@@ -51,10 +51,13 @@ const retrieveQuoteButton = fragmentElement.querySelector(
 const retrieveQuoteContainer = fragmentElement.querySelector('#retrieve-quote');
 const scopeGroupId = Liferay.ThemeDisplay.getScopeGroupId();
 const zipContainer = fragmentElement.querySelector('#zip-container');
+const zipElement = document.getElementById('zip');
 
-window.onload = function () {
-	document.getElementById('zip').focus();
-};
+if (zipElement !== null) {
+	window.onload = function () {
+		zipElement.focus();
+	};
+}
 
 document.getElementById('zip').focus();
 

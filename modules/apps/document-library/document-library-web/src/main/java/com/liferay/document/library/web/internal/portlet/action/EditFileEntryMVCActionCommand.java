@@ -642,6 +642,8 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 					RoleConstants.PLACEHOLDER_DEFAULT_GROUP_ROLE),
 				_RESTRICTED_GUEST_PERMISSIONS, DLFileEntry.class.getName()));
 
+		_setUpDDMFormValues(serviceContext);
+
 		return serviceContext;
 	}
 
@@ -1241,8 +1243,6 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			ServiceContext serviceContext = _createServiceContext(
 				uploadPortletRequest);
-
-			_setUpDDMFormValues(serviceContext);
 
 			FileEntry fileEntry = null;
 

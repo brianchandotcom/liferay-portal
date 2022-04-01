@@ -1,0 +1,34 @@
+diff --git a/org/springframework/beans/CachedIntrospectionResults.java b/org/springframework/beans/CachedIntrospectionResults.java
+index 569c317..e80a381 100644
+--- a/org/springframework/beans/CachedIntrospectionResults.java
++++ b/org/springframework/beans/CachedIntrospectionResults.java
+@@ -22,6 +22,7 @@ import java.beans.Introspector;
+ import java.beans.PropertyDescriptor;
+ import java.lang.ref.Reference;
+ import java.lang.ref.WeakReference;
++import java.security.ProtectionDomain;
+ import java.util.Collections;
+ import java.util.HashSet;
+ import java.util.Iterator;
+@@ -242,8 +243,13 @@ public class CachedIntrospectionResults {
+ 			// This call is slow so we do it once.
+ 			PropertyDescriptor[] pds = this.beanInfo.getPropertyDescriptors();
+ 			for (PropertyDescriptor pd : pds) {
+-				if (Class.class.equals(beanClass) && "classLoader".equals(pd.getName())) {
+-					// Ignore Class.getClassLoader() method - nobody needs to bind to that
++				if (Class.class == beanClass && (!"name".equals(pd.getName()) && !pd.getName().endsWith("Name"))) {
++					// Only allow all name variants of Class properties
++					continue;
++				}
++				if (pd.getPropertyType() != null && (ClassLoader.class.isAssignableFrom(pd.getPropertyType())
++					|| ProtectionDomain.class.isAssignableFrom(pd.getPropertyType()))) {
++					// Ignore ClassLoader and ProtectionDomain types - nobody needs to bind to those
+ 					continue;
+ 				}
+ 				if (logger.isTraceEnabled()) {
+@@ -306,3 +312,4 @@ public class CachedIntrospectionResults {
+ 	}
+ 
+ }
++/* @generated */
+\ No newline at end of file

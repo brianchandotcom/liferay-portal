@@ -15,17 +15,20 @@
 package com.liferay.commerce.order.content.web.internal.frontend.taglib.clay.data.set.provider;
 
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.order.content.web.internal.frontend.constants.CommerceOrderDataSetConstants;
 import com.liferay.commerce.order.content.web.internal.frontend.util.CommerceOrderClayTableUtil;
 import com.liferay.commerce.order.content.web.internal.model.Order;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
+import com.liferay.commerce.service.CommerceOrderTypeLocalService;
 import com.liferay.frontend.taglib.clay.data.Filter;
 import com.liferay.frontend.taglib.clay.data.Pagination;
 import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -73,8 +76,9 @@ public class PendingCommerceOrderDataSetDataProvider
 				pagination.getEndPosition());
 
 		return CommerceOrderClayTableUtil.getOrders(
-			commerceOrders, commerceChannel.getPriceDisplayType(), true,
-			themeDisplay);
+			commerceOrders, _commerceOrderTypeLocalService,
+			_commerceOrderTypeModelResourcePermission,
+			commerceChannel.getPriceDisplayType(), true, themeDisplay);
 	}
 
 	@Override
@@ -104,5 +108,14 @@ public class PendingCommerceOrderDataSetDataProvider
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;
+
+	@Reference
+	private CommerceOrderTypeLocalService _commerceOrderTypeLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.model.CommerceOrderType)"
+	)
+	private ModelResourcePermission<CommerceOrderType>
+		_commerceOrderTypeModelResourcePermission;
 
 }

@@ -82,6 +82,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
@@ -235,10 +236,15 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				String sourceFileName = uploadPortletRequest.getFileName(
 					"file");
 
-				try {
+				ServiceContext serviceContext = _createServiceContext(
+					uploadPortletRequest);
+
+				try (AutoCloseable autoCloseable = _pushServiceContext(
+						serviceContext)) {
+
 					fileEntry = _updateFileEntry(
 						portletConfig, actionRequest, actionResponse,
-						uploadPortletRequest);
+						uploadPortletRequest, serviceContext);
 				}
 				catch (PortalException portalException) {
 					if (!cmd.equals(Constants.ADD_DYNAMIC) &&
@@ -1083,6 +1089,12 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
+	private AutoCloseable _pushServiceContext(ServiceContext serviceContext) {
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		return ServiceContextThreadLocal::popServiceContext;
+	}
+
 	private void _restoreTrashEntries(ActionRequest actionRequest)
 		throws Exception {
 
@@ -1138,7 +1150,8 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 	private FileEntry _updateFileEntry(
 			PortletConfig portletConfig, ActionRequest actionRequest,
 			ActionResponse actionResponse,
-			UploadPortletRequest uploadPortletRequest)
+			UploadPortletRequest uploadPortletRequest,
+			ServiceContext serviceContext)
 		throws IOException, PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -1240,9 +1253,6 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				uploadPortletRequest, addDynamic, user.getTimeZone());
 			Date reviewDate = _getReviewDate(
 				uploadPortletRequest, addDynamic, user.getTimeZone());
-
-			ServiceContext serviceContext = _createServiceContext(
-				uploadPortletRequest);
 
 			FileEntry fileEntry = null;
 

@@ -22,16 +22,16 @@ describe('Liferay.Util.getLexiconIconTpl', () => {
 
 		const icon = getLexiconIconTpl('close', 'test-class');
 
-		expect(icon).toContain('<svg');
-		expect(icon).toContain(
-			'class="lexicon-icon lexicon-icon-close test-class"'
+		expect(icon).toMatchInlineSnapshot(
+			`"<svg aria-hidden=\\"true\\" class=\\"lexicon-icon lexicon-icon-close test-class\\" focusable=\\"false\\" role=\\"presentation\\"><use href=\\"foo/clay/icons.svg#close\\" /></svg>"`
 		);
-		expect(icon).toContain('<use href="foo/clay/icons.svg#close" />');
 	});
 
 	it('adds an empty string if the second argument is missing', () => {
 		const icon = getLexiconIconTpl('close');
 
-		expect(icon).toContain('class="lexicon-icon lexicon-icon-close "');
+		expect(icon).toMatchInlineSnapshot(
+			`"<svg aria-hidden=\\"true\\" class=\\"lexicon-icon lexicon-icon-close \\" focusable=\\"false\\" role=\\"presentation\\"><use href=\\"foo/clay/icons.svg#close\\" /></svg>"`
+		);
 	});
 });

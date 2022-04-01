@@ -65,7 +65,7 @@ AddGroupDisplayContext addGroupDisplayContext = (AddGroupDisplayContext)request.
 		<div class="add-group-loading align-items-center d-none flex-column justify-content-center">
 			<span aria-hidden="true" class="loading-animation mb-4"></span>
 
-			<p class="text-3 text-center text-secondary"><liferay-ui:message key="the-creation-of-the-site-may-take-some-minutes" /></p>
+			<p class="text-3 text-center text-secondary"><liferay-ui:message key="the-creation-of-the-site-may-take-some-time-.closing-the-window-will-not-cancel-the-process" /></p>
 		</div>
 
 		<liferay-frontend:edit-form-footer>

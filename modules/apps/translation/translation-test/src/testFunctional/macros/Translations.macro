@@ -703,6 +703,27 @@ definition {
 		}
 	}
 
+	macro viewCSVErrorReport {
+		var tempDir = PropsUtil.get("output.dir.name");
+		var fileContent = FileUtil.read("${tempDir}/translation-error.csv");
+
+		if (contains("${fileContent}", "${reportContent}")) {
+			echo("The import translation error can be viewed in the report.");
+		}
+		else {
+			fail("The import translation error can not be viewed in the report");
+		}
+
+		if (isSet(viewNoSuccessfullyImportedTranslation)) {
+			if (!(contains("${fileContent}", "${viewNoSuccessfullyImportedTranslation}"))) {
+				echo("No imported translation info in the report");
+			}
+			else {
+				fail("The error report is incorrect.");
+			}
+		}
+	}
+
 	macro viewDisabledFieldTranslationButtons {
 		for (var fieldName : list "${fieldNameList}") {
 			AssertVisible(

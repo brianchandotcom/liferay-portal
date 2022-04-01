@@ -257,6 +257,78 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = "userfn userln");
 	}
 
+	@description = "The filter by Any Account filters all users that assigned account"
+	@priority = "3"
+	test CanFilterByAnyAccount {
+		for (var newEntryNum : list "1,2,3") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Account ${newEntryNum} with User",
+				accountEntryType = "Business");
+
+			JSONAccountEntryUser.addAccountEntryUser(
+				accountEntryName = "Account ${newEntryNum} with User",
+				userEmailAddress = "userea${newEntryNum}@liferay.com",
+				userFirstName = "userfn${newEntryNum}",
+				userLastName = "userln${newEntryNum}",
+				userScreenName = "usersn${newEntryNum}");
+		}
+
+		AccountUsers.openAccountUsersAdmin();
+
+		AccountUsers.removeAccount(
+			accountName = "Account 1 with User",
+			accountUser = "userfn1 userln1");
+
+		AccountUsers.openAccountUsersAdmin();
+
+		ManagementBar.setFilterAndOrder(filterBy = "Any Account");
+
+		LexiconEntry.viewEntryName(rowEntry = "userfn2 userln2");
+
+		LexiconEntry.viewEntryName(rowEntry = "userfn3 userln3");
+
+		LexiconEntry.viewNoEntry(rowEntry = "userfn1 userln1");
+	}
+
+	@description = "This filters users that do not have any assigned account"
+	@priority = "3"
+	test CanFilterByNoAssignedAccount {
+		JSONAccountEntry.addAccountEntry(
+			accountEntryName = "Account with User",
+			accountEntryType = "Business");
+
+		for (var accountUser : list "1,2") {
+			AccountUsers.openAccountUsersAdmin();
+
+			AccountUsers.addUser(
+				accountName = "Account with User",
+				userEmailAddress = "userea${accountUser}@liferay.com",
+				userFirstName = "userfn${accountUser}",
+				userLastName = "userln${accountUser}",
+				userScreenName = "usersn${accountUser}");
+		}
+
+		AccountUsers.openAccountUsersAdmin();
+
+		AccountUsers.removeAccount(
+			accountName = "Account with User",
+			accountUser = "userfn1 userln1");
+
+		AccountUsers.openAccountUsersAdmin();
+
+		ManagementBar.setFilterAndOrder(filterBy = "No Assigned Account");
+
+		LexiconEntry.viewEntryName(rowEntry = "userfn1 userln1");
+
+		LexiconEntry.viewNoEntry(rowEntry = "userfn2 userln2");
+
+		ManagementBar.setFilterAndOrder(filterBy = "Any Account");
+
+		LexiconEntry.viewEntryName(rowEntry = "userfn2 userln2");
+
+		LexiconEntry.viewNoEntry(rowEntry = "userfn1 userln1");
+	}
+
 	@description = "This filters users by Selected Accounts, choosing a specific account to view"
 	@priority = "3"
 	test CanFilterBySelectedAccounts {
@@ -316,45 +388,6 @@ definition {
 		LexiconEntry.viewEntryName(rowEntry = "user business");
 
 		LexiconEntry.viewNoEntry(rowEntry = "person user");
-	}
-
-	@description = "This filters users that do not have any assigned account"
-	@priority = "3"
-	test CanFilterByNoAssignedAccount {
-		JSONAccountEntry.addAccountEntry(
-			accountEntryName = "Account with User",
-			accountEntryType = "Business");
-
-		for (var accountUser : list "1,2") {
-			AccountUsers.openAccountUsersAdmin();
-
-			AccountUsers.addUser(
-				accountName = "Account with User",
-				userEmailAddress = "userea${accountUser}@liferay.com",
-				userFirstName = "userfn${accountUser}",
-				userLastName = "userln${accountUser}",
-				userScreenName = "usersn${accountUser}");
-		}
-
-		AccountUsers.openAccountUsersAdmin();
-
-		AccountUsers.removeAccount(
-			accountName = "Account with User",
-			accountUser = "userfn1 userln1");
-
-		AccountUsers.openAccountUsersAdmin();
-
-		ManagementBar.setFilterAndOrder(filterBy = "No Assigned Account");
-
-		LexiconEntry.viewEntryName(rowEntry = "userfn1 userln1");
-
-		LexiconEntry.viewNoEntry(rowEntry = "userfn2 userln2");
-
-		ManagementBar.setFilterAndOrder(filterBy = "Any Account");
-
-		LexiconEntry.viewEntryName(rowEntry = "userfn2 userln2");
-
-		LexiconEntry.viewNoEntry(rowEntry = "userfn1 userln1");
 	}
 
 	@description = "This filters users by status: active and inactive"

@@ -115,12 +115,12 @@ public class TrafficChannel {
 		return _trafficShare;
 	}
 
-	public Type getType() {
-		return _type;
+	public Tuple getTuple() {
+		return _tuples.get(_type);
 	}
 
-	public Tuple getUrl() {
-		return _urls.get(_type);
+	public Type getType() {
+		return _type;
 	}
 
 	@Override
@@ -136,7 +136,7 @@ public class TrafficChannel {
 		return JSONUtil.put(
 			"endpointURL",
 			Optional.ofNullable(
-				_urls.get(_type)
+				_tuples.get(_type)
 			).map(
 				tuple -> {
 					ResourceURL resourceURL =
@@ -207,7 +207,7 @@ public class TrafficChannel {
 	@Override
 	public String toString() {
 		return JSONUtil.put(
-			"endpointURL", _urls.get(_type)
+			"endpointURL", _tuples.get(_type)
 		).put(
 			"helpMessageKey", getHelpMessageKey()
 		).put(
@@ -311,7 +311,7 @@ public class TrafficChannel {
 			"this-is-the-number-of-page-views-generated-by-people-coming-to-" +
 				"your-page-from-social-sites"
 		).build();
-	private static final Map<Type, Tuple> _urls =
+	private static final Map<Type, Tuple> _tuples =
 		HashMapBuilder.<Type, Tuple>put(
 			Type.ORGANIC,
 			new Tuple(

@@ -56,7 +56,7 @@ public class TrafficChannelTest {
 		Assert.assertEquals(
 			TrafficChannel.Type.DIRECT, trafficChannel.getType());
 
-		Assert.assertNull(trafficChannel.getUrl());
+		Assert.assertNull(trafficChannel.getTuple());
 	}
 
 	@Test
@@ -189,7 +189,7 @@ public class TrafficChannelTest {
 			TrafficChannel.Type.valueOf(acquisitionChannel.getName()),
 			trafficChannel.getType());
 
-		Tuple tuple = trafficChannel.getUrl();
+		Tuple tuple = trafficChannel.getTuple();
 
 		Assert.assertEquals(
 			"/analytics_reports/get_country_search_keywords_traffic_sources",
@@ -218,7 +218,7 @@ public class TrafficChannelTest {
 			TrafficChannel.Type.valueOf(acquisitionChannel.getName()),
 			trafficChannel.getType());
 
-		Tuple tuple = trafficChannel.getUrl();
+		Tuple tuple = trafficChannel.getTuple();
 
 		Assert.assertEquals(
 			"/analytics_reports/get_country_search_keywords_traffic_sources",
@@ -249,7 +249,7 @@ public class TrafficChannelTest {
 			TrafficChannel.Type.valueOf(acquisitionChannel.getName()),
 			trafficChannel.getType());
 
-		Tuple tuple = trafficChannel.getUrl();
+		Tuple tuple = trafficChannel.getTuple();
 
 		Assert.assertEquals(
 			"/analytics_reports/get_referral_traffic_sources",
@@ -279,7 +279,7 @@ public class TrafficChannelTest {
 			TrafficChannel.Type.valueOf(acquisitionChannel.getName()),
 			trafficChannel.getType());
 
-		Tuple tuple = trafficChannel.getUrl();
+		Tuple tuple = trafficChannel.getTuple();
 
 		Assert.assertEquals(
 			"/analytics_reports/get_social_traffic_sources",

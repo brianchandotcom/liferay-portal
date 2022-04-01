@@ -345,6 +345,10 @@ definition {
 					zipFileName = "${zipFileName}");
 			}
 
+			if (isSet(downloadCSVErrorReport)) {
+				Button.click(button = "Download CSV Error Report");
+			}
+
 			if (isSet(uploadAnotherFile)) {
 				Button.click(button = "Upload Another File");
 			}

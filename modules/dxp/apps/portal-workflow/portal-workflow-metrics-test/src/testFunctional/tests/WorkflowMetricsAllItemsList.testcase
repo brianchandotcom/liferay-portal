@@ -146,8 +146,6 @@ definition {
 		WorkflowMetricsAllItemsList.goToTrackWorkflowlink();
 
 		WorkflowMetrics.goToCurrentNode(currentNode = "Review");
-
-
 	}
 
 	@description = "Verify that the users are able to identify the current node of the instance in the workflow"
@@ -185,7 +183,6 @@ definition {
 		WorkflowMetrics.viewCurrentNodeCircleNotPresent(currentNode = "Update");
 
 		WorkflowMetrics.viewCurrentNodeCircleNotPresent(currentNode = "Approved");
-
 	}
 
 	@description = "Verify that the users are able to identify the current nodes of the instance in the workflow, when there is multiple statuses"
@@ -225,7 +222,6 @@ definition {
 		WorkflowMetrics.viewCurrentNodeCircleIcon(currentNode = "task3");
 
 		WorkflowMetrics.viewCurrentNodeCircleNotPresent(currentNode = "Join");
-
 	}
 
 	@description = "Verify that the users are able to identify the past stages that the workflow instance has already passed by"
@@ -472,7 +468,6 @@ definition {
 	@description = "Verify that there is a Track Approval option on the kebab menu"
 	@priority = "4"
 	test CanSelectTrackApprovalOnKebabMenu {
-
 		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
@@ -926,24 +921,24 @@ definition {
 	@description = "Verify that the component displays the entire workflow that the instance is in"
 	@priority = "5"
 	test DisplaysEntireWorkflow {
-		 Workflow.openWorkflowListView();
+		Workflow.openWorkflowListView();
 
-        Navigator.gotoNavItem(navItem = "Configuration");
+		Navigator.gotoNavItem(navItem = "Configuration");
 
-        Workflow.configureWorkflow(
-            workflowDefinition = "Single Approver",
-            workflowResourceValue = "Blogs Entry");
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
 
-        JSONBlog.addEntry(
-            entryContent = "Test Content",
-            entryTitle = "Test Blog");
+		JSONBlog.addEntry(
+			entryContent = "Test Content",
+			entryTitle = "Test Blog");
 
-        ApplicationsMenu.gotoPortlet(
-            category = "Workflow",
-            panel = "Applications",
-            portlet = "Metrics");
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Metrics");
 
-       WorkflowMetrics.goToDashboardAllItemsWithFilter(
+		WorkflowMetrics.goToDashboardAllItemsWithFilter(
 			workflowFilterOption = "PENDING",
 			workflowMetricsTab = "DASHBOARD",
 			workflowProcess = "Single Approver");
@@ -953,7 +948,6 @@ definition {
 		WorkflowMetricsAllItemsList.goToTrackWorkflowlink();
 
 		WorkflowMetricsAllItemsList.viewNodesDisplayed(nodesTrackWorkflow = "Created,Review,Update,Approved");
-
 	}
 
 	@description = "LPS-92053 - Verify that, in the item detail modal, the Due Date by SLA will group SLAs into Open or Resolved"
@@ -2692,9 +2686,9 @@ definition {
 		Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
 
 		WorkflowMetricsAllItemsList.selectAndChangeNodeName(
-			update = "true",
 			nodeName = "Review changed",
-			nodeNodeLabel = "review");
+			nodeNodeLabel = "review",
+			update = "true");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -2742,7 +2736,6 @@ definition {
 		WorkflowMetricsAllItemsList.goToTrackWorkflowlink();
 
 		WorkflowMetricsAllItemsList.viewNodesDisplayed(nodesTrackWorkflow = "Start,task1,task2,task3,End");
-
 	}
 
 	@description = "LPS-108138 - Verify that, in All Items page, when the users select an instance that can't be transitioned by them, the option to transition is not available to be selected"

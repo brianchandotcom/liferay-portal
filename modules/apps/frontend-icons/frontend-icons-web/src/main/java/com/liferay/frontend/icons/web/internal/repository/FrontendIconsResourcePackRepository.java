@@ -150,14 +150,15 @@ public class FrontendIconsResourcePackRepository {
 			FrontendIconsResourcePack frontendIconsResourcePack =
 				new FrontendIconsResourcePack(fileEntry.getTitle());
 
-			List<FrontendIconsResource> iconResources =
+			List<FrontendIconsResource> frontendIconsResources =
 				SVGUtil.getFrontendIconsResources(
 					StringUtil.read(
 						_dlFileEntryLocalService.getFileAsStream(
 							fileEntry.getFileEntryId(),
 							fileEntry.getVersion())));
 
-			frontendIconsResourcePack.addFrontendIconsResources(iconResources);
+			frontendIconsResourcePack.addFrontendIconsResources(
+				frontendIconsResources);
 
 			frontendIconsResourcePacks.add(frontendIconsResourcePack);
 		}

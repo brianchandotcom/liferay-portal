@@ -67,7 +67,12 @@ export default function IconConfiguration({
 	const handleDelete = (iconPackName) => {
 		if (
 			!confirm(
-				`are you sure you want to delete icon pack ${iconPackName}`
+				Liferay.Util.sub(
+					Liferay.Language.get(
+						'are-you-sure-you-want-to-delete-the-x-icon-pack',
+						[iconPackName]
+					)
+				)
 			)
 		) {
 			return;

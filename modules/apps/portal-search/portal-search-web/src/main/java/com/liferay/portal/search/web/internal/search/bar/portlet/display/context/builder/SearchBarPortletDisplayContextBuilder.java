@@ -80,19 +80,19 @@ public class SearchBarPortletDisplayContextBuilder {
 		PortletSharedSearchResponse portletSharedSearchResponse =
 			portletSharedSearchRequest.search(_renderRequest);
 
-		_themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		_keywordsParameterName = _getKeywordsParameterName(
 			portletPreferencesLookup,
 			portletSharedSearchResponse.getSearchSettings(),
 			searchBarPrecedenceHelper, searchBarPortletPreferences,
-			_themeDisplay);
+			themeDisplay);
 
 		_scopeParameterName = _getScopeParameterName(
 			portletPreferencesLookup, searchBarPrecedenceHelper,
 			portletSharedSearchResponse.getSearchSettings(),
-			searchBarPortletPreferences, _themeDisplay);
+			searchBarPortletPreferences, themeDisplay);
 
 		SearchResponse searchResponse = _getSearchResponse(
 			portletSharedSearchResponse, searchBarPortletPreferences);
@@ -130,7 +130,7 @@ public class SearchBarPortletDisplayContextBuilder {
 		SearchBarPortletInstanceConfiguration
 			searchBarPortletInstanceConfiguration =
 				getSearchBarPortletInstanceConfiguration(
-					_themeDisplay.getPortletDisplay());
+					themeDisplay.getPortletDisplay());
 
 		searchBarPortletDisplayContext.setAvailableEverythingSearchScope(
 			isAvailableEverythingSearchScope());
@@ -138,7 +138,7 @@ public class SearchBarPortletDisplayContextBuilder {
 			SearchScope.THIS_SITE.getParameterString());
 		searchBarPortletDisplayContext.setDisplayStyleGroupId(
 			getDisplayStyleGroupId(
-				searchBarPortletInstanceConfiguration, _themeDisplay));
+				searchBarPortletInstanceConfiguration, themeDisplay));
 		searchBarPortletDisplayContext.setEmptySearchEnabled(
 			_emptySearchEnabled);
 		searchBarPortletDisplayContext.setEverythingSearchScopeParameterString(
@@ -169,10 +169,12 @@ public class SearchBarPortletDisplayContextBuilder {
 		_setSelectedSearchScope(searchBarPortletDisplayContext);
 
 		if (Validator.isBlank(_destination)) {
-			searchBarPortletDisplayContext.setSearchURL(_getURLCurrentPath());
+			searchBarPortletDisplayContext.setSearchURL(
+				_getURLCurrentPath(themeDisplay));
 		}
 		else {
-			String destinationURL = _getDestinationURL(_destination);
+			String destinationURL = _getDestinationURL(
+				_destination, themeDisplay);
 
 			if (destinationURL == null) {
 				searchBarPortletDisplayContext.setDestinationUnreachable(true);
@@ -236,9 +238,11 @@ public class SearchBarPortletDisplayContextBuilder {
 		return StringPool.BLANK;
 	}
 
-	protected String getLayoutFriendlyURL(Layout layout) {
+	protected String getLayoutFriendlyURL(
+		Layout layout, ThemeDisplay themeDisplay) {
+
 		try {
-			return _portal.getLayoutFriendlyURL(layout, _themeDisplay);
+			return _portal.getLayoutFriendlyURL(layout, themeDisplay);
 		}
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
@@ -299,15 +303,17 @@ public class SearchBarPortletDisplayContextBuilder {
 		return true;
 	}
 
-	private String _getDestinationURL(String friendlyURL) {
+	private String _getDestinationURL(
+		String friendlyURL, ThemeDisplay themeDisplay) {
+
 		Layout layout = fetchLayoutByFriendlyURL(
-			_themeDisplay.getScopeGroupId(), _slashify(friendlyURL));
+			themeDisplay.getScopeGroupId(), _slashify(friendlyURL));
 
 		if (layout == null) {
 			return null;
 		}
 
-		return getLayoutFriendlyURL(layout);
+		return getLayoutFriendlyURL(layout, themeDisplay);
 	}
 
 	private String _getKeywordsParameterName(
@@ -380,8 +386,8 @@ public class SearchBarPortletDisplayContextBuilder {
 			searchBarPortletPreferences.getFederatedSearchKeyOptional());
 	}
 
-	private String _getURLCurrentPath() {
-		return _http.getPath(_themeDisplay.getURLCurrent());
+	private String _getURLCurrentPath(ThemeDisplay themeDisplay) {
+		return _http.getPath(themeDisplay.getURLCurrent());
 	}
 
 	private boolean _isEmptySearchEnabled(
@@ -435,6 +441,5 @@ public class SearchBarPortletDisplayContextBuilder {
 	private String _scopeParameterName;
 	private String _scopeParameterValue;
 	private SearchScopePreference _searchScopePreference;
-	private ThemeDisplay _themeDisplay;
 
 }

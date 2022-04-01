@@ -1,0 +1,11 @@
+{
+	"configurationPath": "index.json",
+	"cssPath": "index.css",
+	"fragmentEntryKey": "dashboard-heading",
+	"htmlPath": "index.html",
+	"icon": "bars",
+	"jsPath": "index.js",
+	"name": "Dashboard Heading",
+	"thumbnailPath": "dashboard-heading.png",
+	"type": "component"
+}

@@ -2770,6 +2770,12 @@ definition {
 				entryList = "WC_Title_3,WC_Title_4");
 		}
 
+		task ("Deprioritize the Anyone variationto botton") {
+			AssetListsAdmin.deprioritizeVariation(variationTitle = "Anyone");
+
+			AssetListsAdmin.deprioritizeVariation(variationTitle = "Anyone");
+		}
+
 		task ("Select the created manual Collection to be used in the asset publisher portlet") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
@@ -3319,6 +3325,10 @@ definition {
 				assetType = "Basic Web Content",
 				itemSubtype = "Basic Web Content",
 				itemType = "Web Content Article");
+		}
+
+		task ("Deprioritize the Anyone variation") {
+			AssetListsAdmin.deprioritizeVariation(variationTitle = "Anyone");
 		}
 
 		task ("Select the created manual Collection to be used in the asset publisher portlet") {

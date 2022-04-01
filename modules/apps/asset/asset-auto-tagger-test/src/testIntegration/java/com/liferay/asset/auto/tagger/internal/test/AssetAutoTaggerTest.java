@@ -103,6 +103,22 @@ public class AssetAutoTaggerTest extends BaseAssetAutoTaggerTestCase {
 	}
 
 	@Test
+	public void testAutoTagsAssetOnUpdateIfEnabled() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId(), 0);
+
+		FileEntry fileEntry = addFileEntry(serviceContext);
+
+		serviceContext.setAssetTagNames(new String[0]);
+		serviceContext.setAttribute("updateAutoTags", Boolean.TRUE);
+
+		AssetEntry assetEntry = updateFileEntryAssetEntry(
+			fileEntry, serviceContext);
+
+		assertContainsAssetTagName(assetEntry, ASSET_TAG_NAME_AUTO);
+	}
+
+	@Test
 	public void testDeletesAssetAutoTaggerEntriesWhenAssetIsDeleted()
 		throws Exception {
 
@@ -150,6 +166,22 @@ public class AssetAutoTaggerTest extends BaseAssetAutoTaggerTestCase {
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
 		AssetEntry assetEntry = addFileEntryAssetEntry(serviceContext);
+
+		assertDoesNotContainAssetTagName(assetEntry, ASSET_TAG_NAME_AUTO);
+	}
+
+	@Test
+	public void testDoesNotAutoTagAssetOnUpdateIfDisabled() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId(), 0);
+
+		FileEntry fileEntry = addFileEntry(serviceContext);
+
+		serviceContext.setAssetTagNames(new String[0]);
+		serviceContext.setAttribute("updateAutoTags", Boolean.FALSE);
+
+		AssetEntry assetEntry = updateFileEntryAssetEntry(
+			fileEntry, serviceContext);
 
 		assertDoesNotContainAssetTagName(assetEntry, ASSET_TAG_NAME_AUTO);
 	}

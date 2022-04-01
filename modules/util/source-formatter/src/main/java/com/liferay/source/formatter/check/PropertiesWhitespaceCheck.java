@@ -93,11 +93,7 @@ public class PropertiesWhitespaceCheck extends WhitespaceCheck {
 	protected boolean isAllowTrailingSpaces(String line) {
 		String trimmedLine = StringUtil.removeChar(line, CharPool.SPACE);
 
-		if (trimmedLine.endsWith(StringPool.EQUAL)) {
-			return true;
-		}
-
-		return false;
+		return trimmedLine.endsWith(StringPool.EQUAL);
 	}
 
 	private String _calLeadingSpaces(String leadingSpaces) {

@@ -114,7 +114,7 @@ public class ObjectViewLocalServiceTest {
 		}
 		catch (ObjectViewSortColumnException objectViewSortColumnException) {
 			Assert.assertEquals(
-				"There is no object field with the name: zulu",
+				"There is no object view column with the name: zulu",
 				objectViewSortColumnException.getMessage());
 		}
 
@@ -193,7 +193,7 @@ public class ObjectViewLocalServiceTest {
 		}
 		catch (ObjectViewSortColumnException objectViewSortColumnException) {
 			Assert.assertEquals(
-				"There is no object field with the name: king",
+				"There is no object view column with the name: king",
 				objectViewSortColumnException.getMessage());
 		}
 
@@ -264,6 +264,8 @@ public class ObjectViewLocalServiceTest {
 		ObjectViewColumn objectViewColumn = _objectViewColumnPersistence.create(
 			0);
 
+		objectViewColumn.setLabelMap(
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()));
 		objectViewColumn.setObjectFieldName(
 			_addObjectField(objectFieldLabel, objectFieldName));
 		objectViewColumn.setPriority(0);

@@ -111,12 +111,14 @@
 			"objectViewColumns": [
 				{
 					"label": {
+						"en_US": "alias1"
 					},
 					"objectFieldName": "textField1",
 					"priority": 0
 				},
 				{
 					"label": {
+						"en_US": "alias2"
 					},
 					"objectFieldName": "textField2",
 					"priority": 1

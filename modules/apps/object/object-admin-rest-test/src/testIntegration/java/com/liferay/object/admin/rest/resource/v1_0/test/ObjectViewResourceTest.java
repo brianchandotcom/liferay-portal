@@ -210,6 +210,8 @@ public class ObjectViewResourceTest extends BaseObjectViewResourceTestCase {
 	private ObjectViewColumn _randomObjectViewColumn() {
 		return new ObjectViewColumn() {
 			{
+				label = Collections.singletonMap(
+					"en-US", RandomTestUtil.randomString());
 				objectFieldName = _objectField.getName();
 				priority = RandomTestUtil.randomInt();
 			}

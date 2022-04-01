@@ -82,7 +82,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 				const values = selectedItems.map((item) => item.value);
 
 				const redirectURL = createPortletURL(itemData?.redirectURL, {
-					accountEntriesNavigation: 'accounts',
+					accountEntriesNavigation: 'selected-accounts',
 					accountEntryIds: values.join(','),
 				});
 

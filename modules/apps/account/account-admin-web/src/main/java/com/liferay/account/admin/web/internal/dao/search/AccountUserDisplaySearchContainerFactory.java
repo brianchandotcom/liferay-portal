@@ -57,16 +57,16 @@ public class AccountUserDisplaySearchContainerFactory {
 		throws PortalException {
 
 		String accountEntriesNavigation = ParamUtil.getString(
-			liferayPortletRequest, "accountEntriesNavigation", "all");
+			liferayPortletRequest, "accountEntriesNavigation", "any-account");
 
 		long[] accountEntryIds = null;
 
-		if (accountEntriesNavigation.equals("all")) {
+		if (accountEntriesNavigation.equals("any-account")) {
 			accountEntryIds = new long[] {
 				AccountConstants.ACCOUNT_ENTRY_ID_ANY
 			};
 		}
-		else if (accountEntriesNavigation.equals("accounts")) {
+		else if (accountEntriesNavigation.equals("selected-accounts")) {
 			accountEntryIds = ParamUtil.getLongValues(
 				liferayPortletRequest, "accountEntryIds");
 		}

@@ -490,6 +490,19 @@ public class ObjectFieldLocalServiceImpl
 
 		objectField = objectFieldPersistence.remove(objectField);
 
+		String objectFieldSettingFileSource = StringPool.BLANK;
+
+		if (Objects.equals(
+				objectField.getBusinessType(),
+				ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
+
+			ObjectFieldSetting objectFieldSetting =
+				_objectFieldSettingPersistence.fetchByOFI_N(
+					objectField.getObjectFieldId(), "fileSource");
+
+			objectFieldSettingFileSource = objectFieldSetting.getValue();
+		}
+
 		_objectFieldSettingPersistence.removeByObjectFieldId(
 			objectField.getObjectFieldId());
 
@@ -502,10 +515,7 @@ public class ObjectFieldLocalServiceImpl
 				objectDefinition.getExtensionDBTableName(),
 				objectField.getDBTableName())) {
 
-			if (Objects.equals(
-					objectField.getBusinessType(),
-					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
-
+			if (Objects.equals(objectFieldSettingFileSource, "userComputer")) {
 				_deleteFileEntries(
 					objectField.getObjectDefinitionId(), objectField.getName());
 			}

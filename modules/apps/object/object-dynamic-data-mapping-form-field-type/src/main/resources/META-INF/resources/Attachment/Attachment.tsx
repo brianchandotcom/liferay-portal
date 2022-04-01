@@ -119,7 +119,7 @@ export default function Attachment({
 			delete: {href, method},
 		},
 	}: Attachment) => {
-		if (objectEntryId === '0') {
+		if (fileSource === 'userComputer' && objectEntryId === '0') {
 			await fetch(href, {method});
 		}
 

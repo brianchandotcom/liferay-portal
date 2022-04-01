@@ -17,9 +17,11 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			portlet = "Pages");
+
 		PagesAdmin.addPublicPage(
 			pageName = "Calendar Page",
 			sitePageType = "Widget Page");
+
 		PagesAdmin.configurePage(
 			columnName = "1 Column",
 			pageName = "Calendar Page",
@@ -31,7 +33,6 @@ definition {
 		Portlet.addPG(
 			pageName = "Calendar Page",
 			portletName = "Calendar");
-
 	}
 
 	tearDown {
@@ -151,11 +152,6 @@ definition {
 		ConfigurationTemplate.saveCurrentConfigurationsTemplate(templateName = "Configuration Templates Name");
 
 		ConfigurationTemplate.viewCurrentConfigurationsTemplate(templateName = "Configuration Templates Name");
-
-
-
-
-		
 	}
 
 }

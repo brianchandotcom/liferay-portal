@@ -42,10 +42,6 @@ definition {
 		AssertElementPresent(
 			key_configurationName = "${templateName}",
 			locator1 = "Configuration#CONFIGURATION_TEMPLATE_TABLE_NAME");
-
-
-
-			
 	}
 
 	macro viewOrderConfigurationsTemplate {

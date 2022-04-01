@@ -19,7 +19,6 @@ import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
-import com.liferay.expando.kernel.util.ExpandoBridgeIndexerUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -28,6 +27,7 @@ import com.liferay.portal.odata.entity.DateTimeEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.StringEntityField;
 import com.liferay.portal.odata.normalizer.Normalizer;
+import com.liferay.portal.search.expando.ExpandoBridgeIndexer;
 
 import java.util.Collections;
 import java.util.List;
@@ -42,6 +42,7 @@ public class EntityFieldsUtil {
 
 	public static List<EntityField> getEntityFields(
 		long classNameId, long companyId,
+		ExpandoBridgeIndexer expandoBridgeIndexer,
 		ExpandoColumnLocalService expandoColumnLocalService,
 		ExpandoTableLocalService expandoTableLocalService) {
 
@@ -58,7 +59,8 @@ public class EntityFieldsUtil {
 		Stream<ExpandoColumn> expandoColumnsStream = expandoColumns.stream();
 
 		return expandoColumnsStream.map(
-			EntityFieldsUtil::_getEntityField
+			expandoColumn -> _getEntityField(
+				expandoBridgeIndexer, expandoColumn)
 		).filter(
 			Objects::nonNull
 		).collect(
@@ -66,7 +68,10 @@ public class EntityFieldsUtil {
 		);
 	}
 
-	private static EntityField _getEntityField(ExpandoColumn expandoColumn) {
+	private static EntityField _getEntityField(
+		ExpandoBridgeIndexer expandoBridgeIndexer,
+		ExpandoColumn expandoColumn) {
+
 		UnicodeProperties unicodeProperties =
 			expandoColumn.getTypeSettingsProperties();
 
@@ -82,7 +87,7 @@ public class EntityFieldsUtil {
 		String externalName = Normalizer.normalizeIdentifier(
 			expandoColumn.getName());
 
-		String internalName = ExpandoBridgeIndexerUtil.encodeFieldName(
+		String internalName = expandoBridgeIndexer.encodeFieldName(
 			expandoColumn.getName(), indexType);
 
 		if (type == ExpandoColumnConstants.BOOLEAN) {

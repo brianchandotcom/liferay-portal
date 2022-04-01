@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.aggregation.Aggregations;
+import com.liferay.portal.search.expando.ExpandoBridgeIndexer;
 import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
@@ -91,8 +92,8 @@ public class MessageBoardSectionResourceImpl
 			new ArrayList<>(
 				EntityFieldsUtil.getEntityFields(
 					_portal.getClassNameId(MBCategory.class.getName()),
-					contextCompany.getCompanyId(), _expandoColumnLocalService,
-					_expandoTableLocalService)));
+					contextCompany.getCompanyId(), _expandoBridgeIndexer,
+					_expandoColumnLocalService, _expandoTableLocalService)));
 	}
 
 	@Override
@@ -374,6 +375,9 @@ public class MessageBoardSectionResourceImpl
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference
+	private ExpandoBridgeIndexer _expandoBridgeIndexer;
 
 	@Reference
 	private ExpandoColumnLocalService _expandoColumnLocalService;

@@ -43,7 +43,9 @@ import java.util.List;
 
 /**
  * @author Raymond Augé
+ * @deprecated As of Cavanaugh (7.4.x)
  */
+@Deprecated
 public class ExpandoBridgeIndexerImpl implements ExpandoBridgeIndexer {
 
 	@Override

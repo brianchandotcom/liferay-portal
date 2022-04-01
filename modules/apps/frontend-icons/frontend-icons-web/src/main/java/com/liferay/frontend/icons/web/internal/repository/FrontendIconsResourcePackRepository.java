@@ -129,7 +129,7 @@ public class FrontendIconsResourcePackRepository {
 			if (_log.isDebugEnabled()) {
 				_log.debug(exception);
 			}
-			
+
 			return null;
 		}
 	}
@@ -198,7 +198,7 @@ public class FrontendIconsResourcePackRepository {
 
 	private static final String _ROOT_FOLDER_NAME = "icon.admin.web.icon.packs";
 
-		private static final Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		FrontendIconsResourcePackRepository.class);
 
 	@Reference

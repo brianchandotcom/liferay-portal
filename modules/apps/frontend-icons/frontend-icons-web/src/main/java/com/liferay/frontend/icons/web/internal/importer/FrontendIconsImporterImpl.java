@@ -15,12 +15,9 @@
 package com.liferay.frontend.icons.web.internal.importer;
 
 import com.liferay.frontend.icons.importer.FrontendIconsImporter;
-import com.liferay.frontend.icons.web.internal.model.FrontendIconsResource;
 import com.liferay.frontend.icons.web.internal.model.FrontendIconsResourcePack;
 import com.liferay.frontend.icons.web.internal.repository.FrontendIconsResourcePackRepository;
 import com.liferay.frontend.icons.web.internal.util.SVGUtil;
-
-import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;

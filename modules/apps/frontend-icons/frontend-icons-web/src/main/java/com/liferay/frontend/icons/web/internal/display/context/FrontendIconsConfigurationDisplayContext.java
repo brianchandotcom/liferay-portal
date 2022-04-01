@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.portlet.RenderResponse;
@@ -71,9 +70,9 @@ public class FrontendIconsConfigurationDisplayContext {
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 				for (FrontendIconsResourcePack frontendIconsResourcePack :
-					_frontendIconsResourcePackRepository.
-						getFrontendIconsResourcePacks(
-							_themeDisplay.getCompanyId())) {
+						_frontendIconsResourcePackRepository.
+							getFrontendIconsResourcePacks(
+								_themeDisplay.getCompanyId())) {
 
 					JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 

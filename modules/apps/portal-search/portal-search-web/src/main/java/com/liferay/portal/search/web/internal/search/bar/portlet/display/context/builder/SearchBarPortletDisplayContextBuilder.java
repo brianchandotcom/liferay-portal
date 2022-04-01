@@ -102,7 +102,7 @@ public class SearchBarPortletDisplayContextBuilder {
 			portletSharedSearchResponse.getParameter(
 				scopeParameterName, _renderRequest);
 
-		_scopeParameterValue = scopeParameterValueOptional.orElse(null);
+		String scopeParameterValue = scopeParameterValueOptional.orElse(null);
 
 		_searchScopePreference =
 			searchBarPortletPreferences.getSearchScopePreference();
@@ -155,12 +155,13 @@ public class SearchBarPortletDisplayContextBuilder {
 		searchBarPortletDisplayContext.setScopeParameterName(
 			scopeParameterName);
 		searchBarPortletDisplayContext.setScopeParameterValue(
-			getScopeParameterValue());
+			(scopeParameterValue != null) ? scopeParameterValue :
+				StringPool.BLANK);
 		searchBarPortletDisplayContext.setSearchBarPortletInstanceConfiguration(
 			searchBarPortletInstanceConfiguration);
 
 		_setSelectedSearchScope(
-			searchBarPortletDisplayContext, _scopeParameterValue);
+			searchBarPortletDisplayContext, scopeParameterValue);
 
 		if (Validator.isBlank(destination)) {
 			searchBarPortletDisplayContext.setSearchURL(
@@ -240,14 +241,6 @@ public class SearchBarPortletDisplayContextBuilder {
 
 			return null;
 		}
-	}
-
-	protected String getScopeParameterValue() {
-		if (_scopeParameterValue != null) {
-			return _scopeParameterValue;
-		}
-
-		return StringPool.BLANK;
 	}
 
 	protected SearchBarPortletInstanceConfiguration
@@ -411,7 +404,6 @@ public class SearchBarPortletDisplayContextBuilder {
 	private final LayoutLocalService _layoutLocalService;
 	private final Portal _portal;
 	private final RenderRequest _renderRequest;
-	private String _scopeParameterValue;
 	private SearchScopePreference _searchScopePreference;
 
 }

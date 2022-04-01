@@ -48,7 +48,6 @@ import com.liferay.portal.search.web.search.request.SearchSettings;
 
 import java.util.Optional;
 
-import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
 
@@ -69,7 +68,62 @@ public class SearchBarPortletDisplayContextBuilder {
 		_renderRequest = renderRequest;
 	}
 
-	public SearchBarPortletDisplayContext build() throws PortletException {
+	public SearchBarPortletDisplayContext buildDisplayContext(
+		PortletPreferencesLookup portletPreferencesLookup,
+		PortletSharedSearchRequest portletSharedSearchRequest,
+		SearchBarPrecedenceHelper searchBarPrecedenceHelper) {
+
+		SearchBarPortletPreferences searchBarPortletPreferences =
+			new SearchBarPortletPreferencesImpl(
+				Optional.ofNullable(_renderRequest.getPreferences()));
+
+		PortletSharedSearchResponse portletSharedSearchResponse =
+			portletSharedSearchRequest.search(_renderRequest);
+
+		_themeDisplay = portletSharedSearchResponse.getThemeDisplay(
+			_renderRequest);
+
+		_keywordsParameterName = _getKeywordsParameterName(
+			portletPreferencesLookup,
+			portletSharedSearchResponse.getSearchSettings(),
+			searchBarPrecedenceHelper, searchBarPortletPreferences,
+			_themeDisplay);
+
+		_scopeParameterName = _getScopeParameterName(
+			portletPreferencesLookup, searchBarPrecedenceHelper,
+			portletSharedSearchResponse.getSearchSettings(),
+			searchBarPortletPreferences, _themeDisplay);
+
+		SearchResponse searchResponse = _getSearchResponse(
+			portletSharedSearchResponse, searchBarPortletPreferences);
+
+		SearchRequest searchRequest = searchResponse.getRequest();
+
+		_destination = searchBarPortletPreferences.getDestinationString();
+
+		_emptySearchEnabled = _isEmptySearchEnabled(
+			portletSharedSearchResponse);
+
+		_invisible = searchBarPortletPreferences.isInvisible();
+
+		_keywords = Optional.ofNullable(
+			searchRequest.getQueryString()
+		).orElse(
+			null
+		);
+
+		_paginationStartParameterName =
+			searchRequest.getPaginationStartParameterName();
+
+		Optional<String> scopeParameterValueOptional =
+			portletSharedSearchResponse.getParameter(
+				_scopeParameterName, _renderRequest);
+
+		_scopeParameterValue = scopeParameterValueOptional.orElse(null);
+
+		_searchScopePreference =
+			searchBarPortletPreferences.getSearchScopePreference();
+
 		SearchBarPortletDisplayContext searchBarPortletDisplayContext =
 			new SearchBarPortletDisplayContext();
 
@@ -140,66 +194,6 @@ public class SearchBarPortletDisplayContextBuilder {
 		}
 
 		return searchBarPortletDisplayContext;
-	}
-
-	public SearchBarPortletDisplayContext buildDisplayContext(
-			PortletPreferencesLookup portletPreferencesLookup,
-			PortletSharedSearchRequest portletSharedSearchRequest,
-			SearchBarPrecedenceHelper searchBarPrecedenceHelper)
-		throws PortletException {
-
-		SearchBarPortletPreferences searchBarPortletPreferences =
-			new SearchBarPortletPreferencesImpl(
-				Optional.ofNullable(_renderRequest.getPreferences()));
-
-		PortletSharedSearchResponse portletSharedSearchResponse =
-			portletSharedSearchRequest.search(_renderRequest);
-
-		_themeDisplay = portletSharedSearchResponse.getThemeDisplay(
-			_renderRequest);
-
-		_keywordsParameterName = _getKeywordsParameterName(
-			portletPreferencesLookup,
-			portletSharedSearchResponse.getSearchSettings(),
-			searchBarPrecedenceHelper, searchBarPortletPreferences,
-			_themeDisplay);
-
-		_scopeParameterName = _getScopeParameterName(
-			portletPreferencesLookup, searchBarPrecedenceHelper,
-			portletSharedSearchResponse.getSearchSettings(),
-			searchBarPortletPreferences, _themeDisplay);
-
-		SearchResponse searchResponse = _getSearchResponse(
-			portletSharedSearchResponse, searchBarPortletPreferences);
-
-		SearchRequest searchRequest = searchResponse.getRequest();
-
-		_destination = searchBarPortletPreferences.getDestinationString();
-
-		_emptySearchEnabled = _isEmptySearchEnabled(
-			portletSharedSearchResponse);
-
-		_invisible = searchBarPortletPreferences.isInvisible();
-
-		_keywords = Optional.ofNullable(
-			searchRequest.getQueryString()
-		).orElse(
-			null
-		);
-
-		_paginationStartParameterName =
-			searchRequest.getPaginationStartParameterName();
-
-		Optional<String> scopeParameterValueOptional =
-			portletSharedSearchResponse.getParameter(
-				_scopeParameterName, _renderRequest);
-
-		_scopeParameterValue = scopeParameterValueOptional.orElse(null);
-
-		_searchScopePreference =
-			searchBarPortletPreferences.getSearchScopePreference();
-
-		return build();
 	}
 
 	protected Layout fetchLayoutByFriendlyURL(

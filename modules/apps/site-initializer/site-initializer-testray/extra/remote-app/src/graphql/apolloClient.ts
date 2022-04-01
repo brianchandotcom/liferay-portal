@@ -24,18 +24,18 @@ const liferayHost =
 
 const graphqlPath = process.env.REACT_APP_GRAPHQL_PATH || '/o/graphql';
 
+const headers = {
+	'x-csrf-token': Liferay.authToken,
+};
+
 const httpLink = new BatchHttpLink({
-	headers: {
-		'x-csrf-token': Liferay.authToken,
-	},
+	headers,
 	uri: `${liferayHost}${graphqlPath}`,
 });
 
 const restLink = new RestLink({
 	bodySerializers,
-	headers: {
-		'x-csrf-token': Liferay.authToken,
-	},
+	headers,
 	uri: `${liferayHost}/o/c/`,
 });
 

@@ -61,7 +61,7 @@ definition {
 		task ("Then the info button is displayed on the right") {
 			OcularAssertElementImage(
 				locator1 = "ClaySamplePortlet#DISPLAY_CONTEXT_CONTAINER",
-				value1 = "ManagementToolbar/InfoButtonAndActionsRender/InfoButtonBefore.png",
+				value1 = "management_toolbar/info_button_and_actions_render/info_button_before.png",
 				value2 = "80");
 		}
 
@@ -76,7 +76,7 @@ definition {
 
 			OcularAssertElementImage(
 				locator1 = "ClaySamplePortlet#DISPLAY_CONTEXT_CONTAINER",
-				value1 = "ManagementToolbar/InfoButtonAndActionsRender/InfoButtonAfter.png",
+				value1 = "management_toolbar/info_button_and_actions_render/info_button_after.png",
 				value2 = "80");
 		}
 

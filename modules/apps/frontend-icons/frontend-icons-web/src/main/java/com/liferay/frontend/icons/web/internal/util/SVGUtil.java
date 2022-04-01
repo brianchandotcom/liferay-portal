@@ -98,7 +98,9 @@ public class SVGUtil {
 	}
 
 	private static final String _SPRITEMAP_TMPL = StringUtil.read(
-		SVGUtil.class, "dependencies/spritemap.svg");
+		SVGUtil.class,
+		"/com/liferay/frontend/icon/admin/web/internal/util/dependencies" +
+			"/spritemap.svg");
 
 	private static final Log _log = LogFactoryUtil.getLog(SVGUtil.class);
 

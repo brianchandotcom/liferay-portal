@@ -1711,11 +1711,11 @@ public abstract class Base${schemaName}ResourceTestCase {
 																put("siteKey", <@getQuotedString unquotedString="testGraphQL${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}()" />);
 															<#else>
 																put("${javaMethodParameter.parameterName}",
-																<#if stringUtil.equals(javaMethodParameter.parameterType, "java.lang.String")>
-																	<@getQuotedString unquotedString="testGraphQL${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}()" />
-																<#else>
-																	testGraphQL${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}()
-																</#if>
+																	<#if stringUtil.equals(javaMethodParameter.parameterType, "java.lang.String")>
+																		<@getQuotedString unquotedString="testGraphQL${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}()" />
+																	<#else>
+																		testGraphQL${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}()
+																	</#if>
 																);
 															</#if>
 														</#if>
@@ -2676,23 +2676,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 	</#if>
 </#macro>
 
-<#macro getGetterParameters
-	javaMethodSignature
->
-	<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
-		<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
-			put${schemaName}.getId()
-		<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && properties?keys?seq_contains(javaMethodParameter.parameterName)>
-			put${schemaName}.get${javaMethodParameter.parameterName?cap_first}()
-		<#else>
-			<#assign missingGetterJavaMethodParametersMap = missingGetterJavaMethodParametersMap + {javaMethodParameter.parameterName: javaMethodParameter} />
-			test${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}()
-		</#if>
-
-		<#sep>, </#sep>
-	</#list>
-</#macro>
-
 <#macro getGetterParameterMethod
 	javaMethodParameter
 	javaMethodSignature
@@ -2714,6 +2697,24 @@ public abstract class Base${schemaName}ResourceTestCase {
 			javaMethodSignature=javaMethodSignature
 			testNamePrefix=testNamePrefix
 		/>
+	</#list>
+</#macro>
+
+<#macro getGetterParameters
+	javaMethodSignature
+>
+	<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
+		<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
+			put${schemaName}.getId()
+		<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && properties?keys?seq_contains(javaMethodParameter.parameterName)>
+			put${schemaName}.get${javaMethodParameter.parameterName?cap_first}()
+		<#else>
+			<#assign missingGetterJavaMethodParametersMap = missingGetterJavaMethodParametersMap + {javaMethodParameter.parameterName: javaMethodParameter} />
+
+			test${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}()
+		</#if>
+
+		<#sep>, </#sep>
 	</#list>
 </#macro>
 
@@ -2772,6 +2773,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 			${newSchemaVarNamePrefix}${schemaName}
 		<#else>
 			<#assign missingGetterJavaMethodParametersMap = missingGetterJavaMethodParametersMap + {javaMethodParameter.parameterName: javaMethodParameter} />
+
 			test${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}()
 		</#if>
 		<#sep>, </#sep>

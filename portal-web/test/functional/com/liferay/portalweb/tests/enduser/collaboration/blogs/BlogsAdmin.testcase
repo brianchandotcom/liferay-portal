@@ -48,6 +48,15 @@ definition {
 			entryTitle = "Blogs Entry Title");
 	}
 
+	@description = "This test covers LPS-67664. It ensures that a user can order blog enytries by display date."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanOrderByDisplayDate {
+
+		// TODO LPS-150858 CanOrderByDisplayDate pending implementation
+
+	}
+
 	@description = "This checks that the content for a blogs entry can be searched in admin."
 	@priority = "4"
 	@refactordone

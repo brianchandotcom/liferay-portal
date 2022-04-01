@@ -1,0 +1,27 @@
+[
+	{
+		"menuItems": [
+			{
+				"friendlyURL": "/dashboard",
+				"privateLayout": true,
+				"type": "layout"
+			}
+		],
+		"name": "Private"
+	},
+	{
+		"menuItems": [
+			{
+				"friendlyURL": "/home",
+				"privateLayout": false,
+				"type": "layout"
+			},
+			{
+				"friendlyURL": "/dashboard",
+				"privateLayout": true,
+				"type": "layout"
+			}
+		],
+		"name": "Public"
+	}
+]

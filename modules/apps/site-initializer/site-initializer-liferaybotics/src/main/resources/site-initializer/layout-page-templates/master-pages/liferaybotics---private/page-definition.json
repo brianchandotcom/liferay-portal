@@ -39,9 +39,31 @@
 									"fragmentConfig": {
 									},
 									"fragmentFields": [
-									]
+									],
+									"fragmentStyle": {
+										"hidden": true
+									}
 								},
 								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"widgetInstance": {
+										"widgetConfig": {
+											"displayDepth": "0",
+											"displayStyle": "ddmTemplate_NAVBAR-BLANK-FTL",
+											"displayStyleGroupId": "[$GROUP_ID$]",
+											"expandedLevels": "auto",
+											"rootMenuItemLevel": "0",
+											"rootMenuItemType": "absolute",
+											"siteNavigationMenuName": "Private",
+											"siteNavigationMenuType": "-1"
+										},
+										"widgetInstanceId": "nav",
+										"widgetName": "com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet"
+									}
+								},
+								"type": "Widget"
 							}
 						],
 						"type": "FragmentDropZone"

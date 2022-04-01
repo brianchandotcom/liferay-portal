@@ -1,0 +1,140 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragment": {
+						"key": "upper-header-layout"
+					},
+					"fragmentConfig": {
+					},
+					"fragmentFields": [
+					]
+				},
+				"pageElements": [
+					{
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "logo"
+									},
+									"fragmentConfig": {
+									},
+									"fragmentFields": [
+									]
+								},
+								"type": "Fragment"
+							}
+						],
+						"type": "FragmentDropZone"
+					},
+					{
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "navigation"
+									},
+									"fragmentConfig": {
+									},
+									"fragmentFields": [
+									]
+								},
+								"type": "Fragment"
+							}
+						],
+						"type": "FragmentDropZone"
+					},
+					{
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "search-button"
+									},
+									"fragmentConfig": {
+									},
+									"fragmentFields": [
+									]
+								},
+								"type": "Fragment"
+							}
+						],
+						"type": "FragmentDropZone"
+					},
+					{
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "user-bar"
+									},
+									"fragmentConfig": {
+										"enableNotificationIndicator": true,
+										"notificationCount": 0
+									},
+									"fragmentFields": [
+									]
+								},
+								"type": "Fragment"
+							}
+						],
+						"type": "FragmentDropZone"
+					}
+				],
+				"type": "Fragment"
+			},
+			{
+				"definition": {
+					"fragment": {
+						"key": "search-bar"
+					},
+					"fragmentConfig": {
+						"useCommerceSearch": false
+					},
+					"fragmentFields": [
+					]
+				},
+				"type": "Fragment"
+			},
+			{
+				"definition": {
+					"fragment": {
+						"key": "lower-header-layout"
+					},
+					"fragmentConfig": {
+					},
+					"fragmentFields": [
+					]
+				},
+				"type": "Fragment"
+			},
+			{
+				"definition": {
+					"fragmentSettings": {
+						"unallowedFragments": [
+						]
+					}
+				},
+				"type": "DropZone"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"colorSchemeName": "01",
+		"styleBook": {
+			"key": "liferaybotics",
+			"name": "Liferaybotics"
+		},
+		"themeName": "Dialect",
+		"themeSettings": {
+			"lfr-theme:regular:show-footer": "false",
+			"lfr-theme:regular:show-header": "false",
+			"lfr-theme:regular:show-header-search": "false",
+			"lfr-theme:regular:wrap-widget-page-content": "false"
+		}
+	},
+	"version": 1.1
+}

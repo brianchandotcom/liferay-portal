@@ -17,6 +17,7 @@ package com.liferay.object.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.exception.DefaultObjectViewException;
+import com.liferay.object.exception.ObjectViewColumnFieldNameException;
 import com.liferay.object.exception.ObjectViewSortColumnException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
@@ -33,6 +34,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -102,6 +104,45 @@ public class ObjectViewLocalServiceTest {
 			Assert.assertTrue(
 				message.contains("There can only be one default object view"));
 		}
+
+		try {
+			_objectViewLocalService.addObjectView(
+				TestPropsValues.getUserId(),
+				_objectDefinition.getObjectDefinitionId(), false,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				Arrays.asList(
+					_createObjectViewColumnWithNoExistedObjectFieldName()),
+				Collections.emptyList());
+		}
+		catch (ObjectViewColumnFieldNameException
+					objectViewColumnFieldNameException) {
+
+			Assert.assertEquals(
+				"There is no object field with the name: zebra",
+				objectViewColumnFieldNameException.getMessage());
+		}
+
+		try {
+			_objectViewLocalService.addObjectView(
+				TestPropsValues.getUserId(),
+				_objectDefinition.getObjectDefinitionId(), false,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				_createObjectViewColumnsWithDuplicateObjectFieldName(),
+				Collections.emptyList());
+		}
+		catch (ObjectViewColumnFieldNameException
+					objectViewColumnFieldNameException) {
+
+			Assert.assertEquals(
+				"Already exist an object view column with field name: roger",
+				objectViewColumnFieldNameException.getMessage());
+		}
+
+		_objectViewLocalService.addObjectView(
+			TestPropsValues.getUserId(),
+			_objectDefinition.getObjectDefinitionId(), false,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			_createObjectViewColumnsWithoutLabel(), Collections.emptyList());
 
 		try {
 			_objectViewLocalService.addObjectView(
@@ -187,6 +228,37 @@ public class ObjectViewLocalServiceTest {
 				objectView.getObjectViewId(), objectView.isDefaultObjectView(),
 				objectView.getNameMap(),
 				Collections.singletonList(
+					_createObjectViewColumnWithNoExistedObjectFieldName()),
+				Collections.emptyList());
+		}
+		catch (ObjectViewColumnFieldNameException
+					objectViewColumnFieldNameException) {
+
+			Assert.assertEquals(
+				"There is no object field with the name: zebra",
+				objectViewColumnFieldNameException.getMessage());
+		}
+
+		try {
+			_objectViewLocalService.updateObjectView(
+				objectView.getObjectViewId(), objectView.isDefaultObjectView(),
+				objectView.getNameMap(),
+				_createObjectViewColumnsWithDuplicateObjectFieldName(),
+				Collections.emptyList());
+		}
+		catch (ObjectViewColumnFieldNameException
+					objectViewColumnFieldNameException) {
+
+			Assert.assertEquals(
+				"Already exist an object view column with field name: roger",
+				objectViewColumnFieldNameException.getMessage());
+		}
+
+		try {
+			_objectViewLocalService.updateObjectView(
+				objectView.getObjectViewId(), objectView.isDefaultObjectView(),
+				objectView.getNameMap(),
+				Collections.singletonList(
 					_createObjectViewColumn("Jig", "jig")),
 				Collections.singletonList(
 					_createObjectViewSortColumn("jig", "desc")));
@@ -211,6 +283,26 @@ public class ObjectViewLocalServiceTest {
 				"There is no sort order of type: zulu",
 				objectViewSortColumnException.getMessage());
 		}
+
+		objectView = _objectViewLocalService.updateObjectView(
+			objectView.getObjectViewId(), objectView.isDefaultObjectView(),
+			objectView.getNameMap(), Collections.emptyList(),
+			Collections.emptyList());
+
+		objectViewColumns = objectView.getObjectViewColumns();
+
+		Assert.assertEquals(
+			objectViewColumns.toString(), 0, objectViewColumns.size());
+
+		objectViewSortColumns = objectView.getObjectViewSortColumns();
+
+		Assert.assertEquals(
+			objectViewSortColumns.toString(), 0, objectViewSortColumns.size());
+
+		_objectViewLocalService.updateObjectView(
+			objectView.getObjectViewId(), objectView.isDefaultObjectView(),
+			objectView.getNameMap(), _createObjectViewColumnsWithoutLabel(),
+			Collections.emptyList());
 
 		_deleteObjectFields();
 
@@ -269,6 +361,44 @@ public class ObjectViewLocalServiceTest {
 		objectViewColumn.setObjectFieldName(
 			_addObjectField(objectFieldLabel, objectFieldName));
 		objectViewColumn.setPriority(0);
+
+		return objectViewColumn;
+	}
+
+	private List<ObjectViewColumn>
+			_createObjectViewColumnsWithDuplicateObjectFieldName()
+		throws Exception {
+
+		ObjectViewColumn objectViewColumn1 = _createObjectViewColumn(
+			"Roger", "roger");
+
+		ObjectViewColumn objectViewColumn2 = _createObjectViewColumn(
+			RandomTestUtil.randomString(), "f" + RandomTestUtil.randomString());
+
+		objectViewColumn2.setObjectFieldName("roger");
+
+		return ListUtil.fromArray(objectViewColumn1, objectViewColumn2);
+	}
+
+	private List<ObjectViewColumn> _createObjectViewColumnsWithoutLabel()
+		throws Exception {
+
+		ObjectViewColumn objectViewColumn = _createObjectViewColumn(
+			RandomTestUtil.randomString(), "f" + RandomTestUtil.randomString());
+
+		objectViewColumn.setLabelMap(LocalizedMapUtil.getLocalizedMap(""));
+
+		return ListUtil.fromArray(objectViewColumn);
+	}
+
+	private ObjectViewColumn
+			_createObjectViewColumnWithNoExistedObjectFieldName()
+		throws Exception {
+
+		ObjectViewColumn objectViewColumn = _createObjectViewColumn(
+			RandomTestUtil.randomString(), "f" + RandomTestUtil.randomString());
+
+		objectViewColumn.setObjectFieldName("zebra");
 
 		return objectViewColumn;
 	}

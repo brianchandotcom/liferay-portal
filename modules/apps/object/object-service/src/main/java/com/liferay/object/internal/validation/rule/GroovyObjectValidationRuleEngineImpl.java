@@ -56,8 +56,8 @@ public class GroovyObjectValidationRuleEngineImpl
 	public boolean isValidScript(String script) {
 		try {
 			_scripting.eval(
-				null, Collections.emptyMap(), new HashSet<>(), "groovy",
-				script);
+				null, Collections.emptyMap(), new HashSet<>(),
+				ObjectValidationRuleConstants.ENGINE_TYPE_GROOVY, script);
 		}
 		catch (ScriptingException scriptingException) {
 			if (_log.isDebugEnabled()) {

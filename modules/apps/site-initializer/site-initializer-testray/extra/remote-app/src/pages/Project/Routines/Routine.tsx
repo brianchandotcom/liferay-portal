@@ -14,6 +14,7 @@
 
 import ClayChart from '@clayui/charts';
 import ClayIcon from '@clayui/icon';
+import {useParams} from 'react-router-dom';
 
 import Container from '../../../components/Layout/Container';
 import ListView from '../../../components/ListView/ListView';
@@ -29,6 +30,7 @@ import useRoutineActions from './useRoutineActions';
 const Routine = () => {
 	const {actionsRoutine, formModal} = useRoutineActions();
 	const {barChart, colors} = useTotalTestCases();
+	const {routineId} = useParams();
 
 	return (
 		<Container title={i18n.translate('build-history')}>
@@ -197,6 +199,7 @@ const Routine = () => {
 					navigateTo: ({id}) => `build/${id}`,
 				}}
 				transformData={(data) => data?.builds}
+				variables={{filter: `routineId eq ${routineId}`}}
 			/>
 
 			<RoutineBuildModal modal={formModal.modal} />

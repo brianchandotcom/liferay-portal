@@ -12,6 +12,8 @@
  * details.
  */
 
+import {useParams} from 'react-router-dom';
+
 import Container from '../../../components/Layout/Container';
 import ListView from '../../../components/ListView/ListView';
 import ProgressBar from '../../../components/ProgressBar';
@@ -22,13 +24,16 @@ import RoutineModal from './RoutineModal';
 import useRoutineActions from './useRoutineActions';
 
 const Routines = () => {
+	const {projectId} = useParams();
 	const {actions, formModal} = useRoutineActions();
 
 	return (
 		<Container title={i18n.translate('routines')}>
 			<ListView
 				forceRefetch={formModal.forceRefetch}
-				managementToolbarProps={{addButton: formModal.modal.open}}
+				managementToolbarProps={{
+					addButton: () => formModal.modal.open(),
+				}}
 				query={getRoutines}
 				tableProps={{
 					actions,
@@ -41,8 +46,7 @@ const Routines = () => {
 						{
 							clickable: true,
 							key: 'dateCreated',
-							render: (dateCreated) =>
-								getTimeFromNow(dateCreated),
+							render: getTimeFromNow,
 							value: i18n.translate('execution-date'),
 						},
 						{
@@ -82,9 +86,13 @@ const Routines = () => {
 					navigateTo: ({id}) => id?.toString(),
 				}}
 				transformData={(data) => data?.c?.routines}
+				variables={{filter: `projectId eq ${projectId}`}}
 			/>
 
-			<RoutineModal modal={formModal.modal} />
+			<RoutineModal
+				modal={formModal.modal}
+				projectId={Number(projectId)}
+			/>
 		</Container>
 	);
 };

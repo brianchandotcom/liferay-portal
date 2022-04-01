@@ -12,7 +12,6 @@
  * details.
  */
 
-import {useMutation} from '@apollo/client';
 import ClayButton from '@clayui/button';
 import {ClayCheckbox} from '@clayui/form';
 import React, {useEffect, useState} from 'react';
@@ -31,6 +30,7 @@ const routineFormData = {
 
 type RoutineModalProps = {
 	modal: FormModalOptions;
+	projectId: number;
 };
 
 type RoutineFormData = typeof routineFormData;
@@ -64,11 +64,9 @@ const RoutineForm: React.FC<RoutineFormProps> = ({form, onChange}) => {
 };
 
 const RoutineModal: React.FC<RoutineModalProps> = ({
-	modal: {modalState, observer, onChange, onClose, onError, onSave, visible},
+	modal: {modalState, observer, onChange, onClose, onSubmit, visible},
+	projectId,
 }) => {
-	const [onCreateRoutine] = useMutation(CreateRoutine);
-	const [onUpdateRoutine] = useMutation(UpdateRoutine);
-
 	const [form, setForm] = useState<RoutineFormData>(routineFormData);
 
 	useEffect(() => {
@@ -77,29 +75,19 @@ const RoutineModal: React.FC<RoutineModalProps> = ({
 		}
 	}, [visible, modalState]);
 
-	const onSubmit = async () => {
-		const variables: any = {
-			Routine: {
+	const _onSubmit = () => {
+		onSubmit(
+			{
 				autoanalyze: form.autoanalyze,
+				id: form.id,
 				name: form.name,
+				projectId,
 			},
-		};
-
-		try {
-			if (form.id) {
-				variables.routineId = form.id;
-
-				await onUpdateRoutine({variables});
+			{
+				createMutation: CreateRoutine,
+				updateMutation: UpdateRoutine,
 			}
-			else {
-				await onCreateRoutine({variables});
-			}
-
-			onSave();
-		}
-		catch (error) {
-			onError(error);
-		}
+		);
 	};
 
 	return (
@@ -110,7 +98,7 @@ const RoutineModal: React.FC<RoutineModalProps> = ({
 						{i18n.translate('close')}
 					</ClayButton>
 
-					<ClayButton displayType="primary" onClick={onSubmit}>
+					<ClayButton displayType="primary" onClick={_onSubmit}>
 						{i18n.translate('save')}
 					</ClayButton>
 				</ClayButton.Group>

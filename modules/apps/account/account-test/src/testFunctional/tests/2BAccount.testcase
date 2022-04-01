@@ -1033,12 +1033,12 @@ definition {
 			JSONAccountEntry.addAccountEntry(
 				accountEntryName = "Test Account Non-Member",
 				accountEntryType = "Business");
-		}
 
-		task ("And given a user is added to one of the accounts") {
-			User.assignAccountCP(
-				accountName = "Test Account Member",
-				userScreenName = "usersn");
+			task ("And given a user is added to one of the accounts") {
+				Accounts.assignUsers(
+					accountName = "Test Account Member",
+					assigneeName = "userfn userln");
+			}
 		}
 
 		task ("When that user logs in and views the account page") {

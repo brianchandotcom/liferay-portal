@@ -80,8 +80,8 @@ public class SearchBarPortletDisplayContextBuilder {
 		PortletSharedSearchResponse portletSharedSearchResponse =
 			portletSharedSearchRequest.search(_renderRequest);
 
-		_themeDisplay = portletSharedSearchResponse.getThemeDisplay(
-			_renderRequest);
+		_themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		_keywordsParameterName = _getKeywordsParameterName(
 			portletPreferencesLookup,

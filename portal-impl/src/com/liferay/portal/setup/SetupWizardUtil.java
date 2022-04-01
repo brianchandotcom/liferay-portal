@@ -149,21 +149,8 @@ public class SetupWizardUtil {
 		CompanyLocalServiceUtil.updateDisplay(
 			PortalInstances.getDefaultCompanyId(), languageId, timeZoneId);
 
-		HttpSession httpSession = httpServletRequest.getSession();
-
-		httpSession.setAttribute(WebKeys.LOCALE, locale);
-		httpSession.setAttribute(
-			WebKeys.SETUP_WIZARD_DEFAULT_LOCALE, languageId);
-
-		LanguageUtil.updateCookie(
-			httpServletRequest, httpServletResponse, locale);
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		themeDisplay.setLanguageId(languageId);
-		themeDisplay.setLocale(locale);
+		_updateLanguage(
+			httpServletRequest, httpServletResponse, languageId, locale);
 	}
 
 	public static void updateSetup(
@@ -185,12 +172,11 @@ public class SetupWizardUtil {
 
 		_processOtherProperties(httpServletRequest, unicodeProperties);
 
-		updateLanguage(httpServletRequest, httpServletResponse);
-
 		unicodeProperties.put(
 			PropsKeys.SETUP_WIZARD_ENABLED, Boolean.FALSE.toString());
 
-		_updateCompany(httpServletRequest, unicodeProperties);
+		_updateCompany(
+			httpServletRequest, httpServletResponse, unicodeProperties);
 
 		_updateAdminUser(
 			httpServletRequest, httpServletResponse, unicodeProperties);
@@ -408,6 +394,7 @@ public class SetupWizardUtil {
 
 	private static void _updateCompany(
 			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse,
 			UnicodeProperties unicodeProperties)
 		throws Exception {
 
@@ -416,6 +403,10 @@ public class SetupWizardUtil {
 
 		String languageId = ParamUtil.getString(
 			httpServletRequest, "companyLocale", getDefaultLanguageId());
+
+		_updateLanguage(
+			httpServletRequest, httpServletResponse, languageId,
+			LocaleUtil.fromLanguageId(languageId));
 
 		PropsValues.COMPANY_DEFAULT_LOCALE = languageId;
 
@@ -467,6 +458,28 @@ public class SetupWizardUtil {
 				WebKeys.THEME_DISPLAY);
 
 		themeDisplay.setCompany(CompanyLocalServiceUtil.updateCompany(company));
+	}
+
+	private static void _updateLanguage(
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse, String languageId,
+		Locale locale) {
+
+		HttpSession httpSession = httpServletRequest.getSession();
+
+		httpSession.setAttribute(WebKeys.LOCALE, locale);
+		httpSession.setAttribute(
+			WebKeys.SETUP_WIZARD_DEFAULT_LOCALE, languageId);
+
+		LanguageUtil.updateCookie(
+			httpServletRequest, httpServletResponse, locale);
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		themeDisplay.setLanguageId(languageId);
+		themeDisplay.setLocale(locale);
 	}
 
 	private static boolean _writePropertiesFile(

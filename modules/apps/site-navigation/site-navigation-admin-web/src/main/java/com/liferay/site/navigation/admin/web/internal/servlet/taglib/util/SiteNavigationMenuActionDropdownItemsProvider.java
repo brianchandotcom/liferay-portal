@@ -261,7 +261,6 @@ public class SiteNavigationMenuActionDropdownItemsProvider {
 					"siteNavigationMenuId",
 					_siteNavigationMenu.getSiteNavigationMenuId()
 				).buildString());
-			dropdownItem.setIcon("textbox");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "rename"));
 		};

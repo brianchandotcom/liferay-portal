@@ -122,21 +122,38 @@ definition {
 	}
 
 	@description = "Verify that the user is able to click on the Current Node link and the node will be in evidence"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanClickCurrentNodeLink {
+		Workflow.openWorkflowListView();
 
-		// TODO LRQA-72395 CanClickCurrentNodeLink pending implementation
+		Navigator.gotoNavItem(navItem = "Configuration");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry",
+			entryTitle = "Blogs Entry Title");
+
+		WorkflowMetrics.goToDashboardAllItemsWithFilter(
+			workflowFilterOption = "PENDING",
+			workflowMetricsTab = "DASHBOARD",
+			workflowProcess = "Single Approver");
+
+		WorkflowMetricsAllItemsList.viewDetailsModal();
+
+		WorkflowMetricsAllItemsList.goToTrackWorkflowlink();
+
+		WorkflowMetrics.goToCurrentNode(currentNode = "Review");
+
 
 	}
 
 	@description = "Verify that the users are able to identify the current node of the instance in the workflow"
 	@priority = "4"
 	test CanIdentifyCurrentNode {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -155,21 +172,59 @@ definition {
 
 		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
 
-		WorkflowMetrics.gotoKebabMenu3Options(dropdownItem = "Track Workflow");
+		WorkflowMetricsAllItemsList.viewDetailsModal();
 
-		WorkflowMetrics.viewCurrentNode(currentnode = "Review");
+		WorkflowMetricsAllItemsList.goToTrackWorkflowlink();
 
-		WorkflowMetrics.viewNodeCircleIcon(currentNode = "Review");
+		WorkflowMetrics.viewCurrentNode(currentNode = "Review");
 
-		WorkflowMetrics.notViewNodeCircleIcon(currentNode = "Update");
+		WorkflowMetrics.viewCurrentNodeCircleIcon(currentNode = "Review");
+
+		WorkflowMetrics.viewCurrentNodeCircleNotPresent(currentNode = "Created");
+
+		WorkflowMetrics.viewCurrentNodeCircleNotPresent(currentNode = "Update");
+
+		WorkflowMetrics.viewCurrentNodeCircleNotPresent(currentNode = "Approved");
+
 	}
 
 	@description = "Verify that the users are able to identify the current nodes of the instance in the workflow, when there is multiple statuses"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanIdentifyMultipleCurrentNode {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "WorkflowMetricsAllItemsList#CanIdentifyMultipleCurrentNode";
 
-		// TODO LRQA-72394 CanIdentifyMultipleCurrentNode pending implementation
+		Workflow.openWorkflowListView();
+
+		Workflow.uploadDefinition(
+			workflowDefinitionFile = "multi-task-process-workflow-definition.xml",
+			workflowDefinitionTitle = "Multi Task Process");
+
+		Navigator.gotoNavItem(navItem = "Configuration");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Multi Task Process",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry",
+			entryTitle = "Blogs Entry Title");
+
+		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Multi Task Process");
+
+		WorkflowMetricsAllItemsList.viewDetailsModal();
+
+		WorkflowMetricsAllItemsList.goToTrackWorkflowlink();
+
+		WorkflowMetrics.viewCurrentNode(currentNode = "task1, task2, task3");
+
+		WorkflowMetrics.viewCurrentNodeCircleIcon(currentNode = "task1");
+
+		WorkflowMetrics.viewCurrentNodeCircleIcon(currentNode = "task2");
+
+		WorkflowMetrics.viewCurrentNodeCircleIcon(currentNode = "task3");
+
+		WorkflowMetrics.viewCurrentNodeCircleNotPresent(currentNode = "Join");
 
 	}
 
@@ -347,50 +402,9 @@ definition {
 	}
 
 	@description = "Verify that the user is able to see the label of the transitions of a specific node while hovering it"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanSeeTransitionsLabelOnHoverNode {
-
-		// TODO LRQA-72390 CanSeeTransitionsLabelOnHoverNode pending implementation
-
-	}
-
-	@description = "Verify that there is a Track Approval link on the instance detail modal"
-	@priority = "5"
-	test CanSelectTrackApprovalLinkOnDetailModal {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
-
-		Navigator.gotoNavItem(navItem = "Configuration");
-
-		Workflow.configureWorkflow(
-			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Blogs Entry");
-
-		JSONBlog.addEntry(
-			entryContent = "Blogs Entry",
-			entryTitle = "Blogs Entry Title");
-
-		WorkflowMetrics.goToDashboardAllItemsWithFilter(
-			workflowFilterOption = "PENDING",
-			workflowMetricsTab = "DASHBOARD",
-			workflowProcess = "Single Approver");
-
-		WorkflowMetricsAllItemsList.viewDetailsModal();
-
-		WorkflowMetricsAllItemsList.viewTrackWorkflowLinkProcessStatus();
-	}
-
-	@description = "Verify that there is a Track Approval option on the kebab menu"
-	@priority = "4"
-	test CanSelectTrackApprovalOnKebabMenu {
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -409,7 +423,79 @@ definition {
 
 		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
 
-		WorkflowMetrics.viewKebabMenu3OptionsIsAvailable(dropdownItem = "Track Workflow");
+		WorkflowMetricsAllItemsList.viewDetailsModal();
+
+		WorkflowMetricsAllItemsList.goToTrackWorkflowlink();
+
+		WorkflowMetrics.viewTrackWorkflowModal();
+
+		WorkflowMetrics.viewNameHoverTransition(
+			nameOverTransition = "REVIEW",
+			nodesTrackWorkflow = "Created");
+
+		WorkflowMetrics.viewNameHoverTransition(
+			nameOverTransition = "APPROVE",
+			nodesTrackWorkflow = "Review");
+
+		WorkflowMetrics.viewNameHoverTransition(
+			nameOverTransition = "REJECT",
+			nodesTrackWorkflow = "Review");
+	}
+
+	@description = "Verify that there is a Track Approval link on the instance detail modal"
+	@priority = "5"
+	test CanSelectTrackApprovalLinkOnDetailModal {
+		Workflow.openWorkflowListView();
+
+		Navigator.gotoNavItem(navItem = "Configuration");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry",
+			entryTitle = "Blogs Entry Title");
+
+		WorkflowMetrics.goToDashboardAllItemsWithFilter(
+			workflowFilterOption = "PENDING",
+			workflowMetricsTab = "DASHBOARD",
+			workflowProcess = "Single Approver");
+
+		WorkflowMetricsAllItemsList.viewDetailsModal();
+
+		WorkflowMetricsAllItemsList.viewTrackWorkflowLink();
+
+		WorkflowMetricsAllItemsList.goToTrackWorkflowlink();
+	}
+
+	@description = "Verify that there is a Track Approval option on the kebab menu"
+	@priority = "4"
+	test CanSelectTrackApprovalOnKebabMenu {
+
+		Workflow.openWorkflowListView();
+
+		Navigator.gotoNavItem(navItem = "Configuration");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Test Content",
+			entryTitle = "Test Blog");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Metrics");
+
+		WorkflowMetrics.goToDashboardAllItemsWithFilter(
+			workflowFilterOption = "PENDING",
+			workflowMetricsTab = "DASHBOARD",
+			workflowProcess = "Single Approver");
+
+		WorkflowMetrics.viewKebabMenuOptionsIsAvailable(dropdownItem = "Track Workflow");
 	}
 
 	@description = "LPS-92053 - Verify that, at the items table, users should be able to click on process ID column and open a modal for the respective item details"
@@ -840,11 +926,7 @@ definition {
 	@description = "Verify that the component displays the entire workflow that the instance is in"
 	@priority = "5"
 	test DisplaysEntireWorkflow {
-
-		 ApplicationsMenu.gotoPortlet(
-            category = "Workflow",
-            panel = "Applications",
-            portlet = "Process Builder");
+		 Workflow.openWorkflowListView();
 
         Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -861,14 +943,16 @@ definition {
             panel = "Applications",
             portlet = "Metrics");
 
-        WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
+       WorkflowMetrics.goToDashboardAllItemsWithFilter(
+			workflowFilterOption = "PENDING",
+			workflowMetricsTab = "DASHBOARD",
+			workflowProcess = "Single Approver");
 
-        WorkflowMetrics.gotoKebabMenu3Options(dropdownItem = "Track Workflow");
+		WorkflowMetricsAllItemsList.viewDetailsModal();
 
-		WorkflowMetrics.viewTrackWorkflowModal();
+		WorkflowMetricsAllItemsList.goToTrackWorkflowlink();
 
-        WorkflowMetrics.viewNodes();
-
+		WorkflowMetricsAllItemsList.viewNodesDisplayed(nodesTrackWorkflow = "Created,Review,Update,Approved");
 
 	}
 
@@ -2580,10 +2664,7 @@ definition {
 	@description = "Verify that when the user make changes in the Workflow, the Track Approval displays the correct version"
 	@priority = "4"
 	test TrackApprovalDisplayCorrectVersionAfterChange {
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -2602,21 +2683,16 @@ definition {
 
 		WorkflowMetricsAllItemsList.viewDetailsModal();
 
-		WorkflowMetricsAllItemsList.gotoTrackWorkflowlink();
+		WorkflowMetricsAllItemsList.goToTrackWorkflowlink();
 
 		WorkflowMetricsAllItemsList.viewNodesDisplayed(nodesTrackWorkflow = "Created,Review,Update,Approved");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		Workflow.openWorkflowListView();
 
-		WorkflowMetricsAllItemsList.selectSingleApproverWorkflow(
-			key_workflowDefinitionTitle = "Single Approver",
-			menuItem = "Edit");
+		Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
 
 		WorkflowMetricsAllItemsList.selectAndChangeNodeName(
-			key_text = "Update",
+			update = "true",
 			nodeName = "Review changed",
 			nodeNodeLabel = "review");
 
@@ -2630,19 +2706,42 @@ definition {
 			workflowMetricsTab = "DASHBOARD",
 			workflowProcess = "Single Approver");
 
-		WorkflowMetricsAllItemsList.selectWorkflowInstanceId();
+		WorkflowMetricsAllItemsList.viewDetailsModal();
 
-		WorkflowMetricsAllItemsList.gotoTrackWorkflowlink();
+		WorkflowMetricsAllItemsList.goToTrackWorkflowlink();
 
 		WorkflowMetricsAllItemsList.viewNodesDisplayed(nodesTrackWorkflow = "Created,Review changed,Update,Approved");
 	}
 
 	@description = "Verify that when the user clicks the link in the detail modal, the Workflow in use is displayed"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test TrackApprovalDisplayWorkflowInUse {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "WorkflowMetricsAllItemsList#TrackApprovalDisplayWorkflowInUse";
 
-		// TODO LRQA-72397 TrackApprovalDisplayWorkflowInUse pending implementation
+		Workflow.openWorkflowListView();
+
+		Workflow.uploadDefinition(
+			workflowDefinitionFile = "multi-task-process-workflow-definition.xml",
+			workflowDefinitionTitle = "Multi Task Process");
+
+		Navigator.gotoNavItem(navItem = "Configuration");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Multi Task Process",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry",
+			entryTitle = "Blogs Entry Title");
+
+		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Multi Task Process");
+
+		WorkflowMetricsAllItemsList.viewDetailsModal();
+
+		WorkflowMetricsAllItemsList.goToTrackWorkflowlink();
+
+		WorkflowMetricsAllItemsList.viewNodesDisplayed(nodesTrackWorkflow = "Start,task1,task2,task3,End");
 
 	}
 

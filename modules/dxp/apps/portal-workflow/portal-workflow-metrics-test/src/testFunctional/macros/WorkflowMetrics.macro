@@ -887,24 +887,6 @@ definition {
 		Click(locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_HEADER");
 	}
 
-	macro gotoKebabMenu3Options {
-		Click(locator1 = "Icon#SVG_ELLIPSIS");
-
-		var dropdownItem = "${dropdownItem}";
-
-		if ("${dropdownItem}" == "Reassign Task") {
-			Click(locator1 = "WorkflowAllItems#REASSIGN_TASK_DROPDOWN");
-		}
-
-		if ("${dropdownItem}" == "Update Due Date") {
-			Click(locator1 = "WorkflowAllItems#UPDATE_DUE_DATE_DROPDOWN");
-		}
-
-		if ("${dropdownItem}" == "Track Workflow") {
-			Click(locator1 = "WorkflowAllItems#TRACK_WORKFLOW_DROPDOWN");
-		}
-	}
-
 	macro goToReassignSelectTask {
 		Click(
 			locator1 = "WorkflowAllItems#KEBAB_DROPDOWN",
@@ -995,8 +977,10 @@ definition {
 		Click(locator1 = "WorkflowMetricsSLA#METRICS_SLA_SETTINGS");
 	}
 
-	macro notViewNodeCircleIcon {
-		AssertElementNotPresent(locator1 = "WorkflowAllItems#NODE_CIRCLE_ICON");
+	macro viewCurrentNodeCircleNotPresent {
+		AssertElementNotPresent(
+			key_currentNode = "${currentNode}",
+			locator1 = "WorkflowAllItems#CURRENT_NODE_CIRCLE_ICON");
 	}
 
 	macro searchForAssigneeName {
@@ -1607,7 +1591,18 @@ definition {
 	macro viewCurrentNode {
 		AssertElementPresent(
 			locator1 = "WorkflowAllItems#TRACK_APPROVAL_CURRENT_NODE",
-			value1 = "${currentnode}");
+			value1 = "${currentNode}");
+	}
+
+	macro goToCurrentNode {
+		Click(
+			locator1 = "WorkflowAllItems#TRACK_APPROVAL_CURRENT_NODE_LINK",
+			value1 = "${currentNode}");
+
+		AssertVisible(
+			key_currentNode = "${currentNode}",
+			locator1 = "WorkflowAllItems#CURRENT_NODE_CIRCLE_ICON");
+
 	}
 
 	macro viewDateRangeErrorMessage {
@@ -1662,14 +1657,22 @@ definition {
 		if ("${dropdownItem}" == "Update Due Date") {
 			AssertElementPresent(locator1 = "WorkflowAllItems#UPDATE_DUE_DATE_DROPDOWN");
 		}
+
+		if ("${dropdownItem}" == "Track Workflow") {
+			AssertElementPresent(
+				key_menuOption = "${dropdownItem}",
+				locator1 = "WorkflowAllItems#KEBAB_MENU_OPTIONS");
+		}
 	}
 
 	macro viewKebabMenuOptionsIsNotAvailable {
 		AssertElementNotPresent(locator1 = "WorkflowAllItems#UPDATE_DUE_DATE_DROPDOWN");
 	}
 
-	macro viewNodeCircleIcon {
-		AssertElementPresent(locator1 = "WorkflowAllItems#NODE_CIRCLE_ICON");
+	macro viewCurrentNodeCircleIcon {
+		AssertElementPresent(
+			key_currentNode = "${currentNode}",
+			locator1 = "WorkflowAllItems#CURRENT_NODE_CIRCLE_ICON");
 	}
 
 	macro viewPerformanceByAssignee {
@@ -1927,34 +1930,21 @@ definition {
 		}
 	}
 
-	macro viewNodes {
-		AssertElementPresent(
-			locator1 = "WorkflowAllItems#TRACK_APPROVAL_NODE",
-			value1 = "${node}");
-	}
-
-	macro gotoKebabMenu3Options {
-		Click(locator1 = "Icon#SVG_ELLIPSIS");
-		var dropdownItem = "${dropdownItem}";
-		if ("${dropdownItem}" == "Reassign Task") {
-			Click(locator1 = "WorkflowAllItems#REASSIGN_TASK_DROPDOWN");
-		}
-		if ("${dropdownItem}" == "Update Due Date") {
-			Click(locator1 = "WorkflowAllItems#UPDATE_DUE_DATE_DROPDOWN");
-		}
-		if ("${dropdownItem}" == "Track Workflow") {
-			Click(locator1 = "WorkflowAllItems#TRACK_WORKFLOW_DROPDOWN");
-		}
-	}
-
 	macro viewTrackWorkflowModal {
-
 		SelectFrame(locator1 = "WorkflowAllItems#TRACK_APPROVAL_BODY");
 	
 		AssertElementPresent(locator1 = "WorkflowAllItems#TRACK_APPROVAL_BODY");
 
 	}
 
-	
+	macro viewNameHoverTransition {
+		SelectFrame(locator1 = "WorkflowAllItems#TRACK_APPROVAL_BODY");
+
+		MouseOver(
+			locator1 = "WorkflowMetricsAllItemsList#NODES_MODAL_TRACK_WORKFLOW",
+			nodesTrackWorkflow = "${nodesTrackWorkflow}");
+
+		AssertElementPresent(locator1 = "WorkflowAllItems#TRANSITION_NAME_HOVER");
+	}
 
 }

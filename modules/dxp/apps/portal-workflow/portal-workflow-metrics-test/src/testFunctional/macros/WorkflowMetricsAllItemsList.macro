@@ -46,8 +46,8 @@ definition {
 			locator1 = "WorkflowAllItems#TOOLTIP_MESSAGE");
 	}
 
-	macro gotoTrackWorkflowlink {
-		Click(locator1 = "WorkflowMetricsAllItemsList#SELECT_TRACK_WORKFLOW_LINK_PROCESS_STATUS");
+	macro goToTrackWorkflowlink {
+		Click(locator1 = "WorkflowMetricsAllItemsList#TRACK_WORKFLOW_LINK");
 	}
 
 	macro orderByCreationDateAsc {
@@ -61,9 +61,9 @@ definition {
 
 		KaleoDesigner.editNodeName(nodeName = "${nodeName}");
 
-		Click.mouseDownMouseUp(
-			key_text = "${key_text}",
-			locator1 = "Button#ANY");
+		if (isSet(update)) {
+			Button.click(button = "Update");
+		}
 	}
 
 	macro selectSingleApproverWorkflow {
@@ -72,10 +72,6 @@ definition {
 			locator1 = "WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS");
 
 		MenuItem.clickNoError(menuItem = "${menuItem}");
-	}
-
-	macro selectWorkflowInstanceId {
-		Click(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
 	}
 
 	macro viewDetailsModal {
@@ -92,10 +88,8 @@ definition {
 		}
 	}
 
-	macro viewTrackWorkflowLinkProcessStatus {
-		AssertTextPresent(
-			locator1 = "WorkflowMetricsAllItemsList#VIEW_TRACK_WORKFLOW_LINK_PROCESS_STATUS",
-			value1 = "Track Workflow");
+	macro viewTrackWorkflowLink {
+		AssertElementPresent(locator1 = "WorkflowMetricsAllItemsList#TRACK_WORKFLOW_LINK");
 	}
 
 }

@@ -105,8 +105,8 @@ extension named `poshiRunnerResources`:
 
 Property Name | Type | Default Value | Description
 ------------- | ---- | ------------- | -----------
-`artifactAppendix` | `String` |  | For creating a Poshi resource jar. The appendix for the generated Poshi resource jar (used for the group ID)
-`artifactVersion` | `String` |  | For creating a Poshi resource jar. The version for the generated Poshi resource jar (used for the artifact ID)
+`artifactAppendix` | `String` | | For creating a Poshi resource jar. The appendix for the generated Poshi resource jar (used for the group ID)
+`artifactVersion` | `String` | | For creating a Poshi resource jar. The version for the generated Poshi resource jar (used for the artifact ID)
 `baseName` | `String` | `default` | For creating a Poshi resource jar. The base directory name for the Poshi files in the Poshi resource jar.
 `dirs` | Set<String> | | For creating a Poshi resource jar. The directories to include as subdirectories of `baseName` in teh Poshi resource jar.
 `version` | `String` | `latest.release` | For using a Poshi resource jar. The version of a Poshi resource jar to be used.

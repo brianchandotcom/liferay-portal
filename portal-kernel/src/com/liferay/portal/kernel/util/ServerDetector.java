@@ -22,37 +22,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
  */
 public class ServerDetector {
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String GLASSFISH_ID = "glassfish";
-
 	public static final String JBOSS_ID = "jboss";
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String JETTY_ID = "jetty";
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String JONAS_ID = "jonas";
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String OC4J_ID = "oc4j";
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String RESIN_ID = "resin";
 
 	public static final String SYSTEM_PROPERTY_KEY_SERVER_DETECTOR_SERVER_ID =
 		"server.detector.server.id";
@@ -69,68 +39,8 @@ public class ServerDetector {
 		return _serverType.getLowerCaseName();
 	}
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), with no direct replacement
-	 */
-	@Deprecated
-	public static boolean isGlassfish() {
-		if (_serverType == ServerType.GLASSFISH) {
-			return true;
-		}
-
-		return false;
-	}
-
 	public static boolean isJBoss() {
 		if (_serverType == ServerType.JBOSS) {
-			return true;
-		}
-
-		return false;
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), with no direct replacement
-	 */
-	@Deprecated
-	public static boolean isJetty() {
-		if (_serverType == ServerType.JETTY) {
-			return true;
-		}
-
-		return false;
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), with no direct replacement
-	 */
-	@Deprecated
-	public static boolean isJOnAS() {
-		if (_serverType == ServerType.JONAS) {
-			return true;
-		}
-
-		return false;
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), with no direct replacement
-	 */
-	@Deprecated
-	public static boolean isOC4J() {
-		if (_serverType == ServerType.OC4J) {
-			return true;
-		}
-
-		return false;
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), with no direct replacement
-	 */
-	@Deprecated
-	public static boolean isResin() {
-		if (_serverType == ServerType.RESIN) {
 			return true;
 		}
 

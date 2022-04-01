@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.web.internal.display.context.SearchScope;
+import com.liferay.portal.search.web.internal.display.context.SearchScopePreference;
 import com.liferay.portal.search.web.internal.portlet.preferences.PortletPreferencesLookup;
 import com.liferay.portal.search.web.internal.search.bar.portlet.SearchBarPortletPreferences;
 import com.liferay.portal.search.web.internal.search.bar.portlet.configuration.SearchBarPortletInstanceConfiguration;
@@ -220,12 +221,16 @@ public class SearchBarPortletDisplayContextFactoryTest {
 			searchBarPortletDisplayContextFactory =
 				_createSearchBarPortletDisplayContextFactory(null);
 
-		searchBarPortletDisplayContextFactory.setScopeParameterValue(
-			Optional.of(SearchScope.EVERYTHING.getParameterString()));
+		SearchBarPortletDisplayContext searchBarPortletDisplayContext =
+			searchBarPortletDisplayContextFactory.create(
+				_portletPreferencesLookup, _portletSharedSearchRequest,
+				_searchBarPrecedenceHelper);
 
 		Assert.assertEquals(
 			SearchScope.EVERYTHING,
-			searchBarPortletDisplayContextFactory.getSearchScope());
+			searchBarPortletDisplayContextFactory.getSearchScope(
+				SearchScopePreference.THIS_SITE,
+				searchBarPortletDisplayContext.getScopeParameterValue()));
 	}
 
 	protected HttpServletRequest getHttpServletRequest() {
@@ -328,7 +333,7 @@ public class SearchBarPortletDisplayContextFactoryTest {
 			portletSharedSearchResponse.getParameter(
 				Mockito.anyObject(), Mockito.anyObject())
 		).thenReturn(
-			Optional.empty()
+			Optional.of(SearchScope.EVERYTHING.getParameterString())
 		);
 
 		SearchResponse searchResponse = Mockito.mock(SearchResponse.class);

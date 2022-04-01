@@ -49,9 +49,7 @@ export function SpacingBoxField({disabled, field, onValueSelect, value}) {
 SpacingBoxField.propTypes = {
 	className: PropTypes.string,
 	disabled: PropTypes.bool,
-	field: PropTypes.shape({
-		ConfigurationFieldPropTypes,
-	}),
+	field: PropTypes.shape(ConfigurationFieldPropTypes),
 	onValueSelect: PropTypes.func.isRequired,
 	value: PropTypes.object,
 };

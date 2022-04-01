@@ -159,7 +159,8 @@ public class SearchBarPortletDisplayContextBuilder {
 		searchBarPortletDisplayContext.setSearchBarPortletInstanceConfiguration(
 			searchBarPortletInstanceConfiguration);
 
-		_setSelectedSearchScope(searchBarPortletDisplayContext);
+		_setSelectedSearchScope(
+			searchBarPortletDisplayContext, _scopeParameterValue);
 
 		if (Validator.isBlank(destination)) {
 			searchBarPortletDisplayContext.setSearchURL(
@@ -262,9 +263,9 @@ public class SearchBarPortletDisplayContextBuilder {
 		}
 	}
 
-	protected SearchScope getSearchScope() {
-		if (_scopeParameterValue != null) {
-			return SearchScope.getSearchScope(_scopeParameterValue);
+	protected SearchScope getSearchScope(String scopeParameterValue) {
+		if (scopeParameterValue != null) {
+			return SearchScope.getSearchScope(scopeParameterValue);
 		}
 
 		SearchScope searchScope = _searchScopePreference.getSearchScope();
@@ -379,9 +380,10 @@ public class SearchBarPortletDisplayContextBuilder {
 	}
 
 	private void _setSelectedSearchScope(
-		SearchBarPortletDisplayContext searchBarPortletDisplayContext) {
+		SearchBarPortletDisplayContext searchBarPortletDisplayContext,
+		String scopeParameterValue) {
 
-		SearchScope searchScope = getSearchScope();
+		SearchScope searchScope = getSearchScope(scopeParameterValue);
 
 		if (searchScope == SearchScope.EVERYTHING) {
 			searchBarPortletDisplayContext.setSelectedEverythingSearchScope(

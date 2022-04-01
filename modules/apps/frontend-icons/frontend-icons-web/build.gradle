@@ -1,27 +1,5 @@
 import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
-task buildClayIcons(type: Copy)
-
-buildClayIcons {
-	File destinationDir = file("src/main/resources/META-INF/resources/images");
-
-	dependsOn npmInstall
-
-	doFirst {
-		delete destinationDir
-	}
-
-	eachFile new StripPathSegmentsAction(5)
-	from npmInstall.nodeModulesDir
-	include "@clayui/css/lib/images/icons/icons.svg"
-	includeEmptyDirs = false
-	into destinationDir
-}
-
-classes {
-	dependsOn buildClayIcons
-}
-
 dependencies {
 	compileOnly group: "com.liferay", name: "biz.aQute.bnd.annotation", version: "4.2.0.LIFERAY-PATCHED-2"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"

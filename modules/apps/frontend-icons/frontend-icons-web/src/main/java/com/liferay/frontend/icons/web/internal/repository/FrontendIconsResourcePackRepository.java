@@ -18,7 +18,6 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.frontend.icons.web.internal.model.FrontendIconsResource;
 import com.liferay.frontend.icons.web.internal.model.FrontendIconsResourcePack;
-import com.liferay.frontend.icons.web.internal.util.ClayFrontendIconsResourcePackUtil;
 import com.liferay.frontend.icons.web.internal.util.SVGUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -36,7 +35,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -92,15 +90,6 @@ public class FrontendIconsResourcePackRepository {
 	public FrontendIconsResourcePack getFrontendIconsResourcePack(
 		long companyId, String name) {
 
-		if (Objects.equals(
-				name,
-				ClayFrontendIconsResourcePackUtil.
-					CLAY_FRONTEND_ICONS_PACK_NAME)) {
-
-			return ClayFrontendIconsResourcePackUtil.
-				getFrontendIconResourcePack();
-		}
-
 		try {
 			Company company = _companyLocalService.getCompany(companyId);
 
@@ -140,9 +129,6 @@ public class FrontendIconsResourcePackRepository {
 
 		List<FrontendIconsResourcePack> frontendIconsResourcePacks =
 			new ArrayList<>();
-
-		frontendIconsResourcePacks.add(
-			ClayFrontendIconsResourcePackUtil.getFrontendIconResourcePack());
 
 		Company company = _companyLocalService.getCompany(companyId);
 

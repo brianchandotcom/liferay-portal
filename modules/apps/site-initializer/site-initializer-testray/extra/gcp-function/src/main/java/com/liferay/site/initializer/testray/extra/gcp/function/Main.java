@@ -289,16 +289,22 @@ public class Main {
 			return;
 		}
 
-		long testrayIssueId = _getObjectEntryId(testrayIssueName, "issues");
-
 		_postObjectEntry(
 			HashMapBuilder.<String, Object>put(
 				"r_caseResultToCaseResultsIssues_c_caseResultId",
 				testrayCaseResultId
 			).put(
 				"r_issueToCaseResultsIssues_c_issueId",
-				testrayIssueId > 0 ? testrayIssueId :
-					_postObjectEntry(null, testrayIssueName, "issues")
+				() -> {
+					long testrayIssueId = _getObjectEntryId(
+						testrayIssueName, "issues");
+
+					if (testrayIssueId > 0) {
+						return testrayIssueId;
+					}
+
+					return _postObjectEntry(null, testrayIssueName, "issues");
+				}
 			).build(),
 			null, "caseresultsissueses");
 	}

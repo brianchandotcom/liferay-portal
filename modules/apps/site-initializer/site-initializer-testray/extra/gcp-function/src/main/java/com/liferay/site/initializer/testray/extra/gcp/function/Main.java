@@ -201,8 +201,8 @@ public class Main {
 
 		long testrayCaseId = _postObjectEntry(
 			HashMapBuilder.<String, Object>put(
-				"caseNumber", _getObjectEntryCount(
-					"projectId", testrayProjectId, "cases")
+				"caseNumber",
+				_increment("projectId eq " + testrayProjectId, "cases")
 			).put(
 				"description",
 				testrayCasePropertiesMap.get("testray.testcase.description")
@@ -289,8 +289,7 @@ public class Main {
 			return;
 		}
 
-		long testrayIssueId = _getObjectEntryId(
-			testrayIssueName, "issues");
+		long testrayIssueId = _getObjectEntryId(testrayIssueName, "issues");
 
 		_postObjectEntry(
 			HashMapBuilder.<String, Object>put(
@@ -302,7 +301,6 @@ public class Main {
 					_postObjectEntry(null, testrayIssueName, "issues")
 			).build(),
 			null, "caseresultsissueses");
-
 	}
 
 	private void _addTestrayTask(long testrayBuildId, String testrayTaskName)
@@ -367,24 +365,6 @@ public class Main {
 		}
 
 		return attributeNode.getTextContent();
-	}
-
-	private long _getObjectEntryCount(
-		String relationshipName, long relationshipId, String objectDefinitionShortName)
-		throws Exception {
-
-		HttpInvoker.HttpResponse httpResponse = _invoke(
-			null, null, HttpInvoker.HttpMethod.GET, objectDefinitionShortName,
-			HashMapBuilder.put(
-				"fields", "id"
-			).put(
-				"filter", relationshipName + " eq " + relationshipId
-			).build());
-
-		JSONObject responseJSONObject = new JSONObject(
-			httpResponse.getContent());
-
-		return responseJSONObject.getLong("totalCount") + 1;
 	}
 
 	private long _getObjectEntryId(
@@ -818,8 +798,8 @@ public class Main {
 				"jenkinsJobKey", propertiesMap.get("jenkins.job.id")
 			).put(
 				"name", testrayRunName
-			).put("number", _getObjectEntryCount(
-				"buildId", testrayBuildId, "runs")
+			).put(
+				"number", _increment("buildId eq " + testrayBuildId, "runs")
 			).put(
 				"r_buildToRuns_c_buildId", testrayBuildId
 			).build(),
@@ -853,6 +833,30 @@ public class Main {
 				"r_projectToTeams_c_projectId", testrayProjectId
 			).build(),
 			testrayTeamName, "teams");
+	}
+
+	private long _increment(String filter, String objectDefinitionShortName)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse = _invoke(
+			null, null, HttpInvoker.HttpMethod.GET, objectDefinitionShortName,
+			HashMapBuilder.put(
+				"fields", "id"
+			).put(
+				"filter",
+				() -> {
+					if (filter != null) {
+						return filter;
+					}
+
+					return null;
+				}
+			).build());
+
+		JSONObject responseJSONObject = new JSONObject(
+			httpResponse.getContent());
+
+		return responseJSONObject.getLong("totalCount") + 1;
 	}
 
 	private HttpInvoker.HttpResponse _invoke(
@@ -997,8 +1001,8 @@ public class Main {
 		String testrayBuildTime = propertiesMap.get("testray.build.time");
 
 		_addTestrayCases(
-			element, testrayBuildId, testrayBuildTime,
-			testrayProjectId, testrayRunId);
+			element, testrayBuildId, testrayBuildTime, testrayProjectId,
+			testrayRunId);
 
 		_addTestrayTask(
 			testrayBuildId, propertiesMap.get("testray.build.name"));

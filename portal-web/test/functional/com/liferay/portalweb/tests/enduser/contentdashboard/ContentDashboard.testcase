@@ -2384,9 +2384,9 @@ definition {
 	Then the list of contents displays content from all users featured in the user's content dashboard view, including Blogs"
 	@priority = "5"
 	test FilterBlogByAuthorAll {
-		property portal.acceptance = "true";
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
 		property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
+		property portal.acceptance = "true";
 
 		task ("Create a blog") {
 			JSONBlog.addEntry(
@@ -2413,9 +2413,9 @@ definition {
 	Then the list of contents displays content where the user is the creator, including Blogs"
 	@priority = "5"
 	test FilterBlogByAuthorMe {
-		property portal.acceptance = "true";
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
 		property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
+		property portal.acceptance = "true";
 
 		task ("Create a blog") {
 			JSONBlog.addEntry(
@@ -2443,9 +2443,9 @@ definition {
 	Then the list of contents displays content where the selected users are the last editors of the approved version, including Blogs"
 	@priority = "5"
 	test FilterBlogByAuthorOther {
-		property portal.acceptance = "true";
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
 		property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
+		property portal.acceptance = "true";
 
 		task ("Create a blog") {
 			JSONBlog.addEntry(
@@ -2472,9 +2472,9 @@ definition {
 	Then the content list in the Content Dashboard filters accordingly, including Blogs"
 	@priority = "5"
 	test FilterBlogByCategory {
-		property portal.acceptance = "true";
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
 		property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
+		property portal.acceptance = "true";
 
 		task ("Add a public vocabulary for Test Site Name") {
 			JSONCategory.addVocabulary(
@@ -2515,9 +2515,9 @@ definition {
 	Then the list of contents that match the site or asset library selected is displayed, including Blogs"
 	@priority = "5"
 	test FilterBlogBySite {
-		property portal.acceptance = "true";
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
 		property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
+		property portal.acceptance = "true";
 
 		task ("Create a blog") {
 			JSONBlog.addEntry(

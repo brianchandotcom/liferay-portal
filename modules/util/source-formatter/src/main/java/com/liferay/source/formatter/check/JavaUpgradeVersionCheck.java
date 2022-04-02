@@ -21,8 +21,11 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.BNDSettings;
+import com.liferay.source.formatter.check.util.BNDSourceUtil;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaTerm;
@@ -63,6 +66,18 @@ public class JavaUpgradeVersionCheck extends BaseJavaTermCheck {
 			return content;
 		}
 
+		BNDSettings bndSettings = getBNDSettings(fileName);
+
+		boolean liferayService = false;
+
+		if ((bndSettings != null) &&
+			GetterUtil.getBoolean(
+				BNDSourceUtil.getDefinitionValue(
+					bndSettings.getContent(), "Liferay-Service"))) {
+
+			liferayService = true;
+		}
+
 		for (JavaTerm childJavaTerm : javaClass.getChildJavaTerms()) {
 			if (!childJavaTerm.isJavaMethod()) {
 				continue;
@@ -78,8 +93,13 @@ public class JavaUpgradeVersionCheck extends BaseJavaTermCheck {
 				fileName, absolutePath, childJavaTerm,
 				javaClass.getImportNames(), javaClass.getPackageName());
 
-			content = _fixDummyUpgradeStepVersion(
-				content, childJavaTerm, latestUpgradeVersion);
+			if (liferayService) {
+				_checkServiceUpgradeStepVersion(fileName, childJavaTerm);
+			}
+			else {
+				content = _fixDummyUpgradeStepVersion(
+					content, childJavaTerm, latestUpgradeVersion);
+			}
 		}
 
 		return content;
@@ -227,6 +247,36 @@ public class JavaUpgradeVersionCheck extends BaseJavaTermCheck {
 			}
 
 			return null;
+		}
+	}
+
+	private void _checkServiceUpgradeStepVersion(
+		String fileName, JavaTerm javaTerm) {
+
+		String methodContent = javaTerm.getContent();
+
+		int x = 0;
+
+		while (true) {
+			x = methodContent.indexOf("registry.register(", x + 1);
+
+			if (x == -1) {
+				return;
+			}
+
+			List<String> parameterList = JavaSourceUtil.getParameterList(
+				methodContent.substring(x));
+
+			String fromVersion = StringUtil.removeChar(
+				parameterList.get(0), CharPool.QUOTE);
+
+			if (fromVersion.equals("0.0.0")) {
+				addMessage(
+					fileName,
+					"Upgrades from version 0.0.0 for service builder modules " +
+						"are not allowed",
+					javaTerm.getLineNumber(x));
+			}
 		}
 	}
 

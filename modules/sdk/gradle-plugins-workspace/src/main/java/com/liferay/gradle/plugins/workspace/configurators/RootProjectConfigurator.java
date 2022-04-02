@@ -1238,8 +1238,8 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 				@Override
 				public boolean accept(File file, String name) {
-					if (file.isDirectory() && !name.equals("common") &&
-						!name.equals("docker")) {
+					if (!name.startsWith(".") && file.isDirectory() &&
+						!name.equals("common") && !name.equals("docker")) {
 
 						return true;
 					}

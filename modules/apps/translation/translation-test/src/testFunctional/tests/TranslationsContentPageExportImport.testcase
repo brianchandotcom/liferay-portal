@@ -1386,6 +1386,80 @@ definition {
 			text = "HTMLTitulo");
 	}
 
+	@description = "This ensures that users can view the info of the unsuccessfully imported content page translations in the downloaded CSV report."
+	@priority = "5"
+	test CanViewUnsuccessfullyImportedTranslationsInfoInDownloadedCSVReport {
+		property osgi.module.configuration.file.names = "com.liferay.translation.web.internal.configuration.FFBulkTranslationConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "ContentPage",
+			type = "content");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "ContentPage",
+			siteName = "Guest");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+
+		PageEditor.editFragmentText(
+			fragmentName = "Heading",
+			id = "element-text",
+			text = "Heading");
+
+		PageEditor.clickPublish();
+
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+
+		Translations.gotoExportTranslation(pageName = "ContentPage");
+
+		Translations.exportTranslation(
+			defaultLanguage = "English (United States)",
+			languageList = "Japanese (Japan),Spanish (Spain)");
+
+		Translations.translateContentPageFile(
+			contentPageTranslation = "true",
+			encoding = "false",
+			fragmentContent = "Heading",
+			fragmentContentTranslation = "Titulo",
+			operation = "unzip",
+			pageName = "ContentPage",
+			pageNameTranslation = "TranslatedContentPage",
+			translationFileName = "ContentPage-en_US-es_ES",
+			translationZipFileName = "ContentPage-en_US");
+
+		Translations.updateTranslateFileID(
+			translationEntryType = "Layout",
+			translationFileName = "ContentPage-en_US-es_ES",
+			translationZipFileName = "ContentPage-en_US");
+
+		Translations.translateContentPageFile(
+			contentPageTranslation = "true",
+			encoding = "false",
+			fragmentContent = "Heading",
+			fragmentContentTranslation = "見出し",
+			operation = "zip",
+			pageName = "ContentPage",
+			pageNameTranslation = "TranslatedContentページ",
+			translationFileName = "ContentPage-en_US-ja_JP",
+			translationZipFileName = "ContentPage-en_US");
+
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+
+		Translations.importTranslation(
+			downloadCSVErrorReport = "true",
+			fileName = "ContentPage-en_US_translated.zip",
+			filePath = "",
+			pageName = "ContentPage");
+
+		Translations.viewCSVErrorReport(
+			reportContent = "ContentPage-en_US-es_ES.xlf,The translation file does not correspond to this page.,ContentPage-en_US_translated.zip",
+			viewNoSuccessfullyImportedTranslation = "ContentPage-en_US-ja_JP");
+	}
+
 	@description = "This ensures that only the default experiences are exported when exporting multiple content pages for translation."
 	@priority = "4"
 	test OnlyDefaultExperiencesExportedWhenExportingMultiplePages {

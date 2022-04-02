@@ -874,4 +874,66 @@ definition {
 			webContentTitle = "TiteldesWebinhalts");
 	}
 
+	@description = "This ensures that users can view the info of the unsuccessfully imported web content translations in the downloaded CSV report."
+	@priority = "5"
+	test CanViewUnsuccessfullyImportedTranslationsInfoInDownloadedCSVReport {
+		property osgi.module.configuration.file.names = "com.liferay.translation.web.internal.configuration.FFBulkTranslationConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+
+		JSONWebcontent.addWebContent(
+			content = "WebContent",
+			description = "Description",
+			groupName = "Guest",
+			title = "WebContentTitle");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		Translations.gotoExportTranslation(webContentTitle = "WebContentTitle");
+
+		Translations.exportTranslation(
+			defaultLanguage = "English (United States)",
+			languageList = "Japanese (Japan),Spanish (Spain)");
+
+		Translations.translateFile(
+			contentTranslation = "WebContentSpanish",
+			descriptionTranslation = "DescriptionSpanish",
+			encoding = "false",
+			operation = "unzip",
+			titleTranslation = "WebContentTitleSpanish",
+			translationFileName = "WebContentTitle-en_US-es_ES",
+			translationZipFileName = "WebContentTitle-en_US",
+			webContentContent = "WebContent",
+			webContentDescription = "Description",
+			webContentTitle = "WebContentTitle");
+
+		Translations.updateTranslateFileID(
+			translationEntryType = "JournalArticle",
+			translationFileName = "WebContentTitle-en_US-ja_JP",
+			translationZipFileName = "WebContentTitle-en_US");
+
+		Translations.translateFile(
+			contentTranslation = "WebContentJapanese",
+			descriptionTranslation = "DescriptionJapanese",
+			encoding = "false",
+			operation = "zip",
+			titleTranslation = "WebContentTitleJapanese",
+			translationFileName = "WebContentTitle-en_US-ja_JP",
+			translationZipFileName = "WebContentTitle-en_US",
+			webContentContent = "WebContent",
+			webContentDescription = "Description",
+			webContentTitle = "WebContentTitle");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		Translations.importTranslation(
+			downloadCSVErrorReport = "true",
+			fileName = "WebContentTitle-en_US_translated.zip",
+			filePath = "",
+			webContentTitle = "WebContentTitle");
+
+		Translations.viewCSVErrorReport(
+			reportContent = "WebContentTitle-en_US-ja_JP.xlf,The translation file does not correspond to this web content.,WebContentTitle-en_US_translated.zip",
+			viewNoSuccessfullyImportedTranslation = "WebContentTitle-en_US-es_ES");
+	}
+
 }

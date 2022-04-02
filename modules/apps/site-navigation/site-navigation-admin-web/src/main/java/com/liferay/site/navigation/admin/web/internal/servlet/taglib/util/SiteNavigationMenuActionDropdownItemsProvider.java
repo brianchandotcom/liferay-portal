@@ -247,6 +247,11 @@ public class SiteNavigationMenuActionDropdownItemsProvider {
 		return dropdownItem -> {
 			dropdownItem.putData("action", "renameSiteNavigationMenu");
 			dropdownItem.putData(
+				"idFieldValue",
+				String.valueOf(_siteNavigationMenu.getSiteNavigationMenuId()));
+			dropdownItem.putData(
+				"mainFieldValue", _siteNavigationMenu.getName());
+			dropdownItem.putData(
 				"renameSiteNavigationMenuURL",
 				PortletURLBuilder.createActionURL(
 					_liferayPortletResponse
@@ -256,11 +261,6 @@ public class SiteNavigationMenuActionDropdownItemsProvider {
 					"siteNavigationMenuId",
 					_siteNavigationMenu.getSiteNavigationMenuId()
 				).buildString());
-			dropdownItem.putData(
-				"idFieldValue",
-				String.valueOf(_siteNavigationMenu.getSiteNavigationMenuId()));
-			dropdownItem.putData(
-				"mainFieldValue", _siteNavigationMenu.getName());
 			dropdownItem.setIcon("textbox");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "rename"));

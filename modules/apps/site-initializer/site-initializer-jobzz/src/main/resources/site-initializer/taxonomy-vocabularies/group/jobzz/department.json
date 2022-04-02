@@ -1,6 +1,6 @@
 {
-  "description": "Departments",
-  "externalReferenceCode": "CAT_DEPARTMENTS",
-  "name": "Department",
-  "viewableBy": "Anyone"
+	"description": "Departments",
+	"externalReferenceCode": "CAT_DEPARTMENTS",
+	"name": "Department",
+	"viewableBy": "Anyone"
 }

@@ -63,24 +63,16 @@ definition {
 		Form.save(localeSaveForm = "Guardar");
 	}
 
-	@priority = "3"
-	test CanChangeCompanyLocaleOnRestart {
-		property test.name.skip.portal.instance = "Locale#CanChangeCompanyLocaleOnRestart";
+	@priority = "4"
+	test CanChangeDefaultCompanyLocale {
+		property test.name.skip.portal.instance = "Locale#CanChangeDefaultCompanyLocale";
+
+		User.firstLoginPG();
 
 		ContentPages.viewFragmentText(
 			fragmentName = "heading",
 			id = "element-text",
 			text = "Welcome to Liferay");
-
-		Portlet.shutdownServer();
-
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "portal-ext-properties-update -Dadd.new.properties=true -Dupdate.properties=company.default.locale=es_ES");
-
-		Portlet.startServer(deleteLiferayHome = "false");
-
-		User.firstLoginPG();
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",

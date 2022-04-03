@@ -24,10 +24,14 @@ import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
+import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
+import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
+import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -193,6 +197,9 @@ public class LayoutPageTemplateStructureRelStagedModelDataHandler
 					replaceImportContentReferences(
 						portletDataContext, layoutPageTemplateStructureRel,
 						data));
+
+			data = String.valueOf(
+				_processDataJSONObject(data, portletDataContext));
 		}
 
 		importedLayoutPageTemplateStructureRel.setData(data);
@@ -232,6 +239,44 @@ public class LayoutPageTemplateStructureRelStagedModelDataHandler
 		getStagedModelRepository() {
 
 		return _stagedModelRepository;
+	}
+
+	private JSONObject _processDataJSONObject(
+		String data, PortletDataContext portletDataContext) {
+
+		LayoutStructure layoutStructure = LayoutStructure.of(data);
+
+		Map<Long, Long> fragmentEntryLinkIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				FragmentEntryLink.class);
+
+		for (LayoutStructureItem layoutStructureItem :
+				layoutStructure.getLayoutStructureItems()) {
+
+			if (!(layoutStructureItem instanceof
+					FragmentStyledLayoutStructureItem)) {
+
+				continue;
+			}
+
+			FragmentStyledLayoutStructureItem
+				fragmentStyledLayoutStructureItem =
+					(FragmentStyledLayoutStructureItem)layoutStructureItem;
+
+			long fragmentEntryLinkId = MapUtil.getLong(
+				fragmentEntryLinkIds,
+				fragmentStyledLayoutStructureItem.getFragmentEntryLinkId(),
+				fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
+
+			if (fragmentEntryLinkId <= 0) {
+				continue;
+			}
+
+			fragmentStyledLayoutStructureItem.setFragmentEntryLinkId(
+				fragmentEntryLinkId);
+		}
+
+		return layoutStructure.toJSONObject();
 	}
 
 	private String _processReferenceStagedModels(

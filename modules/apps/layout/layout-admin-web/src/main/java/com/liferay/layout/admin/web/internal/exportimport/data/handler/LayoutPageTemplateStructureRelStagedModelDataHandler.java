@@ -198,8 +198,7 @@ public class LayoutPageTemplateStructureRelStagedModelDataHandler
 						portletDataContext, layoutPageTemplateStructureRel,
 						data));
 
-			data = String.valueOf(
-				_processDataJSONObject(data, portletDataContext));
+			data = _processData(data, portletDataContext);
 		}
 
 		importedLayoutPageTemplateStructureRel.setData(data);
@@ -241,7 +240,7 @@ public class LayoutPageTemplateStructureRelStagedModelDataHandler
 		return _stagedModelRepository;
 	}
 
-	private JSONObject _processDataJSONObject(
+	private String _processData(
 		String data, PortletDataContext portletDataContext) {
 
 		LayoutStructure layoutStructure = LayoutStructure.of(data);
@@ -276,7 +275,7 @@ public class LayoutPageTemplateStructureRelStagedModelDataHandler
 				fragmentEntryLinkId);
 		}
 
-		return layoutStructure.toJSONObject();
+		return layoutStructure.toString();
 	}
 
 	private String _processReferenceStagedModels(

@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
@@ -153,42 +154,48 @@ public class LayoutPageTemplateStructureRelStagedModelDataHandler
 		importedLayoutPageTemplateStructureRel.setSegmentsExperienceId(
 			segmentsExperienceId);
 
-		Consumer<JSONObject> consumer = jsonObject -> {
-			long classPK = jsonObject.getLong("classPK");
+		String data = layoutPageTemplateStructureRel.getData();
 
-			Map<Long, Long> assetListEntryNewPrimaryKeys =
-				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-					AssetListEntry.class.getName());
+		if (Validator.isNotNull(data)) {
+			Consumer<JSONObject> consumer = jsonObject -> {
+				long classPK = jsonObject.getLong("classPK");
 
-			long newClassPK = MapUtil.getLong(
-				assetListEntryNewPrimaryKeys, classPK, classPK);
+				Map<Long, Long> assetListEntryNewPrimaryKeys =
+					(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+						AssetListEntry.class.getName());
 
-			AssetListEntry assetListEntry =
-				_assetListEntryLocalService.fetchAssetListEntry(newClassPK);
+				long newClassPK = MapUtil.getLong(
+					assetListEntryNewPrimaryKeys, classPK, classPK);
 
-			if (assetListEntry != null) {
-				jsonObject.put(
-					"classNameId",
-					_portal.getClassNameId(assetListEntry.getAssetEntryType())
-				).put(
-					"classPK", String.valueOf(newClassPK)
-				).put(
-					"itemSubtype", assetListEntry.getAssetEntrySubtype()
-				).put(
-					"itemType", assetListEntry.getAssetEntryType()
-				).put(
-					"title", assetListEntry.getTitle()
-				);
-			}
-		};
+				AssetListEntry assetListEntry =
+					_assetListEntryLocalService.fetchAssetListEntry(newClassPK);
 
-		importedLayoutPageTemplateStructureRel.setData(
-			_processReferenceStagedModels(
+				if (assetListEntry != null) {
+					jsonObject.put(
+						"classNameId",
+						_portal.getClassNameId(
+							assetListEntry.getAssetEntryType())
+					).put(
+						"classPK", String.valueOf(newClassPK)
+					).put(
+						"itemSubtype", assetListEntry.getAssetEntrySubtype()
+					).put(
+						"itemType", assetListEntry.getAssetEntryType()
+					).put(
+						"title", assetListEntry.getTitle()
+					);
+				}
+			};
+
+			data = _processReferenceStagedModels(
 				consumer,
 				_dlReferencesExportImportContentProcessor.
 					replaceImportContentReferences(
 						portletDataContext, layoutPageTemplateStructureRel,
-						layoutPageTemplateStructureRel.getData())));
+						data));
+		}
+
+		importedLayoutPageTemplateStructureRel.setData(data);
 
 		LayoutPageTemplateStructureRel existingLayoutPageTemplateStructureRel =
 			_stagedModelRepository.fetchStagedModelByUuidAndGroupId(

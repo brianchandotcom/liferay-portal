@@ -40,6 +40,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -96,6 +99,30 @@ public class Main {
 		_s3ErroredFolderName = s3ErroredFolderName;
 		_s3InboxFolderName = s3InboxFolderName;
 		_s3ProcessedFolderName = s3ProcessedFolderName;
+
+		_logger = Logger.getLogger(Main.class.getName());
+
+		try {
+			LocalDateTime localDateTime = LocalDateTime.now(ZoneOffset.UTC);
+
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(localDateTime.getYear());
+			sb.append("-");
+			sb.append(localDateTime.getMonthValue());
+			sb.append("-");
+			sb.append(localDateTime.getDayOfMonth());
+			sb.append(".log");
+
+			FileHandler fileHandler = new FileHandler(sb.toString());
+
+			fileHandler.setFormatter(new SimpleFormatter());
+
+			_logger.addHandler(fileHandler);
+		}
+		catch (Exception exception) {
+			_logger.severe(exception.getMessage());
+		}
 	}
 
 	public void uploadToTestray() throws Exception {
@@ -118,6 +145,7 @@ public class Main {
 			}
 
 			try {
+				_logger.info("Processing archive " + name);
 				_processArchive(blob.getContent());
 
 				blob.copyTo(
@@ -126,6 +154,7 @@ public class Main {
 						_s3InboxFolderName, _s3ProcessedFolderName));
 			}
 			catch (Exception exception) {
+				_logger.severe(exception.getMessage());
 				blob.copyTo(
 					_s3BucketName,
 					name.replaceFirst(
@@ -889,10 +918,29 @@ public class Main {
 			}
 		}
 
-		httpInvoker.path(_liferayURL + "/o/c/" + objectDefinitionShortName);
+		String path = _liferayURL + "/o/c/" + objectDefinitionShortName;
+
+		httpInvoker.path(path);
+
 		httpInvoker.userNameAndPassword(_liferayLogin + ":" + _liferayPassword);
 
-		return httpInvoker.invoke();
+		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+
+		if ((httpResponse.getStatusCode() / 100) != 2) {
+			String content = httpResponse.getContent();
+
+			_logger.warning("Unable to process: " + path);
+			_logger.warning(
+				"Unable to process HTTP response content: " + content);
+			_logger.warning(
+				"HTTP response message: " + httpResponse.getMessage());
+			_logger.warning(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			throw new Exception("Unable to process: " + path);
+		}
+
+		return httpResponse;
 	}
 
 	private boolean _isEmpty(String value) {
@@ -965,9 +1013,14 @@ public class Main {
 
 			for (File file : tempDirectoryFile.listFiles()) {
 				try {
+					_logger.info("Processing document " + file.getName());
+
 					Document document = documentBuilder.parse(file);
 
 					_processDocument(document);
+				}
+				catch (Exception exception) {
+					_logger.severe(exception.getMessage());
 				}
 				finally {
 					file.delete();
@@ -1033,6 +1086,7 @@ public class Main {
 	private final String _liferayLogin;
 	private final String _liferayPassword;
 	private final String _liferayURL;
+	private final Logger _logger;
 	private final Map<String, Long> _objectEntryIds = new HashMap<>();
 	private final String _s3APIKeyPath;
 	private final String _s3BucketName;

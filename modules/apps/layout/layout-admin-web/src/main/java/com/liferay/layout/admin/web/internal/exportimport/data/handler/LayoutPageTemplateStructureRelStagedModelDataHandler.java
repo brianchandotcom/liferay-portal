@@ -249,27 +249,24 @@ public class LayoutPageTemplateStructureRelStagedModelDataHandler
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				FragmentEntryLink.class);
 
-		for (LayoutStructureItem layoutStructureItem :
-				layoutStructure.getLayoutStructureItems()) {
+		Map<Long, LayoutStructureItem> fragmentLayoutStructureItems =
+			layoutStructure.getFragmentLayoutStructureItems();
 
-			if (!(layoutStructureItem instanceof
-					FragmentStyledLayoutStructureItem)) {
+		for (Map.Entry<Long, LayoutStructureItem> fragmentLayoutStructureItem :
+				fragmentLayoutStructureItems.entrySet()) {
 
+			long fragmentEntryLinkId = MapUtil.getLong(
+				fragmentEntryLinkIds, fragmentLayoutStructureItem.getKey(),
+				fragmentLayoutStructureItem.getKey());
+
+			if (fragmentEntryLinkId <= 0) {
 				continue;
 			}
 
 			FragmentStyledLayoutStructureItem
 				fragmentStyledLayoutStructureItem =
-					(FragmentStyledLayoutStructureItem)layoutStructureItem;
-
-			long fragmentEntryLinkId = MapUtil.getLong(
-				fragmentEntryLinkIds,
-				fragmentStyledLayoutStructureItem.getFragmentEntryLinkId(),
-				fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
-
-			if (fragmentEntryLinkId <= 0) {
-				continue;
-			}
+					(FragmentStyledLayoutStructureItem)
+						fragmentLayoutStructureItem.getValue();
 
 			fragmentStyledLayoutStructureItem.setFragmentEntryLinkId(
 				fragmentEntryLinkId);

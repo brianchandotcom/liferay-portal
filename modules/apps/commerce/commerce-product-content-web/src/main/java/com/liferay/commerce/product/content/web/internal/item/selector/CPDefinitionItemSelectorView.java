@@ -252,15 +252,11 @@ public class CPDefinitionItemSelectorView
 						JavaConstants.JAVAX_PORTLET_REQUEST),
 					_portletURL, null, "no-entries-were-found");
 
-			entriesSearchContainer.setTotal(
-				_cpDefinitionLocalService.getCPDefinitionsCount());
-
-			List<CPDefinition> cpDefinitions =
-				_cpDefinitionLocalService.getCPDefinitions(
+			entriesSearchContainer.setResultsAndTotal(
+				() -> _cpDefinitionLocalService.getCPDefinitions(
 					entriesSearchContainer.getStart(),
-					entriesSearchContainer.getEnd());
-
-			entriesSearchContainer.setResults(cpDefinitions);
+					entriesSearchContainer.getEnd()),
+				_cpDefinitionLocalService.getCPDefinitionsCount());
 
 			return entriesSearchContainer;
 		}

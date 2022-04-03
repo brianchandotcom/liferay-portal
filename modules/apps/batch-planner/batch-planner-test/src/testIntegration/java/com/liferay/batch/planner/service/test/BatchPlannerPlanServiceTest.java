@@ -15,13 +15,16 @@
 package com.liferay.batch.planner.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.batch.planner.batch.engine.broker.BatchEngineBroker;
 import com.liferay.batch.planner.constants.BatchPlannerPlanConstants;
 import com.liferay.batch.planner.exception.BatchPlannerPlanExternalTypeException;
 import com.liferay.batch.planner.exception.BatchPlannerPlanInternalClassNameException;
 import com.liferay.batch.planner.exception.BatchPlannerPlanNameException;
 import com.liferay.batch.planner.exception.DuplicateBatchPlannerPlanException;
 import com.liferay.batch.planner.exception.RequiredBatchPlannerPlanException;
+import com.liferay.batch.planner.model.BatchPlannerLog;
 import com.liferay.batch.planner.model.BatchPlannerPlan;
+import com.liferay.batch.planner.service.BatchPlannerLogService;
 import com.liferay.batch.planner.service.BatchPlannerPlanService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -32,6 +35,8 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -161,6 +166,33 @@ public class BatchPlannerPlanServiceTest {
 	}
 
 	@Test
+	public void testSearchBatchPlannerPlan() throws Exception {
+		for (int i = 0; i < 60; i++) {
+			boolean export = false;
+
+			if ((i % 2) == 0) {
+				export = true;
+			}
+
+			_submitPlan(
+				export, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString());
+		}
+
+		_submitPlan(true, "internalClassName1", "name1");
+		_submitPlan(true, "internalClassName2", "name2");
+		_submitPlan(true, "internalClassName2", "name3");
+		_submitPlan(false, "internalClassName3", "name4");
+		_submitPlan(false, "internalClassName4", "name5");
+
+		BatchPlannerPlan batchPlannerPlan = _submitPlan(
+			false, "internalClassName4", "name6");
+
+		_testSearchExportBatchPlannerLogs(batchPlannerPlan.getCompanyId());
+		_testSearchImportBatchPlannerLogs(batchPlannerPlan.getCompanyId());
+	}
+
+	@Test
 	public void testUpdateBatchPlannerPlan() throws Exception {
 		BatchPlannerPlan batchPlannerPlan =
 			_batchPlannerPlanService.addBatchPlannerPlan(
@@ -186,6 +218,91 @@ public class BatchPlannerPlanServiceTest {
 				requiredBatchPlannerPlanException.getMessage());
 		}
 	}
+
+	private BatchPlannerPlan _submitPlan(
+			boolean export, String internalClassName, String name)
+		throws Exception {
+
+		BatchPlannerPlan batchPlannerPlan =
+			_batchPlannerPlanService.addBatchPlannerPlan(
+				export, BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
+				"/" + RandomTestUtil.randomString(), internalClassName, name,
+				null, false);
+
+		_batchEngineBroker.submit(batchPlannerPlan.getBatchPlannerPlanId());
+
+		return batchPlannerPlan;
+	}
+
+	private void _testSearchExportBatchPlannerLogs(long companyId)
+		throws Exception {
+
+		List<BatchPlannerLog> batchPlannerLogs =
+			_batchPlannerLogService.getCompanyBatchPlannerLogs(
+				companyId, true, "name", "name3", 0, Integer.MAX_VALUE, null);
+
+		Assert.assertEquals(
+			batchPlannerLogs.toString(), 1, batchPlannerLogs.size());
+
+		batchPlannerLogs = _batchPlannerLogService.getCompanyBatchPlannerLogs(
+			companyId, true, "internalClassName", "internalClassName2", 0,
+			Integer.MAX_VALUE, null);
+
+		Assert.assertEquals(
+			batchPlannerLogs.toString(), 2, batchPlannerLogs.size());
+
+		batchPlannerLogs = _batchPlannerLogService.getCompanyBatchPlannerLogs(
+			companyId, true, "name", RandomTestUtil.randomString(), 0,
+			Integer.MAX_VALUE, null);
+
+		Assert.assertEquals(
+			batchPlannerLogs.toString(), 0, batchPlannerLogs.size());
+
+		batchPlannerLogs = _batchPlannerLogService.getCompanyBatchPlannerLogs(
+			companyId, true, "internalClassName", RandomTestUtil.randomString(),
+			0, Integer.MAX_VALUE, null);
+
+		Assert.assertEquals(
+			batchPlannerLogs.toString(), 0, batchPlannerLogs.size());
+	}
+
+	private void _testSearchImportBatchPlannerLogs(long companyId)
+		throws Exception {
+
+		List<BatchPlannerLog> batchPlannerLogs =
+			_batchPlannerLogService.getCompanyBatchPlannerLogs(
+				companyId, false, "name", "name5", 0, Integer.MAX_VALUE, null);
+
+		Assert.assertEquals(
+			batchPlannerLogs.toString(), 1, batchPlannerLogs.size());
+
+		batchPlannerLogs = _batchPlannerLogService.getCompanyBatchPlannerLogs(
+			companyId, false, "internalClassName", "internalClassName4", 0,
+			Integer.MAX_VALUE, null);
+
+		Assert.assertEquals(
+			batchPlannerLogs.toString(), 2, batchPlannerLogs.size());
+
+		batchPlannerLogs = _batchPlannerLogService.getCompanyBatchPlannerLogs(
+			companyId, false, "name", RandomTestUtil.randomString(), 0,
+			Integer.MAX_VALUE, null);
+
+		Assert.assertEquals(
+			batchPlannerLogs.toString(), 0, batchPlannerLogs.size());
+
+		batchPlannerLogs = _batchPlannerLogService.getCompanyBatchPlannerLogs(
+			companyId, false, "internalClassName",
+			RandomTestUtil.randomString(), 0, Integer.MAX_VALUE, null);
+
+		Assert.assertEquals(
+			batchPlannerLogs.toString(), 0, batchPlannerLogs.size());
+	}
+
+	@Inject
+	private BatchEngineBroker _batchEngineBroker;
+
+	@Inject
+	private BatchPlannerLogService _batchPlannerLogService;
 
 	@Inject
 	private BatchPlannerPlanService _batchPlannerPlanService;

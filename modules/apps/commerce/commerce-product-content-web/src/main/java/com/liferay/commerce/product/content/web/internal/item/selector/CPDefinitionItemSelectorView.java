@@ -191,14 +191,13 @@ public class CPDefinitionItemSelectorView
 		public String getSubtitle(Locale locale) {
 			Date modifiedDate = _cpDefinition.getModifiedDate();
 
-			String modifiedDateDescription = _language.getTimeDescription(
-				locale, System.currentTimeMillis() - modifiedDate.getTime(),
-				true);
-
 			return _language.format(
 				locale, "x-ago-by-x",
 				new Object[] {
-					modifiedDateDescription,
+					_language.getTimeDescription(
+						locale,
+						System.currentTimeMillis() - modifiedDate.getTime(),
+						true),
 					HtmlUtil.escape(_cpDefinition.getUserName())
 				});
 		}

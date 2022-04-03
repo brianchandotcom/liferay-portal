@@ -40,9 +40,7 @@ import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.exportimport.lar.PermissionImporter;
-import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.PortletRegistry;
-import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
@@ -1932,33 +1930,6 @@ public class LayoutStagedModelDataHandler
 				Layout.class, layout.getPlid()));
 	}
 
-	private void _importFragmentEntryLinks(
-			PortletDataContext portletDataContext, Layout layout,
-			Layout importedLayout)
-		throws Exception {
-
-		List<Element> fragmentEntryLinkElements =
-			portletDataContext.getReferenceDataElements(
-				layout, FragmentEntryLink.class);
-
-		for (Element fragmentEntryLinkElement : fragmentEntryLinkElements) {
-			String fragmentEntryLinkPath =
-				fragmentEntryLinkElement.attributeValue("path");
-
-			FragmentEntryLink fragmentEntryLink =
-				(FragmentEntryLink)portletDataContext.getZipEntryAsObject(
-					fragmentEntryLinkPath);
-
-			fragmentEntryLink.setClassNameId(
-				_portal.getClassNameId(Layout.class));
-			fragmentEntryLink.setClassPK(importedLayout.getPlid());
-			fragmentEntryLink.setPlid(importedLayout.getPlid());
-
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, fragmentEntryLink);
-		}
-	}
-
 	private void _importFriendlyURLEntries(
 			PortletDataContext portletDataContext, Layout layout,
 			Layout importedLayout)
@@ -2058,8 +2029,6 @@ public class LayoutStagedModelDataHandler
 			portletDataContext.getScopeGroupId(),
 			_portal.getClassNameId(Layout.class.getName()),
 			importedLayout.getPlid());
-
-		_importFragmentEntryLinks(portletDataContext, layout, importedLayout);
 
 		List<Element> layoutPageTemplateStructureElements =
 			portletDataContext.getReferenceDataElements(
@@ -2815,9 +2784,6 @@ public class LayoutStagedModelDataHandler
 	@Reference
 	private ExportImportProcessCallbackRegistry
 		_exportImportProcessCallbackRegistry;
-
-	@Reference
-	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 
 	@Reference
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;

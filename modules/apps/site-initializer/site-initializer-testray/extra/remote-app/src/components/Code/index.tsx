@@ -12,8 +12,21 @@
  * details.
  */
 
-const Code: React.FC = ({children}) => (
-	<div className="bg-light font-italic p-2 text-secondary">{children}</div>
+import classNames from 'classnames';
+
+type CodeProps = {
+	className?: string;
+};
+
+const Code: React.FC<CodeProps> = ({children, className}) => (
+	<div
+		className={classNames(
+			'bg-light font-italic p-2 text-secondary',
+			className
+		)}
+	>
+		{children}
+	</div>
 );
 
 export default Code;

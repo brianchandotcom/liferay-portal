@@ -22,6 +22,7 @@ export enum Orientation {
 
 type QAItem = {
 	divider?: boolean;
+	flexHeading?: boolean;
 	title: string;
 	value: string | ReactNode;
 };
@@ -46,7 +47,13 @@ const QATable: React.FC<QATableProps> = ({
 						})}
 						key={index}
 					>
-						<th className="small-heading">{item.title}</th>
+						<th
+							className={classNames('small-heading', {
+								'd-flex': item.flexHeading,
+							})}
+						>
+							{item.title}
+						</th>
 
 						<td>{item.value}</td>
 					</tr>

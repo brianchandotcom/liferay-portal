@@ -12,20 +12,11 @@
  * details.
  */
 
-export * from './liferayRole';
-export * from './liferayUserAccount';
-export * from './testrayCase';
-export * from './testrayCaseType';
-export * from './testrayComponent';
-export * from './testrayFactorCategory';
-export * from './testrayFactorOptions';
-export * from './testrayProductVersion';
-export * from './testrayProject';
-export * from './testrayRequirement';
-export * from './testrayRoutine';
-export * from './testrayRun';
-export * from './testraySubTask';
-export * from './testraySuite';
-export * from './testrayTask';
-export * from './testrayTeam';
-export * from './testrayWarning';
+import {gql} from '@apollo/client';
+
+export const testrayWarningFragment = gql`
+	fragment WarningFragment on C_Warning {
+		id: warningId
+		content
+	}
+`;

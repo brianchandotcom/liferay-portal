@@ -29,7 +29,7 @@ export const getTasks = gql`
 		tasks(filter: $filter, page: $page, pageSize: $pageSize)
 			@rest(
 				type: "C_Task"
-				path: "tasks?page={args.page}&pageSize={args.pageSize}&nestedFields=build.project,build.routine"
+				path: "tasks?page={args.page}&pageSize={args.pageSize}&nestedFields=build.project,build.routine&nestedFieldsDepth=2"
 			) {
 			items {
 				dateCreated
@@ -63,7 +63,7 @@ export const getTask = gql`
 		task(taskId: $taskId)
 			@rest(
 				type: "C_Task"
-				path: "tasks/{args.taskId}?nestedFields=build.project,build.routine"
+				path: "tasks/{args.taskId}?nestedFields=build.project,build.routine&nestedFieldsDepth=2"
 			) {
 			dateCreated
 			dueStatus

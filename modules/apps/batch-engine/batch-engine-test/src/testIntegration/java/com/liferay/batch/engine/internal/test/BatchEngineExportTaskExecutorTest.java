@@ -408,7 +408,7 @@ public class BatchEngineExportTaskExecutorTest
 
 		_batchEngineExportTask =
 			_batchEngineExportTaskLocalService.addBatchEngineExportTask(
-				user.getCompanyId(), user.getUserId(), null,
+				null, user.getCompanyId(), user.getUserId(), null,
 				BlogPosting.class.getName(), contentType,
 				BatchEngineTaskExecuteStatus.INITIAL.name(), fieldNames,
 				parameters, null);

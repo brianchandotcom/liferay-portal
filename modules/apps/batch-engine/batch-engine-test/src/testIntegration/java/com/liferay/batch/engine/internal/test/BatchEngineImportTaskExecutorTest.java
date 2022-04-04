@@ -960,7 +960,7 @@ public class BatchEngineImportTaskExecutorTest
 
 		_batchEngineImportTask =
 			_batchEngineImportTaskLocalService.addBatchEngineImportTask(
-				user.getCompanyId(), user.getUserId(), _BATCH_SIZE, null,
+				null, user.getCompanyId(), user.getUserId(), _BATCH_SIZE, null,
 				BlogPosting.class.getName(), content, contentType,
 				BatchEngineTaskExecuteStatus.INITIAL.name(),
 				fieldNameMappingMap, importStrategy,

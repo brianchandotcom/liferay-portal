@@ -39,14 +39,17 @@
 .cp-sla-platinum {
 	background-color: #f9fafb;
 	border: 1px solid #e1e1e4;
+	min-width: 215px;
 }
 
 .cp-sla-gold {
 	border: 1px solid var(--color-brand-secondary-lighten-4);
+	min-width: 215px;
 }
 
 .cp-sla-limited {
 	border: 1px solid #0b5fff99;
+	min-width: 215px;
 }
 
 .cp-sla-label {

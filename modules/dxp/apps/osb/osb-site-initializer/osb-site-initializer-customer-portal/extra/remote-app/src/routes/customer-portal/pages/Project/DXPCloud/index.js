@@ -15,7 +15,7 @@ import {Liferay} from '../../../../../common/services/liferay';
 import {getDXPCloudEnvironment} from '../../../../../common/services/liferay/graphql/queries';
 import ActivationStatus from '../../../components/ActivationStatus/index';
 import DeveloperKeysLayouts from '../../../layouts/DeveloperKeysLayout';
-import {PRODUCT_TYPES} from '../../../utils/constants';
+import {LIST_TYPES, PRODUCT_TYPES} from '../../../utils/constants';
 
 const DXPCloud = ({project, sessionId, subscriptionGroups, userAccount}) => {
 	const [dxpCloudEnvironment, setDxpCloudEnvironment] = useState();
@@ -59,6 +59,7 @@ const DXPCloud = ({project, sessionId, subscriptionGroups, userAccount}) => {
 					accountKey={project.accountKey}
 					downloadTextHelper="To activate a local instance of Liferay DXP, download a developer key for your Liferay DXP version."
 					dxpVersion={project.dxpVersion}
+					listType={LIST_TYPES.dxpVersion}
 					projectName={project.name}
 					sessionId={sessionId}
 				></DeveloperKeysLayouts.Inputs>

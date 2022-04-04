@@ -970,11 +970,29 @@ definition {
 	}
 
 	@description = "Verify that the is able to select who receives the notification: Role"
-	@ignore = "Test Stub"
-	@priority = "5"
-	test CanSelectRoleAsNotificationRecipientType {
+    @priority = "5"
+    test CanSelectRoleAsNotificationRecipientType {
+        property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSelectRoleAsNotificationRecipientType";
+		
+        Workflow.openWorkflowListView();
 
-		// TODO LRQA-73849 CanSelectRoleAsNotificationRecipientType pending implementation
+        Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+        ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "start");
+
+        ProcessBuilderKaleoDesignerReact.viewAndFillNotification(
+            name = "New Notification",
+            newNotification = "true",
+            notificationTemplateValue = "New Notification Template",
+            notificationTypeOption = "email",
+            notificationsRecipientTypeRoleName ="Account Manager",
+            recipientTypeOption = "Role");
+
+        ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+        ProcessBuilderKaleoDesignerReact.gotoNotification(notificationName = "New Notification");
+
+        ProcessBuilderKaleoDesignerReact.viewNotificationInfo(notificationRecipientType = "Role");
 
 	}
 

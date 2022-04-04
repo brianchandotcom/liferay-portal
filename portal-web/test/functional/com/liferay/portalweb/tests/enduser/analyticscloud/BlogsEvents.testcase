@@ -66,6 +66,12 @@ definition {
 				pageName = "AC Page",
 				siteName = "Site Name");
 
+			task ("Start Har recording") {
+				ProxyUtil.startHarRecording("blogClicked");
+
+				Pause(locator1 = "5000");
+			}
+
 			Click(
 				key_entryContent = "This is the blog test for AC",
 				locator1 = "BlogsEntry#CONTENT");
@@ -75,12 +81,6 @@ definition {
 			var entryId = JSONBlog.getBlogEntryId(
 				entryTitle = "Blogs AC Title",
 				groupName = "Site Name");
-		}
-
-		task ("Start Har recording") {
-			ProxyUtil.startHarRecording("blogClicked");
-
-			Pause(locator1 = "5000");
 		}
 
 		task ("View the properties of blogClicked event") {
@@ -139,6 +139,12 @@ definition {
 				pageName = "AC Page",
 				siteName = "Site Name");
 
+			task ("Start Har recording") {
+				ProxyUtil.startHarRecording("blogClicked");
+
+				Pause(locator1 = "5000");
+			}
+
 			Click(
 				key_entryTitle = "Blogs AC Title",
 				locator1 = "BlogsEntry#TITLE");
@@ -148,12 +154,6 @@ definition {
 			var entryId = JSONBlog.getBlogEntryId(
 				entryTitle = "Blogs AC Title",
 				groupName = "Site Name");
-		}
-
-		task ("Start Har recording") {
-			ProxyUtil.startHarRecording("blogClicked");
-
-			Pause(locator1 = "5000");
 		}
 
 		task ("View the properties of blogClicked event") {
@@ -509,6 +509,12 @@ definition {
 			var expectedDataSourceId = ACSettings.getDXPInstanceId(dataSourceName = "${dataSourceName}");
 		}
 
+		task ("Start Har recording") {
+			ProxyUtil.startHarRecording("BlogViewed");
+
+			Pause(locator1 = "5000");
+		}
+
 		task ("Go to the site page to assert the blog entry is displayed but don't visit it") {
 			ACUtils.navigateToSitePage(
 				pageName = "AC Page",
@@ -517,12 +523,6 @@ definition {
 			BlogsEntry.viewEntryPG(
 				entryContent = "This is the blog test for AC",
 				entryTitle = "Blogs AC Title");
-		}
-
-		task ("Start Har recording") {
-			ProxyUtil.startHarRecording("BlogViewed");
-
-			Pause(locator1 = "5000");
 		}
 
 		task ("View the BlogViewed event not triggered") {
@@ -560,6 +560,12 @@ definition {
 			var expectedDataSourceId = ACSettings.getDXPInstanceId(dataSourceName = "${dataSourceName}");
 		}
 
+		task ("Start Har recording") {
+			ProxyUtil.startHarRecording("blogViewed");
+
+			Pause(locator1 = "5000");
+		}
+
 		task ("Go to the site page to visit the blog") {
 			ACUtils.navigateToSitePage(
 				actionType = "View Blog",
@@ -572,12 +578,6 @@ definition {
 			var entryId = JSONBlog.getBlogEntryId(
 				entryTitle = "Blogs AC Title",
 				groupName = "Site Name");
-		}
-
-		task ("Start Har recording") {
-			ProxyUtil.startHarRecording("blogViewed");
-
-			Pause(locator1 = "5000");
 		}
 
 		task ("View the properties of blogClicked event") {

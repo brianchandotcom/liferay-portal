@@ -51,6 +51,7 @@ public class BatchEngineImportTaskWrapper
 
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
+		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("batchEngineImportTaskId", getBatchEngineImportTaskId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -88,6 +89,13 @@ public class BatchEngineImportTaskWrapper
 
 		if (uuid != null) {
 			setUuid(uuid);
+		}
+
+		String externalReferenceCode = (String)attributes.get(
+			"externalReferenceCode");
+
+		if (externalReferenceCode != null) {
+			setExternalReferenceCode(externalReferenceCode);
 		}
 
 		Long batchEngineImportTaskId = (Long)attributes.get(
@@ -345,6 +353,16 @@ public class BatchEngineImportTaskWrapper
 	}
 
 	/**
+	 * Returns the external reference code of this batch engine import task.
+	 *
+	 * @return the external reference code of this batch engine import task
+	 */
+	@Override
+	public String getExternalReferenceCode() {
+		return model.getExternalReferenceCode();
+	}
+
+	/**
 	 * Returns the field name mapping of this batch engine import task.
 	 *
 	 * @return the field name mapping of this batch engine import task
@@ -597,6 +615,16 @@ public class BatchEngineImportTaskWrapper
 	@Override
 	public void setExecuteStatus(String executeStatus) {
 		model.setExecuteStatus(executeStatus);
+	}
+
+	/**
+	 * Sets the external reference code of this batch engine import task.
+	 *
+	 * @param externalReferenceCode the external reference code of this batch engine import task
+	 */
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		model.setExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**

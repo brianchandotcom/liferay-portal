@@ -41,6 +41,10 @@ public class BatchEngineExportTaskTable
 			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<BatchEngineExportTaskTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<BatchEngineExportTaskTable, String>
+		externalReferenceCode = createColumn(
+			"externalReferenceCode", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<BatchEngineExportTaskTable, Long>
 		batchEngineExportTaskId = createColumn(
 			"batchEngineExportTaskId", Long.class, Types.BIGINT,

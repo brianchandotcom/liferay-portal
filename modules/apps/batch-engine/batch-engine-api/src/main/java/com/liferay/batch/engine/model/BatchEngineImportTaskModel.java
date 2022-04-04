@@ -99,6 +99,21 @@ public interface BatchEngineImportTaskModel
 	public void setUuid(String uuid);
 
 	/**
+	 * Returns the external reference code of this batch engine import task.
+	 *
+	 * @return the external reference code of this batch engine import task
+	 */
+	@AutoEscape
+	public String getExternalReferenceCode();
+
+	/**
+	 * Sets the external reference code of this batch engine import task.
+	 *
+	 * @param externalReferenceCode the external reference code of this batch engine import task
+	 */
+	public void setExternalReferenceCode(String externalReferenceCode);
+
+	/**
 	 * Returns the batch engine import task ID of this batch engine import task.
 	 *
 	 * @return the batch engine import task ID of this batch engine import task

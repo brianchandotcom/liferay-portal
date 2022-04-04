@@ -80,12 +80,14 @@ public class BatchEngineImportTaskCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(45);
+		StringBundler sb = new StringBundler(47);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", uuid=");
 		sb.append(uuid);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append(", batchEngineImportTaskId=");
 		sb.append(batchEngineImportTaskId);
 		sb.append(", companyId=");
@@ -143,6 +145,14 @@ public class BatchEngineImportTaskCacheModel
 		}
 		else {
 			batchEngineImportTaskImpl.setUuid(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			batchEngineImportTaskImpl.setExternalReferenceCode("");
+		}
+		else {
+			batchEngineImportTaskImpl.setExternalReferenceCode(
+				externalReferenceCode);
 		}
 
 		batchEngineImportTaskImpl.setBatchEngineImportTaskId(
@@ -249,6 +259,7 @@ public class BatchEngineImportTaskCacheModel
 
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
+		externalReferenceCode = objectInput.readUTF();
 
 		batchEngineImportTaskId = objectInput.readLong();
 
@@ -287,6 +298,13 @@ public class BatchEngineImportTaskCacheModel
 		}
 		else {
 			objectOutput.writeUTF(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
 		}
 
 		objectOutput.writeLong(batchEngineImportTaskId);
@@ -364,6 +382,7 @@ public class BatchEngineImportTaskCacheModel
 
 	public long mvccVersion;
 	public String uuid;
+	public String externalReferenceCode;
 	public long batchEngineImportTaskId;
 	public long companyId;
 	public long userId;

@@ -260,8 +260,9 @@ public class EditDispatchTriggerMVCActionCommand extends BaseMVCActionCommand {
 				actionRequest, "dispatchTaskExecutorType");
 
 			dispatchTrigger = _dispatchTriggerService.addDispatchTrigger(
-				_portal.getUserId(actionRequest), dispatchTaskExecutorType,
-				dispatchTaskSettingsUnicodeProperties, name);
+				null, _portal.getUserId(actionRequest),
+				dispatchTaskExecutorType, dispatchTaskSettingsUnicodeProperties,
+				name);
 		}
 
 		return dispatchTrigger;

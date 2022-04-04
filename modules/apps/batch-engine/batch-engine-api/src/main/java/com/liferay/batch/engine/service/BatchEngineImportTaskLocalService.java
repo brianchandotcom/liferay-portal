@@ -86,15 +86,16 @@ public interface BatchEngineImportTaskLocalService
 			long companyId, long userId, long batchSize, String callbackURL,
 			String className, byte[] content, String contentType,
 			String executeStatus, Map<String, String> fieldNameMappingMap,
-			int importStrategy, String operation,
-			Map<String, Serializable> parameters, String taskItemDelegateName)
+			String operation, Map<String, Serializable> parameters,
+			String taskItemDelegateName)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public BatchEngineImportTask addBatchEngineImportTask(
-			long companyId, long userId, long batchSize, String callbackURL,
-			String className, byte[] content, String contentType,
-			String executeStatus, Map<String, String> fieldNameMappingMap,
+			String externalReferenceCode, long companyId, long userId,
+			long batchSize, String callbackURL, String className,
+			byte[] content, String contentType, String executeStatus,
+			Map<String, String> fieldNameMappingMap, int importStrategy,
 			String operation, Map<String, Serializable> parameters,
 			String taskItemDelegateName)
 		throws PortalException;

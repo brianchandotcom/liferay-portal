@@ -553,11 +553,18 @@ renderResponse.setTitle(headerTitle);
 						/>
 
 						<c:if test="<%= fileEntry != null %>">
-							<aui:input label="update-auto-tags" name="updateAutoTags" type="checkbox" value="<%= false %>" />
+							<clay:checkbox
+								checked="<%= false %>"
+								id='<%= liferayPortletResponse.getNamespace() + "updateAutoTags" %>'
+								label='<%= LanguageUtil.get(request, "update-auto-tags") %>'
+								name='<%= liferayPortletResponse.getNamespace() + "updateAutoTags" %>'
+							/>
 
-							<p class="text-secondary">
-								<liferay-ui:message key="update-auto-tags-help" />
-							</p>
+							<div class="ml-4">
+								<small class="text-secondary">
+									<liferay-ui:message key="update-auto-tags-help" />
+								</small>
+							</div>
 						</c:if>
 					</aui:fieldset>
 				</c:if>

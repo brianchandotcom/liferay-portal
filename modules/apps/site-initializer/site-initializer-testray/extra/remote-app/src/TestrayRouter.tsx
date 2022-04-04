@@ -119,7 +119,7 @@ const TestrayRoute = () => (
 
 									<Route
 										element={<CaseResultOutlet />}
-										path="case-result/:testrayCaseResultId"
+										path="case-result/:caseResultId"
 									>
 										<Route element={<CaseResult />} index />
 

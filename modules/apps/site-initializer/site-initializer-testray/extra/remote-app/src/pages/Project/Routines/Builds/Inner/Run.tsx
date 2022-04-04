@@ -12,6 +12,8 @@
  * details.
  */
 
+import {useParams} from 'react-router-dom';
+
 import Container from '../../../../../components/Layout/Container';
 import ListView from '../../../../../components/ListView/ListView';
 import {APIResponse, CTypePagination} from '../../../../../graphql/queries';
@@ -48,42 +50,47 @@ const transformData = (
 	};
 };
 
-const Runs = () => (
-	<Container className="mt-4" title={i18n.translate('runs')}>
-		<ListView
-			query={getRuns}
-			tableProps={{
-				columns: [
-					{
-						key: 'number',
-						render: (_, {rowIndex}) => rowIndex + 1,
-						value: i18n.translate('run'),
-					},
-					{
-						key: 'applicationServer',
-						value: i18n.translate('application-server'),
-					},
-					{
-						key: 'browser',
-						value: i18n.translate('browser'),
-					},
-					{
-						key: 'database',
-						value: i18n.translate('database'),
-					},
-					{
-						key: 'javaJDK',
-						value: 'javaJDK',
-					},
-					{
-						key: 'operatingSystem',
-						value: i18n.translate('operating-system'),
-					},
-				],
-			}}
-			transformData={transformData}
-		/>
-	</Container>
-);
+const Runs = () => {
+	const {buildId} = useParams();
+
+	return (
+		<Container className="mt-4" title={i18n.translate('runs')}>
+			<ListView
+				query={getRuns}
+				tableProps={{
+					columns: [
+						{
+							key: 'number',
+							render: (_, {rowIndex}) => rowIndex + 1,
+							value: i18n.translate('run'),
+						},
+						{
+							key: 'applicationServer',
+							value: i18n.translate('application-server'),
+						},
+						{
+							key: 'browser',
+							value: i18n.translate('browser'),
+						},
+						{
+							key: 'database',
+							value: i18n.translate('database'),
+						},
+						{
+							key: 'javaJDK',
+							value: 'javaJDK',
+						},
+						{
+							key: 'operatingSystem',
+							value: i18n.translate('operating-system'),
+						},
+					],
+				}}
+				transformData={transformData}
+				variables={{filter: `buildId eq ${buildId}`}}
+			/>
+		</Container>
+	);
+};
 
 export default Runs;

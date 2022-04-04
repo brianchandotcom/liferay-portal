@@ -30,6 +30,11 @@ components:
                     enum: [COMPLETED, FAILED, INITIAL, STARTED]
                     example: INITIALIZED
                     type: string
+                externalReferenceCode:
+                    # @review
+                    description:
+                        The optional external key of this account.
+                    type: string
                 id:
                     description:
                         The task's ID.
@@ -101,6 +106,11 @@ components:
                     enum: [COMPLETED, FAILED, INITIAL, STARTED]
                     example: INITIALIZED
                     type: string
+                externalReferenceCode:
+                    # @review
+                    description:
+                        The optional external key of this account.
+                    type: string
                 failedItems:
                     items:
                         $ref: "#/components/schemas/FailedItem"
@@ -169,6 +179,10 @@ paths:
                       type: string
                 - in: query
                   name: callbackURL
+                  schema:
+                      type: string
+                - in: query
+                  name: externalReferenceCode
                   schema:
                       type: string
                 - in: query
@@ -252,6 +266,10 @@ paths:
                   schema:
                       type: string
                 - in: query
+                  name: externalReferenceCode
+                  schema:
+                      type: string
+                - in: query
                   name: importStrategy
                   schema:
                       enum: [ON_ERROR_CONTINUE, ON_ERROR_FAIL]
@@ -305,6 +323,10 @@ paths:
                       type: string
                 - in: query
                   name: callbackURL
+                  schema:
+                      type: string
+                - in: query
+                  name: externalReferenceCode
                   schema:
                       type: string
                 - in: query
@@ -365,6 +387,10 @@ paths:
                       type: string
                 - in: query
                   name: callbackURL
+                  schema:
+                      type: string
+                - in: query
+                  name: externalReferenceCode
                   schema:
                       type: string
                 - in: query

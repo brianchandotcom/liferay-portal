@@ -507,7 +507,7 @@ public class CommercePaymentEngineImpl implements CommercePaymentEngine {
 
 		ListUtil.sort(
 			commercePaymentMethodGroupRels,
-			new CommercePaymentMethodPriorityComparator(true));
+			new CommercePaymentMethodPriorityComparator());
 
 		List<CommercePaymentMethod> commercePaymentMethods = new LinkedList<>();
 

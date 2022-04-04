@@ -159,17 +159,13 @@ public class SXPBlueprintSearchResultTest {
 
 	@Test
 	public void testBoostAssetType() throws Exception {
-		_sxpBlueprint.setConfigurationJSON(
+		_updateConfigurationJSON(
+			"generalConfiguration",
 			JSONUtil.put(
-				"generalConfiguration",
-				JSONUtil.put(
-					"searchableAssetTypes",
-					JSONUtil.putAll(
-						"com.liferay.journal.model.JournalArticle",
-						"com.liferay.journal.model.JournalFolder"))
-			).put(
-				"queryConfiguration", JSONUtil.put("applyIndexerClauses", true)
-			).toString());
+				"searchableAssetTypes",
+				JSONUtil.putAll(
+					"com.liferay.journal.model.JournalArticle",
+					"com.liferay.journal.model.JournalFolder")));
 
 		_updateSXPBlueprint();
 
@@ -829,13 +825,11 @@ public class SXPBlueprintSearchResultTest {
 	public void testCustomParameterWithinPasteAnyElasticSearchQueryElement()
 		throws Exception {
 
-		_sxpBlueprint.setConfigurationJSON(
-			_configurationJSONObject.put(
-				"parameterConfiguration",
-				JSONUtil.put(
-					"parameters",
-					JSONUtil.put("myparam", JSONUtil.put("type", "String")))
-			).toString());
+		_updateConfigurationJSON(
+			"parameterConfiguration",
+			JSONUtil.put(
+				"parameters",
+				JSONUtil.put("myparam", JSONUtil.put("type", "String"))));
 
 		_updateSXPBlueprint();
 
@@ -1198,15 +1192,13 @@ public class SXPBlueprintSearchResultTest {
 
 	@Test
 	public void testLimitSearchToPDFFiles() throws Exception {
-		_sxpBlueprint.setConfigurationJSON(
-			_configurationJSONObject.put(
-				"generalConfiguration",
-				JSONUtil.put(
-					"searchableAssetTypes",
-					JSONUtil.putAll(
-						"com.liferay.document.library.kernel.model.DLFileEntry",
-						"com.liferay.journal.model.JournalArticle"))
-			).toString());
+		_updateConfigurationJSON(
+			"generalConfiguration",
+			JSONUtil.put(
+				"searchableAssetTypes",
+				JSONUtil.putAll(
+					"com.liferay.document.library.kernel.model.DLFileEntry",
+					"com.liferay.journal.model.JournalArticle")));
 
 		_addFileEntry("PDF file", ".pdf");
 
@@ -2086,6 +2078,15 @@ public class SXPBlueprintSearchResultTest {
 			_setUpJournalArticles(
 				new String[] {""}, new String[] {journalArticleTitles[i]});
 		}
+	}
+
+	private void _updateConfigurationJSON(
+		String configurationName, JSONObject jsonObject) {
+
+		_sxpBlueprint.setConfigurationJSON(
+			_configurationJSONObject.put(
+				configurationName, jsonObject
+			).toString());
 	}
 
 	private void _updateElementInstancesJSON(

@@ -8828,6 +8828,17 @@ virtualHostname="localhost"
 					src="${test.build.license.xml.zip.url}"
 				/>
 			</then>
+			<elseif>
+				<contains string="${test.build.license.xml.zip.url}" substring="${project.dir}" />
+				<then>
+					<mkdir dir="${liferay.home}/deploy" />
+
+					<copy
+						file="${test.build.license.xml.zip.url}"
+						tofile="${liferay.home}/deploy/license.xml"
+					/>
+				</then>
+			</elseif>
 		</if>
 	</target>
 

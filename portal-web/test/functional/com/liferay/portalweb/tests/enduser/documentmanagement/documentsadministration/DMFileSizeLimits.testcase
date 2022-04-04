@@ -1,0 +1,116 @@
+@component-name = "portal-document-management"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Document Management";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONDepot.deleteDepot(depotName = "Test Depot Name");
+
+			DMDocument.tearDownCP();
+
+			Site.tearDownCP();
+		}
+	}
+
+	@description = "This test ensures that a user is not able to upload a file to an asset library that is bigger than the Maximum File Size in that instance."
+	@priority = "4"
+	test CanLimitMaxFileSizeForDepotAtInstanceScope {
+		property test.name.skip.portal.instance = "DMFileSizeLimits#CanLimitMaxFileSizeForDepotAtInstanceScope";
+
+		DMDocument.updateMaximumFileSize(fieldValue = "65536");
+
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMDocument.addCP(
+			dmDocumentFile = "Commerce_Blue.jpg",
+			dmDocumentTitle = "Commerce_Blue.jpg",
+			warningForSizeLimits = "Please enter a file with a valid file size no larger than 64 KB");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		LexiconCard.viewNoCardThumbnail(card = "Commerce_Blue.jpg");
+	}
+
+	@description = "This test ensures that the size limits in the servlet take effect when the instance setting is default."
+	@priority = "4"
+	test WhenInstanceIsDefaultItIsOverridenByServlet {
+		property test.name.skip.portal.instance = "DMFileSizeLimits#WhenInstanceIsDefaultItIsOverridenByServlet";
+
+		SystemSettings.openSystemSettingsAdmin();
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Infrastructure",
+			configurationName = "Upload Servlet Request",
+			configurationScope = "System Scope");
+
+		ServerAdministration.configureFileUploadOverallMaximumFileSize(maxFileSize = "102400");
+
+		DMDocument.updateMaximumFileSize(fieldValue = "409600");
+
+		DMDocument.updateMaximumFileSize(
+			fieldValue = "0",
+			instanceSettings = "true");
+
+		DMDocument.addCP(
+			dmDocumentFile = "high_resolution_photo.jpg",
+			dmDocumentTitle = "high_resolution_photo.jpg",
+			groupName = "Guest",
+			siteURLKey = "guest",
+			warningForSizeLimits = "Please enter a file with a valid file size no larger than 100 KB");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		LexiconCard.viewNoCardThumbnail(card = "high_resolution_photo.jpg");
+	}
+
+	@description = "This test ensures that the size limits in the servlet take effect when it is not bigger than the limits in the instance."
+	@priority = "4"
+	test WhenServletIsSmallerItOverridesInstance {
+		property test.name.skip.portal.instance = "DMFileSizeLimits#WhenServletIsSmallerItOverridesInstance";
+
+		SystemSettings.openSystemSettingsAdmin();
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Infrastructure",
+			configurationName = "Upload Servlet Request",
+			configurationScope = "System Scope");
+
+		ServerAdministration.configureFileUploadOverallMaximumFileSize(maxFileSize = "102400");
+
+		DMDocument.updateMaximumFileSize(fieldValue = "409600");
+
+		DMDocument.updateMaximumFileSize(
+			fieldValue = "204800",
+			instanceSettings = "true");
+
+		DMDocument.addCP(
+			dmDocumentFile = "high_resolution_photo.jpg",
+			dmDocumentTitle = "high_resolution_photo.jpg",
+			groupName = "Guest",
+			siteURLKey = "guest",
+			warningForSizeLimits = "Please enter a file with a valid file size no larger than 100 KB");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		LexiconCard.viewNoCardThumbnail(card = "high_resolution_photo.jpg");
+	}
+
+}

@@ -48,7 +48,7 @@ definition {
 			entryTitle = "Blogs Entry Title");
 	}
 
-	@description = "This test covers LPS-67664. It ensures that a user can order blog enytries by display date."
+	@description = "This test covers LPS-67664. It ensures that a user can order blog entries by display date."
 	@ignore = "Test Stub"
 	@priority = "4"
 	test CanOrderByDisplayDate {

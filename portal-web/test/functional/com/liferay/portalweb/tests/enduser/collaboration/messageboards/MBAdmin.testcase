@@ -319,12 +319,12 @@ definition {
 
 	}
 
-	@description = "This is a test for LPS-68939. It ensures that the message threads are sorted by created date DESC by default."
+	@description = "This is a test for LPS-68939. It ensures that the message threads appear from newest to oldest by default."
 	@ignore = "Test Stub"
 	@priority = "4"
-	test ThreadsAreSortedByCreatedDateDes {
+	test ThreadsAreSortedFromNewestToOldestByDefault {
 
-		// TODO LPS-150860 ThreadsAreSortedByCreatedDateDes pending implementation
+		// TODO LPS-150860 ThreadsAreSortedFromNewestToOldestByDefault pending implementation
 
 	}
 

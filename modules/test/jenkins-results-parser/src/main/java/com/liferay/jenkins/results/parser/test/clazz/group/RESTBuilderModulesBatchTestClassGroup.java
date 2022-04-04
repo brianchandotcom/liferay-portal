@@ -76,7 +76,8 @@ public class RESTBuilderModulesBatchTestClassGroup
 
 		super(jsonObject, portalTestClassJob);
 
-		_buildType = BuildType.valueOf(jsonObject.getString("build_type"));
+		_buildType = BuildType.valueOf(
+			jsonObject.optString("build_type", "FULL"));
 	}
 
 	protected RESTBuilderModulesBatchTestClassGroup(

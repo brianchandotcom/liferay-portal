@@ -1270,11 +1270,26 @@ definition {
 	}
 
 	@description = "Verify that default label and ID for nodes are provided"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test DefaultLabelAndIDAreProvided {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#DefaultLabelAndIDAreProvided";
 
-		// TODO LRQA-73834 DefaultLabelAndIDAreProvided pending implementation
+        Workflow.openWorkflowListView();
+
+
+        Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+
+        ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+            nodeLabel = "Task",
+            nodePosition = "20,-100",
+            nodeType = "task");
+
+		
+		ProcessBuilderKaleoDesignerReact.viewNodeInfo(
+			labelValue = "Task",
+			idValue = "item_2",
+			nodeType = "task");
 
 	}
 

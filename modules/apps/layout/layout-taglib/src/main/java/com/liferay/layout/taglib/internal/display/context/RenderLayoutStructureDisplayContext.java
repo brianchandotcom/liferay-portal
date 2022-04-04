@@ -18,6 +18,7 @@ import com.liferay.asset.info.display.contributor.util.ContentAccessor;
 import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
+import com.liferay.frontend.token.definition.FrontendToken;
 import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.frontend.token.definition.FrontendTokenMapping;
@@ -42,7 +43,6 @@ import com.liferay.layout.util.structure.StyledLayoutStructureItem;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -57,6 +57,7 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -70,9 +71,11 @@ import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.util.DefaultStyleBookEntryUtil;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -977,73 +980,39 @@ public class RenderLayoutStructureDisplayContext {
 			frontendTokenValuesJSONObject = JSONFactoryUtil.createJSONObject();
 		}
 
-		JSONObject frontendTokenDefinitionJSONObject =
-			frontendTokenDefinition.getJSONObject(_themeDisplay.getLocale());
+		Collection<FrontendToken> frontendTokens =
+			frontendTokenDefinition.getFrontendTokens();
 
-		JSONArray frontendTokenCategoriesJSONArray =
-			frontendTokenDefinitionJSONObject.getJSONArray(
-				"frontendTokenCategories");
+		for (FrontendToken frontendToken : frontendTokens) {
+			List<FrontendTokenMapping> frontendTokenMappings = new ArrayList<>(
+				frontendToken.getFrontendTokenMappings(
+					FrontendTokenMapping.TYPE_CSS_VARIABLE));
 
-		for (int i = 0; i < frontendTokenCategoriesJSONArray.length(); i++) {
-			JSONObject frontendTokenCategoryJSONObject =
-				frontendTokenCategoriesJSONArray.getJSONObject(i);
-
-			JSONArray frontendTokenSetsJSONArray =
-				frontendTokenCategoryJSONObject.getJSONArray(
-					"frontendTokenSets");
-
-			for (int j = 0; j < frontendTokenSetsJSONArray.length(); j++) {
-				JSONObject frontendTokenSetJSONObject =
-					frontendTokenSetsJSONArray.getJSONObject(j);
-
-				JSONArray frontendTokensJSONArray =
-					frontendTokenSetJSONObject.getJSONArray("frontendTokens");
-
-				for (int k = 0; k < frontendTokensJSONArray.length(); k++) {
-					JSONObject frontendTokenJSONObject =
-						frontendTokensJSONArray.getJSONObject(k);
-
-					String cssVariable = StringPool.BLANK;
-
-					JSONArray mappingsJSONArray =
-						frontendTokenJSONObject.getJSONArray("mappings");
-
-					for (int l = 0; l < mappingsJSONArray.length(); l++) {
-						JSONObject mappingJSONObject =
-							mappingsJSONArray.getJSONObject(l);
-
-						if (Objects.equals(
-								mappingJSONObject.getString("type"),
-								FrontendTokenMapping.TYPE_CSS_VARIABLE)) {
-
-							cssVariable = mappingJSONObject.getString("value");
-						}
-					}
-
-					String value = StringPool.BLANK;
-
-					String name = frontendTokenJSONObject.getString("name");
-
-					JSONObject valueJSONObject =
-						frontendTokenValuesJSONObject.getJSONObject(name);
-
-					if (valueJSONObject != null) {
-						value = valueJSONObject.getString("value");
-					}
-					else {
-						value = frontendTokenJSONObject.getString(
-							"defaultValue");
-					}
-
-					_frontendTokensJSONObject.put(
-						name,
-						JSONUtil.put(
-							FrontendTokenMapping.TYPE_CSS_VARIABLE, cssVariable
-						).put(
-							"value", value
-						));
-				}
+			if (ListUtil.isEmpty(frontendTokenMappings)) {
+				continue;
 			}
+
+			_frontendTokensJSONObject.put(
+				frontendToken.getName(),
+				JSONUtil.put(
+					FrontendTokenMapping.TYPE_CSS_VARIABLE,
+					() -> {
+						FrontendTokenMapping frontendTokenMapping =
+							frontendTokenMappings.get(0);
+
+						return frontendTokenMapping.getValue();
+					}
+				).put(
+					"value",
+					Optional.ofNullable(
+						frontendTokenValuesJSONObject.getJSONObject(
+							frontendToken.getName())
+					).map(
+						valueJSONObject -> valueJSONObject.getString("value")
+					).orElse(
+						frontendToken.getDefaultValue()
+					)
+				));
 		}
 
 		return _frontendTokensJSONObject;

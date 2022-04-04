@@ -14,6 +14,7 @@
 
 package com.liferay.layout.taglib.internal.servlet.taglib;
 
+import com.liferay.frontend.token.definition.FrontendToken;
 import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.frontend.token.definition.FrontendTokenMapping;
@@ -26,7 +27,6 @@ import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.StyledLayoutStructureItem;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -54,11 +55,12 @@ import com.liferay.style.book.util.DefaultStyleBookEntryUtil;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -116,7 +118,7 @@ public class LayoutStructureCommonStylesCSSTopHeadDynamicInclude
 		printWriter.print("type=\"text/css\">\n");
 
 		JSONObject frontendTokensJSONObject = _getFrontendTokensJSONObject(
-			themeDisplay.getSiteGroupId(), layout, themeDisplay.getLocale(),
+			themeDisplay.getSiteGroupId(), layout,
 			ParamUtil.getBoolean(httpServletRequest, "styleBookEntryPreview"));
 
 		List<LayoutStructureItem> layoutStructureItems =
@@ -187,8 +189,7 @@ public class LayoutStructureCommonStylesCSSTopHeadDynamicInclude
 	}
 
 	private JSONObject _getFrontendTokensJSONObject(
-		long groupId, Layout layout, Locale locale,
-		boolean styleBookEntryPreview) {
+		long groupId, Layout layout, boolean styleBookEntryPreview) {
 
 		JSONObject frontendTokensJSONObject =
 			JSONFactoryUtil.createJSONObject();
@@ -222,73 +223,39 @@ public class LayoutStructureCommonStylesCSSTopHeadDynamicInclude
 			return JSONFactoryUtil.createJSONObject();
 		}
 
-		JSONObject frontendTokenDefinitionJSONObject =
-			frontendTokenDefinition.getJSONObject(locale);
+		Collection<FrontendToken> frontendTokens =
+			frontendTokenDefinition.getFrontendTokens();
 
-		JSONArray frontendTokenCategoriesJSONArray =
-			frontendTokenDefinitionJSONObject.getJSONArray(
-				"frontendTokenCategories");
+		for (FrontendToken frontendToken : frontendTokens) {
+			List<FrontendTokenMapping> frontendTokenMappings = new ArrayList<>(
+				frontendToken.getFrontendTokenMappings(
+					FrontendTokenMapping.TYPE_CSS_VARIABLE));
 
-		for (int i = 0; i < frontendTokenCategoriesJSONArray.length(); i++) {
-			JSONObject frontendTokenCategoryJSONObject =
-				frontendTokenCategoriesJSONArray.getJSONObject(i);
-
-			JSONArray frontendTokenSetsJSONArray =
-				frontendTokenCategoryJSONObject.getJSONArray(
-					"frontendTokenSets");
-
-			for (int j = 0; j < frontendTokenSetsJSONArray.length(); j++) {
-				JSONObject frontendTokenSetJSONObject =
-					frontendTokenSetsJSONArray.getJSONObject(j);
-
-				JSONArray frontendTokensJSONArray =
-					frontendTokenSetJSONObject.getJSONArray("frontendTokens");
-
-				for (int k = 0; k < frontendTokensJSONArray.length(); k++) {
-					JSONObject frontendTokenJSONObject =
-						frontendTokensJSONArray.getJSONObject(k);
-
-					String cssVariable = StringPool.BLANK;
-
-					JSONArray mappingsJSONArray =
-						frontendTokenJSONObject.getJSONArray("mappings");
-
-					for (int l = 0; l < mappingsJSONArray.length(); l++) {
-						JSONObject mappingJSONObject =
-							mappingsJSONArray.getJSONObject(l);
-
-						if (Objects.equals(
-								mappingJSONObject.getString("type"),
-								FrontendTokenMapping.TYPE_CSS_VARIABLE)) {
-
-							cssVariable = mappingJSONObject.getString("value");
-						}
-					}
-
-					String value = StringPool.BLANK;
-
-					String name = frontendTokenJSONObject.getString("name");
-
-					JSONObject valueJSONObject =
-						frontendTokenValuesJSONObject.getJSONObject(name);
-
-					if (valueJSONObject != null) {
-						value = valueJSONObject.getString("value");
-					}
-					else {
-						value = frontendTokenJSONObject.getString(
-							"defaultValue");
-					}
-
-					frontendTokensJSONObject.put(
-						name,
-						JSONUtil.put(
-							FrontendTokenMapping.TYPE_CSS_VARIABLE, cssVariable
-						).put(
-							"value", value
-						));
-				}
+			if (ListUtil.isEmpty(frontendTokenMappings)) {
+				continue;
 			}
+
+			frontendTokensJSONObject.put(
+				frontendToken.getName(),
+				JSONUtil.put(
+					FrontendTokenMapping.TYPE_CSS_VARIABLE,
+					() -> {
+						FrontendTokenMapping frontendTokenMapping =
+							frontendTokenMappings.get(0);
+
+						return frontendTokenMapping.getValue();
+					}
+				).put(
+					"value",
+					Optional.ofNullable(
+						frontendTokenValuesJSONObject.getJSONObject(
+							frontendToken.getName())
+					).map(
+						valueJSONObject -> valueJSONObject.getString("value")
+					).orElse(
+						frontendToken.getDefaultValue()
+					)
+				));
 		}
 
 		return frontendTokensJSONObject;

@@ -177,6 +177,7 @@ public class AnalyticsDispatchTaskExecutorHelper {
 
 		BatchEngineExportTask batchEngineExportTask =
 			batchEngineExportTaskLocalService.addBatchEngineExportTask(
+				String.valueOf(dispatchLog.getDispatchLogId()),
 				dispatchTrigger.getCompanyId(), dispatchTrigger.getUserId(),
 				null,
 				batchEngineTaskItemDelegateResourceMapper.getResourceName(),

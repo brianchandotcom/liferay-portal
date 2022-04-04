@@ -16,39 +16,39 @@ import {useQuery} from '@apollo/client';
 import {useEffect} from 'react';
 import {Outlet, useLocation, useParams} from 'react-router-dom';
 
-import {getCase} from '../../../../../../graphql/queries';
+import {getCaseResult} from '../../../../../../graphql/queries';
 import useHeader from '../../../../../../hooks/useHeader';
 import i18n from '../../../../../../i18n';
 
 const CaseResultOutlet = () => {
 	const {pathname} = useLocation();
-	const {buildId, projectId, routineId, testrayCaseResultId} = useParams();
+	const {buildId, caseResultId, projectId, routineId} = useParams();
 
-	const {data} = useQuery(getCase, {
+	const {data} = useQuery(getCaseResult, {
 		variables: {
-			caseId: testrayCaseResultId,
+			caseResultId,
 		},
 	});
 
-	const testrayCaseResult = data?.c?.Case;
+	const caseResult = data?.caseResult;
 
-	const basePath = `/project/${projectId}/routines/${routineId}/build/${buildId}/case-result/${testrayCaseResultId}`;
+	const basePath = `/project/${projectId}/routines/${routineId}/build/${buildId}/case-result/${caseResultId}`;
 
 	const {setHeading, setTabs} = useHeader({shouldUpdate: false});
 
 	useEffect(() => {
-		if (testrayCaseResult) {
+		if (caseResult) {
 			setHeading(
 				[
 					{
 						category: i18n.translate('case-result'),
-						title: testrayCaseResult.name,
+						title: caseResult.case?.name,
 					},
 				],
 				true
 			);
 		}
-	}, [setHeading, testrayCaseResult]);
+	}, [setHeading, caseResult]);
 
 	useEffect(() => {
 		setTimeout(() => {
@@ -67,8 +67,8 @@ const CaseResultOutlet = () => {
 		}, 0);
 	}, [basePath, pathname, setTabs]);
 
-	if (testrayCaseResult) {
-		return <Outlet context={{testrayCaseResult}} />;
+	if (caseResult) {
+		return <Outlet context={{caseResult}} />;
 	}
 
 	return null;

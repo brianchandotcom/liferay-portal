@@ -12,19 +12,42 @@
  * details.
  */
 
+import {useQuery} from '@apollo/client';
 import ClayButton from '@clayui/button';
 import ClayButtonGroup from '@clayui/button/lib/Group';
 import ClayLayout from '@clayui/layout';
-import {Link} from 'react-router-dom';
+import {useState} from 'react';
+import {Link, useOutletContext} from 'react-router-dom';
 
 import AssignToMe from '../../../../../../components/Avatar/AssigneToMe';
 import Code from '../../../../../../components/Code';
 import Container from '../../../../../../components/Layout/Container';
 import StatusBadge from '../../../../../../components/StatusBadge';
 import QATable, {Orientation} from '../../../../../../components/Table/QATable';
+import {
+	CTypePagination,
+	TestrayCaseResult,
+} from '../../../../../../graphql/queries';
+import {
+	TestrayWarning,
+	getWarnings,
+} from '../../../../../../graphql/queries/testrayWarning';
 import i18n from '../../../../../../i18n';
+import {getStatusLabel} from '../../../../../../util/constants';
+import {getTimeFromNow} from '../../../../../../util/date';
 
 const CaseResult = () => {
+	const {caseResult}: {caseResult: TestrayCaseResult} = useOutletContext();
+	const [showWarning, setShowWarning] = useState(false);
+
+	const {data} = useQuery<CTypePagination<'warnings', TestrayWarning>>(
+		getWarnings
+	);
+
+	const totalCount = data?.c.warnings.totalCount || 0;
+
+	const warnings = data?.c.warnings.items || [];
+
 	return (
 		<ClayLayout.Row>
 			<ClayButtonGroup className="ml-3" spaced>
@@ -58,22 +81,54 @@ const CaseResult = () => {
 							{
 								title: i18n.translate('status'),
 								value: (
-									<StatusBadge type="failed">
-										FAILED
+									<StatusBadge
+										type={getStatusLabel(
+											caseResult.dueStatus
+										)?.toLowerCase()}
+									>
+										{getStatusLabel(caseResult.dueStatus)}
 									</StatusBadge>
 								),
 							},
 							{
 								title: i18n.translate('errors'),
-								value: (
-									<Code>{`
-							java.lang.Exception: Element is present at "//*[contains(@class,'btn')][normalize-space(text())='Sign In']"
-						`}</Code>
-								),
+								value: <Code>{caseResult.errors}</Code>,
 							},
 							{
-								title: i18n.sub('warnings-x', '16'),
-								value: 'Show 16 Warnings',
+								flexHeading: true,
+								title: i18n.sub(
+									'warnings-x',
+									totalCount.toString()
+								),
+								value: (
+									<>
+										<span
+											className="custom-link"
+											onClick={() =>
+												setShowWarning(!showWarning)
+											}
+										>
+											{`${
+												showWarning ? 'Hide' : 'Show'
+											} ${totalCount} Warnings`}
+										</span>
+
+										{showWarning && (
+											<div>
+												{warnings.map(
+													(warning, index) => (
+														<Code
+															className="mt-2"
+															key={index}
+														>
+															{warning.content}
+														</Code>
+													)
+												)}
+											</div>
+										)}
+									</>
+								),
 							},
 							{
 								title: i18n.translate('attachments'),
@@ -96,11 +151,11 @@ const CaseResult = () => {
 						items={[
 							{
 								title: i18n.translate('priority'),
-								value: 5,
+								value: caseResult.case?.priority,
 							},
 							{
 								title: i18n.translate('main-component'),
-								value: 'Tags',
+								value: caseResult.case?.component?.name,
 							},
 							{
 								title: i18n.translate('subcomponents'),
@@ -108,24 +163,24 @@ const CaseResult = () => {
 							},
 							{
 								title: i18n.translate('Type'),
-								value: 'Automated Functional Test',
+								value: caseResult.case?.caseType?.name,
 							},
 							{
 								title: i18n.translate('estimated-duration'),
-								value: '0',
+								value: caseResult.case?.estimatedDuration,
 							},
 							{
 								title: i18n.translate('description'),
-								value: '',
+								value: caseResult.case?.description,
 							},
 							{
 								title: i18n.translate('steps'),
-								value: '',
+								value: caseResult.case?.steps,
 							},
 						]}
 					/>
 
-					<Link to="project/1234/case/1234">
+					<Link to="/project/1234/case/1234">
 						{i18n.translate('view-case')}
 					</Link>
 				</Container>
@@ -137,7 +192,7 @@ const CaseResult = () => {
 						items={[
 							{
 								title: i18n.translate('Updated'),
-								value: '2 days ago',
+								value: getTimeFromNow(caseResult.dateModified),
 							},
 							{
 								title: '',

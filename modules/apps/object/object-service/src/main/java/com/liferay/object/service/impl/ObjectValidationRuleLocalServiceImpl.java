@@ -63,7 +63,7 @@ public class ObjectValidationRuleLocalServiceImpl
 
 		_validateEngine(engine);
 		_validateName(nameMap);
-		_validateScript(engine, script);
+		_validateScript(script);
 
 		ObjectValidationRule objectValidationRule =
 			objectValidationRulePersistence.create(
@@ -156,7 +156,7 @@ public class ObjectValidationRuleLocalServiceImpl
 
 		_validateEngine(engine);
 		_validateName(nameMap);
-		_validateScript(engine, script);
+		_validateScript(script);
 
 		ObjectValidationRule objectValidationRule =
 			objectValidationRulePersistence.findByPrimaryKey(
@@ -266,19 +266,9 @@ public class ObjectValidationRuleLocalServiceImpl
 		}
 	}
 
-	private void _validateScript(String engine, String script)
-		throws PortalException {
-
+	private void _validateScript(String script) throws PortalException {
 		if (Validator.isNull(script)) {
 			throw new ObjectValidationRuleException("Script is null");
-		}
-
-		ObjectValidationRuleEngine objectValidationRuleEngine =
-			_objectValidationRuleEngineServicesTracker.
-				getObjectValidationRuleEngine(engine);
-
-		if (!objectValidationRuleEngine.isValidScript(script)) {
-			throw new ObjectValidationRuleException("Script is invalid");
 		}
 	}
 

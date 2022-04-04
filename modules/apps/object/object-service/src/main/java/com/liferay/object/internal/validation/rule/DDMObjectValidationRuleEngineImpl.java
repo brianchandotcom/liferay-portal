@@ -16,7 +16,6 @@ package com.liferay.object.internal.validation.rule;
 
 import com.liferay.dynamic.data.mapping.expression.CreateExpressionRequest;
 import com.liferay.dynamic.data.mapping.expression.DDMExpression;
-import com.liferay.dynamic.data.mapping.expression.DDMExpressionException;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.object.constants.ObjectValidationRuleConstants;
 import com.liferay.object.validation.rule.ObjectValidationRuleEngine;
@@ -52,22 +51,6 @@ public class DDMObjectValidationRuleEngineImpl
 		return ObjectValidationRuleConstants.ENGINE_TYPE_DDM;
 	}
 
-	@Override
-	public boolean isValidScript(String script) {
-		try {
-			_getDDMExpression(script);
-		}
-		catch (DDMExpressionException ddmExpressionException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(ddmExpressionException);
-			}
-
-			return false;
-		}
-
-		return true;
-	}
-
 	private boolean _evaluate(Map<String, Object> inputObjects, String script)
 		throws Exception {
 
@@ -79,7 +62,7 @@ public class DDMObjectValidationRuleEngineImpl
 	}
 
 	private DDMExpression<Boolean> _getDDMExpression(String script)
-		throws DDMExpressionException {
+		throws Exception {
 
 		return _ddmExpressionFactory.createExpression(
 			CreateExpressionRequest.Builder.newBuilder(

@@ -114,7 +114,7 @@ public class Main {
 			sb.append(localDateTime.getDayOfMonth());
 			sb.append(".log");
 
-			FileHandler fileHandler = new FileHandler(sb.toString());
+			FileHandler fileHandler = new FileHandler(sb.toString(), true);
 
 			fileHandler.setFormatter(new SimpleFormatter());
 

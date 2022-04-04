@@ -1239,7 +1239,8 @@ public class ManagementToolbarTag extends BaseContainerTag {
 			jspWriter.write(" class=\"text-truncate\">");
 			jspWriter.write(
 				LanguageUtil.format(
-					resourceBundle, "x-results-for",
+					resourceBundle,
+					(getItemsTotal() == 1) ? "x-result-for" : "x-results-for",
 					new Object[] {getItemsTotal()}));
 
 			if (searchValue != null) {

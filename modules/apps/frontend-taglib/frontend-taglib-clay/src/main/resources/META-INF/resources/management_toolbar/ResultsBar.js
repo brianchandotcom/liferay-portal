@@ -33,7 +33,9 @@ const ResultsBar = ({
 					<span className="component-text text-truncate-inline">
 						<span className="text-truncate">
 							{Liferay.Util.sub(
-								Liferay.Language.get('x-results-for'),
+								itemsTotal === 1
+									? Liferay.Language.get('x-result-for')
+									: Liferay.Language.get('x-results-for'),
 								itemsTotal
 							)}
 

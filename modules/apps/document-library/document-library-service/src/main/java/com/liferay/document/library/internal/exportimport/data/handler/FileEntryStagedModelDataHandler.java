@@ -56,6 +56,8 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.exportimport.portlet.data.handler.util.ExportImportGroupedModelUtil;
+import com.liferay.friendly.url.model.FriendlyURLEntry;
+import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.string.StringBundler;
@@ -329,8 +331,8 @@ public class FileEntryStagedModelDataHandler
 		}
 
 		_exportMetaData(portletDataContext, fileEntryElement, fileEntry);
-
 		_exportAssetDisplayPage(portletDataContext, fileEntry);
+		_exportFriendlyURLEntries(portletDataContext, fileEntry);
 
 		portletDataContext.addClassedModel(
 			fileEntryElement, fileEntryPath, liferayFileEntry,
@@ -868,6 +870,25 @@ public class FileEntryStagedModelDataHandler
 			ddmFormValuesPath, _serialize(ddmFormValues));
 	}
 
+	private void _exportFriendlyURLEntries(
+			PortletDataContext portletDataContext, FileEntry fileEntry)
+		throws Exception {
+
+		List<FriendlyURLEntry> friendlyURLEntries =
+			_friendlyURLEntryLocalService.getFriendlyURLEntries(
+				fileEntry.getGroupId(), _portal.getClassNameId(FileEntry.class),
+				fileEntry.getFileEntryId());
+
+		for (FriendlyURLEntry friendlyURLEntry : friendlyURLEntries) {
+			StagedModelDataHandlerUtil.exportStagedModel(
+				portletDataContext, friendlyURLEntry);
+
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, friendlyURLEntry, fileEntry,
+				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+		}
+	}
+
 	private void _exportMetaData(
 			PortletDataContext portletDataContext, Element fileEntryElement,
 			FileEntry fileEntry)
@@ -930,11 +951,11 @@ public class FileEntryStagedModelDataHandler
 			portletDataContext.getReferenceDataElements(
 				fileEntry, AssetDisplayPageEntry.class);
 
-		Map<Long, Long> articleNewPrimaryKeys =
+		Map<Long, Long> fileEntryNewPrimaryKeys =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				DLFileEntry.class);
 
-		articleNewPrimaryKeys.put(
+		fileEntryNewPrimaryKeys.put(
 			fileEntry.getFileEntryId(), importedFileEntry.getFileEntryId());
 
 		if (ListUtil.isEmpty(assetDisplayPageEntryElements)) {
@@ -1175,6 +1196,9 @@ public class FileEntryStagedModelDataHandler
 
 	@Reference
 	private DLTrashService _dlTrashService;
+
+	@Reference
+	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
 
 	@Reference(target = "(ddm.form.values.deserializer.type=json)")
 	private DDMFormValuesDeserializer _jsonDDMFormValuesDeserializer;

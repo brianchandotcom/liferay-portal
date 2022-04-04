@@ -239,10 +239,14 @@ function ManagementToolbar({
 					<FrontendManagementToolbar.ResultsBarItem>
 						<span className="component-text text-truncate-inline">
 							<span className="text-truncate">
-								{sub(Liferay.Language.get('x-results-for-x'), [
-									allItems.length,
-									keyword,
-								])}
+								{sub(
+									allItems.length === 1
+										? Liferay.Language.get('x-result-for-x')
+										: Liferay.Language.get(
+												'x-results-for-x'
+										  ),
+									[allItems.length, keyword]
+								)}
 							</span>
 						</span>
 					</FrontendManagementToolbar.ResultsBarItem>

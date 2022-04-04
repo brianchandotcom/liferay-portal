@@ -46,7 +46,11 @@ export default function ResultsMessage({
 						<span
 							dangerouslySetInnerHTML={{
 								__html: lang.sub(
-									Liferay.Language.get('x-results-for-x'),
+									totalCount === 1
+										? Liferay.Language.get('x-result-for-x')
+										: Liferay.Language.get(
+												'x-results-for-x'
+										  ),
 									[
 										totalCount,
 										`<strong>"${slugToText(

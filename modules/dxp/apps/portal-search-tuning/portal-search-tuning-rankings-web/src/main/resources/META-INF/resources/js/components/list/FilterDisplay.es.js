@@ -33,10 +33,12 @@ class FilterDisplay extends Component {
 				<ManagementToolbar.ResultsBarItem expand>
 					<span className="component-text text-truncate-inline">
 						<span className="text-truncate">
-							{sub(Liferay.Language.get('x-results-for-x'), [
-								totalResultsCount,
-								searchBarTerm,
-							])}
+							{sub(
+								totalResultsCount === 1
+									? Liferay.Language.get('x-result-for-x')
+									: Liferay.Language.get('x-results-for-x'),
+								[totalResultsCount, searchBarTerm]
+							)}
 						</span>
 					</span>
 				</ManagementToolbar.ResultsBarItem>

@@ -118,9 +118,11 @@ public class BatchPlannerPlanServiceImpl
 
 	@Override
 	public List<BatchPlannerPlan> getBatchPlannerPlans(
-		long companyId, boolean export, boolean template, String searchByField,
+		long companyId, boolean export, boolean template,
 		String searchByKeyword, int start, int end,
 		OrderByComparator<BatchPlannerPlan> orderByComparator) {
+
+		searchByKeyword = StringUtil.quote(searchByKeyword, CharPool.PERCENT);
 
 		return batchPlannerPlanPersistence.dslQuery(
 			DSLQueryFactoryUtil.select(
@@ -135,11 +137,12 @@ public class BatchPlannerPlanServiceImpl
 				).and(
 					BatchPlannerPlanTable.INSTANCE.template.eq(template)
 				).and(
-					BatchPlannerPlanTable.INSTANCE.getColumn(
-						searchByField
-					).like(
-						StringUtil.quote(searchByKeyword, CharPool.PERCENT)
-					)
+					BatchPlannerPlanTable.INSTANCE.internalClassName.like(
+						searchByKeyword
+					).or(
+						BatchPlannerPlanTable.INSTANCE.name.like(
+							searchByKeyword)
+					).withParentheses()
 				).and(
 					_inlineSQLHelper.getPermissionWherePredicate(
 						BatchPlannerPlan.class,
@@ -163,9 +166,10 @@ public class BatchPlannerPlanServiceImpl
 
 	@Override
 	public List<BatchPlannerPlan> getBatchPlannerPlans(
-		long companyId, boolean template, String searchByField,
-		String searchByKeyword, int start, int end,
-		OrderByComparator<BatchPlannerPlan> orderByComparator) {
+		long companyId, boolean template, String searchByKeyword, int start,
+		int end, OrderByComparator<BatchPlannerPlan> orderByComparator) {
+
+		searchByKeyword = StringUtil.quote(searchByKeyword, CharPool.PERCENT);
 
 		return batchPlannerPlanPersistence.dslQuery(
 			DSLQueryFactoryUtil.select(
@@ -178,11 +182,12 @@ public class BatchPlannerPlanServiceImpl
 				).and(
 					BatchPlannerPlanTable.INSTANCE.template.eq(template)
 				).and(
-					BatchPlannerPlanTable.INSTANCE.getColumn(
-						searchByField
-					).like(
-						StringUtil.quote(searchByKeyword, CharPool.PERCENT)
-					)
+					BatchPlannerPlanTable.INSTANCE.internalClassName.like(
+						searchByKeyword
+					).or(
+						BatchPlannerPlanTable.INSTANCE.name.like(
+							searchByKeyword)
+					).withParentheses()
 				).and(
 					_inlineSQLHelper.getPermissionWherePredicate(
 						BatchPlannerPlan.class,
@@ -233,8 +238,10 @@ public class BatchPlannerPlanServiceImpl
 
 	@Override
 	public int getBatchPlannerPlansCount(
-		long companyId, boolean export, boolean template, String searchByField,
+		long companyId, boolean export, boolean template,
 		String searchByKeyword) {
+
+		searchByKeyword = StringUtil.quote(searchByKeyword, CharPool.PERCENT);
 
 		return batchPlannerPlanPersistence.dslQueryCount(
 			DSLQueryFactoryUtil.count(
@@ -248,11 +255,12 @@ public class BatchPlannerPlanServiceImpl
 				).and(
 					BatchPlannerPlanTable.INSTANCE.template.eq(template)
 				).and(
-					BatchPlannerPlanTable.INSTANCE.getColumn(
-						searchByField
-					).like(
-						StringUtil.quote(searchByKeyword, CharPool.PERCENT)
-					)
+					BatchPlannerPlanTable.INSTANCE.internalClassName.like(
+						searchByKeyword
+					).or(
+						BatchPlannerPlanTable.INSTANCE.name.like(
+							searchByKeyword)
+					).withParentheses()
 				).and(
 					_inlineSQLHelper.getPermissionWherePredicate(
 						BatchPlannerPlan.class,
@@ -263,8 +271,9 @@ public class BatchPlannerPlanServiceImpl
 
 	@Override
 	public int getBatchPlannerPlansCount(
-		long companyId, boolean template, String searchByField,
-		String searchByKeyword) {
+		long companyId, boolean template, String searchByKeyword) {
+
+		searchByKeyword = StringUtil.quote(searchByKeyword, CharPool.PERCENT);
 
 		return batchPlannerPlanPersistence.dslQueryCount(
 			DSLQueryFactoryUtil.count(
@@ -276,11 +285,12 @@ public class BatchPlannerPlanServiceImpl
 				).and(
 					BatchPlannerPlanTable.INSTANCE.template.eq(template)
 				).and(
-					BatchPlannerPlanTable.INSTANCE.getColumn(
-						searchByField
-					).like(
-						StringUtil.quote(searchByKeyword, CharPool.PERCENT)
-					)
+					BatchPlannerPlanTable.INSTANCE.internalClassName.like(
+						searchByKeyword
+					).or(
+						BatchPlannerPlanTable.INSTANCE.name.like(
+							searchByKeyword)
+					).withParentheses()
 				).and(
 					_inlineSQLHelper.getPermissionWherePredicate(
 						BatchPlannerPlan.class,

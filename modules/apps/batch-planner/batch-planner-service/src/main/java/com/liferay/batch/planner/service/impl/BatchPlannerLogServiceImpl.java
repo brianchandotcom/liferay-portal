@@ -103,10 +103,11 @@ public class BatchPlannerLogServiceImpl extends BatchPlannerLogServiceBaseImpl {
 
 	@Override
 	public List<BatchPlannerLog> getCompanyBatchPlannerLogs(
-			long companyId, boolean export, String searchByField,
-			String searchByKeyword, int start, int end,
-			OrderByComparator<BatchPlannerLog> orderByComparator)
+			long companyId, boolean export, String searchByKeyword, int start,
+			int end, OrderByComparator<BatchPlannerLog> orderByComparator)
 		throws PortalException {
+
+		searchByKeyword = StringUtil.quote(searchByKeyword, CharPool.PERCENT);
 
 		return batchPlannerLogPersistence.dslQuery(
 			_getJoinStep(
@@ -117,11 +118,12 @@ public class BatchPlannerLogServiceImpl extends BatchPlannerLogServiceBaseImpl {
 				).and(
 					BatchPlannerPlanTable.INSTANCE.export.eq(export)
 				).and(
-					BatchPlannerPlanTable.INSTANCE.getColumn(
-						searchByField
-					).like(
-						StringUtil.quote(searchByKeyword, CharPool.PERCENT)
-					)
+					BatchPlannerPlanTable.INSTANCE.internalClassName.like(
+						searchByKeyword
+					).or(
+						BatchPlannerPlanTable.INSTANCE.name.like(
+							searchByKeyword)
+					).withParentheses()
 				).and(
 					_inlineSQLHelper.getPermissionWherePredicate(
 						BatchPlannerLog.class,
@@ -146,10 +148,11 @@ public class BatchPlannerLogServiceImpl extends BatchPlannerLogServiceBaseImpl {
 
 	@Override
 	public List<BatchPlannerLog> getCompanyBatchPlannerLogs(
-			long companyId, String searchByField, String searchByKeyword,
-			int start, int end,
+			long companyId, String searchByKeyword, int start, int end,
 			OrderByComparator<BatchPlannerLog> orderByComparator)
 		throws PortalException {
+
+		searchByKeyword = StringUtil.quote(searchByKeyword, CharPool.PERCENT);
 
 		return batchPlannerLogPersistence.dslQuery(
 			_getJoinStep(
@@ -158,11 +161,12 @@ public class BatchPlannerLogServiceImpl extends BatchPlannerLogServiceBaseImpl {
 				BatchPlannerPlanTable.INSTANCE.companyId.eq(
 					companyId
 				).and(
-					BatchPlannerPlanTable.INSTANCE.getColumn(
-						searchByField
-					).like(
-						StringUtil.quote(searchByKeyword, CharPool.PERCENT)
-					)
+					BatchPlannerPlanTable.INSTANCE.internalClassName.like(
+						searchByKeyword
+					).or(
+						BatchPlannerPlanTable.INSTANCE.name.like(
+							searchByKeyword)
+					).withParentheses()
 				).and(
 					_inlineSQLHelper.getPermissionWherePredicate(
 						BatchPlannerLog.class,
@@ -204,9 +208,10 @@ public class BatchPlannerLogServiceImpl extends BatchPlannerLogServiceBaseImpl {
 
 	@Override
 	public int getCompanyBatchPlannerLogsCount(
-			long companyId, boolean export, String searchByField,
-			String searchByKeyword)
+			long companyId, boolean export, String searchByKeyword)
 		throws PortalException {
+
+		searchByKeyword = StringUtil.quote(searchByKeyword, CharPool.PERCENT);
 
 		return batchPlannerLogPersistence.dslQueryCount(
 			_getJoinStep(
@@ -217,11 +222,12 @@ public class BatchPlannerLogServiceImpl extends BatchPlannerLogServiceBaseImpl {
 				).and(
 					BatchPlannerPlanTable.INSTANCE.export.eq(export)
 				).and(
-					BatchPlannerPlanTable.INSTANCE.getColumn(
-						searchByField
-					).like(
-						StringUtil.quote(searchByKeyword, CharPool.PERCENT)
-					)
+					BatchPlannerPlanTable.INSTANCE.internalClassName.like(
+						searchByKeyword
+					).or(
+						BatchPlannerPlanTable.INSTANCE.name.like(
+							searchByKeyword)
+					).withParentheses()
 				).and(
 					_inlineSQLHelper.getPermissionWherePredicate(
 						BatchPlannerLog.class,
@@ -232,8 +238,10 @@ public class BatchPlannerLogServiceImpl extends BatchPlannerLogServiceBaseImpl {
 
 	@Override
 	public int getCompanyBatchPlannerLogsCount(
-			long companyId, String searchByField, String searchByKeyword)
+			long companyId, String searchByKeyword)
 		throws PortalException {
+
+		searchByKeyword = StringUtil.quote(searchByKeyword, CharPool.PERCENT);
 
 		return batchPlannerLogPersistence.dslQueryCount(
 			_getJoinStep(
@@ -242,11 +250,12 @@ public class BatchPlannerLogServiceImpl extends BatchPlannerLogServiceBaseImpl {
 				BatchPlannerLogTable.INSTANCE.companyId.eq(
 					companyId
 				).and(
-					BatchPlannerPlanTable.INSTANCE.getColumn(
-						searchByField
-					).like(
-						StringUtil.quote(searchByKeyword, CharPool.PERCENT)
-					)
+					BatchPlannerPlanTable.INSTANCE.internalClassName.like(
+						searchByKeyword
+					).or(
+						BatchPlannerPlanTable.INSTANCE.name.like(
+							searchByKeyword)
+					).withParentheses()
 				).and(
 					_inlineSQLHelper.getPermissionWherePredicate(
 						BatchPlannerLog.class,

@@ -84,8 +84,6 @@ public class BatchPlannerLogDisplayContext extends BaseDisplayContext {
 			renderRequest, "navigation", "all");
 
 		long companyId = PortalUtil.getCompanyId(renderRequest);
-		String searchByField = ParamUtil.getString(
-			renderRequest, "searchByField", "name");
 		String searchByKeyword = ParamUtil.getString(
 			renderRequest, "keywords", "");
 
@@ -93,22 +91,7 @@ public class BatchPlannerLogDisplayContext extends BaseDisplayContext {
 			_searchContainer.setResultsAndTotal(
 				() -> TransformUtil.transform(
 					BatchPlannerLogServiceUtil.getCompanyBatchPlannerLogs(
-						companyId, searchByField, searchByKeyword,
-						_searchContainer.getStart(), _searchContainer.getEnd(),
-						OrderByComparatorFactoryUtil.create(
-							"BatchPlannerLog", _searchContainer.getOrderByCol(),
-							Objects.equals(
-								_searchContainer.getOrderByType(), "asc"))),
-					this::_toBatchPlannerLogDisplay),
-				BatchPlannerLogServiceUtil.getCompanyBatchPlannerLogsCount(
-					companyId, searchByField, searchByKeyword));
-		}
-		else {
-			_searchContainer.setResultsAndTotal(
-				() -> TransformUtil.transform(
-					BatchPlannerLogServiceUtil.getCompanyBatchPlannerLogs(
-						companyId, isExport(navigation), searchByField,
-						searchByKeyword, _searchContainer.getStart(),
+						companyId, searchByKeyword, _searchContainer.getStart(),
 						_searchContainer.getEnd(),
 						OrderByComparatorFactoryUtil.create(
 							"BatchPlannerLog", _searchContainer.getOrderByCol(),
@@ -116,8 +99,21 @@ public class BatchPlannerLogDisplayContext extends BaseDisplayContext {
 								_searchContainer.getOrderByType(), "asc"))),
 					this::_toBatchPlannerLogDisplay),
 				BatchPlannerLogServiceUtil.getCompanyBatchPlannerLogsCount(
-					companyId, isExport(navigation), searchByField,
-					searchByKeyword));
+					companyId, searchByKeyword));
+		}
+		else {
+			_searchContainer.setResultsAndTotal(
+				() -> TransformUtil.transform(
+					BatchPlannerLogServiceUtil.getCompanyBatchPlannerLogs(
+						companyId, isExport(navigation), searchByKeyword,
+						_searchContainer.getStart(), _searchContainer.getEnd(),
+						OrderByComparatorFactoryUtil.create(
+							"BatchPlannerLog", _searchContainer.getOrderByCol(),
+							Objects.equals(
+								_searchContainer.getOrderByType(), "asc"))),
+					this::_toBatchPlannerLogDisplay),
+				BatchPlannerLogServiceUtil.getCompanyBatchPlannerLogsCount(
+					companyId, isExport(navigation), searchByKeyword));
 		}
 
 		return _searchContainer;

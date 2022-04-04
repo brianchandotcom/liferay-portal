@@ -19,7 +19,7 @@ module.exports = {
 			'formik',
 			{name: 'prop-types', symbols: 'auto'},
 			{name: 'react', symbols: 'auto'},
-			'react-dnd',
+			{name: 'react-dnd', symbols: 'auto' },
 			'react-dnd-html5-backend',
 			{name: 'react-dom', symbols: 'auto'},
 		],

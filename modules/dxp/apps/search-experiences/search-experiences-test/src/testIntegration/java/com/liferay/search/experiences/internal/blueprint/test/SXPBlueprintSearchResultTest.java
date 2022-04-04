@@ -22,6 +22,8 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.asset.test.util.AssetTestUtil;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.model.ExpandoTable;
@@ -31,6 +33,7 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalFolderServiceUtil;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -52,7 +55,9 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.DateUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
@@ -97,6 +102,8 @@ import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
+import org.apache.commons.lang.StringUtils;
+
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
@@ -104,6 +111,7 @@ import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestName;
 import org.junit.runner.RunWith;
 
 /**
@@ -1189,6 +1197,37 @@ public class SXPBlueprintSearchResultTest {
 	}
 
 	@Test
+	public void testLimitSearchToPDFFiles() throws Exception {
+		_sxpBlueprint.setConfigurationJSON(
+			_configurationJSONObject.put(
+				"generalConfiguration",
+				JSONUtil.put(
+					"searchableAssetTypes",
+					JSONUtil.putAll(
+						"com.liferay.document.library.kernel.model.DLFileEntry",
+						"com.liferay.journal.model.JournalArticle"))
+			).toString());
+
+		_addFileEntry("PDF file", ".pdf");
+
+		_setUpJournalArticles(
+			new String[] {"", "", ""},
+			new String[] {"Article file 1", "Article file 2"});
+
+		_updateElementInstancesJSON(
+			null, new String[] {"Limit Search to PDF Files"});
+
+		_keywords = "file";
+
+		_assertSearch("[PDF file]");
+
+		_updateElementInstancesJSON(null, null);
+
+		_assertSearchIgnoreRelevance(
+			"[Article file 1, Article file 2, PDF file]");
+	}
+
+	@Test
 	public void testLimitSearchToTheCurrentSite() throws Exception {
 		_addGroupAAndGroupB();
 
@@ -1732,6 +1771,9 @@ public class SXPBlueprintSearchResultTest {
 		_assertSearch("[watch birds on the sky, clouds]");
 	}
 
+	@Rule
+	public TestName testName = new TestName();
+
 	private void _addAssetCategory(String title, User user) throws Exception {
 		if (_assetVocabulary == null) {
 			_assetVocabulary =
@@ -1742,6 +1784,27 @@ public class SXPBlueprintSearchResultTest {
 		_assetCategory = AssetCategoryLocalServiceUtil.addCategory(
 			user.getUserId(), _group.getGroupId(), title,
 			_assetVocabulary.getVocabularyId(), _serviceContext);
+	}
+
+	private void _addFileEntry(String sourceFileName, String extension)
+		throws Exception {
+
+		Class<?> clazz = getClass();
+
+		String clazzName = clazz.getName();
+
+		String fileName = StringBundler.concat(
+			"dependencies/", clazz.getSimpleName(), StringPool.PERIOD,
+			testName.getMethodName(), extension);
+
+		DLAppLocalServiceUtil.addFileEntry(
+			null, _user.getUserId(), _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, sourceFileName,
+			ContentTypes.APPLICATION_PDF,
+			FileUtil.getBytes(
+				SXPBlueprintSearchResultTest.class,
+				StringUtils.replace(clazzName, ".", "/") + fileName),
+			null, null, _serviceContext);
 	}
 
 	private void _addGroupAAndGroupB() throws Exception {

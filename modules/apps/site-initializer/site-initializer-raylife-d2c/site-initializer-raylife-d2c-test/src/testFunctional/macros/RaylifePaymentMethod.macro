@@ -69,4 +69,93 @@ definition {
 		Click(locator1 = "RaylifePaymentMethod#PAY_NOW");
 	}
 
+	macro enablePricingPaypal {
+		ApplicationsMenu.gotoPortlet(
+			category = "Product Management",
+			panel = "Commerce",
+			portlet = "Products");
+
+		CommerceNavigator.gotoEntry(entryName = "Business Owners Policy");
+
+		CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+		CommerceNavigator.gotoEntry(entryName = "PAY IN FULL");
+
+		WaitForElementPresent(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Type(
+			locator1 = "CommerceEntry#PRICE_FIELD",
+			value1 = "1.00");
+
+		Type(
+			locator1 = "CommerceEntry#SALE_PRICE_FIELD",
+			value1 = "1.00");
+
+		Type(
+			locator1 = "CommerceEntry#COST_FIELD",
+			value1 = "1.00");
+
+		Button.clickPublish();
+
+		Alert.viewSuccessMessage();
+
+		Click(locator1 = "Icon#CLOSE");
+
+		IFrame.selectTopFrame();
+
+		CommerceNavigator.gotoEntry(entryName = "INSTALLMENT");
+
+		WaitForElementPresent(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Type(
+			locator1 = "CommerceEntry#PRICE_FIELD",
+			value1 = "1.00");
+
+		Type(
+			locator1 = "CommerceEntry#SALE_PRICE_FIELD",
+			value1 = "1.00");
+
+		Type(
+			locator1 = "CommerceEntry#COST_FIELD",
+			value1 = "1.00");
+
+		Button.clickPublish();
+
+		Alert.viewSuccessMessage();
+
+		Click(locator1 = "Icon#CLOSE");
+
+		IFrame.selectTopFrame();
+
+		Button.clickPublish();
+	}
+
+	macro paypalPaymentFlow {
+		Type(
+			locator1 = "RaylifePaymentMethod#FIELD_EMAIL_PAYPAL",
+			value1 = "qa-paypal-buyer@liferay.com");
+
+		Click(locator1 = "RaylifePaymentMethod#BUTTON_NEXT_PAYPAL");
+
+		Type(
+			locator1 = "RaylifePaymentMethod#FIELD_PASSWORD_PAYPAL",
+			value1 = "Liferay123");
+
+		Click(locator1 = "RaylifePaymentMethod#BUTTON_LOGIN_PAYPAL");
+
+		AssertElementPresent(
+			locator1 = "RaylifePaymentMethod#TEST_BUYER_PAYPAL",
+			text = "test buyer");
+
+		AssertElementPresent(
+			locator1 = "RaylifePaymentMethod#VALUE_QUOTATION_PAYPAL",
+			value = "$683.05");
+
+		Click(locator1 = "RaylifePaymentMethod#BUTTON_CONTINUE_PAYPAL");
+	}
+
 }

@@ -19,7 +19,6 @@ import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -237,13 +236,8 @@ public class InfoField<T extends InfoFieldType> implements InfoFieldSetEntry {
 		public FinalStep<T> name(String name) {
 			_builder._name = name;
 
-			if (Validator.isBlank(_builder._namespace)) {
-				_builder._uniqueId = name;
-			}
-			else {
-				_builder._uniqueId =
-					_builder._namespace + StringPool.UNDERLINE + name;
-			}
+			_builder._uniqueId =
+				_builder._namespace + StringPool.UNDERLINE + name;
 
 			return new FinalStep<>(_builder);
 		}

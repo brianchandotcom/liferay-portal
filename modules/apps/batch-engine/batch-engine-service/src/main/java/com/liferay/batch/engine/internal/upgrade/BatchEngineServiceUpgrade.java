@@ -63,6 +63,13 @@ public class BatchEngineServiceUpgrade implements UpgradeStepRegistrator {
 			"4.4.0", "4.5.0", BatchEngineImportTaskErrorTable.create(),
 			new com.liferay.batch.engine.internal.upgrade.v4_5_0.
 				BatchEngineImportTaskUpgradeProcess());
+
+		registry.register(
+			"4.5.0", "4.6.0",
+			new com.liferay.batch.engine.internal.upgrade.v4_6_0.
+				BatchEngineExportTaskUpgradeProcess(),
+			new com.liferay.batch.engine.internal.upgrade.v4_6_0.
+				BatchEngineImportTaskUpgradeProcess());
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)

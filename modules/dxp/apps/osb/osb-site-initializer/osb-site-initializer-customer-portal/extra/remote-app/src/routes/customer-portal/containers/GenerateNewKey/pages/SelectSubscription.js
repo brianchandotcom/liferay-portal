@@ -68,11 +68,15 @@ const SelectSubscription = ({
 		fetchGenerateFormData();
 	}, [accountKey, licenseKeyDownloadURL, productGroupName, sessionId]);
 
-	const productVersions = generateFormValues?.versions;
+	const productVersions = useMemo(() => {
+		if (generateFormValues?.versions) {
+			return generateFormValues.versions.sort((a, b) =>
+				a.label >= b.label ? 1 : -1
+			);
+		}
 
-	if (productVersions) {
-		productVersions.sort((a, b) => (a.label >= b.label ? 1 : -1));
-	}
+		return [];
+	}, [generateFormValues?.versions]);
 
 	useEffect(() => {
 		if (productVersions?.length && !infoSelectedKey?.productVersion) {

@@ -123,7 +123,6 @@ Liferay = window.Liferay || {};
 
 			ioConfig.complete = function (response) {
 				if (
-					Object.keys(response).length > 0 &&
 					!Object.prototype.hasOwnProperty.call(response, 'exception')
 				) {
 					if (callbackSuccess) {

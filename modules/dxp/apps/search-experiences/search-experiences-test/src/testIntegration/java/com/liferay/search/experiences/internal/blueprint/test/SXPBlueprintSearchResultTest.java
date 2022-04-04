@@ -1023,7 +1023,7 @@ public class SXPBlueprintSearchResultTest {
 				).put(
 					"start_date",
 					DateUtil.getDate(
-						new Date(System.currentTimeMillis() - 300),
+						new Date(System.currentTimeMillis() - 1000),
 						"yyyyMMddHHmmss", LocaleUtil.US)
 				).build()
 			},

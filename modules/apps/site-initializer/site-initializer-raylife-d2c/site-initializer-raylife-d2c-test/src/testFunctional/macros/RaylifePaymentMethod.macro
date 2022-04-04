@@ -61,14 +61,6 @@ definition {
 		Refresh();
 	}
 
-	macro payPalFlow {
-		Click(locator1 = "RaylifePaymentMethod#PAYMENT_METHOD_PAYPAL");
-
-		Click(locator1 = "RaylifePaymentMethod#TERMS_CONDITIONS_CHECKBOX");
-
-		Click(locator1 = "RaylifePaymentMethod#PAY_NOW");
-	}
-
 	macro enablePricingPaypal {
 		ApplicationsMenu.gotoPortlet(
 			category = "Product Management",
@@ -132,6 +124,14 @@ definition {
 		IFrame.selectTopFrame();
 
 		Button.clickPublish();
+	}
+
+	macro payPalFlow {
+		Click(locator1 = "RaylifePaymentMethod#PAYMENT_METHOD_PAYPAL");
+
+		Click(locator1 = "RaylifePaymentMethod#TERMS_CONDITIONS_CHECKBOX");
+
+		Click(locator1 = "RaylifePaymentMethod#PAY_NOW");
 	}
 
 	macro paypalPaymentFlow {

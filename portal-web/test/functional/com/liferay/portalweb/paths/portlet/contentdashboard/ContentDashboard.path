@@ -410,6 +410,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>VIEW_METRICS_OPTION</td>
+	<td>//*[contains(@data-action, 'showMetrics')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>VIEW_OPTION</td>
 	<td>//*[contains(@class, 'dropdown-item') and contains(text(),'View')]</td>
 	<td></td>

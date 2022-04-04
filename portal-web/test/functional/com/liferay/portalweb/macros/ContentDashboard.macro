@@ -509,6 +509,12 @@ definition {
 		Click(locator1 = "ContentDashboard#INFO_OPTION");
 	}
 
+	macro openViewMetricsByDropdownMenu {
+		Click(locator1 = "ContentDashboard#ASSET_MENU_DROPDOWN_BUTTON");
+
+		Click(locator1 = "ContentDashboard#VIEW_METRICS_OPTION");
+	}
+
 	macro orderByModificationDate {
 		if (IsElementPresent(locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN")) {
 			AssertClickNoError(

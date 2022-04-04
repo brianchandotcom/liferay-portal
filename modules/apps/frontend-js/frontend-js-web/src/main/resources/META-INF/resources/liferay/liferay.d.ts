@@ -127,14 +127,14 @@ declare module Liferay {
 			cssClass?: string
 		): string;
 
-		export function getTop(): Window;
-
 		export function getOpener(): any;
 
 		/**
 		 * Returns the portlet namespace with underscores prepended and appended to it
 		 */
 		export function getPortletNamespace(portletId: string): string;
+
+		export function getTop(): Window;
 
 		export function getURLWithSessionId(url: string): string;
 

@@ -13,7 +13,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {act, cleanup, fireEvent, render} from '@testing-library/react';
+import {act, fireEvent, render} from '@testing-library/react';
 import React from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
@@ -197,7 +197,6 @@ const renderComponent = (state = {}) => {
 
 describe('FragmentsSidebar', () => {
 	afterEach(() => {
-		cleanup();
 		TabsPanel.mockClear();
 		jest.useFakeTimers();
 	});

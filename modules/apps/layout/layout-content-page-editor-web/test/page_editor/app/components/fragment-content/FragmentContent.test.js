@@ -17,7 +17,7 @@ import React from 'react';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/editableFragmentEntryProcessor';
 
 import '@testing-library/jest-dom/extend-expect';
-import {act, cleanup, render} from '@testing-library/react';
+import {act, render} from '@testing-library/react';
 
 import FragmentContent from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/fragment-content/FragmentContent';
 import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/backgroundImageFragmentEntryProcessor';
@@ -162,8 +162,6 @@ const renderFragmentContent = ({
 
 describe('FragmentContent', () => {
 	beforeEach(() => {
-		cleanup();
-
 		resolveEditableValue.mockClear();
 	});
 

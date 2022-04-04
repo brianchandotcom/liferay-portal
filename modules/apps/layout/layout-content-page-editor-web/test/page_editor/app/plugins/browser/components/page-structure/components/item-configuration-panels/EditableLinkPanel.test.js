@@ -13,13 +13,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {
-	act,
-	cleanup,
-	fireEvent,
-	getByLabelText,
-	render,
-} from '@testing-library/react';
+import {act, fireEvent, getByLabelText, render} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
@@ -105,8 +99,6 @@ function renderLinkPanel(
 
 describe('EditableLinkPanel', () => {
 	afterEach(() => {
-		cleanup();
-
 		serviceFetch.mockClear();
 		updateEditableValues.mockClear();
 	});

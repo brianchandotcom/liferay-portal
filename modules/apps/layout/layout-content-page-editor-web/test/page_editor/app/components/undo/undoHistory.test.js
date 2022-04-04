@@ -13,7 +13,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {act, cleanup, render} from '@testing-library/react';
+import {act, render} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
@@ -96,7 +96,6 @@ function renderUndoHistory() {
 
 describe('UndoHistory', () => {
 	afterEach(() => {
-		cleanup();
 		multipleUndo.mockClear();
 	});
 

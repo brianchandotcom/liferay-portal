@@ -13,7 +13,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {cleanup, fireEvent, render, screen} from '@testing-library/react';
+import {fireEvent, render, screen} from '@testing-library/react';
 import React from 'react';
 
 import SpacingBox from '../../../../src/main/resources/META-INF/resources/page_editor/common/components/SpacingBox';
@@ -31,10 +31,6 @@ const SpacingBoxTest = ({onChange = () => {}, value = {}}) => (
 );
 
 describe('SpacingBox', () => {
-	afterEach(() => {
-		cleanup();
-	});
-
 	it('renders given spacing values', async () => {
 		render(<SpacingBoxTest value={{marginTop: 10}} />);
 		expect(screen.getByLabelText('Padding Left')).toHaveTextContent('0');

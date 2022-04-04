@@ -12,8 +12,6 @@
  * details.
  */
 
-import {cleanup} from '@testing-library/react';
-
 import '@testing-library/jest-dom/extend-expect';
 
 import updatePreviewImage from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/actions/updatePreviewImage';
@@ -102,8 +100,6 @@ const languageId = 'en_US';
 describe('ImageEditorModal', () => {
 	describe('updateFragmentsPreviewImage', () => {
 		afterEach(() => {
-			cleanup();
-
 			FragmentService.renderFragmentEntryLinkContent.mockClear();
 			ImageService.getFileEntry.mockClear();
 		});

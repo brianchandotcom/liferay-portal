@@ -13,7 +13,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {cleanup, fireEvent, render} from '@testing-library/react';
+import {fireEvent, render} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
@@ -31,10 +31,6 @@ const renderTextField = (typeOptions = {}, onValueSelect = () => {}) =>
 	);
 
 describe('TextField', () => {
-	afterEach(() => {
-		cleanup();
-	});
-
 	it('renders an input of type text by default', () => {
 		const {getByLabelText, queryByText} = renderTextField();
 

@@ -13,13 +13,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {
-	cleanup,
-	fireEvent,
-	render,
-	screen,
-	waitFor,
-} from '@testing-library/react';
+import {fireEvent, render, screen, waitFor} from '@testing-library/react';
 import React, {useEffect, useState} from 'react';
 
 import {Tooltip} from '../../../../src/main/resources/META-INF/resources/page_editor/common/components/Tooltip';
@@ -55,10 +49,6 @@ function TooltipTest({PositionElementComponent, label = 'Tooltip label'}) {
 }
 
 describe('Tooltip', () => {
-	afterEach(() => {
-		cleanup();
-	});
-
 	it('renders the given label as node', async () => {
 		render(<TooltipTest label={<>Nice tooltip</>} />);
 		fireEvent.mouseOver(screen.getByRole('button'));

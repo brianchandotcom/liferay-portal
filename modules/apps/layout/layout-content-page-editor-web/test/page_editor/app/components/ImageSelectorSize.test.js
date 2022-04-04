@@ -13,7 +13,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {act, cleanup, render} from '@testing-library/react';
+import {act, render} from '@testing-library/react';
 import React from 'react';
 
 import {useGlobalContext} from '../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/GlobalContext';
@@ -91,7 +91,6 @@ describe('ImageSelectorSize', () => {
 	afterEach(() => {
 		useGlobalContext.mockClear();
 		ImageService.getAvailableImageConfigurations.mockClear();
-		cleanup();
 	});
 
 	it('renders viewport width if there are no image sizes', async () => {

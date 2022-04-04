@@ -12,7 +12,7 @@
  * details.
  */
 
-import {act, cleanup, fireEvent, render} from '@testing-library/react';
+import {act, fireEvent, render} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
@@ -79,7 +79,6 @@ const renderPageContents = ({pageContents = contents}) =>
 
 describe('PageContent', () => {
 	afterEach(() => {
-		cleanup();
 		jest.useFakeTimers();
 	});
 

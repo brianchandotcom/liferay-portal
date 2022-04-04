@@ -13,13 +13,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {
-	act,
-	cleanup,
-	fireEvent,
-	getByText,
-	render,
-} from '@testing-library/react';
+import {act, fireEvent, getByText, render} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
@@ -112,7 +106,6 @@ const renderComponent = () => {
 
 describe('CollectionFilterConfigurationModal', () => {
 	beforeEach(() => {
-		cleanup();
 		handleConfigurationChanged.mockClear();
 	});
 

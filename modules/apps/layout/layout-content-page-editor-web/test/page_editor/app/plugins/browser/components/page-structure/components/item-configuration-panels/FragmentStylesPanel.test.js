@@ -13,7 +13,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {cleanup, fireEvent, render} from '@testing-library/react';
+import {fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/editableFragmentEntryProcessor';
@@ -177,7 +177,6 @@ jest.mock(
 
 describe('FragmentStylesPanel', () => {
 	afterEach(() => {
-		cleanup();
 		updateItemConfig.mockClear();
 	});
 

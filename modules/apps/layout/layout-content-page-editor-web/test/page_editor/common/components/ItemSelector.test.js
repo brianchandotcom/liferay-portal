@@ -13,7 +13,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {cleanup, fireEvent, render} from '@testing-library/react';
+import {fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
 import {StoreAPIContextProvider} from '../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
@@ -71,8 +71,6 @@ function renderItemSelector({
 
 describe('ItemSelector', () => {
 	afterEach(() => {
-		cleanup();
-
 		openItemSelector.mockClear();
 	});
 

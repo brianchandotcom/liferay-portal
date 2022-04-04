@@ -15,7 +15,6 @@
 import '@testing-library/jest-dom/extend-expect';
 import {
 	act,
-	cleanup,
 	fireEvent,
 	getByLabelText,
 	getByText,
@@ -181,10 +180,6 @@ describe('MappingSelector', () => {
 	Liferay.Util.sub.mockImplementation((langKey, args) =>
 		[langKey, args].join('-')
 	);
-
-	afterEach(() => {
-		cleanup();
-	});
 
 	it('renders correct selects in content pages', async () => {
 		renderMappingSelector({});

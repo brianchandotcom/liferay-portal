@@ -13,7 +13,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {act, cleanup, fireEvent, render, screen} from '@testing-library/react';
+import {act, fireEvent, render, screen} from '@testing-library/react';
 import React from 'react';
 
 import {HideFromSearchField} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/fragment-configuration-fields/HideFromSearchField';
@@ -51,10 +51,6 @@ const renderComponent = ({
 	);
 
 describe('TextField', () => {
-	afterEach(() => {
-		cleanup();
-	});
-
 	it('calls dispatch method with selected value for Hide From Search checkbox', async () => {
 		renderComponent();
 

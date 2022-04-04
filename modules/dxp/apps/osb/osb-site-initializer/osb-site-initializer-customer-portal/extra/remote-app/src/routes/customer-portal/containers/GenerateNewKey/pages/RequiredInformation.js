@@ -47,9 +47,9 @@ const RequiredInformation = ({
 	const hasError = Object.keys(errors).length;
 
 	const avaliableKeysMaximumCount =
-		infoSelectedKey.selectedSubscription?.quantity;
+		infoSelectedKey?.selectedSubscription?.quantity;
 	const usedKeysCount =
-		infoSelectedKey.selectedSubscription?.provisionedCount;
+		infoSelectedKey?.selectedSubscription?.provisionedCount;
 
 	const hasFilledAtLeastOneField = useMemo(
 		() =>

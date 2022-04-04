@@ -31,6 +31,19 @@ const SpacingBoxTest = ({onChange = () => {}, value = {}}) => (
 );
 
 describe('SpacingBox', () => {
+	let _getComputedStyle;
+	let _liferayUtilSub;
+
+	beforeEach(() => {
+		_getComputedStyle = window.getComputedStyle;
+		_liferayUtilSub = window.Liferay.Util.sub;
+	});
+
+	afterEach(() => {
+		window.getComputedStyle = _getComputedStyle;
+		window.Liferay.Util.sub = _liferayUtilSub;
+	});
+
 	it('renders given spacing values', async () => {
 		render(<SpacingBoxTest value={{marginTop: 10}} />);
 		expect(screen.getByLabelText('Padding Left')).toHaveTextContent('0');
@@ -68,5 +81,20 @@ describe('SpacingBox', () => {
 		fireEvent.click(screen.getByLabelText('set Padding Left to 10'));
 
 		expect(onChange).toHaveBeenCalledWith('paddingLeft', '10');
+	});
+
+	it('shows token value next to token name in the dropdown', () => {
+		window.getComputedStyle = (element) => {
+			return {
+				getPropertyValue: (key) => {
+					return `[${element.className}][${key}]`;
+				},
+			};
+		};
+
+		render(<SpacingBoxTest />);
+
+		fireEvent.click(screen.getByLabelText('Padding Left'));
+		expect(screen.getByText('[pl-10][padding-left]')).toBeInTheDocument();
 	});
 });

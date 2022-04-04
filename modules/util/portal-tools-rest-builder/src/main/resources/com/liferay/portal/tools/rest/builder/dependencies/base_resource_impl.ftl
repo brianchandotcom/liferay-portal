@@ -606,6 +606,10 @@ public abstract class Base${schemaName}ResourceImpl
 	}
 
 	<#if generateBatch>
+		public void setVulcanBatchEngineImportTaskResource(VulcanBatchEngineImportTaskResource vulcanBatchEngineImportTaskResource) {
+			this.vulcanBatchEngineImportTaskResource = vulcanBatchEngineImportTaskResource;
+		}
+
 		@Override
 		public Filter toFilter(String filterString, Map<String, List<String>> multivaluedMap) {
 			try {

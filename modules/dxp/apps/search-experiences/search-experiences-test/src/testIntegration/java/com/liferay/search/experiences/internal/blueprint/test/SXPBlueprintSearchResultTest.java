@@ -84,6 +84,9 @@ import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.test.util.SegmentsTestUtil;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -475,6 +478,56 @@ public class SXPBlueprintSearchResultTest {
 		_userLocalService.updateUser(user);
 
 		_serviceContext.setUserId(user.getUserId());
+
+		_assertSearch("[Article, Article With Category]");
+
+		_updateElementInstancesJSON(null, null);
+
+		_assertSearch("[Article, Article With Category]");
+	}
+
+	@Test
+	public void testBoostContentsInACategoryForTheTimeOfDay() throws Exception {
+		LocalDateTime localDateTime = LocalDateTime.now();
+
+		_addAssetCategory("Time", _user);
+
+		_setUpJournalArticles(
+			new String[] {"", "", ""},
+			new String[] {"Article", "Article With Category"});
+
+		String[] timeOfDays = _getTimeOfDayAndNextTimeOfDay(
+			localDateTime.toLocalTime());
+
+		_updateElementInstancesJSON(
+			new Object[] {
+				HashMapBuilder.<String, Object>put(
+					"asset_category_id",
+					String.valueOf(_assetCategory.getCategoryId())
+				).put(
+					"boost", 100
+				).put(
+					"time_of_day", timeOfDays[0]
+				).build()
+			},
+			new String[] {"Boost Contents in a Category for the Time of Day"});
+
+		_keywords = "Article";
+
+		_assertSearch("[Article With Category, Article]");
+
+		_updateElementInstancesJSON(
+			new Object[] {
+				HashMapBuilder.<String, Object>put(
+					"asset_category_id",
+					String.valueOf(_assetCategory.getCategoryId())
+				).put(
+					"boost", 100
+				).put(
+					"time_of_day", timeOfDays[1]
+				).build()
+			},
+			new String[] {"Boost Contents in a Category for the Time of Day"});
 
 		_assertSearch("[Article, Article With Category]");
 
@@ -1845,6 +1898,32 @@ public class SXPBlueprintSearchResultTest {
 			).build());
 	}
 
+	private String[] _getTimeOfDayAndNextTimeOfDay(LocalTime localTime) {
+		if (_isBetween(localTime, _LOCAL_TIME_04, _LOCAL_TIME_12)) {
+			return new String[] {"morning", "afternoon"};
+		}
+		else if (_isBetween(localTime, _LOCAL_TIME_12, _LOCAL_TIME_17)) {
+			return new String[] {"afternoon", "evening"};
+		}
+		else if (_isBetween(localTime, _LOCAL_TIME_17, _LOCAL_TIME_20)) {
+			return new String[] {"evening", "night"};
+		}
+
+		return new String[] {"night", "morning"};
+	}
+
+	private boolean _isBetween(
+		LocalTime localTime, LocalTime startLocalTime, LocalTime endLocalTime) {
+
+		if (!localTime.isBefore(startLocalTime) &&
+			localTime.isBefore(endLocalTime)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private void _setUpJournalArticles(
 			String[] journalArticleContents, String[] journalArticleTitles)
 		throws Exception {
@@ -1972,6 +2051,14 @@ public class SXPBlueprintSearchResultTest {
 			_sxpBlueprint.getSchemaVersion(), _sxpBlueprint.getTitleMap(),
 			_serviceContext);
 	}
+
+	private static final LocalTime _LOCAL_TIME_04 = LocalTime.of(4, 0, 0);
+
+	private static final LocalTime _LOCAL_TIME_12 = LocalTime.of(12, 0, 0);
+
+	private static final LocalTime _LOCAL_TIME_17 = LocalTime.of(17, 0, 0);
+
+	private static final LocalTime _LOCAL_TIME_20 = LocalTime.of(20, 0, 0);
 
 	private static List<SXPElement> _sxpElements;
 

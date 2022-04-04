@@ -31,6 +31,47 @@ import './Attachment.scss';
 
 const BYTES_PER_MB = 1048576;
 
+function validateFileExtension(
+	acceptedFileExtensions: string,
+	fileExtension: string
+) {
+	const isValidExtension = acceptedFileExtensions
+		.split(/\s*,\s*/)
+		.some(
+			(acceptedFileExtension) =>
+				acceptedFileExtension.toLowerCase() ===
+				fileExtension.toLowerCase()
+		);
+
+	if (!isValidExtension) {
+		return {
+			displayErrors: true,
+			errorMessage: Liferay.Util.sub(
+				Liferay.Language.get(
+					'please-enter-a-file-with-a-valid-extension-x'
+				),
+				acceptedFileExtensions
+			),
+			valid: false,
+		};
+	}
+}
+
+function validateFileSize(fileSize: number, maxFileSize: number) {
+	if (maxFileSize > 0 && fileSize > maxFileSize * BYTES_PER_MB) {
+		return {
+			displayErrors: true,
+			errorMessage: Liferay.Util.sub(
+				Liferay.Language.get(
+					'please-enter-a-file-with-a-valid-file-size-no-larger-than-x'
+				),
+				`${maxFileSize} MB`
+			),
+			valid: false,
+		};
+	}
+}
+
 function File({attachment, loading, onDelete}: IFileProps) {
 	if (loading) {
 		return (
@@ -127,9 +168,23 @@ export default function Attachment({
 	};
 
 	const handleSelectedItem = (selectedItem: any) => {
-		if (selectedItem) {
-			const selectedItemValue = JSON.parse(selectedItem.value);
+		if (!selectedItem) {
+			return;
+		}
 
+		const selectedItemValue = JSON.parse(selectedItem.value);
+
+		const error =
+			validateFileExtension(
+				acceptedFileExtensions,
+				selectedItemValue.extension
+			) ??
+			validateFileSize(selectedItemValue.size, Number(maximumFileSize));
+
+		if (error) {
+			setError(error);
+		}
+		else {
 			onChange({target: {value: selectedItemValue.fileEntryId}});
 		}
 	};
@@ -139,34 +194,37 @@ export default function Attachment({
 	}) => {
 		const selectedFile = files?.[0];
 		if (selectedFile) {
-			const maxFileSize = Number(maximumFileSize);
+			const fileSizeError = validateFileSize(
+				selectedFile.size,
+				Number(maximumFileSize)
+			);
 
-			if (selectedFile.size > maxFileSize * BYTES_PER_MB) {
-				setError({
-					displayErrors: true,
-					errorMessage: Liferay.Util.sub(
-						Liferay.Language.get(
-							'please-enter-a-file-with-a-valid-file-size-no-larger-than-x'
-						),
-						`${maxFileSize} MB`
-					),
-					valid: false,
-				});
+			if (fileSizeError) {
+				setError(fileSizeError);
 
 				return;
 			}
 			setError({});
 			setLoading(true);
 			try {
-				const {file} = (await makeFetch({
+				const {error, file} = (await makeFetch({
 					body: convertToFormData({
 						[`${portletNamespace}file`]: files[0],
 					}),
 					method: 'POST',
 					url,
-				})) as {file: File; success: boolean};
+				})) as {error: {message: string}; file: File; success: boolean};
 
-				onChange({target: {value: file.fileEntryId}});
+				if (error) {
+					setError({
+						displayErrors: true,
+						errorMessage: error.message,
+						valid: false,
+					});
+				}
+				else {
+					onChange({target: {value: file.fileEntryId}});
+				}
 			}
 			finally {
 				setLoading(false);

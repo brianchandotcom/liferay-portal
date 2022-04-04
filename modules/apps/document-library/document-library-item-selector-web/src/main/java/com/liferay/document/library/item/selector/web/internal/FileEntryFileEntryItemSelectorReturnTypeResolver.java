@@ -94,6 +94,8 @@ public class FileEntryFileEntryItemSelectorReturnTypeResolver
 				return null;
 			}
 		).put(
+			"size", fileEntry.getSize()
+		).put(
 			"title", fileEntry.getTitle()
 		).put(
 			"type", "document"

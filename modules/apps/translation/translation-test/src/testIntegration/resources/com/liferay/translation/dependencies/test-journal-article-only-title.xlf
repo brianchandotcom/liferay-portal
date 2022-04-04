@@ -2,7 +2,7 @@
 
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" srcLang="en-US" trgLang="es-ES" version="2.0">
 	<file id="com.liferay.journal.model.JournalArticle:[$JOURNAL_ARTICLE_ID$]">
-		<unit id="title">
+		<unit id="JournalArticle_title">
 			<segment>
 				<source><![CDATA[This is the Title]]></source>
 				<target><![CDATA[Este es el titulo]]></target>

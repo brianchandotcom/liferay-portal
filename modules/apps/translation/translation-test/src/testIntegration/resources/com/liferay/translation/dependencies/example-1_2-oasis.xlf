@@ -18,15 +18,15 @@
 			</phase-group>
 		</header>
 		<body>
-			<trans-unit id="title" maxbytes="14">
+			<trans-unit id="JournalArticle_title" maxbytes="14">
 				<source xml:lang="en-US">Quetzal</source>
 				<target xml:lang="ja-JP">Quetzal</target>
 			</trans-unit>
-			<trans-unit id="description" maxbytes="36">
+			<trans-unit id="JournalArticle_description" maxbytes="36">
 				<source xml:lang="en-US"><![CDATA[XLIFF Data Manager]]></source>
 				<target xml:lang="ja-JP"><![CDATA[XLIFF データ・マネージャ]]></target>
 			</trans-unit>
-			<trans-unit id="name" maxbytes="114">
+			<trans-unit id="JournalArticle_name" maxbytes="114">
 				<source xml:lang="en-US"><![CDATA[An application to manipulate and
 					process XLIFF documents]]></source>
 				<target xml:lang="ja-JP"><![CDATA[<p>XLIFF 文書を編集、または処理 するアプリケーションです。</p>]]></target>

@@ -2,37 +2,37 @@
 
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" srcLang="en-US" trgLang="es-ES" version="2.0">
 	<file id="com.liferay.journal.model.JournalArticle:[$JOURNAL_ARTICLE_ID$]">
-		<unit id="title">
+		<unit id="JournalArticle_title">
 			<segment>
 				<source><![CDATA[Test Article]]></source>
 				<target><![CDATA[Test Article]]></target>
 			</segment>
 		</unit>
-		<unit id="description">
+		<unit id="JournalArticle_description">
 			<segment>
 				<source><![CDATA[]]></source>
 				<target><![CDATA[]]></target>
 			</segment>
 		</unit>
-		<unit id="HTML4acl">
+		<unit id="DDMStructure_HTML4acl">
 			<segment>
 				<source><![CDATA[<p>Some HTML</p>]]></source>
 				<target><![CDATA[<p>Un poco de HTML</p>]]></target>
 			</segment>
 		</unit>
-		<unit id="Text1gf6">
+		<unit id="DDMStructure_Text1gf6">
 			<segment>
 				<source><![CDATA[Some Text]]></source>
 				<target><![CDATA[Un poco de texto]]></target>
 			</segment>
 		</unit>
-		<unit id="Double89452576">
+		<unit id="DDMStructure_Double89452576">
 			<segment>
 				<source><![CDATA[1.0]]></source>
 				<target><![CDATA[1,0]]></target>
 			</segment>
 		</unit>
-		<unit id="Integer2cc6">
+		<unit id="DDMStructure_Integer2cc6">
 			<segment>
 				<source><![CDATA[1]]></source>
 				<target><![CDATA[1]]></target>

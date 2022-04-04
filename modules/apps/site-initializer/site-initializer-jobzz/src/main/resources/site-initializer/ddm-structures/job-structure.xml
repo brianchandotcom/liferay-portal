@@ -1,0 +1,384 @@
+<?xml version="1.0"?>
+<root>
+    <structure>
+        <name>Job</name>
+        <description></description>
+        <definition>
+            <![CDATA[
+				{
+	"definitionSchemaVersion": "2.0",
+	"availableLanguageIds": ["en_US"],
+	"successPage": {
+		"body": {},
+		"title": {},
+		"enabled": false
+	},
+	"defaultLanguageId": "en_US",
+	"fields": [{
+		"labelAtStructureLevel": true,
+		"tooltip": {
+			"en_US": ""
+		},
+		"requireConfirmation": false,
+		"type": "numeric",
+		"showLabel": true,
+		"required": false,
+		"characterOptions": false,
+		"repeatable": false,
+		"nativeField": false,
+		"confirmationLabel": {
+			"en_US": ""
+		},
+		"fieldReference": "hours_per_week",
+		"tip": {
+			"en_US": ""
+		},
+		"numericInputMask": {
+			"en_US": "{\"decimalPlaces\":2,\"append\":\"\",\"symbols\":{\"decimalSymbol\":\".\",\"thousandsSeparator\":\"none\"},\"appendType\":\"prefix\"}"
+		},
+		"placeholder": {
+			"en_US": ""
+		},
+		"direction": ["vertical"],
+		"hideField": false,
+		"confirmationErrorMessage": {
+			"en_US": ""
+		},
+		"dataType": "integer",
+		"readOnly": false,
+		"label": {
+			"en_US": "Hours per week"
+		},
+		"inputMask": false,
+		"fieldNamespace": "",
+		"visibilityExpression": "",
+		"indexType": "keyword",
+		"inputMaskFormat": {
+			"en_US": ""
+		},
+		"name": "hours_per_week",
+		"localizable": true
+	}, {
+		"labelAtStructureLevel": true,
+		"ddmDataProviderInstanceId": [],
+		"dataType": "string",
+		"multiple": false,
+		"readOnly": false,
+		"label": {
+			"en_US": "Educational Level"
+		},
+		"type": "select",
+		"showLabel": true,
+		"required": false,
+		"fieldNamespace": "",
+		"visibilityExpression": "",
+		"indexType": "keyword",
+		"ddmDataProviderInstanceOutput": [],
+		"alphabeticalOrder": true,
+		"repeatable": false,
+		"name": "educational_level",
+		"options": [{
+			"reference": "bachelor",
+			"label": {
+				"en_US": "Bachelor"
+			},
+			"value": "bachelor"
+		}, {
+			"reference": "master",
+			"label": {
+				"en_US": "Master"
+			},
+			"value": "master"
+		}, {
+			"reference": "doctorate",
+			"label": {
+				"en_US": "Doctorate"
+			},
+			"value": "doctorate"
+		}],
+		"nativeField": false,
+		"localizable": true,
+		"fieldReference": "educational_level",
+		"tip": {
+			"en_US": ""
+		},
+		"dataSourceType": ["manual"]
+	}, {
+		"labelAtStructureLevel": true,
+		"ddmDataProviderInstanceId": [],
+		"tooltip": {
+			"en_US": ""
+		},
+		"requireConfirmation": false,
+		"type": "text",
+		"showLabel": true,
+		"required": false,
+		"displayStyle": "singleline",
+		"ddmDataProviderInstanceOutput": [],
+		"repeatable": false,
+		"nativeField": false,
+		"confirmationLabel": {
+			"en_US": ""
+		},
+		"fieldReference": "location",
+		"tip": {
+			"en_US": ""
+		},
+		"placeholder": {
+			"en_US": ""
+		},
+		"direction": ["vertical"],
+		"hideField": false,
+		"confirmationErrorMessage": {
+			"en_US": ""
+		},
+		"autocomplete": false,
+		"dataType": "string",
+		"readOnly": false,
+		"label": {
+			"en_US": "Location"
+		},
+		"fieldNamespace": "",
+		"visibilityExpression": "",
+		"indexType": "keyword",
+		"name": "location",
+		"localizable": true,
+		"dataSourceType": ""
+	}, {
+		"labelAtStructureLevel": true,
+		"dataType": "string",
+		"readOnly": false,
+		"showAsSwitcher": true,
+		"label": {
+			"en_US": "Share"
+		},
+		"type": "checkbox_multiple",
+		"showLabel": true,
+		"required": false,
+		"fieldNamespace": "",
+		"visibilityExpression": "",
+		"indexType": "keyword",
+		"inline": true,
+		"repeatable": false,
+		"name": "some",
+		"options": [{
+			"reference": "linkedin",
+			"label": {
+				"en_US": "LinkedIN"
+			},
+			"value": "linkedin"
+		}, {
+			"reference": "facebook",
+			"label": {
+				"en_US": "Facebook"
+			},
+			"value": "facebook"
+		}, {
+			"reference": "jobbird",
+			"label": {
+				"en_US": "Jobbird"
+			},
+			"value": "jobbird"
+		}, {
+			"reference": "indeed",
+			"label": {
+				"en_US": "Indeed"
+			},
+			"value": "indeed"
+		}],
+		"nativeField": false,
+		"localizable": false,
+		"fieldReference": "share",
+		"tip": {
+			"en_US": ""
+		}
+	}, {
+		"rulesConditionDisabled": true,
+		"dataType": "",
+		"readOnly": false,
+		"label": {
+			"en_US": "Job"
+		},
+		"type": "separator",
+		"showLabel": true,
+		"required": false,
+		"repeatable": false,
+		"name": "Separator23323087",
+		"localizable": false,
+		"fieldReference": "Separator21690222",
+		"tip": {
+			"en_US": ""
+		},
+		"style": {
+			"en_US": ""
+		}
+	}, {
+		"labelAtStructureLevel": true,
+		"ddmDataProviderInstanceId": [],
+		"tooltip": {
+			"en_US": ""
+		},
+		"requireConfirmation": false,
+		"type": "text",
+		"showLabel": true,
+		"required": false,
+		"displayStyle": "multiline",
+		"ddmDataProviderInstanceOutput": [],
+		"repeatable": false,
+		"nativeField": false,
+		"confirmationLabel": {
+			"en_US": ""
+		},
+		"fieldReference": "intro",
+		"tip": {
+			"en_US": ""
+		},
+		"placeholder": {
+			"en_US": ""
+		},
+		"direction": ["vertical"],
+		"hideField": false,
+		"confirmationErrorMessage": {
+			"en_US": ""
+		},
+		"autocomplete": false,
+		"dataType": "string",
+		"readOnly": false,
+		"label": {
+			"en_US": "Intro"
+		},
+		"fieldNamespace": "",
+		"visibilityExpression": "",
+		"indexType": "keyword",
+		"name": "intro",
+		"localizable": true,
+		"dataSourceType": ""
+	}, {
+		"labelAtStructureLevel": true,
+		"ddmDataProviderInstanceId": [],
+		"tooltip": {
+			"en_US": ""
+		},
+		"requireConfirmation": false,
+		"type": "text",
+		"showLabel": true,
+		"required": false,
+		"displayStyle": "multiline",
+		"ddmDataProviderInstanceOutput": [],
+		"repeatable": false,
+		"nativeField": false,
+		"confirmationLabel": {
+			"en_US": ""
+		},
+		"fieldReference": "description",
+		"tip": {
+			"en_US": ""
+		},
+		"placeholder": {
+			"en_US": ""
+		},
+		"direction": ["vertical"],
+		"hideField": false,
+		"confirmationErrorMessage": {
+			"en_US": ""
+		},
+		"autocomplete": false,
+		"dataType": "string",
+		"readOnly": false,
+		"label": {
+			"en_US": "Description"
+		},
+		"fieldNamespace": "",
+		"visibilityExpression": "",
+		"indexType": "keyword",
+		"name": "description",
+		"localizable": true,
+		"dataSourceType": ""
+	}, {
+		"labelAtStructureLevel": true,
+		"ddmDataProviderInstanceId": [],
+		"tooltip": {
+			"en_US": ""
+		},
+		"requireConfirmation": false,
+		"type": "text",
+		"showLabel": true,
+		"required": false,
+		"displayStyle": "multiline",
+		"ddmDataProviderInstanceOutput": [],
+		"repeatable": false,
+		"nativeField": false,
+		"confirmationLabel": {
+			"en_US": ""
+		},
+		"fieldReference": "what_we_need",
+		"tip": {
+			"en_US": ""
+		},
+		"placeholder": {
+			"en_US": ""
+		},
+		"direction": ["vertical"],
+		"hideField": false,
+		"confirmationErrorMessage": {
+			"en_US": ""
+		},
+		"autocomplete": false,
+		"dataType": "string",
+		"readOnly": false,
+		"label": {
+			"en_US": "What we need"
+		},
+		"fieldNamespace": "",
+		"visibilityExpression": "",
+		"indexType": "keyword",
+		"name": "whatweneed",
+		"localizable": true,
+		"dataSourceType": ""
+	}, {
+		"labelAtStructureLevel": true,
+		"ddmDataProviderInstanceId": [],
+		"tooltip": {
+			"en_US": ""
+		},
+		"requireConfirmation": false,
+		"type": "text",
+		"showLabel": true,
+		"required": false,
+		"displayStyle": "multiline",
+		"ddmDataProviderInstanceOutput": [],
+		"repeatable": false,
+		"nativeField": false,
+		"confirmationLabel": {
+			"en_US": ""
+		},
+		"fieldReference": "what_we_offer",
+		"tip": {
+			"en_US": ""
+		},
+		"placeholder": {
+			"en_US": ""
+		},
+		"direction": ["vertical"],
+		"hideField": false,
+		"confirmationErrorMessage": {
+			"en_US": ""
+		},
+		"autocomplete": false,
+		"dataType": "string",
+		"readOnly": false,
+		"label": {
+			"en_US": "What we offer"
+		},
+		"fieldNamespace": "",
+		"visibilityExpression": "",
+		"indexType": "keyword",
+		"name": "whatweoffer",
+		"localizable": true,
+		"dataSourceType": ""
+	}]
+}
+			]]>
+        </definition>
+    </structure>
+</root>

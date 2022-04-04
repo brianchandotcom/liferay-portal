@@ -66,8 +66,8 @@ public class TalendDispatchTaskExecutorTest {
 	public void testExecute() throws Exception {
 		DispatchTrigger dispatchTrigger =
 			_dispatchTriggerLocalService.addDispatchTrigger(
-				TestPropsValues.getUserId(), "talend", new UnicodeProperties(),
-				"TalendDispatchTrigger", false);
+				null, TestPropsValues.getUserId(), "talend",
+				new UnicodeProperties(), "TalendDispatchTrigger", false);
 
 		_dispatchFileRepository.addFileEntry(
 			dispatchTrigger.getUserId(), dispatchTrigger.getDispatchTriggerId(),
@@ -102,7 +102,7 @@ public class TalendDispatchTaskExecutorTest {
 	public void testExecuteLiferayOutputBlog() throws Exception {
 		DispatchTrigger dispatchTrigger =
 			_dispatchTriggerLocalService.addDispatchTrigger(
-				TestPropsValues.getUserId(), "talend",
+				null, TestPropsValues.getUserId(), "talend",
 				UnicodePropertiesBuilder.put(
 					"liferayUser", "test@liferay.com"
 				).put(

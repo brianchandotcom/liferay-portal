@@ -20,6 +20,7 @@ import {ChartStateContextProvider} from '../context/ChartStateContext';
 import ConnectionContext from '../context/ConnectionContext';
 import {StoreContextProvider} from '../context/StoreContext';
 import {dataReducer, initialState} from '../context/dataReducer';
+import ConnectToAC from './ConnectToAC';
 import Navigation from './Navigation';
 
 import '../../css/analytics-reports-app.scss';
@@ -27,6 +28,7 @@ import '../../css/analytics-reports-app.scss';
 export default function AnalyticsReports({
 	analyticsReportsDataURL,
 	hoverOrFocusEventTriggered,
+	isAnalyticsSynced,
 	isPanelStateOpen,
 }) {
 	const isMounted = useIsMounted();
@@ -126,19 +128,23 @@ export default function AnalyticsReports({
 						timeRange={data?.timeRange}
 						timeSpanKey={data?.timeSpanKey}
 					>
-						<div className="analytics-reports-app">
-							<Navigation
-								author={data?.author}
-								canonicalURL={data?.canonicalURL}
-								onSelectedLanguageClick={
-									handleSelectedLanguageClick
-								}
-								pagePublishDate={data?.publishDate}
-								pageTitle={data?.title}
-								timeSpanOptions={data?.timeSpans}
-								viewURLs={data?.viewURLs}
-							/>
-						</div>
+						{isAnalyticsSynced ? (
+							<div className="analytics-reports-app">
+								<Navigation
+									author={data?.author}
+									canonicalURL={data?.canonicalURL}
+									onSelectedLanguageClick={
+										handleSelectedLanguageClick
+									}
+									pagePublishDate={data?.publishDate}
+									pageTitle={data?.title}
+									timeSpanOptions={data?.timeSpans}
+									viewURLs={data?.viewURLs}
+								/>
+							</div>
+						) : (
+							<ConnectToAC />
+						)}
 					</ChartStateContextProvider>
 				</StoreContextProvider>
 			</ConnectionContext.Provider>
@@ -149,5 +155,10 @@ export default function AnalyticsReports({
 AnalyticsReports.propTypes = {
 	analyticsReportsDataURL: PropTypes.string.isRequired,
 	hoverOrFocusEventTriggered: PropTypes.bool.isRequired,
+	isAnalyticsSynced: PropTypes.bool,
 	isPanelStateOpen: PropTypes.bool.isRequired,
+};
+
+AnalyticsReports.defaultProps = {
+	isAnalyticsSynced: false,
 };

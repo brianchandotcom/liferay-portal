@@ -66,11 +66,13 @@ export default function AnalyticsReportsApp({context, portletNamespace}) {
 	);
 
 	return (
-		<AnalyticsReports
-			analyticsReportsDataURL={analyticsReportsDataURL}
-			hoverOrFocusEventTriggered={hoverOrFocusEventTriggered}
-			isPanelStateOpen={isPanelStateOpen}
-		/>
+		<div id={`${portletNamespace}-analytics-reports-root`}>
+			<AnalyticsReports
+				analyticsReportsDataURL={analyticsReportsDataURL}
+				hoverOrFocusEventTriggered={hoverOrFocusEventTriggered}
+				isPanelStateOpen={isPanelStateOpen}
+			/>
+		</div>
 	);
 }
 

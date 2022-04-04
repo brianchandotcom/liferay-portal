@@ -19,20 +19,16 @@
 <%
 AnalyticsReportsDisplayContext analyticsReportsDisplayContext = (AnalyticsReportsDisplayContext)request.getAttribute(AnalyticsReportsWebKeys.ANALYTICS_REPORTS_DISPLAY_CONTEXT);
 %>
+<span
+	aria-hidden="true"
+	className="loading-animation loading-animation-sm"
+></span>
+<react:component
+	module="js/AnalyticsReportsApp"
+	props="<%= analyticsReportsDisplayContext.getData() %>"
+/>
 
-<c:choose>
-	<c:when test="<%= analyticsReportsDisplayContext.isAnalyticsSynced() %>">
-		<div id="<portlet:namespace />-analytics-reports-root">
-			<span aria-hidden="true" class="loading-animation loading-animation-sm"></span>
-
-			<react:component
-				module="js/AnalyticsReportsApp"
-				props="<%= analyticsReportsDisplayContext.getData() %>"
-			/>
-		</div>
-	</c:when>
-	<c:otherwise>
-		<div id="<portlet:namespace />-analytics-reports-root">
+		<!--
 			<div class="p-3 pt-4 text-center">
 				<liferay-ui:icon
 					alt="connect-to-liferay-analytics-cloud"
@@ -80,6 +76,4 @@ AnalyticsReportsDisplayContext analyticsReportsDisplayContext = (AnalyticsReport
 					</c:otherwise>
 				</c:choose>
 			</div>
-		</div>
-	</c:otherwise>
-</c:choose>
+ -->

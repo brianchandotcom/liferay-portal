@@ -24,8 +24,8 @@ import com.liferay.commerce.service.CommerceShippingMethodService;
 import com.liferay.commerce.service.CommerceShippingOptionAccountEntryRelService;
 import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption;
 import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionService;
-import com.liferay.commerce.shipping.engine.fixed.util.comparator.CommerceShippingFixedOptionPriorityComparator;
-import com.liferay.commerce.util.comparator.CommerceShippingMethodPriorityComparator;
+import com.liferay.commerce.shipping.engine.fixed.util.comparator.CommerceShippingFixedOptionNameComparator;
+import com.liferay.commerce.util.comparator.CommerceShippingMethodNameComparator;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -107,6 +107,8 @@ public class CommerceAccountDisplayContext {
 			return Collections.emptyList();
 		}
 
+		Locale locale = _portal.getLocale(_httpServletRequest);
+
 		List<CommerceShippingFixedOption> commerceShippingFixedOptions =
 			new ArrayList<>();
 
@@ -114,14 +116,15 @@ public class CommerceAccountDisplayContext {
 				_commerceShippingMethodService.getCommerceShippingMethods(
 					_commerceChannel.getGroupId(), QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS,
-					new CommerceShippingMethodPriorityComparator())) {
+					new CommerceShippingMethodNameComparator(true, locale))) {
 
 			commerceShippingFixedOptions.addAll(
 				_commerceShippingFixedOptionService.
 					getCommerceShippingFixedOptions(
 						commerceShippingMethod.getCommerceShippingMethodId(),
 						QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-						new CommerceShippingFixedOptionPriorityComparator()));
+						new CommerceShippingFixedOptionNameComparator(
+							true, locale)));
 		}
 
 		return commerceShippingFixedOptions;

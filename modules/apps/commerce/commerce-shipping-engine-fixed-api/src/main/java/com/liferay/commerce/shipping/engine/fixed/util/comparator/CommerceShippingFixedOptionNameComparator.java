@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.commerce.util.comparator;
+package com.liferay.commerce.shipping.engine.fixed.util.comparator;
 
-import com.liferay.commerce.model.CommerceShippingMethod;
+import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption;
 import com.liferay.portal.kernel.util.CollatorUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -25,36 +25,37 @@ import java.util.Locale;
 /**
  * @author Alessio Antonio Rendina
  */
-public class CommerceShippingMethodNameComparator
-	extends OrderByComparator<CommerceShippingMethod> {
+public class CommerceShippingFixedOptionNameComparator
+	extends OrderByComparator<CommerceShippingFixedOption> {
 
-	public static final String ORDER_BY_ASC = "CommerceShippingMethod.name ASC";
+	public static final String ORDER_BY_ASC =
+		"CommerceShippingFixedOption.name ASC";
 
 	public static final String ORDER_BY_DESC =
-		"CommerceShippingMethod.name DESC";
+		"CommerceShippingFixedOption.name DESC";
 
 	public static final String[] ORDER_BY_FIELDS = {"name"};
 
-	public CommerceShippingMethodNameComparator(
+	public CommerceShippingFixedOptionNameComparator(
 		boolean ascending, Locale locale) {
 
 		_ascending = ascending;
 		_locale = locale;
 	}
 
-	public CommerceShippingMethodNameComparator(Locale locale) {
+	public CommerceShippingFixedOptionNameComparator(Locale locale) {
 		this(false, locale);
 	}
 
 	@Override
 	public int compare(
-		CommerceShippingMethod commerceShippingMethod1,
-		CommerceShippingMethod commerceShippingMethod2) {
+		CommerceShippingFixedOption commerceShippingFixedOption1,
+		CommerceShippingFixedOption commerceShippingFixedOption2) {
 
 		Collator collator = CollatorUtil.getInstance(_locale);
 
-		String name1 = commerceShippingMethod1.getName(_locale);
-		String name2 = commerceShippingMethod2.getName(_locale);
+		String name1 = commerceShippingFixedOption1.getName(_locale);
+		String name2 = commerceShippingFixedOption2.getName(_locale);
 
 		int value = collator.compare(name1, name2);
 

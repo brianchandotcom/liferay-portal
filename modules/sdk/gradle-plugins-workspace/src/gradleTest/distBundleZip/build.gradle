@@ -19,17 +19,18 @@ runGradleTest {
 	dependsOn distBundleZip
 
 	doLast {
-		def portalExtPropertiesCount = 0;
+		int portalExtPropertiesCount = 0
 
 		ZipInputStream zipInputStream = new ZipInputStream(new FileInputStream(distBundleZip.archivePath))
 
-		ZipEntry zipIteratorEntry = zipInputStream.getNextEntry()
+		ZipEntry nextZipEntry = zipInputStream.getNextEntry()
 
-		while (zipIteratorEntry != null) {
-			if (!zipIteratorEntry.isDirectory() && zipIteratorEntry.name.endsWith("portal-ext.properties") ) {
+		while (nextZipEntry != null) {
+			if (!nextZipEntry.isDirectory() && nextZipEntry.name.endsWith("portal-ext.properties")) {
 				portalExtPropertiesCount++
 			}
-			zipIteratorEntry = zipInputStream.getNextEntry()
+
+			nextZipEntry = zipInputStream.getNextEntry()
 		}
 
 		zipInputStream.closeEntry()

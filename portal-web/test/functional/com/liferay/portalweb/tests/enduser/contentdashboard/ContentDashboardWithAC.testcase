@@ -184,11 +184,7 @@ definition {
 		task ("Go to Content Dashboard and click on View Metrics in the kebab menu") {
 			ContentDashboard.goToContentDashboard();
 
-			Click(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON");
-
-			Click(
-				key_dropdownItem = "View Metrics",
-				locator1 = "ACUtils#DROPDOWN_ITEM");
+			ContentDashboard.openViewMetricsByDropdownMenu();
 		}
 
 		task ("Assert the Content Performance is present") {

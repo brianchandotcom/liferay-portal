@@ -231,6 +231,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ERROR_IMPORT_TRANSLATIONS_ITEM_ZIP</td>
+	<td>//div[contains(@class,'text-danger')]/preceding-sibling::div//div[contains(@class,'text-right')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ERROR_INVALID_FACEBOOK_VIDEO</td>
 	<td>//div[contains(@class,'pluginSkinLight')]//div</td>
 	<td></td>

@@ -340,7 +340,9 @@ definition {
 					failFileName2 = "${failFileName2}",
 					successFileName = "${successFileName}",
 					successFileName2 = "${successFileName2}",
-					successFileNumber = "${successFileNumber}");
+					successFileName3 = "${successFileName3}",
+					successFileNumber = "${successFileNumber}",
+					zipFileName = "${zipFileName}");
 			}
 
 			if (isSet(uploadAnotherFile)) {
@@ -767,7 +769,7 @@ definition {
 
 			if (isSet(zipFileName)) {
 				AssertTextEquals(
-					locator1 = "Message#ERROR_IMPORT_TRANSLATIONS_ITEM",
+					locator1 = "Message#ERROR_IMPORT_TRANSLATIONS_ITEM_ZIP",
 					value1 = "${zipFileName}");
 			}
 		}

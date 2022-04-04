@@ -1,0 +1,54 @@
+@component-name = "portal-solutions"
+definition {
+
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Testray 2";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Testray.createTestraySite(siteName = "Testray 2");
+
+		Refresh();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		Testray.tearDownCP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "LPS-149615 - Verify that user can can go to the 'Manage Users' page."
+	@priority = "5"
+	test CanAcessManageUser {
+		ApplicationsMenu.gotoSite(site = "Testray 2");
+
+		Click(locator1 = "TestrayUser#USER_ICON_SIDEBAR");
+
+		Click(locator1 = "TestrayUser#MANAGE_ACCOUNT");
+
+		AssertElementPresent(
+			key_projectName = "Project Directory",
+			locator1 = "TestrayDropdown#PROJECT_NAME_BREADCRUMBS");
+	}
+
+	@description = "LPS-149616 - Verify that user can Sign Out."
+	@priority = "5"
+	test CanSignOut {
+		ApplicationsMenu.gotoSite(site = "Testray 2");
+
+		Testray.signOutTestray();
+
+		IsElementNotPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
+
+		User.firstLoginPG();
+	}
+
+} 

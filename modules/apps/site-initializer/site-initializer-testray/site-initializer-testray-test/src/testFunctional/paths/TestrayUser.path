@@ -1,0 +1,31 @@
+<html>
+<head>
+<title>TestrayUser</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">TestrayUser</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>USER_ICON_SIDEBAR</td>
+	<td>//div[contains(@class, 'dropdown')]//span[contains(., 'Test Test')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MANAGE_ACCOUNT</td>
+	<td>//span[contains(text(),'Manage Account')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SIGN_OUT</td>
+	<td>//span[contains(text(),'Sign Out')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

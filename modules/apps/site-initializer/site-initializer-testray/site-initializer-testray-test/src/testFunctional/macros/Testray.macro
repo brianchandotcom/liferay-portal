@@ -128,4 +128,10 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro signOutTestray {
+		Click(locator1 = "TestrayUser#USER_ICON_SIDEBAR");
+
+		Click(locator1 = "TestrayUser#SIGN_OUT");
+	}
+
 }

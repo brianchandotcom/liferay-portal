@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
@@ -722,6 +723,8 @@ public class Mutation {
 		accountResource.setContextUser(_user);
 		accountResource.setGroupLocalService(_groupLocalService);
 		accountResource.setRoleLocalService(_roleLocalService);
+		accountResource.setVulcanBatchEngineImportTaskResource(
+			_vulcanBatchEngineImportTaskResource);
 	}
 
 	private void _populateResourceContext(
@@ -738,6 +741,8 @@ public class Mutation {
 		accountAddressResource.setContextUser(_user);
 		accountAddressResource.setGroupLocalService(_groupLocalService);
 		accountAddressResource.setRoleLocalService(_roleLocalService);
+		accountAddressResource.setVulcanBatchEngineImportTaskResource(
+			_vulcanBatchEngineImportTaskResource);
 	}
 
 	private void _populateResourceContext(
@@ -753,6 +758,8 @@ public class Mutation {
 		accountGroupResource.setContextUser(_user);
 		accountGroupResource.setGroupLocalService(_groupLocalService);
 		accountGroupResource.setRoleLocalService(_roleLocalService);
+		accountGroupResource.setVulcanBatchEngineImportTaskResource(
+			_vulcanBatchEngineImportTaskResource);
 	}
 
 	private void _populateResourceContext(
@@ -768,6 +775,8 @@ public class Mutation {
 		accountMemberResource.setContextUser(_user);
 		accountMemberResource.setGroupLocalService(_groupLocalService);
 		accountMemberResource.setRoleLocalService(_roleLocalService);
+		accountMemberResource.setVulcanBatchEngineImportTaskResource(
+			_vulcanBatchEngineImportTaskResource);
 	}
 
 	private void _populateResourceContext(
@@ -784,6 +793,8 @@ public class Mutation {
 		accountOrganizationResource.setContextUser(_user);
 		accountOrganizationResource.setGroupLocalService(_groupLocalService);
 		accountOrganizationResource.setRoleLocalService(_roleLocalService);
+		accountOrganizationResource.setVulcanBatchEngineImportTaskResource(
+			_vulcanBatchEngineImportTaskResource);
 	}
 
 	private void _populateResourceContext(UserResource userResource)
@@ -797,6 +808,8 @@ public class Mutation {
 		userResource.setContextUser(_user);
 		userResource.setGroupLocalService(_groupLocalService);
 		userResource.setRoleLocalService(_roleLocalService);
+		userResource.setVulcanBatchEngineImportTaskResource(
+			_vulcanBatchEngineImportTaskResource);
 	}
 
 	private static ComponentServiceObjects<AccountResource>
@@ -821,5 +834,7 @@ public class Mutation {
 	private BiFunction<Object, String, Sort[]> _sortsBiFunction;
 	private UriInfo _uriInfo;
 	private com.liferay.portal.kernel.model.User _user;
+	private VulcanBatchEngineImportTaskResource
+		_vulcanBatchEngineImportTaskResource;
 
 }

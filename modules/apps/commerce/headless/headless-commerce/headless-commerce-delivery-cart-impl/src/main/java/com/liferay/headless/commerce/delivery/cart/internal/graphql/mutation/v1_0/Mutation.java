@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 
@@ -369,6 +370,8 @@ public class Mutation {
 		cartResource.setContextUser(_user);
 		cartResource.setGroupLocalService(_groupLocalService);
 		cartResource.setRoleLocalService(_roleLocalService);
+		cartResource.setVulcanBatchEngineImportTaskResource(
+			_vulcanBatchEngineImportTaskResource);
 	}
 
 	private void _populateResourceContext(
@@ -383,6 +386,8 @@ public class Mutation {
 		cartCommentResource.setContextUser(_user);
 		cartCommentResource.setGroupLocalService(_groupLocalService);
 		cartCommentResource.setRoleLocalService(_roleLocalService);
+		cartCommentResource.setVulcanBatchEngineImportTaskResource(
+			_vulcanBatchEngineImportTaskResource);
 	}
 
 	private void _populateResourceContext(CartItemResource cartItemResource)
@@ -396,6 +401,8 @@ public class Mutation {
 		cartItemResource.setContextUser(_user);
 		cartItemResource.setGroupLocalService(_groupLocalService);
 		cartItemResource.setRoleLocalService(_roleLocalService);
+		cartItemResource.setVulcanBatchEngineImportTaskResource(
+			_vulcanBatchEngineImportTaskResource);
 	}
 
 	private static ComponentServiceObjects<CartResource>
@@ -414,5 +421,7 @@ public class Mutation {
 	private BiFunction<Object, String, Sort[]> _sortsBiFunction;
 	private UriInfo _uriInfo;
 	private com.liferay.portal.kernel.model.User _user;
+	private VulcanBatchEngineImportTaskResource
+		_vulcanBatchEngineImportTaskResource;
 
 }

@@ -34,6 +34,7 @@ import com.liferay.document.library.web.internal.helper.DLTrashHelper;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
@@ -238,20 +239,18 @@ public class UIItemsBuilder {
 		return true;
 	}
 	public DropdownItem getCheckoutDropdownItem() {
-		DropdownItem dropdownItem = new DropdownItem();
-
-		dropdownItem.setHref(
+		return DropdownItemBuilder.setHref(
 			PortletURLBuilder.create(
 				_getActionURL(
 					"/document_library/edit_file_entry", Constants.CHECKOUT)
 			).setParameter(
 				"fileEntryId", _fileEntry.getFileEntryId()
-			).buildString());
-		dropdownItem.setIcon("download");
-		dropdownItem.setLabel(
-			LanguageUtil.get(_httpServletRequest, "checkout[document]"));
-
-		return dropdownItem;
+			).buildString()
+		).setIcon(
+			"download"
+		).setLabel(
+			LanguageUtil.get(_httpServletRequest, "checkout[document]")
+		).build();
 	}
 
 	public void addCheckoutMenuItem(List<MenuItem> menuItems)
@@ -554,21 +553,21 @@ public class UIItemsBuilder {
 			_fileEntry, _fileVersion, _themeDisplay, StringPool.BLANK,
 			appendVersion, true);
 
-		DropdownItem dropdownItem = new DropdownItem();
-
-		dropdownItem.setData(
+		return DropdownItemBuilder.setData(
 			HashMapBuilder.<String, Object>put(
 				"analytics-file-entry-id", _fileEntry.getFileEntryId()
 			).put(
 				"analytics-file-entry-title", _fileEntry.getTitle()
 			).put(
 				"senna-off", "true"
-			).build());
-		dropdownItem.setHref(url);
-		dropdownItem.setIcon("download");
-		dropdownItem.setLabel(label);
-
-		return dropdownItem;
+			).build()
+		).setHref(
+			url
+		).setIcon(
+			"download"
+		).setLabel(
+			label
+		).build();
 	}
 
 	public void addDownloadMenuItem(List<MenuItem> menuItems)
@@ -668,13 +667,14 @@ public class UIItemsBuilder {
 
 		portletURL.setParameter("backURL", _getCurrentURL());
 
-		DropdownItem dropdownItem = new DropdownItem();
+		return DropdownItemBuilder.setHref(
+			portletURL.toString()
+		).setIcon(
+			"pencil"
+		).setLabel(
+			LanguageUtil.get(_httpServletRequest, "edit")
+		).build();
 
-		dropdownItem.setHref(portletURL.toString());
-		dropdownItem.setIcon("pencil");
-		dropdownItem.setLabel(LanguageUtil.get(_httpServletRequest, "edit"));
-
-		return dropdownItem;
 	}
 
 	public void addEditImageItem(List<MenuItem> menuItems)
@@ -997,18 +997,15 @@ public class UIItemsBuilder {
 			return null;
 		}
 
-		DropdownItem dropdownItem = new DropdownItem();
-
-		dropdownItem.setHref(
+		return DropdownItemBuilder.setHref(
 			PortletURLBuilder.create(
 				_getRenderURL("/document_library/view_file_entry")
 			).setParameter(
 				"fileEntryId", _fileShortcut.getToFileEntryId()
-			).buildString());
-		dropdownItem.setLabel(
-			LanguageUtil.get(_httpServletRequest, "view-original-file"));
-
-		return dropdownItem;
+			).buildString()
+		).setLabel(
+			LanguageUtil.get(_httpServletRequest, "view-original-file")
+		).build();
 	}
 
 	public void addViewOriginalFileMenuItem(List<MenuItem> menuItems) {

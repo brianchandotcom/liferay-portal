@@ -74,6 +74,10 @@ public abstract class BaseExportTaskResourceImpl implements ExportTaskResource {
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "externalReferenceCode"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "fieldNames"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -101,6 +105,9 @@ public abstract class BaseExportTaskResourceImpl implements ExportTaskResource {
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("callbackURL")
 			String callbackURL,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("externalReferenceCode")
+			String externalReferenceCode,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("fieldNames")
 			String fieldNames,

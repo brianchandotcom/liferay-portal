@@ -40,12 +40,14 @@ public interface ExportTaskResource {
 
 	public ExportTask postExportTask(
 			String className, String contentType, String callbackURL,
-			String fieldNames, String taskItemDelegateName)
+			String externalReferenceCode, String fieldNames,
+			String taskItemDelegateName)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postExportTaskHttpResponse(
 			String className, String contentType, String callbackURL,
-			String fieldNames, String taskItemDelegateName)
+			String externalReferenceCode, String fieldNames,
+			String taskItemDelegateName)
 		throws Exception;
 
 	public ExportTask getExportTask(Long exportTaskId) throws Exception;
@@ -132,12 +134,13 @@ public interface ExportTaskResource {
 
 		public ExportTask postExportTask(
 				String className, String contentType, String callbackURL,
-				String fieldNames, String taskItemDelegateName)
+				String externalReferenceCode, String fieldNames,
+				String taskItemDelegateName)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse = postExportTaskHttpResponse(
-				className, contentType, callbackURL, fieldNames,
-				taskItemDelegateName);
+				className, contentType, callbackURL, externalReferenceCode,
+				fieldNames, taskItemDelegateName);
 
 			String content = httpResponse.getContent();
 
@@ -178,7 +181,8 @@ public interface ExportTaskResource {
 
 		public HttpInvoker.HttpResponse postExportTaskHttpResponse(
 				String className, String contentType, String callbackURL,
-				String fieldNames, String taskItemDelegateName)
+				String externalReferenceCode, String fieldNames,
+				String taskItemDelegateName)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -208,6 +212,12 @@ public interface ExportTaskResource {
 			if (callbackURL != null) {
 				httpInvoker.parameter(
 					"callbackURL", String.valueOf(callbackURL));
+			}
+
+			if (externalReferenceCode != null) {
+				httpInvoker.parameter(
+					"externalReferenceCode",
+					String.valueOf(externalReferenceCode));
 			}
 
 			if (fieldNames != null) {

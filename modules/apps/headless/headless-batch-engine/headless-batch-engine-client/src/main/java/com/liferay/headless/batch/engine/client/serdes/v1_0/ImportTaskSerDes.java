@@ -131,6 +131,20 @@ public class ImportTaskSerDes {
 			sb.append("\"");
 		}
 
+		if (importTask.getExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(importTask.getExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (importTask.getFailedItems() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -284,6 +298,15 @@ public class ImportTaskSerDes {
 				"executeStatus", String.valueOf(importTask.getExecuteStatus()));
 		}
 
+		if (importTask.getExternalReferenceCode() == null) {
+			map.put("externalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"externalReferenceCode",
+				String.valueOf(importTask.getExternalReferenceCode()));
+		}
+
 		if (importTask.getFailedItems() == null) {
 			map.put("failedItems", null);
 		}
@@ -387,6 +410,14 @@ public class ImportTaskSerDes {
 					importTask.setExecuteStatus(
 						ImportTask.ExecuteStatus.create(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					importTask.setExternalReferenceCode(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "failedItems")) {

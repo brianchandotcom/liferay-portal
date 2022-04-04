@@ -129,6 +129,20 @@ public class ExportTaskSerDes {
 			sb.append("\"");
 		}
 
+		if (exportTask.getExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(exportTask.getExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (exportTask.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -234,6 +248,15 @@ public class ExportTaskSerDes {
 				"executeStatus", String.valueOf(exportTask.getExecuteStatus()));
 		}
 
+		if (exportTask.getExternalReferenceCode() == null) {
+			map.put("externalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"externalReferenceCode",
+				String.valueOf(exportTask.getExternalReferenceCode()));
+		}
+
 		if (exportTask.getId() == null) {
 			map.put("id", null);
 		}
@@ -314,6 +337,14 @@ public class ExportTaskSerDes {
 					exportTask.setExecuteStatus(
 						ExportTask.ExecuteStatus.create(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					exportTask.setExternalReferenceCode(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {

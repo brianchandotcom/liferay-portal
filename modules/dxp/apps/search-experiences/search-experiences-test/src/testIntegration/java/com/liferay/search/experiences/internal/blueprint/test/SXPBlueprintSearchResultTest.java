@@ -517,7 +517,7 @@ public class SXPBlueprintSearchResultTest {
 		_addJournalArticleSleep = 3;
 
 		_setUpJournalArticles(
-			new String[] {"", ""},
+			new String[] {"Created", ""},
 			new String[] {"First Created", "Second Created"});
 
 		_updateElementInstancesJSON(

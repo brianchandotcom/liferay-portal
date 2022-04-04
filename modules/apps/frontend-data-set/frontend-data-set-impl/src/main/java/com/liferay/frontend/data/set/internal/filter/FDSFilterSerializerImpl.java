@@ -58,6 +58,8 @@ public class FDSFilterSerializerImpl implements FDSFilterSerializer {
 			).put(
 				"label", label
 			).put(
+				"preloadedData", fdsFilter.getPreloadedData()
+			).put(
 				"type", fdsFilter.getType()
 			);
 

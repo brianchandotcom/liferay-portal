@@ -2791,7 +2791,7 @@ definition {
 
 		Button.clickSave();
 
-		Alert.viewErrorMessage(errorMessage = "TypeError: Cannot read property 'fieldSets' of undefined");
+		Alert.viewErrorMessage(errorMessage = "The title cannot be blank.");
 
 		var elementSourceJson = '''
 {

@@ -53,6 +53,7 @@ import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
+import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -1324,6 +1325,11 @@ public class GraphQLServletExtender {
 				field.set(
 					instance,
 					_portal.getUser(httpServletRequestOptional.orElse(null)));
+			}
+			else if (fieldClass.isAssignableFrom(VulcanBatchEngineImportTaskResource.class)) {
+				field.setAccessible(true);
+
+				field.set(instance, _vulcanBatchEngineImportTaskResource);
 			}
 			else {
 				Map<String, String[]> parameterMap = new HashMap<>(
@@ -2608,6 +2614,9 @@ public class GraphQLServletExtender {
 
 	@Reference
 	private SortParserProvider _sortParserProvider;
+
+	@Reference
+	private VulcanBatchEngineImportTaskResource _vulcanBatchEngineImportTaskResource;
 
 	private static class DateTypeFunction implements TypeFunction {
 

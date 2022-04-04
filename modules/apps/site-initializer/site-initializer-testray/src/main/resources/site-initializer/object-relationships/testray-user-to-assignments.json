@@ -1,0 +1,11 @@
+{
+	"deletionType": "cascade",
+	"label": {
+		"en-US": "User"
+	},
+	"name": "userToAssignments",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:User$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:Assignment$]",
+	"objectDefinitionName2": "Assignment",
+	"type": "oneToMany"
+}

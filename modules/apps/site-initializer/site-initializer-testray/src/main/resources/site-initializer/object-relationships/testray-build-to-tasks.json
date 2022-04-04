@@ -1,7 +1,7 @@
 {
 	"deletionType": "cascade",
 	"label": {
-		"en-US": "One Build to Many Tasks"
+		"en-US": "Testray Build"
 	},
 	"name": "buildToTasks",
 	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:Build$]",

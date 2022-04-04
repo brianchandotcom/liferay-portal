@@ -31,8 +31,8 @@
 			"type": "Clob"
 		},
 		{
-			"DBType": "String",
-			"businessType": "Text",
+			"DBType": "Clob",
+			"businessType": "LongText",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "",
@@ -41,7 +41,7 @@
 			},
 			"name": "value",
 			"required": false,
-			"type": "String"
+			"type": "Clob"
 		}
 	],
 	"pluralLabel": {

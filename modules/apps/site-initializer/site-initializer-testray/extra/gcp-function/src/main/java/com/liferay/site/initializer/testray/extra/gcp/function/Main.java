@@ -40,6 +40,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -96,6 +99,30 @@ public class Main {
 		_s3ErroredFolderName = s3ErroredFolderName;
 		_s3InboxFolderName = s3InboxFolderName;
 		_s3ProcessedFolderName = s3ProcessedFolderName;
+
+		_logger = Logger.getLogger(Main.class.getName());
+
+		try {
+			LocalDateTime localDateTime = LocalDateTime.now(ZoneOffset.UTC);
+
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(localDateTime.getYear());
+			sb.append("-");
+			sb.append(localDateTime.getMonthValue());
+			sb.append("-");
+			sb.append(localDateTime.getDayOfMonth());
+			sb.append(".log");
+
+			FileHandler fileHandler = new FileHandler(sb.toString(), true);
+
+			fileHandler.setFormatter(new SimpleFormatter());
+
+			_logger.addHandler(fileHandler);
+		}
+		catch (Exception exception) {
+			_logger.severe(exception.getMessage());
+		}
 	}
 
 	public void uploadToTestray() throws Exception {
@@ -118,6 +145,7 @@ public class Main {
 			}
 
 			try {
+				_logger.info("Processing archive " + name);
 				_processArchive(blob.getContent());
 
 				blob.copyTo(
@@ -126,6 +154,7 @@ public class Main {
 						_s3InboxFolderName, _s3ProcessedFolderName));
 			}
 			catch (Exception exception) {
+				_logger.severe(exception.getMessage());
 				blob.copyTo(
 					_s3BucketName,
 					name.replaceFirst(
@@ -186,7 +215,7 @@ public class Main {
 	}
 
 	private void _addTestrayCase(
-			Node testcaseNode, long testrayBuildId,
+			Node testcaseNode, long testrayBuildId, String testrayBuildTime,
 			Map<String, Object> testrayCasePropertiesMap, long testrayProjectId,
 			long testrayRunId)
 		throws Exception {
@@ -201,6 +230,9 @@ public class Main {
 
 		long testrayCaseId = _postObjectEntry(
 			HashMapBuilder.<String, Object>put(
+				"caseNumber",
+				_increment("projectId eq " + testrayProjectId, "cases")
+			).put(
 				"description",
 				testrayCasePropertiesMap.get("testray.testcase.description")
 			).put(
@@ -212,17 +244,15 @@ public class Main {
 					(String)testrayCasePropertiesMap.get(
 						"testray.case.type.name"))
 			).put(
-				"r_componentToCases_componentId", testrayComponentId
+				"r_componentToCases_c_componentId", testrayComponentId
 			).put(
 				"r_projectToCases_c_projectId", testrayProjectId
-			).put(
-				"r_teamToCases_teamId", testrayTeamId
 			).build(),
 			(String)testrayCasePropertiesMap.get("testray.testcase.name"),
 			"cases");
 
 		long testrayCaseResultId = _getTestrayCaseResultId(
-			testcaseNode, testrayBuildId, testrayCaseId,
+			testcaseNode, testrayBuildId, testrayBuildTime, testrayCaseId,
 			testrayCasePropertiesMap, testrayComponentId, testrayRunId);
 
 		_addTestrayAttachments(testcaseNode, testrayCaseResultId);
@@ -237,8 +267,8 @@ public class Main {
 	}
 
 	private void _addTestrayCases(
-			Element element, long testrayBuildId, long testrayProjectId,
-			long testrayRunId)
+			Element element, long testrayBuildId, String testrayBuildTime,
+			long testrayProjectId, long testrayRunId)
 		throws Exception {
 
 		NodeList testCaseNodeList = element.getElementsByTagName("testcase");
@@ -250,8 +280,8 @@ public class Main {
 				_getTestrayCaseProperties((Element)testcaseNode);
 
 			_addTestrayCase(
-				testcaseNode, testrayBuildId, testrayCasePropertiesMap,
-				testrayProjectId, testrayRunId);
+				testcaseNode, testrayBuildId, testrayBuildTime,
+				testrayCasePropertiesMap, testrayProjectId, testrayRunId);
 		}
 	}
 
@@ -294,7 +324,16 @@ public class Main {
 				testrayCaseResultId
 			).put(
 				"r_issueToCaseResultsIssues_c_issueId",
-				_postObjectEntry(null, testrayIssueName, "issues")
+				() -> {
+					long testrayIssueId = _getObjectEntryId(
+						testrayIssueName, "issues");
+
+					if (testrayIssueId > 0) {
+						return testrayIssueId;
+					}
+
+					return _postObjectEntry(null, testrayIssueName, "issues");
+				}
 			).build(),
 			null, "caseresultsissueses");
 	}
@@ -390,6 +429,13 @@ public class Main {
 		if (jsonArray.isEmpty()) {
 			return 0;
 		}
+
+		_objectEntryIds.put(
+			objectDefinitionShortName + "#" + name, objectEntryId);
+
+		JSONObject jsonObject = jsonArray.getJSONObject(0);
+
+		objectEntryId = jsonObject.getLong("id");
 
 		_objectEntryIds.put(
 			objectDefinitionShortName + "#" + name, objectEntryId);
@@ -547,12 +593,14 @@ public class Main {
 	}
 
 	private long _getTestrayCaseResultId(
-			Node testcaseNode, long testrayBuildId, long testrayCaseId,
-			Map<String, Object> testrayCasePropertiesMap,
+			Node testcaseNode, long testrayBuildId, String testrayBuildTime,
+			long testrayCaseId, Map<String, Object> testrayCasePropertiesMap,
 			long testrayComponentId, long testrayRunId)
 		throws Exception {
 
 		Map<String, Object> map = HashMapBuilder.<String, Object>put(
+			"closedDate", testrayBuildTime
+		).put(
 			"dueStatus",
 			() -> {
 				String testrayTestcaseStatus =
@@ -583,11 +631,13 @@ public class Main {
 		).put(
 			"r_buildToCaseResult_c_buildId", testrayBuildId
 		).put(
-			"r_caseResultToCase_c_caseId", testrayCaseId
+			"r_caseToCaseResult_c_caseId", testrayCaseId
 		).put(
 			"r_componentToCaseResult_c_componentId", testrayComponentId
 		).put(
 			"r_runToCaseResult_c_runId", testrayRunId
+		).put(
+			"startDate", testrayBuildTime
 		).build();
 
 		Element element = (Element)testcaseNode;
@@ -784,6 +834,8 @@ public class Main {
 			).put(
 				"name", testrayRunName
 			).put(
+				"number", _increment("buildId eq " + testrayBuildId, "runs")
+			).put(
 				"r_buildToRuns_c_buildId", testrayBuildId
 			).build(),
 			testrayRunName, "runs");
@@ -818,6 +870,30 @@ public class Main {
 			testrayTeamName, "teams");
 	}
 
+	private long _increment(String filter, String objectDefinitionShortName)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse = _invoke(
+			null, null, HttpInvoker.HttpMethod.GET, objectDefinitionShortName,
+			HashMapBuilder.put(
+				"fields", "id"
+			).put(
+				"filter",
+				() -> {
+					if (filter != null) {
+						return filter;
+					}
+
+					return null;
+				}
+			).build());
+
+		JSONObject responseJSONObject = new JSONObject(
+			httpResponse.getContent());
+
+		return responseJSONObject.getLong("totalCount") + 1;
+	}
+
 	private HttpInvoker.HttpResponse _invoke(
 			String body, Map<String, String> headers,
 			HttpInvoker.HttpMethod httpMethod, String objectDefinitionShortName,
@@ -842,10 +918,29 @@ public class Main {
 			}
 		}
 
-		httpInvoker.path(_liferayURL + "/o/c/" + objectDefinitionShortName);
+		String path = _liferayURL + "/o/c/" + objectDefinitionShortName;
+
+		httpInvoker.path(path);
+
 		httpInvoker.userNameAndPassword(_liferayLogin + ":" + _liferayPassword);
 
-		return httpInvoker.invoke();
+		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+
+		if ((httpResponse.getStatusCode() / 100) != 2) {
+			String content = httpResponse.getContent();
+
+			_logger.warning("Unable to process: " + path);
+			_logger.warning(
+				"Unable to process HTTP response content: " + content);
+			_logger.warning(
+				"HTTP response message: " + httpResponse.getMessage());
+			_logger.warning(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			throw new Exception("Unable to process: " + path);
+		}
+
+		return httpResponse;
 	}
 
 	private boolean _isEmpty(String value) {
@@ -918,9 +1013,14 @@ public class Main {
 
 			for (File file : tempDirectoryFile.listFiles()) {
 				try {
+					_logger.info("Processing document " + file.getName());
+
 					Document document = documentBuilder.parse(file);
 
 					_processDocument(document);
+				}
+				catch (Exception exception) {
+					_logger.severe(exception.getMessage());
 				}
 				finally {
 					file.delete();
@@ -957,8 +1057,11 @@ public class Main {
 		long testrayRunId = _getTestrayRunId(
 			element, propertiesMap, testrayBuildId, testrayRunName);
 
+		String testrayBuildTime = propertiesMap.get("testray.build.time");
+
 		_addTestrayCases(
-			element, testrayBuildId, testrayProjectId, testrayRunId);
+			element, testrayBuildId, testrayBuildTime, testrayProjectId,
+			testrayRunId);
 
 		_addTestrayTask(
 			testrayBuildId, propertiesMap.get("testray.build.name"));
@@ -983,6 +1086,7 @@ public class Main {
 	private final String _liferayLogin;
 	private final String _liferayPassword;
 	private final String _liferayURL;
+	private final Logger _logger;
 	private final Map<String, Long> _objectEntryIds = new HashMap<>();
 	private final String _s3APIKeyPath;
 	private final String _s3BucketName;

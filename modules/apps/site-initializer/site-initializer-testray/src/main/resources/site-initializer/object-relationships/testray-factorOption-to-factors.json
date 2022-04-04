@@ -1,7 +1,7 @@
 {
 	"deletionType": "cascade",
 	"label": {
-		"en-US": "One Factor Option to Many Factors"
+		"en-US": "Testray Factor Option"
 	},
 	"name": "factorOptionToFactors",
 	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:FactorOption$]",

@@ -744,6 +744,10 @@ definition {
 				queryContains = "Contains");
 		}
 
+		task ("Prioritize the variation") {
+			AssetListsAdmin.prioritizeVariation(variationTitle = "Segment With Test User");
+		}
+
 		task ("Select the created Dynamic Collection to be used in the asset publisher portlet") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",

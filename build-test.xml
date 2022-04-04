@@ -11100,6 +11100,24 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		</if>
 
 		<if>
+			<isset property="test.released.release.bundle.version" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					test.released.release.bundle.version=${test.released.release.bundle.version}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="test.released.test.portal.bundle.zip.url" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					test.released.test.portal.bundle.zip.url=${test.released.test.portal.bundle.zip.url}
+				</echo>
+			</then>
+		</if>
+
+		<if>
 			<isset property="test.run.environment" />
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">

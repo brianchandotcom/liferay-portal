@@ -43,8 +43,9 @@ public class BatchEngineExportTaskLocalServiceImpl
 	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public BatchEngineExportTask addBatchEngineExportTask(
-		long companyId, long userId, String callbackURL, String className,
-		String contentType, String executeStatus, List<String> fieldNamesList,
+		String externalReferenceCode, long companyId, long userId,
+		String callbackURL, String className, String contentType,
+		String executeStatus, List<String> fieldNamesList,
 		Map<String, Serializable> parameters, String taskItemDelegateName) {
 
 		BatchEngineExportTask batchEngineExportTask =
@@ -52,6 +53,7 @@ public class BatchEngineExportTaskLocalServiceImpl
 				counterLocalService.increment(
 					BatchEngineExportTask.class.getName()));
 
+		batchEngineExportTask.setExternalReferenceCode(externalReferenceCode);
 		batchEngineExportTask.setCompanyId(companyId);
 		batchEngineExportTask.setUserId(userId);
 		batchEngineExportTask.setCallbackURL(callbackURL);

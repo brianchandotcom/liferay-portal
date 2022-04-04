@@ -51,8 +51,26 @@ public class BatchEngineImportTaskLocalServiceImpl
 			long companyId, long userId, long batchSize, String callbackURL,
 			String className, byte[] content, String contentType,
 			String executeStatus, Map<String, String> fieldNameMappingMap,
-			int importStrategy, String operation,
-			Map<String, Serializable> parameters, String taskItemDelegateName)
+			String operation, Map<String, Serializable> parameters,
+			String taskItemDelegateName)
+		throws PortalException {
+
+		return addBatchEngineImportTask(
+			null, companyId, userId, batchSize, callbackURL, className, content,
+			contentType, executeStatus, fieldNameMappingMap,
+			BatchEngineImportTaskConstants.IMPORT_STRATEGY_ON_ERROR_FAIL,
+			operation, parameters, taskItemDelegateName);
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public BatchEngineImportTask addBatchEngineImportTask(
+			String externalReferenceCode, long companyId, long userId,
+			long batchSize, String callbackURL, String className,
+			byte[] content, String contentType, String executeStatus,
+			Map<String, String> fieldNameMappingMap, int importStrategy,
+			String operation, Map<String, Serializable> parameters,
+			String taskItemDelegateName)
 		throws PortalException {
 
 		if ((parameters != null) && !parameters.isEmpty()) {
@@ -67,6 +85,7 @@ public class BatchEngineImportTaskLocalServiceImpl
 				counterLocalService.increment(
 					BatchEngineImportTask.class.getName()));
 
+		batchEngineImportTask.setExternalReferenceCode(externalReferenceCode);
 		batchEngineImportTask.setCompanyId(companyId);
 		batchEngineImportTask.setUserId(userId);
 		batchEngineImportTask.setBatchSize(batchSize);
@@ -88,23 +107,6 @@ public class BatchEngineImportTaskLocalServiceImpl
 		batchEngineImportTask.setTaskItemDelegateName(taskItemDelegateName);
 
 		return batchEngineImportTaskPersistence.update(batchEngineImportTask);
-	}
-
-	@Override
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public BatchEngineImportTask addBatchEngineImportTask(
-			long companyId, long userId, long batchSize, String callbackURL,
-			String className, byte[] content, String contentType,
-			String executeStatus, Map<String, String> fieldNameMappingMap,
-			String operation, Map<String, Serializable> parameters,
-			String taskItemDelegateName)
-		throws PortalException {
-
-		return addBatchEngineImportTask(
-			companyId, userId, batchSize, callbackURL, className, content,
-			contentType, executeStatus, fieldNameMappingMap,
-			BatchEngineImportTaskConstants.IMPORT_STRATEGY_ON_ERROR_FAIL,
-			operation, parameters, taskItemDelegateName);
 	}
 
 	@Override

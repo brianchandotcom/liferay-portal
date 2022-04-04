@@ -186,7 +186,7 @@ definition {
 			defaultLanguage = "English (United States)",
 			languageList = "Arabic (Saudi Arabia),Chinese (China),Japanese (Japan),Spanish (Spain)");
 
-		Translations.assertFileNameFromTempFolder(pageName = "Translation Content Page1");
+		Translations.assertFileNameFromTempFolder(pageName = "Page Translations-en_US");
 	}
 
 	@description = "This ensures that the user can export multiple available languages of default experience for translation."
@@ -1162,7 +1162,7 @@ definition {
 			defaultLanguage = "English (United States)",
 			languageList = "Spanish (Spain)");
 
-		Translations.assertFileNameFromTempFolder(pageName = "TranslationContentPage1");
+		Translations.assertFileNameFromTempFolder(pageName = "Page Translations-en_US");
 
 		AntCommand(
 			locator1 = "build-test.xml",

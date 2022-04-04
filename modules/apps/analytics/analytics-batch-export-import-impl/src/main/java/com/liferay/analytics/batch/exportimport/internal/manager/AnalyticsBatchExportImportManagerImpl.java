@@ -95,7 +95,7 @@ public class AnalyticsBatchExportImportManagerImpl
 
 		BatchEngineExportTask batchEngineExportTask =
 			_batchEngineExportTaskLocalService.addBatchEngineExportTask(
-				companyId, userId, null, resourceName,
+				null, companyId, userId, null, resourceName,
 				BatchEngineTaskContentType.JSONL.name(),
 				BatchEngineTaskExecuteStatus.INITIAL.name(), fieldNamesList,
 				parameters, batchEngineExportTaskItemDelegateName);

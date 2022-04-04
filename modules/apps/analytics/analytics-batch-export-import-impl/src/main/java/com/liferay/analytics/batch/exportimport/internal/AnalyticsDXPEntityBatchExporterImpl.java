@@ -78,7 +78,7 @@ public class AnalyticsDXPEntityBatchExporterImpl
 			}
 
 			dispatchTrigger = _dispatchTriggerLocalService.addDispatchTrigger(
-				_userLocalService.getDefaultUserId(companyId),
+				null, _userLocalService.getDefaultUserId(companyId),
 				dispatchTriggerName, null, dispatchTriggerName, false);
 
 			LocalDateTime localDateTime = LocalDateTime.now();

@@ -701,7 +701,7 @@ function PaginationOptions({
 								? 'text-warning'
 								: 'text-secondary',
 							{
-								'font-weight-bold':
+								'd-none':
 									isMaximumValuePerPageError &&
 									numberOfItemsPerPageError,
 							}

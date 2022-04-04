@@ -230,9 +230,10 @@ public class OrderItemUtil {
 		if ((commerceOrderItem == null) &&
 			!Validator.isBlank(orderItem.getExternalReferenceCode())) {
 
-			commerceOrderItemService.fetchByExternalReferenceCode(
-				orderItem.getExternalReferenceCode(),
-				serviceContext.getCompanyId());
+			commerceOrderItem =
+				commerceOrderItemService.fetchByExternalReferenceCode(
+					orderItem.getExternalReferenceCode(),
+					serviceContext.getCompanyId());
 		}
 
 		if (commerceOrderItem != null) {

@@ -36,6 +36,8 @@ public interface FrontendToken {
 
 	public JSONObject getJSONObject(Locale locale);
 
+	public String getName();
+
 	public Type getType();
 
 	public static enum Type {

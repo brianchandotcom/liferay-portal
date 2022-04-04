@@ -191,6 +191,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -2045,6 +2046,13 @@ public class GraphQLServletExtender {
 		GraphQLObjectType.Builder rootMutationGraphQLObjectTypeBuilder,
 		GraphQLObjectType.Builder rootQueryGraphQLObjectTypeBuilder) {
 
+		Collection<GraphQLDTOContributor> graphQLDTOContributors =
+			_graphQLDTOContributorServiceTrackerMap.values();
+
+		if (graphQLDTOContributors.isEmpty()) {
+			return;
+		}
+
 		String namespace = "c";
 
 		GraphQLObjectType.Builder queryGraphQLObjectTypeBuilder =
@@ -2058,7 +2066,7 @@ public class GraphQLServletExtender {
 		mutationGraphQLObjectTypeBuilder.name("Mutation" + namespace);
 
 		for (GraphQLDTOContributor graphQLDTOContributor :
-				_graphQLDTOContributorServiceTrackerMap.values()) {
+				graphQLDTOContributors) {
 
 			if (companyId != graphQLDTOContributor.getCompanyId()) {
 				continue;

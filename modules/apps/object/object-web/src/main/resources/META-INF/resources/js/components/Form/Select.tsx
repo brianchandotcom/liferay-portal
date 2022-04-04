@@ -42,8 +42,8 @@ export default function Select({
 		<FieldBase
 			className={className}
 			disabled={disabled}
-			error={error}
-			feedbackMessage={feedbackMessage}
+			errorMessage={error}
+			helpMessage={feedbackMessage}
 			id={id}
 			label={label}
 			required={required}

@@ -8,6 +8,16 @@
 <thead><tr><td rowspan="1" colspan="3">ObjectField</td></tr></thead>
 <tbody>
 	<tr>
+		<td>LABEL_ERROR_REQUIRED</td>
+		<td>//input[@name='label']/following-sibling::div[contains(.,'Required')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>LABEL_INPUT</td>
+		<td>//input[@name='label']</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>LABEL_LOCALIZED</td>
 		<td>//div[contains(@class,'lfr-objects__input-localized')]//input</td>
 		<td></td>
@@ -40,6 +50,11 @@
 	<tr>
 		<td>SEARCHABLE_LANGUAGE_OPTION</td>
 		<td>//select[@name="indexedLanguageId"]//option[contains(., '${key_language}')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>TYPE_ERROR_REQUIRED</td>
+		<td>//input[@placeholder='Choose an Option']/ancestor::div[contains(.,'Required')]</td>
 		<td></td>
 	</tr>
 	<tr>

@@ -37,7 +37,7 @@ export default function InputLocalized({
 		<FieldBase
 			className="lfr-objects__input-localized"
 			disabled={disabled}
-			error={error}
+			errorMessage={error}
 			id={id}
 			label={label}
 			required={required}

@@ -17,24 +17,28 @@ import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import React, {ReactNode} from 'react';
 
-function ErrorFeedback({className, error}: IErrorFeedbackProps) {
-	return (
-		<ClayForm.FeedbackGroup className={classNames(className)}>
-			<ClayForm.FeedbackItem>
-				<span>{error}</span>
-			</ClayForm.FeedbackItem>
-		</ClayForm.FeedbackGroup>
-	);
-}
+import './FieldBase.scss';
 
-function FeedbackMessage({feedbackMessage}: IFeedbackMessageProps) {
+function Feedback({errorMessage, helpMessage, warningMessage}: IFeedbackProps) {
 	return (
-		<ClayForm.FeedbackGroup>
-			<ClayForm.FeedbackItem>
-				<ClayForm.FeedbackIndicator symbol="exclamation-full" />
+		<ClayForm.FeedbackGroup className="lfr-object__field-base-feedback">
+			{errorMessage && (
+				<ClayForm.FeedbackItem>
+					<ClayForm.FeedbackIndicator symbol="exclamation-full" />
 
-				{feedbackMessage}
-			</ClayForm.FeedbackItem>
+					{errorMessage}
+				</ClayForm.FeedbackItem>
+			)}
+
+			{warningMessage && !errorMessage && (
+				<ClayForm.FeedbackItem>
+					<ClayForm.FeedbackIndicator symbol="warning-full" />
+
+					{warningMessage}
+				</ClayForm.FeedbackItem>
+			)}
+
+			{helpMessage && <div>{helpMessage}</div>}
 		</ClayForm.FeedbackGroup>
 	);
 }
@@ -57,14 +61,20 @@ export default function FieldBase({
 	children,
 	className,
 	disabled,
-	error,
-	feedbackMessage,
+	errorMessage,
+	helpMessage,
 	id,
 	label,
 	required,
+	warningMessage,
 }: IProps) {
 	return (
-		<ClayForm.Group className={classNames(className, {'has-error': error})}>
+		<ClayForm.Group
+			className={classNames(className, {
+				'has-error': errorMessage,
+				'has-warning': warningMessage && !errorMessage,
+			})}
+		>
 			<label className={classNames({disabled})} htmlFor={id}>
 				{label}
 
@@ -73,31 +83,31 @@ export default function FieldBase({
 
 			{children}
 
-			{error && <ErrorFeedback error={error} />}
-
-			{feedbackMessage && (
-				<FeedbackMessage feedbackMessage={feedbackMessage} />
+			{(errorMessage || helpMessage || warningMessage) && (
+				<Feedback
+					errorMessage={errorMessage}
+					helpMessage={helpMessage}
+					warningMessage={warningMessage}
+				/>
 			)}
 		</ClayForm.Group>
 	);
 }
 
-interface IErrorFeedbackProps {
-	className?: string;
-	error: string;
-}
-
-interface IFeedbackMessageProps {
-	feedbackMessage: string;
+interface IFeedbackProps {
+	errorMessage?: string;
+	helpMessage?: string;
+	warningMessage?: string;
 }
 
 interface IProps {
 	children: ReactNode;
 	className?: string;
 	disabled?: boolean;
-	error?: string;
-	feedbackMessage?: string;
+	errorMessage?: string;
+	helpMessage?: string;
 	id?: string;
 	label: string;
 	required?: boolean;
+	warningMessage?: string;
 }

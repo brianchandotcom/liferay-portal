@@ -650,7 +650,7 @@ definition {
 		LexiconEntry.gotoAdd();
 
 		Type(
-			locator1 = "ObjectAdmin#OBJECT_FIELDS_LABEL_INPUT",
+			locator1 = "ObjectField#LABEL_INPUT",
 			value1 = "Custom Field");
 
 		ObjectField.selectType(fieldType = "Text");

@@ -13,24 +13,27 @@
  */
 
 import {ReactNode} from 'react';
+import './FieldBase.scss';
 export default function FieldBase({
 	children,
 	className,
 	disabled,
-	error,
-	feedbackMessage,
+	errorMessage,
+	helpMessage,
 	id,
 	label,
 	required,
+	warningMessage,
 }: IProps): JSX.Element;
 interface IProps {
 	children: ReactNode;
 	className?: string;
 	disabled?: boolean;
-	error?: string;
-	feedbackMessage?: string;
+	errorMessage?: string;
+	helpMessage?: string;
 	id?: string;
 	label: string;
 	required?: boolean;
+	warningMessage?: string;
 }
 export {};

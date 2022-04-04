@@ -103,6 +103,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -1056,6 +1058,8 @@ public class FileEntryStagedModelDataHandler
 					existingFriendlyURLEntry);
 			}
 		}
+
+		_updateFriendlyURLEntries(fileEntry, importedFileEntry, serviceContext);
 	}
 
 	private boolean _importMetaData(
@@ -1197,6 +1201,59 @@ public class FileEntryStagedModelDataHandler
 				_jsonDDMFormValuesSerializer.serialize(builder.build());
 
 		return ddmFormValuesSerializerSerializeResponse.getContent();
+	}
+
+	private void _updateFriendlyURLEntries(
+			FileEntry fileEntry, FileEntry importedFileEntry,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		List<FriendlyURLEntry> friendlyURLEntries =
+			_friendlyURLEntryLocalService.getFriendlyURLEntries(
+				fileEntry.getGroupId(), _portal.getClassNameId(FileEntry.class),
+				fileEntry.getFileEntryId());
+
+		Stream<FriendlyURLEntry> stream = friendlyURLEntries.stream();
+
+		Stream<String> stringStream = stream.map(FriendlyURLEntry::getUrlTitle);
+
+		List<String> fileEntriesUrlTitles = stringStream.collect(
+			Collectors.toList());
+
+		List<FriendlyURLEntry> importedFriendlyURLEntries =
+			_friendlyURLEntryLocalService.getFriendlyURLEntries(
+				importedFileEntry.getGroupId(),
+				_portal.getClassNameId(FileEntry.class),
+				importedFileEntry.getFileEntryId());
+
+		List<Long> friendlyURLEntryIdsToDelete = new ArrayList<>();
+
+		for (FriendlyURLEntry importedFriendlyURLEntry :
+				importedFriendlyURLEntries) {
+
+			if (!fileEntriesUrlTitles.contains(
+					importedFriendlyURLEntry.getUrlTitle())) {
+
+				friendlyURLEntryIdsToDelete.add(
+					importedFriendlyURLEntry.getFriendlyURLEntryId());
+			}
+			else {
+				fileEntriesUrlTitles.remove(
+					importedFriendlyURLEntry.getUrlTitle());
+			}
+		}
+
+		for (String urlTitle : fileEntriesUrlTitles) {
+			_friendlyURLEntryLocalService.addFriendlyURLEntry(
+				importedFileEntry.getGroupId(),
+				_classNameLocalService.getClassNameId(FileEntry.class),
+				importedFileEntry.getFileEntryId(), urlTitle, serviceContext);
+		}
+
+		for (Long friendlyURLEntryId : friendlyURLEntryIdsToDelete) {
+			_friendlyURLEntryLocalService.deleteFriendlyURLEntry(
+				friendlyURLEntryId);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

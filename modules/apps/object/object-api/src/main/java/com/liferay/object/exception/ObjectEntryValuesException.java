@@ -64,6 +64,32 @@ public class ObjectEntryValuesException extends PortalException {
 
 	}
 
+	public static class ExceedsMaxFileSize extends ObjectEntryValuesException {
+
+		public ExceedsMaxFileSize(long maxFileSize, String objectFieldName) {
+			super(
+				String.format(
+					"File exceeds the maximum permitted size of %s MB for " +
+						"object field \"%s\"",
+					maxFileSize, objectFieldName));
+		}
+
+	}
+
+	public static class InvalidFileExtension
+		extends ObjectEntryValuesException {
+
+		public InvalidFileExtension(
+			String fileExtension, String objectFieldName) {
+
+			super(
+				String.format(
+					"The file extension %s is invalid for object field \"%s\"",
+					fileExtension, objectFieldName));
+		}
+
+	}
+
 	public static class ListTypeEntry extends ObjectEntryValuesException {
 
 		public ListTypeEntry(String objectFieldName) {

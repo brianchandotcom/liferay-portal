@@ -58,7 +58,6 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -175,19 +174,6 @@ public class LayoutStructureCommonStylesCSSTopHeadDynamicInclude
 		}
 	}
 
-	private List<String> _getAvailableStyleNames() {
-		try {
-			return CommonStylesUtil.getAvailableStyleNames();
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-
-			return Collections.emptyList();
-		}
-	}
-
 	private JSONObject _getFrontendTokensJSONObject(
 		long groupId, Layout layout, boolean styleBookEntryPreview) {
 
@@ -279,19 +265,25 @@ public class LayoutStructureCommonStylesCSSTopHeadDynamicInclude
 			return StringPool.BLANK;
 		}
 
-		StringBundler cssSB = new StringBundler(74);
+		List<String> availableStyles = ListUtil.filter(
+			CommonStylesUtil.getAvailableStyleNames(),
+			styleName -> _includeStyles(
+				styledLayoutStructureItem, styleName,
+				stylesJSONObject.getString(styleName), viewportSize));
 
-		List<String> availableStyleNames = _getAvailableStyleNames();
+		if (ListUtil.isEmpty(availableStyles)) {
+			return StringPool.BLANK;
+		}
 
-		for (String styleName : availableStyleNames) {
+		StringBundler cssSB = new StringBundler(
+			(availableStyles.size() * 2) + 4);
+
+		cssSB.append(".lfr-layout-structure-item-");
+		cssSB.append(layoutStructureItem.getItemId());
+		cssSB.append(" {\n");
+
+		for (String styleName : availableStyles) {
 			String value = stylesJSONObject.getString(styleName);
-
-			if (!_includeStyles(
-					styledLayoutStructureItem, styleName, value,
-					viewportSize)) {
-
-				continue;
-			}
 
 			cssSB.append(
 				StringUtil.replace(
@@ -299,24 +291,13 @@ public class LayoutStructureCommonStylesCSSTopHeadDynamicInclude
 					_getStyleValue(
 						frontendTokensJSONObject, styledLayoutStructureItem,
 						styleName, value)));
+
 			cssSB.append(StringPool.NEW_LINE);
 		}
 
-		String css = cssSB.toString();
+		cssSB.append("}\n");
 
-		if (Validator.isNull(css)) {
-			return StringPool.BLANK;
-		}
-
-		StringBundler cssRuleSB = new StringBundler(5);
-
-		cssRuleSB.append(".lfr-layout-structure-item-");
-		cssRuleSB.append(layoutStructureItem.getItemId());
-		cssRuleSB.append(" {\n");
-		cssRuleSB.append(css);
-		cssRuleSB.append("}\n");
-
-		return cssRuleSB.toString();
+		return cssSB.toString();
 	}
 
 	private String _getStyleFromStyleBookEntry(

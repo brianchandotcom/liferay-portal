@@ -1035,6 +1035,10 @@ definition {
 				accountEntryType = "Business");
 
 			task ("And given a user is added to one of the accounts") {
+				Navigator.gotoPage(pageName = "2B Account Page");
+
+				LexiconEntry.gotoEntry(rowEntry = "Test Account Member");
+
 				Accounts.assignUsers(
 					accountName = "Test Account Member",
 					assigneeName = "userfn userln");

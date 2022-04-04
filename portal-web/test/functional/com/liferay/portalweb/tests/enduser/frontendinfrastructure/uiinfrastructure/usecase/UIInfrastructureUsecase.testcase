@@ -102,33 +102,24 @@ definition {
 			layoutTemplate = "3 Columns");
 
 		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
 			groupName = "Guest",
 			layoutName = "Test Page",
 			widgetName = "Message Boards");
 
 		JSONLayout.addWidgetToPublicLayout(
+			column = "2",
 			groupName = "Guest",
 			layoutName = "Test Page",
 			widgetName = "Clay Sample");
 
 		JSONLayout.addWidgetToPublicLayout(
+			column = "3",
 			groupName = "Guest",
 			layoutName = "Test Page",
 			widgetName = "Documents and Media");
 
 		Navigator.gotoPage(pageName = "Test Page");
-
-		Portlet.dragAndDropPortletToColumnPG(
-			columnNumberFrom = "1",
-			columnNumberTo = "2",
-			portletName = "Clay Sample");
-
-		Navigator.gotoPage(pageName = "Test Page");
-
-		Portlet.dragAndDropPortletToColumnPG(
-			columnNumberFrom = "1",
-			columnNumberTo = "3",
-			portletName = "Documents and Media");
 
 		MouseOver(
 			key_pageColumnNumber = "1",

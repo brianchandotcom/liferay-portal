@@ -124,16 +124,16 @@ public class DefaultDLViewFileVersionDisplayContext
 		}
 
 		return DropdownItemListBuilder.add(
-			() -> _fileEntryDisplayContextHelper.isDownloadActionAvailable(),
+			_fileEntryDisplayContextHelper::isDownloadActionAvailable,
 			_uiItemsBuilder.createDownloadDropdownItem()
 		).add(
-			() -> _uiItemsBuilder.isViewOriginalFileActionAvailable(),
+			_uiItemsBuilder::isViewOriginalFileActionAvailable,
 			_uiItemsBuilder.createViewOriginalFileDropdownItem()
 		).add(
-			() -> _uiItemsBuilder.isEditActionAvailable(),
+			_uiItemsBuilder::isEditActionAvailable,
 			_uiItemsBuilder.createEditDropdownItem()
 		).add(
-			() -> _uiItemsBuilder.isCheckoutActionAvailable(),
+			_uiItemsBuilder::isCheckoutActionAvailable,
 			_uiItemsBuilder.createCheckoutDropdownItem()
 		).build();
 	}

@@ -228,31 +228,6 @@ public class UIItemsBuilder {
 		javaScriptToolbarItem.setJavaScript(unsyncStringWriter.toString());
 	}
 
-	public boolean isCheckoutActionAvailable() throws PortalException {
-		if ((_fileShortcut != null) ||
-			!_fileEntryDisplayContextHelper.
-				isCheckoutDocumentActionAvailable()) {
-
-			return false;
-		}
-
-		return true;
-	}
-	public DropdownItem createCheckoutDropdownItem() {
-		return DropdownItemBuilder.setHref(
-			PortletURLBuilder.create(
-				_getActionURL(
-					"/document_library/edit_file_entry", Constants.CHECKOUT)
-			).setParameter(
-				"fileEntryId", _fileEntry.getFileEntryId()
-			).buildString()
-		).setIcon(
-			"download"
-		).setLabel(
-			LanguageUtil.get(_httpServletRequest, "checkout[document]")
-		).build();
-	}
-
 	public void addCheckoutMenuItem(List<MenuItem> menuItems)
 		throws PortalException {
 
@@ -531,37 +506,6 @@ public class UIItemsBuilder {
 		menuItems.add(deleteMenuItem);
 	}
 
-	public DropdownItem createDownloadDropdownItem() {
-
-		boolean appendVersion = true;
-
-		if (StringUtil.equalsIgnoreCase(
-				_fileEntry.getVersion(), _fileVersion.getVersion())) {
-
-			appendVersion = false;
-		}
-
-		return DropdownItemBuilder.setData(
-			HashMapBuilder.<String, Object>put(
-				"analytics-file-entry-id", _fileEntry.getFileEntryId()
-			).put(
-				"analytics-file-entry-title", _fileEntry.getTitle()
-			).put(
-				"senna-off", "true"
-			).build()
-		).setHref(
-			_dlURLHelper.getDownloadURL(
-				_fileEntry, _fileVersion, _themeDisplay, StringPool.BLANK,
-				appendVersion, true)
-		).setIcon(
-			"download"
-		).setLabel(
-			StringBundler.concat(
-				_themeDisplay.translate("download"), " (", LanguageUtil.formatStorageSize(
-					_fileVersion.getSize(), _themeDisplay.getLocale()), ")")
-		).build();
-	}
-
 	public void addDownloadMenuItem(List<MenuItem> menuItems)
 		throws PortalException {
 
@@ -631,42 +575,6 @@ public class UIItemsBuilder {
 				")"),
 			_dlURLHelper.getDownloadURL(
 				_fileEntry, _fileVersion, _themeDisplay, StringPool.BLANK));
-	}
-
-	public boolean isEditActionAvailable() throws PortalException{
-		if (((_fileShortcut != null) &&
-			 !_fileShortcutDisplayContextHelper.isEditActionAvailable()) ||
-			((_fileShortcut == null) &&
-			 !_fileEntryDisplayContextHelper.isEditActionAvailable())) {
-
-			return false;
-		}
-
-		return true;
-	}
-
-	public DropdownItem createEditDropdownItem(){
-		PortletURL portletURL = null;
-
-		if (_fileShortcut == null) {
-			portletURL = _getControlPanelRenderURL(
-				"/document_library/edit_file_entry");
-		}
-		else {
-			portletURL = _getControlPanelRenderURL(
-				"/document_library/edit_file_shortcut");
-		}
-
-		portletURL.setParameter("backURL", _getCurrentURL());
-
-		return DropdownItemBuilder.setHref(
-			portletURL.toString()
-		).setIcon(
-			"pencil"
-		).setLabel(
-			LanguageUtil.get(_httpServletRequest, "edit")
-		).build();
-
 	}
 
 	public void addEditImageItem(List<MenuItem> menuItems)
@@ -980,26 +888,6 @@ public class UIItemsBuilder {
 			).buildString());
 	}
 
-	public boolean isViewOriginalFileActionAvailable() {
-		return _fileShortcut != null;
-	}
-
-	public DropdownItem createViewOriginalFileDropdownItem() {
-		if(_fileShortcut == null){
-			return null;
-		}
-
-		return DropdownItemBuilder.setHref(
-			PortletURLBuilder.create(
-				_getRenderURL("/document_library/view_file_entry")
-			).setParameter(
-				"fileEntryId", _fileShortcut.getToFileEntryId()
-			).buildString()
-		).setLabel(
-			LanguageUtil.get(_httpServletRequest, "view-original-file")
-		).build();
-	}
-
 	public void addViewOriginalFileMenuItem(List<MenuItem> menuItems) {
 		if (_fileShortcut == null) {
 			return;
@@ -1029,6 +917,92 @@ public class UIItemsBuilder {
 			).setParameter(
 				"version", _fileVersion.getVersion()
 			).buildString());
+	}
+
+	public DropdownItem createCheckoutDropdownItem() {
+		return DropdownItemBuilder.setHref(
+			PortletURLBuilder.create(
+				_getActionURL(
+					"/document_library/edit_file_entry", Constants.CHECKOUT)
+			).setParameter(
+				"fileEntryId", _fileEntry.getFileEntryId()
+			).buildString()
+		).setIcon(
+			"download"
+		).setLabel(
+			LanguageUtil.get(_httpServletRequest, "checkout[document]")
+		).build();
+	}
+
+	public DropdownItem createDownloadDropdownItem() {
+		boolean appendVersion = true;
+
+		if (StringUtil.equalsIgnoreCase(
+				_fileEntry.getVersion(), _fileVersion.getVersion())) {
+
+			appendVersion = false;
+		}
+
+		return DropdownItemBuilder.setData(
+			HashMapBuilder.<String, Object>put(
+				"analytics-file-entry-id", _fileEntry.getFileEntryId()
+			).put(
+				"analytics-file-entry-title", _fileEntry.getTitle()
+			).put(
+				"senna-off", "true"
+			).build()
+		).setHref(
+			_dlURLHelper.getDownloadURL(
+				_fileEntry, _fileVersion, _themeDisplay, StringPool.BLANK,
+				appendVersion, true)
+		).setIcon(
+			"download"
+		).setLabel(
+			StringBundler.concat(
+				_themeDisplay.translate("download"), " (",
+				LanguageUtil.formatStorageSize(
+					_fileVersion.getSize(), _themeDisplay.getLocale()),
+				")")
+		).build();
+	}
+
+	public DropdownItem createEditDropdownItem() {
+		PortletURL portletURL = null;
+
+		if (_fileShortcut == null) {
+			portletURL = _getControlPanelRenderURL(
+				"/document_library/edit_file_entry");
+		}
+		else {
+			portletURL = _getControlPanelRenderURL(
+				"/document_library/edit_file_shortcut");
+		}
+
+		portletURL.setParameter("backURL", _getCurrentURL());
+
+		return DropdownItemBuilder.setHref(
+			portletURL.toString()
+		).setIcon(
+			"pencil"
+		).setLabel(
+			LanguageUtil.get(_httpServletRequest, "edit")
+		).build();
+	}
+
+	public DropdownItem createViewOriginalFileDropdownItem() {
+		if (_fileShortcut == null) {
+			return null;
+		}
+
+		return DropdownItemBuilder.setHref(
+			PortletURLBuilder.create(
+				_getRenderURL("/document_library/view_file_entry")
+			).setParameter(
+				"fileEntryId", _fileShortcut.getToFileEntryId()
+			).buildString()
+		).setLabel(
+			LanguageUtil.get(_httpServletRequest, "view-original-file")
+		).build();
 	}
 
 	public MenuItem getCheckinMenuItem() throws PortalException {
@@ -1079,6 +1053,37 @@ public class UIItemsBuilder {
 		javaScriptMenuItem.setJavaScript(unsyncStringWriter.toString());
 
 		return javaScriptMenuItem;
+	}
+
+	public boolean isCheckoutActionAvailable() throws PortalException {
+		if ((_fileShortcut != null) ||
+			!_fileEntryDisplayContextHelper.
+				isCheckoutDocumentActionAvailable()) {
+
+			return false;
+		}
+
+		return true;
+	}
+
+	public boolean isEditActionAvailable() throws PortalException {
+		if (((_fileShortcut != null) &&
+			 !_fileShortcutDisplayContextHelper.isEditActionAvailable()) ||
+			((_fileShortcut == null) &&
+			 !_fileEntryDisplayContextHelper.isEditActionAvailable())) {
+
+			return false;
+		}
+
+		return true;
+	}
+
+	public boolean isViewOriginalFileActionAvailable() {
+		if (_fileShortcut != null) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private UIItemsBuilder(

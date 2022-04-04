@@ -14,7 +14,10 @@
 
 package com.liferay.object.service.impl;
 
+import com.liferay.object.exception.ObjectValidationRuleEngineException;
 import com.liferay.object.exception.ObjectValidationRuleException;
+import com.liferay.object.exception.ObjectValidationRuleNameException;
+import com.liferay.object.exception.ObjectValidationRuleScriptException;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectValidationRule;
 import com.liferay.object.service.ObjectEntryLocalService;
@@ -243,7 +246,7 @@ public class ObjectValidationRuleLocalServiceImpl
 
 	private void _validateEngine(String engine) throws PortalException {
 		if (Validator.isNull(engine)) {
-			throw new ObjectValidationRuleException("Engine is null");
+			throw new ObjectValidationRuleEngineException("Engine is null");
 		}
 
 		ObjectValidationRuleEngine objectValidationRuleEngine =
@@ -251,7 +254,7 @@ public class ObjectValidationRuleLocalServiceImpl
 				getObjectValidationRuleEngine(engine);
 
 		if (objectValidationRuleEngine == null) {
-			throw new ObjectValidationRuleException("Engine is invalid");
+			throw new ObjectValidationRuleEngineException("Engine is invalid");
 		}
 	}
 
@@ -261,14 +264,14 @@ public class ObjectValidationRuleLocalServiceImpl
 		Locale locale = LocaleUtil.getSiteDefault();
 
 		if ((nameMap == null) || Validator.isNull(nameMap.get(locale))) {
-			throw new ObjectValidationRuleException(
+			throw new ObjectValidationRuleNameException(
 				"Name is null for locale " + locale.getDisplayName());
 		}
 	}
 
 	private void _validateScript(String script) throws PortalException {
 		if (Validator.isNull(script)) {
-			throw new ObjectValidationRuleException("Script is null");
+			throw new ObjectValidationRuleScriptException("Script is null");
 		}
 	}
 

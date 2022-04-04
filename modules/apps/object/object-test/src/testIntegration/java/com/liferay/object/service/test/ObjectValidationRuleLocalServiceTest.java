@@ -18,7 +18,9 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectValidationRuleConstants;
 import com.liferay.object.exception.NoSuchObjectValidationRuleException;
-import com.liferay.object.exception.ObjectValidationRuleException;
+import com.liferay.object.exception.ObjectValidationRuleEngineException;
+import com.liferay.object.exception.ObjectValidationRuleNameException;
+import com.liferay.object.exception.ObjectValidationRuleScriptException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectValidationRule;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -80,10 +82,12 @@ public class ObjectValidationRuleLocalServiceTest {
 
 			Assert.fail();
 		}
-		catch (ObjectValidationRuleException objectValidationRuleException) {
+		catch (ObjectValidationRuleEngineException
+					objectValidationRuleEngineException) {
+
 			Assert.assertEquals(
 				"Engine is invalid",
-				objectValidationRuleException.getMessage());
+				objectValidationRuleEngineException.getMessage());
 		}
 
 		// Engine is null
@@ -94,9 +98,12 @@ public class ObjectValidationRuleLocalServiceTest {
 
 			Assert.fail();
 		}
-		catch (ObjectValidationRuleException objectValidationRuleException) {
+		catch (ObjectValidationRuleEngineException
+					objectValidationRuleEngineException) {
+
 			Assert.assertEquals(
-				"Engine is null", objectValidationRuleException.getMessage());
+				"Engine is null",
+				objectValidationRuleEngineException.getMessage());
 		}
 
 		// Name is null
@@ -108,10 +115,12 @@ public class ObjectValidationRuleLocalServiceTest {
 
 			Assert.fail();
 		}
-		catch (ObjectValidationRuleException objectValidationRuleException) {
+		catch (ObjectValidationRuleNameException
+					objectValidationRuleNameException) {
+
 			Assert.assertEquals(
 				"Name is null for locale " + LocaleUtil.US.getDisplayName(),
-				objectValidationRuleException.getMessage());
+				objectValidationRuleNameException.getMessage());
 		}
 
 		// Script is null
@@ -122,9 +131,12 @@ public class ObjectValidationRuleLocalServiceTest {
 
 			Assert.fail();
 		}
-		catch (ObjectValidationRuleException objectValidationRuleException) {
+		catch (ObjectValidationRuleScriptException
+					objectValidationRuleScriptException) {
+
 			Assert.assertEquals(
-				"Script is null", objectValidationRuleException.getMessage());
+				"Script is null",
+				objectValidationRuleScriptException.getMessage());
 		}
 
 		ObjectValidationRule objectValidationRule =

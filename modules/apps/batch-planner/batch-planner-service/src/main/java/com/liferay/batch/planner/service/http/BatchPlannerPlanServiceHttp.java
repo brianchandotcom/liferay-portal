@@ -260,8 +260,7 @@ public class BatchPlannerPlanServiceHttp {
 	public static java.util.List
 		<com.liferay.batch.planner.model.BatchPlannerPlan> getBatchPlannerPlans(
 			HttpPrincipal httpPrincipal, long companyId, boolean export,
-			boolean template, String searchByField, String searchByKeyword,
-			int start, int end,
+			boolean template, String searchByKeyword, int start, int end,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<com.liferay.batch.planner.model.BatchPlannerPlan>
 					orderByComparator) {
@@ -272,8 +271,8 @@ public class BatchPlannerPlanServiceHttp {
 				_getBatchPlannerPlansParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, export, template, searchByField,
-				searchByKeyword, start, end, orderByComparator);
+				methodKey, companyId, export, template, searchByKeyword, start,
+				end, orderByComparator);
 
 			Object returnObj = null;
 
@@ -338,7 +337,7 @@ public class BatchPlannerPlanServiceHttp {
 	public static java.util.List
 		<com.liferay.batch.planner.model.BatchPlannerPlan> getBatchPlannerPlans(
 			HttpPrincipal httpPrincipal, long companyId, boolean template,
-			String searchByField, String searchByKeyword, int start, int end,
+			String searchByKeyword, int start, int end,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<com.liferay.batch.planner.model.BatchPlannerPlan>
 					orderByComparator) {
@@ -349,8 +348,8 @@ public class BatchPlannerPlanServiceHttp {
 				_getBatchPlannerPlansParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, template, searchByField, searchByKeyword,
-				start, end, orderByComparator);
+				methodKey, companyId, template, searchByKeyword, start, end,
+				orderByComparator);
 
 			Object returnObj = null;
 
@@ -544,7 +543,7 @@ public class BatchPlannerPlanServiceHttp {
 
 	public static int getBatchPlannerPlansCount(
 		HttpPrincipal httpPrincipal, long companyId, boolean export,
-		boolean template, String searchByField, String searchByKeyword) {
+		boolean template, String searchByKeyword) {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -552,8 +551,7 @@ public class BatchPlannerPlanServiceHttp {
 				_getBatchPlannerPlansCountParameterTypes13);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, export, template, searchByField,
-				searchByKeyword);
+				methodKey, companyId, export, template, searchByKeyword);
 
 			Object returnObj = null;
 
@@ -578,7 +576,7 @@ public class BatchPlannerPlanServiceHttp {
 
 	public static int getBatchPlannerPlansCount(
 		HttpPrincipal httpPrincipal, long companyId, boolean template,
-		String searchByField, String searchByKeyword) {
+		String searchByKeyword) {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -586,7 +584,7 @@ public class BatchPlannerPlanServiceHttp {
 				_getBatchPlannerPlansCountParameterTypes14);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, template, searchByField, searchByKeyword);
+				methodKey, companyId, template, searchByKeyword);
 
 			Object returnObj = null;
 
@@ -673,9 +671,8 @@ public class BatchPlannerPlanServiceHttp {
 		};
 	private static final Class<?>[] _getBatchPlannerPlansParameterTypes5 =
 		new Class[] {
-			long.class, boolean.class, boolean.class, String.class,
-			String.class, int.class, int.class,
-			com.liferay.portal.kernel.util.OrderByComparator.class
+			long.class, boolean.class, boolean.class, String.class, int.class,
+			int.class, com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _getBatchPlannerPlansParameterTypes6 =
 		new Class[] {
@@ -684,8 +681,8 @@ public class BatchPlannerPlanServiceHttp {
 		};
 	private static final Class<?>[] _getBatchPlannerPlansParameterTypes7 =
 		new Class[] {
-			long.class, boolean.class, String.class, String.class, int.class,
-			int.class, com.liferay.portal.kernel.util.OrderByComparator.class
+			long.class, boolean.class, String.class, int.class, int.class,
+			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _getBatchPlannerPlansParameterTypes8 =
 		new Class[] {long.class, int.class, int.class};
@@ -701,11 +698,9 @@ public class BatchPlannerPlanServiceHttp {
 	private static final Class<?>[] _getBatchPlannerPlansCountParameterTypes12 =
 		new Class[] {long.class, boolean.class, boolean.class};
 	private static final Class<?>[] _getBatchPlannerPlansCountParameterTypes13 =
-		new Class[] {
-			long.class, boolean.class, boolean.class, String.class, String.class
-		};
+		new Class[] {long.class, boolean.class, boolean.class, String.class};
 	private static final Class<?>[] _getBatchPlannerPlansCountParameterTypes14 =
-		new Class[] {long.class, boolean.class, String.class, String.class};
+		new Class[] {long.class, boolean.class, String.class};
 	private static final Class<?>[] _updateBatchPlannerPlanParameterTypes15 =
 		new Class[] {long.class, String.class, String.class, String.class};
 

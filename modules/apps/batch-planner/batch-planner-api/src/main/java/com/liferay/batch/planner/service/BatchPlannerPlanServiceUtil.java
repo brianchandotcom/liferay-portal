@@ -79,13 +79,13 @@ public class BatchPlannerPlanServiceUtil {
 	}
 
 	public static List<BatchPlannerPlan> getBatchPlannerPlans(
-		long companyId, boolean export, boolean template, String searchByField,
+		long companyId, boolean export, boolean template,
 		String searchByKeyword, int start, int end,
 		OrderByComparator<BatchPlannerPlan> orderByComparator) {
 
 		return getService().getBatchPlannerPlans(
-			companyId, export, template, searchByField, searchByKeyword, start,
-			end, orderByComparator);
+			companyId, export, template, searchByKeyword, start, end,
+			orderByComparator);
 	}
 
 	public static List<BatchPlannerPlan> getBatchPlannerPlans(
@@ -97,12 +97,11 @@ public class BatchPlannerPlanServiceUtil {
 	}
 
 	public static List<BatchPlannerPlan> getBatchPlannerPlans(
-		long companyId, boolean template, String searchByField,
-		String searchByKeyword, int start, int end,
-		OrderByComparator<BatchPlannerPlan> orderByComparator) {
+		long companyId, boolean template, String searchByKeyword, int start,
+		int end, OrderByComparator<BatchPlannerPlan> orderByComparator) {
 
 		return getService().getBatchPlannerPlans(
-			companyId, template, searchByField, searchByKeyword, start, end,
+			companyId, template, searchByKeyword, start, end,
 			orderByComparator);
 	}
 
@@ -138,19 +137,18 @@ public class BatchPlannerPlanServiceUtil {
 	}
 
 	public static int getBatchPlannerPlansCount(
-		long companyId, boolean export, boolean template, String searchByField,
+		long companyId, boolean export, boolean template,
 		String searchByKeyword) {
 
 		return getService().getBatchPlannerPlansCount(
-			companyId, export, template, searchByField, searchByKeyword);
+			companyId, export, template, searchByKeyword);
 	}
 
 	public static int getBatchPlannerPlansCount(
-		long companyId, boolean template, String searchByField,
-		String searchByKeyword) {
+		long companyId, boolean template, String searchByKeyword) {
 
 		return getService().getBatchPlannerPlansCount(
-			companyId, template, searchByField, searchByKeyword);
+			companyId, template, searchByKeyword);
 	}
 
 	/**

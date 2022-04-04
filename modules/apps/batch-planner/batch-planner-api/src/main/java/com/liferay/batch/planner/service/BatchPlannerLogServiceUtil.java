@@ -63,14 +63,12 @@ public class BatchPlannerLogServiceUtil {
 	}
 
 	public static List<BatchPlannerLog> getCompanyBatchPlannerLogs(
-			long companyId, boolean export, String searchByField,
-			String searchByKeyword, int start, int end,
-			OrderByComparator<BatchPlannerLog> orderByComparator)
+			long companyId, boolean export, String searchByKeyword, int start,
+			int end, OrderByComparator<BatchPlannerLog> orderByComparator)
 		throws PortalException {
 
 		return getService().getCompanyBatchPlannerLogs(
-			companyId, export, searchByField, searchByKeyword, start, end,
-			orderByComparator);
+			companyId, export, searchByKeyword, start, end, orderByComparator);
 	}
 
 	public static List<BatchPlannerLog> getCompanyBatchPlannerLogs(
@@ -83,14 +81,12 @@ public class BatchPlannerLogServiceUtil {
 	}
 
 	public static List<BatchPlannerLog> getCompanyBatchPlannerLogs(
-			long companyId, String searchByField, String searchByKeyword,
-			int start, int end,
+			long companyId, String searchByKeyword, int start, int end,
 			OrderByComparator<BatchPlannerLog> orderByComparator)
 		throws PortalException {
 
 		return getService().getCompanyBatchPlannerLogs(
-			companyId, searchByField, searchByKeyword, start, end,
-			orderByComparator);
+			companyId, searchByKeyword, start, end, orderByComparator);
 	}
 
 	public static int getCompanyBatchPlannerLogsCount(long companyId)
@@ -107,20 +103,19 @@ public class BatchPlannerLogServiceUtil {
 	}
 
 	public static int getCompanyBatchPlannerLogsCount(
-			long companyId, boolean export, String searchByField,
-			String searchByKeyword)
+			long companyId, boolean export, String searchByKeyword)
 		throws PortalException {
 
 		return getService().getCompanyBatchPlannerLogsCount(
-			companyId, export, searchByField, searchByKeyword);
+			companyId, export, searchByKeyword);
 	}
 
 	public static int getCompanyBatchPlannerLogsCount(
-			long companyId, String searchByField, String searchByKeyword)
+			long companyId, String searchByKeyword)
 		throws PortalException {
 
 		return getService().getCompanyBatchPlannerLogsCount(
-			companyId, searchByField, searchByKeyword);
+			companyId, searchByKeyword);
 	}
 
 	/**

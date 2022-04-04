@@ -56,4 +56,16 @@ definition {
 		Click(locator1 = "ContentPerformance#ICON_VIEW_METRICS");
 	}
 
+	macro viewTotalViews {
+		ContentPerformance.openContentPerformance();
+
+		while (IsElementPresent(locator1 = "ContentPerformance#TOTAL_VIEWS_EMPTY")) {
+			Refresh();
+		}
+
+		AssertVisible(
+			key_numberViews = "${numberViews}",
+			locator1 = "ContentPerformance#TOTAL_VIEWS_NUMBER");
+	}
+
 }

@@ -472,13 +472,13 @@ definition {
 
 		Button.click(button = "Update");
 
-		Click(locator1 = "Icon#INFO");
+		KaleoDesigner.viewNodeNotPresent(nodeNodeLabel = "update");
 
-		Click(locator1 = "KaleoDesignerEditWorkflow#REVISION_HISTORY");
+		KaleoDesigner.showRevisionHistory();
 
-		KaleoDesigner.previewDraftWorkflow(rowIndexNumber = "1");
+		KaleoDesigner.restoreDraft(rowIndexNumber = "1");
 
-		KaleoDesigner.viewUpdateLabelVisible();
+		KaleoDesigner.viewNodePresent(nodeNodeLabel = "update");
 	}
 
 	@description = "Verify that the Details tab displays the Created date, Last Modified date and Total Modifications"

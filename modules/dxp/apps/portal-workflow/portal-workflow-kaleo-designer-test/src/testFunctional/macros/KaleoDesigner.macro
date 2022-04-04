@@ -601,16 +601,6 @@ definition {
 		TypeScreen(locator1 = "${kdSourceXml}");
 	}
 
-	macro previewDraftWorkflow {
-		var key_rowIndexNumber = "${rowIndexNumber}";
-
-		Click(locator1 = "Icon#ROW_VERTICAL_ELLIPSIS_N");
-
-		AssertClick(
-			locator1 = "KaleoDesignerEditWorkflow#REVISION_HISTORY_PREVIEW_BUTTON",
-			value1 = "Preview");
-	}
-
 	macro removeAllNodeAssignments {
 		DoubleClick(locator1 = "KaleoDesignerEditWorkflow#SETTINGS_ASSIGNMENTS");
 

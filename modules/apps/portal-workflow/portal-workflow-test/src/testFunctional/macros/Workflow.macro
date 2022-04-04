@@ -873,6 +873,15 @@ definition {
 		Pause(locator1 = "1000");
 	}
 
+	macro setWorkflowToMiniumChannel {
+		Select(
+			key_title = "Buyer Order Approval Workflow",
+			locator1 = "CommerceEntry#CATALOGS_FORM",
+			value1 = "${workflowDefinition}");
+
+		Button.clickSave();
+	}
+
 	macro tearDownPortalWorkflow {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",

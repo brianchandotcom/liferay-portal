@@ -92,6 +92,8 @@ definition {
 	@description = "Verify that, after approval, the Page status is Ready for Publish"
 	@priority = "4"
 	test PageIsReadyForPublishAfterApproval {
+		property test.name.skip.portal.instance = "WorkflowPageRevision#PageIsReadyForPublishAfterApproval";
+
 		Navigator.gotoStagedSitePage(
 			pageName = "Site Page Name",
 			siteName = "Site Name");
@@ -123,6 +125,8 @@ definition {
 
 	@priority = "4"
 	test RejectPageRevisionPG {
+		property test.name.skip.portal.instance = "WorkflowPageRevision#RejectPageRevisionPG";
+
 		var pageName = "Page Revision Page";
 
 		Navigator.gotoStagedSitePage(
@@ -210,6 +214,8 @@ definition {
 	@description = "Verify that when the Approved page is edited it's status comes to Draft"
 	@priority = "3"
 	test StatusComesToDraftWhenPageIsEdited {
+		property test.name.skip.portal.instance = "WorkflowPageRevision#StatusComesToDraftWhenPageIsEdited";
+
 		Navigator.gotoStagedSitePage(
 			pageName = "Site Page Name",
 			siteName = "Site Name");
@@ -268,6 +274,8 @@ definition {
 	@description = "Verify that when the Approved page is edited the button Submit for Publication is displayed"
 	@priority = "3"
 	test SubmitForPublicationButtonIsDisplayedWhenPageIsEdited {
+		property test.name.skip.portal.instance = "WorkflowPageRevision#SubmitForPublicationButtonIsDisplayedWhenPageIsEdited";
+
 		Navigator.gotoStagedSitePage(
 			pageName = "${pageName}",
 			siteName = "${siteName}");
@@ -307,6 +315,7 @@ definition {
 	@priority = "5"
 	test ViewApprovedPageAfterStagingDeactivated {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "WorkflowPageRevision#ViewApprovedPageAfterStagingDeactivated";
 
 		var pageName = "New Site Page Name";
 

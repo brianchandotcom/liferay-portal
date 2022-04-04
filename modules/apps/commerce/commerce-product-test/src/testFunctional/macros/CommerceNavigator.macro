@@ -62,6 +62,10 @@ definition {
 	}
 
 	macro gotoMiniumSidebarItem {
+		if (isSet(userMenu)) {
+			MouseOver(locator1 = "CommerceAccelerators#MINIUM_SIDEBAR_USER_AVATAR");
+		}
+
 		Click(
 			key_menuItem = "${menuItem}",
 			locator1 = "CommerceAccelerators#MINIUM_SIDEBAR_MENU_ITEM");

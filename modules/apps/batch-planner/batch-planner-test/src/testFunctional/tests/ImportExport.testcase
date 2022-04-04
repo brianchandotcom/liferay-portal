@@ -643,10 +643,14 @@ definition {
 			Button.click(button = "Next");
 		}
 
-		task ("Then the user should no be able to import the file") {
+		task ("Then the user should not be able to import the file and the missing field should be highlighted red") {
 			AssertElementNotPresent(
 				key_text = "Start Import",
 				locator1 = "Button#ANY");
+
+			AssertElementPresent(
+				key_destinationField = "currencyCode",
+				locator1 = "ImportExport#REQUIRED_IMPORT_FIELD_ERROR");
 		}
 
 		task ("When the user maps the missing required field and imports the file") {

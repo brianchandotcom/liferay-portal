@@ -46,10 +46,9 @@ const GenerateCardLayout = ({infoSelectedKey}) => {
 						<p className="m-0">Key Activations Available</p>
 
 						<p className="font-weight-normal">
-							{
+							{infoSelectedKey?.selectedSubscription?.quantity -
 								infoSelectedKey?.selectedSubscription
-									?.provisionedCount
-							}
+									?.provisionedCount}
 
 							{' of '}
 

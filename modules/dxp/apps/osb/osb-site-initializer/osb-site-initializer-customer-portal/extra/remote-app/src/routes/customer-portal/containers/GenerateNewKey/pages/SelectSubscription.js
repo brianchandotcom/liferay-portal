@@ -70,6 +70,10 @@ const SelectSubscription = ({
 
 	const productVersions = generateFormValues?.versions;
 
+	if (productVersions) {
+		productVersions.sort((a, b) => (a.label >= b.label ? 1 : -1));
+	}
+
 	useEffect(() => {
 		if (productVersions?.length && !infoSelectedKey?.productVersion) {
 			setSelectedVersion(productVersions[0].label);

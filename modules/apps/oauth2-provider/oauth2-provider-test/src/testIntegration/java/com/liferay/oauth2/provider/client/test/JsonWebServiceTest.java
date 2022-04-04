@@ -98,6 +98,7 @@ public class JsonWebServiceTest extends BaseClientTestCase {
 		formData.putSingle("active", "true");
 		formData.putSingle("countryId", "0");
 		formData.putSingle("name", "'aName'");
+		formData.putSingle("position", "0");
 		formData.putSingle("regionCode", "'aRegionCode'");
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(

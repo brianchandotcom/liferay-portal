@@ -21,6 +21,7 @@ import com.liferay.analytics.reports.web.internal.model.TimeSpan;
 import com.liferay.analytics.reports.web.internal.model.TrafficChannel;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -32,10 +33,12 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -44,6 +47,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.stream.Stream;
 
@@ -207,6 +211,32 @@ public class GetTrafficSourcesMVCResourceCommand
 				trafficChannel -> trafficChannel.toJSONObject(
 					liferayPortletRequest, liferayPortletResponse,
 					resourceBundle)
+			).map(
+				jsonObject -> {
+					if (GetterUtil.getBoolean(
+							_props.get("feature.flag.LPS-149255")) &&
+						(Objects.equals(
+							jsonObject.get("name"),
+							TrafficChannel.Type.ORGANIC.toString()) ||
+						 Objects.equals(
+							 jsonObject.get("name"),
+							 TrafficChannel.Type.PAID.toString()))) {
+
+						JSONObject filteredJSONObject =
+							JSONFactoryUtil.createJSONObject();
+
+						for (String key : jsonObject.keySet()) {
+							if (!key.equals("endpointURL")) {
+								filteredJSONObject.put(
+									key, jsonObject.get(key));
+							}
+						}
+
+						return filteredJSONObject;
+					}
+
+					return jsonObject;
+				}
 			).toArray());
 	}
 
@@ -221,5 +251,8 @@ public class GetTrafficSourcesMVCResourceCommand
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private Props _props;
 
 }

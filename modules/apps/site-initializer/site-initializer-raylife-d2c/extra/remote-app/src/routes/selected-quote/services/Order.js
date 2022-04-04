@@ -70,6 +70,7 @@ export function updateOrder(paymentMethod, orderItem, orderId) {
 	const payload = {
 		orderItems: [
 			{
+				discountAmount: 0,
 				discountPercentageLevel1: 0,
 				discountPercentageLevel2: 0,
 				discountPercentageLevel3: 0,

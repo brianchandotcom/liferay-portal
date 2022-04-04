@@ -17,6 +17,7 @@ package com.liferay.portal.search.internal.result;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
@@ -26,34 +27,38 @@ import com.liferay.portal.kernel.search.SearchResult;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.SummaryFactory;
 import com.liferay.portal.kernel.search.result.SearchResultTranslator;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.test.util.BaseSearchResultUtilTestCase;
 import com.liferay.portal.search.test.util.SearchTestUtil;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.List;
-import java.util.Locale;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.mockito.runners.MockitoJUnitRunner;
 
 /**
  * @author André de Oliveira
  */
-@PrepareForTest(AssetRendererFactoryRegistryUtil.class)
-@RunWith(PowerMockRunner.class)
+@RunWith(MockitoJUnitRunner.class)
 public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testBlankDocument() {
@@ -75,13 +80,13 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 	@Test
 	public void testSummaryFromAssetRenderer() throws Exception {
 		Mockito.when(
-			_assetRenderer.getSearchSummary((Locale)Matchers.any())
+			_assetRenderer.getSearchSummary(Matchers.any())
 		).thenReturn(
 			SearchTestUtil.SUMMARY_CONTENT
 		);
 
 		Mockito.when(
-			_assetRenderer.getTitle((Locale)Matchers.any())
+			_assetRenderer.getTitle(Matchers.any())
 		).thenReturn(
 			SearchTestUtil.SUMMARY_TITLE
 		);
@@ -92,13 +97,16 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 			_assetRenderer
 		);
 
-		PowerMockito.stub(
-			PowerMockito.method(
-				AssetRendererFactoryRegistryUtil.class,
-				"getAssetRendererFactoryByClassName", String.class)
-		).toReturn(
-			_assetRendererFactory
+		Mockito.when(
+			_serviceTrackerMap.getService(Mockito.anyString())
+		).thenReturn(
+			(AssetRendererFactory)_assetRendererFactory
 		);
+
+		ReflectionTestUtil.setFieldValue(
+			AssetRendererFactoryRegistryUtil.class,
+			"_classNameAssetRenderFactoriesServiceTrackerMap",
+			_serviceTrackerMap);
 
 		SearchResult searchResult = assertOneSearchResult(new DocumentImpl());
 
@@ -112,6 +120,8 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 		Assert.assertEquals(SearchTestUtil.SUMMARY_TITLE, summary.getTitle());
 
 		_assertSearchResult(searchResult);
+
+		_serviceTrackerMap.close();
 	}
 
 	@Test
@@ -121,7 +131,7 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 
 		Mockito.when(
 			_indexer.getSummary(
-				(Document)Matchers.any(), Matchers.anyString(),
+				Matchers.any(), Matchers.anyString(),
 				(PortletRequest)Matchers.isNull(),
 				(PortletResponse)Matchers.isNull())
 		).thenReturn(
@@ -210,5 +220,9 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 
 	@Mock
 	private IndexerRegistry _indexerRegistry;
+
+	@Mock
+	private ServiceTrackerMap<String, AssetRendererFactory<?>>
+		_serviceTrackerMap;
 
 }

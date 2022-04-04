@@ -78,10 +78,12 @@ public class DispatchTriggerCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append(", dispatchTriggerId=");
 		sb.append(dispatchTriggerId);
 		sb.append(", companyId=");
@@ -124,6 +126,14 @@ public class DispatchTriggerCacheModel
 		DispatchTriggerImpl dispatchTriggerImpl = new DispatchTriggerImpl();
 
 		dispatchTriggerImpl.setMvccVersion(mvccVersion);
+
+		if (externalReferenceCode == null) {
+			dispatchTriggerImpl.setExternalReferenceCode("");
+		}
+		else {
+			dispatchTriggerImpl.setExternalReferenceCode(externalReferenceCode);
+		}
+
 		dispatchTriggerImpl.setDispatchTriggerId(dispatchTriggerId);
 		dispatchTriggerImpl.setCompanyId(companyId);
 		dispatchTriggerImpl.setUserId(userId);
@@ -210,6 +220,7 @@ public class DispatchTriggerCacheModel
 		throws ClassNotFoundException, IOException {
 
 		mvccVersion = objectInput.readLong();
+		externalReferenceCode = objectInput.readUTF();
 
 		dispatchTriggerId = objectInput.readLong();
 
@@ -238,6 +249,13 @@ public class DispatchTriggerCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
+		}
 
 		objectOutput.writeLong(dispatchTriggerId);
 
@@ -296,6 +314,7 @@ public class DispatchTriggerCacheModel
 	}
 
 	public long mvccVersion;
+	public String externalReferenceCode;
 	public long dispatchTriggerId;
 	public long companyId;
 	public long userId;

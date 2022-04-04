@@ -39,14 +39,15 @@ public class DispatchTriggerServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.dispatch.service.impl.DispatchTriggerServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static DispatchTrigger addDispatchTrigger(
-			long userId, String dispatchTaskExecutorType,
+			String externalReferenceCode, long userId,
+			String dispatchTaskExecutorType,
 			com.liferay.portal.kernel.util.UnicodeProperties
 				dispatchTaskSettingsUnicodeProperties,
 			String name)
 		throws PortalException {
 
 		return getService().addDispatchTrigger(
-			userId, dispatchTaskExecutorType,
+			externalReferenceCode, userId, dispatchTaskExecutorType,
 			dispatchTaskSettingsUnicodeProperties, name);
 	}
 

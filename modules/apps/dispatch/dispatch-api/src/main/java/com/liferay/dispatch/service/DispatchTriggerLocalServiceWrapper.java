@@ -56,14 +56,15 @@ public class DispatchTriggerLocalServiceWrapper
 
 	@Override
 	public com.liferay.dispatch.model.DispatchTrigger addDispatchTrigger(
-			long userId, String dispatchTaskExecutorType,
+			String externalReferenceCode, long userId,
+			String dispatchTaskExecutorType,
 			com.liferay.portal.kernel.util.UnicodeProperties
 				dispatchTaskSettingsUnicodeProperties,
 			String name, boolean system)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dispatchTriggerLocalService.addDispatchTrigger(
-			userId, dispatchTaskExecutorType,
+			externalReferenceCode, userId, dispatchTaskExecutorType,
 			dispatchTaskSettingsUnicodeProperties, name, system);
 	}
 
@@ -263,6 +264,36 @@ public class DispatchTriggerLocalServiceWrapper
 			companyId, name);
 	}
 
+	/**
+	 * Returns the dispatch trigger with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the dispatch trigger's external reference code
+	 * @return the matching dispatch trigger, or <code>null</code> if a matching dispatch trigger could not be found
+	 */
+	@Override
+	public com.liferay.dispatch.model.DispatchTrigger
+		fetchDispatchTriggerByExternalReferenceCode(
+			long companyId, String externalReferenceCode) {
+
+		return _dispatchTriggerLocalService.
+			fetchDispatchTriggerByExternalReferenceCode(
+				companyId, externalReferenceCode);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchDispatchTriggerByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	@Override
+	public com.liferay.dispatch.model.DispatchTrigger
+		fetchDispatchTriggerByReferenceCode(
+			long companyId, String externalReferenceCode) {
+
+		return _dispatchTriggerLocalService.fetchDispatchTriggerByReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
 	@Override
 	public java.util.Date fetchNextFireDate(long dispatchTriggerId) {
 		return _dispatchTriggerLocalService.fetchNextFireDate(
@@ -296,6 +327,25 @@ public class DispatchTriggerLocalServiceWrapper
 
 		return _dispatchTriggerLocalService.getDispatchTrigger(
 			dispatchTriggerId);
+	}
+
+	/**
+	 * Returns the dispatch trigger with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the dispatch trigger's external reference code
+	 * @return the matching dispatch trigger
+	 * @throws PortalException if a matching dispatch trigger could not be found
+	 */
+	@Override
+	public com.liferay.dispatch.model.DispatchTrigger
+			getDispatchTriggerByExternalReferenceCode(
+				long companyId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _dispatchTriggerLocalService.
+			getDispatchTriggerByExternalReferenceCode(
+				companyId, externalReferenceCode);
 	}
 
 	@Override

@@ -54,7 +54,8 @@ public interface DispatchTriggerService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.dispatch.service.impl.DispatchTriggerServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the dispatch trigger remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link DispatchTriggerServiceUtil} if injection and service tracking are not available.
 	 */
 	public DispatchTrigger addDispatchTrigger(
-			long userId, String dispatchTaskExecutorType,
+			String externalReferenceCode, long userId,
+			String dispatchTaskExecutorType,
 			UnicodeProperties dispatchTaskSettingsUnicodeProperties,
 			String name)
 		throws PortalException;

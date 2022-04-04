@@ -76,6 +76,21 @@ public interface DispatchTriggerModel
 	public void setMvccVersion(long mvccVersion);
 
 	/**
+	 * Returns the external reference code of this dispatch trigger.
+	 *
+	 * @return the external reference code of this dispatch trigger
+	 */
+	@AutoEscape
+	public String getExternalReferenceCode();
+
+	/**
+	 * Sets the external reference code of this dispatch trigger.
+	 *
+	 * @param externalReferenceCode the external reference code of this dispatch trigger
+	 */
+	public void setExternalReferenceCode(String externalReferenceCode);
+
+	/**
 	 * Returns the dispatch trigger ID of this dispatch trigger.
 	 *
 	 * @return the dispatch trigger ID of this dispatch trigger

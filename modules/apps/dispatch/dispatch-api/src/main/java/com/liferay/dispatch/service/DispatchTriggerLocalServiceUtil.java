@@ -62,14 +62,15 @@ public class DispatchTriggerLocalServiceUtil {
 	}
 
 	public static DispatchTrigger addDispatchTrigger(
-			long userId, String dispatchTaskExecutorType,
+			String externalReferenceCode, long userId,
+			String dispatchTaskExecutorType,
 			com.liferay.portal.kernel.util.UnicodeProperties
 				dispatchTaskSettingsUnicodeProperties,
 			String name, boolean system)
 		throws PortalException {
 
 		return getService().addDispatchTrigger(
-			userId, dispatchTaskExecutorType,
+			externalReferenceCode, userId, dispatchTaskExecutorType,
 			dispatchTaskSettingsUnicodeProperties, name, system);
 	}
 
@@ -235,6 +236,31 @@ public class DispatchTriggerLocalServiceUtil {
 		return getService().fetchDispatchTrigger(companyId, name);
 	}
 
+	/**
+	 * Returns the dispatch trigger with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the dispatch trigger's external reference code
+	 * @return the matching dispatch trigger, or <code>null</code> if a matching dispatch trigger could not be found
+	 */
+	public static DispatchTrigger fetchDispatchTriggerByExternalReferenceCode(
+		long companyId, String externalReferenceCode) {
+
+		return getService().fetchDispatchTriggerByExternalReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchDispatchTriggerByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	public static DispatchTrigger fetchDispatchTriggerByReferenceCode(
+		long companyId, String externalReferenceCode) {
+
+		return getService().fetchDispatchTriggerByReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
 	public static java.util.Date fetchNextFireDate(long dispatchTriggerId) {
 		return getService().fetchNextFireDate(dispatchTriggerId);
 	}
@@ -260,6 +286,22 @@ public class DispatchTriggerLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getDispatchTrigger(dispatchTriggerId);
+	}
+
+	/**
+	 * Returns the dispatch trigger with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the dispatch trigger's external reference code
+	 * @return the matching dispatch trigger
+	 * @throws PortalException if a matching dispatch trigger could not be found
+	 */
+	public static DispatchTrigger getDispatchTriggerByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
+		throws PortalException {
+
+		return getService().getDispatchTriggerByExternalReferenceCode(
+			companyId, externalReferenceCode);
 	}
 
 	public static List<DispatchTrigger> getDispatchTriggers(

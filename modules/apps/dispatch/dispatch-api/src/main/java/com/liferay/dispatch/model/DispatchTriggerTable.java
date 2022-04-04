@@ -36,6 +36,10 @@ public class DispatchTriggerTable extends BaseTable<DispatchTriggerTable> {
 
 	public final Column<DispatchTriggerTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<DispatchTriggerTable, String> externalReferenceCode =
+		createColumn(
+			"externalReferenceCode", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<DispatchTriggerTable, Long> dispatchTriggerId =
 		createColumn(
 			"dispatchTriggerId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);

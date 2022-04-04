@@ -657,11 +657,78 @@ definition {
 	}
 
 	@description = "LPS-146758 - Verify it is not possible to delete a single Object created by the user if the Delete Owner permission is removed"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CannotDeleteSingleObjectWithoutDeleteOwnerPermission {
+		property test.name.skip.portal.instance = "ObjectPermission#CannotDeleteSingleObjectWithoutDeleteOwnerPermission";
 
-		// TODO LPS-148934 CannotDeleteSingleObjectWithoutDeleteOwnerPermission pending implementation
+		JSONRole.addRegularRole(roleTitle = "Regular Role");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet",
+			roleTitle = "Regular Role");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ADD_OBJECT_DEFINITION",
+			resourceName = "com.liferay.object",
+			roleTitle = "Regular Role");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Regular Role",
+			userEmailAddress = "userea@liferay.com");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectAdmin.addNewObject(
+			fieldLabelName = "Custom Object 148934",
+			pluralLabelName = "Custom Objects 148934");
+
+		ObjectAdmin.saveCustomObject();
+
+		Refresh();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectCustomViews.gotoPermissions(entryName = "Custom Object 148934");
+
+		ObjectCustomViews.selectAnyPermissions(
+			owner = "true",
+			permissionsList = "DELETE");
+
+		Button.clickSave();
+
+		Refresh();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectCustomViews.viewOptionNotPresentInKebabMenu(
+			entryName = "Custom Object 148934",
+			menuItem = "Delete");
+
+
 
 	}
 

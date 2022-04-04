@@ -34,7 +34,7 @@ export const getCaseResults = gql`
 		caseResults(filter: $filter, page: $page, pageSize: $pageSize)
 			@rest(
 				type: "C_CaseResult"
-				path: "caseresults?page={args.page}&pageSize={args.pageSize}&nestedFields=case,component,build.productVersion,build.routine,run"
+				path: "caseresults?filter={args.filter}&page={args.page}&pageSize={args.pageSize}&nestedFields=case,component,build.productVersion,build.routine,run"
 			) {
 			items {
 				assignedUserId

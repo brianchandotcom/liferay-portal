@@ -12,6 +12,8 @@
  * details.
  */
 
+import {useParams} from 'react-router-dom';
+
 import {Avatar} from '../../../../components/Avatar';
 import AssignToMe from '../../../../components/Avatar/AssigneToMe';
 import Code from '../../../../components/Code';
@@ -22,57 +24,59 @@ import {TestrayCaseResult, getCaseResults} from '../../../../graphql/queries';
 import i18n from '../../../../i18n';
 import {getStatusLabel} from '../../../../util/constants';
 
-const Build = () => (
-	<Container className="mt-4" title={i18n.translate('tests')}>
-		<ListView
-			query={getCaseResults}
-			tableProps={{
-				columns: [
-					{
-						clickable: true,
-						key: 'priority',
-						render: (
-							_: any,
-							{case: testrayCase}: TestrayCaseResult
-						) => testrayCase?.priority,
-						value: i18n.translate('priority'),
-					},
-					{
-						key: 'component',
-						render: (
-							_: any,
-							{case: testrayCase}: TestrayCaseResult
-						) => testrayCase?.component?.name,
-						value: i18n.translate('component'),
-					},
-					{
-						clickable: true,
-						key: 'name',
-						render: (
-							_: any,
-							{case: testrayCase}: TestrayCaseResult
-						) => testrayCase?.name,
-						value: i18n.translate('case'),
-					},
-					{
-						key: 'run',
-						render: () => '01',
-						value: i18n.translate('run'),
-					},
-					{
-						key: 'assignee',
-						render: (_: any, {caseResult}: any) =>
-							caseResult?.assignedUserId ? (
-								<Avatar />
-							) : (
-								<AssignToMe />
-							),
-						value: i18n.translate('assignee'),
-					},
-					{
-						key: 'dueStatus',
-						render: (dueStatus: any) =>
-							dueStatus && (
+const Build = () => {
+	const {buildId} = useParams();
+
+	return (
+		<Container className="mt-4" title={i18n.translate('tests')}>
+			<ListView
+				query={getCaseResults}
+				tableProps={{
+					columns: [
+						{
+							clickable: true,
+							key: 'priority',
+							render: (
+								_: any,
+								{case: testrayCase}: TestrayCaseResult
+							) => testrayCase?.priority,
+							value: i18n.translate('priority'),
+						},
+						{
+							key: 'component',
+							render: (
+								_: any,
+								{case: testrayCase}: TestrayCaseResult
+							) => testrayCase?.component?.name,
+							value: i18n.translate('component'),
+						},
+						{
+							clickable: true,
+							key: 'name',
+							render: (
+								_: any,
+								{case: testrayCase}: TestrayCaseResult
+							) => testrayCase?.name,
+							value: i18n.translate('case'),
+						},
+						{
+							key: 'run',
+							render: () => '01',
+							value: i18n.translate('run'),
+						},
+						{
+							key: 'assignee',
+							render: (_: any, {caseResult}: any) =>
+								caseResult?.assignedUserId ? (
+									<Avatar />
+								) : (
+									<AssignToMe />
+								),
+							value: i18n.translate('assignee'),
+						},
+						{
+							key: 'dueStatus',
+							render: (dueStatus: any) => (
 								<StatusBadge
 									type={getStatusLabel(
 										dueStatus
@@ -81,24 +85,26 @@ const Build = () => (
 									{getStatusLabel(dueStatus)}
 								</StatusBadge>
 							),
-						value: i18n.translate('status'),
-					},
-					{
-						key: 'issues',
-						value: i18n.translate('issues'),
-					},
-					{
-						key: 'errors',
-						render: (errors: string) =>
-							errors && <Code>{errors}</Code>,
-						value: i18n.translate('errors'),
-					},
-				],
-				navigateTo: ({id}) => `case-result/${id}`,
-			}}
-			transformData={(data) => data?.caseResults}
-		/>
-	</Container>
-);
+							value: i18n.translate('status'),
+						},
+						{
+							key: 'issues',
+							value: i18n.translate('issues'),
+						},
+						{
+							key: 'errors',
+							render: (errors: string) =>
+								errors && <Code>{errors}</Code>,
+							value: i18n.translate('errors'),
+						},
+					],
+					navigateTo: ({id}) => `case-result/${id}`,
+				}}
+				transformData={(data) => data?.caseResults}
+				variables={{filter: `buildId eq ${buildId}`}}
+			/>
+		</Container>
+	);
+};
 
 export default Build;

@@ -22,12 +22,7 @@ import i18n from '../../../../../../i18n';
 
 const CaseResultOutlet = () => {
 	const {pathname} = useLocation();
-	const {
-		projectId,
-		routineId,
-		testrayBuildId,
-		testrayCaseResultId,
-	} = useParams();
+	const {buildId, projectId, routineId, testrayCaseResultId} = useParams();
 
 	const {data} = useQuery(getCase, {
 		variables: {
@@ -37,7 +32,7 @@ const CaseResultOutlet = () => {
 
 	const testrayCaseResult = data?.c?.Case;
 
-	const basePath = `/project/${projectId}/routines/${routineId}/build/${testrayBuildId}/case-result/${testrayCaseResultId}`;
+	const basePath = `/project/${projectId}/routines/${routineId}/build/${buildId}/case-result/${testrayCaseResultId}`;
 
 	const {setHeading, setTabs} = useHeader({shouldUpdate: false});
 

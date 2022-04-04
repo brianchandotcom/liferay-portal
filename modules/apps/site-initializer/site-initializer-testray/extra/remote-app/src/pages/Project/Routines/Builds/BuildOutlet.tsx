@@ -38,11 +38,11 @@ type BuildOutletProps = {
 
 const BuildOutlet: React.FC<BuildOutletProps> = ({ignorePath}) => {
 	const {pathname} = useLocation();
-	const {projectId, routineId, testrayBuildId} = useParams();
+	const {buildId, projectId, routineId} = useParams();
 	const {testrayProject, testrayRoutine}: any = useOutletContext();
 	const {data} = useQuery<{build: TestrayBuild}>(getBuild, {
 		variables: {
-			buildId: testrayBuildId,
+			buildId,
 		},
 	});
 
@@ -53,12 +53,12 @@ const BuildOutlet: React.FC<BuildOutletProps> = ({ignorePath}) => {
 	const testrayBuild = data?.build;
 	const testrayTasks = testrayTasksData?.tasks.items || [];
 	const testrayTask = testrayTasks.find(
-		(testrayTask) => testrayTask?.build?.id === Number(testrayBuildId)
+		(testrayTask) => testrayTask?.build?.id === Number(buildId)
 	);
 
 	const isCurrentPathIgnored = pathname.includes(ignorePath);
 
-	const basePath = `/project/${projectId}/routines/${routineId}/build/${testrayBuildId}`;
+	const basePath = `/project/${projectId}/routines/${routineId}/build/${buildId}`;
 
 	const {setHeading, setTabs} = useHeader({shouldUpdate: false});
 

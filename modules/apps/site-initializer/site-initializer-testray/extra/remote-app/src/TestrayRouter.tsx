@@ -36,7 +36,6 @@ import CaseResultOutlet from './pages/Project/Routines/Builds/Inner/CaseResult/C
 import CaseResultHistory from './pages/Project/Routines/Builds/Inner/CaseResult/History';
 import CaseTypes from './pages/Project/Routines/Builds/Inner/CaseTypes';
 import Components from './pages/Project/Routines/Builds/Inner/Components';
-import Results from './pages/Project/Routines/Builds/Inner/Results';
 import Runs from './pages/Project/Routines/Builds/Inner/Run';
 import Teams from './pages/Project/Routines/Builds/Inner/Teams';
 import Routine from './pages/Project/Routines/Routine';
@@ -114,7 +113,7 @@ const TestrayRoute = () => (
 									element={
 										<BuildOutlet ignorePath="case-result" />
 									}
-									path="build/:testrayBuildId"
+									path="build/:buildId"
 								>
 									<Route element={<Build />} index />
 
@@ -142,11 +141,6 @@ const TestrayRoute = () => (
 									<Route
 										element={<Components />}
 										path="components"
-									/>
-
-									<Route
-										element={<Results />}
-										path="results"
 									/>
 								</Route>
 							</Route>

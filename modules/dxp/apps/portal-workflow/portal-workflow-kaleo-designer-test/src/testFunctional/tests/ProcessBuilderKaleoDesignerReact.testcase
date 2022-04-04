@@ -970,30 +970,29 @@ definition {
 	}
 
 	@description = "Verify that the is able to select who receives the notification: Role"
-    @priority = "5"
-    test CanSelectRoleAsNotificationRecipientType {
-        property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSelectRoleAsNotificationRecipientType";
-		
-        Workflow.openWorkflowListView();
+	@priority = "5"
+	test CanSelectRoleAsNotificationRecipientType {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSelectRoleAsNotificationRecipientType";
 
-        Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+		Workflow.openWorkflowListView();
 
-        ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "start");
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
 
-        ProcessBuilderKaleoDesignerReact.viewAndFillNotification(
-            name = "New Notification",
-            newNotification = "true",
-            notificationTemplateValue = "New Notification Template",
-            notificationTypeOption = "email",
-            notificationsRecipientTypeRoleName ="Account Manager",
-            recipientTypeOption = "Role");
+		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "start");
 
-        ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+		ProcessBuilderKaleoDesignerReact.viewAndFillNotification(
+			name = "New Notification",
+			newNotification = "true",
+			notificationsRecipientTypeRoleName = "Account Manager",
+			notificationTemplateValue = "New Notification Template",
+			notificationTypeOption = "email",
+			recipientTypeOption = "Role");
 
-        ProcessBuilderKaleoDesignerReact.gotoNotification(notificationName = "New Notification");
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
-        ProcessBuilderKaleoDesignerReact.viewNotificationInfo(notificationRecipientType = "Role");
+		ProcessBuilderKaleoDesignerReact.gotoNotification(notificationName = "New Notification");
 
+		ProcessBuilderKaleoDesignerReact.viewNotificationInfo(notificationRecipientType = "Role");
 	}
 
 	@description = "Verify that the is able to select who receives the notification: Scripted Recipient"

@@ -135,7 +135,7 @@ const Header = () => {
 				</div>
 			</div>
 
-			<ClayTabs className="header-container-tabs ml-3" modern>
+			<ClayTabs className="header-container-tabs ml-3">
 				{tabs.map((tab, index) => (
 					<ClayTabs.Item
 						active={tab.active}

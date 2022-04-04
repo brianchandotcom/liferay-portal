@@ -76,7 +76,7 @@ const InfoPanel = ({metadata}) => {
 	return (
 		<div className="info-panel sidenav-menu-slider">
 			<div className="sidebar-header">
-				<ClayTabs modern>{itemsHeader}</ClayTabs>
+				<ClayTabs>{itemsHeader}</ClayTabs>
 			</div>
 
 			<div className="sidebar-body">

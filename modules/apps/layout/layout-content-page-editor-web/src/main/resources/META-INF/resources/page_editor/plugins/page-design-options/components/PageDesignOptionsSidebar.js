@@ -142,10 +142,7 @@ export default function PageDesignOptionsSidebar() {
 			</SidebarPanelHeader>
 
 			<SidebarPanelContent>
-				<ClayTabs
-					className="page-editor__sidebar__page-design-options__tabs"
-					modern
-				>
+				<ClayTabs className="page-editor__sidebar__page-design-options__tabs">
 					{tabs.map((tab, index) => (
 						<ClayTabs.Item
 							active={activeTabId === index}

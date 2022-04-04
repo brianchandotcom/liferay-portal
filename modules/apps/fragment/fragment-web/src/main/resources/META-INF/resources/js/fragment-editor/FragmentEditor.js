@@ -201,7 +201,7 @@ const FragmentEditor = ({
 				<div className="navbar navbar-expand navbar-underline navigation-bar navigation-bar-light">
 					<div className="container-fluid container-fluid-max-xl">
 						<div className="navbar-nav">
-							<ClayTabs modern>
+							<ClayTabs>
 								<ClayTabs.Item
 									active={activeTabKeyValue === 0}
 									innerProps={{

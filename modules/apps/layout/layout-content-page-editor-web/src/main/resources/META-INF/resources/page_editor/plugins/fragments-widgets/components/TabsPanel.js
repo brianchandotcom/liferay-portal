@@ -36,10 +36,7 @@ export default function TabsPanel({
 
 	return (
 		<>
-			<ClayTabs
-				className="mb-4 page-editor__sidebar__fragments-widgets-panel__tabs"
-				modern
-			>
+			<ClayTabs className="mb-4 page-editor__sidebar__fragments-widgets-panel__tabs">
 				{tabs.map((tab, index) => (
 					<ClayTabs.Item
 						active={tab.id === activeTabId}

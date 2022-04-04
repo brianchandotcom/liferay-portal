@@ -65,7 +65,7 @@ export default function BrowserSidebar({title}) {
 		>
 			<SidebarPanelHeader>{title}</SidebarPanelHeader>
 
-			<ClayTabs className="page-editor__sidebar__browser__tabs" modern>
+			<ClayTabs className="page-editor__sidebar__browser__tabs">
 				{TABS.map((tab, index) => (
 					<ClayTabs.Item
 						active={activeTabId === index}

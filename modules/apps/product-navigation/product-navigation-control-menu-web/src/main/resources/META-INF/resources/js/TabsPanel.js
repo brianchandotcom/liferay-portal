@@ -29,7 +29,7 @@ const TabsPanel = ({tabs}) => {
 
 	return (
 		<>
-			<ClayTabs className="sidebar-body__add-panel__tabs" modern>
+			<ClayTabs className="sidebar-body__add-panel__tabs">
 				{tabs.map((tab, index) => (
 					<ClayTabs.Item
 						active={activeTabId === index}

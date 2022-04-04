@@ -94,7 +94,7 @@ function ItemConfigurationContent() {
 	return (
 		<PageStructureSidebarSection resizable size={1.5}>
 			<div className="page-editor__page-structure__item-configuration">
-				<ClayTabs className="flex-nowrap pt-2 px-3" modern>
+				<ClayTabs className="flex-nowrap pt-2 px-3">
 					{panels.map((panel) => (
 						<ClayTabs.Item
 							active={panel.panelId === activePanelId}

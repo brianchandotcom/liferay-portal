@@ -81,7 +81,7 @@ export default function App() {
 					</ClayLayout.Col>
 				</ClayLayout.Row>
 
-				<ClayTabs modern>
+				<ClayTabs>
 					{TABS.map((tab, i) => (
 						<ClayTabs.Item
 							active={activeTabKeyValue === tab.hash}

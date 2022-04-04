@@ -223,7 +223,7 @@ const AppsPanel = ({
 						<ClayLayout.Col>
 							<ClayLayout.ContentRow verticalAlign="center">
 								<ClayLayout.ContentCol expand>
-									<ClayTabs modern>
+									<ClayTabs>
 										{categories.map(
 											({key, label}, index) => (
 												<ClayTabs.Item

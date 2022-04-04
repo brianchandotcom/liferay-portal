@@ -117,4 +117,10 @@ definition {
 			locator1 = "MenuItem#ANY_MENU_ITEM");
 	}
 
+	macro viewNoCardThumbnail {
+		AssertElementNotPresent(
+			key_card = "${card}",
+			locator1 = "Card#CARD_THUMBNAIL");
+	}
+
 }

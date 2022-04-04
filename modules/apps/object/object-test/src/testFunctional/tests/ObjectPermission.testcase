@@ -524,11 +524,74 @@ definition {
 	}
 
 	@description = "LPS-146759 - Verify it is not possible to update a single Picklist permissions created by the user if the Permissions Owner permission is removed"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CannotDefineSinglePicklistPermissionsWithoutPermissionsOwnerPermission {
+		property test.name.skip.portal.instance = "ObjectPermission#CannotDefineSinglePicklistPermissionsWithoutPermissionsOwnerPermission";
 
-		// TODO LPS-148945 CannotDefineSinglePicklistPermissionsWithoutPermissionsOwnerPermission pending implementation
+		JSONRole.addRegularRole(
+			roleKey = "Regular Role",
+			roleTitle = "Regular Role");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_object_web_internal_list_type_portlet_portlet_ListTypeDefinitionsPortlet",
+			roleTitle = "Regular Role");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ADD_LIST_TYPE_DEFINITION",
+			resourceName = "com.liferay.list.type",
+			roleTitle = "Regular Role");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Regular Role",
+			userEmailAddress = "userea@liferay.com");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Picklist.gotoPicklists();
+
+		Picklist.addPicklistViaUI(picklistName = "Picklist Test");
+
+		Refresh();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		Picklist.gotoPicklists();
+
+		ObjectCustomViews.gotoPermissions(entryName = "Picklist Test");
+
+		ObjectCustomViews.selectAnyPermissions(
+			owner = "true",
+			permissionsList = "PERMISSIONS");
+
+		Button.clickSave();
+
+		Refresh();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Picklist.gotoPicklists();
+
+		ObjectCustomViews.viewOptionNotPresentInKebabMenu(
+			entryName = "Picklist Test",
+			menuItem = "Permissions");
 
 	}
 

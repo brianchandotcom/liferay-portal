@@ -227,13 +227,20 @@ definition {
 	}
 
 	macro viewOptionNotPresentInKebabMenu {
-		Click(
-			key_objectLabel = "${entryName}",
-			locator1 = "ObjectAdmin#OBJECT_KEBAB_MENU");
+		if (IsElementPresent(locator1 = "ObjectAdmin#OBJECT_KEBAB_MENU")) {
+			Click(
+				key_objectLabel = "${entryName}",
+				locator1 = "ObjectAdmin#OBJECT_KEBAB_MENU");
 
-		AssertElementNotPresent(
-			key_menuItem = "${menuItem}",
-			locator1 = "MenuItem#ANY_MENU_ITEM");
+			AssertElementNotPresent(
+				key_menuItem = "${menuItem}",
+				locator1 = "MenuItem#ANY_MENU_ITEM");
+		}
+		else {
+			AssertElementNotPresent(
+				key_objectCustomViewLabel = "${entryName}",
+				locator1 = "ObjectCustomViews#OBJECT_VIEW_KEBAB_MENU");
+		}
 	}
 
 	macro viewOrdersOfTheColumns {

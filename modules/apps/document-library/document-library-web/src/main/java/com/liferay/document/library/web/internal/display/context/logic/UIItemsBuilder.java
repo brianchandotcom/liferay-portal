@@ -238,7 +238,7 @@ public class UIItemsBuilder {
 
 		return true;
 	}
-	public DropdownItem getCheckoutDropdownItem() {
+	public DropdownItem createCheckoutDropdownItem() {
 		return DropdownItemBuilder.setHref(
 			PortletURLBuilder.create(
 				_getActionURL(
@@ -531,27 +531,15 @@ public class UIItemsBuilder {
 		menuItems.add(deleteMenuItem);
 	}
 
-	public DropdownItem getDownloadDropdownItem() {
-		String label = LanguageUtil.formatStorageSize(
-			_fileVersion.getSize(), _themeDisplay.getLocale());
+	public DropdownItem createDownloadDropdownItem() {
 
-		label = StringBundler.concat(
-			_themeDisplay.translate("download"), " (", label, ")");
-
-		boolean appendVersion;
+		boolean appendVersion = true;
 
 		if (StringUtil.equalsIgnoreCase(
 				_fileEntry.getVersion(), _fileVersion.getVersion())) {
 
 			appendVersion = false;
 		}
-		else {
-			appendVersion = true;
-		}
-
-		String url = _dlURLHelper.getDownloadURL(
-			_fileEntry, _fileVersion, _themeDisplay, StringPool.BLANK,
-			appendVersion, true);
 
 		return DropdownItemBuilder.setData(
 			HashMapBuilder.<String, Object>put(
@@ -562,11 +550,15 @@ public class UIItemsBuilder {
 				"senna-off", "true"
 			).build()
 		).setHref(
-			url
+			_dlURLHelper.getDownloadURL(
+				_fileEntry, _fileVersion, _themeDisplay, StringPool.BLANK,
+				appendVersion, true)
 		).setIcon(
 			"download"
 		).setLabel(
-			label
+			StringBundler.concat(
+				_themeDisplay.translate("download"), " (", LanguageUtil.formatStorageSize(
+					_fileVersion.getSize(), _themeDisplay.getLocale()), ")")
 		).build();
 	}
 
@@ -653,7 +645,7 @@ public class UIItemsBuilder {
 		return true;
 	}
 
-	public DropdownItem getEditDropdownItem(){
+	public DropdownItem createEditDropdownItem(){
 		PortletURL portletURL = null;
 
 		if (_fileShortcut == null) {
@@ -992,7 +984,7 @@ public class UIItemsBuilder {
 		return _fileShortcut != null;
 	}
 
-	public DropdownItem getViewOriginalFileDropdownItem() {
+	public DropdownItem createViewOriginalFileDropdownItem() {
 		if(_fileShortcut == null){
 			return null;
 		}

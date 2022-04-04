@@ -125,16 +125,16 @@ public class DefaultDLViewFileVersionDisplayContext
 
 		return DropdownItemListBuilder.add(
 			() -> _fileEntryDisplayContextHelper.isDownloadActionAvailable(),
-			_uiItemsBuilder.getDownloadDropdownItem()
+			_uiItemsBuilder.createDownloadDropdownItem()
 		).add(
 			() -> _uiItemsBuilder.isViewOriginalFileActionAvailable(),
-			_uiItemsBuilder.getViewOriginalFileDropdownItem()
+			_uiItemsBuilder.createViewOriginalFileDropdownItem()
 		).add(
 			() -> _uiItemsBuilder.isEditActionAvailable(),
-			_uiItemsBuilder.getEditDropdownItem()
+			_uiItemsBuilder.createEditDropdownItem()
 		).add(
 			() -> _uiItemsBuilder.isCheckoutActionAvailable(),
-			_uiItemsBuilder.getCheckoutDropdownItem()
+			_uiItemsBuilder.createCheckoutDropdownItem()
 		).build();
 	}
 

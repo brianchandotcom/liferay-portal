@@ -47,44 +47,43 @@ definition {
 	}
 
 	@description = "LPS-150344 - Verify if when you click on the Requirements tab, the Requirements page is shown."
-    @priority = "5"
-    test CanAcessRequirementsPage {
-        ApplicationsMenu.gotoSite(site = "Testray 2");
+	@priority = "5"
+	test CanAcessRequirementsPage {
+		ApplicationsMenu.gotoSite(site = "Testray 2");
 
 		Testray.createProjectTestray();
 
-        Click(
-            key_projectName = "Liferay Portal 7.2",
-            locator1 = "Testray#PROJECT_NAME_BUTTON");
+		Click(
+			key_projectName = "Liferay Portal 7.2",
+			locator1 = "Testray#PROJECT_NAME_BUTTON");
 
-        Click(
-            key_navTabName = "Requirements",
-            locator1 = "Testray#PROJECT_NAVIGATOR_TAB_BUTTON");
+		Click(
+			key_navTabName = "Requirements",
+			locator1 = "Testray#PROJECT_NAVIGATOR_TAB_BUTTON");
 
-        AssertElementPresent(
-            key_title = "Requirements",
-            locator1 = "Testray#NAME_TITLE");
-    }
+		AssertElementPresent(
+			key_title = "Requirements",
+			locator1 = "Testray#NAME_TITLE");
+	}
 
 	@description = "LPS-150342 - Verify if when you click on the Suites tab, the Suites page is shown."
-    @priority = "5"
-    test CanAcessSuitesPage {
-        ApplicationsMenu.gotoSite(site = "Testray 2");
+	@priority = "5"
+	test CanAcessSuitesPage {
+		ApplicationsMenu.gotoSite(site = "Testray 2");
 
 		Testray.createProjectTestray();
 
-        Click(
-            key_projectName = "Liferay Portal 7.2",
-            locator1 = "Testray#PROJECT_NAME_BUTTON");
+		Click(
+			key_projectName = "Liferay Portal 7.2",
+			locator1 = "Testray#PROJECT_NAME_BUTTON");
 
-        Click(
-            key_navTabName = "Suites",
-            locator1 = "Testray#PROJECT_NAVIGATOR_TAB_BUTTON");
+		Click(
+			key_navTabName = "Suites",
+			locator1 = "Testray#PROJECT_NAVIGATOR_TAB_BUTTON");
 
-        AssertElementPresent(
-            key_title = "Suites",
-            locator1 = "Testray#NAME_TITLE");
-    }
+		AssertElementPresent(
+			key_title = "Suites",
+			locator1 = "Testray#NAME_TITLE");
+	}
 
-
-} 
+}

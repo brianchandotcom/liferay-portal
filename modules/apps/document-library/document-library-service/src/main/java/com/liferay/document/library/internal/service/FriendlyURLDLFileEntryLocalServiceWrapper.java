@@ -79,10 +79,10 @@ public class FriendlyURLDLFileEntryLocalServiceWrapper
 	}
 
 	@Override
-	public DLFileEntry deleteFileEntry(long fileEntryId)
+	public DLFileEntry deleteFileEntry(DLFileEntry dlFileEntry)
 		throws PortalException {
 
-		DLFileEntry dlFileEntry = super.deleteFileEntry(fileEntryId);
+		dlFileEntry = super.deleteFileEntry(dlFileEntry);
 
 		if (_ffFriendlyURLEntryFileEntryConfiguration.enabled()) {
 			_friendlyURLEntryLocalService.deleteFriendlyURLEntry(

@@ -46,6 +46,10 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8942 | Test Summary: Assert that a User can't create a Custom Range past 365 days max for Individuals"
 	@priority = "2"
 	test AssertIndividualsTimeFIlterInvalidCustom {
+		property portal.upstream = "quarantine";
+
+		// AC Quarantine Reason: Active individuals chart takes time to load
+
 		task ("Sign in as new user to view the site page") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "ac@liferay.com",
@@ -95,6 +99,10 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LLRAC-8940 | Test Summary: Assert Chart ticks for Individuals Metrics standardized"
 	@priority = "3"
 	test AssertIndividualTicksDateFormat {
+		property portal.upstream = "quarantine";
+
+		// AC Quarantine Reason: Active individuals chart takes time to load
+
 		task ("Sign in as new user to view the site page") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "ac@liferay.com",
@@ -204,6 +212,10 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8941 | Test Summary: Assert Known Individual Chart Popover follows format"
 	@priority = "3"
 	test AssertKnownIndividualChartPopover {
+		property portal.upstream = "quarantine";
+
+		// AC Quarantine Reason: Active individuals chart takes time to load
+
 		task ("Sign in as new user to view the site page") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "ac@liferay.com",
@@ -244,6 +256,10 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8124 | Test Summary: Individual activities graph shows activities from today when switched to 24 hour view"
 	@priority = "5"
 	test GraphShowsIndividualActivitiesFromTodayWhenSwitchedTo24HourView {
+		property portal.upstream = "quarantine";
+
+		// AC Quarantine Reason: Active individuals chart takes time to load
+
 		task ("Create a Document And Media") {
 			ACUtils.createDMAndAddToPage();
 		}

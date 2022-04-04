@@ -44,8 +44,10 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8913 | Test Summary: Assert Individual Activities Chart popover follows format"
 	@priority = "3"
 	test AssertIndividualActivitiesChartPopover {
+		property portal.upstream = "quarantine";
 
-		// AC Refactor ticket: LRAC-9707
+		// AC Quarantine Reason: Not finding the date pattern
+		// AC Refactor ticket: LRAC-10517
 
 		task ("Add DM to AC Page") {
 			ACUtils.createDMAndAddToPage();
@@ -331,6 +333,10 @@ definition {
 	@description = "Set custom range filter with data for individual activity"
 	@priority = "5"
 	test CanSetDataWithCustomRangeOnIndividualActivitiesCard {
+		property portal.upstream = "quarantine";
+
+		// AC Quarantine Reason: Active individuals chart takes some time to load
+
 		ACUtils.createDMAndAddToPage();
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");

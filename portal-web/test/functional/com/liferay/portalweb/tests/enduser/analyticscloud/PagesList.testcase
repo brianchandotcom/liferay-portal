@@ -293,6 +293,10 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8111 | Test Summary: Assert the pages list shows a list of pages"
 	@priority = "5"
 	test ShowsListOfPages {
+		property portal.upstream = "quarantine";
+
+		// AC Quarantine Reason: LRAC-10825
+
 		task ("Add pages") {
 			for (var layoutName : list "AC Page 2,AC Page 3") {
 				ACUtils.addPage(layoutName = "${layoutName}");

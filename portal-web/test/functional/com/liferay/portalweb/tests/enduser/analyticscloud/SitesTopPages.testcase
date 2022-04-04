@@ -157,6 +157,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8301 | Test Summary: Assert Sites Top Pages Card Visited Pages Highest Views"
 	@priority = "3"
 	test AssertSitesTopPagesCardVisitedPagesHighestViews {
+		property portal.upstream = "quarantine";
+
+		// AC Quarantine Reason: Data is not appearing on time
+		// AC Refactor ticket: LRAC-8961
+
 		var num = "1,2";
 		var usernameList = "ac,liferay";
 		var emailList = "ac@liferay.com,liferay@liferay.com";

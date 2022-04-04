@@ -103,6 +103,11 @@ definition {
 	@description = "Edit a dynamic segment and check the edits are saved"
 	@priority = "5"
 	test CanEditDynamicSegmentCheckEditSaved {
+		property portal.upstream = "quarantine";
+
+		// AC Quarantine Reason: Segment membership takes long time to load
+		// AC refactor ticket: LRAC-10769
+
 		property portal.acceptance = "false";
 
 		ACUtils.createBlogsAndAddToPage();

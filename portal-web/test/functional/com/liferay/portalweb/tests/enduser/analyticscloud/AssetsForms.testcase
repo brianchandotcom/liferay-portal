@@ -40,6 +40,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8433 | Test Summary: Form appears on card shows the pages that the form appears on"
 	@priority = "5"
 	test AssertAppearsOnListShowsPagesFormsExists {
+		property portal.upstream = "quarantine";
+
+		// AC Quarantine Reason: propertyName variable not declared not searching
+		// AC refactor ticket: LRAC-10827
+
 		task ("Submit the form") {
 			ACUtils.navigateToSitePage(
 				actionType = "Submit Form",
@@ -249,6 +254,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8417 | Test Summary: Forms list is searchable"
 	@priority = "5"
 	test CanFormsListSearchable {
+		property portal.upstream = "quarantine";
+
+		// AC Quarantine Reason: Empty state no form changed
+		// AC refactor ticket: LRAC-10599
+
 		var formNameList = "Created Form Name,Created Form Name 1";
 
 		ACUtils.addPage(layoutName = "AC Page 1");

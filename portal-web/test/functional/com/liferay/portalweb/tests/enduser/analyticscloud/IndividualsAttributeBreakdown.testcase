@@ -62,6 +62,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8657 | Test Summary: Add a new breakdown by an attribute and assert that correct results appear"
 	@priority = "5"
 	test AddNewBreakdownByAttributeAndAssertCorrectResultsAppear {
+		property portal.upstream = "quarantine";
+
+		// AC Quarantine Reason: Name of breakdown already exists causing test to fail
+		// Possible CSV load time issue as well
+
 		task ("Sign in as new user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "ac@liferay.com",

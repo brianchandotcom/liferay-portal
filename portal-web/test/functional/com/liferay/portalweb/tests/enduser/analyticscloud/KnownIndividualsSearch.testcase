@@ -637,6 +637,10 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9022 | Test Summary: Search an Individual's Activities List"
 	@priority = "4"
 	test SearchIndividualsActivitiesList {
+		property portal.upstream = "quarantine";
+
+		// AC Quarantine Reason: Individual activities takes some time to load
+
 		task ("Create a Document And Media") {
 			ACUtils.createDMAndAddToPage();
 		}

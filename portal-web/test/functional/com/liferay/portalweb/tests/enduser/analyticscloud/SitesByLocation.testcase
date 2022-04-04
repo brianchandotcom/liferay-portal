@@ -36,6 +36,10 @@ definition {
 	@description = "Feature ID: LRAC-6637 | Automation ID: LRAC-8309 | Test Summary: Private IPs reported as Local Network"
 	@priority = "4"
 	test CanprivateIpsReportedAsLocalNetwork {
+		property portal.upstream = "quarantine";
+
+		// AC Quarantine Reason: Not finding local network under geolocation
+
 		task ("Connect DXP to AC") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}

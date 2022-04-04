@@ -62,6 +62,10 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9273 | Test Summary: Create a Segment of Individuals Interested And Another One Not Interest In a Topic"
 	@priority = "5"
 	test CanCreateIndividualsSegmentInterestAndAnotherOneNotInterestInTopic {
+		property portal.upstream = "quarantine";
+
+		// AC Quarantine Reason: Segment membership list taking too long to load
+
 		ACUtils.createBlogsAndAddToPage();
 
 		task ("View the page and blog with the new user") {

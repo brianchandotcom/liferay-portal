@@ -42,6 +42,10 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8920 | Test Summary: Assert individuals overview top interest"
 	@priority = "5"
 	test AssertIndividualOverviewTopInterest {
+		property portal.upstream = "quarantine";
+
+		// AC Quarantine Reason: Individual interest takes long time to load
+
 		task ("Connect DXP to AC") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}

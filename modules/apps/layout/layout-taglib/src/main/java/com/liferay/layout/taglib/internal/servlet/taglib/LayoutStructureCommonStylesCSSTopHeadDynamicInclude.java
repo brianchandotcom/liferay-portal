@@ -97,7 +97,7 @@ public class LayoutStructureCommonStylesCSSTopHeadDynamicInclude
 
 		LayoutStructure layoutStructure =
 			LayoutStructureUtil.getLayoutStructure(
-				httpServletRequest, themeDisplay.getPlid());
+				httpServletRequest, layout.getPlid());
 
 		if (layoutStructure == null) {
 			return;
@@ -110,8 +110,7 @@ public class LayoutStructureCommonStylesCSSTopHeadDynamicInclude
 		printWriter.print("type=\"text/css\">\n");
 
 		JSONObject frontendTokensJSONObject = _getFrontendTokensJSONObject(
-			themeDisplay.getSiteGroupId(), themeDisplay.getLayout(),
-			themeDisplay.getLocale(),
+			themeDisplay.getSiteGroupId(), layout, themeDisplay.getLocale(),
 			ParamUtil.getBoolean(httpServletRequest, "styleBookEntryPreview"));
 
 		List<LayoutStructureItem> layoutStructureItems =

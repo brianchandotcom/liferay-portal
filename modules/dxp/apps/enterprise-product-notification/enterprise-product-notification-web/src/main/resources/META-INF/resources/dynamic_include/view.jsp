@@ -31,7 +31,7 @@ page import="com.liferay.portal.kernel.util.PortalUtil" %>
 				label: '<liferay-ui:message key="done" />',
 				onClick: function ({processClose}) {
 					Liferay.Util.fetch(
-						'<%= PortalUtil.getPortalURL(request) + "/o/enterprise-product-notification/confirm/" %>',
+						'<%= PortalUtil.getPortalURL(request) + PortalUtil.getPathModule() + "/enterprise-product-notification/confirm/" %>',
 						{method: 'post'}
 					);
 

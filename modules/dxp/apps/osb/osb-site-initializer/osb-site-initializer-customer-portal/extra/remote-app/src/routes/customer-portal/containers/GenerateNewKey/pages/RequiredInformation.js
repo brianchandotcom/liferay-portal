@@ -46,9 +46,6 @@ const RequiredInformation = ({
 	const hasTouched = !Object.keys(touched).length;
 	const hasError = Object.keys(errors).length;
 
-	// eslint-disable-next-line no-console
-	console.log(`infoSelectedKey=`, infoSelectedKey);
-
 	const avaliableKeysMaximumCount =
 		infoSelectedKey.selectedSubscription?.quantity;
 	const usedKeysCount =
@@ -116,8 +113,7 @@ const RequiredInformation = ({
 			);
 
 			setShowKeyEmptyError(true);
-		}
-		else {
+		} else {
 			const productName = `${infoSelectedKey?.productType} ${infoSelectedKey?.licenseEntryType}`;
 
 			const licenseKey = {
@@ -144,8 +140,7 @@ const RequiredInformation = ({
 					sessionId,
 					licenseKey
 				);
-			}
-			else {
+			} else {
 				await Promise.all(
 					values?.keys?.map(
 						({hostName, ipAddresses, macAddresses}) => {

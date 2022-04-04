@@ -446,7 +446,7 @@ definition {
 
 		SelectFrameTop();
 
-		FormPortlet.waitFormRenderer(text = "Save");
+		DataEngine.waitForAutoSave();
 
 		Form.save();
 
@@ -783,7 +783,7 @@ definition {
 
 		SelectFrameTop();
 
-		FormPortlet.waitFormRenderer(text = "Save");
+		DataEngine.waitForAutoSave();
 
 		Form.save();
 

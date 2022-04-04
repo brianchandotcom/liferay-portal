@@ -130,11 +130,11 @@ definition {
 	}
 
 	macro viewSuccessMessageText {
-		VerifyVisible(locator1 = "Message#SUCCESS");
-
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#SUCCESS",
 			value1 = "${successMessage}");
+
+		VerifyVisible(locator1 = "Message#SUCCESS");
 	}
 
 	macro viewWarningSpecific {

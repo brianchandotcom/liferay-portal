@@ -17,17 +17,18 @@ import ClayDropDown from '@clayui/drop-down';
 import Icon from '@clayui/icon';
 import React, {useContext, useMemo, useState} from 'react';
 
-import FiltersContext from './filters/FiltersContext';
-import {Filter} from './filters/index';
+import DataSetContext from '../../DataSetContext';
+import Filter from './filters/Filter';
 
 function FiltersDropdown() {
-	const filtersState = useContext(FiltersContext);
+	const {filters} = useContext(DataSetContext);
+
 	const [active, setActive] = useState(false);
 	const [query, setQuery] = useState('');
 
 	const visibleFilters = useMemo(
-		() => filtersState.filters.filter((filter) => !filter.invisible),
-		[filtersState]
+		() => filters.filter((filter) => !filter.invisible),
+		[filters]
 	);
 
 	const [activeFilterId, setActiveFilterId] = useState(null);
@@ -41,7 +42,7 @@ function FiltersDropdown() {
 			: null;
 	}, [visibleFilters, activeFilterId]);
 
-	return filtersState.filters.length ? (
+	return filters.length ? (
 		<ClayDropDown
 			active={active}
 			className="filters-dropdown"
@@ -75,10 +76,7 @@ function FiltersDropdown() {
 
 						{activeFilter.label}
 					</li>
-					<Filter
-						{...activeFilter}
-						updateFilterState={filtersState.updateFilterState}
-					/>
+					<Filter {...activeFilter} />
 				</>
 			) : (
 				<ClayDropDown.Group header={Liferay.Language.get('filters')}>

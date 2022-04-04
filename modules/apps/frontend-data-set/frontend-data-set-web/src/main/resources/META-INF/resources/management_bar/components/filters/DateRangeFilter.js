@@ -16,8 +16,9 @@ import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayForm from '@clayui/form';
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 
+import DataSetContext from '../../../DataSetContext';
 import {
 	convertObjectDateToIsoString,
 	formatDateObject,
@@ -25,42 +26,43 @@ import {
 	getDateFromDateString,
 } from '../../../utils/dates';
 
-function getOdataString(value, key) {
-	if (value.from && value.to) {
-		return `${key} ge ${convertObjectDateToIsoString(
-			value.from,
+const getSelectedItemsLabel = ({selectedData}) => {
+	return formatDateRangeObject(selectedData);
+};
+
+const getOdataString = ({id, selectedData}) => {
+	const {from, to} = selectedData;
+
+	if (from && to) {
+		return `${id} ge ${convertObjectDateToIsoString(
+			from,
 			'from'
-		)}) and (${key} le ${convertObjectDateToIsoString(value.to, 'to')}`;
+		)}) and (${id} le ${convertObjectDateToIsoString(to, 'to')}`;
 	}
-	if (value.from) {
-		return `${key} ge ${convertObjectDateToIsoString(value.from, 'from')}`;
+	if (from) {
+		return `${id} ge ${convertObjectDateToIsoString(from, 'from')}`;
 	}
-	if (value.to) {
-		return `${key} le ${convertObjectDateToIsoString(value.to, 'to')}`;
+	if (to) {
+		return `${id} le ${convertObjectDateToIsoString(to, 'to')}`;
 	}
-}
-function DateRangeFilter({
-	id,
-	max,
-	min,
-	placeholder,
-	updateFilterState,
-	value: valueProp,
-}) {
+};
+function DateRangeFilter({id, max, min, placeholder, selectedData}) {
+	const {setFilter} = useContext(DataSetContext);
+
 	const [fromValue, setFromValue] = useState(
-		valueProp?.from && formatDateObject(valueProp.from)
+		selectedData?.from && formatDateObject(selectedData.from)
 	);
 	const [toValue, setToValue] = useState(
-		valueProp?.to && formatDateObject(valueProp.to)
+		selectedData?.to && formatDateObject(selectedData.to)
 	);
 
 	let actionType = 'edit';
 
-	if (valueProp && !fromValue && !toValue) {
+	if (selectedData && !fromValue && !toValue) {
 		actionType = 'delete';
 	}
 
-	if (!valueProp) {
+	if (!selectedData) {
 		actionType = 'add';
 	}
 
@@ -68,14 +70,14 @@ function DateRangeFilter({
 
 	if (
 		actionType === 'delete' ||
-		((!valueProp || !valueProp.from) && fromValue) ||
-		((!valueProp || !valueProp.to) && toValue) ||
-		(valueProp &&
-			valueProp.from &&
-			fromValue !== formatDateObject(valueProp.from)) ||
-		(valueProp &&
-			valueProp.to &&
-			toValue !== formatDateObject(valueProp.to))
+		((!selectedData || !selectedData.from) && fromValue) ||
+		((!selectedData || !selectedData.to) && toValue) ||
+		(selectedData &&
+			selectedData.from &&
+			fromValue !== formatDateObject(selectedData.from)) ||
+		(selectedData &&
+			selectedData.to &&
+			toValue !== formatDateObject(selectedData.to))
 	) {
 		submitDisabled = false;
 	}
@@ -129,10 +131,10 @@ function DateRangeFilter({
 					disabled={submitDisabled}
 					onClick={() => {
 						if (actionType === 'delete') {
-							updateFilterState(id);
+							setFilter({active: false, id});
 						}
 						else {
-							const newValue = {
+							const newSelectedData = {
 								from: fromValue
 									? getDateFromDateString(fromValue)
 									: null,
@@ -140,12 +142,19 @@ function DateRangeFilter({
 									? getDateFromDateString(toValue)
 									: null,
 							};
-							updateFilterState(
+
+							setFilter({
+								active: true,
 								id,
-								newValue,
-								formatDateRangeObject(newValue),
-								getOdataString(newValue, id)
-							);
+								odataFilterString: getOdataString({
+									id,
+									selectedData: newSelectedData,
+								}),
+								selectedData: newSelectedData,
+								selectedItemsLabel: getSelectedItemsLabel({
+									selectedData: newSelectedData,
+								}),
+							});
 						}
 					}}
 					small
@@ -174,11 +183,11 @@ DateRangeFilter.propTypes = {
 	max: dateShape,
 	min: dateShape,
 	placeholder: PropTypes.string,
-	updateFilterState: PropTypes.func.isRequired,
-	value: PropTypes.shape({
+	selectedData: PropTypes.shape({
 		from: dateShape,
 		to: dateShape,
 	}),
 };
 
+export {getSelectedItemsLabel, getOdataString};
 export default DateRangeFilter;

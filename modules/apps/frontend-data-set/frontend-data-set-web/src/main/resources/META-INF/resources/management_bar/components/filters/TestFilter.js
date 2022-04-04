@@ -16,14 +16,18 @@ import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
+
+import DataSetContext from '../../../DataSetContext';
 
 function getOdataString() {
 	return `test ne 4`;
 }
 
-function TestFilter({id, inputText, updateFilterState, value: valueProp}) {
-	const [value, setValue] = useState(valueProp);
+function TestFilter({id, inputText, selectedData}) {
+	const {setFilter} = useContext(DataSetContext);
+
+	const [value, setValue] = useState(selectedData);
 
 	return (
 		<ClayDropDown.Caption>
@@ -51,9 +55,9 @@ function TestFilter({id, inputText, updateFilterState, value: valueProp}) {
 
 				<div className="mt-3">
 					<ClayButton
-						disabled={value === valueProp}
+						disabled={value === selectedData}
 						onClick={() =>
-							updateFilterState(
+							setFilter(
 								id,
 								value,
 								value,
@@ -62,7 +66,7 @@ function TestFilter({id, inputText, updateFilterState, value: valueProp}) {
 						}
 						small
 					>
-						{valueProp
+						{selectedData
 							? Liferay.Language.get('edit-filter')
 							: Liferay.Language.get('add-filter')}
 					</ClayButton>
@@ -75,7 +79,6 @@ function TestFilter({id, inputText, updateFilterState, value: valueProp}) {
 TestFilter.propTypes = {
 	id: PropTypes.string.isRequired,
 	inputText: PropTypes.string,
-	updateFilterState: PropTypes.func.isRequired,
 	value: PropTypes.string,
 };
 

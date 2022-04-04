@@ -16,17 +16,21 @@ import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import {ClayCheckbox, ClayToggle} from '@clayui/form';
 import PropTypes from 'prop-types';
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 
+import DataSetContext from '../../../DataSetContext';
 import {isValuesArrayChanged} from '../../../utils/index';
 
-export function formatValue(values, items, exclude) {
-	const formattedValue = values
-		? values
-				.map((value) => {
+const getSelectedItemsLabel = ({items, selectedData}) => {
+	const itemsValues = selectedData.itemsValues;
+
+	const itemsLabel = itemsValues
+		? itemsValues
+				.map((itemsValue) => {
 					return items.reduce(
 						(found, item) =>
-							found || (item.value === value ? item.label : null),
+							found ||
+							(item.value === itemsValue ? item.label : null),
 						null
 					);
 				})
@@ -34,32 +38,36 @@ export function formatValue(values, items, exclude) {
 		: '';
 
 	return (
-		(exclude ? `(${Liferay.Language.get('exclude')}) ` : '') +
-		formattedValue
+		(selectedData?.exclude ? `(${Liferay.Language.get('exclude')}) ` : '') +
+		itemsLabel
 	);
-}
+};
 
-function getOdataString(values, key, exclude = false) {
-	if (values?.length) {
-		return `${key}/any(x:${values
+const getOdataString = ({id, selectedData}) => {
+	const {exclude, itemsValues} = selectedData;
+
+	if (itemsValues?.length) {
+		return `${id}/any(x:${itemsValues
 			.map(
-				(value) =>
+				(itemValue) =>
 					`(x ${exclude ? 'ne' : 'eq'} ${
-						typeof value === 'string' ? `'${value}'` : value
+						typeof itemValue === 'string'
+							? `'${itemValue}'`
+							: itemValue
 					})`
 			)
 			.join(exclude ? ' and ' : ' or ')})`;
 	}
 
 	return null;
-}
-function CheckboxesFilter({id, items, updateFilterState, value: valueProp}) {
+};
+function CheckboxesFilter({id, items, selectedData}) {
+	const {setFilter} = useContext(DataSetContext);
+
 	const [itemsValues, setItemsValues] = useState(
-		(valueProp && valueProp.itemsValues) || []
+		selectedData?.itemsValues || []
 	);
-	const [exclude, setExclude] = useState(
-		valueProp ? valueProp.exclude : false
-	);
+	const [exclude, setExclude] = useState(selectedData?.exclude || false);
 
 	function selectCheckbox(selected) {
 		if (itemsValues.includes(selected)) {
@@ -72,17 +80,17 @@ function CheckboxesFilter({id, items, updateFilterState, value: valueProp}) {
 	}
 
 	useEffect(() => {
-		setItemsValues(valueProp ? valueProp.itemsValues : []);
-		setExclude(valueProp ? valueProp.exclude : false);
-	}, [valueProp]);
+		setItemsValues(selectedData?.itemsValues || []);
+		setExclude(selectedData?.exclude || false);
+	}, [selectedData]);
 
 	let actionType = 'edit';
 
-	if (valueProp?.itemsValues && !itemsValues.length) {
+	if (selectedData?.itemsValues && !itemsValues.length) {
 		actionType = 'delete';
 	}
 
-	if (!valueProp) {
+	if (!selectedData) {
 		actionType = 'add';
 	}
 
@@ -90,10 +98,10 @@ function CheckboxesFilter({id, items, updateFilterState, value: valueProp}) {
 
 	if (
 		actionType === 'delete' ||
-		(!valueProp && itemsValues.length) ||
-		(valueProp &&
-			isValuesArrayChanged(valueProp.itemsValues, itemsValues)) ||
-		(valueProp && itemsValues.length && valueProp.exclude !== exclude)
+		(!selectedData && itemsValues.length) ||
+		(selectedData &&
+			isValuesArrayChanged(selectedData.itemsValues, itemsValues)) ||
+		(selectedData && itemsValues.length && selectedData.exclude !== exclude)
 	) {
 		submitDisabled = false;
 	}
@@ -146,19 +154,31 @@ function CheckboxesFilter({id, items, updateFilterState, value: valueProp}) {
 			<ClayDropDown.Caption>
 				<ClayButton
 					disabled={submitDisabled}
-					onClick={() =>
-						actionType !== 'delete'
-							? updateFilterState(
+					onClick={() => {
+						if (actionType === 'delete') {
+							setFilter({active: false, id});
+						}
+						else {
+							const newSelectedData = {
+								exclude,
+								itemsValues,
+							};
+
+							setFilter({
+								active: true,
+								id,
+								odataFilterString: getOdataString({
 									id,
-									{
-										exclude,
-										itemsValues,
-									},
-									formatValue(itemsValues, items, exclude),
-									getOdataString(itemsValues, id, exclude)
-							  )
-							: updateFilterState(id)
-					}
+									selectedData: newSelectedData,
+								}),
+								selectedData: newSelectedData,
+								selectedItemsLabel: getSelectedItemsLabel({
+									items,
+									selectedData: newSelectedData,
+								}),
+							});
+						}
+					}}
 					small
 				>
 					{actionType === 'add' && Liferay.Language.get('add-filter')}
@@ -182,8 +202,7 @@ CheckboxesFilter.propTypes = {
 			value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 		})
 	),
-	updateFilterState: PropTypes.func.isRequired,
-	value: PropTypes.shape({
+	selectedData: PropTypes.shape({
 		exclude: PropTypes.bool,
 		itemsValues: PropTypes.arrayOf(
 			PropTypes.oneOfType([PropTypes.string, PropTypes.number])
@@ -191,4 +210,5 @@ CheckboxesFilter.propTypes = {
 	}),
 };
 
+export {getSelectedItemsLabel, getOdataString};
 export default CheckboxesFilter;

@@ -16,34 +16,42 @@ import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import {ClayRadio, ClayRadioGroup, ClayToggle} from '@clayui/form';
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 
-function formatValue(itemValue, items, exclude) {
+import DataSetContext from '../../../DataSetContext';
+
+const getSelectedItemsLabel = ({items, selectedData}) => {
+	const {exclude, itemValue} = selectedData;
+
 	return (
 		(exclude ? `(${Liferay.Language.get('exclude')}) ` : '') +
 		items.find((item) => item.value === itemValue).label
 	);
-}
+};
 
-function getOdataString(value, key, exclude) {
-	return `${key} ${exclude ? 'ne' : 'eq'} ${
-		typeof value === 'string' ? `'${value}'` : value
+const getOdataString = ({id, selectedData}) => {
+	const {exclude, itemValue} = selectedData;
+
+	return `${id} ${exclude ? 'ne' : 'eq'} ${
+		typeof itemValue === 'string' ? `'${itemValue}'` : itemValue
 	}`;
-}
-function RadioFilter({id, items, updateFilterState, value: valueProp}) {
-	const [itemValue, setItemValue] = useState(
-		valueProp && valueProp.itemValue
-	);
-	const [exclude, setExclude] = useState(!!valueProp?.exclude);
+};
+function RadioFilter({id, items, selectedData}) {
+	const {setFilter} = useContext(DataSetContext);
 
-	const actionType = valueProp ? 'edit' : 'add';
+	const [itemValue, setItemValue] = useState(selectedData?.itemValue);
+	const [exclude, setExclude] = useState(!!selectedData?.exclude);
+
+	const actionType = selectedData ? 'edit' : 'add';
 
 	let submitDisabled = true;
 
 	if (
-		(!valueProp && itemValue !== undefined) ||
-		(valueProp && valueProp.itemValue !== itemValue) ||
-		(valueProp && itemValue !== undefined && valueProp.exclude !== exclude)
+		(!selectedData && itemValue !== undefined) ||
+		(selectedData && selectedData.itemValue !== itemValue) ||
+		(selectedData &&
+			itemValue !== undefined &&
+			selectedData.exclude !== exclude)
 	) {
 		submitDisabled = false;
 	}
@@ -88,19 +96,30 @@ function RadioFilter({id, items, updateFilterState, value: valueProp}) {
 			<ClayDropDown.Caption>
 				<ClayButton
 					disabled={submitDisabled}
-					onClick={() =>
-						actionType !== 'delete'
-							? updateFilterState(
+					onClick={() => {
+						if (actionType === 'delete') {
+							setFilter({active: false, id});
+						}
+						else {
+							const newSelectedData = {
+								exclude,
+								itemValue,
+							};
+
+							setFilter({
+								id,
+								odataFilterString: getOdataString({
 									id,
-									{
-										exclude,
-										itemValue,
-									},
-									formatValue(itemValue, items, exclude),
-									getOdataString(itemValue, id, exclude)
-							  )
-							: updateFilterState(id)
-					}
+									selectedData: newSelectedData,
+								}),
+								selectedData: newSelectedData,
+								selectedItemsLabel: getSelectedItemsLabel({
+									items,
+									selectedData: newSelectedData,
+								}),
+							});
+						}
+					}}
 					small
 				>
 					{actionType === 'add' && Liferay.Language.get('add-filter')}
@@ -121,11 +140,11 @@ RadioFilter.propTypes = {
 			value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 		})
 	),
-	updateFilterState: PropTypes.func.isRequired,
-	value: PropTypes.shape({
+	selectedData: PropTypes.shape({
 		exclude: PropTypes.bool,
 		itemValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 	}),
 };
 
+export {getSelectedItemsLabel, getOdataString};
 export default RadioFilter;

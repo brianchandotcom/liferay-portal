@@ -16,19 +16,26 @@ import ClayButton from '@clayui/button';
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
+import DataSetContext from '../../DataSetContext';
 import FilterResume from './FilterResume';
-import FiltersContext from './filters/FiltersContext';
 
 function ActiveFiltersBar({disabled}) {
-	const filtersState = useContext(FiltersContext);
+	const {filters, setFilters} = useContext(DataSetContext);
 
-	const activeFilters = filtersState.filters.reduce(
-		(acc, filter) =>
-			filter.value !== undefined && !filter.invisible
-				? acc.concat(filter.id)
-				: acc,
-		[]
-	);
+	const resetFiltersValue = () => {
+		setFilters((filters) => {
+			return filters.map((element) => ({
+				...element,
+				active: false,
+				additionalData: undefined,
+				odataFilterString: undefined,
+				resumeCustomLabel: undefined,
+				value: undefined,
+			}));
+		});
+	};
+
+	const activeFilters = filters.filter((filter) => filter.active);
 
 	return activeFilters.length ? (
 		<div className="management-bar management-bar-light navbar navbar-expand-md">
@@ -37,28 +44,12 @@ function ActiveFiltersBar({disabled}) {
 					<ul className="tbar-nav">
 						<li className="p-0 tbar-item tbar-item-expand">
 							<div className="tbar-section">
-								{activeFilters.map((id) => {
-									const filter = filtersState.filters.reduce(
-										(found, filter) =>
-											found ||
-											(filter.id === id ? filter : null),
-										null
-									);
-
-									if (!filter) {
-										throw new Error(
-											`Filter "${id}" not found.`
-										);
-									}
-
+								{activeFilters.map((filter) => {
 									return (
 										<FilterResume
 											disabled={disabled}
 											key={filter.id}
 											{...filter}
-											updateFilterState={
-												filtersState.updateFilterState
-											}
 										/>
 									);
 								})}
@@ -70,7 +61,7 @@ function ActiveFiltersBar({disabled}) {
 								<ClayButton
 									disabled={disabled}
 									displayType="unstyled"
-									onClick={filtersState.resetFiltersValue}
+									onClick={resetFiltersValue}
 								>
 									{Liferay.Language.get('reset-filters')}
 								</ClayButton>

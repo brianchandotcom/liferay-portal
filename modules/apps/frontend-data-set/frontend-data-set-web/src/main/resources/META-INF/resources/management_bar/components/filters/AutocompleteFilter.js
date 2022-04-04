@@ -21,8 +21,15 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {
+	useCallback,
+	useContext,
+	useEffect,
+	useRef,
+	useState,
+} from 'react';
 
+import DataSetContext from '../../../DataSetContext';
 import {getValueFromItem, isValuesArrayChanged} from '../../../utils/index';
 import {logError} from '../../../utils/logError';
 
@@ -85,34 +92,44 @@ function composeSingleValuesOdataString(key, value, exclude) {
 	}`;
 }
 
-const formatValue = (value, exclude) =>
-	(exclude ? `(${Liferay.Language.get('exclude')}) ` : '') +
-	value.map((element) => element.label).join(', ');
+const getSelectedItemsLabel = ({selectedData}) => {
+	const {exclude, itemsValues} = selectedData;
 
-function getOdataString(selectedItems, key, selectionType, exclude) {
-	if (selectedItems?.length) {
-		const values = selectedItems.map((item) => item.value);
+	return (
+		(exclude ? `(${Liferay.Language.get('exclude')}) ` : '') +
+		itemsValues.map((itemsValue) => itemsValue.label).join(', ')
+	);
+};
+
+const getOdataString = ({id, selectedData, selectionType}) => {
+	const {exclude, itemsValues} = selectedData;
+
+	if (itemsValues?.length) {
+		const values = itemsValues.map((item) => item.value);
 
 		return selectionType === 'multiple'
-			? composeMultipleValuesOdataString(key, values, exclude)
-			: composeSingleValuesOdataString(key, values[0], exclude);
+			? composeMultipleValuesOdataString(id, values, exclude)
+			: composeSingleValuesOdataString(id, values[0], exclude);
 	}
 
 	return null;
-}
+};
 function AutocompleteFilter({
 	apiURL,
 	id,
 	inputPlaceholder,
 	itemKey,
 	itemLabel: itemLabelProp,
+	selectedData,
 	selectionType,
-	updateFilterState,
-	value: valueProp,
 }) {
+	const {setFilter} = useContext(DataSetContext);
+
 	const [query, setQuery] = useState('');
 	const [search, setSearch] = useState('');
-	const [selectedItems, setSelectedItems] = useState(valueProp?.items || []);
+	const [selectedItems, setSelectedItems] = useState(
+		selectedData?.itemsValues || []
+	);
 	const [items, setItems] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const [currentPage, setCurrentPage] = useState(1);
@@ -121,13 +138,13 @@ function AutocompleteFilter({
 	const [scrollingAreaRendered, setScrollingAreaRendered] = useState(false);
 	const infiniteLoaderRef = useRef(null);
 	const [infiniteLoaderRendered, setInfiniteLoaderRendered] = useState(false);
-	const [exclude, setExclude] = useState(!!valueProp?.exclude);
+	const [exclude, setExclude] = useState(!!selectedData?.exclude);
 
 	const loaderVisible = items && items.length < total;
 
 	useEffect(() => {
-		setSelectedItems(valueProp?.items || []);
-	}, [valueProp]);
+		setSelectedItems(selectedData?.itemsValues || []);
+	}, [selectedData]);
 
 	useEffect(() => {
 		if (query === search) {
@@ -213,11 +230,11 @@ function AutocompleteFilter({
 
 	let actionType = 'edit';
 
-	if (valueProp?.items && !selectedItems.length) {
+	if (selectedData?.itemsValues && !selectedItems.length) {
 		actionType = 'delete';
 	}
 
-	if (!valueProp) {
+	if (!selectedData) {
 		actionType = 'add';
 	}
 
@@ -225,9 +242,12 @@ function AutocompleteFilter({
 
 	if (
 		actionType === 'delete' ||
-		(!valueProp && selectedItems.length) ||
-		(valueProp && isValuesArrayChanged(valueProp.items, selectedItems)) ||
-		(valueProp && selectedItems.length && valueProp.exclude !== exclude)
+		(!selectedData && selectedItems.length) ||
+		(selectedData &&
+			isValuesArrayChanged(selectedData.itemsValues, selectedItems)) ||
+		(selectedData &&
+			selectedItems.length &&
+			selectedData.exclude !== exclude)
 	) {
 		submitDisabled = false;
 	}
@@ -358,24 +378,32 @@ function AutocompleteFilter({
 			<ClayDropDown.Caption>
 				<ClayButton
 					disabled={submitDisabled}
-					onClick={() =>
-						actionType !== 'delete'
-							? updateFilterState(
+					onClick={() => {
+						if (actionType === 'delete') {
+							setFilter({active: false, id});
+						}
+						else {
+							const newSelectedData = {
+								exclude,
+								itemsValues: selectedItems,
+							};
+
+							setFilter({
+								active: true,
+								id,
+								odataFilterString: getOdataString({
 									id,
-									{
-										exclude,
-										items: selectedItems,
-									},
-									formatValue(selectedItems, exclude),
-									getOdataString(
-										selectedItems,
-										id,
-										selectionType,
-										exclude
-									)
-							  )
-							: updateFilterState(id)
-					}
+									selectedData: newSelectedData,
+									selectionType,
+								}),
+								selectedData: newSelectedData,
+								selectedItemsLabel: getSelectedItemsLabel({
+									items,
+									selectedData: newSelectedData,
+								}),
+							});
+						}
+					}}
 					small
 				>
 					{actionType === 'add' && Liferay.Language.get('add-filter')}
@@ -398,9 +426,7 @@ AutocompleteFilter.propTypes = {
 	itemKey: PropTypes.string.isRequired,
 	itemLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.array])
 		.isRequired,
-	selectionType: PropTypes.oneOf(['single', 'multiple']).isRequired,
-	updateFilterState: PropTypes.func.isRequired,
-	value: PropTypes.shape({
+	selectedData: PropTypes.shape({
 		exclude: PropTypes.bool,
 		items: PropTypes.arrayOf(
 			PropTypes.shape({
@@ -415,10 +441,12 @@ AutocompleteFilter.propTypes = {
 			})
 		),
 	}),
+	selectionType: PropTypes.oneOf(['single', 'multiple']).isRequired,
 };
 
 AutocompleteFilter.defaultProps = {
 	selectionType: 'multiple',
 };
 
+export {getSelectedItemsLabel, getOdataString};
 export default AutocompleteFilter;

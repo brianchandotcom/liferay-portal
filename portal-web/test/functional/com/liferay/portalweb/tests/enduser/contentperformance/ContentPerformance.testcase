@@ -291,9 +291,7 @@ definition {
 				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_URL",
 				value1 = "pt/web/test-site-name/test-widget-page-name");
 
-			AssertTextEquals(
-				locator1 = "ContentPerformance#TOTAL_VIEWS_NUMBER",
-				value1 = "0");
+			ContentPerformance.viewTotalViews(numberViews = "0");
 		}
 	}
 
@@ -342,9 +340,7 @@ definition {
 				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_URL",
 				value1 = "pt/web/test-site-name");
 
-			AssertTextEquals(
-				locator1 = "ContentPerformance#TOTAL_VIEWS_NUMBER",
-				value1 = "0");
+			ContentPerformance.viewTotalViews(numberViews = "0");
 		}
 	}
 
@@ -664,9 +660,7 @@ definition {
 				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_TITLE",
 				pageName = "Test Widget Page Name");
 
-			AssertTextEquals(
-				locator1 = "ContentPerformance#TOTAL_VIEWS_NUMBER",
-				value1 = "0");
+			ContentPerformance.viewTotalViews(numberViews = "0");
 		}
 	}
 
@@ -682,9 +676,7 @@ definition {
 				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_TITLE",
 				pageName = "Content Page");
 
-			AssertTextEquals(
-				locator1 = "ContentPerformance#TOTAL_VIEWS_NUMBER",
-				value1 = "0");
+			ContentPerformance.viewTotalViews(numberViews = "0");
 		}
 	}
 
@@ -722,9 +714,7 @@ definition {
 				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_TITLE",
 				pageName = "Test Widget Page Name");
 
-			AssertTextEquals(
-				locator1 = "ContentPerformance#TOTAL_VIEWS_NUMBER",
-				value1 = "0");
+			ContentPerformance.viewTotalViews(numberViews = "0");
 		}
 	}
 
@@ -750,9 +740,7 @@ definition {
 				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_TITLE",
 				pageName = "Widget Page Name");
 
-			AssertTextEquals(
-				locator1 = "ContentPerformance#TOTAL_VIEWS_NUMBER",
-				value1 = "0");
+			ContentPerformance.viewTotalViews(numberViews = "0");
 		}
 	}
 

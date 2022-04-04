@@ -141,9 +141,9 @@ definition {
 				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_TITLE",
 				pageName = "DM Document Title");
 
-			AssertTextNotPresent(
-				locator1 = "ContentPerformance#TOTAL_VIEWS_NUMBER",
-				value1 = "0");
+			AssertElementNotPresent(
+				key_numberViews = "0",
+				locator1 = "ContentPerformance#TOTAL_VIEWS_NUMBER");
 		}
 	}
 
@@ -181,9 +181,9 @@ definition {
 				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_TITLE",
 				pageName = "DM Document Title");
 
-			AssertTextNotPresent(
-				locator1 = "ContentPerformance#TOTAL_VIEWS_NUMBER",
-				value1 = "0");
+			AssertElementNotPresent(
+				key_numberViews = "0",
+				locator1 = "ContentPerformance#TOTAL_VIEWS_NUMBER");
 		}
 	}
 

@@ -993,6 +993,10 @@ public class UIItemsBuilder {
 	}
 
 	public DropdownItem getViewOriginalFileDropdownItem() {
+		if(_fileShortcut == null){
+			return null;
+		}
+
 		DropdownItem dropdownItem = new DropdownItem();
 
 		dropdownItem.setHref(

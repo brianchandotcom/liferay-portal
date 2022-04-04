@@ -93,7 +93,8 @@ public class ExportTaskResourceImpl extends BaseExportTaskResourceImpl {
 	@Override
 	public ExportTask postExportTask(
 			String className, String contentType, String callbackURL,
-			String fieldNames, String taskItemDelegateName)
+			String externalReferenceCode, String fieldNames,
+			String taskItemDelegateName)
 		throws Exception {
 
 		Class<?> clazz = _itemClassRegistry.getItemClass(className);
@@ -109,8 +110,9 @@ public class ExportTaskResourceImpl extends BaseExportTaskResourceImpl {
 
 		BatchEngineExportTask batchEngineExportTask =
 			_batchEngineExportTaskLocalService.addBatchEngineExportTask(
-				contextCompany.getCompanyId(), contextUser.getUserId(),
-				callbackURL, className, StringUtil.upperCase(contentType),
+				externalReferenceCode, contextCompany.getCompanyId(),
+				contextUser.getUserId(), callbackURL, className,
+				StringUtil.upperCase(contentType),
 				BatchEngineTaskExecuteStatus.INITIAL.name(),
 				_toList(fieldNames),
 				ParametersUtil.toParameters(contextUriInfo, _ignoredParameters),
@@ -134,6 +136,8 @@ public class ExportTaskResourceImpl extends BaseExportTaskResourceImpl {
 				errorMessage = batchEngineExportTask.getErrorMessage();
 				executeStatus = ExportTask.ExecuteStatus.create(
 					batchEngineExportTask.getExecuteStatus());
+				externalReferenceCode =
+					batchEngineExportTask.getExternalReferenceCode();
 				id = batchEngineExportTask.getBatchEngineExportTaskId();
 				processedItemsCount =
 					batchEngineExportTask.getProcessedItemsCount();

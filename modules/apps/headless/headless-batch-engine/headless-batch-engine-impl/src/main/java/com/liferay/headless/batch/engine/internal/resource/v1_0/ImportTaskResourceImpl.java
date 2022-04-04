@@ -88,20 +88,21 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 
 	@Override
 	public ImportTask deleteImportTask(
-			String className, String callbackURL, String importStrategy,
-			String taskItemDelegateName, MultipartBody multipartBody)
+			String className, String callbackURL, String externalReferenceCode,
+			String importStrategy, String taskItemDelegateName,
+			MultipartBody multipartBody)
 		throws Exception {
 
 		return _importFile(
 			BatchEngineTaskOperation.DELETE,
 			multipartBody.getBinaryFile("file"), callbackURL, className, null,
-			importStrategy, taskItemDelegateName);
+			externalReferenceCode, importStrategy, taskItemDelegateName);
 	}
 
 	@Override
 	public ImportTask deleteImportTask(
-			String className, String callbackURL, String importStrategy,
-			String taskItemDelegateName, Object object)
+			String className, String callbackURL, String externalReferenceCode,
+			String importStrategy, String taskItemDelegateName, Object object)
 		throws Exception {
 
 		String contentType = contextHttpServletRequest.getHeader(
@@ -109,8 +110,9 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 
 		return _importFile(
 			BatchEngineTaskOperation.DELETE, _getBytes(object, contentType),
-			callbackURL, className, _getBatchEngineTaskContentType(contentType),
-			taskItemDelegateName, importStrategy, null);
+			callbackURL, className, externalReferenceCode,
+			_getBatchEngineTaskContentType(contentType), taskItemDelegateName,
+			importStrategy, null);
 	}
 
 	@Override
@@ -190,21 +192,23 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 
 	@Override
 	public ImportTask postImportTask(
-			String className, String callbackURL, String fieldNameMapping,
-			String importStrategy, String taskItemDelegateName,
-			MultipartBody multipartBody)
+			String className, String callbackURL, String externalReferenceCode,
+			String fieldNameMapping, String importStrategy,
+			String taskItemDelegateName, MultipartBody multipartBody)
 		throws Exception {
 
 		return _importFile(
 			BatchEngineTaskOperation.CREATE,
 			multipartBody.getBinaryFile("file"), callbackURL, className,
-			fieldNameMapping, importStrategy, taskItemDelegateName);
+			externalReferenceCode, fieldNameMapping, importStrategy,
+			taskItemDelegateName);
 	}
 
 	@Override
 	public ImportTask postImportTask(
-			String className, String callbackURL, String fieldNameMapping,
-			String importStrategy, String taskItemDelegateName, Object object)
+			String className, String callbackURL, String externalReferenceCode,
+			String fieldNameMapping, String importStrategy,
+			String taskItemDelegateName, Object object)
 		throws Exception {
 
 		String contentType = contextHttpServletRequest.getHeader(
@@ -213,25 +217,27 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 		return _importFile(
 			BatchEngineTaskOperation.CREATE, _getBytes(object, contentType),
 			callbackURL, className, _getBatchEngineTaskContentType(contentType),
-			fieldNameMapping, importStrategy, taskItemDelegateName);
+			externalReferenceCode, fieldNameMapping, importStrategy,
+			taskItemDelegateName);
 	}
 
 	@Override
 	public ImportTask putImportTask(
-			String className, String callbackURL, String importStrategy,
-			String taskItemDelegateName, MultipartBody multipartBody)
+			String className, String callbackURL, String externalReferenceCode,
+			String importStrategy, String taskItemDelegateName,
+			MultipartBody multipartBody)
 		throws Exception {
 
 		return _importFile(
 			BatchEngineTaskOperation.UPDATE,
 			multipartBody.getBinaryFile("file"), callbackURL, className, null,
-			importStrategy, taskItemDelegateName);
+			externalReferenceCode, importStrategy, taskItemDelegateName);
 	}
 
 	@Override
 	public ImportTask putImportTask(
-			String className, String callbackURL, String importStrategy,
-			String taskItemDelegateName, Object object)
+			String className, String callbackURL, String externalReferenceCode,
+			String importStrategy, String taskItemDelegateName, Object object)
 		throws Exception {
 
 		String contentType = contextHttpServletRequest.getHeader(
@@ -240,7 +246,7 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 		return _importFile(
 			BatchEngineTaskOperation.UPDATE, _getBytes(object, contentType),
 			callbackURL, className, _getBatchEngineTaskContentType(contentType),
-			null, importStrategy, taskItemDelegateName);
+			null, externalReferenceCode, importStrategy, taskItemDelegateName);
 	}
 
 	@Activate
@@ -358,8 +364,8 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 	private ImportTask _importFile(
 			BatchEngineTaskOperation batchEngineTaskOperation,
 			BinaryFile binaryFile, String callbackURL, String className,
-			String fieldNameMappingString, String importStrategy,
-			String taskItemDelegateName)
+			String externalReferenceCode, String fieldNameMappingString,
+			String importStrategy, String taskItemDelegateName)
 		throws Exception {
 
 		Map.Entry<byte[], String> entry = null;
@@ -375,15 +381,16 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 
 		return _importFile(
 			batchEngineTaskOperation, entry.getKey(), callbackURL, className,
-			entry.getValue(), fieldNameMappingString, importStrategy,
-			taskItemDelegateName);
+			entry.getValue(), externalReferenceCode, fieldNameMappingString,
+			importStrategy, taskItemDelegateName);
 	}
 
 	private ImportTask _importFile(
 			BatchEngineTaskOperation batchEngineTaskOperation, byte[] bytes,
 			String callbackURL, String className,
-			String batchEngineTaskContentType, String fieldNameMappingString,
-			String importStrategy, String taskItemDelegateName)
+			String batchEngineTaskContentType, String externalReferenceCode,
+			String fieldNameMappingString, String importStrategy,
+			String taskItemDelegateName)
 		throws Exception {
 
 		Class<?> clazz = _itemClassRegistry.getItemClass(className);
@@ -399,7 +406,8 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 
 		BatchEngineImportTask batchEngineImportTask =
 			_batchEngineImportTaskLocalService.addBatchEngineImportTask(
-				contextCompany.getCompanyId(), contextUser.getUserId(),
+				externalReferenceCode, contextCompany.getCompanyId(),
+				contextUser.getUserId(),
 				_itemClassBatchSizeMap.getOrDefault(className, _batchSize),
 				callbackURL, className, bytes,
 				StringUtil.upperCase(batchEngineTaskContentType),
@@ -452,6 +460,8 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 				errorMessage = batchEngineImportTask.getErrorMessage();
 				executeStatus = ImportTask.ExecuteStatus.create(
 					batchEngineImportTask.getExecuteStatus());
+				externalReferenceCode =
+					batchEngineImportTask.getExternalReferenceCode();
 				failedItems = TransformUtil.transformToArray(
 					batchEngineImportTask.getBatchEngineImportTaskErrors(),
 					batchEngineImportTaskError -> _toFailedItem(

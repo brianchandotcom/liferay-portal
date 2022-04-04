@@ -47,8 +47,8 @@ public class VulcanBatchEngineImportTaskResourceImpl
 		_initializeContext();
 
 		return _importTaskResource.deleteImportTask(
-			name, callbackURL, _getImportStrategy(), _getTaskItemDelegateName(),
-			object);
+			name, callbackURL, _getExternalReferenceCode(),
+			_getImportStrategy(), _getTaskItemDelegateName(), object);
 	}
 
 	@Override
@@ -59,8 +59,8 @@ public class VulcanBatchEngineImportTaskResourceImpl
 		_initializeContext();
 
 		return _importTaskResource.postImportTask(
-			name, callbackURL, fields, _getImportStrategy(),
-			_getTaskItemDelegateName(), object);
+			name, callbackURL, _getExternalReferenceCode(), fields,
+			_getImportStrategy(), _getTaskItemDelegateName(), object);
 	}
 
 	@Override
@@ -70,8 +70,8 @@ public class VulcanBatchEngineImportTaskResourceImpl
 		_initializeContext();
 
 		return _importTaskResource.putImportTask(
-			name, callbackURL, _getImportStrategy(), _getTaskItemDelegateName(),
-			object);
+			name, callbackURL, _getExternalReferenceCode(),
+			_getImportStrategy(), _getTaskItemDelegateName(), object);
 	}
 
 	@Override
@@ -99,6 +99,10 @@ public class VulcanBatchEngineImportTaskResourceImpl
 	@Override
 	public void setContextUser(User contextUser) {
 		_contextUser = contextUser;
+	}
+
+	private String _getExternalReferenceCode() {
+		return _getQueryParameterValue("externalReferenceCode");
 	}
 
 	private String _getImportStrategy() {

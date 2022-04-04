@@ -111,8 +111,13 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TOTAL_VIEWS_EMPTY</td>
+	<td>//*[contains(@class, 'mb-2')] //span[contains(@class, 'inline-item-after') and contains(text(),'-')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TOTAL_VIEWS_NUMBER</td>
-	<td>//*[contains(@class, 'mb-2')]//span[contains(@class, 'inline-item-after')]</td>
+	<td>//*[contains(@class, 'mb-2')]//span[contains(@class, 'inline-item-after') and text()='${key_numberViews}']</td>
 	<td></td>
 </tr>
 </tbody>

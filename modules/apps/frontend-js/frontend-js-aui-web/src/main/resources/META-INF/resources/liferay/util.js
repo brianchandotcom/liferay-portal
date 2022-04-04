@@ -39,6 +39,9 @@
 
 	var STR_RIGHT_SQUARE_BRACKET = ']';
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
 	var Window = {
 		_map: {},
 
@@ -426,6 +429,9 @@
 			return columnId;
 		},
 
+		/**
+		 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+		 */
 		getWindow(id) {
 			if (!id) {
 				id = Util.getWindowName();

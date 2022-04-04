@@ -249,33 +249,6 @@ public class JobFactory {
 		return _newJob(null, jobName, null, null, null, null, null, null, null);
 	}
 
-	public static Job newJob(
-		String jobName, String testSuiteName, String upstreamBranchName) {
-
-		return _newJob(
-			null, jobName, null, null, null, null, null, testSuiteName,
-			upstreamBranchName);
-	}
-
-	public static Job newJob(
-		String jobName, String testSuiteName, String upstreamBranchName,
-		String repositoryName, Job.BuildProfile buildProfile) {
-
-		return _newJob(
-			buildProfile, jobName, null, null, null, null, repositoryName,
-			testSuiteName, upstreamBranchName);
-	}
-
-	public static Job newJob(
-		String jobName, String testSuiteName, String upstreamBranchName,
-		String repositoryName, Job.BuildProfile buildProfile,
-		PortalGitWorkingDirectory portalGitWorkingDirectory) {
-
-		return _newJob(
-			buildProfile, jobName, null, portalGitWorkingDirectory, null, null,
-			repositoryName, testSuiteName, upstreamBranchName);
-	}
-
 	private static Job _newJob(
 		Job.BuildProfile buildProfile, String jobName, JSONObject jsonObject,
 		PortalGitWorkingDirectory portalGitWorkingDirectory,

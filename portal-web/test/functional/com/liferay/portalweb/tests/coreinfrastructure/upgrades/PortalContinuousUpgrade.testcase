@@ -1,0 +1,76 @@
+@component-name = "portal-upgrades"
+definition {
+
+	property app.server.types = "tomcat";
+	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver";
+	property portal.release = "true";
+	property portal.upgrades = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Upgrades Core Infrastructure";
+
+	@priority = "4"
+	test AutoUpgradeFromLatest7413Update {
+		property database.bare.enabled = "true";
+		property database.types = "mysql";
+		property skip.start.app.server = "true";
+		property skip.upgrade-legacy-database = "true";
+		property test.assert.warning.exceptions = "true";
+		property testcase.url = "http://www.example.com";
+
+		var releaseBundleVersion = PropsUtil.get("test.released.release.bundle.version");
+		var releaseBundleZipURL = PropsUtil.get("test.released.test.portal.bundle.zip.url");
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "prepare-upgrade-released-bundle-test-environment -Dtest.released.release.bundle.version=${releaseBundleVersion} -Dtest.released.test.portal.bundle.zip.url=${releaseBundleZipURL}");
+
+		Portlet.startServer();
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "wait-for-license-activation");
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://localhost:8080",
+			userEmailAddress = "test@liferay.com");
+
+		WebContentNavigator.openWebContentAdmin(
+			baseURL = "http://localhost:8080",
+			siteURLKey = "guest");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+
+		Portlet.shutdownServer();
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "prepare-upgrade-original-bundle-test-environment");
+
+		Portlet.startServer(deleteLiferayHome = "false");
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://localhost:8080",
+			userEmailAddress = "test@liferay.com");
+
+		WebContentNavigator.openWebContentAdmin(
+			baseURL = "http://localhost:8080",
+			siteURLKey = "guest");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+		WebContent.viewCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+	}
+
+}

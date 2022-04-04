@@ -771,7 +771,7 @@ public class SXPBlueprintSearchResultTest {
 				Arrays.toString(suppressed));
 		}
 
-		_assertSearch(
+		_assertSearchIgnoreRelevance(
 			"[liferay]",
 			searchRequestBuilder -> searchRequestBuilder.withSearchContext(
 				searchContext -> searchContext.setAttribute(
@@ -828,7 +828,7 @@ public class SXPBlueprintSearchResultTest {
 			},
 			new String[] {"Hide by Exact Term Match"});
 
-		_assertSearch("[Out of the folder]");
+		_assertSearchIgnoreRelevance("[Out of the folder]");
 
 		_updateElementInstancesJSON(null, null);
 
@@ -937,7 +937,7 @@ public class SXPBlueprintSearchResultTest {
 
 		_keywords = "cafe";
 
-		_assertSearch("[Cloud Cafe]");
+		_assertSearchIgnoreRelevance("[Cloud Cafe]");
 
 		_updateElementInstancesJSON(
 			new Object[] {
@@ -972,7 +972,7 @@ public class SXPBlueprintSearchResultTest {
 				"Text Match Over Multiple Fields", "Hide Hidden Contents"
 			});
 
-		_assertSearch("[Cafe Rio, Starbucks Cafe]");
+		_assertSearchIgnoreRelevance("[Cafe Rio, Starbucks Cafe]");
 	}
 
 	@Test

@@ -79,7 +79,7 @@ definition {
 			ACAssets.viewAssetAppearsOnMetric(
 				canonicalURL = "${portalURL}/web/site-name/ac-page/-/blogs/blogs-ac-title",
 				cardTitle = "Asset Appears On",
-				pageNmae = "Blogs AC Title - Site Name - ${dataSourceName}");
+				pageName = "Blogs AC Title - Site Name - ${dataSourceName}");
 		}
 	}
 

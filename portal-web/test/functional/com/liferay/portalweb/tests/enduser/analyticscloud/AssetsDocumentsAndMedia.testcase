@@ -98,7 +98,7 @@ definition {
 				canonicalURL = "${portalURL}/web/site-name/ac-page/-/document_library",
 				canonicalURLSuffix = "/view_file/${fileEntryId}",
 				cardTitle = "Asset Appears On",
-				pageNmae = "AC Page - Site Name - ${siteName}");
+				pageName = "AC Page - Site Name - ${siteName}");
 
 			// Can't assert this information because the asset takes too long to appear
 

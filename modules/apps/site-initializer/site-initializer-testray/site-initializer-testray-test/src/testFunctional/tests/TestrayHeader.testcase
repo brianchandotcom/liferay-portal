@@ -31,6 +31,8 @@ definition {
 	test CanGoToArchivedRoutines {
 		ApplicationsMenu.gotoSite(site = "Testray 2");
 
+		Testray.createProjectTestray();
+
 		Testray.goToProjectPage(projectName = "Liferay Portal 7.0");
 
 		Testray.goToProjectPage(projectName = "Hotfix Tester");
@@ -44,6 +46,8 @@ definition {
 	@priority = "4"
 	test CanGoToCurrentRoutines {
 		ApplicationsMenu.gotoSite(site = "Testray 2");
+
+		Testray.createProjectTestray();
 
 		Testray.goToProjectPage(projectName = "Liferay Portal 7.0");
 
@@ -60,6 +64,8 @@ definition {
 	@priority = "5"
 	test CanNavigateWithBreadcrumb {
 		ApplicationsMenu.gotoSite(site = "Testray 2");
+
+		Testray.createProjectTestray();
 
 		Testray.goToProjectPage(projectName = "Liferay Portal 7.3");
 

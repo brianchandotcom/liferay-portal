@@ -31,6 +31,8 @@ definition {
 	test CanAcessProjectByDropdown {
 		ApplicationsMenu.gotoSite(site = "Testray 2");
 
+		Testray.createProjectTestray();
+
 		Click(
 			key_projectName = "Liferay Portal 7.",
 			locator1 = "Testray#PROJECT_NAME_BUTTON");
@@ -50,6 +52,8 @@ definition {
 	@priority = "5"
 	test CanAcessProjectDirectoryByDropdown {
 		ApplicationsMenu.gotoSite(site = "Testray 2");
+
+		Testray.createProjectTestray();
 
 		Click(
 			key_projectName = "Liferay Portal 7.",

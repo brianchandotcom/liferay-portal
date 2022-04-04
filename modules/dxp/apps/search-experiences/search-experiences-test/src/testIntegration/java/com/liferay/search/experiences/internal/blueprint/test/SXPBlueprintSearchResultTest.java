@@ -446,7 +446,7 @@ public class SXPBlueprintSearchResultTest {
 		_addGroupAAndGroupB();
 
 		_setUpJournalArticles(
-			new String[] {"", ""},
+			new String[] {"Site", ""},
 			new String[] {"Site Default Group", "Site Group B"});
 
 		User userSiteB = UserTestUtil.addUser(_groupB.getGroupId());

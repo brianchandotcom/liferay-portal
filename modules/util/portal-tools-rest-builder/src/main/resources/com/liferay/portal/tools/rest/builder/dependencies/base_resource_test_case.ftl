@@ -328,7 +328,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 				</#if>
 			}
 
-			<@getGetterParameterMethods
+			<@generateGetterMethods
 				javaMethodSignature=javaMethodSignature
 				missingGetterJavaMethodParametersMap=missingGetterJavaMethodParametersMap
 				testNamePrefix="test"
@@ -1084,7 +1084,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 				</#if>
 			}
 
-			<@getGetterParameterMethods
+			<@generateGetterMethods
 				javaMethodSignature=javaMethodSignature
 				missingGetterJavaMethodParametersMap=missingGetterJavaMethodParametersMap
 				testNamePrefix="test"
@@ -1403,7 +1403,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 				</#if>
 			}
 
-			<@getGetterParameterMethods
+			<@generateGetterMethods
 				javaMethodSignature=javaMethodSignature
 				missingGetterJavaMethodParametersMap=missingGetterJavaMethodParametersMap
 				testNamePrefix="test"
@@ -1731,7 +1731,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 				</#if>
 			}
 
-			<@getGetterParameterMethods
+			<@generateGetterMethods
 				javaMethodSignature=javaMethodSignature
 				missingGetterJavaMethodParametersMap=missingGetterJavaMethodParametersMap
 				testNamePrefix="testGraphQL"
@@ -2660,6 +2660,30 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 }
 
+<#macro generateGetterMethod
+	javaMethodParameter
+	javaMethodSignature
+	testNamePrefix
+>
+	protected ${javaMethodParameter.parameterType} ${testNamePrefix}${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}() throws Exception {
+		throw new UnsupportedOperationException("This method needs to be implemented");
+	}
+</#macro>
+
+<#macro generateGetterMethods
+	javaMethodSignature
+	missingGetterJavaMethodParametersMap
+	testNamePrefix
+>
+	<#list missingGetterJavaMethodParametersMap?values as javaMethodParameter>
+		<@generateGetterMethod
+			javaMethodParameter=javaMethodParameter
+			javaMethodSignature=javaMethodSignature
+			testNamePrefix=testNamePrefix
+		/>
+	</#list>
+</#macro>
+
 <#macro getDefaultParameter
 	javaMethodParameter
 >
@@ -2674,30 +2698,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 	<#else>
 		null
 	</#if>
-</#macro>
-
-<#macro getGetterParameterMethod
-	javaMethodParameter
-	javaMethodSignature
-	testNamePrefix
->
-	protected ${javaMethodParameter.parameterType} ${testNamePrefix}${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}() throws Exception {
-		throw new UnsupportedOperationException("This method needs to be implemented");
-	}
-</#macro>
-
-<#macro getGetterParameterMethods
-	javaMethodSignature
-	missingGetterJavaMethodParametersMap
-	testNamePrefix
->
-	<#list missingGetterJavaMethodParametersMap?values as javaMethodParameter>
-		<@getGetterParameterMethod
-			javaMethodParameter=javaMethodParameter
-			javaMethodSignature=javaMethodSignature
-			testNamePrefix=testNamePrefix
-		/>
-	</#list>
 </#macro>
 
 <#macro getGetterParameters

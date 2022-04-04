@@ -20,7 +20,9 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.language.LanguageResources;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -61,6 +63,16 @@ public class CommonStylesUtil {
 		_availableStyleNames = availableStyleNames;
 
 		return _availableStyleNames;
+	}
+
+	public static JSONArray getCommonStylesJSONArray() {
+		try {
+			return getCommonStylesJSONArray(
+				LanguageResources.getResourceBundle(LocaleUtil.getDefault()));
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
 	}
 
 	public static JSONArray getCommonStylesJSONArray(

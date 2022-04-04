@@ -96,7 +96,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>VIEW_ANALYSIS_INFORMATION_SPECIFC_ORDER</td>
+	<td>VIEW_ANALYSIS_INFORMATION_SPECIFIC_ORDER</td>
 	<td>xpath=(//span[@class='text-truncate' and contains(text(),'${key_commonInformation}')])[${index}]</td>
 	<td></td>
 </tr>

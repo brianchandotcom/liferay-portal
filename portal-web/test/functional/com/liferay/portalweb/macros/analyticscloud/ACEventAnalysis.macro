@@ -239,7 +239,7 @@ definition {
 		var index = "${index}";
 
 		AssertVisible(
-			locator1 = "ACEventAnalysis#VIEW_ANALYSIS_INFORMATION_SPECIFC_ORDER",
+			locator1 = "ACEventAnalysis#VIEW_ANALYSIS_INFORMATION_SPECIFIC_ORDER",
 			value1 = "${informationValue}");
 	}
 

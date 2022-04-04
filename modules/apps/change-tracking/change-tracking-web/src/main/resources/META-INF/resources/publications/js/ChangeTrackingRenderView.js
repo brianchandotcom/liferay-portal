@@ -1257,10 +1257,9 @@ export default function ChangeTrackingRenderView({
 							state.renderData,
 							'rightLocalizedPreview'
 						)
-							? 'nav-link btn-link disabled'
-							: 'nav-link'
+							? 'btn-link disabled'
+							: undefined
 					}
-					displayType="unstyled"
 					onClick={() => {
 						if (
 							state &&
@@ -1320,11 +1319,7 @@ export default function ChangeTrackingRenderView({
 			<ClayNavigationBar.Item
 				active={state.contentType === CONTENT_TYPE_RENDER}
 			>
-				<ClayLink
-					className="nav-link"
-					displayType="unstyled"
-					onClick={() => setContentType(CONTENT_TYPE_RENDER)}
-				>
+				<ClayLink onClick={() => setContentType(CONTENT_TYPE_RENDER)}>
 					{Liferay.Language.get('data')}
 				</ClayLink>
 			</ClayNavigationBar.Item>
@@ -1347,11 +1342,10 @@ export default function ChangeTrackingRenderView({
 					<ClayLink
 						className={
 							state.parents && state.parents.length > 0
-								? 'nav-link'
-								: 'nav-link btn-link disabled'
+								? undefined
+								: 'btn-link disabled'
 						}
 						data-tooltip-align="top"
-						displayType="unstyled"
 						onClick={() => setContentType(CONTENT_TYPE_PARENTS)}
 						title={
 							state.parents && state.parents.length > 0
@@ -1373,11 +1367,10 @@ export default function ChangeTrackingRenderView({
 					<ClayLink
 						className={
 							state.children && state.children.length > 0
-								? 'nav-link'
-								: 'nav-link btn-link disabled'
+								? undefined
+								: 'btn-link disabled'
 						}
 						data-tooltip-align="top"
-						displayType="unstyled"
 						onClick={() => setContentType(CONTENT_TYPE_CHILDREN)}
 						title={
 							state.children && state.children.length > 0

@@ -2131,10 +2131,9 @@ export default function ChangeTrackingChangesView({
 								<ClayLink
 									className={
 										changes.length === 0
-											? 'nav-link btn-link disabled'
-											: 'nav-link'
+											? 'btn-link disabled'
+											: undefined
 									}
-									displayType="unstyled"
 									onClick={
 										changes.length === 0
 											? null
@@ -2156,10 +2155,9 @@ export default function ChangeTrackingChangesView({
 								<ClayLink
 									className={
 										ctMappingInfos.length === 0
-											? 'nav-link btn-link disabled'
-											: 'nav-link'
+											? 'btn-link disabled'
+											: undefined
 									}
-									displayType="unstyled"
 									onClick={
 										ctMappingInfos.length === 0
 											? null

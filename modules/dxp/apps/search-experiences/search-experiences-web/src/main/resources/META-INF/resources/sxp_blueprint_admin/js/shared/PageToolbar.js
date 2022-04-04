@@ -274,16 +274,8 @@ export default function PageToolbar({
 							active={tab === tabKey}
 							key={tabKey}
 						>
-							<ClayButton
-								block
-								className="nav-link"
-								displayType="unstyled"
-								onClick={() => onChangeTab(tabKey)}
-								small
-							>
-								<span className="navbar-text-truncate">
-									{tabs[tabKey]}
-								</span>
+							<ClayButton onClick={() => onChangeTab(tabKey)}>
+								{tabs[tabKey]}
 							</ClayButton>
 						</ClayNavigationBar.Item>
 					))}

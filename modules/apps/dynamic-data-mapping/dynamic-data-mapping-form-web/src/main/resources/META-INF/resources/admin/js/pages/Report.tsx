@@ -58,9 +58,7 @@ export function Report() {
 				triggerLabel={Liferay.Language.get('summary')}
 			>
 				<ClayNavigationBar.Item active>
-					<ClayLink className="nav-link" displayType="unstyled">
-						{Liferay.Language.get('summary')}
-					</ClayLink>
+					<ClayLink>{Liferay.Language.get('summary')}</ClayLink>
 				</ClayNavigationBar.Item>
 			</ClayNavigationBar>
 

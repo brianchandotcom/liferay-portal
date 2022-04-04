@@ -32,20 +32,9 @@ export default function NavigationBar({cssClass, inverted, navigationItems}) {
 						key={label}
 					>
 						{href ? (
-							<ClayLink
-								className="nav-link"
-								displayType="unstyled"
-								href={href}
-							>
-								{label}
-							</ClayLink>
+							<ClayLink href={href}>{label}</ClayLink>
 						) : (
-							<ClayButton
-								className="nav-link"
-								displayType="unstyled"
-							>
-								{label}
-							</ClayButton>
+							<ClayButton>{label}</ClayButton>
 						)}
 					</ClayNavigationBar.Item>
 				);

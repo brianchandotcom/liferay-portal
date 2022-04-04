@@ -79,10 +79,7 @@ export default withRouter(({history, location}) => {
 								)
 							}
 						>
-							<ClayLink
-								className="nav-link"
-								displayType="unstyled"
-							>
+							<ClayLink>
 								{Liferay.Language.get('questions')}
 							</ClayLink>
 						</ClayNavigationBar.Item>
@@ -91,12 +88,7 @@ export default withRouter(({history, location}) => {
 							active={isActive(`/tags`)}
 							onClick={() => historyPushParser('/tags')}
 						>
-							<ClayLink
-								className="nav-link"
-								displayType="unstyled"
-							>
-								{Liferay.Language.get('tags')}
-							</ClayLink>
+							<ClayLink>{Liferay.Language.get('tags')}</ClayLink>
 						</ClayNavigationBar.Item>
 
 						<ClayNavigationBar.Item
@@ -120,10 +112,7 @@ export default withRouter(({history, location}) => {
 								)
 							}
 						>
-							<ClayLink
-								className="nav-link"
-								displayType="unstyled"
-							>
+							<ClayLink>
 								{Liferay.Language.get('my-subscriptions')}
 							</ClayLink>
 						</ClayNavigationBar.Item>
@@ -147,10 +136,7 @@ export default withRouter(({history, location}) => {
 								)
 							}
 						>
-							<ClayLink
-								className="nav-link"
-								displayType="unstyled"
-							>
+							<ClayLink>
 								{Liferay.Language.get('my-activity')}
 							</ClayLink>
 						</ClayNavigationBar.Item>

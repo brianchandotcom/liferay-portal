@@ -466,6 +466,10 @@ definition {
 			var translationFileName = StringUtil.replace("${translationFileName}", ")", "?");
 		}
 
+		if (contains("${translationZipFileName}", " ")) {
+			var translationZipFileName = StringUtil.replace("${translationZipFileName}", " ", "*");
+		}
+
 		if (!(isSet(pageName)) || !(isSet(pageNameTranslation))) {
 			var pageName = "false";
 			var pageNameTranslation = "false";
@@ -553,6 +557,7 @@ definition {
 		if (contains("${translationFileName}", " ")) {
 			var translationFileName = StringUtil.replace("${translationFileName}", " ", "*");
 		}
+
 		if ("${os}" == "true") {
 			AntCommand(
 				locator1 = "build-test.xml",
@@ -603,6 +608,10 @@ definition {
 	}
 
 	macro updateTranslateFileID {
+		if (contains("${translationZipFileName}", " ")) {
+			var translationZipFileName = StringUtil.replace("${translationZipFileName}", " ", "*");
+		}
+
 		AntCommand(
 			locator1 = "build-test.xml",
 			value1 = "update-translation-file-id -Dtranslation.file.name=${translationFileName} -Dtranslation.entry.type=${translationEntryType} -Dtranslation.zip.file.name=${translationZipFileName}");

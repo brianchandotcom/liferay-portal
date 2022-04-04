@@ -216,7 +216,7 @@ public class DispatchLogDisplayContextTest {
 				user, RandomTestUtil.nextInt());
 
 		dispatchTrigger = _dispatchTriggerLocalService.addDispatchTrigger(
-			dispatchTrigger.getUserId(),
+			null, dispatchTrigger.getUserId(),
 			dispatchTrigger.getDispatchTaskExecutorType(),
 			dispatchTrigger.getDispatchTaskSettingsUnicodeProperties(),
 			dispatchTrigger.getName(), dispatchTrigger.isSystem());

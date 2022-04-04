@@ -228,8 +228,8 @@ public class DispatchMessageListenerTest {
 
 		DispatchTrigger dispatchTrigger =
 			_dispatchTriggerLocalService.addDispatchTrigger(
-				user.getUserId(), type, null, RandomTestUtil.randomString(),
-				RandomTestUtil.randomBoolean());
+				null, user.getUserId(), type, null,
+				RandomTestUtil.randomString(), RandomTestUtil.randomBoolean());
 
 		Date date = new Date();
 

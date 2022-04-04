@@ -380,7 +380,7 @@ public class DispatchLogLocalServiceTest {
 		throws Exception {
 
 		return _dispatchTriggerLocalService.addDispatchTrigger(
-			dispatchTrigger.getUserId(),
+			null, dispatchTrigger.getUserId(),
 			dispatchTrigger.getDispatchTaskExecutorType(),
 			dispatchTrigger.getDispatchTaskSettingsUnicodeProperties(),
 			dispatchTrigger.getName(), dispatchTrigger.isSystem());

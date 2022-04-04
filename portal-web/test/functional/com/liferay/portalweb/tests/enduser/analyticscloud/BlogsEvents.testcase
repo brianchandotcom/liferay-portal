@@ -597,7 +597,7 @@ definition {
 				applicationId = "Blog",
 				eventId = "blogViewed",
 				property = "numberOfWords",
-				value = "20");
+				value = "22");
 		}
 
 		task ("View the request common properties value") {

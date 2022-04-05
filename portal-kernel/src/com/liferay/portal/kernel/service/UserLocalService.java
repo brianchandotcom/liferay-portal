@@ -2499,6 +2499,7 @@ public interface UserLocalService
 	 * @return the user
 	 */
 	@CTAware(onProduction = true)
+	@Indexable(type = IndexableType.REINDEX)
 	public User updateLastLogin(long userId, String loginIP)
 		throws PortalException;
 

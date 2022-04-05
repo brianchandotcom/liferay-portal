@@ -239,10 +239,10 @@ public class DDMStructureStagedModelDataHandler
 				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
 		}
 
-		long defaultUserId = _userLocalService.getDefaultUserId(
-			structure.getCompanyId());
+		if (_isPreloadedStructure(
+				_userLocalService.getDefaultUserId(structure.getCompanyId()),
+				structure)) {
 
-		if (_isPreloadedStructure(defaultUserId, structure)) {
 			structureElement.addAttribute("preloaded", "true");
 		}
 

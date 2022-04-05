@@ -258,10 +258,10 @@ public class DDMTemplateStagedModelDataHandler
 
 		template.setScript(script);
 
-		long defaultUserId = _userLocalService.getDefaultUserId(
-			template.getCompanyId());
+		if (_isPreloadedTemplate(
+				_userLocalService.getDefaultUserId(template.getCompanyId()),
+				template)) {
 
-		if (_isPreloadedTemplate(defaultUserId, template)) {
 			templateElement.addAttribute("preloaded", "true");
 		}
 

@@ -89,6 +89,7 @@ const Requirements = () => {
 						navigateTo: ({id}) => id?.toString(),
 					}}
 					transformData={(data) => data?.requirements}
+					variables={{filter: `projectId eq ${projectId}`}}
 				/>
 			</Container>
 

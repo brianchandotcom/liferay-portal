@@ -192,9 +192,6 @@ const RequirementsModal: React.FC<RequirementsModalProps> = ({
 }) => {
 	const [form, setForm] = useState<RequirementsForm>(requirementFormDefault);
 
-	// eslint-disable-next-line no-console
-	console.log({form});
-
 	useEffect(() => {
 		if (visible && modalState) {
 			setForm(modalState);

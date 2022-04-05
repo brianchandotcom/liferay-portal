@@ -1609,9 +1609,6 @@ definition {
 	@description = "This is a use case for LPS-140253. View no private page in web content."
 	@priority = "4"
 	test ViewNoPrivatePageInWebContent {
-		property osgi.module.configuration.file.names = "com.liferay.layout.internal.configuration.FFDisablePrivateLayoutsConfiguration.config";
-		property osgi.module.configurations = "enabled=&quot;true&quot;";
-
 		task ("Add a content page and add Asset Publisher in it") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",

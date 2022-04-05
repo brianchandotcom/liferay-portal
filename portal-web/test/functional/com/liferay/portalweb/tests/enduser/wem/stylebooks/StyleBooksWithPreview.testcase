@@ -1548,9 +1548,6 @@ definition {
 	@description = "This is a use case for LPS-140253. View no private page in style book."
 	@priority = "4"
 	test ViewNoPrivatePageInStyleBooks {
-		property osgi.module.configuration.file.names = "com.liferay.layout.internal.configuration.FFDisablePrivateLayoutsConfiguration.config";
-		property osgi.module.configurations = "enabled=&quot;true&quot;";
-
 		task ("Add 4 public pages") {
 			for (var i : list "1,2,3,4") {
 				JSONLayout.addPublicLayout(

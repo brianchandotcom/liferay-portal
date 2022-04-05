@@ -339,8 +339,6 @@ definition {
 	@priority = "5"
 	@uitest
 	test AddPageToNavigationMenuAndViewPageStatus {
-		property osgi.module.configuration.file.names = "com.liferay.layout.internal.configuration.FFDisablePrivateLayoutsConfiguration.config";
-		property osgi.module.configurations = "enabled=&quot;true&quot;";
 		property portal.acceptance = "true";
 
 		task ("Add a page to the site") {

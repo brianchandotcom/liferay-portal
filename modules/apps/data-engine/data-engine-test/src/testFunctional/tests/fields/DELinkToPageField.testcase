@@ -250,9 +250,6 @@ definition {
 	@description = "This is a use case for LPS-140253. View no private page in link to page structure."
 	@priority = "4"
 	test CanInputLinkFF {
-		property osgi.module.configuration.file.names = "com.liferay.layout.internal.configuration.FFDisablePrivateLayoutsConfiguration.config";
-		property osgi.module.configurations = "enabled=&quot;true&quot;";
-
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
 			layoutName = "Test Page Name");

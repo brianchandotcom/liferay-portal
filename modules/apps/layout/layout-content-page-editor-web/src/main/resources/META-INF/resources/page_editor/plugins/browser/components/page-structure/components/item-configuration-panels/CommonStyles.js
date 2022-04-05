@@ -74,15 +74,11 @@ export function CommonStyles({
 		});
 	};
 
-	let spacingField = null;
+	const spacingField = styles.find((fieldSet) => isSpacingFieldSet(fieldSet))
+		?.styles[0];
 
-	if (config['feature.flag.LPS-141410']) {
-		spacingField = styles.find((fieldSet) => isSpacingFieldSet(fieldSet))
-			?.styles[0];
-
-		if (spacingField) {
-			styles = styles.filter((fieldSet) => !isSpacingFieldSet(fieldSet));
-		}
+	if (spacingField) {
+		styles = styles.filter((fieldSet) => !isSpacingFieldSet(fieldSet));
 	}
 
 	return (

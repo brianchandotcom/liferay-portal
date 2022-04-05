@@ -131,10 +131,9 @@ public class DDMFormRendererTagTest extends PowerMockito {
 
 		ddmForm.setDefaultLocale(LocaleUtil.BRAZIL);
 
-		Locale locale = _ddmFormRendererTag.getLocale(
-			_httpServletRequest, ddmForm);
-
-		Assert.assertEquals(LocaleUtil.BRAZIL, locale);
+		Assert.assertEquals(
+			LocaleUtil.BRAZIL,
+			_ddmFormRendererTag.getLocale(_httpServletRequest, ddmForm));
 	}
 
 	@Test
@@ -209,10 +208,9 @@ public class DDMFormRendererTagTest extends PowerMockito {
 
 	@Test
 	public void testGetLocaleFromRequestWhenDDMFormIsNull() {
-		Locale locale = _ddmFormRendererTag.getLocale(
-			_httpServletRequest, null);
-
-		Assert.assertEquals(LocaleUtil.US, locale);
+		Assert.assertEquals(
+			LocaleUtil.US,
+			_ddmFormRendererTag.getLocale(_httpServletRequest, null));
 	}
 
 	@Test
@@ -223,10 +221,9 @@ public class DDMFormRendererTagTest extends PowerMockito {
 		ddmForm.setAvailableLocales(
 			createAvailableLocales(LocaleUtil.BRAZIL, LocaleUtil.US));
 
-		Locale locale = _ddmFormRendererTag.getLocale(
-			_httpServletRequest, ddmForm);
-
-		Assert.assertEquals(LocaleUtil.US, locale);
+		Assert.assertEquals(
+			LocaleUtil.US,
+			_ddmFormRendererTag.getLocale(_httpServletRequest, ddmForm));
 	}
 
 	@Test

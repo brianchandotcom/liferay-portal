@@ -123,14 +123,11 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 				_filterDDMFormFieldParameterNames(
 					ddmFormField, ddmFormFieldParameterNames);
 
-			String ddmFormFieldParameterPrefix =
-				_getDDMFormFieldParameterPrefix(
-					ddmFormField, parentDDMFormFieldParameterName);
-
 			boolean containsDefaultDDMFormFieldParameterName =
 				_containsDefaultDDMFormFieldParameterName(
 					filteredDDMFormFieldParameterNames,
-					ddmFormFieldParameterPrefix);
+					_getDDMFormFieldParameterPrefix(
+						ddmFormField, parentDDMFormFieldParameterName));
 
 			if (!containsDefaultDDMFormFieldParameterName) {
 				String defaultDDMFormFieldParameterName =

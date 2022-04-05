@@ -122,7 +122,11 @@ definition {
 
 		Button.clickSave();
 
-		AssertElementPresent(locator1 = "CommerceEntry#LAST_CURRENCY_ELEMENT");
+		WaitForElementPresent(locator1 = "CommerceNavigation#SEARCH_CONTAINER_WRAPPER");
+
+		AssertElementPresent(
+			locator1 = "CommerceEntry#LAST_CURRENCY_ELEMENT",
+			key_entryName = "US Dollar");
 	}
 
 	test ViewInstanceCurrenciesAvailable {

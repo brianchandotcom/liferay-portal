@@ -54,10 +54,12 @@ import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectLayoutLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.object.service.ObjectRelationshipService;
 import com.liferay.object.web.internal.constants.ObjectWebKeys;
 import com.liferay.object.web.internal.display.context.helper.ObjectRequestHelper;
 import com.liferay.object.web.internal.item.selector.ObjectEntryItemSelectorReturnType;
@@ -120,7 +122,8 @@ public class ObjectEntryDisplayContext {
 		ObjectLayoutLocalService objectLayoutLocalService,
 		ObjectRelationshipLocalService objectRelationshipLocalService,
 		ObjectScopeProviderRegistry objectScopeProviderRegistry,
-		boolean readOnly) {
+		ObjectDefinitionService objectDefinitionService,
+		ObjectRelationshipService objectRelationshipService, boolean readOnly) {
 
 		_ddmFormRenderer = ddmFormRenderer;
 		_itemSelector = itemSelector;
@@ -132,6 +135,8 @@ public class ObjectEntryDisplayContext {
 		_objectLayoutLocalService = objectLayoutLocalService;
 		_objectRelationshipLocalService = objectRelationshipLocalService;
 		_objectScopeProviderRegistry = objectScopeProviderRegistry;
+		_objectDefinitionService = objectDefinitionService;
+		_objectRelationshipService = objectRelationshipService;
 		_readOnly = readOnly;
 
 		_objectRequestHelper = new ObjectRequestHelper(httpServletRequest);
@@ -159,18 +164,27 @@ public class ObjectEntryDisplayContext {
 		for (ObjectLayoutTab objectLayoutTab :
 				objectLayout.getObjectLayoutTabs()) {
 
-			if (objectLayoutTab.getObjectRelationshipId() > 0) {
-				ObjectRelationship objectRelationship =
-					_objectRelationshipLocalService.getObjectRelationship(
-						objectLayoutTab.getObjectRelationshipId());
+			try {
+				if (objectLayoutTab.getObjectRelationshipId() > 0) {
+					ObjectRelationship objectRelationship =
+						_objectRelationshipService.getObjectRelationship(
+							objectLayoutTab.getObjectRelationshipId());
 
-				ObjectDefinition objectDefinition =
-					_objectDefinitionLocalService.getObjectDefinition(
-						objectRelationship.getObjectDefinitionId2());
+					ObjectDefinition objectDefinition =
+						_objectDefinitionService.getObjectDefinition(
+							objectRelationship.getObjectDefinitionId2());
 
-				if (!objectDefinition.isActive()) {
-					continue;
+					if (!objectDefinition.isActive()) {
+						continue;
+					}
 				}
+			}
+			catch (PortalException portalException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(portalException);
+				}
+
+				continue;
 			}
 
 			navigationItemList.add(
@@ -929,6 +943,7 @@ public class ObjectEntryDisplayContext {
 	private final DDMFormRenderer _ddmFormRenderer;
 	private final ItemSelector _itemSelector;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
+	private final ObjectDefinitionService _objectDefinitionService;
 	private ObjectEntry _objectEntry;
 	private final ObjectEntryService _objectEntryService;
 	private final ObjectFieldBusinessTypeServicesTracker
@@ -938,6 +953,7 @@ public class ObjectEntryDisplayContext {
 	private final ObjectLayoutLocalService _objectLayoutLocalService;
 	private final ObjectRelationshipLocalService
 		_objectRelationshipLocalService;
+	private final ObjectRelationshipService _objectRelationshipService;
 	private final ObjectRequestHelper _objectRequestHelper;
 	private final ObjectScopeProviderRegistry _objectScopeProviderRegistry;
 	private final boolean _readOnly;

@@ -1202,6 +1202,40 @@ definition {
 		}
 	}
 
+	@description = "Verify users can view a preview of the JSON file being imported."
+	@priority = "3"
+	test ViewJSONImportPreview {
+		property portal.acceptance = "true";
+
+		task ("Given the user has configured an import for a JSON file") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.gotoImport();
+
+			ImportExport.configureImport(
+				entityType = "Channel",
+				fieldMappings = "currencyCode:currencyCode,name:name,type:type",
+				fileName = "json_channel_import.json",
+				headlessEndpoint = "/headless-commerce-admin-channel");
+		}
+
+		task ("When the user clicks Next") {
+			Button.clickNext();
+		}
+
+		task ("Then a preview should be shown of the JSON file content.") {
+			ImportExport.assertPreviewLabels(previewLabels = "currencyCode,name,type");
+
+			ImportExport.assertPreviewEntry(
+				entryName = "Test Channel 1",
+				previewFields = "USD,site");
+
+			ImportExport.assertPreviewEntry(
+				entryName = "Test Channel 2",
+				previewFields = "CAD,site");
+		}
+	}
+
 	@description = "Verify users are shown a preview for the first row being imported in a JSONL file."
 	@priority = "3"
 	test ViewJSONLFirstRowPreview {

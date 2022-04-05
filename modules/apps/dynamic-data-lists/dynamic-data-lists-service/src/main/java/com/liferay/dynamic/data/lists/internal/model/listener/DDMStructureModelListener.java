@@ -99,11 +99,9 @@ public class DDMStructureModelListener extends BaseModelListener<DDMStructure> {
 				serviceContext.setAddGuestPermissions(true);
 
 				serviceContext.setScopeGroupId(recordSet.getGroupId());
-
-				long defaultUserId = _userLocalService.getDefaultUserId(
-					recordSet.getCompanyId());
-
-				serviceContext.setUserId(defaultUserId);
+				serviceContext.setUserId(
+					_userLocalService.getDefaultUserId(
+						recordSet.getCompanyId()));
 
 				try {
 					_ddlRecordSetLocalService.updateRecordSet(

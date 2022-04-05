@@ -25,7 +25,6 @@ import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServices
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldValueRendererRegistry;
-import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -105,13 +104,12 @@ public class DDLXLSExporter extends BaseDDLExporter {
 
 				DDLRecordVersion recordVersion = record.getRecordVersion();
 
-				DDMFormValues ddmFormValues = _storageEngine.getDDMFormValues(
-					recordVersion.getDDMStorageId());
-
 				Map<String, DDMFormFieldRenderedValue> values =
 					getRenderedValues(
 						recordSet.getScope(), ddmFormFields.values(),
-						ddmFormValues, _htmlParser);
+						_storageEngine.getDDMFormValues(
+							recordVersion.getDDMStorageId()),
+						_htmlParser);
 
 				_createDataRow(
 					rowIndex++, sheet, dateTimeFormatter,

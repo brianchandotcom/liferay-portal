@@ -26,7 +26,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -100,14 +99,12 @@ public class DDLDisplayTemplateHelper {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(valueString);
 
-		long groupId = jsonObject.getLong("groupId");
-		boolean privateLayout = jsonObject.getBoolean("privateLayout");
-		long layoutId = jsonObject.getLong("layoutId");
-
-		Layout layout = LayoutLocalServiceUtil.getLayout(
-			groupId, privateLayout, layoutId);
-
-		return PortalUtil.getLayoutFriendlyURL(layout, themeDisplay);
+		return PortalUtil.getLayoutFriendlyURL(
+			LayoutLocalServiceUtil.getLayout(
+				jsonObject.getLong("groupId"),
+				jsonObject.getBoolean("privateLayout"),
+				jsonObject.getLong("layoutId")),
+			themeDisplay);
 	}
 
 	public List<DDLRecord> getRecords(long recordSetId) throws PortalException {

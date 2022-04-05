@@ -92,11 +92,9 @@ public class DDLImpl implements DDL {
 			recordVersion = record.getLatestRecordVersion();
 		}
 
-		DDMFormValues ddmFormValues = _storageEngine.getDDMFormValues(
-			recordVersion.getDDMStorageId());
-
 		Fields fields = _ddmFormValuesToFieldsConverter.convert(
-			ddmStructure, ddmFormValues);
+			ddmStructure,
+			_storageEngine.getDDMFormValues(recordVersion.getDDMStorageId()));
 
 		for (Field field : fields) {
 			Object[] fieldValues = _getFieldValues(field, locale);

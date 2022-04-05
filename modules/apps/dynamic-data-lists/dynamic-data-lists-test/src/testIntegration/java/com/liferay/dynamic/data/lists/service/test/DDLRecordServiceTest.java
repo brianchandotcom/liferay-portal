@@ -585,13 +585,10 @@ public class DDLRecordServiceTest {
 			long recordId, DDMFormValues ddmFormValues, int workflowAction)
 		throws Exception {
 
-		ServiceContext serviceContext = DDLRecordTestUtil.getServiceContext(
-			workflowAction);
-
 		return DDLRecordLocalServiceUtil.updateRecord(
 			TestPropsValues.getUserId(), recordId, false,
 			DDLRecordConstants.DISPLAY_INDEX_DEFAULT, ddmFormValues,
-			serviceContext);
+			DDLRecordTestUtil.getServiceContext(workflowAction));
 	}
 
 	private static Group _group;

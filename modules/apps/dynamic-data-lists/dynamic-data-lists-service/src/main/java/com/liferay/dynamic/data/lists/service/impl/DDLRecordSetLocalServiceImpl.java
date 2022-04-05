@@ -176,11 +176,9 @@ public class DDLRecordSetLocalServiceImpl
 
 		// Dynamic data mapping structure link
 
-		long classNameId = _classNameLocalService.getClassNameId(
-			DDLRecordSet.class);
-
 		ddmStructureLinkLocalService.addStructureLink(
-			classNameId, recordSetId, ddmStructureId);
+			_classNameLocalService.getClassNameId(DDLRecordSet.class),
+			recordSetId, ddmStructureId);
 
 		return updatedRecordSet;
 	}
@@ -769,13 +767,10 @@ public class DDLRecordSetLocalServiceImpl
 		recordSetVersion.setName(recordSet.getName());
 		recordSetVersion.setDescription(recordSet.getDescription());
 		recordSetVersion.setVersion(version);
-
-		int status = GetterUtil.getInteger(
-			serviceContext.getAttribute("status"),
-			WorkflowConstants.STATUS_APPROVED);
-
-		recordSetVersion.setStatus(status);
-
+		recordSetVersion.setStatus(
+			GetterUtil.getInteger(
+				serviceContext.getAttribute("status"),
+				WorkflowConstants.STATUS_APPROVED));
 		recordSetVersion.setStatusByUserId(user.getUserId());
 		recordSetVersion.setStatusByUserName(user.getFullName());
 		recordSetVersion.setStatusDate(recordSet.getModifiedDate());

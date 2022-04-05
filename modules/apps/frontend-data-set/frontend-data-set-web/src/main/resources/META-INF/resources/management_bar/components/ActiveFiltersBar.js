@@ -24,13 +24,11 @@ function ActiveFiltersBar({disabled}) {
 
 	const resetFiltersValue = () => {
 		setFilters((filters) => {
-			return filters.map((element) => ({
-				...element,
+			return filters.map((filter) => ({
+				...filter,
 				active: false,
-				additionalData: undefined,
 				odataFilterString: undefined,
-				resumeCustomLabel: undefined,
-				value: undefined,
+				selectedData: undefined,
 			}));
 		});
 	};

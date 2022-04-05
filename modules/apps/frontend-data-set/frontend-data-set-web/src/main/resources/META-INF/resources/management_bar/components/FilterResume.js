@@ -42,7 +42,11 @@ function FilterResume(props) {
 						return filters.map((filter) => ({
 							...filter,
 							...(filter.id === props.id
-								? {active: false, id: props.id}
+								? {
+										active: false,
+										odataFilterString: undefined,
+										selectedData: undefined,
+								  }
 								: {}),
 						}));
 					});

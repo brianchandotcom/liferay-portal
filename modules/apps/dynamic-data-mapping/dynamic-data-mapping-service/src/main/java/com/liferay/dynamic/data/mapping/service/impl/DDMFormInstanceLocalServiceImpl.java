@@ -474,13 +474,10 @@ public class DDMFormInstanceLocalServiceImpl
 		ddmFormInstanceVersion.setDescription(ddmFormInstance.getDescription());
 		ddmFormInstanceVersion.setSettings(ddmFormInstance.getSettings());
 		ddmFormInstanceVersion.setVersion(version);
-
-		int status = GetterUtil.getInteger(
-			serviceContext.getAttribute("status"),
-			WorkflowConstants.STATUS_APPROVED);
-
-		ddmFormInstanceVersion.setStatus(status);
-
+		ddmFormInstanceVersion.setStatus(
+			GetterUtil.getInteger(
+				serviceContext.getAttribute("status"),
+				WorkflowConstants.STATUS_APPROVED));
 		ddmFormInstanceVersion.setStatusByUserId(user.getUserId());
 		ddmFormInstanceVersion.setStatusByUserName(user.getFullName());
 		ddmFormInstanceVersion.setStatusDate(ddmFormInstance.getModifiedDate());

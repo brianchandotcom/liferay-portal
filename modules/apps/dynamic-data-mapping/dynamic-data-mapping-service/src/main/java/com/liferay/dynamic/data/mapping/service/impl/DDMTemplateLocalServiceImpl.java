@@ -1636,13 +1636,10 @@ public class DDMTemplateLocalServiceImpl
 		templateVersion.setDescription(template.getDescription());
 		templateVersion.setLanguage(template.getLanguage());
 		templateVersion.setScript(template.getScript());
-
-		int status = GetterUtil.getInteger(
-			serviceContext.getAttribute("status"),
-			WorkflowConstants.STATUS_APPROVED);
-
-		templateVersion.setStatus(status);
-
+		templateVersion.setStatus(
+			GetterUtil.getInteger(
+				serviceContext.getAttribute("status"),
+				WorkflowConstants.STATUS_APPROVED));
 		templateVersion.setStatusByUserId(user.getUserId());
 		templateVersion.setStatusByUserName(user.getFullName());
 		templateVersion.setStatusDate(template.getModifiedDate());

@@ -138,10 +138,7 @@ public class JSONObjectToDDMFormFieldTransformer {
 		List<DDMFormField> ddmFormFields = new ArrayList<>();
 
 		for (int i = 0; i < jsonArray.length(); i++) {
-			DDMFormField ddmFormField = getDDMFormField(
-				jsonArray.getJSONObject(i));
-
-			ddmFormFields.add(ddmFormField);
+			ddmFormFields.add(getDDMFormField(jsonArray.getJSONObject(i)));
 		}
 
 		return ddmFormFields;

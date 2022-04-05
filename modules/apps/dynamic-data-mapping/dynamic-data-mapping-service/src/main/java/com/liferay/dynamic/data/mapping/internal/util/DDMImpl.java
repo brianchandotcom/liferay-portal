@@ -64,7 +64,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Image;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -325,10 +324,9 @@ public class DDMImpl implements DDM {
 			boolean privateLayout = jsonObject.getBoolean("privateLayout");
 			long layoutId = jsonObject.getLong("layoutId");
 
-			Layout layout = _layoutLocalService.getLayout(
-				groupId, privateLayout, layoutId);
-
-			fieldValue = _portal.getLayoutFriendlyURL(layout, themeDisplay);
+			fieldValue = _portal.getLayoutFriendlyURL(
+				_layoutLocalService.getLayout(groupId, privateLayout, layoutId),
+				themeDisplay);
 		}
 		else if (type.equals(DDMFormFieldType.SELECT)) {
 			String valueString = String.valueOf(fieldValue);

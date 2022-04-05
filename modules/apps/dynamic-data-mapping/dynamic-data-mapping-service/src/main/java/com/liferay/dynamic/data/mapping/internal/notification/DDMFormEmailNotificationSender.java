@@ -417,12 +417,11 @@ public class DDMFormEmailNotificationSender {
 		for (DDMFormLayoutPage ddmFormLayoutPage :
 				ddmFormLayout.getDDMFormLayoutPages()) {
 
-			Map<String, Object> page = _getPage(
-				ddmFormLayoutPage,
-				getDDMFormFieldValuesMap(ddmFormInstanceRecord),
-				_getLocale(ddmFormInstance));
-
-			pages.add(page);
+			pages.add(
+				_getPage(
+					ddmFormLayoutPage,
+					getDDMFormFieldValuesMap(ddmFormInstanceRecord),
+					_getLocale(ddmFormInstance)));
 		}
 
 		return pages;

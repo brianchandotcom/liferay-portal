@@ -138,11 +138,10 @@ public class DDMTemplateImpl extends DDMTemplateBaseImpl {
 			secure = true;
 		}
 
-		String portalURL = PortalUtil.getPortalURL(
-			themeDisplay.getServerName(), themeDisplay.getServerPort(), secure);
-
-		sb.append(portalURL);
-
+		sb.append(
+			PortalUtil.getPortalURL(
+				themeDisplay.getServerName(), themeDisplay.getServerPort(),
+				secure));
 		sb.append(themeDisplay.getPathContext());
 		sb.append("/webdav");
 

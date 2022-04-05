@@ -120,23 +120,18 @@ public class DDMFormInstanceRecordWriterTrackerImplTest {
 		_addDDMFormInstanceRecordJSONWriter(
 			ddmFormInstanceRecordWriterTrackerImpl);
 
-		DDMFormInstanceRecordWriter ddmFormInstanceRecordWriter =
-			new DDMFormInstanceRecordCSVWriter();
-
 		ddmFormInstanceRecordWriterTrackerImpl.
 			removeDDMFormInstanceRecordWriter(
-				ddmFormInstanceRecordWriter,
+				new DDMFormInstanceRecordCSVWriter(),
 				HashMapBuilder.<String, Object>put(
 					"ddm.form.instance.record.writer.extension", "csv"
 				).put(
 					"ddm.form.instance.record.writer.type", "csv"
 				).build());
 
-		ddmFormInstanceRecordWriter =
+		Assert.assertNull(
 			ddmFormInstanceRecordWriterTrackerImpl.
-				getDDMFormInstanceRecordWriter("csv");
-
-		Assert.assertNull(ddmFormInstanceRecordWriter);
+				getDDMFormInstanceRecordWriter("csv"));
 	}
 
 	private void _addDDMFormInstanceRecordCSVWriter(

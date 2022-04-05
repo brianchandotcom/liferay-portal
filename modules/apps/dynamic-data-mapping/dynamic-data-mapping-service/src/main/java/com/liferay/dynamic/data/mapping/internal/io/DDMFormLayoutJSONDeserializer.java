@@ -144,10 +144,8 @@ public class DDMFormLayoutJSONDeserializer
 		List<DDMFormLayoutColumn> ddmFormLayoutColumns = new ArrayList<>();
 
 		for (int i = 0; i < jsonArray.length(); i++) {
-			DDMFormLayoutColumn ddmFormLayoutColumn = getDDMFormLayoutColumn(
-				jsonArray.getJSONObject(i));
-
-			ddmFormLayoutColumns.add(ddmFormLayoutColumn);
+			ddmFormLayoutColumns.add(
+				getDDMFormLayoutColumn(jsonArray.getJSONObject(i)));
 		}
 
 		return ddmFormLayoutColumns;
@@ -172,10 +170,8 @@ public class DDMFormLayoutJSONDeserializer
 		List<DDMFormLayoutPage> ddmFormLayoutPages = new ArrayList<>();
 
 		for (int i = 0; i < jsonArray.length(); i++) {
-			DDMFormLayoutPage ddmFormLayoutPage = getDDMFormLayoutPage(
-				jsonArray.getJSONObject(i));
-
-			ddmFormLayoutPages.add(ddmFormLayoutPage);
+			ddmFormLayoutPages.add(
+				getDDMFormLayoutPage(jsonArray.getJSONObject(i)));
 		}
 
 		return ddmFormLayoutPages;
@@ -185,10 +181,8 @@ public class DDMFormLayoutJSONDeserializer
 		List<DDMFormLayoutRow> ddmFormLayoutRows = new ArrayList<>();
 
 		for (int i = 0; i < jsonArray.length(); i++) {
-			DDMFormLayoutRow ddmFormLayoutRow = _getDDMFormLayoutRow(
-				jsonArray.getJSONObject(i));
-
-			ddmFormLayoutRows.add(ddmFormLayoutRow);
+			ddmFormLayoutRows.add(
+				_getDDMFormLayoutRow(jsonArray.getJSONObject(i)));
 		}
 
 		return ddmFormLayoutRows;

@@ -482,11 +482,9 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 					++batchCounter);
 			}
 
-			long fieldId = instanceToFieldIdMap.get(
-				ddmFieldAttributeInfo._ddmFieldInfo._instanceId);
-
-			ddmFieldAttribute.setFieldId(fieldId);
-
+			ddmFieldAttribute.setFieldId(
+				instanceToFieldIdMap.get(
+					ddmFieldAttributeInfo._ddmFieldInfo._instanceId));
 			ddmFieldAttribute.setStorageId(storageId);
 			ddmFieldAttribute.setAttributeName(
 				ddmFieldAttributeInfo._attributeName);

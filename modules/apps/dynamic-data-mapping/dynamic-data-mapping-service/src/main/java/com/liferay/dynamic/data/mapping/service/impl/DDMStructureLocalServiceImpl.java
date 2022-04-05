@@ -1610,13 +1610,10 @@ public class DDMStructureLocalServiceImpl
 		structureVersion.setDefinition(structure.getDefinition());
 		structureVersion.setStorageType(structure.getStorageType());
 		structureVersion.setType(structure.getType());
-
-		int status = GetterUtil.getInteger(
-			serviceContext.getAttribute("status"),
-			WorkflowConstants.STATUS_APPROVED);
-
-		structureVersion.setStatus(status);
-
+		structureVersion.setStatus(
+			GetterUtil.getInteger(
+				serviceContext.getAttribute("status"),
+				WorkflowConstants.STATUS_APPROVED));
 		structureVersion.setStatusByUserId(user.getUserId());
 		structureVersion.setStatusByUserName(user.getFullName());
 		structureVersion.setStatusDate(structure.getModifiedDate());
@@ -1910,12 +1907,10 @@ public class DDMStructureLocalServiceImpl
 	protected List<DDMTemplate> getStructureTemplates(
 		DDMStructure structure, String type) {
 
-		long classNameId = _classNameLocalService.getClassNameId(
-			DDMStructure.class);
-
 		return _ddmTemplateLocalService.getTemplates(
-			structure.getGroupId(), classNameId, structure.getStructureId(),
-			type);
+			structure.getGroupId(),
+			_classNameLocalService.getClassNameId(DDMStructure.class),
+			structure.getStructureId(), type);
 	}
 
 	protected void reindexStructure(

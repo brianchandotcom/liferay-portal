@@ -261,10 +261,9 @@ public class FieldsToDDMFormValuesConverterImpl
 
 		String name = ddmFormFieldValue.getName();
 
-		String instanceId = _getDDMFieldInstanceId(
-			ddmFields, name, ddmFieldsCounter.get(name));
-
-		ddmFormFieldValue.setInstanceId(instanceId);
+		ddmFormFieldValue.setInstanceId(
+			_getDDMFieldInstanceId(
+				ddmFields, name, ddmFieldsCounter.get(name)));
 	}
 
 	private void _setDDMFormFieldValueLocalizedValue(

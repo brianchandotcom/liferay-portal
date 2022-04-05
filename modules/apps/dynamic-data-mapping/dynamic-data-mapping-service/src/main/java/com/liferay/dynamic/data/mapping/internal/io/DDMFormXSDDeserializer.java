@@ -244,10 +244,9 @@ public class DDMFormXSDDeserializer implements DDMFormDeserializer {
 	protected void setDDMFormFieldOptions(
 		Element dynamicElementElement, DDMFormField ddmFormField) {
 
-		DDMFormFieldOptions ddmFormFieldOptions = getDDMFormFieldOptions(
-			dynamicElementElement.elements("dynamic-element"));
-
-		ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
+		ddmFormField.setDDMFormFieldOptions(
+			getDDMFormFieldOptions(
+				dynamicElementElement.elements("dynamic-element")));
 	}
 
 	protected void setDDMFormFields(Element rootElement, DDMForm ddmForm) {
@@ -264,10 +263,8 @@ public class DDMFormXSDDeserializer implements DDMFormDeserializer {
 	protected void setNestedDDMFormField(
 		Element dynamicElementElement, DDMFormField ddmFormField) {
 
-		List<DDMFormField> nestedDDMFormFields = getDDMFormFields(
-			dynamicElementElement);
-
-		ddmFormField.setNestedDDMFormFields(nestedDDMFormFields);
+		ddmFormField.setNestedDDMFormFields(
+			getDDMFormFields(dynamicElementElement));
 	}
 
 	@Reference(unbind = "-")
@@ -302,10 +299,9 @@ public class DDMFormXSDDeserializer implements DDMFormDeserializer {
 	private void _setDDMFormFieldLocalizable(
 		Element dynamicElementElement, DDMFormField ddmFormField) {
 
-		boolean localizable = GetterUtil.getBoolean(
-			dynamicElementElement.attributeValue("localizable"), true);
-
-		ddmFormField.setLocalizable(localizable);
+		ddmFormField.setLocalizable(
+			GetterUtil.getBoolean(
+				dynamicElementElement.attributeValue("localizable"), true));
 	}
 
 	private void _setDDMFormFieldMetadata(
@@ -352,10 +348,9 @@ public class DDMFormXSDDeserializer implements DDMFormDeserializer {
 	private void _setDDMFormFieldMultiple(
 		Element dynamicElementElement, DDMFormField ddmFormField) {
 
-		boolean multiple = GetterUtil.getBoolean(
-			dynamicElementElement.attributeValue("multiple"));
-
-		ddmFormField.setMultiple(multiple);
+		ddmFormField.setMultiple(
+			GetterUtil.getBoolean(
+				dynamicElementElement.attributeValue("multiple")));
 	}
 
 	private void _setDDMFormFieldNamespace(
@@ -370,10 +365,9 @@ public class DDMFormXSDDeserializer implements DDMFormDeserializer {
 	private void _setDDMFormFieldReadOnly(
 		Element dynamicElementElement, DDMFormField ddmFormField) {
 
-		boolean readOnly = GetterUtil.getBoolean(
-			dynamicElementElement.attributeValue("readOnly"));
-
-		ddmFormField.setReadOnly(readOnly);
+		ddmFormField.setReadOnly(
+			GetterUtil.getBoolean(
+				dynamicElementElement.attributeValue("readOnly")));
 	}
 
 	private void _setDDMFormFieldReference(
@@ -386,28 +380,25 @@ public class DDMFormXSDDeserializer implements DDMFormDeserializer {
 	private void _setDDMFormFieldRepeatable(
 		Element dynamicElementElement, DDMFormField ddmFormField) {
 
-		boolean repeatable = GetterUtil.getBoolean(
-			dynamicElementElement.attributeValue("repeatable"));
-
-		ddmFormField.setRepeatable(repeatable);
+		ddmFormField.setRepeatable(
+			GetterUtil.getBoolean(
+				dynamicElementElement.attributeValue("repeatable")));
 	}
 
 	private void _setDDMFormFieldRequired(
 		Element dynamicElementElement, DDMFormField ddmFormField) {
 
-		boolean required = GetterUtil.getBoolean(
-			dynamicElementElement.attributeValue("required"));
-
-		ddmFormField.setRequired(required);
+		ddmFormField.setRequired(
+			GetterUtil.getBoolean(
+				dynamicElementElement.attributeValue("required")));
 	}
 
 	private void _setDDMFormFieldShowLabel(
 		Element dynamicElementElement, DDMFormField ddmFormField) {
 
-		boolean showLabel = GetterUtil.getBoolean(
-			dynamicElementElement.attributeValue("showLabel"), true);
-
-		ddmFormField.setShowLabel(showLabel);
+		ddmFormField.setShowLabel(
+			GetterUtil.getBoolean(
+				dynamicElementElement.attributeValue("showLabel"), true));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

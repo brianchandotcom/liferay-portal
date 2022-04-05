@@ -211,10 +211,8 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 	public JSONArray getDDMFormFieldsJSONArray(long structureId, String script)
 		throws PortalException {
 
-		com.liferay.dynamic.data.mapping.model.DDMStructure ddmStructure =
-			_ddmStructureLocalService.fetchDDMStructure(structureId);
-
-		return _ddm.getDDMFormFieldsJSONArray(ddmStructure, script);
+		return _ddm.getDDMFormFieldsJSONArray(
+			_ddmStructureLocalService.fetchDDMStructure(structureId), script);
 	}
 
 	@Override

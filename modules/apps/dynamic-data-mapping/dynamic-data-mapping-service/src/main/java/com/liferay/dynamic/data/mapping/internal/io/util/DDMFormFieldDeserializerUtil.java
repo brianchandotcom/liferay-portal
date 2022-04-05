@@ -52,11 +52,10 @@ public class DDMFormFieldDeserializerUtil {
 		List<DDMFormField> ddmFormFields = new ArrayList<>();
 
 		for (int i = 0; i < jsonArray.length(); i++) {
-			DDMFormField ddmFormField = _getDDMFormField(
-				ddmFormFieldTypeServicesTracker, jsonFactory,
-				jsonArray.getJSONObject(i));
-
-			ddmFormFields.add(ddmFormField);
+			ddmFormFields.add(
+				_getDDMFormField(
+					ddmFormFieldTypeServicesTracker, jsonFactory,
+					jsonArray.getJSONObject(i)));
 		}
 
 		return ddmFormFields;

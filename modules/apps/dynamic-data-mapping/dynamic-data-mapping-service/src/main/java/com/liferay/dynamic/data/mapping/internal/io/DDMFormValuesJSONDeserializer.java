@@ -135,10 +135,9 @@ public class DDMFormValuesJSONDeserializer
 		List<DDMFormFieldValue> ddmFormFieldValues = new ArrayList<>();
 
 		for (int i = 0; i < jsonArray.length(); i++) {
-			DDMFormFieldValue ddmFormFieldValue = _getDDMFormFieldValue(
-				jsonArray.getJSONObject(i), ddmFormFieldsMap);
-
-			ddmFormFieldValues.add(ddmFormFieldValue);
+			ddmFormFieldValues.add(
+				_getDDMFormFieldValue(
+					jsonArray.getJSONObject(i), ddmFormFieldsMap));
 		}
 
 		return ddmFormFieldValues;
@@ -181,10 +180,9 @@ public class DDMFormValuesJSONDeserializer
 	protected void setDDMFormFieldValues(
 		JSONArray jsonArray, DDMForm ddmForm, DDMFormValues ddmFormValues) {
 
-		List<DDMFormFieldValue> ddmFormFieldValues = getDDMFormFieldValues(
-			jsonArray, ddmForm.getDDMFormFieldsMap(true));
-
-		ddmFormValues.setDDMFormFieldValues(ddmFormFieldValues);
+		ddmFormValues.setDDMFormFieldValues(
+			getDDMFormFieldValues(
+				jsonArray, ddmForm.getDDMFormFieldsMap(true)));
 	}
 
 	protected void setDDMFormLocalizedValuesDefaultLocale(

@@ -1580,10 +1580,8 @@ public class DynamicDataMappingUpgradeProcess extends UpgradeProcess {
 								String xml = renameInvalidDDMFormFieldNames(
 									structureId, resultSet2.getString("data_"));
 
-								DDMFormValues ddmFormValues = getDDMFormValues(
-									companyId, ddmForm, xml);
-
-								String content = toJSON(ddmFormValues);
+								String content = toJSON(
+									getDDMFormValues(companyId, ddmForm, xml));
 
 								preparedStatement3.setString(1, content);
 
@@ -2158,28 +2156,23 @@ public class DynamicDataMappingUpgradeProcess extends UpgradeProcess {
 
 			String name = ddmFormFieldValue.getName();
 
-			String instanceId = getDDMFieldInstanceId(
-				rootElement, name, ddmFieldsCounter.get(name));
-
-			ddmFormFieldValue.setInstanceId(instanceId);
+			ddmFormFieldValue.setInstanceId(
+				getDDMFieldInstanceId(
+					rootElement, name, ddmFieldsCounter.get(name)));
 		}
 
 		protected void setDDMFormValuesAvailableLocales(
 			DDMFormValues ddmFormValues, Element rootElement) {
 
-			Set<Locale> availableLocales = getAvailableLocales(
-				rootElement.elements("dynamic-element"));
-
-			ddmFormValues.setAvailableLocales(availableLocales);
+			ddmFormValues.setAvailableLocales(
+				getAvailableLocales(rootElement.elements("dynamic-element")));
 		}
 
 		protected void setDDMFormValuesDefaultLocale(
 			DDMFormValues ddmFormValues, Element rootElement) {
 
-			Locale defaultLocale = getDefaultLocale(
-				rootElement.elements("dynamic-element"));
-
-			ddmFormValues.setDefaultLocale(defaultLocale);
+			ddmFormValues.setDefaultLocale(
+				getDefaultLocale(rootElement.elements("dynamic-element")));
 		}
 
 		protected void setNestedDDMFormFieldValues(

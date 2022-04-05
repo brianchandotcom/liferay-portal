@@ -648,11 +648,10 @@ public class DDMFormInstanceRecordExporterImplTest extends PowerMockito {
 			"approvado"
 		);
 
-		String statusMessage =
+		Assert.assertEquals(
+			"approvado",
 			ddmFormInstanceRecordExporterImpl.getStatusMessage(
-				WorkflowConstants.STATUS_APPROVED, locale);
-
-		Assert.assertEquals("approvado", statusMessage);
+				WorkflowConstants.STATUS_APPROVED, locale));
 
 		Mockito.verify(
 			_language, Mockito.times(1)

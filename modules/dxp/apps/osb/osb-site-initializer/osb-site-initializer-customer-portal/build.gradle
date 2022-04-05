@@ -31,6 +31,18 @@ String dateString = dateFormat.format(new Date())
 File extraRemoteAppDir = new File(projectDir, "extra/remote-app/")
 File fragmentsSrcDir = new File(projectDir, "src/main/resources/site-initializer/fragments/")
 
+String webContextPath = ""
+
+if (GUtil.loadProperties(file("bnd.bnd"))["Web-ContextPath"] != null) {
+	webContextPath = GUtil.loadProperties(file("bnd.bnd"))["Web-ContextPath"]
+
+	webContextPath = webContextPath.replaceAll("\\s+", "-").toLowerCase()
+
+	if (webContextPath.startsWith("/")) {
+		webContextPath = webContextPath.substring(1)
+	}
+}
+
 artifacts {
 	extraRemoteApp zipExtraRemoteApp
 }
@@ -54,7 +66,7 @@ processResources {
 	if (gradle.startParameter.taskNames.contains("forceDeploy") || gradle.startParameter.taskNames.contains("uploadExtraRemoteApp")) {
 		dependsOn buildExtraRemoteApp
 
-		into("site-initializer/documents/company/remote-app") {
+		into("site-initializer/documents/company/remote-app/" + webContextPath) {
 			from(new File(projectDir, "extra/remote-app/build/static/css")) {
 				include "*.css"
 			}
@@ -140,7 +152,7 @@ zipExtraRemoteApp {
 		archiveName "extra-remote-app.zip"
 		destinationDir new File(buildDir, "dist")
 
-		into("remote-app/") {
+		into("remote-app/" + webContextPath) {
 			from(new File(projectDir, "extra/remote-app/build/static/css")) {
 				include "*.css"
 			}

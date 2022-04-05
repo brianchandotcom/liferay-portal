@@ -73,10 +73,7 @@ const TestrayRoute = () => (
 						<Route element={<OutletBridge />} path="cases">
 							<Route element={<Cases />} index />
 
-							<Route
-								element={<CaseOutlet />}
-								path=":testrayCaseId"
-							>
+							<Route element={<CaseOutlet />} path=":caseId">
 								<Route element={<Case />} index />
 
 								<Route

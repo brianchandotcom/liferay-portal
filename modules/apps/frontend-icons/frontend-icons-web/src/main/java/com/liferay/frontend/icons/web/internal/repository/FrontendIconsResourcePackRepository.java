@@ -51,14 +51,14 @@ public class FrontendIconsResourcePackRepository {
 
 		Company company = _companyLocalService.getCompany(companyId);
 
-		Folder companyIconsFolder = _getFolder(company);
+		Folder folder = _getFolder(company);
 
 		DLFileEntry dlFileEntry = _dlFileEntryLocalService.fetchFileEntry(
-			company.getGroupId(), companyIconsFolder.getFolderId(),
+			company.getGroupId(), folder.getFolderId(),
 			frontendIconsResourcePack.getName());
 
 		FileEntry fileEntry = _portletFileRepository.fetchPortletFileEntry(
-			company.getGroupId(), companyIconsFolder.getFolderId(),
+			company.getGroupId(), folder.getFolderId(),
 			frontendIconsResourcePack.getName());
 
 		if (dlFileEntry != null) {
@@ -71,7 +71,7 @@ public class FrontendIconsResourcePackRepository {
 
 		_portletFileRepository.addPortletFileEntry(
 			company.getGroupId(), _userLocalService.getDefaultUserId(companyId),
-			null, 0, _REPOSITORY_NAME, companyIconsFolder.getFolderId(),
+			null, 0, _REPOSITORY_NAME, folder.getFolderId(),
 			svgSpritemap.getBytes(), frontendIconsResourcePack.getName(),
 			ContentTypes.IMAGE_SVG_XML, false);
 	}
@@ -81,10 +81,10 @@ public class FrontendIconsResourcePackRepository {
 
 		Company company = _companyLocalService.getCompany(companyId);
 
-		Folder companyIconsFolder = _getFolder(company);
+		Folder folder = _getFolder(company);
 
 		_portletFileRepository.deletePortletFileEntry(
-			company.getGroupId(), companyIconsFolder.getFolderId(), name);
+			company.getGroupId(), folder.getFolderId(), name);
 	}
 
 	public FrontendIconsResourcePack getFrontendIconsResourcePack(
@@ -93,10 +93,10 @@ public class FrontendIconsResourcePackRepository {
 		try {
 			Company company = _companyLocalService.getCompany(companyId);
 
-			Folder companyIconsFolder = _getFolder(company);
+			Folder folder = _getFolder(company);
 
 			FileEntry fileEntry = _portletFileRepository.fetchPortletFileEntry(
-				company.getGroupId(), companyIconsFolder.getFolderId(), name);
+				company.getGroupId(), folder.getFolderId(), name);
 
 			if (fileEntry == null) {
 				return null;
@@ -132,11 +132,11 @@ public class FrontendIconsResourcePackRepository {
 
 		Company company = _companyLocalService.getCompany(companyId);
 
-		Folder companyIconsFolder = _getFolder(company);
+		Folder folder = _getFolder(company);
 
 		List<FileEntry> fileEntries =
 			_portletFileRepository.getPortletFileEntries(
-				company.getGroupId(), companyIconsFolder.getFolderId());
+				company.getGroupId(), folder.getFolderId());
 
 		for (FileEntry fileEntry : fileEntries) {
 			FrontendIconsResourcePack frontendIconsResourcePack =

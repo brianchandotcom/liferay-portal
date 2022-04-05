@@ -26,11 +26,16 @@ export type TestrayCaseResult = {
 	dateModified: string;
 	dueStatus: number;
 	errors: string;
+	id: number;
 	startDate: string;
 };
 
 export const getCaseResults = gql`
-	query getCaseResults($filter: String, $page: Int = 1, $pageSize: Int = 20) {
+	query getCaseResults(
+		$filter: String = ""
+		$page: Int = 1
+		$pageSize: Int = 20
+	) {
 		caseResults(filter: $filter, page: $page, pageSize: $pageSize)
 			@rest(
 				type: "C_CaseResult"

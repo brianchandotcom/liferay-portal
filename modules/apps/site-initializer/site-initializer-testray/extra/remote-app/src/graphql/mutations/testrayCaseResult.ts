@@ -14,18 +14,19 @@
 
 import {gql} from '@apollo/client';
 
-export const testrayCaseFragment = gql`
-	fragment CaseFragment on C_Case {
-		caseNumber
-		dateCreated
-		dateModified
-		description
-		descriptionType
-		estimatedDuration
-		id: caseId
-		name
-		priority
-		steps
-		stepsType
+export const UpdateCaseResult = gql`
+	mutation updateCaseResult(
+		$caseResultId: Long
+		$CaseResult: InputC_CaseResult!
+	) {
+		updateCaseResult(caseResultId: $caseResultId, CaseResult: $CaseResult)
+			@rest(
+				bodyKey: "CaseResult"
+				method: "PATCH"
+				path: "/caseresults/{args.caseResultId}"
+				type: "C_CaseResult"
+			) {
+			id
+		}
 	}
 `;

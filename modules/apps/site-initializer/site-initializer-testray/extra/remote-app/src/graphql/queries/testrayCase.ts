@@ -60,7 +60,6 @@ export const getCases = gql`
 				estimatedDuration
 				id
 				name
-				originationKey
 				priority
 				steps
 				stepsType
@@ -98,7 +97,6 @@ export const getCase = gql`
 			estimatedDuration
 			id
 			name
-			originationKey
 			priority
 			steps
 			stepsType

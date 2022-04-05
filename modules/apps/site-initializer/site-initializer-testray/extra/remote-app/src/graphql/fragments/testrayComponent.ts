@@ -21,7 +21,6 @@ export const testrayComponentFragment = gql`
 		externalReferenceCode
 		id: componentId
 		name
-		originationKey
 		status
 	}
 `;

@@ -132,6 +132,7 @@ const Requirement = () => {
 
 			<Container className="mt-3" title={i18n.translate('cases')}>
 				<ListView
+					managementToolbarProps={{visible: false}}
 					query={getCases}
 					tableProps={{
 						columns: [
@@ -142,6 +143,7 @@ const Requirement = () => {
 							{key: 'name', value: i18n.translate('case-name')},
 							{
 								key: 'component',
+								render: (component) => component?.name,
 								value: i18n.translate('component'),
 							},
 						],

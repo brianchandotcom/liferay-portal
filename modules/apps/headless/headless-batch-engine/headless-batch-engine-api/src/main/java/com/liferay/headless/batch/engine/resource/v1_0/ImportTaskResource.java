@@ -56,6 +56,18 @@ public interface ImportTaskResource {
 		return FactoryHolder.factory.create();
 	}
 
+	public ImportTask getImportTaskByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public Response getImportTaskByExternalReferenceCodeContent(
+			String externalReferenceCode)
+		throws Exception;
+
+	public Response getImportTaskByExternalReferenceCodeFailedItemReport(
+			String externalReferenceCode)
+		throws Exception;
+
 	public ImportTask deleteImportTask(
 			String className, String callbackURL, String externalReferenceCode,
 			String importStrategy, String taskItemDelegateName, Object object)

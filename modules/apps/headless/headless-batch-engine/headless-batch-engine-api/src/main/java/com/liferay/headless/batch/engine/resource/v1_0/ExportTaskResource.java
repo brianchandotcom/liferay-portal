@@ -55,6 +55,14 @@ public interface ExportTaskResource {
 		return FactoryHolder.factory.create();
 	}
 
+	public ExportTask getExportTaskByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public Response getExportTaskByExternalReferenceCodeContent(
+			String externalReferenceCode)
+		throws Exception;
+
 	public ExportTask postExportTask(
 			String className, String contentType, String callbackURL,
 			String externalReferenceCode, String fieldNames,

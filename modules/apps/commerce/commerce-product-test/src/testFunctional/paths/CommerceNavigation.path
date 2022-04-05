@@ -22,7 +22,7 @@
 </tr>
 <tr>
 	<td>EMPTY_SEARCH_CONTAINER</td>
-	<td>//div[contains (@class,'empty-result-message-header')]</td>
+	<td>//div[contains (@class,'empty-result-message-header')] | //div[contains(@class,'empty-state-text')]</td>
 	<td></td>
 </tr>
 <tr>

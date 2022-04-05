@@ -29,7 +29,7 @@ definition {
 	@description = "LPS-144582 - Check if I am redirected to the payment confirmation page, after selected payment by PayPal"
 	@priority = "5"
 	test CanViewConfirmSuccessfulPayment {
-		RaylifePaymentMethod.configurationPaypal();
+		RaylifePaymentMethod.enablePayPalPayment();
 
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
@@ -55,7 +55,7 @@ definition {
 
 		Click(locator1 = "RaylifePaymentMethod#PAY_NOW");
 
-		AssertElementPresent(locator1 = "RaylifePaymentMethod#FIELD_EMAIL_PAYPAL");
+		AssertElementPresent(locator1 = "RaylifePaymentMethod#CONGRATS");
 	}
 
 	@description = "LPS-144583 - Check if the payment method is not selected by default"

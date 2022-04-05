@@ -66,7 +66,6 @@ import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.model.PortletConstants;
-import com.liferay.portal.kernel.model.PortletPreferencesIds;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
@@ -1525,13 +1524,10 @@ public class FileSystemImporter extends BaseImporter {
 		}
 
 		if (portletPreferencesTranslator != null) {
-			PortletPreferencesIds portletPreferencesIds =
-				PortletPreferencesFactoryUtil.getPortletPreferencesIds(
-					layout.getGroupId(), 0, layout, portletId, false);
-
 			PortletPreferences portletSetup =
 				PortletPreferencesLocalServiceUtil.getPreferences(
-					portletPreferencesIds);
+					PortletPreferencesFactoryUtil.getPortletPreferencesIds(
+						layout.getGroupId(), 0, layout, portletId, false));
 
 			Iterator<String> iterator = portletPreferencesJSONObject.keys();
 

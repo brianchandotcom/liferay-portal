@@ -109,12 +109,11 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 				StagingConstants.RANGE_FROM_LAST_PUBLISH_DATE_CHANGESET_NAME);
 
 		if (changesetCollection != null) {
-			long classNameId = ClassNameLocalServiceUtil.getClassNameId(
-				ExportImportClassedModelUtil.getClassName(stagedModel));
-
 			ChangesetEntry changesetEntry =
 				ChangesetEntryLocalServiceUtil.fetchChangesetEntry(
-					changesetCollection.getChangesetCollectionId(), classNameId,
+					changesetCollection.getChangesetCollectionId(),
+					ClassNameLocalServiceUtil.getClassNameId(
+						ExportImportClassedModelUtil.getClassName(stagedModel)),
 					(long)stagedModel.getPrimaryKeyObj());
 
 			if (changesetEntry != null) {

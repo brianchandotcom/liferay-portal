@@ -127,6 +127,27 @@ definition {
 		}
 	}
 
+	macro assertPreviewEntry {
+		AssertElementPresent(
+			key_entryName = "${entryName}",
+			locator1 = "ImportExport#PREVIEW_ENTRY");
+
+		for (var previewField : list "${previewFields}") {
+			AssertElementPresent(
+				key_entryName = "${entryName}",
+				key_previewField = "${previewField}",
+				locator1 = "ImportExport#PREVIEW_ENTRY_FIELD");
+		}
+	}
+
+	macro assertPreviewLabels {
+		for (var previewLabel : list "${previewLabels}") {
+			AssertElementPresent(
+				key_previewLabel = "${previewLabel}",
+				locator1 = "ImportExport#PREVIEW_LABEL");
+		}
+	}
+
 	macro assertRequiredImportFields {
 		for (var requiredField : list "${requiredFields}") {
 			AssertElementPresent(

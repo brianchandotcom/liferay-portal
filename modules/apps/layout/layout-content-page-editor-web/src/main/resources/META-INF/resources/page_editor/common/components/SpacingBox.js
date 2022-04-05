@@ -205,6 +205,7 @@ function SpacingSelectorButton({field, onChange, position, type, value}) {
 					<span ref={setLabelElement}>
 						<SpacingOptionValue
 							position={position}
+							removeValueUnit
 							type={type}
 							value={value || field?.defaultValue}
 						/>
@@ -249,7 +250,12 @@ function SpacingSelectorButton({field, onChange, position, type, value}) {
 	);
 }
 
-function SpacingOptionValue({position, type, value: optionValue}) {
+function SpacingOptionValue({
+	position,
+	removeValueUnit = false,
+	type,
+	value: optionValue,
+}) {
 	const globalContext = useGlobalContext();
 	const [value, setValue] = useState(optionValue);
 
@@ -259,14 +265,24 @@ function SpacingOptionValue({position, type, value: optionValue}) {
 		element.classList.add(`${type[0]}${position[0]}-${optionValue}`);
 		globalContext.document.body.appendChild(element);
 
-		setValue(
-			globalContext.window
-				.getComputedStyle(element)
-				.getPropertyValue(`${type}-${position}`)
-		);
+		let nextValue = globalContext.window
+			.getComputedStyle(element)
+			.getPropertyValue(`${type}-${position}`);
 
+		if (removeValueUnit) {
+			nextValue = parseFloat(nextValue);
+
+			if (isNaN(nextValue)) {
+				nextValue = '0';
+			}
+			else {
+				nextValue = nextValue.toString();
+			}
+		}
+
+		setValue(nextValue);
 		globalContext.document.body.removeChild(element);
-	}, [globalContext, optionValue, position, type]);
+	}, [globalContext, optionValue, position, removeValueUnit, type]);
 
 	return value === undefined ? '' : value;
 }

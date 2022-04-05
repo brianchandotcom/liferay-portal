@@ -354,12 +354,11 @@ public class DLAdminManagementToolbarDisplayContext
 						_httpServletRequest.getLocale());
 				}
 
-				String label = String.format(
-					"%s: %s",
-					LanguageUtil.get(_httpServletRequest, "document-type"),
-					HtmlUtil.escape(fileEntryTypeName));
-
-				labelItem.setLabel(label);
+				labelItem.setLabel(
+					String.format(
+						"%s: %s",
+						LanguageUtil.get(_httpServletRequest, "document-type"),
+						HtmlUtil.escape(fileEntryTypeName)));
 			}
 		).add(
 			() -> Objects.equals(_getNavigation(), "mine"),
@@ -377,11 +376,11 @@ public class DLAdminManagementToolbarDisplayContext
 
 				User user = _themeDisplay.getUser();
 
-				String label = String.format(
-					"%s: %s", LanguageUtil.get(_httpServletRequest, "owner"),
-					HtmlUtil.escape(user.getFullName()));
-
-				labelItem.setLabel(label);
+				labelItem.setLabel(
+					String.format(
+						"%s: %s",
+						LanguageUtil.get(_httpServletRequest, "owner"),
+						HtmlUtil.escape(user.getFullName())));
 			}
 		).build();
 	}

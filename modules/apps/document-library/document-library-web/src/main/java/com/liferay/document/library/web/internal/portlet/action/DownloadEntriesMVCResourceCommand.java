@@ -165,10 +165,10 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 				}
 
 				for (FileShortcut fileShortcut : fileShortcuts) {
-					FileEntry fileEntry = _dlAppService.getFileEntry(
-						fileShortcut.getToFileEntryId());
-
-					_zipFileEntry(fileEntry, StringPool.SLASH, zipWriter);
+					_zipFileEntry(
+						_dlAppService.getFileEntry(
+							fileShortcut.getToFileEntryId()),
+						StringPool.SLASH, zipWriter);
 				}
 
 				for (Folder folder : folders) {
@@ -303,10 +303,9 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 			else if (entry instanceof FileShortcut) {
 				FileShortcut fileShortcut = (FileShortcut)entry;
 
-				FileEntry fileEntry = _dlAppService.getFileEntry(
-					fileShortcut.getToFileEntryId());
-
-				_zipFileEntry(fileEntry, path, zipWriter);
+				_zipFileEntry(
+					_dlAppService.getFileEntry(fileShortcut.getToFileEntryId()),
+					path, zipWriter);
 			}
 		}
 	}

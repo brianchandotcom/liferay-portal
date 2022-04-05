@@ -827,18 +827,16 @@ public class DLAdminDisplayContext {
 						 FileEntry.class.isAssignableFrom(
 							 Class.forName(className))) {
 
-					FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
-						searchResult.getClassPK());
-
-					searchResults.add(fileEntry);
+					searchResults.add(
+						DLAppLocalServiceUtil.getFileEntry(
+							searchResult.getClassPK()));
 				}
 				else if (className.equals(DLFolder.class.getName()) ||
 						 className.equals(Folder.class.getName())) {
 
-					Folder folder = DLAppLocalServiceUtil.getFolder(
-						searchResult.getClassPK());
-
-					searchResults.add(folder);
+					searchResults.add(
+						DLAppLocalServiceUtil.getFolder(
+							searchResult.getClassPK()));
 				}
 			}
 			catch (ClassNotFoundException classNotFoundException) {

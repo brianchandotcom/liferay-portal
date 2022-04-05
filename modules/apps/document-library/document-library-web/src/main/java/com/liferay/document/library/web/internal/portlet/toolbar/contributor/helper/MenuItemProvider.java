@@ -341,15 +341,12 @@ public class MenuItemProvider {
 		urlMenuItem.setKey(
 			DLFileEntryType.class.getSimpleName() +
 				fileEntryType.getFileEntryTypeKey());
-
-		String label = LanguageUtil.get(
-			PortalUtil.getHttpServletRequest(portletRequest),
-			fileEntryType.getUnambiguousName(
-				fileEntryTypes, themeDisplay.getScopeGroupId(),
-				themeDisplay.getLocale()));
-
-		urlMenuItem.setLabel(label);
-
+		urlMenuItem.setLabel(
+			LanguageUtil.get(
+				PortalUtil.getHttpServletRequest(portletRequest),
+				fileEntryType.getUnambiguousName(
+					fileEntryTypes, themeDisplay.getScopeGroupId(),
+					themeDisplay.getLocale())));
 		urlMenuItem.setURL(
 			PortletURLBuilder.create(
 				_getPortletURL(themeDisplay, portletRequest)

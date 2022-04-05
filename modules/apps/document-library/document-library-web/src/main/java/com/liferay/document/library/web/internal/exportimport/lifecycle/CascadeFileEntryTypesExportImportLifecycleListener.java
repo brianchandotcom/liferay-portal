@@ -240,9 +240,8 @@ public class CascadeFileEntryTypesExportImportLifecycleListener
 		throws Exception {
 
 		for (Long folderId : folderIds) {
-			DLFolder dlFolder = _dlFolderLocalService.fetchDLFolder(folderId);
-
-			DLFolder rootFolder = _getProcessableRootFolder(dlFolder);
+			DLFolder rootFolder = _getProcessableRootFolder(
+				_dlFolderLocalService.fetchDLFolder(folderId));
 
 			if (rootFolder != null) {
 				_dlFileEntryTypeLocalService.cascadeFileEntryTypes(

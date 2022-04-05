@@ -120,12 +120,13 @@ public class DLFileEntryTypeModelListener
 		Map<Long, ServiceRegistration<?>> serviceRegistrations =
 			new HashMap<>();
 
-		List<Group> companyGroups = _groupLocalService.getCompanyGroups(
-			company.getCompanyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
 		List<DLFileEntryType> dlFileEntryTypes =
 			_dlFileEntryTypeLocalService.getFileEntryTypes(
-				ListUtil.toLongArray(companyGroups, Group::getGroupId));
+				ListUtil.toLongArray(
+					_groupLocalService.getCompanyGroups(
+						company.getCompanyId(), QueryUtil.ALL_POS,
+						QueryUtil.ALL_POS),
+					Group::getGroupId));
 
 		for (DLFileEntryType dlFileEntryType : dlFileEntryTypes) {
 			serviceRegistrations.put(

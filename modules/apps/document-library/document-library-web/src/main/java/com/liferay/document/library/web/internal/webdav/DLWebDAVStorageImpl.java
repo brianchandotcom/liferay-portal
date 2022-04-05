@@ -1158,10 +1158,9 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 
 		String className = DLFileEntryConstants.getClassName();
 
-		long[] assetCategoryIds = _assetCategoryLocalService.getCategoryIds(
-			className, fileEntry.getFileEntryId());
-
-		serviceContext.setAssetCategoryIds(assetCategoryIds);
+		serviceContext.setAssetCategoryIds(
+			_assetCategoryLocalService.getCategoryIds(
+				className, fileEntry.getFileEntryId()));
 
 		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 			className, fileEntry.getFileEntryId());
@@ -1174,10 +1173,9 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 
 		serviceContext.setAssetLinkEntryIds(assetLinkEntryIds);
 
-		String[] assetTagNames = _assetTagLocalService.getTagNames(
-			className, fileEntry.getFileEntryId());
-
-		serviceContext.setAssetTagNames(assetTagNames);
+		serviceContext.setAssetTagNames(
+			_assetTagLocalService.getTagNames(
+				className, fileEntry.getFileEntryId()));
 
 		ExpandoBridge expandoBridge = fileEntry.getExpandoBridge();
 
@@ -1214,14 +1212,11 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 				continue;
 			}
 
-			DDMFormValues ddmFormValues =
-				StorageEngineManagerUtil.getDDMFormValues(
-					dlFileEntryMetadata.getDDMStorageId());
-
 			serviceContext.setAttribute(
 				DDMFormValues.class.getName() + StringPool.POUND +
 					ddmStructure.getStructureId(),
-				ddmFormValues);
+				StorageEngineManagerUtil.getDDMFormValues(
+					dlFileEntryMetadata.getDDMStorageId()));
 		}
 	}
 

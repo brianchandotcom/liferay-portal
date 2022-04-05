@@ -903,7 +903,7 @@
 </tr>
 <tr>
 	<td>LAST_CURRENCY_ELEMENT</td>
-	<td>//tr[contains(@data-qa-id,'row')]//a[contains(text(),'${key_entryName}')] | //a[@id='_com_liferay_commerce_currency_web_internal_portlet_CommerceCurrencyPortlet_commerceCurrencies_10_menu']</td>
+	<td>//tr[contains(@data-qa-id,'row')]//td//a[contains(text(),'${key_entryName}')]//..//..//a[contains(@id,'_commerceCurrencies_10')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -56,6 +56,7 @@ import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
+import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -472,7 +473,8 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 						httpServletRequest, "for-locale-x-x-was-changed-to-x",
 						new Object[] {
 							"<strong>" + locale.getLanguage() + "</strong>",
-							"<strong>" + originalFriendlyURL + "</strong>",
+							"<strong>" + _html.escapeURL(originalFriendlyURL) +
+								"</strong>",
 							"<strong>" + currentFriendlyURL + "</strong>"
 						}));
 			}
@@ -650,6 +652,9 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private FriendlyURLNormalizer _friendlyURLNormalizer;
+
+	@Reference
+	private Html _html;
 
 	@Reference
 	private Http _http;

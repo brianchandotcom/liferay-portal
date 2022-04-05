@@ -37,6 +37,7 @@
 }
 
 .raylife-login-form li:nth-child(2) {
+	bottom: -25vh;
 	position: absolute;
 }
 
@@ -51,15 +52,6 @@
 	width: 200px;
 }
 
-.raylife-login-form .sign-in-form .form-check {
-	margin-bottom: var(--spacer-4);
-}
-
-.raylife-login-form .sign-in-form .form-check label {
-	color: var(--gray-500);
-	transform: translateY(-2px);
-}
-
 .raylife-login-form .sign-in-form .form-control::placeholder {
 	color: var(--bg-neutral-10);
 	font-weight: 700 !important;
@@ -71,7 +63,6 @@
 
 .raylife-login-form .sign-in-form .form-group input {
 	background: #f0f5ff;
-	border-color: #f0f5ff;
 	border-radius: 4px !important;
 	height: 48px !important;
 }

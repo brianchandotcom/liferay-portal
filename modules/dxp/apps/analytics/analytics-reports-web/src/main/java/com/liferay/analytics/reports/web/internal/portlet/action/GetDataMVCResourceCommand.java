@@ -23,6 +23,7 @@ import com.liferay.analytics.reports.web.internal.data.provider.AnalyticsReports
 import com.liferay.analytics.reports.web.internal.info.item.provider.AnalyticsReportsInfoItemObjectProviderTracker;
 import com.liferay.analytics.reports.web.internal.model.TimeRange;
 import com.liferay.analytics.reports.web.internal.model.TimeSpan;
+import com.liferay.analytics.reports.web.internal.util.AnalyticsReportsUtil;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceTracker;
@@ -154,6 +155,29 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 		}
 	}
 
+	private JSONObject _getAnalyticsDataJSONObject(Layout layout) {
+		return JSONUtil.put(
+			"cloudTrialURL", AnalyticsReportsUtil.ANALYTICS_CLOUD_TRIAL_URL
+		).put(
+			"hasValidConnection",
+			() -> {
+				AnalyticsReportsDataProvider analyticsReportsDataProvider =
+					new AnalyticsReportsDataProvider(_http);
+
+				return analyticsReportsDataProvider.isValidAnalyticsConnection(
+					layout.getCompanyId());
+			}
+		).put(
+			"isSynced",
+			() -> AnalyticsReportsUtil.isAnalyticsSynced(
+				layout.getCompanyId(), layout.getGroupId())
+		).put(
+			"url",
+			() -> PrefsPropsUtil.getString(
+				layout.getCompanyId(), "liferayAnalyticsURL")
+		);
+	}
+
 	private JSONObject _getAuthorJSONObject(
 		AnalyticsReportsInfoItem<Object> analyticsReportsInfoItem,
 		Locale locale, Object object) {
@@ -273,6 +297,8 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 			locale, getClass());
 
 		return JSONUtil.put(
+			"analyticsData", _getAnalyticsDataJSONObject(layout)
+		).put(
 			"author",
 			_getAuthorJSONObject(analyticsReportsInfoItem, locale, object)
 		).put(

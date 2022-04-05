@@ -296,6 +296,57 @@ definition {
 	}
 
 	@priority = "4"
+	test CanViewSimilarResultsFromOtherSitesWithDocumentsWidget {
+		for (var siteName : list "Site Name 1,Site Name 2,Site Name 3") {
+			JSONGroup.addGroup(groupName = "${siteName}");
+		}
+
+		var count = "0";
+
+		for (var siteName : list "Guest,Site Name 1,Site Name 2,Site Name 3") {
+			JSONDocument.addFile(
+				dmDocumentDescription = "DM Document Description ${count}",
+				dmDocumentTitle = "DM Document Title ${count}",
+				groupName = "${siteName}");
+
+			var count = ${count} + 1;
+		}
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Similar Results Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Similar Results Page",
+			widgetName = "Similar Results");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "2",
+			groupName = "Guest",
+			layoutName = "Similar Results Page",
+			widgetName = "Documents and Media");
+
+		Navigator.gotoPage(pageName = "Similar Results Page");
+
+		SearchPortlets.configureSimilarResults(
+			displayTemplate = "Compact Layout",
+			fields = "localized_title_en_US",
+			minimumDocumentFrequency = "1",
+			minimumTermFrequency = "1",
+			searchScope = "Everything");
+
+		DMDocument.viewPG(dmDocumentTitle = "DM Document Title 0");
+
+		for (var count : list "1,2,3") {
+			AssertElementPresent(
+				key_linkResultTitle = "DM Document Title ${count}",
+				locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+		}
+	}
+
+	@priority = "4"
 	test ConfigureSimilarResultsDocumentFrequency {
 		property test.name.skip.portal.instance = "SimilarResults#ConfigureSimilarResultsDocumentFrequency";
 

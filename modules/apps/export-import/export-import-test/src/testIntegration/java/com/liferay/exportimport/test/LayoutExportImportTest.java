@@ -80,10 +80,8 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		Layout layout1 = LayoutTestUtil.addTypePortletLayout(group);
 		Layout layout2 = LayoutTestUtil.addTypePortletLayout(group);
 
-		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-			group.getGroupId(), false);
-
-		long[] layoutIds = ExportImportHelperUtil.getLayoutIds(layouts);
+		long[] layoutIds = ExportImportHelperUtil.getLayoutIds(
+			LayoutLocalServiceUtil.getLayouts(group.getGroupId(), false));
 
 		exportImportLayouts(layoutIds, getImportParameterMap());
 
@@ -225,11 +223,9 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 	public void testExportImportLayouts() throws Exception {
 		LayoutTestUtil.addTypePortletLayout(group);
 
-		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-			group.getGroupId(), false);
-
 		exportImportLayouts(
-			ExportImportHelperUtil.getLayoutIds(layouts),
+			ExportImportHelperUtil.getLayoutIds(
+				LayoutLocalServiceUtil.getLayouts(group.getGroupId(), false)),
 			getImportParameterMap());
 
 		Assert.assertEquals(
@@ -379,11 +375,9 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		Assert.assertNotEquals(
 			layout2.getPriority(), importedLayout2.getPriority());
 
-		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-			group.getGroupId(), false);
-
 		exportImportLayouts(
-			ExportImportHelperUtil.getLayoutIds(layouts),
+			ExportImportHelperUtil.getLayoutIds(
+				LayoutLocalServiceUtil.getLayouts(group.getGroupId(), false)),
 			getImportParameterMap());
 
 		importedLayout1 = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(

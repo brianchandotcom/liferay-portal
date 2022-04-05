@@ -251,11 +251,10 @@ public class LayoutSetPrototypePropagationTest
 
 		propagateChanges(group);
 
-		layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-			layoutSet.getLayoutSetId());
-
 		List<Layout> mergeFailFriendlyURLLayouts =
-			SitesUtil.getMergeFailFriendlyURLLayouts(layoutSet);
+			SitesUtil.getMergeFailFriendlyURLLayouts(
+				LayoutSetLocalServiceUtil.getLayoutSet(
+					layoutSet.getLayoutSetId()));
 
 		Assert.assertEquals(
 			mergeFailFriendlyURLLayouts.toString(),
@@ -286,11 +285,10 @@ public class LayoutSetPrototypePropagationTest
 
 		propagateChanges(group);
 
-		layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-			layoutSet.getLayoutSetId());
-
 		List<Layout> mergeFailFriendlyURLLayouts =
-			SitesUtil.getMergeFailFriendlyURLLayouts(layoutSet);
+			SitesUtil.getMergeFailFriendlyURLLayouts(
+				LayoutSetLocalServiceUtil.getLayoutSet(
+					layoutSet.getLayoutSetId()));
 
 		Assert.assertEquals(
 			mergeFailFriendlyURLLayouts.toString(),
@@ -549,10 +547,9 @@ public class LayoutSetPrototypePropagationTest
 		Group userGroup = GroupLocalServiceUtil.getUserGroup(
 			_user2.getCompanyId(), _user2.getUserId());
 
-		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-			userGroup.getGroupId(), true);
-
-		SitesUtil.resetPrototype(layoutSet);
+		SitesUtil.resetPrototype(
+			LayoutSetLocalServiceUtil.getLayoutSet(
+				userGroup.getGroupId(), true));
 	}
 
 	@Test
@@ -563,10 +560,9 @@ public class LayoutSetPrototypePropagationTest
 		Group userGroup = GroupLocalServiceUtil.getUserGroup(
 			_user1.getCompanyId(), _user1.getUserId());
 
-		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-			userGroup.getGroupId(), true);
-
-		SitesUtil.resetPrototype(layoutSet);
+		SitesUtil.resetPrototype(
+			LayoutSetLocalServiceUtil.getLayoutSet(
+				userGroup.getGroupId(), true));
 	}
 
 	@Test

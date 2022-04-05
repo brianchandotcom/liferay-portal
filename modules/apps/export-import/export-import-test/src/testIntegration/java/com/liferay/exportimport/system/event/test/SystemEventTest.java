@@ -148,13 +148,12 @@ public class SystemEventTest {
 			_stagingGroup.getGroupId(), journalArticle.getArticleId(),
 			new ServiceContext());
 
-		SystemEvent systemEvent = SystemEventLocalServiceUtil.fetchSystemEvent(
-			_stagingGroup.getGroupId(),
-			ClassNameLocalServiceUtil.getClassNameId(JournalArticle.class),
-			journalArticle.getResourcePrimKey(),
-			SystemEventConstants.TYPE_DELETE);
-
-		Assert.assertNotNull(systemEvent);
+		Assert.assertNotNull(
+			SystemEventLocalServiceUtil.fetchSystemEvent(
+				_stagingGroup.getGroupId(),
+				ClassNameLocalServiceUtil.getClassNameId(JournalArticle.class),
+				journalArticle.getResourcePrimKey(),
+				SystemEventConstants.TYPE_DELETE));
 
 		GroupUtil.clearCache();
 
@@ -262,13 +261,12 @@ public class SystemEventTest {
 
 		JournalArticle firstJournalArticle = articles.get(0);
 
-		systemEvent = SystemEventLocalServiceUtil.fetchSystemEvent(
-			_liveGroup.getGroupId(),
-			ClassNameLocalServiceUtil.getClassNameId(JournalArticle.class),
-			firstJournalArticle.getResourcePrimKey(),
-			SystemEventConstants.TYPE_DELETE);
-
-		Assert.assertNull(systemEvent);
+		Assert.assertNull(
+			SystemEventLocalServiceUtil.fetchSystemEvent(
+				_liveGroup.getGroupId(),
+				ClassNameLocalServiceUtil.getClassNameId(JournalArticle.class),
+				firstJournalArticle.getResourcePrimKey(),
+				SystemEventConstants.TYPE_DELETE));
 	}
 
 	@Test
@@ -277,12 +275,11 @@ public class SystemEventTest {
 
 		long classPK = doTestRemoteStaging();
 
-		SystemEvent systemEvent = SystemEventLocalServiceUtil.fetchSystemEvent(
-			_liveGroup.getGroupId(),
-			ClassNameLocalServiceUtil.getClassNameId(JournalArticle.class),
-			classPK, SystemEventConstants.TYPE_DELETE);
-
-		Assert.assertNull(systemEvent);
+		Assert.assertNull(
+			SystemEventLocalServiceUtil.fetchSystemEvent(
+				_liveGroup.getGroupId(),
+				ClassNameLocalServiceUtil.getClassNameId(JournalArticle.class),
+				classPK, SystemEventConstants.TYPE_DELETE));
 	}
 
 	@Test
@@ -291,12 +288,11 @@ public class SystemEventTest {
 
 		long classPK = doTestRemoteStaging();
 
-		SystemEvent systemEvent = SystemEventLocalServiceUtil.fetchSystemEvent(
-			_liveGroup.getGroupId(),
-			ClassNameLocalServiceUtil.getClassNameId(JournalArticle.class),
-			classPK, SystemEventConstants.TYPE_DELETE);
-
-		Assert.assertNotNull(systemEvent);
+		Assert.assertNotNull(
+			SystemEventLocalServiceUtil.fetchSystemEvent(
+				_liveGroup.getGroupId(),
+				ClassNameLocalServiceUtil.getClassNameId(JournalArticle.class),
+				classPK, SystemEventConstants.TYPE_DELETE));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

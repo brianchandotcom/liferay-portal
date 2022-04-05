@@ -112,10 +112,10 @@ public class ExportImportDateUtilTest {
 
 		updateLastPublishDate(_portletPreferences, new Date());
 
-		Date lastPublishDate = ExportImportDateUtil.getLastPublishDate(
-			portletDataContext, _portletPreferences);
-
-		Assert.assertEquals(portletDataContextLastPublishDate, lastPublishDate);
+		Assert.assertEquals(
+			portletDataContextLastPublishDate,
+			ExportImportDateUtil.getLastPublishDate(
+				portletDataContext, _portletPreferences));
 	}
 
 	@Test
@@ -135,10 +135,10 @@ public class ExportImportDateUtilTest {
 
 		updateLastPublishDate(_portletPreferences, new Date());
 
-		Date lastPublishDate = ExportImportDateUtil.getLastPublishDate(
-			portletDataContext, _portletPreferences);
-
-		Assert.assertEquals(portletDataContextLastPublishDate, lastPublishDate);
+		Assert.assertEquals(
+			portletDataContextLastPublishDate,
+			ExportImportDateUtil.getLastPublishDate(
+				portletDataContext, _portletPreferences));
 	}
 
 	@Test
@@ -154,10 +154,9 @@ public class ExportImportDateUtilTest {
 			portletDataContext,
 			ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE, new Date());
 
-		Date lastPublishDate = ExportImportDateUtil.getLastPublishDate(
-			portletDataContext, _portletPreferences);
-
-		Assert.assertNull(lastPublishDate);
+		Assert.assertNull(
+			ExportImportDateUtil.getLastPublishDate(
+				portletDataContext, _portletPreferences));
 	}
 
 	@Test
@@ -177,10 +176,10 @@ public class ExportImportDateUtilTest {
 
 		updateLastPublishDate(_portletPreferences, portletLastPublishDate);
 
-		Date lastPublishDate = ExportImportDateUtil.getLastPublishDate(
-			portletDataContext, _portletPreferences);
-
-		Assert.assertEquals(portletLastPublishDate, lastPublishDate);
+		Assert.assertEquals(
+			portletLastPublishDate,
+			ExportImportDateUtil.getLastPublishDate(
+				portletDataContext, _portletPreferences));
 	}
 
 	@Test
@@ -399,10 +398,8 @@ public class ExportImportDateUtilTest {
 		ExportImportDateUtil.updateLastPublishDate(
 			PortletKeys.EXPORT_IMPORT, _portletPreferences, dateRange, date);
 
-		lastPublishDate = ExportImportDateUtil.getLastPublishDate(
-			_portletPreferences);
-
-		Assert.assertEquals(date, lastPublishDate);
+		Assert.assertEquals(
+			date, ExportImportDateUtil.getLastPublishDate(_portletPreferences));
 	}
 
 	@Test

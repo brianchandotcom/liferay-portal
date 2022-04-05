@@ -97,11 +97,6 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 
 		for (String portletId : portletIds) {
 			try {
-				_portletPreferencesLocalService.deletePortletPreferences(
-					PortletKeys.PREFS_OWNER_ID_DEFAULT,
-					PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-					fragmentEntryLink.getPlid(), portletId);
-
 				PortletLocalServiceUtil.deletePortlet(
 					fragmentEntryLink.getCompanyId(), portletId,
 					fragmentEntryLink.getPlid());

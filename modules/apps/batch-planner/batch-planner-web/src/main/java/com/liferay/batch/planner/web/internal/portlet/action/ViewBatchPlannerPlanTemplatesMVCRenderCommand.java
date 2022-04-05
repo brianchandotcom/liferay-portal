@@ -15,7 +15,7 @@
 package com.liferay.batch.planner.web.internal.portlet.action;
 
 import com.liferay.batch.planner.constants.BatchPlannerPortletKeys;
-import com.liferay.batch.planner.web.internal.display.context.BatchPlannerPlanDisplayContext;
+import com.liferay.batch.planner.web.internal.display.context.BatchPlannerPlanTemplateDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -32,11 +32,12 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + BatchPlannerPortletKeys.BATCH_PLANNER,
-		"mvc.command.name=/batch_planner/view_batch_planner_plans"
+		"mvc.command.name=/batch_planner/view_batch_planner_plan_templates"
 	},
 	service = MVCRenderCommand.class
 )
-public class ViewBatchPlannerPlansMVCRenderCommand implements MVCRenderCommand {
+public class ViewBatchPlannerPlanTemplatesMVCRenderCommand
+	implements MVCRenderCommand {
 
 	@Override
 	public String render(
@@ -45,9 +46,10 @@ public class ViewBatchPlannerPlansMVCRenderCommand implements MVCRenderCommand {
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
-			new BatchPlannerPlanDisplayContext(renderRequest, renderResponse));
+			new BatchPlannerPlanTemplateDisplayContext(
+				renderRequest, renderResponse));
 
-		return "/view_batch_planner_plans.jsp";
+		return "/view_batch_planner_plan_templates.jsp";
 	}
 
 }

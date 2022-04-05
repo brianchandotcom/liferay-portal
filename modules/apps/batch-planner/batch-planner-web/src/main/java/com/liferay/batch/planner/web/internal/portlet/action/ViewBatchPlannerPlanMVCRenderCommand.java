@@ -15,11 +15,9 @@
 package com.liferay.batch.planner.web.internal.portlet.action;
 
 import com.liferay.batch.planner.constants.BatchPlannerPortletKeys;
-import com.liferay.batch.planner.model.BatchPlannerLog;
 import com.liferay.batch.planner.model.BatchPlannerPlan;
-import com.liferay.batch.planner.service.BatchPlannerLogService;
 import com.liferay.batch.planner.service.BatchPlannerPlanService;
-import com.liferay.batch.planner.web.internal.display.BatchPlannerLogDisplay;
+import com.liferay.batch.planner.web.internal.display.BatchPlannerPlanDisplay;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -40,77 +38,66 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + BatchPlannerPortletKeys.BATCH_PLANNER,
-		"mvc.command.name=/batch_planner/view_batch_planner_log"
+		"mvc.command.name=/batch_planner/view_batch_planner_plan"
 	},
 	service = MVCRenderCommand.class
 )
-public class ViewBatchPlannerLogMVCRenderCommand implements MVCRenderCommand {
+public class ViewBatchPlannerPlanMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		long batchPlannerLogId = ParamUtil.getLong(
-			renderRequest, "batchPlannerLogId");
+		long batchPlannerPlanId = ParamUtil.getLong(
+			renderRequest, "batchPlannerPlanId");
 
 		try {
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
-				_getBatchPlannerLogDisplay(batchPlannerLogId));
+				_getBatchPlannerPlanDisplay(batchPlannerPlanId));
 
-			return "/view_batch_planner_log.jsp";
+			return "/view_batch_planner_plan.jsp";
 		}
 		catch (PortalException portalException) {
 			SessionErrors.add(renderRequest, portalException.getClass());
 
 			throw new PortletException(
-				"Unable to render batch planner log " + batchPlannerLogId,
+				"Unable to render batch planner plan " + batchPlannerPlanId,
 				portalException);
 		}
 	}
 
-	private BatchPlannerLogDisplay _getBatchPlannerLogDisplay(
-			long batchPlannerLogId)
+	private BatchPlannerPlanDisplay _getBatchPlannerPlanDisplay(
+			long batchPlannerPlanId)
 		throws PortalException {
 
-		BatchPlannerLog batchPlannerLog =
-			_batchPlannerLogService.getBatchPlannerLog(batchPlannerLogId);
-
 		BatchPlannerPlan batchPlannerPlan =
-			_batchPlannerPlanService.getBatchPlannerPlan(
-				batchPlannerLog.getBatchPlannerPlanId());
+			_batchPlannerPlanService.getBatchPlannerPlan(batchPlannerPlanId);
 
-		BatchPlannerLogDisplay.Builder builder =
-			new BatchPlannerLogDisplay.Builder();
+		BatchPlannerPlanDisplay.Builder builder =
+			new BatchPlannerPlanDisplay.Builder();
 
-		builder.batchPlannerLogId(
-			batchPlannerLogId
-		).batchEngineExportTaskERC(
-			batchPlannerLog.getBatchEngineExportTaskERC()
-		).batchEngineImportTaskERC(
-			batchPlannerLog.getBatchEngineImportTaskERC()
+		builder.batchPlannerPlanId(
+			batchPlannerPlanId
 		).status(
-			batchPlannerLog.getStatus()
+			batchPlannerPlan.getStatus()
 		).createDate(
-			batchPlannerLog.getCreateDate()
+			batchPlannerPlan.getCreateDate()
 		).export(
 			batchPlannerPlan.isExport()
 		).processedItemsCount(
 			0
 		).totalItemsCount(
-			batchPlannerLog.getTotal()
+			batchPlannerPlan.getTotal()
 		).title(
 			batchPlannerPlan.getName()
 		).modifiedDate(
-			batchPlannerLog.getModifiedDate()
+			batchPlannerPlan.getModifiedDate()
 		);
 
 		return builder.build();
 	}
-
-	@Reference
-	private BatchPlannerLogService _batchPlannerLogService;
 
 	@Reference
 	private BatchPlannerPlanService _batchPlannerPlanService;

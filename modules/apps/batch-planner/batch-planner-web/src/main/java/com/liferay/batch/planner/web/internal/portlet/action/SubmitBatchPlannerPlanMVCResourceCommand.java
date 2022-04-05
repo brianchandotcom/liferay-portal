@@ -16,7 +16,6 @@ package com.liferay.batch.planner.web.internal.portlet.action;
 
 import com.liferay.batch.planner.batch.engine.broker.BatchEngineBroker;
 import com.liferay.batch.planner.constants.BatchPlannerPortletKeys;
-import com.liferay.batch.planner.model.BatchPlannerLog;
 import com.liferay.batch.planner.model.BatchPlannerPlan;
 import com.liferay.batch.planner.web.internal.helper.BatchPlannerPlanHelper;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -84,14 +83,10 @@ public class SubmitBatchPlannerPlanMVCResourceCommand
 		if (!batchPlannerPlan.isTemplate()) {
 			_batchEngineBroker.submit(batchPlannerPlan.getBatchPlannerPlanId());
 
-			BatchPlannerLog batchPlannerLog =
-				batchPlannerPlan.getBatchPlannerLog();
-
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
 				JSONUtil.put(
-					"exportTaskId",
-					batchPlannerLog.getBatchEngineExportTaskERC()));
+					"exportTaskId", batchPlannerPlan.getBatchPlannerPlanId()));
 		}
 	}
 
@@ -117,14 +112,10 @@ public class SubmitBatchPlannerPlanMVCResourceCommand
 
 			_batchEngineBroker.submit(batchPlannerPlan.getBatchPlannerPlanId());
 
-			BatchPlannerLog batchPlannerLog =
-				batchPlannerPlan.getBatchPlannerLog();
-
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
 				JSONUtil.put(
-					"importTaskId",
-					batchPlannerLog.getBatchEngineImportTaskERC()));
+					"importTaskId", batchPlannerPlan.getBatchPlannerPlanId()));
 		}
 		finally {
 			FileUtil.delete(importFile);

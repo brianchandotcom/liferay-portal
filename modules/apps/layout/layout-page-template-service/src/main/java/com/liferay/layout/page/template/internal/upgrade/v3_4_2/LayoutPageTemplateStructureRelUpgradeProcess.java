@@ -249,7 +249,7 @@ public class LayoutPageTemplateStructureRelUpgradeProcess
 						"com.liferay.fragment.entry.processor.freemarker." +
 							"FreeMarkerFragmentEntryProcessor");
 
-				if (_isEmpty(fragmentConfigValuesJSONObject)) {
+				if (fragmentConfigValuesJSONObject == null) {
 					continue;
 				}
 

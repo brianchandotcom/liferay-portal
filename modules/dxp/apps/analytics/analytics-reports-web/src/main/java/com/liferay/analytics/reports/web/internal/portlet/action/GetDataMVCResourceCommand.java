@@ -27,6 +27,7 @@ import com.liferay.analytics.reports.web.internal.util.AnalyticsReportsUtil;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
@@ -137,11 +138,13 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 					_getJSONObject(
 						analyticsReportsInfoItem, themeDisplay.getCompanyId(),
 						infoItemReference, themeDisplay.getLayout(),
+						themeDisplay.getLayoutFriendlyURL(
+							themeDisplay.getLayout()),
 						themeDisplay.getLocale(),
 						_getLocale(
 							httpServletRequest, themeDisplay.getLanguageId()),
-						analyticsReportsInfoItemObject, resourceResponse,
-						_getTimeRange(resourceRequest))));
+						analyticsReportsInfoItemObject, resourceRequest,
+						resourceResponse, _getTimeRange(resourceRequest))));
 		}
 		catch (Exception exception) {
 			_log.error(exception);
@@ -288,7 +291,8 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 	private JSONObject _getJSONObject(
 		AnalyticsReportsInfoItem<Object> analyticsReportsInfoItem,
 		long companyId, InfoItemReference infoItemReference, Layout layout,
-		Locale locale, Locale urlLocale, Object object,
+		String layoutFriendlyURL, Locale locale, Locale urlLocale,
+		Object object, ResourceRequest resourceRequest,
 		ResourceResponse resourceResponse, TimeRange timeRange) {
 
 		String canonicalURL = analyticsReportsInfoItem.getCanonicalURL(
@@ -308,6 +312,24 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 			_getEndpointsJSONObject(
 				analyticsReportsInfoItem, canonicalURL, urlLocale,
 				resourceResponse)
+		).put(
+			"hideAnalyticsReportsPanelURL",
+			PortletURLBuilder.createActionURL(
+				resourceResponse
+			).setActionName(
+				"/analytics_reports/hide_panel"
+			).setRedirect(
+				() -> {
+					String redirect = ParamUtil.getString(
+						resourceRequest, "redirect");
+
+					if (Validator.isNotNull(redirect)) {
+						return redirect;
+					}
+
+					return layoutFriendlyURL;
+				}
+			).buildString()
 		).put(
 			"languageTag", locale.toLanguageTag()
 		).put(

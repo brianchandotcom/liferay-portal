@@ -137,12 +137,9 @@ public class DDMFormBuilderContextFactoryHelper {
 		ddmFormRenderingContext.setHttpServletResponse(_httpServletResponse);
 		ddmFormRenderingContext.setLocale(_locale);
 		ddmFormRenderingContext.setPortletNamespace(_portletNamespace);
-
-		DDMFormValues ddmFormValues =
+		ddmFormRenderingContext.setDDMFormValues(
 			_createDDMFormFieldSettingContextDDMFormValues(
-				ddmForm, ddmFormField);
-
-		ddmFormRenderingContext.setDDMFormValues(ddmFormValues);
+				ddmForm, ddmFormField));
 
 		return _ddmFormTemplateContextFactory.create(
 			ddmForm, ddmFormLayout, ddmFormRenderingContext);
@@ -171,12 +168,11 @@ public class DDMFormBuilderContextFactoryHelper {
 
 			DDMForm ddmForm = ddmFormField.getDDMForm();
 
-			Value value = _createDDMFormFieldValue(
-				ddmFormFieldTypeSetting,
-				ddmFormFieldProperties.get(propertyName),
-				ddmForm.getAvailableLocales());
-
-			ddmFormFieldValue.setValue(value);
+			ddmFormFieldValue.setValue(
+				_createDDMFormFieldValue(
+					ddmFormFieldTypeSetting,
+					ddmFormFieldProperties.get(propertyName),
+					ddmForm.getAvailableLocales()));
 
 			ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 		}

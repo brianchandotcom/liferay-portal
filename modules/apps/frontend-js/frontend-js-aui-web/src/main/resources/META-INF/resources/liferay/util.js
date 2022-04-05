@@ -39,9 +39,6 @@
 
 	var STR_RIGHT_SQUARE_BRACKET = ']';
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
 	var Window = {
 		_map: {},
 
@@ -430,7 +427,7 @@
 		},
 
 		/**
-		 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+		 * @deprecated As of Cavanaugh (7.4.x), replaced by `openModal`
 		 */
 		getWindow(id) {
 			if (!id) {

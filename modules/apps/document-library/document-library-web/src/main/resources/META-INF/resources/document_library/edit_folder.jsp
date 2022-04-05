@@ -312,14 +312,6 @@ renderResponse.setTitle(dlEditFolderDisplayContext.getHeaderTitle());
 
 		<c:choose>
 			<c:when test="<%= dlEditFolderDisplayContext.isWorkflowEnabled() %>">
-				var restrictionTypeWorkflow = document.getElementById(
-					'<portlet:namespace />restrictionTypeWorkflow'
-				);
-
-				restrictionTypeWorkflow.classList.add('hide');
-				restrictionTypeWorkflow.setAttribute('hidden', 'hidden');
-				restrictionTypeWorkflow.style.display = 'none';
-
 				var workflowDefinitions =
 					'<%= UnicodeFormatter.toString(workflowDefinitionsBuffer) %>';
 

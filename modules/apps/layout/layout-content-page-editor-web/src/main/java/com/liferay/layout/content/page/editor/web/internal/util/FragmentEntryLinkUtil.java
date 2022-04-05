@@ -84,28 +84,6 @@ public class FragmentEntryLinkUtil {
 		FragmentEntryLinkServiceUtil.deleteFragmentEntryLink(
 			fragmentEntryLinkId);
 
-		if (fragmentEntryLink.getFragmentEntryId() == 0) {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				fragmentEntryLink.getEditableValues());
-
-			String portletId = jsonObject.getString(
-				"portletId", StringPool.BLANK);
-
-			if (Validator.isNotNull(portletId)) {
-				String instanceId = jsonObject.getString(
-					"instanceId", StringPool.BLANK);
-
-				PortletLocalServiceUtil.deletePortlet(
-					companyId, PortletIdCodec.encode(portletId, instanceId),
-					plid);
-
-				LayoutClassedModelUsageLocalServiceUtil.
-					deleteLayoutClassedModelUsages(
-						PortletIdCodec.encode(portletId, instanceId),
-						PortalUtil.getClassNameId(Portlet.class), plid);
-			}
-		}
-
 		List<String> portletIds =
 			portletRegistry.getFragmentEntryLinkPortletIds(fragmentEntryLink);
 

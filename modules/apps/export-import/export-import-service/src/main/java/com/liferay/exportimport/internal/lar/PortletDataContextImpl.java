@@ -841,15 +841,19 @@ public class PortletDataContextImpl implements PortletDataContext {
 		String key = StringPool.BLANK;
 
 		if (_importDataElements != null) {
-			key = StringBundler.concat(
-				_importDataRootElement.attributeValue("self-path"),
-				CharPool.POUND, name, CharPool.POUND, attribute, CharPool.POUND,
-				value);
+			String selfPath = _importDataRootElement.attributeValue(
+				"self-path");
 
-			importDataElement = _importDataElements.get(key);
+			if (Validator.isNotNull(selfPath)) {
+				key = StringBundler.concat(
+					selfPath, CharPool.POUND, name, CharPool.POUND, attribute,
+					CharPool.POUND, value);
 
-			if (importDataElement != null) {
-				return importDataElement;
+				importDataElement = _importDataElements.get(key);
+
+				if (importDataElement != null) {
+					return importDataElement;
+				}
 			}
 		}
 
@@ -857,7 +861,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 		importDataElement = _getDataElement(groupElement, attribute, value);
 
-		if (_importDataElements != null) {
+		if (Validator.isNotNull(key)) {
 			_importDataElements.put(key, importDataElement);
 		}
 
@@ -2050,14 +2054,17 @@ public class PortletDataContextImpl implements PortletDataContext {
 		String key = StringPool.BLANK;
 
 		if (_importDataElements != null) {
-			key = StringBundler.concat(
-				_importDataRootElement.attributeValue("self-path"),
-				CharPool.POUND, name);
+			String selfPath = _importDataRootElement.attributeValue(
+				"self-path");
 
-			groupElement = _importDataElements.get(key);
+			if (Validator.isNotNull(selfPath)) {
+				key = StringBundler.concat(selfPath, CharPool.POUND, name);
 
-			if (groupElement != null) {
-				return groupElement;
+				groupElement = _importDataElements.get(key);
+
+				if (groupElement != null) {
+					return groupElement;
+				}
 			}
 		}
 
@@ -2068,7 +2075,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 			groupElement = SAXReaderUtil.createElement("EMPTY-ELEMENT");
 		}
 
-		if (_importDataElements != null) {
+		if (Validator.isNotNull(key)) {
 			_importDataElements.put(key, groupElement);
 		}
 

@@ -51,6 +51,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PREVIEW_ENTRY</td>
+	<td>//div[@class="modal-content"]//tr/td[normalize-space(text())='${key_entryName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PREVIEW_ENTRY_FIELD</td>
+	<td>//div[@class="modal-content"]//tr/td[normalize-space(text())='${key_entryName}']//following-sibling::td[normalize-space(text())='${key_previewField}'] | //div[@class="modal-content"]//tr/td[normalize-space(text())='${key_entryName}']//preceding-sibling::td[normalize-space(text())='${key_previewField}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PREVIEW_LABEL</td>
+	<td>//div[@class="modal-content"]//tr/th[contains(text(),'${key_previewLabel}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REQUIRED_IMPORT_FIELD</td>
 	<td>//select[contains(@aria-required,'true')][contains(@id,'${key_destinationField}')]</td>
 	<td></td>

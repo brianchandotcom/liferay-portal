@@ -25,7 +25,7 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
-import com.liferay.layout.service.LayoutClassedModelUsageLocalServiceUtil;
+import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.CharPool;
@@ -45,13 +45,12 @@ import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.PortletLocalService;
-import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferenceValueLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -97,13 +96,13 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 
 		for (String portletId : portletIds) {
 			try {
-				PortletLocalServiceUtil.deletePortlet(
+				_portletLocalService.deletePortlet(
 					fragmentEntryLink.getCompanyId(), portletId,
 					fragmentEntryLink.getPlid());
 
-				LayoutClassedModelUsageLocalServiceUtil.
+				_layoutClassedModelUsageLocalService.
 					deleteLayoutClassedModelUsages(
-						portletId, PortalUtil.getClassNameId(Portlet.class),
+						portletId, _portal.getClassNameId(Portlet.class),
 						fragmentEntryLink.getPlid());
 			}
 			catch (Exception exception) {
@@ -553,12 +552,19 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 	private FragmentPortletRenderer _fragmentPortletRenderer;
 
 	@Reference
+	private LayoutClassedModelUsageLocalService
+		_layoutClassedModelUsageLocalService;
+
+	@Reference
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
 
 	@Reference
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private PortletLocalService _portletLocalService;

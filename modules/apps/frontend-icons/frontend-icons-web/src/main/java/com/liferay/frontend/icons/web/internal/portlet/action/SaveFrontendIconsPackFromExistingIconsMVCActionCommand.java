@@ -79,17 +79,17 @@ public class SaveFrontendIconsPackFromExistingIconsMVCActionCommand
 			return;
 		}
 
-		String name = ParamUtil.getString(actionRequest, "name");
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			ParamUtil.getString(actionRequest, "icons"));
-
 		Map<String, FrontendIconsResourcePack> frontendIconsResourcePacks =
 			_getFrontendIconsResourcePacks(companyId);
+
+		String name = ParamUtil.getString(actionRequest, "name");
 
 		FrontendIconsResourcePack frontendIconsResourcePack =
 			frontendIconsResourcePacks.getOrDefault(
 				name, new FrontendIconsResourcePack(name));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			ParamUtil.getString(actionRequest, "icons"));
 
 		for (String key : jsonObject.keySet()) {
 			FrontendIconsResourcePack existingFrontendIconsResourcePack =

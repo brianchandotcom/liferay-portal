@@ -840,6 +840,11 @@
 				"store": true,
 				"type": "keyword"
 			},
+			"lastLoginDate": {
+				"format": "yyyyMMddHHmmss",
+				"store": true,
+				"type": "date"
+			},
 			"layoutUuid": {
 				"store": true,
 				"type": "keyword"

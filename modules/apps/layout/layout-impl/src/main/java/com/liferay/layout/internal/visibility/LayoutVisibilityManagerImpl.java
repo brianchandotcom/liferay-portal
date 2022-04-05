@@ -15,6 +15,8 @@
 package com.liferay.layout.internal.visibility;
 
 import com.liferay.layout.admin.kernel.visibility.LayoutVisibilityManager;
+import com.liferay.release.feature.flag.ReleaseFeatureFlag;
+import com.liferay.release.feature.flag.ReleaseFeatureFlagManagerUtil;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -26,12 +28,24 @@ public class LayoutVisibilityManagerImpl implements LayoutVisibilityManager {
 
 	@Override
 	public boolean isPrivateLayoutsEnabled() {
-		return false;
+		if (ReleaseFeatureFlagManagerUtil.isEnabled(
+				ReleaseFeatureFlag.DEACTIVATE_PRIVATE_PAGES)) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override
 	public boolean isPrivateLayoutsEnabled(long groupId) {
-		return false;
+		if (ReleaseFeatureFlagManagerUtil.isEnabled(
+				ReleaseFeatureFlag.DEACTIVATE_PRIVATE_PAGES)) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 }

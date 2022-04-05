@@ -19,6 +19,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -52,35 +53,37 @@ public class ReindexConfigurationUpgradeProcess extends UpgradeProcess {
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
 			filterString);
 
-		int value = _prefsProps.getInteger(
-			_DL_FILE_INDEXING_INTERVAL, _DEFAULT_VALUE);
+		int indexingInterval = _prefsProps.getInteger(
+			_DL_FILE_INDEXING_INTERVAL, _DEFAULT_INDEXING_INTERVAL);
 
-		if (ArrayUtil.isEmpty(configurations) && (value != _DEFAULT_VALUE)) {
-			_addNewConfiguration(value);
+		if (ArrayUtil.isEmpty(configurations) &&
+			(indexingInterval != _DEFAULT_INDEXING_INTERVAL)) {
+
+			_addNewConfiguration(indexingInterval);
 		}
 		else if (ArrayUtil.isNotEmpty(configurations)) {
 			for (Configuration configuration : configurations) {
-				_upgradeExistingConfiguration(configuration, value);
+				_upgradeExistingConfiguration(configuration, indexingInterval);
 			}
 		}
 	}
 
-	private void _addNewConfiguration(int value) throws Exception {
+	private void _addNewConfiguration(int indexingInterval) throws Exception {
 		Configuration configuration = _configurationAdmin.getConfiguration(
 			ReindexConfiguration.class.getName(), StringPool.QUESTION);
 
 		configuration.update(
 			HashMapDictionaryBuilder.<String, Object>put(
-				_METHOD_NAME,
+				_INDEXING_BATCH_SIZES_PROPERTY_NAME,
 				new String[] {
 					StringBundler.concat(
-						DLFileEntry.class.getName(), "=", value)
+						DLFileEntry.class.getName(), "=", indexingInterval)
 				}
 			).build());
 	}
 
-	private boolean _isDLFileEntryConfigurationLine(String line) {
-		String[] pair = StringUtil.split(line, StringPool.EQUAL);
+	private boolean _isDLFileEntryConfigurationEntry(String entry) {
+		String[] pair = StringUtil.split(entry, StringPool.EQUAL);
 
 		if ((pair.length == 2) &&
 			Objects.equals(pair[0], DLFileEntry.class.getName())) {
@@ -92,43 +95,37 @@ public class ReindexConfigurationUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _upgradeExistingConfiguration(
-			Configuration configuration, int value)
+			Configuration configuration, int indexingInterval)
 		throws Exception {
 
 		Dictionary<String, Object> properties = configuration.getProperties();
 
-		String[] existingValue = null;
+		String[] existingEntries = GetterUtil.getStringValues(
+			properties.get(_INDEXING_BATCH_SIZES_PROPERTY_NAME));
 
-		Object existingValueObject = properties.get(_METHOD_NAME);
-
-		if (existingValueObject != null) {
-			existingValue = (String[])existingValueObject;
-		}
-		else {
-			existingValue = new String[0];
-		}
-
-		for (String line : existingValue) {
-			if (_isDLFileEntryConfigurationLine(line)) {
+		for (String existingEntry : existingEntries) {
+			if (_isDLFileEntryConfigurationEntry(existingEntry)) {
 				return;
 			}
 		}
 
 		properties.put(
-			_METHOD_NAME,
+			_INDEXING_BATCH_SIZES_PROPERTY_NAME,
 			ArrayUtil.append(
-				existingValue,
-				StringBundler.concat(DLFileEntry.class.getName(), "=", value)));
+				existingEntries,
+				StringBundler.concat(
+					DLFileEntry.class.getName(), "=", indexingInterval)));
 
 		configuration.update(properties);
 	}
 
-	private static final int _DEFAULT_VALUE = 500;
+	private static final int _DEFAULT_INDEXING_INTERVAL = 500;
 
 	private static final String _DL_FILE_INDEXING_INTERVAL =
 		"dl.file.indexing.interval";
 
-	private static final String _METHOD_NAME = "indexingBatchSizes";
+	private static final String _INDEXING_BATCH_SIZES_PROPERTY_NAME =
+		"indexingBatchSizes";
 
 	private final ConfigurationAdmin _configurationAdmin;
 	private final PrefsProps _prefsProps;

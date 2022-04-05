@@ -642,9 +642,11 @@ definition {
 
 		Navigator.openURL();
 
-		Pause(locator1 = "5000");
-
 		SearchAdministration.openSearchAdmin();
+
+		WaitForElementPresent(
+			locator1 = "Panel#PANEL",
+			value1 = "NODES (1)");
 
 		var clientVersion = Elasticsearch.getClientVersion();
 

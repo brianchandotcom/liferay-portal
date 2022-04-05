@@ -17,7 +17,6 @@ package com.liferay.headless.commerce.admin.catalog.internal.util.v1_0;
 import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
 import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueService;
-import com.liferay.commerce.product.service.CPSpecificationOptionLocalServiceUtil;
 import com.liferay.commerce.product.service.CPSpecificationOptionService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductSpecification;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
@@ -38,32 +37,62 @@ public class ProductSpecificationUtil {
 				CPSpecificationOptionService cpSpecificationOptionService,
 				long cpDefinitionId, ProductSpecification productSpecification,
 				ServiceContext serviceContext)
-		throws Exception {
+		throws PortalException {
+
+		CPSpecificationOption cpSpecificationOption =
+			cpSpecificationOptionService.fetchCPSpecificationOption(
+				serviceContext.getCompanyId(),
+				FriendlyURLNormalizerUtil.normalize(
+					productSpecification.getSpecificationKey()));
 
 		return cpDefinitionSpecificationOptionValueService.
 			addCPDefinitionSpecificationOptionValue(
 				cpDefinitionId,
-				getCPSpecificationOptionId(
-					cpSpecificationOptionService, productSpecification,
-					serviceContext.getCompanyId(), serviceContext),
-				getCPOptionCategoryId(
-					productSpecification, serviceContext.getCompanyId()),
+				_getCPSpecificationOptionId(
+					cpSpecificationOption, cpSpecificationOptionService,
+					productSpecification, serviceContext),
+				_getCPOptionCategoryId(
+					cpSpecificationOption, productSpecification),
 				LanguageUtils.getLocalizedMap(productSpecification.getValue()),
 				GetterUtil.get(productSpecification.getPriority(), 0D),
 				serviceContext);
 	}
 
-	public static long getCPOptionCategoryId(
-		ProductSpecification productSpecification, long companyId) {
+	public static CPDefinitionSpecificationOptionValue
+			updateCPDefinitionSpecificationOptionValue(
+				CPDefinitionSpecificationOptionValueService
+					cpDefinitionSpecificationOptionValueService,
+				CPDefinitionSpecificationOptionValue
+					cpDefinitionSpecificationOptionValue,
+				CPSpecificationOptionService cpSpecificationOptionService,
+				ProductSpecification productSpecification,
+				ServiceContext serviceContext)
+		throws PortalException {
+
+		CPSpecificationOption cpSpecificationOption =
+			cpSpecificationOptionService.fetchCPSpecificationOption(
+				serviceContext.getCompanyId(),
+				FriendlyURLNormalizerUtil.normalize(
+					productSpecification.getSpecificationKey()));
+
+		return cpDefinitionSpecificationOptionValueService.
+			updateCPDefinitionSpecificationOptionValue(
+				cpDefinitionSpecificationOptionValue.
+					getCPDefinitionSpecificationOptionValueId(),
+				_getCPOptionCategoryId(
+					cpSpecificationOption, productSpecification),
+				LanguageUtils.getLocalizedMap(productSpecification.getValue()),
+				GetterUtil.get(
+					productSpecification.getPriority(),
+					cpDefinitionSpecificationOptionValue.getPriority()),
+				serviceContext);
+	}
+
+	private static long _getCPOptionCategoryId(
+		CPSpecificationOption cpSpecificationOption,
+		ProductSpecification productSpecification) {
 
 		if (productSpecification.getOptionCategoryId() == null) {
-			String specificationKey = FriendlyURLNormalizerUtil.normalize(
-				productSpecification.getSpecificationKey());
-
-			CPSpecificationOption cpSpecificationOption =
-				CPSpecificationOptionLocalServiceUtil.
-					fetchCPSpecificationOption(companyId, specificationKey);
-
 			if (cpSpecificationOption != null) {
 				return cpSpecificationOption.getCPOptionCategoryId();
 			}
@@ -74,55 +103,27 @@ public class ProductSpecificationUtil {
 		return productSpecification.getOptionCategoryId();
 	}
 
-	public static long getCPSpecificationOptionId(
+	private static long _getCPSpecificationOptionId(
+			CPSpecificationOption cpSpecificationOption,
 			CPSpecificationOptionService cpSpecificationOptionService,
-			ProductSpecification productSpecification, long companyId,
+			ProductSpecification productSpecification,
 			ServiceContext serviceContext)
 		throws PortalException {
-
-		String specificationKey = FriendlyURLNormalizerUtil.normalize(
-			productSpecification.getSpecificationKey());
-
-		CPSpecificationOption cpSpecificationOption =
-			cpSpecificationOptionService.fetchCPSpecificationOption(
-				companyId, specificationKey);
 
 		if (cpSpecificationOption == null) {
 			cpSpecificationOption =
 				cpSpecificationOptionService.addCPSpecificationOption(
-					getCPOptionCategoryId(
-						productSpecification, serviceContext.getCompanyId()),
+					GetterUtil.get(
+						productSpecification.getOptionCategoryId(), 0),
 					LanguageUtils.getLocalizedMap(
 						productSpecification.getLabel()),
 					LanguageUtils.getLocalizedMap(
 						productSpecification.getLabel()),
-					false, specificationKey, serviceContext);
+					false, productSpecification.getSpecificationKey(),
+					serviceContext);
 		}
 
 		return cpSpecificationOption.getCPSpecificationOptionId();
-	}
-
-	public static CPDefinitionSpecificationOptionValue
-			updateCPDefinitionSpecificationOptionValue(
-				CPDefinitionSpecificationOptionValueService
-					cpDefinitionSpecificationOptionValueService,
-				CPDefinitionSpecificationOptionValue
-					cpDefinitionSpecificationOptionValue,
-				ProductSpecification productSpecification,
-				ServiceContext serviceContext)
-		throws PortalException {
-
-		return cpDefinitionSpecificationOptionValueService.
-			updateCPDefinitionSpecificationOptionValue(
-				cpDefinitionSpecificationOptionValue.
-					getCPDefinitionSpecificationOptionValueId(),
-				getCPOptionCategoryId(
-					productSpecification, serviceContext.getCompanyId()),
-				LanguageUtils.getLocalizedMap(productSpecification.getValue()),
-				GetterUtil.get(
-					productSpecification.getPriority(),
-					cpDefinitionSpecificationOptionValue.getPriority()),
-				serviceContext);
 	}
 
 }

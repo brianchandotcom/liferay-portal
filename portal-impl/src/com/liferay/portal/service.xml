@@ -3209,6 +3209,7 @@
 		<exception>LayoutSetBranchName</exception>
 		<exception>LayoutSetVirtualHost</exception>
 		<exception>LayoutType</exception>
+		<exception>MasterLayout</exception>
 		<exception>MembershipRequestComments</exception>
 		<exception>OldServiceComponent</exception>
 		<exception>OrganizationId</exception>

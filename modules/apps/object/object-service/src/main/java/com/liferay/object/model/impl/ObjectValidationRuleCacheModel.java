@@ -190,7 +190,9 @@ public class ObjectValidationRuleCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
@@ -209,7 +211,7 @@ public class ObjectValidationRuleCacheModel
 		engine = objectInput.readUTF();
 		errorLabel = objectInput.readUTF();
 		name = objectInput.readUTF();
-		script = objectInput.readUTF();
+		script = (String)objectInput.readObject();
 	}
 
 	@Override
@@ -265,10 +267,10 @@ public class ObjectValidationRuleCacheModel
 		}
 
 		if (script == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(script);
+			objectOutput.writeObject(script);
 		}
 	}
 

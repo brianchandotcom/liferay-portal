@@ -270,7 +270,7 @@ public class ObjectValidationRulePersistenceTest {
 			"objectValidationRuleId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
 			"objectDefinitionId", true, "active", true, "engine", true,
-			"errorLabel", true, "name", true, "script", true);
+			"errorLabel", true, "name", true);
 	}
 
 	@Test

@@ -328,8 +328,7 @@ public class FriendlyURLEntryLocalServiceUtil {
 	}
 
 	public static FriendlyURLEntry fetchMainFriendlyURLEntry(
-			long classNameId, long classPK)
-		throws PortalException {
+		long classNameId, long classPK) {
 
 		return getService().fetchMainFriendlyURLEntry(classNameId, classPK);
 	}

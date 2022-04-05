@@ -365,8 +365,7 @@ public class FriendlyURLEntryLocalServiceWrapper
 
 	@Override
 	public FriendlyURLEntry fetchMainFriendlyURLEntry(
-			long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		long classNameId, long classPK) {
 
 		return _friendlyURLEntryLocalService.fetchMainFriendlyURLEntry(
 			classNameId, classPK);

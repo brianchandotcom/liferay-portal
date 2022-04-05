@@ -17,6 +17,7 @@ package com.liferay.object.model;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.base.BaseTable;
 
+import java.sql.Clob;
 import java.sql.Types;
 
 import java.util.Date;
@@ -72,9 +73,8 @@ public class ObjectValidationRuleTable
 			"errorLabel", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<ObjectValidationRuleTable, String> name = createColumn(
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<ObjectValidationRuleTable, String> script =
-		createColumn(
-			"script", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<ObjectValidationRuleTable, Clob> script = createColumn(
+		"script", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 
 	private ObjectValidationRuleTable() {
 		super("ObjectValidationRule", ObjectValidationRuleTable::new);

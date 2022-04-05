@@ -206,7 +206,7 @@ create table ObjectValidationRule (
 	engine VARCHAR(75) null,
 	errorLabel STRING null,
 	name STRING null,
-	script VARCHAR(75) null
+	script TEXT null
 );
 
 create table ObjectView (

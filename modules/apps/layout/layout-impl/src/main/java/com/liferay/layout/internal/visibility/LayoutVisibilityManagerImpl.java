@@ -25,6 +25,11 @@ import org.osgi.service.component.annotations.Component;
 public class LayoutVisibilityManagerImpl implements LayoutVisibilityManager {
 
 	@Override
+	public boolean isPrivateLayoutsEnabled() {
+		return false;
+	}
+
+	@Override
 	public boolean isPrivateLayoutsEnabled(long groupId) {
 		return false;
 	}

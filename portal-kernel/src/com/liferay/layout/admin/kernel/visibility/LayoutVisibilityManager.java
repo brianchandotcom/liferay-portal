@@ -19,6 +19,8 @@ package com.liferay.layout.admin.kernel.visibility;
  */
 public interface LayoutVisibilityManager {
 
+	public boolean isPrivateLayoutsEnabled();
+
 	public boolean isPrivateLayoutsEnabled(long groupId);
 
 }

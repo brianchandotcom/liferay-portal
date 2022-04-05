@@ -167,17 +167,7 @@ public class FriendlyURLDLFileEntryLocalServiceWrapper
 		if (!Validator.isBlank(urlTitle) &&
 			!Objects.equals(friendlyURLEntry.getUrlTitle(), urlTitle)) {
 
-			String uniqueUrlTitle =
-				_friendlyURLEntryLocalService.getUniqueUrlTitle(
-					dlFileEntry.getGroupId(),
-					_classNameLocalService.getClassNameId(FileEntry.class),
-					dlFileEntry.getFileEntryId(), urlTitle,
-					LanguageUtil.getLanguageId(LocaleUtil.getSiteDefault()));
-
-			_friendlyURLEntryLocalService.updateFriendlyURLEntryLocalization(
-				friendlyURLEntry,
-				LanguageUtil.getLanguageId(LocaleUtil.getSiteDefault()),
-				uniqueUrlTitle);
+			_addFriendlyURLEntry(dlFileEntry, urlTitle);
 		}
 	}
 

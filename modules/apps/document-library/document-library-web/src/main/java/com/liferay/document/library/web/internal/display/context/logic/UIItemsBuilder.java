@@ -933,52 +933,7 @@ public class UIItemsBuilder {
 		).build();
 	}
 
-	public DropdownItem createCheckinDropdownItem() {
-		/*
-		PortletURL portletURL = PortletURLBuilder.create(
-			_getActionURL(
-				"/document_library/edit_file_entry", Constants.CHECKIN)
-		).setParameter(
-			"fileEntryId", _fileEntry.getFileEntryId()
-		).buildPortletURL();
-
-		if (!_versioningStrategy.isOverridable()) {
-			URLMenuItem urlMenuItem = new URLMenuItem();
-
-			urlMenuItem.setKey(DLUIItemKeys.CHECKIN);
-			urlMenuItem.setLabel("checkin");
-			urlMenuItem.setURL(portletURL.toString());
-
-			return urlMenuItem;
-		}
-
-		JavaScriptMenuItem javaScriptMenuItem = new JavaScriptMenuItem();
-
-		javaScriptMenuItem.setKey(DLUIItemKeys.CHECKIN);
-		javaScriptMenuItem.setLabel("checkin");
-		javaScriptMenuItem.setOnClick(
-			StringBundler.concat(
-				_getNamespace(), "showVersionDetailsDialog('",
-				HtmlUtil.escapeJS(portletURL.toString()), "');"));
-		String javaScript =
-			"/com/liferay/document/library/web/display/context/dependencies" +
-			"/checkin_js.ftl";
-		Class<?> clazz = getClass();
-
-		URLTemplateResource urlTemplateResource = new URLTemplateResource(
-			javaScript, clazz.getResource(javaScript));
-
-		Template template = TemplateManagerUtil.getTemplate(
-			TemplateConstants.LANG_TYPE_FTL, urlTemplateResource, false);
-
-		template.put("namespace", _getNamespace());
-		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
-
-		template.processTemplate(unsyncStringWriter);
-		javaScriptMenuItem.setJavaScript(unsyncStringWriter.toString());
-
-		return javaScriptMenuItem;
-		*/
+	public DropdownItem createCheckinDropdownItem() throws PortalException {
 		PortletURL portletURL = PortletURLBuilder.create(
 			_getActionURL(
 				"/document_library/edit_file_entry", Constants.CHECKIN)
@@ -994,10 +949,25 @@ public class UIItemsBuilder {
 			).build();
 		}
 
-		//TODO
+		String javaScript =
+			"/com/liferay/document/library/web/display/context/dependencies" +
+				"/checkin_js.ftl";
+		Class<?> clazz = getClass();
+
+		URLTemplateResource urlTemplateResource = new URLTemplateResource(
+			javaScript, clazz.getResource(javaScript));
+
+		Template template = TemplateManagerUtil.getTemplate(
+			TemplateConstants.LANG_TYPE_FTL, urlTemplateResource, false);
+
+		template.put("namespace", _getNamespace());
+
+		template.processTemplate(new UnsyncStringWriter());
 
 		return DropdownItemBuilder.putData(
 			"action", "checkin"
+		).putData(
+			"checkinURL", portletURL.toString()
 		).putData(
 			"onClick",
 			StringBundler.concat(

@@ -15,6 +15,10 @@
 import {openModal} from 'frontend-js-web';
 
 const ACTIONS = {
+	checkin({checkinURL}, portletNamespace) {
+		window[`${portletNamespace}showVersionDetailsDialog`](checkinURL);
+	},
+
 	delete({deleteURL}) {
 		if (
 			confirm(

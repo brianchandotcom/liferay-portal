@@ -59,6 +59,8 @@ components:
                     type: integer
                 type:
                     enum: [business, guest, person]
+            required:
+                - name
             type: object
         AccountBrief:
             description:

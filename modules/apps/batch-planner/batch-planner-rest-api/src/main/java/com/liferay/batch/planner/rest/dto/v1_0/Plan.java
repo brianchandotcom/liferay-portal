@@ -309,6 +309,60 @@ public class Plan implements Serializable {
 	protected Policy[] policies;
 
 	@Schema
+	public Integer getSize() {
+		return size;
+	}
+
+	public void setSize(Integer size) {
+		this.size = size;
+	}
+
+	@JsonIgnore
+	public void setSize(UnsafeSupplier<Integer, Exception> sizeUnsafeSupplier) {
+		try {
+			size = sizeUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Integer size;
+
+	@Schema
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+	@JsonIgnore
+	public void setStatus(
+		UnsafeSupplier<Integer, Exception> statusUnsafeSupplier) {
+
+		try {
+			status = statusUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Integer status;
+
+	@Schema
 	public String getTaskItemDelegateName() {
 		return taskItemDelegateName;
 	}
@@ -363,6 +417,34 @@ public class Plan implements Serializable {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean template;
+
+	@Schema
+	public Integer getTotal() {
+		return total;
+	}
+
+	public void setTotal(Integer total) {
+		this.total = total;
+	}
+
+	@JsonIgnore
+	public void setTotal(
+		UnsafeSupplier<Integer, Exception> totalUnsafeSupplier) {
+
+		try {
+			total = totalUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Integer total;
 
 	@Override
 	public boolean equals(Object object) {
@@ -517,6 +599,26 @@ public class Plan implements Serializable {
 			sb.append("]");
 		}
 
+		if (size != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"size\": ");
+
+			sb.append(size);
+		}
+
+		if (status != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"status\": ");
+
+			sb.append(status);
+		}
+
 		if (taskItemDelegateName != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -539,6 +641,16 @@ public class Plan implements Serializable {
 			sb.append("\"template\": ");
 
 			sb.append(template);
+		}
+
+		if (total != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"total\": ");
+
+			sb.append(total);
 		}
 
 		sb.append("}");

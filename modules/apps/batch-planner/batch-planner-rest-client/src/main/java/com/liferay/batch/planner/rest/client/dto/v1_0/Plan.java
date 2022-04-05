@@ -219,6 +219,46 @@ public class Plan implements Cloneable, Serializable {
 
 	protected Policy[] policies;
 
+	public Integer getSize() {
+		return size;
+	}
+
+	public void setSize(Integer size) {
+		this.size = size;
+	}
+
+	public void setSize(UnsafeSupplier<Integer, Exception> sizeUnsafeSupplier) {
+		try {
+			size = sizeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Integer size;
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+	public void setStatus(
+		UnsafeSupplier<Integer, Exception> statusUnsafeSupplier) {
+
+		try {
+			status = statusUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Integer status;
+
 	public String getTaskItemDelegateName() {
 		return taskItemDelegateName;
 	}
@@ -260,6 +300,27 @@ public class Plan implements Cloneable, Serializable {
 	}
 
 	protected Boolean template;
+
+	public Integer getTotal() {
+		return total;
+	}
+
+	public void setTotal(Integer total) {
+		this.total = total;
+	}
+
+	public void setTotal(
+		UnsafeSupplier<Integer, Exception> totalUnsafeSupplier) {
+
+		try {
+			total = totalUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Integer total;
 
 	@Override
 	public Plan clone() throws CloneNotSupportedException {

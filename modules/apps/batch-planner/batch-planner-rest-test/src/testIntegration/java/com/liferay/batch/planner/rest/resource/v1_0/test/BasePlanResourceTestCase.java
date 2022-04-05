@@ -22,7 +22,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
-import com.liferay.batch.planner.rest.client.dto.v1_0.Log;
 import com.liferay.batch.planner.rest.client.dto.v1_0.Plan;
 import com.liferay.batch.planner.rest.client.http.HttpInvoker;
 import com.liferay.batch.planner.rest.client.pagination.Page;
@@ -476,6 +475,22 @@ public abstract class BasePlanResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("size", additionalAssertFieldName)) {
+				if (plan.getSize() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("status", additionalAssertFieldName)) {
+				if (plan.getStatus() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"taskItemDelegateName", additionalAssertFieldName)) {
 
@@ -488,6 +503,14 @@ public abstract class BasePlanResourceTestCase {
 
 			if (Objects.equals("template", additionalAssertFieldName)) {
 				if (plan.getTemplate() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("total", additionalAssertFieldName)) {
+				if (plan.getTotal() == null) {
 					valid = false;
 				}
 
@@ -669,6 +692,22 @@ public abstract class BasePlanResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("size", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(plan1.getSize(), plan2.getSize())) {
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("status", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(plan1.getStatus(), plan2.getStatus())) {
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"taskItemDelegateName", additionalAssertFieldName)) {
 
@@ -686,6 +725,14 @@ public abstract class BasePlanResourceTestCase {
 				if (!Objects.deepEquals(
 						plan1.getTemplate(), plan2.getTemplate())) {
 
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("total", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(plan1.getTotal(), plan2.getTotal())) {
 					return false;
 				}
 
@@ -846,6 +893,18 @@ public abstract class BasePlanResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("size")) {
+			sb.append(String.valueOf(plan.getSize()));
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("status")) {
+			sb.append(String.valueOf(plan.getStatus()));
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("taskItemDelegateName")) {
 			sb.append("'");
 			sb.append(String.valueOf(plan.getTaskItemDelegateName()));
@@ -857,6 +916,12 @@ public abstract class BasePlanResourceTestCase {
 		if (entityFieldName.equals("template")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("total")) {
+			sb.append(String.valueOf(plan.getTotal()));
+
+			return sb.toString();
 		}
 
 		throw new IllegalArgumentException(
@@ -913,9 +978,12 @@ public abstract class BasePlanResourceTestCase {
 				internalClassName = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				size = RandomTestUtil.randomInt();
+				status = RandomTestUtil.randomInt();
 				taskItemDelegateName = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				template = RandomTestUtil.randomBoolean();
+				total = RandomTestUtil.randomInt();
 			}
 		};
 	}

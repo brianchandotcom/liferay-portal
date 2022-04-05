@@ -14,7 +14,6 @@
 
 package com.liferay.batch.planner.rest.internal.resource.v1_0;
 
-import com.liferay.batch.planner.rest.dto.v1_0.Log;
 import com.liferay.batch.planner.rest.dto.v1_0.Plan;
 import com.liferay.batch.planner.rest.resource.v1_0.PlanResource;
 import com.liferay.petra.function.UnsafeFunction;
@@ -87,7 +86,7 @@ public abstract class BasePlanResourceImpl implements PlanResource {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/batch-planner/v1.0/plans' -d $'{"active": ___, "export": ___, "externalType": ___, "externalURL": ___, "id": ___, "internalClassName": ___, "mappings": ___, "name": ___, "policies": ___, "taskItemDelegateName": ___, "template": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/batch-planner/v1.0/plans' -d $'{"active": ___, "export": ___, "externalType": ___, "externalURL": ___, "id": ___, "internalClassName": ___, "mappings": ___, "name": ___, "policies": ___, "size": ___, "status": ___, "taskItemDelegateName": ___, "template": ___, "total": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Plan")}
@@ -162,7 +161,7 @@ public abstract class BasePlanResourceImpl implements PlanResource {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/batch-planner/v1.0/plans/{planId}' -d $'{"active": ___, "export": ___, "externalType": ___, "externalURL": ___, "id": ___, "internalClassName": ___, "mappings": ___, "name": ___, "policies": ___, "taskItemDelegateName": ___, "template": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/batch-planner/v1.0/plans/{planId}' -d $'{"active": ___, "export": ___, "externalType": ___, "externalURL": ___, "id": ___, "internalClassName": ___, "mappings": ___, "name": ___, "policies": ___, "size": ___, "status": ___, "taskItemDelegateName": ___, "template": ___, "total": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {

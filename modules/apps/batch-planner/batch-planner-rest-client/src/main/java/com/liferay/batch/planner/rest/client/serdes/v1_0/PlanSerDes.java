@@ -182,6 +182,26 @@ public class PlanSerDes {
 			sb.append("]");
 		}
 
+		if (plan.getSize() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"size\": ");
+
+			sb.append(plan.getSize());
+		}
+
+		if (plan.getStatus() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"status\": ");
+
+			sb.append(plan.getStatus());
+		}
+
 		if (plan.getTaskItemDelegateName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -204,6 +224,16 @@ public class PlanSerDes {
 			sb.append("\"template\": ");
 
 			sb.append(plan.getTemplate());
+		}
+
+		if (plan.getTotal() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"total\": ");
+
+			sb.append(plan.getTotal());
 		}
 
 		sb.append("}");
@@ -289,6 +319,20 @@ public class PlanSerDes {
 			map.put("policies", String.valueOf(plan.getPolicies()));
 		}
 
+		if (plan.getSize() == null) {
+			map.put("size", null);
+		}
+		else {
+			map.put("size", String.valueOf(plan.getSize()));
+		}
+
+		if (plan.getStatus() == null) {
+			map.put("status", null);
+		}
+		else {
+			map.put("status", String.valueOf(plan.getStatus()));
+		}
+
 		if (plan.getTaskItemDelegateName() == null) {
 			map.put("taskItemDelegateName", null);
 		}
@@ -303,6 +347,13 @@ public class PlanSerDes {
 		}
 		else {
 			map.put("template", String.valueOf(plan.getTemplate()));
+		}
+
+		if (plan.getTotal() == null) {
+			map.put("total", null);
+		}
+		else {
+			map.put("total", String.valueOf(plan.getTotal()));
 		}
 
 		return map;
@@ -384,6 +435,17 @@ public class PlanSerDes {
 						));
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "size")) {
+				if (jsonParserFieldValue != null) {
+					plan.setSize(Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "status")) {
+				if (jsonParserFieldValue != null) {
+					plan.setStatus(
+						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
 			else if (Objects.equals(
 						jsonParserFieldName, "taskItemDelegateName")) {
 
@@ -394,6 +456,12 @@ public class PlanSerDes {
 			else if (Objects.equals(jsonParserFieldName, "template")) {
 				if (jsonParserFieldValue != null) {
 					plan.setTemplate((Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "total")) {
+				if (jsonParserFieldValue != null) {
+					plan.setTotal(
+						Integer.valueOf((String)jsonParserFieldValue));
 				}
 			}
 		}

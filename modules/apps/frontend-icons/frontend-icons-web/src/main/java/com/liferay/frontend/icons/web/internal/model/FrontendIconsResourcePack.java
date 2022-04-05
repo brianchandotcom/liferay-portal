@@ -49,6 +49,10 @@ public class FrontendIconsResourcePack {
 		frontendIconsResources.forEach(this::addFrontendIconResource);
 	}
 
+	public void deleteFrontendIconsResource(String name) {
+		_frontendIconsResources.remove(name);
+	}
+
 	public FrontendIconsResource getFrontendIconsResource(String name) {
 		return _frontendIconsResources.get(name);
 	}
@@ -70,10 +74,6 @@ public class FrontendIconsResourcePack {
 
 	public boolean isEditable() {
 		return _editable;
-	}
-
-	public void deleteFrontendIconsResource(String name) {
-		_frontendIconsResources.remove(name);
 	}
 
 	private final boolean _editable;

@@ -10,6 +10,23 @@
 						},
 						"collectionType": "Collection"
 					},
+					"collectionViewports": [
+						{
+							"collectionViewportDefinition": {
+							},
+							"id": "landscapeMobile"
+						},
+						{
+							"collectionViewportDefinition": {
+							},
+							"id": "portraitMobile"
+						},
+						{
+							"collectionViewportDefinition": {
+							},
+							"id": "tablet"
+						}
+					],
 					"displayAllItems": false,
 					"displayAllPages": false,
 					"listItemStyle": "com.liferay.blogs.web.internal.info.item.renderer.BlogsEntryAbstractInfoItemRenderer",

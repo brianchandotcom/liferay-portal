@@ -26,10 +26,10 @@ definition {
 		}
 	}
 
-    @description = "LPS-150325 - Verify that User can acess case types modal."
-    @priority = "5"
-    test CanAcessCaseTypeModal {
-        ApplicationsMenu.gotoSite(site = "Testray 2");
+	@description = "LPS-150325 - Verify that User can acess case types modal."
+	@priority = "5"
+	test CanAcessCaseTypeModal {
+		ApplicationsMenu.gotoSite(site = "Testray 2");
 
 		Click(locator1 = "TestrayManage#MANAGE_SIDEBAR");
 
@@ -37,15 +37,15 @@ definition {
 			key_itemvalue = "Case Types",
 			locator1 = "TestrayDropdown#DROPDOWN_ITEM");
 
-        AssertElementPresent(
-            locator1 = "TestrayManage#TITLE_MODAL_ITEM",
-            key_title = "Case Types");
-    }
+		AssertElementPresent(
+			key_title = "Case Types",
+			locator1 = "TestrayManage#TITLE_MODAL_ITEM");
+	}
 
-    @description = "LPS-150326 - Verify that User can add new case types."
-    @priority = "5"
-    test CanAddNewCaseTypes {
-        ApplicationsMenu.gotoSite(site = "Testray 2");
+	@description = "LPS-150326 - Verify that User can add new case types."
+	@priority = "5"
+	test CanAddNewCaseTypes {
+		ApplicationsMenu.gotoSite(site = "Testray 2");
 
 		Click(locator1 = "TestrayManage#MANAGE_SIDEBAR");
 
@@ -53,17 +53,17 @@ definition {
 			key_itemvalue = "Case Types",
 			locator1 = "TestrayDropdown#DROPDOWN_ITEM");
 
-        Click(locator1 = "TestrayManage#ADD_OPTIONS");
+		Click(locator1 = "TestrayManage#ADD_OPTIONS");
 
-        Type(
-            locator1 = "TestrayManage#NEW_OPTION_NAME",
-            value1 = "Test Case Type");
+		Type(
+			locator1 = "TestrayManage#NEW_OPTION_NAME",
+			value1 = "Test Case Type");
 
-        Click(locator1 = "TestrayManage#SAVE_BUTTON");
+		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 
-        AssertElementPresent(
-            locator1 = "TestrayManage#OPTIONS_NAME",
-            value = "Test Case Type");
-    }
+		AssertElementPresent(
+			locator1 = "TestrayManage#OPTIONS_NAME",
+			value = "Test Case Type");
+	}
 
 }

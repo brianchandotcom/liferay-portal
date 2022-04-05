@@ -12454,14 +12454,12 @@ database.partition.enabled=true</echo>
 
 								exit_code=$?
 
+								echo "$output"
+
 								if [[ (${exit_code} != "0") && ($output == *"SQL2555I"*) ]]
 								then
-									echo "$output"
-
 									exit 0
 								else
-									echo "$output"
-
 									exit ${exit_code}
 								fi
 							]]>

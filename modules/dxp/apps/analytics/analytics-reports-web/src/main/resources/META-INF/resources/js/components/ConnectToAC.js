@@ -17,15 +17,23 @@ import React from 'react';
 export default function ConnectToAC({
 	analyticsCloudTrialURL,
 	analyticsURL,
-	hideAnalyticsReportsPanelURL,
 	isAnalyticsConnected,
+	hideAnalyticsReportsPanelURL,
 	pathToAssets,
+
+	onHideAnalyticsReportsPanelClick = (event) => {
+		event.preventDefault();
+
+		if (document.hrefFm && typeof submitForm !== 'undefined') {
+			submitForm(document.hrefFm, hideAnalyticsReportsPanelURL);
+		}
+	},
 }) {
 	return (
 		<div className="p-3 pt-4 text-center">
 			<img
 				alt={Liferay.Language.get('connect-to-liferay-analytics-cloud')}
-				src={`${pathToAssets}assets/ac-icon.svg`}
+				src={`${pathToAssets}/assets/ac-icon.svg`}
 			></img>
 
 			{isAnalyticsConnected ? (
@@ -82,7 +90,7 @@ export default function ConnectToAC({
 
 					<ClayLink
 						className="d-block font-weight-bold mb-2 mt-5"
-						href={hideAnalyticsReportsPanelURL}
+						onClick={onHideAnalyticsReportsPanelClick}
 					>
 						{Liferay.Language.get('do-not-show-me-this-again')}
 					</ClayLink>
@@ -97,16 +105,9 @@ export default function ConnectToAC({
 }
 
 ConnectToAC.propTypes = {
-	analyticsCloudTrialURL: PropTypes.string,
-	hideAnalyticsReportsPanelURL: PropTypes.string,
-	isAnalyticsConnected: PropTypes.bool,
-	pathToAssets: PropTypes.string,
-};
-
-ConnectToAC.defaultProps = {
-	analyticsCloudTrialURL:
-		'https://www.liferay.com/products/analytics-cloud/get-started',
-	hideAnalyticsReportsPanelURL: '',
-	isAnalyticsConnected: false,
-	pathToAssets: '/o/analytics-reports-web/',
+	analyticsCloudTrialURL: PropTypes.string.isRequired,
+	analyticsURL: PropTypes.string,
+	hideAnalyticsReportsPanelURL: PropTypes.string.isRequired,
+	isAnalyticsConnected: PropTypes.bool.isRequired,
+	pathToAssets: PropTypes.string.isRequired,
 };

@@ -28,7 +28,6 @@ import '../../css/analytics-reports-app.scss';
 export default function AnalyticsReports({
 	analyticsReportsDataURL,
 	hoverOrFocusEventTriggered,
-	isAnalyticsSynced,
 	isPanelStateOpen,
 }) {
 	const isMounted = useIsMounted();
@@ -111,7 +110,8 @@ export default function AnalyticsReports({
 		data && (
 			<ConnectionContext.Provider
 				value={{
-					validAnalyticsConnection: data?.validAnalyticsConnection,
+					validAnalyticsConnection:
+						data?.analyticsData.hasValidConnection,
 				}}
 			>
 				<StoreContextProvider
@@ -128,7 +128,7 @@ export default function AnalyticsReports({
 						timeRange={data?.timeRange}
 						timeSpanKey={data?.timeSpanKey}
 					>
-						{isAnalyticsSynced ? (
+						{data?.analyticsData.isSynced ? (
 							<div className="analytics-reports-app">
 								<Navigation
 									author={data?.author}
@@ -143,7 +143,19 @@ export default function AnalyticsReports({
 								/>
 							</div>
 						) : (
-							<ConnectToAC />
+							<ConnectToAC
+								analyticsCloudTrialURL={
+									data?.analyticsData.cloudTrialURL
+								}
+								analyticsURL={data?.analyticsData.url}
+								hideAnalyticsReportsPanelURL={
+									data?.hideAnalyticsReportsPanelURL
+								}
+								isAnalyticsConnected={
+									data?.analyticsData.hasValidConnection
+								}
+								pathToAssets={data?.pathToAssets}
+							/>
 						)}
 					</ChartStateContextProvider>
 				</StoreContextProvider>
@@ -155,10 +167,5 @@ export default function AnalyticsReports({
 AnalyticsReports.propTypes = {
 	analyticsReportsDataURL: PropTypes.string.isRequired,
 	hoverOrFocusEventTriggered: PropTypes.bool.isRequired,
-	isAnalyticsSynced: PropTypes.bool,
 	isPanelStateOpen: PropTypes.bool.isRequired,
-};
-
-AnalyticsReports.defaultProps = {
-	isAnalyticsSynced: false,
 };

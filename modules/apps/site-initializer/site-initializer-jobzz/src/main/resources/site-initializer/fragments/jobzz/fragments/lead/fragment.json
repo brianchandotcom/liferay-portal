@@ -1,1 +1,9 @@
-{"configurationPath":"index.json","jsPath":"index.js","htmlPath":"index.html","cssPath":"index.css","icon":"code","name":"Lead","type":"component"}
+{
+	"configurationPath": "index.json",
+	"cssPath": "index.css",
+	"htmlPath": "index.html",
+	"icon": "code",
+	"jsPath": "index.js",
+	"name": "Lead",
+	"type": "component"
+}

@@ -123,71 +123,53 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 	}
 
 	@Override
-	public Response getImportTaskContent(Long importTaskId) throws Exception {
+	public ImportTask getImportTaskByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception {
+
+		return _toImportTask(
+			_batchEngineImportTaskLocalService.
+				getBatchEngineImportTaskByExternalReferenceCode(
+					contextCompany.getCompanyId(), externalReferenceCode));
+	}
+
+	@Override
+	public Response getImportTaskByExternalReferenceCodeContent(
+			String externalReferenceCode)
+		throws Exception {
+
+		return _getImportTaskContent(
+			_batchEngineImportTaskLocalService.
+				getBatchEngineImportTaskByExternalReferenceCode(
+					contextCompany.getCompanyId(), externalReferenceCode));
+	}
+
+	@Override
+	public Response getImportTaskByExternalReferenceCodeFailedItemReport(
+			String externalReferenceCode)
+		throws Exception {
+
 		BatchEngineImportTask batchEngineImportTask =
+			_batchEngineImportTaskLocalService.
+				getBatchEngineImportTaskByExternalReferenceCode(
+					contextCompany.getCompanyId(), externalReferenceCode);
+
+		return _getImportTaskFailedItemReport(
+			batchEngineImportTask.getBatchEngineImportTaskId());
+	}
+
+	@Override
+	public Response getImportTaskContent(Long importTaskId) throws Exception {
+		return _getImportTaskContent(
 			_batchEngineImportTaskLocalService.getBatchEngineImportTask(
-				importTaskId);
-
-		BatchEngineTaskExecuteStatus batchEngineTaskExecuteStatus =
-			BatchEngineTaskExecuteStatus.valueOf(
-				batchEngineImportTask.getExecuteStatus());
-
-		if (batchEngineTaskExecuteStatus !=
-				BatchEngineTaskExecuteStatus.COMPLETED) {
-
-			return Response.status(
-				Response.Status.NOT_FOUND
-			).build();
-		}
-
-		StreamingOutput streamingOutput = outputStream -> StreamUtil.transfer(
-			_batchEngineImportTaskLocalService.openContentInputStream(
-				importTaskId),
-			outputStream);
-
-		return Response.ok(
-			streamingOutput
-		).header(
-			"content-disposition",
-			"attachment; filename=" + StringUtil.randomString() + ".zip"
-		).build();
+				importTaskId));
 	}
 
 	@Override
 	public Response getImportTaskFailedItemReport(Long importTaskId)
 		throws Exception {
 
-		StreamingOutput streamingOutput = outputStream -> {
-			try (BufferedWriter bufferedWriter = new BufferedWriter(
-					new OutputStreamWriter(outputStream))) {
-
-				bufferedWriter.write("item, itemIndex, message");
-
-				bufferedWriter.newLine();
-
-				for (BatchEngineImportTaskError batchEngineImportTaskError :
-						_batchEngineImportTaskErrorLocalService.
-							getBatchEngineImportTaskErrors(importTaskId)) {
-
-					bufferedWriter.write(
-						StringBundler.concat(
-							batchEngineImportTaskError.getItem(),
-							StringPool.COMMA_AND_SPACE,
-							batchEngineImportTaskError.getItemIndex(),
-							StringPool.COMMA_AND_SPACE,
-							batchEngineImportTaskError.getMessage()));
-
-					bufferedWriter.newLine();
-				}
-			}
-		};
-
-		return Response.ok(
-			streamingOutput
-		).header(
-			"Content-Disposition",
-			"attachment; filename=" + StringUtil.randomString() + ".csv"
-		).build();
+		return _getImportTaskFailedItemReport(importTaskId);
 	}
 
 	@Override
@@ -339,6 +321,68 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 		return new AbstractMap.SimpleImmutableEntry<>(
 			unsyncByteArrayOutputStream.toByteArray(),
 			_file.getExtension(fileName));
+	}
+
+	private Response _getImportTaskContent(
+		BatchEngineImportTask batchEngineImportTask) {
+
+		BatchEngineTaskExecuteStatus batchEngineTaskExecuteStatus =
+			BatchEngineTaskExecuteStatus.valueOf(
+				batchEngineImportTask.getExecuteStatus());
+
+		if (batchEngineTaskExecuteStatus !=
+				BatchEngineTaskExecuteStatus.COMPLETED) {
+
+			return Response.status(
+				Response.Status.NOT_FOUND
+			).build();
+		}
+
+		StreamingOutput streamingOutput = outputStream -> StreamUtil.transfer(
+			_batchEngineImportTaskLocalService.openContentInputStream(
+				batchEngineImportTask.getBatchEngineImportTaskId()),
+			outputStream);
+
+		return Response.ok(
+			streamingOutput
+		).header(
+			"content-disposition",
+			"attachment; filename=" + StringUtil.randomString() + ".zip"
+		).build();
+	}
+
+	private Response _getImportTaskFailedItemReport(long importTaskId) {
+		StreamingOutput streamingOutput = outputStream -> {
+			try (BufferedWriter bufferedWriter = new BufferedWriter(
+					new OutputStreamWriter(outputStream))) {
+
+				bufferedWriter.write("item, itemIndex, message");
+
+				bufferedWriter.newLine();
+
+				for (BatchEngineImportTaskError batchEngineImportTaskError :
+						_batchEngineImportTaskErrorLocalService.
+							getBatchEngineImportTaskErrors(importTaskId)) {
+
+					bufferedWriter.write(
+						StringBundler.concat(
+							batchEngineImportTaskError.getItem(),
+							StringPool.COMMA_AND_SPACE,
+							batchEngineImportTaskError.getItemIndex(),
+							StringPool.COMMA_AND_SPACE,
+							batchEngineImportTaskError.getMessage()));
+
+					bufferedWriter.newLine();
+				}
+			}
+		};
+
+		return Response.ok(
+			streamingOutput
+		).header(
+			"Content-Disposition",
+			"attachment; filename=" + StringUtil.randomString() + ".csv"
+		).build();
 	}
 
 	private UnsyncByteArrayOutputStream _getUnsyncByteArrayOutputStream(

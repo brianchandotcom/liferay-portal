@@ -81,7 +81,7 @@ public class SaveFrontendIconsPackFromExistingIconsMVCActionCommand
 
 		String name = ParamUtil.getString(actionRequest, "name");
 
-		JSONObject iconsJSONObject = JSONFactoryUtil.createJSONObject(
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			ParamUtil.getString(actionRequest, "icons"));
 
 		Map<String, FrontendIconsResourcePack> frontendIconsResourcePacks =
@@ -91,7 +91,7 @@ public class SaveFrontendIconsPackFromExistingIconsMVCActionCommand
 			frontendIconsResourcePacks.getOrDefault(
 				name, new FrontendIconsResourcePack(name));
 
-		for (String key : iconsJSONObject.keySet()) {
+		for (String key : jsonObject.keySet()) {
 			FrontendIconsResourcePack existingFrontendIconsResourcePack =
 				frontendIconsResourcePacks.get(key);
 
@@ -100,7 +100,7 @@ public class SaveFrontendIconsPackFromExistingIconsMVCActionCommand
 			}
 
 			List<String> frontendIconsResourceNames = JSONUtil.toStringList(
-				iconsJSONObject.getJSONArray(key));
+				jsonObject.getJSONArray(key));
 
 			frontendIconsResourceNames.forEach(
 				frontendIconsResourceName -> {

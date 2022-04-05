@@ -1481,6 +1481,11 @@ public class LayoutImpl extends LayoutBaseImpl {
 			return null;
 		}
 
+		if (getMasterLayoutPlid() == getPlid()) {
+			throw new UnsupportedOperationException(
+				"Master page cannot point to itself");
+		}
+
 		_masterLayout = LayoutLocalServiceUtil.fetchLayout(
 			getMasterLayoutPlid());
 

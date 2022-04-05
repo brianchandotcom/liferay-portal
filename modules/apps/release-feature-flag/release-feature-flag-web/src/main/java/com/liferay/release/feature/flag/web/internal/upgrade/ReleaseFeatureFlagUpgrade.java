@@ -35,9 +35,10 @@ public class ReleaseFeatureFlagUpgrade implements UpgradeStepRegistrator {
 
 		// See https://tinyurl.com/yuzbmuzp on how to use this
 
-		/*registry.register(
+		registry.register(
 			"0.0.0", "1.0.0",
-			new ReleaseFeatureFlagUpgradeStep(ReleaseFeatureFlag.XYZ));*/
+			new ReleaseFeatureFlagUpgradeStep(
+				ReleaseFeatureFlag.DEACTIVATE_PRIVATE_PAGES));
 	}
 
 	public class ReleaseFeatureFlagUpgradeStep implements UpgradeStep {

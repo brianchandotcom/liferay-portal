@@ -18,4 +18,7 @@ package com.liferay.release.feature.flag;
  * @author Alejandro Tardín
  */
 public enum ReleaseFeatureFlag {
+
+	DEACTIVATE_PRIVATE_PAGES
+
 }

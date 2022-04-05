@@ -65,7 +65,7 @@ const DataSet = ({
 	creationMenu,
 	currentURL,
 	customDataRenderers,
-	filters: initFilters,
+	filters: initialFilters,
 	formId,
 	formName,
 	id,
@@ -104,7 +104,7 @@ const DataSet = ({
 	);
 
 	const [filters, setFilters] = useState(() => {
-		return initFilters.map((filter) => {
+		return initialFilters.map((filter) => {
 			const preloadedData = filter.preloadedData;
 
 			if (preloadedData) {

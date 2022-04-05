@@ -17,7 +17,6 @@ package com.liferay.exportimport.web.internal.trash;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -111,10 +110,10 @@ public class ExportImportConfigurationTrashHandler extends BaseTrashHandler {
 			_exportImportConfigurationLocalService.getExportImportConfiguration(
 				classPK);
 
-		Group group = _groupLocalService.getGroup(
-			exportImportConfiguration.getGroupId());
-
-		return _groupPermission.contains(permissionChecker, group, actionId);
+		return _groupPermission.contains(
+			permissionChecker,
+			_groupLocalService.getGroup(exportImportConfiguration.getGroupId()),
+			actionId);
 	}
 
 	@Reference(unbind = "-")

@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutRevision;
-import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
@@ -174,11 +173,10 @@ public class ProcessSummaryDisplayContext {
 			pageNames.add(childPageName);
 
 			if (childLayoutJSONObject.getBoolean("hasChildren")) {
-				List<String> childPageNames = _getChildPageNames(
-					childPageName,
-					childLayoutJSONObject.getJSONObject("children"));
-
-				pageNames.addAll(childPageNames);
+				pageNames.addAll(
+					_getChildPageNames(
+						childPageName,
+						childLayoutJSONObject.getJSONObject("children")));
 			}
 		}
 
@@ -186,11 +184,9 @@ public class ProcessSummaryDisplayContext {
 	}
 
 	private boolean _hasApprovedLayoutRevision(Layout layout) {
-		LayoutSet layoutSet = LayoutSetLocalServiceUtil.fetchLayoutSet(
-			layout.getGroupId(), layout.isPrivateLayout());
-
 		LayoutSetBranch layoutSetBranch = LayoutStagingUtil.getLayoutSetBranch(
-			layoutSet);
+			LayoutSetLocalServiceUtil.fetchLayoutSet(
+				layout.getGroupId(), layout.isPrivateLayout()));
 
 		List<LayoutRevision> approvedLayoutRevisions =
 			LayoutRevisionLocalServiceUtil.getLayoutRevisions(

@@ -1,0 +1,69 @@
+@component-name = "portal-solutions"
+definition {
+
+	property osgi.modules.includes = "site-initializer-testray";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Testray 2";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Testray.createTestraySite(siteName = "Testray 2");
+
+		Refresh();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		Testray.tearDownCP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+    @description = "LPS-150325 - Verify that User can acess case types modal."
+    @priority = "5"
+    test CanAcessCaseTypeModal {
+        ApplicationsMenu.gotoSite(site = "Testray 2");
+
+		Click(locator1 = "TestrayManage#MANAGE_SIDEBAR");
+
+		Click(
+			key_itemvalue = "Case Types",
+			locator1 = "TestrayDropdown#DROPDOWN_ITEM");
+
+        AssertElementPresent(
+            locator1 = "TestrayManage#TITLE_MODAL_ITEM",
+            key_title = "Case Types");
+    }
+
+    @description = "LPS-150326 - Verify that User can add new case types."
+    @priority = "5"
+    test CanAddNewCaseTypes {
+        ApplicationsMenu.gotoSite(site = "Testray 2");
+
+		Click(locator1 = "TestrayManage#MANAGE_SIDEBAR");
+
+		Click(
+			key_itemvalue = "Case Types",
+			locator1 = "TestrayDropdown#DROPDOWN_ITEM");
+
+        Click(locator1 = "TestrayManage#ADD_OPTIONS");
+
+        Type(
+            locator1 = "TestrayManage#NEW_OPTION_NAME",
+            value1 = "Test Case Type");
+
+        Click(locator1 = "TestrayManage#SAVE_BUTTON");
+
+        AssertElementPresent(
+            locator1 = "TestrayManage#OPTIONS_NAME",
+            value = "Test Case Type");
+    }
+
+}

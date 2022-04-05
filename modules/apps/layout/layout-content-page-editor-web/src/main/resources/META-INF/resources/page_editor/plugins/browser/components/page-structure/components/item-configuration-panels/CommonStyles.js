@@ -74,10 +74,11 @@ export function CommonStyles({
 		});
 	};
 
-	const spacingField = styles.find((fieldSet) => isSpacingFieldSet(fieldSet))
-		?.styles[0];
+	const spacingFieldSets = styles.filter((fieldSet) =>
+		isSpacingFieldSet(fieldSet)
+	);
 
-	if (spacingField) {
+	if (spacingFieldSets.length) {
 		styles = styles.filter((fieldSet) => !isSpacingFieldSet(fieldSet));
 	}
 
@@ -86,15 +87,15 @@ export function CommonStyles({
 			<div
 				className={classNames('page-editor__common-styles', className)}
 			>
-				{spacingField ? (
+				{spacingFieldSets.length ? (
 					<FieldSet
 						fields={[
 							{
-								...spacingField,
 								displaySize: '',
 								label: '',
 								name: '',
 								type: 'spacing',
+								typeOptions: {spacingFieldSets},
 							},
 						]}
 						item={item}

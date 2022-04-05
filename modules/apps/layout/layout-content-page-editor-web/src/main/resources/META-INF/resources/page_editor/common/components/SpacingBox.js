@@ -51,7 +51,7 @@ const REVERSED_POSITION = {
 const BUTTON_CLASSNAME = 'page-editor__spacing-selector__button';
 const DROPDOWN_CLASSNAME = 'page-editor__spacing-selector__dropdown';
 
-export default function SpacingBox({defaultValue, onChange, options, value}) {
+export default function SpacingBox({fields, onChange, value}) {
 	const ref = useRef();
 
 	const focusButton = (type, position) => {
@@ -133,10 +133,9 @@ export default function SpacingBox({defaultValue, onChange, options, value}) {
 
 						return (
 							<SpacingSelectorButton
-								defaultValue={defaultValue}
-								key={position}
+								field={fields[key]}
+								key={key}
 								onChange={(value) => onChange(key, value)}
-								options={options}
 								position={position}
 								type={type}
 								value={value[key]}
@@ -149,17 +148,9 @@ export default function SpacingBox({defaultValue, onChange, options, value}) {
 	);
 }
 
-function SpacingSelectorButton({
-	defaultValue,
-	onChange,
-	options,
-	position,
-	type,
-	value,
-}) {
+function SpacingSelectorButton({field, onChange, position, type, value}) {
 	const [active, setActive] = useState(false);
 	const itemListRef = useRef();
-	const label = `${capitalize(type)} ${capitalize(position)}`;
 	const [labelElement, setLabelElement] = useState(null);
 	const tooltipId = useId();
 	const triggerId = useId();
@@ -182,44 +173,49 @@ function SpacingSelectorButton({
 					aria-describedby={tooltipId}
 					aria-expanded={active}
 					aria-haspopup={true}
-					aria-label={label}
+					aria-label={field?.label}
 					className={`${BUTTON_CLASSNAME} b-0 flex-grow-1 mb-0 text-center`}
 					data-position={position}
 					data-type={type}
+					disabled={!field || field.disabled}
 					displayType="unstyled"
 					id={triggerId}
 					onClick={() => setActive(!active)}
 					ref={setTriggerElement}
 					type="button"
 				>
-					<Tooltip
-						hoverElement={triggerElement}
-						id={tooltipId}
-						label={
-							<>
-								{label} -{' '}
-								<SpacingOptionValue
-									position={position}
-									type={type}
-									value={value || defaultValue}
-								/>
-							</>
-						}
-						positionElement={labelElement}
-					/>
+					{field ? (
+						<Tooltip
+							hoverElement={triggerElement}
+							id={tooltipId}
+							label={
+								<>
+									{field.label} -{' '}
+									<SpacingOptionValue
+										position={position}
+										type={type}
+										value={value || field.defaultValue}
+									/>
+								</>
+							}
+							positionElement={labelElement}
+						/>
+					) : null}
 
-					<span ref={setLabelElement}>{value || defaultValue}</span>
+					<span ref={setLabelElement}>
+						{value || field?.defaultValue}
+					</span>
 				</ClayButton>
 			}
 		>
 			<div ref={itemListRef}>
 				<ClayDropDown.ItemList aria-labelledby={triggerId}>
-					<ClayDropDown.Group header={label}>
-						{options.map((option) => (
+					<ClayDropDown.Group header={field?.label}>
+						{field?.validValues?.map((option) => (
 							<ClayDropDown.Item
 								aria-label={Liferay.Util.sub(
 									Liferay.Language.get('set-x-to-x'),
-									[label, option.label]
+									[field.label, option.label]
 								)}
 								className="d-flex"
 								key={option.value}
@@ -268,7 +264,7 @@ function SpacingOptionValue({position, type, value: optionValue}) {
 		globalContext.document.body.removeChild(element);
 	}, [globalContext, optionValue, position, type]);
 
-	return value;
+	return value === undefined ? '' : value;
 }
 
 function capitalize(str) {

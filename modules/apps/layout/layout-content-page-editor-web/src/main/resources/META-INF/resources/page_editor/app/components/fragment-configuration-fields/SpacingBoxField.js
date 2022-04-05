@@ -13,7 +13,7 @@
  */
 
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useMemo} from 'react';
 
 import InvisibleFieldset from '../../../common/components/InvisibleFieldset';
 import SpacingBox from '../../../common/components/SpacingBox';
@@ -28,6 +28,18 @@ export function SpacingBoxField({disabled, field, onValueSelect, value}) {
 		onValueSelect(key, value);
 	};
 
+	const fields = useMemo(() => {
+		const fields = {};
+
+		field.typeOptions.spacingFieldSets.forEach((fieldSet) => {
+			fieldSet.styles.forEach((field) => {
+				fields[field.name] = field;
+			});
+		});
+
+		return fields;
+	}, [field.typeOptions.spacingFieldSets]);
+
 	return (
 		<>
 			<InvisibleFieldset disabled={disabled}>
@@ -36,9 +48,8 @@ export function SpacingBoxField({disabled, field, onValueSelect, value}) {
 				) : null}
 
 				<SpacingBox
-					defaultValue={field.defaultValue}
+					fields={fields}
 					onChange={handleChange}
-					options={field.validValues}
 					value={nextValue}
 				/>
 			</InvisibleFieldset>

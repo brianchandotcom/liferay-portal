@@ -12,6 +12,8 @@
  * details.
  */
 
+import {LAYOUT_STRUCTURE_ITEM_CLASS_NAME_PREFIX} from '../config/constants/layoutStructureItemClassNamePrefix';
+
 export default function getLayoutDataItemUniqueClassName(itemId) {
-	return `lfr-layout-structure-item-${itemId}`;
+	return `${LAYOUT_STRUCTURE_ITEM_CLASS_NAME_PREFIX}${itemId}`;
 }

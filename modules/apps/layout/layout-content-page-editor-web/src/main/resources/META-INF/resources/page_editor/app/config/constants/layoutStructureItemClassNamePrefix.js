@@ -12,8 +12,5 @@
  * details.
  */
 
-import {LAYOUT_STRUCTURE_ITEM_CLASS_NAME_PREFIX} from '../config/constants/layoutStructureItemClassNamePrefix';
-
-export default function getLayoutDataItemTopperUniqueClassName(itemId) {
-	return `${LAYOUT_STRUCTURE_ITEM_CLASS_NAME_PREFIX}topper-${itemId}`;
-}
+export const LAYOUT_STRUCTURE_ITEM_CLASS_NAME_PREFIX =
+	'lfr-layout-structure-item-';

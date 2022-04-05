@@ -100,6 +100,11 @@
 	<td>//div[@class='data-set-content-wrapper']//a[text()='${key_entryName}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SEARCH_CONTAINER_WRAPPER</td>
+	<td>//div[contains(@class,'search-container-wrapper')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

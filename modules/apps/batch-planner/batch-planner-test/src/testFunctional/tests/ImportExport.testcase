@@ -1262,6 +1262,40 @@ definition {
 		}
 	}
 
+	@description = "Verify users can view a preview of the JSONL file being imported."
+	@priority = "3"
+	test ViewJSONLImportPreview {
+		property portal.acceptance = "true";
+
+		task ("Given the user has configured an import for a JSONL file") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.gotoImport();
+
+			ImportExport.configureImport(
+				entityType = "Channel",
+				fieldMappings = "currencyCode:currencyCode,name:name,type:type",
+				fileName = "jsonl_channel_import.jsonl",
+				headlessEndpoint = "/headless-commerce-admin-channel");
+		}
+
+		task ("When the user clicks Next") {
+			Button.clickNext();
+		}
+
+		task ("Then a preview should be shown of the JSONL file content.") {
+			ImportExport.assertPreviewLabels(previewLabels = "currencyCode,name,type");
+
+			ImportExport.assertPreviewEntry(
+				entryName = "Test Channel 1",
+				previewFields = "USD,site");
+
+			ImportExport.assertPreviewEntry(
+				entryName = "Test Channel 2",
+				previewFields = "CAD,site");
+		}
+	}
+
 	@description = "Verify users are shown which fields are required for an import."
 	@priority = "3"
 	test ViewRequiredImportFields {

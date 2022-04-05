@@ -8,7 +8,7 @@
 [#if !is_signed_in]
 <span class="sign-in text-default" role="presentation">
 	<a class="sign-in text-default" data-redirect="true" onclick="document.querySelector('#loginCardContainer').style.visibility = 'visible';">
-		<span class="sign-in-label">languageUtil.get(locale, "sign-in")</span>
+		<span class="sign-in-label">${languageUtil.get(locale, "sign-in")}</span>
 	</a>
 </span>
 [#else]

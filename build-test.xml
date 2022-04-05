@@ -15139,14 +15139,6 @@ url=${short.hostname}:8080</echo>
 		/>
 	</target>
 
-	<target name="update-dependency-injector">
-		<replace
-			file="${project.dir}/${gradle.file.path}/service.xml"
-			token="dependency-injector=&quot;spring&quot;"
-			value="dependency-injector=&quot;ds&quot;"
-		/> 
-	</target>
-
 	<target name="update-osgi-module-configuration">
 		<local name="osgi.configs.dir" />
 
@@ -15169,6 +15161,26 @@ url=${short.hostname}:8080</echo>
 		/>
 
 		<print-file file.name="${osgi.configs.dir}/${osgi.module.configuration.file.names}" />
+	</target>
+
+	<target name="update-service-builder-spring">
+		<replaceregexp
+			file="${project.dir}/modules/test/spring-service-builder-test-service/service.xml"
+			match="(auto-namespace-tables=&quot;false&quot;)"
+			replace="\1 dependency-injector=&quot;ds&quot;"
+		/>
+
+		<replaceregexp
+			file="${project.dir}/modules/test/spring-service-builder-test-service/bnd.bnd"
+			match="(Liferay-Service: true)"
+			replace="\1${line.separator}-dsannotations-options: inherit;"
+		/>
+
+		<replaceregexp
+			file="${project.dir}/modules/test/spring-service-builder-test-service/build.gradle"
+			match="(compileOnly project\(&quot;:apps:portal:portal-spring-extender-api&quot;\))"
+			replace="\1${line.separator}compileOnly project(&quot;:apps:portal:portal-aop-api&quot;)"
+		/>
 	</target>
 
 	<target name="upgrade-legacy-database">

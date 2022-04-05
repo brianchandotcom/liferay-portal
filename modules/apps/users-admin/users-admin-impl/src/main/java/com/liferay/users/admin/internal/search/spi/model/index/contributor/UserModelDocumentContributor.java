@@ -89,6 +89,7 @@ public class UserModelDocumentContributor
 			document.addText("fullName", user.getFullName());
 			document.addKeyword("groupIds", user.getGroupIds());
 			document.addText("jobTitle", user.getJobTitle());
+			document.addDate("lastLoginDate", user.getLastLoginDate());
 			document.addText("lastName", user.getLastName());
 			document.addText("middleName", user.getMiddleName());
 			document.addKeyword("organizationIds", organizationIds);

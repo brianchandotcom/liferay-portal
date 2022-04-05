@@ -2241,7 +2241,8 @@ public class ContentPageEditorDisplayContext {
 	private boolean _isConversionDraft() {
 		Layout publishedLayout = _getPublishedLayout();
 
-		if (Objects.equals(
+		if ((publishedLayout != null) &&
+			Objects.equals(
 				publishedLayout.getType(), LayoutConstants.TYPE_PORTLET)) {
 
 			return true;

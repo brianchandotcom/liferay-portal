@@ -41,8 +41,6 @@ export default function ContainerAdvancedPanel({item}) {
 
 	return (
 		<>
-			<HideFromSearchField item={item} />
-
 			<SelectField
 				className="mb-1"
 				field={{
@@ -71,6 +69,8 @@ export default function ContainerAdvancedPanel({item}) {
 			<p className="small text-secondary">
 				{Liferay.Language.get('misusing-this-setup-might-impact-seo')}
 			</p>
+
+			<HideFromSearchField item={item} />
 		</>
 	);
 }

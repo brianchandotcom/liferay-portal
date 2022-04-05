@@ -63,8 +63,6 @@ export function FragmentAdvancedPanel({item}) {
 				{Liferay.Language.get('advanced-configuration')}
 			</h1>
 
-			<HideFromSearchField item={item} />
-
 			{fieldSets?.length > 0 &&
 				fieldSets.map((fieldSet, index) => {
 					return (
@@ -80,6 +78,8 @@ export function FragmentAdvancedPanel({item}) {
 						/>
 					);
 				})}
+
+			<HideFromSearchField item={item} />
 		</>
 	);
 }

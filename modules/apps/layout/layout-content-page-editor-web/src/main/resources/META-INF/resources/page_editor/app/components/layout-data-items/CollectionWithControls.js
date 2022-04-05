@@ -24,7 +24,7 @@ import {
 	useHoveredItemType,
 } from '../../contexts/ControlsContext';
 import {useSelector} from '../../contexts/StoreContext';
-import getLayoutDataItemTopperClassName from '../../utils/getLayoutDataItemTopperClassName';
+import getLayoutDataItemTopperUniqueClassName from '../../utils/getLayoutDataItemTopperUniqueClassName';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import Topper from '../topper/Topper';
 import Collection from './Collection';
@@ -55,7 +55,7 @@ const CollectionWithControls = React.forwardRef(({children, item}, ref) => {
 			/>
 			<Topper
 				className={classNames({
-					[getLayoutDataItemTopperClassName(
+					[getLayoutDataItemTopperUniqueClassName(
 						item.itemId
 					)]: config.featureFlagLps132571,
 					'page-editor__topper--hovered': hovered,

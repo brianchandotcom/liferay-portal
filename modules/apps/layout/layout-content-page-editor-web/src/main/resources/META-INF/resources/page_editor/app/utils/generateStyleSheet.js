@@ -14,8 +14,8 @@
 
 import {config} from '../config/index';
 import {getFrontendTokenValue} from './getFrontendTokenValue';
-import getLayoutDataItemClassName from './getLayoutDataItemClassName';
-import getLayoutDataItemTopperClassName from './getLayoutDataItemTopperClassName';
+import getLayoutDataItemTopperUniqueClassName from './getLayoutDataItemTopperUniqueClassName';
+import getLayoutDataItemUniqueClassName from './getLayoutDataItemUniqueClassName';
 
 const DEFAULT_SPACING_VALUES = {
 	0: '0',
@@ -84,11 +84,13 @@ export default function generateStyleSheet(styles, {hasTopper = true} = {}) {
 		});
 
 		if (itemCSS) {
-			css += `.${getLayoutDataItemClassName(itemId)} {\n${itemCSS}}\n`;
+			css += `.${getLayoutDataItemUniqueClassName(
+				itemId
+			)} {\n${itemCSS}}\n`;
 		}
 
 		if (topperCSS) {
-			css += `.${getLayoutDataItemTopperClassName(
+			css += `.${getLayoutDataItemTopperUniqueClassName(
 				itemId
 			)} {\n${topperCSS}}\n`;
 		}

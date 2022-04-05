@@ -25,7 +25,7 @@ import {useSelector} from '../../contexts/StoreContext';
 import checkStylesFF from '../../utils/checkStylesFF';
 import {getCommonStyleByName} from '../../utils/getCommonStyleByName';
 import {getFrontendTokenValue} from '../../utils/getFrontendTokenValue';
-import getLayoutDataItemClassName from '../../utils/getLayoutDataItemClassName';
+import getLayoutDataItemUniqueClassName from '../../utils/getLayoutDataItemUniqueClassName';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import {isValidSpacingOption} from '../../utils/isValidSpacingOption';
 import useBackgroundImageValue from '../../utils/useBackgroundImageValue';
@@ -124,7 +124,7 @@ const Row = React.forwardRef(
 		const rowContent = (
 			<ClayLayout.Row
 				className={classNames(className, {
-					[getLayoutDataItemClassName(
+					[getLayoutDataItemUniqueClassName(
 						item.itemId
 					)]: config.featureFlagLps132571,
 					'flex-column-reverse':

@@ -12,6 +12,6 @@
  * details.
  */
 
-export default function getLayoutDataItemClassName(itemId) {
+export default function getLayoutDataItemUniqueClassName(itemId) {
 	return `lfr-layout-structure-item-${itemId}`;
 }

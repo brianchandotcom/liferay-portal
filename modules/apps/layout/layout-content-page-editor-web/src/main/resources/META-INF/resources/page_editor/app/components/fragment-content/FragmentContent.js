@@ -38,7 +38,7 @@ import resolveEditableConfig from '../../utils/editable-value/resolveEditableCon
 import resolveEditableValue from '../../utils/editable-value/resolveEditableValue';
 import {getCommonStyleByName} from '../../utils/getCommonStyleByName';
 import {getFrontendTokenValue} from '../../utils/getFrontendTokenValue';
-import getLayoutDataItemClassName from '../../utils/getLayoutDataItemClassName';
+import getLayoutDataItemUniqueClassName from '../../utils/getLayoutDataItemUniqueClassName';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import {isValidSpacingOption} from '../../utils/isValidSpacingOption';
 import useBackgroundImageValue from '../../utils/useBackgroundImageValue';
@@ -297,7 +297,7 @@ const FragmentContent = ({
 						className,
 						'page-editor__fragment-content',
 						{
-							[getLayoutDataItemClassName(
+							[getLayoutDataItemUniqueClassName(
 								item.itemId
 							)]: config.featureFlagLps132571,
 							'page-editor__fragment-content--portlet-topper-hidden': !canConfigureWidgets,

@@ -30,7 +30,7 @@ import selectLanguageId from '../../selectors/selectLanguageId';
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 import CollectionService from '../../services/CollectionService';
 import updateItemConfig from '../../thunks/updateItemConfig';
-import getLayoutDataItemClassName from '../../utils/getLayoutDataItemClassName';
+import getLayoutDataItemUniqueClassName from '../../utils/getLayoutDataItemUniqueClassName';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import isNullOrUndefined from '../../utils/isNullOrUndefined';
 import UnsafeHTML from '../UnsafeHTML';
@@ -382,7 +382,7 @@ const Collection = React.memo(
 		return (
 			<div
 				className={classNames('page-editor__collection', {
-					[getLayoutDataItemClassName(
+					[getLayoutDataItemUniqueClassName(
 						item.itemId
 					)]: config.featureFlagLps132571,
 				})}

@@ -25,7 +25,7 @@ import {
 } from '../../contexts/ControlsContext';
 import {useSelector} from '../../contexts/StoreContext';
 import {getFrontendTokenValue} from '../../utils/getFrontendTokenValue';
-import getLayoutDataItemTopperClassName from '../../utils/getLayoutDataItemTopperClassName';
+import getLayoutDataItemTopperUniqueClassName from '../../utils/getLayoutDataItemTopperUniqueClassName';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import {isValidSpacingOption} from '../../utils/isValidSpacingOption';
 import FragmentContent from '../fragment-content/FragmentContent';
@@ -114,7 +114,7 @@ const FragmentWithControls = React.forwardRef(({item}, ref) => {
 	return (
 		<Topper
 			className={classNames({
-				[getLayoutDataItemTopperClassName(
+				[getLayoutDataItemTopperUniqueClassName(
 					item.itemId
 				)]: config.featureFlagLps132571,
 				[`mb-${marginBottom}`]: isValidSpacingOption(marginBottom),

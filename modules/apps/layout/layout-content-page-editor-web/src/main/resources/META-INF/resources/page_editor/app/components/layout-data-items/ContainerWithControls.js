@@ -26,7 +26,7 @@ import {
 import {useSelector} from '../../contexts/StoreContext';
 import selectCanUpdateItemConfiguration from '../../selectors/selectCanUpdateItemConfiguration';
 import {getFrontendTokenValue} from '../../utils/getFrontendTokenValue';
-import getLayoutDataItemTopperClassName from '../../utils/getLayoutDataItemTopperClassName';
+import getLayoutDataItemTopperUniqueClassName from '../../utils/getLayoutDataItemTopperUniqueClassName';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import {isValidSpacingOption} from '../../utils/isValidSpacingOption';
 import Topper from '../topper/Topper';
@@ -86,7 +86,7 @@ const ContainerWithControls = React.forwardRef(({children, item}, ref) => {
 	return (
 		<Topper
 			className={classNames({
-				[getLayoutDataItemTopperClassName(
+				[getLayoutDataItemTopperUniqueClassName(
 					item.itemId
 				)]: config.featureFlagLps132571,
 				[`container-fluid`]: widthType === CONTAINER_WIDTH_TYPES.fixed,

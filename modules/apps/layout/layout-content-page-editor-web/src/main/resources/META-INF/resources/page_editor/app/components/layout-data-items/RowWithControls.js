@@ -22,7 +22,7 @@ import {config} from '../../config/index';
 import {ResizeContextProvider} from '../../contexts/ResizeContext';
 import {useSelector} from '../../contexts/StoreContext';
 import selectCanUpdateItemConfiguration from '../../selectors/selectCanUpdateItemConfiguration';
-import getLayoutDataItemTopperClassName from '../../utils/getLayoutDataItemTopperClassName';
+import getLayoutDataItemTopperUniqueClassName from '../../utils/getLayoutDataItemTopperUniqueClassName';
 import {getResponsiveColumnSize} from '../../utils/getResponsiveColumnSize';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import isItemEmpty from '../../utils/isItemEmpty';
@@ -69,7 +69,7 @@ const RowWithControls = React.forwardRef(({children, item}, ref) => {
 	return (
 		<Topper
 			className={classNames({
-				[getLayoutDataItemTopperClassName(
+				[getLayoutDataItemTopperUniqueClassName(
 					item.itemId
 				)]: config.featureFlagLps132571,
 				[`mb-${marginBottom}`]: isValidSpacingOption(marginBottom),

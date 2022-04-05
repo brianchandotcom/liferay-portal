@@ -165,12 +165,90 @@ definition {
 	}
 
 	@description = "LPS-147906 - Verify it is possible to do a nested relation in a One-to-Many relationship"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanDoNestedRelation {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 149249",
+			objectName = "CustomObject149249",
+			pluralLabelName = "Custom Objects 149249");
 
-		// TODO LPS-149249 CanDoNestedRelation pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject149249");
 
+		ObjectAdmin.addObjectRelationshipViaAPI(
+			objectName_1 = "CustomObject149249",
+			objectName_2 = "CustomObject149249",
+			relationshipLabel = "Relationship",
+			relationshipName = "relationship",
+			relationshipType = "oneToMany");
+
+		ObjectAdmin.addObjectLayoutViaAPI(
+			layoutName = "Layout Name",
+			objectName = "CustomObject149249");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 149249");
+
+		CreateObject.selectTitleField(fieldLabel = "Custom Field");
+
+		CreateObject.saveObject();
+
+		ObjectAdmin.goToLayoutsTab();
+
+		ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
+
+		ObjectAdmin.markLayoutAsDefault();
+
+		ObjectAdmin.goToLayoutTabOnLayouts();
+
+		ObjectAdmin.addTabFieldsOnLayout(
+			blockName = "Block 1",
+			columnsNumber = "1",
+			fieldList = "Custom Field,Relationship",
+			tabName = "Field Tab");
+
+		ObjectAdmin.addTabRelationshipsOnLayout(
+			relationshipsLabelName = "Relationship",
+			tabName = "Relationship Tab");
+
+		Button.clickSave();
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject149249");
+
+		for (var fieldEntry : list "A,B") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customObjectField",
+				objectName = "CustomObject149249",
+				value = "Entry ${fieldEntry}");
+		}
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject149249");
+
+		ObjectPortlet.viewEntryDetails(entry = "Entry A");
+
+		ObjectPortlet.gotoRelationshipTab();
+
+		CreateObject.addRelationshipAndSelectEntry(titleFieldName = "Entry B");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject149249");
+
+		ObjectPortlet.viewEntryDetails(entry = "Entry B");
+
+		ObjectPortlet.gotoRelationshipTab();
+
+		CreateObject.addRelationshipAndSelectEntry(titleFieldName = "Entry A");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject149249");
+
+		ObjectPortlet.viewEntry(entry = "Entry A");
+
+		ObjectPortlet.viewEntry(entry = "Entry B");
 	}
 
 	@description = "LPS-135400 - Verify it is not possible to leave the Relationship Label blank"

@@ -552,7 +552,7 @@ renderResponse.setTitle(headerTitle);
 							classPK="<%= assetClassPK %>"
 						/>
 
-						<c:if test="<%= fileEntry != null %>">
+						<c:if test="<%= (fileEntry != null) && dlAdminDisplayContext.isAutoTaggingEnabled() %>">
 							<clay:checkbox
 								checked="<%= false %>"
 								id='<%= liferayPortletResponse.getNamespace() + "updateAutoTags" %>'

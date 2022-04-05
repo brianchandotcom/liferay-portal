@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.web.internal.display.context;
 
+import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfiguration;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryServiceUtil;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
@@ -104,11 +105,13 @@ import javax.servlet.http.HttpServletRequest;
 public class DLAdminDisplayContext {
 
 	public DLAdminDisplayContext(
+		AssetAutoTaggerConfiguration assetAutoTaggerConfiguration,
 		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		VersioningStrategy versioningStrategy, TrashHelper trashHelper) {
 
+		_assetAutoTaggerConfiguration = assetAutoTaggerConfiguration;
 		_httpServletRequest = httpServletRequest;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
@@ -374,6 +377,10 @@ public class DLAdminDisplayContext {
 			_themeDisplay.getScopeGroupId(),
 			portletDisplay.getNamespace() + "folderSelected",
 			folderItemSelectorCriterion);
+	}
+
+	public boolean isAutoTaggingEnabled() {
+		return _assetAutoTaggerConfiguration.isEnabled();
 	}
 
 	public boolean isDefaultFolderView() {
@@ -866,6 +873,7 @@ public class DLAdminDisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLAdminDisplayContext.class);
 
+	private final AssetAutoTaggerConfiguration _assetAutoTaggerConfiguration;
 	private boolean _defaultFolderView;
 	private String _displayStyle;
 	private final DLPortletInstanceSettings _dlPortletInstanceSettings;

@@ -12,6 +12,8 @@
  * details.
  */
 
+import {useParams} from 'react-router-dom';
+
 import Container from '../../../components/Layout/Container';
 import ListView from '../../../components/ListView/ListView';
 import {getSuites} from '../../../graphql/queries';
@@ -20,6 +22,8 @@ import SuiteModal from './SuiteModal';
 import useSuiteActions from './useSuiteActions';
 
 const Suites = () => {
+	const {projectId} = useParams();
+
 	const {actions, formModal} = useSuiteActions();
 
 	return (
@@ -53,10 +57,11 @@ const Suites = () => {
 						navigateTo: ({id}) => id?.toString(),
 					}}
 					transformData={(data) => data?.c?.suites}
+					variables={{filter: `projectId eq ${projectId}`}}
 				/>
 			</Container>
 
-			<SuiteModal modal={formModal.modal} />
+			<SuiteModal modal={formModal.modal} projectId={Number(projectId)} />
 		</>
 	);
 };

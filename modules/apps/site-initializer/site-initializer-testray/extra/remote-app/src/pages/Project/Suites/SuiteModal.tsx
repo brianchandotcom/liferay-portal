@@ -12,7 +12,6 @@
  * details.
  */
 
-import {useMutation} from '@apollo/client';
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import {ClayCheckbox} from '@clayui/form';
@@ -23,17 +22,18 @@ import Modal from '../../../components/Modal';
 import {CreateSuite} from '../../../graphql/mutations';
 import useFormModal, {FormModalOptions} from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
-import {Liferay} from '../../../services/liferay/liferay';
 import SuiteSelectCasesModal from './SuiteSelectCasesModal';
 
 type SuiteModalProps = {
 	modal: FormModalOptions;
+	projectId: number;
 };
 
 type SuiteFormData = {
 	caseParameters?: string;
 	description: string;
 	name: string;
+	projectId?: string;
 	smartSuite: boolean;
 };
 
@@ -106,10 +106,9 @@ const SuiteForm: React.FC<SuiteFormProps> = ({form, onChange}) => {
 };
 
 const SuiteModal: React.FC<SuiteModalProps> = ({
-	modal: {observer, onChange, onClose, onSave, visible},
+	modal: {observer, onChange, onClose, onSubmit, visible},
+	projectId,
 }) => {
-	const [onCreateSuite] = useMutation(CreateSuite);
-
 	const [form, setForm] = useState<SuiteFormData>({
 		caseParameters: '',
 		description: '',
@@ -117,31 +116,17 @@ const SuiteModal: React.FC<SuiteModalProps> = ({
 		smartSuite: false,
 	});
 
-	const onSubmit = async () => {
-		try {
-			const newForm: Partial<SuiteFormData> = {
+	const _onSubmit = () => {
+		onSubmit(
+			{
 				...form,
-				caseParameters: JSON.stringify(form.caseParameters),
-			};
-
-			delete newForm.smartSuite;
-
-			await onCreateSuite({
-				variables: {
-					Suite: newForm,
-				},
-			});
-
-			onSave();
-
-			Liferay.Util.openToast({message: 'TestraySuite Registered'});
-		}
-		catch (error) {
-			Liferay.Util.openToast({
-				message: (error as any).message,
-				type: 'danger',
-			});
-		}
+				projectId,
+			},
+			{
+				createMutation: CreateSuite,
+				updateMutation: CreateSuite,
+			}
+		);
 	};
 
 	return (
@@ -152,7 +137,7 @@ const SuiteModal: React.FC<SuiteModalProps> = ({
 						{i18n.translate('close')}
 					</ClayButton>
 
-					<ClayButton displayType="primary" onClick={onSubmit}>
+					<ClayButton displayType="primary" onClick={_onSubmit}>
 						{i18n.translate('add-suite')}
 					</ClayButton>
 				</ClayButton.Group>

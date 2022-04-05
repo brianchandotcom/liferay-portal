@@ -423,35 +423,6 @@ renderResponse.setTitle(dlEditFolderDisplayContext.getHeaderTitle());
 			option.parentElement.removeChild(option);
 
 			<portlet:namespace />documentTypesChanged = true;
-
-			var select = document.getElementById(
-				'<%= liferayPortletResponse.getNamespace() + "workflowDefinition" + DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL %>'
-			);
-
-			var selectContainer = document.getElementById(
-				'<portlet:namespace />restrictionTypeWorkflow'
-			);
-
-			var fileEntryTypesCount = select.children.length;
-
-			if (fileEntryTypesCount == 0) {
-				selectContainer.classList.add('hide');
-				selectContainer.setAttribute('hidden', 'hidden');
-				selectContainer.style.display = 'none';
-
-				var restrictionTypeWorkflow = document.getElementById(
-					'<portlet:namespace />restrictionTypeWorkflow'
-				);
-
-				restrictionTypeWorkflow.classList.remove('hide');
-				restrictionTypeWorkflow.removeAttribute('hidden');
-				restrictionTypeWorkflow.style.display = '';
-			}
-			else {
-				selectContainer.classList.remove('hide');
-				selectContainer.removeAttribute('hidden');
-				selectContainer.style.display = '';
-			}
 		},
 		'.modify-link'
 	);

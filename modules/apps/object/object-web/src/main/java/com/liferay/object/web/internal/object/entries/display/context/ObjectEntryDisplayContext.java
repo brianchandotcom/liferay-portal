@@ -712,8 +712,23 @@ public class ObjectEntryDisplayContext {
 							ddmFormField.getType(),
 							DDMFormFieldTypeConstants.FIELDSET)) {
 
-						_setDDMFormFieldValueValue(
-							ddmFormField.getName(), ddmFormFieldValue, values);
+						long value = GetterUtil.getLong(
+							values.get(ddmFormField.getName()));
+
+						if (StringUtil.equals(
+								ddmFormField.getType(),
+								"object-relationship") &&
+							(value == 0)) {
+
+							_setDDMFormFieldValueValue(
+								ddmFormField.getName(), ddmFormFieldValue,
+								Collections.emptyMap());
+						}
+						else {
+							_setDDMFormFieldValueValue(
+								ddmFormField.getName(), ddmFormFieldValue,
+								values);
+						}
 					}
 
 					return ddmFormFieldValue;

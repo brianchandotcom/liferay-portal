@@ -265,7 +265,9 @@ public class ObjectEntryDTOConverter
 				long objectEntryId = 0;
 
 				if (serializable != null) {
-					objectEntryId = (long)serializable;
+					if (GetterUtil.getLong(serializable) > 0) {
+						objectEntryId = (long)serializable;
+					}
 
 					Optional<UriInfo> uriInfoOptional =
 						dtoConverterContext.getUriInfoOptional();

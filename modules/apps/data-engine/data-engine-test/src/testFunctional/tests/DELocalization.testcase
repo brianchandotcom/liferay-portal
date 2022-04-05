@@ -1027,4 +1027,45 @@ definition {
 			value1 = "12345");
 	}
 
+
+	@description = "Verify that Structure's translations are displayed on the Web Content"
+	@priority = "5"
+	test CanStructureTranslationsBeShown {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "Structure Description Test",
+			structureName = "Structure Name Test");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Numeric",
+			fieldName = "Numeric");
+
+		WebContentStructures.addTranslations(localeList = "zh-CN");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Numeric",
+			fieldFieldLabelEdit = "数字");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "Structure Name Test");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Numeric",
+			fieldName = "Numeric");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "数字",
+			fieldName = "Numeric");
+
+
+	}
+
 }

@@ -21,15 +21,8 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {
-	useCallback,
-	useContext,
-	useEffect,
-	useRef,
-	useState,
-} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 
-import DataSetContext from '../../../DataSetContext';
 import {getValueFromItem, isValuesArrayChanged} from '../../../utils/index';
 import {logError} from '../../../utils/logError';
 
@@ -122,9 +115,8 @@ function AutocompleteFilter({
 	itemLabel: itemLabelProp,
 	selectedData,
 	selectionType,
+	setFilter,
 }) {
-	const {setFilter} = useContext(DataSetContext);
-
 	const [query, setQuery] = useState('');
 	const [search, setSearch] = useState('');
 	const [selectedItems, setSelectedItems] = useState(

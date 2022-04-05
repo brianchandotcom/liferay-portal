@@ -16,9 +16,8 @@ import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import {ClayCheckbox, ClayToggle} from '@clayui/form';
 import PropTypes from 'prop-types';
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
-import DataSetContext from '../../../DataSetContext';
 import {isValuesArrayChanged} from '../../../utils/index';
 
 const getSelectedItemsLabel = ({items, selectedData}) => {
@@ -61,9 +60,7 @@ const getOdataString = ({id, selectedData}) => {
 
 	return null;
 };
-function CheckboxesFilter({id, items, selectedData}) {
-	const {setFilter} = useContext(DataSetContext);
-
+function CheckboxesFilter({id, items, selectedData, setFilter}) {
 	const [itemsValues, setItemsValues] = useState(
 		selectedData?.itemsValues || []
 	);

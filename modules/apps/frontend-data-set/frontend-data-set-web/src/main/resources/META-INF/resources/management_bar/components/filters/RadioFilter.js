@@ -16,9 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import {ClayRadio, ClayRadioGroup, ClayToggle} from '@clayui/form';
 import PropTypes from 'prop-types';
-import React, {useContext, useState} from 'react';
-
-import DataSetContext from '../../../DataSetContext';
+import React, {useState} from 'react';
 
 const getSelectedItemsLabel = ({items, selectedData}) => {
 	const {exclude, itemValue} = selectedData;
@@ -36,9 +34,7 @@ const getOdataString = ({id, selectedData}) => {
 		typeof itemValue === 'string' ? `'${itemValue}'` : itemValue
 	}`;
 };
-function RadioFilter({id, items, selectedData}) {
-	const {setFilter} = useContext(DataSetContext);
-
+function RadioFilter({id, items, selectedData, setFilter}) {
 	const [itemValue, setItemValue] = useState(selectedData?.itemValue);
 	const [exclude, setExclude] = useState(!!selectedData?.exclude);
 

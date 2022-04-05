@@ -23,7 +23,7 @@ import DataSetContext from '../../DataSetContext';
 import Filter from './filters/Filter';
 
 function FilterResume(props) {
-	const {setFilter} = useContext(DataSetContext);
+	const {setFilters} = useContext(DataSetContext);
 
 	const [open, setOpen] = useState(false);
 
@@ -37,7 +37,16 @@ function FilterResume(props) {
 			closeButtonProps={{
 				className: 'filter-resume-close',
 				disabled: props.disabled,
-				onClick: () => setFilter({active: false, id: props.id}),
+				onClick: () => {
+					setFilters((filters) => {
+						return filters.map((filter) => ({
+							...filter,
+							...(filter.id === props.id
+								? {active: false, id: props.id}
+								: {}),
+						}));
+					});
+				},
 			}}
 			role="button"
 		>

@@ -13,8 +13,9 @@
  */
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 
+import DataSetContext from '../../../DataSetContext';
 import {getComponentByModuleURL} from '../../../utils/modules';
 import AutocompleteFilter, {
 	getOdataString as getAutocompleteFilterOdataString,
@@ -71,6 +72,8 @@ const getOdataFilterString = (filter) => {
 };
 
 const Filter = ({moduleURL, type, ...otherProps}) => {
+	const {setFilters} = useContext(DataSetContext);
+
 	const [Component, setComponent] = useState(() => {
 		if (!moduleURL) {
 			const Matched = FILTER_TYPE_COMPONENT[type];
@@ -94,9 +97,18 @@ const Filter = ({moduleURL, type, ...otherProps}) => {
 		}
 	}, [moduleURL]);
 
+	const setFilter = ({id, ...otherProps}) => {
+		setFilters((filters) => {
+			return filters.map((filter) => ({
+				...filter,
+				...(filter.id === id ? {...otherProps} : {}),
+			}));
+		});
+	};
+
 	return Component ? (
 		<div className="data-set-filter">
-			<Component {...otherProps} />
+			<Component setFilter={setFilter} {...otherProps} />
 		</div>
 	) : (
 		<ClayLoadingIndicator small />

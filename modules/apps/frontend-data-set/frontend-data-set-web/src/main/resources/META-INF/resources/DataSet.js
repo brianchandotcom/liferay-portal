@@ -144,7 +144,7 @@ const DataSet = ({
 	const requestData = useCallback(() => {
 		const activeFiltersOdataStrings = filters.reduce(
 			(activeFilters, filter) =>
-				filter.odataFilterString
+				filter.active && filter.odataFilterString
 					? [...activeFilters, filter.odataFilterString]
 					: activeFilters,
 			[]
@@ -607,30 +607,6 @@ const DataSet = ({
 			});
 	}
 
-	const setFilter = ({
-		active,
-		id,
-		odataFilterString,
-		selectedData,
-		selectedItemsLabel,
-		value,
-	}) => {
-		setFilters((filters) => {
-			return filters.map((filter) => ({
-				...filter,
-				...(filter.id === id
-					? {
-							active,
-							odataFilterString,
-							selectedData,
-							selectedItemsLabel,
-							value,
-					  }
-					: {}),
-			}));
-		});
-	};
-
 	return (
 		<DataSetContext.Provider
 			value={{
@@ -664,7 +640,6 @@ const DataSet = ({
 				selectedItemsKey,
 				selectedItemsValue,
 				selectionType,
-				setFilter,
 				setFilters,
 				sidePanelId: dataSetSupportSidePanelId,
 				sorting,

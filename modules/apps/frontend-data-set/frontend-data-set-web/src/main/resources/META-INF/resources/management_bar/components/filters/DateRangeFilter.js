@@ -16,9 +16,8 @@ import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayForm from '@clayui/form';
 import PropTypes from 'prop-types';
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 
-import DataSetContext from '../../../DataSetContext';
 import {
 	convertObjectDateToIsoString,
 	formatDateObject,
@@ -46,9 +45,7 @@ const getOdataString = ({id, selectedData}) => {
 		return `${id} le ${convertObjectDateToIsoString(to, 'to')}`;
 	}
 };
-function DateRangeFilter({id, max, min, placeholder, selectedData}) {
-	const {setFilter} = useContext(DataSetContext);
-
+function DateRangeFilter({id, max, min, placeholder, selectedData, setFilter}) {
 	const [fromValue, setFromValue] = useState(
 		selectedData?.from && formatDateObject(selectedData.from)
 	);

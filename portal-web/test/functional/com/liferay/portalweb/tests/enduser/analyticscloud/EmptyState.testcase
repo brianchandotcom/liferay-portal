@@ -317,4 +317,49 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: LRAC-10698 | Automation ID: LRAC-10869 | Test Summary: Empty state for all workspace pages"
+	@priority = "2"
+	test CheckMessageWhenNoPropertyNoDataSource {
+		property test.name.skip.portal.instance = "EmptyState#CheckMessageWhenNoPropertyNoDataSource";
+
+		var textValue = "First, complete the onboarding to get your workspace set up.";
+
+		task ("Close the onboarding modal") {
+			ACUtils.closeModal();
+		}
+
+		task ("Asset that there are no properties on the sites page") {
+			AssertElementPresent(locator1 = "ACSidebar#PROPERTY_MENU_NO_PROPERTIES");
+
+			AssertElementPresent(locator1 = "TextInput#NO_PROPERTIES_AVAILABLE_TEXT");
+		}
+
+		for (var pageName : list "sites,assets,event-analysis,segments,accounts,individuals,tests") {
+			task ("Navigate to AC pages") {
+				ACNavigation.goToSidebarOption(sidebarOption = "${pageName}");
+			}
+
+			task ("Check the empty page status message") {
+				ACUtils.viewGenericText(textValueList = "You are Almost There");
+
+				AssertTextEquals.assertPartialText(
+					key_textValue = "${textValue}",
+					locator1 = "ACUtils#GENERIC_TEXT",
+					value1 = "${textValue}");
+			}
+
+			task ("Click on the button and start the onboarding modal") {
+				ACUtils.clickAnyButton(button = "Start");
+			}
+
+			task ("Check the onboarding modal is present") {
+				ACUtils.viewGenericText(textValueList = "Welcome to Analytics Cloud,Just a few more steps to set up your workspace.");
+			}
+
+			task ("Close the onboarding modal") {
+				ACUtils.closeModal();
+			}
+		}
+	}
+
 }

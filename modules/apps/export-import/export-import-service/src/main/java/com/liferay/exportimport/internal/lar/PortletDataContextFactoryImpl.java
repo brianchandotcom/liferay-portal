@@ -148,12 +148,10 @@ public class PortletDataContextFactoryImpl
 		PortletDataContext portletDataContext = _createPortletDataContext(
 			companyId, groupId);
 
-		String dataStrategy = MapUtil.getString(
-			parameterMap, PortletDataHandlerKeys.DATA_STRATEGY,
-			PortletDataHandlerKeys.DATA_STRATEGY_MIRROR);
-
-		portletDataContext.setDataStrategy(dataStrategy);
-
+		portletDataContext.setDataStrategy(
+			MapUtil.getString(
+				parameterMap, PortletDataHandlerKeys.DATA_STRATEGY,
+				PortletDataHandlerKeys.DATA_STRATEGY_MIRROR));
 		portletDataContext.setNewLayouts(new ArrayList<Layout>());
 		portletDataContext.setParameterMap(parameterMap);
 		portletDataContext.setUserIdStrategy(userIdStrategy);
@@ -305,26 +303,16 @@ public class PortletDataContextFactoryImpl
 
 		Element headerElement = rootElement.element("header");
 
-		long sourceCompanyId = GetterUtil.getLong(
-			headerElement.attributeValue("company-id"));
-
-		portletDataContext.setSourceCompanyId(sourceCompanyId);
-
-		long sourceCompanyGroupId = GetterUtil.getLong(
-			headerElement.attributeValue("company-group-id"));
-
-		portletDataContext.setSourceCompanyGroupId(sourceCompanyGroupId);
-
-		long sourceGroupId = GetterUtil.getLong(
-			headerElement.attributeValue("group-id"));
-
-		portletDataContext.setSourceGroupId(sourceGroupId);
-
-		long sourceUserPersonalSiteGroupId = GetterUtil.getLong(
-			headerElement.attributeValue("user-personal-site-group-id"));
-
+		portletDataContext.setSourceCompanyId(
+			GetterUtil.getLong(headerElement.attributeValue("company-id")));
+		portletDataContext.setSourceCompanyGroupId(
+			GetterUtil.getLong(
+				headerElement.attributeValue("company-group-id")));
+		portletDataContext.setSourceGroupId(
+			GetterUtil.getLong(headerElement.attributeValue("group-id")));
 		portletDataContext.setSourceUserPersonalSiteGroupId(
-			sourceUserPersonalSiteGroupId);
+			GetterUtil.getLong(
+				headerElement.attributeValue("user-personal-site-group-id")));
 
 		Element missingReferencesElement = rootElement.element(
 			"missing-references");

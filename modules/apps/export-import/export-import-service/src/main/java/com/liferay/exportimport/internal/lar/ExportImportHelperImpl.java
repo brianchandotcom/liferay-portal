@@ -108,7 +108,6 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -142,10 +141,8 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 	@Override
 	public long[] getAllLayoutIds(long groupId, boolean privateLayout) {
-		List<Layout> layouts = _layoutLocalService.getLayouts(
-			groupId, privateLayout);
-
-		return getLayoutIds(layouts);
+		return getLayoutIds(
+			_layoutLocalService.getLayouts(groupId, privateLayout));
 	}
 
 	@Override
@@ -1510,11 +1507,10 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 					Group.class);
 
-			long groupId = MapUtil.getLong(
-				groupIds,
-				GetterUtil.getLong(element.attributeValue("group-id")));
-
-			missingReference.setGroupId(groupId);
+			missingReference.setGroupId(
+				MapUtil.getLong(
+					groupIds,
+					GetterUtil.getLong(element.attributeValue("group-id"))));
 
 			return missingReference;
 		}
@@ -1561,12 +1557,11 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			if (elementName.equals("header")) {
 				String exportDateString = element.attributeValue("export-date");
 
-				Date exportDate = GetterUtil.getDate(
-					exportDateString,
-					DateFormatFactoryUtil.getSimpleDateFormat(
-						Time.RFC822_FORMAT));
-
-				_manifestSummary.setExportDate(exportDate);
+				_manifestSummary.setExportDate(
+					GetterUtil.getDate(
+						exportDateString,
+						DateFormatFactoryUtil.getSimpleDateFormat(
+							Time.RFC822_FORMAT)));
 			}
 			else if (elementName.equals("portlet")) {
 				String portletId = element.attributeValue("portlet-id");

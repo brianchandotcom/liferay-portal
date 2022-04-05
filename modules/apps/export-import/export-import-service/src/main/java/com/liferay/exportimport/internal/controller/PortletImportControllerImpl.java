@@ -49,7 +49,6 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerStatusMessageSender;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
-import com.liferay.exportimport.kernel.lar.UserIdStrategy;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleManager;
 import com.liferay.exportimport.kernel.lifecycle.constants.ExportImportLifecycleConstants;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
@@ -819,12 +818,9 @@ public class PortletImportControllerImpl implements PortletImportController {
 			validateFile(
 				layout.getCompanyId(), targetGroupId, portletId, zipReader);
 
-			PortletDataContext portletDataContext = getPortletDataContext(
-				exportImportConfiguration, file);
-
 			MissingReferences missingReferences =
 				_exportImportHelper.validateMissingReferences(
-					portletDataContext);
+					getPortletDataContext(exportImportConfiguration, file));
 
 			Map<String, MissingReference> dependencyMissingReferences =
 				missingReferences.getDependencyMissingReferences();
@@ -940,13 +936,12 @@ public class PortletImportControllerImpl implements PortletImportController {
 		String userIdStrategyString = MapUtil.getString(
 			parameterMap, PortletDataHandlerKeys.USER_ID_STRATEGY);
 
-		UserIdStrategy userIdStrategy = _exportImportHelper.getUserIdStrategy(
-			userId, userIdStrategyString);
-
 		PortletDataContext portletDataContext =
 			_portletDataContextFactory.createImportPortletDataContext(
 				layout.getCompanyId(), targetGroupId, parameterMap,
-				userIdStrategy, ZipReaderFactoryUtil.getZipReader(file));
+				_exportImportHelper.getUserIdStrategy(
+					userId, userIdStrategyString),
+				ZipReaderFactoryUtil.getZipReader(file));
 
 		portletDataContext.setExportImportProcessId(
 			String.valueOf(
@@ -1442,9 +1437,7 @@ public class PortletImportControllerImpl implements PortletImportController {
 				Indexer<User> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 					User.class);
 
-				User user = _userLocalService.fetchUser(userId);
-
-				indexer.reindex(user);
+				indexer.reindex(_userLocalService.fetchUser(userId));
 			}
 		}
 

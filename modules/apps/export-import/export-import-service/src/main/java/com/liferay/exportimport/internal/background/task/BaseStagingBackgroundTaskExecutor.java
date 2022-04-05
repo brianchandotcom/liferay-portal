@@ -120,11 +120,8 @@ public abstract class BaseStagingBackgroundTaskExecutor
 		serviceContext.setCompanyId(layoutSet.getCompanyId());
 
 		serviceContext.setSignedIn(false);
-
-		long defaultUserId = UserLocalServiceUtil.getDefaultUserId(
-			layoutSet.getCompanyId());
-
-		serviceContext.setUserId(defaultUserId);
+		serviceContext.setUserId(
+			UserLocalServiceUtil.getDefaultUserId(layoutSet.getCompanyId()));
 
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 	}
@@ -169,11 +166,11 @@ public abstract class BaseStagingBackgroundTaskExecutor
 			missingReferences.getWeakMissingReferences();
 
 		if (MapUtil.isNotEmpty(weakMissingReferences)) {
-			BackgroundTask backgroundTask =
-				BackgroundTaskManagerUtil.fetchBackgroundTask(backgroundTaskId);
-
 			JSONArray jsonArray = StagingUtil.getWarningMessagesJSONArray(
-				getLocale(backgroundTask), weakMissingReferences);
+				getLocale(
+					BackgroundTaskManagerUtil.fetchBackgroundTask(
+						backgroundTaskId)),
+				weakMissingReferences);
 
 			backgroundTaskResult.setStatusMessage(jsonArray.toString());
 		}

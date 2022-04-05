@@ -266,13 +266,13 @@ public class ExportImportConfigurationSettingsMapFactoryImpl
 				portletRequest);
 
 		if (liveGroup != null) {
-			long[] layoutIds = _exportImportHelper.getLayoutIds(
-				layoutIdMap, liveGroup.getGroupId());
-
 			return buildPublishLayoutLocalSettingsMap(
 				themeDisplay.getUserId(), stagingGroup.getGroupId(),
-				liveGroup.getGroupId(), privateLayout, layoutIds, parameterMap,
-				themeDisplay.getLocale(), themeDisplay.getTimeZone());
+				liveGroup.getGroupId(), privateLayout,
+				_exportImportHelper.getLayoutIds(
+					layoutIdMap, liveGroup.getGroupId()),
+				parameterMap, themeDisplay.getLocale(),
+				themeDisplay.getTimeZone());
 		}
 
 		UnicodeProperties groupTypeSettingsUnicodeProperties =

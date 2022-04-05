@@ -279,12 +279,8 @@ public class LayoutExportController implements ExportController {
 
 		headerElement.addAttribute("type", type);
 		portletDataContext.setType(type);
-
-		Element missingReferencesElement = rootElement.addElement(
-			"missing-references");
-
 		portletDataContext.setMissingReferencesElement(
-			missingReferencesElement);
+			rootElement.addElement("missing-references"));
 
 		rootElement.addElement("site-portlets");
 		rootElement.addElement("site-services");

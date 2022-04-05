@@ -987,12 +987,11 @@ public class PortletDataContextImpl implements PortletDataContext {
 	public Element getReferenceDataElement(
 		Element parentElement, Class<?> clazz, long classPK) {
 
-		List<Element> referenceElements = getReferenceElements(
-			parentElement, clazz.getName(), 0, null, (Serializable)classPK,
-			null);
-
 		List<Element> referenceDataElements = getReferenceDataElements(
-			referenceElements, clazz);
+			getReferenceElements(
+				parentElement, clazz.getName(), 0, null, (Serializable)classPK,
+				null),
+			clazz);
 
 		if (referenceDataElements.isEmpty()) {
 			return null;
@@ -1005,11 +1004,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 	public Element getReferenceDataElement(
 		Element parentElement, Class<?> clazz, long groupId, String uuid) {
 
-		List<Element> referenceElements = getReferenceElements(
-			parentElement, clazz.getName(), groupId, uuid, null, null);
-
 		List<Element> referenceDataElements = getReferenceDataElements(
-			referenceElements, clazz);
+			getReferenceElements(
+				parentElement, clazz.getName(), groupId, uuid, null, null),
+			clazz);
 
 		if (referenceDataElements.isEmpty()) {
 			return null;
@@ -1043,10 +1041,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 	public List<Element> getReferenceDataElements(
 		Element parentElement, Class<?> clazz, String referenceType) {
 
-		List<Element> referenceElements = getReferenceElements(
-			parentElement, clazz.getName(), 0, null, null, referenceType);
-
-		return getReferenceDataElements(referenceElements, clazz);
+		return getReferenceDataElements(
+			getReferenceElements(
+				parentElement, clazz.getName(), 0, null, null, referenceType),
+			clazz);
 	}
 
 	@Override
@@ -1060,10 +1058,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 	public List<Element> getReferenceDataElements(
 		StagedModel parentStagedModel, Class<?> clazz, String referenceType) {
 
-		List<Element> referenceElements = getReferenceElements(
-			parentStagedModel, clazz.getName(), null, referenceType);
-
-		return getReferenceDataElements(referenceElements, clazz);
+		return getReferenceDataElements(
+			getReferenceElements(
+				parentStagedModel, clazz.getName(), null, referenceType),
+			clazz);
 	}
 
 	@Override
@@ -1944,10 +1942,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 				"asset-entry-priority");
 
 			if (assetPriorityAttribute != null) {
-				double assetPriority = GetterUtil.getDouble(
-					assetPriorityAttribute.getValue());
-
-				serviceContext.setAssetPriority(assetPriority);
+				serviceContext.setAssetPriority(
+					GetterUtil.getDouble(assetPriorityAttribute.getValue()));
 			}
 		}
 

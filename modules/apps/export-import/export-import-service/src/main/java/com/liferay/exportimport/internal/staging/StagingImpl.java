@@ -267,12 +267,12 @@ public class StagingImpl implements Staging {
 				groupId,
 				StagingConstants.RANGE_FROM_LAST_PUBLISH_DATE_CHANGESET_NAME);
 
-		long classNameId = _classNameLocalService.getClassNameId(
-			stagedGroupedModel.getModelClassName());
 		long classPK = (long)stagedGroupedModel.getPrimaryKeyObj();
 
 		_changesetEntryLocalService.fetchOrAddChangesetEntry(
-			changesetCollection.getChangesetCollectionId(), classNameId,
+			changesetCollection.getChangesetCollectionId(),
+			_classNameLocalService.getClassNameId(
+				stagedGroupedModel.getModelClassName()),
 			classPK);
 	}
 
@@ -2831,13 +2831,13 @@ public class StagingImpl implements Staging {
 			return;
 		}
 
-		long classNameId = _classNameLocalService.getClassNameId(
-			stagedGroupedModel.getModelClassName());
 		long classPK = (long)stagedGroupedModel.getPrimaryKeyObj();
 
 		ChangesetEntry changesetEntry =
 			_changesetEntryLocalService.fetchChangesetEntry(
-				changesetCollection.getChangesetCollectionId(), classNameId,
+				changesetCollection.getChangesetCollectionId(),
+				_classNameLocalService.getClassNameId(
+					stagedGroupedModel.getModelClassName()),
 				classPK);
 
 		if (changesetEntry == null) {
@@ -3908,10 +3908,9 @@ public class StagingImpl implements Staging {
 		int recurrenceType = ParamUtil.getInteger(
 			portletRequest, "recurrenceType");
 
-		String cronText = SchedulerEngineHelperUtil.getCronText(
-			portletRequest, startCalendar, false, recurrenceType);
-
-		scheduleInformation.setCronText(cronText);
+		scheduleInformation.setCronText(
+			SchedulerEngineHelperUtil.getCronText(
+				portletRequest, startCalendar, false, recurrenceType));
 
 		String destinationName = DestinationNames.LAYOUTS_LOCAL_PUBLISHER;
 
@@ -3919,10 +3918,8 @@ public class StagingImpl implements Staging {
 			destinationName = DestinationNames.LAYOUTS_REMOTE_PUBLISHER;
 		}
 
-		String groupName = getSchedulerGroupName(
-			destinationName, targetGroupId);
-
-		scheduleInformation.setGroupName(groupName);
+		scheduleInformation.setGroupName(
+			getSchedulerGroupName(destinationName, targetGroupId));
 
 		Date schedulerEndDate = null;
 

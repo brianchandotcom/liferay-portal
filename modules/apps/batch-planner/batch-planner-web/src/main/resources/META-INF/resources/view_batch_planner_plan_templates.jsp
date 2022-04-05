@@ -30,7 +30,7 @@ BatchPlannerPlanTemplateManagementToolbarDisplayContext batchPlannerPlanTemplate
 
 <clay:management-toolbar
 	managementToolbarDisplayContext="<%= batchPlannerPlanTemplateManagementToolbarDisplayContext %>"
-	propsTransformer="js/BatchPlannerPlanManagementToolbarPropsTransformer"
+	propsTransformer="js/BatchPlannerPlanTemplateManagementToolbarPropsTransformer"
 />
 
 <clay:container-fluid>

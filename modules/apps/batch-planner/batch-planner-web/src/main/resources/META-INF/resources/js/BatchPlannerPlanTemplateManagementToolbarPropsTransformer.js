@@ -15,7 +15,7 @@
 import {postForm} from 'frontend-js-web';
 
 export default function propsTransformer({portletNamespace, ...otherProps}) {
-	const deleteBatchPlannerPlans = (itemData) => {
+	const deleteBatchPlannerPlanTemplates = (itemData) => {
 		if (
 			confirm(
 				Liferay.Language.get(
@@ -26,7 +26,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 			const form = document.getElementById(`${portletNamespace}fm`);
 
 			const searchContainer = document.getElementById(
-				`${portletNamespace}batchPlannerPlanSearchContainer`
+				`${portletNamespace}batchPlannerPlanTemplateSearchContainer`
 			);
 
 			if (form && searchContainer) {
@@ -37,7 +37,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 							`${portletNamespace}allRowIds`
 						),
 					},
-					url: itemData?.deleteBatchPlannerPlansURL,
+					url: itemData?.deleteBatchPlannerPlanTemplatesURL,
 				});
 			}
 		}
@@ -50,8 +50,8 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 
 			const action = data?.action;
 
-			if (action === 'deleteBatchPlannerPlans') {
-				deleteBatchPlannerPlans(data);
+			if (action === 'deleteBatchPlannerPlanTemplates') {
+				deleteBatchPlannerPlanTemplates(data);
 			}
 		},
 	};

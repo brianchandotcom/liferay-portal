@@ -330,8 +330,7 @@ public class FriendlyURLEntryLocalServiceImpl
 
 	@Override
 	public FriendlyURLEntry fetchMainFriendlyURLEntry(
-			long classNameId, long classPK)
-		throws PortalException {
+		long classNameId, long classPK) {
 
 		FriendlyURLEntryMapping friendlyURLEntryMapping =
 			friendlyURLEntryMappingPersistence.fetchByC_C(classNameId, classPK);

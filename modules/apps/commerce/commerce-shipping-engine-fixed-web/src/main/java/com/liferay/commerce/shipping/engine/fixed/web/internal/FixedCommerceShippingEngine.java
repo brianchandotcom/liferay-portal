@@ -159,7 +159,7 @@ public class FixedCommerceShippingEngine implements CommerceShippingEngine {
 			if (_commerceShippingHelper.isFreeShipping(commerceOrder)) {
 				commerceShippingOptions.add(
 					new CommerceShippingOption(
-						KEY, key, name, BigDecimal.ZERO, priority));
+						BigDecimal.ZERO, KEY, key, name, priority));
 
 				continue;
 			}
@@ -192,7 +192,7 @@ public class FixedCommerceShippingEngine implements CommerceShippingEngine {
 			}
 
 			commerceShippingOptions.add(
-				new CommerceShippingOption(KEY, key, name, amount, priority));
+				new CommerceShippingOption(amount, KEY, key, name, priority));
 		}
 
 		return ListUtil.sort(

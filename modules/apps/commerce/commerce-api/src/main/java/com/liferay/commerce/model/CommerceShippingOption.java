@@ -23,13 +23,13 @@ import java.math.BigDecimal;
 public class CommerceShippingOption {
 
 	public CommerceShippingOption(
-		String commerceShippingMethodKey, String key, String name,
-		BigDecimal amount, double priority) {
+		BigDecimal amount, String commerceShippingMethodKey, String key,
+		String name, double priority) {
 
+		_amount = amount;
 		_commerceShippingMethodKey = commerceShippingMethodKey;
 		_key = key;
 		_name = name;
-		_amount = amount;
 		_priority = priority;
 	}
 

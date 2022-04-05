@@ -240,7 +240,7 @@ public class FedExCommerceShippingOptionHelper {
 
 			commerceShippingOptions.add(
 				new CommerceShippingOption(
-					FedExCommerceShippingEngine.KEY, name, label, amount,
+					amount, FedExCommerceShippingEngine.KEY, name, label,
 					priority--));
 		}
 

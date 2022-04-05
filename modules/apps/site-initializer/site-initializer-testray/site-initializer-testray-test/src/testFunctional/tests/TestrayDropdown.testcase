@@ -75,7 +75,7 @@ definition {
 	test CanNotAcessDropdownOnProjectDirectory {
 		ApplicationsMenu.gotoSite(site = "Testray 2");
 
-		Click(locator1 = "TestrayTestflow#TESTFLOW_RESULTS");
+		Click(locator1 = "Testray#RESULTS_SIDEBAR");
 
 		AssertElementNotPresent(locator1 = "TestrayDropdown#DROPDOWN_PROJECT");
 	}

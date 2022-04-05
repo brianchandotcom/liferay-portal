@@ -40,11 +40,6 @@
 	<td>//div[contains(@data-field-name, 'dueStatus')]//input[contains(@type, 'text')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td>TESTFLOW_RESULTS</td>
-	<td>//span[contains(text(),'Results')]</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

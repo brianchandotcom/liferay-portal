@@ -1,0 +1,61 @@
+@component-name = "portal-solutions"
+definition {
+
+	property osgi.modules.includes = "site-initializer-testray";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Testray 2";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Testray.createTestraySite(siteName = "Testray 2");
+
+		Refresh();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		Testray.tearDownCP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+    @description = "LPS-150255 - Verify the user can enter on Testflow page."
+    @priority = "5"
+    test CanAcessTestflowPage {
+        ApplicationsMenu.gotoSite(site = "Testray 2");
+
+        Click(locator1 = "TestrayTestflow#TESTFLOW_SIDEBAR");
+
+        AssertElementPresent(
+            locator1 = "Testray#NAME_TITLE",
+            key_title = "Tasks");
+    }
+
+    @description = "LPS-150256 - Verify the User can click on Current Tab."
+    @priority = "5"
+    test CanAcessCurrentTab {
+        ApplicationsMenu.gotoSite(site = "Testray 2");
+
+        Click(locator1 = "TestrayTestflow#TESTFLOW_SIDEBAR");
+
+        Click(
+            locator1 = "Testray#PROJECT_NAVIGATOR_TAB_BUTTON",
+            key_navTabName = "Archived");
+
+        Click(
+            locator1 = "Testray#PROJECT_NAVIGATOR_TAB_BUTTON",
+            key_navTabName = "Current");
+
+        AssertElementPresent(
+            locator1 = "Testray#NAME_TITLE",
+            key_title = "Tasks");
+    }
+
+}

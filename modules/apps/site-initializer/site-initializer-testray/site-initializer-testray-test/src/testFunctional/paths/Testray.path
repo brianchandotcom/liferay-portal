@@ -65,6 +65,11 @@
 	<td>//div[contains(@class, 'testray-page')]//button[contains(@class, 'nav-btn')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>RESULTS_SIDEBAR</td>
+	<td>//span[contains(text(),'Results')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

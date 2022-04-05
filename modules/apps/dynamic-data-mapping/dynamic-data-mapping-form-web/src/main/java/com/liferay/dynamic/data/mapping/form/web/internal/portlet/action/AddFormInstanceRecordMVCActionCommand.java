@@ -255,11 +255,10 @@ public class AddFormInstanceRecordMVCActionCommand
 		DDMFormInstanceSettings ddmFormInstanceSettings =
 			ddmFormInstance.getSettingsModel();
 
-		String formLayoutURL =
-			_addDefaultSharedFormLayoutPortalInstanceLifecycleListener.
-				getFormLayoutURL(themeDisplay);
-
-		if (StringUtil.startsWith(currentURL, formLayoutURL) &&
+		if (StringUtil.startsWith(
+				currentURL,
+				_addDefaultSharedFormLayoutPortalInstanceLifecycleListener.
+					getFormLayoutURL(themeDisplay)) &&
 			!ddmFormInstanceSettings.published()) {
 
 			throw new FormInstanceNotPublishedException(

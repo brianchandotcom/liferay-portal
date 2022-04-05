@@ -81,12 +81,10 @@ public class AddFormInstanceRecordMVCCommandHelper {
 		Set<String> nonevaluableFieldNames = _getNonevaluableFieldNames(
 			ddmFormEvaluatorEvaluateResponse);
 
-		Set<String> fieldNamesFromDisabledPages =
+		nonevaluableFieldNames.addAll(
 			_getFieldNamesFromDisabledPages(
 				_getDDMFormLayout(actionRequest),
-				ddmFormEvaluatorEvaluateResponse.getDisabledPagesIndexes());
-
-		nonevaluableFieldNames.addAll(fieldNamesFromDisabledPages);
+				ddmFormEvaluatorEvaluateResponse.getDisabledPagesIndexes()));
 
 		_removeDDMFormFieldValues(
 			ddmFormValues.getDDMFormFieldValuesMap(true),

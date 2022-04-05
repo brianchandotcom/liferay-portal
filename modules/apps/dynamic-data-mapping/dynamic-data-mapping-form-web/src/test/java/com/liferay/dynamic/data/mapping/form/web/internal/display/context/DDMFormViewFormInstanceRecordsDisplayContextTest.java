@@ -126,11 +126,10 @@ public class DDMFormViewFormInstanceRecordsDisplayContextTest
 			ddmFormValues
 		);
 
-		Locale defaultLocale =
+		Assert.assertEquals(
+			LocaleUtil.US,
 			_ddmFormViewFormInstanceRecordsDisplayContext.getDefaultLocale(
-				ddmFormInstanceRecord);
-
-		Assert.assertEquals(LocaleUtil.US, defaultLocale);
+				ddmFormInstanceRecord));
 	}
 
 	@Test

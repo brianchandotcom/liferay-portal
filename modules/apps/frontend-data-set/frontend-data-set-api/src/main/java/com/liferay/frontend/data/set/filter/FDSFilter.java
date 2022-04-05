@@ -14,6 +14,8 @@
 
 package com.liferay.frontend.data.set.filter;
 
+import java.util.Map;
+
 /**
  * @author Marco Leo
  */
@@ -22,6 +24,10 @@ public interface FDSFilter {
 	public String getId();
 
 	public String getLabel();
+
+	public default Map<String, Object> getPreloadedData() {
+		return null;
+	}
 
 	public String getType();
 

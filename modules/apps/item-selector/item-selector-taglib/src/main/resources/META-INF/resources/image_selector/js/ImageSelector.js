@@ -15,6 +15,7 @@
 import ClayIcon from '@clayui/icon';
 import {State} from '@liferay/frontend-js-state-web';
 import classNames from 'classnames';
+import {STATUS_CODE} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
 
@@ -30,7 +31,6 @@ import ProgressWrapper from './ProgressWrapper';
 
 const CSS_DROP_ACTIVE = 'drop-active';
 const CSS_PROGRESS_ACTIVE = 'progress-active';
-const STATUS_CODE = Liferay.STATUS_CODE;
 
 const STR_SPACE = ' ';
 

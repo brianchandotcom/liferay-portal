@@ -14,7 +14,12 @@
 
 import {render} from '@liferay/frontend-js-react-web';
 import {ClayAlert} from 'clay-alert';
-import {EventHandler, PortletBase, delegate} from 'frontend-js-web';
+import {
+	EventHandler,
+	PortletBase,
+	STATUS_CODE,
+	delegate,
+} from 'frontend-js-web';
 import {Config} from 'metal-state';
 import ReactDOM from 'react-dom';
 
@@ -23,7 +28,6 @@ import ItemSelectorPreview from '../../item_selector_preview/js/ItemSelectorPrev
 const STR_DRAG_LEAVE = 'dragleave';
 const STR_DRAG_OVER = 'dragover';
 const STR_DROP = 'drop';
-const statusCode = Liferay.STATUS_CODE;
 
 /**
  * Handles the events in the Repository Entry Browser taglib.
@@ -265,13 +269,13 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 			const errorType = error.errorType;
 
 			switch (errorType) {
-				case statusCode.SC_FILE_ANTIVIRUS_EXCEPTION:
+				case STATUS_CODE.SC_FILE_ANTIVIRUS_EXCEPTION:
 					if (error.message) {
 						message = error.message;
 					}
 
 					break;
-				case statusCode.SC_FILE_EXTENSION_EXCEPTION:
+				case STATUS_CODE.SC_FILE_EXTENSION_EXCEPTION:
 					if (error.message) {
 						message = Liferay.Util.sub(
 							Liferay.Language.get(
@@ -287,14 +291,14 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 					}
 
 					break;
-				case statusCode.SC_FILE_NAME_EXCEPTION:
+				case STATUS_CODE.SC_FILE_NAME_EXCEPTION:
 					message = Liferay.Language.get(
 						'please-enter-a-file-with-a-valid-file-name'
 					);
 
 					break;
-				case statusCode.SC_FILE_SIZE_EXCEPTION:
-				case statusCode.SC_UPLOAD_REQUEST_CONTENT_LENGTH_EXCEPTION:
+				case STATUS_CODE.SC_FILE_SIZE_EXCEPTION:
+				case STATUS_CODE.SC_UPLOAD_REQUEST_CONTENT_LENGTH_EXCEPTION:
 					message = Liferay.Util.sub(
 						Liferay.Language.get(
 							'please-enter-a-file-with-a-valid-file-size-no-larger-than-x'
@@ -303,7 +307,7 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 					);
 
 					break;
-				case statusCode.SC_UPLOAD_REQUEST_SIZE_EXCEPTION: {
+				case STATUS_CODE.SC_UPLOAD_REQUEST_SIZE_EXCEPTION: {
 					const maxUploadRequestSize =
 						Liferay.PropsValues
 							.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE;

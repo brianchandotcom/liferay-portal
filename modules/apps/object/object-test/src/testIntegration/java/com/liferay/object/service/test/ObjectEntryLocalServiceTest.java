@@ -504,7 +504,7 @@ public class ObjectEntryLocalServiceTest {
 				TestPropsValues.getUserId(),
 				_objectDefinition.getObjectDefinitionId(), true,
 				ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				LocalizedMapUtil.getLocalizedMap("Field must be an email"),
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"isEmailAddress(emailAddress)");
 
@@ -525,7 +525,7 @@ public class ObjectEntryLocalServiceTest {
 		catch (ModelListenerException modelListenerException) {
 			String message = modelListenerException.getMessage();
 
-			Assert.assertTrue(message.contains(RandomTestUtil.randomString()));
+			Assert.assertTrue(message.contains("Field must be an email"));
 		}
 
 		objectEntry = _addObjectEntry(
@@ -562,13 +562,14 @@ public class ObjectEntryLocalServiceTest {
 
 		Assert.assertNotNull(objectEntry);
 
-		_objectValidationRuleLocalService.addObjectValidationRule(
-			TestPropsValues.getUserId(),
-			_objectDefinition.getObjectDefinitionId(), true,
-			ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
-			LocalizedMapUtil.getLocalizedMap("Names must be equals"),
-			LocalizedMapUtil.getLocalizedMap("Name Validation"),
-			"equals(lastName, middleName)");
+		objectValidationRule =
+			_objectValidationRuleLocalService.addObjectValidationRule(
+				TestPropsValues.getUserId(),
+				_objectDefinition.getObjectDefinitionId(), true,
+				ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
+				LocalizedMapUtil.getLocalizedMap("Names must be equals"),
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"equals(lastName, middleName)");
 
 		try {
 			objectEntry = _addObjectEntry(

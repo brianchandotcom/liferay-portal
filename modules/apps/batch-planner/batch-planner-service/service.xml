@@ -4,55 +4,6 @@
 <service-builder auto-namespace-tables="false" mvcc-enabled="true" package-path="com.liferay.batch.planner">
 	<author>Igor Beslic</author>
 	<namespace>BatchPlanner</namespace>
-	<entity local-service="true" name="BatchPlannerLog" remote-service="true">
-
-		<!-- PK fields -->
-
-		<column name="batchPlannerLogId" primary="true" type="long" />
-
-		<!-- Audit fields -->
-
-		<column name="companyId" type="long" />
-		<column name="userId" type="long" />
-		<column name="userName" type="String" />
-		<column name="createDate" type="Date" />
-		<column name="modifiedDate" type="Date" />
-
-		<!-- Other fields -->
-
-		<column name="batchPlannerPlanId" type="long" />
-		<column name="batchEngineExportTaskERC" type="String" />
-		<column name="batchEngineImportTaskERC" type="String" />
-		<column name="dispatchTriggerERC" type="String" />
-		<column name="size" type="int" />
-		<column name="total" type="int" />
-		<column name="status" type="int" />
-
-		<!-- Order -->
-
-		<order by="desc">
-			<order-column name="modifiedDate" />
-		</order>
-
-		<!-- Finder methods -->
-
-		<finder name="CompanyId" return-type="Collection">
-			<finder-column name="companyId" />
-		</finder>
-		<finder name="BatchPlannerPlanId" return-type="BatchPlannerLog">
-			<finder-column name="batchPlannerPlanId" />
-		</finder>
-		<finder name="BatchEngineExportTaskERC" return-type="BatchPlannerLog" unique="true">
-			<finder-column name="batchEngineExportTaskERC" />
-		</finder>
-		<finder name="BatchEngineImportTaskERC" return-type="BatchPlannerLog" unique="true">
-			<finder-column name="batchEngineImportTaskERC" />
-		</finder>
-		<finder name="BPPI_DTERC" return-type="BatchPlannerLog" unique="true">
-			<finder-column name="batchPlannerPlanId" />
-			<finder-column name="dispatchTriggerERC" />
-		</finder>
-	</entity>
 	<entity local-service="true" name="BatchPlannerMapping" remote-service="true">
 
 		<!-- PK fields -->
@@ -115,8 +66,11 @@
 		<column name="externalURL" type="String" />
 		<column name="internalClassName" type="String" />
 		<column name="name" type="String" />
+		<column name="size" type="int" />
 		<column name="taskItemDelegateName" type="String" />
+		<column name="total" type="int" />
 		<column name="template" type="boolean" />
+		<column name="status" type="int" />
 
 		<!-- Order -->
 
@@ -188,8 +142,6 @@
 		</finder>
 	</entity>
 	<exceptions>
-		<exception>BatchPlannerLogBatchEngineExportTaskERC</exception>
-		<exception>BatchPlannerLogBatchEngineImportTaskERC</exception>
 		<exception>BatchPlannerMappingExternalFieldName</exception>
 		<exception>BatchPlannerMappingExternalFieldType</exception>
 		<exception>BatchPlannerMappingInternalFieldName</exception>

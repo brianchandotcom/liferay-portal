@@ -89,9 +89,6 @@ public class SaveFrontendIconsPackFromSpritemapMVCActionCommand
 			return;
 		}
 
-		InputStream inputStream = uploadPortletRequest.getFileAsStream(
-			"svgFile");
-
 		String name = ParamUtil.getString(actionRequest, "name");
 
 		FrontendIconsResourcePack frontendIconsResourcePack =
@@ -101,6 +98,9 @@ public class SaveFrontendIconsPackFromSpritemapMVCActionCommand
 		if (frontendIconsResourcePack == null) {
 			frontendIconsResourcePack = new FrontendIconsResourcePack(name);
 		}
+
+		InputStream inputStream = uploadPortletRequest.getFileAsStream(
+			"svgFile");
 
 		frontendIconsResourcePack.addFrontendIconsResources(
 			SVGUtil.getFrontendIconsResources(StringUtil.read(inputStream)));

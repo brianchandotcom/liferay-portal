@@ -33,6 +33,7 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.content.page.editor.listener.ContentPageEditorListener;
 import com.liferay.layout.content.page.editor.listener.ContentPageEditorListenerTracker;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalServiceUtil;
+import com.liferay.layout.util.structure.LayoutStructureItemCSSUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -239,6 +240,10 @@ public class FragmentEntryLinkUtil {
 				"configuration", configurationJSONObject
 			).put(
 				"content", content
+			).put(
+				"cssClass",
+				LayoutStructureItemCSSUtil.getFragmentEntryLinkCssClass(
+					fragmentEntryLink)
 			).put(
 				"defaultConfigurationValues",
 				fragmentEntryConfigurationParser.

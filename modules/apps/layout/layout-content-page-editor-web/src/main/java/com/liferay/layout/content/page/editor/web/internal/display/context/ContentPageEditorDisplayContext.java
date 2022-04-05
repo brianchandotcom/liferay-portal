@@ -82,6 +82,7 @@ import com.liferay.layout.util.structure.CommonStylesUtil;
 import com.liferay.layout.util.structure.DropZoneLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.layout.util.structure.LayoutStructureItemCSSUtil;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.Comment;
@@ -1593,6 +1594,10 @@ public class ContentPageEditorDisplayContext {
 						"configuration", configurationJSONObject
 					).put(
 						"content", content
+					).put(
+						"cssClass",
+						LayoutStructureItemCSSUtil.getFragmentEntryLinkCssClass(
+							fragmentEntryLink)
 					).put(
 						"defaultConfigurationValues",
 						_fragmentEntryConfigurationParser.

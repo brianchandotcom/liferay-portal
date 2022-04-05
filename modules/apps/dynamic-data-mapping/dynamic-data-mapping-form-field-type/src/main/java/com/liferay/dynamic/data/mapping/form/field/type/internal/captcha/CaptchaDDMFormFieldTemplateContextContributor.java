@@ -32,7 +32,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.jsp.PageContext;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -84,11 +83,11 @@ public class CaptchaDDMFormFieldTemplateContextContributor
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
-		PageContext pageContext = PageContextFactoryUtil.create(
-			httpServletRequest,
-			new PipingServletResponse(httpServletResponse, unsyncStringWriter));
-
-		captchaTag.setPageContext(pageContext);
+		captchaTag.setPageContext(
+			PageContextFactoryUtil.create(
+				httpServletRequest,
+				new PipingServletResponse(
+					httpServletResponse, unsyncStringWriter)));
 
 		captchaTag.runTag();
 

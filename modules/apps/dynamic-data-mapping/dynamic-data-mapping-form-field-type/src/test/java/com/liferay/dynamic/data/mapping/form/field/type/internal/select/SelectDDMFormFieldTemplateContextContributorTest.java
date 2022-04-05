@@ -149,11 +149,11 @@ public class SelectDDMFormFieldTemplateContextContributorTest
 		DDMFormFieldOptions ddmFormFieldOptions =
 			DDMFormFieldOptionsTestUtil.createDDMFormFieldOptions();
 
-		List<Map<String, String>> actualOptions = _getActualOptions(
-			new DDMFormField("field", "select"), ddmFormFieldOptions,
-			LocaleUtil.US);
-
-		Assert.assertEquals(expectedOptions, actualOptions);
+		Assert.assertEquals(
+			expectedOptions,
+			_getActualOptions(
+				new DDMFormField("field", "select"), ddmFormFieldOptions,
+				LocaleUtil.US));
 	}
 
 	@Test
@@ -188,10 +188,10 @@ public class SelectDDMFormFieldTemplateContextContributorTest
 
 		ddmFormField.setProperty("alphabeticalOrder", "true");
 
-		actualOptions = _getActualOptions(
-			ddmFormField, ddmFormFieldOptions, LocaleUtil.US);
-
-		Assert.assertEquals(expectedOptions, actualOptions);
+		Assert.assertEquals(
+			expectedOptions,
+			_getActualOptions(
+				ddmFormField, ddmFormFieldOptions, LocaleUtil.US));
 	}
 
 	@Test

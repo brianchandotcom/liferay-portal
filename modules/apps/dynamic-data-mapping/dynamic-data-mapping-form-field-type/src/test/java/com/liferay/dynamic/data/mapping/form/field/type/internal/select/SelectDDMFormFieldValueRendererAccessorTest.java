@@ -54,10 +54,8 @@ public class SelectDDMFormFieldValueRendererAccessorTest {
 
 		int numberOfOptions = 2;
 
-		DDMFormFieldOptions ddmFormFieldOptions = createDDMFormFieldOptions(
-			numberOfOptions);
-
-		ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
+		ddmFormField.setDDMFormFieldOptions(
+			createDDMFormFieldOptions(numberOfOptions));
 
 		ddmForm.addDDMFormField(ddmFormField);
 
@@ -94,10 +92,8 @@ public class SelectDDMFormFieldValueRendererAccessorTest {
 
 		int numberOfOptions = 1;
 
-		DDMFormFieldOptions ddmFormFieldOptions = createDDMFormFieldOptions(
-			numberOfOptions);
-
-		ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
+		ddmFormField.setDDMFormFieldOptions(
+			createDDMFormFieldOptions(numberOfOptions));
 
 		ddmForm.addDDMFormField(ddmFormField);
 

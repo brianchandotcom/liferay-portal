@@ -56,10 +56,9 @@ public class GridDDMFormFieldContextHelperTest {
 		DDMFormFieldOptions ddmFormFieldOptions =
 			DDMFormFieldOptionsTestUtil.createDDMFormFieldOptions();
 
-		List<Object> actualOptions = _getActualOptions(
-			ddmFormFieldOptions, LocaleUtil.US);
-
-		Assert.assertEquals(expectedOptions, actualOptions);
+		Assert.assertEquals(
+			expectedOptions,
+			_getActualOptions(ddmFormFieldOptions, LocaleUtil.US));
 	}
 
 	private List<Object> _getActualOptions(

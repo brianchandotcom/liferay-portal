@@ -144,10 +144,8 @@ public class OptionsDDMFormFieldContextHelper {
 	}
 
 	private String _getDefaultOptionLabel() {
-		ResourceBundle resourceBundle = _getResourceBundle(
-			_ddmForm.getDefaultLocale());
-
-		return LanguageUtil.get(resourceBundle, "option");
+		return LanguageUtil.get(
+			_getResourceBundle(_ddmForm.getDefaultLocale()), "option");
 	}
 
 	private String _getLanguageId() {

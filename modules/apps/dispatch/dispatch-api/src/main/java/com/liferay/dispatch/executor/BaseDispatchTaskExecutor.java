@@ -39,7 +39,7 @@ public abstract class BaseDispatchTaskExecutor implements DispatchTaskExecutor {
 	public abstract void doExecute(
 			DispatchTrigger dispatchTrigger,
 			DispatchTaskExecutorOutput dispatchTaskExecutorOutput)
-		throws IOException, PortalException;
+		throws Exception;
 
 	@Override
 	public void execute(long dispatchTriggerId)

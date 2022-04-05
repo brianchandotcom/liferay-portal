@@ -1,29 +1,5 @@
 components:
     schemas:
-        Log:
-            properties:
-                dispatchTriggerExternalReferenceCode:
-                    type: string
-                exportTaskExternalReferenceCode:
-                    type: string
-                id:
-                    format: int64
-                    type: integer
-                importTaskExternalReferenceCode:
-                    type: string
-                planId:
-                    format: int64
-                    type: integer
-                size:
-                    format: int32
-                    type: integer
-                status:
-                    format: int32
-                    type: integer
-                total:
-                    format: int32
-                    type: integer
-            type: object
         Mapping:
             properties:
                 externalFieldName:
@@ -68,10 +44,19 @@ components:
                     items:
                         $ref: "#/components/schemas/Policy"
                     type: array
+                size:
+                    format: int32
+                    type: integer
+                status:
+                    format: int32
+                    type: integer
                 taskItemDelegateName:
                     type: string
                 template:
                     type: boolean
+                total:
+                    format: int32
+                    type: integer
             type: object
         Policy:
             properties:
@@ -204,23 +189,3 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Plan"
             tags: ["Plan"]
-    /plans/{planId}/log:
-        get:
-            operationId: getPlanLog
-            parameters:
-                - in: path
-                  name: planId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Log"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Log"
-            tags: ["Log"]

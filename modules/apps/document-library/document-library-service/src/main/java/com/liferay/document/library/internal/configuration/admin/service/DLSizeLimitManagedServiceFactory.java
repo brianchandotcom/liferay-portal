@@ -66,7 +66,7 @@ public class DLSizeLimitManagedServiceFactory implements ManagedServiceFactory {
 			return 0;
 		}
 
-		Map<String, Long> map = _mimeTypeSizeLimitsMap.computeIfAbsent(
+		Map<String, Long> map = _companyMimeTypeSizeLimitsMap.computeIfAbsent(
 			companyId, this::_computeCompanyMimeTypeSizeLimit);
 
 		long sizeLimit = map.getOrDefault(mimeType, 0L);
@@ -96,19 +96,14 @@ public class DLSizeLimitManagedServiceFactory implements ManagedServiceFactory {
 			dictionary.get("companyId"), CompanyConstants.SYSTEM);
 
 		if (companyId != CompanyConstants.SYSTEM) {
-			_companyConfigurationBeans.put(
-				companyId,
-				ConfigurableUtil.createConfigurable(
-					DLSizeLimitConfiguration.class, dictionary));
-			_companyIds.put(pid, companyId);
-			_mimeTypeSizeLimitsMap.remove(companyId);
+			_updateCompanyConfiguration(companyId, pid, dictionary);
 		}
 	}
 
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_mimeTypeSizeLimitsMap = new ConcurrentHashMap<>();
+		_companyMimeTypeSizeLimitsMap = new ConcurrentHashMap<>();
 		_systemDLSizeLimitConfiguration = ConfigurableUtil.createConfigurable(
 			DLSizeLimitConfiguration.class, properties);
 	}
@@ -144,14 +139,25 @@ public class DLSizeLimitManagedServiceFactory implements ManagedServiceFactory {
 			long companyId = _companyIds.remove(pid);
 
 			_companyConfigurationBeans.remove(companyId);
-			_mimeTypeSizeLimitsMap.remove(companyId);
+			_companyMimeTypeSizeLimitsMap.remove(companyId);
 		}
+	}
+
+	private void _updateCompanyConfiguration(
+		long companyId, String pid, Dictionary<String, ?> dictionary) {
+
+		_companyConfigurationBeans.put(
+			companyId,
+			ConfigurableUtil.createConfigurable(
+				DLSizeLimitConfiguration.class, dictionary));
+		_companyIds.put(pid, companyId);
+		_companyMimeTypeSizeLimitsMap.remove(companyId);
 	}
 
 	private final Map<Long, DLSizeLimitConfiguration>
 		_companyConfigurationBeans = new ConcurrentHashMap<>();
 	private final Map<String, Long> _companyIds = new ConcurrentHashMap<>();
-	private volatile Map<Long, Map<String, Long>> _mimeTypeSizeLimitsMap;
+	private volatile Map<Long, Map<String, Long>> _companyMimeTypeSizeLimitsMap;
 	private volatile DLSizeLimitConfiguration _systemDLSizeLimitConfiguration;
 
 }

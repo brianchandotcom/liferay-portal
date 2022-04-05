@@ -542,7 +542,7 @@
 </tr>
 <tr>
 	<td>SEARCH_FIELD_MAPPINGS_HEADER</td>
-	<td>//a[contains(text(),'Field Mappings')]</td>
+	<td>//span[contains(text(),'Field Mappings')]</td>
 	<td></td>
 </tr>
 <tr>

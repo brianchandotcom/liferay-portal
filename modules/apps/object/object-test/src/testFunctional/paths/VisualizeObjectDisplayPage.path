@@ -17,7 +17,7 @@
 	</tr>
 	<tr>
 		<td>SELECT_OBJECT</td>
-		<td>//a[contains(text(),'${key_pluralLabelName}')]</td>
+		<td>//span[contains(text(),'${key_pluralLabelName}')]</td>
 		<td></td>
 	</tr>
 	<tr>

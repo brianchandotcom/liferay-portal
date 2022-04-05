@@ -321,7 +321,7 @@
 </tr>
 <tr>
 	<td>MY_SITES_TAB</td>
-	<td>//*[contains(@class, 'nav-link') and contains(text(),'My Sites')]</td>
+	<td>//*[contains(@class, 'nav-link')]//*[contains(text(),'My Sites')]</td>
 	<td></td>
 </tr>
 <tr>

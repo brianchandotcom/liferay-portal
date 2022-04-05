@@ -12,7 +12,7 @@
 <tbody>
 	<tr>
 		<td>ANY_TAB_ON_ENTRY</td>
-		<td>//a[contains(text(),'${key_tabName}')]</td>
+		<td>//span[contains(text(),'${key_tabName}')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -242,7 +242,7 @@
 	</tr>
 	<tr>
 		<td>OBJECT_DETAILS_TAB</td>
-		<td>//a[contains(text(), 'Details')]</td>
+		<td>//span[contains(text(), 'Details')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -252,7 +252,7 @@
 	</tr>
 	<tr>
 		<td>OBJECT_FIELDS_TAB</td>
-		<td>//a[contains(text(),'Fields')]</td>
+		<td>//span[contains(text(),'Fields')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -267,12 +267,12 @@
 	</tr>
 	<tr>
 		<td>OBJECT_LAYOUTS_TAB</td>
-		<td>//a[contains(text(), 'Layouts')]</td>
+		<td>//span[contains(text(), 'Layouts')]</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>OBJECT_RELATIONSHIPS_TAB</td>
-		<td>//a[contains(text(),'Relationship')]</td>
+		<td>//span[contains(text(),'Relationship')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -477,7 +477,7 @@
 	</tr>
 	<tr>
 		<td>OBJECT_ACTIONS_TAB</td>
-		<td>//a[contains(text(),'Actions')]</td>
+		<td>//span[contains(text(),'Actions')]</td>
 		<td></td>
 	</tr>
 	<tr>

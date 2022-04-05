@@ -202,7 +202,7 @@
 </tr>
 <tr>
 	<td>QUESTIONS_LIST_TAB_FIELD</td>
-	<td>//*[contains(@class, 'navbar')]//a[normalize-space(text())='${key_questionTabField}']</td>
+	<td>//*[contains(@class, 'navbar')]//span[normalize-space(text())='${key_questionTabField}']</td>
 	<td></td>
 </tr>
 <tr>

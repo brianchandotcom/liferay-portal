@@ -42,7 +42,7 @@
 </tr>
 <tr>
 	<td>ASSET_TEMPLATE</td>
-	<td>//button[contains(@class,'nav-link') and contains(text(),'Templates')]</td>
+	<td>//button[contains(@class,'nav-link')]//span[contains(text(),'Templates')]</td>
 	<td></td>
 </tr>
 <tr>

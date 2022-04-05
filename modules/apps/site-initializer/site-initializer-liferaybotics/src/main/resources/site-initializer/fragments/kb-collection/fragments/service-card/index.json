@@ -1,0 +1,24 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "fa fa-eye",
+					"description": "button-text",
+					"label": "Service Icon",
+					"name": "icon",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "#",
+					"description": "button-text",
+					"label": "Page Link",
+					"name": "link",
+					"type": "text"
+				}
+			]
+		}
+	]
+}

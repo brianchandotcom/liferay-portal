@@ -1,0 +1,19 @@
+{
+	"hidden": false,
+	"name_i18n": {
+		"en_US": "Dashboard"
+	},
+	"private": true,
+	"system": false,
+	"type": "content",
+	"typeSettings": [
+		{
+			"key": "layoutUpdateable",
+			"value": "true"
+		},
+		{
+			"key": "published",
+			"value": "true"
+		}
+	]
+}

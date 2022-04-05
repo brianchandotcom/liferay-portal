@@ -17,7 +17,6 @@ package com.liferay.object.admin.rest.internal.resource.v1_0;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectValidationRule;
 import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectValidationRuleUtil;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectValidationRuleResource;
-import com.liferay.object.exception.ObjectValidationRuleException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectValidationRuleService;
 import com.liferay.portal.kernel.search.Field;
@@ -117,11 +116,11 @@ public class ObjectValidationRuleResourceImpl
 			_objectValidationRuleService.addObjectValidationRule(
 				objectDefinitionId,
 				GetterUtil.getBoolean(objectValidationRule.getActive()),
+				objectValidationRule.getEngine(),
 				LocalizedMapUtil.getLocalizedMap(
 					objectValidationRule.getErrorLabel()),
 				LocalizedMapUtil.getLocalizedMap(
 					objectValidationRule.getName()),
-				objectValidationRule.getEngine(),
 				objectValidationRule.getScript()));
 	}
 
@@ -136,17 +135,17 @@ public class ObjectValidationRuleResourceImpl
 		return _toObjectValidationRule(
 			_objectValidationRuleService.updateObjectValidationRule(
 				objectValidationRuleId, objectValidationRule.getActive(),
+				objectValidationRule.getEngine(),
 				LocalizedMapUtil.getLocalizedMap(
 					objectValidationRule.getErrorLabel()),
 				LocalizedMapUtil.getLocalizedMap(
 					objectValidationRule.getName()),
-				objectValidationRule.getEngine(),
 				objectValidationRule.getScript()));
 	}
 
-	private void _checkFeatureFlag() throws Exception {
+	private void _checkFeatureFlag() {
 		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-147964"))) {
-			throw new ObjectValidationRuleException(
+			throw new UnsupportedOperationException(
 				"ObjectValidationRule is not yet supported");
 		}
 	}

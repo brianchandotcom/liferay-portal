@@ -14,17 +14,27 @@
 
 package com.liferay.batch.planner.web.internal.display.context;
 
+import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
+import com.liferay.batch.engine.model.BatchEngineExportTask;
+import com.liferay.batch.engine.model.BatchEngineImportTask;
+import com.liferay.batch.engine.service.BatchEngineExportTaskLocalServiceUtil;
+import com.liferay.batch.engine.service.BatchEngineImportTaskErrorLocalServiceUtil;
+import com.liferay.batch.engine.service.BatchEngineImportTaskLocalServiceUtil;
+import com.liferay.batch.planner.constants.BatchPlannerPlanConstants;
 import com.liferay.batch.planner.constants.BatchPlannerPortletKeys;
 import com.liferay.batch.planner.model.BatchPlannerPlan;
 import com.liferay.batch.planner.service.BatchPlannerPlanServiceUtil;
+import com.liferay.batch.planner.web.internal.display.BatchPlannerPlanDisplay;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.Objects;
 
@@ -46,8 +56,6 @@ public class BatchPlannerPlanDisplayContext extends BaseDisplayContext {
 	public PortletURL getPortletURL() {
 		return PortletURLBuilder.createRenderURL(
 			renderResponse
-		).setMVCRenderCommandName(
-			"/batch_planner/view_batch_planner_plans"
 		).setNavigation(
 			ParamUtil.getString(renderRequest, "navigation", "all")
 		).setTabs1(
@@ -57,7 +65,9 @@ public class BatchPlannerPlanDisplayContext extends BaseDisplayContext {
 		).buildPortletURL();
 	}
 
-	public SearchContainer<BatchPlannerPlan> getSearchContainer() {
+	public SearchContainer<BatchPlannerPlanDisplay> getSearchContainer()
+		throws PortalException {
+
 		if (_searchContainer != null) {
 			return _searchContainer;
 		}
@@ -65,7 +75,6 @@ public class BatchPlannerPlanDisplayContext extends BaseDisplayContext {
 		_searchContainer = new SearchContainer<>(
 			renderRequest, getPortletURL(), null, "no-items-were-found");
 
-		_searchContainer.setId("batchPlannerPlanSearchContainer");
 		_searchContainer.setOrderByCol(_getOrderByCol());
 		_searchContainer.setOrderByType(_getOrderByType());
 
@@ -73,38 +82,39 @@ public class BatchPlannerPlanDisplayContext extends BaseDisplayContext {
 			renderRequest, "navigation", "all");
 
 		long companyId = PortalUtil.getCompanyId(renderRequest);
-
-		String searchByKeyword = ParamUtil.getString(renderRequest, "keywords");
+		String searchByKeyword = ParamUtil.getString(
+			renderRequest, "keywords", "");
 
 		if (navigation.equals("all")) {
 			_searchContainer.setResultsAndTotal(
-				() -> BatchPlannerPlanServiceUtil.getBatchPlannerPlans(
-					companyId, true, searchByKeyword,
-					_searchContainer.getStart(), _searchContainer.getEnd(),
-					OrderByComparatorFactoryUtil.create(
-						"BatchPlannerPlan", _searchContainer.getOrderByCol(),
-						Objects.equals(
-							_searchContainer.getOrderByType(), "asc"))),
+				() -> TransformUtil.transform(
+					BatchPlannerPlanServiceUtil.getBatchPlannerPlans(
+						companyId, false, searchByKeyword,
+						_searchContainer.getStart(), _searchContainer.getEnd(),
+						OrderByComparatorFactoryUtil.create(
+							"BatchPlannerPlan",
+							_searchContainer.getOrderByCol(),
+							Objects.equals(
+								_searchContainer.getOrderByType(), "asc"))),
+					this::_toBatchPlannerPlanDisplay),
 				BatchPlannerPlanServiceUtil.getBatchPlannerPlansCount(
-					companyId, true, searchByKeyword));
+					companyId, false, searchByKeyword));
 		}
 		else {
-			boolean export = isExport(navigation);
-
 			_searchContainer.setResultsAndTotal(
-				() -> BatchPlannerPlanServiceUtil.getBatchPlannerPlans(
-					companyId, export, true, searchByKeyword,
-					_searchContainer.getStart(), _searchContainer.getEnd(),
-					OrderByComparatorFactoryUtil.create(
-						"BatchPlannerPlan", _searchContainer.getOrderByCol(),
-						Objects.equals(
-							_searchContainer.getOrderByType(), "asc"))),
+				() -> TransformUtil.transform(
+					BatchPlannerPlanServiceUtil.getBatchPlannerPlans(
+						companyId, isExport(navigation), false, searchByKeyword,
+						_searchContainer.getStart(), _searchContainer.getEnd(),
+						OrderByComparatorFactoryUtil.create(
+							"BatchPlannerPlan",
+							_searchContainer.getOrderByCol(),
+							Objects.equals(
+								_searchContainer.getOrderByType(), "asc"))),
+					this::_toBatchPlannerPlanDisplay),
 				BatchPlannerPlanServiceUtil.getBatchPlannerPlansCount(
-					companyId, export, true, searchByKeyword));
+					companyId, isExport(navigation), false, searchByKeyword));
 		}
-
-		_searchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(renderResponse));
 
 		return _searchContainer;
 	}
@@ -128,13 +138,80 @@ public class BatchPlannerPlanDisplayContext extends BaseDisplayContext {
 
 		_orderByType = SearchOrderByUtil.getOrderByType(
 			httpServletRequest, BatchPlannerPortletKeys.BATCH_PLANNER,
-			"paln-order-by-type", "desc");
+			"plan-order-by-type", "desc");
 
 		return _orderByType;
 	}
 
+	private BatchPlannerPlanDisplay _toBatchPlannerPlanDisplay(
+			BatchPlannerPlan batchPlannerPlan)
+		throws PortalException {
+
+		BatchPlannerPlanDisplay.Builder builder =
+			new BatchPlannerPlanDisplay.Builder();
+
+		builder.batchPlannerPlanId(
+			batchPlannerPlan.getBatchPlannerPlanId()
+		).createDate(
+			batchPlannerPlan.getCreateDate()
+		).internalClassName(
+			batchPlannerPlan.getInternalClassName()
+		).title(
+			batchPlannerPlan.getName()
+		).userId(
+			batchPlannerPlan.getUserId()
+		);
+
+		if (batchPlannerPlan.isExport()) {
+			BatchEngineExportTask batchEngineExportTask =
+				BatchEngineExportTaskLocalServiceUtil.
+					getBatchEngineExportTaskByExternalReferenceCode(
+						batchPlannerPlan.getCompanyId(),
+						String.valueOf(
+							batchPlannerPlan.getBatchPlannerPlanId()));
+
+			builder.action(
+				LanguageUtil.get(httpServletRequest, "export")
+			).processedItemsCount(
+				batchEngineExportTask.getProcessedItemsCount()
+			).status(
+				BatchPlannerPlanConstants.getStatus(
+					BatchEngineTaskExecuteStatus.valueOf(
+						batchEngineExportTask.getExecuteStatus()))
+			).totalItemsCount(
+				batchEngineExportTask.getTotalItemsCount()
+			);
+		}
+		else {
+			BatchEngineImportTask batchEngineImportTask =
+				BatchEngineImportTaskLocalServiceUtil.
+					getBatchEngineImportTaskByExternalReferenceCode(
+						batchPlannerPlan.getCompanyId(),
+						String.valueOf(
+							batchPlannerPlan.getBatchPlannerPlanId()));
+
+			builder.action(
+				LanguageUtil.get(httpServletRequest, "import")
+			).failedItemsCount(
+				BatchEngineImportTaskErrorLocalServiceUtil.
+					getBatchEngineImportTaskErrorsCount(
+						batchEngineImportTask.getBatchEngineImportTaskId())
+			).processedItemsCount(
+				batchEngineImportTask.getProcessedItemsCount()
+			).status(
+				BatchPlannerPlanConstants.getStatus(
+					BatchEngineTaskExecuteStatus.valueOf(
+						batchEngineImportTask.getExecuteStatus()))
+			).totalItemsCount(
+				batchEngineImportTask.getTotalItemsCount()
+			);
+		}
+
+		return builder.build();
+	}
+
 	private String _orderByCol;
 	private String _orderByType;
-	private SearchContainer<BatchPlannerPlan> _searchContainer;
+	private SearchContainer<BatchPlannerPlanDisplay> _searchContainer;
 
 }

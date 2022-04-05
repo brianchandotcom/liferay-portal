@@ -31,6 +31,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Supplier;
 
 import org.osgi.framework.Constants;
 import org.osgi.service.cm.ConfigurationException;
@@ -147,24 +148,17 @@ public class DLSizeLimitManagedServiceFactory implements ManagedServiceFactory {
 	}
 
 	private Map<String, Long> _computeCompanyMimeTypeSizeLimit(long companyId) {
-		DLSizeLimitConfiguration dlSizeLimitConfiguration =
-			_getCompanyDLSizeLimitConfiguration(companyId);
-
-		Map<String, Long> mimeTypeSizeLimits = new HashMap<>();
-
-		for (String mimeTypeSizeLimit :
-				dlSizeLimitConfiguration.mimeTypeSizeLimit()) {
-
-			MimeTypeSizeLimitUtil.parseMimeTypeSizeLimit(
-				mimeTypeSizeLimit, mimeTypeSizeLimits::put);
-		}
-
-		return mimeTypeSizeLimits;
+		return _computeMimeTypeSizeLimit(
+			_getCompanyDLSizeLimitConfiguration(companyId));
 	}
 
 	private Map<String, Long> _computeGroupMimeTypeSizeLimit(long groupId) {
-		DLSizeLimitConfiguration dlSizeLimitConfiguration =
-			_getGroupDLSizeLimitConfiguration(groupId);
+		return _computeMimeTypeSizeLimit(
+			_getGroupDLSizeLimitConfiguration(groupId));
+	}
+
+	private Map<String, Long> _computeMimeTypeSizeLimit(
+		DLSizeLimitConfiguration dlSizeLimitConfiguration) {
 
 		Map<String, Long> mimeTypeSizeLimits = new HashMap<>();
 
@@ -181,23 +175,33 @@ public class DLSizeLimitManagedServiceFactory implements ManagedServiceFactory {
 	private DLSizeLimitConfiguration _getCompanyDLSizeLimitConfiguration(
 		long companyId) {
 
-		if (_companyConfigurationBeans.containsKey(companyId)) {
-			return _companyConfigurationBeans.get(companyId);
+		return _getDLSizeLimitConfiguration(
+			companyId, _companyConfigurationBeans,
+			() -> _systemDLSizeLimitConfiguration);
+	}
+
+	private DLSizeLimitConfiguration _getDLSizeLimitConfiguration(
+		long key, Map<Long, DLSizeLimitConfiguration> configurationBeans,
+		Supplier<DLSizeLimitConfiguration> supplier) {
+
+		if (configurationBeans.containsKey(key)) {
+			return configurationBeans.get(key);
 		}
 
-		return _systemDLSizeLimitConfiguration;
+		return supplier.get();
 	}
 
 	private DLSizeLimitConfiguration _getGroupDLSizeLimitConfiguration(
 		long groupId) {
 
-		if (_groupConfigurationBeans.containsKey(groupId)) {
-			return _groupConfigurationBeans.get(groupId);
-		}
+		return _getDLSizeLimitConfiguration(
+			groupId, _groupConfigurationBeans,
+			() -> {
+				Group group = _groupLocalService.fetchGroup(groupId);
 
-		Group group = _groupLocalService.fetchGroup(groupId);
-
-		return _getCompanyDLSizeLimitConfiguration(group.getCompanyId());
+				return _getCompanyDLSizeLimitConfiguration(
+					group.getCompanyId());
+			});
 	}
 
 	private void _unmapPid(String pid) {

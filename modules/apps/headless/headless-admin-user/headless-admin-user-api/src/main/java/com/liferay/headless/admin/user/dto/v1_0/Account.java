@@ -39,6 +39,7 @@ import java.util.Set;
 import javax.annotation.Generated;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -52,6 +53,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 	value = "Account"
 )
 @JsonFilter("Liferay.Vulcan")
+@Schema(
+	description = "An account represents an external account, for example a customer business.",
+	requiredProperties = {"name"}
+)
 @XmlRootElement(name = "Account")
 public class Account implements Serializable {
 
@@ -265,6 +270,7 @@ public class Account implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@NotEmpty
 	protected String name;
 
 	@Schema(description = "The number of this account's associated users.")

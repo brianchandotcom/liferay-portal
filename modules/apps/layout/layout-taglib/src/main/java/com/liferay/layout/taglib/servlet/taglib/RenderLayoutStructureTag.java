@@ -44,6 +44,7 @@ import com.liferay.layout.util.structure.DropZoneLayoutStructureItem;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.layout.util.structure.LayoutStructureItemCSSUtil;
 import com.liferay.layout.util.structure.RootLayoutStructureItem;
 import com.liferay.layout.util.structure.RowStyledLayoutStructureItem;
 import com.liferay.petra.string.StringPool;
@@ -193,9 +194,12 @@ public class RenderLayoutStructureTag extends IncludeTag {
 
 		if (renderLayoutStructureDisplayContext.isCommonStylesFFEnabled()) {
 			jspWriter.write(
-				renderLayoutStructureDisplayContext.
-					getLayoutStructureItemCssClass(
-						collectionStyledLayoutStructureItem));
+				LayoutStructureItemCSSUtil.getLayoutStructureItemUniqueCssClass(
+					collectionStyledLayoutStructureItem));
+			jspWriter.write(StringPool.SPACE);
+			jspWriter.write(
+				LayoutStructureItemCSSUtil.getLayoutStructureItemCssClass(
+					layoutStructureItem));
 		}
 		else {
 			jspWriter.write(
@@ -514,9 +518,12 @@ public class RenderLayoutStructureTag extends IncludeTag {
 
 		if (renderLayoutStructureDisplayContext.isCommonStylesFFEnabled()) {
 			jspWriter.write(
-				renderLayoutStructureDisplayContext.
-					getLayoutStructureItemCssClass(
-						containerStyledLayoutStructureItem));
+				LayoutStructureItemCSSUtil.getLayoutStructureItemUniqueCssClass(
+					containerStyledLayoutStructureItem));
+			jspWriter.write(StringPool.SPACE);
+			jspWriter.write(
+				LayoutStructureItemCSSUtil.getLayoutStructureItemCssClass(
+					layoutStructureItem));
 
 			if (Objects.equals(
 					containerStyledLayoutStructureItem.getWidthType(),
@@ -692,9 +699,13 @@ public class RenderLayoutStructureTag extends IncludeTag {
 						isCommonStylesFFEnabled()) {
 
 					jspWriter.write(
-						renderLayoutStructureDisplayContext.
-							getLayoutStructureItemCssClass(
+						LayoutStructureItemCSSUtil.
+							getLayoutStructureItemUniqueCssClass(
 								fragmentStyledLayoutStructureItem));
+					jspWriter.write(StringPool.SPACE);
+					jspWriter.write(
+						LayoutStructureItemCSSUtil.getFragmentEntryLinkCssClass(
+							fragmentEntryLink));
 				}
 				else {
 					jspWriter.write(
@@ -877,9 +888,12 @@ public class RenderLayoutStructureTag extends IncludeTag {
 
 		if (renderLayoutStructureDisplayContext.isCommonStylesFFEnabled()) {
 			jspWriter.write(
-				renderLayoutStructureDisplayContext.
-					getLayoutStructureItemCssClass(
-						rowStyledLayoutStructureItem));
+				LayoutStructureItemCSSUtil.getLayoutStructureItemUniqueCssClass(
+					rowStyledLayoutStructureItem));
+			jspWriter.write(StringPool.SPACE);
+			jspWriter.write(
+				LayoutStructureItemCSSUtil.getLayoutStructureItemCssClass(
+					layoutStructureItem));
 		}
 		else {
 			jspWriter.write(

@@ -508,12 +508,6 @@ public class RenderLayoutStructureDisplayContext {
 		return _layoutStructure;
 	}
 
-	public String getLayoutStructureItemCssClass(
-		LayoutStructureItem layoutStructureItem) {
-
-		return "lfr-layout-structure-item-" + layoutStructureItem.getItemId();
-	}
-
 	public List<String> getMainChildrenItemIds() {
 		LayoutStructure layoutStructure = getLayoutStructure();
 

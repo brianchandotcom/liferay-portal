@@ -88,6 +88,17 @@ definition {
 		AssertTextEquals(
 			locator1 = "LexiconTable#TABLE_HITS_COUNT",
 			value1 = "6");
+
+		Navigator.openSpecificURL(url = "http://www.able.com:8080");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Monitoring");
+
+		AssertTextEquals(
+			locator1 = "LexiconTable#TABLE_HITS_COUNT",
+			value1 = "10");
 	}
 
 }

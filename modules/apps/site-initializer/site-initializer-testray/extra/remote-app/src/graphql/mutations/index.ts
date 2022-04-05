@@ -14,6 +14,7 @@
 
 export * from './liferayUserAccount';
 export * from './testrayCase';
+export * from './testrayCaseResult';
 export * from './testrayCaseType';
 export * from './testrayFactorCategory';
 export * from './testrayFactorOptions';

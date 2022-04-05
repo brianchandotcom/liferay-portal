@@ -20,12 +20,27 @@ import Code from '../../../../components/Code';
 import Container from '../../../../components/Layout/Container';
 import ListView from '../../../../components/ListView/ListView';
 import StatusBadge from '../../../../components/StatusBadge';
+import client from '../../../../graphql/apolloClient';
+import {UpdateCaseResult} from '../../../../graphql/mutations';
 import {TestrayCaseResult, getCaseResults} from '../../../../graphql/queries';
 import i18n from '../../../../i18n';
+import {Liferay} from '../../../../services/liferay/liferay';
 import {getStatusLabel} from '../../../../util/constants';
 
 const Build = () => {
 	const {buildId} = useParams();
+
+	const onAssignToMe = (caseResult: TestrayCaseResult) => {
+		client.mutate({
+			mutation: UpdateCaseResult,
+			variables: {
+				CaseResult: {
+					r_userToCaseResults_userId: Liferay.ThemeDisplay.getUserId(),
+				},
+				caseResultId: caseResult.id,
+			},
+		});
+	};
 
 	return (
 		<Container className="mt-4" title={i18n.translate('tests')}>
@@ -66,11 +81,13 @@ const Build = () => {
 						},
 						{
 							key: 'assignee',
-							render: (_: any, {caseResult}: any) =>
+							render: (_: any, caseResult: TestrayCaseResult) =>
 								caseResult?.assignedUserId ? (
 									<Avatar />
 								) : (
-									<AssignToMe />
+									<AssignToMe
+										onClick={() => onAssignToMe(caseResult)}
+									/>
 								),
 							value: i18n.translate('assignee'),
 						},

@@ -22,6 +22,7 @@ const statusBarClassNames: any = {
 	passed: 'label-inverse-success',
 	self: 'label-inverse-info',
 	test_fix: 'label-tonal-success',
+	untested: 'label-inverse-secondary',
 };
 
 export type StatusBadgeProps = {

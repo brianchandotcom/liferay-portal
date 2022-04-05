@@ -17,19 +17,19 @@
 <%@ include file="/init.jsp" %>
 
 <%
-BatchPlannerPlanDisplayContext batchPlannerPlanDisplayContext = (BatchPlannerPlanDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+BatchPlannerPlanTemplateDisplayContext batchPlannerPlanTemplateDisplayContext = (BatchPlannerPlanTemplateDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-SearchContainer<BatchPlannerPlan> batchPlannerPlanSearchContainer = batchPlannerPlanDisplayContext.getSearchContainer();
+SearchContainer<BatchPlannerPlan> batchPlannerPlanTemplateSearchContainer = batchPlannerPlanTemplateDisplayContext.getSearchContainer();
 
-BatchPlannerPlanManagementToolbarDisplayContext batchPlannerPlanManagementToolbarDisplayContext = new BatchPlannerPlanManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, batchPlannerPlanSearchContainer);
+BatchPlannerPlanTemplateManagementToolbarDisplayContext batchPlannerPlanTemplateManagementToolbarDisplayContext = new BatchPlannerPlanTemplateManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, batchPlannerPlanTemplateSearchContainer);
 %>
 
 <clay:navigation-bar
-	navigationItems="<%= batchPlannerPlanDisplayContext.getNavigationItems() %>"
+	navigationItems="<%= batchPlannerPlanTemplateDisplayContext.getNavigationItems() %>"
 />
 
 <clay:management-toolbar
-	managementToolbarDisplayContext="<%= batchPlannerPlanManagementToolbarDisplayContext %>"
+	managementToolbarDisplayContext="<%= batchPlannerPlanTemplateManagementToolbarDisplayContext %>"
 	propsTransformer="js/BatchPlannerPlanManagementToolbarPropsTransformer"
 />
 
@@ -39,7 +39,7 @@ BatchPlannerPlanManagementToolbarDisplayContext batchPlannerPlanManagementToolba
 		<aui:input name="batchPlannerPlanIds" type="hidden" />
 
 		<liferay-ui:search-container
-			searchContainer="<%= batchPlannerPlanSearchContainer %>"
+			searchContainer="<%= batchPlannerPlanTemplateSearchContainer %>"
 		>
 			<liferay-ui:search-container-row
 				className="com.liferay.batch.planner.model.BatchPlannerPlan"
@@ -50,7 +50,7 @@ BatchPlannerPlanManagementToolbarDisplayContext batchPlannerPlanManagementToolba
 				<%
 				row.setData(
 					HashMapBuilder.<String, Object>put(
-						"actions", StringUtil.merge(batchPlannerPlanManagementToolbarDisplayContext.getAvailableActions(), StringPool.COMMA)
+						"actions", StringUtil.merge(batchPlannerPlanTemplateManagementToolbarDisplayContext.getAvailableActions(), StringPool.COMMA)
 					).build());
 				%>
 
@@ -80,7 +80,7 @@ BatchPlannerPlanManagementToolbarDisplayContext batchPlannerPlanManagementToolba
 
 				<liferay-ui:search-container-column-text
 					name="type"
-					value="<%= batchPlannerPlanDisplayContext.getSimpleInternalClassName(batchPlannerPlan.getInternalClassName()) %>"
+					value="<%= batchPlannerPlanTemplateDisplayContext.getSimpleInternalClassName(batchPlannerPlan.getInternalClassName()) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
@@ -95,7 +95,7 @@ BatchPlannerPlanManagementToolbarDisplayContext batchPlannerPlanManagementToolba
 
 				<liferay-ui:search-container-column-jsp
 					cssClass="entry-action-column"
-					path="/batch_planner_plan_action.jsp"
+					path="/batch_planner_plan_template_action.jsp"
 				/>
 			</liferay-ui:search-container-row>
 

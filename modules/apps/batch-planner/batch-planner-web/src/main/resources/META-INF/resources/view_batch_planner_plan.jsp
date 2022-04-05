@@ -19,7 +19,7 @@
 <%
 String backURL = ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL()));
 
-BatchPlannerLogDisplay batchPlannerLogDisplay = (BatchPlannerLogDisplay)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+BatchPlannerPlanDisplay batchPlannerPlanDisplay = (BatchPlannerPlanDisplay)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
 <div class="container pt-4">
@@ -41,7 +41,7 @@ BatchPlannerLogDisplay batchPlannerLogDisplay = (BatchPlannerLogDisplay)request.
 						<clay:col
 							md="8"
 						>
-							<%= batchPlannerLogDisplay.getTitle() %>
+							<%= batchPlannerPlanDisplay.getTitle() %>
 						</clay:col>
 					</clay:row>
 
@@ -59,7 +59,7 @@ BatchPlannerLogDisplay batchPlannerLogDisplay = (BatchPlannerLogDisplay)request.
 							<%
 							String exportImportLabel = "import";
 
-							if (batchPlannerLogDisplay.isExport()) {
+							if (batchPlannerPlanDisplay.isExport()) {
 								exportImportLabel = "export";
 							}
 							%>
@@ -82,7 +82,7 @@ BatchPlannerLogDisplay batchPlannerLogDisplay = (BatchPlannerLogDisplay)request.
 						<clay:col
 							md="6"
 						>
-							<%= String.valueOf(batchPlannerLogDisplay.getBatchPlannerLogId()) %>
+							<%= String.valueOf(batchPlannerPlanDisplay.getBatchPlannerPlanId()) %>
 						</clay:col>
 					</clay:row>
 
@@ -96,7 +96,7 @@ BatchPlannerLogDisplay batchPlannerLogDisplay = (BatchPlannerLogDisplay)request.
 						<clay:col
 							md="6"
 						>
-							<%= dateFormatDateTime.format(batchPlannerLogDisplay.getCreateDate()) %>
+							<%= dateFormatDateTime.format(batchPlannerPlanDisplay.getCreateDate()) %>
 						</clay:col>
 					</clay:row>
 
@@ -110,30 +110,7 @@ BatchPlannerLogDisplay batchPlannerLogDisplay = (BatchPlannerLogDisplay)request.
 						<clay:col
 							md="6"
 						>
-							<%= dateFormatDateTime.format(batchPlannerLogDisplay.getModifiedDate()) %>
-						</clay:col>
-					</clay:row>
-
-					<clay:row>
-						<clay:col
-							md="4"
-						>
-							<%= LanguageUtil.get(request, "external-reference-code") %>
-						</clay:col>
-
-						<clay:col
-							md="6"
-						>
-
-							<%
-							String externalReferenceCode = batchPlannerLogDisplay.getBatchEngineImportTaskERC();
-
-							if (batchPlannerLogDisplay.isExport()) {
-								externalReferenceCode = batchPlannerLogDisplay.getBatchEngineExportTaskERC();
-							}
-							%>
-
-							<%= externalReferenceCode %>
+							<%= dateFormatDateTime.format(batchPlannerPlanDisplay.getModifiedDate()) %>
 						</clay:col>
 					</clay:row>
 
@@ -147,7 +124,7 @@ BatchPlannerLogDisplay batchPlannerLogDisplay = (BatchPlannerLogDisplay)request.
 						<clay:col
 							md="6"
 						>
-							<%= String.valueOf(batchPlannerLogDisplay.getTotalItemsCount()) %>
+							<%= String.valueOf(batchPlannerPlanDisplay.getTotalItemsCount()) %>
 						</clay:col>
 					</clay:row>
 
@@ -161,7 +138,7 @@ BatchPlannerLogDisplay batchPlannerLogDisplay = (BatchPlannerLogDisplay)request.
 						<clay:col
 							md="6"
 						>
-							<%= LanguageUtil.get(request, BatchPlannerLogConstants.getStatusLabel(batchPlannerLogDisplay.getStatus())) %>
+							<%= LanguageUtil.get(request, BatchPlannerPlanConstants.getStatusLabel(batchPlannerPlanDisplay.getStatus())) %>
 						</clay:col>
 					</clay:row>
 				</clay:content-col>

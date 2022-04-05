@@ -56,7 +56,12 @@ export default function useFilters(setFilterTerm, productName) {
 				(accumulatorProductVersionsFilter, productVersion, index) => {
 					return `${accumulatorProductVersionsFilter}${
 						index > 0 ? ' or ' : ''
-					}productVersion eq '${productVersion}'`;
+					}${productVersion
+						.split(' ')
+						.map((version) => {
+							return `contains(productVersion, '${version}')`;
+						})
+						.join(' and ')}`;
 				},
 				''
 			)})`;
@@ -142,7 +147,12 @@ export default function useFilters(setFilterTerm, productName) {
 			}
 
 			initialFilter = initialFilter.concat(
-				` and (${filterDates.join(' or ')})`
+				` and (${filterDates.join(
+					filters.expirationDate.value.onOrAfter >
+						filters.expirationDate.value.onOrBefore
+						? ' or '
+						: ' and '
+				)})`
 			);
 		}
 
@@ -162,7 +172,12 @@ export default function useFilters(setFilterTerm, productName) {
 			}
 
 			initialFilter = initialFilter.concat(
-				` and (${filterDates.join(' or ')})`
+				` and (${filterDates.join(
+					filters.startDate.value.onOrAfter >
+						filters.startDate.value.onOrBefore
+						? ' or '
+						: ' and '
+				)})`
 			);
 		}
 
@@ -208,8 +223,7 @@ export default function useFilters(setFilterTerm, productName) {
 						"contains(licenseEntryType, 'cluster')"
 					);
 				}
-			}
-			else {
+			} else {
 				hasFilterPill = true;
 			}
 

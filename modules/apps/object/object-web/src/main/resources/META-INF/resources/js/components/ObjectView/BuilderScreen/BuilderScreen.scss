@@ -1,20 +1,20 @@
-.object-builder-screen {
-	&-name {
+.lfr-object {
+	&__object-builder-screen-name {
 		padding-left: 50px !important;
 	}
 
-	&-second-column {
+	&__object-builder-screen-second-column {
 		left: 330px;
 		position: absolute;
 	}
 
-	&-sort-order {
+	&__object-builder-screen-sort-order {
 		left: 336px;
 		position: absolute;
 		top: 23px;
 	}
 
-	&-empty-state {
+	&__object-builder-screen-empty-state {
 		align-items: center;
 		display: flex;
 		justify-content: center;

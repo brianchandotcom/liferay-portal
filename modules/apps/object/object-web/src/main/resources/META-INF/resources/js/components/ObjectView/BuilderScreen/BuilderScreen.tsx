@@ -104,7 +104,7 @@ export function BuilderScreen({
 										{index === 0 && (
 											<ClayList.Item flex>
 												<ClayList.ItemField expand>
-													<ClayList.ItemField className="object-builder-screen-name">
+													<ClayList.ItemField className="lfr-object__object-builder-screen-name">
 														{Liferay.Language.get(
 															'name'
 														)}
@@ -112,7 +112,7 @@ export function BuilderScreen({
 												</ClayList.ItemField>
 
 												<ClayList.ItemField
-													className="object-builder-screen-second-column"
+													className="lfr-object__object-builder-screen-second-column"
 													expand
 												>
 													<ClayList.ItemField>
@@ -138,7 +138,7 @@ export function BuilderScreen({
 
 											{isDefaultSort && (
 												<ClayList.ItemField
-													className="object-builder-screen-sort-order"
+													className="lfr-object__object-builder-screen-sort-order"
 													expand
 												>
 													<ClayList.ItemText>
@@ -157,7 +157,7 @@ export function BuilderScreen({
 									</React.Fragment>
 								))
 							) : (
-								<div className="object-builder-screen-empty-state">
+								<div className="lfr-object__object-builder-screen-empty-state">
 									<ClayEmptyState
 										description={Liferay.Language.get(
 											'sorry,-no-results-were-found'
@@ -177,7 +177,7 @@ export function BuilderScreen({
 										{index === 0 && (
 											<ClayList.Item flex>
 												<ClayList.ItemField expand>
-													<ClayList.ItemField className="object-builder-screen-name">
+													<ClayList.ItemField className="lfr-object__object-builder-screen-name">
 														{Liferay.Language.get(
 															'name'
 														)}
@@ -185,7 +185,7 @@ export function BuilderScreen({
 												</ClayList.ItemField>
 
 												<ClayList.ItemField
-													className="object-builder-screen-second-column"
+													className="lfr-object__object-builder-screen-second-column"
 													expand
 												>
 													<ClayList.ItemField>
@@ -234,7 +234,7 @@ export function BuilderScreen({
 						)}
 					</ClayList>
 				) : (
-					<div className="object-builder-screen-empty-state">
+					<div className="lfr-object__object-builder-screen-empty-state">
 						<ClayEmptyState
 							description={emptyState.description}
 							title={emptyState.title}

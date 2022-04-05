@@ -1,0 +1,14 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"defaultValue": "",
+					"label": "URL",
+					"name": "url",
+					"type": "text"
+				}
+			]
+		}
+	]
+}

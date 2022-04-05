@@ -1,0 +1,40 @@
+video-wrapper {
+  /* Telling our absolute positioned video to 
+  be relative to this element */
+  position: relative;
+
+  width: 400px;
+  height: 200px;
+
+  /* Will not allow the video to overflow the 
+  container */
+  overflow: hidden;
+
+  /* Centering the container's content vertically 
+  and horizontally */
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Add some content at the bottom of the video/page */
+.content {
+  position: absolute;
+  top: 20%;
+  /*background: rgba(0, 0, 0, 0.5);*/
+  color: #f1f1f1;
+  width: 100%;
+  padding: 20px;
+	text-align: center;
+}
+
+.content > .cta {
+  font-size: 6em;
+  text-shadow: 3px 3px #000;
+}
+
+.content > .btn {
+  padding-left: 40px;
+  padding-right: 40px;
+}

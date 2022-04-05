@@ -347,6 +347,50 @@ definition {
 	}
 
 	@priority = "4"
+	test CanViewSimilarResultsFromSearchResults {
+		for (var count : list "1,2,3") {
+			JSONDocument.addFile(
+				dmDocumentDescription = "DM Content",
+				dmDocumentTitle = "DM Document Title ${count}",
+				groupName = "Guest");
+		}
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Similar Results Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Similar Results Page",
+			widgetName = "Similar Results");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "2",
+			groupName = "Guest",
+			layoutName = "Similar Results Page",
+			widgetName = "Documents and Media");
+
+		Navigator.gotoPage(pageName = "Similar Results Page");
+
+		SearchPortlets.configureSimilarResults(
+			displayTemplate = "Compact Layout",
+			fields = "localized_title_en_US",
+			minimumDocumentFrequency = "1",
+			minimumTermFrequency = "1");
+
+		SearchPortlets.searchEmbedded(searchTerm = "DM Document Title");
+
+		Search.gotoResultAssetViaTitle(searchAssetTitle = "DM Document Title 1");
+
+		for (var count : list "2,3") {
+			AssertElementPresent(
+				key_linkResultTitle = "DM Document Title ${count}",
+				locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+		}
+	}
+
+	@priority = "4"
 	test ConfigureSimilarResultsDocumentFrequency {
 		property test.name.skip.portal.instance = "SimilarResults#ConfigureSimilarResultsDocumentFrequency";
 

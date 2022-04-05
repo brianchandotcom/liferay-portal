@@ -21,7 +21,7 @@ import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.layout.util.comparator.LayoutCreateDateComparator;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.MasterLayoutException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -412,7 +412,7 @@ public class LayoutLocalServiceTest {
 		Assert.assertEquals("/home", layout.getFriendlyURL(LocaleUtil.US));
 	}
 
-	@Test(expected = PortalException.class)
+	@Test(expected = MasterLayoutException.class)
 	public void testUpdateMasterLayoutWithInvalidPlid1() throws Exception {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
@@ -421,7 +421,7 @@ public class LayoutLocalServiceTest {
 			layout.getPlid());
 	}
 
-	@Test(expected = PortalException.class)
+	@Test(expected = MasterLayoutException.class)
 	public void testUpdateMasterLayoutWithInvalidPlid2() throws Exception {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 

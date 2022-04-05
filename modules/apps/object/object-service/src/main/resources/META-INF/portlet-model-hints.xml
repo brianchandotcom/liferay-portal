@@ -206,7 +206,9 @@
 		<field name="engine" type="String" />
 		<field localized="true" name="errorLabel" type="String" />
 		<field localized="true" name="name" type="String" />
-		<field name="script" type="String" />
+		<field name="script" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 	</model>
 	<model name="com.liferay.object.model.ObjectView">
 		<field name="mvccVersion" type="long" />

@@ -37,7 +37,7 @@ definition {
 
 		Type(
 			locator1 = "TestrayManage#NEW_OPTION_NAME",
-			value1 = "Liferay Portal 7.");
+			value1 = "${key_name}");
 
 		Type(
 			locator1 = "Testray#DESCRIPTION_PROJECT",

@@ -31,7 +31,7 @@ definition {
 	test CanAcessCasesPage {
 		ApplicationsMenu.gotoSite(site = "Testray 2");
 
-		Testray.createProjectTestray();
+		Testray.createProjectTestray(key_name = "Liferay Portal 7.");
 
 		Click(
 			key_projectName = "Liferay Portal 7.",
@@ -51,7 +51,7 @@ definition {
 	test CanAcessRequirementsPage {
 		ApplicationsMenu.gotoSite(site = "Testray 2");
 
-		Testray.createProjectTestray();
+		Testray.createProjectTestray(key_name = "Liferay Portal 7.");
 
 		Click(
 			key_projectName = "Liferay Portal 7.2",
@@ -71,7 +71,7 @@ definition {
 	test CanAcessSuitesPage {
 		ApplicationsMenu.gotoSite(site = "Testray 2");
 
-		Testray.createProjectTestray();
+		Testray.createProjectTestray(key_name = "Liferay Portal 7.");
 
 		Click(
 			key_projectName = "Liferay Portal 7.2",

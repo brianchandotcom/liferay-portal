@@ -26,43 +26,44 @@ definition {
 		}
 	}
 
-    @description = "LPS-150165 - Verify the user can access a project on Project Directory."
-    @priority = "5"
-    test CanEnterOnRoutineTab {
-        ApplicationsMenu.gotoSite(site = "Testray 2");
+	@description = "Verify the user can enter a Routine."
+	@priority = "5"
+	test CanEnterARoutine {
+		ApplicationsMenu.gotoSite(site = "Testray 2");
 
 		Testray.createProjectTestray(key_name = "Liferay Portal 7.");
 
-        Click(
+		Click(
 			key_projectName = "Liferay Portal 7.2",
 			locator1 = "Testray#PROJECT_NAME_BUTTON");
 
-        AssertElementPresent(
+		Click(locator1 = "Testray#ADD_PROJECT");
+
+		Type(
+			locator1 = "TestrayManage#NEW_OPTION_NAME",
+			value1 = "EE Pull Request");
+
+		Click(locator1 = "TestrayManage#SAVE_BUTTON");
+
+		AssertElementPresent(
+			key_projectName = "EE Pull Request",
+			locator1 = "Testray#PROJECT_NAME_BUTTON");
+	}
+
+	@description = "LPS-150165 - Verify the user can access a project on Project Directory."
+	@priority = "5"
+	test CanEnterOnRoutineTab {
+		ApplicationsMenu.gotoSite(site = "Testray 2");
+
+		Testray.createProjectTestray(key_name = "Liferay Portal 7.");
+
+		Click(
+			key_projectName = "Liferay Portal 7.2",
+			locator1 = "Testray#PROJECT_NAME_BUTTON");
+
+		AssertElementPresent(
 			key_pageTabTilte = "Routines",
 			locator1 = "TestrayHeader#PAGE_TAB_TITLE");
-    }
+	}
 
-    @description = "Verify the user can enter a Routine."
-    @priority = "5"
-    test CanEnterARoutine {
-        ApplicationsMenu.gotoSite(site = "Testray 2");
-
-		Testray.createProjectTestray(key_name = "Liferay Portal 7.");
-
-        Click(
-			key_projectName = "Liferay Portal 7.2",
-			locator1 = "Testray#PROJECT_NAME_BUTTON");
-
-        Click(locator1 = "Testray#ADD_PROJECT");
-
-        Type(
-            locator1 = "TestrayManage#NEW_OPTION_NAME",
-            value1 = "EE Pull Request");
-
-        Click(locator1 = "TestrayManage#SAVE_BUTTON");
-
-        AssertElementPresent(
-            locator1 = "Testray#PROJECT_NAME_BUTTON",
-            key_projectName = "EE Pull Request");
-    }
 }

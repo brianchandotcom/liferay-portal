@@ -62,6 +62,9 @@ public class FrontendIconsResourcePackRepository {
 			frontendIconsResourcePack.getName());
 
 		if (dlFileEntry != null) {
+
+			// TODO Can fileEntry be null too?
+
 			_portletFileRepository.deletePortletFileEntry(
 				fileEntry.getFileEntryId());
 		}
@@ -180,7 +183,11 @@ public class FrontendIconsResourcePackRepository {
 			groupId, _REPOSITORY_NAME, serviceContext);
 	}
 
+	// TODO Rename to match frontend-icons-web
+
 	private static final String _REPOSITORY_NAME = "icon.admin.web";
+
+	// TODO Rename to match frontend-icons-web
 
 	private static final String _ROOT_FOLDER_NAME = "icon.admin.web.icon.packs";
 

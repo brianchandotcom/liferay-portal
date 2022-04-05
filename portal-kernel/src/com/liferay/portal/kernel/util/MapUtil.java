@@ -346,11 +346,13 @@ public class MapUtil {
 
 		V value = map.get(key);
 
-		if (value != null) {
-			return value;
+		if ((value == null) ||
+			((value instanceof String) && Validator.isBlank((String)value))) {
+
+			return map.get(fallbackKey);
 		}
 
-		return map.get(fallbackKey);
+		return value;
 	}
 
 	public static boolean isEmpty(Map<?, ?> map) {

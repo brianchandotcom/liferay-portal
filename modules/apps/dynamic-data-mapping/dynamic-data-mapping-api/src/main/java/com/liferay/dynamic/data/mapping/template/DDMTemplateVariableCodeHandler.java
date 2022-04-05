@@ -22,7 +22,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
-import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateResourceLoaderUtil;
 import com.liferay.portal.kernel.template.TemplateVariableCodeHandler;
 import com.liferay.portal.kernel.template.TemplateVariableDefinition;
@@ -53,11 +52,10 @@ public class DDMTemplateVariableCodeHandler
 			String language)
 		throws Exception {
 
-		String templateId = getTemplateId(
-			templateVariableDefinition.getDataType());
-
 		String content = getTemplateContent(
-			getTemplate(templateId), templateVariableDefinition, language);
+			getTemplate(
+				getTemplateId(templateVariableDefinition.getDataType())),
+			templateVariableDefinition, language);
 
 		if (templateVariableDefinition.isRepeatable()) {
 			content = handleRepeatableField(
@@ -68,15 +66,14 @@ public class DDMTemplateVariableCodeHandler
 	}
 
 	protected Template getTemplate(String templateId) throws Exception {
-		TemplateResource templateResource =
+		return TemplateManagerUtil.getTemplate(
+			TemplateConstants.LANG_TYPE_FTL,
 			TemplateResourceLoaderUtil.getTemplateResource(
 				TemplateConstants.LANG_TYPE_FTL,
 				StringBundler.concat(
 					ClassLoaderPool.getContextName(_classLoader),
-					TemplateConstants.CLASS_LOADER_SEPARATOR, templateId));
-
-		return TemplateManagerUtil.getTemplate(
-			TemplateConstants.LANG_TYPE_FTL, templateResource, false);
+					TemplateConstants.CLASS_LOADER_SEPARATOR, templateId)),
+			false);
 	}
 
 	protected String getTemplateContent(

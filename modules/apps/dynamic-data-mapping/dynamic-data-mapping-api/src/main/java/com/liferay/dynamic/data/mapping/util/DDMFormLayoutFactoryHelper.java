@@ -105,10 +105,8 @@ public class DDMFormLayoutFactoryHelper {
 			ddmFormLayoutPage =
 				new com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage();
 
-		LocalizedValue title = createDDMFormLayoutPageTitle(
-			ddmFormLayoutPageAnnotation.title());
-
-		ddmFormLayoutPage.setTitle(title);
+		ddmFormLayoutPage.setTitle(
+			createDDMFormLayoutPageTitle(ddmFormLayoutPageAnnotation.title()));
 
 		for (DDMFormLayoutRow ddmFormLayoutRow :
 				ddmFormLayoutPageAnnotation.value()) {

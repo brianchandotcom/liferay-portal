@@ -308,12 +308,12 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 			return ParamUtil.getString(liferayPortletRequest, "redirect");
 		}
 
-		String portletId = PortletProviderUtil.getPortletId(
-			DDMStructure.class.getName(), PortletProvider.Action.VIEW);
-
 		return PortletURLBuilder.create(
 			PortalUtil.getControlPanelPortletURL(
-				liferayPortletRequest, portletId, PortletRequest.RENDER_PHASE)
+				liferayPortletRequest,
+				PortletProviderUtil.getPortletId(
+					DDMStructure.class.getName(), PortletProvider.Action.VIEW),
+				PortletRequest.RENDER_PHASE)
 		).setMVCPath(
 			"/view.jsp"
 		).buildString();
@@ -437,12 +437,12 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 			long classPK, long resourceClassNameId)
 		throws Exception {
 
-		String portletId = PortletProviderUtil.getPortletId(
-			DDMStructure.class.getName(), PortletProvider.Action.VIEW);
-
 		return PortletURLBuilder.create(
 			PortalUtil.getControlPanelPortletURL(
-				liferayPortletRequest, portletId, PortletRequest.RENDER_PHASE)
+				liferayPortletRequest,
+				PortletProviderUtil.getPortletId(
+					DDMStructure.class.getName(), PortletProvider.Action.VIEW),
+				PortletRequest.RENDER_PHASE)
 		).setMVCPath(
 			"/view_template.jsp"
 		).setParameter(

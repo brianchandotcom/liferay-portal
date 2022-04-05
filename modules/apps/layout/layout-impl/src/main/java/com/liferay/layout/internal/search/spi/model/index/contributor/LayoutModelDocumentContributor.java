@@ -75,6 +75,10 @@ public class LayoutModelDocumentContributor
 				layout.getName(locale));
 		}
 
+		if (layout.isPrivateLayout()) {
+			return;
+		}
+
 		Group group = layout.getGroup();
 
 		if (group.isStagingGroup()) {

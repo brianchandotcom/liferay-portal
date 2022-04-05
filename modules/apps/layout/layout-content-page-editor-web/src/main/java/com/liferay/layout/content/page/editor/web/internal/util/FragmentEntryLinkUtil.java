@@ -34,14 +34,10 @@ import com.liferay.layout.content.page.editor.listener.ContentPageEditorListener
 import com.liferay.layout.content.page.editor.listener.ContentPageEditorListenerTracker;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalServiceUtil;
 import com.liferay.layout.util.structure.LayoutStructureItemCSSUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.portlet.PortletIdCodec;
-import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -83,17 +79,6 @@ public class FragmentEntryLinkUtil {
 
 		FragmentEntryLinkServiceUtil.deleteFragmentEntryLink(
 			fragmentEntryLinkId);
-
-		List<String> portletIds =
-			portletRegistry.getFragmentEntryLinkPortletIds(fragmentEntryLink);
-
-		for (String portletId : portletIds) {
-			PortletLocalServiceUtil.deletePortlet(companyId, portletId, plid);
-
-			LayoutClassedModelUsageLocalServiceUtil.
-				deleteLayoutClassedModelUsages(
-					portletId, PortalUtil.getClassNameId(Portlet.class), plid);
-		}
 
 		LayoutClassedModelUsageLocalServiceUtil.deleteLayoutClassedModelUsages(
 			String.valueOf(fragmentEntryLinkId),

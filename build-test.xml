@@ -11926,10 +11926,7 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 		</if>
 
 		<if>
-			<or>
-				<equals arg1="${app.server.type}" arg2="weblogic" />
-				<equals arg1="${app.server.type}" arg2="websphere" />
-			</or>
+			<equals arg1="${app.server.type}" arg2="weblogic" />
 			<then>
 				<ant antfile="build-test-elasticsearch7.xml" target="get-sidecar-binaries" />
 			</then>

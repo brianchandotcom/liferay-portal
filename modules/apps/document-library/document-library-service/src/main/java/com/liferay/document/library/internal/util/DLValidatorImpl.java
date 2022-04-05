@@ -31,6 +31,7 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelper;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeFormatter;
 import com.liferay.portal.kernel.util.Validator;
@@ -80,22 +81,15 @@ public final class DLValidatorImpl implements DLValidator {
 
 	@Override
 	public long getMaxAllowableSize(String mimeType) {
-		long globalMaxAllowableSize = _getGlobalMaxAllowableSize(
-			CompanyThreadLocal.getCompanyId());
-
-		long mimeTypeFileMaxSize =
-			_dlSizeLimitManagedServiceFactory.getCompanyMimeTypeSizeLimit(
-				CompanyThreadLocal.getCompanyId(), mimeType);
-
-		if (mimeTypeFileMaxSize == 0) {
-			return globalMaxAllowableSize;
-		}
-
-		if (globalMaxAllowableSize == 0) {
-			return mimeTypeFileMaxSize;
-		}
-
-		return Math.min(mimeTypeFileMaxSize, globalMaxAllowableSize);
+		return _min(
+			_getGlobalMaxAllowableSize(
+				CompanyThreadLocal.getCompanyId(),
+				GroupThreadLocal.getGroupId()),
+			_min(
+				_dlSizeLimitManagedServiceFactory.getCompanyMimeTypeSizeLimit(
+					CompanyThreadLocal.getCompanyId(), mimeType),
+				_dlSizeLimitManagedServiceFactory.getGroupMimeTypeSizeLimit(
+					GroupThreadLocal.getGroupId(), mimeType)));
 	}
 
 	@Override
@@ -306,21 +300,26 @@ public final class DLValidatorImpl implements DLValidator {
 			uploadServletRequestConfigurationHelper;
 	}
 
-	private long _getGlobalMaxAllowableSize(long companyId) {
-		long dlFileMaxSize =
-			_dlSizeLimitManagedServiceFactory.getCompanyFileMaxSize(companyId);
-		long uploadServletRequestFileMaxSize =
-			_uploadServletRequestConfigurationHelper.getMaxSize();
+	private long _getGlobalMaxAllowableSize(long companyId, long groupId) {
+		return _min(
+			_uploadServletRequestConfigurationHelper.getMaxSize(),
+			_min(
+				_dlSizeLimitManagedServiceFactory.getCompanyFileMaxSize(
+					companyId),
+				_dlSizeLimitManagedServiceFactory.getGroupFileMaxSize(
+					groupId)));
+	}
 
-		if (dlFileMaxSize == 0) {
-			return uploadServletRequestFileMaxSize;
+	private long _min(long a, long b) {
+		if (a == 0) {
+			return b;
 		}
 
-		if (uploadServletRequestFileMaxSize == 0) {
-			return dlFileMaxSize;
+		if (b == 0) {
+			return a;
 		}
 
-		return Math.min(dlFileMaxSize, uploadServletRequestFileMaxSize);
+		return Math.min(a, b);
 	}
 
 	private String _replaceDLCharLastBlacklist(String title) {

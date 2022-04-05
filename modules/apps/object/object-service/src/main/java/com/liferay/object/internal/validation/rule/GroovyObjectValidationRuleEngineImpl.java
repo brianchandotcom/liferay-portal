@@ -19,8 +19,9 @@ import com.liferay.object.validation.rule.ObjectValidationRuleEngine;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.scripting.Scripting;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 
-import java.util.HashSet;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -61,18 +62,20 @@ public class GroovyObjectValidationRuleEngineImpl
 
 		ClassLoader classLoader = clazz.getClassLoader();
 
+		Map<String, Object> results = null;
+
 		try {
 			currentThread.setContextClassLoader(classLoader);
 
-			_scripting.eval(
-				null, inputObjects, new HashSet<>(),
+			results = _scripting.eval(
+				null, inputObjects, SetUtil.fromArray("returnValue"),
 				ObjectValidationRuleConstants.ENGINE_TYPE_GROOVY, script);
 		}
 		finally {
 			currentThread.setContextClassLoader(contextClassLoader);
 		}
 
-		return true;
+		return GetterUtil.getBoolean(results.get("returnValue"));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

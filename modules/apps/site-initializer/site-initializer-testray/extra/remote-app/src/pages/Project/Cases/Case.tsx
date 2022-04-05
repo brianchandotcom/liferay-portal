@@ -12,7 +12,7 @@
  * details.
  */
 
-import {useOutletContext} from 'react-router-dom';
+import {useOutletContext, useParams} from 'react-router-dom';
 
 import Container from '../../../components/Layout/Container';
 import ListView from '../../../components/ListView/ListView';
@@ -21,9 +21,13 @@ import QATable from '../../../components/Table/QATable';
 import {TestrayCase, getCaseResults} from '../../../graphql/queries';
 import i18n from '../../../i18n';
 import {getStatusLabel} from '../../../util/constants';
+import CaseModal from './CaseModal';
+import useCaseActions from './useCaseActions';
 
 const Case = () => {
+	const {caseId, projectId} = useParams();
 	const {testrayCase}: {testrayCase: TestrayCase} = useOutletContext();
+	const {actions, formModal} = useCaseActions();
 
 	return (
 		<>
@@ -72,8 +76,25 @@ const Case = () => {
 
 			<Container className="mt-3" title={i18n.translate('test-history')}>
 				<ListView
+					forceRefetch={formModal.forceRefetch}
+					initialContext={{
+						filters: {
+							columns: {
+								caseType: false,
+								dateCreated: false,
+								dateModified: false,
+								issues: false,
+								team: false,
+							},
+						},
+					}}
+					managementToolbarProps={{
+						addButton: formModal.modal.open,
+						visible: true,
+					}}
 					query={getCaseResults}
 					tableProps={{
+						actions,
 						columns: [
 							{
 								key: 'dateCreated',
@@ -87,6 +108,7 @@ const Case = () => {
 								value: i18n.translate('git-hash'),
 							},
 							{
+								clickable: true,
 								key: 'product-version',
 								render: (_, {build}) => {
 									return build?.productVersion?.name;
@@ -94,6 +116,7 @@ const Case = () => {
 								value: i18n.translate('product-version'),
 							},
 							{
+								clickable: true,
 								key: 'run',
 								render: (run) => {
 									return run?.externalReferencePK;
@@ -102,6 +125,7 @@ const Case = () => {
 								value: i18n.translate('environment'),
 							},
 							{
+								clickable: true,
 								key: 'routine',
 								render: (_, {build}) => build?.routine?.name,
 								value: i18n.translate('routine'),
@@ -128,10 +152,15 @@ const Case = () => {
 							{key: 'issues', value: i18n.translate('issues')},
 							{key: 'errors', value: i18n.translate('errors')},
 						],
+						navigateTo: ({build, id}) =>
+							`/project/${projectId}/routines/${build?.routine?.id}/build/${build?.id}/case-result/${id}`,
 					}}
 					transformData={(data) => data?.caseResults}
+					variables={{filter: `caseId eq ${caseId}`}}
 				/>
 			</Container>
+
+			<CaseModal modal={formModal.modal} projectId={Number(projectId)} />
 		</>
 	);
 };

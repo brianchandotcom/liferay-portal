@@ -27,9 +27,9 @@ import i18n from '../../../i18n';
 
 const CaseOutlet = () => {
 	const {testrayProject}: any = useOutletContext();
-	const {projectId, testrayCaseId} = useParams();
+	const {caseId, projectId} = useParams();
 	const {pathname} = useLocation();
-	const basePath = `/project/${projectId}/cases/${testrayCaseId}`;
+	const basePath = `/project/${projectId}/cases/${caseId}`;
 
 	const {setHeading} = useHeader({
 		useTabs: [
@@ -48,7 +48,7 @@ const CaseOutlet = () => {
 
 	const {data} = useQuery<{case: TestrayCase}>(getCase, {
 		variables: {
-			caseId: testrayCaseId,
+			caseId,
 		},
 	});
 

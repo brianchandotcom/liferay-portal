@@ -12,6 +12,8 @@
  * details.
  */
 
+import {useParams} from 'react-router-dom';
+
 import Container from '../../../components/Layout/Container';
 import ListView from '../../../components/ListView/ListView';
 import {getCases} from '../../../graphql/queries';
@@ -20,6 +22,8 @@ import CaseModal from './CaseModal';
 import useCaseActions from './useCaseActions';
 
 const Cases = () => {
+	const {projectId} = useParams();
+
 	const {actions, formModal} = useCaseActions();
 
 	return (
@@ -87,10 +91,11 @@ const Cases = () => {
 						navigateTo: ({id}) => id?.toString(),
 					}}
 					transformData={(data) => data?.cases}
+					variables={{filter: `projectId eq ${projectId}`}}
 				/>
 			</Container>
 
-			<CaseModal modal={formModal.modal} />
+			<CaseModal modal={formModal.modal} projectId={Number(projectId)} />
 		</>
 	);
 };

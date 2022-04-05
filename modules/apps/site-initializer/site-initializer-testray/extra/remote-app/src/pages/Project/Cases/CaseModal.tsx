@@ -12,7 +12,7 @@
  * details.
  */
 
-import {useMutation, useQuery} from '@apollo/client';
+import {useQuery} from '@apollo/client';
 import ClayButton from '@clayui/button';
 import ClayForm, {ClaySelectWithOption} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
@@ -231,10 +231,12 @@ const CaseForm: React.FC<CaseFormProps> = ({form, onChange}) => {
 
 type CaseModalProps = {
 	modal: FormModalOptions;
+	projectId: number;
 };
 
 const CaseModal: React.FC<CaseModalProps> = ({
-	modal: {observer, onChange, onClose, onError, onSave, visible},
+	modal: {observer, onChange, onClose, onSubmit, visible},
+	projectId,
 }) => {
 	const [form, setForm] = useState<CaseFormData>({
 		caseTypeId: 0,
@@ -248,27 +250,17 @@ const CaseModal: React.FC<CaseModalProps> = ({
 		stepsType: '',
 	});
 
-	const [onCreateCase] = useMutation(CreateCase);
-
-	const onSubmit = async () => {
-		try {
-			await onCreateCase({
-				variables: {
-					Case: {
-						...form,
-						caseTypeId: Number(form.caseTypeId),
-						componentId: Number(form.componentId),
-						estimatedDuration: Number(form.estimatedDuration),
-						priority: Number(form.priority),
-					},
-				},
-			});
-
-			onSave();
-		}
-		catch (error) {
-			onError();
-		}
+	const _onSubmit = () => {
+		onSubmit(
+			{
+				...form,
+				projectId,
+			},
+			{
+				createMutation: CreateCase,
+				updateMutation: CreateCase,
+			}
+		);
 	};
 
 	return (
@@ -279,7 +271,7 @@ const CaseModal: React.FC<CaseModalProps> = ({
 						{i18n.translate('close')}
 					</ClayButton>
 
-					<ClayButton displayType="primary" onClick={onSubmit}>
+					<ClayButton displayType="primary" onClick={_onSubmit}>
 						{i18n.translate('add-case')}
 					</ClayButton>
 				</ClayButton.Group>

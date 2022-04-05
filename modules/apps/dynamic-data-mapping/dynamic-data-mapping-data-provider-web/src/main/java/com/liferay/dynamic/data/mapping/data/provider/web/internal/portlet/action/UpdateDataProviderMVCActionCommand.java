@@ -233,13 +233,11 @@ public class UpdateDataProviderMVCActionCommand
 			DDMDataProviderPortletUtil.getDDMFormFieldNamesByType(
 				dataProviderInstanceSettingsDDMForm, "password");
 
-		DDMFormValues storedDDMFormValues = _getStoredDDMFormValues(
-			dataProviderInstanceSettingsDDMForm,
-			dataProviderInstance.getDefinition());
-
 		_restoreDDMFormFieldValues(
 			passwordDDMFormFieldNames, ddmFormValues.getDDMFormFieldValues(),
-			storedDDMFormValues);
+			_getStoredDDMFormValues(
+				dataProviderInstanceSettingsDDMForm,
+				dataProviderInstance.getDefinition()));
 	}
 
 }

@@ -517,10 +517,9 @@ public class DDMDataProviderInvokerImplTest extends PowerMockito {
 			ddmDataProviderRequest,
 			_createDDMRESTDataProviderSettingsWithTimeout(timeout));
 
-		executionTimeoutInMilliseconds = _getExecutionTimeoutInMilliseconds(
-			ddmDataProviderInvokeCommand);
-
-		Assert.assertEquals(timeout, executionTimeoutInMilliseconds);
+		Assert.assertEquals(
+			timeout,
+			_getExecutionTimeoutInMilliseconds(ddmDataProviderInvokeCommand));
 	}
 
 	@Test

@@ -24,6 +24,24 @@ const serialize: RestLink.Serializer = (body, headers) => {
 };
 
 export const bodySerializers: RestLink.Serializers = {
+	case: (
+		{
+			caseTypeId: r_caseTypeToCases_c_caseTypeId,
+			componentId: r_componentToCases_c_componentId,
+			projectId: r_projectToCases_c_projectId,
+			...data
+		},
+		headers
+	) =>
+		serialize(
+			{
+				...data,
+				r_caseTypeToCases_c_caseTypeId,
+				r_componentToCases_c_componentId,
+				r_projectToCases_c_projectId,
+			},
+			headers
+		),
 	factorOption: (
 		{
 			factorCategoryId: r_factorCategoryToOptions_c_factorCategoryId,
@@ -45,21 +63,28 @@ export const bodySerializers: RestLink.Serializers = {
 			...data
 		},
 		headers
-	) => {
-		return serialize(
+	) =>
+		serialize(
 			{
 				...data,
 				r_componentToRequirements_c_componentId,
 				r_projectToRequirements_c_projectId,
 			},
 			headers
-		);
-	},
+		),
 	routine: ({projectId: r_routineToProjects_c_projectId, ...data}, headers) =>
 		serialize(
 			{
 				...data,
 				r_routineToProjects_c_projectId,
+			},
+			headers
+		),
+	suite: ({projectId: r_projectToSuites_c_projectId, ...data}, headers) =>
+		serialize(
+			{
+				...data,
+				r_projectToSuites_c_projectId,
 			},
 			headers
 		),

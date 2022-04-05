@@ -14,16 +14,17 @@
 
 import {gql} from '@apollo/client';
 
-import {testrayCaseFragment} from '../fragments';
-
 export const CreateCase = gql`
-	${testrayCaseFragment}
-
-	mutation CreateCase($Case: InputC_Case!) {
-		c {
-			createCase(Case: $Case) {
-				...CaseFragment
-			}
+	mutation createCase($data: InputC_Case!) {
+		createCase(Case: $data)
+			@rest(
+				bodyKey: "Case"
+				bodySerializer: "case"
+				method: "POST"
+				path: "cases"
+				type: "C_Case"
+			) {
+			id
 		}
 	}
 `;
@@ -32,6 +33,21 @@ export const DeleteCase = gql`
 	mutation deleteCase($caseId: Long) {
 		c {
 			deleteCase(caseId: $caseId)
+		}
+	}
+`;
+
+export const UpdateCase = gql`
+	mutation updateCase($data: InputC_Case!, $id: Long) {
+		updateCase(Case: $data, caseId: $id)
+			@rest(
+				bodyKey: "Case"
+				bodySerializer: "case"
+				method: "PUT"
+				path: "cases/{args.caseId}"
+				type: "C_Case"
+			) {
+			id
 		}
 	}
 `;

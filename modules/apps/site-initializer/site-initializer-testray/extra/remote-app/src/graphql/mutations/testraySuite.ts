@@ -14,16 +14,31 @@
 
 import {gql} from '@apollo/client';
 
-import {testraySuiteFragment} from '../fragments';
-
 export const CreateSuite = gql`
-	${testraySuiteFragment}
-
-	mutation CreateSuite($Suite: InputC_Suite!) {
-		c {
-			createSuite(Suite: $Suite) {
-				...SuiteFragment
-			}
+	mutation createSuite($data: InputC_Suite!) {
+		createSuite(Suite: $data)
+			@rest(
+				bodyKey: "Suite"
+				bodySerializer: "suite"
+				method: "POST"
+				path: "suites"
+				type: "C_Suite"
+			) {
+			id
+		}
+	}
+`;
+export const UpdateSuite = gql`
+	mutation updateSuite($data: InputC_Suite!, $id: Long) {
+		updateRoutine(Suite: $data, suiteId: $id)
+			@rest(
+				bodyKey: "Suite"
+				bodySerializer: "suite"
+				method: "PUT"
+				path: "suites/{args.suiteId}"
+				type: "C_Suite"
+			) {
+			id
 		}
 	}
 `;

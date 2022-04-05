@@ -41,7 +41,9 @@ export const getCaseResults = gql`
 				attachments
 				build: r_buildToCaseResult_c_build {
 					gitHash
+					id
 					routine: r_routineToBuilds_c_routine {
+						id
 						name
 					}
 					productVersion: r_productVersionToBuilds_c_productVersion {

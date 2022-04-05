@@ -28,6 +28,7 @@ import resolveEditableValue from '../../utils/editable-value/resolveEditableValu
 import {getCommonStyleByName} from '../../utils/getCommonStyleByName';
 import {getEditableLinkValue} from '../../utils/getEditableLinkValue';
 import {getFrontendTokenValue} from '../../utils/getFrontendTokenValue';
+import getLayoutDataItemClassName from '../../utils/getLayoutDataItemClassName';
 import getLayoutDataItemUniqueClassName from '../../utils/getLayoutDataItemUniqueClassName';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import {isValidSpacingOption} from '../../utils/isValidSpacingOption';
@@ -169,6 +170,9 @@ const Container = React.forwardRef(
 			<HTMLTag
 				{...(link ? {} : data)}
 				className={classNames(className, {
+					[getLayoutDataItemClassName(
+						item.type
+					)]: config.featureFlagLps132571,
 					[getLayoutDataItemUniqueClassName(
 						item.itemId
 					)]: config.featureFlagLps132571,

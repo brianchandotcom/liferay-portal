@@ -91,10 +91,10 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 	public void deleteFragmentEntryLinkData(
 		FragmentEntryLink fragmentEntryLink) {
 
-		List<String> portletIds =
-			_portletRegistry.getFragmentEntryLinkPortletIds(fragmentEntryLink);
+		for (String portletId :
+				_portletRegistry.getFragmentEntryLinkPortletIds(
+					fragmentEntryLink)) {
 
-		for (String portletId : portletIds) {
 			try {
 				_portletLocalService.deletePortlet(
 					fragmentEntryLink.getCompanyId(), portletId,

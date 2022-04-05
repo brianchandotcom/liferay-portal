@@ -55,10 +55,18 @@
 
 	<div class="d-flex flex-column w-100">
 		<div class="bg-neutral-0 d-flex flex-column page-header-container sticky-top w-100">
-			<div class="align-items-center container d-flex header-content justify-content-between px-4 py-3">
-				<p class="font-weight-light h3 m-0 text-neutral-10" data-lfr-editable-id="header-title" data-lfr-editable-type="text" />
+			<div class="align-items-center container d-flex header-content justify-content-between px-0 py-3">
+				<div class="left-content">
+					<lfr-drop-zone></lfr-drop-zone>
+				</div>
 
-				<img alt="search" class="search-icon" src="[resources:search_icon.svg]" />
+				<div class="d-flex flex-row right-content">
+					<img alt="search" class="search-icon" src="[resources:search_icon.svg]" />
+
+					<div class="h-25">
+						<lfr-drop-zone></lfr-drop-zone>
+					</div>
+				</div>
 			</div>
 		</div>
 

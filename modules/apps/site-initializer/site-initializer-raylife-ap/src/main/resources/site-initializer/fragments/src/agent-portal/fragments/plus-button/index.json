@@ -1,0 +1,30 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "Button",
+					"description": "container-text",
+					"label": "Button name",
+					"name": "buttonName",
+					"type": "text",
+					"typeOptions": {
+						"placeholder": "Insert the name of button"
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"description": "container-text",
+					"label": "Event name",
+					"name": "eventName",
+					"type": "text",
+					"typeOptions": {
+						"placeholder": "Insert the name of event"
+					}
+				}
+			]
+		}
+	]
+}

@@ -36,14 +36,3 @@ btnPolicies.onclick = () => redirectUrl('policies');
 btnClaims.onclick = () => redirectUrl('claims');
 btnReports.onclick = () => redirectUrl('reports');
 btnLogo.onclick = () => redirectUrl('dashboard');
-
-const layoutName = configuration.layoutName;
-const headerTitleElement = fragmentElement.querySelector(
-	'.page-header-container p'
-);
-const dashBoardTitle = `<span class="font-weight-bolder h3">Hi, Hugo.</span> You're	on track this month!`;
-
-headerTitleElement.innerHTML =
-	layoutName === 'Dashboard'
-		? dashBoardTitle
-		: `<span class="font-weight-bolder h3">${layoutName}</span>`;

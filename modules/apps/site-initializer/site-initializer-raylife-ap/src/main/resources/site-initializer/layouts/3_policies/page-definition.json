@@ -4,8 +4,10 @@
 			{
 				"definition": {
 					"fragmentStyle": {
-						"borderWidth": "0"
+						"borderWidth": "0",
+						"textAlign": ""
 					},
+					"indexed": true,
 					"layout": {
 						"borderWidth": 0,
 						"htmlTag": "Div",
@@ -27,35 +29,60 @@
 								"key": "layout"
 							},
 							"fragmentConfig": {
-								"layoutName": "Policies"
+								"layoutName": "Dashboard"
 							},
 							"fragmentFields": [
-							]
+							],
+							"indexed": true
 						},
 						"pageElements": [
 							{
-								"definition": {
-									"layout": {
-										"borderWidth": 0,
-										"htmlTag": "Div",
-										"marginBottom": 0,
-										"marginLeft": 0,
-										"marginRight": 0,
-										"marginTop": 0,
-										"paddingBottom": 0,
-										"paddingLeft": 0,
-										"paddingRight": 0,
-										"paddingTop": 0,
-										"widthType": "Fluid"
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "BASIC_COMPONENT-heading"
+											},
+											"fragmentConfig": {
+												"headingLevel": "h3"
+											},
+											"fragmentFields": [
+												{
+													"id": "element-text",
+													"value": {
+														"fragmentLink": {
+															"value_i18n": {
+															}
+														},
+														"text": {
+															"value_i18n": {
+																"en_US": "Policies"
+															}
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
 									}
-								},
+								],
+								"type": "FragmentDropZone"
+							},
+							{
+								"type": "FragmentDropZone"
+							},
+							{
 								"pageElements": [
 									{
 										"definition": {
 											"fragmentStyle": {
+												"borderWidth": "0",
 												"paddingBottom": "4",
-												"paddingTop": "4"
+												"paddingTop": "4",
+												"textAlign": ""
 											},
+											"indexed": true,
 											"layout": {
 												"borderWidth": 0,
 												"htmlTag": "Div",
@@ -74,6 +101,7 @@
 											{
 												"definition": {
 													"gutters": true,
+													"indexed": true,
 													"modulesPerRow": 3,
 													"numberOfColumns": 3,
 													"reverseOrder": false,
@@ -131,8 +159,10 @@
 																	],
 																	"fragmentStyle": {
 																		"maxWidth": "516px",
+																		"textAlign": "",
 																		"width": "100%"
-																	}
+																	},
+																	"indexed": true
 																},
 																"pageElements": [
 																	{
@@ -147,7 +177,8 @@
 																						"height": "257px"
 																					},
 																					"fragmentFields": [
-																					]
+																					],
+																					"indexed": true
 																				},
 																				"type": "Fragment"
 																			}
@@ -194,8 +225,10 @@
 																	],
 																	"fragmentStyle": {
 																		"maxWidth": "516px\t",
+																		"textAlign": "",
 																		"width": "100%"
-																	}
+																	},
+																	"indexed": true
 																},
 																"pageElements": [
 																	{
@@ -212,8 +245,10 @@
 																					"fragmentFields": [
 																					],
 																					"fragmentStyle": {
-																						"maxWidth": "\t\t\t\t\t\t\t\"type\": \"FragmentDropZone\" \t\t\t\t\t\t\t392px"
-																					}
+																						"maxWidth": "\t\t\t\t\t\t\t\"type\": \"FragmentDropZone\" \t\t\t\t\t\t\t392px",
+																						"textAlign": ""
+																					},
+																					"indexed": true
 																				},
 																				"type": "Fragment"
 																			}
@@ -260,8 +295,10 @@
 																	],
 																	"fragmentStyle": {
 																		"maxWidth": "516px",
+																		"textAlign": "",
 																		"width": "100%"
-																	}
+																	},
+																	"indexed": true
 																},
 																"pageElements": [
 																	{
@@ -276,7 +313,8 @@
 																						"height": "257px"
 																					},
 																					"fragmentFields": [
-																					]
+																					],
+																					"indexed": true
 																				},
 																				"type": "Fragment"
 																			}
@@ -294,6 +332,10 @@
 											},
 											{
 												"definition": {
+													"fragmentStyle": {
+														"borderWidth": "0"
+													},
+													"indexed": true,
 													"layout": {
 														"borderWidth": 0,
 														"htmlTag": "Div",
@@ -318,7 +360,8 @@
 																"sectionId": "primary"
 															},
 															"fragmentFields": [
-															]
+															],
+															"indexed": true
 														},
 														"pageElements": [
 															{
@@ -335,8 +378,10 @@
 																			"fragmentFields": [
 																			],
 																			"fragmentStyle": {
-																				"marginTop": "4"
-																			}
+																				"marginTop": "4",
+																				"textAlign": ""
+																			},
+																			"indexed": true
 																		},
 																		"type": "Fragment"
 																	}
@@ -353,7 +398,7 @@
 										"type": "Section"
 									}
 								],
-								"type": "Section"
+								"type": "FragmentDropZone"
 							}
 						],
 						"type": "Fragment"

@@ -17,7 +17,6 @@ package com.liferay.batch.planner.service.base;
 import com.liferay.batch.planner.model.BatchPlannerMapping;
 import com.liferay.batch.planner.service.BatchPlannerMappingLocalService;
 import com.liferay.batch.planner.service.BatchPlannerMappingLocalServiceUtil;
-import com.liferay.batch.planner.service.persistence.BatchPlannerLogPersistence;
 import com.liferay.batch.planner.service.persistence.BatchPlannerMappingPersistence;
 import com.liferay.batch.planner.service.persistence.BatchPlannerPlanPersistence;
 import com.liferay.batch.planner.service.persistence.BatchPlannerPolicyPersistence;
@@ -486,9 +485,6 @@ public abstract class BatchPlannerMappingLocalServiceBaseImpl
 			throw new RuntimeException(reflectiveOperationException);
 		}
 	}
-
-	@Reference
-	protected BatchPlannerLogPersistence batchPlannerLogPersistence;
 
 	protected BatchPlannerMappingLocalService batchPlannerMappingLocalService;
 

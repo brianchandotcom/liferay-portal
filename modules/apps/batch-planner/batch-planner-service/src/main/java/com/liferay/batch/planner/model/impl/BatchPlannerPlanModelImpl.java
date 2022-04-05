@@ -79,8 +79,9 @@ public class BatchPlannerPlanModelImpl
 		{"modifiedDate", Types.TIMESTAMP}, {"active_", Types.BOOLEAN},
 		{"export", Types.BOOLEAN}, {"externalType", Types.VARCHAR},
 		{"externalURL", Types.VARCHAR}, {"internalClassName", Types.VARCHAR},
-		{"name", Types.VARCHAR}, {"taskItemDelegateName", Types.VARCHAR},
-		{"template", Types.BOOLEAN}
+		{"name", Types.VARCHAR}, {"size_", Types.INTEGER},
+		{"taskItemDelegateName", Types.VARCHAR}, {"total", Types.INTEGER},
+		{"template", Types.BOOLEAN}, {"status", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -100,12 +101,15 @@ public class BatchPlannerPlanModelImpl
 		TABLE_COLUMNS_MAP.put("externalURL", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("internalClassName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("size_", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("taskItemDelegateName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("total", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("template", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table BatchPlannerPlan (mvccVersion LONG default 0 not null,batchPlannerPlanId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,active_ BOOLEAN,export BOOLEAN,externalType VARCHAR(75) null,externalURL STRING null,internalClassName VARCHAR(75) null,name VARCHAR(75) null,taskItemDelegateName VARCHAR(75) null,template BOOLEAN)";
+		"create table BatchPlannerPlan (mvccVersion LONG default 0 not null,batchPlannerPlanId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,active_ BOOLEAN,export BOOLEAN,externalType VARCHAR(75) null,externalURL STRING null,internalClassName VARCHAR(75) null,name VARCHAR(75) null,size_ INTEGER,taskItemDelegateName VARCHAR(75) null,total INTEGER,template BOOLEAN,status INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table BatchPlannerPlan";
 
@@ -366,17 +370,29 @@ public class BatchPlannerPlanModelImpl
 		attributeSetterBiConsumers.put(
 			"name",
 			(BiConsumer<BatchPlannerPlan, String>)BatchPlannerPlan::setName);
+		attributeGetterFunctions.put("size", BatchPlannerPlan::getSize);
+		attributeSetterBiConsumers.put(
+			"size",
+			(BiConsumer<BatchPlannerPlan, Integer>)BatchPlannerPlan::setSize);
 		attributeGetterFunctions.put(
 			"taskItemDelegateName", BatchPlannerPlan::getTaskItemDelegateName);
 		attributeSetterBiConsumers.put(
 			"taskItemDelegateName",
 			(BiConsumer<BatchPlannerPlan, String>)
 				BatchPlannerPlan::setTaskItemDelegateName);
+		attributeGetterFunctions.put("total", BatchPlannerPlan::getTotal);
+		attributeSetterBiConsumers.put(
+			"total",
+			(BiConsumer<BatchPlannerPlan, Integer>)BatchPlannerPlan::setTotal);
 		attributeGetterFunctions.put("template", BatchPlannerPlan::getTemplate);
 		attributeSetterBiConsumers.put(
 			"template",
 			(BiConsumer<BatchPlannerPlan, Boolean>)
 				BatchPlannerPlan::setTemplate);
+		attributeGetterFunctions.put("status", BatchPlannerPlan::getStatus);
+		attributeSetterBiConsumers.put(
+			"status",
+			(BiConsumer<BatchPlannerPlan, Integer>)BatchPlannerPlan::setStatus);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -678,6 +694,21 @@ public class BatchPlannerPlanModelImpl
 
 	@JSON
 	@Override
+	public int getSize() {
+		return _size;
+	}
+
+	@Override
+	public void setSize(int size) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_size = size;
+	}
+
+	@JSON
+	@Override
 	public String getTaskItemDelegateName() {
 		if (_taskItemDelegateName == null) {
 			return "";
@@ -694,6 +725,21 @@ public class BatchPlannerPlanModelImpl
 		}
 
 		_taskItemDelegateName = taskItemDelegateName;
+	}
+
+	@JSON
+	@Override
+	public int getTotal() {
+		return _total;
+	}
+
+	@Override
+	public void setTotal(int total) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_total = total;
 	}
 
 	@JSON
@@ -725,6 +771,21 @@ public class BatchPlannerPlanModelImpl
 	public boolean getOriginalTemplate() {
 		return GetterUtil.getBoolean(
 			this.<Boolean>getColumnOriginalValue("template"));
+	}
+
+	@JSON
+	@Override
+	public int getStatus() {
+		return _status;
+	}
+
+	@Override
+	public void setStatus(int status) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_status = status;
 	}
 
 	public long getColumnBitmask() {
@@ -796,8 +857,11 @@ public class BatchPlannerPlanModelImpl
 		batchPlannerPlanImpl.setExternalURL(getExternalURL());
 		batchPlannerPlanImpl.setInternalClassName(getInternalClassName());
 		batchPlannerPlanImpl.setName(getName());
+		batchPlannerPlanImpl.setSize(getSize());
 		batchPlannerPlanImpl.setTaskItemDelegateName(getTaskItemDelegateName());
+		batchPlannerPlanImpl.setTotal(getTotal());
 		batchPlannerPlanImpl.setTemplate(isTemplate());
+		batchPlannerPlanImpl.setStatus(getStatus());
 
 		batchPlannerPlanImpl.resetOriginalValues();
 
@@ -834,10 +898,16 @@ public class BatchPlannerPlanModelImpl
 			this.<String>getColumnOriginalValue("internalClassName"));
 		batchPlannerPlanImpl.setName(
 			this.<String>getColumnOriginalValue("name"));
+		batchPlannerPlanImpl.setSize(
+			this.<Integer>getColumnOriginalValue("size_"));
 		batchPlannerPlanImpl.setTaskItemDelegateName(
 			this.<String>getColumnOriginalValue("taskItemDelegateName"));
+		batchPlannerPlanImpl.setTotal(
+			this.<Integer>getColumnOriginalValue("total"));
 		batchPlannerPlanImpl.setTemplate(
 			this.<Boolean>getColumnOriginalValue("template"));
+		batchPlannerPlanImpl.setStatus(
+			this.<Integer>getColumnOriginalValue("status"));
 
 		return batchPlannerPlanImpl;
 	}
@@ -987,6 +1057,8 @@ public class BatchPlannerPlanModelImpl
 			batchPlannerPlanCacheModel.name = null;
 		}
 
+		batchPlannerPlanCacheModel.size = getSize();
+
 		batchPlannerPlanCacheModel.taskItemDelegateName =
 			getTaskItemDelegateName();
 
@@ -999,7 +1071,11 @@ public class BatchPlannerPlanModelImpl
 			batchPlannerPlanCacheModel.taskItemDelegateName = null;
 		}
 
+		batchPlannerPlanCacheModel.total = getTotal();
+
 		batchPlannerPlanCacheModel.template = isTemplate();
+
+		batchPlannerPlanCacheModel.status = getStatus();
 
 		return batchPlannerPlanCacheModel;
 	}
@@ -1106,8 +1182,11 @@ public class BatchPlannerPlanModelImpl
 	private String _externalURL;
 	private String _internalClassName;
 	private String _name;
+	private int _size;
 	private String _taskItemDelegateName;
+	private int _total;
 	private boolean _template;
+	private int _status;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
@@ -1151,9 +1230,12 @@ public class BatchPlannerPlanModelImpl
 		_columnOriginalValues.put("externalURL", _externalURL);
 		_columnOriginalValues.put("internalClassName", _internalClassName);
 		_columnOriginalValues.put("name", _name);
+		_columnOriginalValues.put("size_", _size);
 		_columnOriginalValues.put(
 			"taskItemDelegateName", _taskItemDelegateName);
+		_columnOriginalValues.put("total", _total);
 		_columnOriginalValues.put("template", _template);
+		_columnOriginalValues.put("status", _status);
 	}
 
 	private static final Map<String, String> _attributeNames;
@@ -1162,6 +1244,7 @@ public class BatchPlannerPlanModelImpl
 		Map<String, String> attributeNames = new HashMap<>();
 
 		attributeNames.put("active_", "active");
+		attributeNames.put("size_", "size");
 
 		_attributeNames = Collections.unmodifiableMap(attributeNames);
 	}
@@ -1203,9 +1286,15 @@ public class BatchPlannerPlanModelImpl
 
 		columnBitmasks.put("name", 4096L);
 
-		columnBitmasks.put("taskItemDelegateName", 8192L);
+		columnBitmasks.put("size_", 8192L);
 
-		columnBitmasks.put("template", 16384L);
+		columnBitmasks.put("taskItemDelegateName", 16384L);
+
+		columnBitmasks.put("total", 32768L);
+
+		columnBitmasks.put("template", 65536L);
+
+		columnBitmasks.put("status", 131072L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

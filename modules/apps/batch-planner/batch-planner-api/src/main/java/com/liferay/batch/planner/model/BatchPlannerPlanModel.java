@@ -289,6 +289,20 @@ public interface BatchPlannerPlanModel
 	public void setName(String name);
 
 	/**
+	 * Returns the size of this batch planner plan.
+	 *
+	 * @return the size of this batch planner plan
+	 */
+	public int getSize();
+
+	/**
+	 * Sets the size of this batch planner plan.
+	 *
+	 * @param size the size of this batch planner plan
+	 */
+	public void setSize(int size);
+
+	/**
 	 * Returns the task item delegate name of this batch planner plan.
 	 *
 	 * @return the task item delegate name of this batch planner plan
@@ -302,6 +316,20 @@ public interface BatchPlannerPlanModel
 	 * @param taskItemDelegateName the task item delegate name of this batch planner plan
 	 */
 	public void setTaskItemDelegateName(String taskItemDelegateName);
+
+	/**
+	 * Returns the total of this batch planner plan.
+	 *
+	 * @return the total of this batch planner plan
+	 */
+	public int getTotal();
+
+	/**
+	 * Sets the total of this batch planner plan.
+	 *
+	 * @param total the total of this batch planner plan
+	 */
+	public void setTotal(int total);
 
 	/**
 	 * Returns the template of this batch planner plan.
@@ -323,6 +351,20 @@ public interface BatchPlannerPlanModel
 	 * @param template the template of this batch planner plan
 	 */
 	public void setTemplate(boolean template);
+
+	/**
+	 * Returns the status of this batch planner plan.
+	 *
+	 * @return the status of this batch planner plan
+	 */
+	public int getStatus();
+
+	/**
+	 * Sets the status of this batch planner plan.
+	 *
+	 * @param status the status of this batch planner plan
+	 */
+	public void setStatus(int status);
 
 	@Override
 	public BatchPlannerPlan cloneWithOriginalValues();

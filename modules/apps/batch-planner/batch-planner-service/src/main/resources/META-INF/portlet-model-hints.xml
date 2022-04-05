@@ -1,22 +1,6 @@
 <?xml version="1.0"?>
 
 <model-hints>
-	<model name="com.liferay.batch.planner.model.BatchPlannerLog">
-		<field name="mvccVersion" type="long" />
-		<field name="batchPlannerLogId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="userId" type="long" />
-		<field name="userName" type="String" />
-		<field name="createDate" type="Date" />
-		<field name="modifiedDate" type="Date" />
-		<field name="batchPlannerPlanId" type="long" />
-		<field name="batchEngineExportTaskERC" type="String" />
-		<field name="batchEngineImportTaskERC" type="String" />
-		<field name="dispatchTriggerERC" type="String" />
-		<field name="size" type="int" />
-		<field name="total" type="int" />
-		<field name="status" type="int" />
-	</model>
 	<model name="com.liferay.batch.planner.model.BatchPlannerMapping">
 		<field name="mvccVersion" type="long" />
 		<field name="batchPlannerMappingId" type="long" />
@@ -65,8 +49,11 @@
 		<field name="name" type="String">
 			<validator name="required" />
 		</field>
+		<field name="size" type="int" />
 		<field name="taskItemDelegateName" type="String" />
+		<field name="total" type="int" />
 		<field name="template" type="boolean" />
+		<field name="status" type="int" />
 	</model>
 	<model name="com.liferay.batch.planner.model.BatchPlannerPolicy">
 		<field name="mvccVersion" type="long" />

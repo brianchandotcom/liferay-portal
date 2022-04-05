@@ -263,7 +263,7 @@ public interface BatchPlannerPlanLocalService
 		throws PortalException;
 
 	public BatchPlannerPlan updateActive(
-			boolean active, String batchEngineTaskERC, boolean export)
+			boolean active, String batchEngineTaskERC)
 		throws PortalException;
 
 	public BatchPlannerPlan updateActive(

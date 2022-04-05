@@ -5077,6 +5077,7 @@ public class BatchPlannerPlanPersistenceImpl
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("active", "active_");
+		dbColumnNames.put("size", "size_");
 
 		setDBColumnNames(dbColumnNames);
 
@@ -5868,7 +5869,7 @@ public class BatchPlannerPlanPersistenceImpl
 		BatchPlannerPlanPersistenceImpl.class);
 
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
-		new String[] {"active"});
+		new String[] {"active", "size"});
 
 	@Override
 	protected FinderCache getFinderCache() {

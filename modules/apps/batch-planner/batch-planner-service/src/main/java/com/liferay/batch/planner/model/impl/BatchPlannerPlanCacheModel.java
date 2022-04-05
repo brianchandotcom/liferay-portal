@@ -78,7 +78,7 @@ public class BatchPlannerPlanCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -106,10 +106,16 @@ public class BatchPlannerPlanCacheModel
 		sb.append(internalClassName);
 		sb.append(", name=");
 		sb.append(name);
+		sb.append(", size=");
+		sb.append(size);
 		sb.append(", taskItemDelegateName=");
 		sb.append(taskItemDelegateName);
+		sb.append(", total=");
+		sb.append(total);
 		sb.append(", template=");
 		sb.append(template);
+		sb.append(", status=");
+		sb.append(status);
 		sb.append("}");
 
 		return sb.toString();
@@ -176,6 +182,8 @@ public class BatchPlannerPlanCacheModel
 			batchPlannerPlanImpl.setName(name);
 		}
 
+		batchPlannerPlanImpl.setSize(size);
+
 		if (taskItemDelegateName == null) {
 			batchPlannerPlanImpl.setTaskItemDelegateName("");
 		}
@@ -183,7 +191,9 @@ public class BatchPlannerPlanCacheModel
 			batchPlannerPlanImpl.setTaskItemDelegateName(taskItemDelegateName);
 		}
 
+		batchPlannerPlanImpl.setTotal(total);
 		batchPlannerPlanImpl.setTemplate(template);
+		batchPlannerPlanImpl.setStatus(status);
 
 		batchPlannerPlanImpl.resetOriginalValues();
 
@@ -210,9 +220,15 @@ public class BatchPlannerPlanCacheModel
 		externalURL = objectInput.readUTF();
 		internalClassName = objectInput.readUTF();
 		name = objectInput.readUTF();
+
+		size = objectInput.readInt();
 		taskItemDelegateName = objectInput.readUTF();
 
+		total = objectInput.readInt();
+
 		template = objectInput.readBoolean();
+
+		status = objectInput.readInt();
 	}
 
 	@Override
@@ -267,6 +283,8 @@ public class BatchPlannerPlanCacheModel
 			objectOutput.writeUTF(name);
 		}
 
+		objectOutput.writeInt(size);
+
 		if (taskItemDelegateName == null) {
 			objectOutput.writeUTF("");
 		}
@@ -274,7 +292,11 @@ public class BatchPlannerPlanCacheModel
 			objectOutput.writeUTF(taskItemDelegateName);
 		}
 
+		objectOutput.writeInt(total);
+
 		objectOutput.writeBoolean(template);
+
+		objectOutput.writeInt(status);
 	}
 
 	public long mvccVersion;
@@ -290,7 +312,10 @@ public class BatchPlannerPlanCacheModel
 	public String externalURL;
 	public String internalClassName;
 	public String name;
+	public int size;
 	public String taskItemDelegateName;
+	public int total;
 	public boolean template;
+	public int status;
 
 }

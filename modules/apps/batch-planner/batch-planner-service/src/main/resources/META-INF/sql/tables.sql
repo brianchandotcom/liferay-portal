@@ -28,8 +28,11 @@ create table BatchPlannerPlan (
 	externalURL STRING null,
 	internalClassName VARCHAR(75) null,
 	name VARCHAR(75) null,
+	size_ INTEGER,
 	taskItemDelegateName VARCHAR(75) null,
-	template BOOLEAN
+	total INTEGER,
+	template BOOLEAN,
+	status INTEGER
 );
 
 create table BatchPlannerPolicy (

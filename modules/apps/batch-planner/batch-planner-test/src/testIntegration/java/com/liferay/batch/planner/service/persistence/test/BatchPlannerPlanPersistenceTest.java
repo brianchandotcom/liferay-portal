@@ -148,10 +148,16 @@ public class BatchPlannerPlanPersistenceTest {
 
 		newBatchPlannerPlan.setName(RandomTestUtil.randomString());
 
+		newBatchPlannerPlan.setSize(RandomTestUtil.nextInt());
+
 		newBatchPlannerPlan.setTaskItemDelegateName(
 			RandomTestUtil.randomString());
 
+		newBatchPlannerPlan.setTotal(RandomTestUtil.nextInt());
+
 		newBatchPlannerPlan.setTemplate(RandomTestUtil.randomBoolean());
+
+		newBatchPlannerPlan.setStatus(RandomTestUtil.nextInt());
 
 		_batchPlannerPlans.add(_persistence.update(newBatchPlannerPlan));
 
@@ -197,11 +203,19 @@ public class BatchPlannerPlanPersistenceTest {
 		Assert.assertEquals(
 			existingBatchPlannerPlan.getName(), newBatchPlannerPlan.getName());
 		Assert.assertEquals(
+			existingBatchPlannerPlan.getSize(), newBatchPlannerPlan.getSize());
+		Assert.assertEquals(
 			existingBatchPlannerPlan.getTaskItemDelegateName(),
 			newBatchPlannerPlan.getTaskItemDelegateName());
 		Assert.assertEquals(
+			existingBatchPlannerPlan.getTotal(),
+			newBatchPlannerPlan.getTotal());
+		Assert.assertEquals(
 			existingBatchPlannerPlan.isTemplate(),
 			newBatchPlannerPlan.isTemplate());
+		Assert.assertEquals(
+			existingBatchPlannerPlan.getStatus(),
+			newBatchPlannerPlan.getStatus());
 	}
 
 	@Test
@@ -283,7 +297,8 @@ public class BatchPlannerPlanPersistenceTest {
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "active", true, "export", true,
 			"externalType", true, "externalURL", true, "internalClassName",
-			true, "name", true, "taskItemDelegateName", true, "template", true);
+			true, "name", true, "size", true, "taskItemDelegateName", true,
+			"total", true, "template", true, "status", true);
 	}
 
 	@Test
@@ -596,9 +611,15 @@ public class BatchPlannerPlanPersistenceTest {
 
 		batchPlannerPlan.setName(RandomTestUtil.randomString());
 
+		batchPlannerPlan.setSize(RandomTestUtil.nextInt());
+
 		batchPlannerPlan.setTaskItemDelegateName(RandomTestUtil.randomString());
 
+		batchPlannerPlan.setTotal(RandomTestUtil.nextInt());
+
 		batchPlannerPlan.setTemplate(RandomTestUtil.randomBoolean());
+
+		batchPlannerPlan.setStatus(RandomTestUtil.nextInt());
 
 		_batchPlannerPlans.add(_persistence.update(batchPlannerPlan));
 

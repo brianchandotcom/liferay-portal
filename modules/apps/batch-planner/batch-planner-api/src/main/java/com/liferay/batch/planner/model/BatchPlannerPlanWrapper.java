@@ -55,8 +55,11 @@ public class BatchPlannerPlanWrapper
 		attributes.put("externalURL", getExternalURL());
 		attributes.put("internalClassName", getInternalClassName());
 		attributes.put("name", getName());
+		attributes.put("size", getSize());
 		attributes.put("taskItemDelegateName", getTaskItemDelegateName());
+		attributes.put("total", getTotal());
 		attributes.put("template", isTemplate());
+		attributes.put("status", getStatus());
 
 		return attributes;
 	}
@@ -141,6 +144,12 @@ public class BatchPlannerPlanWrapper
 			setName(name);
 		}
 
+		Integer size = (Integer)attributes.get("size");
+
+		if (size != null) {
+			setSize(size);
+		}
+
 		String taskItemDelegateName = (String)attributes.get(
 			"taskItemDelegateName");
 
@@ -148,21 +157,28 @@ public class BatchPlannerPlanWrapper
 			setTaskItemDelegateName(taskItemDelegateName);
 		}
 
+		Integer total = (Integer)attributes.get("total");
+
+		if (total != null) {
+			setTotal(total);
+		}
+
 		Boolean template = (Boolean)attributes.get("template");
 
 		if (template != null) {
 			setTemplate(template);
+		}
+
+		Integer status = (Integer)attributes.get("status");
+
+		if (status != null) {
+			setStatus(status);
 		}
 	}
 
 	@Override
 	public BatchPlannerPlan cloneWithOriginalValues() {
 		return wrap(model.cloneWithOriginalValues());
-	}
-
-	@Override
-	public BatchPlannerLog fetchBatchPlannerLog() {
-		return model.fetchBatchPlannerLog();
 	}
 
 	@Override
@@ -178,13 +194,6 @@ public class BatchPlannerPlanWrapper
 	@Override
 	public boolean getActive() {
 		return model.getActive();
-	}
-
-	@Override
-	public BatchPlannerLog getBatchPlannerLog()
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return model.getBatchPlannerLog();
 	}
 
 	@Override
@@ -315,6 +324,26 @@ public class BatchPlannerPlanWrapper
 	}
 
 	/**
+	 * Returns the size of this batch planner plan.
+	 *
+	 * @return the size of this batch planner plan
+	 */
+	@Override
+	public int getSize() {
+		return model.getSize();
+	}
+
+	/**
+	 * Returns the status of this batch planner plan.
+	 *
+	 * @return the status of this batch planner plan
+	 */
+	@Override
+	public int getStatus() {
+		return model.getStatus();
+	}
+
+	/**
 	 * Returns the task item delegate name of this batch planner plan.
 	 *
 	 * @return the task item delegate name of this batch planner plan
@@ -332,6 +361,16 @@ public class BatchPlannerPlanWrapper
 	@Override
 	public boolean getTemplate() {
 		return model.getTemplate();
+	}
+
+	/**
+	 * Returns the total of this batch planner plan.
+	 *
+	 * @return the total of this batch planner plan
+	 */
+	@Override
+	public int getTotal() {
+		return model.getTotal();
 	}
 
 	/**
@@ -520,6 +559,26 @@ public class BatchPlannerPlanWrapper
 	}
 
 	/**
+	 * Sets the size of this batch planner plan.
+	 *
+	 * @param size the size of this batch planner plan
+	 */
+	@Override
+	public void setSize(int size) {
+		model.setSize(size);
+	}
+
+	/**
+	 * Sets the status of this batch planner plan.
+	 *
+	 * @param status the status of this batch planner plan
+	 */
+	@Override
+	public void setStatus(int status) {
+		model.setStatus(status);
+	}
+
+	/**
 	 * Sets the task item delegate name of this batch planner plan.
 	 *
 	 * @param taskItemDelegateName the task item delegate name of this batch planner plan
@@ -537,6 +596,16 @@ public class BatchPlannerPlanWrapper
 	@Override
 	public void setTemplate(boolean template) {
 		model.setTemplate(template);
+	}
+
+	/**
+	 * Sets the total of this batch planner plan.
+	 *
+	 * @param total the total of this batch planner plan
+	 */
+	@Override
+	public void setTotal(int total) {
+		model.setTotal(total);
 	}
 
 	/**

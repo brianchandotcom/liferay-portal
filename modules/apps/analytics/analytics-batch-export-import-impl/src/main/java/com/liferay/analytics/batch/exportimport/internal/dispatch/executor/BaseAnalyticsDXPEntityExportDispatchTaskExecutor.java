@@ -26,8 +26,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 
-import java.io.IOException;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
@@ -45,7 +43,7 @@ public abstract class BaseAnalyticsDXPEntityExportDispatchTaskExecutor
 	public void doExecute(
 			DispatchTrigger dispatchTrigger,
 			DispatchTaskExecutorOutput dispatchTaskExecutorOutput)
-		throws IOException, PortalException {
+		throws Exception {
 
 		DispatchLog dispatchLog =
 			dispatchLogLocalService.fetchLatestDispatchLog(
@@ -63,19 +61,14 @@ public abstract class BaseAnalyticsDXPEntityExportDispatchTaskExecutor
 			resourceLastModifiedDate = latestSuccessfulDispatchLog.getEndDate();
 		}
 
-		try {
-			analyticsBatchExportImportManager.exportToAnalyticsCloud(
-				getBatchEngineExportTaskItemDelegateName(),
-				dispatchTrigger.getCompanyId(), null,
-				message -> _updateDispatchLog(
-					dispatchLog.getDispatchLogId(), dispatchTaskExecutorOutput,
-					message),
-				resourceLastModifiedDate, DXPEntity.class.getName(),
-				dispatchTrigger.getUserId());
-		}
-		catch (Exception exception) {
-			throw new PortalException(exception);
-		}
+		analyticsBatchExportImportManager.exportToAnalyticsCloud(
+			getBatchEngineExportTaskItemDelegateName(),
+			dispatchTrigger.getCompanyId(), null,
+			message -> _updateDispatchLog(
+				dispatchLog.getDispatchLogId(), dispatchTaskExecutorOutput,
+				message),
+			resourceLastModifiedDate, DXPEntity.class.getName(),
+			dispatchTrigger.getUserId());
 	}
 
 	protected abstract String getBatchEngineExportTaskItemDelegateName();

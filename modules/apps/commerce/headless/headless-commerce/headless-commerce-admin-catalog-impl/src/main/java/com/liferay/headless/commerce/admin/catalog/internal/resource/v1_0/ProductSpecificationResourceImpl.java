@@ -135,7 +135,8 @@ public class ProductSpecificationResourceImpl
 		return ProductSpecificationUtil.
 			updateCPDefinitionSpecificationOptionValue(
 				_cpDefinitionSpecificationOptionValueService,
-				cpDefinitionSpecificationOptionValue, productSpecification,
+				cpDefinitionSpecificationOptionValue,
+				_cpSpecificationOptionService, productSpecification,
 				_serviceContextHelper.getServiceContext());
 	}
 

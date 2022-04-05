@@ -175,7 +175,8 @@ public class CPSpecificationOptionLocalServiceImpl
 	public CPSpecificationOption fetchCPSpecificationOption(
 		long companyId, String key) {
 
-		return cpSpecificationOptionPersistence.fetchByC_K(companyId, key);
+		return cpSpecificationOptionPersistence.fetchByC_K(
+			companyId, _friendlyURLNormalizer.normalize(key));
 	}
 
 	@Override

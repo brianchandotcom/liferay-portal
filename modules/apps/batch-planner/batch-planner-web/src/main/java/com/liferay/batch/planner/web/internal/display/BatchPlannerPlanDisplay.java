@@ -14,29 +14,21 @@
 
 package com.liferay.batch.planner.web.internal.display;
 
-import com.liferay.batch.planner.constants.BatchPlannerLogConstants;
+import com.liferay.batch.planner.constants.BatchPlannerPlanConstants;
 
 import java.util.Date;
 
 /**
  * @author Matija Petanjek
  */
-public class BatchPlannerLogDisplay {
+public class BatchPlannerPlanDisplay {
 
 	public String getAction() {
 		return _action;
 	}
 
-	public String getBatchEngineExportTaskERC() {
-		return _batchEngineExportTaskERC;
-	}
-
-	public String getBatchEngineImportTaskERC() {
-		return _batchEngineImportTaskERC;
-	}
-
-	public long getBatchPlannerLogId() {
-		return _batchPlannerLogId;
+	public long getBatchPlannerPlanId() {
+		return _batchPlannerPlanId;
 	}
 
 	public Date getCreateDate() {
@@ -80,7 +72,7 @@ public class BatchPlannerLogDisplay {
 	}
 
 	public boolean isStatusCompleted() {
-		if (_status == BatchPlannerLogConstants.STATUS_COMPLETED) {
+		if (_status == BatchPlannerPlanConstants.STATUS_COMPLETED) {
 			return true;
 		}
 
@@ -95,34 +87,18 @@ public class BatchPlannerLogDisplay {
 			return this;
 		}
 
-		public Builder batchEngineExportTaskERC(
-			String batchEngineExportTaskERC) {
-
-			_batchEngineExportTaskERC = batchEngineExportTaskERC;
+		public Builder batchPlannerPlanId(long batchPlannerPlanId) {
+			_batchPlannerPlanId = batchPlannerPlanId;
 
 			return this;
 		}
 
-		public Builder batchEngineImportTaskERC(
-			String batchEngineImportTaskERC) {
-
-			_batchEngineImportTaskERC = batchEngineImportTaskERC;
-
-			return this;
-		}
-
-		public Builder batchPlannerLogId(long batchPlannerLogId) {
-			_batchPlannerLogId = batchPlannerLogId;
-
-			return this;
-		}
-
-		public BatchPlannerLogDisplay build() {
-			return new BatchPlannerLogDisplay(
-				_action, _batchEngineExportTaskERC, _batchEngineImportTaskERC,
-				_batchPlannerLogId, _createDate, _export, _failedItemsCount,
-				_internalClassName, _modifiedDate, _processedItemsCount,
-				_status, _title, _totalItemsCount, _userId);
+		public BatchPlannerPlanDisplay build() {
+			return new BatchPlannerPlanDisplay(
+				_action, _batchPlannerPlanId, _createDate, _export,
+				_failedItemsCount, _internalClassName, _modifiedDate,
+				_processedItemsCount, _status, _title, _totalItemsCount,
+				_userId);
 		}
 
 		public Builder createDate(Date createDate) {
@@ -186,9 +162,7 @@ public class BatchPlannerLogDisplay {
 		}
 
 		private String _action;
-		private String _batchEngineExportTaskERC;
-		private String _batchEngineImportTaskERC;
-		private long _batchPlannerLogId;
+		private long _batchPlannerPlanId;
 		private Date _createDate;
 		private boolean _export;
 		private int _failedItemsCount;
@@ -202,17 +176,14 @@ public class BatchPlannerLogDisplay {
 
 	}
 
-	private BatchPlannerLogDisplay(
-		String action, String batchEngineExportTaskERC,
-		String batchEngineImportTaskERC, long batchPlannerLogId,
-		Date createDate, boolean export, int failedItemsCount,
-		String internalClassName, Date modifiedDate, int processedItemsCount,
-		int status, String title, int totalItemsCount, long userId) {
+	private BatchPlannerPlanDisplay(
+		String action, long batchPlannerPlanId, Date createDate, boolean export,
+		int failedItemsCount, String internalClassName, Date modifiedDate,
+		int processedItemsCount, int status, String title, int totalItemsCount,
+		long userId) {
 
 		_action = action;
-		_batchEngineExportTaskERC = batchEngineExportTaskERC;
-		_batchEngineImportTaskERC = batchEngineImportTaskERC;
-		_batchPlannerLogId = batchPlannerLogId;
+		_batchPlannerPlanId = batchPlannerPlanId;
 		_createDate = createDate;
 		_export = export;
 		_failedItemsCount = failedItemsCount;
@@ -226,9 +197,7 @@ public class BatchPlannerLogDisplay {
 	}
 
 	private String _action;
-	private String _batchEngineExportTaskERC;
-	private String _batchEngineImportTaskERC;
-	private long _batchPlannerLogId;
+	private long _batchPlannerPlanId;
 	private Date _createDate;
 	private boolean _export;
 	private int _failedItemsCount;

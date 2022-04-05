@@ -39,12 +39,16 @@ public class BeanTestUtil {
 		Class<?> targetClass = target.getClass();
 
 		for (Field field : sourceClass.getDeclaredFields()) {
-			Method getMethod = _getMethod(sourceClass, field.getName(), "get");
+			if (!field.isSynthetic()) {
+				Method getMethod = _getMethod(
+					sourceClass, field.getName(), "get");
 
-			Method setMethod = _getMethod(
-				targetClass, field.getName(), "set", getMethod.getReturnType());
+				Method setMethod = _getMethod(
+					targetClass, field.getName(), "set",
+					getMethod.getReturnType());
 
-			setMethod.invoke(target, getMethod.invoke(source, null));
+				setMethod.invoke(target, getMethod.invoke(source, null));
+			}
 		}
 	}
 

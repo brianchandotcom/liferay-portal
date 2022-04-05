@@ -168,7 +168,6 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 				editableValues, fragmentEntryProcessorContext);
 		}
 
-		FragmentEntryLink originalFragmentEntryLink = null;
 		Set<String> processedPortletIds = new HashSet<>();
 
 		for (Element element : document.select("*")) {
@@ -178,14 +177,6 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 
 			if (Validator.isNull(portletName)) {
 				continue;
-			}
-
-			if ((originalFragmentEntryLink == null) &&
-				(fragmentEntryLink.getOriginalFragmentEntryLinkId() > 0)) {
-
-				originalFragmentEntryLink =
-					_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
-						fragmentEntryLink.getOriginalFragmentEntryLinkId());
 			}
 
 			Portlet portlet = _portletLocalService.getPortletById(portletName);
@@ -213,24 +204,13 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 				fragmentEntryProcessorContext.getHttpServletRequest(),
 				"p_l_id");
 
-			String defaultPreferences = StringPool.BLANK;
-
-			if (originalFragmentEntryLink != null) {
-				defaultPreferences = _getPreferences(
-					plid, portletName, originalFragmentEntryLink, id,
-					StringPool.BLANK);
-			}
-			else {
-				defaultPreferences = portlet.getDefaultPreferences();
-			}
-
 			String portletHTML = _fragmentPortletRenderer.renderPortlet(
 				fragmentEntryProcessorContext.getHttpServletRequest(),
 				fragmentEntryProcessorContext.getHttpServletResponse(),
 				portletName, instanceId,
 				_getPreferences(
 					plid, portletName, fragmentEntryLink, id,
-					defaultPreferences));
+					portlet.getDefaultPreferences()));
 
 			Element portletElement = new Element("div");
 

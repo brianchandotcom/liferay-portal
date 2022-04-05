@@ -19,7 +19,6 @@ import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
-import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.petra.io.DummyWriter;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
@@ -29,10 +28,8 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.servlet.DummyHttpServletResponse;
@@ -46,7 +43,6 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
@@ -129,8 +125,6 @@ public class FreeMarkerFragmentEntryProcessor
 				fragmentEntryLink.getConfiguration(),
 				fragmentEntryLink.getEditableValues(),
 				fragmentEntryProcessorContext.getLocale());
-		String fragmentEntryLinkNamespace = _getFragmentEntryLinkNamespace(
-			fragmentEntryLink);
 
 		template.putAll(
 			HashMapBuilder.<String, Object>put(
@@ -139,7 +133,7 @@ public class FreeMarkerFragmentEntryProcessor
 				"fragmentElementId",
 				fragmentEntryProcessorContext.getFragmentElementId()
 			).put(
-				"fragmentEntryLinkNamespace", fragmentEntryLinkNamespace
+				"fragmentEntryLinkNamespace", fragmentEntryLink.getNamespace()
 			).putAll(
 				_fragmentEntryConfigurationParser.getContextObjects(
 					configurationValuesJSONObject,
@@ -234,15 +228,6 @@ public class FreeMarkerFragmentEntryProcessor
 		}
 	}
 
-	private String _getFragmentEntryLinkNamespace(
-		FragmentEntryLink fragmentEntryLink) {
-
-		FragmentEntryLink originalFragmentEntryLink =
-			_getOriginalFragmentEntryLink(fragmentEntryLink);
-
-		return originalFragmentEntryLink.getNamespace();
-	}
-
 	private String _getMessage(TemplateException templateException) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", getClass());
@@ -261,47 +246,8 @@ public class FreeMarkerFragmentEntryProcessor
 		return message;
 	}
 
-	private FragmentEntryLink _getOriginalFragmentEntryLink(
-		FragmentEntryLink fragmentEntryLink) {
-
-		if (fragmentEntryLink.getOriginalFragmentEntryLinkId() <= 0) {
-			return fragmentEntryLink;
-		}
-
-		return Optional.ofNullable(
-			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
-				fragmentEntryLink.getOriginalFragmentEntryLinkId())
-		).filter(
-			originalFragmentEntryLink -> _isRelated(
-				_layoutLocalService.fetchLayout(fragmentEntryLink.getPlid()),
-				originalFragmentEntryLink.getPlid())
-		).map(
-			this::_getOriginalFragmentEntryLink
-		).orElse(
-			fragmentEntryLink
-		);
-	}
-
 	private boolean _isFreemarkerTemplate(String html) {
 		if (html.contains("${") || html.contains("<#") || html.contains("<@")) {
-			return true;
-		}
-
-		return false;
-	}
-
-	private boolean _isRelated(Layout layout, long plid) {
-		if (layout == null) {
-			return false;
-		}
-
-		if ((layout.getClassPK() == plid) || (layout.getPlid() == plid)) {
-			return true;
-		}
-
-		Layout draftLayout = layout.fetchDraftLayout();
-
-		if ((draftLayout != null) && (draftLayout.getPlid() == plid)) {
 			return true;
 		}
 
@@ -316,11 +262,5 @@ public class FreeMarkerFragmentEntryProcessor
 
 	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
-
-	@Reference
-	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
-
-	@Reference
-	private LayoutLocalService _layoutLocalService;
 
 }

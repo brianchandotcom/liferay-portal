@@ -26,36 +26,36 @@ definition {
 		}
 	}
 
-    @description = "LPS-150255 - Verify the user can enter on Testflow page."
-    @priority = "5"
-    test CanAcessTestflowPage {
-        ApplicationsMenu.gotoSite(site = "Testray 2");
+	@description = "LPS-150256 - Verify the User can click on Current Tab."
+	@priority = "5"
+	test CanAcessCurrentTab {
+		ApplicationsMenu.gotoSite(site = "Testray 2");
 
-        Click(locator1 = "TestrayTestflow#TESTFLOW_SIDEBAR");
+		Click(locator1 = "TestrayTestflow#TESTFLOW_SIDEBAR");
 
-        AssertElementPresent(
-            locator1 = "Testray#NAME_TITLE",
-            key_title = "Tasks");
-    }
+		Click(
+			key_navTabName = "Archived",
+			locator1 = "Testray#PROJECT_NAVIGATOR_TAB_BUTTON");
 
-    @description = "LPS-150256 - Verify the User can click on Current Tab."
-    @priority = "5"
-    test CanAcessCurrentTab {
-        ApplicationsMenu.gotoSite(site = "Testray 2");
+		Click(
+			key_navTabName = "Current",
+			locator1 = "Testray#PROJECT_NAVIGATOR_TAB_BUTTON");
 
-        Click(locator1 = "TestrayTestflow#TESTFLOW_SIDEBAR");
+		AssertElementPresent(
+			key_title = "Tasks",
+			locator1 = "Testray#NAME_TITLE");
+	}
 
-        Click(
-            locator1 = "Testray#PROJECT_NAVIGATOR_TAB_BUTTON",
-            key_navTabName = "Archived");
+	@description = "LPS-150255 - Verify the user can enter on Testflow page."
+	@priority = "5"
+	test CanAcessTestflowPage {
+		ApplicationsMenu.gotoSite(site = "Testray 2");
 
-        Click(
-            locator1 = "Testray#PROJECT_NAVIGATOR_TAB_BUTTON",
-            key_navTabName = "Current");
+		Click(locator1 = "TestrayTestflow#TESTFLOW_SIDEBAR");
 
-        AssertElementPresent(
-            locator1 = "Testray#NAME_TITLE",
-            key_title = "Tasks");
-    }
+		AssertElementPresent(
+			key_title = "Tasks",
+			locator1 = "Testray#NAME_TITLE");
+	}
 
 }

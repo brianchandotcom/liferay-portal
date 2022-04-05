@@ -381,12 +381,9 @@ public class DDMFormFieldTemplateContextFactoryTest extends PowerMockito {
 				_groupLocalService, _htmlParser, new JSONFactoryImpl(), true,
 				new DDMFormLayout());
 
-		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker =
-			mockDDMFormFieldTypeServicesTracker(
-				ddmFormFieldRenderer, ddmFormFieldTemplateContextContributor);
-
 		ddmFormFieldTemplateContextFactory.setDDMFormFieldTypeServicesTracker(
-			ddmFormFieldTypeServicesTracker);
+			mockDDMFormFieldTypeServicesTracker(
+				ddmFormFieldRenderer, ddmFormFieldTemplateContextContributor));
 
 		return ddmFormFieldTemplateContextFactory;
 	}

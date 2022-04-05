@@ -240,10 +240,7 @@ public class DDMFormTemplateContextProcessor {
 		List<DDMFormRule> ddmFormRules = new ArrayList<>();
 
 		for (int i = 0; i < jsonArray.length(); i++) {
-			DDMFormRule ddmFormRule = _getDDMFormRule(
-				jsonArray.getJSONObject(i));
-
-			ddmFormRules.add(ddmFormRule);
+			ddmFormRules.add(_getDDMFormRule(jsonArray.getJSONObject(i)));
 		}
 
 		return ddmFormRules;
@@ -612,10 +609,8 @@ public class DDMFormTemplateContextProcessor {
 	}
 
 	private void _setDDMFormRules() {
-		List<DDMFormRule> ddmFormRules = _getDDMFormRules(
-			_jsonObject.getJSONArray("rules"));
-
-		_ddmForm.setDDMFormRules(ddmFormRules);
+		_ddmForm.setDDMFormRules(
+			_getDDMFormRules(_jsonObject.getJSONArray("rules")));
 	}
 
 	private void _setDDMFormValuesAvailableLocales() {

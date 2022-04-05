@@ -1659,11 +1659,15 @@ definition {
 		var dropdownItem = "${dropdownItem}";
 
 		if ("${dropdownItem}" == "Reassign Task") {
-			AssertElementPresent(locator1 = "WorkflowAllItems#REASSIGN_TASK_DROPDOWN");
+			AssertElementPresent(locator1 = "WorkflowAllItems#KEBAB_MENU_OPTIONS");
+		}
+
+		if ("${dropdownItem}" == "Transition") {
+			AssertElementPresent(locator1 = "WorkflowAllItems#KEBAB_MENU_OPTIONS");
 		}
 
 		if ("${dropdownItem}" == "Update Due Date") {
-			AssertElementPresent(locator1 = "WorkflowAllItems#UPDATE_DUE_DATE_DROPDOWN");
+			AssertElementPresent(locator1 = "WorkflowAllItems#KEBAB_MENU_OPTIONS");
 		}
 
 		if ("${dropdownItem}" == "Track Workflow") {
@@ -1946,6 +1950,37 @@ definition {
 		if (IsTextEqual(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_${key_status}_ITEMS_VALUE", value1 = "${key_expectedValue}")) {
 			echo("timeout exceeded");
 		}
+	}
+
+	macro goToKebabMenuOptions {
+		Click(locator1 = "Icon#SVG_ELLIPSIS");
+
+		var dropdownItem = "${dropdownItem}";
+
+		if ("${dropdownItem}" == "Reassign Task") {
+			Click(locator1 = "WorkflowAllItems#KEBAB_MENU_OPTIONS");
+		}
+
+		if ("${dropdownItem}" == "Transition") {
+			Click(locator1 = "WorkflowAllItems#KEBAB_MENU_OPTIONS");
+		}
+
+		if ("${dropdownItem}" == "Update Due Date") {
+			Click(locator1 = "WorkflowAllItems#KEBAB_MENU_OPTIONS");
+		}
+
+		if ("${dropdownItem}" == "Track Workflow") {
+			Click(
+				key_menuOption = "${dropdownItem}",
+				locator1 = "WorkflowAllItems#KEBAB_MENU_OPTIONS");
+		}
+
+	}
+
+	macro viewCurrentNodeDoneIcon {
+		AssertElementPresent(
+			key_currentNode = "${currentNode}",
+			locator1 = "WorkflowAllItems#CURRENT_NODE_DONE_ICON");
 	}
 
 }

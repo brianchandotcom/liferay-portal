@@ -515,6 +515,11 @@
 	<td>//*[contains(@class, 'react-flow__edge react-flow__edge-transition')]//..//*[contains(text(),'${nameOverTransition}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>CURRENT_NODE_DONE_ICON</td>
+	<td>//div[contains(@class, '') and contains(@title,'${key_currentNode}')]//*[name()='svg'][contains(@class,'done-icon')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

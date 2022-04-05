@@ -267,11 +267,54 @@ definition {
 	}
 
 	@description = "Verify that the users are able to identify the past stages that the workflow instance has already passed by"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanIdentifyPastStagesOnWorkflow {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "WorkflowMetricsAllItemsList#CanIdentifyPastStagesOnWorkflow";
 
-		// TODO LRQA-72393 CanIdentifyPastStagesOnWorkflow pending implementation
+		Workflow.openWorkflowListView();
+
+		Workflow.uploadDefinition(
+			workflowDefinitionFile = "multi-task-process-workflow-definition.xml",
+			workflowDefinitionTitle = "Multi Task Process");
+
+		Navigator.gotoNavItem(navItem = "Configuration");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Multi Task Process",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry",
+			entryTitle = "Blogs Entry Title");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
+
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Assign to Me");
+
+		Workflow.confirmWorkflowAction();
+
+		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Multi Task Process");
+
+		WorkflowMetrics.goToBulkTransitionSelectTasks();
+
+		WorkflowMetrics.selectAllTransitionTasks();
+
+		WorkflowMetrics.chooseTransitionPerStep(
+			taskName = "Task1",
+			transitionOption = "Join");
+
+		WorkflowMetrics.goToKebabMenuOptions(dropdownItem = "Track Workflow");
+
+		WorkflowMetrics.viewCurrentNodeCircleIcon(currentNode = "task2");
+
+		WorkflowMetrics.viewCurrentNodeCircleIcon(currentNode = "task3");
+
+		WorkflowMetrics.viewCurrentNodeDoneIcon(currentNode = "fork");
+
+		WorkflowMetrics.viewCurrentNodeDoneIcon(currentNode = "task1");
 
 	}
 

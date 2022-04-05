@@ -25,6 +25,10 @@ const ACTIONS = {
 		}
 	},
 
+	move({parameterName, parameterValue}, portletNamespace) {
+		window[`${portletNamespace}move`](1, parameterName, parameterValue);
+	},
+
 	permissions({permissionsURL}) {
 		openModal({
 			title: Liferay.Language.get('permissions'),
@@ -45,7 +49,7 @@ const ACTIONS = {
 	},
 };
 
-export default function propsTransformer({items, ...props}) {
+export default function propsTransformer({items, portletNamespace, ...props}) {
 	return {
 		...props,
 		items: items.map((item) => {
@@ -57,7 +61,7 @@ export default function propsTransformer({items, ...props}) {
 					if (action) {
 						event.preventDefault();
 
-						ACTIONS[action](item.data);
+						ACTIONS[action](item.data, portletNamespace);
 					}
 				},
 			};

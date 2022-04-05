@@ -77,7 +77,6 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUt
 import com.liferay.layout.page.template.util.PaddingConverter;
 import com.liferay.layout.page.template.util.comparator.LayoutPageTemplateEntryNameComparator;
 import com.liferay.layout.responsive.ViewportSize;
-import com.liferay.layout.util.constants.LayoutConverterTypeConstants;
 import com.liferay.layout.util.structure.CommonStylesUtil;
 import com.liferay.layout.util.structure.DropZoneLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
@@ -479,6 +478,8 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"infoListSelectorURL", _getInfoListSelectorURL()
 			).put(
+				"isConversionDraft", _isConversionDraft()
+			).put(
 				"isPrivateLayoutsEnabled",
 				() -> {
 					Group group = themeDisplay.getScopeGroup();
@@ -703,14 +704,6 @@ public class ContentPageEditorDisplayContext {
 
 	public boolean isContentLayout() {
 		if (_getLayoutType() == -1) {
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean isConversionDraft() {
-		if (_getLayoutType() == LayoutConverterTypeConstants.TYPE_CONVERSION) {
 			return true;
 		}
 
@@ -1806,16 +1799,6 @@ public class ContentPageEditorDisplayContext {
 			return _layoutType;
 		}
 
-		Layout publishedLayout = _getPublishedLayout();
-
-		if (Objects.equals(
-				publishedLayout.getType(), LayoutConstants.TYPE_PORTLET)) {
-
-			_layoutType = LayoutConverterTypeConstants.TYPE_CONVERSION;
-
-			return _layoutType;
-		}
-
 		Layout layout = themeDisplay.getLayout();
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
@@ -2253,6 +2236,18 @@ public class ContentPageEditorDisplayContext {
 			dropZoneLayoutStructureItem.isAllowNewFragmentEntries();
 
 		return _allowNewFragmentEntries;
+	}
+
+	private boolean _isConversionDraft() {
+		Layout publishedLayout = _getPublishedLayout();
+
+		if (Objects.equals(
+				publishedLayout.getType(), LayoutConstants.TYPE_PORTLET)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private boolean _isMasterUsed() {

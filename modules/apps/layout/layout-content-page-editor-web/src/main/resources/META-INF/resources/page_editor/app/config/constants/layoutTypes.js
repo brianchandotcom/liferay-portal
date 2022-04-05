@@ -18,7 +18,6 @@
  */
 export const LAYOUT_TYPES = {
 	content: '-1',
-	conversion: '4',
 	display: '1',
 	master: '3',
 	pageTemplate: '0',

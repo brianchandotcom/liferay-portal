@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<root available-locales="en_US" default-locale="en_US" version="1.0">
+	<dynamic-element index-type="keyword" instance-id="Ix8IVDbo" name="hours_per_week" type="numeric">
+		<dynamic-content language-id="en_US"><![CDATA[40]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="SaMxH8nX" name="educational_level" type="select">
+		<dynamic-content language-id="en_US"><![CDATA[bachelor]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="0npgRfiY" name="location" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[London]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="f6NFUYlU" name="some" type="checkbox_multiple">
+		<dynamic-content language-id="en_US"><![CDATA[[]]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="" instance-id="c7cd9aqk" name="Separator23323087" type="separator"/>
+	<dynamic-element index-type="keyword" instance-id="W73U3pLM" name="intro" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[Sales Engineers are both highly technical and laser-focused on business solutions. SEs can talk to senior software engineers, CEOs, and information security directors with credibility and sincerity.]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="4Am8Fyl1" name="description" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[Liferay needs an experienced sales engineer to be part of our team dedicated to new & expansion business and to support our partners & channels. Qualified leads and opportunities will be your team’s responsibility to win and close. SEs work in teams with account executives, customer experience managers, inside sales, and marketing. The Sales Engineer is the technical expert and resource for: solution architecture, development best practices, identity management, integration points, UI/UX, system administration, mobile strategy, content management, web analytics, DevOps best practices, high availability & clustering, cloud infrastructure, and all features of Liferay DXP and its suite of products. Sales Engineers provide technical justification and business consultation, and are trusted advisors to technology directors, CTOs, and software architects as they go through the buyer journey.
+
+1. Design and create attractive product demonstrations, and present compelling business use cases that connect and delight top prospects
+2. Provide technical leadership and guidance in the installation, configuration, and best use of Liferay products and all related technologies
+3. Analyze and understand customer requirements by running an expert discovery process phase
+4. Be an expert on a complete and integrated Liferay solution, available apps, APIs, roadmap, solution architecture, and product features
+5. Lead customers in consultative solution audits, due diligence efforts, RFPs, and be skilled at resourcing for all inquiries and questions
+6. Proactively participate in account strategy planning with account executives for the sales pitch and demo
+7. Develop sales collateral in a participatory and iterative way using various media formats, channels, and platforms
+8. Continually learn and be up-to-date on the Liferay suite of products and frequent releases by working cross functionally and across departments
+9. Present and demo at industry and official Liferay events onsite and online to educate customers and evangelize Liferay technology
+10. Grow subject matter expertise in one or many of Liferay’s products, features, and services
+11. Meet defined regional, individual, and team-based sales targets
+12. Travel 25-50% or as necessary onsite at the customer or prospect]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="wjhlVmBj" name="whatweneed" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[1. Bachelor's Degree in Computer Science, Computer Engineering, MIS, or equivalent level of demonstrated experience
+2. 2+ years direct sales engineering, technical pre-sales, or customer-facing consulting experience
+3. Expertise in developing with Java, JavaScript, JSON, and related development frameworks in the enterprise software stack or digital experience platforms
+4. Advanced understanding of enterprise Java, related design patterns, service oriented architecture
+5. Advanced knowledge of databases such as MySQL, Oracle, SQL Server, NoSQL
+6. Strong experience with Apache Tomcat, WebSphere, WebLogic, JBoss AS
+7. Knowledge of Windows and Linux OS, Servlets/JSP, Spring, Hibernate, performance tuning, scaling, clustering
+8. Strong ability to speak and present in-person and online; Excellent writing and verbal communication skills
+9. Expert problem-solving skills and a very strong motivation to help customers
+10. Flexible, proven ability to work well under pressure, meet aggressive deadlines during several-months-long engineering and sales cycles
+11. Ability to thrive in a global distributed organization across various time zones
+12. Charismatic and energetic self-starting personality]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="8720ZGMN" name="whatweoffer" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[- Salary package w/ competitive benefits according to qualifications and experience
+- Opportunities to take responsibility and grow professionally
+- A positive and collaborative work culture
+- Working at a leading open source company]]></dynamic-content>
+	</dynamic-element>
+</root>

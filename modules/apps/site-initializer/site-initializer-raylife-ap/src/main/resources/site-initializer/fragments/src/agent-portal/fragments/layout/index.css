@@ -92,7 +92,7 @@
 	right: 25px;
 }
 
-.page-header-container {
+.page-header-container:not(#Applications) {
 	box-shadow: 0 5px 15px rgba(77, 133, 255, 0.12);
 }
 
@@ -103,4 +103,12 @@
 
 .page-header-container .header-content .search-icon {
 	cursor: pointer;
+}
+
+#Applications .page-header-container {
+  box-shadow: 0 1px #d3d3d4 !important;
+}
+
+#Applications .navbar.navigation-bar-light {
+    border-color: #ffffff !important;
 }

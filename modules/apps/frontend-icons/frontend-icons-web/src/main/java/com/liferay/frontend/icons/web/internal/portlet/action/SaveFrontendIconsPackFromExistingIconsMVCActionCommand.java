@@ -99,14 +99,14 @@ public class SaveFrontendIconsPackFromExistingIconsMVCActionCommand
 				continue;
 			}
 
-			List<String> iconNames = JSONUtil.toStringList(
+			List<String> frontendIconsResourceNames = JSONUtil.toStringList(
 				iconsJSONObject.getJSONArray(key));
 
-			iconNames.forEach(
-				iconName -> {
+			frontendIconsResourceNames.forEach(
+				frontendIconsResourceName -> {
 					FrontendIconsResource frontendIconsResource =
 						existingFrontendIconsResourcePack.
-							getFrontendIconsResource(iconName);
+							getFrontendIconsResource(frontendIconsResourceName);
 
 					if (frontendIconsResource != null) {
 						frontendIconsResourcePack.addFrontendIconResource(

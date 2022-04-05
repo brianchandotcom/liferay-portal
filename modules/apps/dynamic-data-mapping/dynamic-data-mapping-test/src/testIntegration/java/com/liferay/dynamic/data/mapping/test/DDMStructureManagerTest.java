@@ -87,10 +87,8 @@ public class DDMStructureManagerTest {
 			structure.getStructureId(), new DocumentImpl(),
 			createDDMFormValues());
 
-		String fieldProperty = structure.getFieldProperty(
-			"fieldName", "indexType");
-
-		Assert.assertNotNull(fieldProperty);
+		Assert.assertNotNull(
+			structure.getFieldProperty("fieldName", "indexType"));
 	}
 
 	@Test
@@ -108,11 +106,10 @@ public class DDMStructureManagerTest {
 
 		_ddmStructureManager.deleteStructure(structure.getStructureId());
 
-		structure = _ddmStructureManager.fetchStructure(
-			structure.getGroupId(), structure.getClassNameId(),
-			structure.getStructureKey());
-
-		Assert.assertNull(structure);
+		Assert.assertNull(
+			_ddmStructureManager.fetchStructure(
+				structure.getGroupId(), structure.getClassNameId(),
+				structure.getStructureKey()));
 	}
 
 	@Test

@@ -235,10 +235,8 @@ public class DDMFormTemplateSynchonizerTest extends BaseDDMTestCase {
 
 		label.addString(LocaleUtil.US, StringUtil.randomString());
 
-		DDMFormFieldOptions ddmFormFieldOptions = createDDMFormFieldOptions(
-			availableOptions);
-
-		ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
+		ddmFormField.setDDMFormFieldOptions(
+			createDDMFormFieldOptions(availableOptions));
 
 		return ddmFormField;
 	}
@@ -255,10 +253,8 @@ public class DDMFormTemplateSynchonizerTest extends BaseDDMTestCase {
 
 		label.addString(LocaleUtil.US, StringUtil.randomString());
 
-		DDMFormFieldOptions ddmFormFieldOptions = createDDMFormFieldOptions(
-			availableOptions);
-
-		ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
+		ddmFormField.setDDMFormFieldOptions(
+			createDDMFormFieldOptions(availableOptions));
 
 		return ddmFormField;
 	}

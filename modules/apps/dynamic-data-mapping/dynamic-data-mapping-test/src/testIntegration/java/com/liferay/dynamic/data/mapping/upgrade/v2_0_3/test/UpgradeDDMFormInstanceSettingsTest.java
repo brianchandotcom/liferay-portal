@@ -81,11 +81,10 @@ public class UpgradeDDMFormInstanceSettingsTest {
 
 		formInstance = getRecordSet(formInstance);
 
-		fieldValuesJSONArray = getFieldValuesJSONArray(
-			formInstance.getSettings());
-
 		Assert.assertTrue(
-			containsField(fieldValuesJSONArray, "requireAuthentication"));
+			containsField(
+				getFieldValuesJSONArray(formInstance.getSettings()),
+				"requireAuthentication"));
 	}
 
 	@Test
@@ -104,11 +103,10 @@ public class UpgradeDDMFormInstanceSettingsTest {
 
 		formInstance = getRecordSet(formInstance);
 
-		fieldValuesJSONArray = getFieldValuesJSONArray(
-			formInstance.getSettings());
-
 		Assert.assertTrue(
-			containsField(fieldValuesJSONArray, "autosaveEnabled"));
+			containsField(
+				getFieldValuesJSONArray(formInstance.getSettings()),
+				"autosaveEnabled"));
 	}
 
 	protected boolean containsField(
@@ -183,11 +181,8 @@ public class UpgradeDDMFormInstanceSettingsTest {
 	protected String createSettings(boolean hasSetting) {
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
-		JSONArray availableLanguagesJSONArray = getAvailableLanguagesJSONArray(
-			"en_US");
-
 		jsonObject.put(
-			"availableLanguageIdss", availableLanguagesJSONArray
+			"availableLanguageIdss", getAvailableLanguagesJSONArray("en_US")
 		).put(
 			"defaultLanguageId", "en_US"
 		);

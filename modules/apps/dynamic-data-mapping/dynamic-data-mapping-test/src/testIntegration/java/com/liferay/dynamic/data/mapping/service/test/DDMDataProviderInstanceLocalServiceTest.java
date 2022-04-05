@@ -28,7 +28,6 @@ import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -159,13 +158,11 @@ public class DDMDataProviderInstanceLocalServiceTest
 		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
 			ddmForm);
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				group.getGroupId(), TestPropsValues.getUserId());
-
 		return DDMDataProviderInstanceLocalServiceUtil.addDataProviderInstance(
 			TestPropsValues.getUserId(), group.getGroupId(), nameMap, nameMap,
-			ddmFormValues, "rest", serviceContext);
+			ddmFormValues, "rest",
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId()));
 	}
 
 	private final JSONFactory _jsonFactory = new JSONFactoryImpl();

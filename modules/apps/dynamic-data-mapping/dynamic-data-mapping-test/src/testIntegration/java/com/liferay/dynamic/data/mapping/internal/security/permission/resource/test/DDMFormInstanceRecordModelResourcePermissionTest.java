@@ -145,16 +145,13 @@ public class DDMFormInstanceRecordModelResourcePermissionTest
 	private DDMFormInstance _createFormInstance() throws Exception {
 		DDMStructure structure = addStructure(_classNameId, "Test Structure");
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				group, TestPropsValues.getUserId());
-
 		return DDMFormInstanceLocalServiceUtil.addFormInstance(
 			structure.getUserId(), structure.getGroupId(),
 			structure.getStructureId(), structure.getNameMap(),
 			structure.getNameMap(),
 			DDMFormInstanceTestUtil.createSettingsDDMFormValues(),
-			serviceContext);
+			ServiceContextTestUtil.getServiceContext(
+				group, TestPropsValues.getUserId()));
 	}
 
 	private void _setUpPermissionThreadLocal() throws Exception {

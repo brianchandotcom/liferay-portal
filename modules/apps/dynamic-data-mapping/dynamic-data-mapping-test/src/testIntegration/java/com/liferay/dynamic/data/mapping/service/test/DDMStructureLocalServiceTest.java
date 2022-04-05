@@ -52,7 +52,6 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -200,12 +199,10 @@ public class DDMStructureLocalServiceTest extends BaseDDMServiceTestCase {
 
 		DDMStructureLocalServiceUtil.deleteStructure(structure);
 
-		dataProviderInstanceLink =
+		Assert.assertNull(
 			DDMDataProviderInstanceLinkLocalServiceUtil.
 				fetchDataProviderInstanceLink(
-					ddmDataProviderInstanceId, structure.getStructureId());
-
-		Assert.assertNull(dataProviderInstanceLink);
+					ddmDataProviderInstanceId, structure.getStructureId()));
 	}
 
 	@Test
@@ -244,12 +241,10 @@ public class DDMStructureLocalServiceTest extends BaseDDMServiceTestCase {
 
 		DDMStructureLocalServiceUtil.deleteStructure(structure);
 
-		dataProviderInstanceLink =
+		Assert.assertNull(
 			DDMDataProviderInstanceLinkLocalServiceUtil.
 				fetchDataProviderInstanceLink(
-					ddmDataProviderInstanceId, structure.getStructureId());
-
-		Assert.assertNull(dataProviderInstanceLink);
+					ddmDataProviderInstanceId, structure.getStructureId()));
 	}
 
 	@Test
@@ -1017,13 +1012,11 @@ public class DDMStructureLocalServiceTest extends BaseDDMServiceTestCase {
 		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
 			ddmForm);
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				group.getGroupId(), TestPropsValues.getUserId());
-
 		return DDMDataProviderInstanceLocalServiceUtil.addDataProviderInstance(
 			TestPropsValues.getUserId(), group.getGroupId(), nameMap, nameMap,
-			ddmFormValues, "rest", serviceContext);
+			ddmFormValues, "rest",
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId()));
 	}
 
 	protected String getStructureName(DDMStructure structure) {

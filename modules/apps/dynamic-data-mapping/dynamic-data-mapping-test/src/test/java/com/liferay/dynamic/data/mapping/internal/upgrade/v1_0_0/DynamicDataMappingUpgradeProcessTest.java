@@ -788,10 +788,7 @@ public class DynamicDataMappingUpgradeProcessTest extends BaseDDMTestCase {
 
 			String name = dynamicElementElement.attributeValue("name");
 
-			Map<String, List<String>> localizedDataMap = _getLocalizedDataMap(
-				dynamicElementElement);
-
-			dataMap.put(name, localizedDataMap);
+			dataMap.put(name, _getLocalizedDataMap(dynamicElementElement));
 		}
 
 		return dataMap;

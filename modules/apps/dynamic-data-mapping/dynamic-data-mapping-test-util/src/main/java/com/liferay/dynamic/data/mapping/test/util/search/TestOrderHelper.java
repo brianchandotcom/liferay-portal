@@ -247,11 +247,8 @@ public abstract class TestOrderHelper {
 				_group.getGroupId(),
 				new String[] {getSearchableAssetEntryClassName()});
 
-		String orderByCol1 = _ddmIndexer.encodeName(
-			ddmStructure.getStructureId(), "name");
-
-		assetEntryQuery.setOrderByCol1(orderByCol1);
-
+		assetEntryQuery.setOrderByCol1(
+			_ddmIndexer.encodeName(ddmStructure.getStructureId(), "name"));
 		assetEntryQuery.setOrderByType1("asc");
 
 		return assetEntryQuery;

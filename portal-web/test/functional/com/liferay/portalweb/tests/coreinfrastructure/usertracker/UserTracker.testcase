@@ -1,6 +1,7 @@
 @component-name = "portal-user-tracker"
 definition {
 
+	property custom.properties = "live.users.enabled=true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "User Tracker";
@@ -21,7 +22,6 @@ definition {
 
 	@priority = "4"
 	test CanTrackerUserClicks {
-		property custom.properties = "live.users.enabled=true";
 		property test.name.skip.portal.instance = "UserTracker#CanTrackerUserClicks";
 
 		ApplicationsMenu.gotoPortlet(

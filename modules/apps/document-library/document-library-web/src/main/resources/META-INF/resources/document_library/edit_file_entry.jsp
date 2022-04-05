@@ -577,7 +577,7 @@ renderResponse.setTitle(headerTitle);
 							inputAddon="<%= dlEditFileEntryDisplayContext.getFriendlyURLBase() %>"
 							localizable="<%= false %>"
 							name="urlTitle"
-							showHistory="<%= false %>"
+							showHistory="<%= true %>"
 						/>
 
 						<p class="text-secondary"><liferay-ui:message key="the-friendly-url-may-be-modified-to-ensure-uniqueness" /></p>

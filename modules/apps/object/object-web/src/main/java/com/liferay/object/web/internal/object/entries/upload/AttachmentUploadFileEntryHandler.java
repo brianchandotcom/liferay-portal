@@ -14,6 +14,7 @@
 
 package com.liferay.object.web.internal.object.entries.upload;
 
+import com.liferay.document.library.kernel.exception.InvalidFileException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -62,6 +63,13 @@ public class AttachmentUploadFileEntryHandler
 			_folderModelResourcePermission, themeDisplay.getPermissionChecker(),
 			themeDisplay.getScopeGroupId(), folderId, ActionKeys.ADD_DOCUMENT);
 
+		String fileName = uploadPortletRequest.getFileName("file");
+
+		long objectFieldId = ParamUtil.getLong(
+			uploadPortletRequest, "objectFieldId");
+
+		_attachmentValidator.validateFileExtension(fileName, objectFieldId);
+
 		File file = null;
 
 		try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
@@ -69,15 +77,12 @@ public class AttachmentUploadFileEntryHandler
 
 			file = FileUtil.createTempFile(inputStream);
 
-			String fileName = uploadPortletRequest.getFileName("file");
-
-			long objectFieldId = ParamUtil.getLong(
-				uploadPortletRequest, "objectFieldId");
+			if (file == null) {
+				throw new InvalidFileException("File is null for " + fileName);
+			}
 
 			_attachmentValidator.validateFileSize(
-				file, fileName, objectFieldId);
-
-			_attachmentValidator.validateFileExtension(fileName, objectFieldId);
+				fileName, file.length(), objectFieldId);
 
 			ObjectDefinition objectDefinition = _getObjectDefinition(
 				objectFieldId);

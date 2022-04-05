@@ -16,17 +16,12 @@ package com.liferay.object.web.internal.object.entries.upload.util;
 
 import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
-import com.liferay.document.library.kernel.exception.InvalidFileException;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringUtil;
-
-import java.io.File;
-
-import java.util.Arrays;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -42,11 +37,9 @@ public class AttachmentValidator {
 			_objectFieldSettingLocalService.fetchObjectFieldSetting(
 				objectFieldId, "acceptedFileExtensions");
 
-		if (objectFieldSetting == null) {
-			return new String[0];
-		}
+		String objectFieldSettingValue = objectFieldSetting.getValue();
 
-		return StringUtil.split(objectFieldSetting.getValue());
+		return objectFieldSettingValue.split("\\s*,\\s*");
 	}
 
 	public long getMaximumFileSize(long objectFieldId) {
@@ -54,49 +47,29 @@ public class AttachmentValidator {
 			_objectFieldSettingLocalService.fetchObjectFieldSetting(
 				objectFieldId, "maximumFileSize");
 
-		if (objectFieldSetting == null) {
-			return 0;
-		}
-
 		return GetterUtil.getLong(objectFieldSetting.getValue()) *
 			_FILE_LENGTH_MB;
 	}
 
-	public void validateFileExtension(String fileName, long objectFielId)
+	public void validateFileExtension(String fileName, long objectFieldId)
 		throws FileExtensionException {
 
-		boolean validFileExtension = false;
+		if (!ArrayUtil.contains(
+				getAcceptedFileExtensions(objectFieldId),
+				FileUtil.getExtension(fileName), true)) {
 
-		String fileExtension = FileUtil.getExtension(fileName);
-
-		for (String acceptedFileExtension :
-				Arrays.asList(getAcceptedFileExtensions(objectFielId))) {
-
-			if (StringUtil.equalsIgnoreCase(
-					fileExtension, StringUtil.trim(acceptedFileExtension))) {
-
-				validFileExtension = true;
-
-				break;
-			}
-		}
-
-		if (!validFileExtension) {
 			throw new FileExtensionException(
 				"Invalid file extension for " + fileName);
 		}
 	}
 
-	public void validateFileSize(File file, String fileName, long objectFielId)
-		throws FileSizeException, InvalidFileException {
+	public void validateFileSize(
+			String fileName, long fileSize, long objectFieldId)
+		throws FileSizeException {
 
-		if (file == null) {
-			throw new InvalidFileException("File is null for " + fileName);
-		}
+		long maximumFileSize = getMaximumFileSize(objectFieldId);
 
-		long maximumFileSize = getMaximumFileSize(objectFielId);
-
-		if ((maximumFileSize > 0) && (file.length() > maximumFileSize)) {
+		if ((maximumFileSize > 0) && (fileSize > maximumFileSize)) {
 			throw new FileSizeException(
 				StringBundler.concat(
 					"File ", fileName,

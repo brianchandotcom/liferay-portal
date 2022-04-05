@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.util.PropsValues;
@@ -265,7 +266,9 @@ public class ObjectEntryDTOConverter
 				long objectEntryId = 0;
 
 				if (serializable != null) {
-					objectEntryId = (long)serializable;
+					if (Validator.isNotNull(GetterUtil.getLong(serializable))) {
+						objectEntryId = (long)serializable;
+					}
 
 					Optional<UriInfo> uriInfoOptional =
 						dtoConverterContext.getUriInfoOptional();

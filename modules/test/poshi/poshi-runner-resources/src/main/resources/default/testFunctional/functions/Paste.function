@@ -1,20 +1,6 @@
 @default = "paste"
 definition {
 
-	function ckEditorPaste {
-		selenium.waitForVisible("//a[contains(@class,'cke_button__unlink') and contains(@class,'cke_button_disabled')]");
-
-		selenium.selectFrame();
-
-		selenium.waitForVisible("//html/body");
-
-		selenium.mouseOver("//html/body");
-
-		selenium.paste("//html/body");
-
-		selenium.selectFrame("relative=parent");
-	}
-
 	function paste {
 		selenium.waitForVisible();
 

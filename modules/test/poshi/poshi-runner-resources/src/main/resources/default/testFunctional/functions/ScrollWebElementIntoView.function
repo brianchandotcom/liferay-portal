@@ -2,6 +2,8 @@
 definition {
 
 	function scrollWebElementIntoView {
+		selenium.waitForElementPresent();
+
 		selenium.scrollWebElementIntoView();
 	}
 

@@ -8,12 +8,18 @@ definition {
 	}
 
 	function closeAndSelectWindow {
+		selenium.pause("1000");
+
 		selenium.close();
+
+		selenium.pause("5000");
 
 		selenium.selectWindow();
 	}
 
 	function closeWindow {
+		selenium.pause("1000");
+
 		selenium.close();
 
 		selenium.selectWindow("null");

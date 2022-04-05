@@ -13,7 +13,7 @@ definition {
 		selenium.assertNotChecked("xpath=(${locator1})/../../input");
 	}
 
-	function assertNotCheckedToggleSwitch {
+	function assertNotCheckedNotVisible {
 		selenium.waitForElementPresent();
 
 		selenium.assertNotChecked();

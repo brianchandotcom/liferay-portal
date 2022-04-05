@@ -1,8 +1,0 @@
-@default = "sikuliLeftMouseUp"
-definition {
-
-	function sikuliLeftMouseUp {
-		selenium.sikuliLeftMouseUp();
-	}
-
-}

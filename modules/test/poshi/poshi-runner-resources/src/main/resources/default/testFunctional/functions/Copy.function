@@ -1,20 +1,6 @@
 @default = "copy"
 definition {
 
-	function ckEditorCopy {
-		selenium.waitForVisible("//a[contains(@class,'cke_button__unlink') and contains(@class,'cke_button_disabled')]");
-
-		selenium.selectFrame();
-
-		selenium.waitForVisible("//html/body");
-
-		selenium.mouseOver("//html/body");
-
-		selenium.copyText("//html/body");
-
-		selenium.selectFrame("relative=parent");
-	}
-
 	function copy {
 		if (contains("${locator1}", "/input")) {
 			Copy.valueCopy();

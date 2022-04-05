@@ -8,10 +8,4 @@ definition {
 		selenium.selectFieldText();
 	}
 
-	function selectFieldTextNoError {
-		Click();
-
-		selenium.selectFieldText();
-	}
-
 }

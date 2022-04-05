@@ -2,6 +2,8 @@
 definition {
 
 	function pauseSelect {
+		selenium.pause("5000");
+
 		selenium.select();
 	}
 
@@ -11,14 +13,6 @@ definition {
 		selenium.mouseOver();
 
 		selenium.select();
-	}
-
-	function selectByClick {
-		selenium.waitForVisible();
-
-		selenium.click("${locator1}");
-
-		selenium.click("//option[contains(.,'${value1}')]");
 	}
 
 }

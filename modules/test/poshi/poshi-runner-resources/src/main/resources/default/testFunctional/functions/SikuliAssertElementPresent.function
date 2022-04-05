@@ -1,8 +1,0 @@
-@default = "sikuliAssertElementPresent"
-definition {
-
-	function sikuliAssertElementPresent {
-		selenium.sikuliAssertElementPresent();
-	}
-
-}

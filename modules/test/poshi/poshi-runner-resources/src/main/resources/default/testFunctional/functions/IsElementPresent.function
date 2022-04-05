@@ -9,14 +9,18 @@ definition {
 		selenium.isElementPresentAfterWait();
 	}
 
+	function isElementPresentNoSPARefresh {
+		selenium.isElementPresent();
+	}
+
 	function isVisible {
 		selenium.isVisible();
 	}
 
-	function waitForVisible {
-		selenium.waitForVisible();
+	function pauseIsElementPresent {
+		selenium.pause("1000");
 
-		IsElementPresent.isVisible();
+		selenium.isElementPresent();
 	}
 
 }

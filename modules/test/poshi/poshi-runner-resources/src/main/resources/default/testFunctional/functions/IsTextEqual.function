@@ -6,7 +6,7 @@ definition {
 
 		selenium.waitForVisible();
 
-		selenium.isPartialText();
+		selenium.isPartialTextCaseInsensitive();
 	}
 
 	function isText {
@@ -14,7 +14,7 @@ definition {
 
 		selenium.waitForVisible();
 
-		selenium.isText();
+		selenium.isTextCaseInsensitive();
 	}
 
 	function isTextEqual {

@@ -9,4 +9,10 @@ definition {
 		selenium.uploadTempFile();
 	}
 
+	function uploadTempFileHiddenNoMouseOver {
+		selenium.waitForElementPresent();
+
+		selenium.uploadTempFile();
+	}
+
 }

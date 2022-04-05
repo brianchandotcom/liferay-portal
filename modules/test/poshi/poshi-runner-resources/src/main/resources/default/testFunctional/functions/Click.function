@@ -15,6 +15,14 @@ definition {
 
 		selenium.mouseOver();
 
+		selenium.clickAt("${locator1}", "${value1}");
+	}
+
+	function clickAtNotVisible {
+		selenium.waitForElementPresent();
+
+		selenium.mouseOver();
+
 		selenium.clickAt();
 	}
 
@@ -24,22 +32,28 @@ definition {
 		selenium.click();
 	}
 
+	function clickNoMouseOverNoWaitForVisible {
+		selenium.click();
+	}
+
 	function clickNoWaitForVisible {
 		selenium.mouseOver();
 
 		selenium.click();
 	}
 
-	function makeVisibleClickAt {
+	function javaScriptClick {
+		selenium.javaScriptClick();
+	}
+
+	function mouseDownMouseUp {
 		selenium.waitForElementPresent();
-
-		selenium.mouseOver();
-
-		selenium.makeVisible();
 
 		selenium.waitForVisible();
 
-		selenium.clickAt();
+		selenium.mouseDown();
+
+		selenium.mouseUp();
 	}
 
 	function mouseOverClick {
@@ -53,13 +67,11 @@ definition {
 	}
 
 	function pauseClickAt {
+		selenium.pause("1000");
+
 		selenium.mouseOver();
 
 		Click.clickAt();
-	}
-
-	function pauseMakeVisibleClickAt {
-		Click.makeVisibleClickAt();
 	}
 
 }

@@ -13,16 +13,18 @@ definition {
 		AssertNotChecked.assertNotChecked();
 	}
 
-	function uncheckNoError {
-		selenium.waitForVisible();
+	function uncheckNotVisible {
+		selenium.waitForElementPresent();
 
 		selenium.mouseOver();
 
 		if (selenium.isChecked()) {
 			selenium.clickAt();
+
+			selenium.pause("1000");
 		}
 
-		AssertNotChecked.assertNotChecked();
+		selenium.assertNotChecked();
 	}
 
 	function uncheckToggleSwitch {
@@ -34,7 +36,21 @@ definition {
 			selenium.clickAt();
 		}
 
-		AssertNotChecked.assertNotCheckedToggleSwitch();
+		AssertNotChecked.assertNotCheckedNotVisible();
+	}
+
+	function uncheckToggleSwitchAndPause {
+		selenium.waitForElementPresent();
+
+		selenium.mouseOver();
+
+		if (selenium.isChecked()) {
+			selenium.clickAt();
+		}
+
+		selenium.pause("1000");
+
+		AssertNotChecked.assertNotCheckedNotVisible();
 	}
 
 	function uncheckToggleSwitchNoErrorNoAssert {

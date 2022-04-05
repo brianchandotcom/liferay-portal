@@ -1,26 +1,21 @@
-@default = "assertConfirmation"
-@summary = "Assert that the confirmation window equals the value '${value1}'"
+@default = "confirm"
+@summary = "Execute the confirmation of a confirmation window"
 definition {
 
-	function assertConfirmation {
-		selenium.assertConfirmation();
+	function acceptAlert {
+		selenium.acceptAlert();
 	}
 
-	function assertConfirmationNoWait {
-		selenium.assertConfirmation();
+	function confirm {
+		selenium.getConfirmation();
 	}
 
-	function assertPartialConfirmation {
-		selenium.assertPartialConfirmation();
+	function dismissAlert {
+		selenium.dismissAlert();
 	}
 
-	@summary = "Assert that the confirmation window equals the value '${locator1}' and enter '${value1}' for input"
-	function assertPrompt {
-		selenium.assertPrompt();
-	}
-
-	function waitForConfirmation {
-		selenium.waitForConfirmation();
+	function typeAlert {
+		selenium.typeAlert();
 	}
 
 }

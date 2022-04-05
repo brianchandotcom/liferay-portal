@@ -4,6 +4,16 @@ definition {
 	function assertNotEditable {
 		selenium.waitForVisible();
 
+		selenium.waitForNotEditable();
+
+		selenium.assertNotEditable();
+	}
+
+	function assertNotEditableNotVisible {
+		selenium.waitForElementPresent();
+
+		selenium.waitForNotEditable();
+
 		selenium.assertNotEditable();
 	}
 

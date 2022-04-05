@@ -2,15 +2,33 @@
 definition {
 
 	function selectPopUp {
+		selenium.pause("5000");
+
 		selenium.selectPopUp();
 	}
 
 	function selectWindow {
+		selenium.pause("5000");
+
 		selenium.selectWindow();
 	}
 
-	function selectWindowTop {
+	function selectWindowNoSPARefresh {
+		selenium.pause("5000");
+
+		selenium.selectWindow();
+	}
+
+	function selectWindowTopNoSPARefresh {
+		selenium.pause("5000");
+
 		selenium.selectWindow("null");
+	}
+
+	function waitForSelectPopUp {
+		selenium.waitForPopUp("${locator1}", "${value1}");
+
+		selenium.selectPopUp();
 	}
 
 }

@@ -2,25 +2,13 @@
 @summary = "Assert that '${locator1}' equals the value '${value1}'"
 definition {
 
-	function assertCKEditorText {
-		selenium.waitForVisible("//a[contains(@class,'cke_button__unlink') and contains(@class,'cke_button_disabled')]");
-
-		selenium.selectFrame();
-
-		selenium.waitForVisible("//html/body");
-
-		selenium.assertText("//html/body");
-
-		selenium.selectFrame("relative=parent");
-	}
-
 	@summary = "Assert that '${locator1}' contains the value '${value1}'"
 	function assertPartialText {
 		selenium.waitForVisible();
 
-		selenium.waitForPartialText();
+		selenium.waitForPartialTextCaseInsensitive();
 
-		selenium.assertPartialText();
+		selenium.assertPartialTextCaseInsensitive();
 	}
 
 	function assertPartialTextAceEditor {
@@ -32,6 +20,14 @@ definition {
 	}
 
 	function assertText {
+		selenium.waitForVisible();
+
+		selenium.waitForTextCaseInsensitive();
+
+		selenium.assertTextCaseInsensitive();
+	}
+
+	function assertTextCaseSensitive {
 		selenium.waitForVisible();
 
 		selenium.waitForText();
@@ -46,12 +42,6 @@ definition {
 		else {
 			AssertTextEquals.assertText();
 		}
-	}
-
-	function assertTextWaitForCKEditor {
-		selenium.waitForVisible("//a[contains(@class,'cke_button__unlink') and contains(@class,'cke_button_disabled')]");
-
-		AssertTextEquals.assertText();
 	}
 
 	function assertValue {

@@ -19,12 +19,10 @@ definition {
 		selenium.clickAt();
 	}
 
-	function assertTextClick {
-		AssertTextEquals.assertText();
+	function assertPartialTextClickAtNoMouseOver {
+		AssertTextEquals.assertPartialText();
 
-		selenium.mouseOver();
-
-		selenium.click();
+		selenium.clickAt();
 	}
 
 	function assertTextClickAt {
@@ -41,6 +39,34 @@ definition {
 		selenium.mouseOver();
 
 		selenium.clickAt();
+
+		selenium.pause("1000");
+	}
+
+	function assertTextClickAtNoJavaScript {
+		AssertTextEquals.assertText();
+
+		selenium.mouseOver();
+
+		selenium.clickAt();
+
+		selenium.assertLiferayErrors();
+	}
+
+	function assertTextClickAtWaitForLastScript {
+		selenium.waitForVisible();
+
+		AssertClick.assertTextClickAt();
+
+		selenium.waitForElementPresent("xpath=(//script)[last()]");
+	}
+
+	function assertTextClickCaseSensitive {
+		AssertTextEquals.assertTextCaseSensitive();
+
+		selenium.mouseOver();
+
+		selenium.click();
 	}
 
 	function assertTextClickNoMouseOver {
@@ -57,24 +83,10 @@ definition {
 		selenium.clickAt();
 	}
 
-	function pauseAssertPartialTextClickAt {
-		AssertClick.assertPartialTextClickAt();
-	}
-
 	function pauseAssertTextClickAt {
+		selenium.pause("1000");
+
 		AssertClick.assertTextClickAt();
-	}
-
-	function pauseMakeVisibleAssertTextEqualsClickAt {
-		selenium.makeVisible();
-
-		selenium.waitForVisible();
-
-		selenium.waitForText();
-
-		selenium.mouseDown();
-
-		selenium.mouseUp();
 	}
 
 }

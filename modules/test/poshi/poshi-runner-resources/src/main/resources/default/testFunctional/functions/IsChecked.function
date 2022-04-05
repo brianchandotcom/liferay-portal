@@ -2,6 +2,8 @@
 definition {
 
 	function isChecked {
+		selenium.waitForElementPresent();
+
 		selenium.isChecked();
 	}
 

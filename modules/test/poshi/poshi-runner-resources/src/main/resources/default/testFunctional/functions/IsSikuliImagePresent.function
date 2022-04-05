@@ -1,8 +1,0 @@
-@default = "isSikuliImagePresent"
-definition {
-
-	function isSikuliImagePresent {
-		selenium.isSikuliImagePresent();
-	}
-
-}

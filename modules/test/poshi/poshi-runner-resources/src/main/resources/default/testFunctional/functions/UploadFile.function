@@ -2,7 +2,7 @@
 definition {
 
 	function uploadFile {
-		selenium.waitForVisible();
+		selenium.waitForElementPresent();
 
 		selenium.uploadFile();
 	}

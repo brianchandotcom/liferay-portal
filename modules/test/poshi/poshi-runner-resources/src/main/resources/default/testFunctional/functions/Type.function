@@ -1,33 +1,31 @@
-@default = "type"
+@default = "clickAtType"
 @summary = "Type to '${locator1}' the value '${value1}'"
 definition {
-
-	function clickAtSendKeys {
-		selenium.waitForVisible();
-
-		selenium.mouseOver();
-
-		selenium.clickAt();
-
-		selenium.sendKeys();
-
-		selenium.clickAt();
-	}
 
 	function clickAtType {
 		selenium.waitForVisible();
 
+		selenium.waitForEditable();
+
 		selenium.mouseOver();
 
 		selenium.clickAt();
 
+		selenium.pause("1000");
+
 		selenium.type();
 
+		selenium.pause("1000");
+
 		selenium.clickAt();
+
+		selenium.pause("1000");
 	}
 
 	function sendKeys {
 		selenium.waitForVisible();
+
+		selenium.waitForEditable();
 
 		selenium.mouseOver();
 
@@ -37,25 +35,17 @@ definition {
 	function sendKeysAceEditor {
 		selenium.waitForElementPresent();
 
+		selenium.waitForEditable();
+
 		selenium.mouseOver();
 
 		selenium.sendKeysAceEditor();
-	}
-
-	function sendKeysAceEditorNoMouseOver {
-		selenium.waitForElementPresent();
-
-		selenium.sendKeysAceEditor();
-	}
-
-	function sendKeysNoWait {
-		selenium.mouseOver();
-
-		selenium.sendKeys();
 	}
 
 	function type {
 		selenium.waitForVisible();
+
+		selenium.waitForEditable();
 
 		selenium.mouseOver();
 
@@ -65,6 +55,18 @@ definition {
 	function typeAceEditor {
 		selenium.waitForElementPresent();
 
+		selenium.waitForEditable();
+
+		selenium.mouseOver();
+
+		selenium.typeAceEditor();
+	}
+
+	function typeAceEditorNoError {
+		selenium.waitForElementPresent();
+
+		selenium.waitForEditable();
+
 		selenium.mouseOver();
 
 		selenium.typeAceEditor();
@@ -73,25 +75,25 @@ definition {
 	function typeAceEditorNoMouseOver {
 		selenium.waitForElementPresent();
 
+		selenium.waitForEditable();
+
 		selenium.typeAceEditor();
 	}
 
 	function typeCKEditor {
 		selenium.waitForVisible();
 
+		selenium.waitForEditable();
+
 		selenium.mouseOver();
 
 		selenium.typeCKEditor();
 	}
 
-	function typeCKEditorWaitForCKEditor {
-		selenium.waitForVisible("//a[contains(@class,'cke_button__source') and contains(@class,'cke_button_off')]");
-
-		Type.typeCKEditor();
-	}
-
 	function typeClickAt {
 		selenium.waitForVisible();
+
+		selenium.waitForEditable();
 
 		selenium.mouseOver();
 
@@ -100,18 +102,48 @@ definition {
 		selenium.clickAt();
 	}
 
+	function typeCodeMirrorEditorNoError {
+		selenium.waitForElementPresent();
+
+		selenium.mouseOver();
+
+		selenium.typeCodeMirrorEditor();
+	}
+
 	function typeEditor {
 		selenium.waitForElementPresent();
+
+		selenium.waitForEditable();
 
 		selenium.mouseOver();
 
 		selenium.typeEditor();
 	}
 
-	function typeWaitForCKEditor {
-		selenium.waitForVisible("//a[contains(@class,'cke_button__unlink') and contains(@class,'cke_button_disabled')]");
+	function typeNoMouseOver {
+		selenium.waitForElementPresent();
 
-		Type.type();
+		selenium.waitForEditable();
+
+		selenium.type();
+	}
+
+	function typeNotVisibleNoMouseOver {
+		selenium.waitForEditable();
+
+		selenium.type();
+	}
+
+	function typePause {
+		selenium.waitForVisible();
+
+		selenium.waitForEditable();
+
+		selenium.mouseOver();
+
+		selenium.type();
+
+		selenium.pause("5000");
 	}
 
 }

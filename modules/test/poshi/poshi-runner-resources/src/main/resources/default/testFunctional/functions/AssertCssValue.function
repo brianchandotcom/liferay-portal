@@ -2,7 +2,7 @@
 definition {
 
 	function assertCssValue {
-		selenium.waitForVisible();
+		selenium.waitForElementPresent();
 
 		selenium.assertCssValue("${locator1}", "${locator2}");
 	}

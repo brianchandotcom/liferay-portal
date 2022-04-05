@@ -8,10 +8,4 @@ definition {
 		selenium.assertElementNotPresent();
 	}
 
-	function assertNotVisible {
-		selenium.waitForNotVisible();
-
-		selenium.assertNotVisible();
-	}
-
 }

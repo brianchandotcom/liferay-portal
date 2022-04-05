@@ -7,4 +7,10 @@ definition {
 		selenium.assertVisible();
 	}
 
+	function assertVisibleNoSPAWait {
+		selenium.waitForVisible();
+
+		selenium.assertVisible();
+	}
+
 }

@@ -10,24 +10,20 @@ definition {
 		selenium.open();
 	}
 
+	function openInTheNewTab {
+		var javascript = '''
+window.open("${locator1}","_blank");
+		''';
+
+		selenium.runScript("${javascript}");
+	}
+
 	function openNoError {
 		selenium.selectWindow("null");
 
 		selenium.selectFrame("relative=top");
 
 		selenium.open();
-	}
-
-	function openWindow {
-		selenium.selectWindow("null");
-
-		selenium.selectFrame("relative=top");
-
-		selenium.openWindow("${locator1}", "windowName");
-
-		selenium.waitForPopUp("windowName", "windowName");
-
-		selenium.selectWindow("windowName");
 	}
 
 }

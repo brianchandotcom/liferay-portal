@@ -7,13 +7,7 @@ definition {
 		selenium.assertChecked();
 	}
 
-	function assertCheckedToggleSwitch {
-		selenium.waitForElementPresent();
-
-		selenium.assertChecked();
-	}
-
-	function waitForElementPresentAssertChecked {
+	function assertCheckedNotVisible {
 		selenium.waitForElementPresent();
 
 		selenium.assertChecked();

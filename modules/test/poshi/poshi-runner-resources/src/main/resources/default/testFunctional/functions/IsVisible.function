@@ -5,10 +5,4 @@ definition {
 		selenium.isVisible();
 	}
 
-	function waitForVisible {
-		selenium.waitForVisible();
-
-		IsVisible.isVisible();
-	}
-
 }

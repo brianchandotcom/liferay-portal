@@ -1,8 +1,0 @@
-@default = "assertNotLocation"
-definition {
-
-	function assertNotLocation {
-		selenium.assertNotLocation();
-	}
-
-}

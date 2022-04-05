@@ -2,7 +2,7 @@
 definition {
 
 	function setWindowSize {
-		selenium.setWindowSize();
+		selenium.setWindowSize("${value1}");
 	}
 
 }

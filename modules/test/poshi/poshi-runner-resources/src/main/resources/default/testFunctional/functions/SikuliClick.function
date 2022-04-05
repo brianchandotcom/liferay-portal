@@ -1,8 +1,0 @@
-@default = "sikuliClick"
-definition {
-
-	function sikuliClick {
-		selenium.sikuliClick();
-	}
-
-}

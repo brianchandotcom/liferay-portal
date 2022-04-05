@@ -17,4 +17,12 @@ definition {
 		selenium.doubleClickAt();
 	}
 
+	function javaScriptDoubleClick {
+		selenium.waitForVisible();
+
+		selenium.mouseOver();
+
+		selenium.javaScriptDoubleClick();
+	}
+
 }

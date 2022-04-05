@@ -2,8 +2,18 @@
 @summary = "Mouse over '${locator1}'"
 definition {
 
+	function javaScriptMouseOver {
+		selenium.javaScriptMouseOver();
+	}
+
 	function mouseOver {
 		selenium.waitForVisible();
+
+		selenium.mouseOver();
+	}
+
+	function mouseOverInvisible {
+		selenium.waitForElementPresent();
 
 		selenium.mouseOver();
 	}
@@ -14,24 +24,6 @@ definition {
 		selenium.mouseOver();
 
 		selenium.waitForVisible();
-	}
-
-	function partialTextMouseOver {
-		AssertTextEquals.assertPartialText();
-
-		selenium.mouseOver();
-	}
-
-	function textMouseOver {
-		AssertTextEquals.assertText();
-
-		selenium.mouseOver();
-	}
-
-	function valueMouseOver {
-		AssertTextEquals.assertValue();
-
-		selenium.mouseOver();
 	}
 
 }

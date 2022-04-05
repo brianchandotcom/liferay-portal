@@ -2700,6 +2700,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		Layout layout = layoutPersistence.findByG_P_L(
 			groupId, privateLayout, layoutId);
 
+		_validateMasterLayout(masterLayoutPlid, layout.getPlid());
+
 		if (parentLayoutId != layout.getParentLayoutId()) {
 			layout.setParentPlid(
 				_getParentPlid(groupId, privateLayout, parentLayoutId));
@@ -2882,6 +2884,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		Layout layout = layoutPersistence.findByG_P_L(
 			groupId, privateLayout, layoutId);
+
+		_validateMasterLayout(masterLayoutPlid, layout.getPlid());
 
 		layout.setMasterLayoutPlid(masterLayoutPlid);
 
@@ -4009,6 +4013,14 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 						portalPreferencesModel, false);
 
 			portalPreferences.resetValues(namespace);
+		}
+	}
+
+	private void _validateMasterLayout(long masterLayoutPlid, long plid)
+		throws PortalException {
+
+		if (masterLayoutPlid == plid) {
+			throw new PortalException("Master page cannot point to itself");
 		}
 	}
 

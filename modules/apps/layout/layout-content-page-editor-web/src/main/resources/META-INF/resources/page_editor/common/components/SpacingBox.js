@@ -203,7 +203,11 @@ function SpacingSelectorButton({field, onChange, position, type, value}) {
 					) : null}
 
 					<span ref={setLabelElement}>
-						{value || field?.defaultValue}
+						<SpacingOptionValue
+							position={position}
+							type={type}
+							value={value || field?.defaultValue}
+						/>
 					</span>
 				</ClayButton>
 			}

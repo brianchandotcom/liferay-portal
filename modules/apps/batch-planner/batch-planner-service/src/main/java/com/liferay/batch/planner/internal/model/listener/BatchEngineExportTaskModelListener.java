@@ -16,12 +16,10 @@ package com.liferay.batch.planner.internal.model.listener;
 
 import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
 import com.liferay.batch.engine.model.BatchEngineExportTask;
-import com.liferay.batch.planner.constants.BatchPlannerLogConstants;
+import com.liferay.batch.planner.constants.BatchPlannerPlanConstants;
 import com.liferay.batch.planner.constants.BatchPlannerPortletKeys;
 import com.liferay.batch.planner.internal.notification.BatchPlannerNotificationSender;
-import com.liferay.batch.planner.model.BatchPlannerLog;
 import com.liferay.batch.planner.model.BatchPlannerPlan;
-import com.liferay.batch.planner.service.BatchPlannerLogLocalService;
 import com.liferay.batch.planner.service.BatchPlannerPlanLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.log.Log;
@@ -30,6 +28,7 @@ import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -58,8 +57,7 @@ public class BatchEngineExportTaskModelListener
 			_batchPlannerPlanLocalService.updateActive(
 				false,
 				String.valueOf(
-					batchEngineExportTask.getBatchEngineExportTaskId()),
-				true);
+					batchEngineExportTask.getBatchEngineExportTaskId()));
 		}
 		catch (Exception exception) {
 			_log.error(exception);
@@ -72,9 +70,10 @@ public class BatchEngineExportTaskModelListener
 			BatchEngineExportTask batchEngineExportTask)
 		throws ModelListenerException {
 
-		BatchPlannerLog batchPlannerLog = _updateStatus(batchEngineExportTask);
+		BatchPlannerPlan batchPlannerPlan = _updateStatus(
+			batchEngineExportTask);
 
-		if (batchPlannerLog == null) {
+		if (batchPlannerPlan == null) {
 			return;
 		}
 
@@ -87,10 +86,7 @@ public class BatchEngineExportTaskModelListener
 			(batchEngineTaskExecuteStatus ==
 				BatchEngineTaskExecuteStatus.FAILED)) {
 
-			_notify(
-				batchEngineTaskExecuteStatus,
-				_batchPlannerPlanLocalService.fetchBatchPlannerPlan(
-					batchPlannerLog.getBatchPlannerPlanId()));
+			_notify(batchEngineTaskExecuteStatus, batchPlannerPlan);
 		}
 	}
 
@@ -112,40 +108,35 @@ public class BatchEngineExportTaskModelListener
 				batchPlannerPlan.getInternalClassName()));
 	}
 
-	private BatchPlannerLog _updateStatus(
+	private BatchPlannerPlan _updateStatus(
 		BatchEngineExportTask batchEngineExportTask) {
 
-		BatchPlannerLog batchPlannerLog =
-			_batchPlannerLogLocalService.fetchBatchPlannerLog(
-				String.valueOf(
-					batchEngineExportTask.getBatchEngineExportTaskId()),
-				true);
+		BatchPlannerPlan batchPlannerPlan =
+			_batchPlannerPlanLocalService.fetchBatchPlannerPlan(
+				GetterUtil.getLong(
+					batchEngineExportTask.getExternalReferenceCode()));
 
-		if (batchPlannerLog == null) {
+		if (batchPlannerPlan == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"No batch planner log found for batch engine export task " +
-						"ID " +
-							batchEngineExportTask.getBatchEngineExportTaskId());
+					"No batch planner plan found for ID " +
+						batchEngineExportTask.getExternalReferenceCode());
 			}
 
 			return null;
 		}
 
-		batchPlannerLog.setStatus(
-			BatchPlannerLogConstants.getStatus(
+		batchPlannerPlan.setStatus(
+			BatchPlannerPlanConstants.getStatus(
 				BatchEngineTaskExecuteStatus.valueOf(
 					batchEngineExportTask.getExecuteStatus())));
 
-		return _batchPlannerLogLocalService.updateBatchPlannerLog(
-			batchPlannerLog);
+		return _batchPlannerPlanLocalService.updateBatchPlannerPlan(
+			batchPlannerPlan);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BatchEngineExportTaskModelListener.class);
-
-	@Reference
-	private BatchPlannerLogLocalService _batchPlannerLogLocalService;
 
 	private final BatchPlannerNotificationSender
 		_batchPlannerNotificationSender = new BatchPlannerNotificationSender(

@@ -11852,7 +11852,6 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 				</echo>
 			</then>
 		</if>
-
 	</target>
 
 	<target name="prepare-selenium-email-properties">

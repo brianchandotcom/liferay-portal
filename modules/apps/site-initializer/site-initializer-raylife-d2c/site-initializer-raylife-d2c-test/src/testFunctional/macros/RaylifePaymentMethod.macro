@@ -73,7 +73,6 @@ definition {
 	}
 
 	macro paypalPaymentFlow {
-
 		var raylifePaypalEmail = PropsUtil.get("raylife.paypal.email");
 		var raylifePaypalPassword = PropsUtil.get("raylife.paypal.password");
 

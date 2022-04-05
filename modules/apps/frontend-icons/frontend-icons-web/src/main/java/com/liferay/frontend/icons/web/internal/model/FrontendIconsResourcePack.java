@@ -72,7 +72,7 @@ public class FrontendIconsResourcePack {
 		return _editable;
 	}
 
-	public void removeFrontendIconsResource(String name) {
+	public void deleteFrontendIconsResource(String name) {
 		_frontendIconsResources.remove(name);
 	}
 

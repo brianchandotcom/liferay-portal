@@ -21,6 +21,7 @@ import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.layout.util.comparator.LayoutCreateDateComparator;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -409,6 +410,29 @@ public class LayoutLocalServiceTest {
 			layout.getStyleBookEntryId(), serviceContext);
 
 		Assert.assertEquals("/home", layout.getFriendlyURL(LocaleUtil.US));
+	}
+
+	@Test(expected = PortalException.class)
+	public void testUpdateMasterLayoutWithInvalidPlid1() throws Exception {
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		_layoutLocalService.updateMasterLayoutPlid(
+			_group.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			layout.getPlid());
+	}
+
+	@Test(expected = PortalException.class)
+	public void testUpdateMasterLayoutWithInvalidPlid2() throws Exception {
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		_layoutLocalService.updateLayout(
+			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			layout.getParentLayoutId(), layout.getNameMap(),
+			layout.getTitleMap(), layout.getDescriptionMap(),
+			layout.getKeywordsMap(), layout.getRobotsMap(), layout.getType(),
+			layout.isHidden(), layout.getFriendlyURLMap(),
+			layout.getIconImage(), null, layout.getPlid(),
+			layout.getStyleBookEntryId(), new ServiceContext());
 	}
 
 	private void _testDeleteLayouts(boolean system) throws Exception {

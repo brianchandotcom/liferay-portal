@@ -26,7 +26,6 @@ import java.io.IOException;
 
 import java.text.SimpleDateFormat;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -63,27 +62,13 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 		return TestClassGroupFactory.newAxisTestClassGroup(this);
 	}
 
-	public List<NPMTestClass> getNPMTestClasses() {
-		List<NPMTestClass> npmTestClasses = new ArrayList<>();
-
-		for (TestClass testClass : TestClassFactory.getTestClasses()) {
-			if (!(testClass instanceof NPMTestClass)) {
-				continue;
-			}
-
-			npmTestClasses.add((NPMTestClass)testClass);
-		}
-
-		return npmTestClasses;
-	}
-
 	public void writeTestCSVReportFile() throws Exception {
 		CSVReport csvReport = new CSVReport(
 			new CSVReport.Row(
 				"Module Name", "Class Name", "Method Name", "Ignored",
 				"File Path"));
 
-		for (NPMTestClass npmTestClass : getNPMTestClasses()) {
+		for (NPMTestClass npmTestClass : TestClassFactory.getNPMTestClasses()) {
 			File moduleTestClassFile = npmTestClass.getTestClassFile();
 
 			String moduleName = moduleTestClassFile.getName();

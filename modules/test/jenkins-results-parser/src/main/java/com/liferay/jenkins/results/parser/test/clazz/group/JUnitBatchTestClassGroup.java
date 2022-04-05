@@ -152,26 +152,14 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		return jsonObject;
 	}
 
-	public List<JUnitTestClass> getJUnitTestClasses() {
-		List<JUnitTestClass> junitTestClasses = new ArrayList<>();
-
-		for (TestClass testClass : TestClassFactory.getTestClasses()) {
-			if (!(testClass instanceof JUnitTestClass)) {
-				continue;
-			}
-
-			junitTestClasses.add((JUnitTestClass)testClass);
-		}
-
-		return junitTestClasses;
-	}
-
 	public void writeTestCSVReportFile() throws Exception {
 		CSVReport csvReport = new CSVReport(
 			new CSVReport.Row(
 				"Class Name", "Method Name", "Ignored", "File Path"));
 
-		for (JUnitTestClass jUnitTestClass : getJUnitTestClasses()) {
+		for (JUnitTestClass jUnitTestClass :
+				TestClassFactory.getJUnitTestClasses()) {
+
 			File testClassFile = jUnitTestClass.getTestClassFile();
 
 			String testClassFileRelativePath =

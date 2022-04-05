@@ -16,7 +16,6 @@ package com.liferay.jenkins.results.parser.test.clazz.group;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.Job;
-import com.liferay.jenkins.results.parser.JobFactory;
 import com.liferay.jenkins.results.parser.PortalAWSJob;
 import com.liferay.jenkins.results.parser.PortalEnvironmentJob;
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
@@ -24,9 +23,6 @@ import com.liferay.jenkins.results.parser.QAWebsitesGitRepositoryJob;
 import com.liferay.jenkins.results.parser.RootCauseAnalysisToolJob;
 
 import java.io.File;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import org.json.JSONObject;
 
@@ -215,12 +211,6 @@ public class TestClassGroupFactory {
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(batchName)) {
 			batchName = jsonObject.getString("batch_name");
-		}
-
-		String key = JobFactory.getKey(job) + "_" + batchName;
-
-		if (_batchTestClassGroups.containsKey(key)) {
-			return _batchTestClassGroups.get(key);
 		}
 
 		BatchTestClassGroup batchTestClassGroup = null;
@@ -467,12 +457,7 @@ public class TestClassGroupFactory {
 			throw new IllegalArgumentException("Unknown test class group");
 		}
 
-		_batchTestClassGroups.put(key, batchTestClassGroup);
-
 		return batchTestClassGroup;
 	}
-
-	private static final Map<String, BatchTestClassGroup>
-		_batchTestClassGroups = new HashMap<>();
 
 }

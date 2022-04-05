@@ -855,6 +855,13 @@ definition {
 			category = "Inventory Management",
 			portlet = "Warehouses");
 
+		var channelIds = CommerceJSONChannelsAPI._getCommerceChannelIds();
+
+		for (var channelId : list "${channelIds}") {
+			var channel1 = StringUtil.extractFirst("${channelIds}", ",");
+			var channel2 = StringUtil.extractLast("${channelIds}", ",");
+		}
+
 		Click(
 			key_metadataSetName = "Italy",
 			locator1 = "DocumentsAndMediaMetadataSets#METADATA_SETS_NAME");
@@ -866,7 +873,7 @@ definition {
 		}
 
 		Uncheck.uncheckToggleSwitch(
-			key_toggleSwitchLabel = "Minium2 Portal",
+			key_toggleSwitchLabel = "${channel2}",
 			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
 		Button.clickSave();
@@ -882,7 +889,7 @@ definition {
 		}
 
 		Uncheck.uncheckToggleSwitch(
-			key_toggleSwitchLabel = "Minium Portal",
+			key_toggleSwitchLabel = "${channel1}",
 			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
 		Button.clickSave();

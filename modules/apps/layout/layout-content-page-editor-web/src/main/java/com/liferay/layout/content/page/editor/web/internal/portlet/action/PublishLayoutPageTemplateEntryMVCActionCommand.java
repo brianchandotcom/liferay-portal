@@ -14,7 +14,6 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
-import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.listener.ContentPageEditorListenerTracker;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
@@ -122,8 +121,8 @@ public class PublishLayoutPageTemplateEntryMVCActionCommand
 		throws Exception {
 
 		LayoutStructureUtil.deleteMarkedForDeletionItems(
-			draftLayout.getCompanyId(), _contentPageEditorListenerTracker,
-			draftLayout.getGroupId(), draftLayout.getPlid(), _portletRegistry);
+			_contentPageEditorListenerTracker, draftLayout.getGroupId(),
+			draftLayout.getPlid());
 
 		draftLayout = _layoutLocalService.fetchLayout(draftLayout.getPlid());
 
@@ -166,8 +165,5 @@ public class PublishLayoutPageTemplateEntryMVCActionCommand
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private PortletRegistry _portletRegistry;
 
 }

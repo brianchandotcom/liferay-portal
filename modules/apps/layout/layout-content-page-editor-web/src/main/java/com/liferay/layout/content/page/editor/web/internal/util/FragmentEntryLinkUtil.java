@@ -19,7 +19,6 @@ import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.entry.processor.util.EditableFragmentEntryProcessorUtil;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererController;
@@ -58,10 +57,8 @@ import javax.portlet.PortletResponse;
 public class FragmentEntryLinkUtil {
 
 	public static void deleteFragmentEntryLink(
-			long companyId,
 			ContentPageEditorListenerTracker contentPageEditorListenerTracker,
-			long fragmentEntryLinkId, long plid,
-			PortletRegistry portletRegistry)
+			long fragmentEntryLinkId, long plid)
 		throws PortalException {
 
 		FragmentEntryLink fragmentEntryLink =

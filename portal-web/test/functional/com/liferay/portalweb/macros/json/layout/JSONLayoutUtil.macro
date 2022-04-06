@@ -71,6 +71,9 @@ definition {
 		else if ("${widgetName}" == "Contacts Center") {
 			var portletId = "com_liferay_contacts_web_portlet_ContactsCenterPortlet";
 		}
+		else if ("${widgetName}" == "Cookies Banner Configuration") {
+			var portletId = "com_liferay_cookies_banner_web_portlet_CookiesBannerConfigurationPortlet";
+		}
 		else if ("${widgetName}" == "CSS Cadmin Sample") {
 			var portletId = "com_liferay_frontend_css_cadmin_sample_web_internal_portlet_CadminSampleWebPortlet";
 		}

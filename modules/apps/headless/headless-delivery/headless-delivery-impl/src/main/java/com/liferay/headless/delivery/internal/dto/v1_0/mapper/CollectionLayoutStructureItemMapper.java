@@ -188,16 +188,12 @@ public class CollectionLayoutStructureItemMapper
 
 		List<CollectionViewport> collectionViewports = new ArrayList<>();
 
-		Map<String, JSONObject> collectionViewportConfigurationsMap =
-			collectionStyledLayoutStructureItem.
-				getViewportConfigurationJSONObjects();
-
 		collectionViewports.add(
 			new CollectionViewport() {
 				{
 					collectionViewportDefinition =
 						_toCollectionViewportDefinition(
-							collectionViewportConfigurationsMap,
+							collectionViewportConfigurationJSONObjects,
 							ViewportSize.MOBILE_LANDSCAPE);
 					id = ViewportSize.MOBILE_LANDSCAPE.getViewportSizeId();
 				}
@@ -207,7 +203,7 @@ public class CollectionLayoutStructureItemMapper
 				{
 					collectionViewportDefinition =
 						_toCollectionViewportDefinition(
-							collectionViewportConfigurationsMap,
+							collectionViewportConfigurationJSONObjects,
 							ViewportSize.PORTRAIT_MOBILE);
 					id = ViewportSize.PORTRAIT_MOBILE.getViewportSizeId();
 				}
@@ -217,7 +213,7 @@ public class CollectionLayoutStructureItemMapper
 				{
 					collectionViewportDefinition =
 						_toCollectionViewportDefinition(
-							collectionViewportConfigurationsMap,
+							collectionViewportConfigurationJSONObjects,
 							ViewportSize.TABLET);
 					id = ViewportSize.TABLET.getViewportSizeId();
 				}

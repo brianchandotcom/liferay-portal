@@ -75,11 +75,9 @@ public class ExportFragmentCollectionsMVCResourceCommand
 			for (long exportFragmentCollectionId :
 					exportFragmentCollectionIds) {
 
-				FragmentCollection fragmentCollection =
+				fragmentCollections.add(
 					_fragmentCollectionService.fetchFragmentCollection(
-						exportFragmentCollectionId);
-
-				fragmentCollections.add(fragmentCollection);
+						exportFragmentCollectionId));
 			}
 
 			File file = _exportHelper.exportFragmentCollections(

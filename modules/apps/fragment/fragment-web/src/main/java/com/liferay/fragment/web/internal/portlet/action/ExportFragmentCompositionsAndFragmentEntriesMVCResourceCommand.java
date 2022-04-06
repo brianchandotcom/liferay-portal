@@ -87,11 +87,9 @@ public class ExportFragmentCompositionsAndFragmentEntriesMVCResourceCommand
 				for (long exportFragmentCompositionId :
 						exportFragmentCompositionIds) {
 
-					FragmentComposition fragmentComposition =
+					fragmentCompositions.add(
 						_fragmentCompositionService.fetchFragmentComposition(
-							exportFragmentCompositionId);
-
-					fragmentCompositions.add(fragmentComposition);
+							exportFragmentCompositionId));
 				}
 			}
 
@@ -99,11 +97,9 @@ public class ExportFragmentCompositionsAndFragmentEntriesMVCResourceCommand
 
 			if (ArrayUtil.isNotEmpty(exportFragmentEntryIds)) {
 				for (long exportFragmentEntryId : exportFragmentEntryIds) {
-					FragmentEntry fragmentEntry =
+					fragmentEntries.add(
 						_fragmentEntryService.fetchFragmentEntry(
-							exportFragmentEntryId);
-
-					fragmentEntries.add(fragmentEntry);
+							exportFragmentEntryId));
 				}
 			}
 

@@ -231,7 +231,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-98241 and LPS-115224. The user could configure the Heading fragment in page editor."
+	@description = "This is a test for LPS-98241, LPS-115224 and LPS-141412. The user could configure the Heading fragment in page editor."
 	@priority = "4"
 	test ConfigureBasicComponentHeading {
 		task ("Add a Heading fragment to page") {
@@ -249,6 +249,14 @@ definition {
 
 			PageEditor.configureFragment(
 				alignment = "Right",
+				marginBottom = "2",
+				marginLeft = "2",
+				marginRight = "2",
+				marginTop = "2",
+				paddingBottom = "2",
+				paddingLeft = "2",
+				paddingRight = "2",
+				paddingTop = "2",
 				textColor = "Blockquote Small Color");
 
 			PageEditor.gotoConfiguration(fragmentName = "Heading");
@@ -261,6 +269,14 @@ definition {
 				alignment = "right",
 				fragmentName = "heading",
 				headingLevel = "h2",
+				marginBottom = "2",
+				marginLeft = "2",
+				marginRight = "2",
+				marginTop = "2",
+				paddingBottom = "2",
+				paddingLeft = "2",
+				paddingRight = "2",
+				paddingTop = "2",
 				textColor = "blockquote-small-color");
 
 			PageEditor.clickPublish();

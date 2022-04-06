@@ -1,0 +1,49 @@
+definition {
+
+	macro checkCookieConsentPanelIsNotVisible {
+		WaitForElementNotPresent(locator1 = "COOKIES_CONSENT_PANEL_IFRAME");
+	}
+
+	macro checkIfCookiesHasSixMonthsAsExpirationDate {
+		CookieHelper.checkSelectedCookieExpirationDate(cookieName = "liferay.cookie.consent.performance");
+
+		CookieHelper.checkSelectedCookieExpirationDate(cookieName = "liferay.cookie.consent.functional");
+
+		CookieHelper.checkSelectedCookieExpirationDate(cookieName = "liferay.cookie.consent.personalization");
+	}
+
+	macro cookiesBannerAcceptAll {
+		Click(locator1 = "CookieBanner#ACCEPT_ALL_BUTTON");
+	}
+
+	macro cookiesBannerDeclineAll {
+		Click(locator1 = "CookieBanner#DECLINE_ALL_BUTTON");
+	}
+
+	macro openCookieConsentPanel {
+		Click(locator1 = "CookieBanner#CONFIGURATION_LINK");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CookieConsentPanel#COOKIES_CONSENT_PANEL_IFRAME");
+
+		WaitForSPARefresh();
+	}
+
+	macro verifyAllElementsArePresent {
+		WaitForElementPresent(locator1 = "CookieBanner#COOKIES_BANNER");
+
+		WaitForElementPresent(locator1 = "CookieBanner#DESCRIPTION");
+
+		WaitForElementPresent(locator1 = "CookieBanner#CONFIGURATION_LINK");
+
+		WaitForElementPresent(locator1 = "CookieBanner#ACCEPT_ALL_BUTTON");
+
+		WaitForElementPresent(locator1 = "CookieBanner#DECLINE_ALL_BUTTON");
+
+		Click(locator1 = "CookieBanner#CONFIGURATION_LINK");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CookieConsentPanel#COOKIES_CONSENT_PANEL_IFRAME");
+
+		CookieConsentPanel.verifyAllElementsArePresent();
+	}
+
+}

@@ -1,0 +1,116 @@
+definition {
+
+	@description = "Select the control frame of the Cookie Consent popup."
+	macro _selectPanelOuterFrame {
+		SelectFrame.selectFrameNoLoading(locator1 = "CookieConsentPanel#COOKIES_CONSENT_PANEL");
+	}
+
+	macro checkCookieConsentPanelIsNotVisible {
+		WaitForElementNotPresent(locator1 = "COOKIES_CONSENT_PANEL_IFRAME");
+	}
+
+	macro cookiesAcceptAll {
+		Click(locator1 = "CookieConsentPanel#ACCEPT_ALL_BUTTON");
+	}
+
+	macro cookiesCheckAll {
+		Check.checkToggleSwitch(locator1 = "CookieConsentPanel#PERFORMANCE_COOKIES_TOGGLE");
+
+		Check.checkToggleSwitch(locator1 = "CookieConsentPanel#FUNCTIONAL_COOKIES_TOGGLE");
+
+		Check.checkToggleSwitch(locator1 = "CookieConsentPanel#PERSONALIZATION_COOKIES_TOGGLE");
+
+		CookieConsentPanel._selectPanelOuterFrame();
+
+		CookieConsentPanel.cookiesConfirmSelected();
+	}
+
+	macro cookiesConfirmSelected {
+		CookieConsentPanel._selectPanelOuterFrame();
+
+		Click(locator1 = "CookieConsentPanel#CONFIRM_BUTTON");
+	}
+
+	macro cookiesDeclineAll {
+		CookieConsentPanel._selectPanelOuterFrame();
+
+		Click(locator1 = "CookieConsentPanel#DECLINE_ALL_BUTTON");
+	}
+
+	macro editCookieConsentConsent {
+		if (isSet(performanceCookies)) {
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Performance Cookies",
+				locator1 = "CookieConsentPanel#PERFORMANCE_COOKIES_TOGGLE");
+		}
+
+		if (isSet(functionalCookies)) {
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Functional Cookies",
+				locator1 = "CookieConsentPanel#FUNCTIONAL_COOKIES_TOGGLE");
+		}
+
+		if (isSet(personalizationCookies)) {
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Personalization Cookies",
+				locator1 = "CookieConsentPanel#PERSONALIZATION_COOKIES_TOGGLE");
+		}
+	}
+
+	macro selectAllCookiesOnConsentPanel {
+		Check.checkToggleSwitch(locator1 = "CookieConsentPanel#PERFORMANCE_COOKIES_TOGGLE");
+
+		Check.checkToggleSwitch(locator1 = "CookieConsentPanel#FUNCTIONAL_COOKIES_TOGGLE");
+
+		Check.checkToggleSwitch(locator1 = "CookieConsentPanel#PERSONALIZATION_COOKIES_TOGGLE");
+	}
+
+	macro verifyAllElementsArePresent {
+		WaitForElementPresent(locator1 = "CookieConsentPanel#PERFORMANCE_COOKIES_TOGGLE");
+
+		WaitForElementPresent(locator1 = "CookieConsentPanel#FUNCTIONAL_COOKIES_TOGGLE");
+
+		WaitForElementPresent(locator1 = "CookieConsentPanel#PERSONALIZATION_COOKIES_TOGGLE");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CookieConsentPanel#COOKIES_CONSENT_PANEL");
+
+		WaitForElementPresent(locator1 = "CookieConsentPanel#DECLINE_ALL_BUTTON");
+
+		WaitForElementPresent(locator1 = "CookieConsentPanel#CONFIRM_BUTTON");
+
+		WaitForElementPresent(locator1 = "CookieConsentPanel#ACCEPT_ALL_BUTTON");
+
+		WaitForElementPresent(locator1 = "CookieConsentPanel#CLOSE_BUTTON");
+	}
+
+	macro verifyAllElementsArePresentOnCookieConsentPortlet {
+		WaitForElementPresent(locator1 = "CookieConsentPanel#PERFORMANCE_COOKIES_TOGGLE");
+
+		WaitForElementPresent(locator1 = "CookieConsentPanel#FUNCTIONAL_COOKIES_TOGGLE");
+
+		WaitForElementPresent(locator1 = "CookieConsentPanel#PERSONALIZATION_COOKIES_TOGGLE");
+
+		WaitForElementPresent(locator1 = "CookieConsentPanel#DECLINE_ALL_BUTTON");
+
+		WaitForElementPresent(locator1 = "CookieConsentPanel#CONFIRM_BUTTON");
+
+		WaitForElementPresent(locator1 = "CookieConsentPanel#ACCEPT_ALL_BUTTON");
+
+		WaitForElementPresent(locator1 = "CookieConsentPanel#CLOSE_BUTTON");
+	}
+
+	macro verifyCookiesAreNotPresent {
+		CookieHelper.checkSelectedCookieIsNotPresent(
+			cookieName = "liferay.cookie.consent.performance",
+			expectedCookieValue = "accepted");
+
+		CookieHelper.checkSelectedCookieIsNotPresent(
+			cookieName = "liferay.cookie.consent.functional",
+			expectedCookieValue = "accepted");
+
+		CookieHelper.checkSelectedCookieIsNotPresent(
+			cookieName = "liferay.cookie.consent.personalization",
+			expectedCookieValue = "accepted");
+	}
+
+}

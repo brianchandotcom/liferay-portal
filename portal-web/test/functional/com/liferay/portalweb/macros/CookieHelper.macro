@@ -1,0 +1,136 @@
+definition {
+
+	@description = "Get Cookie '${cookieName}' and check if it's value equals: '${expectedCookieValue}'"
+	macro _checkSelectedCookieValue {
+		Variables.assertDefined(parameterList = "${cookieName},${expectedCookieValue}");
+
+		var javascript = '''var cookieName = "${cookieName}";
+                        	var allCookies = document.cookie.split(';');
+							var value="empty";
+                        	for (var i = 0; i < allCookies.length; i++){
+                        		if(allCookies[i].includes(cookieName)){
+                        			value = allCookies[i].replace(cookieName+"=","").trim();
+                        		}
+                        	}
+                        	return value;''';
+		var cookieValue = selenium.getEval("${javascript}");
+
+		if ("${cookieValue}" != "empty") {
+			echo("Cookie with name: ${cookieName} has the following value: ${cookieValue}");
+
+			TestUtils.assertEquals(
+				actual = "${cookieValue}",
+				expected = "${expectedCookieValue}");
+		}
+		else {
+			fail("Cookie with name ${cookieName} is not exists");
+		}
+	}
+
+	macro checkAllCookieAreAcceptedAndSaved {
+		CookieHelper._checkSelectedCookieValue(
+			cookieName = "liferay.cookie.consent.performance",
+			expectedCookieValue = "accepted");
+
+		CookieHelper._checkSelectedCookieValue(
+			cookieName = "liferay.cookie.consent.functional",
+			expectedCookieValue = "accepted");
+
+		CookieHelper._checkSelectedCookieValue(
+			cookieName = "liferay.cookie.consent.personalization",
+			expectedCookieValue = "accepted");
+	}
+
+	macro checkAllCookieAreDeclinedAndSaved {
+		CookieHelper._checkSelectedCookieValue(
+			cookieName = "liferay.cookie.consent.performance",
+			expectedCookieValue = "decline");
+
+		CookieHelper._checkSelectedCookieValue(
+			cookieName = "liferay.cookie.consent.functional",
+			expectedCookieValue = "decline");
+
+		CookieHelper._checkSelectedCookieValue(
+			cookieName = "liferay.cookie.consent.personalization",
+			expectedCookieValue = "decline");
+	}
+
+	@description = "Check if cookie named as '${cookieName}' lasts for 6 months. Requires Chrome 87."
+	macro checkSelectedCookieExpirationDate {
+		Variables.assertDefined(parameterList = "${cookieName}");
+
+		var javascriptForTargetDate = '''var targetDate = new Date( Date.now() - 1000 * (60 * 5) ); targetDate.setMonth(targetDate.getMonth() + 6); return targetDate.toISOString().slice(0,13);''';
+		var targetDate = selenium.getEval("${javascriptForTargetDate}");
+
+		var javascriptForCookieExpirationDate = '''var cookieName = "${cookieName}";
+													async function getCookieExpirationDate(){
+													try {
+															await cookieStore.get(cookieName).then(cookies => cookieExpirationDate = cookies.expires);
+															return (new Date(cookieExpirationDate)).toISOString().slice(0,13); // return format: YYYY-MM-DDTHH
+														  }
+														  catch(error){
+															return error.toString();
+														  }
+												 }
+
+			return getCookieExpirationDate();''';
+		var cookieExpirationDate = selenium.getEval("${javascriptForCookieExpirationDate}");
+
+		if ("${targetDate}" != "${cookieExpirationDate}") {
+			TestUtils.fail(message = "Cookie expiration date is not 6 months ahead. The expected expiration date is:'${targetDate}' while the actual cookie has '${cookieExpirationDate}'.");
+		}
+	}
+
+	@description = "Get Cookie check if it's not present."
+	macro checkSelectedCookieIsNotPresent {
+		Variables.assertDefined(parameterList = "${cookieName},${expectedCookieValue}");
+
+		var javascript = '''var cookieName = "${cookieName}";
+                                var allCookies = document.cookie.split(';');
+        						var value="empty";
+                                for (var i = 0; i < allCookies.length; i++){
+                                	if(allCookies[i].includes(cookieName)){
+                                		value = allCookies[i].replace(cookieName+"=","").trim();
+                                	}
+                                }
+                                return value;''';
+		var cookieValue = selenium.getEval("${javascript}");
+
+		if ("${cookieValue}" == "empty") {
+			echo("Cookie with name: ${cookieName} has the following value: ${cookieValue}");
+
+			TestUtils.pass(message = "Cookie named: ${cookieName} is not present.");
+		}
+		else {
+			fail("Cookie with name ${cookieName} is present.");
+		}
+	}
+
+	macro createSitePageWithCookieBannerConfigurationPortlet {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Cookie Consent Test Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Cookie Consent Test Page",
+			widgetName = "Cookies Banner Configuration");
+
+		Navigator.gotoSitePage(
+			pageName = "Cookie Consent Test Page",
+			siteName = "Guest");
+	}
+
+	macro deleteAllCookiesAndRefreshPage {
+		var javascript = '''var allCookies = document.cookie.split(';');
+    							for (var i = 0; i < allCookies.length; i++)
+    								document.cookie = allCookies[i] + "=;expires="
+    								+ new Date(0).toUTCString();''';
+		var deleted = selenium.getEval("${javascript}");
+
+		echo("${deleted}");
+
+		Refresh();
+	}
+
+}

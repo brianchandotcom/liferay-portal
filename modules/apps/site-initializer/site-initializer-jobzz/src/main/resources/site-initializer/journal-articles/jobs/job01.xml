@@ -1,4 +1,5 @@
 <?xml version="1.0"?>
+
 <root available-locales="en_US" default-locale="en_US" version="1.0">
 	<dynamic-element index-type="keyword" instance-id="Ix8IVDbo" name="hours_per_week" type="numeric">
 		<dynamic-content language-id="en_US"><![CDATA[40]]></dynamic-content>
@@ -12,12 +13,12 @@
 	<dynamic-element index-type="keyword" instance-id="f6NFUYlU" name="some" type="checkbox_multiple">
 		<dynamic-content language-id="en_US"><![CDATA[[]]]></dynamic-content>
 	</dynamic-element>
-	<dynamic-element index-type="" instance-id="c7cd9aqk" name="Separator23323087" type="separator"/>
+	<dynamic-element index-type="" instance-id="c7cd9aqk" name="Separator23323087" type="separator" />
 	<dynamic-element index-type="keyword" instance-id="W73U3pLM" name="intro" type="text">
 		<dynamic-content language-id="en_US"><![CDATA[Sales Engineers are both highly technical and laser-focused on business solutions. SEs can talk to senior software engineers, CEOs, and information security directors with credibility and sincerity.]]></dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="keyword" instance-id="4Am8Fyl1" name="description" type="text">
-		<dynamic-content language-id="en_US"><![CDATA[Liferay needs an experienced sales engineer to be part of our team dedicated to new & expansion business and to support our partners & channels. Qualified leads and opportunities will be your team’s responsibility to win and close. SEs work in teams with account executives, customer experience managers, inside sales, and marketing. The Sales Engineer is the technical expert and resource for: solution architecture, development best practices, identity management, integration points, UI/UX, system administration, mobile strategy, content management, web analytics, DevOps best practices, high availability & clustering, cloud infrastructure, and all features of Liferay DXP and its suite of products. Sales Engineers provide technical justification and business consultation, and are trusted advisors to technology directors, CTOs, and software architects as they go through the buyer journey.
+		<dynamic-content language-id="en_US"><![CDATA[Liferay needs an experienced sales engineer to be part of our team dedicated to new & expansion business and to support our partners & channels. Qualified leads and opportunities will be your team's responsibility to win and close. SEs work in teams with account executives, customer experience managers, inside sales, and marketing. The Sales Engineer is the technical expert and resource for: solution architecture, development best practices, identity management, integration points, UI/UX, system administration, mobile strategy, content management, web analytics, DevOps best practices, high availability & clustering, cloud infrastructure, and all features of Liferay DXP and its suite of products. Sales Engineers provide technical justification and business consultation, and are trusted advisors to technology directors, CTOs, and software architects as they go through the buyer journey.
 
 1. Design and create attractive product demonstrations, and present compelling business use cases that connect and delight top prospects
 2. Provide technical leadership and guidance in the installation, configuration, and best use of Liferay products and all related technologies
@@ -28,7 +29,7 @@
 7. Develop sales collateral in a participatory and iterative way using various media formats, channels, and platforms
 8. Continually learn and be up-to-date on the Liferay suite of products and frequent releases by working cross functionally and across departments
 9. Present and demo at industry and official Liferay events onsite and online to educate customers and evangelize Liferay technology
-10. Grow subject matter expertise in one or many of Liferay’s products, features, and services
+10. Grow subject matter expertise in one or many of Liferay's products, features, and services
 11. Meet defined regional, individual, and team-based sales targets
 12. Travel 25-50% or as necessary onsite at the customer or prospect]]></dynamic-content>
 	</dynamic-element>

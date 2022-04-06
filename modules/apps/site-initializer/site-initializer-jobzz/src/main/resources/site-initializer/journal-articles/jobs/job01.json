@@ -1,8 +1,11 @@
 {
 	"articleId": "job01",
+	"assetTagNames": [
+		"highlight",
+		"homepage"
+	],
 	"ddmStructureKey": "Job",
 	"ddmTemplateKey": "JOB",
 	"folder": "jobs",
-	"name": "Sales Engineer",
-	"assetTagNames": ["highlight","homepage"]
+	"name": "Sales Engineer"
 }

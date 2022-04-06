@@ -68,7 +68,9 @@ export function BuilderScreen({
 
 	const newFilteredItems = filteredItems.filter(
 		(objectColumns: TObjectViewSortColumn) =>
-			objectColumns.fieldLabel.toLowerCase().includes(query.toLowerCase())
+			objectColumns.fieldLabel
+				?.toLowerCase()
+				.includes(query.toLowerCase())
 	);
 
 	return (

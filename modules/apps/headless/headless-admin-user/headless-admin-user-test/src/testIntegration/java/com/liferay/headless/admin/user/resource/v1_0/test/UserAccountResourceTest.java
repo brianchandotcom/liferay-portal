@@ -319,6 +319,39 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 			Arrays.asList(userAccount1, userAccount2, userAccount3),
 			(List<UserAccount>)page.getItems());
 		assertValid(page);
+
+		page = userAccountResource.getUserAccountsPage(
+			null, String.format("name eq '%s'", userAccount1.getName()),
+			Pagination.of(1, 3), null);
+
+		Assert.assertEquals(1, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(userAccount1), (List<UserAccount>)page.getItems());
+
+		String familyName = RandomTestUtil.randomString();
+
+		UserAccount userAccount4 = randomUserAccount();
+
+		userAccount4.setFamilyName(familyName);
+
+		userAccount4 = testGetUserAccountsPage_addUserAccount(userAccount4);
+
+		UserAccount userAccount5 = randomUserAccount();
+
+		userAccount5.setFamilyName(familyName);
+
+		userAccount5 = testGetUserAccountsPage_addUserAccount(userAccount5);
+
+		page = userAccountResource.getUserAccountsPage(
+			null, String.format("contains(name, '%s')", familyName),
+			Pagination.of(1, 5), null);
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(userAccount4, userAccount5),
+			(List<UserAccount>)page.getItems());
 	}
 
 	@Override
@@ -696,7 +729,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 	@Override
 	protected String[] getIgnoredEntityFieldNames() {
-		return new String[] {"alternateName", "emailAddress"};
+		return new String[] {"alternateName", "emailAddress", "name"};
 	}
 
 	@Override

@@ -634,6 +634,238 @@ definition {
 		}
 	}
 
+	@description = "This ensures that user can select multiple Xlf files when importing translations for multiple content pages."
+	@priority = "5"
+	test CanImportMultipleXlfFiles {
+		property osgi.module.configuration.file.names = "com.liferay.layout.admin.web.internal.configuration.FFBulkTranslationConfiguration.config:com.liferay.translation.web.internal.configuration.FFBulkTranslationConfiguration.config";
+		property osgi.module.configurations = "bulkTranslationEnabled=&quot;true&quot;:enabled=B&quot;true&quot;";
+		property portal.acceptance = "false";
+
+		for (var i : list "1,2") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "TranslationContentPage${i}",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "TranslationContentPage${i}",
+				siteName = "Guest");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "HTML");
+
+			PageEditor.editFragmentHTML(
+				content = "HTMLTitle",
+				fragmentName = "HTML",
+				id = "element-html");
+
+			PageEditor.clickPublish();
+		}
+
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+
+		Translations.gotoBulkExportTranslation(exportTranslationEntry = "TranslationContentPage1,TranslationContentPage2");
+
+		Translations.exportTranslation(
+			defaultLanguage = "English (United States)",
+			languageList = "Japanese (Japan),Spanish (Spain)");
+
+		Translations.translateContentPageFile(
+			contentPageTranslation = "true",
+			encoding = "false",
+			fragmentContent = "HTMLTitle",
+			fragmentContentTranslation = "HTMLTitlees_ES",
+			operation = "unzip",
+			pageName = "TranslationContentPage1",
+			pageNameTranslation = "TranslatedContentPage1es_ES",
+			translationFileName = "TranslationContentPage1-en_US-es_ES",
+			translationZipFileName = "Page Translations-en_US");
+
+		for (var i : list "1,2") {
+			Translations.translateContentPageFile(
+				contentPageTranslation = "true",
+				encoding = "false",
+				fragmentContent = "HTMLTitle",
+				fragmentContentTranslation = "HTMLTitleja_JP",
+				operation = "false",
+				pageName = "TranslationContentPage${i}",
+				pageNameTranslation = "TranslatedContentPage${i}ja_JP",
+				translationFileName = "TranslationContentPage${i}-en_US-ja_JP",
+				translationZipFileName = "Page Translations-en_US");
+		}
+
+		Translations.translateContentPageFile(
+			contentPageTranslation = "true",
+			encoding = "false",
+			fragmentContent = "HTMLTitle",
+			fragmentContentTranslation = "HTMLTitlees_ES",
+			operation = "false",
+			pageName = "TranslationContentPage2",
+			pageNameTranslation = "TranslatedContentPage2es_ES",
+			translationFileName = "TranslationContentPage2-en_US-es_ES",
+			translationZipFileName = "Page Translations-en_US");
+
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+
+		Translations.gotoBulkImportTranslation();
+
+		Translations.importTranslation(
+			fileName = "TranslationContentPage1-en_US-es_ES.xlf,TranslationContentPage1-en_US-ja_JP.xlf,TranslationContentPage2-en_US-es_ES.xlf,TranslationContentPage2-en_US-ja_JP.xlf",
+			filePath = "Page Translations-en_US");
+
+		for (var language : list "es-ES,ja-JP") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "TranslationContentPage1",
+				siteName = "Guest");
+
+			PageEditor.changeLocale(
+				currentLocale = "en-US",
+				locale = "${language}");
+
+			var language = StringUtil.replace("${language}", "-", "_");
+
+			PageEditor.viewFragmentEditableText(
+				editableText = "HTMLTitle${language}",
+				fragmentName = "HTML",
+				id = "element-html");
+		}
+
+		for (var language : list "es-ES,ja-JP") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "TranslationContentPage2",
+				siteName = "Guest");
+
+			PageEditor.changeLocale(
+				currentLocale = "en-US",
+				locale = "${language}");
+
+			var language = StringUtil.replace("${language}", "-", "_");
+
+			PageEditor.viewFragmentEditableText(
+				editableText = "HTMLTitle${language}",
+				fragmentName = "HTML",
+				id = "element-html");
+		}
+	}
+
+	@description = "This ensures that user can select multiple zip files when importing translations for multiple content pages with different experience."
+	@priority = "5"
+	test CanImportMultipleZipFilesWithExperiences {
+		property osgi.module.configuration.file.names = "com.liferay.layout.admin.web.internal.configuration.FFBulkTranslationConfiguration.config:com.liferay.translation.web.internal.configuration.FFBulkTranslationConfiguration.config";
+		property osgi.module.configurations = "bulkTranslationEnabled=&quot;true&quot;:enabled=B&quot;true&quot;";
+		property portal.acceptance = "false";
+
+		for (var i : list "1,2") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "TranslationContentPage${i}",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "TranslationContentPage${i}",
+				siteName = "Guest");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "Heading");
+
+			PageEditor.addExperience(
+				experienceName = "NewAnyoneExperience",
+				segmentName = "Anyone");
+
+			PageEditor.clickManagementBar();
+
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "HeadingExperience");
+
+			PageEditor.clickPublish();
+		}
+
+		for (var i : list "1,2") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+
+			Translations.gotoBulkExportTranslation(
+				exportTranslationEntry = "TranslationContentPage${i}",
+				toolbarOptions = "true");
+
+			Translations.exportTranslation(
+				defaultLanguage = "English (United States)",
+				languageList = "Spanish (Spain)");
+		}
+
+		for (var i : list "1,2") {
+			Translations.translateContentPageFile(
+				contentPageTranslation = "true",
+				encoding = "false",
+				fragmentContent = "HeadingExperience",
+				fragmentContentTranslation = "HeadingExperiencees_ES",
+				operation = "unzip",
+				translationFileName = "TranslationContentPage${i} (NewAnyoneExperience)-en_US-es_ES",
+				translationZipFileName = "TranslationContentPage${i}-en_US");
+
+			Translations.translateContentPageFile(
+				contentPageTranslation = "true",
+				encoding = "false",
+				fragmentContent = "Heading",
+				fragmentContentTranslation = "Headinges_ES",
+				operation = "zip",
+				translationFileName = "TranslationContentPage${i}-en_US-es_ES",
+				translationZipFileName = "TranslationContentPage${i}-en_US");
+		}
+
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+
+		Translations.gotoBulkImportTranslation();
+
+		Translations.importTranslation(
+			fileName = "TranslationContentPage1-en_US_translated.zip,TranslationContentPage2-en_US_translated.zip",
+			filePath = "");
+
+		for (var i : list "1,2") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "TranslationContentPage${i}",
+				siteName = "Guest");
+
+			PageEditor.clickPublish();
+
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "TranslationContentPage${i}",
+				siteName = "Guest");
+
+			Navigator.ensureLocaleURL(locale = "es");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Headinges_ES");
+
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "TranslationContentPage${i}",
+				siteName = "Guest");
+
+			ContentPages.changeExperience(experienceName = "NewAnyoneExperience");
+
+			Navigator.ensureLocaleURL(locale = "es");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "HeadingExperiencees_ES");
+
+			var portalURL = PropsUtil.get("portal.url");
+
+			Navigator.openSpecificURL(url = "${portalURL}/en/");
+		}
+	}
+
 	@description = "This ensures that the user can not import an invalid translation file."
 	@priority = "4"
 	test CannotImportAnInvalidFile {
@@ -729,14 +961,14 @@ definition {
 			errorMessageItem = "The translation file does not correspond to this page.");
 	}
 
-	@description = "This ensures that only the valid translation files can be imported from a zip."
+	@description = "This ensures that only the valid translation files can be imported from xlf and zip files."
 	@priority = "5"
-	test CanPartiallyImportMultiplePages {
-		property osgi.module.configuration.file.names = "com.liferay.layout.admin.web.internal.configuration.FFBulkTranslationConfiguration.config";
-		property osgi.module.configurations = "bulkTranslationEnabled=&quot;true&quot;";
+	test CanPartiallyImportMultipleFiles {
+		property osgi.module.configuration.file.names = "com.liferay.layout.admin.web.internal.configuration.FFBulkTranslationConfiguration.config:com.liferay.translation.web.internal.configuration.FFBulkTranslationConfiguration.config";
+		property osgi.module.configurations = "bulkTranslationEnabled=&quot;true&quot;:enabled=B&quot;true&quot;";
 		property portal.acceptance = "false";
 
-		for (var i : list "1,2") {
+		for (var i : list "1,2,3") {
 			JSONLayout.addPublicLayout(
 				groupName = "Guest",
 				layoutName = "TranslationContentPage${i}",
@@ -775,17 +1007,23 @@ definition {
 			pageName = "TranslationContentPage1",
 			pageNameTranslation = "TranslatedContentPage1",
 			translationFileName = "TranslationContentPage1-en_US-es_ES",
-			translationZipFileName = "TranslationContentPage1-en_US");
+			translationZipFileName = "Page Translations-en_US");
 
-		Translations.updateTranslateFileID(
-			translationEntryType = "Layout",
+		Translations.translateContentPageFile(
+			contentPageTranslation = "true",
+			encoding = "false",
+			fragmentContent = "Heading",
+			fragmentContentTranslation = "タイトル",
+			operation = "false",
+			pageName = "TranslatedContentPage1",
+			pageNameTranslation = "翻訳ページ",
 			translationFileName = "TranslationContentPage1-en_US-ja_JP",
-			translationZipFileName = "TranslationContentPage1-en_US");
+			translationZipFileName = "Page Translations-en_US");
 
 		Translations.updateTranslateFileID(
 			translationEntryType = "Layout",
 			translationFileName = "TranslationContentPage2-en_US-es_ES",
-			translationZipFileName = "TranslationContentPage1-en_US");
+			translationZipFileName = "Page Translations-en_US");
 
 		Translations.translateContentPageFile(
 			contentPageTranslation = "true",
@@ -796,7 +1034,33 @@ definition {
 			pageName = "TranslatedContentPage2",
 			pageNameTranslation = "翻訳ページ",
 			translationFileName = "TranslationContentPage2-en_US-ja_JP",
-			translationZipFileName = "TranslationContentPage1-en_US");
+			translationZipFileName = "Page Translations-en_US");
+
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+
+		Translations.gotoExportTranslation(pageName = "TranslationContentPage3");
+
+		Translations.exportTranslation(
+			defaultLanguage = "English (United States)",
+			languageList = "Spanish (Spain)");
+
+		Translations.translateContentPageFile(
+			contentPageTranslation = "true",
+			encoding = "false",
+			fragmentContent = "Heading",
+			fragmentContentTranslation = "Titulo",
+			operation = "unzip",
+			translationFileName = "TranslationContentPage3-en_US-es_ES",
+			translationZipFileName = "TranslationContentPage3-en_US");
+
+		Translations.updateTranslateFileID(
+			translationEntryType = "Layout",
+			translationFileName = "TranslationContentPage3-en_US-es_ES",
+			translationZipFileName = "TranslationContentPage3-en_US");
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "copy-translation-file -Dtranslation.zip.file.name=TranslationContentPage3-en_US -Dtranslation.file.name=TranslationContentPage3-en_US-es_ES.xlf");
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
@@ -805,21 +1069,25 @@ definition {
 		Translations.importTranslation(
 			errorMessage = "2 files could not be published.",
 			errorMessageItem = "The XLIFF file contains a translation for an invalid model.",
-			failFileName = "TranslationContentPage1-en_US-ja_JP.xlf",
-			failFileName2 = "TranslationContentPage2-en_US-es_ES.xlf",
-			fileName = "TranslationContentPage1-en_US_translated.zip",
+			failFileName = "TranslationContentPage2-en_US-es_ES.xlf",
+			failFileName2 = "TranslationContentPage3-en_US-es_ES.xlf",
+			fileName = "Page Translations-en_US_translated.zip,TranslationContentPage3-en_US-es_ES.xlf",
 			filePath = "",
 			successFileName = "TranslationContentPage1-en_US-es_ES.xlf",
-			successFileName2 = "TranslationContentPage2-en_US-ja_JP.xlf",
-			successFileNumber = "2 Files Saved");
+			successFileName2 = "TranslationContentPage1-en_US-ja_JP.xlf",
+			successFileName3 = "TranslationContentPage2-en_US-ja_JP.xlf",
+			successFileNumber = "3 Files Saved",
+			zipFileName = "Page Translations-en_US_translated.zip");
 
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "TranslationContentPage1",
-			siteName = "Guest");
+		for (var i : list "2,3") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "TranslationContentPage${i}",
+				siteName = "Guest");
 
-		Translations.viewUntranslatedStatus(
-			locale = "ja-JP",
-			page = "true");
+			Translations.viewUntranslatedStatus(
+				locale = "es-ES",
+				page = "true");
+		}
 
 		ContentPagesNavigator.openEditContentPage(
 			pageName = "TranslationContentPage1",
@@ -834,26 +1102,20 @@ definition {
 			fragmentName = "Heading",
 			id = "element-text");
 
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "TranslationContentPage2",
-			siteName = "Guest");
+		for (var i : list "1,2") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "TranslationContentPage1",
+				siteName = "Guest");
 
-		Translations.viewUntranslatedStatus(
-			locale = "es-ES",
-			page = "true");
+			PageEditor.changeLocale(
+				currentLocale = "en-US",
+				locale = "ja-JP");
 
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "TranslationContentPage2",
-			siteName = "Guest");
-
-		PageEditor.changeLocale(
-			currentLocale = "en-US",
-			locale = "ja-JP");
-
-		PageEditor.viewFragmentEditableText(
-			editableText = "タイトル",
-			fragmentName = "Heading",
-			id = "element-text");
+			PageEditor.viewFragmentEditableText(
+				editableText = "タイトル",
+				fragmentName = "Heading",
+				id = "element-text");
+		}
 	}
 
 	@description = "This is a test for LPS-144152. This ensures that the updated draft translation can be published."

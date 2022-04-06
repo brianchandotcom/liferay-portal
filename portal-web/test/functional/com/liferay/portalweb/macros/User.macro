@@ -311,16 +311,10 @@ definition {
 				value1 = "${userComment}");
 		}
 
-		if (isSet(destination)) {
-			var origin = Geolocation.getMarkerPosition();
-
-			Geolocation.setMarkerPosition(destination = "${destination}");
-
-			var current = Geolocation.getMarkerPosition();
-
-			TestUtils.assertNotEquals(
-				actual = "${current}",
-				expected = "${origin}");
+		if (isSet(lat) && isSet(lng)) {
+			Geolocation.setMarkerPosition(
+				lat = "${lat}",
+				lng = "${lng}");
 		}
 
 		var browserType = PropsUtil.get("browser.type");

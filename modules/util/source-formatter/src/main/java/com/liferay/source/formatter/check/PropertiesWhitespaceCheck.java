@@ -102,9 +102,7 @@ public class PropertiesWhitespaceCheck extends WhitespaceCheck {
 		int remainder = length % 4;
 
 		if (remainder > 0) {
-			int quotient = length / 4;
-
-			if (quotient > 0) {
+			if ((length / 4) > 0) {
 				leadingSpaces = leadingSpaces.substring(remainder);
 			}
 			else {

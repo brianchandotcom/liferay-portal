@@ -97,7 +97,7 @@ public class RowStyledLayoutStructureItem extends StyledLayoutStructureItem {
 			}
 
 			JSONObject viewportConfigurationJSONObject =
-				_viewportConfigurations.getOrDefault(
+				_viewportConfigurationJSONObjects.getOrDefault(
 					viewportSize.getViewportSizeId(),
 					JSONFactoryUtil.createJSONObject());
 
@@ -152,8 +152,8 @@ public class RowStyledLayoutStructureItem extends StyledLayoutStructureItem {
 		return _verticalAlignment;
 	}
 
-	public Map<String, JSONObject> getViewportConfigurations() {
-		return _viewportConfigurations;
+	public Map<String, JSONObject> getViewportConfigurationJSONObjects() {
+		return _viewportConfigurationJSONObjects;
 	}
 
 	@Override
@@ -200,9 +200,9 @@ public class RowStyledLayoutStructureItem extends StyledLayoutStructureItem {
 	public void setViewportConfiguration(
 		String viewportSizeId, JSONObject configurationJSONObject) {
 
-		_viewportConfigurations.put(
+		_viewportConfigurationJSONObjects.put(
 			viewportSizeId,
-			_viewportConfigurations.getOrDefault(
+			_viewportConfigurationJSONObjects.getOrDefault(
 				viewportSizeId, JSONFactoryUtil.createJSONObject()
 			).put(
 				"modulesPerRow",
@@ -287,7 +287,7 @@ public class RowStyledLayoutStructureItem extends StyledLayoutStructureItem {
 	private int _numberOfColumns;
 	private boolean _reverseOrder;
 	private String _verticalAlignment = "top";
-	private final Map<String, JSONObject> _viewportConfigurations =
+	private final Map<String, JSONObject> _viewportConfigurationJSONObjects =
 		new HashMap<>();
 
 }

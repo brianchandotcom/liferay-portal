@@ -806,15 +806,17 @@ public class LayoutStructure {
 				continue;
 			}
 
-			Map<String, JSONObject> columnViewportConfigurations =
-				columnLayoutStructureItem.getViewportConfigurations();
+			Map<String, JSONObject> columnViewportConfigurationJSONObjects =
+				columnLayoutStructureItem.getViewportConfigurationJSONObjects();
 
-			if (!columnViewportConfigurations.containsKey(viewportSizeId)) {
+			if (!columnViewportConfigurationJSONObjects.containsKey(
+					viewportSizeId)) {
+
 				continue;
 			}
 
 			JSONObject columnViewportConfigurationJSONObject =
-				columnViewportConfigurations.get(viewportSizeId);
+				columnViewportConfigurationJSONObjects.get(viewportSizeId);
 
 			if (!columnViewportConfigurationJSONObject.has("size") &&
 				!updateEmpty) {
@@ -866,11 +868,11 @@ public class LayoutStructure {
 		RowStyledLayoutStructureItem rowStyledLayoutStructureItem,
 		String viewportSizeId, int numberOfColumns) {
 
-		Map<String, JSONObject> rowViewportConfigurations =
-			rowStyledLayoutStructureItem.getViewportConfigurations();
+		Map<String, JSONObject> rowViewportConfigurationJSONObjects =
+			rowStyledLayoutStructureItem.getViewportConfigurationJSONObjects();
 
 		JSONObject viewportConfigurationJSONObject =
-			rowViewportConfigurations.getOrDefault(
+			rowViewportConfigurationJSONObjects.getOrDefault(
 				viewportSizeId, JSONFactoryUtil.createJSONObject());
 
 		viewportConfigurationJSONObject.put("numberOfColumns", numberOfColumns);

@@ -178,17 +178,19 @@ public class CollectionLayoutStructureItemMapper
 		CollectionStyledLayoutStructureItem
 			collectionStyledLayoutStructureItem) {
 
-		Map<String, JSONObject> collectionViewportConfigurations =
-			collectionStyledLayoutStructureItem.getViewportConfigurations();
+		Map<String, JSONObject> collectionViewportConfigurationJSONObjects =
+			collectionStyledLayoutStructureItem.
+				getViewportConfigurationJSONObjects();
 
-		if (MapUtil.isEmpty(collectionViewportConfigurations)) {
+		if (MapUtil.isEmpty(collectionViewportConfigurationJSONObjects)) {
 			return null;
 		}
 
 		List<CollectionViewport> collectionViewports = new ArrayList<>();
 
 		Map<String, JSONObject> collectionViewportConfigurationsMap =
-			collectionStyledLayoutStructureItem.getViewportConfigurations();
+			collectionStyledLayoutStructureItem.
+				getViewportConfigurationJSONObjects();
 
 		collectionViewports.add(
 			new CollectionViewport() {
@@ -249,16 +251,16 @@ public class CollectionLayoutStructureItemMapper
 	}
 
 	private CollectionViewportDefinition _toCollectionViewportDefinition(
-		Map<String, JSONObject> collectionViewportConfigurations,
+		Map<String, JSONObject> collectionViewportConfigurationJSONObjects,
 		ViewportSize viewportSize) {
 
-		if (!collectionViewportConfigurations.containsKey(
+		if (!collectionViewportConfigurationJSONObjects.containsKey(
 				viewportSize.getViewportSizeId())) {
 
 			return null;
 		}
 
-		JSONObject jsonObject = collectionViewportConfigurations.get(
+		JSONObject jsonObject = collectionViewportConfigurationJSONObjects.get(
 			viewportSize.getViewportSizeId());
 
 		return new CollectionViewportDefinition() {

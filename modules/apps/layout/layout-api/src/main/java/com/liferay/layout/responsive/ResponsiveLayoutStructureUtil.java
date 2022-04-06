@@ -60,8 +60,8 @@ public class ResponsiveLayoutStructureUtil {
 		sb.append("col-lg-");
 		sb.append(columnLayoutStructureItem.getSize());
 
-		Map<String, JSONObject> columnViewportConfigurations =
-			columnLayoutStructureItem.getViewportConfigurations();
+		Map<String, JSONObject> columnViewportConfigurationJSONObjects =
+			columnLayoutStructureItem.getViewportConfigurationJSONObjects();
 
 		for (ViewportSize viewportSize : _viewportSizes) {
 			if (Objects.equals(viewportSize, ViewportSize.DESKTOP)) {
@@ -70,8 +70,8 @@ public class ResponsiveLayoutStructureUtil {
 
 			int columnSize = GetterUtil.getInteger(
 				getResponsivePropertyValue(
-					viewportSize, columnViewportConfigurations, "size",
-					columnLayoutStructureItem.getSize()));
+					viewportSize, columnViewportConfigurationJSONObjects,
+					"size", columnLayoutStructureItem.getSize()));
 
 			sb.append(" col");
 			sb.append(viewportSize.getCssClassPrefix());
@@ -162,11 +162,11 @@ public class ResponsiveLayoutStructureUtil {
 
 	public static Object getResponsivePropertyValue(
 		ViewportSize currentViewportSize,
-		Map<String, JSONObject> viewportConfigurations, String propertyName,
-		Object defaultValue) {
+		Map<String, JSONObject> viewportConfigurationJSONObjects,
+		String propertyName, Object defaultValue) {
 
 		JSONObject viewportConfigurationJSONObject =
-			viewportConfigurations.getOrDefault(
+			viewportConfigurationJSONObjects.getOrDefault(
 				currentViewportSize.getViewportSizeId(),
 				JSONFactoryUtil.createJSONObject());
 
@@ -177,7 +177,7 @@ public class ResponsiveLayoutStructureUtil {
 		for (ViewportSize viewportSize : _sortedViewportSizes) {
 			if (viewportSize.getOrder() < currentViewportSize.getOrder()) {
 				viewportConfigurationJSONObject =
-					viewportConfigurations.getOrDefault(
+					viewportConfigurationJSONObjects.getOrDefault(
 						viewportSize.getViewportSizeId(),
 						JSONFactoryUtil.createJSONObject());
 
@@ -200,8 +200,8 @@ public class ResponsiveLayoutStructureUtil {
 			_getVerticalAlignmentCssClass(
 				rowStyledLayoutStructureItem.getVerticalAlignment()));
 
-		Map<String, JSONObject> rowViewportConfigurations =
-			rowStyledLayoutStructureItem.getViewportConfigurations();
+		Map<String, JSONObject> rowViewportConfigurationJSONObjects =
+			rowStyledLayoutStructureItem.getViewportConfigurationJSONObjects();
 
 		for (ViewportSize viewportSize : _viewportSizes) {
 			if (Objects.equals(viewportSize, ViewportSize.DESKTOP)) {
@@ -210,7 +210,7 @@ public class ResponsiveLayoutStructureUtil {
 
 			String verticalAlignment = GetterUtil.getString(
 				getResponsivePropertyValue(
-					viewportSize, rowViewportConfigurations,
+					viewportSize, rowViewportConfigurationJSONObjects,
 					"verticalAlignment",
 					rowStyledLayoutStructureItem.getVerticalAlignment()));
 
@@ -242,12 +242,14 @@ public class ResponsiveLayoutStructureUtil {
 
 			boolean reverseOrder = GetterUtil.getBoolean(
 				getResponsivePropertyValue(
-					viewportSize, rowViewportConfigurations, "reverseOrder",
+					viewportSize, rowViewportConfigurationJSONObjects,
+					"reverseOrder",
 					rowStyledLayoutStructureItem.isReverseOrder()));
 
 			int modulesPerRow = GetterUtil.getInteger(
 				getResponsivePropertyValue(
-					viewportSize, rowViewportConfigurations, "modulesPerRow",
+					viewportSize, rowViewportConfigurationJSONObjects,
+					"modulesPerRow",
 					rowStyledLayoutStructureItem.getModulesPerRow()));
 
 			sb.append(StringPool.SPACE);

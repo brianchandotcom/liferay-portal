@@ -142,7 +142,7 @@ public class CollectionStyledLayoutStructureItem
 			}
 
 			JSONObject viewportConfigurationJSONObject =
-				_viewportConfigurations.getOrDefault(
+				_viewportConfigurationJSONObjects.getOrDefault(
 					viewportSize.getViewportSizeId(),
 					JSONFactoryUtil.createJSONObject());
 
@@ -199,8 +199,8 @@ public class CollectionStyledLayoutStructureItem
 		return _verticalAlignment;
 	}
 
-	public Map<String, JSONObject> getViewportConfigurations() {
-		return _viewportConfigurations;
+	public Map<String, JSONObject> getViewportConfigurationJSONObjects() {
+		return _viewportConfigurationJSONObjects;
 	}
 
 	@Override
@@ -308,9 +308,9 @@ public class CollectionStyledLayoutStructureItem
 	public void setViewportConfiguration(
 		String viewportSizeId, JSONObject configurationJSONObject) {
 
-		_viewportConfigurations.put(
+		_viewportConfigurationJSONObjects.put(
 			viewportSizeId,
-			_viewportConfigurations.getOrDefault(
+			_viewportConfigurationJSONObjects.getOrDefault(
 				viewportSizeId, JSONFactoryUtil.createJSONObject()
 			).put(
 				"numberOfColumns",
@@ -421,7 +421,7 @@ public class CollectionStyledLayoutStructureItem
 	private boolean _showAllItems;
 	private String _templateKey;
 	private String _verticalAlignment = "start";
-	private final Map<String, JSONObject> _viewportConfigurations =
+	private final Map<String, JSONObject> _viewportConfigurationJSONObjects =
 		new HashMap<>();
 
 }

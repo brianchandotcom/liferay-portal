@@ -52,11 +52,9 @@ public class PropertiesWhitespaceCheck extends WhitespaceCheck {
 				}
 
 				if (line.matches("\\s*[^\\s#].*[,=]\\\\")) {
-					String leadingSpaces = _getLeadingSpaces(line);
-
-					leadingSpaces = _fixLeadingSpaces(leadingSpaces);
-
-					line = leadingSpaces + StringUtil.trim(line);
+					line =
+						_fixLeadingSpaces(_getLeadingSpaces(line)) +
+							StringUtil.trim(line);
 				}
 
 				if (previousLine.matches("\\s*[^\\s#].*[,=]\\\\")) {

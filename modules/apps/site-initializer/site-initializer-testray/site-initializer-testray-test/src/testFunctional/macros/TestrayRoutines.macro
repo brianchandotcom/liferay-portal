@@ -1,5 +1,6 @@
 definition {
-    macro createRoutineTestray {
+
+	macro createRoutineTestray {
 		Click(locator1 = "Testray#ADD_PROJECT");
 
 		Type(

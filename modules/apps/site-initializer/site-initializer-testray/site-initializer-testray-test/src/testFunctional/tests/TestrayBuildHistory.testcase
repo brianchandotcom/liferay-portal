@@ -26,10 +26,62 @@ definition {
 		}
 	}
 
+	@description = "LPS-151098 - Verify that clicking on Block*d in the subtitle makes it disabled"
+	@priority = "3"
+	test CanBlockedStatusBeDisabled {
+		ApplicationsMenu.gotoSite(site = "Testray 2");
+
+		Testray.createProjectTestray(key_name = "Liferay Portal 7.4");
+
+		Click(
+			key_projectName = "Liferay Portal 7.4",
+			locator1 = "Testray#PROJECT_NAME_BUTTON");
+
+		TestrayRoutines.createRoutineTestray(key_name = "Routine Test");
+
+		Click(
+			key_projectName = "Routine Test",
+			locator1 = "Testray#PROJECT_NAME_BUTTON");
+
+		Click(
+			key_item = "BLOCKED",
+			locator1 = "TestrayRoutines#STATUS_BUILD_HISTORY");
+
+		AssertElementPresent(
+			key_item = "BLOCKED",
+			locator1 = "TestrayRoutines#STATUS_BUILD_HISTORY_DISABLED");
+	}
+
+	@description = "LPS-151099 - Verify that clicking on Failed in the subtitle makes it disabled"
+	@priority = "3"
+	test CanFailedStatusBeDisabled {
+		ApplicationsMenu.gotoSite(site = "Testray 2");
+
+		Testray.createProjectTestray(key_name = "Liferay Portal 7.4");
+
+		Click(
+			key_projectName = "Liferay Portal 7.4",
+			locator1 = "Testray#PROJECT_NAME_BUTTON");
+
+		TestrayRoutines.createRoutineTestray(key_name = "Routine Test");
+
+		Click(
+			key_projectName = "Routine Test",
+			locator1 = "Testray#PROJECT_NAME_BUTTON");
+
+		Click(
+			key_item = "FAILED",
+			locator1 = "TestrayRoutines#STATUS_BUILD_HISTORY");
+
+		AssertElementPresent(
+			key_item = "FAILED",
+			locator1 = "TestrayRoutines#STATUS_BUILD_HISTORY_DISABLED");
+	}
+
 	@description = "LPS-150428 - Verify that clicking on the table redirects to a results history page."
-    @priority = "5"
-    test CanGoToResultsPage {
-        ApplicationsMenu.gotoSite(site = "Testray 2");
+	@priority = "5"
+	test CanGoToResultsPage {
+		ApplicationsMenu.gotoSite(site = "Testray 2");
 
 		Testray.createProjectTestray(key_name = "Liferay Portal 7.4");
 
@@ -37,22 +89,21 @@ definition {
 			key_projectName = "Liferay Portal 7.4",
 			locator1 = "Testray#PROJECT_NAME_BUTTON");
 
-        
-        TestrayRoutines.createRoutineTestray(key_name = "Routine Test");
+		TestrayRoutines.createRoutineTestray(key_name = "Routine Test");
 
-        Click(
-            locator1 = "Testray#PROJECT_NAME_BUTTON",
-            key_projectName = "Routine Test");
+		Click(
+			key_projectName = "Routine Test",
+			locator1 = "Testray#PROJECT_NAME_BUTTON");
 
-        AssertElementPresent(
-            locator1 = "Testray#NAME_TITLE",
-            key_title = "Build History");
-    }
+		AssertElementPresent(
+			key_title = "Build History",
+			locator1 = "Testray#NAME_TITLE");
+	}
 
-    @description = "LPS-151095 - Verify that clicking on Incomplete in the subtitle makes it disabled"
-    @priority = "3"
-    test CanIncompleteStatusBeDisabled {
-        ApplicationsMenu.gotoSite(site = "Testray 2");
+	@description = "LPS-151095 - Verify that clicking on Incomplete in the subtitle makes it disabled"
+	@priority = "3"
+	test CanIncompleteStatusBeDisabled {
+		ApplicationsMenu.gotoSite(site = "Testray 2");
 
 		Testray.createProjectTestray(key_name = "Liferay Portal 7.4");
 
@@ -60,26 +111,25 @@ definition {
 			key_projectName = "Liferay Portal 7.4",
 			locator1 = "Testray#PROJECT_NAME_BUTTON");
 
-        
-        TestrayRoutines.createRoutineTestray(key_name = "Routine Test");
+		TestrayRoutines.createRoutineTestray(key_name = "Routine Test");
 
-        Click(
-            locator1 = "Testray#PROJECT_NAME_BUTTON",
-            key_projectName = "Routine Test");
+		Click(
+			key_projectName = "Routine Test",
+			locator1 = "Testray#PROJECT_NAME_BUTTON");
 
-        Click(
-            locator1 = "TestrayRoutines#STATUS_BUILD_HISTORY",
-            key_item = "INCOMPLETE");
+		Click(
+			key_item = "INCOMPLETE",
+			locator1 = "TestrayRoutines#STATUS_BUILD_HISTORY");
 
-        AssertElementPresent(
-            locator1 = "TestrayRoutines#STATUS_BUILD_HISTORY_DISABLED",
-            key_item = "INCOMPLETE");
-    }
+		AssertElementPresent(
+			key_item = "INCOMPLETE",
+			locator1 = "TestrayRoutines#STATUS_BUILD_HISTORY_DISABLED");
+	}
 
-    @description = "LPS-151097 - Verify that clicking on Test Fix in the subtitle makes it disabled"
-    @priority = "3"
-    test CanTestFixStatusBeDisabled {
-        ApplicationsMenu.gotoSite(site = "Testray 2");
+	@description = "LPS-151100 - Verify that clicking on Passed in the subtitle makes it disabled"
+	@priority = "3"
+	test CanPassedStatusBeDisabled {
+		ApplicationsMenu.gotoSite(site = "Testray 2");
 
 		Testray.createProjectTestray(key_name = "Liferay Portal 7.4");
 
@@ -87,26 +137,25 @@ definition {
 			key_projectName = "Liferay Portal 7.4",
 			locator1 = "Testray#PROJECT_NAME_BUTTON");
 
-        
-        TestrayRoutines.createRoutineTestray(key_name = "Routine Test");
+		TestrayRoutines.createRoutineTestray(key_name = "Routine Test");
 
-        Click(
-            locator1 = "Testray#PROJECT_NAME_BUTTON",
-            key_projectName = "Routine Test");
+		Click(
+			key_projectName = "Routine Test",
+			locator1 = "Testray#PROJECT_NAME_BUTTON");
 
-        Click(
-            locator1 = "TestrayRoutines#STATUS_BUILD_HISTORY",
-            key_item = "TEST FIX");
+		Click(
+			key_item = "PASSED",
+			locator1 = "TestrayRoutines#STATUS_BUILD_HISTORY");
 
-        AssertElementPresent(
-            locator1 = "TestrayRoutines#STATUS_BUILD_HISTORY_DISABLED",
-            key_item = "TEST FIX");
-    }
+		AssertElementPresent(
+			key_item = "PASSED",
+			locator1 = "TestrayRoutines#STATUS_BUILD_HISTORY_DISABLED");
+	}
 
-    @description = "LPS-151098 - Verify that clicking on Block*d in the subtitle makes it disabled"
-    @priority = "3"
-    test CanBlockedStatusBeDisabled {
-        ApplicationsMenu.gotoSite(site = "Testray 2");
+	@description = "LPS-151097 - Verify that clicking on Test Fix in the subtitle makes it disabled"
+	@priority = "3"
+	test CanTestFixStatusBeDisabled {
+		ApplicationsMenu.gotoSite(site = "Testray 2");
 
 		Testray.createProjectTestray(key_name = "Liferay Portal 7.4");
 
@@ -114,73 +163,19 @@ definition {
 			key_projectName = "Liferay Portal 7.4",
 			locator1 = "Testray#PROJECT_NAME_BUTTON");
 
-        
-        TestrayRoutines.createRoutineTestray(key_name = "Routine Test");
-
-        Click(
-            locator1 = "Testray#PROJECT_NAME_BUTTON",
-            key_projectName = "Routine Test");
-
-        Click(
-            locator1 = "TestrayRoutines#STATUS_BUILD_HISTORY",
-            key_item = "BLOCKED");
-
-        AssertElementPresent(
-            locator1 = "TestrayRoutines#STATUS_BUILD_HISTORY_DISABLED",
-            key_item = "BLOCKED");
-    }
-
-    @description = "LPS-151099 - Verify that clicking on Failed in the subtitle makes it disabled"
-    @priority = "3"
-    test CanFailedStatusBeDisabled {
-        ApplicationsMenu.gotoSite(site = "Testray 2");
-
-		Testray.createProjectTestray(key_name = "Liferay Portal 7.4");
+		TestrayRoutines.createRoutineTestray(key_name = "Routine Test");
 
 		Click(
-			key_projectName = "Liferay Portal 7.4",
+			key_projectName = "Routine Test",
 			locator1 = "Testray#PROJECT_NAME_BUTTON");
-
-        
-        TestrayRoutines.createRoutineTestray(key_name = "Routine Test");
-
-        Click(
-            locator1 = "Testray#PROJECT_NAME_BUTTON",
-            key_projectName = "Routine Test");
-
-        Click(
-            locator1 = "TestrayRoutines#STATUS_BUILD_HISTORY",
-            key_item = "FAILED");
-
-        AssertElementPresent(
-            locator1 = "TestrayRoutines#STATUS_BUILD_HISTORY_DISABLED",
-            key_item = "FAILED");
-    }
-
-    @description = "LPS-151100 - Verify that clicking on Passed in the subtitle makes it disabled"
-    @priority = "3"
-    test CanPassedStatusBeDisabled {
-        ApplicationsMenu.gotoSite(site = "Testray 2");
-
-		Testray.createProjectTestray(key_name = "Liferay Portal 7.4");
 
 		Click(
-			key_projectName = "Liferay Portal 7.4",
-			locator1 = "Testray#PROJECT_NAME_BUTTON");
+			key_item = "TEST FIX",
+			locator1 = "TestrayRoutines#STATUS_BUILD_HISTORY");
 
-        
-        TestrayRoutines.createRoutineTestray(key_name = "Routine Test");
+		AssertElementPresent(
+			key_item = "TEST FIX",
+			locator1 = "TestrayRoutines#STATUS_BUILD_HISTORY_DISABLED");
+	}
 
-        Click(
-            locator1 = "Testray#PROJECT_NAME_BUTTON",
-            key_projectName = "Routine Test");
-
-        Click(
-            locator1 = "TestrayRoutines#STATUS_BUILD_HISTORY",
-            key_item = "PASSED");
-
-        AssertElementPresent(
-            locator1 = "TestrayRoutines#STATUS_BUILD_HISTORY_DISABLED",
-            key_item = "PASSED");
-    }
 }

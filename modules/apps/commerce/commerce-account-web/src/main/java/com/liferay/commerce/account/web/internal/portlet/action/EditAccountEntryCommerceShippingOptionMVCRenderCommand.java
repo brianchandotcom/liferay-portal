@@ -48,11 +48,11 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"javax.portlet.name=" + AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
 		"javax.portlet.name=" + AccountPortletKeys.ACCOUNT_ENTRIES_MANAGEMENT,
-		"mvc.command.name=/account_entries_admin/edit_account_entry_shipping_option"
+		"mvc.command.name=/account_entries_admin/edit_account_entry_commerce_shipping_option"
 	},
 	service = MVCRenderCommand.class
 )
-public class EditAccountEntryShippingOptionMVCRenderCommand
+public class EditAccountEntryCommerceShippingOptionMVCRenderCommand
 	implements MVCRenderCommand {
 
 	@Override
@@ -62,7 +62,8 @@ public class EditAccountEntryShippingOptionMVCRenderCommand
 
 		RequestDispatcher requestDispatcher =
 			_servletContext.getRequestDispatcher(
-				"/account_entry/shipping_options/edit_shipping_option.jsp");
+				"/account_entry/commerce_shipping_options" +
+					"/edit_commerce_shipping_option.jsp");
 
 		try {
 			HttpServletRequest httpServletRequest =

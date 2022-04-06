@@ -35,8 +35,9 @@ import org.osgi.service.component.annotations.Reference;
 	property = "clay.data.set.display.name=" + CommerceAccountDataSetConstants.COMMERCE_DATA_SET_KEY_ACCOUNT_ENTRY_DEFAULT_SHIPPING_OPTIONS,
 	service = ClayDataSetDisplayView.class
 )
-public class AccountEntryDefaultShippingOptionClayTableDataSetDisplayView
-	extends BaseTableClayDataSetDisplayView {
+public class
+	AccountEntryDefaultCommerceShippingOptionClayTableDataSetDisplayView
+		extends BaseTableClayDataSetDisplayView {
 
 	@Override
 	public ClayTableSchema getClayTableSchema(Locale locale) {

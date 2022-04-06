@@ -24,7 +24,7 @@ CommerceAccountDisplayContext commerceAccountDisplayContext = (CommerceAccountDi
 	submitButtonLabel='<%= LanguageUtil.get(request, "save") %>'
 	title='<%= LanguageUtil.get(request, "edit-shipping-option") %>'
 >
-	<portlet:actionURL name="/account_entries_admin/edit_account_entry_shipping_option" var="editAccountEntryShippingOptionActionURL" />
+	<portlet:actionURL name="/account_entries_admin/edit_account_entry_commerce_shipping_option" var="editAccountEntryShippingOptionActionURL" />
 
 	<aui:form action="<%= editAccountEntryShippingOptionActionURL %>" method="post" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />

@@ -37,7 +37,7 @@ renderResponse.setTitle((commerceAccountDisplayContext.getAccountEntryId() == 0)
 
 			<liferay-util:dynamic-include key="com.liferay.commerce.account.web#/account_entry/order_defaults.jsp#payment_methods" />
 
-			<%@ include file="/account_entry/shipping_options/default_commerce_shipping_options.jspf" %>
+			<%@ include file="/account_entry/commerce_shipping_options/default_commerce_shipping_options.jspf" %>
 		</liferay-frontend:fieldset-group>
 	</liferay-frontend:edit-form-body>
 </liferay-frontend:edit-form>

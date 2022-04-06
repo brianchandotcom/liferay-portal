@@ -60,19 +60,19 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = {ScreenNavigationCategory.class, ScreenNavigationEntry.class}
 )
-public class AccountEntryOrderDefaultsScreenNavigationCategory
+public class AccountEntryCommerceOrderDefaultsScreenNavigationCategory
 	implements ScreenNavigationCategory, ScreenNavigationEntry<AccountEntry> {
 
 	@Override
 	public String getCategoryKey() {
 		return AccountEntryScreenNavigationEntryConstants.
-			CATEGORY_KEY_ORDER_DEFAULTS;
+			CATEGORY_KEY_COMMERCE_ORDER_DEFAULTS;
 	}
 
 	@Override
 	public String getEntryKey() {
 		return AccountEntryScreenNavigationEntryConstants.
-			CATEGORY_KEY_ORDER_DEFAULTS;
+			CATEGORY_KEY_COMMERCE_ORDER_DEFAULTS;
 	}
 
 	@Override
@@ -80,10 +80,7 @@ public class AccountEntryOrderDefaultsScreenNavigationCategory
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(
-			resourceBundle,
-			AccountEntryScreenNavigationEntryConstants.
-				CATEGORY_KEY_ORDER_DEFAULTS);
+		return LanguageUtil.get(resourceBundle, "order-defaults");
 	}
 
 	@Override
@@ -130,11 +127,11 @@ public class AccountEntryOrderDefaultsScreenNavigationCategory
 
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,
-			"/account_entry/order_defaults.jsp");
+			"/account_entry/commerce_order_defaults.jsp");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AccountEntryOrderDefaultsScreenNavigationCategory.class);
+		AccountEntryCommerceOrderDefaultsScreenNavigationCategory.class);
 
 	@Reference
 	private AccountEntryService _accountEntryService;

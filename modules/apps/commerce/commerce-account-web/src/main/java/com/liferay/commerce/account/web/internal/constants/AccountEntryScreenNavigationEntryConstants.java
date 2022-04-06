@@ -16,10 +16,12 @@ package com.liferay.commerce.account.web.internal.constants;
 
 /**
  * @author Andrea Sbarra
+ * @author Alessio Antonio Rendina
  */
 public class AccountEntryScreenNavigationEntryConstants {
 
-	public static final String CATEGORY_KEY_ORDER_DEFAULTS = "order-defaults";
+	public static final String CATEGORY_KEY_COMMERCE_ORDER_DEFAULTS =
+		"commerce-order-defaults";
 
 	public static final String SCREEN_NAVIGATION_KEY_ACCOUNT_ENTRY =
 		"edit.account.entry.form";

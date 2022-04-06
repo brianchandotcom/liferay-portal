@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "clay.data.provider.key=" + CommerceAccountDataSetConstants.COMMERCE_DATA_SET_KEY_ACCOUNT_ENTRY_DEFAULT_SHIPPING_OPTIONS,
 	service = ClayDataSetActionProvider.class
 )
-public class AccountEntryDefaultShippingOptionDataSetActionProvider
+public class AccountEntryDefaultCommerceShippingOptionDataSetActionProvider
 	implements ClayDataSetActionProvider {
 
 	@Override
@@ -88,7 +88,7 @@ public class AccountEntryDefaultShippingOptionDataSetActionProvider
 				httpServletRequest, AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
 				PortletRequest.RENDER_PHASE)
 		).setMVCRenderCommandName(
-			"/account_entries_admin/edit_account_entry_shipping_option"
+			"/account_entries_admin/edit_account_entry_commerce_shipping_option"
 		).setParameter(
 			"accountEntryId", accountEntryId
 		).setParameter(

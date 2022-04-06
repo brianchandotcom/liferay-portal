@@ -50,7 +50,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "clay.data.provider.key=" + CommerceAccountDataSetConstants.COMMERCE_DATA_SET_KEY_ACCOUNT_ENTRY_DEFAULT_SHIPPING_OPTIONS,
 	service = ClayDataSetDataProvider.class
 )
-public class AccountEntryDefaultShippingOptionDataSetDataProvider
+public class AccountEntryDefaultCommerceShippingOptionDataSetDataProvider
 	implements ClayDataSetDataProvider<ShippingOption> {
 
 	@Override

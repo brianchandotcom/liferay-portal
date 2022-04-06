@@ -45,11 +45,11 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"javax.portlet.name=" + AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
 		"javax.portlet.name=" + AccountPortletKeys.ACCOUNT_ENTRIES_MANAGEMENT,
-		"mvc.command.name=/account_entries_admin/edit_account_entry_shipping_option"
+		"mvc.command.name=/account_entries_admin/edit_account_entry_commerce_shipping_option"
 	},
 	service = MVCActionCommand.class
 )
-public class EditAccountEntryShippingOptionMVCActionCommand
+public class EditAccountEntryCommerceShippingOptionMVCActionCommand
 	extends BaseMVCActionCommand {
 
 	@Override
@@ -130,7 +130,7 @@ public class EditAccountEntryShippingOptionMVCActionCommand
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		EditAccountEntryShippingOptionMVCActionCommand.class);
+		EditAccountEntryCommerceShippingOptionMVCActionCommand.class);
 
 	@Reference
 	private CommerceShippingFixedOptionService

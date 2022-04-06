@@ -103,6 +103,7 @@ function FieldSetContent({fields, item, languageId, onValueSelect, values}) {
 							<FieldComponent
 								disabled={fieldIsDisabled(item, field)}
 								field={field}
+								item={item}
 								onValueSelect={onValueSelect}
 								value={getFieldValue({
 									field,

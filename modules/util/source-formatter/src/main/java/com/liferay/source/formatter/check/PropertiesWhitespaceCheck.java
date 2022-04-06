@@ -52,9 +52,7 @@ public class PropertiesWhitespaceCheck extends WhitespaceCheck {
 				}
 
 				if (line.matches("\\s*[^\\s#].*[,=]\\\\")) {
-					line =
-						_fixLeadingSpaces(_getLeadingSpaces(line)) +
-							StringUtil.trim(line);
+					line = _fixLeadingSpaces(line);
 				}
 
 				if (previousLine.matches("\\s*[^\\s#].*[,=]\\\\")) {
@@ -94,13 +92,15 @@ public class PropertiesWhitespaceCheck extends WhitespaceCheck {
 		return trimmedLine.endsWith(StringPool.EQUAL);
 	}
 
-	private String _fixLeadingSpaces(String leadingSpaces) {
+	private String _fixLeadingSpaces(String line) {
+		String leadingSpaces = _getLeadingSpaces(line);
+
 		int length = leadingSpaces.length();
 
 		int remainder = length % 4;
 
 		if (remainder == 0) {
-			return leadingSpaces;
+			return leadingSpaces + StringUtil.trimLeading(line);
 		}
 
 		if ((length / 4) > 0) {
@@ -118,7 +118,7 @@ public class PropertiesWhitespaceCheck extends WhitespaceCheck {
 			leadingSpaces = sb.toString();
 		}
 
-		return leadingSpaces;
+		return leadingSpaces + StringUtil.trimLeading(line);
 	}
 
 	private String _getLeadingSpaces(String line) {

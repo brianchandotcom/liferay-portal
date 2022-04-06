@@ -101,21 +101,23 @@ public class PropertiesWhitespaceCheck extends WhitespaceCheck {
 
 		int remainder = length % 4;
 
-		if (remainder > 0) {
-			if ((length / 4) > 0) {
-				leadingSpaces = leadingSpaces.substring(remainder);
+		if (remainder == 0) {
+			return leadingSpaces;
+		}
+
+		if ((length / 4) > 0) {
+			leadingSpaces = leadingSpaces.substring(remainder);
+		}
+		else {
+			StringBundler sb = new StringBundler();
+
+			sb.append(leadingSpaces);
+
+			for (int i = 0; i < (remainder - 1); i++) {
+				sb.append(StringPool.SPACE);
 			}
-			else {
-				StringBundler sb = new StringBundler();
 
-				sb.append(leadingSpaces);
-
-				for (int i = 0; i < remainder - 1; i++) {
-					sb.append(StringPool.SPACE);
-				}
-
-				leadingSpaces = sb.toString();
-			}
+			leadingSpaces = sb.toString();
 		}
 
 		return leadingSpaces;

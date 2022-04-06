@@ -97,16 +97,14 @@ public class FragmentEntryLocalServiceTest {
 		int type = FragmentConstants.TYPE_COMPONENT;
 		int status = WorkflowConstants.STATUS_APPROVED;
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		FragmentEntry fragmentEntry =
 			_fragmentEntryLocalService.addFragmentEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				_fragmentCollection.getFragmentCollectionId(), fragmentEntryKey,
 				name, css, html, js, false, configuration, null,
-				previewFileEntryId, type, status, serviceContext);
+				previewFileEntryId, type, status,
+				ServiceContextTestUtil.getServiceContext(
+					_group.getGroupId(), TestPropsValues.getUserId()));
 
 		FragmentEntry persistedFragmentEntry =
 			_fragmentEntryPersistence.fetchByPrimaryKey(
@@ -139,17 +137,14 @@ public class FragmentEntryLocalServiceTest {
 		long previewFileEntryId = RandomTestUtil.randomLong();
 		int status = WorkflowConstants.STATUS_APPROVED;
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		FragmentEntry fragmentEntry =
 			_fragmentEntryLocalService.addFragmentEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				_fragmentCollection.getFragmentCollectionId(), fragmentEntryKey,
 				name, css, html, js, false, StringPool.BLANK, null,
 				previewFileEntryId, FragmentConstants.TYPE_COMPONENT, status,
-				serviceContext);
+				ServiceContextTestUtil.getServiceContext(
+					_group.getGroupId(), TestPropsValues.getUserId()));
 
 		FragmentEntry persistedFragmentEntry =
 			_fragmentEntryPersistence.fetchByPrimaryKey(
@@ -180,16 +175,14 @@ public class FragmentEntryLocalServiceTest {
 		int type = FragmentConstants.TYPE_COMPONENT;
 		int status = WorkflowConstants.STATUS_APPROVED;
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		FragmentEntry fragmentEntry =
 			_fragmentEntryLocalService.addFragmentEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				_fragmentCollection.getFragmentCollectionId(), fragmentEntryKey,
 				name, css, html, js, false, StringPool.BLANK, null,
-				previewFileEntryId, type, status, serviceContext);
+				previewFileEntryId, type, status,
+				ServiceContextTestUtil.getServiceContext(
+					_group.getGroupId(), TestPropsValues.getUserId()));
 
 		FragmentEntry persistedFragmentEntry =
 			_fragmentEntryPersistence.fetchByPrimaryKey(
@@ -220,16 +213,14 @@ public class FragmentEntryLocalServiceTest {
 		int type = FragmentConstants.TYPE_COMPONENT;
 		int status = WorkflowConstants.STATUS_APPROVED;
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		FragmentEntry fragmentEntry =
 			_fragmentEntryLocalService.addFragmentEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				_fragmentCollection.getFragmentCollectionId(), fragmentEntryKey,
 				name, css, html, js, false, StringPool.BLANK, null, 0, type,
-				status, serviceContext);
+				status,
+				ServiceContextTestUtil.getServiceContext(
+					_group.getGroupId(), TestPropsValues.getUserId()));
 
 		FragmentEntry persistedFragmentEntry =
 			_fragmentEntryPersistence.fetchByPrimaryKey(
@@ -256,17 +247,14 @@ public class FragmentEntryLocalServiceTest {
 		int type = FragmentConstants.TYPE_COMPONENT;
 		int status = WorkflowConstants.STATUS_DRAFT;
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		FragmentEntry fragmentEntry =
 			_fragmentEntryLocalService.addFragmentEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				_fragmentCollection.getFragmentCollectionId(), fragmentEntryKey,
 				name, StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 				false, StringPool.BLANK, null, previewFileEntryId, type, status,
-				serviceContext);
+				ServiceContextTestUtil.getServiceContext(
+					_group.getGroupId(), TestPropsValues.getUserId()));
 
 		FragmentEntry persistedFragmentEntry =
 			_fragmentEntryPersistence.fetchByPrimaryKey(
@@ -286,10 +274,6 @@ public class FragmentEntryLocalServiceTest {
 	public void testAddFragmentEntryWithHtmlWithAmpersand() throws Exception {
 		String html = "<H1>A&B&amp;C</H1>";
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		FragmentEntry fragmentEntry =
 			_fragmentEntryLocalService.addFragmentEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(),
@@ -298,7 +282,9 @@ public class FragmentEntryLocalServiceTest {
 				StringPool.BLANK, html, StringPool.BLANK, false,
 				StringPool.BLANK, null, RandomTestUtil.randomLong(),
 				FragmentConstants.TYPE_COMPONENT,
-				WorkflowConstants.STATUS_APPROVED, serviceContext);
+				WorkflowConstants.STATUS_APPROVED,
+				ServiceContextTestUtil.getServiceContext(
+					_group.getGroupId(), TestPropsValues.getUserId()));
 
 		FragmentEntry persistedFragmentEntry =
 			_fragmentEntryPersistence.fetchByPrimaryKey(
@@ -317,17 +303,15 @@ public class FragmentEntryLocalServiceTest {
 		String js = RandomTestUtil.randomString();
 		int status = WorkflowConstants.STATUS_APPROVED;
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		FragmentEntry fragmentEntry =
 			_fragmentEntryLocalService.addFragmentEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				_fragmentCollection.getFragmentCollectionId(),
 				RandomTestUtil.randomString(), name, css, html, js, false,
 				StringPool.BLANK, null, RandomTestUtil.randomLong(),
-				FragmentConstants.TYPE_COMPONENT, status, serviceContext);
+				FragmentConstants.TYPE_COMPONENT, status,
+				ServiceContextTestUtil.getServiceContext(
+					_group.getGroupId(), TestPropsValues.getUserId()));
 
 		FragmentEntry persistedFragmentEntry =
 			_fragmentEntryPersistence.fetchByPrimaryKey(
@@ -351,17 +335,15 @@ public class FragmentEntryLocalServiceTest {
 		long previewFileEntryId = RandomTestUtil.randomLong();
 		int status = WorkflowConstants.STATUS_APPROVED;
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		FragmentEntry fragmentEntry =
 			_fragmentEntryLocalService.addFragmentEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				_fragmentCollection.getFragmentCollectionId(),
 				RandomTestUtil.randomString(), name, css, html, js, false,
 				StringPool.BLANK, null, previewFileEntryId,
-				FragmentConstants.TYPE_COMPONENT, status, serviceContext);
+				FragmentConstants.TYPE_COMPONENT, status,
+				ServiceContextTestUtil.getServiceContext(
+					_group.getGroupId(), TestPropsValues.getUserId()));
 
 		FragmentEntry persistedFragmentEntry =
 			_fragmentEntryPersistence.fetchByPrimaryKey(
@@ -388,17 +370,15 @@ public class FragmentEntryLocalServiceTest {
 		int type = FragmentConstants.TYPE_COMPONENT;
 		int status = WorkflowConstants.STATUS_APPROVED;
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		FragmentEntry fragmentEntry =
 			_fragmentEntryLocalService.addFragmentEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				_fragmentCollection.getFragmentCollectionId(),
 				RandomTestUtil.randomString(), name, css, html, js, false,
 				StringPool.BLANK, null, previewFileEntryId,
-				FragmentConstants.TYPE_COMPONENT, status, serviceContext);
+				FragmentConstants.TYPE_COMPONENT, status,
+				ServiceContextTestUtil.getServiceContext(
+					_group.getGroupId(), TestPropsValues.getUserId()));
 
 		FragmentEntry persistedFragmentEntry =
 			_fragmentEntryPersistence.fetchByPrimaryKey(
@@ -425,17 +405,15 @@ public class FragmentEntryLocalServiceTest {
 		int type = FragmentConstants.TYPE_COMPONENT;
 		int status = WorkflowConstants.STATUS_APPROVED;
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		FragmentEntry fragmentEntry =
 			_fragmentEntryLocalService.addFragmentEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				_fragmentCollection.getFragmentCollectionId(),
 				RandomTestUtil.randomString(), name, css, html, js, false,
 				StringPool.BLANK, null, 0, FragmentConstants.TYPE_COMPONENT,
-				status, serviceContext);
+				status,
+				ServiceContextTestUtil.getServiceContext(
+					_group.getGroupId(), TestPropsValues.getUserId()));
 
 		FragmentEntry persistedFragmentEntry =
 			_fragmentEntryPersistence.fetchByPrimaryKey(
@@ -555,10 +533,6 @@ public class FragmentEntryLocalServiceTest {
 
 		String fragmentEntryKey = RandomTestUtil.randomString();
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		FragmentEntry fragmentEntry =
 			_fragmentEntryLocalService.addFragmentEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(),
@@ -567,7 +541,9 @@ public class FragmentEntryLocalServiceTest {
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				false, "{fieldSets: []}", null, 0,
 				FragmentConstants.TYPE_COMPONENT,
-				WorkflowConstants.STATUS_APPROVED, serviceContext);
+				WorkflowConstants.STATUS_APPROVED,
+				ServiceContextTestUtil.getServiceContext(
+					_group.getGroupId(), TestPropsValues.getUserId()));
 
 		FragmentEntry persistedFragmentEntry =
 			_fragmentEntryLocalService.fetchFragmentEntry(
@@ -578,17 +554,15 @@ public class FragmentEntryLocalServiceTest {
 
 	@Test
 	public void testGenerateFragmentEntryKey() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		_fragmentEntryLocalService.addFragmentEntry(
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			_fragmentCollection.getFragmentCollectionId(), "test-key",
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
 			"{fieldSets: []}", null, 0, FragmentConstants.TYPE_COMPONENT,
-			WorkflowConstants.STATUS_APPROVED, serviceContext);
+			WorkflowConstants.STATUS_APPROVED,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
 
 		String fragmentEntryKey =
 			_fragmentEntryLocalService.generateFragmentEntryKey(
@@ -892,10 +866,6 @@ public class FragmentEntryLocalServiceTest {
 
 	@Test
 	public void testUpdateFragmentCollectionId() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		FragmentEntry fragmentEntry =
 			_fragmentEntryLocalService.addFragmentEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(),
@@ -904,7 +874,9 @@ public class FragmentEntryLocalServiceTest {
 				RandomTestUtil.randomString(), "<H1>A</H1>",
 				RandomTestUtil.randomString(), false, StringPool.BLANK, null, 0,
 				FragmentConstants.TYPE_COMPONENT,
-				WorkflowConstants.STATUS_APPROVED, serviceContext);
+				WorkflowConstants.STATUS_APPROVED,
+				ServiceContextTestUtil.getServiceContext(
+					_group.getGroupId(), TestPropsValues.getUserId()));
 
 		_fragmentEntryLocalService.updateFragmentEntry(
 			fragmentEntry.getUserId(), fragmentEntry.getFragmentEntryId(),
@@ -1028,10 +1000,6 @@ public class FragmentEntryLocalServiceTest {
 	public void testUpdateFragmentEntryWithHtmlWithAmpersand()
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		FragmentEntry fragmentEntry =
 			_fragmentEntryLocalService.addFragmentEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(),
@@ -1040,7 +1008,9 @@ public class FragmentEntryLocalServiceTest {
 				RandomTestUtil.randomString(), "<H1>A</H1>",
 				RandomTestUtil.randomString(), false, StringPool.BLANK, null,
 				RandomTestUtil.randomLong(), FragmentConstants.TYPE_COMPONENT,
-				WorkflowConstants.STATUS_APPROVED, serviceContext);
+				WorkflowConstants.STATUS_APPROVED,
+				ServiceContextTestUtil.getServiceContext(
+					_group.getGroupId(), TestPropsValues.getUserId()));
 
 		String html = "<H1>A&B&amp;C</H1>";
 

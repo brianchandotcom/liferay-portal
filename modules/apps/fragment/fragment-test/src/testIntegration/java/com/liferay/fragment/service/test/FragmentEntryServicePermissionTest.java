@@ -501,16 +501,14 @@ public class FragmentEntryServicePermissionTest {
 	public void testUpdateFragmentEntryValuesAndPreviewFileEntryIdWithoutPermissions()
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		FragmentEntry fragmentEntry = _fragmentEntryService.addFragmentEntry(
 			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
 			StringPool.BLANK, StringUtil.randomString(), StringPool.BLANK,
 			RandomTestUtil.randomString(), StringPool.BLANK, false,
 			StringPool.BLANK, null, 0, FragmentConstants.TYPE_COMPONENT,
-			WorkflowConstants.STATUS_DRAFT, serviceContext);
+			WorkflowConstants.STATUS_DRAFT,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
 
 		Assert.assertEquals(0, fragmentEntry.getPreviewFileEntryId());
 
@@ -527,16 +525,14 @@ public class FragmentEntryServicePermissionTest {
 	public void testUpdateFragmentEntryValuesAndPreviewFileEntryIdWithPermissions()
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		FragmentEntry fragmentEntry = _fragmentEntryService.addFragmentEntry(
 			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
 			StringPool.BLANK, StringUtil.randomString(), StringPool.BLANK,
 			RandomTestUtil.randomString(), StringPool.BLANK, false,
 			StringPool.BLANK, null, 0, FragmentConstants.TYPE_COMPONENT,
-			WorkflowConstants.STATUS_DRAFT, serviceContext);
+			WorkflowConstants.STATUS_DRAFT,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
 
 		Assert.assertEquals(0, fragmentEntry.getPreviewFileEntryId());
 
@@ -555,16 +551,14 @@ public class FragmentEntryServicePermissionTest {
 	public void testUpdateFragmentEntryValuesWithoutPermissions()
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		FragmentEntry fragmentEntry = _fragmentEntryService.addFragmentEntry(
 			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
 			StringPool.BLANK, StringUtil.randomString(), StringPool.BLANK,
 			RandomTestUtil.randomString(), StringPool.BLANK, false,
 			StringPool.BLANK, null, 0, FragmentConstants.TYPE_COMPONENT,
-			WorkflowConstants.STATUS_DRAFT, serviceContext);
+			WorkflowConstants.STATUS_DRAFT,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
 
 		UserTestUtil.setUser(_user);
 
@@ -578,16 +572,14 @@ public class FragmentEntryServicePermissionTest {
 	public void testUpdateFragmentEntryValuesWithPermissions()
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		FragmentEntry fragmentEntry = _fragmentEntryService.addFragmentEntry(
 			_group.getGroupId(), _fragmentCollection.getFragmentCollectionId(),
 			StringPool.BLANK, StringUtil.randomString(), StringPool.BLANK,
 			RandomTestUtil.randomString(), StringPool.BLANK, false,
 			StringPool.BLANK, null, 0, FragmentConstants.TYPE_COMPONENT,
-			WorkflowConstants.STATUS_DRAFT, serviceContext);
+			WorkflowConstants.STATUS_DRAFT,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
 
 		_setRolePermissions(FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
 

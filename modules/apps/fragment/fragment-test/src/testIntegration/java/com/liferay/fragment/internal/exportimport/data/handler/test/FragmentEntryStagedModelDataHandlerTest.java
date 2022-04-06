@@ -137,10 +137,6 @@ public class FragmentEntryStagedModelDataHandlerTest
 
 		String configuration = _read("configuration-valid-all-types.json");
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				group.getGroupId(), TestPropsValues.getUserId());
-
 		return _fragmentEntryLocalService.addFragmentEntry(
 			TestPropsValues.getUserId(), group.getGroupId(),
 			fragmentCollection.getFragmentCollectionId(),
@@ -148,7 +144,8 @@ public class FragmentEntryStagedModelDataHandlerTest
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), false, configuration, null, 0,
 			FragmentConstants.TYPE_COMPONENT, WorkflowConstants.STATUS_APPROVED,
-			serviceContext);
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId()));
 	}
 
 	@Override

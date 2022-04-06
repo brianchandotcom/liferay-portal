@@ -179,11 +179,8 @@ public class PropagateGroupFragmentEntryChangesMVCActionCommandTest {
 
 		themeDisplay.setCompany(_company);
 
-		long controlPanelPlid = _portal.getControlPanelPlid(
-			_company.getCompanyId());
-
 		Layout controlPanelLayout = _layoutLocalService.getLayout(
-			controlPanelPlid);
+			_portal.getControlPanelPlid(_company.getCompanyId()));
 
 		themeDisplay.setLayout(controlPanelLayout);
 

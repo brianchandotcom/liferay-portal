@@ -1,0 +1,61 @@
+<html>
+<head>
+<title>CookieConsentPanel</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CookieConsentPanel</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>COOKIES_CONSENT_PANEL</td>
+	<td>//div[contains(@id,'cookiesBannerConfiguration')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COOKIES_CONSENT_PANEL_IFRAME</td>
+	<td>//iframe[@id='cookiesBannerConfiguration_iframe_']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PERFORMANCE_COOKIES_TOGGLE</td>
+	<td>//input[contains(@class,'toggle-switch-check-performance')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FUNCTIONAL_COOKIES_TOGGLE</td>
+	<td>//input[contains(@class,'toggle-switch-check-functional')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PERSONALIZATION_COOKIES_TOGGLE</td>
+	<td>//input[contains(@class,'toggle-switch-check-personalization')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DECLINE_ALL_BUTTON</td>
+	<td>//div[contains(@id,'cookiesBannerConfiguration')]//button[contains(.,'Decline All')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIRM_BUTTON</td>
+	<td>//div[contains(@id,'cookiesBannerConfiguration')]//button[contains(.,'Confirm')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACCEPT_ALL_BUTTON</td>
+	<td>//div[contains(@id,'cookiesBannerConfiguration')]//button[contains(.,'Accept All')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CLOSE_BUTTON</td>
+	<td>//div[contains(@id,'cookiesBannerConfiguration')]//button[contains(@class,'close')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

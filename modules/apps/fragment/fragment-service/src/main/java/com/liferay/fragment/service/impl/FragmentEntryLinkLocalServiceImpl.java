@@ -546,12 +546,12 @@ public class FragmentEntryLinkLocalServiceImpl
 
 		fragmentEntryLink.setConfiguration(fragmentEntry.getConfiguration());
 
-		String processedHTML = _getProcessedHTML(
-			fragmentEntryLink, ServiceContextThreadLocal.getServiceContext());
-
 		String defaultEditableValues = String.valueOf(
 			_fragmentEntryProcessorRegistry.getDefaultEditableValuesJSONObject(
-				processedHTML, fragmentEntryLink.getConfiguration()));
+				_getProcessedHTML(
+					fragmentEntryLink,
+					ServiceContextThreadLocal.getServiceContext()),
+				fragmentEntryLink.getConfiguration()));
 
 		fragmentEntryLink.setCss(fragmentEntry.getCss());
 		fragmentEntryLink.setJs(fragmentEntry.getJs());

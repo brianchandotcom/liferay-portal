@@ -160,13 +160,11 @@ public class FragmentEntryStagedModelDataHandler
 
 		importedFragmentEntry.setGroupId(portletDataContext.getScopeGroupId());
 		importedFragmentEntry.setFragmentCollectionId(fragmentCollectionId);
-
-		String html =
+		importedFragmentEntry.setHtml(
 			_dlReferencesExportImportContentProcessor.
 				replaceImportContentReferences(
-					portletDataContext, fragmentEntry, fragmentEntry.getHtml());
-
-		importedFragmentEntry.setHtml(html);
+					portletDataContext, fragmentEntry,
+					fragmentEntry.getHtml()));
 
 		FragmentEntry existingFragmentEntry =
 			_stagedModelRepository.fetchStagedModelByUuidAndGroupId(

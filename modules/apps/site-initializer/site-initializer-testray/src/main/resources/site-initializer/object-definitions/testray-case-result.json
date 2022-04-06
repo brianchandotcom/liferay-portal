@@ -61,8 +61,8 @@
 		},
 		{
 			"DBType": "Integer",
-			"indexed": false,
-			"indexedAsKeyword": false,
+			"indexed": true,
+			"indexedAsKeyword": true,
 			"label": {
 				"en_US": "Status"
 			},

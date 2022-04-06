@@ -60,6 +60,7 @@ const DXPCloud = ({project, sessionId, subscriptionGroups, userAccount}) => {
 					downloadTextHelper="To activate a local instance of Liferay DXP, download a developer key for your Liferay DXP version."
 					dxpVersion={project.dxpVersion}
 					listType={LIST_TYPES.dxpVersion}
+					productName="DXP"
 					projectName={project.name}
 					sessionId={sessionId}
 				></DeveloperKeysLayouts.Inputs>

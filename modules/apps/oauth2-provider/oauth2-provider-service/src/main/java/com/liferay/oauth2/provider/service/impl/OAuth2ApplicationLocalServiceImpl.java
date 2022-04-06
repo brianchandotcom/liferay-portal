@@ -128,18 +128,116 @@ public class OAuth2ApplicationLocalServiceImpl
 			builderConsumer, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public OAuth2Application addOAuth2Application(
-		long companyId, long userId, String userName,
-		List<GrantType> allowedGrantTypesList,
-		String clientAuthenticationMethod, long clientCredentialUserId,
-		String clientId, int clientProfile, String clientSecret,
-		String description, List<String> featuresList, String homePageURL,
-		long iconFileEntryId, String name, String privacyPolicyURL,
-		List<String> redirectURIsList, boolean rememberDevice,
-		boolean trustedApplication,
-		Consumer<OAuth2ScopeBuilder> builderConsumer,
-		ServiceContext serviceContext)
+			long companyId, long userId, String userName,
+			List<GrantType> allowedGrantTypesList, long clientCredentialUserId,
+			String clientId, int clientProfile, String clientSecret,
+			String description, List<String> featuresList, String homePageURL,
+			long iconFileEntryId, String name, String privacyPolicyURL,
+			List<String> redirectURIsList, boolean rememberDevice,
+			List<String> scopeAliasesList, boolean trustedApplication,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return oAuth2ApplicationLocalService.addOAuth2Application(
+			companyId, userId, userName, allowedGrantTypesList,
+			OAuthConstants.TOKEN_ENDPOINT_AUTH_BASIC, clientCredentialUserId,
+			clientId, clientProfile, clientSecret, description, featuresList,
+			homePageURL, iconFileEntryId, name, privacyPolicyURL,
+			redirectURIsList, rememberDevice, scopeAliasesList,
+			trustedApplication, serviceContext);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #addOAuth2Application(long, long, String, List, long, String,
+	 *             int, String, String, List, String, long, String, String,
+	 *             List, boolean, boolean, Consumer, ServiceContext)}
+	 */
+	@Deprecated
+	@Override
+	public OAuth2Application addOAuth2Application(
+			long companyId, long userId, String userName,
+			List<GrantType> allowedGrantTypesList, long clientCredentialUserId,
+			String clientId, int clientProfile, String clientSecret,
+			String description, List<String> featuresList, String homePageURL,
+			long iconFileEntryId, String name, String privacyPolicyURL,
+			List<String> redirectURIsList,
+			Consumer<OAuth2ScopeBuilder> builderConsumer,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return addOAuth2Application(
+			companyId, userId, userName, allowedGrantTypesList, userId,
+			clientId, clientProfile, clientSecret, description, featuresList,
+			homePageURL, iconFileEntryId, name, privacyPolicyURL,
+			redirectURIsList, false, false, builderConsumer, serviceContext);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #addOAuth2Application(long, long, String, List, long, String,
+	 *             int, String, String, List, String, long, String, String,
+	 *             List, boolean, List, boolean, ServiceContext)} (String,
+	 *             long)}
+	 */
+	@Deprecated
+	@Override
+	public OAuth2Application addOAuth2Application(
+			long companyId, long userId, String userName,
+			List<GrantType> allowedGrantTypesList, long clientCredentialUserId,
+			String clientId, int clientProfile, String clientSecret,
+			String description, List<String> featuresList, String homePageURL,
+			long iconFileEntryId, String name, String privacyPolicyURL,
+			List<String> redirectURIsList, List<String> scopeAliasesList,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return addOAuth2Application(
+			companyId, userId, userName, allowedGrantTypesList, userId,
+			clientId, clientProfile, clientSecret, description, featuresList,
+			homePageURL, iconFileEntryId, name, privacyPolicyURL,
+			redirectURIsList, false, scopeAliasesList, false, serviceContext);
+	}
+
+	/**
+	 * @deprecated As of Mueller (7.2.x)
+	 */
+	@Deprecated
+	@Override
+	public OAuth2Application addOAuth2Application(
+			long companyId, long userId, String userName,
+			List<GrantType> allowedGrantTypesList, String clientId,
+			int clientProfile, String clientSecret, String description,
+			List<String> featuresList, String homePageURL, long iconFileEntryId,
+			String name, String privacyPolicyURL, List<String> redirectURIsList,
+			List<String> scopeAliasesList, ServiceContext serviceContext)
+		throws PortalException {
+
+		return addOAuth2Application(
+			companyId, userId, userName, allowedGrantTypesList, userId,
+			clientId, clientProfile, clientSecret, description, featuresList,
+			homePageURL, iconFileEntryId, name, privacyPolicyURL,
+			redirectURIsList, scopeAliasesList, serviceContext);
+	}
+
+	@Override
+	public OAuth2Application addOAuth2Application(
+			long companyId, long userId, String userName,
+			List<GrantType> allowedGrantTypesList,
+			String clientAuthenticationMethod, long clientCredentialUserId,
+			String clientId, int clientProfile, String clientSecret,
+			String description, List<String> featuresList, String homePageURL,
+			long iconFileEntryId, String name, String privacyPolicyURL,
+			List<String> redirectURIsList, boolean rememberDevice,
+			boolean trustedApplication,
+			Consumer<OAuth2ScopeBuilder> builderConsumer,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		if (allowedGrantTypesList == null) {
@@ -217,42 +315,17 @@ public class OAuth2ApplicationLocalServiceImpl
 		return oAuth2ApplicationPersistence.update(oAuth2Application);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x)
-	 */
-	@Deprecated
 	@Override
 	public OAuth2Application addOAuth2Application(
 			long companyId, long userId, String userName,
-			List<GrantType> allowedGrantTypesList, long clientCredentialUserId,
+			List<GrantType> allowedGrantTypesList,
+			String clientAuthenticationMethod, long clientCredentialUserId,
 			String clientId, int clientProfile, String clientSecret,
 			String description, List<String> featuresList, String homePageURL,
 			long iconFileEntryId, String name, String privacyPolicyURL,
 			List<String> redirectURIsList, boolean rememberDevice,
 			List<String> scopeAliasesList, boolean trustedApplication,
 			ServiceContext serviceContext)
-		throws PortalException {
-
-		return oAuth2ApplicationLocalService.addOAuth2Application(
-			companyId, userId, userName, allowedGrantTypesList,
-			OAuthConstants.TOKEN_ENDPOINT_AUTH_BASIC, clientCredentialUserId,
-			clientId, clientProfile, clientSecret, description, featuresList,
-			homePageURL, iconFileEntryId, name, privacyPolicyURL,
-			redirectURIsList, rememberDevice, scopeAliasesList,
-			trustedApplication, serviceContext);
-	}
-
-	@Override
-	public OAuth2Application addOAuth2Application(
-		long companyId, long userId, String userName,
-		List<GrantType> allowedGrantTypesList,
-		String clientAuthenticationMethod, long clientCredentialUserId,
-		String clientId, int clientProfile, String clientSecret,
-		String description, List<String> featuresList, String homePageURL,
-		long iconFileEntryId, String name, String privacyPolicyURL,
-		List<String> redirectURIsList, boolean rememberDevice,
-		List<String> scopeAliasesList, boolean trustedApplication,
-		ServiceContext serviceContext)
 		throws PortalException {
 
 		if (allowedGrantTypesList == null) {
@@ -332,79 +405,6 @@ public class OAuth2ApplicationLocalServiceImpl
 			oAuth2Application.getOAuth2ApplicationId(), false, false, false);
 
 		return oAuth2ApplicationPersistence.update(oAuth2Application);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #addOAuth2Application(long, long, String, List, long, String,
-	 *             int, String, String, List, String, long, String, String,
-	 *             List, boolean, boolean, Consumer, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public OAuth2Application addOAuth2Application(
-			long companyId, long userId, String userName,
-			List<GrantType> allowedGrantTypesList, long clientCredentialUserId,
-			String clientId, int clientProfile, String clientSecret,
-			String description, List<String> featuresList, String homePageURL,
-			long iconFileEntryId, String name, String privacyPolicyURL,
-			List<String> redirectURIsList,
-			Consumer<OAuth2ScopeBuilder> builderConsumer,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		return addOAuth2Application(
-			companyId, userId, userName, allowedGrantTypesList, userId,
-			clientId, clientProfile, clientSecret, description, featuresList,
-			homePageURL, iconFileEntryId, name, privacyPolicyURL,
-			redirectURIsList, false, false, builderConsumer, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #addOAuth2Application(long, long, String, List, long, String,
-	 *             int, String, String, List, String, long, String, String,
-	 *             List, boolean, List, boolean, ServiceContext)} (String,
-	 *             long)}
-	 */
-	@Deprecated
-	@Override
-	public OAuth2Application addOAuth2Application(
-			long companyId, long userId, String userName,
-			List<GrantType> allowedGrantTypesList, long clientCredentialUserId,
-			String clientId, int clientProfile, String clientSecret,
-			String description, List<String> featuresList, String homePageURL,
-			long iconFileEntryId, String name, String privacyPolicyURL,
-			List<String> redirectURIsList, List<String> scopeAliasesList,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		return addOAuth2Application(
-			companyId, userId, userName, allowedGrantTypesList, userId,
-			clientId, clientProfile, clientSecret, description, featuresList,
-			homePageURL, iconFileEntryId, name, privacyPolicyURL,
-			redirectURIsList, false, scopeAliasesList, false, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	@Override
-	public OAuth2Application addOAuth2Application(
-			long companyId, long userId, String userName,
-			List<GrantType> allowedGrantTypesList, String clientId,
-			int clientProfile, String clientSecret, String description,
-			List<String> featuresList, String homePageURL, long iconFileEntryId,
-			String name, String privacyPolicyURL, List<String> redirectURIsList,
-			List<String> scopeAliasesList, ServiceContext serviceContext)
-		throws PortalException {
-
-		return addOAuth2Application(
-			companyId, userId, userName, allowedGrantTypesList, userId,
-			clientId, clientProfile, clientSecret, description, featuresList,
-			homePageURL, iconFileEntryId, name, privacyPolicyURL,
-			redirectURIsList, scopeAliasesList, serviceContext);
 	}
 
 	@Override

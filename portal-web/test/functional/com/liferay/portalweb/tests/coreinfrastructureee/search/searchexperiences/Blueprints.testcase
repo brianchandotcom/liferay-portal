@@ -356,6 +356,73 @@ definition {
 		Portlet.viewNoPermissionPG();
 	}
 
+	test AssertUsingCopiedElementJSONWithinCustomElement {
+		JSONBlog.addEntry(
+			entryContent = "",
+			entryTitle = "apple apple apple");
+
+		JSONWebcontent.addWebContent(
+			content = "apple",
+			groupName = "Guest",
+			title = "WC Title");
+
+		Blueprints.openBlueprintsAdmin();
+
+		Blueprints.createBlueprint(title = "Test Blueprint");
+
+		Blueprints.addElement(element = "Boost Asset Type");
+
+		Blueprints.configureElementDropdown(
+			dropdownName = "Asset Type",
+			option = "Web Content Article");
+
+		Type(
+			elementName = "Boost Asset Type",
+			fieldLabel = "Boost",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
+			value1 = "1000");
+
+		Blueprints.selectAddedElementMenuItem(
+			element = "Boost Asset Type",
+			menuItem = "View Element JSON");
+
+		SelectFrameTop();
+
+		Click(locator1 = "Link#DOWNLOAD");
+
+		var outputDir = PropsUtil.get("output.dir.name");
+		var fileContent = FileUtil.read("${outputDir}/sxpElement.json");
+		var customElementJson = StringUtil.replace("${fileContent}", "Boost Asset Type", "Boost Results of Web Content Articles");
+
+		Click(locator1 = "Modal#CLOSE_BUTTON");
+
+		ClickNoError(
+			key_text = "Cancel",
+			locator1 = "Link#ANY");
+
+		Confirm();
+
+		Blueprints.createElement(
+			elementSourceJson = "${customElementJson}",
+			title = "Test Element");
+
+		Navigator.gotoNavItem(navItem = "Blueprints");
+
+		Blueprints.editBlueprint(title = "Test Blueprint");
+
+		Blueprints.addElement(element = "Boost Results of Web Content Articles");
+
+		PortletEntry.save();
+
+		Search.openSearchPage();
+
+		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
+
+		SearchPortlets.searchEmbedded(searchTerm = "apple");
+
+		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "WC Title,apple apple apple");
+	}
+
 	test BoostCustomLiferayObjectType {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 501",

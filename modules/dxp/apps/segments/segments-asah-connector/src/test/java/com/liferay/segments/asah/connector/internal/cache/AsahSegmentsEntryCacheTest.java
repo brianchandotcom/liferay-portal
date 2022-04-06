@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.segments.asah.connector.internal.configuration.provider.SegmentsAsahConfigurationProvider;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -45,6 +46,18 @@ public class AsahSegmentsEntryCacheTest {
 	public void setUp() {
 		ReflectionTestUtil.setFieldValue(
 			_asahSegmentsEntryCache, "_portalCache", _portalCache);
+
+		ReflectionTestUtil.setFieldValue(
+			_asahSegmentsEntryCache, "_segmentsAsahConfigurationProvider",
+			new SegmentsAsahConfigurationProvider() {
+
+				public int getAnonymousUserSegmentsCacheExpirationTime(
+					long companyId) {
+
+					return 0;
+				}
+
+			});
 	}
 
 	@Test

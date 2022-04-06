@@ -499,12 +499,12 @@
 </tr>
 <tr>
 	<td>FRAGMENT_SIDEBAR_CENTER_TEXT</td>
-	<td>//div[contains(@class,'text-center')]/h1</td>
+	<td>//div[contains(@class,'text-center')]//span[@class='text-truncate']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FRAGMENT_SIDEBAR_SECONDARY_TEXT</td>
-	<td>//*[contains(@class,'text-secondary')]</td>
+	<td>//*[contains(@class,'empty-state-text')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -183,13 +183,9 @@ public class FrontendIconsResourcePackRepository {
 			groupId, _REPOSITORY_NAME, serviceContext);
 	}
 
-	// TODO Rename to match frontend-icons-web
+	private static final String _REPOSITORY_NAME = "com.liferay.frontend.icons.web";
 
-	private static final String _REPOSITORY_NAME = "icon.admin.web";
-
-	// TODO Rename to match frontend-icons-web
-
-	private static final String _ROOT_FOLDER_NAME = "icon.admin.web.icon.packs";
+	private static final String _ROOT_FOLDER_NAME = "com.liferay.frontend.icons.web.icon.packs";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FrontendIconsResourcePackRepository.class);

@@ -330,12 +330,12 @@ definition {
 		ACIndividualsDashboard.assertIndividualAttribute(individualAttribute = "Static Segment Test");
 	}
 
-	@description = "Set custom range filter with data for individual activity"
+	@description = "Assert Individual Activities Custom Range (when changing to an valida data time period)"
+	@ignore = "true"
 	@priority = "5"
 	test CanSetDataWithCustomRangeOnIndividualActivitiesCard {
-		property portal.upstream = "quarantine";
 
-		// AC Quarantine Reason: Active individuals chart takes some time to load
+		// Tests with custom range are not possible to automate now. These cases will be automated on personas.
 
 		ACUtils.createDMAndAddToPage();
 

@@ -115,9 +115,13 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8901 | Test Summary: As a Business User, I should be able to change individual overview time filter to Custom Range"
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8901 | Test Summary: Assert Individuals Overview time filter Custom Range"
+	@ignore = "true"
 	@priority = "5"
 	test CanUseCustomRangeTimeFilterOnActiveIndividualsChart {
+
+		// Tests with custom range are not possible to automate now. These cases will be automated on personas.
+
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 

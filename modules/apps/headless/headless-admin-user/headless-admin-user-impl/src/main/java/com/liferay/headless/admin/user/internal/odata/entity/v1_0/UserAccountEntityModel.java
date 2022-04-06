@@ -39,6 +39,10 @@ public class UserAccountEntityModel implements EntityModel {
 				"dateModified",
 				locale -> Field.getSortableFieldName(Field.MODIFIED_DATE),
 				locale -> Field.MODIFIED_DATE),
+			new DateTimeEntityField(
+				"lastLoginDate",
+				locale -> Field.getSortableFieldName("lastLoginDate"),
+				locale -> "lastLoginDate"),
 			new IdEntityField(
 				"organizationIds", locale -> "organizationIds",
 				String::valueOf),

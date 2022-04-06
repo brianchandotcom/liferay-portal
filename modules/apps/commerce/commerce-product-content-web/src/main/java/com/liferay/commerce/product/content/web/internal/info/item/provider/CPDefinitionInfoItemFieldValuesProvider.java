@@ -16,12 +16,22 @@ package com.liferay.commerce.product.content.web.internal.info.item.provider;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.commerce.context.CommerceContext;
+import com.liferay.commerce.context.CommerceContextFactory;
+import com.liferay.commerce.currency.model.CommerceMoney;
+import com.liferay.commerce.inventory.CPDefinitionInventoryEngine;
 import com.liferay.commerce.inventory.CPDefinitionInventoryEngineRegistry;
 import com.liferay.commerce.inventory.engine.CommerceInventoryEngine;
+import com.liferay.commerce.model.CPDefinitionInventory;
+import com.liferay.commerce.price.CommerceProductPriceCalculation;
+import com.liferay.commerce.product.content.util.CPContentHelper;
 import com.liferay.commerce.product.content.web.internal.info.CPDefinitionInfoItemFields;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
+import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemFieldValues;
@@ -29,11 +39,13 @@ import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.field.reader.InfoItemFieldReaderFieldSetProvider;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,6 +85,44 @@ public class CPDefinitionInfoItemFieldValuesProvider
 		).build();
 	}
 
+	private String _getAvailabilityStatus(
+			CPInstance cpInstance, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		if (cpInstance == null) {
+			return StringPool.BLANK;
+		}
+
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.fetchCommerceChannelBySiteGroupId(
+				themeDisplay.getScopeGroupId());
+
+		if (commerceChannel == null) {
+			return StringPool.BLANK;
+		}
+
+		CPDefinitionInventory cpDefinitionInventory =
+			_cpDefinitionInventoryLocalService.
+				fetchCPDefinitionInventoryByCPDefinitionId(
+					cpInstance.getCPDefinitionId());
+
+		CPDefinitionInventoryEngine cpDefinitionInventoryEngine =
+			_cpDefinitionInventoryEngineRegistry.getCPDefinitionInventoryEngine(
+				cpDefinitionInventory);
+
+		boolean displayAvailability =
+			cpDefinitionInventoryEngine.isDisplayAvailability(cpInstance);
+
+		if (displayAvailability) {
+			return _commerceInventoryEngine.getAvailabilityStatus(
+				cpInstance.getCompanyId(), commerceChannel.getGroupId(),
+				cpDefinitionInventoryEngine.getMinStockQuantity(cpInstance),
+				cpInstance.getSku());
+		}
+
+		return StringPool.BLANK;
+	}
+
 	private List<InfoFieldValue<Object>> _getCPDefinitionInfoFieldValues(
 		CPDefinition cpDefinition) {
 
@@ -89,6 +139,28 @@ public class CPDefinitionInfoItemFieldValuesProvider
 				new InfoFieldValue<>(
 					CPDefinitionInfoItemFields.approvedInfoField,
 					cpDefinition.isApproved()));
+
+			CPInstance cpInstance = null;
+
+			if (cpDefinition.isIgnoreSKUCombinations() &&
+				!_cpContentHelper.hasChildCPDefinitions(
+					cpDefinition.getCPDefinitionId())) {
+
+				cpInstance = _cpInstanceHelper.getDefaultCPInstance(
+					cpDefinition.getCPDefinitionId());
+			}
+
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+			if (themeDisplay != null) {
+				cpDefinitionInfoFieldValues.add(
+					new InfoFieldValue<>(
+						CPDefinitionInfoItemFields.availabilityStatusInfoField,
+						_getAvailabilityStatus(cpInstance, themeDisplay)));
+			}
 
 			List<AssetCategory> assetCategories =
 				_assetCategoryLocalService.getCategories(
@@ -195,11 +267,6 @@ public class CPDefinitionInfoItemFieldValuesProvider
 					CPDefinitionInfoItemFields.displayDateInfoField,
 					cpDefinition.getDisplayDate()));
 
-			ServiceContext serviceContext =
-				ServiceContextThreadLocal.getServiceContext();
-
-			ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
-
 			if (themeDisplay != null) {
 				cpDefinitionInfoFieldValues.add(
 					new InfoFieldValue<>(
@@ -224,6 +291,14 @@ public class CPDefinitionInfoItemFieldValuesProvider
 				new InfoFieldValue<>(
 					CPDefinitionInfoItemFields.freeShippingInfoField,
 					cpDefinition.isFreeShipping()));
+
+			if (themeDisplay != null) {
+				cpDefinitionInfoFieldValues.add(
+					new InfoFieldValue<>(
+						CPDefinitionInfoItemFields.finalPriceInfoField,
+						_getFinalPrice(cpInstance, themeDisplay)));
+			}
+
 			cpDefinitionInfoFieldValues.add(
 				new InfoFieldValue<>(
 					CPDefinitionInfoItemFields.groupIdInfoField,
@@ -336,6 +411,10 @@ public class CPDefinitionInfoItemFieldValuesProvider
 					cpDefinition.isShipSeparately()));
 			cpDefinitionInfoFieldValues.add(
 				new InfoFieldValue<>(
+					CPDefinitionInfoItemFields.skuInfoField,
+					_getSKU(cpInstance)));
+			cpDefinitionInfoFieldValues.add(
+				new InfoFieldValue<>(
 					CPDefinitionInfoItemFields.stagedModelTypeInfoField,
 					cpDefinition.getStagedModelType()));
 			cpDefinitionInfoFieldValues.add(
@@ -419,6 +498,39 @@ public class CPDefinitionInfoItemFieldValuesProvider
 		return cpDefinitionInfoFieldValues;
 	}
 
+	private String _getFinalPrice(
+			CPInstance cpInstance, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		if (cpInstance == null) {
+			return StringPool.BLANK;
+		}
+
+		CommerceContext commerceContext = _commerceContextFactory.create(
+			themeDisplay.getCompanyId(),
+			_commerceChannelLocalService.getCommerceChannelGroupIdBySiteGroupId(
+				themeDisplay.getScopeGroupId()),
+			themeDisplay.getUserId(), 0, 0);
+
+		CommerceMoney commerceMoney =
+			_commerceProductPriceCalculation.getFinalPrice(
+				cpInstance.getCPInstanceId(), 1, commerceContext);
+
+		if (commerceMoney.isEmpty()) {
+			return StringPool.BLANK;
+		}
+
+		return commerceMoney.format(themeDisplay.getLocale());
+	}
+
+	private String _getSKU(CPInstance cpInstance) throws PortalException {
+		if (cpInstance == null) {
+			return StringPool.BLANK;
+		}
+
+		return cpInstance.getSku();
+	}
+
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;
 
@@ -426,7 +538,16 @@ public class CPDefinitionInfoItemFieldValuesProvider
 	private CommerceChannelLocalService _commerceChannelLocalService;
 
 	@Reference
+	private CommerceContextFactory _commerceContextFactory;
+
+	@Reference
 	private CommerceInventoryEngine _commerceInventoryEngine;
+
+	@Reference
+	private CommerceProductPriceCalculation _commerceProductPriceCalculation;
+
+	@Reference
+	private CPContentHelper _cpContentHelper;
 
 	@Reference
 	private CPDefinitionHelper _cpDefinitionHelper;
@@ -440,7 +561,13 @@ public class CPDefinitionInfoItemFieldValuesProvider
 		_cpDefinitionInventoryLocalService;
 
 	@Reference
+	private CPInstanceHelper _cpInstanceHelper;
+
+	@Reference
 	private InfoItemFieldReaderFieldSetProvider
 		_infoItemFieldReaderFieldSetProvider;
+
+	@Reference
+	private Portal _portal;
 
 }

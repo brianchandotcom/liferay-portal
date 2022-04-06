@@ -89,71 +89,61 @@ const RequirementsForm: React.FC<RequirementsFormProps> = ({
 	return (
 		<Container>
 			<ClayForm>
-				<ClayLayout.Row justify="center">
-					<ClayLayout.Col size={3} sm={12} xl={3}>
-						{i18n.translate('requirements')}
-					</ClayLayout.Col>
+				<FormRow title={i18n.translate('requirements')}>
+					<ClayForm.Group className="form-group-sm">
+						<Input
+							label={i18n.translate('key')}
+							name="key"
+							onChange={onChange}
+							required
+							value={form.key}
+						/>
 
-					<ClayLayout.Col size={3} sm={12} xl={9}>
-						<ClayForm.Group className="form-group-sm">
-							<Input
-								label={i18n.translate('key')}
-								name="key"
-								onChange={onChange}
-								required
-								value={form.key}
-							/>
+						<Input
+							label={i18n.translate('summary')}
+							name="summary"
+							onChange={onChange}
+							required
+							value={form.summary}
+						/>
 
-							<Input
-								label={i18n.translate('summary')}
-								name="summary"
-								onChange={onChange}
-								required
-								value={form.summary}
-							/>
+						<Input
+							label={i18n.translate('link-url')}
+							name="linkURL"
+							onChange={onChange}
+							required
+							value={form.linkURL}
+						/>
 
-							<Input
-								label={i18n.translate('link-url')}
-								name="linkURL"
-								onChange={onChange}
-								required
-								value={form.linkURL}
-							/>
+						<Input
+							label={i18n.translate('link-title')}
+							name="linkTitle"
+							onChange={onChange}
+							required
+							value={form.linkTitle}
+						/>
 
-							<Input
-								label={i18n.translate('link-title')}
-								name="linkTitle"
-								onChange={onChange}
-								required
-								value={form.linkTitle}
-							/>
+						<label
+							className={classNames(
+								'font-weight-normal mx-0 mt-2 text-paragraph'
+							)}
+						>
+							{i18n.translate('main-component')}
+						</label>
 
-							<label
-								className={classNames(
-									'font-weight-normal mx-0 mt-2 text-paragraph'
-								)}
-							>
-								{i18n.translate('main-component')}
-							</label>
-
-							<ClaySelectWithOption
-								className="rounded-xs"
-								name="componentId"
-								onChange={onChange}
-								options={testrayComponents.map(
-									({id, name}) => ({
-										label: name,
-										value: id,
-									})
-								)}
-								required
-								value={form.componentId}
-							/>
-						</ClayForm.Group>
-					</ClayLayout.Col>
-				</ClayLayout.Row>
-
-				<hr />
+						<ClaySelectWithOption
+							className="rounded-xs"
+							name="componentId"
+							onChange={onChange}
+							options={testrayComponents.map(({id, name}) => ({
+								label: name,
+								value: id,
+							}))}
+							required
+							value={form.componentId}
+						/>
+					</ClayForm.Group>
+				</FormRow>
 
 				<FormRow title={i18n.translate('description')}>
 					<ClayForm.Group className="form-group-sm">

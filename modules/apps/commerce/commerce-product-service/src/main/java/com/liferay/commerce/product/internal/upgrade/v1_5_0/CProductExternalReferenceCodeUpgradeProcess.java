@@ -40,7 +40,7 @@ public class CProductExternalReferenceCodeUpgradeProcess
 					"dependencies" +
 						"/CProductExternalReferenceCodeUpgradeProcess.sql"));
 
-			runSQLTemplateString(template, false, false);
+			runSQLTemplateString(template, false);
 
 			dropColumn(CPDefinitionImpl.TABLE_NAME, "externalReferenceCode");
 		}

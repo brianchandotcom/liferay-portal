@@ -50,7 +50,7 @@ public class CPDefinitionVirtualSettingUpgradeProcess extends UpgradeProcess {
 			template = StringUtil.replace(
 				template, "(?)", "\'" + classNameId + "\'");
 
-			runSQLTemplateString(template, false, false);
+			runSQLTemplateString(template, false);
 		}
 	}
 

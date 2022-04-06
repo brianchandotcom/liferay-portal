@@ -42,7 +42,7 @@ public class CPDefinitionTrashEntriesUpgradeProcess extends UpgradeProcess {
 				template,
 				_classNameLocalService.getClassNameId(
 					CPDefinition.class.getName())),
-			false, false);
+			false);
 
 		// CPInstance
 
@@ -51,7 +51,7 @@ public class CPDefinitionTrashEntriesUpgradeProcess extends UpgradeProcess {
 				template,
 				_classNameLocalService.getClassNameId(
 					CPInstance.class.getName())),
-			false, false);
+			false);
 	}
 
 	private final ClassNameLocalService _classNameLocalService;

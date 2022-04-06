@@ -31,7 +31,7 @@ public class CommerceSubscriptionUpgradeProcess
 				CommerceSubscriptionUpgradeProcess.class.getResourceAsStream(
 					"dependencies/CommerceSubscriptionEntry.sql"));
 
-			runSQLTemplateString(template, false, false);
+			runSQLTemplateString(template, false);
 		}
 
 		addColumn("CommerceOrderItem", "subscription", "BOOLEAN");

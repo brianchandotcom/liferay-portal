@@ -41,7 +41,7 @@ public class CommercePaymentMethodUpgradeProcess
 				CommercePaymentMethodUpgradeProcess.class.getResourceAsStream(
 					"dependencies/CommerceOrderUpgradeProcess.sql"));
 
-			runSQLTemplateString(template, false, false);
+			runSQLTemplateString(template, false);
 
 			alterTableDropColumn("CommerceOrder", "commercePaymentMethodId");
 		}
@@ -58,7 +58,7 @@ public class CommercePaymentMethodUpgradeProcess
 				CommercePaymentMethodUpgradeProcess.class.getResourceAsStream(
 					"dependencies/CommerceOrderPaymentUpgradeProcess.sql"));
 
-			runSQLTemplateString(template, false, false);
+			runSQLTemplateString(template, false);
 
 			alterTableDropColumn(
 				"CommerceOrderPayment", "commercePaymentMethodId");
@@ -69,7 +69,7 @@ public class CommercePaymentMethodUpgradeProcess
 				CommercePaymentMethodUpgradeProcess.class.getResourceAsStream(
 					"dependencies/CommercePaymentMethodUpgradeProcess.sql"));
 
-			runSQLTemplateString(template, false, false);
+			runSQLTemplateString(template, false);
 		}
 	}
 

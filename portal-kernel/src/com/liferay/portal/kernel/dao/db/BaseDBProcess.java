@@ -162,19 +162,6 @@ public abstract class BaseDBProcess implements DBProcess {
 		}
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #runSQLTemplateString(String, boolean)}
-	 */
-	@Deprecated
-	@Override
-	public void runSQLTemplateString(
-			String template, boolean evaluate, boolean failOnError)
-		throws IOException, NamingException, SQLException {
-
-		runSQLTemplateString(template, failOnError);
-	}
-
 	protected void addIndexes(
 			Connection connection, List<IndexMetadata> indexMetadatas)
 		throws IOException, SQLException {

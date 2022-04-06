@@ -662,15 +662,13 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 			String thumbnailPath = jsonObject.getString("thumbnailPath");
 
 			if (Validator.isNotNull(thumbnailPath)) {
-				long previewFileEntryId = _getPreviewFileEntryId(
-					userId, groupId, zipFile,
-					FragmentComposition.class.getName(),
-					fragmentComposition.getFragmentCompositionId(),
-					entry.getValue(), thumbnailPath);
-
 				_fragmentCompositionService.updateFragmentComposition(
 					fragmentComposition.getFragmentCompositionId(),
-					previewFileEntryId);
+					_getPreviewFileEntryId(
+						userId, groupId, zipFile,
+						FragmentComposition.class.getName(),
+						fragmentComposition.getFragmentCompositionId(),
+						entry.getValue(), thumbnailPath));
 			}
 		}
 	}
@@ -735,13 +733,13 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 				String thumbnailPath = jsonObject.getString("thumbnailPath");
 
 				if (Validator.isNotNull(thumbnailPath)) {
-					long previewFileEntryId = _getPreviewFileEntryId(
-						userId, groupId, zipFile, FragmentEntry.class.getName(),
-						fragmentEntry.getFragmentEntryId(), entry.getValue(),
-						thumbnailPath);
-
 					_fragmentEntryLocalService.updateFragmentEntry(
-						fragmentEntry.getFragmentEntryId(), previewFileEntryId);
+						fragmentEntry.getFragmentEntryId(),
+						_getPreviewFileEntryId(
+							userId, groupId, zipFile,
+							FragmentEntry.class.getName(),
+							fragmentEntry.getFragmentEntryId(),
+							entry.getValue(), thumbnailPath));
 				}
 			}
 		}

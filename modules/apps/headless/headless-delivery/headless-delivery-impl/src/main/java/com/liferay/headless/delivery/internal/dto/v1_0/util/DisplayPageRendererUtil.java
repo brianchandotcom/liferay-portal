@@ -47,7 +47,6 @@ import com.liferay.portal.vulcan.util.JaxRsLinkUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.taglib.util.ThemeUtil;
 
-import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.ServletContext;
@@ -84,14 +83,11 @@ public class DisplayPageRendererUtil {
 
 		UriInfo uriInfo = uriInfoOptional.get();
 
-		List<LayoutPageTemplateEntry> layoutPageTemplateEntries =
+		return TransformUtil.transformToArray(
 			layoutPageTemplateEntryService.getLayoutPageTemplateEntries(
 				groupId, PortalUtil.getClassNameId(itemClassName),
 				itemClassTypeId,
-				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE);
-
-		return TransformUtil.transformToArray(
-			layoutPageTemplateEntries,
+				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE),
 			layoutPageTemplateEntry -> new RenderedContent() {
 				{
 					contentTemplateId =

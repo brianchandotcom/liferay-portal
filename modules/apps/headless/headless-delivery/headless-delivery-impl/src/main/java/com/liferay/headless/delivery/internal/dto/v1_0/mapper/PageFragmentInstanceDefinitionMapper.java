@@ -255,12 +255,11 @@ public class PageFragmentInstanceDefinitionMapper {
 				"EditableFragmentEntryProcessor");
 
 		if (jsonObject != null) {
-			Map<String, String> editableTypes =
-				EditableFragmentEntryProcessorUtil.getEditableTypes(
-					fragmentEntryLink.getHtml());
-
 			fragmentFields.addAll(
-				_getTextFragmentFields(editableTypes, jsonObject, saveMapping));
+				_getTextFragmentFields(
+					EditableFragmentEntryProcessorUtil.getEditableTypes(
+						fragmentEntryLink.getHtml()),
+					jsonObject, saveMapping));
 		}
 
 		return fragmentFields.toArray(new FragmentField[0]);

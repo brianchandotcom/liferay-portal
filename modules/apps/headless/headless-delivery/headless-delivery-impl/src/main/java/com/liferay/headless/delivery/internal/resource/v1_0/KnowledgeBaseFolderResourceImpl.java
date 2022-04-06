@@ -192,10 +192,9 @@ public class KnowledgeBaseFolderResourceImpl
 			Long knowledgeBaseFolderId, KnowledgeBaseFolder knowledgeBaseFolder)
 		throws Exception {
 
-		KBFolder kbFolder = _kbFolderLocalService.getKBFolder(
-			knowledgeBaseFolderId);
-
-		return _updateKnowledgeBaseFolder(kbFolder, knowledgeBaseFolder);
+		return _updateKnowledgeBaseFolder(
+			_kbFolderLocalService.getKBFolder(knowledgeBaseFolderId),
+			knowledgeBaseFolder);
 	}
 
 	@Override

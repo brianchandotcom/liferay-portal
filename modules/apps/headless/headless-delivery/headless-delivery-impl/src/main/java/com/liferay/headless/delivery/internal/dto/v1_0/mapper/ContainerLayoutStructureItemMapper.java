@@ -83,17 +83,10 @@ public class ContainerLayoutStructureItemMapper
 										"styles"),
 									saveMappingConfiguration);
 							});
-
 						setFragmentViewports(
-							() -> {
-								JSONObject itemConfigJSONObject =
-									containerStyledLayoutStructureItem.
-										getItemConfigJSONObject();
-
-								return getFragmentViewPorts(
-									itemConfigJSONObject);
-							});
-
+							() -> getFragmentViewPorts(
+								containerStyledLayoutStructureItem.
+									getItemConfigJSONObject()));
 						setHtmlProperties(
 							() -> _toHtmlProperties(
 								containerStyledLayoutStructureItem));

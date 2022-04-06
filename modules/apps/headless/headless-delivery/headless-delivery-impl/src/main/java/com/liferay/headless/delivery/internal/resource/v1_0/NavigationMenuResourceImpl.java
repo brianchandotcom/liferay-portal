@@ -413,12 +413,10 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 	private NavigationMenu _toNavigationMenu(
 		SiteNavigationMenu siteNavigationMenu) {
 
-		List<SiteNavigationMenuItem> siteNavigationMenuItems =
-			_siteNavigationMenuItemService.getSiteNavigationMenuItems(
-				siteNavigationMenu.getSiteNavigationMenuId());
-
 		Map<Long, List<SiteNavigationMenuItem>> siteNavigationMenuItemsMap =
-			_getSiteNavigationMenuItemsMap(siteNavigationMenuItems);
+			_getSiteNavigationMenuItemsMap(
+				_siteNavigationMenuItemService.getSiteNavigationMenuItems(
+					siteNavigationMenu.getSiteNavigationMenuId()));
 
 		return new NavigationMenu() {
 			{

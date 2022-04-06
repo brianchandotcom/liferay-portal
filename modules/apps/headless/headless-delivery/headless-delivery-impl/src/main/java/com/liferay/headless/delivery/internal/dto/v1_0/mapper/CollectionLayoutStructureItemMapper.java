@@ -112,14 +112,9 @@ public class CollectionLayoutStructureItemMapper
 									saveMappingConfiguration);
 							});
 						setFragmentViewports(
-							() -> {
-								JSONObject itemConfigJSONObject =
-									collectionStyledLayoutStructureItem.
-										getItemConfigJSONObject();
-
-								return getFragmentViewPorts(
-									itemConfigJSONObject);
-							});
+							() -> getFragmentViewPorts(
+								collectionStyledLayoutStructureItem.
+									getItemConfigJSONObject()));
 					}
 				};
 				type = Type.COLLECTION;

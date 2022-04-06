@@ -77,14 +77,9 @@ public class RowLayoutStructureItemMapper
 									saveMappingConfiguration);
 							});
 						setFragmentViewports(
-							() -> {
-								JSONObject itemConfigJSONObject =
-									rowStyledLayoutStructureItem.
-										getItemConfigJSONObject();
-
-								return getFragmentViewPorts(
-									itemConfigJSONObject);
-							});
+							() -> getFragmentViewPorts(
+								rowStyledLayoutStructureItem.
+									getItemConfigJSONObject()));
 						setRowViewports(
 							() -> {
 								Map<String, JSONObject>

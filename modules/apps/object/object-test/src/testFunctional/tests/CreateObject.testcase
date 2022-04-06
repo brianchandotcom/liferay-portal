@@ -821,9 +821,13 @@ definition {
 
 		Button.clickSave();
 
+		Navigator.openURL();
+
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject16");
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject16");
+
+		LexiconEntry.gotoAdd();
 
 		CreateObject.assertCanCollapseAndExpandEntryField();
 	}

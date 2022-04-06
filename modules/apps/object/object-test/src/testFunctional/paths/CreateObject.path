@@ -195,6 +195,11 @@
 		<td>//div[contains(@class,'${key_className}') and contains(.,'${key_errorMessage}')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>VIEW_COLLAPSE_ICON</td>
+		<td>//span[contains(@class,'actions collapse-icon-${key_closedOrOpen}')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

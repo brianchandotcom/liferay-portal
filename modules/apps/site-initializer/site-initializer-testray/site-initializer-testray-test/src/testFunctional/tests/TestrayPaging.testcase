@@ -31,7 +31,7 @@ definition {
 	test CanChangeComponentPageByClickingOnNumber {
 		ApplicationsMenu.gotoSite(site = "Testray 2");
 
-		Testray.createProjectTestray(key_name = "Liferay Portal 7.");
+		Testray.createProjectTestray(key_name = "Liferay Portal 7.4");
 
 		Testray.goToProjectPage(projectName = "Liferay Portal 7.0");
 
@@ -50,6 +50,8 @@ definition {
 	@priority = "3"
 	test CanChangeItemsShownOnPage {
 		ApplicationsMenu.gotoSite(site = "Testray 2");
+
+		Testray.createProjectTestray(key_name = "Liferay Portal 7.4");
 
 		Testray.assertItemsPerPageValue(itemValue = "20");
 

@@ -51,8 +51,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DESCRIPTION_PROJECT</td>
+	<td>NEW_DESCRIPTION_PROJECT</td>
 	<td>//textarea[contains(@id, 'description') and contains(@type, 'text')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DESCRIPTION_PROJECT</td>
+	<td>//div[contains(@class, 'testray-content')]//td[contains(text(),'${key_itemvalue}')]</td>
 	<td></td>
 </tr>
 <tr>

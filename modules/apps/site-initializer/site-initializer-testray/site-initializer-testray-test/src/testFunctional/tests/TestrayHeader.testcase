@@ -47,7 +47,7 @@ definition {
 	test CanGoToCurrentRoutines {
 		ApplicationsMenu.gotoSite(site = "Testray 2");
 
-		Testray.createProjectTestray(key_name = "Liferay Portal 7.");
+		Testray.createProjectTestray(key_name = "Liferay Portal 7.0");
 
 		Testray.goToProjectPage(projectName = "Liferay Portal 7.0");
 
@@ -65,7 +65,7 @@ definition {
 	test CanNavigateWithBreadcrumb {
 		ApplicationsMenu.gotoSite(site = "Testray 2");
 
-		Testray.createProjectTestray(key_name = "Liferay Portal 7.");
+		Testray.createProjectTestray(key_name = "Liferay Portal 7.0");
 
 		Testray.goToProjectPage(projectName = "Liferay Portal 7.3");
 

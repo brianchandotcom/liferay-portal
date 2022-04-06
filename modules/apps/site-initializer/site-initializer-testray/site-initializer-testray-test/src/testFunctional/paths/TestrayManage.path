@@ -32,7 +32,7 @@
 </tr>
 <tr>
 	<td>SAVE_BUTTON</td>
-	<td>//button[contains(text(),'Save')]</td>
+	<td>//div[contains(@class, 'modal-content')]//button[contains(text(),'Save')]</td>
 	<td></td>
 </tr>
 <tr>

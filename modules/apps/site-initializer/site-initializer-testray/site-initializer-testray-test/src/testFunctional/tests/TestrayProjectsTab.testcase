@@ -1,0 +1,53 @@
+@component-name = "portal-solutions"
+definition {
+
+	property osgi.modules.includes = "site-initializer-testray";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Testray 2";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Testray.createTestraySite(siteName = "Testray 2");
+
+		Refresh();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		Testray.tearDownCP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "LPS-150822 - Verify if the user can see the Project Name Column."
+    @priority = "3"
+    test CanSeeProjectNameColumn {
+        ApplicationsMenu.gotoSite(site = "Testray 2");
+
+		Testray.createProjectTestray(key_name = "Liferay Portal 7.4");
+
+        AssertElementPresent(
+            locator1 = "Testray#PROJECT_NAME_BUTTON",
+            key_projectName = "Liferay Portal 7.4");
+    }
+
+    @description = "LPS-150823 - Verify if the user can see the Description Column."
+    @priority = "3"
+    test CanSeeDecriptionColumn {
+        ApplicationsMenu.gotoSite(site = "Testray 2");
+
+		Testray.createProjectTestray(key_name = "Liferay Portal 7.4");
+
+        AssertElementPresent(
+            locator1 = "Testray#DESCRIPTION_PROJECT",
+            key_itemvalue = "ci:test");
+    }
+
+}

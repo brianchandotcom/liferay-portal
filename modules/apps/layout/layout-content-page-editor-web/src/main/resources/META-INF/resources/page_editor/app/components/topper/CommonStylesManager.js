@@ -45,8 +45,8 @@ export default function CommonStylesManager() {
 
 	const globalContext = useGlobalContext();
 
-	const layoutDataItemsConfigRef = useRef(null);
-	const masterLayoutDataItemsConfigRef = useRef(null);
+	const stylesPerViewportRef = useRef(null);
+	const masterStylesPerViewportRef = useRef(null);
 
 	useEffect(() => {
 		const items = Object.values(layoutData.items);
@@ -72,7 +72,7 @@ export default function CommonStylesManager() {
 			!layoutDataItemsConfigRef.current ||
 			!deepEqual(nextStyles, layoutDataItemsConfigRef.current)
 		) {
-			layoutDataItemsConfigRef.current = nextStyles;
+			stylesPerViewportRef.current[selectedViewportSize] = nextStyles;
 
 			const styleSheet = generateStyleSheet(nextStyles);
 
@@ -109,10 +109,10 @@ export default function CommonStylesManager() {
 		});
 
 		if (
-			!masterLayoutDataItemsConfigRef.current ||
-			!deepEqual(nextStyles, masterLayoutDataItemsConfigRef.current)
+			!masterStylesPerViewportRef.current ||
+			!deepEqual(nextStyles, masterStylesPerViewportRef.current)
 		) {
-			masterLayoutDataItemsConfigRef.current = nextStyles;
+			masterStylesPerViewportRef.current = nextStyles;
 
 			const styleSheet = generateStyleSheet(nextStyles, {
 				hasTopper: false,

@@ -1899,6 +1899,8 @@ definition {
 
 		Portlet.addPG(portletName = "Asset Publisher");
 
+		AssetPublisherPortlet.configureDynamicAssetSelectionPG(portletName = "Asset Publisher");
+
 		AssetPublisherPortlet.configureAssetLinkBehaviorPG(assetLinkBehavior = "Show Full Content");
 
 		Navigator.gotoStagedSitePage(
@@ -1906,6 +1908,8 @@ definition {
 			siteName = "Site Name");
 
 		Portlet.addPG(portletName = "Asset Publisher");
+
+		AssetPublisherPortlet.configureDynamicAssetSelectionPG(portletName = "Asset Publisher");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Test Page 1",

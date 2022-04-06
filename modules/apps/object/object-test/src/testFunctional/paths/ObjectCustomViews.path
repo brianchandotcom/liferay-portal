@@ -22,7 +22,7 @@
 	</tr>
 	<tr>
 		<td>OBJECT_VIEWS_TAB</td>
-		<td>//a[contains(text(),'Views')]</td>
+		<td>//*[contains(@class,'nav-link')]//span[contains(text(),'Views')]</td>
 		<td></td>
 	</tr>
 	<tr>

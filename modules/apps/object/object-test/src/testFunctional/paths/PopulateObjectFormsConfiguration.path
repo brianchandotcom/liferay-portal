@@ -107,7 +107,7 @@
 	</tr>
 	<tr>
 		<td>ADVANCED_TAB</td>
-		<td>//button[@class='nav-link btn btn-unstyled']/span[@class='navbar-text-truncate']</td>
+		<td>//button[@class='nav-link btn btn-unstyled']/span[@class='navbar-text-truncate' and contains(.,'Advanced')]</td>
 		<td></td>
 	</tr>
 	<tr>

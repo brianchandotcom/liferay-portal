@@ -122,7 +122,7 @@
 	</tr>
 	<tr>
 		<td>ENTRY_RELATIONSHIP_TAB</td>
-		<td>//a[contains(text(),'${key_tabName}')]</td>
+		<td>//*[contains(@class,'nav-link')]//span[contains(text(),'${key_tabName}')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -242,7 +242,7 @@
 	</tr>
 	<tr>
 		<td>OBJECT_DETAILS_TAB</td>
-		<td>//span[contains(text(), 'Details')]</td>
+		<td>//*[contains(@class,'nav-link')]//span[contains(text(), 'Details')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -252,7 +252,7 @@
 	</tr>
 	<tr>
 		<td>OBJECT_FIELDS_TAB</td>
-		<td>//span[contains(text(),'Fields')]</td>
+		<td>//*[contains(@class,'nav-link')]//span[contains(text(),'Fields')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -267,12 +267,12 @@
 	</tr>
 	<tr>
 		<td>OBJECT_LAYOUTS_TAB</td>
-		<td>//span[contains(text(), 'Layouts')]</td>
+		<td>//*[contains(@class,'nav-link')]//span[contains(text(), 'Layouts')]</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>OBJECT_RELATIONSHIPS_TAB</td>
-		<td>//span[contains(text(),'Relationship')]</td>
+		<td>//*[contains(@class,'nav-link')]//span[contains(text(),'Relationship')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -347,7 +347,7 @@
 	</tr>
 	<tr>
 		<td>SELECT_OBJECT_FIELD</td>
-		<td>//a[contains(text(),'${key_label}')]</td>
+		<td>//*[contains(@class,'nav-link')]//span[contains(text(),'${key_label}')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -477,7 +477,7 @@
 	</tr>
 	<tr>
 		<td>OBJECT_ACTIONS_TAB</td>
-		<td>//span[contains(text(),'Actions')]</td>
+		<td>//*[contains(@class,'nav-link')]//span[contains(text(),'Actions')]</td>
 		<td></td>
 	</tr>
 	<tr>

@@ -1321,4 +1321,130 @@ definition {
 		}
 	}
 
+
+	@description = "Verify that is possible to translate fields with options inside a Fields Group"
+	@priority = "5"
+	test CanInputtedDataBeTranslatedInFieldOptionOnFieldsGroup {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "Structure Description Test",
+			structureName = "Structure Name Test");
+
+		
+
+		DEBuilder.addField(
+			fieldLabel = "Multiple Selection",
+			fieldName = "Multiple Selection");
+
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "Text",
+			fieldName = "Text",
+			targetFieldLabel = "Multiple Selection");
+
+		DEBuilder.addFieldOptions(
+			fieldLabel = "Multiple Selection",
+			optionValueList = "Option 1,Option 2, Option 3");
+
+		FormFields.assertFieldsGroup(fieldName = "Fields Group");
+
+		WebContentStructures.addTranslations(localeList = "zh-CN");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Text",
+			fieldFieldLabelEdit = "文本");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Multiple Selection",
+			fieldFieldLabelEdit = "复选列表框");
+
+
+
+		DEBuilder.addFieldOptions(
+			fieldLabel = "复选列表框",
+			optionValueList = "選項 1,選項 2,選項 3");
+
+		FormFields.assertFieldsGroup(fieldName = "Fields Group");
+
+		WebContentStructures.saveCP();
+
+		NavItem.click(navItem = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name Test");
+
+		PortletEntry.inputTitle(title = "Test");
+
+		DERenderer.inputDataInMultipleSelectionField(
+			fieldLabel = "Multiple Selection",
+			optionValue = "Option 1");
+
+		DERenderer.inputDataInMultipleSelectionField(
+			fieldLabel = "Multiple Selection",
+			optionValue = "Option 2");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		PortletEntry.inputTitle(title = "测试");
+
+		DERenderer.inputDataInMultipleSelectionField(
+			fieldLabel = "复选列表框",
+			optionValue = "選項 1");
+
+		DERenderer.inputDataInMultipleSelectionField(
+			fieldLabel = "复选列表框",
+			optionValue = "選項 2");
+
+		DERenderer.inputDataInMultipleSelectionField(
+			fieldLabel = "复选列表框",
+			optionValue = "選項 3");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Test");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "Test");
+
+		FormFields.assertFieldsGroup(fieldName = "Fields Group");
+
+		DERenderer.assertDataInMultipleSelectionField(
+			fieldLabel = "Multiple Selection",
+			optionValue = "Option 1");
+
+		DERenderer.assertDataInMultipleSelectionField(
+			fieldLabel = "Multiple Selection",
+			optionValue = "Option 2");
+
+		DERenderer.assertMultipleSelectionOptionIsUnchecked(
+			fieldLabel = "Multiple Selection",
+			optionValue = "Option 3");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "测试");
+
+		FormFields.assertFieldsGroup(fieldName = "Fields Group");
+
+		DERenderer.assertMultipleSelectionOptionIsUnchecked(
+			fieldLabel = "复选列表框",
+			optionValue = "選項 1");
+
+		DERenderer.assertMultipleSelectionOptionIsUnchecked(
+			fieldLabel = "复选列表框",
+			optionValue = "選項 2");
+
+		DERenderer.assertDataInMultipleSelectionField(
+			fieldLabel = "复选列表框",
+			optionValue = "選項 3");
+
+		
+	}
+
 }

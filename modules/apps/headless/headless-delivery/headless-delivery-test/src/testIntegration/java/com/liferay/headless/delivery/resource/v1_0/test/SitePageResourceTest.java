@@ -108,12 +108,10 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			layout,
 			ServiceContextTestUtil.getServiceContext(testGroup.getGroupId()));
 
-		String siteSitePageExperienceExperienceKeyRenderedPage =
+		Assert.assertNotNull(
 			sitePageResource.getSiteSitePageExperienceExperienceKeyRenderedPage(
 				testGroup.getGroupId(), friendlyURL.substring(1),
-				segmentsExperience.getSegmentsExperienceKey());
-
-		Assert.assertNotNull(siteSitePageExperienceExperienceKeyRenderedPage);
+				segmentsExperience.getSegmentsExperienceKey()));
 	}
 
 	@Override
@@ -123,11 +121,9 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		String friendlyURL = layout.getFriendlyURL();
 
-		String siteSitePageRenderedPage =
+		Assert.assertNotNull(
 			sitePageResource.getSiteSitePageRenderedPage(
-				testGroup.getGroupId(), friendlyURL.substring(1));
-
-		Assert.assertNotNull(siteSitePageRenderedPage);
+				testGroup.getGroupId(), friendlyURL.substring(1)));
 	}
 
 	@Ignore
@@ -169,9 +165,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	public void testGraphQLGetSiteSitePagesPage() throws Exception {
 		Long siteId = testGetSiteSitePagesPage_getSiteId();
 
-		Group group = _groupLocalService.fetchGroup(siteId);
-
-		_addLayout(group);
+		_addLayout(_groupLocalService.fetchGroup(siteId));
 
 		BaseSitePageResourceTestCase.GraphQLField graphQLField =
 			new BaseSitePageResourceTestCase.GraphQLField(
@@ -203,9 +197,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			Long siteId, SitePage sitePage)
 		throws Exception {
 
-		Group group = _groupLocalService.fetchGroup(siteId);
-
-		Layout layout = _addLayout(group, false, sitePage.getTitle());
+		Layout layout = _addLayout(
+			_groupLocalService.fetchGroup(siteId), false, sitePage.getTitle());
 
 		sitePage.setDateCreated(layout.getCreateDate());
 		sitePage.setDateModified(layout.getModifiedDate());
@@ -238,11 +231,9 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			try {
 				PrincipalThreadLocal.setName(TestPropsValues.getUserId());
 
-				ServiceContext serviceContext =
+				ServiceContextThreadLocal.pushServiceContext(
 					ServiceContextTestUtil.getServiceContext(
-						testGroup.getGroupId());
-
-				ServiceContextThreadLocal.pushServiceContext(serviceContext);
+						testGroup.getGroupId()));
 
 				LayoutPageTemplateStructure layoutPageTemplateStructure =
 					_layoutPageTemplateStructureLocalService.

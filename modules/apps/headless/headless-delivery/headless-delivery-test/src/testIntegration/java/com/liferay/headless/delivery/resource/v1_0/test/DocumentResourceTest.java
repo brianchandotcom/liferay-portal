@@ -69,14 +69,11 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 				ServiceContextTestUtil.getServiceContext(
 					testGroup.getGroupId()));
 
-		String documentRenderedContentByDisplayPageDisplayPageKey =
+		Assert.assertNotNull(
 			documentResource.
 				getDocumentRenderedContentByDisplayPageDisplayPageKey(
 					document.getId(),
-					layoutPageTemplateEntry.getLayoutPageTemplateEntryKey());
-
-		Assert.assertNotNull(
-			documentRenderedContentByDisplayPageDisplayPageKey);
+					layoutPageTemplateEntry.getLayoutPageTemplateEntryKey()));
 	}
 
 	@Override

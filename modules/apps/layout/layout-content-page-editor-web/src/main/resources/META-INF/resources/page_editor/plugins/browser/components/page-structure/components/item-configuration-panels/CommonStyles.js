@@ -25,7 +25,7 @@ import {
 } from '../../../../../../app/contexts/StoreContext';
 import selectSegmentsExperienceId from '../../../../../../app/selectors/selectSegmentsExperienceId';
 import updateItemStyle from '../../../../../../app/utils/updateItemStyle';
-import {FieldSet} from './FieldSet';
+import {FieldSet, fieldIsDisabled} from './FieldSet';
 
 export function CommonStyles({
 	className,
@@ -74,9 +74,15 @@ export function CommonStyles({
 		});
 	};
 
-	const spacingFieldSets = styles.filter((fieldSet) =>
-		isSpacingFieldSet(fieldSet)
-	);
+	const spacingFieldSets = styles
+		.filter((fieldSet) => isSpacingFieldSet(fieldSet))
+		.map((fieldSet) => ({
+			...fieldSet,
+			styles: fieldSet.styles.map((field) => ({
+				...field,
+				disabled: fieldIsDisabled(item, field),
+			})),
+		}));
 
 	if (spacingFieldSets.length) {
 		styles = styles.filter((fieldSet) => !isSpacingFieldSet(fieldSet));

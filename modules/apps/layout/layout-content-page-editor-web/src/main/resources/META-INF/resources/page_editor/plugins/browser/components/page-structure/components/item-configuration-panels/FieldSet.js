@@ -31,10 +31,13 @@ const DISPLAY_SIZES = {
 	small: 'small',
 };
 
-const fieldIsDisabled = (item, field) =>
-	item.type === LAYOUT_DATA_ITEM_TYPES.container &&
-	item.config?.widthType === CONTAINER_WIDTH_TYPES.fixed &&
-	(field.name === 'marginRight' || field.name === 'marginLeft');
+export function fieldIsDisabled(item, field) {
+	return (
+		item.type === LAYOUT_DATA_ITEM_TYPES.container &&
+		item.config?.widthType === CONTAINER_WIDTH_TYPES.fixed &&
+		(field.name === 'marginRight' || field.name === 'marginLeft')
+	);
+}
 
 export function FieldSet({
 	fields,

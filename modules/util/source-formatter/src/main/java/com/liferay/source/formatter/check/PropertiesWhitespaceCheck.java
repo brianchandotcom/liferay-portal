@@ -70,8 +70,8 @@ public class PropertiesWhitespaceCheck extends WhitespaceCheck {
 							line, leadingSpaces, expectedLeadingSpaces);
 					}
 
-					if (line.matches("    ]")) {
-						line = line.trim();
+					if (line.matches(" {4,}]")) {
+						line = line.substring(4);
 					}
 				}
 

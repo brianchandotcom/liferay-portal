@@ -141,7 +141,7 @@ public class AccountEntryUserRelLocalServiceTest {
 	}
 
 	@Test
-	public void testAddAccountEntryUserRel2WithBlockedEmailDomainAs2BUser()
+	public void testAddAccountEntryUserRel2WithBlockedEmailDomain()
 		throws Exception {
 
 		String originalName = PrincipalThreadLocal.getName();
@@ -159,12 +159,6 @@ public class AccountEntryUserRelLocalServiceTest {
 			).build());
 
 		try {
-			AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
-				_accountEntryLocalService);
-
-			_accountEntryUserRelLocalService.addAccountEntryUserRel(
-				accountEntry.getAccountEntryId(), _user.getUserId());
-
 			PrincipalThreadLocal.setName(_user.getUserId());
 
 			_userInfo.emailAddress = _userInfo.screenName + "@test.com";
@@ -230,18 +224,6 @@ public class AccountEntryUserRelLocalServiceTest {
 	public void testAddAccountEntryUserRel2WithInvalidUserEmailAddressDomain()
 		throws Exception {
 
-		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
-			_accountEntryLocalService, new String[] {"test1.com", "test2.com"});
-
-		_userInfo.emailAddress = _userInfo.screenName + "@invalid-domain.com";
-
-		_addAccountEntryUserRel(accountEntry.getAccountEntryId());
-	}
-
-	@Test
-	public void testAddAccountEntryUserRel2WithInvalidUserEmailAddressDomainAs2BUser()
-		throws Exception {
-
 		String originalName = PrincipalThreadLocal.getName();
 
 		String pid =
@@ -255,12 +237,10 @@ public class AccountEntryUserRelLocalServiceTest {
 			).build());
 
 		try {
-			AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
-				_accountEntryLocalService,
-				new String[] {"test1.com", "test2.com"});
+			_accountEntry.setDomains("test1.com, test2.com");
 
-			_accountEntryUserRelLocalService.addAccountEntryUserRel(
-				accountEntry.getAccountEntryId(), _user.getUserId());
+			_accountEntry = _accountEntryLocalService.updateAccountEntry(
+				_accountEntry);
 
 			PrincipalThreadLocal.setName(_user.getUserId());
 

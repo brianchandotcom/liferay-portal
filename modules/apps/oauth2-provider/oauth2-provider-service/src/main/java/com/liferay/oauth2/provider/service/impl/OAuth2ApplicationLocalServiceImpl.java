@@ -85,6 +85,8 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.function.Consumer;
 
+import org.apache.cxf.rs.security.oauth2.utils.OAuthConstants;
+
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -100,6 +102,10 @@ import org.osgi.service.component.annotations.Reference;
 public class OAuth2ApplicationLocalServiceImpl
 	extends OAuth2ApplicationLocalServiceBaseImpl {
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public OAuth2Application addOAuth2Application(
 			long companyId, long userId, String userName,
@@ -107,10 +113,33 @@ public class OAuth2ApplicationLocalServiceImpl
 			String clientId, int clientProfile, String clientSecret,
 			String description, List<String> featuresList, String homePageURL,
 			long iconFileEntryId, String name, String privacyPolicyURL,
-			List<String> redirectURIsList, boolean rememeberDevice,
+			List<String> redirectURIsList, boolean rememberDevice,
 			boolean trustedApplication,
 			Consumer<OAuth2ScopeBuilder> builderConsumer,
 			ServiceContext serviceContext)
+		throws PortalException {
+
+		return oAuth2ApplicationLocalService.addOAuth2Application(
+			companyId, userId, userName, allowedGrantTypesList,
+			OAuthConstants.TOKEN_ENDPOINT_AUTH_BASIC, clientCredentialUserId,
+			clientId, clientProfile, clientSecret, description, featuresList,
+			homePageURL, iconFileEntryId, name, privacyPolicyURL,
+			redirectURIsList, rememberDevice, trustedApplication,
+			builderConsumer, serviceContext);
+	}
+
+	@Override
+	public OAuth2Application addOAuth2Application(
+		long companyId, long userId, String userName,
+		List<GrantType> allowedGrantTypesList,
+		String clientAuthenticationMethod, long clientCredentialUserId,
+		String clientId, int clientProfile, String clientSecret,
+		String description, List<String> featuresList, String homePageURL,
+		long iconFileEntryId, String name, String privacyPolicyURL,
+		List<String> redirectURIsList, boolean rememberDevice,
+		boolean trustedApplication,
+		Consumer<OAuth2ScopeBuilder> builderConsumer,
+		ServiceContext serviceContext)
 		throws PortalException {
 
 		if (allowedGrantTypesList == null) {
@@ -151,6 +180,8 @@ public class OAuth2ApplicationLocalServiceImpl
 		oAuth2Application.setCreateDate(new Date());
 		oAuth2Application.setModifiedDate(new Date());
 		oAuth2Application.setAllowedGrantTypesList(allowedGrantTypesList);
+		oAuth2Application.setClientAuthenticationMethod(
+			clientAuthenticationMethod);
 		oAuth2Application.setClientCredentialUserId(user.getUserId());
 		oAuth2Application.setClientCredentialUserName(user.getScreenName());
 		oAuth2Application.setClientId(clientId);
@@ -163,7 +194,7 @@ public class OAuth2ApplicationLocalServiceImpl
 		oAuth2Application.setName(name);
 		oAuth2Application.setPrivacyPolicyURL(privacyPolicyURL);
 		oAuth2Application.setRedirectURIsList(redirectURIsList);
-		oAuth2Application.setRememberDevice(rememeberDevice);
+		oAuth2Application.setRememberDevice(rememberDevice);
 		oAuth2Application.setTrustedApplication(trustedApplication);
 
 		if (builderConsumer != null) {
@@ -186,6 +217,10 @@ public class OAuth2ApplicationLocalServiceImpl
 		return oAuth2ApplicationPersistence.update(oAuth2Application);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public OAuth2Application addOAuth2Application(
 			long companyId, long userId, String userName,
@@ -196,6 +231,28 @@ public class OAuth2ApplicationLocalServiceImpl
 			List<String> redirectURIsList, boolean rememberDevice,
 			List<String> scopeAliasesList, boolean trustedApplication,
 			ServiceContext serviceContext)
+		throws PortalException {
+
+		return oAuth2ApplicationLocalService.addOAuth2Application(
+			companyId, userId, userName, allowedGrantTypesList,
+			OAuthConstants.TOKEN_ENDPOINT_AUTH_BASIC, clientCredentialUserId,
+			clientId, clientProfile, clientSecret, description, featuresList,
+			homePageURL, iconFileEntryId, name, privacyPolicyURL,
+			redirectURIsList, rememberDevice, scopeAliasesList,
+			trustedApplication, serviceContext);
+	}
+
+	@Override
+	public OAuth2Application addOAuth2Application(
+		long companyId, long userId, String userName,
+		List<GrantType> allowedGrantTypesList,
+		String clientAuthenticationMethod, long clientCredentialUserId,
+		String clientId, int clientProfile, String clientSecret,
+		String description, List<String> featuresList, String homePageURL,
+		long iconFileEntryId, String name, String privacyPolicyURL,
+		List<String> redirectURIsList, boolean rememberDevice,
+		List<String> scopeAliasesList, boolean trustedApplication,
+		ServiceContext serviceContext)
 		throws PortalException {
 
 		if (allowedGrantTypesList == null) {
@@ -240,6 +297,8 @@ public class OAuth2ApplicationLocalServiceImpl
 		oAuth2Application.setCreateDate(new Date());
 		oAuth2Application.setModifiedDate(new Date());
 		oAuth2Application.setAllowedGrantTypesList(allowedGrantTypesList);
+		oAuth2Application.setClientAuthenticationMethod(
+			clientAuthenticationMethod);
 		oAuth2Application.setClientCredentialUserId(user.getUserId());
 		oAuth2Application.setClientCredentialUserName(user.getScreenName());
 		oAuth2Application.setClientId(clientId);
@@ -560,10 +619,35 @@ public class OAuth2ApplicationLocalServiceImpl
 			oAuth2ApplicationScopeAliasesId, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	@Override
 	public OAuth2Application updateOAuth2Application(
 			long oAuth2ApplicationId, long oAuth2ApplicationScopeAliasesId,
 			List<GrantType> allowedGrantTypesList, long clientCredentialUserId,
+			String clientId, int clientProfile, String clientSecret,
+			String description, List<String> featuresList, String homePageURL,
+			long iconFileEntryId, String name, String privacyPolicyURL,
+			List<String> redirectURIsList, boolean rememberDevice,
+			boolean trustedApplication)
+		throws PortalException {
+
+		return oAuth2ApplicationLocalService.updateOAuth2Application(
+			oAuth2ApplicationId, oAuth2ApplicationScopeAliasesId,
+			allowedGrantTypesList, OAuthConstants.TOKEN_ENDPOINT_AUTH_BASIC,
+			clientCredentialUserId, clientId, clientProfile, clientSecret,
+			description, featuresList, homePageURL, iconFileEntryId, name,
+			privacyPolicyURL, redirectURIsList, rememberDevice,
+			trustedApplication);
+	}
+
+	@Override
+	public OAuth2Application updateOAuth2Application(
+			long oAuth2ApplicationId, long oAuth2ApplicationScopeAliasesId,
+			List<GrantType> allowedGrantTypesList,
+			String clientAuthenticationMethod, long clientCredentialUserId,
 			String clientId, int clientProfile, String clientSecret,
 			String description, List<String> featuresList, String homePageURL,
 			long iconFileEntryId, String name, String privacyPolicyURL,
@@ -594,6 +678,8 @@ public class OAuth2ApplicationLocalServiceImpl
 		oAuth2Application.setOAuth2ApplicationScopeAliasesId(
 			oAuth2ApplicationScopeAliasesId);
 		oAuth2Application.setAllowedGrantTypesList(allowedGrantTypesList);
+		oAuth2Application.setClientAuthenticationMethod(
+			clientAuthenticationMethod);
 		oAuth2Application.setClientCredentialUserId(user.getUserId());
 		oAuth2Application.setClientCredentialUserName(user.getScreenName());
 		oAuth2Application.setClientId(clientId);

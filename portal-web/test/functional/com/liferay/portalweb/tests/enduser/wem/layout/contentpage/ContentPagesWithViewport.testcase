@@ -725,7 +725,7 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Styles");
 
-			for (var fieldSetLabel : list "Margin,Padding,Text,Background,Borders,Effects") {
+			for (var fieldSetLabel : list "Spacing,Text,Background,Borders,Effects") {
 				AssertElementPresent(
 					key_fieldSetLabel = "${fieldSetLabel}",
 					locator1 = "PageEditor#COMMON_STYLES_FIELDSET_LABEL");
@@ -736,11 +736,9 @@ definition {
 			for (var deviceType : list "Tablet,Landscape Phone,Portrait Phone") {
 				PageEditor.switchViewport(deviceType = "${deviceType}");
 
-				for (var fieldSetLabel : list "Margin,Padding") {
-					AssertElementPresent(
-						key_fieldSetLabel = "${fieldSetLabel}",
-						locator1 = "PageEditor#COMMON_STYLES_FIELDSET_LABEL");
-				}
+				AssertElementPresent(
+					key_fieldSetLabel = "Spacing",
+					locator1 = "PageEditor#COMMON_STYLES_FIELDSET_LABEL");
 			}
 		}
 	}

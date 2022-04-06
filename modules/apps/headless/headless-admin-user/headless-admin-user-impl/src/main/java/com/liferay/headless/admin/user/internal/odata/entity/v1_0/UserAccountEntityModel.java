@@ -54,7 +54,8 @@ public class UserAccountEntityModel implements EntityModel {
 			new StringEntityField(
 				"givenName", locale -> Field.getSortableFieldName("firstName")),
 			new StringEntityField(
-				"jobTitle", locale -> Field.getSortableFieldName("jobTitle")));
+				"jobTitle", locale -> Field.getSortableFieldName("jobTitle")),
+			new StringEntityField("name", locale -> Field.USER_NAME));
 	}
 
 	@Override

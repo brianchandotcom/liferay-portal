@@ -1017,10 +1017,13 @@ public class UIItemsBuilder {
 	public DropdownItem createDeleteDropdownItem() throws PortalException {
 		String cmd = null;
 		String icon = "trash";
+		String label = LanguageUtil.get(
+			_httpServletRequest, "move-to-recycle-bin");
 
 		if (_isDeleteActionAvailable()) {
 			cmd = Constants.DELETE;
 			icon = "times-circle";
+			label = LanguageUtil.get(_httpServletRequest, "delete");
 		}
 		else if (_isMoveToTheRecycleBinActionAvailable()) {
 			cmd = Constants.MOVE_TO_TRASH;
@@ -1047,7 +1050,7 @@ public class UIItemsBuilder {
 		).setIcon(
 			icon
 		).setLabel(
-			LanguageUtil.get(_httpServletRequest, "delete")
+			label
 		).build();
 	}
 

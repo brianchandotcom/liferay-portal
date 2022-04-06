@@ -21,12 +21,15 @@ import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.TermRangeQuery;
 import com.liferay.portal.kernel.search.WildcardQuery;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.ExistsFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.CollectionEntityField;
 import com.liferay.portal.odata.entity.ComplexEntityField;
+import com.liferay.portal.odata.entity.DateEntityField;
+import com.liferay.portal.odata.entity.DateTimeEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.entity.StringEntityField;
@@ -164,6 +167,60 @@ public class ExpressionVisitorImplTest {
 
 		Assert.assertEquals(entityField.getName(), queryTerm.getField());
 		Assert.assertEquals("*", queryTerm.getValue());
+	}
+
+	@Test
+	public void testVisitBinaryExpressionOperationWithEqualOperationAndNullValueForDateField() {
+		Map<String, EntityField> entityFieldsMap =
+			_entityModel.getEntityFieldsMap();
+
+		EntityField entityField = entityFieldsMap.get("date");
+
+		BooleanFilter booleanFilter =
+			(BooleanFilter)
+				_expressionVisitorImpl.visitBinaryExpressionOperation(
+					BinaryExpression.Operation.EQ, entityField, null);
+
+		Assert.assertTrue(booleanFilter.hasClauses());
+
+		List<BooleanClause<Filter>> booleanClauses =
+			booleanFilter.getMustNotBooleanClauses();
+
+		Assert.assertEquals(
+			booleanClauses.toString(), 1, booleanClauses.size());
+
+		BooleanClause<Filter> queryBooleanClause = booleanClauses.get(0);
+
+		ExistsFilter filter = (ExistsFilter)queryBooleanClause.getClause();
+
+		Assert.assertEquals(entityField.getName(), filter.getField());
+	}
+
+	@Test
+	public void testVisitBinaryExpressionOperationWithEqualOperationAndNullValueForDateTimeField() {
+		Map<String, EntityField> entityFieldsMap =
+			_entityModel.getEntityFieldsMap();
+
+		EntityField entityField = entityFieldsMap.get("dateTime");
+
+		BooleanFilter booleanFilter =
+			(BooleanFilter)
+				_expressionVisitorImpl.visitBinaryExpressionOperation(
+					BinaryExpression.Operation.EQ, entityField, null);
+
+		Assert.assertTrue(booleanFilter.hasClauses());
+
+		List<BooleanClause<Filter>> booleanClauses =
+			booleanFilter.getMustNotBooleanClauses();
+
+		Assert.assertEquals(
+			booleanClauses.toString(), 1, booleanClauses.size());
+
+		BooleanClause<Filter> queryBooleanClause = booleanClauses.get(0);
+
+		ExistsFilter filter = (ExistsFilter)queryBooleanClause.getClause();
+
+		Assert.assertEquals(entityField.getName(), filter.getField());
 	}
 
 	@SuppressWarnings("unchecked")
@@ -379,6 +436,34 @@ public class ExpressionVisitorImplTest {
 
 		Assert.assertEquals(entityField.getName(), queryTerm.getField());
 		Assert.assertEquals("*", queryTerm.getValue());
+	}
+
+	@Test
+	public void testVisitBinaryExpressionOperationWithNotEqualOperationAndNullValueForDateField() {
+		Map<String, EntityField> entityFieldsMap =
+			_entityModel.getEntityFieldsMap();
+
+		EntityField entityField = entityFieldsMap.get("date");
+
+		ExistsFilter existsFilter =
+			(ExistsFilter)_expressionVisitorImpl.visitBinaryExpressionOperation(
+				BinaryExpression.Operation.NE, entityField, null);
+
+		Assert.assertEquals(entityField.getName(), existsFilter.getField());
+	}
+
+	@Test
+	public void testVisitBinaryExpressionOperationWithNotEqualOperationAndNullValueForDateTimeField() {
+		Map<String, EntityField> entityFieldsMap =
+			_entityModel.getEntityFieldsMap();
+
+		EntityField entityField = entityFieldsMap.get("dateTime");
+
+		ExistsFilter existsFilter =
+			(ExistsFilter)_expressionVisitorImpl.visitBinaryExpressionOperation(
+				BinaryExpression.Operation.NE, entityField, null);
+
+		Assert.assertEquals(entityField.getName(), existsFilter.getField());
 	}
 
 	@Test
@@ -704,7 +789,10 @@ public class ExpressionVisitorImplTest {
 					).collect(
 						Collectors.toList()
 					)),
-				new StringEntityField("title", locale -> "title")
+				new StringEntityField("title", locale -> "title"),
+				new DateEntityField("date", locale -> "date", locale -> "date"),
+				new DateTimeEntityField(
+					"dateTime", locale -> "dateTime", locale -> "dateTime")
 			).collect(
 				Collectors.toMap(EntityField::getName, Function.identity())
 			);

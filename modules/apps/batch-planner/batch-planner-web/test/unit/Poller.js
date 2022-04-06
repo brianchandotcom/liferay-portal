@@ -25,7 +25,7 @@ import {
 	PROCESS_STARTED,
 } from '../../src/main/resources/META-INF/resources/js/constants';
 
-const taskId = 1234;
+const externalReferenceCode = '1234';
 const onFail = jest.fn();
 const onProgress = jest.fn();
 const onSuccess = jest.fn();
@@ -40,23 +40,23 @@ describe('Polling Export Status Process', () => {
 	});
 
 	it('must call onProgress when status is STARTED', async () => {
-		fetchMock.mock(getExportTaskStatusURL(taskId), {
+		fetchMock.mock(getExportTaskStatusURL(externalReferenceCode), {
 			className:
 				'com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Product',
 			contentType: 'CSV',
 			endTime: null,
 			errorMessage: null,
 			executeStatus: PROCESS_STARTED,
-			id: taskId,
+			externalReferenceCode,
 			processedItemsCount: 25,
 			startTime: '2021-11-10T10:36:08Z',
 			totalItemsCount: 50,
 		});
 
 		await getTaskStatus({
+			externalReferenceCode,
 			onProgress,
 			requestTaskStatus: exportStatus,
-			taskId,
 		});
 
 		expect(onProgress).toBeCalledWith('CSV', 50);
@@ -64,46 +64,46 @@ describe('Polling Export Status Process', () => {
 
 	it('must call onFail when status is FAILED', async () => {
 		const mockErrorMessage = 'Test FAILED Polling';
-		fetchMock.mock(getExportTaskStatusURL(taskId), {
+		fetchMock.mock(getExportTaskStatusURL(externalReferenceCode), {
 			className:
 				'com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Product',
 			contentType: 'CSV',
 			endTime: null,
 			errorMessage: mockErrorMessage,
 			executeStatus: PROCESS_FAILED,
-			id: taskId,
+			externalReferenceCode,
 			processedItemsCount: 25,
 			startTime: '2021-11-10T10:36:08Z',
 			totalItemsCount: 50,
 		});
 
 		await getTaskStatus({
+			externalReferenceCode,
 			onFail,
 			requestTaskStatus: exportStatus,
-			taskId,
 		});
 
 		expect(onFail).toBeCalledWith(mockErrorMessage);
 	});
 
 	it('must call onSuccess when status is COMPLETED', async () => {
-		fetchMock.mock(getExportTaskStatusURL(taskId), {
+		fetchMock.mock(getExportTaskStatusURL(externalReferenceCode), {
 			className:
 				'com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Product',
 			contentType: 'CSV',
 			endTime: null,
 			errorMessage: null,
 			executeStatus: PROCESS_COMPLETED,
-			id: taskId,
+			externalReferenceCode,
 			processedItemsCount: 25,
 			startTime: '2021-11-10T10:36:08Z',
 			totalItemsCount: 50,
 		});
 
 		await getTaskStatus({
+			externalReferenceCode,
 			onSuccess,
 			requestTaskStatus: exportStatus,
-			taskId,
 		});
 
 		expect(onSuccess).toBeCalledWith('CSV');

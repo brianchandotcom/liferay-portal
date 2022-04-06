@@ -42,7 +42,7 @@ const internalFieldName = 'name';
 const externalFieldName = 'external';
 
 let mockApi;
-const mockTaskID = '1234';
+const externalReferenceCode = '1234';
 
 configure({asyncUtilTimeout: 5000});
 
@@ -58,7 +58,7 @@ describe('ImportSubmit', () => {
 		document.body.appendChild(form);
 
 		mockApi = fetchMock.mock(BASE_PROPS.formImportURL, () => ({
-			importTaskId: mockTaskID,
+			externalReferenceCode,
 		}));
 	});
 
@@ -81,7 +81,9 @@ describe('ImportSubmit', () => {
 
 	it('must start polling import status and enable button when import process is completed', async () => {
 		jest.useFakeTimers();
-		const importTaskStatusURL = getImportTaskStatusURL(mockTaskID);
+		const importTaskStatusURL = getImportTaskStatusURL(
+			externalReferenceCode
+		);
 
 		mockApi.mock(
 			importTaskStatusURL,
@@ -93,7 +95,7 @@ describe('ImportSubmit', () => {
 					endTime: null,
 					errorMessage: null,
 					executeStatus: PROCESS_STARTED,
-					id: mockTaskID,
+					externalReferenceCode,
 					processedItemsCount: 25,
 					startTime: '2021-11-10T10:36:08Z',
 					totalItemsCount: 50,

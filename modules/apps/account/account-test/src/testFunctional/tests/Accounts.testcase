@@ -373,7 +373,7 @@ definition {
 
 			LexiconEntry.gotoEntry(rowEntry = "Business Account");
 
-			Accounts.addNewUserWithBlockedDomain(
+			Accounts.viewErrorWhenAddingUserWithBlockedDomain(
 				accountName = "Business Account",
 				assigneeName = "userfn",
 				emailDomainName = "google.com",
@@ -2257,6 +2257,120 @@ definition {
 			value1 = "No addresses were found.");
 	}
 
+	@description = "This test adds a blocked domain in instance settings and asserts that a user with a blocked domain cannot be added to an account."
+	@priority = "4"
+	test CannotAddUserWithBlockedEmailDomain {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		task ("Given an account is created and is configured to have blocked domains") {
+			AccountConfiguration.enableAccountEmailDomain();
+
+			AccountConfiguration.addBlockedEmailDomain(settingValues = "yahoo.com,blocked.com");
+
+			Accounts.openAccountsAdmin();
+
+			Accounts.addAccountWithDomain(
+				accountName = "AM Account",
+				domainNames = "liferay.com,Google.com");
+		}
+
+		task ("When an account manager is added to the account and attempts to create a new account user using a blocked email domain an error should display") {
+			AccountConfiguration.addAccountManager(
+				accountName = "AM Account",
+				orgName = "AM Organization",
+				orgRoleTitle = "Account Manager",
+				userEmailAddress = "useramea@liferay.com",
+				userFirstName = "useramfn",
+				userLastName = "useramln",
+				userScreenName = "useramsn");
+
+			User.logoutPG();
+
+			User.loginUserPG(
+				password = "test",
+				userEmailAddress = "useramea@liferay.com");
+
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "AM Account");
+
+			Accounts.viewErrorWhenAddingUserWithBlockedDomain(
+				accountName = "AM Account",
+				assigneeName = "userfn",
+				emailDomainName = "blocked.com",
+				userEmailAddress = "userea@blocked.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+		}
+
+		task ("Then the user should not be added or listed in that account") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "AM Account");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Users");
+
+			LexiconEntry.viewNoEntry(rowEntry = "userfn userln");
+		}
+	}
+
+	@description = "This test sets a valid domain for a business account. It attempts to add a user with a different domain and asserts that a warning displays and the user is not added."
+	@priority = "3"
+	test CannotAddUserWithInvalidEmailDomain {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		task ("Given an account is created and is configured to have valid email domains") {
+			AccountConfiguration.enableAccountEmailDomain();
+
+			Accounts.openAccountsAdmin();
+
+			Accounts.addAccountWithDomain(
+				accountName = "AM Account",
+				domainNames = "liferay.com,Google.com,9teen.com");
+		}
+
+		task ("When an account manager is added to the account and attempts to create a new account user using an invalid email domain an error should display") {
+			AccountConfiguration.addAccountManager(
+				accountName = "AM Account",
+				orgName = "AM Organization",
+				orgRoleTitle = "Account Manager",
+				userEmailAddress = "useramea@liferay.com",
+				userFirstName = "useramfn",
+				userLastName = "useramln",
+				userScreenName = "useramsn");
+
+			User.logoutPG();
+
+			User.loginUserPG(
+				password = "test",
+				userEmailAddress = "useramea@liferay.com");
+
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "AM Account");
+
+			Accounts.viewErrorWhenAddingUserWithInvalidDomain(
+				accountName = "AM Account",
+				assigneeName = "userfn",
+				emailDomainName = "nodomain.com",
+				userEmailAddress = "userea@nodomain.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+		}
+
+		task ("Then the user should not be added or listed in that account") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "AM Account");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Users");
+
+			LexiconEntry.viewNoEntry(rowEntry = "userfn userln");
+		}
+	}
+
 	@description = "This test adds an address, sets it as default, and removes it as default"
 	@priority = "3"
 	test CanRemoveAddressAsDefault {
@@ -3482,108 +3596,6 @@ definition {
 		Accounts.gotoEdit(accountName = "Person Account");
 
 		AssertElementNotPresent(locator1 = "Account#VALID_DOMAINS_HEADING");
-	}
-
-	@description = "This test sets a valid domain for a business account. It adds a user with a different domain and asserts that warning displays when a user attempts to do so."
-	@priority = "3"
-	test WarningDisplaysWhenAddingAUserWithInvalidDomain {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
-		AccountConfiguration.enableAccountEmailDomain();
-
-		Accounts.openAccountsAdmin();
-
-		Accounts.addAccountWithDomain(
-			accountName = "AM Account",
-			domainNames = "liferay.com,Google.com,9teen.com");
-
-		AccountConfiguration.addAccountManager(
-			accountName = "AM Account",
-			orgName = "AM Organization",
-			orgRoleTitle = "Account Manager",
-			userEmailAddress = "useramea@liferay.com",
-			userFirstName = "useramfn",
-			userLastName = "useramln",
-			userScreenName = "useramsn");
-
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "useramea@liferay.com");
-
-		Accounts.openAccountsAdmin();
-
-		LexiconEntry.gotoEntry(rowEntry = "AM Account");
-
-		Accounts.addNewUserWithInvalidDomain(
-			accountName = "AM Account",
-			assigneeName = "userfn",
-			emailDomainName = "nodomain.com",
-			userEmailAddress = "userea@nodomain.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		Accounts.openAccountsAdmin();
-
-		LexiconEntry.gotoEntry(rowEntry = "AM Account");
-
-		Accounts.gotoAssigneeTab(assigneeTab = "Users");
-
-		LexiconEntry.viewEntryName(rowEntry = "userfn userln");
-	}
-
-	@description = "This test adds a blocked domain in instance settings. Warning will display when adding a user with blocked domain."
-	@priority = "4"
-	test WarningDisplaysWhenAddingUserWithBlockedEmailDomain {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
-		AccountConfiguration.enableAccountEmailDomain();
-
-		AccountConfiguration.addBlockedEmailDomain(settingValues = "yahoo.com,blocked.com");
-
-		Accounts.openAccountsAdmin();
-
-		Accounts.addAccountWithDomain(
-			accountName = "AM Account",
-			domainNames = "liferay.com,Google.com");
-
-		AccountConfiguration.addAccountManager(
-			accountName = "AM Account",
-			orgName = "AM Organization",
-			orgRoleTitle = "Account Manager",
-			userEmailAddress = "useramea@liferay.com",
-			userFirstName = "useramfn",
-			userLastName = "useramln",
-			userScreenName = "useramsn");
-
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "useramea@liferay.com");
-
-		Accounts.openAccountsAdmin();
-
-		LexiconEntry.gotoEntry(rowEntry = "AM Account");
-
-		Accounts.addNewUserWithBlockedDomain(
-			accountName = "AM Account",
-			assigneeName = "userfn",
-			emailDomainName = "blocked.com",
-			userEmailAddress = "userea@blocked.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		Accounts.openAccountsAdmin();
-
-		LexiconEntry.gotoEntry(rowEntry = "AM Account");
-
-		Accounts.gotoAssigneeTab(assigneeTab = "Users");
-
-		LexiconEntry.viewEntryName(rowEntry = "userfn userln");
 	}
 
 }

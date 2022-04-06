@@ -88,10 +88,10 @@ public class OAuth2InAssertionManagedServiceFactory
 			throw new IllegalArgumentException(sb.toString());
 		}
 
-		Map<String, JwsSignatureVerifier> kidJWSSignatureVerifiers =
+		Map<String, JwsSignatureVerifier> kidsJWSSignatureVerifiers =
 			jwsSignatureVerifiers.get(issuer);
 
-		if (kidJWSSignatureVerifiers == null) {
+		if (kidsJWSSignatureVerifiers == null) {
 			sb.append("No JWS signature keys for issuer: ");
 			sb.append(issuer);
 			sb.append(", in company: ");
@@ -100,7 +100,7 @@ public class OAuth2InAssertionManagedServiceFactory
 			throw new IllegalArgumentException(sb.toString());
 		}
 
-		if (!kidJWSSignatureVerifiers.containsKey(kid)) {
+		if (!kidsJWSSignatureVerifiers.containsKey(kid)) {
 			sb.append("No JWS signature key of kid: ");
 			sb.append(kid);
 			sb.append(", for issuer: ");
@@ -111,7 +111,7 @@ public class OAuth2InAssertionManagedServiceFactory
 			throw new IllegalArgumentException(sb.toString());
 		}
 
-		return kidJWSSignatureVerifiers.get(kid);
+		return kidsJWSSignatureVerifiers.get(kid);
 	}
 
 	@Override
@@ -239,7 +239,7 @@ public class OAuth2InAssertionManagedServiceFactory
 			userAuthTypes.put(
 				issuer, oAuth2InAssertionConfiguration.userAuthType());
 
-			Map<String, JwsSignatureVerifier> kidsJwsSignatureVerifiers =
+			Map<String, JwsSignatureVerifier> kidsJWSSignatureVerifiers =
 				jwsSignatureVerifiers.get(issuer);
 
 			JsonWebKeys jsonWebKeys = JwkUtils.readJwkSet(
@@ -258,7 +258,7 @@ public class OAuth2InAssertionManagedServiceFactory
 					continue;
 				}
 
-				if (kidsJwsSignatureVerifiers.containsKey(
+				if (kidsJWSSignatureVerifiers.containsKey(
 						jsonWebKey.getKeyId())) {
 
 					if (_log.isWarnEnabled()) {
@@ -273,7 +273,7 @@ public class OAuth2InAssertionManagedServiceFactory
 					continue;
 				}
 
-				kidsJwsSignatureVerifiers.put(
+				kidsJWSSignatureVerifiers.put(
 					jsonWebKey.getKeyId(),
 					JwsUtils.getSignatureVerifier(jsonWebKey));
 			}

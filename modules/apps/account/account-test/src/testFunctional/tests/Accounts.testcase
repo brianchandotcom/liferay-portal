@@ -359,6 +359,49 @@ definition {
 		}
 	}
 
+	@description = "Use case for LPS-139430. Asserts a user can be assigned to an account through the Users Admin portlet"
+	@priority = "4"
+	test AssignUserToAccountViaUsersAdmin {
+		task ("Given two accounts are created") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Account Test 1",
+				accountEntryType = "Business");
+
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Account Test 2",
+				accountEntryType = "Business");
+		}
+
+		task ("And given an account user is added to one of those accounts") {
+			JSONAccountEntryUser.addAccountEntryUser(
+				accountEntryName = "Account Test 1",
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+		}
+
+		task ("When assigning the second account through the Users Admin to the same user") {
+			User.assignAccountCP(
+				accountName = "Account Test 2",
+				userScreenName = "usersn");
+		}
+
+		task ("Then both accounts should be listed when viewing the user's memberships via Users Admin") {
+			User.openUsersAdmin();
+
+			UserNavigator.gotoUser(userScreenName = "usersn");
+
+			UserNavigator.gotoMemberships();
+
+			for (var accountName : list "Account Test 1,Account Test 2") {
+				AssertElementPresent(
+					key_accountName = "${accountName}",
+					locator1 = "UsersAndOrganizationsEditUser#ACCOUNTS_TABLE_ACCOUNT_NAMES");
+			}
+		}
+	}
+
 	@description = "This test asserts that a domain blocked in one instance will not be blocked when creating a separate virtual instance."
 	@priority = "4"
 	test BlockedDomainsAreInstanceWide {

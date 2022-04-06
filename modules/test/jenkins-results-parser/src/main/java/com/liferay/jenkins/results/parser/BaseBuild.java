@@ -430,6 +430,10 @@ public abstract class BaseBuild implements Build {
 	public Job.BuildProfile getBuildProfile() {
 		String buildProfile = getParameterValue("TEST_PORTAL_BUILD_PROFILE");
 
+		if (JenkinsResultsParserUtil.isNullOrEmpty(buildProfile)) {
+			buildProfile = System.getenv("TEST_PORTAL_BUILD_PROFILE");
+		}
+
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(buildProfile)) {
 			if (buildProfile.equals("dxp")) {
 				return Job.BuildProfile.DXP;

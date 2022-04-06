@@ -403,7 +403,7 @@ public abstract class BaseObjectValidationRuleResourceTestCase {
 	@Test
 	public void testGraphQLDeleteObjectValidationRule() throws Exception {
 		ObjectValidationRule objectValidationRule =
-			testGraphQLObjectValidationRule_addObjectValidationRule();
+			testGraphQLDeleteObjectValidationRule_addObjectValidationRule();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -418,7 +418,6 @@ public abstract class BaseObjectValidationRuleResourceTestCase {
 							}
 						})),
 				"JSONObject/data", "Object/deleteObjectValidationRule"));
-
 		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
@@ -434,6 +433,13 @@ public abstract class BaseObjectValidationRuleResourceTestCase {
 			"JSONArray/errors");
 
 		Assert.assertTrue(errorsJSONArray.length() > 0);
+	}
+
+	protected ObjectValidationRule
+			testGraphQLDeleteObjectValidationRule_addObjectValidationRule()
+		throws Exception {
+
+		return testGraphQLObjectValidationRule_addObjectValidationRule();
 	}
 
 	@Test
@@ -460,7 +466,7 @@ public abstract class BaseObjectValidationRuleResourceTestCase {
 	@Test
 	public void testGraphQLGetObjectValidationRule() throws Exception {
 		ObjectValidationRule objectValidationRule =
-			testGraphQLObjectValidationRule_addObjectValidationRule();
+			testGraphQLGetObjectValidationRule_addObjectValidationRule();
 
 		Assert.assertTrue(
 			equals(
@@ -501,6 +507,13 @@ public abstract class BaseObjectValidationRuleResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected ObjectValidationRule
+			testGraphQLGetObjectValidationRule_addObjectValidationRule()
+		throws Exception {
+
+		return testGraphQLObjectValidationRule_addObjectValidationRule();
 	}
 
 	@Test

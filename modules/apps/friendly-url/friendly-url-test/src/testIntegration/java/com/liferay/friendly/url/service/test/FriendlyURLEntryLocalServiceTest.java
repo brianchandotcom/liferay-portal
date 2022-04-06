@@ -130,13 +130,12 @@ public class FriendlyURLEntryLocalServiceTest {
 	public void testGetUniqueUrlTitleNormalizesUrlTitle() throws Exception {
 		String urlTitle = "url title with spaces";
 
-		String uniqueUrlTitle =
+		Assert.assertEquals(
+			"url-title-with-spaces",
 			FriendlyURLEntryLocalServiceUtil.getUniqueUrlTitle(
 				_group.getGroupId(),
 				ClassNameLocalServiceUtil.getClassNameId(User.class),
-				TestPropsValues.getUserId(), urlTitle);
-
-		Assert.assertEquals("url-title-with-spaces", uniqueUrlTitle);
+				TestPropsValues.getUserId(), urlTitle));
 	}
 
 	@Test
@@ -148,11 +147,10 @@ public class FriendlyURLEntryLocalServiceTest {
 			_group.getGroupId(), classNameId, TestPropsValues.getUserId(),
 			urlTitle, _getServiceContext());
 
-		String uniqueUrlTitle =
+		Assert.assertEquals(
+			"existing-url-title-1",
 			FriendlyURLEntryLocalServiceUtil.getUniqueUrlTitle(
-				_group.getGroupId(), classNameId, _user.getUserId(), urlTitle);
-
-		Assert.assertEquals("existing-url-title-1", uniqueUrlTitle);
+				_group.getGroupId(), classNameId, _user.getUserId(), urlTitle));
 	}
 
 	@Test
@@ -214,10 +212,9 @@ public class FriendlyURLEntryLocalServiceTest {
 	public void testValidateDuplicateUrlTitle() throws Exception {
 		long classNameId = ClassNameLocalServiceUtil.getClassNameId(User.class);
 
-		int maxLength = ModelHintsUtil.getMaxLength(
-			FriendlyURLEntryLocalization.class.getName(), "urlTitle");
-
-		String urlTitle = StringUtil.randomString(maxLength);
+		String urlTitle = StringUtil.randomString(
+			ModelHintsUtil.getMaxLength(
+				FriendlyURLEntryLocalization.class.getName(), "urlTitle"));
 
 		FriendlyURLEntryLocalServiceUtil.addFriendlyURLEntry(
 			_group.getGroupId(), classNameId, TestPropsValues.getUserId(),
@@ -231,10 +228,9 @@ public class FriendlyURLEntryLocalServiceTest {
 	public void testValidateUrlTitleNotOwnedByModel() throws Exception {
 		long classNameId = ClassNameLocalServiceUtil.getClassNameId(User.class);
 
-		int maxLength = ModelHintsUtil.getMaxLength(
-			FriendlyURLEntryLocalization.class.getName(), "urlTitle");
-
-		String urlTitle = StringUtil.randomString(maxLength);
+		String urlTitle = StringUtil.randomString(
+			ModelHintsUtil.getMaxLength(
+				FriendlyURLEntryLocalization.class.getName(), "urlTitle"));
 
 		FriendlyURLEntryLocalServiceUtil.addFriendlyURLEntry(
 			_group.getGroupId(), classNameId, TestPropsValues.getUserId(),
@@ -248,10 +244,9 @@ public class FriendlyURLEntryLocalServiceTest {
 	public void testValidateUrlTitleOwnedByModel() throws Exception {
 		long classNameId = ClassNameLocalServiceUtil.getClassNameId(User.class);
 
-		int maxLength = ModelHintsUtil.getMaxLength(
-			FriendlyURLEntryLocalization.class.getName(), "urlTitle");
-
-		String urlTitle = StringUtil.randomString(maxLength);
+		String urlTitle = StringUtil.randomString(
+			ModelHintsUtil.getMaxLength(
+				FriendlyURLEntryLocalization.class.getName(), "urlTitle"));
 
 		FriendlyURLEntryLocalServiceUtil.addFriendlyURLEntry(
 			_group.getGroupId(), classNameId, TestPropsValues.getUserId(),
@@ -279,10 +274,9 @@ public class FriendlyURLEntryLocalServiceTest {
 	public void testValidateUrlTitleWithMaxLength() throws Exception {
 		long classNameId = ClassNameLocalServiceUtil.getClassNameId(User.class);
 
-		int maxLength = ModelHintsUtil.getMaxLength(
-			FriendlyURLEntryLocalization.class.getName(), "urlTitle");
-
-		String urlTitle = StringUtil.randomString(maxLength);
+		String urlTitle = StringUtil.randomString(
+			ModelHintsUtil.getMaxLength(
+				FriendlyURLEntryLocalization.class.getName(), "urlTitle"));
 
 		FriendlyURLEntryLocalServiceUtil.validate(
 			_group.getGroupId(), classNameId, urlTitle);

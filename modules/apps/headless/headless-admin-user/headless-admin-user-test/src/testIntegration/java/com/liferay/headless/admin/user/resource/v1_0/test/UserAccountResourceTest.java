@@ -385,12 +385,9 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	@Override
 	@Test
 	public void testGraphQLGetMyUserAccount() throws Exception {
-		UserAccount userAccount = userAccountResource.getUserAccount(
-			_testUser.getUserId());
-
 		Assert.assertTrue(
 			equals(
-				userAccount,
+				userAccountResource.getUserAccount(_testUser.getUserId()),
 				UserAccountSerDes.toDTO(
 					JSONUtil.getValueAsString(
 						invokeGraphQLQuery(

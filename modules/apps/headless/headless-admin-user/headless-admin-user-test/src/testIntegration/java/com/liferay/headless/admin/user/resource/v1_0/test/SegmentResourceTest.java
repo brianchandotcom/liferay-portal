@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -217,15 +216,13 @@ public class SegmentResourceTest extends BaseSegmentResourceTestCase {
 	}
 
 	private Segment _addSegment(Long siteId, Segment segment) throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				siteId, _adminUser.getUserId());
-
 		return _toSegment(
 			SegmentsTestUtil.addSegmentsEntry(
 				segment.getName(), segment.getName(), null,
 				segment.getCriteria(), segment.getSource(),
-				User.class.getName(), serviceContext));
+				User.class.getName(),
+				ServiceContextTestUtil.getServiceContext(
+					siteId, _adminUser.getUserId())));
 	}
 
 	private Segment _toSegment(SegmentsEntry segmentsEntry) {

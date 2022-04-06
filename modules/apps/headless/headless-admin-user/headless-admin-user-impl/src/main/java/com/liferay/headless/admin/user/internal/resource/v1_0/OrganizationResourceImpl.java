@@ -127,10 +127,8 @@ public class OrganizationResourceImpl
 
 	@Override
 	public void deleteOrganization(String organizationId) throws Exception {
-		long serviceBuilderOrganizationId = _getServiceBuilderOrganizationId(
-			organizationId);
-
-		_organizationService.deleteOrganization(serviceBuilderOrganizationId);
+		_organizationService.deleteOrganization(
+			_getServiceBuilderOrganizationId(organizationId));
 	}
 
 	@Override

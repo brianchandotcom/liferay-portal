@@ -46,14 +46,14 @@ public class SegmentUserResourceImpl extends BaseSegmentUserResourceImpl {
 		SegmentsEntry segmentsEntry =
 			_segmentsEntryLocalService.getSegmentsEntry(segmentId);
 
-		long[] segmentsEntryClassPKs =
-			_segmentsEntryProviderRegistry.getSegmentsEntryClassPKs(
-				segmentsEntry.getSegmentsEntryId(),
-				pagination.getStartPosition(), pagination.getEndPosition());
-
 		return Page.of(
 			transformToList(
-				ArrayUtil.toArray(segmentsEntryClassPKs), this::_toSegmentUser),
+				ArrayUtil.toArray(
+					_segmentsEntryProviderRegistry.getSegmentsEntryClassPKs(
+						segmentsEntry.getSegmentsEntryId(),
+						pagination.getStartPosition(),
+						pagination.getEndPosition())),
+				this::_toSegmentUser),
 			pagination,
 			_segmentsEntryProviderRegistry.getSegmentsEntryClassPKsCount(
 				segmentsEntry.getSegmentsEntryId()));

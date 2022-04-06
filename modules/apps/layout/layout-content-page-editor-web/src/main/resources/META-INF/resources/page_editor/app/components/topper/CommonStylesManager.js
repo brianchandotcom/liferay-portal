@@ -45,11 +45,15 @@ export default function CommonStylesManager() {
 
 	const globalContext = useGlobalContext();
 
-	const stylesPerViewportRef = useRef(null);
-	const masterStylesPerViewportRef = useRef(null);
+	const stylesPerViewportRef = useRef({});
+	const masterStylesPerViewportRef = useRef({});
 
 	useEffect(() => {
 		const items = Object.values(layoutData.items);
+
+		const {styles: currentStyles} = stylesPerViewportRef.current[
+			selectedViewportSize
+		];
 
 		const nextStyles = {};
 
@@ -68,11 +72,11 @@ export default function CommonStylesManager() {
 			}
 		});
 
-		if (
-			!layoutDataItemsConfigRef.current ||
-			!deepEqual(nextStyles, layoutDataItemsConfigRef.current)
-		) {
-			stylesPerViewportRef.current[selectedViewportSize] = nextStyles;
+		if (!currentStyles || !deepEqual(nextStyles, currentStyles)) {
+			stylesPerViewportRef.current[selectedViewportSize] = {
+				styleSheet,
+				styles: nextStyles,
+			};
 
 			const styleSheet = generateStyleSheet(nextStyles);
 
@@ -91,6 +95,10 @@ export default function CommonStylesManager() {
 
 		const items = Object.values(masterLayoutData.items);
 
+		const {styles: currentStyles} = masterStylesPerViewportRef.current[
+			selectedViewportSize
+		];
+
 		const nextStyles = {};
 
 		items.forEach((item) => {
@@ -108,15 +116,15 @@ export default function CommonStylesManager() {
 			}
 		});
 
-		if (
-			!masterStylesPerViewportRef.current ||
-			!deepEqual(nextStyles, masterStylesPerViewportRef.current)
-		) {
-			masterStylesPerViewportRef.current = nextStyles;
-
+		if (!currentStyles || !deepEqual(nextStyles, currentStyles)) {
 			const styleSheet = generateStyleSheet(nextStyles, {
 				hasTopper: false,
 			});
+
+			masterStylesPerViewportRef.current[selectedViewportSize] = {
+				styleSheet,
+				styles: nextStyles,
+			};
 
 			createOrUpdateStyleTag({
 				globalContext,

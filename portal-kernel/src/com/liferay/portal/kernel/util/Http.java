@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.util;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.net.URI;
 import java.net.URL;
 
 import java.util.ArrayList;
@@ -25,11 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.RenderRequest;
-
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -56,121 +51,13 @@ public interface Http {
 
 	public static final int URL_MAXIMUM_LENGTH = 2083;
 
-	public String addParameter(String url, String name, boolean value);
-
-	public String addParameter(String url, String name, double value);
-
-	public String addParameter(String url, String name, int value);
-
-	public String addParameter(String url, String name, long value);
-
-	public String addParameter(String url, String name, short value);
-
-	public String addParameter(String url, String name, String value);
-
-	public String decodePath(String path);
-
-	public String decodeURL(String url);
-
-	public String encodeParameters(String url);
-
-	public String encodePath(String path);
-
-	public String fixPath(String path);
-
-	public String fixPath(String path, boolean leading, boolean trailing);
-
-	public String getCompleteURL(HttpServletRequest httpServletRequest);
-
 	public Cookie[] getCookies();
 
-	public String getDomain(String url);
-
-	public String getIpAddress(String url);
-
-	public String getParameter(String url, String name);
-
-	public String getParameter(String url, String name, boolean escaped);
-
-	public Map<String, String[]> getParameterMap(String queryString);
-
-	public String getPath(String url);
-
-	public String getProtocol(ActionRequest actionRequest);
-
-	public String getProtocol(boolean secure);
-
-	public String getProtocol(HttpServletRequest httpServletRequest);
-
-	public String getProtocol(RenderRequest renderRequest);
-
-	public String getProtocol(String url);
-
-	public String getQueryString(HttpServletRequest httpServletRequest);
-
-	public String getQueryString(String url);
-
-	public String getRequestURL(HttpServletRequest httpServletRequest);
-
-	public URI getURI(String uriString);
-
-	public boolean hasDomain(String url);
-
-	public boolean hasProtocol(String url);
-
 	public boolean hasProxyConfig();
-
-	public boolean isForwarded(HttpServletRequest httpServletRequest);
 
 	public boolean isNonProxyHost(String host);
 
 	public boolean isProxyHost(String host);
-
-	public boolean isSecure(String url);
-
-	public String normalizePath(String uri);
-
-	public Map<String, String[]> parameterMapFromString(String queryString);
-
-	public String parameterMapToString(Map<String, String[]> parameterMap);
-
-	public String parameterMapToString(
-		Map<String, String[]> parameterMap, boolean addQuestion);
-
-	public String protocolize(String url, ActionRequest actionRequest);
-
-	public String protocolize(String url, boolean secure);
-
-	public String protocolize(
-		String url, HttpServletRequest httpServletRequest);
-
-	public String protocolize(String url, int port, boolean secure);
-
-	public String protocolize(String url, RenderRequest renderRequest);
-
-	public String removeDomain(String url);
-
-	public String removeParameter(String url, String name);
-
-	public String removePathParameters(String uri);
-
-	public String removeProtocol(String url);
-
-	public String sanitizeHeader(String header);
-
-	public String setParameter(String url, String name, boolean value);
-
-	public String setParameter(String url, String name, double value);
-
-	public String setParameter(String url, String name, int value);
-
-	public String setParameter(String url, String name, long value);
-
-	public String setParameter(String url, String name, short value);
-
-	public String setParameter(String url, String name, String value);
-
-	public String shortenURL(String url);
 
 	public byte[] URLtoByteArray(Http.Options options) throws IOException;
 

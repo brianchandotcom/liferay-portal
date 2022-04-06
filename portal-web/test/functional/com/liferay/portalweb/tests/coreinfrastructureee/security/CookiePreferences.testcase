@@ -1,0 +1,160 @@
+@component-name = "portal-security"
+definition {
+
+	property custom.properties = "feature.flag.LPS-142518=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Security";
+
+	setUp {
+		task ("Setup: Setup portal instance") {
+			TestCase.setUpPortalInstance();
+		}
+	}
+
+	@description = "This is a use case for LPS-142518. TC-9 Verify that Accept All at the Cookie Banner could be set and cookies are stored with declined values."
+	@priority = "5"
+	test CookieBannerAcceptAllSelected {
+		property test.name.skip.portal.instance = "CookiePreferences#CookieBannerAcceptAllSelected";
+
+		task ("Given: User click on Accept all") {
+			CookieBanner.cookiesBannerAcceptAll();
+		}
+
+		task ("Then: All cookie consent category related cookies are created and saved with 'accepted' as value.") {
+			CookieHelper.checkAllCookieAreAcceptedAndSaved();
+		}
+	}
+
+	@description = "This is a use case for LPS-142518. TC-1, TC-2 and TC-3: Verify that Cookie Banner is visible with the options configured by the site admin."
+	@priority = "5"
+	test CookieBannerAndCookieConsentPanelElementsAreVisible {
+		property test.name.skip.portal.instance = "CookiePreferences#CookieBannerAndCookieConsentPanelElementsAreVisible";
+
+		task ("Given: Cookie banner and Cookie Consent portlet are present") {
+			CookieBanner.verifyAllElementsArePresent();
+		}
+
+		task ("When: User accept all cookies at the Cookie Consent portlet.") {
+			CookieConsentPanel.cookiesAcceptAll();
+		}
+
+		task ("Then: All cookie consent category related cookies are created and saved with 'accepted' as value.") {
+			CookieHelper.checkAllCookieAreAcceptedAndSaved();
+		}
+
+		task ("And: Cookie Consent portlet in the popup is closed.") {
+			CookieBanner.checkCookieConsentPanelIsNotVisible();
+		}
+	}
+
+	@description = "This is a use case for LPS-142518. TC-10 Verify that Decline All at the Cookie Banner could be set and cookies are stored with declined values."
+	@priority = "5"
+	test CookieBannerDeclineAllSelected {
+		property test.name.skip.portal.instance = "CookiePreferences#CookieBannerDeclineAllSelected";
+
+		task ("Given: User click on Decline all") {
+			CookieBanner.cookiesBannerDeclineAll();
+		}
+
+		task ("Then: All cookie consent category related cookies are created and saved with 'declined' as value.") {
+			CookieHelper.checkAllCookieAreDeclinedAndSaved();
+		}
+	}
+
+	@description = "This is a use case for LPS-142518. TC-4 Verify that Decline All could be set and cookies are stored with declined values."
+	@priority = "5"
+	test CookieConsentDeclineAllSelected {
+		property test.name.skip.portal.instance = "CookiePreferences#CookieConsentDeclineAllSelected";
+
+		task ("Given: Use opens the Cookie consent portlet in a popup") {
+			CookieBanner.openCookieConsentPanel();
+		}
+
+		task ("When: User click on Decline all") {
+			CookieConsentPanel.cookiesDeclineAll();
+		}
+
+		task ("Then: All cookie consent category related cookies are created and saved with 'declined' as value.") {
+			CookieHelper.checkAllCookieAreDeclinedAndSaved();
+		}
+
+		task ("And: Cookie Consent portlet in the popup is closed.") {
+			CookieBanner.checkCookieConsentPanelIsNotVisible();
+		}
+	}
+
+	@description = "This is a use case for LPS-142518. TC-5 When End-User accept selected cookies, only selected cookies are saved. Blocked by LPS-150990."
+	@priority = "5"
+	test CookieConsentPanelAcceptsOnlySelectedCookies {
+		property portal.upstream = "quarantine";
+		property test.name.skip.portal.instance = "CookiePreferences#CookieConsentPanelAcceptsOnlySelectedCookies";
+
+		task ("Given: User opens the Cookie Consent portlet from the Cookie Banner via Configuration link") {
+			CookieBanner.openCookieConsentPanel();
+		}
+
+		task ("When: User accepts only selected cookies via Accept Selected button") {
+			CookieConsentPanel.editCookieConsentConsent(
+				functionalCookies = "true",
+				performanceCookies = "true");
+		}
+
+		task ("Then: Only selected cookie category related cookies are saved, and nothing more") {
+			CookieConsentPanel.verifyCookiesAreNotPresent();
+		}
+	}
+
+	@description = "This is a use case for LPS-142518. TC-7 Verify that Cookie Consent Panel could be added to a Site Page. Blocked by LPS-150992."
+	@priority = "5"
+	test CookieConsentPanelCouldBeAddedToASitePage {
+		property portal.upstream = "quarantine";
+		property test.name.skip.portal.instance = "CookiePreferences#CookieConsentPanelCouldBeAddedToASitePage";
+
+		task ("Given: User creates a site page and adds Cookie Consent Configuration widget to it.") {
+			CookieHelper.createSitePageWithCookieBannerConfigurationPortlet();
+		}
+
+		task ("Then: All elements of the Cookie Consent Portlet are present on the site page") {
+			CookieConsentPanel.verifyAllElementsArePresentOnCookieConsentPortlet();
+		}
+	}
+
+	@description = "This is a use case for LPS-142518. TC-6 Verify that Cookie Consent Panel could be used to save Cookie Preferences."
+	@priority = "5"
+	test CookieConsentPanelCouldSaveCookieSettingsWhenItsOnASitePage {
+		property test.name.skip.portal.instance = "CookiePreferences#CookieConsentPanelCouldSaveCookieSettingsWhenItsOnASitePage";
+
+		task ("Given: User creates a site page and adds Cookie Consent Configuration widget to it.") {
+			CookieHelper.createSitePageWithCookieBannerConfigurationPortlet();
+		}
+
+		task ("When: User selects Accept All button on the Cookie Consent Configuration widget") {
+			CookieConsentPanel.selectAllCookiesOnConsentPanel();
+		}
+
+		task ("Then: All cookie consent category related cookies are created and saved with 'accepted' as value.") {
+			CookieHelper.checkAllCookieAreAcceptedAndSaved();
+		}
+	}
+
+	@description = "This is a use case for LPS-142518. TC-8 Verify that cookies will have 6 months of lifetime when they are accepted or declined. Blocked by LRCI-2917."
+	@ignore = "true"
+	@priority = "5"
+	test CookiesLifetimeIsSixMonthsWhenTheyAreSaved {
+		property test.name.skip.portal.instance = "CookiePreferences#CookiesLifetimeIsSixMonthsWhenTheyAreSaved";
+
+		task ("Given: Cookie Banner is present on the Site.") {
+			CookieBanner.cookiesBannerAcceptAll();
+		}
+
+		task ("When: User accepts all cookie categories") {
+			CookieHelper.checkAllCookieAreAcceptedAndSaved();
+		}
+
+		task ("Then: Cookie category related cookies are saved with 6 months as expiration time.") {
+			CookieBanner.checkIfCookiesHasSixMonthsAsExpirationDate();
+		}
+	}
+
+}

@@ -14,24 +14,22 @@
 
 package com.liferay.segments.asah.connector.internal.cache;
 
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.segments.asah.connector.internal.configuration.SegmentsAsahConfiguration;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.segments.asah.connector.internal.configuration.provider.SegmentsAsahConfigurationProvider;
 
-import java.util.Map;
-
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author David Arques
  */
 @Component(
-	configurationPid = "com.liferay.segments.asah.connector.internal.configuration.SegmentsAsahConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	service = AsahSegmentsEntryCache.class
 )
@@ -42,21 +40,21 @@ public class AsahSegmentsEntryCache {
 	}
 
 	public void putSegmentsEntryIds(String userId, long[] segmentsEntryIds) {
+		int anonymousTimeToLiveInSeconds = PortalCache.DEFAULT_TIME_TO_LIVE;
+
+		try {
+			anonymousTimeToLiveInSeconds =
+				_segmentsAsahConfigurationProvider.
+					getAnonymousUserSegmentsCacheExpirationTime(
+						CompanyThreadLocal.getCompanyId());
+		}
+		catch (ConfigurationException configurationException) {
+			_log.error(configurationException);
+		}
+
 		_portalCache.put(
 			_generateCacheKey(userId), segmentsEntryIds,
-			_anonymousTimeToLiveInSeconds);
-	}
-
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		SegmentsAsahConfiguration segmentsAsahConfiguration =
-			ConfigurableUtil.createConfigurable(
-				SegmentsAsahConfiguration.class, properties);
-
-		_anonymousTimeToLiveInSeconds =
-			segmentsAsahConfiguration.
-				anonymousUserSegmentsCacheExpirationTime();
+			anonymousTimeToLiveInSeconds);
 	}
 
 	@Reference(unbind = "-")
@@ -71,8 +69,13 @@ public class AsahSegmentsEntryCache {
 
 	private static final String _CACHE_PREFIX = "segments-";
 
-	private volatile int _anonymousTimeToLiveInSeconds =
-		PortalCache.DEFAULT_TIME_TO_LIVE;
+	private static final Log _log = LogFactoryUtil.getLog(
+		AsahSegmentsEntryCache.class);
+
 	private PortalCache<String, long[]> _portalCache;
+
+	@Reference
+	private SegmentsAsahConfigurationProvider
+		_segmentsAsahConfigurationProvider;
 
 }

@@ -248,14 +248,13 @@ public class ThemeContributorTopHeadDynamicInclude implements DynamicInclude {
 		String portalURL, PrintWriter printWriter, String[] resourceURLs) {
 
 		for (String resourceURL : resourceURLs) {
-			String staticResourceURL = _portal.getStaticResourceURL(
-				httpServletRequest,
-				StringBundler.concat(
-					portalURL, _portal.getPathProxy(), resourceURL),
-				themeLastModified);
-
 			printWriter.write("<link data-senna-track=\"permanent\" href=\"");
-			printWriter.write(staticResourceURL);
+			printWriter.write(
+				_portal.getStaticResourceURL(
+					httpServletRequest,
+					StringBundler.concat(
+						portalURL, _portal.getPathProxy(), resourceURL),
+					themeLastModified));
 			printWriter.write("\" rel=\"stylesheet\" type = \"text/css\" />\n");
 		}
 	}
@@ -265,14 +264,13 @@ public class ThemeContributorTopHeadDynamicInclude implements DynamicInclude {
 		String portalURL, PrintWriter printWriter, String[] resourceURLs) {
 
 		for (String resourceURL : resourceURLs) {
-			String staticResourceURL = _portal.getStaticResourceURL(
-				httpServletRequest,
-				StringBundler.concat(
-					portalURL, _portal.getPathProxy(), resourceURL),
-				themeLastModified);
-
 			printWriter.write("<script data-senna-track=\"permanent\" src=\"");
-			printWriter.write(staticResourceURL);
+			printWriter.write(
+				_portal.getStaticResourceURL(
+					httpServletRequest,
+					StringBundler.concat(
+						portalURL, _portal.getPathProxy(), resourceURL),
+					themeLastModified));
 			printWriter.write("\" type = \"text/javascript\"></script>\n");
 		}
 	}

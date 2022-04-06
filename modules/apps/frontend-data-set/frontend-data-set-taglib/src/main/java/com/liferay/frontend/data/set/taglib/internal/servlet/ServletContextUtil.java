@@ -57,10 +57,7 @@ public class ServletContextUtil {
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		String portletNamespace = _portal.getPortletNamespace(
-			portletDisplay.getId());
-
-		sb.append(portletNamespace);
+		sb.append(_portal.getPortletNamespace(portletDisplay.getId()));
 
 		sb.append(StringPool.POUND);
 		sb.append(themeDisplay.getPlid());

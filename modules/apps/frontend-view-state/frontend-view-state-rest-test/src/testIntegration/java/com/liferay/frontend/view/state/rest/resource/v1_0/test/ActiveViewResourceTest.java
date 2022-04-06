@@ -42,11 +42,10 @@ public class ActiveViewResourceTest extends BaseActiveViewResourceTestCase {
 		activeViewResource.putActiveViewPageLayoutPortlet(
 			activeViewId, 0L, "-", string);
 
-		Object activeViewPageLayoutPortlet =
+		Assert.assertEquals(
+			string,
 			activeViewResource.getActiveViewPageLayoutPortlet(
-				activeViewId, 0L, "-");
-
-		Assert.assertEquals(string, activeViewPageLayoutPortlet);
+				activeViewId, 0L, "-"));
 	}
 
 	@Override

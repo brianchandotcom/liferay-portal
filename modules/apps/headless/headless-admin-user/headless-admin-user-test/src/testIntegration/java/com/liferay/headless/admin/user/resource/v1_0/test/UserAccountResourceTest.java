@@ -310,8 +310,12 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		UserAccount userAccount3 = userAccountResource.getUserAccount(
 			_testUser.getUserId());
 
+		String idFilterString = String.format(
+			"id in ('%s','%s','%s')", userAccount1.getId(),
+			userAccount2.getId(), userAccount3.getId());
+
 		Page<UserAccount> page = userAccountResource.getUserAccountsPage(
-			null, null, Pagination.of(1, 3), null);
+			null, idFilterString, Pagination.of(1, 3), null);
 
 		Assert.assertEquals(3, page.getTotalCount());
 
@@ -319,6 +323,31 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 			Arrays.asList(userAccount1, userAccount2, userAccount3),
 			(List<UserAccount>)page.getItems());
 		assertValid(page);
+
+		_userLocalService.updateLastLogin(userAccount2.getId(), null);
+		_userLocalService.updateLastLogin(userAccount3.getId(), null);
+
+		page = userAccountResource.getUserAccountsPage(
+			null,
+			String.format(
+				"%s and %s", idFilterString,
+				"lastLoginDate gt 1900-01-01T01:01:28Z"),
+			Pagination.of(1, 3), null);
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(userAccount2, userAccount3),
+			(List<UserAccount>)page.getItems());
+
+		page = userAccountResource.getUserAccountsPage(
+			null,
+			String.format(
+				"%s and %s", idFilterString,
+				"not (lastLoginDate gt 1900-01-01T01:01:28Z)"),
+			Pagination.of(1, 3), null);
+
+		assertEqualsIgnoringOrder(
+			Collections.singletonList(userAccount1),
+			(List<UserAccount>)page.getItems());
 
 		page = userAccountResource.getUserAccountsPage(
 			null, String.format("name eq '%s'", userAccount1.getName()),
@@ -729,7 +758,9 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 	@Override
 	protected String[] getIgnoredEntityFieldNames() {
-		return new String[] {"alternateName", "emailAddress", "name"};
+		return new String[] {
+			"alternateName", "emailAddress", "lastLoginDate", "name"
+		};
 	}
 
 	@Override

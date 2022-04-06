@@ -491,11 +491,11 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 					String aliasResolvedId = ModuleNameUtil.getModuleResolvedId(
 						jsPackage, jsModuleAlias.getAlias());
-					String moduleResolvedId =
-						ModuleNameUtil.getModuleResolvedId(
-							jsPackage, jsModuleAlias.getModuleName());
 
-					exactMatchMap.put(aliasResolvedId, moduleResolvedId);
+					exactMatchMap.put(
+						aliasResolvedId,
+						ModuleNameUtil.getModuleResolvedId(
+							jsPackage, jsModuleAlias.getModuleName()));
 				}
 
 				for (JSModule jsModule : jsPackage.getJSModules()) {

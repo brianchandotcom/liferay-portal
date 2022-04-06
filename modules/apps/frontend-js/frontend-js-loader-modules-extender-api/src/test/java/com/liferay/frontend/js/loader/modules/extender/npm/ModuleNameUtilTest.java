@@ -80,18 +80,16 @@ public class ModuleNameUtilTest {
 
 	@Test
 	public void testGetPackageNameScoped() throws Exception {
-		String packageName = ModuleNameUtil.getPackageName(
-			"@myscope/mypackage/lib/mymodule");
-
-		Assert.assertEquals("@myscope/mypackage", packageName);
+		Assert.assertEquals(
+			"@myscope/mypackage",
+			ModuleNameUtil.getPackageName("@myscope/mypackage/lib/mymodule"));
 	}
 
 	@Test
 	public void testGetPackageNameScopedNoModule() throws Exception {
-		String packageName = ModuleNameUtil.getPackageName(
-			"@myscope/mypackage");
-
-		Assert.assertEquals("@myscope/mypackage", packageName);
+		Assert.assertEquals(
+			"@myscope/mypackage",
+			ModuleNameUtil.getPackageName("@myscope/mypackage"));
 	}
 
 	@Test
@@ -123,18 +121,14 @@ public class ModuleNameUtilTest {
 
 	@Test
 	public void testGetPackagePathScoped() throws Exception {
-		String packagePath = ModuleNameUtil.getPackagePath(
-			"@myscope/mypackage/lib/mymodule");
-
-		Assert.assertEquals("lib/mymodule", packagePath);
+		Assert.assertEquals(
+			"lib/mymodule",
+			ModuleNameUtil.getPackagePath("@myscope/mypackage/lib/mymodule"));
 	}
 
 	@Test
 	public void testGetPackagePathScopedNoModule() throws Exception {
-		String packagePath = ModuleNameUtil.getPackagePath(
-			"@myscope/mypackage");
-
-		Assert.assertNull(packagePath);
+		Assert.assertNull(ModuleNameUtil.getPackagePath("@myscope/mypackage"));
 	}
 
 	@Test

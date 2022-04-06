@@ -166,7 +166,7 @@ definition {
 		for (var searchAssetTitle : list "${resultsList}") {
 			var resultOrder = ${resultOrder} + 1;
 
-			while (IsElementNotPresent(locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE") && (maxIterations = "6")) {
+			while (IsElementNotPresent(key_searchAssetTitle = "${searchAssetTitle}", locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE") && (maxIterations = "6")) {
 				Pause(locator1 = "5000");
 
 				Refresh();

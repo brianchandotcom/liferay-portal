@@ -336,7 +336,7 @@ public class CommerceOrderLocalServiceImpl
 		}
 
 		if (commerceOrder != null) {
-			commerceOrderLocalService.updateCommerceOrder(
+			commerceOrder = commerceOrderLocalService.updateCommerceOrder(
 				externalReferenceCode, commerceOrder.getCommerceOrderId(),
 				billingAddressId, shippingAddressId, commercePaymentMethodKey,
 				commerceShippingMethodId, shippingOptionName,
@@ -345,21 +345,23 @@ public class CommerceOrderLocalServiceImpl
 				totalWithTaxAmount, commerceOrder.getTotalDiscountAmount(),
 				advanceStatus, commerceContext);
 
-			Date orderDate = PortalUtil.getDate(
-				orderDateMonth, orderDateDay, orderDateYear);
-
-			if (orderDate != null) {
-				commerceOrderLocalService.updateOrderDate(
-					commerceOrder.getCommerceOrderId(), orderDateMonth,
-					orderDateDay, orderDateYear, orderDateHour, orderDateMinute,
-					serviceContext);
-			}
-
-			commerceOrderLocalService.updatePaymentStatus(
+			commerceOrder = commerceOrderLocalService.updatePaymentStatus(
 				userId, commerceOrder.getCommerceOrderId(), paymentStatus);
 
-			return commerceOrderLocalService.updateOrderStatus(
-				commerceOrder.getCommerceOrderId(), paymentStatus);
+			User user = userLocalService.getUser(serviceContext.getUserId());
+
+			Date orderDate = PortalUtil.getDate(
+				orderDateMonth, orderDateDay, orderDateYear, orderDateHour,
+				orderDateMinute, user.getTimeZone(),
+				CommerceOrderDateException.class);
+
+			if (orderDate != null) {
+				commerceOrder.setOrderDate(orderDate);
+			}
+
+			commerceOrder.setOrderStatus(orderStatus);
+
+			return commerceOrderPersistence.update(commerceOrder);
 		}
 
 		// Add
@@ -1536,20 +1538,6 @@ public class CommerceOrderLocalServiceImpl
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public CommerceOrder updateOrderStatus(
-			long commerceOrderId, int orderStatus)
-		throws PortalException {
-
-		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
-			commerceOrderId);
-
-		commerceOrder.setOrderStatus(orderStatus);
-
-		return commerceOrderPersistence.update(commerceOrder);
-	}
-
-	@Indexable(type = IndexableType.REINDEX)
-	@Override
 	public CommerceOrder updatePaymentStatus(
 			long userId, long commerceOrderId, int paymentStatus)
 		throws PortalException {
@@ -1754,18 +1742,19 @@ public class CommerceOrderLocalServiceImpl
 		}
 
 		if (commerceOrder != null) {
-			commerceOrderLocalService.updateCommerceOrder(
+			commerceOrder = commerceOrderLocalService.updateCommerceOrder(
 				externalReferenceCode, commerceOrder.getCommerceOrderId(),
 				billingAddressId, shippingAddressId, commercePaymentMethodKey,
 				commerceShippingMethodId, shippingOptionName,
 				purchaseOrderNumber, subtotal, shippingAmount, total,
 				advanceStatus, commerceContext);
 
-			commerceOrderLocalService.updatePaymentStatus(
+			commerceOrder = commerceOrderLocalService.updatePaymentStatus(
 				userId, commerceOrder.getCommerceOrderId(), paymentStatus);
 
-			return commerceOrderLocalService.updateOrderStatus(
-				commerceOrder.getCommerceOrderId(), paymentStatus);
+			commerceOrder.setOrderStatus(paymentStatus);
+
+			return commerceOrderPersistence.update(commerceOrder);
 		}
 
 		// Add

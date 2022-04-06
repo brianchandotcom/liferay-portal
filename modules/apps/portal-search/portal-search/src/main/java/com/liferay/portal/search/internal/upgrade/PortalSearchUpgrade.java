@@ -35,8 +35,10 @@ public class PortalSearchUpgrade implements UpgradeStepRegistrator {
 	public void register(Registry registry) {
 		registry.register("0.0.0", "1.0.1", new DummyUpgradeStep());
 
+		registry.register("0.0.1", "0.0.2", new DummyUpgradeStep());
+
 		registry.register(
-			"0.0.1", "1.0.0",
+			"0.0.2", "1.0.0",
 			_configurationUpgradeStepFactory.createUpgradeStep(
 				"com.liferay.portal.search.internal.index." +
 					"IndexStatusManagerInternalConfiguration",

@@ -21,6 +21,7 @@
 
 		<column db-name="oA2AScopeAliasesId" name="oAuth2ApplicationScopeAliasesId" type="long" />
 		<column name="allowedGrantTypes" type="String" />
+		<column name="clientAuthenticationMethod" type="String" />
 		<column name="clientCredentialUserId" type="long" />
 		<column name="clientCredentialUserName" type="String" />
 		<column name="clientId" type="String" />

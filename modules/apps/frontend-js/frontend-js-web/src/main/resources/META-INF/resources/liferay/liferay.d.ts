@@ -171,6 +171,13 @@ declare module Liferay {
 			options?: {data: Object; url: string}
 		): void;
 
+		export function removeEntitySelection(
+			entityIdString: string,
+			entityNameString: string,
+			removeEntityButton: string | HTMLElement,
+			namespace: string
+		): void;
+
 		/**
 		 * Sets the form elements to given values.
 		 */

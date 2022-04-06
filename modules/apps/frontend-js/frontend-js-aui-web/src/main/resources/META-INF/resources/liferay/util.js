@@ -566,33 +566,6 @@
 			return Math.ceil(Math.random() * new Date().getTime());
 		},
 
-		removeEntitySelection(
-			entityIdString,
-			entityNameString,
-			removeEntityButton,
-			namespace
-		) {
-			const elementByEntityId = document.getElementById(
-				`${namespace}${entityIdString}`
-			);
-
-			if (elementByEntityId) {
-				elementByEntityId.value = 0;
-			}
-
-			const elementByEntityName = document.getElementById(
-				`${namespace}${entityNameString}`
-			);
-
-			if (elementByEntityName) {
-				elementByEntityName.value = '';
-			}
-
-			Liferay.Util.toggleDisabled(removeEntityButton, true);
-
-			Liferay.fire('entitySelectionRemoved');
-		},
-
 		reorder(box, down) {
 			box = Util.getElement(box);
 

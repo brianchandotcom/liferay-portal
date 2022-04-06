@@ -258,7 +258,7 @@ export function useObjectFieldForm({
 			if (!settings.fileSource) {
 				errors.fileSource = REQUIRED_MSG;
 			}
-			if (!settings.maximumFileSize) {
+			if (!settings.maximumFileSize && settings.maximumFileSize !== 0) {
 				errors.maximumFileSize = REQUIRED_MSG;
 			}
 			else if (settings.maximumFileSize < 0) {

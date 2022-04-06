@@ -1,7 +1,7 @@
-configuration.override.com.liferay.dynamic.data.mapping.form.web.internal.configuration.DDMFormWebConfiguration_guestUploadFileExtensions=[\
-    "doc",\
-    "xlsx",\
-]
+    configuration.override.com.liferay.dynamic.data.mapping.form.web.internal.configuration.DDMFormWebConfiguration_guestUploadFileExtensions=[\
+        "doc",\
+        "xlsx",\
+    ]
 
     testray.team.developer-tools.component.names=\
         Blade Samples,\

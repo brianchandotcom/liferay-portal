@@ -98,10 +98,10 @@ public class FragmentEntryProcessorHelperTest {
 	public void testGetFileEntryIdClassNameClassPKDLImage() throws Exception {
 		FileEntry fileEntry = _addImageFileEntry();
 
-		long fileEntryId = _fragmentEntryProcessorHelper.getFileEntryId(
-			FileEntry.class.getName(), fileEntry.getFileEntryId());
-
-		Assert.assertEquals(fileEntry.getFileEntryId(), fileEntryId);
+		Assert.assertEquals(
+			fileEntry.getFileEntryId(),
+			_fragmentEntryProcessorHelper.getFileEntryId(
+				FileEntry.class.getName(), fileEntry.getFileEntryId()));
 	}
 
 	@Test
@@ -111,22 +111,23 @@ public class FragmentEntryProcessorHelperTest {
 		JournalArticle journalArticle = _addJournalArticle(
 			_addImageFileEntry(), "ImageFieldName");
 
-		long fileEntryId = _fragmentEntryProcessorHelper.getFileEntryId(
-			JournalArticle.class.getName(),
-			journalArticle.getResourcePrimKey());
-
-		Assert.assertEquals(0L, fileEntryId);
+		Assert.assertEquals(
+			0L,
+			_fragmentEntryProcessorHelper.getFileEntryId(
+				JournalArticle.class.getName(),
+				journalArticle.getResourcePrimKey()));
 	}
 
 	@Test
 	public void testGetFileEntryIdClassPKDLImage() throws Exception {
 		FileEntry fileEntry = _addImageFileEntry();
 
-		long fileEntryId = _fragmentEntryProcessorHelper.getFileEntryId(
-			_portal.getClassNameId(FileEntry.class.getName()),
-			fileEntry.getFileEntryId(), "fileURL", LocaleUtil.getSiteDefault());
-
-		Assert.assertEquals(fileEntry.getFileEntryId(), fileEntryId);
+		Assert.assertEquals(
+			fileEntry.getFileEntryId(),
+			_fragmentEntryProcessorHelper.getFileEntryId(
+				_portal.getClassNameId(FileEntry.class.getName()),
+				fileEntry.getFileEntryId(), "fileURL",
+				LocaleUtil.getSiteDefault()));
 	}
 
 	@Test
@@ -137,12 +138,12 @@ public class FragmentEntryProcessorHelperTest {
 
 		JournalArticle journalArticle = _addJournalArticle(fileEntry, fieldId);
 
-		long fileEntryId = _fragmentEntryProcessorHelper.getFileEntryId(
-			_portal.getClassNameId(JournalArticle.class.getName()),
-			journalArticle.getResourcePrimKey(), fieldId,
-			LocaleUtil.getSiteDefault());
-
-		Assert.assertEquals(fileEntry.getFileEntryId(), fileEntryId);
+		Assert.assertEquals(
+			fileEntry.getFileEntryId(),
+			_fragmentEntryProcessorHelper.getFileEntryId(
+				_portal.getClassNameId(JournalArticle.class.getName()),
+				journalArticle.getResourcePrimKey(), fieldId,
+				LocaleUtil.getSiteDefault()));
 	}
 
 	@Test
@@ -155,10 +156,10 @@ public class FragmentEntryProcessorHelperTest {
 
 		JournalArticle journalArticle = _addJournalArticle(fileEntry, fieldId);
 
-		long fileEntryId = _fragmentEntryProcessorHelper.getFileEntryId(
-			journalArticle, fieldId, LocaleUtil.getSiteDefault());
-
-		Assert.assertEquals(fileEntry.getFileEntryId(), fileEntryId);
+		Assert.assertEquals(
+			fileEntry.getFileEntryId(),
+			_fragmentEntryProcessorHelper.getFileEntryId(
+				journalArticle, fieldId, LocaleUtil.getSiteDefault()));
 	}
 
 	private DDMStructure _addDDMStructure(Group group, String content)

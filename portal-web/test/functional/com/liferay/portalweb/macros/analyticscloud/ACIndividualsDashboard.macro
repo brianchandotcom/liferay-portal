@@ -56,6 +56,12 @@ definition {
 			locator1 = "ACIndividualsDashboard#DELETE_BREAKDOWN_BUTTON");
 	}
 
+	macro expandActivity {
+		Click(
+			key_pageTitle = "${eventName}",
+			locator1 = "ACUtils#PAGE_TITLE");
+	}
+
 	macro filterKnownIndividualList {
 		Click(
 			key_rowName = "${rowName}",

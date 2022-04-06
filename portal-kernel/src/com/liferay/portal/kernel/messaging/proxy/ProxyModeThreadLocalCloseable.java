@@ -29,7 +29,7 @@ public class ProxyModeThreadLocalCloseable implements Closeable {
 
 	@Override
 	public void close() {
-		ProxyModeThreadLocal.setForceSync(_forceSync);
+		ProxyModeThreadLocal.setWithSafeCloseable(_forceSync);
 	}
 
 	private final boolean _forceSync;

@@ -78,7 +78,7 @@ public class CPSpecificationOptionsPortlet extends MVCPortlet {
 		try (SafeCloseable safeCloseable =
 				ProxyModeThreadLocal.setWithSafeCloseable(true)) {
 
-			ProxyModeThreadLocal.setForceSync(true);
+			ProxyModeThreadLocal.setWithSafeCloseable(true);
 
 			super.processAction(actionRequest, actionResponse);
 		}

@@ -53,7 +53,7 @@ public class DeleteAssetCategoryCPDefinitionMVCActionCommand
 		try (ProxyModeThreadLocalCloseable proxyModeThreadLocalCloseable =
 				new ProxyModeThreadLocalCloseable()) {
 
-			ProxyModeThreadLocal.setForceSync(true);
+			ProxyModeThreadLocal.setWithSafeCloseable(true);
 
 			return super.processAction(actionRequest, actionResponse);
 		}

@@ -100,7 +100,7 @@ public class CommerceOpenOrderContentPortlet extends MVCPortlet {
 		try (ProxyModeThreadLocalCloseable proxyModeThreadLocalCloseable =
 				new ProxyModeThreadLocalCloseable()) {
 
-			ProxyModeThreadLocal.setForceSync(true);
+			ProxyModeThreadLocal.setWithSafeCloseable(true);
 
 			super.processAction(actionRequest, actionResponse);
 		}

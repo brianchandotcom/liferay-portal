@@ -14,6 +14,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
+import classNames from 'classnames';
 import React, {useEffect, useRef, useState} from 'react';
 
 import {useGlobalContext} from '../../app/contexts/GlobalContext';
@@ -174,7 +175,10 @@ function SpacingSelectorButton({field, onChange, position, type, value}) {
 					aria-expanded={active}
 					aria-haspopup={true}
 					aria-label={field?.label}
-					className={`${BUTTON_CLASSNAME} b-0 flex-grow-1 mb-0 text-center`}
+					className={classNames(
+						`${BUTTON_CLASSNAME} b-0 flex-grow-1 mb-0 text-center`,
+						{'text-secondary': !active}
+					)}
 					data-position={position}
 					data-type={type}
 					disabled={!field || field.disabled}

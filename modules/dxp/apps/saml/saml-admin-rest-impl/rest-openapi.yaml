@@ -1,0 +1,137 @@
+components:
+    schemas:
+        Idp:
+            # @review
+            description:
+                Configuration of the SAML provider's IDP capability.
+            properties:
+                authnRequestSignatureRequired:
+                    type: boolean
+                defaultAssertionLifetime:
+                    type: integer
+                sessionMaximumAge:
+                    format: int64
+                    type: integer
+                sessionTimeout:
+                    format: int64
+                    type: integer
+            type: object
+        SamlProvider:
+            description:
+                The complete configuration of this SAML Provider.
+            properties:
+                enabled:
+                    type: boolean
+                entityId:
+                    type: string
+                idp:
+                    $ref: "#/components/schemas/Idp"
+                keyStoreCredentialPassword:
+                    type: string
+                    writeOnly: true
+                role:
+                    enum: [idp, sp]
+                    type: string
+                signMetadata:
+                    type: boolean
+                sp:
+                    $ref: "#/components/schemas/Sp"
+                sslRequired:
+                    type: boolean
+            type: object
+        Sp:
+            # @review
+            description:
+                Configuration of the SAML provider's SP capability.
+            properties:
+                allowShowingTheLoginPortlet:
+                    type: boolean
+                assertionSignatureRequired:
+                    type: boolean
+                clockSkew:
+                    format: int64
+                    type: integer
+                keyStoreEncryptionCredentialPassword:
+                    type: string
+                    writeOnly: true
+                ldapImportEnabled:
+                    type: boolean
+                signAuthnRequest:
+                    type: boolean
+            type: object
+info:
+    description:
+        "SAML configuration. A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
+        'com.liferay.saml.admin.rest.client', and version '1.0.0'."
+    license:
+        name: "Apache 2.0"
+        url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+    title: "Headless Admin SAML"
+    version: v1.0
+openapi: 3.0.1
+paths:
+    "/provider":
+        get:
+            description:
+                Retrieves the SAML Provider configuration.
+            operationId: getSamlProvider
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/SamlProvider"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/SamlProvider"
+            tags: ["SamlProvider"]
+        patch:
+            description:
+                Patch the SAML Provider configuration.
+            operationId: patchSamlProvider
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/SamlProvider"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/SamlProvider"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/SamlProvider"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/SamlProvider"
+                    # @review
+                    description:
+                        SAML provider configuration was successfully created
+            tags: ["SamlProvider"]
+        post:
+            description:
+                Creates a full SAML Provider configuration with peer connections.
+            operationId: postSamlProvider
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/SamlProvider"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/SamlProvider"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/SamlProvider"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/SamlProvider"
+                    # @review
+                    description:
+                        SAML provider configuration was successfully created
+            tags: ["SamlProvider"]

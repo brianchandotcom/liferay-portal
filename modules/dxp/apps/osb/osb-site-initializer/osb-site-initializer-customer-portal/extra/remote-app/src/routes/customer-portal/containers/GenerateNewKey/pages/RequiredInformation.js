@@ -10,6 +10,7 @@
  */
 
 import ClayIcon from '@clayui/icon';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import {FieldArray, Formik} from 'formik';
 import {useEffect, useMemo, useState} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
@@ -61,28 +62,33 @@ const RequiredInformation = ({
 		[values?.keys]
 	);
 
-	useEffect(() => {
-		const newUsedKeys = usedKeysCount + values?.keys?.length;
+	const newUsedKeys = usedKeysCount + values?.keys?.length;
+	const hasReachedMaximumKeys = newUsedKeys === avaliableKeysMaximumCount;
 
+	useEffect(() => {
 		const verificationDisabledType = infoSelectedKey.hasNotPermanentLicence
 			? !values.name || !values.maxClusterNodes
 			: !values.name || hasError;
 
 		setBaseButtonDisabled(verificationDisabledType);
 		setAddButtonDisabled(
-			newUsedKeys === avaliableKeysMaximumCount ||
-				!hasFilledAtLeastOneField
+			hasReachedMaximumKeys || !hasFilledAtLeastOneField
 		);
 	}, [
-		avaliableKeysMaximumCount,
 		hasError,
 		hasFilledAtLeastOneField,
+		hasReachedMaximumKeys,
 		infoSelectedKey.hasNotPermanentLicence,
-		usedKeysCount,
-		values?.keys?.length,
 		values.maxClusterNodes,
 		values.name,
 	]);
+
+	const addActivationKeyProp = hasReachedMaximumKeys
+		? {
+				title:
+					'Maximum number of Activation Keys reached for this subscription.',
+		  }
+		: {};
 
 	const submitKey = async () => {
 		if (
@@ -307,28 +313,48 @@ const RequiredInformation = ({
 										</Button>
 									)}
 
-									<Button
-										className="btn btn-secondary mb-3 mt-4 py-2"
-										disabled={addButtonDisabled}
-										displayType="secundary"
-										onClick={() => {
-											push(getInitialGenerateNewKey());
+									<ClayTooltipProvider
+										contentRenderer={({title}) => (
+											<div>
+												<p className="font-weight-bold m-0"></p>
 
-											setAvailableKeys(
-												(
-													previousAvailableAdminsRoles
-												) =>
-													previousAvailableAdminsRoles +
-													1
-											);
-										}}
+												<p className="font-weight-normal m-0 text-paragraph">
+													{title}
+												</p>
+											</div>
+										)}
+										delay={200}
 									>
-										<ClayIcon
-											className="cp-button-icon-plus mr-2"
-											symbol="plus"
-										/>
-										Add Activation Key
-									</Button>
+										<Button
+											className="btn btn-secondary mb-3 mt-4 p-0"
+											disabled={addButtonDisabled}
+											displayType="secundary"
+											onClick={() => {
+												push(
+													getInitialGenerateNewKey()
+												);
+
+												setAvailableKeys(
+													(
+														previousAvailableAdminsRoles
+													) =>
+														previousAvailableAdminsRoles +
+														1
+												);
+											}}
+										>
+											<div
+												className="mx-1 p-2"
+												{...addActivationKeyProp}
+											>
+												<ClayIcon
+													className="cp-button-icon-plus mr-2"
+													symbol="plus"
+												/>
+												Add Activation Key
+											</div>
+										</Button>
+									</ClayTooltipProvider>
 
 									<div className="dropdown-divider"></div>
 								</div>

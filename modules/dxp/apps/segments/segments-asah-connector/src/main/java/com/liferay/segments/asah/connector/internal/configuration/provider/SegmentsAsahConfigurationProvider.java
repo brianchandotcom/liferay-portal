@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.segments.asah.connector.internal.configuration.SegmentsAsahCompanyConfiguration;
 import com.liferay.segments.asah.connector.internal.configuration.SegmentsAsahConfiguration;
-import com.liferay.segments.configuration.SegmentsCompanyConfiguration;
 
 import java.io.IOException;
 
@@ -60,6 +59,22 @@ public class SegmentsAsahConfigurationProvider {
 			anonymousUserSegmentsCacheExpirationTime();
 	}
 
+	public int getInterestTermsCacheExpirationTime(long companyId)
+		throws ConfigurationException {
+
+		if (!_isSegmentsAsahCompanyConfigurationDefined(companyId)) {
+			return _segmentsAsahConfiguration.
+				interestTermsCacheExpirationTime();
+		}
+
+		SegmentsAsahCompanyConfiguration segmentsAsahCompanyConfiguration =
+			_configurationProvider.getCompanyConfiguration(
+				SegmentsAsahCompanyConfiguration.class, companyId);
+
+		return segmentsAsahCompanyConfiguration.
+			interestTermsCacheExpirationTime();
+	}
+
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
@@ -73,7 +88,7 @@ public class SegmentsAsahConfigurationProvider {
 		try {
 			String filterString = StringBundler.concat(
 				"(&(", ConfigurationAdmin.SERVICE_FACTORYPID, StringPool.EQUAL,
-				SegmentsCompanyConfiguration.class.getName(), ".scoped",
+				SegmentsAsahConfiguration.class.getName(), ".scoped",
 				")(companyId=", companyId, "))");
 
 			Configuration[] configuration =

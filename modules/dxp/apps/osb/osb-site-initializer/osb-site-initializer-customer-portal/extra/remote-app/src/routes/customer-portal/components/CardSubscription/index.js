@@ -63,7 +63,7 @@ const CardSubscription = ({
 				/>
 			)}
 			<div
-				className="border border-light cp-card-subscription p-4 rounded"
+				className="border border-light cp-card-subscription px-3 py-4 rounded"
 				onClick={() => setVisible(true)}
 			>
 				<div className="text-center">

@@ -182,8 +182,8 @@ function filterStyles({item, selectedViewportSize, styles}) {
 
 		if (
 			styleValue &&
-			defaultValue !== styleValue &&
-			selectedViewportSize === VIEWPORT_SIZES.desktop &&
+			(defaultValue !== styleValue ||
+				selectedViewportSize !== VIEWPORT_SIZES.desktop) &&
 			(!isContainerFixed ||
 				(styleName !== 'marginRight' && styleName !== 'marginLeft'))
 		) {

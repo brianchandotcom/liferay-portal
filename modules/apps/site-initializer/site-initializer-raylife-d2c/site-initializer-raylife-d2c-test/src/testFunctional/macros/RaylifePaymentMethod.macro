@@ -72,6 +72,71 @@ definition {
 		Click(locator1 = "RaylifePaymentMethod#PAY_NOW");
 	}
 
+	macro enablePricingPaypal {
+		ApplicationsMenu.gotoPortlet(
+			category = "Product Management",
+			panel = "Commerce",
+			portlet = "Products");
+
+		CommerceNavigator.gotoEntry(entryName = "Business Owners Policy");
+
+		CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+		CommerceNavigator.gotoEntry(entryName = "PAY IN FULL");
+
+		WaitForElementPresent(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Type(
+			locator1 = "CommerceEntry#PRICE_FIELD",
+			value1 = "1.00");
+
+		Type(
+			locator1 = "CommerceEntry#SALE_PRICE_FIELD",
+			value1 = "1.00");
+
+		Type(
+			locator1 = "CommerceEntry#COST_FIELD",
+			value1 = "1.00");
+
+		Button.clickPublish();
+
+		Alert.viewSuccessMessage();
+
+		Click(locator1 = "Icon#CLOSE");
+
+		IFrame.selectTopFrame();
+
+		CommerceNavigator.gotoEntry(entryName = "INSTALLMENT");
+
+		WaitForElementPresent(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Type(
+			locator1 = "CommerceEntry#PRICE_FIELD",
+			value1 = "1.00");
+
+		Type(
+			locator1 = "CommerceEntry#SALE_PRICE_FIELD",
+			value1 = "1.00");
+
+		Type(
+			locator1 = "CommerceEntry#COST_FIELD",
+			value1 = "1.00");
+
+		Button.clickPublish();
+
+		Alert.viewSuccessMessage();
+
+		Click(locator1 = "Icon#CLOSE");
+
+		IFrame.selectTopFrame();
+
+		Button.clickPublish();
+	}
+
 	macro paypalPaymentFlow {
 		var raylifePaypalEmail = PropsUtil.get("raylife.paypal.email");
 		var raylifePaypalPassword = PropsUtil.get("raylife.paypal.password");

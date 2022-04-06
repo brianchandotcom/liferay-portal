@@ -31,6 +31,8 @@ definition {
 	test CanViewConfirmSuccessfulPayment {
 		RaylifePaymentMethod.enablePayPalPayment();
 
+		RaylifePaymentMethod.configurationPaypal();
+
 		ApplicationsMenu.gotoSite(key_site = "Raylife");
 
 		RaylifeHomePage.startFlow();
@@ -55,7 +57,7 @@ definition {
 
 		Click(locator1 = "RaylifePaymentMethod#PAY_NOW");
 
-		AssertElementPresent(locator1 = "RaylifePaymentMethod#CONGRATS");
+		AssertElementPresent(locator1 = "RaylifePaymentMethod#FIELD_EMAIL_PAYPAL");
 	}
 
 	@description = "LPS-144583 - Check if the payment method is not selected by default"

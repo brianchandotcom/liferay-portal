@@ -104,13 +104,13 @@ definition {
 		task ("Go to Styles and assert the styles are collapsible and are listed in groups") {
 			Navigator.gotoNavTab(navTab = "Styles");
 
-			for (var key_panel : list "Margin,Padding,Text,Background,Borders,Effects") {
+			for (var key_panel : list "Spacing,Text,Background,Borders,Effects") {
 				Panel.collapsePanel(panel = "${key_panel}");
 			}
 
 			AssertElementNotPresent(locator1 = "//div[contains(@class,'fieldset')]");
 
-			for (var key_panel : list "Margin,Padding,Text,Background,Borders,Effects") {
+			for (var key_panel : list "Spacing,Text,Background,Borders,Effects") {
 				Panel.expandPanel(panel = "${key_panel}");
 			}
 		}

@@ -155,14 +155,12 @@ definition {
 
 		task ("Assert the Margin Left and Margin Right fields are disabled") {
 			AssertNotEditable(
-				key_borderBottom = "Margin",
-				key_fieldLabel = "Left",
-				locator1 = "Select#BORDER_BOTTOM_SELECT_FIELD");
+				ariaLabel = "Margin Left",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
 			AssertNotEditable(
-				key_borderBottom = "Margin",
-				key_fieldLabel = "Right",
-				locator1 = "Select#BORDER_BOTTOM_SELECT_FIELD");
+				ariaLabel = "Margin Right",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
 		}
 
 		task ("View the Container styles") {

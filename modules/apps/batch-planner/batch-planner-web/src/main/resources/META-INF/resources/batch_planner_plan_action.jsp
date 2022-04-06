@@ -39,7 +39,7 @@ BatchPlannerPlanDisplay batchPlannerPlanDisplay = (BatchPlannerPlanDisplay)resul
 		<liferay-frontend:component
 			context='<%=
 				HashMapBuilder.<String, Object>put(
-					"batchEngineImportTaskId", batchPlannerPlanDisplay.getBatchPlannerPlanId()
+					"externalReferenceCode", batchPlannerPlanDisplay.getBatchPlannerPlanId()
 				).put(
 					"HTMLElementId", liferayPortletResponse.getNamespace() + "downloadErrorReport" + batchPlannerPlanDisplay.getBatchPlannerPlanId()
 				).put(
@@ -60,7 +60,7 @@ BatchPlannerPlanDisplay batchPlannerPlanDisplay = (BatchPlannerPlanDisplay)resul
 		<liferay-frontend:component
 			context='<%=
 				HashMapBuilder.<String, Object>put(
-					"batchEngineImportTaskId", batchPlannerPlanDisplay.getBatchPlannerPlanId()
+					"externalReferenceCode", batchPlannerPlanDisplay.getBatchPlannerPlanId()
 				).put(
 					"HTMLElementId", liferayPortletResponse.getNamespace() + "downloadImportFile" + batchPlannerPlanDisplay.getBatchPlannerPlanId()
 				).put(

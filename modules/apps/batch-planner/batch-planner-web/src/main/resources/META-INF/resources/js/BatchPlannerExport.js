@@ -16,18 +16,21 @@ import {fetch} from 'frontend-js-web';
 
 import {HEADERS, HEADLESS_BATCH_ENGINE_URL} from './constants';
 
-export function getExportTaskStatusURL(taskId) {
-	return `${HEADLESS_BATCH_ENGINE_URL}/export-task/${taskId}`;
+export function getExportTaskStatusURL(externalReferenceCode) {
+	return `${HEADLESS_BATCH_ENGINE_URL}/export-task/by-external-reference-code/${externalReferenceCode}`;
 }
 
-export function getExportFileURL(taskId) {
-	return `${HEADLESS_BATCH_ENGINE_URL}/export-task/${taskId}/content`;
+export function getExportFileURL(externalReferenceCode) {
+	return `${HEADLESS_BATCH_ENGINE_URL}/export-task/by-external-reference-code/${externalReferenceCode}/content`;
 }
 
-export async function exportStatus(exportTaskId) {
-	const response = await fetch(getExportTaskStatusURL(exportTaskId), {
-		headers: HEADERS,
-	});
+export async function exportStatus(externalReferenceCode) {
+	const response = await fetch(
+		getExportTaskStatusURL(externalReferenceCode),
+		{
+			headers: HEADERS,
+		}
+	);
 
 	if (!response.ok) {
 		throw new Error(response);
@@ -36,8 +39,8 @@ export async function exportStatus(exportTaskId) {
 	return await response.json();
 }
 
-export async function fetchExportedFile(taskId) {
-	const response = await fetch(getExportFileURL(taskId));
+export async function fetchExportedFile(externalReferenceCode) {
+	const response = await fetch(getExportFileURL(externalReferenceCode));
 	const blob = await response.blob();
 
 	return URL.createObjectURL(blob);

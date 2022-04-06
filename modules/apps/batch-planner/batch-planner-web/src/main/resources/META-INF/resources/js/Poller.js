@@ -34,11 +34,11 @@ const STOP_LOADING = 'DOWNLOADING';
 const initialState = {
 	contentType: null,
 	errorMessage: null,
+	externalReferenceCode: null,
 	loading: false,
 	percentage: 0,
 	pollingIntervalId: null,
 	ready: false,
-	taskId: null,
 };
 
 const setError = (error) => ({
@@ -46,8 +46,8 @@ const setError = (error) => ({
 	type: ERROR,
 });
 
-const setTaskId = (contentType, taskId) => ({
-	payload: {contentType, taskId},
+const setExternalReferenceCode = (contentType, externalReferenceCode) => ({
+	payload: {contentType, externalReferenceCode},
 	type: COMPLETED,
 });
 
@@ -75,11 +75,11 @@ export async function startTask(formDataQuerySelector, formSubmitURL) {
 }
 
 export async function getTaskStatus({
+	externalReferenceCode,
 	onFail,
 	onProgress,
 	onSuccess,
 	requestTaskStatus,
-	taskId,
 }) {
 	try {
 		const {
@@ -88,7 +88,7 @@ export async function getTaskStatus({
 			executeStatus,
 			processedItemsCount,
 			totalItemsCount,
-		} = await requestTaskStatus(taskId);
+		} = await requestTaskStatus(externalReferenceCode);
 
 		switch (executeStatus) {
 			case PROCESS_FAILED:
@@ -142,11 +142,11 @@ const reducer = (state = initialState, {payload, type}) => {
 			return {
 				...state,
 				contentType: payload.contentType,
+				externalReferenceCode: payload.externalReferenceCode,
 				loading: false,
 				percentage: 100,
 				pollingIntervalId: null,
 				ready: true,
-				taskId: payload.taskId,
 			};
 		case PROGRESS:
 			return {
@@ -200,7 +200,7 @@ const Poller = (
 		dispatchIfMounted({type: LOADING});
 
 		try {
-			const blobUrl = await requestTaskFile(state.taskId);
+			const blobUrl = await requestTaskFile(state.externalReferenceCode);
 
 			download(blobUrl, EXPORT_FILE_NAME);
 
@@ -211,7 +211,7 @@ const Poller = (
 
 			dispatchIfMounted(setError());
 		}
-	}, [dispatchIfMounted, requestTaskFile, state.taskId]);
+	}, [dispatchIfMounted, requestTaskFile, state.externalReferenceCode]);
 
 	useEffect(() => {
 		let pollingIntervalId;
@@ -220,7 +220,7 @@ const Poller = (
 			dispatchIfMounted({type: LOADING});
 
 			try {
-				const {error, exportTaskId, importTaskId} = await startTask(
+				const {error, externalReferenceCode} = await startTask(
 					formDataQuerySelector,
 					formSubmitURL
 				);
@@ -232,6 +232,7 @@ const Poller = (
 				pollingIntervalId = setInterval(
 					() =>
 						getTaskStatus({
+							externalReferenceCode,
 							onFail: (error) =>
 								dispatchIfMounted(setError(error)),
 							onProgress: (contentType, percent) =>
@@ -240,13 +241,12 @@ const Poller = (
 								),
 							onSuccess: (contentType) =>
 								dispatchIfMounted(
-									setTaskId(
+									setExternalReferenceCode(
 										contentType,
-										exportTaskId || importTaskId
+										externalReferenceCode
 									)
 								),
 							requestTaskStatus,
-							taskId: exportTaskId || importTaskId,
 						}),
 					POLL_INTERVAL
 				);

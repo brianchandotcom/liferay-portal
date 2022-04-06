@@ -16,18 +16,21 @@ import {fetch} from 'frontend-js-web';
 
 import {HEADERS, HEADLESS_BATCH_ENGINE_URL} from './constants';
 
-export function getImportTaskStatusURL(taskId) {
-	return `${HEADLESS_BATCH_ENGINE_URL}/import-task/${taskId}`;
+export function getImportTaskStatusURL(externalReferenceCode) {
+	return `${HEADLESS_BATCH_ENGINE_URL}/import-task/by-external-reference-code/${externalReferenceCode}`;
 }
 
-export function getImportFileURL(taskId) {
-	return `${HEADLESS_BATCH_ENGINE_URL}/import-task/${taskId}/content`;
+export function getImportFileURL(externalReferenceCode) {
+	return `${HEADLESS_BATCH_ENGINE_URL}/import-task/by-external-reference-code/${externalReferenceCode}/content`;
 }
 
-export async function importStatus(exportTaskId) {
-	const response = await fetch(getImportTaskStatusURL(exportTaskId), {
-		headers: HEADERS,
-	});
+export async function importStatus(externalReferenceCode) {
+	const response = await fetch(
+		getImportTaskStatusURL(externalReferenceCode),
+		{
+			headers: HEADERS,
+		}
+	);
 
 	if (!response.ok) {
 		throw new Error(response);

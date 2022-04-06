@@ -14,41 +14,41 @@
 
 import {fetch} from 'frontend-js-web';
 
-const getEndpoint = (type, taskId) => {
+import {HEADLESS_BATCH_ENGINE_URL} from './constants';
+
+const getEndpoint = (type, externalReferenceCode) => {
 	const endpoints = {
-		errorReport: `/o/headless-batch-engine/v1.0/import-task/${taskId}/failed-items/report`,
-		importFile: `/o/headless-batch-engine/v1.0/import-task/${taskId}/content`,
+		errorReport: `${HEADLESS_BATCH_ENGINE_URL}/import-task/by-external-reference-code/${externalReferenceCode}/failed-items/report`,
+		importFile: `${HEADLESS_BATCH_ENGINE_URL}/import-task/by-external-reference-code/${externalReferenceCode}/content`,
 	};
 
 	return endpoints[type];
 };
 
-export default function ({HTMLElementId, batchEngineImportTaskId, type}) {
+export default function ({HTMLElementId, externalReferenceCode, type}) {
 	document
 		.getElementById(HTMLElementId)
 		.addEventListener('click', (event) => {
 			event.preventDefault();
 
-			fetch(getEndpoint(type, batchEngineImportTaskId)).then(
-				(response) => {
-					response.blob().then((blob) => {
-						const LinkElement = document.createElement('a');
+			fetch(getEndpoint(type, externalReferenceCode)).then((response) => {
+				response.blob().then((blob) => {
+					const LinkElement = document.createElement('a');
 
-						LinkElement.href = URL.createObjectURL(blob);
+					LinkElement.href = URL.createObjectURL(blob);
 
-						const fileName = response.headers
-							.get('Content-Disposition')
-							.match(/filename=(.*)/)[1];
+					const fileName = response.headers
+						.get('Content-Disposition')
+						.match(/filename=(.*)/)[1];
 
-						LinkElement.download = fileName;
+					LinkElement.download = fileName;
 
-						document.body.appendChild(LinkElement);
+					document.body.appendChild(LinkElement);
 
-						LinkElement.click();
+					LinkElement.click();
 
-						LinkElement.remove();
-					});
-				}
-			);
+					LinkElement.remove();
+				});
+			});
 		});
 }

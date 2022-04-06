@@ -86,7 +86,8 @@ public class SubmitBatchPlannerPlanMVCResourceCommand
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
 				JSONUtil.put(
-					"exportTaskId", batchPlannerPlan.getBatchPlannerPlanId()));
+					"externalReferenceCode",
+					batchPlannerPlan.getBatchPlannerPlanId()));
 		}
 	}
 
@@ -115,7 +116,8 @@ public class SubmitBatchPlannerPlanMVCResourceCommand
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
 				JSONUtil.put(
-					"importTaskId", batchPlannerPlan.getBatchPlannerPlanId()));
+					"externalReferenceCode",
+					batchPlannerPlan.getBatchPlannerPlanId()));
 		}
 		finally {
 			FileUtil.delete(importFile);

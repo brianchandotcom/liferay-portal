@@ -261,7 +261,7 @@ definition {
 			startingValue = "Nickname");
 	}
 
-	@description = "This is a use case for LPS-146795.The test is blocked and waiting on POSHI-256"
+	@description = "This is a use case for LPS-146795. The user admin could add new user with space character in geolocation custom field name."
 	@priority = "4"
 	test AddNewUserWithGeolocationCustomFields {
 		ApplicationsMenu.gotoPortlet(

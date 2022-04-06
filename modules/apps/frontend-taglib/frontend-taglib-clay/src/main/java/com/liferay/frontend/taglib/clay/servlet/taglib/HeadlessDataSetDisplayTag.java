@@ -399,12 +399,10 @@ public class HeadlessDataSetDisplayTag extends IncludeTag {
 			PortletPreferencesFactoryUtil.getPortalPreferences(
 				httpServletRequest);
 
-		String clayDataSetDisplaySettingsNamespace =
-			ServletContextUtil.getClayDataSetDisplaySettingsNamespace(
-				httpServletRequest, _id);
-
 		_activeViewSettingsJSON = portalPreferences.getValue(
-			clayDataSetDisplaySettingsNamespace, "activeViewSettingsJSON");
+			ServletContextUtil.getClayDataSetDisplaySettingsNamespace(
+				httpServletRequest, _id),
+			"activeViewSettingsJSON");
 	}
 
 	private void _setClayDataSetDisplayViewsContext() {

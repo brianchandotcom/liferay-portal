@@ -78,12 +78,13 @@ public class DiffVersionComparatorTag extends IncludeTag {
 			() -> {
 				Date modifiedDate = diffVersion.getModifiedDate();
 
-				String timeDescription = LanguageUtil.getTimeDescription(
-					httpServletRequest,
-					System.currentTimeMillis() - modifiedDate.getTime(), true);
-
 				return LanguageUtil.format(
-					httpServletRequest, "x-ago", timeDescription, false);
+					httpServletRequest, "x-ago",
+					LanguageUtil.getTimeDescription(
+						httpServletRequest,
+						System.currentTimeMillis() - modifiedDate.getTime(),
+						true),
+					false);
 			}
 		).put(
 			"inRange",

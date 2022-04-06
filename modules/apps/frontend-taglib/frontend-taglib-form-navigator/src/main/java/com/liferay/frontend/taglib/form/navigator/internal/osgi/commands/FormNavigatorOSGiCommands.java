@@ -88,11 +88,10 @@ public class FormNavigatorOSGiCommands {
 				FormNavigatorEntry<?> formNavigatorEntry =
 					bundleContext.getService(serviceReference);
 
-				String key = _getKey(
-					formNavigatorEntry.getFormNavigatorId(),
-					formNavigatorEntry.getCategoryKey());
-
-				emitter.emit(key);
+				emitter.emit(
+					_getKey(
+						formNavigatorEntry.getFormNavigatorId(),
+						formNavigatorEntry.getCategoryKey()));
 
 				bundleContext.ungetService(serviceReference);
 			});

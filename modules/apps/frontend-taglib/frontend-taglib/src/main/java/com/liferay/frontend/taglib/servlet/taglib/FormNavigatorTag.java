@@ -15,7 +15,6 @@
 package com.liferay.frontend.taglib.servlet.taglib;
 
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorCategoryProvider;
-import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntry;
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntryProvider;
 import com.liferay.frontend.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -166,11 +165,11 @@ public class FormNavigatorTag extends IncludeTag {
 				WebKeys.THEME_DISPLAY);
 
 		for (String categoryKey : formNavigatorCategoryProvider.getKeys(_id)) {
-			List<FormNavigatorEntry<Object>> formNavigatorEntries =
-				formNavigatorEntryProvider.getFormNavigatorEntries(
-					_id, categoryKey, themeDisplay.getUser(), _formModelBean);
+			if (ListUtil.isNotEmpty(
+					formNavigatorEntryProvider.getFormNavigatorEntries(
+						_id, categoryKey, themeDisplay.getUser(),
+						_formModelBean))) {
 
-			if (ListUtil.isNotEmpty(formNavigatorEntries)) {
 				categoryKeys.add(categoryKey);
 			}
 		}

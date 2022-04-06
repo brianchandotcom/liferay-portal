@@ -48,26 +48,21 @@ public class ScreenNavigationRegistry {
 
 		return ListUtil.filter(
 			screenNavigationCategories,
-			screenNavigationCategory -> {
-				List<ScreenNavigationEntry<T>> screenNavigationEntries =
-					getScreenNavigationEntries(
-						screenNavigationCategory, user, context);
-
-				return ListUtil.isNotEmpty(screenNavigationEntries);
-			});
+			screenNavigationCategory -> ListUtil.isNotEmpty(
+				getScreenNavigationEntries(
+					screenNavigationCategory, user, context)));
 	}
 
 	public <T> List<ScreenNavigationEntry<T>> getScreenNavigationEntries(
 		ScreenNavigationCategory screenNavigationCategory, User user,
 		T context) {
 
-		String key = _getKey(
-			screenNavigationCategory.getScreenNavigationKey(),
-			screenNavigationCategory.getCategoryKey());
-
 		List<ScreenNavigationEntry<T>> screenNavigationEntries =
 			(List<ScreenNavigationEntry<T>>)
-				(List<?>)_screenNavigationEntriesMap.getService(key);
+				(List<?>)_screenNavigationEntriesMap.getService(
+					_getKey(
+						screenNavigationCategory.getScreenNavigationKey(),
+						screenNavigationCategory.getCategoryKey()));
 
 		if (ListUtil.isEmpty(screenNavigationEntries)) {
 			return Collections.emptyList();

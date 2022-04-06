@@ -1,13 +1,20 @@
 definition {
 
-	macro getMarkerPosition {
+	macro assertMarkerPosition {
 		WaitForVisible(locator1 = "DDMField#GEOLOCATION_MAP");
 
-		var style = selenium.getAttribute("//img[contains(@class,'marker-icon')]@style");
-		var position = StringUtil.extractLast("${style}", "translate3d(");
-		var position = StringUtil.extractFirst("${position}", ")");
-
-		return "${position}";
+		if (IsElementPresent(locator1 = "//div[contains(@class,'ddm-geolocation')]")) {
+			AssertAttributeValue(
+				attribute1 = "value",
+				locator1 = "DDMField#GEOLOCATION_MAP_INPUT",
+				value1 = "{&quot;lat&quot;:${lat},&quot;lng&quot;:${lng}}");
+		}
+		else if (IsElementPresent(locator1 = "//div[contains(@id,'Location')]")) {
+			AssertAttributeValue(
+				attribute1 = "value",
+				locator1 = "DDMField#GEOLOCATION_MAP_INPUT",
+				value1 = "{&quot;latitude&quot;:${lat},&quot;longitude&quot;:${lng}}");
+		}
 	}
 
 	macro setMarkerPosition {

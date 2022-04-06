@@ -1106,6 +1106,20 @@ public class UIItemsBuilder {
 		).build();
 	}
 
+	public DropdownItem createEditImageDropdownItem() {
+		return DropdownItemBuilder.putData(
+			"action", "editImage"
+		).putData(
+			"fileEntryId", String.valueOf(_fileEntry.getFileEntryId())
+		).putData(
+			"imageURL",
+			_dlURLHelper.getPreviewURL(
+				_fileEntry, _fileVersion, _themeDisplay, StringPool.BLANK)
+		).setLabel(
+			LanguageUtil.get(_httpServletRequest, "edit-image")
+		).build();
+	}
+
 	public DropdownItem createMoveDropdownItem() {
 		return DropdownItemBuilder.putData(
 			"action", "move"
@@ -1322,6 +1336,20 @@ public class UIItemsBuilder {
 			 !_fileShortcutDisplayContextHelper.isEditActionAvailable()) ||
 			((_fileShortcut == null) &&
 			 !_fileEntryDisplayContextHelper.isEditActionAvailable())) {
+
+			return false;
+		}
+
+		return true;
+	}
+
+	public boolean isEditImageActionAvailable() throws PortalException {
+		if ((_fileShortcut != null) ||
+			!_fileEntryDisplayContextHelper.
+				isCheckoutDocumentActionAvailable() ||
+			!ArrayUtil.contains(
+				PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES,
+				_fileVersion.getMimeType())) {
 
 			return false;
 		}

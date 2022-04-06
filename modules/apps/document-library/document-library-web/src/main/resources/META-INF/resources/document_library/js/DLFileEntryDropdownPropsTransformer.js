@@ -29,6 +29,13 @@ const ACTIONS = {
 		}
 	},
 
+	editImage({fileEntryId, imageURL}, portletNamespace) {
+		window[`${portletNamespace}editWithImageEditor`]({
+			fileEntryId,
+			imageURL,
+		});
+	},
+
 	move({parameterName, parameterValue}, portletNamespace) {
 		window[`${portletNamespace}move`](1, parameterName, parameterValue);
 	},

@@ -133,6 +133,9 @@ public class DefaultDLViewFileVersionDisplayContext
 			_uiItemsBuilder::isEditActionAvailable,
 			_uiItemsBuilder.createEditDropdownItem()
 		).add(
+			_uiItemsBuilder::isEditImageActionAvailable,
+			_uiItemsBuilder.createEditImageDropdownItem()
+		).add(
 			_uiItemsBuilder::isCheckoutActionAvailable,
 			_uiItemsBuilder.createCheckoutDropdownItem()
 		).add(

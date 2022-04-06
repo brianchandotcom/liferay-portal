@@ -361,15 +361,6 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 		).put(
 			"title", analyticsReportsInfoItem.getTitle(object, urlLocale)
 		).put(
-			"validAnalyticsConnection",
-			() -> {
-				AnalyticsReportsDataProvider analyticsReportsDataProvider =
-					new AnalyticsReportsDataProvider(_http);
-
-				return analyticsReportsDataProvider.isValidAnalyticsConnection(
-					companyId);
-			}
-		).put(
 			"viewURLs",
 			_getViewURLsJSONArray(
 				analyticsReportsInfoItem, infoItemReference, locale, object,

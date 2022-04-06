@@ -15,14 +15,9 @@
 package com.liferay.analytics.reports.web.internal.display.context;
 
 import com.liferay.analytics.reports.info.item.ClassNameClassPKInfoItemIdentifier;
-import com.liferay.analytics.reports.web.internal.util.AnalyticsReportsUtil;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
-import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collections;
 import java.util.Map;
@@ -42,9 +37,7 @@ public class AnalyticsReportsDisplayContext<T> {
 		RenderResponse renderResponse, ThemeDisplay themeDisplay) {
 
 		_infoItemReference = infoItemReference;
-		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
-		_themeDisplay = themeDisplay;
 	}
 
 	public Map<String, Object> getData() {
@@ -60,39 +53,6 @@ public class AnalyticsReportsDisplayContext<T> {
 					_getResourceURL("/analytics_reports/get_data"))));
 
 		return _data;
-	}
-
-	public String getHideAnalyticsReportsPanelURL() {
-		return PortletURLBuilder.createActionURL(
-			_renderResponse
-		).setActionName(
-			"/analytics_reports/hide_panel"
-		).setRedirect(
-			() -> {
-				String redirect = ParamUtil.getString(
-					_renderRequest, "redirect");
-
-				if (Validator.isNotNull(redirect)) {
-					return redirect;
-				}
-
-				return _themeDisplay.getLayoutFriendlyURL(
-					_themeDisplay.getLayout());
-			}
-		).buildString();
-	}
-
-	public String getLiferayAnalyticsURL() {
-		return PrefsPropsUtil.getString(
-			_themeDisplay.getCompanyId(), "liferayAnalyticsURL");
-	}
-
-	public boolean isAnalyticsSynced() {
-		long groupId = ParamUtil.getLong(
-			_renderRequest, "groupId", _themeDisplay.getScopeGroupId());
-
-		return AnalyticsReportsUtil.isAnalyticsSynced(
-			_themeDisplay.getCompanyId(), groupId);
 	}
 
 	private ResourceURL _getResourceURL(String resourceID) {
@@ -136,8 +96,6 @@ public class AnalyticsReportsDisplayContext<T> {
 
 	private Map<String, Object> _data;
 	private final InfoItemReference _infoItemReference;
-	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final ThemeDisplay _themeDisplay;
 
 }

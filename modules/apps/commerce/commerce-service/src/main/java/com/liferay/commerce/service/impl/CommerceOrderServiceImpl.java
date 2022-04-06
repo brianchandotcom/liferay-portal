@@ -989,28 +989,6 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 			paymentCommerceTermEntryId, languageId);
 	}
 
-	@Override
-	public CommerceOrder updateTransactionId(
-			long commerceOrderId, String transactionId)
-		throws PortalException {
-
-		_commerceOrderModelResourcePermission.check(
-			getPermissionChecker(), commerceOrderId, ActionKeys.UPDATE);
-
-		return commerceOrderLocalService.updateTransactionId(
-			commerceOrderId, transactionId);
-	}
-
-	@Override
-	public CommerceOrder updateUser(long commerceOrderId, long userId)
-		throws PortalException {
-
-		_commerceOrderModelResourcePermission.check(
-			getPermissionChecker(), commerceOrderId, ActionKeys.UPDATE);
-
-		return commerceOrderLocalService.updateUser(commerceOrderId, userId);
-	}
-
 	private void _checkAccountOrder(
 			long groupId, long commerceAccountId, String action)
 		throws PortalException {

@@ -1724,35 +1724,6 @@ public class CommerceOrderLocalServiceImpl
 		return commerceOrderPersistence.update(commerceOrder);
 	}
 
-	@Indexable(type = IndexableType.REINDEX)
-	@Override
-	public CommerceOrder updateTransactionId(
-			long commerceOrderId, String transactionId)
-		throws PortalException {
-
-		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
-			commerceOrderId);
-
-		commerceOrder.setTransactionId(transactionId);
-
-		return commerceOrderPersistence.update(commerceOrder);
-	}
-
-	@Override
-	public CommerceOrder updateUser(long commerceOrderId, long userId)
-		throws PortalException {
-
-		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
-			commerceOrderId);
-
-		User user = userLocalService.getUser(userId);
-
-		commerceOrder.setUserId(user.getUserId());
-		commerceOrder.setUserName(user.getFullName());
-
-		return commerceOrderPersistence.update(commerceOrder);
-	}
-
 	/**
 	 * @deprecated As of Athanasius (7.3.x)
 	 */

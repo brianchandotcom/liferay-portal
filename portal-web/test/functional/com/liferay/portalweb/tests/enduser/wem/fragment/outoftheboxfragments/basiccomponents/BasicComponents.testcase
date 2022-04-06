@@ -234,6 +234,7 @@ definition {
 	@description = "This is a test for LPS-98241, LPS-115224 and LPS-141412. The user could configure the Heading fragment in page editor."
 	@priority = "5"
 	test ConfigureBasicComponentHeading {
+		property custom.properties = "feature.flag.LPS-141410=true";
 		property portal.acceptance = "true";
 
 		task ("Add a Heading fragment to page") {

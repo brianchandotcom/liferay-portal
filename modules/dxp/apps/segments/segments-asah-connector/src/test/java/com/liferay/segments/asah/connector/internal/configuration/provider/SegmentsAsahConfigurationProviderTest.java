@@ -114,6 +114,60 @@ public class SegmentsAsahConfigurationProviderTest {
 					-RandomTestUtil.randomLong()));
 	}
 
+	@Test
+	public void testGetInterestTermsCacheExpirationTimeWithCompanyConfiguration()
+		throws Exception {
+
+		Mockito.when(
+			_configurationAdmin.listConfigurations(Mockito.anyString())
+		).thenReturn(
+			new Configuration[0]
+		);
+
+		long companyId = RandomTestUtil.randomLong();
+
+		Mockito.when(
+			_configurationProvider.getCompanyConfiguration(
+				SegmentsAsahCompanyConfiguration.class, companyId)
+		).thenReturn(
+			new SegmentsAsahCompanyConfiguration() {
+
+				@Override
+				public int anonymousUserSegmentsCacheExpirationTime() {
+					return 0;
+				}
+
+				@Override
+				public int interestTermsCacheExpirationTime() {
+					return 100;
+				}
+
+			}
+		);
+
+		Assert.assertEquals(
+			100L,
+			_segmentsAsahConfigurationProvider.
+				getInterestTermsCacheExpirationTime(companyId));
+	}
+
+	@Test
+	public void testGetInterestTermsCacheExpirationTimeWithoutCompanyConfiguration()
+		throws Exception {
+
+		Mockito.when(
+			_configurationAdmin.listConfigurations(Mockito.anyString())
+		).thenReturn(
+			null
+		);
+
+		Assert.assertEquals(
+			86400L,
+			_segmentsAsahConfigurationProvider.
+				getInterestTermsCacheExpirationTime(
+					-RandomTestUtil.randomLong()));
+	}
+
 	private ConfigurationAdmin _configurationAdmin;
 	private ConfigurationProvider _configurationProvider;
 	private final SegmentsAsahConfigurationProvider

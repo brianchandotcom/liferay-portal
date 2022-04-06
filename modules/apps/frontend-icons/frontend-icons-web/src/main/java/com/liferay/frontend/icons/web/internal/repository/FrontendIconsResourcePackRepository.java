@@ -14,8 +14,6 @@
 
 package com.liferay.frontend.icons.web.internal.repository;
 
-import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.frontend.icons.web.internal.model.FrontendIconsResource;
 import com.liferay.frontend.icons.web.internal.model.FrontendIconsResourcePack;
 import com.liferay.frontend.icons.web.internal.util.SVGUtil;
@@ -53,18 +51,11 @@ public class FrontendIconsResourcePackRepository {
 
 		Folder folder = _getFolder(company);
 
-		DLFileEntry dlFileEntry = _dlFileEntryLocalService.fetchFileEntry(
-			company.getGroupId(), folder.getFolderId(),
-			frontendIconsResourcePack.getName());
-
 		FileEntry fileEntry = _portletFileRepository.fetchPortletFileEntry(
 			company.getGroupId(), folder.getFolderId(),
 			frontendIconsResourcePack.getName());
 
-		if (dlFileEntry != null) {
-
-			// TODO Can fileEntry be null too?
-
+		if (fileEntry != null) {
 			_portletFileRepository.deletePortletFileEntry(
 				fileEntry.getFileEntryId());
 		}
@@ -110,10 +101,7 @@ public class FrontendIconsResourcePackRepository {
 
 			frontendIconsResourcePack.addFrontendIconsResources(
 				SVGUtil.getFrontendIconsResources(
-					StringUtil.read(
-						_dlFileEntryLocalService.getFileAsStream(
-							fileEntry.getFileEntryId(),
-							fileEntry.getVersion()))));
+					StringUtil.read(fileEntry.getContentStream())));
 
 			return frontendIconsResourcePack;
 		}
@@ -147,10 +135,7 @@ public class FrontendIconsResourcePackRepository {
 
 			List<FrontendIconsResource> frontendIconsResources =
 				SVGUtil.getFrontendIconsResources(
-					StringUtil.read(
-						_dlFileEntryLocalService.getFileAsStream(
-							fileEntry.getFileEntryId(),
-							fileEntry.getVersion())));
+					StringUtil.read(fileEntry.getContentStream()));
 
 			frontendIconsResourcePack.addFrontendIconsResources(
 				frontendIconsResources);
@@ -183,18 +168,17 @@ public class FrontendIconsResourcePackRepository {
 			groupId, _REPOSITORY_NAME, serviceContext);
 	}
 
-	private static final String _REPOSITORY_NAME = "com.liferay.frontend.icons.web";
+	private static final String _REPOSITORY_NAME =
+		"com.liferay.frontend.icons.web";
 
-	private static final String _ROOT_FOLDER_NAME = "com.liferay.frontend.icons.web.icon.packs";
+	private static final String _ROOT_FOLDER_NAME =
+		"com.liferay.frontend.icons.web.icon.packs";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FrontendIconsResourcePackRepository.class);
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
-
-	@Reference
-	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 	@Reference
 	private PortletFileRepository _portletFileRepository;

@@ -135,7 +135,7 @@ const Table: React.FC<TableProps> = ({
 								{activeRow === rowIndex ? (
 									<DropDown actions={actions} item={item} />
 								) : (
-									<div style={{height: 36}}></div>
+									<div style={{height: 33}}></div>
 								)}
 							</Cell>
 						)}

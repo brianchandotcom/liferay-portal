@@ -19,6 +19,9 @@ import {TestrayProject} from './testrayProject';
 import {TestrayRoutine} from './testrayRoutine';
 
 export type TestrayBuild = {
+	creator: {
+		name: string;
+	};
 	dateCreated: string;
 	description: string;
 	dueStatus: number;
@@ -65,6 +68,9 @@ export const getBuild = gql`
 				type: "C_Build"
 				path: "builds/{args.buildId}?nestedFields=productVersion"
 			) {
+			creator {
+				name
+			}
 			dateCreated
 			description
 			dueStatus

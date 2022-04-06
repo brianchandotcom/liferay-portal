@@ -20,6 +20,7 @@ import QATable from '../../../../components/Table/QATable';
 import useTotalTestCases from '../../../../data/useTotalTestCases';
 import {TestrayBuild} from '../../../../graphql/queries';
 import i18n from '../../../../i18n';
+import dayjs from '../../../../util/date';
 import {getDonutLegend} from '../../../../util/graph';
 
 type BuildOverviewProps = {
@@ -50,11 +51,13 @@ const BuildOverview: React.FC<BuildOverviewProps> = ({testrayBuild}) => {
 						},
 						{
 							title: i18n.translate('create-date'),
-							value: testrayBuild.dateCreated,
+							value: dayjs(testrayBuild.dateCreated).format(
+								'lll'
+							),
 						},
 						{
 							title: i18n.translate('created-by'),
-							value: 'John Doe',
+							value: testrayBuild.creator.name,
 						},
 						{title: i18n.translate('all-issues-found'), value: '-'},
 					]}

@@ -44,6 +44,8 @@ export type FormModal = {
 	modal: FormModalOptions;
 };
 
+export type FormModalComponent = Omit<FormModal, 'forceRefetch'>;
+
 type UseFormModal = {
 	isVisible?: boolean;
 	onSave?: (param: any) => void;
@@ -106,8 +108,7 @@ const useFormModal = ({
 			});
 
 			onSave();
-		}
-		catch (error) {
+		} catch (error) {
 			onError(error);
 
 			throw error;

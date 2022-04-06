@@ -23,49 +23,82 @@ import useDebounce from '../../hooks/useDebounce';
 import InputWarning from './InputWarning';
 
 type InputProps = {
-	error?: string;
+	errors?: any;
 	id?: string;
 	label?: string;
 	name: string;
+	register?: any;
 	required?: boolean;
 	type?: string;
 } & InputHTMLAttributes<HTMLInputElement>;
 
-const Input: React.FC<InputProps> = ({
+type InputWrapper = {
+	description?: string;
+	error?: string;
+	label?: string;
+	required?: boolean;
+};
+
+const InputWrapper: React.FC<InputWrapper> = ({
+	children,
+	description,
 	error,
 	label,
+	required,
+}) => {
+	return (
+		<ClayForm.Group>
+			{label && (
+				<label
+					className={classNames(
+						'font-weight-normal mb-1 mx-0 text-paragraph',
+						{required}
+					)}
+				>
+					{label}
+				</label>
+			)}
+
+			{children}
+
+			{description && (
+				<small className="form-text text-muted" id="emailHelp">
+					{description}
+				</small>
+			)}
+
+			{error && <InputWarning>{error}</InputWarning>}
+		</ClayForm.Group>
+	);
+};
+
+const Input: React.FC<InputProps> = ({
+	errors = {},
+	label,
 	name,
+	register = () => {},
 	id = name,
 	type,
 	value,
 	required = false,
 	...otherProps
 }) => (
-	<ClayForm.Group>
-		{label && (
-			<label
-				className={classNames(
-					'font-weight-normal mb-1 mx-0 text-paragraph',
-					{required}
-				)}
-				htmlFor={id}
-			>
-				{label}
-			</label>
-		)}
-
+	<InputWrapper
+		error={errors[name]?.message}
+		label={label}
+		required={required}
+	>
 		<ClayInput
 			className="rounded-xs"
 			component={type === 'textarea' ? 'textarea' : 'input'}
 			id={id}
 			name={name}
 			type={type}
-			value={value || ''}
+			value={value}
 			{...otherProps}
+			{...register(name, {required})}
 		/>
-
-		{error && <InputWarning>{error}</InputWarning>}
-	</ClayForm.Group>
+	</InputWrapper>
 );
 
 export type BoxItem = {

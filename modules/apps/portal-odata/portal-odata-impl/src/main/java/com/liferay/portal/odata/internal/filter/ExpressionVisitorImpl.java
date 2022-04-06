@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.ExistsFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
@@ -298,10 +299,7 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 			BooleanFilter booleanFilter = new BooleanFilter();
 
 			booleanFilter.add(
-				new QueryFilter(
-					_nestedFieldQueryHelper.getQuery(
-						entityField.getFilterableName(locale),
-						fieldName -> new WildcardQueryImpl(fieldName, "*"))),
+				_getNullValueFilter(entityField, locale),
 				BooleanClauseOccur.MUST_NOT);
 
 			return booleanFilter;
@@ -507,10 +505,7 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 		EntityField entityField, Object fieldValue, Locale locale) {
 
 		if (fieldValue == null) {
-			return new QueryFilter(
-				_nestedFieldQueryHelper.getQuery(
-					entityField.getFilterableName(locale),
-					fieldName -> new WildcardQueryImpl(fieldName, "*")));
+			return _getNullValueFilter(entityField, locale);
 		}
 
 		BooleanFilter booleanFilter = new BooleanFilter();
@@ -533,6 +528,21 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 		booleanFilter.add(filter, BooleanClauseOccur.MUST_NOT);
 
 		return booleanFilter;
+	}
+
+	private Filter _getNullValueFilter(EntityField entityField, Locale locale) {
+		EntityField.Type type = entityField.getType();
+
+		if (Objects.equals(type, EntityField.Type.DATE) ||
+			Objects.equals(type, EntityField.Type.DATE_TIME)) {
+
+			return new ExistsFilter(entityField.getFilterableName(locale));
+		}
+
+		return new QueryFilter(
+			_nestedFieldQueryHelper.getQuery(
+				entityField.getFilterableName(locale),
+				fieldName -> new WildcardQueryImpl(fieldName, "*")));
 	}
 
 	private Filter _getORFilter(Filter leftFilter, Filter rightFilter) {

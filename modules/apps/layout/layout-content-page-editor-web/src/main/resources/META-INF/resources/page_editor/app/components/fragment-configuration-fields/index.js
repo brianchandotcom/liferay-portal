@@ -17,6 +17,7 @@ import {CheckboxField} from './CheckboxField';
 import {CollectionSelectorField} from './CollectionSelectorField';
 import {ColorPaletteField} from './ColorPaletteField';
 import {ColorPickerField} from './ColorPickerField';
+import {HideFragmentField} from './HideFragmentField';
 import {ImageSelectorField} from './ImageSelectorField';
 import {ItemSelectorField} from './ItemSelectorField';
 import {NavigationMenuSelectorField} from './NavigationMenuSelectorField';
@@ -31,6 +32,7 @@ export const FRAGMENT_CONFIGURATION_FIELDS = {
 	collectionSelector: CollectionSelectorField,
 	colorPalette: ColorPaletteField,
 	colorPicker: ColorPickerField,
+	hideFragment: HideFragmentField,
 	imageSelector: ImageSelectorField,
 	itemSelector: ItemSelectorField,
 	navigationMenuSelector: NavigationMenuSelectorField,

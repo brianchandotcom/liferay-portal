@@ -32,7 +32,7 @@ export function CheckboxField({disabled, field, onValueSelect, title, value}) {
 	const customValues = field.typeOptions?.customValues;
 
 	return (
-		<ClayForm.Group className="mt-1">
+		<ClayForm.Group className="mb-0 mt-1">
 			<div
 				className="align-items-center d-flex justify-content-between page-editor__sidebar__fieldset__field-checkbox"
 				data-tooltip-align="bottom"

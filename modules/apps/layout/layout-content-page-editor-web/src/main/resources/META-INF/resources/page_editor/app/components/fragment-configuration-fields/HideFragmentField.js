@@ -16,6 +16,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
+import {config} from '../../config';
 import {CheckboxField} from './CheckboxField';
 
 export function HideFragmentField({
@@ -26,13 +27,22 @@ export function HideFragmentField({
 	value,
 }) {
 	return (
-		<CheckboxField
-			disabled={disabled}
-			field={field}
-			onValueSelect={onValueSelect}
-			title={title}
-			value={value}
-		/>
+		<>
+			<CheckboxField
+				disabled={disabled}
+				field={field}
+				onValueSelect={onValueSelect}
+				title={title}
+				value={value}
+			/>
+			{value === 'none' && config.fragmentAdvancedOptionsEnabled && (
+				<p className="small text-secondary">
+					{Liferay.Language.get(
+						'this-fragment-is-still-visible-on-search-.you-can-hide-it-from-search-in-advanced-tab'
+					)}
+				</p>
+			)}
+		</>
 	);
 }
 

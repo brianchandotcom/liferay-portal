@@ -495,6 +495,38 @@ public class ObjectEntryLocalServiceTest {
 					"\"listTypeEntryKeyRequired\"",
 				objectEntryValuesException.getMessage());
 		}
+
+		// Invalid file extension for attachment field
+
+		try {
+			_updateObjectFieldSetting(
+				"upload", "acceptedFileExtensions", "jpg, png");
+
+			FileEntry fileEntry = _dlAppLocalService.addFileEntry(
+				null, TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				StringUtil.randomString() + ".txt", ContentTypes.TEXT_PLAIN,
+				RandomTestUtil.randomBytes(), null, null,
+				ServiceContextTestUtil.getServiceContext());
+
+			_addObjectEntry(
+				HashMapBuilder.<String, Serializable>put(
+					"emailAddressRequired", "peter@liferay.com"
+				).put(
+					"listTypeEntryKeyRequired", "listTypeEntryKey1"
+				).put(
+					"upload", fileEntry.getFileEntryId()
+				).build());
+
+			Assert.fail();
+		}
+		catch (ObjectEntryValuesException.InvalidFileExtension
+					objectEntryValuesException) {
+
+			Assert.assertEquals(
+				"The file extension txt is invalid for object field \"upload\"",
+				objectEntryValuesException.getMessage());
+		}
 	}
 
 	@Test
@@ -1954,6 +1986,23 @@ public class ObjectEntryLocalServiceTest {
 
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_APPROVED, objectEntry.getStatus());
+	}
+
+	private void _updateObjectFieldSetting(
+			String objectFieldName, String objectFieldSettingName,
+			String objectFieldSettingValue)
+		throws Exception {
+
+		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+			_objectDefinition.getObjectDefinitionId(), objectFieldName);
+
+		ObjectFieldSetting objectFieldSetting =
+			_objectFieldSettingLocalService.fetchObjectFieldSetting(
+				objectField.getObjectFieldId(), objectFieldSettingName);
+
+		_objectFieldSettingLocalService.updateObjectFieldSetting(
+			objectFieldSetting.getObjectFieldSettingId(),
+			objectFieldSettingValue);
 	}
 
 	@Inject

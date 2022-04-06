@@ -386,7 +386,7 @@ definition {
 		}
 
 		task ("Attempt to add user using the email domain blocked previously and assert that the new user is not added into the account") {
-			Accounts.addNewUserWithBlockedDomain(
+			Accounts.viewErrorWhenAddingUserWithBlockedDomain(
 				accountName = "Account Name",
 				assigneeName = "gmailUser",
 				emailDomainName = "gmail.com",
@@ -471,7 +471,7 @@ definition {
 		}
 
 		task ("As account admin attempt to add user using the invalid domain and assert that the new user is not added into the account") {
-			Accounts.addNewUserWithInvalidDomain(
+			Accounts.viewErrorWhenAddingUserWithInvalidDomain(
 				accountName = "Account Name",
 				asAccountAdmin = "true",
 				assigneeName = "9teenUser",

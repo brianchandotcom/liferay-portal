@@ -20,9 +20,18 @@ definition {
 	macro setMarkerPosition {
 		WaitForVisible(locator1 = "DDMField#GEOLOCATION_MAP");
 
-		DragAndDrop.dragAndDrop(
-			locator1 = "WCEditWebContent#MARKER",
-			value1 = "${destination}");
+		if (IsElementPresent(locator1 = "//div[contains(@class,'ddm-geolocation')]")) {
+			var javascript = '''
+Liferay.MapBase.get(document.evaluate("//div[contains(@class,'form-group')][*//div[contains(@class,'lfr-map')]]", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.dataset.fieldName.replace('$$en_US', '').replace('ddm', 'map'), (map) => map.position = {location: {lat: ${lat}, lng: ${lng}}})
+			''';
+			var result = selenium.getEval("${javascript}");
+		}
+		else if (IsElementPresent(locator1 = "//div[contains(@id,'Location')]")) {
+			var javascript = '''
+Liferay.MapBase.get(document.evaluate("//div[contains(@class,'lfr-map')]", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.id.replace('Map', ''), (map) => map.position = {location: {lat: ${lat}, lng: ${lng}}})
+			''';
+			var result = selenium.getEval("${javascript}");
+		}
 	}
 
 }

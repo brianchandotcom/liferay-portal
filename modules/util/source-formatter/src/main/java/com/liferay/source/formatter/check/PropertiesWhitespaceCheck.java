@@ -95,15 +95,15 @@ public class PropertiesWhitespaceCheck extends WhitespaceCheck {
 	private String _fixLeadingSpaces(String line) {
 		String leadingSpaces = _getLeadingSpaces(line);
 
-		int length = leadingSpaces.length();
+		int leadingSpacesLength = leadingSpaces.length();
 
-		int remainder = length % 4;
+		int remainder = leadingSpacesLength % 4;
 
 		if (remainder == 0) {
 			return leadingSpaces + StringUtil.trimLeading(line);
 		}
 
-		if ((length / 4) > 0) {
+		if ((leadingSpacesLength / 4) > 0) {
 			leadingSpaces = leadingSpaces.substring(remainder);
 		}
 		else {

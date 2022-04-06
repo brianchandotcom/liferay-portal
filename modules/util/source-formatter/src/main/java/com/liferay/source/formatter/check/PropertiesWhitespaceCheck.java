@@ -110,7 +110,7 @@ public class PropertiesWhitespaceCheck extends WhitespaceCheck {
 
 				sb.append(leadingSpaces);
 
-				for (int i = 0; i < remainder; i++) {
+				for (int i = 0; i < remainder - 1; i++) {
 					sb.append(StringPool.SPACE);
 				}
 

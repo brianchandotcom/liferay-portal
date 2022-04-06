@@ -19,7 +19,7 @@ const CartResource = ServiceProvider.DeliveryCartAPI('v1');
 
 function formatCartItem(cpInstance) {
 	return {
-		options: JSON.stringify(cpInstance.options || []),
+		options: JSON.stringify(cpInstance.skuOptions || []),
 		quantity: cpInstance.quantity,
 		skuId: cpInstance.skuId,
 	};
@@ -59,7 +59,7 @@ export async function addToCart(cpInstances, cartId, channel, accountId) {
 		const includedCartItem = updatedCartItems.find((cartItem) => {
 			return (
 				cartItem.skuId === cpInstance.skuId &&
-				cartItem.options === cpInstance.options
+				cartItem.options === JSON.stringify(cpInstance.skuOptions)
 			);
 		});
 

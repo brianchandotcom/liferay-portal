@@ -147,12 +147,12 @@ function SkuContent({
 							}}
 							cpInstance={{
 								inCart,
-								options: formatProductOptions(
-									product.options,
-									product.productOptions
-								),
 								quantity: product.quantity,
 								skuId: product.skuId,
+								skuOptions: formatProductOptions(
+									product.skuOptions,
+									product.productOptions
+								),
 							}}
 							disabled={!productPurchasable}
 							settings={{

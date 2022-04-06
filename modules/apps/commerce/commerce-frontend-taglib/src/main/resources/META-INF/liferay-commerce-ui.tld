@@ -50,12 +50,12 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>options</name>
+			<name>size</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>size</name>
+			<name>skuOptions</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

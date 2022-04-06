@@ -52,7 +52,7 @@ class DDMFormHandler {
 			headers: new Headers({'x-csrf-token': Liferay.authToken}),
 		}).then((cpInstance) => {
 			if (cpInstance.cpInstanceExist) {
-				cpInstance.options = ddmFormValues;
+				cpInstance.skuOptions = ddmFormValues;
 				cpInstance.skuId = parseInt(cpInstance.cpInstanceId, 10);
 
 				const dispatchedPayload = {

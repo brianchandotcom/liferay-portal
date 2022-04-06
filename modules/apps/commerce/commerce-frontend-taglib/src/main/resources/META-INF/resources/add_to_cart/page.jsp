@@ -64,8 +64,8 @@ if (alignment.equals("full-width")) {
 		},
 		cpInstance: {
 			inCart: <%= inCart %>,
-			options: <%= options %> || [],
 			skuId: <%= cpInstanceId %>,
+			skuOptions: <%= skuOptions %> || [],
 			stockQuantity: <%= stockQuantity %>,
 		},
 		disabled: <%= disabled %>,

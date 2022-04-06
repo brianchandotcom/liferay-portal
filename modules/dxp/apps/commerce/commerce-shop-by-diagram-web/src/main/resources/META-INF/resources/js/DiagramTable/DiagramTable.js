@@ -41,8 +41,8 @@ function formatCpInstances(cpInstances, quantities) {
 				return selectedCpInstances;
 			}
 
-			const options = formatProductOptions(
-				cpInstance.options,
+			const skuOptions = formatProductOptions(
+				cpInstance.skuOptions,
 				cpInstance.productOptions
 			);
 
@@ -50,11 +50,11 @@ function formatCpInstances(cpInstances, quantities) {
 				...selectedCpInstances,
 				{
 					inCart: false,
-					options,
 					quantity:
 						quantities[cpInstance.skuId] ||
 						cpInstance.initialQuantity,
 					skuId: cpInstance.skuId,
+					skuOptions,
 				},
 			];
 		},

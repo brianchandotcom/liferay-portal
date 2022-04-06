@@ -43,9 +43,9 @@ const addToCartProps = {
 	...commonProps,
 	cpInstance: {
 		inCart: false,
-		options: 'null',
 		quantity: 3,
 		skuId: 42633,
+		skuOptions: 'null',
 	},
 };
 
@@ -54,9 +54,9 @@ const addToCartButtonProps = {
 	cpInstances: [
 		{
 			inCart: false,
-			options: 'null',
 			quantity: 3,
 			skuId: 42633,
+			skuOptions: 'null',
 		},
 	],
 };

@@ -139,11 +139,7 @@ export function formatMappedProductForTable(mappedProducts, isAdmin) {
 }
 
 export function formatProductOptions(skuOptions, productOptions) {
-	const optionsData = Object.entries(skuOptions);
-
-	return optionsData.reduce((formattedOptions, optionData) => {
-		const [optionId, optionValueId] = optionData;
-
+	return skuOptions.map(({key: optionId, value: optionValueId}) => {
 		const option = productOptions.find(
 			(productOption) => String(productOption.id) === String(optionId)
 		);
@@ -155,11 +151,8 @@ export function formatProductOptions(skuOptions, productOptions) {
 					String(productOptionValue.id) === String(optionValueId)
 			);
 
-		return [
-			...formattedOptions,
-			{key: option.key, value: [optionValue.key]},
-		];
-	}, []);
+		return {key: option.key, value: [optionValue.key]};
+	});
 }
 
 export function getProductURL(productBaseURL, productURLs) {

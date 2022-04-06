@@ -42,9 +42,9 @@ String iconOnly = (String)request.getAttribute("liferay-commerce:add-to-cart:ico
 String inCart = (String)request.getAttribute("liferay-commerce:add-to-cart:inCart");
 String inline = (String)request.getAttribute("liferay-commerce:add-to-cart:inline");
 String namespace = (String)request.getAttribute("liferay-commerce:add-to-cart:namespace");
-String options = (String)request.getAttribute("liferay-commerce:add-to-cart:options");
 ProductSettingsModel productSettingsModel = (ProductSettingsModel)request.getAttribute("liferay-commerce:add-to-cart:productSettingsModel");
 String size = (String)request.getAttribute("liferay-commerce:add-to-cart:size");
+String skuOptions = (String)request.getAttribute("liferay-commerce:add-to-cart:skuOptions");
 String stockQuantity = (String)request.getAttribute("liferay-commerce:add-to-cart:stockQuantity");
 
 String randomNamespace = PortalUtil.generateRandomKey(request, "taglib") + StringPool.UNDERLINE;

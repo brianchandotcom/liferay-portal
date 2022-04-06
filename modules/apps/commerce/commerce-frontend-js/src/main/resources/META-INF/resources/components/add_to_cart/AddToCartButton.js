@@ -92,7 +92,7 @@ AddToCartButton.defaultProps = {
 	cpInstances: [
 		{
 			inCart: false,
-			options: '[]',
+			skuOptions: '[]',
 		},
 	],
 	hideIcon: false,
@@ -120,9 +120,12 @@ AddToCartButton.propTypes = {
 	cpInstances: PropTypes.arrayOf(
 		PropTypes.shape({
 			inCart: PropTypes.bool,
-			options: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
 			quantity: PropTypes.number,
 			skuId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+			skuOptions: PropTypes.oneOfType([
+				PropTypes.string,
+				PropTypes.array,
+			]),
 		})
 	).isRequired,
 	disabled: PropTypes.bool,

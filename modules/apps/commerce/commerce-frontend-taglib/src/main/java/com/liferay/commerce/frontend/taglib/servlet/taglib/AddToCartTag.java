@@ -156,12 +156,12 @@ public class AddToCartTag extends IncludeTag {
 		return _namespace;
 	}
 
-	public String getOptions() {
-		return _options;
-	}
-
 	public String getSize() {
 		return _size;
+	}
+
+	public String getSkuOptions() {
+		return _skuOptions;
 	}
 
 	public void setAlignment(String alignment) {
@@ -191,7 +191,7 @@ public class AddToCartTag extends IncludeTag {
 		setNamespacedAttribute(httpServletRequest, "inCart", _inCart);
 		setNamespacedAttribute(httpServletRequest, "inline", _inline);
 		setNamespacedAttribute(httpServletRequest, "namespace", _namespace);
-		setNamespacedAttribute(httpServletRequest, "options", _options);
+		setNamespacedAttribute(httpServletRequest, "skuOptions", _skuOptions);
 		setNamespacedAttribute(
 			httpServletRequest, "productSettingsModel", _productSettingsModel);
 
@@ -220,10 +220,6 @@ public class AddToCartTag extends IncludeTag {
 		_namespace = namespace;
 	}
 
-	public void setOptions(String options) {
-		_options = options;
-	}
-
 	@Override
 	public void setPageContext(PageContext pageContext) {
 		super.setPageContext(pageContext);
@@ -242,6 +238,10 @@ public class AddToCartTag extends IncludeTag {
 
 	public void setSize(String size) {
 		_size = size;
+	}
+
+	public void setSkuOptions(String skuOptions) {
+		_skuOptions = skuOptions;
 	}
 
 	@Override
@@ -265,10 +265,10 @@ public class AddToCartTag extends IncludeTag {
 		_inCart = false;
 		_inline = false;
 		_namespace = StringPool.BLANK;
-		_options = null;
 		_productHelper = null;
 		_productSettingsModel = null;
 		_size = "md";
+		_skuOptions = null;
 		_stockQuantity = 0;
 	}
 
@@ -301,10 +301,10 @@ public class AddToCartTag extends IncludeTag {
 	private boolean _inCart;
 	private boolean _inline;
 	private String _namespace = StringPool.BLANK;
-	private String _options;
 	private ProductHelper _productHelper;
 	private ProductSettingsModel _productSettingsModel;
 	private String _size = "md";
+	private String _skuOptions;
 	private int _stockQuantity;
 
 }

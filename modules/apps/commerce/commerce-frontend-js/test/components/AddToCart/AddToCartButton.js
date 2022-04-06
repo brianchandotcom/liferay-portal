@@ -262,16 +262,16 @@ describe('AddToCartButton', () => {
 			cpInstance: {
 				...INITIAL_PROPS.cpInstance,
 				accountId: 12345,
-				options: '[]',
 				quantity: 1,
+				skuOptions: '[]',
 				stockQuantity: 10,
 			},
 		};
 
 		const CART_ITEM = {
-			options: INTERACTION_PROPS.cpInstance.options,
 			quantity: INTERACTION_PROPS.cpInstance.quantity,
 			skuId: INTERACTION_PROPS.cpInstance.skuId,
+			skuOptions: INTERACTION_PROPS.cpInstance.skuOptions,
 		};
 
 		beforeEach(() => {
@@ -344,8 +344,8 @@ describe('AddToCartButton', () => {
 			cpInstance: {
 				...INITIAL_PROPS.cpInstance,
 				accountId: 12345,
-				options: '[]',
 				quantity: 1,
+				skuOptions: '[]',
 				stockQuantity: 10,
 			},
 		};

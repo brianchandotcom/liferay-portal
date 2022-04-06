@@ -31,6 +31,13 @@ import org.dom4j.Element;
 public class RootCauseAnalysisToolTopLevelBuildRunner
 	extends PortalTopLevelBuildRunner<PortalTopLevelBuildData> {
 
+	@Override
+	public void tearDown() {
+		cleanUpHostServices();
+
+		tearDownWorkspace();
+	}
+
 	protected RootCauseAnalysisToolTopLevelBuildRunner(
 		PortalTopLevelBuildData portalTopLevelBuildData) {
 

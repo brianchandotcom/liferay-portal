@@ -340,9 +340,27 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 		page = userAccountResource.getUserAccountsPage(
 			null,
+			String.format("%s and %s", idFilterString, "lastLoginDate ne null"),
+			Pagination.of(1, 3), null);
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(userAccount2, userAccount3),
+			(List<UserAccount>)page.getItems());
+
+		page = userAccountResource.getUserAccountsPage(
+			null,
 			String.format(
 				"%s and %s", idFilterString,
 				"not (lastLoginDate gt 1900-01-01T01:01:28Z)"),
+			Pagination.of(1, 3), null);
+
+		assertEqualsIgnoringOrder(
+			Collections.singletonList(userAccount1),
+			(List<UserAccount>)page.getItems());
+
+		page = userAccountResource.getUserAccountsPage(
+			null,
+			String.format("%s and %s", idFilterString, "lastLoginDate eq null"),
 			Pagination.of(1, 3), null);
 
 		assertEqualsIgnoringOrder(

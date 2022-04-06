@@ -1846,4 +1846,66 @@ definition {
 		
 	}
 
+	@description = "Verify that is not possible to choose options of a field that has Localizable set as off"
+	@priority = "4"
+	test CanNotLocalizbleOffTranslateOptionFields {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Multiple Selection",
+			fieldName = "Multiple Selection");
+
+		DEBuilder.addFieldOptions(
+			fieldLabel = "Multiple Selection",
+			optionValueList = "Option 1,Option 2, Option 3, Option 4");
+
+
+		DataEngine.editFieldLocalizable(fieldFieldLabel = "Multiple Selection");
+
+
+		WebContentStructures.addTranslations(localeList = "pt-BR,zh-CN");
+
+		for (var language : list "pt-BR,zh-CN") {
+			PortletEntry.changeLocale(locale = "${language}");
+
+			WebContentStructures.addName(structureName = "WC Structure Title - ${language}");
+
+			DataEngine.editFieldLabel(
+				fieldFieldLabel = "Multiple Selection",
+				fieldFieldLabelEdit = "Multiple Selection - ${language}");
+
+		}
+
+		WebContentStructures.saveCP();
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		DERenderer.inputDataInMultipleSelectionField(
+			fieldLabel = "Multiple Selection",
+			optionValue = "Option 1");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		WebContent.addCP(webContentTitle = "Web Content Title - pt-BR");
+
+		DataEngine.assertNonLocalizableField(fieldFieldName = "Multiple Selection - pt-BR");
+		
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		WebContent.addCP(webContentTitle = "Web Content Title - zh-CN");
+
+		DataEngine.assertNonLocalizableField(fieldFieldName = "Multiple Selection - zh-CN");
+
+		
+	}
+
 }

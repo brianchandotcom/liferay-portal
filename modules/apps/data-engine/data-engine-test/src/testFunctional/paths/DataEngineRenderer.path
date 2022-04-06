@@ -147,7 +147,7 @@
 </tr>
 <tr>
 	<td>WEB_CONTENT_DISABLED_FIELD</td>
-	<td>xpath=(//div[contains(@data-field-name, '${key_fieldName}')]//input[@disabled=''])</td>
+	<td>xpath=(//div[contains(@data-field-name, '${key_fieldName}')]//input[@disabled=''] | //legend[text()='${key_fieldName}']/..//input[@disabled=''])</td>
 	<td></td>
 </tr>
 </tbody>

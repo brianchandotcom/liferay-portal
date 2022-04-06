@@ -550,9 +550,9 @@ definition {
 			fragmentContentTranslation = "HTMLTitlear_SA",
 			operation = "unzip",
 			pageName = "TranslationContentPage1",
-			pageNameTranslation = "TranslatedContentPage1",
+			pageNameTranslation = "TranslatedContentPage1_SA",
 			translationFileName = "TranslationContentPage1-en_US-ar_SA",
-			translationZipFileName = "TranslationContentPage1-en_US");
+			translationZipFileName = "Page Translations-en_US");
 
 		for (var language : list "de_DE,es_ES,ja_JP,zh_CN") {
 			Translations.translateContentPageFile(
@@ -561,10 +561,10 @@ definition {
 				fragmentContent = "HTMLTitle",
 				fragmentContentTranslation = "HTMLTitle${language}",
 				operation = "false",
-				pageName = "TranslationContentPage${i}",
-				pageNameTranslation = "TranslatedContentPage1",
+				pageName = "TranslationContentPage1",
+				pageNameTranslation = "TranslatedContentPage1${language}",
 				translationFileName = "TranslationContentPage1-en_US-${language}",
-				translationZipFileName = "TranslationContentPage1-en_US");
+				translationZipFileName = "Page Translations-en_US");
 		}
 
 		for (var language : list "ar_SA,de_DE,es_ES,ja_JP") {
@@ -574,10 +574,10 @@ definition {
 				fragmentContent = "HTMLTitle",
 				fragmentContentTranslation = "HTMLTitle${language}",
 				operation = "false",
-				pageName = "TranslationContentPage${i}",
-				pageNameTranslation = "TranslatedContentPage2",
+				pageName = "TranslationContentPage2",
+				pageNameTranslation = "TranslatedContentPage2${language}",
 				translationFileName = "TranslationContentPage2-en_US-${language}",
-				translationZipFileName = "TranslationContentPage1-en_US");
+				translationZipFileName = "Page Translations-en_US");
 		}
 
 		Translations.translateContentPageFile(
@@ -586,17 +586,17 @@ definition {
 			fragmentContent = "HTMLTitle",
 			fragmentContentTranslation = "HTMLTitlezh_CN",
 			operation = "zip",
-			pageName = "TranslationContentPage$1",
-			pageNameTranslation = "TranslatedContentPage2",
+			pageName = "TranslationContentPage2",
+			pageNameTranslation = "TranslatedContentPage2zh_CN",
 			translationFileName = "TranslationContentPage2-en_US-zh_CN",
-			translationZipFileName = "TranslationContentPage1-en_US");
+			translationZipFileName = "Page Translations-en_US");
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
 		Translations.gotoBulkImportTranslation();
 
 		Translations.importTranslation(
-			fileName = "TranslationContentPage1-en_US_translated.zip",
+			fileName = "Page Translations-en_US_translated.zip",
 			filePath = "");
 
 		for (var language : list "ar-SA,de-DE,es-ES,ja-JP,zh-CN") {

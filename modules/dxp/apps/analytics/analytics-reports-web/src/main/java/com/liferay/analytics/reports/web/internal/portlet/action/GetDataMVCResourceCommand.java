@@ -137,8 +137,8 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 				JSONUtil.put(
 					"context",
 					_getJSONObject(
-						analyticsReportsInfoItem, themeDisplay.getCompanyId(),
-						infoItemReference, themeDisplay.getLayout(),
+						analyticsReportsInfoItem, infoItemReference,
+						themeDisplay.getLayout(),
 						themeDisplay.getLayoutFriendlyURL(
 							themeDisplay.getLayout()),
 						themeDisplay.getLocale(),
@@ -291,7 +291,7 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 
 	private JSONObject _getJSONObject(
 		AnalyticsReportsInfoItem<Object> analyticsReportsInfoItem,
-		long companyId, InfoItemReference infoItemReference, Layout layout,
+		InfoItemReference infoItemReference, Layout layout,
 		String layoutFriendlyURL, Locale locale, Locale urlLocale,
 		Object object, ResourceRequest resourceRequest,
 		ResourceResponse resourceResponse, TimeRange timeRange) {

@@ -1,5 +1,5 @@
 dependencies {
-	compileInclude group: "com.thoughtworks.xstream", name: "xstream", version: "1.4.17"
+	compileInclude group: "com.thoughtworks.xstream", name: "xstream", version: "1.4.19"
 	compileInclude group: "io.github.x-stream", name: "mxparser", version: "1.2.2"
 	compileInclude group: "net.sf.kxml", name: "kxml2", version: "2.3.0"
 }

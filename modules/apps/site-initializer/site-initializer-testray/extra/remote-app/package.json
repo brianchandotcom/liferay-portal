@@ -29,19 +29,21 @@
 		"@clayui/sticker": "^3.40.0",
 		"@clayui/table": "^3.40.0",
 		"@clayui/tabs": "^3.40.0",
+		"@hookform/resolvers": "^2.8.8",
 		"apollo-link-rest": "^0.9.0-rc.1",
 		"classnames": "^2.3.1",
 		"dayjs": "^1.10.8",
 		"graphql": "^16.3.0",
 		"graphql-anywhere": "^4.2.7",
-		"history": "^5.2.0",
 		"react": "^18.0.0",
 		"react-dom": "^18.0.0",
+		"react-hook-form": "^7.29.0",
 		"react-markdown": "^8.0.0",
 		"react-router-dom": "^6.2.1",
 		"react-scripts": "4.0.3",
 		"remark-gfm": "^3.0.1",
-		"sass": "^1.49.0"
+		"sass": "^1.49.0",
+		"yup": "^0.32.11"
 	},
 	"devDependencies": {
 		"@types/node": "^17.0.10",

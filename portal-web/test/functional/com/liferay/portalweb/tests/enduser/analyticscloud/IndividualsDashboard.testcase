@@ -62,18 +62,20 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8907 | Test Summary: Expand activity in individual overview"
 	@priority = "3"
 	test CanExpandActivityInIndividualOverview {
-		property portal.upstream = "quarantine";
-
-		// AC Quarantine Reason: Individuals activities takes some time to load
-
+		task ("Create Blog to Add to Page") {
+			ACUtils.createBlogsAndAddToPage();
+		}
+		
 		task ("Sign in as new user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "userea@liferay.com",
 				userLoginFullName = "userfn userln");
 		}
 
-		task ("View the site page") {
+		task ("View the blog page") {
 			ACUtils.navigateToSitePage(
+				actionType = "View Blog",
+				documentTitleList = "Blogs AC Title",
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}

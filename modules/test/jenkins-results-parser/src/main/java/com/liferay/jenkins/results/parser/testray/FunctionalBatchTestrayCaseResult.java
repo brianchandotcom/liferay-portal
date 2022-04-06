@@ -299,7 +299,7 @@ public class FunctionalBatchTestrayCaseResult extends BatchTestrayCaseResult {
 				getTestrayAttachment(
 					getAxisBuild(), "Liferay OSGi Log (" + i + ")",
 					JenkinsResultsParserUtil.combine(
-						getAxisBuildURLPath(), "/liferay-log-osgi-",
+						getAxisBuildURLPath(), "/liferay-osgi-log-",
 						String.valueOf(i), ".txt.gz"));
 
 			if (liferayOSGiLogTestrayAttachment == null) {

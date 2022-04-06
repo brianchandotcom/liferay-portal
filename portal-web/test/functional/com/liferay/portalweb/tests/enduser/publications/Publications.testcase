@@ -660,11 +660,11 @@ definition {
 			groupName = "Guest",
 			title = "WC WebContent Title");
 
-		// Workaround LPS-133249
+		PublicationsNavigator.gotoPublish(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication Name");
 
-		JSONPublications.publishPublication(publicationName = "Publication Name");
-
-		Publications.viewPublicationPublished(publicationName = "Publication Name");
+		Publications.publishPublication(publicationName = "Publication Name");
 
 		RunScript(locator1 = "window.history.go(-1)");
 

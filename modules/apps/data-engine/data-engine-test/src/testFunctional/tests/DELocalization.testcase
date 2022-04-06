@@ -24,6 +24,514 @@ definition {
 		}
 	}
 
+	@description = "Verify that is possible to choose different options for Multiple Selection field for a translated language"
+	@priority = "5"
+	test CanChooseDifferentOptionsFromMultpleSelectionField {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "Structure Description Test",
+			structureName = "Structure Name Test");
+
+		DEBuilder.addField(
+			fieldLabel = "Multiple Selection",
+			fieldName = "Multiple Selection");
+
+		DEBuilder.addFieldOptions(
+			fieldLabel = "Multiple Selection",
+			optionValueList = "Option 1,Option 2, Option 3, Option 4");
+
+		WebContentStructures.addTranslations(localeList = "zh-CN");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Multiple Selection",
+			fieldFieldLabelEdit = "复选列表框");
+
+		WebContentStructures.saveCP();
+
+		NavItem.click(navItem = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name Test");
+
+		PortletEntry.inputTitle(title = "Test");
+
+		DERenderer.inputDataInMultipleSelectionField(
+			fieldLabel = "Multiple Selection",
+			optionValue = "Option 1");
+
+		DERenderer.inputDataInMultipleSelectionField(
+			fieldLabel = "Multiple Selection",
+			optionValue = "Option 2");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		PortletEntry.inputTitle(title = "测试");
+
+		DERenderer.inputDataInMultipleSelectionField(
+			fieldLabel = "复选列表框",
+			optionValue = "Option 1");
+
+		DERenderer.inputDataInMultipleSelectionField(
+			fieldLabel = "复选列表框",
+			optionValue = "Option 2");
+
+		DERenderer.inputDataInMultipleSelectionField(
+			fieldLabel = "复选列表框",
+			optionValue = "Option 3");
+
+		DERenderer.inputDataInMultipleSelectionField(
+			fieldLabel = "复选列表框",
+			optionValue = "Option 4");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Test");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "Test");
+
+		DERenderer.assertDataInMultipleSelectionField(
+			fieldLabel = "Multiple Selection",
+			optionValue = "Option 1");
+
+		DERenderer.assertDataInMultipleSelectionField(
+			fieldLabel = "Multiple Selection",
+			optionValue = "Option 2");
+
+		DERenderer.assertMultipleSelectionOptionIsUnchecked(
+			fieldLabel = "Multiple Selection",
+			optionValue = "Option 3");
+
+		DERenderer.assertMultipleSelectionOptionIsUnchecked(
+			fieldLabel = "Multiple Selection",
+			optionValue = "Option 4");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "测试");
+
+		DERenderer.assertDataInMultipleSelectionField(
+			fieldLabel = "复选列表框",
+			optionValue = "Option 3");
+
+		DERenderer.assertDataInMultipleSelectionField(
+			fieldLabel = "复选列表框",
+			optionValue = "Option 4");
+
+		DERenderer.assertMultipleSelectionOptionIsUnchecked(
+			fieldLabel = "复选列表框",
+			optionValue = "Option 1");
+
+		DERenderer.assertMultipleSelectionOptionIsUnchecked(
+			fieldLabel = "复选列表框",
+			optionValue = "Option 2");
+	}
+
+	@description = "Verify that is possible to choose different options for Select From List field for a translated language"
+	@priority = "5"
+	test CanChooseDifferentOptionsFromSelectFromListField {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "Structure Description Test",
+			structureName = "Structure Name Test");
+
+		DEBuilder.addField(
+			fieldLabel = "Select from List",
+			fieldName = "Select from List");
+
+		DEBuilder.addFieldOptions(
+			fieldLabel = "Select from List",
+			optionValueList = "Option 1,Option 2");
+
+		WebContentStructures.addTranslations(localeList = "zh-CN");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Select from List",
+			fieldFieldLabelEdit = "下拉列表");
+
+		WebContentStructures.saveCP();
+
+		NavItem.click(navItem = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name Test");
+
+		PortletEntry.inputTitle(title = "Test");
+
+		DERenderer.inputDataInSelectFromListField(
+			fieldLabel = "Select from List",
+			optionValue = "Option 1");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		PortletEntry.inputTitle(title = "测试");
+
+		DERenderer.inputDataInSelectFromListField(
+			fieldLabel = "下拉列表",
+			optionValue = "Option 2");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Test");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "Test");
+
+		DERenderer.assertDataInSelectFromListField(
+			fieldLabel = "Select from List",
+			optionValue = "Option 1");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "测试");
+
+		DERenderer.assertDataInSelectFromListField(
+			fieldLabel = "下拉列表",
+			optionValue = "Option 2");
+	}
+
+	@description = "Verify that is possible to choose different options for Single Selection field for a translated language"
+	@priority = "5"
+	test CanChooseDifferentOptionsFromSingleSelectionField {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "Structure Description Test",
+			structureName = "Structure Name Test");
+
+		DEBuilder.addField(
+			fieldLabel = "Single Selection",
+			fieldName = "Single Selection");
+
+		DEBuilder.addFieldOptions(
+			fieldLabel = "Single Selection",
+			optionValueList = "Option 1,Option 2");
+
+		WebContentStructures.addTranslations(localeList = "zh-CN");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Single Selection",
+			fieldFieldLabelEdit = "单选列表框");
+
+		WebContentStructures.saveCP();
+
+		NavItem.click(navItem = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name Test");
+
+		PortletEntry.inputTitle(title = "Test");
+
+		DERenderer.inputDataInSingleSelectionField(
+			fieldLabel = "Single Selection",
+			optionValue = "Option 1");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		PortletEntry.inputTitle(title = "测试");
+
+		DERenderer.inputDataInSingleSelectionField(
+			fieldLabel = "单选列表框",
+			optionValue = "Option 2");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Test");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "Test");
+
+		DERenderer.assertDataInSingleSelectionField(
+			fieldLabel = "Single Selection",
+			optionValue = "Option 1");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "测试");
+
+		DERenderer.assertDataInSingleSelectionField(
+			fieldLabel = "单选列表框",
+			optionValue = "Option 2");
+	}
+
+	@description = "Verify that upon editing Default language, translated languages are not affected"
+	@priority = "5"
+	test CanDefaulfLanguageChangeTranslationsAfterEdited {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		AssertElementPresent(
+			key_locale = "en-US",
+			locator1 = "Translation#CURRENT_LOCALE");
+
+		DataEngine.addFields(fieldNameList = "Text,Numeric");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		WebContentStructures.addTranslations(localeList = "pt-BR,zh-CN");
+
+		for (var language : list "pt-BR,zh-CN") {
+			PortletEntry.changeLocale(locale = "${language}");
+
+			WebContentStructures.addName(structureName = "WC Structure Title - ${language}");
+
+			DataEngine.editFieldLabel(
+				fieldFieldLabel = "Text",
+				fieldFieldLabelEdit = "Text - ${language}");
+
+			DataEngine.editFieldLabel(
+				fieldFieldLabel = "Numeric",
+				fieldFieldLabelEdit = "Numeric - ${language}");
+		}
+
+		WebContentStructures.saveCP();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Localization",
+			configurationName = "Language",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.configureCurrentLanguagesCP(defaultPortalLanguage = "Portuguese (Brazil)");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		AssertElementPresent(
+			key_locale = "en-US",
+			locator1 = "Translation#CURRENT_LOCALE");
+
+		for (var language : list "pt-BR,zh-CN") {
+			PortletEntry.changeLocale(locale = "${language}");
+
+			DataEngine.viewField(
+				fieldFieldLabel = "Text - ${language}",
+				fieldName = "Text");
+
+			DataEngine.viewField(
+				fieldFieldLabel = "Numeric - ${language}",
+				fieldName = "Numeric");
+		}
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Localization",
+			configurationName = "Language",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.configureCurrentLanguagesCP(defaultPortalLanguage = "English (United States)");
+	}
+
+	@description = "Verify that default language inputted data are displayed for untranslated languages"
+	@priority = "4"
+	test CanDefaultDatabeShown {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "Structure Description Test",
+			structureName = "Structure Name Test");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Numeric",
+			fieldName = "Numeric");
+
+		WebContentStructures.addTranslations(localeList = "zh-CN");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Numeric",
+			fieldFieldLabelEdit = "数字");
+
+		WebContentStructures.saveCP();
+
+		NavItem.click(navItem = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name Test");
+
+		WebContent.addWithStructureCP(
+			webContentNumeric = "12345",
+			webContentTitle = "Test");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Test");
+
+		AssertTextEquals.assertValue(
+			key_fieldFieldLabel = "Numeric",
+			locator1 = "WCEditWebContent#TEXT_INPUT",
+			value1 = "12345");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		AssertTextEquals.assertValue(
+			key_fieldFieldLabel = "数字",
+			locator1 = "WCEditWebContent#TEXT_INPUT",
+			value1 = "12345");
+	}
+
+	@description = "Verify that Fieldset's translations are displayed on the Web Content"
+	@priority = "5"
+	test CanFielsetTranslationsBeShown {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DataEngine.gotoCreateNewFieldset();
+
+		FormViewBuilder.editFieldSetName(fieldSetName = "New Fieldset");
+
+		DEBuilder.addField(
+			fieldLabel = "Text",
+			fieldName = "Text");
+
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			modal = "true");
+
+		FormViewBuilder.editFieldSetName(fieldSetName = "新字段集");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Text",
+			fieldFieldLabelEdit = "文本");
+
+		FormViewBuilder.saveButtonFieldset();
+
+		DataEngine.addFieldsetToBuilder(fieldsetName = "New Fieldset");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.viewFieldset(
+			fieldNameList = "Text",
+			fieldsetName = "New Fieldset");
+
+		WebContentStructures.addTranslations(localeList = "zh-CN");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		DataEngine.viewFieldset(
+			fieldNameList = "文本",
+			fieldsetName = "新字段集");
+	}
+
+	@description = "Verify that is possible to input different values for Text and Numeric fields inside a Fields Group for translated languages"
+	@priority = "5"
+	test CanInputtedDataBeTranslatedInFieldOnFieldsGroup {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Text",
+			fieldName = "Text");
+
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "Numeric",
+			fieldName = "Numeric",
+			targetFieldLabel = "Text");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DEBuilder.assertFieldsGroup(
+			fieldGroupDepth = "1",
+			fieldGroupLabel = "Fields Group",
+			fieldsLabelList = "Text,Numeric");
+
+		WebContentStructures.saveCP();
+
+		NavItem.click(navItem = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		DERenderer.inputDataInTextField(
+			fieldLabel = "Text",
+			value = "This is a Text field");
+
+		DERenderer.inputDataInNumericField(
+			fieldLabel = "Numeric",
+			value = "123");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		DERenderer.inputDataInTextField(
+			fieldLabel = "Text",
+			value = "This is a Text field - zh-CN");
+
+		DERenderer.inputDataInNumericField(
+			fieldLabel = "Numeric",
+			value = "456");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		DERenderer.assertDataInTextField(
+			fieldLabel = "Text",
+			value = "This is a Text field");
+
+		DERenderer.assertDataInNumericField(
+			fieldLabel = "Numeric",
+			value = "123");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		DERenderer.assertDataInTextField(
+			fieldLabel = "Text",
+			value = "This is a Text field - zh-CN");
+
+		DERenderer.assertDataInNumericField(
+			fieldLabel = "Numeric",
+			value = "456");
+	}
+
 	@description = "Verify that is possible to choose a different color on the Color Field for a translated language"
 	@priority = "5"
 	test CanInputtedDataBeTranslatedOnColorField {
@@ -309,6 +817,104 @@ definition {
 			value1 = "测试");
 	}
 
+	@description = "Verify Default language when Portal Instance language is changed"
+	@priority = "4"
+	test CanPortalLanguageBeChanged {
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Localization",
+			configurationName = "Language",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.configureCurrentLanguagesCP(defaultPortalLanguage = "Portuguese (Brazil)");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		AssertElementPresent(
+			key_locale = "pt-BR",
+			locator1 = "Translation#CURRENT_LOCALE");
+
+		DataEngine.addFields(fieldNameList = "Text,Numeric");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		WebContentStructures.addTranslations(localeList = "en-US,ca-ES,zh-CN");
+
+		for (var language : list "en-US,ca-ES,zh-CN") {
+			PortletEntry.changeLocale(locale = "${language}");
+
+			WebContentStructures.addName(structureName = "WC Structure Title - ${language}");
+
+			DataEngine.editFieldLabel(
+				fieldFieldLabel = "Text",
+				fieldFieldLabelEdit = "Text - ${language}");
+
+			DataEngine.editFieldLabel(
+				fieldFieldLabel = "Numeric",
+				fieldFieldLabelEdit = "Numeric - ${language}");
+		}
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Localization",
+			configurationName = "Language",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.configureCurrentLanguagesCP(defaultPortalLanguage = "English (United States)");
+	}
+
+	@description = "Verify that Structure's translations are displayed on the Web Content"
+	@priority = "5"
+	test CanStructureTranslationsBeShown {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "Structure Description Test",
+			structureName = "Structure Name Test");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Numeric",
+			fieldName = "Numeric");
+
+		WebContentStructures.addTranslations(localeList = "zh-CN");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Numeric",
+			fieldFieldLabelEdit = "数字");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "Structure Name Test");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Numeric",
+			fieldName = "Numeric");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "数字",
+			fieldName = "Numeric");
+	}
+
 	@description = "This is a stubbed description"
 	@ignore = "true"
 	@priority = "5"
@@ -471,6 +1077,85 @@ definition {
 			locator1 = "WCEditWebContent#IMAGE_PICKER_PREVIEW");
 	}
 
+	@description = "Verify that is possible to choose a different Page on the Link to Page Field for a translated language"
+	@priority = "5"
+	test CanUploadedLinkToPageChangeWithTranslations {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		for (var n : list "1,2") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name ${n}");
+		}
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "Structure Description Test",
+			structureName = "Structure Name Test");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Link to Page",
+			fieldName = "Link to Page");
+
+		WebContentStructures.addTranslations(localeList = "zh-CN");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Link to Page",
+			fieldFieldLabelEdit = "网页链接");
+
+		WebContentStructures.saveCP();
+
+		NavItem.click(navItem = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name Test");
+
+		PortletEntry.inputTitle(title = "Test");
+
+		DERenderer.inputDataInLinkToPageField(
+			linkToPageContent = "Test Page Name 1",
+			linkToPageFieldLabel = "Link to Page");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		PortletEntry.inputTitle(title = "测试");
+
+		AssertClick(
+			key_fieldFieldLabel = "网页链接",
+			locator1 = "AppBuilder#CLEAR_SEARCH",
+			value1 = "Clear");
+
+		DERenderer.inputDataInLinkToPageField(
+			linkToPageContent = "Test Page Name 2",
+			linkToPageFieldLabel = "网页链接");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Test");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "Test");
+
+		DERenderer.assertContentInLinktoPageField(
+			index = "1",
+			linkToPageContent = "Public Pages > Test Page Name 1",
+			linkToPageFieldLabel = "Link to Page");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "测试");
+
+		DERenderer.assertContentInLinktoPageField(
+			index = "1",
+			linkToPageContent = "Public Pages > Test Page Name 2",
+			linkToPageFieldLabel = "网页链接");
+	}
+
 	@description = "Verify that is possible to choose a different Web Content on the Web Content Field for a translated language"
 	@priority = "5"
 	test CanUploadedWebContentChangeWithTranslations {
@@ -548,345 +1233,6 @@ definition {
 			value1 = "Web Content Title 2");
 	}
 
-	@description = "Verify that is possible to choose a different Page on the Link to Page Field for a translated language"
-	@priority = "5"
-	test CanUploadedLinkToPageChangeWithTranslations {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		for (var n : list "1,2") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Page Name ${n}");
-		}
-		
-		
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(
-			structureDescription = "Structure Description Test",
-			structureName = "Structure Name Test");
-
-		DataEngine.addField(
-			fieldFieldLabel = "Link to Page",
-			fieldName = "Link to Page");
-
-		WebContentStructures.addTranslations(localeList = "zh-CN");
-
-		PortletEntry.changeLocale(locale = "zh-CN");
-
-		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Link to Page",
-			fieldFieldLabelEdit = "网页链接");
-
-		WebContentStructures.saveCP();
-
-		NavItem.click(navItem = "Web Content");
-
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name Test");
-
-		PortletEntry.inputTitle(title = "Test");
-
-		DERenderer.inputDataInLinkToPageField(
-			linkToPageContent = "Test Page Name 1",
-			linkToPageFieldLabel = "Link to Page");
-
-		PortletEntry.changeLocale(locale = "zh-CN");
-
-		PortletEntry.inputTitle(title = "测试");
-
-		AssertClick(
-			key_fieldFieldLabel = "网页链接",
-			locator1 = "AppBuilder#CLEAR_SEARCH",
-			value1 = "Clear");
-
-		DERenderer.inputDataInLinkToPageField(
-			linkToPageContent = "Test Page Name 2",
-			linkToPageFieldLabel = "网页链接");
-
-		PortletEntry.publish();
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "Test");
-
-		AssertTextEquals(
-			locator1 = "TextInput#TITLE",
-			value1 = "Test");
-
-		DERenderer.assertContentInLinktoPageField(
-			index = "1",
-			linkToPageContent = "Public Pages > Test Page Name 1",
-			linkToPageFieldLabel = "Link to Page");
-
-		PortletEntry.changeLocale(locale = "zh-CN");
-
-		AssertTextEquals(
-			locator1 = "TextInput#TITLE",
-			value1 = "测试");
-
-		DERenderer.assertContentInLinktoPageField(
-			index = "1",
-			linkToPageContent = "Public Pages > Test Page Name 2",
-			linkToPageFieldLabel = "网页链接");
-	}
-
-	@description = "Verify that is possible to choose different options for Select From List field for a translated language"
-	@priority = "5"
-	test CanChooseDifferentOptionsFromSelectFromListField {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		
-		
-		
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(
-			structureDescription = "Structure Description Test",
-			structureName = "Structure Name Test");
-
-		DEBuilder.addField(
-			fieldLabel = "Select from List",
-			fieldName = "Select from List");
-
-		DEBuilder.addFieldOptions(
-			fieldLabel = "Select from List",
-			optionValueList = "Option 1,Option 2");
-
-		WebContentStructures.addTranslations(localeList = "zh-CN");
-
-		PortletEntry.changeLocale(locale = "zh-CN");
-
-		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Select from List",
-			fieldFieldLabelEdit = "下拉列表");
-
-		WebContentStructures.saveCP();
-
-		NavItem.click(navItem = "Web Content");
-
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name Test");
-
-		PortletEntry.inputTitle(title = "Test");
-
-		DERenderer.inputDataInSelectFromListField(
-			fieldLabel = "Select from List",
-			optionValue = "Option 1");
-
-		PortletEntry.changeLocale(locale = "zh-CN");
-
-		PortletEntry.inputTitle(title = "测试");
-
-		DERenderer.inputDataInSelectFromListField(
-			fieldLabel = "下拉列表",
-			optionValue = "Option 2");
-
-		PortletEntry.publish();
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "Test");
-
-		AssertTextEquals(
-			locator1 = "TextInput#TITLE",
-			value1 = "Test");
-
-		DERenderer.assertDataInSelectFromListField(
-			fieldLabel = "Select from List",
-			optionValue = "Option 1");
-
-		PortletEntry.changeLocale(locale = "zh-CN");
-
-		AssertTextEquals(
-			locator1 = "TextInput#TITLE",
-			value1 = "测试");
-
-		DERenderer.assertDataInSelectFromListField(
-			fieldLabel = "下拉列表",
-			optionValue = "Option 2");
-	}
-
-	@description = "Verify that is possible to choose different options for Single Selection field for a translated language"
-	@priority = "5"
-	test CanChooseDifferentOptionsFromSingleSelectionField {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(
-			structureDescription = "Structure Description Test",
-			structureName = "Structure Name Test");
-
-		DEBuilder.addField(
-			fieldLabel = "Single Selection",
-			fieldName = "Single Selection");
-
-		DEBuilder.addFieldOptions(
-			fieldLabel = "Single Selection",
-			optionValueList = "Option 1,Option 2");
-
-		WebContentStructures.addTranslations(localeList = "zh-CN");
-
-		PortletEntry.changeLocale(locale = "zh-CN");
-
-		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Single Selection",
-			fieldFieldLabelEdit = "单选列表框");
-
-		WebContentStructures.saveCP();
-
-		NavItem.click(navItem = "Web Content");
-
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name Test");
-
-		PortletEntry.inputTitle(title = "Test");
-
-		DERenderer.inputDataInSingleSelectionField(
-			fieldLabel = "Single Selection",
-			optionValue = "Option 1");
-
-		PortletEntry.changeLocale(locale = "zh-CN");
-
-		PortletEntry.inputTitle(title = "测试");
-
-		DERenderer.inputDataInSingleSelectionField(
-			fieldLabel = "单选列表框",
-			optionValue = "Option 2");
-
-		PortletEntry.publish();
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "Test");
-
-		AssertTextEquals(
-			locator1 = "TextInput#TITLE",
-			value1 = "Test");
-
-		DERenderer.assertDataInSingleSelectionField(
-			fieldLabel = "Single Selection",
-			optionValue = "Option 1");
-
-		PortletEntry.changeLocale(locale = "zh-CN");
-
-		AssertTextEquals(
-			locator1 = "TextInput#TITLE",
-			value1 = "测试");
-
-		DERenderer.assertDataInSingleSelectionField(
-			fieldLabel = "单选列表框",
-			optionValue = "Option 2");
-	}
-
-	@description = "Verify that is possible to choose different options for Multiple Selection field for a translated language"
-	@priority = "5"
-	test CanChooseDifferentOptionsFromMultpleSelectionField {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(
-			structureDescription = "Structure Description Test",
-			structureName = "Structure Name Test");
-
-		DEBuilder.addField(
-			fieldLabel = "Multiple Selection",
-			fieldName = "Multiple Selection");
-
-		DEBuilder.addFieldOptions(
-			fieldLabel = "Multiple Selection",
-			optionValueList = "Option 1,Option 2, Option 3, Option 4");
-
-		WebContentStructures.addTranslations(localeList = "zh-CN");
-
-		PortletEntry.changeLocale(locale = "zh-CN");
-
-		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Multiple Selection",
-			fieldFieldLabelEdit = "复选列表框");
-
-		WebContentStructures.saveCP();
-
-		NavItem.click(navItem = "Web Content");
-
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name Test");
-
-		PortletEntry.inputTitle(title = "Test");
-
-		DERenderer.inputDataInMultipleSelectionField(
-			fieldLabel = "Multiple Selection",
-			optionValue = "Option 1");
-
-		DERenderer.inputDataInMultipleSelectionField(
-			fieldLabel = "Multiple Selection",
-			optionValue = "Option 2");
-
-		PortletEntry.changeLocale(locale = "zh-CN");
-
-		PortletEntry.inputTitle(title = "测试");
-
-		DERenderer.inputDataInMultipleSelectionField(
-			fieldLabel = "复选列表框",
-			optionValue = "Option 1");
-
-		DERenderer.inputDataInMultipleSelectionField(
-			fieldLabel = "复选列表框",
-			optionValue = "Option 2");
-
-		DERenderer.inputDataInMultipleSelectionField(
-			fieldLabel = "复选列表框",
-			optionValue = "Option 3");
-
-		DERenderer.inputDataInMultipleSelectionField(
-			fieldLabel = "复选列表框",
-			optionValue = "Option 4");
-
-		PortletEntry.publish();
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "Test");
-
-		AssertTextEquals(
-			locator1 = "TextInput#TITLE",
-			value1 = "Test");
-
-		DERenderer.assertDataInMultipleSelectionField(
-			fieldLabel = "Multiple Selection",
-			optionValue = "Option 1");
-
-		DERenderer.assertDataInMultipleSelectionField(
-			fieldLabel = "Multiple Selection",
-			optionValue = "Option 2");
-
-		DERenderer.assertMultipleSelectionOptionIsUnchecked(
-			fieldLabel = "Multiple Selection",
-			optionValue = "Option 3");
-
-		DERenderer.assertMultipleSelectionOptionIsUnchecked(
-			fieldLabel = "Multiple Selection",
-			optionValue = "Option 4");
-
-		PortletEntry.changeLocale(locale = "zh-CN");
-
-		AssertTextEquals(
-			locator1 = "TextInput#TITLE",
-			value1 = "测试");
-
-		DERenderer.assertDataInMultipleSelectionField(
-			fieldLabel = "复选列表框",
-			optionValue = "Option 3");
-
-		DERenderer.assertDataInMultipleSelectionField(
-			fieldLabel = "复选列表框",
-			optionValue = "Option 4");
-
-		DERenderer.assertMultipleSelectionOptionIsUnchecked(
-			fieldLabel = "复选列表框",
-			optionValue = "Option 1");
-
-		DERenderer.assertMultipleSelectionOptionIsUnchecked(
-			fieldLabel = "复选列表框",
-			optionValue = "Option 2");
-	}
-
 	@description = "Verify that is possible to choose different options for Grid field for a translated language"
 	@priority = "5"
 	test DanChooseDifferentOptionsFromGridField {
@@ -935,11 +1281,9 @@ definition {
 				row = "${index}");
 		}
 
-
 		PortletEntry.changeLocale(locale = "zh-CN");
 
 		PortletEntry.inputTitle(title = "测试");
-
 
 		for (var index : list "4,5,6") {
 			DERenderer.inputDataInGridField(
@@ -976,302 +1320,5 @@ definition {
 				row = "${index}");
 		}
 	}
-
-	@description = "Verify that default language inputted data are displayed for untranslated languages"
-	@priority = "4"
-	test CanDefaultDatabeShown {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(
-			structureDescription = "Structure Description Test",
-			structureName = "Structure Name Test");
-
-		DataEngine.addField(
-			fieldFieldLabel = "Numeric",
-			fieldName = "Numeric");
-
-		WebContentStructures.addTranslations(localeList = "zh-CN");
-
-		PortletEntry.changeLocale(locale = "zh-CN");
-
-		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Numeric",
-			fieldFieldLabelEdit = "数字");
-
-		WebContentStructures.saveCP();
-
-		NavItem.click(navItem = "Web Content");
-
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name Test");
-
-		WebContent.addWithStructureCP(
-			webContentNumeric = "12345",
-			webContentTitle = "Test");
-
-		PortletEntry.publish();
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "Test");
-
-		AssertTextEquals.assertValue(
-			key_fieldFieldLabel = "Numeric",
-			locator1 = "WCEditWebContent#TEXT_INPUT",
-			value1 = "12345");
-
-		PortletEntry.changeLocale(locale = "zh-CN");
-
-		AssertTextEquals.assertValue(
-			key_fieldFieldLabel = "数字",
-			locator1 = "WCEditWebContent#TEXT_INPUT",
-			value1 = "12345");
-	}
-
-
-	@description = "Verify that Structure's translations are displayed on the Web Content"
-	@priority = "5"
-	test CanStructureTranslationsBeShown {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(
-			structureDescription = "Structure Description Test",
-			structureName = "Structure Name Test");
-
-		DataEngine.addField(
-			fieldFieldLabel = "Numeric",
-			fieldName = "Numeric");
-
-		WebContentStructures.addTranslations(localeList = "zh-CN");
-
-		PortletEntry.changeLocale(locale = "zh-CN");
-
-		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Numeric",
-			fieldFieldLabelEdit = "数字");
-
-		WebContentStructures.saveCP();
-
-		WebContentNavigator.gotoEditStructure(structureName = "Structure Name Test");
-
-		DataEngine.viewField(
-			fieldFieldLabel = "Numeric",
-			fieldName = "Numeric");
-
-		PortletEntry.changeLocale(locale = "zh-CN");
-
-		DataEngine.viewField(
-			fieldFieldLabel = "数字",
-			fieldName = "Numeric");
-
-
-	}
-
-	@description = "Verify that Fieldset's translations are displayed on the Web Content"
-	@priority = "5"
-	test CanFielsetTranslationsBeShown {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "WC Structure Title");
-
-		DataEngine.gotoCreateNewFieldset();
-
-		FormViewBuilder.editFieldSetName(fieldSetName = "New Fieldset");
-
-		DEBuilder.addField(
-			fieldLabel = "Text",
-			fieldName = "Text");
-
-
-		PortletEntry.changeLocale(
-			locale = "zh-CN",
-			modal = "true");
-
-		FormViewBuilder.editFieldSetName(fieldSetName = "新字段集");
-
-		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Text",
-			fieldFieldLabelEdit = "文本");
-
-		FormViewBuilder.saveButtonFieldset();
-
-		DataEngine.addFieldsetToBuilder(fieldsetName = "New Fieldset");
-
-		WebContentStructures.saveCP();
-
-		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
-
-		DataEngine.viewFieldset(
-			fieldNameList = "Text",
-			fieldsetName = "New Fieldset");
-
-		WebContentStructures.addTranslations(localeList = "zh-CN");
-
-		PortletEntry.changeLocale(locale = "zh-CN");
-
-		DataEngine.viewFieldset(
-			fieldNameList = "文本",
-			fieldsetName = "新字段集");
-
-
-	}
-
-	@description = "Verify Default language when Portal Instance language is changed"
-	@priority = "4"
-	test CanPortalLanguageBeChanged {
-
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Localization",
-			configurationName = "Language",
-			configurationScope = "Virtual Instance Scope");
-
-		PortalSettings.configureCurrentLanguagesCP(defaultPortalLanguage = "Portuguese (Brazil)");
-
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "WC Structure Title");
-
-		AssertElementPresent(
-			key_locale = "pt-BR",
-			locator1 = "Translation#CURRENT_LOCALE");
-
-		DataEngine.addFields(fieldNameList = "Text,Numeric");
-
-		WebContentStructures.saveCP();
-
-		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
-
-		WebContentStructures.addTranslations(localeList = "en-US,ca-ES,zh-CN");
-
-		for (var language : list "en-US,ca-ES,zh-CN") {
-			PortletEntry.changeLocale(locale = "${language}");
-
-			WebContentStructures.addName(structureName = "WC Structure Title - ${language}");
-
-			DataEngine.editFieldLabel(
-				fieldFieldLabel = "Text",
-				fieldFieldLabelEdit = "Text - ${language}");
-
-
-			DataEngine.editFieldLabel(
-				fieldFieldLabel = "Numeric",
-				fieldFieldLabelEdit = "Numeric - ${language}");
-		}
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Localization",
-			configurationName = "Language",
-			configurationScope = "Virtual Instance Scope");
-
-		PortalSettings.configureCurrentLanguagesCP(defaultPortalLanguage = "English (United States)");
-
-	}
-
-	@description = "Verify that upon editing Default language, translated languages are not affected"
-	@priority = "5"
-	test CanDefaulfLanguageChangeTranslationsAfterEdited {
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "WC Structure Title");
-
-		AssertElementPresent(
-			key_locale = "en-US",
-			locator1 = "Translation#CURRENT_LOCALE");
-
-		DataEngine.addFields(fieldNameList = "Text,Numeric");
-
-		WebContentStructures.saveCP();
-
-		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
-
-		WebContentStructures.addTranslations(localeList = "pt-BR,zh-CN");
-
-		for (var language : list "pt-BR,zh-CN") {
-			PortletEntry.changeLocale(locale = "${language}");
-
-			WebContentStructures.addName(structureName = "WC Structure Title - ${language}");
-
-			DataEngine.editFieldLabel(
-				fieldFieldLabel = "Text",
-				fieldFieldLabelEdit = "Text - ${language}");
-
-
-			DataEngine.editFieldLabel(
-				fieldFieldLabel = "Numeric",
-				fieldFieldLabelEdit = "Numeric - ${language}");
-		}
-
-		WebContentStructures.saveCP();
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Localization",
-			configurationName = "Language",
-			configurationScope = "Virtual Instance Scope");
-
-		PortalSettings.configureCurrentLanguagesCP(defaultPortalLanguage = "Portuguese (Brazil)");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
-
-		AssertElementPresent(
-			key_locale = "en-US",
-			locator1 = "Translation#CURRENT_LOCALE");
-
-		for (var language : list "pt-BR,zh-CN") {
-			PortletEntry.changeLocale(locale = "${language}");
-
-			DataEngine.viewField(
-				fieldFieldLabel = "Text - ${language}",
-				fieldName = "Text");
-
-			DataEngine.viewField(
-				fieldFieldLabel = "Numeric - ${language}",
-				fieldName = "Numeric");
-		}
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Localization",
-			configurationName = "Language",
-			configurationScope = "Virtual Instance Scope");
-
-		PortalSettings.configureCurrentLanguagesCP(defaultPortalLanguage = "English (United States)");
-
-	}
-
-
-	
 
 }

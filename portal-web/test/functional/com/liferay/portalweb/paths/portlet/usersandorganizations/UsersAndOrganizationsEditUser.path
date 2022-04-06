@@ -10,6 +10,17 @@
 </thead>
 
 <tbody>
+<!--Accounts-->
+<tr>
+	<td>ACCOUNTS_SELECT_LINK</td>
+	<td>//a[contains(@id,'selectAccountLink')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACCOUNTS_TABLE_ACCOUNT_NAMES</td>
+	<td>//div[contains(.,'Accounts')]//td[contains(@class,'lfr-name-column') and contains(.,'${key_accountName}')]</td>
+	<td></td>
+</tr>
 <!--DETAILS-->
 <tr>
 	<td>DETAILS_BIRTHDAY_FIELD</td>

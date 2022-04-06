@@ -1705,4 +1705,67 @@ definition {
 		
 	}
 
+	@description = "Verify that is not possible to translate a field that has Localizable set as off"
+	@priority = "4"
+	test CanNotLocalizbleOffTranslate {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DataEngine.addFields(fieldNameList = "Text,Numeric");
+
+		DataEngine.editFieldLocalizable(fieldFieldLabel = "Text");
+
+		DataEngine.editFieldLocalizable(fieldFieldLabel = "Numeric");
+
+		WebContentStructures.addTranslations(localeList = "pt-BR,zh-CN");
+
+		for (var language : list "pt-BR,zh-CN") {
+			PortletEntry.changeLocale(locale = "${language}");
+
+			WebContentStructures.addName(structureName = "WC Structure Title - ${language}");
+
+			DataEngine.editFieldLabel(
+				fieldFieldLabel = "Text",
+				fieldFieldLabelEdit = "Text - ${language}");
+
+			DataEngine.editFieldLabel(
+				fieldFieldLabel = "Numeric",
+				fieldFieldLabelEdit = "Numeric - ${language}");
+		}
+
+		WebContentStructures.saveCP();
+
+		NavItem.gotoWebContent();
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		WebContent.addWithStructureCP(
+			webContentNumeric = "10",
+			webContentNumericFieldLabel = "Numeric",
+			webContentText = "This is a Text field",
+			webContentTextFieldLabel = "Text",
+			webContentTitle = "Web Content Title");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		WebContent.addCP(webContentTitle = "Web Content Title - pt-BR");
+
+		for (var fieldFieldLabel : list "Text,Numeric") {
+			DataEngine.assertNonLocalizableField(fieldFieldName = "${fieldFieldLabel}");
+		}
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		WebContent.addCP(webContentTitle = "Web Content Title - zh-CN");
+
+		for (var fieldFieldLabel : list "Text,Numeric") {
+			DataEngine.assertNonLocalizableField(fieldFieldName = "${fieldFieldLabel}");
+		}
+
+		
+	}
+
 }

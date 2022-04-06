@@ -10,7 +10,6 @@
 					"layout": {
 						"borderWidth": 0,
 						"contentDisplay": "FlexRow",
-						"htmlTag": "Div",
 						"marginBottom": 0,
 						"marginLeft": 0,
 						"marginRight": 0,
@@ -45,7 +44,6 @@
 							},
 							"layout": {
 								"borderWidth": 0,
-								"htmlTag": "Div",
 								"marginBottom": 0,
 								"marginLeft": 0,
 								"marginRight": 2,
@@ -70,7 +68,6 @@
 										"align": "Center",
 										"borderWidth": 0,
 										"contentDisplay": "FlexRow",
-										"htmlTag": "Div",
 										"justify": "SpaceBetween",
 										"marginBottom": 0,
 										"marginLeft": 2,
@@ -119,7 +116,6 @@
 									},
 									"layout": {
 										"borderWidth": 0,
-										"htmlTag": "Div",
 										"marginBottom": 0,
 										"marginLeft": 0,
 										"marginRight": 0,

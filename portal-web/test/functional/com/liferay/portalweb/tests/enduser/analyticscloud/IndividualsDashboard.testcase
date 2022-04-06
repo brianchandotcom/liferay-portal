@@ -65,7 +65,7 @@ definition {
 		task ("Create Blog to Add to Page") {
 			ACUtils.createBlogsAndAddToPage();
 		}
-		
+
 		task ("Sign in as new user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "userea@liferay.com",
@@ -109,7 +109,7 @@ definition {
 		}
 
 		task ("Expand access timeline") {
-			Click(locator1 = "ACIndividualsDashboard#BASE_RESULTS_TIMELINE");
+			ACIndividualsDashboard.expandActivity(eventName = "pageViewed");
 
 			AssertElementPresent(
 				locator1 = "ACIndividualsDashboard#BASE_RESULTS_TIMELINE_ATTRIBUTES_TITLE",

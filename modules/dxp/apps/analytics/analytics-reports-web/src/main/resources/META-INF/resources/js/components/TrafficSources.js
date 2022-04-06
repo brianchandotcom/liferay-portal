@@ -173,9 +173,8 @@ export default function TrafficSources({dataProvider, onTrafficSourceClick}) {
 						<tbody>
 							{trafficSources?.map((entry) => {
 								const hasDetails =
-									entry?.value > 0 &&
-									entry?.endpointURL;	
-																		
+									entry?.value > 0 && entry?.endpointURL;
+
 								return (
 									<tr key={entry.name}>
 										<td

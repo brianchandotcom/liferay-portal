@@ -1545,17 +1545,9 @@ public class CommerceOrderLocalServiceImpl
 		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
 			commerceOrderId);
 
-		int previousPaymentStatus = commerceOrder.getPaymentStatus();
-
-		commerceOrder.setPaymentStatus(paymentStatus);
-
-		commerceOrder = commerceOrderPersistence.update(commerceOrder);
-
-		// Messaging
-
-		sendPaymentStatusMessage(commerceOrder, previousPaymentStatus);
-
-		return commerceOrder;
+		return commerceOrderLocalService.updatePaymentStatusAndTransactionId(
+			userId, commerceOrderId, paymentStatus,
+			commerceOrder.getTransactionId());
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

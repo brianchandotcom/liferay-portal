@@ -51,8 +51,8 @@ definition {
 
 	@description = "This test ensures that the size limits in the servlet take effect when the instance setting is default."
 	@priority = "4"
-	test WhenInstanceIsDefaultItIsOverridenByServlet {
-		property test.name.skip.portal.instance = "DMFileSizeLimits#WhenInstanceIsDefaultItIsOverridenByServlet";
+	test WhenInstanceIsDefaultItIsOverriddenByServlet {
+		property test.name.skip.portal.instance = "DMFileSizeLimits#WhenInstanceIsDefaultItIsOverriddenByServlet";
 
 		SystemSettings.openSystemSettingsAdmin();
 

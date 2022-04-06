@@ -212,7 +212,7 @@ const PaymentMethod = () => {
 
 						{checkedMethod.options.length ? (
 							<>
-								<div className="c-px-3 d-sm-flex">
+								<div className="d-sm-flex">
 									{checkedMethod.options.map(
 										(option, index) => (
 											<div

@@ -13,7 +13,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {fireEvent, render} from '@testing-library/react';
+import {render} from '@testing-library/react';
 import React from 'react';
 
 import {StoreAPIContextProvider} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
@@ -159,20 +159,22 @@ describe('CommonStyles', () => {
 	});
 
 	it('shows common styles panel', async () => {
-		const {getByText} = renderComponent({});
+		const {getByLabelText} = renderComponent({});
 
-		expect(getByText('margin')).toBeInTheDocument();
+		expect(getByLabelText('margin-left')).toBeInTheDocument();
 	});
 
 	it('allows changing common styles for a given viewport', async () => {
+		Liferay.Util.sub.mockImplementation((key, args) =>
+			args.reduce((key, arg) => key.replace('x', arg), key)
+		);
+
 		const {getByLabelText} = renderComponent({
 			state: {selectedViewportSize: 'tablet'},
 		});
-		const input = getByLabelText('margin-left');
 
-		await fireEvent.change(input, {
-			target: {value: '1'},
-		});
+		getByLabelText('margin-left').click();
+		getByLabelText('set-margin-left-to-1').click();
 
 		expect(updateItemConfig).toHaveBeenCalledWith({
 			itemConfig: {

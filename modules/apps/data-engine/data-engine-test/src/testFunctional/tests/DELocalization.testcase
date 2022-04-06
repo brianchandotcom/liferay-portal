@@ -1447,4 +1447,133 @@ definition {
 		
 	}
 
+	@description = "Verify that translations for more than two different languages persists"
+	@priority = "5"
+	test CanInputtedDataBeTranslatedToTwoLanguages {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DataEngine.addFields(fieldNameList = "Text,Numeric");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		WebContentStructures.addTranslations(localeList = "pt-BR,zh-CN");
+
+		for (var language : list "pt-BR,zh-CN,en-US") {
+			PortletEntry.changeLocale(locale = "${language}");
+
+			WebContentStructures.addName(structureName = "WC Structure Title - ${language}");
+
+			DataEngine.editFieldLabel(
+				fieldFieldLabel = "Text",
+				fieldFieldLabelEdit = "Text - ${language}");
+
+			DataEngine.editFieldLabel(
+				fieldFieldLabel = "Numeric",
+				fieldFieldLabelEdit = "Numeric - ${language}");
+		}
+
+		WebContentStructures.saveCP();
+
+		NavItem.click(navItem = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title - en-US");
+
+		PortletEntry.inputTitle(title = "Test - en-US");
+
+		WebContent.addWithStructureCP(
+			webContentNumeric = "12345",
+			webContentNumericFieldLabel = "Numeric - en-US",
+			webContentText = "Test - en-US",
+			webContentTextFieldLabel = "Text - en-US",
+			webContentTitle = "Test - en-US");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		PortletEntry.inputTitle(title = "Test - zh-CN");
+
+		WebContent.addWithStructureCP(
+			webContentNumeric = "54321",
+			webContentNumericFieldLabel = "Numeric - zh-CN",
+			webContentText = "Test - zh-CN",
+			webContentTextFieldLabel = "Text - zh-CN",
+			webContentTitle = "Test - zh-CN");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		PortletEntry.inputTitle(title = "Test - pt-BR");
+
+		WebContent.addWithStructureCP(
+			webContentNumeric = "98765",
+			webContentNumericFieldLabel = "Numeric - pt-BR",
+			webContentText = "Test - pt-BR",
+			webContentTextFieldLabel = "Text - pt-BR",
+			webContentTitle = "Test - pt-BR");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Test - en-US");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "Test - en-US");
+
+		AssertTextEquals.assertValue(
+			key_fieldFieldLabel = "Text - en-US",
+			locator1 = "WCEditWebContent#TEXT_INPUT",
+			value1 = "Test - en-US");
+
+		AssertTextEquals.assertValue(
+			key_fieldFieldLabel = "Numeric - en-US",
+			locator1 = "WCEditWebContent#TEXT_INPUT",
+			value1 = "12345");
+
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "Test - zh-CN");
+
+		AssertTextEquals.assertValue(
+			key_fieldFieldLabel = "Text - zh-CN",
+			locator1 = "WCEditWebContent#TEXT_INPUT",
+			value1 = "Test - zh-CN");
+
+		AssertTextEquals.assertValue(
+			key_fieldFieldLabel = "Numeric - zh-CN",
+			locator1 = "WCEditWebContent#TEXT_INPUT",
+			value1 = "54321");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "Test - pt-BR");
+
+		AssertTextEquals.assertValue(
+			key_fieldFieldLabel = "Text - pt-BR",
+			locator1 = "WCEditWebContent#TEXT_INPUT",
+			value1 = "Test - pt-BR");
+
+		AssertTextEquals.assertValue(
+			key_fieldFieldLabel = "Numeric - pt-BR",
+			locator1 = "WCEditWebContent#TEXT_INPUT",
+			value1 = "98765");
+
+
+		
+
+		
+
+	
+
+		
+	}
+
 }

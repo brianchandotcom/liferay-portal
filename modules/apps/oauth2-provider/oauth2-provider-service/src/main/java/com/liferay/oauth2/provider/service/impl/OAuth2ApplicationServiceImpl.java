@@ -72,53 +72,6 @@ public class OAuth2ApplicationServiceImpl
 			scopeAliasesList, trustedApplication, serviceContext);
 	}
 
-	@Override
-	public OAuth2Application addOAuth2Application(
-		List<GrantType> allowedGrantTypesList,
-		String clientAuthenticationMethod, long clientCredentialUserId,
-		String clientId, int clientProfile, String clientSecret,
-		String description, List<String> featuresList, String homePageURL,
-		long iconFileEntryId, String name, String privacyPolicyURL,
-		List<String> redirectURIsList, boolean rememberDevice,
-		List<String> scopeAliasesList, boolean trustedApplication,
-		ServiceContext serviceContext)
-		throws PortalException {
-
-		ModelResourcePermissionUtil.check(
-			_oAuth2ApplicationModelResourcePermission, getPermissionChecker(),
-			0, 0, OAuth2ProviderActionKeys.ACTION_ADD_APPLICATION);
-
-		if (rememberDevice) {
-			ModelResourcePermissionUtil.check(
-				_oAuth2ApplicationModelResourcePermission,
-				getPermissionChecker(), 0, 0,
-				OAuth2ProviderActionKeys.ACTION_ADD_REMEMBER_DEVICE);
-		}
-
-		if (trustedApplication) {
-			ModelResourcePermissionUtil.check(
-				_oAuth2ApplicationModelResourcePermission,
-				getPermissionChecker(), 0, 0,
-				OAuth2ProviderActionKeys.ACTION_ADD_TRUSTED_APPLICATION);
-		}
-
-		User user = getUser();
-
-		if (allowedGrantTypesList.contains(GrantType.CLIENT_CREDENTIALS) &&
-			(clientCredentialUserId != user.getUserId())) {
-
-			_checkCanImpersonateClientCredentialUser(clientCredentialUserId);
-		}
-
-		return oAuth2ApplicationLocalService.addOAuth2Application(
-			user.getCompanyId(), user.getUserId(), user.getFullName(),
-			allowedGrantTypesList, clientAuthenticationMethod,
-			clientCredentialUserId, clientId, clientProfile, clientSecret,
-			description, featuresList, homePageURL, iconFileEntryId, name,
-			privacyPolicyURL, redirectURIsList, rememberDevice,
-			scopeAliasesList, trustedApplication, serviceContext);
-	}
-
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
 	 *             #addOAuth2Application(List, long, String, int, String,
@@ -175,6 +128,53 @@ public class OAuth2ApplicationServiceImpl
 			description, featuresList, homePageURL, iconFileEntryId, name,
 			privacyPolicyURL, redirectURIsList, scopeAliasesList,
 			serviceContext);
+	}
+
+	@Override
+	public OAuth2Application addOAuth2Application(
+			List<GrantType> allowedGrantTypesList,
+			String clientAuthenticationMethod, long clientCredentialUserId,
+			String clientId, int clientProfile, String clientSecret,
+			String description, List<String> featuresList, String homePageURL,
+			long iconFileEntryId, String name, String privacyPolicyURL,
+			List<String> redirectURIsList, boolean rememberDevice,
+			List<String> scopeAliasesList, boolean trustedApplication,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		ModelResourcePermissionUtil.check(
+			_oAuth2ApplicationModelResourcePermission, getPermissionChecker(),
+			0, 0, OAuth2ProviderActionKeys.ACTION_ADD_APPLICATION);
+
+		if (rememberDevice) {
+			ModelResourcePermissionUtil.check(
+				_oAuth2ApplicationModelResourcePermission,
+				getPermissionChecker(), 0, 0,
+				OAuth2ProviderActionKeys.ACTION_ADD_REMEMBER_DEVICE);
+		}
+
+		if (trustedApplication) {
+			ModelResourcePermissionUtil.check(
+				_oAuth2ApplicationModelResourcePermission,
+				getPermissionChecker(), 0, 0,
+				OAuth2ProviderActionKeys.ACTION_ADD_TRUSTED_APPLICATION);
+		}
+
+		User user = getUser();
+
+		if (allowedGrantTypesList.contains(GrantType.CLIENT_CREDENTIALS) &&
+			(clientCredentialUserId != user.getUserId())) {
+
+			_checkCanImpersonateClientCredentialUser(clientCredentialUserId);
+		}
+
+		return oAuth2ApplicationLocalService.addOAuth2Application(
+			user.getCompanyId(), user.getUserId(), user.getFullName(),
+			allowedGrantTypesList, clientAuthenticationMethod,
+			clientCredentialUserId, clientId, clientProfile, clientSecret,
+			description, featuresList, homePageURL, iconFileEntryId, name,
+			privacyPolicyURL, redirectURIsList, rememberDevice,
+			scopeAliasesList, trustedApplication, serviceContext);
 	}
 
 	@Override

@@ -568,7 +568,7 @@
 				"name": "display",
 				"responsive": true,
 				"responsiveTemplate": "d{viewport}{value}",
-				"type": "checkbox",
+				"type": "hideFragment",
 				"typeOptions": {
 					"customValues": {
 						"checked": "none",

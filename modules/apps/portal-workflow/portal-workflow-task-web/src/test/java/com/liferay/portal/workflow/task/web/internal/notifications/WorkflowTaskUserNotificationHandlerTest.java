@@ -16,8 +16,6 @@ package com.liferay.portal.workflow.task.web.internal.notifications;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.json.JSONFactoryImpl;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -32,7 +30,6 @@ import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.kernel.workflow.BaseWorkflowHandler;
 import com.liferay.portal.kernel.workflow.DefaultWorkflowTask;
@@ -40,7 +37,6 @@ import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.portal.util.HtmlImpl;
 import com.liferay.portal.workflow.WorkflowTaskManagerProxyBean;
 import com.liferay.portal.workflow.task.web.internal.permission.WorkflowTaskPermissionChecker;
 
@@ -73,8 +69,6 @@ public class WorkflowTaskUserNotificationHandlerTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		_setUpHtmlUtil();
-		_setUpJSONFactoryUtil();
 		_setUpUserNotificationEventLocalService();
 		_setUpWorkflowTaskManagerUtil();
 		_setUpWorkflowTaskPermissionChecker();
@@ -87,10 +81,10 @@ public class WorkflowTaskUserNotificationHandlerTest {
 
 	@Test
 	public void testInterpret() throws Exception {
-		_language = Mockito.mock(Language.class);
+		Language language = Mockito.mock(Language.class);
 
 		ReflectionTestUtil.setFieldValue(
-			LanguageUtil.class, "_language", _language);
+			LanguageUtil.class, "_language", language);
 
 		Mockito.when(
 			LanguageUtil.format(
@@ -102,7 +96,7 @@ public class WorkflowTaskUserNotificationHandlerTest {
 		);
 
 		Mockito.when(
-			_language.get(
+			language.get(
 				Mockito.any(Locale.class),
 				Mockito.eq("notification-no-longer-applies"))
 		).thenReturn(
@@ -208,26 +202,6 @@ public class WorkflowTaskUserNotificationHandlerTest {
 			}
 
 		};
-	}
-
-	private static void _setUpHtmlUtil() {
-		HtmlUtil htmlUtil = new HtmlUtil();
-
-		htmlUtil.setHtml(
-			new HtmlImpl() {
-
-				@Override
-				public String escape(String text) {
-					return text;
-				}
-
-			});
-	}
-
-	private static void _setUpJSONFactoryUtil() {
-		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
-
-		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
 	}
 
 	private static void _setUpUserNotificationEventLocalService()
@@ -343,8 +317,6 @@ public class WorkflowTaskUserNotificationHandlerTest {
 
 	private static final Long _VALID_WORKFLOW_TASK_ID =
 		RandomTestUtil.randomLong();
-
-	private static Language _language;
 
 	private static final ServiceContext _serviceContext = new ServiceContext() {
 

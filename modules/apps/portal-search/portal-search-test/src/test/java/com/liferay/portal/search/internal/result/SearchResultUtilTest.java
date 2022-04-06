@@ -120,8 +120,6 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 		Assert.assertEquals(SearchTestUtil.SUMMARY_TITLE, summary.getTitle());
 
 		_assertSearchResult(searchResult);
-
-		_serviceTrackerMap.close();
 	}
 
 	@Test

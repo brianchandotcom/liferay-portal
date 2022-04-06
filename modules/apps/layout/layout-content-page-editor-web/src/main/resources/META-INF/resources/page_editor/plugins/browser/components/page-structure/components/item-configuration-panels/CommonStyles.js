@@ -94,6 +94,7 @@ export function CommonStyles({
 								displaySize: '',
 								label: '',
 								name: '',
+								responsive: true,
 								type: 'spacing',
 								typeOptions: {spacingFieldSets},
 							},

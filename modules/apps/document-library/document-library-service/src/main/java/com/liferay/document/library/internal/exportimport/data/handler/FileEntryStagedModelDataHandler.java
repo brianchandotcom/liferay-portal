@@ -333,6 +333,7 @@ public class FileEntryStagedModelDataHandler
 		}
 
 		_exportMetaData(portletDataContext, fileEntryElement, fileEntry);
+
 		_exportAssetDisplayPage(portletDataContext, fileEntry);
 		_exportFriendlyURLEntries(portletDataContext, fileEntry);
 

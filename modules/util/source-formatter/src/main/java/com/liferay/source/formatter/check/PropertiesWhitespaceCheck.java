@@ -109,7 +109,7 @@ public class PropertiesWhitespaceCheck extends WhitespaceCheck {
 			leadingSpaces = leadingSpaces.substring(remainder);
 		}
 		else {
-			StringBundler sb = new StringBundler();
+			StringBundler sb = new StringBundler(remainder);
 
 			sb.append(leadingSpaces);
 

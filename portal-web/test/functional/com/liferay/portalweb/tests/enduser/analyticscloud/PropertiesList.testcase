@@ -95,11 +95,9 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-9120 | Test Summary: [AC] Property list default view"
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9120 | Test Summary: Property field is displayed in empty state when no property is available"
 	@priority = "3"
 	test ViewPropertyListDefault {
-		var propertyNameList = "New property 1,New property 2";
-
 		task ("Go to properties") {
 			ACNavigation.goToSettings();
 
@@ -107,21 +105,19 @@ definition {
 		}
 
 		task ("Assert empty state on properties page") {
-			ACProperties.assertNoProperties();
-		}
-
-		task ("Create two new properties") {
-			for (var propertyName : list "${propertyNameList}") {
-				ACProperties.addNewProperty(propertyName = "${propertyName}");
-
-				ACSettings.goToProperties();
+			if (IsElementNotPresent(key_textValue = "No Properties Found", locator1 = "ACUtils#GENERIC_TEXT")) {
+				ACSettings.deleteAllProperties();
 			}
-		}
-
-		task ("Assert empty state on properties page") {
-			ACSettings.deleteAllProperties();
 
 			ACProperties.assertNoProperties();
+		}
+
+		task ("Asset that there are no more properties on the sites page") {
+			Navigator.gotoBack();
+
+			AssertElementPresent(locator1 = "ACSidebar#PROPERTY_MENU_NO_PROPERTIES");
+
+			AssertElementPresent(locator1 = "TextInput#NO_PROPERTIES_AVAILABLE_TEXT");
 		}
 	}
 

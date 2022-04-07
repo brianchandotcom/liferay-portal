@@ -234,36 +234,6 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8320 | Test Summary: Property field is displayed in empty state when no property is available"
-	@priority = "4"
-	test PropertyFieldWhenNoProperty {
-		task ("Connect the DXP to AC") {
-			ACDXPSettings.connectDXPtoAnalyticsCloud();
-		}
-
-		task ("AC launch and delete all properties") {
-			ACUtils.launchAC();
-
-			ACSettings.deleteAllProperties();
-		}
-
-		task ("Asset that no longer properties exists") {
-			ACProperties.assertNoProperties();
-		}
-
-		task ("Asset that there are no more properties on the sites page") {
-			Navigator.gotoBack();
-
-			AssertTextEquals(
-				locator1 = "ACSidebar#PROPERTY_MENU_NO_PROPERTIES",
-				value1 = "No Properties");
-
-			AssertElementPresent(locator1 = "TextInput#NO_PROPERTIES_AVAILABLE_TEXT");
-
-			AssertElementNotPresent(locator1 = "ACSidebar#PROPERTY_MENU_ITEM_BY_NAME");
-		}
-	}
-
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8323 | Test Summary: A user lost access to a given property (because the admin removed the user's access or someone deleted the property of the system)"
 	@priority = "4"
 	test UserLostAccess {

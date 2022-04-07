@@ -118,9 +118,10 @@ public class SearcherImpl implements Searcher {
 		SearchRequest searchRequest,
 		SearchResponseBuilder searchResponseBuilder) {
 
-		List<SearchRequest> list = searchRequest.getFederatedSearchRequests();
+		List<SearchRequest> federatedSearchRequests =
+			searchRequest.getFederatedSearchRequests();
 
-		for (SearchRequest federatedSearchRequest : list) {
+		for (SearchRequest federatedSearchRequest : federatedSearchRequests) {
 			searchResponseBuilder.addFederatedSearchResponse(
 				search(federatedSearchRequest));
 		}

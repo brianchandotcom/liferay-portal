@@ -82,13 +82,13 @@ public final class DLValidatorImpl implements DLValidator {
 
 	@Override
 	public long getMaxAllowableSize(long groupId, String mimeType) {
-		Group group = _groupLocalService.fetchGroup(groupId);
+		long companyId = _getCompanyId(groupId);
 
 		return _min(
-			_getGlobalMaxAllowableSize(group.getCompanyId(), groupId),
+			_getGlobalMaxAllowableSize(companyId, groupId),
 			_min(
 				_dlSizeLimitManagedServiceFactory.getCompanyMimeTypeSizeLimit(
-					group.getCompanyId(), mimeType),
+					companyId, mimeType),
 				_dlSizeLimitManagedServiceFactory.getGroupMimeTypeSizeLimit(
 					groupId, mimeType)));
 	}
@@ -299,12 +299,26 @@ public final class DLValidatorImpl implements DLValidator {
 		_dlSizeLimitManagedServiceFactory = dlSizeLimitManagedServiceFactory;
 	}
 
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
 	protected void setUploadServletRequestConfigurationHelper(
 		UploadServletRequestConfigurationHelper
 			uploadServletRequestConfigurationHelper) {
 
 		_uploadServletRequestConfigurationHelper =
 			uploadServletRequestConfigurationHelper;
+	}
+
+	private long _getCompanyId(long groupId) {
+		Group group = _groupLocalService.fetchGroup(groupId);
+
+		if (group == null) {
+			return CompanyThreadLocal.getCompanyId();
+		}
+
+		return group.getCompanyId();
 	}
 
 	private long _getGlobalMaxAllowableSize(long companyId, long groupId) {

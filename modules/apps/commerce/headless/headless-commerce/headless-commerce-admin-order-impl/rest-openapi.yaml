@@ -125,6 +125,39 @@ components:
                 type:
                     type: string
             type: object
+        CustomField:
+            # @review
+            description:
+                Represents the value of each custom field. Fields can contain different information types (e.g.,
+                geolocation, strings, etc.).
+            properties:
+                customValue:
+                    $ref: "#/components/schemas/CustomValue"
+                dataType:
+                    description:
+                        The field type (e.g., image, text, etc.).
+                    readOnly: true
+                    type: string
+                name:
+                    description:
+                        The field's internal name. This is valid for comparisons and unique in the structured content.
+                    type: string
+        CustomValue:
+            properties:
+                data:
+                    description:
+                        The field's content for simple types.
+                    type: object
+                data_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
+                geo:
+                    allOf:
+                        - $ref: "#/components/schemas/Geo"
+                    description:
+                        A point determined by latitude and longitude.
+            type: object
         Error:
             properties:
                 errorCode:
@@ -154,6 +187,21 @@ components:
                 - errorDescription
                 - message
                 - status
+            type: object
+        Geo:
+            description:
+                A point determined by latitude and longitude.
+            properties:
+                latitude:
+                    description:
+                        The latitude of a point in space.
+                    format: double
+                    type: number
+                longitude:
+                    description:
+                        The longitude of a point in space.
+                    format: double
+                    type: number
             type: object
         Order:
             properties:
@@ -573,8 +621,9 @@ components:
                     minimum: 0
                     type: integer
                 customFields:
-                    additionalProperties: true
-                    type: object
+                    items:
+                        $ref: "#/components/schemas/CustomField"
+                    type: array
                 decimalQuantity:
                     example: 10.1
                     format: bigdecimal
@@ -663,7 +712,6 @@ components:
                         hu_HU: Product Name HU
                     type: object
                 options:
-                    readOnly: true
                     type: string
                 orderExternalReferenceCode:
                     example: CAB-34098-789-N
@@ -4494,6 +4542,86 @@ paths:
                       - CommerceOpenApiAdmin.write
             summary: Creates or updates a Order Type Channel.
             tags: ["OrderTypeChannel"]
+    /orderItems:
+        get:
+            parameters:
+                - in: query
+                  name: filter
+                  required: false
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  required: false
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  required: false
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/OrderItem"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/OrderItem"
+                                type: array
+                    description:
+                        Successful operation
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminOrder.read
+            summary: Gets a list of Order Items.
+            tags: ["OrderItem"]
     /orderItems/by-externalReferenceCode/{externalReferenceCode}:
         delete:
             operationId: deleteOrderItemByExternalReferenceCode

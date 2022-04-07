@@ -2837,6 +2837,40 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		return layoutPersistence.update(layout);
 	}
 
+	@Override
+	public Layout updateLayout(
+			long groupId, boolean privateLayout, long layoutId,
+			String typeSettings, byte[] iconBytes, String themeId,
+			String colorSchemeId, long styleBookEntryId, String css,
+			long masterLayoutPlid)
+		throws PortalException {
+
+		Layout layout = layoutPersistence.findByG_P_L(
+			groupId, privateLayout, layoutId);
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			UnicodePropertiesBuilder.fastLoad(
+				typeSettings
+			).build();
+
+		validateTypeSettingsProperties(layout, typeSettingsUnicodeProperties);
+
+		_validateMasterLayout(masterLayoutPlid, layout.getPlid());
+
+		layout.setModifiedDate(new Date());
+		layout.setTypeSettings(typeSettingsUnicodeProperties.toString());
+		layout.setThemeId(themeId);
+		layout.setColorSchemeId(colorSchemeId);
+		layout.setStyleBookEntryId(styleBookEntryId);
+		layout.setCss(css);
+		layout.setMasterLayoutPlid(masterLayoutPlid);
+
+		PortalUtil.updateImageId(
+			layout, iconBytes != null, iconBytes, "iconImageId", 0, 0, 0);
+
+		return layoutPersistence.update(layout);
+	}
+
 	/**
 	 * Updates the look and feel of the layout.
 	 *

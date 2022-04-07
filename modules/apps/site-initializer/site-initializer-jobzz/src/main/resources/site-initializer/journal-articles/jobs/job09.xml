@@ -5,10 +5,10 @@
 		<dynamic-content language-id="en_US"><![CDATA[40]]></dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="keyword" instance-id="SaMxH8nX" name="educational_level" type="select">
-		<dynamic-content language-id="en_US"><![CDATA[bachelor]]></dynamic-content>
+		<dynamic-content language-id="en_US"><![CDATA[master]]></dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="keyword" instance-id="0npgRfiY" name="location" type="text">
-		<dynamic-content language-id="en_US"><![CDATA[London]]></dynamic-content>
+		<dynamic-content language-id="en_US"><![CDATA[Dubai]]></dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="keyword" instance-id="f6NFUYlU" name="some" type="checkbox_multiple">
 		<dynamic-content language-id="en_US"><![CDATA[[]]]></dynamic-content>

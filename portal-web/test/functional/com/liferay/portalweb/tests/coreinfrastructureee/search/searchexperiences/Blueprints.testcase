@@ -423,6 +423,66 @@ definition {
 		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "WC Title,apple apple apple");
 	}
 
+	test AssertUsingCopiedElementJSONWithinCustomJSONElement {
+		JSONBlog.addEntry(
+			entryContent = "",
+			entryTitle = "apple apple apple");
+
+		JSONWebcontent.addWebContent(
+			content = "apple",
+			groupName = "Guest",
+			title = "WC Title");
+
+		Blueprints.openBlueprintsAdmin();
+
+		Blueprints.createBlueprint(title = "Test Blueprint");
+
+		Blueprints.addElement(element = "Boost Asset Type");
+
+		Blueprints.configureElementDropdown(
+			dropdownName = "Asset Type",
+			option = "Web Content Article");
+
+		Type(
+			elementName = "Boost Asset Type",
+			fieldLabel = "Boost",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
+			value1 = "1000");
+
+		Blueprints.selectAddedElementMenuItem(
+			element = "Boost Asset Type",
+			menuItem = "View Element JSON");
+
+		SelectFrameTop();
+
+		Click(locator1 = "Link#DOWNLOAD");
+
+		var outputDir = PropsUtil.get("output.dir.name");
+		var elementJson = FileUtil.read("${outputDir}/sxpElement.json");
+
+		Click(locator1 = "Modal#CLOSE_BUTTON");
+
+		Blueprints.addElement(element = "Custom JSON Element");
+
+		Type.typeCodeMirrorEditorNoError(
+			locator1 = "Blueprints#CODE_MIRROR_EDITOR",
+			value1 = "${elementJson}");
+
+		Blueprints.selectAddedElementMenuItem(
+			element = "Boost Asset Type",
+			menuItem = "Remove");
+
+		PortletEntry.save();
+
+		Search.openSearchPage();
+
+		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
+
+		SearchPortlets.searchEmbedded(searchTerm = "apple");
+
+		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "WC Title,apple apple apple");
+	}
+
 	test BoostCustomLiferayObjectType {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 501",

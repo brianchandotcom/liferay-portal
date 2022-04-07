@@ -95,6 +95,15 @@ definition {
 		DMDocument.viewCP(dmDocumentTitle = "Document_4.jpg");
 	}
 
+	@description = "This validates LPS-68795. It ensures that a shortcut can be moved into a folder."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanMoveShortcutIntoFolder {
+
+		// TODO LPS-150915
+
+	}
+
 	@description = "This ensures that the user can edit the shortcut."
 	@priority = "4"
 	@refactorneeded

@@ -1195,9 +1195,9 @@ definition {
 
 		var username = "ac";
 
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		ACUtils.createBlogsAndAddToPage();
 
-		var dataSource = StringUtil.extractFirst("${propertyName}", " ");
+		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		JSONUser.addUser(
 			userEmailAddress = "${username}@liferay.com",
@@ -1212,6 +1212,8 @@ definition {
 			userLoginFullName = "${username} ${username}");
 
 		ACUtils.navigateToSitePage(
+			actionType = "View Blog",
+			documentTitleList = "Blogs AC Title",
 			pageName = "AC Page",
 			siteName = "Site Name");
 
@@ -1219,7 +1221,7 @@ definition {
 
 		ACUtils.launchAC();
 
-		ACProperties.switchProperty(propertyName = "${propertyName}");
+		ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 
 		ACNavigation.goToSegments();
 
@@ -1242,11 +1244,11 @@ definition {
 
 		ACUtils.launchDXP(userEmailAddress = "${username}@liferay.com");
 
-		for (var n : list "1,2,3") {
-			ACUtils.navigateToSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
-		}
+		ACUtils.navigateToSitePage(
+			actionType = "View Blog",
+			documentTitleList = "Blogs AC Title,Blogs AC Title,Blogs AC Title",
+			pageName = "AC Page",
+			siteName = "Site Name");
 
 		ACUtils.closeAllSessionsAndWait();
 

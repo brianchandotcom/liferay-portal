@@ -12,11 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.asm;
+package com.liferay.portal.proxy.internal;
 
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.DelegateProxyFactory;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.lang.reflect.Constructor;
@@ -28,12 +29,16 @@ import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 
-/**
- * @author Matthew Tambara
- */
-public class ASMWrapperUtil {
+import org.osgi.service.component.annotations.Component;
 
-	public static <T> T createASMWrapper(
+/**
+ * @author Shuyang Zhou
+ */
+@Component(service = DelegateProxyFactory.class)
+public class ASMDelegateProxyFactory implements DelegateProxyFactory {
+
+	@Override
+	public <T> T newDelegateProxyInstance(
 		ClassLoader classLoader, Class<T> interfaceClass, Object delegateObject,
 		T defaultObject) {
 
@@ -83,7 +88,7 @@ public class ASMWrapperUtil {
 		}
 	}
 
-	private static <T> byte[] _generateASMWrapperClassData(
+	private <T> byte[] _generateASMWrapperClassData(
 		String asmWrapperClassBinaryName, Class<T> interfaceClass,
 		Object delegateObject, T defaultObject) {
 
@@ -194,7 +199,7 @@ public class ASMWrapperUtil {
 		return classWriter.toByteArray();
 	}
 
-	private static void _generateMethod(
+	private void _generateMethod(
 		ClassWriter classWriter, Method method,
 		String asmWrapperClassBinaryName, String fieldName,
 		String targetClassDescriptor, String targetClassBinaryName) {
@@ -242,13 +247,10 @@ public class ASMWrapperUtil {
 		methodVisitor.visitEnd();
 	}
 
-	private static String _getClassBinaryName(Class<?> clazz) {
+	private String _getClassBinaryName(Class<?> clazz) {
 		String className = clazz.getName();
 
 		return StringUtil.replace(className, '.', '/');
-	}
-
-	private ASMWrapperUtil() {
 	}
 
 	private static final Method _defineClassMethod;

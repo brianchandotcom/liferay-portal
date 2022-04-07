@@ -19,7 +19,6 @@ import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.asm.ASMWrapperUtil;
 import com.liferay.portal.kernel.application.type.ApplicationType;
 import com.liferay.portal.kernel.bean.BeanProperties;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -53,6 +52,7 @@ import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.DelegateProxyFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -1310,7 +1310,7 @@ public class PortletTracker
 
 		PortletApp portletAppDefault = _portalPortletModel.getPortletApp();
 
-		portletApp = ASMWrapperUtil.createASMWrapper(
+		portletApp = _delegateProxyFactory.newDelegateProxyInstance(
 			PortletTracker.class.getClassLoader(), PortletApp.class,
 			bundlePortletAppDelegate, portletAppDefault);
 
@@ -1472,6 +1472,9 @@ public class PortletTracker
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private DelegateProxyFactory _delegateProxyFactory;
 
 	private ExecutorService _executorService;
 	private String _httpServiceEndpoint = StringPool.BLANK;

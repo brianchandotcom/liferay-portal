@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.asm;
+package com.liferay.portal.proxy.internal;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -23,9 +23,9 @@ import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ReflectionUtilTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.DelegateProxyFactory;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
@@ -37,9 +37,9 @@ import org.junit.Rule;
 import org.junit.Test;
 
 /**
- * @author Matthew Tambara
+ * @author Shuyang Zhou
  */
-public class ASMWrapperUtilTest {
+public class ASMDelegateProxyFactoryTest {
 
 	@ClassRule
 	@Rule
@@ -49,7 +49,10 @@ public class ASMWrapperUtilTest {
 
 	@Test
 	public void testASMWrapper() throws Exception {
-		Object asmWrapper = ASMWrapperUtil.createASMWrapper(
+		DelegateProxyFactory delegateProxyFactory =
+			new ASMDelegateProxyFactory();
+
+		Object asmWrapper = delegateProxyFactory.newDelegateProxyInstance(
 			TestInterface.class.getClassLoader(), TestInterface.class,
 			new TestDelegate(), new TestDefault());
 
@@ -78,7 +81,10 @@ public class ASMWrapperUtilTest {
 				ReflectionUtilTestUtil.throwForSuppressAccessChecks(
 					securityException)) {
 
-			ASMWrapperUtil.createASMWrapper(
+			DelegateProxyFactory delegateProxyFactory =
+				new ASMDelegateProxyFactory();
+
+			delegateProxyFactory.newDelegateProxyInstance(
 				TestInterface.class.getClassLoader(), TestInterface.class,
 				new TestDelegate(), new TestDefault());
 
@@ -90,22 +96,11 @@ public class ASMWrapperUtilTest {
 	}
 
 	@Test
-	public void testConstructor() throws Exception {
-		Class<ASMWrapperUtil> clazz = ASMWrapperUtil.class;
-
-		Constructor<ASMWrapperUtil> constructor =
-			clazz.getDeclaredConstructor();
-
-		Assert.assertEquals(Modifier.PRIVATE, constructor.getModifiers());
-
-		constructor.setAccessible(true);
-
-		constructor.newInstance();
-	}
-
-	@Test
 	public void testCreateASMWrapper() throws Exception {
-		Object asmWrapper = ASMWrapperUtil.createASMWrapper(
+		DelegateProxyFactory delegateProxyFactory =
+			new ASMDelegateProxyFactory();
+
+		Object asmWrapper = delegateProxyFactory.newDelegateProxyInstance(
 			TestInterface.class.getClassLoader(), TestInterface.class,
 			new TestDelegate(), new TestDefault());
 
@@ -146,10 +141,13 @@ public class ASMWrapperUtilTest {
 	@Test
 	public void testErrorCreateASMWrapper() throws Exception {
 		Method defineClassMethod = ReflectionTestUtil.getAndSetFieldValue(
-			ASMWrapperUtil.class, "_defineClassMethod", null);
+			ASMDelegateProxyFactory.class, "_defineClassMethod", null);
+
+		DelegateProxyFactory delegateProxyFactory =
+			new ASMDelegateProxyFactory();
 
 		try {
-			ASMWrapperUtil.createASMWrapper(
+			delegateProxyFactory.newDelegateProxyInstance(
 				TestInterface.class.getClassLoader(), TestInterface.class,
 				new TestDelegate(), new TestDefault());
 
@@ -162,11 +160,12 @@ public class ASMWrapperUtilTest {
 		}
 		finally {
 			ReflectionTestUtil.setFieldValue(
-				ASMWrapperUtil.class, "_defineClassMethod", defineClassMethod);
+				ASMDelegateProxyFactory.class, "_defineClassMethod",
+				defineClassMethod);
 		}
 
 		try {
-			ASMWrapperUtil.createASMWrapper(
+			delegateProxyFactory.newDelegateProxyInstance(
 				ClassLoader.getSystemClassLoader(), Object.class, new Object(),
 				Object.class);
 

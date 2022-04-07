@@ -97,23 +97,30 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 						_objectDefinition.getObjectDefinitionId(),
 						objectViewColumn.getObjectFieldName());
 
-				if (objectField == null) {
-					_addNonobjectField(
-						fdsTableSchemaBuilder,
-						objectViewColumn.getObjectFieldName());
-				}
-				else {
-					if (GetterUtil.getBoolean(
-							PropsUtil.get("feature.flag.LPS-149120"))) {
+				if (GetterUtil.getBoolean(
+						PropsUtil.get("feature.flag.LPS-149120"))) {
 
-						String label = objectViewColumn.getLabel(locale, true);
+					String label = objectViewColumn.getLabel(locale, true);
 
-						if (label.isEmpty()) {
-							label = objectField.getLabel(locale, true);
-						}
+					if (label.isEmpty()) {
+						label = objectField.getLabel(locale, true);
+					}
 
+					if (objectField == null) {
+						_addNonobjectField(
+							fdsTableSchemaBuilder, label,
+							objectViewColumn.getObjectFieldName());
+					}
+					else {
 						_addObjectField(
 							fdsTableSchemaBuilder, label, objectField);
+					}
+				}
+				else {
+					if (objectField == null) {
+						_addNonobjectField(
+							fdsTableSchemaBuilder, "",
+							objectViewColumn.getObjectFieldName());
 					}
 					else {
 						_addObjectField(
@@ -130,7 +137,7 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 	private void _addAllObjectFields(
 		FDSTableSchemaBuilder fdsTableSchemaBuilder, Locale locale) {
 
-		_addNonobjectField(fdsTableSchemaBuilder, "id");
+		_addNonobjectField(fdsTableSchemaBuilder, "id", "id");
 
 		List<ObjectField> objectFields =
 			_objectFieldLocalService.getObjectFields(
@@ -141,8 +148,8 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 				fdsTableSchemaBuilder, objectField.getLabel(locale, true),
 				objectField));
 
-		_addNonobjectField(fdsTableSchemaBuilder, "status");
-		_addNonobjectField(fdsTableSchemaBuilder, "creator");
+		_addNonobjectField(fdsTableSchemaBuilder, "status", "status");
+		_addNonobjectField(fdsTableSchemaBuilder, "creator", "creator");
 	}
 
 	private void _addFDSTableSchemaField(
@@ -197,32 +204,62 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 	}
 
 	private void _addNonobjectField(
-		FDSTableSchemaBuilder fdsTableSchemaBuilder, String fieldName) {
+		FDSTableSchemaBuilder fdsTableSchemaBuilder, String fieldLabel,
+		String fieldName) {
 
-		if (Objects.equals(fieldName, "creator")) {
-			_addFDSTableSchemaField(
-				null, null, null, fdsTableSchemaBuilder, "creator.name",
-				"author", true);
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-149120"))) {
+			if (Objects.equals(fieldName, "creator")) {
+				_addFDSTableSchemaField(
+					null, null, null, fdsTableSchemaBuilder, "creator.name",
+					fieldLabel, true);
+			}
+			else if (Objects.equals(fieldName, "dateCreated")) {
+				_addFDSTableSchemaField(
+					null, null, "Date", fdsTableSchemaBuilder, "dateCreated",
+					fieldLabel, true);
+			}
+			else if (Objects.equals(fieldName, "dateModified")) {
+				_addFDSTableSchemaField(
+					null, null, "Date", fdsTableSchemaBuilder, "dateModified",
+					fieldLabel, true);
+			}
+			else if (Objects.equals(fieldName, "id")) {
+				_addFDSTableSchemaField(
+					null, "actionLink", null, fdsTableSchemaBuilder, "id",
+					fieldLabel, true);
+			}
+			else if (Objects.equals(fieldName, "status")) {
+				_addFDSTableSchemaField(
+					null, "status", null, fdsTableSchemaBuilder, "status",
+					fieldLabel, true);
+			}
 		}
-		else if (Objects.equals(fieldName, "dateCreated")) {
-			_addFDSTableSchemaField(
-				null, null, "Date", fdsTableSchemaBuilder, "dateCreated",
-				"created-date", true);
-		}
-		else if (Objects.equals(fieldName, "dateModified")) {
-			_addFDSTableSchemaField(
-				null, null, "Date", fdsTableSchemaBuilder, "dateModified",
-				"modified-date", true);
-		}
-		else if (Objects.equals(fieldName, "id")) {
-			_addFDSTableSchemaField(
-				null, "actionLink", null, fdsTableSchemaBuilder, "id", "id",
-				true);
-		}
-		else if (Objects.equals(fieldName, "status")) {
-			_addFDSTableSchemaField(
-				null, "status", null, fdsTableSchemaBuilder, "status", "status",
-				true);
+		else {
+			if (Objects.equals(fieldName, "creator")) {
+				_addFDSTableSchemaField(
+					null, null, null, fdsTableSchemaBuilder, "creator.name",
+					"author", true);
+			}
+			else if (Objects.equals(fieldName, "dateCreated")) {
+				_addFDSTableSchemaField(
+					null, null, "Date", fdsTableSchemaBuilder, "dateCreated",
+					"created-date", true);
+			}
+			else if (Objects.equals(fieldName, "dateModified")) {
+				_addFDSTableSchemaField(
+					null, null, "Date", fdsTableSchemaBuilder, "dateModified",
+					"modified-date", true);
+			}
+			else if (Objects.equals(fieldName, "id")) {
+				_addFDSTableSchemaField(
+					null, "actionLink", null, fdsTableSchemaBuilder, "id", "id",
+					true);
+			}
+			else if (Objects.equals(fieldName, "status")) {
+				_addFDSTableSchemaField(
+					null, "status", null, fdsTableSchemaBuilder, "status",
+					"status", true);
+			}
 		}
 	}
 

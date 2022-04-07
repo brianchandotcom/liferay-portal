@@ -45,7 +45,8 @@ public class SXPParameterContributorDefinitionResourceImpl
 			transform(
 				_sxpParameterContributorDefinitionProvider.
 					getSXPParameterContributorDefinitions(
-						contextCompany.getCompanyId()),
+						contextCompany.getCompanyId(),
+						contextAcceptLanguage.getPreferredLocale()),
 				sxpParameterContributorDefinition ->
 					new SXPParameterContributorDefinition() {
 						{

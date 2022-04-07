@@ -48,7 +48,7 @@ import java.util.concurrent.FutureTask;
 
 import javax.portlet.PortletPreferences;
 
-import org.hibernate.util.JDBCExceptionReporter;
+import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
 
 import org.junit.Assert;
 import org.junit.Assume;
@@ -172,7 +172,7 @@ public class PortletPreferencesLocalServiceConcurrentTest {
 						expectedType = ExpectedType.CONTAINS
 					)
 				},
-				level = "ERROR", loggerClass = JDBCExceptionReporter.class
+				level = "ERROR", loggerClass = SqlExceptionHelper.class
 			)
 		}
 	)

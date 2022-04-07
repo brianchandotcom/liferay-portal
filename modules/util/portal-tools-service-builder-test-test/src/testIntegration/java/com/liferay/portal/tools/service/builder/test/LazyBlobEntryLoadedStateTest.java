@@ -30,9 +30,9 @@ import com.liferay.portal.tools.service.builder.test.model.LazyBlobEntry;
 import com.liferay.portal.tools.service.builder.test.service.LazyBlobEntryLocalService;
 import com.liferay.portal.tools.service.builder.test.service.persistence.LazyBlobEntryPersistence;
 
-import org.hibernate.engine.EntityEntry;
-import org.hibernate.engine.PersistenceContext;
-import org.hibernate.engine.SessionImplementor;
+import org.hibernate.engine.spi.EntityEntry;
+import org.hibernate.engine.spi.PersistenceContext;
+import org.hibernate.engine.spi.SessionImplementor;
 
 import org.junit.Assert;
 import org.junit.ClassRule;

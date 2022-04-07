@@ -54,7 +54,7 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.FutureTask;
 
-import org.hibernate.util.JDBCExceptionReporter;
+import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
 
 import org.junit.Assert;
 import org.junit.Assume;
@@ -206,7 +206,7 @@ public class ResourcePermissionLocalServiceConcurrentTest {
 						expectedType = ExpectedType.CONTAINS
 					)
 				},
-				level = "ERROR", loggerClass = JDBCExceptionReporter.class
+				level = "ERROR", loggerClass = SqlExceptionHelper.class
 			)
 		}
 	)

@@ -59,7 +59,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.util.JDBCExceptionReporter;
+import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -152,7 +152,7 @@ public class MBMessageServiceTest {
 			LogCapture logCapture3 = LoggerTestUtil.configureLog4JLogger(
 				DoAsUserThread.class.getName(), LoggerTestUtil.ERROR);
 			LogCapture logCapture4 = LoggerTestUtil.configureLog4JLogger(
-				JDBCExceptionReporter.class.getName(), LoggerTestUtil.ERROR);
+				SqlExceptionHelper.class.getName(), LoggerTestUtil.ERROR);
 			LogCapture logCapture5 = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.portal.messaging.internal.SynchronousDestination",
 				LoggerTestUtil.ERROR)) {

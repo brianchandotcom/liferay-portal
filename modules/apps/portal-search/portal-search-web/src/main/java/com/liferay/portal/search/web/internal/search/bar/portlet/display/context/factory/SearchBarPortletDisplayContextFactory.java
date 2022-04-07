@@ -73,6 +73,9 @@ public class SearchBarPortletDisplayContextFactory {
 		PortletSharedSearchRequest portletSharedSearchRequest,
 		SearchBarPrecedenceHelper searchBarPrecedenceHelper) {
 
+		SearchBarPortletDisplayContext searchBarPortletDisplayContext =
+			new SearchBarPortletDisplayContext();
+
 		SearchBarPortletPreferences searchBarPortletPreferences =
 			new SearchBarPortletPreferencesImpl(
 				Optional.ofNullable(_renderRequest.getPreferences()));
@@ -80,11 +83,29 @@ public class SearchBarPortletDisplayContextFactory {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		String destination = searchBarPortletPreferences.getDestinationString();
+
+		if (Validator.isBlank(destination)) {
+			searchBarPortletDisplayContext.setSearchURL(
+				_getURLCurrentPath(themeDisplay));
+		}
+		else {
+			String destinationURL = _getDestinationURL(
+				destination, themeDisplay);
+
+			if (destinationURL == null) {
+				searchBarPortletDisplayContext.setDestinationUnreachable(true);
+				searchBarPortletDisplayContext.setRenderNothing(true);
+
+				return searchBarPortletDisplayContext;
+			}
+			else {
+				searchBarPortletDisplayContext.setSearchURL(destinationURL);
+			}
+		}
+
 		PortletSharedSearchResponse portletSharedSearchResponse =
 			portletSharedSearchRequest.search(_renderRequest);
-
-		SearchBarPortletDisplayContext searchBarPortletDisplayContext =
-			new SearchBarPortletDisplayContext();
 
 		SearchBarPortletInstanceConfiguration
 			searchBarPortletInstanceConfiguration =
@@ -163,25 +184,6 @@ public class SearchBarPortletDisplayContextFactory {
 		_setSelectedSearchScope(
 			searchBarPortletDisplayContext, searchScopePreference,
 			scopeParameterValue);
-
-		String destination = searchBarPortletPreferences.getDestinationString();
-
-		if (Validator.isBlank(destination)) {
-			searchBarPortletDisplayContext.setSearchURL(
-				_getURLCurrentPath(themeDisplay));
-		}
-		else {
-			String destinationURL = _getDestinationURL(
-				destination, themeDisplay);
-
-			if (destinationURL == null) {
-				searchBarPortletDisplayContext.setDestinationUnreachable(true);
-				searchBarPortletDisplayContext.setRenderNothing(true);
-			}
-			else {
-				searchBarPortletDisplayContext.setSearchURL(destinationURL);
-			}
-		}
 
 		if (searchBarPortletPreferences.isInvisible()) {
 			searchBarPortletDisplayContext.setRenderNothing(true);

@@ -16,6 +16,7 @@ package com.liferay.document.library.kernel.exception;
 
 import com.liferay.document.library.kernel.util.DLValidatorUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.GroupThreadLocal;
 
 /**
  * @author Brian Wing Shun Chan
@@ -65,7 +66,8 @@ public class FileSizeException extends PortalException {
 			return _maxSize;
 		}
 
-		return DLValidatorUtil.getMaxAllowableSize(null);
+		return DLValidatorUtil.getMaxAllowableSize(
+			GroupThreadLocal.getGroupId(), null);
 	}
 
 	private final long _maxSize;

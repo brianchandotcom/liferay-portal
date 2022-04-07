@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 
 import java.io.IOException;
@@ -79,7 +80,8 @@ public class DLHook extends BaseHook {
 		String fileName = getFileName(image.getImageId(), image.getType());
 
 		DLValidatorUtil.validateFileSize(
-			fileName, MimeTypesUtil.getContentType(fileName), bytes);
+			GroupThreadLocal.getGroupId(), fileName,
+			MimeTypesUtil.getContentType(fileName), bytes);
 
 		if (DLStoreUtil.hasFile(
 				image.getCompanyId(), _REPOSITORY_ID, fileName)) {

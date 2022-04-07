@@ -28,7 +28,9 @@ import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.wiki.configuration.WikiFileUploadConfiguration;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.item.selector.criterion.WikiAttachmentItemSelectorCriterion;
@@ -167,9 +169,14 @@ public class WikiAttachmentItemSelectorViewDisplayContext {
 		WikiFileUploadConfiguration wikiFileUploadConfiguration =
 			_getWikiFileUploadsConfiguration();
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 		return Math.min(
 			wikiFileUploadConfiguration.attachmentMaxSize(),
-			DLValidatorUtil.getMaxAllowableSize(null));
+			DLValidatorUtil.getMaxAllowableSize(
+				themeDisplay.getScopeGroupId(), null));
 	}
 
 	public WikiPage getWikiPage() throws PortalException {

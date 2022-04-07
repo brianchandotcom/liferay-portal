@@ -19,6 +19,7 @@ import com.liferay.document.library.internal.configuration.admin.service.DLSizeL
 import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelper;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -62,7 +63,9 @@ public class DLValidatorImplTest {
 	}
 
 	@Test
-	public void testCompanyMimeTypeSizeLimitTakesPrecedenceOverGroupMimeTypeSizeLimit() {
+	public void testCompanyMimeTypeSizeLimitTakesPrecedenceOverGroupMimeTypeSizeLimit()
+		throws Exception {
+
 		Mockito.when(
 			_dlSizeLimitManagedServiceFactory.getCompanyMimeTypeSizeLimit(
 				Mockito.anyLong(), Mockito.anyString())
@@ -77,7 +80,10 @@ public class DLValidatorImplTest {
 			15L
 		);
 
-		Assert.assertEquals(10, _dlValidator.getMaxAllowableSize("image/png"));
+		Assert.assertEquals(
+			10,
+			_dlValidator.getMaxAllowableSize(
+				TestPropsValues.getGroupId(), "image/png"));
 	}
 
 	@Test(expected = FileExtensionException.class)
@@ -86,7 +92,9 @@ public class DLValidatorImplTest {
 	}
 
 	@Test
-	public void testMaxAllowableSizeDLFileMaxSizeTakesPrecedenceOverMimeTypeSizeLimit() {
+	public void testMaxAllowableSizeDLFileMaxSizeTakesPrecedenceOverMimeTypeSizeLimit()
+		throws Exception {
+
 		Mockito.when(
 			_dlSizeLimitManagedServiceFactory.getCompanyFileMaxSize(
 				Mockito.anyLong())
@@ -101,11 +109,14 @@ public class DLValidatorImplTest {
 			15L
 		);
 
-		Assert.assertEquals(10, _dlValidator.getMaxAllowableSize("image/png"));
+		Assert.assertEquals(
+			10,
+			_dlValidator.getMaxAllowableSize(
+				TestPropsValues.getGroupId(), "image/png"));
 	}
 
 	@Test
-	public void testMaxAllowableSizeMimeTypeSizeLimit() {
+	public void testMaxAllowableSizeMimeTypeSizeLimit() throws Exception {
 		Mockito.when(
 			_uploadServletRequestConfigurationHelper.getMaxSize()
 		).thenReturn(
@@ -126,11 +137,16 @@ public class DLValidatorImplTest {
 			5L
 		);
 
-		Assert.assertEquals(5, _dlValidator.getMaxAllowableSize("image/png"));
+		Assert.assertEquals(
+			5,
+			_dlValidator.getMaxAllowableSize(
+				TestPropsValues.getGroupId(), "image/png"));
 	}
 
 	@Test
-	public void testMaxAllowableSizeUploadServletRequestFileMaxSizeTakesPrecedenceOverDLFileMaxSize() {
+	public void testMaxAllowableSizeUploadServletRequestFileMaxSizeTakesPrecedenceOverDLFileMaxSize()
+		throws Exception {
+
 		Mockito.when(
 			_uploadServletRequestConfigurationHelper.getMaxSize()
 		).thenReturn(
@@ -146,7 +162,8 @@ public class DLValidatorImplTest {
 
 		Assert.assertEquals(
 			10,
-			_dlValidator.getMaxAllowableSize(RandomTestUtil.randomString()));
+			_dlValidator.getMaxAllowableSize(
+				TestPropsValues.getGroupId(), RandomTestUtil.randomString()));
 	}
 
 	@Test

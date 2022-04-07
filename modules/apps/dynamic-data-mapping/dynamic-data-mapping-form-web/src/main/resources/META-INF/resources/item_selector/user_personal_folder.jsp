@@ -24,7 +24,7 @@ DDMUserPersonalFolderItemSelectorViewDisplayContext ddmUserPersonalFolderItemSel
 	emptyResultsMessage='<%= LanguageUtil.get(request, "there-are-no-documents-or-media-files-in-this-folder") %>'
 	itemSelectedEventName="<%= ddmUserPersonalFolderItemSelectorViewDisplayContext.getItemSelectedEventName() %>"
 	itemSelectorReturnTypeResolver="<%= ddmUserPersonalFolderItemSelectorViewDisplayContext.getItemSelectorReturnTypeResolver() %>"
-	maxFileSize="<%= DLValidatorUtil.getMaxAllowableSize(null) %>"
+	maxFileSize="<%= DLValidatorUtil.getMaxAllowableSize(themeDisplay.getScopeGroupId(), null) %>"
 	portletURL="<%= ddmUserPersonalFolderItemSelectorViewDisplayContext.getPortletURL() %>"
 	repositoryEntries="<%= ddmUserPersonalFolderItemSelectorViewDisplayContext.getPortletFileEntries() %>"
 	repositoryEntriesCount="<%= ddmUserPersonalFolderItemSelectorViewDisplayContext.getPortletFileEntriesCount() %>"

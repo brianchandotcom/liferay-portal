@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.repository.registry.BaseRepositoryDefiner;
 import com.liferay.portal.kernel.repository.registry.CapabilityRegistry;
 import com.liferay.portal.kernel.repository.registry.RepositoryDefiner;
 import com.liferay.portal.kernel.repository.registry.RepositoryFactoryRegistry;
+import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 
@@ -185,6 +186,7 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 				}
 
 				DLValidatorUtil.validateFileSize(
+					GroupThreadLocal.getGroupId(),
 					fileContentReference.getSourceFileName(),
 					fileContentReference.getMimeType(),
 					fileContentReference.getSize());

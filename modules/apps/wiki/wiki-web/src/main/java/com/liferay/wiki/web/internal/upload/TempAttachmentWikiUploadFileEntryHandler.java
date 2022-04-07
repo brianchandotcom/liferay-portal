@@ -17,9 +17,11 @@ package com.liferay.wiki.web.internal.upload;
 import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.upload.UploadFileEntryHandler;
 import com.liferay.wiki.constants.WikiConstants;
 import com.liferay.wiki.service.WikiPageService;
@@ -43,7 +45,12 @@ public class TempAttachmentWikiUploadFileEntryHandler
 	public FileEntry upload(UploadPortletRequest uploadPortletRequest)
 		throws IOException, PortalException {
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)uploadPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 		_dlValidator.validateFileSize(
+			themeDisplay.getScopeGroupId(),
 			uploadPortletRequest.getFileName(_PARAMETER_NAME),
 			uploadPortletRequest.getContentType(_PARAMETER_NAME),
 			uploadPortletRequest.getSize(_PARAMETER_NAME));

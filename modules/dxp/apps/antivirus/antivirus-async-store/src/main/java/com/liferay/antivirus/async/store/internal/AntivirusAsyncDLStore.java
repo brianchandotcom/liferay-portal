@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portlet.documentlibrary.store.StoreFactory;
 
@@ -570,7 +571,8 @@ public class AntivirusAsyncDLStore implements DLStore {
 		validate(fileName, validateFileExtension);
 
 		_dlValidator.validateFileSize(
-			fileName, MimeTypesUtil.getContentType(fileName), bytes);
+			GroupThreadLocal.getGroupId(), fileName,
+			MimeTypesUtil.getContentType(fileName), bytes);
 	}
 
 	@Override
@@ -581,7 +583,8 @@ public class AntivirusAsyncDLStore implements DLStore {
 		validate(fileName, validateFileExtension);
 
 		_dlValidator.validateFileSize(
-			fileName, MimeTypesUtil.getContentType(fileName), file);
+			GroupThreadLocal.getGroupId(), fileName,
+			MimeTypesUtil.getContentType(fileName), file);
 	}
 
 	@Override
@@ -593,7 +596,8 @@ public class AntivirusAsyncDLStore implements DLStore {
 		validate(fileName, validateFileExtension);
 
 		_dlValidator.validateFileSize(
-			fileName, MimeTypesUtil.getContentType(fileName), inputStream);
+			GroupThreadLocal.getGroupId(), fileName,
+			MimeTypesUtil.getContentType(fileName), inputStream);
 	}
 
 	@Override
@@ -617,7 +621,8 @@ public class AntivirusAsyncDLStore implements DLStore {
 			fileName, fileExtension, sourceFileName, validateFileExtension);
 
 		_dlValidator.validateFileSize(
-			fileName, MimeTypesUtil.getContentType(fileName), file);
+			GroupThreadLocal.getGroupId(), fileName,
+			MimeTypesUtil.getContentType(fileName), file);
 	}
 
 	@Override
@@ -630,7 +635,8 @@ public class AntivirusAsyncDLStore implements DLStore {
 			fileName, fileExtension, sourceFileName, validateFileExtension);
 
 		_dlValidator.validateFileSize(
-			fileName, MimeTypesUtil.getContentType(fileName), inputStream);
+			GroupThreadLocal.getGroupId(), fileName,
+			MimeTypesUtil.getContentType(fileName), inputStream);
 	}
 
 	protected void validate(

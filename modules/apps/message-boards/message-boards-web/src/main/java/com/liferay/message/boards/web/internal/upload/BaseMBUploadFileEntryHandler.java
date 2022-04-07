@@ -41,14 +41,15 @@ public abstract class BaseMBUploadFileEntryHandler
 	public FileEntry upload(UploadPortletRequest uploadPortletRequest)
 		throws IOException, PortalException {
 
-		dlValidator.validateFileSize(
-			uploadPortletRequest.getFileName(getParameterName()),
-			uploadPortletRequest.getContentType(getParameterName()),
-			uploadPortletRequest.getSize(getParameterName()));
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)uploadPortletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
+
+		dlValidator.validateFileSize(
+			themeDisplay.getScopeGroupId(),
+			uploadPortletRequest.getFileName(getParameterName()),
+			uploadPortletRequest.getContentType(getParameterName()),
+			uploadPortletRequest.getSize(getParameterName()));
 
 		long categoryId = ParamUtil.getLong(uploadPortletRequest, "categoryId");
 

@@ -1793,7 +1793,7 @@ definition {
 			fieldName = "",
 			fieldType = "Text");
 
-		ObjectAdmin.viewFieldErrorMessage(errorMessage = "Required");
+		AssertElementPresent(locator1 = "ObjectAdmin#REQUIRED_ERROR_MESSAGE");
 	}
 
 	@description = "LPS-135549 - Verify it is not possible to leave the Label field blank"

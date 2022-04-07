@@ -246,8 +246,8 @@
 		<td></td>
 	</tr>
 	<tr>
-		<td>OBJECT_FIELDS_REQUIRED_ERROR_MESSAGE</td>
-		<td>//div[contains(@class,'form-feedback-item') and contains (.,'Required')]</td>
+		<td>REQUIRED_ERROR_MESSAGE</td>
+		<td>//div[contains(@class,'form-group has-error')]//div[@class='form-feedback-item' and contains (.,'Required')]</td>
 		<td></td>
 	</tr>
 	<tr>

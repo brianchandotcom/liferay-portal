@@ -183,7 +183,7 @@ definition {
 
 		Picklist.clickSaveButton();
 
-		ObjectAdmin.viewFieldErrorMessage(errorMessage = "Required");
+		AssertElementPresent(locator1 = "ObjectAdmin#REQUIRED_ERROR_MESSAGE");
 	}
 
 	@description = "LPS-136595 - Verify it is not possible to leave Name field empty for a Picklist item"
@@ -201,7 +201,7 @@ definition {
 
 		Picklist.clickSaveButton();
 
-		ObjectAdmin.viewFieldErrorMessage(errorMessage = "Required");
+		AssertElementPresent(locator1 = "ObjectAdmin#REQUIRED_ERROR_MESSAGE");
 	}
 
 	@description = "LPS-136595 - Verify it is not possible to leave Name field empty for Picklist"
@@ -211,7 +211,7 @@ definition {
 
 		Picklist.addPicklistViaUI(picklistName = "");
 
-		ObjectAdmin.viewFieldErrorMessage(errorMessage = "Required");
+		AssertElementPresent(locator1 = "ObjectAdmin#REQUIRED_ERROR_MESSAGE");
 	}
 
 	@description = "LPS-136595 - Verify it is not possible to update a Picklist item's key"

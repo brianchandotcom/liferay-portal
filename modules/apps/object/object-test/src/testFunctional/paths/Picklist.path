@@ -117,7 +117,7 @@
 	</tr>
 	<tr>
 		<td>REQUIRED_KEY_ITEM</td>
-		<td>//label[@for='listTypeEntryKey']/following-sibling::div//span[contains(text(),'Required')]</td>
+		<td>//input[@id='listTypeEntryKey']/..//div[contains(@class, 'form-feedback-group') and contains(.,'Required')]</td>
 		<td></td>
 	</tr>
 	<tr>

@@ -20,6 +20,7 @@ import ClayPopover from '@clayui/popover';
 import classNames from 'classnames';
 import {
 	EVENT_TYPES as CORE_EVENT_TYPES,
+	FieldFeedback,
 	Layout,
 	getRepeatedIndex,
 	useForm,
@@ -64,6 +65,7 @@ const getFieldDetails = ({
 	required,
 	text,
 	tip,
+	warningMessage,
 }) => {
 	const fieldDetails = [];
 
@@ -78,8 +80,13 @@ const getFieldDetails = ({
 	if (hasError) {
 		fieldDetails.push(Liferay.Util.escape(errorMessage));
 	}
-	else if (required) {
-		fieldDetails.push(Liferay.Language.get('required'));
+	else {
+		if (warningMessage) {
+			fieldDetails.push(Liferay.Util.escape(warningMessage));
+		}
+		if (required) {
+			fieldDetails.push(Liferay.Language.get('required'));
+		}
 	}
 
 	return fieldDetails.join('<br>');
@@ -166,7 +173,7 @@ export function FieldBase({
 	name,
 	nestedFields,
 	onClick,
-	overMaximumRepetitionsLimit = false,
+	overMaximumRepetitionsLimit,
 	readOnly,
 	repeatable,
 	required,
@@ -178,6 +185,7 @@ export function FieldBase({
 	type,
 	valid,
 	visible,
+	warningMessage,
 }) {
 	const {editingLanguageId} = useFormState();
 	const dispatch = useForm();
@@ -190,11 +198,10 @@ export function FieldBase({
 		required,
 		text,
 		tip,
+		warningMessage,
 	});
 
-	let fieldDetailsId = id ?? name;
-
-	fieldDetailsId = fieldDetailsId + '_fieldDetails';
+	const fieldDetailsId = `${id ?? name}_fieldDetails`;
 
 	const accessibleProps =
 		accessible && fieldDetails ? {'aria-labelledby': fieldDetailsId} : null;
@@ -235,10 +242,11 @@ export function FieldBase({
 	}));
 
 	return (
-		<div
+		<ClayForm.Group
 			aria-labelledby={!renderLabel ? fieldDetailsId : null}
-			className={classNames('form-group', {
+			className={classNames({
 				'has-error': hasError,
+				'has-warning': warningMessage && !hasError,
 				'hide': !visible,
 			})}
 			data-field-name={name}
@@ -375,21 +383,12 @@ export function FieldBase({
 				/>
 			)}
 
-			{typeof tip === 'string' && (
-				<span aria-hidden="true" className="form-text">
-					{tip}
-				</span>
-			)}
-
-			{hasError && (
-				<span className="form-feedback-group">
-					<ClayForm.FeedbackItem aria-hidden="true">
-						<ClayForm.FeedbackIndicator symbol="exclamation-full" />
-
-						{errorMessage}
-					</ClayForm.FeedbackItem>
-				</span>
-			)}
+			<FieldFeedback
+				aria-hidden
+				errorMessage={hasError ? errorMessage : undefined}
+				helpMessage={typeof tip === 'string' ? tip : undefined}
+				warningMessage={warningMessage}
+			/>
 
 			{accessible && fieldDetails && (
 				<span
@@ -402,6 +401,6 @@ export function FieldBase({
 			)}
 
 			{defaultRows && <Layout rows={defaultRows} />}
-		</div>
+		</ClayForm.Group>
 	);
 }

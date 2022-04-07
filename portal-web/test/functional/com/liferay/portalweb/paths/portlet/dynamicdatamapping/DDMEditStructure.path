@@ -121,12 +121,12 @@
 </tr>
 <tr>
 	<td>SETTINGS_TEXT</td>
-	<td>//label[normalize-space(text())='${key_fieldFieldLabel}']//following-sibling::span[contains(@class,'form-text')] | //legend[normalize-space(text())='${key_fieldFieldLabel}']/..//following-sibling::span[contains(@class,'form-text')]</td>
+	<td>//label[normalize-space(text())='${key_fieldFieldLabel}']//following-sibling::div[contains(@class,'form-feedback-group')] | //legend[normalize-space(text())='${key_fieldFieldLabel}']/..//following-sibling::div[contains(@class,'form-feedback-group')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SETTINGS_TEXT_ANY</td>
-	<td>xpath=(//label[normalize-space(text())='${key_fieldFieldLabel}']//following-sibling::span[contains(@class,'form-text')] | //legend[normalize-space(text())='${key_fieldFieldLabel}']//following-sibling::span[contains(@class,'form-text')])[${key_index}]</td>
+	<td>xpath=(//label[normalize-space(text())='${key_fieldFieldLabel}']//following-sibling::div[contains(@class,'form-feedback-group')] | //legend[normalize-space(text())='${key_fieldFieldLabel}']//following-sibling::div[contains(@class,'form-feedback-group')])[${key_index}]</td>
 	<td></td>
 </tr>
 <tr>

@@ -456,7 +456,7 @@ definition {
 
 		AssertElementPresent(locator1 = "ObjectAdmin#OBJECT_LAYOUTS_FIELD_INPUT_HAS_REQUIRED_ERROR");
 
-		AssertElementPresent(locator1 = "ObjectAdmin#OBJECT_FIELDS_REQUIRED_ERROR_MESSAGE");
+		AssertElementPresent(locator1 = "ObjectAdmin#REQUIRED_ERROR_MESSAGE");
 	}
 
 	macro assertObjectActions {
@@ -546,7 +546,7 @@ definition {
 	macro assertObjectLayoutRelationshipFieldRequiredError {
 		AssertElementPresent(locator1 = "ObjectAdmin#OBJECT_LAYOUTS_RELATIONSHIP_FIELD_HAD_REQUIRED_ERROR");
 
-		AssertElementPresent(locator1 = "ObjectAdmin#OBJECT_FIELDS_REQUIRED_ERROR_MESSAGE");
+		AssertElementPresent(locator1 = "ObjectAdmin#REQUIRED_ERROR_MESSAGE");
 	}
 
 	macro assertObjectNameFieldRequired {
@@ -1017,12 +1017,6 @@ definition {
 		AssertElementPresent(locator1 = "ObjectAdmin#FIELDS_DETAILS_IFRAME");
 
 		AssertElementPresent(locator1 = "ObjectAdmin#FIELDS_DETAILS_TITLE");
-	}
-
-	macro viewFieldErrorMessage {
-		AssertTextEquals(
-			locator1 = "ObjectAdmin#OBJECT_FIELDS_REQUIRED_ERROR_MESSAGE",
-			value1 = "${errorMessage}");
 	}
 
 	macro viewFieldValueDisabled {

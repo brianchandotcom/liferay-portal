@@ -121,12 +121,14 @@ exports[`Field Color Picker renders field with helptext 1`] = `
       type="hidden"
       value="false"
     />
-    <span
+    <div
       aria-hidden="true"
-      class="form-text"
+      class="form-feedback-group lfr-de__field-feedback"
     >
-      Helptext
-    </span>
+      <div>
+        Helptext
+      </div>
+    </div>
     <span
       class="sr-only"
       id="colorPicker_fieldDetails"
@@ -200,12 +202,14 @@ exports[`Field Color Picker renders field with label 1`] = `
       type="hidden"
       value="false"
     />
-    <span
+    <div
       aria-hidden="true"
-      class="form-text"
+      class="form-feedback-group lfr-de__field-feedback"
     >
-      Helptext
-    </span>
+      <div>
+        Helptext
+      </div>
+    </div>
     <span
       class="sr-only"
       id="colorPicker_fieldDetails"

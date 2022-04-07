@@ -358,7 +358,7 @@
 <!--HELP TEXT-->
 <tr>
 	<td>HELP_TEXT</td>
-	<td>//div[contains(@class,'form-group')]//span[contains(@class,'form-text') and contains(text(),'${value1}')] | //div[contains(@data-field-name,'${key_fieldName}')]//p[@class='liferay-ddm-form-field-tip'] | //div[contains(@data-field-name,'${key_fieldName}')]//span[contains(@class, 'form-text')]</td>
+	<td>//div[contains(@class,'form-group')]//div[contains(@class,'form-feedback-group') and contains(.,'${value1}')] | //div[contains(@data-field-name,'${key_fieldName}')]//p[@class='liferay-ddm-form-field-tip'] | //div[contains(@data-field-name,'${key_fieldName}')]//div[contains(@class,'form-feedback-group')]</td>
 	<td></td>
 </tr>
 <tr>

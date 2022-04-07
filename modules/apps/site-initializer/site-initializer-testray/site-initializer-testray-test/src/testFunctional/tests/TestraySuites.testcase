@@ -1,0 +1,79 @@
+@component-name = "portal-solutions"
+definition {
+
+	property osgi.modules.includes = "site-initializer-testray";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Testray 2";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Testray.createTestraySite(siteName = "Testray 2");
+
+		Refresh();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		Testray.tearDownCP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "LPS-150818 - Verify if the user can access Suites tab."
+    @priority = "5"
+    test CanAccessSuitesTab {
+        ApplicationsMenu.gotoSite(site = "Testray 2");
+
+		Testray.createProjectTestray(key_name = "Liferay Portal 7.4");
+
+        Click(
+			key_projectName = "Liferay Portal 7.4",
+			locator1 = "Testray#PROJECT_NAME_BUTTON");
+
+        Click(
+			key_navTabName = "Suites",
+			locator1 = "Testray#PROJECT_NAVIGATOR_TAB_BUTTON");
+
+        AssertElementPresent(
+			key_pageTabTilte = "Suites",
+			locator1 = "TestrayHeader#PAGE_TAB_TITLE");
+    }
+
+    @description = "LPS-150819 - Verify if the user can enter a suite."
+    @priority = "5"
+    test CanEnterASuite {
+        ApplicationsMenu.gotoSite(site = "Testray 2");
+
+		Testray.createProjectTestray(key_name = "Liferay Portal 7.4");
+
+        Click(
+			key_projectName = "Liferay Portal 7.4",
+			locator1 = "Testray#PROJECT_NAME_BUTTON");
+
+        Click(
+			key_navTabName = "Suites",
+			locator1 = "Testray#PROJECT_NAVIGATOR_TAB_BUTTON");
+
+        TestraySuites.createSuiteTestray();
+
+        Click(
+            locator1 = "Testray#PROJECT_NAME_BUTTON",
+            key_projectName = "Suite Test");
+
+        AssertElementPresent(
+            locator1 = "TestrayDropdown#PROJECT_NAME_BREADCRUMBS",
+            key_projectName = "Suite Test");
+    }
+
+
+
+
+
+}

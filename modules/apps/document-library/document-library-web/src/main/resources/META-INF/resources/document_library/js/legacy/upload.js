@@ -1400,7 +1400,7 @@ AUI.add(
 					instance._updateEntryIcon(node, fileName);
 
 					if (!displayStyleList && REGEX_IMAGE.test(fileName)) {
-						instance._updateThumbnail(node, fileName);
+						instance._updateThumbnail(node, fileName, displayStyle);
 					}
 				},
 

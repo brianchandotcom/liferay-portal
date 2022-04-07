@@ -90,11 +90,6 @@
 /development/websocket-api.jar
 /development/xmlresolver.jar
 /portal/activation.jar
-/portal/asm-analysis.jar
-/portal/asm-commons.jar
-/portal/asm-tree.jar
-/portal/asm-util.jar
-/portal/asm.jar
 /portal/commons-beanutils.jar
 /portal/commons-codec.jar
 /portal/commons-collections.jar

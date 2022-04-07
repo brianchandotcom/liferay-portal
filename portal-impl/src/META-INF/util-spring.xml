@@ -24,11 +24,6 @@
 	<bean class="com.liferay.portal.kernel.bean.BeanPropertiesUtil" id="com.liferay.portal.kernel.bean.BeanPropertiesUtil">
 		<property name="beanProperties" ref="com.liferay.portal.bean.BeanPropertiesImpl" />
 	</bean>
-	<bean class="com.liferay.portal.kernel.bean.ConstantsBeanFactoryUtil" id="com.liferay.portal.kernel.bean.ConstantsBeanFactoryUtil">
-		<property name="constantsBeanFactory">
-			<bean class="com.liferay.portal.bean.ConstantsBeanFactoryImpl" />
-		</property>
-	</bean>
 	<bean class="com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil" id="com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil">
 		<property name="cacheKeyGenerators">
 			<map>

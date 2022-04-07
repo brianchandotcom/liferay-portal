@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.bean;
+package com.liferay.alloy.mvc.internal.util;
 
 import com.liferay.petra.process.ClassPathUtil;
 import com.liferay.portal.kernel.test.FinalizeManagerUtil;
@@ -44,7 +44,7 @@ import org.junit.Test;
 /**
  * @author Shuyang Zhou
  */
-public class ConstantsBeanFactoryImplTest {
+public class ConstantsBeanFactoryUtilTest {
 
 	@ClassRule
 	@Rule
@@ -61,7 +61,7 @@ public class ConstantsBeanFactoryImplTest {
 				ReflectionUtilTestUtil.throwForSuppressAccessChecks(
 					securityException)) {
 
-			Class.forName(ConstantsBeanFactoryImpl.class.getName());
+			Class.forName(ConstantsBeanFactoryUtil.class.getName());
 
 			Assert.fail();
 		}
@@ -77,10 +77,10 @@ public class ConstantsBeanFactoryImplTest {
 		// Exception on create
 
 		Method defineClassMethod = ReflectionTestUtil.getAndSetFieldValue(
-			ConstantsBeanFactoryImpl.class, "_defineClassMethod", null);
+			ConstantsBeanFactoryUtil.class, "_defineClassMethod", null);
 
 		try {
-			ConstantsBeanFactoryImpl.createConstantsBean(Constants.class);
+			ConstantsBeanFactoryUtil.createConstantsBean(Constants.class);
 
 			Assert.fail();
 		}
@@ -91,13 +91,13 @@ public class ConstantsBeanFactoryImplTest {
 		}
 		finally {
 			ReflectionTestUtil.setFieldValue(
-				ConstantsBeanFactoryImpl.class, "_defineClassMethod",
+				ConstantsBeanFactoryUtil.class, "_defineClassMethod",
 				defineClassMethod);
 		}
 
 		// Normal create
 
-		Object constantsBean = ConstantsBeanFactoryImpl.createConstantsBean(
+		Object constantsBean = ConstantsBeanFactoryUtil.createConstantsBean(
 			Constants.class);
 
 		Class<?> constantsBeanClass = constantsBean.getClass();
@@ -295,14 +295,14 @@ public class ConstantsBeanFactoryImplTest {
 		// Ensure reuse of cached generated class
 
 		Object testConstantsBean2 =
-			ConstantsBeanFactoryImpl.createConstantsBean(Constants.class);
+			ConstantsBeanFactoryUtil.createConstantsBean(Constants.class);
 
 		Assert.assertSame(constantsBeanClass, testConstantsBean2.getClass());
 	}
 
 	@Test
 	public void testSynchronizedConstantsUpdate() throws Exception {
-		Object constantsBean = ConstantsBeanFactoryImpl.createConstantsBean(
+		Object constantsBean = ConstantsBeanFactoryUtil.createConstantsBean(
 			Constants.class);
 
 		Class<?> constantsBeanClass = constantsBean.getClass();
@@ -343,8 +343,8 @@ public class ConstantsBeanFactoryImplTest {
 		Class<?> constantsClass1 = classLoader1.loadClass(
 			Constants.class.getName());
 
-		ConstantsBeanFactoryImpl constantsBeanFactoryImpl =
-			new ConstantsBeanFactoryImpl();
+		ConstantsBeanFactoryUtil constantsBeanFactoryImpl =
+			new ConstantsBeanFactoryUtil();
 
 		Object constantsBean1 = constantsBeanFactoryImpl.getConstantsBean(
 			constantsClass1);
@@ -354,7 +354,7 @@ public class ConstantsBeanFactoryImplTest {
 		Assert.assertSame(classLoader1, constantsBeanClass1.getClassLoader());
 
 		Map<Class<?>, ?> constantsBeans =
-			ConstantsBeanFactoryImpl.constantsBeans;
+			ConstantsBeanFactoryUtil.constantsBeans;
 
 		Assert.assertEquals(
 			constantsBeans.toString(), 1, constantsBeans.size());

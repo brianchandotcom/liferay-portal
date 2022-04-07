@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<checkstyle>
+		<suppress checks="MemberNameCheck" files="alloy-mvc/src/test/java/com/liferay/alloy/mvc/internal/util/ConstantsBeanFactoryUtilTest\.java" />
+		<suppress checks="StaticVariableNameCheck" files="alloy-mvc/src/test/java/com/liferay/alloy/mvc/internal/util/ConstantsBeanFactoryUtilTest\.java" />
+	</checkstyle>
+</suppressions>

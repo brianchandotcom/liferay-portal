@@ -12,13 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.bean;
+package com.liferay.alloy.mvc.internal.util;
 
 import com.liferay.petra.concurrent.ConcurrentReferenceKeyHashMap;
 import com.liferay.petra.concurrent.ConcurrentReferenceValueHashMap;
 import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.portal.kernel.bean.ConstantsBeanFactory;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.lang.ref.Reference;
@@ -36,10 +35,9 @@ import org.objectweb.asm.Type;
 /**
  * @author Shuyang Zhou
  */
-public class ConstantsBeanFactoryImpl implements ConstantsBeanFactory {
+public class ConstantsBeanFactoryUtil {
 
-	@Override
-	public Object getConstantsBean(Class<?> constantsClass) {
+	public static Object getConstantsBean(Class<?> constantsClass) {
 		Object constantsBean = constantsBeans.get(constantsClass);
 
 		if (constantsBean == null) {
@@ -105,8 +103,7 @@ public class ConstantsBeanFactoryImpl implements ConstantsBeanFactory {
 		methodVisitor.visitCode();
 		methodVisitor.visitVarInsn(Opcodes.ALOAD, 0);
 		methodVisitor.visitMethodInsn(
-			Opcodes.INVOKESPECIAL, objectClassBinaryName, "<init>", "()V",
-			false);
+			Opcodes.INVOKESPECIAL, objectClassBinaryName, "<init>", "()V");
 		methodVisitor.visitInsn(Opcodes.RETURN);
 		methodVisitor.visitMaxs(1, 1);
 		methodVisitor.visitEnd();
@@ -158,7 +155,7 @@ public class ConstantsBeanFactoryImpl implements ConstantsBeanFactory {
 
 			methodVisitor.visitMethodInsn(
 				Opcodes.INVOKESTATIC, constantsClassBinaryName,
-				method.getName(), methodDescriptor, false);
+				method.getName(), methodDescriptor);
 
 			Type returnType = Type.getType(method.getReturnType());
 

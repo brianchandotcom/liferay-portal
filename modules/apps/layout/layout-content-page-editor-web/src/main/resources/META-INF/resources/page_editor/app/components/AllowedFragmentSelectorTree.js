@@ -13,10 +13,11 @@
  */
 
 import {TreeView as ClayTreeView} from '@clayui/core';
+import ClayEmptyState from '@clayui/empty-state';
 import {ClayCheckbox, ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
 import {useSelector} from '../contexts/StoreContext';
 
@@ -85,11 +86,10 @@ const getSelectedNodeIds = (
 
 const nodeByName = (items, name) => {
 	return items.reduce(function reducer(acc, item) {
-		if (item.name.match(new RegExp(name, 'i'))) {
+		if (item.name?.toLowerCase().includes(name.toLowerCase())) {
 			acc.push(item);
 		}
-
-		if (item.children) {
+		else if (item.children) {
 			acc.concat(item.children.reduce(reducer, acc));
 		}
 
@@ -128,7 +128,6 @@ const AllowedFragmentSelectorTree = ({dropZoneConfig, onSelectedFragment}) => {
 	);
 
 	const [items, setItems] = useState(nodes);
-	const initialItemsRef = useRef(items);
 	const [selectedKeys, setSelectedKeys] = useState(
 		new Set(fragmentEntryKeys)
 	);
@@ -140,16 +139,14 @@ const AllowedFragmentSelectorTree = ({dropZoneConfig, onSelectedFragment}) => {
 		const value = event.target.value;
 
 		if (!value) {
-			setItems(initialItemsRef.current);
+			setItems(nodes);
 
 			return;
 		}
 
-		const newItems = new Set(nodeByName(items, value));
+		const newItems = new Set(nodeByName(nodes, value));
 
-		if (newItems.size) {
-			setItems([...newItems]);
-		}
+		setItems(newItems.size ? [...newItems] : []);
 	};
 
 	useEffect(() => {
@@ -181,41 +178,54 @@ const AllowedFragmentSelectorTree = ({dropZoneConfig, onSelectedFragment}) => {
 					type="text"
 				/>
 
-				<div className="mb-2 page-editor__allowed-fragment__tree pl-2">
-					<ClayTreeView
-						defaultExpandedKeys={expandedKeys}
-						expanderIcons={{
-							close: <ClayIcon symbol="hr" />,
-							open: <ClayIcon symbol="plus" />,
-						}}
-						items={items}
-						nestedKey="children"
-						onItemsChange={setItems}
-						onSelectionChange={setSelectedKeys}
-						selectedKeys={selectedKeys}
-						selectionMode="multiple-recursive"
-						showExpanderOnHover={false}
-					>
-						{(item) => (
-							<ClayTreeView.Item>
-								<ClayTreeView.ItemStack>
-									<ClayCheckbox label={item.name} />
-								</ClayTreeView.ItemStack>
+				{items.length ? (
+					<div className="mb-2 page-editor__allowed-fragment__tree pl-2">
+						<ClayTreeView
+							defaultExpandedKeys={expandedKeys}
+							expanderIcons={{
+								close: <ClayIcon symbol="hr" />,
+								open: <ClayIcon symbol="plus" />,
+							}}
+							items={items}
+							nestedKey="children"
+							onItemsChange={setItems}
+							onSelectionChange={setSelectedKeys}
+							selectedKeys={selectedKeys}
+							selectionMode="multiple-recursive"
+							showExpanderOnHover={false}
+						>
+							{(item) => (
+								<ClayTreeView.Item>
+									<ClayTreeView.ItemStack>
+										<ClayCheckbox label={item.name} />
+									</ClayTreeView.ItemStack>
 
-								<ClayTreeView.Group items={item.children}>
-									{(item) => (
-										<ClayTreeView.Item>
-											<ClayCheckbox label={item.name} />
-										</ClayTreeView.Item>
-									)}
-								</ClayTreeView.Group>
-							</ClayTreeView.Item>
+									<ClayTreeView.Group items={item.children}>
+										{(item) => (
+											<ClayTreeView.Item>
+												<ClayCheckbox
+													label={item.name}
+												/>
+											</ClayTreeView.Item>
+										)}
+									</ClayTreeView.Group>
+								</ClayTreeView.Item>
+							)}
+						</ClayTreeView>
+					</div>
+				) : (
+					<ClayEmptyState
+						description={Liferay.Language.get(
+							'try-again-with-a-different-search'
 						)}
-					</ClayTreeView>
-				</div>
+						imgSrc={`${themeDisplay.getPathThemeImages()}/states/search_state.gif`}
+						small
+						title={Liferay.Language.get('no-results-found')}
+					/>
+				)}
 			</div>
 
-			<div className="page-editor__allowed-fragment__new-fragments-checkbox">
+			<div className="page-editor__allowed-fragment__new-fragments-checkbox px-4 py-3">
 				<ClayCheckbox
 					aria-label={Liferay.Language.get(
 						'select-new-fragments-automatically'

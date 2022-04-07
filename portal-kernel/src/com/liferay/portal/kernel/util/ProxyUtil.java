@@ -25,8 +25,11 @@ import java.lang.ref.WeakReference;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ConcurrentMap;
 import java.util.function.Function;
 
@@ -148,6 +151,16 @@ public class ProxyUtil {
 		return _constructorReferences.containsKey(clazz);
 	}
 
+	public static <T> T newDelegateProxyInstance(
+		ClassLoader classLoader, Class<T> interfaceClass, Object delegateObject,
+		T defaultObject) {
+
+		return (T)newProxyInstance(
+			classLoader, new Class<?>[] {interfaceClass},
+			new DelegateInvocationHandler(
+				interfaceClass, delegateObject, defaultObject));
+	}
+
 	public static Object newProxyInstance(
 		ClassLoader classLoader, Class<?>[] interfaces,
 		InvocationHandler invocationHandler) {
@@ -212,6 +225,55 @@ public class ProxyUtil {
 		}
 
 		private volatile Reference<Constructor<?>> _reference;
+
+	}
+
+	private static class DelegateInvocationHandler
+		implements InvocationHandler {
+
+		@Override
+		public Object invoke(Object object, Method method, Object[] args)
+			throws Throwable {
+
+			Method delegateMethod = _delegateMethods.get(method);
+
+			if (delegateMethod != null) {
+				return delegateMethod.invoke(_delegateObject, args);
+			}
+
+			return method.invoke(_defaultObject, args);
+		}
+
+		private DelegateInvocationHandler(
+			Class<?> interfaceClass, Object delegateObject,
+			Object defaultObject) {
+
+			Map<Method, Method> delegateMethods = new HashMap<>();
+
+			Class<?> delegateClass = delegateObject.getClass();
+
+			for (Method method : interfaceClass.getMethods()) {
+				try {
+					Method delegateMethod = delegateClass.getMethod(
+						method.getName(), method.getParameterTypes());
+
+					delegateMethod.setAccessible(true);
+
+					delegateMethods.put(method, delegateMethod);
+				}
+				catch (NoSuchMethodException noSuchMethodException) {
+				}
+			}
+
+			_delegateMethods = delegateMethods;
+
+			_delegateObject = delegateObject;
+			_defaultObject = defaultObject;
+		}
+
+		private final Object _defaultObject;
+		private final Map<Method, Method> _delegateMethods;
+		private final Object _delegateObject;
 
 	}
 

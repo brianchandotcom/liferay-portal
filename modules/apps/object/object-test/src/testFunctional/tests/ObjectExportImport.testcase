@@ -185,9 +185,7 @@ definition {
 
 		ObjectAdmin.gotoRelationshipsTab();
 
-		AssertTextEquals(
-			locator1 = "Message#EMPTY_INFO",
-			value1 = "No Items were found.");
+		ObjectAdmin.assertNoResultsWereFound();
 	}
 
 	@description = "LPS-142175 - Verify it is possible to publish an imported custom object"

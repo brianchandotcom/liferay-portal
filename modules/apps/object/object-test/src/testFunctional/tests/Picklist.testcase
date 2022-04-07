@@ -497,7 +497,7 @@ definition {
 	test EmptyStateMessageDisplayedWhenNoPicklist {
 		Picklist.gotoPicklists();
 
-		Picklist.assertEmptyStateMessageDisplayed();
+		ObjectAdmin.assertNoResultsWereFound();
 	}
 
 	@description = "LPS-136595 - Verify the empty state message when where is no items for a Picklist"
@@ -511,7 +511,7 @@ definition {
 
 		Picklist.selectPickilistModalFrame();
 
-		Picklist.assertEmptyStateMessageDisplayed();
+		ObjectAdmin.assertNoResultsWereFound();
 	}
 
 	@description = "LPS-140407 - Verify that the Key field is autofilled when the Name field is filled"

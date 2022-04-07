@@ -111,9 +111,7 @@ definition {
 
 		AssertElementNotPresent(locator1 = "Portlet#MODAL_TITLE");
 
-		AssertTextEquals(
-			locator1 = "Message#EMPTY_INFO",
-			value1 = "No Items were found.");
+		ObjectAdmin.assertNoResultsWereFound();
 	}
 
 	@description = "LPS-135394 - Verify it is possible to create a View"
@@ -885,9 +883,7 @@ definition {
 
 		ObjectCustomViews.goToViewsTab();
 
-		AssertTextEquals(
-			locator1 = "Message#EMPTY_INFO",
-			value1 = "No Items were found.");
+		ObjectAdmin.assertNoResultsWereFound();
 	}
 
 	@description = "LPS-135394 - Verify the Author, Creation Date, Modified Date, Workflow Status, ID columns (Metadata columns) are displayed to be selected"
@@ -937,9 +933,7 @@ definition {
 
 		Search.searchCP(searchTerm = "ObjectTest202");
 
-		AssertTextEquals(
-			locator1 = "Message#EMPTY_INFO",
-			value1 = "No Items were found.");
+		ObjectAdmin.assertNoResultsWereFound();
 	}
 
 	@description = "LPS-135394 - Verify the no result message when searching for a column"

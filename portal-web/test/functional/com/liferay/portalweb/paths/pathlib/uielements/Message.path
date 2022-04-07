@@ -485,6 +485,11 @@
 	<td>//div[@class='portlet-body']/div[contains(@class,'alert-warning')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>EMPTY_STATE_INFO</td>
+	<td>//div[(@class='c-empty-state-title')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

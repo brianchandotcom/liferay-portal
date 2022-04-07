@@ -43,7 +43,7 @@ definition {
 
 		AssertElementNotPresent(locator1 = "Portlet#MODAL_TITLE");
 
-		ObjectAdmin.assertNoItemsWereFound();
+		ObjectAdmin.assertNoResultsWereFound();
 	}
 
 	@description = "LPS-139008 - Verify it is possible to cancel the update of an Action"

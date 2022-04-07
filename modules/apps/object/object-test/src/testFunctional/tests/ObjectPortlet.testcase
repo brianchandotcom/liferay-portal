@@ -2386,7 +2386,7 @@ definition {
 
 		ObjectPortlet.searchEntry(entryName = "Lorem ipsum");
 
-		ObjectAdmin.assertNoItemsWereFound();
+		ObjectAdmin.assertNoResultsWereFound();
 	}
 
 	@description = "LPS-135393 - Verify the empty state when searching for a value that does not exist on the dropdown to select the columns to be displayed on the auto-generated table on the Custom Object Portlet"
@@ -2439,7 +2439,7 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject282");
 
-		ObjectAdmin.assertNoItemsWereFound();
+		ObjectAdmin.assertNoResultsWereFound();
 	}
 
 	@description = "LPS-135393 - Verify that an Integer entry is correctly displayed on the auto-generated table on the Custom Object Portlet"

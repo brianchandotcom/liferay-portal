@@ -441,6 +441,12 @@ definition {
 			value1 = "No items were found.");
 	}
 
+	macro assertNoResultsWereFound {
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_STATE_INFO",
+			value1 = "No Results Found");
+	}
+
 	macro assertNotPossibleAddFieldOnBlockWithoutChooseOptionField {
 		Click(locator1 = "ObjectAdmin#ADD_FIELD_ON_BLOCK");
 

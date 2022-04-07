@@ -58,7 +58,7 @@ definition {
 
 		ObjectPortlet.assertHeader(objectLabel = "Picklists");
 
-		ObjectAdmin.assertNoItemsWereFound();
+		ObjectAdmin.assertNoResultsWereFound();
 	}
 
 	@description = "LPS-135390 - Verify it is possible to add a Picklist with the Add permission"

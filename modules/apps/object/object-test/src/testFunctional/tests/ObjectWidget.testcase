@@ -73,7 +73,7 @@ definition {
 
 		AssertElementPresent(locator1 = "Button#PLUS");
 
-		ObjectAdmin.assertNoItemsWereFound();
+		ObjectAdmin.assertNoResultsWereFound();
 	}
 
 	@description = "LPS-143122 - Verify that a widget button is displayed on the Objects details page"

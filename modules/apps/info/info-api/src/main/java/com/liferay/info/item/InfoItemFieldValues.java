@@ -144,8 +144,10 @@ public class InfoItemFieldValues {
 
 			infoFieldValues.add(infoFieldValue);
 
-			_infoFieldValuesByIdMap.put(
-				infoField.getUniqueId(), infoFieldValues);
+			infoFieldValues = _infoFieldValuesByIdMap.computeIfAbsent(
+				infoField.getUniqueId(), key -> new ArrayList<>());
+
+			infoFieldValues.add(infoFieldValue);
 
 			return this;
 		}

@@ -29,7 +29,7 @@
 								"key": "layout"
 							},
 							"fragmentConfig": {
-								"layoutName": "Dashboard"
+								"layoutName": "Claims"
 							},
 							"fragmentFields": [
 							],

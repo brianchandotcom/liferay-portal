@@ -3,7 +3,7 @@
 		"label": "margin",
 		"styles": [
 			{
-				"cssTemplate": "margin-top: {value};",
+				"cssTemplate": "margin-top: {value} !important;",
 				"dataType": "string",
 				"defaultValue": "0",
 				"displaySize": "small",
@@ -60,7 +60,7 @@
 				]
 			},
 			{
-				"cssTemplate": "margin-bottom: {value};",
+				"cssTemplate": "margin-bottom: {value} !important;",
 				"dataType": "string",
 				"defaultValue": "0",
 				"displaySize": "small",
@@ -117,7 +117,7 @@
 				]
 			},
 			{
-				"cssTemplate": "margin-left: {value};",
+				"cssTemplate": "margin-left: {value} !important;",
 				"dataType": "string",
 				"defaultValue": "0",
 				"displaySize": "small",
@@ -174,7 +174,7 @@
 				]
 			},
 			{
-				"cssTemplate": "margin-right: {value};",
+				"cssTemplate": "margin-right: {value} !important;",
 				"dataType": "string",
 				"defaultValue": "0",
 				"displaySize": "small",
@@ -236,7 +236,7 @@
 		"label": "padding",
 		"styles": [
 			{
-				"cssTemplate": "padding-top: {value};",
+				"cssTemplate": "padding-top: {value} !important;",
 				"dataType": "string",
 				"defaultValue": "0",
 				"displaySize": "small",
@@ -293,7 +293,7 @@
 				]
 			},
 			{
-				"cssTemplate": "padding-bottom: {value};",
+				"cssTemplate": "padding-bottom: {value} !important;",
 				"dataType": "string",
 				"defaultValue": "0",
 				"displaySize": "small",
@@ -350,7 +350,7 @@
 				]
 			},
 			{
-				"cssTemplate": "padding-left: {value};",
+				"cssTemplate": "padding-left: {value} !important;",
 				"dataType": "string",
 				"defaultValue": "0",
 				"displaySize": "small",
@@ -407,7 +407,7 @@
 				]
 			},
 			{
-				"cssTemplate": "padding-right: {value};",
+				"cssTemplate": "padding-right: {value} !important;",
 				"dataType": "string",
 				"defaultValue": "0",
 				"displaySize": "small",
@@ -470,7 +470,7 @@
 		"label": "frame",
 		"styles": [
 			{
-				"cssTemplate": "width: {value};",
+				"cssTemplate": "width: {value} !important;",
 				"dataType": "string",
 				"defaultValue": "",
 				"displaySize": "small",
@@ -480,7 +480,7 @@
 				"type": "text"
 			},
 			{
-				"cssTemplate": "height: {value};",
+				"cssTemplate": "height: {value} !important;",
 				"dataType": "string",
 				"defaultValue": "",
 				"displaySize": "small",
@@ -490,7 +490,7 @@
 				"type": "text"
 			},
 			{
-				"cssTemplate": "min-width: {value};",
+				"cssTemplate": "min-width: {value} !important;",
 				"dataType": "string",
 				"defaultValue": "",
 				"displaySize": "small",
@@ -500,7 +500,7 @@
 				"type": "text"
 			},
 			{
-				"cssTemplate": "max-width: {value};",
+				"cssTemplate": "max-width: {value} !important;",
 				"dataType": "string",
 				"defaultValue": "",
 				"displaySize": "small",
@@ -510,7 +510,7 @@
 				"type": "text"
 			},
 			{
-				"cssTemplate": "min-height: {value};",
+				"cssTemplate": "min-height: {value} !important;",
 				"dataType": "string",
 				"defaultValue": "",
 				"displaySize": "small",
@@ -520,7 +520,7 @@
 				"type": "text"
 			},
 			{
-				"cssTemplate": "max-height: {value};",
+				"cssTemplate": "max-height: {value} !important;",
 				"dataType": "string",
 				"defaultValue": "",
 				"displaySize": "small",
@@ -530,7 +530,7 @@
 				"type": "text"
 			},
 			{
-				"cssTemplate": "overflow: {value};",
+				"cssTemplate": "overflow: {value} !important;",
 				"dataType": "string",
 				"defaultValue": "",
 				"label": "overflow",
@@ -561,7 +561,7 @@
 				]
 			},
 			{
-				"cssTemplate": "display: {value};",
+				"cssTemplate": "display: {value} !important;",
 				"dataType": "string",
 				"defaultValue": "block",
 				"label": "hide-fragment",
@@ -582,7 +582,7 @@
 		"label": "text",
 		"styles": [
 			{
-				"cssTemplate": "font-family: {value};",
+				"cssTemplate": "font-family: {value} !important;",
 				"dataType": "string",
 				"defaultValue": "",
 				"label": "font-family",
@@ -612,7 +612,7 @@
 				]
 			},
 			{
-				"cssTemplate": "font-weight: {value};",
+				"cssTemplate": "font-weight: {value} !important;",
 				"dataType": "string",
 				"defaultValue": "",
 				"label": "font-weight",
@@ -652,7 +652,7 @@
 				]
 			},
 			{
-				"cssTemplate": "font-size: {value};",
+				"cssTemplate": "font-size: {value} !important;",
 				"dataType": "string",
 				"defaultValue": "",
 				"label": "font-size",
@@ -682,7 +682,7 @@
 				]
 			},
 			{
-				"cssTemplate": "color: {value};",
+				"cssTemplate": "color: {value} !important;",
 				"dataType": "string",
 				"label": "text-color",
 				"name": "textColor",
@@ -690,7 +690,7 @@
 				"type": "colorPicker"
 			},
 			{
-				"cssTemplate": "text-align: {value};",
+				"cssTemplate": "text-align: {value} !important;",
 				"dataType": "string",
 				"defaultValue": "left",
 				"label": "text-align",
@@ -723,7 +723,7 @@
 		"label": "background",
 		"styles": [
 			{
-				"cssTemplate": "background-color: {value};",
+				"cssTemplate": "background-color: {value} !important;",
 				"dataType": "string",
 				"label": "background-color",
 				"name": "backgroundColor",
@@ -731,7 +731,7 @@
 				"type": "colorPicker"
 			},
 			{
-				"cssTemplate": "background-position: 50% 50%; background-repeat:no-repeat; background-size: cover; background-image: {value};",
+				"cssTemplate": "background-position: 50% 50%; background-repeat:no-repeat; background-size: cover; background-image: {value} !important;",
 				"dataType": "object",
 				"defaultValue": {
 				},
@@ -746,7 +746,7 @@
 		"label": "borders",
 		"styles": [
 			{
-				"cssTemplate": "border-style: solid; border-width: {value}px;",
+				"cssTemplate": "border-style: solid; border-width: {value}px !important;",
 				"dataType": "number",
 				"defaultValue": 0,
 				"label": "border-width",
@@ -760,7 +760,7 @@
 				}
 			},
 			{
-				"cssTemplate": "border-radius: {value};",
+				"cssTemplate": "border-radius: {value} !important;",
 				"dataType": "string",
 				"defaultValue": "",
 				"label": "border-radius",
@@ -795,7 +795,7 @@
 				]
 			},
 			{
-				"cssTemplate": "border-color: {value};",
+				"cssTemplate": "border-color: {value} !important;",
 				"dataType": "string",
 				"label": "border-color",
 				"name": "borderColor",
@@ -808,7 +808,7 @@
 		"label": "effects",
 		"styles": [
 			{
-				"cssTemplate": "opacity: {value};",
+				"cssTemplate": "opacity: {value} !important;",
 				"dataType": "number",
 				"defaultValue": "",
 				"label": "opacity",
@@ -822,7 +822,7 @@
 				}
 			},
 			{
-				"cssTemplate": "box-shadow: {value};",
+				"cssTemplate": "box-shadow: {value} !important;",
 				"dataType": "object",
 				"defaultValue": "",
 				"label": "shadow",

@@ -11172,6 +11172,7 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 
 		<prepare-selenium-login-config />
 
+<<<<<<< HEAD
 		<prepare-selenium-analytics-cloud-properties />
 		<prepare-selenium-app-server-properties />
 		<prepare-selenium-aws-translation-properties />
@@ -11191,6 +11192,28 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		<prepare-selenium-required-properties />
 		<prepare-selenium-sharepoint-properties />
 		<prepare-selenium-testcase-properties />
+=======
+		<antcall target="prepare-selenium-analytics-cloud-properties" />
+		<antcall target="prepare-selenium-app-server-properties" />
+		<antcall target="prepare-selenium-aws-translation-properties" />
+		<antcall target="prepare-selenium-azure-translation-properties" />
+		<antcall target="prepare-selenium-browser" />
+		<antcall target="prepare-selenium-click-to-chat-properties" />
+		<antcall target="prepare-selenium-database-properties" />
+		<antcall target="prepare-selenium-digital-signature-properties" />
+		<antcall target="prepare-selenium-email-properties" />
+		<antcall target="prepare-selenium-facebook-properties" />
+		<antcall target="prepare-selenium-google-cloud-autotagging-properties" />
+		<antcall target="prepare-selenium-google-cloud-translation-properties" />
+		<antcall target="prepare-selenium-google-properties" />
+		<antcall target="prepare-selenium-onedrive-properties" />
+		<antcall target="prepare-selenium-openid-properties" />
+		<antcall target="prepare-selenium-raylife-paypal-properties" />
+		<antcall target="prepare-selenium-recaptcha-properties" />
+		<antcall target="prepare-selenium-required-properties" />
+		<antcall target="prepare-selenium-sharepoint-properties" />
+		<antcall target="prepare-selenium-testcase-properties" />
+>>>>>>> 380cbb8 (LPS-151038 Fix build-test order)
 
 		<get-browser-property property.name="browser.docker.image" />
 		<get-operating-system-property property.name="operating.system.docker.image" />
@@ -11816,44 +11839,6 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		</if>
 	</target>
 
-	<target name="prepare-selenium-raylife-paypal-properties">
-		<if>
-			<isset property="raylife.paypal.client.id" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					raylife.paypal.client.id=${raylife.paypal.client.id}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="raylife.paypal.client.secret" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					raylife.paypal.client.secret=${raylife.paypal.client.secret}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="raylife.paypal.email" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					raylife.paypal.email=${raylife.paypal.email}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="raylife.paypal.password" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					raylife.paypal.password=${raylife.paypal.password}
-				</echo>
-			</then>
-		</if>
-	</target>
-
 	<target name="prepare-selenium-email-properties">
 		<if>
 			<isset property="email.address.1" />
@@ -12408,6 +12393,44 @@ tokenLocation="REQUEST"</echo>
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
 					openid.username=${openid.username}
+				</echo>
+			</then>
+		</if>
+	</target>
+
+	<target name="prepare-selenium-raylife-paypal-properties">
+		<if>
+			<isset property="raylife.paypal.client.id" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					raylife.paypal.client.id=${raylife.paypal.client.id}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="raylife.paypal.client.secret" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					raylife.paypal.client.secret=${raylife.paypal.client.secret}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="raylife.paypal.email" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					raylife.paypal.email=${raylife.paypal.email}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="raylife.paypal.password" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					raylife.paypal.password=${raylife.paypal.password}
 				</echo>
 			</then>
 		</if>

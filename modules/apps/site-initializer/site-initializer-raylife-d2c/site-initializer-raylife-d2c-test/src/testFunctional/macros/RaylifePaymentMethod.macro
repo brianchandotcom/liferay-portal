@@ -1,5 +1,52 @@
 definition {
 
+	macro configurationPaypal {
+		ApplicationsMenu.gotoPortlet(
+			category = "Store Management",
+			panel = "Commerce",
+			portlet = "Channels");
+
+		CommerceNavigator.gotoEntry(entryName = "Raylife Channel");
+
+		CommerceChannels.activatePaymentMethod(paymentMethod = "PayPal");
+
+		Refresh();
+
+		CommerceEntry.clickTableEntryEditButton(
+			entryName = "PayPal",
+			table = "Payment Methods");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Click(
+			locator1 = "CommerceEntry#PAYMENT_METHODS_SIDE_PANEL_NAV_ITEMS",
+			navItem = "Configuration");
+
+		var raylifePaypalClientId = PropsUtil.get("raylife.paypal.client.id");
+		var raylifePaypalClientSecret = PropsUtil.get("raylife.paypal.client.secret");
+
+		Type(
+			key_text = "Client ID",
+			locator1 = "TextInput#ANY",
+			value1 = "${raylifePaypalClientId}");
+
+		Type(
+			key_text = "Client Secret",
+			locator1 = "TextInput#ANY",
+			value1 = "${raylifePaypalClientSecret}");
+
+		Select(
+			key_fieldLabel = "Mode",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "Sandbox");
+
+		Button.clickSave();
+
+		Click(locator1 = "Icon#CLOSE");
+
+		Refresh();
+	}
+
 	macro enablePayPalPayment {
 		ApplicationsMenu.gotoPortlet(
 			category = "Store Management",
@@ -23,6 +70,34 @@ definition {
 		Click(locator1 = "RaylifePaymentMethod#TERMS_CONDITIONS_CHECKBOX");
 
 		Click(locator1 = "RaylifePaymentMethod#PAY_NOW");
+	}
+
+	macro paypalPaymentFlow {
+
+		var raylifePaypalEmail = PropsUtil.get("raylife.paypal.email");
+		var raylifePaypalPassword = PropsUtil.get("raylife.paypal.password");
+
+		Type(
+			locator1 = "RaylifePaymentMethod#FIELD_EMAIL_PAYPAL",
+			value1 = "${raylifePaypalEmail}");
+
+		Click(locator1 = "RaylifePaymentMethod#BUTTON_NEXT_PAYPAL");
+
+		Type(
+			locator1 = "RaylifePaymentMethod#FIELD_PASSWORD_PAYPAL",
+			value1 = "${raylifePaypalPassword}");
+
+		Click(locator1 = "RaylifePaymentMethod#BUTTON_LOGIN_PAYPAL");
+
+		AssertElementPresent(
+			locator1 = "RaylifePaymentMethod#TEST_BUYER_PAYPAL",
+			text = "test buyer");
+
+		AssertElementPresent(
+			locator1 = "RaylifePaymentMethod#VALUE_QUOTATION_PAYPAL",
+			value = "$683.05");
+
+		Click(locator1 = "RaylifePaymentMethod#BUTTON_CONTINUE_PAYPAL");
 	}
 
 }

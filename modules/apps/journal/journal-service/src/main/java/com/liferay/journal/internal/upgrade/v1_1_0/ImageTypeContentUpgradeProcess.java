@@ -80,9 +80,13 @@ public class ImageTypeContentUpgradeProcess extends UpgradeProcess {
 					long userId = PortalUtil.getValidUserId(
 						companyId, (Long)values[4]);
 
-					long folderId =
-						_journalArticleImageUpgradeHelper.getFolderId(
-							userId, groupId, resourcePrimKey);
+					long folderId = 0L;
+
+					synchronized (this) {
+						folderId =
+							_journalArticleImageUpgradeHelper.getFolderId(
+								userId, groupId, resourcePrimKey);
+					}
 
 					String fileName = String.valueOf(articleImageId);
 

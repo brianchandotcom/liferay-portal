@@ -78,7 +78,7 @@ public class LiferayJWTBearerAuthenticationHandler
 			throw new NotAuthorizedException("Missing JWT assertion");
 		}
 
-		JwtToken jwtToken = super.getJwtToken(assertion, null, null);
+		JwtToken jwtToken = super.getJwtToken(assertion);
 
 		String claimSubject = (String)jwtToken.getClaim(
 			JwtConstants.CLAIM_SUBJECT);

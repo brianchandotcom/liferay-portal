@@ -15,13 +15,17 @@
 package com.liferay.search.experiences.blueprint.parameter.contributor;
 
 import java.util.List;
+import java.util.Locale;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Petteri Karttunen
  */
+@ProviderType
 public interface SXPParameterContributorDefinitionProvider {
 
 	public List<SXPParameterContributorDefinition>
-		getSXPParameterContributorDefinitions(long companyId);
+		getSXPParameterContributorDefinitions(long companyId, Locale locale);
 
 }

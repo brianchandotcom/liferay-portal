@@ -15,7 +15,6 @@
 package com.liferay.portal.jsp.engine.internal;
 
 import com.liferay.petra.lang.ClassLoaderPool;
-import com.liferay.portal.asm.ASMWrapperUtil;
 import com.liferay.portal.jsp.engine.internal.delegate.CheckEnabledServletDelegate;
 import com.liferay.portal.jsp.engine.internal.delegate.JspConfigDescriptorServletContextDelegate;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -24,6 +23,7 @@ import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.util.PropsImpl;
 import com.liferay.shielded.container.Ordered;
@@ -106,7 +106,7 @@ public class JSPEngineShieldedContainerInitializer
 
 		jasperInitializer.onStartup(
 			null,
-			ASMWrapperUtil.createASMWrapper(
+			ProxyUtil.newDelegateProxyInstance(
 				servletContext.getClassLoader(), ServletContext.class,
 				new JspConfigDescriptorServletContextDelegate(servletContext),
 				servletContext));
@@ -141,7 +141,7 @@ public class JSPEngineShieldedContainerInitializer
 		Servlet portalJSPServlet;
 
 		if (checkInterval > 0) {
-			portalJSPServlet = ASMWrapperUtil.createASMWrapper(
+			portalJSPServlet = ProxyUtil.newDelegateProxyInstance(
 				servletContext.getClassLoader(), Servlet.class,
 				new CheckEnabledServletDelegate(
 					jspServlet, servletContext, checkInterval),

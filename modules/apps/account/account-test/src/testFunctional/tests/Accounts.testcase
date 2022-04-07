@@ -368,7 +368,7 @@ definition {
 				accountEntryType = "Business");
 		}
 
-		task ("Add a user using an email with the domain and assert the warning label appears signaling that the domain is blocked") {
+		task ("Attempt to add a user with a blocked domain and assert the warning and error") {
 			Accounts.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Business Account");
@@ -384,6 +384,8 @@ definition {
 		}
 
 		task ("Set up a new virtual instance and create a new account") {
+			Navigator.openURL();
+
 			SAML.addVirtualInstances(virtualHosts = "www.able.com");
 
 			User.firstLoginUI(

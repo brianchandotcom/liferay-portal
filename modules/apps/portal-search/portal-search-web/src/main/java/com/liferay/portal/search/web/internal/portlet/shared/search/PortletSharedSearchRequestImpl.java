@@ -226,19 +226,13 @@ public class PortletSharedSearchRequestImpl
 		List<Portlet> instantiatedPortlets = _getInstantiatedPortlets(
 			layout, companyId);
 
-		List<Portlet> mergedPortlets = new ArrayList<>();
-
-		for (Portlet portlet : portlets) {
-			mergedPortlets.add(portlet);
-
-			for (Portlet instantiatedPortlet : instantiatedPortlets) {
-				if (instantiatedPortlet.equals(portlet)) {
-					mergedPortlets.add(instantiatedPortlet);
-				}
+		for (Portlet instantiatedPortlet : instantiatedPortlets) {
+			if (!portlets.contains(instantiatedPortlet)) {
+				portlets.add(instantiatedPortlet);
 			}
 		}
 
-		return mergedPortlets;
+		return portlets;
 	}
 
 	private SearchSettingsContributor _getSearchSettingsContributor(

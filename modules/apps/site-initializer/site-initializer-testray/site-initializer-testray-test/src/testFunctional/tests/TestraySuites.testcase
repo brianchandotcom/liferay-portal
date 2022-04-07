@@ -27,53 +27,49 @@ definition {
 	}
 
 	@description = "LPS-150818 - Verify if the user can access Suites tab."
-    @priority = "5"
-    test CanAccessSuitesTab {
-        ApplicationsMenu.gotoSite(site = "Testray 2");
+	@priority = "5"
+	test CanAccessSuitesTab {
+		ApplicationsMenu.gotoSite(site = "Testray 2");
 
 		Testray.createProjectTestray(key_name = "Liferay Portal 7.4");
 
-        Click(
+		Click(
 			key_projectName = "Liferay Portal 7.4",
 			locator1 = "Testray#PROJECT_NAME_BUTTON");
 
-        Click(
+		Click(
 			key_navTabName = "Suites",
 			locator1 = "Testray#PROJECT_NAVIGATOR_TAB_BUTTON");
 
-        AssertElementPresent(
+		AssertElementPresent(
 			key_pageTabTilte = "Suites",
 			locator1 = "TestrayHeader#PAGE_TAB_TITLE");
-    }
+	}
 
-    @description = "LPS-150819 - Verify if the user can enter a suite."
-    @priority = "5"
-    test CanEnterASuite {
-        ApplicationsMenu.gotoSite(site = "Testray 2");
+	@description = "LPS-150819 - Verify if the user can enter a suite."
+	@priority = "5"
+	test CanEnterASuite {
+		ApplicationsMenu.gotoSite(site = "Testray 2");
 
 		Testray.createProjectTestray(key_name = "Liferay Portal 7.4");
 
-        Click(
+		Click(
 			key_projectName = "Liferay Portal 7.4",
 			locator1 = "Testray#PROJECT_NAME_BUTTON");
 
-        Click(
+		Click(
 			key_navTabName = "Suites",
 			locator1 = "Testray#PROJECT_NAVIGATOR_TAB_BUTTON");
 
-        TestraySuites.createSuiteTestray();
+		TestraySuites.createSuiteTestray();
 
-        Click(
-            locator1 = "Testray#PROJECT_NAME_BUTTON",
-            key_projectName = "Suite Test");
+		Click(
+			key_projectName = "Suite Test",
+			locator1 = "Testray#PROJECT_NAME_BUTTON");
 
-        AssertElementPresent(
-            locator1 = "TestrayDropdown#PROJECT_NAME_BREADCRUMBS",
-            key_projectName = "Suite Test");
-    }
-
-
-
-
+		AssertElementPresent(
+			key_projectName = "Suite Test",
+			locator1 = "TestrayDropdown#PROJECT_NAME_BREADCRUMBS");
+	}
 
 }

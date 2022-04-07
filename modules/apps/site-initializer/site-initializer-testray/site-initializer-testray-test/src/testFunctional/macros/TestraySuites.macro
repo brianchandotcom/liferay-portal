@@ -1,12 +1,13 @@
 definition {
 
-    macro createSuiteTestray {
-        Click(locator1 = "Testray#ADD_PROJECT");
+	macro createSuiteTestray {
+		Click(locator1 = "Testray#ADD_PROJECT");
 
-        Type(
-            locator1 = "TestrayManage#NEW_OPTION_NAME",
-            value1 = "Suite Test");
+		Type(
+			locator1 = "TestrayManage#NEW_OPTION_NAME",
+			value1 = "Suite Test");
 
-        Click(locator1 = "TestraySuites#ADD_SUITE");
-    }
+		Click(locator1 = "TestraySuites#ADD_SUITE");
+	}
+
 }

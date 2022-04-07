@@ -448,9 +448,7 @@ definition {
 
 		DataEngine.waitForAutoSave();
 
-		Form.save();
-
-		Alert.viewSuccessMessageText(successMessage = "Your request completed successfully.");
+		Button.clickPublish();
 
 		FormsAdminNavigator.gotoBack();
 
@@ -785,9 +783,7 @@ definition {
 
 		DataEngine.waitForAutoSave();
 
-		Form.save();
-
-		Alert.viewSuccessMessageText(successMessage = "Your request completed successfully.");
+		Button.clickPublish();
 
 		FormsAdminNavigator.gotoBack();
 

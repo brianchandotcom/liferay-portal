@@ -5176,6 +5176,66 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.shared.dependencies.asm.jar!asm-analysis.jar</file-name>
+				<version>7.0</version>
+				<project-name>org.objectweb.asm.tree.analysis</project-name>
+				<project-url>http://asm.ow2.org/</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.shared.dependencies.asm.jar!asm-commons.jar</file-name>
+				<version>7.0</version>
+				<project-name>org.objectweb.asm.commons</project-name>
+				<project-url>http://asm.ow2.org/</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.shared.dependencies.asm.jar!asm-tree.jar</file-name>
+				<version>7.0</version>
+				<project-name>org.objectweb.asm.tree</project-name>
+				<project-url>http://asm.ow2.org/</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.shared.dependencies.asm.jar!asm-util.jar</file-name>
+				<version>7.0</version>
+				<project-name>org.objectweb.asm.util</project-name>
+				<project-url>http://asm.ow2.org/</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.shared.dependencies.asm.jar!asm.jar</file-name>
+				<version>7.0</version>
+				<project-name>org.objectweb.asm</project-name>
+				<project-url>http://asm.ow2.org/</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.shared.dependencies.jdom2.jar!org.jdom2.jar</file-name>
 				<version>2.0.6.LIFERAY-PATCHED-1</version>
 				<project-name>org.jdom2</project-name>

@@ -12473,25 +12473,25 @@ database.partition.enabled=true</echo>
 						<then>
 							<echo file="${import.database.sh.file.path}">
 								<![CDATA[
-								#!/bin/bash
+									#!/bin/bash
 
-								echo "db2 restore database lportal user ${database.username} using ${database.password} from /opt/ibm/db2 replace existing"
+									echo "db2 restore database lportal user ${database.username} using ${database.password} from /opt/ibm/db2 replace existing"
 
-								output=$(db2 restore database lportal user ${database.username} using ${database.password} from /opt/ibm/db2 replace existing)
+									output=$(db2 restore database lportal user ${database.username} using ${database.password} from /opt/ibm/db2 replace existing)
 
-								exit_code=$?
+									exit_code=$?
 
-								if [[ (${exit_code} != "0") && ($output == *"SQL2555I"*) ]]
-								then
-									echo "$output"
+									if [[ (${exit_code} != "0") && ($output == *"SQL2555I"*) ]]
+									then
+										echo "$output"
 
-									exit 0
-								else
-									echo "$output"
+										exit 0
+									else
+										echo "$output"
 
-									exit ${exit_code}
-								fi
-							]]>
+										exit ${exit_code}
+									fi
+								]]>
 							</echo>
 
 							<property name="docker.database.dest.path" value="/opt/ibm/db2" />

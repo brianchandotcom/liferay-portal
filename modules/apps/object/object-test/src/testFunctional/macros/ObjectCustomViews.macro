@@ -227,7 +227,7 @@ definition {
 	}
 
 	macro viewOptionNotPresentInKebabMenu {
-		if (IsElementPresent(locator1 = "ObjectAdmin#OBJECT_KEBAB_MENU")) {
+		if (IsElementPresent(key_objectLabel = "${entryName}", locator1 = "ObjectAdmin#OBJECT_KEBAB_MENU")) {
 			Click(
 				key_objectLabel = "${entryName}",
 				locator1 = "ObjectAdmin#OBJECT_KEBAB_MENU");

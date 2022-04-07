@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -173,6 +174,26 @@ public class DLSizeLimitManagedServiceFactoryTest {
 		}
 	}
 
+	@Test
+	public void testGetGroupMimeTypeSizeLimitWithInvalidGroupId()
+		throws Exception {
+
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					"com.liferay.document.library.internal.configuration." +
+						"DLSizeLimitConfiguration",
+					HashMapDictionaryBuilder.<String, Object>put(
+						"mimeTypeSizeLimit",
+						new String[] {"image/*:1234", "image/png:5678"}
+					).build())) {
+
+			Assert.assertEquals(
+				5678,
+				_getGroupMimeTypeSizeLimit(
+					GroupConstants.DEFAULT_PARENT_GROUP_ID, "image/png"));
+		}
+	}
+
 	private long _getCompanyMimeTypeSizeLimit(String mimeType)
 		throws Exception {
 
@@ -184,13 +205,19 @@ public class DLSizeLimitManagedServiceFactoryTest {
 			_managedServiceFactory, TestPropsValues.getCompanyId(), mimeType);
 	}
 
-	private long _getGroupMimeTypeSizeLimit(String mimeType) throws Exception {
+	private long _getGroupMimeTypeSizeLimit(long groupId, String mimeType)
+		throws Exception {
+
 		Method method = ReflectionUtil.getDeclaredMethod(
 			_managedServiceFactory.getClass(), "getGroupMimeTypeSizeLimit",
 			long.class, String.class);
 
-		return (long)method.invoke(
-			_managedServiceFactory, TestPropsValues.getGroupId(), mimeType);
+		return (long)method.invoke(_managedServiceFactory, groupId, mimeType);
+	}
+
+	private long _getGroupMimeTypeSizeLimit(String mimeType) throws Exception {
+		return _getGroupMimeTypeSizeLimit(
+			TestPropsValues.getGroupId(), mimeType);
 	}
 
 	private <E extends Exception> void _withGroupConfiguration(

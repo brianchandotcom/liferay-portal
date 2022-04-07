@@ -61,6 +61,25 @@ public class DLValidatorImplTest {
 		_dlValidator = dlValidatorImpl;
 	}
 
+	@Test
+	public void testCompanyMimeTypeSizeLimitTakesPrecedenceOverGroupMimeTypeSizeLimit() {
+		Mockito.when(
+			_dlSizeLimitManagedServiceFactory.getCompanyMimeTypeSizeLimit(
+				Mockito.anyLong(), Mockito.anyString())
+		).thenReturn(
+			10L
+		);
+
+		Mockito.when(
+			_dlSizeLimitManagedServiceFactory.getGroupMimeTypeSizeLimit(
+				Mockito.anyLong(), Mockito.anyString())
+		).thenReturn(
+			15L
+		);
+
+		Assert.assertEquals(10, _dlValidator.getMaxAllowableSize("image/png"));
+	}
+
 	@Test(expected = FileExtensionException.class)
 	public void testInvalidExtension() throws Exception {
 		_validateFileExtension("test.gıf");

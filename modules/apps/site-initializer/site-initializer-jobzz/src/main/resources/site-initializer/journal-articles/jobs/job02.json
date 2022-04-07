@@ -1,7 +1,7 @@
 {
-	"articleId": "job01",
+	"articleId": "job02",
 	"assetCategoryERCs": [
-		"CAT_SALES"
+		"CAT_MARKETING"
 	],
 	"assetTagNames": [
 		"highlight",
@@ -10,5 +10,5 @@
 	"ddmStructureKey": "Job",
 	"ddmTemplateKey": "JOB",
 	"folder": "jobs",
-	"name": "Sales Engineer"
+	"name": "Online Marketeer"
 }

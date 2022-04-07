@@ -1,14 +1,13 @@
 {
-	"articleId": "job01",
+	"articleId": "job10",
 	"assetCategoryERCs": [
-		"CAT_SALES"
+		"CAT_SUPPORT"
 	],
 	"assetTagNames": [
-		"highlight",
-		"homepage"
+		"highlight"
 	],
 	"ddmStructureKey": "Job",
 	"ddmTemplateKey": "JOB",
 	"folder": "jobs",
-	"name": "Sales Engineer"
+	"name": "Support Engineer"
 }

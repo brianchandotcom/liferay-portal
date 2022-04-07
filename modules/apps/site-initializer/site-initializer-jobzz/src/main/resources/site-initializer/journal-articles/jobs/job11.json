@@ -1,14 +1,13 @@
 {
-	"articleId": "job01",
+	"articleId": "job11",
 	"assetCategoryERCs": [
-		"CAT_SALES"
+		"CAT_MARKETING"
 	],
 	"assetTagNames": [
-		"highlight",
-		"homepage"
+		
 	],
 	"ddmStructureKey": "Job",
 	"ddmTemplateKey": "JOB",
 	"folder": "jobs",
-	"name": "Sales Engineer"
+	"name": "Senior Marketing Manager"
 }

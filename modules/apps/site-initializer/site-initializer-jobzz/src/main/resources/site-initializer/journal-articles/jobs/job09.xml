@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US" version="1.0">
+	<dynamic-element index-type="keyword" instance-id="Ix8IVDbo" name="hours_per_week" type="numeric">
+		<dynamic-content language-id="en_US"><![CDATA[40]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="SaMxH8nX" name="educational_level" type="select">
+		<dynamic-content language-id="en_US"><![CDATA[bachelor]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="0npgRfiY" name="location" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[London]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="f6NFUYlU" name="some" type="checkbox_multiple">
+		<dynamic-content language-id="en_US"><![CDATA[[]]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="" instance-id="c7cd9aqk" name="Separator23323087" type="separator" />
+	<dynamic-element index-type="keyword" instance-id="W73U3pLM" name="intro" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse facilisis, mauris ut egestas imperdiet, massa elit posuere est, vitae venenatis orci ante pellentesque leo.]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="4Am8Fyl1" name="description" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed fermentum tempus tellus non semper. Vestibulum vitae sollicitudin metus. Etiam laoreet.
+
+1. Nullam in sapien maximus, gravida mauris ac, finibus dolor.
+2. Sed congue dui vel felis convallis mollis.
+3. Praesent vel arcu quis est ullamcorper varius.
+4. Praesent mattis tortor id turpis ultricies dictum.
+5. Ut gravida nisl eu interdum sodales.
+6. Proin et ex nec nisi blandit ultricies.
+7. Nam consequat dolor quis dolor ornare, at porta magna vehicula.
+8. Proin convallis eros porta orci porta tincidunt.
+9. Curabitur vitae nisi nec purus lobortis malesuada.]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="wjhlVmBj" name="whatweneed" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[Vivamus fringilla ipsum sit amet blandit accumsan. Pellentesque rutrum luctus dui sed.
+
+1. Sed at sapien imperdiet, interdum mi sed, vulputate libero.
+2. Phasellus vestibulum est rutrum ex consectetur suscipit.
+3. Integer ut leo et nulla posuere placerat sit amet id quam.
+4. Maecenas vulputate quam non est pretium tincidunt.
+5. Fusce cursus turpis quis ullamcorper elementum.
+6. Maecenas quis risus mattis, iaculis eros at, interdum enim.
+7. Aenean pharetra massa suscipit varius ornare.
+8. Sed eget ex ac urna luctus cursus.
+9. Nullam nec nibh quis mi placerat accumsan vitae nec eros.
+10. Praesent molestie metus cursus, hendrerit nibh a, malesuada velit.
+11. Duis sed risus sit amet ipsum dignissim molestie.]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="8720ZGMN" name="whatweoffer" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[- Salary package w/ competitive benefits according to qualifications and experience
+- Opportunities to take responsibility and grow professionally
+- A positive and collaborative work culture
+- Working at a leading open source company]]></dynamic-content>
+	</dynamic-element>
+</root>

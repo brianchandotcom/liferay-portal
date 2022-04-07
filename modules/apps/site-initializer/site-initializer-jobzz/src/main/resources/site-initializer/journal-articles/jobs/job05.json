@@ -1,14 +1,13 @@
 {
-	"articleId": "job01",
+	"articleId": "job05",
 	"assetCategoryERCs": [
-		"CAT_SALES"
+		"CAT_IT"
 	],
 	"assetTagNames": [
-		"highlight",
-		"homepage"
+		
 	],
 	"ddmStructureKey": "Job",
 	"ddmTemplateKey": "JOB",
 	"folder": "jobs",
-	"name": "Sales Engineer"
+	"name": "Security Officer"
 }

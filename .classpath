@@ -127,11 +127,6 @@
 	<classpathentry kind="lib" path="lib/development/websocket-api.jar"/>
 	<classpathentry kind="lib" path="lib/development/xmlresolver.jar"/>
 	<classpathentry kind="lib" path="lib/development/xmltask.jar"/>
-	<classpathentry kind="lib" path="lib/portal/asm-analysis.jar"/>
-	<classpathentry kind="lib" path="lib/portal/asm-commons.jar"/>
-	<classpathentry kind="lib" path="lib/portal/asm-tree.jar"/>
-	<classpathentry kind="lib" path="lib/portal/asm-util.jar"/>
-	<classpathentry kind="lib" path="lib/portal/asm.jar"/>
 	<classpathentry kind="lib" path="lib/portal/commons-beanutils.jar"/>
 	<classpathentry kind="lib" path="lib/portal/commons-codec.jar"/>
 	<classpathentry kind="lib" path="lib/portal/commons-collections.jar"/>

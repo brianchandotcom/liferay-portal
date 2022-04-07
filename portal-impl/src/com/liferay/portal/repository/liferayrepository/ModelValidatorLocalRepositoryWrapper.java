@@ -54,8 +54,8 @@ public class ModelValidatorLocalRepositoryWrapper
 
 		FileContentReference fileContentReference =
 			FileContentReference.fromFile(
-				sourceFileName, DLAppUtil.getExtension(title, sourceFileName),
-				mimeType, file);
+				serviceContext.getScopeGroupId(), sourceFileName,
+				DLAppUtil.getExtension(title, sourceFileName), mimeType, file);
 
 		_modelValidator.validate(fileContentReference);
 
@@ -76,8 +76,9 @@ public class ModelValidatorLocalRepositoryWrapper
 
 		FileContentReference fileContentReference =
 			FileContentReference.fromInputStream(
-				sourceFileName, DLAppUtil.getExtension(title, sourceFileName),
-				mimeType, inputStream, size);
+				serviceContext.getScopeGroupId(), sourceFileName,
+				DLAppUtil.getExtension(title, sourceFileName), mimeType,
+				inputStream, size);
 
 		_modelValidator.validate(fileContentReference);
 
@@ -120,7 +121,7 @@ public class ModelValidatorLocalRepositoryWrapper
 
 		FileContentReference fileContentReference =
 			FileContentReference.fromInputStream(
-				fileEntryId, sourceFileName,
+				serviceContext.getScopeGroupId(), fileEntryId, sourceFileName,
 				DLAppUtil.getExtension(title, sourceFileName), mimeType,
 				inputStream, size);
 

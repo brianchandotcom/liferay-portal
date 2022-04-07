@@ -127,6 +127,11 @@ function SegmentsExperiments({
 											<ClayDropDown.Item
 												onClick={_handleEditExperiment}
 											>
+												<ClayIcon
+													className="c-mr-3 text-4"
+													symbol="pencil"
+												/>
+
 												{Liferay.Language.get('edit')}
 											</ClayDropDown.Item>
 
@@ -135,6 +140,11 @@ function SegmentsExperiments({
 													_handleDeleteActiveExperiment
 												}
 											>
+												<ClayIcon
+													className="c-mr-3 text-4"
+													symbol="trash"
+												/>
+
 												{Liferay.Language.get('delete')}
 											</ClayDropDown.Item>
 										</ClayDropDown.ItemList>

@@ -342,8 +342,7 @@ public class PoshiContext {
 				continue;
 			}
 
-			String[] dirNames = StringUtil.split(
-				properties.getProperty(poshiDirPropertyName));
+			String[] dirNames = StringUtil.split(poshiDirPropertyValue);
 
 			for (String dirName : dirNames) {
 				File dir = null;

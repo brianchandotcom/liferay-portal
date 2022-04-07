@@ -1,114 +1,117 @@
 {
-  "pageElement": {
-    "pageElements": [
-      {
-        "definition": {
-          "fragmentStyle": {
-            "backgroundColor": "colorNeutral0"
-          },
-          "layout": {
-            "borderWidth": 0,
-            "marginBottom": 0,
-            "marginLeft": 0,
-            "marginRight": 0,
-            "marginTop": 0,
-            "paddingBottom": 0,
-            "paddingLeft": 0,
-            "paddingRight": 0,
-            "paddingTop": 0,
-            "widthType": "Fluid"
-          }
-        },
-        "pageElements": [
-          {
-            "definition": {
-              "fragment": {
-                "key": "filter"
-              },
-              "fragmentConfig": {},
-              "fragmentFields": []
-            },
-            "pageElements": [
-              {
-                "pageElements": [
-                  {
-                    "definition": {
-                      "widgetInstance": {
-                        "widgetConfig": {},
-                        "widgetName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSpecificationOptionFacetsPortlet"
-                      }
-                    },
-                    "type": "Widget"
-                  }
-                ],
-                "type": "FragmentDropZone"
-              }
-            ],
-            "type": "Fragment"
-          }
-        ],
-        "type": "Section"
-      },
-      {
-        "definition": {
-          "fragmentStyle": {
-            "backgroundColor": "colorNeutral0"
-          },
-          "layout": {
-            "borderWidth": 0,
-            "marginBottom": 0,
-            "marginLeft": 0,
-            "marginRight": 0,
-            "marginTop": 0,
-            "paddingBottom": 0,
-            "paddingLeft": 0,
-            "paddingRight": 0,
-            "paddingTop": 0,
-            "widthType": "Fluid"
-          }
-        },
-        "pageElements": [
-          {
-            "definition": {
-              "widgetInstance": {
-                "widgetConfig": {
-                  "cpContentListRendererKey": "list-default",
-                  "selectionStyle": "adt",
-                  "displayStyle": "ddmTemplate_45808",
-                  "virtual--cpTypeListEntryRendererKey": "list-entry-default",
-                  "grouped--cpTypeListEntryRendererKey": "list-entry-default",
-                  "paginationDelta": "15",
-                  "paginate": "true",
-                  "displayStyleGroupId": "45315",
-                  "simple--cpTypeListEntryRendererKey": "list-entry-default"
-                },
-                "widgetName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSearchResultsPortlet"
-              }
-            },
-            "type": "Widget"
-          },
-          {
-            "definition": {
-              "widgetInstance": {
-                "widgetConfig": {
-                  "federatedSearchKey": "",
-                  "allowEmptySearches": "true",
-                  "basicFacetSelection": "false"
-                },
-                "widgetName": "com_liferay_portal_search_web_search_options_portlet_SearchOptionsPortlet"
-              }
-            },
-            "type": "Widget"
-          }
-        ],
-        "type": "Section"
-      }
-    ],
-    "type": "Root"
-  },
-  "settings": {
-    "masterPage": {
-      "key": "Jobzz"
-    }
-  }
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragmentStyle": {
+						"backgroundColor": "colorNeutral0"
+					},
+					"layout": {
+						"borderWidth": 0,
+						"marginBottom": 0,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 0,
+						"paddingBottom": 0,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 0,
+						"widthType": "Fluid"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragment": {
+								"key": "filter"
+							},
+							"fragmentConfig": {
+							},
+							"fragmentFields": [
+							]
+						},
+						"pageElements": [
+							{
+								"pageElements": [
+									{
+										"definition": {
+											"widgetInstance": {
+												"widgetConfig": {
+												},
+												"widgetName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSpecificationOptionFacetsPortlet"
+											}
+										},
+										"type": "Widget"
+									}
+								],
+								"type": "FragmentDropZone"
+							}
+						],
+						"type": "Fragment"
+					}
+				],
+				"type": "Section"
+			},
+			{
+				"definition": {
+					"fragmentStyle": {
+						"backgroundColor": "colorNeutral0"
+					},
+					"layout": {
+						"borderWidth": 0,
+						"marginBottom": 0,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 0,
+						"paddingBottom": 0,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 0,
+						"widthType": "Fluid"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"widgetInstance": {
+								"widgetConfig": {
+									"cpContentListRendererKey": "list-default",
+									"displayStyle": "ddmTemplate_45808",
+									"displayStyleGroupId": "45315",
+									"grouped--cpTypeListEntryRendererKey": "list-entry-default",
+									"paginate": "true",
+									"paginationDelta": "15",
+									"selectionStyle": "adt",
+									"simple--cpTypeListEntryRendererKey": "list-entry-default",
+									"virtual--cpTypeListEntryRendererKey": "list-entry-default"
+								},
+								"widgetName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSearchResultsPortlet"
+							}
+						},
+						"type": "Widget"
+					},
+					{
+						"definition": {
+							"widgetInstance": {
+								"widgetConfig": {
+									"allowEmptySearches": "true",
+									"basicFacetSelection": "false",
+									"federatedSearchKey": ""
+								},
+								"widgetName": "com_liferay_portal_search_web_search_options_portlet_SearchOptionsPortlet"
+							}
+						},
+						"type": "Widget"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "Jobzz"
+		}
+	}
 }

@@ -1,326 +1,346 @@
 {
-  "pageElement": {
-    "pageElements": [
-      {
-        "definition": {
-          "fragmentStyle": {
-            "backgroundColor": "colorNeutral0",
-            "borderWidth": "0",
-            "textAlign": ""
-          },
-          "layout": {
-            "borderWidth": 0,
-            "htmlTag": "Div",
-            "marginBottom": 0,
-            "marginLeft": 0,
-            "marginRight": 0,
-            "marginTop": 0,
-            "paddingBottom": 0,
-            "paddingLeft": 0,
-            "paddingRight": 0,
-            "paddingTop": 0,
-            "widthType": "Fixed"
-          }
-        },
-        "pageElements": [
-          {
-            "definition": {
-              "gutters": true,
-              "modulesPerRow": 2,
-              "numberOfColumns": 2,
-              "reverseOrder": false,
-              "rowViewports": [
-                {
-                  "id": "landscapeMobile",
-                  "rowViewportDefinition": {}
-                },
-                {
-                  "id": "portraitMobile",
-                  "rowViewportDefinition": {}
-                },
-                {
-                  "id": "tablet",
-                  "rowViewportDefinition": {}
-                }
-              ],
-              "verticalAlignment": "top"
-            },
-            "pageElements": [
-              {
-                "definition": {
-                  "columnViewports": [
-                    {
-                      "columnViewportDefinition": {},
-                      "id": "landscapeMobile"
-                    },
-                    {
-                      "columnViewportDefinition": {},
-                      "id": "portraitMobile"
-                    },
-                    {
-                      "columnViewportDefinition": {},
-                      "id": "tablet"
-                    }
-                  ],
-                  "size": 4
-                },
-                "pageElements": [
-                  {
-                    "definition": {
-                      "widgetInstance": {
-                        "widgetConfig": {},
-                        "widgetName": "com_liferay_portal_search_web_internal_sort_portlet_SortPortlet"
-                      }
-                    },
-                    "type": "Widget"
-                  },
-                  {
-                    "definition": {
-                      "widgetInstance": {
-                        "widgetConfig": {
-                          "federatedSearchKey": "",
-                          "allowEmptySearches": "true",
-                          "basicFacetSelection": "false"
-                        },
-                        "widgetName": "com_liferay_portal_search_web_search_options_portlet_SearchOptionsPortlet",
-                        "widgetPermissions": [
-                          {
-                            "actionKeys": [
-                              "VIEW"
-                            ],
-                            "roleKey": "Guest"
-                          },
-                          {
-                            "actionKeys": [
-                              "PERMISSIONS",
-                              "PREFERENCES",
-                              "CONFIGURATION",
-                              "ACCESS_IN_CONTROL_PANEL",
-                              "VIEW",
-                              "ADD_TO_PAGE"
-                            ],
-                            "roleKey": "Owner"
-                          },
-                          {
-                            "actionKeys": [
-                              "VIEW"
-                            ],
-                            "roleKey": "Site Member"
-                          }
-                        ]
-                      }
-                    },
-                    "type": "Widget"
-                  },
-                  {
-                    "definition": {
-                      "widgetInstance": {
-                        "widgetConfig": {
-                          "federatedSearchKey": "",
-                          "occur": "filter",
-                          "invisible": "true",
-                          "parameterName": "",
-                          "displayStyleGroupId": "82449",
-                          "filterField": "ddmStructureKey",
-                          "displayStyle": "default",
-                          "immutable": "true",
-                          "filterQueryType": "match",
-                          "filterValue": "JOB",
-                          "parentQueryName": "",
-                          "queryName": "",
-                          "disabled": "false",
-                          "customHeading": "",
-                          "boost": ""
-                        },
-                        "widgetName": "com_liferay_portal_search_web_internal_custom_filter_portlet_CustomFilterPortlet",
-                        "widgetPermissions": [
-                          {
-                            "actionKeys": [
-                              "VIEW"
-                            ],
-                            "roleKey": "Guest"
-                          },
-                          {
-                            "actionKeys": [
-                              "ADD_PORTLET_DISPLAY_TEMPLATE",
-                              "PERMISSIONS",
-                              "PREFERENCES",
-                              "CONFIGURATION",
-                              "VIEW",
-                              "ADD_TO_PAGE"
-                            ],
-                            "roleKey": "Owner"
-                          },
-                          {
-                            "actionKeys": [
-                              "VIEW"
-                            ],
-                            "roleKey": "Site Member"
-                          }
-                        ]
-                      }
-                    },
-                    "type": "Widget"
-                  }
-                ],
-                "type": "Column"
-              },
-              {
-                "definition": {
-                  "columnViewports": [
-                    {
-                      "columnViewportDefinition": {},
-                      "id": "landscapeMobile"
-                    },
-                    {
-                      "columnViewportDefinition": {},
-                      "id": "portraitMobile"
-                    },
-                    {
-                      "columnViewportDefinition": {},
-                      "id": "tablet"
-                    }
-                  ],
-                  "size": 8
-                },
-                "pageElements": [
-                  {
-                    "definition": {
-                      "widgetInstance": {
-                        "widgetConfig": {
-                          "federatedSearchKey": "",
-                          "displayStyle": "default",
-                          "scopeParameterName": "scope",
-                          "showStagedResults": "false",
-                          "searchScope": "this-site",
-                          "keywordsParameterName": "q",
-                          "destination": "",
-                          "invisible": "false",
-                          "displayStyleGroupId": "82449",
-                          "useAdvancedSearchSyntax": "false"
-                        },
-                        "widgetName": "com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet"
-                      }
-                    },
-                    "type": "Widget"
-                  }
-                ],
-                "type": "Column"
-              }
-            ],
-            "type": "Row"
-          }
-        ],
-        "type": "Section"
-      },
-      {
-        "definition": {
-          "fragmentStyle": {
-            "backgroundColor": "colorNeutral0",
-            "borderWidth": "0",
-            "textAlign": ""
-          },
-          "layout": {
-            "borderWidth": 0,
-            "htmlTag": "Div",
-            "marginBottom": 0,
-            "marginLeft": 0,
-            "marginRight": 0,
-            "marginTop": 0,
-            "paddingBottom": 0,
-            "paddingLeft": 0,
-            "paddingRight": 0,
-            "paddingTop": 0,
-            "widthType": "Fixed"
-          }
-        },
-        "pageElements": [
-          {
-            "definition": {
-              "gutters": true,
-              "modulesPerRow": 2,
-              "numberOfColumns": 2,
-              "reverseOrder": false,
-              "rowViewports": [
-                {
-                  "id": "landscapeMobile",
-                  "rowViewportDefinition": {}
-                },
-                {
-                  "id": "portraitMobile",
-                  "rowViewportDefinition": {}
-                },
-                {
-                  "id": "tablet",
-                  "rowViewportDefinition": {}
-                }
-              ],
-              "verticalAlignment": "top"
-            },
-            "pageElements": [
-              {
-                "definition": {
-                  "columnViewports": [
-                    {
-                      "columnViewportDefinition": {},
-                      "id": "landscapeMobile"
-                    },
-                    {
-                      "columnViewportDefinition": {},
-                      "id": "portraitMobile"
-                    },
-                    {
-                      "columnViewportDefinition": {},
-                      "id": "tablet"
-                    }
-                  ],
-                  "size": 4
-                },
-                "type": "Column"
-              },
-              {
-                "definition": {
-                  "columnViewports": [
-                    {
-                      "columnViewportDefinition": {},
-                      "id": "landscapeMobile"
-                    },
-                    {
-                      "columnViewportDefinition": {},
-                      "id": "portraitMobile"
-                    },
-                    {
-                      "columnViewportDefinition": {},
-                      "id": "tablet"
-                    }
-                  ],
-                  "size": 8
-                },
-                "pageElements": [
-                  {
-                    "definition": {
-                      "widgetInstance": {
-                        "widgetConfig": {},
-                        "widgetName": "com_liferay_portal_search_web_search_results_portlet_SearchResultsPortlet"
-                      }
-                    },
-                    "type": "Widget"
-                  }
-                ],
-                "type": "Column"
-              }
-            ],
-            "type": "Row"
-          }
-        ],
-        "type": "Section"
-      }
-    ],
-    "type": "Root"
-  },
-  "settings": {
-    "masterPage": {
-      "key": "Jobzz"
-    }
-  }
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragmentStyle": {
+						"backgroundColor": "colorNeutral0",
+						"borderWidth": "0",
+						"textAlign": ""
+					},
+					"layout": {
+						"borderWidth": 0,
+						"htmlTag": "Div",
+						"marginBottom": 0,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 0,
+						"paddingBottom": 0,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 0,
+						"widthType": "Fixed"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"gutters": true,
+							"modulesPerRow": 2,
+							"numberOfColumns": 2,
+							"reverseOrder": false,
+							"rowViewports": [
+								{
+									"id": "landscapeMobile",
+									"rowViewportDefinition": {
+									}
+								},
+								{
+									"id": "portraitMobile",
+									"rowViewportDefinition": {
+									}
+								},
+								{
+									"id": "tablet",
+									"rowViewportDefinition": {
+									}
+								}
+							],
+							"verticalAlignment": "top"
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
+									"size": 4
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"widgetInstance": {
+												"widgetConfig": {
+												},
+												"widgetName": "com_liferay_portal_search_web_internal_sort_portlet_SortPortlet"
+											}
+										},
+										"type": "Widget"
+									},
+									{
+										"definition": {
+											"widgetInstance": {
+												"widgetConfig": {
+													"allowEmptySearches": "true",
+													"basicFacetSelection": "false",
+													"federatedSearchKey": ""
+												},
+												"widgetName": "com_liferay_portal_search_web_search_options_portlet_SearchOptionsPortlet",
+												"widgetPermissions": [
+													{
+														"actionKeys": [
+															"VIEW"
+														],
+														"roleKey": "Guest"
+													},
+													{
+														"actionKeys": [
+															"PERMISSIONS",
+															"PREFERENCES",
+															"CONFIGURATION",
+															"ACCESS_IN_CONTROL_PANEL",
+															"VIEW",
+															"ADD_TO_PAGE"
+														],
+														"roleKey": "Owner"
+													},
+													{
+														"actionKeys": [
+															"VIEW"
+														],
+														"roleKey": "Site Member"
+													}
+												]
+											}
+										},
+										"type": "Widget"
+									},
+									{
+										"definition": {
+											"widgetInstance": {
+												"widgetConfig": {
+													"boost": "",
+													"customHeading": "",
+													"disabled": "false",
+													"displayStyle": "default",
+													"displayStyleGroupId": "82449",
+													"federatedSearchKey": "",
+													"filterField": "ddmStructureKey",
+													"filterQueryType": "match",
+													"filterValue": "JOB",
+													"immutable": "true",
+													"invisible": "true",
+													"occur": "filter",
+													"parameterName": "",
+													"parentQueryName": "",
+													"queryName": ""
+												},
+												"widgetName": "com_liferay_portal_search_web_internal_custom_filter_portlet_CustomFilterPortlet",
+												"widgetPermissions": [
+													{
+														"actionKeys": [
+															"VIEW"
+														],
+														"roleKey": "Guest"
+													},
+													{
+														"actionKeys": [
+															"ADD_PORTLET_DISPLAY_TEMPLATE",
+															"PERMISSIONS",
+															"PREFERENCES",
+															"CONFIGURATION",
+															"VIEW",
+															"ADD_TO_PAGE"
+														],
+														"roleKey": "Owner"
+													},
+													{
+														"actionKeys": [
+															"VIEW"
+														],
+														"roleKey": "Site Member"
+													}
+												]
+											}
+										},
+										"type": "Widget"
+									}
+								],
+								"type": "Column"
+							},
+							{
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
+									"size": 8
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"widgetInstance": {
+												"widgetConfig": {
+													"destination": "",
+													"displayStyle": "default",
+													"displayStyleGroupId": "82449",
+													"federatedSearchKey": "",
+													"invisible": "false",
+													"keywordsParameterName": "q",
+													"scopeParameterName": "scope",
+													"searchScope": "this-site",
+													"showStagedResults": "false",
+													"useAdvancedSearchSyntax": "false"
+												},
+												"widgetName": "com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet"
+											}
+										},
+										"type": "Widget"
+									}
+								],
+								"type": "Column"
+							}
+						],
+						"type": "Row"
+					}
+				],
+				"type": "Section"
+			},
+			{
+				"definition": {
+					"fragmentStyle": {
+						"backgroundColor": "colorNeutral0",
+						"borderWidth": "0",
+						"textAlign": ""
+					},
+					"layout": {
+						"borderWidth": 0,
+						"htmlTag": "Div",
+						"marginBottom": 0,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 0,
+						"paddingBottom": 0,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 0,
+						"widthType": "Fixed"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"gutters": true,
+							"modulesPerRow": 2,
+							"numberOfColumns": 2,
+							"reverseOrder": false,
+							"rowViewports": [
+								{
+									"id": "landscapeMobile",
+									"rowViewportDefinition": {
+									}
+								},
+								{
+									"id": "portraitMobile",
+									"rowViewportDefinition": {
+									}
+								},
+								{
+									"id": "tablet",
+									"rowViewportDefinition": {
+									}
+								}
+							],
+							"verticalAlignment": "top"
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
+									"size": 4
+								},
+								"type": "Column"
+							},
+							{
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
+									"size": 8
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"widgetInstance": {
+												"widgetConfig": {
+												},
+												"widgetName": "com_liferay_portal_search_web_search_results_portlet_SearchResultsPortlet"
+											}
+										},
+										"type": "Widget"
+									}
+								],
+								"type": "Column"
+							}
+						],
+						"type": "Row"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "Jobzz"
+		}
+	}
 }

@@ -116,6 +116,7 @@ public class AnalyticsDXPEntityBatchExporterImpl
 	private static final String _CRON_EXPRESSION = "0 0 * * * ?";
 
 	private static final String[] _DISPATCH_TRIGGER_NAMES = {
+		"export-analytics-delete-message-analytics-dxp-entities",
 		"export-expando-column-analytics-dxp-entities",
 		"export-group-analytics-dxp-entities",
 		"export-organization-analytics-dxp-entities",

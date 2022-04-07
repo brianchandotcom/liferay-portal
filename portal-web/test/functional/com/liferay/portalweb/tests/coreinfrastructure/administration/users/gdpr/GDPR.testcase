@@ -1365,13 +1365,81 @@ definition {
 		}
 	}
 
-	@description = "This test publishes a staged entry to live after deleting live entry."
-	@ignore = "Test Stub"
+	@description = "This test publishes a staged entry to live after deleting live entry, test with Blog entries."
 	@priority = "3"
 	test CanPublishToLiveADeletedLiveEntry {
+		task ("Given add staged entry with related asset and publish to live this entry.") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
 
-		// TODO LRQA-50759 Publish to live a deleted live entry (Message Board)
+			JSONGroup.addGroup(groupName = "Site Name");
 
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Staging Test Page");
+
+			JSONUser.addUserToSite(
+				groupName = "Site Name",
+				userEmailAddress = "userea@liferay.com");
+
+			JSONStaging.enableLocalStaging(groupName = "Site Name");
+
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Site Name (Staging)",
+				site = "false",
+				userEmailAddress = "userea@liferay.com",
+				userPassword = "test");
+
+			BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name-staging");
+
+			Staging.publishViaSAP(
+				confirmMessage = "Are you sure you want to publish to live?",
+				entry = "Blogs Entry Title");
+		}
+
+		task ("When delete only the live entry using Personal Data Erasure.") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			User.openUsersAdmin();
+
+			User.deletePersonalDataCP(
+				userFirstName = "userfn",
+				userLastName = "userln");
+
+			GDPR.filterByScope(scope = "Regular Sites");
+
+			GDPR.filterByApplications(
+				applicationItemsCount = "2",
+				applications = "Blogs",
+				totalItemsCount = "2");
+
+			GDPR.deleteTheSpecificEntry(rowIndexNumber = "2");
+
+			task ("And assert entry is deleted from live.") {
+				BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
+
+				Blogs.viewNoEntryCP();
+			}
+
+			task ("And publish to live entry again.") {
+				BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name-staging");
+
+				Staging.publishViaSAP(
+					confirmMessage = "Are you sure you want to publish to live?",
+					entry = "Blogs Entry Title");
+			}
+		}
+
+		task ("Then assert entry is present on live.") {
+			BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
+
+			Blogs.viewEntryPresent(entryTitle = "Blogs Entry Title");
+		}
 	}
 
 	@priority = "4"

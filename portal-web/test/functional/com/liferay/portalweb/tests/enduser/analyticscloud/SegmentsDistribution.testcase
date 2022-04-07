@@ -113,7 +113,7 @@ definition {
 		}
 
 		task ("Get current date") {
-			var dayNum = DateUtil.getCurrentDate();
+			var dayNum = DateUtil.getDate("1");
 			var monthNum = DateUtil.getCurrentMonth();
 			var yearNum = DateUtil.getCurrentYear();
 

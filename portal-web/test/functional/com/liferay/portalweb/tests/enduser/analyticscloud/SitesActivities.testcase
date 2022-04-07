@@ -580,6 +580,10 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8288 | Test Summary: Unique Visitors label is shown on the tabs of Sites dashboards"
 	@priority = "3"
 	test CanUniqueVisitorsLabelShowSitesDashboards {
+		task ("Create blog and add to page") {
+			ACUtils.createBlogsAndAddToPage();
+		}
+
 		task ("Add a new user") {
 			JSONUser.addUser(
 				userEmailAddress = "ac@liferay.com",
@@ -589,7 +593,7 @@ definition {
 		}
 
 		task ("Connect Analytics Cloud to DXP") {
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 
 		task ("Login with new user") {
@@ -598,8 +602,10 @@ definition {
 				userLoginFullName = "ac ac");
 		}
 
-		task ("Go to site page") {
+		task ("Go to site page and view the blog") {
 			ACUtils.navigateToSitePage(
+				actionType = "View Blog",
+				documentTitleList = "Blogs AC Title",
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -611,7 +617,7 @@ definition {
 		task ("Switch to new property in AC and go to Sites") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 
 			ACNavigation.goToSites();
 		}

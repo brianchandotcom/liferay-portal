@@ -116,7 +116,6 @@ definition {
 		var key_metricValue = "${metricValue}";
 
 		while (IsElementNotPresent(locator1 = "ACAssets#METRIC_VALUE") && (maxIterations = "50")) {
-
 			TestUtils.hardRefresh();
 
 			if ("${timeFilter}" != "Custom Range") {
@@ -165,7 +164,7 @@ definition {
 					startYear = "${startYear}");
 			}
 		}
-			
+
 		AssertTextEquals(
 			locator1 = "ACAssets#METRIC_VALUE",
 			value1 = "${metricValue}");

@@ -30,7 +30,6 @@ exports[`Field Text has a helptext 1`] = `
       id="textField_fieldDetails"
     >
       Type something
-      <br />
     </span>
   </div>
 </div>

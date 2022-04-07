@@ -172,7 +172,6 @@ exports[`Grid has a tip 1`] = `
       id="undefined_fieldDetails"
     >
       Type something
-      <br />
     </span>
   </div>
 </div>

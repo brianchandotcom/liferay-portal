@@ -640,7 +640,6 @@ exports[`Select has a help text 1`] = `
       id="undefined_fieldDetails"
     >
       Type something
-      <br />
     </span>
   </div>
 </div>

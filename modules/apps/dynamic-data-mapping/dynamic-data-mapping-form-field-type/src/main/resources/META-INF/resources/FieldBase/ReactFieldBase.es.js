@@ -58,25 +58,31 @@ function normalizeInputValue(fieldType, locale, value) {
 	return value;
 }
 
-const getFieldDetails = ({errorMessage, hasError, required, text, tip}) => {
-	let fieldDetails = '';
+const getFieldDetails = ({
+	errorMessage,
+	hasError,
+	required,
+	text,
+	tip,
+}) => {
+	const fieldDetails = [];
 
 	if (tip) {
-		fieldDetails += Liferay.Util.escape(tip) + '<br>';
+		fieldDetails.push(Liferay.Util.escape(tip));
 	}
 
 	if (text) {
-		fieldDetails += Liferay.Util.escape(text) + '<br>';
+		fieldDetails.push(Liferay.Util.escape(text));
 	}
 
 	if (hasError) {
-		fieldDetails += Liferay.Util.escape(errorMessage);
+		fieldDetails.push(Liferay.Util.escape(errorMessage));
 	}
 	else if (required) {
-		fieldDetails += Liferay.Language.get('required');
+		fieldDetails.push(Liferay.Language.get('required'));
 	}
 
-	return fieldDetails;
+	return fieldDetails.join('<br>');
 };
 
 const HideFieldProperty = () => {

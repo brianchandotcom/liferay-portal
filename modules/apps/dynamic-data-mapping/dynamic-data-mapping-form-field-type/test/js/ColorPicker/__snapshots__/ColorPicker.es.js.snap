@@ -132,7 +132,6 @@ exports[`Field Color Picker renders field with helptext 1`] = `
       id="colorPicker_fieldDetails"
     >
       Helptext
-      <br />
     </span>
   </div>
 </div>
@@ -212,7 +211,6 @@ exports[`Field Color Picker renders field with label 1`] = `
       id="colorPicker_fieldDetails"
     >
       Helptext
-      <br />
     </span>
   </div>
 </div>

@@ -85,7 +85,6 @@ exports[`Field Checkbox Multiple has a helptext 1`] = `
       id="undefined_fieldDetails"
     >
       Type something
-      <br />
     </span>
   </div>
 </div>

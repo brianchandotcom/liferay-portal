@@ -100,7 +100,6 @@ exports[`ReactFieldBase renders the FieldBase with help text 1`] = `
       id="undefined_fieldDetails"
     >
       Type something!
-      <br />
     </span>
   </div>
 </div>

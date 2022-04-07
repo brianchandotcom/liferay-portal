@@ -59,7 +59,6 @@ exports[`KeyValue has a helptext 1`] = `
       id="keyValue_fieldDetails"
     >
       Type something
-      <br />
     </span>
   </div>
 </div>

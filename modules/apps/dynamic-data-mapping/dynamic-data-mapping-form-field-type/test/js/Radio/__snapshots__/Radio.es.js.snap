@@ -77,7 +77,6 @@ exports[`Field Radio has a helptext 1`] = `
       id="radioField_fieldDetails"
     >
       Type something
-      <br />
     </span>
   </div>
 </div>

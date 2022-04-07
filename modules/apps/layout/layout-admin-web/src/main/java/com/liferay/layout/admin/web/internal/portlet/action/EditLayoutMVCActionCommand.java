@@ -14,6 +14,8 @@
 
 package com.liferay.layout.admin.web.internal.portlet.action;
 
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.portal.events.EventsProcessorUtil;
@@ -123,6 +125,16 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				Layout.class.getName(), actionRequest);
+
+			if (layout.isTypeAssetDisplay() ||
+				(layout.isTypeContent() &&
+				 (layout.fetchDraftLayout() == null))) {
+
+				AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+					Layout.class.getName(), layout.getPlid());
+
+				serviceContext.setAssetCategoryIds(assetEntry.getCategoryIds());
+			}
 
 			String oldFriendlyURL = layout.getFriendlyURL();
 
@@ -252,6 +264,9 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 			throw modelListenerException;
 		}
 	}
+
+	@Reference
+	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;

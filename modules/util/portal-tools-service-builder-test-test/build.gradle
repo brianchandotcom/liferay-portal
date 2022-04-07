@@ -1,6 +1,6 @@
 dependencies {
-	testIntegrationCompile group: "com.liferay", name: "org.hibernate.core", version: "3.6.10.LIFERAY-PATCHED-6"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	testIntegrationCompile group: "org.hibernate", name: "hibernate-core", version: "5.6.7.Final"
 	testIntegrationCompile project(":apps:change-tracking:change-tracking-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 	testIntegrationCompile project(":util:portal-tools-service-builder-test-api")

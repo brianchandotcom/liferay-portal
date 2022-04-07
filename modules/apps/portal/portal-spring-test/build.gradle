@@ -1,7 +1,7 @@
 dependencies {
-	testIntegrationCompile group: "com.liferay", name: "org.hibernate.core", version: "3.6.10.LIFERAY-PATCHED-6"
+	testIntegrationCompile group: "com.liferay", name: "org.springframework.orm", version: "5.2.20.LIFERAY-PATCHED-1"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
-	testIntegrationCompile group: "org.springframework", name: "spring-orm", version: "4.3.22.RELEASE"
+	testIntegrationCompile group: "org.hibernate", name: "hibernate-core", version: "5.6.7.Final"
 	testIntegrationCompile group: "org.springframework", name: "spring-tx", version: "5.2.20.RELEASE"
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

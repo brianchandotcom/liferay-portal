@@ -1,39 +1,39 @@
 <div class="bg-brand-primary-lighten-6 d-flex layout-container">
 	<div class="bg-brand-primary-darken-5 d-flex flex-column justify-content-between sidebar-container sticky-top">
-		<div class="d-flex flex-row mb-10 pt-3 px-2 top-bar">
+		<div class="d-flex flex-row pt-3 top-bar">
 			<img alt="logo" class="logo-icon" src="[resources:raylife_logo_icon.svg]" />
 
 			<img alt="logo name" class="logo-name" src="[resources:raylife_logo_name.svg]" />
 		</div>
 
-		<div class="flex-fill middle-bar px-3">
-			<ul class="p-0 text-neutral-0">
-				<li class="align-items-center d-flex dashboard-menu flex-row pb-5">
-					<span class="menu-item-name ml-2 text-neutral-5">
-						Dashboard
-					</span>
-				</li>
-				<li class="align-items-center applications-menu d-flex flex-row pb-5">
-					<span class="menu-item-name ml-2 text-neutral-5">
-						Applications
-					</span>
-				</li>
-				<li class="align-items-center d-flex flex-row pb-5 policies-menu">
-					<span class="menu-item-name ml-2 text-neutral-5">
-						Policies
-					</span>
-				</li>
-				<li class="align-items-center claims-menu d-flex flex-row pb-5">
-					<span class="menu-item-name ml-2 text-neutral-5">
-						Claims
-					</span>
-				</li>
-				<li class="align-items-center d-flex flex-row reports-menu">
-					<span class="menu-item-name ml-2 text-neutral-5">
-						Reports
-					</span>
-				</li>
-			</ul>
+		<div class="d-flex flex-column middle-bar pr-6 text-nowrap">
+			<div class="align-items-center d-flex dashboard-menu mb-5" id="${configuration.layoutName}">
+				<span class="menu-item-name ml-2 text-neutral-5">
+					Dashboard
+				</span>
+			</div>
+
+			<div class="align-items-center applications-menu d-flex mb-5" id="${configuration.layoutName}">
+				<span class="menu-item-name ml-2 text-neutral-5">
+					Applications
+				</span>
+			</div>
+
+			<div class="align-items-center d-flex mb-5 policies-menu" id="${configuration.layoutName}">
+				<span class="menu-item-name ml-2 text-neutral-5">
+					Policies
+				</span>
+			</div>
+
+			<div class="align-items-center claims-menu d-flex mb-5" id="${configuration.layoutName}">
+				<span class="menu-item-name ml-2 text-neutral-5">Claims</span>
+			</div>
+
+			<div class="align-items-center d-flex reports-menu" id="${configuration.layoutName}">
+				<span class="menu-item-name ml-2 text-neutral-5">
+					Reports
+				</span>
+			</div>
 		</div>
 
 		<div class="d-flex flex-column footer-bar pb-4 px-2">

@@ -12468,7 +12468,6 @@ database.partition.enabled=true</echo>
 						<property name="docker.database.dest.path" value="/sqllib/bin/db2" />
 						<property name="import.database.src.path" value="${liferay.home}/." />
 					</then>
-					//
 					<elseif>
 						<equals arg1="${database.type}" arg2="db2" />
 						<then>

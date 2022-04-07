@@ -10953,6 +10953,11 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 					test.base.dir.name=${test.base.dir.name}
 				</echo>
 			</then>
+			<else>
+				<echo append="true" file="${test.ext.properties.file}">
+					test.base.dir.name=${basedir.unix}/portal-web/test/functional/com/liferay/portalweb/
+				</echo>
+			</else>
 		</if>
 
 		<if>
@@ -11297,6 +11302,11 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 					test.base.dir.name=${test.base.dir.name}
 				</echo>
 			</then>
+			<else>
+				<echo append="true" file="${test.ext.properties.file}">
+					test.base.dir.name=${basedir.unix}/portal-web/test/functional/com/liferay/portalweb/
+				</echo>
+			</else>
 		</if>
 
 		<get-testcase-property property.name="test.skip.tear.down" />

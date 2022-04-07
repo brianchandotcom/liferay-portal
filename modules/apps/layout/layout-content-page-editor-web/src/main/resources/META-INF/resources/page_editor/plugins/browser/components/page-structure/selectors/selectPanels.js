@@ -16,7 +16,6 @@ import {COLLECTION_APPLIED_FILTERS_FRAGMENT_ENTRY_KEY} from '../../../../../app/
 import {COLLECTION_FILTER_FRAGMENT_ENTRY_KEY} from '../../../../../app/config/constants/collectionFilterFragmentEntryKey';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../app/config/constants/editableFragmentEntryProcessor';
 import {EDITABLE_TYPES} from '../../../../../app/config/constants/editableTypes';
-import {FRAGMENT_CONFIGURATION_ROLES} from '../../../../../app/config/constants/fragmentConfigurationRoles';
 import {ITEM_TYPES} from '../../../../../app/config/constants/itemTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../app/config/constants/layoutDataItemTypes';
 import {VIEWPORT_SIZES} from '../../../../../app/config/constants/viewportSizes';
@@ -211,7 +210,6 @@ export function selectPanels(activeItemId, activeItemType, state) {
 			state.fragmentEntryLinks[activeItem.config.fragmentEntryLinkId];
 
 		const fragmentEntryKey = fragmentEntryLink.fragmentEntryKey;
-		const fieldSets = fragmentEntryLink?.configuration?.fieldSets ?? [];
 
 		panelsIds = {
 			[PANEL_IDS.fragmentAdvanced]:
@@ -219,13 +217,7 @@ export function selectPanels(activeItemId, activeItemType, state) {
 				state.selectedViewportSize === VIEWPORT_SIZES.desktop,
 			[PANEL_IDS.fragmentStyles]: true,
 			[PANEL_IDS.fragmentGeneral]:
-				fragmentEntryKey !== COLLECTION_FILTER_FRAGMENT_ENTRY_KEY &&
-				fieldSets.some((fieldSet) =>
-					config.fragmentAdvancedOptionsEnabled
-						? !fieldSet.configurationRole
-						: fieldSet.configurationRole !==
-						  FRAGMENT_CONFIGURATION_ROLES.style
-				),
+				fragmentEntryKey !== COLLECTION_FILTER_FRAGMENT_ENTRY_KEY,
 			[PANEL_IDS.collectionAppliedFiltersGeneral]:
 				fragmentEntryKey ===
 					COLLECTION_APPLIED_FILTERS_FRAGMENT_ENTRY_KEY &&

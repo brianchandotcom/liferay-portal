@@ -46,13 +46,13 @@ export function FragmentGeneralPanel({item}) {
 
 	const languageId = useSelector(selectLanguageId);
 
-	const fieldSets = fragmentEntryLink.configuration?.fieldSets.filter(
-		(fieldSet) =>
+	const fieldSets =
+		fragmentEntryLink.configuration?.fieldSets?.filter((fieldSet) =>
 			config.fragmentAdvancedOptionsEnabled
 				? !fieldSet.configurationRole
 				: fieldSet.configurationRole !==
 				  FRAGMENT_CONFIGURATION_ROLES.style
-	);
+		) ?? [];
 
 	const itemConfig = getResponsiveConfig(item.config, selectedViewportSize);
 

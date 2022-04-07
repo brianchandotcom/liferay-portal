@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -131,7 +132,8 @@ public class FriendlyURLDLFileEntryLocalServiceWrapper
 		String uniqueUrlTitle = _friendlyURLEntryLocalService.getUniqueUrlTitle(
 			dlFileEntry.getGroupId(),
 			_classNameLocalService.getClassNameId(FileEntry.class),
-			dlFileEntry.getFileEntryId(), urlTitle,
+			dlFileEntry.getFileEntryId(),
+			_friendlyURLNormalizer.normalizeWithPeriodsAndSlashes(urlTitle),
 			LanguageUtil.getLanguageId(LocaleUtil.getSiteDefault()));
 
 		_friendlyURLEntryLocalService.addFriendlyURLEntry(
@@ -164,10 +166,14 @@ public class FriendlyURLDLFileEntryLocalServiceWrapper
 			return;
 		}
 
-		if (!Validator.isBlank(urlTitle) &&
-			!Objects.equals(friendlyURLEntry.getUrlTitle(), urlTitle)) {
+		String normalizedUrlTitle =
+			_friendlyURLNormalizer.normalizeWithPeriodsAndSlashes(urlTitle);
 
-			_addFriendlyURLEntry(dlFileEntry, urlTitle);
+		if (Validator.isNotNull(urlTitle) &&
+			!Objects.equals(
+				friendlyURLEntry.getUrlTitle(), normalizedUrlTitle)) {
+
+			_addFriendlyURLEntry(dlFileEntry, normalizedUrlTitle);
 		}
 	}
 
@@ -179,5 +185,8 @@ public class FriendlyURLDLFileEntryLocalServiceWrapper
 
 	@Reference
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
+
+	@Reference
+	private FriendlyURLNormalizer _friendlyURLNormalizer;
 
 }

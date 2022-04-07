@@ -99,9 +99,8 @@ public class SearchBarPortletDisplayContextFactory {
 
 				return searchBarPortletDisplayContext;
 			}
-			else {
-				searchBarPortletDisplayContext.setSearchURL(destinationURL);
-			}
+
+			searchBarPortletDisplayContext.setSearchURL(destinationURL);
 		}
 
 		PortletSharedSearchResponse portletSharedSearchResponse =

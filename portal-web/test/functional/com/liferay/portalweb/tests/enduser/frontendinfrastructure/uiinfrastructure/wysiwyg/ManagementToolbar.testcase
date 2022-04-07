@@ -137,6 +137,47 @@ definition {
 		}
 	}
 
+	@description = "LPS-147852. Assert a tooltip message will be displayed when hovered over the order toggle button"
+	@priority = "3"
+	test OrderButtonAsAToggleCanDisplayTooltip {
+		task ("When the user opens any section with the management toolbar") {
+
+			// Using message boards as workaround until LPS-150056
+
+			MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+
+			MessageboardsCategory.addCP(categoryName = "Test Category");
+		}
+
+		task ("And clicks on the order button") {			
+			Click(
+				key_text = "order-list-up",
+				locator1 = "ManagementBar#ANY_ICON");
+		}
+
+		task ("Then there is no dropdown menu") {
+			AssertElementNotPresent(
+				key_item = "",
+				locator1 = "ManagementBar#ACTIVE_DROPDOWN_ITEM");
+		}
+
+		task ("And the button is changed to the other order direction") {
+			AssertElementPresent(locator1 = "xpath=(//nav[contains(@class,'management-bar')]//*[*[name()='svg'][contains(@class,'icon-order-list-down')] and contains(@title,'Reverse Order Direction')])");
+		}
+
+		task ("And a tooltip message will be displayed") {
+			WaitForPageLoad();
+
+			MouseOver(
+				key_text = "order-list-down",
+				locator1 = "ManagementBar#ANY_ICON");
+
+			AssertTextEquals(
+				locator1 = "Message#TOOLTIP",
+				value1 = "Reverse Order Direction");
+		}
+	}
+
 	@description = "LPS-147850. Assert the order button can sort results by descending order"
 	@priority = "5"
 	test OrderButtonCanSortOptionsByDescending {

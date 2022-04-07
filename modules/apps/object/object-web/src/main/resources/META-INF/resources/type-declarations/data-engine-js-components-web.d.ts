@@ -12,27 +12,16 @@
  * details.
  */
 
-import {ReactNode} from 'react';
-export default function FieldBase({
-	children,
-	className,
-	disabled,
-	errorMessage,
-	helpMessage,
-	id,
-	label,
-	required,
-	warningMessage,
-}: IProps): JSX.Element;
+declare module 'data-engine-js-components-web' {
+	function FieldFeedback({
+		errorMessage,
+		helpMessage,
+		warningMessage,
+	}: IProps): JSX.Element;
+}
+
 interface IProps {
-	children: ReactNode;
-	className?: string;
-	disabled?: boolean;
 	errorMessage?: string;
 	helpMessage?: string;
-	id?: string;
-	label: string;
-	required?: boolean;
 	warningMessage?: string;
 }
-export {};

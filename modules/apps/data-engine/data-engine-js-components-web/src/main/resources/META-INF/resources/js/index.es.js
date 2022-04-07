@@ -45,6 +45,7 @@ export {PagesVisitor} from './utils/visitors.es';
 
 export {EVENT_TYPES} from './core/actions/eventTypes.es';
 export {Field} from './core/components/Field/Field.es';
+export {FieldFeedback} from './core/components/FieldFeedback';
 export {FieldStateless} from './core/components/Field/FieldStateless.es';
 export * as DefaultVariant from './core/components/PageRenderer/DefaultVariant.es';
 export {Layout} from './core/components/PageRenderer/Layout.es';

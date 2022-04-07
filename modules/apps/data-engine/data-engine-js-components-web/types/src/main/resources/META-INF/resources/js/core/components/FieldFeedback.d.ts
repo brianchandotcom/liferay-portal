@@ -12,27 +12,17 @@
  * details.
  */
 
-import {ReactNode} from 'react';
-export default function FieldBase({
-	children,
-	className,
-	disabled,
+import React from 'react';
+import './FieldFeedback.scss';
+export declare function FieldFeedback({
 	errorMessage,
 	helpMessage,
-	id,
-	label,
-	required,
 	warningMessage,
-}: IProps): JSX.Element;
-interface IProps {
-	children: ReactNode;
-	className?: string;
-	disabled?: boolean;
+	...otherProps
+}: IProps): JSX.Element | null;
+interface IProps extends React.HTMLAttributes<HTMLDivElement> {
 	errorMessage?: string;
 	helpMessage?: string;
-	id?: string;
-	label: string;
-	required?: boolean;
 	warningMessage?: string;
 }
 export {};

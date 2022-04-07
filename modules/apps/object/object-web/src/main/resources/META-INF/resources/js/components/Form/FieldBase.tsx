@@ -15,33 +15,8 @@
 import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
+import {FieldFeedback} from 'data-engine-js-components-web';
 import React, {ReactNode} from 'react';
-
-import './FieldBase.scss';
-
-function Feedback({errorMessage, helpMessage, warningMessage}: IFeedbackProps) {
-	return (
-		<ClayForm.FeedbackGroup className="lfr-object__field-base-feedback">
-			{errorMessage && (
-				<ClayForm.FeedbackItem>
-					<ClayForm.FeedbackIndicator symbol="exclamation-full" />
-
-					{errorMessage}
-				</ClayForm.FeedbackItem>
-			)}
-
-			{warningMessage && !errorMessage && (
-				<ClayForm.FeedbackItem>
-					<ClayForm.FeedbackIndicator symbol="warning-full" />
-
-					{warningMessage}
-				</ClayForm.FeedbackItem>
-			)}
-
-			{helpMessage && <div>{helpMessage}</div>}
-		</ClayForm.FeedbackGroup>
-	);
-}
 
 function RequiredMask() {
 	return (
@@ -83,21 +58,13 @@ export default function FieldBase({
 
 			{children}
 
-			{(errorMessage || helpMessage || warningMessage) && (
-				<Feedback
-					errorMessage={errorMessage}
-					helpMessage={helpMessage}
-					warningMessage={warningMessage}
-				/>
-			)}
+			<FieldFeedback
+				errorMessage={errorMessage}
+				helpMessage={helpMessage}
+				warningMessage={warningMessage}
+			/>
 		</ClayForm.Group>
 	);
-}
-
-interface IFeedbackProps {
-	errorMessage?: string;
-	helpMessage?: string;
-	warningMessage?: string;
 }
 
 interface IProps {

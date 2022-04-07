@@ -73,8 +73,8 @@ public class ImageImpl extends ImageBaseImpl {
 						_log.debug(
 							StringBundler.concat(
 								"Image", image.toString(),
-								"was not found in its company.",
-								"Attempting in the default company."));
+								"was not found in its company. Attempting in ",
+								"the default company."));
 					}
 
 					inputStream = DLStoreUtil.getFileAsStream(

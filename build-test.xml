@@ -10127,7 +10127,7 @@ ${update.properties}</echo>
 
 		<prepare-portal-template-freemarker-osgi-configuration />
 
-		<antcall target="prepare-selenium-login-config" />
+		<prepare-selenium-login-config />
 	</target>
 
 	<target name="prepare-patching-tool">
@@ -11152,27 +11152,27 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			<param name="test.class" value="${test.class}" />
 		</antcall>
 
-		<antcall target="prepare-selenium-login-config" />
+		<prepare-selenium-login-config />
 
-		<antcall target="prepare-selenium-analytics-cloud-properties" />
-		<antcall target="prepare-selenium-app-server-properties" />
-		<antcall target="prepare-selenium-aws-translation-properties" />
-		<antcall target="prepare-selenium-azure-translation-properties" />
-		<antcall target="prepare-selenium-browser" />
-		<antcall target="prepare-selenium-click-to-chat-properties" />
-		<antcall target="prepare-selenium-database-properties" />
-		<antcall target="prepare-selenium-digital-signature-properties" />
-		<antcall target="prepare-selenium-email-properties" />
-		<antcall target="prepare-selenium-facebook-properties" />
-		<antcall target="prepare-selenium-google-cloud-autotagging-properties" />
-		<antcall target="prepare-selenium-google-cloud-translation-properties" />
-		<antcall target="prepare-selenium-google-properties" />
-		<antcall target="prepare-selenium-onedrive-properties" />
-		<antcall target="prepare-selenium-openid-properties" />
-		<antcall target="prepare-selenium-recaptcha-properties" />
-		<antcall target="prepare-selenium-required-properties" />
-		<antcall target="prepare-selenium-sharepoint-properties" />
-		<antcall target="prepare-selenium-testcase-properties" />
+		<prepare-selenium-analytics-cloud-properties />
+		<prepare-selenium-app-server-properties />
+		<prepare-selenium-aws-translation-properties />
+		<prepare-selenium-azure-translation-properties />
+		<prepare-selenium-browser />
+		<prepare-selenium-click-to-chat-properties />
+		<prepare-selenium-database-properties />
+		<prepare-selenium-digital-signature-properties />
+		<prepare-selenium-email-properties />
+		<prepare-selenium-facebook-properties />
+		<prepare-selenium-google-cloud-autotagging-properties />
+		<prepare-selenium-google-cloud-translation-properties />
+		<prepare-selenium-google-properties />
+		<prepare-selenium-onedrive-properties />
+		<prepare-selenium-openid-properties />
+		<prepare-selenium-recaptcha-properties />
+		<prepare-selenium-required-properties />
+		<prepare-selenium-sharepoint-properties />
+		<prepare-selenium-testcase-properties />
 
 		<get-browser-property property.name="browser.docker.image" />
 		<get-operating-system-property property.name="operating.system.docker.image" />

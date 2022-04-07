@@ -21,8 +21,8 @@ import com.liferay.commerce.product.model.CPMeasurementUnit;
 import com.liferay.commerce.product.service.CPMeasurementUnitService;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.util.CommerceOrderItemQuantityFormatter;
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderItem;
+import com.liferay.headless.commerce.admin.order.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -57,12 +57,16 @@ public class OrderItemDTOConverter
 
 		CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
 		CPInstance cpInstance = commerceOrderItem.fetchCPInstance();
-		ExpandoBridge expandoBridge = commerceOrderItem.getExpandoBridge();
 
 		return new OrderItem() {
 			{
 				bookedQuantityId = commerceOrderItem.getBookedQuantityId();
-				customFields = expandoBridge.getAttributes();
+				customFields = CustomFieldsUtil.toCustomFields(
+					dtoConverterContext.isAcceptAllLanguages(),
+					CommerceOrderItem.class.getName(),
+					commerceOrderItem.getCommerceOrderItemId(),
+					commerceOrderItem.getCompanyId(),
+					dtoConverterContext.getLocale());
 				decimalQuantity = commerceOrderItem.getDecimalQuantity();
 				deliveryGroup = commerceOrderItem.getDeliveryGroup();
 				discountAmount = commerceOrderItem.getDiscountAmount();

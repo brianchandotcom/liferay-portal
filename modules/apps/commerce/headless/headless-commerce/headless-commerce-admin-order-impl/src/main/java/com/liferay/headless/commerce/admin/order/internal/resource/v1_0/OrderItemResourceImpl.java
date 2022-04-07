@@ -26,26 +26,38 @@ import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderItem;
 import com.liferay.headless.commerce.admin.order.internal.dto.v1_0.converter.OrderItemDTOConverter;
+import com.liferay.headless.commerce.admin.order.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.commerce.admin.order.internal.helper.v1_0.OrderItemHelper;
+import com.liferay.headless.commerce.admin.order.internal.odata.entity.v1_0.OrderItemEntityModel;
 import com.liferay.headless.commerce.admin.order.internal.util.v1_0.OrderItemUtil;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderItemResource;
 import com.liferay.headless.commerce.core.util.ExpandoUtil;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
+import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.SearchUtil;
+
+import java.io.Serializable;
 
 import java.math.BigDecimal;
 
 import java.util.List;
 import java.util.Map;
 
+import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
@@ -115,6 +127,13 @@ public class OrderItemResourceImpl
 	}
 
 	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		return _entityModel;
+	}
+
+	@Override
 	public Page<OrderItem> getOrderByExternalReferenceCodeOrderItemsPage(
 			String externalReferenceCode, Pagination pagination)
 		throws Exception {
@@ -174,6 +193,30 @@ public class OrderItemResourceImpl
 		}
 
 		return _toOrderItem(commerceOrderItem.getCommerceOrderItemId());
+	}
+
+	@Override
+	public Page<OrderItem> getOrderItemsPage(
+			String search, Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		return SearchUtil.search(
+			null, booleanQuery -> booleanQuery.getPreBooleanFilter(), filter,
+			CommerceOrderItem.class.getName(), search, pagination,
+			queryConfig -> queryConfig.setSelectedFieldNames(
+				Field.ENTRY_CLASS_PK),
+			new UnsafeConsumer() {
+
+				public void accept(Object object) throws Exception {
+					SearchContext searchContext = (SearchContext)object;
+
+					searchContext.setCompanyId(contextCompany.getCompanyId());
+				}
+
+			},
+			sorts,
+			document -> _toOrderItem(
+				GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))));
 	}
 
 	@Override
@@ -321,7 +364,7 @@ public class OrderItemResourceImpl
 
 		// Expando
 
-		Map<String, ?> customFields = orderItem.getCustomFields();
+		Map<String, ?> customFields = _getExpandoBridgeAttributes(orderItem);
 
 		if ((customFields != null) && !customFields.isEmpty()) {
 			ExpandoUtil.updateExpando(
@@ -330,6 +373,15 @@ public class OrderItemResourceImpl
 		}
 
 		return _toOrderItem(commerceOrderItem.getCommerceOrderItemId());
+	}
+
+	private Map<String, Serializable> _getExpandoBridgeAttributes(
+		OrderItem orderItem) {
+
+		return CustomFieldsUtil.toMap(
+			CommerceOrderItem.class.getName(), contextCompany.getCompanyId(),
+			orderItem.getCustomFields(),
+			contextAcceptLanguage.getPreferredLocale());
 	}
 
 	private OrderItem _toOrderItem(long commerceOrderItemId) throws Exception {
@@ -348,6 +400,8 @@ public class OrderItemResourceImpl
 
 		commerceOrderItem = _commerceOrderItemService.updateCommerceOrderItem(
 			commerceOrderItem.getCommerceOrderItemId(),
+			GetterUtil.getString(
+				orderItem.getOptions(), commerceOrderItem.getJson()),
 			GetterUtil.get(
 				orderItem.getQuantity(), commerceOrderItem.getQuantity()),
 			_commerceContextFactory.create(
@@ -427,7 +481,7 @@ public class OrderItemResourceImpl
 
 		// Expando
 
-		Map<String, ?> customFields = orderItem.getCustomFields();
+		Map<String, ?> customFields = _getExpandoBridgeAttributes(orderItem);
 
 		if ((customFields != null) && !customFields.isEmpty()) {
 			ExpandoUtil.updateExpando(
@@ -437,6 +491,8 @@ public class OrderItemResourceImpl
 
 		return _toOrderItem(commerceOrderItem.getCommerceOrderItemId());
 	}
+
+	private static final EntityModel _entityModel = new OrderItemEntityModel();
 
 	@Reference
 	private CommerceContextFactory _commerceContextFactory;

@@ -244,6 +244,11 @@ public class OAuth2ApplicationLocalServiceImpl
 			allowedGrantTypesList = new ArrayList<>();
 		}
 
+		if (Validator.isBlank(clientAuthenticationMethod)) {
+			clientAuthenticationMethod =
+				OAuthConstants.TOKEN_ENDPOINT_AUTH_BASIC;
+		}
+
 		if (Validator.isBlank(clientId)) {
 			clientId = OAuth2SecureRandomGenerator.generateClientId();
 		}
@@ -260,9 +265,9 @@ public class OAuth2ApplicationLocalServiceImpl
 		}
 
 		validate(
-			companyId, allowedGrantTypesList, clientId, clientProfile,
-			clientSecret, homePageURL, name, privacyPolicyURL,
-			redirectURIsList);
+			companyId, allowedGrantTypesList, clientAuthenticationMethod,
+			clientId, clientProfile, clientSecret, homePageURL, jwks, name,
+			privacyPolicyURL, redirectURIsList);
 
 		long oAuth2ApplicationId = counterLocalService.increment(
 			OAuth2Application.class.getName());
@@ -333,6 +338,11 @@ public class OAuth2ApplicationLocalServiceImpl
 			allowedGrantTypesList = new ArrayList<>();
 		}
 
+		if (Validator.isBlank(clientAuthenticationMethod)) {
+			clientAuthenticationMethod =
+				OAuthConstants.TOKEN_ENDPOINT_AUTH_BASIC;
+		}
+
 		if (Validator.isBlank(clientId)) {
 			clientId = OAuth2SecureRandomGenerator.generateClientId();
 		}
@@ -353,9 +363,9 @@ public class OAuth2ApplicationLocalServiceImpl
 		}
 
 		validate(
-			companyId, allowedGrantTypesList, clientId, clientProfile,
-			clientSecret, homePageURL, name, privacyPolicyURL,
-			redirectURIsList);
+			companyId, allowedGrantTypesList, clientAuthenticationMethod,
+			clientId, clientProfile, clientSecret, homePageURL, jwks, name,
+			privacyPolicyURL, redirectURIsList);
 
 		long oAuth2ApplicationId = counterLocalService.increment(
 			OAuth2Application.class.getName());
@@ -660,6 +670,11 @@ public class OAuth2ApplicationLocalServiceImpl
 		OAuth2Application oAuth2Application =
 			oAuth2ApplicationPersistence.findByPrimaryKey(oAuth2ApplicationId);
 
+		if (Validator.isBlank(clientAuthenticationMethod)) {
+			clientAuthenticationMethod =
+				OAuthConstants.TOKEN_ENDPOINT_AUTH_BASIC;
+		}
+
 		clientId = StringUtil.trim(clientId);
 		homePageURL = StringUtil.trim(homePageURL);
 		name = StringUtil.trim(name);
@@ -671,8 +686,9 @@ public class OAuth2ApplicationLocalServiceImpl
 
 		validate(
 			oAuth2Application.getCompanyId(), oAuth2ApplicationId,
-			allowedGrantTypesList, clientId, clientProfile, clientSecret,
-			homePageURL, name, privacyPolicyURL, redirectURIsList);
+			allowedGrantTypesList, clientAuthenticationMethod, clientId,
+			clientProfile, clientSecret, homePageURL, jwks, name,
+			privacyPolicyURL, redirectURIsList);
 
 		User user = _userLocalService.getUser(clientCredentialUserId);
 
@@ -771,39 +787,75 @@ public class OAuth2ApplicationLocalServiceImpl
 
 	protected void validate(
 			long companyId, List<GrantType> allowedGrantTypesList,
-			String clientId, int clientProfile, String clientSecret,
-			String homePageURL, String name, String privacyPolicyURL,
+			String clientAuthenticationMethod, String clientId,
+			int clientProfile, String clientSecret, String homePageURL,
+			String jwks, String name, String privacyPolicyURL,
 			List<String> redirectURIsList)
 		throws PortalException {
 
 		validate(
-			companyId, 0, allowedGrantTypesList, clientId, clientProfile,
-			clientSecret, homePageURL, name, privacyPolicyURL,
-			redirectURIsList);
+			companyId, 0, allowedGrantTypesList, clientAuthenticationMethod,
+			clientId, clientProfile, clientSecret, homePageURL, jwks, name,
+			privacyPolicyURL, redirectURIsList);
 	}
 
 	protected void validate(
 			long companyId, long oAuth2ApplicationId,
-			List<GrantType> allowedGrantTypesList, String clientId,
+			List<GrantType> allowedGrantTypesList,
+			String clientAuthenticationMethod, String clientId,
 			int clientProfile, String clientSecret, String homePageURL,
-			String name, String privacyPolicyURL, List<String> redirectURIsList)
+			String jwks, String name, String privacyPolicyURL,
+			List<String> redirectURIsList)
 		throws PortalException {
 
-		if (!Validator.isBlank(clientSecret)) {
-			for (GrantType grantType : allowedGrantTypesList) {
-				if (!grantType.isSupportsConfidentialClients()) {
-					throw new OAuth2ApplicationClientGrantTypeException(
-						grantType.name());
-				}
-			}
-		}
-		else {
+		if (clientAuthenticationMethod.equals(
+				OAuthConstants.TOKEN_ENDPOINT_AUTH_NONE)) {
+
+			// public client
+
 			for (GrantType grantType : allowedGrantTypesList) {
 				if (!grantType.isSupportsPublicClients()) {
 					throw new OAuth2ApplicationClientGrantTypeException(
 						grantType.name());
 				}
 			}
+		}
+		else if (clientAuthenticationMethod.equals(
+					OAuthConstants.TOKEN_ENDPOINT_AUTH_POST) ||
+				 clientAuthenticationMethod.equals("client_secret_jwt")) {
+
+			// confidential client using client secret
+
+			for (GrantType grantType : allowedGrantTypesList) {
+				if (!grantType.isSupportsConfidentialClients()) {
+					throw new OAuth2ApplicationClientGrantTypeException(
+						grantType.name());
+				}
+			}
+
+			if (Validator.isNull(clientSecret)) {
+				throw new PortalException(
+					"Client needs to specify client secret");
+			}
+		}
+		else if (clientAuthenticationMethod.equals("private_key_jwt")) {
+
+			// confidential client using private/public key
+
+			for (GrantType grantType : allowedGrantTypesList) {
+				if (!grantType.isSupportsConfidentialClients()) {
+					throw new OAuth2ApplicationClientGrantTypeException(
+						grantType.name());
+				}
+			}
+
+			if (Validator.isNull(jwks)) {
+				throw new PortalException("Client needs to specify JWKS");
+			}
+		}
+		else {
+			throw new PortalException(
+				"Unrecognized Client Authentication Method");
 		}
 
 		if (!Validator.isBlank(clientId)) {

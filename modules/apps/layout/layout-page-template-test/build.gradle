@@ -15,8 +15,8 @@ dependencies {
 	testIntegrationCompile project(":apps:layout:layout-page-template-api")
 	testIntegrationCompile project(":apps:layout:layout-page-template-service")
 	testIntegrationCompile project(":apps:layout:layout-test-util")
-	testIntegrationCompile project(":apps:petra:petra-json-validator")
 	testIntegrationCompile project(":apps:portal-vulcan:portal-vulcan-api")
+	testIntegrationCompile project(":apps:portal:portal-json-validator")
 	testIntegrationCompile project(":apps:segments:segments-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

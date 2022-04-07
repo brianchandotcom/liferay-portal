@@ -103,7 +103,8 @@ public class TemplateInfoItemFieldSetProviderImpl
 		).namespace(
 			PortletDisplayTemplate.DISPLAY_STYLE_PREFIX
 		).name(
-			String.valueOf(templateEntry.getTemplateEntryId())
+			PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
+				templateEntry.getTemplateEntryId()
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.<String>builder(
 			).value(

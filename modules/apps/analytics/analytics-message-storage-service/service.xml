@@ -3,6 +3,34 @@
 
 <service-builder auto-import-default-references="false" auto-namespace-tables="false" dependency-injector="ds" mvcc-enabled="true" package-path="com.liferay.analytics.message.storage">
 	<namespace>Analytics</namespace>
+	<entity local-service="true" name="AnalyticsDeleteMessage" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="analyticsDeleteMessageId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="className" type="String" />
+		<column name="classPK" type="long" />
+
+		<!-- Finder methods -->
+
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
+		<finder name="GtM_C" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column comparator="&gt;" name="modifiedDate" />
+		</finder>
+	</entity>
 	<entity local-service="true" name="AnalyticsMessage" remote-service="false">
 
 		<!-- PK fields -->

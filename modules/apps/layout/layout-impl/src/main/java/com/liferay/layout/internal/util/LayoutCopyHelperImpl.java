@@ -937,9 +937,6 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 					new ServiceContext());
 			}
 
-			_sites.copyExpandoBridgeAttributes(_sourceLayout, _targetLayout);
-			_sites.copyPortletSetups(_sourceLayout, _targetLayout);
-
 			if (Objects.equals(
 					_sourceLayout.getType(), LayoutConstants.TYPE_PORTLET)) {
 
@@ -958,6 +955,9 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 				_copyPortletPermissions(
 					_segmentsExperiencesIds, _sourceLayout, _targetLayout);
 			}
+
+			_sites.copyExpandoBridgeAttributes(_sourceLayout, _targetLayout);
+			_sites.copyPortletSetups(_sourceLayout, _targetLayout);
 
 			_copyAssetCategoryIdsAndAssetTagNames(_sourceLayout, _targetLayout);
 

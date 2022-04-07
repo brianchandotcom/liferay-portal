@@ -195,7 +195,7 @@ public class PortletSharedSearchRequestImpl
 					PortletKeys.PREFS_OWNER_ID_DEFAULT,
 					PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid());
 
-		List<Portlet> portletList = new ArrayList<>();
+		List<Portlet> portlets = new ArrayList<>();
 
 		for (com.liferay.portal.kernel.model.PortletPreferences
 				portletPreferences : portletPreferencesList) {
@@ -206,11 +206,11 @@ public class PortletSharedSearchRequestImpl
 			if (portlet.isInstanceable() &&
 				Validator.isNotNull(portlet.getInstanceId())) {
 
-				portletList.add(portlet);
+				portlets.add(portlet);
 			}
 		}
 
-		return portletList;
+		return portlets;
 	}
 
 	private List<Portlet> _getPortlets(Layout layout, long companyId) {

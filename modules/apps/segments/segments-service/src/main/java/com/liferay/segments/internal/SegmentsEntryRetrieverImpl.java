@@ -17,11 +17,15 @@ package com.liferay.segments.internal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.segments.SegmentsEntryRetriever;
+import com.liferay.segments.configuration.provider.SegmentsConfigurationProvider;
 import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.constants.SegmentsWebKeys;
 import com.liferay.segments.context.Context;
@@ -47,6 +51,25 @@ public class SegmentsEntryRetrieverImpl implements SegmentsEntryRetriever {
 	@Override
 	public long[] getSegmentsEntryIds(
 		long groupId, long userId, Context context) {
+
+		Group group = _groupLocalService.fetchGroup(groupId);
+
+		if (group == null) {
+			_log.error("Invalid group " + groupId);
+
+			return new long[] {SegmentsEntryConstants.ID_DEFAULT};
+		}
+
+		try {
+			if (!_segmentsConfigurationProvider.isSegmentationEnabled(
+					group.getCompanyId())) {
+
+				return new long[] {SegmentsEntryConstants.ID_DEFAULT};
+			}
+		}
+		catch (ConfigurationException configurationException) {
+			_log.error(configurationException);
+		}
 
 		Optional<long[]> segmentsEntryIdsOptional =
 			_getSegmentsEntryIdsOptional();
@@ -112,6 +135,12 @@ public class SegmentsEntryRetrieverImpl implements SegmentsEntryRetriever {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SegmentsEntryRetrieverImpl.class);
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private SegmentsConfigurationProvider _segmentsConfigurationProvider;
 
 	@Reference
 	private SegmentsEntryProviderRegistry _segmentsEntryProviderRegistry;

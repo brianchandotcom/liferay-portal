@@ -1060,7 +1060,7 @@ public class AccountEntryLocalServiceImpl
 
 	private void _validateName(String name) throws PortalException {
 		if (Validator.isNull(name)) {
-			throw new AccountEntryNameException();
+			throw new AccountEntryNameException("An account name is required");
 		}
 	}
 

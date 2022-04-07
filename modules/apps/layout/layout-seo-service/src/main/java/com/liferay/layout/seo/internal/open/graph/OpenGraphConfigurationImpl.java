@@ -42,12 +42,11 @@ public class OpenGraphConfigurationImpl implements OpenGraphConfiguration {
 			_configurationProvider.getCompanyConfiguration(
 				LayoutSEOCompanyConfiguration.class, company.getCompanyId());
 
-		if (!_isOpenGraphEnabled(layoutSEOCompanyConfiguration)) {
+		if (!layoutSEOCompanyConfiguration.enableOpenGraph()) {
 			return false;
 		}
 
-		return _isLayoutTranslatedLanguagesEnabled(
-			layoutSEOCompanyConfiguration);
+		return layoutSEOCompanyConfiguration.enableLayoutTranslatedLanguages();
 	}
 
 	@Override
@@ -60,15 +59,13 @@ public class OpenGraphConfigurationImpl implements OpenGraphConfiguration {
 			_configurationProvider.getCompanyConfiguration(
 				LayoutSEOCompanyConfiguration.class, company.getCompanyId());
 
-		if (!_isOpenGraphEnabled(layoutSEOCompanyConfiguration) ||
+		if (!layoutSEOCompanyConfiguration.enableOpenGraph() ||
 			!_isOpenGraphEnabled(group)) {
 
 			return false;
 		}
 
-		if (_isLayoutTranslatedLanguagesEnabled(
-				layoutSEOCompanyConfiguration)) {
-
+		if (layoutSEOCompanyConfiguration.enableLayoutTranslatedLanguages()) {
 			return true;
 		}
 
@@ -85,7 +82,7 @@ public class OpenGraphConfigurationImpl implements OpenGraphConfiguration {
 			_configurationProvider.getCompanyConfiguration(
 				LayoutSEOCompanyConfiguration.class, company.getCompanyId());
 
-		return _isOpenGraphEnabled(layoutSEOCompanyConfiguration);
+		return layoutSEOCompanyConfiguration.enableOpenGraph();
 	}
 
 	@Override
@@ -99,12 +96,6 @@ public class OpenGraphConfigurationImpl implements OpenGraphConfiguration {
 		return _isOpenGraphEnabled(group);
 	}
 
-	private boolean _isLayoutTranslatedLanguagesEnabled(
-		LayoutSEOCompanyConfiguration layoutSEOCompanyConfiguration) {
-
-		return layoutSEOCompanyConfiguration.enableLayoutTranslatedLanguages();
-	}
-
 	private boolean _isOpenGraphEnabled(Group group) {
 		LayoutSEOSite layoutSEOSite =
 			_layoutSEOSiteLocalService.fetchLayoutSEOSiteByGroupId(
@@ -115,12 +106,6 @@ public class OpenGraphConfigurationImpl implements OpenGraphConfiguration {
 		}
 
 		return false;
-	}
-
-	private boolean _isOpenGraphEnabled(
-		LayoutSEOCompanyConfiguration layoutSEOCompanyConfiguration) {
-
-		return layoutSEOCompanyConfiguration.enableOpenGraph();
 	}
 
 	@Reference

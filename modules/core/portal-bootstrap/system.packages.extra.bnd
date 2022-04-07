@@ -225,13 +225,6 @@ Export-Package:\
 	\
 	org.json.*;version='20180813',\
 	\
-	org.objectweb.asm;version='7.0',\
-	org.objectweb.asm.commons;version='7.0',\
-	org.objectweb.asm.signature;version='7.0',\
-	org.objectweb.asm.tree;version='7.0',\
-	org.objectweb.asm.tree.analysis;version='7.0',\
-	org.objectweb.asm.util;version='7.0',\
-	\
 	org.slf4j;version='1.7.2',\
 	org.slf4j.helpers;version='1.7.2',\
 	org.slf4j.spi;version='1.7.2',\
@@ -281,11 +274,6 @@ Provide-Capability:\
 	@../../../lib/development/activation.jar,\
 	@../../../lib/development/mail.jar,\
 	@../../../lib/development/servlet-api.jar,\
-	@../../../lib/portal/asm-analysis.jar,\
-	@../../../lib/portal/asm-commons.jar,\
-	@../../../lib/portal/asm-tree.jar,\
-	@../../../lib/portal/asm-util.jar,\
-	@../../../lib/portal/asm.jar,\
 	@../../../lib/portal/commons-beanutils.jar,\
 	@../../../lib/portal/commons-codec.jar,\
 	@../../../lib/portal/commons-collections.jar,\

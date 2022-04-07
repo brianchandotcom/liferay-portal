@@ -1,0 +1,7 @@
+dependencies {
+	compileInclude group: "org.ow2.asm", name: "asm", version: "7.0"
+	compileInclude group: "org.ow2.asm", name: "asm-analysis", version: "7.0"
+	compileInclude group: "org.ow2.asm", name: "asm-commons", version: "7.0"
+	compileInclude group: "org.ow2.asm", name: "asm-tree", version: "7.0"
+	compileInclude group: "org.ow2.asm", name: "asm-util", version: "7.0"
+}

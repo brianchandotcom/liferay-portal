@@ -22,6 +22,7 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -199,8 +200,13 @@ public class DLSizeLimitManagedServiceFactory implements ManagedServiceFactory {
 			() -> {
 				Group group = _groupLocalService.fetchGroup(groupId);
 
-				return _getCompanyDLSizeLimitConfiguration(
-					group.getCompanyId());
+				long companyId = CompanyThreadLocal.getCompanyId();
+
+				if (group != null) {
+					companyId = group.getCompanyId();
+				}
+
+				return _getCompanyDLSizeLimitConfiguration(companyId);
 			});
 	}
 

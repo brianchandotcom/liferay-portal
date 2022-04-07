@@ -21,6 +21,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.internal.dto.v1_0.converter.ObjectEntryDTOConverter;
+import com.liferay.object.rest.internal.odata.entity.v1_0.ObjectEntryEntityModel;
 import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResourceImpl;
 import com.liferay.object.rest.internal.search.aggregation.AggregationUtil;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
@@ -28,6 +29,8 @@ import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -42,6 +45,10 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.odata.filter.ExpressionConvert;
+import com.liferay.portal.odata.filter.FilterParser;
+import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.search.aggregation.Aggregations;
 import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.query.Queries;
@@ -242,6 +249,23 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 	}
 
 	@Override
+	public Page<ObjectEntry> getObjectEntries(
+			long companyId, ObjectDefinition objectDefinition, String scopeKey,
+			Aggregation aggregation, DTOConverterContext dtoConverterContext,
+			String filterString, Pagination pagination, String search,
+			Sort[] sorts)
+		throws Exception {
+
+		return getObjectEntries(
+			companyId, objectDefinition, scopeKey, aggregation,
+			dtoConverterContext,
+			_toFilter(
+				filterString, dtoConverterContext.getLocale(),
+				objectDefinition.getObjectDefinitionId()),
+			pagination, search, sorts);
+	}
+
+	@Override
 	public ObjectEntry getObjectEntry(
 			DTOConverterContext dtoConverterContext,
 			ObjectDefinition objectDefinition, long objectEntryId)
@@ -361,6 +385,30 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 		}
 	}
 
+	private Filter _toFilter(
+		String filterString, Locale locale, Long objectDefinitionId) {
+
+		try {
+			EntityModel entityModel = new ObjectEntryEntityModel(
+				_objectFieldLocalService.getObjectFields(objectDefinitionId));
+
+			FilterParser filterParser = _filterParserProvider.provide(
+				entityModel);
+
+			com.liferay.portal.odata.filter.Filter oDataFilter =
+				new com.liferay.portal.odata.filter.Filter(
+					filterParser.parse(filterString));
+
+			return _expressionConvert.convert(
+				oDataFilter.getExpression(), locale, entityModel);
+		}
+		catch (Exception exception) {
+			_log.error("Invalid filter " + filterString, exception);
+		}
+
+		return null;
+	}
+
 	private ObjectEntry _toObjectEntry(
 			DTOConverterContext dtoConverterContext,
 			ObjectDefinition objectDefinition,
@@ -459,11 +507,22 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 		return values;
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		ObjectEntryManagerImpl.class);
+
 	@Reference
 	private Aggregations _aggregations;
 
 	@Reference
 	private DepotEntryLocalService _depotEntryLocalService;
+
+	@Reference(
+		target = "(result.class.name=com.liferay.portal.kernel.search.filter.Filter)"
+	)
+	private ExpressionConvert<Filter> _expressionConvert;
+
+	@Reference
+	private FilterParserProvider _filterParserProvider;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

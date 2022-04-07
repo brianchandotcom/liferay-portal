@@ -539,12 +539,19 @@ public class ObjectEntryDisplayContext {
 
 		if (objectLayoutTab == null) {
 			for (ObjectField objectField : objectFields) {
-				if (!_isActive(objectField)) {
-					continue;
-				}
+				try {
+					if (!_isActive(objectField)) {
+						continue;
+					}
 
-				ddmForm.addDDMFormField(
-					_getDDMFormField(objectField, readOnly));
+					ddmForm.addDDMFormField(
+						_getDDMFormField(objectField, readOnly));
+				}
+				catch (PortalException portalException) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(portalException);
+					}
+				}
 			}
 		}
 		else {
@@ -801,26 +808,33 @@ public class ObjectEntryDisplayContext {
 			for (ObjectLayoutColumn objectLayoutColumn :
 					objectLayoutRow.getObjectLayoutColumns()) {
 
-				Stream<ObjectField> stream = objectFields.stream();
+				try {
+					Stream<ObjectField> stream = objectFields.stream();
 
-				Optional<ObjectField> objectFieldOptional = stream.filter(
-					objectField ->
-						objectField.getObjectFieldId() ==
-							objectLayoutColumn.getObjectFieldId()
-				).findFirst();
+					Optional<ObjectField> objectFieldOptional = stream.filter(
+						objectField ->
+							objectField.getObjectFieldId() ==
+								objectLayoutColumn.getObjectFieldId()
+					).findFirst();
 
-				if (objectFieldOptional.isPresent()) {
-					ObjectField objectField = objectFieldOptional.get();
+					if (objectFieldOptional.isPresent()) {
+						ObjectField objectField = objectFieldOptional.get();
 
-					if (!_isActive(objectField)) {
-						continue;
+						if (!_isActive(objectField)) {
+							continue;
+						}
+
+						_objectFieldNames.put(
+							objectLayoutColumn.getObjectFieldId(),
+							objectField.getName());
+						nestedDDMFormFields.add(
+							_getDDMFormField(objectField, readOnly));
 					}
-
-					_objectFieldNames.put(
-						objectLayoutColumn.getObjectFieldId(),
-						objectField.getName());
-					nestedDDMFormFields.add(
-						_getDDMFormField(objectField, readOnly));
+				}
+				catch (PortalException portalException) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(portalException);
+					}
 				}
 			}
 		}
@@ -881,7 +895,7 @@ public class ObjectEntryDisplayContext {
 						objectField.getObjectFieldId());
 
 			ObjectDefinition relatedObjectDefinition =
-				_objectDefinitionLocalService.getObjectDefinition(
+				_objectDefinitionService.getObjectDefinition(
 					objectRelationship.getObjectDefinitionId1());
 
 			return relatedObjectDefinition.isActive();

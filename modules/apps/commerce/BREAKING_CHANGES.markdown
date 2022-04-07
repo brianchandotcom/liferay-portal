@@ -1,4 +1,4 @@
-# What are the Breaking Changes for Liferay Commerce 3.0?
+# What are the Breaking Changes for Liferay Commerce 4.0?
 
 This document presents a chronological list of changes that break existing
 functionality, APIs, or contracts with third party Liferay Commerce developers or users.
@@ -72,62 +72,6 @@ The remaining content of this document consists of the breaking changes listed
 in ascending chronological order.
 
 ## Breaking Changes List
-
-### Move Commerce administration from the Control Panel to the new 7.3 Global App menu
-- **Date:** 2020-Sep-3
-- **JIRA Ticket:** [COMMERCE-4565](https://issues.liferay.com/browse/COMMERCE-4565)
-
-#### What changed?
-
-Moved Commerce to the same level as Applications and Control Panel in the
-Applications Menu. Also dropped the commerce-admin-api and commerce-admin-web
-modules.
-
-#### Who is affected?
-
-Developers: It's not possible anymore to add items to Commerce->Settings section
-by implementing CommerceAdminModule.
-
-End Users: The Commerce sections are now at the same level as the Control Panel.
-
-#### Why was this change made?
-
-This change was made in order not to lose the navigation scope in the header
-bar while remaining compliant with DXP 7.3 standards.
-
----------------------------------------
-
-### Files Moved
-- **Date:** 2020-Aug-20
-- **JIRA Ticket:** [COMMERCE-4052](https://issues.liferay.com/browse/COMMERCE-4052)
-
-#### What changed?
-
-Files listed below have moved:
-
-- `com.liferay.commerce.pricing.web.servlet.taglib.ui.
-CommerceDiscountScreenNavigationConstants;`
-- `com.liferay.commerce.pricing.web.servlet.taglib.ui.
-CommercePricingClassScreenNavigationConstants;`
-
-#### Who is affected?
-
-Anyone who references or uses these files.
-
-#### How should I update my code?
-Replace old references with the new package path.
-
-New package paths:
-- `com.liferay.commerce.pricing.web.internal.constants.
-CommerceDiscountScreenNavigationConstants;`
-- `com.liferay.commerce.pricing.web.internal.constants.
-CommercePricingClassScreenNavigationConstants;`
-
-#### Why was this change made?
-
-This was moved to follow Liferay coding pattern.
-
----------------------------------------
 
 ### Destination Names Changed
 - **Date:** 2020-Sep-10
@@ -462,5 +406,42 @@ End users (Account managers) that will use a different widget to manage accounts
 
 This change was introduced to be compliant with Commerce Account migration to
 Account.
+
+---------------------------------------
+
+### Refactor CommerceOrderLocalServiceImpl
+- **Date:** 2022-Feb-16
+- **JIRA Ticket:** [COMMERCE-8440](https://issues.liferay.com/browse/COMMERCE-8440)
+
+#### What changed?
+
+* The method `updateCommerceOrder` has been reduced down from 4 methods to 3.
+* The method `updateCustomFields` has been removed.
+* The method `updateOrderStatus` has been removed.
+* The method `updateTransactionId` has been removed.
+* The method `updateUser` has been removed.
+#### Who is affected?
+
+Developers who are calling any of these methods in their code.
+
+#### How should I update my code?
+* Use the remaining 3 `updateCommerceOrder` methods as a direct replacement.
+* Use `updateCommerceOrder(CommerceOrder commerceOrder)` method after setting
+`expandoBridgeAttributes` with
+`commerceOrder.setExpandoBridgeAttributes(ServiceContext serviceContext)` to
+update the `customFields`.
+* Use `updateCommerceOrder(CommerceOrder commerceOrder)` method after setting
+the `orderStatus` with `commerceOrder.setOrderStatus(int orderStatus)` to update
+the `orderStatus`.
+* Use `updateCommerceOrder(CommerceOrder commerceOrder)` method after setting
+`transactionId` with `commerceOrder.setTransactionId(String transactionId)` to
+update the `transactionId`.
+* Use `updateCommerceOrder(CommerceOrder commerceOrder)` method after setting
+the `userId` and `userName` with `commerceOrder.setUserId(long userId)` and
+`commerceOrder.setUserName(String userName)` to update the user information.
+#### Why was this change made?
+
+This change was introduced to clean up the class
+`CommerceOrderLocalServiceImpl`.
 
 ---------------------------------------

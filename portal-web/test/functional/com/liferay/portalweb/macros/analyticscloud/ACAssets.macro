@@ -116,9 +116,56 @@ definition {
 		var key_metricValue = "${metricValue}";
 
 		while (IsElementNotPresent(locator1 = "ACAssets#METRIC_VALUE") && (maxIterations = "50")) {
-			TestUtils.hardRefresh();
-		}
 
+			TestUtils.hardRefresh();
+
+			if ("${timeFilter}" != "Custom Range") {
+				ACTimeFilter.clickTimeFilterButton();
+
+				if ("${timeFilter}" == "Last 24 hours") {
+					ACTimeFilter.setLast24Hours();
+				}
+
+				if ("${timeFilter}" == "Yesterday") {
+					ACTimeFilter.setYesterday();
+				}
+
+				if ("${timeFilter}" == "Last 7 days") {
+					ACTimeFilter.setLast7Days();
+				}
+
+				if ("${timeFilter}" == "Last 28 days") {
+					ACTimeFilter.setLast28Days();
+				}
+
+				if ("${timeFilter}" == "Last 30 days") {
+					ACTimeFilter.setLast30Days();
+				}
+
+				if ("${timeFilter}" == "Last 90 days") {
+					ACTimeFilter.setLast90Days();
+				}
+
+				if ("${timeFilter}" == "Last 180 days") {
+					ACTimeFilter.setLast180Days();
+				}
+
+				if ("${timeFilter}" == "Last Year") {
+					ACTimeFilter.setLastYear();
+				}
+			}
+
+			if ("${timeFilter}" == "Custom Range") {
+				ACTimeFilter.setCustomRange(
+					endDay = "${endDay}",
+					endMonth = "${endMonth}",
+					endYear = "${endYear}",
+					startDay = "${startDay}",
+					startMonth = "${startMonth}",
+					startYear = "${startYear}");
+			}
+		}
+			
 		AssertTextEquals(
 			locator1 = "ACAssets#METRIC_VALUE",
 			value1 = "${metricValue}");

@@ -625,7 +625,8 @@ definition {
 		task ("Assert the unique visitors label is shown") {
 			ACAssets.viewVisitorsBehaviorMetric(
 				metricTitle = "Unique Visitors",
-				metricValue = "1");
+				metricValue = "1",
+				timeFilter = "Last 24 hours");
 
 			AssertElementPresent(
 				key_visitorsLabel = "Unique Visitors",

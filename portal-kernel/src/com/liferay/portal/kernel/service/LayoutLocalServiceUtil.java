@@ -1682,6 +1682,18 @@ public class LayoutLocalServiceUtil {
 			groupId, privateLayout, layoutId, typeSettings);
 	}
 
+	public static Layout updateLayout(
+			long groupId, boolean privateLayout, long layoutId,
+			String typeSettings, byte[] iconBytes, String themeId,
+			String colorSchemeId, long styleBookEntryId, String css,
+			long masterLayoutPlid)
+		throws PortalException {
+
+		return getService().updateLayout(
+			groupId, privateLayout, layoutId, typeSettings, iconBytes, themeId,
+			colorSchemeId, styleBookEntryId, css, masterLayoutPlid);
+	}
+
 	/**
 	 * Updates the look and feel of the layout.
 	 *

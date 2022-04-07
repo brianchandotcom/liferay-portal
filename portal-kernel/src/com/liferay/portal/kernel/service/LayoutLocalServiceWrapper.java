@@ -1824,6 +1824,19 @@ public class LayoutLocalServiceWrapper
 			groupId, privateLayout, layoutId, typeSettings);
 	}
 
+	@Override
+	public Layout updateLayout(
+			long groupId, boolean privateLayout, long layoutId,
+			String typeSettings, byte[] iconBytes, String themeId,
+			String colorSchemeId, long styleBookEntryId, String css,
+			long masterLayoutPlid)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutLocalService.updateLayout(
+			groupId, privateLayout, layoutId, typeSettings, iconBytes, themeId,
+			colorSchemeId, styleBookEntryId, css, masterLayoutPlid);
+	}
+
 	/**
 	 * Updates the look and feel of the layout.
 	 *

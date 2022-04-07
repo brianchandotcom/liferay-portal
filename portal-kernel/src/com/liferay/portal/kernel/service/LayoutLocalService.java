@@ -1401,6 +1401,13 @@ public interface LayoutLocalService
 			String typeSettings)
 		throws PortalException;
 
+	public Layout updateLayout(
+			long groupId, boolean privateLayout, long layoutId,
+			String typeSettings, byte[] iconBytes, String themeId,
+			String colorSchemeId, long styleBookEntryId, String css,
+			long masterLayoutPlid)
+		throws PortalException;
+
 	/**
 	 * Updates the look and feel of the layout.
 	 *

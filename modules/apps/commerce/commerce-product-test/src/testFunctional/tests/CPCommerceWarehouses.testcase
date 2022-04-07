@@ -855,11 +855,11 @@ definition {
 			category = "Inventory Management",
 			portlet = "Warehouses");
 
-		var channelIds = CommerceJSONChannelsAPI._getCommerceChannelIds();
+		var commerceChannelIds = CommerceJSONChannelsAPI._getCommerceChannelIds();
 
-		for (var channelId : list "${channelIds}") {
-			var channel1 = StringUtil.extractFirst("${channelIds}", ",");
-			var channel2 = StringUtil.extractLast("${channelIds}", ",");
+		for (var commerceChannelId : list "${commerceChannelIds}") {
+			var commerceChannel1 = StringUtil.extractFirst("${commerceChannelIds}", ",");
+			var commerceChannel2 = StringUtil.extractLast("${commerceChannelIds}", ",");
 		}
 
 		Click(

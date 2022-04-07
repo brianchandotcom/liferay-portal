@@ -325,12 +325,12 @@ public class ObjectEntryDisplayContext {
 			_objectRelationshipLocalService.getObjectRelationship(
 				objectLayoutTab.getObjectRelationshipId());
 
-		ObjectDefinition objectDefinition =
+		ObjectDefinition objectDefinition2 =
 			_objectDefinitionLocalService.getObjectDefinition(
 				objectRelationship.getObjectDefinitionId2());
 
 		infoItemItemSelectorCriterion.setItemType(
-			objectDefinition.getClassName());
+			objectDefinition2.getClassName());
 
 		return PortletURLBuilder.create(
 			_itemSelector.getItemSelectorURL(
@@ -338,6 +338,15 @@ public class ObjectEntryDisplayContext {
 				liferayPortletResponse.getNamespace() +
 					"selectRelatedModalEntry",
 				infoItemItemSelectorCriterion)
+		).setParameter(
+			"objectDefinitionId",
+			() -> {
+				ObjectDefinition objectDefinition1 =
+					_objectDefinitionLocalService.getObjectDefinition(
+						objectRelationship.getObjectDefinitionId1());
+
+				return objectDefinition1.getObjectDefinitionId();
+			}
 		).buildString();
 	}
 

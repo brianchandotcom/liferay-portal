@@ -23,7 +23,7 @@ import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
-import com.liferay.object.scope.ObjectScopeProvider;
+import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
@@ -32,16 +32,23 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.IOException;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -54,6 +61,8 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+
+import javax.ws.rs.core.UriInfo;
 
 /**
  * @author Guilherme Camacho
@@ -68,6 +77,7 @@ public class ObjectEntryItemSelectorView
 		ObjectDefinition objectDefinition,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectEntryLocalService objectEntryLocalService,
+		ObjectEntryManager objectEntryManager,
 		ObjectScopeProviderRegistry objectScopeProviderRegistry,
 		Portal portal) {
 
@@ -76,6 +86,7 @@ public class ObjectEntryItemSelectorView
 		_objectDefinition = objectDefinition;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectEntryLocalService = objectEntryLocalService;
+		_objectEntryManager = objectEntryManager;
 		_objectScopeProviderRegistry = objectScopeProviderRegistry;
 		_portal = portal;
 	}
@@ -113,10 +124,12 @@ public class ObjectEntryItemSelectorView
 			servletRequest, servletResponse, infoItemItemSelectorCriterion,
 			portletURL, itemSelectedEventName, search,
 			new ObjectItemSelectorViewDescriptor(
-				(HttpServletRequest)servletRequest,
-				infoItemItemSelectorCriterion, _objectDefinition,
-				_objectScopeProviderRegistry, portletURL));
+				(HttpServletRequest)servletRequest, _objectDefinition,
+				_objectEntryManager, portletURL));
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ObjectEntryItemSelectorView.class);
 
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Arrays.asList(
@@ -128,6 +141,7 @@ public class ObjectEntryItemSelectorView
 	private final ObjectDefinition _objectDefinition;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectEntryLocalService _objectEntryLocalService;
+	private final ObjectEntryManager _objectEntryManager;
 	private final ObjectScopeProviderRegistry _objectScopeProviderRegistry;
 	private final Portal _portal;
 
@@ -222,15 +236,12 @@ public class ObjectEntryItemSelectorView
 
 		public ObjectItemSelectorViewDescriptor(
 			HttpServletRequest httpServletRequest,
-			InfoItemItemSelectorCriterion infoItemItemSelectorCriterion,
 			ObjectDefinition objectDefinition,
-			ObjectScopeProviderRegistry objectScopeProviderRegistry,
-			PortletURL portletURL) {
+			ObjectEntryManager objectEntryManager, PortletURL portletURL) {
 
 			_httpServletRequest = httpServletRequest;
-			_infoItemItemSelectorCriterion = infoItemItemSelectorCriterion;
 			_objectDefinition = objectDefinition;
-			_objectScopeProviderRegistry = objectScopeProviderRegistry;
+			_objectEntryManager = objectEntryManager;
 			_portletURL = portletURL;
 
 			_portletRequest = (PortletRequest)_httpServletRequest.getAttribute(
@@ -262,54 +273,76 @@ public class ObjectEntryItemSelectorView
 					_portletRequest, _portletURL, null,
 					"no-entries-were-found");
 
-			searchContainer.setResultsAndTotal(
-				() -> {
-					List<ItemSelectorReturnType>
-						desiredItemSelectorReturnTypes =
-							_infoItemItemSelectorCriterion.
-								getDesiredItemSelectorReturnTypes();
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
 
-					if (desiredItemSelectorReturnTypes.get(0) instanceof
-							InfoItemItemSelectorReturnType) {
+			try {
+				Page<com.liferay.object.rest.dto.v1_0.ObjectEntry>
+					objectEntriesPage = _objectEntryManager.getObjectEntries(
+						serviceContext.getCompanyId(), _objectDefinition, null,
+						null, _getDTOConverterContext(), _getFilterString(),
+						null, null, null);
 
-						return _objectEntryLocalService.getObjectEntries(
-							_getGroupId(),
-							_objectDefinition.getObjectDefinitionId(),
-							WorkflowConstants.STATUS_APPROVED,
-							searchContainer.getStart(),
-							searchContainer.getEnd());
-					}
+				List<ObjectEntry> objectEntries = TransformUtil.transform(
+					objectEntriesPage.getItems(),
+					item -> _toObjectEntry(
+						item, _objectDefinition.getObjectDefinitionId()));
 
-					return _objectEntryLocalService.getObjectEntries(
-						_getGroupId(),
-						_objectDefinition.getObjectDefinitionId(),
-						searchContainer.getStart(), searchContainer.getEnd());
-				},
-				_objectEntryLocalService.getObjectEntriesCount());
+				searchContainer.setResultsAndTotal(
+					() -> objectEntries, objectEntries.size());
+			}
+			catch (Exception exception) {
+				_log.error(exception);
+
+				searchContainer.setResultsAndTotal(ArrayList::new, 0);
+			}
 
 			return searchContainer;
 		}
 
-		private long _getGroupId() throws PortalException {
-			ObjectScopeProvider objectScopeProvider =
-				_objectScopeProviderRegistry.getObjectScopeProvider(
-					_objectDefinition.getScope());
+		private DefaultDTOConverterContext _getDTOConverterContext() {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)_httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
-			if (!objectScopeProvider.isGroupAware()) {
-				return 0;
-			}
-
-			ServiceContext serviceContext =
-				ServiceContextThreadLocal.getServiceContext();
-
-			return objectScopeProvider.getGroupId(serviceContext.getRequest());
+			return new DefaultDTOConverterContext(
+				false, null, null, _httpServletRequest, null,
+				_httpServletRequest.getLocale(), _contextUriInfo,
+				themeDisplay.getUser());
 		}
 
+		private String _getFilterString() throws PortalException {
+			long objectDefinitionId = ParamUtil.getLong(
+				_portletRequest, "objectDefinitionId");
+
+			if (objectDefinitionId == 0) {
+				return StringPool.BLANK;
+			}
+
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.getObjectDefinition(
+					objectDefinitionId);
+
+			return StringUtil.toLowerCase(objectDefinition.getShortName()) +
+				"Id eq 0";
+		}
+
+		private ObjectEntry _toObjectEntry(
+			com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry,
+			long objectDefinitionId) {
+
+			ObjectEntry serviceBuilderObjectEntry =
+				_objectEntryLocalService.createObjectEntry(objectEntry.getId());
+
+			serviceBuilderObjectEntry.setObjectDefinitionId(objectDefinitionId);
+
+			return serviceBuilderObjectEntry;
+		}
+
+		private UriInfo _contextUriInfo;
 		private final HttpServletRequest _httpServletRequest;
-		private final InfoItemItemSelectorCriterion
-			_infoItemItemSelectorCriterion;
 		private final ObjectDefinition _objectDefinition;
-		private final ObjectScopeProviderRegistry _objectScopeProviderRegistry;
+		private final ObjectEntryManager _objectEntryManager;
 		private final PortletRequest _portletRequest;
 		private final PortletURL _portletURL;
 

@@ -102,10 +102,20 @@ function Variant({
 						>
 							<ClayDropDown.ItemList>
 								<ClayDropDown.Item onClick={_handleEdition}>
+									<ClayIcon
+										className="c-mr-3 text-4"
+										symbol="pencil"
+									/>
+
 									{Liferay.Language.get('edit')}
 								</ClayDropDown.Item>
 
 								<ClayDropDown.Item onClick={_handleDeletion}>
+									<ClayIcon
+										className="c-mr-3 text-4"
+										symbol="trash"
+									/>
+
 									{Liferay.Language.get('delete')}
 								</ClayDropDown.Item>
 							</ClayDropDown.ItemList>

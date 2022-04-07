@@ -73,7 +73,8 @@ public class OrderItemUtil {
 		if (commerceOrder.isOpen()) {
 			commerceOrderItem = commerceOrderItemService.addCommerceOrderItem(
 				commerceOrder.getCommerceOrderId(),
-				cpInstance.getCPInstanceId(), null,
+				cpInstance.getCPInstanceId(),
+				GetterUtil.getString(orderItem.getOptions(), null),
 				GetterUtil.get(orderItem.getQuantity(), 0),
 				GetterUtil.get(orderItem.getShippedQuantity(), 0),
 				commerceContext, serviceContext);
@@ -250,7 +251,8 @@ public class OrderItemUtil {
 			commerceOrderItem =
 				commerceOrderItemService.addOrUpdateCommerceOrderItem(
 					commerceOrder.getCommerceOrderId(),
-					cpInstance.getCPInstanceId(), json,
+					cpInstance.getCPInstanceId(),
+					GetterUtil.getString(orderItem.getOptions(), json),
 					GetterUtil.get(orderItem.getQuantity(), quantity),
 					GetterUtil.get(
 						orderItem.getShippedQuantity(), shippedQuantity),

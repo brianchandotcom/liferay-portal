@@ -1234,7 +1234,7 @@ definition {
 		ACSegments.editWebBehaviorCriterion(
 			indexField = "1",
 			occurenceNumber = "4",
-			searchTerm = "AC Page - Site Name - ${dataSource}");
+			searchTerm = "Blogs AC Title - Site Name - Liferay DXP");
 
 		ACSegments.saveSegment();
 

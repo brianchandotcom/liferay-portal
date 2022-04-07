@@ -123,6 +123,7 @@ public class PluginsFunctionalBatchTestClassGroup
 			}
 
 			Properties properties = JenkinsResultsParserUtil.getProperties(
+				new File(portalWorkingDirectory, "portal-web/poshi.properties"),
 				new File(
 					portalWorkingDirectory, "portal-web/poshi-ext.properties"),
 				new File(testBaseDir, "test.properties"));

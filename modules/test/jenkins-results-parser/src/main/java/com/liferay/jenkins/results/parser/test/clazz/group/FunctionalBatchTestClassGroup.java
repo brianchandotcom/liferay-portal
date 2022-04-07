@@ -205,6 +205,7 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 			}
 
 			Properties properties = JenkinsResultsParserUtil.getProperties(
+				new File(portalWorkingDirectory, "portal-web/poshi.properties"),
 				new File(
 					portalWorkingDirectory, "portal-web/poshi-ext.properties"));
 

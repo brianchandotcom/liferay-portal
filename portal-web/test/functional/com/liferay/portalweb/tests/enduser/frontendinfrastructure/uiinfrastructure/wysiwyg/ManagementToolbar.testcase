@@ -149,7 +149,7 @@ definition {
 			MessageboardsCategory.addCP(categoryName = "Test Category");
 		}
 
-		task ("And clicks on the order button") {			
+		task ("And clicks on the order button") {
 			Click(
 				key_text = "order-list-up",
 				locator1 = "ManagementBar#ANY_ICON");

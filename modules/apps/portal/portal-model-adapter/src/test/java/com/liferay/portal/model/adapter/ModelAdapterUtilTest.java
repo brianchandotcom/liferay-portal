@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.petra.model.adapter.util;
+package com.liferay.portal.model.adapter;
 
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 

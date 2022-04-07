@@ -36,11 +36,13 @@ import com.liferay.layout.seo.open.graph.OpenGraphConfiguration;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
 import com.liferay.layout.seo.service.LayoutSEOSiteLocalService;
 import com.liferay.layout.seo.template.LayoutSEOTemplateProcessor;
+import com.liferay.layout.seo.web.internal.configuration.LayoutSEODynamicRenderingConfiguration;
 import com.liferay.layout.seo.web.internal.util.OpenGraphImageProvider;
 import com.liferay.layout.seo.web.internal.util.TitleProvider;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
@@ -81,7 +83,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alicia García
  */
-@Component(service = DynamicInclude.class)
+@Component(
+	configurationPid = "com.liferay.layout.seo.web.internal.configuration.LayoutSEODynamicRenderingConfiguration",
+	service = DynamicInclude.class
+)
 public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 
 	@Override
@@ -98,6 +103,15 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 			Layout layout = themeDisplay.getLayout();
 
 			if (themeDisplay.isSignedIn() || layout.isPrivateLayout()) {
+				return;
+			}
+
+			List<String> prerenderPathList = Arrays.asList(
+				_layoutSEODynamicRenderingConfiguration.pathList());
+
+			if (_layoutSEODynamicRenderingConfiguration.enabled() &&
+				prerenderPathList.contains(layout.getFriendlyURL())) {
+
 				return;
 			}
 
@@ -314,6 +328,10 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 			_layoutSEOSiteLocalService, _layoutSEOTemplateProcessor, _portal,
 			_storageEngine);
 		_titleProvider = new TitleProvider(_layoutSEOLinkManager);
+
+		_layoutSEODynamicRenderingConfiguration =
+			ConfigurableUtil.createConfigurable(
+				LayoutSEODynamicRenderingConfiguration.class, properties);
 	}
 
 	private String _addLinkTag(LayoutSEOLink layoutSEOLink) {
@@ -475,6 +493,9 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 
 	@Reference
 	private Language _language;
+
+	private volatile LayoutSEODynamicRenderingConfiguration
+		_layoutSEODynamicRenderingConfiguration;
 
 	@Reference
 	private LayoutSEOEntryLocalService _layoutSEOEntryLocalService;

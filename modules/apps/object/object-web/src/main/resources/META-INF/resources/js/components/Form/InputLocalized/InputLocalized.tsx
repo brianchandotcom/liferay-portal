@@ -13,6 +13,7 @@
  */
 
 import ClayLocalizedInput from '@clayui/localized-input';
+import classNames from 'classnames';
 import React from 'react';
 
 import FieldBase from '../FieldBase';
@@ -44,6 +45,14 @@ export default function InputLocalized({
 		>
 			<ClayLocalizedInput
 				{...otherProps}
+				className={classNames({
+					'lfr-objects__input-localized--rtl':
+
+						// @ts-ignore
+
+						Liferay.Language.direction[selectedLocale.label] ===
+						'rtl',
+				})}
 				disabled={disabled}
 				id={id}
 				label=""

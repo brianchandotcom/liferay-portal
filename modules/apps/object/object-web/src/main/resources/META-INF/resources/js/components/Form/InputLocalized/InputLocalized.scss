@@ -6,4 +6,8 @@
 	.form-text {
 		display: none;
 	}
+
+	&--rtl {
+		text-align: right;
+	}
 }

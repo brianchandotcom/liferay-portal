@@ -1093,14 +1093,123 @@ definition {
 			value1 = "7.45");
 	}
 
-	@description = "This is a test for COMMERCE-6220. When creating a price list only catalogs for which the user has permission should be visible in the drop down"
-	@ignore = "true"
+	@description = "This is a test for COMMERCE-8568. Verify multiple Price Entries can be set on the same Price List for the same SKU"
 	@priority = "3"
-	test AllowMultiplePriceEntriesOnTheSamePriceList {
+	test AllowMultiplePriceEntriesInTheSamePriceList {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property osgi.module.configuration.file.names = "com.liferay.commerce.price.list.configuration.CommercePriceEntryConfiguration.config";
+		property osgi.module.configurations = "checkInterval=&quot;1&quot;";
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-8568 AllowMultiplePriceEntriesOnTheSamePriceList Pending Implementation
+		task ("Given a Minium site with a buyer user") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And given a new Test Price List") {
+			CommerceJSONPriceListsAndPromotionsAPI._addPriceList(
+				catalogName = "Minium",
+				currencyCode = "USD",
+				priceListName = "Test Price List");
+		}
+
+		task ("And given a Test Price List entry for U-Joint that is set to expire in 4 minutes") {
+			CommercePriceLists.openPriceListsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Test Price List");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Entries");
+
+			CommerceJSONPriceListsAndPromotionsAPI._addPriceListEntry(
+				entryPrice = "20",
+				priceListName = "Test Price List",
+				productSKU = "MIN55861");
+
+			Refresh();
+
+			CommerceNavigator.gotoEntry(entryName = "MIN55861");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.setExpirationTime(minutesToExpire = "4");
+
+			Button.clickSave();
+		}
+
+		task ("And given a Test Price List entry for U-Joint that is set to publish in 6 minutes") {
+			CommerceJSONPriceListsAndPromotionsAPI._addPriceListEntry(
+				entryPrice = "10",
+				priceListName = "Test Price List",
+				productSKU = "MIN55861");
+
+			Refresh();
+
+			Click(
+				key_rowNumber = "2",
+				locator1 = "CommerceNavigation#ENTRY_NAME_N");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.setPublishTime(minutesToPublish = "6");
+
+			Button.clickSave();
+		}
+
+		task ("When the buyer navigates to the Minium Catalog") {
+			Refresh();
+
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("Then the U-Joint price is the first price entry price (20.00)") {
+			AssertTextEquals.assertPartialText(
+				key_productName = "U-Joint",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE",
+				value1 = "20.00");
+		}
+
+		task ("When the first price entry expires and the buyer views the U-Joint product") {
+			Pause(locator1 = "240000");
+
+			Refresh();
+		}
+
+		task ("Then the U-Joint price is the base price (24.00)") {
+			AssertTextEquals.assertPartialText(
+				key_productName = "U-Joint",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE",
+				value1 = "24.00");
+		}
+
+		task ("When the second price entry is published and the buyer views the U-Joint product") {
+			Pause(locator1 = "120000");
+
+			Refresh();
+		}
+
+		task ("Then the U-Joint price is the second price entry price (10.00)") {
+			AssertTextEquals.assertPartialText(
+				key_productName = "U-Joint",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE",
+				value1 = "10.00");
+		}
 	}
 
 	test AssertPriceEntriesAreProductsInTheSameCatalogAsPriceList {

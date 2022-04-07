@@ -31,8 +31,8 @@ html#{$cadmin-selector} {
 				}
 
 				&--margin {
-					&:hover,
-					&:focus-within {
+					&:not(.disabled):hover,
+					&:not(.disabled):focus-within {
 						background-color: #ffe4d1;
 					}
 

@@ -151,6 +151,7 @@ export default function SpacingBox({fields, onChange, value}) {
 
 function SpacingSelectorButton({field, onChange, position, type, value}) {
 	const [active, setActive] = useState(false);
+	const disabled = !field || field.disabled;
 	const itemListRef = useRef();
 	const [labelElement, setLabelElement] = useState(null);
 	const tooltipId = useId();
@@ -166,7 +167,10 @@ function SpacingSelectorButton({field, onChange, position, type, value}) {
 	return (
 		<ClayDropDown
 			active={active}
-			className={`${DROPDOWN_CLASSNAME} ${DROPDOWN_CLASSNAME}--${type} ${DROPDOWN_CLASSNAME}--${type}-${position} align-items-stretch d-flex text-center`}
+			className={classNames(
+				`${DROPDOWN_CLASSNAME} ${DROPDOWN_CLASSNAME}--${type} ${DROPDOWN_CLASSNAME}--${type}-${position} align-items-stretch d-flex text-center`,
+				{disabled}
+			)}
 			onActiveChange={setActive}
 			renderMenuOnClick
 			trigger={
@@ -181,7 +185,7 @@ function SpacingSelectorButton({field, onChange, position, type, value}) {
 					)}
 					data-position={position}
 					data-type={type}
-					disabled={!field || field.disabled}
+					disabled={disabled}
 					displayType="unstyled"
 					id={triggerId}
 					onClick={() => setActive(!active)}

@@ -360,7 +360,7 @@ definition {
 	}
 
 	@description = "Use case for LPS-139430. Asserts a user can be assigned to an account through the Users Admin portlet"
-	@priority = "4"
+	@priority = "3"
 	test AssignUserToAccountViaUsersAdmin {
 		task ("Given two accounts are created") {
 			JSONAccountEntry.addAccountEntry(
@@ -370,15 +370,15 @@ definition {
 			JSONAccountEntry.addAccountEntry(
 				accountEntryName = "Account Test 2",
 				accountEntryType = "Business");
-		}
 
-		task ("And given an account user is added to one of those accounts") {
-			JSONAccountEntryUser.addAccountEntryUser(
-				accountEntryName = "Account Test 1",
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
+			task ("And given an account user is added to one of those accounts") {
+				JSONAccountEntryUser.addAccountEntryUser(
+					accountEntryName = "Account Test 1",
+					userEmailAddress = "userea@liferay.com",
+					userFirstName = "userfn",
+					userLastName = "userln",
+					userScreenName = "usersn");
+			}
 		}
 
 		task ("When assigning the second account through the Users Admin to the same user") {

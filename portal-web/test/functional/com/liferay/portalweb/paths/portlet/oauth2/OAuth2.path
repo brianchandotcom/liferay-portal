@@ -113,7 +113,7 @@
 </tr>
 <tr>
 	<td>ADMIN_RESOURCE_SCOPE_CHECKBOX</td>
-	<td>//input[@value='${key_scopeName}']</td>
+	<td>//input[contains(@value,'${key_scopeName}')]</td>
 	<td></td>
 </tr>
 <tr>

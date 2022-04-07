@@ -315,6 +315,10 @@ definition {
 
 			if (isSet(resourceCheckList)) {
 				for (var scopeName : list "${resourceCheckList}") {
+					ScrollWebElementIntoView(
+						key_scopeName = "${scopeName}",
+						locator1 = "OAuth2#ADMIN_RESOURCE_SCOPE_CHECKBOX");
+
 					Check(
 						key_scopeName = "${scopeName}",
 						locator1 = "OAuth2#ADMIN_RESOURCE_SCOPE_CHECKBOX");

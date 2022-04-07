@@ -149,10 +149,8 @@ public class PoshiSourceProcessor extends BaseSourceProcessor {
 
 		List<File> poshiDirs = new ArrayList<>();
 
-		File portalDir = getPortalDir();
-
-		if (portalDir != null) {
-			poshiDirs.add(portalDir);
+		if (isPortalSource()) {
+			poshiDirs.add(getPortalDir());
 		}
 		else {
 			poshiDirs.addAll(PoshiContext.getPoshiDirs());

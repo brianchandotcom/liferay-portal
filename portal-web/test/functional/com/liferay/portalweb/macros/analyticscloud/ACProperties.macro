@@ -68,7 +68,9 @@ definition {
 	}
 
 	macro assertNoProperties {
-		AssertElementPresent(locator1 = "ACSettings#NO_PROPERTIES_FOUND");
+		var key_textValue = "No Properties Found";
+
+		WaitForElementPresent(locator1 = "ACUtils#GENERIC_TEXT");
 
 		for (var key_messageValue : list "Create a property to get started.,Access our documentation to learn more.") {
 			AssertElementPresent(locator1 = "ACSettings#PROPERTIES_DEFAULT_SECONDARY_DESCRIPTION");

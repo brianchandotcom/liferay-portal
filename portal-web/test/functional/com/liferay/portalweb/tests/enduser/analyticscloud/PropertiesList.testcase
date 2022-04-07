@@ -112,7 +112,7 @@ definition {
 			ACProperties.assertNoProperties();
 		}
 
-		task ("Asset that there are no more properties on the sites page") {
+		task ("Assert that there are no more properties on the sites page") {
 			Navigator.gotoBack();
 
 			AssertElementPresent(locator1 = "ACSidebar#PROPERTY_MENU_NO_PROPERTIES");

@@ -236,7 +236,7 @@ definition {
 		}
 
 		var curl = '''
-			${baseURL}/o/headless-commerce-admin-catalog/v1.0/skus \
+			${baseURL}/o/headless-commerce-admin-catalog/v1.0/skus?search=${productSKU} \
 			-u test@liferay.com:test \
 			-H 'accept: application/json' \
 		''';

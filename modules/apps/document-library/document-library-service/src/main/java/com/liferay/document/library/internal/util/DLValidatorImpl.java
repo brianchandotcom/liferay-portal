@@ -28,10 +28,11 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelper;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeFormatter;
 import com.liferay.portal.kernel.util.Validator;
@@ -80,16 +81,16 @@ public final class DLValidatorImpl implements DLValidator {
 	}
 
 	@Override
-	public long getMaxAllowableSize(String mimeType) {
+	public long getMaxAllowableSize(long groupId, String mimeType) {
+		Group group = _groupLocalService.fetchGroup(groupId);
+
 		return _min(
-			_getGlobalMaxAllowableSize(
-				CompanyThreadLocal.getCompanyId(),
-				GroupThreadLocal.getGroupId()),
+			_getGlobalMaxAllowableSize(group.getCompanyId(), groupId),
 			_min(
 				_dlSizeLimitManagedServiceFactory.getCompanyMimeTypeSizeLimit(
-					CompanyThreadLocal.getCompanyId(), mimeType),
+					group.getCompanyId(), mimeType),
 				_dlSizeLimitManagedServiceFactory.getGroupMimeTypeSizeLimit(
-					GroupThreadLocal.getGroupId(), mimeType)));
+					groupId, mimeType)));
 	}
 
 	@Override
@@ -185,43 +186,48 @@ public final class DLValidatorImpl implements DLValidator {
 	}
 
 	@Override
-	public void validateFileSize(String fileName, String mimeType, byte[] bytes)
+	public void validateFileSize(
+			long groupId, String fileName, String mimeType, byte[] bytes)
 		throws FileSizeException {
 
 		if (bytes == null) {
 			throw new FileSizeException(
 				"File size is zero for " + fileName,
-				getMaxAllowableSize(mimeType));
+				getMaxAllowableSize(groupId, mimeType));
 		}
 
-		validateFileSize(fileName, mimeType, bytes.length);
-	}
-
-	@Override
-	public void validateFileSize(String fileName, String mimeType, File file)
-		throws FileSizeException {
-
-		if (file == null) {
-			throw new FileSizeException(
-				"File is null for " + fileName, getMaxAllowableSize(mimeType));
-		}
-
-		validateFileSize(fileName, mimeType, file.length());
+		validateFileSize(groupId, fileName, mimeType, bytes.length);
 	}
 
 	@Override
 	public void validateFileSize(
-			String fileName, String mimeType, InputStream inputStream)
+			long groupId, String fileName, String mimeType, File file)
+		throws FileSizeException {
+
+		if (file == null) {
+			throw new FileSizeException(
+				"File is null for " + fileName,
+				getMaxAllowableSize(groupId, mimeType));
+		}
+
+		validateFileSize(groupId, fileName, mimeType, file.length());
+	}
+
+	@Override
+	public void validateFileSize(
+			long groupId, String fileName, String mimeType,
+			InputStream inputStream)
 		throws FileSizeException {
 
 		try {
 			if (inputStream == null) {
 				throw new FileSizeException(
 					"Input stream is null for " + fileName,
-					getMaxAllowableSize(mimeType));
+					getMaxAllowableSize(groupId, mimeType));
 			}
 
-			validateFileSize(fileName, mimeType, inputStream.available());
+			validateFileSize(
+				groupId, fileName, mimeType, inputStream.available());
 		}
 		catch (IOException ioException) {
 			throw new FileSizeException(ioException);
@@ -229,10 +235,11 @@ public final class DLValidatorImpl implements DLValidator {
 	}
 
 	@Override
-	public void validateFileSize(String fileName, String mimeType, long size)
+	public void validateFileSize(
+			long groupId, String fileName, String mimeType, long size)
 		throws FileSizeException {
 
-		long maxSize = getMaxAllowableSize(mimeType);
+		long maxSize = getMaxAllowableSize(groupId, mimeType);
 
 		if ((maxSize > 0) && (size > maxSize)) {
 			throw new FileSizeException(
@@ -379,6 +386,9 @@ public final class DLValidatorImpl implements DLValidator {
 
 	@Reference
 	private DLSizeLimitManagedServiceFactory _dlSizeLimitManagedServiceFactory;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private UploadServletRequestConfigurationHelper

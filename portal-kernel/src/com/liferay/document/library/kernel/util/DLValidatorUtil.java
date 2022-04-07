@@ -34,8 +34,8 @@ public class DLValidatorUtil {
 		return _dlValidator.fixName(name);
 	}
 
-	public static long getMaxAllowableSize(String mimeType) {
-		return _dlValidator.getMaxAllowableSize(mimeType);
+	public static long getMaxAllowableSize(long groupId, String mimeType) {
+		return _dlValidator.getMaxAllowableSize(groupId, mimeType);
 	}
 
 	public static boolean isValidName(String name) {
@@ -61,31 +61,32 @@ public class DLValidatorUtil {
 	}
 
 	public static void validateFileSize(
-			String fileName, String mimeType, byte[] bytes)
+			long groupId, String fileName, String mimeType, byte[] bytes)
 		throws FileSizeException {
 
-		_dlValidator.validateFileSize(fileName, mimeType, bytes);
+		_dlValidator.validateFileSize(groupId, fileName, mimeType, bytes);
 	}
 
 	public static void validateFileSize(
-			String fileName, String mimeType, File file)
+			long groupId, String fileName, String mimeType, File file)
 		throws FileSizeException {
 
-		_dlValidator.validateFileSize(fileName, mimeType, file);
+		_dlValidator.validateFileSize(groupId, fileName, mimeType, file);
 	}
 
 	public static void validateFileSize(
-			String fileName, String mimeType, InputStream inputStream)
+			long groupId, String fileName, String mimeType,
+			InputStream inputStream)
 		throws FileSizeException {
 
-		_dlValidator.validateFileSize(fileName, mimeType, inputStream);
+		_dlValidator.validateFileSize(groupId, fileName, mimeType, inputStream);
 	}
 
 	public static void validateFileSize(
-			String fileName, String mimeType, long size)
+			long groupId, String fileName, String mimeType, long size)
 		throws FileSizeException {
 
-		_dlValidator.validateFileSize(fileName, mimeType, size);
+		_dlValidator.validateFileSize(groupId, fileName, mimeType, size);
 	}
 
 	public static void validateSourceFileExtension(

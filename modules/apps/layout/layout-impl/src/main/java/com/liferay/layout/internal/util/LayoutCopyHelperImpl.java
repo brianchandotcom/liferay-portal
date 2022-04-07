@@ -68,8 +68,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
-import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.exportimport.staging.StagingAdvicesThreadLocal;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
@@ -940,7 +938,6 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 			}
 
 			_sites.copyExpandoBridgeAttributes(_sourceLayout, _targetLayout);
-			_sites.copyLookAndFeel(_targetLayout, _sourceLayout);
 			_sites.copyPortletSetups(_sourceLayout, _targetLayout);
 
 			if (Objects.equals(
@@ -969,24 +966,6 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 			_copyPortletPreferences(
 				_segmentsExperiencesIds, _sourceLayout, _targetLayout);
 
-			_layoutLocalService.updateMasterLayoutPlid(
-				_targetLayout.getGroupId(), _targetLayout.isPrivateLayout(),
-				_targetLayout.getLayoutId(),
-				_sourceLayout.getMasterLayoutPlid());
-
-			_layoutLocalService.updateStyleBookEntryId(
-				_targetLayout.getGroupId(), _targetLayout.isPrivateLayout(),
-				_targetLayout.getLayoutId(),
-				_sourceLayout.getStyleBookEntryId());
-
-			UnicodeProperties unicodeProperties = UnicodePropertiesBuilder.load(
-				_sourceLayout.getTypeSettings()
-			).build();
-
-			_layoutLocalService.updateLayout(
-				_targetLayout.getGroupId(), _targetLayout.isPrivateLayout(),
-				_targetLayout.getLayoutId(), unicodeProperties.toString());
-
 			Image image = _imageLocalService.getImage(
 				_sourceLayout.getIconImageId());
 
@@ -996,8 +975,13 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 				imageBytes = image.getTextObj();
 			}
 
-			return _layoutLocalService.updateIconImage(
-				_targetLayout.getPlid(), imageBytes);
+			return _layoutLocalService.updateLayout(
+				_targetLayout.getGroupId(), _targetLayout.isPrivateLayout(),
+				_targetLayout.getLayoutId(), _sourceLayout.getTypeSettings(),
+				imageBytes, _sourceLayout.getThemeId(),
+				_sourceLayout.getColorSchemeId(),
+				_sourceLayout.getStyleBookEntryId(), _sourceLayout.getCss(),
+				_sourceLayout.getMasterLayoutPlid());
 		}
 
 		private CopyLayoutCallable(

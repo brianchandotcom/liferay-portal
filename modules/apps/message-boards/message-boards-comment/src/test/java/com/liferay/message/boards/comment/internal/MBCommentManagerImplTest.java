@@ -93,6 +93,97 @@ public class MBCommentManagerImplTest extends Mockito {
 	}
 
 	@Test
+	public void testAddCommentWithExternalReferenceCodeAndParentMessage()
+		throws Exception {
+
+		when(
+			_mbMessage.getParentMessageId()
+		).thenReturn(
+			_ROOT_MESSAGE_ID
+		);
+
+		when(
+			_mbMessage.getMessageId()
+		).thenReturn(
+			_MBMESSAGE_ID
+		);
+
+		when(
+			_mbMessage.getGroupId()
+		).thenReturn(
+			_GROUP_ID
+		);
+
+		when(
+			_mbMessage.getThreadId()
+		).thenReturn(
+			_THREAD_ID
+		);
+
+		Assert.assertEquals(
+			_MBMESSAGE_ID,
+			_mbCommentManagerImpl.addComment(
+				_EXTERNAL_REFERENCE_CODE, _USER_ID, _CLASS_NAME, _ENTRY_ID,
+				_USER_NAME, _ROOT_MESSAGE_ID, _SUBJECT, _BODY,
+				_serviceContextFunction));
+
+		Mockito.verify(
+			_mbMessageLocalService
+		).getMessage(
+			_ROOT_MESSAGE_ID
+		);
+
+		Mockito.verify(
+			_mbMessage
+		).getGroupId();
+
+		Mockito.verify(
+			_mbMessage
+		).getThreadId();
+
+		Mockito.verify(
+			_mbMessageLocalService
+		).addDiscussionMessage(
+			_EXTERNAL_REFERENCE_CODE, _USER_ID, _USER_NAME, _GROUP_ID,
+			_CLASS_NAME, _ENTRY_ID, _THREAD_ID, _ROOT_MESSAGE_ID, _SUBJECT,
+			_BODY, _serviceContext
+		);
+	}
+
+	@Test
+	public void testAddCommentWithExternalReferenceCodeUserNameAndSubject()
+		throws Exception {
+
+		when(
+			_mbMessage.getMessageId()
+		).thenReturn(
+			_MBMESSAGE_ID
+		);
+
+		Assert.assertEquals(
+			_MBMESSAGE_ID,
+			_mbCommentManagerImpl.addComment(
+				_EXTERNAL_REFERENCE_CODE, _USER_ID, _GROUP_ID, _CLASS_NAME,
+				_ENTRY_ID, _USER_NAME, _SUBJECT, _BODY,
+				_serviceContextFunction));
+
+		Mockito.verify(
+			_mbMessageLocalService
+		).addDiscussionMessage(
+			_EXTERNAL_REFERENCE_CODE, _USER_ID, _USER_NAME, _GROUP_ID,
+			_CLASS_NAME, _ENTRY_ID, _THREAD_ID, _ROOT_MESSAGE_ID, _SUBJECT,
+			_BODY, _serviceContext
+		);
+
+		Mockito.verify(
+			_mbMessageLocalService
+		).getDiscussionMessageDisplay(
+			_USER_ID, _GROUP_ID, _CLASS_NAME, _ENTRY_ID,
+			WorkflowConstants.STATUS_APPROVED
+		);
+	}
+
+	@Test
 	public void testAddCommentWithUserNameAndSubject() throws Exception {
 		when(
 			_mbMessage.getMessageId()
@@ -109,8 +200,8 @@ public class MBCommentManagerImplTest extends Mockito {
 		Mockito.verify(
 			_mbMessageLocalService
 		).addDiscussionMessage(
-			_USER_ID, _USER_NAME, _GROUP_ID, _CLASS_NAME, _ENTRY_ID, _THREAD_ID,
-			_ROOT_MESSAGE_ID, _SUBJECT, _BODY, _serviceContext
+			null, _USER_ID, _USER_NAME, _GROUP_ID, _CLASS_NAME, _ENTRY_ID,
+			_THREAD_ID, _ROOT_MESSAGE_ID, _SUBJECT, _BODY, _serviceContext
 		);
 
 		Mockito.verify(
@@ -328,11 +419,27 @@ public class MBCommentManagerImplTest extends Mockito {
 		);
 
 		when(
+			_mbMessageLocalService.getMessage(Matchers.anyLong())
+		).thenReturn(
+			_mbMessage
+		);
+
+		when(
 			_mbMessageLocalService.addDiscussionMessage(
 				Matchers.anyLong(), Matchers.anyString(), Matchers.anyLong(),
 				Matchers.anyString(), Matchers.anyLong(), Matchers.anyLong(),
 				Matchers.anyLong(), Matchers.anyString(), Matchers.anyString(),
 				Matchers.any())
+		).thenReturn(
+			_mbMessage
+		);
+
+		when(
+			_mbMessageLocalService.addDiscussionMessage(
+				Matchers.anyString(), Matchers.anyLong(), Matchers.anyString(),
+				Matchers.anyLong(), Matchers.anyString(), Matchers.anyLong(),
+				Matchers.anyLong(), Matchers.anyLong(), Matchers.anyString(),
+				Matchers.anyString(), Matchers.any())
 		).thenReturn(
 			_mbMessage
 		);
@@ -377,6 +484,9 @@ public class MBCommentManagerImplTest extends Mockito {
 	private static final String _CLASS_NAME = RandomTestUtil.randomString();
 
 	private static final long _ENTRY_ID = RandomTestUtil.randomLong();
+
+	private static final String _EXTERNAL_REFERENCE_CODE =
+		RandomTestUtil.randomString();
 
 	private static final long _GROUP_ID = RandomTestUtil.randomLong();
 

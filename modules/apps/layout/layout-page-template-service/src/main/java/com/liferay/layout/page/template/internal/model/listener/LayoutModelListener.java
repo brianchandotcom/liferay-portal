@@ -270,7 +270,9 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 	private void _reindexLayout(Layout layout) {
 		Indexer<Layout> indexer = IndexerRegistryUtil.getIndexer(Layout.class);
 
-		if (indexer == null) {
+		if ((indexer == null) || layout.isSystem() ||
+			(layout.getStatus() != WorkflowConstants.STATUS_APPROVED)) {
+
 			return;
 		}
 

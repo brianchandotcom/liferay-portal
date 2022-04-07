@@ -14463,6 +14463,10 @@ url=${short.hostname}:8080</echo>
 	</target>
 
 	<target name="unzip-temp-file">
+		<antelope:stringutil property="fileName" string="${fileName}">
+			<antelope:replace regex="\*" replacement=" " />
+		</antelope:stringutil>
+
 		<unzip
 			dest="${selenium.output.dir.name}"
 			src="${selenium.output.dir.name}/${fileName}"

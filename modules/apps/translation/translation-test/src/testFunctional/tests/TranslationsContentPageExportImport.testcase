@@ -1164,9 +1164,11 @@ definition {
 
 		Translations.assertFileNameFromTempFolder(pageName = "Page Translations-en_US");
 
+		var fileName = StringUtil.replace("Page Translations-en_US.zip", " ", "*");
+
 		AntCommand(
 			locator1 = "build-test.xml",
-			value1 = "unzip-temp-file -DfileName=TranslationContentPage1-en_US.zip");
+			value1 = "unzip-temp-file -DfileName=${fileName}");
 
 		for (var fileName : list "TranslationContentPage1-en_US-es_ES.xlf,TranslationContentPage2-en_US-es_ES.xlf") {
 			DMDocument.assertFileNameFromTempFolder(fileName = "${fileName}");

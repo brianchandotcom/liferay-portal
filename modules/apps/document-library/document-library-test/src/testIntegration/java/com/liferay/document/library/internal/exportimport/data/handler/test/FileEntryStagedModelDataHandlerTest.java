@@ -302,7 +302,7 @@ public class FileEntryStagedModelDataHandlerTest
 					fileEntry.getFileEntryId());
 
 			Assert.assertNotNull(friendlyURLEntry);
-			Assert.assertEquals("pdf_test.pdf", friendlyURLEntry.getUrlTitle());
+			Assert.assertEquals("pdf_test-pdf", friendlyURLEntry.getUrlTitle());
 
 			exportImportStagedModel(fileEntry);
 
@@ -316,7 +316,7 @@ public class FileEntryStagedModelDataHandlerTest
 					importedFileEntry.getFileEntryId());
 
 			Assert.assertEquals(
-				"pdf_test.pdf", importedFriendlyURLEntry.getUrlTitle());
+				"pdf_test-pdf", importedFriendlyURLEntry.getUrlTitle());
 
 			fileEntry = DLAppServiceUtil.updateFileEntry(
 				fileEntry.getFileEntryId(), StringPool.BLANK,
@@ -506,7 +506,7 @@ public class FileEntryStagedModelDataHandlerTest
 					fileEntry.getFileEntryId());
 
 			Assert.assertNotNull(friendlyURLEntry);
-			Assert.assertEquals("pdf_test.pdf", friendlyURLEntry.getUrlTitle());
+			Assert.assertEquals("pdf_test-pdf", friendlyURLEntry.getUrlTitle());
 
 			exportImportStagedModel(fileEntry);
 
@@ -520,7 +520,7 @@ public class FileEntryStagedModelDataHandlerTest
 					importedFileEntry.getFileEntryId());
 
 			Assert.assertEquals(
-				"pdf_test.pdf", importedFriendlyURLEntry.getUrlTitle());
+				"pdf_test-pdf", importedFriendlyURLEntry.getUrlTitle());
 		}
 	}
 

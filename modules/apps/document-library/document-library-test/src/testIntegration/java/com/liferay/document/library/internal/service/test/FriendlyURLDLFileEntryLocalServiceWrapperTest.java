@@ -234,6 +234,43 @@ public class FriendlyURLDLFileEntryLocalServiceWrapperTest
 	}
 
 	@Test
+	public void testAddFileEntryAddsFriendlyURLEntryWithNormalizedUrlTitle()
+		throws Exception {
+
+		_testWithActiveFFFriendlyURLEntryFileEntryConfiguration(
+			() -> {
+				byte[] bytes = TestDataConstants.TEST_BYTE_ARRAY;
+
+				InputStream inputStream = new ByteArrayInputStream(bytes);
+
+				ServiceContext serviceContext =
+					ServiceContextTestUtil.getServiceContext(
+						group.getGroupId(), TestPropsValues.getUserId());
+
+				DLFileEntry dlFileEntry = _dlFileEntryLocalService.addFileEntry(
+					null, TestPropsValues.getUserId(), group.getGroupId(),
+					group.getGroupId(), parentFolder.getFolderId(),
+					RandomTestUtil.randomString(),
+					ContentTypes.APPLICATION_OCTET_STREAM,
+					RandomTestUtil.randomString(), "<script/urlTitle</script>",
+					StringPool.BLANK, StringPool.BLANK,
+					DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
+					null, null, inputStream, bytes.length, null, null,
+					serviceContext);
+
+				FriendlyURLEntry friendlyURLEntry =
+					_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
+						_portal.getClassNameId(FileEntry.class),
+						dlFileEntry.getFileEntryId());
+
+				Assert.assertNotNull(friendlyURLEntry);
+				Assert.assertEquals(
+					"-script-urltitle-script-", friendlyURLEntry.getUrlTitle());
+			},
+			true);
+	}
+
+	@Test
 	public void testDeleteFileEntryDeletesFriendlyURLEntry() throws Exception {
 		_testWithActiveFFFriendlyURLEntryFileEntryConfiguration(
 			() -> {
@@ -670,6 +707,62 @@ public class FriendlyURLDLFileEntryLocalServiceWrapperTest
 						dlFileEntry.getFileEntryId());
 
 				Assert.assertEquals("urltitle", friendlyURLEntry.getUrlTitle());
+			},
+			true);
+	}
+
+	@Test
+	public void testUpdateFileEntryUpdatesFriendlyURLEntryWithNormalizedUrlTitle()
+		throws Exception {
+
+		_testWithActiveFFFriendlyURLEntryFileEntryConfiguration(
+			() -> {
+				byte[] bytes = TestDataConstants.TEST_BYTE_ARRAY;
+
+				InputStream inputStream = new ByteArrayInputStream(bytes);
+
+				ServiceContext serviceContext =
+					ServiceContextTestUtil.getServiceContext(
+						group.getGroupId(), TestPropsValues.getUserId());
+
+				DLFileEntry dlFileEntry = _dlFileEntryLocalService.addFileEntry(
+					null, TestPropsValues.getUserId(), group.getGroupId(),
+					group.getGroupId(), parentFolder.getFolderId(),
+					RandomTestUtil.randomString(),
+					ContentTypes.APPLICATION_OCTET_STREAM,
+					"<script>title</script>", StringPool.BLANK,
+					StringPool.BLANK, StringPool.BLANK,
+					DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
+					null, null, inputStream, bytes.length, null, null,
+					serviceContext);
+
+				FriendlyURLEntry mainFriendlyURLEntry =
+					_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
+						_portal.getClassNameId(FileEntry.class),
+						dlFileEntry.getFileEntryId());
+
+				Assert.assertEquals(
+					"-script-title-script-",
+					mainFriendlyURLEntry.getUrlTitle());
+
+				dlFileEntry = _dlFileEntryLocalService.updateFileEntry(
+					group.getCreatorUserId(), dlFileEntry.getFileEntryId(),
+					StringUtil.randomString(),
+					ContentTypes.APPLICATION_OCTET_STREAM,
+					RandomTestUtil.randomString(), "url/title",
+					RandomTestUtil.randomString(), StringPool.BLANK,
+					DLVersionNumberIncrease.MAJOR,
+					DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
+					Collections.emptyMap(), null, inputStream, 0, null, null,
+					serviceContext);
+
+				mainFriendlyURLEntry =
+					_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
+						_portal.getClassNameId(FileEntry.class),
+						dlFileEntry.getFileEntryId());
+
+				Assert.assertEquals(
+					"url-title", mainFriendlyURLEntry.getUrlTitle());
 			},
 			true);
 	}

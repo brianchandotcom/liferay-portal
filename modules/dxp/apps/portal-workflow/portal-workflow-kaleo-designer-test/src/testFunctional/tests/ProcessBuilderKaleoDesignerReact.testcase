@@ -859,8 +859,9 @@ definition {
 	@description = "Verify that the is able to select who receives the notification: Asset Creator"
 	@priority = "5"
 	test CanSelectAssetCreatorAsNotificationRecipientType {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSelectAssetCreatorAsNotificationRecipientType";
+
+		
 
 		Workflow.openWorkflowListView();
 

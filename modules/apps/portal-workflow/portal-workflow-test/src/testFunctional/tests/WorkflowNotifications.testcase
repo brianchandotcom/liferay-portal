@@ -89,7 +89,7 @@ definition {
 
 		CommerceNavigator.gotoMiniCart();
 
-		Button.click(button = "Review Order");
+		Button.click(button = "View Details");
 
 		Button.click(button = "Submit");
 
@@ -166,7 +166,7 @@ definition {
 
 		CommerceNavigator.gotoMiniCart();
 
-		Button.click(button = "Review Order");
+		Button.click(button = "View Details");
 
 		Button.click(button = "Submit");
 

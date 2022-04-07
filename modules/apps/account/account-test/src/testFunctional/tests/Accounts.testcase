@@ -3579,7 +3579,7 @@ definition {
 
 		Accounts.gotoAssigneeTab(assigneeTab = "Users");
 
-		LexiconEntry.viewEntryName(rowEntry = "userfn1 userln1");
+		LexiconEntry.viewNoEntry(rowEntry = "userfn1 userln1");
 
 		LexiconEntry.viewEntryName(rowEntry = "userfn2 userln2");
 	}

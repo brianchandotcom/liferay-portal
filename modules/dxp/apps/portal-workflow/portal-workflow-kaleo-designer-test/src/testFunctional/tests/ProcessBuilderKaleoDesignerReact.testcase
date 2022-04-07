@@ -861,8 +861,6 @@ definition {
 	test CanSelectAssetCreatorAsNotificationRecipientType {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSelectAssetCreatorAsNotificationRecipientType";
 
-		
-
 		Workflow.openWorkflowListView();
 
 		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");

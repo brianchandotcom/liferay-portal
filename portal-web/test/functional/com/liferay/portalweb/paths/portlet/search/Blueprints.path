@@ -176,6 +176,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BLUEPRINTS_CLAUSE_CONTRIBUTOR_SEARCH_BAR</td>
+	<td>//div[contains(@class,'clause-contributors-sidebar')]//input[contains(@aria-label,'Search')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BLUEPRINTS_CLAUSE_CONTRIBUTOR_SORT_BUTTON</td>
 	<td>//button[@title='Reverse Sort Direction']</td>
 	<td></td>

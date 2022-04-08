@@ -1469,20 +1469,6 @@ public class CommerceOrderLocalServiceImpl
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public CommerceOrder updateCustomFields(
-			long commerceOrderId, ServiceContext serviceContext)
-		throws PortalException {
-
-		CommerceOrder commerceOrder =
-			commerceOrderLocalService.getCommerceOrder(commerceOrderId);
-
-		commerceOrder.setExpandoBridgeAttributes(serviceContext);
-
-		return commerceOrderPersistence.update(commerceOrder);
-	}
-
-	@Indexable(type = IndexableType.REINDEX)
-	@Override
 	public CommerceOrder updateInfo(
 			long commerceOrderId, String printedNote,
 			int requestedDeliveryDateMonth, int requestedDeliveryDateDay,

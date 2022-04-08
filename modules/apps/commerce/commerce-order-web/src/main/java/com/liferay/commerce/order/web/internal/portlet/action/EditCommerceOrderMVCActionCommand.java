@@ -155,11 +155,15 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 		long commerceOrderId = ParamUtil.getLong(
 			actionRequest, "commerceOrderId");
 
+		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
+			commerceOrderId);
+
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CommerceOrder.class.getName(), actionRequest);
 
-		_commerceOrderService.updateCustomFields(
-			commerceOrderId, serviceContext);
+		commerceOrder.setExpandoBridgeAttributes(serviceContext);
+
+		_commerceOrderService.updateCommerceOrder(commerceOrder);
 	}
 
 	private void _addBillingAddress(ActionRequest actionRequest)

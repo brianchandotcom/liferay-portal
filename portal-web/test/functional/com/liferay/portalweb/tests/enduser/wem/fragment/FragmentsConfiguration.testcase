@@ -1049,6 +1049,62 @@ main();
 		}
 	}
 
+	@description = "This is a test for LPS-147396. Hide from Site Search Results could hide result from search."
+	@priority = "5"
+	test CouldHideResultFromSearchInAdvancedSettings {
+		property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration.config";
+		property osgi.module.configurations = "fragmentAdvancedOptionsEnabled=&quot;true&quot;";
+
+		task ("Add a a content page and add a Button fragment to it") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Guest");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+		}
+
+		task ("Publish the page") {
+			PageEditor.clickPublish();
+		}
+
+		task ("Search "Go Somewhere" from page search bar, assert a search result about Button fragment") {
+			SearchPortlets.searchEmbedded(searchTerm = "Go Somewhere");
+
+			SearchResultPortlet.viewSearchResults(
+				searchAssetTitle = "Go...Somewhere",
+				searchAssetType = "Page");
+		}
+
+		task ("Check Hide from Site Search Results checkbox in Advanced Settings") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Guest");
+
+			PageEditor.gotoAdvanced(fragmentName = "Button");
+
+			Click.javaScriptClick(
+				checkboxName = "Hide from Site Search Results",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		task ("Publish the page") {
+			PageEditor.clickPublish();
+		}
+
+		task ("Search "Go Somewhere" from page search bar, assert no search result about Button fragment") {
+			SearchPortlets.searchEmbedded(searchTerm = "Go Somewhere");
+
+			SearchResultPortlet.viewNoSearchResults(searchTerm = "Go Somewhere");
+		}
+	}
+
 	@description = "This is a test for LPS-100751. View placeholder in fragment configuration without default value."
 	@priority = "5"
 	@uitest

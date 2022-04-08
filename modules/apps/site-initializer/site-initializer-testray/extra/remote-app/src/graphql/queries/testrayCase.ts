@@ -35,11 +35,11 @@ export type TestrayCase = {
 };
 
 export const getCases = gql`
-	query getCases($filter: String, $page: Int = 1, $pageSize: Int = 20) {
+	query getCases($filter: String = "", $page: Int = 1, $pageSize: Int = 20) {
 		cases(filter: $filter, page: $page, pageSize: $pageSize)
 			@rest(
 				type: "C_Case"
-				path: "cases?page={args.page}&pageSize={args.pageSize}&nestedFields=component.team,caseType&nestedFieldsDepth=2"
+				path: "cases?filter={args.filter}&page={args.page}&pageSize={args.pageSize}&nestedFields=component.team,caseType&nestedFieldsDepth=2"
 			) {
 			items {
 				caseNumber

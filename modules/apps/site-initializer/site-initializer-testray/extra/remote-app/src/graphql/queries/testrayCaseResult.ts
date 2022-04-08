@@ -39,7 +39,7 @@ export const getCaseResults = gql`
 		caseResults(filter: $filter, page: $page, pageSize: $pageSize)
 			@rest(
 				type: "C_CaseResult"
-				path: "caseresults?filter={args.filter}&page={args.page}&pageSize={args.pageSize}&nestedFields=case,component,build.productVersion,build.routine,run&nestedFieldsDepth=3"
+				path: "caseresults?filter={args.filter}&page={args.page}&pageSize={args.pageSize}&nestedFields=case,component.team,build.productVersion,build.routine,run&nestedFieldsDepth=3"
 			) {
 			items {
 				assignedUserId
@@ -64,10 +64,16 @@ export const getCaseResults = gql`
 					}
 					name
 					priority
+					caseNumber
 				}
 				closedDate
 				commentMBMessageId
-				component: r_componentToCaseResult_c_component
+				component: r_componentToCaseResult_c_component {
+					name
+					team: r_teamToComponents_c_team {
+						name
+					}
+				}
 				dateCreated
 				dateModified
 				dueStatus

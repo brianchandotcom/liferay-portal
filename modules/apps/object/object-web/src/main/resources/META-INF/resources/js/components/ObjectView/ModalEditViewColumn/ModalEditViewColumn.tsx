@@ -63,6 +63,7 @@ export function ModalEditViewColumn({
 	const [editingColumn] = objectViewColumns.filter(
 		(viewColumn) => viewColumn.objectFieldName === editingObjectFieldName
 	);
+
 	const {label} = editingColumn;
 
 	const [selectedLocale, setSelectedLocale] = useState(

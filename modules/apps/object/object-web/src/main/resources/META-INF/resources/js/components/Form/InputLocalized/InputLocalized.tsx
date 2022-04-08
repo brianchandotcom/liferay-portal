@@ -19,6 +19,8 @@ import FieldBase from '../FieldBase';
 
 import './InputLocalized.scss';
 
+const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
+
 export default function InputLocalized({
 	disabled,
 	error,
@@ -47,7 +49,9 @@ export default function InputLocalized({
 				disabled={disabled}
 				id={id}
 				label=""
-				locales={locales}
+				locales={locales.sort((a) =>
+					a.label === defaultLanguageId ? -1 : 1
+				)}
 				name={name}
 				onSelectedLocaleChange={onSelectedLocaleChange}
 				onTranslationsChange={onTranslationsChange}

@@ -216,12 +216,13 @@ public class LayoutSitemapURLProviderTest {
 	}
 
 	private void _initThemeDisplay() throws Exception {
+		_themeDisplay = new ThemeDisplay();
+
 		Company company = CompanyLocalServiceUtil.getCompany(
 			_group.getCompanyId());
 
-		_themeDisplay = new ThemeDisplay();
-
 		_themeDisplay.setCompany(company);
+
 		_themeDisplay.setLanguageId(_group.getDefaultLanguageId());
 		_themeDisplay.setLayoutSet(_layoutSet);
 		_themeDisplay.setLocale(

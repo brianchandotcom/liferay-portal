@@ -190,7 +190,7 @@ definition {
 		}
 
 		task ("When delete Catalan language") {
-			ManageTranslations.deleteLanguage(key_language = "Catalan");
+			ManageTranslations.deleteAndSaveLanguage(key_language = "Catalan");
 		}
 
 		task ("Then assert Catalan language menu item is not present in select translation language dropdown") {
@@ -263,6 +263,86 @@ definition {
 			AssertElementNotPresent(
 				key_index = "2",
 				locator1 = "ManageTranslations#TABLE_BODY_ROW_INDEX");
+		}
+	}
+
+	@description = "LPS-148144. Validates language status is not translated after re-add language on modal."
+	@priority = "3"
+	test HasNotTranslatedStutasAfterDeletingTranslatedLanguageWithSaving {
+		task ("When input different language text in aui tag field") {
+			TranslationManagerPortlet.inputTextInAuiTagField(
+				key_currentLocale = "en-us",
+				key_leftTitle = "Default",
+				key_locale = "fr-FR",
+				key_rightTitle = "Admin",
+				languagefirst = "Welcome to Liferay",
+				languagesecond = "Bienvenue sur Liferay");
+		}
+
+		task ("Given manage translations modal") {
+			TranslationManagerPortlet.goToAuiTagManageTranslationsModal(
+				key_currentLocale = "fr-fr",
+				key_title = "Admin");
+		}
+
+		task ("When click done button after deleting French language on modal") {
+			ManageTranslations.deleteAndSaveLanguage(key_language = "French");
+		}
+
+		task ("Given manage translations modal") {
+			TranslationManagerPortlet.goToAuiTagManageTranslationsModal(
+				key_currentLocale = "en-us",
+				key_title = "Admin");
+		}
+
+		task ("Then re-add the French language on Manage Translations modal") {
+			ManageTranslations.addLanguage(key_locale = "fr-FR");
+		}
+
+		task ("Then assert the French language is changed to Not Translated status") {
+			AssertElementPresent(
+				key_language = "French",
+				key_status = "Not Translated",
+				locator1 = "ManageTranslations#LANGUAGE_STATUS");
+
+			Click(locator1 = "Modal#CLOSE_BUTTON");
+		}
+	}
+
+	@description = "LPS-148144. Validates language status is translated after re-add language on modal."
+	@priority = "3"
+	test HasTranslatedStutasAfterDeletingTranslatedLanguageWithoutSaving {
+		task ("When input different language text in aui tag field") {
+			TranslationManagerPortlet.inputTextInAuiTagField(
+				key_currentLocale = "en-us",
+				key_leftTitle = "Default",
+				key_locale = "fr-FR",
+				key_rightTitle = "Admin",
+				languagefirst = "Welcome to Liferay",
+				languagesecond = "Bienvenue sur Liferay");
+		}
+
+		task ("Given manage translations modal") {
+			TranslationManagerPortlet.goToAuiTagManageTranslationsModal(
+				key_currentLocale = "fr-fr",
+				key_title = "Admin");
+		}
+
+		task ("When delete French language without click done button on modal") {
+			ManageTranslations.deleteLanguage(key_language = "French");
+		}
+
+		task ("Then re-add the French language on Manage Translations modal") {
+			ManageTranslations.addLanguage(key_locale = "fr-FR");
+		}
+
+		task ("Assert the French language is still translated status") {
+			AssertElementPresent(
+				key_language = "French",
+				key_status = "Translated",
+				locator1 = "ManageTranslations#LANGUAGE_STATUS");
+
+			Click(locator1 = "Modal#CLOSE_BUTTON");
 		}
 	}
 

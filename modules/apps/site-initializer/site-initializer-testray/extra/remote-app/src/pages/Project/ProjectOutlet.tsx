@@ -16,6 +16,7 @@ import {useQuery} from '@apollo/client';
 import {useCallback, useEffect} from 'react';
 import {Outlet, useLocation, useParams} from 'react-router-dom';
 
+import EmptyState from '../../components/EmptyState';
 import {CType, CTypePagination} from '../../graphql/queries';
 import {
 	TestrayProject,
@@ -30,9 +31,12 @@ const ProjectOutlet = () => {
 	const {pathname} = useLocation();
 	const {setActions, setDropdown, setHeading, setTabs} = useHeader();
 
-	const {data} = useQuery<CType<'project', TestrayProject>>(getProject, {
-		variables: {projectId},
-	});
+	const {data, error} = useQuery<CType<'project', TestrayProject>>(
+		getProject,
+		{
+			variables: {projectId},
+		}
+	);
 
 	const {data: dataTestrayProjects} = useQuery<
 		CTypePagination<'projects', TestrayProject>
@@ -157,6 +161,16 @@ const ProjectOutlet = () => {
 			}, 0);
 		}
 	}, [getPath, setTabs, hasOtherParams]);
+
+	if (error) {
+		return (
+			<EmptyState
+				description={error.message}
+				title={i18n.translate('error')}
+				type="EMPTY_SEARCH"
+			/>
+		);
+	}
 
 	if (testrayProject) {
 		return <Outlet context={{testrayProject}} />;

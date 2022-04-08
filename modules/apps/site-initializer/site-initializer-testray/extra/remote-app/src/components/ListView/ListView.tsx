@@ -24,6 +24,7 @@ import ListViewContextProvider, {
 import i18n from '../../i18n';
 import {PAGINATION} from '../../util/constants';
 import EmptyState from '../EmptyState';
+import Loading from '../Loading';
 import ManagementToolbar, {ManagementToolbarProps} from '../ManagementToolbar';
 import Table, {TableProps} from '../Table';
 
@@ -113,7 +114,7 @@ const ListView: React.FC<ListViewProps> = ({
 	}
 
 	if (loading) {
-		return <span>{i18n.translate('loading')}...</span>;
+		return <Loading />;
 	}
 
 	return (

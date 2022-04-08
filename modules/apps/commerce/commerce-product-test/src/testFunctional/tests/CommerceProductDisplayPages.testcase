@@ -42,8 +42,8 @@ definition {
 			CommerceEntry.assertDefaultDisplayPage(pageName = "None");
 
 			AssertTextEquals(
-				locator1 = "Message#EMPTY_INFO",
-				value1 = "No Items were found.");
+				locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER",
+				value1 = "Sorry, no results were found.");
 		}
 
 		task ("When I click on a product in the catalog page") {
@@ -192,8 +192,8 @@ definition {
 				layout = "Test Public Widget Page 2");
 
 			AssertTextEquals(
-				locator1 = "Message#EMPTY_INFO",
-				value1 = "No Items were found.");
+				locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER",
+				value1 = "Sorry, no results were found.");
 		}
 	}
 

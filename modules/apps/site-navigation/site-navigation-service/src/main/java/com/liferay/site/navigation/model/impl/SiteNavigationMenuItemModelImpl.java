@@ -36,7 +36,6 @@ import com.liferay.site.navigation.model.SiteNavigationMenuItemModel;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Blob;
@@ -269,34 +268,6 @@ public class SiteNavigationMenuItemModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
-	}
-
-	private static Function<InvocationHandler, SiteNavigationMenuItem>
-		_getProxyProviderFunction() {
-
-		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			SiteNavigationMenuItem.class.getClassLoader(),
-			SiteNavigationMenuItem.class, ModelWrapper.class);
-
-		try {
-			Constructor<SiteNavigationMenuItem> constructor =
-				(Constructor<SiteNavigationMenuItem>)proxyClass.getConstructor(
-					InvocationHandler.class);
-
-			return invocationHandler -> {
-				try {
-					return constructor.newInstance(invocationHandler);
-				}
-				catch (ReflectiveOperationException
-							reflectiveOperationException) {
-
-					throw new InternalError(reflectiveOperationException);
-				}
-			};
-		}
-		catch (NoSuchMethodException noSuchMethodException) {
-			throw new InternalError(noSuchMethodException);
-		}
 	}
 
 	private static final Map<String, Function<SiteNavigationMenuItem, Object>>
@@ -1171,7 +1142,9 @@ public class SiteNavigationMenuItemModelImpl
 	private static class EscapedModelProxyProviderFunctionHolder {
 
 		private static final Function<InvocationHandler, SiteNavigationMenuItem>
-			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+			_escapedModelProxyProviderFunction =
+				ProxyUtil.getProxyProviderFunction(
+					SiteNavigationMenuItem.class, ModelWrapper.class);
 
 	}
 

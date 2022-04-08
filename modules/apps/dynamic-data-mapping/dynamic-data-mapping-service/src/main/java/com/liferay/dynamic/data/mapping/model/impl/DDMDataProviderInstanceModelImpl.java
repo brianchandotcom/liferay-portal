@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Blob;
@@ -254,34 +253,6 @@ public class DDMDataProviderInstanceModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
-	}
-
-	private static Function<InvocationHandler, DDMDataProviderInstance>
-		_getProxyProviderFunction() {
-
-		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			DDMDataProviderInstance.class.getClassLoader(),
-			DDMDataProviderInstance.class, ModelWrapper.class);
-
-		try {
-			Constructor<DDMDataProviderInstance> constructor =
-				(Constructor<DDMDataProviderInstance>)proxyClass.getConstructor(
-					InvocationHandler.class);
-
-			return invocationHandler -> {
-				try {
-					return constructor.newInstance(invocationHandler);
-				}
-				catch (ReflectiveOperationException
-							reflectiveOperationException) {
-
-					throw new InternalError(reflectiveOperationException);
-				}
-			};
-		}
-		catch (NoSuchMethodException noSuchMethodException) {
-			throw new InternalError(noSuchMethodException);
-		}
 	}
 
 	private static final Map<String, Function<DDMDataProviderInstance, Object>>
@@ -1347,7 +1318,8 @@ public class DDMDataProviderInstanceModelImpl
 		private static final Function
 			<InvocationHandler, DDMDataProviderInstance>
 				_escapedModelProxyProviderFunction =
-					_getProxyProviderFunction();
+					ProxyUtil.getProxyProviderFunction(
+						DDMDataProviderInstance.class, ModelWrapper.class);
 
 	}
 

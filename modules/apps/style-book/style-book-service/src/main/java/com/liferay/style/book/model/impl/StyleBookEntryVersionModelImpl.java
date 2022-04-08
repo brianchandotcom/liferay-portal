@@ -34,7 +34,6 @@ import com.liferay.style.book.model.StyleBookEntryVersionModel;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Blob;
@@ -271,34 +270,6 @@ public class StyleBookEntryVersionModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
-	}
-
-	private static Function<InvocationHandler, StyleBookEntryVersion>
-		_getProxyProviderFunction() {
-
-		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			StyleBookEntryVersion.class.getClassLoader(),
-			StyleBookEntryVersion.class, ModelWrapper.class);
-
-		try {
-			Constructor<StyleBookEntryVersion> constructor =
-				(Constructor<StyleBookEntryVersion>)proxyClass.getConstructor(
-					InvocationHandler.class);
-
-			return invocationHandler -> {
-				try {
-					return constructor.newInstance(invocationHandler);
-				}
-				catch (ReflectiveOperationException
-							reflectiveOperationException) {
-
-					throw new InternalError(reflectiveOperationException);
-				}
-			};
-		}
-		catch (NoSuchMethodException noSuchMethodException) {
-			throw new InternalError(noSuchMethodException);
-		}
 	}
 
 	private static final Map<String, Function<StyleBookEntryVersion, Object>>
@@ -1219,7 +1190,9 @@ public class StyleBookEntryVersionModelImpl
 	private static class EscapedModelProxyProviderFunctionHolder {
 
 		private static final Function<InvocationHandler, StyleBookEntryVersion>
-			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+			_escapedModelProxyProviderFunction =
+				ProxyUtil.getProxyProviderFunction(
+					StyleBookEntryVersion.class, ModelWrapper.class);
 
 	}
 

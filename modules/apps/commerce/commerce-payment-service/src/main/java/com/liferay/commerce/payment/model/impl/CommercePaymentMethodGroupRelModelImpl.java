@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Blob;
@@ -260,34 +259,6 @@ public class CommercePaymentMethodGroupRelModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
-	}
-
-	private static Function<InvocationHandler, CommercePaymentMethodGroupRel>
-		_getProxyProviderFunction() {
-
-		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			CommercePaymentMethodGroupRel.class.getClassLoader(),
-			CommercePaymentMethodGroupRel.class, ModelWrapper.class);
-
-		try {
-			Constructor<CommercePaymentMethodGroupRel> constructor =
-				(Constructor<CommercePaymentMethodGroupRel>)
-					proxyClass.getConstructor(InvocationHandler.class);
-
-			return invocationHandler -> {
-				try {
-					return constructor.newInstance(invocationHandler);
-				}
-				catch (ReflectiveOperationException
-							reflectiveOperationException) {
-
-					throw new InternalError(reflectiveOperationException);
-				}
-			};
-		}
-		catch (NoSuchMethodException noSuchMethodException) {
-			throw new InternalError(noSuchMethodException);
-		}
 	}
 
 	private static final Map
@@ -1318,7 +1289,9 @@ public class CommercePaymentMethodGroupRelModelImpl
 		private static final Function
 			<InvocationHandler, CommercePaymentMethodGroupRel>
 				_escapedModelProxyProviderFunction =
-					_getProxyProviderFunction();
+					ProxyUtil.getProxyProviderFunction(
+						CommercePaymentMethodGroupRel.class,
+						ModelWrapper.class);
 
 	}
 

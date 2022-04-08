@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Blob;
@@ -235,34 +234,6 @@ public class MFAFIDO2CredentialEntryModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
-	}
-
-	private static Function<InvocationHandler, MFAFIDO2CredentialEntry>
-		_getProxyProviderFunction() {
-
-		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			MFAFIDO2CredentialEntry.class.getClassLoader(),
-			MFAFIDO2CredentialEntry.class, ModelWrapper.class);
-
-		try {
-			Constructor<MFAFIDO2CredentialEntry> constructor =
-				(Constructor<MFAFIDO2CredentialEntry>)proxyClass.getConstructor(
-					InvocationHandler.class);
-
-			return invocationHandler -> {
-				try {
-					return constructor.newInstance(invocationHandler);
-				}
-				catch (ReflectiveOperationException
-							reflectiveOperationException) {
-
-					throw new InternalError(reflectiveOperationException);
-				}
-			};
-		}
-		catch (NoSuchMethodException noSuchMethodException) {
-			throw new InternalError(noSuchMethodException);
-		}
 	}
 
 	private static final Map<String, Function<MFAFIDO2CredentialEntry, Object>>
@@ -945,7 +916,8 @@ public class MFAFIDO2CredentialEntryModelImpl
 		private static final Function
 			<InvocationHandler, MFAFIDO2CredentialEntry>
 				_escapedModelProxyProviderFunction =
-					_getProxyProviderFunction();
+					ProxyUtil.getProxyProviderFunction(
+						MFAFIDO2CredentialEntry.class, ModelWrapper.class);
 
 	}
 

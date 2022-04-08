@@ -33,7 +33,6 @@ import com.liferay.saml.persistence.model.SamlPeerBindingModel;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Blob;
@@ -261,34 +260,6 @@ public class SamlPeerBindingModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
-	}
-
-	private static Function<InvocationHandler, SamlPeerBinding>
-		_getProxyProviderFunction() {
-
-		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			SamlPeerBinding.class.getClassLoader(), SamlPeerBinding.class,
-			ModelWrapper.class);
-
-		try {
-			Constructor<SamlPeerBinding> constructor =
-				(Constructor<SamlPeerBinding>)proxyClass.getConstructor(
-					InvocationHandler.class);
-
-			return invocationHandler -> {
-				try {
-					return constructor.newInstance(invocationHandler);
-				}
-				catch (ReflectiveOperationException
-							reflectiveOperationException) {
-
-					throw new InternalError(reflectiveOperationException);
-				}
-			};
-		}
-		catch (NoSuchMethodException noSuchMethodException) {
-			throw new InternalError(noSuchMethodException);
-		}
 	}
 
 	private static final Map<String, Function<SamlPeerBinding, Object>>
@@ -1018,7 +989,9 @@ public class SamlPeerBindingModelImpl
 	private static class EscapedModelProxyProviderFunctionHolder {
 
 		private static final Function<InvocationHandler, SamlPeerBinding>
-			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+			_escapedModelProxyProviderFunction =
+				ProxyUtil.getProxyProviderFunction(
+					SamlPeerBinding.class, ModelWrapper.class);
 
 	}
 

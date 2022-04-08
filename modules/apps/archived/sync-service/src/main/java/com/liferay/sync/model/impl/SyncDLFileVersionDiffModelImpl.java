@@ -30,7 +30,6 @@ import com.liferay.sync.model.SyncDLFileVersionDiffModel;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Blob;
@@ -236,34 +235,6 @@ public class SyncDLFileVersionDiffModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
-	}
-
-	private static Function<InvocationHandler, SyncDLFileVersionDiff>
-		_getProxyProviderFunction() {
-
-		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			SyncDLFileVersionDiff.class.getClassLoader(),
-			SyncDLFileVersionDiff.class, ModelWrapper.class);
-
-		try {
-			Constructor<SyncDLFileVersionDiff> constructor =
-				(Constructor<SyncDLFileVersionDiff>)proxyClass.getConstructor(
-					InvocationHandler.class);
-
-			return invocationHandler -> {
-				try {
-					return constructor.newInstance(invocationHandler);
-				}
-				catch (ReflectiveOperationException
-							reflectiveOperationException) {
-
-					throw new InternalError(reflectiveOperationException);
-				}
-			};
-		}
-		catch (NoSuchMethodException noSuchMethodException) {
-			throw new InternalError(noSuchMethodException);
-		}
 	}
 
 	private static final Map<String, Function<SyncDLFileVersionDiff, Object>>
@@ -777,7 +748,9 @@ public class SyncDLFileVersionDiffModelImpl
 	private static class EscapedModelProxyProviderFunctionHolder {
 
 		private static final Function<InvocationHandler, SyncDLFileVersionDiff>
-			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+			_escapedModelProxyProviderFunction =
+				ProxyUtil.getProxyProviderFunction(
+					SyncDLFileVersionDiff.class, ModelWrapper.class);
 
 	}
 

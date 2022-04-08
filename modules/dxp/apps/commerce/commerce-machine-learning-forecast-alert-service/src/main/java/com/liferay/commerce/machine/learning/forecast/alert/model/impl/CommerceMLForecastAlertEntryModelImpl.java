@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Blob;
@@ -267,34 +266,6 @@ public class CommerceMLForecastAlertEntryModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
-	}
-
-	private static Function<InvocationHandler, CommerceMLForecastAlertEntry>
-		_getProxyProviderFunction() {
-
-		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			CommerceMLForecastAlertEntry.class.getClassLoader(),
-			CommerceMLForecastAlertEntry.class, ModelWrapper.class);
-
-		try {
-			Constructor<CommerceMLForecastAlertEntry> constructor =
-				(Constructor<CommerceMLForecastAlertEntry>)
-					proxyClass.getConstructor(InvocationHandler.class);
-
-			return invocationHandler -> {
-				try {
-					return constructor.newInstance(invocationHandler);
-				}
-				catch (ReflectiveOperationException
-							reflectiveOperationException) {
-
-					throw new InternalError(reflectiveOperationException);
-				}
-			};
-		}
-		catch (NoSuchMethodException noSuchMethodException) {
-			throw new InternalError(noSuchMethodException);
-		}
 	}
 
 	private static final Map
@@ -1045,7 +1016,8 @@ public class CommerceMLForecastAlertEntryModelImpl
 		private static final Function
 			<InvocationHandler, CommerceMLForecastAlertEntry>
 				_escapedModelProxyProviderFunction =
-					_getProxyProviderFunction();
+					ProxyUtil.getProxyProviderFunction(
+						CommerceMLForecastAlertEntry.class, ModelWrapper.class);
 
 	}
 

@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Blob;
@@ -225,34 +224,6 @@ public class BatchEngineImportTaskErrorModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
-	}
-
-	private static Function<InvocationHandler, BatchEngineImportTaskError>
-		_getProxyProviderFunction() {
-
-		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			BatchEngineImportTaskError.class.getClassLoader(),
-			BatchEngineImportTaskError.class, ModelWrapper.class);
-
-		try {
-			Constructor<BatchEngineImportTaskError> constructor =
-				(Constructor<BatchEngineImportTaskError>)
-					proxyClass.getConstructor(InvocationHandler.class);
-
-			return invocationHandler -> {
-				try {
-					return constructor.newInstance(invocationHandler);
-				}
-				catch (ReflectiveOperationException
-							reflectiveOperationException) {
-
-					throw new InternalError(reflectiveOperationException);
-				}
-			};
-		}
-		catch (NoSuchMethodException noSuchMethodException) {
-			throw new InternalError(noSuchMethodException);
-		}
 	}
 
 	private static final Map
@@ -849,7 +820,8 @@ public class BatchEngineImportTaskErrorModelImpl
 		private static final Function
 			<InvocationHandler, BatchEngineImportTaskError>
 				_escapedModelProxyProviderFunction =
-					_getProxyProviderFunction();
+					ProxyUtil.getProxyProviderFunction(
+						BatchEngineImportTaskError.class, ModelWrapper.class);
 
 	}
 

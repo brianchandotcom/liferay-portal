@@ -33,7 +33,6 @@ import com.liferay.saml.persistence.model.SamlIdpSpConnectionModel;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Blob;
@@ -243,34 +242,6 @@ public class SamlIdpSpConnectionModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
-	}
-
-	private static Function<InvocationHandler, SamlIdpSpConnection>
-		_getProxyProviderFunction() {
-
-		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			SamlIdpSpConnection.class.getClassLoader(),
-			SamlIdpSpConnection.class, ModelWrapper.class);
-
-		try {
-			Constructor<SamlIdpSpConnection> constructor =
-				(Constructor<SamlIdpSpConnection>)proxyClass.getConstructor(
-					InvocationHandler.class);
-
-			return invocationHandler -> {
-				try {
-					return constructor.newInstance(invocationHandler);
-				}
-				catch (ReflectiveOperationException
-							reflectiveOperationException) {
-
-					throw new InternalError(reflectiveOperationException);
-				}
-			};
-		}
-		catch (NoSuchMethodException noSuchMethodException) {
-			throw new InternalError(noSuchMethodException);
-		}
 	}
 
 	private static final Map<String, Function<SamlIdpSpConnection, Object>>
@@ -1182,7 +1153,9 @@ public class SamlIdpSpConnectionModelImpl
 	private static class EscapedModelProxyProviderFunctionHolder {
 
 		private static final Function<InvocationHandler, SamlIdpSpConnection>
-			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+			_escapedModelProxyProviderFunction =
+				ProxyUtil.getProxyProviderFunction(
+					SamlIdpSpConnection.class, ModelWrapper.class);
 
 	}
 

@@ -34,7 +34,6 @@ import com.liferay.push.notifications.model.PushNotificationsDeviceModel;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Blob;
@@ -232,34 +231,6 @@ public class PushNotificationsDeviceModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
-	}
-
-	private static Function<InvocationHandler, PushNotificationsDevice>
-		_getProxyProviderFunction() {
-
-		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			PushNotificationsDevice.class.getClassLoader(),
-			PushNotificationsDevice.class, ModelWrapper.class);
-
-		try {
-			Constructor<PushNotificationsDevice> constructor =
-				(Constructor<PushNotificationsDevice>)proxyClass.getConstructor(
-					InvocationHandler.class);
-
-			return invocationHandler -> {
-				try {
-					return constructor.newInstance(invocationHandler);
-				}
-				catch (ReflectiveOperationException
-							reflectiveOperationException) {
-
-					throw new InternalError(reflectiveOperationException);
-				}
-			};
-		}
-		catch (NoSuchMethodException noSuchMethodException) {
-			throw new InternalError(noSuchMethodException);
-		}
 	}
 
 	private static final Map<String, Function<PushNotificationsDevice, Object>>
@@ -752,7 +723,8 @@ public class PushNotificationsDeviceModelImpl
 		private static final Function
 			<InvocationHandler, PushNotificationsDevice>
 				_escapedModelProxyProviderFunction =
-					_getProxyProviderFunction();
+					ProxyUtil.getProxyProviderFunction(
+						PushNotificationsDevice.class, ModelWrapper.class);
 
 	}
 

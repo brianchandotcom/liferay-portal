@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Blob;
@@ -290,34 +289,6 @@ public class CPDefinitionVirtualSettingModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
-	}
-
-	private static Function<InvocationHandler, CPDefinitionVirtualSetting>
-		_getProxyProviderFunction() {
-
-		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			CPDefinitionVirtualSetting.class.getClassLoader(),
-			CPDefinitionVirtualSetting.class, ModelWrapper.class);
-
-		try {
-			Constructor<CPDefinitionVirtualSetting> constructor =
-				(Constructor<CPDefinitionVirtualSetting>)
-					proxyClass.getConstructor(InvocationHandler.class);
-
-			return invocationHandler -> {
-				try {
-					return constructor.newInstance(invocationHandler);
-				}
-				catch (ReflectiveOperationException
-							reflectiveOperationException) {
-
-					throw new InternalError(reflectiveOperationException);
-				}
-			};
-		}
-		catch (NoSuchMethodException noSuchMethodException) {
-			throw new InternalError(noSuchMethodException);
-		}
 	}
 
 	private static final Map
@@ -1602,7 +1573,8 @@ public class CPDefinitionVirtualSettingModelImpl
 		private static final Function
 			<InvocationHandler, CPDefinitionVirtualSetting>
 				_escapedModelProxyProviderFunction =
-					_getProxyProviderFunction();
+					ProxyUtil.getProxyProviderFunction(
+						CPDefinitionVirtualSetting.class, ModelWrapper.class);
 
 	}
 

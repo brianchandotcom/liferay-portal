@@ -32,7 +32,6 @@ import com.liferay.social.kernel.model.SocialActivityCounterModel;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Blob;
@@ -274,34 +273,6 @@ public class SocialActivityCounterModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
-	}
-
-	private static Function<InvocationHandler, SocialActivityCounter>
-		_getProxyProviderFunction() {
-
-		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			SocialActivityCounter.class.getClassLoader(),
-			SocialActivityCounter.class, ModelWrapper.class);
-
-		try {
-			Constructor<SocialActivityCounter> constructor =
-				(Constructor<SocialActivityCounter>)proxyClass.getConstructor(
-					InvocationHandler.class);
-
-			return invocationHandler -> {
-				try {
-					return constructor.newInstance(invocationHandler);
-				}
-				catch (ReflectiveOperationException
-							reflectiveOperationException) {
-
-					throw new InternalError(reflectiveOperationException);
-				}
-			};
-		}
-		catch (NoSuchMethodException noSuchMethodException) {
-			throw new InternalError(noSuchMethodException);
-		}
 	}
 
 	private static final Map<String, Function<SocialActivityCounter, Object>>
@@ -1038,7 +1009,9 @@ public class SocialActivityCounterModelImpl
 	private static class EscapedModelProxyProviderFunctionHolder {
 
 		private static final Function<InvocationHandler, SocialActivityCounter>
-			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+			_escapedModelProxyProviderFunction =
+				ProxyUtil.getProxyProviderFunction(
+					SocialActivityCounter.class, ModelWrapper.class);
 
 	}
 

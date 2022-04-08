@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Blob;
@@ -279,34 +278,6 @@ public class LayoutClassedModelUsageModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
-	}
-
-	private static Function<InvocationHandler, LayoutClassedModelUsage>
-		_getProxyProviderFunction() {
-
-		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			LayoutClassedModelUsage.class.getClassLoader(),
-			LayoutClassedModelUsage.class, ModelWrapper.class);
-
-		try {
-			Constructor<LayoutClassedModelUsage> constructor =
-				(Constructor<LayoutClassedModelUsage>)proxyClass.getConstructor(
-					InvocationHandler.class);
-
-			return invocationHandler -> {
-				try {
-					return constructor.newInstance(invocationHandler);
-				}
-				catch (ReflectiveOperationException
-							reflectiveOperationException) {
-
-					throw new InternalError(reflectiveOperationException);
-				}
-			};
-		}
-		catch (NoSuchMethodException noSuchMethodException) {
-			throw new InternalError(noSuchMethodException);
-		}
 	}
 
 	private static final Map<String, Function<LayoutClassedModelUsage, Object>>
@@ -1108,7 +1079,8 @@ public class LayoutClassedModelUsageModelImpl
 		private static final Function
 			<InvocationHandler, LayoutClassedModelUsage>
 				_escapedModelProxyProviderFunction =
-					_getProxyProviderFunction();
+					ProxyUtil.getProxyProviderFunction(
+						LayoutClassedModelUsage.class, ModelWrapper.class);
 
 	}
 

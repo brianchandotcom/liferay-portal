@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Blob;
@@ -253,35 +252,6 @@ public class CommerceShippingFixedOptionQualifierModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
-	}
-
-	private static Function
-		<InvocationHandler, CommerceShippingFixedOptionQualifier>
-			_getProxyProviderFunction() {
-
-		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			CommerceShippingFixedOptionQualifier.class.getClassLoader(),
-			CommerceShippingFixedOptionQualifier.class, ModelWrapper.class);
-
-		try {
-			Constructor<CommerceShippingFixedOptionQualifier> constructor =
-				(Constructor<CommerceShippingFixedOptionQualifier>)
-					proxyClass.getConstructor(InvocationHandler.class);
-
-			return invocationHandler -> {
-				try {
-					return constructor.newInstance(invocationHandler);
-				}
-				catch (ReflectiveOperationException
-							reflectiveOperationException) {
-
-					throw new InternalError(reflectiveOperationException);
-				}
-			};
-		}
-		catch (NoSuchMethodException noSuchMethodException) {
-			throw new InternalError(noSuchMethodException);
-		}
 	}
 
 	private static final Map
@@ -952,7 +922,9 @@ public class CommerceShippingFixedOptionQualifierModelImpl
 		private static final Function
 			<InvocationHandler, CommerceShippingFixedOptionQualifier>
 				_escapedModelProxyProviderFunction =
-					_getProxyProviderFunction();
+					ProxyUtil.getProxyProviderFunction(
+						CommerceShippingFixedOptionQualifier.class,
+						ModelWrapper.class);
 
 	}
 

@@ -30,7 +30,6 @@ import com.liferay.portal.tools.service.builder.test.model.NestedSetsTreeEntryMo
 
 import java.io.Serializable;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Blob;
@@ -216,34 +215,6 @@ public class NestedSetsTreeEntryModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
-	}
-
-	private static Function<InvocationHandler, NestedSetsTreeEntry>
-		_getProxyProviderFunction() {
-
-		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			NestedSetsTreeEntry.class.getClassLoader(),
-			NestedSetsTreeEntry.class, ModelWrapper.class);
-
-		try {
-			Constructor<NestedSetsTreeEntry> constructor =
-				(Constructor<NestedSetsTreeEntry>)proxyClass.getConstructor(
-					InvocationHandler.class);
-
-			return invocationHandler -> {
-				try {
-					return constructor.newInstance(invocationHandler);
-				}
-				catch (ReflectiveOperationException
-							reflectiveOperationException) {
-
-					throw new InternalError(reflectiveOperationException);
-				}
-			};
-		}
-		catch (NoSuchMethodException noSuchMethodException) {
-			throw new InternalError(noSuchMethodException);
-		}
 	}
 
 	private static final Map<String, Function<NestedSetsTreeEntry, Object>>
@@ -667,7 +638,9 @@ public class NestedSetsTreeEntryModelImpl
 	private static class EscapedModelProxyProviderFunctionHolder {
 
 		private static final Function<InvocationHandler, NestedSetsTreeEntry>
-			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+			_escapedModelProxyProviderFunction =
+				ProxyUtil.getProxyProviderFunction(
+					NestedSetsTreeEntry.class, ModelWrapper.class);
 
 	}
 

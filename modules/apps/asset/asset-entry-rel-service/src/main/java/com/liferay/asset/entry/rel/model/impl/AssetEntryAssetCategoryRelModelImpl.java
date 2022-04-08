@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Blob;
@@ -223,34 +222,6 @@ public class AssetEntryAssetCategoryRelModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
-	}
-
-	private static Function<InvocationHandler, AssetEntryAssetCategoryRel>
-		_getProxyProviderFunction() {
-
-		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			AssetEntryAssetCategoryRel.class.getClassLoader(),
-			AssetEntryAssetCategoryRel.class, ModelWrapper.class);
-
-		try {
-			Constructor<AssetEntryAssetCategoryRel> constructor =
-				(Constructor<AssetEntryAssetCategoryRel>)
-					proxyClass.getConstructor(InvocationHandler.class);
-
-			return invocationHandler -> {
-				try {
-					return constructor.newInstance(invocationHandler);
-				}
-				catch (ReflectiveOperationException
-							reflectiveOperationException) {
-
-					throw new InternalError(reflectiveOperationException);
-				}
-			};
-		}
-		catch (NoSuchMethodException noSuchMethodException) {
-			throw new InternalError(noSuchMethodException);
-		}
 	}
 
 	private static final Map
@@ -719,7 +690,8 @@ public class AssetEntryAssetCategoryRelModelImpl
 		private static final Function
 			<InvocationHandler, AssetEntryAssetCategoryRel>
 				_escapedModelProxyProviderFunction =
-					_getProxyProviderFunction();
+					ProxyUtil.getProxyProviderFunction(
+						AssetEntryAssetCategoryRel.class, ModelWrapper.class);
 
 	}
 

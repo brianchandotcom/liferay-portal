@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
 
 import java.math.BigDecimal;
@@ -259,34 +258,6 @@ public class CommerceShippingFixedOptionRelModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
-	}
-
-	private static Function<InvocationHandler, CommerceShippingFixedOptionRel>
-		_getProxyProviderFunction() {
-
-		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			CommerceShippingFixedOptionRel.class.getClassLoader(),
-			CommerceShippingFixedOptionRel.class, ModelWrapper.class);
-
-		try {
-			Constructor<CommerceShippingFixedOptionRel> constructor =
-				(Constructor<CommerceShippingFixedOptionRel>)
-					proxyClass.getConstructor(InvocationHandler.class);
-
-			return invocationHandler -> {
-				try {
-					return constructor.newInstance(invocationHandler);
-				}
-				catch (ReflectiveOperationException
-							reflectiveOperationException) {
-
-					throw new InternalError(reflectiveOperationException);
-				}
-			};
-		}
-		catch (NoSuchMethodException noSuchMethodException) {
-			throw new InternalError(noSuchMethodException);
-		}
 	}
 
 	private static final Map
@@ -1169,7 +1140,9 @@ public class CommerceShippingFixedOptionRelModelImpl
 		private static final Function
 			<InvocationHandler, CommerceShippingFixedOptionRel>
 				_escapedModelProxyProviderFunction =
-					_getProxyProviderFunction();
+					ProxyUtil.getProxyProviderFunction(
+						CommerceShippingFixedOptionRel.class,
+						ModelWrapper.class);
 
 	}
 

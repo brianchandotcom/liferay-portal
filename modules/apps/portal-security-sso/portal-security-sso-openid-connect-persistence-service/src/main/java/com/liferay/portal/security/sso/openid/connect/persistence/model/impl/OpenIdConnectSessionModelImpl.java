@@ -33,7 +33,6 @@ import com.liferay.portal.security.sso.openid.connect.persistence.model.OpenIdCo
 
 import java.io.Serializable;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Blob;
@@ -228,34 +227,6 @@ public class OpenIdConnectSessionModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
-	}
-
-	private static Function<InvocationHandler, OpenIdConnectSession>
-		_getProxyProviderFunction() {
-
-		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			OpenIdConnectSession.class.getClassLoader(),
-			OpenIdConnectSession.class, ModelWrapper.class);
-
-		try {
-			Constructor<OpenIdConnectSession> constructor =
-				(Constructor<OpenIdConnectSession>)proxyClass.getConstructor(
-					InvocationHandler.class);
-
-			return invocationHandler -> {
-				try {
-					return constructor.newInstance(invocationHandler);
-				}
-				catch (ReflectiveOperationException
-							reflectiveOperationException) {
-
-					throw new InternalError(reflectiveOperationException);
-				}
-			};
-		}
-		catch (NoSuchMethodException noSuchMethodException) {
-			throw new InternalError(noSuchMethodException);
-		}
 	}
 
 	private static final Map<String, Function<OpenIdConnectSession, Object>>
@@ -872,7 +843,9 @@ public class OpenIdConnectSessionModelImpl
 	private static class EscapedModelProxyProviderFunctionHolder {
 
 		private static final Function<InvocationHandler, OpenIdConnectSession>
-			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+			_escapedModelProxyProviderFunction =
+				ProxyUtil.getProxyProviderFunction(
+					OpenIdConnectSession.class, ModelWrapper.class);
 
 	}
 

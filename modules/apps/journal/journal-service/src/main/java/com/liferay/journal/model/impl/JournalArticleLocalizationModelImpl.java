@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Blob;
@@ -236,34 +235,6 @@ public class JournalArticleLocalizationModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
-	}
-
-	private static Function<InvocationHandler, JournalArticleLocalization>
-		_getProxyProviderFunction() {
-
-		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			JournalArticleLocalization.class.getClassLoader(),
-			JournalArticleLocalization.class, ModelWrapper.class);
-
-		try {
-			Constructor<JournalArticleLocalization> constructor =
-				(Constructor<JournalArticleLocalization>)
-					proxyClass.getConstructor(InvocationHandler.class);
-
-			return invocationHandler -> {
-				try {
-					return constructor.newInstance(invocationHandler);
-				}
-				catch (ReflectiveOperationException
-							reflectiveOperationException) {
-
-					throw new InternalError(reflectiveOperationException);
-				}
-			};
-		}
-		catch (NoSuchMethodException noSuchMethodException) {
-			throw new InternalError(noSuchMethodException);
-		}
 	}
 
 	private static final Map
@@ -805,7 +776,8 @@ public class JournalArticleLocalizationModelImpl
 		private static final Function
 			<InvocationHandler, JournalArticleLocalization>
 				_escapedModelProxyProviderFunction =
-					_getProxyProviderFunction();
+					ProxyUtil.getProxyProviderFunction(
+						JournalArticleLocalization.class, ModelWrapper.class);
 
 	}
 

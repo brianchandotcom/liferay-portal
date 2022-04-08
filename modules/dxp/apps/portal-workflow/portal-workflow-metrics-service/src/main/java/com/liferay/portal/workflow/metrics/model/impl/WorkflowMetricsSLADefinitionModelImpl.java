@@ -37,7 +37,6 @@ import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinitionMod
 
 import java.io.Serializable;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Blob;
@@ -297,34 +296,6 @@ public class WorkflowMetricsSLADefinitionModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
-	}
-
-	private static Function<InvocationHandler, WorkflowMetricsSLADefinition>
-		_getProxyProviderFunction() {
-
-		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			WorkflowMetricsSLADefinition.class.getClassLoader(),
-			WorkflowMetricsSLADefinition.class, ModelWrapper.class);
-
-		try {
-			Constructor<WorkflowMetricsSLADefinition> constructor =
-				(Constructor<WorkflowMetricsSLADefinition>)
-					proxyClass.getConstructor(InvocationHandler.class);
-
-			return invocationHandler -> {
-				try {
-					return constructor.newInstance(invocationHandler);
-				}
-				catch (ReflectiveOperationException
-							reflectiveOperationException) {
-
-					throw new InternalError(reflectiveOperationException);
-				}
-			};
-		}
-		catch (NoSuchMethodException noSuchMethodException) {
-			throw new InternalError(noSuchMethodException);
-		}
 	}
 
 	private static final Map
@@ -1574,7 +1545,8 @@ public class WorkflowMetricsSLADefinitionModelImpl
 		private static final Function
 			<InvocationHandler, WorkflowMetricsSLADefinition>
 				_escapedModelProxyProviderFunction =
-					_getProxyProviderFunction();
+					ProxyUtil.getProxyProviderFunction(
+						WorkflowMetricsSLADefinition.class, ModelWrapper.class);
 
 	}
 

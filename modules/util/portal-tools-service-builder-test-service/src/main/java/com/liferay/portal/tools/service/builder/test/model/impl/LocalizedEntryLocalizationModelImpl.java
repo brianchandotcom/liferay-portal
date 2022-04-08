@@ -30,7 +30,6 @@ import com.liferay.portal.tools.service.builder.test.model.LocalizedEntryLocaliz
 
 import java.io.Serializable;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Blob;
@@ -231,34 +230,6 @@ public class LocalizedEntryLocalizationModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
-	}
-
-	private static Function<InvocationHandler, LocalizedEntryLocalization>
-		_getProxyProviderFunction() {
-
-		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			LocalizedEntryLocalization.class.getClassLoader(),
-			LocalizedEntryLocalization.class, ModelWrapper.class);
-
-		try {
-			Constructor<LocalizedEntryLocalization> constructor =
-				(Constructor<LocalizedEntryLocalization>)
-					proxyClass.getConstructor(InvocationHandler.class);
-
-			return invocationHandler -> {
-				try {
-					return constructor.newInstance(invocationHandler);
-				}
-				catch (ReflectiveOperationException
-							reflectiveOperationException) {
-
-					throw new InternalError(reflectiveOperationException);
-				}
-			};
-		}
-		catch (NoSuchMethodException noSuchMethodException) {
-			throw new InternalError(noSuchMethodException);
-		}
 	}
 
 	private static final Map
@@ -734,7 +705,8 @@ public class LocalizedEntryLocalizationModelImpl
 		private static final Function
 			<InvocationHandler, LocalizedEntryLocalization>
 				_escapedModelProxyProviderFunction =
-					_getProxyProviderFunction();
+					ProxyUtil.getProxyProviderFunction(
+						LocalizedEntryLocalization.class, ModelWrapper.class);
 
 	}
 

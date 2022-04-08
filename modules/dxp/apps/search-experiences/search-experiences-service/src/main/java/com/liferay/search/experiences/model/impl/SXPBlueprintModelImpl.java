@@ -41,7 +41,6 @@ import com.liferay.search.experiences.model.SXPBlueprintModel;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Blob;
@@ -249,34 +248,6 @@ public class SXPBlueprintModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
-	}
-
-	private static Function<InvocationHandler, SXPBlueprint>
-		_getProxyProviderFunction() {
-
-		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			SXPBlueprint.class.getClassLoader(), SXPBlueprint.class,
-			ModelWrapper.class);
-
-		try {
-			Constructor<SXPBlueprint> constructor =
-				(Constructor<SXPBlueprint>)proxyClass.getConstructor(
-					InvocationHandler.class);
-
-			return invocationHandler -> {
-				try {
-					return constructor.newInstance(invocationHandler);
-				}
-				catch (ReflectiveOperationException
-							reflectiveOperationException) {
-
-					throw new InternalError(reflectiveOperationException);
-				}
-			};
-		}
-		catch (NoSuchMethodException noSuchMethodException) {
-			throw new InternalError(noSuchMethodException);
-		}
 	}
 
 	private static final Map<String, Function<SXPBlueprint, Object>>
@@ -1465,7 +1436,9 @@ public class SXPBlueprintModelImpl
 	private static class EscapedModelProxyProviderFunctionHolder {
 
 		private static final Function<InvocationHandler, SXPBlueprint>
-			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+			_escapedModelProxyProviderFunction =
+				ProxyUtil.getProxyProviderFunction(
+					SXPBlueprint.class, ModelWrapper.class);
 
 	}
 

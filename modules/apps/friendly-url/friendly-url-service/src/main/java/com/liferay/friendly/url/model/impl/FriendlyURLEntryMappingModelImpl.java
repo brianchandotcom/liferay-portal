@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Blob;
@@ -224,34 +223,6 @@ public class FriendlyURLEntryMappingModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
-	}
-
-	private static Function<InvocationHandler, FriendlyURLEntryMapping>
-		_getProxyProviderFunction() {
-
-		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			FriendlyURLEntryMapping.class.getClassLoader(),
-			FriendlyURLEntryMapping.class, ModelWrapper.class);
-
-		try {
-			Constructor<FriendlyURLEntryMapping> constructor =
-				(Constructor<FriendlyURLEntryMapping>)proxyClass.getConstructor(
-					InvocationHandler.class);
-
-			return invocationHandler -> {
-				try {
-					return constructor.newInstance(invocationHandler);
-				}
-				catch (ReflectiveOperationException
-							reflectiveOperationException) {
-
-					throw new InternalError(reflectiveOperationException);
-				}
-			};
-		}
-		catch (NoSuchMethodException noSuchMethodException) {
-			throw new InternalError(noSuchMethodException);
-		}
 	}
 
 	private static final Map<String, Function<FriendlyURLEntryMapping, Object>>
@@ -733,7 +704,8 @@ public class FriendlyURLEntryMappingModelImpl
 		private static final Function
 			<InvocationHandler, FriendlyURLEntryMapping>
 				_escapedModelProxyProviderFunction =
-					_getProxyProviderFunction();
+					ProxyUtil.getProxyProviderFunction(
+						FriendlyURLEntryMapping.class, ModelWrapper.class);
 
 	}
 

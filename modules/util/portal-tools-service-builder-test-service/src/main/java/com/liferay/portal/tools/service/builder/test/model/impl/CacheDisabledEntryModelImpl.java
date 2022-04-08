@@ -30,7 +30,6 @@ import com.liferay.portal.tools.service.builder.test.model.CacheDisabledEntryMod
 
 import java.io.Serializable;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Blob;
@@ -215,34 +214,6 @@ public class CacheDisabledEntryModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
-	}
-
-	private static Function<InvocationHandler, CacheDisabledEntry>
-		_getProxyProviderFunction() {
-
-		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			CacheDisabledEntry.class.getClassLoader(), CacheDisabledEntry.class,
-			ModelWrapper.class);
-
-		try {
-			Constructor<CacheDisabledEntry> constructor =
-				(Constructor<CacheDisabledEntry>)proxyClass.getConstructor(
-					InvocationHandler.class);
-
-			return invocationHandler -> {
-				try {
-					return constructor.newInstance(invocationHandler);
-				}
-				catch (ReflectiveOperationException
-							reflectiveOperationException) {
-
-					throw new InternalError(reflectiveOperationException);
-				}
-			};
-		}
-		catch (NoSuchMethodException noSuchMethodException) {
-			throw new InternalError(noSuchMethodException);
-		}
 	}
 
 	private static final Map<String, Function<CacheDisabledEntry, Object>>
@@ -569,7 +540,9 @@ public class CacheDisabledEntryModelImpl
 	private static class EscapedModelProxyProviderFunctionHolder {
 
 		private static final Function<InvocationHandler, CacheDisabledEntry>
-			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+			_escapedModelProxyProviderFunction =
+				ProxyUtil.getProxyProviderFunction(
+					CacheDisabledEntry.class, ModelWrapper.class);
 
 	}
 

@@ -29,7 +29,6 @@ import com.liferay.saml.persistence.model.SamlSpAuthRequestModel;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
 
 import java.sql.Blob;
@@ -221,34 +220,6 @@ public class SamlSpAuthRequestModelImpl
 		getAttributeSetterBiConsumers() {
 
 		return _attributeSetterBiConsumers;
-	}
-
-	private static Function<InvocationHandler, SamlSpAuthRequest>
-		_getProxyProviderFunction() {
-
-		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			SamlSpAuthRequest.class.getClassLoader(), SamlSpAuthRequest.class,
-			ModelWrapper.class);
-
-		try {
-			Constructor<SamlSpAuthRequest> constructor =
-				(Constructor<SamlSpAuthRequest>)proxyClass.getConstructor(
-					InvocationHandler.class);
-
-			return invocationHandler -> {
-				try {
-					return constructor.newInstance(invocationHandler);
-				}
-				catch (ReflectiveOperationException
-							reflectiveOperationException) {
-
-					throw new InternalError(reflectiveOperationException);
-				}
-			};
-		}
-		catch (NoSuchMethodException noSuchMethodException) {
-			throw new InternalError(noSuchMethodException);
-		}
 	}
 
 	private static final Map<String, Function<SamlSpAuthRequest, Object>>
@@ -691,7 +662,9 @@ public class SamlSpAuthRequestModelImpl
 	private static class EscapedModelProxyProviderFunctionHolder {
 
 		private static final Function<InvocationHandler, SamlSpAuthRequest>
-			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+			_escapedModelProxyProviderFunction =
+				ProxyUtil.getProxyProviderFunction(
+					SamlSpAuthRequest.class, ModelWrapper.class);
 
 	}
 

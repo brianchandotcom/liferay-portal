@@ -3674,7 +3674,7 @@ definition {
 				value1 = "There are no comments yet.");
 
 			AssertTextEquals(
-				locator1 = "PageEditor#FRAGMENT_SIDEBAR_SECONDARY_TEXT",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_STATE_TEXT",
 				value1 = "Select a fragment to add a comment.");
 		}
 

@@ -181,6 +181,60 @@ public class LayoutSitemapURLProviderTest {
 		}
 	}
 
+	@Test
+	public void testLayoutSitemapURLProviderPortletLayoutType()
+		throws Exception {
+
+		Document document = _saxReader.createDocument();
+
+		document.setXMLEncoding("UTF-8");
+
+		Element rootElement = document.addElement(
+			"urlset", "http://www.sitemaps.org/schemas/sitemap/0.9");
+
+		rootElement.addAttribute(
+			"xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
+		rootElement.addAttribute(
+			"xsi:schemaLocation",
+			"http://www.w3.org/1999/xhtml " +
+				"http://www.w3.org/2002/08/xhtml/xhtml1-strict.xsd");
+		rootElement.addAttribute("xmlns:xhtml", "http://www.w3.org/1999/xhtml");
+
+		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
+
+		SitemapURLProvider layoutSitemapURLProvider =
+			SitemapURLProviderRegistryUtil.getSitemapURLProvider(
+				Layout.class.getName());
+
+		layoutSitemapURLProvider.visitLayout(
+			rootElement, layout.getUuid(), _layoutSet, _themeDisplay);
+
+		Assert.assertTrue(rootElement.hasContent());
+
+		List<Element> elements = rootElement.elements();
+
+		Set<Locale> availableLocales = LanguageUtil.getAvailableLocales(
+			_group.getLiveGroupId());
+
+		Assert.assertEquals(
+			elements.toString(), availableLocales.size(), elements.size());
+
+		String canonicalURL = _portal.getCanonicalURL(
+			_portal.getLayoutFullURL(layout, _themeDisplay), _themeDisplay,
+			layout);
+
+		Map<Locale, String> alternateURLsMap = _portal.getAlternateURLs(
+			canonicalURL, _themeDisplay, layout);
+
+		for (Element element : elements) {
+			String layoutLocalizedURL = element.elementText("loc");
+
+			Assert.assertTrue(
+				layoutLocalizedURL,
+				alternateURLsMap.containsValue(layoutLocalizedURL));
+		}
+	}
+
 	private void _initThemeDisplay() throws Exception {
 		Company company = CompanyLocalServiceUtil.getCompany(
 			_group.getCompanyId());

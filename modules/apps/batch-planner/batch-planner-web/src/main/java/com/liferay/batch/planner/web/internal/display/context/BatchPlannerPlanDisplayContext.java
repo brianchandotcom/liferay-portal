@@ -28,7 +28,6 @@ import com.liferay.batch.planner.web.internal.display.BatchPlannerPlanDisplay;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -119,6 +118,14 @@ public class BatchPlannerPlanDisplayContext extends BaseDisplayContext {
 		return _searchContainer;
 	}
 
+	private String _getAction(boolean export) {
+		if (export) {
+			return "export";
+		}
+
+		return "import";
+	}
+
 	private String _getOrderByCol() {
 		if (Validator.isNotNull(_orderByCol)) {
 			return _orderByCol;
@@ -160,7 +167,15 @@ public class BatchPlannerPlanDisplayContext extends BaseDisplayContext {
 			batchPlannerPlan.getName()
 		).userId(
 			batchPlannerPlan.getUserId()
+		).action(
+			_getAction(batchPlannerPlan.getExport())
+		).status(
+			BatchPlannerPlanConstants.STATUS_INACTIVE
 		);
+
+		if (!batchPlannerPlan.isActive()) {
+			return builder.build();
+		}
 
 		if (batchPlannerPlan.isExport()) {
 			BatchEngineExportTask batchEngineExportTask =
@@ -170,9 +185,7 @@ public class BatchPlannerPlanDisplayContext extends BaseDisplayContext {
 						String.valueOf(
 							batchPlannerPlan.getBatchPlannerPlanId()));
 
-			builder.action(
-				LanguageUtil.get(httpServletRequest, "export")
-			).processedItemsCount(
+			builder.processedItemsCount(
 				batchEngineExportTask.getProcessedItemsCount()
 			).status(
 				BatchPlannerPlanConstants.getStatus(
@@ -190,9 +203,7 @@ public class BatchPlannerPlanDisplayContext extends BaseDisplayContext {
 						String.valueOf(
 							batchPlannerPlan.getBatchPlannerPlanId()));
 
-			builder.action(
-				LanguageUtil.get(httpServletRequest, "import")
-			).failedItemsCount(
+			builder.failedItemsCount(
 				BatchEngineImportTaskErrorLocalServiceUtil.
 					getBatchEngineImportTaskErrorsCount(
 						batchEngineImportTask.getBatchEngineImportTaskId())

@@ -48,7 +48,7 @@ public class UpgradePortalPreferences extends UpgradeProcess {
 			SQLTransformer.transform(
 				StringBundler.concat(
 					"select portalPreferencesId, preferences from ",
-					"PortalPreferences where CAST_CLOB_TEXT(preferences) != '",
+					"PortalPreferences where preferences not like '",
 					PortletConstants.DEFAULT_PREFERENCES,
 					"' and preferences is not null")),
 			resultSet -> new Object[] {

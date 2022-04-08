@@ -66,27 +66,28 @@ public class ImageTypeContentUpgradeProcess extends UpgradeProcess {
 					"and JournalArticle.articleId = ",
 					"JournalArticleImage.articleId and JournalArticle.version ",
 					"= JournalArticleImage.version)"),
-				resultSet -> new Object[] {
-					resultSet.getLong(1), resultSet.getLong(2),
-					resultSet.getLong(3), resultSet.getLong(4),
-					resultSet.getLong(5)
+				resultSet -> {
+					long articleImageId = resultSet.getLong(1);
+					long groupId = resultSet.getLong(2);
+					long companyId = resultSet.getLong(3);
+					long resourcePrimKey = resultSet.getLong(4);
+
+					long userId = PortalUtil.getValidUserId(
+						companyId, resultSet.getLong(5));
+
+					long folderId =
+						_journalArticleImageUpgradeHelper.getFolderId(
+							userId, groupId, resourcePrimKey);
+
+					return new Object[] {
+						articleImageId, groupId, resourcePrimKey, userId,
+						folderId
+					};
 				},
 				values -> {
 					long articleImageId = (Long)values[0];
 					long groupId = (Long)values[1];
-					long companyId = (Long)values[2];
-					long resourcePrimKey = (Long)values[3];
-
-					long userId = PortalUtil.getValidUserId(
-						companyId, (Long)values[4]);
-
-					long folderId = 0L;
-
-					synchronized (this) {
-						folderId =
-							_journalArticleImageUpgradeHelper.getFolderId(
-								userId, groupId, resourcePrimKey);
-					}
+					long folderId = (Long)values[4];
 
 					String fileName = String.valueOf(articleImageId);
 
@@ -97,6 +98,9 @@ public class ImageTypeContentUpgradeProcess extends UpgradeProcess {
 					if (fileEntry != null) {
 						return;
 					}
+
+					long resourcePrimKey = (Long)values[2];
+					long userId = (Long)values[3];
 
 					try {
 						Image image = _imageLocalService.getImage(

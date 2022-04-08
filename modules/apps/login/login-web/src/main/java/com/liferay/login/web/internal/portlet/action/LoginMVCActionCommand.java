@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.security.auth.session.AuthenticatedSessionManag
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.URLCodec;
@@ -213,7 +214,7 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 			if (!themeDisplay.isSignedIn()) {
 				actionRequest.setAttribute(
 					WebKeys.REDIRECT,
-					_http.addParameter(
+					HttpHelperUtil.addParameter(
 						_portal.getPathMain() + "/portal/login", "redirect",
 						redirect));
 
@@ -319,9 +320,6 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private AuthenticatedSessionManager _authenticatedSessionManager;
-
-	@Reference
-	private Http _http;
 
 	@Reference
 	private Portal _portal;

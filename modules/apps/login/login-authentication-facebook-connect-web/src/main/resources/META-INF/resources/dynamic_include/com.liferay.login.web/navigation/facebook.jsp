@@ -31,9 +31,9 @@ String nonce = PwdGenerator.getPassword(GetterUtil.getInteger(PropsUtil.get(Prop
 
 portalSession.setAttribute(WebKeys.FACEBOOK_NONCE, nonce);
 
-facebookAuthURL = HttpUtil.addParameter(facebookAuthURL, "client_id", facebookAppId);
-facebookAuthURL = HttpUtil.addParameter(facebookAuthURL, "redirect_uri", facebookAuthRedirectURL);
-facebookAuthURL = HttpUtil.addParameter(facebookAuthURL, "scope", "email");
+facebookAuthURL = HttpHelperUtil.addParameter(facebookAuthURL, "client_id", facebookAppId);
+facebookAuthURL = HttpHelperUtil.addParameter(facebookAuthURL, "redirect_uri", facebookAuthRedirectURL);
+facebookAuthURL = HttpHelperUtil.addParameter(facebookAuthURL, "scope", "email");
 
 JSONObject stateJSONObject = JSONUtil.put(
 	"redirect", loginRedirectURL
@@ -41,7 +41,7 @@ JSONObject stateJSONObject = JSONUtil.put(
 	"stateNonce", nonce
 );
 
-facebookAuthURL = HttpUtil.addParameter(facebookAuthURL, "state", stateJSONObject.toString());
+facebookAuthURL = HttpHelperUtil.addParameter(facebookAuthURL, "state", stateJSONObject.toString());
 
 String taglibOpenFacebookConnectLoginWindow = "javascript:var facebookConnectLoginWindow = window.open('" + URLCodec.encodeURL(facebookAuthURL) + "', 'facebook', 'align=center,directories=no,height=560,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no,width=1000'); void(''); facebookConnectLoginWindow.focus();";
 %>

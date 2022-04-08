@@ -4,6 +4,8 @@
 /development/ant-apache-bsf.jar
 /development/ant-compress.jar
 /development/appium.jar
+/development/asm-tree.jar
+/development/asm.jar
 /development/aspectj-rt.jar
 /development/aspectj-weaver.jar
 /development/bnd-repository.jar

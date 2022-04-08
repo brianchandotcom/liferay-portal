@@ -2665,6 +2665,18 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.portal.configuration.metatype.api.jar!asm.jar</file-name>
+				<version>7.0</version>
+				<project-name>org.objectweb.asm</project-name>
+				<project-url>http://asm.ow2.org/</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.portal.crypto.hash.impl.jar!org.apache.aries.component-dsl.component-dsl.jar</file-name>
 				<version>1.2.2</version>
 				<project-name>org.apache.aries.component-dsl.component-dsl</project-name>
@@ -5798,6 +5810,30 @@
 					<license>
 						<license-name>Apache License 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>lib/development/asm-tree.jar</file-name>
+				<version>7.0</version>
+				<project-name>ASM</project-name>
+				<project-url>http://asm.ow2.io</project-url>
+				<licenses>
+					<license>
+						<license-name>ASM License</license-name>
+						<license-url>http://asm.ow2.org/license.html</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>lib/development/asm.jar</file-name>
+				<version>7.0</version>
+				<project-name>ASM</project-name>
+				<project-url>http://asm.ow2.io</project-url>
+				<licenses>
+					<license>
+						<license-name>ASM License</license-name>
+						<license-url>http://asm.ow2.org/license.html</license-url>
 					</license>
 				</licenses>
 			</library>

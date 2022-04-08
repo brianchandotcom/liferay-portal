@@ -8,6 +8,10 @@
 		(event) => {
 			event.preventDefault();
 
-			alert('Form submitted');
+			if (Liferay.__FF__.enableCustomDialogs) {
+				Liferay.Util.openAlertModal({message: 'Form submitted'});
+			} else {
+				alert('Form submitted');
+			}
 		});
 }

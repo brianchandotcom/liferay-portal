@@ -29,20 +29,17 @@ public class PLOEntryModelListener extends BaseModelListener<PLOEntry> {
 
 	@Override
 	public void onAfterCreate(PLOEntry ploEntry) {
-		_ploLanguageOverrideProvider.clear(
-			ploEntry.getCompanyId(), ploEntry.getLanguageId());
+		_ploLanguageOverrideProvider.add(ploEntry);
 	}
 
 	@Override
 	public void onAfterRemove(PLOEntry ploEntry) {
-		_ploLanguageOverrideProvider.clear(
-			ploEntry.getCompanyId(), ploEntry.getLanguageId());
+		_ploLanguageOverrideProvider.remove(ploEntry);
 	}
 
 	@Override
 	public void onAfterUpdate(PLOEntry originalPLOEntry, PLOEntry ploEntry) {
-		_ploLanguageOverrideProvider.clear(
-			ploEntry.getCompanyId(), ploEntry.getLanguageId());
+		_ploLanguageOverrideProvider.update(ploEntry);
 	}
 
 	@Reference

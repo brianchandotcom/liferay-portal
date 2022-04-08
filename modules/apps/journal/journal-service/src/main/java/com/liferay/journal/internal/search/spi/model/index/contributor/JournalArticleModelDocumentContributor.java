@@ -139,12 +139,9 @@ public class JournalArticleModelDocumentContributor
 			"ddmStructureKey", journalArticle.getDDMStructureKey());
 		document.addKeyword(
 			"ddmTemplateKey", journalArticle.getDDMTemplateKey());
-
-		String defaultLanguageId = localization.getDefaultLanguageId(
-			journalArticle.getDocument());
-
-		document.addText("defaultLanguageId", defaultLanguageId);
-
+		document.addText(
+			"defaultLanguageId",
+			localization.getDefaultLanguageId(journalArticle.getDocument()));
 		document.addDate("displayDate", journalArticle.getDisplayDate());
 		document.addKeyword("head", JournalUtil.isHead(journalArticle));
 

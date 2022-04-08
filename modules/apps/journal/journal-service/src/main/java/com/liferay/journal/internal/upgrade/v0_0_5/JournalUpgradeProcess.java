@@ -155,11 +155,8 @@ public class JournalUpgradeProcess extends UpgradeProcess {
 		for (Map.Entry<Long, List<Long>> entry :
 				ddmStructureIdsMap.entrySet()) {
 
-			long ddmStructureId = _getDDMStructureId(
-				entry.getKey(), entry.getValue());
-
 			DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
-				ddmStructureId);
+				_getDDMStructureId(entry.getKey(), entry.getValue()));
 
 			DDMStructureVersion ddmStructureVersion =
 				ddmStructure.getStructureVersion();

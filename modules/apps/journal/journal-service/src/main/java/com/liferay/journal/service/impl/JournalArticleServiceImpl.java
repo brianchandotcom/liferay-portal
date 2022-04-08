@@ -483,11 +483,10 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		JournalArticle article = journalArticleLocalService.getArticle(
-			groupId, articleId);
-
 		_journalArticleModelResourcePermission.check(
-			getPermissionChecker(), article, ActionKeys.DELETE);
+			getPermissionChecker(),
+			journalArticleLocalService.getArticle(groupId, articleId),
+			ActionKeys.DELETE);
 
 		journalArticleLocalService.deleteArticle(
 			groupId, articleId, serviceContext);
@@ -571,11 +570,10 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		JournalArticle article = journalArticleLocalService.getArticle(
-			groupId, articleId);
-
 		_journalArticleModelResourcePermission.check(
-			getPermissionChecker(), article, ActionKeys.EXPIRE);
+			getPermissionChecker(),
+			journalArticleLocalService.getArticle(groupId, articleId),
+			ActionKeys.EXPIRE);
 
 		journalArticleLocalService.expireArticle(
 			getUserId(), groupId, articleId, articleURL, serviceContext);
@@ -1752,11 +1750,10 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			_journalFolderModelResourcePermission, getPermissionChecker(),
 			groupId, newFolderId, ActionKeys.ADD_ARTICLE);
 
-		JournalArticle article = journalArticleLocalService.getArticle(
-			groupId, articleId);
-
 		_journalArticleModelResourcePermission.check(
-			getPermissionChecker(), article, ActionKeys.UPDATE);
+			getPermissionChecker(),
+			journalArticleLocalService.getArticle(groupId, articleId),
+			ActionKeys.UPDATE);
 
 		journalArticleLocalService.moveArticle(
 			groupId, articleId, newFolderId, serviceContext);
@@ -1845,11 +1842,10 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	public JournalArticle moveArticleToTrash(long groupId, String articleId)
 		throws PortalException {
 
-		JournalArticle article = journalArticleLocalService.getArticle(
-			groupId, articleId);
-
 		_journalArticleModelResourcePermission.check(
-			getPermissionChecker(), article, ActionKeys.DELETE);
+			getPermissionChecker(),
+			journalArticleLocalService.getArticle(groupId, articleId),
+			ActionKeys.DELETE);
 
 		return journalArticleLocalService.moveArticleToTrash(
 			getUserId(), groupId, articleId);

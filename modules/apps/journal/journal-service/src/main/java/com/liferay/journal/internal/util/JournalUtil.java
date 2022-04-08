@@ -209,11 +209,12 @@ public class JournalUtil {
 		}
 
 		try {
-			String portletId = PortletProviderUtil.getPortletId(
-				JournalArticle.class.getName(), PortletProvider.Action.EDIT);
-
 			String articleURL = PortalUtil.getControlPanelFullURL(
-				groupId, portletId, null);
+				groupId,
+				PortletProviderUtil.getPortletId(
+					JournalArticle.class.getName(),
+					PortletProvider.Action.EDIT),
+				null);
 
 			String namespace = PortalUtil.getPortletNamespace(
 				JournalPortletKeys.JOURNAL);

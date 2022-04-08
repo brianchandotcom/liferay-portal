@@ -298,12 +298,11 @@ public class JournalContentImpl
 		PortletRequestModel portletRequestModel, ThemeDisplay themeDisplay) {
 
 		try {
-			JournalArticle article = _journalArticleLocalService.getArticle(
-				groupId, articleId, version);
-
 			return getDisplay(
-				article, ddmTemplateKey, viewMode, languageId, page,
-				portletRequestModel, themeDisplay);
+				_journalArticleLocalService.getArticle(
+					groupId, articleId, version),
+				ddmTemplateKey, viewMode, languageId, page, portletRequestModel,
+				themeDisplay);
 		}
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {

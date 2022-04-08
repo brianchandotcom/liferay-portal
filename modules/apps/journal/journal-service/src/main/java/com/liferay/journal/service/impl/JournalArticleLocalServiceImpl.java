@@ -802,11 +802,9 @@ public class JournalArticleLocalServiceImpl
 		String articleResourceUuid = GetterUtil.getString(
 			serviceContext.getAttribute("articleResourceUuid"));
 
-		long resourcePrimKey =
+		article.setResourcePrimKey(
 			_journalArticleResourceLocalService.getArticleResourcePrimKey(
-				articleResourceUuid, groupId, articleId);
-
-		article.setResourcePrimKey(resourcePrimKey);
+				articleResourceUuid, groupId, articleId));
 
 		article.setGroupId(groupId);
 		article.setCompanyId(user.getCompanyId());
@@ -948,11 +946,9 @@ public class JournalArticleLocalServiceImpl
 			return article;
 		}
 
-		long resourcePrimKey =
+		article.setResourcePrimKey(
 			_journalArticleResourceLocalService.getArticleResourcePrimKey(
-				groupId, articleId);
-
-		article.setResourcePrimKey(resourcePrimKey);
+				groupId, articleId));
 
 		return journalArticlePersistence.update(article);
 	}
@@ -1366,12 +1362,10 @@ public class JournalArticleLocalServiceImpl
 
 			// Friendly URL
 
-			long classNameId = _classNameLocalService.getClassNameId(
-				JournalArticle.class);
-
 			List<FriendlyURLEntry> friendlyURLEntries =
 				friendlyURLEntryLocalService.getFriendlyURLEntries(
-					article.getGroupId(), classNameId,
+					article.getGroupId(),
+					_classNameLocalService.getClassNameId(JournalArticle.class),
 					article.getResourcePrimKey());
 
 			if (!friendlyURLEntries.isEmpty()) {
@@ -1545,11 +1539,9 @@ public class JournalArticleLocalServiceImpl
 					(articleResource.getPrimaryKey() !=
 						article.getResourcePrimKey())) {
 
-					articleResource =
+					articleResources.add(
 						_journalArticleResourceLocalService.getArticleResource(
-							article.getResourcePrimKey());
-
-					articleResources.add(articleResource);
+							article.getResourcePrimKey()));
 				}
 
 				journalArticleLocalService.deleteArticle(article, null, null);
@@ -7017,10 +7009,9 @@ public class JournalArticleLocalServiceImpl
 	protected String buildArticleURL(
 		String articleURL, long groupId, long folderId, String articleId) {
 
-		String portletId = PortletProviderUtil.getPortletId(
-			JournalArticle.class.getName(), PortletProvider.Action.EDIT);
-
-		String namespace = _portal.getPortletNamespace(portletId);
+		String namespace = _portal.getPortletNamespace(
+			PortletProviderUtil.getPortletId(
+				JournalArticle.class.getName(), PortletProvider.Action.EDIT));
 
 		articleURL = _http.addParameter(
 			articleURL, namespace + "groupId", groupId);
@@ -7849,11 +7840,9 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	protected long getClassTypeId(JournalArticle article) {
-		long classNameId = _classNameLocalService.getClassNameId(
-			JournalArticle.class);
-
 		DDMStructure ddmStructure = ddmStructureLocalService.fetchStructure(
-			_portal.getSiteGroupId(article.getGroupId()), classNameId,
+			_portal.getSiteGroupId(article.getGroupId()),
+			_classNameLocalService.getClassNameId(JournalArticle.class),
 			article.getDDMStructureKey(), true);
 
 		return ddmStructure.getStructureId();
@@ -8481,12 +8470,9 @@ public class JournalArticleLocalServiceImpl
 		subscriptionSender.setLocalizedBodyMap(localizedBodyMap);
 		subscriptionSender.setLocalizedSubjectMap(localizedSubjectMap);
 		subscriptionSender.setMailId("journal_article", article.getId());
-
-		String portletId = PortletProviderUtil.getPortletId(
-			JournalArticle.class.getName(), PortletProvider.Action.EDIT);
-
-		subscriptionSender.setPortletId(portletId);
-
+		subscriptionSender.setPortletId(
+			PortletProviderUtil.getPortletId(
+				JournalArticle.class.getName(), PortletProvider.Action.EDIT));
 		subscriptionSender.setScopeGroupId(article.getGroupId());
 		subscriptionSender.setServiceContext(serviceContext);
 

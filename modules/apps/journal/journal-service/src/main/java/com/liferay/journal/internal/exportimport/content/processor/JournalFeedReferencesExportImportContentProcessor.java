@@ -407,12 +407,9 @@ public class JournalFeedReferencesExportImportContentProcessor
 				break;
 			}
 
-			Map<String, String> journalFeedReferenceParameters =
-				_getJournalFeedReferenceParameters(
-					groupId, content, beginPos, endPos);
-
 			JournalFeed journalFeed = _getJournalFeed(
-				journalFeedReferenceParameters);
+				_getJournalFeedReferenceParameters(
+					groupId, content, beginPos, endPos));
 
 			if (journalFeed == null) {
 				ExportImportContentValidationException

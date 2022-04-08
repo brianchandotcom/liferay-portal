@@ -352,11 +352,10 @@ public class JournalFolderLocalServiceImpl
 				folderId);
 		}
 
-		long classNameId = _classNameLocalService.getClassNameId(
-			JournalArticle.class);
-
 		return _ddmStructureLocalService.getStructures(
-			groupIds, classNameId, orderByComparator);
+			groupIds,
+			_classNameLocalService.getClassNameId(JournalArticle.class),
+			orderByComparator);
 	}
 
 	@Override
@@ -656,12 +655,10 @@ public class JournalFolderLocalServiceImpl
 
 			// Folders and articles
 
-			List<Object> foldersAndArticles =
+			restoreDependentsFromTrash(
 				journalFolderLocalService.getFoldersAndArticles(
 					folder.getGroupId(), folder.getFolderId(),
-					WorkflowConstants.STATUS_IN_TRASH);
-
-			restoreDependentsFromTrash(foldersAndArticles);
+					WorkflowConstants.STATUS_IN_TRASH));
 		}
 
 		return journalFolderLocalService.moveFolder(
@@ -703,11 +700,10 @@ public class JournalFolderLocalServiceImpl
 
 		// Folders and articles
 
-		List<Object> foldersAndArticles =
+		moveDependentsToTrash(
 			journalFolderLocalService.getFoldersAndArticles(
-				folder.getGroupId(), folder.getFolderId());
-
-		moveDependentsToTrash(foldersAndArticles, trashEntry.getEntryId());
+				folder.getGroupId(), folder.getFolderId()),
+			trashEntry.getEntryId());
 
 		// Social
 
@@ -768,12 +764,10 @@ public class JournalFolderLocalServiceImpl
 
 		// Folders and articles
 
-		List<Object> foldersAndArticles =
+		restoreDependentsFromTrash(
 			journalFolderLocalService.getFoldersAndArticles(
 				folder.getGroupId(), folder.getFolderId(),
-				WorkflowConstants.STATUS_IN_TRASH);
-
-		restoreDependentsFromTrash(foldersAndArticles);
+				WorkflowConstants.STATUS_IN_TRASH));
 
 		// Trash
 

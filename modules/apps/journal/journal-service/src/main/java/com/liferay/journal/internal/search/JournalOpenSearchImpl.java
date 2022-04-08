@@ -87,13 +87,11 @@ public class JournalOpenSearchImpl extends HitsOpenSearchImpl {
 			groupId, articleId);
 
 		if (Validator.isNotNull(article.getLayoutUuid())) {
-			String groupFriendlyURL = _portal.getGroupFriendlyURL(
-				_layoutSetLocalService.getLayoutSet(
-					article.getGroupId(), false),
-				themeDisplay, false, false);
-
 			return StringBundler.concat(
-				groupFriendlyURL,
+				_portal.getGroupFriendlyURL(
+					_layoutSetLocalService.getLayoutSet(
+						article.getGroupId(), false),
+					themeDisplay, false, false),
 				JournalArticleConstants.CANONICAL_URL_SEPARATOR,
 				article.getUrlTitle());
 		}

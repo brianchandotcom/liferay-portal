@@ -143,15 +143,14 @@ public class UpgradeJournalArticles extends BasePortletIdUpgradeProcess {
 					_portletPreferenceValueLocalService.getPreferences(
 						portletPreferences);
 
-				PortletPreferences newPreferences = _getNewPreferences(
-					oldPortletPreferences, plid, oldRootPortletId,
-					newRootPortletId);
-
 				_portletPreferencesLocalService.updatePreferences(
 					portletPreferences.getOwnerId(),
 					portletPreferences.getOwnerType(),
 					portletPreferences.getPlid(),
-					portletPreferences.getPortletId(), newPreferences);
+					portletPreferences.getPortletId(),
+					_getNewPreferences(
+						oldPortletPreferences, plid, oldRootPortletId,
+						newRootPortletId));
 			}
 		}
 	}

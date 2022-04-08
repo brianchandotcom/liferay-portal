@@ -85,12 +85,10 @@ public class JournalArticleKeywordQueryContributor
 
 		QueryConfig queryConfig = searchContext.getQueryConfig();
 
-		String[] localizedFieldNames =
+		queryConfig.addHighlightFieldNames(
 			_searchLocalizationHelper.getLocalizedFieldNames(
 				new String[] {Field.CONTENT, Field.DESCRIPTION, Field.TITLE},
-				searchContext);
-
-		queryConfig.addHighlightFieldNames(localizedFieldNames);
+				searchContext));
 	}
 
 	private void _addLocalizedFields(

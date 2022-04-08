@@ -126,28 +126,6 @@ public class ResourceBundleUtil {
 		return map;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getLocalizationMap(ResourceBundleLoader, String)}
-	 */
-	@Deprecated
-	public static Map<Locale, String> getLocalizationMap(
-		com.liferay.portal.kernel.util.ResourceBundleLoader
-			resourceBundleLoader,
-		String key) {
-
-		return getLocalizationMap(
-			new ResourceBundleLoader() {
-
-				@Override
-				public ResourceBundle loadResourceBundle(Locale locale) {
-					return resourceBundleLoader.loadResourceBundle(locale);
-				}
-
-			},
-			key);
-	}
-
 	public static ResourceBundle getModuleAndPortalResourceBundle(
 		Locale locale, Class<?> clazz) {
 

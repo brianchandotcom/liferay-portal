@@ -335,20 +335,6 @@ public abstract class BaseSocialActivityInterpreter
 		return StringPool.BLANK;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #acquireResourceBundleLoader}
-	 */
-	@Deprecated
-	protected com.liferay.portal.kernel.util.ResourceBundleLoader
-		getResourceBundleLoader() {
-
-		ResourceBundleLoader resourceBundleLoader =
-			acquireResourceBundleLoader();
-
-		return locale -> resourceBundleLoader.loadResourceBundle(locale);
-	}
-
 	protected String getTitle(
 			SocialActivity activity, ServiceContext serviceContext)
 		throws Exception {

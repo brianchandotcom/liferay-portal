@@ -143,20 +143,6 @@ public class TagResourceBundleUtil {
 		return _emptyResourceBundle;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #acquireResourceBundleLoader(HttpServletRequest)}
-	 */
-	@Deprecated
-	protected static com.liferay.portal.kernel.util.ResourceBundleLoader
-		getResourceBundleLoader(HttpServletRequest httpServletRequest) {
-
-		ResourceBundleLoader resourceBundleLoader = acquireResourceBundleLoader(
-			httpServletRequest);
-
-		return locale -> resourceBundleLoader.loadResourceBundle(locale);
-	}
-
 	private static final ResourceBundle _emptyResourceBundle =
 		new EmptyResourceBundle();
 

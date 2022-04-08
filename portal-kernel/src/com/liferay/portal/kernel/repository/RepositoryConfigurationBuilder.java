@@ -44,29 +44,6 @@ public class RepositoryConfigurationBuilder {
 		}
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #RepositoryConfigurationBuilder(ResourceBundleLoader,
-	 *             String[])}
-	 */
-	@Deprecated
-	public RepositoryConfigurationBuilder(
-		com.liferay.portal.kernel.util.ResourceBundleLoader
-			resourceBundleLoader,
-		String... names) {
-
-		this(
-			new ResourceBundleLoader() {
-
-				@Override
-				public ResourceBundle loadResourceBundle(Locale locale) {
-					return resourceBundleLoader.loadResourceBundle(locale);
-				}
-
-			},
-			names);
-	}
-
 	public RepositoryConfigurationBuilder addParameter(String name) {
 		String labelKey = HtmlUtil.escape(
 			StringUtil.replace(

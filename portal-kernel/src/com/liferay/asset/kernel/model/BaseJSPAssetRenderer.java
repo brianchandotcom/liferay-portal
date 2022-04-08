@@ -106,20 +106,6 @@ public abstract class BaseJSPAssetRenderer<T>
 			ResourceBundleLoaderUtil.getPortalResourceBundleLoader());
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #acquireResourceBundleLoader}
-	 */
-	@Deprecated
-	protected com.liferay.portal.kernel.util.ResourceBundleLoader
-		getResourceBundleLoader() {
-
-		ResourceBundleLoader resourceBundleLoader =
-			acquireResourceBundleLoader();
-
-		return locale -> resourceBundleLoader.loadResourceBundle(locale);
-	}
-
 	protected ServletContext getServletContext() {
 		if (_servletContext != null) {
 			return _servletContext;

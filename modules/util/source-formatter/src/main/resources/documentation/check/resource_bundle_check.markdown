@@ -6,7 +6,7 @@ may return incorrect values for non-English languages, due to the fact that
 `java.util.ResourceBundle.getBundle` loads them as `ISO-8859-1`.
 
 Instead, use
-`com.liferay.portal.kernel.util.ResourceBundleLoader.loadResourceBundle`.
+`com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader.loadResourceBundle`.
 
 ### Example
 

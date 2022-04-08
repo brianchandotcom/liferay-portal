@@ -68,7 +68,7 @@ import com.liferay.portal.kernel.upload.UploadRequestSizeException;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -363,15 +363,15 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 
-		String portletResource = _http.getParameter(
+		String portletResource = HttpHelperUtil.getParameter(
 			redirect, "portletResource", false);
 
 		if (Validator.isNotNull(portletResource)) {
 			String namespace = _portal.getPortletNamespace(portletResource);
 
-			redirect = _http.addParameter(
+			redirect = HttpHelperUtil.addParameter(
 				redirect, namespace + "className", BlogsEntry.class.getName());
-			redirect = _http.addParameter(
+			redirect = HttpHelperUtil.addParameter(
 				redirect, namespace + "classPK", entryId);
 		}
 
@@ -399,7 +399,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		String namespace = actionResponse.getNamespace();
 
-		redirect = _http.setParameter(
+		redirect = HttpHelperUtil.setParameter(
 			redirect, namespace + "redirectToLastFriendlyURL", false);
 
 		sendRedirect(
@@ -637,9 +637,6 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private BlogsEntryService _blogsEntryService;
-
-	@Reference
-	private Http _http;
 
 	@Reference
 	private Portal _portal;

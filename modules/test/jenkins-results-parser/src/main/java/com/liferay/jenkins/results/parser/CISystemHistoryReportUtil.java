@@ -195,7 +195,7 @@ public class CISystemHistoryReportUtil {
 							JenkinsResultsParserUtil.getDistinctTimeStamp();
 
 						File buildResultGzTempFile = new File(
-							"build-result-" + timestamp + "json.gz");
+							"build-result-" + timestamp + ".json.gz");
 
 						try {
 							JenkinsResultsParserUtil.copy(
@@ -206,7 +206,7 @@ public class CISystemHistoryReportUtil {
 						}
 
 						File buildResultTempFile = new File(
-							"build-result-" + timestamp + "json");
+							"build-result-" + timestamp + ".json");
 
 						try {
 							JenkinsResultsParserUtil.unGzip(

@@ -23,6 +23,7 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -155,9 +156,9 @@ public class TextObjectFieldBusinessType implements ObjectFieldBusinessType {
 			}
 			else if (Objects.equals(
 						objectFieldSetting.getName(), "showCounter") &&
-					 !Objects.equals(
+					 !StringUtil.equalsIgnoreCase(
 						 objectFieldSetting.getValue(), StringPool.FALSE) &&
-					 !Objects.equals(
+					 !StringUtil.equalsIgnoreCase(
 						 objectFieldSetting.getValue(), StringPool.TRUE)) {
 
 				throw new ObjectFieldSettingValueException.InvalidValue(

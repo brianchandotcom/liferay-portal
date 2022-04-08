@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
@@ -213,9 +212,6 @@ public class ContentLayoutTypeControllerTest {
 
 	@Inject
 	private LayoutSetLocalService _layoutSetLocalService;
-
-	@Inject
-	private Portal _portal;
 
 	@Inject
 	private UserLocalService _userLocalService;

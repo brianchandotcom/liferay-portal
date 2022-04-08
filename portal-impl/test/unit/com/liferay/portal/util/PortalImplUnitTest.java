@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.security.auth.AlwaysAllowDoAsUser;
 import com.liferay.portal.kernel.servlet.PersistentHttpServletRequestWrapper;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.util.HttpHelperUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -35,25 +35,18 @@ import javax.servlet.http.HttpSession;
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.mockito.Mockito;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
 
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
-
 import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Miguel Pastor
  */
-@PrepareForTest(HttpHelperUtil.class)
-@RunWith(PowerMockRunner.class)
-public class PortalImplUnitTest extends PowerMockito {
+public class PortalImplUnitTest {
 
 	@ClassRule
 	public static LiferayUnitTestRule liferayUnitTestRule =
@@ -657,17 +650,19 @@ public class PortalImplUnitTest extends PowerMockito {
 
 	@Test
 	public void testUpdateRedirectRemoveLayoutURL() {
-		mockStatic(HttpHelperUtil.class);
+		HttpUtil httpUtil = new HttpUtil();
 
-		when(
-			HttpHelperUtil.getParameter(
+		HttpImpl httpImpl = Mockito.mock(HttpImpl.class);
+
+		Mockito.when(
+			httpImpl.getParameter(
 				Mockito.anyString(), Mockito.anyString(), Mockito.anyBoolean())
 		).thenReturn(
 			StringPool.BLANK
 		);
 
-		when(
-			HttpHelperUtil.getPath(Mockito.anyString())
+		Mockito.when(
+			httpImpl.getPath(Mockito.anyString())
 		).thenAnswer(
 			invocation -> {
 				Object[] args = invocation.getArguments();
@@ -676,11 +671,13 @@ public class PortalImplUnitTest extends PowerMockito {
 			}
 		);
 
-		when(
-			HttpHelperUtil.getQueryString(Mockito.anyString())
+		Mockito.when(
+			httpImpl.getQueryString(Mockito.anyString())
 		).thenReturn(
 			StringPool.BLANK
 		);
+
+		httpUtil.setHttp(httpImpl);
 
 		Assert.assertEquals(
 			"/web/group",
@@ -697,7 +694,9 @@ public class PortalImplUnitTest extends PowerMockito {
 		return (HttpServletRequest)requestWrapper.getRequest();
 	}
 
-	protected void setPropsValuesValue(String fieldName, Object value) {
+	protected void setPropsValuesValue(String fieldName, Object value)
+		throws Exception {
+
 		ReflectionTestUtil.setFieldValue(PropsValues.class, fieldName, value);
 	}
 

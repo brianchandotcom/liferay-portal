@@ -43,13 +43,6 @@ public class BatchEngineImportTaskModelListener
 	extends BaseModelListener<BatchEngineImportTask> {
 
 	@Override
-	public void onAfterCreate(BatchEngineImportTask batchEngineImportTask)
-		throws ModelListenerException {
-
-		_updateStatus(batchEngineImportTask);
-	}
-
-	@Override
 	public void onAfterRemove(BatchEngineImportTask batchEngineImportTask)
 		throws ModelListenerException {
 

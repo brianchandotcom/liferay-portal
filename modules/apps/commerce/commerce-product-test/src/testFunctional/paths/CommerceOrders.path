@@ -16,6 +16,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ORDER_DETAILS_EDIT_BUTTON</td>
+	<td>//h4[contains(text(),'${key_titleName}')]/a[contains(text(),'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ORDER_DETAILS_PAYMENT_METHOD_NAME</td>
 	<td>//span[contains(@class,'payment-name')]</td>
 	<td></td>

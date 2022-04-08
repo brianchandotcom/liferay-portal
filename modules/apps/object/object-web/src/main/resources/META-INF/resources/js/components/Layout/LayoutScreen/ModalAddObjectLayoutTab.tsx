@@ -133,7 +133,7 @@ const ModalAddObjectLayoutTab: React.FC<IModalAddObjectLayoutTabProps> = ({
 		return objectRelationships.filter(({inLayout, label, name}) => {
 			return (
 				(label[defaultLanguageId]
-					.toLowerCase()
+					?.toLowerCase()
 					?.match(query.toLowerCase()) ??
 					name.toLowerCase()?.match(query.toLowerCase())) &&
 				!inLayout

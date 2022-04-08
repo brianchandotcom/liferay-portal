@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,24 +13,22 @@
  * details.
  */
 
-const EMAIL_INPUT_ID = '_com_liferay_login_web_portlet_LoginPortlet_login';
+const EMAIL_INPUT_ID = '#_com_liferay_login_web_portlet_LoginPortlet_login';
 const PASSWORD_INPUT_ID =
-	'_com_liferay_login_web_portlet_LoginPortlet_password';
-
-const emailInput = document.getElementById(EMAIL_INPUT_ID);
-emailInput.setAttribute('placeholder', 'Email');
-emailInput.removeAttribute('value');
-
-const passwordInput = document.getElementById(PASSWORD_INPUT_ID);
-passwordInput.setAttribute('placeholder', 'Password');
-
-window.onload = function () {
-	document.getElementById(EMAIL_INPUT_ID).focus();
-};
-
-document.getElementById(EMAIL_INPUT_ID).focus();
+	'#_com_liferay_login_web_portlet_LoginPortlet_password';
 
 function inputValidation() {
+	const emailInput = fragmentElement.querySelector(EMAIL_INPUT_ID);
+	const passwordInput = fragmentElement.querySelector(PASSWORD_INPUT_ID);
+
+	if (emailInput) {
+		window.onload = function () {
+			emailInput.focus();
+		};
+	}
+
+	emailInput.focus();
+
 	const EMAIL_REGEX = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g;
 
 	const TEXT_VARIANT = {

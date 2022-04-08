@@ -1,10 +1,19 @@
 .raylife-sign-in .form-column {
+	background-color: #272833;
 	padding: var(--spacer-6) var(--spacer-8) var(--spacer-6) var(--spacer-2);
 }
 
 .raylife-sign-in .login-title {
-	font-weight: 900;
 	margin-bottom: var(--spacer-4);
+}
+
+.raylife-sign-in .login-title:after {
+	background-color: var(--primary);
+	content: '';
+	display: block;
+	height: 2px;
+	margin-top: 0.3rem;
+	width: 19px;
 }
 
 .raylife-sign-in .sign-in-image {
@@ -28,33 +37,24 @@
 
 .raylife-login-form .form-group > label:not(.toggle-switch),
 .lfr-ddm-legend:not(.toggle-switch) .sign-in-form .sign-in-logo {
-	color: var(--color-neutral-0);
 	margin: 0;
 }
 
-.raylife-login-form li:nth-child(1) {
+.raylife-login-form li {
 	display: none;
 }
 
-.raylife-login-form li:nth-child(2) {
-	bottom: -25vh;
-	position: absolute;
-}
-
-.raylife-login-form li:nth-child(2) a {
-	color: var(--white);
-	font-weight: bold;
-	text-decoration: underline;
-}
-
 .raylife-login-form .sign-in-form .button-holder button {
-	text-transform: uppercase;
-	width: 200px;
+	align-items: center;
+	background: var(--primary) !important;
+	display: flex;
+	height: 2.5rem !important;
+	justify-content: center;
+	width: 100%;
 }
 
-.raylife-login-form .sign-in-form .form-control::placeholder {
-	color: var(--bg-neutral-10);
-	font-weight: 700 !important;
+.raylife-login-form .sign-in-form .button-holder button:hover {
+	background: #3272ff !important;
 }
 
 .raylife-login-form .sign-in-form .form-group {
@@ -62,22 +62,24 @@
 }
 
 .raylife-login-form .sign-in-form .form-group input {
-	background: #f0f5ff;
+	background-color: var(--color-neutral-0);
 	border-radius: 4px !important;
-	height: 48px !important;
+	height: 2.5rem !important;
 }
 
-.raylife-login-form .sign-in-form .form-group label {
-	display: none;
+.raylife-login-form .sign-in-form .input-checkbox-wrapper label,
+.raylife-login-form .sign-in-form .input-text-wrapper .control-label {
+	font-size: 0.75rem;
+	font-weight: var(--font-weight-normal);
 }
 
-.raylife-login-form .sign-in-form .input-checkbox-wrapper input {
-	margin-right: 5px;
-}
-
-.raylife-login-form .sign-in-form .input-checkbox-wrapper label {
+.raylife-login-form .sign-in-form .form-group.input-checkbox-wrapper label {
 	align-items: center;
-	color: var(--white);
+	color: #ffffff80;
 	display: flex;
-	justify-content: center;
+}
+
+.raylife-login-form .sign-in-form .form-group.input-text-wrapper .control-label {
+	color: var(--color-neutral-0);
+	opacity: 0.5;
 }

@@ -17,28 +17,49 @@ import React from 'react';
 
 import i18n from '../../i18n';
 
+enum States {
+	BLANK = '',
+
+	/**
+	 * When the filters or search results return zero results.
+	 */
+
+	EMPTY_SEARCH = 'https://clayui.com/images/empty_state.gif',
+
+	/**
+	 * When there are no elements in the data set at a certain level
+	 */
+
+	EMPTY_STATE = `https://clayui.com/images/empty_state.gif`,
+
+	/**
+	 * The user has emptied the dataset for a good cause.
+	 * For example, all the notifications have been addressed, resulting in a clean state.
+	 */
+	SUCCESS = 'https://clayui.com/images/success_state.gif',
+}
+
 export type EmptyStateProps = {
 	description?: string;
 	title?: string;
+	type?: keyof typeof States;
 };
 
 const EmptyState: React.FC<EmptyStateProps> = ({
 	children,
 	description,
 	title,
-}) => {
-	return (
-		<ClayEmptyState
-			description={
-				description ||
-				i18n.translate('sorry-there-are-no-results-found')
-			}
-			imgSrc="https://clayui.com/images/success_state.gif"
-			title={title || i18n.translate('no-results-found')}
-		>
-			{children}
-		</ClayEmptyState>
-	);
-};
+	type,
+}) => (
+	<ClayEmptyState
+		description={
+			description || i18n.translate('sorry-there-are-no-results-found')
+		}
+		imgSrc={type ? States[type] : States.EMPTY_SEARCH}
+		title={title || i18n.translate('no-results-found')}
+	>
+		{children}
+	</ClayEmptyState>
+);
 
 export default EmptyState;

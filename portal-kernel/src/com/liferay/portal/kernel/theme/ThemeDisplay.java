@@ -48,7 +48,7 @@ import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.Mergeable;
@@ -704,7 +704,7 @@ public class ThemeDisplay
 	}
 
 	public String getProtocol() {
-		return HttpUtil.getProtocol(_secure);
+		return HttpHelperUtil.getProtocol(_secure);
 	}
 
 	public String getRealCompanyLogo() {

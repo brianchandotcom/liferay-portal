@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.model.LayoutQueryStringComposite;
 import com.liferay.portal.kernel.model.VirtualLayoutConstants;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -80,9 +80,9 @@ public class VirtualLayoutFriendlyURLResolver implements FriendlyURLResolver {
 			group.getGroupId(), privateLayout, mainPath, layoutFriendlyURL,
 			params, requestContext);
 
-		return HttpUtil.addParameter(
-			HttpUtil.removeParameter(actualURL, "p_v_l_s_g_id"), "p_v_l_s_g_id",
-			groupId);
+		return HttpHelperUtil.addParameter(
+			HttpHelperUtil.removeParameter(actualURL, "p_v_l_s_g_id"),
+			"p_v_l_s_g_id", groupId);
 	}
 
 	@Override

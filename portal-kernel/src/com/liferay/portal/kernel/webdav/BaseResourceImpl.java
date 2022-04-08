@@ -18,7 +18,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.URLCodec;
@@ -64,7 +64,7 @@ public class BaseResourceImpl implements Resource {
 		_displayName = displayName;
 		_size = size;
 
-		String href = HttpUtil.encodePath(parentPath);
+		String href = HttpHelperUtil.encodePath(parentPath);
 
 		if (Validator.isNotNull(name)) {
 			href += StringPool.SLASH + URLCodec.encodeURL(name, true);

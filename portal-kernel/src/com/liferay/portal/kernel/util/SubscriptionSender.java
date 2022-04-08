@@ -324,7 +324,7 @@ public class SubscriptionSender implements Serializable {
 		setContextAttribute("[$COMPANY_NAME$]", company.getName());
 
 		if (Validator.isNotNull(_entryURL)) {
-			boolean secureConnection = HttpUtil.isSecure(_entryURL);
+			boolean secureConnection = HttpHelperUtil.isSecure(_entryURL);
 
 			String portalURL = PortalUtil.getPortalURL(
 				company.getVirtualHostname(),

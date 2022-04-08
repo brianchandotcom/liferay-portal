@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -110,7 +110,7 @@ public class WebDAVUtil {
 
 		String destination = pathSegments[pathSegments.length - 1];
 
-		destination = HttpUtil.decodePath(destination);
+		destination = HttpHelperUtil.decodePath(destination);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Destination " + destination);
@@ -250,7 +250,7 @@ public class WebDAVUtil {
 	}
 
 	public static String[] getPathArray(String path, boolean fixTrailing) {
-		path = HttpUtil.fixPath(path, true, fixTrailing);
+		path = HttpHelperUtil.fixPath(path, true, fixTrailing);
 
 		return StringUtil.split(path, CharPool.SLASH);
 	}

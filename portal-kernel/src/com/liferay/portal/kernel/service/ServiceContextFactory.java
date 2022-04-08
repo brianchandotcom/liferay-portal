@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -192,7 +192,7 @@ public class ServiceContextFactory {
 
 			String fullCanonicalURL = canonicalURL;
 
-			if (!HttpUtil.hasProtocol(layoutURL)) {
+			if (!HttpHelperUtil.hasProtocol(layoutURL)) {
 				fullCanonicalURL = PortalUtil.getCanonicalURL(
 					PortalUtil.getPortalURL(themeDisplay) + layoutURL,
 					themeDisplay, themeDisplay.getLayout(), true);

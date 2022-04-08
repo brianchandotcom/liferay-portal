@@ -21,7 +21,7 @@ public class URLStringEncoder implements StringEncoder {
 
 	@Override
 	public String decode(String s) {
-		return HttpUtil.decodeURL(s);
+		return HttpHelperUtil.decodeURL(s);
 	}
 
 	@Override

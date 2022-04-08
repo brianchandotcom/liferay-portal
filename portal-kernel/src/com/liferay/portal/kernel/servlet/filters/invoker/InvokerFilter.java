@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.servlet.NonSerializableObjectRequestWrapper;
 import com.liferay.portal.kernel.servlet.SanitizedServletResponse;
 import com.liferay.portal.kernel.util.BasePortalLifecycle;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -249,7 +249,7 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 			originalURI = originalURI.substring(_contextPath.length());
 		}
 
-		return HttpUtil.normalizePath(originalURI);
+		return HttpHelperUtil.normalizePath(originalURI);
 	}
 
 	protected boolean handleLongRequestURL(

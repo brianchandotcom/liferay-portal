@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -132,7 +132,7 @@ public class PortletPathsUtil {
 			Portlet rootPortlet = portlet.getRootPortlet();
 
 			for (String footerPortalCss : portlet.getFooterPortalCss()) {
-				if (!HttpUtil.hasProtocol(footerPortalCss)) {
+				if (!HttpHelperUtil.hasProtocol(footerPortalCss)) {
 					footerPortalCss =
 						PortalUtil.getPathContext() + footerPortalCss;
 
@@ -147,7 +147,7 @@ public class PortletPathsUtil {
 			for (String footerPortalJavaScript :
 					portlet.getFooterPortalJavaScript()) {
 
-				if (!HttpUtil.hasProtocol(footerPortalJavaScript)) {
+				if (!HttpHelperUtil.hasProtocol(footerPortalJavaScript)) {
 					footerPortalJavaScript =
 						PortalUtil.getPathContext() + footerPortalJavaScript;
 
@@ -160,7 +160,7 @@ public class PortletPathsUtil {
 			}
 
 			for (String footerPortletCss : portlet.getFooterPortletCss()) {
-				if (!HttpUtil.hasProtocol(footerPortletCss)) {
+				if (!HttpHelperUtil.hasProtocol(footerPortletCss)) {
 					footerPortletCss =
 						portlet.getStaticResourcePath() + footerPortletCss;
 
@@ -175,7 +175,7 @@ public class PortletPathsUtil {
 			for (String footerPortletJavaScript :
 					portlet.getFooterPortletJavaScript()) {
 
-				if (!HttpUtil.hasProtocol(footerPortletJavaScript)) {
+				if (!HttpHelperUtil.hasProtocol(footerPortletJavaScript)) {
 					footerPortletJavaScript =
 						portlet.getStaticResourcePath() +
 							footerPortletJavaScript;
@@ -189,7 +189,7 @@ public class PortletPathsUtil {
 			}
 
 			for (String headerPortalCss : portlet.getHeaderPortalCss()) {
-				if (!HttpUtil.hasProtocol(headerPortalCss)) {
+				if (!HttpHelperUtil.hasProtocol(headerPortalCss)) {
 					headerPortalCss =
 						PortalUtil.getPathContext() + headerPortalCss;
 
@@ -204,7 +204,7 @@ public class PortletPathsUtil {
 			for (String headerPortalJavaScript :
 					portlet.getHeaderPortalJavaScript()) {
 
-				if (!HttpUtil.hasProtocol(headerPortalJavaScript)) {
+				if (!HttpHelperUtil.hasProtocol(headerPortalJavaScript)) {
 					headerPortalJavaScript =
 						PortalUtil.getPathContext() + headerPortalJavaScript;
 
@@ -217,7 +217,7 @@ public class PortletPathsUtil {
 			}
 
 			for (String headerPortletCss : portlet.getHeaderPortletCss()) {
-				if (!HttpUtil.hasProtocol(headerPortletCss)) {
+				if (!HttpHelperUtil.hasProtocol(headerPortletCss)) {
 					headerPortletCss =
 						portlet.getStaticResourcePath() + headerPortletCss;
 
@@ -232,7 +232,7 @@ public class PortletPathsUtil {
 			for (String headerPortletJavaScript :
 					portlet.getHeaderPortletJavaScript()) {
 
-				if (!HttpUtil.hasProtocol(headerPortletJavaScript)) {
+				if (!HttpHelperUtil.hasProtocol(headerPortletJavaScript)) {
 					headerPortletJavaScript =
 						portlet.getStaticResourcePath() +
 							headerPortletJavaScript;

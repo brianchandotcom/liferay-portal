@@ -162,9 +162,7 @@ const Container = React.forwardRef(
 		const textAlignDefaultValue = getCommonStyleByName('textAlign')
 			.defaultValue;
 
-		const HTMLTag = config.fragmentAdvancedOptionsEnabled
-			? itemConfig.htmlTag || 'div'
-			: 'div';
+		const HTMLTag = itemConfig.htmlTag || 'div';
 
 		const content = (
 			<HTMLTag

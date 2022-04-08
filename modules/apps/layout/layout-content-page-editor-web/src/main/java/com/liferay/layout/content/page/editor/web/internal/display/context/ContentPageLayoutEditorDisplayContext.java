@@ -34,7 +34,6 @@ import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderIt
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.layout.content.page.editor.sidebar.panel.ContentPageEditorSidebarPanel;
-import com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration;
 import com.liferay.layout.content.page.editor.web.internal.configuration.PageEditorConfiguration;
 import com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorActionKeys;
 import com.liferay.layout.content.page.editor.web.internal.segments.SegmentsExperienceUtil;
@@ -101,8 +100,6 @@ public class ContentPageLayoutEditorDisplayContext
 	public ContentPageLayoutEditorDisplayContext(
 		CommentManager commentManager,
 		List<ContentPageEditorSidebarPanel> contentPageEditorSidebarPanels,
-		FFLayoutContentPageEditorConfiguration
-			ffLayoutContentPageEditorConfiguration,
 		FragmentCollectionContributorTracker
 			fragmentCollectionContributorTracker,
 		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
@@ -119,7 +116,6 @@ public class ContentPageLayoutEditorDisplayContext
 
 		super(
 			commentManager, contentPageEditorSidebarPanels,
-			ffLayoutContentPageEditorConfiguration,
 			fragmentCollectionContributorTracker,
 			fragmentEntryConfigurationParser, fragmentRendererController,
 			fragmentRendererTracker, frontendTokenDefinitionRegistry,

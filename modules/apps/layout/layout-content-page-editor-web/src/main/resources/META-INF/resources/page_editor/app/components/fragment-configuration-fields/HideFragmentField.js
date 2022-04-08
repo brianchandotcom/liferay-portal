@@ -17,7 +17,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
-import {config} from '../../config/index';
 import {useSelectItem} from '../../contexts/ControlsContext';
 import {useSelector} from '../../contexts/StoreContext';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
@@ -75,15 +74,13 @@ export function HideFragmentField({
 				value={value}
 			/>
 
-			{value === 'none' &&
-				!hiddenAncestorId &&
-				config.fragmentAdvancedOptionsEnabled && (
-					<p className="small text-secondary">
-						{Liferay.Language.get(
-							'this-fragment-is-still-visible-on-search-.you-can-hide-it-from-search-in-the-advanced-tab'
-						)}
-					</p>
-				)}
+			{value === 'none' && !hiddenAncestorId && (
+				<p className="small text-secondary">
+					{Liferay.Language.get(
+						'this-fragment-is-still-visible-on-search-.you-can-hide-it-from-search-in-the-advanced-tab'
+					)}
+				</p>
+			)}
 
 			{hiddenAncestorId && (
 				<>

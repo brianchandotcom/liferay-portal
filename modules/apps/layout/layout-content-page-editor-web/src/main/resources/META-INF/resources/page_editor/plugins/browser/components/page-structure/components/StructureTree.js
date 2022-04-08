@@ -260,7 +260,6 @@ function getMappedFieldLabel(
 
 function getNameInfo(item) {
 	if (
-		config.fragmentAdvancedOptionsEnabled &&
 		item.type === LAYOUT_DATA_ITEM_TYPES.container &&
 		item.config.htmlTag !== 'div'
 	) {

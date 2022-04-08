@@ -23,7 +23,6 @@ import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
 import com.liferay.layout.content.page.editor.sidebar.panel.ContentPageEditorSidebarPanel;
-import com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration;
 import com.liferay.layout.content.page.editor.web.internal.configuration.PageEditorConfiguration;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -59,10 +58,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Pavel Savinov
  */
 @Component(
-	configurationPid = {
-		"com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration",
-		"com.liferay.layout.content.page.editor.web.internal.configuration.PageEditorConfiguration"
-	},
+	configurationPid = "com.liferay.layout.content.page.editor.web.internal.configuration.PageEditorConfiguration",
 	immediate = true, service = ContentPageEditorDisplayContextProvider.class
 )
 public class ContentPageEditorDisplayContextProvider {
@@ -77,7 +73,6 @@ public class ContentPageEditorDisplayContextProvider {
 		if (Objects.equals(className, Layout.class.getName())) {
 			return new ContentPageLayoutEditorDisplayContext(
 				_commentManager, _getContentPageEditorSidebarPanels(),
-				_ffLayoutContentPageEditorConfiguration,
 				_fragmentCollectionContributorTracker,
 				_fragmentEntryConfigurationParser, _fragmentRendererController,
 				_fragmentRendererTracker, _frontendTokenDefinitionRegistry,
@@ -105,7 +100,6 @@ public class ContentPageEditorDisplayContextProvider {
 
 		return new ContentPageEditorLayoutPageTemplateDisplayContext(
 			_commentManager, _getContentPageEditorSidebarPanels(),
-			_ffLayoutContentPageEditorConfiguration,
 			_fragmentCollectionContributorTracker,
 			_fragmentEntryConfigurationParser, _fragmentRendererController,
 			_fragmentRendererTracker, _frontendTokenDefinitionRegistry,
@@ -121,9 +115,6 @@ public class ContentPageEditorDisplayContextProvider {
 	protected void activate(
 		BundleContext bundleContext, Map<String, Object> properties) {
 
-		_ffLayoutContentPageEditorConfiguration =
-			ConfigurableUtil.createConfigurable(
-				FFLayoutContentPageEditorConfiguration.class, properties);
 		_pageEditorConfiguration = ConfigurableUtil.createConfigurable(
 			PageEditorConfiguration.class, properties);
 		_serviceTrackerList = ServiceTrackerListFactory.open(
@@ -152,9 +143,6 @@ public class ContentPageEditorDisplayContextProvider {
 
 	@Reference
 	private CommentManager _commentManager;
-
-	private volatile FFLayoutContentPageEditorConfiguration
-		_ffLayoutContentPageEditorConfiguration;
 
 	@Reference
 	private FragmentCollectionContributorTracker

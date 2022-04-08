@@ -35,7 +35,6 @@ import com.liferay.layout.responsive.ResponsiveLayoutStructureUtil;
 import com.liferay.layout.taglib.internal.display.context.RenderCollectionLayoutStructureItemDisplayContext;
 import com.liferay.layout.taglib.internal.display.context.RenderLayoutStructureDisplayContext;
 import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
-import com.liferay.layout.taglib.internal.util.FFLayoutTaglibConfigurationUtil;
 import com.liferay.layout.util.constants.LayoutStructureConstants;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
@@ -523,9 +522,7 @@ public class RenderLayoutStructureTag extends IncludeTag {
 
 		String htmlTag = containerStyledLayoutStructureItem.getHtmlTag();
 
-		if (!FFLayoutTaglibConfigurationUtil.fragmentAdvancedOptionsEnabled() ||
-			Validator.isNull(htmlTag)) {
-
+		if (Validator.isNull(htmlTag)) {
 			htmlTag = "div";
 		}
 

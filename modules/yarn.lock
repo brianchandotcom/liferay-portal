@@ -1792,10 +1792,10 @@
   dependencies:
     "@lezer/common" "^0.15.0"
 
-"@liferay/amd-loader@5.0.0":
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/@liferay/amd-loader/-/amd-loader-5.0.0.tgz#5d40403348b70be4296bfb6e7f28a6f20d31a0a3"
-  integrity sha512-MIymRWn2AyiiT8MncAdahFosGqAfeM8MG6oUlc+i272Id97Koclx9ofv3aqdL8v9TsEAGITi2Bb2IzMBOvgzNw==
+"@liferay/amd-loader@5.1.0":
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/@liferay/amd-loader/-/amd-loader-5.1.0.tgz#f49294299d0fd062f004aad532c5497b17454099"
+  integrity sha512-nJcJpltU4IB+tLT0jAE4aWQFbQ7DiSv9ywdQ0c9JK17iov+SnlmgLp7XlJZm9D/IWNZwmfd4V+Wmmq3jrQNrmA==
 
 "@liferay/eslint-plugin@1.2.0":
   version "1.2.0"
@@ -1868,10 +1868,10 @@
     xml-js "^1.6.8"
     yargs "^14.0.0"
 
-"@liferay/npm-scripts@47.3.0-pre.3":
-  version "47.3.0-pre.3"
-  resolved "https://registry.yarnpkg.com/@liferay/npm-scripts/-/npm-scripts-47.3.0-pre.3.tgz#0076614516817f2940c18462202f68d05bdb9252"
-  integrity sha512-U+O93J/rAk9Wlqvps8G6Hs6mZ6R8i09zel3oKb+RhjzJo8gH929MXlip/wFkgK7Ruij4dyEcyq5nvowW3E/A+A==
+"@liferay/npm-scripts@47.3.0-pre.4":
+  version "47.3.0-pre.4"
+  resolved "https://registry.yarnpkg.com/@liferay/npm-scripts/-/npm-scripts-47.3.0-pre.4.tgz#a2538c5578fe2f03c8a00bdfd39a2026edd79457"
+  integrity sha512-ACd/jxBaE4wk7aawl1jmQkD+3lvH2ERFl9xcURjfE4sTkPoKQnvBe6fuXfn3N36LEuWZmDFC9SiRSXJE/Y7BZA==
   dependencies:
     "@babel/cli" "^7.2.3"
     "@babel/core" "^7.8.3"

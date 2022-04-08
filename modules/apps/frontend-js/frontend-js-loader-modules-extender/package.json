@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"@liferay/amd-loader": "5.0.0"
+		"@liferay/amd-loader": "5.1.0"
 	},
 	"name": "frontend-js-loader-modules-extender",
 	"version": "6.0.18"

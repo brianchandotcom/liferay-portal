@@ -18,7 +18,7 @@ import com.liferay.adaptive.media.image.configuration.AMImageConfigurationEntry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -28,7 +28,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * Parses ConfigAdmin configuration entries.
@@ -76,9 +75,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = AMImageConfigurationEntryParser.class)
 public class AMImageConfigurationEntryParser {
-
-	public AMImageConfigurationEntryParser() {
-	}
 
 	public String getConfigurationString(
 		AMImageConfigurationEntry amImageConfigurationEntry) {
@@ -143,11 +139,11 @@ public class AMImageConfigurationEntryParser {
 
 		String name = fields[0];
 
-		name = _http.decodeURL(name);
+		name = HttpHelperUtil.decodeURL(name);
 
 		String description = fields[1];
 
-		description = _http.decodeURL(description);
+		description = HttpHelperUtil.decodeURL(description);
 
 		String uuid = fields[2];
 
@@ -186,10 +182,6 @@ public class AMImageConfigurationEntryParser {
 			name, description, uuid, properties, enabled);
 	}
 
-	protected AMImageConfigurationEntryParser(Http http) {
-		_http = http;
-	}
-
 	private static final Pattern _attributeSeparatorPattern = Pattern.compile(
 		"\\s*;\\s*");
 	private static final Pattern _disabledSeparatorPattern = Pattern.compile(
@@ -198,8 +190,5 @@ public class AMImageConfigurationEntryParser {
 		"\\s*:\\s*");
 	private static final Pattern _keyValueSeparatorPattern = Pattern.compile(
 		"\\s*=\\s*");
-
-	@Reference
-	private Http _http;
 
 }

@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -147,10 +147,10 @@ public class EditSiteURLMVCActionCommand
 		String namespace = _portal.getPortletNamespace(
 			ConfigurationAdminPortletKeys.SITE_SETTINGS);
 
-		siteAdministrationURL = _http.addParameter(
+		siteAdministrationURL = HttpHelperUtil.addParameter(
 			siteAdministrationURL, namespace + "mvcRenderCommandName",
 			"/configuration_admin/view_configuration_screen");
-		siteAdministrationURL = _http.addParameter(
+		siteAdministrationURL = HttpHelperUtil.addParameter(
 			siteAdministrationURL, namespace + "configurationScreenKey",
 			"site-configuration-site-url");
 
@@ -162,9 +162,6 @@ public class EditSiteURLMVCActionCommand
 
 	@Reference
 	private GroupService _groupService;
-
-	@Reference
-	private Http _http;
 
 	@Reference
 	private LayoutSetService _layoutSetService;

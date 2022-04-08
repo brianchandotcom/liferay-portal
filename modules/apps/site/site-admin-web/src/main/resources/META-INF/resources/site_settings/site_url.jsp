@@ -118,16 +118,16 @@ if (publicVirtualHostnames.isEmpty()) {
 		<liferay-ui:message arguments='<%= new Object[] {"<strong>" + themeDisplay.getPortalURL() + themeDisplay.getPathFriendlyURLPublic() + "</strong>"} %>' key="the-friendly-url-is-appended-to-x-for-pages" translateArguments="<%= false %>" />
 	</p>
 
-	<aui:input label="friendly-url" name="groupFriendlyURL" type="text" value="<%= HttpUtil.decodeURL(liveGroup.getFriendlyURL()) %>" />
+	<aui:input label="friendly-url" name="groupFriendlyURL" type="text" value="<%= HttpHelperUtil.decodeURL(liveGroup.getFriendlyURL()) %>" />
 
 	<c:if test="<%= liveGroup.hasStagingGroup() %>">
-		<aui:input label="staging-friendly-url" name="stagingFriendlyURL" type="text" value="<%= HttpUtil.decodeURL(stagingGroup.getFriendlyURL()) %>" />
+		<aui:input label="staging-friendly-url" name="stagingFriendlyURL" type="text" value="<%= HttpHelperUtil.decodeURL(stagingGroup.getFriendlyURL()) %>" />
 	</c:if>
 
 	<p class="small text-secondary">
 		<liferay-ui:message key="enter-the-virtual-host-that-map-to-the-friendly-url" />
 
-		<liferay-ui:message arguments='<%= new Object[] {"<strong>www.helloworld.com</strong>", "<strong>/helloworld</strong>", "<strong>" + HttpUtil.getProtocol(request) + "://www.helloworld.com</strong>", "<strong>" + themeDisplay.getPortalURL() + themeDisplay.getPathFriendlyURLPublic() + "/helloworld</strong>"} %>' key="for-example,-if-the-virtual-host-is-x-and-the-friendly-url-is-x,-then-x-is-mapped-to-x" translateArguments="<%= false %>" />
+		<liferay-ui:message arguments='<%= new Object[] {"<strong>www.helloworld.com</strong>", "<strong>/helloworld</strong>", "<strong>" + HttpHelperUtil.getProtocol(request) + "://www.helloworld.com</strong>", "<strong>" + themeDisplay.getPortalURL() + themeDisplay.getPathFriendlyURLPublic() + "/helloworld</strong>"} %>' key="for-example,-if-the-virtual-host-is-x-and-the-friendly-url-is-x,-then-x-is-mapped-to-x" translateArguments="<%= false %>" />
 	</p>
 
 	<div class="mb-5" id="<portlet:namespace />publicVirtualHostFields">

@@ -62,7 +62,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -1219,7 +1219,7 @@ public class GroupServiceTest {
 			_group.getGroupId(), friendlyURL);
 
 		Assert.assertEquals(
-			friendlyURL, HttpUtil.decodeURL(_group.getFriendlyURL()));
+			friendlyURL, HttpHelperUtil.decodeURL(_group.getFriendlyURL()));
 	}
 
 	@Test

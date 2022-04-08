@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -72,7 +72,7 @@ public class ActionUtil {
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 
-		return HttpUtil.getParameter(
+		return HttpHelperUtil.getParameter(
 			redirect, actionResponse.getNamespace() + "historyKey", false);
 	}
 

@@ -236,24 +236,8 @@ public class PortletSharedSearchRequestImpl
 	}
 
 	private SearchSettingsContributor _getSearchSettingsContributor(
-		PortletSharedSearchContributor portletSharedSearchContributor,
 		Portlet portlet, ThemeDisplay themeDisplay,
 		RenderRequest renderRequest) {
-
-		Optional<PortletPreferences> portletPreferencesOptional =
-			portletPreferencesLookup.fetchPreferences(portlet, themeDisplay);
-
-		return searchSettings -> portletSharedSearchContributor.contribute(
-			new PortletSharedSearchSettingsImpl(
-				searchSettings, portlet.getPortletId(),
-				portletPreferencesOptional, portletSharedRequestHelper,
-				renderRequest));
-	}
-
-	private SearchSettingsContributor
-		_getSearchSettingsContributorOptional(
-			Portlet portlet, ThemeDisplay themeDisplay,
-			RenderRequest renderRequest) {
 
 		PortletSharedSearchContributor portletSharedSearchContributor =
 			_portletSharedSearchContributors.getService(
@@ -268,6 +252,21 @@ public class PortletSharedSearchRequestImpl
 			renderRequest);
 	}
 
+	private SearchSettingsContributor _getSearchSettingsContributor(
+		PortletSharedSearchContributor portletSharedSearchContributor,
+		Portlet portlet, ThemeDisplay themeDisplay,
+		RenderRequest renderRequest) {
+
+		Optional<PortletPreferences> portletPreferencesOptional =
+			portletPreferencesLookup.fetchPreferences(portlet, themeDisplay);
+
+		return searchSettings -> portletSharedSearchContributor.contribute(
+			new PortletSharedSearchSettingsImpl(
+				searchSettings, portlet.getPortletId(),
+				portletPreferencesOptional, portletSharedRequestHelper,
+				renderRequest));
+	}
+
 	private List<SearchSettingsContributor> _getSearchSettingsContributors(
 		ThemeDisplay themeDisplay, RenderRequest renderRequest) {
 
@@ -278,14 +277,12 @@ public class PortletSharedSearchRequestImpl
 			new ArrayList<>();
 
 		for (Portlet portlet : portlets) {
-			SearchSettingsContributor
-				searchSettingsContributorOptional =
-					_getSearchSettingsContributorOptional(
-						portlet, themeDisplay, renderRequest);
+			SearchSettingsContributor searchSettingsContributor =
+				_getSearchSettingsContributor(
+					portlet, themeDisplay, renderRequest);
 
-			if (searchSettingsContributorOptional != null) {
-				searchSettingsContributors.add(
-					searchSettingsContributorOptional);
+			if (searchSettingsContributor != null) {
+				searchSettingsContributors.add(searchSettingsContributor);
 			}
 		}
 

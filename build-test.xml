@@ -6308,6 +6308,25 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 
 	<macrodef name="start-docker-database">
 		<sequential>
+			<trycatch property="start.docker.database.error">
+				<try>
+					<retry retrycount="2">
+						<sequential>
+							<start-docker-database-cmd />
+						</sequential>
+					</retry>
+				</try>
+				<catch>
+					<echo>Failed to start the docker database container</echo>
+
+					<fail>${start.docker.database.error}</fail>
+				</catch>
+			</trycatch>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="start-docker-database-cmd">
+		<sequential>
 			<get-database-property property.name="database.host" />
 			<get-database-property property.name="database.docker.database.options" />
 			<get-database-property property.name="database.docker.image" />
@@ -6724,6 +6743,25 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 	</macrodef>
 
 	<macrodef name="stop-docker-database">
+		<sequential>
+			<trycatch property="stop.docker.database.error">
+				<try>
+					<retry retrycount="2">
+						<sequential>
+							<stop-docker-database-cmd />
+						</sequential>
+					</retry>
+				</try>
+				<catch>
+					<echo>Failed to stop the docker database container</echo>
+
+					<fail>${stop.docker.database.error}</fail>
+				</catch>
+			</trycatch>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="stop-docker-database-cmd">
 		<sequential>
 			<get-database-property property.name="database.host" />
 

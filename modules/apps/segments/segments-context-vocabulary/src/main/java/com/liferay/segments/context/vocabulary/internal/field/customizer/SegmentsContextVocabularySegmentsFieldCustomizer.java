@@ -58,7 +58,7 @@ import org.osgi.service.component.annotations.Reference;
 public class SegmentsContextVocabularySegmentsFieldCustomizer
 	implements SegmentsFieldCustomizer {
 
-	public static final String KEY = "assetVocabulary";
+	public static final String KEY = "assetVocabularyName";
 
 	@Override
 	public List<String> getFieldNames() {

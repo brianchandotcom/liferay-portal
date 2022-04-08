@@ -85,6 +85,14 @@ definition {
 			var total = "${subtotal}";
 		}
 
+		if (isSet(paymentMethod) && (IsElementPresent(key_radioOption = "", locator1 = "CommerceEntry#RADIO_BUTTON"))) {
+			Click(
+				key_radioOption = "${paymentMethod}",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+
+			Click(locator1 = "Button#CONTINUE");
+		}
+
 		CommerceCheckout.viewCheckoutOrderSummary(
 			addressAddress = "${newAddressAddress}",
 			addressCity = "${newAddressCity}",

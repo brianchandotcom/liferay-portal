@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.test;
 
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Collections;
 import java.util.Date;
@@ -23,19 +22,12 @@ import java.util.Map;
 import java.util.Objects;
 
 import org.junit.Assert;
-import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author Guilherme Camacho
  */
 public class BeanTestUtilTest {
-
-	@ClassRule
-	@Rule
-	public static final LiferayUnitTestRule liferayUnitTestRule =
-		LiferayUnitTestRule.INSTANCE;
 
 	@Test(expected = NoSuchMethodException.class)
 	public void testCopyPropertiesShouldFailIfPropertiesDoesNotExist()

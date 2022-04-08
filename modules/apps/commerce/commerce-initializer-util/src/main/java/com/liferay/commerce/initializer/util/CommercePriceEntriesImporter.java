@@ -168,9 +168,8 @@ public class CommercePriceEntriesImporter {
 				"No price list found with name " + name);
 		}
 
-		String sku = jsonObject.getString("sku");
-
-		String externalReferenceCode = _friendlyURLNormalizer.normalize(sku);
+		String externalReferenceCode = jsonObject.getString(
+			"externalReferenceCode");
 
 		CPInstance cpInstance =
 			_cpInstanceLocalService.fetchByExternalReferenceCode(
@@ -178,7 +177,8 @@ public class CommercePriceEntriesImporter {
 
 		if (cpInstance == null) {
 			throw new NoSuchCPInstanceException(
-				"No cpInstance found with sku " + sku);
+				"No cpInstance found with externalReferenceCode " +
+					externalReferenceCode);
 		}
 
 		CommercePriceEntry commercePriceEntry =

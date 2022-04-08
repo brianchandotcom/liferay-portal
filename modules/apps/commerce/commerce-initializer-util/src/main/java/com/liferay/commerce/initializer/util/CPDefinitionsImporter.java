@@ -525,12 +525,6 @@ public class CPDefinitionsImporter {
 					BigDecimal.valueOf(jsonObject.getDouble("promoPrice", 0)));
 				cpInstance.setCost(cost);
 
-				String cpInstanceExternalReferenceCode =
-					_friendlyURLNormalizer.normalize(sku);
-
-				cpInstance.setExternalReferenceCode(
-					cpInstanceExternalReferenceCode);
-
 				_cpInstanceLocalService.updateCPInstance(cpInstance);
 
 				// Commerce warehouse items
@@ -802,6 +796,8 @@ public class CPDefinitionsImporter {
 			ServiceContext serviceContext)
 		throws Exception {
 
+		String externalReferenceCode = skuJSONObject.getString(
+			"externalReferenceCode");
 		String sku = skuJSONObject.getString("sku");
 		String manufacturerPartNumber = skuJSONObject.getString(
 			"manufacturerPartNumber");
@@ -868,8 +864,6 @@ public class CPDefinitionsImporter {
 
 		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
 			cpDefinitionId);
-
-		String externalReferenceCode = _friendlyURLNormalizer.normalize(sku);
 
 		boolean overrideSubscriptionInfo = false;
 		boolean subscriptionEnabled = false;

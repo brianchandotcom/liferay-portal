@@ -84,6 +84,7 @@
 						"value": "12"
 					}
 				],
+				"externalReferenceCode": "MIN93016A",
 				"manufacturerPartNumber": "BB98319",
 				"price": 80.0,
 				"promoPrice": 72.0,
@@ -99,6 +100,7 @@
 						"value": "48"
 					}
 				],
+				"externalReferenceCode": "MIN93016B",
 				"manufacturerPartNumber": "BB98320",
 				"price": 80.0,
 				"promoPrice": 72.0,
@@ -114,6 +116,7 @@
 						"value": "112"
 					}
 				],
+				"externalReferenceCode": "MIN93016C",
 				"manufacturerPartNumber": "BB98321",
 				"price": 80.0,
 				"promoPrice": 72.0,
@@ -493,6 +496,7 @@
 						"value": "6"
 					}
 				],
+				"externalReferenceCode": "MIN93022A",
 				"manufacturerPartNumber": "BB98327",
 				"price": 120.0,
 				"promoPrice": 0,
@@ -508,6 +512,7 @@
 						"value": "24"
 					}
 				],
+				"externalReferenceCode": "MIN93022B",
 				"manufacturerPartNumber": "BB98328",
 				"price": 120.0,
 				"promoPrice": 0,
@@ -523,6 +528,7 @@
 						"value": "48"
 					}
 				],
+				"externalReferenceCode": "MIN93022C",
 				"manufacturerPartNumber": "BB98329",
 				"price": 120.0,
 				"promoPrice": 0,

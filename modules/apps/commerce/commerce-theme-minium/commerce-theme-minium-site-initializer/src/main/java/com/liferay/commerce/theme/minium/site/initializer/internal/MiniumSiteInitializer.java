@@ -570,9 +570,21 @@ public class MiniumSiteInitializer implements SiteInitializer {
 			_log.info("Importing commerce price entries...");
 		}
 
+		JSONArray jsonArray = _getJSONArray("price-entries.json");
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			String sku = jsonObject.getString("sku");
+
+			String externalReferenceCode =
+				sku + _siteInitializerDependencyResolver.getKey();
+
+			jsonObject.put("externalReferenceCode", externalReferenceCode);
+		}
+
 		_commercePriceEntriesImporter.importCommercePriceEntries(
-			_getJSONArray("price-entries.json"), catalogGroupId,
-			serviceContext.getUserId());
+			jsonArray, catalogGroupId, serviceContext.getUserId());
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce price entries successfully imported");
@@ -637,6 +649,26 @@ public class MiniumSiteInitializer implements SiteInitializer {
 
 				jsonObject.put(
 					"externalReferenceCode", newExternalReferenceCode);
+
+				JSONArray skusJSONArray = jsonObject.getJSONArray("skus");
+
+				if (skusJSONArray != null) {
+					for (int j = 0; j < skusJSONArray.length(); j++) {
+						JSONObject skuJSONObject = skusJSONArray.getJSONObject(
+							j);
+
+						String skuExternalReferenceCode =
+							skuJSONObject.getString("externalReferenceCode");
+
+						String newSkuExternalReferenceCode =
+							skuExternalReferenceCode +
+								_siteInitializerDependencyResolver.getKey();
+
+						skuJSONObject.put(
+							"externalReferenceCode",
+							newSkuExternalReferenceCode);
+					}
+				}
 			}
 		}
 

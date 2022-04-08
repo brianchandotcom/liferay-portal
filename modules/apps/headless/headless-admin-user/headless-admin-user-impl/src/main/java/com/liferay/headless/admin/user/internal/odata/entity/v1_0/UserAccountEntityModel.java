@@ -35,6 +35,8 @@ public class UserAccountEntityModel implements EntityModel {
 			new CollectionEntityField(
 				new StringEntityField(
 					"keywords", locale -> "assetTagNames.raw")),
+			new CollectionEntityField(
+				new StringEntityField("roleNames", locale -> "roleNames")),
 			new DateTimeEntityField(
 				"dateModified",
 				locale -> Field.getSortableFieldName(Field.MODIFIED_DATE),

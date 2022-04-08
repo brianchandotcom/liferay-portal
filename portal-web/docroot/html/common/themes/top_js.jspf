@@ -311,9 +311,13 @@
 			isSignedIn: function() {
 				return <%= themeDisplay.isSignedIn() %>;
 			},
-			isStagedPortlet: function() {
-				return <%= liveGroup.isStagedPortlet(themeDisplay.getPpid()) %>;
-			},
+
+			<c:if test="<%= Validator.isNotNull(themeDisplay.getPpid()) %>">
+				isStagedPortlet: function() {
+					return <%= liveGroup.isStagedPortlet(themeDisplay.getPpid()) %>;
+				},
+			</c:if>
+
 			isStateExclusive: function() {
 				return <%= themeDisplay.isStateExclusive() %>;
 			},

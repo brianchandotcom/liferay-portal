@@ -1022,7 +1022,7 @@ definition {
 	macro viewFieldErrorMessage {
 		AssertTextEquals(
 			locator1 = "ObjectAdmin#OBJECT_FIELDS_REQUIRED_ERROR_MESSAGE",
-			value1 = "${message}");
+			value1 = "${errorMessage}");
 	}
 
 	macro viewFieldValueDisabled {

@@ -1790,10 +1790,10 @@ definition {
 
 		ObjectAdmin.addObjectFieldViaUI(
 			fieldLabel = "Custom Field",
-			fieldName = " ",
+			fieldName = "",
 			fieldType = "Text");
 
-		ObjectAdmin.viewFieldErrorMessage(message = "Required");
+		ObjectAdmin.viewFieldErrorMessage(errorMessage = "Required");
 	}
 
 	@description = "LPS-135549 - Verify it is not possible to leave the Label field blank"

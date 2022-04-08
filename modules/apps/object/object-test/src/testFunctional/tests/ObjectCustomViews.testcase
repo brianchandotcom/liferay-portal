@@ -327,7 +327,7 @@ definition {
 
 		Button.clickSave();
 
-		AssertElementPresent(locator1 = "ObjectCustomViews#CUSTOM_VIEW_FIELD_REQUIRED");
+		ObjectAdmin.viewFieldErrorMessage(errorMessage = "Required");
 	}
 
 	@description = "LPS-135394 - Verify that it is not possible to save another View as default"

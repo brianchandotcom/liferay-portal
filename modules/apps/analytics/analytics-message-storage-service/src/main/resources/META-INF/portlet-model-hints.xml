@@ -8,7 +8,9 @@
 		<field name="userId" type="long" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="className" type="String" />
+		<field name="className" type="String">
+			<hint name="max-length">255</hint>
+		</field>
 		<field name="classPK" type="long" />
 	</model>
 	<model name="com.liferay.analytics.message.storage.model.AnalyticsMessage">

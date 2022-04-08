@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -79,7 +79,7 @@ public class GetFormReportDataMVCResourceCommand
 						ddmFormInstanceReport)
 				).put(
 					"formReportRecordsFieldValuesURL",
-					_http.addParameter(
+					HttpHelperUtil.addParameter(
 						ResourceURLBuilder.createResourceURL(
 							resourceResponse
 						).setResourceID(
@@ -126,9 +126,6 @@ public class GetFormReportDataMVCResourceCommand
 	@Reference
 	private DDMFormInstanceReportLocalService
 		_ddmFormInstanceReportLocalService;
-
-	@Reference
-	private Http _http;
 
 	@Reference
 	private Portal _portal;

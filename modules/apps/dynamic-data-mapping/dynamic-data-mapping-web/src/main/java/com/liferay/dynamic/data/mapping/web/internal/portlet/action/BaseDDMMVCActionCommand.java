@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -191,7 +191,7 @@ public abstract class BaseDDMMVCActionCommand extends BaseMVCActionCommand {
 			return redirect;
 		}
 
-		redirect = HttpUtil.setParameter(
+		redirect = HttpHelperUtil.setParameter(
 			redirect, "closeRedirect", closeRedirect);
 
 		SessionMessages.add(

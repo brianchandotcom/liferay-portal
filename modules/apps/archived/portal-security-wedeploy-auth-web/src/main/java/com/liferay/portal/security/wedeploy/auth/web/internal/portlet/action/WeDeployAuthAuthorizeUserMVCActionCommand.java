@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp;
@@ -68,7 +68,7 @@ public class WeDeployAuthAuthorizeUserMVCActionCommand
 
 		try {
 			if (cmd.equals("allow")) {
-				redirectURI = _http.addParameter(
+				redirectURI = HttpHelperUtil.addParameter(
 					redirectURI, "code",
 					_getWeDeployAuthToken(actionRequest, themeDisplay));
 			}
@@ -116,9 +116,6 @@ public class WeDeployAuthAuthorizeUserMVCActionCommand
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		WeDeployAuthAuthorizeUserMVCActionCommand.class);
-
-	@Reference
-	private Http _http;
 
 	@Reference
 	private WeDeployAuthTokenLocalService _weDeployAuthTokenLocalService;

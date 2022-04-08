@@ -17,7 +17,7 @@ package com.liferay.youtube.web.internal.display.context;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Objects;
@@ -42,7 +42,7 @@ public class YouTubeDisplayContext {
 	public String getEmbedURL() {
 		StringBundler sb = new StringBundler(12);
 
-		sb.append(HttpUtil.getProtocol(_httpServletRequest));
+		sb.append(HttpHelperUtil.getProtocol(_httpServletRequest));
 		sb.append("://www.youtube.com/embed/");
 		sb.append(getId());
 		sb.append("?wmode=transparent");
@@ -112,8 +112,8 @@ public class YouTubeDisplayContext {
 
 	public String getImageURL() {
 		return StringBundler.concat(
-			HttpUtil.getProtocol(_httpServletRequest), "://img.youtube.com/vi/",
-			getId(), "/0.jpg");
+			HttpHelperUtil.getProtocol(_httpServletRequest),
+			"://img.youtube.com/vi/", getId(), "/0.jpg");
 	}
 
 	public String getPresetSize() {
@@ -148,7 +148,7 @@ public class YouTubeDisplayContext {
 	}
 
 	public String getWatchURL() {
-		return HttpUtil.getProtocol(_httpServletRequest) +
+		return HttpHelperUtil.getProtocol(_httpServletRequest) +
 			"://www.youtube.com/watch?v=" + getId();
 	}
 

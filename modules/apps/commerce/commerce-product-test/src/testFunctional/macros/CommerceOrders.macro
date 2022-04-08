@@ -210,6 +210,12 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro openOrdersAdmin {
+		Navigator.openWithAppendToBaseURL(
+			baseURL = "${baseURL}",
+			urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_commerce_order_web_internal_portlet_CommerceOrderPortlet");
+	}
+
 	macro openOrderTypesAdmin {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = "${baseURL}",

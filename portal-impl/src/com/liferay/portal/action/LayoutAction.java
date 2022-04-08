@@ -35,7 +35,7 @@ import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -129,11 +129,11 @@ public class LayoutAction implements Action {
 					).buildString();
 				}
 
-				authLoginURL = HttpUtil.setParameter(
+				authLoginURL = HttpHelperUtil.setParameter(
 					authLoginURL, "p_p_id",
 					PropsValues.AUTH_LOGIN_PORTLET_NAME);
 
-				authLoginURL = HttpUtil.setParameter(
+				authLoginURL = HttpHelperUtil.setParameter(
 					authLoginURL, redirectParam,
 					PortalUtil.getCurrentURL(httpServletRequest));
 
@@ -219,12 +219,12 @@ public class LayoutAction implements Action {
 		}
 
 		if (Validator.isNotNull(themeDisplay.getDoAsUserId())) {
-			forwardURL = HttpUtil.addParameter(
+			forwardURL = HttpHelperUtil.addParameter(
 				forwardURL, "doAsUserId", themeDisplay.getDoAsUserId());
 		}
 
 		if (Validator.isNotNull(themeDisplay.getDoAsUserLanguageId())) {
-			forwardURL = HttpUtil.addParameter(
+			forwardURL = HttpHelperUtil.addParameter(
 				forwardURL, "doAsUserLanguageId",
 				themeDisplay.getDoAsUserLanguageId());
 		}

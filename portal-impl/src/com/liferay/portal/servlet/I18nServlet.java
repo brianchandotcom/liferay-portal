@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -220,8 +220,8 @@ public class I18nServlet extends HttpServlet {
 
 		String redirect = path;
 
-		if (path.equals(HttpUtil.decodePath(path))) {
-			redirect = HttpUtil.encodePath(path);
+		if (path.equals(HttpHelperUtil.decodePath(path))) {
+			redirect = HttpHelperUtil.encodePath(path);
 		}
 
 		if (_log.isDebugEnabled()) {

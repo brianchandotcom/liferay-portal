@@ -97,7 +97,6 @@ import com.liferay.portal.struts.TilesUtil;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.net.URI;
 import java.net.URL;
 
 import java.util.Collections;
@@ -109,7 +108,6 @@ import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -924,168 +922,13 @@ public class TemplateContextHelper {
 		}
 
 		@Override
-		public String addParameter(String url, String name, boolean value) {
-			return _http.addParameter(url, name, value);
-		}
-
-		@Override
-		public String addParameter(String url, String name, double value) {
-			return _http.addParameter(url, name, value);
-		}
-
-		@Override
-		public String addParameter(String url, String name, int value) {
-			return _http.addParameter(url, name, value);
-		}
-
-		@Override
-		public String addParameter(String url, String name, long value) {
-			return _http.addParameter(url, name, value);
-		}
-
-		@Override
-		public String addParameter(String url, String name, short value) {
-			return _http.addParameter(url, name, value);
-		}
-
-		@Override
-		public String addParameter(String url, String name, String value) {
-			return _http.addParameter(url, name, value);
-		}
-
-		@Override
-		public String decodePath(String path) {
-			return _http.decodePath(path);
-		}
-
-		@Override
-		public String decodeURL(String url) {
-			return _http.decodeURL(url);
-		}
-
-		@Override
-		public String encodeParameters(String url) {
-			return _http.encodeParameters(url);
-		}
-
-		@Override
-		public String encodePath(String path) {
-			return _http.encodePath(path);
-		}
-
-		@Override
-		public String fixPath(String path) {
-			return _http.fixPath(path);
-		}
-
-		@Override
-		public String fixPath(String path, boolean leading, boolean trailing) {
-			return _http.fixPath(path, leading, trailing);
-		}
-
-		@Override
-		public String getCompleteURL(HttpServletRequest httpServletRequest) {
-			return _http.getCompleteURL(httpServletRequest);
-		}
-
-		@Override
 		public Cookie[] getCookies() {
 			return _http.getCookies();
 		}
 
 		@Override
-		public String getDomain(String url) {
-			return _http.getDomain(url);
-		}
-
-		@Override
-		public String getIpAddress(String url) {
-			return _http.getIpAddress(url);
-		}
-
-		@Override
-		public String getParameter(String url, String name) {
-			return _http.getParameter(url, name);
-		}
-
-		@Override
-		public String getParameter(String url, String name, boolean escaped) {
-			return _http.getParameter(url, name, escaped);
-		}
-
-		@Override
-		public Map<String, String[]> getParameterMap(String queryString) {
-			return _http.getParameterMap(queryString);
-		}
-
-		@Override
-		public String getPath(String url) {
-			return _http.getPath(url);
-		}
-
-		@Override
-		public String getProtocol(ActionRequest actionRequest) {
-			return _http.getProtocol(actionRequest);
-		}
-
-		@Override
-		public String getProtocol(boolean secure) {
-			return _http.getProtocol(secure);
-		}
-
-		@Override
-		public String getProtocol(HttpServletRequest httpServletRequest) {
-			return _http.getProtocol(httpServletRequest);
-		}
-
-		@Override
-		public String getProtocol(RenderRequest renderRequest) {
-			return _http.getProtocol(renderRequest);
-		}
-
-		@Override
-		public String getProtocol(String url) {
-			return _http.getProtocol(url);
-		}
-
-		@Override
-		public String getQueryString(HttpServletRequest httpServletRequest) {
-			return _http.getQueryString(httpServletRequest);
-		}
-
-		@Override
-		public String getQueryString(String url) {
-			return _http.getQueryString(url);
-		}
-
-		@Override
-		public String getRequestURL(HttpServletRequest httpServletRequest) {
-			return _http.getRequestURL(httpServletRequest);
-		}
-
-		@Override
-		public URI getURI(String uriString) {
-			return _http.getURI(uriString);
-		}
-
-		@Override
-		public boolean hasDomain(String url) {
-			return _http.hasDomain(url);
-		}
-
-		@Override
-		public boolean hasProtocol(String url) {
-			return _http.hasProtocol(url);
-		}
-
-		@Override
 		public boolean hasProxyConfig() {
 			return _http.hasProxyConfig();
-		}
-
-		@Override
-		public boolean isForwarded(HttpServletRequest httpServletRequest) {
-			return _http.isForwarded(httpServletRequest);
 		}
 
 		@Override
@@ -1096,122 +939,6 @@ public class TemplateContextHelper {
 		@Override
 		public boolean isProxyHost(String host) {
 			return _http.isProxyHost(host);
-		}
-
-		@Override
-		public boolean isSecure(String url) {
-			return _http.isSecure(url);
-		}
-
-		@Override
-		public String normalizePath(String uri) {
-			return _http.normalizePath(uri);
-		}
-
-		@Override
-		public Map<String, String[]> parameterMapFromString(
-			String queryString) {
-
-			return _http.parameterMapFromString(queryString);
-		}
-
-		@Override
-		public String parameterMapToString(Map<String, String[]> parameterMap) {
-			return _http.parameterMapToString(parameterMap);
-		}
-
-		@Override
-		public String parameterMapToString(
-			Map<String, String[]> parameterMap, boolean addQuestion) {
-
-			return _http.parameterMapToString(parameterMap, addQuestion);
-		}
-
-		@Override
-		public String protocolize(String url, ActionRequest actionRequest) {
-			return _http.protocolize(url, actionRequest);
-		}
-
-		@Override
-		public String protocolize(String url, boolean secure) {
-			return _http.protocolize(url, secure);
-		}
-
-		@Override
-		public String protocolize(
-			String url, HttpServletRequest httpServletRequest) {
-
-			return _http.protocolize(url, httpServletRequest);
-		}
-
-		@Override
-		public String protocolize(String url, int port, boolean secure) {
-			return _http.protocolize(url, port, secure);
-		}
-
-		@Override
-		public String protocolize(String url, RenderRequest renderRequest) {
-			return _http.protocolize(url, renderRequest);
-		}
-
-		@Override
-		public String removeDomain(String url) {
-			return _http.removeDomain(url);
-		}
-
-		@Override
-		public String removeParameter(String url, String name) {
-			return _http.removeParameter(url, name);
-		}
-
-		@Override
-		public String removePathParameters(String uri) {
-			return _http.removePathParameters(uri);
-		}
-
-		@Override
-		public String removeProtocol(String url) {
-			return _http.removeProtocol(url);
-		}
-
-		@Override
-		public String sanitizeHeader(String header) {
-			return _http.sanitizeHeader(header);
-		}
-
-		@Override
-		public String setParameter(String url, String name, boolean value) {
-			return _http.setParameter(url, name, value);
-		}
-
-		@Override
-		public String setParameter(String url, String name, double value) {
-			return _http.setParameter(url, name, value);
-		}
-
-		@Override
-		public String setParameter(String url, String name, int value) {
-			return _http.setParameter(url, name, value);
-		}
-
-		@Override
-		public String setParameter(String url, String name, long value) {
-			return _http.setParameter(url, name, value);
-		}
-
-		@Override
-		public String setParameter(String url, String name, short value) {
-			return _http.setParameter(url, name, value);
-		}
-
-		@Override
-		public String setParameter(String url, String name, String value) {
-			return _http.setParameter(url, name, value);
-		}
-
-		@Override
-		public String shortenURL(String url) {
-			return _http.shortenURL(url);
 		}
 
 		@Override

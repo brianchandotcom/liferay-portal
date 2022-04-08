@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
@@ -113,7 +113,7 @@ public class XmlRpcServlet extends HttpServlet {
 	protected String getToken(HttpServletRequest httpServletRequest) {
 		String token = httpServletRequest.getPathInfo();
 
-		return HttpUtil.fixPath(token);
+		return HttpHelperUtil.fixPath(token);
 	}
 
 	protected Response invokeMethod(

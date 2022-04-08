@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.util.Digester;
 import com.liferay.portal.kernel.util.DigesterUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -42,7 +42,7 @@ public class CacheFileNameGenerator {
 			CacheKeyGeneratorUtil.getCacheKeyGenerator(cacheName);
 
 		cacheKeyGenerator.append(
-			HttpUtil.getProtocol(httpServletRequest.isSecure()));
+			HttpHelperUtil.getProtocol(httpServletRequest.isSecure()));
 		cacheKeyGenerator.append(StringPool.UNDERLINE);
 		cacheKeyGenerator.append(httpServletRequest.getRequestURI());
 

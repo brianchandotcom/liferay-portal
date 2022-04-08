@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -167,9 +167,9 @@ public class WebDAVServlet extends HttpServlet {
 	}
 
 	protected String getRootPath(HttpServletRequest httpServletRequest) {
-		String contextPath = HttpUtil.fixPath(
+		String contextPath = HttpHelperUtil.fixPath(
 			PortalUtil.getPathContext(httpServletRequest), false, true);
-		String servletPath = HttpUtil.fixPath(
+		String servletPath = HttpHelperUtil.fixPath(
 			httpServletRequest.getServletPath(), false, true);
 
 		return contextPath.concat(servletPath);

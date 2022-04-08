@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -194,12 +194,12 @@ public class EditLayoutAction extends JSONAction {
 		String layoutURL = PortalUtil.getLayoutURL(layout, themeDisplay);
 
 		if (Validator.isNotNull(doAsUserId)) {
-			layoutURL = HttpUtil.addParameter(
+			layoutURL = HttpHelperUtil.addParameter(
 				layoutURL, "doAsUserId", themeDisplay.getDoAsUserId());
 		}
 
 		if (Validator.isNotNull(doAsUserLanguageId)) {
-			layoutURL = HttpUtil.addParameter(
+			layoutURL = HttpHelperUtil.addParameter(
 				layoutURL, "doAsUserLanguageId",
 				themeDisplay.getDoAsUserLanguageId());
 		}

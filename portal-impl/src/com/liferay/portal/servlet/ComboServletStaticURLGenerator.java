@@ -18,7 +18,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.comparator.PortletNameComparator;
@@ -59,7 +59,7 @@ public class ComboServletStaticURLGenerator {
 
 					String url = portletResource;
 
-					if (!HttpUtil.hasProtocol(portletResource)) {
+					if (!HttpHelperUtil.hasProtocol(portletResource)) {
 						url =
 							PortalUtil.getPathProxy() +
 								portlet.getContextPath() + portletResource;
@@ -69,7 +69,7 @@ public class ComboServletStaticURLGenerator {
 						continue;
 					}
 
-					if (HttpUtil.hasProtocol(portletResource)) {
+					if (HttpHelperUtil.hasProtocol(portletResource)) {
 						urls.add(portletResource);
 					}
 					else {
@@ -93,7 +93,7 @@ public class ComboServletStaticURLGenerator {
 		if (sb.length() > 0) {
 			String url = _urlPrefix + sb.toString();
 
-			url = HttpUtil.addParameter(url, "t", timestamp);
+			url = HttpHelperUtil.addParameter(url, "t", timestamp);
 
 			urls.add(url);
 		}

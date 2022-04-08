@@ -16,7 +16,7 @@ package com.liferay.portal.webdav;
 
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.webdav.WebDAVException;
 import com.liferay.portal.kernel.webdav.WebDAVRequest;
@@ -44,7 +44,7 @@ public class WebDAVRequestImpl implements WebDAVRequest {
 
 		_lockUuid = WebDAVUtil.getLockUuid(httpServletRequest);
 
-		String pathInfo = HttpUtil.fixPath(
+		String pathInfo = HttpHelperUtil.fixPath(
 			_httpServletRequest.getPathInfo(), false, true);
 
 		String strippedPathInfo = WebDAVUtil.stripManualCheckInRequiredPath(

@@ -60,7 +60,7 @@ import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.upgrade.ReleaseManager;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortalLifecycleUtil;
@@ -1139,14 +1139,15 @@ public class MainServlet extends HttpServlet {
 
 		String redirect = mainPath.concat("/portal/login");
 
-		redirect = HttpUtil.addParameter(
+		redirect = HttpHelperUtil.addParameter(
 			redirect, "redirect", PortalUtil.getCurrentURL(httpServletRequest));
 
 		long plid = ParamUtil.getLong(httpServletRequest, "p_l_id");
 
 		if (plid > 0) {
 			try {
-				redirect = HttpUtil.addParameter(redirect, "refererPlid", plid);
+				redirect = HttpHelperUtil.addParameter(
+					redirect, "refererPlid", plid);
 
 				Layout layout = LayoutLocalServiceUtil.getLayout(plid);
 
@@ -1163,7 +1164,8 @@ public class MainServlet extends HttpServlet {
 					plid = guestGroup.getDefaultPublicPlid();
 				}
 
-				redirect = HttpUtil.addParameter(redirect, "p_l_id", plid);
+				redirect = HttpHelperUtil.addParameter(
+					redirect, "p_l_id", plid);
 			}
 			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {

@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.sharepoint.BaseSharepointStorageImpl;
@@ -209,7 +209,7 @@ public class DLSharepointStorageImpl extends BaseSharepointStorageImpl {
 		long parentFolderId = folderIds.get(folderIds.size() - 1);
 
 		Folder folder = DLAppServiceUtil.getFolder(
-			groupId, parentFolderId, HttpUtil.decodePath(pathArray[0]));
+			groupId, parentFolderId, HttpHelperUtil.decodePath(pathArray[0]));
 
 		folderIds.add(folder.getFolderId());
 

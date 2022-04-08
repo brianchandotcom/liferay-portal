@@ -17,7 +17,7 @@ package com.liferay.portlet;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -54,7 +54,7 @@ public class PortletResourceStaticURLGenerator {
 				portlet);
 
 			for (String portletResource : portletResources) {
-				if (!HttpUtil.hasProtocol(portletResource)) {
+				if (!HttpHelperUtil.hasProtocol(portletResource)) {
 					Portlet rootPortlet = portlet.getRootPortlet();
 
 					portletResource = PortalUtil.getStaticResourceURL(

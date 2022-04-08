@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -94,7 +94,7 @@ public abstract class FindStrutsAction implements StrutsAction {
 					ActionKeys.VIEW)) {
 
 				if (!themeDisplay.isSignedIn() && result.isSignInRequired()) {
-					String redirect = HttpUtil.addParameter(
+					String redirect = HttpHelperUtil.addParameter(
 						PortalUtil.getPathMain() + "/portal/login", "redirect",
 						PortalUtil.getCurrentCompleteURL(httpServletRequest));
 
@@ -125,10 +125,10 @@ public abstract class FindStrutsAction implements StrutsAction {
 				String noSuchEntryRedirect = ParamUtil.getString(
 					httpServletRequest, "noSuchEntryRedirect");
 
-				redirect = HttpUtil.getParameter(
+				redirect = HttpHelperUtil.getParameter(
 					noSuchEntryRedirect, "redirect", false);
 
-				redirect = HttpUtil.decodeURL(redirect);
+				redirect = HttpHelperUtil.decodeURL(redirect);
 			}
 			else {
 				redirect = ParamUtil.getString(httpServletRequest, "redirect");

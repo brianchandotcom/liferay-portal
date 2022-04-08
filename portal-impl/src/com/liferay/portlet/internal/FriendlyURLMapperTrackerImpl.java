@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapperTracker;
 import com.liferay.portal.kernel.portlet.Route;
 import com.liferay.portal.kernel.portlet.Router;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -122,7 +122,7 @@ public class FriendlyURLMapperTrackerImpl implements FriendlyURLMapperTracker {
 	protected String getContent(ClassLoader classLoader, String fileName)
 		throws Exception {
 
-		String queryString = HttpUtil.getQueryString(fileName);
+		String queryString = HttpHelperUtil.getQueryString(fileName);
 
 		if (Validator.isNull(queryString)) {
 			return StringUtil.read(classLoader, fileName);
@@ -132,7 +132,7 @@ public class FriendlyURLMapperTrackerImpl implements FriendlyURLMapperTracker {
 
 		String xml = StringUtil.read(classLoader, fileName.substring(0, pos));
 
-		Map<String, String[]> parameterMap = HttpUtil.getParameterMap(
+		Map<String, String[]> parameterMap = HttpHelperUtil.getParameterMap(
 			queryString);
 
 		if (parameterMap == null) {

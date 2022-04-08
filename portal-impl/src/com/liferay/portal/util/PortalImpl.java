@@ -171,7 +171,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.InetAddressUtil;
 import com.liferay.portal.kernel.util.InheritableMap;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -235,6 +235,7 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.NetworkInterface;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.UnknownHostException;
 
 import java.sql.Connection;
@@ -793,12 +794,12 @@ public class PortalImpl implements Portal {
 
 		if (doAsUser) {
 			if (Validator.isNotNull(themeDisplay.getDoAsUserId())) {
-				url = HttpUtil.setParameter(
+				url = HttpHelperUtil.setParameter(
 					url, "doAsUserId", themeDisplay.getDoAsUserId());
 			}
 
 			if (Validator.isNotNull(themeDisplay.getDoAsUserLanguageId())) {
-				url = HttpUtil.setParameter(
+				url = HttpHelperUtil.setParameter(
 					url, "doAsUserLanguageId",
 					themeDisplay.getDoAsUserLanguageId());
 			}
@@ -806,24 +807,24 @@ public class PortalImpl implements Portal {
 
 		if (typeControlPanel) {
 			if (Validator.isNotNull(themeDisplay.getPpid())) {
-				url = HttpUtil.setParameter(
+				url = HttpHelperUtil.setParameter(
 					url, "p_p_id", themeDisplay.getPpid());
 			}
 
 			if (themeDisplay.getDoAsGroupId() > 0) {
-				url = HttpUtil.setParameter(
+				url = HttpHelperUtil.setParameter(
 					url, "doAsGroupId", themeDisplay.getDoAsGroupId());
 			}
 
 			if (themeDisplay.getRefererGroupId() !=
 					GroupConstants.DEFAULT_PARENT_GROUP_ID) {
 
-				url = HttpUtil.setParameter(
+				url = HttpHelperUtil.setParameter(
 					url, "refererGroupId", themeDisplay.getRefererGroupId());
 			}
 
 			if (themeDisplay.getRefererPlid() != LayoutConstants.DEFAULT_PLID) {
-				url = HttpUtil.setParameter(
+				url = HttpHelperUtil.setParameter(
 					url, "refererPlid", themeDisplay.getRefererPlid());
 			}
 		}
@@ -911,7 +912,14 @@ public class PortalImpl implements Portal {
 			return null;
 		}
 
-		URI uri = HttpUtil.getURI(url);
+		URI uri = null;
+
+		try {
+			uri = HttpHelperUtil.getURI(url);
+		}
+		catch (URISyntaxException uriSyntaxException) {
+			_log.error(uriSyntaxException);
+		}
 
 		if (uri == null) {
 			return null;
@@ -1416,7 +1424,7 @@ public class PortalImpl implements Portal {
 			layout.isTypeControlPanel());
 
 		if (PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 2) {
-			String groupFriendlyURLDomain = HttpUtil.getDomain(
+			String groupFriendlyURLDomain = HttpHelperUtil.getDomain(
 				groupFriendlyURL);
 
 			int pos = groupFriendlyURL.indexOf(groupFriendlyURLDomain);
@@ -1971,7 +1979,8 @@ public class PortalImpl implements Portal {
 			WebKeys.CURRENT_COMPLETE_URL);
 
 		if (currentCompleteURL == null) {
-			currentCompleteURL = HttpUtil.getCompleteURL(httpServletRequest);
+			currentCompleteURL = HttpHelperUtil.getCompleteURL(
+				httpServletRequest);
 
 			httpServletRequest.setAttribute(
 				WebKeys.CURRENT_COMPLETE_URL, currentCompleteURL);
@@ -1992,7 +2001,7 @@ public class PortalImpl implements Portal {
 		currentURL = ParamUtil.getString(httpServletRequest, "currentURL");
 
 		if (Validator.isNull(currentURL)) {
-			currentURL = HttpUtil.getCompleteURL(httpServletRequest);
+			currentURL = HttpHelperUtil.getCompleteURL(httpServletRequest);
 
 			if (Validator.isNotNull(currentURL) &&
 				!currentURL.contains(_J_SECURITY_CHECK)) {
@@ -2917,7 +2926,7 @@ public class PortalImpl implements Portal {
 
 		String layoutURL = getLayoutURL(layout, themeDisplay, doAsUser);
 
-		if (!HttpUtil.hasProtocol(layoutURL)) {
+		if (!HttpHelperUtil.hasProtocol(layoutURL)) {
 			layoutURL = getPortalURL(layout, themeDisplay) + layoutURL;
 		}
 
@@ -3015,7 +3024,7 @@ public class PortalImpl implements Portal {
 			Layout layout, ThemeDisplay themeDisplay, boolean doAsUser)
 		throws PortalException {
 
-		return HttpUtil.removeDomain(
+		return HttpHelperUtil.removeDomain(
 			getLayoutFullURL(layout, themeDisplay, doAsUser));
 	}
 
@@ -4328,7 +4337,7 @@ public class PortalImpl implements Portal {
 
 			queryString =
 				StringPool.AMPERSAND +
-					HttpUtil.parameterMapToString(actualParams, false);
+					HttpHelperUtil.parameterMapToString(actualParams, false);
 
 			break;
 		}
@@ -4365,9 +4374,10 @@ public class PortalImpl implements Portal {
 						"p_p_state",
 						new String[] {WindowState.MAXIMIZED.toString()});
 
-					queryString =
-						StringPool.AMPERSAND +
-							HttpUtil.parameterMapToString(actualParams, false);
+					String result = HttpHelperUtil.parameterMapToString(
+						actualParams, false);
+
+					queryString = StringPool.AMPERSAND + result;
 				}
 			}
 		}
@@ -5044,7 +5054,7 @@ public class PortalImpl implements Portal {
 			"p_p_state", new String[] {WindowState.MAXIMIZED.toString()});
 		params.put("p_p_mode", new String[] {PortletMode.VIEW.toString()});
 
-		sb.append(HttpUtil.parameterMapToString(params, true));
+		sb.append(HttpHelperUtil.parameterMapToString(params, true));
 
 		return sb.toString();
 	}
@@ -5189,7 +5199,7 @@ public class PortalImpl implements Portal {
 		Map<String, String[]> parameterMap = null;
 
 		if (Validator.isNotNull(queryString)) {
-			parameterMap = HttpUtil.getParameterMap(queryString);
+			parameterMap = HttpHelperUtil.getParameterMap(queryString);
 		}
 
 		StringBundler sb = new StringBundler(15);
@@ -6477,7 +6487,7 @@ public class PortalImpl implements Portal {
 		int count = _PORTLET_RESOURCE_ID_URL_DECODE_COUNT;
 
 		while ((count > 0) && resourceId.contains("%")) {
-			resourceId = HttpUtil.decodePath(resourceId);
+			resourceId = HttpHelperUtil.decodePath(resourceId);
 
 			if (Validator.isNull(resourceId)) {
 				return false;
@@ -6536,11 +6546,12 @@ public class PortalImpl implements Portal {
 
 		String portletNamespace = getPortletNamespace(portletId);
 
-		Map<String, String[]> parameterMap = HttpUtil.getParameterMap(url);
+		Map<String, String[]> parameterMap = HttpHelperUtil.getParameterMap(
+			url);
 
 		for (String name : parameterMap.keySet()) {
 			if (name.startsWith(portletNamespace)) {
-				url = HttpUtil.removeParameter(url, name);
+				url = HttpHelperUtil.removeParameter(url, name);
 			}
 		}
 
@@ -7141,9 +7152,9 @@ public class PortalImpl implements Portal {
 			return redirect;
 		}
 
-		String queryString = HttpUtil.getQueryString(redirect);
+		String queryString = HttpHelperUtil.getQueryString(redirect);
 
-		String redirectParam = HttpUtil.getParameter(
+		String redirectParam = HttpHelperUtil.getParameter(
 			redirect, "redirect", false);
 
 		if (Validator.isNotNull(redirectParam)) {
@@ -7155,7 +7166,7 @@ public class PortalImpl implements Portal {
 				queryString, redirectParam, newRedirectParam);
 		}
 
-		String redirectPath = HttpUtil.getPath(redirect);
+		String redirectPath = HttpHelperUtil.getPath(redirect);
 
 		int pos = redirect.indexOf(redirectPath);
 
@@ -7983,12 +7994,12 @@ public class PortalImpl implements Portal {
 	}
 
 	protected String removeRedirectParameter(String url) {
-		Map<String, String[]> parameterMap = HttpUtil.getParameterMap(
-			HttpUtil.getQueryString(url));
+		Map<String, String[]> parameterMap = HttpHelperUtil.getParameterMap(
+			HttpHelperUtil.getQueryString(url));
 
 		for (String parameter : parameterMap.keySet()) {
 			if (parameter.endsWith("redirect")) {
-				url = HttpUtil.removeParameter(url, parameter);
+				url = HttpHelperUtil.removeParameter(url, parameter);
 			}
 		}
 

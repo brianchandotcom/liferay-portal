@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -63,7 +63,7 @@ public class SharepointUtil {
 	}
 
 	public static String[] getPathArray(String path) {
-		path = HttpUtil.fixPath(path, true, true);
+		path = HttpHelperUtil.fixPath(path, true, true);
 
 		return StringUtil.split(path, CharPool.SLASH);
 	}

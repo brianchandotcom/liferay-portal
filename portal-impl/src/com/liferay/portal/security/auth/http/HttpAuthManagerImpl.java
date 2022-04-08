@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.security.auth.session.AuthenticatedSessionManag
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.Base64;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -342,7 +342,7 @@ public class HttpAuthManagerImpl implements HttpAuthManager {
 		if (index > -1) {
 			login = credentials.substring(0, index);
 
-			login = HttpUtil.decodeURL(login.trim());
+			login = HttpHelperUtil.decodeURL(login.trim());
 
 			password = credentials.substring(index + 1);
 

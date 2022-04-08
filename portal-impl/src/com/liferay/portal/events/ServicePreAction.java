@@ -82,7 +82,7 @@ import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -651,7 +651,7 @@ public class ServicePreAction extends Action {
 		String portalDomain = _portalDomains.get(portalURL);
 
 		if (portalDomain == null) {
-			portalDomain = HttpUtil.getDomain(portalURL);
+			portalDomain = HttpHelperUtil.getDomain(portalURL);
 
 			_portalDomains.put(portalURL, portalDomain);
 		}
@@ -1585,12 +1585,12 @@ public class ServicePreAction extends Action {
 			GroupConstants.CONTROL_PANEL_FRIENDLY_URL);
 
 		if (Validator.isNotNull(doAsUserId)) {
-			urlControlPanel = HttpUtil.addParameter(
+			urlControlPanel = HttpHelperUtil.addParameter(
 				urlControlPanel, "doAsUserId", doAsUserId);
 		}
 
 		if (refererGroupId > 0) {
-			urlControlPanel = HttpUtil.addParameter(
+			urlControlPanel = HttpHelperUtil.addParameter(
 				urlControlPanel, "refererGroupId", refererGroupId);
 		}
 		else if (scopeGroupId > 0) {
@@ -1600,18 +1600,18 @@ public class ServicePreAction extends Action {
 				Group refererLayoutGroup = refererLayout.getGroup();
 
 				if (refererLayoutGroup.isUserGroup()) {
-					urlControlPanel = HttpUtil.addParameter(
+					urlControlPanel = HttpHelperUtil.addParameter(
 						urlControlPanel, "refererGroupId", scopeGroupId);
 				}
 			}
 		}
 
 		if (refererPlid > 0) {
-			urlControlPanel = HttpUtil.addParameter(
+			urlControlPanel = HttpHelperUtil.addParameter(
 				urlControlPanel, "refererPlid", refererPlid);
 		}
 		else if (plid > 0) {
-			urlControlPanel = HttpUtil.addParameter(
+			urlControlPanel = HttpHelperUtil.addParameter(
 				urlControlPanel, "refererPlid", plid);
 		}
 
@@ -1748,7 +1748,7 @@ public class ServicePreAction extends Action {
 			securePortalURL, mainPath, _PATH_PORTAL_LOGIN);
 
 		if (layout != null) {
-			urlSignIn = HttpUtil.addParameter(
+			urlSignIn = HttpHelperUtil.addParameter(
 				urlSignIn, "p_l_id", layout.getPlid());
 		}
 

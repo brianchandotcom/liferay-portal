@@ -134,7 +134,7 @@ import com.liferay.portal.kernel.util.EscapableLocalizableFunction;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.GroupSubscriptionCheckSubscriptionSender;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -2674,20 +2674,20 @@ public class DLFileEntryLocalServiceImpl
 
 		String namespace = PortalUtil.getPortletNamespace(portletId);
 
-		entryURL = HttpUtil.addParameter(
+		entryURL = HttpHelperUtil.addParameter(
 			entryURL, namespace + "mvcRenderCommandName",
 			"/document_library/edit_file_entry");
-		entryURL = HttpUtil.addParameter(
+		entryURL = HttpHelperUtil.addParameter(
 			entryURL, namespace + "redirect",
-			HttpUtil.addParameter(
+			HttpHelperUtil.addParameter(
 				PortalUtil.getControlPanelFullURL(
 					fileVersion.getGroupId(), portletId, null),
 				namespace + "folderId", fileVersion.getFolderId()));
-		entryURL = HttpUtil.addParameter(
+		entryURL = HttpHelperUtil.addParameter(
 			entryURL, namespace + "groupId", fileVersion.getGroupId());
-		entryURL = HttpUtil.addParameter(
+		entryURL = HttpHelperUtil.addParameter(
 			entryURL, namespace + "folderId", fileVersion.getFolderId());
-		entryURL = HttpUtil.addParameter(
+		entryURL = HttpHelperUtil.addParameter(
 			entryURL, namespace + "fileEntryId",
 			String.valueOf(fileVersion.getFileEntryId()));
 

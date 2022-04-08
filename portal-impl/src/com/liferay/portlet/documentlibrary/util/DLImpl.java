@@ -64,7 +64,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -254,7 +254,7 @@ public class DLImpl implements DL {
 			fileEntry, fileVersion, themeDisplay, queryString, appendVersion,
 			absoluteURL);
 
-		return HttpUtil.addParameter(previewURL, "download", true);
+		return HttpHelperUtil.addParameter(previewURL, "download", true);
 	}
 
 	@Override

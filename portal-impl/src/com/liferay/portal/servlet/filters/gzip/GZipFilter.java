@@ -17,7 +17,7 @@ package com.liferay.portal.servlet.filters.gzip;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
@@ -107,7 +107,8 @@ public class GZipFilter extends BasePortalFilter {
 		throws Exception {
 
 		if (_log.isDebugEnabled()) {
-			String completeURL = HttpUtil.getCompleteURL(httpServletRequest);
+			String completeURL = HttpHelperUtil.getCompleteURL(
+				httpServletRequest);
 
 			_log.debug("Compressing " + completeURL);
 		}

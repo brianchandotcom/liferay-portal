@@ -17,7 +17,7 @@ package com.liferay.portal.webserver;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 
 import java.text.Format;
@@ -111,7 +111,7 @@ public class WebServerEntry {
 
 	protected String getPath(String path, String name) {
 		if (name.endsWith(StringPool.SLASH)) {
-			name = HttpUtil.fixPath(name, false, true);
+			name = HttpHelperUtil.fixPath(name, false, true);
 
 			return getPath(path, name) + StringPool.SLASH;
 		}

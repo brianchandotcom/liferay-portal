@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -80,7 +80,7 @@ public class RSSFeedEntry {
 		String syndEntryLink = syndEntry.getLink();
 
 		if (Validator.isNotNull(syndEntryLink) &&
-			!HttpUtil.hasDomain(syndEntryLink)) {
+			!HttpHelperUtil.hasDomain(syndEntryLink)) {
 
 			syndEntryLink = rssFeed.getBaseURL() + syndEntryLink;
 		}

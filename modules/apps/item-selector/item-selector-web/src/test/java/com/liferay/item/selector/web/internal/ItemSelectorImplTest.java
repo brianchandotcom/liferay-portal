@@ -30,13 +30,12 @@ import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.impl.GroupImpl;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.portal.util.HttpImpl;
 import com.liferay.portal.util.PortalImpl;
 
 import java.util.List;
@@ -84,8 +83,6 @@ public class ItemSelectorImplTest extends PowerMockito {
 		_itemSelectorImpl.setItemSelectorCriterionSerializer(
 			_stubItemSelectorCriterionSerializerImpl);
 
-		ReflectionTestUtil.setFieldValue(
-			_itemSelectorImpl, "_http", new HttpImpl());
 		ReflectionTestUtil.setFieldValue(
 			_itemSelectorImpl, "_portal", new PortalImpl());
 		ReflectionTestUtil.setFieldValue(
@@ -301,7 +298,7 @@ public class ItemSelectorImplTest extends PowerMockito {
 		for (Map.Entry<String, String[]> entry :
 				itemSelectorParameters.entrySet()) {
 
-			itemSelectorURL = HttpUtil.addParameter(
+			itemSelectorURL = HttpHelperUtil.addParameter(
 				itemSelectorURL, namespace + entry.getKey(),
 				entry.getValue()[0]);
 		}

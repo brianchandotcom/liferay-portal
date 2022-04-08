@@ -28,7 +28,7 @@ String uploadURL = itemSelectorUploadViewDisplayContext.getURL();
 String namespace = itemSelectorUploadViewDisplayContext.getNamespace();
 
 if (Validator.isNotNull(namespace)) {
-	uploadURL = HttpUtil.addParameter(uploadURL, namespace + "returnType", itemSelectorReturnTypeClass.getName());
+	uploadURL = HttpHelperUtil.addParameter(uploadURL, namespace + "returnType", itemSelectorReturnTypeClass.getName());
 }
 %>
 

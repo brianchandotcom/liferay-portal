@@ -792,7 +792,7 @@ export default withRouter(
 							<link
 								href={`${getFullPath('questions')}${
 									context.historyRouterBasePath ? '' : '#/'
-								}questions/${sectionTitle}`}
+								}questions/${sectionTitle}?page=${page}&pagesize=${pageSize}`}
 								rel="canonical"
 							/>
 						</Helmet>

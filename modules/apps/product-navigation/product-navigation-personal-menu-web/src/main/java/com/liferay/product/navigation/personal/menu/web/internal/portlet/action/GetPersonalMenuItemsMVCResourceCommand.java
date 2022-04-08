@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Html;
-import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -95,29 +95,31 @@ public class GetPersonalMenuItemsMVCResourceCommand
 		User realUser = themeDisplay.getRealUser();
 		User user = themeDisplay.getUser();
 
-		String realUserURL = _http.removeParameter(
+		String realUserURL = HttpHelperUtil.removeParameter(
 			ParamUtil.getString(portletRequest, "currentURL"), "doAsUserId");
 
-		String userProfileURL = _http.getPath(
+		String userProfileURL = HttpHelperUtil.getPath(
 			user.getDisplayURL(themeDisplay, false));
 
 		if (realUserURL.startsWith(userProfileURL)) {
 			realUserURL = StringUtil.replace(
 				realUserURL, userProfileURL,
-				_http.getPath(realUser.getDisplayURL(themeDisplay, false)));
+				HttpHelperUtil.getPath(
+					realUser.getDisplayURL(themeDisplay, false)));
 
 			PersonalApplicationURLUtil.
 				getOrAddEmbeddedPersonalApplicationLayout(
 					realUser, realUser.getGroup(), false);
 		}
 
-		String userDashboardURL = _http.getPath(
+		String userDashboardURL = HttpHelperUtil.getPath(
 			user.getDisplayURL(themeDisplay, true));
 
 		if (realUserURL.startsWith(userDashboardURL)) {
 			realUserURL = StringUtil.replace(
 				realUserURL, userDashboardURL,
-				_http.getPath(realUser.getDisplayURL(themeDisplay, true)));
+				HttpHelperUtil.getPath(
+					realUser.getDisplayURL(themeDisplay, true)));
 
 			PersonalApplicationURLUtil.
 				getOrAddEmbeddedPersonalApplicationLayout(
@@ -172,7 +174,7 @@ public class GetPersonalMenuItemsMVCResourceCommand
 			jsonArray.put(
 				JSONUtil.put(
 					"href",
-					_http.setParameter(
+					HttpHelperUtil.setParameter(
 						ParamUtil.getString(portletRequest, "currentURL"),
 						"doAsUserLanguageId", doAsUserLanguageId)
 				).put(
@@ -304,9 +306,6 @@ public class GetPersonalMenuItemsMVCResourceCommand
 
 	@Reference
 	private Html _html;
-
-	@Reference
-	private Http _http;
 
 	@Reference
 	private PersonalMenuEntryRegistry _personalMenuEntryRegistry;

@@ -49,7 +49,7 @@ import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.SessionClicks;
@@ -767,7 +767,7 @@ public class LayoutsTreeDisplayContext {
 			url = StringPool.POUND;
 		}
 		else if (Validator.isNotNull(url)) {
-			url = HttpUtil.addParameter(
+			url = HttpHelperUtil.addParameter(
 				url,
 				getNamespace() + _SITE_NAVIGATION_MENU_ITEM_ID_PARAMETER_NAME,
 				siteNavigationMenuItem.getSiteNavigationMenuItemId());

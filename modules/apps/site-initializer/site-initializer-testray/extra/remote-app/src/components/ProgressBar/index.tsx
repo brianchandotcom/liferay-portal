@@ -12,6 +12,8 @@
  * details.
  */
 
+import {useMemo} from 'react';
+
 import {Progress, Tasks} from '../../util/mock';
 import TaskbarProgress from './TaskbarProgress';
 
@@ -34,14 +36,23 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
 		.map(([, value]) => value)
 		.reduce((prevValue, currentValue) => prevValue + currentValue);
 
-	const totalCompleted = sortedItems
-		.filter(([label, value]) => {
-			if (label !== 'incomplete') {
-				return value;
-			}
-		})
-		.map(([, value]) => value)
-		.reduce((previus, current) => previus + current);
+	const totalCompleted = useMemo(() => {
+		const _totalCompleted = sortedItems
+			.filter(([label, value]) => {
+				if (label !== 'incomplete') {
+					return value;
+				}
+			})
+			.map(([, value]) => value);
+
+		if (_totalCompleted.length) {
+			return _totalCompleted.reduce(
+				(previus, current) => previus + current
+			);
+		}
+
+		return 0;
+	}, [sortedItems]);
 
 	return (
 		<TaskbarProgress

@@ -32,6 +32,8 @@ type TaskbarProgress = {
 	totalCompleted: number;
 };
 
+const NaNToZero = (value: number) => (Number.isNaN(value) ? 0 : value);
+
 const TaskbarProgress: React.FC<TaskbarProgress> = ({
 	displayTotalCompleted,
 	items,
@@ -43,7 +45,7 @@ const TaskbarProgress: React.FC<TaskbarProgress> = ({
 		<div className="testray-progress-bar">
 			{items.map((item, index) => {
 				const [label, value] = item;
-				const percent = Math.ceil((value * 100) / total);
+				const percent = NaNToZero(Math.ceil((value * 100) / total));
 
 				if (value) {
 					return (
@@ -85,7 +87,7 @@ const TaskbarProgress: React.FC<TaskbarProgress> = ({
 
 				{items.map((item, index) => {
 					const [label, value] = item;
-					const percent = Math.ceil((value * 100) / total);
+					const percent = NaNToZero(Math.ceil((value * 100) / total));
 					const percentTitle = `${percent}% (${value})`;
 
 					return (

@@ -50,7 +50,7 @@ public class ObjectEntryValuesException extends PortalException {
 
 		public ExceedsLongMinSize() {
 			super(
-				"Object entry value falls bellow minimum long field allowed " +
+				"Object entry value falls below minimum long field allowed " +
 					"size");
 		}
 

@@ -37,7 +37,8 @@
 									"id": "cta",
 									"value": {
 										"fragmentLink": {
-											"value_i18n": {}
+											"value_i18n": {
+											}
 										}
 									}
 								}
@@ -79,13 +80,15 @@
 							"fragment": {
 								"key": "lead"
 							},
-							"fragmentConfig": {},
+							"fragmentConfig": {
+							},
 							"fragmentFields": [
 								{
 									"id": "lead",
 									"value": {
 										"fragmentLink": {
-											"value_i18n": {}
+											"value_i18n": {
+											}
 										}
 									}
 								}
@@ -98,13 +101,15 @@
 							"fragment": {
 								"key": "lead"
 							},
-							"fragmentConfig": {},
+							"fragmentConfig": {
+							},
 							"fragmentFields": [
 								{
 									"id": "lead",
 									"value": {
 										"fragmentLink": {
-											"value_i18n": {}
+											"value_i18n": {
+											}
 										},
 										"text": {
 											"value_i18n": {
@@ -122,13 +127,15 @@
 							"fragment": {
 								"key": "lead"
 							},
-							"fragmentConfig": {},
+							"fragmentConfig": {
+							},
 							"fragmentFields": [
 								{
 									"id": "lead",
 									"value": {
 										"fragmentLink": {
-											"value_i18n": {}
+											"value_i18n": {
+											}
 										},
 										"text": {
 											"value_i18n": {
@@ -175,15 +182,18 @@
 							"rowViewports": [
 								{
 									"id": "landscapeMobile",
-									"rowViewportDefinition": {}
+									"rowViewportDefinition": {
+									}
 								},
 								{
 									"id": "portraitMobile",
-									"rowViewportDefinition": {}
+									"rowViewportDefinition": {
+									}
 								},
 								{
 									"id": "tablet",
-									"rowViewportDefinition": {}
+									"rowViewportDefinition": {
+									}
 								}
 							],
 							"verticalAlignment": "top"
@@ -193,15 +203,18 @@
 								"definition": {
 									"columnViewports": [
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "tablet"
 										}
 									],
@@ -213,13 +226,15 @@
 											"fragment": {
 												"key": "BASIC_COMPONENT-paragraph"
 											},
-											"fragmentConfig": {},
+											"fragmentConfig": {
+											},
 											"fragmentFields": [
 												{
 													"id": "element-text",
 													"value": {
 														"fragmentLink": {
-															"value_i18n": {}
+															"value_i18n": {
+															}
 														},
 														"text": {
 															"value_i18n": {
@@ -239,15 +254,18 @@
 								"definition": {
 									"columnViewports": [
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "tablet"
 										}
 									],
@@ -267,7 +285,8 @@
 													"id": "element-text",
 													"value": {
 														"fragmentLink": {
-															"value_i18n": {}
+															"value_i18n": {
+															}
 														},
 														"text": {
 															"value_i18n": {
@@ -308,7 +327,8 @@
 										"pageElements": [
 											{
 												"definition": {
-													"collectionItemConfig": {}
+													"collectionItemConfig": {
+													}
 												},
 												"pageElements": [
 													{
@@ -324,7 +344,8 @@
 																	"id": "element-text",
 																	"value": {
 																		"fragmentLink": {
-																			"value_i18n": {}
+																			"value_i18n": {
+																			}
 																		},
 																		"text": {
 																			"mapping": {
@@ -413,15 +434,18 @@
 									"rowViewports": [
 										{
 											"id": "landscapeMobile",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										},
 										{
 											"id": "portraitMobile",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										},
 										{
 											"id": "tablet",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										}
 									],
 									"verticalAlignment": "top"
@@ -431,15 +455,18 @@
 										"definition": {
 											"columnViewports": [
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -459,7 +486,8 @@
 															"id": "element-text",
 															"value": {
 																"fragmentLink": {
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																},
 																"text": {
 																	"value_i18n": {
@@ -482,13 +510,15 @@
 													"fragment": {
 														"key": "BASIC_COMPONENT-paragraph"
 													},
-													"fragmentConfig": {},
+													"fragmentConfig": {
+													},
 													"fragmentFields": [
 														{
 															"id": "element-text",
 															"value": {
 																"fragmentLink": {
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																},
 																"text": {
 																	"value_i18n": {
@@ -512,15 +542,16 @@
 														"key": "BASIC_COMPONENT-button"
 													},
 													"fragmentConfig": {
-														"buttonType": "primary",
-														"buttonSize": "sm"
+														"buttonSize": "sm",
+														"buttonType": "primary"
 													},
 													"fragmentFields": [
 														{
 															"id": "link",
 															"value": {
 																"fragmentLink": {
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																},
 																"text": {
 																	"value_i18n": {
@@ -540,15 +571,18 @@
 										"definition": {
 											"columnViewports": [
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -560,7 +594,7 @@
 													"collectionConfig": {
 														"collectionReference": {
 															"className": "com.liferay.asset.list.model.AssetListEntry",
-															"classPK": [$ASSET_LIST_ENTRY_ID:HOMEPAGE$]
+															"classPK": "[$ASSET_LIST_ENTRY_ID:HOMEPAGE$]"
 														},
 														"collectionType": "Collection"
 													},
@@ -579,7 +613,8 @@
 												"pageElements": [
 													{
 														"definition": {
-															"collectionItemConfig": {}
+															"collectionItemConfig": {
+															}
 														},
 														"pageElements": [
 															{
@@ -587,7 +622,8 @@
 																	"fragment": {
 																		"key": "job-highlight"
 																	},
-																	"fragmentConfig": {},
+																	"fragmentConfig": {
+																	},
 																	"fragmentFields": [
 																		{
 																			"id": "link",
@@ -603,7 +639,8 @@
 																							}
 																						}
 																					},
-																					"value_i18n": {}
+																					"value_i18n": {
+																					}
 																				}
 																			}
 																		},
@@ -611,7 +648,8 @@
 																			"id": "location",
 																			"value": {
 																				"fragmentLink": {
-																					"value_i18n": {}
+																					"value_i18n": {
+																					}
 																				},
 																				"text": {
 																					"mapping": {
@@ -627,7 +665,8 @@
 																			"id": "jobname",
 																			"value": {
 																				"fragmentLink": {
-																					"value_i18n": {}
+																					"value_i18n": {
+																					}
 																				},
 																				"text": {
 																					"mapping": {

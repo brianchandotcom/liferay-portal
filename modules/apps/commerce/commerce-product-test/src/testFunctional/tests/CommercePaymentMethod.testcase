@@ -25,6 +25,47 @@ definition {
 		CommerceConfiguration.commerceInitializersTearDown();
 	}
 
+	@description = "Verify once created, users can navigate to the Payment Methods page where new Offline Payment Methods can be Edited and Activated."
+	@priority = "3"
+	test ActivateOfflinePaymentMethodsAndAddDescription {
+		property portal.acceptance = "false";
+
+		task ("Given a Channel") {
+			CommerceJSONChannelsAPI._addChannel(
+				channelName = "Test Channel",
+				channelType = "site",
+				currencyCode = "USD");
+		}
+
+		task ("And given a new offline payment method") {
+			CommercePaymentMethods.addOfflinePaymentMethod(key = "Test Offline Payment Method");
+		}
+
+		task ("And given the System Integrator navigates to the channel details") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Test Channel");
+		}
+
+		task ("When the offline payment method is activated and a description is set") {
+			CommerceChannels.activatePaymentMethod(paymentMethod = "Test Offline Payment Method");
+		}
+
+		task ("Then the status for the payment method should be active and the description should be set") {
+			AssertElementPresent(
+				key_entryDescription = "Pay with Test Offline Payment Method.",
+				key_entryName = "Test Offline Payment Method",
+				key_table = "Payment Methods",
+				locator1 = "CommerceEntry#TABLE_ENTRY_DESCRIPTION");
+
+			AssertElementPresent(
+				key_entryName = "Test Offline Payment Method",
+				key_entryStatus = "Active",
+				key_table = "Payment Methods",
+				locator1 = "CommerceEntry#TABLE_ENTRY_STATUS");
+		}
+	}
+
 	@description = "Verify an offline payment method can be added, edited, and deleted from system settings"
 	@priority = "3"
 	test AddEditAndDeleteOfflinePaymentMethod {

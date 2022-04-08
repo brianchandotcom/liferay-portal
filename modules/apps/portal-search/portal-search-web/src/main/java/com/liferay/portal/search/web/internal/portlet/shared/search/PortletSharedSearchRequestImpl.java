@@ -250,19 +250,22 @@ public class PortletSharedSearchRequestImpl
 				renderRequest));
 	}
 
-	private Optional<SearchSettingsContributor>
+	private SearchSettingsContributor
 		_getSearchSettingsContributorOptional(
 			Portlet portlet, ThemeDisplay themeDisplay,
 			RenderRequest renderRequest) {
 
-		return Optional.ofNullable(
+		PortletSharedSearchContributor portletSharedSearchContributor =
 			_portletSharedSearchContributors.getService(
-				portlet.getPortletName())
-		).map(
-			portletSharedSearchContributor -> _getSearchSettingsContributor(
-				portletSharedSearchContributor, portlet, themeDisplay,
-				renderRequest)
-		);
+				portlet.getPortletName());
+
+		if (portletSharedSearchContributor == null) {
+			return null;
+		}
+
+		return _getSearchSettingsContributor(
+			portletSharedSearchContributor, portlet, themeDisplay,
+			renderRequest);
 	}
 
 	private List<SearchSettingsContributor> _getSearchSettingsContributors(
@@ -275,14 +278,14 @@ public class PortletSharedSearchRequestImpl
 			new ArrayList<>();
 
 		for (Portlet portlet : portlets) {
-			Optional<SearchSettingsContributor>
+			SearchSettingsContributor
 				searchSettingsContributorOptional =
 					_getSearchSettingsContributorOptional(
 						portlet, themeDisplay, renderRequest);
 
-			if (searchSettingsContributorOptional.isPresent()) {
+			if (searchSettingsContributorOptional != null) {
 				searchSettingsContributors.add(
-					searchSettingsContributorOptional.get());
+					searchSettingsContributorOptional);
 			}
 		}
 

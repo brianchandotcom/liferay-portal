@@ -20,6 +20,8 @@ definition {
 		Button.clickSave();
 
 		Click(locator1 = "Icon#CLOSE");
+
+		SelectFrame.selectFrameTop();
 	}
 
 	macro addCategory {

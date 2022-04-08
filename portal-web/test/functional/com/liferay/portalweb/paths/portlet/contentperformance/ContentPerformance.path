@@ -106,11 +106,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SELECT_TRAFFIC_SOURCES_NUMBER</td>
-	<td>//div[@class='pie-chart-wrapper'] //td[contains(text(),'0')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SIDEBAR</td>
 	<td>//div[contains(@class,'lfr-analytics-reports-panel')]</td>
 	<td></td>
@@ -123,6 +118,16 @@
 <tr>
 	<td>TOTAL_VIEWS_NUMBER</td>
 	<td>//*[contains(@class, 'mb-2')]//span[contains(@class, 'inline-item-after') and text()='${key_numberViews}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TRAFFIC_CHANNELS_VALUE</td>
+	<td>//div[@class='pie-chart-wrapper'] //tr[td[./span[contains(text(),'${trafficChannel}')]]]/td[text()='${key_numberViews}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TRAFFIC_CHANNELS_TEXT</td>
+	<td>//div[@class='pie-chart-wrapper'] //td/span[contains(text(),'${trafficChannel}')]</td>
 	<td></td>
 </tr>
 </tbody>

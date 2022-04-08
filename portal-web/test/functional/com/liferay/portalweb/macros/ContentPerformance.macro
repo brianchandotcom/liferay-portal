@@ -68,4 +68,17 @@ definition {
 			locator1 = "ContentPerformance#TOTAL_VIEWS_NUMBER");
 	}
 
+	macro viewTrafficViews {
+		ContentPerformance.openContentPerformance();
+
+		while (IsElementPresent(locator1 = "ContentPerformance#TOTAL_VIEWS_EMPTY")) {
+			Refresh();
+		}
+
+		AssertVisible(
+			key_numberViews = "${numberViews}",
+			key_trafficChannel = "${trafficChannel}",
+			locator1 = "ContentPerformance#TRAFFIC_CHANNELS_VALUE");
+	}
+
 }

@@ -22,8 +22,7 @@ definition {
 		}
 
 		task ("Go to DXP portal, login and create site") {
-
-			//TestCase.setUpPortalInstance();
+			TestCase.setUpPortalInstance();
 
 			User.firstLoginPG();
 
@@ -1280,24 +1279,24 @@ definition {
 	@description = "LPS-111042: As a content writer I want to know the keywords driving traffic to my contents by different countries"
 	@priority = "4"
 	test NoNavigationWithoutIncomingTraffic {
-		task ("Open Content Performance and Assert") {
-			if (IsVisible(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_PANEL")) {
-				Click(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_BUTTON");
-			}
-
-			Click(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_BUTTON");
-
-			AssertElementPresent(
-				locator1 = "ContentPerformance#SELECT_TRAFFIC_SOURCES_NUMBER",
-				value1 = "0");
+		task ("Open Content Performance") {
+			ContentPerformance.openContentPerformance();
 		}
 
-		task ("Click and Assert if element still present") {
-			ClickNoError(locator1 = "ContentPerformance#SELECT_TRAFFIC_SOURCES_NUMBER");
+		task ("Check the value of engagement data") {
+			for (var channel : list "Referral,Social,Paid,Direct,Organic") {
+				ContentPerformance.viewTrafficViews(
+					key_numberViews = "0",
+					trafficChannel = "${channel}");
+			}
+		}
 
-			AssertElementPresent(
-				locator1 = "ContentPerformance#SELECT_TRAFFIC_SOURCES_NUMBER",
-				value1 = "0");
+		task ("Chech that channels are not clickable") {
+			for (var channel : list "Referral,Social,Paid,Direct,Organic") {
+				AssertVisible(
+					locator1 = "ContentPerformance#TRAFFIC_CHANNELS_TEXT",
+					trafficChannel = "${channel}");
+			}
 		}
 	}
 

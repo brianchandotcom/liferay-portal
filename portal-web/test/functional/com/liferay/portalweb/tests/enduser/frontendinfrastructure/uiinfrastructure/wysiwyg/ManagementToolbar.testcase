@@ -166,7 +166,7 @@ definition {
 		}
 
 		task ("And a tooltip message will be displayed") {
-			WaitForPageLoad();
+			Refresh();
 
 			MouseOver(
 				key_text = "order-list-down",

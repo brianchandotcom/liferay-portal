@@ -45,7 +45,6 @@ import com.liferay.portal.theme.ThemeDisplayFactory;
 import com.liferay.portal.util.LayoutTypeControllerTracker;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -75,8 +74,6 @@ public class ContentLayoutTypeControllerTest {
 
 		_httpServletRequest = new MockHttpServletRequest();
 
-		_httpServletResponse = new MockHttpServletResponse();
-
 		LayoutTestUtil.addTypePortletLayout(_group);
 	}
 
@@ -94,7 +91,7 @@ public class ContentLayoutTypeControllerTest {
 			_userLocalService.getDefaultUser(_group.getCompanyId()));
 
 		layoutTypeController.includeLayoutContent(
-			_httpServletRequest, _httpServletResponse, layout);
+			_httpServletRequest, new MockHttpServletResponse(), layout);
 	}
 
 	@Test
@@ -111,7 +108,7 @@ public class ContentLayoutTypeControllerTest {
 
 		Assert.assertFalse(
 			layoutTypeController.includeLayoutContent(
-				_httpServletRequest, _httpServletResponse, layout));
+				_httpServletRequest, new MockHttpServletResponse(), layout));
 	}
 
 	@Test
@@ -140,7 +137,7 @@ public class ContentLayoutTypeControllerTest {
 
 		Assert.assertFalse(
 			layoutTypeController.includeLayoutContent(
-				_httpServletRequest, _httpServletResponse, layout));
+				_httpServletRequest, new MockHttpServletResponse(), layout));
 	}
 
 	@Test
@@ -168,7 +165,7 @@ public class ContentLayoutTypeControllerTest {
 
 		Assert.assertFalse(
 			layoutTypeController.includeLayoutContent(
-				_httpServletRequest, _httpServletResponse, layout));
+				_httpServletRequest, new MockHttpServletResponse(), layout));
 	}
 
 	private ThemeDisplay _initThemeDisplay(User user) throws Exception {
@@ -205,7 +202,6 @@ public class ContentLayoutTypeControllerTest {
 	private Group _group;
 
 	private HttpServletRequest _httpServletRequest;
-	private HttpServletResponse _httpServletResponse;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;

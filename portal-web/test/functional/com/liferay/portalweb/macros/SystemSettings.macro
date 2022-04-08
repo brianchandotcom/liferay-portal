@@ -102,6 +102,16 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro deleteConfigurationEntry {
+		Click(
+			key_entryName = "${configurationEntry}",
+			locator1 = "CommerceEntry#ENTRY_ROW_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Delete");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro editSecurityCredential {
 		Type(
 			locator1 = "SystemSettings#SECURITY_CREDENTIAL_FIELD",

@@ -53,7 +53,7 @@ public class BeanTestUtil {
 	}
 
 	public static boolean hasProperty(Object bean, String name) {
-		if (ReflectionTestUtil.hasMethod(
+		if (_hasMethod(
 				bean.getClass(),
 				"set" + StringUtil.upperCaseFirstLetter(name))) {
 
@@ -85,6 +85,16 @@ public class BeanTestUtil {
 		return clazz.getMethod(
 			prefix + StringUtil.upperCaseFirstLetter(fieldName),
 			parameterTypes);
+	}
+
+	private static boolean _hasMethod(Class<?> clazz, String name) {
+		for (Method method : clazz.getMethods()) {
+			if (name.equals(method.getName())) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private static boolean _hasSuperClass(Class<?> clazz) {

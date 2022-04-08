@@ -55,7 +55,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlParser;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -130,7 +130,7 @@ public class CommerceSearchResource {
 			String url = _commerceSearchUtil.getSearchFriendlyURL(themeDisplay);
 
 			if (Validator.isNotNull(url)) {
-				url = _http.addParameter(url, "q", queryString);
+				url = HttpHelperUtil.addParameter(url, "q", queryString);
 
 				SearchItemModel searchItemModel = new SearchItemModel(
 					"category",
@@ -241,7 +241,7 @@ public class CommerceSearchResource {
 			themeDisplay);
 
 		if (Validator.isNotNull(url)) {
-			url = _http.addParameter(url, "q", queryString);
+			url = HttpHelperUtil.addParameter(url, "q", queryString);
 
 			SearchItemModel searchItemModel = new SearchItemModel(
 				"category",
@@ -295,7 +295,7 @@ public class CommerceSearchResource {
 		String url = _commerceSearchUtil.getOrdersFriendlyURL(themeDisplay);
 
 		if (Validator.isNotNull(url)) {
-			url = _http.addParameter(url, "q", queryString);
+			url = HttpHelperUtil.addParameter(url, "q", queryString);
 
 			SearchItemModel searchItemModel = new SearchItemModel(
 				"category",
@@ -382,7 +382,7 @@ public class CommerceSearchResource {
 		String url = _commerceSearchUtil.getCatalogFriendlyURL(themeDisplay);
 
 		if (Validator.isNotNull(url)) {
-			url = _http.addParameter(url, "q", queryString);
+			url = HttpHelperUtil.addParameter(url, "q", queryString);
 
 			SearchItemModel searchItemModel = new SearchItemModel(
 				"category", LanguageUtil.get(resourceBundle, "catalog"));
@@ -434,9 +434,6 @@ public class CommerceSearchResource {
 
 	@Reference
 	private HtmlParser _htmlParser;
-
-	@Reference
-	private Http _http;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

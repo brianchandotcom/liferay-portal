@@ -21,6 +21,7 @@ import com.liferay.layout.security.permission.resource.LayoutContentModelResourc
 import com.liferay.layout.type.controller.BaseLayoutTypeControllerImpl;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -119,6 +120,17 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 
 			if (!hasUpdatePermissions) {
 				layoutMode = Constants.VIEW;
+			}
+		}
+
+		if (!layout.isPublished()) {
+			if (hasUpdatePermissions == null) {
+				hasUpdatePermissions = _hasUpdatePermissions(
+					themeDisplay.getPermissionChecker(), layout);
+			}
+
+			if (!hasUpdatePermissions) {
+				throw new NoSuchLayoutException();
 			}
 		}
 

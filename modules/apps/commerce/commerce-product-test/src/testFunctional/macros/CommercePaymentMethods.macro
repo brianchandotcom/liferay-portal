@@ -1,0 +1,28 @@
+definition {
+
+	macro addOfflinePaymentMethod {
+		if (!(IsElementPresent(key_title = "Offline Payment Method Keys", locator1 = "Header#H2_TITLE"))) {
+			SystemSettings.openSystemSettingsAdmin();
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Payment",
+				configurationName = "Offline Payment Method Keys",
+				configurationScope = "System Scope");
+		}
+
+		Button.clickAdd();
+
+		Type(
+			locator1 = "SystemSettings#KEY",
+			value1 = "${key}");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		AssertElementPresent(
+			key_configurationEntry = "${key}",
+			locator1 = "SystemSettings#CONFIGURATION_ENTRY");
+	}
+
+}

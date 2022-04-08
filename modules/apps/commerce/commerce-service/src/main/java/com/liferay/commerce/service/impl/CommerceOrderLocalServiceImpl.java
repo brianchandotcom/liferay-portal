@@ -1247,41 +1247,34 @@ public class CommerceOrderLocalServiceImpl
 		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
 			commerceOrderId);
 
-		commerceOrder.setLastPriceUpdateDate(new Date());
-		commerceOrder.setSubtotal(subtotal);
-		commerceOrder.setSubtotalDiscountAmount(subtotalDiscountAmount);
-		commerceOrder.setSubtotalDiscountPercentageLevel1(
-			subtotalDiscountPercentageLevel1);
-		commerceOrder.setSubtotalDiscountPercentageLevel2(
-			subtotalDiscountPercentageLevel2);
-		commerceOrder.setSubtotalDiscountPercentageLevel3(
-			subtotalDiscountPercentageLevel3);
-		commerceOrder.setSubtotalDiscountPercentageLevel4(
-			subtotalDiscountPercentageLevel4);
-		commerceOrder.setShippingAmount(shippingAmount);
-		commerceOrder.setShippingDiscountAmount(shippingDiscountAmount);
-		commerceOrder.setShippingDiscountPercentageLevel1(
-			shippingDiscountPercentageLevel1);
-		commerceOrder.setShippingDiscountPercentageLevel2(
-			shippingDiscountPercentageLevel2);
-		commerceOrder.setShippingDiscountPercentageLevel3(
-			shippingDiscountPercentageLevel3);
-		commerceOrder.setShippingDiscountPercentageLevel4(
-			shippingDiscountPercentageLevel4);
-		commerceOrder.setTaxAmount(taxAmount);
-		commerceOrder.setTotal(total);
-		commerceOrder.setTotalDiscountAmount(totalDiscountAmount);
-		commerceOrder.setTotalDiscountPercentageLevel1(
-			totalDiscountPercentageLevel1);
-		commerceOrder.setTotalDiscountPercentageLevel2(
-			totalDiscountPercentageLevel2);
-		commerceOrder.setTotalDiscountPercentageLevel3(
-			totalDiscountPercentageLevel3);
-		commerceOrder.setTotalDiscountPercentageLevel4(
-			totalDiscountPercentageLevel4);
-		commerceOrder.setManuallyAdjusted(true);
-
-		return commerceOrderPersistence.update(commerceOrder);
+		return commerceOrderLocalService.updateCommerceOrderPrices(
+			commerceOrderId, subtotal, subtotalDiscountAmount,
+			subtotalDiscountPercentageLevel1, subtotalDiscountPercentageLevel2,
+			subtotalDiscountPercentageLevel3, subtotalDiscountPercentageLevel4,
+			shippingAmount, shippingDiscountAmount,
+			shippingDiscountPercentageLevel1, shippingDiscountPercentageLevel2,
+			shippingDiscountPercentageLevel3, shippingDiscountPercentageLevel4,
+			taxAmount, total, totalDiscountAmount,
+			totalDiscountPercentageLevel1, totalDiscountPercentageLevel2,
+			totalDiscountPercentageLevel3, totalDiscountPercentageLevel4,
+			commerceOrder.getSubtotalWithTaxAmount(),
+			commerceOrder.getSubtotalDiscountWithTaxAmount(),
+			commerceOrder.getSubtotalDiscountPercentageLevel1WithTaxAmount(),
+			commerceOrder.getSubtotalDiscountPercentageLevel2WithTaxAmount(),
+			commerceOrder.getSubtotalDiscountPercentageLevel3WithTaxAmount(),
+			commerceOrder.getSubtotalDiscountPercentageLevel4WithTaxAmount(),
+			commerceOrder.getShippingWithTaxAmount(),
+			commerceOrder.getShippingDiscountWithTaxAmount(),
+			commerceOrder.getShippingDiscountPercentageLevel1WithTaxAmount(),
+			commerceOrder.getShippingDiscountPercentageLevel2WithTaxAmount(),
+			commerceOrder.getShippingDiscountPercentageLevel3WithTaxAmount(),
+			commerceOrder.getShippingDiscountPercentageLevel4WithTaxAmount(),
+			commerceOrder.getTotalWithTaxAmount(),
+			commerceOrder.getTotalDiscountWithTaxAmount(),
+			commerceOrder.getTotalDiscountPercentageLevel1WithTaxAmount(),
+			commerceOrder.getTotalDiscountPercentageLevel2WithTaxAmount(),
+			commerceOrder.getTotalDiscountPercentageLevel3WithTaxAmount(),
+			commerceOrder.getTotalDiscountPercentageLevel4WithTaxAmount());
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

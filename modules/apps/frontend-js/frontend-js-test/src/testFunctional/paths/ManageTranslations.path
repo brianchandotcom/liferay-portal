@@ -12,6 +12,11 @@
 <tbody>
 
 <tr>
+	<td>DROPDOWN_MENU_ITEM_LANGUAGE</td>
+	<td>//div[contains(@class,'dropdown-menu') and contains(@class,'show')]//button[contains(.,'${key_locale}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LIST_ITEM_LANGUAGE</td>
 	<td>//tr//td[contains(text(),'${key_language}')]</td>
 	<td></td>
@@ -19,6 +24,11 @@
 <tr>
 	<td>LIST_ITEM_DELETE_LANGUAGE_BUTTON</td>
 	<td>//tr//td[contains(text(),'${key_language}')]/following-sibling::td//button[@*[contains(.,'Delete')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LANGUAGE_STATUS</td>
+	<td>//tr//td[contains(text(),'${key_language}')]/following-sibling::td//span[text()='${key_status}']</td>
 	<td></td>
 </tr>
 <tr>

@@ -535,6 +535,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENTRY_ROW_VERTICAL_ELLIPSIS</td>
+	<td>//*[contains(.,'${key_entryName}')]/td//span[*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ROW_VERTICAL_ELLIPSIS</td>
 	<td>//td//span[*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
 	<td></td>

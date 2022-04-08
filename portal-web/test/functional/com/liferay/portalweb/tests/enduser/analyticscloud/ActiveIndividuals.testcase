@@ -139,7 +139,7 @@ definition {
 		}
 
 		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 
 		task ("Sign in with the new user to visit the site pages") {
@@ -161,7 +161,7 @@ definition {
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 		}
 
 		task ("Navigate to the Individual Activity Overview") {
@@ -182,10 +182,8 @@ definition {
 			ACIndividualsDashboard.viewRechartsBarOnIndividualsActivitiesChart();
 		}
 
-		task ("Click Individual Activity Chart") {
-			Click(
-				index = "1",
-				locator1 = "ACIndividualsDashboard#INDIVIDUALS_ACTIVITIES_CHART_RECHARTS_BAR");
+		task ("Select the data on Individuals Activities chart") {
+			ACIndividualsDashboard.selectDataOnIndividualsActivitiesChart();
 		}
 
 		task ("Get current Date") {

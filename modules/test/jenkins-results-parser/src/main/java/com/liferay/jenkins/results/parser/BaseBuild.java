@@ -122,17 +122,14 @@ public abstract class BaseBuild implements Build {
 		setArchiveName(archiveName);
 
 		if (!_status.equals("completed")) {
+			System.out.println("Could not archive due to status: " + _status);
+
 			return;
 		}
 
 		File archiveDir = new File(getArchiveRootDir(), getArchivePath());
 
-		if (archiveDir.exists()) {
-			if (!JenkinsResultsParserUtil.isCINode()) {
-				archiveDir.delete();
-			}
-		}
-		else {
+		if (!archiveDir.exists()) {
 			archiveDir.mkdirs();
 		}
 
@@ -149,7 +146,7 @@ public abstract class BaseBuild implements Build {
 		archiveConsoleLog();
 		archiveJSON();
 
-		if (downstreamBuilds != null) {
+		if ((downstreamBuilds != null) && !downstreamBuilds.isEmpty()) {
 			List<Callable<Object>> callables = new ArrayList<>(
 				downstreamBuilds.size());
 
@@ -158,7 +155,7 @@ public abstract class BaseBuild implements Build {
 
 					@Override
 					public Object call() {
-						downstreamBuild.archive(archiveName);
+						downstreamBuild.archive();
 
 						return null;
 					}
@@ -2477,6 +2474,12 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected JSONObject getBuildJSONObject(String tree) {
+		String archiveFileContent = getArchiveFileContent("api/json");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(archiveFileContent)) {
+			return new JSONObject(archiveFileContent);
+		}
+
 		return JenkinsAPIUtil.getAPIJSONObject(getBuildURL(), tree);
 	}
 

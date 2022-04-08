@@ -88,6 +88,12 @@ public abstract class TopLevelBuild extends BaseBuild {
 
 	@Override
 	public void archive(String archiveName) {
+		String status = getStatus();
+
+		if (!status.equals("completed")) {
+			return;
+		}
+
 		super.archive(archiveName);
 
 		if (getParentBuild() == null) {

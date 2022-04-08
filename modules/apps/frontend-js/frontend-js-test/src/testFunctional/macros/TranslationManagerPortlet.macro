@@ -7,6 +7,15 @@ definition {
 			locator1 = "TranslationManager#SELECT_TRANSLATION_LANGUAGE_MENU");
 	}
 
+	macro goToAuiTagManageTranslationsModal {
+		Click.clickNoMouseOver(
+			key_currentLocale = "${key_currentLocale}",
+			key_title = "${key_title}",
+			locator1 = "TranslationManager#SELECT_TRANSLATION_LANGUAGE_AUI_TAG_MENU");
+
+		Click(locator1 = "Translation#TRANSLATION_MANAGE_BUTTON");
+	}
+
 	macro goToManageTranslationsModal {
 		TranslationManagerPortlet.clickSelectTranslation(
 			key_currentLocale = "${key_currentLocale}",

@@ -61,6 +61,7 @@ import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -795,7 +796,7 @@ public class OAuth2ApplicationLocalServiceImpl
 
 				String path = uri.getPath();
 
-				String normalizedPath = _http.normalizePath(path);
+				String normalizedPath = HttpHelperUtil.normalizePath(path);
 
 				if (!Objects.equals(path, normalizedPath)) {
 					throw new OAuth2ApplicationRedirectURIPathException(
@@ -862,9 +863,6 @@ public class OAuth2ApplicationLocalServiceImpl
 
 	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private Http _http;
 
 	@Reference
 	private ImageTool _imageTool;

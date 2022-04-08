@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
-import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -84,7 +84,7 @@ public abstract class BaseMessageBodyWriter<T> implements MessageBodyWriter<T> {
 				).build());
 		}
 
-		if (!http.hasDomain(authorizeScreenURL)) {
+		if (!HttpHelperUtil.hasDomain(authorizeScreenURL)) {
 			String portalURL = portal.getPortalURL(httpServletRequest);
 
 			authorizeScreenURL = portalURL + authorizeScreenURL;
@@ -106,7 +106,7 @@ public abstract class BaseMessageBodyWriter<T> implements MessageBodyWriter<T> {
 	}
 
 	protected String removeParameter(String url, String name) {
-		return http.removeParameter(url, "oauth2_" + name);
+		return HttpHelperUtil.removeParameter(url, "oauth2_" + name);
 	}
 
 	protected String setParameter(String url, String name, String value) {
@@ -114,16 +114,13 @@ public abstract class BaseMessageBodyWriter<T> implements MessageBodyWriter<T> {
 			return url;
 		}
 
-		return http.addParameter(url, "oauth2_" + name, value);
+		return HttpHelperUtil.addParameter(url, "oauth2_" + name, value);
 	}
 
 	protected abstract String writeTo(T t, String authorizeScreenURL);
 
 	@Reference
 	protected ConfigurationProvider configurationProvider;
-
-	@Reference
-	protected Http http;
 
 	@Context
 	protected MessageContext messageContext;

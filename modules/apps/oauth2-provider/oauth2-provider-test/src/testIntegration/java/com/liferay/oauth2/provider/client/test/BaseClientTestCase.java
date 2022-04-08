@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.Digester;
 import com.liferay.portal.kernel.util.DigesterUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -368,7 +368,7 @@ public abstract class BaseClientTestCase {
 				return response;
 			}
 
-			Map<String, String[]> parameterMap = HttpUtil.getParameterMap(
+			Map<String, String[]> parameterMap = HttpHelperUtil.getParameterMap(
 				uri.getQuery());
 
 			if (parameterMap.containsKey("error") || skipAuthorization) {
@@ -586,7 +586,7 @@ public abstract class BaseClientTestCase {
 					"from which code is extracted");
 		}
 
-		Map<String, String[]> parameterMap = HttpUtil.getParameterMap(
+		Map<String, String[]> parameterMap = HttpHelperUtil.getParameterMap(
 			uri.getQuery());
 
 		if (!parameterMap.containsKey("code")) {
@@ -609,7 +609,7 @@ public abstract class BaseClientTestCase {
 					"from which error is extracted");
 		}
 
-		Map<String, String[]> parameterMap = HttpUtil.getParameterMap(
+		Map<String, String[]> parameterMap = HttpHelperUtil.getParameterMap(
 			uri.getQuery());
 
 		if (!parameterMap.containsKey("error")) {

@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.ProtectedPrincipal;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
-import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -168,7 +168,8 @@ public class AuthorizationCodeGrantServiceContainerRequestFilter
 			StringUtil.replace(
 				"?" + requestURI.getRawQuery(), CharPool.COLON, "%3a"));
 
-		loginURL = _http.addParameter(loginURL, "redirect", requestURIString);
+		loginURL = HttpHelperUtil.addParameter(
+			loginURL, "redirect", requestURIString);
 
 		containerRequestContext.abortWith(
 			Response.status(
@@ -216,7 +217,7 @@ public class AuthorizationCodeGrantServiceContainerRequestFilter
 				_portal.getPathContext(), _portal.getPathMain(),
 				"/portal/login");
 		}
-		else if (!_http.hasDomain(loginURL)) {
+		else if (!HttpHelperUtil.hasDomain(loginURL)) {
 			String portalURL = _portal.getPortalURL(_httpServletRequest);
 
 			loginURL = portalURL + loginURL;
@@ -230,9 +231,6 @@ public class AuthorizationCodeGrantServiceContainerRequestFilter
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
-
-	@Reference
-	private Http _http;
 
 	@Context
 	private HttpServletRequest _httpServletRequest;

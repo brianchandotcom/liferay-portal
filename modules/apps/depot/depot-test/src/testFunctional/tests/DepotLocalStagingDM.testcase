@@ -2772,66 +2772,6 @@ definition {
 		DMDocument.viewPG(dmDocumentTitle = "Document_1.png");
 	}
 
-	@description = "This ensures that an image in a depot can be published in Media Gallery when local staging is enabled."
-	@priority = "4"
-	test CanPublishImageInMG {
-		property osgi.module.configuration.file.names = "com.liferay.document.library.item.selector.web.internal.configuration.FFFolderItemSelectorGroupSelectorConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
-
-		JSONFolder.addFolder(
-			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name",
-			groupName = "Test Depot Name-staging");
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Image Description",
-			dmDocumentTitle = "Document_2.jpg",
-			folderName = "DM Folder Name",
-			groupName = "Test Depot Name-staging",
-			mimeType = "image/jpeg",
-			sourceFileName = "Document_2.jpg");
-
-		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
-
-		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
-
-		Staging.publishToLive();
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name (Staging)",
-			layoutName = "Test Page",
-			site = "false",
-			widgetName = "Media Gallery");
-
-		Navigator.gotoStagedSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
-		MGPortlet.setRootFolder(
-			depotName = "Test Depot Name",
-			dmRootFolderName = "DM Folder Name");
-
-		DMDocument.viewPGViaMG(
-			mgDocumentTitle = "Document_2.jpg",
-			staging = "true");
-
-		Navigator.gotoStagedSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive();
-
-		Navigator.openSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
-		DMDocument.viewPGViaMG(
-			mgDocumentTitle = "Document_2.jpg",
-			staging = "true");
-	}
-
 	@description = "This ensures that the shortcut to an image in the depot can be added and published in the staging site when enabling local staging."
 	@priority = "5"
 	@refactordone

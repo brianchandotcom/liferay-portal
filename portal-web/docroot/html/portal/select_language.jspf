@@ -17,11 +17,11 @@
 <div class="float-right">
 
 	<%
-	String updateLanguageFormAction = HttpUtil.addParameter(themeDisplay.getPathMain() + "/portal/update_language", "p_l_id", themeDisplay.getPlid());
+	String updateLanguageFormAction = HttpHelperUtil.addParameter(themeDisplay.getPathMain() + "/portal/update_language", "p_l_id", themeDisplay.getPlid());
 
-	String updateLanguageRedirect = HttpUtil.addParameter(PortalUtil.getCurrentURL(request), "ticketKey", ParamUtil.getString(request, "ticketKey"));
+	String updateLanguageRedirect = HttpHelperUtil.addParameter(PortalUtil.getCurrentURL(request), "ticketKey", ParamUtil.getString(request, "ticketKey"));
 
-	updateLanguageFormAction = HttpUtil.addParameter(updateLanguageFormAction, "redirect", updateLanguageRedirect);
+	updateLanguageFormAction = HttpHelperUtil.addParameter(updateLanguageFormAction, "redirect", updateLanguageRedirect);
 	%>
 
 	<liferay-ui:language

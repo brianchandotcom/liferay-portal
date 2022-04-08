@@ -63,7 +63,7 @@ if (end > total) {
 }
 
 if (deltaConfigurable) {
-	url = HttpUtil.setParameter(url, namespace + deltaParam, String.valueOf(delta));
+	url = HttpHelperUtil.setParameter(url, namespace + deltaParam, String.valueOf(delta));
 }
 
 NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
@@ -101,7 +101,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 							continue;
 						}
 
-						String curDeltaURL = HttpUtil.setParameter(url + urlAnchor, namespace + deltaParam, curDelta);
+						String curDeltaURL = HttpHelperUtil.setParameter(url + urlAnchor, namespace + deltaParam, curDelta);
 					%>
 
 						<li>
@@ -372,7 +372,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 					namespace: '<%= namespace %>',
 					pages: '<%= pages %>',
 					randomNamespace: '<%= randomNamespace %>',
-					url: '<%= HtmlUtil.escapeJS(HttpUtil.removeParameter(url, namespace + curParam)) %>',
+					url: '<%= HtmlUtil.escapeJS(HttpHelperUtil.removeParameter(url, namespace + curParam)) %>',
 					urlAnchor: '<%= urlAnchor %>'
 				}
 			),
@@ -401,7 +401,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 <%!
 private String _getHREF(String formName, String curParam, int cur, String jsCall, String url, String urlAnchor) throws Exception {
 	if (Validator.isNotNull(url)) {
-		return HtmlUtil.escapeHREF(HttpUtil.addParameter(HttpUtil.removeParameter(url, curParam) + urlAnchor, curParam, cur));
+		return HtmlUtil.escapeHREF(HttpHelperUtil.addParameter(HttpHelperUtil.removeParameter(url, curParam) + urlAnchor, curParam, cur));
 	}
 
 	return "javascript:document." + formName + "." + curParam + ".value = '" + cur + "'; " + jsCall;

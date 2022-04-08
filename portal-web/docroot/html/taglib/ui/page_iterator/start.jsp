@@ -77,7 +77,7 @@ else {
 }
 
 if (deltaConfigurable) {
-	url = HttpUtil.setParameter(url, namespace + deltaParam, String.valueOf(delta));
+	url = HttpHelperUtil.setParameter(url, namespace + deltaParam, String.valueOf(delta));
 }
 
 NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
@@ -207,7 +207,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 								<liferay-ui:icon
 									message="<%= String.valueOf(i) %>"
 									onClick='<%= forcePost ? _getOnClick(namespace, curParam, i) : "" %>'
-									url="<%= HtmlUtil.escapeJSLink(HttpUtil.setParameter(url + urlAnchor, namespace + curParam, i)) %>"
+									url="<%= HtmlUtil.escapeJSLink(HttpHelperUtil.setParameter(url + urlAnchor, namespace + curParam, i)) %>"
 								/>
 
 							<%
@@ -238,7 +238,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 											continue;
 										}
 
-										String curDeltaURL = HttpUtil.setParameter(url + urlAnchor, namespace + deltaParam, curDelta);
+										String curDeltaURL = HttpHelperUtil.setParameter(url + urlAnchor, namespace + deltaParam, curDelta);
 									%>
 
 										<liferay-ui:icon
@@ -325,7 +325,7 @@ private String _getHREF(String formName, String curParam, int cur, String jsCall
 	String href = null;
 
 	if (Validator.isNotNull(url)) {
-		href = HtmlUtil.escapeHREF(HttpUtil.addParameter(HttpUtil.removeParameter(url, curParam) + urlAnchor, curParam, cur));
+		href = HtmlUtil.escapeHREF(HttpHelperUtil.addParameter(HttpHelperUtil.removeParameter(url, curParam) + urlAnchor, curParam, cur));
 	}
 	else {
 		href = "javascript:document." + formName + "." + curParam + ".value = '" + cur + "'; " + jsCall;

@@ -2279,10 +2279,18 @@ definition {
 			LexiconCard.clickCard(card = "${depotName}");
 		}
 
-		AssertClick(
-			key_dmFolderName = "${dmRootFolderName}",
-			locator1 = "DocumentsAndMedia#SELECT_FOLDER_BUTTON",
-			value1 = "Select");
+		if (isSet(selectRootFolder)) {
+			AssertClick(
+				key_text = "Select This Folder",
+				locator1 = "Button#ANY",
+				value1 = "Select This Folder");
+		}
+		else {
+			AssertClick(
+				key_dmFolderName = "${dmRootFolderName}",
+				locator1 = "DocumentsAndMedia#SELECT_FOLDER_BUTTON",
+				value1 = "Select");
+		}
 
 		SelectFrame(locator1 = "relative=top");
 

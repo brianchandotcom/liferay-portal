@@ -15,14 +15,19 @@
 package com.liferay.object.internal.field.business.type;
 
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.util.DLValidatorUtil;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.dynamic.data.mapping.form.field.type.constants.ObjectDDMFormFieldTypeConstants;
+import com.liferay.object.exception.ObjectFieldSettingNameException;
 import com.liferay.object.exception.ObjectFieldSettingValueException;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.render.ObjectFieldRenderingContext;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
+import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -40,11 +45,15 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.math.BigDecimal;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -61,6 +70,12 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class AttachmentObjectFieldBusinessType
 	implements ObjectFieldBusinessType {
+
+	@Override
+	public Set<String> getAllowedObjectFieldSettingsNames() {
+		return SetUtil.fromArray(
+			"showFilesInDocumentsAndMedia", "storageFolder");
+	}
 
 	@Override
 	public String getDBType() {
@@ -150,18 +165,19 @@ public class AttachmentObjectFieldBusinessType
 		ObjectFieldBusinessType.super.validateObjectFieldSettings(
 			objectFieldName, objectFieldSettings);
 
-		for (ObjectFieldSetting objectFieldSetting : objectFieldSettings) {
-			if (Objects.equals(objectFieldSetting.getName(), "fileSource")) {
-				_validateObjectFieldSettingFileSource(
-					objectFieldName, objectFieldSetting.getValue());
-			}
-			else if (Objects.equals(
-						objectFieldSetting.getName(), "maximumFileSize")) {
+		Stream<ObjectFieldSetting> stream = objectFieldSettings.stream();
 
-				_validateObjectFieldSettingMaximumFileSize(
-					objectFieldName, objectFieldSetting.getValue());
-			}
-		}
+		Map<String, String> objectFieldSettingsValuesMap = stream.collect(
+			Collectors.toMap(
+				ObjectFieldSetting::getName, ObjectFieldSetting::getValue));
+
+		_validateObjectFieldSettingFileSource(
+			objectFieldSettingsValuesMap.get("fileSource"), objectFieldName,
+			objectFieldSettingsValuesMap.get("showFilesInDocumentsAndMedia"),
+			objectFieldSettingsValuesMap.get("storageFolder"));
+		_validateObjectFieldSettingMaximumFileSize(
+			objectFieldName,
+			objectFieldSettingsValuesMap.get("maximumFileSize"));
 	}
 
 	private Folder _addFolder(
@@ -243,14 +259,84 @@ public class AttachmentObjectFieldBusinessType
 	}
 
 	private void _validateObjectFieldSettingFileSource(
-			String objectFieldName, String objectFieldSettingValue)
+			String fileSource, String objectFieldName,
+			String showFilesInDocumentsAndMedia, String storageFolder)
 		throws PortalException {
 
-		if (!Objects.equals(objectFieldSettingValue, "documentsAndMedia") &&
-			!Objects.equals(objectFieldSettingValue, "userComputer")) {
-
+		if (Objects.equals(fileSource, "documentsAndMedia")) {
+			_validateObjectFieldSettingFileSourceDocumentsAndMedia(
+				objectFieldName, showFilesInDocumentsAndMedia, storageFolder);
+		}
+		else if (Objects.equals(fileSource, "userComputer")) {
+			_validateObjectFieldSettingFileSourceUserComputer(
+				objectFieldName, showFilesInDocumentsAndMedia, storageFolder);
+		}
+		else {
 			throw new ObjectFieldSettingValueException.InvalidValue(
-				objectFieldName, "fileSource", objectFieldSettingValue);
+				objectFieldName, "fileSource", fileSource);
+		}
+	}
+
+	private void _validateObjectFieldSettingFileSourceDocumentsAndMedia(
+			String objectFieldName, String showFilesInDocumentsAndMedia,
+			String storageFolder)
+		throws PortalException {
+
+		Set<String> notAllowedObjectFieldSettingsNames = new HashSet<>();
+
+		if (Validator.isNotNull(showFilesInDocumentsAndMedia)) {
+			notAllowedObjectFieldSettingsNames.add(
+				"showFilesInDocumentsAndMedia");
+		}
+
+		if (Validator.isNotNull(storageFolder)) {
+			notAllowedObjectFieldSettingsNames.add("storageFolder");
+		}
+
+		if (!notAllowedObjectFieldSettingsNames.isEmpty()) {
+			throw new ObjectFieldSettingNameException.NotAllowedNames(
+				objectFieldName, notAllowedObjectFieldSettingsNames);
+		}
+	}
+
+	private void _validateObjectFieldSettingFileSourceUserComputer(
+			String objectFieldName, String showFilesInDocumentsAndMedia,
+			String storageFolder)
+		throws PortalException {
+
+		if (StringUtil.equalsIgnoreCase(
+				showFilesInDocumentsAndMedia, StringPool.FALSE)) {
+
+			if (Validator.isNotNull(storageFolder)) {
+				throw new ObjectFieldSettingNameException.NotAllowedNames(
+					objectFieldName, Collections.singleton("storageFolder"));
+			}
+		}
+		else if (StringUtil.equalsIgnoreCase(
+					showFilesInDocumentsAndMedia, StringPool.TRUE)) {
+
+			if (Validator.isNull(storageFolder)) {
+				throw new ObjectFieldSettingValueException.
+					MissingRequiredValues(
+						objectFieldName,
+						Collections.singleton("storageFolder"));
+			}
+
+			for (String directoryName :
+					StringUtil.split(storageFolder, CharPool.FORWARD_SLASH)) {
+
+				DLValidatorUtil.validateDirectoryName(directoryName);
+			}
+		}
+		else if (Validator.isNull(showFilesInDocumentsAndMedia)) {
+			throw new ObjectFieldSettingValueException.MissingRequiredValues(
+				objectFieldName,
+				Collections.singleton("showFilesInDocumentsAndMedia"));
+		}
+		else {
+			throw new ObjectFieldSettingValueException.InvalidValue(
+				objectFieldName, "showFilesInDocumentsAndMedia",
+				showFilesInDocumentsAndMedia);
 		}
 	}
 

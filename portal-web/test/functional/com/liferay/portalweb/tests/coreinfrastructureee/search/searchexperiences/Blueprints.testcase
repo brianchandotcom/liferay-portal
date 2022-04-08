@@ -312,7 +312,7 @@ definition {
 		AssertElementPresent(locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_FIELD_MAPPING_LOCALE_DROPDOWN");
 	}
 
-	@description = "This is a use case for LPS-LPS-144359."
+	@description = "This is a use case for LPS-144359."
 	test AssertNoBlueprintsPreviewResultsDueToEmptyRequiredFields {
 		Blueprints.openBlueprintsAdmin();
 

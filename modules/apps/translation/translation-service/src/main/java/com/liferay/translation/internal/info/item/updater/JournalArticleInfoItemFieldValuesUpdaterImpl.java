@@ -34,6 +34,7 @@ import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -105,15 +106,24 @@ public class JournalArticleInfoItemFieldValuesUpdaterImpl
 							translatedLocales.add(locale);
 
 							String fieldName = infoField.getName();
+							String fieldUniqueId = infoField.getUniqueId();
 
 							String valueString = String.valueOf(
 								infoFieldValue.getValue(locale));
 
-							if (Objects.equals("description", fieldName)) {
+							if (Objects.equals(fieldName, "description") &&
+								fieldUniqueId.startsWith(
+									JournalArticle.class.getSimpleName() +
+										StringPool.UNDERLINE)) {
+
 								importedLocaleDescriptionMap.put(
 									locale, valueString);
 							}
-							else if (Objects.equals("title", fieldName)) {
+							else if (Objects.equals(fieldName, "title") &&
+									 fieldUniqueId.startsWith(
+										 JournalArticle.class.getSimpleName() +
+											 StringPool.UNDERLINE)) {
+
 								importedLocaleTitleMap.put(locale, valueString);
 							}
 							else {

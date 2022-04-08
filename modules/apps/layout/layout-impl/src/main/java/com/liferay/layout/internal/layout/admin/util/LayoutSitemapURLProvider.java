@@ -118,7 +118,8 @@ public class LayoutSitemapURLProvider implements SitemapURLProvider {
 		if (!GetterUtil.getBoolean(
 				typeSettingsUnicodeProperties.getProperty(
 					LayoutTypePortletConstants.SITEMAP_INCLUDE),
-				true)) {
+				true) ||
+			!layout.isPublished()) {
 
 			return;
 		}

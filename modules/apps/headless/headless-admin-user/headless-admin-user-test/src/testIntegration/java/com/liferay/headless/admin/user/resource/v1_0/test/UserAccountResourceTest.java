@@ -43,7 +43,9 @@ import com.liferay.portal.kernel.captcha.CaptchaException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.security.auth.Authenticator;
@@ -51,6 +53,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -314,67 +317,32 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 			"id in ('%s','%s','%s')", userAccount1.getId(),
 			userAccount2.getId(), userAccount3.getId());
 
-		Page<UserAccount> page = userAccountResource.getUserAccountsPage(
-			null, idFilterString, Pagination.of(1, 3), null);
-
-		Assert.assertEquals(3, page.getTotalCount());
-
-		assertEqualsIgnoringOrder(
-			Arrays.asList(userAccount1, userAccount2, userAccount3),
-			(List<UserAccount>)page.getItems());
-		assertValid(page);
+		_testGetUserAccountsPage(
+			idFilterString, userAccount1, userAccount2, userAccount3);
 
 		_userLocalService.updateLastLogin(userAccount2.getId(), null);
 		_userLocalService.updateLastLogin(userAccount3.getId(), null);
 
-		page = userAccountResource.getUserAccountsPage(
-			null,
+		_testGetUserAccountsPage(
 			String.format(
 				"%s and %s", idFilterString,
 				"lastLoginDate gt 1900-01-01T01:01:28Z"),
-			Pagination.of(1, 3), null);
-
-		assertEqualsIgnoringOrder(
-			Arrays.asList(userAccount2, userAccount3),
-			(List<UserAccount>)page.getItems());
-
-		page = userAccountResource.getUserAccountsPage(
-			null,
+			userAccount2, userAccount3);
+		_testGetUserAccountsPage(
 			String.format("%s and %s", idFilterString, "lastLoginDate ne null"),
-			Pagination.of(1, 3), null);
-
-		assertEqualsIgnoringOrder(
-			Arrays.asList(userAccount2, userAccount3),
-			(List<UserAccount>)page.getItems());
-
-		page = userAccountResource.getUserAccountsPage(
-			null,
+			userAccount2, userAccount3);
+		_testGetUserAccountsPage(
 			String.format(
 				"%s and %s", idFilterString,
 				"not (lastLoginDate gt 1900-01-01T01:01:28Z)"),
-			Pagination.of(1, 3), null);
-
-		assertEqualsIgnoringOrder(
-			Collections.singletonList(userAccount1),
-			(List<UserAccount>)page.getItems());
-
-		page = userAccountResource.getUserAccountsPage(
-			null,
+			userAccount1);
+		_testGetUserAccountsPage(
 			String.format("%s and %s", idFilterString, "lastLoginDate eq null"),
-			Pagination.of(1, 3), null);
+			userAccount1);
 
-		assertEqualsIgnoringOrder(
-			Collections.singletonList(userAccount1),
-			(List<UserAccount>)page.getItems());
-
-		page = userAccountResource.getUserAccountsPage(
-			null, String.format("name eq '%s'", userAccount1.getName()),
-			Pagination.of(1, 3), null);
-
-		Assert.assertEquals(1, page.getTotalCount());
-
-		assertEqualsIgnoringOrder(
-			Arrays.asList(userAccount1), (List<UserAccount>)page.getItems());
+		_testGetUserAccountsPage(
+			String.format("name eq '%s'", userAccount1.getName()),
+			userAccount1);
 
 		String familyName = RandomTestUtil.randomString();
 
@@ -390,15 +358,22 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 		userAccount5 = testGetUserAccountsPage_addUserAccount(userAccount5);
 
-		page = userAccountResource.getUserAccountsPage(
-			null, String.format("contains(name, '%s')", familyName),
-			Pagination.of(1, 5), null);
+		_testGetUserAccountsPage(
+			String.format("contains(name, '%s')", familyName), userAccount4,
+			userAccount5);
 
-		Assert.assertEquals(2, page.getTotalCount());
+		String roleName = "Test role " + RandomTestUtil.randomString();
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(userAccount4, userAccount5),
-			(List<UserAccount>)page.getItems());
+		Role role = RoleTestUtil.addRole(roleName, RoleConstants.TYPE_REGULAR);
+
+		_userLocalService.addRoleUser(role.getRoleId(), userAccount1.getId());
+
+		_testGetUserAccountsPage(
+			String.format("roleNames/any(f:f eq '%s')", roleName),
+			userAccount1);
+		_testGetUserAccountsPage(
+			"roleNames/any(f:contains(f, 'Test role '))", userAccount1);
+		_testGetUserAccountsPage("roleNames/any(f:f eq 'Test Role')");
 	}
 
 	@Override
@@ -1141,6 +1116,25 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 				setUrlType("personal");
 			}
 		};
+	}
+
+	private void _testGetUserAccountsPage(
+			String filterString, UserAccount... expectedUserAccounts)
+		throws Exception {
+
+		Page<UserAccount> page = userAccountResource.getUserAccountsPage(
+			null, filterString,
+			Pagination.of(1, expectedUserAccounts.length + 1), null);
+
+		Assert.assertEquals(expectedUserAccounts.length, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(expectedUserAccounts),
+			(List<UserAccount>)page.getItems());
+
+		if (expectedUserAccounts.length > 0) {
+			assertValid(page);
+		}
 	}
 
 	private void _testPostUserAccount(Captcha captcha, boolean enableCaptcha)

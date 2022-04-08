@@ -61,7 +61,7 @@ import com.liferay.portal.kernel.upload.UploadRequestSizeException;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -557,18 +557,18 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 
 		String editURL = portal.getLayoutFullURL(themeDisplay);
 
-		editURL = HttpUtil.setParameter(
+		editURL = HttpHelperUtil.setParameter(
 			editURL, "p_p_id", portletDisplay.getId());
-		editURL = HttpUtil.setParameter(
+		editURL = HttpHelperUtil.setParameter(
 			editURL, actionResponse.getNamespace() + "mvcPath",
 			templatePath + "edit_article.jsp");
-		editURL = HttpUtil.setParameter(
+		editURL = HttpHelperUtil.setParameter(
 			editURL, actionResponse.getNamespace() + "redirect",
 			getRedirect(actionRequest, actionResponse));
-		editURL = HttpUtil.setParameter(
+		editURL = HttpHelperUtil.setParameter(
 			editURL, actionResponse.getNamespace() + "resourcePrimKey",
 			kbArticle.getResourcePrimKey());
-		editURL = HttpUtil.setParameter(
+		editURL = HttpHelperUtil.setParameter(
 			editURL, actionResponse.getNamespace() + "status",
 			WorkflowConstants.STATUS_ANY);
 
@@ -721,15 +721,15 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 	private String _getContentRedirect(
 		Class<?> clazz, long classPK, String redirect) {
 
-		String portletId = HttpUtil.getParameter(
+		String portletId = HttpHelperUtil.getParameter(
 			redirect, "portletResource", false);
 
 		String namespace = PortalUtil.getPortletNamespace(portletId);
 
 		if (Validator.isNotNull(portletId)) {
-			redirect = HttpUtil.addParameter(
+			redirect = HttpHelperUtil.addParameter(
 				redirect, namespace + "className", clazz.getName());
-			redirect = HttpUtil.addParameter(
+			redirect = HttpHelperUtil.addParameter(
 				redirect, namespace + "classPK", classPK);
 		}
 

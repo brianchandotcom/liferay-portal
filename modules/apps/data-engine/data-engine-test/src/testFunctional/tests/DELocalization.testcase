@@ -326,6 +326,54 @@ definition {
 			value1 = "3000/01/02");
 	}
 
+	@description = "Verify that for decimal Numeric fields the decimal separator is adequate to the current locale"
+	@priority = "4"
+	test CanDecimalSeparatorBeAdequateWithDifferentLanguages {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "Structure Description Test",
+			structureName = "Structure Name Test");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Numeric",
+			fieldName = "Numeric");
+
+		DataEngine.editNumericType(
+			fieldLabel = "Numeric",
+			fieldNumericType = "Decimal");
+
+		WebContentStructures.addTranslations(localeList = "pt-BR");
+
+		WebContentStructures.saveCP();
+
+		NavItem.click(navItem = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name Test");
+
+		WebContent.addWithStructureCP(
+			webContentNumeric = "10.00",
+			webContentTitle = "Test");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Test");
+
+		AssertTextEquals.assertValue(
+			key_fieldFieldLabel = "Numeric",
+			locator1 = "WCEditWebContent#TEXT_INPUT",
+			value1 = "10.00");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		AssertTextEquals.assertValue(
+			key_fieldFieldLabel = "Numeric",
+			locator1 = "WCEditWebContent#TEXT_INPUT",
+			value1 = "10,00");
+	}
+
 	@description = "Verify that upon editing Default language, translated languages are not affected"
 	@priority = "5"
 	test CanDefaulfLanguageChangeTranslationsAfterEdited {
@@ -1527,6 +1575,90 @@ definition {
 
 	}
 
+	@description = "Verify that translations for repeatable fields persists"
+	@priority = "5"
+	test CanTranslationsPersistsOnRepeatableField {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "Structure Description Test",
+			structureName = "Structure Name Test");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		DataEngine.toggleFieldRepeatable(fieldFieldLabel = "Text");
+
+		WebContentStructures.addTranslations(localeList = "pt-BR");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Text",
+			fieldFieldLabelEdit = "Text - pt-BR");
+
+		WebContentStructures.saveCP();
+
+		NavItem.click(navItem = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name Test");
+
+		PortletEntry.inputTitle(title = "Test");
+
+		DataEngine.addRepeatableField(fieldLabel = "Text");
+
+		DERenderer.inputDataInTextField(
+			fieldLabel = "Text",
+			index = "1",
+			value = "This is a Text field 1");
+
+		DERenderer.inputDataInTextField(
+			fieldLabel = "Text",
+			index = "2",
+			value = "This is a Text field 2");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DERenderer.inputDataInTextField(
+			fieldLabel = "Text - pt-BR",
+			index = "1",
+			value = "Campo de texto 1");
+
+		DERenderer.inputDataInTextField(
+			fieldLabel = "Text - pt-BR",
+			index = "2",
+			value = "Campo de texto 2");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Test");
+
+		DERenderer.assertDataInTextField(
+			fieldLabel = "Text",
+			index = "1",
+			value = "This is a Text field 1");
+
+		DERenderer.assertDataInTextField(
+			fieldLabel = "Text",
+			index = "2",
+			value = "This is a Text field 2");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DERenderer.assertDataInTextField(
+			fieldLabel = "Text - pt-BR",
+			index = "1",
+			value = "Campo de texto 1");
+
+		DERenderer.assertDataInTextField(
+			fieldLabel = "Text - pt-BR",
+			index = "2",
+			value = "Campo de texto 2");
+	}
+
 	@description = "Verify that is possible to upload a different file on the Upload Field for a translated language"
 	@priority = "5"
 	test CanUploadedChangeWithTranslations {
@@ -1922,56 +2054,6 @@ definition {
 				fieldLabel = "网格",
 				row = "${index}");
 		}
-	}
-
-	@description = "Verify that for decimal Numeric fields the decimal separator is adequate to the current locale"
-	@priority = "4"
-	test CanDecimalSeparatorBeAdequateWithDifferentLanguages {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(
-			structureDescription = "Structure Description Test",
-			structureName = "Structure Name Test");
-
-		DataEngine.addField(
-			fieldFieldLabel = "Numeric",
-			fieldName = "Numeric");
-
-		DataEngine.editNumericType(
-			fieldLabel = "Numeric",
-			fieldNumericType = "Decimal");
-		
-		WebContentStructures.addTranslations(localeList = "pt-BR");
-
-		WebContentStructures.saveCP();
-
-		NavItem.click(navItem = "Web Content");
-
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name Test");
-
-		WebContent.addWithStructureCP(
-			webContentNumeric = "10.00",
-			webContentTitle = "Test");
-
-		PortletEntry.publish();
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "Test");
-
-		AssertTextEquals.assertValue(
-			key_fieldFieldLabel = "Numeric",
-			locator1 = "WCEditWebContent#TEXT_INPUT",
-			value1 = "10.00");
-
-		PortletEntry.changeLocale(locale = "pt-BR");
-
-		AssertTextEquals.assertValue(
-			key_fieldFieldLabel = "Numeric",
-			locator1 = "WCEditWebContent#TEXT_INPUT",
-			value1 = "10,00");
-
-		
 	}
 
 }

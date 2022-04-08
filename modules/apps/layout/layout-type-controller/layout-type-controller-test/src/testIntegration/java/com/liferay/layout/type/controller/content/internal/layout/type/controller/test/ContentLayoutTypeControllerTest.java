@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -45,6 +46,7 @@ import com.liferay.portal.util.LayoutTypeControllerTracker;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -92,6 +94,23 @@ public class ContentLayoutTypeControllerTest {
 
 		layoutTypeController.includeLayoutContent(
 			_httpServletRequest, _httpServletResponse, layout);
+	}
+
+	@Test
+	public void testContentLayoutTypeControllerNoPublishedPagePermissionUser()
+		throws Exception {
+
+		LayoutTypeController layoutTypeController =
+			LayoutTypeControllerTracker.getLayoutTypeController(
+				LayoutConstants.TYPE_CONTENT);
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		_initThemeDisplay(TestPropsValues.getUser());
+
+		Assert.assertFalse(
+			layoutTypeController.includeLayoutContent(
+				_httpServletRequest, _httpServletResponse, layout));
 	}
 
 	private ThemeDisplay _initThemeDisplay(User user) throws Exception {

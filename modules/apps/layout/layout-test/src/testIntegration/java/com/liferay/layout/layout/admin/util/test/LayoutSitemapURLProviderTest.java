@@ -43,7 +43,6 @@ import com.liferay.portal.kernel.xml.SAXReader;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.portal.theme.ThemeDisplayFactory;
 
 import java.util.List;
 import java.util.Locale;
@@ -219,7 +218,7 @@ public class LayoutSitemapURLProviderTest {
 		Company company = CompanyLocalServiceUtil.getCompany(
 			_group.getCompanyId());
 
-		_themeDisplay = ThemeDisplayFactory.create();
+		_themeDisplay = new ThemeDisplay();
 
 		_themeDisplay.setCompany(company);
 		_themeDisplay.setLanguageId(_group.getDefaultLanguageId());

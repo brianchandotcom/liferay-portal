@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.portal.theme.ThemeDisplayFactory;
 import com.liferay.portal.util.LayoutTypeControllerTracker;
 
 import javax.servlet.http.HttpServletRequest;
@@ -169,7 +168,7 @@ public class ContentLayoutTypeControllerTest {
 
 		UserTestUtil.setUser(user);
 
-		ThemeDisplay themeDisplay = ThemeDisplayFactory.create();
+		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		Company company = CompanyLocalServiceUtil.getCompany(
 			_group.getCompanyId());

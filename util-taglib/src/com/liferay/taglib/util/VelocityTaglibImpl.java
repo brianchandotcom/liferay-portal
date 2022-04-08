@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
 import com.liferay.portal.kernel.servlet.JSPSupportServlet;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.TagSupport;
 import com.liferay.taglib.portlet.ActionURLTag;
@@ -109,8 +109,8 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 
 		String resourceID = null;
 		String cacheability = null;
-		Map<String, String[]> parameterMap = HttpUtil.parameterMapFromString(
-			queryString);
+		Map<String, String[]> parameterMap =
+			HttpHelperUtil.parameterMapFromString(queryString);
 		Set<String> removedParameterNames = null;
 
 		PortletURL portletURL = ActionURLTag.doTag(
@@ -413,8 +413,8 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 		String name = null;
 		String resourceID = null;
 		String cacheability = null;
-		Map<String, String[]> parameterMap = HttpUtil.parameterMapFromString(
-			queryString);
+		Map<String, String[]> parameterMap =
+			HttpHelperUtil.parameterMapFromString(queryString);
 		Set<String> removedParameterNames = null;
 
 		PortletURL portletURL = ActionURLTag.doTag(

@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateMa
 import com.liferay.portal.kernel.servlet.taglib.ui.LanguageEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -171,7 +171,7 @@ public class LanguageTag extends IncludeTag {
 			themeDisplay.getPathMain() + "/portal/update_language?p_l_id=" +
 				themeDisplay.getPlid();
 
-		formAction = HttpUtil.setParameter(
+		formAction = HttpHelperUtil.setParameter(
 			formAction, "redirect",
 			PortalUtil.getCurrentURL(httpServletRequest));
 
@@ -229,7 +229,7 @@ public class LanguageTag extends IncludeTag {
 			String url = null;
 
 			if (!LocaleUtil.equals(locale, currentLocale)) {
-				url = HttpUtil.setParameter(
+				url = HttpHelperUtil.setParameter(
 					formAction, parameterName, LocaleUtil.toLanguageId(locale));
 			}
 			else if (!displayCurrentLocale) {

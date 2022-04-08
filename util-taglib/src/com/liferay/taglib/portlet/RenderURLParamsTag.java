@@ -19,7 +19,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.taglib.servlet.PipingPageContext;
 
@@ -101,7 +101,7 @@ public class RenderURLParamsTag extends TagSupport {
 		JspWriter jspWriter = pageContext.getOut();
 
 		String[] parameters = StringUtil.split(
-			HttpUtil.getQueryString(url), CharPool.AMPERSAND);
+			HttpHelperUtil.getQueryString(url), CharPool.AMPERSAND);
 
 		for (String parameter : parameters) {
 			if (parameter.length() > 0) {
@@ -116,7 +116,7 @@ public class RenderURLParamsTag extends TagSupport {
 						value = kvp[1];
 					}
 
-					value = HttpUtil.decodeURL(value);
+					value = HttpHelperUtil.decodeURL(value);
 
 					jspWriter.write("<input name=\"");
 					jspWriter.write(key);

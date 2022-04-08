@@ -72,8 +72,6 @@ public class ContentLayoutTypeControllerTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		_httpServletRequest = new MockHttpServletRequest();
-
 		LayoutTestUtil.addTypePortletLayout(_group);
 	}
 
@@ -87,11 +85,10 @@ public class ContentLayoutTypeControllerTest {
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
-		_initThemeDisplay(
-			_userLocalService.getDefaultUser(_group.getCompanyId()));
-
 		layoutTypeController.includeLayoutContent(
-			_httpServletRequest, new MockHttpServletResponse(), layout);
+			_getHttpServletRequest(
+				_userLocalService.getDefaultUser(_group.getCompanyId())),
+			new MockHttpServletResponse(), layout);
 	}
 
 	@Test
@@ -104,11 +101,10 @@ public class ContentLayoutTypeControllerTest {
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
-		_initThemeDisplay(TestPropsValues.getUser());
-
 		Assert.assertFalse(
 			layoutTypeController.includeLayoutContent(
-				_httpServletRequest, new MockHttpServletResponse(), layout));
+				_getHttpServletRequest(TestPropsValues.getUser()),
+				new MockHttpServletResponse(), layout));
 	}
 
 	@Test
@@ -132,12 +128,11 @@ public class ContentLayoutTypeControllerTest {
 				_group.getCompanyId(), _group.getGroupId(),
 				TestPropsValues.getUserId()));
 
-		_initThemeDisplay(
-			_userLocalService.getDefaultUser(_group.getCompanyId()));
-
 		Assert.assertFalse(
 			layoutTypeController.includeLayoutContent(
-				_httpServletRequest, new MockHttpServletResponse(), layout));
+				_getHttpServletRequest(
+					_userLocalService.getDefaultUser(_group.getCompanyId())),
+				new MockHttpServletResponse(), layout));
 	}
 
 	@Test
@@ -161,22 +156,26 @@ public class ContentLayoutTypeControllerTest {
 				_group.getCompanyId(), _group.getGroupId(),
 				TestPropsValues.getUserId()));
 
-		_initThemeDisplay(TestPropsValues.getUser());
-
 		Assert.assertFalse(
 			layoutTypeController.includeLayoutContent(
-				_httpServletRequest, new MockHttpServletResponse(), layout));
+				_getHttpServletRequest(TestPropsValues.getUser()),
+				new MockHttpServletResponse(), layout));
 	}
 
-	private ThemeDisplay _initThemeDisplay(User user) throws Exception {
+	private HttpServletRequest _getHttpServletRequest(User user)
+		throws Exception {
+
+		HttpServletRequest httpServletRequest = new MockHttpServletRequest();
+
 		UserTestUtil.setUser(user);
+
+		ThemeDisplay themeDisplay = ThemeDisplayFactory.create();
 
 		Company company = CompanyLocalServiceUtil.getCompany(
 			_group.getCompanyId());
 
-		ThemeDisplay themeDisplay = ThemeDisplayFactory.create();
-
 		themeDisplay.setCompany(company);
+
 		themeDisplay.setLanguageId(_group.getDefaultLanguageId());
 		themeDisplay.setLayoutSet(
 			_layoutSetLocalService.getLayoutSet(_group.getGroupId(), false));
@@ -186,22 +185,20 @@ public class ContentLayoutTypeControllerTest {
 			PermissionCheckerFactoryUtil.create(user));
 		themeDisplay.setPortalDomain(company.getVirtualHostname());
 		themeDisplay.setPortalURL(company.getPortalURL(_group.getGroupId()));
-		themeDisplay.setRequest(_httpServletRequest);
+		themeDisplay.setRequest(httpServletRequest);
 		themeDisplay.setScopeGroupId(_group.getGroupId());
 		themeDisplay.setServerPort(8080);
 		themeDisplay.setSignedIn(true);
 		themeDisplay.setSiteGroupId(_group.getGroupId());
 		themeDisplay.setUser(user);
 
-		_httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
+		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
 
-		return themeDisplay;
+		return httpServletRequest;
 	}
 
 	@DeleteAfterTestRun
 	private Group _group;
-
-	private HttpServletRequest _httpServletRequest;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;

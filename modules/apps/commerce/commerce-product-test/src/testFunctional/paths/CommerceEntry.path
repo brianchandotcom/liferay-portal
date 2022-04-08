@@ -545,8 +545,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TABLE_ENTRY_DESCRIPTION</td>
+	<td>//h4[contains(.,'${key_table}')]//..//div/a[contains(.,'${key_entryName}')]/parent::div/parent::div/parent::div//div[@class='dnd-td'][2][contains(.,'${key_entryDescription}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TABLE_ENTRY_NAME</td>
 	<td>//h4[contains(.,'${key_table}')]//..//div/a[contains(.,'${key_entryName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_ENTRY_STATUS</td>
+	<td>//h4[contains(.,'${key_table}')]//..//div/a[contains(.,'${key_entryName}')]/parent::div/parent::div/parent::div//div[@class='dnd-td']/span[contains(@class,'label')][contains(.,'${key_entryStatus}')]</td>
 	<td></td>
 </tr>
 <tr>

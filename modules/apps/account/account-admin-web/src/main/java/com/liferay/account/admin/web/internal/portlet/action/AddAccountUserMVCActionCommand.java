@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -141,7 +141,7 @@ public class AddAccountUserMVCActionCommand extends BaseMVCActionCommand {
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
 
 			if (Validator.isNotNull(redirect)) {
-				redirect = _http.setParameter(
+				redirect = HttpHelperUtil.setParameter(
 					redirect, actionResponse.getNamespace() + "p_u_i_d",
 					accountEntryUserRel.getAccountUserId());
 
@@ -169,9 +169,6 @@ public class AddAccountUserMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private AccountEntryUserRelService _accountEntryUserRelService;
-
-	@Reference
-	private Http _http;
 
 	@Reference
 	private Portal _portal;

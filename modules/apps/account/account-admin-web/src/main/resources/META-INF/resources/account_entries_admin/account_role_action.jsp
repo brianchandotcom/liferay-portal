@@ -50,14 +50,14 @@ Role role = accountRoleDisplay.getRole();
 	<c:if test="<%= !AccountRoleConstants.isSharedRole(role) && AccountRolePermission.contains(permissionChecker, accountRoleDisplay.getAccountRoleId(), ActionKeys.DEFINE_PERMISSIONS) %>">
 		<liferay-ui:icon
 			message="define-permissions"
-			url='<%= HttpUtil.setParameter(editAccountRoleURL, liferayPortletResponse.getNamespace() + "screenNavigationCategoryKey", AccountScreenNavigationEntryConstants.CATEGORY_KEY_DEFINE_PERMISSIONS) %>'
+			url='<%= HttpHelperUtil.setParameter(editAccountRoleURL, liferayPortletResponse.getNamespace() + "screenNavigationCategoryKey", AccountScreenNavigationEntryConstants.CATEGORY_KEY_DEFINE_PERMISSIONS) %>'
 		/>
 	</c:if>
 
 	<c:if test="<%= AccountRolePermission.contains(permissionChecker, accountRoleDisplay.getAccountRoleId(), AccountActionKeys.ASSIGN_USERS) %>">
 		<liferay-ui:icon
 			message="assign-users"
-			url='<%= HttpUtil.setParameter(editAccountRoleURL, liferayPortletResponse.getNamespace() + "screenNavigationCategoryKey", AccountScreenNavigationEntryConstants.CATEGORY_KEY_ASSIGNEES) %>'
+			url='<%= HttpHelperUtil.setParameter(editAccountRoleURL, liferayPortletResponse.getNamespace() + "screenNavigationCategoryKey", AccountScreenNavigationEntryConstants.CATEGORY_KEY_ASSIGNEES) %>'
 		/>
 	</c:if>
 

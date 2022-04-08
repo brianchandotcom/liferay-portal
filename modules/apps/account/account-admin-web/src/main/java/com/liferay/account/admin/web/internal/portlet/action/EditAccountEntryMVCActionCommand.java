@@ -36,7 +36,7 @@ import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -82,7 +82,7 @@ public class EditAccountEntryMVCActionCommand extends BaseMVCActionCommand {
 						AccountEntry accountEntry = _addAccountEntry(
 							actionRequest);
 
-						redirect = _http.setParameter(
+						redirect = HttpHelperUtil.setParameter(
 							redirect,
 							actionResponse.getNamespace() + "accountEntryId",
 							accountEntry.getAccountEntryId());
@@ -247,8 +247,5 @@ public class EditAccountEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
-
-	@Reference
-	private Http _http;
 
 }

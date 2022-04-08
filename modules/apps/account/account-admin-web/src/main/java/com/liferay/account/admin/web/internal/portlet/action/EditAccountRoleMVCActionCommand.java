@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -66,7 +66,7 @@ public class EditAccountRoleMVCActionCommand extends BaseMVCActionCommand {
 			if (cmd.equals(Constants.ADD)) {
 				AccountRole accountRole = _addAccountRole(actionRequest);
 
-				redirect = _http.setParameter(
+				redirect = HttpHelperUtil.setParameter(
 					redirect, actionResponse.getNamespace() + "accountRoleId",
 					accountRole.getAccountRoleId());
 			}
@@ -138,9 +138,6 @@ public class EditAccountRoleMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private AccountRoleService _accountRoleService;
-
-	@Reference
-	private Http _http;
 
 	@Reference
 	private RoleLocalService _roleLocalService;

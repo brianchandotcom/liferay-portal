@@ -5,13 +5,17 @@ definition {
 
 		Click(
 			key_locale = "${key_locale}",
-			locator1 = "Translation#DROPDOWN_MENU_ITEM");
+			locator1 = "ManageTranslations#DROPDOWN_MENU_ITEM_LANGUAGE");
+	}
+
+	macro deleteAndSaveLanguage {
+		Click(locator1 = "ManageTranslations#LIST_ITEM_DELETE_LANGUAGE_BUTTON");
+
+		Click(locator1 = "Button#DONE");
 	}
 
 	macro deleteLanguage {
 		Click(locator1 = "ManageTranslations#LIST_ITEM_DELETE_LANGUAGE_BUTTON");
-
-		Click(locator1 = "Button#DONE");
 	}
 
 	macro searchLanguage {

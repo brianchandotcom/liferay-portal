@@ -1391,6 +1391,7 @@ definition {
 	test CanViewUnsuccessfullyImportedTranslationsInfoInDownloadedCSVReport {
 		property osgi.module.configuration.file.names = "com.liferay.translation.web.internal.configuration.FFBulkTranslationConfiguration.config";
 		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+		property portal.acceptance = "false";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",

@@ -85,7 +85,7 @@ String insightsResponseId = liferayPortletResponse.getNamespace() + "insightsRes
 								"id", insightsRequestId
 							).build()
 						%>'
-						module="js/CodeMirrorTextArea"
+						module="js/components/CodeMirrorTextArea"
 					/>
 				</liferay-ui:panel>
 
@@ -114,7 +114,7 @@ String insightsResponseId = liferayPortletResponse.getNamespace() + "insightsRes
 								"id", insightsResponseId
 							).build()
 						%>'
-						module="js/CodeMirrorTextArea"
+						module="js/components/CodeMirrorTextArea"
 					/>
 				</liferay-ui:panel>
 			</liferay-ui:panel-container>

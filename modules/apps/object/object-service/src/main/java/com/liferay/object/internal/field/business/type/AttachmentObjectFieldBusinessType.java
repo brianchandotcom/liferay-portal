@@ -37,8 +37,10 @@ import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -73,6 +75,11 @@ public class AttachmentObjectFieldBusinessType
 
 	@Override
 	public Set<String> getAllowedObjectFieldSettingsNames() {
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-148112"))) {
+			return ObjectFieldBusinessType.super.
+				getAllowedObjectFieldSettingsNames();
+		}
+
 		return SetUtil.fromArray(
 			"showFilesInDocumentsAndMedia", "storageFolder");
 	}
@@ -264,10 +271,22 @@ public class AttachmentObjectFieldBusinessType
 		throws PortalException {
 
 		if (Objects.equals(fileSource, "documentsAndMedia")) {
+			if (!GetterUtil.getBoolean(
+					PropsUtil.get("feature.flag.LPS-148112"))) {
+
+				return;
+			}
+
 			_validateObjectFieldSettingFileSourceDocumentsAndMedia(
 				objectFieldName, showFilesInDocumentsAndMedia, storageFolder);
 		}
 		else if (Objects.equals(fileSource, "userComputer")) {
+			if (!GetterUtil.getBoolean(
+					PropsUtil.get("feature.flag.LPS-148112"))) {
+
+				return;
+			}
+
 			_validateObjectFieldSettingFileSourceUserComputer(
 				objectFieldName, showFilesInDocumentsAndMedia, storageFolder);
 		}

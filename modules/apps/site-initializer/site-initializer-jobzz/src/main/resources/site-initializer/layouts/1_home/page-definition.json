@@ -41,7 +41,8 @@
 											}
 										}
 									}
-								},{
+								},
+								{
 									"id": "jobs-link",
 									"value": {
 										"fragmentLink": {
@@ -50,18 +51,22 @@
 													"mapping": {
 														"itemReference": {
 															"className": "com.liferay.portal.kernel.model.Layout",
-															"fields": [{
-																"fieldName": "friendlyURL",
-																"fieldValue": "/jobs"
-															}, {
-																"fieldName": "privatePage",
-																"fieldValue": "false"
-															}]
+															"fields": [
+																{
+																	"fieldName": "friendlyURL",
+																	"fieldValue": "/jobs"
+																},
+																{
+																	"fieldName": "privatePage",
+																	"fieldValue": "false"
+																}
+															]
 														}
 													}
 												}
 											},
-											"value_i18n": {}
+											"value_i18n": {
+											}
 										}
 									}
 								}
@@ -565,38 +570,44 @@
 														"key": "BASIC_COMPONENT-button"
 													},
 													"fragmentConfig": {
-														"buttonType": "primary",
-														"buttonSize": "nm"
+														"buttonSize": "nm",
+														"buttonType": "primary"
 													},
-													"fragmentFields": [{
-														"id": "link",
-														"value": {
-															"fragmentLink": {
-																"value": {
-																	"href": {
-																		"mapping": {
-																			"itemReference": {
-																				"className": "com.liferay.portal.kernel.model.Layout",
-																				"fields": [{
-																					"fieldName": "friendlyURL",
-																					"fieldValue": "/jobs"
-																				}, {
-																					"fieldName": "privatePage",
-																					"fieldValue": "false"
-																				}]
+													"fragmentFields": [
+														{
+															"id": "link",
+															"value": {
+																"fragmentLink": {
+																	"value": {
+																		"href": {
+																			"mapping": {
+																				"itemReference": {
+																					"className": "com.liferay.portal.kernel.model.Layout",
+																					"fields": [
+																						{
+																							"fieldName": "friendlyURL",
+																							"fieldValue": "/jobs"
+																						},
+																						{
+																							"fieldName": "privatePage",
+																							"fieldValue": "false"
+																						}
+																					]
+																				}
 																			}
 																		}
+																	},
+																	"value_i18n": {
 																	}
 																},
-																"value_i18n": {}
-															},
-															"text": {
-																"value_i18n": {
-																	"en_US": "Find your job"
+																"text": {
+																	"value_i18n": {
+																		"en_US": "Find your job"
+																	}
 																}
 															}
 														}
-													}]
+													]
 												},
 												"type": "Fragment"
 											}

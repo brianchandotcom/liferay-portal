@@ -30,7 +30,7 @@ definition {
 	@priority = "5"
 	test CanReachPolicyDeclarationPageByTheForm {
 		property portal.acceptance = "quarantine";
-		
+
 		RaylifePaymentMethod.configurationPaypal();
 
 		RaylifePaymentMethod.enablePricingPaypal();

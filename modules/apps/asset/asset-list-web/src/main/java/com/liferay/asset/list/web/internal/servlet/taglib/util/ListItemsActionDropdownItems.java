@@ -33,7 +33,7 @@ import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -113,7 +113,7 @@ public class ListItemsActionDropdownItems {
 			_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
 				className, classPK, _themeDisplay);
 
-		return HttpUtil.setParameter(
+		return HttpHelperUtil.setParameter(
 			viewDisplayPageURL, "p_l_back_url", _getRedirect());
 	}
 
@@ -182,7 +182,7 @@ public class ListItemsActionDropdownItems {
 		String editContentURL = infoEditURLProvider.getURL(
 			object, _httpServletRequest);
 
-		return HttpUtil.setParameter(
+		return HttpHelperUtil.setParameter(
 			editContentURL, "redirect", _getRedirect());
 	}
 

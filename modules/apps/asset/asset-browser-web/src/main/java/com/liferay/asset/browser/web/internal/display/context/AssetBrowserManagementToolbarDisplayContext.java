@@ -39,7 +39,7 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -318,7 +318,7 @@ public class AssetBrowserManagementToolbarDisplayContext
 
 		addPortletURL.setParameter("groupId", String.valueOf(groupId));
 
-		return HttpUtil.addParameter(
+		return HttpHelperUtil.addParameter(
 			addPortletURL.toString(), "refererPlid", _themeDisplay.getPlid());
 	}
 

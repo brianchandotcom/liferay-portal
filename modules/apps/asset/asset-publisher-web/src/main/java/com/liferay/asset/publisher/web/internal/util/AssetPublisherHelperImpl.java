@@ -62,7 +62,7 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -627,7 +627,7 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 				if (Validator.isNotNull(viewURL) &&
 					!Objects.equals(viewURL, noSuchEntryRedirect)) {
 
-					viewURL = _http.setParameter(
+					viewURL = HttpHelperUtil.setParameter(
 						viewURL, "redirect",
 						_portal.getCurrentURL(liferayPortletRequest));
 				}
@@ -1442,9 +1442,6 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private Http _http;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

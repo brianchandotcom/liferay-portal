@@ -334,9 +334,17 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(folderName)) {
-			var folderId = JSONDocumentAPI._getFolderIdByFolderName(
-				groupName = "${groupName}",
-				name = "${folderName}");
+			if (isSet(stagingDepotName)) {
+				var folderId = JSONDocumentAPI._getFolderIdByFolderName(
+					groupName = "${stagingDepotName}-staging",
+					name = "${folderName}",
+					parentFolderId = "${parentFolderId}");
+			}
+			else {
+				var folderId = JSONDocumentAPI._getFolderIdByFolderName(
+					groupName = "${groupName}",
+					name = "${folderName}");
+			}
 		}
 		else {
 			var folderId = "0";
@@ -346,7 +354,8 @@ definition {
 			dmDocumentTitle = "${dmDocumentTitle}",
 			folderId = "${folderId}",
 			groupName = "${groupName}",
-			portalURL = "${baseURL}");
+			portalURL = "${baseURL}",
+			site = "${site}");
 
 		var portalURL = JSONCompany.getPortalURL();
 

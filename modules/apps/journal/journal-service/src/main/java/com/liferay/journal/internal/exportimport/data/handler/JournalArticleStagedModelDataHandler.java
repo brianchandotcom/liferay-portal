@@ -88,7 +88,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlEscapableObject;
-import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -869,7 +869,7 @@ public class JournalArticleStagedModelDataHandler
 
 			friendlyURLMap.forEach(
 				(locale, url) -> friendlyURLMap.replace(
-					locale, _http.decodeURL(url)));
+					locale, HttpHelperUtil.decodeURL(url)));
 
 			String articleURL = null;
 
@@ -1822,9 +1822,6 @@ public class JournalArticleStagedModelDataHandler
 
 	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private Http _http;
 
 	private ImageLocalService _imageLocalService;
 

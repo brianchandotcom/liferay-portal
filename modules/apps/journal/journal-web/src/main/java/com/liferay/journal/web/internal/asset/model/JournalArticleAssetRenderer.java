@@ -58,7 +58,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlParser;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -381,7 +381,7 @@ public class JournalArticleAssetRenderer
 
 			if (Validator.isNotNull(friendlyURL)) {
 				if (!_article.isApproved()) {
-					friendlyURL = HttpUtil.addParameter(
+					friendlyURL = HttpHelperUtil.addParameter(
 						friendlyURL, "version", _article.getId());
 				}
 
@@ -404,7 +404,7 @@ public class JournalArticleAssetRenderer
 			_article.getUrlTitle(themeDisplay.getLocale()));
 
 		if (!_article.isApproved()) {
-			friendlyURL = HttpUtil.addParameter(
+			friendlyURL = HttpHelperUtil.addParameter(
 				friendlyURL, "version", _article.getId());
 		}
 

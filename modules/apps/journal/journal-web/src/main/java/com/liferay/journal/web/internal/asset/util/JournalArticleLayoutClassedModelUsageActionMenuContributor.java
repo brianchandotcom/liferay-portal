@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -154,15 +154,15 @@ public class JournalArticleLayoutClassedModelUsageActionMenuContributor
 					layoutClassedModelUsage.getPlid()),
 				themeDisplay);
 
-			layoutURL = _http.setParameter(
+			layoutURL = HttpHelperUtil.setParameter(
 				layoutURL, "previewClassNameId",
 				String.valueOf(layoutClassedModelUsage.getClassNameId()));
-			layoutURL = _http.setParameter(
+			layoutURL = HttpHelperUtil.setParameter(
 				layoutURL, "previewClassPK",
 				String.valueOf(layoutClassedModelUsage.getClassPK()));
-			layoutURL = _http.setParameter(
+			layoutURL = HttpHelperUtil.setParameter(
 				layoutURL, "previewType", String.valueOf(previewType));
-			layoutURL = _http.setParameter(
+			layoutURL = HttpHelperUtil.setParameter(
 				layoutURL, "previewVersion", previewVersion);
 		}
 		else {
@@ -183,7 +183,7 @@ public class JournalArticleLayoutClassedModelUsageActionMenuContributor
 			).buildString();
 		}
 
-		String portletURLString = _http.setParameter(
+		String portletURLString = HttpHelperUtil.setParameter(
 			layoutURL, "p_l_back_url", themeDisplay.getURLCurrent());
 
 		return portletURLString + "#portlet_" +
@@ -192,9 +192,6 @@ public class JournalArticleLayoutClassedModelUsageActionMenuContributor
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalArticleLayoutClassedModelUsageActionMenuContributor.class);
-
-	@Reference
-	private Http _http;
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;

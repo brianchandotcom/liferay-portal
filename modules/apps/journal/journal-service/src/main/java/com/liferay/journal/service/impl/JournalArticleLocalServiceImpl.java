@@ -184,7 +184,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.GroupSubscriptionCheckSubscriptionSender;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -7013,11 +7013,11 @@ public class JournalArticleLocalServiceImpl
 			PortletProviderUtil.getPortletId(
 				JournalArticle.class.getName(), PortletProvider.Action.EDIT));
 
-		articleURL = _http.addParameter(
+		articleURL = HttpHelperUtil.addParameter(
 			articleURL, namespace + "groupId", groupId);
-		articleURL = _http.addParameter(
+		articleURL = HttpHelperUtil.addParameter(
 			articleURL, namespace + "folderId", folderId);
-		articleURL = _http.addParameter(
+		articleURL = HttpHelperUtil.addParameter(
 			articleURL, namespace + "articleId", articleId);
 
 		return articleURL;
@@ -7308,7 +7308,7 @@ public class JournalArticleLocalServiceImpl
 			String articleURL = _portal.getControlPanelFullURL(
 				article.getGroupId(), portletId, null);
 
-			articleURL = _http.addParameter(
+			articleURL = HttpHelperUtil.addParameter(
 				articleURL, _portal.getPortletNamespace(portletId) + "mvcPath",
 				"/edit_article.jsp");
 
@@ -9289,9 +9289,6 @@ public class JournalArticleLocalServiceImpl
 
 	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private Http _http;
 
 	@Reference
 	private ImageLocalService _imageLocalService;

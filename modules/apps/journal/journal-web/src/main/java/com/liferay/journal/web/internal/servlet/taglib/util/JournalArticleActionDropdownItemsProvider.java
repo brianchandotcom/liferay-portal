@@ -57,7 +57,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -731,10 +731,10 @@ public class JournalArticleActionDropdownItemsProvider {
 					assetEntry.getClassName(), assetEntry.getClassPK(),
 					_themeDisplay);
 
-			previewURL = HttpUtil.addParameter(
+			previewURL = HttpHelperUtil.addParameter(
 				previewURL, "p_l_mode", Constants.PREVIEW);
 
-			return HttpUtil.addParameter(
+			return HttpHelperUtil.addParameter(
 				previewURL, "version", _article.getId());
 		}
 

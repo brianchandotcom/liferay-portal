@@ -54,7 +54,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -219,10 +219,10 @@ public class JournalUtil {
 			String namespace = PortalUtil.getPortletNamespace(
 				JournalPortletKeys.JOURNAL);
 
-			articleURL = HttpUtil.addParameter(
+			articleURL = HttpHelperUtil.addParameter(
 				articleURL, namespace + "groupId", groupId);
 
-			return HttpUtil.addParameter(
+			return HttpHelperUtil.addParameter(
 				articleURL, namespace + "folderId", folderId);
 		}
 		catch (PortalException portalException) {
@@ -591,9 +591,11 @@ public class JournalUtil {
 		tokens.put("main_path", themeDisplay.getPathMain());
 		tokens.put("portal_ctx", themeDisplay.getPathContext());
 		tokens.put(
-			"portal_url", HttpUtil.removeProtocol(themeDisplay.getURLPortal()));
+			"portal_url",
+			HttpHelperUtil.removeProtocol(themeDisplay.getURLPortal()));
 		tokens.put(
-			"protocol", HttpUtil.getProtocol(themeDisplay.getURLPortal()));
+			"protocol",
+			HttpHelperUtil.getProtocol(themeDisplay.getURLPortal()));
 		tokens.put("root_path", themeDisplay.getPathContext());
 		tokens.put(
 			"scope_group_id", String.valueOf(themeDisplay.getScopeGroupId()));
@@ -662,9 +664,10 @@ public class JournalUtil {
 		tokens.put("portal_ctx", themeDisplayModel.getPathContext());
 		tokens.put(
 			"portal_url",
-			HttpUtil.removeProtocol(themeDisplayModel.getURLPortal()));
+			HttpHelperUtil.removeProtocol(themeDisplayModel.getURLPortal()));
 		tokens.put(
-			"protocol", HttpUtil.getProtocol(themeDisplayModel.getURLPortal()));
+			"protocol",
+			HttpHelperUtil.getProtocol(themeDisplayModel.getURLPortal()));
 		tokens.put("root_path", themeDisplayModel.getPathContext());
 		tokens.put(
 			"scope_group_id",

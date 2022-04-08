@@ -308,6 +308,7 @@ definition {
 		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test ScheduleWebContentChangesWithDBPartitioningActivatedAcrossVariousCompanies {
 		property osgi.module.configuration.file.names = "com.liferay.journal.configuration.JournalServiceConfiguration.config";

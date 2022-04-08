@@ -89,10 +89,8 @@ public class UploadImageMVCResourceCommand extends BaseMVCResourceCommand {
 		byte[] bytes = _imageTool.getBytes(
 			imageBag.getRenderedImage(), imageBag.getType());
 
-		String contentType = MimeTypesUtil.getExtensionContentType(
-			imageBag.getType());
-
-		mimeResponse.setContentType(contentType);
+		mimeResponse.setContentType(
+			MimeTypesUtil.getExtensionContentType(imageBag.getType()));
 
 		PortletResponseUtil.write(mimeResponse, bytes);
 	}

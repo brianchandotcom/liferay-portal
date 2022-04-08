@@ -178,6 +178,16 @@ declare module Liferay {
 			namespace: string
 		): void;
 
+		export function selectFolder(
+			folderData: {
+				idString: string;
+				idValue: string;
+				nameString: string;
+				nameValue: string;
+			},
+			namespace: string
+		): void;
+
 		/**
 		 * Sets the form elements to given values.
 		 */

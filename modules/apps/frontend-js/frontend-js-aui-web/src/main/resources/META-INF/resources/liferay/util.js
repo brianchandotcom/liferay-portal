@@ -655,32 +655,6 @@
 			});
 		},
 
-		selectFolder(folderData, namespace) {
-			const folderDataElement = document.getElementById(
-				namespace + folderData.idString
-			);
-
-			if (folderDataElement) {
-				folderDataElement.value = folderData.idValue;
-			}
-
-			const folderNameElement = document.getElementById(
-				namespace + folderData.nameString
-			);
-
-			if (folderNameElement) {
-				folderNameElement.value = this.unescape(folderData.nameValue);
-			}
-
-			const removeFolderButton = document.getElementById(
-				`${namespace}removeFolderButton`
-			);
-
-			if (removeFolderButton) {
-				this.toggleDisabled(removeFolderButton, false);
-			}
-		},
-
 		setCursorPosition(element, position) {
 			var instance = this;
 

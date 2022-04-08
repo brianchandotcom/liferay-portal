@@ -12,19 +12,31 @@
  * details.
  */
 
+import {useEffect} from 'react';
+
 import Container from '../../components/Layout/Container';
 import ListView from '../../components/ListView/ListView';
-import {initialState} from '../../context/HeaderContext';
 import {getProjects} from '../../graphql/queries';
 import useHeader from '../../hooks/useHeader';
 import i18n from '../../i18n';
 import ProjectModal from './ProjectModal';
 import useProjectActions from './useProjectActions';
 
-const Projects = ({PageContainer = Container}) => {
+const Projects = ({addHeading = true, PageContainer = Container}) => {
 	const {actions, formModal} = useProjectActions();
 
-	useHeader({useDropdown: [], useHeading: initialState.heading});
+	const {setHeading} = useHeader({shouldUpdate: false});
+
+	useEffect(() => {
+		if (addHeading) {
+			setHeading([
+				{
+					category: i18n.translate('project'),
+					title: i18n.translate('project-directory'),
+				},
+			]);
+		}
+	}, [addHeading, setHeading]);
 
 	return (
 		<>

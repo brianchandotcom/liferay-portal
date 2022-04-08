@@ -20,7 +20,6 @@ import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
 import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemActionProvider;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -82,16 +81,13 @@ public class ViewFileEntryContentDashboardItemActionProvider
 		HttpServletRequest httpServletRequest, FileEntry fileEntry) {
 
 		return new ViewFileEntryContentDashboardItemAction(
-			_assetDisplayPageFriendlyURLProvider, fileEntry, _http,
-			httpServletRequest, _language);
+			_assetDisplayPageFriendlyURLProvider, fileEntry, httpServletRequest,
+			_language);
 	}
 
 	@Reference
 	private AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider;
-
-	@Reference
-	private Http _http;
 
 	@Reference
 	private Language _language;

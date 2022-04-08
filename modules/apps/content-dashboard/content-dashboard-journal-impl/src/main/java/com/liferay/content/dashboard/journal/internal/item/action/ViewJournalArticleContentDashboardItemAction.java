@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -41,12 +41,11 @@ public class ViewJournalArticleContentDashboardItemAction
 
 	public ViewJournalArticleContentDashboardItemAction(
 		AssetDisplayPageFriendlyURLProvider assetDisplayPageFriendlyURLProvider,
-		Http http, HttpServletRequest httpServletRequest,
-		JournalArticle journalArticle, Language language) {
+		HttpServletRequest httpServletRequest, JournalArticle journalArticle,
+		Language language) {
 
 		_assetDisplayPageFriendlyURLProvider =
 			assetDisplayPageFriendlyURLProvider;
-		_http = http;
 		_httpServletRequest = httpServletRequest;
 		_journalArticle = journalArticle;
 		_language = language;
@@ -108,10 +107,11 @@ public class ViewJournalArticleContentDashboardItemAction
 						_httpServletRequest, "backURL");
 
 					if (Validator.isNotNull(backURL)) {
-						return _http.setParameter(url, "p_l_back_url", backURL);
+						return HttpHelperUtil.setParameter(
+							url, "p_l_back_url", backURL);
 					}
 
-					return _http.setParameter(
+					return HttpHelperUtil.setParameter(
 						url, "p_l_back_url", themeDisplay.getURLCurrent());
 				}
 			).orElse(
@@ -130,7 +130,6 @@ public class ViewJournalArticleContentDashboardItemAction
 
 	private final AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider;
-	private final Http _http;
 	private final HttpServletRequest _httpServletRequest;
 	private final JournalArticle _journalArticle;
 	private final Language _language;

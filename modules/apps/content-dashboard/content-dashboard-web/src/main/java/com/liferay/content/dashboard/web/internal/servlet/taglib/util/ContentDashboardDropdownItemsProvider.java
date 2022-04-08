@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
@@ -42,11 +41,9 @@ import javax.servlet.http.HttpServletRequest;
 public class ContentDashboardDropdownItemsProvider {
 
 	public ContentDashboardDropdownItemsProvider(
-		Http http, Language language,
-		LiferayPortletRequest liferayPortletRequest,
+		Language language, LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse, Portal portal) {
 
-		_http = http;
 		_language = language;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
@@ -174,7 +171,6 @@ public class ContentDashboardDropdownItemsProvider {
 	}
 
 	private final String _currentURL;
-	private final Http _http;
 	private final Language _language;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;

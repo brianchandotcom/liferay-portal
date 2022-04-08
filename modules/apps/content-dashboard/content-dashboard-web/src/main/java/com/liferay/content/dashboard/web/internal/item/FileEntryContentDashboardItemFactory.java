@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Optional;
@@ -81,7 +80,7 @@ public class FileEntryContentDashboardItemFactory
 			contentDashboardItemSubtypeFactory.create(
 				dlFileEntry.getFileEntryTypeId()),
 			_dlURLHelper, fileEntry,
-			_groupLocalService.fetchGroup(fileEntry.getGroupId()), _http,
+			_groupLocalService.fetchGroup(fileEntry.getGroupId()),
 			infoItemFieldValuesProvider, _language, _portal);
 	}
 
@@ -116,9 +115,6 @@ public class FileEntryContentDashboardItemFactory
 
 	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private Http _http;
 
 	@Reference
 	private Language _language;

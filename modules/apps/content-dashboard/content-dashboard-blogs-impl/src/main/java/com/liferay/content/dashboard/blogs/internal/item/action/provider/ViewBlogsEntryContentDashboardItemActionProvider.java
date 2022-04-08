@@ -20,7 +20,6 @@ import com.liferay.content.dashboard.blogs.internal.item.action.ViewBlogsEntryCo
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
 import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemActionProvider;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Validator;
 
 import javax.servlet.http.HttpServletRequest;
@@ -78,16 +77,13 @@ public class ViewBlogsEntryContentDashboardItemActionProvider
 		HttpServletRequest httpServletRequest, BlogsEntry blogsEntry) {
 
 		return new ViewBlogsEntryContentDashboardItemAction(
-			_assetDisplayPageFriendlyURLProvider, blogsEntry, _http,
+			_assetDisplayPageFriendlyURLProvider, blogsEntry,
 			httpServletRequest, _language);
 	}
 
 	@Reference
 	private AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider;
-
-	@Reference
-	private Http _http;
 
 	@Reference
 	private Language _language;

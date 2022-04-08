@@ -20,7 +20,6 @@ import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemAc
 import com.liferay.content.dashboard.journal.internal.item.action.ViewJournalArticleContentDashboardItemAction;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Validator;
 
 import javax.servlet.http.HttpServletRequest;
@@ -79,16 +78,13 @@ public class ViewJournalArticleContentDashboardItemActionProvider
 		HttpServletRequest httpServletRequest, JournalArticle journalArticle) {
 
 		return new ViewJournalArticleContentDashboardItemAction(
-			_assetDisplayPageFriendlyURLProvider, _http, httpServletRequest,
+			_assetDisplayPageFriendlyURLProvider, httpServletRequest,
 			journalArticle, _language);
 	}
 
 	@Reference
 	private AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider;
-
-	@Reference
-	private Http _http;
 
 	@Reference
 	private Language _language;

@@ -95,7 +95,7 @@ public class FileEntryContentDashboardItemTest {
 		FileEntryContentDashboardItem fileEntryContentDashboardItem =
 			new FileEntryContentDashboardItem(
 				Collections.singletonList(assetCategory), null, null, null,
-				null, fileEntry, null, null, null, null, null);
+				null, fileEntry, null, null, null, null);
 
 		Assert.assertEquals(
 			Collections.singletonList(assetCategory),
@@ -117,7 +117,7 @@ public class FileEntryContentDashboardItemTest {
 		FileEntryContentDashboardItem fileEntryContentDashboardItem =
 			new FileEntryContentDashboardItem(
 				Collections.singletonList(assetCategory), null, null, null,
-				null, fileEntry, null, null, null, null, null);
+				null, fileEntry, null, null, null, null);
 
 		Assert.assertEquals(
 			Collections.singletonList(assetCategory),
@@ -131,7 +131,7 @@ public class FileEntryContentDashboardItemTest {
 
 		FileEntryContentDashboardItem fileEntryContentDashboardItem =
 			new FileEntryContentDashboardItem(
-				null, null, null, null, null, fileEntry, null, null, null, null,
+				null, null, null, null, null, fileEntry, null, null, null,
 				null);
 
 		Assert.assertEquals(
@@ -154,7 +154,7 @@ public class FileEntryContentDashboardItemTest {
 		FileEntryContentDashboardItem fileEntryContentDashboardItem =
 			new FileEntryContentDashboardItem(
 				Collections.singletonList(assetCategory), null, null, null,
-				null, fileEntry, null, null, null, null, null);
+				null, fileEntry, null, null, null, null);
 
 		Assert.assertEquals(
 			Collections.emptyList(),
@@ -171,7 +171,7 @@ public class FileEntryContentDashboardItemTest {
 		FileEntryContentDashboardItem fileEntryContentDashboardItem =
 			new FileEntryContentDashboardItem(
 				null, Collections.singletonList(assetTag), null, null, null,
-				fileEntry, null, null, null, null, null);
+				fileEntry, null, null, null, null);
 
 		Assert.assertEquals(
 			Collections.singletonList(assetTag),
@@ -211,7 +211,7 @@ public class FileEntryContentDashboardItemTest {
 
 		FileEntryContentDashboardItem fileEntryContentDashboardItem =
 			new FileEntryContentDashboardItem(
-				null, null, null, null, null, fileEntry, null, null,
+				null, null, null, null, null, fileEntry, null,
 				infoItemFieldValuesProvider, null, null);
 
 		Assert.assertEquals(
@@ -225,7 +225,7 @@ public class FileEntryContentDashboardItemTest {
 
 		FileEntryContentDashboardItem fileEntryContentDashboardItem =
 			new FileEntryContentDashboardItem(
-				null, null, null, null, null, fileEntry, null, null, null, null,
+				null, null, null, null, null, fileEntry, null, null, null,
 				null);
 
 		Assert.assertEquals(
@@ -248,7 +248,7 @@ public class FileEntryContentDashboardItemTest {
 		FileEntryContentDashboardItem fileEntryContentDashboardItem =
 			new FileEntryContentDashboardItem(
 				null, null, null, null, null, fileEntry, group, null, null,
-				null, null);
+				null);
 
 		Assert.assertEquals(
 			"scopeName",
@@ -285,7 +285,7 @@ public class FileEntryContentDashboardItemTest {
 					}
 
 				},
-				null, fileEntry, null, null, null, null, null);
+				null, fileEntry, null, null, null, null);
 
 		ContentDashboardItemSubtype contentDashboardItemType =
 			fileEntryContentDashboardItem.getContentDashboardItemSubtype();
@@ -300,7 +300,7 @@ public class FileEntryContentDashboardItemTest {
 
 		FileEntryContentDashboardItem fileEntryContentDashboardItem =
 			new FileEntryContentDashboardItem(
-				null, null, null, null, null, fileEntry, null, null, null, null,
+				null, null, null, null, null, fileEntry, null, null, null,
 				null);
 
 		Assert.assertEquals(
@@ -320,7 +320,7 @@ public class FileEntryContentDashboardItemTest {
 
 		FileEntryContentDashboardItem fileEntryContentDashboardItem =
 			new FileEntryContentDashboardItem(
-				null, null, null, null, null, fileEntry, null, null, null, null,
+				null, null, null, null, null, fileEntry, null, null, null,
 				null);
 
 		Assert.assertEquals(
@@ -339,7 +339,7 @@ public class FileEntryContentDashboardItemTest {
 
 		FileEntryContentDashboardItem fileEntryContentDashboardItem =
 			new FileEntryContentDashboardItem(
-				null, null, null, null, null, fileEntry, null, null, null, null,
+				null, null, null, null, null, fileEntry, null, null, null,
 				null);
 
 		Assert.assertEquals(
@@ -368,7 +368,7 @@ public class FileEntryContentDashboardItemTest {
 					_getContentDashboardItemActionProvider(
 						ContentDashboardItemAction.Type.VIEW,
 						"http://localhost:8080/view")),
-				null, null, fileEntry, null, null, null, _getLanguage(), null);
+				null, null, fileEntry, null, null, _getLanguage(), null);
 
 		Assert.assertTrue(
 			fileEntryContentDashboardItem.isViewable(

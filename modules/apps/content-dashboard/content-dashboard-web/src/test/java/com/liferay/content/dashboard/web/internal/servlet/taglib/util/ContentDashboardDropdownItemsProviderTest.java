@@ -93,7 +93,7 @@ public class ContentDashboardDropdownItemsProviderTest {
 		ContentDashboardDropdownItemsProvider
 			contentDashboardDropdownItemsProvider =
 				new ContentDashboardDropdownItemsProvider(
-					null, _language, mockLiferayPortletRenderRequest,
+					_language, mockLiferayPortletRenderRequest,
 					new MockLiferayPortletRenderResponse(), new PortalImpl());
 
 		List<DropdownItem> dropdownItems =
@@ -132,7 +132,7 @@ public class ContentDashboardDropdownItemsProviderTest {
 		ContentDashboardDropdownItemsProvider
 			contentDashboardDropdownItemsProvider =
 				new ContentDashboardDropdownItemsProvider(
-					null, _language, mockLiferayPortletRenderRequest,
+					_language, mockLiferayPortletRenderRequest,
 					new MockLiferayPortletRenderResponse(), new PortalImpl());
 
 		List<DropdownItem> dropdownItems =
@@ -175,7 +175,7 @@ public class ContentDashboardDropdownItemsProviderTest {
 		ContentDashboardDropdownItemsProvider
 			contentDashboardDropdownItemsProvider =
 				new ContentDashboardDropdownItemsProvider(
-					null, _language, mockLiferayPortletRenderRequest,
+					_language, mockLiferayPortletRenderRequest,
 					new MockLiferayPortletRenderResponse(), new PortalImpl());
 
 		List<DropdownItem> dropdownItems =

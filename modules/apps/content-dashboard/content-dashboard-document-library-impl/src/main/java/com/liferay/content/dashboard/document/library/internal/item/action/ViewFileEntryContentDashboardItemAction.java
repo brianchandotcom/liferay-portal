@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -41,13 +41,12 @@ public class ViewFileEntryContentDashboardItemAction
 
 	public ViewFileEntryContentDashboardItemAction(
 		AssetDisplayPageFriendlyURLProvider assetDisplayPageFriendlyURLProvider,
-		FileEntry fileEntry, Http http, HttpServletRequest httpServletRequest,
+		FileEntry fileEntry, HttpServletRequest httpServletRequest,
 		Language language) {
 
 		_assetDisplayPageFriendlyURLProvider =
 			assetDisplayPageFriendlyURLProvider;
 		_fileEntry = fileEntry;
-		_http = http;
 		_httpServletRequest = httpServletRequest;
 		_language = language;
 	}
@@ -107,10 +106,11 @@ public class ViewFileEntryContentDashboardItemAction
 						_httpServletRequest, "backURL");
 
 					if (Validator.isNotNull(backURL)) {
-						return _http.setParameter(url, "p_l_back_url", backURL);
+						return HttpHelperUtil.setParameter(
+							url, "p_l_back_url", backURL);
 					}
 
-					return _http.setParameter(
+					return HttpHelperUtil.setParameter(
 						url, "p_l_back_url", themeDisplay.getURLCurrent());
 				}
 			).orElse(
@@ -130,7 +130,6 @@ public class ViewFileEntryContentDashboardItemAction
 	private final AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider;
 	private final FileEntry _fileEntry;
-	private final Http _http;
 	private final HttpServletRequest _httpServletRequest;
 	private final Language _language;
 

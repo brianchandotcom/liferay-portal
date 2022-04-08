@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.search.aggregation.Aggregations;
@@ -137,7 +136,7 @@ public class ContentDashboardAdminPortlet extends MVCPortlet {
 					contentDashboardDataProvider.getAssetVocabularyMetric(
 						assetVocabularies),
 					new ContentDashboardDropdownItemsProvider(
-						_http, _language, liferayPortletRequest,
+						_language, liferayPortletRequest,
 						liferayPortletResponse, _portal),
 					_contentDashboardItemSubtypeFactoryTracker, _itemSelector,
 					_language.get(
@@ -197,9 +196,6 @@ public class ContentDashboardAdminPortlet extends MVCPortlet {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private Http _http;
 
 	@Reference
 	private ItemSelector _itemSelector;

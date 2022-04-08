@@ -1,9 +1,9 @@
 {
 	"dependencies": {
 		"@clayui/button": "3.40.0",
-		"@clayui/css": "3.51.0",
-		"@clayui/drop-down": "3.49.0",
-		"@clayui/form": "3.49.0",
+		"@clayui/css": "3.52.0",
+		"@clayui/drop-down": "3.52.0",
+		"@clayui/form": "3.52.0",
 		"@clayui/icon": "3.40.0",
 		"classnames": "2.3.1",
 		"react": "16.12.0",

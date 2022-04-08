@@ -101,10 +101,10 @@ definition {
 			minimumDocumentFrequency = "1",
 			minimumTermFrequency = "1");
 
-		BlogsNavigator.openToBlogEntry(
-			entryTitle = "Blogs Entry Title 1",
-			layoutName = "Similar Results Page",
-			siteURLKey = "guest");
+		AssertClick(
+			key_entryTitle = "Blogs Entry Title 1",
+			locator1 = "BlogsEntry#TITLE_LINK",
+			value1 = "Blogs Entry Title 1");
 
 		AssertElementPresent(
 			key_linkResultTitle = "Blogs Entry Title 2",

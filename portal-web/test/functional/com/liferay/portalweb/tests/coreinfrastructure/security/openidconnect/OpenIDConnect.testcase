@@ -1,11 +1,10 @@
 @component-name = "portal-security"
 definition {
 
-	property custom.properties = "company.default.time.zone=America/Los_Angeles";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "OpenID Connect";
-	property user.time.zone = "America/Los_Angeles";
+	property user.time.zone = "UTC";
 
 	setUp {
 		TestCase.setUpPortalInstance();

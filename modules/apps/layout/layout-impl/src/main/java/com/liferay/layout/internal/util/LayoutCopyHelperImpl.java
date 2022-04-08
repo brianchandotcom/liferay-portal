@@ -67,7 +67,6 @@ import com.liferay.portal.kernel.util.CopyLayoutThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -554,9 +553,6 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 			List<String> portletIds = _getLayoutPortletIds(
 				sourceLayout, segmentsExperiencesIds);
 
-			List<String> targetPortletIds = _getLayoutPortletIds(
-				targetLayout, segmentsExperiencesIds);
-
 			for (String portletId : portletIds) {
 				Portlet portlet = _portletLocalService.getPortletById(
 					portletId);
@@ -564,8 +560,6 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 				if ((portlet == null) || portlet.isUndeployedPortlet()) {
 					continue;
 				}
-
-				targetPortletIds.remove(portletId);
 
 				PortletPreferencesIds portletPreferencesIds =
 					_portletPreferencesFactory.getPortletPreferencesIds(
@@ -602,23 +596,6 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 						targetLayout.getPlid(), portletId, portlet,
 						PortletPreferencesFactoryUtil.toXML(
 							jxPortletPreferences));
-				}
-			}
-
-			for (String portletId : targetPortletIds) {
-				try {
-					_portletPreferencesLocalService.deletePortletPreferences(
-						PortletKeys.PREFS_OWNER_ID_DEFAULT,
-						PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-						targetLayout.getPlid(), portletId);
-				}
-				catch (Exception exception) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(
-							"Unable to delete portlet preferences for " +
-								"portlet " + portletId,
-							exception);
-					}
 				}
 			}
 		}

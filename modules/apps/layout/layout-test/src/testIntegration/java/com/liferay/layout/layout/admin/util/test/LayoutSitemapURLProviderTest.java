@@ -79,10 +79,6 @@ public class LayoutSitemapURLProviderTest {
 
 		_initThemeDisplay();
 
-		_serviceContext = ServiceContextTestUtil.getServiceContext(
-			_group.getCompanyId(), _group.getGroupId(),
-			TestPropsValues.getUserId());
-
 		LayoutTestUtil.addTypePortletLayout(_group);
 	}
 
@@ -121,9 +117,14 @@ public class LayoutSitemapURLProviderTest {
 
 		Assert.assertNotNull(draftLayout);
 
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getCompanyId(), _group.getGroupId(),
+				TestPropsValues.getUserId());
+
 		_layoutLocalService.updateStatus(
 			TestPropsValues.getUserId(), draftLayout.getPlid(),
-			WorkflowConstants.STATUS_APPROVED, _serviceContext);
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		layoutSitemapURLProvider.visitLayout(
 			rootElement, layout.getUuid(), _layoutSet, _themeDisplay);
@@ -254,7 +255,6 @@ public class LayoutSitemapURLProviderTest {
 	@Inject
 	private SAXReader _saxReader;
 
-	private ServiceContext _serviceContext;
 	private ThemeDisplay _themeDisplay;
 
 }

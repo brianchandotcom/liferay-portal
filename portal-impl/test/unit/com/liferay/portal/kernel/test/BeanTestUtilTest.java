@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.kernel.test.util;
+package com.liferay.portal.kernel.test;
 
-import com.liferay.portal.kernel.test.BeanTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Collections;

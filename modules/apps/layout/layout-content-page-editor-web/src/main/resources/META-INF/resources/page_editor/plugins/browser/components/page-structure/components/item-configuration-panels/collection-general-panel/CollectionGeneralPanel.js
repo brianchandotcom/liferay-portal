@@ -263,14 +263,16 @@ export function CollectionGeneralPanel({item}) {
 										selectedViewportSize ===
 											VIEWPORT_SIZES.desktop && (
 											<>
-												<ShowGutterSelector
-													checked={
-														item.config.gutters
-													}
-													handleConfigurationChanged={
-														handleConfigurationChanged
-													}
-												/>
+												{numberOfColumns > 1 && (
+													<ShowGutterSelector
+														checked={
+															item.config.gutters
+														}
+														handleConfigurationChanged={
+															handleConfigurationChanged
+														}
+													/>
+												)}
 
 												<VerticalAlignmentSelector
 													collectionLayoutId={

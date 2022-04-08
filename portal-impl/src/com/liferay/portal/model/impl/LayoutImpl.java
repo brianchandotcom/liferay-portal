@@ -1178,6 +1178,32 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	/**
+	 * Returns <code>true</code> if the current layout is type content and has
+	 * been published.
+	 *
+	 *
+	 * @return <code>true</code> if the current layout is type content and has
+	 *         been published; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isPublished() {
+		if (!isTypeContent()) {
+			return true;
+		}
+
+		Layout draftLayout = fetchDraftLayout();
+
+		if ((draftLayout == null) ||
+			GetterUtil.getBoolean(
+				draftLayout.getTypeSettingsProperty("published"))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
 	 * Returns <code>true</code> if the current layout is the root layout.
 	 *
 	 * @return <code>true</code> if the current layout is the root layout;

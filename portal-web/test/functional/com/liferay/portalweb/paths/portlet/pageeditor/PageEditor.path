@@ -508,6 +508,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FRAGMENT_SIDEBAR_STATE_TEXT</td>
+	<td>//*[contains(@class,'state-text')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FRAGMENT_SIDEBAR_SHOW_RESOLVED_COMMENTS_LABEL</td>
 	<td>//span[contains(@class,'custom-control-label-text') and contains(.,'Show Resolved Comments')]</td>
 	<td></td>

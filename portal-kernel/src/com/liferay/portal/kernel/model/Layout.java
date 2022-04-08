@@ -400,6 +400,15 @@ public interface Layout extends LayoutModel, PersistedModel {
 	public boolean isPublicLayout();
 
 	/**
+	 * Returns <code>true</code> if the current layout is type content and has
+	 * been published.
+	 *
+	 * @return <code>true</code> if the current layout is type content and has
+	 been published; <code>false</code> otherwise
+	 */
+	public boolean isPublished();
+
+	/**
 	 * Returns <code>true</code> if the current layout is the root layout.
 	 *
 	 * @return <code>true</code> if the current layout is the root layout;

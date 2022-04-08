@@ -174,7 +174,7 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 
 		for (InfoField infoField : _getInfoFields(className, object)) {
 			String[] infoFieldParameterValue = infoFieldParameterValues.get(
-				infoField.getName());
+				infoField.getUniqueId());
 
 			if (ArrayUtil.isNotEmpty(infoFieldParameterValue)) {
 				Locale sourceLocale = _getSourceLocale(actionRequest);
@@ -182,7 +182,7 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 				List<InfoFieldValue<Object>> sourceInfoFieldValues =
 					new ArrayList<>(
 						infoItemFieldValues.getInfoFieldValues(
-							infoField.getName()));
+							infoField.getUniqueId()));
 
 				for (int i = 0; i < infoFieldParameterValue.length; i++) {
 					InfoFieldValue<Object> sourceInfoFieldValue =

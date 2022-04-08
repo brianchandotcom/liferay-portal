@@ -29,7 +29,7 @@
 				</div>
 			</c:when>
 			<c:otherwise>
-				<aui:input dir="<%= sourceContentDir %>" label="<%= label %>" name="<%= name %>" readonly="true" tabIndex="-1" type='<%= multiline ? "textarea" : "text" %>' value="<%= sourceContent %>" />
+				<aui:input dir="<%= sourceContentDir %>" label="<%= label %>" name="<%= infoField.getUniqueId() %>" readonly="true" tabIndex="-1" type='<%= multiline ? "textarea" : "text" %>' value="<%= sourceContent %>" />
 			</c:otherwise>
 		</c:choose>
 	</clay:col>
@@ -48,7 +48,7 @@
 				</div>
 			</c:when>
 			<c:otherwise>
-				<aui:input dir='<%= LanguageUtil.get(translateDisplayContext.getTargetLocale(), "lang.dir") %>' disabled="<%= true %>" label="<%= label %>" name='<%= "infoField--" + infoField.getName() + "--" %>' type='<%= multiline ? "textarea" : "text" %>' value="<%= targetContent %>" />
+				<aui:input dir='<%= LanguageUtil.get(translateDisplayContext.getTargetLocale(), "lang.dir") %>' disabled="<%= true %>" label="<%= label %>" name='<%= "infoField--" + infoField.getUniqueId() + "--" %>' type='<%= multiline ? "textarea" : "text" %>' value="<%= targetContent %>" />
 			</c:otherwise>
 		</c:choose>
 	</clay:col>

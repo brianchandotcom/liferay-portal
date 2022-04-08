@@ -331,7 +331,7 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 
 		InfoFieldValue<Object> infoFieldValue =
 			translationEntryInfoItemFieldValues.getInfoFieldValue(
-				infoField.getName());
+				infoField.getUniqueId());
 
 		if (infoFieldValue != null) {
 			return infoFieldValue.getValue();

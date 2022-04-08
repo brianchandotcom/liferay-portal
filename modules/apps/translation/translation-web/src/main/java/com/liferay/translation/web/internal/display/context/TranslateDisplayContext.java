@@ -183,7 +183,8 @@ public class TranslateDisplayContext {
 						return stream.map(
 							infoField -> {
 								String infoFieldId =
-									"infoField--" + infoField.getName() + "--";
+									"infoField--" + infoField.getUniqueId() +
+										"--";
 
 								Map<String, Object> editorConfiguration = null;
 
@@ -352,7 +353,8 @@ public class TranslateDisplayContext {
 		InfoField infoField, Locale locale) {
 
 		Collection<InfoFieldValue<Object>> infoFieldValues =
-			_sourceInfoItemFieldValues.getInfoFieldValues(infoField.getName());
+			_sourceInfoItemFieldValues.getInfoFieldValues(
+				infoField.getUniqueId());
 
 		Stream<InfoFieldValue<Object>> stream = infoFieldValues.stream();
 
@@ -376,7 +378,8 @@ public class TranslateDisplayContext {
 		InfoField infoField, Locale locale) {
 
 		Collection<InfoFieldValue<Object>> infoFieldValues =
-			_targetInfoItemFieldValues.getInfoFieldValues(infoField.getName());
+			_targetInfoItemFieldValues.getInfoFieldValues(
+				infoField.getUniqueId());
 
 		Stream<InfoFieldValue<Object>> stream = infoFieldValues.stream();
 

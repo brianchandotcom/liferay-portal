@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.test;
 
+import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
 import java.util.Collections;
@@ -22,12 +23,17 @@ import java.util.Map;
 import java.util.Objects;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
 import org.junit.Test;
 
 /**
  * @author Guilherme Camacho
  */
 public class BeanTestUtilTest {
+
+	@ClassRule
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		CodeCoverageAssertor.INSTANCE;
 
 	@Test(expected = NoSuchMethodException.class)
 	public void testCopyPropertiesShouldFailIfPropertiesDoesNotExist()

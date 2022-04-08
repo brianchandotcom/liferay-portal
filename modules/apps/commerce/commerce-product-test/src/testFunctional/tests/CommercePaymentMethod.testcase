@@ -129,4 +129,77 @@ definition {
 		}
 	}
 
+	@description = "Verify an activated offline payment method can be used for an order."
+	@priority = "3"
+	test AnOfflinePaymentMethodCanBeUsedForAnOrder {
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site with a buyer user") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+
+			User.openUsersAdmin();
+
+			CommerceLogin.editPasswordCP(
+				newPassword = "test",
+				requirePasswordReset = "false",
+				userScreenName = "buyeruser");
+		}
+
+		task ("And given a new offline payment method is created and activated") {
+			CommercePaymentMethods.addOfflinePaymentMethod(key = "Test Offline Payment Method");
+
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			CommerceChannels.activatePaymentMethod(paymentMethod = "Test Offline Payment Method");
+		}
+
+		task ("When the buyer user makes an order") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+
+			CommerceNavigator.gotoMiniCart();
+
+			Button.click(button = "View Details");
+
+			Button.click(button = "Checkout");
+		}
+
+		task ("Then the new offline payment method should be visible in the checkout order summary") {
+			CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				paymentMethod = "Test Offline Payment Method",
+				productName = "U-Joint",
+				productQuantity = "1",
+				productUnitPrice = "24",
+				shippingMethod = "Standard");
+		}
+	}
+
 }

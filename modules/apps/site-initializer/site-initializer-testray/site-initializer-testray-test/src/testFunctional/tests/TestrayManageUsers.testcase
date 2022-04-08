@@ -1,0 +1,44 @@
+@component-name = "portal-solutions"
+definition {
+
+	property osgi.modules.includes = "site-initializer-testray";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Testray 2";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Testray.createTestraySite(siteName = "Testray 2");
+
+		Refresh();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		Testray.tearDownCP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "LPS-150613 - Verify that User can access Manage Users page."
+	@priority = "5"
+	test CanAcessManageUsersPage {
+		ApplicationsMenu.gotoSite(site = "Testray 2");
+
+		Click(locator1 = "TestrayManage#MANAGE_SIDEBAR");
+
+		Click(
+			key_itemvalue = "Manage Users",
+			locator1 = "TestrayDropdown#DROPDOWN_ITEM");
+
+		AssertElementPresent(
+			key_breadcrumbName = "Manage Users",
+			locator1 = "TestrayHeader#HEADER_BREADCRUMB_DIRECTION");
+	}
+}

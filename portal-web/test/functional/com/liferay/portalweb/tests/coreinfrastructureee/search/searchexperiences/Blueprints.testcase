@@ -2523,6 +2523,170 @@ definition {
 			resultTitle = "");
 	}
 
+	test ViewClauseContributorsFilterAndSort {
+		Blueprints.openBlueprintsAdmin();
+
+		Blueprints.createBlueprint(title = "Test Blueprint");
+
+		Navigator.gotoNavNested(navNested = "Query Settings");
+
+		Check.checkNotVisible(
+			locator1 = "Radio#ANY",
+			radioLabel = "Customize");
+
+		Button.click(button = "Customize Contributors");
+
+		Uncheck.uncheckToggleSwitch(
+			contributorClass = "AssetCategoryKeywordQueryContributor",
+			locator1 = "Blueprints#BLUEPRINTS_CLAUSE_CONTRIBUTOR_ON_OFF_TOGGLE");
+
+		Uncheck.uncheckToggleSwitch(
+			contributorClass = "AccountEntryModelPreFilterContributor",
+			locator1 = "Blueprints#BLUEPRINTS_CLAUSE_CONTRIBUTOR_ON_OFF_TOGGLE");
+
+		Uncheck.uncheckToggleSwitch(
+			contributorClass = "AssetEntryModelPreFilterContributor",
+			locator1 = "Blueprints#BLUEPRINTS_CLAUSE_CONTRIBUTOR_ON_OFF_TOGGLE");
+
+		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
+
+		MenuItem.click(menuItem = "Inactive");
+
+		AssertElementPresent(
+			contributorClass = "AssetCategoryKeywordQueryContributor",
+			locator1 = "Blueprints#BLUEPRINTS_CLAUSE_CONTRIBUTOR_ITEM");
+
+		AssertElementPresent(
+			contributorClass = "AccountEntryModelPreFilterContributor",
+			locator1 = "Blueprints#BLUEPRINTS_CLAUSE_CONTRIBUTOR_ITEM");
+
+		AssertElementPresent(
+			contributorClass = "AssetEntryModelPreFilterContributor",
+			locator1 = "Blueprints#BLUEPRINTS_CLAUSE_CONTRIBUTOR_ITEM");
+
+		AssertElementNotPresent(locator1 = "Blueprints#BLUEPRINTS_CLAUSE_CONTRIBUTOR_TOGGLE_ENABLED");
+
+		Button.click(button = "Clear");
+
+		AssertElementPresent(locator1 = "Blueprints#BLUEPRINTS_CLAUSE_CONTRIBUTOR_TOGGLE_ENABLED");
+
+		AssertElementPresent(locator1 = "Blueprints#BLUEPRINTS_CLAUSE_CONTRIBUTOR_TOGGLE_DISABLED");
+
+		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
+
+		MenuItem.click(menuItem = "Active");
+
+		AssertElementPresent(locator1 = "Blueprints#BLUEPRINTS_CLAUSE_CONTRIBUTOR_TOGGLE_ENABLED");
+
+		AssertElementNotPresent(locator1 = "Blueprints#BLUEPRINTS_CLAUSE_CONTRIBUTOR_TOGGLE_DISABLED");
+
+		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
+
+		Click(
+			key_menuItem = "KeywordQueryContributor",
+			locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+
+		AssertElementPresent(
+			contributorClass = "KeywordQueryContributor",
+			locator1 = "Blueprints#BLUEPRINTS_CLAUSE_CONTRIBUTOR_ITEM");
+
+		AssertElementNotPresent(
+			contributorClass = "ModelPreFilterContributor",
+			locator1 = "Blueprints#BLUEPRINTS_CLAUSE_CONTRIBUTOR_ITEM");
+
+		AssertElementNotPresent(
+			contributorClass = "QueryPreFilterContributor",
+			locator1 = "Blueprints#BLUEPRINTS_CLAUSE_CONTRIBUTOR_ITEM");
+
+		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
+
+		Click(
+			key_menuItem = "ModelPrefilterContributor",
+			locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+
+		AssertElementPresent(
+			contributorClass = "ModelPreFilterContributor",
+			locator1 = "Blueprints#BLUEPRINTS_CLAUSE_CONTRIBUTOR_ITEM");
+
+		AssertElementNotPresent(
+			contributorClass = "KeywordQueryContributor",
+			locator1 = "Blueprints#BLUEPRINTS_CLAUSE_CONTRIBUTOR_ITEM");
+
+		AssertElementNotPresent(
+			contributorClass = "QueryPreFilterContributor",
+			locator1 = "Blueprints#BLUEPRINTS_CLAUSE_CONTRIBUTOR_ITEM");
+
+		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
+
+		Click(
+			key_menuItem = "QueryPrefilterContributor",
+			locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+
+		AssertElementPresent(
+			contributorClass = "QueryPreFilterContributor",
+			locator1 = "Blueprints#BLUEPRINTS_CLAUSE_CONTRIBUTOR_ITEM");
+
+		AssertElementNotPresent(
+			contributorClass = "KeywordQueryContributor",
+			locator1 = "Blueprints#BLUEPRINTS_CLAUSE_CONTRIBUTOR_ITEM");
+
+		AssertElementNotPresent(
+			contributorClass = "ModelPreFilterContributor",
+			locator1 = "Blueprints#BLUEPRINTS_CLAUSE_CONTRIBUTOR_ITEM");
+
+		Click(
+			filter = "QueryPrefilterContributor",
+			locator1 = "Blueprints#BLUEPRINTS_CLAUSE_CONTRIBUTOR_CLEAR_FILTER_BUTTON");
+
+		AssertElementPresent(
+			contributorClass = "KeywordQueryContributor",
+			locator1 = "Blueprints#BLUEPRINTS_CLAUSE_CONTRIBUTOR_ITEM");
+
+		AssertElementPresent(
+			contributorClass = "ModelPreFilterContributor",
+			locator1 = "Blueprints#BLUEPRINTS_CLAUSE_CONTRIBUTOR_ITEM");
+
+		AssertElementPresent(
+			contributorClass = "QueryPreFilterContributor",
+			locator1 = "Blueprints#BLUEPRINTS_CLAUSE_CONTRIBUTOR_ITEM");
+
+		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
+
+		MenuItem.click(menuItem = "Inactive");
+
+		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
+
+		Click(
+			key_menuItem = "KeywordQueryContributor",
+			locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+
+		AssertElementPresent(
+			contributorClass = "AssetCategoryKeywordQueryContributor",
+			locator1 = "Blueprints#BLUEPRINTS_CLAUSE_CONTRIBUTOR_ITEM");
+
+		AssertElementNotPresent(
+			contributorClass = "AccountEntryModelPreFilterContributor",
+			locator1 = "Blueprints#BLUEPRINTS_CLAUSE_CONTRIBUTOR_ITEM");
+
+		AssertElementNotPresent(
+			contributorClass = "AssetEntryModelPreFilterContributor",
+			locator1 = "Blueprints#BLUEPRINTS_CLAUSE_CONTRIBUTOR_ITEM");
+
+		Button.click(button = "Clear");
+
+		AssertTextEquals.assertPartialText(
+			index = "1",
+			locator1 = "Blueprints#BLUEPRINTS_CLAUSE_CONTRIBUTOR_NTH_ITEM",
+			value1 = "Account Entry Keyword Query Contributor");
+
+		Click.clickNoMouseOver(locator1 = "Blueprints#BLUEPRINTS_CLAUSE_CONTRIBUTOR_SORT_BUTTON");
+
+		AssertTextEquals.assertPartialText(
+			index = "1",
+			locator1 = "Blueprints#BLUEPRINTS_CLAUSE_CONTRIBUTOR_NTH_ITEM",
+			value1 = "User Keyword Query Contributor");
+	}
+
 	test ViewClauseContributorsUI {
 		Blueprints.openBlueprintsAdmin();
 

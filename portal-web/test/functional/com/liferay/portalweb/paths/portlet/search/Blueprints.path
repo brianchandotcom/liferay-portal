@@ -151,6 +151,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BLUEPRINTS_CLAUSE_CONTRIBUTOR_CLEAR_FILTER_BUTTON</td>
+	<td>//span[contains(@class,'label-dismissible') and contains(.,'${filter}')]//button[contains(@class,'close')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLUEPRINTS_CLAUSE_CONTRIBUTOR_ITEM</td>
+	<td>//div[contains(@class,'clause-contributors-sidebar')]//li[contains(@class,'list-group-item') and contains(.,"${contributorClass}")]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLUEPRINTS_CLAUSE_CONTRIBUTOR_NTH_ITEM</td>
+	<td>xpath=(//div[contains(@class,'clause-contributors-sidebar')]//li[contains(@class,'list-group-item')])[${index}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BLUEPRINTS_CLAUSE_CONTRIBUTOR_ON_OFF_TOGGLE</td>
 	<td>//div[contains(@class,'clause-contributors-sidebar')]//li[contains(.,"${contributorClass}")]//input[contains(@class,"toggle-switch-check")]</td>
 	<td></td>
@@ -158,6 +173,11 @@
 <tr>
 	<td>BLUEPRINTS_CLAUSE_CONTRIBUTOR_OPEN_SIDEBAR</td>
 	<td>//div[contains(@class,'clause-contributors-sidebar') and contains(@class,'open')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLUEPRINTS_CLAUSE_CONTRIBUTOR_SORT_BUTTON</td>
+	<td>//button[@title='Reverse Sort Direction']</td>
 	<td></td>
 </tr>
 <tr>

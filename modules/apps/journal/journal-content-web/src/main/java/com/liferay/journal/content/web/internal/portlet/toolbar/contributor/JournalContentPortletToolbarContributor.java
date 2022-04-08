@@ -167,17 +167,12 @@ public class JournalContentPortletToolbarContributor
 							themeDisplay.getLocale(), "new-x",
 							ddmStructure.getName(themeDisplay.getLocale())))
 				).build());
-
-			String label = ddmStructure.getUnambiguousName(
-				ddmStructures, themeDisplay.getScopeGroupId(),
-				themeDisplay.getLocale());
-
-			urlMenuItem.setLabel(label);
-
-			String url = _http.addParameter(
-				portletURL.toString(), "refererPlid", plid);
-
-			urlMenuItem.setURL(url);
+			urlMenuItem.setLabel(
+				ddmStructure.getUnambiguousName(
+					ddmStructures, themeDisplay.getScopeGroupId(),
+					themeDisplay.getLocale()));
+			urlMenuItem.setURL(
+				_http.addParameter(portletURL.toString(), "refererPlid", plid));
 
 			menuItems.add(urlMenuItem);
 		}

@@ -746,12 +746,11 @@ public class JournalContentDisplayContext {
 		try {
 			JournalArticle article = getArticle();
 
-			Group group = GroupLocalServiceUtil.fetchGroup(
-				article.getGroupId());
-
 			return PortletURLBuilder.create(
 				PortalUtil.getControlPanelPortletURL(
-					_portletRequest, group, JournalPortletKeys.JOURNAL, 0, 0,
+					_portletRequest,
+					GroupLocalServiceUtil.fetchGroup(article.getGroupId()),
+					JournalPortletKeys.JOURNAL, 0, 0,
 					PortletRequest.RENDER_PHASE)
 			).setMVCPath(
 				"/view_article_history.jsp"

@@ -108,7 +108,7 @@
 </tr>
 <tr>
 	<td>CLAY_SECTION</td>
-	<td>//section[contains(@id,'portlet_ClaySamplePortlet')]</td>
+	<td>//*[contains(@class,'container-fluid')]//parent::*[not(contains(@class,'hide')) and contains(@id,'ClaySamplePortlet')]</td>
 	<td></td>
 </tr>
 <!--MANAGEMENT_TOOLBARS-->

@@ -1,30 +1,32 @@
 definition {
 
 	macro assertNavTabVisualContent {
+		var tabName = StringUtil.toLowerCase("${tab}");
+
 		Navigator.gotoNavTab(navTab = "${tab}");
 
 		if ("${tab}" == "Navigation Bars") {
 			OcularAssertElementImage(
 				locator1 = "ClaySamplePortlet#CLAY_SECTION",
-				value1 = "ClaySmoke/CanRenderUI/NavigationBars.png",
+				value1 = "clay_smoke/can_render_ui/navigation_bars.png",
 				value2 = "70");
 		}
 		else if ("${tab}" == "Pagination Bars") {
 			OcularAssertElementImage(
 				locator1 = "ClaySamplePortlet#CLAY_SECTION",
-				value1 = "ClaySmoke/CanRenderUI/PaginationBars.png",
+				value1 = "clay_smoke/can_render_ui/pagination_bars.png",
 				value2 = "70");
 		}
 		else if ("${tab}" == "Progress Bars") {
 			OcularAssertElementImage(
 				locator1 = "ClaySamplePortlet#CLAY_SECTION",
-				value1 = "ClaySmoke/CanRenderUI/ProgressBars.png",
+				value1 = "clay_smoke/can_render_ui/progress_bars.png",
 				value2 = "80");
 		}
 		else {
 			OcularAssertElementImage(
 				locator1 = "ClaySamplePortlet#CLAY_SECTION",
-				value1 = "ClaySmoke/CanRenderUI/${tab}.png",
+				value1 = "clay_smoke/can_render_ui/${tabName}.png",
 				value2 = "80");
 		}
 	}

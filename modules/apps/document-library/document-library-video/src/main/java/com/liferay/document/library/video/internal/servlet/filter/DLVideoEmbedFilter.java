@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
@@ -135,7 +135,7 @@ public class DLVideoEmbedFilter extends BasePortalFilter {
 		}
 
 		long folderId = GetterUtil.getLong(pathParts.get(2));
-		String fileName = _http.decodeURL(pathParts.get(3));
+		String fileName = HttpHelperUtil.decodeURL(pathParts.get(3));
 
 		return _dlAppLocalService.getFileEntryByFileName(
 			groupId, folderId, fileName);
@@ -186,8 +186,5 @@ public class DLVideoEmbedFilter extends BasePortalFilter {
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
-
-	@Reference
-	private Http _http;
 
 }

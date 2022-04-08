@@ -48,7 +48,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -421,7 +421,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 		ThemeDisplay themeDisplay, FileEntry fileEntry, String queryString,
 		boolean absoluteURL) {
 
-		return _http.addParameter(
+		return HttpHelperUtil.addParameter(
 			getPortletFileEntryURL(
 				themeDisplay, fileEntry, queryString, absoluteURL),
 			"download", true);
@@ -796,9 +796,6 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private Http _http;
 
 	@Reference(
 		target = "(class.name=com.liferay.portal.repository.liferayrepository.LiferayRepository)"

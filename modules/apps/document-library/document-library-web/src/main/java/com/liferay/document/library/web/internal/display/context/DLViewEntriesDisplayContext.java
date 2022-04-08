@@ -45,7 +45,7 @@ import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -249,7 +249,7 @@ public class DLViewEntriesDisplayContext {
 		).setMVCRenderCommandName(
 			"/document_library/view_file_entry"
 		).setRedirect(
-			HttpUtil.removeParameter(
+			HttpHelperUtil.removeParameter(
 				_dlRequestHelper.getCurrentURL(),
 				_liferayPortletResponse.getNamespace() + "ajax")
 		).setParameter(

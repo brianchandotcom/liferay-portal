@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PwdGenerator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -74,7 +74,7 @@ public class GoogleDrivePortletRequestAuthorizationHelper {
 		if (!_dlOpenerGoogleDriveManager.hasValidCredential(
 				themeDisplay.getCompanyId(), themeDisplay.getUserId())) {
 
-			authorizationURL = _httpUtil.setParameter(
+			authorizationURL = HttpHelperUtil.setParameter(
 				authorizationURL, "prompt", "select_account");
 		}
 
@@ -99,9 +99,6 @@ public class GoogleDrivePortletRequestAuthorizationHelper {
 
 	@Reference
 	private DLOpenerGoogleDriveManager _dlOpenerGoogleDriveManager;
-
-	@Reference
-	private HttpUtil _httpUtil;
 
 	@Reference
 	private Portal _portal;

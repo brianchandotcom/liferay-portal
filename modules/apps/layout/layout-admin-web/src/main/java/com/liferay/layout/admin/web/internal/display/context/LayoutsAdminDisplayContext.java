@@ -1527,20 +1527,7 @@ public class LayoutsAdminDisplayContext {
 			return false;
 		}
 
-		if (layout.isTypeContent()) {
-			Layout draftLayout = layout.fetchDraftLayout();
-
-			boolean published = false;
-
-			if (draftLayout != null) {
-				published = GetterUtil.getBoolean(
-					draftLayout.getTypeSettingsProperty("published"));
-			}
-
-			return published;
-		}
-
-		return true;
+		return layout.isPublished();
 	}
 
 	public boolean isShowDeleteAction(Layout layout) throws PortalException {
@@ -1741,20 +1728,7 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public boolean isShowViewLayoutAction(Layout layout) {
-		Layout draftLayout = layout.fetchDraftLayout();
-
-		if (layout.isDenied() || layout.isPending()) {
-			return true;
-		}
-
-		boolean published = true;
-
-		if (draftLayout != null) {
-			published = GetterUtil.getBoolean(
-				draftLayout.getTypeSettingsProperty("published"));
-		}
-
-		if (!layout.isTypeContent() || published) {
+		if (layout.isDenied() || layout.isPending() || layout.isPublished()) {
 			return true;
 		}
 

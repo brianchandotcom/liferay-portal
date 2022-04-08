@@ -247,14 +247,7 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 			return false;
 		}
 
-		Layout draftLayout = layout.fetchDraftLayout();
-
-		if (draftLayout == null) {
-			return false;
-		}
-
-		return GetterUtil.getBoolean(
-			draftLayout.getTypeSettingsProperty("published"));
+		return layout.isPublished();
 	}
 
 	private boolean _menuItemExists(long siteNavigationMenuId, Layout layout) {

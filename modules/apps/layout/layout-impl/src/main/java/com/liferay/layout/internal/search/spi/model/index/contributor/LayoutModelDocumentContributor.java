@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -75,7 +74,7 @@ public class LayoutModelDocumentContributor
 				layout.getName(locale));
 		}
 
-		if (layout.isPrivateLayout()) {
+		if (layout.isPrivateLayout() || !layout.isPublished()) {
 			return;
 		}
 
@@ -91,15 +90,6 @@ public class LayoutModelDocumentContributor
 					layout.getGroupId(), layout.getPlid());
 
 		if (layoutPageTemplateStructure == null) {
-			return;
-		}
-
-		Layout draftLayout = layout.fetchDraftLayout();
-
-		if ((draftLayout == null) ||
-			!GetterUtil.getBoolean(
-				draftLayout.getTypeSettingsProperty("published"))) {
-
 			return;
 		}
 
@@ -134,20 +124,7 @@ public class LayoutModelDocumentContributor
 	}
 
 	private int _getStatus(Layout layout) {
-		if (!layout.isTypeContent()) {
-			return WorkflowConstants.STATUS_APPROVED;
-		}
-
-		Layout draftLayout = layout.fetchDraftLayout();
-
-		boolean published = false;
-
-		if (draftLayout != null) {
-			published = GetterUtil.getBoolean(
-				draftLayout.getTypeSettingsProperty("published"));
-		}
-
-		if (published) {
+		if (layout.isPublished()) {
 			return WorkflowConstants.STATUS_APPROVED;
 		}
 

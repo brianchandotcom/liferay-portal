@@ -18,6 +18,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -63,7 +64,7 @@ public class WabURLConnection extends URLConnection {
 	public InputStream getInputStream() throws IOException {
 		URL url = getURL();
 
-		Map<String, String[]> parameters = HttpUtil.getParameterMap(
+		Map<String, String[]> parameters = HttpHelperUtil.getParameterMap(
 			url.getQuery());
 
 		if (!parameters.containsKey("Web-ContextPath")) {

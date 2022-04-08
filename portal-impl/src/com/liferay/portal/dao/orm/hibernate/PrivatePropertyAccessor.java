@@ -27,9 +27,6 @@ import org.hibernate.property.access.spi.PropertyAccess;
 @SuppressWarnings("rawtypes")
 public class PrivatePropertyAccessor extends PropertyAccessStrategyFieldImpl {
 
-	public static final PrivatePropertyAccessor INSTANCE =
-		new PrivatePropertyAccessor();
-
 	@Override
 	public PropertyAccess buildPropertyAccess(
 		Class containerJavaType, String propertyName) {

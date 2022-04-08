@@ -49,9 +49,6 @@ import org.hibernate.property.access.spi.SetterMethodImpl;
  */
 public class LiferayPropertyAccessor implements PropertyAccessStrategy {
 
-	public static final LiferayPropertyAccessor INSTANCE =
-		new LiferayPropertyAccessor();
-
 	@Override
 	public PropertyAccess buildPropertyAccess(
 		Class containerJavaType, String propertyName) {

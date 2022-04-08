@@ -21,9 +21,6 @@ import org.hibernate.property.access.spi.PropertyAccess;
  */
 public class CamelCasePropertyAccessor extends LiferayPropertyAccessor {
 
-	public static final CamelCasePropertyAccessor INSTANCE =
-		new CamelCasePropertyAccessor();
-
 	@Override
 	public PropertyAccess buildPropertyAccess(
 		Class containerJavaType, String propertyName) {

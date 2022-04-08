@@ -160,7 +160,7 @@ export default function Attachment({
 			delete: {href, method},
 		},
 	}: Attachment) => {
-		if (fileSource === 'userComputer' && objectEntryId === '0') {
+		if (objectEntryId === '0') {
 			await fetch(href, {method});
 		}
 
@@ -270,7 +270,11 @@ export default function Attachment({
 				<File
 					attachment={attachment}
 					loading={isLoading}
-					onDelete={handleDelete}
+					onDelete={(event) =>
+						fileSource === 'userComputer'
+							? handleDelete(event)
+							: onChange({target: {value: null}})
+					}
 				/>
 			</div>
 

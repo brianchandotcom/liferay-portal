@@ -49,6 +49,8 @@ public class BatchPlannerPlanConstants {
 
 	public static final String LABEL_FAILED = "failed";
 
+	public static final String LABEL_INACTIVE = "inactive";
+
 	public static final String LABEL_QUEUED = "queued";
 
 	public static final String LABEL_RUNNING = "running";
@@ -56,6 +58,8 @@ public class BatchPlannerPlanConstants {
 	public static final int STATUS_COMPLETED = 3;
 
 	public static final int STATUS_FAILED = 4;
+
+	public static final int STATUS_INACTIVE = 0;
 
 	public static final int STATUS_QUEUED = 1;
 
@@ -89,9 +93,7 @@ public class BatchPlannerPlanConstants {
 			return STATUS_RUNNING;
 		}
 
-		throw new IllegalArgumentException(
-			"Invalid batch engine task execute status " +
-				batchEngineTaskExecuteStatus);
+		return STATUS_INACTIVE;
 	}
 
 	public static String getStatusCssClass(int status) {

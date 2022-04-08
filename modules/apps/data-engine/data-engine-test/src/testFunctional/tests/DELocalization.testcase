@@ -1924,4 +1924,54 @@ definition {
 		}
 	}
 
+	@description = "Verify that for decimal Numeric fields the decimal separator is adequate to the current locale"
+	@priority = "4"
+	test CanDecimalSeparatorBeAdequateWithDifferentLanguages {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "Structure Description Test",
+			structureName = "Structure Name Test");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Numeric",
+			fieldName = "Numeric");
+
+		DataEngine.editNumericType(
+			fieldLabel = "Numeric",
+			fieldNumericType = "Decimal");
+		
+		WebContentStructures.addTranslations(localeList = "pt-BR");
+
+		WebContentStructures.saveCP();
+
+		NavItem.click(navItem = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name Test");
+
+		WebContent.addWithStructureCP(
+			webContentNumeric = "10.00",
+			webContentTitle = "Test");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Test");
+
+		AssertTextEquals.assertValue(
+			key_fieldFieldLabel = "Numeric",
+			locator1 = "WCEditWebContent#TEXT_INPUT",
+			value1 = "10.00");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		AssertTextEquals.assertValue(
+			key_fieldFieldLabel = "Numeric",
+			locator1 = "WCEditWebContent#TEXT_INPUT",
+			value1 = "10,00");
+
+		
+	}
+
 }

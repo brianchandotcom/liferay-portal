@@ -612,7 +612,7 @@ public class CalendarDisplayContext {
 		_iteratorURL = PortletURLBuilder.createRenderURL(
 			_renderResponse
 		).setMVCPath(
-			"/blogs_aggregator/view"
+			"/view.jsp"
 		).setTabs1(
 			"resources"
 		).buildPortletURL();

@@ -82,12 +82,11 @@ public class ContentLayoutTypeControllerTest {
 			LayoutTypeControllerTracker.getLayoutTypeController(
 				LayoutConstants.TYPE_CONTENT);
 
-		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
-
 		layoutTypeController.includeLayoutContent(
 			_getHttpServletRequest(
 				_userLocalService.getDefaultUser(_group.getCompanyId())),
-			new MockHttpServletResponse(), layout);
+			new MockHttpServletResponse(),
+			LayoutTestUtil.addTypeContentLayout(_group));
 	}
 
 	@Test
@@ -98,12 +97,11 @@ public class ContentLayoutTypeControllerTest {
 			LayoutTypeControllerTracker.getLayoutTypeController(
 				LayoutConstants.TYPE_CONTENT);
 
-		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
-
 		Assert.assertFalse(
 			layoutTypeController.includeLayoutContent(
 				_getHttpServletRequest(TestPropsValues.getUser()),
-				new MockHttpServletResponse(), layout));
+				new MockHttpServletResponse(),
+				LayoutTestUtil.addTypeContentLayout(_group)));
 	}
 
 	@Test

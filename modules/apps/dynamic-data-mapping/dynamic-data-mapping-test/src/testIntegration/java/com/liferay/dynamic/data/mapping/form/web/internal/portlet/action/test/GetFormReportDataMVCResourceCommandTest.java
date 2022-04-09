@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -183,7 +182,6 @@ public class GetFormReportDataMVCResourceCommandTest {
 		ReflectionTestUtil.setFieldValue(
 			_mvcResourceCommand, "_ddmFormInstanceReportLocalService",
 			_ddmFormInstanceReportLocalService);
-		ReflectionTestUtil.setFieldValue(_mvcResourceCommand, "_http", _http);
 		ReflectionTestUtil.setFieldValue(
 			_mvcResourceCommand, "_portal", _portal);
 	}
@@ -194,9 +192,6 @@ public class GetFormReportDataMVCResourceCommandTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
-
-	@Inject
-	private Http _http;
 
 	@Inject(
 		filter = "mvc.command.name=/dynamic_data_mapping_form/get_form_report_data"

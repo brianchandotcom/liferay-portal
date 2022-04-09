@@ -67,6 +67,7 @@ definition {
 	@priority = "5"
 	test AddWidgetsToPrivateLayout {
 		property osgi.app.includes = "bookmarks";
+		property private.pages.enabled = "true";
 
 		task ("Add a private page") {
 			JSONLayout.addPrivateLayout(

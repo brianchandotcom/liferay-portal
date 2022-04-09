@@ -165,6 +165,7 @@ definition {
 
 	@priority = "4"
 	test PublishPrivateContentPageWithFragment {
+		property private.pages.enabled = "true";
 		property test.assert.warning.exceptions = "true";
 
 		JSONPublications.addPublication(publicationName = "Publication Name");

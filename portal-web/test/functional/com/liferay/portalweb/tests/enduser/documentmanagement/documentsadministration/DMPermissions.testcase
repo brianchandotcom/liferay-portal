@@ -2496,6 +2496,7 @@ definition {
 	@refactorneeded
 	test ViewDocumentWithGlobalScope {
 		property portal.acceptance = "true";
+		property private.pages.enabled = "true";
 		property testray.component.names = "Training";
 
 		JSONLayout.addPublicLayout(

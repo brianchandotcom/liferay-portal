@@ -238,6 +238,7 @@ definition {
 	@priority = "4"
 	@uitest
 	test ShouldBeDisplayWithCategory {
+		property private.pages.enabled = "true";
 		property testray.component.names = "Categories,Staging,Related Assets,Web Content Administration";
 
 		task ("Add a public page with JSON") {

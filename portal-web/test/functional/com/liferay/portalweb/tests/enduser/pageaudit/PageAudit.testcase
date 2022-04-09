@@ -1031,6 +1031,8 @@ definition {
 	Then the reload button won't be visible."
 	@priority = "3"
 	test CheckNotVisibleReloadbButtonInPrivatePage {
+		property private.pages.enabled = "true";
+
 		task ("Create a Private Page") {
 			JSONLayout.addPrivateLayout(
 				groupName = "Test Site Name",

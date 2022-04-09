@@ -1285,6 +1285,8 @@ definition {
 	@description = "This is a test for LPS-87134. View no navigation menus are automatically created after adding pages."
 	@priority = "3"
 	test ViewNoNavigationMenuAfterAddingPages {
+		property private.pages.enabled = "true";
+
 		task ("Add a public page to the site") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",

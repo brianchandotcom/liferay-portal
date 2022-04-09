@@ -31,6 +31,8 @@ definition {
 	@description = "View private parend and child page via Site Map widget."
 	@priority = "4"
 	test DisplayPrivateParentAndChildPage {
+		property private.pages.enabled = "true";
+
 		task ("Add a parent private page") {
 			JSONLayout.addPrivateLayout(
 				groupName = "Test Site Name",

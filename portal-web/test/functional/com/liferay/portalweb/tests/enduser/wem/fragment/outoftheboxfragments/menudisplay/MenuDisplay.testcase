@@ -399,6 +399,7 @@ definition {
 	@uitest
 	test SelectNavigationMenuFromExistingOnes {
 		property portal.acceptance = "true";
+		property private.pages.enabled = "true";
 
 		task ("Add a public widget page") {
 			JSONLayout.addPublicLayout(

@@ -347,6 +347,7 @@ definition {
 	@priority = "5"
 	test NavigateToBothPageTypes {
 		property portal.acceptance = "true";
+		property private.pages.enabled = "true";
 
 		task ("Add a public and private pages") {
 			JSONLayout.addPublicLayout(
@@ -409,6 +410,8 @@ definition {
 	@description = "This is a test for LPS-133709. The user can navigate to private and public pages defined in navigation menu via the Page Tree."
 	@priority = "4"
 	test NavigateToPrivateAndPublicPagesDefinedInNavigationMenu {
+		property private.pages.enabled = "true";
+
 		task ("Add a public content page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -850,6 +853,8 @@ definition {
 	@description = "This is a test for LPS-133709. The user can switch site navigation menus via page type selector in Page Tree."
 	@priority = "4"
 	test SwitchNavigationMenusViaPageTypeSelector {
+		property private.pages.enabled = "true";
+
 		task ("Add two public pages") {
 			for (var n : list "1,2") {
 				JSONLayout.addPublicLayout(

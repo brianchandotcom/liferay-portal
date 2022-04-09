@@ -39,6 +39,7 @@ definition {
 	test CannotViewPrivateContentAndPageAsGuest {
 		property osgi.module.configuration.file.names = "com.liferay.login.web.internal.configuration.AuthLoginConfiguration.config";
 		property osgi.module.configurations = "promptEnabled=&quot;true&quot;";
+		property private.pages.enabled = "true";
 		property testray.component.names = "Message Boards";
 
 		task ("Add a private page") {
@@ -137,6 +138,7 @@ definition {
 	@priority = "5"
 	test CannotViewPrivateContentAndPageAsUserWithoutPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}mail.send.blacklist=";
+		property private.pages.enabled = "true";
 		property testray.component.names = "Message Boards,Training";
 
 		task ("Add a new user") {
@@ -247,6 +249,7 @@ definition {
 	test CannotViewPrivatePageAsUserWithoutPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
+		property private.pages.enabled = "true";
 		property testray.component.names = "Permissions,Roles,Training";
 
 		task ("Add a site template") {
@@ -429,6 +432,7 @@ definition {
 	@priority = "3"
 	test ViewPrivateContentAndPageAsSiteMember {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}mail.send.blacklist=";
+		property private.pages.enabled = "true";
 		property testray.component.names = "Message Boards";
 
 		task ("Add a new user") {

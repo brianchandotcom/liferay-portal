@@ -542,6 +542,7 @@ definition {
 	@description = "Assert a user can navigate to a Site's public or private pages via MySites widget"
 	@priority = "3"
 	test ViewSitePages {
+		property private.pages.enabled = "true";
 		property testray.component.names = "Site Administration";
 
 		task ("Add a site with a public and private page") {

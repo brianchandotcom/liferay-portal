@@ -84,6 +84,7 @@ definition {
 
 	@priority = "5"
 	test ActivateStagingPageVersioningWithCustomDefaultLanguage {
+		property private.pages.enabled = "true";
 		property test.name.skip.portal.instance = "Staging#ActivateStagingPageVersioningWithCustomDefaultLanguage";
 
 		JSONLayout.addPrivateLayout(
@@ -1053,6 +1054,8 @@ definition {
 
 	@priority = "4"
 	test PublishTemplateWithPages {
+		property private.pages.enabled = "true";
+
 		JSONLayout.addPrivateLayout(
 			groupName = "Site Name",
 			layoutName = "Private Staging Page");

@@ -895,6 +895,7 @@ definition {
 	@priority = "5"
 	test PreviewDraftContentPage {
 		property portal.acceptance = "true";
+		property private.pages.enabled = "true";
 
 		task ("Add a public content page") {
 			JSONLayout.addPublicLayout(

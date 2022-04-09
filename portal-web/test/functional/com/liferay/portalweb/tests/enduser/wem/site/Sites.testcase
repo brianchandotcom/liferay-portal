@@ -185,6 +185,8 @@ definition {
 	@description = "Deleting firiendly URL makes it not able to access page via fridely URL."
 	@priority = "4"
 	test DeleteSiteFriendlyURL {
+		property private.pages.enabled = "true";
+
 		task ("Add a site") {
 			JSONGroup.addGroup(groupName = "Site Name");
 		}
@@ -263,6 +265,8 @@ definition {
 	@description = "Could edit friendly URL and access by it."
 	@priority = "4"
 	test EditSiteFriendlyURL {
+		property private.pages.enabled = "true";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		task ("Add a site") {

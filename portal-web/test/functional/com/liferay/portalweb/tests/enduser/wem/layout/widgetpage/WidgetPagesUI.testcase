@@ -117,6 +117,8 @@ definition {
 	@priority = "4"
 	@uitest
 	test AddPrivatePage {
+		property private.pages.enabled = "true";
+
 		task ("Add a private page") {
 			PagesAdmin.addPrivatePage(pageName = "Test Private Page");
 		}

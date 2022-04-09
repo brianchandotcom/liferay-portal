@@ -1079,6 +1079,7 @@ definition {
 	@priority = "5"
 	test ExportImportPrivatePage {
 		property portal.acceptance = "true";
+		property private.pages.enabled = "true";
 		property testray.component.names = "Training";
 
 		Navigator.openURL();

@@ -554,6 +554,7 @@ definition {
 	@priority = "3"
 	test NoGuestRolePermissionsFromPrivateLayout {
 		property custom.properties = "permissions.check.guest.enabled=false";
+		property private.pages.enabled = "true";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Sites",
@@ -1624,6 +1625,8 @@ definition {
 
 	@priority = "4"
 	test ViewPrivatePageSiteMemberRole {
+		property private.pages.enabled = "true";
+
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		JSONUser.addUser(
@@ -1683,6 +1686,8 @@ definition {
 
 	@priority = "4"
 	test ViewRegRolePermissionsDefaultView {
+		property private.pages.enabled = "true";
+
 		JSONRole.addRegularRole(
 			roleKey = "Roles Regrole Name",
 			roleTitle = "Roles Regrole Name");

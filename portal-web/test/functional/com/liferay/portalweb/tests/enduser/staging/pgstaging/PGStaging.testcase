@@ -564,6 +564,7 @@ definition {
 	@priority = "5"
 	test PublishPrivatePage {
 		property portal.acceptance = "true";
+		property private.pages.enabled = "true";
 		property testray.component.names = "Training";
 
 		JSONStaging.enableLocalStaging(

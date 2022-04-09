@@ -311,7 +311,7 @@
 </tr>
 <tr>
 	<td>RADIO_BUTTON</td>
-	<td>//label[contains(.,'${key_radioOption}')]/input[@type='radio']</td>
+	<td>//label[contains(.,'${key_radioOption}')]/input[@type='radio'] | //div[contains(@class,'justify')][contains(.,'${key_radioOption}')]//preceding::input[@type='radio'][1]</td>
 	<td></td>
 </tr>
 <tr>

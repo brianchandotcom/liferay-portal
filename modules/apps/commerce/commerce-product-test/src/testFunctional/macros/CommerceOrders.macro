@@ -210,6 +210,22 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro editPaymentMethod {
+		Click(
+			key_titleName = "Payment Method",
+			locator1 = "CommerceOrders#ORDER_DETAILS_EDIT_BUTTON");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		Click.clickAtNotVisible(
+			key_radioOption = "${paymentMethod}",
+			locator1 = "CommerceEntry#RADIO_BUTTON");
+
+		Click(locator1 = "Button#MODAL_IFRAME_FOOTER_SUBMIT");
+
+		IFrame.selectTopFrame();
+	}
+
 	macro openOrdersAdmin {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = "${baseURL}",

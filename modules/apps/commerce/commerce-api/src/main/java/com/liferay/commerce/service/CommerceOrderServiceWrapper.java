@@ -496,29 +496,6 @@ public class CommerceOrderServiceWrapper
 			String commercePaymentMethodKey, long commerceShippingMethodId,
 			String shippingOptionName, String purchaseOrderNumber,
 			java.math.BigDecimal subtotal, java.math.BigDecimal shippingAmount,
-			java.math.BigDecimal taxAmount, java.math.BigDecimal total,
-			java.math.BigDecimal subtotalWithTaxAmount,
-			java.math.BigDecimal shippingWithTaxAmount,
-			java.math.BigDecimal totalWithTaxAmount, String advanceStatus,
-			com.liferay.commerce.context.CommerceContext commerceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _commerceOrderService.updateCommerceOrder(
-			externalReferenceCode, commerceOrderId, billingAddressId,
-			shippingAddressId, commercePaymentMethodKey,
-			commerceShippingMethodId, shippingOptionName, purchaseOrderNumber,
-			subtotal, shippingAmount, taxAmount, total, subtotalWithTaxAmount,
-			shippingWithTaxAmount, totalWithTaxAmount, advanceStatus,
-			commerceContext);
-	}
-
-	@Override
-	public com.liferay.commerce.model.CommerceOrder updateCommerceOrder(
-			String externalReferenceCode, long commerceOrderId,
-			long billingAddressId, long shippingAddressId,
-			String commercePaymentMethodKey, long commerceShippingMethodId,
-			String shippingOptionName, String purchaseOrderNumber,
-			java.math.BigDecimal subtotal, java.math.BigDecimal shippingAmount,
 			java.math.BigDecimal total, String advanceStatus,
 			com.liferay.commerce.context.CommerceContext commerceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -666,16 +643,6 @@ public class CommerceOrderServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.model.CommerceOrder updateCustomFields(
-			long commerceOrderId,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _commerceOrderService.updateCustomFields(
-			commerceOrderId, serviceContext);
-	}
-
-	@Override
 	public com.liferay.commerce.model.CommerceOrder updateInfo(
 			long commerceOrderId, String printedNote,
 			int requestedDeliveryDateMonth, int requestedDeliveryDateDay,
@@ -781,23 +748,6 @@ public class CommerceOrderServiceWrapper
 		return _commerceOrderService.updateTermsAndConditions(
 			commerceOrderId, deliveryCommerceTermEntryId,
 			paymentCommerceTermEntryId, languageId);
-	}
-
-	@Override
-	public com.liferay.commerce.model.CommerceOrder updateTransactionId(
-			long commerceOrderId, String transactionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _commerceOrderService.updateTransactionId(
-			commerceOrderId, transactionId);
-	}
-
-	@Override
-	public com.liferay.commerce.model.CommerceOrder updateUser(
-			long commerceOrderId, long userId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _commerceOrderService.updateUser(commerceOrderId, userId);
 	}
 
 	@Override

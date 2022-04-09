@@ -71,6 +71,69 @@ definition {
 		}
 	}
 
+	macro addCollectionPage {
+		if (IsTextNotEqual(locator1 = "ControlMenu#HEADING", value1 = "Pages")) {
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
+		}
+
+		LexiconEntry.gotoAdd();
+
+		MenuItem.click(menuItem = "Collection Page");
+
+		Navigator.gotoNavTab(navTab = "${tabName}");
+
+		if (isSet(menuItem)) {
+			AssetListsAdmin.addSelection(
+				collectionName = "${collectionName}",
+				menuItem = "${menuItem}",
+				selectedAsset = "${selectedAsset}");
+
+			Click(locator1 = "Icon#BACK");
+		}
+
+		LexiconCard.clickCard(card = "${collectionName}");
+
+		if (isSet(masterLayoutName)) {
+			LexiconCard.clickCard(card = "${masterLayoutName}");
+		}
+		else {
+			LexiconCard.clickCard(card = "Blank");
+		}
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		PortletEntry.inputName(name = "${pageName}");
+
+		if (isSet(categoryName)) {
+			AssetCategorization.addCategory(
+				categoryName = "${categoryName}",
+				vocabularyName = "${vocabularyName}");
+		}
+
+		if (isSet(categoryNameList)) {
+			AssetCategorization.addMultipleCategories(
+				categoryNameList = "${categoryNameList}",
+				vocabularyName = "${vocabularyName}");
+		}
+
+		Button.clickAdd();
+
+		SelectFrame.selectFrameTop();
+
+		PageEditor.assertFragmentSidebarLoaded();
+
+		ControlMenu.viewHeaderTitle(headerTitle = "${pageName} *");
+
+		PageEditor.viewFragmentEditableText(
+			editableText = "${collectionName}",
+			fragmentName = "Heading",
+			id = "element-text");
+
+		PageEditor.viewFragment(fragmentName = "Collection Display");
+	}
+
 	macro addPage {
 		if (IsTextNotEqual(locator1 = "ControlMenu#HEADING", value1 = "Pages")) {
 			ProductMenu.gotoPortlet(
@@ -157,69 +220,6 @@ definition {
 		SelectFrame.selectFrameTop();
 
 		PageEditor.assertFragmentSidebarLoaded();
-	}
-
-	macro addPublicCollectionPage {
-		if (IsTextNotEqual(locator1 = "ControlMenu#HEADING", value1 = "Pages")) {
-			ProductMenu.gotoPortlet(
-				category = "Site Builder",
-				portlet = "Pages");
-		}
-
-		LexiconEntry.gotoAdd();
-
-		MenuItem.click(menuItem = "Public Collection Page");
-
-		Navigator.gotoNavTab(navTab = "${tabName}");
-
-		if (isSet(menuItem)) {
-			AssetListsAdmin.addSelection(
-				collectionName = "${collectionName}",
-				menuItem = "${menuItem}",
-				selectedAsset = "${selectedAsset}");
-
-			Click(locator1 = "Icon#BACK");
-		}
-
-		LexiconCard.clickCard(card = "${collectionName}");
-
-		if (isSet(masterLayoutName)) {
-			LexiconCard.clickCard(card = "${masterLayoutName}");
-		}
-		else {
-			LexiconCard.clickCard(card = "Blank");
-		}
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		PortletEntry.inputName(name = "${pageName}");
-
-		if (isSet(categoryName)) {
-			AssetCategorization.addCategory(
-				categoryName = "${categoryName}",
-				vocabularyName = "${vocabularyName}");
-		}
-
-		if (isSet(categoryNameList)) {
-			AssetCategorization.addMultipleCategories(
-				categoryNameList = "${categoryNameList}",
-				vocabularyName = "${vocabularyName}");
-		}
-
-		Button.clickAdd();
-
-		SelectFrame.selectFrameTop();
-
-		PageEditor.assertFragmentSidebarLoaded();
-
-		ControlMenu.viewHeaderTitle(headerTitle = "${pageName} *");
-
-		PageEditor.viewFragmentEditableText(
-			editableText = "${collectionName}",
-			fragmentName = "Heading",
-			id = "element-text");
-
-		PageEditor.viewFragment(fragmentName = "Collection Display");
 	}
 
 	macro changeExperience {

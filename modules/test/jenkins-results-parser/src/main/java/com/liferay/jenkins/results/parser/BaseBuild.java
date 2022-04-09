@@ -1405,11 +1405,9 @@ public abstract class BaseBuild implements Build {
 	public JSONObject getTestReportJSONObject(boolean checkCache) {
 		String result = getResult();
 
-		if (result == null) {
-			return null;
-		}
+		if ((result == null) ||
+			(!result.equals("SUCCESS") && !result.equals("UNSTABLE"))) {
 
-		if (!result.equals("SUCCESS") && !result.equals("UNSTABLE")) {
 			return null;
 		}
 
@@ -1421,8 +1419,7 @@ public abstract class BaseBuild implements Build {
 
 		try {
 			return JenkinsResultsParserUtil.toJSONObject(
-				JenkinsResultsParserUtil.getLocalURL(
-					getBuildURL() + urlSuffix),
+				JenkinsResultsParserUtil.getLocalURL(getBuildURL() + urlSuffix),
 				checkCache);
 		}
 		catch (IOException ioException) {

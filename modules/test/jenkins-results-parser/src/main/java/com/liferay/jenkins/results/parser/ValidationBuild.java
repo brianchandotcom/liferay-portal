@@ -20,6 +20,8 @@ import com.liferay.jenkins.results.parser.failure.message.generator.GradleTaskFa
 import com.liferay.jenkins.results.parser.failure.message.generator.RebaseFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.SourceFormatFailureMessageGenerator;
 
+import java.io.IOException;
+
 import java.net.URL;
 
 import java.util.ArrayList;
@@ -47,6 +49,31 @@ public class ValidationBuild extends BaseBuild {
 	@Override
 	public URL getArtifactsBaseURL() {
 		return null;
+	}
+
+	@Override
+	public String getBaseGitRepositoryName() {
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(gitRepositoryName)) {
+			return gitRepositoryName;
+		}
+
+		TopLevelBuild topLevelBuild = getTopLevelBuild();
+
+		gitRepositoryName = topLevelBuild.getParameterValue("REPOSITORY_NAME");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(gitRepositoryName)) {
+			return gitRepositoryName;
+		}
+
+		String branchName = getBranchName();
+
+		gitRepositoryName = "liferay-portal-ee";
+
+		if (branchName.equals("master")) {
+			gitRepositoryName = "liferay-portal";
+		}
+
+		return gitRepositoryName;
 	}
 
 	@Override
@@ -123,6 +150,25 @@ public class ValidationBuild extends BaseBuild {
 		}
 
 		return rootElement;
+	}
+
+	@Override
+	public JSONObject getTestReportJSONObject(boolean checkCache) {
+		String urlSuffix = "testReport/api/json";
+
+		if (archiveFileExists(urlSuffix)) {
+			return new JSONObject(getArchiveFileContent(urlSuffix));
+		}
+
+		try {
+			return JenkinsResultsParserUtil.toJSONObject(
+				JenkinsResultsParserUtil.getLocalURL(getBuildURL() + urlSuffix),
+				checkCache);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				"Unable to get test report JSON object", ioException);
+		}
 	}
 
 	@Override

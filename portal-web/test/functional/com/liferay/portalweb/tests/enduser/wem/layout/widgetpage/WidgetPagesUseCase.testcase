@@ -35,7 +35,7 @@ definition {
 		task ("Add a panel page with collaboration component") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
 
-			PagesAdmin.addPublicPage(
+			PagesAdmin.addPage(
 				componentName = "Collaboration",
 				pageName = "Test Page Name",
 				sitePageType = "Panel");
@@ -119,7 +119,7 @@ definition {
 		task ("Add an embedded page") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
-			PagesAdmin.addPublicPage(
+			PagesAdmin.addPage(
 				pageName = "Test Page Name 1",
 				pageTypeURL = "https://www.google.com",
 				sitePageType = "Embedded");
@@ -129,14 +129,13 @@ definition {
 			PagesAdmin.configurePage(
 				pageName = "Test Page Name 1",
 				pageTypeURL = "http://iscaliforniaonfire.com/",
-				privacy = "Public Pages",
 				sitePageType = "Embedded");
 		}
 
 		task ("Add a panel page with community component") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
-			PagesAdmin.addPublicPage(
+			PagesAdmin.addPage(
 				componentName = "Community",
 				pageName = "Test Page Name 2",
 				sitePageType = "Panel");
@@ -200,9 +199,7 @@ definition {
 				pageName = "Test Page Name Edit",
 				siteName = "Test Site Name");
 
-			PagesAdmin.viewPageItemPresent(
-				pageName = "Test Page Name Edit",
-				privacy = "Public Pages");
+			PagesAdmin.viewPageItemPresent(pageName = "Test Page Name Edit");
 		}
 
 		task ("Edit the SEO settings") {

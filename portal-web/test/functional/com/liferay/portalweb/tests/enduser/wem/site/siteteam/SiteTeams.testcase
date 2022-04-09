@@ -482,7 +482,7 @@ definition {
 
 			PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
 
-			PagesAdmin.addPublicPage(
+			PagesAdmin.addPage(
 				pageName = "Search Page Template",
 				pageTemplateName = "Search");
 		}

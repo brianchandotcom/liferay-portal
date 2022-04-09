@@ -57,7 +57,7 @@ definition {
 
 			PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
 
-			PagesAdmin.addPublicPage(
+			PagesAdmin.addPage(
 				pageName = "Site Page",
 				pageTemplateName = "Page Template Name");
 		}
@@ -192,7 +192,7 @@ definition {
 		task ("Add a page based on the widget page template") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
 
-			PagesAdmin.addPublicPage(
+			PagesAdmin.addPage(
 				collectionName = "Page Template Collection",
 				pageName = "Test Page Name",
 				pageTemplateName = "Page Template Name");

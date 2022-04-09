@@ -161,7 +161,7 @@ definition {
 	@priority = "3"
 	test AuthorNotShowInWidgetPage {
 		task ("Create and go to Widget Page") {
-			PagesAdmin.addPublicPage(
+			PagesAdmin.addPage(
 				pageName = "Widget Page Name",
 				sitePageType = "Widget Page");
 
@@ -318,7 +318,7 @@ definition {
 		task ("Create Widget Page") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name");
 
-			PagesAdmin.addPublicPage(
+			PagesAdmin.addPage(
 				pageName = "Widget Page Name",
 				sitePageType = "Widget Page");
 		}
@@ -722,7 +722,7 @@ definition {
 	@priority = "4"
 	test MetricsIconVisibleInWidgetPage {
 		task ("Create Widget Page") {
-			PagesAdmin.addPublicPage(
+			PagesAdmin.addPage(
 				pageName = "Widget Page Name",
 				sitePageType = "Widget Page");
 		}
@@ -1385,7 +1385,7 @@ definition {
 	@priority = "3"
 	test PanelInformationInWidgetPage {
 		task ("Create Widget Page") {
-			PagesAdmin.addPublicPage(
+			PagesAdmin.addPage(
 				pageName = "Widget Page Name",
 				sitePageType = "Widget Page");
 		}

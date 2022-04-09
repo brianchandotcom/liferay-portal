@@ -14,7 +14,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(pageName = "Quick Note Page");
+		PagesAdmin.addPage(pageName = "Quick Note Page");
 
 		Navigator.gotoPage(pageName = "Quick Note Page");
 	}

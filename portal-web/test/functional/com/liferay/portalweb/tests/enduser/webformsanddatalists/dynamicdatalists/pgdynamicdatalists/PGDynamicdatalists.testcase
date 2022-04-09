@@ -17,7 +17,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(pageName = "Dynamic Data Lists Display Page");
+		PagesAdmin.addPage(pageName = "Dynamic Data Lists Display Page");
 
 		Navigator.gotoPage(pageName = "Dynamic Data Lists Display Page");
 
@@ -754,7 +754,6 @@ definition {
 		PagesAdmin.configurePage(
 			columnName = "1 Column",
 			pageName = "Dynamic Data Lists Display Page",
-			privacy = "Public Pages",
 			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "Dynamic Data Lists Display Page");

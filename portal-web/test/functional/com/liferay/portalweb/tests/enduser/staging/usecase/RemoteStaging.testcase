@@ -103,7 +103,7 @@ definition {
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
 
-		PagesAdmin.addPublicPage(pageName = "Second Test Page");
+		PagesAdmin.addPage(pageName = "Second Test Page");
 
 		JSONGroup.deleteGroupByName(
 			groupName = "Remote Site",

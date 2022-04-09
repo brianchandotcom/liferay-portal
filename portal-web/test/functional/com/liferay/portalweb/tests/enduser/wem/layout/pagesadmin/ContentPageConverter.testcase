@@ -648,7 +648,6 @@ definition {
 			PagesAdmin.configurePage(
 				columnName = "Custom Layout",
 				pageName = "Test Page Name",
-				privacy = "Public Pages",
 				sitePageType = "Widget Page");
 		}
 
@@ -760,7 +759,6 @@ definition {
 			PagesAdmin.configurePage(
 				columnName = "Custom Layout",
 				pageName = "Test Page Name",
-				privacy = "Public Pages",
 				sitePageType = "Widget Page");
 		}
 
@@ -880,7 +878,6 @@ definition {
 			PagesAdmin.configurePage(
 				columnName = "Custom Layout",
 				pageName = "Test Page Name",
-				privacy = "Public Pages",
 				sitePageType = "Widget Page");
 		}
 

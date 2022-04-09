@@ -304,11 +304,11 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(pageName = "Test Page1");
+		PagesAdmin.addPage(pageName = "Test Page1");
 
-		PagesAdmin.addPublicPage(pageName = "Test Page2");
+		PagesAdmin.addPage(pageName = "Test Page2");
 
-		PagesAdmin.addPublicPage(pageName = "Test Page3");
+		PagesAdmin.addPage(pageName = "Test Page3");
 
 		var pageName = "Test Page1";
 		var portletBody = "Please configure this portlet to make it visible to all users.";

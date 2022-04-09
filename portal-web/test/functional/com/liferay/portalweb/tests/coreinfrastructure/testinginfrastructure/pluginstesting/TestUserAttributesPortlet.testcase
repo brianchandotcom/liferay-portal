@@ -20,7 +20,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(pageName = "Test User Attributes Page");
+		PagesAdmin.addPage(pageName = "Test User Attributes Page");
 
 		Navigator.gotoPage(pageName = "Test User Attributes Page");
 

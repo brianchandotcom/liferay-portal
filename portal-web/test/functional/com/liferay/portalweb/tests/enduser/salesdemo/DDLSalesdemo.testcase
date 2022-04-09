@@ -80,12 +80,11 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(pageName = "Company Picnic");
+		PagesAdmin.addPage(pageName = "Company Picnic");
 
 		PagesAdmin.configurePage(
 			columnName = "1 Column",
 			pageName = "Company Picnic",
-			privacy = "Public Pages",
 			sitePageType = "Widget Page");
 
 		Navigator.openURL();

@@ -42,7 +42,7 @@ definition {
 		task ("Add collection page based on manual collection") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
-			ContentPages.addPublicCollectionPage(
+			ContentPages.addCollectionPage(
 				collectionName = "<script>alert(123)</script>",
 				pageName = "Collection Page Name",
 				tabName = "Collections");

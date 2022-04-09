@@ -68,7 +68,7 @@ definition {
 		task ("Add a widget page and add it to navigation menu") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
-			PagesAdmin.addPublicPage(
+			PagesAdmin.addPage(
 				navigationMenus = "Navigation Menu Name",
 				pageName = "Test Widget Page");
 		}

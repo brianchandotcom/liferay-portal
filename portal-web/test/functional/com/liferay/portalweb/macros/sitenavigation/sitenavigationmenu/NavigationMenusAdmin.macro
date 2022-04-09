@@ -2,7 +2,7 @@ definition {
 
 	macro _addItemPage {
 		if (!(isSet(privacy))) {
-			var privacy = "Public Pages";
+			var privacy = "Pages";
 		}
 
 		Navigator.gotoNavItem(navItem = "${privacy}");

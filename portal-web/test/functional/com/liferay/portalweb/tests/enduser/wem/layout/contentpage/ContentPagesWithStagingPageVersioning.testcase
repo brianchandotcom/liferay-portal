@@ -306,7 +306,7 @@ definition {
 		task ("Add a public content page") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-staging");
 
-			ContentPages.addPage(pageName = "Public Content Page Name");
+			ContentPages.addPublicPage(pageName = "Public Content Page Name");
 		}
 
 		task ("Add a Heading fragment to page") {

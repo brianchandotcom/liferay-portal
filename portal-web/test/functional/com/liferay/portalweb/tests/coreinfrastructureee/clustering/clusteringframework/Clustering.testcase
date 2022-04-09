@@ -42,7 +42,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(pageName = "Test Page1");
+		PagesAdmin.addPage(pageName = "Test Page1");
 
 		Navigator.gotoPage(pageName = "Test Page1");
 
@@ -83,7 +83,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(pageName = "Test Page2");
+		PagesAdmin.addPage(pageName = "Test Page2");
 
 		Navigator.gotoSpecificURLPage(
 			pageName = "Test Page2",
@@ -498,7 +498,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(pageName = "Documents and Media Page");
+		PagesAdmin.addPage(pageName = "Documents and Media Page");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -721,7 +721,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(pageName = "New Page Name");
+		PagesAdmin.addPage(pageName = "New Page Name");
 
 		Navigator.openURL();
 

@@ -270,7 +270,7 @@ definition {
 		task ("Add a page based on Search") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
-			PagesAdmin.addPublicPage(
+			PagesAdmin.addPage(
 				collectionName = "Global Templates",
 				pageName = "Test Search",
 				pageTemplateName = "Search");
@@ -279,7 +279,7 @@ definition {
 		task ("Add a page based on Full Page Application") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
-			PagesAdmin.addPublicPage(
+			PagesAdmin.addPage(
 				pageName = "Test Full Page Application",
 				sitePageType = "Full Page Application");
 		}
@@ -287,7 +287,7 @@ definition {
 		task ("Add a page based on Page Set") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
-			PagesAdmin.addPublicPage(
+			PagesAdmin.addPage(
 				pageName = "Test Page Set",
 				sitePageType = "Page Set");
 
@@ -300,7 +300,7 @@ definition {
 		task ("Add a page based on Embedded") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
-			PagesAdmin.addPublicPage(
+			PagesAdmin.addPage(
 				pageName = "Test Embedded",
 				pageTypeURL = "https://www.liferay.com",
 				sitePageType = "Embedded");
@@ -309,7 +309,7 @@ definition {
 		task ("Add a page based on Link to a Page of This Site") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
-			PagesAdmin.addPublicPage(
+			PagesAdmin.addPage(
 				linkPageName = "Test Content Page",
 				pageName = "Test Link To A Page Of This Site",
 				sitePageType = "Link to a Page of This Site");
@@ -318,7 +318,7 @@ definition {
 		task ("Add a page based on Panel") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
-			PagesAdmin.addPublicPage(
+			PagesAdmin.addPage(
 				componentName = "Collaboration",
 				pageName = "Test Panel",
 				sitePageType = "Panel");
@@ -327,7 +327,7 @@ definition {
 		task ("Add a page based on Link to URL") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
-			PagesAdmin.addPublicPage(
+			PagesAdmin.addPage(
 				pageName = "Test Link To URL",
 				pageTypeURL = "https://www.liferay.com",
 				sitePageType = "Link to URL");

@@ -369,7 +369,7 @@ definition {
 			portlet = "Pages",
 			site = "${siteName}");
 
-		PagesAdmin.addPublicPage(pageName = "Wiki Test Page");
+		PagesAdmin.addPage(pageName = "Wiki Test Page");
 
 		Navigator.gotoPage(pageName = "Wiki Test Page");
 

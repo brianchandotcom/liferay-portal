@@ -81,7 +81,7 @@ definition {
 		task ("Add a child page") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
-			PagesAdmin.addPublicChildPage(
+			PagesAdmin.addChildPage(
 				childPageName = "Test Child Page",
 				parentPageName = "Test Page Name");
 		}
@@ -89,8 +89,7 @@ definition {
 		task ("View child page in Pages admin") {
 			PagesAdmin.viewPageItemPresent(
 				depth = "2",
-				pageName = "Test Child Page",
-				privacy = "Public Pages");
+				pageName = "Test Child Page");
 		}
 	}
 
@@ -100,15 +99,13 @@ definition {
 	test AddMultiplePages {
 		task ("Add three widget pages") {
 			for (var i : list "1,2,3") {
-				PagesAdmin.addPublicPage(pageName = "Test Page Name ${i}");
+				PagesAdmin.addPage(pageName = "Test Page Name ${i}");
 			}
 		}
 
 		task ("View pages in Pages admin") {
 			for (var i : list "1,2,3") {
-				PagesAdmin.viewPageItemPresent(
-					pageName = "Test Page Name ${i}",
-					privacy = "Public Pages");
+				PagesAdmin.viewPageItemPresent(pageName = "Test Page Name ${i}");
 			}
 		}
 	}

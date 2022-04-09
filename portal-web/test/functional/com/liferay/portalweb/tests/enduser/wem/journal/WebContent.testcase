@@ -672,7 +672,7 @@ definition {
 			portlet = "Pages",
 			site = "Test Site Name");
 
-		PagesAdmin.addPublicPage(
+		PagesAdmin.addPage(
 			pageName = "Web Content Display Page",
 			sitePageType = "Widget Page");
 

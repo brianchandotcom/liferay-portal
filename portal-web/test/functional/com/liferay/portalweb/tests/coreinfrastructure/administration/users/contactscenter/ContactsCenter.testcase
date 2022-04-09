@@ -23,7 +23,6 @@ definition {
 		PagesAdmin.configurePage(
 			columnName = "1 Column",
 			pageName = "Contacts Center Page",
-			privacy = "Public Pages",
 			sitePageType = "Widget Page");
 
 		JSONLayout.addWidgetToPublicLayout(

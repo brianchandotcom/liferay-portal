@@ -272,14 +272,13 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(
+		PagesAdmin.addPage(
 			pageName = "Elasticsearch Monitoring Page",
 			sitePageType = "Widget Page");
 
 		PagesAdmin.configurePage(
 			columnName = "1 Column",
 			pageName = "Elasticsearch Monitoring Page",
-			privacy = "Public Pages",
 			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "Elasticsearch Monitoring Page");
@@ -321,14 +320,13 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(
+		PagesAdmin.addPage(
 			pageName = "Elasticsearch Monitoring Page",
 			sitePageType = "Widget Page");
 
 		PagesAdmin.configurePage(
 			columnName = "1 Column",
 			pageName = "Elasticsearch Monitoring Page",
-			privacy = "Public Pages",
 			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "Elasticsearch Monitoring Page");

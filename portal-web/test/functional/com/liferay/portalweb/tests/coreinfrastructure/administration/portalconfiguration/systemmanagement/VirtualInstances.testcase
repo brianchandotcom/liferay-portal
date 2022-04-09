@@ -148,7 +148,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(pageName = "Blogs Page");
+		PagesAdmin.addPage(pageName = "Blogs Page");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
@@ -158,7 +158,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(pageName = "Wiki Page");
+		PagesAdmin.addPage(pageName = "Wiki Page");
 
 		Navigator.gotoPage(pageName = "Wiki Page");
 
@@ -168,7 +168,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(pageName = "Language Page");
+		PagesAdmin.addPage(pageName = "Language Page");
 
 		Navigator.gotoPage(pageName = "Language Page");
 
@@ -197,7 +197,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(pageName = "Web Content Page");
+		PagesAdmin.addPage(pageName = "Web Content Page");
 
 		Navigator.gotoSpecificURLPage(
 			pageName = "Web Content Page",

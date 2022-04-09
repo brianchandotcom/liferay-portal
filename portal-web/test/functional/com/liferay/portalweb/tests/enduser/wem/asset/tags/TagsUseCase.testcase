@@ -383,7 +383,7 @@ definition {
 		task ("Add a page based on Search temlate") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
-			PagesAdmin.addPublicPage(
+			PagesAdmin.addPage(
 				pageName = "search",
 				pageTemplateName = "Search");
 		}

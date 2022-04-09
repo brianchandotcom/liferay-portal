@@ -421,7 +421,6 @@ definition {
 		PagesAdmin.configurePage(
 			columnName = "1 Column",
 			pageName = "Staging Test Page",
-			privacy = "Public Pages",
 			sitePageType = "Widget Page");
 
 		JSONLayout.addWidgetToPublicLayout(
@@ -598,9 +597,7 @@ definition {
 			pageName = "Private Staging Page",
 			siteName = "Site Name");
 
-		PagesAdmin.viewPageItemPresent(
-			pageName = "Private Staging Page",
-			privacy = "Private Pages");
+		PagesAdmin.viewPageItemPresent(pageName = "Private Staging Page");
 	}
 
 	@description = "This is a use case for LPS-80367."
@@ -812,7 +809,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(pageName = "Test Variation Page");
+		PagesAdmin.addPage(pageName = "Test Variation Page");
 
 		Navigator.gotoSitePage(
 			pageName = "Test Variation Page",

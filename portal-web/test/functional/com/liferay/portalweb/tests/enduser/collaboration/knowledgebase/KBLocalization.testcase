@@ -48,7 +48,7 @@ definition {
 			portlet = "Pages",
 			site = "${siteName}");
 
-		PagesAdmin.addPublicChildPage(
+		PagesAdmin.addChildPage(
 			childPageName = "Knowledge Base Display Page",
 			parentPageName = "Home");
 
@@ -60,7 +60,6 @@ definition {
 			columnName = "1 Column",
 			pageName = "Knowledge Base Display Page",
 			parentPagesHierarchy = "Home",
-			privacy = "Public Pages",
 			sitePageType = "Widget Page");
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");

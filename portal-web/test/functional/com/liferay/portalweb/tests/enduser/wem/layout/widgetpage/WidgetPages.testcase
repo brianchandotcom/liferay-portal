@@ -42,7 +42,7 @@ definition {
 		task ("Add a page based in global search template") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
-			PagesAdmin.addPublicPage(
+			PagesAdmin.addPage(
 				pageName = "Test Page Name",
 				pageTemplateName = "Search");
 		}
@@ -64,7 +64,7 @@ definition {
 		task ("Add a page with escape characters name") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
-			PagesAdmin.addPublicPage(pageName = "Test's Page Name");
+			PagesAdmin.addPage(pageName = "Test's Page Name");
 		}
 
 		task ("View the alert not shown") {
@@ -92,17 +92,14 @@ definition {
 		task ("View parent page is shown") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
-			PagesAdmin.viewPageItemPresent(
-				pageName = "Test Page Name",
-				privacy = "Public Pages");
+			PagesAdmin.viewPageItemPresent(pageName = "Test Page Name");
 		}
 
 		task ("View children pages are shwon") {
 			for (var i : list "1,2,3") {
 				PagesAdmin.viewPageItemPresent(
 					depth = "2",
-					pageName = "Test Child Page ${i}",
-					privacy = "Public Pages");
+					pageName = "Test Child Page ${i}");
 			}
 		}
 	}
@@ -356,7 +353,6 @@ definition {
 				PagesAdmin.configurePage(
 					pageName = "Test Page Name",
 					portlet = "${portletName}",
-					privacy = "Public Pages",
 					sitePageType = "Full Page Application");
 
 				Navigator.gotoSitePage(
@@ -395,9 +391,7 @@ definition {
 		}
 
 		task ("View the edited name is shown") {
-			PagesAdmin.viewPageItemPresent(
-				pageName = "Test Page Name 1 Edited",
-				privacy = "Public Pages");
+			PagesAdmin.viewPageItemPresent(pageName = "Test Page Name 1 Edited");
 		}
 
 		task ("Change the layout template of the second page") {
@@ -420,9 +414,7 @@ definition {
 		}
 
 		task ("View the edited name is shown") {
-			PagesAdmin.viewPageItemPresent(
-				pageName = "Test Page Name 2 Edited",
-				privacy = "Public Pages");
+			PagesAdmin.viewPageItemPresent(pageName = "Test Page Name 2 Edited");
 		}
 	}
 

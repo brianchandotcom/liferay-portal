@@ -125,8 +125,6 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.togglePrivacy(privacy = "Public Pages");
-
 		PagesAdmin.cannotDeletePagesAssociatedWithSiteTemplate(
 			page = "Site Child Page Name",
 			pageName = "Site Page Name");
@@ -146,13 +144,9 @@ definition {
 
 		Page.viewNoPG(pageName = "Site Child Page Name");
 
-		PagesAdmin.viewPageItemNotPresent(
-			pageName = "Site Page Name",
-			privacy = "Public Pages");
+		PagesAdmin.viewPageItemNotPresent(pageName = "Site Page Name");
 
-		PagesAdmin.viewPageItemNotPresent(
-			pageName = "Site Child Page Name",
-			privacy = "Public Pages");
+		PagesAdmin.viewPageItemNotPresent(pageName = "Site Child Page Name");
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 	}

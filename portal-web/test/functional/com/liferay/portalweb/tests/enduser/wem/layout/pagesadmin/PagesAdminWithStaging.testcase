@@ -155,7 +155,7 @@ definition {
 		task ("Add a collection page based on dynamic collection") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-staging");
 
-			ContentPages.addPublicCollectionPage(
+			ContentPages.addCollectionPage(
 				collectionName = "Dynamic Collection",
 				pageName = "Dynamic Collection Page Name",
 				tabName = "Collections");

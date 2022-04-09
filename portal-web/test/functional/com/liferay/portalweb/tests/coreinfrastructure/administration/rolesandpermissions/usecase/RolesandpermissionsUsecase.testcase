@@ -225,7 +225,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(pageName = "Site Page Name");
+		PagesAdmin.addPage(pageName = "Site Page Name");
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -429,7 +429,7 @@ definition {
 			portlet = "Pages",
 			site = "${siteName}");
 
-		PagesAdmin.addPublicPage(pageName = "Bookmarks Page");
+		PagesAdmin.addPage(pageName = "Bookmarks Page");
 
 		Navigator.gotoPage(pageName = "Bookmarks Page");
 
@@ -457,7 +457,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(pageName = "Bookmarks Page");
+		PagesAdmin.addPage(pageName = "Bookmarks Page");
 
 		Navigator.gotoSitePage(
 			pageName = "Bookmarks Page",
@@ -1003,7 +1003,7 @@ definition {
 			portlet = "Pages",
 			site = "${siteName}");
 
-		PagesAdmin.addPublicPage(pageName = "Bookmarks Page");
+		PagesAdmin.addPage(pageName = "Bookmarks Page");
 
 		Navigator.gotoPage(pageName = "Bookmarks Page");
 
@@ -1151,7 +1151,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(
+		PagesAdmin.addPage(
 			pageName = "USA Ice Hockey Team Search",
 			pageTemplateName = "Search");
 
@@ -1268,7 +1268,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(
+		PagesAdmin.addPage(
 			pageName = "Search Page",
 			pageTemplateName = "Search");
 

@@ -996,13 +996,13 @@ definition {
 		}
 
 		task ("Add a page and automatically add it to both navigation menus") {
-			PagesAdmin.addPublicPage(
+			PagesAdmin.addPage(
 				navigationMenus = "Navigation Menu Name 1,Navigation Menu Name 2",
 				pageName = "Page 1");
 		}
 
 		task ("Add a second page and automatically add it to the second navigation menu") {
-			PagesAdmin.addPublicPage(
+			PagesAdmin.addPage(
 				navigationMenus = "Navigation Menu Name 2",
 				pageName = "Page 2");
 		}
@@ -1042,7 +1042,7 @@ definition {
 		task ("Add a third page and assert that while adding the new page, the checkbox to add a new page to the first navigation menu is not present") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
-			PagesAdmin.addPublicPage(
+			PagesAdmin.addPage(
 				assertCheckboxMissing = "true",
 				navigationMenus = "Navigation Menu Name 1",
 				pageName = "Page 3");

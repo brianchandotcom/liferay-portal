@@ -170,7 +170,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(pageName = "Dynamic Data Lists Display Page");
+		PagesAdmin.addPage(pageName = "Dynamic Data Lists Display Page");
 
 		Navigator.gotoPage(pageName = "Dynamic Data Lists Display Page");
 
@@ -329,7 +329,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(pageName = "DDL Page");
+		PagesAdmin.addPage(pageName = "DDL Page");
 
 		Navigator.gotoPage(pageName = "DDL Page");
 
@@ -366,7 +366,7 @@ definition {
 				category = "Site Builder",
 				portlet = "Pages");
 
-			PagesAdmin.addPublicPage(pageName = "Test Page");
+			PagesAdmin.addPage(pageName = "Test Page");
 
 			Navigator.openURL();
 
@@ -425,7 +425,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(pageName = "DDL Page");
+		PagesAdmin.addPage(pageName = "DDL Page");
 
 		Navigator.gotoPage(pageName = "DDL Page");
 
@@ -483,7 +483,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(pageName = "DDL Page");
+		PagesAdmin.addPage(pageName = "DDL Page");
 
 		Navigator.gotoPage(pageName = "DDL Page");
 
@@ -583,7 +583,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(pageName = "DDL Page");
+		PagesAdmin.addPage(pageName = "DDL Page");
 
 		Navigator.gotoPage(pageName = "DDL Page");
 
@@ -905,7 +905,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(pageName = "Dynamic Data Lists Page");
+		PagesAdmin.addPage(pageName = "Dynamic Data Lists Page");
 
 		Navigator.gotoPage(pageName = "Dynamic Data Lists Page");
 
@@ -1054,7 +1054,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(pageName = "Dynamic Data Lists Display Page");
+		PagesAdmin.addPage(pageName = "Dynamic Data Lists Display Page");
 
 		Navigator.gotoPage(pageName = "Dynamic Data Lists Display Page");
 
@@ -1092,7 +1092,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(pageName = "Dynamic Data Lists Display Page");
+		PagesAdmin.addPage(pageName = "Dynamic Data Lists Display Page");
 
 		Navigator.gotoPage(pageName = "Dynamic Data Lists Display Page");
 
@@ -1231,7 +1231,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(pageName = "Dynamic Data Lists Display Page");
+		PagesAdmin.addPage(pageName = "Dynamic Data Lists Display Page");
 
 		Navigator.gotoPage(pageName = "Dynamic Data Lists Display Page");
 
@@ -1342,7 +1342,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(pageName = "Dynamic Data Lists Display Page");
+		PagesAdmin.addPage(pageName = "Dynamic Data Lists Display Page");
 
 		Navigator.gotoPage(pageName = "Dynamic Data Lists Display Page");
 
@@ -1398,7 +1398,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(pageName = "Dynamic Data Lists Display Page");
+		PagesAdmin.addPage(pageName = "Dynamic Data Lists Display Page");
 
 		Navigator.gotoPage(pageName = "Dynamic Data Lists Display Page");
 
@@ -1495,7 +1495,7 @@ definition {
 
 		Refresh();
 
-		PagesAdmin.addPublicPage(pageName = "Data Definition Page Name");
+		PagesAdmin.addPage(pageName = "Data Definition Page Name");
 
 		Navigator.gotoPage(pageName = "Data Definition Page Name");
 
@@ -1587,7 +1587,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(pageName = "Dynamic Data Lists Display Page");
+		PagesAdmin.addPage(pageName = "Dynamic Data Lists Display Page");
 
 		Navigator.gotoPage(pageName = "Dynamic Data Lists Display Page");
 
@@ -1930,7 +1930,7 @@ definition {
 			portlet = "Pages",
 			site = "${siteName}");
 
-		PagesAdmin.addPublicPage(pageName = "Dynamic Data Lists Display Page");
+		PagesAdmin.addPage(pageName = "Dynamic Data Lists Display Page");
 
 		Navigator.gotoPage(pageName = "Dynamic Data Lists Display Page");
 
@@ -2503,7 +2503,7 @@ definition {
 			portlet = "Pages");
 
 		for (var pageName : list "P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12") {
-			PagesAdmin.addPublicPage(pageName = "${pageName}");
+			PagesAdmin.addPage(pageName = "${pageName}");
 		}
 
 		ProductMenu.gotoPortlet(
@@ -2864,9 +2864,9 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(pageName = "Parent Page Name");
+		PagesAdmin.addPage(pageName = "Parent Page Name");
 
-		PagesAdmin.addPublicChildPage(
+		PagesAdmin.addChildPage(
 			childPageName = "Child Page Name",
 			parentPageName = "Parent Page Name");
 
@@ -2948,7 +2948,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(pageName = "Asset Publisher Page");
+		PagesAdmin.addPage(pageName = "Asset Publisher Page");
 
 		Navigator.gotoPage(pageName = "Asset Publisher Page");
 

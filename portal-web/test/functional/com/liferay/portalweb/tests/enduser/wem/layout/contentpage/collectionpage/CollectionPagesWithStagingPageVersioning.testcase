@@ -48,7 +48,7 @@ definition {
 		task ("Add the first collection page based on manual collection") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
-			ContentPages.addPublicCollectionPage(
+			ContentPages.addCollectionPage(
 				collectionName = "Manual Collection",
 				pageName = "First Collection Page Name",
 				tabName = "Collections");
@@ -59,7 +59,7 @@ definition {
 		}
 
 		task ("Add the second collection page based on dynamic collection") {
-			ContentPages.addPublicCollectionPage(
+			ContentPages.addCollectionPage(
 				collectionName = "Dynamic Collection",
 				pageName = "Second Collection Page Name",
 				tabName = "Collections");
@@ -76,7 +76,7 @@ definition {
 		}
 
 		task ("Add the third collection page based on collection provider") {
-			ContentPages.addPublicCollectionPage(
+			ContentPages.addCollectionPage(
 				collectionName = "Most Viewed Assets",
 				pageName = "Third Collection Page Name",
 				tabName = "Collection Providers");

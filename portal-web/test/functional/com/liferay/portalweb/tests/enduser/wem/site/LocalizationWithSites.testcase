@@ -180,7 +180,7 @@ definition {
 		}
 
 		task ("Add a widget page") {
-			PagesAdmin.addPublicPage(pageName = "Test Page Name");
+			PagesAdmin.addPage(pageName = "Test Page Name");
 		}
 
 		task ("View current languages are shown in Pages admin") {

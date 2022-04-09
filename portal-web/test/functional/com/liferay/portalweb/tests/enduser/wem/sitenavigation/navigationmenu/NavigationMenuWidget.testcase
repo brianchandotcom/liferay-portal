@@ -53,9 +53,7 @@ definition {
 		task ("Grand all permissions to Power User for that page") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
-			PermissionsInline.gotoSitePageCP(
-				pageName = "Test Page Name",
-				privacy = "Public Pages");
+			PermissionsInline.gotoSitePageCP(pageName = "Test Page Name");
 
 			Role.definePermissionPG(
 				permissionsList = "CONTENT_PERMISSIONS_ADD_DISCUSSION_CHECKBOX,CONTENT_PERMISSIONS_CONFIGURE_APPLICATIONS_CHECKBOX,CONTENT_PERMISSIONS_CUSTOMIZE_CHECKBOX,CONTENT_PERMISSIONS_DELETE_CHECKBOX,CONTENT_PERMISSIONS_DELETE_DISCUSSION_CHECKBOX,CONTENT_PERMISSIONS_PERMISSIONS_CHECKBOX,CONTENT_PERMISSIONS_UPDATE_CHECKBOX,CONTENT_PERMISSIONS_UPDATE_DISCUSSION_CHECKBOX,CONTENT_PERMISSIONS_VIEW_CHECKBOX",
@@ -197,7 +195,7 @@ definition {
 		task ("Add the second page") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
 
-			PagesAdmin.addPublicPage(pageName = "Test Page Name 2");
+			PagesAdmin.addPage(pageName = "Test Page Name 2");
 		}
 
 		task ("Rename the second page") {

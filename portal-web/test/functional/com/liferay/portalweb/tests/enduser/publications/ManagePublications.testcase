@@ -61,7 +61,7 @@ definition {
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
-		PagesAdmin.addPublicPage(pageName = "Test Page");
+		PagesAdmin.addPage(pageName = "Test Page");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Publications",

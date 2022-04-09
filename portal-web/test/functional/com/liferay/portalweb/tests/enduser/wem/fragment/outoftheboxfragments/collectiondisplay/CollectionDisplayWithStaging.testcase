@@ -235,7 +235,7 @@ definition {
 		task ("Add the first collection page based on dynamic collection") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-staging");
 
-			ContentPages.addPublicCollectionPage(
+			ContentPages.addCollectionPage(
 				collectionName = "Dynamic Collection",
 				pageName = "Collection Page Name 1",
 				tabName = "Collections");
@@ -273,7 +273,7 @@ definition {
 		task ("Add the second collection page based on Most Viewed Assets collection provider") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-staging");
 
-			ContentPages.addPublicCollectionPage(
+			ContentPages.addCollectionPage(
 				collectionName = "Most Viewed Assets",
 				pageName = "Collection Page Name 2",
 				tabName = "Collection Providers");

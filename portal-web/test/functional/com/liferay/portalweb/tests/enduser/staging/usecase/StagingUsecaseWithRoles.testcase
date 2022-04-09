@@ -160,7 +160,6 @@ definition {
 		PagesAdmin.configurePage(
 			columnName = "1 Column",
 			pageName = "Staging Test Page",
-			privacy = "Public Pages",
 			sitePageType = "Widget Page");
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
@@ -247,21 +246,17 @@ definition {
 
 		Navigator.openStagingSiteURL(siteName = "Site Name");
 
-		PagesAdmin.viewPageItemPresent(
-			pageName = "Staging Test Page",
-			privacy = "Public Pages");
+		PagesAdmin.viewPageItemPresent(pageName = "Staging Test Page");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Wiki",
 			siteName = "Site Name");
 
-		PagesAdmin.viewPageItemPresent(
-			pageName = "Wiki",
-			privacy = "Public Pages");
+		PagesAdmin.viewPageItemPresent(pageName = "Wiki");
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
 
-		PagesAdmin.addPublicPage(pageName = "Test Page Name");
+		PagesAdmin.addPage(pageName = "Test Page Name");
 
 		Navigator.openStagingSiteURL(siteName = "Site Name");
 
@@ -275,7 +270,6 @@ definition {
 
 		Staging.enablePageInSitePagesVariation(
 			pageName = "Test Page Name",
-			privacy = "Public Pages",
 			sitePagesVariationName = "Main Variation Edit");
 
 		Navigator.gotoStagedSitePage(
@@ -288,9 +282,7 @@ definition {
 			pageName = "Test Page Name",
 			siteName = "Site Name");
 
-		PagesAdmin.viewPageItemPresent(
-			pageName = "Test Page Name",
-			privacy = "Public Pages");
+		PagesAdmin.viewPageItemPresent(pageName = "Test Page Name");
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
 
@@ -308,9 +300,7 @@ definition {
 
 		Navigator.openStagingSiteURL(siteName = "Site Name");
 
-		PagesAdmin.viewPageItemPresent(
-			pageName = "Staging Test Page",
-			privacy = "Public Pages");
+		PagesAdmin.viewPageItemPresent(pageName = "Staging Test Page");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Test Page Name",
@@ -338,7 +328,7 @@ definition {
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
 
-		PagesAdmin.addPublicPage(pageName = "Empty Page Name");
+		PagesAdmin.addPage(pageName = "Empty Page Name");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Empty Page Name",
@@ -370,9 +360,7 @@ definition {
 
 		Staging.viewSitePagesVariationPG(sitePagesVariationName = "Empty Variation");
 
-		PagesAdmin.viewPageItemPresent(
-			pageName = "Staging Test Page",
-			privacy = "Public Pages");
+		PagesAdmin.viewPageItemPresent(pageName = "Staging Test Page");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Wiki",
@@ -380,9 +368,7 @@ definition {
 
 		Staging.viewSitePagesVariationPG(sitePagesVariationName = "Empty Variation");
 
-		PagesAdmin.viewPageItemPresent(
-			pageName = "Wiki",
-			privacy = "Public Pages");
+		PagesAdmin.viewPageItemPresent(pageName = "Wiki");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Test Page Name",
@@ -390,9 +376,7 @@ definition {
 
 		Staging.viewSitePagesVariationPG(sitePagesVariationName = "Empty Variation");
 
-		PagesAdmin.viewPageItemPresent(
-			pageName = "Test Page Name",
-			privacy = "Public Pages");
+		PagesAdmin.viewPageItemPresent(pageName = "Test Page Name");
 	}
 
 	@priority = "5"
@@ -445,7 +429,7 @@ definition {
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
 
-		PagesAdmin.addPublicPage(pageName = "New Page Name");
+		PagesAdmin.addPage(pageName = "New Page Name");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "New Page Name",

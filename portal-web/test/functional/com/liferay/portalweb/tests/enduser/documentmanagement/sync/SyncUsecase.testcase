@@ -28,14 +28,13 @@ definition {
 			portlet = "Pages",
 			site = "${siteName}");
 
-		PagesAdmin.addPublicPage(
+		PagesAdmin.addPage(
 			pageName = "Sync Page",
 			sitePageType = "Widget Page");
 
 		PagesAdmin.configurePage(
 			columnName = "1 Column",
 			pageName = "Sync Page",
-			privacy = "Public Pages",
 			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "Sync Page");

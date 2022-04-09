@@ -347,7 +347,7 @@ definition {
 				category = "Site Builder",
 				portlet = "Pages");
 
-			PagesAdmin.addPublicPage(pageName = "Web Content Display Page");
+			PagesAdmin.addPage(pageName = "Web Content Display Page");
 
 			Navigator.gotoPage(
 				baseURL = "www.able.com:8080",
@@ -390,7 +390,7 @@ definition {
 				category = "Site Builder",
 				portlet = "Pages");
 
-			PagesAdmin.addPublicPage(pageName = "Web Content Display Page");
+			PagesAdmin.addPage(pageName = "Web Content Display Page");
 
 			Navigator.gotoPage(pageName = "Web Content Display Page");
 

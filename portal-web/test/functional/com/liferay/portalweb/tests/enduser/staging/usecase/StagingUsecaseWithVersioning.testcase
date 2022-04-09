@@ -81,7 +81,7 @@ definition {
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
 
-		PagesAdmin.addPublicChildPage(
+		PagesAdmin.addChildPage(
 			childPageName = "Page 1",
 			parentPageName = "Staging Test Page");
 
@@ -93,9 +93,7 @@ definition {
 			sitePagesVariationMenulistName = "Main Variation",
 			sitePagesVariationName = "Summer");
 
-		PagesAdmin.viewPageItemNotPresent(
-			pageName = "Page 1",
-			privacy = "Public Pages");
+		PagesAdmin.viewPageItemNotPresent(pageName = "Page 1");
 	}
 
 	@priority = "3"
@@ -120,7 +118,7 @@ definition {
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
 
-		PagesAdmin.addPublicPage(
+		PagesAdmin.addPage(
 			collectionName = "Page Template Collection",
 			pageName = "Test Page Name",
 			pageTemplateName = "Page Template Name");
@@ -137,9 +135,7 @@ definition {
 			pageName = "Test Page Edit",
 			siteName = "Site Name");
 
-		PagesAdmin.viewPageItemPresent(
-			pageName = "Test Page Edit",
-			privacy = "Public Pages");
+		PagesAdmin.viewPageItemPresent(pageName = "Test Page Edit");
 	}
 
 	@priority = "4"
@@ -150,7 +146,7 @@ definition {
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
 
-		PagesAdmin.addPublicPage(pageName = "Test Page Name");
+		PagesAdmin.addPage(pageName = "Test Page Name");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Test Page Name",
@@ -164,7 +160,6 @@ definition {
 
 		Staging.enablePageInSitePagesVariation(
 			pageName = "Test Page Name",
-			privacy = "Public Pages",
 			sitePagesVariationName = "Main Variation");
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
@@ -175,9 +170,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.viewPageItemNotPresent(
-			pageName = "Test Page Name",
-			privacy = "Public Pages");
+		PagesAdmin.viewPageItemNotPresent(pageName = "Test Page Name");
 	}
 
 	@description = "This is a use case for LPS-78292."
@@ -185,7 +178,7 @@ definition {
 	test PublicationWithoutReadyForPublication {
 		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
 
-		PagesAdmin.addPublicPage(pageName = "Staging Test Page 2");
+		PagesAdmin.addPage(pageName = "Staging Test Page 2");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page 2",
@@ -199,9 +192,7 @@ definition {
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
-		PagesAdmin.viewPageItemNotPresent(
-			pageName = "Staging Test Page 2",
-			privacy = "Public Pages");
+		PagesAdmin.viewPageItemNotPresent(pageName = "Staging Test Page 2");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page 2",
@@ -324,7 +315,7 @@ definition {
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
 
-		PagesAdmin.addPublicPage(pageName = "Page Revision Page");
+		PagesAdmin.addPage(pageName = "Page Revision Page");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Page Revision Page",
@@ -610,7 +601,7 @@ definition {
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
 
-		PagesAdmin.addPublicPage(pageName = "Page 2");
+		PagesAdmin.addPage(pageName = "Page 2");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Page 2",
@@ -667,7 +658,7 @@ definition {
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
 
-		PagesAdmin.addPublicPage(pageName = "Page 2");
+		PagesAdmin.addPage(pageName = "Page 2");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Page 2",
@@ -697,7 +688,6 @@ definition {
 
 		Staging.enablePageInSitePagesVariation(
 			pageName = "Page 2",
-			privacy = "Public Pages",
 			sitePagesVariationName = "Summer");
 
 		Navigator.gotoStagedSitePage(
@@ -918,7 +908,7 @@ definition {
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
 
-		PagesAdmin.addPublicPage(pageName = "Test Page Name");
+		PagesAdmin.addPage(pageName = "Test Page Name");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Test Page Name",
@@ -932,7 +922,6 @@ definition {
 
 		Staging.enablePageInSitePagesVariation(
 			pageName = "Test Page Name",
-			privacy = "Public Pages",
 			sitePagesVariationName = "Main Variation");
 	}
 
@@ -951,7 +940,7 @@ definition {
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
 
-		PagesAdmin.addPublicPage(
+		PagesAdmin.addPage(
 			collectionName = "Page Template Collection",
 			inheritChanges = "false",
 			pageName = "Test Page Name",
@@ -960,8 +949,6 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			portlet = "Pages");
-
-		PagesAdmin.togglePrivacy(privacy = "Public Pages");
 
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",
@@ -1042,7 +1029,7 @@ definition {
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
 
-		PagesAdmin.addPublicPage(pageName = "Page1");
+		PagesAdmin.addPage(pageName = "Page1");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -1058,7 +1045,7 @@ definition {
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
 
-		PagesAdmin.addPublicChildPage(
+		PagesAdmin.addChildPage(
 			childPageName = "Page2",
 			parentPageName = "Page1");
 
@@ -1154,7 +1141,7 @@ definition {
 	test ViewSummaryScreenWithDraftPage {
 		PagesAdmin.openPagesAdmin(siteURLKey = "site-name-staging");
 
-		PagesAdmin.addPublicPage(pageName = "Draft Page");
+		PagesAdmin.addPage(pageName = "Draft Page");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Draft Page",

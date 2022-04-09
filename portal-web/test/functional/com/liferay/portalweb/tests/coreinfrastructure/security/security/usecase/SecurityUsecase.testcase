@@ -382,7 +382,6 @@ out.println(PortalUtil.escapeRedirect("/"));
 			PagesAdmin.configurePage(
 				columnName = "1 Column",
 				pageName = "Test Widget Page",
-				privacy = "Public Pages",
 				sitePageType = "Widget Page");
 		}
 

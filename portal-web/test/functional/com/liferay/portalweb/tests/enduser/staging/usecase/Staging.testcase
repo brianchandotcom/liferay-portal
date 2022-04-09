@@ -1126,7 +1126,7 @@ definition {
 
 		Form.publishForm();
 
-		PagesAdmin.addPublicPage(
+		PagesAdmin.addPage(
 			pageName = "Test Page",
 			sitePageType = "Widget Page");
 
@@ -1560,7 +1560,6 @@ definition {
 		PagesAdmin.configurePage(
 			columnName = "1 Column",
 			pageName = "Staging Test Page",
-			privacy = "Public Pages",
 			sitePageType = "Widget Page");
 
 		Navigator.gotoSitePage(
@@ -2344,17 +2343,13 @@ definition {
 			pageName = "Staging Page Edit",
 			siteName = "Site Name");
 
-		PagesAdmin.viewPageItemPresent(
-			pageName = "Staging Page Edit",
-			privacy = "Public Pages");
+		PagesAdmin.viewPageItemPresent(pageName = "Staging Page Edit");
 
 		Navigator.gotoSitePage(
 			pageName = "Staging Page Edit",
 			siteName = "Site Name");
 
-		PagesAdmin.viewPageItemPresent(
-			pageName = "Staging Page Edit",
-			privacy = "Public Pages");
+		PagesAdmin.viewPageItemPresent(pageName = "Staging Page Edit");
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
@@ -2430,9 +2425,7 @@ definition {
 			pageName = "Staging Page Edit",
 			siteName = "Site Name");
 
-		PagesAdmin.viewPageItemPresent(
-			pageName = "Staging Page Edit",
-			privacy = "Public Pages");
+		PagesAdmin.viewPageItemPresent(pageName = "Staging Page Edit");
 	}
 
 	@description = "This is a use case for LPS-82355."

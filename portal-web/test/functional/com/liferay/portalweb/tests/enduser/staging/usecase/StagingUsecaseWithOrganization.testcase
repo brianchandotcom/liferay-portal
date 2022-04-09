@@ -50,7 +50,7 @@ definition {
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "Staging Organization Name");
 
-		PagesAdmin.addPublicPage(pageName = "Site Page Name");
+		PagesAdmin.addPage(pageName = "Site Page Name");
 
 		JSONUser.addUser(
 			allowManualMembershipManagement = "true",

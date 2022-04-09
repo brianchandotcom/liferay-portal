@@ -206,6 +206,12 @@ definition {
 	}
 
 	macro addChildPage {
+		if (IsTextNotEqual(locator1 = "ControlMenu#HEADING", value1 = "Pages")) {
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
+		}
+
 		MouseOver(
 			key_itemName = "${parentPageName}",
 			locator1 = "PagesAdmin#LIST_GROUP_ITEM");

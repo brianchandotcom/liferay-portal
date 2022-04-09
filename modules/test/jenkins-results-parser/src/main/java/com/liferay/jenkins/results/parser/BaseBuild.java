@@ -1403,6 +1403,16 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public JSONObject getTestReportJSONObject(boolean checkCache) {
+		String result = getResult();
+
+		if (result == null) {
+			return null;
+		}
+
+		if (!result.equals("SUCCESS") && !result.equals("UNSTABLE")) {
+			return null;
+		}
+
 		String urlSuffix = "testReport/api/json";
 
 		if (archiveFileExists(urlSuffix)) {
@@ -1412,7 +1422,7 @@ public abstract class BaseBuild implements Build {
 		try {
 			return JenkinsResultsParserUtil.toJSONObject(
 				JenkinsResultsParserUtil.getLocalURL(
-					getBuildURL() + "testReport/api/json"),
+					getBuildURL() + urlSuffix),
 				checkCache);
 		}
 		catch (IOException ioException) {

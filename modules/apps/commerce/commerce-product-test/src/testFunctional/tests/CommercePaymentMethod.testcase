@@ -202,6 +202,112 @@ definition {
 		}
 	}
 
+	@description = "Verify offline payment methods display in the orders page for orders placed with a new offline payment method. Verify this payment method can be changed to another offline payment method."
+	@priority = "3"
+	test AssertAndEditNewPaymentMethodInOrdersPage {
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site with a buyer user") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+
+			User.openUsersAdmin();
+
+			CommerceLogin.editPasswordCP(
+				newPassword = "test",
+				requirePasswordReset = "false",
+				userScreenName = "buyeruser");
+		}
+
+		task ("And given 2 new offline payment methods are created and activated") {
+			CommercePaymentMethods.addOfflinePaymentMethod(key = "Test Offline Payment Method 1");
+
+			CommercePaymentMethods.addOfflinePaymentMethod(key = "Test Offline Payment Method 2");
+
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			CommerceChannels.activatePaymentMethod(paymentMethod = "Test Offline Payment Method 1");
+
+			CommerceChannels.activatePaymentMethod(paymentMethod = "Test Offline Payment Method 2");
+		}
+
+		task ("And give the buyer places an order using the first offline payment method") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+
+			CommerceNavigator.gotoMiniCart();
+
+			Button.click(button = "View Details");
+
+			Button.click(button = "Checkout");
+
+			CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				paymentMethod = "Test Offline Payment Method 1",
+				productName = "U-Joint",
+				productQuantity = "1",
+				productUnitPrice = "24",
+				shippingMethod = "Standard");
+		}
+
+		task ("When the admin goes to the Orders page to view the pending order") {
+			User.logoutAndLoginPG();
+
+			CommerceOrders.openOrdersAdmin();
+
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
+		}
+
+		task ("Then the selected offline payment method is present") {
+			CommerceOrders.viewOrdersEntry(
+				addressAddress = "Test Address",
+				addressCity = "Test City",
+				addressZipCode = "Test Zip Code",
+				paymentMethod = "Test Offline Payment Method",
+				productListPrice = "24.00",
+				productName = "U-Joint",
+				productQuantity = "1",
+				productSku = "MIN55861",
+				productTotalPrice = "24.00");
+		}
+
+		task ("When the admin changes the payment method to another offline payment method") {
+			CommerceOrders.editPaymentMethod(paymentMethod = "Test Offline Payment Method 2");
+		}
+
+		task ("Then the payment method should be updated") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "CommerceOrders#ORDER_DETAILS_PAYMENT_METHOD_NAME",
+				value1 = "Test Offline Payment Method 2");
+		}
+	}
+
 	@description = "Verify an activated offline payment method can be selected for an order when multiple payment methods are active."
 	@priority = "3"
 	test CreateOrderWithMultipleActivePaymentMethods {

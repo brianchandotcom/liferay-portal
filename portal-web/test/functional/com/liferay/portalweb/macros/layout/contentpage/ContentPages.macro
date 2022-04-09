@@ -142,7 +142,7 @@ definition {
 		}
 
 		if (IsElementPresent(locator1 = "Message#EMPTY_INFO_TAGLIB")) {
-			PagesAdmin.gotoAddFirstPage(pageType = "Public Page");
+			PagesAdmin.gotoAddFirstPage(pageType = "Page");
 		}
 		else {
 			AssertClick(
@@ -150,7 +150,7 @@ definition {
 				locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
 				value1 = "Pages");
 
-			LexiconEntry.gotoAddMenuItem(menuItem = "Public Page");
+			LexiconEntry.gotoAddMenuItem(menuItem = "Page");
 		}
 
 		ContentPages._selectCard(
@@ -203,6 +203,42 @@ definition {
 				value1 = "Pages");
 
 			LexiconEntry.gotoAddMenuItem(menuItem = "Private Page");
+		}
+
+		ContentPages._selectCard(
+			basicTemplate = "${basicTemplate}",
+			collectionName = "${collectionName}",
+			masterLayoutName = "${masterLayoutName}",
+			pageTemplateName = "${pageTemplateName}");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		PortletEntry.inputName(name = "${pageName}");
+
+		Button.clickAdd();
+
+		SelectFrame.selectFrameTop();
+
+		PageEditor.assertFragmentSidebarLoaded();
+	}
+
+	macro addPublicPage {
+		if (IsTextNotEqual(locator1 = "ControlMenu#HEADING", value1 = "Pages")) {
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
+		}
+
+		if (IsElementPresent(locator1 = "Message#EMPTY_INFO_TAGLIB")) {
+			PagesAdmin.gotoAddFirstPage(pageType = "Public Page");
+		}
+		else {
+			AssertClick(
+				key_breadcrumbName = "Pages",
+				locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
+				value1 = "Pages");
+
+			LexiconEntry.gotoAddMenuItem(menuItem = "Public Page");
 		}
 
 		ContentPages._selectCard(

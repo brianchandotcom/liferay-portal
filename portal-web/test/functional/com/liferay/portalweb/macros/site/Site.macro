@@ -824,7 +824,7 @@ definition {
 	}
 
 	macro importSiteFromTempFolder {
-		var siteLarFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "Public_Pages-*.lar");
+		var siteLarFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "Pages-*.lar");
 
 		UploadTempFile.uploadTempFileHiddenNoMouseOver(
 			locator1 = "TextInput#FILE",

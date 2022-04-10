@@ -465,11 +465,9 @@ public class JournalArticleTrashHandlerTest
 
 	@Override
 	protected void moveBaseModelToTrash(long primaryKey) throws Exception {
-		JournalArticle article = JournalArticleLocalServiceUtil.getArticle(
-			primaryKey);
-
 		JournalArticleLocalServiceUtil.moveArticleToTrash(
-			TestPropsValues.getUserId(), article);
+			TestPropsValues.getUserId(),
+			JournalArticleLocalServiceUtil.getArticle(primaryKey));
 	}
 
 	private static final int _FOLDER_NAME_MAX_LENGTH = 100;

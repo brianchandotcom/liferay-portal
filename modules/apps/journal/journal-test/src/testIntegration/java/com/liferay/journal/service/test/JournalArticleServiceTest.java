@@ -68,8 +68,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.InputStream;
 
-import java.lang.reflect.InvocationHandler;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -98,11 +96,9 @@ public class JournalArticleServiceTest {
 
 	@BeforeClass
 	public static void setUpClass() {
-		InvocationHandler invocationHandler = ProxyUtil.getInvocationHandler(
-			_journalArticleLocalService);
-
 		_journalArticleLocalServiceImplInstance = ReflectionTestUtil.invoke(
-			invocationHandler, "getTarget", new Class<?>[0]);
+			ProxyUtil.getInvocationHandler(_journalArticleLocalService),
+			"getTarget", new Class<?>[0]);
 	}
 
 	@Before

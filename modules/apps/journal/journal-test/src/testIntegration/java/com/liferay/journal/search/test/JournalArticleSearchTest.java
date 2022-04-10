@@ -568,11 +568,9 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 
 	@Override
 	protected void moveBaseModelToTrash(long primaryKey) throws Exception {
-		JournalArticle article = JournalArticleLocalServiceUtil.getArticle(
-			primaryKey);
-
 		JournalArticleLocalServiceUtil.moveArticleToTrash(
-			TestPropsValues.getUserId(), article);
+			TestPropsValues.getUserId(),
+			JournalArticleLocalServiceUtil.getArticle(primaryKey));
 	}
 
 	@Override

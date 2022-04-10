@@ -112,10 +112,9 @@ public class JournalFragmentEntryProcessorEditableTest {
 		_fragmentEntryLinkLocalService.deleteFragmentEntryLink(
 			fragmentEntryLink);
 
-		ddmTemplateLink = _ddmTemplateLinkLocalService.fetchDDMTemplateLink(
-			ddmTemplateLink.getTemplateLinkId());
-
-		Assert.assertNull(ddmTemplateLink);
+		Assert.assertNull(
+			_ddmTemplateLinkLocalService.fetchDDMTemplateLink(
+				ddmTemplateLink.getTemplateLinkId()));
 	}
 
 	private long _getClassNameId(String editableKey) {

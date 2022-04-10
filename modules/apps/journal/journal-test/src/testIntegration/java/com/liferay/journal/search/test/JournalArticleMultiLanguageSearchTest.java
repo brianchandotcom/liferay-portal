@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -166,10 +165,6 @@ public class JournalArticleMultiLanguageSearchTest {
 
 	@Test
 	public void testSearchCount() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		JournalTestUtil.addArticle(
 			_group.getGroupId(), 0,
 			PortalUtil.getClassNameId(JournalArticle.class),
@@ -184,7 +179,9 @@ public class JournalArticleMultiLanguageSearchTest {
 			HashMapBuilder.put(
 				LocaleUtil.US, US_CONTENT
 			).build(),
-			LocaleUtil.getSiteDefault(), false, true, serviceContext);
+			LocaleUtil.getSiteDefault(), false, true,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
 
 		int count = journalArticleLocalService.searchCount(
 			_group.getCompanyId(), _group.getGroupId(), Collections.emptyList(),

@@ -109,10 +109,9 @@ public class JournalConverterUtilTest {
 				_enLocale, Collections.singletonList("[\"value 01\"]")
 			).build());
 
-		Field fieldsDisplayField = getFieldsDisplayField(
-			_ddmStructure.getStructureId(), "list_INSTANCE_pcm9WPVX");
-
-		fields.put(fieldsDisplayField);
+		fields.put(
+			getFieldsDisplayField(
+				_ddmStructure.getStructureId(), "list_INSTANCE_pcm9WPVX"));
 
 		String expectedContent = read("test-journal-content-list-field.xml");
 
@@ -133,10 +132,10 @@ public class JournalConverterUtilTest {
 				Collections.singletonList("[\"value 01\",\"value 02\"]")
 			).build());
 
-		Field fieldsDisplayField = getFieldsDisplayField(
-			_ddmStructure.getStructureId(), "multi_list_INSTANCE_9X5wVsSv");
-
-		fields.put(fieldsDisplayField);
+		fields.put(
+			getFieldsDisplayField(
+				_ddmStructure.getStructureId(),
+				"multi_list_INSTANCE_9X5wVsSv"));
 
 		String expectedContent = read(
 			"test-journal-content-multi-list-field.xml");
@@ -169,10 +168,9 @@ public class JournalConverterUtilTest {
 				_enLocale, Collections.singletonList("<p>Hello World!</p>")
 			).build());
 
-		Field fieldsDisplayField = getFieldsDisplayField(
-			_ddmStructure.getStructureId(), "text_area_INSTANCE_RFnJ1nCn");
-
-		fields.put(fieldsDisplayField);
+		fields.put(
+			getFieldsDisplayField(
+				_ddmStructure.getStructureId(), "text_area_INSTANCE_RFnJ1nCn"));
 
 		String expectedContent = read(
 			"test-journal-content-text-area-field.xml");
@@ -195,12 +193,11 @@ public class JournalConverterUtilTest {
 				_ptLocale, Arrays.asList("um", "dois", "tres")
 			).build());
 
-		Field fieldsDisplayField = getFieldsDisplayField(
-			_ddmStructure.getStructureId(),
-			"text_box_INSTANCE_ND057krU,text_box_INSTANCE_HvemvQgl," +
-				"text_box_INSTANCE_enAnbvq6");
-
-		fields.put(fieldsDisplayField);
+		fields.put(
+			getFieldsDisplayField(
+				_ddmStructure.getStructureId(),
+				"text_box_INSTANCE_ND057krU,text_box_INSTANCE_HvemvQgl," +
+					"text_box_INSTANCE_enAnbvq6"));
 
 		String expectedContent = read(
 			"test-journal-content-text-box-repeatable-field.xml");
@@ -223,10 +220,9 @@ public class JournalConverterUtilTest {
 				_ptLocale, Collections.singletonList("um")
 			).build());
 
-		Field fieldsDisplayField = getFieldsDisplayField(
-			_ddmStructure.getStructureId(), "text_INSTANCE_bf4sdx6Q");
-
-		fields.put(fieldsDisplayField);
+		fields.put(
+			getFieldsDisplayField(
+				_ddmStructure.getStructureId(), "text_INSTANCE_bf4sdx6Q"));
 
 		String expectedContent = read("test-journal-content-text-field.xml");
 
@@ -246,14 +242,13 @@ public class JournalConverterUtilTest {
 				_enLocale, Collections.singletonList("[\"value 01\"]")
 			).build());
 
-		Field fieldsDisplayField = getFieldsDisplayField(
-			_ddmStructure.getStructureId(),
-			StringBundler.concat(
-				"list_INSTANCE_pcm9WPVX,contactFieldSet_INSTANCE_",
-				_ddmStructure.getStructureId(), ",phoneFieldSet_INSTANCE_",
-				_ddmStructure.getStructureId()));
-
-		expectedFields.put(fieldsDisplayField);
+		expectedFields.put(
+			getFieldsDisplayField(
+				_ddmStructure.getStructureId(),
+				StringBundler.concat(
+					"list_INSTANCE_pcm9WPVX,contactFieldSet_INSTANCE_",
+					_ddmStructure.getStructureId(), ",phoneFieldSet_INSTANCE_",
+					_ddmStructure.getStructureId())));
 
 		String content = read("test-journal-content-list-field.xml");
 
@@ -276,14 +271,13 @@ public class JournalConverterUtilTest {
 				Collections.singletonList("[\"value 01\",\"value 02\"]")
 			).build());
 
-		Field fieldsDisplayField = getFieldsDisplayField(
-			_ddmStructure.getStructureId(),
-			StringBundler.concat(
-				"multi_list_INSTANCE_9X5wVsSv,contactFieldSet_INSTANCE_",
-				_ddmStructure.getStructureId(), ",phoneFieldSet_INSTANCE_",
-				_ddmStructure.getStructureId()));
-
-		expectedFields.put(fieldsDisplayField);
+		expectedFields.put(
+			getFieldsDisplayField(
+				_ddmStructure.getStructureId(),
+				StringBundler.concat(
+					"multi_list_INSTANCE_9X5wVsSv,contactFieldSet_INSTANCE_",
+					_ddmStructure.getStructureId(), ",phoneFieldSet_INSTANCE_",
+					_ddmStructure.getStructureId())));
 
 		String content = read("test-journal-content-multi-list-field.xml");
 
@@ -354,13 +348,14 @@ public class JournalConverterUtilTest {
 				_enLocale, Collections.singletonList("Text 2")
 			).build());
 
-		Field fieldsDisplayField = getFieldsDisplayField(
-			childDDMStructure.getStructureId(),
-			"parentStructureFieldSet37599_INSTANCE_" +
-				childDDMStructure.getStructureId() +
-					",Text23i4_INSTANCE_ngkuwrmn,Textlmzq_INSTANCE_yxxxshhf");
-
-		expectedFields.put(fieldsDisplayField);
+		expectedFields.put(
+			getFieldsDisplayField(
+				childDDMStructure.getStructureId(),
+				StringBundler.concat(
+					"parentStructureFieldSet37599_INSTANCE_",
+					childDDMStructure.getStructureId(),
+					",Text23i4_INSTANCE_ngkuwrmn,Textlmzq_INSTANCE_",
+					"yxxxshhf")));
 
 		String content = read(
 			"test-journal-content-parent-structure-fields.xml");
@@ -385,14 +380,13 @@ public class JournalConverterUtilTest {
 				_ptLocale, Collections.singletonList("one")
 			).build());
 
-		Field fieldsDisplayField = getFieldsDisplayField(
-			_ddmStructure.getStructureId(),
-			StringBundler.concat(
-				"contactFieldSet_INSTANCE_", _ddmStructure.getStructureId(),
-				",phoneFieldSet_INSTANCE_", _ddmStructure.getStructureId(),
-				",text_INSTANCE_Okhyj7Ni"));
-
-		expectedFields.put(fieldsDisplayField);
+		expectedFields.put(
+			getFieldsDisplayField(
+				_ddmStructure.getStructureId(),
+				StringBundler.concat(
+					"contactFieldSet_INSTANCE_", _ddmStructure.getStructureId(),
+					",phoneFieldSet_INSTANCE_", _ddmStructure.getStructureId(),
+					",text_INSTANCE_Okhyj7Ni")));
 
 		String content = read(
 			"test-journal-content-text-unlocalized-field.xml");

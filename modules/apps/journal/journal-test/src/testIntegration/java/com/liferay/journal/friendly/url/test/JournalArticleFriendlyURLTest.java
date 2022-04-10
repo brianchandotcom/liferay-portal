@@ -21,7 +21,6 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -90,12 +89,10 @@ public class JournalArticleFriendlyURLTest {
 				LocaleUtil.US, usTitle
 			).build());
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		_journalArticleLocalService.deleteArticle(
-			updatedArticle2, updatedArticle2.getUrlTitle(), serviceContext);
+			updatedArticle2, updatedArticle2.getUrlTitle(),
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
 
 		JournalArticle persistedArticle =
 			_journalArticleLocalService.fetchLatestArticle(
@@ -222,15 +219,13 @@ public class JournalArticleFriendlyURLTest {
 			Map<Locale, String> titleMap)
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		return JournalTestUtil.addArticle(
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, titleMap, titleMap,
-			titleMap, LocaleUtil.US, false, true, serviceContext);
+			titleMap, LocaleUtil.US, false, true,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
 	}
 
 	private Map<Locale, String> _getLocalizedMap(
@@ -249,13 +244,10 @@ public class JournalArticleFriendlyURLTest {
 			JournalArticle article, Map<Locale, String> titleMap)
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		return JournalTestUtil.updateArticle(
 			article, titleMap, article.getContent(), false, true,
-			serviceContext);
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
 	}
 
 	@DeleteAfterTestRun

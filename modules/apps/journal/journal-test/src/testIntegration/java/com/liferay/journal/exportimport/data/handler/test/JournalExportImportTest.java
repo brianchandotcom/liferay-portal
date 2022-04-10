@@ -179,10 +179,10 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 
 		Assert.assertNotNull(importedArticle);
 
-		articlesCount = JournalArticleLocalServiceUtil.getArticlesCount(
-			importedGroup.getGroupId(), importedArticle.getArticleId());
-
-		Assert.assertEquals(1, articlesCount);
+		Assert.assertEquals(
+			1,
+			JournalArticleLocalServiceUtil.getArticlesCount(
+				importedGroup.getGroupId(), importedArticle.getArticleId()));
 	}
 
 	@Test
@@ -354,11 +354,9 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 
 		JournalArticle article = (JournalArticle)stagedModel;
 
-		JournalArticle latestArticle =
+		deleteStagedModel(
 			JournalArticleLocalServiceUtil.getLatestArticle(
-				article.getGroupId(), article.getArticleId());
-
-		deleteStagedModel(latestArticle);
+				article.getGroupId(), article.getArticleId()));
 	}
 
 	@Override
@@ -396,10 +394,10 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 
 		exportImportPortlet(JournalPortletKeys.JOURNAL);
 
-		int articlesCount = JournalArticleLocalServiceUtil.getArticlesCount(
-			importedGroup.getGroupId());
-
-		Assert.assertEquals(1, articlesCount);
+		Assert.assertEquals(
+			1,
+			JournalArticleLocalServiceUtil.getArticlesCount(
+				importedGroup.getGroupId()));
 
 		JournalArticle groupArticle =
 			JournalArticleLocalServiceUtil.fetchJournalArticleByUuidAndGroupId(
@@ -531,13 +529,11 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 		String userIdStrategyString = MapUtil.getString(
 			parameterMap, PortletDataHandlerKeys.USER_ID_STRATEGY);
 
-		UserIdStrategy userIdStrategy =
-			ExportImportHelperUtil.getUserIdStrategy(
-				TestPropsValues.getUserId(), userIdStrategyString);
-
 		return PortletDataContextFactoryUtil.createImportPortletDataContext(
 			group.getCompanyId(), importedGroup.getGroupId(), parameterMap,
-			userIdStrategy, ZipReaderFactoryUtil.getZipReader(larFile));
+			ExportImportHelperUtil.getUserIdStrategy(
+				TestPropsValues.getUserId(), userIdStrategyString),
+			ZipReaderFactoryUtil.getZipReader(larFile));
 	}
 
 	@Override

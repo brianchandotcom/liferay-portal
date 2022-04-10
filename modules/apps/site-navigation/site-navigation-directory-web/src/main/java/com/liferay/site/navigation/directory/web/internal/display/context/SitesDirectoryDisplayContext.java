@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
-import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -30,7 +29,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.util.comparator.GroupNameComparator;
 import com.liferay.site.navigation.directory.web.internal.configuration.SitesDirectoryPortletInstanceConfiguration;
-import com.liferay.site.navigation.directory.web.internal.constants.SitesDirectoryPortletKeys;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -87,8 +85,8 @@ public class SitesDirectoryDisplayContext {
 			return _displayStyle;
 		}
 
-		_displayStyle = SearchDisplayStyleUtil.getDisplayStyle(
-			_httpServletRequest, SitesDirectoryPortletKeys.SITES_DIRECTORY,
+		_displayStyle = ParamUtil.getString(
+			_httpServletRequest, "displayStyle",
 			_sitesDirectoryPortletInstanceConfiguration.displayStyle());
 
 		return _displayStyle;

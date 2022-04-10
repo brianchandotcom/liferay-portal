@@ -1134,7 +1134,9 @@ definition {
 				portlet = "Pages");
 		}
 
-		PagesAdmin.togglePrivacy(privacy = "${privacy}");
+		if (isSet(privacy)) {
+			PagesAdmin.togglePrivacy(privacy = "${privacy}");
+		}
 
 		AssertElementNotPresent(
 			key_pageName = "${pageName}",
@@ -1148,7 +1150,9 @@ definition {
 				portlet = "Pages");
 		}
 
-		PagesAdmin.togglePrivacy(privacy = "${privacy}");
+		if (isSet(privacy)) {
+			PagesAdmin.togglePrivacy(privacy = "${privacy}");
+		}
 
 		if (isSet(depth)) {
 			PagesAdmin.expandPageTree(depth = "${depth}");

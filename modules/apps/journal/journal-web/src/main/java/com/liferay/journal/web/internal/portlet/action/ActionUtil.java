@@ -372,10 +372,8 @@ public class ActionUtil {
 		List<JournalArticle> articles = new ArrayList<>();
 
 		for (String articleId : articleIds) {
-			JournalArticle article = JournalArticleServiceUtil.getArticle(
-				groupId, articleId);
-
-			articles.add(article);
+			articles.add(
+				JournalArticleServiceUtil.getArticle(groupId, articleId));
 		}
 
 		return articles;

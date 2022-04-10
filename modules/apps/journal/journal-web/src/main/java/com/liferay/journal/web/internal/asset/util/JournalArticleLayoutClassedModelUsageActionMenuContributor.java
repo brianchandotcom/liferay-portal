@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -150,10 +149,10 @@ public class JournalArticleLayoutClassedModelUsageActionMenuContributor
 		if (layoutClassedModelUsage.getContainerType() ==
 				_portal.getClassNameId(FragmentEntryLink.class)) {
 
-			Layout layout = _layoutLocalService.fetchLayout(
-				layoutClassedModelUsage.getPlid());
-
-			layoutURL = _portal.getLayoutFriendlyURL(layout, themeDisplay);
+			layoutURL = _portal.getLayoutFriendlyURL(
+				_layoutLocalService.fetchLayout(
+					layoutClassedModelUsage.getPlid()),
+				themeDisplay);
 
 			layoutURL = _http.setParameter(
 				layoutURL, "previewClassNameId",

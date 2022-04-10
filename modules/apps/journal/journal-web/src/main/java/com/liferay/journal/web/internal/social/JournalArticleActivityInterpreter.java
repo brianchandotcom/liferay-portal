@@ -96,12 +96,10 @@ public class JournalArticleActivityInterpreter
 			Layout layout = article.getLayout();
 
 			if (layout != null) {
-				String groupFriendlyURL = _portal.getGroupFriendlyURL(
-					layout.getLayoutSet(), serviceContext.getThemeDisplay(),
-					false, false);
-
 				return StringBundler.concat(
-					groupFriendlyURL,
+					_portal.getGroupFriendlyURL(
+						layout.getLayoutSet(), serviceContext.getThemeDisplay(),
+						false, false),
 					JournalArticleConstants.CANONICAL_URL_SEPARATOR,
 					article.getUrlTitle());
 			}

@@ -156,13 +156,10 @@ public class DDMStructureRelatedInfoCollectionProvider
 			ServiceContextThreadLocal.getServiceContext();
 
 		try {
-			long[] currentAndAncestorSiteAndDepotGroupIds =
-				SiteConnectedGroupGroupProviderUtil.
-					getCurrentAndAncestorSiteAndDepotGroupIds(
-						serviceContext.getScopeGroupId(), true);
-
 			if (ArrayUtil.contains(
-					currentAndAncestorSiteAndDepotGroupIds,
+					SiteConnectedGroupGroupProviderUtil.
+						getCurrentAndAncestorSiteAndDepotGroupIds(
+							serviceContext.getScopeGroupId(), true),
 					_ddmStructure.getGroupId())) {
 
 				return true;

@@ -198,10 +198,10 @@ public class BasicWebContentSingleFormVariationInfoCollectionProvider
 		String[] title = configuration.get(Field.TITLE);
 
 		if (ArrayUtil.isNotEmpty(title) && Validator.isNotNull(title[0])) {
-			String localizedName = Field.getLocalizedName(
-				LocaleUtil.getSiteDefault(), Field.TITLE);
-
-			searchContext.setAttribute(localizedName, title[0]);
+			searchContext.setAttribute(
+				Field.getLocalizedName(
+					LocaleUtil.getSiteDefault(), Field.TITLE),
+				title[0]);
 		}
 
 		ServiceContext serviceContext =

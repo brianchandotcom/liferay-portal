@@ -135,12 +135,10 @@ public class ExportArticleHelperImpl implements ExportArticleHelper {
 
 		sb.append(PrincipalThreadLocal.getUserId());
 		sb.append(StringPool.UNDERLINE);
-
-		String tempFileId = DLUtil.getTempFileId(
-			articleDisplay.getId(), String.valueOf(articleDisplay.getVersion()),
-			languageId);
-
-		sb.append(tempFileId);
+		sb.append(
+			DLUtil.getTempFileId(
+				articleDisplay.getId(),
+				String.valueOf(articleDisplay.getVersion()), languageId));
 
 		File convertedFile = DocumentConversionUtil.convert(
 			sb.toString(), inputStream, sourceExtension, targetExtension);

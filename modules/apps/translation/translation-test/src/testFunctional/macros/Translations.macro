@@ -347,6 +347,8 @@ definition {
 
 			if (isSet(downloadCSVErrorReport)) {
 				Button.click(button = "Download CSV Error Report");
+
+				DownloadTempFile();
 			}
 
 			if (isSet(uploadAnotherFile)) {

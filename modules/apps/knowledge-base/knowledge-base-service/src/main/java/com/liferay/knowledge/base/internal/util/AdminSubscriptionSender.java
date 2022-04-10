@@ -56,12 +56,12 @@ public class AdminSubscriptionSender extends SubscriptionSender {
 	public void initialize() throws Exception {
 		super.initialize();
 
-		String kbArticleURL = KnowledgeBaseUtil.getKBArticleURL(
-			_serviceContext.getPlid(), _kbArticle.getResourcePrimKey(),
-			_kbArticle.getStatus(), _serviceContext.getPortalURL(), false);
-
 		setContextAttribute("[$ARTICLE_TITLE$]", _kbArticle.getTitle());
-		setContextAttribute("[$ARTICLE_URL$]", kbArticleURL);
+		setContextAttribute(
+			"[$ARTICLE_URL$]",
+			KnowledgeBaseUtil.getKBArticleURL(
+				_serviceContext.getPlid(), _kbArticle.getResourcePrimKey(),
+				_kbArticle.getStatus(), _serviceContext.getPortalURL(), false));
 		setLocalizedContextAttributeWithFunction(
 			"[$ARTICLE_ATTACHMENTS$]", _getEmailKBArticleAttachmentsFunction());
 		setLocalizedContextAttributeWithFunction(

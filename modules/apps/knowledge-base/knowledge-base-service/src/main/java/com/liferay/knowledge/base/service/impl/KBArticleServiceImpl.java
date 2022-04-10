@@ -913,11 +913,10 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 			syndEntries.add(syndEntry);
 		}
 
-		String feedType = RSSUtil.getFeedType(
-			RSSUtil.getFormatType(rssFormat),
-			RSSUtil.getFormatVersion(rssFormat));
-
-		syndFeed.setFeedType(feedType);
+		syndFeed.setFeedType(
+			RSSUtil.getFeedType(
+				RSSUtil.getFormatType(rssFormat),
+				RSSUtil.getFormatVersion(rssFormat)));
 
 		List<SyndLink> syndLinks = new ArrayList<>();
 

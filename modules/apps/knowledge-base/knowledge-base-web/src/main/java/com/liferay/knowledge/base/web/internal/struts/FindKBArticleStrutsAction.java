@@ -184,10 +184,10 @@ public class FindKBArticleStrutsAction implements StrutsAction {
 			group = layout.getGroup();
 		}
 
-		List<Layout> layouts = _layoutLocalService.getLayouts(
-			group.getGroupId(), privateLayout, LayoutConstants.TYPE_PORTLET);
-
-		candidateLayouts.addAll(layouts);
+		candidateLayouts.addAll(
+			_layoutLocalService.getLayouts(
+				group.getGroupId(), privateLayout,
+				LayoutConstants.TYPE_PORTLET));
 
 		Layout layout = _layoutLocalService.getLayout(plid);
 

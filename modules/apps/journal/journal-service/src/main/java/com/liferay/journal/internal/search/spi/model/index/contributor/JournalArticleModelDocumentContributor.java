@@ -142,7 +142,6 @@ public class JournalArticleModelDocumentContributor
 		document.addText(
 			"defaultLanguageId",
 			localization.getDefaultLanguageId(journalArticle.getDocument()));
-		document.addDate("displayDate", journalArticle.getDisplayDate());
 		document.addKeyword("head", JournalUtil.isHead(journalArticle));
 
 		boolean headListable = JournalUtil.isHeadListable(journalArticle);

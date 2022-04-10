@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Html;
-import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -155,7 +155,7 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 			SegmentsExperienceManager segmentsExperienceManager =
 				new SegmentsExperienceManager(_segmentsExperienceLocalService);
 
-			String dataURL = _http.setParameter(
+			String dataURL = HttpHelperUtil.setParameter(
 				portletURL.toString(), "segmentsExperienceId",
 				segmentsExperienceManager.getSegmentsExperienceId(
 					httpServletRequest));
@@ -331,9 +331,6 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 
 	@Reference
 	private Html _html;
-
-	@Reference
-	private Http _http;
 
 	@Reference
 	private Language _language;

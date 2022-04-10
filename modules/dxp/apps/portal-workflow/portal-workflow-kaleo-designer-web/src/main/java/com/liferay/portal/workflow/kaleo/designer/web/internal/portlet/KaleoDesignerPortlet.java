@@ -44,7 +44,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -203,7 +203,8 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 
 		String redirect = actionRequest.getParameter("redirect");
 
-		String portletId = _http.getParameter(redirect, "p_p_id", false);
+		String portletId = HttpHelperUtil.getParameter(
+			redirect, "p_p_id", false);
 
 		if (_isRedirectToAnotherPortlet(portletId)) {
 			String successMessage = ParamUtil.getString(
@@ -543,9 +544,6 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 	private ClassNameLocalService _classNameLocalService;
 
 	private volatile boolean _companyAdministratorCanPublish;
-
-	@Reference
-	private Http _http;
 
 	@Reference
 	private KaleoDefinitionVersionLocalService

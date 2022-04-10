@@ -16,7 +16,6 @@ package com.liferay.saml.opensaml.integration.internal.servlet.profile;
 
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.opensaml.integration.internal.BaseSamlTestCase;
 import com.liferay.saml.opensaml.integration.internal.bootstrap.SecurityConfigurationBootstrap;
@@ -595,7 +594,6 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 		metadataManagerImpl = new MetadataManagerImpl();
 
 		metadataManagerImpl.setCredentialResolver(credentialResolver);
-		metadataManagerImpl.setHttp(HttpUtil.getHttp());
 		metadataManagerImpl.setLocalEntityManager(credentialResolver);
 		metadataManagerImpl.setMetadataResolver(
 			new MockMetadataResolver(false));

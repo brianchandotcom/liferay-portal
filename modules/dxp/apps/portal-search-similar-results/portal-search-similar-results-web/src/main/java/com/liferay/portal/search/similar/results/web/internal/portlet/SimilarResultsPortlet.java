@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -201,8 +200,6 @@ public class SimilarResultsPortlet extends MVCPortlet {
 			_fastDateFormatFactory
 		).setHighlightEnabled(
 			false
-		).setHttp(
-			_http
 		).setIndexerRegistry(
 			_indexerRegistry
 		).setLocale(
@@ -307,9 +304,6 @@ public class SimilarResultsPortlet extends MVCPortlet {
 
 	@Reference
 	private FastDateFormatFactory _fastDateFormatFactory;
-
-	@Reference
-	private Http _http;
 
 	@Reference
 	private IndexerRegistry _indexerRegistry;

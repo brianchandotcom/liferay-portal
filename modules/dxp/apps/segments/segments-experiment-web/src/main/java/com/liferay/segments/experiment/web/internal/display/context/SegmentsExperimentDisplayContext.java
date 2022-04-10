@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -130,7 +130,7 @@ public class SegmentsExperimentDisplayContext {
 	}
 
 	private String _getContentPageEditorActionURL(String action) {
-		return HttpUtil.addParameter(
+		return HttpHelperUtil.addParameter(
 			PortletURLBuilder.createActionURL(
 				_portal.getLiferayPortletResponse(_renderResponse),
 				ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET
@@ -206,16 +206,16 @@ public class SegmentsExperimentDisplayContext {
 		long segmentsExperienceId = _getSegmentsExperienceId();
 
 		if (segmentsExperienceId != -1) {
-			layoutURL = HttpUtil.setParameter(
+			layoutURL = HttpHelperUtil.setParameter(
 				layoutURL, "segmentsExperienceId", segmentsExperienceId);
 		}
 
-		layoutFullURL = HttpUtil.setParameter(
+		layoutFullURL = HttpHelperUtil.setParameter(
 			layoutFullURL, "p_l_back_url", layoutURL);
 
-		layoutFullURL = HttpUtil.setParameter(
+		layoutFullURL = HttpHelperUtil.setParameter(
 			layoutFullURL, "p_l_mode", Constants.EDIT);
-		layoutFullURL = HttpUtil.setParameter(
+		layoutFullURL = HttpHelperUtil.setParameter(
 			layoutFullURL, "redirect", layoutFullURL);
 
 		return layoutFullURL;
@@ -406,7 +406,7 @@ public class SegmentsExperimentDisplayContext {
 	}
 
 	private String _getSegmentsExperimentActionURL(String action) {
-		return HttpUtil.addParameter(
+		return HttpHelperUtil.addParameter(
 			PortletURLBuilder.createActionURL(
 				_renderResponse
 			).setActionName(

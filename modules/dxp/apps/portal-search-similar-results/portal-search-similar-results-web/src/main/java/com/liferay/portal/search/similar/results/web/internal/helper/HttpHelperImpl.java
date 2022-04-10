@@ -20,14 +20,13 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Wade Cao
@@ -40,7 +39,8 @@ public class HttpHelperImpl implements HttpHelper {
 	public String[] getFriendlyURLParameters(String urlString) {
 		try {
 			String[] subpath = StringUtil.split(
-				_http.getPath(urlString), Portal.FRIENDLY_URL_SEPARATOR);
+				HttpHelperUtil.getPath(urlString),
+				Portal.FRIENDLY_URL_SEPARATOR);
 
 			return StringUtil.split(
 				subpath[subpath.length - 1], CharPool.FORWARD_SLASH);
@@ -59,8 +59,9 @@ public class HttpHelperImpl implements HttpHelper {
 		String urlString, String parameterName) {
 
 		try {
-			Map<String, String[]> parameterMap = _http.parameterMapFromString(
-				_http.getQueryString(urlString));
+			Map<String, String[]> parameterMap =
+				HttpHelperUtil.parameterMapFromString(
+					HttpHelperUtil.getQueryString(urlString));
 
 			String[] parameterValues = parameterMap.get(parameterName);
 
@@ -89,8 +90,9 @@ public class HttpHelperImpl implements HttpHelper {
 		String urlString, String parameterName, String portletId) {
 
 		try {
-			Map<String, String[]> parameterMap = _http.parameterMapFromString(
-				_http.getQueryString(urlString));
+			Map<String, String[]> parameterMap =
+				HttpHelperUtil.parameterMapFromString(
+					HttpHelperUtil.getQueryString(urlString));
 
 			return parameterMap.get(
 				StringBundler.concat(
@@ -106,13 +108,6 @@ public class HttpHelperImpl implements HttpHelper {
 		}
 	}
 
-	@Reference(unbind = "-")
-	public void setHttp(Http http) {
-		_http = http;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(HttpHelperImpl.class);
-
-	private Http _http;
 
 }

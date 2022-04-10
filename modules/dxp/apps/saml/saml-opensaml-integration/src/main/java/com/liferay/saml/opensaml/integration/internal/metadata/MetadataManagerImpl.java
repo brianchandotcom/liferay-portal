@@ -18,7 +18,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -302,7 +302,7 @@ public class MetadataManagerImpl
 			requestURI = requestURI.substring(contextPath.length());
 		}
 
-		return _http.removePathParameters(requestURI);
+		return HttpHelperUtil.removePathParameters(requestURI);
 	}
 
 	@Override
@@ -473,11 +473,6 @@ public class MetadataManagerImpl
 	}
 
 	@Reference(unbind = "-")
-	public void setHttp(Http http) {
-		_http = http;
-	}
-
-	@Reference(unbind = "-")
 	public void setLocalEntityManager(LocalEntityManager localEntityManager) {
 		_localEntityManager = localEntityManager;
 	}
@@ -600,7 +595,6 @@ public class MetadataManagerImpl
 			new CachingChainingMetadataResolver();
 	private ChainingSignatureTrustEngine _chainingSignatureTrustEngine;
 	private CredentialResolver _credentialResolver;
-	private Http _http;
 	private LocalEntityManager _localEntityManager;
 	private MetadataCredentialResolver _metadataCredentialResolver;
 	private ParserPool _parserPool;

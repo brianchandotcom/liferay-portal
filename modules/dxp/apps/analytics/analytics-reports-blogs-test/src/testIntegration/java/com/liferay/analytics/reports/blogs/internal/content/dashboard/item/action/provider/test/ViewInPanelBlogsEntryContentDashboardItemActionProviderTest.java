@@ -48,7 +48,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -140,14 +140,14 @@ public class ViewInPanelBlogsEntryContentDashboardItemActionProviderTest {
 		Assert.assertEquals(
 			_portal.getClassName(
 				layoutDisplayPageObjectProvider.getClassNameId()),
-			_http.getParameter(
+			HttpHelperUtil.getParameter(
 				contentDashboardItemAction.getURL(),
 				"_com_liferay_analytics_reports_web_internal_portlet_" +
 					"AnalyticsReportsPortlet_className",
 				false));
 		Assert.assertEquals(
 			String.valueOf(layoutDisplayPageObjectProvider.getClassPK()),
-			_http.getParameter(
+			HttpHelperUtil.getParameter(
 				contentDashboardItemAction.getURL(),
 				"_com_liferay_analytics_reports_web_internal_portlet_" +
 					"AnalyticsReportsPortlet_classPK",
@@ -155,7 +155,7 @@ public class ViewInPanelBlogsEntryContentDashboardItemActionProviderTest {
 
 		Assert.assertEquals(
 			"%2Fanalytics_reports_panel.jsp",
-			_http.getParameter(
+			HttpHelperUtil.getParameter(
 				contentDashboardItemAction.getURL(),
 				"_com_liferay_analytics_reports_web_internal_portlet_" +
 					"AnalyticsReportsPortlet_mvcPath",
@@ -284,9 +284,6 @@ public class ViewInPanelBlogsEntryContentDashboardItemActionProviderTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
-
-	@Inject
-	private Http _http;
 
 	private Layout _layout;
 

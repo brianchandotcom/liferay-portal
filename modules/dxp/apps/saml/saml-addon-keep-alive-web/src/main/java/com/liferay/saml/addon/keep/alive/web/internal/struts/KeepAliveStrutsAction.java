@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -98,7 +98,8 @@ public class KeepAliveStrutsAction implements StrutsAction {
 		List<String> keepAliveURLs = _getSPsKeepAliveURLs(httpServletRequest);
 
 		for (String keepAliveURL : keepAliveURLs) {
-			keepAliveURL = _http.addParameter(keepAliveURL, "r", randomString);
+			keepAliveURL = HttpHelperUtil.addParameter(
+				keepAliveURL, "r", randomString);
 
 			printWriter.write("document.write('<img alt=\"\" src=\"");
 			printWriter.write(
@@ -179,9 +180,6 @@ public class KeepAliveStrutsAction implements StrutsAction {
 
 	private static final String _BASE64_1X1_GIF =
 		"R0lGODdhAQABAIAAAP///////ywAAAAAAQABAAACAkQBADs=";
-
-	@Reference
-	private Http _http;
 
 	@Reference
 	private SamlIdpSpConnectionLocalService _samlIdpSpConnectionLocalService;

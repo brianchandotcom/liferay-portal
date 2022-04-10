@@ -82,7 +82,6 @@ import com.liferay.portal.kernel.model.LayoutFriendlyURL;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.model.LayoutRevisionConstants;
-import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.model.LayoutStagingHandler;
 import com.liferay.portal.kernel.model.LayoutTemplate;
@@ -689,10 +688,8 @@ public class LayoutStagedModelDataHandler
 				portletDataContext.getCompanyId(), groupId, userId, layout,
 				importedLayout, privateLayout);
 
-			LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
-				groupId, privateLayout);
-
-			importedLayout.setLayoutSet(layoutSet);
+			importedLayout.setLayoutSet(
+				_layoutSetLocalService.getLayoutSet(groupId, privateLayout));
 		}
 		else {
 			importedLayout = existingLayout;
@@ -942,11 +939,9 @@ public class LayoutStagedModelDataHandler
 			}
 		}
 
-		String layoutPrototypeUuid = _getLayoutPrototypeUuid(
-			portletDataContext.getCompanyId(), layout, layoutElement);
-
-		importedLayout.setLayoutPrototypeUuid(layoutPrototypeUuid);
-
+		importedLayout.setLayoutPrototypeUuid(
+			_getLayoutPrototypeUuid(
+				portletDataContext.getCompanyId(), layout, layoutElement));
 		importedLayout.setLayoutPrototypeLinkEnabled(
 			layout.isLayoutPrototypeLinkEnabled());
 
@@ -1939,15 +1934,12 @@ public class LayoutStagedModelDataHandler
 			Layout importedLayout)
 		throws Exception {
 
-		long userId = portletDataContext.getUserId(layout.getUserUuid());
-
-		long[] assetCategoryIds = portletDataContext.getAssetCategoryIds(
-			Layout.class, layout.getPlid());
-		String[] assetTagNames = portletDataContext.getAssetTagNames(
-			Layout.class, layout.getPlid());
-
 		_layoutLocalService.updateAsset(
-			userId, importedLayout, assetCategoryIds, assetTagNames);
+			portletDataContext.getUserId(layout.getUserUuid()), importedLayout,
+			portletDataContext.getAssetCategoryIds(
+				Layout.class, layout.getPlid()),
+			portletDataContext.getAssetTagNames(
+				Layout.class, layout.getPlid()));
 	}
 
 	private void _importFragmentEntryLinks(
@@ -2400,12 +2392,10 @@ public class LayoutStagedModelDataHandler
 			importedLayout.setThemeId(layout.getThemeId());
 			importedLayout.setColorSchemeId(layout.getColorSchemeId());
 
-			String css =
+			importedLayout.setCss(
 				_dlReferencesExportImportContentProcessor.
 					replaceImportContentReferences(
-						portletDataContext, layout, layout.getCss());
-
-			importedLayout.setCss(css);
+						portletDataContext, layout, layout.getCss()));
 
 			UnicodeProperties typeSettingsUnicodeProperties =
 				layout.getTypeSettingsProperties();

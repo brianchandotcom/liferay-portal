@@ -76,11 +76,9 @@ public class LayoutSegmentsExperienceInfoItemPermissionProvider
 
 	private InfoItemReference _getInfoItemReference(long segmentsExperienceId) {
 		try {
-			SegmentsExperience segmentsExperience =
+			Layout layout = _getLayout(
 				_segmentsExperienceLocalService.getSegmentsExperience(
-					segmentsExperienceId);
-
-			Layout layout = _getLayout(segmentsExperience);
+					segmentsExperienceId));
 
 			return new InfoItemReference(
 				Layout.class.getName(),

@@ -60,12 +60,9 @@ public class LayoutTypeUpgradeProcess extends UpgradeProcess {
 			String journalArticleId)
 		throws Exception {
 
-		String portletPreferences = _getPortletPreferences(
-			groupId, journalArticleId);
-
 		PortletPreferencesLocalServiceUtil.addPortletPreferences(
 			companyId, 0, PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid, portletId,
-			null, portletPreferences);
+			null, _getPortletPreferences(groupId, journalArticleId));
 	}
 
 	private long _getAssetEntryId(long resourcePrimKey) throws Exception {

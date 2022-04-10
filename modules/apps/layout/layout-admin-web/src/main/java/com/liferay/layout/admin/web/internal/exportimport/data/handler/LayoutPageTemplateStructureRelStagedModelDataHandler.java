@@ -187,14 +187,13 @@ public class LayoutPageTemplateStructureRelStagedModelDataHandler
 			}
 		};
 
-		String data = _processReferenceStagedModels(
-			consumer,
-			_dlReferencesExportImportContentProcessor.
-				replaceImportContentReferences(
-					portletDataContext, layoutPageTemplateStructureRel,
-					layoutPageTemplateStructureRel.getData()));
-
-		importedLayoutPageTemplateStructureRel.setData(data);
+		importedLayoutPageTemplateStructureRel.setData(
+			_processReferenceStagedModels(
+				consumer,
+				_dlReferencesExportImportContentProcessor.
+					replaceImportContentReferences(
+						portletDataContext, layoutPageTemplateStructureRel,
+						layoutPageTemplateStructureRel.getData())));
 
 		LayoutPageTemplateStructureRel existingLayoutPageTemplateStructureRel =
 			_stagedModelRepository.fetchStagedModelByUuidAndGroupId(

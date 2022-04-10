@@ -300,13 +300,11 @@ public class LayoutPageTemplateEntryStagedModelDataHandler
 				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 					LayoutPrototype.class);
 
-			long layoutPrototypeId = MapUtil.getLong(
-				layoutPrototypeIds,
-				layoutPageTemplateEntry.getLayoutPrototypeId(),
-				layoutPageTemplateEntry.getLayoutPrototypeId());
-
 			importedLayoutPageTemplateEntry.setLayoutPrototypeId(
-				layoutPrototypeId);
+				MapUtil.getLong(
+					layoutPrototypeIds,
+					layoutPageTemplateEntry.getLayoutPrototypeId(),
+					layoutPageTemplateEntry.getLayoutPrototypeId()));
 		}
 
 		if (portletDataContext.isDataStrategyMirror()) {

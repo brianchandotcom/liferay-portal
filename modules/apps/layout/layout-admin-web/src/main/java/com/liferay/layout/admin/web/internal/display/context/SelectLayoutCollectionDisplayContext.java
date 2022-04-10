@@ -214,10 +214,9 @@ public class SelectLayoutCollectionDisplayContext {
 			infoCollectionProviders,
 			infoCollectionProvider -> {
 				try {
-					String label = infoCollectionProvider.getLabel(
-						_themeDisplay.getLocale());
-
-					if (Validator.isNotNull(label) &&
+					if (Validator.isNotNull(
+							infoCollectionProvider.getLabel(
+								_themeDisplay.getLocale())) &&
 						infoCollectionProvider.isAvailable()) {
 
 						return true;

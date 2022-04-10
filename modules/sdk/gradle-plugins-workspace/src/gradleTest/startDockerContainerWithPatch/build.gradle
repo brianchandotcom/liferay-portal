@@ -1,7 +1,7 @@
 task runGradleTest
 
 createDockerContainer {
-	hostConfig.portBindings = ['8888:8080']
+	hostConfig.portBindings = ['8891:8080']
 }
 
 runGradleTest {

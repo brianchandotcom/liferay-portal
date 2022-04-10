@@ -704,8 +704,6 @@ definition {
 	}
 
 	macro viewCSVErrorReport {
-		Pause(locator1 = "3000");
-
 		var tempDir = PropsUtil.get("output.dir.name");
 		var fileContent = FileUtil.read("${tempDir}/translation-error.csv");
 

@@ -131,9 +131,17 @@ renderResponse.setTitle(LanguageUtil.get(request, "merge-tags"));
 			);
 
 			if (mergeTagNames.length < 2) {
-				alert(
-					'<liferay-ui:message arguments="2" key="please-choose-at-least-x-tags" />'
-				);
+				if (Liferay.__FF__.enableCustomDialogs) {
+					Liferay.Util.openAlertModal({
+						message:
+							'<liferay-ui:message arguments="2" key="please-choose-at-least-x-tags" />',
+					});
+				}
+				else {
+					alert(
+						'<liferay-ui:message arguments="2" key="please-choose-at-least-x-tags" />'
+					);
+				}
 
 				return;
 			}

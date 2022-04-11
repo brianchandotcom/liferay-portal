@@ -22,12 +22,14 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.search.test.util.IndexerFixture;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -38,6 +40,8 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Ricardo Couso
@@ -72,10 +76,33 @@ public class LayoutPublishedSearchTest {
 		_layoutIndexerFixture.searchOnlyOne(name);
 	}
 
+	@Test
+	public void testPublishedPrivatePageSearch() throws Exception {
+		Layout layout = LayoutTestUtil.addTypeContentLayout(
+			_group, true, false);
+
+		String name = layout.getName(layout.getDefaultLanguageId());
+
+		_layoutIndexerFixture.searchNoOne(name);
+
+		_publishLayout(layout);
+
+		_layoutIndexerFixture.searchOnlyOne(name);
+	}
+
 	private void _publishLayout(Layout layout) throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				layout.getGroup(), TestPropsValues.getUserId());
+
+		MockHttpServletRequest httpServletRequest =
+			new MockHttpServletRequest();
+
+		httpServletRequest.setAttribute(
+			JavaConstants.JAVAX_PORTLET_RESPONSE,
+			new MockLiferayPortletActionResponse());
+
+		serviceContext.setRequest(httpServletRequest);
 
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 

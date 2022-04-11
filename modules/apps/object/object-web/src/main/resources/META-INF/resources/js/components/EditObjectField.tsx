@@ -63,7 +63,6 @@ export default function EditObjectField({
 	objectField: initialValues,
 	objectFieldTypes,
 	readOnly,
-	showDocumentsAndMediaOption,
 }: IProps) {
 	const onSubmit = async ({id, ...objectField}: ObjectField) => {
 		const response = await fetch(
@@ -156,7 +155,6 @@ export default function EditObjectField({
 					objectField={values}
 					objectFieldTypes={objectFieldTypes}
 					setValues={setValues}
-					showDocumentsAndMediaOption={showDocumentsAndMediaOption}
 				>
 					{values.businessType === 'Attachment' && (
 						<AttachmentProperties
@@ -469,7 +467,6 @@ interface IProps {
 	objectField: ObjectField;
 	objectFieldTypes: ObjectFieldType[];
 	readOnly: boolean;
-	showDocumentsAndMediaOption: boolean;
 }
 
 interface ISearchableProps {

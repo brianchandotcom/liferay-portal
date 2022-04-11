@@ -37,7 +37,6 @@ function ModalAddObjectField({
 	objectFieldTypes,
 	observer,
 	onClose,
-	showDocumentsAndMediaOption,
 }: IModal) {
 	const [error, setError] = useState<string>('');
 
@@ -119,9 +118,6 @@ function ModalAddObjectField({
 						objectField={values}
 						objectFieldTypes={objectFieldTypes}
 						setValues={setValues}
-						showDocumentsAndMediaOption={
-							showDocumentsAndMediaOption
-						}
 					/>
 				</ClayModal.Body>
 
@@ -150,7 +146,6 @@ export default function ModalWithProvider({
 	allowMaxLength,
 	apiURL,
 	objectFieldTypes,
-	showDocumentsAndMediaOption,
 }: IProps) {
 	const [isVisible, setVisibility] = useState<boolean>(false);
 	const {observer, onClose} = useModal({onClose: () => setVisibility(false)});
@@ -170,7 +165,6 @@ export default function ModalWithProvider({
 					objectFieldTypes={objectFieldTypes}
 					observer={observer}
 					onClose={onClose}
-					showDocumentsAndMediaOption={showDocumentsAndMediaOption}
 				/>
 			)}
 		</ClayModalProvider>
@@ -187,5 +181,4 @@ interface IProps {
 	allowMaxLength: boolean;
 	apiURL: string;
 	objectFieldTypes: ObjectFieldType[];
-	showDocumentsAndMediaOption: boolean;
 }

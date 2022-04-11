@@ -21,7 +21,6 @@ export default function EditObjectField({
 	objectField: initialValues,
 	objectFieldTypes,
 	readOnly,
-	showDocumentsAndMediaOption,
 }: IProps): JSX.Element;
 interface IProps {
 	allowMaxLength?: boolean;
@@ -29,6 +28,5 @@ interface IProps {
 	objectField: ObjectField;
 	objectFieldTypes: ObjectFieldType[];
 	readOnly: boolean;
-	showDocumentsAndMediaOption: boolean;
 }
 export {};

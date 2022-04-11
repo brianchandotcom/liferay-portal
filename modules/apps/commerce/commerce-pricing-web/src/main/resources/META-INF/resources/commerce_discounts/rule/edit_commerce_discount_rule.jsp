@@ -124,9 +124,17 @@ String type = BeanParamUtil.getString(commerceDiscountRule, request, "type");
 					return;
 				})
 				.catch(() => {
-					alert(
-						'<liferay-ui:message key="your-request-failed-to-complete" />'
-					);
+					if (Liferay.__FF__.enableCustomDialogs) {
+						Liferay.Util.openAlertModal({
+							message:
+								'<liferay-ui:message key="your-request-failed-to-complete" />',
+						});
+					}
+					else {
+						alert(
+							'<liferay-ui:message key="your-request-failed-to-complete" />'
+						);
+					}
 
 					return;
 				});

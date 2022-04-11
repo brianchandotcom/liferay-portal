@@ -199,9 +199,17 @@ String defaultLanguageId = cpDefinitionOptionRelDisplayContext.getCatalogDefault
 					formFieldTypeSelect.value != '' &&
 					!endsWith(formFieldTypeSelect.value, array)
 				) {
-					alert(
-						'<liferay-ui:message key="selected-field-type-price-type-and-sku-contributor-combination-is-not-allowed" />'
-					);
+					if (Liferay.__FF__.enableCustomDialogs) {
+						Liferay.Util.openAlertModal({
+							message:
+								'<liferay-ui:message key="selected-field-type-price-type-and-sku-contributor-combination-is-not-allowed" />',
+						});
+					}
+					else {
+						alert(
+							'<liferay-ui:message key="selected-field-type-price-type-and-sku-contributor-combination-is-not-allowed" />'
+						);
+					}
 
 					return;
 				}
@@ -239,9 +247,16 @@ String defaultLanguageId = cpDefinitionOptionRelDisplayContext.getCatalogDefault
 						disable(priceTypeSelect);
 					}
 					else {
-						alert(
-							'<liferay-ui:message key="selected-field-type-price-type-and-sku-contributor-combination-is-not-allowed" />'
-						);
+						if (Liferay.__FF__.enableCustomDialogs) {
+							Liferay.Util.openAlertModal(
+								'<liferay-ui:message key="selected-field-type-price-type-and-sku-contributor-combination-is-not-allowed" />'
+							);
+						}
+						else {
+							alert(
+								'<liferay-ui:message key="selected-field-type-price-type-and-sku-contributor-combination-is-not-allowed" />'
+							);
+						}
 
 						return;
 					}
@@ -260,9 +275,17 @@ String defaultLanguageId = cpDefinitionOptionRelDisplayContext.getCatalogDefault
 						disable(skuContributorInput);
 					}
 					else {
-						alert(
-							'<liferay-ui:message key="selected-field-type-price-type-and-sku-contributor-combination-is-not-allowed" />'
-						);
+						if (Liferay.__FF__.enableCustomDialogs) {
+							Liferay.Util.openAlertModal({
+								message:
+									'<liferay-ui:message key="selected-field-type-price-type-and-sku-contributor-combination-is-not-allowed" />',
+							});
+						}
+						else {
+							alert(
+								'<liferay-ui:message key="selected-field-type-price-type-and-sku-contributor-combination-is-not-allowed" />'
+							);
+						}
 
 						return;
 					}

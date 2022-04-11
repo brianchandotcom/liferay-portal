@@ -338,9 +338,9 @@ definition {
 			picklistOption = "View");
 
 		Picklist.addPicklistItemWithTranslationViaUI(
-			defaultLanguage = "en-US",
+			defaultLanguage = "en_US",
 			newItemName = "Teste na lista",
-			newLanguage = "pt-BR",
+			newLanguage = "pt_BR",
 			picklistItemName = "Item Test");
 
 		Picklist.clickSaveButton();

@@ -151,6 +151,10 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 
 		return builder.delimiter(
 			_getValue(batchPlannerPlan.fetchBatchPlannerPolicy("csvSeparator"))
+		).enclosingCharacter(
+			_getValue(
+				batchPlannerPlan.fetchBatchPlannerPolicy(
+					"csvEnclosingCharacter"))
 		).taskItemDelegateName(
 			batchPlannerPlan.getTaskItemDelegateName()
 		).queryParameter(

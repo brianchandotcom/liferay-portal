@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -241,7 +242,7 @@ public class PortalImplCanonicalURLTest {
 		Assert.assertEquals(
 			completeURL,
 			_portal.getCanonicalURL(
-				_http.addParameter(
+				HttpHelperUtil.addParameter(
 					completeURL, "_ga",
 					"2.237928582.786466685.1515402734-1365236376"),
 				themeDisplay, _layout4, false, false));
@@ -264,14 +265,14 @@ public class PortalImplCanonicalURLTest {
 			Assert.assertEquals(
 				completeURL,
 				_portal.getCanonicalURL(
-					_http.addParameter(
+					HttpHelperUtil.addParameter(
 						completeURL, "_ga",
 						"2.237928582.786466685.1515402734-1365236376"),
 					themeDisplay, _layout1, false, false));
 			Assert.assertEquals(
 				completeURL,
 				_portal.getCanonicalURL(
-					_http.addParameter(
+					HttpHelperUtil.addParameter(
 						completeURL, "_ga",
 						"2.237928582.786466685.1515402734-1365236376"),
 					themeDisplay, _layout3, false, false));
@@ -309,7 +310,7 @@ public class PortalImplCanonicalURLTest {
 			Assert.assertEquals(
 				completeURL,
 				_portal.getCanonicalURL(
-					_http.addParameter(
+					HttpHelperUtil.addParameter(
 						completeURL, "_ga",
 						"2.237928582.786466685.1515402734-1365236376"),
 					themeDisplay, _layout1, false, false));
@@ -320,7 +321,7 @@ public class PortalImplCanonicalURLTest {
 	public void testCanonicalURLWithoutQueryString() throws Exception {
 		String portalDomain = "localhost";
 
-		String completeURL = _http.addParameter(
+		String completeURL = HttpHelperUtil.addParameter(
 			_generateURL(
 				portalDomain, "8080", "/en", _group.getFriendlyURL(),
 				_layout1.getFriendlyURL(), false),
@@ -330,7 +331,7 @@ public class PortalImplCanonicalURLTest {
 			portalDomain, _group, 8080, false);
 
 		Assert.assertEquals(
-			_http.removeParameter(
+			HttpHelperUtil.removeParameter(
 				_portal.getCanonicalURL(
 					completeURL, themeDisplay, _layout1, true, true),
 				"_ga"),
@@ -734,9 +735,6 @@ public class PortalImplCanonicalURLTest {
 
 	@Inject
 	private GroupLocalService _groupLocalService;
-
-	@Inject
-	private Http _http;
 
 	private Layout _layout1;
 	private Layout _layout2;

@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.test.util.TestPropsUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -216,7 +216,7 @@ public class PortalImplAlternateURLTest {
 			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
 
 		themeDisplay.setLayoutSet(group.getPublicLayoutSet());
-		themeDisplay.setPortalDomain(_http.getDomain(portalURL));
+		themeDisplay.setPortalDomain(HttpHelperUtil.getDomain(portalURL));
 		themeDisplay.setPortalURL(portalURL);
 		themeDisplay.setSiteGroupId(group.getGroupId());
 
@@ -243,7 +243,7 @@ public class PortalImplAlternateURLTest {
 
 		themeDisplay.setLayoutSet(layoutSet);
 
-		themeDisplay.setPortalDomain(_http.getDomain(portalURL));
+		themeDisplay.setPortalDomain(HttpHelperUtil.getDomain(portalURL));
 		themeDisplay.setPortalURL(portalURL);
 		themeDisplay.setSiteGroupId(group.getGroupId());
 
@@ -417,9 +417,6 @@ public class PortalImplAlternateURLTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
-
-	@Inject
-	private Http _http;
 
 	@Inject
 	private Portal _portal;

@@ -217,13 +217,9 @@ public class LayoutPageTemplateEntryItemSelectorView
 						getPagePreviewURL.setResourceID(
 							"/layout_content_page_editor/get_page_preview");
 
-						String url = HttpUtil.addParameter(
+						return HttpUtil.addParameter(
 							getPagePreviewURL.toString(), "p_l_mode",
 							Constants.PREVIEW);
-
-						return HttpUtil.addParameter(
-							url, "doAsUserId",
-							_themeDisplay.getDefaultUserId());
 					}
 
 					String layoutURL = HttpUtil.addParameter(

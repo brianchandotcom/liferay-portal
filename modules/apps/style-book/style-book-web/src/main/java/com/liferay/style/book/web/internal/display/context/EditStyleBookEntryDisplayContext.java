@@ -540,10 +540,8 @@ public class EditStyleBookEntryDisplayContext {
 					"/layout_content_page_editor/get_page_preview");
 
 				String url = HttpUtil.addParameter(
-					getPagePreviewURL.toString(), "doAsUserId",
-					_themeDisplay.getDefaultUserId());
-
-				url = HttpUtil.addParameter(url, "p_l_mode", Constants.PREVIEW);
+					getPagePreviewURL.toString(), "p_l_mode",
+					Constants.PREVIEW);
 
 				return HttpUtil.addParameter(
 					url, "styleBookEntryPreview", true);

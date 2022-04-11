@@ -57,9 +57,13 @@ export function addColumnsNamesToCSVData(itemsData, headers) {
 
 export function extractFieldsFromCSV(
 	content,
-	{CSVContainsHeaders, CSVDelimiter, CSVSeparator}
+	{CSVContainsHeaders, CSVEnclosingCharacter, CSVSeparator}
 ) {
-	const rawFileContent = parseCSV(content, CSVSeparator, CSVDelimiter);
+	const rawFileContent = parseCSV(
+		content,
+		CSVSeparator,
+		CSVEnclosingCharacter
+	);
 
 	if (!rawFileContent) {
 		return;

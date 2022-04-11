@@ -20,7 +20,6 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.search.model.uid.UIDFactory;
-import com.liferay.portal.search.similar.results.web.internal.builder.TestHttp;
 import com.liferay.portal.search.similar.results.web.internal.helper.HttpHelper;
 import com.liferay.portal.search.similar.results.web.internal.helper.HttpHelperImpl;
 import com.liferay.portal.search.similar.results.web.spi.contributor.helper.CriteriaHelper;
@@ -206,11 +205,7 @@ public abstract class BaseSimilarResultsContributorTestCase {
 	}
 
 	protected HttpHelper setUpHttpHelper() {
-		HttpHelperImpl httpHelperImpl = new HttpHelperImpl();
-
-		httpHelperImpl.setHttp(TestHttp.getInstance());
-
-		return httpHelperImpl;
+		return new HttpHelperImpl();
 	}
 
 	protected void setUpPortalUtil() {

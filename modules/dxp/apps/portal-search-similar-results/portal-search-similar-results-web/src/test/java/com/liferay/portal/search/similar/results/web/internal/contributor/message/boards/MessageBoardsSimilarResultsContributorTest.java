@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.similar.results.web.internal.builder.DestinationBuilderImpl;
 import com.liferay.portal.search.similar.results.web.internal.builder.RouteBuilderImpl;
 import com.liferay.portal.search.similar.results.web.internal.builder.SimilarResultsRoute;
-import com.liferay.portal.search.similar.results.web.internal.builder.TestHttp;
 import com.liferay.portal.search.similar.results.web.internal.contributor.BaseSimilarResultsContributorTestCase;
 import com.liferay.portal.search.similar.results.web.internal.portlet.shared.search.Criteria;
 import com.liferay.portal.search.similar.results.web.internal.portlet.shared.search.CriteriaBuilderImpl;
@@ -63,7 +62,6 @@ public class MessageBoardsSimilarResultsContributorTest
 
 	@Test
 	public void testDetectRoute() {
-		_messageBoardsSimilarResultsContributor.setHttp(TestHttp.getInstance());
 		_messageBoardsSimilarResultsContributor.setHttpHelper(
 			setUpHttpHelper());
 
@@ -173,8 +171,7 @@ public class MessageBoardsSimilarResultsContributorTest
 				StringBundler.concat(
 					"http://localhost:8080/message-board/-/message_boards",
 					"/message/42790#_com_liferay_message_boards",
-					"_web_portlet_MBPortlet_message_42790"),
-				TestHttp.getInstance());
+					"_web_portlet_MBPortlet_message_42790"));
 
 		Mockito.doReturn(
 			42791L

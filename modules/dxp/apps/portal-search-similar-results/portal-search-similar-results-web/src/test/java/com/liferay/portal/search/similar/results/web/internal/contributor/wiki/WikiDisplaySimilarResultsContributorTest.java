@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.similar.results.web.internal.builder.DestinationBuilderImpl;
 import com.liferay.portal.search.similar.results.web.internal.builder.RouteBuilderImpl;
 import com.liferay.portal.search.similar.results.web.internal.builder.SimilarResultsRoute;
-import com.liferay.portal.search.similar.results.web.internal.builder.TestHttp;
 import com.liferay.portal.search.similar.results.web.internal.contributor.BaseSimilarResultsContributorTestCase;
 import com.liferay.portal.search.similar.results.web.internal.portlet.shared.search.Criteria;
 import com.liferay.portal.search.similar.results.web.internal.portlet.shared.search.CriteriaBuilderImpl;
@@ -136,8 +135,7 @@ public class WikiDisplaySimilarResultsContributorTest
 					"p_p_id=com_liferay_wiki_web_portlet_",
 					"WikiDisplayPortlet_INSTANCE_U7Z1QHX4C38N&",
 					"nodeName=Main&_com_liferay_wiki_web_portlet",
-					"_WikiDisplayPortlet_INSTANCE_U7Z1QHX4C38N_title=page+1"),
-				TestHttp.getInstance());
+					"_WikiDisplayPortlet_INSTANCE_U7Z1QHX4C38N_title=page+1"));
 
 		setUpDestinationHelper(WikiPage.class.getName());
 

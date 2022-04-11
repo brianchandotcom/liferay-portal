@@ -24,7 +24,7 @@ import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.search.similar.results.web.internal.helper.HttpHelper;
 import com.liferay.portal.search.similar.results.web.internal.util.SearchStringUtil;
 import com.liferay.portal.search.similar.results.web.spi.contributor.SimilarResultsContributor;
@@ -54,7 +54,7 @@ public class DocumentLibrarySimilarResultsContributor
 		RouteBuilder routeBuilder, RouteHelper routeHelper) {
 
 		String[] parameters = _httpHelper.getFriendlyURLParameters(
-			_http.decodePath(routeHelper.getURLString()));
+			HttpHelperUtil.decodePath(routeHelper.getURLString()));
 
 		SearchStringUtil.requireEquals("document_library", parameters[0]);
 
@@ -140,11 +140,6 @@ public class DocumentLibrarySimilarResultsContributor
 		destinationBuilder.replace(String.valueOf(id2), String.valueOf(id1));
 	}
 
-	@Reference(unbind = "-")
-	protected void setHttp(Http http) {
-		_http = http;
-	}
-
 	private List<?> _getDLFileEntryData(Long id) {
 		DLFileEntry dlFileEntry = _dlFileEntryLocalService.fetchDLFileEntry(id);
 
@@ -205,7 +200,6 @@ public class DocumentLibrarySimilarResultsContributor
 	private AssetEntryLocalService _assetEntryLocalService;
 	private DLFileEntryLocalService _dlFileEntryLocalService;
 	private DLFolderLocalService _dlFolderLocalService;
-	private Http _http;
 	private HttpHelper _httpHelper;
 
 }

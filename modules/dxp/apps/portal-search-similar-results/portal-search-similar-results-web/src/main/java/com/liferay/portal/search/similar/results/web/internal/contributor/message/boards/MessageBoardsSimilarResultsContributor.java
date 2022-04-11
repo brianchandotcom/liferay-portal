@@ -21,7 +21,7 @@ import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBCategoryLocalService;
 import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.search.similar.results.web.internal.builder.AssetTypeUtil;
 import com.liferay.portal.search.similar.results.web.internal.helper.HttpHelper;
 import com.liferay.portal.search.similar.results.web.internal.util.SearchStringUtil;
@@ -52,7 +52,7 @@ public class MessageBoardsSimilarResultsContributor
 		RouteBuilder routeBuilder, RouteHelper routeHelper) {
 
 		String[] parameters = _httpHelper.getFriendlyURLParameters(
-			_http.decodePath(routeHelper.getURLString()));
+			HttpHelperUtil.decodePath(routeHelper.getURLString()));
 
 		SearchStringUtil.requireEquals("message_boards", parameters[0]);
 
@@ -130,11 +130,6 @@ public class MessageBoardsSimilarResultsContributor
 		);
 	}
 
-	@Reference(unbind = "-")
-	protected void setHttp(Http http) {
-		_http = http;
-	}
-
 	protected static final String CATEGORY = "category";
 
 	protected static final String MESSAGE = "message";
@@ -181,7 +176,6 @@ public class MessageBoardsSimilarResultsContributor
 	}
 
 	private AssetEntryLocalService _assetEntryLocalService;
-	private Http _http;
 	private HttpHelper _httpHelper;
 	private MBCategoryLocalService _mbCategoryLocalService;
 	private MBMessageLocalService _mbMessageLocalService;

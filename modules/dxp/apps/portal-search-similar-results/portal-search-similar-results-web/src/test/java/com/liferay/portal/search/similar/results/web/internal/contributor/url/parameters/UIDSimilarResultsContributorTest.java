@@ -17,7 +17,6 @@ package com.liferay.portal.search.similar.results.web.internal.contributor.url.p
 import com.liferay.portal.search.similar.results.web.internal.builder.DestinationBuilderImpl;
 import com.liferay.portal.search.similar.results.web.internal.builder.RouteBuilderImpl;
 import com.liferay.portal.search.similar.results.web.internal.builder.SimilarResultsRoute;
-import com.liferay.portal.search.similar.results.web.internal.builder.TestHttp;
 import com.liferay.portal.search.similar.results.web.internal.contributor.BaseSimilarResultsContributorTestCase;
 import com.liferay.portal.search.similar.results.web.internal.portlet.shared.search.Criteria;
 import com.liferay.portal.search.similar.results.web.internal.portlet.shared.search.CriteriaBuilderImpl;
@@ -54,7 +53,6 @@ public class UIDSimilarResultsContributorTest
 
 	@Test
 	public void testDetectRoute() {
-		_uidSimilarResultsContributor.setHttp(TestHttp.getInstance());
 		_uidSimilarResultsContributor.setHttpHelper(setUpHttpHelper());
 
 		RouteBuilderImpl routeBuilderImpl = new RouteBuilderImpl();
@@ -91,8 +89,7 @@ public class UIDSimilarResultsContributorTest
 	@Test
 	public void testWriteDestination() {
 		DestinationBuilderImpl destinationBuilderImpl =
-			new DestinationBuilderImpl(
-				"http://localhost:8080?uid=theUid", TestHttp.getInstance());
+			new DestinationBuilderImpl("http://localhost:8080?uid=theUid");
 
 		Mockito.doReturn(
 			"newUid"

@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.similar.results.web.internal.builder.DestinationBuilderImpl;
 import com.liferay.portal.search.similar.results.web.internal.builder.RouteBuilderImpl;
 import com.liferay.portal.search.similar.results.web.internal.builder.SimilarResultsRoute;
-import com.liferay.portal.search.similar.results.web.internal.builder.TestHttp;
 import com.liferay.portal.search.similar.results.web.internal.contributor.BaseSimilarResultsContributorTestCase;
 import com.liferay.portal.search.similar.results.web.internal.portlet.shared.search.Criteria;
 import com.liferay.portal.search.similar.results.web.internal.portlet.shared.search.CriteriaBuilderImpl;
@@ -61,7 +60,6 @@ public class BlogsSimilarResultsContributorTest
 
 	@Test
 	public void testDetectRoute() {
-		_blogsSimilarResultsContributor.setHttp(TestHttp.getInstance());
 		_blogsSimilarResultsContributor.setHttpHelper(setUpHttpHelper());
 
 		RouteBuilderImpl routeBuilderImpl = new RouteBuilderImpl();
@@ -138,8 +136,7 @@ public class BlogsSimilarResultsContributorTest
 					"_com_liferay_blogs_web_portlet_BlogsPortlet_redirect=",
 					"http://localhost:8080/blog-page?",
 					"p_p_id=com_liferay_blogs_web_portlet_BlogsPortlet&",
-					"p_p_lifecycle=0&p_p_state=normal&p_p_mode=view"),
-				TestHttp.getInstance());
+					"p_p_lifecycle=0&p_p_state=normal&p_p_mode=view"));
 
 		setUpDestinationHelper(assetRenderer);
 

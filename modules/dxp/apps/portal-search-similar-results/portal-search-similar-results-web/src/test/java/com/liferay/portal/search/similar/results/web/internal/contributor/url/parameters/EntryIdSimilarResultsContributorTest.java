@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.similar.results.web.internal.builder.DestinationBuilderImpl;
 import com.liferay.portal.search.similar.results.web.internal.builder.RouteBuilderImpl;
 import com.liferay.portal.search.similar.results.web.internal.builder.SimilarResultsRoute;
-import com.liferay.portal.search.similar.results.web.internal.builder.TestHttp;
 import com.liferay.portal.search.similar.results.web.internal.contributor.BaseSimilarResultsContributorTestCase;
 import com.liferay.portal.search.similar.results.web.internal.portlet.shared.search.Criteria;
 import com.liferay.portal.search.similar.results.web.internal.portlet.shared.search.CriteriaBuilderImpl;
@@ -54,7 +53,6 @@ public class EntryIdSimilarResultsContributorTest
 
 	@Test
 	public void testDetectRoute() {
-		_entryIdSimilarResultsContributor.setHttp(TestHttp.getInstance());
 		_entryIdSimilarResultsContributor.setHttpHelper(setUpHttpHelper());
 
 		RouteBuilderImpl routeBuilderImpl = new RouteBuilderImpl();
@@ -98,8 +96,7 @@ public class EntryIdSimilarResultsContributorTest
 	@Test
 	public void testWriteDestination() {
 		DestinationBuilderImpl destinationBuilderImpl =
-			new DestinationBuilderImpl(
-				"http://localhost:8080?entryId=1234", TestHttp.getInstance());
+			new DestinationBuilderImpl("http://localhost:8080?entryId=1234");
 
 		setUpDestinationHelper(setUpAssetEntry(4321L));
 

@@ -18,7 +18,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.search.web.internal.custom.filter.configuration.CustomFilterPortletInstanceConfiguration;
 import com.liferay.portal.search.web.internal.custom.filter.display.context.CustomFilterDisplayContext;
 import com.liferay.portal.search.web.internal.util.SearchOptionalUtil;
@@ -79,12 +79,6 @@ public class CustomFilterDisplayContextBuilder {
 		Optional<String> filterValueOptional) {
 
 		_filterValueOptional = filterValueOptional;
-
-		return this;
-	}
-
-	public CustomFilterDisplayContextBuilder http(Http http) {
-		_http = http;
 
 		return this;
 	}
@@ -188,18 +182,13 @@ public class CustomFilterDisplayContextBuilder {
 	}
 
 	private String _getURLCurrentPath() {
-		if (_http == null) {
-			return null;
-		}
-
-		return _http.getPath(_themeDisplay.getURLCurrent());
+		return HttpHelperUtil.getPath(_themeDisplay.getURLCurrent());
 	}
 
 	private Optional<String> _customHeadingOptional = Optional.empty();
 	private boolean _disabled;
 	private Optional<String> _filterFieldOptional = Optional.empty();
 	private Optional<String> _filterValueOptional = Optional.empty();
-	private Http _http;
 	private boolean _immutable;
 	private String _parameterName;
 	private Optional<String> _parameterValueOptional = Optional.empty();

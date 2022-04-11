@@ -17,7 +17,7 @@ package com.liferay.portal.search.similar.results.web.internal.contributor.url.p
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.search.similar.results.web.internal.helper.HttpHelper;
 import com.liferay.portal.search.similar.results.web.spi.contributor.SimilarResultsContributor;
 import com.liferay.portal.search.similar.results.web.spi.contributor.helper.CriteriaBuilder;
@@ -50,7 +50,8 @@ public class ClassUUIDSimilarResultsContributor
 			CLASS_UUID,
 			Objects.requireNonNull(
 				_httpHelper.getPortletIdParameter(
-					_http.decodePath(routeHelper.getURLString()), CLASS_UUID)));
+					HttpHelperUtil.decodePath(routeHelper.getURLString()),
+					CLASS_UUID)));
 	}
 
 	@Override
@@ -94,13 +95,7 @@ public class ClassUUIDSimilarResultsContributor
 			CLASS_UUID, assetEntry.getClassUuid());
 	}
 
-	@Reference(unbind = "-")
-	protected void setHttp(Http http) {
-		_http = http;
-	}
-
 	private AssetEntryLocalService _assetEntryLocalService;
-	private Http _http;
 	private HttpHelper _httpHelper;
 
 }

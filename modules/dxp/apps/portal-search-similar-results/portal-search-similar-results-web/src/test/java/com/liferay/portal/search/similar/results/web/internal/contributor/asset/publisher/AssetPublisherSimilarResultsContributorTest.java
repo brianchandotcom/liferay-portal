@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.similar.results.web.internal.builder.DestinationBuilderImpl;
 import com.liferay.portal.search.similar.results.web.internal.builder.RouteBuilderImpl;
 import com.liferay.portal.search.similar.results.web.internal.builder.SimilarResultsRoute;
-import com.liferay.portal.search.similar.results.web.internal.builder.TestHttp;
 import com.liferay.portal.search.similar.results.web.internal.contributor.BaseSimilarResultsContributorTestCase;
 import com.liferay.portal.search.similar.results.web.internal.portlet.shared.search.Criteria;
 import com.liferay.portal.search.similar.results.web.internal.portlet.shared.search.CriteriaBuilderImpl;
@@ -56,8 +55,6 @@ public class AssetPublisherSimilarResultsContributorTest
 
 	@Test
 	public void testDetectRoute() {
-		_assetPublisherSimilarResultsContributor.setHttp(
-			TestHttp.getInstance());
 		_assetPublisherSimilarResultsContributor.setHttpHelper(
 			setUpHttpHelper());
 
@@ -118,8 +115,7 @@ public class AssetPublisherSimilarResultsContributorTest
 					"?_com_liferay_asset_publisher_web_portlet_",
 					"AssetPublisherPortlet_INSTANCE_BNPTUvWUBXIr_assetEntryId",
 					"=12345&_com_liferay_asset_publisher_web_portlet_",
-					"AssetPublisherPortlet_INSTANCE_BNPTUvWUBXIr_redirect="),
-				TestHttp.getInstance());
+					"AssetPublisherPortlet_INSTANCE_BNPTUvWUBXIr_redirect="));
 
 		setUpDestinationHelper(WikiPage.class.getName());
 		setUpDestinationHelper(setUpAssetEntry(54321L));

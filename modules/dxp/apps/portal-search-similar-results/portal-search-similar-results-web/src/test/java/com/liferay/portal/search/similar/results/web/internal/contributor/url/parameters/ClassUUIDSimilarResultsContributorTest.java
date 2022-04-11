@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.similar.results.web.internal.builder.DestinationBuilderImpl;
 import com.liferay.portal.search.similar.results.web.internal.builder.RouteBuilderImpl;
 import com.liferay.portal.search.similar.results.web.internal.builder.SimilarResultsRoute;
-import com.liferay.portal.search.similar.results.web.internal.builder.TestHttp;
 import com.liferay.portal.search.similar.results.web.internal.contributor.BaseSimilarResultsContributorTestCase;
 import com.liferay.portal.search.similar.results.web.internal.portlet.shared.search.Criteria;
 import com.liferay.portal.search.similar.results.web.internal.portlet.shared.search.CriteriaBuilderImpl;
@@ -57,7 +56,6 @@ public class ClassUUIDSimilarResultsContributorTest
 
 	@Test
 	public void testDetectRoute() {
-		_classUUIDSimilarResultsContributor.setHttp(TestHttp.getInstance());
 		_classUUIDSimilarResultsContributor.setHttpHelper(setUpHttpHelper());
 
 		RouteBuilderImpl routeBuilderImpl = new RouteBuilderImpl();
@@ -112,8 +110,7 @@ public class ClassUUIDSimilarResultsContributorTest
 		).getClassUuid();
 
 		DestinationBuilderImpl destinationBuilderImpl =
-			new DestinationBuilderImpl(
-				"http://localhost:8080?classUuid=uid", TestHttp.getInstance());
+			new DestinationBuilderImpl("http://localhost:8080?classUuid=uid");
 
 		setUpDestinationHelper(assetEntry);
 

@@ -17,7 +17,6 @@ package com.liferay.portal.search.similar.results.web.internal.contributor.url.p
 import com.liferay.portal.search.similar.results.web.internal.builder.DestinationBuilderImpl;
 import com.liferay.portal.search.similar.results.web.internal.builder.RouteBuilderImpl;
 import com.liferay.portal.search.similar.results.web.internal.builder.SimilarResultsRoute;
-import com.liferay.portal.search.similar.results.web.internal.builder.TestHttp;
 import com.liferay.portal.search.similar.results.web.internal.contributor.BaseSimilarResultsContributorTestCase;
 import com.liferay.portal.search.similar.results.web.internal.portlet.shared.search.Criteria;
 import com.liferay.portal.search.similar.results.web.internal.portlet.shared.search.CriteriaBuilderImpl;
@@ -53,8 +52,6 @@ public class ClassNameClassPKSimilarResultsContributorTest
 
 	@Test
 	public void testDetectRoute() {
-		_classNameClassPKSimilarResultsContributor.setHttp(
-			TestHttp.getInstance());
 		_classNameClassPKSimilarResultsContributor.setHttpHelper(
 			setUpHttpHelper());
 
@@ -101,8 +98,7 @@ public class ClassNameClassPKSimilarResultsContributorTest
 		DestinationBuilderImpl destinationBuilderImpl =
 			new DestinationBuilderImpl(
 				"http://localhost:8080?classUuid=uid&" +
-					"className=AssetClassName&classPK=112233",
-				TestHttp.getInstance());
+					"className=AssetClassName&classPK=112233");
 
 		setUpDestinationHelper(setUpAssetEntry("newAssetClassName", 54321L));
 

@@ -1,0 +1,23 @@
+import com.liferay.gradle.util.copy.StripPathSegmentsAction
+
+task buildClayIcons(type: Copy)
+
+buildClayIcons {
+	File destinationDir = file("src/main/resources/META-INF/resources/images");
+
+	dependsOn npmInstall
+
+	doFirst {
+		delete destinationDir
+	}
+
+	eachFile new StripPathSegmentsAction(5)
+	from npmInstall.nodeModulesDir
+	include "@clayui/css/lib/images/icons/icons.svg"
+	includeEmptyDirs = false
+	into destinationDir
+}
+
+classes {
+	dependsOn buildClayIcons
+}

@@ -81,40 +81,6 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 			_log.error(
 				"Unable to execute batch planner plan ID " + batchPlannerPlanId,
 				exception);
-
-			try {
-				Random _random = new Random();
-				long value = _random.nextLong();
-				if (value <= 0L) {
-					value = _random.nextLong();
-				}
-
-				BatchPlannerPlan batchPlannerPlan =
-					_batchPlannerPlanLocalService.getBatchPlannerPlan(
-						batchPlannerPlanId);
-
-				if (batchPlannerPlan.isExport()) {
-					_batchPlannerLogLocalService.addBatchPlannerLog(
-						batchPlannerPlan.getUserId(),
-						batchPlannerPlan.getBatchPlannerPlanId(),
-						String.valueOf(value) , null, null, 0,
-						BatchPlannerLogConstants.STATUS_FAILED);
-				}
-				else {
-					_batchPlannerLogLocalService.addBatchPlannerLog(
-						batchPlannerPlan.getUserId(),
-						batchPlannerPlan.getBatchPlannerPlanId(),
-						null , String.valueOf(value), null, 0,
-						BatchPlannerLogConstants.STATUS_FAILED);
-				}
-
-				_batchPlannerPlanLocalService.updateActive(
-					batchPlannerPlanId, true);
-			}
-			catch (Exception exception1) {
-				_log.error(
-					"Unable to add batch planner log " + exception1);
-			}
 		}
 	}
 

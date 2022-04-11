@@ -319,6 +319,46 @@ definition {
 		}
 	}
 
+	@description = "LPS-147853. Assert tooltip messages will be displayed when hovered over the filter and order buttons in responsive mode"
+	@priority = "4"
+	test ResponsiveModeFilterAndOrderAsIconButtons {
+		task ("Given a window size set to phone size") {
+			SetWindowSize(value1 = "360,720");
+		}
+
+		task ("Then the 'filter' and 'order' buttons will be displayed as icon buttons") {
+			AssertElementPresent(
+				key_icon = "filter",
+				key_title = "Show Filter Options",
+				locator1 = "ManagementBar#FILTER_OR_ORDER_MOBILE");
+
+			AssertElementPresent(
+				key_icon = "order-list-down",
+				key_title = "Show Order Options",
+				locator1 = "ManagementBar#FILTER_OR_ORDER_MOBILE");
+		}
+
+		task ("And a tooltip message will be displayed") {
+			MouseOver(
+				key_icon = "filter",
+				key_title = "Show Filter Options",
+				locator1 = "ManagementBar#FILTER_OR_ORDER_MOBILE");
+
+			AssertTextEquals(
+				locator1 = "Message#TOOLTIP",
+				value1 = "Show Filter Options");
+
+			MouseOver(
+				key_icon = "order-list-down",
+				key_title = "Show Order Options",
+				locator1 = "ManagementBar#FILTER_OR_ORDER_MOBILE");
+
+			AssertTextEquals(
+				locator1 = "Message#TOOLTIP",
+				value1 = "Show Order Options");
+		}
+	}
+
 	@description = "LPS-147865. Assert the new button is displayed as an icon button in responsive mode"
 	@priority = "5"
 	test ResponsiveModeNewButtonAsIconButton {

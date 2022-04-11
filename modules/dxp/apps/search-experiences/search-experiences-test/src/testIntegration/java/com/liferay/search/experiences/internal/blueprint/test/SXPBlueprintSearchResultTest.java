@@ -155,6 +155,8 @@ public class SXPBlueprintSearchResultTest {
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()),
 			_serviceContext);
+
+		_testName = new TestName();
 	}
 
 	@Test
@@ -199,22 +201,20 @@ public class SXPBlueprintSearchResultTest {
 
 	@Test
 	public void testBoostContentsForTheCurrentLanguage() throws Exception {
+		_setUpJournalArticles(
+			new String[] {"Article", ""},
+			new String[] {"Article beta en_US", "Article delta en_US"});
+
 		LocaleThreadLocal.setDefaultLocale(LocaleUtil.SPAIN);
 
 		_setUpJournalArticles(
 			new String[] {"Article Article", ""},
 			new String[] {"Article alpha es_ES", "Article omega es_ES"});
 
-		LocaleThreadLocal.setDefaultLocale(LocaleUtil.US);
-
-		_setUpJournalArticles(
-			new String[] {"Article", ""},
-			new String[] {"Article beta en_US", "Article delta en_US"});
-
 		_updateElementInstancesJSON(
 			new Object[] {
 				HashMapBuilder.<String, Object>put(
-					"boost", 100
+					"boost", 1000
 				).build()
 			},
 			new String[] {"Boost Contents for the Current Language"});
@@ -222,20 +222,20 @@ public class SXPBlueprintSearchResultTest {
 		_keywords = "Article";
 
 		_assertSearch(
-			"[Article beta en_US, Article delta en_US, Article alpha" +
-				" es_ES, Article omega es_ES]");
-
-		LocaleThreadLocal.setDefaultLocale(LocaleUtil.SPAIN);
-
-		_assertSearch(
 			"[Article alpha es_ES, Article omega es_ES, Article beta" +
 				" en_US, Article delta en_US]");
+
+		LocaleThreadLocal.setDefaultLocale(LocaleUtil.US);
+
+		_assertSearch(
+			"[Article beta en_US, Article delta en_US, Article alpha" +
+				" es_ES, Article omega es_ES]");
 
 		_updateElementInstancesJSON(null, null);
 
 		_assertSearch(
-			"[Article alpha es_ES, Article beta en_US, Article omega" +
-				" es_ES, Article delta en_US]");
+			"[Article alpha es_ES, Article beta en_US, Article delta" +
+				" en_US, Article omega es_ES]");
 	}
 
 	@Test
@@ -1763,9 +1763,6 @@ public class SXPBlueprintSearchResultTest {
 		_assertSearch("[watch birds on the sky, clouds]");
 	}
 
-	@Rule
-	public TestName testName = new TestName();
-
 	private void _addAssetCategory(String title, User user) throws Exception {
 		if (_assetVocabulary == null) {
 			_assetVocabulary =
@@ -1787,7 +1784,7 @@ public class SXPBlueprintSearchResultTest {
 
 		String fileName = StringBundler.concat(
 			"dependencies/", clazz.getSimpleName(), StringPool.PERIOD,
-			testName.getMethodName(), extension);
+			_testName.getMethodName(), extension);
 
 		DLAppLocalServiceUtil.addFileEntry(
 			null, _user.getUserId(), _group.getGroupId(),
@@ -2179,6 +2176,7 @@ public class SXPBlueprintSearchResultTest {
 	private SXPBlueprintSearchRequestEnhancer
 		_sxpBlueprintSearchRequestEnhancer;
 
+	private TestName _testName;
 	private User _user;
 
 	@Inject(

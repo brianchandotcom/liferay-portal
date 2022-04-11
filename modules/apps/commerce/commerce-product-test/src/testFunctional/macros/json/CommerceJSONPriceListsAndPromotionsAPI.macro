@@ -58,6 +58,64 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
+	macro _addPromotion {
+		Variables.assertDefined(parameterList = "${catalogName},${promotionName},${currencyCode}");
+
+		var catalogId = CommerceJSONCatalogsAPI._getCommerceCatalogIdByName(catalogName = "${catalogName}");
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-pricing/v2.0/price-lists \
+			-u test@liferay.com:test \
+			-H 'accept: application/json' \
+			-H 'Content-Type: application/json' \
+			-d '{
+				  "active": true,
+				  "catalogBasePriceList": false,
+				  "catalogId": "${catalogId}",
+				  "currencyCode": "${currencyCode}",
+				  "name": "${promotionName}",
+				  "netPrice": true,
+				  "neverExpire": true,
+				  "priority": 0,
+				  "type": "promotion"
+				}'
+			''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
+	macro _addPromotionEntry {
+		Variables.assertDefined(parameterList = "${productSKU},${promotionName},${entryPrice}");
+
+		var skuId = CommerceJSONProductsAPI._getSKUId(productSKU = "${productSKU}");
+
+		var promotionId = CommerceJSONPriceListsAndPromotionsAPI._getCommercePriceListsAndPromotionsIdByName(priceListAndPromotionName = "${promotionName}");
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-pricing/v2.0/price-lists/${promotionId}/price-entries \
+			-u test@liferay.com:test \
+			-H 'accept: application/json' \
+			-H 'Content-Type: application/json' \
+			-d '{
+				  "active": true,
+				  "neverExpire": true,
+				  "price": "${entryPrice}",
+				  "priceListId": "${promotionId}",
+				  "skuId": "${skuId}"
+				}'
+			''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
 	macro _deleteAllNoMasterPriceListsAndPromotions {
 		var baseURL = "${baseURL}";
 

@@ -66,7 +66,7 @@ public class CommentDemoDataCreatorImpl implements CommentDemoDataCreator {
 			new IdentityServiceContextFunction(new ServiceContext());
 
 		long commentId = _commentManager.addComment(
-			user.getUserId(), group.getGroupId(), className, classPK,
+			null, user.getUserId(), group.getGroupId(), className, classPK,
 			user.getFullName(), StringPool.BLANK, _getRandomBody(),
 			identityServiceContextFunction);
 
@@ -84,9 +84,9 @@ public class CommentDemoDataCreatorImpl implements CommentDemoDataCreator {
 			new IdentityServiceContextFunction(new ServiceContext());
 
 		long commentId = _commentManager.addComment(
-			userId, parentComment.getClassName(), parentComment.getClassPK(),
-			user.getFullName(), parentCommentId, StringPool.BLANK,
-			_getRandomBody(), identityServiceContextFunction);
+			null, userId, parentComment.getClassName(),
+			parentComment.getClassPK(), user.getFullName(), parentCommentId,
+			StringPool.BLANK, _getRandomBody(), identityServiceContextFunction);
 
 		return _getComment(commentId);
 	}

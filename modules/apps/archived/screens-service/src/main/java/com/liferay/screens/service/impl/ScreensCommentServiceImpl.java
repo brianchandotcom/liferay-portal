@@ -70,7 +70,7 @@ public class ScreensCommentServiceImpl extends ScreensCommentServiceBaseImpl {
 			group.getCompanyId(), assetEntry.getGroupId(), className, classPK);
 
 		long commentId = commentManager.addComment(
-			getUserId(), assetEntry.getGroupId(), className, classPK,
+			null, getUserId(), assetEntry.getGroupId(), className, classPK,
 			getUser().getFullName(), StringPool.BLANK, body,
 			createServiceContextFunction());
 

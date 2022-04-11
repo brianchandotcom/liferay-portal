@@ -71,9 +71,11 @@ public class UserAnalyticsDXPEntityBatchEngineTaskItemDelegate
 				User.class.getName(), null, vulcanPagination,
 				queryConfig -> queryConfig.setSelectedFieldNames(
 					Field.ENTRY_CLASS_PK),
-				searchContext -> searchContext.setCompanyId(
-					contextCompany.getCompanyId()),
-				null,
+				searchContext -> {
+					searchContext.setCompanyId(contextCompany.getCompanyId());
+					searchContext.setUserId(0);
+				},
+				sorts,
 				document -> _dxpEntityDTOConverter.toDTO(
 					_userLocalService.getUser(
 						GetterUtil.getLong(

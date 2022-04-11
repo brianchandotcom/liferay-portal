@@ -706,8 +706,7 @@ definition {
 	}
 
 	macro viewCSVErrorReport {
-		var tempDir = PropsUtil.get("output.dir.name");
-		var fileContent = FileUtil.read("${tempDir}/translation-error.csv");
+		var fileContent = TestCase.getTempFileContent(fileName = "translation-error.csv");
 
 		if (contains("${fileContent}", "${reportContent}")) {
 			echo("The import translation error can be viewed in the report.");

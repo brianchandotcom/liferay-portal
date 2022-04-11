@@ -55,6 +55,56 @@ definition {
 		WaitForSPARefresh();
 	}
 
+	macro addCollectionPage {
+		PagesFinder.selectPageType(optionValue = "Pages Hierarchy");
+
+		Click(locator1 = "PagesFinder#PAGE_TYPE_SELECTOR_ELLIPSIS_ICON");
+
+		MenuItem.click(menuItem = "Add Collection Page");
+
+		Navigator.gotoNavTab(navTab = "${tabName}");
+
+		if (isSet(menuItem)) {
+			AssetListsAdmin.addSelection(
+				collectionName = "${collectionName}",
+				menuItem = "${menuItem}",
+				selectedAsset = "${selectedAsset}");
+
+			Click(locator1 = "Icon#BACK");
+		}
+
+		LexiconCard.clickCard(card = "${collectionName}");
+
+		if (isSet(masterLayoutName)) {
+			LexiconCard.clickCard(card = "${masterLayoutName}");
+		}
+		else {
+			LexiconCard.clickCard(card = "Blank");
+		}
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		PortletEntry.inputName(name = "${pageName}");
+
+		if (isSet(categoryName)) {
+			AssetCategorization.addCategory(
+				categoryName = "${categoryName}",
+				vocabularyName = "${vocabularyName}");
+		}
+
+		if (isSet(categoryNameList)) {
+			AssetCategorization.addMultipleCategories(
+				categoryNameList = "${categoryNameList}",
+				vocabularyName = "${vocabularyName}");
+		}
+
+		Button.clickAdd();
+
+		SelectFrame.selectFrameTop();
+
+		PageEditor.assertFragmentSidebarLoaded();
+	}
+
 	macro addContentPage {
 		PagesFinder.selectPageType(optionValue = "Pages Hierarchy");
 

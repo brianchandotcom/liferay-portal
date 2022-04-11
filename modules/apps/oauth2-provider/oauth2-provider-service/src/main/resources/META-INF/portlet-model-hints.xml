@@ -28,6 +28,9 @@
 			<validator name="url" />
 		</field>
 		<field name="iconFileEntryId" type="long" />
+		<field name="jwks" type="String">
+			<hint name="max-length">3999</hint>
+		</field>
 		<field name="name" type="String" />
 		<field name="privacyPolicyURL" type="String">
 			<hint-collection name="URL" />

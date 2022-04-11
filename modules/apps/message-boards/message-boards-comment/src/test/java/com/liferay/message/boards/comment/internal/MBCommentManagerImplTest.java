@@ -103,7 +103,7 @@ public class MBCommentManagerImplTest extends Mockito {
 		Assert.assertEquals(
 			_MBMESSAGE_ID,
 			_mbCommentManagerImpl.addComment(
-				_USER_ID, _GROUP_ID, _CLASS_NAME, _ENTRY_ID, _USER_NAME,
+				null, _USER_ID, _GROUP_ID, _CLASS_NAME, _ENTRY_ID, _USER_NAME,
 				_SUBJECT, _BODY, _serviceContextFunction));
 
 		Mockito.verify(

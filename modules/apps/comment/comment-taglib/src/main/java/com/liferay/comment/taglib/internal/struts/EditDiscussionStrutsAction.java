@@ -256,8 +256,9 @@ public class EditDiscussionStrutsAction implements StrutsAction {
 					className, classPK);
 
 				commentId = _commentManager.addComment(
-					user.getUserId(), className, classPK, user.getFullName(),
-					parentCommentId, subject, body, serviceContextFunction);
+					null, user.getUserId(), className, classPK,
+					user.getFullName(), parentCommentId, subject, body,
+					serviceContextFunction);
 			}
 			finally {
 				PrincipalThreadLocal.setName(name);

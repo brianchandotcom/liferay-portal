@@ -251,7 +251,7 @@ public class CommentResourceImpl
 
 		return _postComment(
 			() -> _commentManager.addComment(
-				_getUserId(), parentComment.getClassName(),
+				null, _getUserId(), parentComment.getClassName(),
 				parentComment.getClassPK(), StringPool.BLANK,
 				parentComment.getCommentId(), StringPool.BLANK,
 				StringBundler.concat("<p>", comment.getText(), "</p>"),
@@ -408,8 +408,9 @@ public class CommentResourceImpl
 
 		return _postComment(
 			() -> _commentManager.addComment(
-				_getUserId(), groupId, className, classPK, StringPool.BLANK,
-				StringPool.BLANK, StringBundler.concat("<p>", text, "</p>"),
+				null, _getUserId(), groupId, className, classPK,
+				StringPool.BLANK, StringPool.BLANK,
+				StringBundler.concat("<p>", text, "</p>"),
 				_createServiceContextFunction()),
 			className, classPK, groupId);
 	}

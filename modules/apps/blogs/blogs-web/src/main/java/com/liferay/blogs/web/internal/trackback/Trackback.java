@@ -54,7 +54,7 @@ public class Trackback {
 		String body = _buildBody(themeDisplay, excerpt, url);
 
 		long commentId = _commentManager.addComment(
-			userId, groupId, className, classPK, blogName, title, body,
+			null, userId, groupId, className, classPK, blogName, title, body,
 			serviceContextFunction);
 
 		String entryURL = _buildEntryURL(entry, themeDisplay);

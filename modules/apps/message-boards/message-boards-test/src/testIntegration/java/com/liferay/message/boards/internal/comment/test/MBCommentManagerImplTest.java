@@ -213,7 +213,7 @@ public class MBCommentManagerImplTest {
 					_group, user.getUserId()));
 
 		return _commentManager.addComment(
-			user.getUserId(), User.class.getName(), user.getUserId(),
+			null, user.getUserId(), User.class.getName(), user.getUserId(),
 			user.getFullName(), parentCommentId, StringUtil.randomString(),
 			StringUtil.randomString(), serviceContextFunction);
 	}

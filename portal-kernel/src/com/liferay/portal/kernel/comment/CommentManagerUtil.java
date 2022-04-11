@@ -43,7 +43,7 @@ public class CommentManagerUtil {
 		throws PortalException {
 
 		return _commentManager.addComment(
-			userId, groupId, className, classPK, userName, subject, body,
+			null, userId, groupId, className, classPK, userName, subject, body,
 			serviceContextFunction);
 	}
 
@@ -54,8 +54,8 @@ public class CommentManagerUtil {
 		throws PortalException {
 
 		return _commentManager.addComment(
-			userId, className, classPK, userName, parentCommentId, subject,
-			body, serviceContextFunction);
+			null, userId, className, classPK, userName, parentCommentId,
+			subject, body, serviceContextFunction);
 	}
 
 	public static void addDiscussion(

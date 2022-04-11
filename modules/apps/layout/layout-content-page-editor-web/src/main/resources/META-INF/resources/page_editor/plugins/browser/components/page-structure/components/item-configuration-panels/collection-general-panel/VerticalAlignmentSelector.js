@@ -23,18 +23,18 @@ const VERTICAL_ALIGNMENT_OPTIONS = [
 ];
 
 export function VerticalAlignmentSelector({
-	collectionLayoutId,
+	collectionVerticalAlignmentId,
 	handleConfigurationChanged,
 	value,
 }) {
 	return (
 		<ClayForm.Group small>
-			<label htmlFor={collectionLayoutId}>
+			<label htmlFor={collectionVerticalAlignmentId}>
 				{Liferay.Language.get('vertical-alignment')}
 			</label>
 
 			<ClaySelectWithOption
-				id={collectionLayoutId}
+				id={collectionVerticalAlignmentId}
 				onChange={(event) => {
 					const nextValue = event.target.value;
 
@@ -50,7 +50,7 @@ export function VerticalAlignmentSelector({
 }
 
 VerticalAlignmentSelector.propTypes = {
-	collectionLayoutId: PropTypes.string.isRequired,
+	collectionVerticalAlignmentId: PropTypes.string.isRequired,
 	handleConfigurationChanged: PropTypes.func.isRequired,
 	value: PropTypes.string.isRequired,
 };

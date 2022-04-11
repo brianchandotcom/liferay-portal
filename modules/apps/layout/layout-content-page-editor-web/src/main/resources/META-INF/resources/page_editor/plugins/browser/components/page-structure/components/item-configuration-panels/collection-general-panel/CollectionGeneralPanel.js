@@ -71,6 +71,7 @@ export function CollectionGeneralPanel({item}) {
 	const collectionLayoutId = useId();
 	const collectionListItemStyleId = useId();
 	const collectionPaginationTypeId = useId();
+	const collectionVerticalAlignmentId = useId();
 	const dispatch = useDispatch();
 	const getState = useGetState();
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
@@ -275,8 +276,8 @@ export function CollectionGeneralPanel({item}) {
 												)}
 
 												<VerticalAlignmentSelector
-													collectionLayoutId={
-														collectionLayoutId
+													collectionVerticalAlignmentId={
+														collectionVerticalAlignmentId
 													}
 													handleConfigurationChanged={
 														handleConfigurationChanged

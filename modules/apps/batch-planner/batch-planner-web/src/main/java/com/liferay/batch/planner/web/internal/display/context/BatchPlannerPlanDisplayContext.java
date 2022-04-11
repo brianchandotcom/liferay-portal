@@ -157,7 +157,9 @@ public class BatchPlannerPlanDisplayContext extends BaseDisplayContext {
 		BatchPlannerPlanDisplay.Builder builder =
 			new BatchPlannerPlanDisplay.Builder();
 
-		builder.batchPlannerPlanId(
+		builder.action(
+			_getAction(batchPlannerPlan.getExport())
+		).batchPlannerPlanId(
 			batchPlannerPlan.getBatchPlannerPlanId()
 		).createDate(
 			batchPlannerPlan.getCreateDate()
@@ -167,8 +169,6 @@ public class BatchPlannerPlanDisplayContext extends BaseDisplayContext {
 			batchPlannerPlan.getName()
 		).userId(
 			batchPlannerPlan.getUserId()
-		).action(
-			_getAction(batchPlannerPlan.getExport())
 		).status(
 			BatchPlannerPlanConstants.STATUS_INACTIVE
 		);

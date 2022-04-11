@@ -18,7 +18,8 @@ export default function propsTransformer(props) {
 		onActionButtonClick: () => {
 			if (Liferay.__FF__.enableCustomDialogs) {
 				Liferay.Util.openAlertModal({message: 'Action button clicked'});
-			} else {
+			}
+			else {
 				alert('Action button clicked');
 			}
 		},
@@ -27,7 +28,8 @@ export default function propsTransformer(props) {
 				Liferay.Util.openAlertModal({
 					message: 'Select all checkbox changed',
 				});
-			} else {
+			}
+			else {
 				alert('Select all checkbox changed');
 			}
 		},
@@ -36,28 +38,36 @@ export default function propsTransformer(props) {
 				Liferay.Util.openAlertModal({
 					message: 'Clear selection button clicked',
 				});
-			} else {
+			}
+			else {
 				alert('Clear selection button clicked');
 			}
 		},
 		onInfoButtonClick: () => {
 			if (Liferay.__FF__.enableCustomDialogs) {
 				Liferay.Util.openAlertModal({message: 'Info button clicked'});
-			} else {
+			}
+			else {
 				alert('Info button clicked');
 			}
 		},
 		onSelectAllButtonClick: () => {
 			if (Liferay.__FF__.enableCustomDialogs) {
-				Liferay.Util.openAlertModal({message: 'Select all button clicked'});
-			} else {
+				Liferay.Util.openAlertModal({
+					message: 'Select all button clicked',
+				});
+			}
+			else {
 				alert('Select all button click');
 			}
 		},
 		onShowMoreButtonClick: () => {
 			if (Liferay.__FF__.enableCustomDialogs) {
-				Liferay.Util.openAlertModal({message: 'Show more button clicked'});
-			} else {
+				Liferay.Util.openAlertModal({
+					message: 'Show more button clicked',
+				});
+			}
+			else {
 				alert('Show more button clicked');
 			}
 		},

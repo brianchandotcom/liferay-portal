@@ -18,7 +18,8 @@ export default function propsTransformer(props) {
 		onClick: () => {
 			if (Liferay.__FF__.enableCustomDialogs) {
 				Liferay.Util.openAlertModal({message: 'click!'});
-			} else {
+			}
+			else {
 				alert('click!');
 			}
 		},

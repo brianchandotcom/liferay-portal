@@ -29,7 +29,8 @@ export default function propsTransformer({
 					Liferay.Util.openAlertModal({
 						message: `${greeting} ${itemData.title}!`,
 					});
-				} else {
+				}
+				else {
 					alert(`${greeting} ${itemData.title}!`);
 				}
 			}

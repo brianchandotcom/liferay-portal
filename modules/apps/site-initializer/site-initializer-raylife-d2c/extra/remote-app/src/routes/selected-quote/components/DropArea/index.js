@@ -97,8 +97,11 @@ const DropArea = ({
 
 			if (currentFileExist) {
 				if (Liferay.__FF__.enableCustomDialogs) {
-					Liferay.Util.openAlertModal(`File ${fileName} already exists!`);
-				} else {
+					Liferay.Util.openAlertModal(
+						`File ${fileName} already exists!`
+					);
+				}
+				else {
 					alert(`File ${fileName} already exists!`);
 				}
 
@@ -108,7 +111,8 @@ const DropArea = ({
 			if (!validateExtensions(fileType, type)) {
 				if (Liferay.__FF__.enableCustomDialogs) {
 					Liferay.Util.openAlertModal(`Invalid file ${fileName}!`);
-				} else {
+				}
+				else {
 					alert(`Invalid file ${fileName}!`);
 				}
 

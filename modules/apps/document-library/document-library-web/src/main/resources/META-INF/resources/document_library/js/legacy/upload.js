@@ -1533,20 +1533,6 @@ AUI.add(
 
 							instance._createUploadStatus(entryNode, file);
 						});
-
-						filesPartition.rejects.map((file) => {
-							var entryNode = instance._createEntryNode(
-								file.name,
-								file.size,
-								displayStyle
-							);
-
-							instance._displayEntryError(
-								entryNode,
-								file.errorMessage,
-								instance._getDisplayStyle()
-							);
-						});
 					}
 				},
 

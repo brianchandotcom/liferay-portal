@@ -281,7 +281,7 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 	}
 
 	@Override
-	public List<User> getAssignableUsers(long companyId, long workflowTaskId)
+	public List<User> getAssignableUsers(long workflowTaskId)
 		throws WorkflowException {
 
 		return _getAllowedUsers(
@@ -325,7 +325,7 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 	}
 
 	@Override
-	public List<User> getNotifiableUsers(long companyId, long workflowTaskId)
+	public List<User> getNotifiableUsers(long workflowTaskId)
 		throws WorkflowException {
 
 		return _getAllowedUsers(

@@ -107,7 +107,7 @@ public class BatchPlannerPlanConstants {
 			return "text-info";
 		}
 
-		throw new IllegalArgumentException("Invalid status " + status);
+		return "text-warning";
 	}
 
 	public static String getStatusLabel(int status) {
@@ -124,7 +124,7 @@ public class BatchPlannerPlanConstants {
 			return LABEL_RUNNING;
 		}
 
-		throw new IllegalArgumentException("Invalid status " + status);
+		return LABEL_INACTIVE;
 	}
 
 	private static final Map<String, String> _contentTypes = HashMapBuilder.put(

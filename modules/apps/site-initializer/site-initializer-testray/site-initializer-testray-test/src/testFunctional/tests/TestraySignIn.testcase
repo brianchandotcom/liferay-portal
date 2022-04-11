@@ -1,134 +1,133 @@
 @component-name = "portal-solutions"
 definition {
 
-    property osgi.modules.includes = "site-initializer-testray";
-    property portal.release = "false";
-    property portal.upstream = "true";
-    property testray.main.component.name = "Testray 2";
+	property osgi.modules.includes = "site-initializer-testray";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Testray 2";
 
-    setUp {
-        TestCase.setUpPortalInstance();
+	setUp {
+		TestCase.setUpPortalInstance();
 
-        User.firstLoginPG();
+		User.firstLoginPG();
 
-        Testray.createTestraySite(siteName = "Testray 2");
+		Testray.createTestraySite(siteName = "Testray 2");
 
-        Refresh();
-    }
+		Refresh();
+	}
 
-    tearDown {
-        var testPortalInstance = PropsUtil.get("test.portal.instance");
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-        Testray.tearDownCP();
+		Testray.tearDownCP();
 
-        if ("${testPortalInstance}" == "true") {
-            PortalInstances.tearDownCP();
-        }
-    }
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
 
-    @description = "LPS-150436 - Verify when filling the field, the field label is green."
-    @priority = "2"
-    test CanFieldLabelBeGreen {
-        ApplicationsMenu.gotoSite(site = "Testray 2");
+	@description = "LPS-150436 - Verify when filling the field, the field label is green."
+	@priority = "2"
+	test CanFieldLabelBeGreen {
+		ApplicationsMenu.gotoSite(site = "Testray 2");
 
-        Testray.signOutTestray();
+		Testray.signOutTestray();
 
-        Navigator.openSpecificURL(url = "http://localhost:8080/web/testray-2");
+		Navigator.openSpecificURL(url = "http://localhost:8080/web/testray-2");
 
-        Type(
-            locator1 = "TestrayUser#FIELD_EMAIL",
-            value1 = "test@liferay.com");
+		Type(
+			locator1 = "TestrayUser#FIELD_EMAIL",
+			value1 = "test@liferay.com");
 
-        Type(
-            locator1 = "TestrayUser#FIELD_PASSWORD",
-            value1 = "test");
+		Type(
+			locator1 = "TestrayUser#FIELD_PASSWORD",
+			value1 = "test");
 
-        AssertElementPresent(
-            locator1 = "TestrayUser#FIELD_SUCCESS",
-            key_fieldName = "Email Address");
+		AssertElementPresent(
+			key_fieldName = "Email Address",
+			locator1 = "TestrayUser#FIELD_SUCCESS");
 
-        User.firstLoginPG();
-    }
+		User.firstLoginPG();
+	}
 
-    @description = "LPS-150437 - Verify when deleting the field, the field label is red."
-    @priority = "2"
-    test CanFieldLabelBeRed {
-        ApplicationsMenu.gotoSite(site = "Testray 2");
+	@description = "LPS-150437 - Verify when deleting the field, the field label is red."
+	@priority = "2"
+	test CanFieldLabelBeRed {
+		ApplicationsMenu.gotoSite(site = "Testray 2");
 
-        Testray.signOutTestray();
+		Testray.signOutTestray();
 
-        Navigator.openSpecificURL(url = "http://localhost:8080/web/testray-2");
+		Navigator.openSpecificURL(url = "http://localhost:8080/web/testray-2");
 
-        Type(
-            locator1 = "TestrayUser#FIELD_EMAIL",
-            value1 = "test@liferay.com");
+		Type(
+			locator1 = "TestrayUser#FIELD_EMAIL",
+			value1 = "test@liferay.com");
 
-        Type(
-            locator1 = "TestrayUser#FIELD_EMAIL",
-            value1 = "");
+		Type(
+			locator1 = "TestrayUser#FIELD_EMAIL",
+			value1 = "");
 
-        Type(
-            locator1 = "TestrayUser#FIELD_PASSWORD",
-            value1 = "test");
+		Type(
+			locator1 = "TestrayUser#FIELD_PASSWORD",
+			value1 = "test");
 
-        AssertElementPresent(
-            locator1 = "TestrayUser#FIELD_FAILED",
-            key_fieldName = "Email Address");
+		AssertElementPresent(
+			key_fieldName = "Email Address",
+			locator1 = "TestrayUser#FIELD_FAILED");
 
-        User.firstLoginPG();
-    }
+		User.firstLoginPG();
+	}
 
-    @description = "LPS-150438 - Verify the user can enter with an valid email."
-    @priority = "5"
-    test CanSignIn {
-        ApplicationsMenu.gotoSite(site = "Testray 2");
+	@description = "LPS-150438 - Verify the user can enter with an valid email."
+	@priority = "5"
+	test CanSignIn {
+		ApplicationsMenu.gotoSite(site = "Testray 2");
 
-        Testray.signOutTestray();
+		Testray.signOutTestray();
 
-        Navigator.openSpecificURL(url = "http://localhost:8080/web/testray-2");
+		Navigator.openSpecificURL(url = "http://localhost:8080/web/testray-2");
 
-        Type(
-            locator1 = "TestrayUser#FIELD_EMAIL",
-            value1 = "test@liferay.com");
+		Type(
+			locator1 = "TestrayUser#FIELD_EMAIL",
+			value1 = "test@liferay.com");
 
-        Type(
-            locator1 = "TestrayUser#FIELD_PASSWORD",
-            value1 = "test");
+		Type(
+			locator1 = "TestrayUser#FIELD_PASSWORD",
+			value1 = "test");
 
-        Click(locator1 = "TestrayUser#SIGN_IN_BUTTON");
+		Click(locator1 = "TestrayUser#SIGN_IN_BUTTON");
 
-        AssertElementPresent(
-            locator1 = "TestrayDropdown#PROJECT_NAME_BREADCRUMBS",
-            key_projectName = "Project Directory");
+		AssertElementPresent(
+			key_projectName = "Project Directory",
+			locator1 = "TestrayDropdown#PROJECT_NAME_BREADCRUMBS");
 
-        User.firstLoginPG();
-    }
+		User.firstLoginPG();
+	}
 
-    @description = "LPS-150439 - Verify the user can enter with an valid email after getting the password wrong."
-    @priority = "4"
-    test CanSignInAfterPasswordWrong {
-        ApplicationsMenu.gotoSite(site = "Testray 2");
+	@description = "LPS-150439 - Verify the user can enter with an valid email after getting the password wrong."
+	@priority = "4"
+	test CanSignInAfterPasswordWrong {
+		ApplicationsMenu.gotoSite(site = "Testray 2");
 
-        Testray.signOutTestray();
+		Testray.signOutTestray();
 
-        Navigator.openSpecificURL(url = "http://localhost:8080/web/testray-2");
+		Navigator.openSpecificURL(url = "http://localhost:8080/web/testray-2");
 
-        Type(
-            locator1 = "TestrayUser#FIELD_EMAIL",
-            value1 = "test@liferay.com");
+		Type(
+			locator1 = "TestrayUser#FIELD_EMAIL",
+			value1 = "test@liferay.com");
 
-        Type(
-            locator1 = "TestrayUser#FIELD_PASSWORD",
-            value1 = "test10");
+		Type(
+			locator1 = "TestrayUser#FIELD_PASSWORD",
+			value1 = "test10");
 
-        Click(locator1 = "TestrayUser#SIGN_IN_BUTTON");
+		Click(locator1 = "TestrayUser#SIGN_IN_BUTTON");
 
-        AssertElementNotPresent(
-            locator1 = "TestrayDropdown#PROJECT_NAME_BREADCRUMBS",
-            key_projectName = "Project Directory");
+		AssertElementNotPresent(
+			key_projectName = "Project Directory",
+			locator1 = "TestrayDropdown#PROJECT_NAME_BREADCRUMBS");
 
-        User.firstLoginPG();
-    }
-
+		User.firstLoginPG();
+	}
 
 }

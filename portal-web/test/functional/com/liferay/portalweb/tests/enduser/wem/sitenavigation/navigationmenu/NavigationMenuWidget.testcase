@@ -508,11 +508,11 @@ definition {
 		task ("Assert Select Public Pages Hierarchy and Bar minimally styled") {
 			NavigationMenusWidget.gotoNavigationMenuWidgetConfig();
 
-			NavigationMenusWidget.selectNavigation(menuType = "Public Pages Hierarchy");
+			NavigationMenusWidget.selectNavigation(menuType = "Pages Hierarchy");
 
 			AssertSelectedLabel(
 				locator1 = "NavigationMenusWidget#SELECT_NAVIGATION",
-				value1 = "Public Pages Hierarchy");
+				value1 = "Pages Hierarchy");
 
 			NavigationMenusWidget.selectDisplayTemplate(templateName = "Bar minimally styled");
 
@@ -584,11 +584,11 @@ definition {
 		task ("Assert Select Public Pages Hierarchy and Bar minimally styled") {
 			NavigationMenusWidget.gotoNavigationMenuWidgetConfig();
 
-			NavigationMenusWidget.selectNavigation(menuType = "Public Pages Hierarchy");
+			NavigationMenusWidget.selectNavigation(menuType = "Pages Hierarchy");
 
 			AssertSelectedLabel(
 				locator1 = "NavigationMenusWidget#SELECT_NAVIGATION",
-				value1 = "Public Pages Hierarchy");
+				value1 = "Pages Hierarchy");
 
 			NavigationMenusWidget.selectDisplayTemplate(templateName = "List Menu");
 
@@ -863,7 +863,7 @@ definition {
 
 			AssertSelectedLabel(
 				locator1 = "NavigationMenusWidget#SELECT_NAVIGATION",
-				value1 = "Public Pages Hierarchy");
+				value1 = "Pages Hierarchy");
 		}
 	}
 

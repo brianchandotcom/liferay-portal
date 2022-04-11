@@ -1402,7 +1402,7 @@ definition {
 		task ("Select Public Pages Hierarchy and Bar minimally styled") {
 			NavigationMenusWidget.gotoNavigationMenuWidgetConfig();
 
-			NavigationMenusWidget.selectNavigation(menuType = "Public Pages Hierarchy");
+			NavigationMenusWidget.selectNavigation(menuType = "Pages Hierarchy");
 
 			Pause(locator1 = "1000");
 

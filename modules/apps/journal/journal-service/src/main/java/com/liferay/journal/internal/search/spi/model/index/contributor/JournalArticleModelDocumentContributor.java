@@ -148,9 +148,8 @@ public class JournalArticleModelDocumentContributor
 
 		document.addKeyword("headListable", headListable);
 
-		boolean latestArticle = JournalUtil.isLatestArticle(journalArticle);
-
-		document.addKeyword("latest", latestArticle);
+		document.addKeyword(
+			"latest", JournalUtil.isLatestArticle(journalArticle));
 
 		// Scheduled listable articles should be visible in asset browser
 

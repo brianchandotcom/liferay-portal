@@ -14,11 +14,9 @@
 
 package com.liferay.source.formatter.check;
 
-import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.source.formatter.check.util.SourceUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.regex.Matcher;
@@ -29,6 +27,8 @@ import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.Node;
+
+import org.hsqldb.lib.StringUtil;
 
 /**
  * @author Seiphon Wang
@@ -46,30 +46,24 @@ public class XMLEchoMessageCheck extends BaseFileCheck {
 
 		Matcher matcher = _echoMessagePattern.matcher(content);
 
-		List<String> matchedTags = new ArrayList<>();
-
-		while (matcher.find()) {
-			matchedTags.add(matcher.group());
-		}
-
-		if (ListUtil.isEmpty(matchedTags)) {
-			return content;
-		}
-
 		Document document = SourceUtil.readXML(content);
 
 		List<Node> echoNodes = document.selectNodes("//*[name() = 'echo']");
 
-		for (Node echoNode : echoNodes) {
-			Element echoElement = (Element)echoNode;
+		while (matcher.find()) {
+			String matchedTag = matcher.group();
 
-			Attribute messageAttribute = echoElement.attribute("message");
+			String expectedString = "";
 
-			if (messageAttribute == null) {
-				continue;
-			}
+			for (Node echoNode : echoNodes) {
+				Element echoElement = (Element)echoNode;
 
-			for (String matchedTag : matchedTags) {
+				Attribute messageAttribute = echoElement.attribute("message");
+
+				if (messageAttribute == null) {
+					continue;
+				}
+
 				Document documentElement = DocumentHelper.parseText(matchedTag);
 
 				Element rootElement = documentElement.getRootElement();
@@ -81,11 +75,25 @@ public class XMLEchoMessageCheck extends BaseFileCheck {
 				echoElement.remove(messageAttribute);
 				echoElement.setText(messageAttribute.getText());
 
-				content = StringUtil.replace(
-					content, matchedTag, echoElement.asXML());
+				expectedString = echoElement.asXML();
 
 				break;
 			}
+
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("Do not use self-closing tag for attribute 'message' ");
+			sb.append("in '<echo>' tag.");
+
+			if (!StringUtil.isEmpty(expectedString)) {
+				sb.append(" Please use '");
+				sb.append(expectedString);
+				sb.append("' instead.");
+			}
+
+			addMessage(
+				fileName, sb.toString(),
+				getLineNumber(content, matcher.start()));
 		}
 
 		return content;

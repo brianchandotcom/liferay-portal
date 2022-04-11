@@ -615,10 +615,10 @@ public class JournalArticleFinderTest {
 		QueryDefinition<JournalArticle> queryDefinition =
 			new QueryDefinition<>();
 
-		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
 		queryDefinition.setOrderByComparator(
 			OrderByComparatorFactoryUtil.create(
 				"JournalArticleLocalization", "title", ascending));
+		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
 
 		List<JournalArticle> articles = _journalArticleFinder.findByG_F_L(
 			groupId, folderIds, locale, queryDefinition);

@@ -109,7 +109,9 @@ public class SubmitBatchPlannerPlanMVCResourceCommand
 
 			BatchPlannerPlan batchPlannerPlan =
 				_batchPlannerPlanHelper.addImportBatchPlannerPlan(
-					resourceRequest, importFileURI.toString());
+					resourceRequest,
+					uploadPortletRequest.getFileName("importFile"),
+					importFileURI.toString());
 
 			_batchEngineBroker.submit(batchPlannerPlan.getBatchPlannerPlanId());
 

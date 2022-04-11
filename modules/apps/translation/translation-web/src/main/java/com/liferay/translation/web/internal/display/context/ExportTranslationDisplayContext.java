@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -249,6 +250,18 @@ public class ExportTranslationDisplayContext {
 		return infoItemLanguagesProvider.getDefaultLanguageId(_models.get(0));
 	}
 
+	private long _getDraftLayoutPlid(long classPK) {
+		Layout layout = LayoutLocalServiceUtil.fetchLayout(classPK);
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		if (draftLayout != null) {
+			return draftLayout.getPlid();
+		}
+
+		return classPK;
+	}
+
 	private JSONObject _getExportFileFormatJSONObject(
 		TranslationInfoItemFieldValuesExporter
 			translationInfoItemFieldValuesExporter) {
@@ -277,7 +290,14 @@ public class ExportTranslationDisplayContext {
 		);
 
 		for (long classPK : _classPKs) {
-			uriBuilderWrapper.addParameter("classPK", String.valueOf(classPK));
+			if (_className.equals(Layout.class.getName())) {
+				uriBuilderWrapper.addParameter(
+					"classPK", String.valueOf(_getDraftLayoutPlid(classPK)));
+			}
+			else {
+				uriBuilderWrapper.addParameter(
+					"classPK", String.valueOf(classPK));
+			}
 		}
 
 		uriBuilderWrapper.addParameter("groupId", String.valueOf(_groupId));

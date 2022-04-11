@@ -139,10 +139,10 @@ public class JournalArticleModelDocumentContributor
 			"ddmStructureKey", journalArticle.getDDMStructureKey());
 		document.addKeyword(
 			"ddmTemplateKey", journalArticle.getDDMTemplateKey());
+		document.addKeyword("head", JournalUtil.isHead(journalArticle));
 		document.addText(
 			"defaultLanguageId",
 			localization.getDefaultLanguageId(journalArticle.getDocument()));
-		document.addKeyword("head", JournalUtil.isHead(journalArticle));
 
 		boolean headListable = JournalUtil.isHeadListable(journalArticle);
 

@@ -18,7 +18,7 @@ import React, {useEffect, useState} from 'react';
 
 import parseFile from '../FileParsers';
 import {
-	CSV_DELIMITERS,
+	CSV_ENCLOSING_CHARACTERS,
 	FILE_EXTENSION_INPUT_PARTIAL_NAME,
 	FILE_SCHEMA_EVENT,
 	IMPORT_FILE_FORMATS,
@@ -45,12 +45,12 @@ function FileUpload({portletNamespace}) {
 
 	const inputContainsHeadersId = `${portletNamespace}containsHeaders`;
 	const inputCSVSeparatorId = `${portletNamespace}csvSeparator`;
-	const inputCSVDelimiterId = `${portletNamespace}csvDelimiter`;
+	const inputCSVEnclosingCharacterId = `${portletNamespace}csvEnclosingCharacter`;
 	const inputFileId = `${portletNamespace}importFile`;
 
 	const [parserOptions, setParserOptions] = useState({
 		CSVContainsHeaders: true,
-		CSVDelimiter: '',
+		CSVEnclosingCharacter: '',
 		CSVSeparator: ',',
 	});
 
@@ -175,28 +175,31 @@ function FileUpload({portletNamespace}) {
 
 						<div className="col-md-6">
 							<ClayForm.Group>
-								<label htmlFor={inputCSVDelimiterId}>
+								<label htmlFor={inputCSVEnclosingCharacterId}>
 									{Liferay.Language.get(
 										'csv-file-column-delimiter'
 									)}
 								</label>
 
 								<ClaySelect
-									id={inputCSVDelimiterId}
+									id={inputCSVEnclosingCharacterId}
+									name={inputCSVEnclosingCharacterId}
 									onChange={({target}) =>
 										setParserOptions({
 											...parserOptions,
-											CSVDelimiter: target.value,
+											CSVEnclosingCharacter: target.value,
 										})
 									}
 								>
-									{CSV_DELIMITERS.map((delimiter) => (
-										<ClaySelect.Option
-											key={delimiter}
-											label={delimiter}
-											value={delimiter}
-										/>
-									))}
+									{CSV_ENCLOSING_CHARACTERS.map(
+										(delimiter) => (
+											<ClaySelect.Option
+												key={delimiter}
+												label={delimiter}
+												value={delimiter}
+											/>
+										)
+									)}
 								</ClaySelect>
 							</ClayForm.Group>
 						</div>

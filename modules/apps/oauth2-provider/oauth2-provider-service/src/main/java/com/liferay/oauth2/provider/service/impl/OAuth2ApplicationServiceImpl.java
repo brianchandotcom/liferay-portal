@@ -67,7 +67,7 @@ public class OAuth2ApplicationServiceImpl
 		return oAuth2ApplicationService.addOAuth2Application(
 			allowedGrantTypesList, OAuthConstants.TOKEN_ENDPOINT_AUTH_BASIC,
 			clientCredentialUserId, clientId, clientProfile, clientSecret,
-			description, featuresList, homePageURL, iconFileEntryId, name,
+			description, featuresList, homePageURL, iconFileEntryId, null, name,
 			privacyPolicyURL, redirectURIsList, rememberDevice,
 			scopeAliasesList, trustedApplication, serviceContext);
 	}
@@ -136,10 +136,10 @@ public class OAuth2ApplicationServiceImpl
 			String clientAuthenticationMethod, long clientCredentialUserId,
 			String clientId, int clientProfile, String clientSecret,
 			String description, List<String> featuresList, String homePageURL,
-			long iconFileEntryId, String name, String privacyPolicyURL,
-			List<String> redirectURIsList, boolean rememberDevice,
-			List<String> scopeAliasesList, boolean trustedApplication,
-			ServiceContext serviceContext)
+			long iconFileEntryId, String jwks, String name,
+			String privacyPolicyURL, List<String> redirectURIsList,
+			boolean rememberDevice, List<String> scopeAliasesList,
+			boolean trustedApplication, ServiceContext serviceContext)
 		throws PortalException {
 
 		ModelResourcePermissionUtil.check(
@@ -172,7 +172,7 @@ public class OAuth2ApplicationServiceImpl
 			user.getCompanyId(), user.getUserId(), user.getFullName(),
 			allowedGrantTypesList, clientAuthenticationMethod,
 			clientCredentialUserId, clientId, clientProfile, clientSecret,
-			description, featuresList, homePageURL, iconFileEntryId, name,
+			description, featuresList, homePageURL, iconFileEntryId, jwks, name,
 			privacyPolicyURL, redirectURIsList, rememberDevice,
 			scopeAliasesList, trustedApplication, serviceContext);
 	}
@@ -345,7 +345,7 @@ public class OAuth2ApplicationServiceImpl
 			oAuth2ApplicationId, oAuth2ApplicationScopeAliasesId,
 			allowedGrantTypesList, OAuthConstants.TOKEN_ENDPOINT_AUTH_BASIC,
 			clientCredentialUserId, clientId, clientProfile, clientSecret,
-			description, featuresList, homePageURL, iconFileEntryId, name,
+			description, featuresList, homePageURL, iconFileEntryId, null, name,
 			privacyPolicyURL, redirectURIsList, rememberDevice,
 			trustedApplication);
 	}
@@ -357,9 +357,9 @@ public class OAuth2ApplicationServiceImpl
 			String clientAuthenticationMethod, long clientCredentialUserId,
 			String clientId, int clientProfile, String clientSecret,
 			String description, List<String> featuresList, String homePageURL,
-			long iconFileEntryId, String name, String privacyPolicyURL,
-			List<String> redirectURIsList, boolean rememberDevice,
-			boolean trustedApplication)
+			long iconFileEntryId, String jwks, String name,
+			String privacyPolicyURL, List<String> redirectURIsList,
+			boolean rememberDevice, boolean trustedApplication)
 		throws PortalException {
 
 		_oAuth2ApplicationModelResourcePermission.check(
@@ -390,7 +390,7 @@ public class OAuth2ApplicationServiceImpl
 			oAuth2ApplicationId, oAuth2ApplicationScopeAliasesId,
 			allowedGrantTypesList, clientAuthenticationMethod,
 			clientCredentialUserId, clientId, clientProfile, clientSecret,
-			description, featuresList, homePageURL, iconFileEntryId, name,
+			description, featuresList, homePageURL, iconFileEntryId, jwks, name,
 			privacyPolicyURL, redirectURIsList, rememberDevice,
 			trustedApplication);
 	}

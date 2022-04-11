@@ -119,13 +119,21 @@ public class OAuth2ApplicationLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		String clientAuthenticationMethod =
+			OAuthConstants.TOKEN_ENDPOINT_AUTH_BASIC;
+
+		if (Validator.isNull(clientSecret)) {
+			clientAuthenticationMethod =
+				OAuthConstants.TOKEN_ENDPOINT_AUTH_NONE;
+		}
+
 		return oAuth2ApplicationLocalService.addOAuth2Application(
 			companyId, userId, userName, allowedGrantTypesList,
-			OAuthConstants.TOKEN_ENDPOINT_AUTH_BASIC, clientCredentialUserId,
-			clientId, clientProfile, clientSecret, description, featuresList,
-			homePageURL, iconFileEntryId, null, name, privacyPolicyURL,
-			redirectURIsList, rememberDevice, trustedApplication,
-			builderConsumer, serviceContext);
+			clientAuthenticationMethod, clientCredentialUserId, clientId,
+			clientProfile, clientSecret, description, featuresList, homePageURL,
+			iconFileEntryId, null, name, privacyPolicyURL, redirectURIsList,
+			rememberDevice, trustedApplication, builderConsumer,
+			serviceContext);
 	}
 
 	/**
@@ -144,13 +152,21 @@ public class OAuth2ApplicationLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		String clientAuthenticationMethod =
+			OAuthConstants.TOKEN_ENDPOINT_AUTH_BASIC;
+
+		if (Validator.isNull(clientSecret)) {
+			clientAuthenticationMethod =
+				OAuthConstants.TOKEN_ENDPOINT_AUTH_NONE;
+		}
+
 		return oAuth2ApplicationLocalService.addOAuth2Application(
 			companyId, userId, userName, allowedGrantTypesList,
-			OAuthConstants.TOKEN_ENDPOINT_AUTH_BASIC, clientCredentialUserId,
-			clientId, clientProfile, clientSecret, description, featuresList,
-			homePageURL, iconFileEntryId, null, name, privacyPolicyURL,
-			redirectURIsList, rememberDevice, scopeAliasesList,
-			trustedApplication, serviceContext);
+			clientAuthenticationMethod, clientCredentialUserId, clientId,
+			clientProfile, clientSecret, description, featuresList, homePageURL,
+			iconFileEntryId, null, name, privacyPolicyURL, redirectURIsList,
+			rememberDevice, scopeAliasesList, trustedApplication,
+			serviceContext);
 	}
 
 	/**
@@ -646,9 +662,17 @@ public class OAuth2ApplicationLocalServiceImpl
 			boolean trustedApplication)
 		throws PortalException {
 
+		String clientAuthenticationMethod =
+			OAuthConstants.TOKEN_ENDPOINT_AUTH_BASIC;
+
+		if (Validator.isNull(clientSecret)) {
+			clientAuthenticationMethod =
+				OAuthConstants.TOKEN_ENDPOINT_AUTH_NONE;
+		}
+
 		return oAuth2ApplicationLocalService.updateOAuth2Application(
 			oAuth2ApplicationId, oAuth2ApplicationScopeAliasesId,
-			allowedGrantTypesList, OAuthConstants.TOKEN_ENDPOINT_AUTH_BASIC,
+			allowedGrantTypesList, clientAuthenticationMethod,
 			clientCredentialUserId, clientId, clientProfile, clientSecret,
 			description, featuresList, homePageURL, iconFileEntryId, null, name,
 			privacyPolicyURL, redirectURIsList, rememberDevice,

@@ -672,13 +672,16 @@ public class PageFragmentInstanceDefinitionMapper {
 				classPKReferences = _toClassPKReferences(localizedJSONObjects);
 				fragmentImageConfiguration = new FragmentImageConfiguration() {
 					{
-						landscapeMobile =
-							imageConfigurationJSONObject.getString(
-								"landscapeMobile", "auto");
-						portraitMobile = imageConfigurationJSONObject.getString(
-							"portraitMobile", "auto");
-						tablet = imageConfigurationJSONObject.getString(
-							"tablet", "auto");
+						if (imageConfigurationJSONObject != null) {
+							landscapeMobile =
+								imageConfigurationJSONObject.getString(
+									"landscapeMobile", "auto");
+							portraitMobile =
+								imageConfigurationJSONObject.getString(
+									"portraitMobile", "auto");
+							tablet = imageConfigurationJSONObject.getString(
+								"tablet", "auto");
+						}
 					}
 				};
 			}

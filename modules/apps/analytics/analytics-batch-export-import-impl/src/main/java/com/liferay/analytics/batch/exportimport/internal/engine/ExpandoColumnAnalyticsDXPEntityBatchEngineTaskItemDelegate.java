@@ -52,7 +52,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "batch.engine.task.item.delegate.name=expando-column-dxp-entities",
+	property = "batch.engine.task.item.delegate.name=expando-column-analytics-dxp-entities",
 	service = BatchEngineTaskItemDelegate.class
 )
 public class ExpandoColumnAnalyticsDXPEntityBatchEngineTaskItemDelegate

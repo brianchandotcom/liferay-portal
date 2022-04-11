@@ -90,6 +90,18 @@ definition {
 			locator1 = "CommerceFrontStore#FS_PRODUCT_IMAGE");
 	}
 
+	macro assertPromoPrice {
+		AssertTextEquals.assertPartialText(
+			key_productName = "${productName}",
+			locator1 = "CommerceFrontStore#FS_PRODUCT_VALUE_PROMO_PRICE",
+			value1 = "${promoPrice}");
+
+		AssertTextEquals.assertPartialText(
+			key_productName = "${productName}",
+			locator1 = "CommerceFrontStore#FS_PRODUCT_VALUE_INACTIVE_PRICE",
+			value1 = "${basePrice}");
+	}
+
 	macro getCurrentCartItemCount {
 		CommerceNavigator.gotoMiniCart();
 

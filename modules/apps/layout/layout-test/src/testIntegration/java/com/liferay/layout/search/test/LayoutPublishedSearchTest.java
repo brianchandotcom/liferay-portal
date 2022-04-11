@@ -94,13 +94,15 @@ public class LayoutPublishedSearchTest {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(
 			_group, true, false);
 
-		String name = layout.getName(layout.getDefaultLanguageId());
+		String content = RandomTestUtil.randomString();
 
-		_layoutIndexerFixture.searchNoOne(name);
+		_updateDraftLayout(layout, content);
+
+		_layoutIndexerFixture.searchNoOne(content);
 
 		_publishLayout(layout);
 
-		_layoutIndexerFixture.searchOnlyOne(name);
+		_layoutIndexerFixture.searchOnlyOne(content);
 	}
 
 	private void _publishLayout(Layout layout) throws Exception {

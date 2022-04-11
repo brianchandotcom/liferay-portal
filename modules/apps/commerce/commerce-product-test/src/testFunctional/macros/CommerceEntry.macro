@@ -1018,6 +1018,80 @@ definition {
 		}
 	}
 
+	macro setExpirationTime {
+		var timeString = selenium.getElementValue("TextInput#DISPLAY_DATE_TIME");
+		var ampm = RegexUtil.replace("${timeString}", "([0-9]*):([0-9]*) ([A-Z]*)", "3");
+		var hours = RegexUtil.replace("${timeString}", "([0-9]*):([0-9]*) ([A-Z]*)", "1");
+		var minutes = RegexUtil.replace("${timeString}", "([0-9]*):([0-9]*) ([A-Z]*)", "2");
+		var minutesToExpire = "${minutesToExpire}";
+		var minutes = ${minutes} + ${minutesToExpire};
+		var changeHour = MathUtil.isGreaterThan("${minutes}", "59");
+
+		if ("${changeHour}" == "true") {
+			var minutes = ${minutes} - 60;
+
+			if ("${hours}" == "11") {
+				if ("${ampm}" == "PM") {
+					var ampm = "AM";
+				}
+				else {
+					var ampm = "PM";
+				}
+			}
+
+			if ("${hours}" == "12") {
+				var hours = "01";
+			}
+			else {
+				var hours = ${hours} + 1;
+			}
+		}
+
+		Uncheck.uncheckToggleSwitch(
+			checkboxName = "Never Expire",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		Type(
+			inputFieldId = "expirationDateTime",
+			locator1 = "TextInput#INPUT_ID",
+			value1 = "${hours}:${minutes} ${ampm}");
+	}
+
+	macro setPublishTime {
+		var timeString = selenium.getElementValue("TextInput#DISPLAY_DATE_TIME");
+		var ampm = RegexUtil.replace("${timeString}", "([0-9]*):([0-9]*) ([A-Z]*)", "3");
+		var hours = RegexUtil.replace("${timeString}", "([0-9]*):([0-9]*) ([A-Z]*)", "1");
+		var minutes = RegexUtil.replace("${timeString}", "([0-9]*):([0-9]*) ([A-Z]*)", "2");
+		var minutesToPublish = "${minutesToPublish}";
+		var minutes = ${minutes} + ${minutesToPublish};
+		var changeHour = MathUtil.isGreaterThan("${minutes}", "59");
+
+		if ("${changeHour}" == "true") {
+			var minutes = ${minutes} - 60;
+
+			if ("${hours}" == "11") {
+				if ("${ampm}" == "PM") {
+					var ampm = "AM";
+				}
+				else {
+					var ampm = "PM";
+				}
+			}
+
+			if ("${hours}" == "12") {
+				var hours = "01";
+			}
+			else {
+				var hours = ${hours} + 1;
+			}
+		}
+
+		Type(
+			inputFieldId = "displayDateTime",
+			locator1 = "TextInput#INPUT_ID",
+			value1 = "${hours}:${minutes} ${ampm}");
+	}
+
 	macro uploadCatalogEntrySingleImage {
 		AssertClick(
 			locator1 = "CommerceEntry#PRODUCT_IMAGE_SELECT_FILE",

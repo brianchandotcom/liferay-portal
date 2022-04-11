@@ -179,7 +179,6 @@ public class WorkflowTaskDisplayContext {
 		throws PortalException {
 
 		return WorkflowTaskManagerUtil.getAssignableUsers(
-			_workflowTaskRequestHelper.getCompanyId(),
 			workflowTask.getWorkflowTaskId());
 	}
 

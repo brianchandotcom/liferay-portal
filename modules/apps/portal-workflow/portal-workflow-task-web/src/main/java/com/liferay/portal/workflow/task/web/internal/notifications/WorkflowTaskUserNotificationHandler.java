@@ -105,7 +105,6 @@ public class WorkflowTaskUserNotificationHandler
 
 			for (User user :
 					WorkflowTaskManagerUtil.getNotifiableUsers(
-						jsonObject.getLong("companyId"),
 						jsonObject.getLong("workflowTaskId"))) {
 
 				if (user.getUserId() == serviceContext.getUserId()) {

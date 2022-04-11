@@ -126,9 +126,8 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				Layout.class.getName(), actionRequest);
 
-			if (layout.isTypeAssetDisplay() ||
-				(layout.isTypeContent() &&
-				 (layout.fetchDraftLayout() == null))) {
+			if ((layout.isTypeAssetDisplay() || layout.isTypeContent()) &&
+				(layout.fetchDraftLayout() == null)) {
 
 				AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 					Layout.class.getName(), layout.getPlid());

@@ -60,18 +60,14 @@ const SearchBar = ({setFilters}) => {
 					{isSearchButton ? (
 						<ClayButtonWithIcon
 							displayType="unstyled"
-							onClick={() => {
-								updateSearchFilter();
-							}}
+							onClick={() => updateSearchFilter()}
 							symbol="search"
 						/>
 					) : (
 						<ClayButtonWithIcon
 							className="navbar-breakpoint-d-none"
 							displayType="unstyled"
-							onClick={() => {
-								updateSearchFilter();
-							}}
+							onClick={() => updateSearchFilter()}
 							symbol="times"
 						/>
 					)}

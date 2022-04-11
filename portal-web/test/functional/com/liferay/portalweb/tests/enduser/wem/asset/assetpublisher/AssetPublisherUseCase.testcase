@@ -1430,7 +1430,7 @@ definition {
 
 			WebContent.editDisplayPage(
 				pageName = "Asset Publisher Page",
-				pageType = "Public Pages",
+				pageType = "Pages",
 				webContentTitle = "Web Content Title");
 
 			PortletEntry.publish();
@@ -1816,7 +1816,7 @@ definition {
 
 		WebContent.editDisplayPage(
 			pageName = "Asset Publisher Page",
-			pageType = "Public Pages");
+			pageType = "Pages");
 
 		WebContent.editFriendlyURL(webContentFriendlyURL = "webcontentenglish");
 
@@ -2506,7 +2506,7 @@ catch (Exception e) {
 
 			WebContent.editDisplayPage(
 				pageName = "Content Page Name",
-				pageType = "Public Pages");
+				pageType = "Pages");
 
 			PortletEntry.publish();
 		}
@@ -2570,7 +2570,7 @@ catch (Exception e) {
 
 			WebContent.editDisplayPage(
 				pageName = "Asset Publisher Page",
-				pageType = "Public Pages");
+				pageType = "Pages");
 
 			PortletEntry.publish();
 		}

@@ -409,7 +409,7 @@ definition {
 
 		WebContent.editDisplayPage(
 			pageName = "Test Page",
-			pageType = "Public Pages");
+			pageType = "Pages");
 
 		PortletEntry.publish();
 

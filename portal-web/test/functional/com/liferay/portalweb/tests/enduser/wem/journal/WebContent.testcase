@@ -1299,7 +1299,7 @@ definition {
 
 			WebContent.editDisplayPage(
 				pageName = "Test Page Name 2",
-				pageType = "Public Pages");
+				pageType = "Pages");
 
 			PortletEntry.publish();
 		}
@@ -1319,7 +1319,7 @@ definition {
 
 			WebContent.editDisplayPage(
 				pageName = "Test Page Name 2",
-				pageType = "Public Pages");
+				pageType = "Pages");
 
 			PortletEntry.publish();
 		}
@@ -1453,7 +1453,7 @@ definition {
 
 			WebContent.editDisplayPage(
 				pageName = "Test Page Name",
-				pageType = "Public Pages");
+				pageType = "Pages");
 
 			PortletEntry.publish();
 		}

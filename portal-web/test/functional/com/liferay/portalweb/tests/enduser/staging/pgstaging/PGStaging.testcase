@@ -720,7 +720,7 @@ definition {
 
 		WebContent.editDisplayPage(
 			pageName = "Staging Test Page",
-			pageType = "Public Pages");
+			pageType = "Pages");
 
 		PortletEntry.publish();
 

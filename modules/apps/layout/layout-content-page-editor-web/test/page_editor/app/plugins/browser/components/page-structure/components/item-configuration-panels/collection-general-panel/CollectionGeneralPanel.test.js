@@ -29,6 +29,7 @@ jest.mock(
 	() => ({
 		config: {
 			commonStyles: [],
+			featureFlagLps119551: true,
 			searchContainerPageMaxDelta: '50',
 		},
 	})
@@ -63,11 +64,14 @@ const DEFAULT_ITEM_CONFIG = {
 	},
 	displayAllItems: false,
 	displayAllPages: false,
+	gutters: false,
+	listStyle: '',
 	numberOfColumns: 1,
 	numberOfItems: 5,
 	numberOfItemsPerPage: 5,
 	numberOfPages: 1,
 	paginationType: 'numeric',
+	verticalAlignment: 'start',
 };
 
 const renderComponent = ({
@@ -75,6 +79,7 @@ const renderComponent = ({
 	fragmentEntryLinks = {},
 	itemId = '0',
 	layoutData = {},
+	selectedViewportSize = 'desktop',
 } = {}) => {
 	Liferay.Util.sub.mockImplementation((langKey, args) =>
 		[langKey, args].join('-')
@@ -87,7 +92,7 @@ const renderComponent = ({
 				fragmentEntryLinks,
 				layoutData,
 				segmentsExperienceId: '0',
-				selectedViewportSize: 'desktop',
+				selectedViewportSize,
 			})}
 		>
 			<CollectionGeneralPanel
@@ -104,6 +109,42 @@ const renderComponent = ({
 };
 
 describe('CollectionGeneralPanel', () => {
+	it('allows changing the Gutter select', async () => {
+		renderComponent({
+			itemConfig: {
+				numberOfColumns: 2,
+			},
+		});
+
+		const input = screen.getByLabelText('show-gutter');
+
+		fireEvent.click(input);
+
+		expect(updateItemConfig).toHaveBeenCalledWith({
+			itemConfig: {gutters: true},
+			itemId: '0',
+			segmentsExperienceId: '0',
+		});
+	});
+
+	it('allows changing the Vertical Alignment select', async () => {
+		renderComponent();
+
+		const input = screen.getByLabelText('vertical-alignment');
+
+		fireEvent.change(input, {
+			target: {value: 'center'},
+		});
+
+		expect(updateItemConfig).toHaveBeenCalledWith({
+			itemConfig: {
+				verticalAlignment: 'center',
+			},
+			itemId: '0',
+			segmentsExperienceId: '0',
+		});
+	});
+
 	it('allows changing the Pagination select', async () => {
 		renderComponent();
 
@@ -361,6 +402,25 @@ describe('CollectionGeneralPanel', () => {
 			expect(confirm).toHaveBeenCalledWith(
 				'if-you-change-the-collection-you-unlink-the-collection-filter\n\ndo-you-want-to-continue'
 			);
+		});
+	});
+
+	it('allows changing Layout for a given viewport', async () => {
+		renderComponent({
+			selectedViewportSize: 'tablet',
+		});
+		const input = screen.getByLabelText('layout');
+
+		fireEvent.change(input, {
+			target: {value: '1'},
+		});
+
+		expect(updateItemConfig).toHaveBeenCalledWith({
+			itemConfig: {
+				tablet: {numberOfColumns: '1'},
+			},
+			itemId: '0',
+			segmentsExperienceId: '0',
 		});
 	});
 });

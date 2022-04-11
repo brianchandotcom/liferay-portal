@@ -14,9 +14,13 @@
 
 package com.liferay.analytics.batch.exportimport.internal.dispatch.executor;
 
+import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
+import com.liferay.analytics.settings.configuration.AnalyticsConfigurationTracker;
 import com.liferay.dispatch.executor.DispatchTaskExecutor;
+import com.liferay.portal.kernel.util.ArrayUtil;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcos Martins
@@ -43,5 +47,24 @@ public class UserAnalyticsDXPEntityExportDispatchTaskExecutor
 	protected String getBatchEngineExportTaskItemDelegateName() {
 		return "user-analytics-dxp-entities";
 	}
+
+	@Override
+	protected boolean shouldExport(long companyId) {
+		AnalyticsConfiguration analyticsConfiguration =
+			_analyticsConfigurationTracker.getAnalyticsConfiguration(companyId);
+
+		if (analyticsConfiguration.syncAllContacts() ||
+			!ArrayUtil.isEmpty(analyticsConfiguration.syncedUserGroupIds()) ||
+			!ArrayUtil.isEmpty(
+				analyticsConfiguration.syncedOrganizationIds())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	@Reference
+	private AnalyticsConfigurationTracker _analyticsConfigurationTracker;
 
 }

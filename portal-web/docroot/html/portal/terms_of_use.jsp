@@ -69,7 +69,9 @@ TermsOfUseContentProvider termsOfUseContentProvider = TermsOfUseContentProviderU
 					<aui:button type="submit" value="i-agree" />
 
 					<%
-					String taglibOnClick = "alert('" + UnicodeLanguageUtil.get(request, "you-must-agree-with-the-terms-of-use-to-continue") + "');";
+					String disagreeMessage = '" + UnicodeLanguageUtil.get(request, "you-must-agree-with-the-terms-of-use-to-continue") + "';
+
+					String taglibOnClick = "Liferay.__FF__.enableCustomDialogs ? Liferay.Util.openAlertModal({message: '" + disagreeMessage + "'}) : alert('" + disagreeMessage + "');";
 					%>
 
 					<aui:button onClick="<%= taglibOnClick %>" type="cancel" value="i-disagree" />

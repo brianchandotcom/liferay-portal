@@ -24,7 +24,7 @@ const SearchBar = ({setFilters}) => {
 		}));
 	};
 
-	function setSearch() {
+	const updateSearchFilter = () => {
 		if (isSearchButton) {
 			setIsSearchButton(false);
 			updateSearchTermFilter(searchTerm);
@@ -34,7 +34,7 @@ const SearchBar = ({setFilters}) => {
 			updateSearchTermFilter('');
 			setIsSearchButton(true);
 		}
-	}
+	};
 
 	return (
 		<ClayInput.Group className="m-0 mr-2">
@@ -48,7 +48,7 @@ const SearchBar = ({setFilters}) => {
 					}}
 					onKeyPress={(event) => {
 						if (event.key === 'Enter') {
-							setSearch();
+							updateSearchFilter();
 						}
 					}}
 					placeholder="Search"
@@ -61,7 +61,7 @@ const SearchBar = ({setFilters}) => {
 						<ClayButtonWithIcon
 							displayType="unstyled"
 							onClick={() => {
-								setSearch();
+								updateSearchFilter();
 							}}
 							symbol="search"
 						/>
@@ -70,7 +70,7 @@ const SearchBar = ({setFilters}) => {
 							className="navbar-breakpoint-d-none"
 							displayType="unstyled"
 							onClick={() => {
-								setSearch();
+								updateSearchFilter();
 							}}
 							symbol="times"
 						/>

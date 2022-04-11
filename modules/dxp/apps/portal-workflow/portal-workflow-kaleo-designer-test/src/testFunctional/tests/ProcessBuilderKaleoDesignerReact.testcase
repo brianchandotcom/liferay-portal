@@ -1434,11 +1434,46 @@ definition {
 	}
 
 	@description = "Verify that each fork node requires a join node"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test ForkNodeRequiresJoinNode {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#ForkNodeRequiresJoinNode";
 
-		// TODO LRQA-72942 ForkNodeRequiresJoinNode pending implementation
+		Workflow.openWorkflowListView();
+
+
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Fork",
+			nodePosition = "-20,-100",
+			nodeType = "fork");
+
+
+		ProcessBuilderKaleoDesignerReact.addConnector(
+			connectorIn = "fork",
+			connectorLabel = "Transition Label",
+			connectorOut = "start",
+			key_direction = "top");
+
+
+		ProcessBuilderKaleoDesignerReact.addConnector(
+			connectorIn = "end",
+			connectorLabel = "Transition Label",
+			connectorOut = "fork",
+			key_direction = "top");
+
+
+		Button.clickPublish();
+
+
+		Alert.viewErrorMessage(errorMessage = "Each fork node requires a join node. Make sure all forks and joins are properly paired");
+		
+
+		Navigator.gotoBack();
+
+
+		Workflow.viewDefinitionNotPresent(workflowDefinitionTitle = "New Workflow Definition");
 
 	}
 

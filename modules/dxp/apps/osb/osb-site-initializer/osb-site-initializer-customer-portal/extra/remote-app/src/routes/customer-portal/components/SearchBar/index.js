@@ -28,7 +28,8 @@ const SearchBar = ({setFilters}) => {
 		if (isSearchButton) {
 			setIsSearchButton(false);
 			updateSearchTermFilter(searchTerm);
-		} else {
+		}
+		else {
 			setSearchTerm('');
 			updateSearchTermFilter('');
 			setIsSearchButton(true);

@@ -91,22 +91,22 @@ public class BatchPlannerPlanHelper {
 	}
 
 	public BatchPlannerPlan addImportBatchPlannerPlan(
-			PortletRequest portletRequest, String importFileURI)
+			PortletRequest portletRequest, String importFileName,
+			String importFileURI)
 		throws PortalException {
 
 		String externalType = ParamUtil.getString(
 			portletRequest, "externalType", "CSV");
 		String internalClassName = ParamUtil.getString(
 			portletRequest, "internalClassName");
-		String name = ParamUtil.getString(portletRequest, "name");
 		String taskItemDelegateName = ParamUtil.getString(
 			portletRequest, "taskItemDelegateName");
 		boolean template = ParamUtil.getBoolean(portletRequest, "template");
 
 		BatchPlannerPlan batchPlannerPlan =
 			_batchPlannerPlanService.addBatchPlannerPlan(
-				false, externalType, importFileURI, internalClassName, name,
-				taskItemDelegateName, template);
+				false, externalType, importFileURI, internalClassName,
+				importFileName, taskItemDelegateName, template);
 
 		_batchPlannerPolicyService.addBatchPlannerPolicy(
 			batchPlannerPlan.getBatchPlannerPlanId(), "containsHeaders",
@@ -116,6 +116,10 @@ public class BatchPlannerPlanHelper {
 			_batchPlannerPolicyService.addBatchPlannerPolicy(
 				batchPlannerPlan.getBatchPlannerPlanId(), "csvSeparator",
 				ParamUtil.getString(portletRequest, "csvSeparator"));
+			_batchPlannerPolicyService.addBatchPlannerPolicy(
+				batchPlannerPlan.getBatchPlannerPlanId(),
+				"csvEnclosingCharacter",
+				ParamUtil.getString(portletRequest, "csvEnclosingCharacter"));
 		}
 
 		_batchPlannerPolicyService.addBatchPlannerPolicy(

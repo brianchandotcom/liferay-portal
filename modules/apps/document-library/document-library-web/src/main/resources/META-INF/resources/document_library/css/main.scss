@@ -819,12 +819,6 @@ $productMenuWidth: 320px;
 		border-top-left-radius: 0;
 		border-top-right-radius: 0;
 	}
-
-	.document-container {
-		.upload-drop-active & {
-			box-shadow: inset 0 0 5px #b8c1d1;
-		}
-	}
 }
 
 .active-area-proxy {
@@ -841,5 +835,10 @@ $productMenuWidth: 320px;
 	.progress p {
 		font-weight: 600;
 		margin: auto;
+	}
+
+	.overlaymask-content {
+		background-color: #fff;
+		border-radius: 5px;
 	}
 }

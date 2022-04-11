@@ -126,7 +126,7 @@ definition {
 		if (IsTextEqual.isPartialText(locator1 = "Toolbar#FEEDBACK", value1 = "Successfully received translations.")) {
 			Translations.viewTargetFields(
 				contentPageName = "内容页面名称",
-				link = "去一个地方");
+				link = "去某地");
 
 			PortletEntry.publish();
 
@@ -141,7 +141,7 @@ definition {
 			ContentPages.viewFragmentText(
 				fragmentName = "button",
 				id = "link",
-				text = "去一个地方");
+				text = "去某地");
 
 			PageEditor.clickPublish();
 

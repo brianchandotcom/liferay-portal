@@ -21,6 +21,7 @@ definition {
 		property data.archive.type = "data-archive-msb";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.1.3";
+		property private.pages.enabled = "true";
 
 		Upgrade.viewMSBUpgrade();
 
@@ -32,6 +33,7 @@ definition {
 		property data.archive.type = "data-archive-msb";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.1.10.2";
+		property private.pages.enabled = "true";
 
 		Upgrade.viewMSBUpgrade();
 

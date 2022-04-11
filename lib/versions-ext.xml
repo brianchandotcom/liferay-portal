@@ -1799,18 +1799,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/stax.jar</file-name>
-				<version>1.0.1</version>
-				<project-name>JSR 173 Streaming API for XML</project-name>
-				<project-url>http://jcp.org/en/jsr/detail?id=173</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/stax-ex.jar</file-name>
 				<version>1.2</version>
 				<project-name>StAX-Ex</project-name>

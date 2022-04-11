@@ -14,8 +14,6 @@
 
 package com.liferay.source.formatter.processor;
 
-import com.liferay.petra.string.StringBundler;
-
 import org.junit.Test;
 
 /**
@@ -33,10 +31,8 @@ public class XMLSourceProcessorTest extends BaseSourceProcessorTestCase {
 	public void testIncorrectMessageInEchoTag() throws Exception {
 		test(
 			"IncorrectEchoTagWithMessage.testxml",
-			StringBundler.concat(
-				"Do not use self-closing tag for attribute 'message' in ",
-				"'<echo>' tag. Please use '<echo>Executing Gradle task: ",
-				"${gradle.executable.task}</echo>' instead."),
+			"Do not use self-closing tag for attribute 'message' in '" +
+				"<echo>' tag",
 			9);
 	}
 

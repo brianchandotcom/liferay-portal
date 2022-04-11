@@ -44,6 +44,8 @@ renderResponse.setTitle(LanguageUtil.get(request, "view-element"));
 			HashMapBuilder.<String, Object>put(
 				"defaultLocale", LocaleUtil.toLanguageId(LocaleUtil.getDefault())
 			).put(
+				"jsonAutocompleteEnabled", GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-148749"))
+			).put(
 				"learnMessages", LearnMessageUtil.getJSONObject("search-experiences-web")
 			).put(
 				"locale", themeDisplay.getLanguageId()

@@ -22,6 +22,7 @@ import EditSXPBlueprintForm from './EditSXPBlueprintForm';
 export default function ({
 	contextPath,
 	defaultLocale,
+	jsonAutocompleteEnabled,
 	learnMessages,
 	locale,
 	namespace,
@@ -52,6 +53,7 @@ export default function ({
 				availableLanguages: Liferay.Language.available,
 				contextPath,
 				defaultLocale,
+				jsonAutocompleteEnabled,
 				learnMessages,
 				locale,
 				namespace,

@@ -37,7 +37,9 @@ import 'codemirror/lib/codemirror.css';
 
 import 'codemirror/mode/javascript/javascript';
 import CodeMirror from 'codemirror';
-import React, {useEffect, useRef} from 'react';
+import React, {useContext, useEffect, useRef} from 'react';
+
+import ThemeContext from './ThemeContext';
 
 const AUTOCOMPLETE_EXCLUDED_KEYS = new Set([
 	' ',
@@ -495,6 +497,7 @@ const CodeMirrorEditor = React.forwardRef(
 		const innerRef = useRef(ref);
 		const editorWrapperRef = useRef();
 		const editorRef = useCombinedRefs(ref, innerRef);
+		const {jsonAutocompleteEnabled} = useContext(ThemeContext);
 
 		useEffect(() => {
 			if (editorWrapperRef.current) {
@@ -520,7 +523,6 @@ const CodeMirrorEditor = React.forwardRef(
 					matchBrackets: true,
 					mode: {globalVars: true, name: MODES[mode].type},
 					readOnly,
-					showHint: !!autocompleteSchema,
 					tabSize: 2,
 					value,
 				});
@@ -531,7 +533,7 @@ const CodeMirrorEditor = React.forwardRef(
 
 				// Enable autocomplete if `autocompleteSchema` is defined.
 
-				if (autocompleteSchema) {
+				if (autocompleteSchema && jsonAutocompleteEnabled) {
 					CodeMirror.registerHelper('hint', 'json', (cm) =>
 						getCodeMirrorHints(cm, autocompleteSchema)
 					);

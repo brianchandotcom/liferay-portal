@@ -143,6 +143,22 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 	}
 
 	@Override
+	public BlogsEntry fetchBlogsEntryByExternalReferenceCode(
+			long groupId, String externalReferenceCode)
+		throws PortalException {
+
+		BlogsEntry blogsEntry = blogsEntryPersistence.fetchByG_ERC(
+			groupId, externalReferenceCode);
+
+		if (blogsEntry != null) {
+			_blogsEntryModelResourcePermission.check(
+				getPermissionChecker(), blogsEntry, ActionKeys.VIEW);
+		}
+
+		return blogsEntry;
+	}
+
+	@Override
 	public List<BlogsEntry> getCompanyEntries(
 			long companyId, Date displayDate, int status, int max)
 		throws PortalException {

@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.props.test.util.PropsTemporarySwapper;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -104,18 +105,23 @@ public class AssetAutoTaggerTest extends BaseAssetAutoTaggerTestCase {
 
 	@Test
 	public void testAutoTagsAssetOnUpdateIfEnabled() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group.getGroupId(), 0);
+		try (PropsTemporarySwapper propsTemporarySwapper =
+				new PropsTemporarySwapper(
+					"feature.flag.LPS-150762", Boolean.TRUE.toString())) {
 
-		FileEntry fileEntry = addFileEntry(serviceContext);
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(group.getGroupId(), 0);
 
-		serviceContext.setAssetTagNames(new String[0]);
-		serviceContext.setAttribute("updateAutoTags", Boolean.TRUE);
+			FileEntry fileEntry = addFileEntry(serviceContext);
 
-		AssetEntry assetEntry = updateFileEntryAssetEntry(
-			fileEntry, serviceContext);
+			serviceContext.setAssetTagNames(new String[0]);
+			serviceContext.setAttribute("updateAutoTags", Boolean.TRUE);
 
-		assertContainsAssetTagName(assetEntry, ASSET_TAG_NAME_AUTO);
+			AssetEntry assetEntry = updateFileEntryAssetEntry(
+				fileEntry, serviceContext);
+
+			assertContainsAssetTagName(assetEntry, ASSET_TAG_NAME_AUTO);
+		}
 	}
 
 	@Test
@@ -172,18 +178,23 @@ public class AssetAutoTaggerTest extends BaseAssetAutoTaggerTestCase {
 
 	@Test
 	public void testDoesNotAutoTagAssetOnUpdateIfDisabled() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group.getGroupId(), 0);
+		try (PropsTemporarySwapper propsTemporarySwapper =
+				new PropsTemporarySwapper(
+					"feature.flag.LPS-150762", Boolean.TRUE.toString())) {
 
-		FileEntry fileEntry = addFileEntry(serviceContext);
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(group.getGroupId(), 0);
 
-		serviceContext.setAssetTagNames(new String[0]);
-		serviceContext.setAttribute("updateAutoTags", Boolean.FALSE);
+			FileEntry fileEntry = addFileEntry(serviceContext);
 
-		AssetEntry assetEntry = updateFileEntryAssetEntry(
-			fileEntry, serviceContext);
+			serviceContext.setAssetTagNames(new String[0]);
+			serviceContext.setAttribute("updateAutoTags", Boolean.FALSE);
 
-		assertDoesNotContainAssetTagName(assetEntry, ASSET_TAG_NAME_AUTO);
+			AssetEntry assetEntry = updateFileEntryAssetEntry(
+				fileEntry, serviceContext);
+
+			assertDoesNotContainAssetTagName(assetEntry, ASSET_TAG_NAME_AUTO);
+		}
 	}
 
 	@Test

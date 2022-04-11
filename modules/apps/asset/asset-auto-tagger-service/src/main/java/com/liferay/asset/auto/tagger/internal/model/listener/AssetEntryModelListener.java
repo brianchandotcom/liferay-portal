@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.util.concurrent.Callable;
 
@@ -127,6 +128,10 @@ public class AssetEntryModelListener extends BaseModelListener<AssetEntry> {
 	}
 
 	private boolean _isUpdateAutoTags() {
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-150762"))) {
+			return false;
+		}
+
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 

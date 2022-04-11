@@ -88,6 +88,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.trash.TrashHelper;
 
@@ -380,6 +381,10 @@ public class DLAdminDisplayContext {
 	}
 
 	public boolean isAutoTaggingEnabled() {
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-150762"))) {
+			return false;
+		}
+
 		return _assetAutoTaggerConfiguration.isEnabled();
 	}
 

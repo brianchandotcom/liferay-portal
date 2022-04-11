@@ -107,6 +107,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ORDER_TOGGLE_BUTTON</td>
+	<td>//nav[contains(@class,'management-bar')]//*[*[name()='svg'][contains(@class,'icon-${key_icon}')] and contains(@title,'Reverse Order Direction')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MORE_ACTIONS_ELLIPSIS</td>
 	<td>//nav[contains(@class,'management-bar')]//button[contains(@class, 'dropdown-toggle')][*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
 	<td></td>

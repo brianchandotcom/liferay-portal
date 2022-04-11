@@ -162,7 +162,9 @@ definition {
 		}
 
 		task ("And the button is changed to the other order direction") {
-			AssertElementPresent(locator1 = "xpath=(//nav[contains(@class,'management-bar')]//*[*[name()='svg'][contains(@class,'icon-order-list-down')] and contains(@title,'Reverse Order Direction')])");
+			AssertElementPresent(
+				key_icon = "order-list-down",
+				locator1 = "ManagementBar#ORDER_TOGGLE_BUTTON");
 		}
 
 		task ("And a tooltip message will be displayed") {

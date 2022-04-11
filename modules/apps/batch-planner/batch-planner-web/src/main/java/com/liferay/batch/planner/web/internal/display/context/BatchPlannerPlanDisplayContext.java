@@ -168,7 +168,7 @@ public class BatchPlannerPlanDisplayContext extends BaseDisplayContext {
 		).userId(
 			batchPlannerPlan.getUserId()
 		).action(
-			_getAction(batchPlannerPlan.getExport())
+			_getAction(batchPlannerPlan.isExport())
 		).status(
 			BatchPlannerPlanConstants.STATUS_INACTIVE
 		);

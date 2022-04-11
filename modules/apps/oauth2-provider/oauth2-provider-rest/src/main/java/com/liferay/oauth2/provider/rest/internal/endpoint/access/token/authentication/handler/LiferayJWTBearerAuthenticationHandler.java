@@ -18,7 +18,6 @@ import com.liferay.oauth2.provider.rest.internal.configuration.admin.service.OAu
 import com.liferay.oauth2.provider.rest.internal.endpoint.constants.OAuth2ProviderRESTEndpointConstants;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -36,7 +35,11 @@ import org.apache.cxf.jaxrs.utils.HttpUtils;
 import org.apache.cxf.jaxrs.utils.JAXRSUtils;
 import org.apache.cxf.message.Message;
 import org.apache.cxf.rs.security.jose.common.JoseConstants;
+import org.apache.cxf.rs.security.jose.jwk.JsonWebKeys;
+import org.apache.cxf.rs.security.jose.jwk.JwkUtils;
+import org.apache.cxf.rs.security.jose.jws.HmacJwsSignatureVerifier;
 import org.apache.cxf.rs.security.jose.jws.JwsSignatureVerifier;
+import org.apache.cxf.rs.security.jose.jws.JwsUtils;
 import org.apache.cxf.rs.security.jose.jwt.JwtConstants;
 import org.apache.cxf.rs.security.jose.jwt.JwtToken;
 import org.apache.cxf.rs.security.oauth2.common.Client;
@@ -124,22 +127,34 @@ public class LiferayJWTBearerAuthenticationHandler
 		Client client = _clientRegistrationProvider.getClient(
 			(String)jwtToken.getClaim(JwtConstants.CLAIM_SUBJECT));
 
-		Map<String, String> clientProperties = client.getProperties();
-
-		long companyId = GetterUtil.getLong(
-			clientProperties.get(
-				OAuth2ProviderRESTEndpointConstants.PROPERTY_KEY_COMPANY_ID));
-
-		String issuer = (String)jwtToken.getClaim(JwtConstants.CLAIM_ISSUER);
-		String kid = (String)jwtToken.getJwsHeader(JoseConstants.HEADER_KEY_ID);
+		String tokenEndpointAuthMethod = client.getTokenEndpointAuthMethod();
 
 		try {
-			return _oAuth2InAssertionManagedServiceFactory.
-				getJWSSignatureVerifier(companyId, issuer, kid);
+			if (tokenEndpointAuthMethod.equals(_CLIENT_SECRET_JWT)) {
+				return new HmacJwsSignatureVerifier(client.getClientSecret());
+			}
+
+			if (tokenEndpointAuthMethod.equals(_PRIVATE_KEY_JWT)) {
+				Map<String, String> clientProperties = client.getProperties();
+
+				JsonWebKeys jsonWebKeys = JwkUtils.readJwkSet(
+					clientProperties.get(
+						OAuth2ProviderRESTEndpointConstants.
+							PROPERTY_KEY_CLIENT_JWKS));
+
+				return JwsUtils.getSignatureVerifier(
+					jsonWebKeys.getKey(
+						(String)jwtToken.getJwsHeader(
+							JoseConstants.HEADER_KEY_ID)));
+			}
+
+			throw new IllegalArgumentException(
+				"Client configures not to use JWT as client authentication " +
+					"method");
 		}
-		catch (IllegalArgumentException illegalArgumentException) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(illegalArgumentException);
+				_log.warn(exception);
 			}
 
 			throw new NotAuthorizedException(OAuthConstants.INVALID_CLIENT);
@@ -164,6 +179,10 @@ public class LiferayJWTBearerAuthenticationHandler
 
 		return false;
 	}
+
+	private static final String _CLIENT_SECRET_JWT = "client_secret_jwt";
+
+	private static final String _PRIVATE_KEY_JWT = "private_key_jwt";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LiferayJWTBearerAuthenticationHandler.class);

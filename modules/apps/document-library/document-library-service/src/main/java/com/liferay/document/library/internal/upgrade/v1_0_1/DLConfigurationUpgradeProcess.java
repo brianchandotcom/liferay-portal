@@ -15,6 +15,7 @@
 package com.liferay.document.library.internal.upgrade.v1_0_1;
 
 import com.liferay.document.library.configuration.DLConfiguration;
+import com.liferay.document.library.internal.configuration.DLSizeLimitConfiguration;
 import com.liferay.document.library.internal.constants.LegacyDLKeys;
 import com.liferay.portal.configuration.upgrade.PrefsPropsToConfigurationUpgradeHelper;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -41,7 +42,11 @@ public class DLConfigurationUpgradeProcess extends UpgradeProcess {
 	private void _upgradeConfiguration() throws Exception {
 		_prefsPropsToConfigurationUpgradeHelper.mapConfigurations(
 			DLConfiguration.class,
-			new KeyValuePair(LegacyDLKeys.DL_FILE_EXTENSIONS, "fileExtensions"),
+			new KeyValuePair(
+				LegacyDLKeys.DL_FILE_EXTENSIONS, "fileExtensions"));
+
+		_prefsPropsToConfigurationUpgradeHelper.mapConfigurations(
+			DLSizeLimitConfiguration.class,
 			new KeyValuePair(LegacyDLKeys.DL_FILE_MAX_SIZE, "fileMaxSize"));
 	}
 

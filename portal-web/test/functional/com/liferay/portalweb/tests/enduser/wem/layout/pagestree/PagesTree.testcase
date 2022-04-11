@@ -167,7 +167,7 @@ definition {
 
 			PagesFinder.goToPagesFinder();
 
-			PagesFinder.addPublicCollectionPage(
+			PagesFinder.addCollectionPage(
 				collectionName = "Dynamic Collection",
 				pageName = "Test Collection Page Name 1",
 				tabName = "Collections");
@@ -206,7 +206,7 @@ definition {
 		task ("Add a collection page based on Highest Rated Assets via page tree") {
 			PagesFinder.goToPagesFinder();
 
-			PagesFinder.addPublicCollectionPage(
+			PagesFinder.addCollectionPage(
 				collectionName = "Highest Rated Assets",
 				pageName = "Test Collection Page Name 2",
 				tabName = "Collection Providers");
@@ -253,7 +253,7 @@ definition {
 
 			PagesFinder.goToPagesFinder();
 
-			PagesFinder.addPublicCollectionPage(
+			PagesFinder.addCollectionPage(
 				collectionName = "Manual Collection Name",
 				menuItem = "Manual Collection",
 				pageName = "Manual Collection Page Name",
@@ -264,7 +264,7 @@ definition {
 		}
 
 		task ("Add a collection page based on dynamic collection via page tree") {
-			PagesFinder.addPublicCollectionPage(
+			PagesFinder.addCollectionPage(
 				collectionName = "Dynamic Collection Name",
 				menuItem = "Dynamic Collection",
 				pageName = "Dynamic Collection Page Name",

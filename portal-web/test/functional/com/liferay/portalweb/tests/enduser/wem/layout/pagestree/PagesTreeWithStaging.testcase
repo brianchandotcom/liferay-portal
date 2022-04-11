@@ -59,7 +59,7 @@ definition {
 
 			PagesFinder.goToPagesFinder();
 
-			PagesFinder.addPublicCollectionPage(
+			PagesFinder.addCollectionPage(
 				collectionName = "Dynamic Collection",
 				pageName = "Test Collection Page Name 1",
 				tabName = "Collections");
@@ -92,7 +92,7 @@ definition {
 		task ("Add a Collection Page based on Most Viewed Assets via Pages Tree Panel") {
 			PagesFinder.goToPagesFinder();
 
-			PagesFinder.addPublicCollectionPage(
+			PagesFinder.addCollectionPage(
 				collectionName = "Most Viewed Assets",
 				pageName = "Test Collection Page Name 2",
 				tabName = "Collection Providers");

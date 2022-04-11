@@ -21,15 +21,6 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class ObjectEntryValuesException extends PortalException {
 
-	public static class Exceeds280Characters
-		extends ObjectEntryValuesException {
-
-		public Exceeds280Characters() {
-			super("The maximum length is 280 characters for text fields");
-		}
-
-	}
-
 	public static class ExceedsIntegerSize extends ObjectEntryValuesException {
 
 		public ExceedsIntegerSize() {
@@ -72,6 +63,19 @@ public class ObjectEntryValuesException extends PortalException {
 					"File exceeds the maximum permitted size of %s MB for " +
 						"object field \"%s\"",
 					maxFileSize, objectFieldName));
+		}
+
+	}
+
+	public static class ExceedsTextMaxLength
+		extends ObjectEntryValuesException {
+
+		public ExceedsTextMaxLength(int maxLength, String objectFieldName) {
+			super(
+				String.format(
+					"Object entry value exceeds the maximum length of %s " +
+						"characters for object field \"%s\"",
+					maxLength, objectFieldName));
 		}
 
 	}

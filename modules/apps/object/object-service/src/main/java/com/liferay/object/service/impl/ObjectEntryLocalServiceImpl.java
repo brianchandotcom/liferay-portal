@@ -1739,6 +1739,27 @@ public class ObjectEntryLocalServiceImpl
 		}
 	}
 
+	private void _validateTextMaxLength(
+			int defaultMaxLength, String objectEntryValue, long objectFieldId,
+			String objectFieldName)
+		throws PortalException {
+
+		int maxLength = defaultMaxLength;
+
+		ObjectFieldSetting objectFieldSetting =
+			_objectFieldSettingPersistence.fetchByOFI_N(
+				objectFieldId, "maxLength");
+
+		if (objectFieldSetting != null) {
+			maxLength = GetterUtil.getInteger(objectFieldSetting.getValue());
+		}
+
+		if (objectEntryValue.length() > maxLength) {
+			throw new ObjectEntryValuesException.ExceedsTextMaxLength(
+				maxLength, objectFieldName);
+		}
+	}
+
 	private void _validateValues(
 			long objectDefinitionId, Map<String, Serializable> values)
 		throws PortalException {
@@ -1791,6 +1812,14 @@ public class ObjectEntryLocalServiceImpl
 			}
 		}
 		else if (StringUtil.equals(
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT)) {
+
+			_validateTextMaxLength(
+				65000, GetterUtil.getString(entry.getValue()),
+				objectField.getObjectFieldId(), objectField.getName());
+		}
+		else if (StringUtil.equals(
 					objectField.getDBType(),
 					ObjectFieldConstants.DB_TYPE_INTEGER)) {
 
@@ -1836,11 +1865,9 @@ public class ObjectEntryLocalServiceImpl
 					objectField.getDBType(),
 					ObjectFieldConstants.DB_TYPE_STRING)) {
 
-			String value = (String)entry.getValue();
-
-			if ((value != null) && (value.length() > 280)) {
-				throw new ObjectEntryValuesException.Exceeds280Characters();
-			}
+			_validateTextMaxLength(
+				280, GetterUtil.getString(entry.getValue()),
+				objectField.getObjectFieldId(), objectField.getName());
 		}
 
 		if (objectField.getListTypeDefinitionId() != 0) {

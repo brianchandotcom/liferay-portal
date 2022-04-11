@@ -30,9 +30,14 @@ definition {
 		}
 
 		if ("${pageVersioningEnabled}" == "true") {
-			Click(locator1 = "Checkbox#ENABLED_ON_PUBLIC_PAGES");
+			if (IsElementPresent(key_fieldLabel = "Enabled", locator1 = "Checkbox#CHECKBOX_LABEL")) {
+				Click(locator1 = "Checkbox#ENABLED_ON_PUBLIC_PAGES");
+			}
+			else {
+				Click(locator1 = "Checkbox#ENABLED_ON_PUBLIC_PAGES");
 
-			Click(locator1 = "Checkbox#ENABLED_ON_PRIVATE_PAGES");
+				Click(locator1 = "Checkbox#ENABLED_ON_PRIVATE_PAGES");
+			}
 		}
 
 		Click(locator1 = "SiteSettingsStaging#CONTENT_SELECT_ALL_CHECKBOX");

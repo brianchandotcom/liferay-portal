@@ -28,10 +28,10 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Locale;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Locale;
-import java.util.Map;
 
 /**
  * @author Lourdes Fernández Besada
@@ -39,13 +39,12 @@ import java.util.Map;
 public class LayoutPageTemplateStructureRenderUtil {
 
 	public static String renderLayoutContent(
-		FragmentRendererController fragmentRendererController,
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse,
-		LayoutAdaptiveMediaProcessor layoutAdaptiveMediaProcessor,
-		LayoutPageTemplateStructure layoutPageTemplateStructure,
-		String mode, Map<String, Object> parameterMap, Locale locale,
-		long segmentsExperienceId)
+			FragmentRendererController fragmentRendererController,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse,
+			LayoutAdaptiveMediaProcessor layoutAdaptiveMediaProcessor,
+			LayoutPageTemplateStructure layoutPageTemplateStructure,
+			String mode, Locale locale, long segmentsExperienceId)
 		throws PortalException {
 
 		if (fragmentRendererController == null) {
@@ -60,7 +59,7 @@ public class LayoutPageTemplateStructureRenderUtil {
 
 		String content = _renderLayoutData(
 			data, fragmentRendererController, httpServletRequest,
-			httpServletResponse, mode, parameterMap, locale);
+			httpServletResponse, mode, locale);
 
 		if (layoutAdaptiveMediaProcessor == null) {
 			return content;
@@ -75,13 +74,12 @@ public class LayoutPageTemplateStructureRenderUtil {
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse,
 			LayoutPageTemplateStructure layoutPageTemplateStructure,
-			String mode, Map<String, Object> parameterMap, Locale locale,
-			long segmentsExperienceId)
+			String mode, Locale locale, long segmentsExperienceId)
 		throws PortalException {
 
 		return renderLayoutContent(
 			fragmentRendererController, httpServletRequest, httpServletResponse,
-			null, layoutPageTemplateStructure, mode, parameterMap, locale,
+			null, layoutPageTemplateStructure, mode, locale,
 			segmentsExperienceId);
 	}
 
@@ -89,8 +87,7 @@ public class LayoutPageTemplateStructureRenderUtil {
 		long fragmentEntryLinkId,
 		FragmentRendererController fragmentRendererController,
 		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, String mode,
-		Map<String, Object> parameterMap, Locale locale) {
+		HttpServletResponse httpServletResponse, String mode, Locale locale) {
 
 		FragmentEntryLink fragmentEntryLink =
 			FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(
@@ -103,7 +100,6 @@ public class LayoutPageTemplateStructureRenderUtil {
 		DefaultFragmentRendererContext fragmentRendererContext =
 			new DefaultFragmentRendererContext(fragmentEntryLink);
 
-		fragmentRendererContext.setFieldValues(parameterMap);
 		fragmentRendererContext.setLocale(locale);
 		fragmentRendererContext.setMode(mode);
 
@@ -114,8 +110,7 @@ public class LayoutPageTemplateStructureRenderUtil {
 	private static String _renderLayoutData(
 		String data, FragmentRendererController fragmentRendererController,
 		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, String mode,
-		Map<String, Object> parameterMap, Locale locale) {
+		HttpServletResponse httpServletResponse, String mode, Locale locale) {
 
 		StringBundler sb = new StringBundler();
 
@@ -144,7 +139,7 @@ public class LayoutPageTemplateStructureRenderUtil {
 				_renderFragmentEntryLink(
 					fragmentStyledLayoutStructureItem.getFragmentEntryLinkId(),
 					fragmentRendererController, httpServletRequest,
-					httpServletResponse, mode, parameterMap, locale));
+					httpServletResponse, mode, locale));
 		}
 
 		return sb.toString();

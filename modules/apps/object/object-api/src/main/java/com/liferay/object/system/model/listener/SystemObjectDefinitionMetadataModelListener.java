@@ -229,7 +229,15 @@ public class SystemObjectDefinitionMetadataModelListener<T extends BaseModel<T>>
 			return baseModel.toString();
 		}
 
-		User user = _userLocalService.getUser(userId);
+		User user = _userLocalService.fetchUser(userId);
+
+		if (user == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("No User found with key: " + userId);
+			}
+
+			return baseModel.toString();
+		}
 
 		DefaultDTOConverterContext defaultDTOConverterContext =
 			new DefaultDTOConverterContext(

@@ -126,9 +126,9 @@ for (ProductNavigationControlMenuCategory productNavigationControlMenuCategory :
 			'#<portlet:namespace />ControlMenu [data-toggle="liferay-sidenav"]'
 		);
 
-		var sidenavInstances = Array.from(sidenavToggles).map((toggle) => {
-			return Liferay.SideNavigation.instance(toggle);
-		});
+		var sidenavInstances = Array.from(sidenavToggles)
+			.map((toggle) => Liferay.SideNavigation.instance(toggle))
+			.filter((instance) => instance);
 
 		sidenavInstances.forEach((instance) => {
 			instance.on('openStart.lexicon.sidenav', (event, source) => {

@@ -65,7 +65,7 @@ public class WorkflowTaskAssignableUsersResourceImpl
 
 							List<User> assignableUsers =
 								_workflowTaskManager.getAssignableUsers(
-									contextUser.getCompanyId(), workflowTaskId);
+									workflowTaskId);
 
 							if (commonAssignableUsers == null) {
 								commonAssignableUsers = new TreeSet<>(

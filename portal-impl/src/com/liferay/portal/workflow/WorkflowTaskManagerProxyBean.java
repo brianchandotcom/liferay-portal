@@ -71,7 +71,7 @@ public class WorkflowTaskManagerProxyBean
 	}
 
 	@Override
-	public List<User> getAssignableUsers(long companyId, long workflowTaskId) {
+	public List<User> getAssignableUsers(long workflowTaskId) {
 		throw new UnsupportedOperationException();
 	}
 

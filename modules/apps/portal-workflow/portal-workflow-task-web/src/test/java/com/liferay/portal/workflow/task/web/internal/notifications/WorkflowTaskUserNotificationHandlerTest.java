@@ -281,9 +281,7 @@ public class WorkflowTaskUserNotificationHandlerTest {
 				}
 
 				@Override
-				public List<User> getNotifiableUsers(
-					long companyId, long workflowTaskId) {
-
+				public List<User> getNotifiableUsers(long workflowTaskId) {
 					return _allowedUsers;
 				}
 
@@ -362,7 +360,6 @@ public class WorkflowTaskUserNotificationHandlerTest {
 		RandomTestUtil.randomLong();
 
 	private static List<User> _allowedUsers;
-	private static Language _language;
 
 	private static final ServiceContext _serviceContext = new ServiceContext() {
 

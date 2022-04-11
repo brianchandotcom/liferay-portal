@@ -76,8 +76,7 @@ public interface WorkflowTaskManager {
 	public WorkflowTask fetchWorkflowTask(long companyId, long workflowTaskId)
 		throws WorkflowException;
 
-	public default List<User> getAssignableUsers(
-			long companyId, long workflowTaskId)
+	public default List<User> getAssignableUsers(long workflowTaskId)
 		throws WorkflowException {
 
 		throw new UnsupportedOperationException();
@@ -87,8 +86,7 @@ public interface WorkflowTaskManager {
 			long companyId, long userId, long workflowTaskId)
 		throws WorkflowException;
 
-	public default List<User> getNotifiableUsers(
-			long companyId, long workflowTaskId)
+	public default List<User> getNotifiableUsers(long workflowTaskId)
 		throws WorkflowException {
 
 		throw new UnsupportedOperationException();

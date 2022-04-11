@@ -337,7 +337,7 @@ public class CPInstanceDisplayContext extends BaseCPDefinitionsDisplayContext {
 		return _ddmHelper.renderCPInstanceOptions(
 			getCPDefinitionId(), null, cpDefinition.isIgnoreSKUCombinations(),
 			renderRequest, renderResponse,
-			_cpInstanceHelper.getCPDefinitionOptionRelsMap(
+			_cpInstanceHelper.getCPDefinitionOptionValueRelsMap(
 				getCPDefinitionId(), true, false));
 	}
 

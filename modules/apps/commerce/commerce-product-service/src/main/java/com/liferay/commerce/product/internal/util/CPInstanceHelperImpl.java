@@ -202,7 +202,7 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 
 	@Override
 	public Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
-		getCPDefinitionOptionRelsMap(
+		getCPDefinitionOptionValueRelsMap(
 			long cpDefinitionId, boolean skuContributor, boolean publicStore) {
 
 		List<CPDefinitionOptionRel> cpDefinitionOptionRels;
@@ -249,7 +249,7 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 
 	@Override
 	public Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
-			getCPDefinitionOptionRelsMap(long cpDefinitionId, String json)
+			getCPDefinitionOptionValueRelsMap(long cpDefinitionId, String json)
 		throws PortalException {
 
 		Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>

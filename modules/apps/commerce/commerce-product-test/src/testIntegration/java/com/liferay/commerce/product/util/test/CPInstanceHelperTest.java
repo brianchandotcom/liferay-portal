@@ -407,17 +407,17 @@ public class CPInstanceHelperTest {
 			cpDefinitionOptionRel2);
 
 		Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
-			cpDefinitionOptionRelsMap =
-				_cpInstanceHelper.getCPDefinitionOptionRelsMap(
+			cpDefinitionOptionValueRelsMap =
+				_cpInstanceHelper.getCPDefinitionOptionValueRelsMap(
 					cpDefinition.getCPDefinitionId(), true, true);
 
-		Assert.assertNotNull(cpDefinitionOptionRelsMap);
+		Assert.assertNotNull(cpDefinitionOptionValueRelsMap);
 		Assert.assertEquals(
-			cpDefinitionOptionRelsMap.toString(), 2,
-			cpDefinitionOptionRelsMap.size());
+			cpDefinitionOptionValueRelsMap.toString(), 2,
+			cpDefinitionOptionValueRelsMap.size());
 
 		List<CPDefinitionOptionRel> keys = new ArrayList<>(
-			cpDefinitionOptionRelsMap.keySet());
+			cpDefinitionOptionValueRelsMap.keySet());
 
 		CPDefinitionOptionRel orderedCPDefinitionOptionRel1 = keys.get(0);
 		CPDefinitionOptionRel orderedCPDefinitionOptionRel2 = keys.get(1);
@@ -464,17 +464,17 @@ public class CPInstanceHelperTest {
 			cpDefinitionOptionRel2);
 
 		Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
-			cpDefinitionOptionRelsMap =
-				_cpInstanceHelper.getCPDefinitionOptionRelsMap(
+			cpDefinitionOptionValueRelsMap =
+				_cpInstanceHelper.getCPDefinitionOptionValueRelsMap(
 					cpDefinition.getCPDefinitionId(), true, true);
 
-		Assert.assertNotNull(cpDefinitionOptionRelsMap);
+		Assert.assertNotNull(cpDefinitionOptionValueRelsMap);
 		Assert.assertEquals(
-			cpDefinitionOptionRelsMap.toString(), 2,
-			cpDefinitionOptionRelsMap.size());
+			cpDefinitionOptionValueRelsMap.toString(), 2,
+			cpDefinitionOptionValueRelsMap.size());
 
 		List<CPDefinitionOptionRel> keys = new ArrayList<>(
-			cpDefinitionOptionRelsMap.keySet());
+			cpDefinitionOptionValueRelsMap.keySet());
 
 		CPDefinitionOptionRel orderedCPDefinitionOptionRel1 = keys.get(0);
 		CPDefinitionOptionRel orderedCPDefinitionOptionRel2 = keys.get(1);

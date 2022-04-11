@@ -214,24 +214,24 @@ public class CPAttachmentFileEntryIndexer
 		document.addNumber(Field.TYPE, cpAttachmentFileEntry.getType());
 
 		Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
-			cpDefinitionOptionRelListMap =
-				_cpInstanceHelper.getCPDefinitionOptionRelsMap(
+			cpDefinitionOptionValueRelListMap =
+				_cpInstanceHelper.getCPDefinitionOptionValueRelsMap(
 					cpAttachmentFileEntry.getClassPK(),
 					cpAttachmentFileEntry.getJson());
 
 		for (Map.Entry<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
-				cpDefinitionOptionRelListMapEntry :
-					cpDefinitionOptionRelListMap.entrySet()) {
+				cpDefinitionOptionValueRelListMapEntry :
+					cpDefinitionOptionValueRelListMap.entrySet()) {
 
 			CPDefinitionOptionRel cpDefinitionOptionRel =
-				cpDefinitionOptionRelListMapEntry.getKey();
+				cpDefinitionOptionValueRelListMapEntry.getKey();
 
 			CPOption cpOption = cpDefinitionOptionRel.getCPOption();
 
 			List<String> optionValueIds = new ArrayList<>();
 
 			for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
-					cpDefinitionOptionRelListMapEntry.getValue()) {
+					cpDefinitionOptionValueRelListMapEntry.getValue()) {
 
 				optionValueIds.add(cpDefinitionOptionValueRel.getKey());
 			}

@@ -12,7 +12,7 @@
 import ClayIcon from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import {FieldArray, Formik} from 'formik';
-import {useEffect, useMemo, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import {Badge, Button, Input} from '../../../../../common/components';
 import Layout from '../../../../../common/containers/setup-forms/Layout';
@@ -52,15 +52,11 @@ const RequiredInformation = ({
 	const usedKeysCount =
 		infoSelectedKey?.selectedSubscription?.provisionedCount;
 
-	const hasFilledAtLeastOneField = useMemo(
-		() =>
-			values?.keys?.every((key) => {
-				const fieldValues = Object.values(key).filter(Boolean);
+	const hasFilledAtLeastOneField = values?.keys?.every((key) => {
+		const fieldValues = Object.values(key).filter(Boolean);
 
-				return fieldValues.length > 0;
-			}),
-		[values?.keys]
-	);
+		return fieldValues.length > 0;
+	});
 
 	const newUsedKeys = usedKeysCount + values?.keys?.length;
 	const hasReachedMaximumKeys = newUsedKeys === avaliableKeysMaximumCount;
@@ -96,24 +92,20 @@ const RequiredInformation = ({
 			!hasFilledAtLeastOneField
 		) {
 			setErrors({
-				keys: [
-					{
-						hostName: true,
-						ipAddresses: true,
-						macAddresses: true,
-					},
-				],
+				keys: [...new Array(values.keys?.length)].map(() => ({
+					hostName: true,
+					ipAddresses: true,
+					macAddresses: true,
+				})),
 			});
 
 			setTouched(
 				{
-					keys: [
-						{
-							hostName: true,
-							ipAddresses: true,
-							macAddresses: true,
-						},
-					],
+					keys: [...new Array(values.keys?.length)].map(() => ({
+						hostName: true,
+						ipAddresses: true,
+						macAddresses: true,
+					})),
 				},
 				false
 			);

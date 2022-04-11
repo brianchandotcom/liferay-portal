@@ -741,6 +741,11 @@
 			<property name="description" value="Checks that names of threads follow naming conventions." />
 			<message key="thread.rename" value="Rename thread to ''{0}''" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.check.ToJSONStringMethodCheck">
+			<property name="category" value="Styling" />
+			<property name="description" value="Checks for calling 'toJSONString' method." />
+			<message key="json.to.string.use" value="Use ''toString'' instead of ''toJSONString''" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.TransactionalTestRuleCheck">
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Finds usage of `TransactionalTestRule` in `*StagedModelDataHandlerTest`." />

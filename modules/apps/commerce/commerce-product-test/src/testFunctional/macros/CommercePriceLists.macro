@@ -68,4 +68,10 @@ definition {
 		Button.clickSave();
 	}
 
+	macro openPriceListsAdmin {
+		Navigator.openWithAppendToBaseURL(
+			baseURL = "${baseURL}",
+			urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_commerce_pricing_web_internal_portlet_CommercePriceListPortlet");
+	}
+
 }

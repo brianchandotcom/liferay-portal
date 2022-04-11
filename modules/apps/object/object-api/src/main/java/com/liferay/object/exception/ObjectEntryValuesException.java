@@ -76,7 +76,21 @@ public class ObjectEntryValuesException extends PortalException {
 					"Object entry value exceeds the maximum length of %s " +
 						"characters for object field \"%s\"",
 					maxLength, objectFieldName));
+
+			_maxLength = maxLength;
+			_objectFieldName = objectFieldName;
 		}
+
+		public int getMaxLength() {
+			return _maxLength;
+		}
+
+		public String getObjectFieldName() {
+			return _objectFieldName;
+		}
+
+		private final int _maxLength;
+		private final String _objectFieldName;
 
 	}
 

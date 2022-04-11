@@ -2391,7 +2391,6 @@ public class LayoutStagedModelDataHandler
 		if (importThemeSettings) {
 			importedLayout.setThemeId(layout.getThemeId());
 			importedLayout.setColorSchemeId(layout.getColorSchemeId());
-
 			importedLayout.setCss(
 				_dlReferencesExportImportContentProcessor.
 					replaceImportContentReferences(

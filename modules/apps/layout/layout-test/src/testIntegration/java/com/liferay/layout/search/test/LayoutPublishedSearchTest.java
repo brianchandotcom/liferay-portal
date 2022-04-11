@@ -30,23 +30,29 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
+import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.test.util.IndexerFixture;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -55,6 +61,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
 
 /**
  * @author Ricardo Couso
@@ -84,7 +91,7 @@ public class LayoutPublishedSearchTest {
 
 		_layoutIndexerFixture.searchNoOne(name);
 
-		_publishLayout(layout);
+		_publishLayout(new MockHttpServletRequest(), layout);
 
 		_layoutIndexerFixture.searchOnlyOne(name);
 	}
@@ -100,22 +107,51 @@ public class LayoutPublishedSearchTest {
 
 		_layoutIndexerFixture.searchNoOne(content);
 
-		_publishLayout(layout);
+		_publishLayout(_getHttpServletRequest(layout), layout);
 
 		_layoutIndexerFixture.searchOnlyOne(content);
 	}
 
-	private void _publishLayout(Layout layout) throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				layout.getGroup(), TestPropsValues.getUserId());
+	private HttpServletRequest _getHttpServletRequest(Layout layout)
+		throws Exception {
 
 		MockHttpServletRequest httpServletRequest =
 			new MockHttpServletRequest();
 
 		httpServletRequest.setAttribute(
 			JavaConstants.JAVAX_PORTLET_RESPONSE,
-			new MockLiferayPortletActionResponse());
+			new MockLiferayPortletRenderResponse());
+
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setCompany(
+			_companyLocalService.getCompany(layout.getCompanyId()));
+		themeDisplay.setLayout(layout);
+
+		LayoutSet layoutSet = _group.getPublicLayoutSet();
+
+		themeDisplay.setLayoutSet(layoutSet);
+		themeDisplay.setLookAndFeel(
+			layoutSet.getTheme(), layoutSet.getColorScheme());
+
+		themeDisplay.setRealUser(TestPropsValues.getUser());
+		themeDisplay.setRequest(httpServletRequest);
+		themeDisplay.setResponse(new MockHttpServletResponse());
+		themeDisplay.setScopeGroupId(_group.getGroupId());
+		themeDisplay.setUser(TestPropsValues.getUser());
+
+		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
+
+		return httpServletRequest;
+	}
+
+	private void _publishLayout(
+			HttpServletRequest httpServletRequest, Layout layout)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				layout.getGroup(), TestPropsValues.getUserId());
 
 		serviceContext.setRequest(httpServletRequest);
 
@@ -198,6 +234,9 @@ public class LayoutPublishedSearchTest {
 				_group.getGroupId(), draftLayout.getPlid(),
 				defaultSegmentsExperienceId, layoutStructure.toString());
 	}
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@Inject
 	private FragmentCollectionContributorTracker

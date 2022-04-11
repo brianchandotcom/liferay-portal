@@ -1674,10 +1674,6 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public boolean isShowUserPrivateLayouts() throws PortalException {
-		if (!isPrivateLayoutsEnabled()) {
-			return false;
-		}
-
 		Group selGroup = getSelGroup();
 
 		if (selGroup.isUser()) {

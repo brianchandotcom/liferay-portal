@@ -40,6 +40,16 @@
 		font-size: 14px;
 	}
 
+	.form-group {
+		label {
+			margin-bottom: 0;
+		}
+
+		.sheet-text {
+			margin-bottom: 0.5rem;
+		}
+	}
+
 	.has-error {
 		.codemirror-editor-wrapper {
 			border: 1px solid $errorL1;

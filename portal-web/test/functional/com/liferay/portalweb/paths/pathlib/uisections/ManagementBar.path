@@ -102,6 +102,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FILTER_OR_ORDER_MOBILE</td>
+	<td>//nav[contains(@class,'management-bar')]//*[contains(@title,'${key_title}')]//*[name()='svg'][contains(@class,'icon-${key_icon}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ICON_AND_TEXT_ACTION_BUTTON</td>
 	<td>//nav[contains(@class,'management-bar')]//*[*[name()='svg'][contains(@class,'icon-${key_icon}')]]//following-sibling::span[text()='${key_action}']</td>
 	<td></td>

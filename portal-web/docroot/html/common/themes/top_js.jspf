@@ -312,11 +312,16 @@
 				return <%= themeDisplay.isSignedIn() %>;
 			},
 
-			<c:if test="<%= Validator.isNotNull(themeDisplay.getPpid()) %>">
-				isStagedPortlet: function() {
-					return <%= liveGroup.isStagedPortlet(themeDisplay.getPpid()) %>;
-				},
-			</c:if>
+			isStagedPortlet: function() {
+				<c:choose>
+					<c:when test="<%= Validator.isNotNull(themeDisplay.getPpid()) %>">
+						return <%= liveGroup.isStagedPortlet(themeDisplay.getPpid()) %>;
+					</c:when>
+					<c:otherwise>
+						return false;
+					</c:otherwise>
+				</c:choose>
+			},
 
 			isStateExclusive: function() {
 				return <%= themeDisplay.isStateExclusive() %>;

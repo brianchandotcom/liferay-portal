@@ -615,11 +615,19 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			DLFileEntry.class.getName(), httpServletRequest);
+
+		_setUpDDMFormValues(serviceContext);
+
+		serviceContext.setAttribute(
+			"updateAutoTags",
+			ParamUtil.getBoolean(httpServletRequest, "updateAutoTags"));
+
 		String cmd = ParamUtil.getString(httpServletRequest, Constants.CMD);
 
 		if (!cmd.equals(Constants.ADD_DYNAMIC)) {
-			return ServiceContextFactory.getInstance(
-				DLFileEntry.class.getName(), httpServletRequest);
+			return serviceContext;
 		}
 
 		ThemeDisplay themeDisplay =
@@ -632,12 +640,8 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		if (layout.isPublicLayout() ||
 			(layout.isTypeControlPanel() && !group.hasPrivateLayouts())) {
 
-			return ServiceContextFactory.getInstance(
-				DLFileEntry.class.getName(), httpServletRequest);
+			return serviceContext;
 		}
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			DLFileEntry.class.getName(), httpServletRequest);
 
 		ModelPermissions modelPermissions =
 			serviceContext.getModelPermissions();
@@ -647,12 +651,6 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				modelPermissions.getActionIds(
 					RoleConstants.PLACEHOLDER_DEFAULT_GROUP_ROLE),
 				_RESTRICTED_GUEST_PERMISSIONS, DLFileEntry.class.getName()));
-
-		_setUpDDMFormValues(serviceContext);
-
-		serviceContext.setAttribute(
-			"updateAutoTags",
-			ParamUtil.getBoolean(httpServletRequest, "updateAutoTags"));
 
 		return serviceContext;
 	}

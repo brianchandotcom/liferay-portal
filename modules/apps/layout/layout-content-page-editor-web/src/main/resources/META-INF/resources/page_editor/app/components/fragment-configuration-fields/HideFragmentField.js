@@ -17,7 +17,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
-import {config} from '../../config';
+import {config} from '../../config/index';
 import {useSelectItem} from '../../contexts/ControlsContext';
 import {useSelector} from '../../contexts/StoreContext';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';

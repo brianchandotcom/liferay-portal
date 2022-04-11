@@ -18,14 +18,12 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
 import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
-import com.liferay.layout.adaptive.media.LayoutAdaptiveMediaProcessor;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
@@ -39,13 +37,11 @@ import javax.servlet.http.HttpServletResponse;
 public class LayoutPageTemplateStructureRenderUtil {
 
 	public static String renderLayoutContent(
-			FragmentRendererController fragmentRendererController,
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse,
-			LayoutAdaptiveMediaProcessor layoutAdaptiveMediaProcessor,
-			LayoutPageTemplateStructure layoutPageTemplateStructure,
-			String mode, Locale locale, long segmentsExperienceId)
-		throws PortalException {
+		FragmentRendererController fragmentRendererController,
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse,
+		LayoutPageTemplateStructure layoutPageTemplateStructure, String mode,
+		Locale locale, long segmentsExperienceId) {
 
 		if (fragmentRendererController == null) {
 			return StringPool.BLANK;
@@ -57,30 +53,9 @@ public class LayoutPageTemplateStructureRenderUtil {
 			return StringPool.BLANK;
 		}
 
-		String content = _renderLayoutData(
+		return _renderLayoutData(
 			data, fragmentRendererController, httpServletRequest,
 			httpServletResponse, mode, locale);
-
-		if (layoutAdaptiveMediaProcessor == null) {
-			return content;
-		}
-
-		return layoutAdaptiveMediaProcessor.processAdaptiveMediaContent(
-			content);
-	}
-
-	public static String renderLayoutContent(
-			FragmentRendererController fragmentRendererController,
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse,
-			LayoutPageTemplateStructure layoutPageTemplateStructure,
-			String mode, Locale locale, long segmentsExperienceId)
-		throws PortalException {
-
-		return renderLayoutContent(
-			fragmentRendererController, httpServletRequest, httpServletResponse,
-			null, layoutPageTemplateStructure, mode, locale,
-			segmentsExperienceId);
 	}
 
 	private static String _renderFragmentEntryLink(

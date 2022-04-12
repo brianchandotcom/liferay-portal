@@ -324,6 +324,22 @@ public class VirtualHostFilter extends BasePortalFilter {
 					if (Validator.isNotNull(homeURL)) {
 						friendlyURL = homeURL;
 					}
+
+					if (friendlyURL.equals(StringPool.SLASH)) {
+						if (layoutSet.isPrivateLayout()) {
+							if (group.isUser()) {
+								sb.append(_PRIVATE_USER_SERVLET_MAPPING);
+							}
+							else {
+								sb.append(_PRIVATE_GROUP_SERVLET_MAPPING);
+							}
+						}
+						else {
+							sb.append(_PUBLIC_GROUP_SERVLET_MAPPING);
+						}
+
+						sb.append(group.getFriendlyURL());
+					}
 				}
 				else {
 					if (layoutSet.isPrivateLayout()) {

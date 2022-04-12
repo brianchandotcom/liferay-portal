@@ -263,8 +263,8 @@ public class CommerceOrderLocalServiceImpl
 		commerceOrder.setShippingOptionName(shippingOptionName);
 
 		_setCommerceOrderPrices(
-			commerceOrder, subtotal, shippingAmount, taxAmount, total,
-			subtotalWithTaxAmount, shippingWithTaxAmount, totalWithTaxAmount);
+			commerceOrder, shippingAmount, shippingWithTaxAmount, subtotal,
+			subtotalWithTaxAmount, taxAmount, total, totalWithTaxAmount);
 
 		_setCommerceOrderShippingDiscountValue(commerceOrder, null, true);
 		_setCommerceOrderShippingDiscountValue(commerceOrder, null, false);
@@ -1141,8 +1141,8 @@ public class CommerceOrderLocalServiceImpl
 		commerceOrder.setTotalDiscountAmount(totalDiscountAmount);
 
 		_setCommerceOrderPrices(
-			commerceOrder, subtotal, shippingAmount, taxAmount, total,
-			subtotalWithTaxAmount, shippingWithTaxAmount, totalWithTaxAmount);
+			commerceOrder, shippingAmount, shippingWithTaxAmount, subtotal,
+			subtotalWithTaxAmount, taxAmount, total, totalWithTaxAmount);
 
 		if (commerceContext != null) {
 			CommerceOrderPriceCalculation commerceOrderPriceCalculation =
@@ -2049,17 +2049,25 @@ public class CommerceOrderLocalServiceImpl
 	}
 
 	private void _setCommerceOrderPrices(
-		CommerceOrder commerceOrder, BigDecimal subtotal,
-		BigDecimal shippingAmount, BigDecimal taxAmount, BigDecimal total,
-		BigDecimal subtotalWithTaxAmount, BigDecimal shippingWithTaxAmount,
-		BigDecimal totalWithTaxAmount) {
+		CommerceOrder commerceOrder, BigDecimal shippingAmount,
+		BigDecimal shippingWithTaxAmount, BigDecimal subtotal,
+		BigDecimal subtotalWithTaxAmount, BigDecimal taxAmount,
+		BigDecimal total, BigDecimal totalWithTaxAmount) {
+
+		if (shippingAmount == null) {
+			shippingAmount = BigDecimal.ZERO;
+		}
+
+		if (shippingWithTaxAmount == null) {
+			shippingWithTaxAmount = BigDecimal.ZERO;
+		}
 
 		if (subtotal == null) {
 			subtotal = BigDecimal.ZERO;
 		}
 
-		if (shippingAmount == null) {
-			shippingAmount = BigDecimal.ZERO;
+		if (subtotalWithTaxAmount == null) {
+			subtotalWithTaxAmount = BigDecimal.ZERO;
 		}
 
 		if (taxAmount == null) {
@@ -2068,14 +2076,6 @@ public class CommerceOrderLocalServiceImpl
 
 		if (total == null) {
 			total = BigDecimal.ZERO;
-		}
-
-		if (subtotalWithTaxAmount == null) {
-			subtotalWithTaxAmount = BigDecimal.ZERO;
-		}
-
-		if (shippingWithTaxAmount == null) {
-			shippingWithTaxAmount = BigDecimal.ZERO;
 		}
 
 		if (totalWithTaxAmount == null) {

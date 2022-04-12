@@ -40,7 +40,7 @@ import com.liferay.portal.kernel.util.CalendarUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -253,15 +253,15 @@ public class NotificationTemplateContextFactory {
 		String namespace = PortalUtil.getPortletNamespace(
 			CalendarPortletKeys.CALENDAR);
 
-		url = HttpUtil.addParameter(
+		url = HttpHelperUtil.addParameter(
 			url, namespace + "mvcPath", "/view_calendar_booking.jsp");
 
-		url = HttpUtil.addParameter(
+		url = HttpHelperUtil.addParameter(
 			url, "p_p_id", CalendarPortletKeys.CALENDAR);
-		url = HttpUtil.addParameter(url, "p_p_lifecycle", "0");
-		url = HttpUtil.addParameter(
+		url = HttpHelperUtil.addParameter(url, "p_p_lifecycle", "0");
+		url = HttpHelperUtil.addParameter(
 			url, "p_p_state", WindowState.MAXIMIZED.toString());
-		url = HttpUtil.addParameter(
+		url = HttpHelperUtil.addParameter(
 			url, namespace + "calendarBookingId", calendarBookingId);
 
 		return url;

@@ -18,8 +18,6 @@ import com.liferay.object.admin.rest.dto.v1_0.ObjectView;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectViewColumn;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectViewSortColumn;
 import com.liferay.object.util.LocalizedMapUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.Map;
@@ -72,22 +70,11 @@ public class ObjectViewUtil {
 			return null;
 		}
 
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-149119"))) {
-			return new ObjectViewColumn() {
-				{
-					id = serviceBuilderObjectViewColumn.getObjectViewColumnId();
-					label = LocalizedMapUtil.getLanguageIdMap(
-						serviceBuilderObjectViewColumn.getLabelMap());
-					objectFieldName =
-						serviceBuilderObjectViewColumn.getObjectFieldName();
-					priority = serviceBuilderObjectViewColumn.getPriority();
-				}
-			};
-		}
-
 		return new ObjectViewColumn() {
 			{
 				id = serviceBuilderObjectViewColumn.getObjectViewColumnId();
+				label = LocalizedMapUtil.getLanguageIdMap(
+					serviceBuilderObjectViewColumn.getLabelMap());
 				objectFieldName =
 					serviceBuilderObjectViewColumn.getObjectFieldName();
 				priority = serviceBuilderObjectViewColumn.getPriority();

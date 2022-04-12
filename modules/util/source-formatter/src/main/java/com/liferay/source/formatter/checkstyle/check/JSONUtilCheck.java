@@ -14,6 +14,8 @@
 
 package com.liferay.source.formatter.checkstyle.check;
 
+import com.liferay.portal.kernel.util.StringUtil;
+
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
@@ -37,6 +39,7 @@ public class JSONUtilCheck extends BaseChainedMethodCheck {
 		if (detailAST.getType() == TokenTypes.METHOD_CALL) {
 			_checkChainedPutCalls(detailAST);
 			_checkStringValueOfCalls(detailAST);
+			_checkToJSONStringCalls(detailAST);
 
 			return;
 		}
@@ -205,7 +208,7 @@ public class JSONUtilCheck extends BaseChainedMethodCheck {
 			if (Objects.equals(fullIdent.getText(), "JSONUtil.put") ||
 				Objects.equals(fullIdent.getText(), "JSONUtil.putAll")) {
 
-				log(detailAST, _MSG_USE_JSON_UTIL_TO_STRING);
+				log(detailAST, _MSG_USE_JSON_UTIL_TO_STRING_1);
 			}
 
 			return;
@@ -255,7 +258,65 @@ public class JSONUtilCheck extends BaseChainedMethodCheck {
 		String methodCall = fullIdent.getText();
 
 		if (methodCall.startsWith("JSONUtil.")) {
-			log(detailAST, _MSG_USE_JSON_UTIL_TO_STRING);
+			log(detailAST, _MSG_USE_JSON_UTIL_TO_STRING_1);
+		}
+	}
+
+	private void _checkToJSONStringCalls(DetailAST detailAST) {
+		if (!StringUtil.equals("toJSONString", getMethodName(detailAST))) {
+			return;
+		}
+
+		List<String> chainedMethodNames = new ArrayList<>();
+
+		List<DetailAST> methodCallDetailASTList = getAllChildTokens(
+			detailAST, true, TokenTypes.METHOD_CALL);
+
+		for (DetailAST methodCallDetailAST : methodCallDetailASTList) {
+			DetailAST dotDetailAST = methodCallDetailAST.findFirstToken(
+				TokenTypes.DOT);
+
+			if (dotDetailAST != null) {
+				List<DetailAST> childMethodCallDetailASTList =
+					getAllChildTokens(
+						dotDetailAST, false, TokenTypes.METHOD_CALL);
+
+				if (!childMethodCallDetailASTList.isEmpty()) {
+					continue;
+				}
+			}
+
+			BaseCheck.ChainInformation chainInformation = getChainInformation(
+				methodCallDetailAST);
+
+			chainedMethodNames = chainInformation.getMethodNames();
+		}
+
+		for (int i = 0; i < (chainedMethodNames.size() - 1); i++) {
+			String chainedMethodName = chainedMethodNames.get(i);
+
+			if (!chainedMethodName.equals("put") &&
+				!chainedMethodName.equals("putAll")) {
+
+				return;
+			}
+		}
+
+		DetailAST methodCallDetailAST = methodCallDetailASTList.get(
+			methodCallDetailASTList.size() - 1);
+
+		DetailAST firstChildDetailAST = methodCallDetailAST.getFirstChild();
+
+		if (firstChildDetailAST.getType() != TokenTypes.DOT) {
+			return;
+		}
+
+		FullIdent fullIdent = FullIdent.createFullIdent(firstChildDetailAST);
+
+		String methodCall = fullIdent.getText();
+
+		if (methodCall.startsWith("JSONUtil.")) {
+			log(detailAST, _MSG_USE_JSON_UTIL_TO_STRING_2);
 		}
 	}
 
@@ -287,7 +348,10 @@ public class JSONUtilCheck extends BaseChainedMethodCheck {
 	private static final String _MSG_USE_JSON_UTIL_PUT_ALL =
 		"json.util.put.all.use";
 
-	private static final String _MSG_USE_JSON_UTIL_TO_STRING =
-		"json.util.to.string.use";
+	private static final String _MSG_USE_JSON_UTIL_TO_STRING_1 =
+		"json.util.to.string.use.1";
+
+	private static final String _MSG_USE_JSON_UTIL_TO_STRING_2 =
+		"json.util.to.string.use.2";
 
 }

@@ -1,0 +1,34 @@
+{
+    admin off
+    auto_https off
+
+    log {
+        format json
+    }
+}
+
+(cors) {
+    @origin{args.0} header Origin {args.0}
+    header @origin{args.0} Access-Control-Allow-Origin "{args.0}"
+    header @origin{args.0} Vary Origin
+}
+
+:80 {
+    root * /static
+    file_server
+
+    @options {
+        method OPTIONS
+    }
+
+    respond @options 204
+
+    header Access-Control-Allow-Methods "POST, GET, OPTIONS"
+    header Access-Control-Allow-Headers "*"
+    import cors {$CORS_ALLOWED_ORIGIN}
+
+    log {
+        output stdout
+        format json
+    }
+}

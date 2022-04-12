@@ -593,7 +593,7 @@ public class SXPBlueprintSearchResultTest {
 				HashMapBuilder.<String, Object>put(
 					"boost", 100
 				).put(
-					"factor", 1.2
+					"factor", 10
 				).put(
 					"modifier", "sqrt"
 				).build()

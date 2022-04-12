@@ -162,6 +162,18 @@ public class BatchPlannerPlanServiceTest {
 
 		_batchPlannerPlanService.deleteBatchPlannerPlan(
 			batchPlannerPlan.getBatchPlannerPlanId());
+
+		_testUpdateBatchPlannerPlanStatusFailed(
+			_batchPlannerPlanService.addBatchPlannerPlan(
+				true, BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
+				"/" + RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				null, false));
+		_testUpdateBatchPlannerPlanStatusFailed(
+			_batchPlannerPlanService.addBatchPlannerPlan(
+				true, BatchPlannerPlanConstants.EXTERNAL_TYPE_CSV,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), null, false));
 	}
 
 	@Test
@@ -174,36 +186,18 @@ public class BatchPlannerPlanServiceTest {
 			}
 
 			_submitPlan(
-				export,
-				"com.liferay.headless.commerce.admin.channel.dto.v1_0.Channel",
+				export, _INTERNAL_CLASS_NAME_CHANNEL,
 				RandomTestUtil.randomString());
 		}
 
-		_submitPlan(
-			true,
-			"com.liferay.headless.commerce.admin.channel.dto.v1_0.Channel",
-			"name1");
-		_submitPlan(
-			true,
-			"com.liferay.headless.commerce.admin.channel.dto.v1_0.Channel",
-			"name2");
-		_submitPlan(
-			true,
-			"com.liferay.headless.commerce.admin.channel.dto.v1_0.Channel",
-			"name3");
-		_submitPlan(
-			false,
-			"com.liferay.headless.commerce.admin.channel.dto.v1_0.Channel",
-			"name4");
-		_submitPlan(
-			false,
-			"com.liferay.headless.commerce.admin.channel.dto.v1_0.Channel",
-			"name5");
+		_submitPlan(true, _INTERNAL_CLASS_NAME_CHANNEL, "name1");
+		_submitPlan(true, _INTERNAL_CLASS_NAME_CHANNEL, "name2");
+		_submitPlan(true, _INTERNAL_CLASS_NAME_CHANNEL, "name3");
+		_submitPlan(false, _INTERNAL_CLASS_NAME_CHANNEL, "name4");
+		_submitPlan(false, _INTERNAL_CLASS_NAME_CHANNEL, "name5");
 
 		BatchPlannerPlan batchPlannerPlan = _submitPlan(
-			false,
-			"com.liferay.headless.commerce.admin.channel.dto.v1_0.Channel",
-			"name6");
+			false, _INTERNAL_CLASS_NAME_CHANNEL, "name6");
 
 		_testSearchExportBatchPlannerLogs(batchPlannerPlan.getCompanyId());
 		_testSearchImportBatchPlannerLogs(batchPlannerPlan.getCompanyId());
@@ -266,8 +260,7 @@ public class BatchPlannerPlanServiceTest {
 			batchPlannerPlans.toString(), 1, batchPlannerPlans.size());
 
 		batchPlannerPlans = _batchPlannerPlanService.getBatchPlannerPlans(
-			companyId, true, false,
-			"com.liferay.headless.commerce.admin.channel.dto.v1_0.Channel", 0,
+			companyId, true, false, _INTERNAL_CLASS_NAME_CHANNEL, 0,
 			Integer.MAX_VALUE, null);
 
 		Assert.assertEquals(
@@ -299,8 +292,7 @@ public class BatchPlannerPlanServiceTest {
 			batchPlannerPlans.toString(), 1, batchPlannerPlans.size());
 
 		batchPlannerPlans = _batchPlannerPlanService.getBatchPlannerPlans(
-			companyId, false, false,
-			"com.liferay.headless.commerce.admin.channel.dto.v1_0.Channel", 0,
+			companyId, false, false, _INTERNAL_CLASS_NAME_CHANNEL, 0,
 			Integer.MAX_VALUE, null);
 
 		Assert.assertEquals(
@@ -320,6 +312,23 @@ public class BatchPlannerPlanServiceTest {
 		Assert.assertEquals(
 			batchPlannerPlans.toString(), 0, batchPlannerPlans.size());
 	}
+
+	private void _testUpdateBatchPlannerPlanStatusFailed(
+			BatchPlannerPlan batchPlannerPlan)
+		throws Exception {
+
+		_batchEngineBroker.submit(batchPlannerPlan.getBatchPlannerPlanId());
+
+		batchPlannerPlan = _batchPlannerPlanService.getBatchPlannerPlan(
+			batchPlannerPlan.getBatchPlannerPlanId());
+
+		Assert.assertEquals(
+			BatchPlannerPlanConstants.STATUS_FAILED,
+			batchPlannerPlan.getStatus());
+	}
+
+	private static final String _INTERNAL_CLASS_NAME_CHANNEL =
+		"com.liferay.headless.commerce.admin.channel.dto.v1_0.Channel";
 
 	@Inject
 	private BatchEngineBroker _batchEngineBroker;

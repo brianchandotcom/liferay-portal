@@ -46,6 +46,7 @@ definition {
 		}
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test AddProcess {
 		property test.name.skip.portal.instance = "KaleoFormsXSS#AddProcess";

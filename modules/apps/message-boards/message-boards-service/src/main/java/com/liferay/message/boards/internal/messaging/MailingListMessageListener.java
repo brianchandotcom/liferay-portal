@@ -245,12 +245,12 @@ public class MailingListMessageListener extends BaseMessageListener {
 		serviceContext.setAddGuestPermissions(true);
 
 		long groupId = mailingListRequest.getGroupId();
-		String portletId = PortletProviderUtil.getPortletId(
-			MBMessage.class.getName(), PortletProvider.Action.VIEW);
 
 		serviceContext.setLayoutFullURL(
-			_portal.getLayoutFullURL(groupId, portletId));
-
+			_portal.getLayoutFullURL(
+				groupId,
+				PortletProviderUtil.getPortletId(
+					MBMessage.class.getName(), PortletProvider.Action.VIEW)));
 		serviceContext.setScopeGroupId(groupId);
 
 		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =

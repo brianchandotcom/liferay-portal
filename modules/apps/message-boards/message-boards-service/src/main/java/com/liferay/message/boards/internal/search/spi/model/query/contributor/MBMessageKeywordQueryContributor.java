@@ -52,11 +52,9 @@ public class MBMessageKeywordQueryContributor
 
 		QueryConfig queryConfig = searchContext.getQueryConfig();
 
-		String[] localizedFieldNames =
+		queryConfig.addHighlightFieldNames(
 			searchLocalizationHelper.getLocalizedFieldNames(
-				new String[] {Field.CONTENT, Field.TITLE}, searchContext);
-
-		queryConfig.addHighlightFieldNames(localizedFieldNames);
+				new String[] {Field.CONTENT, Field.TITLE}, searchContext));
 	}
 
 	@Reference

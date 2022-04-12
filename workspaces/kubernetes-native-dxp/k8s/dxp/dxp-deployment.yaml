@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dxp-deployment
+  labels:
+    app: dxp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dxp
+  revisionHistoryLimit: 5
+  progressDeadlineSeconds: 300
+  minReadySeconds: 10
+  template:
+    metadata:
+      labels:
+        app: dxp
+    spec:
+      containers:
+        - name: dxp
+          image: kubernetes-native-dxp:7.4.13-k8s-native
+          imagePullPolicy: Never
+          resources:
+            limits:
+              cpu: "4000m"
+              memory: "8096Mi"
+          livenessProbe:
+            failureThreshold: 360
+            httpGet:
+              path: /c/portal/layout
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 300
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 30
+          env:
+            - name: JAVA_VERSION
+              value: zulu11
+            - name: LIFERAY_JPDA_ENABLED
+              value: "true"
+            - name: LIFERAY_MODULE_PERIOD_FRAMEWORK_PERIOD_SYSTEM_PERIOD_PACKAGES_PERIOD_EXTRA
+              valueFrom:
+                configMapKeyRef:
+                  name: dxp-configmap
+                  key: module.framework.system.packages.extra
+            - name: LIFERAY_MODULE_PERIOD_FRAMEWORK_PERIOD_PROPERTIES_PERIOD_ORG_PERIOD_APACHE_PERIOD_FELIX_PERIOD_CONFIGADMIN_PERIOD_PLUGIN_PERIOD_INTERPOLATION_PERIOD_SECRETSDIR
+              valueFrom:
+                configMapKeyRef:
+                  name: dxp-configmap
+                  key: org.apache.felix.configadmin.plugin.interpolation.secretsdir
+            - name: LIFERAY_MODULE_PERIOD_FRAMEWORK_PERIOD_PROPERTIES_PERIOD_FELIX_PERIOD_CM_PERIOD_CONFIG_PERIOD_PLUGINS
+              valueFrom:
+                configMapKeyRef:
+                  name: dxp-configmap
+                  key: felix.cm.config.plugins
+          ports:
+          - containerPort: 8080
+          - containerPort: 8000
+          - containerPort: 11311
+          volumeMounts:
+          - name: dxp-configmap
+            mountPath: "/opt/liferay/osgi/configs"
+            readOnly: true
+          - name: dxp-logging-configmap
+            mountPath: /opt/liferay/osgi/log4j
+            readOnly: true
+      volumes:
+        - name: dxp-configmap
+          configMap:
+            name: dxp-configmap
+        - name: dxp-logging-configmap
+          configMap:
+            name: dxp-logging-configmap

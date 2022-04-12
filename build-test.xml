@@ -12085,6 +12085,12 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 			<param name="test.build.license.xml.zip.url" value="${test.license.xml.url}" />
 		</antcall>
 
+		<get-test-app-server-lib-portal-dir />
+
+		<antcall inheritAll="false" target="copy-optional-jars">
+			<param name="todir" value="${test.app.server.lib.portal.dir}" />
+		</antcall>
+
 		<antcall target="prepare-osgi-module-configurations" />
 		<antcall target="prepare-portal-properties" />
 		<antcall target="prepare-portal-ext-properties" />

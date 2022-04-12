@@ -234,6 +234,13 @@ definition {
 				value1 = "${privatePageVirtualHostURL}");
 		}
 
+		if (isSet(stagingPages)) {
+			Type(
+				key_text = "Staging Pages",
+				locator1 = "TextInput#ANY",
+				value1 = "${stagingPages}");
+		}
+
 		if (isSet(stagingPublicPages)) {
 			Type(
 				key_text = "Staging Public Pages",

@@ -28,14 +28,3 @@
 		</aui:select>
 	</clay:col>
 </clay:row>
-
-<liferay-frontend:component
-	context='<%=
-		HashMapBuilder.<String, Object>put(
-			"iconCssClass", ".icon"
-		).put(
-			"orderingContainerId", liferayPortletResponse.getNamespace() + "ordering"
-		).build()
-	%>'
-	module="js/Ordering"
-/>

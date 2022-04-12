@@ -20,6 +20,10 @@ import com.liferay.portal.kernel.util.StringUtil;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -47,16 +51,16 @@ public class BeanTestUtil {
 					targetClass, field.getName(), "set",
 					getMethod.getReturnType());
 
-				setMethod.invoke(target, getMethod.invoke(source, null));
+				setMethod.invoke(target, getMethod.invoke(source));
 			}
 		}
 	}
 
 	public static boolean hasProperty(Object bean, String name) {
-		if (_hasMethod(
-				bean.getClass(),
-				"set" + StringUtil.upperCaseFirstLetter(name))) {
+		Method setMethod = _getMethod(
+			bean.getClass(), "set" + StringUtil.upperCaseFirstLetter(name));
 
+		if (setMethod != null) {
 			return true;
 		}
 
@@ -68,13 +72,29 @@ public class BeanTestUtil {
 
 		Class<?> clazz = bean.getClass();
 
-		Method getMethod = _getMethod(clazz, name, "get");
-
 		Method setMethod = _getMethod(
-			clazz, name, "set", getMethod.getReturnType());
+			clazz, "set" + StringUtil.upperCaseFirstLetter(name));
 
-		setMethod.invoke(
-			bean, _translateValue(getMethod.getReturnType(), value));
+		if (setMethod == null) {
+			throw new NoSuchMethodException();
+		}
+
+		Class<?>[] parameterTypes = setMethod.getParameterTypes();
+
+		setMethod.invoke(bean, _translateValue(parameterTypes[0], value));
+	}
+
+	private static Method _getMethod(Class<?> clazz, String name) {
+		for (Method method : clazz.getMethods()) {
+			if (name.equals(method.getName()) &&
+				(method.getParameterCount() == 1) &&
+				_parameterTypes.contains(method.getParameterTypes()[0])) {
+
+				return method;
+			}
+		}
+
+		return null;
 	}
 
 	private static Method _getMethod(
@@ -85,16 +105,6 @@ public class BeanTestUtil {
 		return clazz.getMethod(
 			prefix + StringUtil.upperCaseFirstLetter(fieldName),
 			parameterTypes);
-	}
-
-	private static boolean _hasMethod(Class<?> clazz, String name) {
-		for (Method method : clazz.getMethods()) {
-			if (name.equals(method.getName())) {
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	private static boolean _hasSuperClass(Class<?> clazz) {
@@ -112,11 +122,15 @@ public class BeanTestUtil {
 	private static Object _translateValue(
 		Class<?> parameterType, Object value) {
 
-		if (parameterType.equals(Long.class)) {
+		if ((value instanceof Integer) && parameterType.equals(Long.class)) {
 			return GetterUtil.getLong(value);
 		}
 
 		return value;
 	}
+
+	private static final List<Class<?>> _parameterTypes = Arrays.asList(
+		Boolean.class, Date.class, Double.class, Integer.class, Long.class,
+		Map.class, String.class);
 
 }

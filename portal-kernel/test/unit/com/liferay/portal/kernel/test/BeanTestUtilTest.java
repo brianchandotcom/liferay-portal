@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.test;
 
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
@@ -161,6 +162,28 @@ public class BeanTestUtilTest {
 		catch (NoSuchMethodException noSuchMethodException) {
 			Assert.assertNotNull(noSuchMethodException);
 		}
+
+		try {
+			BeanTestUtil.setProperty(
+				new TestClass(), "composedStringProperty",
+				RandomTestUtil.randomString());
+
+			Assert.fail();
+		}
+		catch (NoSuchMethodException noSuchMethodException) {
+			Assert.assertNotNull(noSuchMethodException);
+		}
+
+		try {
+			BeanTestUtil.setProperty(
+				new TestClass(), "stringPropertyUnsafeSupplier",
+				RandomTestUtil.randomString());
+
+			Assert.fail();
+		}
+		catch (NoSuchMethodException noSuchMethodException) {
+			Assert.assertNotNull(noSuchMethodException);
+		}
 	}
 
 	@Test
@@ -262,6 +285,12 @@ public class BeanTestUtilTest {
 			this.booleanProperty = booleanProperty;
 		}
 
+		public void setComposedStringProperty(
+			String prefix, String stringProperty, String suffix) {
+
+			this.stringProperty = prefix + stringProperty + suffix;
+		}
+
 		public void setDateProperty(Date dateProperty) {
 			this.dateProperty = dateProperty;
 		}
@@ -284,6 +313,28 @@ public class BeanTestUtilTest {
 
 		public void setStringProperty(String stringProperty) {
 			this.stringProperty = stringProperty;
+		}
+
+		public void setStringProperty(
+			UnsafeSupplier<String, Exception> stringPropertyUnsafeSupplier) {
+
+			try {
+				stringProperty = stringPropertyUnsafeSupplier.get();
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		}
+
+		public void setStringPropertyUnsafeSupplier(
+			UnsafeSupplier<String, Exception> stringPropertyUnsafeSupplier) {
+
+			try {
+				stringProperty = stringPropertyUnsafeSupplier.get();
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
 		}
 
 		protected Boolean booleanProperty;

@@ -31,6 +31,8 @@ definition {
 	@description = "This is a test for LPS-103104. Can add pages of different types via page tree panel."
 	@priority = "3"
 	test AddAllTypesOfPages {
+		property private.pages.enabled = "true";
+
 		task ("Add different types of pages via page tree") {
 			ApplicationsMenu.gotoSite(site = "Test Site Name");
 

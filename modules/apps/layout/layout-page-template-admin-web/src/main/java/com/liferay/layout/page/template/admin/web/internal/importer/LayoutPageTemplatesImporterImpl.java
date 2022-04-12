@@ -651,11 +651,9 @@ public class LayoutPageTemplatesImporterImpl
 				continue;
 			}
 
-			String pageTemplateCollectionKey = _getPageTemplateCollectionKey(
-				zipEntry.getName(), zipFile);
-
 			PageTemplateCollectionEntry pageTemplateCollectionEntry =
-				pageTemplateCollectionMap.get(pageTemplateCollectionKey);
+				pageTemplateCollectionMap.get(
+					_getPageTemplateCollectionKey(zipEntry.getName(), zipFile));
 
 			try {
 				String pageDefinitionJSON = _getPageDefinitionJSON(

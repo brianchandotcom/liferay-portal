@@ -59,11 +59,10 @@ public class ExportMasterLayoutsMVCResourceCommand
 				new ArrayList<>();
 
 			for (long layoutPageTemplateEntryId : layoutPageTemplateEntryIds) {
-				LayoutPageTemplateEntry layoutPageTemplateEntry =
+				layoutPageTemplateEntries.add(
 					_layoutPageTemplateEntryLocalService.
-						fetchLayoutPageTemplateEntry(layoutPageTemplateEntryId);
-
-				layoutPageTemplateEntries.add(layoutPageTemplateEntry);
+						fetchLayoutPageTemplateEntry(
+							layoutPageTemplateEntryId));
 			}
 
 			return _layoutPageTemplatesExporter.exportMasterLayouts(

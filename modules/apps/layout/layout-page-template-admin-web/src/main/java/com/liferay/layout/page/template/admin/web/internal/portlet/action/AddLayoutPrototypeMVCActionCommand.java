@@ -108,12 +108,9 @@ public class AddLayoutPrototypeMVCActionCommand extends BaseMVCActionCommand {
 			return layoutPrototype;
 		}
 
-		long layoutPageTemplateCollectionId = ParamUtil.getLong(
-			actionRequest, "layoutPageTemplateCollectionId");
-
 		layoutPageTemplateEntry.setGroupId(themeDisplay.getScopeGroupId());
 		layoutPageTemplateEntry.setLayoutPageTemplateCollectionId(
-			layoutPageTemplateCollectionId);
+			ParamUtil.getLong(actionRequest, "layoutPageTemplateCollectionId"));
 
 		_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
 			layoutPageTemplateEntry);

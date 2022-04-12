@@ -24,6 +24,74 @@ definition {
 		}
 	}
 
+	@description = "Verify that is possible to translate Web Content fields with different Instance language set"
+	@priority = "4"
+	test CanBeTranslatedWithDifferentInstanceLanguages {
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Localization",
+			configurationName = "Language",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.configureCurrentLanguagesCP(defaultPortalLanguage = "Portuguese (Brazil)");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+		WebContent.editCP(
+			webContentContentEdit = "WC WebContent Content pt-BR",
+			webContentTitle = "WC WebContent Title",
+			webContentTitleEdit = "WC WebContent Title pt-BR");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title pt-BR");
+
+		PortletEntry.changeLocale(locale = "en-US");
+
+		WebContent.editWebContentContent(
+			webContentContentEdit = "WC WebContent Content en-US",
+			webContentTitle = "WC WebContent Title pt-BR",
+			webContentTitleEdit = "WC WebContent Title en-US");
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title en-US");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title en-US");
+
+		WebContent.viewCP(
+			webContentContent = "WC WebContent Content pt-BR",
+			webContentTitle = "WC WebContent Title pt-BR");
+
+		PortletEntry.changeLocale(locale = "en-US");
+
+		WebContent.viewCP(
+			webContentContent = "WC WebContent Content en-US",
+			webContentTitle = "WC WebContent Title en-US");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Localization",
+			configurationName = "Language",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.configureCurrentLanguagesCP(defaultPortalLanguage = "English (United States)");
+	}
+
 	@description = "Verify that is possible to choose different options for Multiple Selection field for a translated language"
 	@priority = "5"
 	test CanChooseDifferentOptionsFromMultpleSelectionField {
@@ -1575,6 +1643,278 @@ definition {
 
 	}
 
+	@description = "Verify that is possible to translate a Web Content with all fields"
+	@priority = "5"
+	test CanTranslateWebContentWithAllFields {
+		for (var n : list "1,2") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name ${n}");
+		}
+
+		for (var n : list "1,2") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title ${n}");
+		}
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Name");
+
+		DataEngine.addFields(fieldNameList = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Separator,Link to Page");
+
+		WebContentStructures.addLocalization(
+			locale = "zh-CN",
+			localization1Name = "网页内容结构");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Text",
+			fieldFieldLabelEdit = "文本框");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Select from List",
+			fieldFieldLabelEdit = "下拉列表");
+
+		DataEngine.addFieldOption(
+			fieldFieldLabel = "下拉列表",
+			index = "1",
+			optionValue = "选择 2");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Single Selection",
+			fieldFieldLabelEdit = "单选列表框");
+
+		DataEngine.addFieldOption(
+			fieldFieldLabel = "单选列表框",
+			index = "1",
+			optionValue = "选择 3");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Multiple Selection",
+			fieldFieldLabelEdit = "复选列表框");
+
+		DataEngine.addFieldOption(
+			fieldFieldLabel = "复选列表框",
+			index = "1",
+			optionValue = "选择 1");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Grid",
+			fieldFieldLabelEdit = "网格");
+
+		var index = "1";
+
+		for (var optionValue : list "R3,R4") {
+			DataEngine.addFieldOption(
+				fieldFieldLabel = "网格",
+				index = "${index}",
+				optionFieldLabel = "Rows",
+				optionValue = "行 ${index}");
+
+			DataEngine.editFieldReferenceOfFieldOption(
+				fieldFieldLabel = "网格",
+				fieldReferenceOfFieldOption = "${optionValue}",
+				index = "${index}",
+				optionFieldLabel = "Rows");
+
+			var index = ${index} + 1;
+		}
+
+		var index = "1";
+
+		for (var optionValue : list "C3,C4") {
+			DataEngine.addFieldOption(
+				fieldFieldLabel = "网格",
+				index = "${index}",
+				optionFieldLabel = "Columns",
+				optionValue = "列 ${index}");
+
+			DataEngine.editFieldReferenceOfFieldOption(
+				fieldFieldLabel = "网格",
+				fieldReferenceOfFieldOption = "${optionValue}",
+				index = "${index}",
+				optionFieldLabel = "Rows");
+
+			var index = ${index} + 1;
+		}
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Date",
+			fieldFieldLabelEdit = "日期");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Numeric",
+			fieldFieldLabelEdit = "数字");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Image",
+			fieldFieldLabelEdit = "图片");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Rich Text",
+			fieldFieldLabelEdit = "多格式文本框");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Upload",
+			fieldFieldLabelEdit = "文件");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Color",
+			fieldFieldLabelEdit = "颜色");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Web Content",
+			fieldFieldLabelEdit = "网页内容");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Geolocation",
+			fieldFieldLabelEdit = "地理位置");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Separator",
+			fieldFieldLabelEdit = "分割线");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Link to Page",
+			fieldFieldLabelEdit = "网页链接");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoManageTemplatesViaStructures(structureName = "WC Structure Name");
+
+		WebContentTemplates.addCP(
+			templateFieldNames = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Web Content,Geolocation,Link to Page",
+			templateName = "WC Template Name");
+
+		Navigator.gotoNavItem(navItem = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			column = "1",
+			dmNavTab = "User Personal Folder",
+			navTab = "Web Content Images",
+			row = "1",
+			webContentColor = "FF0D0D",
+			webContentDate = "10/10/2020",
+			webContentGrid = "true",
+			webContentImage = "Document_3.png",
+			webContentLinkToPage = "Test Page Name 1",
+			webContentMultipleSelection = "Option 1",
+			webContentNumeric = "9",
+			webContentRichText = "This is a Rich Text field",
+			webContentSelectFromList = "Option 2",
+			webContentSingleSelection = "Option 3",
+			webContentText = "This is a Text field",
+			webContentTitle = "WC Title",
+			webContentUpload = "Document_1.jpg",
+			webContentWebContent = "Web Content Title 1");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		WebContent.addWithStructureCP(
+			column = "2",
+			dmNavTab = "User Personal Folder",
+			navTab = "Web Content Images",
+			row = "2",
+			webContentColor = "2BA676",
+			webContentColorFieldLabel = "颜色",
+			webContentDate = "2020/01/01",
+			webContentDateFieldLabel = "日期",
+			webContentGrid = "true",
+			webContentGridFieldLabel = "网格",
+			webContentImage = "Document_1.png",
+			webContentImageFieldLabel = "图片",
+			webContentLinkToPage = "Test Page Name 2",
+			webContentLinkToPageFieldLabel = "网页链接",
+			webContentMultipleSelection = "选择 1",
+			webContentMultipleSelectionFieldLabel = "复选列表框",
+			webContentNumeric = "123",
+			webContentNumericFieldLabel = "数字",
+			webContentRichText = "这是多格式文本框",
+			webContentRichTextFieldLabel = "多格式文本框",
+			webContentSelectFromList = "选择 2",
+			webContentSelectFromListFieldLabel = "下拉列表",
+			webContentSingleSelection = "选择 3",
+			webContentSingleSelectionFieldLabel = "单选列表框",
+			webContentText = "这是文本框",
+			webContentTextFieldLabel = "文本框",
+			webContentTitle = "网页内容标题",
+			webContentUpload = "Document_2.jpg",
+			webContentUploadFieldLabel = "文件",
+			webContentWebContent = "Web Content Title 2",
+			webContentWebContentFieldLabel = "网页内容");
+
+		PortletEntry.publish();
+
+		WebContent.viewWithStructureCP(
+			column = "1",
+			dmNavTab = "User Personal Folder",
+			navTab = "Web Content Images",
+			row = "1",
+			webContentColor = "FF0D0D",
+			webContentDate = "10/10/2020",
+			webContentGeolocation = "true",
+			webContentGrid = "true",
+			webContentImage = "Document_3.png",
+			webContentLinkToPage = "Test Page Name 1",
+			webContentMultipleSelection = "Option 1",
+			webContentNumeric = "9",
+			webContentRichText = "This is a Rich Text field",
+			webContentSelectFromList = "Option 2",
+			webContentSeparator = "true",
+			webContentSingleSelection = "Option 3",
+			webContentText = "This is a Text field",
+			webContentTitle = "WC Title",
+			webContentUpload = "Document_1.jpg",
+			webContentWebContent = "Web Content Title 1");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "网页内容标题");
+
+		WebContent.viewWithStructureCP(
+			column = "2",
+			dmNavTab = "User Personal Folder",
+			navTab = "Web Content Images",
+			predefinedValue = "true",
+			row = "2",
+			webContentColor = "2BA676",
+			webContentColorFieldLabel = "颜色",
+			webContentDate = "2020/01/01",
+			webContentDateFieldLabel = "日期",
+			webContentGeolocation = "true",
+			webContentGeolocationFieldLabel = "地理位置",
+			webContentGrid = "true",
+			webContentGridFieldLabel = "网格",
+			webContentImage = "Document_1.png",
+			webContentImageFieldLabel = "图片",
+			webContentLinkToPage = "Test Page Name 2",
+			webContentLinkToPageFieldLabel = "网页链接",
+			webContentMultipleSelection = "选择 1",
+			webContentMultipleSelectionFieldLabel = "复选列表框",
+			webContentNumeric = "123",
+			webContentNumericFieldLabel = "数字",
+			webContentRichText = "这是多格式文本框",
+			webContentRichTextFieldLabel = "多格式文本框",
+			webContentSelectFromList = "选择 2",
+			webContentSelectFromListFieldLabel = "下拉列表",
+			webContentSeparator = "true",
+			webContentSeparatorFieldLabel = "分割线",
+			webContentSingleSelection = "选择 3",
+			webContentSingleSelectionFieldLabel = "单选列表框",
+			webContentText = "这是文本框",
+			webContentTextFieldLabel = "文本框",
+			webContentUpload = "Document_2.jpg",
+			webContentUploadFieldLabel = "文件",
+			webContentWebContent = "Web Content Title 2",
+			webContentWebContentFieldLabel = "网页内容");
+	}
+
 	@description = "Verify that translations for repeatable fields persists"
 	@priority = "5"
 	test CanTranslationsPersistsOnRepeatableField {
@@ -1968,6 +2308,70 @@ definition {
 			value1 = "Web Content Title 2");
 	}
 
+	@description = "Create, edit and delete Web Content with translations"
+	@priority = "5"
+	test CanWebContentWithTranslationsBeCreatedEditedAndDeleted {
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Site Name",
+			title = "WC WebContent Title");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+		WebContent.editCP(
+			webContentContentEdit = "WC WebContent Content en-US",
+			webContentTitle = "WC WebContent Title",
+			webContentTitleEdit = "WC WebContent Title en-US");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title en-US");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		WebContent.editWebContentContent(
+			webContentContentEdit = "WC WebContent Content zh-CN",
+			webContentTitle = "WC WebContent Title en-US",
+			webContentTitleEdit = "WC WebContent Title zh-CN");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title en-US");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		WebContent.editWebContentContent(
+			webContentContentEdit = "WC WebContent Content pt-BR",
+			webContentTitle = "WC WebContent Title en-US",
+			webContentTitleEdit = "WC WebContent Title pt-BR");
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title en-US");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title en-US");
+
+		WebContent.viewCP(
+			webContentContent = "WC WebContent Content en-US",
+			webContentTitle = "WC WebContent Title en-US");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		WebContent.viewCP(
+			webContentContent = "WC WebContent Content zh-CN",
+			webContentTitle = "WC WebContent Title zh-CN");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		WebContent.viewCP(
+			webContentContent = "WC WebContent Content pt-BR",
+			webContentTitle = "WC WebContent Title pt-BR");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContent.deleteCP(
+			siteURLKey = "test-site-name",
+			webContentTitle = "WC WebContent Title en-US");
+	}
+
 	@description = "Verify that is possible to choose different options for Grid field for a translated language"
 	@priority = "5"
 	test DanChooseDifferentOptionsFromGridField {
@@ -2054,159 +2458,6 @@ definition {
 				fieldLabel = "网格",
 				row = "${index}");
 		}
-	}
-
-	@description = "Create, edit and delete Web Content with translations"
-	@priority = "5"
-	test CanWebContentWithTranslationsBeCreatedEditedAndDeleted {
-
-		JSONWebcontent.addWebContent(
-			content = "WC WebContent Content",
-			groupName = "Test Site Name",
-			title = "WC WebContent Title");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		
-
-		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
-
-		WebContent.editCP(
-			webContentContentEdit = "WC WebContent Content en-US",
-			webContentTitle = "WC WebContent Title",
-			webContentTitleEdit = "WC WebContent Title en-US");
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title en-US");
-
-		PortletEntry.changeLocale(locale = "zh-CN");
-
-		WebContent.editWebContentContent(
-			webContentContentEdit = "WC WebContent Content zh-CN",
-			webContentTitle = "WC WebContent Title en-US",
-			webContentTitleEdit = "WC WebContent Title zh-CN");
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title en-US");
-
-
-		PortletEntry.changeLocale(locale = "pt-BR");
-
-		WebContent.editWebContentContent(
-			webContentContentEdit = "WC WebContent Content pt-BR",
-			webContentTitle = "WC WebContent Title en-US",
-			webContentTitleEdit = "WC WebContent Title pt-BR");
-
-		
-
-		WebContent.viewTitle(webContentTitle = "WC WebContent Title en-US");
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title en-US");
-
-		WebContent.viewCP(
-			webContentContent = "WC WebContent Content en-US",
-			webContentTitle = "WC WebContent Title en-US");
-
-		PortletEntry.changeLocale(locale = "zh-CN");
-
-		WebContent.viewCP(
-			webContentContent = "WC WebContent Content zh-CN",
-			webContentTitle = "WC WebContent Title zh-CN");
-
-		PortletEntry.changeLocale(locale = "pt-BR");
-
-		WebContent.viewCP(
-			webContentContent = "WC WebContent Content pt-BR",
-			webContentTitle = "WC WebContent Title pt-BR");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContent.deleteCP(
-			siteURLKey = "test-site-name",
-			webContentTitle = "WC WebContent Title en-US");
-	}
-
-	@description = "Verify that is possible to translate Web Content fields with different Instance language set"
-	@priority = "4"
-	test CanBeTranslatedWithDifferentInstanceLanguages {
-
-		
-
-
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Localization",
-			configurationName = "Language",
-			configurationScope = "Virtual Instance Scope");
-
-		PortalSettings.configureCurrentLanguagesCP(defaultPortalLanguage = "Portuguese (Brazil)");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
-
-		PortletEntry.publish();
-
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
-
-		WebContent.editCP(
-			webContentContentEdit = "WC WebContent Content pt-BR",
-			webContentTitle = "WC WebContent Title",
-			webContentTitleEdit = "WC WebContent Title pt-BR");
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title pt-BR");
-
-		PortletEntry.changeLocale(locale = "en-US");
-
-		WebContent.editWebContentContent(
-			webContentContentEdit = "WC WebContent Content en-US",
-			webContentTitle = "WC WebContent Title pt-BR",
-			webContentTitleEdit = "WC WebContent Title en-US");
-
-		
-
-		WebContent.viewTitle(webContentTitle = "WC WebContent Title en-US");
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title en-US");
-
-		WebContent.viewCP(
-			webContentContent = "WC WebContent Content pt-BR",
-			webContentTitle = "WC WebContent Title pt-BR");
-
-
-
-		PortletEntry.changeLocale(locale = "en-US");
-
-
-		WebContent.viewCP(
-			webContentContent = "WC WebContent Content en-US",
-			webContentTitle = "WC WebContent Title en-US");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Localization",
-			configurationName = "Language",
-			configurationScope = "Virtual Instance Scope");
-
-		PortalSettings.configureCurrentLanguagesCP(defaultPortalLanguage = "English (United States)");
-
-	
-
-	
 	}
 
 }

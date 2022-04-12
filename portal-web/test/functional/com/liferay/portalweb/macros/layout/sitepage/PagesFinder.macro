@@ -55,6 +55,23 @@ definition {
 		WaitForSPARefresh();
 	}
 
+	macro addChildPage {
+		PagesFinder.selectPageType(optionValue = "Pages Hierarchy");
+
+		Click(
+			key_pageName = "${parentPageName}",
+			locator1 = "PagesFinder#PAGE_ELLIPSIS_ICON");
+
+		MenuItem.click(menuItem = "Add Child Page");
+
+		PagesFinder._addPage(
+			assertCheckboxMissing = "${assertCheckboxMissing}",
+			navigationMenus = "${navigationMenus}",
+			pageName = "${childPageName}",
+			pageTemplateName = "${pageTemplateName}",
+			sitePageType = "${sitePageType}");
+	}
+
 	macro addCollectionPage {
 		PagesFinder.selectPageType(optionValue = "Pages Hierarchy");
 

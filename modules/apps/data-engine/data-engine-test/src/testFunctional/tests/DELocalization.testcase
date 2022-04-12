@@ -27,6 +27,8 @@ definition {
 	@description = "Verify that is possible to translate Web Content fields with different Instance language set"
 	@priority = "4"
 	test CanBeTranslatedWithDifferentInstanceLanguages {
+		property test.name.skip.portal.instance = "DELocalization#CanBeTranslatedWithDifferentInstanceLanguages";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -90,6 +92,94 @@ definition {
 			configurationScope = "Virtual Instance Scope");
 
 		PortalSettings.configureCurrentLanguagesCP(defaultPortalLanguage = "English (United States)");
+	}
+
+	@description = "Verify that is possible to choose different options for Grid field for a translated language"
+	@priority = "5"
+	test CanChooseDifferentOptionsFromGridField {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "Structure Description Test",
+			structureName = "Structure Name Test");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Grid",
+			fieldName = "Grid");
+
+		DEBuilder.addFieldOptions(
+			fieldLabel = "Grid",
+			optionFieldLabel = "Rows",
+			optionValueList = "Option 1,Option 2,Option 3, Option 4, Option 5, Option 6");
+
+		DEBuilder.addFieldOptions(
+			fieldLabel = "Grid",
+			optionFieldLabel = "Columns",
+			optionValueList = "Option 1,Option 2,Option 3, Option 4, Option 5, Option 6");
+
+		WebContentStructures.addTranslations(localeList = "zh-CN");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Grid",
+			fieldFieldLabelEdit = "网格");
+
+		WebContentStructures.saveCP();
+
+		NavItem.click(navItem = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name Test");
+
+		PortletEntry.inputTitle(title = "Test");
+
+		for (var index : list "1,2,3") {
+			DERenderer.inputDataInGridField(
+				column = "${index}",
+				fieldLabel = "Grid",
+				row = "${index}");
+		}
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		PortletEntry.inputTitle(title = "测试");
+
+		for (var index : list "4,5,6") {
+			DERenderer.inputDataInGridField(
+				column = "${index}",
+				fieldLabel = "网格",
+				row = "${index}");
+		}
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Test");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "Test");
+
+		for (var index : list "1,2,3") {
+			DERenderer.assertDataInGridField(
+				column = "${index}",
+				fieldLabel = "Grid",
+				row = "${index}");
+		}
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "测试");
+
+		for (var index : list "1,2,3,4,5,6") {
+			DERenderer.assertDataInGridField(
+				column = "${index}",
+				fieldLabel = "网格",
+				row = "${index}");
+		}
 	}
 
 	@description = "Verify that is possible to choose different options for Multiple Selection field for a translated language"
@@ -445,6 +535,8 @@ definition {
 	@description = "Verify that upon editing Default language, translated languages are not affected"
 	@priority = "5"
 	test CanDefaulfLanguageChangeTranslationsAfterEdited {
+		property test.name.skip.portal.instance = "DELocalization#CanDefaulfLanguageChangeTranslationsAfterEdited";
+
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
@@ -1539,6 +1631,8 @@ definition {
 	@description = "Verify Default language when Portal Instance language is changed"
 	@priority = "4"
 	test CanPortalLanguageBeChanged {
+		property test.name.skip.portal.instance = "DELocalization#CanPortalLanguageBeChanged";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -2370,94 +2464,6 @@ definition {
 		WebContent.deleteCP(
 			siteURLKey = "test-site-name",
 			webContentTitle = "WC WebContent Title en-US");
-	}
-
-	@description = "Verify that is possible to choose different options for Grid field for a translated language"
-	@priority = "5"
-	test DanChooseDifferentOptionsFromGridField {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(
-			structureDescription = "Structure Description Test",
-			structureName = "Structure Name Test");
-
-		DataEngine.addField(
-			fieldFieldLabel = "Grid",
-			fieldName = "Grid");
-
-		DEBuilder.addFieldOptions(
-			fieldLabel = "Grid",
-			optionFieldLabel = "Rows",
-			optionValueList = "Option 1,Option 2,Option 3, Option 4, Option 5, Option 6");
-
-		DEBuilder.addFieldOptions(
-			fieldLabel = "Grid",
-			optionFieldLabel = "Columns",
-			optionValueList = "Option 1,Option 2,Option 3, Option 4, Option 5, Option 6");
-
-		WebContentStructures.addTranslations(localeList = "zh-CN");
-
-		PortletEntry.changeLocale(locale = "zh-CN");
-
-		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Grid",
-			fieldFieldLabelEdit = "网格");
-
-		WebContentStructures.saveCP();
-
-		NavItem.click(navItem = "Web Content");
-
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name Test");
-
-		PortletEntry.inputTitle(title = "Test");
-
-		for (var index : list "1,2,3") {
-			DERenderer.inputDataInGridField(
-				column = "${index}",
-				fieldLabel = "Grid",
-				row = "${index}");
-		}
-
-		PortletEntry.changeLocale(locale = "zh-CN");
-
-		PortletEntry.inputTitle(title = "测试");
-
-		for (var index : list "4,5,6") {
-			DERenderer.inputDataInGridField(
-				column = "${index}",
-				fieldLabel = "网格",
-				row = "${index}");
-		}
-
-		PortletEntry.publish();
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "Test");
-
-		AssertTextEquals(
-			locator1 = "TextInput#TITLE",
-			value1 = "Test");
-
-		for (var index : list "1,2,3") {
-			DERenderer.assertDataInGridField(
-				column = "${index}",
-				fieldLabel = "Grid",
-				row = "${index}");
-		}
-
-		PortletEntry.changeLocale(locale = "zh-CN");
-
-		AssertTextEquals(
-			locator1 = "TextInput#TITLE",
-			value1 = "测试");
-
-		for (var index : list "1,2,3,4,5,6") {
-			DERenderer.assertDataInGridField(
-				column = "${index}",
-				fieldLabel = "网格",
-				row = "${index}");
-		}
 	}
 
 }

@@ -61,7 +61,6 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.system=true",
 		"com.liferay.portlet.use-default-template=false",
 		"javax.portlet.display-name=Content Performance",
-		"javax.portlet.init-param.view-template=/view.jsp",
 		"javax.portlet.name=" + AnalyticsReportsPortletKeys.ANALYTICS_REPORTS,
 		"javax.portlet.resource-bundle=content.Language"
 	},
@@ -89,15 +88,11 @@ public class AnalyticsReportsPortlet extends MVCPortlet {
 
 		InfoItemReference infoItemReference = _getInfoItemReference(
 			httpServletRequest);
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
 
 		renderRequest.setAttribute(
 			AnalyticsReportsWebKeys.ANALYTICS_REPORTS_DISPLAY_CONTEXT,
 			new AnalyticsReportsDisplayContext(
-				infoItemReference, renderRequest, renderResponse,
-				themeDisplay));
+				infoItemReference, renderResponse));
 
 		super.doDispatch(renderRequest, renderResponse);
 	}

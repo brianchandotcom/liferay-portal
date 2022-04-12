@@ -17,12 +17,10 @@ package com.liferay.analytics.reports.web.internal.display.context;
 import com.liferay.analytics.reports.info.item.ClassNameClassPKInfoItemIdentifier;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 import java.util.Collections;
 import java.util.Map;
 
-import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceURL;
 
@@ -33,8 +31,7 @@ import javax.portlet.ResourceURL;
 public class AnalyticsReportsDisplayContext<T> {
 
 	public AnalyticsReportsDisplayContext(
-		InfoItemReference infoItemReference, RenderRequest renderRequest,
-		RenderResponse renderResponse, ThemeDisplay themeDisplay) {
+		InfoItemReference infoItemReference, RenderResponse renderResponse) {
 
 		_infoItemReference = infoItemReference;
 		_renderResponse = renderResponse;

@@ -1,31 +1,36 @@
 #!/bin/bash
 
 if [ `which minikube` ];then
-    eval $(minikube docker-env) && echo "Using minikube docker-env"
+    eval $(minikube docker-env) && echo "[run_local] Using minikube docker-env"
+    R=$?
 
     MINIKUBE_STATUS=$(minikube status -o json | jq -r '.APIServer')
-    if [ "$MINIKUBE_STATUS" == "Stopped" ];then
-        echo "Starting minikube ..."
+    if [ "$MINIKUBE_STATUS" != "Running" ];then
+        echo "[run_local] Starting minikube ..."
         minikube start --cpus 8 --memory 16364
+    fi
+
+    if [ $R -gt 0 ];then
+        eval $(minikube docker-env) && echo "[run_local] Using minikube docker-env"
     fi
 fi
 
 # build local dxp image with k8s-native features
-(cd kubernetes-native-dxp && ./gradlew buildDockerImage)
+./gradlew resolve buildDockerImage
 
-# build the remote-app PoC
-(cd ../LCD-13781-remote-apps-sdlc/liferay-hello-world &&
+echo "[run_local] Build the remote-app PoC"
+(cd lxc-extensions/liferay-hello-world &&
     yarn install && yarn build &&
     docker build -t remoteappa . &&
-    cat ../template.yaml > ../k8s/remote-app-a-configmap.yaml &&
-    REMOTE_APP_HOST=http://localhost:8090 ../create_app_config.sh -n "Remote App A" -e liferay-hello-world -p "foo=bar" >> ../k8s/remote-app-a-configmap.yaml)
+    cat ../../k8s/remoteappa/remote-app-a-configmap.yaml.template > ../../k8s/remoteappa/remote-app-a-configmap.yaml &&
+    REMOTE_APP_HOST=http://localhost:8090 ../create_app_config.sh -n "Remote App A" -e liferay-hello-world -p "foo=bar" >> ../../k8s/remoteappa/remote-app-a-configmap.yaml)
 
-echo "Deleting deployment"
+echo "[run_local] Deleting deployments"
 kubectl delete deployments.apps remote-app-a --wait=true --ignore-not-found=true
 kubectl delete deployments.apps dxp-deployment --wait=true --ignore-not-found=true
 
-echo "Deploy updated resources"
-kubectl apply -f ../LCD-13781-remote-apps-sdlc/k8s/
+echo "[run_local] Deploy updated resources"
+kubectl apply -f k8s/remoteappa/
 kubectl wait --for=condition=available --timeout=600s deployment/remote-app-a
 kubectl apply -f k8s/dxp/
 kubectl wait --for=condition=available --timeout=600s deployment/dxp-deployment

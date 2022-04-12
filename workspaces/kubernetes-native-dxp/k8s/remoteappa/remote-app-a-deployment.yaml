@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: remote-app-a
+  labels:
+    app: remote-app-a
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: remote-app-a
+  revisionHistoryLimit: 5
+  progressDeadlineSeconds: 300
+  minReadySeconds: 10
+  template:
+    metadata:
+      labels:
+        app: remote-app-a
+    spec:
+      containers:
+        - name: remote-app-a
+          image: remoteappa
+          imagePullPolicy: Never
+          resources:
+            limits:
+              cpu: "200m"
+              memory: "50Mi"
+          env:
+            - name: CORS_ALLOWED_ORIGIN
+              value: dxp.local
+          ports:
+          - containerPort: 80

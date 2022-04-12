@@ -231,8 +231,6 @@ definition {
 	@description = "This is a use case for LPS-140253. View no private page in staging."
 	@priority = "4"
 	test ViewNoPrivatePageInStaging {
-		property private.pages.enabled = "true";
-
 		task ("Go to Publishing > Staging, enable page versioning, assert no public and private page inside to select") {
 			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
 

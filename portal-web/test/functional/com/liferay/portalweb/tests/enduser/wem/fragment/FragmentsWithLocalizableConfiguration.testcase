@@ -87,16 +87,16 @@ definition {
 				key_navItem = "Estilos",
 				locator1 = "PageEditor#NAV_ITEM_BUTTON");
 
-			for (var fieldSetLabel : list "Margen,Margen interno (padding),Texto,Fondo,Bordes,Efectos") {
+			for (var fieldSetLabel : list "Espaciado,Texto,Fondo,Bordes,Efectos") {
 				AssertVisible(
 					key_fieldSetLabel = "${fieldSetLabel}",
 					locator1 = "PageEditor#COMMON_STYLES_FIELDSET_LABEL");
 			}
 
 			for (var fieldLabel : list "Margen,Relleno") {
-				AssertSelectedLabel(
-					key_fieldLabel = "${fieldLabel} superior",
-					locator1 = "Select#GENERIC_SELECT_FIELD",
+				AssertTextEquals(
+					ariaLabel = "${fieldLabel} superior",
+					locator1 = "Button#ANY_WITH_ARIA_LABEL",
 					value1 = "0");
 			}
 

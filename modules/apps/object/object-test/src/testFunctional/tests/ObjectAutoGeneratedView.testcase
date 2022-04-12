@@ -87,8 +87,6 @@ definition {
 	@description = "LPS-142659 - Verify it is possible to edit a entry of Clob field and view the update on entry table"
 	@priority = "4"
 	test CanEditClobField {
-		property portal.upstream = "quarantine";
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 196",
 			objectName = "CustomObject196",

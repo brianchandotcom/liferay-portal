@@ -45,4 +45,6 @@ type ObjectFieldSettingName =
 	| 'fileSource'
 	| 'maximumFileSize'
 	| 'maxLength'
-	| 'showCounter';
+	| 'showCounter'
+	| 'showFilesInDocumentsAndMedia'
+	| 'storageDLFolderPath';

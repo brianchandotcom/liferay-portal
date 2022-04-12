@@ -37,6 +37,14 @@ ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT
 			).put(
 				"objectFieldTypes", objectDefinitionsFieldsDisplayContext.getObjectFieldBusinessTypeMaps(Validator.isNotNull(objectField.getRelationshipType()), locale)
 			).put(
+				"objectName", objectDefinition.getShortName()
+			).put(
+				"forbiddenNames", PropsUtil.getArray(PropsKeys.DL_NAME_BLACKLIST)
+			).put(
+				"forbiddenChars", PropsUtil.getArray(PropsKeys.DL_CHAR_BLACKLIST)
+			).put(
+				"forbiddenLastChars", PropsUtil.getArray(PropsKeys.DL_CHAR_LAST_BLACKLIST)
+			).put(
 				"readOnly", !objectDefinitionsFieldsDisplayContext.hasUpdateObjectDefinitionPermission()
 			).build()
 		%>'

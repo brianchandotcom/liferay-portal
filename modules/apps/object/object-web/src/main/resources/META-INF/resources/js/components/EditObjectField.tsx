@@ -59,9 +59,13 @@ function closeSidePanel() {
 
 export default function EditObjectField({
 	allowMaxLength,
+	forbiddenChars,
+	forbiddenLastChars,
+	forbiddenNames,
 	isApproved,
 	objectField: initialValues,
 	objectFieldTypes,
+	objectName,
 	readOnly,
 }: IProps) {
 	const onSubmit = async ({id, ...objectField}: ObjectField) => {
@@ -106,7 +110,13 @@ export default function EditObjectField({
 		handleSubmit,
 		setValues,
 		values,
-	} = useObjectFieldForm({initialValues, onSubmit});
+	} = useObjectFieldForm({
+		forbiddenChars,
+		forbiddenLastChars,
+		forbiddenNames,
+		initialValues,
+		onSubmit,
+	});
 
 	const disabled = !!(readOnly || isApproved || values.relationshipType);
 
@@ -154,6 +164,7 @@ export default function EditObjectField({
 					handleChange={handleChange}
 					objectField={values}
 					objectFieldTypes={objectFieldTypes}
+					objectName={objectName}
 					setValues={setValues}
 				>
 					{values.businessType === 'Attachment' && (
@@ -413,6 +424,28 @@ function AttachmentProperties({
 
 	return (
 		<>
+			<ClayForm.Group>
+				{settings.showFilesInDocumentsAndMedia && (
+					<Input
+						error={errors.storageDLFolderPath}
+						feedbackMessage={Liferay.Util.sub(
+							Liferay.Language.get(
+								'input-the-path-of-the-chosen-folder-in-documents-and-media-an-example-of-a-valid-path-is-x'
+							),
+							'/myDocumentsAndMediaFolder'
+						)}
+						label={Liferay.Language.get('storage-folder')}
+						onChange={({target: {value}}) =>
+							onSettingsChange({
+								name: 'storageDLFolderPath',
+								value,
+							})
+						}
+						required
+						value={settings.storageDLFolderPath as string}
+					/>
+				)}
+			</ClayForm.Group>
 			<Input
 				component="textarea"
 				error={errors.acceptedFileExtensions}
@@ -463,9 +496,13 @@ interface IMaxLengthPropertiesProps {
 
 interface IProps {
 	allowMaxLength?: boolean;
+	forbiddenChars: string[];
+	forbiddenLastChars: string[];
+	forbiddenNames: string[];
 	isApproved: boolean;
 	objectField: ObjectField;
 	objectFieldTypes: ObjectFieldType[];
+	objectName: string;
 	readOnly: boolean;
 }
 

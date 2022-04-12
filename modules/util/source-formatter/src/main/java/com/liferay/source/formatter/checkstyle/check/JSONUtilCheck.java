@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter.checkstyle.check;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
@@ -267,6 +268,27 @@ public class JSONUtilCheck extends BaseChainedMethodCheck {
 			return;
 		}
 
+		DetailAST firstChildDetailAST = detailAST.getFirstChild();
+
+		if (firstChildDetailAST == null) {
+			return;
+		}
+
+		firstChildDetailAST = firstChildDetailAST.getFirstChild();
+
+		if (firstChildDetailAST.getType() == TokenTypes.IDENT) {
+			String variableName = getVariableName(detailAST);
+
+			String variableTypeName = getVariableTypeName(
+				detailAST, variableName, true);
+
+			if (ArrayUtil.contains(_VARIABLE_TYPE_NAMES, variableTypeName)) {
+				log(detailAST, _MSG_USE_JSON_UTIL_TO_STRING_2);
+
+				return;
+			}
+		}
+
 		List<String> chainedMethodNames = new ArrayList<>();
 
 		List<DetailAST> methodCallDetailASTList = getAllChildTokens(
@@ -305,7 +327,7 @@ public class JSONUtilCheck extends BaseChainedMethodCheck {
 		DetailAST methodCallDetailAST = methodCallDetailASTList.get(
 			methodCallDetailASTList.size() - 1);
 
-		DetailAST firstChildDetailAST = methodCallDetailAST.getFirstChild();
+		firstChildDetailAST = methodCallDetailAST.getFirstChild();
 
 		if (firstChildDetailAST.getType() != TokenTypes.DOT) {
 			return;
@@ -353,5 +375,9 @@ public class JSONUtilCheck extends BaseChainedMethodCheck {
 
 	private static final String _MSG_USE_JSON_UTIL_TO_STRING_2 =
 		"json.util.to.string.use.2";
+
+	private static final String[] _VARIABLE_TYPE_NAMES = {
+		"JSONArray", "JSONObject"
+	};
 
 }

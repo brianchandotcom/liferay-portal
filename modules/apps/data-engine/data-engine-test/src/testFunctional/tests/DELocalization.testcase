@@ -2126,4 +2126,87 @@ definition {
 			webContentTitle = "WC WebContent Title en-US");
 	}
 
+	@description = "Verify that is possible to translate Web Content fields with different Instance language set"
+	@priority = "4"
+	test CanBeTranslatedWithDifferentInstanceLanguages {
+
+		
+
+
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Localization",
+			configurationName = "Language",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.configureCurrentLanguagesCP(defaultPortalLanguage = "Portuguese (Brazil)");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		PortletEntry.publish();
+
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+		WebContent.editCP(
+			webContentContentEdit = "WC WebContent Content pt-BR",
+			webContentTitle = "WC WebContent Title",
+			webContentTitleEdit = "WC WebContent Title pt-BR");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title pt-BR");
+
+		PortletEntry.changeLocale(locale = "en-US");
+
+		WebContent.editWebContentContent(
+			webContentContentEdit = "WC WebContent Content en-US",
+			webContentTitle = "WC WebContent Title pt-BR",
+			webContentTitleEdit = "WC WebContent Title en-US");
+
+		
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title en-US");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title en-US");
+
+		WebContent.viewCP(
+			webContentContent = "WC WebContent Content pt-BR",
+			webContentTitle = "WC WebContent Title pt-BR");
+
+
+
+		PortletEntry.changeLocale(locale = "en-US");
+
+
+		WebContent.viewCP(
+			webContentContent = "WC WebContent Content en-US",
+			webContentTitle = "WC WebContent Title en-US");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Localization",
+			configurationName = "Language",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.configureCurrentLanguagesCP(defaultPortalLanguage = "English (United States)");
+
+	
+
+	
+	}
+
 }

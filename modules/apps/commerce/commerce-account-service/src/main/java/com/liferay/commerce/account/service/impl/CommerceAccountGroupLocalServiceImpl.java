@@ -175,7 +175,7 @@ public class CommerceAccountGroupLocalServiceImpl
 		long companyId, String externalReferenceCode) {
 
 		return CommerceAccountGroupImpl.fromAccountGroup(
-			_accountGroupLocalService.fetchAccountGroupByReferenceCode(
+			_accountGroupLocalService.fetchAccountGroupByExternalReferenceCode(
 				companyId, externalReferenceCode));
 	}
 
@@ -371,8 +371,9 @@ public class CommerceAccountGroupLocalServiceImpl
 
 		CommerceAccountGroup commerceAccountGroup =
 			CommerceAccountGroupImpl.fromAccountGroup(
-				_accountGroupLocalService.fetchAccountGroupByReferenceCode(
-					companyId, externalReferenceCode));
+				_accountGroupLocalService.
+					fetchAccountGroupByExternalReferenceCode(
+						companyId, externalReferenceCode));
 
 		if ((commerceAccountGroup != null) &&
 			(commerceAccountGroup.getCommerceAccountGroupId() !=

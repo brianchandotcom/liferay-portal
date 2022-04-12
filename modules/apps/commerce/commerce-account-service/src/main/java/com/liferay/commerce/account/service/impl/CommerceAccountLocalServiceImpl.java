@@ -163,8 +163,10 @@ public class CommerceAccountLocalServiceImpl
 		else {
 			CommerceAccount commerceAccount =
 				CommerceAccountImpl.fromAccountEntry(
-					_accountEntryLocalService.fetchAccountEntryByReferenceCode(
-						serviceContext.getCompanyId(), externalReferenceCode));
+					_accountEntryLocalService.
+						fetchAccountEntryByExternalReferenceCode(
+							serviceContext.getCompanyId(),
+							externalReferenceCode));
 
 			if (commerceAccount != null) {
 				return commerceAccountLocalService.updateCommerceAccount(
@@ -682,7 +684,7 @@ public class CommerceAccountLocalServiceImpl
 		}
 
 		CommerceAccount commerceAccount = CommerceAccountImpl.fromAccountEntry(
-			_accountEntryLocalService.fetchAccountEntryByReferenceCode(
+			_accountEntryLocalService.fetchAccountEntryByExternalReferenceCode(
 				companyId, externalReferenceCode));
 
 		if ((commerceAccount != null) &&

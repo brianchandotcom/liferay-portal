@@ -294,6 +294,58 @@ definition {
 		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "Liferay Web Content,Liferay Blogs Entry");
 	}
 
+	test AssertBlueprintStillAppliedAfterRename {
+		JSONWebcontent.addWebContent(
+			content = "apple apple apple",
+			groupName = "Guest",
+			title = "WC Shorter");
+
+		JSONWebcontent.addWebContent(
+			content = "apple adding more content to this article",
+			groupName = "Guest",
+			title = "WC Longer");
+
+		Blueprints.openBlueprintsAdmin();
+
+		Blueprints.createBlueprint(title = "Test Blueprint");
+
+		Blueprints.addElement(element = "Boost Longer Contents");
+
+		Type(
+			elementName = "Boost Longer Contents",
+			fieldLabel = "Boost",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
+			value1 = "1000");
+
+		PortletEntry.save();
+
+		Search.openSearchPage();
+
+		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
+
+		SearchPortlets.searchEmbedded(searchTerm = "apple");
+
+		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "WC Longer,WC Shorter");
+
+		Blueprints.openBlueprintsAdmin();
+
+		Blueprints.editBlueprint(title = "Test Blueprint");
+
+		Click(locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_HEADER_TITLE");
+
+		PortletEntry.inputTitle(title = "Edited Blueprint");
+
+		Button.clickDone();
+
+		PortletEntry.save();
+
+		Search.openSearchPage();
+
+		SearchPortlets.searchEmbedded(searchTerm = "apple");
+
+		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "WC Longer,WC Shorter");
+	}
+
 	test AssertLocalizedFieldsAddLocaleDropdown {
 		Blueprints.openBlueprintsAdmin();
 

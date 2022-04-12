@@ -469,9 +469,7 @@ public class SiteNavigationMenuDisplayContext {
 		Layout layout = themeDisplay.getLayout();
 		Group scopeGroup = themeDisplay.getScopeGroup();
 
-		if (layout.isPrivateLayout() && scopeGroup.hasPrivateLayouts() &&
-			scopeGroup.isPrivateLayoutsEnabled()) {
-
+		if (layout.isPrivateLayout() && scopeGroup.hasPrivateLayouts()) {
 			return SiteNavigationConstants.TYPE_PRIVATE_PAGES_HIERARCHY;
 		}
 

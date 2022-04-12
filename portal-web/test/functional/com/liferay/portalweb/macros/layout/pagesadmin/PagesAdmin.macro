@@ -552,11 +552,18 @@ definition {
 	}
 
 	macro changeSiteCurrentTheme {
-		PagesAdmin.togglePrivacy(privacy = "${privacy}");
+		if (IsElementPresent(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS")) {
+			Click(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
 
-		Click(
-			key_pageName = "${privacy}",
-			locator1 = "Icon#COG_PAGE");
+			MenuItem.click(menuItem = "Configuration");
+		}
+		else {
+			PagesAdmin.togglePrivacy(privacy = "${privacy}");
+
+			Click(
+				key_pageName = "${privacy}",
+				locator1 = "Icon#COG_PAGE");
+		}
 
 		Navigator.gotoNavTab(navTab = "Look and Feel");
 

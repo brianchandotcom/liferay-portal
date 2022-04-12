@@ -37,6 +37,7 @@ definition {
 	test AddChildSiteFromImportedSiteTemplate {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
+		property private.pages.enabled = "true";
 		property test.name.skip.portal.instance = "SitesUseCase#AddChildSiteFromImportedSiteTemplate";
 		property testray.component.names = "Training";
 

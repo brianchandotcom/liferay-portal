@@ -861,7 +861,7 @@ definition {
 
 		SiteTemplates.AddSiteTemplateJavaScript(
 			javaScript = "${javascript}",
-			pageName = "Pages");
+			pageName = "Public Pages");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",

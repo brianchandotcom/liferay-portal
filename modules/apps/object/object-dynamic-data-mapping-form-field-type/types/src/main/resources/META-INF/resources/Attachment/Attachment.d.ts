@@ -24,6 +24,7 @@ export default function Attachment({
 	onChange,
 	url,
 	value,
+	warningMessage,
 	...otherProps
 }: IProps): JSX.Element;
 interface IProps {
@@ -34,5 +35,6 @@ interface IProps {
 	onChange: FieldChangeEventHandler;
 	url: string;
 	value: string;
+	warningMessage?: string;
 }
 export {};

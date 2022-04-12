@@ -354,11 +354,13 @@ definition {
 			ImportExport.assertExecutionEntry(
 				entityType = "Account",
 				executionAction = "Import",
+				executionName = "csv_account_import.csv",
 				executionStatus = "Completed");
 
 			ImportExport.assertExecutionEntry(
 				entityType = "Account",
 				executionAction = "Export",
+				executionName = "Account Plan Execution",
 				executionStatus = "Completed");
 		}
 
@@ -370,11 +372,13 @@ definition {
 			ImportExport.assertExecutionEntry(
 				entityType = "Account",
 				executionAction = "Import",
+				executionName = "csv_account_import.csv",
 				executionStatus = "Completed");
 
 			ImportExport.assertNoExecutionEntry(
 				entityType = "Account",
 				executionAction = "Export",
+				executionName = "Account Plan Execution",
 				executionStatus = "Completed");
 		}
 
@@ -386,11 +390,13 @@ definition {
 			ImportExport.assertExecutionEntry(
 				entityType = "Account",
 				executionAction = "Export",
+				executionName = "Account Plan Execution",
 				executionStatus = "Completed");
 
 			ImportExport.assertNoExecutionEntry(
 				entityType = "Account",
 				executionAction = "Import",
+				executionName = "csv_account_import.csv",
 				executionStatus = "Completed");
 		}
 	}
@@ -844,11 +850,13 @@ definition {
 			ImportExport.assertExecutionEntry(
 				entityType = "Account",
 				executionAction = "Export",
+				executionName = "Account Plan Execution",
 				executionStatus = "Failed");
 
 			ImportExport.assertExecutionEntry(
 				entityType = "Account",
 				executionAction = "Export",
+				executionName = "Account Plan Execution",
 				executionStatus = "Completed");
 		}
 

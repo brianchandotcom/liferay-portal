@@ -32,13 +32,13 @@ public class RoleUpgradeProcess extends UpgradeProcess {
 					"'");
 
 		_updateRole(
-			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_POWER_USER,
+			"Account Power User",
 			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_ADMINISTRATOR);
 		_updateRole(
-			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_OWNER,
+			"Account Owner",
 			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER);
 		_updateRole(
-			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_USER,
+			"Account User",
 			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MEMBER);
 	}
 

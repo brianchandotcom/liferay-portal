@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 
+import java.util.Objects;
+
 import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Component;
@@ -66,9 +68,8 @@ public class RatingsOrderingNavigatorEntry
 		Portlet portlet = _portletLocalService.getPortletById(
 			themeDisplay.getCompanyId(), portletDisplay.getPortletResource());
 
-		String rootPortletId = portlet.getRootPortletId();
-
-		if (rootPortletId.equals(
+		if (Objects.equals(
+				portlet.getRootPortletId(),
 				AssetPublisherPortletKeys.HIGHEST_RATED_ASSETS)) {
 
 			return true;

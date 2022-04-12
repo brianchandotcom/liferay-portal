@@ -1,0 +1,3 @@
+Bundle-Name: oauth2-application-factory-headless-server
+Bundle-SymbolicName: com.liferay.oauth2.application.factory.headless.server
+Bundle-Version: 1.0.0

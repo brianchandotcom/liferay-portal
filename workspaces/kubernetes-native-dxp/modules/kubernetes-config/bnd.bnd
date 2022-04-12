@@ -1,0 +1,12 @@
+Bundle-Name: Liferay Kubernetes Configuration Agent
+Bundle-SymbolicName: com.liferay.kubernetes.config
+Bundle-Version: 1.0.0
+
+Import-Package: \
+	!android.*,\
+	!javax.annotation.meta.*,\
+	!org.bouncycastle.*,\
+	!org.conscrypt.*,\
+	*
+-fixupmessages: Classes found in the wrong directory
+-noclassforname: true

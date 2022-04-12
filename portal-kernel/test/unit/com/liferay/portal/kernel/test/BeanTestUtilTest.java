@@ -35,19 +35,27 @@ public class BeanTestUtilTest {
 	public static final CodeCoverageAssertor codeCoverageAssertor =
 		CodeCoverageAssertor.INSTANCE;
 
-	@Test(expected = NoSuchMethodException.class)
+	@Test
+	public void testConstructor() {
+		new BeanTestUtil();
+	}
+
+	@Test
 	public void testCopyPropertiesShouldFailIfPropertiesDoesNotExist()
 		throws Exception {
 
-		TestClass sourceTestClass = new TestClass();
+		TestClass testClass = new TestClass();
 
-		sourceTestClass.setIntegerProperty(1);
+		testClass.setIntegerProperty(1);
 
-		Object targetTestClass = new Object();
+		try {
+			BeanTestUtil.copyProperties(testClass, new Object());
 
-		BeanTestUtil.copyProperties(sourceTestClass, targetTestClass);
-
-		Assert.assertEquals(sourceTestClass, targetTestClass);
+			Assert.fail();
+		}
+		catch (NoSuchMethodException noSuchMethodException) {
+			Assert.assertNotNull(noSuchMethodException);
+		}
 	}
 
 	@Test
@@ -74,6 +82,27 @@ public class BeanTestUtilTest {
 	}
 
 	@Test
+	public void testCopyPropertiesShouldSucceedIfItHasSyntheticProperty()
+		throws Exception {
+
+		TestClass sourceTestClass = new TestClass();
+
+		TestClass.NestedClass sourceNestedClass =
+			sourceTestClass.new NestedClass();
+
+		sourceNestedClass.setNestedProperty("aaa");
+
+		TestClass targetTestClass = new TestClass();
+
+		TestClass.NestedClass targetNestedClass =
+			targetTestClass.new NestedClass();
+
+		BeanTestUtil.copyProperties(sourceNestedClass, targetNestedClass);
+
+		Assert.assertEquals(sourceNestedClass, targetNestedClass);
+	}
+
+	@Test
 	public void testCopyPropertiesShouldSucceedIfPropertiesExist()
 		throws Exception {
 
@@ -95,6 +124,17 @@ public class BeanTestUtilTest {
 	}
 
 	@Test
+	public void testCopyPropertiesShouldSucceedIfThereIsNoSuperClass()
+		throws Exception {
+
+		Object object = new Object();
+
+		BeanTestUtil.copyProperties(object, object);
+
+		Assert.assertEquals(object, object);
+	}
+
+	@Test
 	public void testHasPropertyShouldReturnFalseIfPropertyDoesNotExist() {
 		Assert.assertFalse(
 			BeanTestUtil.hasProperty(
@@ -107,13 +147,20 @@ public class BeanTestUtilTest {
 			BeanTestUtil.hasProperty(new TestClass(), "stringProperty"));
 	}
 
-	@Test(expected = NoSuchMethodException.class)
+	@Test
 	public void testSetPropertyShouldFailIfPropertyDoesNotExist()
 		throws Exception {
 
-		BeanTestUtil.setProperty(
-			new TestClass(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString());
+		try {
+			BeanTestUtil.setProperty(
+				new TestClass(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString());
+
+			Assert.fail();
+		}
+		catch (NoSuchMethodException noSuchMethodException) {
+			Assert.assertNotNull(noSuchMethodException);
+		}
 	}
 
 	@Test
@@ -246,6 +293,40 @@ public class BeanTestUtilTest {
 		protected Long longProperty;
 		protected Map<String, Object> mapProperty;
 		protected String stringProperty;
+
+		protected class NestedClass {
+
+			@Override
+			public boolean equals(Object object) {
+				if (this == object) {
+					return true;
+				}
+
+				if (!(object instanceof NestedClass)) {
+					return false;
+				}
+
+				NestedClass that = (NestedClass)object;
+
+				return Objects.equals(nestedProperty, that.nestedProperty);
+			}
+
+			public String getNestedProperty() {
+				return nestedProperty;
+			}
+
+			@Override
+			public int hashCode() {
+				return Objects.hash(nestedProperty);
+			}
+
+			public void setNestedProperty(String nestedProperty) {
+				this.nestedProperty = nestedProperty;
+			}
+
+			protected String nestedProperty;
+
+		}
 
 	}
 

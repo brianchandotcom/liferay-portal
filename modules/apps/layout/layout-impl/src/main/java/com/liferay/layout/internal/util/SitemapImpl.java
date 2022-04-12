@@ -216,10 +216,10 @@ public class SitemapImpl implements Sitemap {
 
 		_initEntriesAndSize(rootElement);
 
-		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
-			groupId, privateLayout);
-
-		_visitLayoutSet(rootElement, layoutSet, themeDisplay);
+		_visitLayoutSet(
+			rootElement,
+			_layoutSetLocalService.getLayoutSet(groupId, privateLayout),
+			themeDisplay);
 
 		_removeEntriesAndSize(rootElement);
 

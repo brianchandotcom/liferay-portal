@@ -98,6 +98,7 @@ public class BatchEngineExportTaskModelListener
 			UserNotificationDeliveryConstants.TYPE_WEBSITE,
 			_batchPlannerNotificationSender.getNotificationEventJSONObject(
 				batchEngineTaskExecuteStatus,
+				batchPlannerPlan.getBatchPlannerPlanId(),
 				batchPlannerPlan.getInternalClassName()));
 	}
 

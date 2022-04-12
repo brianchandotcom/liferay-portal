@@ -628,7 +628,7 @@ definition {
 		PagesAdmin.openPagesAdmin(siteURLKey = "new-site");
 
 		PagesAdmin.viewPagesOrder(
-			depth = "2",
+			depth = "1",
 			pageNameList = "Home,1,2,Hello");
 	}
 

@@ -16,8 +16,12 @@ package com.liferay.commerce.product.type.grouped.constants;
 
 /**
  * @author Andrea Di Giorgi
+ * @author Alessio Antonio Rendina
  */
 public class GroupedCPTypeConstants {
+
+	public static final String GROUPED_CP_TYPE_HELPER =
+		"GROUPED_CP_TYPE_HELPER";
 
 	public static final String NAME = "grouped";
 

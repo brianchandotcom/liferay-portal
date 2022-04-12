@@ -18,6 +18,7 @@ import com.liferay.commerce.constants.CommerceOrderConstants;
 
 /**
  * @author Andrea Di Giorgi
+ * @author Alessio Antonio Rendina
  */
 public class VirtualCPTypeConstants {
 
@@ -28,5 +29,8 @@ public class VirtualCPTypeConstants {
 	};
 
 	public static final String NAME = "virtual";
+
+	public static final String VIRTUAL_CP_TYPE_HELPER =
+		"VIRTUAL_CP_TYPE_HELPER";
 
 }

@@ -189,7 +189,7 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanPreviewWithLongInputs {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		var portalURL = PropsUtil.get("portal.url");
 

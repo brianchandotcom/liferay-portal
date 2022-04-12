@@ -321,7 +321,7 @@ definition {
 
 	@description = "LPS-147853. Assert tooltip messages will be displayed when hovered over the filter and order buttons in responsive mode"
 	@priority = "4"
-	test ResponsiveModeFilterAndOrderAsIconButtons {
+	test ResponsiveModeFilterAndOrderButtonsShouldDisplayAsIcons {
 		task ("Given a window size set to phone size") {
 			SetWindowSize(value1 = "360,720");
 		}

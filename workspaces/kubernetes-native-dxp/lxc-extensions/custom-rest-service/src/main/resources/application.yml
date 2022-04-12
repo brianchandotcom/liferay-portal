@@ -1,0 +1,10 @@
+server: 
+  port: 8081
+
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        opaque:
+          introspection-uri: http://localhost:8080/o/oauth2/introspect
+          introspection-client-id: id-8fde7fde-b91f-55b3-2018-21c991f3086

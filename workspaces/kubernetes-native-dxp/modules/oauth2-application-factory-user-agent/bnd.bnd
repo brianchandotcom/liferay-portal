@@ -1,0 +1,3 @@
+Bundle-Name: oauth2-application-factory-user-agent
+Bundle-SymbolicName: com.liferay.oauth2.application.factory.user.agent
+Bundle-Version: 1.0.0

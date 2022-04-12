@@ -55,7 +55,7 @@ public class BatchPlannerPlanLocalServiceImpl
 	@Override
 	public BatchPlannerPlan addBatchPlannerPlan(
 			long userId, boolean export, String externalType,
-			String externalURL, String internalClassName, String name,
+			String externalURL, String internalClassName, String name, int size,
 			String taskItemDelegateName, boolean template)
 		throws PortalException {
 
@@ -81,6 +81,7 @@ public class BatchPlannerPlanLocalServiceImpl
 		batchPlannerPlan.setExternalURL(externalURL);
 		batchPlannerPlan.setInternalClassName(internalClassName);
 		batchPlannerPlan.setName(name);
+		batchPlannerPlan.setSize(size);
 		batchPlannerPlan.setTaskItemDelegateName(taskItemDelegateName);
 		batchPlannerPlan.setTemplate(template);
 
@@ -115,8 +116,7 @@ public class BatchPlannerPlanLocalServiceImpl
 
 	@Override
 	public BatchPlannerPlan updateActive(
-			boolean active, String batchEngineTaskERC)
-		throws PortalException {
+		boolean active, String batchEngineTaskERC) {
 
 		BatchPlannerPlan batchPlannerPlan =
 			batchPlannerPlanPersistence.fetchByPrimaryKey(
@@ -133,8 +133,9 @@ public class BatchPlannerPlanLocalServiceImpl
 			return null;
 		}
 
-		return batchPlannerPlanLocalService.updateActive(
-			batchPlannerPlan.getBatchPlannerPlanId(), active);
+		batchPlannerPlan.setActive(active);
+
+		return batchPlannerPlanPersistence.update(batchPlannerPlan);
 	}
 
 	@Override
@@ -170,6 +171,18 @@ public class BatchPlannerPlanLocalServiceImpl
 		batchPlannerPlan.setExternalType(externalType);
 		batchPlannerPlan.setInternalClassName(internalClassName);
 		batchPlannerPlan.setName(name);
+
+		return batchPlannerPlanPersistence.update(batchPlannerPlan);
+	}
+
+	@Override
+	public BatchPlannerPlan updateStatus(long batchPlannerPlanId, int status)
+		throws PortalException {
+
+		BatchPlannerPlan batchPlannerPlan =
+			batchPlannerPlanPersistence.findByPrimaryKey(batchPlannerPlanId);
+
+		batchPlannerPlan.setStatus(status);
 
 		return batchPlannerPlanPersistence.update(batchPlannerPlan);
 	}

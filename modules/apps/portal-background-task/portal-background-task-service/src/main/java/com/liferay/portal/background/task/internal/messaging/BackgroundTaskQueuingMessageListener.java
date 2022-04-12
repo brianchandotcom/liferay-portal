@@ -14,9 +14,10 @@
 
 package com.liferay.portal.background.task.internal.messaging;
 
+import com.liferay.portal.background.task.internal.BackgroundTaskImpl;
 import com.liferay.portal.background.task.internal.lock.helper.BackgroundTaskLockHelper;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
+import com.liferay.portal.background.task.model.BackgroundTask;
+import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.lock.LockManager;
 import com.liferay.portal.kernel.log.Log;
@@ -68,8 +69,9 @@ public class BackgroundTaskQueuingMessageListener extends BaseMessageListener {
 				BackgroundTaskConstants.BACKGROUND_TASK_ID);
 
 			if (!_backgroundTaskLockHelper.isLockedBackgroundTask(
-					_backgroundTaskManager.fetchBackgroundTask(
-						backgroundTaskId))) {
+					new BackgroundTaskImpl(
+						_backgroundTaskLocalService.fetchBackgroundTask(
+							backgroundTaskId)))) {
 
 				_executeQueuedBackgroundTasks(taskExecutorClassName);
 			}
@@ -89,7 +91,7 @@ public class BackgroundTaskQueuingMessageListener extends BaseMessageListener {
 		}
 
 		BackgroundTask backgroundTask =
-			_backgroundTaskManager.fetchFirstBackgroundTask(
+			_backgroundTaskLocalService.fetchFirstBackgroundTask(
 				taskExecutorClassName, BackgroundTaskConstants.STATUS_QUEUED);
 
 		if (backgroundTask == null) {
@@ -102,16 +104,16 @@ public class BackgroundTaskQueuingMessageListener extends BaseMessageListener {
 			return;
 		}
 
-		_backgroundTaskManager.resumeBackgroundTask(
+		_backgroundTaskLocalService.resumeBackgroundTask(
 			backgroundTask.getBackgroundTaskId());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BackgroundTaskQueuingMessageListener.class);
 
-	private BackgroundTaskLockHelper _backgroundTaskLockHelper;
-
 	@Reference
-	private BackgroundTaskManager _backgroundTaskManager;
+	private BackgroundTaskLocalService _backgroundTaskLocalService;
+
+	private BackgroundTaskLockHelper _backgroundTaskLockHelper;
 
 }

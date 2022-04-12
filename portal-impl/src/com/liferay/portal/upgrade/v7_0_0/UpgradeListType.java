@@ -23,7 +23,7 @@ public class UpgradeListType extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterColumnType("ListType", "listTypeId", "LONG");
+		alterColumnType("ListType", "listTypeId", "LONG not null");
 	}
 
 }

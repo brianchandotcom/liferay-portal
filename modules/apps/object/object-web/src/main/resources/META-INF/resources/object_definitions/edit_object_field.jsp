@@ -31,6 +31,14 @@ ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT
 			HashMapBuilder.<String, Object>put(
 				"allowMaxLength", GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-146889"))
 			).put(
+				"allowUploadDocAndMedia", GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-148112"))
+			).put(
+				"forbiddenChars", PropsUtil.getArray(PropsKeys.DL_CHAR_BLACKLIST)
+			).put(
+				"forbiddenLastChars", PropsUtil.getArray(PropsKeys.DL_CHAR_LAST_BLACKLIST)
+			).put(
+				"forbiddenNames", PropsUtil.getArray(PropsKeys.DL_NAME_BLACKLIST)
+			).put(
 				"isApproved", objectDefinition.isApproved()
 			).put(
 				"objectField", objectDefinitionsFieldsDisplayContext.getObjectFieldJSONObject(objectField)
@@ -38,12 +46,6 @@ ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT
 				"objectFieldTypes", objectDefinitionsFieldsDisplayContext.getObjectFieldBusinessTypeMaps(Validator.isNotNull(objectField.getRelationshipType()), locale)
 			).put(
 				"objectName", objectDefinition.getShortName()
-			).put(
-				"forbiddenNames", PropsUtil.getArray(PropsKeys.DL_NAME_BLACKLIST)
-			).put(
-				"forbiddenChars", PropsUtil.getArray(PropsKeys.DL_CHAR_BLACKLIST)
-			).put(
-				"forbiddenLastChars", PropsUtil.getArray(PropsKeys.DL_CHAR_LAST_BLACKLIST)
 			).put(
 				"readOnly", !objectDefinitionsFieldsDisplayContext.hasUpdateObjectDefinitionPermission()
 			).build()

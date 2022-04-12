@@ -59,6 +59,7 @@ function closeSidePanel() {
 
 export default function EditObjectField({
 	allowMaxLength,
+	allowUploadDocAndMedia,
 	forbiddenChars,
 	forbiddenLastChars,
 	forbiddenNames,
@@ -159,6 +160,7 @@ export default function EditObjectField({
 
 				<ObjectFieldFormBase
 					allowMaxLength={allowMaxLength}
+					allowUploadDocAndMedia={allowUploadDocAndMedia}
 					disabled={disabled}
 					errors={errors}
 					handleChange={handleChange}
@@ -169,6 +171,7 @@ export default function EditObjectField({
 				>
 					{values.businessType === 'Attachment' && (
 						<AttachmentProperties
+							allowUploadDocAndMedia={allowUploadDocAndMedia}
 							errors={errors}
 							objectFieldSettings={
 								values.objectFieldSettings as ObjectFieldSetting[]
@@ -416,6 +419,7 @@ function MaxLengthProperties({
 }
 
 function AttachmentProperties({
+	allowUploadDocAndMedia,
 	errors,
 	objectFieldSettings,
 	onSettingsChange,
@@ -425,26 +429,27 @@ function AttachmentProperties({
 	return (
 		<>
 			<ClayForm.Group>
-				{settings.showFilesInDocumentsAndMedia && (
-					<Input
-						error={errors.storageDLFolderPath}
-						feedbackMessage={Liferay.Util.sub(
-							Liferay.Language.get(
-								'input-the-path-of-the-chosen-folder-in-documents-and-media-an-example-of-a-valid-path-is-x'
-							),
-							'/myDocumentsAndMediaFolder'
-						)}
-						label={Liferay.Language.get('storage-folder')}
-						onChange={({target: {value}}) =>
-							onSettingsChange({
-								name: 'storageDLFolderPath',
-								value,
-							})
-						}
-						required
-						value={settings.storageDLFolderPath as string}
-					/>
-				)}
+				{allowUploadDocAndMedia &&
+					settings.showFilesInDocumentsAndMedia && (
+						<Input
+							error={errors.storageDLFolderPath}
+							feedbackMessage={Liferay.Util.sub(
+								Liferay.Language.get(
+									'input-the-path-of-the-chosen-folder-in-documents-and-media-an-example-of-a-valid-path-is-x'
+								),
+								'/myDocumentsAndMediaFolder'
+							)}
+							label={Liferay.Language.get('storage-folder')}
+							onChange={({target: {value}}) =>
+								onSettingsChange({
+									name: 'storageDLFolderPath',
+									value,
+								})
+							}
+							required
+							value={settings.storageDLFolderPath as string}
+						/>
+					)}
 			</ClayForm.Group>
 			<Input
 				component="textarea"
@@ -480,6 +485,7 @@ function AttachmentProperties({
 }
 
 interface IAttachmentPropertiesProps {
+	allowUploadDocAndMedia?: boolean;
 	errors: ObjectFieldErrors;
 	objectFieldSettings: ObjectFieldSetting[];
 	onSettingsChange: (setting: ObjectFieldSetting) => void;
@@ -496,6 +502,7 @@ interface IMaxLengthPropertiesProps {
 
 interface IProps {
 	allowMaxLength?: boolean;
+	allowUploadDocAndMedia?: boolean;
 	forbiddenChars: string[];
 	forbiddenLastChars: string[];
 	forbiddenNames: string[];

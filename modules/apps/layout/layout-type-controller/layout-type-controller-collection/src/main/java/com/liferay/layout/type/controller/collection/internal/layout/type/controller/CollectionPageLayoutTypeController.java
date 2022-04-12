@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.servlet.TransferHeadersHelper;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -156,12 +156,12 @@ public class CollectionPageLayoutTypeController
 					"p_l_back_url");
 
 				if (Validator.isNotNull(backURL)) {
-					layoutFullURL = _http.addParameter(
+					layoutFullURL = HttpHelperUtil.addParameter(
 						layoutFullURL, "p_l_back_url", backURL);
 				}
 
 				httpServletResponse.sendRedirect(
-					_http.addParameter(
+					HttpHelperUtil.addParameter(
 						layoutFullURL, "p_l_mode", Constants.EDIT));
 			}
 			else {
@@ -279,9 +279,6 @@ public class CollectionPageLayoutTypeController
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CollectionPageLayoutTypeController.class);
-
-	@Reference
-	private Http _http;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

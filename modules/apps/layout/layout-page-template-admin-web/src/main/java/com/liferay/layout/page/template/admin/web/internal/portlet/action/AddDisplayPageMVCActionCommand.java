@@ -38,7 +38,7 @@ import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -103,7 +103,7 @@ public class AddDisplayPageMVCActionCommand extends BaseMVCActionCommand {
 		String layoutFullURL = _portal.getLayoutFullURL(
 			draftLayout, themeDisplay);
 
-		layoutFullURL = _http.setParameter(
+		layoutFullURL = HttpHelperUtil.setParameter(
 			layoutFullURL, "p_l_back_url",
 			PortletURLBuilder.create(
 				PortletURLFactoryUtil.create(
@@ -114,7 +114,8 @@ public class AddDisplayPageMVCActionCommand extends BaseMVCActionCommand {
 				"display-page-templates"
 			).buildString());
 
-		return _http.setParameter(layoutFullURL, "p_l_mode", Constants.EDIT);
+		return HttpHelperUtil.setParameter(
+			layoutFullURL, "p_l_mode", Constants.EDIT);
 	}
 
 	private JSONObject _addDisplayPage(
@@ -175,9 +176,6 @@ public class AddDisplayPageMVCActionCommand extends BaseMVCActionCommand {
 
 		return JSONUtil.put("error", errorJSONObject);
 	}
-
-	@Reference
-	private Http _http;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

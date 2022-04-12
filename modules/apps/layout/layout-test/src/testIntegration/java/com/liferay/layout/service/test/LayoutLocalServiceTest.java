@@ -35,7 +35,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -258,9 +258,9 @@ public class LayoutLocalServiceTest {
 
 		String name = "café";
 
-		String friendlyURL = HttpUtil.decodeURL(StringPool.SLASH + name);
+		String friendlyURL = HttpHelperUtil.decodeURL(StringPool.SLASH + name);
 
-		friendlyURL = HttpUtil.decodeURL(friendlyURL);
+		friendlyURL = HttpHelperUtil.decodeURL(friendlyURL);
 
 		Layout layout = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(), false,
@@ -279,7 +279,7 @@ public class LayoutLocalServiceTest {
 
 		String name = "café";
 
-		String friendlyURL = HttpUtil.decodeURL(StringPool.SLASH + name);
+		String friendlyURL = HttpHelperUtil.decodeURL(StringPool.SLASH + name);
 
 		Layout layout = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(), false,

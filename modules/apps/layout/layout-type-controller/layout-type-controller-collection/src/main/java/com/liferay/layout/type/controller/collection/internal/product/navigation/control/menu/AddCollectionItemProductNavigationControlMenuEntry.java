@@ -40,7 +40,7 @@ import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -250,14 +250,14 @@ public class AddCollectionItemProductNavigationControlMenuEntry
 			ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		String currentURL = _http.addParameter(
+		String currentURL = HttpHelperUtil.addParameter(
 			_portal.getLayoutRelativeURL(
 				themeDisplay.getLayout(), themeDisplay),
 			"p_l_mode",
 			ParamUtil.getString(
 				httpServletRequest, "p_l_mode", Constants.VIEW));
 
-		return _http.addParameter(
+		return HttpHelperUtil.addParameter(
 			PortletURLBuilder.createActionURL(
 				liferayPortletResponse
 			).setActionName(
@@ -292,9 +292,6 @@ public class AddCollectionItemProductNavigationControlMenuEntry
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;
-
-	@Reference
-	private Http _http;
 
 	@Reference
 	private Portal _portal;

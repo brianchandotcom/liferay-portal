@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -114,7 +114,7 @@ public class AddMasterLayoutMVCActionCommand extends BaseMVCActionCommand {
 		String layoutFullURL = _portal.getLayoutFullURL(
 			draftLayout, themeDisplay);
 
-		layoutFullURL = _http.setParameter(
+		layoutFullURL = HttpHelperUtil.setParameter(
 			layoutFullURL, "p_l_back_url",
 			PortletURLBuilder.create(
 				PortletURLFactoryUtil.create(
@@ -125,11 +125,9 @@ public class AddMasterLayoutMVCActionCommand extends BaseMVCActionCommand {
 				"master-layouts"
 			).buildString());
 
-		return _http.setParameter(layoutFullURL, "p_l_mode", Constants.EDIT);
+		return HttpHelperUtil.setParameter(
+			layoutFullURL, "p_l_mode", Constants.EDIT);
 	}
-
-	@Reference
-	private Http _http;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

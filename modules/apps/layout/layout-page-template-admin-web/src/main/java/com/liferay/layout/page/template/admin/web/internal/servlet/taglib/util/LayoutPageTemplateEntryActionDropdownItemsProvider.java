@@ -46,7 +46,7 @@ import com.liferay.portal.kernel.service.LayoutPrototypeServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelperUtil;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -324,7 +324,7 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 				String layoutFullURL = layoutPrototypeGroup.getDisplayURL(
 					_themeDisplay, true);
 
-				layoutFullURL = HttpUtil.setParameter(
+				layoutFullURL = HttpHelperUtil.setParameter(
 					layoutFullURL, "p_l_back_url",
 					_themeDisplay.getURLCurrent());
 
@@ -340,9 +340,9 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 			String layoutFullURL = PortalUtil.getLayoutFullURL(
 				_draftLayout, _themeDisplay);
 
-			layoutFullURL = HttpUtil.setParameter(
+			layoutFullURL = HttpHelperUtil.setParameter(
 				layoutFullURL, "p_l_back_url", _themeDisplay.getURLCurrent());
-			layoutFullURL = HttpUtil.setParameter(
+			layoutFullURL = HttpHelperUtil.setParameter(
 				layoutFullURL, "p_l_mode", Constants.EDIT);
 
 			dropdownItem.setHref(layoutFullURL);

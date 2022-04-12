@@ -35,7 +35,7 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.permission.LayoutPermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -222,17 +222,18 @@ public class EditLayoutModeProductNavigationControlMenuEntry
 			Layout layout, ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		String redirect = _http.setParameter(
+		String redirect = HttpHelperUtil.setParameter(
 			fullLayoutURL, "p_l_back_url",
 			_portal.getLayoutFullURL(layout, themeDisplay));
 
-		redirect = _http.setParameter(redirect, "p_l_mode", Constants.EDIT);
+		redirect = HttpHelperUtil.setParameter(
+			redirect, "p_l_mode", Constants.EDIT);
 
 		long segmentsExperienceId = ParamUtil.getLong(
 			httpServletRequest, "segmentsExperienceId", -1);
 
 		if (segmentsExperienceId != -1) {
-			redirect = _http.setParameter(
+			redirect = HttpHelperUtil.setParameter(
 				redirect, "segmentsExperienceId", segmentsExperienceId);
 		}
 
@@ -241,9 +242,6 @@ public class EditLayoutModeProductNavigationControlMenuEntry
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditLayoutModeProductNavigationControlMenuEntry.class);
-
-	@Reference
-	private Http _http;
 
 	@Reference
 	private LayoutCopyHelper _layoutCopyHelper;

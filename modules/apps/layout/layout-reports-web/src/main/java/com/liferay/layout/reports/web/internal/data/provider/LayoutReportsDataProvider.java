@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -109,19 +110,19 @@ public class LayoutReportsDataProvider {
 			"https://content-pagespeedonline.googleapis.com/pagespeedonline" +
 				"/v5/runPagespeed";
 
-		googlePageSpeedURL = HttpUtil.addParameter(
+		googlePageSpeedURL = HttpHelperUtil.addParameter(
 			googlePageSpeedURL, "category", "ACCESSIBILITY");
-		googlePageSpeedURL = HttpUtil.addParameter(
+		googlePageSpeedURL = HttpHelperUtil.addParameter(
 			googlePageSpeedURL, "category", "BEST_PRACTICES");
-		googlePageSpeedURL = HttpUtil.addParameter(
+		googlePageSpeedURL = HttpHelperUtil.addParameter(
 			googlePageSpeedURL, "category", "SEO");
-		googlePageSpeedURL = HttpUtil.addParameter(
+		googlePageSpeedURL = HttpHelperUtil.addParameter(
 			googlePageSpeedURL, "key", _apiKey);
-		googlePageSpeedURL = HttpUtil.addParameter(
+		googlePageSpeedURL = HttpHelperUtil.addParameter(
 			googlePageSpeedURL, "locale", LanguageUtil.getLanguageId(locale));
-		googlePageSpeedURL = HttpUtil.addParameter(
+		googlePageSpeedURL = HttpHelperUtil.addParameter(
 			googlePageSpeedURL, "strategy", _strategy);
-		googlePageSpeedURL = HttpUtil.addParameter(
+		googlePageSpeedURL = HttpHelperUtil.addParameter(
 			googlePageSpeedURL, "url", url);
 
 		options.setLocation(googlePageSpeedURL);

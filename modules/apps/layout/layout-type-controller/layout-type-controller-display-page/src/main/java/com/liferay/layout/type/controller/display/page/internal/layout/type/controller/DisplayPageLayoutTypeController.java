@@ -41,7 +41,7 @@ import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.servlet.TransferHeadersHelper;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -218,7 +218,7 @@ public class DisplayPageLayoutTypeController
 				String signInURL = themeDisplay.getURLSignIn();
 
 				httpServletResponse.sendRedirect(
-					_http.setParameter(
+					HttpHelperUtil.setParameter(
 						signInURL, "redirect", themeDisplay.getURLCurrent()));
 			}
 		}
@@ -352,9 +352,6 @@ public class DisplayPageLayoutTypeController
 	@Reference
 	private AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider;
-
-	@Reference
-	private Http _http;
 
 	@Reference
 	private volatile List<InfoDisplayRequestAttributesContributor>

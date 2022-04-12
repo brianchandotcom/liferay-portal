@@ -46,7 +46,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -235,8 +235,8 @@ public class LayoutStagedModelDataHandlerTest
 			typeSettingsUnicodeProperties.getProperty("url"));
 
 		Assert.assertEquals(
-			HttpUtil.removeParameter(livePreviewURL, "t"),
-			HttpUtil.removeParameter(liveLinkedURL, "t"));
+			HttpHelperUtil.removeParameter(livePreviewURL, "t"),
+			HttpHelperUtil.removeParameter(liveLinkedURL, "t"));
 	}
 
 	@Override

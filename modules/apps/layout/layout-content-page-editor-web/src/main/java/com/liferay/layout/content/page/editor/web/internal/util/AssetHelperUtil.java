@@ -35,7 +35,7 @@ import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -216,12 +216,12 @@ public class AssetHelperUtil {
 			ThemeDisplay themeDisplay)
 		throws Exception {
 
-		String currentURL = HttpUtil.addParameter(
+		String currentURL = HttpHelperUtil.addParameter(
 			_portal.getLayoutRelativeURL(
 				themeDisplay.getLayout(), themeDisplay),
 			"p_l_mode", Constants.EDIT);
 
-		return HttpUtil.addParameter(
+		return HttpHelperUtil.addParameter(
 			PortletURLBuilder.create(
 				PortalUtil.getControlPanelPortletURL(
 					httpServletRequest,

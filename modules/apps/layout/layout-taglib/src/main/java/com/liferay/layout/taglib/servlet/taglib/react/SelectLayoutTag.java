@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -359,11 +359,11 @@ public class SelectLayoutTag extends IncludeTag {
 			).put(
 				"previewURL",
 				() -> {
-					String layoutURL = HttpUtil.addParameter(
+					String layoutURL = HttpHelperUtil.addParameter(
 						PortalUtil.getLayoutFullURL(layout, themeDisplay),
 						"p_l_mode", Constants.PREVIEW);
 
-					return HttpUtil.addParameter(
+					return HttpHelperUtil.addParameter(
 						layoutURL, "p_p_auth",
 						AuthTokenUtil.getToken(getRequest()));
 				}

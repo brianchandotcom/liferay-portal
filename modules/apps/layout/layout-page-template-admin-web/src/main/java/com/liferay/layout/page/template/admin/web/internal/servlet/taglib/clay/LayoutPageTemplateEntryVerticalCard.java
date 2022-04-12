@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutPrototypeServiceUtil;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.List;
@@ -109,7 +109,7 @@ public class LayoutPageTemplateEntryVerticalCard extends BaseVerticalCard {
 				String layoutFullURL = layoutPrototypeGroup.getDisplayURL(
 					themeDisplay, true);
 
-				return HttpUtil.setParameter(
+				return HttpHelperUtil.setParameter(
 					layoutFullURL, "p_l_back_url",
 					themeDisplay.getURLCurrent());
 			}
@@ -119,10 +119,10 @@ public class LayoutPageTemplateEntryVerticalCard extends BaseVerticalCard {
 					_layoutPageTemplateEntry.getPlid()),
 				themeDisplay);
 
-			layoutFullURL = HttpUtil.setParameter(
+			layoutFullURL = HttpHelperUtil.setParameter(
 				layoutFullURL, "p_l_mode", Constants.EDIT);
 
-			return HttpUtil.setParameter(
+			return HttpHelperUtil.setParameter(
 				layoutFullURL, "p_l_back_url", themeDisplay.getURLCurrent());
 		}
 		catch (Exception exception) {

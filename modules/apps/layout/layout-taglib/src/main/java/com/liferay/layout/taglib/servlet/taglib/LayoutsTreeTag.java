@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.SessionTreeJSClicks;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -324,7 +324,7 @@ public class LayoutsTreeTag extends IncludeTag {
 						).setParameter(
 							"selPlid", "{selPlid}"
 						).buildString(),
-						HttpUtil.encodePath("{selPlid}"), "{selPlid}")
+						HttpHelperUtil.encodePath("{selPlid}"), "{selPlid}")
 				));
 		}
 

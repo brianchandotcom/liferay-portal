@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -73,11 +73,11 @@ public class EditDisplayPageMenuDisplayContext {
 						_themeDisplay.getPlid()),
 					_themeDisplay);
 
-				editLayoutURL = HttpUtil.setParameter(
+				editLayoutURL = HttpHelperUtil.setParameter(
 					editLayoutURL, "p_l_back_url",
 					_themeDisplay.getURLCurrent());
 
-				editLayoutURL = HttpUtil.setParameter(
+				editLayoutURL = HttpHelperUtil.setParameter(
 					editLayoutURL, "p_l_mode", Constants.EDIT);
 
 				dropdownItem.setHref(editLayoutURL);

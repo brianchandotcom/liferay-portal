@@ -99,7 +99,7 @@ String friendlyURLBase = StringPool.BLANK;
 				/>
 			</c:when>
 			<c:otherwise>
-				<aui:input name="friendlyURL" type="hidden" value="<%= (selLayout != null) ? HttpUtil.decodeURL(selLayout.getFriendlyURL()) : StringPool.BLANK %>" />
+				<aui:input name="friendlyURL" type="hidden" value="<%= (selLayout != null) ? HttpHelperUtil.decodeURL(selLayout.getFriendlyURL()) : StringPool.BLANK %>" />
 			</c:otherwise>
 		</c:choose>
 
@@ -116,7 +116,7 @@ String friendlyURLBase = StringPool.BLANK;
 	</c:when>
 	<c:otherwise>
 		<aui:input name='<%= "name_" + defaultLanguageId %>' type="hidden" value="<%= selLayout.getName(defaultLocale) %>" />
-		<aui:input name="friendlyURL" type="hidden" value="<%= (selLayout != null) ? HttpUtil.decodeURL(selLayout.getFriendlyURL()) : StringPool.BLANK %>" />
+		<aui:input name="friendlyURL" type="hidden" value="<%= (selLayout != null) ? HttpHelperUtil.decodeURL(selLayout.getFriendlyURL()) : StringPool.BLANK %>" />
 	</c:otherwise>
 </c:choose>
 

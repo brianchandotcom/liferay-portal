@@ -59,7 +59,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -536,7 +536,7 @@ public class AssetListEntryUsagesUtil {
 		Layout layout = themeDisplay.getLayout();
 
 		try {
-			return HttpUtil.setParameter(
+			return HttpHelperUtil.setParameter(
 				PortalUtil.getLayoutRelativeURL(layout, themeDisplay),
 				"p_l_mode", Constants.EDIT);
 		}

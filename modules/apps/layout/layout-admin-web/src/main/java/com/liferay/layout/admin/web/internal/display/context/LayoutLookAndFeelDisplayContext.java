@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -109,15 +109,15 @@ public class LayoutLookAndFeelDisplayContext {
 				Layout masterLayout = LayoutLocalServiceUtil.getLayout(
 					selLayout.getMasterLayoutPlid());
 
-				String editLayoutURL = HttpUtil.addParameter(
-					HttpUtil.addParameter(
+				String editLayoutURL = HttpHelperUtil.addParameter(
+					HttpHelperUtil.addParameter(
 						PortalUtil.getLayoutFullURL(selLayout, _themeDisplay),
 						"p_l_mode", Constants.EDIT),
 					"p_l_back_url",
 					ParamUtil.getString(_httpServletRequest, "redirect"));
 
-				return HttpUtil.addParameter(
-					HttpUtil.addParameter(
+				return HttpHelperUtil.addParameter(
+					HttpHelperUtil.addParameter(
 						PortalUtil.getLayoutFullURL(
 							masterLayout.fetchDraftLayout(), _themeDisplay),
 						"p_l_mode", Constants.EDIT),

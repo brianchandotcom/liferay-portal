@@ -487,6 +487,10 @@ declare module Liferay {
 		export function getLanguageId(): Language.Locale;
 	}
 
+	namespace PropsValues {
+		export const UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE: number;
+	}
+
 	/**
 	 * Registers a component and retrieves its instance from the global registry.
 	 */

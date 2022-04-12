@@ -793,9 +793,13 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			Attribute usersLdapAttribute)
 		throws Exception {
 
-		if (_log.isDebugEnabled()) {
-			int size = usersLdapAttribute.size();
+		int size = 0;
 
+		if (usersLdapAttribute != null) {
+			size = usersLdapAttribute.size();
+		}
+
+		if (_log.isDebugEnabled()) {
 			_log.debug(
 				StringBundler.concat(
 					"Importing ", size, " users from LDAP server ",
@@ -805,7 +809,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 
 		Set<Long> newUserIds = new LinkedHashSet<>();
 
-		for (int i = 0; i < usersLdapAttribute.size(); i++) {
+		for (int i = 0; i < size; i++) {
 			String fullUserDN = (String)usersLdapAttribute.get(i);
 
 			Long userId = ldapImportContext.getImportedUserId(fullUserDN);
@@ -1138,8 +1142,6 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 							_log.info(
 								"No users found in " + userGroup.getName());
 						}
-
-						continue;
 					}
 
 					importUsers(

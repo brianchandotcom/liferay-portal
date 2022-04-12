@@ -1092,7 +1092,12 @@ definition {
 	}
 
 	macro configureCacheControl {
-		DMNavigator.openToConfigInSystemSettings(portlet = "Cache Control");
+		if (isSet(systemSettingsInstanceScope)) {
+			DMNavigator.openToConfigInSystemSettings(portlet = "Cache Control");
+		}
+		else {
+			DMNavigator.openToConfigInInstanceSettings(portlet = "Cache Control");
+		}
 
 		if (isSet(cacheControl)) {
 			AssertTextEquals(

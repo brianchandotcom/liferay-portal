@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -59,10 +59,9 @@ import javax.servlet.http.HttpServletRequest;
 public class SearchBarPortletDisplayContextFactory {
 
 	public SearchBarPortletDisplayContextFactory(
-		Http http, LayoutLocalService layoutLocalService, Portal portal,
+		LayoutLocalService layoutLocalService, Portal portal,
 		RenderRequest renderRequest) {
 
-		_http = http;
 		_layoutLocalService = layoutLocalService;
 		_portal = portal;
 		_renderRequest = renderRequest;
@@ -361,7 +360,7 @@ public class SearchBarPortletDisplayContextFactory {
 	}
 
 	private String _getURLCurrentPath(ThemeDisplay themeDisplay) {
-		return _http.getPath(themeDisplay.getURLCurrent());
+		return HttpHelperUtil.getPath(themeDisplay.getURLCurrent());
 	}
 
 	private boolean _isEmptySearchEnabled(
@@ -405,7 +404,6 @@ public class SearchBarPortletDisplayContextFactory {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SearchBarPortletDisplayContextFactory.class);
 
-	private final Http _http;
 	private final LayoutLocalService _layoutLocalService;
 	private final Portal _portal;
 	private final RenderRequest _renderRequest;

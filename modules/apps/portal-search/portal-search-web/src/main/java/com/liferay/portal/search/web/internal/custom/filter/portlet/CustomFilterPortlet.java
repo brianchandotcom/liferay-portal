@@ -16,7 +16,6 @@ package com.liferay.portal.search.web.internal.custom.filter.portlet;
 
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.searcher.SearchRequest;
@@ -101,9 +100,6 @@ public class CustomFilterPortlet extends MVCPortlet {
 	}
 
 	@Reference
-	protected Http http;
-
-	@Reference
 	protected Portal portal;
 
 	@Reference
@@ -130,8 +126,6 @@ public class CustomFilterPortlet extends MVCPortlet {
 			customFilterPortletPreferences.isDisabled()
 		).filterFieldOptional(
 			customFilterPortletPreferences.getFilterFieldOptional()
-		).http(
-			http
 		).immutable(
 			customFilterPortletPreferences.isImmutable()
 		).filterValueOptional(

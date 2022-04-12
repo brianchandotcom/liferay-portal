@@ -16,6 +16,7 @@ package com.liferay.portal.search.elasticsearch7.internal.connection;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -126,7 +127,8 @@ public class ProxyConfig {
 				return Stream.of(
 					_networkHostAddresses
 				).allMatch(
-					host -> !_http.isNonProxyHost(_http.getDomain(host))
+					host -> !_http.isNonProxyHost(
+						HttpHelperUtil.getDomain(host))
 				);
 			}
 

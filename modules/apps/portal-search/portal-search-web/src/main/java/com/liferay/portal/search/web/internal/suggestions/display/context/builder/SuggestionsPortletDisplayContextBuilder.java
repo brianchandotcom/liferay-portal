@@ -18,7 +18,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.util.Html;
-import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.web.internal.search.suggest.KeywordsSuggestionHolder;
 import com.liferay.portal.search.web.internal.suggestions.display.context.SuggestionDisplayContext;
@@ -34,9 +34,8 @@ import java.util.stream.Stream;
  */
 public class SuggestionsPortletDisplayContextBuilder {
 
-	public SuggestionsPortletDisplayContextBuilder(Html html, Http http) {
+	public SuggestionsPortletDisplayContextBuilder(Html html) {
 		_html = html;
-		_http = http;
 	}
 
 	public SuggestionsPortletDisplayContext build() {
@@ -157,7 +156,7 @@ public class SuggestionsPortletDisplayContextBuilder {
 		String parameterValue = StringUtil.merge(
 			keywordsSuggestionHolder.getSuggestedKeywords(), StringPool.SPACE);
 
-		return _http.setParameter(
+		return HttpHelperUtil.setParameter(
 			_searchURL, _keywordsParameterName, parameterValue);
 	}
 
@@ -214,7 +213,6 @@ public class SuggestionsPortletDisplayContextBuilder {
 	}
 
 	private final Html _html;
-	private final Http _http;
 	private String _keywords;
 	private String _keywordsParameterName;
 	private List<String> _relatedQueriesSuggestions;

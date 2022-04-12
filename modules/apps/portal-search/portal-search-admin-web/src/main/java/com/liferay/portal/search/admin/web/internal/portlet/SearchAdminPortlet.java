@@ -16,7 +16,6 @@ package com.liferay.portal.search.admin.web.internal.portlet;
 
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -116,7 +115,7 @@ public class SearchAdminPortlet extends MVCPortlet {
 		else if (tab.equals("field-mappings")) {
 			FieldMappingsDisplayContextBuilder
 				fieldMappingsDisplayContextBuilder =
-					new FieldMappingsDisplayContextBuilder(_http);
+					new FieldMappingsDisplayContextBuilder();
 
 			fieldMappingsDisplayContextBuilder.setCompanyId(
 				_portal.getCompanyId(renderRequest));
@@ -141,8 +140,7 @@ public class SearchAdminPortlet extends MVCPortlet {
 			IndexActionsDisplayContextBuilder
 				indexActionsDisplayContextBuilder =
 					new IndexActionsDisplayContextBuilder(
-						_http, _language, _portal, renderRequest,
-						renderResponse);
+						_language, _portal, renderRequest, renderResponse);
 
 			renderRequest.setAttribute(
 				SearchAdminWebKeys.INDEX_ACTIONS_DISPLAY_CONTEXT,
@@ -182,9 +180,6 @@ public class SearchAdminPortlet extends MVCPortlet {
 		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected volatile SearchEngineInformation searchEngineInformation;
-
-	@Reference
-	private Http _http;
 
 	private final List<String> _indexReindexerClassNames =
 		new CopyOnWriteArrayList<>();

@@ -18,6 +18,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -40,7 +41,7 @@ public class SearchHttpUtil {
 		String requestURL = null;
 		String queryString = null;
 
-		if (_http.isForwarded(httpServletRequest)) {
+		if (HttpHelperUtil.isForwarded(httpServletRequest)) {
 			requestURL = _portal.getAbsoluteURL(
 				httpServletRequest,
 				(String)httpServletRequest.getAttribute(
@@ -52,7 +53,7 @@ public class SearchHttpUtil {
 		else {
 			requestURL = _portal.getAbsoluteURL(
 				httpServletRequest,
-				_http.getPath(
+				HttpHelperUtil.getPath(
 					String.valueOf(httpServletRequest.getRequestURL())));
 
 			queryString = httpServletRequest.getQueryString();
@@ -97,18 +98,12 @@ public class SearchHttpUtil {
 	}
 
 	@Reference(unbind = "-")
-	protected void setHttp(Http http) {
-		_http = http;
-	}
-
-	@Reference(unbind = "-")
 	protected void setPortal(Portal portal) {
 		_portal = portal;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(SearchHttpUtil.class);
 
-	private static Http _http;
 	private static Portal _portal;
 
 }

@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactory;
-import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -210,9 +210,6 @@ public class SearchResultsPortlet extends MVCPortlet {
 
 	@Reference
 	protected GroupLocalService groupLocalService;
-
-	@Reference
-	protected Http http;
 
 	@Reference
 	protected IndexerRegistry indexerRegistry;
@@ -492,7 +489,7 @@ public class SearchResultsPortlet extends MVCPortlet {
 	private String _getURLString(
 		RenderRequest renderRequest, String paginationStartParameterName) {
 
-		return http.removeParameter(
+		return HttpHelperUtil.removeParameter(
 			portletSharedRequestHelper.getCompleteURL(renderRequest),
 			paginationStartParameterName);
 	}

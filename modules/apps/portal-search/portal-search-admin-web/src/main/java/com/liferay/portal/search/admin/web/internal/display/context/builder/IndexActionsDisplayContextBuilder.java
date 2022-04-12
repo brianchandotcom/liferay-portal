@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -45,10 +44,9 @@ import javax.servlet.http.HttpServletRequest;
 public class IndexActionsDisplayContextBuilder {
 
 	public IndexActionsDisplayContextBuilder(
-		Http http, Language language, Portal portal,
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+		Language language, Portal portal, RenderRequest renderRequest,
+		RenderResponse renderResponse) {
 
-		_http = http;
 		_language = language;
 		_portal = portal;
 		_renderRequest = renderRequest;
@@ -125,7 +123,6 @@ public class IndexActionsDisplayContextBuilder {
 	private static final Log _log = LogFactoryUtil.getLog(
 		IndexActionsDisplayContextBuilder.class);
 
-	private final Http _http;
 	private final HttpServletRequest _httpServletRequest;
 	private final Language _language;
 	private final Portal _portal;

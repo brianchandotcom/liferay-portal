@@ -15,7 +15,7 @@
 package com.liferay.portal.search.admin.web.internal.display.context.builder;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.admin.web.internal.display.context.FieldMappingIndexDisplayContext;
 import com.liferay.portal.search.admin.web.internal.display.context.FieldMappingsDisplayContext;
@@ -32,10 +32,6 @@ import java.util.stream.Stream;
  * @author Adam Brandizzi
  */
 public class FieldMappingsDisplayContextBuilder {
-
-	public FieldMappingsDisplayContextBuilder(Http http) {
-		_http = http;
-	}
 
 	public FieldMappingsDisplayContext build() {
 		FieldMappingsDisplayContext fieldMappingsDisplayContext =
@@ -143,7 +139,7 @@ public class FieldMappingsDisplayContextBuilder {
 			fieldMappingIndexDisplayContext.setCssClass("active");
 		}
 
-		String url = _http.setParameter(
+		String url = HttpHelperUtil.setParameter(
 			_currentURL, _namespace + "selectedIndexName", indexName);
 
 		fieldMappingIndexDisplayContext.setUrl(url);
@@ -153,7 +149,6 @@ public class FieldMappingsDisplayContextBuilder {
 
 	private long _companyId;
 	private String _currentURL;
-	private final Http _http;
 	private IndexInformation _indexInformation;
 	private String _namespace = StringPool.BLANK;
 	private String _selectedIndexName;

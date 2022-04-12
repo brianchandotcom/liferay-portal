@@ -79,7 +79,6 @@ public class SearchBarPortletDisplayContextFactoryTest {
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 
-		_setUpHttp();
 		_setUpLanguageUtil();
 		_setUpPortal();
 		_setUpThemeDisplay();
@@ -289,7 +288,7 @@ public class SearchBarPortletDisplayContextFactoryTest {
 		SearchBarPortletDisplayContextFactory
 			searchBarPortletDisplayContextFactory =
 				new SearchBarPortletDisplayContextFactory(
-					_http, _layoutLocalService, _portal, renderRequest);
+					_layoutLocalService, _portal, renderRequest);
 
 		PortletPreferences portletPreferences = new PortletPreferencesImpl();
 
@@ -356,16 +355,6 @@ public class SearchBarPortletDisplayContextFactoryTest {
 		);
 
 		return searchBarPortletDisplayContextFactory;
-	}
-
-	private void _setUpHttp() {
-		Mockito.doAnswer(
-			invocation -> getPath(invocation.getArgumentAt(0, String.class))
-		).when(
-			_http
-		).getPath(
-			Mockito.anyString()
-		);
 	}
 
 	private void _setUpLanguageUtil() {

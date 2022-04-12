@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.search.OpenSearchUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Tuple;
@@ -163,7 +163,7 @@ public class SearchUtil {
 			).buildPortletURL();
 
 			if (Validator.isNull(className) || (classPK <= 0)) {
-				return HttpUtil.setParameter(
+				return HttpHelperUtil.setParameter(
 					viewContentURL.toString(), "p_l_back_url", currentURL);
 			}
 
@@ -175,7 +175,7 @@ public class SearchUtil {
 					getAssetRendererFactoryByClassName(className);
 
 			if (assetRendererFactory == null) {
-				return HttpUtil.setParameter(
+				return HttpHelperUtil.setParameter(
 					viewContentURL.toString(), "p_l_back_url", currentURL);
 			}
 
@@ -184,7 +184,7 @@ public class SearchUtil {
 			viewContentURL.setParameter("type", assetRendererFactory.getType());
 
 			if (!viewInContext) {
-				return HttpUtil.setParameter(
+				return HttpHelperUtil.setParameter(
 					viewContentURL.toString(), "p_l_back_url", currentURL);
 			}
 
@@ -200,7 +200,8 @@ public class SearchUtil {
 				viewURL = viewContentURL.toString();
 			}
 
-			return HttpUtil.setParameter(viewURL, "p_l_back_url", currentURL);
+			return HttpHelperUtil.setParameter(
+				viewURL, "p_l_back_url", currentURL);
 		}
 		catch (Exception exception) {
 			_log.error(

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CalendarFactory;
 import com.liferay.portal.kernel.util.DateFormatFactory;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -358,12 +359,12 @@ public class ModifiedFacetDisplayContextBuilderTest {
 
 	private void _assertDoesNotHasParameter(String url, String name) {
 		Assert.assertTrue(
-			Validator.isNull(_httpImpl.getParameter(url, name, false)));
+			Validator.isNull(HttpHelperUtil.getParameter(url, name, false)));
 	}
 
 	private void _assertHasParameter(String url, String name) {
 		Assert.assertTrue(
-			Validator.isNotNull(_httpImpl.getParameter(url, name, false)));
+			Validator.isNotNull(HttpHelperUtil.getParameter(url, name, false)));
 	}
 
 	private void _assertTermDisplayContextsDoNotHaveFromAndToParameters(
@@ -399,8 +400,7 @@ public class ModifiedFacetDisplayContextBuilderTest {
 
 		try {
 			return new ModifiedFacetDisplayContextBuilder(
-				_calendarFactory, _dateFormatFactory, _httpImpl,
-				_getRenderRequest());
+				_calendarFactory, _dateFormatFactory, _getRenderRequest());
 		}
 		catch (ConfigurationException configurationException) {
 			throw new RuntimeException(configurationException);

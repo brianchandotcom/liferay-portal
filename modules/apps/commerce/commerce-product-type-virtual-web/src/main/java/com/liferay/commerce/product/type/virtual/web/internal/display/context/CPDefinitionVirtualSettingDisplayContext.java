@@ -23,7 +23,7 @@ import com.liferay.commerce.product.type.virtual.constants.VirtualCPTypeConstant
 import com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting;
 import com.liferay.commerce.product.type.virtual.web.internal.portlet.action.helper.CPDefinitionVirtualSettingActionHelper;
 import com.liferay.document.library.kernel.service.DLAppService;
-import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.document.library.util.DLURLHelperUtil;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
@@ -136,7 +136,7 @@ public class CPDefinitionVirtualSettingDisplayContext
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		return DLUtil.getDownloadURL(
+		return DLURLHelperUtil.getDownloadURL(
 			fileEntry, fileEntry.getLatestFileVersion(), themeDisplay,
 			StringPool.BLANK, true, true);
 	}
@@ -157,7 +157,7 @@ public class CPDefinitionVirtualSettingDisplayContext
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		return DLUtil.getDownloadURL(
+		return DLURLHelperUtil.getDownloadURL(
 			fileEntry, fileEntry.getLatestFileVersion(), themeDisplay,
 			StringPool.BLANK, true, true);
 	}

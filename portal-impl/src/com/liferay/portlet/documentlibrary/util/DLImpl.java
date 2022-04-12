@@ -65,7 +65,6 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -222,25 +221,6 @@ public class DLImpl implements DL {
 		sb.append(id);
 
 		return sb.toString();
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             com.liferay.document.library.util.DLURLHelper#getDownloadURL(
-	 *             FileEntry, FileVersion, ThemeDisplay, String, boolean,
-	 *             boolean)}
-	 */
-	@Deprecated
-	@Override
-	public String getDownloadURL(
-		FileEntry fileEntry, FileVersion fileVersion, ThemeDisplay themeDisplay,
-		String queryString, boolean appendVersion, boolean absoluteURL) {
-
-		String previewURL = getPreviewURL(
-			fileEntry, fileVersion, themeDisplay, queryString, appendVersion,
-			absoluteURL);
-
-		return HttpComponentsUtil.addParameter(previewURL, "download", true);
 	}
 
 	@Override

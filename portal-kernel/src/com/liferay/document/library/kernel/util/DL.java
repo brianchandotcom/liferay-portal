@@ -69,17 +69,6 @@ public interface DL {
 
 	public String getDividedPath(long id);
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             com.liferay.document.library.util.DLURLHelper#getDownloadURL(
-	 *             FileEntry, FileVersion, ThemeDisplay, String, boolean,
-	 *             boolean)}
-	 */
-	@Deprecated
-	public String getDownloadURL(
-		FileEntry fileEntry, FileVersion fileVersion, ThemeDisplay themeDisplay,
-		String queryString, boolean appendVersion, boolean absoluteURL);
-
 	public Map<String, String> getEmailDefinitionTerms(
 		PortletRequest portletRequest, String emailFromAddress,
 		String emailFromName);

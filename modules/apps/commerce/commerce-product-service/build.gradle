@@ -31,6 +31,7 @@ dependencies {
 	compileOnly project(":apps:commerce:commerce-product-type-virtual-api")
 	compileOnly project(":apps:commerce:commerce-shop-by-diagram-api")
 	compileOnly project(":apps:configuration-admin:configuration-admin-api")
+	compileOnly project(":apps:document-library:document-library-api")
 	compileOnly project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	compileOnly project(":apps:dynamic-data-mapping:dynamic-data-mapping-service")
 	compileOnly project(":apps:expando:expando-taglib")

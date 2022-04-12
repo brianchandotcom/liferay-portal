@@ -78,22 +78,6 @@ public class DLUtil {
 		return _dl;
 	}
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             com.liferay.document.library.util.DLURLHelper#getDownloadURL(
-	 *             FileEntry, FileVersion, ThemeDisplay, String, boolean,
-	 *             boolean)}
-	 */
-	@Deprecated
-	public static String getDownloadURL(
-		FileEntry fileEntry, FileVersion fileVersion, ThemeDisplay themeDisplay,
-		String queryString, boolean appendVersion, boolean absoluteURL) {
-
-		return _dl.getDownloadURL(
-			fileEntry, fileVersion, themeDisplay, queryString, appendVersion,
-			absoluteURL);
-	}
-
 	public static Map<String, String> getEmailDefinitionTerms(
 		RenderRequest renderRequest, String emailFromAddress,
 		String emailFromName) {

@@ -19,7 +19,7 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.commerce.product.importer.CPFileImporter;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
-import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.document.library.util.DLURLHelperUtil;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
@@ -671,7 +671,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 		content = _replaceJournalArticleImages(
 			content, _journalArticleHTMLImagePattern,
 			fileEntry -> {
-				String previewURL = DLUtil.getDownloadURL(
+				String previewURL = DLURLHelperUtil.getDownloadURL(
 					fileEntry, fileEntry.getLatestFileVersion(), null,
 					StringPool.BLANK, false, false);
 

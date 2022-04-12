@@ -1,6 +1,8 @@
 {
 	const form = document.querySelector('.fragment-button:not(.parsed)');
 
+	const MESSAGE_FORM_SUBMITTED = 'Form submitted';
+
 	form.classList.add('parsed');
 
 	form.addEventListener(
@@ -9,9 +11,9 @@
 			event.preventDefault();
 
 			if (Liferay.__FF__.enableCustomDialogs) {
-				Liferay.Util.openAlertModal({message: 'Form submitted'});
+				Liferay.Util.openAlertModal({message: MESSAGE_FORM_SUBMITTED});
 			} else {
-				alert('Form submitted');
+				alert(MESSAGE_FORM_SUBMITTED);
 			}
 		});
 }

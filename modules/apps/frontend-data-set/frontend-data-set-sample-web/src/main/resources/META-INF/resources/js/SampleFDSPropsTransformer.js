@@ -12,6 +12,8 @@
  * details.
  */
 
+import {openAlertModal} from 'frontend-js-web';
+
 import SampleCustomDataRenderer from './SampleCustomDataRenderer';
 
 export default function propsTransformer({
@@ -25,13 +27,15 @@ export default function propsTransformer({
 		},
 		onActionDropdownItemClick({action, itemData}) {
 			if (action.data.id === 'sampleMessage') {
+				const alertMessage = `${greeting} ${itemData.title}!`;
+
 				if (Liferay.__FF__.enableCustomDialogs) {
-					Liferay.Util.openAlertModal({
-						message: `${greeting} ${itemData.title}!`,
+					openAlertModal({
+						message: alertMessage,
 					});
 				}
 				else {
-					alert(`${greeting} ${itemData.title}!`);
+					alert(alertMessage);
 				}
 			}
 		},

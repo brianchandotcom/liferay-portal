@@ -12,12 +12,16 @@
  * details.
  */
 
+import {openAlertModal} from 'frontend-js-web';
+
 export default function propsTransformer(props) {
 	return {
 		...props,
 		onClick: () => {
+			const message = 'click!';
+
 			if (Liferay.__FF__.enableCustomDialogs) {
-				Liferay.Util.openAlertModal({message: 'click!'});
+				openAlertModal({message});
 			}
 			else {
 				alert('click!');

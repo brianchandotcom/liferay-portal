@@ -1,6 +1,8 @@
 {
 	const form = document.querySelector('.fragment-configuration:not(.parsed)');
 
+	const MESSAGE = 'Here we go';
+
 	form.classList.add('parsed');
 
 	form.addEventListener(
@@ -9,9 +11,9 @@
 			event.preventDefault();
 
 			if (Liferay.__FF__.enableCustomDialogs) {
-				Liferay.Util.openAlertModal({message: 'Here we go'});
+				Liferay.Util.openAlertModal({message: MESSAGE});
 			} else {
-				alert('Here we go');
+				alert(MESSAGE);
 			}
 		});
 }

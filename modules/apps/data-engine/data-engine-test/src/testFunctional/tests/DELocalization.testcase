@@ -27,6 +27,8 @@ definition {
 	@description = "Verify that is possible to translate Web Content fields with different Instance language set"
 	@priority = "4"
 	test CanBeTranslatedWithDifferentInstanceLanguages {
+		property test.name.skip.portal.instance = "DELocalization#CanBeTranslatedWithDifferentInstanceLanguages";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -445,6 +447,8 @@ definition {
 	@description = "Verify that upon editing Default language, translated languages are not affected"
 	@priority = "5"
 	test CanDefaulfLanguageChangeTranslationsAfterEdited {
+		property test.name.skip.portal.instance = "DELocalization#CanDefaulfLanguageChangeTranslationsAfterEdited";
+
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
@@ -1539,6 +1543,8 @@ definition {
 	@description = "Verify Default language when Portal Instance language is changed"
 	@priority = "4"
 	test CanPortalLanguageBeChanged {
+		property test.name.skip.portal.instance = "DELocalization#CanPortalLanguageBeChanged";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",

@@ -813,6 +813,142 @@ definition {
 		}
 	}
 
+	@description = "Verify users can search Import/Exports executions by name and action."
+	@priority = "3"
+	test CanSearchExecutions {
+		property portal.acceptance = "true";
+
+		task ("Given an account import and export") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.importFile(
+				entityType = "Account",
+				fieldMappings = "name:Account Name,type:Account Type,description:Account Description,externalReferenceCode:External Reference Code",
+				fileName = "csv_account_import.csv",
+				headlessEndpoint = "/headless-admin-user");
+
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.exportFile(
+				entityType = "Account",
+				exportFields = "name,type,description,externalReferenceCode",
+				exportFileFormat = "CSV",
+				headlessEndpoint = "/headless-admin-user");
+		}
+
+		task ("And given a channel import and export") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.importFile(
+				entityType = "Channel",
+				fieldMappings = "name:Channel Name,type:Channel Type,currencyCode:Currency Code",
+				fileName = "csv_channel_import.csv",
+				headlessEndpoint = "/headless-commerce-admin-channel");
+
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.exportFile(
+				entityType = "Channel",
+				exportFields = "name,type,currencyCode",
+				exportFileFormat = "CSV",
+				headlessEndpoint = "/headless-commerce-admin-channel");
+		}
+
+		task ("When I go to the Import/Export center and search executions by name") {
+			ImportExport.openImportExportAdmin();
+
+			Search.searchCP(searchTerm = "csv_account_import.csv");
+		}
+
+		task ("Then only executions with the name keyword should be shown") {
+			ImportExport.assertExecutionEntry(
+				entityType = "Account",
+				executionAction = "Import",
+				executionName = "csv_account_import.csv",
+				executionStatus = "Completed");
+
+			ImportExport.assertNoExecutionEntry(
+				entityType = "Account",
+				executionAction = "Export",
+				executionName = "Account Plan Execution",
+				executionStatus = "Completed");
+
+			ImportExport.assertNoExecutionEntry(
+				entityType = "Channel",
+				executionAction = "Import",
+				executionName = "csv_channel_import.csv",
+				executionStatus = "Completed");
+
+			ImportExport.assertNoExecutionEntry(
+				entityType = "Channel",
+				executionAction = "Export",
+				executionName = "Channel Plan Execution",
+				executionStatus = "Completed");
+		}
+
+		task ("When I search executions by entity") {
+			Search.searchCP(searchTerm = "Channel");
+		}
+
+		task ("Then only executions with the entity keyword should be shown") {
+			ImportExport.assertExecutionEntry(
+				entityType = "Channel",
+				executionAction = "Import",
+				executionName = "csv_channel_import.csv",
+				executionStatus = "Completed");
+
+			ImportExport.assertExecutionEntry(
+				entityType = "Channel",
+				executionAction = "Export",
+				executionName = "Channel Plan Execution",
+				executionStatus = "Completed");
+
+			ImportExport.assertNoExecutionEntry(
+				entityType = "Account",
+				executionAction = "Import",
+				executionName = "csv_account_import.csv",
+				executionStatus = "Completed");
+
+			ImportExport.assertNoExecutionEntry(
+				entityType = "Account",
+				executionAction = "Export",
+				executionName = "Account Plan Execution",
+				executionStatus = "Completed");
+		}
+
+		task ("When I filter by Import and search by entity") {
+			ManagementBar.setFilterAndOrder(filterBy = "Import");
+
+			Search.searchCP(searchTerm = "Channel");
+		}
+
+		task ("Then only the Import executions with the entity keyword should be shown") {
+			ImportExport.assertExecutionEntry(
+				entityType = "Channel",
+				executionAction = "Import",
+				executionName = "csv_channel_import.csv",
+				executionStatus = "Completed");
+
+			ImportExport.assertNoExecutionEntry(
+				entityType = "Channel",
+				executionAction = "Export",
+				executionName = "Channel Plan Execution",
+				executionStatus = "Completed");
+
+			ImportExport.assertNoExecutionEntry(
+				entityType = "Account",
+				executionAction = "Import",
+				executionName = "csv_account_import.csv",
+				executionStatus = "Completed");
+
+			ImportExport.assertNoExecutionEntry(
+				entityType = "Account",
+				executionAction = "Export",
+				executionName = "Account Plan Execution",
+				executionStatus = "Completed");
+		}
+	}
+
 	@description = "Verify users receive a notification when an export is triggered."
 	@priority = "3"
 	test CanViewExportNotifications {

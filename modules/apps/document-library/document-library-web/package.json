@@ -2,7 +2,8 @@
 	"dependencies": {
 		"clipboard": "2.0.4"
 	},
-	"name": "document-library-web",
+	"main": "document_library/js/index.js",
+	"name": "@liferay/document-library-web",
 	"private": true,
 	"scripts": {
 		"build": "liferay-npm-scripts build",

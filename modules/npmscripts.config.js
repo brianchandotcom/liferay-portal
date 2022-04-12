@@ -32,6 +32,9 @@ module.exports = {
 					'@liferay/document-library-preview-css': {
 						'/': '*',
 					},
+					'@liferay/document-library-web': {
+						'/': '*',
+					},
 					'@liferay/fragment-renderer-collection-filter-impl': {
 						'/': '*',
 					},

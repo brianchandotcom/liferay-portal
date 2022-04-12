@@ -304,11 +304,6 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
-	public boolean isMovable() {
-		return true;
-	}
-
-	@Override
 	public boolean isMovable(long classPK) throws PortalException {
 		MBCategory category = _mbCategoryLocalService.getCategory(classPK);
 

@@ -316,11 +316,6 @@ public class WikiPageTrashHandler extends BaseWikiTrashHandler {
 	}
 
 	@Override
-	public boolean isMovable() {
-		return false;
-	}
-
-	@Override
 	public boolean isRestorable(long classPK) throws PortalException {
 		WikiPage page = _wikiPageLocalService.getLatestPage(
 			classPK, WorkflowConstants.STATUS_ANY, false);

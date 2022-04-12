@@ -185,11 +185,6 @@ public abstract class BaseBookmarksTrashHandler extends BaseTrashHandler {
 		return trashedModels;
 	}
 
-	@Override
-	public boolean isMovable() {
-		return true;
-	}
-
 	protected abstract long getGroupId(long classPK) throws PortalException;
 
 }

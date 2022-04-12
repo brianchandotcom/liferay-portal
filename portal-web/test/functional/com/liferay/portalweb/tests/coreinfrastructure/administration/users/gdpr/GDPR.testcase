@@ -221,13 +221,83 @@ definition {
 			value1 = "Anonymous Anonymous");
 	}
 
-	@description = "This test asserts that all applications that do not have items are visible but disabled."
-	@ignore = "Test Stub"
+	@description = "This test asserts that all applications that do not have items are visible but disabled, test with Blogs, WC and MB entries."
 	@priority = "2"
 	test AppsWithNoEntriesAreDisabledInNewDataExport {
+		task ("Given sign in as New User and add entries supported by GDPR") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
 
-		// TODO LRQA-50751 View app level data and switch between different lists of entities (LPS-77750)
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				userEmailAddress = "userea@liferay.com",
+				userPassword = "test");
 
+			JSONWebcontent.addWebContent(
+				content = "This is a WC Content for GDPR Export testing.",
+				groupName = "Guest",
+				title = "GDPR Export Article",
+				userEmailAddress = "userea@liferay.com",
+				userPassword = "test");
+
+			JSONMBMessage.addMessage(
+				groupName = "Guest",
+				threadBody = "MB Thread Message Body",
+				threadSubject = "MB Thread Message Subject",
+				userEmailAddress = "userea@liferay.com",
+				userPassword = "test");
+		}
+
+		task ("When sign in as Super User and add a data export progress to export all added entries") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			User.openUsersAdmin();
+
+			User.exportPersonalDataCP(
+				userFirstName = "userfn",
+				userLastName = "userln");
+
+			LexiconEntry.gotoAdd();
+
+			PortletEntry.selectAll();
+
+			for (var application : list "Blogs,Web Content,Message Boards") {
+				AssertChecked(
+					key_application = "${application}",
+					locator1 = "ExportPersonalData#APPLICATION_CHECKBOX");
+			}
+
+			task ("And assert the other application entries with no data are displayed and unselectable") {
+				for (var application : list "Announcements,Contacts Center,Documents and Media,Forms,Wiki") {
+					AssertNotChecked(
+						key_application = "${application}",
+						locator1 = "ExportPersonalData#APPLICATION_CHECKBOX",
+						value1 = "disabled");
+				}
+
+				AssertClick(
+					locator1 = "Button#EXPORT",
+					value1 = "Export");
+
+				Alert.viewSuccessMessage();
+			}
+		}
+
+		task ("Then assert selected entries are exported, but no entry is exported for the unselectable items") {
+			for (var tableEntry : list "Blogs,Web Content,Message Boards") {
+				GDPR.viewEntryRowInApplicationCP(
+					tableEntry = "${tableEntry}",
+					tableEntryPartialTextList = "${tableEntry},Create Date,Completion Date");
+			}
+
+			for (var rowEntry : list "Announcements,Contacts Center,Documents and Media,Forms,Wiki") {
+				LexiconEntry.viewNoEntry(rowEntry = "${rowEntry}");
+			}
+		}
 	}
 
 	@description = "This test anonymizes all entries from an application"

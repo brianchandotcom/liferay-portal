@@ -35,7 +35,10 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeFormatter;
+import com.liferay.portal.util.PropsValues;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -110,6 +113,25 @@ public class ObjectDefinitionsFieldsDisplayContext
 				"/o/object-admin/v1.0/object-fields/{id}", "trash", "delete",
 				LanguageUtil.get(objectRequestHelper.getRequest(), "delete"),
 				"delete", "delete", "async"));
+	}
+
+	public String[] getForbiddenLastCharacters() {
+		List<String> forbiddenLastCharacters = new ArrayList<>();
+
+		for (String forbiddenLastCharacter :
+				PropsValues.DL_CHAR_LAST_BLACKLIST) {
+
+			if (forbiddenLastCharacter.startsWith(
+					UnicodeFormatter.UNICODE_PREFIX)) {
+
+				forbiddenLastCharacter = UnicodeFormatter.parseString(
+					forbiddenLastCharacter);
+			}
+
+			forbiddenLastCharacters.add(forbiddenLastCharacter);
+		}
+
+		return forbiddenLastCharacters.toArray(new String[0]);
 	}
 
 	public List<Map<String, String>> getObjectFieldBusinessTypeMaps(

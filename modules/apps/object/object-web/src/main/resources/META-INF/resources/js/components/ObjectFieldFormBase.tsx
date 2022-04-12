@@ -12,7 +12,9 @@
  * details.
  */
 
-import {ClayToggle} from '@clayui/form';
+import ClayForm, {ClayToggle} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import {fetch} from 'frontend-js-web';
 import React, {ChangeEventHandler, ReactNode, useMemo, useState} from 'react';
 
@@ -25,6 +27,8 @@ import {toCamelCase} from '../utils/string';
 import CustomSelect from './Form/CustomSelect/CustomSelect';
 import Input from './Form/Input';
 import Select from './Form/Select';
+
+import './ObjectFieldFormBase.scss';
 
 const REQUIRED_MSG = Liferay.Language.get('required');
 
@@ -72,12 +76,14 @@ async function fetchPickList() {
 
 export default function ObjectFieldFormBase({
 	allowMaxLength,
+	allowUploadDocAndMedia,
 	children,
 	disabled,
 	errors,
 	handleChange,
 	objectField: values,
 	objectFieldTypes,
+	objectName,
 	setValues,
 }: IProps) {
 	const businessTypeMap = useMemo(() => {
@@ -113,10 +119,6 @@ export default function ObjectFieldFormBase({
 					{
 						name: 'acceptedFileExtensions',
 						value: 'jpeg, jpg, pdf, png',
-					},
-					{
-						name: 'fileSource',
-						value: '',
 					},
 					{
 						name: 'maximumFileSize',
@@ -187,12 +189,15 @@ export default function ObjectFieldFormBase({
 
 			{values.businessType === 'Attachment' && (
 				<AttachmentSourceProperty
+					allowUploadDocAndMedia={allowUploadDocAndMedia}
 					disabled={disabled}
 					error={errors.fileSource}
 					objectFieldSettings={
 						values.objectFieldSettings as ObjectFieldSetting[]
 					}
+					objectName={objectName}
 					onSettingsChange={handleSettingsChange}
+					setValues={setValues}
 				/>
 			)}
 
@@ -223,10 +228,58 @@ export default function ObjectFieldFormBase({
 }
 
 export function useObjectFieldForm({
+	forbiddenChars,
+	forbiddenLastChars,
+	forbiddenNames,
 	initialValues,
 	onSubmit,
 }: IUseObjectFieldForm) {
 	const validate = (field: Partial<ObjectField>) => {
+		const getSourceFolderError = (folderPath: string) => {
+
+			// folder name cannot end with invalid last characters
+
+			const lastChar = folderPath[folderPath.length - 1];
+
+			if (forbiddenLastChars?.some((char) => char === lastChar)) {
+				return Liferay.Util.sub(
+					Liferay.Language.get(
+						'the-folder-name-cannot-end-with-the-following-characters-x'
+					),
+					forbiddenLastChars.join(' ')
+				);
+			}
+
+			// folder name cannot contain invalid characters
+
+			if (forbiddenChars?.some((symbol) => folderPath.includes(symbol))) {
+				return Liferay.Util.sub(
+					Liferay.Language.get(
+						'the-folder-name-cannot-contain-the-following-invalid-characters-x'
+					),
+					forbiddenChars.join(' ')
+				);
+			}
+
+			// folder name cannot be a reserved word
+
+			const reservedNames = new Set(forbiddenNames);
+
+			if (
+				forbiddenNames &&
+				folderPath.split('/').some((name) => reservedNames.has(name))
+			) {
+				return Liferay.Util.sub(
+					Liferay.Language.get(
+						'the-folder-name-cannot-have-a-reserved-word-such-as-x'
+					),
+					forbiddenNames.join(', ')
+				);
+			}
+
+			return null;
+		};
+
 		const errors: ObjectFieldErrors = {};
 
 		const label = field.label?.[defaultLanguageId];
@@ -266,6 +319,25 @@ export function useObjectFieldForm({
 					0
 				);
 			}
+
+			if (settings.showFilesInDocumentsAndMedia) {
+				if (
+					invalidateRequired(
+						settings.storageDLFolderPath as string | undefined
+					)
+				) {
+					errors.storageDLFolderPath = REQUIRED_MSG;
+				}
+				else {
+					const sourceFolderError = getSourceFolderError(
+						settings.storageDLFolderPath as string
+					);
+
+					if (sourceFolderError !== null) {
+						errors.storageDLFolderPath = sourceFolderError;
+					}
+				}
+			}
 		}
 		else if (
 			field.businessType === 'Text' ||
@@ -297,10 +369,13 @@ export function useObjectFieldForm({
 }
 
 function AttachmentSourceProperty({
+	allowUploadDocAndMedia,
 	disabled,
 	error,
 	objectFieldSettings,
+	objectName,
 	onSettingsChange,
+	setValues,
 }: IAttachmentSourcePropertyProps) {
 	const settings = normalizeFieldSettings(objectFieldSettings);
 
@@ -308,31 +383,111 @@ function AttachmentSourceProperty({
 		({value}) => value === settings.fileSource
 	);
 
+	const handleAttachmentSourceChange = ({value}: {value: string}) => {
+		const fileSource: ObjectFieldSetting = {name: 'fileSource', value};
+		if (!allowUploadDocAndMedia) {
+			onSettingsChange(fileSource);
+
+			return;
+		}
+
+		const updatedSettings = objectFieldSettings.filter(
+			(setting) =>
+				setting.name !== 'fileSource' &&
+				setting.name !== 'showFilesInDocumentsAndMedia' &&
+				setting.name !== 'storageDLFolderPath'
+		);
+
+		updatedSettings.push(fileSource);
+
+		if (value === 'userComputer') {
+			updatedSettings.push({
+				name: 'showFilesInDocumentsAndMedia',
+				value: false,
+			});
+		}
+
+		setValues({objectFieldSettings: updatedSettings});
+	};
+
+	const toggleShowFiles = (value: boolean) => {
+		const updatedSettings = objectFieldSettings.filter(
+			(setting) =>
+				setting.name !== 'showFilesInDocumentsAndMedia' &&
+				setting.name !== 'storageDLFolderPath'
+		);
+
+		updatedSettings.push({
+			name: 'showFilesInDocumentsAndMedia',
+			value,
+		});
+
+		if (value) {
+			updatedSettings.push({
+				name: 'storageDLFolderPath',
+				value: `/${objectName}`,
+			});
+		}
+
+		setValues({objectFieldSettings: updatedSettings});
+	};
+
 	return (
-		<CustomSelect
-			disabled={disabled}
-			error={error}
-			label={Liferay.Language.get('request-files')}
-			onChange={({value}) =>
-				onSettingsChange({
-					name: 'fileSource',
-					value,
-				})
-			}
-			options={attachmentSources}
-			required
-			value={attachmentSource?.label}
-		/>
+		<>
+			<CustomSelect
+				disabled={disabled}
+				error={error}
+				label={Liferay.Language.get('request-files')}
+				onChange={handleAttachmentSourceChange}
+				options={attachmentSources}
+				required
+				value={attachmentSource?.label}
+			/>
+
+			{allowUploadDocAndMedia && settings.fileSource === 'userComputer' && (
+				<ClayForm.Group className="lfr-objects__object-field-form-base-container">
+					<ClayToggle
+						disabled={disabled}
+						label={Liferay.Language.get(
+							'show-files-in-documents-and-media'
+						)}
+						name="showFilesInDocumentsAndMedia"
+						onToggle={toggleShowFiles}
+						toggled={!!settings.showFilesInDocumentsAndMedia}
+					/>
+
+					<ClayTooltipProvider>
+						<div
+							data-tooltip-align="top"
+							title={Liferay.Language.get(
+								'when-activated-users-can-define-a-folder-within-documents-and-media-to-display-the-files-leave-it-unchecked-for-files-to-be-stored-individually-per-entry'
+							)}
+						>
+							<ClayIcon
+								className="lfr-objects__edit-object-field-tooltip-icon"
+								symbol="question-circle-full"
+							/>
+						</div>
+					</ClayTooltipProvider>
+				</ClayForm.Group>
+			)}
+		</>
 	);
 }
 
 interface IAttachmentSourcePropertyProps {
+	allowUploadDocAndMedia?: boolean;
 	disabled?: boolean;
 	error?: string;
 	objectFieldSettings: ObjectFieldSetting[];
+	objectName: string;
 	onSettingsChange: (setting: ObjectFieldSetting) => void;
+	setValues: (values: Partial<ObjectField>) => void;
 }
 interface IUseObjectFieldForm {
+	forbiddenChars?: string[];
+	forbiddenLastChars?: string[];
+	forbiddenNames?: string[];
 	initialValues: Partial<ObjectField>;
 	onSubmit: (field: ObjectField) => void;
 }
@@ -343,12 +498,14 @@ interface IPickList {
 
 interface IProps {
 	allowMaxLength?: boolean;
+	allowUploadDocAndMedia?: boolean;
 	children?: ReactNode;
 	disabled?: boolean;
 	errors: ObjectFieldErrors;
 	handleChange: ChangeEventHandler<HTMLInputElement>;
 	objectField: Partial<ObjectField>;
 	objectFieldTypes: ObjectFieldType[];
+	objectName: string;
 	setValues: (values: Partial<ObjectField>) => void;
 }
 

@@ -20,8 +20,10 @@ export declare function normalizeFieldSettings(
 	maximumFileSize?: string | number | boolean | undefined;
 	maxLength?: string | number | boolean | undefined;
 	showCounter?: string | number | boolean | undefined;
+	showFilesInDocumentsAndMedia?: string | number | boolean | undefined;
+	storageDLFolderPath?: string | number | boolean | undefined;
 };
 export declare function updateFieldSettings(
 	objectFieldSettings: ObjectFieldSetting[] | undefined,
 	{name, value}: ObjectFieldSetting
-): ObjectFieldSetting[] | undefined;
+): ObjectFieldSetting[];

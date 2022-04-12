@@ -63,15 +63,12 @@ public class LayoutTypeContentTest {
 					_group.getGroupId(), layout.getPlid());
 
 		Assert.assertNotNull(layoutPageTemplateStructure);
-
-		LayoutPageTemplateStructureRel layoutPageTemplateStructureRel =
+		Assert.assertNotNull(
 			_layoutPageTemplateStructureRelLocalService.
 				fetchLayoutPageTemplateStructureRel(
 					layoutPageTemplateStructure.
 						getLayoutPageTemplateStructureId(),
-					SegmentsExperienceConstants.ID_DEFAULT);
-
-		Assert.assertNotNull(layoutPageTemplateStructureRel);
+					SegmentsExperienceConstants.ID_DEFAULT));
 	}
 
 	@Test

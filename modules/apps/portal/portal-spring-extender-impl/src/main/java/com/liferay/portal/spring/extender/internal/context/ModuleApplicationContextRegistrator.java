@@ -83,6 +83,24 @@ public class ModuleApplicationContextRegistrator {
 		_registerDataSource();
 	}
 
+	public void stop() {
+		if (_serviceRegistrations != null) {
+			for (ServiceRegistration<?> serviceRegistration :
+					_serviceRegistrations) {
+
+				serviceRegistration.unregister();
+			}
+
+			_serviceRegistrations = null;
+		}
+
+		if (_dataSourceServiceRegistration != null) {
+			_dataSourceServiceRegistration.unregister();
+
+			_dataSourceServiceRegistration = null;
+		}
+	}
+
 	protected void start() throws Exception {
 		try {
 			_moduleApplicationContext.refresh();

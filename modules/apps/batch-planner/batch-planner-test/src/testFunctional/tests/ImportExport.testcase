@@ -890,9 +890,10 @@ definition {
 
 			ImportExport.configureImport(
 				entityType = "Account",
-				fieldMappings = "description:Account Description,type:Account Type",
-				fileName = "csv_account_import.csv",
-				headlessEndpoint = "/headless-admin-user");
+				fieldMappings = "name:Account Name,type:Account Type,description:Account Description,externalReferenceCode:External Reference Code",
+				fileName = "csv_account_import_error.csv",
+				headlessEndpoint = "/headless-admin-user",
+				stopImportOnError = "true");
 
 			Button.click(button = "Next");
 
@@ -902,30 +903,28 @@ definition {
 		}
 
 		task ("And given a succesful import") {
-			Button.clickCancel();
+			ImportExport.openImportExportAdmin();
 
-			ImportExport.mapImport(fieldMappings = "name:Account Name");
-
-			Button.click(button = "Next");
-
-			Button.click(button = "Start Import");
-
-			WaitForElementPresent(locator1 = "ImportExport#EXECUTION_SUCCESS");
+			ImportExport.importFile(
+				entityType = "Account",
+				fieldMappings = "name:Account Name,type:Account Type,description:Account Description,externalReferenceCode:External Reference Code",
+				fileName = "csv_account_import.csv",
+				headlessEndpoint = "/headless-admin-user");
 		}
 
 		task ("When the imports are finished") {
-			Button.clickDone();
-
 			ImportExport.openImportExportAdmin();
 
 			ImportExport.assertExecutionEntry(
 				entityType = "Account",
 				executionAction = "Import",
+				executionName = "csv_account_import_error.csv",
 				executionStatus = "Failed");
 
 			ImportExport.assertExecutionEntry(
 				entityType = "Account",
 				executionAction = "Import",
+				executionName = "csv_account_import.csv",
 				executionStatus = "Completed");
 		}
 
@@ -943,6 +942,10 @@ definition {
 				entityType = "Account",
 				executionAction = "Import",
 				executionStatus = "Failed");
+
+			PortletEntry.selectAll();
+
+			ClickNoError(locator1 = "Icon#DELETE");
 		}
 	}
 

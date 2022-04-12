@@ -4,6 +4,7 @@ definition {
 		AssertElementPresent(
 			key_entityType = "${entityType}",
 			key_executionAction = "${executionAction}",
+			key_executionName = "${executionName}",
 			key_executionStatus = "${executionStatus}",
 			locator1 = "ImportExport#EXECUTION_ENTRY");
 	}

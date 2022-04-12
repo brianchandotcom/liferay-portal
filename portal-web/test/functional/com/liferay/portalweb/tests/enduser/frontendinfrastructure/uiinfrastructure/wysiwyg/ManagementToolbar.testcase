@@ -359,6 +359,26 @@ definition {
 		}
 	}
 
+	@description = "LPS-147860. Assert tooltip message will be displayed when hovered over the clear button in responsive mode"
+	@priority = "3"
+	test ResponsiveModeClearButtonShouldDisplayTooltip {
+		task ("Given a window size set to phone size") {
+			SetWindowSize(value1 = "360,720");
+		}
+
+		task ("And hovers over the clear button") {
+			ScrollWebElementIntoView(locator1 = "ManagementBar#CLEAR_BUTTON_MOBILE");
+
+			MouseOver.javaScriptMouseOver(locator1 = "ManagementBar#CLEAR_BUTTON_MOBILE");
+		}
+
+		task ("Then a tooltip message will be displayed") {
+			AssertTextEquals(
+				locator1 = "Message#TOOLTIP",
+				value1 = "Clear");
+		}
+	}
+
 	@description = "LPS-147865. Assert the new button is displayed as an icon button in responsive mode"
 	@priority = "5"
 	test ResponsiveModeNewButtonAsIconButton {

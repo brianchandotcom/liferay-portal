@@ -96,12 +96,12 @@ public class EditLayoutModeProductNavigationControlMenuEntry
 			Layout layout = themeDisplay.getLayout();
 
 			if (layout.isDraftLayout()) {
-				String layoutFullURL = _portal.getLayoutFullURL(
-					_layoutLocalService.getLayout(layout.getClassPK()),
-					themeDisplay);
-
 				return _getRedirect(
-					httpServletRequest, layoutFullURL, layout, themeDisplay);
+					httpServletRequest,
+					_portal.getLayoutFullURL(
+						_layoutLocalService.getLayout(layout.getClassPK()),
+						themeDisplay),
+					layout, themeDisplay);
 			}
 
 			Layout draftLayout = layout.fetchDraftLayout();
@@ -131,11 +131,10 @@ public class EditLayoutModeProductNavigationControlMenuEntry
 					WorkflowConstants.STATUS_APPROVED, serviceContext);
 			}
 
-			String layoutFullURL = _portal.getLayoutFullURL(
-				draftLayout, themeDisplay);
-
 			return _getRedirect(
-				httpServletRequest, layoutFullURL, layout, themeDisplay);
+				httpServletRequest,
+				_portal.getLayoutFullURL(draftLayout, themeDisplay), layout,
+				themeDisplay);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

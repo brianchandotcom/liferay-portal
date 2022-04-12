@@ -153,11 +153,9 @@ public class PageDefinitionDTOConverterTest {
 		LayoutStructure layoutStructure = _getLayoutStructure(
 			"layout_data_drop_zone_allowed_fragments.json", new HashMap<>());
 
-		Layout layout = _layoutLocalService.fetchLayout(
-			_layoutPageTemplateEntry.getPlid());
-
 		PageDefinition pageDefinition = _getPageDefinition(
-			layout, layoutStructure);
+			_layoutLocalService.fetchLayout(_layoutPageTemplateEntry.getPlid()),
+			layoutStructure);
 
 		PageElement rootPageElement = pageDefinition.getPageElement();
 
@@ -203,11 +201,9 @@ public class PageDefinitionDTOConverterTest {
 		LayoutStructure layoutStructure = _getLayoutStructure(
 			"layout_data_drop_zone_unallowed_fragments.json", new HashMap<>());
 
-		Layout layout = _layoutLocalService.fetchLayout(
-			_layoutPageTemplateEntry.getPlid());
-
 		PageDefinition pageDefinition = _getPageDefinition(
-			layout, layoutStructure);
+			_layoutLocalService.fetchLayout(_layoutPageTemplateEntry.getPlid()),
+			layoutStructure);
 
 		PageElement rootPageElement = pageDefinition.getPageElement();
 
@@ -461,11 +457,9 @@ public class PageDefinitionDTOConverterTest {
 		LayoutStructure layoutStructure = _getLayoutStructure(
 			"layout_data_row.json", new HashMap<>());
 
-		Layout layout = _layoutLocalService.fetchLayout(
-			_layoutPageTemplateEntry.getPlid());
-
 		PageDefinition pageDefinition = _getPageDefinition(
-			layout, layoutStructure);
+			_layoutLocalService.fetchLayout(_layoutPageTemplateEntry.getPlid()),
+			layoutStructure);
 
 		PageElement rootPageElement = pageDefinition.getPageElement();
 
@@ -517,11 +511,9 @@ public class PageDefinitionDTOConverterTest {
 		LayoutStructure layoutStructure = _getLayoutStructure(
 			"layout_data_section.json", new HashMap<>());
 
-		Layout layout = _layoutLocalService.fetchLayout(
-			_layoutPageTemplateEntry.getPlid());
-
 		PageDefinition pageDefinition = _getPageDefinition(
-			layout, layoutStructure);
+			_layoutLocalService.fetchLayout(_layoutPageTemplateEntry.getPlid()),
+			layoutStructure);
 
 		PageElement rootPageElement = pageDefinition.getPageElement();
 
@@ -692,15 +684,14 @@ public class PageDefinitionDTOConverterTest {
 				configuration, _read(editableValuesFileName), StringPool.BLANK,
 				0, null, _serviceContext);
 
-		LayoutStructure layoutStructure = _getLayoutStructure(
-			"layout_data_fragment.json",
-			HashMapBuilder.put(
-				"FRAGMENT_ENTRY_LINK_ID",
-				String.valueOf(fragmentEntryLink.getFragmentEntryLinkId())
-			).build());
-
 		PageDefinition pageDefinition = _getPageDefinition(
-			layout, layoutStructure);
+			layout,
+			_getLayoutStructure(
+				"layout_data_fragment.json",
+				HashMapBuilder.put(
+					"FRAGMENT_ENTRY_LINK_ID",
+					String.valueOf(fragmentEntryLink.getFragmentEntryLinkId())
+				).build()));
 
 		PageElement rootPageElement = pageDefinition.getPageElement();
 

@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.DateTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -80,15 +79,13 @@ public class DisplayPageTemplateStagedModelDataHandlerTest
 			Map<String, List<StagedModel>> dependentStagedModelsMap)
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				group.getGroupId(), TestPropsValues.getUserId());
-
 		return _layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 			TestPropsValues.getUserId(), group.getGroupId(), 0, _classNameId,
 			_classTypeId, RandomTestUtil.randomString(),
 			LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE, 0, false, 0,
-			0, 0, WorkflowConstants.STATUS_APPROVED, serviceContext);
+			0, 0, WorkflowConstants.STATUS_APPROVED,
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId()));
 	}
 
 	@Override

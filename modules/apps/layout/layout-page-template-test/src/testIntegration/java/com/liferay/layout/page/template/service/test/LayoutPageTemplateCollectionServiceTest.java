@@ -85,15 +85,13 @@ public class LayoutPageTemplateCollectionServiceTest {
 
 	@Test
 	public void testAddLayoutPageTemplateCollection() throws PortalException {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
 			_layoutPageTemplateCollectionService.
 				addLayoutPageTemplateCollection(
 					_group.getGroupId(), "Layout Page Template Collection",
-					null, serviceContext);
+					null,
+					ServiceContextTestUtil.getServiceContext(
+						_group.getGroupId(), TestPropsValues.getUserId()));
 
 		Assert.assertEquals(
 			"Layout Page Template Collection",
@@ -104,24 +102,20 @@ public class LayoutPageTemplateCollectionServiceTest {
 	public void testAddLayoutPageTemplateCollectionWithEmptyName()
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		_layoutPageTemplateCollectionService.addLayoutPageTemplateCollection(
-			_group.getGroupId(), StringPool.BLANK, null, serviceContext);
+			_group.getGroupId(), StringPool.BLANK, null,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
 	}
 
 	@Test(expected = LayoutPageTemplateCollectionNameException.class)
 	public void testAddLayoutPageTemplateCollectionWithNullName()
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		_layoutPageTemplateCollectionService.addLayoutPageTemplateCollection(
-			_group.getGroupId(), null, null, serviceContext);
+			_group.getGroupId(), null, null,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
 	}
 
 	@Test
@@ -155,15 +149,13 @@ public class LayoutPageTemplateCollectionServiceTest {
 
 	@Test
 	public void testDeleteLayoutPageTemplateCollection() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
 			_layoutPageTemplateCollectionService.
 				addLayoutPageTemplateCollection(
 					_group.getGroupId(), "Layout Page Template Collection",
-					null, serviceContext);
+					null,
+					ServiceContextTestUtil.getServiceContext(
+						_group.getGroupId(), TestPropsValues.getUserId()));
 
 		_layoutPageTemplateCollectionService.deleteLayoutPageTemplateCollection(
 			layoutPageTemplateCollection.getLayoutPageTemplateCollectionId());
@@ -478,15 +470,13 @@ public class LayoutPageTemplateCollectionServiceTest {
 	public void testUpdateLayoutPageTemplateCollection()
 		throws PortalException {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
 			_layoutPageTemplateCollectionService.
 				addLayoutPageTemplateCollection(
 					_group.getGroupId(), "Layout Page Template Collection",
-					null, serviceContext);
+					null,
+					ServiceContextTestUtil.getServiceContext(
+						_group.getGroupId(), TestPropsValues.getUserId()));
 
 		layoutPageTemplateCollection =
 			_layoutPageTemplateCollectionService.

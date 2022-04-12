@@ -72,11 +72,9 @@ public class GroupModelListenerTest {
 
 		_groupLocalService.deleteGroup(group);
 
-		fragmentCollection =
+		Assert.assertNull(
 			_fragmentCollectionLocalService.fetchFragmentCollection(
-				fragmentCollection.getFragmentCollectionId());
-
-		Assert.assertNull(fragmentCollection);
+				fragmentCollection.getFragmentCollectionId()));
 	}
 
 	@Test
@@ -97,11 +95,9 @@ public class GroupModelListenerTest {
 
 		_groupLocalService.deleteGroup(group);
 
-		fragmentEntryLink =
+		Assert.assertNull(
 			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
-				fragmentEntryLink.getFragmentEntryLinkId());
-
-		Assert.assertNull(fragmentEntryLink);
+				fragmentEntryLink.getFragmentEntryLinkId()));
 	}
 
 	@Test
@@ -115,13 +111,11 @@ public class GroupModelListenerTest {
 
 		_groupLocalService.deleteGroup(group);
 
-		layoutPageTemplateCollection =
+		Assert.assertNull(
 			_layoutPageTemplateCollectionLocalService.
 				fetchLayoutPageTemplateCollection(
 					layoutPageTemplateCollection.
-						getLayoutPageTemplateCollectionId());
-
-		Assert.assertNull(layoutPageTemplateCollection);
+						getLayoutPageTemplateCollectionId()));
 	}
 
 	@Test

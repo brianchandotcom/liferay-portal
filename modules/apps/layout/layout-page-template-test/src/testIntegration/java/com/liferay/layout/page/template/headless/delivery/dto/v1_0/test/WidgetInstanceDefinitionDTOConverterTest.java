@@ -71,7 +71,6 @@ import org.junit.runner.RunWith;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 
 /**
@@ -227,12 +226,10 @@ public class WidgetInstanceDefinitionDTOConverterTest {
 	}
 
 	private Object _getService() {
-		ServiceReference<?> serviceReference =
+		return _bundleContext.getService(
 			_bundleContext.getServiceReference(
 				"com.liferay.headless.delivery.internal.dto.v1_0.mapper." +
-					"WidgetInstanceMapper");
-
-		return _bundleContext.getService(serviceReference);
+					"WidgetInstanceMapper"));
 	}
 
 	private void _registerTestPortlet(String portletId) throws Exception {

@@ -76,17 +76,14 @@ public class LayoutPageTemplateTestUtil {
 			LayoutPageTemplateCollectionLocalServiceUtil.
 				getLayoutPageTemplateCollection(layoutPageTemplateCollectionId);
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				layoutPageTemplateCollection.getGroupId(),
-				TestPropsValues.getUserId());
-
 		return LayoutPageTemplateEntryLocalServiceUtil.
 			addLayoutPageTemplateEntry(
 				TestPropsValues.getUserId(),
 				layoutPageTemplateCollection.getGroupId(),
 				layoutPageTemplateCollectionId, name, type, 0, status,
-				serviceContext);
+				ServiceContextTestUtil.getServiceContext(
+					layoutPageTemplateCollection.getGroupId(),
+					TestPropsValues.getUserId()));
 	}
 
 }

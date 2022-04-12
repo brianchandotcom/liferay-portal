@@ -37,12 +37,15 @@ import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.util.TransformUtil;
+
+import java.io.Serializable;
 
 import java.util.Objects;
 
@@ -107,8 +110,11 @@ public class AssignableAccountUserDisplaySearchContainerFactory {
 
 		BaseModelSearchResult<User> baseModelSearchResult =
 			_accountUserRetriever.searchAccountUsers(
-				accountEntryIds,
-				_getEmailAddressDomains(accountEntryId, navigation), keywords,
+				accountEntryIds, keywords,
+				LinkedHashMapBuilder.<String, Serializable>put(
+					"emailAddressDomains",
+					_getEmailAddressDomains(accountEntryId, navigation)
+				).build(),
 				WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(),
 				searchContainer.getDelta(), searchContainer.getOrderByCol(),
 				_isReverseOrder(searchContainer.getOrderByType()));

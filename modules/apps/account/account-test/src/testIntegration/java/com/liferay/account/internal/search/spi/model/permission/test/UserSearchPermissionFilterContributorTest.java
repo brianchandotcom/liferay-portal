@@ -49,6 +49,8 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import java.util.LinkedHashMap;
+
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -137,8 +139,9 @@ public class UserSearchPermissionFilterContributorTest {
 
 			BaseModelSearchResult<User> userBaseModelSearchResult =
 				_accountUserRetriever.searchAccountUsers(
-					accountEntryId, null, WorkflowConstants.STATUS_APPROVED,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, "screen-name", false);
+					new long[] {accountEntryId}, null, new LinkedHashMap<>(),
+					WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, "screen-name", false);
 
 			return userBaseModelSearchResult.getLength();
 		}

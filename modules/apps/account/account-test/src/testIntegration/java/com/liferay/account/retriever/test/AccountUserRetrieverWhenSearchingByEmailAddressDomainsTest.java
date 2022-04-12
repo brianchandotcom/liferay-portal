@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -41,7 +42,10 @@ import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.io.Serializable;
+
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.junit.Assert;
@@ -74,14 +78,14 @@ public class AccountUserRetrieverWhenSearchingByEmailAddressDomainsTest {
 
 		BaseModelSearchResult<User> expectedBaseModelSearchResult =
 			_accountUserRetriever.searchAccountUsers(
-				AccountConstants.ACCOUNT_ENTRY_ID_ANY, null,
-				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, "screen-name", false);
+				new long[] {AccountConstants.ACCOUNT_ENTRY_ID_ANY}, null,
+				new LinkedHashMap<>(), WorkflowConstants.STATUS_APPROVED,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, "screen-name", false);
 		BaseModelSearchResult<User> actualBaseModelSearchResult =
 			_accountUserRetriever.searchAccountUsers(
-				AccountConstants.ACCOUNT_ENTRY_ID_ANY, null, null,
-				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, "screen-name", false);
+				new long[] {AccountConstants.ACCOUNT_ENTRY_ID_ANY}, null,
+				new LinkedHashMap<>(), WorkflowConstants.STATUS_APPROVED,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, "screen-name", false);
 
 		Assert.assertEquals(
 			expectedBaseModelSearchResult.getLength(),
@@ -115,8 +119,11 @@ public class AccountUserRetrieverWhenSearchingByEmailAddressDomainsTest {
 
 		BaseModelSearchResult<User> baseModelSearchResult =
 			_accountUserRetriever.searchAccountUsers(
-				AccountConstants.ACCOUNT_ENTRY_ID_ANY, emailAddressDomains,
-				null, WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+				new long[] {AccountConstants.ACCOUNT_ENTRY_ID_ANY}, null,
+				LinkedHashMapBuilder.<String, Serializable>put(
+					"emailAddressDomains", emailAddressDomains
+				).build(),
+				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, "email-address", false);
 
 		Assert.assertEquals(users.size(), baseModelSearchResult.getLength());
@@ -140,8 +147,11 @@ public class AccountUserRetrieverWhenSearchingByEmailAddressDomainsTest {
 
 		BaseModelSearchResult<User> baseModelSearchResult =
 			_accountUserRetriever.searchAccountUsers(
-				AccountConstants.ACCOUNT_ENTRY_ID_ANY, emailAddressDomains,
-				null, WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+				new long[] {AccountConstants.ACCOUNT_ENTRY_ID_ANY}, null,
+				LinkedHashMapBuilder.<String, Serializable>put(
+					"emailAddressDomains", emailAddressDomains
+				).build(),
+				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, "email-address", false);
 
 		Assert.assertEquals(0, baseModelSearchResult.getLength());

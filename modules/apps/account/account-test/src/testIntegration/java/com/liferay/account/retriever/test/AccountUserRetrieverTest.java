@@ -322,8 +322,8 @@ public class AccountUserRetrieverTest {
 		throws Exception {
 
 		return _accountUserRetriever.searchAccountUsers(
-			accountEntryIds, keywords, WorkflowConstants.STATUS_APPROVED, cur,
-			delta, sortField, reverse);
+			accountEntryIds, keywords, null, WorkflowConstants.STATUS_APPROVED,
+			cur, delta, sortField, reverse);
 	}
 
 	private BaseModelSearchResult<User> _searchAccountUsers(
@@ -339,7 +339,7 @@ public class AccountUserRetrieverTest {
 		throws Exception {
 
 		return _accountUserRetriever.searchAccountUsers(
-			_accountEntry.getAccountEntryId(), keywords,
+			new long[] {_accountEntry.getAccountEntryId()}, keywords, null,
 			WorkflowConstants.STATUS_APPROVED, cur, delta, sortField, reverse);
 	}
 

@@ -709,7 +709,7 @@ public class AccountEntryUserRelLocalServiceTest {
 
 		BaseModelSearchResult<User> baseModelSearchResult =
 			_accountUserRetriever.searchAccountUsers(
-				accountEntryId, user.getScreenName(),
+				new long[] {accountEntryId}, user.getScreenName(), null,
 				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, "screenName", false);
 

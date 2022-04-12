@@ -15,7 +15,7 @@
 import {openAlertModal} from 'frontend-js-web';
 
 function openAlert(message) {
-	if (Liferay.__FF__.enableCustomDialogs) {
+	if (Liferay.__FF__.customDialogsEnabled) {
 		openAlertModal({message});
 	}
 	else {

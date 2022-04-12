@@ -235,7 +235,7 @@ function createOrder(
 
 					var messageOrderCompleted = 'Order completed! you will be redirected to your dashboard';
 
-					if (Liferay.__FF__.enableCustomDialogs) {
+					if (Liferay.__FF__.customDialogsEnabled) {
 						Liferay.Util.openAlertModal({
 							message:
 								messageOrderCompleted,

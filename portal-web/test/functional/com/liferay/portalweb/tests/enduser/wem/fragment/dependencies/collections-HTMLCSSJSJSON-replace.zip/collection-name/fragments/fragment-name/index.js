@@ -10,7 +10,7 @@
 		(event) => {
 			event.preventDefault();
 
-			if (Liferay.__FF__.enableCustomDialogs) {
+			if (Liferay.__FF__.customDialogsEnabled) {
 				Liferay.Util.openAlertModal({message: MESSAGE});
 			} else {
 				alert(MESSAGE);

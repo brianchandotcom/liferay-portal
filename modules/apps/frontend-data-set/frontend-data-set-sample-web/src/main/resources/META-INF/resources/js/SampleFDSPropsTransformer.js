@@ -29,7 +29,7 @@ export default function propsTransformer({
 			if (action.data.id === 'sampleMessage') {
 				const alertMessage = `${greeting} ${itemData.title}!`;
 
-				if (Liferay.__FF__.enableCustomDialogs) {
+				if (Liferay.__FF__.customDialogsEnabled) {
 					openAlertModal({
 						message: alertMessage,
 					});

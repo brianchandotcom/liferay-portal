@@ -148,12 +148,10 @@ public class UpdateConfigurationValuesMVCActionCommand
 			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
 				fragmentEntryLink, fragmentEntryProcessorContext);
 
-		JSONObject defaultEditableValuesJSONObject =
-			_fragmentEntryProcessorRegistry.getDefaultEditableValuesJSONObject(
-				processedHTML, fragmentEntryLink.getConfiguration());
-
 		JSONObject newEditableValuesJSONObject = _mergeEditableValuesJSONObject(
-			defaultEditableValuesJSONObject, editableValues);
+			_fragmentEntryProcessorRegistry.getDefaultEditableValuesJSONObject(
+				processedHTML, fragmentEntryLink.getConfiguration()),
+			editableValues);
 
 		fragmentEntryLink = _fragmentEntryLinkService.updateFragmentEntryLink(
 			fragmentEntryLinkId, newEditableValuesJSONObject.toString());

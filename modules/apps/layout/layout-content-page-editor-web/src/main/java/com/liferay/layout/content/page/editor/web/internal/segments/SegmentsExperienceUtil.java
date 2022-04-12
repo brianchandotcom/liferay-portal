@@ -101,11 +101,9 @@ public class SegmentsExperienceUtil {
 
 		Layout draftLayout = themeDisplay.getLayout();
 
-		Layout layout = LayoutLocalServiceUtil.getLayout(
-			draftLayout.getClassPK());
-
 		String layoutFullURL = PortalUtil.getLayoutFullURL(
-			layout, themeDisplay);
+			LayoutLocalServiceUtil.getLayout(draftLayout.getClassPK()),
+			themeDisplay);
 
 		List<SegmentsExperience> segmentsExperiences =
 			SegmentsExperienceServiceUtil.getSegmentsExperiences(

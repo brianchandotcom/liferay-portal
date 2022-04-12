@@ -180,19 +180,6 @@ public class DLUtil {
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             com.liferay.document.library.util.DLURLHelper#getImagePreviewURL(
-	 *             FileEntry, FileVersion, ThemeDisplay)}
-	 */
-	@Deprecated
-	public static String getImagePreviewURL(
-			FileEntry fileEntry, ThemeDisplay themeDisplay)
-		throws Exception {
-
-		return _dl.getImagePreviewURL(fileEntry, themeDisplay);
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
 	 *             com.liferay.document.library.util.DLURLHelper#getPreviewURL(
 	 *             FileEntry, FileVersion, ThemeDisplay, String)}
 	 */

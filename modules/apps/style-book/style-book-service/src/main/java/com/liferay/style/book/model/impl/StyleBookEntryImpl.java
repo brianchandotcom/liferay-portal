@@ -14,7 +14,7 @@
 
 package com.liferay.style.book.model.impl;
 
-import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.document.library.util.DLURLHelperUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -45,7 +45,7 @@ public class StyleBookEntryImpl extends StyleBookEntryBaseImpl {
 				return StringPool.BLANK;
 			}
 
-			return DLUtil.getImagePreviewURL(fileEntry, themeDisplay);
+			return DLURLHelperUtil.getImagePreviewURL(fileEntry, themeDisplay);
 		}
 		catch (Exception exception) {
 			_log.error("Unable to get image preview URL", exception);

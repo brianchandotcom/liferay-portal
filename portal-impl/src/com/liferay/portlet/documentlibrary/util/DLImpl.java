@@ -504,21 +504,6 @@ public class DLImpl implements DL {
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             com.liferay.document.library.util.DLURLHelper#getImagePreviewURL(
-	 *             FileEntry, FileVersion, ThemeDisplay)}
-	 */
-	@Deprecated
-	@Override
-	public String getImagePreviewURL(
-			FileEntry fileEntry, ThemeDisplay themeDisplay)
-		throws Exception {
-
-		return getImagePreviewURL(
-			fileEntry, fileEntry.getFileVersion(), themeDisplay);
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
 	 *             com.liferay.document.library.util.DLURLHelper#getPreviewURL(
 	 *             FileEntry, FileVersion, ThemeDisplay, String)}
 	 */

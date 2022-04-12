@@ -14,7 +14,7 @@
 
 package com.liferay.fragment.model.impl;
 
-import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.document.library.util.DLURLHelperUtil;
 import com.liferay.fragment.constants.FragmentExportImportConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -57,7 +57,7 @@ public class FragmentCompositionImpl extends FragmentCompositionBaseImpl {
 				return StringPool.BLANK;
 			}
 
-			return DLUtil.getImagePreviewURL(fileEntry, themeDisplay);
+			return DLURLHelperUtil.getImagePreviewURL(fileEntry, themeDisplay);
 		}
 		catch (Exception exception) {
 			_log.error("Unable to get preview entry image URL", exception);

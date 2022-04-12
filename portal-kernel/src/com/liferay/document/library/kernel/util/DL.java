@@ -135,16 +135,6 @@ public interface DL {
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             com.liferay.document.library.util.DLURLHelper#getImagePreviewURL(
-	 *             FileEntry, FileVersion, ThemeDisplay)}
-	 */
-	@Deprecated
-	public String getImagePreviewURL(
-			FileEntry fileEntry, ThemeDisplay themeDisplay)
-		throws Exception;
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
 	 *             com.liferay.document.library.util.DLURLHelper#getPreviewURL(
 	 *             FileEntry, FileVersion, ThemeDisplay, String)}
 	 */

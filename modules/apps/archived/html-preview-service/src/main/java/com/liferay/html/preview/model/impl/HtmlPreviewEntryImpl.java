@@ -15,7 +15,7 @@
 package com.liferay.html.preview.model.impl;
 
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
-import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.document.library.util.DLURLHelperUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -35,7 +35,7 @@ public class HtmlPreviewEntryImpl extends HtmlPreviewEntryBaseImpl {
 		}
 
 		try {
-			return DLUtil.getImagePreviewURL(
+			return DLURLHelperUtil.getImagePreviewURL(
 				DLAppLocalServiceUtil.getFileEntry(fileEntryId), themeDisplay);
 		}
 		catch (Exception exception) {

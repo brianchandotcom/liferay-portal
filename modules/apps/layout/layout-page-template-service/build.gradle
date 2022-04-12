@@ -16,6 +16,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:change-tracking:change-tracking-spi")
+	compileOnly project(":apps:document-library:document-library-api")
 	compileOnly project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	compileOnly project(":apps:fragment:fragment-api")
 	compileOnly project(":apps:info:info-api")

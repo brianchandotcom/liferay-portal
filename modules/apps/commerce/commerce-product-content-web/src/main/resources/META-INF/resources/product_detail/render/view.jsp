@@ -33,13 +33,6 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 
 <div class="mb-5 product-detail" id="<portlet:namespace /><%= cpDefinitionId %>ProductContent">
 	<div class="row">
-		<div class="col-12 col-md-6">
-			<commerce-ui:gallery
-				CPDefinitionId="<%= cpDefinitionId %>"
-				namespace="<%= liferayPortletResponse.getNamespace() %>"
-			/>
-		</div>
-
 		<div class="col-12 col-md-6 d-flex flex-column justify-content-center">
 			<header>
 				<div class="availability d-flex mb-4">
@@ -172,6 +165,8 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 				</c:otherwise>
 			</c:choose>
 
+			<liferay-util:dynamic-include key="com.liferay.commerce.product.type.grouped.web#/grouped_product_type.jsp#" />
+
 			<div class="mt-3 price-container row">
 				<div class="col-lg-9 col-sm-12 col-xl-6">
 					<commerce-ui:price
@@ -202,6 +197,8 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 					CPCatalogEntry="<%= cpCatalogEntry %>"
 					large="<%= true %>"
 				/>
+
+				<liferay-util:dynamic-include key="com.liferay.commerce.product.type.virtual.web#/virtual_product_type.jsp#" />
 			</div>
 
 			<div class="mt-3">
@@ -210,6 +207,13 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 					label='<%= LanguageUtil.get(resourceBundle, "compare") %>'
 				/>
 			</div>
+		</div>
+
+		<div class="col-12 col-md-6">
+			<commerce-ui:gallery
+				CPDefinitionId="<%= cpDefinitionId %>"
+				namespace="<%= liferayPortletResponse.getNamespace() %>"
+			/>
 		</div>
 	</div>
 </div>

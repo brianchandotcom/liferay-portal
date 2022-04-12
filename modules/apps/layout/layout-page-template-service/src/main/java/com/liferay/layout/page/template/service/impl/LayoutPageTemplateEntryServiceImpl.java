@@ -133,10 +133,8 @@ public class LayoutPageTemplateEntryServiceImpl
 		Layout layout = _layoutLocalService.getLayout(
 			layoutPageTemplateEntry.getPlid());
 
-		Layout draftLayout = layout.fetchDraftLayout();
-
 		_layoutCopyHelper.copyLayout(
-			segmentsExperienceId, sourceLayout, draftLayout);
+			segmentsExperienceId, sourceLayout, layout.fetchDraftLayout());
 
 		return layoutPageTemplateEntry;
 	}

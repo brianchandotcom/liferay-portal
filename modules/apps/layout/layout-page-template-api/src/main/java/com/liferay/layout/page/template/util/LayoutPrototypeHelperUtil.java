@@ -39,10 +39,9 @@ public class LayoutPrototypeHelperUtil {
 		throws Exception {
 
 		for (LayoutPrototype layoutPrototype : layoutPrototypes) {
-			String defaultLanguageId = LocalizationUtil.getDefaultLanguageId(
-				layoutPrototype.getName());
-
-			Locale defaultLocale = LocaleUtil.fromLanguageId(defaultLanguageId);
+			Locale defaultLocale = LocaleUtil.fromLanguageId(
+				LocalizationUtil.getDefaultLanguageId(
+					layoutPrototype.getName()));
 
 			String name = nameMap.get(defaultLocale);
 

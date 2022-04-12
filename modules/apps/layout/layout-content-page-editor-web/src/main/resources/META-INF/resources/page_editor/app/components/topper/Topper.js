@@ -209,7 +209,9 @@ function TopperContent({
 			ref={canBeDragged ? itemHandlerRef : null}
 			style={config.featureFlagLps132571 ? {} : style}
 		>
-			{(isActive || isHighlighted) && !isDraggingSource ? (
+			{(isActive || isHighlighted) &&
+			!isDraggingSource &&
+			style?.display !== 'none' ? (
 				<TopperLabel itemElement={itemElement}>
 					<ul className="tbar-nav">
 						{canBeDragged && (

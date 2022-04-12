@@ -3506,7 +3506,7 @@
 									"value": "card-elevated-box-shadow"
 								}
 							],
-							"name": "cardElevatedBorderColor",
+							"name": "cardElevatedBoxShadow",
 							"type": "String"
 						},
 						{
@@ -3518,7 +3518,7 @@
 									"value": "card-elevated-active-box-shadow"
 								}
 							],
-							"name": "cardElevatedActiveBorderColor",
+							"name": "cardElevatedActiveBoxShadow",
 							"type": "String"
 						},
 						{
@@ -3530,7 +3530,7 @@
 									"value": "card-elevated-hover-box-shadow"
 								}
 							],
-							"name": "cardElevatedHoverBorderColor",
+							"name": "cardElevatedHoverBoxShadow",
 							"type": "String"
 						}
 					],
@@ -3638,7 +3638,7 @@
 									"value": "card-outlined-box-shadow"
 								}
 							],
-							"name": "cardOutlinedBorderColor",
+							"name": "cardOutlinedBoxShadow",
 							"type": "String"
 						},
 						{
@@ -3650,7 +3650,7 @@
 									"value": "card-outlined-active-box-shadow"
 								}
 							],
-							"name": "cardOutlinedActiveBorderColor",
+							"name": "cardOutlinedActiveBoxShadow",
 							"type": "String"
 						},
 						{
@@ -3662,7 +3662,7 @@
 									"value": "card-outlined-hover-box-shadow"
 								}
 							],
-							"name": "cardOutlinedHoverBorderColor",
+							"name": "cardOutlinedHoverBoxShadow",
 							"type": "String"
 						}
 					],
@@ -3770,7 +3770,7 @@
 									"value": "card-flat-box-shadow"
 								}
 							],
-							"name": "cardFlatBorderColor",
+							"name": "cardFlatBoxShadow",
 							"type": "String"
 						},
 						{
@@ -3782,7 +3782,7 @@
 									"value": "card-flat-active-box-shadow"
 								}
 							],
-							"name": "cardFlatActiveBorderColor",
+							"name": "cardFlatActiveBoxShadow",
 							"type": "String"
 						},
 						{
@@ -3794,7 +3794,7 @@
 									"value": "card-flat-hover-box-shadow"
 								}
 							],
-							"name": "cardFlatHoverBorderColor",
+							"name": "cardFlatHoverBoxShadow",
 							"type": "String"
 						}
 					],

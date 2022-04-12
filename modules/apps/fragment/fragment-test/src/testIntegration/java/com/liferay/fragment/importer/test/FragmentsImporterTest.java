@@ -15,6 +15,7 @@
 package com.liferay.fragment.importer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.fragment.configuration.FragmentServiceConfiguration;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.constants.FragmentExportImportConstants;
 import com.liferay.fragment.importer.FragmentsImporter;
@@ -23,6 +24,7 @@ import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.fragment.util.comparator.FragmentEntryCreateDateComparator;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONException;
@@ -31,6 +33,8 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -39,6 +43,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.zip.ZipWriter;
@@ -104,6 +109,35 @@ public class FragmentsImporterTest {
 	@Test
 	public void testImportComponents() throws Exception {
 		_importFragmentsByType(FragmentConstants.TYPE_COMPONENT);
+	}
+
+	@Test
+	public void testImportFragmentResourcesCreatesNewResourceWithoutPropagation()
+		throws Exception {
+
+		_testResources(2, "[resources:image (1).png]");
+	}
+
+	@Test
+	public void testImportFragmentResourcesCreatesNoNewResourceWithPropagation()
+		throws Exception {
+
+		_configurationProvider.saveCompanyConfiguration(
+			FragmentServiceConfiguration.class, _group.getCompanyId(),
+			HashMapDictionaryBuilder.<String, Object>put(
+				"propagateChanges", true
+			).build());
+
+		try {
+			_testResources(1, "[resources:image.png]");
+		}
+		finally {
+			_configurationProvider.saveCompanyConfiguration(
+				FragmentServiceConfiguration.class, _group.getCompanyId(),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"propagateChanges", false
+				).build());
+		}
 	}
 
 	@Test
@@ -506,10 +540,79 @@ public class FragmentsImporterTest {
 			zipWriter, path, jsonObject.getString("thumbnailPath"));
 	}
 
+	private void _testResources(
+			int expectedNumberOfResources, String resourceReference)
+		throws Exception {
+
+		ServiceContextThreadLocal.pushServiceContext(
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		try {
+			_fragmentsImporter.importFragmentEntries(
+				_user.getUserId(), _group.getGroupId(), 0, _file, true);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+
+		List<FragmentCollection> fragmentCollections =
+			_fragmentCollectionLocalService.getFragmentCollections(
+				_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		FragmentCollection fragmentCollection = fragmentCollections.get(0);
+
+		List<FileEntry> resources = fragmentCollection.getResources();
+
+		Assert.assertEquals(resources.toString(), 1, resources.size());
+
+		ServiceContextThreadLocal.pushServiceContext(
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		try {
+			_fragmentsImporter.importFragmentEntries(
+				_user.getUserId(), _group.getGroupId(), 0, _file, true);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+
+		fragmentCollections =
+			_fragmentCollectionLocalService.getFragmentCollections(
+				_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		fragmentCollection = fragmentCollections.get(0);
+
+		resources = fragmentCollection.getResources();
+
+		Assert.assertEquals(
+			resources.toString(), expectedNumberOfResources, resources.size());
+
+		List<FragmentEntry> fragmentEntries =
+			_fragmentEntryLocalService.getFragmentEntries(
+				_group.getGroupId(),
+				fragmentCollection.getFragmentCollectionId(), "resource",
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				new FragmentEntryCreateDateComparator(true));
+
+		FragmentEntry fragmentEntry = fragmentEntries.get(0);
+
+		String html = fragmentEntry.getHtml();
+
+		Assert.assertTrue(html, html.contains(resourceReference));
+
+		String css = fragmentEntry.getCss();
+
+		Assert.assertTrue(css, css.contains(resourceReference));
+	}
+
 	private static final String _FRAGMENTS_PATH =
 		"com/liferay/fragment/dependencies/fragments/";
 
 	private Bundle _bundle;
+
+	@Inject
+	private ConfigurationProvider _configurationProvider;
+
 	private File _file;
 
 	@Inject

@@ -18,6 +18,7 @@ import com.liferay.batch.planner.batch.engine.broker.BatchEngineBroker;
 import com.liferay.batch.planner.constants.BatchPlannerPortletKeys;
 import com.liferay.batch.planner.model.BatchPlannerPlan;
 import com.liferay.batch.planner.web.internal.helper.BatchPlannerPlanHelper;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCResourceCommand;
@@ -35,8 +36,6 @@ import java.io.InputStream;
 import java.net.URI;
 
 import java.nio.file.Files;
-
-import java.util.UUID;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -95,14 +94,12 @@ public class SubmitBatchPlannerPlanMVCResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		String externalType = ParamUtil.getString(
-			resourceRequest, "externalType", "CSV");
-
 		UploadPortletRequest uploadPortletRequest =
 			_portal.getUploadPortletRequest(resourceRequest);
 
 		File importFile = _toBatchPlannerFile(
-			externalType, uploadPortletRequest.getFileAsStream("importFile"));
+			uploadPortletRequest.getFileName("importFile"),
+			uploadPortletRequest.getFileAsStream("importFile"));
 
 		try {
 			URI importFileURI = importFile.toURI();
@@ -126,13 +123,12 @@ public class SubmitBatchPlannerPlanMVCResourceCommand
 		}
 	}
 
-	private File _toBatchPlannerFile(
-			String externalType, InputStream inputStream)
+	private File _toBatchPlannerFile(String fileName, InputStream inputStream)
 		throws Exception {
 
-		UUID uuid = UUID.randomUUID();
-
-		File file = FileUtil.createTempFile(uuid.toString(), externalType);
+		File file = FileUtil.createTempFile(
+			FileUtil.stripExtension(fileName) + StringPool.DASH,
+			FileUtil.getExtension(fileName));
 
 		try {
 			Files.copy(inputStream, file.toPath());

@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 
-import java.util.Dictionary;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -59,33 +58,22 @@ public class BackgroundTaskMessagingConfigurator {
 			bundleContext, DestinationConfiguration.DESTINATION_TYPE_PARALLEL,
 			DestinationNames.BACKGROUND_TASK, 5, 10);
 
-		BackgroundTaskMessageListener backgroundTaskMessageListener =
+		backgroundTaskDestination.register(
 			new BackgroundTaskMessageListener(
 				_backgroundTaskExecutorRegistry, _backgroundTaskLocalService,
 				_backgroundTaskStatusRegistry,
-				_backgroundTaskThreadLocalManager, _lockManager, _messageBus);
-
-		backgroundTaskDestination.register(backgroundTaskMessageListener);
+				_backgroundTaskThreadLocalManager, _lockManager, _messageBus));
 
 		Destination backgroundTaskStatusDestination = _registerDestination(
 			bundleContext, DestinationConfiguration.DESTINATION_TYPE_SERIAL,
 			DestinationNames.BACKGROUND_TASK_STATUS, 1, 1);
 
-		BackgroundTaskQueuingMessageListener
-			backgroundTaskQueuingMessageListener =
-				new BackgroundTaskQueuingMessageListener(
-					_backgroundTaskLocalService, _lockManager);
-
 		backgroundTaskStatusDestination.register(
-			backgroundTaskQueuingMessageListener);
-
-		RemoveOnCompletionBackgroundTaskStatusMessageListener
-			removeOnCompletionBackgroundTaskStatusMessageListener =
-				new RemoveOnCompletionBackgroundTaskStatusMessageListener(
-					_backgroundTaskLocalService);
-
+			new BackgroundTaskQueuingMessageListener(
+				_backgroundTaskLocalService, _lockManager));
 		backgroundTaskStatusDestination.register(
-			removeOnCompletionBackgroundTaskStatusMessageListener);
+			new RemoveOnCompletionBackgroundTaskStatusMessageListener(
+				_backgroundTaskLocalService));
 	}
 
 	@Deactivate
@@ -117,16 +105,12 @@ public class BackgroundTaskMessagingConfigurator {
 		Destination destination = _destinationFactory.createDestination(
 			destinationConfiguration);
 
-		Dictionary<String, Object> dictionary =
-			HashMapDictionaryBuilder.<String, Object>put(
-				"destination.name", destination.getName()
-			).build();
-
-		ServiceRegistration<Destination> serviceRegistration =
+		_serviceRegistrations.add(
 			bundleContext.registerService(
-				Destination.class, destination, dictionary);
-
-		_serviceRegistrations.add(serviceRegistration);
+				Destination.class, destination,
+				HashMapDictionaryBuilder.<String, Object>put(
+					"destination.name", destination.getName()
+				).build()));
 
 		return destination;
 	}

@@ -20,19 +20,23 @@ import com.liferay.jenkins.results.parser.JenkinsMaster;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.Job;
 import com.liferay.jenkins.results.parser.QAWebsitesGitRepositoryJob;
+import com.liferay.jenkins.results.parser.RemoteExecutor;
 import com.liferay.jenkins.results.parser.TopLevelBuild;
 import com.liferay.jenkins.results.parser.job.property.JobProperty;
 import com.liferay.jenkins.results.parser.job.property.JobPropertyFactory;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 
+import java.io.File;
 import java.io.IOException;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeoutException;
 
 import org.apache.commons.lang.WordUtils;
 
@@ -48,6 +52,16 @@ public class BatchTestrayCaseResult extends TestrayCaseResult {
 		super(testrayBuild, topLevelBuild);
 
 		_axisTestClassGroup = axisTestClassGroup;
+
+		String workspace = System.getenv("WORKSPACE");
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(workspace)) {
+			throw new RuntimeException("Please set WORKSPACE");
+		}
+
+		_testrayUploadBaseDir = new File(
+			workspace,
+			"testray/" + JenkinsResultsParserUtil.getDistinctTimeStamp());
 	}
 
 	public AxisBuild getAxisBuild() {
@@ -311,9 +325,49 @@ public class BatchTestrayCaseResult extends TestrayCaseResult {
 	}
 
 	private TestrayAttachment _getJenkinsConsoleTestrayAttachment() {
-		return getTestrayAttachment(
-			getAxisBuild(), "Jenkins Console",
-			getAxisBuildURLPath() + "/jenkins-console.txt.gz");
+		String name = "Jenkins Console";
+		String key = getAxisBuildURLPath() + "/jenkins-console.txt.gz";
+
+		TestrayAttachment testrayAttachment = getTestrayAttachment(
+			getAxisBuild(), name, key);
+
+		if (testrayAttachment != null) {
+			return testrayAttachment;
+		}
+
+		AxisBuild axisBuild = getAxisBuild();
+
+		File jenkinsConsoleFile = new File(
+			_testrayUploadBaseDir, "jenkins-console.txt");
+		File jenkinsConsoleGzFile = new File(
+			_testrayUploadBaseDir, "jenkins-console.txt.gz");
+
+		try {
+			JenkinsResultsParserUtil.write(
+				jenkinsConsoleFile, axisBuild.getConsoleText());
+
+			JenkinsResultsParserUtil.gzip(
+				jenkinsConsoleFile, jenkinsConsoleGzFile);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+		finally {
+			JenkinsResultsParserUtil.delete(jenkinsConsoleFile);
+		}
+
+		if (!jenkinsConsoleGzFile.exists()) {
+			return null;
+		}
+
+		testrayAttachment = _uploadDefaultTestrayAttachment(
+			name, key, jenkinsConsoleGzFile);
+
+		if (testrayAttachment != null) {
+			return testrayAttachment;
+		}
+
+		return _uploadS3TestrayAttachment(name, key, jenkinsConsoleGzFile);
 	}
 
 	private TestrayAttachment _getJenkinsConsoleTopLevelTestrayAttachment() {
@@ -350,6 +404,24 @@ public class BatchTestrayCaseResult extends TestrayCaseResult {
 			_getTopLevelBuildURLPath() + "/job-summary/index.html.gz");
 	}
 
+	private String _getMasterHostname() {
+		Build build = getBuild();
+
+		JenkinsMaster jenkinsMaster = build.getJenkinsMaster();
+
+		return jenkinsMaster.getName();
+	}
+
+	private String _getTestrayMountDirPath() {
+		try {
+			return JenkinsResultsParserUtil.getBuildProperty(
+				"testray.server.mount.dir[testray-1]");
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
 	private String _getTopLevelBuildURLPath() {
 		TopLevelBuild topLevelBuild = getTopLevelBuild();
 
@@ -379,6 +451,80 @@ public class BatchTestrayCaseResult extends TestrayCaseResult {
 		return sb.toString();
 	}
 
+	private TestrayAttachment _uploadDefaultTestrayAttachment(
+		String name, String key, File file) {
+
+		if (!file.exists()) {
+			return null;
+		}
+
+		String parentKey = key.replaceAll("(.+)/[^/]+", "$1");
+
+		RemoteExecutor remoteExecutor = new RemoteExecutor();
+
+		try {
+			remoteExecutor.execute(
+				1, new String[] {"root@" + _getMasterHostname()},
+				new String[] {
+					JenkinsResultsParserUtil.combine(
+						"mkdir -p \"", _getTestrayMountDirPath(),
+						"/jenkins/testray-results/production/logs/", parentKey,
+						"\"")
+				});
+		}
+		catch (Exception exception) {
+			return null;
+		}
+
+		try {
+			JenkinsResultsParserUtil.executeBashCommands(
+				JenkinsResultsParserUtil.combine(
+					"rsync -aqz --chmod=go=rx \"",
+					JenkinsResultsParserUtil.getCanonicalPath(file), "\" \"",
+					_getMasterHostname(), "::testray-results/production/logs/",
+					parentKey, "/\""));
+		}
+		catch (IOException | TimeoutException exception) {
+			return null;
+		}
+
+		try {
+			TestrayServer testrayServer = getTestrayServer();
+
+			URL url = new URL(
+				JenkinsResultsParserUtil.combine(
+					String.valueOf(testrayServer.getURL()),
+					"/reports/production/logs/", key));
+
+			System.out.println("Uploaded " + url);
+
+			return new DefaultTestrayAttachment(this, name, key, url);
+		}
+		catch (MalformedURLException malformedURLException) {
+			return null;
+		}
+	}
+
+	private TestrayAttachment _uploadS3TestrayAttachment(
+		String name, String key, File file) {
+
+		if (!file.exists()) {
+			return null;
+		}
+
+		try {
+			TestrayS3Bucket testrayS3Bucket = TestrayS3Bucket.getInstance();
+
+			testrayS3Bucket.createTestrayS3Object(key, file);
+
+			return new S3TestrayAttachment(this, name, key);
+		}
+		catch (Exception exception) {
+			return null;
+		}
+	}
+
 	private final AxisTestClassGroup _axisTestClassGroup;
+	private final File _testrayUploadBaseDir;
 
 }

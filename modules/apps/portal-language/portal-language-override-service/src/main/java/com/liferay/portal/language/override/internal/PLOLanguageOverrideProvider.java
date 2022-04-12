@@ -70,7 +70,6 @@ public class PLOLanguageOverrideProvider implements LanguageOverrideProvider {
 	}
 
 	@Activate
-	@SuppressWarnings("unchecked")
 	protected void activate() {
 		_ploEntriesMap = new ConcurrentHashMap<>();
 

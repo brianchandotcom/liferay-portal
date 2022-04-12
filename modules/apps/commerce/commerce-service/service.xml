@@ -196,10 +196,9 @@
 		<column name="paymentCommerceTermEntryId" type="long" />
 		<column name="shippingAddressId" type="long" />
 		<column name="transactionId" type="String" />
+		<column name="couponCode" type="String" />
 		<column name="shippingOptionName" type="String" />
 		<column name="purchaseOrderNumber" type="String" />
-		<column name="couponCode" type="String" />
-		<column name="lastPriceUpdateDate" type="Date" />
 		<column db-name="deliveryCTermEntryDescription" name="deliveryCommerceTermEntryDescription" type="String" />
 		<column name="deliveryCommerceTermEntryName" type="String" />
 		<column db-name="paymentCTermEntryDescription" name="paymentCommerceTermEntryDescription" type="String" />
@@ -243,11 +242,12 @@
 		<column db-name="totalDiscountPctLev4WithTax" name="totalDiscountPercentageLevel4WithTaxAmount" type="BigDecimal" />
 		<column name="advanceStatus" type="String" />
 		<column name="paymentStatus" type="int" />
-		<column name="orderDate" type="Date" />
 		<column name="orderStatus" type="int" />
 		<column name="printedNote" type="String" />
-		<column name="requestedDeliveryDate" type="Date" />
 		<column name="manuallyAdjusted" type="boolean" />
+		<column name="lastPriceUpdateDate" type="Date" />
+		<column name="orderDate" type="Date" />
+		<column name="requestedDeliveryDate" type="Date" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
 		<column name="statusByUserName" type="String" />

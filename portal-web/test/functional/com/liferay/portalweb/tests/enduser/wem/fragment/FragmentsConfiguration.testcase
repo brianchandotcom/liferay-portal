@@ -1051,19 +1051,36 @@ main();
 
 	@description = "This is a test for LPS-147396. Hide from Site Search Results could hide result from search."
 	@priority = "5"
-	test CouldHideResultFromSearchInAdvancedSettings {
+	test HideResultFromSearchInAdvancedSettings {
 		property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration.config";
 		property osgi.module.configurations = "fragmentAdvancedOptionsEnabled=&quot;true&quot;";
 
-		task ("Add a a content page and add a Button fragment to it") {
+		task ("Add a Home page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Guest",
-				layoutName = "Test Page Name",
+				groupName = "Test Site Name",
+				layoutName = "Home",
 				type = "content");
 
+			JSONLayout.publishLayout(
+				groupName = "Test Site Name",
+				layoutName = "Home");
+		}
+
+		task ("Add a Search Results widget to a Search page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Search");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Search",
+				widgetName = "Search Results");
+		}
+
+		task ("Add a Button fragment to content page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Guest");
+				siteName = "Test Site Name");
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -1074,7 +1091,11 @@ main();
 			PageEditor.clickPublish();
 		}
 
-		task ("Search "Go Somewhere" from page search bar, assert a search result about Button fragment") {
+		task ("Search 'Go Somewhere' from page search bar, assert a search result about Button fragment") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Home",
+				siteName = "Test Site Name");
+
 			SearchPortlets.searchEmbedded(searchTerm = "Go Somewhere");
 
 			SearchResultPortlet.viewSearchResults(
@@ -1085,7 +1106,7 @@ main();
 		task ("Check Hide from Site Search Results checkbox in Advanced Settings") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Guest");
+				siteName = "Test Site Name");
 
 			PageEditor.gotoAdvanced(fragmentName = "Button");
 
@@ -1098,7 +1119,11 @@ main();
 			PageEditor.clickPublish();
 		}
 
-		task ("Search "Go Somewhere" from page search bar, assert no search result about Button fragment") {
+		task ("Search 'Go Somewhere' from page search bar, assert no search result about Button fragment") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Home",
+				siteName = "Test Site Name");
+
 			SearchPortlets.searchEmbedded(searchTerm = "Go Somewhere");
 
 			SearchResultPortlet.viewNoSearchResults(searchTerm = "Go Somewhere");
@@ -1107,19 +1132,36 @@ main();
 
 	@description = "This is a test for LPS-147396. Hide from Site Search Results could hide single text in multiple results."
 	@priority = "3"
-	test CouldHideSingleResultInMultipleResultsInAdvancedSettings {
+	test HideSingleResultInMultipleResultsInAdvancedSettings {
 		property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration.config";
 		property osgi.module.configurations = "fragmentAdvancedOptionsEnabled=&quot;true&quot;";
 
-		task ("Add a a content page and add a Paragraph fragment to it") {
+		task ("Add a Home page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Guest",
-				layoutName = "Test Page Name",
+				groupName = "Test Site Name",
+				layoutName = "Home",
 				type = "content");
 
+			JSONLayout.publishLayout(
+				groupName = "Test Site Name",
+				layoutName = "Home");
+		}
+
+		task ("Add a Search Results widget to a Search page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Search");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Search",
+				widgetName = "Search Results");
+		}
+
+		task ("Add a Paragraph fragment to a content page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Guest");
+				siteName = "Test Site Name");
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -1142,7 +1184,7 @@ main();
 
 		task ("Create a couple more content pages with the same Paragraph fragment") {
 			for (var pageNum : list "1,2,3") {
-				PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+				PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 				PagesAdmin.gotoPageEllipsisMenuItem(
 					menuItem = "Copy Page",
@@ -1156,15 +1198,17 @@ main();
 
 				SelectFrameTop();
 
-				ContentPagesNavigator.openEditContentPage(
-					pageName = "Page Name ${pageNum}",
-					siteName = "Guest");
-
-				PageEditor.clickPublish();
+				JSONLayout.publishLayout(
+					groupName = "Test Site Name",
+					layoutName = "Page Name ${pageNum}");
 			}
 		}
 
-		task ("Search "footer" from page search bar, the fragments on all the pages show up in the search results") {
+		task ("Search 'footer' from page search bar, the fragments on all the pages show up in the search results") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Home",
+				siteName = "Test Site Name");
+
 			SearchPortlets.searchEmbedded(searchTerm = "footer");
 
 			SearchResultPortlet.viewSearchResults(
@@ -1181,20 +1225,22 @@ main();
 		task ("Check Hide from Site Search Results checkbox in Advanced Settings") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
-				siteName = "Guest");
+				siteName = "Test Site Name");
 
 			PageEditor.gotoAdvanced(fragmentName = "Paragraph");
 
 			Click.javaScriptClick(
 				checkboxName = "Hide from Site Search Results",
 				locator1 = "Checkbox#ANY_CHECKBOX");
-		}
 
-		task ("Publish the page") {
 			PageEditor.clickPublish();
 		}
 
-		task ("Search "footer" from page search bar, assert the page with Hide from Site Search Results checked does not appear in the search result") {
+		task ("Search 'footer' from page search bar, assert the page with Hide from Site Search Results checked does not appear in the search result") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Home",
+				siteName = "Test Site Name");
+
 			SearchPortlets.searchEmbedded(searchTerm = "footer");
 
 			SearchResultPortlet.viewSearchResultNotPresent(

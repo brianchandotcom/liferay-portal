@@ -17,12 +17,15 @@ package com.liferay.analytics.reports.web.internal.product.navigation.control.me
 import com.liferay.analytics.reports.constants.AnalyticsReportsWebKeys;
 import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItem;
 import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItemTracker;
+import com.liferay.analytics.reports.info.item.ClassNameClassPKInfoItemIdentifier;
 import com.liferay.analytics.reports.info.item.provider.AnalyticsReportsInfoItemObjectProvider;
 import com.liferay.analytics.reports.web.internal.constants.AnalyticsReportsPortletKeys;
 import com.liferay.analytics.reports.web.internal.info.item.provider.AnalyticsReportsInfoItemObjectProviderTracker;
 import com.liferay.analytics.reports.web.internal.util.AnalyticsReportsUtil;
+import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
-import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -30,28 +33,33 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.template.react.renderer.ComponentDescriptor;
+import com.liferay.portal.template.react.renderer.ReactRenderer;
 import com.liferay.product.navigation.control.menu.BaseProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
 import com.liferay.taglib.aui.IconTag;
-import com.liferay.taglib.portletext.RuntimeTag;
 import com.liferay.taglib.util.BodyBottomTag;
 
 import java.io.IOException;
 import java.io.Writer;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
+
+import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -103,7 +111,19 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 		try {
 			bodyBottomTag.doBodyTag(
 				httpServletRequest, httpServletResponse,
-				this::_processBodyBottomTagBody);
+				pageContext -> {
+					try {
+						_processBodyBottomTagBody(pageContext);
+					}
+					catch (Exception exception) {
+						throw new ProcessBodyBottomTagBodyException(exception);
+					}
+				});
+		}
+		catch (ProcessBodyBottomTagBodyException
+					processBodyBottomTagBodyException) {
+
+			throw new IOException(processBodyBottomTagBodyException);
 		}
 		catch (JspException jspException) {
 			throw new IOException(jspException);
@@ -121,24 +141,9 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 		Map<String, String> values = new HashMap<>();
 
 		if (isPanelStateOpen(httpServletRequest)) {
-			values.put("analyticsReportsPanelURL", StringPool.BLANK);
 			values.put("cssClass", "active");
 		}
 		else {
-			InfoItemReference infoItemReference = _getInfoItemReference(
-				httpServletRequest);
-
-			try {
-				values.put(
-					"analyticsReportsPanelURL",
-					AnalyticsReportsUtil.getAnalyticsReportsPanelURL(
-						infoItemReference, httpServletRequest, _portal,
-						_portletURLFactory));
-			}
-			catch (Exception exception) {
-				ReflectionUtil.throwException(exception);
-			}
-
 			values.put("cssClass", StringPool.BLANK);
 		}
 
@@ -161,7 +166,7 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 				iconTag.doTagAsString(httpServletRequest, httpServletResponse));
 		}
 		catch (JspException jspException) {
-			ReflectionUtil.throwException(jspException);
+			throw new IOException(jspException);
 		}
 
 		values.put("portletNamespace", _portletNamespace);
@@ -240,10 +245,69 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 		SessionClicks.put(httpServletRequest, _SESSION_CLICKS_KEY, panelState);
 	}
 
+	public static class ProcessBodyBottomTagBodyException
+		extends RuntimeException {
+
+		public ProcessBodyBottomTagBodyException(Throwable throwable) {
+			super(throwable);
+		}
+
+	}
+
 	@Activate
 	protected void activate() {
 		_portletNamespace = _portal.getPortletNamespace(
 			AnalyticsReportsPortletKeys.ANALYTICS_REPORTS);
+	}
+
+	private String _getAnalyticsReportsURL(
+		HttpServletRequest httpServletRequest) {
+
+		InfoItemReference infoItemReference = _getInfoItemReference(
+			httpServletRequest);
+
+		if (infoItemReference.getInfoItemIdentifier() instanceof
+				ClassNameClassPKInfoItemIdentifier) {
+
+			ClassNameClassPKInfoItemIdentifier
+				classNameClassPKInfoItemIdentifier =
+					(ClassNameClassPKInfoItemIdentifier)
+						infoItemReference.getInfoItemIdentifier();
+
+			return PortletURLBuilder.create(
+				_portletURLFactory.create(
+					httpServletRequest,
+					AnalyticsReportsPortletKeys.ANALYTICS_REPORTS,
+					PortletRequest.RESOURCE_PHASE)
+			).setParameter(
+				"className", infoItemReference.getClassName()
+			).setParameter(
+				"classPK", classNameClassPKInfoItemIdentifier.getClassPK()
+			).setParameter(
+				"classTypeName",
+				classNameClassPKInfoItemIdentifier.getClassName()
+			).setParameter(
+				"p_p_resource_id", "/analytics_reports/get_data"
+			).buildString();
+		}
+		else if (infoItemReference.getInfoItemIdentifier() instanceof
+					ClassPKInfoItemIdentifier) {
+
+			return PortletURLBuilder.create(
+				_portletURLFactory.create(
+					httpServletRequest,
+					AnalyticsReportsPortletKeys.ANALYTICS_REPORTS,
+					PortletRequest.RESOURCE_PHASE)
+			).setParameter(
+				"className", infoItemReference.getClassName()
+			).setParameter(
+				"classPK", infoItemReference.getClassPK()
+			).setParameter(
+				"p_p_resource_id", "/analytics_reports/get_data"
+			).buildString();
+		}
+
+		return StringPool.BLANK;
 	}
 
 	private InfoItemReference _getInfoItemReference(
@@ -262,7 +326,9 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 		);
 	}
 
-	private void _processBodyBottomTagBody(PageContext pageContext) {
+	private void _processBodyBottomTagBody(PageContext pageContext)
+		throws IOException, JspException {
+
 		try {
 			HttpServletRequest httpServletRequest =
 				(HttpServletRequest)pageContext.getRequest();
@@ -274,37 +340,70 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 
 			JspWriter jspWriter = pageContext.getOut();
 
-			jspWriter.write("<div class=\"");
+			StringBundler sb = new StringBundler(23);
+
+			sb.append("<div class=\"");
 
 			if (isPanelStateOpen(httpServletRequest)) {
-				jspWriter.write(
-					"lfr-has-analytics-reports-panel open-admin-panel ");
+				sb.append("lfr-has-analytics-reports-panel open-admin-panel ");
 			}
 
-			jspWriter.write(
+			sb.append(
 				StringBundler.concat(
 					"cadmin d-print-none lfr-admin-panel ",
 					"lfr-product-menu-panel lfr-analytics-reports-panel ",
 					"sidenav-fixed sidenav-menu-slider sidenav-right\" id=\""));
+			sb.append(_portletNamespace);
+			sb.append("analyticsReportsPanelId\">");
+			sb.append("<div class=\"sidebar sidebar-light sidenav-menu ");
+			sb.append("sidebar-sm\">");
+			sb.append("<div class=\"lfr-analytics-reports-sidebar\" ");
+			sb.append("id=\"analyticsReportsSidebar\">");
+			sb.append("<div class=\"d-flex justify-content-between p-3 ");
+			sb.append("sidebar-header\">");
+			sb.append("<h1 class=\"sr-only\">");
+			sb.append(
+				_language.get(httpServletRequest, "content-performance-panel"));
+			sb.append("</h1>");
+			sb.append("<span class=\"font-weight-bold\">");
+			sb.append(_language.get(httpServletRequest, "content-performance"));
+			sb.append("</span>");
 
-			jspWriter.write(_portletNamespace);
+			IconTag iconTag = new IconTag();
 
-			jspWriter.write("analyticsReportsPanelId\">");
-			jspWriter.write(
-				"<div class=\"sidebar sidebar-light sidenav-menu " +
-					"sidebar-sm\">");
+			iconTag.setCssClass("sidenav-close text-secondary");
+			iconTag.setImage("times");
+			iconTag.setMarkupView("lexicon");
+			iconTag.setUrl("javascript:;");
 
-			RuntimeTag runtimeTag = new RuntimeTag();
+			sb.append(iconTag.doTagAsString(pageContext));
 
-			runtimeTag.setPortletName(
-				AnalyticsReportsPortletKeys.ANALYTICS_REPORTS);
+			sb.append("</div>");
+			sb.append("<div class=\"sidebar-body\">");
+			sb.append("<span aria-hidden=\"true\" ");
+			sb.append("className=\"loading-animation ");
+			sb.append("loading-animation-sm\" />");
 
-			runtimeTag.doTag(pageContext);
+			jspWriter.write(sb.toString());
 
-			jspWriter.write("</div></div>");
+			_reactRenderer.renderReact(
+				new ComponentDescriptor(
+					_npmResolver.resolveModuleName("analytics-reports-web") +
+						"/js/AnalyticsReportsApp"),
+				HashMapBuilder.<String, Object>put(
+					"context",
+					Collections.singletonMap(
+						"analyticsReportsDataURL",
+						_getAnalyticsReportsURL(httpServletRequest))
+				).put(
+					"portletNamespace", _portletNamespace
+				).build(),
+				httpServletRequest, jspWriter);
+
+			jspWriter.write("</div></div></div></div>");
 		}
 		catch (Exception exception) {
-			ReflectionUtil.throwException(exception);
+			throw new IOException(exception);
 		}
 	}
 
@@ -328,11 +427,17 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 	private Language _language;
 
 	@Reference
+	private NPMResolver _npmResolver;
+
+	@Reference
 	private Portal _portal;
 
 	private String _portletNamespace;
 
 	@Reference
 	private PortletURLFactory _portletURLFactory;
+
+	@Reference
+	private ReactRenderer _reactRenderer;
 
 }

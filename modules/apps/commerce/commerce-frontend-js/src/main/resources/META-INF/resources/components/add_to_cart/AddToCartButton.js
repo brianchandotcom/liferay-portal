@@ -82,14 +82,21 @@ function AddToCartButton({
 					.catch((error) => {
 						console.error(error);
 
-						const errorMessage =
-							cpInstances.length > 1
-								? Liferay.Language.get(
-										'unable-to-add-products-to-the-cart'
-								  )
-								: Liferay.Language.get(
-										'unable-to-add-product-to-the-cart'
-								  );
+						let errorMessage;
+
+						if (error.message) {
+							errorMessage = error.message;
+						}
+						else {
+							errorMessage =
+								cpInstances.length > 1
+									? Liferay.Language.get(
+											'unable-to-add-products-to-the-cart'
+									  )
+									: Liferay.Language.get(
+											'unable-to-add-product-to-the-cart'
+									  );
+						}
 
 						showErrorNotification(errorMessage);
 

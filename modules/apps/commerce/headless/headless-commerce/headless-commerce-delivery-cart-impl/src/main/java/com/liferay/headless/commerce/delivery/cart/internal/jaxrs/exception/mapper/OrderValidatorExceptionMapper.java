@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.headless.commerce.admin.order.internal.jaxrs.exception.mapper;
+package com.liferay.headless.commerce.delivery.cart.internal.jaxrs.exception.mapper;
 
 import com.liferay.headless.commerce.core.exception.mapper.BaseOrderValidatorExceptionMapper;
 
@@ -21,14 +21,14 @@ import javax.ws.rs.ext.ExceptionMapper;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Alessio Antonio Rendina
+ * @author Brian I. Kim
  */
 @Component(
 	enabled = false,
 	property = {
-		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Order)",
+		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Commerce.Delivery.Cart)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Order.OrderValidatorExceptionMapper"
+		"osgi.jaxrs.name=Liferay.Headless.Commerce.Delivery.Cart.OrderValidatorExceptionMapper"
 	},
 	service = ExceptionMapper.class
 )

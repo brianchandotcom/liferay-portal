@@ -133,6 +133,7 @@ definition {
 	@description = "This ensures that the Adaptive Media app in the app manager can be deactivated and reactivated."
 	@priority = "5"
 	test CanDeactivateAndActivateAdaptiveMedia {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "AppManagement#CanDeactivateAndActivateAdaptiveMedia";
 		property testray.main.component.name = "Adaptive Media";
 
@@ -165,6 +166,7 @@ definition {
 	@description = "This ensures that the Asset Libraries app in the app manager can be deactivated and reactivated."
 	@priority = "5"
 	test CanDeactivateAndActivateAssetLibraries {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "AppManagement#CanDeactivateAndActivateAssetLibraries";
 		property testray.main.component.name = "Depot";
 
@@ -230,6 +232,7 @@ definition {
 	@description = "This ensures that the Comment app in the app manager can be deactivated and reactivated."
 	@priority = "5"
 	test CanDeactivateAndActivateComment {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "AppManagement#CanDeactivateAndActivateComment";
 		property testray.main.component.name = "Content Page Review";
 
@@ -295,6 +298,7 @@ definition {
 	@description = "This ensures that the Knowledge Base app in the app manager can be deactivated and reactivated."
 	@priority = "5"
 	test CanDeactivateAndActivateKnowledgeBase {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "AppManagement#CanDeactivateAndActivateKnowledgeBase";
 		property testray.main.component.name = "Knowledge Base";
 
@@ -393,6 +397,7 @@ definition {
 	@description = "This ensures that the Questions app in the app manager can be deactivated and reactivated."
 	@priority = "5"
 	test CanDeactivateAndActivateQuestions {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "AppManagement#CanDeactivateAndActivateQuestions";
 		property testray.main.component.name = "Questions";
 
@@ -458,6 +463,7 @@ definition {
 	@description = "This ensures that the Sharing app in the app manager can be deactivated and reactivated."
 	@priority = "5"
 	test CanDeactivateAndActivateSharing {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "AppManagement#CanDeactivateAndActivateSharing";
 		property testray.main.component.name = "Asset Sharing";
 
@@ -490,6 +496,7 @@ definition {
 	@description = "This ensures that the Translation app in the app manager can be deactivated and reactivated."
 	@priority = "5"
 	test CanDeactivateAndActivateTranslation {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "AppManagement#CanDeactivateAndActivateTranslation";
 		property testray.main.component.name = "Translations Management";
 

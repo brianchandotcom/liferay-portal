@@ -16,10 +16,17 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-util:include page="/mail_fields.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="companyId" value="<%= String.valueOf(CompanyConstants.SYSTEM) %>" />
-</liferay-util:include>
+<portlet:actionURL name="/server_admin/edit_server" var="actionURL" />
 
-<aui:button-row>
-	<aui:button cssClass="save-server-button" data-cmd="updateMail" value="save" />
-</aui:button-row>
+<aui:form action="<%= actionURL %>" method="post" name="fm">
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="updateMail" />
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+
+	<liferay-util:include page="/mail_fields.jsp" servletContext="<%= application %>">
+		<liferay-util:param name="preferencesCompanyId" value="<%= String.valueOf(company.getCompanyId()) %>" />
+	</liferay-util:include>
+
+	<aui:button-row>
+		<aui:button cssClass="save-server-button" type="submit" value="save" />
+	</aui:button-row>
+</aui:form>

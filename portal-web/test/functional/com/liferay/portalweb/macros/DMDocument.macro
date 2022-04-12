@@ -3212,6 +3212,15 @@ definition {
 		AssertElementNotPresent(locator1 = "Button#PLUS");
 	}
 
+	macro viewNoCacheControlConfigurationInConsole {
+		if (!(contains("${responseHeader}", "${cacheControlAttribute}"))) {
+			echo("No configured cache control property in the console.");
+		}
+		else {
+			fail("The configured cache control property can be viewed in the console.");
+		}
+	}
+
 	macro viewNoCategoriesPG {
 		if (isSet(categoryNameList)) {
 			for (var categoryName : list "${categoryNameList}") {

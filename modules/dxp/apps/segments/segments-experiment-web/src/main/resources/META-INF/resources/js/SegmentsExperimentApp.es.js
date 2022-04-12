@@ -11,11 +11,13 @@
 
 import React from 'react';
 
+import ConnectToAC from './components/ConnectToAC.es';
 import SegmentsExperimentsSidebar from './components/SegmentsExperimentsSidebar.es';
 import SegmentsExperimentsContext from './context.es';
 import APIService from './util/APIService.es';
 
-export default function ({context, props}) {
+export default function ({context, portletNamespace, props}) {
+	const isAnalyticsSync = false;
 	const {endpoints, imagesPath, page} = context;
 	const {
 		calculateSegmentsExperimentEstimatedDurationURL,
@@ -30,7 +32,7 @@ export default function ({context, props}) {
 		runSegmentsExperimentURL,
 	} = endpoints;
 
-	return (
+	return isAnalyticsSync ? (
 		<SegmentsExperimentsContext.Provider
 			value={{
 				APIService: APIService({
@@ -54,16 +56,20 @@ export default function ({context, props}) {
 				page,
 			}}
 		>
-			<SegmentsExperimentsSidebar
-				initialExperimentHistory={props.historySegmentsExperiments}
-				initialGoals={props.segmentsExperimentGoals}
-				initialSegmentsExperiment={props.segmentsExperiment}
-				initialSegmentsVariants={props.initialSegmentsVariants}
-				initialSelectedSegmentsExperienceId={
-					props.selectedSegmentsExperienceId
-				}
-				winnerSegmentsVariantId={props.winnerSegmentsVariantId}
-			/>
+			<div id={`${portletNamespace}-segments-experiment-root`}>
+				<SegmentsExperimentsSidebar
+					initialExperimentHistory={props.historySegmentsExperiments}
+					initialGoals={props.segmentsExperimentGoals}
+					initialSegmentsExperiment={props.segmentsExperiment}
+					initialSegmentsVariants={props.initialSegmentsVariants}
+					initialSelectedSegmentsExperienceId={
+						props.selectedSegmentsExperienceId
+					}
+					winnerSegmentsVariantId={props.winnerSegmentsVariantId}
+				/>
+			</div>
 		</SegmentsExperimentsContext.Provider>
+	) : (
+		<ConnectToAC />
 	);
 }

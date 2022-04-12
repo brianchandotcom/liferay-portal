@@ -20,19 +20,17 @@
 SegmentsExperimentDisplayContext segmentsExperimentDisplayContext = (SegmentsExperimentDisplayContext)request.getAttribute(SegmentsExperimentWebKeys.SEGMENTS_EXPERIMENT_DISPLAY_CONTEXT);
 %>
 
-<c:choose>
-	<c:when test="<%= SegmentsExperimentUtil.isAnalyticsSynced(themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId()) %>">
-		<div id="<portlet:namespace />-segments-experiment-root" %>
-			<div class="inline-item my-5 p-5 w-100">
-				<span aria-hidden="true" class="loading-animation"></span>
-			</div>
-
-			<react:component
-				module="js/SegmentsExperimentApp.es"
-				props="<%= segmentsExperimentDisplayContext.getData() %>"
-			/>
+<!-- <c:choose>
+	<c:when test="<%= SegmentsExperimentUtil.isAnalyticsSynced(themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId()) %>"> -->
+		<div class="inline-item my-5 p-5 w-100">
+			<span aria-hidden="true" class="loading-animation"></span>
 		</div>
-	</c:when>
+
+		<react:component
+			module="js/SegmentsExperimentApp.es"
+			props="<%= segmentsExperimentDisplayContext.getData() %>"
+		/>
+	<!-- </c:when>
 	<c:otherwise>
 		<div class="p-3 pt-4 text-center">
 			<liferay-ui:icon
@@ -86,4 +84,4 @@ SegmentsExperimentDisplayContext segmentsExperimentDisplayContext = (SegmentsExp
 			</c:choose>
 		</div>
 	</c:otherwise>
-</c:choose>
+</c:choose> -->

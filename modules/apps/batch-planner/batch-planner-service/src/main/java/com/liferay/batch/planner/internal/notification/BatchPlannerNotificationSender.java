@@ -32,18 +32,30 @@ public class BatchPlannerNotificationSender {
 
 	public JSONObject getNotificationEventJSONObject(
 		BatchEngineTaskExecuteStatus batchEngineTaskExecuteStatus,
-		String className) {
+		long batchPlannerPlanId, String className) {
 
 		JSONObject notificationEventJSONObject =
 			JSONFactoryUtil.createJSONObject();
 
 		return notificationEventJSONObject.put(
+			"batchPlannerPlanId", batchPlannerPlanId
+		).put(
 			"className", className
 		).put(
 			"status", batchEngineTaskExecuteStatus.name()
 		).put(
 			"taskType", _taskType
 		);
+	}
+
+	public JSONObject getNotificationEventJSONObject(
+		BatchEngineTaskExecuteStatus batchEngineTaskExecuteStatus,
+		long batchPlannerPlanId, String className, String fileName) {
+
+		JSONObject notificationEventJSONObject = getNotificationEventJSONObject(
+			batchEngineTaskExecuteStatus, batchPlannerPlanId, className);
+
+		return notificationEventJSONObject.put("fileName", fileName);
 	}
 
 	public void sendUserNotificationEvents(

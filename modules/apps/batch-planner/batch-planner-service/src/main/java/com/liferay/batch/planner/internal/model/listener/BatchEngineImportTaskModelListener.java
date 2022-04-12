@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import org.osgi.service.component.annotations.Activate;
@@ -89,6 +90,12 @@ public class BatchEngineImportTaskModelListener
 			_userNotificationEventLocalService);
 	}
 
+	private String _getFileName(String externalURL) {
+		String fileName = FileUtil.getShortFileName(externalURL);
+
+		return fileName.replaceAll("(.+)-(.+)\\.(\\w+)", "$1.$3");
+	}
+
 	private void _notify(
 		BatchEngineTaskExecuteStatus batchEngineTaskExecuteStatus,
 		BatchPlannerPlan batchPlannerPlan) {
@@ -98,7 +105,9 @@ public class BatchEngineImportTaskModelListener
 			UserNotificationDeliveryConstants.TYPE_WEBSITE,
 			_batchPlannerNotificationSender.getNotificationEventJSONObject(
 				batchEngineTaskExecuteStatus,
-				batchPlannerPlan.getInternalClassName()));
+				batchPlannerPlan.getBatchPlannerPlanId(),
+				batchPlannerPlan.getInternalClassName(),
+				_getFileName(batchPlannerPlan.getExternalURL())));
 	}
 
 	private BatchPlannerPlan _updateStatus(

@@ -47,7 +47,9 @@ import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.model.impl.DDMStructureImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateImpl;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
@@ -59,10 +61,14 @@ import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactory;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -72,14 +78,12 @@ import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyFactory;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.util.LocalizationImpl;
 import com.liferay.portal.util.PropsImpl;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.xml.SAXReaderImpl;
 
 import java.io.IOException;
@@ -96,39 +100,16 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 import org.junit.Before;
-import org.junit.runner.RunWith;
 
 import org.mockito.Matchers;
-import org.mockito.Mock;
-import org.mockito.invocation.InvocationOnMock;
+import org.mockito.Mockito;
 import org.mockito.stubbing.Answer;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.core.classloader.annotations.SuppressStaticInitializationFor;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Pablo Carvalho
  * @author Miguel Angelo Caldas Gallindo
  */
-@PrepareForTest(
-	{
-		DDMStructureLocalServiceUtil.class, DDMTemplateLocalServiceUtil.class,
-		LocaleUtil.class, PortalClassLoaderUtil.class, PropsValues.class,
-		ResourceBundleUtil.class
-	}
-)
-@RunWith(PowerMockRunner.class)
-@SuppressStaticInitializationFor(
-	{
-		"com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil",
-		"com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil",
-		"com.liferay.portal.kernel.xml.SAXReaderUtil",
-		"com.liferay.portal.util.PropsValues"
-	}
-)
-public abstract class BaseDDMTestCase extends PowerMockito {
+public abstract class BaseDDMTestCase {
 
 	@Before
 	public void setUp() throws Exception {
@@ -438,55 +419,55 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 
 		setUpDefaultDDMFormFieldType();
 
-		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker = mock(
-			DDMFormFieldTypeServicesTracker.class);
+		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker =
+			Mockito.mock(DDMFormFieldTypeServicesTracker.class);
 
-		DDMFormFieldRenderer ddmFormFieldRenderer = mock(
+		DDMFormFieldRenderer ddmFormFieldRenderer = Mockito.mock(
 			DDMFormFieldRenderer.class);
 
-		when(
+		Mockito.when(
 			ddmFormFieldTypeServicesTracker.getDDMFormFieldRenderer(
 				Matchers.anyString())
 		).thenReturn(
 			ddmFormFieldRenderer
 		);
 
-		when(
+		Mockito.when(
 			ddmFormFieldTypeServicesTracker.getDDMFormFieldType(
 				Matchers.anyString())
 		).thenReturn(
 			_defaultDDMFormFieldType
 		);
 
-		when(
+		Mockito.when(
 			ddmFormFieldTypeServicesTracker.getDDMFormFieldType(
 				Matchers.eq("fieldset"))
 		).thenReturn(
 			new FieldSetDDMFormFieldType()
 		);
 
-		when(
+		Mockito.when(
 			ddmFormFieldTypeServicesTracker.getDDMFormFieldType(
 				Matchers.eq("radio"))
 		).thenReturn(
 			new RadioDDMFormFieldType()
 		);
 
-		when(
+		Mockito.when(
 			ddmFormFieldTypeServicesTracker.getDDMFormFieldType(
 				Matchers.eq("select"))
 		).thenReturn(
 			new SelectDDMFormFieldType()
 		);
 
-		when(
+		Mockito.when(
 			ddmFormFieldTypeServicesTracker.getDDMFormFieldType(
 				Matchers.eq("text"))
 		).thenReturn(
 			new TextDDMFormFieldType()
 		);
 
-		when(
+		Mockito.when(
 			ddmFormFieldTypeServicesTracker.getDDMFormFieldTypeProperties(
 				Matchers.anyString())
 		).thenReturn(
@@ -500,33 +481,6 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 		);
 
 		return ddmFormFieldTypeServicesTracker;
-	}
-
-	protected DDMStructure getStructure(long structureId) {
-		try {
-			return DDMStructureLocalServiceUtil.getStructure(structureId);
-		}
-		catch (Exception exception) {
-			return null;
-		}
-	}
-
-	protected DDMForm getStructureDDMForm(DDMStructure structure) {
-		try {
-			return DDMStructureLocalServiceUtil.getStructureDDMForm(structure);
-		}
-		catch (Exception exception) {
-			return null;
-		}
-	}
-
-	protected DDMTemplate getTemplate(long templateId) {
-		try {
-			return DDMTemplateLocalServiceUtil.getTemplate(templateId);
-		}
-		catch (Exception exception) {
-			return null;
-		}
 	}
 
 	protected String read(String fileName) throws IOException {
@@ -551,181 +505,134 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 	}
 
 	protected void setUpConfigurationFactoryUtil() {
-		mockStatic(ConfigurationFactoryUtil.class);
-
-		when(
+		Mockito.when(
 			_configurationFactory.getConfiguration(
 				Matchers.any(ClassLoader.class), Matchers.anyString())
 		).thenReturn(
 			_configuration
 		);
 
-		ConfigurationFactoryUtil.setConfigurationFactory(_configurationFactory);
+		ReflectionTestUtil.setFieldValue(
+			ConfigurationFactoryUtil.class, "_configurationFactory",
+			_configurationFactory);
 	}
 
-	protected void setUpDDMFormJSONDeserializer() throws Exception {
-		field(
-			DDMFormJSONDeserializer.class, "_ddmFormFieldTypeServicesTracker"
-		).set(
-			ddmFormJSONDeserializer, getMockedDDMFormFieldTypeServicesTracker()
-		);
+	protected void setUpDDMFormJSONDeserializer() {
+		ReflectionTestUtil.setFieldValue(
+			ddmFormJSONDeserializer, "_ddmFormFieldTypeServicesTracker",
+			getMockedDDMFormFieldTypeServicesTracker());
 
-		field(
-			DDMFormJSONDeserializer.class, "_jsonFactory"
-		).set(
-			ddmFormJSONDeserializer, jsonFactory
-		);
+		ReflectionTestUtil.setFieldValue(
+			ddmFormJSONDeserializer, "_jsonFactory", jsonFactory);
 	}
 
-	protected void setUpDDMFormJSONSerializer() throws Exception {
-		field(
-			DDMFormJSONSerializer.class, "_ddmFormFieldTypeServicesTracker"
-		).set(
-			ddmFormJSONSerializer, getMockedDDMFormFieldTypeServicesTracker()
-		);
+	protected void setUpDDMFormJSONSerializer() {
+		ReflectionTestUtil.setFieldValue(
+			ddmFormJSONSerializer, "_ddmFormFieldTypeServicesTracker",
+			getMockedDDMFormFieldTypeServicesTracker());
 
-		field(
-			DDMFormJSONSerializer.class, "_jsonFactory"
-		).set(
-			ddmFormJSONSerializer, jsonFactory
-		);
+		ReflectionTestUtil.setFieldValue(
+			ddmFormJSONSerializer, "_jsonFactory", jsonFactory);
 	}
 
-	protected void setUpDDMFormLayoutJSONDeserializer() throws Exception {
-		field(
-			DDMFormLayoutJSONDeserializer.class, "_jsonFactory"
-		).set(
-			ddmFormLayoutJSONDeserializer, jsonFactory
-		);
+	protected void setUpDDMFormLayoutJSONDeserializer() {
+		ReflectionTestUtil.setFieldValue(
+			ddmFormLayoutJSONDeserializer, "_jsonFactory", jsonFactory);
 	}
 
-	protected void setUpDDMFormLayoutJSONSerializer() throws Exception {
-		field(
-			DDMFormLayoutJSONSerializer.class, "_jsonFactory"
-		).set(
-			ddmFormLayoutJSONSerializer, jsonFactory
-		);
+	protected void setUpDDMFormLayoutJSONSerializer() {
+		ReflectionTestUtil.setFieldValue(
+			ddmFormLayoutJSONSerializer, "_jsonFactory", jsonFactory);
 	}
 
-	protected void setUpDDMFormValuesJSONDeserializer() throws Exception {
-		field(
-			DDMFormValuesJSONDeserializer.class, "_jsonFactory"
-		).set(
-			ddmFormValuesJSONDeserializer, jsonFactory
-		);
+	protected void setUpDDMFormValuesJSONDeserializer() {
+		ReflectionTestUtil.setFieldValue(
+			ddmFormValuesJSONDeserializer, "_jsonFactory", jsonFactory);
 
-		field(
-			DDMFormValuesJSONDeserializer.class, "_serviceTrackerMap"
-		).set(
-			ddmFormValuesJSONDeserializer,
-			ProxyFactory.newDummyInstance(ServiceTrackerMap.class)
-		);
+		ReflectionTestUtil.setFieldValue(
+			ddmFormValuesJSONDeserializer, "_serviceTrackerMap",
+			ProxyFactory.newDummyInstance(ServiceTrackerMap.class));
 	}
 
-	protected void setUpDDMFormValuesJSONSerializer() throws Exception {
-		field(
-			DDMFormValuesJSONSerializer.class, "_jsonFactory"
-		).set(
-			ddmFormValuesJSONSerializer, jsonFactory
-		);
+	protected void setUpDDMFormValuesJSONSerializer() {
+		ReflectionTestUtil.setFieldValue(
+			ddmFormValuesJSONSerializer, "_jsonFactory", jsonFactory);
 
-		field(
-			DDMFormValuesJSONSerializer.class, "_serviceTrackerMap"
-		).set(
-			ddmFormValuesJSONSerializer,
-			ProxyFactory.newDummyInstance(ServiceTrackerMap.class)
-		);
+		ReflectionTestUtil.setFieldValue(
+			ddmFormValuesJSONSerializer, "_serviceTrackerMap",
+			ProxyFactory.newDummyInstance(ServiceTrackerMap.class));
 	}
 
-	protected void setUpDDMStructureLocalServiceUtil() {
-		mockStatic(DDMStructureLocalServiceUtil.class);
+	protected void setUpDDMStructureLocalServiceUtil() throws PortalException {
+		DDMStructureLocalService ddmStructureLocalService = Mockito.mock(
+			DDMStructureLocalService.class);
 
-		when(
-			getStructure(Matchers.anyLong())
-		).then(
-			new Answer<DDMStructure>() {
+		ReflectionTestUtil.setFieldValue(
+			DDMStructureLocalServiceUtil.class, "_service",
+			ddmStructureLocalService);
 
-				@Override
-				public DDMStructure answer(InvocationOnMock invocationOnMock)
-					throws Throwable {
+		Mockito.when(
+			ddmStructureLocalService.getStructure(Mockito.anyLong())
+		).thenAnswer(
+			invocationOnMock -> {
+				Object[] args = invocationOnMock.getArguments();
 
-					Object[] args = invocationOnMock.getArguments();
+				Long structureId = (Long)args[0];
 
-					Long structureId = (Long)args[0];
-
-					return structures.get(structureId);
-				}
-
+				return structures.get(structureId);
 			}
 		);
 
-		when(
-			getStructureDDMForm(Matchers.any(DDMStructure.class))
-		).then(
-			new Answer<DDMForm>() {
+		Mockito.when(
+			ddmStructureLocalService.getStructureDDMForm(
+				Matchers.any(DDMStructure.class))
+		).thenAnswer(
+			invocationOnMock -> {
+				Object[] args = invocationOnMock.getArguments();
 
-				@Override
-				public DDMForm answer(InvocationOnMock invocationOnMock)
-					throws Throwable {
+				DDMStructure structure = (DDMStructure)args[0];
 
-					Object[] args = invocationOnMock.getArguments();
+				DDMFormDeserializerDeserializeRequest.Builder builder =
+					DDMFormDeserializerDeserializeRequest.Builder.newBuilder(
+						structure.getDefinition());
 
-					DDMStructure structure = (DDMStructure)args[0];
+				DDMFormDeserializerDeserializeResponse
+					ddmFormDeserializerDeserializeResponse =
+						ddmFormJSONDeserializer.deserialize(builder.build());
 
-					DDMFormDeserializerDeserializeRequest.Builder builder =
-						DDMFormDeserializerDeserializeRequest.Builder.
-							newBuilder(structure.getDefinition());
-
-					DDMFormDeserializerDeserializeResponse
-						ddmFormDeserializerDeserializeResponse =
-							ddmFormJSONDeserializer.deserialize(
-								builder.build());
-
-					return ddmFormDeserializerDeserializeResponse.getDDMForm();
-				}
-
+				return ddmFormDeserializerDeserializeResponse.getDDMForm();
 			}
 		);
 	}
 
-	protected void setUpDDMTemplateLocalServiceUtil() {
-		mockStatic(DDMTemplateLocalServiceUtil.class);
+	protected void setUpDDMTemplateLocalServiceUtil() throws PortalException {
+		DDMTemplateLocalService ddmTemplateLocalService = Mockito.mock(
+			DDMTemplateLocalService.class);
 
-		when(
-			getTemplate(Matchers.anyLong())
-		).then(
-			new Answer<DDMTemplate>() {
+		ReflectionTestUtil.setFieldValue(
+			DDMTemplateLocalServiceUtil.class, "_service",
+			ddmTemplateLocalService);
 
-				@Override
-				public DDMTemplate answer(InvocationOnMock invocationOnMock)
-					throws Throwable {
+		Mockito.when(
+			ddmTemplateLocalService.getTemplate(Matchers.anyLong())
+		).thenAnswer(
+			invocationOnMock -> {
+				Object[] args = invocationOnMock.getArguments();
 
-					Object[] args = invocationOnMock.getArguments();
+				Long templateId = (Long)args[0];
 
-					Long templateId = (Long)args[0];
-
-					return templates.get(templateId);
-				}
-
+				return templates.get(templateId);
 			}
 		);
 	}
 
 	protected void setUpDefaultDDMFormFieldType() {
-		when(
+		Mockito.when(
 			_defaultDDMFormFieldType.getDDMFormFieldTypeSettings()
 		).then(
-			new Answer<Class<? extends DDMFormFieldTypeSettings>>() {
-
-				@Override
-				public Class<? extends DDMFormFieldTypeSettings> answer(
-						InvocationOnMock invocationOnMock)
-					throws Throwable {
-
-					return DDMFormFieldTypeSettingsTestUtil.getSettings();
-				}
-
-			}
+			(Answer<Class<? extends DDMFormFieldTypeSettings>>)
+				invocationOnMock ->
+					DDMFormFieldTypeSettingsTestUtil.getSettings()
 		);
 	}
 
@@ -770,20 +677,14 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 	protected void setUpLanguageUtil(Map<String, String> languageKeys) {
 		LanguageUtil languageUtil = new LanguageUtil();
 
-		when(
+		Mockito.when(
 			language.get(
 				Matchers.any(ResourceBundle.class), Matchers.anyString())
 		).then(
-			new Answer<String>() {
+			(Answer<String>)invocationOnMock -> {
+				Object[] arguments = invocationOnMock.getArguments();
 
-				public String answer(InvocationOnMock invocationOnMock)
-					throws Throwable {
-
-					Object[] arguments = invocationOnMock.getArguments();
-
-					return languageKeys.get((String)arguments[1]);
-				}
-
+				return languageKeys.get((String)arguments[1]);
 			}
 		);
 
@@ -791,68 +692,18 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 	}
 
 	protected void setUpLocaleUtil() {
-		mockStatic(LocaleUtil.class);
+		LocaleUtil localeUtil = ReflectionTestUtil.getFieldValue(
+			LocaleUtil.class, "_localeUtil");
 
-		when(
-			LocaleUtil.fromLanguageId("en_US")
-		).thenReturn(
-			LocaleUtil.US
-		);
+		Map<String, Locale> locales = ReflectionTestUtil.getFieldValue(
+			localeUtil, "_locales");
 
-		when(
-			LocaleUtil.fromLanguageId("pt_BR")
-		).thenReturn(
-			LocaleUtil.BRAZIL
-		);
+		locales.clear();
 
-		when(
-			LocaleUtil.fromLanguageId("en_US", true, false)
-		).thenReturn(
-			LocaleUtil.US
-		);
+		locales.put("en_US", LocaleUtil.US);
+		locales.put("pt_BR", LocaleUtil.BRAZIL);
 
-		when(
-			LocaleUtil.getDefault()
-		).thenReturn(
-			LocaleUtil.US
-		);
-
-		when(
-			LocaleUtil.toLanguageId(LocaleUtil.US)
-		).thenReturn(
-			"en_US"
-		);
-
-		when(
-			LocaleUtil.toLanguageId(LocaleUtil.BRAZIL)
-		).thenReturn(
-			"pt_BR"
-		);
-
-		when(
-			LocaleUtil.toLanguageIds((Locale[])Matchers.any())
-		).then(
-			new Answer<String[]>() {
-
-				@Override
-				public String[] answer(InvocationOnMock invocationOnMock)
-					throws Throwable {
-
-					Object[] args = invocationOnMock.getArguments();
-
-					Locale[] locales = (Locale[])args[0];
-
-					String[] languageIds = new String[locales.length];
-
-					for (int i = 0; i < locales.length; i++) {
-						languageIds[i] = LocaleUtil.toLanguageId(locales[i]);
-					}
-
-					return languageIds;
-				}
-
-			}
-		);
+		ReflectionTestUtil.setFieldValue(localeUtil, "_locale", LocaleUtil.US);
 	}
 
 	protected void setUpLocalizationUtil() {
@@ -862,23 +713,17 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 	}
 
 	protected void setUpPortalClassLoaderUtil() {
-		mockStatic(PortalClassLoaderUtil.class);
-
-		when(
-			PortalClassLoaderUtil.getClassLoader()
-		).thenReturn(
-			_classLoader
-		);
+		PortalClassLoaderUtil.setClassLoader(_classLoader);
 	}
 
 	protected void setUpPortalUtil() {
 		PortalUtil portalUtil = new PortalUtil();
 
-		Portal portal = mock(Portal.class);
+		Portal portal = Mockito.mock(Portal.class);
 
-		ResourceBundle resourceBundle = mock(ResourceBundle.class);
+		ResourceBundle resourceBundle = Mockito.mock(ResourceBundle.class);
 
-		when(
+		Mockito.when(
 			portal.getResourceBundle(Matchers.any(Locale.class))
 		).thenReturn(
 			resourceBundle
@@ -891,23 +736,21 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 		PropsUtil.setProps(new PropsImpl());
 	}
 
-	protected void setUpPropsValues() {
-		mockStatic(PropsValues.class);
-	}
-
 	protected void setUpResourceBundleUtil() {
-		mockStatic(ResourceBundleUtil.class);
+		ResourceBundleLoader resourceBundleLoader = Mockito.mock(
+			ResourceBundleLoader.class);
 
-		when(
-			ResourceBundleUtil.getBundle(
-				"content.Language", LocaleUtil.BRAZIL, _classLoader)
+		ResourceBundleLoaderUtil.setPortalResourceBundleLoader(
+			resourceBundleLoader);
+
+		Mockito.when(
+			resourceBundleLoader.loadResourceBundle(LocaleUtil.BRAZIL)
 		).thenReturn(
 			_resourceBundle
 		);
 
-		when(
-			ResourceBundleUtil.getBundle(
-				"content.Language", LocaleUtil.US, _classLoader)
+		Mockito.when(
+			resourceBundleLoader.loadResourceBundle(LocaleUtil.US)
 		).thenReturn(
 			_resourceBundle
 		);
@@ -931,7 +774,7 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 	protected void whenLanguageGet(
 		Locale locale, String key, String returnValue) {
 
-		when(
+		Mockito.when(
 			language.get(Matchers.eq(locale), Matchers.eq(key))
 		).thenReturn(
 			returnValue
@@ -941,7 +784,7 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 	protected void whenLanguageGetAvailableLocalesThen(
 		Set<Locale> availableLocales) {
 
-		when(
+		Mockito.when(
 			language.getAvailableLocales()
 		).thenReturn(
 			availableLocales
@@ -949,7 +792,7 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 	}
 
 	protected void whenLanguageGetLanguageId(Locale locale, String languageId) {
-		when(
+		Mockito.when(
 			language.getLanguageId(Matchers.eq(locale))
 		).thenReturn(
 			languageId
@@ -957,7 +800,7 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 	}
 
 	protected void whenLanguageIsAvailableLocale(Locale locale) {
-		when(
+		Mockito.when(
 			language.isAvailableLocale(Matchers.eq(locale))
 		).thenReturn(
 			true
@@ -965,7 +808,7 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 	}
 
 	protected void whenLanguageIsAvailableLocale(String languageId) {
-		when(
+		Mockito.when(
 			language.isAvailableLocale(Matchers.eq(languageId))
 		).thenReturn(
 			true
@@ -986,9 +829,7 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 		ddmFormValuesJSONSerializer = new DDMFormValuesJSONSerializer();
 	protected static final JSONFactory jsonFactory = new JSONFactoryImpl();
 
-	@Mock
-	protected Language language;
-
+	protected Language language = Mockito.mock(Language.class);
 	protected Map<Long, DDMStructure> structures = new HashMap<>();
 	protected Map<Long, DDMTemplate> templates = new HashMap<>();
 
@@ -1017,19 +858,14 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 
 	}
 
-	@Mock
-	private ClassLoader _classLoader;
-
-	@Mock
-	private Configuration _configuration;
-
-	@Mock
-	private ConfigurationFactory _configurationFactory;
-
-	@Mock
-	private DDMFormFieldType _defaultDDMFormFieldType;
-
-	@Mock
-	private ResourceBundle _resourceBundle;
+	private final ClassLoader _classLoader = Mockito.mock(ClassLoader.class);
+	private final Configuration _configuration = Mockito.mock(
+		Configuration.class);
+	private final ConfigurationFactory _configurationFactory = Mockito.mock(
+		ConfigurationFactory.class);
+	private final DDMFormFieldType _defaultDDMFormFieldType = Mockito.mock(
+		DDMFormFieldType.class);
+	private final ResourceBundle _resourceBundle = Mockito.mock(
+		ResourceBundle.class);
 
 }

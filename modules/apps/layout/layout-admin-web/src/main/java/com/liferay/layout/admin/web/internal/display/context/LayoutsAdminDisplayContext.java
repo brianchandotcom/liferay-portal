@@ -1570,7 +1570,7 @@ public class LayoutsAdminDisplayContext {
 			return false;
 		}
 
-		if (draftLayout.getStatus() == WorkflowConstants.STATUS_DRAFT) {
+		if (draftLayout.isDraft()) {
 			return true;
 		}
 
@@ -1655,9 +1655,7 @@ public class LayoutsAdminDisplayContext {
 			return false;
 		}
 
-		if ((draftLayout.getStatus() == WorkflowConstants.STATUS_DRAFT) ||
-			!layout.isPublished()) {
-
+		if (draftLayout.isDraft() || !layout.isPublished()) {
 			return true;
 		}
 

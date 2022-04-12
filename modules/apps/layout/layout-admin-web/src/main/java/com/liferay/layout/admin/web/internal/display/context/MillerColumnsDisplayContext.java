@@ -43,7 +43,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.LayoutTypeControllerTracker;
 import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporterTracker;
 
@@ -515,9 +514,7 @@ public class MillerColumnsDisplayContext {
 		Layout draftLayout = layout.fetchDraftLayout();
 
 		if (layout.isTypeContent()) {
-			if ((draftLayout.getStatus() == WorkflowConstants.STATUS_DRAFT) ||
-				!layout.isPublished()) {
-
+			if (draftLayout.isDraft() || !layout.isPublished()) {
 				jsonArray.put(
 					JSONUtil.put(
 						"id", "draft"

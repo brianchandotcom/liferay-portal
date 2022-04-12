@@ -172,6 +172,8 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 				</c:otherwise>
 			</c:choose>
 
+			<liferay-util:dynamic-include key="com.liferay.commerce.product.type.grouped.web#/grouped_product_type.jsp#" />
+
 			<div class="mt-3 price-container row">
 				<div class="col-lg-9 col-sm-12 col-xl-6">
 					<commerce-ui:price
@@ -202,6 +204,8 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 					CPCatalogEntry="<%= cpCatalogEntry %>"
 					large="<%= true %>"
 				/>
+
+				<liferay-util:dynamic-include key="com.liferay.commerce.product.type.virtual.web#/virtual_product_type.jsp#" />
 			</div>
 
 			<div class="mt-3">

@@ -16,7 +16,12 @@ package com.liferay.commerce.product.content.web.internal.render;
 
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.content.render.CPContentRenderer;
+import com.liferay.commerce.product.type.grouped.constants.GroupedCPTypeConstants;
+import com.liferay.commerce.product.type.grouped.constants.GroupedCPTypeWebKeys;
 import com.liferay.commerce.product.type.grouped.util.GroupedCPTypeHelper;
+import com.liferay.commerce.product.type.simple.constants.SimpleCPTypeConstants;
+import com.liferay.commerce.product.type.virtual.constants.VirtualCPTypeConstants;
+import com.liferay.commerce.product.type.virtual.constants.VirtualCPTypeWebKeys;
 import com.liferay.commerce.product.type.virtual.util.VirtualCPTypeHelper;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -34,15 +39,16 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Gianmarco Brunialti Masera
+ * @author Alessio Antonio Rendina
  */
 @Component(
 	enabled = false, immediate = true,
 	property = {
 		"commerce.product.content.renderer.key=" + DefaultCPContentRenderer.KEY,
 		"commerce.product.content.renderer.order=" + Integer.MIN_VALUE,
-		"commerce.product.content.renderer.type=grouped",
-		"commerce.product.content.renderer.type=simple",
-		"commerce.product.content.renderer.type=virtual"
+		"commerce.product.content.renderer.type=" + GroupedCPTypeConstants.NAME,
+		"commerce.product.content.renderer.type=" + SimpleCPTypeConstants.NAME,
+		"commerce.product.content.renderer.type=" + VirtualCPTypeConstants.NAME
 	},
 	service = CPContentRenderer.class
 )
@@ -71,9 +77,9 @@ public class DefaultCPContentRenderer implements CPContentRenderer {
 		throws Exception {
 
 		httpServletRequest.setAttribute(
-			"groupedCPTypeHelper", _groupedCPTypeHelper);
+			GroupedCPTypeWebKeys.GROUPED_CP_TYPE_HELPER, _groupedCPTypeHelper);
 		httpServletRequest.setAttribute(
-			"virtualCPTypeHelper", _virtualCPTypeHelper);
+			VirtualCPTypeWebKeys.VIRTUAL_CP_TYPE_HELPER, _virtualCPTypeHelper);
 
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,

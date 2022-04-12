@@ -654,7 +654,7 @@ definition {
 			panel = "Site Administration",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(pageName = "Wiki Page");
+		PagesAdmin.addPage(pageName = "Wiki Page");
 
 		Navigator.gotoPage(pageName = "Wiki Page");
 
@@ -870,7 +870,7 @@ definition {
 			panel = "Site Administration",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(pageName = "Blogs Page");
+		PagesAdmin.addPage(pageName = "Blogs Page");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
@@ -1391,7 +1391,7 @@ definition {
 			portlet = "Pages",
 			site = "${siteName}");
 
-		PagesAdmin.addPublicPage(pageName = "Asset Publisher Test Page");
+		PagesAdmin.addPage(pageName = "Asset Publisher Test Page");
 
 		Navigator.gotoPage(
 			pageName = "Asset Publisher Test Page",

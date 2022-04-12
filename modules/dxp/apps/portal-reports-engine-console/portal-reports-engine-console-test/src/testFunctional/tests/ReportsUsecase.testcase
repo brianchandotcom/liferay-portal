@@ -78,7 +78,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(pageName = "Reports Page");
+		PagesAdmin.addPage(pageName = "Reports Page");
 
 		Navigator.gotoPage(pageName = "Reports Page");
 
@@ -256,7 +256,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(pageName = "Reports Page");
+		PagesAdmin.addPage(pageName = "Reports Page");
 
 		Navigator.gotoPage(pageName = "Reports Page");
 

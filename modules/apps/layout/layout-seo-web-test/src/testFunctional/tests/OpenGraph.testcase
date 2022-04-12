@@ -601,7 +601,7 @@ definition {
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
-		PagesAdmin.addPublicPage(
+		PagesAdmin.addPage(
 			customDescription = "This is a new description",
 			customTitle = "This is a new title",
 			openGraph = "true",

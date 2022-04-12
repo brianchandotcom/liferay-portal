@@ -992,7 +992,7 @@ definition {
 				category = "Site Builder",
 				portlet = "Pages");
 
-			PagesAdmin.addPublicPage(
+			PagesAdmin.addPage(
 				pageName = "2B New Site",
 				sitePageType = "Widget Page");
 

@@ -30,7 +30,7 @@ definition {
 			panel = "Site Administration",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(pageName = "Page Comments Page");
+		PagesAdmin.addPage(pageName = "Page Comments Page");
 
 		Navigator.gotoPage(pageName = "Page Comments Page");
 

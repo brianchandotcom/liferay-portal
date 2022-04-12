@@ -2322,7 +2322,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(
+		PagesAdmin.addPage(
 			pageName = "Object Page",
 			sitePageType = "Widget Page");
 
@@ -2417,7 +2417,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(
+		PagesAdmin.addPage(
 			pageName = "Object Page",
 			sitePageType = "Widget Page");
 
@@ -2478,7 +2478,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(
+		PagesAdmin.addPage(
 			pageName = "Object Page",
 			sitePageType = "Widget Page");
 
@@ -2539,7 +2539,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(
+		PagesAdmin.addPage(
 			pageName = "Object Page",
 			sitePageType = "Widget Page");
 

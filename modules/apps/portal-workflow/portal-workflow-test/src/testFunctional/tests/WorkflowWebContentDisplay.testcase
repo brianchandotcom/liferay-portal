@@ -28,7 +28,7 @@ definition {
 			panel = "Site Administration",
 			portlet = "Pages");
 
-		PagesAdmin.addPublicPage(pageName = "Web Content Display Page");
+		PagesAdmin.addPage(pageName = "Web Content Display Page");
 
 		Navigator.gotoPage(pageName = "Web Content Display Page");
 

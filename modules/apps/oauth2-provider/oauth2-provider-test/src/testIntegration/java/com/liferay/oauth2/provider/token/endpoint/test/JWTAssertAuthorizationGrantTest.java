@@ -159,6 +159,10 @@ public class JWTAssertAuthorizationGrantTest extends BaseClientTestCase {
 
 	private static final String _TEST_CLIENT_ID_1 = "test_client_id_1";
 
+	private static final String _TEST_CLIENT_ID_2 = "test_client_id_2";
+
+	private static final String _TEST_CLIENT_ID_3 = "test_client_id_3";
+
 	private static final String _TEST_CLIENT_SECRET =
 		"oauthTestApplicationSecret";
 
@@ -173,13 +177,13 @@ public class JWTAssertAuthorizationGrantTest extends BaseClientTestCase {
 	private final TestJWTAssertionClientAuthentication
 		_testJWTAssertionClientAuthentication1 =
 			new TestJWTAssertionClientAuthentication(
-				getTokenWebTarget(), _TEST_CLIENT_ID_1, false,
-				_TEST_CLIENT_ID_1);
+				getTokenWebTarget(), _TEST_CLIENT_ID_2, false,
+				_TEST_CLIENT_ID_2, _TEST_CLIENT_SECRET, true);
 	private final TestJWTAssertionClientAuthentication
 		_testJWTAssertionClientAuthentication2 =
 			new TestJWTAssertionClientAuthentication(
-				getTokenWebTarget(), _TEST_CLIENT_ID_1, true,
-				_TEST_CLIENT_ID_1);
+				getTokenWebTarget(), _TEST_CLIENT_ID_3, false,
+				_TEST_CLIENT_ID_3, JWTAssertionUtil.JWKS, false);
 
 	private static class JWTBearerGrantTestPreparatorBundleActivator
 		extends BaseTestPreparatorBundleActivator {
@@ -201,9 +205,21 @@ public class JWTAssertAuthorizationGrantTest extends BaseClientTestCase {
 			User user = UserTestUtil.getAdminUser(
 				PortalUtil.getDefaultCompanyId());
 
-			createOAuth2Application(
+			createOAuth2ApplicationWithClientSecretPost(
 				user.getCompanyId(), user, _TEST_CLIENT_ID_1,
-				Arrays.asList(GrantType.JWT_BEARER),
+				_TEST_CLIENT_SECRET, Arrays.asList(GrantType.JWT_BEARER),
+				Arrays.asList(
+					"everything", "everything.read", "everything.write"));
+
+			createOAuth2ApplicationWithClientSecretJWT(
+				user.getCompanyId(), user, _TEST_CLIENT_ID_2,
+				_TEST_CLIENT_SECRET, Arrays.asList(GrantType.JWT_BEARER),
+				Arrays.asList(
+					"everything", "everything.read", "everything.write"));
+
+			createOAuth2ApplicationWithPrivateKeyJWT(
+				user.getCompanyId(), user, _TEST_CLIENT_ID_3,
+				Arrays.asList(GrantType.JWT_BEARER), JWTAssertionUtil.JWKS,
 				Arrays.asList(
 					"everything", "everything.read", "everything.write"));
 		}

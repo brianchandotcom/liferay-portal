@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -107,44 +106,99 @@ public class AccountUserRetrieverImpl implements AccountUserRetriever {
 		return new BaseModelSearchResult<>(users, total);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #searchAccountUsers(long[], String, LinkedHashMap, int, int, int, String, boolean)}
+	 */
+	@Deprecated
 	@Override
 	public BaseModelSearchResult<User> searchAccountUsers(
 			long accountEntryId, String keywords, int status, int cur,
 			int delta, String sortField, boolean reverse)
 		throws PortalException {
 
+		if ((accountEntryId != AccountConstants.ACCOUNT_ENTRY_ID_ANY) &&
+			(accountEntryId != AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT)) {
+
+			_accountEntryLocalService.getAccountEntry(accountEntryId);
+		}
+
 		return searchAccountUsers(
-			new long[] {accountEntryId}, keywords, status, cur, delta,
+			new long[] {accountEntryId}, keywords, null, status, cur, delta,
 			sortField, reverse);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #searchAccountUsers(long[], String, LinkedHashMap, int, int, int, String, boolean)}
+	 */
+	@Deprecated
 	@Override
 	public BaseModelSearchResult<User> searchAccountUsers(
 			long accountEntryId, String[] emailAddressDomains, String keywords,
 			int status, int cur, int delta, String sortField, boolean reverse)
 		throws PortalException {
 
-		return _getUserBaseModelSearchResult(
-			_getSearchResponse(
-				HashMapBuilder.<String, Serializable>put(
-					"accountEntryIds", new long[] {accountEntryId}
-				).put(
-					"emailAddressDomains", emailAddressDomains
-				).build(),
-				cur, delta, keywords, reverse, sortField, status));
+		if ((accountEntryId != AccountConstants.ACCOUNT_ENTRY_ID_ANY) &&
+			(accountEntryId != AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT)) {
+
+			_accountEntryLocalService.getAccountEntry(accountEntryId);
+		}
+
+		return searchAccountUsers(
+			new long[] {accountEntryId}, keywords,
+			LinkedHashMapBuilder.<String, Serializable>put(
+				"emailAddressDomains", emailAddressDomains
+			).build(),
+			status, cur, delta, sortField, reverse);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #searchAccountUsers(long[], String, LinkedHashMap, int, int, int, String, boolean)}
+	 */
+	@Deprecated
 	@Override
 	public BaseModelSearchResult<User> searchAccountUsers(
 			long[] accountEntryIds, String keywords, int status, int cur,
 			int delta, String sortField, boolean reverse)
 		throws PortalException {
 
+		if (accountEntryIds != null) {
+			for (long accountEntryId : accountEntryIds) {
+				if ((accountEntryId != AccountConstants.ACCOUNT_ENTRY_ID_ANY) &&
+					(accountEntryId !=
+						AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT)) {
+
+					_accountEntryLocalService.getAccountEntry(accountEntryId);
+				}
+			}
+		}
+
 		return searchAccountUsers(
-			accountEntryIds, null, keywords, status, cur, delta, sortField,
+			accountEntryIds, keywords, null, status, cur, delta, sortField,
 			reverse);
 	}
 
+	@Override
+	public BaseModelSearchResult<User> searchAccountUsers(
+			long[] accountEntryIds, String keywords,
+			LinkedHashMap<String, Serializable> params, int status, int cur,
+			int delta, String sortField, boolean reverse)
+		throws PortalException {
+
+		if (params == null) {
+			params = new LinkedHashMap<>();
+		}
+
+		params.put("accountEntryIds", accountEntryIds);
+
+		return _getUserBaseModelSearchResult(
+			_getSearchResponse(
+				params, cur, delta, keywords, reverse, sortField, status));
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #searchAccountUsers(long[], String, LinkedHashMap, int, int, int, String, boolean)}
+	 */
+	@Deprecated
 	@Override
 	public BaseModelSearchResult<User> searchAccountUsers(
 			long[] accountEntryIds, String[] emailAddressDomains,
@@ -163,14 +217,12 @@ public class AccountUserRetrieverImpl implements AccountUserRetriever {
 			}
 		}
 
-		return _getUserBaseModelSearchResult(
-			_getSearchResponse(
-				HashMapBuilder.<String, Serializable>put(
-					"accountEntryIds", accountEntryIds
-				).put(
-					"emailAddressDomains", emailAddressDomains
-				).build(),
-				cur, delta, keywords, reverse, sortField, status));
+		return searchAccountUsers(
+			accountEntryIds, keywords,
+			LinkedHashMapBuilder.<String, Serializable>put(
+				"emailAddressDomains", emailAddressDomains
+			).build(),
+			status, cur, delta, sortField, reverse);
 	}
 
 	private SearchResponse _getSearchResponse(

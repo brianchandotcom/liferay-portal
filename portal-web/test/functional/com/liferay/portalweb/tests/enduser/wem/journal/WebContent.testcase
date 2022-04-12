@@ -1466,7 +1466,7 @@ definition {
 
 		task ("View the selected display page is not saved") {
 			WebContent.viewSelectedDisplayPageTemplateCP(
-				displayPageTemplateName = "Public Pages > Test Page Name",
+				displayPageTemplateName = "Pages > Test Page Name",
 				displayPageTemplateType = "Specific");
 		}
 	}

@@ -76,7 +76,7 @@ definition {
 
 		WebContent.editDisplayPage(
 			pageName = "Test Source Page",
-			pageType = "Public Pages");
+			pageType = "Pages");
 
 		PortletEntry.publish();
 
@@ -114,7 +114,7 @@ definition {
 
 		WebContent.editDisplayPage(
 			pageName = "Test Source Page",
-			pageType = "Public Pages");
+			pageType = "Pages");
 
 		WebContent.editFriendlyURL(webContentFriendlyURL = "friendlyUrl");
 
@@ -162,7 +162,7 @@ definition {
 
 		WebContent.editDisplayPage(
 			pageName = "Test Source Page",
-			pageType = "Public Pages");
+			pageType = "Pages");
 
 		PortletEntry.publish();
 

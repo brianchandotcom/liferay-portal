@@ -106,7 +106,7 @@ definition {
 			LexiconCard.clickCard(card = "${dmDocumentTitle}");
 		}
 		else if (isSet(pageName)) {
-			Navigator.gotoNavItem(navItem = "Public Pages");
+			Navigator.gotoNavItem(navItem = "Pages");
 
 			Portlet.expandTree();
 

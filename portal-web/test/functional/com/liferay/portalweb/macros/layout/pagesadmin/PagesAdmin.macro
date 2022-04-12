@@ -382,6 +382,31 @@ definition {
 			vocabularyName = "${vocabularyName}");
 	}
 
+	macro addPageUnderSitePagesVariation {
+		LexiconEntry.gotoAddMenuItem(menuItem = "Page");
+
+		PagesAdmin._selectPageType(
+			collectionName = "${collectionName}",
+			pageTemplateName = "${pageTemplateName}",
+			sitePageType = "${sitePageType}");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		PortletEntry.inputName(name = "${pageName}");
+
+		Button.clickAdd();
+
+		SelectFrame.selectFrameTop();
+
+		VerifyElementPresent(locator1 = "Message#SUCCESS");
+
+		AssertVisible(locator1 = "TextInput#NAME");
+
+		Button.click(button = "Save");
+
+		WaitForSPARefresh();
+	}
+
 	macro addPrivateChildPage {
 		if (IsTextNotEqual(locator1 = "ControlMenu#HEADING", value1 = "Pages")) {
 			ProductMenu.gotoPortlet(

@@ -18,7 +18,7 @@
 
 <liferay-ui:icon
 	cssClass="ddm-template-editor-portlet-icon"
-	icon="upload"
+	icon="download"
 	id="importScript"
 	markupView="lexicon"
 	message="import-script"

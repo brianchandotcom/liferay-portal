@@ -45,9 +45,7 @@ definition {
 			Click(locator1 = "PagesConfiguration#CHANGE_TO_PUBLIC_PAGES");
 		}
 
-		Click(locator1 = "PagesConfiguration#PAGES_ALL_PUBLIC_PAGES_CHECKBOX");
-
-		Click(locator1 = "PagesConfiguration#PAGES_ALL_PUBLIC_PAGES_CHECKBOX");
+		ContentConfiguration.uncheckPages();
 
 		for (var pageName : list "${checkPublicPages}") {
 			var key_pageName = "${pageName}";

@@ -91,6 +91,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ASSET_ENTRY_TABLE_TITLE_SPECIFIC_HIGHLIGHT</td>
+	<td>//span[contains(@class,'highlight') and contains(.,'${key_searchAssetTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ASSET_ENTRY_TABLE_TITLE_SPECIFIC_ORDER</td>
 	<td>//div[contains(@id,'SearchResultsPortlet')]//li[${resultOrder}]/div//a</td>
 	<td></td>

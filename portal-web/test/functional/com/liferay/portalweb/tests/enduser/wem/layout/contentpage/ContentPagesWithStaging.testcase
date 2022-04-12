@@ -245,7 +245,7 @@ definition {
 		task ("Configure the Staging Public Pages in site configuration") {
 			Site.openSiteSettingsAdmin(siteURLKey = "test-site-name-staging");
 
-			Site.addVirtualHostsURLCP(stagingPublicPages = "www.able.com");
+			Site.addVirtualHostsURLCP(stagingPages = "www.able.com");
 		}
 
 		task ("Sign out") {

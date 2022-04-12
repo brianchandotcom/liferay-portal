@@ -566,8 +566,8 @@ definition {
 			Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
 			Site.addVirtualHostsURLCP(
-				publicPageVirtualHostURL = "www.baker.com",
-				publicVirtualHosts = "true");
+				pageVirtualHosts = "true",
+				pageVirtualHostURL = "www.baker.com");
 		}
 
 		task ("Log in public page in virtual host") {

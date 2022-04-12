@@ -289,10 +289,14 @@ public class JSONUtilCheck extends BaseChainedMethodCheck {
 			}
 		}
 
-		List<String> chainedMethodNames = new ArrayList<>();
-
 		List<DetailAST> methodCallDetailASTList = getAllChildTokens(
 			detailAST, true, TokenTypes.METHOD_CALL);
+
+		if (methodCallDetailASTList.isEmpty()) {
+			return;
+		}
+
+		List<String> chainedMethodNames = new ArrayList<>();
 
 		for (DetailAST methodCallDetailAST : methodCallDetailASTList) {
 			DetailAST dotDetailAST = methodCallDetailAST.findFirstToken(

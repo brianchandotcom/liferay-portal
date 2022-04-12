@@ -186,22 +186,22 @@
 
 		<!-- Other fields -->
 
+		<column name="billingAddressId" type="long" />
 		<column name="commerceAccountId" type="long" />
 		<column name="commerceCurrencyId" type="long" />
 		<column name="commerceOrderTypeId" type="long" />
-		<column name="billingAddressId" type="long" />
-		<column name="shippingAddressId" type="long" />
 		<column name="commercePaymentMethodKey" type="String" />
-		<column name="transactionId" type="String" />
 		<column name="commerceShippingMethodId" type="long" />
+		<column name="deliveryCommerceTermEntryId" type="long" />
+		<column name="paymentCommerceTermEntryId" type="long" />
+		<column name="shippingAddressId" type="long" />
+		<column name="transactionId" type="String" />
 		<column name="shippingOptionName" type="String" />
 		<column name="purchaseOrderNumber" type="String" />
 		<column name="couponCode" type="String" />
 		<column name="lastPriceUpdateDate" type="Date" />
-		<column name="deliveryCommerceTermEntryId" type="long" />
 		<column db-name="deliveryCTermEntryDescription" name="deliveryCommerceTermEntryDescription" type="String" />
 		<column name="deliveryCommerceTermEntryName" type="String" />
-		<column name="paymentCommerceTermEntryId" type="long" />
 		<column db-name="paymentCTermEntryDescription" name="paymentCommerceTermEntryDescription" type="String" />
 		<column name="paymentCommerceTermEntryName" type="String" />
 		<column name="subtotal" type="BigDecimal" />

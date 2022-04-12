@@ -90,15 +90,6 @@ definition {
 		task ("Then only those fields should be imported") {
 			WaitForElementPresent(locator1 = "ImportExport#EXECUTION_SUCCESS");
 
-			Button.clickDone();
-
-			ImportExport.openImportExportAdmin();
-
-			ImportExport.assertExecutionEntry(
-				entityType = "Account",
-				executionAction = "Import",
-				executionStatus = "Completed");
-
 			Accounts.openAccountsAdmin();
 
 			Accounts.viewAccountDetails(

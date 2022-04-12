@@ -73,12 +73,11 @@ public class LayoutSEOCanonicalURLProviderImpl
 			Layout layout, ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		String canonicalURL = _portal.getCanonicalURL(
-			_portal.getLayoutFullURL(layout, themeDisplay), themeDisplay,
-			layout, false, false);
-
 		Map<Locale, String> alternateURLs = _portal.getAlternateURLs(
-			canonicalURL, themeDisplay, layout);
+			_portal.getCanonicalURL(
+				_portal.getLayoutFullURL(layout, themeDisplay), themeDisplay,
+				layout, false, false),
+			themeDisplay, layout);
 
 		LayoutSEOEntry layoutSEOEntry =
 			_layoutSEOEntryLocalService.fetchLayoutSEOEntry(

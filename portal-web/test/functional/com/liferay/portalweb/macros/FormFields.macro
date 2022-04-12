@@ -1107,21 +1107,30 @@ definition {
 		if (isSet(prefix)) {
 			var inputMask = "${prefix}";
 			var maskOption = "Prefix";
+
+			Type(
+				locator1 = "FormFields#INPUT_MASK_PREFIX_OR_SUFFIX",
+				value1 = "${inputMask}");
+
+			Click(
+				key_fieldName = "",
+				key_radioOption = "${maskOption}",
+				locator1 = "FormFields#RADIO_OPTION_LABEL");
 		}
 
 		if (isSet(suffix)) {
 			var inputMask = "${suffix}";
 			var maskOption = "Suffix";
+
+			Type(
+				locator1 = "FormFields#INPUT_MASK_PREFIX_OR_SUFFIX",
+				value1 = "${inputMask}");
+
+			Click(
+				key_fieldName = "",
+				key_radioOption = "${maskOption}",
+				locator1 = "FormFields#RADIO_OPTION_LABEL");
 		}
-
-		Type(
-			locator1 = "FormFields#INPUT_MASK_PREFIX_OR_SUFFIX",
-			value1 = "${inputMask}");
-
-		Click(
-			key_fieldName = "",
-			key_radioOption = "${maskOption}",
-			locator1 = "FormFields#RADIO_OPTION_LABEL");
 	}
 
 	macro setValidationAcceptedDate {

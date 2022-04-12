@@ -55,6 +55,8 @@ import java.util.concurrent.TimeUnit;
 
 import javax.ws.rs.core.Application;
 
+import org.apache.cxf.rs.security.oauth2.utils.OAuthConstants;
+
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
@@ -285,6 +287,31 @@ public abstract class BaseTestPreparatorBundleActivator
 			List<String> scopeAliasesList, boolean trustedApplication)
 		throws PortalException {
 
+		return createOAuth2Application(
+			companyId, user, clientId, clientSecret, allowedGrantTypesList,
+			OAuthConstants.TOKEN_ENDPOINT_AUTH_POST, null, redirectURIsList,
+			rememberDevice, scopeAliasesList, trustedApplication);
+	}
+
+	protected OAuth2Application createOAuth2Application(
+			long companyId, User user, String clientId, String clientSecret,
+			List<GrantType> allowedGrantTypesList,
+			List<String> redirectURIsList, List<String> scopeAliasesList)
+		throws PortalException {
+
+		return createOAuth2Application(
+			companyId, user, clientId, clientSecret, allowedGrantTypesList,
+			redirectURIsList, false, scopeAliasesList, false);
+	}
+
+	protected OAuth2Application createOAuth2Application(
+			long companyId, User user, String clientId, String clientSecret,
+			List<GrantType> allowedGrantTypesList,
+			String clientAuthenticationMethod, String jwks,
+			List<String> redirectURIsList, boolean rememberDevice,
+			List<String> scopeAliasesList, boolean trustedApplication)
+		throws PortalException {
+
 		ServiceReference<OAuth2ApplicationLocalService> serviceReference =
 			bundleContext.getServiceReference(
 				OAuth2ApplicationLocalService.class);
@@ -297,10 +324,11 @@ public abstract class BaseTestPreparatorBundleActivator
 		OAuth2Application oAuth2Application =
 			oAuth2ApplicationLocalService.addOAuth2Application(
 				companyId, user.getUserId(), user.getLogin(),
-				allowedGrantTypesList, user.getUserId(), clientId, 0,
-				clientSecret, "test oauth application",
+				allowedGrantTypesList, clientAuthenticationMethod,
+				user.getUserId(), clientId, 0, clientSecret,
+				"test oauth application",
 				Collections.singletonList("token.introspection"),
-				"http://localhost:8080", 0, "test application",
+				"http://localhost:8080", 0, jwks, "test application",
 				"http://localhost:8080", redirectURIsList, rememberDevice,
 				scopeAliasesList, trustedApplication, new ServiceContext());
 
@@ -311,15 +339,53 @@ public abstract class BaseTestPreparatorBundleActivator
 		return oAuth2Application;
 	}
 
-	protected OAuth2Application createOAuth2Application(
+	protected OAuth2Application createOAuth2ApplicationWithClientSecretJWT(
 			long companyId, User user, String clientId, String clientSecret,
 			List<GrantType> allowedGrantTypesList,
-			List<String> redirectURIsList, List<String> scopeAliasesList)
+			List<String> scopeAliasesList)
 		throws PortalException {
 
 		return createOAuth2Application(
 			companyId, user, clientId, clientSecret, allowedGrantTypesList,
-			redirectURIsList, false, scopeAliasesList, false);
+			"client_secret_jwt", null, Arrays.asList(), false, scopeAliasesList,
+			false);
+	}
+
+	protected OAuth2Application createOAuth2ApplicationWithClientSecretPost(
+			long companyId, User user, String clientId, String clientSecret,
+			List<GrantType> allowedGrantTypesList,
+			List<String> scopeAliasesList)
+		throws PortalException {
+
+		return createOAuth2Application(
+			companyId, user, clientId, clientSecret, allowedGrantTypesList,
+			"client_secret_post", null, Arrays.asList(), false,
+			scopeAliasesList, false);
+	}
+
+	protected OAuth2Application createOAuth2ApplicationWithNone(
+			long companyId, User user, String clientId,
+			List<GrantType> allowedGrantTypesList,
+			List<String> redirectURIsList, boolean rememberDevice,
+			List<String> scopeAliasesList, boolean trustedApplication)
+		throws PortalException {
+
+		return createOAuth2Application(
+			companyId, user, clientId, null, allowedGrantTypesList,
+			OAuthConstants.TOKEN_ENDPOINT_AUTH_NONE, null, redirectURIsList,
+			rememberDevice, scopeAliasesList, trustedApplication);
+	}
+
+	protected OAuth2Application createOAuth2ApplicationWithPrivateKeyJWT(
+			long companyId, User user, String clientId,
+			List<GrantType> allowedGrantTypesList, String jwks,
+			List<String> scopeAliasesList)
+		throws PortalException {
+
+		return createOAuth2Application(
+			companyId, user, clientId, null, allowedGrantTypesList,
+			"private_key_jwt", jwks, Arrays.asList(), false, scopeAliasesList,
+			false);
 	}
 
 	protected void createServiceAccessProfile(

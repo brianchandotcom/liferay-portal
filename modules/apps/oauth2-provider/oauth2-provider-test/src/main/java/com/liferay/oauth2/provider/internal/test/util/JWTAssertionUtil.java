@@ -29,6 +29,7 @@ import org.apache.cxf.rs.security.jose.jws.JwsJwtCompactProducer;
 import org.apache.cxf.rs.security.jose.jwt.JwtClaims;
 import org.apache.cxf.rs.security.jose.jwt.JwtToken;
 import org.apache.cxf.rs.security.oauth2.utils.OAuthUtils;
+import org.apache.cxf.rt.security.crypto.CryptoUtils;
 
 /**
  * @author Arthur Chan
@@ -39,8 +40,21 @@ public class JWTAssertionUtil {
 		"keys", JSONUtil.put(_createTestRSAKeyPairJSONWebKey01())
 	).toString();
 
-	public static String getJWTAssertion(
-		URI audienceURI, String issuer, String subject) {
+	public static String getJWTAssertionHS256(
+		URI audienceURI, String issuer, String subject, String key) {
+
+		JwsHeaders jwsHeaders = new JwsHeaders(
+			JoseType.JWT, SignatureAlgorithm.HS256);
+
+		JwsJwtCompactProducer jwsJwtCompactProducer = new JwsJwtCompactProducer(
+			new JwtToken(
+				jwsHeaders, _getJWTClaims(audienceURI, issuer, subject)));
+
+		return jwsJwtCompactProducer.signWith(CryptoUtils.decodeSequence(key));
+	}
+
+	public static String getJWTAssertionRS256(
+		URI audienceURI, String issuer, String jwks, String subject) {
 
 		JwsHeaders jwsHeaders = new JwsHeaders(
 			JoseType.JWT, SignatureAlgorithm.RS256);
@@ -51,7 +65,7 @@ public class JWTAssertionUtil {
 			new JwtToken(
 				jwsHeaders, _getJWTClaims(audienceURI, issuer, subject)));
 
-		JsonWebKeys jsonWebKeys = JwkUtils.readJwkSet(JWKS);
+		JsonWebKeys jsonWebKeys = JwkUtils.readJwkSet(jwks);
 
 		return jwsJwtCompactProducer.signWith(
 			jsonWebKeys.getKey(jwsHeaders.getKeyId()));

@@ -28,12 +28,20 @@ public class TestJWTAssertionClientAuthentication
 
 	public TestJWTAssertionClientAuthentication(
 		WebTarget audienceWebTarget, String clientId, boolean clientIdInForm,
-		String issuer) {
+		String issuer, String key, boolean symmetricSignature) {
 
-		_clientAuthenticationParameters.add(
-			"client_assertion",
-			JWTAssertionUtil.getJWTAssertion(
-				audienceWebTarget.getUri(), clientId, issuer));
+		String jwtAssertion = null;
+
+		if (symmetricSignature) {
+			jwtAssertion = JWTAssertionUtil.getJWTAssertionHS256(
+				audienceWebTarget.getUri(), clientId, issuer, key);
+		}
+		else {
+			jwtAssertion = JWTAssertionUtil.getJWTAssertionRS256(
+				audienceWebTarget.getUri(), clientId, key, issuer);
+		}
+
+		_clientAuthenticationParameters.add("client_assertion", jwtAssertion);
 		_clientAuthenticationParameters.add(
 			"client_assertion_type",
 			"urn:ietf:params:oauth:client-assertion-type:jwt-bearer");

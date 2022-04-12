@@ -770,8 +770,8 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 				defaultCompanyId, user, "oauthTestApplicationCode",
 				Collections.singletonList(GrantType.AUTHORIZATION_CODE), false,
 				Collections.singletonList("everything"), false);
-			createOAuth2Application(
-				defaultCompanyId, user, "oauthTestApplicationCodePKCE", null,
+			createOAuth2ApplicationWithNone(
+				defaultCompanyId, user, "oauthTestApplicationCodePKCE",
 				Collections.singletonList(GrantType.AUTHORIZATION_CODE_PKCE),
 				Collections.singletonList("http://redirecturi:8080"), false,
 				Collections.singletonList("everything"), false);
@@ -779,9 +779,8 @@ public class RememberDeviceApplicationClientTest extends BaseClientTestCase {
 				defaultCompanyId, user, "oauthTestRememberApplicationCode",
 				Collections.singletonList(GrantType.AUTHORIZATION_CODE), true,
 				Collections.singletonList("everything"), false);
-			createOAuth2Application(
+			createOAuth2ApplicationWithNone(
 				defaultCompanyId, user, "oauthTestRememberApplicationCodePKCE",
-				null,
 				Collections.singletonList(GrantType.AUTHORIZATION_CODE_PKCE),
 				Collections.singletonList("http://redirecturi:8080"), true,
 				Collections.singletonList("everything"), false);

@@ -19,8 +19,10 @@ definition {
 			ACUtils.launchDXP();
 		}
 
-		task ("Add a new site with a public widget page") {
+		task ("Add a new site with a public widget page, then add a blog") {
 			ACUtils.addSiteAndPage();
+
+			ACUtils.createBlogsAndAddToPage();
 		}
 
 		task ("Connect the DXP to AC") {
@@ -46,7 +48,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8911 | Test Summary: Enriched profiles increases by 1 when an anonymous individual converted to a known individual"
 	@priority = "5"
 	test IncreaseByOneWhenAnonymousIndividualConvertedToKnownIndividual {
-		property portal.acceptance = "true";
+		property portal.acceptance = "true"; 
 
 		task ("Sign out") {
 			UserBar.signOut();
@@ -54,6 +56,7 @@ definition {
 
 		task ("View the site page as guest") {
 			ACUtils.navigateToSitePage(
+				actionType = "View Blog"
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -93,12 +96,14 @@ definition {
 		}
 
 		task ("Sign in as Test Test") {
-			var portalURL = PropsUtil.get("portal.url");
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
 
-			User.firstLoginUI(
-				password = "test",
-				specificURL = "${portalURL}/web/site-name/ac-page",
-				userEmailAddress = "test@liferay.com");
+			ACUtils.navigateToSitePage(
+				actionType = "View Blog"
+				pageName = "AC Page",
+				siteName = "Site Name");
 		}
 
 		task ("Close Sessions") {

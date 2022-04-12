@@ -23,7 +23,6 @@ import ViewContext from '../context';
 const ViewBuilderScreen: React.FC<{}> = () => {
 	const [
 		{
-			isFFObjectViewColumnAliasEnabled,
 			objectView: {objectViewColumns},
 		},
 	] = useContext(ViewContext);
@@ -43,11 +42,7 @@ const ViewBuilderScreen: React.FC<{}> = () => {
 	return (
 		<>
 			<BuilderScreen
-				aliasColumnHeader={
-					isFFObjectViewColumnAliasEnabled
-						? Liferay.Language.get('column-label')
-						: ''
-				}
+				aliasColumnHeader={Liferay.Language.get('column-label')}
 				emptyState={{
 					buttonText: Liferay.Language.get('add-column'),
 					description: Liferay.Language.get(

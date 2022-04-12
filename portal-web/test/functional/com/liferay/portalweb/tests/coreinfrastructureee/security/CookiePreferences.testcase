@@ -87,6 +87,7 @@ definition {
 	@description = "This is a use case for LPS-142518. TC-5 When End-User accept selected cookies, only selected cookies are saved. Blocked by LPS-150990."
 	@priority = "5"
 	test CookieConsentPanelAcceptsOnlySelectedCookies {
+		property portal.release = "quarantine";
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "CookiePreferences#CookieConsentPanelAcceptsOnlySelectedCookies";
 
@@ -108,6 +109,7 @@ definition {
 	@description = "This is a use case for LPS-142518. TC-7 Verify that Cookie Consent Panel could be added to a Site Page. Blocked by LPS-150992."
 	@priority = "5"
 	test CookieConsentPanelCouldBeAddedToASitePage {
+		property portal.release = "quarantine";
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "CookiePreferences#CookieConsentPanelCouldBeAddedToASitePage";
 

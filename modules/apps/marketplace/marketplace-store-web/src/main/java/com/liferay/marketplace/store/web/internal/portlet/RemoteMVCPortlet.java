@@ -444,10 +444,10 @@ public class RemoteMVCPortlet extends MVCPortlet {
 
 		OAuthService oAuthService = oAuthManager.getOAuthService();
 
-		Token accessToken = oAuthService.getAccessToken(
-			requestToken, new Verifier(oAuthVerifier));
-
-		oAuthManager.updateAccessToken(themeDisplay.getUser(), accessToken);
+		oAuthManager.updateAccessToken(
+			themeDisplay.getUser(),
+			oAuthService.getAccessToken(
+				requestToken, new Verifier(oAuthVerifier)));
 
 		oAuthManager.deleteRequestToken(themeDisplay.getUser());
 	}

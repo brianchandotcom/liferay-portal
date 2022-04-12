@@ -65,9 +65,9 @@ public class AssociateFacebookUserMVCRenderCommand implements MVCRenderCommand {
 			renderRequest, "userId");
 
 		if (facebookIncompleteUserId != 0) {
-			User user = _userLocalService.fetchUser(facebookIncompleteUserId);
-
-			return _renderUpdateAccount(renderRequest, user);
+			return _renderUpdateAccount(
+				renderRequest,
+				_userLocalService.fetchUser(facebookIncompleteUserId));
 		}
 
 		// This return statement may be used if the user presses the browser's

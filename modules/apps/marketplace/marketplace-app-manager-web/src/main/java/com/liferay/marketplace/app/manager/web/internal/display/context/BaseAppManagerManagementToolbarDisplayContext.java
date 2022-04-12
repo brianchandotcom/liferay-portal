@@ -19,7 +19,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.marketplace.app.manager.web.internal.constants.BundleStateConstants;
 import com.liferay.marketplace.app.manager.web.internal.util.BundleManagerUtil;
 import com.liferay.marketplace.app.manager.web.internal.util.MarketplaceAppManagerUtil;
-import com.liferay.marketplace.model.App;
 import com.liferay.marketplace.service.AppLocalServiceUtil;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.CharPool;
@@ -65,11 +64,9 @@ public abstract class BaseAppManagerManagementToolbarDisplayContext
 	}
 
 	public List<DropdownItem> getCategoryDropdownItems() {
-		List<App> apps = AppLocalServiceUtil.getApps(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
 		String[] categories = MarketplaceAppManagerUtil.getCategories(
-			apps, BundleManagerUtil.getBundles());
+			AppLocalServiceUtil.getApps(QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+			BundleManagerUtil.getBundles());
 
 		Map<String, String> categoriesMap = new LinkedHashMap<>();
 

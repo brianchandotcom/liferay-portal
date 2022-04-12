@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: test-configmap
+  labels:
+    dxp: configmap
+data:
+  # property-like keys; each key maps to a simple value
+  test.config: |
+    testKey="testValue"
+

@@ -1,0 +1,33 @@
+// Check GETTING_STARTED.markdown for information regarding usage.
+
+subprojects {
+	repositories {
+		mavenLocal()
+	}
+}
+
+configurations {
+	osgiStaticDependencies
+}
+
+dependencies {
+	providedModules group: "org.apache.commons", name: "commons-collections4", version: "4.4"
+	osgiStaticDependencies group: "org.apache.felix", name: "org.apache.felix.configadmin.plugin.interpolation", version: "1.2.2"
+}
+
+task addOsgiStaticDependencies() {
+	doLast {
+		configurations.osgiStaticDependencies.resolvedConfiguration.resolvedArtifacts.each { artifact ->
+			if (artifact.extension == 'jar') {
+				project.copy {
+					from artifact.file
+					into 'build/docker/configs/local/osgi/static'
+					rename { "${artifact.name}.${artifact.extension}" }
+				}
+			}
+		}
+	}
+}
+
+addOsgiStaticDependencies.dependsOn dockerDeploy
+createDockerfile.dependsOn addOsgiStaticDependencies

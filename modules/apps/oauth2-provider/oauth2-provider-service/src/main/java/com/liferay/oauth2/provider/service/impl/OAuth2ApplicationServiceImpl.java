@@ -65,7 +65,7 @@ public class OAuth2ApplicationServiceImpl
 		throws PortalException {
 
 		return oAuth2ApplicationService.addOAuth2Application(
-			allowedGrantTypesList, OAuthConstants.TOKEN_ENDPOINT_AUTH_BASIC,
+			allowedGrantTypesList, OAuthConstants.TOKEN_ENDPOINT_AUTH_POST,
 			clientCredentialUserId, clientId, clientProfile, clientSecret,
 			description, featuresList, homePageURL, iconFileEntryId, null, name,
 			privacyPolicyURL, redirectURIsList, rememberDevice,
@@ -343,7 +343,7 @@ public class OAuth2ApplicationServiceImpl
 
 		return oAuth2ApplicationService.updateOAuth2Application(
 			oAuth2ApplicationId, oAuth2ApplicationScopeAliasesId,
-			allowedGrantTypesList, OAuthConstants.TOKEN_ENDPOINT_AUTH_BASIC,
+			allowedGrantTypesList, OAuthConstants.TOKEN_ENDPOINT_AUTH_POST,
 			clientCredentialUserId, clientId, clientProfile, clientSecret,
 			description, featuresList, homePageURL, iconFileEntryId, null, name,
 			privacyPolicyURL, redirectURIsList, rememberDevice,

@@ -41,47 +41,10 @@ public interface AccountUserRetriever {
 			int end, OrderByComparator<User> orderByComparator)
 		throws PortalException;
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #searchAccountUsers(long[], String, LinkedHashMap, int, int, int, String, boolean)}
-	 */
-	@Deprecated
-	public BaseModelSearchResult<User> searchAccountUsers(
-			long accountEntryId, String keywords, int status, int cur,
-			int delta, String sortField, boolean reverse)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #searchAccountUsers(long[], String, LinkedHashMap, int, int, int, String, boolean)}
-	 */
-	@Deprecated
-	public BaseModelSearchResult<User> searchAccountUsers(
-			long accountEntryId, String[] emailAddressDomains, String keywords,
-			int status, int cur, int delta, String sortField, boolean reverse)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #searchAccountUsers(long[], String, LinkedHashMap, int, int, int, String, boolean)}
-	 */
-	@Deprecated
-	public BaseModelSearchResult<User> searchAccountUsers(
-			long[] accountEntryIds, String keywords, int status, int cur,
-			int delta, String sortField, boolean reverse)
-		throws PortalException;
-
 	public BaseModelSearchResult<User> searchAccountUsers(
 			long[] accountEntryIds, String keywords,
 			LinkedHashMap<String, Serializable> params, int status, int cur,
 			int delta, String sortField, boolean reverse)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #searchAccountUsers(long[], String, LinkedHashMap, int, int, int, String, boolean)}
-	 */
-	@Deprecated
-	public BaseModelSearchResult<User> searchAccountUsers(
-			long[] accountEntryIds, String[] emailAddressDomains,
-			String keywords, int status, int cur, int delta, String sortField,
-			boolean reverse)
 		throws PortalException;
 
 }

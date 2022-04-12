@@ -31,13 +31,6 @@ public class AccountConstants {
 
 	public static final String ACCOUNT_ENTRY_TYPE_PERSON = "person";
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #ACCOUNT_ENTRY_TYPE_PERSON}
-	 */
-	@Deprecated
-	public static final String ACCOUNT_ENTRY_TYPE_PERSONAL = "person";
-
 	public static final String[] ACCOUNT_ENTRY_TYPES = {
 		ACCOUNT_ENTRY_TYPE_BUSINESS, ACCOUNT_ENTRY_TYPE_GUEST,
 		ACCOUNT_ENTRY_TYPE_PERSON

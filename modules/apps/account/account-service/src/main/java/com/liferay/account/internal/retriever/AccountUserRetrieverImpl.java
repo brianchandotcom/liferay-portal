@@ -14,7 +14,6 @@
 
 package com.liferay.account.internal.retriever;
 
-import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.internal.search.searcher.UserSearchRequestBuilder;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountRole;
@@ -106,77 +105,6 @@ public class AccountUserRetrieverImpl implements AccountUserRetriever {
 		return new BaseModelSearchResult<>(users, total);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #searchAccountUsers(long[], String, LinkedHashMap, int, int, int, String, boolean)}
-	 */
-	@Deprecated
-	@Override
-	public BaseModelSearchResult<User> searchAccountUsers(
-			long accountEntryId, String keywords, int status, int cur,
-			int delta, String sortField, boolean reverse)
-		throws PortalException {
-
-		if ((accountEntryId != AccountConstants.ACCOUNT_ENTRY_ID_ANY) &&
-			(accountEntryId != AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT)) {
-
-			_accountEntryLocalService.getAccountEntry(accountEntryId);
-		}
-
-		return searchAccountUsers(
-			new long[] {accountEntryId}, keywords, null, status, cur, delta,
-			sortField, reverse);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #searchAccountUsers(long[], String, LinkedHashMap, int, int, int, String, boolean)}
-	 */
-	@Deprecated
-	@Override
-	public BaseModelSearchResult<User> searchAccountUsers(
-			long accountEntryId, String[] emailAddressDomains, String keywords,
-			int status, int cur, int delta, String sortField, boolean reverse)
-		throws PortalException {
-
-		if ((accountEntryId != AccountConstants.ACCOUNT_ENTRY_ID_ANY) &&
-			(accountEntryId != AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT)) {
-
-			_accountEntryLocalService.getAccountEntry(accountEntryId);
-		}
-
-		return searchAccountUsers(
-			new long[] {accountEntryId}, keywords,
-			LinkedHashMapBuilder.<String, Serializable>put(
-				"emailAddressDomains", emailAddressDomains
-			).build(),
-			status, cur, delta, sortField, reverse);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #searchAccountUsers(long[], String, LinkedHashMap, int, int, int, String, boolean)}
-	 */
-	@Deprecated
-	@Override
-	public BaseModelSearchResult<User> searchAccountUsers(
-			long[] accountEntryIds, String keywords, int status, int cur,
-			int delta, String sortField, boolean reverse)
-		throws PortalException {
-
-		if (accountEntryIds != null) {
-			for (long accountEntryId : accountEntryIds) {
-				if ((accountEntryId != AccountConstants.ACCOUNT_ENTRY_ID_ANY) &&
-					(accountEntryId !=
-						AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT)) {
-
-					_accountEntryLocalService.getAccountEntry(accountEntryId);
-				}
-			}
-		}
-
-		return searchAccountUsers(
-			accountEntryIds, keywords, null, status, cur, delta, sortField,
-			reverse);
-	}
-
 	@Override
 	public BaseModelSearchResult<User> searchAccountUsers(
 			long[] accountEntryIds, String keywords,
@@ -193,36 +121,6 @@ public class AccountUserRetrieverImpl implements AccountUserRetriever {
 		return _getUserBaseModelSearchResult(
 			_getSearchResponse(
 				params, cur, delta, keywords, reverse, sortField, status));
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #searchAccountUsers(long[], String, LinkedHashMap, int, int, int, String, boolean)}
-	 */
-	@Deprecated
-	@Override
-	public BaseModelSearchResult<User> searchAccountUsers(
-			long[] accountEntryIds, String[] emailAddressDomains,
-			String keywords, int status, int cur, int delta, String sortField,
-			boolean reverse)
-		throws PortalException {
-
-		if (accountEntryIds != null) {
-			for (long accountEntryId : accountEntryIds) {
-				if ((accountEntryId != AccountConstants.ACCOUNT_ENTRY_ID_ANY) &&
-					(accountEntryId !=
-						AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT)) {
-
-					_accountEntryLocalService.getAccountEntry(accountEntryId);
-				}
-			}
-		}
-
-		return searchAccountUsers(
-			accountEntryIds, keywords,
-			LinkedHashMapBuilder.<String, Serializable>put(
-				"emailAddressDomains", emailAddressDomains
-			).build(),
-			status, cur, delta, sortField, reverse);
 	}
 
 	private SearchResponse _getSearchResponse(

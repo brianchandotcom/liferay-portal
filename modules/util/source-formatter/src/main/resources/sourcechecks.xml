@@ -10,6 +10,10 @@
 			<category name="Bug Prevention" />
 			<description name="Checks that `/src/*/java/` only contains `.java` files." />
 		</check>
+		<check name="IncorrectFilePahCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks the file Path." />
+		</check>
 		<check name="NonbreakingSpaceCheck">
 			<category name="Styling" />
 			<description name="Finds `no break space` (`\u00a0`) characters." />

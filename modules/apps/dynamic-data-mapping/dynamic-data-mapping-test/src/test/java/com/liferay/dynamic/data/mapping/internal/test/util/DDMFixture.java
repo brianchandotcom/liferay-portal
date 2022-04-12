@@ -22,17 +22,17 @@ import com.liferay.portal.kernel.bean.BeanProperties;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.ResourceBundle;
 
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-
-import org.powermock.api.mockito.PowerMockito;
 
 /**
  * @author André de Oliveira
@@ -49,7 +49,8 @@ public class DDMFixture {
 		ClassLoader classLoader = Mockito.mock(ClassLoader.class);
 
 		_setUpPortalClassLoaderUtil(classLoader);
-		_setUpResourceBundleUtil(classLoader);
+
+		_setUpResourceBundleUtil();
 	}
 
 	public void tearDown() {
@@ -78,14 +79,10 @@ public class DDMFixture {
 		beanPropertiesUtil.setBeanProperties(new BeanPropertiesImpl());
 	}
 
-	private void _setUpDDMStructureLocalServiceUtil() throws Exception {
-		PowerMockito.spy(DDMStructureLocalServiceUtil.class);
-
-		PowerMockito.doReturn(
-			_ddmStructureLocalService
-		).when(
-			DDMStructureLocalServiceUtil.class, "getService"
-		);
+	private void _setUpDDMStructureLocalServiceUtil() {
+		ReflectionTestUtil.setFieldValue(
+			DDMStructureLocalServiceUtil.class, "_service",
+			_ddmStructureLocalService);
 	}
 
 	private void _setUpLanguageUtil() {
@@ -102,21 +99,23 @@ public class DDMFixture {
 		PortalClassLoaderUtil.setClassLoader(classLoader);
 	}
 
-	private void _setUpResourceBundleUtil(ClassLoader classLoader) {
-		PowerMockito.mockStatic(ResourceBundleUtil.class);
-
+	private void _setUpResourceBundleUtil() {
 		ResourceBundle resourceBundle = Mockito.mock(ResourceBundle.class);
 
-		PowerMockito.when(
-			ResourceBundleUtil.getBundle(
-				"content.Language", LocaleUtil.BRAZIL, classLoader)
+		ResourceBundleLoader resourceBundleLoader = Mockito.mock(
+			ResourceBundleLoader.class);
+
+		ResourceBundleLoaderUtil.setPortalResourceBundleLoader(
+			resourceBundleLoader);
+
+		Mockito.when(
+			resourceBundleLoader.loadResourceBundle(LocaleUtil.BRAZIL)
 		).thenReturn(
 			resourceBundle
 		);
 
-		PowerMockito.when(
-			ResourceBundleUtil.getBundle(
-				"content.Language", LocaleUtil.US, classLoader)
+		Mockito.when(
+			resourceBundleLoader.loadResourceBundle(LocaleUtil.US)
 		).thenReturn(
 			resourceBundle
 		);

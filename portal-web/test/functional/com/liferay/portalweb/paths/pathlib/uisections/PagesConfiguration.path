@@ -46,6 +46,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGES_ALL_PAGES_CHECKBOX</td>
+	<td>xpath=(//div[normalize-space()='Pages']//span[contains(@class,'icon-check')])[1]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGES_ALL_PUBLIC_PAGES_CHECKBOX</td>
 	<td>xpath=(//div[contains(.,'Public Pages')]//span[contains(@class,'icon-check')])[1]</td>
 	<td></td>

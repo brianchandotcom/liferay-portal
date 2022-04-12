@@ -2056,4 +2056,74 @@ definition {
 		}
 	}
 
+	@description = "Create, edit and delete Web Content with translations"
+	@priority = "5"
+	test CanWebContentWithTranslationsBeCreatedEditedAndDeleted {
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Site Name",
+			title = "WC WebContent Title");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+		WebContent.editCP(
+			webContentContentEdit = "WC WebContent Content en-US",
+			webContentTitle = "WC WebContent Title",
+			webContentTitleEdit = "WC WebContent Title en-US");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title en-US");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		WebContent.editWebContentContent(
+			webContentContentEdit = "WC WebContent Content zh-CN",
+			webContentTitle = "WC WebContent Title en-US",
+			webContentTitleEdit = "WC WebContent Title zh-CN");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title en-US");
+
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		WebContent.editWebContentContent(
+			webContentContentEdit = "WC WebContent Content pt-BR",
+			webContentTitle = "WC WebContent Title en-US",
+			webContentTitleEdit = "WC WebContent Title pt-BR");
+
+		
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title en-US");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title en-US");
+
+		WebContent.viewCP(
+			webContentContent = "WC WebContent Content en-US",
+			webContentTitle = "WC WebContent Title en-US");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		WebContent.viewCP(
+			webContentContent = "WC WebContent Content zh-CN",
+			webContentTitle = "WC WebContent Title zh-CN");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		WebContent.viewCP(
+			webContentContent = "WC WebContent Content pt-BR",
+			webContentTitle = "WC WebContent Title pt-BR");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContent.deleteCP(
+			siteURLKey = "test-site-name",
+			webContentTitle = "WC WebContent Title en-US");
+	}
+
 }

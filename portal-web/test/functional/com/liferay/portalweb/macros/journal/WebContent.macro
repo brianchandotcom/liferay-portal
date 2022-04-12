@@ -1083,6 +1083,32 @@ definition {
 		}
 	}
 
+	macro editWebContentContent {
+		WebContent.addCP(webContentTitle = "${webContentTitleEdit}");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
+
+		Type(
+			key_fieldLabel = "content",
+			locator1 = "CKEditor#BODY",
+			value1 = "${webContentContentEdit}");
+
+		SelectFrame(value1 = "relative=top");
+		
+
+		if ("${saveAsDraft}" == "true") {
+			PortletEntry.saveAsDraft();
+
+			AssertTextEquals.assertPartialText(
+				key_status = "Draft",
+				locator1 = "WCEditWebContent#WORKFLOW_STATUS",
+				value1 = "Draft");
+		}
+		else {
+			PortletEntry.publish();
+		}
+	}
+
 	macro editDisplayDate {
 		Panel.expandPanel(panel = "Schedule");
 

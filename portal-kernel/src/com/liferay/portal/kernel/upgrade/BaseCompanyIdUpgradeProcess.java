@@ -36,33 +36,7 @@ public abstract class BaseCompanyIdUpgradeProcess extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		processConcurrently(
 			getTableUpdaters(),
-			tableUpdater -> {
-				String tableName = tableUpdater.getTableName();
-
-				try (LoggingTimer loggingTimer = new LoggingTimer(tableName)) {
-					if (!hasColumn(tableName, "companyId")) {
-						if (_log.isInfoEnabled()) {
-							_log.info(
-								"Adding column companyId to table " +
-									tableName);
-						}
-
-						runSQL(
-							connection,
-							"alter table " + tableName + " add companyId LONG");
-					}
-					else {
-						if (_log.isInfoEnabled()) {
-							_log.info(
-								"Skipping the creation of companyId column " +
-									"for table " + tableName);
-						}
-					}
-
-					tableUpdater.update(connection);
-				}
-			},
-			null);
+			tableUpdater -> _addCompanyIdColumn(tableUpdater), null);
 	}
 
 	protected abstract TableUpdater[] getTableUpdaters();
@@ -162,6 +136,33 @@ public abstract class BaseCompanyIdUpgradeProcess extends UpgradeProcess {
 		private final String[][] _foreignNamesArray;
 		private final String _tableName;
 
+	}
+
+	private void _addCompanyIdColumn(TableUpdater tableUpdater)
+		throws Exception {
+
+		String tableName = tableUpdater.getTableName();
+
+		try (LoggingTimer loggingTimer = new LoggingTimer(tableName)) {
+			if (!hasColumn(tableName, "companyId")) {
+				if (_log.isInfoEnabled()) {
+					_log.info("Adding column companyId to table " + tableName);
+				}
+
+				runSQL(
+					connection,
+					"alter table " + tableName + " add companyId LONG");
+			}
+			else {
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Skipping the creation of companyId column for table " +
+							tableName);
+				}
+			}
+
+			tableUpdater.update(connection);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

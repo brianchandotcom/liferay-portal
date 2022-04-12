@@ -227,21 +227,6 @@ public class DLImpl implements DL {
 	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link
 	 *             com.liferay.document.library.util.DLURLHelper#getDownloadURL(
-	 *             FileEntry, FileVersion, ThemeDisplay, String)}
-	 */
-	@Deprecated
-	@Override
-	public String getDownloadURL(
-		FileEntry fileEntry, FileVersion fileVersion, ThemeDisplay themeDisplay,
-		String queryString) {
-
-		return getDownloadURL(
-			fileEntry, fileVersion, themeDisplay, queryString, true, true);
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             com.liferay.document.library.util.DLURLHelper#getDownloadURL(
 	 *             FileEntry, FileVersion, ThemeDisplay, String, boolean,
 	 *             boolean)}
 	 */

@@ -17,7 +17,7 @@ package com.liferay.commerce.product.content.web.internal.util;
 import com.liferay.commerce.media.CommerceMediaResolverUtil;
 import com.liferay.commerce.product.content.util.CPMedia;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
-import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.document.library.util.DLURLHelperUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -31,7 +31,7 @@ public class CPMediaImpl implements CPMedia {
 	public CPMediaImpl(FileEntry fileEntry, ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		String defaultURL = DLUtil.getDownloadURL(
+		String defaultURL = DLURLHelperUtil.getDownloadURL(
 			fileEntry, fileEntry.getFileVersion(), themeDisplay,
 			StringPool.BLANK);
 

@@ -72,16 +72,6 @@ public interface DL {
 	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link
 	 *             com.liferay.document.library.util.DLURLHelper#getDownloadURL(
-	 *             FileEntry, FileVersion, ThemeDisplay, String)}
-	 */
-	@Deprecated
-	public String getDownloadURL(
-		FileEntry fileEntry, FileVersion fileVersion, ThemeDisplay themeDisplay,
-		String queryString);
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             com.liferay.document.library.util.DLURLHelper#getDownloadURL(
 	 *             FileEntry, FileVersion, ThemeDisplay, String, boolean,
 	 *             boolean)}
 	 */

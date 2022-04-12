@@ -81,20 +81,6 @@ public class DLUtil {
 	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link
 	 *             com.liferay.document.library.util.DLURLHelper#getDownloadURL(
-	 *             FileEntry, FileVersion, ThemeDisplay, String)}
-	 */
-	@Deprecated
-	public static String getDownloadURL(
-		FileEntry fileEntry, FileVersion fileVersion, ThemeDisplay themeDisplay,
-		String queryString) {
-
-		return _dl.getDownloadURL(
-			fileEntry, fileVersion, themeDisplay, queryString);
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             com.liferay.document.library.util.DLURLHelper#getDownloadURL(
 	 *             FileEntry, FileVersion, ThemeDisplay, String, boolean,
 	 *             boolean)}
 	 */

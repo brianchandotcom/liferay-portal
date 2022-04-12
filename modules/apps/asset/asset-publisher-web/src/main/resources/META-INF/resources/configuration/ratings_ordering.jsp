@@ -16,9 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<clay:row
-	id='<%= liferayPortletResponse.getNamespace() + "ordering" %>'
->
+<clay:row>
 	<clay:col
 		md="6"
 	>

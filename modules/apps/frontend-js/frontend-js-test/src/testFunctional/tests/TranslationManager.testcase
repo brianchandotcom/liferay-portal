@@ -266,9 +266,9 @@ definition {
 		}
 	}
 
-	@description = "LPS-148144. Validates language status is not translated after re-add language on modal."
+	@description = "LPS-148144. Validates language status is not translated after deleting and re-adding language on modal."
 	@priority = "3"
-	test HasNotTranslatedStutasAfterDeletingTranslatedLanguageWithSaving {
+	test DeletedTranslatedLanguageDoesNotHaveTranslatedStatus {
 		task ("When input different language text in aui tag field") {
 			TranslationManagerPortlet.inputTextInAuiTagField(
 				key_currentLocale = "en-us",
@@ -309,9 +309,9 @@ definition {
 		}
 	}
 
-	@description = "LPS-148144. Validates language status is translated after re-add language on modal."
+	@description = "LPS-148144. Validates language status is still translated after not saving deleted translation."
 	@priority = "3"
-	test HasTranslatedStutasAfterDeletingTranslatedLanguageWithoutSaving {
+	test NotSavingDeletedTranslatedLanguageStillHasTranslatedStatus {
 		task ("When input different language text in aui tag field") {
 			TranslationManagerPortlet.inputTextInAuiTagField(
 				key_currentLocale = "en-us",

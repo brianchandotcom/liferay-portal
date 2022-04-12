@@ -1788,6 +1788,9 @@ public class SXPBlueprintSearchResultTest {
 		_assertSearch("[watch birds on the sky, clouds]");
 	}
 
+	@Rule
+	public TestName testName = new TestName();
+
 	private void _addAssetCategory(String title, User user) throws Exception {
 		if (_assetVocabulary == null) {
 			_assetVocabulary =
@@ -1809,7 +1812,7 @@ public class SXPBlueprintSearchResultTest {
 
 		String fileName = StringBundler.concat(
 			"dependencies/", clazz.getSimpleName(), StringPool.PERIOD,
-			_testName.getMethodName(), extension);
+			testName.getMethodName(), extension);
 
 		DLAppLocalServiceUtil.addFileEntry(
 			null, _user.getUserId(), _group.getGroupId(),
@@ -2200,9 +2203,6 @@ public class SXPBlueprintSearchResultTest {
 	@Inject
 	private SXPBlueprintSearchRequestEnhancer
 		_sxpBlueprintSearchRequestEnhancer;
-
-	@Rule
-	private TestName _testName = new TestName();
 
 	private User _user;
 

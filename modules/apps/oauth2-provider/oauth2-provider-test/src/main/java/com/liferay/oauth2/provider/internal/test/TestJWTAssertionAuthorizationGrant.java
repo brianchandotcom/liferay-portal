@@ -36,8 +36,9 @@ public class TestJWTAssertionAuthorizationGrant
 
 		_authorizationGrantData.add(
 			"assertion",
-			JWTAssertionUtil.getJWTAssertion(
-				audienceWebTarget.getUri(), issuer, subject));
+			JWTAssertionUtil.getJWTAssertionRS256(
+				audienceWebTarget.getUri(), issuer, JWTAssertionUtil.JWKS,
+				subject));
 		_authorizationGrantData.add("grant_type", Constants.JWT_BEARER_GRANT);
 
 		if (scopes != null) {

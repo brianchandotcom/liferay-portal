@@ -34,8 +34,6 @@ definition {
 		task ("Add a structure with XSS name") {
 			var actualScript = '''<script>alert(123);</script>''';
 
-			var escapedScript = '''&lt;script&gt;alert(123);&lt;/script&gt;''';
-
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoStructures();
@@ -56,7 +54,7 @@ definition {
 		task ("View no alert popup when add a web content based on new structure") {
 			NavItem.gotoWebContent();
 
-			WebContentNavigator.gotoAddWithStructureCP(structureName = "${escapedScript}");
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "${actualScript}");
 
 			AssertAlertNotPresent();
 		}

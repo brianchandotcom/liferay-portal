@@ -512,7 +512,7 @@ definition {
 		task ("Assert no checkbox for Add Page to Global navigation menu when creating a page in normal site") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
 
-			LexiconEntry.gotoAddMenuItem(menuItem = "Public Page");
+			LexiconEntry.gotoAddMenuItem(menuItem = "Page");
 
 			LexiconCard.clickCard(card = "Widget Page");
 

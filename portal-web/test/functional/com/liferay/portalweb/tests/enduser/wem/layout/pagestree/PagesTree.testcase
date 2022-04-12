@@ -129,7 +129,7 @@ definition {
 
 			PagesFinder.goToPagesFinder();
 
-			PagesFinder.addPublicChildPage(
+			PagesFinder.addChildPage(
 				childPageName = "Test Child Page",
 				parentPageName = "Test Page Name");
 		}
@@ -293,7 +293,7 @@ definition {
 
 			PagesFinder.goToPagesFinder();
 
-			PagesFinder.addPublicPage(pageName = "Test Page Name");
+			PagesFinder.addPage(pageName = "Test Page Name");
 		}
 
 		task ("View widget page name in page tree") {

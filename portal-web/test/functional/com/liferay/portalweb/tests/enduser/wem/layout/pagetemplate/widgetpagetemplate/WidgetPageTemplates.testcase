@@ -245,7 +245,7 @@ definition {
 		task ("View inactive page template doesn't display") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
 
-			LexiconEntry.gotoAddMenuItem(menuItem = "Public Page");
+			LexiconEntry.gotoAddMenuItem(menuItem = "Page");
 
 			Navigator.gotoNavNested(navNested = "Global Templates");
 
@@ -267,7 +267,7 @@ definition {
 		task ("View active page template displays") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
 
-			LexiconEntry.gotoAddMenuItem(menuItem = "Public Page");
+			LexiconEntry.gotoAddMenuItem(menuItem = "Page");
 
 			Navigator.gotoNavNested(navNested = "Global Templates");
 

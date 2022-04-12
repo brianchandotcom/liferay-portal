@@ -1,0 +1,23 @@
+{
+  "kind": "Deployment",
+  "id": "remoteappa",
+  "image": "rotty3000/remoteappa",
+  "cpu": 1,
+  "scale": 1,
+  "memory": 50,
+  "loadBalancer": {
+    "targetPort": 80,
+    "cdn": true
+  },
+  "environments": {
+    "infra": {
+      "deploy": false
+    },
+    "dev": {
+      "loadBalancer": {
+        "targetPort": 80,
+        "cdn": false
+      }
+    }
+  }
+}

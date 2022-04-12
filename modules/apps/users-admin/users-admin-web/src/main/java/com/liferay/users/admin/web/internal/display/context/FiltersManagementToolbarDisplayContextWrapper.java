@@ -24,7 +24,7 @@ import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.users.admin.management.toolbar.FilterContributor;
 
@@ -59,7 +59,7 @@ public class FiltersManagementToolbarDisplayContextWrapper
 		String clearResultsURL = super.getClearResultsURL();
 
 		for (FilterContributor filterContributor : _filterContributors) {
-			clearResultsURL = HttpUtil.removeParameter(
+			clearResultsURL = HttpHelperUtil.removeParameter(
 				clearResultsURL,
 				liferayPortletResponse.getNamespace() +
 					filterContributor.getParameter());

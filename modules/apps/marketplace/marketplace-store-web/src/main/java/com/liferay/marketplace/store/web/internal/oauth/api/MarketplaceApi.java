@@ -15,7 +15,7 @@
 package com.liferay.marketplace.store.web.internal.oauth.api;
 
 import com.liferay.marketplace.store.web.internal.configuration.MarketplaceStoreWebConfigurationValues;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 
 import org.scribe.builder.api.DefaultApi10a;
 import org.scribe.model.OAuthConstants;
@@ -33,7 +33,7 @@ public class MarketplaceApi extends DefaultApi10a {
 
 	@Override
 	public String getAuthorizationUrl(Token token) {
-		return HttpUtil.addParameter(
+		return HttpHelperUtil.addParameter(
 			_AUTHORIZATION_URL, OAuthConstants.TOKEN, token.getToken());
 	}
 

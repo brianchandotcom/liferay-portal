@@ -27,7 +27,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -1290,7 +1290,7 @@ public class ManagementToolbarTag extends BaseContainerTag {
 		Map<String, List<String>> searchData = new HashMap<>();
 
 		String[] parameters = StringUtil.split(
-			HttpUtil.getQueryString(url), CharPool.AMPERSAND);
+			HttpHelperUtil.getQueryString(url), CharPool.AMPERSAND);
 
 		for (String parameter : parameters) {
 			if (parameter.length() == 0) {
@@ -1312,7 +1312,7 @@ public class ManagementToolbarTag extends BaseContainerTag {
 				parameterValue = parameterParts[1];
 			}
 
-			parameterValue = HttpUtil.decodeURL(parameterValue);
+			parameterValue = HttpHelperUtil.decodeURL(parameterValue);
 
 			List<String> parameterValues = searchData.get(parameterName);
 

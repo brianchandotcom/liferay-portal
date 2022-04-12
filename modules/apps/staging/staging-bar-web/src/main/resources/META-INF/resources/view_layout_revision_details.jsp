@@ -115,8 +115,8 @@ else {
 
 				String layoutURL = PortalUtil.getLayoutFriendlyURL(layout, themeDisplay);
 
-				layoutURL = HttpUtil.addParameter(layoutURL, "layoutSetBranchId", layoutRevision.getLayoutSetBranchId());
-				layoutURL = HttpUtil.addParameter(layoutURL, "layoutRevisionId", layoutRevision.getLayoutRevisionId());
+				layoutURL = HttpHelperUtil.addParameter(layoutURL, "layoutSetBranchId", layoutRevision.getLayoutSetBranchId());
+				layoutURL = HttpHelperUtil.addParameter(layoutURL, "layoutRevisionId", layoutRevision.getLayoutRevisionId());
 				%>
 
 				<liferay-ui:icon

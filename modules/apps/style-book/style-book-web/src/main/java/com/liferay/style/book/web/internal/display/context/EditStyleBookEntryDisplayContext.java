@@ -58,7 +58,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -476,9 +476,10 @@ public class EditStyleBookEntryDisplayContext {
 		String portletNamespace = PortalUtil.getPortletNamespace(
 			StyleBookPortletKeys.STYLE_BOOK);
 
-		url = HttpUtil.addParameter(url, portletNamespace + "groupId", groupId);
+		url = HttpHelperUtil.addParameter(
+			url, portletNamespace + "groupId", groupId);
 
-		return HttpUtil.addParameter(
+		return HttpHelperUtil.addParameter(
 			url, portletNamespace + "fragmentCollectionKey",
 			fragmentCollectionKey);
 	}
@@ -497,15 +498,15 @@ public class EditStyleBookEntryDisplayContext {
 
 	private String _getPreviewURL(Layout layout) {
 		try {
-			String layoutURL = HttpUtil.addParameter(
+			String layoutURL = HttpHelperUtil.addParameter(
 				PortalUtil.getLayoutFullURL(layout, _themeDisplay), "p_l_mode",
 				Constants.PREVIEW);
 
-			layoutURL = HttpUtil.addParameter(
+			layoutURL = HttpHelperUtil.addParameter(
 				layoutURL, "p_p_auth",
 				AuthTokenUtil.getToken(_httpServletRequest));
 
-			return HttpUtil.addParameter(
+			return HttpHelperUtil.addParameter(
 				layoutURL, "styleBookEntryPreview", true);
 		}
 		catch (PortalException portalException) {
@@ -539,11 +540,11 @@ public class EditStyleBookEntryDisplayContext {
 				getPagePreviewURL.setResourceID(
 					"/layout_content_page_editor/get_page_preview");
 
-				String url = HttpUtil.addParameter(
+				String url = HttpHelperUtil.addParameter(
 					getPagePreviewURL.toString(), "p_l_mode",
 					Constants.PREVIEW);
 
-				return HttpUtil.addParameter(
+				return HttpHelperUtil.addParameter(
 					url, "styleBookEntryPreview", true);
 			}
 

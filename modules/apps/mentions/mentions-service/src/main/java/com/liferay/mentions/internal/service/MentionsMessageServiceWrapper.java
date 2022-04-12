@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.util.HtmlParser;
-import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -108,7 +108,7 @@ public class MentionsMessageServiceWrapper
 		else {
 			serviceContext.setAttribute(
 				"contentURL",
-				_http.addParameter(
+				HttpHelperUtil.addParameter(
 					contentURL,
 					serviceContext.getAttribute("namespace") + "messageId",
 					message.getMessageId()));
@@ -145,9 +145,6 @@ public class MentionsMessageServiceWrapper
 
 	@Reference
 	private HtmlParser _htmlParser;
-
-	@Reference
-	private Http _http;
 
 	private MBMessageLocalService _mbMessageLocalService;
 	private MentionsNotifier _mentionsNotifier;

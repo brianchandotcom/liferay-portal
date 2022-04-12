@@ -43,7 +43,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -204,15 +204,15 @@ public class UpdateUserRolesMVCActionCommand extends BaseMVCActionCommand {
 				httpServletRequest, "redirect");
 
 			if (Validator.isNotNull(redirect)) {
-				Map<String, String[]> parameterMap = _http.getParameterMap(
-					redirect);
+				Map<String, String[]> parameterMap =
+					HttpHelperUtil.getParameterMap(redirect);
 
 				backURL = parameterMap.get(portletNamespace + "backURL")[0];
 			}
 
 			if (Validator.isNotNull(backURL)) {
-				Map<String, String[]> parameterMap = _http.getParameterMap(
-					backURL);
+				Map<String, String[]> parameterMap =
+					HttpHelperUtil.getParameterMap(backURL);
 
 				organizationId = GetterUtil.getLong(
 					parameterMap.get(portletNamespace + "organizationId")[0]);
@@ -257,9 +257,6 @@ public class UpdateUserRolesMVCActionCommand extends BaseMVCActionCommand {
 			throw new RequiredRoleException.MustNotRemoveLastAdministator();
 		}
 	}
-
-	@Reference
-	private Http _http;
 
 	@Reference
 	private OrganizationPermission _organizationPermission;

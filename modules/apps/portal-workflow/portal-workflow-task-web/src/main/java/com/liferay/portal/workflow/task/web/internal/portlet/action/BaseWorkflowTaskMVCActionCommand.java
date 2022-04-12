@@ -17,7 +17,7 @@ package com.liferay.portal.workflow.task.web.internal.portlet.action;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -64,7 +64,7 @@ public abstract class BaseWorkflowTaskMVCActionCommand
 			actionRequest, "closeRedirect");
 
 		if (Validator.isNotNull(closeRedirect)) {
-			redirect = HttpUtil.setParameter(
+			redirect = HttpHelperUtil.setParameter(
 				redirect, "closeRedirect", closeRedirect);
 
 			SessionMessages.add(

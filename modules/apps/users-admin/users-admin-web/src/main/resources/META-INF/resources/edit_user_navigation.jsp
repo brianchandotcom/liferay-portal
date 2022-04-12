@@ -60,8 +60,8 @@ if (Validator.isNull(redirect)) {
 	).buildString();
 }
 
-redirect = HttpUtil.addParameter(redirect, liferayPortletResponse.getNamespace() + "screenNavigationCategoryKey", screenNavigationCategoryKey);
-redirect = HttpUtil.addParameter(redirect, liferayPortletResponse.getNamespace() + "screenNavigationEntryKey", screenNavigationEntryKey);
+redirect = HttpHelperUtil.addParameter(redirect, liferayPortletResponse.getNamespace() + "screenNavigationCategoryKey", screenNavigationCategoryKey);
+redirect = HttpHelperUtil.addParameter(redirect, liferayPortletResponse.getNamespace() + "screenNavigationEntryKey", screenNavigationEntryKey);
 %>
 
 <liferay-ui:success key="userAdded" message="the-user-was-created-successfully" />

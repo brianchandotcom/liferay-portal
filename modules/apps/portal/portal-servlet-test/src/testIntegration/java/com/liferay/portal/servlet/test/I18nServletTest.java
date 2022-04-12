@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -174,7 +174,7 @@ public class I18nServletTest extends I18nServlet {
 		I18nData i18nData = getI18nData(mockHttpServletRequest);
 
 		Assert.assertEquals(
-			HttpUtil.encodePath(specialCharacters), i18nData.getPath());
+			HttpHelperUtil.encodePath(specialCharacters), i18nData.getPath());
 	}
 
 	@Test
@@ -187,7 +187,7 @@ public class I18nServletTest extends I18nServlet {
 				"/%s_%s", LocaleUtil.SPAIN.getLanguage(),
 				LocaleUtil.SPAIN.getCountry()));
 
-		String specialCharacters = HttpUtil.encodePath("es/^_Ñ,í-ó");
+		String specialCharacters = HttpHelperUtil.encodePath("es/^_Ñ,í-ó");
 
 		mockHttpServletRequest.setPathInfo(specialCharacters);
 

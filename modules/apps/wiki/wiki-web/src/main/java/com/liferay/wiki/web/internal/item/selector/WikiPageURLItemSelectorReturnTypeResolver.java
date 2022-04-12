@@ -19,7 +19,7 @@ import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
@@ -84,7 +84,7 @@ public class WikiPageURLItemSelectorReturnTypeResolver
 			}
 		}
 
-		return _http.removeDomain(
+		return HttpHelperUtil.removeDomain(
 			PortletURLBuilder.create(
 				_portal.getControlPanelPortletURL(
 					themeDisplay.getRequest(), WikiPortletKeys.WIKI_ADMIN,
@@ -97,9 +97,6 @@ public class WikiPageURLItemSelectorReturnTypeResolver
 				"title", page.getTitle()
 			).buildString());
 	}
-
-	@Reference
-	private Http _http;
 
 	@Reference
 	private Portal _portal;

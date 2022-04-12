@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -184,7 +184,7 @@ public class PasswordPoliciesAdminPortlet extends MVCPortlet {
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 
 		if (Validator.isNotNull(redirect)) {
-			redirect = _http.setParameter(
+			redirect = HttpHelperUtil.setParameter(
 				redirect, actionResponse.getNamespace() + "passwordPolicyId",
 				passwordPolicyId);
 
@@ -297,9 +297,6 @@ public class PasswordPoliciesAdminPortlet extends MVCPortlet {
 	protected void setUserService(UserService userService) {
 		_userService = userService;
 	}
-
-	@Reference
-	private Http _http;
 
 	private OrganizationService _organizationService;
 	private volatile PasswordPoliciesConfiguration

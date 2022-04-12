@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
 import com.liferay.portal.kernel.servlet.taglib.util.OutputData;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.remote.app.constants.RemoteAppConstants;
@@ -198,7 +198,7 @@ public class RemoteAppEntryPortlet extends MVCPortlet {
 		Properties properties = _getProperties(renderRequest);
 
 		for (Map.Entry<Object, Object> entry : properties.entrySet()) {
-			iFrameURL = HttpUtil.addParameter(
+			iFrameURL = HttpHelperUtil.addParameter(
 				iFrameURL, (String)entry.getKey(), (String)entry.getValue());
 		}
 

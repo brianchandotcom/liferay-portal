@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupServiceWrapper;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.service.permission.GroupPermission;
-import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import org.osgi.service.component.annotations.Component;
@@ -58,10 +58,10 @@ public class DepotGroupLocalServiceWrapper extends GroupServiceWrapper {
 			String namespace = _portal.getPortletNamespace(
 				DepotPortletKeys.DEPOT_ADMIN);
 
-			controlPanelFullURL = _http.addParameter(
+			controlPanelFullURL = HttpHelperUtil.addParameter(
 				controlPanelFullURL, namespace + "mvcRenderCommandName",
 				"/depot/view_depot_dashboard");
-			controlPanelFullURL = _http.addParameter(
+			controlPanelFullURL = HttpHelperUtil.addParameter(
 				controlPanelFullURL, namespace + "depotEntryId",
 				String.valueOf(depotEntry.getDepotEntryId()));
 
@@ -80,9 +80,6 @@ public class DepotGroupLocalServiceWrapper extends GroupServiceWrapper {
 
 	@Reference
 	private GroupPermission _groupPermission;
-
-	@Reference
-	private Http _http;
 
 	@Reference
 	private Portal _portal;

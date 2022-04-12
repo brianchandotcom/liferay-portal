@@ -34,7 +34,10 @@ String widgetURL = ParamUtil.getString(request, "widgetURL");
 	</c:when>
 	<c:when test="<%= Validator.isNotNull(netvibesURL) %>">
 		<p>
-			<aui:a href='<%= HttpUtil.addParameter("http://eco.netvibes.com/apps/submit/info", "url", netvibesURL) %>' target="_blank"><liferay-ui:message key="add-this-application-to-netvibes" /></aui:a>
+			<aui:a
+				href='<%=
+			HttpHelperUtil.addParameter("http://eco.netvibes.com/apps/submit/info", "url", netvibesURL) %>' target="_blank"><liferay-ui:message key="add-this-application-to-netvibes" /></aui:a
+			>
 		</p>
 
 		<aui:input label="" name="netvibesURL" type="resource" value="<%= netvibesURL %>" />

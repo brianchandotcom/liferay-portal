@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.HttpHelperUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -92,7 +92,7 @@ public class RemoteMVCPortlet extends MVCPortlet {
 
 		String callbackURL = ParamUtil.getString(actionRequest, "callbackURL");
 
-		redirect = HttpUtil.addParameter(
+		redirect = HttpHelperUtil.addParameter(
 			redirect, OAuthConstants.CALLBACK, callbackURL);
 
 		actionResponse.sendRedirect(redirect);

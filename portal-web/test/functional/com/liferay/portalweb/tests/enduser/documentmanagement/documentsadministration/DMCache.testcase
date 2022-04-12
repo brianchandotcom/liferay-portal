@@ -45,7 +45,8 @@ definition {
 
 		DMDocument.configureCacheControl(
 			cacheControl = "Private",
-			maxAge = "30");
+			maxAge = "30",
+			systemSettingsInstanceScope = "true");
 
 		JSONDocument.addFileWithUploadedFile(
 			assetTagNames = "Tag Name",
@@ -120,6 +121,37 @@ definition {
 		DMDocument.viewCacheControlConfigurationInConsole(
 			responseHeader = "${responseHeader}",
 			uncacheableMimeType = "true");
+	}
+
+	@description = "This checks that the cache control configured in an instance will not affect other instance settings."
+	@priority = "4"
+	test ConfiguredCacheControlOnlyWorksOnCurrentInstance {
+		property test.name.skip.portal.instance = "DMCache#ConfiguredCacheControlOnlyWorksOnCurrentInstance";
+
+		DMDocument.configureCacheControl(
+			cacheControl = "Public",
+			maxAge = "30");
+
+		HeadlessPortalInstanceAPI.addPortalInstance(
+			domain = "www.able.com",
+			portalInstanceId = "www.able.com",
+			virtualHost = "www.able.com");
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://www.able.com:8080",
+			userEmailAddress = "test@www.able.com");
+
+		DMNavigator.openDocumentsAndMediaAdmin(baseURL = "http://www.able.com:8080");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Commerce_Blue.jpg",
+			dmDocumentTitle = "DM Document Title");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
+
+		var responseHeader = DMDocument.getFileResponseHeader(dmDocumentFileName = "Commerce_Blue.jpg");
 	}
 
 }

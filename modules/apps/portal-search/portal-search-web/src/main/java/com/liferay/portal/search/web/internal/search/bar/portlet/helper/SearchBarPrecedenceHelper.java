@@ -41,9 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = SearchBarPrecedenceHelper.class)
 public class SearchBarPrecedenceHelper {
 
-	public Optional<Portlet> findHeaderSearchBarPortletOptional(
-		ThemeDisplay themeDisplay) {
-
+	public Portlet findHeaderSearchBarPortlet(ThemeDisplay themeDisplay) {
 		List<Portlet> portlets = _getPortlets(themeDisplay);
 
 		Portlet headerSearchBarPortlet = null;
@@ -56,7 +54,7 @@ public class SearchBarPrecedenceHelper {
 			}
 		}
 
-		return Optional.ofNullable(headerSearchBarPortlet);
+		return headerSearchBarPortlet;
 	}
 
 	public boolean isDisplayWarningIgnoredConfiguration(
@@ -95,21 +93,18 @@ public class SearchBarPrecedenceHelper {
 	public boolean isSearchBarInBodyWithHeaderSearchBarAlreadyPresent(
 		ThemeDisplay themeDisplay, String portletId) {
 
-		Optional<Portlet> optional = findHeaderSearchBarPortletOptional(
+		Portlet headerSearchBarPortlet = findHeaderSearchBarPortlet(
 			themeDisplay);
 
-		if (!optional.isPresent()) {
-			return false;
-		}
+		if ((headerSearchBarPortlet == null) ||
+			_isSamePortlet(headerSearchBarPortlet, portletId)) {
 
-		Portlet portlet = optional.get();
-
-		if (_isSamePortlet(portlet, portletId)) {
 			return false;
 		}
 
 		SearchBarPortletPreferences searchBarPortletPreferences1 =
-			_getSearchBarPortletPreferences(portlet, themeDisplay);
+			_getSearchBarPortletPreferences(
+				headerSearchBarPortlet, themeDisplay);
 
 		if (!SearchBarPortletDestinationUtil.isSameDestination(
 				searchBarPortletPreferences1, themeDisplay)) {

@@ -322,10 +322,9 @@ public class SearchBarPortletDisplayContextFactoryTest {
 		);
 
 		Mockito.when(
-			_searchBarPrecedenceHelper.findHeaderSearchBarPortletOptional(
-				_themeDisplay)
+			_searchBarPrecedenceHelper.findHeaderSearchBarPortlet(_themeDisplay)
 		).thenReturn(
-			Optional.empty()
+			null
 		);
 
 		Mockito.when(

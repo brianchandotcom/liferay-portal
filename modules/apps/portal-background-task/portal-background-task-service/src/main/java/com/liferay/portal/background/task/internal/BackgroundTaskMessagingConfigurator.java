@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import org.osgi.framework.BundleContext;
@@ -49,9 +48,7 @@ import org.osgi.service.component.annotations.Reference;
 public class BackgroundTaskMessagingConfigurator {
 
 	@Activate
-	protected void activate(
-		BundleContext bundleContext, Map<String, Object> properties) {
-
+	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 
 		Destination backgroundTaskDestination = _registerDestination(

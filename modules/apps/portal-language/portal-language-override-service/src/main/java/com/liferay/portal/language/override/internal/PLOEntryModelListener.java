@@ -15,7 +15,6 @@
 package com.liferay.portal.language.override.internal;
 
 import com.liferay.portal.kernel.cluster.ClusterExecutor;
-import com.liferay.portal.kernel.cluster.ClusterLink;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -77,7 +76,7 @@ public class PLOEntryModelListener
 	}
 
 	private void _notifyCluster(MethodType methodType, PLOEntry ploEntry) {
-		if (!_clusterLink.isEnabled()) {
+		if (!_clusterExecutor.isEnabled()) {
 			return;
 		}
 
@@ -121,9 +120,6 @@ public class PLOEntryModelListener
 
 	@Reference
 	private ClusterExecutor _clusterExecutor;
-
-	@Reference
-	private ClusterLink _clusterLink;
 
 	@Reference
 	private PLOLanguageOverrideProvider _ploLanguageOverrideProvider;

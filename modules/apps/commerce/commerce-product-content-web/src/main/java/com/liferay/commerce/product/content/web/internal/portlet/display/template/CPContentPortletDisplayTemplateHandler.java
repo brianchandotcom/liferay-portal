@@ -19,6 +19,8 @@ import com.liferay.commerce.product.content.util.CPContentHelper;
 import com.liferay.commerce.product.content.web.internal.portlet.CPContentPortlet;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
+import com.liferay.commerce.product.type.grouped.util.GroupedCPTypeHelper;
+import com.liferay.commerce.product.type.virtual.util.VirtualCPTypeHelper;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -90,6 +92,12 @@ public class CPContentPortletDisplayTemplateHandler
 			"cp-catalog-entry", CPDefinition.class, "cpCatalogEntry");
 		templateVariableGroup.addVariable(
 			"cp-content-helper", CPContentHelper.class, "cpContentHelper");
+		templateVariableGroup.addVariable(
+			"grouped-cp-type-helper", GroupedCPTypeHelper.class,
+			"groupedCPTypeHelper");
+		templateVariableGroup.addVariable(
+			"virtual-cp-type-helper", VirtualCPTypeHelper.class,
+			"virtualCPTypeHelper");
 
 		TemplateVariableGroup cpDefinitionsServicesTemplateVariableGroup =
 			new TemplateVariableGroup(

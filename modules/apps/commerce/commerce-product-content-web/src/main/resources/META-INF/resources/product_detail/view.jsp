@@ -27,6 +27,10 @@ Map<String, Object> contextObjects = HashMapBuilder.<String, Object>put(
 	"cpCatalogEntry", cpCatalogEntry
 ).put(
 	"cpContentHelper", cpContentHelper
+).put(
+	"groupedCPTypeHelper", (GroupedCPTypeHelper)request.getAttribute(GroupedCPTypeConstants.GROUPED_CP_TYPE_HELPER)
+).put(
+	"virtualCPTypeHelper", (VirtualCPTypeHelper)request.getAttribute(VirtualCPTypeConstants.VIRTUAL_CP_TYPE_HELPER)
 ).build();
 
 CPInstance cpInstance = cpContentHelper.getDefaultCPInstance(request);

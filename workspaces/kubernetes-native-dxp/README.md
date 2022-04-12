@@ -1,40 +1,34 @@
 ## Kubernetes Native DXP
 
-> **Note:** I've abbreviated all `kubectl` commands to `k` for brevity.
+1. Make sure you have [minikube installed](https://minikube.sigs.k8s.io/docs/start/)
 
-### Create Kubernetes Cluster
-
-1. Create a new Kubernetes cluster, for example with Minikube, making sure to leave enough room to run DXP. DXP is setup for 4CPUs and 4Gb memory so make sure your cluster supports that plus a bit for other workloads.
-
-   ```bash
-   minikube start --cpus 8 --memory 16364
-   ```
-
-2. in the root of the project execute the `./run_local.sh` script which should build and orchestrate the environment.
-
-### Find the DXP Pod
+1. Run the `run_local.sh` script in the workspace root:
 
 ```bash
-POD=$(k get pods --field-selector="status.phase=Running" -o json | jq -r '.items[].metadata.name')
+./run_local.sh
 ```
 
 ### Debug DXP
 
-DXP is setup for debug, to connect a debugger find the DXP pod and open a port forward.
-
-```bash
-k get pods
-
-k port-forward $POD 8000:8000
-```
+DXP is ready debugging on port `8000`.
 
 ### Telnet to Gogo Shell
 
+Gogo shell is available to connect at port `11311`
+
 ```bash
-k port-forward $POD 11311:11311
+telnet localhost 11311
 ```
 
-#### Add support for operating on Configurations to DXP Gogo
+### Logs
+
+To follow logs of all the containers run the `logs.sh` script:
+
+```bash
+./logs.sh
+```
+
+### Add support for operating on Configurations to DXP Gogo
 
 Paste the following into gogo. This adds all the methods of the `ConfigurationAdmin` service as commands under the context `cm`.
 
@@ -61,25 +55,6 @@ listconfigurations "(service.pid=$PID)"
 (configuration com.liferay.kubernetes.config.KubernetesConfigurationAgent) processedProperties null
 
 # PS: listconfigirations does not create a configuration if it's missing, `configuration` command does
-```
-
-Deploy a couple of needed OSGi bundles into DXP deployment pod
-
-```bash
-k cp \
-	~/.m2/repository/org/apache/commons/commons-collections4/4.4/commons-collections4-4.4.jar \
-	$POD:/opt/liferay/osgi/modules/
-k cp \
-	~/.m2/repository/org/apache/felix/org.apache.felix.configadmin.plugin.interpolation/1.2.2/org.apache.felix.configadmin.plugin.interpolation-1.2.2.jar \
-	$POD:/opt/liferay/osgi/modules/
-k cp \
-	kubernetes-native-dxp/modules/kubernetes-config/build/libs/com.liferay.kubernetes.config-1.0.0.jar \
-	$POD:/opt/liferay/osgi/modules/
-
-# if needed
-k cp \
-	kubernetes-native-dxp/modules/logservice-command/build/libs/com.liferay.logservice.command-1.0.0.jar \
-	$POD:/opt/liferay/osgi/modules/
 ```
 
 ## Trusted Communication Demo

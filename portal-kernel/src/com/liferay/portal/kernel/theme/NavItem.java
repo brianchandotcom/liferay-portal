@@ -397,9 +397,7 @@ public class NavItem implements Serializable {
 			return false;
 		}
 
-		Layout draftLayout = layout.fetchDraftLayout();
-
-		if (draftLayout != null) {
+		if (layout.fetchDraftLayout() != null) {
 			return !layout.isPublished();
 		}
 

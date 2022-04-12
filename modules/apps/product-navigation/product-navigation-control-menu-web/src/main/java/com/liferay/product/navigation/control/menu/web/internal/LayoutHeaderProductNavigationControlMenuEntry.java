@@ -245,9 +245,7 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 			return false;
 		}
 
-		Layout draftLayout = layout.fetchDraftLayout();
-
-		if ((draftLayout != null) ||
+		if ((layout.fetchDraftLayout() != null) ||
 			(!layout.isDraft() && _isLayoutPublished(layout))) {
 
 			return false;

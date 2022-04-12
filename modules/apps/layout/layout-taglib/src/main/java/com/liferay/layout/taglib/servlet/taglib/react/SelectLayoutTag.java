@@ -394,9 +394,7 @@ public class SelectLayoutTag extends IncludeTag {
 			return false;
 		}
 
-		Layout draftLayout = layout.fetchDraftLayout();
-
-		if (draftLayout != null) {
+		if (layout.fetchDraftLayout() != null) {
 			if (_showDraftLayouts) {
 				return false;
 			}

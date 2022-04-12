@@ -1,0 +1,27 @@
+{
+  "kind": "Deployment",
+  "id": "customrestservice",
+  "image": "customrestservice",
+  "cpu": 0.2,
+  "scale": 1,
+  "memory": 300,
+  "loadBalancer": {
+    "targetPort": 8081,
+    "cdn": true
+  },
+  "env": {
+    "AMADEUS_CLIENT_ID": "@amadeus-client-id",
+    "AMADEUS_CLIENT_SECRET": "@amadeus-client-secret"
+  },
+  "environments": {
+    "infra": {
+      "deploy": false
+    },
+    "dev": {
+      "loadBalancer": {
+        "targetPort": 8081,
+        "cdn": false
+      }
+    }
+  }
+}

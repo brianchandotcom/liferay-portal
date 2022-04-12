@@ -1,0 +1,57 @@
+apiVersion: skaffold/v2beta28
+kind: Config
+build:
+  tagPolicy:
+    sha256: {}
+  artifacts:
+  - image: k8s-native-dxp
+    custom:
+      buildCommand: ./gradlew resolve buildDockerImage -Pdocker.image.id=$IMAGE
+      dependencies:
+        paths:
+        - configs/common/**/*
+        - configs/local/**/*
+        - modules/**/*
+  - image: liferayhelloworld
+    custom:
+      buildCommand: lxc-extensions/liferayhelloworld/build.sh
+      dependencies:
+        paths:
+        - lxc-extensions/liferayhelloworld/public
+        - lxc-extensions/liferayhelloworld/src
+        - lxc-extensions/liferayhelloworld/package.json
+        - lxc-extensions/liferayhelloworld/build.sh
+  - image: customrestservice
+    custom:
+      buildCommand: lxc-extensions/customrestservice/build.sh
+      dependencies:
+        paths:
+        - lxc-extensions/customrestservice/src/**/*
+        - lxc-extensions/customrestservice/pom.xml
+  - image: dynamicjscss
+    custom:
+      buildCommand: lxc-extensions/dynamicjscss/build.sh
+      dependencies:
+        paths:
+        - lxc-extensions/dynamicjscss/**/*
+  - image: cronjob
+    custom:
+      buildCommand: lxc-extensions/cronjob/build.sh
+      dependencies:
+        paths:
+        - lxc-extensions/cronjob/curl.sh
+deploy:
+  kustomize:
+    paths:
+    - k8s/dxp/
+    - k8s/liferayhelloworld/
+    - k8s/customrestservice/
+    - k8s/dynamicjscss/
+    - k8s/cronjob/
+    - k8s/common/
+    hooks:
+      after:
+      - host:
+          command: ["./darwin_patch.sh"]
+          os:
+          - darwin

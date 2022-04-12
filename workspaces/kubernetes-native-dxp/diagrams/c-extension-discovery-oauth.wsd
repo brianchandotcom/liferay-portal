@@ -1,0 +1,30 @@
+@startuml Discover LXC Extension having OAuth2 Profile
+!include common.wsd
+title Discover LXC Extension having OAuth2 Profile
+actor developer
+participant lcp
+participant api
+box "Kubernetes cluster"
+    participant "k8s-api" as k8s
+    participant dxp
+    participant extension
+end box
+
+dxp -> k8s : watch for\next-configs
+developer -> lcp : deploy\nextension
+lcp -> api : upload\nextension
+api -> api : parse\nextension\nLCP.json &\nconfigs
+par this happens in parallel
+api -> k8s : create\nextension\ndeployment\ndependent on\noauth-config
+k8s -> extension : create\nextension\npods\ndependent on\noauth-config
+extension -> k8s : watch for\noauth-configs
+else
+api -> k8s : create\next-config
+k8s -> dxp : announce\next-config
+dxp -> dxp : creates OSGi\nconfiguration
+dxp -> k8s : create\noauth-config
+k8s -> extension : announce\noauth-config
+activate extension
+end
+
+@enduml

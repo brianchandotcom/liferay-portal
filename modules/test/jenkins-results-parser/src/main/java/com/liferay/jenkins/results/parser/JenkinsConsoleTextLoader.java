@@ -79,7 +79,35 @@ public class JenkinsConsoleTextLoader {
 		return hasMoreData;
 	}
 
-	protected void update() {
+	protected synchronized void update() {
+		Retryable<Object> retryable = new Retryable<Object>(true, 3, 5, true) {
+
+			@Override
+			public Object execute() {
+				try {
+					_update();
+				}
+				catch (IOException ioException) {
+					serverLogSize = 0;
+
+					throw new RuntimeException(ioException);
+				}
+
+				return null;
+			}
+
+		};
+
+		retryable.executeWithRetries();
+	}
+
+	protected String buildURL;
+	protected String consoleLogFileKey;
+	protected boolean hasMoreData = true;
+	protected long serverLogSize;
+	protected boolean truncated;
+
+	private synchronized void _update() throws IOException {
 		boolean hasMoreData = true;
 
 		long cacheFileSize = JenkinsResultsParserUtil.getCacheFileSize(
@@ -160,6 +188,14 @@ public class JenkinsConsoleTextLoader {
 					"Invalid buildURL " + buildURL, malformedURLException);
 			}
 			catch (IOException ioException) {
+				String message = ioException.getMessage();
+
+				if (message.contains("Premature EOF")) {
+					System.out.println("Premature EOF: " + buildURL);
+
+					throw ioException;
+				}
+
 				System.out.println(
 					"Unable to update console log for build: " + buildURL);
 
@@ -169,12 +205,6 @@ public class JenkinsConsoleTextLoader {
 			}
 		}
 	}
-
-	protected String buildURL;
-	protected String consoleLogFileKey;
-	protected boolean hasMoreData = true;
-	protected long serverLogSize;
-	protected boolean truncated;
 
 	private static final long _BYTES_MAX_SIZE_CONSOLE_LOG = 1024 * 1024 * 20;
 

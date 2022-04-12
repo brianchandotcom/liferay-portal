@@ -20,7 +20,6 @@ import com.liferay.jenkins.results.parser.BuildDatabaseUtil;
 import com.liferay.jenkins.results.parser.Dom4JUtil;
 import com.liferay.jenkins.results.parser.GitWorkingDirectory;
 import com.liferay.jenkins.results.parser.GitWorkingDirectoryFactory;
-import com.liferay.jenkins.results.parser.JenkinsConsoleTextLoader;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 import com.liferay.jenkins.results.parser.TopLevelBuild;
@@ -272,15 +271,12 @@ public class TestrayAttachmentRecorder {
 	}
 
 	private void _recordJenkinsConsole() {
-		JenkinsConsoleTextLoader jenkinsConsoleTextLoader =
-			new JenkinsConsoleTextLoader(_build.getBuildURL());
-
 		File jenkinsConsoleFile = new File(
 			_getRecordedFilesBuildDir(), "jenkins-console.txt");
 
 		try {
 			JenkinsResultsParserUtil.write(
-				jenkinsConsoleFile, jenkinsConsoleTextLoader.getConsoleText());
+				jenkinsConsoleFile, _build.getConsoleText());
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);

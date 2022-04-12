@@ -121,9 +121,7 @@ public abstract class BaseBuild implements Build {
 	public void archive(String archiveName) {
 		setArchiveName(archiveName);
 
-		if (!_status.equals("completed")) {
-			System.out.println("Unable to archive due to status: " + _status);
-
+		if (fromArchive) {
 			return;
 		}
 
@@ -133,43 +131,10 @@ public abstract class BaseBuild implements Build {
 			archiveDir.mkdirs();
 		}
 
-		try {
-			writeArchiveFile(
-				String.valueOf(JenkinsResultsParserUtil.getCurrentTimeMillis()),
-				getArchivePath() + "/archive-marker");
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(
-				"Unable to to write archive-marker", ioException);
-		}
+		ParallelExecutor<Object> parallelExecutor = new ParallelExecutor<>(
+			getArchiveCallables(), getExecutorService());
 
-		archiveConsoleLog();
-		archiveJSON();
-
-		if ((downstreamBuilds != null) && !downstreamBuilds.isEmpty()) {
-			List<Callable<Object>> callables = new ArrayList<>(
-				downstreamBuilds.size());
-
-			for (final Build downstreamBuild : downstreamBuilds) {
-				Callable<Object> callable = new Callable<Object>() {
-
-					@Override
-					public Object call() {
-						downstreamBuild.archive();
-
-						return null;
-					}
-
-				};
-
-				callables.add(callable);
-			}
-
-			ParallelExecutor<Object> parallelExecutor = new ParallelExecutor<>(
-				callables, getExecutorService());
-
-			parallelExecutor.execute();
-		}
+		parallelExecutor.execute();
 	}
 
 	@Override
@@ -189,6 +154,64 @@ public abstract class BaseBuild implements Build {
 		}
 
 		return false;
+	}
+
+	@Override
+	public List<Callable<Object>> getArchiveCallables() {
+		List<Callable<Object>> archiveCallables = new ArrayList<>();
+
+		archiveCallables.add(
+			new Callable<Object>() {
+
+				@Override
+				public Object call() {
+					_archiveMarkerFile();
+
+					return null;
+				}
+
+			});
+		archiveCallables.add(
+			new Callable<Object>() {
+
+				@Override
+				public Object call() {
+					_archiveConsoleLog();
+
+					return null;
+				}
+
+			});
+		archiveCallables.add(
+			new Callable<Object>() {
+
+				@Override
+				public Object call() {
+					_archiveBuildJSON();
+
+					return null;
+				}
+
+			});
+		archiveCallables.add(
+			new Callable<Object>() {
+
+				@Override
+				public Object call() {
+					_archiveTestReportJSON();
+
+					return null;
+				}
+
+			});
+
+		if ((downstreamBuilds != null) && !downstreamBuilds.isEmpty()) {
+			for (Build downstreamBuild : downstreamBuilds) {
+				archiveCallables.addAll(downstreamBuild.getArchiveCallables());
+			}
+		}
+
+		return archiveCallables;
 	}
 
 	@Override
@@ -2011,10 +2034,6 @@ public abstract class BaseBuild implements Build {
 				throw new RuntimeException(ioException);
 			}
 		}
-
-		if (!fromArchive && JenkinsResultsParserUtil.isCINode()) {
-			archive();
-		}
 	}
 
 	public static class BuildDisplayNameComparator
@@ -2298,32 +2317,10 @@ public abstract class BaseBuild implements Build {
 		}
 	}
 
-	protected void archiveConsoleLog() {
-		String urlSuffix = "consoleText";
-
-		if (archiveFileExists(urlSuffix)) {
-			return;
-		}
-
-		try {
-			writeArchiveFile(
-				JenkinsResultsParserUtil.redact(getConsoleText()),
-				getArchivePath() + "/" + urlSuffix);
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException("Unable to write file", ioException);
-		}
-	}
-
 	protected boolean archiveFileExists(String urlSuffix) {
 		File archiveFile = getArchiveFile(urlSuffix);
 
 		return archiveFile.exists();
-	}
-
-	protected void archiveJSON() {
-		downloadSampleURL(true, "api/json");
-		downloadSampleURL(false, "testReport/api/json");
 	}
 
 	protected void checkForReinvocation(String consoleText) {
@@ -2341,45 +2338,6 @@ public abstract class BaseBuild implements Build {
 			reset();
 
 			update();
-		}
-	}
-
-	protected void downloadSampleURL(boolean required, String urlSuffix) {
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(
-				getArchiveFileContent(urlSuffix))) {
-
-			return;
-		}
-
-		String urlString = getBuildURL() + urlSuffix;
-
-		if (urlString.endsWith("json")) {
-			urlString += "?pretty";
-		}
-
-		urlSuffix = JenkinsResultsParserUtil.fixFileName(urlSuffix);
-
-		String content = null;
-
-		try {
-			content = JenkinsResultsParserUtil.toString(
-				JenkinsResultsParserUtil.getLocalURL(urlString), false, 0, 0, 0,
-				true);
-		}
-		catch (IOException ioException) {
-			if (required) {
-				throw new RuntimeException(
-					"Unable to download sample " + urlString, ioException);
-			}
-
-			return;
-		}
-
-		try {
-			writeArchiveFile(content, getArchivePath() + "/" + urlSuffix);
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException("Unable to write file", ioException);
 		}
 	}
 
@@ -2641,7 +2599,7 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected ExecutorService getExecutorService() {
-		return null;
+		return _executorService;
 	}
 
 	protected List<Build> getFailedDownstreamBuilds() {
@@ -3656,6 +3614,86 @@ public abstract class BaseBuild implements Build {
 
 	}
 
+	private void _archive(String content, boolean required, String urlSuffix) {
+		String status = getStatus();
+
+		if (!status.equals("completed") || archiveFileExists(urlSuffix)) {
+			return;
+		}
+
+		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
+
+		String urlString = getBuildURL() + urlSuffix;
+
+		if (urlString.endsWith("json")) {
+			urlString += "?pretty";
+		}
+
+		urlSuffix = JenkinsResultsParserUtil.fixFileName(urlSuffix);
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(content)) {
+			try {
+				int maxRetries = 0;
+				int retryPeriodSeconds = 0;
+
+				if (required) {
+					maxRetries = 2;
+					retryPeriodSeconds = 5;
+				}
+
+				content = JenkinsResultsParserUtil.toString(
+					JenkinsResultsParserUtil.getLocalURL(urlString), false,
+					maxRetries, retryPeriodSeconds, 0, true);
+			}
+			catch (IOException ioException) {
+				if (required) {
+					throw new RuntimeException(
+						"Unable to archive " + urlString, ioException);
+				}
+
+				return;
+			}
+		}
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(content)) {
+			return;
+		}
+
+		try {
+			writeArchiveFile(content, getArchivePath() + "/" + urlSuffix);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException("Unable to write file", ioException);
+		}
+		finally {
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					"Archived ", String.valueOf(getArchiveFile(urlSuffix)),
+					" in ",
+					JenkinsResultsParserUtil.toDurationString(
+						JenkinsResultsParserUtil.getCurrentTimeMillis() -
+							start)));
+		}
+	}
+
+	private void _archiveBuildJSON() {
+		_archive(null, true, "api/json");
+	}
+
+	private void _archiveConsoleLog() {
+		_archive(getConsoleText(), true, "consoleText");
+	}
+
+	private void _archiveMarkerFile() {
+		_archive(
+			String.valueOf(JenkinsResultsParserUtil.getCurrentTimeMillis()),
+			true, "archive-marker");
+	}
+
+	private void _archiveTestReportJSON() {
+		_archive(null, false, "testReport/api/json");
+	}
+
 	private Map<String, String> _getDefaultJobParameters() {
 		JSONObject jobJSONObject = null;
 
@@ -3904,6 +3942,8 @@ public abstract class BaseBuild implements Build {
 		JenkinsResultsParserUtil.combine(
 			"\\w+://(?<master>[^/]+)/+job/+(?<jobName>[^/]+).*/(?<buildNumber>",
 			"\\d+)/?"));
+	private static final ExecutorService _executorService =
+		JenkinsResultsParserUtil.getNewThreadPoolExecutor(5, true);
 	private static final Pattern _testrayAttachmentURLPattern = Pattern.compile(
 		"\\[beanshell\\] Uploaded (?<url>https://testray.liferay.com/[^\\s]+)");
 	private static final Pattern _testrayS3ObjectURLPattern = Pattern.compile(

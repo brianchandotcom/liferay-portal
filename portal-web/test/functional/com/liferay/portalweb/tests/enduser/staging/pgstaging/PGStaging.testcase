@@ -597,7 +597,9 @@ definition {
 			pageName = "Private Staging Page",
 			siteName = "Site Name");
 
-		PagesAdmin.viewPageItemPresent(pageName = "Private Staging Page");
+		PagesAdmin.viewPageItemPresent(
+			pageName = "Private Staging Page",
+			privacy = "Private Pages");
 	}
 
 	@description = "This is a use case for LPS-80367."

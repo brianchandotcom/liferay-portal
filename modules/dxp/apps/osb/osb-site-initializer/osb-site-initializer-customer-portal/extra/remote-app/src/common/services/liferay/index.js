@@ -17,6 +17,7 @@ export const Liferay = window.Liferay || {
 	ThemeDisplay: {
 		getCanonicalURL: () => window.location.href,
 		getCompanyGroupId: () => 0,
+		getLanguageId: () => 'en_US',
 		getPathThemeImages: () => null,
 		getScopeGroupId: () => 0,
 		getSiteGroupId: () => 0,

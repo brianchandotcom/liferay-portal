@@ -40,8 +40,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
-import javax.portlet.PortletURL;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
@@ -130,10 +128,6 @@ public class HeadlessDisplayTag extends BaseDisplayTag {
 
 	public int getPageNumber() {
 		return _pageNumber;
-	}
-
-	public PortletURL getPortletURL() {
-		return _portletURL;
 	}
 
 	public List<String> getSelectedItems() {
@@ -237,10 +231,6 @@ public class HeadlessDisplayTag extends BaseDisplayTag {
 		_pageNumber = pageNumber;
 	}
 
-	public void setPortletURL(PortletURL portletURL) {
-		_portletURL = portletURL;
-	}
-
 	public void setSelectedItems(List<String> selectedItems) {
 		_selectedItems = selectedItems;
 	}
@@ -295,7 +285,6 @@ public class HeadlessDisplayTag extends BaseDisplayTag {
 		_nestedItemsReferenceKey = null;
 		_pageNumber = 0;
 		_paginationSelectedEntry = 0;
-		_portletURL = null;
 		_selectedItems = null;
 		_selectedItemsKey = null;
 		_selectionType = null;
@@ -355,8 +344,6 @@ public class HeadlessDisplayTag extends BaseDisplayTag {
 				).build()
 			).put(
 				"portletId", PortalUtil.getPortletId(getRequest())
-			).put(
-				"portletURL", _portletURL.toString()
 			).put(
 				"selectedItems", _selectedItems
 			).put(
@@ -465,7 +452,6 @@ public class HeadlessDisplayTag extends BaseDisplayTag {
 	private String _nestedItemsReferenceKey;
 	private int _pageNumber;
 	private int _paginationSelectedEntry;
-	private PortletURL _portletURL;
 	private List<String> _selectedItems;
 	private String _selectedItemsKey;
 	private String _selectionType;

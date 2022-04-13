@@ -28,6 +28,8 @@ import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 
+import javax.portlet.PortletURL;
+
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
@@ -75,6 +77,14 @@ public class BaseDisplayTag extends AttributesTagSupport {
 		_id = id;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
+	public void setPortletURL(PortletURL portletURL) {
+		_portletURL = portletURL;
+	}
+
 	public void setPropsTransformer(String propsTransformer) {
 		_propsTransformer = propsTransformer;
 	}
@@ -92,6 +102,7 @@ public class BaseDisplayTag extends AttributesTagSupport {
 	protected void cleanUp() {
 		_additionalProps = null;
 		_id = null;
+		_portletURL = null;
 		_propsTransformer = null;
 		_propsTransformerServletContext = null;
 		_randomNamespace = null;
@@ -176,6 +187,7 @@ public class BaseDisplayTag extends AttributesTagSupport {
 
 	private Map<String, Object> _additionalProps;
 	private String _id;
+	private PortletURL _portletURL;
 	private String _propsTransformer;
 	private ServletContext _propsTransformerServletContext;
 	private String _randomNamespace;

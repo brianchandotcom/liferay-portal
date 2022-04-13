@@ -3011,4 +3011,53 @@ definition {
 
 	}
 
+	@description = "Verify that is possible to translate multiple options for Select From List field"
+	@priority = "4"
+	test CanTranslateLabelAndHelpTextOnSelectFromListField {
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Select from List",
+			fieldName = "Select from List");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Select from List",
+			fieldHelp = "Help Text");
+
+		WebContentStructures.addTranslations(localeList = "pt-BR");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Select from List",
+			fieldFieldLabelEdit = "Select from List pt-BR");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Select from List pt-BR",
+			fieldHelp = "Help Text pt-BR");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Select from List",
+			fieldHelp = "Help Text",
+			fieldName = "Select from List");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Select from List pt-BR",
+			fieldHelp = "Help Text pt-BR",
+			fieldName = "Select from List");
+
+
+	}
+
 }

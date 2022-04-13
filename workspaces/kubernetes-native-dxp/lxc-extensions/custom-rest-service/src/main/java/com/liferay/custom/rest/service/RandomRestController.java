@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -24,6 +25,9 @@ import org.springframework.web.client.RestTemplate;
 @RequestMapping(value = "/random")
 public class RandomRestController {
 
+	@Value("${DXP_SERVICE_URI}")
+	String dxpServiceUri;
+
 	private static final Logger logger = LoggerFactory.getLogger(RandomRestController.class);
 
 	@GetMapping(value = {"/number", "/number/{count}"})
@@ -32,12 +36,12 @@ public class RandomRestController {
 	}
 
 	@GetMapping(value = {"/alpha", "/alpha/{count}"})
-	public Long randomAlpha(@PathVariable Optional<Integer> count) {
+	public String randomAlpha(@PathVariable Optional<Integer> count) {
 		return _randomAlpha(count.orElse(2));
 	}
 
-	private Long _randomAlpha(int count) {
-		return Long.parseLong(randomAlphabetic(count));
+	private String _randomAlpha(int count) {
+		return randomAlphabetic(count);
 	}
 
 	private Long _randomLong(int count) {
@@ -57,7 +61,7 @@ public class RandomRestController {
 		RestTemplate restTemplate = new RestTemplate();
 		restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
 		String result = restTemplate.patchForObject(
-				"http://localhost:8080/o/headless-admin-user/v1.0/user-accounts/" + id, entity, String.class);
+			dxpServiceUri + "/o/headless-admin-user/v1.0/user-accounts/" + id, entity, String.class);
 		logger.info("User patched " + result);
 	}
 

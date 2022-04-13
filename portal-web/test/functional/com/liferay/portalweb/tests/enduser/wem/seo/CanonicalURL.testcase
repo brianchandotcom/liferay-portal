@@ -288,8 +288,8 @@ definition {
 		Site.openSiteSettingsAdmin(siteURLKey = "guest");
 
 		Site.addVirtualHostsURLCP(
-			publicPageVirtualHostURL = "www.able.com",
-			publicVirtualHosts = "true");
+			pageVirtualHosts = "true",
+			pageVirtualHostURL = "www.able.com");
 
 		User.logoutPG();
 

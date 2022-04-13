@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfiguration
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.util.comparator.PortletConfigurationIconComparator;
 import com.liferay.taglib.servlet.PipingServletResponseFactory;
@@ -128,6 +129,19 @@ public class IconOptionsTag extends IconTag {
 		iconMenuTag.setShowWhenSingleIcon(true);
 		iconMenuTag.setTriggerCssClass("component-action");
 
+		for (PortletConfigurationIcon portletConfigurationIcon :
+				getPortletConfigurationIcons()) {
+
+			if (Validator.isNotNull(
+					portletConfigurationIcon.getIconCssClass())) {
+
+				iconMenuTag.setDropdownCssClass(
+					"dropdown-menu-indicator-start");
+
+				break;
+			}
+		}
+
 		iconMenuTag.doBodyTag(
 			pageContext, this::_processPortletConfigurationIcons);
 
@@ -178,8 +192,15 @@ public class IconOptionsTag extends IconTag {
 				iconTag.setAriaRole(portletConfigurationIcon.getAriaRole());
 				iconTag.setCssClass(portletConfigurationIcon.getCssClass());
 				iconTag.setData(portletConfigurationIcon.getData());
-				iconTag.setIconCssClass(
-					portletConfigurationIcon.getIconCssClass());
+
+				if (Validator.isNotNull(
+						portletConfigurationIcon.getIconCssClass())) {
+
+					iconTag.setIcon(portletConfigurationIcon.getIconCssClass());
+					iconTag.setIconCssClass("dropdown-item-indicator-start");
+					iconTag.setMarkupView("lexicon");
+				}
+
 				iconTag.setId(portletConfigurationIcon.getId());
 				iconTag.setImage(portletConfigurationIcon.getImage());
 				iconTag.setImageHover(portletConfigurationIcon.getImageHover());
@@ -188,6 +209,7 @@ public class IconOptionsTag extends IconTag {
 				iconTag.setLinkCssClass(
 					"dropdown-item " +
 						portletConfigurationIcon.getLinkCssClass());
+
 				iconTag.setLocalizeMessage(false);
 				iconTag.setMessage(
 					portletConfigurationIcon.getMessage(portletRequest));

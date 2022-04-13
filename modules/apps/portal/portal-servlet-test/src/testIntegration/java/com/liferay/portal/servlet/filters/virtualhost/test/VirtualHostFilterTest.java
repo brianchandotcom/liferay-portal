@@ -141,7 +141,9 @@ public class VirtualHostFilterTest {
 		String homeURL = PropsValues.COMPANY_DEFAULT_HOME_URL;
 
 		try {
-			_setPortalProperty("COMPANY_DEFAULT_HOME_URL", StringPool.SLASH);
+			ReflectionTestUtil.setFieldValue(
+				PropsValues.class, "COMPANY_DEFAULT_HOME_URL",
+				StringPool.SLASH);
 			_mockHttpServletRequest.setRequestURI(StringPool.SLASH);
 
 			_virtualHostFilter.init(_mockFilterConfig);
@@ -156,7 +158,8 @@ public class VirtualHostFilterTest {
 				_mockFilterChain);
 		}
 		finally {
-			_setPortalProperty("COMPANY_DEFAULT_HOME_URL", homeURL);
+			ReflectionTestUtil.setFieldValue(
+				PropsValues.class, "COMPANY_DEFAULT_HOME_URL", homeURL);
 		}
 
 		Assert.assertNotEquals(
@@ -184,11 +187,6 @@ public class VirtualHostFilterTest {
 		}
 
 		return StringPool.BLANK;
-	}
-
-	private void _setPortalProperty(String propertyName, Object value) {
-		ReflectionTestUtil.setFieldValue(
-			PropsValues.class, propertyName, value);
 	}
 
 	private static final String _LAST_PATH =

@@ -53,9 +53,9 @@ public class RemoteAppConfigFactory {
 
 	@Activate
 	public RemoteAppConfigFactory(
+			@Reference CompanyLocalService companyLocalService,
 			@Reference RemoteAppEntryLocalService remoteAppEntryLocalService,
 			@Reference UserLocalService userLocalService,
-			@Reference CompanyLocalService companyLocalService,
 			Map<String, Object> properties)
 		throws PortalException {
 
@@ -65,16 +65,10 @@ public class RemoteAppConfigFactory {
 			ConfigurableUtil.createConfigurable(
 				RemoteAppConfiguration.class, properties);
 
-		String externalReferenceCode = GetterUtil.getString(
-			properties.get(Constants.SERVICE_PID));
+		String externalReferenceCode = _getExternalReferenceCode(properties);
 
-		int pos = externalReferenceCode.indexOf('~');
-
-		if (pos > 0) {
-			externalReferenceCode = externalReferenceCode.substring(pos + 1);
-		}
-
-		Company company = companyLocalService.getCompanyById(remoteAppConfiguration.companyId());
+		Company company = companyLocalService.getCompanyById(
+			remoteAppConfiguration.companyId());
 
 		User defaultAdminUser = userLocalService.getUserByScreenName(
 			company.getCompanyId(), PropsValues.DEFAULT_ADMIN_SCREEN_NAME);
@@ -111,6 +105,19 @@ public class RemoteAppConfigFactory {
 		if (reason == ComponentConstants.DEACTIVATION_REASON_CONFIGURATION_DELETED) {
 			_remoteAppEntryLocalService.deleteRemoteAppEntry(_remoteAppEntry);
 		}
+	}
+
+	private String _getExternalReferenceCode(Map<String, Object> properties) {
+		String externalReferenceCode = GetterUtil.getString(
+			properties.get(Constants.SERVICE_PID));
+
+		int pos = externalReferenceCode.indexOf('~');
+
+		if (pos > 0) {
+			externalReferenceCode = externalReferenceCode.substring(pos + 1);
+		}
+
+		return externalReferenceCode;
 	}
 
 	private final RemoteAppEntry _remoteAppEntry;

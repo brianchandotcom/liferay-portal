@@ -369,8 +369,8 @@ definition {
 		Workflow.unpublishWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
 
 		ProcessBuilderListView.viewDefinitionPublicationStatus(
-			workflowDefinitionTitle = "Single Approver",
-			notPublished = "true");
+			notPublished = "true",
+			workflowDefinitionTitle = "Single Approver");
 
 		Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
 

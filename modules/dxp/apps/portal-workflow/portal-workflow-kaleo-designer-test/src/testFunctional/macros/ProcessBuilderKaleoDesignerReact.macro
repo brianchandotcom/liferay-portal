@@ -550,6 +550,12 @@ definition {
 		}
 	}
 
+	macro viewDefinitionTitle {
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "${definitionTitle}");
+	}
+
 	macro viewDiagramEditor {
 		AssertElementPresent(locator1 = "ProcessBuilderKaleoDesignerReact#REACT_PANEL");
 
@@ -826,16 +832,6 @@ definition {
 			locator1 = "Button#ANY");
 	}
 
-	macro viewSaveButtonPresent {
-		AssertElementPresent(locator1 = "KaleoDesigner#SAVE_BUTTON");
-	}
-
-	macro viewDefinitionTitle{
-		AssertTextEquals(
-			locator1 = "TextInput#TITLE",
-			value1 = "${definitionTitle}");
-	}
-
 	macro viewRequiredField {
 		AssertElementPresent(
 			key_requiredField = "${requiredField}",
@@ -850,6 +846,10 @@ definition {
 
 			Alert.viewErrorMessage(errorMessage = "Some fields need to be filled.:Please fill out the fields before saving or publishing.");
 		}
+	}
+
+	macro viewSaveButtonPresent {
+		AssertElementPresent(locator1 = "KaleoDesigner#SAVE_BUTTON");
 	}
 
 	macro viewSelectedAssignments {

@@ -38,6 +38,24 @@ definition {
 			value1 = "${numberResults} Results for ${workflowName}");
 	}
 
+	macro viewDefinitionPublicationStatus {
+		AssertElementPresent(
+			key_workflowDefinitionTitle = "Published",
+			locator1 = "WorkflowDefinition#DEFINITION_TABLE_TITLE");
+
+		if (isSet(published)) {
+			AssertElementPresent(
+				key_workflowDefinitionTitle = "${workflowDefinitionTitle}",
+				locator1 = "WorkflowDefinition#DEFINITION_TABLE_TITLE_PUBLISHED");
+		}
+
+		if (isSet(notPublished)) {
+			AssertElementPresent(
+				key_workflowDefinitionTitle = "${workflowDefinitionTitle}",
+				locator1 = "WorkflowDefinition#DEFINITION_TABLE_TITLE_UNPUBLISHED");
+		}
+	}
+
 	macro viewWorkflowIsNotPresent {
 		AssertElementNotPresent(
 			key_workflowDefinitionTitle = "${workflowDefinitionTitle}",
@@ -48,24 +66,6 @@ definition {
 		AssertElementPresent(
 			key_workflowDefinitionTitle = "${workflowDefinitionTitle}",
 			locator1 = "WorkflowDefinition#DEFINITION_TABLE_TITLE_PUBLISHED");
-	}
-
-	macro viewDefinitionPublicationStatus {
-        AssertElementPresent(
-            key_workflowDefinitionTitle = "Published",
-            locator1 = "WorkflowDefinition#DEFINITION_TABLE_TITLE");
-
-        if (isSet(published)) {
-			AssertElementPresent(
-			    key_workflowDefinitionTitle = "${workflowDefinitionTitle}",
-			    locator1 = "WorkflowDefinition#DEFINITION_TABLE_TITLE_PUBLISHED");
-		}
-        
-        if (isSet(notPublished)) {
-			AssertElementPresent(
-			    key_workflowDefinitionTitle = "${workflowDefinitionTitle}",
-			    locator1 = "WorkflowDefinition#DEFINITION_TABLE_TITLE_UNPUBLISHED");
-		}
 	}
 
 }

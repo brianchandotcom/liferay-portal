@@ -2668,4 +2668,53 @@ definition {
 
 	}
 
+	@description = "Verify that is possible to translate Label and Help text of Rich Text Field"
+	@priority = "4"
+	test CanTranslateLabelAndHelpTextOnRichTextField {
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Rich Text",
+			fieldName = "Rich Text");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Rich Text",
+			fieldHelp = "Help Text");
+
+		WebContentStructures.addTranslations(localeList = "pt-BR");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Rich Text",
+			fieldFieldLabelEdit = "Rich Text pt-BR");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Rich Text pt-BR",
+			fieldHelp = "Help Text pt-BR");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Rich Text",
+			fieldHelp = "Help Text",
+			fieldName = "Rich Text");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Rich Text pt-BR",
+			fieldHelp = "Help Text pt-BR",
+			fieldName = "Rich Text");
+
+
+	}
+
 }

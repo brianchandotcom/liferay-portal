@@ -166,6 +166,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>ASSERT_DELETION_TYPE_VALUE</td>
+		<td>//div[contains(@class, 'form-group')]//label[contains(.,'Deletion Type')]//..//input[contains(@value,'${key_value}')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>ASSERT_TWO_COLUMN_FIELD_ENTRY</td>
 		<td>//div[contains(@class,'col-md-6')]</td>
 		<td></td>

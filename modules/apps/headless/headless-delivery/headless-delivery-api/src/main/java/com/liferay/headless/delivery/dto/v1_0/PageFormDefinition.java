@@ -14,15 +14,12 @@
 
 package com.liferay.headless.delivery.dto.v1_0;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
@@ -48,35 +45,38 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName(description = "Represents a Page element.", value = "PageElement")
+@GraphQLName(
+	description = "Represent a definition of a Page form.",
+	value = "PageFormDefinition"
+)
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "PageElement")
-public class PageElement implements Serializable {
+@XmlRootElement(name = "PageFormDefinition")
+public class PageFormDefinition implements Serializable {
 
-	public static PageElement toDTO(String json) {
-		return ObjectMapperUtil.readValue(PageElement.class, json);
+	public static PageFormDefinition toDTO(String json) {
+		return ObjectMapperUtil.readValue(PageFormDefinition.class, json);
 	}
 
-	public static PageElement unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(PageElement.class, json);
+	public static PageFormDefinition unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(PageFormDefinition.class, json);
 	}
 
-	@Schema(description = "The page element's definition.")
+	@Schema(description = "The page form's configuration.")
 	@Valid
-	public Object getDefinition() {
-		return definition;
+	public FormConfig getFormConfig() {
+		return formConfig;
 	}
 
-	public void setDefinition(Object definition) {
-		this.definition = definition;
+	public void setFormConfig(FormConfig formConfig) {
+		this.formConfig = formConfig;
 	}
 
 	@JsonIgnore
-	public void setDefinition(
-		UnsafeSupplier<Object, Exception> definitionUnsafeSupplier) {
+	public void setFormConfig(
+		UnsafeSupplier<FormConfig, Exception> formConfigUnsafeSupplier) {
 
 		try {
-			definition = definitionUnsafeSupplier.get();
+			formConfig = formConfigUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -86,26 +86,26 @@ public class PageElement implements Serializable {
 		}
 	}
 
-	@GraphQLField(description = "The page element's definition.")
+	@GraphQLField(description = "The page form's configuration.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Object definition;
+	protected FormConfig formConfig;
 
-	@Schema(description = "A list of the page elements this page element has.")
+	@Schema(description = "The fragment style of a Page form.")
 	@Valid
-	public PageElement[] getPageElements() {
-		return pageElements;
+	public FragmentStyle getFragmentStyle() {
+		return fragmentStyle;
 	}
 
-	public void setPageElements(PageElement[] pageElements) {
-		this.pageElements = pageElements;
+	public void setFragmentStyle(FragmentStyle fragmentStyle) {
+		this.fragmentStyle = fragmentStyle;
 	}
 
 	@JsonIgnore
-	public void setPageElements(
-		UnsafeSupplier<PageElement[], Exception> pageElementsUnsafeSupplier) {
+	public void setFragmentStyle(
+		UnsafeSupplier<FragmentStyle, Exception> fragmentStyleUnsafeSupplier) {
 
 		try {
-			pageElements = pageElementsUnsafeSupplier.get();
+			fragmentStyle = fragmentStyleUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -115,37 +115,57 @@ public class PageElement implements Serializable {
 		}
 	}
 
-	@GraphQLField(
-		description = "A list of the page elements this page element has."
-	)
+	@GraphQLField(description = "The fragment style of a Page form.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected PageElement[] pageElements;
+	protected FragmentStyle fragmentStyle;
+
+	@Schema(description = "A list of fragment viewports of a Page form.")
+	@Valid
+	public FragmentViewport[] getFragmentViewports() {
+		return fragmentViewports;
+	}
+
+	public void setFragmentViewports(FragmentViewport[] fragmentViewports) {
+		this.fragmentViewports = fragmentViewports;
+	}
+
+	@JsonIgnore
+	public void setFragmentViewports(
+		UnsafeSupplier<FragmentViewport[], Exception>
+			fragmentViewportsUnsafeSupplier) {
+
+		try {
+			fragmentViewports = fragmentViewportsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "A list of fragment viewports of a Page form.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected FragmentViewport[] fragmentViewports;
 
 	@Schema(
-		description = "The page element's type (collection, collection item, column, drop zone, form, fragment, fragment drop zone, root, row, section or widget)."
+		description = "A flag that indicates whether the page fragment instance is indexed or not."
 	)
-	@Valid
-	public Type getType() {
-		return type;
+	public Boolean getIndexed() {
+		return indexed;
+	}
+
+	public void setIndexed(Boolean indexed) {
+		this.indexed = indexed;
 	}
 
 	@JsonIgnore
-	public String getTypeAsString() {
-		if (type == null) {
-			return null;
-		}
+	public void setIndexed(
+		UnsafeSupplier<Boolean, Exception> indexedUnsafeSupplier) {
 
-		return type.toString();
-	}
-
-	public void setType(Type type) {
-		this.type = type;
-	}
-
-	@JsonIgnore
-	public void setType(UnsafeSupplier<Type, Exception> typeUnsafeSupplier) {
 		try {
-			type = typeUnsafeSupplier.get();
+			indexed = indexedUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -156,10 +176,10 @@ public class PageElement implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "The page element's type (collection, collection item, column, drop zone, form, fragment, fragment drop zone, root, row, section or widget)."
+		description = "A flag that indicates whether the page fragment instance is indexed or not."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Type type;
+	protected Boolean indexed;
 
 	@Override
 	public boolean equals(Object object) {
@@ -167,13 +187,13 @@ public class PageElement implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof PageElement)) {
+		if (!(object instanceof PageFormDefinition)) {
 			return false;
 		}
 
-		PageElement pageElement = (PageElement)object;
+		PageFormDefinition pageFormDefinition = (PageFormDefinition)object;
 
-		return Objects.equals(toString(), pageElement.toString());
+		return Objects.equals(toString(), pageFormDefinition.toString());
 	}
 
 	@Override
@@ -188,40 +208,39 @@ public class PageElement implements Serializable {
 
 		sb.append("{");
 
-		if (definition != null) {
+		if (formConfig != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"definition\": ");
+			sb.append("\"formConfig\": ");
 
-			if (definition instanceof Map) {
-				sb.append(
-					JSONFactoryUtil.createJSONObject((Map<?, ?>)definition));
-			}
-			else if (definition instanceof String) {
-				sb.append("\"");
-				sb.append(_escape((String)definition));
-				sb.append("\"");
-			}
-			else {
-				sb.append(definition);
-			}
+			sb.append(String.valueOf(formConfig));
 		}
 
-		if (pageElements != null) {
+		if (fragmentStyle != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"pageElements\": ");
+			sb.append("\"fragmentStyle\": ");
+
+			sb.append(String.valueOf(fragmentStyle));
+		}
+
+		if (fragmentViewports != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"fragmentViewports\": ");
 
 			sb.append("[");
 
-			for (int i = 0; i < pageElements.length; i++) {
-				sb.append(String.valueOf(pageElements[i]));
+			for (int i = 0; i < fragmentViewports.length; i++) {
+				sb.append(String.valueOf(fragmentViewports[i]));
 
-				if ((i + 1) < pageElements.length) {
+				if ((i + 1) < fragmentViewports.length) {
 					sb.append(", ");
 				}
 			}
@@ -229,18 +248,14 @@ public class PageElement implements Serializable {
 			sb.append("]");
 		}
 
-		if (type != null) {
+		if (indexed != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"type\": ");
+			sb.append("\"indexed\": ");
 
-			sb.append("\"");
-
-			sb.append(type);
-
-			sb.append("\"");
+			sb.append(indexed);
 		}
 
 		sb.append("}");
@@ -250,51 +265,10 @@ public class PageElement implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.delivery.dto.v1_0.PageElement",
+		defaultValue = "com.liferay.headless.delivery.dto.v1_0.PageFormDefinition",
 		name = "x-class-name"
 	)
 	public String xClassName;
-
-	@GraphQLName("Type")
-	public static enum Type {
-
-		COLLECTION("Collection"), COLLECTION_ITEM("CollectionItem"),
-		COLUMN("Column"), DROP_ZONE("DropZone"), FORM("Form"),
-		FRAGMENT("Fragment"), FRAGMENT_DROP_ZONE("FragmentDropZone"),
-		ROOT("Root"), ROW("Row"), SECTION("Section"), WIDGET("Widget");
-
-		@JsonCreator
-		public static Type create(String value) {
-			if ((value == null) || value.equals("")) {
-				return null;
-			}
-
-			for (Type type : values()) {
-				if (Objects.equals(type.getValue(), value)) {
-					return type;
-				}
-			}
-
-			throw new IllegalArgumentException("Invalid enum value: " + value);
-		}
-
-		@JsonValue
-		public String getValue() {
-			return _value;
-		}
-
-		@Override
-		public String toString() {
-			return _value;
-		}
-
-		private Type(String value) {
-			_value = value;
-		}
-
-		private final String _value;
-
-	}
 
 	private static String _escape(Object object) {
 		return StringUtil.replace(

@@ -2718,7 +2718,7 @@ definition {
 	}
 
 	@description = "Verify that is possible to translate Label and Help text of Upload Field"
-	@priority = "5"
+	@priority = "4"
 	test CanTranslateLabelAndHelpTextOnUploadField {
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -2762,6 +2762,55 @@ definition {
 			fieldFieldLabel = "Upload pt-BR",
 			fieldHelp = "Help Text pt-BR",
 			fieldName = "Upload");
+
+
+	}
+
+	@description = "Verify that is possible to translate Label and Help text of Color Field"
+	@priority = "4"
+	test CanTranslateLabelAndHelpTextOnColorField {
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Color",
+			fieldName = "Color");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Color",
+			fieldHelp = "Help Text");
+
+		WebContentStructures.addTranslations(localeList = "pt-BR");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Color",
+			fieldFieldLabelEdit = "Color pt-BR");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Color pt-BR",
+			fieldHelp = "Help Text pt-BR");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Color",
+			fieldHelp = "Help Text",
+			fieldName = "Color");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Color pt-BR",
+			fieldHelp = "Help Text pt-BR",
+			fieldName = "Color");
 
 
 	}

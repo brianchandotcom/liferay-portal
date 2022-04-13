@@ -15,10 +15,10 @@
 package com.liferay.source.formatter.check;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.check.util.SourceUtil;
-
-import java.util.Objects;
 
 /**
  * @author Seiphon Wang
@@ -39,16 +39,18 @@ public class IncorrectFilePahCheck extends BaseFileCheck {
 		String relativePath = absolutePath.substring(rootDirName.length());
 
 		for (String path : relativePath.split("/")) {
-			String firstChar = path.substring(0, 1);
-
-			if (Objects.equals(firstChar, String.valueOf(CharPool.SPACE))) {
-				addMessage(fileName, "A file name can not start with a space.");
+			if (Validator.isNull(path)) {
+				continue;
 			}
 
-			String lastChar = path.substring(path.length() - 1);
+			if (path.endsWith(StringPool.SPACE) ||
+				path.startsWith(StringPool.SPACE)) {
 
-			if (Objects.equals(lastChar, String.valueOf(CharPool.SPACE))) {
-				addMessage(fileName, "A file name can not end with a space.");
+				addMessage(
+					fileName,
+					StringBundler.concat(
+						"Do not add leading/trailing spaces in file or folder ",
+						"names '", path, "'"));
 			}
 
 			for (char charactor : _ILLEGALCHARACTORS) {

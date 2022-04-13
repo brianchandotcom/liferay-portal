@@ -129,7 +129,14 @@ public class DLFolderItemSelectorView
 		if (themeDisplay.getScopeGroupId() != _getRepositoryGroupId(
 				itemSelectorCriterion.getRepositoryId())) {
 
-			folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+			Folder folder = _fetchFolder(folderId);
+
+			if ((folder == null) ||
+				(folder.getRepositoryId() != themeDisplay.getScopeGroupId())) {
+
+				folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+			}
+
 			repositoryId = themeDisplay.getScopeGroupId();
 		}
 

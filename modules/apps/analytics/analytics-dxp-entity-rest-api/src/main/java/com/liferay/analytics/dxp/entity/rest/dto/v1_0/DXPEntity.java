@@ -143,6 +143,34 @@ public class DXPEntity implements Serializable {
 	protected String id;
 
 	@Schema
+	public String getModifiedDate() {
+		return modifiedDate;
+	}
+
+	public void setModifiedDate(String modifiedDate) {
+		this.modifiedDate = modifiedDate;
+	}
+
+	@JsonIgnore
+	public void setModifiedDate(
+		UnsafeSupplier<String, Exception> modifiedDateUnsafeSupplier) {
+
+		try {
+			modifiedDate = modifiedDateUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String modifiedDate;
+
+	@Schema
 	public String getType() {
 		return type;
 	}
@@ -245,6 +273,20 @@ public class DXPEntity implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(id));
+
+			sb.append("\"");
+		}
+
+		if (modifiedDate != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"modifiedDate\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(modifiedDate));
 
 			sb.append("\"");
 		}

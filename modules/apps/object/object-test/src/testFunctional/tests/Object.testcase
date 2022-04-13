@@ -1,0 +1,71 @@
+@component-name = "portal-object"
+definition {
+
+	property portal.acceptance = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Object";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			ObjectAdmin.deleteAllCustomObjectsViaAPI();
+		}
+	}
+
+	@description = "LPS-135406 - Verify it is not possible to delete native fields of objects native"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CannotDeleteFieldsFromNativeObjects {
+
+		// TODO LPS-151497 CannotDeleteFieldsFromNativeObjects pending implementation
+
+	}
+
+	@description = "LPS-135406 - Verify it is the user is not able to delete a relationship of object native"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CannotDeleteRelationshipFromNativeObject {
+
+		// TODO LPS-151498 CannotDeleteRelationshipFromNativeObject pending implementation
+
+	}
+
+	@description = "LPS-135406 - Verify it is not possible to delete a relationship field of custom object from a native object"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CannotDeleteReleationshipFieldFromNativeObject {
+
+		// TODO LPS-151500 CannotDeleteReleationshipFieldFromNativeObject pending implementation
+
+	}
+
+	@description = "LPS-135406 - Verify it is possible to update the label of relationship field of custom object from a native object"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanUpdateRelationshipFieldLabelFromNativeObject {
+
+		// TODO LPS-151501 CanUpdateRelationshipFieldLabelFromNativeObject pending implementation
+
+	}
+
+	@description = "LPS-135406 - Verify it is possible to update the label of relationship of native object"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanUpdateRelationshipLavelFromNativeObject {
+
+		// TODO LPS-151499 CanUpdateRelationshipLavelFromNativeObject pending implementation
+
+	}
+
+}

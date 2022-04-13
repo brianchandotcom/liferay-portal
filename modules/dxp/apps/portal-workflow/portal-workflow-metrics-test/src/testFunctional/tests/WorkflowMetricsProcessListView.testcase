@@ -104,9 +104,6 @@ definition {
 			portlet = "Metrics");
 
 		WorkflowMetricsProcessListView.assertPaginationComponentPresent(pageNumberList = "1");
-
-
-		
 	}
 
 	@description = "LPS-86638 - Verify that pagination follows in asc/desc sequence"

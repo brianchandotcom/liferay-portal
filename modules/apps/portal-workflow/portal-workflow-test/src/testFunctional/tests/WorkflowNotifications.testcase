@@ -102,7 +102,7 @@ definition {
 			urlAppend = "web/minium",
 			userEmailAddress = "buyer@liferay.com");
 
-		CommerceNavigator.gotoMiniumSidebarItem(
+		Workflow.gotoMiniumSidebarItem(
 			menuItem = "Notifications",
 			userMenu = "true");
 

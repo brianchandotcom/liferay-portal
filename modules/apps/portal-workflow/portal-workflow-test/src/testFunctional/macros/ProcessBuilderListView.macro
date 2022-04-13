@@ -50,4 +50,22 @@ definition {
 			locator1 = "WorkflowDefinition#DEFINITION_TABLE_TITLE_PUBLISHED");
 	}
 
+	macro viewDefinitionPublicationStatus {
+        AssertElementPresent(
+            key_workflowDefinitionTitle = "Published",
+            locator1 = "WorkflowDefinition#DEFINITION_TABLE_TITLE");
+
+        if (isSet(published)) {
+			AssertElementPresent(
+			    key_workflowDefinitionTitle = "${workflowDefinitionTitle}",
+			    locator1 = "WorkflowDefinition#DEFINITION_TABLE_TITLE_PUBLISHED");
+		}
+        
+        if (isSet(notPublished)) {
+			AssertElementPresent(
+			    key_workflowDefinitionTitle = "${workflowDefinitionTitle}",
+			    locator1 = "WorkflowDefinition#DEFINITION_TABLE_TITLE_UNPUBLISHED");
+		}
+	}
+
 }

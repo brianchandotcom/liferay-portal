@@ -62,10 +62,6 @@ definition {
 	}
 
 	macro gotoMiniumSidebarItem {
-		if (isSet(userMenu)) {
-			MouseOver(locator1 = "CommerceAccelerators#MINIUM_SIDEBAR_USER_AVATAR");
-		}
-
 		ScrollBy(value1 = "0, -1000");
 
 		Click(

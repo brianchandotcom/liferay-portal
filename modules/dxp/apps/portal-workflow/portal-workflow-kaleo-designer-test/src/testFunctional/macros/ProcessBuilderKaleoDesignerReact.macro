@@ -820,6 +820,22 @@ definition {
 		Button.viewNotPresent(button = "Publish");
 	}
 
+	macro viewPublishButtonPresent {
+		AssertElementPresent(
+			key_text = "Publish",
+			locator1 = "Button#ANY");
+	}
+
+	macro viewSaveButtonPresent {
+		AssertElementPresent(locator1 = "KaleoDesigner#SAVE_BUTTON");
+	}
+
+	macro viewDefinitionTitle{
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "${definitionTitle}");
+	}
+
 	macro viewRequiredField {
 		AssertElementPresent(
 			key_requiredField = "${requiredField}",

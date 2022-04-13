@@ -356,6 +356,36 @@ public interface SXPBlueprintModel
 	public void setSchemaVersion(String schemaVersion);
 
 	/**
+	 * Returns the version of this sxp blueprint.
+	 *
+	 * @return the version of this sxp blueprint
+	 */
+	@AutoEscape
+	public String getVersion();
+
+	/**
+	 * Sets the version of this sxp blueprint.
+	 *
+	 * @param version the version of this sxp blueprint
+	 */
+	public void setVersion(String version);
+
+	/**
+	 * Returns the key of this sxp blueprint.
+	 *
+	 * @return the key of this sxp blueprint
+	 */
+	@AutoEscape
+	public String getKey();
+
+	/**
+	 * Sets the key of this sxp blueprint.
+	 *
+	 * @param key the key of this sxp blueprint
+	 */
+	public void setKey(String key);
+
+	/**
 	 * Returns the title of this sxp blueprint.
 	 *
 	 * @return the title of this sxp blueprint

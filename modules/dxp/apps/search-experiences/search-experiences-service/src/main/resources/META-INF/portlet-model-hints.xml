@@ -20,6 +20,8 @@
 			<hint-collection name="CLOB" />
 		</field>
 		<field name="schemaVersion" type="String" />
+		<field name="version" type="String" />
+		<field name="key" type="String" />
 		<field localized="true" name="title" type="String">
 			<hint name="max-length">500</hint>
 			<sanitize content-type="text/plain" modes="ALL" />
@@ -48,6 +50,8 @@
 		<field name="hidden" type="boolean" />
 		<field name="readOnly" type="boolean" />
 		<field name="schemaVersion" type="String" />
+		<field name="version" type="String" />
+		<field name="key" type="String" />
 		<field localized="true" name="title" type="String">
 			<hint name="max-length">500</hint>
 			<sanitize content-type="text/plain" modes="ALL" />

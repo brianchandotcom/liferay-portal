@@ -77,7 +77,7 @@ public class SXPElementCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -105,6 +105,10 @@ public class SXPElementCacheModel
 		sb.append(readOnly);
 		sb.append(", schemaVersion=");
 		sb.append(schemaVersion);
+		sb.append(", version=");
+		sb.append(version);
+		sb.append(", key=");
+		sb.append(key);
 		sb.append(", title=");
 		sb.append(title);
 		sb.append(", type=");
@@ -178,6 +182,20 @@ public class SXPElementCacheModel
 			sxpElementImpl.setSchemaVersion(schemaVersion);
 		}
 
+		if (version == null) {
+			sxpElementImpl.setVersion("");
+		}
+		else {
+			sxpElementImpl.setVersion(version);
+		}
+
+		if (key == null) {
+			sxpElementImpl.setKey("");
+		}
+		else {
+			sxpElementImpl.setKey(key);
+		}
+
 		if (title == null) {
 			sxpElementImpl.setTitle("");
 		}
@@ -215,6 +233,8 @@ public class SXPElementCacheModel
 
 		readOnly = objectInput.readBoolean();
 		schemaVersion = objectInput.readUTF();
+		version = objectInput.readUTF();
+		key = objectInput.readUTF();
 		title = objectInput.readUTF();
 
 		type = objectInput.readInt();
@@ -274,6 +294,20 @@ public class SXPElementCacheModel
 			objectOutput.writeUTF(schemaVersion);
 		}
 
+		if (version == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(version);
+		}
+
+		if (key == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(key);
+		}
+
 		if (title == null) {
 			objectOutput.writeUTF("");
 		}
@@ -299,6 +333,8 @@ public class SXPElementCacheModel
 	public boolean hidden;
 	public boolean readOnly;
 	public String schemaVersion;
+	public String version;
+	public String key;
 	public String title;
 	public int type;
 	public int status;

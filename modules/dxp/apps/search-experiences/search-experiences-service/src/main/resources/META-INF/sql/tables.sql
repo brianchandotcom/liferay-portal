@@ -11,6 +11,8 @@ create table SXPBlueprint (
 	description STRING null,
 	elementInstancesJSON TEXT null,
 	schemaVersion VARCHAR(75) null,
+	version VARCHAR(75) null,
+	key_ VARCHAR(75) null,
 	title STRING null,
 	status INTEGER,
 	statusByUserId LONG,
@@ -32,6 +34,8 @@ create table SXPElement (
 	hidden_ BOOLEAN,
 	readOnly BOOLEAN,
 	schemaVersion VARCHAR(75) null,
+	version VARCHAR(75) null,
+	key_ VARCHAR(75) null,
 	title STRING null,
 	type_ INTEGER,
 	status INTEGER

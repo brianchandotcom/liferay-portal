@@ -382,6 +382,36 @@ public interface SXPElementModel
 	public void setSchemaVersion(String schemaVersion);
 
 	/**
+	 * Returns the version of this sxp element.
+	 *
+	 * @return the version of this sxp element
+	 */
+	@AutoEscape
+	public String getVersion();
+
+	/**
+	 * Sets the version of this sxp element.
+	 *
+	 * @param version the version of this sxp element
+	 */
+	public void setVersion(String version);
+
+	/**
+	 * Returns the key of this sxp element.
+	 *
+	 * @return the key of this sxp element
+	 */
+	@AutoEscape
+	public String getKey();
+
+	/**
+	 * Sets the key of this sxp element.
+	 *
+	 * @param key the key of this sxp element
+	 */
+	public void setKey(String key);
+
+	/**
 	 * Returns the title of this sxp element.
 	 *
 	 * @return the title of this sxp element

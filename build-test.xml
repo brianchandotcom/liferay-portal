@@ -12134,14 +12134,14 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 
 									<echo file="${create.sh.file.path}">
 										<![CDATA[
-										#!/bin/bash
+											#!/bin/bash
 
-										db2 disconnect lportal
+											db2 disconnect lportal
 
-										db2 drop db lportal
+											db2 drop db lportal
 
-										db2 -f/tmp/create.sql -st
-									]]>
+											db2 -f/tmp/create.sql -st
+										]]>
 									</echo>
 
 									<if>
@@ -12149,8 +12149,8 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 										<then>
 											<echo file="${create.sh.file.path}">
 												<![CDATA[
-												db2 drop db lportal${databases.size}
-											]]>
+													db2 drop db lportal${databases.size}
+												]]>
 											</echo>
 										</then>
 									</if>

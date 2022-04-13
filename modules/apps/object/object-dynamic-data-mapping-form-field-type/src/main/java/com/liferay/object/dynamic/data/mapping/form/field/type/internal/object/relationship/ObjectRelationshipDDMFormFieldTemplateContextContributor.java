@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -273,12 +272,10 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 					getPersistedModelLocalService(
 						objectDefinition.getClassName());
 
-			PersistedModel persistedModel =
-				persistedModelLocalService.getPersistedModel(
-					GetterUtil.getLong(value));
-
 			JSONObject jsonObject = _jsonFactory.createJSONObject(
-				_jsonFactory.looseSerialize(persistedModel));
+				_jsonFactory.looseSerialize(
+					persistedModelLocalService.getPersistedModel(
+						GetterUtil.getLong(value))));
 
 			return jsonObject.getString(
 				_getObjectFieldDBColumnName(objectDefinition));

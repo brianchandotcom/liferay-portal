@@ -25,6 +25,10 @@ definition {
 			agreeToTermsAndAnswerReminderQuery = "true",
 			requireReset = "false",
 			userEmailAddress = "userea@liferay.com");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
 	}
 
 	tearDown {
@@ -50,10 +54,6 @@ definition {
 
 	@priority = "4"
 	test AnonymizeAllEntries {
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title",
@@ -185,12 +185,6 @@ definition {
 	test AnonymizeEntryFromApplication {
 		property portal.acceptance = "true";
 
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
-
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.addCP(
@@ -225,10 +219,6 @@ definition {
 	@priority = "2"
 	test AppsWithNoEntriesAreDisabledInNewDataExport {
 		task ("Given sign in as New User and add entries supported by GDPR") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea@liferay.com",
-				userLoginFullName = "userfn userln");
-
 			JSONBlog.addEntry(
 				entryContent = "Blogs Entry Content",
 				entryTitle = "Blogs Entry Title",
@@ -303,12 +293,6 @@ definition {
 	@description = "This test anonymizes all entries from an application"
 	@priority = "3"
 	test CanAnonymizeAllEntriesFromAnApplication {
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
-
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.jpeg,Document_2.docx,Document_3.mp3");
@@ -346,12 +330,6 @@ definition {
 	@description = "This test anonymizes all staged data from an application, test with DM entries."
 	@priority = "3"
 	test CanAnonymizeAllStagedDataFromDM {
-		User.logoutPG();
-
-		User.firstLoginUI(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
-
 		JSONGroup.addGroup(groupName = "Site Name");
 
 		JSONLayout.addPublicLayout(
@@ -418,10 +396,6 @@ definition {
 	@priority = "3"
 	test CanAnonymizeARelatedAsset {
 		task ("Login as user whose data will be deleted and add a blog entry and document to be added as Related Assets") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea@liferay.com",
-				userLoginFullName = "userfn userln");
-
 			JSONBlog.addEntry(
 				entryContent = "Blogs Entry Content",
 				entryTitle = "Blogs Entry Title",
@@ -529,12 +503,6 @@ definition {
 	@priority = "3"
 	test CanAnonymizeASingleStagedAndLiveWebContentEntry {
 		task ("Given Publish the staged web content entries to live as a new admin user") {
-			User.logoutPG();
-
-			User.firstLoginUI(
-				password = "test",
-				userEmailAddress = "userea@liferay.com");
-
 			JSONGroup.addGroup(groupName = "Site Name");
 
 			JSONLayout.addPublicLayout(
@@ -624,10 +592,6 @@ definition {
 	@description = "LPS-77748"
 	@priority = "3"
 	test CanAnonymizeMultipleEntriesFromAnApplication {
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMFolder.addCP(dmFolderName = "Folder1");
@@ -675,10 +639,6 @@ definition {
 	@description = "This test anonymizes only one entry from an application via the Info panel"
 	@priority = "2"
 	test CanAnonymizeViaInfoPanel {
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
 		Blogs.addEntry(
@@ -718,12 +678,6 @@ definition {
 	@description = "This test deletes multiple staged data from an application, tests with Blogs and DM entries."
 	@priority = "3"
 	test CanDeleteAllStagedDataFromAnApplication {
-		User.logoutPG();
-
-		User.firstLoginUI(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
-
 		JSONGroup.addGroup(groupName = "Site Name");
 
 		JSONLayout.addPublicLayout(
@@ -814,10 +768,6 @@ definition {
 	@description = "This test deletes and anonymizes all entries from all applications"
 	@priority = "3"
 	test CanDeleteAndAnonymizeAllEntries {
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.addCP(
@@ -850,10 +800,6 @@ definition {
 	@priority = "3"
 	test CanDeleteAnExportProcess {
 		task ("Log in as new user and create data across several different applications") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea@liferay.com",
-				userLoginFullName = "userfn userln");
-
 			JSONBlog.addEntry(
 				entryContent = "Blogs Entry Content",
 				entryTitle = "Blogs Entry Title",
@@ -939,10 +885,6 @@ definition {
 	@priority = "3"
 	test CanDeleteARelatedAsset {
 		task ("Login as user whose data will be deleted and add a blog entry and document to be added as Related Assets") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea@liferay.com",
-				userLoginFullName = "userfn userln");
-
 			JSONBlog.addEntry(
 				entryContent = "Blogs Entry Content",
 				entryTitle = "Blogs Entry Title",
@@ -1027,12 +969,6 @@ definition {
 	@priority = "3"
 	test CanDeleteASingleStagedAndLiveBlogsEntry {
 		task ("Given Publish the staged blogs entries to live as a new admin user") {
-			User.logoutPG();
-
-			User.firstLoginUI(
-				password = "test",
-				userEmailAddress = "userea@liferay.com");
-
 			JSONGroup.addGroup(groupName = "Site Name");
 
 			JSONLayout.addPublicLayout(
@@ -1114,10 +1050,6 @@ definition {
 	@description = "This is a use case for LPS-77748. This test deletes multiple selected entries from a single application."
 	@priority = "3"
 	test CanDeleteMultipleEntriesFromAnApplication {
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMFolder.addCP(dmFolderName = "Folder1");
@@ -1161,10 +1093,6 @@ definition {
 	@priority = "2"
 	test CanFilterAndOrderExportProcesses {
 		task ("Sign in as New User and create data from various applications") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea@liferay.com",
-				userLoginFullName = "userfn userln");
-
 			JSONBlog.addEntry(
 				entryContent = "Blogs Entry Content",
 				entryTitle = "Blogs Entry Title",
@@ -1239,10 +1167,6 @@ definition {
 	@description = "This test filters application to Forms, Web Content and Contacts and views all filtered data in Review Data section"
 	@priority = "3"
 	test CanFilterAndViewData {
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
 			portlet = "Forms");
@@ -1370,10 +1294,6 @@ definition {
 	@description = "LPS-77749"
 	@priority = "2"
 	test CanOrderDataInViewData {
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.addCP(
@@ -1439,10 +1359,6 @@ definition {
 	@priority = "3"
 	test CanPublishToLiveADeletedLiveEntry {
 		task ("Given add staged entry with related asset and publish to live this entry.") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea@liferay.com",
-				userLoginFullName = "userfn userln");
-
 			JSONGroup.addGroup(groupName = "Site Name");
 
 			JSONLayout.addPublicLayout(
@@ -1514,12 +1430,6 @@ definition {
 
 	@priority = "4"
 	test DeleteAllEntriesFromInstanceScope {
-		User.logoutPG();
-
-		User.firstLoginUI(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
-
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Announcements Page");
@@ -1576,12 +1486,6 @@ definition {
 	test DeleteAllEntriesFromPersonalSiteScope {
 		property test.name.skip.portal.instance = "GDPR#DeleteEntryFromPersonalSiteScope";
 
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
-
 		UserBar.gotoDropdownItem(dropdownItem = "My Profile");
 
 		ProductMenu.gotoPortlet(
@@ -1636,12 +1540,6 @@ definition {
 
 	@priority = "4"
 	test DeleteAllEntriesFromRegularSitesScope {
-		User.logoutPG();
-
-		User.firstLoginUI(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
-
 		JSONGroup.addGroup(groupName = "Site Name");
 
 		JSONLayout.addPublicLayout(
@@ -1687,12 +1585,6 @@ definition {
 	test DeleteEntryFromApplication {
 		property portal.acceptance = "true";
 
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
-
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title",
@@ -1726,12 +1618,6 @@ definition {
 	@priority = "4"
 	test EditEntryFromApplication {
 		ProductMenuHelper.openProductMenu();
-
-		User.logoutPG();
-
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -1779,10 +1665,6 @@ definition {
 	@priority = "3"
 	test EntriesAreStillAnonymousAfterActivatingUser {
 		task ("Sign in as User and add DM folder1 and Document_2.docx.") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea@liferay.com",
-				userLoginFullName = "userfn userln");
-
 			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 			DMFolder.addCP(dmFolderName = "Folder1");
@@ -1869,10 +1751,6 @@ definition {
 	@description = "LPS-77750 This test asserts that the details of the entry display when user clicks on the Info icon."
 	@priority = "3"
 	test EntryDetailsDisplayInInfoPanel {
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMFolder.addCP(
@@ -1929,10 +1807,6 @@ definition {
 	@priority = "4"
 	test ExportAllEntries {
 		property portal.acceptance = "true";
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -2067,10 +1941,6 @@ definition {
 	@priority = "2"
 	test PaginationWorksInExportPersonalData {
 		task ("Log in as new user and create data across several different applications") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea@liferay.com",
-				userLoginFullName = "userfn userln");
-
 			JSONBlog.addEntry(
 				entryContent = "Blogs Entry Content",
 				entryTitle = "Blogs Entry Title",
@@ -2189,6 +2059,10 @@ definition {
 		property portal.release = "false";
 
 		task ("Bring up the New Data Export page") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
 			User.openUsersAdmin();
 
 			User.exportPersonalDataCP(
@@ -2255,10 +2129,6 @@ definition {
 	@description = "LPS-91766. This test asserts that the Remaining Items count under Status Summary is accurate"
 	@priority = "3"
 	test RemainingItemsCountIsAccurate {
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.jpeg,Document_2.docx,Document_3.mp3,Document_4.txt");

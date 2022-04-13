@@ -107,7 +107,7 @@ public class ExportImportPortletConfigurationIcon
 
 	@Override
 	public double getWeight() {
-		return 15.0;
+		return 102;
 	}
 
 	@Override

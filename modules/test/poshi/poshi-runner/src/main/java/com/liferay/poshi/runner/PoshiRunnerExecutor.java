@@ -859,7 +859,10 @@ public class PoshiRunnerExecutor {
 				List<String> parameterNames =
 					seleniumMethod.getParameterNames();
 
-				argument = parameterNames.get(i);
+				String parameterName = parameterNames.get(i);
+
+				argument = PoshiVariablesUtil.getStringFromCommandMap(
+					parameterName);
 			}
 			else {
 				argument = PoshiVariablesUtil.getReplacedCommandVarsString(

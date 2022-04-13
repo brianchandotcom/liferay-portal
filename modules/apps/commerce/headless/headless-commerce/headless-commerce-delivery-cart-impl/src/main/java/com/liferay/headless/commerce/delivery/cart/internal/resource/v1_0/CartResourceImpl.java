@@ -361,13 +361,14 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 			commerceOrder.getExternalReferenceCode(),
 			commerceOrder.getCommerceOrderId(),
 			commerceOrder.getBillingAddressId(),
-			commerceOrder.getShippingAddressId(),
 			commerceOrder.getCommercePaymentMethodKey(),
 			commerceOrder.getCommerceShippingMethodId(),
-			commerceOrder.getShippingOptionName(),
-			commerceOrder.getPurchaseOrderNumber(), commerceOrder.getSubtotal(),
-			commerceOrder.getShippingAmount(), commerceOrder.getTotal(),
-			commerceOrder.getAdvanceStatus(), commerceContext);
+			commerceOrder.getShippingAddressId(),
+			commerceOrder.getAdvanceStatus(),
+			commerceOrder.getPurchaseOrderNumber(),
+			commerceOrder.getShippingAmount(),
+			commerceOrder.getShippingOptionName(), commerceOrder.getSubtotal(),
+			commerceOrder.getTotal(), commerceContext);
 	}
 
 	private void _addOrUpdateCommerceOrderItem(
@@ -440,13 +441,14 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 				commerceOrder.getExternalReferenceCode(),
 				commerceOrder.getCommerceOrderId(),
 				commerceOrder.getShippingAddressId(),
-				commerceOrder.getShippingAddressId(),
 				commerceOrder.getCommercePaymentMethodKey(),
 				commerceOrder.getCommerceShippingMethodId(),
-				commerceOrder.getShippingOptionName(),
+				commerceOrder.getShippingAddressId(),
+				commerceOrder.getAdvanceStatus(),
 				commerceOrder.getPurchaseOrderNumber(),
-				commerceOrder.getSubtotal(), commerceOrder.getShippingAmount(),
-				commerceOrder.getTotal(), commerceOrder.getAdvanceStatus(),
+				commerceOrder.getShippingAmount(),
+				commerceOrder.getShippingOptionName(),
+				commerceOrder.getSubtotal(), commerceOrder.getTotal(),
 				commerceContext);
 		}
 		else {
@@ -485,13 +487,14 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 			commerceOrder.getExternalReferenceCode(),
 			commerceOrder.getCommerceOrderId(),
 			commerceOrder.getBillingAddressId(),
-			commerceOrder.getShippingAddressId(),
 			commerceOrder.getCommercePaymentMethodKey(),
 			commerceOrder.getCommerceShippingMethodId(),
-			commerceOrder.getShippingOptionName(),
-			commerceOrder.getPurchaseOrderNumber(), commerceOrder.getSubtotal(),
-			commerceOrder.getShippingAmount(), commerceOrder.getTotal(),
-			commerceOrder.getAdvanceStatus(), commerceContext);
+			commerceOrder.getShippingAddressId(),
+			commerceOrder.getAdvanceStatus(),
+			commerceOrder.getPurchaseOrderNumber(),
+			commerceOrder.getShippingAmount(),
+			commerceOrder.getShippingOptionName(), commerceOrder.getSubtotal(),
+			commerceOrder.getTotal(), commerceContext);
 	}
 
 	private long _getCommerceOrderTypeId(Cart cart) throws Exception {
@@ -725,18 +728,20 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 				cart.getBillingAddressId(),
 				commerceOrder.getBillingAddressId()),
 			GetterUtil.get(
-				cart.getShippingAddressId(),
-				commerceOrder.getShippingAddressId()),
-			GetterUtil.get(
 				cart.getPaymentMethod(),
 				commerceOrder.getCommercePaymentMethodKey()),
 			commerceShippingMethodId,
 			GetterUtil.get(
+				cart.getShippingAddressId(),
+				commerceOrder.getShippingAddressId()),
+			commerceOrder.getAdvanceStatus(),
+			commerceOrder.getPurchaseOrderNumber(),
+			commerceOrder.getShippingAmount(),
+			GetterUtil.get(
 				cart.getShippingOption(),
 				commerceOrder.getShippingOptionName()),
-			commerceOrder.getPurchaseOrderNumber(), commerceOrder.getSubtotal(),
-			commerceOrder.getShippingAmount(), commerceOrder.getTotal(),
-			commerceOrder.getAdvanceStatus(), commerceContext);
+			commerceOrder.getSubtotal(), commerceOrder.getTotal(),
+			commerceContext);
 
 		// Expando
 

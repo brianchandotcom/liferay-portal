@@ -625,12 +625,12 @@ public class CommerceAddressLocalServiceImpl
 
 			commerceOrderLocalService.updateCommerceOrder(
 				null, commerceOrder.getCommerceOrderId(), billingAddressId,
-				shippingAddressId, commerceOrder.getCommercePaymentMethodKey(),
-				commerceShippingMethodId, shippingOptionName,
-				commerceOrder.getPurchaseOrderNumber(),
-				commerceOrder.getSubtotal(), shippingPrice,
-				commerceOrder.getTotal(), commerceOrder.getAdvanceStatus(),
-				null);
+				commerceOrder.getCommercePaymentMethodKey(),
+				commerceShippingMethodId, shippingAddressId,
+				commerceOrder.getAdvanceStatus(),
+				commerceOrder.getPurchaseOrderNumber(), shippingPrice,
+				shippingOptionName, commerceOrder.getSubtotal(),
+				commerceOrder.getTotal(), null);
 		}
 	}
 

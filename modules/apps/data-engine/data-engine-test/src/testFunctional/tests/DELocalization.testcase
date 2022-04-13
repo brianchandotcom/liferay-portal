@@ -3407,4 +3407,102 @@ definition {
 
 	}
 
+	@description = "Verify that is possible to translate fields inside a Fields Group"
+	@priority = "5"
+	test CanTranslateFieldsOnFieldsGroup {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Text",
+			fieldName = "Text");
+
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "Numeric",
+			fieldName = "Numeric",
+			targetFieldLabel = "Text");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Text",
+			fieldHelp = "Help Text",
+			fieldPlaceholder = "Placeholder Text");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Numeric",
+			fieldHelp = "Help Text");
+
+		for (var language : list "pt-BR,zh-CN") {
+			WebContentStructures.addTranslations(localeList = "${language}");
+
+			PortletEntry.changeLocale(locale = "${language}");
+
+			DataEngine.editFieldLabel(
+			fieldFieldLabel = "Text",
+			fieldFieldLabelEdit = "Text ${language}");
+
+			DataEngine.editFieldTip(
+				fieldFieldLabel = "Text ${language}",
+				fieldHelp = "Help Text ${language}",
+				fieldPlaceholder = "Placeholder Text ${language}");
+
+			DataEngine.editFieldLabel(
+			fieldFieldLabel = "Numeric",
+			fieldFieldLabelEdit = "Numeric ${language}");
+
+			DataEngine.editFieldTip(
+				fieldFieldLabel = "Numeric ${language}",
+				fieldHelp = "Help Text ${language}");
+		}
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DEBuilder.assertFieldsGroup(
+			fieldGroupDepth = "1",
+			fieldGroupLabel = "Fields Group",
+			fieldsLabelList = "Text,Numeric");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Text",
+			fieldHelp = "Help Text",
+			fieldName = "Text",
+			fieldPlaceholder = "Placeholder Text");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Numeric",
+			fieldHelp = "Help Text",
+			fieldName = "Numeric");
+
+		
+		for (var language : list "pt-BR,zh-CN") {
+		
+
+			PortletEntry.changeLocale(locale = "${language}");
+
+			DEBuilder.assertFieldsGroup(
+				fieldGroupDepth = "1",
+				fieldGroupLabel = "Fields Group",
+				fieldsLabelList = "Text ${language},Numeric ${language}");
+
+			DataEngine.viewField(
+				fieldFieldLabel = "Text ${language}",
+				fieldHelp = "Help Text ${language}",
+				fieldName = "Text",
+				fieldPlaceholder = "Placeholder Text ${language}");
+
+			DataEngine.viewField(
+				fieldFieldLabel = "Numeric ${language}",
+				fieldHelp = "Help Text ${language}",
+				fieldName = "Numeric");
+		}
+
+		
+
+		
+	}
+
 }

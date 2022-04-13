@@ -33,11 +33,13 @@ definition {
 			locator1 = "CommerceEntry#NAME_FIELD_SPECIAL",
 			value1 = "${termsAndConditionName}");
 
-		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+		if (isSet(termsAndConditionDescription)) {
+			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
-		AssertTextEquals(
-			locator1 = "CKEditor#BODY",
-			value1 = "${termsAndConditionDescription}");
+			AssertTextEquals(
+				locator1 = "CKEditor#BODY",
+				value1 = "${termsAndConditionDescription}");
+		}
 
 		if (isSet(valuePosition)) {
 			AssertTextEquals(
@@ -64,6 +66,14 @@ definition {
 			value1 = "${valuePosition}");
 
 		Click(locator1 = "Button#CANCEL_SPECIAL");
+	}
+
+	macro changeLocale {
+		Click(locator1 = "Button#LOCALIZATION_GENERIC_1");
+
+		Click(
+			key_locale = "${locale}",
+			locator1 = "Translation#LOCALIZATION_NAME");
 	}
 
 	macro deleteTermsAndCondition {

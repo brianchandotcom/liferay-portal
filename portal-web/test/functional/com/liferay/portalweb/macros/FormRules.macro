@@ -412,6 +412,38 @@ definition {
 		AssertElementNotPresent(locator1 = "FormRules#RULE_BUILDER_SUMMARY_CONDITION");
 	}
 
+	macro viewFieldNotPresentAtActions {
+		var key_actionRowNumber = "${actionRowNumber}";
+		var key_selectValue = "${actionTarget}";
+		var key_fieldColumnNumber = "2";
+
+		FormRules.selectAction(
+			action = "${action}",
+			actionRowNumber = "${actionRowNumber}");
+
+		Click(locator1 = "FormRules#RULE_BUILDER_ACTION_FIELD");
+
+		AssertElementNotPresent(
+			locator1 = "FormRules#RULE_BUILDER_FIELD_SELECT_VALUE",
+			value1 = "${actionTarget}");
+	}
+
+	macro viewFieldPresentAtActions {
+		var key_actionRowNumber = "${actionRowNumber}";
+		var key_selectValue = "${actionTarget}";
+		var key_fieldColumnNumber = "2";
+
+		FormRules.selectAction(
+			action = "${action}",
+			actionRowNumber = "${actionRowNumber}");
+
+		Click(locator1 = "FormRules#RULE_BUILDER_ACTION_FIELD");
+
+		AssertElementPresent(
+			locator1 = "FormRules#RULE_BUILDER_FIELD_SELECT_VALUE",
+			value1 = "${actionTarget}");
+	}
+
 	macro viewInactiveSaveButton {
 		AssertElementPresent(locator1 = "FormRules#RULE_BUILDER_SAVE_BUTTON_DISABLED");
 	}

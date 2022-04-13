@@ -352,6 +352,93 @@ definition {
 			fieldReference = "Separator1234");
 	}
 
+	@description = "Verify if the rule actions are not allowed work correctly"
+	@priority = "4"
+	test RulesActionsNotAllowed {
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Text");
+
+		FormViewBuilder.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Separator");
+
+		FormsAdminNavigator.gotoRules();
+
+		FormRules.addRule();
+
+		FormRules.configureConditionOptions(
+			conditionField = "Text",
+			conditionFieldValue = "ABC",
+			conditionOperator = "Is Equal To",
+			conditionRowNumber = "1",
+			conditionValueType = "Value");
+
+		FormRules.viewFieldNotPresentAtActions(
+			action = "Require",
+			actionRowNumber = "1",
+			actionTarget = "Separator");
+
+		FormRules.viewFieldNotPresentAtActions(
+			action = "Calculate",
+			actionRowNumber = "1",
+			actionTarget = "Separator");
+
+		FormRules.viewFieldNotPresentAtActions(
+			action = "Autofill",
+			actionRowNumber = "1",
+			actionTarget = "Separator");
+
+		FormRules.viewFieldPresentAtActions(
+			action = "Enable",
+			actionRowNumber = "1",
+			actionTarget = "Separator");
+
+		FormRules.viewFieldPresentAtActions(
+			action = "Show",
+			actionRowNumber = "1",
+			actionTarget = "Separator");
+
+		FormRules.configureActionOptions(
+			action = "Show",
+			actionRowNumber = "1",
+			actionTarget = "Separator");
+
+		FormRules.save();
+
+		FormRules.viewSummary(
+			action = "Show",
+			actionTarget = "Separator",
+			conditionField = "Text",
+			conditionFieldConstant = "ABC",
+			conditionOperator = "Is Equal To",
+			ruleNumber = "1");
+
+		FormsAdminNavigator.gotoFormBuilder();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.editText(
+			fieldName = "Text",
+			fieldValue = "testing");
+
+		FormFields.viewFieldNotVisible(fieldName = "Separator");
+
+		FormFields.editText(
+			fieldName = "Text",
+			fieldValue = "ABC");
+
+		FormFields.viewSeparator(fieldLabel = "Separator");
+	}
+
 	@description = "Verify that the Field Type can be changed"
 	@ignore = "Test Stub"
 	@priority = "5"

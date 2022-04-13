@@ -20,7 +20,6 @@ import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBCategoryLocalService;
 import com.liferay.message.boards.service.MBMessageLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -44,13 +43,11 @@ public class MBMessageUADTestUtil {
 			MBMessageLocalService mbMessageLocalService, long userId)
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				TestPropsValues.getGroupId());
-
 		MBCategory mbCategory = mbCategoryLocalService.addCategory(
 			userId, 0, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), serviceContext);
+			RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getGroupId()));
 
 		return addMBMessage(
 			mbMessageLocalService, userId, mbCategory.getCategoryId());
@@ -61,14 +58,12 @@ public class MBMessageUADTestUtil {
 			long mbCategoryId)
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				TestPropsValues.getGroupId());
-
 		return mbMessageLocalService.addMessage(
 			userId, RandomTestUtil.randomString(), TestPropsValues.getGroupId(),
 			mbCategoryId, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), serviceContext);
+			RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getGroupId()));
 	}
 
 	public static MBMessage addMBMessage(
@@ -79,15 +74,13 @@ public class MBMessageUADTestUtil {
 		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
 			Collections.emptyList();
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				TestPropsValues.getGroupId());
-
 		return mbMessageLocalService.addMessage(
 			userId, RandomTestUtil.randomString(), TestPropsValues.getGroupId(),
 			mbCategoryId, mbThreadId, 0, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), MBMessageConstants.DEFAULT_FORMAT,
-			inputStreamOVPs, false, 0.0, false, serviceContext);
+			inputStreamOVPs, false, 0.0, false,
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getGroupId()));
 	}
 
 	public static MBMessage addMBMessageWithStatusByUserId(
@@ -99,13 +92,11 @@ public class MBMessageUADTestUtil {
 		MBMessage mbMessage = addMBMessage(
 			mbCategoryLocalService, mbMessageLocalService, userId);
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				TestPropsValues.getGroupId());
-
 		return mbMessageLocalService.updateStatus(
 			statusByUserId, mbMessage.getMessageId(),
-			WorkflowConstants.STATUS_APPROVED, serviceContext,
+			WorkflowConstants.STATUS_APPROVED,
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getGroupId()),
 			HashMapBuilder.<String, Serializable>put(
 				WorkflowConstants.CONTEXT_URL, "http://localhost"
 			).build());

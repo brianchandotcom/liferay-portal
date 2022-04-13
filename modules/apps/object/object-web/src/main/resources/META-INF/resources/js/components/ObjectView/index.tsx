@@ -17,6 +17,7 @@ import ClayTabs from '@clayui/tabs';
 import {fetch} from 'frontend-js-web';
 import React, {useContext, useEffect, useState} from 'react';
 
+import {invalidateRequired} from '../../hooks/useForm';
 import SidePanelContent from '../SidePanelContent';
 import BasicInfoScreen from './BasicInfoScreen/BasicInfoScreen';
 import {DefaultSortScreen} from './DefaultSortScreen/DefaultSortScreen';
@@ -43,6 +44,8 @@ const HEADERS = new Headers({
 	'Accept': 'application/json',
 	'Content-Type': 'application/json',
 });
+
+const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 const CustomView: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 	const [{isViewOnly, objectView, objectViewId}, dispatch] = useContext(
@@ -158,6 +161,15 @@ const CustomView: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 		const {objectViewColumns} = newObjectView;
 
 		const parentWindow = Liferay.Util.getOpener();
+
+		if (invalidateRequired(objectView.name[defaultLanguageId])) {
+			parentWindow.Liferay.Util.openToast({
+				message: Liferay.Language.get('a-name-is-required'),
+				type: 'danger',
+			});
+
+			return;
+		}
 
 		if (!objectView.defaultObjectView || objectViewColumns.length !== 0) {
 			const response = await fetch(

@@ -15,6 +15,7 @@
 import ClayForm, {ClayCheckbox} from '@clayui/form';
 import React, {useContext} from 'react';
 
+import {invalidateRequired} from '../../../hooks/useForm';
 import Card from '../../Card/Card';
 import Input from '../../Form/Input';
 import LayoutContext, {TYPES} from '../context';
@@ -24,6 +25,12 @@ const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 const InfoScreen: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 	const [{isViewOnly, objectLayout}, dispatch] = useContext(LayoutContext);
 
+	let error: string | undefined;
+
+	if (invalidateRequired(objectLayout.name[defaultLanguageId])) {
+		error = Liferay.Language.get('required');
+	}
+
 	return (
 		<Card>
 			<Card.Header title={Liferay.Language.get('basic-info')} />
@@ -32,6 +39,7 @@ const InfoScreen: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 				<ClayForm.Group>
 					<Input
 						disabled={isViewOnly}
+						error={error}
 						id="objectLayoutName"
 						label={Liferay.Language.get('name')}
 						name="name"

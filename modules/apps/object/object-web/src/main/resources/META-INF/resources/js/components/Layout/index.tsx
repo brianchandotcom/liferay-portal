@@ -17,6 +17,7 @@ import ClayTabs from '@clayui/tabs';
 import {fetch} from 'frontend-js-web';
 import React, {useContext, useEffect, useState} from 'react';
 
+import {invalidateRequired} from '../../hooks/useForm';
 import {TabsVisitor} from '../../utils/visitor';
 import SidePanelContent from '../SidePanelContent';
 import InfoScreen from './InfoScreen/InfoScreen';
@@ -44,6 +45,8 @@ const HEADERS = new Headers({
 	'Accept': 'application/json',
 	'Content-Type': 'application/json',
 });
+
+const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 type TNormalizeObjectFields = ({
 	objectFields,
@@ -205,6 +208,15 @@ const Layout: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 		);
 
 		const parentWindow = Liferay.Util.getOpener();
+
+		if (invalidateRequired(objectLayout.name[defaultLanguageId])) {
+			parentWindow.Liferay.Util.openToast({
+				message: Liferay.Language.get('a-name-is-required'),
+				type: 'danger',
+			});
+
+			return;
+		}
 
 		if (!hasFieldsInLayout) {
 			parentWindow.Liferay.Util.openToast({

@@ -15,6 +15,7 @@
 import ClayForm, {ClayCheckbox} from '@clayui/form';
 import React, {useContext} from 'react';
 
+import {invalidateRequired} from '../../../hooks/useForm';
 import Card from '../../Card/Card';
 import Input from '../../Form/Input';
 import ViewContext, {TYPES} from '../context';
@@ -38,6 +39,12 @@ export default function BasicInfoScreen() {
 		});
 	};
 
+	let error: string | undefined;
+
+	if (invalidateRequired(objectView.name[defaultLanguageId])) {
+		error = Liferay.Language.get('required');
+	}
+
 	return (
 		<Card>
 			<Card.Header title={Liferay.Language.get('basic-info')} />
@@ -46,6 +53,7 @@ export default function BasicInfoScreen() {
 				<ClayForm.Group>
 					<Input
 						disabled={false}
+						error={error}
 						label={Liferay.Language.get('name')}
 						name="name"
 						onChange={({target: {value}}: any) => {

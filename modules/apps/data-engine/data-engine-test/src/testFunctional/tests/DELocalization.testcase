@@ -3060,4 +3060,53 @@ definition {
 
 	}
 
+	@description = "Verify that is possible to translate multiple options for Single Selection field"
+	@priority = "4"
+	test CanTranslateLabelAndHelpTextOnSingleSelectionField {
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Single Selection",
+			fieldName = "Single Selection");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Single Selection",
+			fieldHelp = "Help Text");
+
+		WebContentStructures.addTranslations(localeList = "pt-BR");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Single Selection",
+			fieldFieldLabelEdit = "Single Selection pt-BR");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Single Selection pt-BR",
+			fieldHelp = "Help Text pt-BR");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Single Selection",
+			fieldHelp = "Help Text",
+			fieldName = "Single Selection");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Single Selection pt-BR",
+			fieldHelp = "Help Text pt-BR",
+			fieldName = "Single Selection");
+
+
+	}
+
 }

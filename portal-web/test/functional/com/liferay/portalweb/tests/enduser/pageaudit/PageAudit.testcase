@@ -17,6 +17,10 @@ definition {
 				groupName = "Test Site Name",
 				layoutName = "Content Page",
 				type = "content");
+
+			JSONLayout.publishLayout(
+				groupName = "Test Site Name",
+				layoutName = "Content Page");
 		}
 	}
 

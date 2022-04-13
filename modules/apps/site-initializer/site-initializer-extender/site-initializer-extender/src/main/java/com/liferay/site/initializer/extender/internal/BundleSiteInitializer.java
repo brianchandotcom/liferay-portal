@@ -1615,11 +1615,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 				siteNavigationMenuItemSettingsBuilder)
 		throws Exception {
 
+		Map<String, String> objectDefinitionIdsStringUtilReplaceValues =
+			new HashMap<>();
+
 		Set<String> resourcePaths = _servletContext.getResourcePaths(
 			"/site-initializer/object-definitions");
 
 		if (SetUtil.isEmpty(resourcePaths)) {
-			return new HashMap<>();
+			return objectDefinitionIdsStringUtilReplaceValues;
 		}
 
 		Set<String> sortedResourcePaths = new TreeSet<>(
@@ -1629,15 +1632,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		resourcePaths = sortedResourcePaths;
 
-		Map<String, String> objectDefinitionIdsStringUtilReplaceValues =
-			new HashMap<>();
-
 		List<com.liferay.object.model.ObjectDefinition> objectDefinitions =
 			_objectDefinitionLocalService.getObjectDefinitions(
 				serviceContext.getCompanyId(), true,
 				WorkflowConstants.STATUS_APPROVED);
 
-		Map<String, String> objectEntriesStringUtilReplaceValues = new HashMap<>();
+		Map<String, String> objectEntriesStringUtilReplaceValues =
+			new HashMap<>();
 
 		for (com.liferay.object.model.ObjectDefinition objectDefinition :
 				objectDefinitions) {
@@ -1719,7 +1720,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 			}
 
 			objectEntriesJSON = StringUtil.replace(
-				objectEntriesJSON, "[$", "$]", objectEntriesStringUtilReplaceValues);
+				objectEntriesJSON, "[$", "$]",
+				objectEntriesStringUtilReplaceValues);
 
 			JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
 				objectEntriesJSON);
@@ -1735,10 +1737,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 							Serializable.class, String.valueOf(jsonObject)),
 						serviceContext);
 
-				if(jsonObject.has("externalReferenceCode")){
+				if (jsonObject.has("externalReferenceCode")) {
 					objectEntriesStringUtilReplaceValues.put(
-						StringBundler.concat(objectDefinition.getName(),
-							"#", jsonObject.getString("externalReferenceCode")),
+						StringBundler.concat(
+							objectDefinition.getName(), "#",
+							jsonObject.getString("externalReferenceCode")),
 						String.valueOf(objectEntry.getObjectEntryId()));
 				}
 

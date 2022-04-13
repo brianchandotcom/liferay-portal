@@ -1043,6 +1043,22 @@
 					"if": {
 						"properties": {
 							"type": {
+								"const": "Form"
+							}
+						}
+					},
+					"then": {
+						"properties": {
+							"definition": {
+								"$ref": "#/definitions/PageFormDefinition"
+							}
+						}
+					}
+				},
+				{
+					"if": {
+						"properties": {
+							"type": {
 								"const": "Fragment"
 							}
 						}
@@ -1169,6 +1185,36 @@
 				"type"
 			],
 			"title": "The PageElement Schema",
+			"type": "object"
+		},
+		"PageFormDefinition": {
+			"additionalProperties": false,
+			"properties": {
+				"formSubtype": {
+					"properties": {
+						"subtypeId": {
+							"title": "The subtypeId Schema",
+							"type": "integer"
+						}
+					},
+					"title": "The formSubtype Schema",
+					"type": "object"
+				},
+				"formType": {
+					"properties": {
+						"className": {
+							"title": "The className Schema",
+							"type": "string"
+						}
+					},
+					"required": [
+						"className"
+					],
+					"title": "The formType Schema",
+					"type": "object"
+				}
+			},
+			"title": "The PageFormDefinition Schema",
 			"type": "object"
 		},
 		"PageFragmentInstanceDefinition": {

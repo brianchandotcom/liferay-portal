@@ -96,7 +96,7 @@
 </tr>
 <tr>
 	<td>LIST_GROUP_ITEM_ELLIPSIS_ICON</td>
-	<td>//li[contains(.,'${key_pageName}')]//*[*[name()='svg'][contains(@class,'ellipsis-v')]]</td>
+	<td>//li[contains(@class,'miller-columns')][contains(.,'${key_pageName}')]//*[*[name()='svg'][contains(@class,'ellipsis-v')]]</td>
 	<td></td>
 </tr>
 <tr>

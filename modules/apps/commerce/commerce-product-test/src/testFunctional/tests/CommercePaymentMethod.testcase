@@ -150,13 +150,6 @@ definition {
 				userRole = "Buyer",
 				userScreenName = "buyeruser",
 				userSiteMembership = "Minium");
-
-			User.openUsersAdmin();
-
-			CommerceLogin.editPasswordCP(
-				newPassword = "test",
-				requirePasswordReset = "false",
-				userScreenName = "buyeruser");
 		}
 
 		task ("And given a new offline payment method is created and activated") {
@@ -223,13 +216,6 @@ definition {
 				userRole = "Buyer",
 				userScreenName = "buyeruser",
 				userSiteMembership = "Minium");
-
-			User.openUsersAdmin();
-
-			CommerceLogin.editPasswordCP(
-				newPassword = "test",
-				requirePasswordReset = "false",
-				userScreenName = "buyeruser");
 		}
 
 		task ("And given 2 new offline payment methods are created and activated") {
@@ -329,13 +315,6 @@ definition {
 				userRole = "Buyer",
 				userScreenName = "buyeruser",
 				userSiteMembership = "Minium");
-
-			User.openUsersAdmin();
-
-			CommerceLogin.editPasswordCP(
-				newPassword = "test",
-				requirePasswordReset = "false",
-				userScreenName = "buyeruser");
 		}
 
 		task ("And given a new offline payment method is created and activated") {

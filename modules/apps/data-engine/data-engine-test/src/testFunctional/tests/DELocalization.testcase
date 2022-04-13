@@ -3505,4 +3505,78 @@ definition {
 		
 	}
 
+	@description = "Verify that is possible to translate field with options inside a Fields Group"
+	@priority = "5"
+	test CanTranslateFieldOptionInFieldsGroup {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Multiple Selection",
+			fieldName = "Multiple Selection");
+
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "Text",
+			fieldName = "Text",
+			targetFieldLabel = "Multiple Selection");
+
+		DEBuilder.addFieldOptions(
+			fieldLabel = "Multiple Selection",
+			optionValueList = "Option 1,Option 2,Option 3");
+
+
+		WebContentStructures.addTranslations(localeList = "zh-CN");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		FormFields.assertFieldsGroup(fieldName = "Fields Group");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Text",
+			fieldFieldLabelEdit = "文本");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Multiple Selection",
+			fieldFieldLabelEdit = "复选列表框");
+
+		DEBuilder.addFieldOptions(
+			fieldLabel = "复选列表框",
+			optionValueList = "選項 1,選項 2,選項 3");
+
+		
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		FormFields.assertFieldsGroup(fieldName = "Fields Group");
+
+		
+
+		DEBuilder.assertFieldOptionLabels(
+			fieldFieldLabel = "Multiple Selection",
+			optionLabelList = "Option 1,Option 2,Option 3");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		FormFields.assertFieldsGroup(fieldName = "Fields Group");
+
+		DEBuilder.assertFieldOptionLabels(
+			fieldFieldLabel = "复选列表框",
+			optionLabelList = "選項 1,選項 2,選項 3");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "文本",
+			fieldName = "Text");
+
+		
+	}
+
 }

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: custom-rest-service-extension-configmap
+  labels:
+    dxp: configmap
+data:
+  com.liferay.oauth2.application.factory.user.agent.configuration.v1.OAuth2ApplicationUserAgentConfiguration-customrestservice.config: |
+    name="custom-rest-service"
+    description="This a custom REST service for the remote-app DEMO"
+    companyId=L"20099"
+    homePageUrl="http://localhost:8081"
+    privacyPolicyUrl=""
+    redirectUrl="http://localhost:8081"
+    scopes=["Liferay.Headless.Admin.User.everything"]

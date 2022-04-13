@@ -21,6 +21,7 @@ import React, {useEffect, useState} from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 
+import {defaultLanguageId} from '../../../utils/locale';
 import Card from '../../Card/Card';
 import {ManagementToolbarSearch} from '../ManagementToolbarSearch/ManagementToolbarSearch';
 import {TObjectColumn} from '../types';
@@ -46,8 +47,6 @@ interface IProps {
 	thirdColumnHeader?: string;
 	title: string;
 }
-
-const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 export function BuilderScreen({
 	emptyState,

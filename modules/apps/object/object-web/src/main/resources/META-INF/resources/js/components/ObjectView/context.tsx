@@ -14,6 +14,7 @@
 
 import React, {createContext, useReducer} from 'react';
 
+import {defaultLanguageId} from '../../utils/locale';
 import {
 	TAction,
 	TName,
@@ -29,8 +30,6 @@ interface IViewContextProps extends Array<TState | Function> {
 }
 
 const ViewContext = createContext({} as IViewContextProps);
-
-const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 const METADATAS = [
 	{

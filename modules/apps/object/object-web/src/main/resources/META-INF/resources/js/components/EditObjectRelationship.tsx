@@ -19,6 +19,11 @@ import {fetch} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 import useForm, {invalidateRequired} from '../hooks/useForm';
+import {
+	availableLocales,
+	defaultLanguageId,
+	defaultLocale,
+} from '../utils/locale';
 import {objectRelationshipTypes} from '../utils/objectRelationshipTypes';
 import {firstLetterUppercase} from '../utils/string';
 import CustomSelect from './Form/CustomSelect/CustomSelect';
@@ -31,23 +36,6 @@ const HEADERS = new Headers({
 	'Accept': 'application/json',
 	'Content-Type': 'application/json',
 });
-
-const availableLocales: TLocale[] = Object.keys(Liferay.Language.available).map(
-	(language) => {
-		const formattedLocales = language.replace('_', '-');
-
-		return {
-			label: language,
-			symbol: formattedLocales.toLowerCase(),
-		};
-	}
-);
-
-const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
-
-const defaultLocale = availableLocales.find(
-	(locale) => locale.label === defaultLanguageId
-);
 
 const onCloseSidePanel = () => {
 	const parentWindow = Liferay.Util.getOpener();
@@ -247,9 +235,4 @@ type TObjectRelationship = {
 	objectDefinitionName2: string;
 	objectRelationshipId: number;
 	type: string;
-};
-
-type TLocale = {
-	label: string;
-	symbol: string;
 };

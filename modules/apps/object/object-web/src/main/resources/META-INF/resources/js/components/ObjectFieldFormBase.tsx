@@ -24,6 +24,7 @@ import {
 	normalizeFieldSettings,
 	updateFieldSettings,
 } from '../utils/fieldSettings';
+import {defaultLanguageId} from '../utils/locale';
 import {toCamelCase} from '../utils/string';
 import CustomSelect from './Form/CustomSelect/CustomSelect';
 import Input from './Form/Input';
@@ -51,8 +52,6 @@ const attachmentSources = [
 		value: 'documentsAndMedia',
 	},
 ];
-
-const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId() as Liferay.Language.Locale;
 
 const headers = new Headers({
 	'Accept': 'application/json',

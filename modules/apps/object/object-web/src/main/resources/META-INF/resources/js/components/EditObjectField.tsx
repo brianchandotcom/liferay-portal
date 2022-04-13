@@ -26,6 +26,7 @@ import {
 	normalizeFieldSettings,
 	updateFieldSettings,
 } from '../utils/fieldSettings';
+import {defaultLanguageId, defaultLocale} from '../utils/locale';
 import Input from './Form/Input';
 import InputLocalized from './Form/InputLocalized/InputLocalized';
 import Select from './Form/Select';
@@ -37,8 +38,6 @@ import Sheet from './Sheet';
 
 import './EditObjectField.scss';
 
-const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId() as Locale;
-const defaultSymbol = defaultLanguageId.replace('_', '-').toLocaleLowerCase();
 const locales: {label: string; symbol: string}[] = [];
 const languageLabels: string[] = [];
 const languages = Liferay.Language.available as LocalizedValue<string>;
@@ -51,8 +50,6 @@ Object.entries(languages).forEach(([languageId, label]) => {
 
 	languageLabels.push(label);
 });
-
-const defaultLocale = locales.find(({symbol}) => symbol === defaultSymbol);
 
 function closeSidePanel() {
 	const parentWindow = Liferay.Util.getOpener();

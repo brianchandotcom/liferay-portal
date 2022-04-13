@@ -18,6 +18,7 @@ import {fetch} from 'frontend-js-web';
 import React, {useContext, useEffect, useState} from 'react';
 
 import {invalidateRequired} from '../../hooks/useForm';
+import {defaultLanguageId} from '../../utils/locale';
 import SidePanelContent from '../SidePanelContent';
 import BasicInfoScreen from './BasicInfoScreen/BasicInfoScreen';
 import {DefaultSortScreen} from './DefaultSortScreen/DefaultSortScreen';
@@ -44,8 +45,6 @@ const HEADERS = new Headers({
 	'Accept': 'application/json',
 	'Content-Type': 'application/json',
 });
-
-const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 const CustomView: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 	const [{isViewOnly, objectView, objectViewId}, dispatch] = useContext(

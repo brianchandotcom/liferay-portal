@@ -21,6 +21,7 @@ import classNames from 'classnames';
 import React, {useContext, useMemo, useState} from 'react';
 
 import useForm from '../../../hooks/useForm';
+import {defaultLanguageId} from '../../../utils/locale';
 import {separateCamelCase} from '../../../utils/string';
 import AutoComplete from '../../Form/AutoComplete';
 import Input from '../../Form/Input';
@@ -56,8 +57,6 @@ const types: TTabTypes = {
 		label: Liferay.Language.get('relationships'),
 	},
 };
-
-const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 interface IModalAddObjectLayoutTabProps
 	extends React.HTMLAttributes<HTMLElement> {

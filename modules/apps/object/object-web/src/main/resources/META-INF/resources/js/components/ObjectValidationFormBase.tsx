@@ -16,11 +16,10 @@ import {ClayToggle} from '@clayui/form';
 import React, {ChangeEventHandler, ReactNode} from 'react';
 
 import useForm, {FormError, invalidateRequired} from '../hooks/useForm';
+import {defaultLanguageId} from '../utils/locale';
 import CustomSelect from './Form/CustomSelect/CustomSelect';
 
 const REQUIRED_MSG = Liferay.Language.get('required');
-
-const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId() as Liferay.Language.Locale;
 
 export default function ObjectValidationFormBase({
 	children,

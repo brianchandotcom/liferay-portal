@@ -17,6 +17,11 @@ import ClayForm from '@clayui/form';
 import ClayModal from '@clayui/modal';
 import React, {FormEvent, useContext, useState} from 'react';
 
+import {
+	availableLocales,
+	defaultLanguageId,
+	defaultLocale,
+} from '../../../utils/locale';
 import Input from '../../Form/Input';
 import InputLocalized from '../../Form/InputLocalized/InputLocalized';
 import ViewContext, {TYPES} from '../context';
@@ -26,27 +31,6 @@ interface IProps {
 	observer: any;
 	onClose: () => void;
 }
-type TLocale = {
-	label: string;
-	symbol: string;
-};
-
-const availableLocales: TLocale[] = Object.keys(Liferay.Language.available).map(
-	(language) => {
-		const formattedLocales = language.replace('_', '-');
-
-		return {
-			label: language,
-			symbol: formattedLocales.toLowerCase(),
-		};
-	}
-);
-
-const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
-
-const defaultLocale = availableLocales.find(
-	(locale) => locale.label === defaultLanguageId
-);
 
 export function ModalEditViewColumn({
 	editingObjectFieldName,

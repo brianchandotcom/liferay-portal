@@ -20,10 +20,9 @@ import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import useForm from '../hooks/useForm';
+import {defaultLanguageId} from '../utils/locale';
 import Input from './Form/Input';
 import {TName} from './Layout/types';
-
-const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 const ModalAddListTypeDefinition: React.FC<IProps> = ({
 	apiURL,

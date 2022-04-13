@@ -19,14 +19,15 @@ import ClayModal, {ClayModalProvider, useModal} from '@clayui/modal';
 import {fetch} from 'frontend-js-web';
 import React, {FormEvent, useEffect, useState} from 'react';
 
+import {defaultLanguageId} from '../utils/locale';
 import CustomSelect from './Form/CustomSelect/CustomSelect';
 import Input from './Form/Input';
 
-const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId() as Liferay.Language.Locale;
 const headers = new Headers({
 	'Accept': 'application/json',
 	'Content-Type': 'application/json',
 });
+
 const requiredLabel = Liferay.Language.get('required');
 
 function ModalAddObjectValidation({

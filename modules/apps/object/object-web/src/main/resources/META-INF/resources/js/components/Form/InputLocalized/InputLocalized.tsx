@@ -16,11 +16,10 @@ import ClayLocalizedInput from '@clayui/localized-input';
 import classNames from 'classnames';
 import React from 'react';
 
+import {defaultLanguageId} from '../../../utils/locale';
 import FieldBase from '../FieldBase';
 
 import './InputLocalized.scss';
-
-const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 export default function InputLocalized({
 	disabled,

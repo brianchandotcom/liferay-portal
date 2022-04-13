@@ -20,6 +20,7 @@ import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import useForm from '../hooks/useForm';
+import {defaultLanguageId} from '../utils/locale';
 import {objectRelationshipTypes} from '../utils/objectRelationshipTypes';
 import {toCamelCase} from '../utils/string';
 import CustomSelect from './Form/CustomSelect/CustomSelect';
@@ -30,8 +31,6 @@ const headers = new Headers({
 	'Accept': 'application/json',
 	'Content-Type': 'application/json',
 });
-
-const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 const ModalAddObjectRelationship: React.FC<IProps> = ({
 	apiURL,

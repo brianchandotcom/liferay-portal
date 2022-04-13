@@ -18,6 +18,7 @@ import {fetch} from 'frontend-js-web';
 import React, {useContext, useEffect, useState} from 'react';
 
 import {invalidateRequired} from '../../hooks/useForm';
+import {defaultLanguageId} from '../../utils/locale';
 import {TabsVisitor} from '../../utils/visitor';
 import SidePanelContent from '../SidePanelContent';
 import InfoScreen from './InfoScreen/InfoScreen';
@@ -45,8 +46,6 @@ const HEADERS = new Headers({
 	'Accept': 'application/json',
 	'Content-Type': 'application/json',
 });
-
-const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 type TNormalizeObjectFields = ({
 	objectFields,

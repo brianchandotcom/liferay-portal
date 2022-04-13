@@ -20,11 +20,10 @@ import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import {ERRORS} from '../utils/errors';
+import {defaultLanguageId} from '../utils/locale';
 import {toCamelCase} from '../utils/string';
 import Input from './Form/Input';
 import ObjectFieldFormBase, {useObjectFieldForm} from './ObjectFieldFormBase';
-
-const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId() as Liferay.Language.Locale;
 
 const headers = new Headers({
 	'Accept': 'application/json',

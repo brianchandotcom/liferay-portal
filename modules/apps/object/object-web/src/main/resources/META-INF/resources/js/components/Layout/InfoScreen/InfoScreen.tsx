@@ -16,11 +16,10 @@ import ClayForm, {ClayCheckbox} from '@clayui/form';
 import React, {useContext} from 'react';
 
 import {invalidateRequired} from '../../../hooks/useForm';
+import {defaultLanguageId} from '../../../utils/locale';
 import Card from '../../Card/Card';
 import Input from '../../Form/Input';
 import LayoutContext, {TYPES} from '../context';
-
-const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 const InfoScreen: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 	const [{isViewOnly, objectLayout}, dispatch] = useContext(LayoutContext);

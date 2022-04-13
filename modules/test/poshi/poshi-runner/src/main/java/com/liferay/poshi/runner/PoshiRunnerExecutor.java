@@ -19,6 +19,7 @@ import com.liferay.poshi.core.PoshiGetterUtil;
 import com.liferay.poshi.core.PoshiStackTraceUtil;
 import com.liferay.poshi.core.PoshiVariablesUtil;
 import com.liferay.poshi.core.selenium.LiferaySelenium;
+import com.liferay.poshi.core.selenium.LiferaySeleniumMethod;
 import com.liferay.poshi.core.util.GetterUtil;
 import com.liferay.poshi.core.util.PropsValues;
 import com.liferay.poshi.core.util.Validator;
@@ -845,75 +846,20 @@ public class PoshiRunnerExecutor {
 
 		String selenium = executeElement.attributeValue("selenium");
 
-		int parameterCount = PoshiContext.getSeleniumParameterCount(selenium);
+		LiferaySeleniumMethod seleniumMethod = PoshiContext.getSeleniumMethod(
+			selenium);
+
+		int parameterCount = seleniumMethod.getParameterCount();
 
 		for (int i = 0; i < parameterCount; i++) {
 			String argument = executeElement.attributeValue(
 				"argument" + (i + 1));
 
 			if (argument == null) {
-				if (i == 0) {
-					if (_isJavaScriptMethod(selenium) ||
-						selenium.equals("assertAlertText") ||
-						selenium.equals("assertConfirmation") ||
-						selenium.equals("assertConsoleTextNotPresent") ||
-						selenium.equals("assertConsoleTextPresent") ||
-						selenium.equals("assertHTMLSourceTextNotPresent") ||
-						selenium.equals("assertHTMLSourceTextPresent") ||
-						selenium.equals("assertLocation") ||
-						selenium.equals("assertNotLocation") ||
-						selenium.equals("assertPartialConfirmation") ||
-						selenium.equals("assertPartialLocation") ||
-						selenium.equals("assertTextNotPresent") ||
-						selenium.equals("assertTextPresent") ||
-						selenium.equals("isConsoleTextNotPresent") ||
-						selenium.equals("isConsoleTextPresent") ||
-						selenium.equals("scrollBy") ||
-						selenium.equals("typeAlert") ||
-						selenium.equals("waitForConfirmation") ||
-						selenium.equals("waitForConsoleTextNotPresent") ||
-						selenium.equals("waitForConsoleTextPresent") ||
-						selenium.equals("waitForTextNotPresent") ||
-						selenium.equals("waitForTextPresent")) {
+				List<String> parameterNames =
+					seleniumMethod.getParameterNames();
 
-						argument = PoshiVariablesUtil.getStringFromCommandMap(
-							"value1");
-					}
-					else {
-						argument = PoshiVariablesUtil.getStringFromCommandMap(
-							"locator1");
-					}
-				}
-				else if (i == 1) {
-					argument = PoshiVariablesUtil.getStringFromCommandMap(
-						"value1");
-
-					if (selenium.equals("clickAt")) {
-						argument = "";
-					}
-					else if (_isJavaScriptMethod(selenium)) {
-						argument = PoshiVariablesUtil.getStringFromCommandMap(
-							"value2");
-					}
-				}
-				else if (i == 2) {
-					if (selenium.equals("assertCssValue")) {
-						argument = PoshiVariablesUtil.getStringFromCommandMap(
-							"value1");
-					}
-					else if (selenium.equals("ocularAssertElementImage")) {
-						argument = PoshiVariablesUtil.getStringFromCommandMap(
-							"value2");
-					}
-					else if (_isJavaScriptMethod(selenium)) {
-						argument = PoshiVariablesUtil.getStringFromCommandMap(
-							"value3");
-					}
-					else {
-						argument = PoshiVariablesUtil.getStringFromCommandMap(
-							"locator2");
-					}
-				}
+				argument = parameterNames.get(i);
 			}
 			else {
 				argument = PoshiVariablesUtil.getReplacedCommandVarsString(
@@ -1327,20 +1273,6 @@ public class PoshiRunnerExecutor {
 		}
 
 		return null;
-	}
-
-	private boolean _isJavaScriptMethod(String methodName) {
-		if (methodName.equals("assertJavaScript") ||
-			methodName.equals("executeJavaScript") ||
-			methodName.equals("getJavaScriptResult") ||
-			methodName.equals("waitForJavaScript") ||
-			methodName.equals("waitForJavaScriptNoError") ||
-			methodName.equals("verifyJavaScript")) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private static final Pattern _locatorKeyPattern = Pattern.compile(

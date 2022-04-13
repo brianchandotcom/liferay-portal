@@ -41,6 +41,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BLUEPRINTS_ADDED_ELEMENT_ENABLE_DISABLE_TOGGLE</td>
+	<td>//div[contains(@id,'querySXPElement')][./ul[contains(.,'${elementName}')]]//input[contains(@class,"toggle-switch-check")]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BLUEPRINTS_ADDED_ELEMENT_FIELD_LABEL</td>
 	<td>//div[contains(@id,'querySXPElement')][./ul[contains(.,'${elementName}')]]//label[contains(.,'${fieldName}')]</td>
 	<td></td>

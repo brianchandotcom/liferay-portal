@@ -43,8 +43,13 @@ definition {
 	}
 
 	@description = "Feature ID: LRAC-6433 | Automation ID: LRAC-10166 | Test Summary: Search Events Blocked List"
+	@ignore = "true"
 	@priority = "3"
 	test BlockedEventsListSearchable {
+
+		// AC Quarantine Reason: The data in the event analysis taking a while to appear
+		// AC Refactor ticket: LRAC-10599
+
 		task ("Add a Web Content Display to page and display the custom event") {
 			ACCustomEvents.createWCWithCustomEventAndAddToPage();
 		}

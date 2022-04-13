@@ -18,8 +18,8 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.file.install.constants.FileInstallConstants;
 import com.liferay.portal.file.install.internal.activator.FileInstallImplBundleActivator;
-import com.liferay.portal.file.install.internal.properties.ConfigurationProperties;
-import com.liferay.portal.file.install.internal.properties.ConfigurationPropertiesFactory;
+import com.liferay.portal.file.install.properties.ConfigurationProperties;
+import com.liferay.portal.file.install.properties.ConfigurationPropertiesFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 

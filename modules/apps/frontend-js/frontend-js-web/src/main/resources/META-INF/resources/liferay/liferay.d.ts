@@ -25,6 +25,215 @@ declare module Liferay {
 		): Promise<any>;
 	}
 
+	namespace DOMTaskRunner {
+		export function addTask(task: object): void;
+
+		export function addTaskState(state: object): void;
+
+		export function reset(): void;
+
+		export function runTasks(node: any): void;
+	}
+
+	namespace Language {
+		type Direction = 'ltr' | 'rtl';
+
+		type Locale =
+			| 'ar_SA'
+			| 'ca_ES'
+			| 'de_DE'
+			| 'en_US'
+			| 'es_ES'
+			| 'fi_FI'
+			| 'fr_FR'
+			| 'hu_HU'
+			| 'nl_NL'
+			| 'ja_JP'
+			| 'pt_BR'
+			| 'sv_SE'
+			| 'zh_CN';
+
+		type LocalizedValue<T> = {[key in Locale]?: T};
+
+		export const available: Object;
+
+		export const direction: LocalizedValue<Direction>;
+
+		export function get(key: string): string;
+	}
+
+	namespace Portal {
+		namespace Tabs {
+
+			/**
+			 * Prepares and fires the an event that will show a tab
+			 */
+			export function show(
+				id: string,
+				names: string[],
+				namespace: string,
+				callback?: () => void
+			): void;
+		}
+	}
+
+	namespace Portlet {
+		export function add(options: object): void;
+
+		export function addHTML(options: object): void;
+
+		export function close(
+			portlet: any,
+			skipConfirm: boolean,
+			options?: object
+		): void;
+
+		export function destroy(portlet: any, options?: object): void;
+
+		export function onLoad(options: object): void;
+
+		/**
+		 * Minimizes portlet
+		 */
+		export function minimize(
+			portletSelector: string,
+			trigger: HTMLElement,
+			options?: Object
+		): void;
+
+		export function refresh(
+			portlet: any,
+			data?: object,
+			mergeWithRefreshURLData?: boolean
+		): void;
+
+		export function registerStatic(portletId: any): void;
+	}
+
+	namespace PropsValues {
+		export const UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE: number;
+	}
+
+	namespace Service {
+		export function bind(...args: any[]): void;
+
+		export function del(httpMethodName: string): void;
+
+		export function get(httpMethodName: string): void;
+
+		export function invoke(
+			payload: Object,
+			ioConfig: Object
+		): Promise<void>;
+
+		export function post(httpMethodName: string): void;
+
+		export function put(httpMethodName: string): void;
+
+		export function parseInvokeArgs(payload: Object, ...args: any[]): void;
+
+		export function parseIOConfig(payload: Object, ...args: any[]): void;
+
+		export function parseIOFormConfig(
+			ioConfig: Object,
+			form: HTMLFormElement,
+			...args: any[]
+		): void;
+
+		export function parseStringPayload(...args: any[]): Object;
+
+		export function update(httpMethodName: string): void;
+	}
+
+	namespace State {
+		type Primitive =
+			| bigint
+			| boolean
+			| null
+			| number
+			| string
+			| symbol
+			| undefined;
+
+		type Builtin = Date | Error | Function | Primitive | RegExp;
+
+		/**
+		 * A local "DeepReadonly" until TypeScript bundles one out of the box.
+		 *
+		 * See: https://github.com/microsoft/TypeScript/issues/13923
+		 */
+		export type Immutable<T> = T extends Builtin
+			? T
+			: T extends Map<infer K, infer V>
+			? ReadonlyMap<Immutable<K>, Immutable<V>>
+			: T extends ReadonlyMap<infer K, infer V>
+			? ReadonlyMap<Immutable<K>, Immutable<V>>
+			: T extends WeakMap<infer K, infer V>
+			? WeakMap<Immutable<K>, Immutable<V>>
+			: T extends Set<infer U>
+			? ReadonlySet<Immutable<U>>
+			: T extends ReadonlySet<infer U>
+			? ReadonlySet<Immutable<U>>
+			: T extends WeakSet<infer U>
+			? WeakSet<Immutable<U>>
+			: T extends Promise<infer U>
+			? Promise<Immutable<U>>
+			: T extends {}
+			? {readonly [K in keyof T]: Immutable<T[K]>}
+			: Readonly<T>;
+
+		const ATOM = 'Liferay.State.ATOM';
+		const SELECTOR = 'Liferay.State.SELECTOR';
+
+		type Atom<T> = Immutable<{
+			[ATOM]: true;
+			default: T;
+			key: string;
+		}>;
+
+		interface Getter {
+			<T>(atomOrSelector: Atom<T> | Selector<T>): Immutable<T>;
+		}
+
+		type Selector<T> = Immutable<{
+			[SELECTOR]: true;
+			deriveValue: (get: Getter) => T;
+			key: string;
+		}>;
+
+		export function atom<T>(key: string, value: T): Atom<T>;
+
+		export function read<T>(
+			atomOrSelector: Atom<T> | Selector<T>
+		): Immutable<T>;
+
+		export function readAtom<T>(atom: Atom<T>): Immutable<T>;
+
+		export function readSelector<T>(selector: Selector<T>): Immutable<T>;
+
+		export function selector<T>(
+			key: string,
+			deriveValue: (get: Getter) => T
+		): Selector<T>;
+
+		export function subscribe<T extends any>(
+			atomOrSelector: Atom<T> | Selector<T>,
+			callback: (value: Immutable<T>) => void
+		): {dispose: () => void};
+
+		export function write<T>(
+			atomOrSelector: Atom<T> | Selector<T>,
+			value: T
+		): void;
+
+		export function writeAtom<T>(atom: Atom<T>, value: T): void;
+	}
+
+	namespace ThemeDisplay {
+		export function getDefaultLanguageId(): string;
+		export function getLanguageId(): Language.Locale;
+	}
+
 	namespace Util {
 		namespace PortletURL {
 
@@ -155,68 +364,9 @@ declare module Liferay {
 			namespace?: string
 		): FormData;
 
-		/**
-		 * Returns a FormData containing serialized object.
-		 */
-
 		export function objectToURLSearchParams(
 			object: Object
 		): URLSearchParams;
-
-		/**
-		 * Submits the form, with optional setting of form elements.
-		 */
-		export function postForm(
-			form: HTMLFormElement | string,
-			options?: {data: Object; url: string}
-		): void;
-
-		export function removeEntitySelection(
-			entityIdString: string,
-			entityNameString: string,
-			removeEntityButton: string | HTMLElement,
-			namespace: string
-		): void;
-
-		export function selectFolder(
-			folderData: {
-				idString: string;
-				idValue: string;
-				nameString: string;
-				nameValue: string;
-			},
-			namespace: string
-		): void;
-
-		/**
-		 * Sets the form elements to given values.
-		 */
-		export function setFormValues(
-			form: HTMLFormElement,
-			data: Object
-		): void;
-
-		export function sub(
-			string: string,
-			data:
-				| string
-				| number
-				| string[]
-				| number[]
-				| Array<string>
-				| Array<number>,
-			...args: string[] | number[]
-		): string;
-
-		/**
-		 * Get character code at the start of the given string.
-		 */
-		export function toCharCode(name: string): string;
-
-		/**
-		 * Unescapes HTML from the given string.
-		 */
-		export function unescapeHTML(string: string): string;
 
 		export function openModal(props: Object): void;
 
@@ -280,215 +430,61 @@ declare module Liferay {
 			type?: string;
 			variant?: string;
 		}): void;
-	}
-
-	namespace Portal {
-		namespace Tabs {
-
-			/**
-			 * Prepares and fires the an event that will show a tab
-			 */
-			export function show(
-				namespace: string,
-				names: string[],
-				id: string,
-				callback?: () => void
-			): void;
-		}
-	}
-
-	namespace Portlet {
-		export function add(options: object): void;
-
-		export function addHTML(options: object): void;
-
-		export function close(
-			portlet: any,
-			skipConfirm: boolean,
-			options?: object
-		): void;
-
-		export function destroy(portlet: any, options?: object): void;
-
-		export function onLoad(options: object): void;
-
-		export function refresh(
-			portlet: any,
-			data?: object,
-			mergeWithRefreshURLData?: boolean
-		): void;
-
-		export function registerStatic(portletId: any): void;
 
 		/**
-		 * Minimizes portlet
+		 * Submits the form, with optional setting of form elements.
 		 */
-		export function minimize(
-			portletSelector: string,
-			trigger: HTMLElement,
-			options?: Object
+		export function postForm(
+			form: HTMLFormElement | string,
+			options?: {data: Object; url: string}
 		): void;
-	}
 
-	namespace Service {
-		export function get(httpMethodName: string): void;
+		export function removeEntitySelection(
+			entityIdString: string,
+			entityNameString: string,
+			removeEntityButton: string | HTMLElement,
+			namespace: string
+		): void;
 
-		export function del(httpMethodName: string): void;
+		export function selectFolder(
+			folderData: {
+				idString: string;
+				idValue: string;
+				nameString: string;
+				nameValue: string;
+			},
+			namespace: string
+		): void;
 
-		export function post(httpMethodName: string): void;
-
-		export function put(httpMethodName: string): void;
-
-		export function update(httpMethodName: string): void;
-
-		export function bind(...args: any[]): void;
-
-		export function parseInvokeArgs(payload: Object, ...args: any[]): void;
-
-		export function parseIOConfig(payload: Object, ...args: any[]): void;
-
-		export function parseIOFormConfig(
-			ioConfig: Object,
+		/**
+		 * Sets the form elements to given values.
+		 */
+		export function setFormValues(
 			form: HTMLFormElement,
-			...args: any[]
+			data: Object
 		): void;
 
-		export function parseStringPayload(...args: any[]): Object;
-
-		export function invoke(
-			payload: Object,
-			ioConfig: Object
-		): Promise<void>;
-	}
-
-	namespace State {
-		type Primitive =
-			| bigint
-			| boolean
-			| null
-			| number
-			| string
-			| symbol
-			| undefined;
-
-		type Builtin = Date | Error | Function | Primitive | RegExp;
+		export function sub(
+			string: string,
+			data:
+				| string
+				| number
+				| string[]
+				| number[]
+				| Array<string>
+				| Array<number>,
+			...args: string[] | number[]
+		): string;
 
 		/**
-		 * A local "DeepReadonly" until TypeScript bundles one out of the box.
-		 *
-		 * See: https://github.com/microsoft/TypeScript/issues/13923
+		 * Get character code at the start of the given string.
 		 */
-		export type Immutable<T> = T extends Builtin
-			? T
-			: T extends Map<infer K, infer V>
-			? ReadonlyMap<Immutable<K>, Immutable<V>>
-			: T extends ReadonlyMap<infer K, infer V>
-			? ReadonlyMap<Immutable<K>, Immutable<V>>
-			: T extends WeakMap<infer K, infer V>
-			? WeakMap<Immutable<K>, Immutable<V>>
-			: T extends Set<infer U>
-			? ReadonlySet<Immutable<U>>
-			: T extends ReadonlySet<infer U>
-			? ReadonlySet<Immutable<U>>
-			: T extends WeakSet<infer U>
-			? WeakSet<Immutable<U>>
-			: T extends Promise<infer U>
-			? Promise<Immutable<U>>
-			: T extends {}
-			? {readonly [K in keyof T]: Immutable<T[K]>}
-			: Readonly<T>;
+		export function toCharCode(name: string): string;
 
-		const ATOM = 'Liferay.State.ATOM';
-		const SELECTOR = 'Liferay.State.SELECTOR';
-
-		type Atom<T> = Immutable<{
-			[ATOM]: true;
-			default: T;
-			key: string;
-		}>;
-
-		interface Getter {
-			<T>(atomOrSelector: Atom<T> | Selector<T>): Immutable<T>;
-		}
-
-		type Selector<T> = Immutable<{
-			[SELECTOR]: true;
-			deriveValue: (get: Getter) => T;
-			key: string;
-		}>;
-
-		export function atom<T>(key: string, value: T): Atom<T>;
-
-		export function read<T>(
-			atomOrSelector: Atom<T> | Selector<T>
-		): Immutable<T>;
-
-		export function readAtom<T>(atom: Atom<T>): Immutable<T>;
-
-		export function readSelector<T>(selector: Selector<T>): Immutable<T>;
-
-		export function selector<T>(
-			key: string,
-			deriveValue: (get: Getter) => T
-		): Selector<T>;
-
-		export function subscribe<T extends any>(
-			atomOrSelector: Atom<T> | Selector<T>,
-			callback: (value: Immutable<T>) => void
-		): {dispose: () => void};
-
-		export function write<T>(
-			atomOrSelector: Atom<T> | Selector<T>,
-			value: T
-		): void;
-
-		export function writeAtom<T>(atom: Atom<T>, value: T): void;
-	}
-
-	namespace DOMTaskRunner {
-		export function addTask(task: object): void;
-
-		export function addTaskState(state: object): void;
-
-		export function reset(): void;
-
-		export function runTasks(node: any): void;
-	}
-
-	namespace Language {
-		type Locale =
-			| 'ar_SA'
-			| 'ca_ES'
-			| 'de_DE'
-			| 'en_US'
-			| 'es_ES'
-			| 'fi_FI'
-			| 'fr_FR'
-			| 'hu_HU'
-			| 'nl_NL'
-			| 'ja_JP'
-			| 'pt_BR'
-			| 'sv_SE'
-			| 'zh_CN';
-
-		type LocalizedValue<T> = {[key in Locale]?: T};
-
-		type Direction = 'ltr' | 'rtl';
-
-		export function get(key: string): string;
-
-		export const direction: LocalizedValue<Direction>;
-
-		export const available: Object;
-	}
-
-	namespace ThemeDisplay {
-		export function getDefaultLanguageId(): string;
-		export function getLanguageId(): Language.Locale;
-	}
-
-	namespace PropsValues {
-		export const UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE: number;
+		/**
+		 * Unescapes HTML from the given string.
+		 */
+		export function unescapeHTML(string: string): string;
 	}
 
 	/**
@@ -520,6 +516,8 @@ declare module Liferay {
 		filterFn?: (component: any, componentConfigs: any) => boolean
 	): void;
 
+	export function detach(event: string, callback?: () => void): void;
+
 	/**
 	 * Clears the component promises map to make sure pending promises don't get
 	 * accidentally resolved at a later stage if a component with the same ID
@@ -537,18 +535,16 @@ declare module Liferay {
 	 */
 	export function initComponentCache(): void;
 
+	export function lazyLoad(): void;
+
+	export function namespace(object: Object, path: string): Object;
+
+	export function on(events: string | string[], callback?: () => void): void;
+
 	export function SideNavigation(
 		toggler: HTMLElement,
 		options?: Object
 	): void;
-
-	export function namespace(object: Object, path: string): Object;
-
-	export function lazyLoad(): void;
-
-	export function on(events: string | string[], callback?: () => void): void;
-
-	export function detach(event: string, callback?: () => void): void;
 }
 interface ThemeDisplay {
 	isStatePopUp(): boolean;

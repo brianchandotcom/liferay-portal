@@ -57,12 +57,29 @@ definition {
 	}
 
 	@description = "This is a test for LPS-93334. It checks that an ODT file can be auto-tagged."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanAddAutoTagForODTFile {
+		property test.name.skip.portal.instance = "DMAutoTagging#CanAddAutoTagForODTFile";
 
-		// TODO LPS-149972 CanAddAutoTagForODTFile pending implementation
+		AutoTagging.enableOpenNLP(
+			assetType = "Document",
+			confidenceThreshold = "0.05");
 
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document ODT",
+			groupName = "Guest",
+			mimeType = "application/vnd.oasis.opendocument.text",
+			sourceFileName = "Alice Adventures in Wonderland.odt");
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "DM Document ODT",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document ODT");
+
+		DMDocument.viewTagInfo(tagName = "alice");
 	}
 
 	@description = "This test asserts that auto-tags added to an image uploaded on a staged site gets published to Live."

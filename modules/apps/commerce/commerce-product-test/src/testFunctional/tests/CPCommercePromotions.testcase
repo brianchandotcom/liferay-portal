@@ -25,14 +25,123 @@ definition {
 		CommerceConfiguration.commerceInitializersTearDown();
 	}
 
-	@description = "[Please Update]"
-	@ignore = "Test Stub"
-	@priority = "4"
+	@description = "This is a test for COMMERCE-8569. Verify multiple Price Entries can be set in the same Promotion for the same SKU"
+	@priority = "3"
 	test AllowMultiplePriceEntriesInTheSamePromotion {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property osgi.module.configuration.file.names = "com.liferay.commerce.price.list.configuration.CommercePriceEntryConfiguration.config";
+		property osgi.module.configurations = "checkInterval=&quot;1&quot;";
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-8569 AllowMultiplePriceEntriesInTheSamePromotion pending implementation
+		task ("Given a Minium site with a buyer user") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And given a new Test Promotion") {
+			CommerceJSONPriceListsAndPromotionsAPI._addPromotion(
+				catalogName = "Minium",
+				currencyCode = "USD",
+				promotionName = "Test Promotion");
+		}
+
+		task ("And given a Test Promotion entry for U-Joint that is set to expire in 4 minutes") {
+			CommercePromotions.openPromotionsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Test Promotion");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Entries");
+
+			CommerceJSONPriceListsAndPromotionsAPI._addPromotionEntry(
+				entryPrice = "20",
+				productSKU = "MIN55861",
+				promotionName = "Test Promotion");
+
+			Refresh();
+
+			CommerceNavigator.gotoEntry(entryName = "MIN55861");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.setExpirationTime(minutesToExpire = "4");
+
+			Button.clickSave();
+		}
+
+		task ("And given a Test Promotion entry for U-Joint that is set to publish in 6 minutes") {
+			CommerceJSONPriceListsAndPromotionsAPI._addPromotionEntry(
+				entryPrice = "10",
+				productSKU = "MIN55861",
+				promotionName = "Test Promotion");
+
+			Refresh();
+
+			Click(
+				key_rowNumber = "2",
+				locator1 = "CommerceNavigation#ENTRY_NAME_N");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.setPublishTime(minutesToPublish = "6");
+
+			Button.clickSave();
+		}
+
+		task ("When the buyer navigates to the Minium Catalog") {
+			Refresh();
+
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("Then the U-Joint price is the first promo entry price (20.00)") {
+			FrontStore.assertPromoPrice(
+				basePrice = "24.00",
+				productName = "U-Joint",
+				promoPrice = "20.00");
+		}
+
+		task ("When the first price entry expires and the buyer views the U-Joint product") {
+			Pause(locator1 = "240000");
+
+			Refresh();
+		}
+
+		task ("Then the U-Joint price is the base price (24.00)") {
+			AssertTextEquals.assertPartialText(
+				key_productName = "U-Joint",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE",
+				value1 = "24.00");
+		}
+
+		task ("When the second promo entry is published and the buyer views the U-Joint product") {
+			Pause(locator1 = "120000");
+
+			Refresh();
+		}
+
+		task ("Then the U-Joint price is the second promo entry price (10.00)") {
+			FrontStore.assertPromoPrice(
+				basePrice = "24.00",
+				productName = "U-Joint",
+				promoPrice = "10.00");
+		}
 	}
 
 }

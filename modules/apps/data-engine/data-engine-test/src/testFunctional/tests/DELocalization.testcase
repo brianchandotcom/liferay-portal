@@ -2913,4 +2913,53 @@ definition {
 
 	}
 
+	@description = "Verify that is possible to translate Label and Help text of Link to Page Field"
+	@priority = "4"
+	test CanTranslateLabelAndHelpTextOnLinkToPageField {
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Link to Page",
+			fieldName = "Link to Page");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Link to Page",
+			fieldHelp = "Help Text");
+
+		WebContentStructures.addTranslations(localeList = "pt-BR");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Link to Page",
+			fieldFieldLabelEdit = "Link to Page pt-BR");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Link to Page pt-BR",
+			fieldHelp = "Help Text pt-BR");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Link to Page",
+			fieldHelp = "Help Text",
+			fieldName = "Link to Page");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Link to Page pt-BR",
+			fieldHelp = "Help Text pt-BR",
+			fieldName = "Link to Page");
+
+
+	}
+
 }

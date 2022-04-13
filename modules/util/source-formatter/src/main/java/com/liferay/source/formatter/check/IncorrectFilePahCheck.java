@@ -15,6 +15,8 @@
 package com.liferay.source.formatter.check;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.source.formatter.check.util.SourceUtil;
 
 import java.util.Objects;
 
@@ -28,23 +30,29 @@ public class IncorrectFilePahCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		String[] fileNames = absolutePath.split("/");
+		String rootDirName = SourceUtil.getRootDirName(absolutePath);
 
-		for (int i = 1; i < (fileNames.length - 1); i++) {
-			String firstChar = fileNames[i].substring(0, 1);
+		if (Validator.isNull(rootDirName)) {
+			return content;
+		}
+
+		String relativePath = absolutePath.substring(rootDirName.length());
+
+		for (String path : relativePath.split("/")) {
+			String firstChar = path.substring(0, 1);
 
 			if (Objects.equals(firstChar, String.valueOf(CharPool.SPACE))) {
 				addMessage(fileName, "A file name can not start with a space.");
 			}
 
-			String lastChar = fileNames[i].substring(fileNames[i].length() - 1);
+			String lastChar = path.substring(path.length() - 1);
 
 			if (Objects.equals(lastChar, String.valueOf(CharPool.SPACE))) {
 				addMessage(fileName, "A file name can not end with a space.");
 			}
 
 			for (char charactor : _ILLEGALCHARACTORS) {
-				if (fileNames[i].contains(String.valueOf(charactor))) {
+				if (path.contains(String.valueOf(charactor))) {
 					addMessage(
 						fileName,
 						"A file name can not contain any of the following " +

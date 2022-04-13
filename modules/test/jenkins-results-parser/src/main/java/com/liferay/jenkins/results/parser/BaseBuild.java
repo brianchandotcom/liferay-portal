@@ -3617,7 +3617,17 @@ public abstract class BaseBuild implements Build {
 	private void _archive(String content, boolean required, String urlSuffix) {
 		String status = getStatus();
 
-		if (!status.equals("completed") || archiveFileExists(urlSuffix)) {
+		File archiveFile = getArchiveFile(urlSuffix);
+
+		if (!status.equals("completed")) {
+			if (archiveFile.exists()) {
+				JenkinsResultsParserUtil.delete(archiveFile);
+			}
+
+			return;
+		}
+
+		if (archiveFile.exists()) {
 			return;
 		}
 

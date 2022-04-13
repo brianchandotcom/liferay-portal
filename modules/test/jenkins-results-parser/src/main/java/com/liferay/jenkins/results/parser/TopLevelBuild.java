@@ -1852,7 +1852,17 @@ public abstract class TopLevelBuild extends BaseBuild {
 
 		String urlSuffix = "build-database.json";
 
-		if (!status.equals("completed") || archiveFileExists(urlSuffix)) {
+		File archiveFile = getArchiveFile(urlSuffix);
+
+		if (!status.equals("completed")) {
+			if (archiveFile.exists()) {
+				JenkinsResultsParserUtil.delete(archiveFile);
+			}
+
+			return;
+		}
+
+		if (archiveFile.exists()) {
 			return;
 		}
 
@@ -1889,15 +1899,23 @@ public abstract class TopLevelBuild extends BaseBuild {
 
 		String urlSuffix = "jenkins-report.html";
 
-		if (!status.equals("completed") || archiveFileExists(urlSuffix)) {
+		File archiveFile = getArchiveFile(urlSuffix);
+
+		if (!status.equals("completed")) {
+			if (archiveFile.exists()) {
+				JenkinsResultsParserUtil.delete(archiveFile);
+			}
+
+			return;
+		}
+
+		if (archiveFile.exists()) {
 			return;
 		}
 
 		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 		File jenkinsReportFile = new File(getBuildDirPath(), urlSuffix);
-
-		File archiveFile = getArchiveFile(urlSuffix);
 
 		try {
 			if (jenkinsReportFile.exists()) {
@@ -1940,12 +1958,16 @@ public abstract class TopLevelBuild extends BaseBuild {
 	private void _archiveProperties() {
 		String status = getStatus();
 
-		if (!status.equals("completed")) {
-			return;
-		}
-
 		File archiveFile = new File(
 			getArchiveRootDir(), getArchiveName() + "/archive.properties");
+
+		if (!status.equals("completed")) {
+			if (archiveFile.exists()) {
+				JenkinsResultsParserUtil.delete(archiveFile);
+			}
+
+			return;
+		}
 
 		if (archiveFile.exists()) {
 			return;

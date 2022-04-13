@@ -110,10 +110,14 @@
 			},
 			"objectViewColumns": [
 				{
+					"label": {
+					},
 					"objectFieldName": "textField1",
 					"priority": 0
 				},
 				{
+					"label": {
+					},
 					"objectFieldName": "textField2",
 					"priority": 1
 				}

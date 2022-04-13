@@ -57,9 +57,14 @@ definition {
 	}
 
 	macro selectAndChangeNodeName {
-		KaleoDesigner.selectNode(nodeNodeLabel = "${nodeNodeLabel}");
+		Click(
+			key_nodeType = "${nodeType}",
+			key_nodeLabel = "${nodeLabel}",
+			locator1 = "ProcessBuilderKaleoDesignerReact#DIAGRAM_NODE_LABEL_SPECIFIC");
 
-		KaleoDesigner.editNodeName(nodeName = "${nodeName}");
+		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
+			infoOption = "Label",
+			infoValue = "${nodeName}");
 
 		if (isSet(update)) {
 			Button.click(button = "Update");

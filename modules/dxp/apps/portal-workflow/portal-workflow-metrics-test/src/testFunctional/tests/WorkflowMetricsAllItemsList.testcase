@@ -2691,7 +2691,8 @@ definition {
 
 		WorkflowMetricsAllItemsList.selectAndChangeNodeName(
 			nodeName = "Review changed",
-			nodeNodeLabel = "review",
+			nodeType = "task",
+			nodeLabel = "review",
 			update = "true");
 
 		ApplicationsMenu.gotoPortlet(
@@ -2708,7 +2709,7 @@ definition {
 
 		WorkflowMetricsAllItemsList.goToTrackWorkflowlink();
 
-		WorkflowMetricsAllItemsList.viewNodesDisplayed(nodesTrackWorkflow = "Created,Review changed,Update,Approved");
+		WorkflowMetricsAllItemsList.viewNodesDisplayed(nodesTrackWorkflow = "created,Review changed,update,approved");
 	}
 
 	@description = "Verify that when the user clicks the link in the detail modal, the Workflow in use is displayed"

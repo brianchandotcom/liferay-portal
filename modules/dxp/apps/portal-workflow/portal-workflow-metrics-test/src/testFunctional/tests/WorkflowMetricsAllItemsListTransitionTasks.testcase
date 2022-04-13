@@ -652,9 +652,9 @@ definition {
 
 		Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
 
-		KaleoDesigner.selectNode(nodeNodeLabel = "update");
+		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "task");
 
-		KaleoDesigner.deleteNode(nodeNodeLabel = "update");
+		ProcessBuilderKaleoDesignerReact.deleteNodeOrConnection(title = "task");
 
 		Button.click(button = "Update");
 

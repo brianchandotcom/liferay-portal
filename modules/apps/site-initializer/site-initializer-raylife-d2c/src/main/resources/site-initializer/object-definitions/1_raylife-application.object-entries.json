@@ -1,0 +1,50 @@
+[
+	{
+		"applicationId": "123456",
+		"applicationStatus": "incomplete",
+		"dateFiled": "2022-03-09",
+		"externalReferenceCode": "RAY-001",
+		"policySent": false,
+		"product": "Home"
+	},
+	{
+		"applicationId": "123567",
+		"applicationStatus": "quoted",
+		"dateFiled": "2022-02-16",
+		"externalReferenceCode": "RAY-002",
+		"policySent": false,
+		"product": "Auto"
+	},
+	{
+		"applicationId": "123734",
+		"applicationStatus": "reviewed",
+		"dateFiled": "2022-02-10",
+		"externalReferenceCode": "RAY-005",
+		"policySent": false,
+		"product": "Life"
+	},
+	{
+		"applicationId": "123784",
+		"applicationStatus": "incomplete",
+		"dateFiled": "2022-02-16",
+		"externalReferenceCode": "RAY-003",
+		"policySent": false,
+		"product": "Auto"
+	},
+	{
+		"applicationId": "123789",
+		"applicationStatus": "quoted",
+		"dateFiled": "2022-02-16",
+		"externalReferenceCode": "RAY-004",
+		"policySent": false,
+		"product": "Home"
+	},
+	{
+		"applicationId": "437852",
+		"applicationStatus": "reviewed",
+		"dateFiled": "2022-03-04",
+		"externalReferenceCode": "RAY-006",
+		"policySent": false,
+		"product": "Home"
+	}
+]

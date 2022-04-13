@@ -3,24 +3,24 @@
 		"claimNumber": 1,
 		"claimStatus": "inInvestigation",
 		"dateFiled": "2022-03-17",
+		"externalReferenceCode": "RAY-001",
 		"name": "User Test",
-		"product": "Professional Liability",
-		"externalReferenceCode": "RAY-001"
+		"product": "Professional Liability"
 	},
 	{
 		"claimNumber": 2,
 		"claimStatus": "approved",
 		"dateFiled": "2022-03-04",
+		"externalReferenceCode": "RAY-002",
 		"name": "User Test 1",
-		"product": "Business Owners Policy",
-		"externalReferenceCode": "RAY-002"
+		"product": "Business Owners Policy"
 	},
 	{
 		"claimNumber": 3,
 		"claimStatus": "inEstimation",
 		"dateFiled": "2022-03-08",
+		"externalReferenceCode": "RAY-003",
 		"name": "User Test 2",
-		"product": "General Liability",
-		"externalReferenceCode": "RAY-003"
+		"product": "General Liability"
 	}
 ]

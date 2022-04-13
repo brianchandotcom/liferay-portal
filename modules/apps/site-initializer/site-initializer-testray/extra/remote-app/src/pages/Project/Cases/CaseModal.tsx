@@ -14,16 +14,16 @@
 
 import {useQuery} from '@apollo/client';
 import ClayButton from '@clayui/button';
-import ClayForm, {ClaySelectWithOption} from '@clayui/form';
+import ClayForm from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import classNames from 'classnames';
-import {useState} from 'react';
+import {useForm} from 'react-hook-form';
 
 import Input from '../../../components/Input';
 import Container from '../../../components/Layout/Container';
 import MarkdownPreview from '../../../components/Markdown';
 import Modal from '../../../components/Modal';
-import {CreateCase} from '../../../graphql/mutations';
+import {CreateCase, UpdateCase} from '../../../graphql/mutations';
 import {
 	CTypePagination,
 	TestrayCaseType,
@@ -31,8 +31,10 @@ import {
 	getCaseTypes,
 	getComponents,
 } from '../../../graphql/queries';
+import {withVisibleContent} from '../../../hoc/withVisibleContent';
 import {FormModalOptions} from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
+import yupSchema, {yupResolver} from '../../../schema/yup';
 import {DescriptionType} from '../../../types';
 
 type CaseFormData = {
@@ -56,11 +58,6 @@ const descriptionTypes = Object.values(
 	DescriptionType
 ).map((descriptionType) => ({label: descriptionType, value: descriptionType}));
 
-const emptyOption = {
-	label: i18n.translate('choose-an-option'),
-	value: '',
-};
-
 const FormRow: React.FC<{title: string}> = ({children, title}) => (
 	<>
 		<ClayLayout.Row justify="start">
@@ -77,12 +74,25 @@ const FormRow: React.FC<{title: string}> = ({children, title}) => (
 	</>
 );
 
-type CaseFormProps = {
-	form: CaseFormData;
-	onChange: (event: any) => void;
+type CaseModalProps = {
+	modal: FormModalOptions;
+	projectId: number;
 };
 
-const CaseForm: React.FC<CaseFormProps> = ({form, onChange}) => {
+const CaseModal: React.FC<CaseModalProps> = ({
+	modal: {modalState, observer, onClose, onSubmit},
+	projectId,
+}) => {
+	const {
+		formState: {errors},
+		handleSubmit,
+		register,
+		watch,
+	} = useForm<CaseFormData>({
+		defaultValues: modalState,
+		resolver: yupResolver(yupSchema.case),
+	});
+
 	const {data: testrayComponentsData} = useQuery<
 		CTypePagination<'components', TestrayComponent>
 	>(getComponents);
@@ -94,173 +104,23 @@ const CaseForm: React.FC<CaseFormProps> = ({form, onChange}) => {
 	const testrayCaseTypes = testrayCaseTypesData?.c.caseTypes.items || [];
 	const testrayComponents = testrayComponentsData?.c.components.items || [];
 
-	return (
-		<Container>
-			<ClayForm>
-				<FormRow title={i18n.translate('case-name')}>
-					<ClayForm.Group className="form-group-sm">
-						<Input
-							name="name"
-							onChange={onChange}
-							placeholder={i18n.translate('enter-the-case-name')}
-							required
-							value={form.name}
-						/>
-					</ClayForm.Group>
-				</FormRow>
-
-				<FormRow title={i18n.translate('details')}>
-					<ClayForm.Group className="form-group-sm">
-						<label
-							className={classNames(
-								'font-weight-normal mx-0 text-paragraph'
-							)}
-						>
-							{i18n.translate('priority')}
-						</label>
-
-						<ClaySelectWithOption
-							className="rounded-xs"
-							name="priority"
-							onChange={onChange}
-							options={priorities.map(({label, value}) => ({
-								label,
-								value,
-							}))}
-							value={form.priority}
-						/>
-
-						<label
-							className={classNames(
-								'font-weight-normal mx-0 mt-2 text-paragraph'
-							)}
-						>
-							{i18n.translate('type')}
-						</label>
-
-						<ClaySelectWithOption
-							name="caseTypeId"
-							onChange={onChange}
-							options={[
-								emptyOption,
-								...testrayCaseTypes.map(({id, name}) => ({
-									label: name,
-									value: id,
-								})),
-							]}
-							value={form.caseTypeId}
-						/>
-
-						<label
-							className={classNames(
-								'font-weight-normal mx-0 mt-2 text-paragraph'
-							)}
-						>
-							{i18n.translate('main-component')}
-						</label>
-
-						<ClaySelectWithOption
-							name="componentId"
-							onChange={onChange}
-							options={[
-								emptyOption,
-								...testrayComponents.map(({id, name}) => ({
-									label: name,
-									value: id,
-								})),
-							]}
-							value={form.componentId}
-						/>
-
-						<Input
-							label={i18n.translate('estimated-duration')}
-							name="estimatedDuration"
-							onChange={onChange}
-							placeholder={i18n.translate('enter-the-case-name')}
-							required
-							value={form.estimatedDuration}
-						/>
-					</ClayForm.Group>
-				</FormRow>
-
-				<FormRow title={i18n.translate('description')}>
-					<ClayForm.Group className="form-group-sm">
-						<ClaySelectWithOption
-							className="mb-2"
-							name="descriptionType"
-							onChange={onChange}
-							options={descriptionTypes}
-							value={form.descriptionType}
-						/>
-
-						<Input
-							name="description"
-							onChange={onChange}
-							required
-							type="textarea"
-							value={form.description}
-						/>
-					</ClayForm.Group>
-
-					<MarkdownPreview markdown={form.description} />
-				</FormRow>
-
-				<FormRow title={i18n.translate('steps')}>
-					<ClayForm.Group className="form-group-sm">
-						<ClaySelectWithOption
-							className="mb-2"
-							name="stepsType"
-							onChange={onChange}
-							options={descriptionTypes}
-							value={form.stepsType}
-						/>
-
-						<Input
-							name="steps"
-							onChange={onChange}
-							required
-							type="textarea"
-							value={form.steps}
-						/>
-					</ClayForm.Group>
-				</FormRow>
-			</ClayForm>
-		</Container>
-	);
-};
-
-type CaseModalProps = {
-	modal: FormModalOptions;
-	projectId: number;
-};
-
-const CaseModal: React.FC<CaseModalProps> = ({
-	modal: {observer, onChange, onClose, onSubmit, visible},
-	projectId,
-}) => {
-	const [form, setForm] = useState<CaseFormData>({
-		caseTypeId: 0,
-		componentId: 0,
-		description: '',
-		descriptionType: '',
-		estimatedDuration: 0,
-		name: '',
-		priority: 0,
-		steps: '',
-		stepsType: '',
-	});
-
-	const _onSubmit = () => {
+	const _onSubmit = (form: CaseFormData) => {
 		onSubmit(
-			{
-				...form,
-				projectId,
-			},
+			{...form, projectId},
 			{
 				createMutation: CreateCase,
-				updateMutation: CreateCase,
+				updateMutation: UpdateCase,
 			}
 		);
+	};
+
+	const description = watch('description');
+	const steps = watch('steps');
+
+	const inputProps = {
+		errors,
+		register,
+		required: true,
 	};
 
 	return (
@@ -271,7 +131,10 @@ const CaseModal: React.FC<CaseModalProps> = ({
 						{i18n.translate('close')}
 					</ClayButton>
 
-					<ClayButton displayType="primary" onClick={_onSubmit}>
+					<ClayButton
+						displayType="primary"
+						onClick={handleSubmit(_onSubmit)}
+					>
 						{i18n.translate('add-case')}
 					</ClayButton>
 				</ClayButton.Group>
@@ -279,11 +142,184 @@ const CaseModal: React.FC<CaseModalProps> = ({
 			observer={observer}
 			size="full-screen"
 			title={i18n.translate('new-case')}
-			visible={visible}
+			visible
 		>
-			<CaseForm form={form} onChange={onChange({form, setForm})} />
+			<Container>
+				<ClayForm>
+					<FormRow title={i18n.translate('case-name')}>
+						<ClayForm.Group className="form-group-sm">
+							<Input
+								label={i18n.translate('name')}
+								name="name"
+								{...inputProps}
+							/>
+						</ClayForm.Group>
+					</FormRow>
+
+					<FormRow title={i18n.translate('details')}>
+						<ClayForm.Group className="form-group-sm">
+							<label
+								className={classNames(
+									'font-weight-normal mx-0 text-paragraph'
+								)}
+								htmlFor="priority"
+							>
+								{i18n.translate('priority')}
+							</label>
+
+							<select
+								className="form-control"
+								id="priority"
+								{...register('priority')}
+							>
+								<option>
+									{i18n.translate('choose-an-option')}
+								</option>
+
+								{priorities.map(({label, value}) => (
+									<option key={label} value={value}>
+										{value}
+									</option>
+								))}
+							</select>
+
+							<label
+								className={classNames(
+									'font-weight-normal mx-0 text-paragraph'
+								)}
+								htmlFor="type"
+							>
+								{i18n.translate('type')}
+							</label>
+
+							<select
+								className="form-control"
+								id="type"
+								{...register('caseTypeId')}
+							>
+								<option>
+									{i18n.translate('choose-an-option')}
+								</option>
+
+								{testrayCaseTypes.map(({id, name}) => (
+									<option key={id} value={id}>
+										{name}
+									</option>
+								))}
+							</select>
+
+							<label
+								className={classNames(
+									'font-weight-normal mx-0 text-paragraph'
+								)}
+								htmlFor="componentId"
+							>
+								{i18n.translate('main-component')}
+							</label>
+
+							<select
+								className="form-control"
+								id="componentId"
+								{...register('componentId')}
+							>
+								<option>
+									{i18n.translate('choose-an-option')}
+								</option>
+
+								{testrayComponents.map(({id, name}) => (
+									<option key={id} value={id}>
+										{name}
+									</option>
+								))}
+							</select>
+
+							<Input
+								label={i18n.translate('enter-the-case-name')}
+								name="estimatedDuration"
+								{...inputProps}
+							/>
+						</ClayForm.Group>
+					</FormRow>
+
+					<FormRow title={i18n.translate('description')}>
+						<ClayForm.Group className="form-group-sm">
+							<label
+								className={classNames(
+									'font-weight-normal mx-0 text-paragraph'
+								)}
+								htmlFor="descriptionType"
+							>
+								{i18n.translate('description-type')}
+							</label>
+
+							<select
+								className="form-control"
+								id="descriptionType"
+								{...register('descriptionType')}
+							>
+								<option>
+									{i18n.translate('choose-an-option')}
+								</option>
+
+								{descriptionTypes.map(({label, value}) => (
+									<option key={label} value={value}>
+										{value}
+									</option>
+								))}
+							</select>
+
+							<Input
+								label={i18n.translate('description')}
+								name="description"
+								type="textarea"
+								{...inputProps}
+							/>
+						</ClayForm.Group>
+
+						<MarkdownPreview markdown={description} />
+					</FormRow>
+
+					<FormRow title={i18n.translate('steps')}>
+						<ClayForm.Group className="form-group-sm">
+							<label
+								className={classNames(
+									'font-weight-normal mx-0 text-paragraph'
+								)}
+								htmlFor="stepsType"
+							>
+								{i18n.translate('steps-type')}
+							</label>
+
+							<select
+								className="form-control"
+								id="stepsType"
+								{...register('stepsType')}
+							>
+								<option>
+									{i18n.translate('choose-an-option')}
+								</option>
+
+								{descriptionTypes.map(({label, value}) => (
+									<option key={label} value={value}>
+										{value}
+									</option>
+								))}
+							</select>
+
+							<Input
+								label={i18n.translate('steps')}
+								name="steps"
+								type="textarea"
+								{...inputProps}
+							/>
+						</ClayForm.Group>
+
+						<MarkdownPreview markdown={steps} />
+					</FormRow>
+				</ClayForm>
+			</Container>
 		</Modal>
 	);
 };
 
-export default CaseModal;
+export default withVisibleContent(CaseModal);

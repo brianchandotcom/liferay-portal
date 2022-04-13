@@ -2619,4 +2619,53 @@ definition {
 
 	}
 
+	@description = "Verify that is possible to translate Label and Help text of Image Field"
+	@priority = "4"
+	test CanTranslateLabelAndHelpTextOnImageField {
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Image",
+			fieldName = "Image");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Image",
+			fieldHelp = "Help Text");
+
+		WebContentStructures.addTranslations(localeList = "pt-BR");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Image",
+			fieldFieldLabelEdit = "Image pt-BR");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Image pt-BR",
+			fieldHelp = "Help Text pt-BR");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Image",
+			fieldHelp = "Help Text",
+			fieldName = "Image");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Image pt-BR",
+			fieldHelp = "Help Text pt-BR",
+			fieldName = "Image");
+
+
+	}
+
 }

@@ -3311,6 +3311,7 @@ components:
                         - $ref: "#/components/schemas/PageCollectionItemDefinition"
                         - $ref: "#/components/schemas/PageColumnDefinition"
                         - $ref: "#/components/schemas/PageDropZoneDefinition"
+                        - $ref: "#/components/schemas/PageFormDefinition"
                         - $ref: "#/components/schemas/PageFragmentInstanceDefinition"
                         - $ref: "#/components/schemas/PageRootDefinition"
                         - $ref: "#/components/schemas/PageRowDefinition"
@@ -3326,11 +3327,40 @@ components:
                 type:
                     # @review
                     description:
-                        The page element's type (collection, collection item,, column, drop zone, fragment, fragment
-                        drop zone, root, row, section or widget).
-                    enum: [Collection, CollectionItem, Column, DropZone, Fragment, FragmentDropZone, Root, Row, Section,
+                        The page element's type (collection, collection item, column, drop zone, form, fragment,
+                        fragment drop zone, root, row, section or widget).
+                    enum: [Collection, CollectionItem, Column, DropZone, Form, Fragment, FragmentDropZone, Root, Row, Section,
                         Widget]
                     type: string
+        PageFormDefinition:
+            # @review
+            description:
+                Represent a definition of a Page form.
+            properties:
+                formSubtype:
+                    # @review
+                    description:
+                        The form subtype.
+                    properties:
+                        subtypeId:
+                            # @review
+                            description:
+                                The form subtype's ID.
+                            format: int64
+                            type: integer
+                    type: object
+                formType:
+                    # @review
+                    description:
+                        The type of form.
+                    properties:
+                        className:
+                            # @review
+                            description:
+                                The form type's class name.
+                            type: string
+                    type: object
+            type: object
         PageFragmentInstanceDefinition:
             # @review
             description:

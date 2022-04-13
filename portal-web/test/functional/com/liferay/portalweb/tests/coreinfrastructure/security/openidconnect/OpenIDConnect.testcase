@@ -64,10 +64,9 @@ definition {
 	@description = "This is a use case for LPS-105151. Users could configure multiple OpenID Connect providers."
 	@priority = "4"
 	test ConfigureMultipleOpenIDConnectProviders {
-		property dummy.socket.proxy.disabled = "true";
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration.config";
 		property osgi.module.configurations = "enabled=&quot;true&quot;";
-		property test.name.skip.portal.instance = "OpenIDConnect#MultipleOpenIDConnectProvider";
+		property test.name.skip.portal.instance = "OpenIDConnect#ConfigureMultipleOpenIDConnectProviders";
 
 		var openIdConnectClientId = PropsUtil.get("google.client.id.2");
 		var openIdConnectClientSecret = PropsUtil.get("google.client.secret.2");
@@ -287,7 +286,6 @@ definition {
 	@description = "This is a use case for LRQA-40911. Users could login and logout using OpenID Connect provider."
 	@priority = "4"
 	test OpenIDConnectSmoke {
-		property dummy.socket.proxy.disabled = "true";
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "OpenIDConnect#OpenIDConnectSmoke";
 
@@ -334,7 +332,6 @@ definition {
 	@description = "This is a use case for LRQA-72792. Users could login and logout using Auth0 as OpenID Connect provider."
 	@priority = "5"
 	test OpenIDConnectSmokeWithAuth0 {
-		property dummy.socket.proxy.disabled = "true";
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration.config";
 		property osgi.module.configurations = "enabled=&quot;true&quot;${line.separator}tokenRefreshOffset=&quot;120&quot;";
 		property portal.acceptance = "true";
@@ -365,7 +362,6 @@ definition {
 	@description = "This is a use case for LRQA-72792. Users could login and logout using Azure as OpenID Connect provider. Blocked by LRQA-73513."
 	@priority = "5"
 	test OpenIDConnectSmokeWithAzure {
-		property dummy.socket.proxy.disabled = "true";
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration.config";
 		property osgi.module.configurations = "enabled=&quot;true&quot;${line.separator}tokenRefreshOffset=&quot;120&quot;";
 		property portal.release = "quarantine";
@@ -397,7 +393,6 @@ definition {
 	@description = "This is a use case for LRQA-72792. Users could login and logout using Okta as OpenID Connect provider."
 	@priority = "5"
 	test OpenIDConnectSmokeWithOkta {
-		property dummy.socket.proxy.disabled = "true";
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration.config";
 		property osgi.module.configurations = "enabled=&quot;true&quot;${line.separator}tokenRefreshOffset=&quot;120&quot;";
 		property portal.acceptance = "true";
@@ -428,7 +423,6 @@ definition {
 	@description = "This is a use case for LRQA-72792. Users could login and logout using PingOne as OpenID Connect provider."
 	@priority = "5"
 	test OpenIDConnectSmokeWithPingOne {
-		property dummy.socket.proxy.disabled = "true";
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration.config";
 		property osgi.module.configurations = "enabled=&quot;true&quot;${line.separator}tokenRefreshOffset=&quot;120&quot;";
 		property portal.acceptance = "true";

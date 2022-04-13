@@ -33,8 +33,8 @@ const useCaseTypeActions = () => {
 				name: i18n.translate('edit'),
 			},
 			{
-				action: ({id: caseTypeId}: TestrayCaseType) =>
-					onDeleteCaseType({variables: {caseTypeId}})
+				action: ({id}: TestrayCaseType) =>
+					onDeleteCaseType({variables: {id}})
 						.then(() => modal.onSave())
 						.catch(modal.onError),
 				name: i18n.translate('delete'),

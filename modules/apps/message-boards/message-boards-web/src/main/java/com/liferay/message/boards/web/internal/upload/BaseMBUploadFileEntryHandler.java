@@ -55,13 +55,12 @@ public abstract class BaseMBUploadFileEntryHandler
 		try (InputStream inputStream = _getFileAsInputStream(
 				uploadPortletRequest)) {
 
-			String tempFileName = TempFileEntryUtil.getTempFileName(
-				_getFileName(uploadPortletRequest));
-
 			return mbMessageService.addTempAttachment(
 				themeDisplay.getScopeGroupId(), categoryId,
-				MBMessageConstants.TEMP_FOLDER_NAME, tempFileName, inputStream,
-				_getContentType(uploadPortletRequest));
+				MBMessageConstants.TEMP_FOLDER_NAME,
+				TempFileEntryUtil.getTempFileName(
+					_getFileName(uploadPortletRequest)),
+				inputStream, _getContentType(uploadPortletRequest));
 		}
 	}
 

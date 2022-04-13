@@ -2987,11 +2987,16 @@ public class ServiceBuilder {
 		content = content.substring(lastImportEnd + 1);
 
 		if (!xmlFile.exists()) {
+			String hbmNamespace = _HIBERNATE_3_HBM_NAMESPACE;
+
+			if (isVersionGTE_7_4_0()) {
+				hbmNamespace = _HIBERNATE_5_HBM_NAMESPACE;
+			}
+
 			String xml = StringBundler.concat(
 				"<?xml version=\"1.0\"?>\n",
 				"<!DOCTYPE hibernate-mapping PUBLIC \"-//Hibernate/Hibernate ",
-				"Mapping DTD 3.0//EN\" \"http://hibernate.sourceforge.net",
-				"/hibernate-mapping-3.0.dtd\">\n\n",
+				"Mapping DTD 3.0//EN\" ", hbmNamespace, ">\n\n",
 				"<hibernate-mapping auto-import=\"false\" default-lazy=",
 				"\"false\">\n", "</hibernate-mapping>");
 
@@ -4623,7 +4628,15 @@ public class ServiceBuilder {
 			String line = null;
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
-				if (line.startsWith("\t<class name=\"")) {
+				if (isVersionGTE_7_4_0() &&
+					line.startsWith("<!DOCTYPE hibernate-mapping") &&
+					line.contains(_HIBERNATE_3_HBM_NAMESPACE)) {
+
+					line = StringUtil.replace(
+						line, _HIBERNATE_3_HBM_NAMESPACE,
+						_HIBERNATE_5_HBM_NAMESPACE);
+				}
+				else if (line.startsWith("\t<class name=\"")) {
 					line = StringUtil.replace(
 						line,
 						new String[] {
@@ -7877,6 +7890,12 @@ public class ServiceBuilder {
 	}
 
 	private static final int _DEFAULT_COLUMN_MAX_LENGTH = 75;
+
+	private static final String _HIBERNATE_3_HBM_NAMESPACE =
+		"\"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd\"";
+
+	private static final String _HIBERNATE_5_HBM_NAMESPACE =
+		"\"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd\"";
 
 	private static final int _MAX_LINE_LENGTH = 80;
 

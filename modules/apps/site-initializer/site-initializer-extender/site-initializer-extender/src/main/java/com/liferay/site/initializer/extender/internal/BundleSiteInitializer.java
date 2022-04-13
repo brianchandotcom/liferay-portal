@@ -1615,20 +1615,29 @@ public class BundleSiteInitializer implements SiteInitializer {
 				siteNavigationMenuItemSettingsBuilder)
 		throws Exception {
 
-		Map<String, String> objectDefinitionIdsStringUtilReplaceValues =
-			new HashMap<>();
-
 		Set<String> resourcePaths = _servletContext.getResourcePaths(
 			"/site-initializer/object-definitions");
 
 		if (SetUtil.isEmpty(resourcePaths)) {
-			return objectDefinitionIdsStringUtilReplaceValues;
+			return new HashMap<>();
 		}
+
+		Set<String> sortedResourcePaths = new TreeSet<>(
+			new NaturalOrderStringComparator());
+
+		sortedResourcePaths.addAll(resourcePaths);
+
+		resourcePaths = sortedResourcePaths;
+
+		Map<String, String> objectDefinitionIdsStringUtilReplaceValues =
+			new HashMap<>();
 
 		List<com.liferay.object.model.ObjectDefinition> objectDefinitions =
 			_objectDefinitionLocalService.getObjectDefinitions(
 				serviceContext.getCompanyId(), true,
 				WorkflowConstants.STATUS_APPROVED);
+
+		Map<String, String> objectEntriesStringUtilReplaceValues = new HashMap<>();
 
 		for (com.liferay.object.model.ObjectDefinition objectDefinition :
 				objectDefinitions) {
@@ -1709,6 +1718,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 				continue;
 			}
 
+			objectEntriesJSON = StringUtil.replace(
+				objectEntriesJSON, "[$", "$]", objectEntriesStringUtilReplaceValues);
+
 			JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
 				objectEntriesJSON);
 
@@ -1722,6 +1734,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 						ObjectMapperUtil.readValue(
 							Serializable.class, String.valueOf(jsonObject)),
 						serviceContext);
+
+				if(jsonObject.has("externalReferenceCode")){
+					objectEntriesStringUtilReplaceValues.put(
+						StringBundler.concat(objectDefinition.getName(),
+							"#", jsonObject.getString("externalReferenceCode")),
+						String.valueOf(objectEntry.getObjectEntryId()));
+				}
 
 				String objectEntrySiteInitializerKey = jsonObject.getString(
 					"objectEntrySiteInitializerKey");

@@ -3109,4 +3109,53 @@ definition {
 
 	}
 
+	@description = "Verify that is possible to translate multiple options for Multiple Selection field"
+	@priority = "5"
+	test CanTranslateLabelAndHelpTextOnMultipleSelectionField {
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Multiple Selection",
+			fieldName = "Multiple Selection");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Multiple Selection",
+			fieldHelp = "Help Text");
+
+		WebContentStructures.addTranslations(localeList = "pt-BR");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Multiple Selection",
+			fieldFieldLabelEdit = "Multiple Selection pt-BR");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Multiple Selection pt-BR",
+			fieldHelp = "Help Text pt-BR");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Multiple Selection",
+			fieldHelp = "Help Text",
+			fieldName = "Multiple Selection");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Multiple Selection pt-BR",
+			fieldHelp = "Help Text pt-BR",
+			fieldName = "Multiple Selection");
+
+
+	}
+
 }

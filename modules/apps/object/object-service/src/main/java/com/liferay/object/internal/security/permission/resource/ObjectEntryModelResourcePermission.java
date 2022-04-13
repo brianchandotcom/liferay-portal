@@ -70,10 +70,9 @@ public class ObjectEntryModelResourcePermission
 			String actionId)
 		throws PortalException {
 
-		ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
-			objectEntryId);
-
-		return contains(permissionChecker, objectEntry, actionId);
+		return contains(
+			permissionChecker,
+			_objectEntryLocalService.getObjectEntry(objectEntryId), actionId);
 	}
 
 	@Override

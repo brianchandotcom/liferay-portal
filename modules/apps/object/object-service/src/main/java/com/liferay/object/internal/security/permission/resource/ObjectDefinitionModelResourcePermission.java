@@ -69,11 +69,11 @@ public class ObjectDefinitionModelResourcePermission
 			String actionId)
 		throws PortalException {
 
-		ObjectDefinition objectDefinition =
+		return contains(
+			permissionChecker,
 			_objectDefinitionLocalService.getObjectDefinition(
-				objectDefinitionId);
-
-		return contains(permissionChecker, objectDefinition, actionId);
+				objectDefinitionId),
+			actionId);
 	}
 
 	@Override

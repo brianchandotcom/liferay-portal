@@ -554,10 +554,7 @@ public class ObjectEntryLocalServiceImpl
 			rows.size());
 
 		for (Object[] objects : rows) {
-			Map<String, Serializable> values = _getValues(
-				objects, selectExpressions);
-
-			valuesList.add(values);
+			valuesList.add(_getValues(objects, selectExpressions));
 		}
 
 		return valuesList;

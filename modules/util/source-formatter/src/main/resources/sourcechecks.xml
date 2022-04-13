@@ -12,7 +12,7 @@
 		</check>
 		<check name="IncorrectFilePahCheck">
 			<category name="Bug Prevention" />
-			<description name="Checks the file Path." />
+			<description name="Checks that file path conatins leading/trailing spaces." />
 		</check>
 		<check name="NonbreakingSpaceCheck">
 			<category name="Styling" />

@@ -43,7 +43,7 @@ GradleProvidedDependenciesCheck | .gradle | Validates the scope of dependencies 
 [GradleRequiredDependenciesCheck](check/gradle_required_dependencies_check.markdown#gradlerequireddependenciescheck) | .gradle | Validates the dependencies in `/required-dependencies/required-dependencies/build.gradle`. |
 GradleTestDependencyVersionCheck | .gradle | Checks the version for dependencies in gradle build files. |
 [IncorrectFileLocationCheck](check/incorrect_file_location_check.markdown#incorrectfilelocationcheck) | | Checks that `/src/*/java/` only contains `.java` files. |
-IncorrectFilePahCheck | | Checks the file Path. |
+IncorrectFilePahCheck | | Checks that file path conatins leading/trailing spaces. |
 [JSLodashDependencyCheck](check/js_lodash_dependency_check.markdown#jslodashdependencycheck) | .js or .jsx | Finds incorrect use of `AUI._`. |
 [JSONDeprecatedPackagesCheck](check/json_deprecated_packages_check.markdown#jsondeprecatedpackagescheck) | .ipynb, .json or .npmbridgerc | Finds incorrect use of deprecated packages in `package.json` files. |
 JSONPackageJSONBNDVersionCheck | .ipynb, .json or .npmbridgerc | Checks the version for dependencies in `package.json` files. |

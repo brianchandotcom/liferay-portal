@@ -5100,11 +5100,9 @@ public class JenkinsResultsParserUtil {
 
 		StringBuilder sb = new StringBuilder();
 
-		String[] paths = propertyValue.split(",");
+		String[] paths = propertyValue.split("\\s*,\\s*");
 
 		for (String path : paths) {
-			path = path.trim();
-
 			File file = new File(propertyFile.getParentFile(), path);
 
 			if (file.exists()) {

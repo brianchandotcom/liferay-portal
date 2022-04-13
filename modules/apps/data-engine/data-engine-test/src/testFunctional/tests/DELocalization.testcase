@@ -3158,4 +3158,53 @@ definition {
 
 	}
 
+	@description = "Verify that is possible to translate multiple options for Grid field"
+	@priority = "5"
+	test CanTranslateLabelAndHelpTextOnGridField {
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Grid",
+			fieldName = "Grid");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Grid",
+			fieldHelp = "Help Text");
+
+		WebContentStructures.addTranslations(localeList = "pt-BR");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Grid",
+			fieldFieldLabelEdit = "Grid pt-BR");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Grid pt-BR",
+			fieldHelp = "Help Text pt-BR");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Grid",
+			fieldHelp = "Help Text",
+			fieldName = "Grid");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Grid pt-BR",
+			fieldHelp = "Help Text pt-BR",
+			fieldName = "Grid");
+
+
+	}
+
 }

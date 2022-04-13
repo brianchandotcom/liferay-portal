@@ -130,12 +130,12 @@ const Table: React.FC<TableProps> = ({
 						{actions && (
 							<Cell
 								align="right"
-								className="table-action-column table-cell-expand"
+								className="p-0 table-action-column table-cell-expand"
 							>
 								{activeRow === rowIndex ? (
 									<DropDown actions={actions} item={item} />
 								) : (
-									<div style={{height: 33}}></div>
+									<div></div>
 								)}
 							</Cell>
 						)}

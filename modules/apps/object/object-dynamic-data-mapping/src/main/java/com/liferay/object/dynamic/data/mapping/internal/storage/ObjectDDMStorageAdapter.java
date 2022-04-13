@@ -159,13 +159,10 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 			long objectDefinitionId = _getObjectDefinitionId(
 				ddmStorageAdapterSaveRequest);
 
-			ObjectDefinition objectDefinition =
-				_objectDefinitionLocalService.getObjectDefinition(
-					objectDefinitionId);
-
 			ObjectEntry addObjectEntry = _objectEntryManager.addObjectEntry(
 				_getDTOConverterContext(null, user, ddmForm.getDefaultLocale()),
-				objectDefinition,
+				_objectDefinitionLocalService.getObjectDefinition(
+					objectDefinitionId),
 				new ObjectEntry() {
 					{
 						properties = _getObjectEntryProperties(

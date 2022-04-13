@@ -20,8 +20,6 @@ import com.liferay.petra.json.web.service.client.server.simulator.HTTPSServerSim
 import com.liferay.petra.json.web.service.client.server.simulator.constants.SimulatorConstants;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import java.security.KeyStore;
-
 import java.util.Map;
 
 import org.junit.Assert;
@@ -113,10 +111,8 @@ public class JSONWebServiceClientImplSSLGetTest
 
 		KeyStoreLoader keyStoreLoader = new KeyStoreLoader();
 
-		KeyStore keyStore = keyStoreLoader.getKeyStore(
-			"localhost.jks", "liferay");
-
-		properties.put("keyStore", keyStore);
+		properties.put(
+			"keyStore", keyStoreLoader.getKeyStore("localhost.jks", "liferay"));
 
 		properties.put("protocol", "https");
 

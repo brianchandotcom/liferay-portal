@@ -15,7 +15,6 @@
 package com.liferay.password.policies.admin.uad.test;
 
 import com.liferay.portal.kernel.model.PasswordPolicy;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portlet.passwordpoliciesadmin.util.test.PasswordPolicyTestUtil;
@@ -28,11 +27,9 @@ public class PasswordPolicyUADTestUtil {
 	public static PasswordPolicy addPasswordPolicy(long userId)
 		throws Exception {
 
-		ServiceContext serviceContext =
+		return PasswordPolicyTestUtil.addPasswordPolicy(
 			ServiceContextTestUtil.getServiceContext(
-				TestPropsValues.getGroupId(), userId);
-
-		return PasswordPolicyTestUtil.addPasswordPolicy(serviceContext);
+				TestPropsValues.getGroupId(), userId));
 	}
 
 }

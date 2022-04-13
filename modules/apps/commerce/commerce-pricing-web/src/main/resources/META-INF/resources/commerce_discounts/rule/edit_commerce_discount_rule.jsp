@@ -124,7 +124,7 @@ String type = BeanParamUtil.getString(commerceDiscountRule, request, "type");
 					return;
 				})
 				.catch(() => {
-					if (Liferay.__FF__.enableCustomDialogs) {
+					if (Liferay.__FF__.customDialogsEnabled) {
 						Liferay.Util.openAlertModal({
 							message:
 								'<liferay-ui:message key="your-request-failed-to-complete" />',

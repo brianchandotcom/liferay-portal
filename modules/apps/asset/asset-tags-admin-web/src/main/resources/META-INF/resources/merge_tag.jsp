@@ -131,7 +131,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "merge-tags"));
 			);
 
 			if (mergeTagNames.length < 2) {
-				if (Liferay.__FF__.enableCustomDialogs) {
+				if (Liferay.__FF__.customDialogsEnabled) {
 					Liferay.Util.openAlertModal({
 						message:
 							'<liferay-ui:message arguments="2" key="please-choose-at-least-x-tags" />',

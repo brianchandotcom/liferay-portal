@@ -199,7 +199,7 @@ String defaultLanguageId = cpDefinitionOptionRelDisplayContext.getCatalogDefault
 					formFieldTypeSelect.value != '' &&
 					!endsWith(formFieldTypeSelect.value, array)
 				) {
-					if (Liferay.__FF__.enableCustomDialogs) {
+					if (Liferay.__FF__.customDialogsEnabled) {
 						Liferay.Util.openAlertModal({
 							message:
 								'<liferay-ui:message key="selected-field-type-price-type-and-sku-contributor-combination-is-not-allowed" />',
@@ -247,7 +247,7 @@ String defaultLanguageId = cpDefinitionOptionRelDisplayContext.getCatalogDefault
 						disable(priceTypeSelect);
 					}
 					else {
-						if (Liferay.__FF__.enableCustomDialogs) {
+						if (Liferay.__FF__.customDialogsEnabled) {
 							Liferay.Util.openAlertModal(
 								'<liferay-ui:message key="selected-field-type-price-type-and-sku-contributor-combination-is-not-allowed" />'
 							);
@@ -275,7 +275,7 @@ String defaultLanguageId = cpDefinitionOptionRelDisplayContext.getCatalogDefault
 						disable(skuContributorInput);
 					}
 					else {
-						if (Liferay.__FF__.enableCustomDialogs) {
+						if (Liferay.__FF__.customDialogsEnabled) {
 							Liferay.Util.openAlertModal({
 								message:
 									'<liferay-ui:message key="selected-field-type-price-type-and-sku-contributor-combination-is-not-allowed" />',

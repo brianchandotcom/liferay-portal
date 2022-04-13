@@ -14,38 +14,51 @@
 
 package com.liferay.dynamic.data.mapping.form.field.type.internal.select;
 
-import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldOptionsValidationTestCase;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueValidator;
-import com.liferay.portal.json.JSONFactoryImpl;
-import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueValidationException;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
+import com.liferay.portal.kernel.util.LocaleUtil;
 
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Marcellus Tavares
  */
-public class SelectDDMFormFieldValueValidatorTest
-	extends BaseDDMFormFieldOptionsValidationTestCase {
+@RunWith(PowerMockRunner.class)
+public class SelectDDMFormFieldValueValidatorTest {
 
-	@ClassRule
-	@Rule
-	public static final LiferayUnitTestRule liferayUnitTestRule =
-		LiferayUnitTestRule.INSTANCE;
+	@Test
+	public void testValidate() throws Exception {
+		DDMFormField ddmFormField = new DDMFormField("option", "select");
 
-	@Before
-	public void setUp() {
-		_setUpDDMFormFieldValueValidator();
+		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
+
+		ddmFormFieldOptions.addOptionLabel("A", LocaleUtil.US, "Option A");
+
+		ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
+
+		_selectDDMFormFieldValueValidator.validate(ddmFormField, null);
 	}
 
-	@Override
-	protected DDMFormFieldValueValidator getDDMFormFieldValueValidator() {
-		return _selectDDMFormFieldValueValidator;
+	@Test(expected = DDMFormFieldValueValidationException.class)
+	public void testValidateWithEmptyOptionsValues() throws Exception {
+		DDMFormField ddmFormField = new DDMFormField("option", "select");
+
+		ddmFormField.setDDMFormFieldOptions(new DDMFormFieldOptions());
+
+		_selectDDMFormFieldValueValidator.validate(ddmFormField, null);
 	}
 
-	private void _setUpDDMFormFieldValueValidator() {
-		_selectDDMFormFieldValueValidator.jsonFactory = new JSONFactoryImpl();
+	@Test(expected = DDMFormFieldValueValidationException.class)
+	public void testValidateWithNullDDMFormFieldOptions() throws Exception {
+		DDMFormField ddmFormField = new DDMFormField("option", "select");
+
+		ddmFormField.setDDMFormFieldOptions(null);
+
+		_selectDDMFormFieldValueValidator.validate(ddmFormField, null);
 	}
 
 	private final SelectDDMFormFieldValueValidator

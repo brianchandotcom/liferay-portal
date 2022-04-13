@@ -20,19 +20,11 @@ import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTy
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.Value;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.Validator;
 
-import java.util.Locale;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcellus Tavares
@@ -49,31 +41,9 @@ public class SelectDDMFormFieldValueValidator
 	public void validate(DDMFormField ddmFormField, Value value)
 		throws DDMFormFieldValueValidationException {
 
-		if (Objects.equals(ddmFormField.getDataSourceType(), "manual")) {
-			try {
-				_validateDDMFormFieldOptions(ddmFormField, value);
-			}
-			catch (DDMFormFieldValueValidationException
-						ddmFormFieldValueValidationException) {
-
-				throw ddmFormFieldValueValidationException;
-			}
-			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(exception);
-				}
-
-				throw new DDMFormFieldValueValidationException(exception);
-			}
+		if (!Objects.equals(ddmFormField.getDataSourceType(), "manual")) {
+			return;
 		}
-	}
-
-	@Reference
-	protected JSONFactory jsonFactory;
-
-	private void _validateDDMFormFieldOptions(
-			DDMFormField ddmFormField, Value value)
-		throws Exception {
 
 		DDMFormFieldOptions ddmFormFieldOptions =
 			ddmFormField.getDDMFormFieldOptions();
@@ -91,38 +61,6 @@ public class SelectDDMFormFieldValueValidator
 			throw new DDMFormFieldValueValidationException(
 				"Options must contain at least one alternative");
 		}
-
-		Map<Locale, String> selectedValues = value.getValues();
-
-		for (String selectedValue : selectedValues.values()) {
-			_validateSelectedValue(ddmFormField, optionsValues, selectedValue);
-		}
 	}
-
-	private void _validateSelectedValue(
-			DDMFormField ddmFormField, Set<String> optionValues,
-			String selectedValue)
-		throws Exception {
-
-		JSONArray jsonArray = jsonFactory.createJSONArray(selectedValue);
-
-		for (int i = 0; i < jsonArray.length(); i++) {
-			if (Validator.isNull(jsonArray.getString(i)) &&
-				!ddmFormField.isRequired()) {
-
-				continue;
-			}
-
-			if (!optionValues.contains(jsonArray.getString(i))) {
-				throw new DDMFormFieldValueValidationException(
-					String.format(
-						"The selected option \"%s\" is not a valid alternative",
-						jsonArray.getString(i)));
-			}
-		}
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		SelectDDMFormFieldValueValidator.class);
 
 }

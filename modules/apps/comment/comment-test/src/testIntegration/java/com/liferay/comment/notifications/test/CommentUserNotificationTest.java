@@ -169,7 +169,7 @@ public class CommentUserNotificationTest extends BaseUserNotificationTestCase {
 			serviceContext, Constants.ADD);
 
 		return MBMessageLocalServiceUtil.addDiscussionMessage(
-			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			null, TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 			group.getGroupId(), BlogsEntry.class.getName(), _entry.getEntryId(),
 			thread.getThreadId(), MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(50),

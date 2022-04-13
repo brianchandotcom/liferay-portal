@@ -264,7 +264,7 @@ public class CommentsSubscriptionTest {
 			serviceContext, Constants.ADD);
 
 		return MBMessageLocalServiceUtil.addDiscussionMessage(
-			userId, RandomTestUtil.randomString(), _group.getGroupId(),
+			null, userId, RandomTestUtil.randomString(), _group.getGroupId(),
 			BlogsEntry.class.getName(), entry.getEntryId(),
 			thread.getThreadId(), MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),

@@ -96,7 +96,7 @@ public class MBCommentManagerImpl implements CommentManager {
 			MBMessage.class.getName());
 
 		MBMessage mbMessage = _mbMessageLocalService.addDiscussionMessage(
-			userId, StringPool.BLANK, groupId, className, classPK,
+			null, userId, StringPool.BLANK, groupId, className, classPK,
 			thread.getThreadId(), thread.getRootMessageId(), StringPool.BLANK,
 			body, serviceContext);
 

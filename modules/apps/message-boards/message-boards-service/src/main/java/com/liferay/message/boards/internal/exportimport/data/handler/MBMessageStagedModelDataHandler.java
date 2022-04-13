@@ -467,7 +467,7 @@ public class MBMessageStagedModelDataHandler
 				_mbDiscussionLocalService.getThreadDiscussion(threadId);
 
 			return _mbMessageLocalService.addDiscussionMessage(
-				userId, message.getUserName(),
+				null, userId, message.getUserName(),
 				portletDataContext.getScopeGroupId(), discussion.getClassName(),
 				discussion.getClassPK(), threadId, parentMessageId,
 				message.getSubject(), message.getBody(), serviceContext);

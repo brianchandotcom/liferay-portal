@@ -80,7 +80,7 @@ public class MBCommentManagerImplTest extends Mockito {
 		Mockito.verify(
 			_mbMessageLocalService
 		).addDiscussionMessage(
-			_USER_ID, StringPool.BLANK, _GROUP_ID, _CLASS_NAME, _ENTRY_ID,
+			null, _USER_ID, StringPool.BLANK, _GROUP_ID, _CLASS_NAME, _ENTRY_ID,
 			_THREAD_ID, _ROOT_MESSAGE_ID, StringPool.BLANK, _BODY,
 			_serviceContext
 		);
@@ -245,7 +245,7 @@ public class MBCommentManagerImplTest extends Mockito {
 		Mockito.verify(
 			_mbMessageLocalService
 		).addDiscussionMessage(
-			_USER_ID, StringPool.BLANK, _GROUP_ID, _CLASS_NAME, _ENTRY_ID,
+			null, _USER_ID, StringPool.BLANK, _GROUP_ID, _CLASS_NAME, _ENTRY_ID,
 			_THREAD_ID, _ROOT_MESSAGE_ID, StringPool.BLANK, _BODY,
 			_serviceContext
 		);
@@ -426,10 +426,10 @@ public class MBCommentManagerImplTest extends Mockito {
 
 		when(
 			_mbMessageLocalService.addDiscussionMessage(
+				Matchers.anyString(), Matchers.anyLong(), Matchers.anyString(),
 				Matchers.anyLong(), Matchers.anyString(), Matchers.anyLong(),
-				Matchers.anyString(), Matchers.anyLong(), Matchers.anyLong(),
-				Matchers.anyLong(), Matchers.anyString(), Matchers.anyString(),
-				Matchers.any())
+				Matchers.anyLong(), Matchers.anyLong(), Matchers.anyString(),
+				Matchers.anyString(), Matchers.any())
 		).thenReturn(
 			_mbMessage
 		);

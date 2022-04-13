@@ -206,7 +206,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		try {
 			return addDiscussionMessage(
-				userId, userName, groupId, className, classPK, threadId,
+				null, userId, userName, groupId, className, classPK, threadId,
 				parentMessageId, subject, body, serviceContext);
 		}
 		finally {
@@ -1135,7 +1135,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				//String body = subject;
 
 				message = mbMessageLocalService.addDiscussionMessage(
-					userId, null, groupId, className, classPK, 0,
+					null, userId, null, groupId, className, classPK, 0,
 					MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID, subject,
 					subject, new ServiceContext());
 			}

@@ -1586,7 +1586,7 @@ public class BlogsEntryLocalServiceTest {
 			serviceContext, Constants.ADD);
 
 		return MBMessageLocalServiceUtil.addDiscussionMessage(
-			userId, RandomTestUtil.randomString(), _group.getGroupId(),
+			null, userId, RandomTestUtil.randomString(), _group.getGroupId(),
 			BlogsEntry.class.getName(), entry.getEntryId(),
 			mbThread.getThreadId(),
 			MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID,

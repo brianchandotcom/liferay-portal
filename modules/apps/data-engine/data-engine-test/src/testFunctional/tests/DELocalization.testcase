@@ -2521,4 +2521,53 @@ definition {
 
 	}
 
+	@description = "Verify that is possible to translate Label and Help text of Date Field"
+	@priority = "5"
+	test CanTranslateLabelAndHelpTextOnDateField {
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Date",
+			fieldName = "Date");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Date",
+			fieldHelp = "Help Date");
+
+		WebContentStructures.addTranslations(localeList = "pt-BR");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Date",
+			fieldFieldLabelEdit = "Date pt-BR");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Date pt-BR",
+			fieldHelp = "Help Date pt-BR");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Date",
+			fieldHelp = "Help Date",
+			fieldName = "Date");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Date pt-BR",
+			fieldHelp = "Help Date pt-BR",
+			fieldName = "Date");
+
+
+	}
+
 }

@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.io.StringReader;
 
 /**
  * @author Matthew Tambara
@@ -47,6 +48,30 @@ public class ConfigurationPropertiesFactory {
 		try (InputStream inputStream = new FileInputStream(file);
 			Reader reader = new InputStreamReader(inputStream, encoding)) {
 
+			configurationProperties.load(reader);
+		}
+
+		return configurationProperties;
+	}
+
+	public static ConfigurationProperties create(
+			String name, String configurationContent, String encoding)
+		throws IOException {
+
+		ConfigurationProperties configurationProperties = null;
+
+		if (name.endsWith("config")) {
+			configurationProperties = new TypedProperties();
+		}
+		else if (name.endsWith("cfg")) {
+			configurationProperties = new CFGProperties();
+		}
+		else {
+			throw new IllegalArgumentException(
+				"Unknown configuration type: " + name);
+		}
+
+		try (Reader reader = new StringReader(configurationContent)) {
 			configurationProperties.load(reader);
 		}
 

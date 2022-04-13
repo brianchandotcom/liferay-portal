@@ -655,6 +655,9 @@
 			});
 		},
 
+		/**
+		 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+		 */
 		setCursorPosition(element, position) {
 			var instance = this;
 

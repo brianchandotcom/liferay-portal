@@ -2690,9 +2690,9 @@ definition {
 		Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
 
 		WorkflowMetricsAllItemsList.selectAndChangeNodeName(
+			nodeLabel = "review",
 			nodeName = "Review changed",
 			nodeType = "task",
-			nodeLabel = "review",
 			update = "true");
 
 		ApplicationsMenu.gotoPortlet(

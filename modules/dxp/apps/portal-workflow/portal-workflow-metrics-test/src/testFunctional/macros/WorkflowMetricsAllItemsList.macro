@@ -58,8 +58,8 @@ definition {
 
 	macro selectAndChangeNodeName {
 		Click(
-			key_nodeType = "${nodeType}",
 			key_nodeLabel = "${nodeLabel}",
+			key_nodeType = "${nodeType}",
 			locator1 = "ProcessBuilderKaleoDesignerReact#DIAGRAM_NODE_LABEL_SPECIFIC");
 
 		ProcessBuilderKaleoDesignerReact.editNodeInformationField(

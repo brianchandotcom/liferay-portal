@@ -434,17 +434,9 @@ public class LiferayOAuthDataProvider
 				_populateClient(oAuth2Application), refreshTokenKey, lifetime,
 				issuedAt);
 
-			refreshToken.setSubject(
-				_populateUserSubject(
-					oAuth2Authorization.getCompanyId(),
-					oAuth2Authorization.getUserId(),
-					oAuth2Authorization.getUserName()));
-
-			List<String> accessTokens = Collections.singletonList(
-				oAuth2Authorization.getAccessTokenContent());
-
-			refreshToken.setAccessTokens(accessTokens);
-
+			refreshToken.setAccessTokens(
+				Collections.singletonList(
+					oAuth2Authorization.getAccessTokenContent()));
 			refreshToken.setScopes(
 				convertScopeToPermissions(
 					refreshToken.getClient(),
@@ -452,6 +444,11 @@ public class LiferayOAuthDataProvider
 						getScopeAliasesList(
 							oAuth2Authorization.
 								getOAuth2ApplicationScopeAliasesId())));
+			refreshToken.setSubject(
+				_populateUserSubject(
+					oAuth2Authorization.getCompanyId(),
+					oAuth2Authorization.getUserId(),
+					oAuth2Authorization.getUserName()));
 
 			Map<String, String> extraProperties =
 				refreshToken.getExtraProperties();

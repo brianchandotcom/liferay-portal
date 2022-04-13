@@ -24,7 +24,6 @@ import com.liferay.oauth2.provider.web.internal.constants.OAuth2ProviderPortletK
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -70,10 +69,10 @@ public abstract class BaseOAuth2PortletDisplayContext {
 			return getDefaultIconURL();
 		}
 
-		FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
-			oAuth2Application.getIconFileEntryId());
-
-		return dlURLHelper.getThumbnailSrc(fileEntry, themeDisplay);
+		return dlURLHelper.getThumbnailSrc(
+			DLAppLocalServiceUtil.getFileEntry(
+				oAuth2Application.getIconFileEntryId()),
+			themeDisplay);
 	}
 
 	public boolean hasAddApplicationPermission() {

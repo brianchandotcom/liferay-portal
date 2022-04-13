@@ -159,12 +159,13 @@ public class TOCTOUTest extends BaseClientTestCase {
 		// Try again with a fresh token (implicitly for "everything.read"). It
 		// should succeed.
 
-		token = getToken(
-			"oauthTestApplicationCode", null,
-			getAuthorizationCodeBiFunction("test@liferay.com", "test", null),
-			this::parseTokenString);
-
-		webTarget2InvocationBuilder = authorize(webTarget2.request(), token);
+		webTarget2InvocationBuilder = authorize(
+			webTarget2.request(),
+			getToken(
+				"oauthTestApplicationCode", null,
+				getAuthorizationCodeBiFunction(
+					"test@liferay.com", "test", null),
+				this::parseTokenString));
 
 		Assert.assertEquals(
 			"everything.read", webTarget2InvocationBuilder.get(String.class));

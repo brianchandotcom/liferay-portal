@@ -72,10 +72,8 @@ public class OAuth2ApplicationImpl extends OAuth2ApplicationBaseImpl {
 
 	@Override
 	public void setRedirectURIsList(List<String> redirectURIsList) {
-		String redirectURIs = StringUtil.merge(
-			redirectURIsList, StringPool.NEW_LINE);
-
-		setRedirectURIs(redirectURIs);
+		setRedirectURIs(
+			StringUtil.merge(redirectURIsList, StringPool.NEW_LINE));
 	}
 
 }

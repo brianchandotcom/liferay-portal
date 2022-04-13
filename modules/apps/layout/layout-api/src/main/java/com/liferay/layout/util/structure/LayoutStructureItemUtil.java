@@ -54,6 +54,10 @@ public class LayoutStructureItemUtil {
 			return new DropZoneLayoutStructureItem(parentItemId);
 		}
 
+		if (Objects.equals(itemType, LayoutDataItemTypeConstants.TYPE_FORM)) {
+			return new FormLayoutStructureItem(parentItemId);
+		}
+
 		if (Objects.equals(
 				itemType, LayoutDataItemTypeConstants.TYPE_FRAGMENT)) {
 

@@ -15,7 +15,7 @@
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput, ClaySelect} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import React from 'react';
+import React, {useRef} from 'react';
 import {DndProvider, useDrag, useDrop} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 
@@ -173,10 +173,17 @@ function Field({field, index, label, onChange, onDelete, order}) {
 }
 
 function FieldList({fields, onChangeFields}) {
+	const idCounterRef = useRef(10000); // Starts at 10000 to avoid conflicts with existing fields.
+
 	const _handleAddField = () => {
 		onChangeFields([
 			...fields,
-			{field: '', label: '', order: ORDERS.ASC.value},
+			{
+				field: '',
+				id: idCounterRef.current++,
+				label: '',
+				order: ORDERS.ASC.value,
+			},
 		]);
 	};
 
@@ -197,7 +204,7 @@ function FieldList({fields, onChangeFields}) {
 	return (
 		<DndProvider backend={HTML5Backend}>
 			{fields.map((item, index) => (
-				<div key={index}>
+				<div key={item.id}>
 					<DropZone index={index} move={_handleMoveField} />
 
 					<Field

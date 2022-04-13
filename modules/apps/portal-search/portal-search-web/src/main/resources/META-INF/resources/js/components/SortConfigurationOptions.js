@@ -31,7 +31,7 @@ const addOrdersToFieldNames = (fields) =>
 
 /**
  * Uses the indexed field name to determine if order is ascending (+) or
- * descending (-)
+ * descending (-).
  * @param {string} fieldName The indexed field name with possible order symbol.
  * @return {string} Order value (ascending or descending).
  */
@@ -81,8 +81,9 @@ function SortConfigurationOptions({
 
 	const [fields, setFields] = useState(
 		(hasRelevance ? fieldsJSONArray.slice(1) : fieldsJSONArray).map(
-			({field: fieldName, label}) => ({
+			({field: fieldName, label}, index) => ({
 				field: removeOrderFromFieldName(fieldName),
+				id: index, // For FieldList item `key` when reordering.
 				label,
 				order: getOrderFromFieldName(fieldName),
 			})

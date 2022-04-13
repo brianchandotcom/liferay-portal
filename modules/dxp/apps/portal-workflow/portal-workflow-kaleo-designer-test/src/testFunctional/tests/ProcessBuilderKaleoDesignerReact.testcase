@@ -1263,11 +1263,25 @@ definition {
 	}
 
 	@description = "Verify that the Condition node must have at least two outgoing transitions"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test ConditionMustHaveMoreThanOneTransition {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#ConditionMustHaveMoreThanOneTransition";
 
-		// TODO LRQA-72941 ConditionMustHaveMoreThanOneTransition pending implementation
+		Workflow.openWorkflowListView();
+
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.uploadDefinition(workflowDefinitionFile = "invalid-condition-workflow-definition.xml");
+
+		ProcessBuilderKaleoDesignerReact.diagramSourceSwitchView();
+
+		Button.clickPublish();
+
+        Alert.viewErrorMessage(errorMessage = "The Condition node must have at least 2 outgoing transitions");
+
+		Navigator.gotoBack();
+
+        Workflow.viewDefinitionNotPresent(workflowDefinitionTitle = "New Workflow Definition");
 
 	}
 

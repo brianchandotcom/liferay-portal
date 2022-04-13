@@ -1332,6 +1332,7 @@ definition {
 	@refactordone
 	test PrivateSiteShouldNotBeViewableWithoutPermissionsInCalendar {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property private.pages.enabled = "true";
 
 		var portalURL = PropsUtil.get("portal.url");
 

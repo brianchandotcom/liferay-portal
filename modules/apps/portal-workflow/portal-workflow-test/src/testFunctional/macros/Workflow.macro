@@ -718,11 +718,7 @@ definition {
 
 		MenuItem.click(menuItem = "Edit");
 
-		Workflow.viewDefinitionPublicationStatus(status = "Not Published");
-
 		PortletEntry.publish();
-
-		Workflow.viewDefinitionPublicationStatus(status = "Published");
 	}
 
 	macro publishInvalidWorkflowDefinition {

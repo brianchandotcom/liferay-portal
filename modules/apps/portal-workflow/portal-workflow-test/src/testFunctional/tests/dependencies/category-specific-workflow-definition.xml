@@ -1,54 +1,30 @@
 <?xml version="1.0"?>
 
 <workflow-definition
-	xmlns="urn:liferay.com:liferay-workflow_6.2.0"
+	xmlns="urn:liferay.com:liferay-workflow_7.4.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="urn:liferay.com:liferay-workflow_6.2.0 http://www.liferay.com/dtd/liferay-workflow-definition_6_2_0.xsd"
+	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
-	<name>Category Specific Approval</name>
 	<description>A single approver can approve a workflow content.</description>
 	<version>1</version>
-	<state>
-		<name>created</name>
-		<metadata>
-			<![CDATA[
-				{
-					"transitions": {
-						"Determine Branch": {
-							"xy": [
-								-40,
-								6
-							]
-						}
-					},
-					"xy": [
-						60,
-						45
-					]
-				}
-			]]>
-		</metadata>
-		<initial>true</initial>
-		<transitions>
-			<transition>
-				<name>Determine Branch</name>
-				<target>determine-branch</target>
-				<default>true</default>
-			</transition>
-		</transitions>
-	</state>
 	<condition>
-		<name>determine-branch</name>
+		<id>determine-branch</id>
+		<description>Execute conditional logic.</description>
 		<metadata>
 			<![CDATA[
 				{
 					"xy": [
-						228,
-						32
+						414.99998474121094,
+						86
 					]
 				}
 			]]>
 		</metadata>
+		<labels>
+			<label language-id="en_US">
+				determine-branch
+			</label>
+		</labels>
 		<script>
 			<![CDATA[
 				import com.liferay.asset.kernel.model.AssetCategory;
@@ -93,25 +69,102 @@
 		<script-language>groovy</script-language>
 		<transitions>
 			<transition>
-				<name>Legal Review</name>
+				<labels>
+					<label language-id="en_US">
+						Legal Review
+					</label>
+				</labels>
+				<id>Legal Review</id>
 				<target>legal-review</target>
-				<default>false</default>
+				<default>true</default>
 			</transition>
 			<transition>
-				<name>Content Review</name>
+				<labels>
+					<label language-id="en_US">
+						Content Review
+					</label>
+				</labels>
+				<id>Content Review</id>
 				<target>content-review</target>
 				<default>false</default>
 			</transition>
 		</transitions>
 	</condition>
-	<task>
-		<name>update</name>
+	<state>
+		<id>created</id>
+		<description>Begin a workflow.</description>
 		<metadata>
 			<![CDATA[
 				{
 					"xy": [
-						670,
-						30
+						85.99999237060547,
+						83.99998474121094
+					]
+				}
+			]]>
+		</metadata>
+		<initial>true</initial>
+		<labels>
+			<label language-id="en_US">
+				created
+			</label>
+		</labels>
+		<transitions>
+			<transition>
+				<labels>
+					<label language-id="en_US">
+						Determine Branch
+					</label>
+				</labels>
+				<id>Determine Branch</id>
+				<target>determine-branch</target>
+				<default>true</default>
+			</transition>
+		</transitions>
+	</state>
+	<state>
+		<id>approved</id>
+		<description>Execute actions in the workflow.</description>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						805,
+						506.9999542236328
+					]
+				}
+			]]>
+		</metadata>
+		<actions>
+			<action>
+				<name>approve</name>
+				<script>
+					<![CDATA[
+						import com.liferay.portal.kernel.workflow.WorkflowConstants;
+						import com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil;
+
+						WorkflowStatusManagerUtil.updateStatus(WorkflowConstants.getLabelStatus("approved"), workflowContext);
+					]]>
+				</script>
+				<script-language>groovy</script-language>
+				<execution-type>onEntry</execution-type>
+			</action>
+		</actions>
+		<labels>
+			<label language-id="en_US">
+				approved
+			</label>
+		</labels>
+	</state>
+	<task>
+		<id>update</id>
+		<description>Ask a user to work on the item.</description>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						85.99998474121094,
+						311.00001525878906
 					]
 				}
 			]]>
@@ -119,32 +172,48 @@
 		<actions>
 			<notification>
 				<name>Creator Modification Notification</name>
-				<template>Your submission was rejected by a reviewer, please modify and resubmit.</template>
+				<template>
+					<![CDATA[Your submission was rejected by a reviewer, please modify and resubmit.]]>
+				</template>
 				<template-language>text</template-language>
 				<notification-type>email</notification-type>
 				<notification-type>user-notification</notification-type>
+				<recipients>
+					<user />
+				</recipients>
 				<execution-type>onAssignment</execution-type>
 			</notification>
 		</actions>
 		<assignments>
 			<user />
 		</assignments>
+		<labels>
+			<label language-id="en_US">
+				update
+			</label>
+		</labels>
 		<transitions>
 			<transition>
-				<name>resubmit</name>
+				<labels>
+					<label language-id="en_US">
+						resubmit
+					</label>
+				</labels>
+				<id>resubmit</id>
 				<target>determine-branch</target>
 				<default>true</default>
 			</transition>
 		</transitions>
 	</task>
 	<task>
-		<name>content-review</name>
+		<id>content-review</id>
+		<description>Ask a user to work on the item.</description>
 		<metadata>
 			<![CDATA[
 				{
 					"xy": [
-						447,
-						119
+						808,
+						314.00001525878906
 					]
 				}
 			]]>
@@ -152,10 +221,15 @@
 		<actions>
 			<notification>
 				<name>Review Notification</name>
-				<template>You have a new submission waiting for your review in the workflow.</template>
+				<template>
+					<![CDATA[You have a new submission waiting for your review in the workflow.]]>
+				</template>
 				<template-language>text</template-language>
 				<notification-type>email</notification-type>
 				<notification-type>user-notification</notification-type>
+				<recipients>
+					<user />
+				</recipients>
 				<execution-type>onAssignment</execution-type>
 			</notification>
 		</actions>
@@ -195,6 +269,11 @@
 				</role>
 			</roles>
 		</assignments>
+		<labels>
+			<label language-id="en_US">
+				content-review
+			</label>
+		</labels>
 		<task-timers>
 			<task-timer>
 				<name></name>
@@ -202,38 +281,52 @@
 					<duration>1</duration>
 					<scale>hour</scale>
 				</delay>
-				<blocking>false</blocking>
+				<blocking>true</blocking>
 				<timer-actions>
-					<timer-notification>
-						<name></name>
-						<template></template>
-						<template-language>text</template-language>
-						<notification-type>user-notification</notification-type>
-					</timer-notification>
+					<timer-action>
+						<name>Final Timer</name>
+						<description></description>
+						<script>
+							<![CDATA[Final]]>
+						</script>
+						<script-language>groovy</script-language>
+						<priority>1</priority>
+					</timer-action>
 				</timer-actions>
 			</task-timer>
 		</task-timers>
 		<transitions>
 			<transition>
-				<name>approve</name>
+				<labels>
+					<label language-id="en_US">
+						approve
+					</label>
+				</labels>
+				<id>approve</id>
 				<target>approved</target>
 				<default>true</default>
 			</transition>
 			<transition>
-				<name>reject</name>
+				<labels>
+					<label language-id="en_US">
+						reject
+					</label>
+				</labels>
+				<id>reject</id>
 				<target>update</target>
 				<default>false</default>
 			</transition>
 		</transitions>
 	</task>
 	<task>
-		<name>legal-review</name>
+		<id>legal-review</id>
+		<description>Ask a user to work on the item.</description>
 		<metadata>
 			<![CDATA[
 				{
 					"xy": [
-						228,
-						280
+						415,
+						509.99989318847656
 					]
 				}
 			]]>
@@ -241,10 +334,15 @@
 		<actions>
 			<notification>
 				<name>Review Notification</name>
-				<template>You have a new submission waiting for your review in the workflow.</template>
+				<template>
+					<![CDATA[You have a new submission waiting for your review in the workflow.]]>
+				</template>
 				<template-language>text</template-language>
 				<notification-type>email</notification-type>
 				<notification-type>user-notification</notification-type>
+				<recipients>
+					<user />
+				</recipients>
 				<execution-type>onAssignment</execution-type>
 			</notification>
 		</actions>
@@ -284,45 +382,32 @@
 				</role>
 			</roles>
 		</assignments>
+		<labels>
+			<label language-id="en_US">
+				legal-review
+			</label>
+		</labels>
 		<transitions>
 			<transition>
-				<name>approve</name>
+				<labels>
+					<label language-id="en_US">
+						approve
+					</label>
+				</labels>
+				<id>legal-review_approve_approved</id>
 				<target>approved</target>
 				<default>true</default>
 			</transition>
 			<transition>
-				<name>reject</name>
+				<labels>
+					<label language-id="en_US">
+						reject
+					</label>
+				</labels>
+				<id>legal-review_reject_update</id>
 				<target>update</target>
 				<default>false</default>
 			</transition>
 		</transitions>
 	</task>
-	<state>
-		<name>approved</name>
-		<metadata>
-			<![CDATA[
-				{
-					"xy": [
-						680,
-						295
-					]
-				}
-			]]>
-		</metadata>
-		<actions>
-			<action>
-				<name>approve</name>
-				<script>
-					<![CDATA[
-						import com.liferay.portal.kernel.workflow.WorkflowConstants;
-						import com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil;
-
-						WorkflowStatusManagerUtil.updateStatus(WorkflowConstants.getLabelStatus("approved"), workflowContext);
-					]]>
-				</script>
-				<script-language>groovy</script-language>
-				<execution-type>onEntry</execution-type>
-			</action>
-		</actions>
-	</state>
 </workflow-definition>

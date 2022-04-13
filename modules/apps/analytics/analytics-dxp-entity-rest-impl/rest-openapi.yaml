@@ -12,6 +12,8 @@ components:
                     type: array
                 id:
                     type: string
+                modifiedDate:
+                    type: string
                 type:
                     type: string
             type: object

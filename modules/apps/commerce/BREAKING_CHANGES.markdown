@@ -420,11 +420,13 @@ Account.
 * The method `updateOrderStatus` has been removed.
 * The method `updateTransactionId` has been removed.
 * The method `updateUser` has been removed.
+
 #### Who is affected?
 
 Developers who are calling any of these methods in their code.
 
 #### How should I update my code?
+
 * Use the remaining 3 `updateCommerceOrder` methods as a direct replacement.
 * Use `updateCommerceOrder(CommerceOrder commerceOrder)` method after setting
 `expandoBridgeAttributes` with
@@ -439,9 +441,47 @@ update the `transactionId`.
 * Use `updateCommerceOrder(CommerceOrder commerceOrder)` method after setting
 the `userId` and `userName` with `commerceOrder.setUserId(long userId)` and
 `commerceOrder.setUserName(String userName)` to update the user information.
+
 #### Why was this change made?
 
 This change was introduced to clean up the class
 `CommerceOrderLocalServiceImpl`.
+
+---------------------------------------
+
+### Refine CommerceOrder in commerce-service service.xml
+- **Date:** 2022-Apr-13
+- **JIRA Ticket:** [COMMERCE-8408](https://issues.liferay.com/browse/COMMERCE-8408)
+
+#### What changed?
+
+* The method `addCommerceOrder` in `CommerceOrderLocalService` and
+`CommerceOrderService` have parameters that have been rearranged.
+* The method `addOrUpdateCommerceOrder` in `CommerceOrderLocalService` and
+`CommerceOrderService` have parameters that have been rearranged.
+* The method `updateCommerceOrder`  in `CommerceOrderLocalService` and
+`CommerceOrderService` have parameters that have been rearranged.
+* The method `updateCommerceOrderPrices` in `CommerceOrderLocalService` and
+`CommerceOrderService` have parameters that have been rearranged.
+
+#### Who is affected?
+
+Developers who are calling any of these methods in their code.
+
+#### How should I update my code?
+
+* Verify that parameters are correctly aligned with new `addCommerceOrder`
+method(s).
+* Verify that parameters are correctly aligned with new
+`addOrUpdateCommerceOrder` method(s).
+* Verify that parameters are correctly aligned with new `updateCommerceOrder`
+method(s).
+* Verify that parameters are correctly aligned with new
+`updateCommerceOrderPrices` method(s).
+
+#### Why was this change made?
+
+This change was introduced to clean up the entity `CommerceOrder` in
+`commerce-service` `service.xml`.
 
 ---------------------------------------

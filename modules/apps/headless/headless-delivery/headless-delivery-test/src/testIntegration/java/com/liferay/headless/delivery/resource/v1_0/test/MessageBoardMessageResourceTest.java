@@ -16,6 +16,8 @@ package com.liferay.headless.delivery.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.delivery.client.dto.v1_0.MessageBoardMessage;
+import com.liferay.headless.delivery.client.pagination.Page;
+import com.liferay.headless.delivery.client.pagination.Pagination;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBMessageLocalServiceUtil;
@@ -28,6 +30,10 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 
+import java.util.Arrays;
+import java.util.List;
+
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -47,6 +53,53 @@ public class MessageBoardMessageResourceTest
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setScopeGroupId(testGroup.getGroupId());
+	}
+
+	@Override
+	@Test
+	public void testGetMessageBoardMessageMessageBoardMessagesPage()
+		throws Exception {
+
+		super.testGetMessageBoardMessageMessageBoardMessagesPage();
+
+		// Test of flatten parameter with a tree of MessageBoardMessage
+
+		Long parentMessageBoardMessageId =
+			testGetMessageBoardMessageMessageBoardMessagesPage_getParentMessageBoardMessageId();
+
+		MessageBoardMessage messageBoardMessage1 =
+			testGetMessageBoardMessageMessageBoardMessagesPage_addMessageBoardMessage(
+				parentMessageBoardMessageId, randomMessageBoardMessage());
+
+		MessageBoardMessage messageBoardMessage2 =
+			testGetMessageBoardMessageMessageBoardMessagesPage_addMessageBoardMessage(
+				messageBoardMessage1.getId(), randomMessageBoardMessage());
+
+		Page<MessageBoardMessage> page =
+			messageBoardMessageResource.
+				getMessageBoardMessageMessageBoardMessagesPage(
+					parentMessageBoardMessageId, false, null, null, null,
+					Pagination.of(1, 10), null);
+
+		Assert.assertEquals(1, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(messageBoardMessage1),
+			(List<MessageBoardMessage>)page.getItems());
+		assertValid(page);
+
+		page =
+			messageBoardMessageResource.
+				getMessageBoardMessageMessageBoardMessagesPage(
+					parentMessageBoardMessageId, true, null, null, null,
+					Pagination.of(1, 10), null);
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(messageBoardMessage1, messageBoardMessage2),
+			(List<MessageBoardMessage>)page.getItems());
+		assertValid(page);
 	}
 
 	@Test

@@ -170,9 +170,8 @@ definition {
 
 		Workflow.addNewDefinition(workflowDefinitionTitle = "Quarterly Reports Review Process");
 
-		ProcessBuilderKaleoDesignerReact.uploadDefinition(
-			workflowDefinitionFile = "advanced-governors-review-workflow-definition.xml");
-		
+		ProcessBuilderKaleoDesignerReact.uploadDefinition(workflowDefinitionFile = "advanced-governors-review-workflow-definition.xml");
+
 		ProcessBuilderKaleoDesignerReact.diagramSourceSwitchView();
 
 		Button.clickPublish();

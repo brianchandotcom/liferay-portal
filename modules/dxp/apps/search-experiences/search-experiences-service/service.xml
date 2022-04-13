@@ -23,6 +23,8 @@
 		<column localized="true" name="description" type="String" />
 		<column name="elementInstancesJSON" type="String" />
 		<column name="schemaVersion" type="String" />
+		<column name="version" type="String" />
+		<column name="key" type="String" />
 		<column localized="true" name="title" type="String" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
@@ -56,6 +58,8 @@
 		<column name="hidden" type="boolean" />
 		<column name="readOnly" type="boolean" />
 		<column name="schemaVersion" type="String" />
+		<column name="version" type="String" />
+		<column name="key" type="String" />
 		<column localized="true" name="title" type="String" />
 		<column name="type" type="int" />
 		<column name="status" type="int" />

@@ -1048,6 +1048,11 @@
 					"store": true,
 					"type": "keyword"
 				},
+				"userGroupRoleNames": {
+					"normalizer": "lowercase",
+					"store": true,
+					"type": "keyword"
+				},
 				"userId": {
 					"store": true,
 					"type": "keyword"

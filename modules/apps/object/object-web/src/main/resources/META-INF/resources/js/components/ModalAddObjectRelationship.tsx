@@ -20,34 +20,11 @@ import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import useForm from '../hooks/useForm';
+import {objectRelationshipTypes} from '../utils/objectRelationshipTypes';
 import {toCamelCase} from '../utils/string';
 import CustomSelect from './Form/CustomSelect/CustomSelect';
 import Input from './Form/Input';
 import Select from './Form/Select';
-
-const objectRelationshipTypes = [
-	{
-		description: Liferay.Language.get(
-			"one-object's-entry-interacts-only-with-one-other-object's-entry"
-		),
-		label: Liferay.Language.get('one-to-one'),
-		value: 'oneToOne',
-	},
-	{
-		description: Liferay.Language.get(
-			"one-object's-entry-interacts-with-many-others-object's-entries"
-		),
-		label: Liferay.Language.get('one-to-many'),
-		value: 'oneToMany',
-	},
-	{
-		description: Liferay.Language.get(
-			"multiple-object's-entries-can-interact-with-many-others-object's-entries"
-		),
-		label: Liferay.Language.get('many-to-many'),
-		value: 'manyToMany',
-	},
-];
 
 const headers = new Headers({
 	'Accept': 'application/json',

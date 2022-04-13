@@ -16,10 +16,18 @@ package com.liferay.object.web.internal.object.definitions.display.context;
 
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.web.internal.configuration.activator.FFOneToOneRelationshipConfigurationActivator;
+import com.liferay.object.web.internal.display.context.helper.ObjectRequestHelper;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -40,12 +48,18 @@ public class ObjectDefinitionsRelationshipsDisplayContext
 			ffOneToOneRelationshipConfigurationActivator,
 		HttpServletRequest httpServletRequest,
 		ModelResourcePermission<ObjectDefinition>
-			objectDefinitionModelResourcePermission) {
+			objectDefinitionModelResourcePermission,
+		ObjectDefinitionService objectDefinitionService) {
 
 		super(httpServletRequest, objectDefinitionModelResourcePermission);
 
 		_ffOneToOneRelationshipConfigurationActivator =
 			ffOneToOneRelationshipConfigurationActivator;
+		_objectDefinitionModelResourcePermission =
+			objectDefinitionModelResourcePermission;
+		_objectDefinitionService = objectDefinitionService;
+
+		_objectRequestHelper = new ObjectRequestHelper(httpServletRequest);
 	}
 
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems()
@@ -70,6 +84,64 @@ public class ObjectDefinitionsRelationshipsDisplayContext
 				"delete",
 				LanguageUtil.get(objectRequestHelper.getRequest(), "delete"),
 				"delete", "delete", "async"));
+	}
+
+	public JSONArray getObjectRelationshipDeletionTypesJSONArray() {
+		return JSONUtil.putAll(
+			JSONUtil.put(
+				"label",
+				LanguageUtil.get(
+					_objectRequestHelper.getRequest(),
+					ObjectRelationshipConstants.DELETION_TYPE_CASCADE)
+			).put(
+				"value", ObjectRelationshipConstants.DELETION_TYPE_CASCADE
+			)
+		).put(
+			JSONUtil.put(
+				"label",
+				LanguageUtil.get(
+					_objectRequestHelper.getRequest(),
+					ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE)
+			).put(
+				"value", ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE
+			)
+		).put(
+			JSONUtil.put(
+				"label",
+				LanguageUtil.get(
+					_objectRequestHelper.getRequest(),
+					ObjectRelationshipConstants.DELETION_TYPE_PREVENT)
+			).put(
+				"value", ObjectRelationshipConstants.DELETION_TYPE_PREVENT
+			)
+		);
+	}
+
+	public JSONObject getObjectRelationshipJSONObject(
+			ObjectRelationship objectRelationship)
+		throws PortalException {
+
+		ObjectDefinition objectDefinition2 =
+			_objectDefinitionService.getObjectDefinition(
+				objectRelationship.getObjectDefinitionId2());
+
+		return JSONUtil.put(
+			"deletionType", objectRelationship.getDeletionType()
+		).put(
+			"label", objectRelationship.getLabelMap()
+		).put(
+			"name", objectRelationship.getName()
+		).put(
+			"objectDefinitionId1", objectRelationship.getObjectDefinitionId1()
+		).put(
+			"objectDefinitionId2", objectRelationship.getObjectDefinitionId2()
+		).put(
+			"objectDefinitionName2", objectDefinition2.getShortName()
+		).put(
+			"objectRelationshipId", objectRelationship.getObjectRelationshipId()
+		).put(
+			"type", objectRelationship.getType()
+		);
 	}
 
 	public boolean isFFOneToOneRelationshipConfigurationEnabled() {
@@ -97,5 +169,9 @@ public class ObjectDefinitionsRelationshipsDisplayContext
 
 	private final FFOneToOneRelationshipConfigurationActivator
 		_ffOneToOneRelationshipConfigurationActivator;
+	private final ModelResourcePermission<ObjectDefinition>
+		_objectDefinitionModelResourcePermission;
+	private final ObjectDefinitionService _objectDefinitionService;
+	private final ObjectRequestHelper _objectRequestHelper;
 
 }

@@ -32,8 +32,8 @@ const useSuiteActions = () => {
 				name: i18n.translate('edit'),
 			},
 			{
-				action: ({id: suiteId}: TestraySuite) =>
-					onDeleteSuite({variables: {suiteId}})
+				action: ({id}: TestraySuite) =>
+					onDeleteSuite({variables: {id}})
 						.then(() => modal.onSave())
 						.catch(modal.onError),
 				name: i18n.translate('delete'),

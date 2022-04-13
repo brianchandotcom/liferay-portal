@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import React from 'react';
+import React, {useEffect} from 'react';
 
 import ConnectToAC from './components/ConnectToAC.es';
 import SegmentsExperimentsSidebar from './components/SegmentsExperimentsSidebar.es';
@@ -31,6 +31,35 @@ export default function ({context, portletNamespace, props}) {
 		editSegmentsVariantURL,
 		runSegmentsExperimentURL,
 	} = endpoints;
+	const segmentsExperimentPanelToggle = document.getElementById(
+		`${portletNamespace}segmentsExperimentPanelToggleId`
+	);
+
+	useEffect(() => {
+		if (segmentsExperimentPanelToggle) {
+			const sidenavInstance = Liferay.SideNavigation.initialize(
+				segmentsExperimentPanelToggle
+			);
+
+			sidenavInstance.on('open.lexicon.sidenav', () => {
+				Liferay.Util.Session.set(
+					'com.liferay.segments.experiment.web_panelState',
+					'open'
+				);
+			});
+
+			sidenavInstance.on('closed.lexicon.sidenav', () => {
+				Liferay.Util.Session.set(
+					'com.liferay.segments.experiment.web_panelState',
+					'closed'
+				);
+			});
+
+			Liferay.once('screenLoad', () => {
+				Liferay.SideNavigation.destroy(segmentsExperimentPanelToggle);
+			});
+		}
+	}, [segmentsExperimentPanelToggle, portletNamespace]);
 
 	return isAnalyticsSync ? (
 		<SegmentsExperimentsContext.Provider

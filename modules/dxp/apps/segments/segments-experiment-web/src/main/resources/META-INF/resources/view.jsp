@@ -37,31 +37,3 @@
 		</c:if>
 	</div>
 </div>
-
-<aui:script>
-	var segmentsExperimentPanelToggle = document.getElementById(
-		'<portlet:namespace />segmentsExperimentPanelToggleId'
-	);
-
-	var sidenavInstance = Liferay.SideNavigation.initialize(
-		segmentsExperimentPanelToggle
-	);
-
-	sidenavInstance.on('open.lexicon.sidenav', (event) => {
-		Liferay.Util.Session.set(
-			'com.liferay.segments.experiment.web_panelState',
-			'open'
-		);
-	});
-
-	sidenavInstance.on('closed.lexicon.sidenav', (event) => {
-		Liferay.Util.Session.set(
-			'com.liferay.segments.experiment.web_panelState',
-			'closed'
-		);
-	});
-
-	Liferay.once('screenLoad', () => {
-		Liferay.SideNavigation.destroy(segmentsExperimentPanelToggle);
-	});
-</aui:script>

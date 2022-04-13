@@ -2717,4 +2717,53 @@ definition {
 
 	}
 
+	@description = "Verify that is possible to translate Label and Help text of Upload Field"
+	@priority = "5"
+	test CanTranslateLabelAndHelpTextOnUploadField {
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Upload",
+			fieldName = "Upload");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Upload",
+			fieldHelp = "Help Text");
+
+		WebContentStructures.addTranslations(localeList = "pt-BR");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Upload",
+			fieldFieldLabelEdit = "Upload pt-BR");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Upload pt-BR",
+			fieldHelp = "Help Text pt-BR");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Upload",
+			fieldHelp = "Help Text",
+			fieldName = "Upload");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Upload pt-BR",
+			fieldHelp = "Help Text pt-BR",
+			fieldName = "Upload");
+
+
+	}
+
 }

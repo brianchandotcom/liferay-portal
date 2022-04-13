@@ -8,6 +8,7 @@
     # to the repository, but as they are generated files the linter should not
     # touch them.
     #
+
     *.soy.js
     build/**
     classes/**
@@ -23,6 +24,7 @@
     # prepended, each must have a trailing blank line. Prettier would remove the
     # blank line if we did not ignore it here.
     #
+
     /copyright.js
     /dxp/copyright.js
 
@@ -35,6 +37,7 @@
     # need to ignore them to prevent Prettier from stripping off the trailing
     # blank line.
     #
+
     /apps/portal-portlet-bridge/portal-portlet-bridge-soy-impl/src/test/resources/com/liferay/portal/portlet/bridge/soy/internal/dependencies/**/*.js
     /apps/fragment/fragment-demo-data-creator-impl/src/main/resources/com/liferay/fragment/demo/data/creator/internal/dependencies/**/*.js
     /apps/fragment/fragment-test/src/testIntegration/resources/com/liferay/fragment/dependencies/**/*.js
@@ -47,5 +50,6 @@
     # These are generated third-party files, not intended for editing or
     # inspection.
     #
+
     /apps/frontend-js/frontend-js-svg4everybody-web/src/main/resources/META-INF/resources/svg4everybody.js
     /yarn-*.js

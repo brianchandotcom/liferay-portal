@@ -50,10 +50,10 @@ public class AccountEntrySystemObjectDefinitionMetadata
 	@Override
 	public List<ObjectField> getObjectFields() {
 		return Arrays.asList(
-			createObjectField("Boolean", "Boolean", "active", "active", true),
 			createObjectField("Text", "String", "name", "name", true),
-			createObjectField("Boolean", "Boolean", "root", "root", true),
-			createObjectField("Text", "String", "tax-id", "taxId", false));
+			createObjectField(
+				"Text", "String", "description", "description", false),
+			createObjectField("Text", "String", "type", "type", true));
 	}
 
 	@Override
@@ -68,7 +68,7 @@ public class AccountEntrySystemObjectDefinitionMetadata
 
 	@Override
 	public String getRESTContextPath() {
-		return "headless-commerce-admin-account/v1.0/accounts";
+		return "headless-admin-user/v1.0/accounts";
 	}
 
 	@Override

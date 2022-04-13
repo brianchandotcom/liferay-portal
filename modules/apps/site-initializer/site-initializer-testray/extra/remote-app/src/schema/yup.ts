@@ -16,6 +16,26 @@ import {yupResolver} from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
 const yupSchema = {
+	case: yup.object({
+		componentId: yup.string().required(),
+		description: yup.string(),
+		descriptionType: yup.string(),
+		estimatedDuration: yup.number(),
+		name: yup.string().required(),
+		priority: yup.number(),
+		steps: yup.string(),
+		stepsType: yup.string().required(),
+	}),
+	caseType: yup.object({
+		name: yup.string().required(),
+	}),
+	factorCategory: yup.object({
+		name: yup.string().required(),
+	}),
+	factorOption: yup.object({
+		factorCategoryId: yup.string().required(),
+		name: yup.string().required(),
+	}),
 	project: yup.object({
 		description: yup.string().required(),
 		name: yup.string().required(),
@@ -23,6 +43,12 @@ const yupSchema = {
 	routine: yup.object({
 		autoanalyze: yup.boolean(),
 		name: yup.string().required(),
+	}),
+	suite: yup.object({
+		autoanalyze: yup.boolean(),
+		description: yup.string(),
+		name: yup.string().required(),
+		smartSuite: yup.string(),
 	}),
 };
 

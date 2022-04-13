@@ -26,7 +26,9 @@ echo "[run_local] Build the remote-app PoC"
     REMOTE_APP_HOST=http://localhost:8090 ../create_app_config.sh -n "Remote App A" -e liferay-hello-world -p "foo=bar" >> ../../k8s/remoteappa/remote-app-a-configmap.yaml)
 
 echo "[run_local] Build the custom-rest-service"
-(cd custom-rest-service && docker build -t "custom-rest-service:1.0.0-SNAPSHOT" .)
+(cd lxc-extensions/custom-rest-service && 
+    mvn clean package &&
+    docker build -t "custom-rest-service:1.0.0-SNAPSHOT" .)
 
 echo "[run_local] Deleting deployments"
 kubectl delete deployments.apps remote-app-a --wait=true --ignore-not-found=true

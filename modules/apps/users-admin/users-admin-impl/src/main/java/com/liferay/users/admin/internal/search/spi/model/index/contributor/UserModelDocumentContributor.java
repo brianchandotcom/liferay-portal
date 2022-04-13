@@ -91,6 +91,7 @@ public class UserModelDocumentContributor
 			document.addText("firstName", user.getFirstName());
 			document.addText("fullName", user.getFullName());
 			document.addKeyword("groupIds", user.getGroupIds());
+
 			document.addText("jobTitle", user.getJobTitle());
 			document.addDate("lastLoginDate", user.getLastLoginDate());
 			document.addText("lastName", user.getLastName());
@@ -102,21 +103,23 @@ public class UserModelDocumentContributor
 			long[] roleIds = user.getRoleIds();
 
 			document.addKeyword("roleIds", roleIds);
-
-			long[] userGroupRoleIds = _getUserGroupRoleIds(user.getUserId());
-
 			document.addKeyword(
 				"roleNames",
 				ListUtil.toArray(
-					_roleLocalService.getRoles(
-						ArrayUtil.append(roleIds, userGroupRoleIds)),
-					Role.NAME_ACCESSOR));
+					_roleLocalService.getRoles(roleIds), Role.NAME_ACCESSOR));
 
 			document.addText("screenName", user.getScreenName());
 			document.addKeyword("teamIds", user.getTeamIds());
 			document.addKeyword("userGroupIds", user.getUserGroupIds());
 
+			long[] userGroupRoleIds = _getUserGroupRoleIds(user.getUserId());
+
 			document.addKeyword("userGroupRoleIds", userGroupRoleIds);
+			document.addKeyword(
+				"userGroupRoleNames",
+				ListUtil.toArray(
+					_roleLocalService.getRoles(userGroupRoleIds),
+					Role.NAME_ACCESSOR));
 
 			_populateAddresses(document, user.getAddresses(), 0, 0);
 		}

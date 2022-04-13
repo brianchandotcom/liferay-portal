@@ -58,6 +58,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.stream.Stream;
 
+import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
@@ -71,7 +72,7 @@ public class SegmentsExperimentDisplayContext {
 	public SegmentsExperimentDisplayContext(
 		HttpServletRequest httpServletRequest,
 		LayoutLocalService layoutLocalService, Portal portal,
-		RenderResponse renderResponse,
+		RenderRequest renderRequest, RenderResponse renderResponse,
 		SegmentsExperienceService segmentsExperienceService,
 		SegmentsExperimentConfiguration segmentsExperimentConfiguration,
 		SegmentsExperienceManager segmentsExperienceManager,
@@ -81,6 +82,7 @@ public class SegmentsExperimentDisplayContext {
 		_httpServletRequest = httpServletRequest;
 		_layoutLocalService = layoutLocalService;
 		_portal = portal;
+		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_segmentsExperienceService = segmentsExperienceService;
 		_segmentsExperimentConfiguration = segmentsExperimentConfiguration;
@@ -121,6 +123,23 @@ public class SegmentsExperimentDisplayContext {
 				segmentsExperienceId, _portal.getClassNameId(Layout.class),
 				layout.getPlid(),
 				SegmentsExperimentConstants.Status.getExclusiveStatusValues()));
+	}
+
+	private JSONObject _getAnalyticsDataJSONObject(
+		long companyId, long groupId) {
+
+		return JSONUtil.put(
+			"cloudTrialURL", SegmentsExperimentUtil.ANALYTICS_CLOUD_TRIAL_URL
+		).put(
+			"isConnected",
+			SegmentsExperimentUtil.isAnalyticsConnected(companyId)
+		).put(
+			"isSynced",
+			() -> SegmentsExperimentUtil.isAnalyticsSynced(companyId, groupId)
+		).put(
+			"url",
+			() -> PrefsPropsUtil.getString(companyId, "liferayAnalyticsURL")
+		);
 	}
 
 	private String _getCalculateSegmentsExperimentEstimatedDurationURL() {
@@ -303,11 +322,36 @@ public class SegmentsExperimentDisplayContext {
 		Locale locale = _themeDisplay.getLocale();
 
 		return HashMapBuilder.<String, Object>put(
+			"analyticsData",
+			_getAnalyticsDataJSONObject(
+				_themeDisplay.getCompanyId(), _themeDisplay.getScopeGroupId())
+		).put(
+			"hideSegmentsExperimentPanelURL",
+			PortletURLBuilder.createActionURL(
+				_renderResponse
+			).setActionName(
+				"/segments_experiment/hide_segments_experiment_panel"
+			).setRedirect(
+				() -> {
+					String redirect = ParamUtil.getString(
+						_renderRequest, "redirect");
+
+					if (Validator.isNotNull(redirect)) {
+						return redirect;
+					}
+
+					return _themeDisplay.getLayoutFriendlyURL(
+						_themeDisplay.getLayout());
+				}
+			).buildString()
+		).put(
 			"historySegmentsExperiments",
 			_getHistorySegmentsExperimentsJSONArray(locale)
 		).put(
 			"initialSegmentsVariants",
 			_getSegmentsExperimentRelsJSONArray(locale)
+		).put(
+			"pathToAssets", _portal.getPathContext(_renderRequest)
 		).put(
 			"segmentsExperiences", _getSegmentsExperiencesJSONArray(locale)
 		).put(
@@ -502,6 +546,7 @@ public class SegmentsExperimentDisplayContext {
 	private final HttpServletRequest _httpServletRequest;
 	private final LayoutLocalService _layoutLocalService;
 	private final Portal _portal;
+	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private Long _segmentsExperienceId;
 	private final SegmentsExperienceManager _segmentsExperienceManager;

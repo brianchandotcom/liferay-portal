@@ -44,7 +44,11 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
 import java.io.Serializable;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -71,9 +75,12 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 			DTOConverterContext dtoConverterContext, BaseModel<?> baseModel)
 		throws Exception {
 
+		Map<String, Object> modelAttributes = baseModel.getModelAttributes();
+
 		return _toDXPEntity(
 			_getExpandoFields(baseModel), _getFields(baseModel),
 			String.valueOf(baseModel.getPrimaryKeyObj()),
+			(Date)modelAttributes.get("modifiedDate"),
 			baseModel.getModelClassName());
 	}
 
@@ -246,7 +253,8 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 	}
 
 	private DXPEntity _toDXPEntity(
-		ExpandoField[] expandoFields, Field[] fields, String id, String type) {
+		ExpandoField[] expandoFields, Field[] fields, String id,
+		Date modifiedDate, String type) {
 
 		DXPEntity dxpEntity = new DXPEntity();
 
@@ -259,6 +267,7 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 		}
 
 		dxpEntity.setId(id);
+		dxpEntity.setModifiedDate(_dateFormat.format(modifiedDate));
 		dxpEntity.setType(type);
 
 		return dxpEntity;
@@ -266,6 +275,9 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DXPEntityDTOConverterImpl.class);
+
+	private static final DateFormat _dateFormat = new SimpleDateFormat(
+		"yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 
 	@Reference
 	private AnalyticsConfigurationTracker _analyticsConfigurationTracker;

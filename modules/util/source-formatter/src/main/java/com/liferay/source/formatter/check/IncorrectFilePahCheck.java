@@ -26,8 +26,7 @@ public class IncorrectFilePahCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(
-			String fileName, String absolutePath, String content)
-		throws Exception {
+		String fileName, String absolutePath, String content) {
 
 		String rootDirName = SourceUtil.getRootDirName(absolutePath);
 

@@ -352,6 +352,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8481 | Test Summary: Create a Dynamic Individuals Segment with a criteria that uses a boolean and a does not contain"
 	@priority = "4"
 	test CanCreateDynamicSegmentWithIndividualCriteriaUsesBooleanAndDoesNotContain {
+		property portal.upstream = "quarantine";
+
+		// AC Quarantine Reason: The membership list takes a long time to update
+		// AC Refactor ticket: LRAC-10769
+
 		property test.name.skip.portal.instance = "SegmentsCreation#CanCreateDynamicSegmentWithIndividualCriteriaUsesBooleanAndDoesNotContain";
 
 		var usernameList = "user1,user2,user3";
@@ -467,6 +472,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8480 | Test Summary: Create a Dynamic Individuals Segment with a criteria that uses is known and is not"
 	@priority = "4"
 	test CanCreateDynamicSegmentWithIndividualCriteriaUsesIsKnownAndIsNot {
+		property portal.upstream = "quarantine";
+
+		// AC Quarantine Reason: The membership list takes a long time to update
+		// AC Refactor ticket: LRAC-10769
+
 		property test.name.skip.portal.instance = "SegmentsCreation#CanCreateDynamicSegmentWithIndividualCriteriaUsesIsKnownAndIsNot";
 
 		var usernameList = "user1,user2,user3";
@@ -932,6 +942,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8479 | Test Summary: Create a Segment with a Number Property"
 	@priority = "4"
 	test CanCreateSegmentWithNumberProperty {
+		property portal.upstream = "quarantine";
+
+		// AC Quarantine Reason: The membership list takes a long time to update
+		// AC Refactor ticket: LRAC-10769
+
 		property test.name.skip.portal.instance = "SegmentsCreation#CanCreateSegmentWithNumberProperty";
 
 		var usernameList = "user1,user2,user3";
@@ -1155,6 +1170,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8471 | Test Summary: Paginate Segment Profile in Membership List"
 	@priority = "3"
 	test CanPaginateSegmentProfileInMembershipList {
+		property portal.upstream = "quarantine";
+
+		// AC Quarantine Reason: The membership list takes a long time to update
+		// AC Refactor ticket: LRAC-10769
+
 		property test.name.skip.portal.instance = "SegmentsCreation#CanPaginateSegmentProfileInMembershipList";
 
 		var usernameList = "user1,user2,user3,user4,user5";

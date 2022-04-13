@@ -115,6 +115,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9221 | Test Summary: Create a Web Behavior criteria at least/at most times"
 	@priority = "4"
 	test CanCreateWebBehaviorSegmentCriteriaLeastMostTimes {
+		property portal.upstream = "quarantine";
+
+		// AC Quarantine Reason: The membership list takes a long time to update
+		// AC Refactor ticket: LRAC-10769
+
 		property test.name.skip.portal.instance = "SegmentsCreationWebBehavior#CanCreateWebBehaviorSegmentCriteriaLeastMostTimes";
 
 		ACUtils.createWCAndAddToPage();
@@ -348,6 +353,11 @@ definition {
 	@description = "Create a Web Behavior Segment Submitting a Form"
 	@priority = "5"
 	test CanCreateWebBehaviorSegmentSubmittingForm {
+		property portal.upstream = "quarantine";
+
+		// AC Quarantine Reason: The membership list takes a long time to update
+		// AC Refactor ticket: LRAC-10769
+
 		property test.name.skip.portal.instance = "SegmentsCreationWebBehavior#CanCreateWebBehaviorSegmentSubmittingForm";
 
 		ACUtils.createFormAndAddToPage();
@@ -425,6 +435,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9216 | Test Summary: Add segment using a web behavior 'after' some time"
 	@priority = "4"
 	test CanCreateWebBehaviorSegmentUsingAfter {
+		property portal.upstream = "quarantine";
+
+		// AC Quarantine Reason: The membership list takes a long time to update
+		// AC Refactor ticket: LRAC-10769
+
 		property test.name.skip.portal.instance = "SegmentsCreationWebBehavior#CanCreateWebBehaviorSegmentUsingAfter";
 
 		ACUtils.createWCAndAddToPage();
@@ -501,6 +516,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9217 | Test Summary: Add segment using a web behavior 'before' some time"
 	@priority = "4"
 	test CanCreateWebBehaviorSegmentUsingBefore {
+		property portal.upstream = "quarantine";
+
+		// AC Quarantine Reason: The membership list takes a long time to update
+		// AC Refactor ticket: LRAC-10769
+
 		property test.name.skip.portal.instance = "SegmentsCreationWebBehavior#CanCreateWebBehaviorSegmentUsingBefore";
 
 		ACUtils.createWCAndAddToPage();

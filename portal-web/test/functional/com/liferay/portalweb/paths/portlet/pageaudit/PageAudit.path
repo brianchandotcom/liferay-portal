@@ -151,6 +151,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SIDEBAR</td>
+	<td>//div[contains(@class,'sidenav-menu') and descendant::span[contains(.,'Page Audit')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUCCESS_IMAGE</td>
 	<td>//img[contains(@alt, 'success-page-audit-image-alt-description')]</td>
 	<td></td>

@@ -12,15 +12,24 @@ definition {
 	}
 
 	tearDown {
-		Navigator.openURL();
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if (IsElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
-			User.logoutPG();
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
 		}
+		else {
+			Navigator.openURL();
 
-		User.firstLoginPG();
+			if (IsElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
+				User.logoutPG();
+			}
 
-		CommerceConfiguration.commerceAdminTearDown();
+			User.firstLoginPG();
+
+			CommerceConfiguration.commerceAdminTearDown();
+
+			CommerceConfiguration.commerceInitializersTearDown();
+		}
 	}
 
 	@description = "This is a test for COMMERCE-6912. Bulk delete countries"

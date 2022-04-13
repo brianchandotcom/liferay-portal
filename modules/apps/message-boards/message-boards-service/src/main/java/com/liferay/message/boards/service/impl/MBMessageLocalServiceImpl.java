@@ -1419,10 +1419,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			String className, long classPK, int status, int start, int end)
 		throws PortalException {
 
-		long rootDiscussionMessageId = _getRootDiscussionMessageId(
-			className, classPK);
-
-		return getChildMessages(rootDiscussionMessageId, status, start, end);
+		return getChildMessages(
+			_getRootDiscussionMessageId(className, classPK), status, start,
+			end);
 	}
 
 	@Override
@@ -1432,10 +1431,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		int count = 0;
 
 		try {
-			long rootDiscussionMessageId = _getRootDiscussionMessageId(
-				className, classPK);
-
-			count = getChildMessagesCount(rootDiscussionMessageId, status);
+			count = getChildMessagesCount(
+				_getRootDiscussionMessageId(className, classPK), status);
 		}
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
@@ -1959,13 +1956,12 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		Group group = _groupLocalService.fetchGroup(message.getGroupId());
 
-		portletId = PortletProviderUtil.getPortletId(
-			MBMessage.class.getName(), PortletProvider.Action.MANAGE);
-
 		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
-				httpServletRequest, group, portletId, 0, 0,
-				PortletRequest.RENDER_PHASE)
+				httpServletRequest, group,
+				PortletProviderUtil.getPortletId(
+					MBMessage.class.getName(), PortletProvider.Action.MANAGE),
+				0, 0, PortletRequest.RENDER_PHASE)
 		).setMVCRenderCommandName(
 			"/message_boards/view_message"
 		).setParameter(
@@ -2064,12 +2060,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 
 		subscriptionSender.setNotificationType(notificationType);
-
-		String portletId = PortletProviderUtil.getPortletId(
-			MBMessage.class.getName(), PortletProvider.Action.VIEW);
-
-		subscriptionSender.setPortletId(portletId);
-
+		subscriptionSender.setPortletId(
+			PortletProviderUtil.getPortletId(
+				MBMessage.class.getName(), PortletProvider.Action.VIEW));
 		subscriptionSender.setReplyToAddress(replyToAddress);
 		subscriptionSender.setScopeGroupId(groupId);
 		subscriptionSender.setServiceContext(serviceContext);
@@ -2186,12 +2179,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 
 		subscriptionSender.setNotificationType(notificationType);
-
-		String portletId = PortletProviderUtil.getPortletId(
-			Comment.class.getName(), PortletProvider.Action.VIEW);
-
-		subscriptionSender.setPortletId(portletId);
-
+		subscriptionSender.setPortletId(
+			PortletProviderUtil.getPortletId(
+				Comment.class.getName(), PortletProvider.Action.VIEW));
 		subscriptionSender.setScopeGroupId(message.getGroupId());
 		subscriptionSender.setServiceContext(serviceContext);
 		subscriptionSender.setUniqueMailId(false);

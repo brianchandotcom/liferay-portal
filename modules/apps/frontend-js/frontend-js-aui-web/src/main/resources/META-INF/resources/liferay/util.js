@@ -661,6 +661,9 @@
 			instance.setSelectionRange(element, position, position);
 		},
 
+		/**
+		 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+		 */
 		setSelectionRange(element, selectionStart, selectionEnd) {
 			element = Util.getDOM(element);
 

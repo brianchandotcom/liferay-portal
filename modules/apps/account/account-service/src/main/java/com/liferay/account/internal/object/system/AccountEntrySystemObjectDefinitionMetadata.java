@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Gabriel Albuquerque
  */
-@Component(immediate = true, service = SystemObjectDefinitionMetadata.class)
+@Component(enabled = false, service = SystemObjectDefinitionMetadata.class)
 public class AccountEntrySystemObjectDefinitionMetadata
 	extends BaseSystemObjectDefinitionMetadata {
 

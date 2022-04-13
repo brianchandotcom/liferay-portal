@@ -42,20 +42,27 @@
 
 <aui:script>
 	function <portlet:namespace />insertCustomCSSValue(value) {
-		var customCSS = document.getElementById('<portlet:namespace />customCSS');
+		var customCSSTextarea = document.getElementById(
+			'<portlet:namespace />customCSS'
+		);
 
-		if (customCSS) {
-			var customCSSVal = customCSS.value.trim();
+		if (customCSSTextarea) {
+			var customCSSTextareaValue = customCSSTextarea.value.trim();
 
-			if (customCSSVal.length) {
-				customCSSVal += '\n\n';
+			if (customCSSTextareaValue.length) {
+				customCSSTextareaValue += '\n\n';
 			}
 
-			var newVal = customCSSVal + value + ' {\n\t\n}\n';
+			var newValue = customCSSTextareaValue + value + ' {\n\t\n}\n';
 
-			customCSS.value = newVal;
+			customCSSTextarea.value = newValue;
 
-			Liferay.Util.setCursorPosition(customCSS, newVal.length - 3);
+			customCSSTextarea.focus();
+
+			customCSSTextarea.setSelectionRange(
+				customCSSTextarea.value.length - 3,
+				customCSSTextarea.value.length - 3
+			);
 		}
 	}
 

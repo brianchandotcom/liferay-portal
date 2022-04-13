@@ -603,7 +603,7 @@
 <!--CHANNEL-->
 <tr>
 	<td>PAYMENT_METHODS_SIDE_PANEL_NAV_ITEMS</td>
-	<td>//div[contains(@class,'side-panel')]//li[a[contains(text(),'${navItem}')]]</td>
+	<td>//div[contains(@class,'side-panel')]//li[a[span[contains(text(),'${navItem}')]]]</td>
 	<td></td>
 </tr>
 <tr>

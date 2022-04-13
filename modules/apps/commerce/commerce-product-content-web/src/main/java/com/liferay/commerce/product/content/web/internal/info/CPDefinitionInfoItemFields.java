@@ -362,6 +362,16 @@ public interface CPDefinitionInfoItemFields {
 			InfoLocalizedValue.localize(
 				CPDefinitionInfoItemFields.class, "incomplete")
 		).build();
+	public static final InfoField<NumberInfoFieldType> inventoryInfoField =
+		InfoField.builder(
+		).infoFieldType(
+			NumberInfoFieldType.INSTANCE
+		).name(
+			"inventory"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				CPDefinitionInfoItemFields.class, "inventory")
+		).build();
 	public static final InfoField<DateInfoFieldType> lastPublishDateInfoField =
 		InfoField.builder(
 		).infoFieldType(

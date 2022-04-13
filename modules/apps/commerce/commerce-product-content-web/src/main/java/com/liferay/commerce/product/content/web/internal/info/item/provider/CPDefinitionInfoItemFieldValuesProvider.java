@@ -319,6 +319,14 @@ public class CPDefinitionInfoItemFieldValuesProvider
 				new InfoFieldValue<>(
 					CPDefinitionInfoItemFields.incompleteInfoField,
 					cpDefinition.isIncomplete()));
+
+			if (themeDisplay != null) {
+				cpDefinitionInfoFieldValues.add(
+					new InfoFieldValue<>(
+						CPDefinitionInfoItemFields.inventoryInfoField,
+						_getInventory(cpInstance, themeDisplay)));
+			}
+
 			cpDefinitionInfoFieldValues.add(
 				new InfoFieldValue<>(
 					CPDefinitionInfoItemFields.lastPublishDateInfoField,
@@ -521,6 +529,40 @@ public class CPDefinitionInfoItemFieldValuesProvider
 		}
 
 		return commerceMoney.format(themeDisplay.getLocale());
+	}
+
+	private Integer _getInventory(
+			CPInstance cpInstance, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		if (cpInstance == null) {
+			return null;
+		}
+
+		CPDefinitionInventory cpDefinitionInventory =
+			_cpDefinitionInventoryLocalService.
+				fetchCPDefinitionInventoryByCPDefinitionId(
+					cpInstance.getCPDefinitionId());
+
+		CPDefinitionInventoryEngine cpDefinitionInventoryEngine =
+			_cpDefinitionInventoryEngineRegistry.getCPDefinitionInventoryEngine(
+				cpDefinitionInventory);
+
+		boolean displayStockQuantity =
+			cpDefinitionInventoryEngine.isDisplayStockQuantity(cpInstance);
+
+		if (displayStockQuantity) {
+			long commerceChannelGroupId =
+				_commerceChannelLocalService.
+					getCommerceChannelGroupIdBySiteGroupId(
+						themeDisplay.getScopeGroupId());
+
+			return _commerceInventoryEngine.getStockQuantity(
+				cpInstance.getCompanyId(), commerceChannelGroupId,
+				cpInstance.getSku());
+		}
+
+		return null;
 	}
 
 	private String _getSKU(CPInstance cpInstance) throws PortalException {

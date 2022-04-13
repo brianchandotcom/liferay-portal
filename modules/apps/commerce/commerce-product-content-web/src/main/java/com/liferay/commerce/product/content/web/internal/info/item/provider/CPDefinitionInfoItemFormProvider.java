@@ -87,6 +87,8 @@ public class CPDefinitionInfoItemFormProvider
 		).infoFieldSetEntry(
 			CPDefinitionInfoItemFields.finalPriceInfoField
 		).infoFieldSetEntry(
+			CPDefinitionInfoItemFields.inventoryInfoField
+		).infoFieldSetEntry(
 			CPDefinitionInfoItemFields.nameInfoField
 		).infoFieldSetEntry(
 			CPDefinitionInfoItemFields.productTypeNameInfoField

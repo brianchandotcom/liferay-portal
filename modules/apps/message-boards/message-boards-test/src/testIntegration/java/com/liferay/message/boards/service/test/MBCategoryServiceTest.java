@@ -96,13 +96,12 @@ public class MBCategoryServiceTest {
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_user)) {
 
-			int categoriesAndThreadsCount =
+			Assert.assertEquals(
+				4,
 				MBCategoryServiceUtil.getCategoriesAndThreadsCount(
 					_group.getGroupId(),
 					MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
-					WorkflowConstants.STATUS_APPROVED);
-
-			Assert.assertEquals(4, categoriesAndThreadsCount);
+					WorkflowConstants.STATUS_APPROVED));
 		}
 	}
 
@@ -119,13 +118,12 @@ public class MBCategoryServiceTest {
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_user)) {
 
-			int categoriesAndThreadsCount =
+			Assert.assertEquals(
+				2,
 				MBCategoryServiceUtil.getCategoriesAndThreadsCount(
 					_group.getGroupId(),
 					MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
-					WorkflowConstants.STATUS_APPROVED);
-
-			Assert.assertEquals(2, categoriesAndThreadsCount);
+					WorkflowConstants.STATUS_APPROVED));
 		}
 	}
 
@@ -140,13 +138,12 @@ public class MBCategoryServiceTest {
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_user)) {
 
-			int categoriesAndThreadsCount =
+			Assert.assertEquals(
+				2,
 				MBCategoryServiceUtil.getCategoriesAndThreadsCount(
 					_group.getGroupId(),
 					MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
-					WorkflowConstants.STATUS_APPROVED);
-
-			Assert.assertEquals(2, categoriesAndThreadsCount);
+					WorkflowConstants.STATUS_APPROVED));
 		}
 	}
 
@@ -163,12 +160,11 @@ public class MBCategoryServiceTest {
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_user)) {
 
-			int categoriesAndThreadsCount =
+			Assert.assertEquals(
+				1,
 				MBCategoryServiceUtil.getCategoriesAndThreadsCount(
 					_group.getGroupId(), category1.getCategoryId(),
-					WorkflowConstants.STATUS_APPROVED);
-
-			Assert.assertEquals(1, categoriesAndThreadsCount);
+					WorkflowConstants.STATUS_APPROVED));
 		}
 	}
 
@@ -521,13 +517,11 @@ public class MBCategoryServiceTest {
 	}
 
 	protected MBCategory addCategory(long parentCategoryId) throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		return MBCategoryServiceUtil.addCategory(
 			TestPropsValues.getUserId(), parentCategoryId,
-			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
+			RandomTestUtil.randomString(), StringPool.BLANK,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
 	}
 
 	protected MBMessage addMessage(long categoryId) throws Exception {

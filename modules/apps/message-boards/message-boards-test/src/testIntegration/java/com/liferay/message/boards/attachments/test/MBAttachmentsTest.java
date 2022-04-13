@@ -304,14 +304,12 @@ public class MBAttachmentsTest {
 			addGroup();
 		}
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		_category = MBCategoryServiceUtil.addCategory(
 			TestPropsValues.getUserId(),
 			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
-			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
+			RandomTestUtil.randomString(), StringPool.BLANK,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
 	}
 
 	protected void addGroup() throws Exception {
@@ -325,15 +323,12 @@ public class MBAttachmentsTest {
 			addCategory();
 		}
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		_message = MBMessageLocalServiceUtil.addMessage(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 			_category.getGroupId(), _category.getCategoryId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			serviceContext);
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
 	}
 
 	protected void addMessageAttachment() throws Exception {
@@ -352,15 +347,13 @@ public class MBAttachmentsTest {
 				MBTestUtil.getInputStreamOVPs(
 					"company_logo.png", getClass(), StringPool.BLANK);
 
-			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(
-					_group.getGroupId(), user.getUserId());
-
 			_message = MBMessageLocalServiceUtil.addMessage(
 				user.getUserId(), user.getFullName(), _group.getGroupId(),
 				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, "Subject",
 				"Body", MBMessageConstants.DEFAULT_FORMAT, objectValuePairs,
-				false, 0, false, serviceContext);
+				false, 0, false,
+				ServiceContextTestUtil.getServiceContext(
+					_group.getGroupId(), user.getUserId()));
 		}
 		else {
 			ServiceContext serviceContext =

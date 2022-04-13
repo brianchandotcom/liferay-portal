@@ -106,13 +106,11 @@ public class MBThreadLocalServiceTest {
 		Assert.assertEquals(1, splitMessage.getAttachmentsFileEntriesCount());
 		Assert.assertEquals(1, childMessage.getAttachmentsFileEntriesCount());
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		MBThreadLocalServiceUtil.splitThread(
 			TestPropsValues.getUserId(), splitMessage.getMessageId(),
-			RandomTestUtil.randomString(), serviceContext);
+			RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
 
 		rootMessage = MBMessageLocalServiceUtil.getMBMessage(
 			rootMessage.getMessageId());
@@ -205,13 +203,11 @@ public class MBThreadLocalServiceTest {
 
 		Assert.assertNotEquals(splitMessage.getSubject(), thread.getTitle());
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		MBThreadLocalServiceUtil.splitThread(
 			TestPropsValues.getUserId(), splitMessage.getMessageId(),
-			RandomTestUtil.randomString(), serviceContext);
+			RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
 
 		rootMessage = MBMessageLocalServiceUtil.getMBMessage(
 			rootMessage.getMessageId());
@@ -270,16 +266,14 @@ public class MBThreadLocalServiceTest {
 		long parentMessageId = BeanPropertiesUtil.getLong(
 			parentMessage, "messageId");
 
-		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
-			MBTestUtil.getInputStreamOVPs(
-				"attachment.txt", getClass(), StringPool.BLANK);
-
 		return MBMessageLocalServiceUtil.addMessage(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 			_group.getGroupId(), categoryId, threadId, parentMessageId,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			MBMessageConstants.DEFAULT_FORMAT, inputStreamOVPs, false, 0.0,
-			false, serviceContext);
+			MBMessageConstants.DEFAULT_FORMAT,
+			MBTestUtil.getInputStreamOVPs(
+				"attachment.txt", getClass(), StringPool.BLANK),
+			false, 0.0, false, serviceContext);
 	}
 
 	private MBMessage _addMessageWithExpando(String name, String value)

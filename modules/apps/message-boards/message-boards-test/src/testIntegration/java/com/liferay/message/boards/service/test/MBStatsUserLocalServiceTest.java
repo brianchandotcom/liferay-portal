@@ -160,14 +160,12 @@ public class MBStatsUserLocalServiceTest {
 	}
 
 	protected void addMessage(boolean approved) throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		_message = MBTestUtil.addMessageWithWorkflow(
 			_group.getGroupId(), MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			approved, serviceContext);
+			approved,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
 	}
 
 	protected int getStatsUserMessageCount() throws Exception {

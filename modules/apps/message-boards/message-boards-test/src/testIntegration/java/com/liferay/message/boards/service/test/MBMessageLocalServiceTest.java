@@ -85,15 +85,12 @@ public class MBMessageLocalServiceTest {
 		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
 			Collections.emptyList();
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		MBMessage message = MBMessageLocalServiceUtil.addMessage(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 			_group.getGroupId(), MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 			subject, body, "bbcode", inputStreamOVPs, false, 0.0, false,
-			serviceContext);
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
 
 		Assert.assertEquals(subject, message.getSubject());
 		Assert.assertEquals(subject, message.getBody());
@@ -106,15 +103,12 @@ public class MBMessageLocalServiceTest {
 		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
 			Collections.emptyList();
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		MBMessage message = MBMessageLocalServiceUtil.addMessage(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 			_group.getGroupId(), MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 			subject, body, "html", inputStreamOVPs, false, 0.0, false,
-			serviceContext);
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
 
 		Assert.assertEquals(subject, message.getSubject());
 		Assert.assertEquals(HtmlUtil.escape(subject), message.getBody());
@@ -129,15 +123,12 @@ public class MBMessageLocalServiceTest {
 		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
 			Collections.emptyList();
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		MBMessage message = MBMessageLocalServiceUtil.addMessage(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 			_group.getGroupId(), MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 			subject, body, "bbcode", inputStreamOVPs, false, 0.0, false,
-			serviceContext);
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
 
 		Assert.assertEquals(subject, message.getSubject());
 		Assert.assertEquals(subject, message.getBody());
@@ -255,15 +246,12 @@ public class MBMessageLocalServiceTest {
 		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
 			Collections.emptyList();
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		MBMessage message = MBMessageLocalServiceUtil.addMessage(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 			_group.getGroupId(), MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 			subject, body, format, inputStreamOVPs, false, 0.0, false,
-			serviceContext);
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
 
 		Assert.assertEquals(subject, message.getSubject());
 		Assert.assertEquals(StringPool.BLANK, message.getBody());
@@ -277,15 +265,12 @@ public class MBMessageLocalServiceTest {
 		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
 			Collections.emptyList();
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		MBMessage message = MBMessageLocalServiceUtil.addMessage(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 			_group.getGroupId(), MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 			subject, body, "html", inputStreamOVPs, false, 0.0, false,
-			serviceContext);
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
 
 		Assert.assertEquals(subject, message.getSubject());
 		Assert.assertEquals(HtmlUtil.escape(subject), message.getBody());
@@ -407,14 +392,11 @@ public class MBMessageLocalServiceTest {
 
 		Assert.assertEquals(mbThread.getModifiedDate(), date);
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		MBMessageLocalServiceUtil.updateMessage(
 			message.getUserId(), message.getMessageId(), message.getSubject(),
 			RandomTestUtil.randomString(), Collections.emptyList(), 0, false,
-			serviceContext);
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
 
 		mbThread = message.getThread();
 
@@ -433,14 +415,12 @@ public class MBMessageLocalServiceTest {
 
 		Assert.assertEquals(mbThread.getModifiedDate(), date);
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		MBMessageLocalServiceUtil.updateMessage(
 			message.getUserId(), message.getMessageId(),
 			RandomTestUtil.randomString(), message.getBody(),
-			Collections.emptyList(), 0, false, serviceContext);
+			Collections.emptyList(), 0, false,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
 
 		mbThread = message.getThread();
 

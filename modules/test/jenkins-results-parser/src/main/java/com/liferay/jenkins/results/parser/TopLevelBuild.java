@@ -1923,9 +1923,8 @@ public abstract class TopLevelBuild extends BaseBuild {
 			writeArchiveFile(
 				getJenkinsReport(), getArchivePath() + "/jenkins-report.html");
 		}
-		catch (IOException ioException) {
-			throw new RuntimeException(
-				"Unable to archive Jenkins report", ioException);
+		catch (Exception exception) {
+			System.out.println("Unable to archive Jenkins report");
 		}
 		finally {
 			System.out.println(

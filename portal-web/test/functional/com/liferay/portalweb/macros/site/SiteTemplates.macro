@@ -117,9 +117,16 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		Click(
-			key_pageName = "${pageName}",
-			locator1 = "Icon#COG_PAGE");
+		if (isSet(pageName)) {
+			Click(
+				key_pageName = "${pageName}",
+				locator1 = "Icon#COG_PAGE");
+		}
+		else {
+			Click(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
+
+			MenuItem.click(menuItem = "Configuration");
+		}
 
 		Navigator.gotoNavTab(navTab = "Advanced");
 
@@ -551,9 +558,16 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		Click(
-			key_pageName = "${pageName}",
-			locator1 = "Icon#COG_PAGE");
+		if (isSet(pageName)) {
+			Click(
+				key_pageName = "${pageName}",
+				locator1 = "Icon#COG_PAGE");
+		}
+		else {
+			Click(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
+
+			MenuItem.click(menuItem = "Configuration");
+		}
 
 		Navigator.gotoNavTab(navTab = "Advanced");
 

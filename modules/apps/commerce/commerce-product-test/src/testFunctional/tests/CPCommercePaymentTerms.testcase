@@ -270,6 +270,54 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-8284. The Sales Manager can use the localization to change the entry's name based on a language."
+	@priority = "4"
+	test CanUseTheLocalization {
+		property portal.acceptance = "false";
+
+		task ("Given a new entry into the Terms and Conditions") {
+			CommerceNavigator.gotoPortlet(
+				category = "Order Management",
+				portlet = "Terms and Conditions");
+
+			CommercePaymentTerms.addTermsAndCondition(
+				active = "true",
+				termsAndConditionName = "Test Terms and Condition",
+				termsAndConditionType = "Payment Terms",
+				valuePosition = "1");
+
+			Click(locator1 = "Icon#BACK");
+		}
+
+		task ("When the Sales Manager opens the new entry, presented on the details page of the entry") {
+			CommerceNavigator.gotoEntry(entryName = "Test Terms and Condition");
+
+			CommercePaymentTerms.assertTermsAndConditionEntry(
+				termsAndConditionName = "Test Terms and Condition",
+				valuePosition = "1.0");
+		}
+
+		task ("Then the Sales Manager can use the localization to change the entry's name based on a language") {
+			CommercePaymentTerms.changeLocale(locale = "zh-CN");
+
+			Type(
+				locator1 = "CommerceEntry#NAME_FIELD_SPECIAL",
+				value1 = "测试条款和条件");
+
+			CommercePaymentTerms.changeLocale(locale = "en-US");
+
+			CommercePaymentTerms.assertTermsAndConditionEntry(
+				termsAndConditionName = "Test Terms and Condition",
+				valuePosition = "1.0");
+
+			CommercePaymentTerms.changeLocale(locale = "zh-CN");
+
+			CommercePaymentTerms.assertTermsAndConditionEntry(
+				termsAndConditionName = "测试条款和条件",
+				valuePosition = "1.0");
+		}
+	}
+
 	@description = "[Please Update]"
 	@ignore = "Test Stub"
 	@priority = "4"
@@ -277,16 +325,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-8280 ChangeTheStatus pending implementation
-
-	}
-
-	@description = "[Please Update]"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test UseTheLocalization {
-		property portal.acceptance = "false";
-
-		// TODO COMMERCE-8284 UseTheLocalization pending implementation
 
 	}
 

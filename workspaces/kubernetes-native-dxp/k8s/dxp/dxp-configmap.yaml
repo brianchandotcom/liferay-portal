@@ -30,6 +30,11 @@ data:
     userInfoEndPoint=""
   com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration.config: |
     enabled=B"true"
+  com.liferay.oauth2.provider.rest.internal.spi.bearer.token.provider.configuration.DefaultBearerTokenProviderConfiguration.config: |
+    access.token.expires.in=I"60000"
+    access.token.key.byte.size=I"32"
+    refresh.token.expires.in=I"604800"
+    refresh.token.key.byte.size=I"32"
   felix.cm.config.plugins: org.apache.felix.configadmin.plugin.interpolation
   foo.config: |
     foo="baz"

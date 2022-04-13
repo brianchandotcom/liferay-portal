@@ -339,7 +339,7 @@ definition {
 		}
 
 		task ("And a tooltip message will be displayed") {
-			MouseOver(
+			MouseOver.javaScriptMouseOver(
 				key_icon = "filter",
 				key_title = "Show Filter Options",
 				locator1 = "ManagementBar#FILTER_OR_ORDER_MOBILE");
@@ -348,7 +348,7 @@ definition {
 				locator1 = "Message#TOOLTIP",
 				value1 = "Show Filter Options");
 
-			MouseOver(
+			MouseOver.javaScriptMouseOver(
 				key_icon = "order-list-down",
 				key_title = "Show Order Options",
 				locator1 = "ManagementBar#FILTER_OR_ORDER_MOBILE");

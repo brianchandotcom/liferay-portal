@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: custom-rest-service
+spec:
+  selector:
+    app: custom-rest-service
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 8081

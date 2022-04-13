@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: custom-rest-service-configmap
+data:
+  dxp.service_uri: http://dxp-service
+  oauth2.client_id: id-3865597a-e4bf-d547-6629-90c8846db27
+  oauth2.introspection_uri: http://dxp-service/o/oauth2/introspect

@@ -301,24 +301,24 @@ public class OrderResourceImpl
 		CommerceOrder commerceOrder =
 			_commerceOrderService.addOrUpdateCommerceOrder(
 				order.getExternalReferenceCode(), commerceChannel.getGroupId(),
+				GetterUtil.getLong(order.getBillingAddressId()),
 				commerceAccount.getCommerceAccountId(),
 				commerceCurrency.getCommerceCurrencyId(),
-				_getCommerceOrderTypeId(order),
-				GetterUtil.getLong(order.getBillingAddressId()),
+				_getCommerceOrderTypeId(order), order.getPaymentMethod(),
+				commerceShippingMethodId,
 				GetterUtil.getLong(order.getShippingAddressId()),
-				order.getPaymentMethod(), commerceShippingMethodId,
-				order.getShippingOption(), order.getPurchaseOrderNumber(),
-				order.getSubtotal(), order.getShippingAmount(),
-				order.getTaxAmount(), order.getTotal(),
-				order.getSubtotalWithTaxAmount(),
-				order.getShippingWithTaxAmount(), order.getTotalWithTaxAmount(),
-				GetterUtil.getInteger(
-					order.getPaymentStatus(),
-					CommerceOrderConstants.PAYMENT_STATUS_PENDING),
+				order.getAdvanceStatus(),
 				GetterUtil.getInteger(
 					order.getOrderStatus(),
 					CommerceOrderConstants.ORDER_STATUS_PENDING),
-				order.getAdvanceStatus(),
+				GetterUtil.getInteger(
+					order.getPaymentStatus(),
+					CommerceOrderConstants.PAYMENT_STATUS_PENDING),
+				order.getPurchaseOrderNumber(), order.getShippingAmount(),
+				order.getShippingOption(), order.getShippingWithTaxAmount(),
+				order.getSubtotal(), order.getSubtotalWithTaxAmount(),
+				order.getTaxAmount(), order.getTotal(),
+				order.getTotalWithTaxAmount(),
 				_commerceContextFactory.create(
 					contextCompany.getCompanyId(), commerceChannel.getGroupId(),
 					contextUser.getUserId(), 0,

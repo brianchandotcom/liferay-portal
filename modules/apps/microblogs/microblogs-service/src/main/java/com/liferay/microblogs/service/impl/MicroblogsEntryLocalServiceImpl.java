@@ -687,11 +687,10 @@ public class MicroblogsEntryLocalServiceImpl
 				}
 
 				for (int j = start; j < end; j++) {
-					long subscriptionId = getSubscriptionId(
-						receiverUserIds.get(j), microblogsEntry);
-
 					notificationEventJSONObject.put(
-						"subscriptionId", subscriptionId);
+						"subscriptionId",
+						getSubscriptionId(
+							receiverUserIds.get(j), microblogsEntry));
 
 					int notificationType = MicroblogsUtil.getNotificationType(
 						microblogsEntry, receiverUserIds.get(j),

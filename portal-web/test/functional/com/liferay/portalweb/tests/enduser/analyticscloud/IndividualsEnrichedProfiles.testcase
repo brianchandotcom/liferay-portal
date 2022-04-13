@@ -42,21 +42,34 @@ definition {
 			JSONGroup.deleteGroupByName(groupName = "Site Name");
 		}
 
+		JSONUser.tearDownNonAdminUsers();
+
 		ACUtils.tearDownAC();
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8911 | Test Summary: Enriched profiles increases by 1 when an anonymous individual converted to a known individual"
 	@priority = "5"
 	test IncreaseByOneWhenAnonymousIndividualConvertedToKnownIndividual {
-		property portal.acceptance = "true"; 
+		property portal.acceptance = "true";
 
-		task ("Sign out") {
-			UserBar.signOut();
+		task ("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = "ac@liferay.com",
+				userFirstName = "ac",
+				userLastName = "ac",
+				userScreenName = "ac");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "ac@liferay.com");
 		}
 
-		task ("View the site page as guest") {
-			ACUtils.navigateToSitePage(
-				actionType = "View Blog"
+		task ("View the blog as a new user") {
+			ACUtils.navigateToSitePageWithUser(
+				actionType = "View Blog",
+				documentTitleList = "Blogs AC Title",
+				emailList = "ac@liferay.com",
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -95,13 +108,18 @@ definition {
 				count = "0 Profiles");
 		}
 
-		task ("Sign in as Test Test") {
+		task ("Sync the new user and view the blog") {
+			ACUtils.launchDXP();
+
+			ACDXPSettings.syncNewContactData();
+
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
+				userLoginEmailAddress = "ac@liferay.com",
+				userLoginFullName = "ac ac");
 
 			ACUtils.navigateToSitePage(
-				actionType = "View Blog"
+				actionType = "View Blog",
+				documentTitleList = "Blogs AC Title",
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}

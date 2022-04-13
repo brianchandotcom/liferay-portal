@@ -233,12 +233,12 @@ function createOrder(
 						'&nextStep=' +
 						redirectURL;
 
-					var messageOrderCompleted = 'Order completed! you will be redirected to your dashboard';
+					var messageOrderCompleted =
+						'Order completed! you will be redirected to your dashboard';
 
 					if (Liferay.__FF__.customDialogsEnabled) {
 						Liferay.Util.openAlertModal({
-							message:
-								messageOrderCompleted,
+							message: messageOrderCompleted,
 						});
 					}
 					else {

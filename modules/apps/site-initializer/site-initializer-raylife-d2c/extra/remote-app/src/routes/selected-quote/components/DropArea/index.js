@@ -99,9 +99,7 @@ const DropArea = ({
 				const messageAlreadyExists = `File ${fileName} already exists!`;
 
 				if (Liferay.__FF__.customDialogsEnabled) {
-					Liferay.Util.openAlertModal(
-						messageAlreadyExists
-					);
+					Liferay.Util.openAlertModal(messageAlreadyExists);
 				}
 				else {
 					alert(messageAlreadyExists);

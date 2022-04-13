@@ -12,10 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.file.install.internal.properties;
+package com.liferay.portal.file.install.properties;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.file.install.properties.TypedProperties;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;

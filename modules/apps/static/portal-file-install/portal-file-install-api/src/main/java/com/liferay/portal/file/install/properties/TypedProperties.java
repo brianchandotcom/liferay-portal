@@ -12,11 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.file.install.internal.properties;
+package com.liferay.portal.file.install.properties;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.file.install.properties.ConfigurationHandler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 

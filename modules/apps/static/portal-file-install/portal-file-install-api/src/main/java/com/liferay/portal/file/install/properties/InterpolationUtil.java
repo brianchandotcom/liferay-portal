@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.file.install.internal.properties;
+package com.liferay.portal.file.install.properties;
 
 /**
  * @author Matthew Tambara

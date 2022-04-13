@@ -1022,6 +1022,11 @@ public class LayoutReferencesExportImportContentProcessor
 							group.getGroupId(), false, urlWithoutLocale);
 
 					if (layout != null) {
+						layout = _layoutLocalService.fetchLayoutByFriendlyURL(
+							group.getGroupId(), true, urlWithoutLocale);
+					}
+
+					if (layout != null) {
 						urlSB.append(localePath);
 
 						url = urlWithoutLocale;

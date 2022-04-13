@@ -2815,4 +2815,53 @@ definition {
 
 	}
 
+	@description = "Verify that is possible to translate Label and Help text of Web Content Field"
+	@priority = "4"
+	test CanTranslateLabelAndHelpTextOnWebContentField {
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Web Content",
+			fieldName = "Web Content");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Web Content",
+			fieldHelp = "Help Text");
+
+		WebContentStructures.addTranslations(localeList = "pt-BR");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Web Content",
+			fieldFieldLabelEdit = "Web Content pt-BR");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Web Content pt-BR",
+			fieldHelp = "Help Text pt-BR");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Web Content",
+			fieldHelp = "Help Text",
+			fieldName = "Web Content");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Web Content pt-BR",
+			fieldHelp = "Help Text pt-BR",
+			fieldName = "Web Content");
+
+
+	}
+
 }

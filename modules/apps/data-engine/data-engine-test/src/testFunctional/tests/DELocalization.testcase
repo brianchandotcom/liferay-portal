@@ -3307,4 +3307,104 @@ definition {
 
 	}
 
+	@description = "Verify that upon editing Default language, translated languages are not affected"
+	@priority = "5"
+	test CanDefaultLanguageBeEditedAndRemainTranslations {
+
+		property test.name.skip.portal.instance = "DELocalization#CanDefaultLanguageBeEditedAndRemainTranslations";
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		AssertElementPresent(
+			key_locale = "en-US",
+			locator1 = "Translation#CURRENT_LOCALE");
+
+		DEBuilder.addField(
+			fieldLabel = "Text",
+			fieldName = "Text");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Text",
+			fieldHelp = "Help Text",
+			fieldPlaceholder = "Placeholder Text");
+
+		
+
+		for (var language : list "pt-BR,zh-CN") {
+			WebContentStructures.addTranslations(localeList = "${language}");
+
+			PortletEntry.changeLocale(locale = "${language}");
+
+			DataEngine.editFieldLabel(
+			fieldFieldLabel = "Text",
+			fieldFieldLabelEdit = "Text ${language}");
+
+			DataEngine.editFieldTip(
+				fieldFieldLabel = "Text ${language}",
+				fieldHelp = "Help Text ${language}",
+				fieldPlaceholder = "Placeholder Text ${language}");
+		}
+
+		WebContentStructures.saveCP();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Localization",
+			configurationName = "Language",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.configureCurrentLanguagesCP(defaultPortalLanguage = "Portuguese (Brazil)");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		AssertElementPresent(
+			key_locale = "en-US",
+			locator1 = "Translation#CURRENT_LOCALE");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Text",
+			fieldHelp = "Help Text",
+			fieldName = "Text",
+			fieldPlaceholder = "Placeholder Text");
+
+		
+		for (var language : list "pt-BR,zh-CN") {
+		
+
+			PortletEntry.changeLocale(locale = "${language}");
+
+			DataEngine.viewField(
+				fieldFieldLabel = "Text ${language}",
+				fieldHelp = "Help Text ${language}",
+				fieldName = "Text",
+				fieldPlaceholder = "Placeholder Text ${language}");
+		}
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Localization",
+			configurationName = "Language",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.configureCurrentLanguagesCP(defaultPortalLanguage = "English (United States)");
+
+
+	}
+
 }

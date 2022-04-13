@@ -154,12 +154,29 @@ definition {
 	}
 
 	@description = "This is a test for LPS-80203. It checks that the users will remain in the current context after clearing the search."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test UserRemainsInCurrentContextAfterClearingSearch {
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest");
 
-		// TODO LPS-149975 UserRemainsInCurrentContextAfterClearingSearch pending implementation
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM SubFolder Description",
+			dmFolderName = "DM SubFolder Name",
+			groupName = "Guest",
+			parentFolderName = "DM Folder Name");
 
+		DMNavigator.openToFolderInAdmin(
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		Search.searchCP(searchTerm = "DM SubFolder Name");
+
+		Search.clearSearchResult();
+
+		Breadcrumb.viewActiveEntry(breadcrumbName = "DM Folder Name");
 	}
 
 }

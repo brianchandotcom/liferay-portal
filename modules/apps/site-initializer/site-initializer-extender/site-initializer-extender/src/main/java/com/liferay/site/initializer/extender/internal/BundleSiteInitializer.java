@@ -1637,7 +1637,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				serviceContext.getCompanyId(), true,
 				WorkflowConstants.STATUS_APPROVED);
 
-		Map<String, String> objectEntriesStringUtilReplaceValues =
+		Map<String, String> objectEntryIdsStringUtilReplaceValues =
 			new HashMap<>();
 
 		for (com.liferay.object.model.ObjectDefinition objectDefinition :
@@ -1721,7 +1721,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			objectEntriesJSON = StringUtil.replace(
 				objectEntriesJSON, "[$", "$]",
-				objectEntriesStringUtilReplaceValues);
+				objectEntryIdsStringUtilReplaceValues);
 
 			JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
 				objectEntriesJSON);
@@ -1738,7 +1738,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 						serviceContext);
 
 				if (jsonObject.has("externalReferenceCode")) {
-					objectEntriesStringUtilReplaceValues.put(
+					objectEntryIdsStringUtilReplaceValues.put(
 						StringBundler.concat(
 							objectDefinition.getName(), "#",
 							jsonObject.getString("externalReferenceCode")),

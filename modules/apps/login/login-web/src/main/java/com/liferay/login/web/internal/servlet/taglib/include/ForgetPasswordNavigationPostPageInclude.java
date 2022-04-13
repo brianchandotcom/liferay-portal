@@ -81,6 +81,7 @@ public class ForgetPasswordNavigationPostPageInclude implements PageInclude {
 
 		IconTag iconTag = new IconTag();
 
+		iconTag.setCssClass("text-4");
 		iconTag.setMessage("forgot-password");
 		iconTag.setUrl(forgetPasswordURL);
 

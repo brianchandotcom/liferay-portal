@@ -101,6 +101,7 @@ public class SignInNavigationPrePageInclude implements PageInclude {
 
 		IconTag iconTag = new IconTag();
 
+		iconTag.setCssClass("text-4");
 		iconTag.setMessage("sign-in");
 		iconTag.setUrl(signInURL);
 

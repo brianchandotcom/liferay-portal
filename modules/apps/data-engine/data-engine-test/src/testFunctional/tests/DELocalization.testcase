@@ -2468,4 +2468,57 @@ definition {
 			webContentTitle = "WC WebContent Title en-US");
 	}
 
+	@description = "Verify that is possible to translate Label, Placeholder and Help text of Text Field"
+	@priority = "5"
+	test CanTranslateLabelPlaceholderHelpTextOnTextField {
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Text",
+			fieldName = "Text");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Text",
+			fieldHelp = "Help Text",
+			fieldPlaceholder = "Placeholder Text");
+
+		WebContentStructures.addTranslations(localeList = "pt-BR");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Text",
+			fieldFieldLabelEdit = "Text pt-BR");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Text pt-BR",
+			fieldHelp = "Help Text pt-BR",
+			fieldPlaceholder = "Placeholder Text pt-BR");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Text",
+			fieldHelp = "Help Text",
+			fieldName = "Text",
+			fieldPlaceholder = "Placeholder Text");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Text pt-BR",
+			fieldHelp = "Help Text pt-BR",
+			fieldName = "Text",
+			fieldPlaceholder = "Placeholder Text pt-BR");
+
+
+	}
+
 }

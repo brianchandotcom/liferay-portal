@@ -97,6 +97,24 @@
 			"title": "The ClassPKReference Schema",
 			"type": "object"
 		},
+		"ClassTypeReference": {
+			"additionalProperties": false,
+			"properties": {
+				"className": {
+					"title": "The className Schema",
+					"type": "string"
+				},
+				"classType": {
+					"title": "The classType Schema",
+					"type": "integer"
+				}
+			},
+			"required": [
+				"className"
+			],
+			"title": "The ClassTypeReference Schema",
+			"type": "object"
+		},
 		"CollectionViewport": {
 			"additionalProperties": false,
 			"properties": {
@@ -1043,6 +1061,22 @@
 					"if": {
 						"properties": {
 							"type": {
+								"const": "Form"
+							}
+						}
+					},
+					"then": {
+						"properties": {
+							"definition": {
+								"$ref": "#/definitions/PageFormDefinition"
+							}
+						}
+					}
+				},
+				{
+					"if": {
+						"properties": {
+							"type": {
 								"const": "Fragment"
 							}
 						}
@@ -1169,6 +1203,29 @@
 				"type"
 			],
 			"title": "The PageElement Schema",
+			"type": "object"
+		},
+		"PageFormDefinition": {
+			"additionalProperties": false,
+			"properties": {
+				"formConfig": {
+					"properties": {
+						"formReference": {
+							"oneOf": [
+								{
+									"$ref": "#/definitions/ClassTypeReference"
+								},
+								{
+									"$ref": "#/definitions/ContextReference"
+								}
+							]
+						}
+					},
+					"title": "The formConfig Schema",
+					"type": "object"
+				}
+			},
+			"title": "The PageFormDefinition Schema",
 			"type": "object"
 		},
 		"PageFragmentInstanceDefinition": {

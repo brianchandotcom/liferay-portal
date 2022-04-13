@@ -2537,7 +2537,7 @@ definition {
 
 		DataEngine.editFieldTip(
 			fieldFieldLabel = "Date",
-			fieldHelp = "Help Date");
+			fieldHelp = "Help Text");
 
 		WebContentStructures.addTranslations(localeList = "pt-BR");
 
@@ -2549,7 +2549,7 @@ definition {
 
 		DataEngine.editFieldTip(
 			fieldFieldLabel = "Date pt-BR",
-			fieldHelp = "Help Date pt-BR");
+			fieldHelp = "Help Text pt-BR");
 
 		WebContentStructures.saveCP();
 
@@ -2557,15 +2557,64 @@ definition {
 
 		DataEngine.viewField(
 			fieldFieldLabel = "Date",
-			fieldHelp = "Help Date",
+			fieldHelp = "Help Text",
 			fieldName = "Date");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
 		DataEngine.viewField(
 			fieldFieldLabel = "Date pt-BR",
-			fieldHelp = "Help Date pt-BR",
+			fieldHelp = "Help Text pt-BR",
 			fieldName = "Date");
+
+
+	}
+
+	@description = "Verify that is possible to translate Label and Help text of Numeric Field"
+	@priority = "5"
+	test CanTranslateLabelAndHelpTextOnNumericField {
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Numeric",
+			fieldName = "Numeric");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Numeric",
+			fieldHelp = "Help Text");
+
+		WebContentStructures.addTranslations(localeList = "pt-BR");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Numeric",
+			fieldFieldLabelEdit = "Numeric pt-BR");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Numeric pt-BR",
+			fieldHelp = "Help Text pt-BR");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Numeric",
+			fieldHelp = "Help Text",
+			fieldName = "Numeric");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Numeric pt-BR",
+			fieldHelp = "Help Text pt-BR",
+			fieldName = "Numeric");
 
 
 	}

@@ -14,7 +14,6 @@
 
 package com.liferay.source.formatter.check;
 
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -52,24 +51,9 @@ public class IncorrectFilePahCheck extends BaseFileCheck {
 						"Do not add leading/trailing spaces in file or folder ",
 						"names '", path, "'"));
 			}
-
-			for (char charactor : _ILLEGALCHARACTORS) {
-				if (path.contains(String.valueOf(charactor))) {
-					addMessage(
-						fileName,
-						"A file name can not contain any of the following " +
-							"charactors: \\ / : * \" < > |");
-				}
-			}
 		}
 
 		return content;
 	}
-
-	private static final char[] _ILLEGALCHARACTORS = {
-		CharPool.BACK_SLASH, CharPool.COLON, CharPool.FORWARD_SLASH,
-		CharPool.GREATER_THAN, CharPool.LESS_THAN, CharPool.PIPE,
-		CharPool.QUESTION, CharPool.QUOTE, CharPool.SPACE, CharPool.STAR
-	};
 
 }

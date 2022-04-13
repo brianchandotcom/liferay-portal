@@ -513,6 +513,10 @@ definition {
 		Click(locator1 = "ContentDashboard#ASSET_MENU_DROPDOWN_BUTTON");
 
 		Click(locator1 = "ContentDashboard#VIEW_METRICS_OPTION");
+
+		while (IsNotVisible(locator1 = "ContentDashboard#CONTENT_PERFORMANCE_TITLE_PANEL")) {
+			WaitForElementPresent(locator1 = "ContentDashboard#CONTENT_PERFORMANCE_TITLE_PANEL");
+		}
 	}
 
 	macro orderByModificationDate {

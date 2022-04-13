@@ -48,6 +48,10 @@ definition {
 		if (!(IsVisible(locator1 = "ContentPerformance#SIDEBAR"))) {
 			Click(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_BUTTON");
 		}
+
+		while (IsNotVisible(locator1 = "ContentPerformance#SIDEBAR")) {
+			WaitForElementPresent(locator1 = "ContentPerformance#SIDEBAR");
+		}
 	}
 
 	macro showMetricsButton {

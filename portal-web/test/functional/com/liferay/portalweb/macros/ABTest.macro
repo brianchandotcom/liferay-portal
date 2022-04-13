@@ -156,6 +156,10 @@ definition {
 		if (IsNotVisible(locator1 = "ABTest#AB_TEST_SIDE_BAR")) {
 			Click(locator1 = "ABTest#AB_TEST_BUTTON");
 		}
+
+		while (IsNotVisible(locator1 = "ABTest#AB_TEST_SIDE_BAR")) {
+			WaitForElementPresent(locator1 = "ABTest#AB_TEST_SIDE_BAR");
+		}
 	}
 
 	macro runTest {

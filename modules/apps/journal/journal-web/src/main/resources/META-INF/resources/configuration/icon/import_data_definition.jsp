@@ -17,7 +17,10 @@
 <%@ include file="/init.jsp" %>
 
 <liferay-ui:icon
+	icon="download"
+	iconCssClass="dropdown-item-indicator-start"
 	id="importDataDefinitionIcon"
+	markupView="lexicon"
 	message="import-structure"
 	onClick='<%= liferayPortletResponse.getNamespace() + "openImportDataDefinitionModal();" %>'
 	url="javascript:;"

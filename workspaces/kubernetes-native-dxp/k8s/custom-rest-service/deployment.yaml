@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: custom-rest-service
+  labels:
+    app: custom-rest-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: custom-rest-service
+  template:
+    metadata:
+      labels:
+        app: custom-rest-service
+    spec:
+      containers:
+      - name: custom-rest-service
+        image: custom-rest-service:1.0.0-SNAPSHOT
+        imagePullPolicy: Never
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 8081
+        - containerPort: 8000
+        env:
+          - name: DXP_SERVICE_URI
+            valueFrom:
+              configMapKeyRef:
+                key: dxp.service_uri
+                name: custom-rest-service-configmap
+          - name: OAUTH2_INTROSPECTION_URI
+            valueFrom:
+              configMapKeyRef:
+                key: oauth2.introspection_uri
+                name: custom-rest-service-configmap
+          - name: OAUTH2_APP_CLIENT_ID
+            valueFrom:
+              configMapKeyRef:
+                key: oauth2.client_id
+                name: custom-rest-service-configmap

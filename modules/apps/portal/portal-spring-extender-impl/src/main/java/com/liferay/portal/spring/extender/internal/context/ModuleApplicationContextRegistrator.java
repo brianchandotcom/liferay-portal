@@ -84,15 +84,8 @@ public class ModuleApplicationContextRegistrator {
 	}
 
 	public void stop() {
-		if (_serviceRegistrations != null) {
-			for (ServiceRegistration<?> serviceRegistration :
-					_serviceRegistrations) {
-
-				serviceRegistration.unregister();
-			}
-
-			_serviceRegistrations = null;
-		}
+		ApplicationContextServicePublisherUtil.unregisterContext(
+			_serviceRegistrations);
 
 		if (_dataSourceServiceRegistration != null) {
 			_dataSourceServiceRegistration.unregister();

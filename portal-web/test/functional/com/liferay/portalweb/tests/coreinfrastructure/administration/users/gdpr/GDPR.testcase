@@ -265,26 +265,26 @@ definition {
 
 			PortletEntry.selectAll();
 
-			for (var application : list "Blogs,Web Content,Message Boards") {
-				AssertChecked(
-					key_application = "${application}",
-					locator1 = "ExportPersonalData#APPLICATION_CHECKBOX");
-			}
+			task ("And assert the application with entries are selectable and application with no entries are displayed but not selectable") {
+				for (var application : list "Blogs,Web Content,Message Boards") {
+					AssertChecked(
+						key_application = "${application}",
+						locator1 = "ExportPersonalData#APPLICATION_CHECKBOX");
+				}
 
-			task ("And assert the other application entries with no data are displayed and unselectable") {
 				for (var application : list "Announcements,Contacts Center,Documents and Media,Forms,Wiki") {
 					AssertNotChecked(
 						key_application = "${application}",
 						locator1 = "ExportPersonalData#APPLICATION_CHECKBOX",
 						value1 = "disabled");
 				}
-
-				AssertClick(
-					locator1 = "Button#EXPORT",
-					value1 = "Export");
-
-				Alert.viewSuccessMessage();
 			}
+
+			AssertClick(
+				locator1 = "Button#EXPORT",
+				value1 = "Export");
+
+			Alert.viewSuccessMessage();
 		}
 
 		task ("Then assert selected entries are exported, but no entry is exported for the unselectable items") {

@@ -859,9 +859,7 @@ definition {
 
 		SiteTemplates.gotoSettingsCP(siteTemplateName = "Site Template Name");
 
-		SiteTemplates.AddSiteTemplateJavaScript(
-			javaScript = "${javascript}",
-			pageName = "Public Pages");
+		SiteTemplates.AddSiteTemplateJavaScript(javaScript = "${javascript}");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -882,9 +880,7 @@ definition {
 			siteName = "Site Name",
 			siteTemplateName = "Site Template Name");
 
-		SiteTemplates.ViewSiteTemplateJavaScript(
-			javaScript = "${javascript}",
-			pageName = "Public Pages");
+		SiteTemplates.ViewSiteTemplateJavaScript(javaScript = "${javascript}");
 	}
 
 }

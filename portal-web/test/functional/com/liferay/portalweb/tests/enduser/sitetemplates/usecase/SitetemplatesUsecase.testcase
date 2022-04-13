@@ -330,9 +330,7 @@ definition {
 			category = "Site Builder",
 			portlet = "Pages");
 
-		PagesAdmin.cannotDeletePagesAssociatedWithSiteTemplate(
-			page = "Home",
-			pageName = "Public Pages");
+		PagesAdmin.cannotDeletePagesAssociatedWithSiteTemplate(page = "Home");
 	}
 
 	@description = "LRQA-73456. Site template preferences and contents are inherited on User group sites."

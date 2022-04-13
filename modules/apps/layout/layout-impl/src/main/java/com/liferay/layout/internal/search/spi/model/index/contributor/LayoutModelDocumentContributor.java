@@ -36,7 +36,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
-import com.liferay.segments.constants.SegmentsExperienceConstants;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.Locale;
 import java.util.Set;
@@ -166,7 +166,8 @@ public class LayoutModelDocumentContributor
 			_fragmentRendererController, httpServletRequest,
 			httpServletResponse, layoutPageTemplateStructure,
 			FragmentEntryLinkConstants.VIEW, locale,
-			SegmentsExperienceConstants.ID_DEFAULT);
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				layout.getPlid()));
 	}
 
 	private int _getStatus(Layout layout) {
@@ -205,5 +206,8 @@ public class LayoutModelDocumentContributor
 	@Reference
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
+
+	@Reference
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 }

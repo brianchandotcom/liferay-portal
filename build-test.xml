@@ -12136,11 +12136,11 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 										<![CDATA[
 										#!/bin/bash
 
-										db2 disconnect lportal'
+										db2 disconnect lportal
 
-										db2 drop db lportal'
+										db2 drop db lportal
 
-										db2 -f/tmp/create.sql -st'
+										db2 -f/tmp/create.sql -st
 									]]>
 									</echo>
 

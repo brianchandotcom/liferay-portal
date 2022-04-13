@@ -137,10 +137,10 @@ public class MySubscriptionsUtil {
 		}
 
 		if (className.equals(MBCategory.class.getName())) {
-			String portletId = PortletProviderUtil.getPortletId(
-				MBMessage.class.getName(), PortletProvider.Action.VIEW);
-
-			return PortalUtil.getLayoutFullURL(classPK, portletId);
+			return PortalUtil.getLayoutFullURL(
+				classPK,
+				PortletProviderUtil.getPortletId(
+					MBMessage.class.getName(), PortletProvider.Action.VIEW));
 		}
 
 		if (className.equals(WikiNode.class.getName())) {
@@ -153,11 +153,9 @@ public class MySubscriptionsUtil {
 
 			StringBundler sb = new StringBundler(5);
 
-			String layoutFullURL = PortalUtil.getLayoutFullURL(
-				LayoutLocalServiceUtil.getLayout(plid), themeDisplay);
-
-			sb.append(layoutFullURL);
-
+			sb.append(
+				PortalUtil.getLayoutFullURL(
+					LayoutLocalServiceUtil.getLayout(plid), themeDisplay));
 			sb.append(Portal.FRIENDLY_URL_SEPARATOR);
 			sb.append("wiki/");
 			sb.append(classPK);
@@ -222,12 +220,11 @@ public class MySubscriptionsUtil {
 				PortletPreferencesLocalServiceUtil.getPortletPreferences(
 					classPK);
 
-			Layout layout = LayoutLocalServiceUtil.getLayout(
-				portletPreferences.getPlid());
-
 			javax.portlet.PortletPreferences jxPortletPreferences =
 				PortletPreferencesFactoryUtil.getPortletSetup(
-					layout, portletPreferences.getPortletId(), null);
+					LayoutLocalServiceUtil.getLayout(
+						portletPreferences.getPlid()),
+					portletPreferences.getPortletId(), null);
 
 			String portletTitle = jxPortletPreferences.getValue(
 				"portletSetupTitle_" + LocaleUtil.toLanguageId(locale),

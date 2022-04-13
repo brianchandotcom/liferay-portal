@@ -12,10 +12,9 @@
  * details.
  */
 
-import {useMutation, useQuery} from '@apollo/client';
+import {useQuery} from '@apollo/client';
 import ClayButton from '@clayui/button';
-import ClayForm, {ClaySelectWithOption} from '@clayui/form';
-import {useEffect, useState} from 'react';
+import {useForm} from 'react-hook-form';
 
 import Input from '../../../components/Input';
 import Modal from '../../../components/Modal';
@@ -28,8 +27,10 @@ import {
 	TestrayFactorCategory,
 	getFactorCategories,
 } from '../../../graphql/queries';
+import {withVisibleContent} from '../../../hoc/withVisibleContent';
 import {FormModalOptions} from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
+import yupSchema, {yupResolver} from '../../../schema/yup';
 
 type FactorOptionsForm = {
 	factorCategoryId: string;
@@ -37,96 +38,42 @@ type FactorOptionsForm = {
 	name: string;
 };
 
-type FactorOptionsFormProps = {
-	form: FactorOptionsForm;
-	onChange: (event: any) => void;
-	onSubmit: (event: any) => void;
+type FactorOptionsProps = {
+	modal: FormModalOptions;
 };
 
-const FormFactorOptions: React.FC<FactorOptionsFormProps> = ({
-	form,
-	onChange,
-	onSubmit,
+const FactorOptionsFormModal: React.FC<FactorOptionsProps> = ({
+	modal: {modalState, observer, onClose, onSubmit},
 }) => {
+	const {
+		formState: {errors},
+		handleSubmit,
+		register,
+	} = useForm<FactorOptionsForm>({
+		defaultValues: modalState,
+		resolver: yupResolver(yupSchema.factorOption),
+	});
+
 	const {data} = useQuery<
 		CTypePagination<'factorCategories', TestrayFactorCategory>
 	>(getFactorCategories);
 
 	const factorCategories = data?.c.factorCategories.items || [];
 
-	return (
-		<ClayForm onSubmit={onSubmit}>
-			<Input
-				label="Name"
-				name="name"
-				onChange={onChange}
-				required
-				value={form.name}
-			/>
-
-			<label htmlFor="category-type">
-				{i18n.translate('category-type')}
-			</label>
-
-			<ClaySelectWithOption
-				id="category-type"
-				name="factorCategoryId"
-				onChange={onChange}
-				options={factorCategories.map(({id, name}) => ({
-					label: name,
-					value: id,
-				}))}
-				value={form.factorCategoryId}
-			/>
-		</ClayForm>
-	);
-};
-
-type FactorOptionsProps = {
-	modal: FormModalOptions;
-};
-const FactorOptionsFormModal: React.FC<FactorOptionsProps> = ({
-	modal: {modalState, observer, onChange, onClose, onError, onSave, visible},
-}) => {
-	const [form, setForm] = useState<FactorOptionsForm>({
-		factorCategoryId: '',
-		name: '',
-	});
-
-	const [onCreateFactorOption] = useMutation(CreateFactorOption);
-	const [onUpdateFactorOption] = useMutation(UpdateFactorOption);
-
-	useEffect(() => {
-		if (visible && modalState) {
-			setForm(modalState);
-		}
-	}, [visible, modalState]);
-
-	const onSubmit = async (event?: any) => {
-		event?.preventDefault();
-
-		const variables: any = {
-			FactorOption: {
-				factorCategoryId: form.factorCategoryId,
-				name: form.name,
-			},
-		};
-
-		try {
-			if (form.id) {
-				variables.factorOptionId = form.id;
-
-				await onUpdateFactorOption({variables});
+	const _onSubmit = (form: FactorOptionsForm) => {
+		onSubmit(
+			{id: form.id, name: form.name},
+			{
+				createMutation: CreateFactorOption,
+				updateMutation: UpdateFactorOption,
 			}
-			else {
-				await onCreateFactorOption({variables});
-			}
+		);
+	};
 
-			onSave();
-		}
-		catch (error) {
-			onError(error);
-		}
+	const inputProps = {
+		errors,
+		register,
+		required: true,
 	};
 
 	return (
@@ -137,23 +84,42 @@ const FactorOptionsFormModal: React.FC<FactorOptionsProps> = ({
 						{i18n.translate('close')}
 					</ClayButton>
 
-					<ClayButton displayType="primary" onClick={onSubmit}>
+					<ClayButton
+						displayType="primary"
+						onClick={handleSubmit(_onSubmit)}
+					>
 						{i18n.translate('save')}
 					</ClayButton>
 				</ClayButton.Group>
 			}
 			observer={observer}
 			size="lg"
-			title={i18n.translate(form.id ? 'edit-option' : 'new-option')}
-			visible={visible}
+			title={i18n.translate(
+				modalState?.id ? 'edit-option' : 'new-option'
+			)}
+			visible
 		>
-			<FormFactorOptions
-				form={form}
-				onChange={onChange({form, setForm})}
-				onSubmit={onSubmit}
-			/>
+			<Input label={i18n.translate('name')} name="name" {...inputProps} />
+
+			<label htmlFor="category-type">
+				{i18n.translate('category-type')}
+			</label>
+
+			<select
+				className="form-control"
+				id="category-type"
+				{...register('factorCategoryId')}
+			>
+				<option>{i18n.translate('choose-an-option')}</option>
+
+				{factorCategories.map(({id, name}) => (
+					<option key={id} value={id}>
+						{name}
+					</option>
+				))}
+			</select>
 		</Modal>
 	);
 };
 
-export default FactorOptionsFormModal;
+export default withVisibleContent(FactorOptionsFormModal);

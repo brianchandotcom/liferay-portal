@@ -20,11 +20,11 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 public class CustomRestSecurityConfig extends WebSecurityConfigurerAdapter {
 
-	@Value("${spring.security.oauth2.resourceserver.opaque.introspection-uri}")
-	String introspectionUri;
-
-	@Value("${spring.security.oauth2.resourceserver.opaque.introspection-client-id}")
+	@Value("${OAUTH2_APP_CLIENT_ID}")
 	String clientId;
+
+	@Value("${OAUTH2_INTROSPECTION_URI}")
+	String introspectionUri;
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {

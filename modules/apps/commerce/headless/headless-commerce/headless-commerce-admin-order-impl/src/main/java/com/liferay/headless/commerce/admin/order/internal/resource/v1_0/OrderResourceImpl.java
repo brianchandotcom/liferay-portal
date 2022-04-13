@@ -590,41 +590,41 @@ public class OrderResourceImpl
 			GetterUtil.getLong(
 				order.getBillingAddressId(),
 				commerceOrder.getBillingAddressId()),
-			GetterUtil.getLong(
-				order.getShippingAddressId(),
-				commerceOrder.getShippingAddressId()),
 			GetterUtil.getString(
 				order.getPaymentMethod(),
 				commerceOrder.getCommercePaymentMethodKey()),
 			commerceShippingMethodId,
+			GetterUtil.getLong(
+				order.getShippingAddressId(),
+				commerceOrder.getShippingAddressId()),
 			GetterUtil.getString(
-				order.getShippingOption(),
-				commerceOrder.getShippingOptionName()),
+				order.getAdvanceStatus(), commerceOrder.getAdvanceStatus()),
 			GetterUtil.getString(
 				order.getPurchaseOrderNumber(),
 				commerceOrder.getPurchaseOrderNumber()),
 			(BigDecimal)GetterUtil.getNumber(
+				order.getShippingAmount(), commerceOrder.getShippingAmount()),
+			GetterUtil.getString(
+				order.getShippingOption(),
+				commerceOrder.getShippingOptionName()),
+			(BigDecimal)GetterUtil.getNumber(
+				order.getShippingWithTaxAmount(),
+				commerceOrder.getShippingWithTaxAmount()),
+			(BigDecimal)GetterUtil.getNumber(
 				order.getSubtotal(), commerceOrder.getSubtotal()),
 			(BigDecimal)GetterUtil.getNumber(
-				order.getShippingAmount(), commerceOrder.getShippingAmount()),
+				order.getSubtotalWithTaxAmount(),
+				commerceOrder.getSubtotalWithTaxAmount()),
 			(BigDecimal)GetterUtil.getNumber(
 				order.getTaxAmount(), commerceOrder.getTaxAmount()),
 			(BigDecimal)GetterUtil.getNumber(
 				order.getTotal(), commerceOrder.getTotal()),
 			(BigDecimal)GetterUtil.getNumber(
-				order.getSubtotalWithTaxAmount(),
-				commerceOrder.getSubtotalWithTaxAmount()),
-			(BigDecimal)GetterUtil.getNumber(
-				order.getShippingWithTaxAmount(),
-				commerceOrder.getShippingWithTaxAmount()),
+				order.getTotalDiscountAmount(),
+				commerceOrder.getTotalDiscountAmount()),
 			(BigDecimal)GetterUtil.getNumber(
 				order.getTotalWithTaxAmount(),
 				commerceOrder.getTotalWithTaxAmount()),
-			(BigDecimal)GetterUtil.getNumber(
-				order.getTotalDiscountAmount(),
-				commerceOrder.getTotalDiscountAmount()),
-			GetterUtil.getString(
-				order.getAdvanceStatus(), commerceOrder.getAdvanceStatus()),
 			_commerceContextFactory.create(
 				contextCompany.getCompanyId(), commerceOrder.getGroupId(),
 				contextUser.getUserId(), 0,

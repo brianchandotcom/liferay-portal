@@ -213,12 +213,13 @@ public class CommerceOrderGenerator {
 		commerceOrder = _commerceOrderLocalService.updateCommerceOrder(
 			null, commerceOrder.getCommerceOrderId(),
 			commerceAddress.getCommerceAddressId(),
-			commerceAddress.getCommerceAddressId(),
 			commerceOrder.getCommercePaymentMethodKey(),
-			commerceShippingMethodId, commerceShippingOptionKey,
-			commerceOrder.getPurchaseOrderNumber(), commerceOrder.getSubtotal(),
-			commerceOrder.getShippingAmount(), commerceOrder.getTotal(),
-			commerceOrder.getAdvanceStatus(), commerceContext);
+			commerceShippingMethodId, commerceAddress.getCommerceAddressId(),
+			commerceOrder.getAdvanceStatus(),
+			commerceOrder.getPurchaseOrderNumber(),
+			commerceOrder.getShippingAmount(), commerceShippingOptionKey,
+			commerceOrder.getSubtotal(), commerceOrder.getTotal(),
+			commerceContext);
 
 		// Checkout commerce order
 

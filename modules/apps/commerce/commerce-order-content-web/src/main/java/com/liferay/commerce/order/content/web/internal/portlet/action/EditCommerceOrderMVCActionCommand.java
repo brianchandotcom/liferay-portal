@@ -451,13 +451,12 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 
 		_commerceOrderService.updateCommerceOrder(
 			commerceOrder.getExternalReferenceCode(), commerceOrderId,
-			billingAddressId, shippingAddressId,
-			commerceOrder.getCommercePaymentMethodKey(),
-			commerceOrder.getCommerceShippingMethodId(),
-			commerceOrder.getShippingOptionName(), purchaseOrderNumber,
-			commerceOrder.getSubtotal(), commerceOrder.getShippingAmount(),
-			commerceOrder.getTotal(), commerceOrder.getAdvanceStatus(),
-			commerceContext);
+			billingAddressId, commerceOrder.getCommercePaymentMethodKey(),
+			commerceOrder.getCommerceShippingMethodId(), shippingAddressId,
+			commerceOrder.getAdvanceStatus(), purchaseOrderNumber,
+			commerceOrder.getShippingAmount(),
+			commerceOrder.getShippingOptionName(), commerceOrder.getSubtotal(),
+			commerceOrder.getTotal(), commerceContext);
 	}
 
 	@Reference

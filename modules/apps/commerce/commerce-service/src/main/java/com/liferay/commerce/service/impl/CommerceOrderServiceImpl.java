@@ -642,14 +642,14 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 	@Override
 	public CommerceOrder updateCommerceOrder(
 			String externalReferenceCode, long commerceOrderId,
-			long billingAddressId, long shippingAddressId,
-			String commercePaymentMethodKey, long commerceShippingMethodId,
-			String shippingOptionName, String purchaseOrderNumber,
-			BigDecimal subtotal, BigDecimal shippingAmount,
-			BigDecimal taxAmount, BigDecimal total,
-			BigDecimal subtotalWithTaxAmount, BigDecimal shippingWithTaxAmount,
-			BigDecimal totalWithTaxAmount, BigDecimal totalDiscountAmount,
-			String advanceStatus, CommerceContext commerceContext)
+			long billingAddressId, String commercePaymentMethodKey,
+			long commerceShippingMethodId, long shippingAddressId,
+			String advanceStatus, String purchaseOrderNumber,
+			BigDecimal shippingAmount, String shippingOptionName,
+			BigDecimal shippingWithTaxAmount, BigDecimal subtotal,
+			BigDecimal subtotalWithTaxAmount, BigDecimal taxAmount,
+			BigDecimal total, BigDecimal totalDiscountAmount,
+			BigDecimal totalWithTaxAmount, CommerceContext commerceContext)
 		throws PortalException {
 
 		_commerceOrderModelResourcePermission.check(
@@ -657,21 +657,22 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 
 		return commerceOrderLocalService.updateCommerceOrder(
 			externalReferenceCode, commerceOrderId, billingAddressId,
-			shippingAddressId, commercePaymentMethodKey,
-			commerceShippingMethodId, shippingOptionName, purchaseOrderNumber,
-			subtotal, shippingAmount, taxAmount, total, subtotalWithTaxAmount,
-			shippingWithTaxAmount, totalWithTaxAmount, totalDiscountAmount,
-			advanceStatus, commerceContext);
+			commercePaymentMethodKey, commerceShippingMethodId,
+			shippingAddressId, advanceStatus, purchaseOrderNumber,
+			shippingAmount, shippingOptionName, shippingWithTaxAmount, subtotal,
+			subtotalWithTaxAmount, taxAmount, total, totalWithTaxAmount,
+			totalDiscountAmount, commerceContext);
 	}
 
 	@Override
 	public CommerceOrder updateCommerceOrder(
 			String externalReferenceCode, long commerceOrderId,
-			long billingAddressId, long shippingAddressId,
-			String commercePaymentMethodKey, long commerceShippingMethodId,
-			String shippingOptionName, String purchaseOrderNumber,
-			BigDecimal subtotal, BigDecimal shippingAmount, BigDecimal total,
-			String advanceStatus, CommerceContext commerceContext)
+			long billingAddressId, String commercePaymentMethodKey,
+			long commerceShippingMethodId, long shippingAddressId,
+			String advanceStatus, String purchaseOrderNumber,
+			BigDecimal shippingAmount, String shippingOptionName,
+			BigDecimal subtotal, BigDecimal total,
+			CommerceContext commerceContext)
 		throws PortalException {
 
 		_commerceOrderModelResourcePermission.check(
@@ -679,9 +680,10 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 
 		return commerceOrderLocalService.updateCommerceOrder(
 			externalReferenceCode, commerceOrderId, billingAddressId,
-			shippingAddressId, commercePaymentMethodKey,
-			commerceShippingMethodId, shippingOptionName, purchaseOrderNumber,
-			subtotal, shippingAmount, total, advanceStatus, commerceContext);
+			commercePaymentMethodKey, commerceShippingMethodId,
+			shippingAddressId, advanceStatus, purchaseOrderNumber,
+			shippingAmount, shippingOptionName, subtotal, total,
+			commerceContext);
 	}
 
 	@Override

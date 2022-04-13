@@ -188,12 +188,13 @@ public class AddressCommerceCheckoutStepUtil {
 		return _commerceOrderService.updateCommerceOrder(
 			commerceOrder.getExternalReferenceCode(),
 			commerceOrder.getCommerceOrderId(), billingAddressId,
-			shippingAddressId, commerceOrder.getCommercePaymentMethodKey(),
-			commerceOrder.getCommerceShippingMethodId(),
-			commerceOrder.getShippingOptionName(),
-			commerceOrder.getPurchaseOrderNumber(), commerceOrder.getSubtotal(),
-			commerceOrder.getShippingAmount(), commerceOrder.getTotal(),
-			commerceOrder.getAdvanceStatus(), commerceContext);
+			commerceOrder.getCommercePaymentMethodKey(),
+			commerceOrder.getCommerceShippingMethodId(), shippingAddressId,
+			commerceOrder.getAdvanceStatus(),
+			commerceOrder.getPurchaseOrderNumber(),
+			commerceOrder.getShippingAmount(),
+			commerceOrder.getShippingOptionName(), commerceOrder.getSubtotal(),
+			commerceOrder.getTotal(), commerceContext);
 	}
 
 	private CommerceAddress _addCommerceAddress(

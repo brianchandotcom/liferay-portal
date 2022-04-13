@@ -11,26 +11,26 @@ definition {
 		User.firstLoginPG();
 	}
 
-		tearDown {
-    		var testPortalInstance = PropsUtil.get("test.portal.instance");
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-    		if ("${testPortalInstance}" == "true") {
-    			PortalInstances.tearDownCP();
-    		}
-    		else {
-    			Navigator.openURL();
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Navigator.openURL();
 
-    			if (IsElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
-    				User.logoutPG();
-    			}
+			if (IsElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
+				User.logoutPG();
+			}
 
-    			User.firstLoginPG();
+			User.firstLoginPG();
 
-    			CommerceConfiguration.commerceAdminTearDown();
+			CommerceConfiguration.commerceAdminTearDown();
 
-    			CommerceConfiguration.commerceInitializersTearDown();
-    		}
-    	}
+			CommerceConfiguration.commerceInitializersTearDown();
+		}
+	}
 
 	@description = "COMMERCE-5937. As a buyer, I want open Account Selector to close if I open the Global Search"
 	@priority = "3"

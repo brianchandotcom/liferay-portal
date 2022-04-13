@@ -54,13 +54,13 @@ definition {
 		return "${commerceTaxCategories}";
 	}
 
-	macro _getCommereTaxCategoriesCount() {
+	macro _getCommereTaxCategoriesCount {
 		var taxCategoriesCount = "0";
 
 		var commerceTaxCategoriesIds = CommerceJSONTaxCategoriesAPI._getCommerceTaxCategories();
 
 		for (var commerceTaxCategoriesId : list "${commerceTaxCategoriesIds}") {
-			if("${commerceTaxCategoriesId}" != "") {
+			if ("${commerceTaxCategoriesId}" != "") {
 				var taxCategoriesCount = ${taxCategoriesCount} + 1;
 			}
 		}
@@ -68,6 +68,6 @@ definition {
 		echo("The Commerce available estimates count is: ${taxCategoriesCount}");
 
 		return "${taxCategoriesCount}";
-    }
+	}
 
 }

@@ -2,7 +2,6 @@ definition {
 
 	macro _deleteAllWarehouseItems {
 		var emptyCount = "0";
-
 		var baseURL = "${baseURL}";
 
 		if (!(isSet(baseURL))) {
@@ -35,11 +34,12 @@ definition {
 						JSONCurlUtil.delete("${curlWarehouse}");
 					}
 				}
+
 				var partialWarehouseItemsCount = JSONCurlUtil.get("${curlWarehouseItems}", "$.['totalCount']");
+
 				TestUtils.assertEquals(
 					actual = "${partialWarehouseItemsCount}",
 					expected = "${emptyCount}");
-
 
 				echo("Deleting Commerce warehouse with id: ${warehouseId}");
 

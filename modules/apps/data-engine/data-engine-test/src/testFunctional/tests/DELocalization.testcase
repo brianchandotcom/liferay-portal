@@ -2864,4 +2864,53 @@ definition {
 
 	}
 
+	@description = "Verify that is possible to translate Label and Help text of Geolocation Field"
+	@priority = "4"
+	test CanTranslateLabelAndHelpTextOnGeolocationField {
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Geolocation",
+			fieldName = "Geolocation");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Geolocation",
+			fieldHelp = "Help Text");
+
+		WebContentStructures.addTranslations(localeList = "pt-BR");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Geolocation",
+			fieldFieldLabelEdit = "Geolocation pt-BR");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Geolocation pt-BR",
+			fieldHelp = "Help Text pt-BR");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Geolocation",
+			fieldHelp = "Help Text",
+			fieldName = "Geolocation");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Geolocation pt-BR",
+			fieldHelp = "Help Text pt-BR",
+			fieldName = "Geolocation");
+
+
+	}
+
 }

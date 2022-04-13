@@ -1277,12 +1277,11 @@ definition {
 
 		Button.clickPublish();
 
-        Alert.viewErrorMessage(errorMessage = "The Condition node must have at least 2 outgoing transitions");
+		Alert.viewErrorMessage(errorMessage = "The Condition node must have at least 2 outgoing transitions");
 
 		Navigator.gotoBack();
 
-        Workflow.viewDefinitionNotPresent(workflowDefinitionTitle = "New Workflow Definition");
-
+		Workflow.viewDefinitionNotPresent(workflowDefinitionTitle = "New Workflow Definition");
 	}
 
 	@description = "Verify that connectors can be deleted"

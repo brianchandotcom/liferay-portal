@@ -627,12 +627,70 @@ definition {
 	}
 
 	@description = "LPS-136595 - Verify that the updated Picklist item's name will be displayed on the object's portlet"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test ViewUpdatedPicklistItemNameOnObjectPortlet {
+		Picklist.addPicklistViaAPI(picklistName = "Picklist Test");
 
-		// TODO LPS-147727 ViewUpdatedPicklistItemNameOnObjectPortlet pending implementation
+		Picklist.addPicklistItemViaAPI(
+			itemKey = "PicklistItemKeyTest",
+			itemName = "Picklist Item Name Test",
+			picklistName = "Picklist Test");
 
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 147729",
+			objectName = "CustomObject147729",
+			pluralLabelName = "Custom Objects 147729");
+
+		Picklist.gotoPicklists();
+
+		Picklist.gotoPicklistView(picklistName = "Picklist Test");
+
+		Picklist.addLanguageOnPicklist(
+			itemName = "Teste na lista",
+			newlanguage = "pt-BR");
+
+		Picklist.optionsPicklistItem(
+			itemKey = "PicklistItemKeyTest",
+			picklistItemOption = "View");
+
+		Picklist.addLanguageOnPicklistItem(
+			itemName = "Teste de entrada",
+			newlanguage = "pt-BR");
+
+		Button.clickSave();
+
+		Navigator.openURL();
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 147729");
+
+		ObjectAdmin.goToFieldsTab();
+
+		ObjectAdmin.addObjectFieldViaUI(
+			fieldLabel = "Field Picklist",
+			fieldPicklist = "Picklist Test",
+			fieldType = "Picklist");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject147729");
+
+		User.openUsersAdmin();
+
+		User.editDisplaySettingsCP(
+			languageName = "português (Brasil)",
+			userScreenName = "test");
+
+		Navigator.openURL();
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject147729");
+
+		LexiconEntry.gotoAdd();
+
+		Click(locator1 = "ObjectAdmin#ENTRY_CHOOSE_OPTION");
+
+		AssertVisible(
+			key_picklistOption = "Teste de entrada",
+			locator1 = "ObjectAdmin#ENTRY_PICKLIST_OPTION");
 	}
 
 	@description = "LPS-136595 - Verify that the updating or deleting a picklist item warn message is displayed"

@@ -198,6 +198,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8449 | Test Summary: Web content audience card shows expected amount of segmented and unsegmented individuals"
 	@priority = "5"
 	test AudienceCardShowsExpectedAmountSegmentedAndUnsegmentedInWC {
+		property portal.upstream = "quarantine";
+
+		// AC Quarantine Reason: The membership list takes a long time to update
+		// AC Refactor ticket: LRAC-10769 and LRAC-10024
+
 		property test.name.skip.portal.instance = "AssetsWebContent#AudienceCardShowsExpectedAmountSegmentedAndUnsegmentedInWC";
 
 		var usernameList = "ac,liferay";

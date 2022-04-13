@@ -54,4 +54,20 @@ definition {
 		return "${commerceTaxCategories}";
 	}
 
+	macro _getCommereTaxCategoriesCount() {
+		var taxCategoriesCount = "0";
+
+		var commerceTaxCategoriesIds = CommerceJSONTaxCategoriesAPI._getCommerceTaxCategories();
+
+		for (var commerceTaxCategoriesId : list "${commerceTaxCategoriesIds}") {
+			if("${commerceTaxCategoriesId}" != "") {
+				var taxCategoriesCount = ${taxCategoriesCount} + 1;
+			}
+		}
+
+		echo("The Commerce available estimates count is: ${taxCategoriesCount}");
+
+		return "${taxCategoriesCount}";
+    }
+
 }

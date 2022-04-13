@@ -54,4 +54,19 @@ definition {
 		return "${availableEstimates}";
 	}
 
+	macro _getAvailableEstimatesCount() {
+		var availableEstimatesCount = "0";
+
+		var commerceAvailabilityEstimateIds = CommerceJSONAvailableEstimatesAPI._getCommerceAvailableEstimates();
+
+		for (var commerceAvailabilityEstimateId : list "${commerceAvailabilityEstimateIds}") {
+			if ("${commerceAvailabilityEstimateId}" != "") {
+				var availableEstimatesCount = ${availableEstimatesCount} + 1;
+			}
+		}
+
+		echo("The Commerce available estimates count is: ${availableEstimatesCount}");
+
+		return "${availableEstimatesCount}";
+	}
 }

@@ -54,4 +54,20 @@ definition {
 		return "${commerceMeasurementUnits}";
 	}
 
+	macro _getCommerceAvailableMeasurementUnitsCount() {
+		var availableMeasurementUnits = "0";
+
+		var commerceMeasurementUnitsIds = CommerceJSONMeasurementUnitsAPI._getCommerceMeasurementUnits();
+
+		for (var commerceMeasurementUnitsId : list "${commerceMeasurementUnitsIds}") {
+			if("${commerceMeasurementUnitsId}" != "") {
+				var availableMeasurementUnits = ${availableMeasurementUnits} + 1;
+			}
+		}
+
+		echo("The Commerce available measurement units count is: ${availableMeasurementUnits}");
+
+		return "${availableMeasurementUnits}";
+    	}
+
 }

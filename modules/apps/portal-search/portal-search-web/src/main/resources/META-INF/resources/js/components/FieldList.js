@@ -99,6 +99,7 @@ function Field({field, index, label, onChange, onDelete, order}) {
 					<ClayInput.GroupItem shrink>
 						<ClayButton
 							borderless
+							className="drag-handle"
 							displayType="secondary"
 							monospaced
 							small

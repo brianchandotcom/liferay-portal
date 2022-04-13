@@ -369,9 +369,9 @@ const InviteTeamMembersPage = ({
 									<h5 className="text-neutral-7">
 										{`${
 											projectHasSLAGoldPlatinum
-												? ROLE_TYPES.requester.name
-												: ROLE_TYPES.admin.name
-										}   roles available: ${availableAdminsRoles} of ${
+												? 'Support Seats'
+												: `${ROLE_TYPES.admin.name} roles`
+										}   available: ${availableAdminsRoles} of ${
 											project.maxRequestors
 										}`}
 									</h5>
@@ -380,7 +380,7 @@ const InviteTeamMembersPage = ({
 										{`Only ${project.maxRequestors} member${
 											project.maxRequestors > 1 ? 's' : ''
 										} per project (including yourself) have
-								   role permissions (Admins & Requestors) to open Support
+								   role permissions (Admins & Support Seats) to open Support
 								   tickets. `}
 
 										<a

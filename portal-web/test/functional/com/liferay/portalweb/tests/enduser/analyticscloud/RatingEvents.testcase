@@ -20,6 +20,14 @@ definition {
 		ACUtils.createBlogsAndAddToPage();
 
 		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+
+		task ("Change blog rating type to star") {
+			Ratings.configureRatingType(
+				applications = "Blogs",
+				portlet = "Ratings",
+				ratingType = "Stars",
+				siteName = "Site Name");
+		}
 	}
 
 	tearDown {
@@ -29,6 +37,9 @@ definition {
 
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
 		}
 
 		ACUtils.tearDownAC();
@@ -56,6 +67,10 @@ definition {
 			var expectedDataSourceId = ACSettings.getDXPInstanceId(dataSourceName = "${dataSourceName}");
 		}
 
+		task ("Sign in as Test Test") {
+			ACUtils.launchDXP();
+		}
+
 		task ("View the blog entry and rate it") {
 			ACUtils.navigateToSitePage(
 				actionType = "View Blog",
@@ -63,15 +78,13 @@ definition {
 				pageName = "AC Page",
 				siteName = "Site Name");
 
-			Ratings.rateThumb(
-				blogRating = "true",
-				ratingResult = "Rate this as good");
-		}
+			task ("Start Har recording") {
+				ProxyUtil.startHarRecording("VOTE");
 
-		task ("Start Har recording") {
-			ProxyUtil.startHarRecording("blogVOTE");
+				Pause(locator1 = "5000");
+			}
 
-			Pause(locator1 = "5000");
+			Ratings.rateStar(ratingStarCount = "4");
 		}
 
 		task ("Get entryId of blog entry") {
@@ -97,13 +110,13 @@ definition {
 				applicationId = "Ratings",
 				eventId = "VOTE",
 				property = "ratingType",
-				value = "thumbs");
+				value = "stars");
 
 			ACUtils.assertEventPropertyValue(
 				applicationId = "Ratings",
 				eventId = "VOTE",
 				property = "score",
-				value = "1");
+				value = "0.8");
 		}
 
 		task ("View the request common properties value") {

@@ -18,20 +18,21 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.view.count.ViewCountManagerUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.view.count.ViewCountManager;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.ratings.test.util.RatingsTestUtil;
@@ -72,15 +73,15 @@ public class AssetEntryServiceTest {
 
 		assetEntryQuery.setGroupIds(new long[] {_group.getGroupId()});
 
-		int initialAssetEntriesCount =
-			AssetEntryLocalServiceUtil.getEntriesCount(assetEntryQuery);
+		int initialAssetEntriesCount = _assetEntryLocalService.getEntriesCount(
+			assetEntryQuery);
 
 		AssetTestUtil.addAssetEntry(_group.getGroupId());
 
 		assetEntryQuery.setGroupIds(new long[] {_group.getGroupId()});
 
-		int actualAssetEntriesCount =
-			AssetEntryLocalServiceUtil.getEntriesCount(assetEntryQuery);
+		int actualAssetEntriesCount = _assetEntryLocalService.getEntriesCount(
+			assetEntryQuery);
 
 		Assert.assertEquals(
 			initialAssetEntriesCount + 1, actualAssetEntriesCount);
@@ -93,13 +94,13 @@ public class AssetEntryServiceTest {
 		assetEntryQuery.setGroupIds(new long[] {_group.getGroupId()});
 
 		List<AssetEntry> initialAssetEntries =
-			AssetEntryLocalServiceUtil.getEntries(assetEntryQuery);
+			_assetEntryLocalService.getEntries(assetEntryQuery);
 
 		AssetTestUtil.addAssetEntry(_group.getGroupId());
 
 		assetEntryQuery.setGroupIds(new long[] {_group.getGroupId()});
 
-		List<AssetEntry> assetEntries = AssetEntryLocalServiceUtil.getEntries(
+		List<AssetEntry> assetEntries = _assetEntryLocalService.getEntries(
 			assetEntryQuery);
 
 		Assert.assertEquals(
@@ -125,7 +126,7 @@ public class AssetEntryServiceTest {
 		assetEntryQuery.setOrderByType2("DESC");
 
 		List<AssetEntry> actualAssetEntries =
-			AssetEntryLocalServiceUtil.getEntries(assetEntryQuery);
+			_assetEntryLocalService.getEntries(assetEntryQuery);
 
 		validateAssetEntries(expectedAssetEntries, actualAssetEntries);
 	}
@@ -141,7 +142,7 @@ public class AssetEntryServiceTest {
 		assetEntryQuery.setOrderByType1("DESC");
 
 		List<AssetEntry> actualAssetEntries =
-			AssetEntryLocalServiceUtil.getEntries(assetEntryQuery);
+			_assetEntryLocalService.getEntries(assetEntryQuery);
 
 		validateAssetEntries(expectedAssetEntries, actualAssetEntries);
 	}
@@ -150,8 +151,7 @@ public class AssetEntryServiceTest {
 	public void testGetEntriesOrderByRatingsAndViewCount() throws Exception {
 		List<AssetEntry> expectedAssetEntries = new ArrayList<>(4);
 
-		long classNameId = ClassNameLocalServiceUtil.getClassNameId(
-			AssetEntry.class);
+		long classNameId = _portal.getClassNameId(AssetEntry.class);
 
 		AssetEntry assetEntry1 = AssetTestUtil.addAssetEntry(
 			_group.getGroupId());
@@ -159,7 +159,7 @@ public class AssetEntryServiceTest {
 		RatingsTestUtil.addStats(
 			assetEntry1.getClassName(), assetEntry1.getClassPK(), 2000);
 
-		ViewCountManagerUtil.incrementViewCount(
+		_viewCountManager.incrementViewCount(
 			assetEntry1.getCompanyId(), classNameId, assetEntry1.getEntryId(),
 			2);
 
@@ -169,7 +169,7 @@ public class AssetEntryServiceTest {
 		RatingsTestUtil.addStats(
 			assetEntry2.getClassName(), assetEntry2.getClassPK(), 2000);
 
-		ViewCountManagerUtil.incrementViewCount(
+		_viewCountManager.incrementViewCount(
 			assetEntry2.getCompanyId(), classNameId, assetEntry2.getEntryId(),
 			1);
 
@@ -185,7 +185,7 @@ public class AssetEntryServiceTest {
 		RatingsTestUtil.addStats(
 			assetEntry4.getClassName(), assetEntry4.getClassPK(), 1000);
 
-		ViewCountManagerUtil.incrementViewCount(
+		_viewCountManager.incrementViewCount(
 			assetEntry4.getCompanyId(), classNameId, assetEntry4.getEntryId(),
 			4);
 
@@ -203,7 +203,7 @@ public class AssetEntryServiceTest {
 		assetEntryQuery.setOrderByType2("DESC");
 
 		List<AssetEntry> actualAssetEntries =
-			AssetEntryLocalServiceUtil.getEntries(assetEntryQuery);
+			_assetEntryLocalService.getEntries(assetEntryQuery);
 
 		validateAssetEntries(expectedAssetEntries, actualAssetEntries);
 	}
@@ -219,7 +219,7 @@ public class AssetEntryServiceTest {
 		assetEntryQuery.setOrderByType1("DESC");
 
 		List<AssetEntry> actualAssetEntries =
-			AssetEntryLocalServiceUtil.getEntries(assetEntryQuery);
+			_assetEntryLocalService.getEntries(assetEntryQuery);
 
 		validateAssetEntries(expectedAssetEntries, actualAssetEntries);
 	}
@@ -229,13 +229,12 @@ public class AssetEntryServiceTest {
 		AssetEntry assetEntry = AssetTestUtil.addAssetEntry(
 			_group.getGroupId(), new Date(), "testClass");
 
-		ViewCountManagerUtil.incrementViewCount(
-			assetEntry.getCompanyId(),
-			ClassNameLocalServiceUtil.getClassNameId(AssetEntry.class),
+		_viewCountManager.incrementViewCount(
+			assetEntry.getCompanyId(), _portal.getClassNameId(AssetEntry.class),
 			assetEntry.getEntryId(), 2);
 
 		List<AssetEntry> topViewEntries =
-			AssetEntryLocalServiceUtil.getTopViewedEntries(
+			_assetEntryLocalService.getTopViewedEntries(
 				"testClass", false, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		Assert.assertEquals(
@@ -245,14 +244,13 @@ public class AssetEntryServiceTest {
 	@Test(expected = AssetCategoryException.class)
 	public void testValidate() throws Exception {
 		AssetTestUtil.addVocabulary(
-			_group.getGroupId(),
-			ClassNameLocalServiceUtil.getClassNameId(Group.class),
+			_group.getGroupId(), _portal.getClassNameId(Group.class),
 			AssetCategoryConstants.ALL_CLASS_TYPE_PK, true);
 
-		Company company = CompanyLocalServiceUtil.getCompany(
+		Company company = _companyLocalService.getCompany(
 			_group.getCompanyId());
 
-		AssetEntryLocalServiceUtil.validate(
+		_assetEntryLocalService.validate(
 			company.getGroupId(), Group.class.getName(), _group.getGroupId(), 0,
 			new long[0], new String[0]);
 	}
@@ -268,8 +266,7 @@ public class AssetEntryServiceTest {
 
 		Date dayBeforeYesterday = calendar.getTime();
 
-		long classNameId = ClassNameLocalServiceUtil.getClassNameId(
-			AssetEntry.class);
+		long classNameId = _portal.getClassNameId(AssetEntry.class);
 
 		AssetEntry assetEntry1 = AssetTestUtil.addAssetEntry(
 			_group.getGroupId(), dayBeforeYesterday);
@@ -277,7 +274,7 @@ public class AssetEntryServiceTest {
 		RatingsTestUtil.addStats(
 			assetEntry1.getClassName(), assetEntry1.getClassPK(), 2000);
 
-		ViewCountManagerUtil.incrementViewCount(
+		_viewCountManager.incrementViewCount(
 			assetEntry1.getCompanyId(), classNameId, assetEntry1.getEntryId(),
 			2);
 
@@ -287,7 +284,7 @@ public class AssetEntryServiceTest {
 		RatingsTestUtil.addStats(
 			assetEntry2.getClassName(), assetEntry2.getClassPK(), 1000);
 
-		ViewCountManagerUtil.incrementViewCount(
+		_viewCountManager.incrementViewCount(
 			assetEntry2.getCompanyId(), classNameId, assetEntry2.getEntryId(),
 			1);
 
@@ -297,7 +294,7 @@ public class AssetEntryServiceTest {
 		RatingsTestUtil.addStats(
 			assetEntry3.getClassName(), assetEntry3.getClassPK(), 3000);
 
-		ViewCountManagerUtil.incrementViewCount(
+		_viewCountManager.incrementViewCount(
 			assetEntry3.getCompanyId(), classNameId, assetEntry3.getEntryId(),
 			3);
 
@@ -324,6 +321,18 @@ public class AssetEntryServiceTest {
 				expectedAssetEntry.getEntryId(), actualAssetEntry.getEntryId());
 		}
 	}
+
+	@Inject
+	private static AssetEntryLocalService _assetEntryLocalService;
+
+	@Inject
+	private static CompanyLocalService _companyLocalService;
+
+	@Inject
+	private static Portal _portal;
+
+	@Inject
+	private static ViewCountManager _viewCountManager;
 
 	@DeleteAfterTestRun
 	private Group _group;

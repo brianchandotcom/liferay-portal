@@ -1,0 +1,11 @@
+{
+	"deletionType": "prevent",
+	"label": {
+		"en_US": "Application to Policies"
+	},
+	"name": "applicationToPolicies",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:RaylifeApplication$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:RaylifePolicy$]",
+	"objectDefinitionName2": "RaylifePolicy",
+	"type": "oneToMany"
+}

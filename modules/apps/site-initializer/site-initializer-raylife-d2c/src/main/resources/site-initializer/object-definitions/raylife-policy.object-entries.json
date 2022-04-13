@@ -6,7 +6,9 @@
 		"policyNumber": "12345",
 		"product": "Business Owners Policy",
 		"renewalDue": 2,
-		"startDate": "2022-03-31T00:00:00Z"
+		"startDate": "2022-03-31T00:00:00Z",
+		"externalReferenceCode": "RAY-001",
+		"r_applicationToPolicies_c_raylifeApplicationId": "[$RaylifeApplication#RAY-001$]"
 	},
 	{
 		"finishDate": "2023-03-02T00:00:00Z",
@@ -15,7 +17,9 @@
 		"policyNumber": "12346",
 		"product": "General Liability",
 		"renewalDue": 5,
-		"startDate": "2022-03-04T00:00:00Z"
+		"startDate": "2022-03-04T00:00:00Z",
+		"externalReferenceCode": "RAY-002",
+		"r_applicationToPolicies_c_raylifeApplicationId": "[$RaylifeApplication#RAY-002$]"
 	},
 	{
 		"finishDate": "2023-03-16T00:00:00Z",
@@ -24,7 +28,9 @@
 		"policyNumber": "12347",
 		"product": "Workers Compensation",
 		"renewalDue": 3,
-		"startDate": "2022-03-07T00:00:00Z"
+		"startDate": "2022-03-07T00:00:00Z",
+		"externalReferenceCode": "RAY-003",
+		"r_applicationToPolicies_c_raylifeApplicationId": "[$RaylifeApplication#RAY-003$]"
 	},
 	{
 		"finishDate": "2023-03-23T00:00:00Z",
@@ -33,6 +39,8 @@
 		"policyNumber": "123458",
 		"product": "Professional Liability",
 		"renewalDue": 9,
-		"startDate": "2022-03-02T00:00:00Z"
+		"startDate": "2022-03-02T00:00:00Z",
+		"externalReferenceCode": "RAY-004",
+		"r_applicationToPolicies_c_raylifeApplicationId": "[$RaylifeApplication#RAY-004$]"
 	}
 ]

@@ -31,6 +31,16 @@
 	/>
 </#if>
 
+<#if entity.hasUuid() && osgiModule && serviceBuilder.isVersionGTE_7_4_0()>
+	<#assign
+		portalUUID = "_portalUUID"
+	/>
+<#else>
+	<#assign
+		portalUUID = "PortalUUIDUtil"
+	/>
+</#if>
+
 <#assign
 	finderFieldSQLSuffix = "_SQL"
 	useCache = "useFinderCache"
@@ -119,6 +129,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.registry.Registry;
@@ -645,7 +656,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		${entity.variableName}.setPrimaryKey(${entity.PKVariableName});
 
 		<#if entity.hasUuid()>
-			String uuid = PortalUUIDUtil.generate();
+			String uuid = ${portalUUID}.generate();
 
 			${entity.variableName}.setUuid(uuid);
 		</#if>
@@ -803,7 +814,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 		<#if entity.hasUuid()>
 			if (Validator.isNull(${entity.variableName}.getUuid())) {
-				String uuid = PortalUUIDUtil.generate();
+				String uuid = ${portalUUID}.generate();
 
 				${entity.variableName}.setUuid(uuid);
 			}
@@ -3116,6 +3127,15 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		private ServiceRegistration<ArgumentsResolver> _argumentsResolverServiceRegistration;
 
 		<#include "model_arguments_resolver.ftl">
+	</#if>
+
+	<#if osgiModule && serviceBuilder.isVersionGTE_7_4_0() && entity.hasUuid()>
+		<#if dependencyInjectorDS>
+			@Reference
+		<#else>
+			@ServiceReference(type = PortalUUID.class)
+		</#if>
+		private PortalUUID ${portalUUID};
 	</#if>
 
 	<#if serviceBuilder.isVersionGTE_7_4_0() && dependencyInjectorDS>

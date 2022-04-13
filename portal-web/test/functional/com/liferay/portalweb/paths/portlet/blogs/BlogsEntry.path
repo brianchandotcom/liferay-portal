@@ -72,7 +72,7 @@
 </tr>
 <tr>
 	<td>CONTENT</td>
-	<td>//div[contains(@class,'content')]//p[contains(normalize-space(),'${key_entryContent}')]</td>
+	<td>//div[contains(@class,'entry-content')]//*[contains(@class,'cke_editable') and contains(normalize-space(),'${key_entryContent}')]</td>
 	<td></td>
 </tr>
 <tr>

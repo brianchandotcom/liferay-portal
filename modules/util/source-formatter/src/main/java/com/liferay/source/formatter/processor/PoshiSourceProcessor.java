@@ -108,9 +108,8 @@ public class PoshiSourceProcessor extends BaseSourceProcessor {
 
 		System.setOut(printStream);
 
-		PoshiElement poshiElement =
-			(PoshiElement)PoshiNodeFactory.newPoshiNodeFromFile(
-				FileUtil.getURL(file));
+		PoshiElement poshiElement = (PoshiElement)PoshiNodeFactory.newPoshiNode(
+			content, FileUtil.getURL(file));
 
 		System.out.flush();
 

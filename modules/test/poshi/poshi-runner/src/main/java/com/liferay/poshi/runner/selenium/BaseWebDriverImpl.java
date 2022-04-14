@@ -153,7 +153,8 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 		try {
 			webDriver.get(browserURL);
-		} catch (WebDriverException webDriverException) {
+		}
+		catch (WebDriverException webDriverException) {
 			System.out.println(webDriverException);
 			System.out.println("Default browser is unavailable");
 		}

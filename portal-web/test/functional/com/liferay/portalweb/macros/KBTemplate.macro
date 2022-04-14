@@ -70,4 +70,14 @@ definition {
 			value1 = "${kbTemplateContent}");
 	}
 
+	macro viewEntryMenuItem {
+		Navigator.gotoNavItem(navItem = "Articles");
+
+		LexiconEntry.gotoAdd();
+
+		AssertElementPresent(
+			key_menuItem = "${menuItem}",
+			locator1 = "MenuItem#ANY_MENU_ITEM");
+	}
+
 }

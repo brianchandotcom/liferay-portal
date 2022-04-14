@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.render;
 
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.BaseDDMTestCase;
 import com.liferay.dynamic.data.mapping.internal.render.CheckboxDDMFormFieldValueRenderer;
@@ -33,12 +34,15 @@ import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.LayoutServiceUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
@@ -59,13 +63,11 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import org.mockito.Matchers;
-
-import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.mockito.Mockito;
 
 /**
  * @author Marcellus Tavares
  */
-@PrepareForTest({DLAppLocalServiceUtil.class, LayoutServiceUtil.class})
 public class DDMFormFieldValueRendererTest extends BaseDDMTestCase {
 
 	@ClassRule
@@ -493,19 +495,23 @@ public class DDMFormFieldValueRendererTest extends BaseDDMTestCase {
 		dateFormatFactoryUtil.setDateFormatFactory(new DateFormatFactoryImpl());
 	}
 
-	protected void setUpDLAppLocalServiceUtil() throws Exception {
-		mockStatic(DLAppLocalServiceUtil.class);
+	protected void setUpDLAppLocalServiceUtil() throws PortalException {
+		FileEntry fileEntry = Mockito.mock(FileEntry.class);
 
-		FileEntry fileEntry = mock(FileEntry.class);
-
-		when(
+		Mockito.when(
 			fileEntry.getTitle()
 		).thenReturn(
 			"File Entry Title"
 		);
 
-		when(
-			DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
+		DLAppLocalService dlAppLocalService = Mockito.mock(
+			DLAppLocalService.class);
+
+		ReflectionTestUtil.setFieldValue(
+			DLAppLocalServiceUtil.class, "_service", dlAppLocalService);
+
+		Mockito.when(
+			dlAppLocalService.getFileEntryByUuidAndGroupId(
 				Matchers.anyString(), Matchers.anyLong())
 		).thenReturn(
 			fileEntry
@@ -527,18 +533,20 @@ public class DDMFormFieldValueRendererTest extends BaseDDMTestCase {
 	}
 
 	protected void setUpLayoutServiceUtil() throws Exception {
-		mockStatic(LayoutServiceUtil.class);
+		LayoutService layoutService = Mockito.mock(LayoutService.class);
 
-		when(
-			LayoutServiceUtil.getLayoutName(
+		ReflectionTestUtil.setFieldValue(
+			LayoutServiceUtil.class, "_service", layoutService);
+		Mockito.when(
+			layoutService.getLayoutName(
 				Matchers.anyLong(), Matchers.anyBoolean(), Matchers.anyLong(),
 				Matchers.eq("en_US"))
 		).thenReturn(
 			"Layout Name"
 		);
 
-		when(
-			LayoutServiceUtil.getLayoutName(
+		Mockito.when(
+			layoutService.getLayoutName(
 				Matchers.anyLong(), Matchers.anyBoolean(), Matchers.anyLong(),
 				Matchers.eq("pt_BR"))
 		).thenReturn(

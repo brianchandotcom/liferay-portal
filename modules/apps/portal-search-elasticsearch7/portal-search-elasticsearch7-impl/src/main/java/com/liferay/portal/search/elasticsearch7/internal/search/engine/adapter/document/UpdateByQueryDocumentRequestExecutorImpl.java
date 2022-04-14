@@ -34,7 +34,6 @@ import org.elasticsearch.core.TimeValue;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.reindex.BulkByScrollResponse;
 import org.elasticsearch.index.reindex.UpdateByQueryRequest;
-import org.elasticsearch.script.Script;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -90,10 +89,9 @@ public class UpdateByQueryDocumentRequestExecutorImpl
 			updateByQueryDocumentRequest.isRefresh());
 
 		if (updateByQueryDocumentRequest.getScript() != null) {
-			Script script = _scriptTranslator.translate(
-				updateByQueryDocumentRequest.getScript());
-
-			updateByQueryRequest.setScript(script);
+			updateByQueryRequest.setScript(
+				_scriptTranslator.translate(
+					updateByQueryDocumentRequest.getScript()));
 		}
 		else if (updateByQueryDocumentRequest.getScriptJSONObject() != null) {
 			ScriptBuilder scriptBuilder = _scripts.builder();

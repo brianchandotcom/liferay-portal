@@ -278,12 +278,10 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		searchSearchRequest.setLocale(queryConfig.getLocale());
 		searchSearchRequest.setHighlightRequireFieldMatch(
 			queryConfig.isHighlightRequireFieldMatch());
-
-		boolean luceneSyntax = GetterUtil.getBoolean(
-			searchContext.getAttribute(
-				SearchContextAttributes.ATTRIBUTE_KEY_LUCENE_SYNTAX));
-
-		searchSearchRequest.setLuceneSyntax(luceneSyntax);
+		searchSearchRequest.setLuceneSyntax(
+			GetterUtil.getBoolean(
+				searchContext.getAttribute(
+					SearchContextAttributes.ATTRIBUTE_KEY_LUCENE_SYNTAX)));
 
 		String preference = (String)searchContext.getAttribute(
 			ElasticsearchSearchContextAttributes.

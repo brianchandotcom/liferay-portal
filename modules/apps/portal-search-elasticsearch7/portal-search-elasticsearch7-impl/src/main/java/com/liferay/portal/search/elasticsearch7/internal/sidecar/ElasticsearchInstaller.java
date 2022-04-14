@@ -154,11 +154,9 @@ public class ElasticsearchInstaller {
 	}
 
 	private void _downloadAndInstallElasticsearch() throws IOException {
-		Path filePath = _getFilePath(
-			_distribution.getElasticsearchDistributable());
-
 		String rootArchiveName = UncompressUtil.unarchive(
-			filePath, _temporaryDirectoryPath);
+			_getFilePath(_distribution.getElasticsearchDistributable()),
+			_temporaryDirectoryPath);
 
 		PathUtil.copyDirectory(
 			_temporaryDirectoryPath.resolve(rootArchiveName),

@@ -86,12 +86,11 @@ public class ElasticsearchIndexInformationTest {
 	public void testGetFieldMappings() throws Exception {
 		_companyIndexFactoryFixture.createIndices();
 
-		String fieldMappings = _elasticsearchIndexInformation.getFieldMappings(
-			_companyIndexFactoryFixture.getIndexName());
-
 		AssertUtils.assertEquals(
 			"", _loadJSONObject(testName.getMethodName()),
-			_jsonFactory.createJSONObject(fieldMappings));
+			_jsonFactory.createJSONObject(
+				_elasticsearchIndexInformation.getFieldMappings(
+					_companyIndexFactoryFixture.getIndexName())));
 	}
 
 	@Test

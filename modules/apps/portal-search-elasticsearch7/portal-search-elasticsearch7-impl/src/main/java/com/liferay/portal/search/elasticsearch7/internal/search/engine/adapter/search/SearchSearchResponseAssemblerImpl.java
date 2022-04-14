@@ -225,11 +225,10 @@ public class SearchSearchResponseAssemblerImpl
 		org.elasticsearch.search.SearchHits elasticsearchSearchHits =
 			searchResponse.getHits();
 
-		SearchHits searchHits = searchHitsTranslator.translate(
-			elasticsearchSearchHits,
-			searchSearchRequest.getAlternateUidFieldName());
-
-		searchSearchResponse.setSearchHits(searchHits);
+		searchSearchResponse.setSearchHits(
+			searchHitsTranslator.translate(
+				elasticsearchSearchHits,
+				searchSearchRequest.getAlternateUidFieldName()));
 	}
 
 	private void _setSearchTimeValue(

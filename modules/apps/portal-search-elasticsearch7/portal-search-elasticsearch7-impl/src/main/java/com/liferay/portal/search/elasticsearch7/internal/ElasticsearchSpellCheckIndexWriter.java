@@ -133,10 +133,9 @@ public class ElasticsearchSpellCheckIndexWriter
 
 		Localization localization = getLocalization();
 
-		String localizedName = localization.getLocalizedName(
-			keywordFieldName, languageId);
-
-		document.addKeyword(localizedName, keywords);
+		document.addKeyword(
+			localization.getLocalizedName(keywordFieldName, languageId),
+			keywords);
 
 		document.addKeyword(Field.COMPANY_ID, companyId);
 		document.addKeyword(Field.GROUP_ID, groupId);

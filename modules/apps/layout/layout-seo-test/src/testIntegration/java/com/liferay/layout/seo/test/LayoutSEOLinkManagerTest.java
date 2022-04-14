@@ -81,34 +81,13 @@ public class LayoutSEOLinkManagerTest {
 		_group = GroupTestUtil.addGroup();
 
 		LayoutTestUtil.addTypePortletLayout(_group);
-
-		_layout = LayoutTestUtil.addTypePortletLayout(_group);
-
-		for (Map.Entry<Locale, String> entry :
-				_expectedFriendlyURLs.entrySet()) {
-
-			_layout = _layoutLocalService.updateFriendlyURL(
-				TestPropsValues.getUserId(), _layout.getPlid(),
-				entry.getValue(), LocaleUtil.toLanguageId(entry.getKey()));
-		}
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setRequest(_getHttpServletRequest(_layout));
-
-		ServiceContextThreadLocal.pushServiceContext(serviceContext);
-
-		_groupFriendlyURL = _portal.getGroupFriendlyURL(
-			_group.getPublicLayoutSet(), _themeDisplay, false, false);
-
-		_canonicalURL =
-			_PORTAL_URL + _groupFriendlyURL +
-				_expectedFriendlyURLs.get(LocaleUtil.US);
 	}
 
 	@Test
 	public void testGetClassicLocalizedLayoutSEOLinksWithDefaultLocale()
 		throws Exception {
+
+		_setupForTestingPageLocalizedLayoutSEOLinks();
 
 		_testWithLayoutSEOCompanyConfiguration(
 			"default-language-url",
@@ -122,6 +101,8 @@ public class LayoutSEOLinkManagerTest {
 	public void testGetClassicLocalizedLayoutSEOLinksWithNoDefaultLocale()
 		throws Exception {
 
+		_setupForTestingPageLocalizedLayoutSEOLinks();
+
 		_testWithLayoutSEOCompanyConfiguration(
 			"default-language-url",
 			() -> _testWithSiteDefaultLanguage(
@@ -134,6 +115,8 @@ public class LayoutSEOLinkManagerTest {
 	public void testGetDefaultLocalizedLayoutSEOLinksWithDefaultLocale()
 		throws Exception {
 
+		_setupForTestingPageLocalizedLayoutSEOLinks();
+
 		_testWithLayoutSEOCompanyConfiguration(
 			"localized-url",
 			() -> _testWithSiteDefaultLanguage(
@@ -145,6 +128,8 @@ public class LayoutSEOLinkManagerTest {
 	@Test
 	public void testGetDefaultLocalizedLayoutSEOLinksWithNoDefaultLocale()
 		throws Exception {
+
+		_setupForTestingPageLocalizedLayoutSEOLinks();
 
 		_testWithLayoutSEOCompanyConfiguration(
 			"localized-url",
@@ -335,6 +320,33 @@ public class LayoutSEOLinkManagerTest {
 		}
 
 		return null;
+	}
+
+	private void _setupForTestingPageLocalizedLayoutSEOLinks()
+		throws Exception {
+
+		_layout = LayoutTestUtil.addTypePortletLayout(_group);
+
+		for (Map.Entry<Locale, String> entry :
+				_expectedFriendlyURLs.entrySet()) {
+
+			_layout = _layoutLocalService.updateFriendlyURL(
+				TestPropsValues.getUserId(), _layout.getPlid(),
+				entry.getValue(), LocaleUtil.toLanguageId(entry.getKey()));
+		}
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setRequest(_getHttpServletRequest(_layout));
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		_groupFriendlyURL = _portal.getGroupFriendlyURL(
+			_group.getPublicLayoutSet(), _themeDisplay, false, false);
+
+		_canonicalURL =
+			_PORTAL_URL + _groupFriendlyURL +
+				_expectedFriendlyURLs.get(LocaleUtil.US);
 	}
 
 	private void _testWithLayoutSEOCompanyConfiguration(

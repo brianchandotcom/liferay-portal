@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marco Leo
  */
-@Component(enabled = false, service = ObjectActionExecutor.class)
+@Component(service = ObjectActionExecutor.class)
 public class GroovyObjectActionExecutorImpl implements ObjectActionExecutor {
 
 	@Override
@@ -40,7 +40,13 @@ public class GroovyObjectActionExecutorImpl implements ObjectActionExecutor {
 			JSONObject payloadJSONObject, long userId)
 		throws Exception {
 
-		_execute(new HashMap<>(), parametersUnicodeProperties.get("script"));
+		Map<String, Object> inputObjects = new HashMap<>();
+
+		for (String key : payloadJSONObject.keySet()) {
+			inputObjects.put(key, payloadJSONObject.get(key));
+		}
+
+		_execute(inputObjects, parametersUnicodeProperties.get("script"));
 	}
 
 	@Override

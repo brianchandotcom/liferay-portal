@@ -40,10 +40,6 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		_addDefaultSegmentsExperience();
-	}
-
-	private void _addDefaultSegmentsExperience() throws Exception {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				"select layoutPageTemplateStructureId, classPK, userId from " +
 					"LayoutPageTemplateStructure")) {
@@ -52,64 +48,64 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 				while (resultSet.next()) {
 					long layoutPageTemplateStructureId = resultSet.getLong(
 						"layoutPageTemplateStructureId");
-
 					long classPK = resultSet.getLong("classPK");
+					long userId = resultSet.getLong("userId");
 
-					long defaultSegmentsExperienceId =
-						_segmentsExperienceLocalService.
-							fetchDefaultSegmentsExperienceId(classPK);
-
-					if (defaultSegmentsExperienceId <= 0) {
-						long userId = resultSet.getLong("userId");
-
-						SegmentsExperience defaultSegmentsExperience =
-							_segmentsExperienceLocalService.
-								addDefaultSegmentsExperience(
-									userId, classPK, new ServiceContext());
-
-						defaultSegmentsExperienceId =
-							defaultSegmentsExperience.getSegmentsExperienceId();
-					}
-
-					long draftClassPK = 0;
-					long publishedClassPK = 0;
-
-					Layout layout = _layoutLocalService.fetchLayout(classPK);
-
-					if (layout.isDraftLayout()) {
-						draftClassPK = layout.getPlid();
-						publishedClassPK = layout.getClassPK();
-					}
-					else {
-						Layout draftLayout =
-							_layoutLocalService.fetchDraftLayout(
-								layout.getPlid());
-
-						if (draftLayout != null) {
-							draftClassPK = draftLayout.getPlid();
-						}
-
-						publishedClassPK = layout.getPlid();
-					}
-
-					_updateFragmentEntryLinks(
-						defaultSegmentsExperienceId, draftClassPK,
-						publishedClassPK);
-
-					_updateLayoutPageTemplateStructureRels(
-						defaultSegmentsExperienceId,
-						layoutPageTemplateStructureId);
-
-					_updateSegmentsExperiments(
-						defaultSegmentsExperienceId, draftClassPK,
-						publishedClassPK);
-
-					_updateSegmentsExperimentRels(
-						defaultSegmentsExperienceId, draftClassPK,
-						publishedClassPK);
+					_addDefaultSegmentsExperience(
+						classPK, layoutPageTemplateStructureId, userId);
 				}
 			}
 		}
+	}
+
+	private void _addDefaultSegmentsExperience(
+			long classPK, long layoutPageTemplateStructureId, long userId)
+		throws Exception {
+
+		long defaultSegmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				classPK);
+
+		if (defaultSegmentsExperienceId <= 0) {
+			SegmentsExperience defaultSegmentsExperience =
+				_segmentsExperienceLocalService.addDefaultSegmentsExperience(
+					userId, classPK, new ServiceContext());
+
+			defaultSegmentsExperienceId =
+				defaultSegmentsExperience.getSegmentsExperienceId();
+		}
+
+		long draftClassPK = 0;
+		long publishedClassPK = 0;
+
+		Layout layout = _layoutLocalService.fetchLayout(classPK);
+
+		if (layout.isDraftLayout()) {
+			draftClassPK = layout.getPlid();
+			publishedClassPK = layout.getClassPK();
+		}
+		else {
+			Layout draftLayout = _layoutLocalService.fetchDraftLayout(
+				layout.getPlid());
+
+			if (draftLayout != null) {
+				draftClassPK = draftLayout.getPlid();
+			}
+
+			publishedClassPK = layout.getPlid();
+		}
+
+		_updateFragmentEntryLinks(
+			defaultSegmentsExperienceId, draftClassPK, publishedClassPK);
+
+		_updateLayoutPageTemplateStructureRels(
+			defaultSegmentsExperienceId, layoutPageTemplateStructureId);
+
+		_updateSegmentsExperiments(
+			defaultSegmentsExperienceId, draftClassPK, publishedClassPK);
+
+		_updateSegmentsExperimentRels(
+			defaultSegmentsExperienceId, draftClassPK, publishedClassPK);
 	}
 
 	private void _updateFragmentEntryLinks(

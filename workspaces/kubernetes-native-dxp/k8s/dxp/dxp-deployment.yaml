@@ -55,6 +55,16 @@ spec:
                 configMapKeyRef:
                   name: dxp-configmap
                   key: felix.cm.config.plugins
+            - name: GOOGLE_OIDC_CLIENT_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: google-oidc-credentials-configmap
+                  key: GOOGLE_OIDC_CLIENT_ID
+            - name: GOOGLE_OIDC_CLIENT_SECRET
+              valueFrom:
+                configMapKeyRef:
+                  name: google-oidc-credentials-configmap
+                  key: GOOGLE_OIDC_CLIENT_SECRET
           ports:
           - containerPort: 8080
           - containerPort: 8000

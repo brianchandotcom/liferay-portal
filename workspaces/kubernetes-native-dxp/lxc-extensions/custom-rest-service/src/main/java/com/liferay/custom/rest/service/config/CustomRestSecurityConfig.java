@@ -20,7 +20,7 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 public class CustomRestSecurityConfig extends WebSecurityConfigurerAdapter {
 
-	@Value("${OAUTH2_APP_CLIENT_ID}")
+	@Value("${OAUTH2_USERAGENTAPP_CLIENT_ID}")
 	String clientId;
 
 	@Value("${OAUTH2_INTROSPECTION_URI}")

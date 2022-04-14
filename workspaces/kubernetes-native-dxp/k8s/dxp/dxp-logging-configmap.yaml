@@ -4,17 +4,25 @@ metadata:
   name: dxp-logging-configmap
 data:
   # property-like keys; each key maps to a simple value
-  com.liferay.kubernetes.config-log4j-ext.xml: |
+  com.liferay.k8s.agent-log4j-ext.xml: |
     <?xml version="1.0"?>
     <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
     <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
-        <category name="com.liferay.kubernetes">
+        <category name="com.liferay.k8s.agent">
             <priority value="DEBUG" />
         </category>
         <category name="io.kubernetes">
             <priority value="DEBUG" />
         </category>
         <category name="okhttp3">
+            <priority value="DEBUG" />
+        </category>
+    </log4j:configuration>
+  com.liferay.oauth2.application.factory-log4j-ext.xml: |
+    <?xml version="1.0"?>
+    <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+    <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+        <category name="com.liferay.oauth2.application.factory">
             <priority value="DEBUG" />
         </category>
     </log4j:configuration>

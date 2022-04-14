@@ -24,18 +24,17 @@ import javax.portlet.RenderResponse;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Andrea Di Giorgi
- * @author Alessio Antonio Rendina
+ * @author Crescenzo Rega
  */
 @Component(
-	enabled = false,
+	enabled = false, immediate = true,
 	property = {
 		"javax.portlet.name=" + CPPortletKeys.COMMERCE_INVENTORY_WAREHOUSE,
-		"mvc.command.name=/commerce_inventory_warehouse/edit_commerce_inventory_warehouse"
+		"mvc.command.name=/commerce_inventory_warehouse/edit_commerce_inventory_warehouse_external_reference_code"
 	},
 	service = MVCRenderCommand.class
 )
-public class EditCommerceInventoryWarehouseMVCRenderCommand
+public class EditCommerceInventoryWarehouseExternalReferenceCodeMVCRenderCommand
 	implements MVCRenderCommand {
 
 	@Override
@@ -44,7 +43,7 @@ public class EditCommerceInventoryWarehouseMVCRenderCommand
 		throws PortletException {
 
 		return "/commerce_inventory_warehouse" +
-			"/edit_commerce_inventory_warehouse.jsp";
+			"/edit_commerce_inventory_warehouse_external_reference_code.jsp";
 	}
 
 }

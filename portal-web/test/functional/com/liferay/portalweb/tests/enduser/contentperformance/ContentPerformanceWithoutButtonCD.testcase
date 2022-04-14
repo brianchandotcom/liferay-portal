@@ -70,11 +70,9 @@ definition {
 		task ("Check at panel that DXP is not connected to AC") {
 			AssertVisible(
 				key_text = "Start Free Trial",
-				locator1 = "Link#ANY");
+				locator1 = "Button#ANY");
 
-			AssertVisible(
-				key_text = "Do not show me this again",
-				locator1 = "Link#ANY");
+			AssertVisible(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_DO_NOT_SHOW_AGAIN");
 		}
 
 		task ("Click on the button for do not show again") {

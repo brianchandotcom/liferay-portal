@@ -37,7 +37,9 @@ definition {
 		task ("Open Content Performance panel") {
 			ContentPerformance.openContentPerformance();
 
-			AssertVisible(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_START_FREE_TRIAL");
+			AssertVisible(
+				key_text = "Start Free Trial",
+				locator1 = "Button#ANY");
 		}
 
 		task ("Logout and login") {
@@ -47,53 +49,45 @@ definition {
 		}
 
 		task ("Check if panel is closed") {
-			AssertNotVisible(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_START_FREE_TRIAL");
+			AssertElementNotPresent(
+				key_text = "Start Free Trial",
+				locator1 = "Button#ANY");
 		}
 	}
 
 	@description = "LPS-108856: When user opens Content Performance panel and AC is not connected, a Dont show me this again button is displayed"
 	@priority = "3"
 	test DontShowButton {
-		task ("Assert if element is not present") {
+		task ("Open Content Performance") {
 			ContentPerformance.openContentPerformance();
 		}
 
-		task ("Click on the") {
-			AssertElementPresent(
-				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_DO_NOT_SHOW_AGAIN",
-				value1 = "Do not show me this again.");
+		task ("Assert that 'Dont show me this again' button is displayed") {
+			AssertVisible(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_DO_NOT_SHOW_AGAIN");
 		}
 	}
 
 	@description = "LPS-105216: Validate that Free trial and dismiss buttons are displayed when AC is disabled"
 	@priority = "5"
 	test FreeTrialButtonPresent {
-		task ("Open Content Performance and Assert if element is present") {
-			if (IsVisible(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_PANEL")) {
-				Click(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_BUTTON");
-			}
+		task ("Open Content Performance") {
+			ContentPerformance.openContentPerformance();
+		}
 
-			Click(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_BUTTON");
+		task ("Assert that Free trial and dismiss buttons are displayed") {
+			AssertVisible(
+				key_text = "Start Free Trial",
+				locator1 = "Button#ANY");
 
-			AssertElementPresent(
-				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_START_FREE_TRIAL",
-				value1 = "Start Free Trial");
-
-			AssertElementPresent(
-				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_DO_NOT_SHOW_AGAIN",
-				value1 = "Do not show me this again.");
+			AssertVisible(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_DO_NOT_SHOW_AGAIN");
 		}
 	}
 
 	@description = "LPS-108856: When user clicks on Dont show me this again button, the Content Performance panel disappears"
 	@priority = "5"
 	test HideContentPerformancePanel {
-		task ("Assert if element is not present") {
-			if (IsVisible(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_PANEL")) {
-				Click(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_BUTTON");
-			}
-
-			Click(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_BUTTON");
+		task ("Open Content Performance") {
+			ContentPerformance.openContentPerformance();
 		}
 
 		task ("Click on the button") {
@@ -237,8 +231,6 @@ definition {
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
 			Button.clickPublish();
-
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}

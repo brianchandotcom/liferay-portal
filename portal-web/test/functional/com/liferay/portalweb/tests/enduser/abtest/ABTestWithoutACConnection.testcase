@@ -86,7 +86,7 @@ definition {
 		task ("Click on the A/B Test icon and Assert hide AB Test icon is present") {
 			ABTest.openABTestPanel();
 
-			AssertElementPresent(locator1 = "ABTest#HIDE_AB_TEST_BUTTON");
+			AssertVisible(locator1 = "ABTest#HIDE_AB_TEST_BUTTON");
 		}
 	}
 

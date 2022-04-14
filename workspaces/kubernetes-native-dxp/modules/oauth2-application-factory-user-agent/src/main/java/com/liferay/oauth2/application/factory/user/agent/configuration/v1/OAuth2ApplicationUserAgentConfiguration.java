@@ -60,7 +60,7 @@ public interface OAuth2ApplicationUserAgentConfiguration {
 		description = "home-page-url-description",
 		type = Type.String
 	)
-	public String homePageUrl();
+	public String homePageURL();
 
 	@Meta.AD(
 		name = "privacy-policy-url",
@@ -68,14 +68,14 @@ public interface OAuth2ApplicationUserAgentConfiguration {
 		type = Type.String,
 		required = false
 	)
-	public String privacyPolicyUrl();
+	public String privacyPolicyURL();
 
 	@Meta.AD(
 		name = "redirect-url",
 		description = "redirect-url-description",
 		type = Type.String
 	)
-	public String redirectUrl();
+	public String redirectURL();
 
 	@Meta.AD(
 		name = "scopes",

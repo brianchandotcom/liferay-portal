@@ -1556,21 +1556,6 @@
 				</comments>
 			</library>
 			<library>
-				<file-name>lib/portal/spring-aspects.jar</file-name>
-				<version>5.2.20</version>
-				<project-name>Spring</project-name>
-				<project-url>http://www.springframework.org</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-				<comments>
-					This does not include missing OSGi headers. See LPS-49575.
-				</comments>
-			</library>
-			<library>
 				<file-name>lib/portal/spring-beans.jar</file-name>
 				<version>5.2.20</version>
 				<project-name>Spring</project-name>
@@ -1587,21 +1572,6 @@
 			</library>
 			<library>
 				<file-name>lib/portal/spring-context.jar</file-name>
-				<version>5.2.20</version>
-				<project-name>Spring</project-name>
-				<project-url>http://www.springframework.org</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-				<comments>
-					This does not include missing OSGi headers. See LPS-49575.
-				</comments>
-			</library>
-			<library>
-				<file-name>lib/portal/spring-context-support.jar</file-name>
 				<version>5.2.20</version>
 				<project-name>Spring</project-name>
 				<project-url>http://www.springframework.org</project-url>
@@ -1661,38 +1631,8 @@
 				</comments>
 			</library>
 			<library>
-				<file-name>lib/portal/spring-jms.jar</file-name>
-				<version>5.2.20</version>
-				<project-name>Spring</project-name>
-				<project-url>http://www.springframework.org</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-				<comments>
-					This does not include missing OSGi headers. See LPS-49575.
-				</comments>
-			</library>
-			<library>
 				<file-name>lib/portal/spring-orm.jar</file-name>
 				<version>5.2.20.LIFERAY-PATCHED-1</version>
-				<project-name>Spring</project-name>
-				<project-url>http://www.springframework.org</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-				<comments>
-					This does not include missing OSGi headers. See LPS-49575.
-				</comments>
-			</library>
-			<library>
-				<file-name>lib/portal/spring-oxm.jar</file-name>
-				<version>5.2.20</version>
 				<project-name>Spring</project-name>
 				<project-url>http://www.springframework.org</project-url>
 				<licenses>
@@ -1722,21 +1662,6 @@
 			</library>
 			<library>
 				<file-name>lib/portal/spring-web.jar</file-name>
-				<version>5.2.20</version>
-				<project-name>Spring</project-name>
-				<project-url>http://www.springframework.org</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-				<comments>
-					This does not include missing OSGi headers. See LPS-49575.
-				</comments>
-			</library>
-			<library>
-				<file-name>lib/portal/spring-webmvc.jar</file-name>
 				<version>5.2.20</version>
 				<project-name>Spring</project-name>
 				<project-url>http://www.springframework.org</project-url>

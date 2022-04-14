@@ -20,7 +20,7 @@ import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
-import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -31,26 +31,23 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.powermock.api.mockito.PowerMockito;
-
 /**
  * @author Leonardo Barros
  */
-public class RadioDDMFormFieldTemplateContextContributorTest
-	extends PowerMockito {
+public class RadioDDMFormFieldTemplateContextContributorTest {
 
 	@ClassRule
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@Before
-	public void setUp() throws Exception {
+	@BeforeClass
+	public static void setUpClass() {
 		_radioDDMFormFieldTemplateContextContributor =
 			new RadioDDMFormFieldTemplateContextContributor();
 
@@ -237,6 +234,12 @@ public class RadioDDMFormFieldTemplateContextContributorTest
 			"name", false, false, false);
 	}
 
+	private static void _setUpJSONFactory() {
+		ReflectionTestUtil.setFieldValue(
+			_radioDDMFormFieldTemplateContextContributor, "jsonFactory",
+			new JSONFactoryImpl());
+	}
+
 	private List<Map<String, String>> _createDDMFormOptions() {
 		return Arrays.asList(
 			HashMapBuilder.put(
@@ -251,16 +254,7 @@ public class RadioDDMFormFieldTemplateContextContributorTest
 			).build());
 	}
 
-	private void _setUpJSONFactory() throws Exception {
-		field(
-			RadioDDMFormFieldTemplateContextContributor.class, "jsonFactory"
-		).set(
-			_radioDDMFormFieldTemplateContextContributor, _jsonFactory
-		);
-	}
-
-	private final JSONFactory _jsonFactory = new JSONFactoryImpl();
-	private RadioDDMFormFieldTemplateContextContributor
+	private static RadioDDMFormFieldTemplateContextContributor
 		_radioDDMFormFieldTemplateContextContributor;
 
 }

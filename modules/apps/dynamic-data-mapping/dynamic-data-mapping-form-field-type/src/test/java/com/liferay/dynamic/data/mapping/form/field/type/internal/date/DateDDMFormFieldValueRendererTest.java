@@ -17,43 +17,56 @@ package com.liferay.dynamic.data.mapping.form.field.type.internal.date;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
+import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.DateFormatFactoryImpl;
 import com.liferay.portal.util.FastDateFormatFactoryImpl;
 
 import java.util.Locale;
 import java.util.Map;
 
+import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Bruno Basto
  */
-@PrepareForTest(LocaleThreadLocal.class)
-@RunWith(PowerMockRunner.class)
-public class DateDDMFormFieldValueRendererTest extends PowerMockito {
+public class DateDDMFormFieldValueRendererTest {
 
-	@Before
-	public void setUp() {
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
+
+	@BeforeClass
+	public static void setUpClass() {
 		setUpDateFormatFactoryUtil();
 		setUpFastDateFormatFactoryUtil();
+
+		ReflectionTestUtil.setFieldValue(
+			LocaleThreadLocal.class, "_themeDisplayLocale",
+			_themeDisplayLocale);
+	}
+
+	@After
+	public void tearDown() {
+		_themeDisplayLocale.remove();
 	}
 
 	@Test
 	public void testRenderDisplayLocaleBrazil() {
-		_mockThemeDisplayLocale(LocaleUtil.BRAZIL);
+		LocaleThreadLocal.setThemeDisplayLocale(LocaleUtil.BRAZIL);
 
 		_assertRenderValues(
 			_getSingleValueExpectedValuesMap("25/01/2015"), "2015-01-25");
@@ -145,7 +158,7 @@ public class DateDDMFormFieldValueRendererTest extends PowerMockito {
 
 	@Test
 	public void testRenderDisplayLocaleUS() {
-		_mockThemeDisplayLocale(LocaleUtil.US);
+		LocaleThreadLocal.setThemeDisplayLocale(LocaleUtil.US);
 
 		_assertRenderValues(
 			_getSingleValueExpectedValuesMap("01/25/2015"), "2015-01-25");
@@ -154,14 +167,14 @@ public class DateDDMFormFieldValueRendererTest extends PowerMockito {
 			"2015-01-25 1:00");
 	}
 
-	protected void setUpDateFormatFactoryUtil() {
+	protected static void setUpDateFormatFactoryUtil() {
 		DateFormatFactoryUtil dateFormatFactoryUtil =
 			new DateFormatFactoryUtil();
 
 		dateFormatFactoryUtil.setDateFormatFactory(new DateFormatFactoryImpl());
 	}
 
-	protected void setUpFastDateFormatFactoryUtil() {
+	protected static void setUpFastDateFormatFactoryUtil() {
 		FastDateFormatFactoryUtil fastDateFormatFactoryUtil =
 			new FastDateFormatFactoryUtil();
 
@@ -223,15 +236,9 @@ public class DateDDMFormFieldValueRendererTest extends PowerMockito {
 		).build();
 	}
 
-	private void _mockThemeDisplayLocale(Locale locale) {
-		mockStatic(LocaleThreadLocal.class);
-
-		when(
-			LocaleThreadLocal.getThemeDisplayLocale()
-		).thenReturn(
-			locale
-		);
-	}
+	private static final ThreadLocal<Locale> _themeDisplayLocale =
+		new CentralizedThreadLocal<>(
+			LocaleThreadLocal.class + "._themeDisplayLocale");
 
 	private final DateDDMFormFieldValueRenderer _dateDDMFormFieldValueRenderer =
 		new DateDDMFormFieldValueRenderer();

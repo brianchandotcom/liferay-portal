@@ -108,6 +108,20 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="configure-elasticsearch-jdk17">
+		<sequential>
+			<replace
+				file="${elasticsearch.dir}/bin/elasticsearch-env"
+			>
+				<replacetoken><![CDATA[JAVA="$JAVA_HOME/bin/java"]]></replacetoken>
+				<replacevalue><![CDATA[JAVA="/opt/java/openjdk17/bin/java"]]></replacevalue>
+			</replace>
+
+			<echo file="${elasticsearch.dir}/config/jvm.options.d/jvm.options">${line.separator}-Xms1g
+-Xmx1g</echo>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="configure-elasticsearch-ltr-properties">
 		<sequential>
 			<echo append="true" file="${elasticsearch.dir}/config/elasticsearch.yml">${line.separator}xpack.ml.enabled: false

@@ -21,17 +21,13 @@ ObjectDefinitionsViewsDisplayContext objectDefinitionsViewsDisplayContext = (Obj
 ObjectView objectView = (ObjectView)request.getAttribute(ObjectWebKeys.OBJECT_VIEW);
 %>
 
-<liferay-frontend:side-panel-content
-	title='<%= LanguageUtil.get(request, "custom-view") %>'
->
-	<react:component
-		module="js/components/ObjectView/index"
-		props='<%=
-			HashMapBuilder.<String, Object>put(
-				"isViewOnly", !objectDefinitionsViewsDisplayContext.hasUpdateObjectDefinitionPermission()
-			).put(
-				"objectViewId", objectView.getObjectViewId()
-			).build()
-		%>'
-	/>
-</liferay-frontend:side-panel-content>
+<react:component
+	module="js/components/ObjectView/index"
+	props='<%=
+		HashMapBuilder.<String, Object>put(
+			"isViewOnly", !objectDefinitionsViewsDisplayContext.hasUpdateObjectDefinitionPermission()
+		).put(
+			"objectViewId", objectView.getObjectViewId()
+		).build()
+	%>'
+/>

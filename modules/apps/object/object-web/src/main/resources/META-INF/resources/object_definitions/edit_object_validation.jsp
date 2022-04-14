@@ -21,11 +21,7 @@ ObjectDefinitionsValidationsDisplayContext objectDefinitionsValidationsDisplayCo
 ObjectValidationRule objectValidationRule = (ObjectValidationRule)request.getAttribute(ObjectWebKeys.OBJECT_VALIDATION);
 %>
 
-<liferay-frontend:side-panel-content
-	title="<%= objectValidationRule.getName(locale) %>"
->
-	<react:component
-		module="js/components/EditObjectValidation"
-		props="<%= objectDefinitionsValidationsDisplayContext.getProps(objectValidationRule) %>"
-	/>
-</liferay-frontend:side-panel-content>
+<react:component
+	module="js/components/EditObjectValidation"
+	props="<%= objectDefinitionsValidationsDisplayContext.getProps(objectValidationRule) %>"
+/>

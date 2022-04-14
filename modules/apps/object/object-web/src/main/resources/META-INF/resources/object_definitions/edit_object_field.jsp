@@ -22,29 +22,25 @@ ObjectDefinitionsFieldsDisplayContext objectDefinitionsFieldsDisplayContext = (O
 ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT_FIELD);
 %>
 
-<liferay-frontend:side-panel-content
-	title='<%= LanguageUtil.get(request, "field") %>'
->
-	<react:component
-		module="js/components/EditObjectField"
-		props='<%=
-			HashMapBuilder.<String, Object>put(
-				"forbiddenChars", PropsUtil.getArray(PropsKeys.DL_CHAR_BLACKLIST)
-			).put(
-				"forbiddenLastChars", objectDefinitionsFieldsDisplayContext.getForbiddenLastCharacters()
-			).put(
-				"forbiddenNames", PropsUtil.getArray(PropsKeys.DL_NAME_BLACKLIST)
-			).put(
-				"isApproved", objectDefinition.isApproved()
-			).put(
-				"objectField", objectDefinitionsFieldsDisplayContext.getObjectFieldJSONObject(objectField)
-			).put(
-				"objectFieldTypes", objectDefinitionsFieldsDisplayContext.getObjectFieldBusinessTypeMaps(Validator.isNotNull(objectField.getRelationshipType()), locale)
-			).put(
-				"objectName", objectDefinition.getShortName()
-			).put(
-				"readOnly", !objectDefinitionsFieldsDisplayContext.hasUpdateObjectDefinitionPermission()
-			).build()
-		%>'
-	/>
-</liferay-frontend:side-panel-content>
+<react:component
+	module="js/components/EditObjectField"
+	props='<%=
+		HashMapBuilder.<String, Object>put(
+			"forbiddenChars", PropsUtil.getArray(PropsKeys.DL_CHAR_BLACKLIST)
+		).put(
+			"forbiddenLastChars", objectDefinitionsFieldsDisplayContext.getForbiddenLastCharacters()
+		).put(
+			"forbiddenNames", PropsUtil.getArray(PropsKeys.DL_NAME_BLACKLIST)
+		).put(
+			"isApproved", objectDefinition.isApproved()
+		).put(
+			"objectField", objectDefinitionsFieldsDisplayContext.getObjectFieldJSONObject(objectField)
+		).put(
+			"objectFieldTypes", objectDefinitionsFieldsDisplayContext.getObjectFieldBusinessTypeMaps(Validator.isNotNull(objectField.getRelationshipType()), locale)
+		).put(
+			"objectName", objectDefinition.getShortName()
+		).put(
+			"readOnly", !objectDefinitionsFieldsDisplayContext.hasUpdateObjectDefinitionPermission()
+		).build()
+	%>'
+/>

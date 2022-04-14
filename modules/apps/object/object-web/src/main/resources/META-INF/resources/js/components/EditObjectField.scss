@@ -4,12 +4,11 @@
 	background-color: $light;
 	padding: 1.5rem;
 
-	&-container {
-		display: flex;
-		gap: 0.5rem;
-	}
-
 	&-tooltip-icon {
 		color: $secondary-l1;
+	}
+
+	.sheet {
+		margin: 1.5rem;
 	}
 }

@@ -1,0 +1,23 @@
+@import 'atlas-variables';
+
+.lfr-objects__side-panel-content {
+	background: $gray-100;
+	min-height: 100vh;
+
+	&-container {
+		margin: 1.5rem;
+	}
+
+	&-header {
+		align-items: center;
+		background: $white;
+		border-bottom: 1px solid $gray-300;
+		display: flex;
+		height: 65px;
+		justify-content: space-between;
+		padding: 0.25rem 1rem;
+		position: sticky;
+		top: 0;
+		z-index: 10;
+	}
+}

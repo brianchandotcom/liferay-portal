@@ -382,12 +382,12 @@
 	</tr>
 	<tr>
 		<td>FIELDS_DETAILS_IFRAME</td>
-		<td>//div[contains(@class, 'side-panel-iframe')]</td>
+		<td>//div[contains(@class, 'lfr-objects__side-panel-content')]</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>FIELDS_DETAILS_TITLE</td>
-		<td>//div[contains(@class, 'side-panel-iframe')]//h3[contains(@class, 'mb-0')]</td>
+		<td>//div[contains(@class, 'lfr-objects__side-panel-content-header')]//h3[contains(@class, 'mb-0')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -553,6 +553,16 @@
 	<tr>
 		<td>VIEW_PICKLIST_OPTIONS</td>
 		<td>//*[contains(@class,'form-control')]//option[contains(text(),'${key_optionName}')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>SIDE_PANEL</td>
+		<td>//div[contains(@class, 'side-panel-iframe')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>SIDE_PANEL_TITLE</td>
+		<td>//div[contains(@class, 'side-panel-iframe')]//h3[contains(@class, 'mb-0')]</td>
 		<td></td>
 	</tr>
 </tbody>

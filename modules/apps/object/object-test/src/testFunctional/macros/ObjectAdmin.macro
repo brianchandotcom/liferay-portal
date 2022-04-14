@@ -783,7 +783,7 @@ definition {
 	macro editObjectAction {
 		ObjectAdmin.goToActionDetails(viewEntry = "${viewEntry}");
 
-		ObjectAdmin.viewFieldDetails();
+		ObjectAdmin.viewSidePanel();
 
 		if (isSet(newActionName)) {
 			Type(
@@ -1074,6 +1074,14 @@ definition {
 		AssertTextEquals.assertPartialText(
 			locator1 = "TextInput#REQUIRED_ALERT",
 			value1 = "${requiredAlert}");
+	}
+
+	macro viewSidePanel {
+		SelectFrame(locator1 = "IFrame#IFRAME");
+
+		AssertElementPresent(locator1 = "ObjectAdmin#SIDE_PANEL");
+
+		AssertElementPresent(locator1 = "ObjectAdmin#SIDE_PANEL_TITLE");
 	}
 
 	macro viewSystemObject {

@@ -12,13 +12,12 @@
  * details.
  */
 
-import ClayButton from '@clayui/button';
 import ClayTabs from '@clayui/tabs';
 import {fetch} from 'frontend-js-web';
 import React, {useContext, useEffect, useState} from 'react';
 
 import {invalidateRequired} from '../../hooks/useForm';
-import SidePanelContent from '../SidePanelContent';
+import SidePanelContent, {closeSidePanel, openToast} from '../SidePanelContent';
 import BasicInfoScreen from './BasicInfoScreen/BasicInfoScreen';
 import {DefaultSortScreen} from './DefaultSortScreen/DefaultSortScreen';
 import ViewBuilderScreen from './ViewBuilderScreen/ViewBuilderScreen';
@@ -54,11 +53,6 @@ const CustomView: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 
 	const [activeIndex, setActiveIndex] = useState<number>(0);
 	const [loading, setLoading] = useState<boolean>(true);
-
-	const onCloseSidePanel = () => {
-		const parentWindow = Liferay.Util.getOpener();
-		parentWindow.Liferay.fire('close-side-panel');
-	};
 
 	useEffect(() => {
 		const makeFetch = async () => {
@@ -160,10 +154,8 @@ const CustomView: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 
 		const {objectViewColumns} = newObjectView;
 
-		const parentWindow = Liferay.Util.getOpener();
-
 		if (invalidateRequired(objectView.name[defaultLanguageId])) {
-			parentWindow.Liferay.Util.openToast({
+			openToast({
 				message: Liferay.Language.get('a-name-is-required'),
 				type: 'danger',
 			});
@@ -185,13 +177,12 @@ const CustomView: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 				window.location.reload();
 			}
 			else if (response.ok) {
-				onCloseSidePanel();
+				closeSidePanel();
 
-				parentWindow.Liferay.Util.openToast({
+				openToast({
 					message: Liferay.Language.get(
 						'modifications-saved-successfully'
 					),
-					type: 'success',
 				});
 			}
 			else {
@@ -199,14 +190,14 @@ const CustomView: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 					title = Liferay.Language.get('an-error-occurred'),
 				} = (await response.json()) as any;
 
-				parentWindow.Liferay.Util.openToast({
+				openToast({
 					message: title,
 					type: 'danger',
 				});
 			}
 		}
 		else {
-			parentWindow.Liferay.Util.openToast({
+			openToast({
 				message: Liferay.Language.get(
 					'default-view-must-have-at-least-one-column'
 				),
@@ -216,7 +207,11 @@ const CustomView: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 	};
 
 	return (
-		<>
+		<SidePanelContent
+			onSave={handleSaveObjectView}
+			readOnly={isViewOnly || loading}
+			title={Liferay.Language.get('custom-view')}
+		>
 			<ClayTabs className="side-panel-iframe__tabs">
 				{TABS.map(({label}, index) => (
 					<ClayTabs.Item
@@ -229,38 +224,16 @@ const CustomView: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 				))}
 			</ClayTabs>
 
-			<SidePanelContent className="side-panel-content--custom-view">
-				<SidePanelContent.Body>
-					<ClayTabs.Content activeIndex={activeIndex} fade>
-						{TABS.map(({Component}, index) => (
-							<ClayTabs.TabPane key={index}>
-								{!loading && <Component />}
-							</ClayTabs.TabPane>
-						))}
-					</ClayTabs.Content>
-				</SidePanelContent.Body>
-
-				{!loading && (
-					<SidePanelContent.Footer>
-						<ClayButton.Group spaced>
-							<ClayButton
-								displayType="secondary"
-								onClick={onCloseSidePanel}
-							>
-								{Liferay.Language.get('cancel')}
-							</ClayButton>
-
-							<ClayButton
-								disabled={isViewOnly}
-								onClick={() => handleSaveObjectView()}
-							>
-								{Liferay.Language.get('save')}
-							</ClayButton>
-						</ClayButton.Group>
-					</SidePanelContent.Footer>
-				)}
-			</SidePanelContent>
-		</>
+			<SidePanelContent.Container>
+				<ClayTabs.Content activeIndex={activeIndex} fade>
+					{TABS.map(({Component}, index) => (
+						<ClayTabs.TabPane key={index}>
+							{!loading && <Component />}
+						</ClayTabs.TabPane>
+					))}
+				</ClayTabs.Content>
+			</SidePanelContent.Container>
+		</SidePanelContent>
 	);
 };
 interface ICustomViewWrapperProps extends React.HTMLAttributes<HTMLElement> {

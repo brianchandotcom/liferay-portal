@@ -13,10 +13,44 @@
  */
 
 import React from 'react';
-interface ISidePanelContentBody extends React.HTMLAttributes<HTMLElement> {}
-interface ISidePanelContentFooter extends React.HTMLAttributes<HTMLElement> {}
-declare const SidePanelContent: React.FC<React.HTMLAttributes<HTMLElement>> & {
-	Body: React.FC<ISidePanelContentBody>;
-	Footer: React.FC<ISidePanelContentFooter>;
-};
+import './SidePanelContent.scss';
+export declare function closeSidePanel(): void;
+export declare function openToast(options: {
+	message: string;
+	type?: 'danger' | 'success';
+}): void;
+export declare function Container({
+	children,
+	className,
+}: IContainerProps): JSX.Element;
+export declare function SidePanelContent({
+	children,
+	className,
+	onSave,
+	readOnly,
+	title,
+}: IProps): JSX.Element;
+export declare namespace SidePanelContent {
+	var Container: typeof import('./SidePanelContent').Container;
+}
+export declare function SidePanelForm({
+	children,
+	onSubmit,
+	readOnly,
+	title,
+}: ISidePanelFormProps): JSX.Element;
 export default SidePanelContent;
+interface IContainerProps {
+	children: React.ReactNode;
+	className?: string;
+}
+interface CommonProps extends IContainerProps {
+	readOnly?: boolean;
+	title: string;
+}
+interface IProps extends CommonProps {
+	onSave?: () => void;
+}
+interface ISidePanelFormProps extends CommonProps {
+	onSubmit?: React.FormEventHandler<HTMLFormElement>;
+}

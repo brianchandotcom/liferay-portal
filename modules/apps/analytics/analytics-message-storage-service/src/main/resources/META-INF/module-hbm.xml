@@ -2,7 +2,20 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping auto-import="false" default-lazy="false">
+	<import class="com.liferay.analytics.message.storage.model.AnalyticsDeleteMessage" />
 	<import class="com.liferay.analytics.message.storage.model.AnalyticsMessage" />
+	<class dynamic-update="true" name="com.liferay.analytics.message.storage.model.impl.AnalyticsDeleteMessageImpl" table="AnalyticsDeleteMessage">
+		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="analyticsDeleteMessageId" type="long">
+			<generator class="assigned" />
+		</id>
+		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="className" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
 	<class dynamic-update="true" name="com.liferay.analytics.message.storage.model.impl.AnalyticsMessageImpl" table="AnalyticsMessage">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="analyticsMessageId" type="long">
 			<generator class="assigned" />

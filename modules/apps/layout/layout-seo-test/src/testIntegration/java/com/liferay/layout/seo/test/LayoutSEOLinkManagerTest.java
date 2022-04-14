@@ -127,7 +127,7 @@ public class LayoutSEOLinkManagerTest {
 	}
 
 	@Test
-	public void testGetClassicLocalizedLayoutSEOLinksWithDefaultLocale()
+	public void testGetClassicPageLocalizedLayoutSEOLinksWithDefaultLocale()
 		throws Exception {
 
 		_setupForTestingPageLocalizedLayoutSEOLinks();
@@ -141,7 +141,7 @@ public class LayoutSEOLinkManagerTest {
 	}
 
 	@Test
-	public void testGetClassicLocalizedLayoutSEOLinksWithNoDefaultLocale()
+	public void testGetClassicPageLocalizedLayoutSEOLinksWithNoDefaultLocale()
 		throws Exception {
 
 		_setupForTestingPageLocalizedLayoutSEOLinks();
@@ -183,7 +183,7 @@ public class LayoutSEOLinkManagerTest {
 	}
 
 	@Test
-	public void testGetDefaultLocalizedLayoutSEOLinksWithDefaultLocale()
+	public void testGetDefaultPageLocalizedLayoutSEOLinksWithDefaultLocale()
 		throws Exception {
 
 		_setupForTestingPageLocalizedLayoutSEOLinks();
@@ -197,7 +197,7 @@ public class LayoutSEOLinkManagerTest {
 	}
 
 	@Test
-	public void testGetDefaultLocalizedLayoutSEOLinksWithNoDefaultLocale()
+	public void testGetDefaultPageLocalizedLayoutSEOLinksWithNoDefaultLocale()
 		throws Exception {
 
 		_setupForTestingPageLocalizedLayoutSEOLinks();

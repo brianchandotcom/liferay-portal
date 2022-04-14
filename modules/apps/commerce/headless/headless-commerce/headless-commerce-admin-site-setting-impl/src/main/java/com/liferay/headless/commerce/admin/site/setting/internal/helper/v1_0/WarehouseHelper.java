@@ -19,6 +19,7 @@ import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseService;
 import com.liferay.headless.commerce.admin.site.setting.dto.v1_0.Warehouse;
 import com.liferay.headless.commerce.admin.site.setting.internal.mapper.v1_0.DTOMapper;
+import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -59,7 +60,8 @@ public class WarehouseHelper {
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
 			_commerceInventoryWarehouseService.addCommerceInventoryWarehouse(
-				null, warehouse.getName(), warehouse.getDescription(),
+				null, LanguageUtils.getLocalizedMap(warehouse.getName()),
+				LanguageUtils.getLocalizedMap(warehouse.getDescription()),
 				GetterUtil.get(warehouse.getActive(), false),
 				warehouse.getStreet1(), warehouse.getStreet2(),
 				warehouse.getStreet3(), warehouse.getCity(), warehouse.getZip(),
@@ -131,10 +133,8 @@ public class WarehouseHelper {
 		return _commerceInventoryWarehouseService.
 			updateCommerceInventoryWarehouse(
 				commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
-				warehouse.getName(),
-				GetterUtil.get(
-					warehouse.getDescription(),
-					commerceInventoryWarehouse.getDescription()),
+				LanguageUtils.getLocalizedMap(warehouse.getName()),
+				LanguageUtils.getLocalizedMap(warehouse.getDescription()),
 				GetterUtil.get(
 					warehouse.getActive(),
 					commerceInventoryWarehouse.isActive()),

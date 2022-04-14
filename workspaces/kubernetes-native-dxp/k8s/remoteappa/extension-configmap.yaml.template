@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: remote-app-a-configmap
+  labels:
+    dxp: configmap
+data:
+  com.liferay.remote.app.factory.configuration.v1.RemoteAppFactoryConfiguration-remoteappa.config: |
+    companyId=L"20099"

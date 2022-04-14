@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: dxp-configmap
 data:
-  com.liferay.kubernetes.config.KubernetesConfigurationAgent.config: |
+  com.liferay.k8s.agent.configuration.v1.K8sAgentConfiguration.config: |
     namespace="$[secret:namespace]"
     labelSelector="dxp=configmap"
   com.liferay.portal.security.sso.openid.connect.internal.configuration.OpenIdConnectProviderConfiguration-googleoidcprovider.config: |

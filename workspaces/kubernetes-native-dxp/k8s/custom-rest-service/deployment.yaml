@@ -30,14 +30,14 @@ spec:
             valueFrom:
               configMapKeyRef:
                 key: dxp.service_uri
-                name: custom-rest-service-configmap
+                name: custom-rest-service.user.agent.factory.application.oauth2.liferay.com
           - name: OAUTH2_INTROSPECTION_URI
             valueFrom:
               configMapKeyRef:
                 key: oauth2.introspection_uri
-                name: custom-rest-service-configmap
+                name: custom-rest-service.user.agent.factory.application.oauth2.liferay.com
           - name: OAUTH2_APP_CLIENT_ID
             valueFrom:
               configMapKeyRef:
                 key: oauth2.client_id
-                name: custom-rest-service-configmap
+                name: custom-rest-service.user.agent.factory.application.oauth2.liferay.com

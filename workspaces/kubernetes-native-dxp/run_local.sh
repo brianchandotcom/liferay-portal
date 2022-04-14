@@ -22,8 +22,8 @@ echo "[run_local] Build the remote-app PoC"
 (cd lxc-extensions/liferay-hello-world &&
     yarn install && yarn build &&
     docker build -t remoteappa . &&
-    cat ../../k8s/remoteappa/remote-app-a-configmap.yaml.template > ../../k8s/remoteappa/remote-app-a-configmap.yaml &&
-    REMOTE_APP_HOST=http://localhost:8090 ../create_app_config.sh -n "Remote App A" -e liferay-hello-world -p "foo=bar" >> ../../k8s/remoteappa/remote-app-a-configmap.yaml)
+    cat ../../k8s/remoteappa/extension-configmap.yaml.template > ../../k8s/remoteappa/extension-configmap.yaml &&
+    REMOTE_APP_HOST=http://localhost:8090 ../create_app_config.sh -n "Remote App A" -e liferay-hello-world -p "foo=bar" >> ../../k8s/remoteappa/extension-configmap.yaml)
 
 echo "[run_local] Build the custom-rest-service"
 (cd lxc-extensions/custom-rest-service && 

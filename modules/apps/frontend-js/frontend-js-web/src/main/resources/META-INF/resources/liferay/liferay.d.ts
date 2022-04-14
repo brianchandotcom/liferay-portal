@@ -464,6 +464,11 @@ declare module Liferay {
 			data: Object
 		): void;
 
+		export function showCapsLock(
+			event: KeyboardEvent,
+			elementId: string
+		): void;
+
 		export function sub(
 			string: string,
 			data:

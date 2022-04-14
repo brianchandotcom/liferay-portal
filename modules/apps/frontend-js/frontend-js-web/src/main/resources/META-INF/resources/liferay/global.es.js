@@ -82,6 +82,7 @@ import createResourceURL from './util/portlet_url/create_resource_url.es';
 import removeEntitySelection from './util/remove_entity_selection';
 import selectFolder from './util/select_folder';
 import {getSessionValue, setSessionValue} from './util/session.es';
+import showCapsLock from './util/show_caps_lock';
 import sub from './util/sub';
 import toCharCode from './util/to_char_code.es';
 import toggleDisabled from './util/toggle_disabled';
@@ -311,6 +312,7 @@ Liferay.Util.openToast = (...args) => {
 
 Liferay.Util.removeEntitySelection = removeEntitySelection;
 Liferay.Util.selectFolder = selectFolder;
+Liferay.Util.showCapsLock = showCapsLock;
 Liferay.Util.sub = sub;
 
 Liferay.Util.Session = {

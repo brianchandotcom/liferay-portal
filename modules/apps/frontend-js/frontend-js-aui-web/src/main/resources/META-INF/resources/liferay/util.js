@@ -685,29 +685,6 @@
 			}
 		},
 
-		showCapsLock(event, spanId) {
-			const span = document.getElementById(spanId);
-
-			if (span) {
-				var keyCode = event.keyCode ? event.keyCode : event.which;
-
-				var shiftKeyCode = keyCode === 16;
-
-				var shiftKey = event.shiftKey ? event.shiftKey : shiftKeyCode;
-
-				var display = 'none';
-
-				if (
-					(keyCode >= 65 && keyCode <= 90 && !shiftKey) ||
-					(keyCode >= 97 && keyCode <= 122 && shiftKey)
-				) {
-					display = '';
-				}
-
-				span.style.display = display;
-			}
-		},
-
 		/**
 		 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 		 */

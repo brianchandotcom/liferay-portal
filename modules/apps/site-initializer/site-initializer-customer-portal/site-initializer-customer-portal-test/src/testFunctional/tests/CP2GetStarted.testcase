@@ -1,0 +1,52 @@
+@component-name = "portal-solutions"
+definition {
+
+	property custom.properties = "javascript.single.page.application.enabled=false${line.separator}jsonws.web.service.paths.excludes=";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Customer Portal";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		CustomerPortal.setUpForCP20();
+
+		CustomerPortal.createCPSite(siteName = "Customer Portal");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			CustomerPortal.tearDownForOktaAndSAML();
+		}
+	}
+
+	@description = "LPS-143375 - Verify if Liferay Contact displays Liferay Contact's email."
+	@priority = "4"
+	test IsContactEmailDisplayed {
+        CustomerPortal.changeUserRole(
+            accountUserName = "Test Test",
+            accountRoleTitle = "Account Administrator");
+	}
+
+	@description = "LPS-143373 - Verify if Liferay Contact displays Liferay Contact's name."
+	@priority = "4"
+	test IsContactNameDisplayed {
+		
+
+	}
+
+	@description = "LPS-143374 - Verify if Liferay Contact displays Liferay Contact's role."
+	@priority = "3"
+	test IsContactRoleDisplayed {
+		
+
+	}
+
+}

@@ -170,19 +170,14 @@
 	<classpathentry kind="lib" path="lib/portal/slf4j-api.jar"/>
 	<classpathentry kind="lib" path="lib/portal/soap-api.jar"/>
 	<classpathentry kind="lib" path="lib/portal/spring-aop.jar"/>
-	<classpathentry kind="lib" path="lib/portal/spring-aspects.jar"/>
 	<classpathentry kind="lib" path="lib/portal/spring-beans.jar"/>
 	<classpathentry kind="lib" path="lib/portal/spring-context.jar"/>
-	<classpathentry kind="lib" path="lib/portal/spring-context-support.jar"/>
 	<classpathentry kind="lib" path="lib/portal/spring-core.jar"/>
 	<classpathentry kind="lib" path="lib/portal/spring-expression.jar"/>
 	<classpathentry kind="lib" path="lib/portal/spring-jdbc.jar"/>
-	<classpathentry kind="lib" path="lib/portal/spring-jms.jar"/>
 	<classpathentry kind="lib" path="lib/portal/spring-orm.jar"/>
-	<classpathentry kind="lib" path="lib/portal/spring-oxm.jar"/>
 	<classpathentry kind="lib" path="lib/portal/spring-tx.jar"/>
 	<classpathentry kind="lib" path="lib/portal/spring-web.jar"/>
-	<classpathentry kind="lib" path="lib/portal/spring-webmvc.jar"/>
 	<classpathentry kind="lib" path="lib/portal/stax-ex.jar"/>
 	<classpathentry kind="lib" path="lib/portal/transaction.jar"/>
 	<classpathentry kind="lib" path="lib/portal/wstx.jar"/>

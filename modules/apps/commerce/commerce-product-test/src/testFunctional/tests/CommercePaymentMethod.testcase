@@ -30,6 +30,7 @@ definition {
 	@priority = "3"
 	test ActivateOfflinePaymentMethodsAndAddDescription {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CommercePaymentMethod#ActivateOfflinePaymentMethodsAndAddDescription";
 
 		task ("Given a Channel") {
 			CommerceJSONChannelsAPI._addChannel(
@@ -71,6 +72,7 @@ definition {
 	@priority = "3"
 	test AddEditAndDeleteOfflinePaymentMethod {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CommercePaymentMethod#AddEditAndDeleteOfflinePaymentMethod";
 
 		task ("Given the System Integrator navigates to the Offline Payment Method Keys configuration under the Payment category in System Settings") {
 			SystemSettings.openSystemSettingsAdmin();
@@ -134,6 +136,7 @@ definition {
 	@priority = "3"
 	test AnOfflinePaymentMethodCanBeUsedForAnOrder {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CommercePaymentMethod#AnOfflinePaymentMethodCanBeUsedForAnOrder";
 
 		task ("Given a Minium site with a buyer user") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -200,6 +203,7 @@ definition {
 	@priority = "3"
 	test AssertAndEditNewPaymentMethodInOrdersPage {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CommercePaymentMethod#AssertAndEditNewPaymentMethodInOrdersPage";
 
 		task ("Given a Minium site with a buyer user") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -299,6 +303,7 @@ definition {
 	@priority = "3"
 	test CreateOrderWithMultipleActivePaymentMethods {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CommercePaymentMethod#CreateOrderWithMultipleActivePaymentMethods";
 
 		task ("Given a Minium site with a buyer user") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");

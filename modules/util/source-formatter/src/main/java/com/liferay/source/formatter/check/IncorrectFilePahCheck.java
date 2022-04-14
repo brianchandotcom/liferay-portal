@@ -51,7 +51,7 @@ public class IncorrectFilePahCheck extends BaseFileCheck {
 						"names '", path, "'"));
 			}
 
-			for (String illegalCharacter : _ILLEGALCHARACTERS) {
+			for (String illegalCharacter : _ILLEGAL_CHARACTERS) {
 				if (path.contains(illegalCharacter)) {
 					addMessage(
 						fileName,
@@ -65,7 +65,7 @@ public class IncorrectFilePahCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private static final String[] _ILLEGALCHARACTERS = {
+	private static final String[] _ILLEGAL_CHARACTERS = {
 		StringPool.BACK_SLASH, StringPool.COLON, StringPool.FORWARD_SLASH,
 		StringPool.GREATER_THAN, StringPool.LESS_THAN, StringPool.PIPE,
 		StringPool.QUESTION, StringPool.QUOTE, StringPool.STAR

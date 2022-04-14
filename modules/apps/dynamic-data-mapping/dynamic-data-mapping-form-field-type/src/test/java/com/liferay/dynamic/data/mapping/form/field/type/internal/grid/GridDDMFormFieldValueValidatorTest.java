@@ -23,24 +23,27 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.portal.json.JSONFactoryImpl;
-import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Pedro Queiroz
  */
-@RunWith(PowerMockRunner.class)
-public class GridDDMFormFieldValueValidatorTest extends PowerMockito {
+public class GridDDMFormFieldValueValidatorTest {
 
-	@Before
-	public void setUp() throws Exception {
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
 		_setUpGridDDMFormFieldValueValidator();
 	}
 
@@ -140,17 +143,17 @@ public class GridDDMFormFieldValueValidatorTest extends PowerMockito {
 			ddmFormField, ddmFormFieldValue.getValue());
 	}
 
-	private void _setUpGridDDMFormFieldValueValidator() throws Exception {
+	private static void _setUpGridDDMFormFieldValueValidator()
+		throws Exception {
+
 		_gridDDMFormFieldValueValidator = new GridDDMFormFieldValueValidator();
 
-		field(
-			GridDDMFormFieldValueValidator.class, "jsonFactory"
-		).set(
-			_gridDDMFormFieldValueValidator, _jsonFactory
-		);
+		ReflectionTestUtil.setFieldValue(
+			_gridDDMFormFieldValueValidator, "jsonFactory",
+			new JSONFactoryImpl());
 	}
 
-	private GridDDMFormFieldValueValidator _gridDDMFormFieldValueValidator;
-	private final JSONFactory _jsonFactory = new JSONFactoryImpl();
+	private static GridDDMFormFieldValueValidator
+		_gridDDMFormFieldValueValidator;
 
 }

@@ -144,20 +144,14 @@ public class LayoutSEOCanonicalURLProviderImpl
 			_configurationProvider.getCompanyConfiguration(
 				LayoutSEOCompanyConfiguration.class, layout.getCompanyId());
 
-		FriendlyURLMapperProvider.FriendlyURLMapper friendlyURLMapper =
-			_friendlyURLMapperProvider.getFriendlyURLMapper(
-				_getHttpServletRequest());
-
 		if (Objects.equals(
 				layoutSEOCompanyConfiguration.canonicalURL(),
 				"default-language-url")) {
 
-			return friendlyURLMapper.getMappedFriendlyURL(
-				canonicalURL, LocaleUtil.getDefault());
+			return alternateURLs.get(LocaleUtil.getDefault());
 		}
 
-		return friendlyURLMapper.getMappedFriendlyURL(
-			alternateURLs.get(locale), locale);
+		return alternateURLs.get(locale);
 	}
 
 	private HttpServletRequest _getHttpServletRequest() {

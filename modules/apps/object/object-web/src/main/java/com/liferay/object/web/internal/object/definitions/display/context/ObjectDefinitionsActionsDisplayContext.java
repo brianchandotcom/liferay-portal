@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.vulcan.util.TransformUtil;
@@ -156,11 +157,19 @@ public class ObjectDefinitionsActionsDisplayContext {
 		JSONArray objectActionExecutorsJSONArray =
 			_jsonFactory.createJSONArray();
 
-		List<ObjectActionExecutor> objectActionExecutors =
-			_objectActionExecutorRegistry.getObjectActionExecutors();
+		for (ObjectActionExecutor objectActionExecutor :
+				_objectActionExecutorRegistry.getObjectActionExecutors()) {
 
-		objectActionExecutors.forEach(
-			objectActionExecutor -> objectActionExecutorsJSONArray.put(
+			if (StringUtil.equals(
+					objectActionExecutor.getKey(),
+					ObjectActionExecutorConstants.KEY_GROOVY) &&
+				!GetterUtil.getBoolean(
+					PropsUtil.get("feature.flag.LPS-146871"))) {
+
+				continue;
+			}
+
+			objectActionExecutorsJSONArray.put(
 				JSONUtil.put(
 					"description",
 					LanguageUtil.get(
@@ -175,7 +184,8 @@ public class ObjectDefinitionsActionsDisplayContext {
 						_objectRequestHelper.getLocale(),
 						"object-action-executor[" +
 							objectActionExecutor.getKey() + "]")
-				)));
+				));
+		}
 
 		return objectActionExecutorsJSONArray;
 	}

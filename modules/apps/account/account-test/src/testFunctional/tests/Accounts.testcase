@@ -3433,6 +3433,35 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = "Account without Role");
 	}
 
+	@description = "Use case for LPS-139430. Asserts a user can be removed from an account through the Users Admin portlet"
+	@priority = "3"
+	test RemoveUserFromAccountViaUsersAdmin {
+		task ("Given an account is created") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Account Name",
+				accountEntryType = "Business");
+
+			task ("And given an account user is created and added to this account") {
+				JSONAccountEntryUser.addAccountEntryUser(
+					accountEntryName = "Account Name",
+					userEmailAddress = "userea@liferay.com",
+					userFirstName = "userfn",
+					userLastName = "userln",
+					userScreenName = "usersn");
+			}
+		}
+
+		task ("When removing this account through Users Admin") {
+			User.removeAccountCP(
+				accountName = "Account Name",
+				userScreenName = "usersn");
+		}
+
+		task ("Then the user should no longer have this account listed in their memberships") {
+			LexiconTable.viewTableEntryNotPresent(tableEntry = "Account Name");
+		}
+	}
+
 	@description = "This test replaces user in Person Account with another existing user. It asserts that first user was replaced by the second user and isn't assigned to the account anymore."
 	@priority = "5"
 	test SelectingUserWillReplaceExistingUserInPersonAccount {

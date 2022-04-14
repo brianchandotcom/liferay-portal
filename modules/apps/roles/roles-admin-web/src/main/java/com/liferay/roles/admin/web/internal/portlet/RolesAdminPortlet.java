@@ -791,6 +791,22 @@ public class RolesAdminPortlet extends MVCPortlet {
 				}
 			}
 		}
+		else if (role.getType() == RoleConstants.TYPE_ACCOUNT) {
+			if (scope == ResourceConstants.SCOPE_GROUP_TEMPLATE) {
+				_resourcePermissionService.removeResourcePermissions(
+					groupId, companyId, selResource,
+					ResourceConstants.SCOPE_GROUP_TEMPLATE, roleId, actionId);
+			}
+			else {
+				_resourcePermissionService.removeResourcePermissions(
+					groupId, companyId, selResource,
+					ResourceConstants.SCOPE_COMPANY, roleId, actionId);
+
+				_resourcePermissionService.removeResourcePermissions(
+					groupId, companyId, selResource,
+					ResourceConstants.SCOPE_GROUP, roleId, actionId);
+			}
+		}
 		else {
 
 			// Remove company, group template, and group permissions

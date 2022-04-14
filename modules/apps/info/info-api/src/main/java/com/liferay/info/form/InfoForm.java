@@ -40,44 +40,6 @@ public class InfoForm {
 		return new Builder();
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	public InfoForm(String name) {
-		this(builder().name(name));
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	public InfoForm add(InfoFieldSet infoFieldSet) {
-		_builder.infoFieldSetEntry(infoFieldSet);
-
-		return this;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	public InfoForm add(InfoFieldSetEntry infoFieldSetEntry) {
-		_builder.infoFieldSetEntry(infoFieldSetEntry);
-
-		return this;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	public InfoForm addAll(Collection<InfoFieldSetEntry> infoFieldSetEntries) {
-		_builder.infoFieldSetEntries(infoFieldSetEntries);
-
-		return this;
-	}
-
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -158,26 +120,6 @@ public class InfoForm {
 		hash = HashUtil.hash(hash, _builder._labelInfoLocalizedValue);
 
 		return HashUtil.hash(hash, _builder._name);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	public void setDescriptionInfoLocalizedValue(
-		InfoLocalizedValue<String> descriptionInfoLocalizedValue) {
-
-		_builder.descriptionInfoLocalizedValue(descriptionInfoLocalizedValue);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	public void setLabelInfoLocalizedValue(
-		InfoLocalizedValue<String> labelInfoLocalizedValue) {
-
-		_builder.labelInfoLocalizedValue(labelInfoLocalizedValue);
 	}
 
 	@Override

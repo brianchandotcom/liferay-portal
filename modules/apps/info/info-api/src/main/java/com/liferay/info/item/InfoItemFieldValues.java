@@ -38,28 +38,6 @@ public class InfoItemFieldValues {
 		return new Builder();
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	public InfoItemFieldValues add(InfoFieldValue<Object> infoFieldValue) {
-		_builder.infoFieldValue(infoFieldValue);
-
-		return this;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	public InfoItemFieldValues addAll(
-		List<InfoFieldValue<Object>> infoFieldValues) {
-
-		_builder.infoFieldValues(infoFieldValues);
-
-		return this;
-	}
-
 	public InfoFieldValue<Object> getInfoFieldValue(String infoFieldName) {
 		Collection<InfoFieldValue<Object>> infoFieldValues =
 			_builder._infoFieldValuesByIdMap.getOrDefault(

@@ -19,17 +19,19 @@ definition {
 	}
 
 	macro goToAddVideo {
-		VerifyElementPresent(locator1 = "CKEditor#INSERT_BTN");
+		VerifyVisible(locator1 = "CKEditor#INSERT_BTN");
 
 		Click(locator1 = "CKEditor#INSERT_BTN");
 
 		Click(locator1 = "CKEditor#INSERT_VIDEO_BTN");
 	}
 
-	macro toggleBalloonEditorContentStyle {
+	macro highlightText {
 		TripleClick(locator1 = "CKEditorBalloonEditorSample#BODY_TEXT");
+	}
 
-		VerifyElementPresent(
+	macro toggleBalloonEditorContentStyle {
+		ScrollWebElementIntoView(
 			key_titleName = "${optionTool}",
 			locator1 = "CKEditor#TOOLBAR_ANY_ITEM_BUTTON");
 

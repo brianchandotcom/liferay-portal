@@ -259,17 +259,15 @@ definition {
 		var paragraphText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nunc id cursus metus aliquam eleifend mi in nulla. Quam adipiscing vitae proin sagittis nisl rhoncus. Suspendisse faucibus interdum posuere lorem. Nullam ac tortor vitae purus faucibus ornare. Ac felis donec et odio pellentesque diam. Nulla at volutpat diam ut. Posuere urna nec tincidunt praesent semper feugiat nibh. Gravida quis blandit turpis cursus. Proin libero nunc consequat interdum varius. Sollicitudin ac orci phasellus egestas tellus rutrum tellus pellentesque. Neque volutpat ac tincidunt vitae semper quis lectus nulla at. Odio euismod lacinia at quis risus sed vulputate odio ut. Augue lacus viverra vitae congue eu consequat ac. Elementum sagittis vitae et leo duis ut diam. Diam quis enim lobortis scelerisque fermentum dui faucibus.";
 
 		task ("Check that text can be bolded") {
-			BalloonEditor.toggleBalloonEditorContentStyle(
-				optionTool = "Bold",
-				paragraph_number = "1");
+			BalloonEditor.highlightText(paragraph_number = "1");
+
+			BalloonEditor.toggleBalloonEditorContentStyle(optionTool = "Bold");
 
 			AssertElementPresent(
 				key_textName = "${paragraphText}",
 				locator1 = "CKEditorBalloonEditorSample#BODY_TEXT_CONTENT_BOLD");
 
-			BalloonEditor.toggleBalloonEditorContentStyle(
-				optionTool = "Bold",
-				paragraph_number = "1");
+			BalloonEditor.toggleBalloonEditorContentStyle(optionTool = "Bold");
 
 			AssertElementPresent(
 				key_textName = "${paragraphText}",
@@ -278,17 +276,15 @@ definition {
 		}
 
 		task ("Check that text can be italicized") {
-			BalloonEditor.toggleBalloonEditorContentStyle(
-				optionTool = "Italic",
-				paragraph_number = "1");
+			BalloonEditor.highlightText(paragraph_number = "1");
+
+			BalloonEditor.toggleBalloonEditorContentStyle(optionTool = "Italic");
 
 			AssertElementPresent(
 				key_textName = "${paragraphText}",
 				locator1 = "CKEditorBalloonEditorSample#BODY_TEXT_CONTENT_ITALIC");
 
-			BalloonEditor.toggleBalloonEditorContentStyle(
-				optionTool = "Italic",
-				paragraph_number = "1");
+			BalloonEditor.toggleBalloonEditorContentStyle(optionTool = "Italic");
 
 			AssertElementPresent(
 				key_textName = "${paragraphText}",
@@ -297,17 +293,15 @@ definition {
 		}
 
 		task ("Check that text can be underlined") {
-			BalloonEditor.toggleBalloonEditorContentStyle(
-				optionTool = "Underline",
-				paragraph_number = "1");
+			BalloonEditor.highlightText(paragraph_number = "1");
+
+			BalloonEditor.toggleBalloonEditorContentStyle(optionTool = "Underline");
 
 			AssertElementPresent(
 				key_textName = "${paragraphText}",
 				locator1 = "CKEditorBalloonEditorSample#BODY_TEXT_CONTENT_UNDERLINE");
 
-			BalloonEditor.toggleBalloonEditorContentStyle(
-				optionTool = "Underline",
-				paragraph_number = "1");
+			BalloonEditor.toggleBalloonEditorContentStyle(optionTool = "Underline");
 
 			AssertElementPresent(
 				key_textName = "${paragraphText}",
@@ -316,17 +310,15 @@ definition {
 		}
 
 		task ("Check that text can be listed with bullets") {
-			BalloonEditor.toggleBalloonEditorContentStyle(
-				optionTool = "Bulleted",
-				paragraph_number = "1");
+			BalloonEditor.highlightText(paragraph_number = "1");
+
+			BalloonEditor.toggleBalloonEditorContentStyle(optionTool = "Bulleted");
 
 			AssertElementPresent(
 				key_textName = "${paragraphText}",
 				locator1 = "CKEditorBalloonEditorSample#BODY_TEXT_CONTENT_BULLET_LIST");
 
-			BalloonEditor.toggleBalloonEditorContentStyle(
-				optionTool = "Bulleted",
-				paragraph_number = "1");
+			BalloonEditor.toggleBalloonEditorContentStyle(optionTool = "Bulleted");
 
 			AssertElementPresent(
 				key_textName = "${paragraphText}",
@@ -335,17 +327,15 @@ definition {
 		}
 
 		task ("Check that text can be listed with numbers") {
-			BalloonEditor.toggleBalloonEditorContentStyle(
-				optionTool = "Numbered",
-				paragraph_number = "1");
+			BalloonEditor.highlightText(paragraph_number = "1");
+
+			BalloonEditor.toggleBalloonEditorContentStyle(optionTool = "Numbered");
 
 			AssertTextEquals(
 				locator1 = "CKEditorBalloonEditorSample#PARAGRAPH_CONTENT_NUMBERED_LIST",
 				value1 = "${paragraphText}");
 
-			BalloonEditor.toggleBalloonEditorContentStyle(
-				optionTool = "Numbered",
-				paragraph_number = "1");
+			BalloonEditor.toggleBalloonEditorContentStyle(optionTool = "Numbered");
 
 			AssertElementPresent(
 				key_textName = "${paragraphText}",
@@ -354,9 +344,9 @@ definition {
 		}
 
 		task ("Check that text can be centered") {
-			BalloonEditor.toggleBalloonEditorContentStyle(
-				optionTool = "Center",
-				paragraph_number = "1");
+			BalloonEditor.highlightText(paragraph_number = "1");
+
+			BalloonEditor.toggleBalloonEditorContentStyle(optionTool = "Center");
 
 			AssertAttributeValue(
 				attribute1 = "style",
@@ -368,9 +358,9 @@ definition {
 		}
 
 		task ("Check that text can be aligned right") {
-			BalloonEditor.toggleBalloonEditorContentStyle(
-				optionTool = "Align Right",
-				paragraph_number = "1");
+			BalloonEditor.highlightText(paragraph_number = "1");
+
+			BalloonEditor.toggleBalloonEditorContentStyle(optionTool = "Align Right");
 
 			AssertAttributeValue(
 				attribute1 = "style",
@@ -382,9 +372,9 @@ definition {
 		}
 
 		task ("Check that text can be justified") {
-			BalloonEditor.toggleBalloonEditorContentStyle(
-				optionTool = "Justify",
-				paragraph_number = "1");
+			BalloonEditor.highlightText(paragraph_number = "1");
+
+			BalloonEditor.toggleBalloonEditorContentStyle(optionTool = "Justify");
 
 			AssertAttributeValue(
 				attribute1 = "style",

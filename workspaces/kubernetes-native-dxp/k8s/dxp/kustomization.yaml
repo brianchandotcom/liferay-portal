@@ -1,0 +1,10 @@
+resources:
+- dxp-configmap.yaml
+- dxp-deployment.yaml
+- dxp-logging-configmap.yaml
+- dxp-role-and-binding.yaml
+- dxp-service.yaml
+configMapGenerator:
+- name: google-oidc-credentials-configmap
+  envs:
+  - ENV

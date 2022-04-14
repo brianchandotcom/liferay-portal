@@ -104,33 +104,32 @@ public interface CommerceOrderLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrder addCommerceOrder(
-			long userId, long groupId, long commerceAccountId,
-			long commerceCurrencyId, long commerceOrderTypeId,
-			long billingAddressId, long shippingAddressId,
-			String commercePaymentMethodKey, long commerceShippingMethodId,
-			String shippingOptionName, String purchaseOrderNumber,
-			BigDecimal subtotal, BigDecimal shippingAmount,
-			BigDecimal taxAmount, BigDecimal total,
-			BigDecimal subtotalWithTaxAmount, BigDecimal shippingWithTaxAmount,
-			BigDecimal totalWithTaxAmount, int paymentStatus,
-			int orderDateMonth, int orderDateDay, int orderDateYear,
-			int orderDateHour, int orderDateMinute, int orderStatus,
-			ServiceContext serviceContext)
+			long userId, long groupId, long billingAddressId,
+			long commerceAccountId, long commerceCurrencyId,
+			long commerceOrderTypeId, String commercePaymentMethodKey,
+			long commerceShippingMethodId, long shippingAddressId,
+			int orderStatus, int paymentStatus, String purchaseOrderNumber,
+			BigDecimal shippingAmount, String shippingOptionName,
+			BigDecimal shippingWithTaxAmount, BigDecimal subtotal,
+			BigDecimal subtotalWithTaxAmount, BigDecimal taxAmount,
+			BigDecimal total, BigDecimal totalWithTaxAmount, int orderDateMonth,
+			int orderDateDay, int orderDateYear, int orderDateHour,
+			int orderDateMinute, ServiceContext serviceContext)
 		throws PortalException;
 
 	public CommerceOrder addOrUpdateCommerceOrder(
 			String externalReferenceCode, long userId, long groupId,
-			long commerceAccountId, long commerceCurrencyId,
-			long commerceOrderTypeId, long billingAddressId,
-			long shippingAddressId, String commercePaymentMethodKey,
-			long commerceShippingMethodId, String shippingOptionName,
-			String purchaseOrderNumber, BigDecimal subtotal,
-			BigDecimal shippingAmount, BigDecimal taxAmount, BigDecimal total,
-			BigDecimal subtotalWithTaxAmount, BigDecimal shippingWithTaxAmount,
-			BigDecimal totalWithTaxAmount, int paymentStatus,
-			int orderDateMonth, int orderDateDay, int orderDateYear,
-			int orderDateHour, int orderDateMinute, int orderStatus,
-			String advanceStatus, CommerceContext commerceContext,
+			long billingAddressId, long commerceAccountId,
+			long commerceCurrencyId, long commerceOrderTypeId,
+			String commercePaymentMethodKey, long commerceShippingMethodId,
+			long shippingAddressId, String advanceStatus, int orderStatus,
+			int paymentStatus, String purchaseOrderNumber,
+			BigDecimal shippingAmount, String shippingOptionName,
+			BigDecimal shippingWithTaxAmount, BigDecimal subtotal,
+			BigDecimal subtotalWithTaxAmount, BigDecimal taxAmount,
+			BigDecimal total, BigDecimal totalWithTaxAmount, int orderDateMonth,
+			int orderDateDay, int orderDateYear, int orderDateHour,
+			int orderDateMinute, CommerceContext commerceContext,
 			ServiceContext serviceContext)
 		throws PortalException;
 
@@ -140,18 +139,17 @@ public interface CommerceOrderLocalService
 	@Deprecated
 	public CommerceOrder addOrUpdateCommerceOrder(
 			String externalReferenceCode, long userId, long groupId,
-			long commerceAccountId, long commerceCurrencyId,
-			long billingAddressId, long shippingAddressId,
-			String commercePaymentMethodKey, long commerceShippingMethodId,
-			String shippingOptionName, String purchaseOrderNumber,
-			BigDecimal subtotal, BigDecimal shippingAmount,
+			long billingAddressId, long commerceAccountId,
+			long commerceCurrencyId, String commercePaymentMethodKey,
+			long commerceShippingMethodId, long shippingAddressId,
+			String advanceStatus, int orderStatus, int paymentStatus,
+			String purchaseOrderNumber, BigDecimal shippingAmount,
+			String shippingOptionName, BigDecimal shippingWithTaxAmount,
+			BigDecimal subtotal, BigDecimal subtotalWithTaxAmount,
 			BigDecimal taxAmount, BigDecimal total,
-			BigDecimal subtotalWithTaxAmount, BigDecimal shippingWithTaxAmount,
-			BigDecimal totalWithTaxAmount, int paymentStatus,
-			int orderDateMonth, int orderDateDay, int orderDateYear,
-			int orderDateHour, int orderDateMinute, int orderStatus,
-			String advanceStatus, CommerceContext commerceContext,
-			ServiceContext serviceContext)
+			BigDecimal totalWithTaxAmount, int orderDateMonth, int orderDateDay,
+			int orderDateYear, int orderDateHour, int orderDateMinute,
+			CommerceContext commerceContext, ServiceContext serviceContext)
 		throws PortalException;
 
 	public CommerceOrder applyCouponCode(
@@ -604,24 +602,25 @@ public interface CommerceOrderLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrder updateCommerceOrder(
 			String externalReferenceCode, long commerceOrderId,
-			long billingAddressId, long shippingAddressId,
-			String commercePaymentMethodKey, long commerceShippingMethodId,
-			String shippingOptionName, String purchaseOrderNumber,
-			BigDecimal subtotal, BigDecimal shippingAmount,
-			BigDecimal taxAmount, BigDecimal total,
-			BigDecimal subtotalWithTaxAmount, BigDecimal shippingWithTaxAmount,
-			BigDecimal totalWithTaxAmount, BigDecimal totalDiscountAmount,
-			String advanceStatus, CommerceContext commerceContext)
+			long billingAddressId, String commercePaymentMethodKey,
+			long commerceShippingMethodId, long shippingAddressId,
+			String advanceStatus, String purchaseOrderNumber,
+			BigDecimal shippingAmount, String shippingOptionName,
+			BigDecimal shippingWithTaxAmount, BigDecimal subtotal,
+			BigDecimal subtotalWithTaxAmount, BigDecimal taxAmount,
+			BigDecimal total, BigDecimal totalDiscountAmount,
+			BigDecimal totalWithTaxAmount, CommerceContext commerceContext)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrder updateCommerceOrder(
 			String externalReferenceCode, long commerceOrderId,
-			long billingAddressId, long shippingAddressId,
-			String commercePaymentMethodKey, long commerceShippingMethodId,
-			String shippingOptionName, String purchaseOrderNumber,
-			BigDecimal subtotal, BigDecimal shippingAmount, BigDecimal total,
-			String advanceStatus, CommerceContext commerceContext)
+			long billingAddressId, String commercePaymentMethodKey,
+			long commerceShippingMethodId, long shippingAddressId,
+			String advanceStatus, String purchaseOrderNumber,
+			BigDecimal shippingAmount, String shippingOptionName,
+			BigDecimal subtotal, BigDecimal total,
+			CommerceContext commerceContext)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -631,17 +630,17 @@ public interface CommerceOrderLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrder updateCommerceOrderPrices(
-			long commerceOrderId, BigDecimal subtotal,
+			long commerceOrderId, BigDecimal shippingAmount,
+			BigDecimal shippingDiscountAmount,
+			BigDecimal shippingDiscountPercentageLevel1,
+			BigDecimal shippingDiscountPercentageLevel2,
+			BigDecimal shippingDiscountPercentageLevel3,
+			BigDecimal shippingDiscountPercentageLevel4, BigDecimal subtotal,
 			BigDecimal subtotalDiscountAmount,
 			BigDecimal subtotalDiscountPercentageLevel1,
 			BigDecimal subtotalDiscountPercentageLevel2,
 			BigDecimal subtotalDiscountPercentageLevel3,
-			BigDecimal subtotalDiscountPercentageLevel4,
-			BigDecimal shippingAmount, BigDecimal shippingDiscountAmount,
-			BigDecimal shippingDiscountPercentageLevel1,
-			BigDecimal shippingDiscountPercentageLevel2,
-			BigDecimal shippingDiscountPercentageLevel3,
-			BigDecimal shippingDiscountPercentageLevel4, BigDecimal taxAmount,
+			BigDecimal subtotalDiscountPercentageLevel4, BigDecimal taxAmount,
 			BigDecimal total, BigDecimal totalDiscountAmount,
 			BigDecimal totalDiscountPercentageLevel1,
 			BigDecimal totalDiscountPercentageLevel2,
@@ -651,40 +650,40 @@ public interface CommerceOrderLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrder updateCommerceOrderPrices(
-			long commerceOrderId, BigDecimal subtotal,
+			long commerceOrderId, BigDecimal shippingAmount,
+			BigDecimal shippingDiscountAmount,
+			BigDecimal shippingDiscountPercentageLevel1,
+			BigDecimal shippingDiscountPercentageLevel2,
+			BigDecimal shippingDiscountPercentageLevel3,
+			BigDecimal shippingDiscountPercentageLevel4,
+			BigDecimal shippingDiscountPercentageLevel1WithTaxAmount,
+			BigDecimal shippingDiscountPercentageLevel2WithTaxAmount,
+			BigDecimal shippingDiscountPercentageLevel3WithTaxAmount,
+			BigDecimal shippingDiscountPercentageLevel4WithTaxAmount,
+			BigDecimal shippingDiscountWithTaxAmount,
+			BigDecimal shippingWithTaxAmount, BigDecimal subtotal,
 			BigDecimal subtotalDiscountAmount,
 			BigDecimal subtotalDiscountPercentageLevel1,
 			BigDecimal subtotalDiscountPercentageLevel2,
 			BigDecimal subtotalDiscountPercentageLevel3,
 			BigDecimal subtotalDiscountPercentageLevel4,
-			BigDecimal shippingAmount, BigDecimal shippingDiscountAmount,
-			BigDecimal shippingDiscountPercentageLevel1,
-			BigDecimal shippingDiscountPercentageLevel2,
-			BigDecimal shippingDiscountPercentageLevel3,
-			BigDecimal shippingDiscountPercentageLevel4, BigDecimal taxAmount,
+			BigDecimal subtotalDiscountPercentageLevel1WithTaxAmount,
+			BigDecimal subtotalDiscountPercentageLevel2WithTaxAmount,
+			BigDecimal subtotalDiscountPercentageLevel3WithTaxAmount,
+			BigDecimal subtotalDiscountPercentageLevel4WithTaxAmount,
+			BigDecimal subtotalDiscountWithTaxAmount,
+			BigDecimal subtotalWithTaxAmount, BigDecimal taxAmount,
 			BigDecimal total, BigDecimal totalDiscountAmount,
 			BigDecimal totalDiscountPercentageLevel1,
 			BigDecimal totalDiscountPercentageLevel2,
 			BigDecimal totalDiscountPercentageLevel3,
 			BigDecimal totalDiscountPercentageLevel4,
-			BigDecimal subtotalWithTaxAmount,
-			BigDecimal subtotalDiscountWithTaxAmount,
-			BigDecimal subtotalDiscountPercentageLevel1WithTaxAmount,
-			BigDecimal subtotalDiscountPercentageLevel2WithTaxAmount,
-			BigDecimal subtotalDiscountPercentageLevel3WithTaxAmount,
-			BigDecimal subtotalDiscountPercentageLevel4WithTaxAmount,
-			BigDecimal shippingWithTaxAmount,
-			BigDecimal shippingDiscountWithTaxAmount,
-			BigDecimal shippingDiscountPercentageLevel1WithTaxAmount,
-			BigDecimal shippingDiscountPercentageLevel2WithTaxAmount,
-			BigDecimal shippingDiscountPercentageLevel3WithTaxAmount,
-			BigDecimal shippingDiscountPercentageLevel4WithTaxAmount,
-			BigDecimal totalWithTaxAmount,
-			BigDecimal totalDiscountWithTaxAmount,
 			BigDecimal totalDiscountPercentageLevel1WithTaxAmount,
 			BigDecimal totalDiscountPercentageLevel2WithTaxAmount,
 			BigDecimal totalDiscountPercentageLevel3WithTaxAmount,
-			BigDecimal totalDiscountPercentageLevel4WithTaxAmount)
+			BigDecimal totalDiscountPercentageLevel4WithTaxAmount,
+			BigDecimal totalDiscountWithTaxAmount,
+			BigDecimal totalWithTaxAmount)
 		throws PortalException;
 
 	public CommerceOrder updateCommercePaymentMethodKey(

@@ -323,6 +323,20 @@ public interface CommerceOrderItemModel
 	public void setParentCommerceOrderItemId(long parentCommerceOrderItemId);
 
 	/**
+	 * Returns the shipping address ID of this commerce order item.
+	 *
+	 * @return the shipping address ID of this commerce order item
+	 */
+	public long getShippingAddressId();
+
+	/**
+	 * Sets the shipping address ID of this commerce order item.
+	 *
+	 * @param shippingAddressId the shipping address ID of this commerce order item
+	 */
+	public void setShippingAddressId(long shippingAddressId);
+
+	/**
 	 * Returns the decimal quantity of this commerce order item.
 	 *
 	 * @return the decimal quantity of this commerce order item
@@ -855,20 +869,6 @@ public interface CommerceOrderItemModel
 	 * @param requestedDeliveryDate the requested delivery date of this commerce order item
 	 */
 	public void setRequestedDeliveryDate(Date requestedDeliveryDate);
-
-	/**
-	 * Returns the shipping address ID of this commerce order item.
-	 *
-	 * @return the shipping address ID of this commerce order item
-	 */
-	public long getShippingAddressId();
-
-	/**
-	 * Sets the shipping address ID of this commerce order item.
-	 *
-	 * @param shippingAddressId the shipping address ID of this commerce order item
-	 */
-	public void setShippingAddressId(long shippingAddressId);
 
 	/**
 	 * Returns the ship separately of this commerce order item.

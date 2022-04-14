@@ -114,6 +114,8 @@ public class CommerceOrderItemCacheModel
 		sb.append(CProductId);
 		sb.append(", parentCommerceOrderItemId=");
 		sb.append(parentCommerceOrderItemId);
+		sb.append(", shippingAddressId=");
+		sb.append(shippingAddressId);
 		sb.append(", decimalQuantity=");
 		sb.append(decimalQuantity);
 		sb.append(", deliveryGroup=");
@@ -174,8 +176,6 @@ public class CommerceOrderItemCacheModel
 		sb.append(quantity);
 		sb.append(", requestedDeliveryDate=");
 		sb.append(requestedDeliveryDate);
-		sb.append(", shippingAddressId=");
-		sb.append(shippingAddressId);
 		sb.append(", shipSeparately=");
 		sb.append(shipSeparately);
 		sb.append(", shippable=");
@@ -256,6 +256,7 @@ public class CommerceOrderItemCacheModel
 		commerceOrderItemImpl.setCProductId(CProductId);
 		commerceOrderItemImpl.setParentCommerceOrderItemId(
 			parentCommerceOrderItemId);
+		commerceOrderItemImpl.setShippingAddressId(shippingAddressId);
 		commerceOrderItemImpl.setDecimalQuantity(decimalQuantity);
 
 		if (deliveryGroup == null) {
@@ -348,7 +349,6 @@ public class CommerceOrderItemCacheModel
 				new Date(requestedDeliveryDate));
 		}
 
-		commerceOrderItemImpl.setShippingAddressId(shippingAddressId);
 		commerceOrderItemImpl.setShipSeparately(shipSeparately);
 		commerceOrderItemImpl.setShippable(shippable);
 		commerceOrderItemImpl.setShippedQuantity(shippedQuantity);
@@ -420,6 +420,8 @@ public class CommerceOrderItemCacheModel
 		CProductId = objectInput.readLong();
 
 		parentCommerceOrderItemId = objectInput.readLong();
+
+		shippingAddressId = objectInput.readLong();
 		decimalQuantity = (BigDecimal)objectInput.readObject();
 		deliveryGroup = objectInput.readUTF();
 
@@ -462,8 +464,6 @@ public class CommerceOrderItemCacheModel
 
 		quantity = objectInput.readInt();
 		requestedDeliveryDate = objectInput.readLong();
-
-		shippingAddressId = objectInput.readLong();
 
 		shipSeparately = objectInput.readBoolean();
 
@@ -529,6 +529,8 @@ public class CommerceOrderItemCacheModel
 		objectOutput.writeLong(CProductId);
 
 		objectOutput.writeLong(parentCommerceOrderItemId);
+
+		objectOutput.writeLong(shippingAddressId);
 		objectOutput.writeObject(decimalQuantity);
 
 		if (deliveryGroup == null) {
@@ -605,8 +607,6 @@ public class CommerceOrderItemCacheModel
 		objectOutput.writeInt(quantity);
 		objectOutput.writeLong(requestedDeliveryDate);
 
-		objectOutput.writeLong(shippingAddressId);
-
 		objectOutput.writeBoolean(shipSeparately);
 
 		objectOutput.writeBoolean(shippable);
@@ -664,6 +664,7 @@ public class CommerceOrderItemCacheModel
 	public long CPMeasurementUnitId;
 	public long CProductId;
 	public long parentCommerceOrderItemId;
+	public long shippingAddressId;
 	public BigDecimal decimalQuantity;
 	public String deliveryGroup;
 	public long deliveryMaxSubscriptionCycles;
@@ -694,7 +695,6 @@ public class CommerceOrderItemCacheModel
 	public BigDecimal promoPriceWithTaxAmount;
 	public int quantity;
 	public long requestedDeliveryDate;
-	public long shippingAddressId;
 	public boolean shipSeparately;
 	public boolean shippable;
 	public int shippedQuantity;

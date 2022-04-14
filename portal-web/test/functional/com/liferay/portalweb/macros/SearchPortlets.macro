@@ -306,6 +306,13 @@ definition {
 				value1 = "${fields}");
 		}
 
+		if (isSet(linkBehavior)) {
+			Select(
+				locator1 = "Select#SELECT_ID",
+				selectFieldId = "linkBehavior",
+				value1 = "${linkBehavior}");
+		}
+
 		if (isSet(maximumDocumentFrequency)) {
 			Type(
 				key_fieldLabel = "Maximum Document Frequency",

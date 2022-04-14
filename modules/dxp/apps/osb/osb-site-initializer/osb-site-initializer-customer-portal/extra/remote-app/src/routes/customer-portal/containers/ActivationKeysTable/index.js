@@ -24,7 +24,7 @@ import ModalKeyDetails from './components/ModalKeyDetails';
 import useGetActivationKeysData from './hooks/useGetActivationKeysData';
 import usePagination from './hooks/usePagination';
 import useStatusCountNavigation from './hooks/useStatusCountNavigation';
-import {COLUMNS} from './utils/constants';
+import {ACTIVATE_COLUMNS} from './utils/constants';
 import {ALERT_ACTIVATION_AGGREGATED_KEYS_DOWNLOAD_TEXT} from './utils/constants/alertAggregateKeysDownloadText';
 import {
 	EnvironmentTypeColumn,
@@ -191,7 +191,7 @@ const ActivationKeysTable = ({productName, project, sessionId}) => {
 								setCheckboxesChecked: setActivationKeysIdChecked,
 							}}
 							className="border-0 cp-activation-key-table"
-							columns={COLUMNS}
+							columns={ACTIVATE_COLUMNS}
 							hasCheckbox
 							hasPagination
 							isLoading={loading}

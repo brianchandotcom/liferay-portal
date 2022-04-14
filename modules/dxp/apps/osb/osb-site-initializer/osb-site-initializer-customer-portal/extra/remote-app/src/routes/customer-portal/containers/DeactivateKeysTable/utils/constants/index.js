@@ -9,9 +9,7 @@
  * distribution rights of the Software.
  */
 
-import ClayIcon from '@clayui/icon';
-
-export const ACTIVATE_COLUMNS = [
+export const DEACTIVATE_COLUMNS = [
 	{
 		accessor: 'envName',
 		bodyClass: 'border-0 cursor-pointer',
@@ -55,16 +53,6 @@ export const ACTIVATE_COLUMNS = [
 		bodyClass: 'border-0 cursor-pointer',
 		header: {
 			name: 'Status',
-			styles: 'bg-transparent text-neutral-10 font-weight-bold',
-		},
-	},
-	{
-		accessor: 'download',
-		align: 'center',
-		bodyClass: 'border-0',
-		disableCustomClickOnRow: true,
-		header: {
-			name: <ClayIcon symbol="download" />,
 			styles: 'bg-transparent text-neutral-10 font-weight-bold',
 		},
 	},

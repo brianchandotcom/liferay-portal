@@ -14,14 +14,13 @@
 
 package com.liferay.commerce.warehouse.web.internal.portlet;
 
-import com.liferay.commerce.country.CommerceCountryManager;
+import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseService;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.service.CommerceChannelRelService;
-import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.commerce.warehouse.web.internal.display.context.CommerceInventoryWarehousesDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.service.CountryService;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -42,11 +41,9 @@ import org.osgi.service.component.annotations.Reference;
 	enabled = false, immediate = true,
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
-		"com.liferay.portlet.css-class-wrapper=portlet-commerce-warehouses",
 		"com.liferay.portlet.display-category=category.hidden",
-		"com.liferay.portlet.header-portlet-css=/css/main.css",
 		"com.liferay.portlet.layout-cacheable=true",
-		"com.liferay.portlet.preferences-owned-by-group=true",
+		"com.liferay.portlet.preferences-owned-by-group=false",
 		"com.liferay.portlet.preferences-unique-per-layout=false",
 		"com.liferay.portlet.private-request-attributes=false",
 		"com.liferay.portlet.private-session-attributes=false",
@@ -72,10 +69,10 @@ public class CommerceInventoryWarehousePortlet extends MVCPortlet {
 		CommerceInventoryWarehousesDisplayContext
 			commerceInventoryWarehousesDisplayContext =
 				new CommerceInventoryWarehousesDisplayContext(
-					_commerceChannelRelService, _commerceChannelService,
-					_commerceCountryManager, _commerceInventoryWarehouseService,
-					_countryService,
-					_portal.getHttpServletRequest(renderRequest));
+					_commerceChannelRelService,
+					_commerceInventoryWarehouseService,
+					_portal.getHttpServletRequest(renderRequest), _portal,
+					_commerceInventoryWarehouseModelResourcePermission);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -87,18 +84,15 @@ public class CommerceInventoryWarehousePortlet extends MVCPortlet {
 	@Reference
 	private CommerceChannelRelService _commerceChannelRelService;
 
-	@Reference
-	private CommerceChannelService _commerceChannelService;
-
-	@Reference
-	private CommerceCountryManager _commerceCountryManager;
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.inventory.model.CommerceInventoryWarehouse)"
+	)
+	private ModelResourcePermission<CommerceInventoryWarehouse>
+		_commerceInventoryWarehouseModelResourcePermission;
 
 	@Reference
 	private CommerceInventoryWarehouseService
 		_commerceInventoryWarehouseService;
-
-	@Reference
-	private CountryService _countryService;
 
 	@Reference
 	private Portal _portal;

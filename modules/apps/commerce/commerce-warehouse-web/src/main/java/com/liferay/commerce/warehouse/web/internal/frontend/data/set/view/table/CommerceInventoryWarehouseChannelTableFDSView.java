@@ -20,7 +20,6 @@ import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
 import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
-import com.liferay.frontend.data.set.view.table.FDSTableSchemaField;
 
 import java.util.Locale;
 
@@ -32,10 +31,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "frontend.data.set.name=" + CommerceInventoryWarehouseFDSNames.COMMERCE_DATA_SET_KEY_INVENTORY_WAREHOUSE_QUALIFIER_ORDER_TYPES,
+	property = "frontend.data.set.name=" + CommerceInventoryWarehouseFDSNames.COMMERCE_INVENTORY_WAREHOUSE_QUALIFIER_CHANNELS,
 	service = FDSView.class
 )
-public class CommerceInventoryWarehouseOrderTypeTableFDSView
+public class CommerceInventoryWarehouseChannelTableFDSView
 	extends BaseTableFDSView {
 
 	@Override
@@ -43,13 +42,11 @@ public class CommerceInventoryWarehouseOrderTypeTableFDSView
 		FDSTableSchemaBuilder fdsTableSchemaBuilder =
 			_fdsTableSchemaBuilderFactory.create();
 
-		FDSTableSchemaField nameFDSTableSchemaField =
-			fdsTableSchemaBuilder.addFDSTableSchemaField(
-				"orderType.name.LANG", "name");
-
-		nameFDSTableSchemaField.setContentRenderer("actionLink");
-
-		return fdsTableSchemaBuilder.build();
+		return fdsTableSchemaBuilder.add(
+			"channel.name", "name",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"actionLink")
+		).build();
 	}
 
 	@Reference

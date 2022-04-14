@@ -5,7 +5,7 @@ create table AnalyticsDeleteMessage (
 	userId LONG,
 	createDate DATE null,
 	modifiedDate DATE null,
-	className VARCHAR(75) null,
+	className VARCHAR(255) null,
 	classPK LONG
 );
 

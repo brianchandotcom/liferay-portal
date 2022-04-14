@@ -482,12 +482,15 @@ definition {
 	}
 
 	@description = "This is a test for LPS-120917. It checks that XSS cannot be executed from the KB template name."
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CannotStoreXSSInTemplateName {
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
-		// TODO LPS-149973 CannotStoreXSSInTemplateName pending implementation
+		KBTemplate.addCP(
+			kbTemplateContent = "Knowledge Base Template Content",
+			kbTemplateTitle = '''<script>alert(123)</script>''');
 
+		KBTemplate.viewEntryMenuItem(menuItem = '''&lt;script&gt;alert(123)&lt;/script&gt;''');
 	}
 
 	@priority = "4"

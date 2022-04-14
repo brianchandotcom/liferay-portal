@@ -198,14 +198,62 @@ definition {
 
 	}
 
-	@description = "[Please Update]"
-	@ignore = "Test Stub"
+	@description = "COMMERCE-8566. Tooltip pin information can be seen on the product with diagrams, if click the product name, it can redirect to the product details page."
 	@priority = "4"
 	test VerifyTooltipPinInformation {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-8566 VerifyTooltipPinInformation pending implementation
+		task ("Given a Diagram with the "Type" set to "Default", an image (Commerce_Black.jpg) uploaded as "Diagram File" and 1 mapper product (MIN93015)") {
+			CommerceProducts.openProductsAdmin();
 
+			CPCommerceCatalog.newProductsEntry(
+				productCatalog = "Master",
+				productName = "Diagram Test",
+				productType = "Diagram");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Diagram");
+
+			CommerceProductImages.addDiagramImages(
+				imageTitles = "Black",
+				productType = "Diagram");
+
+			CommerceDiagram.addPin(
+				pinNumber = "1",
+				quantity = "1",
+				selectType = "Linked to a SKU",
+				sku = "MIN93015");
+		}
+
+		task ("When a Buyer goes on the Product Details page of the product on Minium") {
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+			CommerceNavigator.searchCatalog(productName = "Diagram Test");
+
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "Diagram Test");
+		}
+
+		task ("And click on the pin") {
+			CommerceDiagram.viewPinInProduct(pinNumber = "1");
+		}
+
+		task ("Then the Buyer will be able to see into the tooltip the SKU (MIN93015) and the name of the product (ABS Sensor)") {
+			CommerceDiagram.assertPinToolTipInfoInProduct(
+				productName = "ABS Sensor",
+				sku = "MIN93015");
+		}
+
+		task ("And if the Buyer clicks on the product name inside the tooltip he will be redirected to the ABS Sensor product details page") {
+			Click(
+				key_productName = "ABS Sensor",
+				locator1 = "CommerceDiagrams#DIAGRAM_PRODUCT_TOOLTIP_LINKED_PRODUCT_NAME");
+
+			FrontStore.assertProductDetails(
+				productListPrice = "50.00",
+				productName = "ABS Sensor",
+				productSKU = "MIN93015");
+		}
 	}
 
 }

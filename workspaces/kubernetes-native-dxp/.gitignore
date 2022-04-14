@@ -24,4 +24,4 @@
 /plugins-sdk/lib
 test-results
 
-k8s/remoteappa/remote-app-a-configmap.yaml
+k8s/remoteappa/extension-configmap.yaml

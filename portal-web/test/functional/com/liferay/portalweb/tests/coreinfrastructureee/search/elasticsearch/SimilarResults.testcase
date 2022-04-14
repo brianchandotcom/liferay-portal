@@ -819,6 +819,68 @@ definition {
 			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
 	}
 
+	test ViewInContentDisplayBehavior {
+		for (var blogName : list "Similar Results Blog 1,Similar Results Blog 2") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "${blogName}",
+				groupName = "Guest");
+		}
+
+		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+			contentType = "Blogs Entry",
+			displayPageTemplateEntryName = "Display Page Name",
+			groupName = "Guest");
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "guest");
+
+		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Display Page Content");
+
+		Button.clickPublish();
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "guest");
+
+		DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+
+		ContentPages.addPage(pageName = "Similar Results Page");
+
+		PageEditor.addWidget(portletName = "Blogs");
+
+		PageEditor.clickPublish();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/similar-results-page");
+
+		ContentPages.gotoPageEditor();
+
+		PageEditor.addWidget(
+			portletName = "Similar Results",
+			targetFragmentName = "Blogs");
+
+		SearchPortlets.configureSimilarResults(
+			displayTemplate = "Compact Layout",
+			fields = "localized_title_en_US",
+			linkBehavior = "View in Context",
+			minimumDocumentFrequency = "1",
+			minimumTermFrequency = "1");
+
+		PageEditor.clickPublish();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/similar-results-page");
+
+		AssertClick(
+			key_entryTitle = "Similar Results Blog 1",
+			locator1 = "BlogsEntry#TITLE_LINK",
+			value1 = "Similar Results Blog 1");
+
+		ControlMenu.viewHeaderTitle(headerTitle = "Display Page Name");
+	}
+
 	@priority = "4"
 	test ViewSimilarResultsOnContentPages {
 		JSONWebcontent.addWebContent(

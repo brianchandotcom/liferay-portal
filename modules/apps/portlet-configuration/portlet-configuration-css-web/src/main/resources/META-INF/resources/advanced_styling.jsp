@@ -59,9 +59,11 @@
 
 			customCSSTextarea.focus();
 
+			var newCursorPosition = customCSSTextarea.value.length - 3;
+
 			customCSSTextarea.setSelectionRange(
-				customCSSTextarea.value.length - 3,
-				customCSSTextarea.value.length - 3
+				newCursorPosition,
+				newCursorPosition
 			);
 		}
 	}

@@ -29,18 +29,34 @@ const FrontendDataSet = ({
 	views,
 	...props
 }) => {
-	const activeViewName = activeViewSettings?.name;
+	const getInitialViewsState = () => {
+		let initialActiveView = views[0];
+		let initialVisibleFieldNames = {};
 
-	const activeView = activeViewName
-		? views.find(({name}) => name === activeViewName)
-		: views[0];
-	const [state, dispatch] = useThunk(
-		useReducer(viewsReducer, {
-			activeView,
+		if (activeViewSettings) {
+			const {name, visibleFieldNames} = JSON.parse(activeViewSettings);
+
+			if (name) {
+				initialActiveView = views.find(
+					({viewName}) => viewName === name
+				);
+			}
+
+			if (visibleFieldNames) {
+				initialVisibleFieldNames = visibleFieldNames;
+			}
+		}
+
+		return {
+			activeView: initialActiveView,
 			customViewsEnabled,
 			views,
-			visibleFieldNames: activeViewSettings?.visibleFieldNames || {},
-		})
+			visibleFieldNames: initialVisibleFieldNames,
+		};
+	};
+
+	const [state, dispatch] = useThunk(
+		useReducer(viewsReducer, getInitialViewsState())
 	);
 
 	return (

@@ -28,6 +28,10 @@ import java.util.Set;
  */
 public interface LayoutSEOLinkManager {
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #getCanonicalLayoutSEOLink(Layout, Locale, String, Set)}
+	 */
+	@Deprecated
 	public default LayoutSEOLink getCanonicalLayoutSEOLink(
 			Layout layout, Locale locale, String canonicalURL,
 			Map<Locale, String> alternateURLs)
@@ -51,6 +55,10 @@ public interface LayoutSEOLinkManager {
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #getLocalizedLayoutSEOLinks(Layout, Locale, String, Set)}
+	 */
+	@Deprecated
 	public List<LayoutSEOLink> getLocalizedLayoutSEOLinks(
 			Layout layout, Locale locale, String canonicalURL,
 			Map<Locale, String> alternateURLs)

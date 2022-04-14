@@ -69,11 +69,8 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 			Map<Locale, String> alternateURLs)
 		throws PortalException {
 
-		return new LayoutSEOLinkImpl(
-			_html.escapeAttribute(
-				_layoutSEOCanonicalURLProvider.getCanonicalURL(
-					layout, locale, canonicalURL, alternateURLs)),
-			null, LayoutSEOLink.Relationship.CANONICAL);
+		return getCanonicalLayoutSEOLink(
+			layout, locale, canonicalURL, alternateURLs.keySet());
 	}
 
 	@Override
@@ -117,44 +114,8 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 			Map<Locale, String> alternateURLs)
 		throws PortalException {
 
-		List<LayoutSEOLink> layoutSEOLinks = new ArrayList<>(
-			alternateURLs.size() + 2);
-
-		layoutSEOLinks.add(
-			getCanonicalLayoutSEOLink(
-				layout, locale, canonicalURL, alternateURLs));
-
-		ThemeDisplay themeDisplay = _getThemeDisplay();
-
-		FriendlyURLMapperProvider.FriendlyURLMapper friendlyURLMapper =
-			_friendlyURLMapperProvider.getFriendlyURLMapper(
-				themeDisplay.getRequest());
-
-		Map<Locale, String> mappedFriendlyURLs =
-			friendlyURLMapper.getMappedFriendlyURLs(alternateURLs);
-
-		mappedFriendlyURLs.forEach(
-			(urlLocale, url) -> layoutSEOLinks.add(
-				new LayoutSEOLinkImpl(
-					_html.escapeAttribute(
-						_getAlternateCustomCanonicalURL(
-							layout, urlLocale, url)),
-					LocaleUtil.toW3cLanguageId(urlLocale),
-					LayoutSEOLink.Relationship.ALTERNATE)));
-
-		String defaultLocaleURL = alternateURLs.get(
-			_portal.getSiteDefaultLocale(layout.getGroupId()));
-
-		if (defaultLocaleURL == null) {
-			return layoutSEOLinks;
-		}
-
-		layoutSEOLinks.add(
-			new LayoutSEOLinkImpl(
-				_html.escapeAttribute(defaultLocaleURL), "x-default",
-				LayoutSEOLink.Relationship.ALTERNATE));
-
-		return layoutSEOLinks;
+		return getLocalizedLayoutSEOLinks(
+			layout, locale, canonicalURL, alternateURLs.keySet());
 	}
 
 	@Override

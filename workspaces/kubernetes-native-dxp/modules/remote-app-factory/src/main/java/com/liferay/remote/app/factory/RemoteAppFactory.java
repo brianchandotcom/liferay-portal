@@ -77,31 +77,22 @@ public class RemoteAppFactory {
 			LocaleUtil.getMostRelevantLocale(),
 			remoteAppFactoryConfiguration.name());
 
-		RemoteAppEntry remoteAppEntry =
-			_remoteAppEntryLocalService.
-				fetchRemoteAppEntryByExternalReferenceCode(
-					company.getCompanyId(), externalReferenceCode);
+		RemoteAppEntry remoteAppEntry = _remoteAppEntryLocalService.
+			addOrUpdateCustomElementRemoteAppEntry(
+				externalReferenceCode, defaultAdminUser.getUserId(),
+				StringUtil.merge(
+					remoteAppFactoryConfiguration.webComponentCssUrl(), ","),
+				remoteAppFactoryConfiguration.elementName(),
+				StringUtil.merge(
+					remoteAppFactoryConfiguration.webComponentUrl(), ","),
+				false, remoteAppFactoryConfiguration.description(),
+				remoteAppFactoryConfiguration.friendlyURLMapping(),
+				remoteAppFactoryConfiguration.instanceable(), nameMap,
+				remoteAppFactoryConfiguration.portletDisplayCategory(),
+				remoteAppFactoryConfiguration.portletServiceProperties(),
+				null);
 
-		if (remoteAppEntry == null) {
-			remoteAppEntry =
-				_remoteAppEntryLocalService.
-					addOrUpdateCustomElementRemoteAppEntry(
-						externalReferenceCode, defaultAdminUser.getUserId(),
-						StringUtil.merge(
-							remoteAppFactoryConfiguration.webComponentCssUrl(),
-							","),
-						remoteAppFactoryConfiguration.elementName(),
-						StringUtil.merge(
-							remoteAppFactoryConfiguration.webComponentUrl(),
-							","),
-						false, remoteAppFactoryConfiguration.description(),
-						remoteAppFactoryConfiguration.friendlyURLMapping(),
-						remoteAppFactoryConfiguration.instanceable(), nameMap,
-						remoteAppFactoryConfiguration.portletDisplayCategory(),
-						remoteAppFactoryConfiguration.
-							portletServiceProperties(),
-						null);
-
+		if (remoteAppEntry.isNew()) {
 			_remoteAppEntryLocalService.updateStatus(
 				defaultAdminUser.getUserId(),
 				remoteAppEntry.getRemoteAppEntryId(),

@@ -5,6 +5,7 @@ import HelloBar from './routes/hello-bar/pages/HelloBar';
 import HelloFoo from './routes/hello-foo/pages/HelloFoo';
 import HelloWorld from './routes/hello-world/pages/HelloWorld';
 import './common/styles/index.scss';
+import { Liferay } from './common/services/liferay/liferay';
 import api from './common/services/liferay/api';
 
 const App = ({ route }) => {
@@ -36,6 +37,21 @@ class WebComponent extends HTMLElement {
 					}
 				}
 		});
+
+		if (Liferay.ThemeDisplay.isSignedIn()) {
+			fetch(
+				"http://localhost:8081/random/number"
+			).then(response => response.json())
+				.then(res => {
+					let nameEls = document.getElementsByClassName('random-number');
+					if (nameEls.length > 0){
+						if (res) {
+							console.log("RESULT: ", res);
+							nameEls[0].innerHTML = res;
+						}
+					}
+			});
+		}
 	}
 }
 

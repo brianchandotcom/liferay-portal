@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.Collections;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.http.HttpHeaders;
@@ -16,6 +17,8 @@ import org.springframework.security.oauth2.server.resource.introspection.SpringO
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class CustomRestSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -26,10 +29,26 @@ public class CustomRestSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Value("${OAUTH2_INTROSPECTION_URI}")
 	String introspectionUri;
 
+	@Bean
+	public static WebMvcConfigurer corsConfigurer() {
+		return new WebMvcConfigurer() {
+			@Override
+			public void addCorsMappings(CorsRegistry registry) {
+				registry.addMapping("/**").allowedOrigins("http://localhost:8080");
+			}
+		};
+	}
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests(authz -> authz.anyRequest().authenticated()).oauth2ResourceServer(oauth2 -> oauth2
-				.opaqueToken().introspector(new CustomSpringOpaqueTokenIntrospector(introspectionUri, this.clientId)));
+		http.cors().and().authorizeRequests(
+			authz -> authz.anyRequest().authenticated()
+		).oauth2ResourceServer(
+			oauth2 -> oauth2.opaqueToken().introspector(
+				new CustomSpringOpaqueTokenIntrospector(
+					introspectionUri, this.clientId)
+			)
+		);
 	}
 
 	private static class CustomSpringOpaqueTokenIntrospector extends SpringOpaqueTokenIntrospector {

@@ -19,20 +19,24 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidationExpression;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.test.util.TestDDMForm;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Carolina Barbosa
  */
-@RunWith(PowerMockRunner.class)
 public class DDMFormFieldFactoryHelperTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testCreateVoidDDMFormField() throws Exception {

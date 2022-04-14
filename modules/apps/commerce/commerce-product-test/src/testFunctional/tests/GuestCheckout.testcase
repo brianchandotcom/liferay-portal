@@ -21,6 +21,8 @@ definition {
 	}
 
 	tearDown {
+		CommerceJSONOrdersAPI._deleteAllCommerceOrdersAndCheck();
+
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		if ("${testPortalInstance}" == "true") {

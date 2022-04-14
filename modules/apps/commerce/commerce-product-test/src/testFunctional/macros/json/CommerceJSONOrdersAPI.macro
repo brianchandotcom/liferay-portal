@@ -132,4 +132,13 @@ definition {
 		return "${ordersCount}";
 	}
 
+	macro _deleteAllCommerceOrdersAndCheck {
+		CommerceJSONOrdersAPI._deleteAllCommerceOrders();
+
+		var orderCount = CommerceJSONOrdersAPI._getCommerceOrdersCount();
+
+		TestUtils.assertEquals(
+			actual = "${orderCount}",
+			expected = "0");
+	}
 }

@@ -16,6 +16,7 @@ package com.liferay.layout.seo.internal;
 
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.layout.seo.canonical.url.LayoutSEOCanonicalURLProvider;
+import com.liferay.layout.seo.internal.util.AlternateURLProvider;
 import com.liferay.layout.seo.internal.util.FriendlyURLMapperProvider;
 import com.liferay.layout.seo.kernel.LayoutSEOLink;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
@@ -47,6 +48,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -71,6 +73,25 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 			_html.escapeAttribute(
 				_layoutSEOCanonicalURLProvider.getCanonicalURL(
 					layout, locale, canonicalURL, alternateURLs)),
+			null, LayoutSEOLink.Relationship.CANONICAL);
+	}
+
+	@Override
+	public LayoutSEOLink getCanonicalLayoutSEOLink(
+			Layout layout, Locale locale, String canonicalURL,
+			Set<Locale> availableLocales)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = _getThemeDisplay();
+
+		return new LayoutSEOLinkImpl(
+			_html.escapeAttribute(
+				_layoutSEOCanonicalURLProvider.getCanonicalURL(
+					layout, locale, canonicalURL,
+					_alternateURLProvider.getAlternateURLs(
+						canonicalURL, themeDisplay, layout, availableLocales,
+						_friendlyURLMapperProvider.getFriendlyURLMapper(
+							themeDisplay.getRequest())))),
 			null, LayoutSEOLink.Relationship.CANONICAL);
 	}
 
@@ -137,6 +158,51 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 	}
 
 	@Override
+	public List<LayoutSEOLink> getLocalizedLayoutSEOLinks(
+			Layout layout, Locale locale, String canonicalURL,
+			Set<Locale> availableLocales)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = _getThemeDisplay();
+
+		Map<Locale, String> alternateURLs =
+			_alternateURLProvider.getAlternateURLs(
+				canonicalURL, themeDisplay, layout, availableLocales,
+				_friendlyURLMapperProvider.getFriendlyURLMapper(
+					themeDisplay.getRequest()));
+
+		List<LayoutSEOLink> layoutSEOLinks = new ArrayList<>(
+			availableLocales.size() + 2);
+
+		layoutSEOLinks.add(
+			getCanonicalLayoutSEOLink(
+				layout, locale, canonicalURL, alternateURLs));
+
+		alternateURLs.forEach(
+			(urlLocale, url) -> layoutSEOLinks.add(
+				new LayoutSEOLinkImpl(
+					_html.escapeAttribute(
+						_getAlternateCustomCanonicalURL(
+							layout, urlLocale, url)),
+					LocaleUtil.toW3cLanguageId(urlLocale),
+					LayoutSEOLink.Relationship.ALTERNATE)));
+
+		String defaultLocaleURL = alternateURLs.get(
+			_portal.getSiteDefaultLocale(layout.getGroupId()));
+
+		if (defaultLocaleURL == null) {
+			return layoutSEOLinks;
+		}
+
+		layoutSEOLinks.add(
+			new LayoutSEOLinkImpl(
+				_html.escapeAttribute(defaultLocaleURL), "x-default",
+				LayoutSEOLink.Relationship.ALTERNATE));
+
+		return layoutSEOLinks;
+	}
+
+	@Override
 	public String getPageTitle(
 			Layout layout, String portletId, String tilesTitle,
 			ListMergeable<String> titleListMergeable,
@@ -168,12 +234,16 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 
 	@Activate
 	protected void activate() {
+		_alternateURLProvider = new AlternateURLProvider(_portal);
+
 		_friendlyURLMapperProvider = new FriendlyURLMapperProvider(
 			_assetDisplayPageFriendlyURLProvider, _classNameLocalService);
 	}
 
 	@Deactivate
 	protected void deactivate() {
+		_alternateURLProvider = null;
+
 		_friendlyURLMapperProvider = null;
 	}
 
@@ -312,6 +382,8 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutSEOLinkManagerImpl.class);
+
+	private AlternateURLProvider _alternateURLProvider;
 
 	@Reference
 	private AssetDisplayPageFriendlyURLProvider

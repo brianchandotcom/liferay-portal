@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.ListMergeable;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Cristina González
@@ -35,6 +36,11 @@ public interface LayoutSEOLinkManager {
 		throw new UnsupportedOperationException();
 	}
 
+	public LayoutSEOLink getCanonicalLayoutSEOLink(
+			Layout layout, Locale locale, String canonicalURL,
+			Set<Locale> availableLocales)
+		throws PortalException;
+
 	public default String getFullPageTitle(
 			Layout layout, String portletId, String tilesTitle,
 			ListMergeable<String> titleListMergeable,
@@ -48,6 +54,11 @@ public interface LayoutSEOLinkManager {
 	public List<LayoutSEOLink> getLocalizedLayoutSEOLinks(
 			Layout layout, Locale locale, String canonicalURL,
 			Map<Locale, String> alternateURLs)
+		throws PortalException;
+
+	public List<LayoutSEOLink> getLocalizedLayoutSEOLinks(
+			Layout layout, Locale locale, String canonicalURL,
+			Set<Locale> availableLocales)
 		throws PortalException;
 
 	public default String getPageTitle(

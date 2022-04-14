@@ -4,7 +4,7 @@ metadata:
   namespace: default
   name: config-reader-role
   labels:
-    dxp: configmap
+    app: dxp
 rules:
 - apiGroups: [""] # "" indicates the core API group
   resources: ["configmaps"]
@@ -17,6 +17,8 @@ kind: RoleBinding
 metadata:
   name: config-reader-role-binding
   namespace: default
+  labels:
+    app: dxp
 subjects:
 # You can specify more than one "subject"
 - kind: User

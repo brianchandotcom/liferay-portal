@@ -57,7 +57,7 @@
 </tr>
 <tr>
 	<td>BUTTON_LABEL_INDEXED</td>
-	<td>xpath=(//div[./label[normalize-space(text())='${key_fieldLabel}']]//button[normalize-space()='${key_text}'])[${key_index}] | //div//label[text()='${key_fieldLabel}']/..//input[@class='form-control bg-light']</td>
+	<td>xpath=(//div[./label[normalize-space(text())='${key_fieldLabel}']]//button[normalize-space()='${key_text}'])[${key_index}] | //div[@class='ddm-field'][${key_index}]//label[text()='${key_fieldLabel}']/..//input[@class='form-control bg-light']</td>
 	<td></td>
 </tr>
 <tr>

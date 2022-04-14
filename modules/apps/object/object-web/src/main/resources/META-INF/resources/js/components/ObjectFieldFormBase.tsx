@@ -16,13 +16,7 @@ import ClayForm, {ClayToggle} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import {fetch} from 'frontend-js-web';
-import React, {
-	ChangeEventHandler,
-	ReactNode,
-	useEffect,
-	useMemo,
-	useState,
-} from 'react';
+import React, {ChangeEventHandler, ReactNode, useMemo, useState} from 'react';
 
 import useForm, {FormError, invalidateRequired} from '../hooks/useForm';
 import {
@@ -125,10 +119,6 @@ export default function ObjectFieldFormBase({
 					{
 						name: 'acceptedFileExtensions',
 						value: 'jpeg, jpg, pdf, png',
-					},
-					{
-						name: 'fileSource',
-						value: '',
 					},
 					{
 						name: 'maximumFileSize',
@@ -393,52 +383,54 @@ function AttachmentSourceProperty({
 		({value}) => value === settings.fileSource
 	);
 
-	const setDocsAndMediaProps = (showFiles: Boolean) => {
-		const updatedSettings: ObjectFieldSetting[] = objectFieldSettings.filter(
-			(setting) => {
-				return (
-					setting.name !== 'showFilesInDocumentsAndMedia' &&
-					setting.name !== 'storageDLFolderPath'
-				);
-			}
+	const handleAttachmentSourceChange = ({value}: {value: string}) => {
+		const fileSource: ObjectFieldSetting = {name: 'fileSource', value};
+		if (!allowUploadDocAndMedia) {
+			onSettingsChange(fileSource);
+
+			return;
+		}
+
+		const updatedSettings = objectFieldSettings.filter(
+			(setting) =>
+				setting.name !== 'fileSource' &&
+				setting.name !== 'showFilesInDocumentsAndMedia' &&
+				setting.name !== 'storageDLFolderPath'
+		);
+
+		updatedSettings.push(fileSource);
+
+		if (value === 'userComputer') {
+			updatedSettings.push({
+				name: 'showFilesInDocumentsAndMedia',
+				value: false,
+			});
+		}
+
+		setValues({objectFieldSettings: updatedSettings});
+	};
+
+	const toggleShowFiles = (value: boolean) => {
+		const updatedSettings = objectFieldSettings.filter(
+			(setting) =>
+				setting.name !== 'showFilesInDocumentsAndMedia' &&
+				setting.name !== 'storageDLFolderPath'
 		);
 
 		updatedSettings.push({
 			name: 'showFilesInDocumentsAndMedia',
-			value: showFiles as boolean,
+			value,
 		});
 
-		if (showFiles) {
+		if (value) {
 			updatedSettings.push({
 				name: 'storageDLFolderPath',
 				value: `/${objectName}`,
 			});
 		}
 
-		return updatedSettings;
+		setValues({objectFieldSettings: updatedSettings});
 	};
-
-	useEffect(() => {
-		if (allowUploadDocAndMedia) {
-			let updatedSettings: ObjectFieldSetting[];
-			if (settings.fileSource === 'userComputer') {
-				updatedSettings = setDocsAndMediaProps(false);
-			}
-			else {
-				updatedSettings = objectFieldSettings.filter((setting) => {
-					return (
-						setting.name !== 'showFilesInDocumentsAndMedia' &&
-						setting.name !== 'storageDLFolderPath'
-					);
-				});
-			}
-
-			setValues({
-				objectFieldSettings: updatedSettings,
-			});
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [settings.fileSource]);
 
 	return (
 		<>
@@ -446,12 +438,7 @@ function AttachmentSourceProperty({
 				disabled={disabled}
 				error={error}
 				label={Liferay.Language.get('request-files')}
-				onChange={({value}) =>
-					onSettingsChange({
-						name: 'fileSource',
-						value,
-					})
-				}
+				onChange={handleAttachmentSourceChange}
 				options={attachmentSources}
 				required
 				value={attachmentSource?.label}
@@ -465,13 +452,7 @@ function AttachmentSourceProperty({
 							'show-files-in-documents-and-media'
 						)}
 						name="showFilesInDocumentsAndMedia"
-						onToggle={(value) => {
-							setValues({
-								objectFieldSettings: setDocsAndMediaProps(
-									value
-								),
-							});
-						}}
+						onToggle={toggleShowFiles}
 						toggled={!!settings.showFilesInDocumentsAndMedia}
 					/>
 

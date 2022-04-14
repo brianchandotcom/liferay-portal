@@ -1,2 +1,7 @@
 server: 
   port: 8081
+logging:
+  level:
+    com.liferay.custom.rest.service: DEBUG
+    org.springframework.security: DEBUG
+    org.springframework.web: DEBUG

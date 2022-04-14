@@ -20,16 +20,20 @@ import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ClassName;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -85,7 +89,7 @@ public class AlternateURLMapperProvider {
 			throws PortalException {
 
 			return _portal.getAlternateURL(
-				_getMappedFriendlyURL(canonicalURL, locale, themeDisplay),
+				_getCanonicalFriendlyURL(canonicalURL, locale, themeDisplay),
 				themeDisplay, locale, layout);
 		}
 
@@ -101,6 +105,45 @@ public class AlternateURLMapperProvider {
 			_classNameLocalService = classNameLocalService;
 			_layoutDisplayPageObjectProvider = layoutDisplayPageObjectProvider;
 			_portal = portal;
+		}
+
+		private String _getCanonicalFriendlyURL(
+				String defaultURL, Locale locale, ThemeDisplay themeDisplay)
+			throws PortalException {
+
+			String friendlyURL = _getMappedFriendlyURL(
+				defaultURL, locale, themeDisplay);
+
+			if (friendlyURL.startsWith(Http.HTTP)) {
+				return friendlyURL;
+			}
+
+			TreeMap<String, String> virtualHostnames =
+				_portal.getVirtualHostnames(themeDisplay.getLayoutSet());
+
+			String virtualHostname = null;
+
+			if (!virtualHostnames.isEmpty()) {
+				virtualHostname = virtualHostnames.firstKey();
+			}
+
+			if (Validator.isNull(virtualHostname)) {
+				virtualHostname = "localhost";
+
+				Company company = themeDisplay.getCompany();
+
+				if ((company != null) &&
+					Validator.isNotNull(company.getVirtualHostname())) {
+
+					virtualHostname = company.getVirtualHostname();
+				}
+			}
+
+			String portalURL = _portal.getPortalURL(
+				virtualHostname, themeDisplay.getServerPort(),
+				themeDisplay.isSecure());
+
+			return portalURL.concat(friendlyURL);
 		}
 
 		private String _getMappedFriendlyURL(

@@ -22,7 +22,7 @@
 </tr>
 <tr>
 	<td>EXECUTION_NOTIFICATION</td>
-	<td>//h4/a/h2[@class = 'title' and contains(text(),'${key_executionAction} job ${key_jobStatus}')]/parent::a/div[@class = 'body' and contains(text(),'${key_executionAction} job for') and contains(text(),'${key_entityType} ${key_jobStatus}')]</td>
+	<td>//h4/a/h2[@class = 'title' and contains(text(),'${key_title}')]/parent::a/div[@class = 'body' and contains(text(),'${key_body}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -1103,15 +1103,19 @@ definition {
 
 			Notifications.gotoNotifications();
 
-			ImportExport.assertExecutionNotification(
-				entityType = "Account",
-				executionAction = "Export",
-				executionStatus = "Completed");
+			AssertElementPresent(
+				key_body = "Accounts were exported to a ZIP file.",
+				key_title = "Accounts Exported",
+				locator1 = "ImportExport#EXECUTION_NOTIFICATION");
 
-			ImportExport.assertExecutionNotification(
-				entityType = "Account",
-				executionAction = "Export",
-				executionStatus = "Failed");
+			AssertElementPresent(
+				key_body = "Account entity export encountered an error while exporting to a ZIP file.",
+				key_title = "Accounts Export Stopped",
+				locator1 = "ImportExport#EXECUTION_NOTIFICATION");
+
+			PortletEntry.selectAll();
+
+			ClickNoError(locator1 = "Icon#DELETE");
 		}
 	}
 
@@ -1170,15 +1174,15 @@ definition {
 
 			Notifications.gotoNotifications();
 
-			ImportExport.assertExecutionNotification(
-				entityType = "Account",
-				executionAction = "Import",
-				executionStatus = "Completed");
+			AssertElementPresent(
+				key_body = "Accounts from csv_account_import.csv were imported to the Account entity.",
+				key_title = "Accounts Imported",
+				locator1 = "ImportExport#EXECUTION_NOTIFICATION");
 
-			ImportExport.assertExecutionNotification(
-				entityType = "Account",
-				executionAction = "Import",
-				executionStatus = "Failed");
+			AssertElementPresent(
+				key_body = "csv_account_import_error.csv encountered an error while importing to the Account entity.",
+				key_title = "Accounts Import Stopped",
+				locator1 = "ImportExport#EXECUTION_NOTIFICATION");
 
 			PortletEntry.selectAll();
 

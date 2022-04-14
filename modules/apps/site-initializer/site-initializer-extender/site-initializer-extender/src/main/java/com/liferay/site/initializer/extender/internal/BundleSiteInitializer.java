@@ -1786,7 +1786,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 					objectEntryJSONObject.getString(
 						"objectEntrySiteInitializerKey");
 
-				if (objectEntrySiteInitializerKey == null) {
+				if (Validator.isNull(objectEntrySiteInitializerKey)) {
 					continue;
 				}
 

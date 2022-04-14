@@ -23,25 +23,28 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.portal.json.JSONFactoryImpl;
-import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Pedro Queiroz
  */
-@RunWith(PowerMockRunner.class)
-public class GridDDMFormFieldValueAccessorTest extends PowerMockito {
+public class GridDDMFormFieldValueAccessorTest {
 
-	@Before
-	public void setUp() throws Exception {
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
+
+	@BeforeClass
+	public static void setUpClass() {
 		_setUpGridDDMFormFieldValueAccessor();
 	}
 
@@ -120,17 +123,14 @@ public class GridDDMFormFieldValueAccessorTest extends PowerMockito {
 				ddmFormFieldValue, LocaleUtil.US));
 	}
 
-	private void _setUpGridDDMFormFieldValueAccessor() throws Exception {
+	private static void _setUpGridDDMFormFieldValueAccessor() {
 		_gridDDMFormFieldValueAccessor = new GridDDMFormFieldValueAccessor();
 
-		field(
-			GridDDMFormFieldValueAccessor.class, "jsonFactory"
-		).set(
-			_gridDDMFormFieldValueAccessor, _jsonFactory
-		);
+		ReflectionTestUtil.setFieldValue(
+			_gridDDMFormFieldValueAccessor, "jsonFactory",
+			new JSONFactoryImpl());
 	}
 
-	private GridDDMFormFieldValueAccessor _gridDDMFormFieldValueAccessor;
-	private final JSONFactory _jsonFactory = new JSONFactoryImpl();
+	private static GridDDMFormFieldValueAccessor _gridDDMFormFieldValueAccessor;
 
 }

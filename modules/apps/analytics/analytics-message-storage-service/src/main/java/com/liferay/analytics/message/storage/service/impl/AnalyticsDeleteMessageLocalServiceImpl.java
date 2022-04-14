@@ -14,8 +14,12 @@
 
 package com.liferay.analytics.message.storage.service.impl;
 
+import com.liferay.analytics.message.storage.model.AnalyticsDeleteMessage;
 import com.liferay.analytics.message.storage.service.base.AnalyticsDeleteMessageLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+
+import java.util.Date;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -28,4 +32,57 @@ import org.osgi.service.component.annotations.Component;
 )
 public class AnalyticsDeleteMessageLocalServiceImpl
 	extends AnalyticsDeleteMessageLocalServiceBaseImpl {
+
+	public AnalyticsDeleteMessage addAnalyticsDeleteMessage(
+		long companyId, Date createDate, String className, long classPK,
+		long userId) {
+
+		AnalyticsDeleteMessage analyticsDeleteMessage =
+			analyticsDeleteMessagePersistence.create(
+				counterLocalService.increment());
+
+		analyticsDeleteMessage.setCompanyId(companyId);
+		analyticsDeleteMessage.setUserId(userId);
+		analyticsDeleteMessage.setCreateDate(createDate);
+		analyticsDeleteMessage.setModifiedDate(createDate);
+		analyticsDeleteMessage.setClassName(className);
+		analyticsDeleteMessage.setClassPK(classPK);
+
+		return analyticsDeleteMessagePersistence.update(analyticsDeleteMessage);
+	}
+
+	@Override
+	public void deleteAnalyticsModelRemoveLoggers(long companyId) {
+		analyticsDeleteMessagePersistence.removeByCompanyId(companyId);
+	}
+
+	@Override
+	public List<AnalyticsDeleteMessage> getAnalyticsDeleteMessages(
+		long companyId, int start, int end) {
+
+		return analyticsDeleteMessagePersistence.findByCompanyId(
+			companyId, start, end);
+	}
+
+	@Override
+	public int getAnalyticsDeleteMessagesCount(long companyId) {
+		return analyticsDeleteMessagePersistence.countByCompanyId(companyId);
+	}
+
+	@Override
+	public List<AnalyticsDeleteMessage> getGtAnalyticsDeleteMessages(
+		long companyId, Date modifiedDate, int start, int end) {
+
+		return analyticsDeleteMessagePersistence.findByGtM_C(
+			companyId, modifiedDate, start, end);
+	}
+
+	@Override
+	public int getGtAnalyticsDeleteMessagesCount(
+		long companyId, Date gtModifiedDate) {
+
+		return analyticsDeleteMessagePersistence.countByGtM_C(
+			companyId, gtModifiedDate);
+	}
+
 }

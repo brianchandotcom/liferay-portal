@@ -620,11 +620,8 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 
 		schedulerResponse.setDescription(
 			jobDataMap.getString(SchedulerEngine.DESCRIPTION));
-
-		String destinationName = jobDataMap.getString(
-			SchedulerEngine.DESTINATION_NAME);
-
-		schedulerResponse.setDestinationName(destinationName);
+		schedulerResponse.setDestinationName(
+			jobDataMap.getString(SchedulerEngine.DESTINATION_NAME));
 
 		Message message = getMessage(jobDataMap);
 
@@ -632,10 +629,9 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 
 		schedulerResponse.setMessage(message);
 
-		StorageType storageType = StorageType.valueOf(
-			jobDataMap.getString(SchedulerEngine.STORAGE_TYPE));
-
-		schedulerResponse.setStorageType(storageType);
+		schedulerResponse.setStorageType(
+			StorageType.valueOf(
+				jobDataMap.getString(SchedulerEngine.STORAGE_TYPE)));
 
 		String jobName = jobKey.getName();
 		String groupName = jobKey.getGroup();

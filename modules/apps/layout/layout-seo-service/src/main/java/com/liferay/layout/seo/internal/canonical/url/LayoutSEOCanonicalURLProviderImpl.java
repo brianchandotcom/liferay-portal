@@ -65,7 +65,7 @@ public class LayoutSEOCanonicalURLProviderImpl
 		}
 
 		return _getDefaultCanonicalURL(
-			layout, locale, canonicalURL, alternateURLs);
+			layout, locale, canonicalURL, _getThemeDisplay());
 	}
 
 	@Override
@@ -111,15 +111,8 @@ public class LayoutSEOCanonicalURLProviderImpl
 			_portal.getLayoutFullURL(layout, themeDisplay), themeDisplay,
 			layout, false, false);
 
-		AlternateURLMapperProvider.AlternateURLMapper alternateURLMapper =
-			_alternateURLMapperProvider.getAlternateURLMapper(
-				_getHttpServletRequest());
-
 		return _getDefaultCanonicalURL(
-			layout, themeDisplay.getLocale(), canonicalURL,
-			alternateURLMapper.getAlternateURLs(
-				canonicalURL, themeDisplay, layout,
-				LanguageUtil.getAvailableLocales(layout.getGroupId())));
+			layout, themeDisplay.getLocale(), canonicalURL, themeDisplay);
 	}
 
 	@Activate
@@ -136,21 +129,27 @@ public class LayoutSEOCanonicalURLProviderImpl
 
 	private String _getDefaultCanonicalURL(
 			Layout layout, Locale locale, String canonicalURL,
-			Map<Locale, String> alternateURLs)
+			ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		LayoutSEOCompanyConfiguration layoutSEOCompanyConfiguration =
 			_configurationProvider.getCompanyConfiguration(
 				LayoutSEOCompanyConfiguration.class, layout.getCompanyId());
 
+		AlternateURLMapperProvider.AlternateURLMapper alternateURLMapper =
+			_alternateURLMapperProvider.getAlternateURLMapper(
+				_getHttpServletRequest());
+
 		if (Objects.equals(
 				layoutSEOCompanyConfiguration.canonicalURL(),
 				"default-language-url")) {
 
-			return alternateURLs.get(LocaleUtil.getDefault());
+			return alternateURLMapper.getAlternateURL(
+				canonicalURL, themeDisplay, LocaleUtil.getDefault(), layout);
 		}
 
-		return alternateURLs.get(locale);
+		return alternateURLMapper.getAlternateURL(
+			canonicalURL, themeDisplay, locale, layout);
 	}
 
 	private HttpServletRequest _getHttpServletRequest() {
@@ -177,6 +176,17 @@ public class LayoutSEOCanonicalURLProviderImpl
 		}
 
 		return layoutSEOEntry.getCanonicalURL(locale);
+	}
+
+	private ThemeDisplay _getThemeDisplay() {
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (serviceContext != null) {
+			return serviceContext.getThemeDisplay();
+		}
+
+		return null;
 	}
 
 	private AlternateURLMapperProvider _alternateURLMapperProvider;

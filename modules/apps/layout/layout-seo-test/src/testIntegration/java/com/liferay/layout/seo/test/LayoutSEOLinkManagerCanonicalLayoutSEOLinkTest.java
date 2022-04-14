@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.seo.kernel.LayoutSEOLink;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.model.Company;
@@ -68,11 +69,11 @@ public class LayoutSEOLinkManagerCanonicalLayoutSEOLinkTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_layout = _layoutLocalService.getLayout(TestPropsValues.getPlid());
-
 		_group = GroupTestUtil.addGroup();
 
-		_layout.setGroupId(_group.getGroupId());
+		LayoutTestUtil.addTypePortletLayout(_group);
+
+		_layout = LayoutTestUtil.addTypePortletLayout(_group);
 
 		ServiceContext serviceContext = new ServiceContext();
 

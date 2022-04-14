@@ -4,14 +4,35 @@ definition {
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property test.run.environment = "EE";
 	property testray.main.component.name = "Product Info Management";
 
 	setUp {
-		CommerceConfiguration.commerceSetUp();
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "Commerce Account");
 	}
 
 	tearDown {
-		CommerceConfiguration.commerceTearDown();
+		Navigator.openURL();
+
+		if (IsElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
+			User.logoutPG();
+		}
+
+		User.firstLoginPG();
+
+		CommerceConfiguration.commerceAdminTearDown();
+
+		CommerceConfiguration.commerceInitializersTearDown();
 	}
 
 	@description = "[Please Update]"
@@ -34,6 +55,69 @@ definition {
 
 	}
 
+	@description = "COMMERCE-8207. Diagram is rendered on the Product Details page."
+	@priority = "4"
+	test AssertIfDiagramIsRendered {
+		property portal.acceptance = "false";
+
+		task ("Given a Diagram with the "Type" set to "Default", a png image uploaded as "Diagram File" and 2 pins linked to an SKU within the image") {
+			CommerceProducts.openProductsAdmin();
+
+			CPCommerceCatalog.newProductsEntry(
+				productCatalog = "Master",
+				productName = "Diagram Test",
+				productType = "Diagram");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Diagram");
+
+			CommerceProductImages.addDiagramImages(
+				imageTitles = "Black",
+				productType = "Diagram");
+
+			CommerceDiagram.addPin(
+				pinNumber = "1",
+				position = "0,150",
+				quantity = "1",
+				selectType = "Linked to a SKU",
+				sku = "MIN93015");
+
+			CommerceDiagram.addPin(
+				pinNumber = "2",
+				position = "150,100",
+				quantity = "1",
+				selectType = "Linked to a SKU",
+				sku = "MIN93020");
+
+			Button.clickPublish();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("When a Buyer goes on Minium catalog page") {
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+		}
+
+		task ("And search for the Diagram we created before") {
+			CommerceNavigator.searchCatalog(productName = "Diagram Test");
+		}
+
+		task ("When we click on it") {
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "Diagram Test");
+		}
+
+		task ("Then the Buyer is presented with the correct related product details page") {
+			AssertElementPresent(
+				key_pinNumber = "1",
+				locator1 = "CommerceDiagrams#DIAGRAM_PIN");
+
+			AssertElementPresent(
+				key_pinNumber = "2",
+				locator1 = "CommerceDiagrams#DIAGRAM_PIN");
+		}
+	}
+
 	@description = "[Please Update]"
 	@ignore = "Test Stub"
 	@priority = "4"
@@ -41,16 +125,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-8129 AssertDiagramThumbnailIntoSearchResults pending implementation
-
-	}
-
-	@description = "[Please Update]"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test AssertIfDiagramIsRendered {
-		property portal.acceptance = "false";
-
-		// TODO COMMERCE-8207 AssertIfDiagramIsRendered pending implementation
 
 	}
 

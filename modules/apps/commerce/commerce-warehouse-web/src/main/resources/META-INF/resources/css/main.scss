@@ -7,3 +7,10 @@
 		fill: #f00;
 	}
 }
+
+.card-full-height {
+	max-height: -moz-available;
+	max-height: -webkit-fill-available;
+	max-height: fill-available;
+	max-height: -webkit-fill-available;
+}

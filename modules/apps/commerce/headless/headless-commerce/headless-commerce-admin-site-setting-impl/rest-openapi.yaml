@@ -247,8 +247,13 @@ components:
                     minimum: 0
                     type: integer
                 description:
-                    example: right stairs, first room on the left
-                    type: string
+                    additionalProperties:
+                        type: string
+                    example:
+                        en_US: Warehouse Description US
+                        hr_HR: Warehouse Description HR
+                        hu_HU: Warehouse Description HU
+                    type: object
                 groupId:
                     example: 23130
                     format: int64
@@ -272,8 +277,13 @@ components:
                     example: 0
                     type: number
                 name:
-                    example: Warehouse Name
-                    type: string
+                    additionalProperties:
+                        type: string
+                    example:
+                        en_US: Warehouse Name US
+                        hr_HR: Warehouse Name HR
+                        hu_HU: Warehouse Name HU
+                    type: object
                 primary:
                     example: true
                     type: boolean

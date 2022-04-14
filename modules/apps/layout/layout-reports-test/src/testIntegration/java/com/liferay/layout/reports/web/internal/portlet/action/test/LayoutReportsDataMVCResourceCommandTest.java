@@ -49,8 +49,10 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -59,6 +61,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import java.io.ByteArrayOutputStream;
 
 import java.util.Arrays;
+import java.util.Locale;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -431,8 +434,19 @@ public class LayoutReportsDataMVCResourceCommandTest {
 		MockLiferayResourceResponse mockLiferayResourceResponse =
 			new MockLiferayResourceResponse();
 
-		_layoutReportsDataMVCResourceCommand.serveResource(
-			mockLiferayResourceRequest, mockLiferayResourceResponse);
+		Locale originalSiteDefaultLocale =
+			LocaleThreadLocal.getSiteDefaultLocale();
+
+		try {
+			LocaleThreadLocal.setSiteDefaultLocale(
+				_portal.getSiteDefaultLocale(_group.getGroupId()));
+
+			_layoutReportsDataMVCResourceCommand.serveResource(
+				mockLiferayResourceRequest, mockLiferayResourceResponse);
+		}
+		finally {
+			LocaleThreadLocal.setSiteDefaultLocale(originalSiteDefaultLocale);
+		}
 
 		ByteArrayOutputStream byteArrayOutputStream =
 			(ByteArrayOutputStream)
@@ -456,6 +470,9 @@ public class LayoutReportsDataMVCResourceCommandTest {
 
 	@Inject
 	private LayoutSEOEntryLocalService _layoutSEOEntryLocalService;
+
+	@Inject
+	private Portal _portal;
 
 	private static class MockInfoItemFieldValuesProvider
 		implements InfoItemFieldValuesProvider<MockObject> {

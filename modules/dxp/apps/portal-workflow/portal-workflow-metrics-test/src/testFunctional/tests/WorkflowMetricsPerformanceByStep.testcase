@@ -240,13 +240,17 @@ definition {
 
 		Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
 
-		KaleoDesigner.selectNode(nodeNodeLabel = "review");
+		WorkflowMetricsAllItemsList.selectAndChangeNodeID(
+				nodeID = "review2",
+				nodeType = "task",
+				nodeLabel = "review",
+				update = "true");
 
-		KaleoDesigner.editNodeName(nodeName = "review2");
-
-		KaleoDesigner.selectNode(nodeNodeLabel = "update");
-
-		KaleoDesigner.editNodeName(nodeName = "update2");
+			WorkflowMetricsAllItemsList.selectAndChangeNodeID(
+				nodeID = "update2",
+				nodeType = "task",
+				nodeLabel = "update",
+				update = "true");
 
 		Button.clickUpdate();
 
@@ -509,13 +513,17 @@ definition {
 
 		Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
 
-		KaleoDesigner.selectNode(nodeNodeLabel = "review");
+		WorkflowMetricsAllItemsList.selectAndChangeNodeID(
+				nodeID = "review2",
+				nodeType = "task",
+				nodeLabel = "review",
+				update = "true");
 
-		KaleoDesigner.editNodeName(nodeName = "review2");
-
-		KaleoDesigner.selectNode(nodeNodeLabel = "update");
-
-		KaleoDesigner.editNodeName(nodeName = "update2");
+			WorkflowMetricsAllItemsList.selectAndChangeNodeID(
+				nodeID = "update2",
+				nodeType = "task",
+				nodeLabel = "update",
+				update = "true");
 
 		Button.clickUpdate();
 
@@ -579,15 +587,21 @@ definition {
 
 			Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
 
-			KaleoDesigner.selectNode(nodeNodeLabel = "review");
+			WorkflowMetricsAllItemsList.selectAndChangeNodeID(
+				nodeID = "review2",
+				nodeType = "task",
+				nodeLabel = "review",
+				update = "true");
 
-			KaleoDesigner.editNodeName(nodeName = "review2");
-
-			KaleoDesigner.selectNode(nodeNodeLabel = "update");
-
-			KaleoDesigner.editNodeName(nodeName = "update2");
+			WorkflowMetricsAllItemsList.selectAndChangeNodeID(
+				nodeID = "update2",
+				nodeType = "task",
+				nodeLabel = "update",
+				update = "true");
 
 			Button.clickUpdate();
+
+
 		}
 
 		Navigator.gotoBack();
@@ -1110,13 +1124,17 @@ definition {
 
 			Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
 
-			KaleoDesigner.selectNode(nodeNodeLabel = "review");
+			WorkflowMetricsAllItemsList.selectAndChangeNodeName(
+				nodeName = "review2",
+				nodeType = "task",
+				nodeLabel = "review",
+				update = "true");
 
-			KaleoDesigner.editNodeName(nodeName = "review2");
-
-			KaleoDesigner.selectNode(nodeNodeLabel = "update");
-
-			KaleoDesigner.editNodeName(nodeName = "update2");
+			WorkflowMetricsAllItemsList.selectAndChangeNodeName(
+				nodeName = "update2",
+				nodeType = "task",
+				nodeLabel = "update",
+				update = "true");
 
 			Button.clickUpdate();
 		}

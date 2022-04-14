@@ -71,6 +71,21 @@ definition {
 		}
 	}
 
+	macro selectAndChangeNodeID {
+		Click(
+			key_nodeLabel = "${nodeLabel}",
+			key_nodeType = "${nodeType}",
+			locator1 = "ProcessBuilderKaleoDesignerReact#DIAGRAM_NODE_LABEL_SPECIFIC");
+
+		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
+			infoOption = "Id",
+			infoValue = "${nodeID}");
+
+		if (isSet(update)) {
+			Button.click(button = "Update");
+		}
+	}
+
 	macro selectSingleApproverWorkflow {
 		Click(
 			key_workflowDefinitionTitle = "${key_workflowDefinitionTitle}",

@@ -1,0 +1,14 @@
+Bundle-Name: Liferay Kubernetes Agent
+Bundle-SymbolicName: com.liferay.k8s.agent
+Bundle-Version: 1.0.0
+Export-Package: \
+	com.liferay.k8s.agent,\
+	com.liferay.k8s.agent.configuration.v1
+Import-Package: \
+	!android.*,\
+	!javax.annotation.meta.*,\
+	!org.bouncycastle.*,\
+	!org.conscrypt.*,\
+	*
+-fixupmessages: Classes found in the wrong directory
+-noclassforname: true

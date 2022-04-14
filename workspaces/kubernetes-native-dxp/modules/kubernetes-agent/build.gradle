@@ -1,0 +1,8 @@
+dependencies {
+	compileOnly group: "com.liferay.portal", name: "release.dxp.api"
+	compileOnly group: "com.liferay", name: "biz.aQute.bnd.annotation", version: "4.2.0.LIFERAY-PATCHED-2"
+
+	compileInclude('io.fabric8:kubernetes-client:5.12.2') {
+		exclude group: "org.slf4j", module: "slf4j-api"
+	}
+}

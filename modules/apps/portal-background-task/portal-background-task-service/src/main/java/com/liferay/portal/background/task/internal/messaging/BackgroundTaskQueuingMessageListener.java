@@ -65,11 +65,9 @@ public class BackgroundTaskQueuingMessageListener extends BaseMessageListener {
 			long backgroundTaskId = (Long)message.get(
 				BackgroundTaskConstants.BACKGROUND_TASK_ID);
 
-			BackgroundTask backgroundTask =
-				_backgroundTaskManager.fetchBackgroundTask(backgroundTaskId);
-
 			if (!_backgroundTaskLockHelper.isLockedBackgroundTask(
-					backgroundTask)) {
+					_backgroundTaskManager.fetchBackgroundTask(
+						backgroundTaskId))) {
 
 				_executeQueuedBackgroundTasks(taskExecutorClassName);
 			}

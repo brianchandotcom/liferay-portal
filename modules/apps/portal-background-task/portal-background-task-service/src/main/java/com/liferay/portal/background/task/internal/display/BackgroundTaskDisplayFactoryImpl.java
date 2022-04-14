@@ -50,10 +50,8 @@ public class BackgroundTaskDisplayFactoryImpl
 	public BackgroundTaskDisplay getBackgroundTaskDisplay(
 		long backgroundTaskId) {
 
-		BackgroundTask backgroundTask =
-			_backgroundTaskManager.fetchBackgroundTask(backgroundTaskId);
-
-		return getBackgroundTaskDisplay(backgroundTask);
+		return getBackgroundTaskDisplay(
+			_backgroundTaskManager.fetchBackgroundTask(backgroundTaskId));
 	}
 
 	@Reference(unbind = "-")

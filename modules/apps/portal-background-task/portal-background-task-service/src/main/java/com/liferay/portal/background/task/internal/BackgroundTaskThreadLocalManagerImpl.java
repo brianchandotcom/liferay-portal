@@ -17,7 +17,6 @@ package com.liferay.portal.background.task.internal;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocalManager;
 import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
@@ -135,11 +134,10 @@ public class BackgroundTaskThreadLocalManagerImpl
 		if (Validator.isNotNull(principalName)) {
 			PrincipalThreadLocal.setName(principalName);
 
-			User user = _userLocalService.fetchUser(
-				PrincipalThreadLocal.getUserId());
-
 			PermissionThreadLocal.setPermissionChecker(
-				_permissionCheckerFactory.create(user));
+				_permissionCheckerFactory.create(
+					_userLocalService.fetchUser(
+						PrincipalThreadLocal.getUserId())));
 		}
 
 		Locale siteDefaultLocale = (Locale)threadLocalValues.get(

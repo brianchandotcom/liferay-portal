@@ -1,5 +1,5 @@
 {
-	"$id": "sxpelement.schema.json",
+	"$id": "sxp-query-element.schema.json",
 	"$schema": "http://json-schema.org/draft-07/schema#",
 	"definitions": {
 		"Clause": {
@@ -8,7 +8,6 @@
 					"type": "boolean"
 				},
 				"boost": {
-					"format": "float",
 					"type": "number"
 				},
 				"context": {
@@ -166,7 +165,6 @@
 		"FieldMapping": {
 			"properties": {
 				"boost": {
-					"format": "float",
 					"type": "number"
 				},
 				"field": {
@@ -271,18 +269,15 @@
 					"type": "object"
 				},
 				"queryWeight": {
-					"format": "float",
 					"type": "number"
 				},
 				"rescoreQueryWeight": {
-					"format": "float",
 					"type": "number"
 				},
 				"scoreMode": {
 					"type": "string"
 				},
 				"windowSize": {
-					"format": "int32",
 					"type": "integer"
 				}
 			},

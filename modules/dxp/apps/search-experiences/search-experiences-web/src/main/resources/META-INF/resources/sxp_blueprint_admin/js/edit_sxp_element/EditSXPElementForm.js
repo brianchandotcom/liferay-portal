@@ -27,8 +27,8 @@ import React, {
 	useState,
 } from 'react';
 
+import sxpElementSchema from '../../schemas/sxp-query-element.schema.json';
 import useShouldConfirmBeforeNavigate from '../hooks/useShouldConfirmBeforeNavigate';
-import sxpElementSchema from '../schema/sxpelement.schema.json';
 import CodeMirrorEditor from '../shared/CodeMirrorEditor';
 import ErrorBoundary from '../shared/ErrorBoundary';
 import JSONSXPElement from '../shared/JSONSXPElement';

@@ -19,7 +19,7 @@ import getCN from 'classnames';
 import {PropTypes} from 'prop-types';
 import React, {useContext, useEffect, useState} from 'react';
 
-import sxpElementSchema from '../schema/sxpelement.schema.json';
+import sxpElementSchema from '../../schemas/sxp-query-element.schema.json';
 import {DEFAULT_SXP_ELEMENT_ICON} from '../utils/data';
 import {getLocalizedText} from '../utils/language';
 import ThemeContext from './ThemeContext';

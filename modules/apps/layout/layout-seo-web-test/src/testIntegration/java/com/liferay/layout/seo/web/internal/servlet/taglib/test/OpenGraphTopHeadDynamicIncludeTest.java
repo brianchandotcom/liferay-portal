@@ -1415,9 +1415,11 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 				localeAlternateLinkElements.get(0);
 
 			Assert.assertEquals(
-				_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-					FileEntry.class.getName(), fileEntry.getFileEntryId(),
-					locale, _getThemeDisplay()),
+				_portal.getAlternateURL(
+					_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
+						FileEntry.class.getName(), fileEntry.getFileEntryId(),
+						locale, _getThemeDisplay()),
+					_getThemeDisplay(), locale, _layout),
 				localeAlternateLinkElement.attr("href"));
 		}
 	}

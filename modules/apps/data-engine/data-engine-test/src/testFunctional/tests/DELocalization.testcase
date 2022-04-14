@@ -944,7 +944,7 @@ definition {
 
 		DERenderer.inputDataInColorField(
 			fieldLabel = "Color",
-			value = "FF0D0D");
+			value = "ff0d0d");
 
 		PortletEntry.changeLocale(locale = "zh-CN");
 
@@ -952,7 +952,7 @@ definition {
 
 		DERenderer.inputDataInColorField(
 			fieldLabel = "颜色",
-			value = "FF0D0D");
+			value = "ff0d0d");
 
 		PortletEntry.publish();
 
@@ -966,7 +966,7 @@ definition {
 
 		DERenderer.assertDataInColorField(
 			fieldLabel = "颜色",
-			value = "FF0D0D");
+			value = "ff0d0d");
 	}
 
 	@description = "Verify that is possible to translate input data on the Date Field"

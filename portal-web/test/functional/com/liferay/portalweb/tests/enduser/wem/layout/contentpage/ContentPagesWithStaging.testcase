@@ -974,12 +974,18 @@ definition {
 			Staging.publishCustomPublication();
 		}
 
-		task ("Navigate to Live site via Product Menu") {
-			ProductMenu.gotoLiveSite();
+		task ("View draft page is shown in pages admin in live site") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			PagesAdmin.viewPageStatus(
+				pageName = "Test Content Page Name",
+				status = "Draft");
 		}
 
-		task ("View the header title") {
-			ControlMenu.viewHeaderTitle(headerTitle = "Test Content Page Name");
+		task ("Assert View action is disabled for draft page in live site") {
+			PagesAdmin.openPageEllipsisMenu(pageName = "Test Content Page Name");
+
+			MenuItem.viewDisabled(menuItem = "View");
 		}
 
 		task ("Navigate to staging site via Product Menu") {
@@ -1002,12 +1008,18 @@ definition {
 			Staging.publishCustomPublication();
 		}
 
-		task ("Navigate to Live site via Product Menu") {
-			ProductMenu.gotoLiveSite();
+		task ("View draft page is shown in pages admin in live site after republish with an edition") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			PagesAdmin.viewPageStatus(
+				pageName = "Test Content Page Name",
+				status = "Draft");
 		}
 
-		task ("View the header title") {
-			ControlMenu.viewHeaderTitle(headerTitle = "Test Content Page Name");
+		task ("Assert View action is disabled for draft page in live site after republish with an edition") {
+			PagesAdmin.openPageEllipsisMenu(pageName = "Test Content Page Name");
+
+			MenuItem.viewDisabled(menuItem = "View");
 		}
 	}
 

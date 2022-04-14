@@ -16,36 +16,35 @@ package com.liferay.dynamic.data.mapping.form.field.type.internal.radio;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Rafael Praxedes
  */
-@RunWith(PowerMockRunner.class)
-public class RadioDDMFormFieldValueRequestParameterRetrieverTest
-	extends PowerMockito {
+public class RadioDDMFormFieldValueRequestParameterRetrieverTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		_radioDDMFormFieldValueRequestParameterRetriever =
 			new RadioDDMFormFieldValueRequestParameterRetriever();
 
-		field(
-			RadioDDMFormFieldValueRequestParameterRetriever.class,
-			"_jsonFactory"
-		).set(
-			_radioDDMFormFieldValueRequestParameterRetriever,
-			new JSONFactoryImpl()
-		);
+		ReflectionTestUtil.setFieldValue(
+			_radioDDMFormFieldValueRequestParameterRetriever, "_jsonFactory",
+			new JSONFactoryImpl());
 	}
 
 	@Test

@@ -39,6 +39,7 @@ import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -188,6 +189,22 @@ public class ObjectDefinitionsActionsDisplayContext {
 		}
 
 		return objectActionExecutorsJSONArray;
+	}
+
+	public JSONObject getObjectActionJSONObject(ObjectAction objectAction) {
+		return JSONUtil.put(
+			"active", objectAction.isActive()
+		).put(
+			"id", objectAction.getObjectActionId()
+		).put(
+			"name", objectAction.getName()
+		).put(
+			"objectActionExecutorKey", objectAction.getObjectActionExecutorKey()
+		).put(
+			"objectActionTriggerKey", objectAction.getObjectActionTriggerKey()
+		).put(
+			"parameters", objectAction.getParametersUnicodeProperties()
+		);
 	}
 
 	public JSONArray getObjectActionTriggersJSONArray() {

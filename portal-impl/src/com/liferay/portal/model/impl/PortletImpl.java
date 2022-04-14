@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapperTracker;
 import com.liferay.portal.kernel.portlet.PortletBag;
 import com.liferay.portal.kernel.portlet.PortletBagPool;
+import com.liferay.portal.kernel.portlet.PortletConfigurationListener;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletLayoutListener;
 import com.liferay.portal.kernel.portlet.PortletQNameUtil;
@@ -164,6 +165,7 @@ public class PortletImpl extends PortletBaseImpl {
 		String friendlyURLMapping, String friendlyURLRoutes,
 		String urlEncoderClass, String portletDataHandlerClass,
 		List<String> stagedModelDataHandlerClasses, String templateHandlerClass,
+		String portletConfigurationListenerClass,
 		String portletLayoutListenerClass, String pollerProcessorClass,
 		String popMessageListenerClass,
 		List<String> socialActivityInterpreterClasses,
@@ -240,6 +242,7 @@ public class PortletImpl extends PortletBaseImpl {
 		_portletDataHandlerClass = portletDataHandlerClass;
 		_stagedModelDataHandlerClasses = stagedModelDataHandlerClasses;
 		_templateHandlerClass = templateHandlerClass;
+		_portletConfigurationListenerClass = portletConfigurationListenerClass;
 		_portletLayoutListenerClass = portletLayoutListenerClass;
 		_pollerProcessorClass = pollerProcessorClass;
 		_popMessageListenerClass = popMessageListenerClass;
@@ -409,9 +412,9 @@ public class PortletImpl extends PortletBaseImpl {
 			getFriendlyURLMapperClass(), getFriendlyURLMapping(),
 			getFriendlyURLRoutes(), getURLEncoderClass(),
 			getPortletDataHandlerClass(), getStagedModelDataHandlerClasses(),
-			getTemplateHandlerClass(), getPortletLayoutListenerClass(),
-			getPollerProcessorClass(), getPopMessageListenerClass(),
-			getSocialActivityInterpreterClasses(),
+			getTemplateHandlerClass(), getPortletConfigurationListenerClass(),
+			getPortletLayoutListenerClass(), getPollerProcessorClass(),
+			getPopMessageListenerClass(), getSocialActivityInterpreterClasses(),
 			getSocialRequestInterpreterClass(),
 			getUserNotificationDefinitions(),
 			getUserNotificationHandlerClasses(), getWebDAVStorageToken(),
@@ -1367,6 +1370,32 @@ public class PortletImpl extends PortletBaseImpl {
 	@Override
 	public String getPortletClass() {
 		return _portletClass;
+	}
+
+	@Override
+	public String getPortletConfigurationListenerClass() {
+		return _portletConfigurationListenerClass;
+	}
+
+	@Override
+	public PortletConfigurationListener
+		getPortletConfigurationListenerInstance() {
+
+		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
+
+		if (portletBag == null) {
+			return null;
+		}
+
+		List<PortletConfigurationListener>
+			portletConfigurationListenerInstances =
+				portletBag.getPortletConfigurationListenerInstances();
+
+		if (portletConfigurationListenerInstances.isEmpty()) {
+			return null;
+		}
+
+		return portletConfigurationListenerInstances.get(0);
 	}
 
 	/**
@@ -3528,6 +3557,13 @@ public class PortletImpl extends PortletBaseImpl {
 		_portletClass = portletClass;
 	}
 
+	@Override
+	public void setPortletConfigurationListenerClass(
+		String portletConfigurationListenerClass) {
+
+		_portletConfigurationListenerClass = portletConfigurationListenerClass;
+	}
+
 	/**
 	 * Sets the name of the portlet data handler class of the portlet.
 	 *
@@ -4554,6 +4590,8 @@ public class PortletImpl extends PortletBaseImpl {
 	 * The name of the portlet class of the portlet.
 	 */
 	private String _portletClass;
+
+	private String _portletConfigurationListenerClass;
 
 	/**
 	 * The name of the portlet data handler class of the portlet.

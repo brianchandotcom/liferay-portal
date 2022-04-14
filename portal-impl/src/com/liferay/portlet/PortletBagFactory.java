@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapperTracker;
 import com.liferay.portal.kernel.portlet.PortletBag;
 import com.liferay.portal.kernel.portlet.PortletBagPool;
+import com.liferay.portal.kernel.portlet.PortletConfigurationListener;
 import com.liferay.portal.kernel.portlet.PortletInstanceFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletLayoutListener;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
@@ -149,6 +150,9 @@ public class PortletBagFactory {
 			bundleContext, portlet, properties, serviceRegistrations);
 
 		_registerTemplateHandlers(
+			bundleContext, portlet, properties, serviceRegistrations);
+
+		_registerPortletConfigurationListeners(
 			bundleContext, portlet, properties, serviceRegistrations);
 
 		_registerPortletLayoutListeners(
@@ -524,6 +528,29 @@ public class PortletBagFactory {
 				bundleContext.registerService(
 					MessageListener.class, popMessageListenerInstance,
 					properties);
+
+			serviceRegistrations.add(serviceRegistration);
+		}
+	}
+
+	private void _registerPortletConfigurationListeners(
+			BundleContext bundleContext, Portlet portlet,
+			Dictionary<String, Object> properties,
+			List<ServiceRegistration<?>> serviceRegistrations)
+		throws Exception {
+
+		if (Validator.isNotNull(
+				portlet.getPortletConfigurationListenerClass())) {
+
+			PortletConfigurationListener portletConfigurationListener =
+				_newInstance(
+					PortletConfigurationListener.class,
+					portlet.getPortletConfigurationListenerClass());
+
+			ServiceRegistration<?> serviceRegistration =
+				bundleContext.registerService(
+					PortletConfigurationListener.class,
+					portletConfigurationListener, properties);
 
 			serviceRegistrations.add(serviceRegistration);
 		}

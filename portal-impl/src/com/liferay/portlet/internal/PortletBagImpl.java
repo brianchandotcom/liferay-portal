@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.ControlPanelEntry;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapperTracker;
 import com.liferay.portal.kernel.portlet.PortletBag;
+import com.liferay.portal.kernel.portlet.PortletConfigurationListener;
 import com.liferay.portal.kernel.portlet.PortletLayoutListener;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerEventMessageListener;
@@ -259,6 +260,24 @@ public class PortletBagImpl implements PortletBag {
 		}
 
 		return _toList(_popMessageListenerInstances);
+	}
+
+	@Override
+	public List<PortletConfigurationListener>
+		getPortletConfigurationListenerInstances() {
+
+		if (_portletConfigurationListenerInstances == null) {
+			synchronized (this) {
+				if (_portletConfigurationListenerInstances == null) {
+					_portletConfigurationListenerInstances =
+						ServiceTrackerListFactory.open(
+							_bundleContext, PortletConfigurationListener.class,
+							_filterString);
+				}
+			}
+		}
+
+		return _toList(_portletConfigurationListenerInstances);
 	}
 
 	@Override
@@ -596,6 +615,8 @@ public class PortletBagImpl implements PortletBag {
 		_pollerProcessorInstances;
 	private volatile ServiceTrackerList<MessageListener>
 		_popMessageListenerInstances;
+	private volatile ServiceTrackerList<PortletConfigurationListener>
+		_portletConfigurationListenerInstances;
 	private volatile ServiceTrackerList<PortletDataHandler>
 		_portletDataHandlerInstances;
 	private Portlet _portletInstance;

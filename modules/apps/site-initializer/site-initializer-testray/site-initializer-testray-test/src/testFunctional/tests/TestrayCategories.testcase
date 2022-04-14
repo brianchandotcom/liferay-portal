@@ -1,0 +1,69 @@
+@component-name = "portal-solutions"
+definition {
+
+	property osgi.modules.includes = "site-initializer-testray";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Testray 2";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Testray.createTestraySite(siteName = "Testray 2");
+
+		Refresh();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		Testray.tearDownCP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "LPS-150328 - Verify that User can acess category modal."
+	@priority = "5"
+	test CanAcessCategoryModal {
+		ApplicationsMenu.gotoSite(site = "Testray 2");
+
+		Click(locator1 = "TestrayManage#MANAGE_SIDEBAR");
+
+		Click(
+			key_itemvalue = "Categories",
+			locator1 = "TestrayDropdown#DROPDOWN_ITEM");
+
+		AssertElementPresent(
+			key_title = "Categories",
+			locator1 = "TestrayManage#TITLE_MODAL_ITEM");
+	}
+
+	@description = "LPS-150329 - Verify that User can add new category."
+	@priority = "5"
+	test CanAddNewCategory {
+		ApplicationsMenu.gotoSite(site = "Testray 2");
+
+		Click(locator1 = "TestrayManage#MANAGE_SIDEBAR");
+
+		Click(
+			key_itemvalue = "Categories",
+			locator1 = "TestrayDropdown#DROPDOWN_ITEM");
+
+		Click(locator1 = "TestrayManage#ADD_OPTIONS");
+
+		Type(
+			locator1 = "TestrayManage#NEW_OPTION_NAME",
+			value1 = "New Category Test");
+
+		Click(locator1 = "TestrayManage#SAVE_BUTTON");
+
+		AssertElementPresent(
+			key_title = "New Category Test",
+			locator1 = "TestrayManage#PROJECT_NAME_MODAL");
+	}
+
+} 

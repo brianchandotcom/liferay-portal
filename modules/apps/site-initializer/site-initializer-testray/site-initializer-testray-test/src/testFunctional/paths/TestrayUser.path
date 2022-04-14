@@ -32,7 +32,7 @@
 </tr>
 <tr>
 	<td>FIELD_EMAIL</td>
-	<td>//div[contains(@class, 'login-container')]//input[contains(@id, 'liferay_login_web') and contains(@value, '@liferay.com')]</td>
+	<td>//div[contains(@class, 'login-container')]//input[contains(@id, 'liferay_login_web') and contains(@type, 'text')]</td>
 	<td></td>
 </tr>
 <tr>

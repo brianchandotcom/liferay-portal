@@ -29,7 +29,7 @@ definition {
 	test CanVerifyAbandonedStatus {
 		Testray.enableTestrayTasksInPortlet();
 
-		Testray.statusChangeTestray(value = "2");
+		Testray.createTestrayTasks(value = "2");
 
 		Refresh();
 
@@ -45,7 +45,7 @@ definition {
 	test CanVerifyCompleteStatus {
 		Testray.enableTestrayTasksInPortlet();
 
-		Testray.statusChangeTestray(value = "3");
+		Testray.createTestrayTasks(value = "3");
 
 		ApplicationsMenu.gotoSite(key_site = "Testray 2");
 
@@ -59,7 +59,7 @@ definition {
 	test CanVerifyInAnalysisStatus {
 		Testray.enableTestrayTasksInPortlet();
 
-		Testray.statusChangeTestray(value = "1");
+		Testray.createTestrayTasks(value = "1");
 
 		Refresh();
 
@@ -75,7 +75,7 @@ definition {
 	test CanVerifyOpenStatus {
 		Testray.enableTestrayTasksInPortlet();
 
-		Testray.statusChangeTestray(value = "4");
+		Testray.createTestrayTasks(value = "4");
 
 		Refresh();
 

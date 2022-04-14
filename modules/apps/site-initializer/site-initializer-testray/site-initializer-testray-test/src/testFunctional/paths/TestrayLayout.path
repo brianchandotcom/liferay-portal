@@ -11,11 +11,6 @@
 
 <tbody>
 <tr>
-	<td>TESTFLOW_SIDEBAR</td>
-	<td>//a[contains(@href, '#/testflow')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>RESULTS_SIDEBAR</td>
 	<td>//span[contains(text(),'Results')]</td>
 	<td></td>
@@ -26,23 +21,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>MANAGE_SIDEBAR</td>
-	<td>//div[contains(@class,'testray-sidebar-footer')]//span[contains(text(),'Manage')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>USER_SIDEBAR</td>
-	<td>//div[contains(@class,'testray-sidebar-footer')]//span[contains(@class,'sticker-overlay')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>DROPDOWN_ON_SIDEBAR</td>
 	<td>//div[contains(@class,'dropdown-menu show')]//ul[contains(@class,'list-unstyled')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_TAB_TITLE</td>
-	<td>//div[contains(@class, 'testray-content')]//h5[contains(text(),'${key_pageTabTilte}')]</td>
 	<td></td>
 </tr>
 </tbody>

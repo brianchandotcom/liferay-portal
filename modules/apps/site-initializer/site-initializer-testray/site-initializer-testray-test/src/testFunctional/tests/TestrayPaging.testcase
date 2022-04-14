@@ -33,7 +33,7 @@ definition {
 
 		Testray.createProjectTestray(key_name = "Liferay Portal 7.4");
 
-		Testray.goToProjectPage(projectName = "Liferay Portal 7.0");
+		Testray.goToProjectPage(projectName = "Liferay Portal 7.4");
 
 		Testray.projectTabNavigator(navTabName = "Cases");
 
@@ -55,21 +55,21 @@ definition {
 
 		Testray.assertItemsPerPageValue(itemValue = "20");
 
-		Testray.changeItemsPerPage(itemValue = "50");
+		Testray.changeItemsPerPage(itemValue = "50 Items");
 
 		Testray.assertItemsPerPageValue(itemValue = "50");
 
-		Testray.changeItemsPerPage(itemValue = "75");
+		Testray.changeItemsPerPage(itemValue = "75 Items");
 
 		Testray.assertItemsPerPageValue(itemValue = "75");
 
-		Testray.changeItemsPerPage(itemValue = "100");
+		Testray.changeItemsPerPage(itemValue = "100 Items");
 
 		Testray.assertItemsPerPageValue(itemValue = "100");
 
-		Testray.changeItemsPerPage(itemValue = "200");
+		Testray.changeItemsPerPage(itemValue = "150 Items");
 
-		Testray.assertItemsPerPageValue(itemValue = "200");
+		Testray.assertItemsPerPageValue(itemValue = "150");
 	}
 
 	@description = "LPS-149446 - Verify if user can go to the next and previous page by clicking on '>' and '<' buttons."
@@ -77,8 +77,8 @@ definition {
 	test CanChangePageOnNextAndPrevioustButton {
 		ApplicationsMenu.gotoSite(site = "Testray 2");
 
-		Testray.createProjectTestray(key_name = "Liferay Portal 7.");
-
+		Testray.createProjectTestray(key_name = "Liferay Portal 7.0");
+		
 		Testray.goToProjectPage(projectName = "Liferay Portal 7.0");
 
 		Testray.projectTabNavigator(navTabName = "Cases");

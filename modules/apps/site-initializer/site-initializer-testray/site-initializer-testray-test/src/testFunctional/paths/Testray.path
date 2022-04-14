@@ -17,7 +17,7 @@
 </tr>
 <tr>
 	<td>ITEMS_PER_PAGE_BUTTON_DROPDOWN</td>
-	<td>//button[contains(text(), "${key_itemvalue}")]</td>
+	<td>//div[contains(@class, 'dropdown-menu')]//button[(text()='${key_itemValue}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -52,7 +52,7 @@
 </tr>
 <tr>
 	<td>NEW_DESCRIPTION_PROJECT</td>
-	<td>//div[contains(@class, 'modal-content')]//input[contains(@id, 'description') and contains(text(),'')]</td>
+	<td><td>//div[contains(@class, 'modal-content')]//input[contains(@id, 'description')]</td></td>
 	<td></td>
 </tr>
 <tr>
@@ -78,6 +78,11 @@
 <tr>
 	<td>TESTFLOW_SIDEBAR</td>
 	<td>//a[contains(@href, '#/testflow')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MODAL_BODY</td>
+	<td>//div[contains(@class,'modal-body')]</td>
 	<td></td>
 </tr>
 </tbody>

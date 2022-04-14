@@ -40,6 +40,16 @@
 	<td>//div[contains(@data-field-name, 'dueStatus')]//input[contains(@type, 'text')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ADD_NAME_TASKS</td>
+	<td>//div[contains(@class, 'panel-group')]//div[contains(@data-field-name, 'name')]//input[contains(@type, 'text')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_BUILD_TASKS</td>
+	<td>//div[contains(@class, 'panel-group')]//div[contains(@data-field-name, 'buildToTasks')]//input[contains(@type, 'text')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -34,7 +34,7 @@ definition {
 		Testray.createProjectTestray(key_name = "Liferay Portal 7.4");
 
 		AssertElementPresent(
-			key_itemvalue = "ci:test",
+			key_value = "ci:test",
 			locator1 = "Testray#NEW_DESCRIPTION_PROJECT");
 	}
 

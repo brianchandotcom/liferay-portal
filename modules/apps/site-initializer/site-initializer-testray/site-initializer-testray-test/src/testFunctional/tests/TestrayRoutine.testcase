@@ -31,7 +31,7 @@ definition {
 	test CanEnterARoutine {
 		ApplicationsMenu.gotoSite(site = "Testray 2");
 
-		Testray.createProjectTestray(key_name = "Liferay Portal 7.");
+		Testray.createProjectTestray(key_name = "Liferay Portal 7.2");
 
 		Click(
 			key_projectName = "Liferay Portal 7.2",
@@ -55,7 +55,7 @@ definition {
 	test CanEnterOnRoutineTab {
 		ApplicationsMenu.gotoSite(site = "Testray 2");
 
-		Testray.createProjectTestray(key_name = "Liferay Portal 7.");
+		Testray.createProjectTestray(key_name = "Liferay Portal 7.2");
 
 		Click(
 			key_projectName = "Liferay Portal 7.2",

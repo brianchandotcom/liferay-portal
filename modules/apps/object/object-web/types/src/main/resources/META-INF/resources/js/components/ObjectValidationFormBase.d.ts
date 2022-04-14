@@ -27,8 +27,7 @@ export declare function useObjectValidationForm({
 }: IUseObjectValidationForm): {
 	errors: FormError<ObjectValidation>;
 	handleChange: React.ChangeEventHandler<HTMLInputElement>;
-	handleSubmit: React.FormEventHandler<HTMLFormElement> &
-		React.MouseEventHandler<HTMLButtonElement>;
+	handleSubmit: React.FormEventHandler<HTMLFormElement>;
 	setValues: (values: Partial<ObjectValidation>) => void;
 	values: Partial<ObjectValidation>;
 };

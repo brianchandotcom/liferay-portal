@@ -12,7 +12,6 @@
  * details.
  */
 
-import ClayButton from '@clayui/button';
 import ClayTabs from '@clayui/tabs';
 import {fetch} from 'frontend-js-web';
 import React, {useContext, useEffect, useState} from 'react';
@@ -20,7 +19,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import {invalidateRequired} from '../../hooks/useForm';
 import {defaultLanguageId} from '../../utils/locale';
 import {TabsVisitor} from '../../utils/visitor';
-import SidePanelContent from '../SidePanelContent';
+import SidePanelContent, {closeSidePanel, openToast} from '../SidePanelContent';
 import InfoScreen from './InfoScreen/InfoScreen';
 import LayoutScreen from './LayoutScreen/LayoutScreen';
 import LayoutContext, {LayoutContextProvider, TYPES} from './context';
@@ -111,12 +110,6 @@ const Layout: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 	const [activeIndex, setActiveIndex] = useState<number>(0);
 	const [loading, setLoading] = useState<boolean>(true);
 
-	const onCloseSidePanel = () => {
-		const parentWindow = Liferay.Util.getOpener();
-
-		parentWindow.Liferay.fire('close-side-panel');
-	};
-
 	useEffect(() => {
 		const makeFetch = async () => {
 			const objectLayoutResponse = await fetch(
@@ -206,10 +199,8 @@ const Layout: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 			(objectField) => objectField.inLayout
 		);
 
-		const parentWindow = Liferay.Util.getOpener();
-
 		if (invalidateRequired(objectLayout.name[defaultLanguageId])) {
-			parentWindow.Liferay.Util.openToast({
+			openToast({
 				message: Liferay.Language.get('a-name-is-required'),
 				type: 'danger',
 			});
@@ -218,7 +209,7 @@ const Layout: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 		}
 
 		if (!hasFieldsInLayout) {
-			parentWindow.Liferay.Util.openToast({
+			openToast({
 				message: Liferay.Language.get('please-add-at-least-one-field'),
 				type: 'danger',
 			});
@@ -239,13 +230,12 @@ const Layout: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 			window.location.reload();
 		}
 		else if (response.ok) {
-			onCloseSidePanel();
+			closeSidePanel();
 
-			parentWindow.Liferay.Util.openToast({
+			openToast({
 				message: Liferay.Language.get(
 					'the-object-layout-was-updated-successfully'
 				),
-				type: 'success',
 			});
 		}
 		else {
@@ -253,7 +243,7 @@ const Layout: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 				title = Liferay.Language.get('an-error-occurred'),
 			} = (await response.json()) as {title: any};
 
-			parentWindow.Liferay.Util.openToast({
+			openToast({
 				message: title,
 				type: 'danger',
 			});
@@ -261,7 +251,11 @@ const Layout: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 	};
 
 	return (
-		<>
+		<SidePanelContent
+			onSave={saveObjectLayout}
+			readOnly={isViewOnly || loading}
+			title={Liferay.Language.get('layout')}
+		>
 			<ClayTabs className="side-panel-iframe__tabs">
 				{TABS.map(({label}, index) => (
 					<ClayTabs.Item
@@ -274,38 +268,16 @@ const Layout: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 				))}
 			</ClayTabs>
 
-			<SidePanelContent className="side-panel-content--layout">
-				<SidePanelContent.Body>
-					<ClayTabs.Content activeIndex={activeIndex} fade>
-						{TABS.map(({Component}, index) => (
-							<ClayTabs.TabPane key={index}>
-								{!loading && <Component />}
-							</ClayTabs.TabPane>
-						))}
-					</ClayTabs.Content>
-				</SidePanelContent.Body>
-
-				{!loading && (
-					<SidePanelContent.Footer>
-						<ClayButton.Group spaced>
-							<ClayButton
-								displayType="secondary"
-								onClick={onCloseSidePanel}
-							>
-								{Liferay.Language.get('cancel')}
-							</ClayButton>
-
-							<ClayButton
-								disabled={isViewOnly}
-								onClick={() => saveObjectLayout()}
-							>
-								{Liferay.Language.get('save')}
-							</ClayButton>
-						</ClayButton.Group>
-					</SidePanelContent.Footer>
-				)}
-			</SidePanelContent>
-		</>
+			<SidePanelContent.Container>
+				<ClayTabs.Content activeIndex={activeIndex} fade>
+					{TABS.map(({Component}, index) => (
+						<ClayTabs.TabPane key={index}>
+							{!loading && <Component />}
+						</ClayTabs.TabPane>
+					))}
+				</ClayTabs.Content>
+			</SidePanelContent.Container>
+		</SidePanelContent>
 	);
 };
 

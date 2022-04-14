@@ -44,8 +44,7 @@ export declare function useObjectFieldForm({
 		}
 	>;
 	handleChange: React.ChangeEventHandler<HTMLInputElement>;
-	handleSubmit: React.FormEventHandler<HTMLFormElement> &
-		React.MouseEventHandler<HTMLButtonElement>;
+	handleSubmit: React.FormEventHandler<HTMLFormElement>;
 	setValues: (values: Partial<ObjectField>) => void;
 	values: Partial<ObjectField>;
 };

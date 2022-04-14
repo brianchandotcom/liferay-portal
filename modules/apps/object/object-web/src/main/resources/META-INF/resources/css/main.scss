@@ -1,13 +1,16 @@
+@import 'atlas-variables';
+
 .side-panel-iframe {
 	& &-content {
 		padding: 0 !important;
 	}
 
 	& &-header {
-		background-color: #fff !important;
+		background-color: $white !important;
 	}
 
 	&__tabs {
+		background-color: $white;
 		padding: 0.5rem 1rem 0;
 
 		.nav-link {
@@ -17,7 +20,7 @@
 }
 
 .side-panel-content {
-	background-color: #f1f2f5;
+	background-color: $light;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
@@ -27,13 +30,9 @@
 	&__footer {
 		padding: 1.5rem;
 	}
-
-	&--layout {
-		height: calc(100vh - 118px);
-	}
 }
 
 .text-small {
-	color: #a7a9bc !important;
+	color: $secondary-l1 !important;
 	font-size: 0.75rem;
 }

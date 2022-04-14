@@ -12,7 +12,6 @@
  * details.
  */
 
-import ClayForm from '@clayui/form';
 import React, {ChangeEventHandler, useState} from 'react';
 
 import Editor from '../Editor/Editor';
@@ -40,7 +39,7 @@ function BasicInfo({
 	);
 
 	return (
-		<ClayForm className="lfr-objects__edit-object-validation">
+		<>
 			<div className="sheet">
 				<h2 className="sheet-title">{componentLabel}</h2>
 
@@ -74,7 +73,7 @@ function BasicInfo({
 				disabled={disabled}
 				eventTypes={[Liferay.Language.get('on-submission')]}
 			/>
-		</ClayForm>
+		</>
 	);
 }
 
@@ -94,7 +93,7 @@ function Conditions({
 	);
 
 	return (
-		<ClayForm className="lfr-objects__groovy-field">
+		<>
 			<div className="sheet">
 				<h2 className="sheet-title">
 					{Liferay.Language.get('groovy')}
@@ -126,7 +125,7 @@ function Conditions({
 					translations={values.errorLabel as LocalizedValue<string>}
 				/>
 			</div>
-		</ClayForm>
+		</>
 	);
 }
 

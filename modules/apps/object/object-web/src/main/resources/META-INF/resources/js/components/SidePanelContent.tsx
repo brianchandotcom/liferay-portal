@@ -12,34 +12,118 @@
  * details.
  */
 
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
+import ClayForm from '@clayui/form';
 import classNames from 'classnames';
 import React from 'react';
 
-interface ISidePanelContentBody extends React.HTMLAttributes<HTMLElement> {}
-interface ISidePanelContentFooter extends React.HTMLAttributes<HTMLElement> {}
+import './SidePanelContent.scss';
 
-const SidePanelContent: React.FC<React.HTMLAttributes<HTMLElement>> & {
-	Body: React.FC<ISidePanelContentBody>;
-	Footer: React.FC<ISidePanelContentFooter>;
-} = ({children, className}) => {
+export function closeSidePanel() {
+	const parentWindow = Liferay.Util.getOpener();
+	parentWindow.Liferay.fire('close-side-panel');
+}
+
+export function openToast(options: {
+	message: string;
+	type?: 'danger' | 'success';
+}) {
+	const parentWindow = Liferay.Util.getOpener();
+	parentWindow.Liferay.Util.openToast(options);
+}
+
+export function Container({children, className}: IContainerProps) {
 	return (
-		<div className={classNames('side-panel-content', className)}>
+		<div
+			className={classNames(
+				'lfr-objects__side-panel-content-container',
+				className
+			)}
+		>
 			{children}
 		</div>
 	);
-};
+}
 
-const SidePanelContentBody: React.FC<ISidePanelContentBody> = ({children}) => {
-	return <div className="side-panel-content__body">{children}</div>;
-};
-
-const SidePanelContentFooter: React.FC<ISidePanelContentFooter> = ({
+export function SidePanelContent({
 	children,
-}) => {
-	return <div className="side-panel-content__footer">{children}</div>;
-};
+	className,
+	onSave,
+	readOnly,
+	title,
+}: IProps) {
+	const saveProps: {
+		onClick?: () => void;
+		type?: 'submit';
+	} = onSave ? {onClick: onSave} : {type: 'submit'};
 
-SidePanelContent.Body = SidePanelContentBody;
-SidePanelContent.Footer = SidePanelContentFooter;
+	return (
+		<div
+			className={classNames('lfr-objects__side-panel-content', className)}
+		>
+			<div className="lfr-objects__side-panel-content-header">
+				<h3 className="mb-0">{title}</h3>
+
+				<ClayButtonWithIcon
+					className="side-panel-iframe-close"
+					displayType="unstyled"
+					monospaced={false}
+					onClick={closeSidePanel}
+					symbol="times"
+				/>
+			</div>
+
+			{children}
+
+			<ClayButton.Group
+				className="lfr-objects__side-panel-content-container"
+				spaced
+			>
+				<ClayButton displayType="secondary" onClick={closeSidePanel}>
+					{Liferay.Language.get('cancel')}
+				</ClayButton>
+
+				<ClayButton disabled={readOnly} {...saveProps}>
+					{Liferay.Language.get('save')}
+				</ClayButton>
+			</ClayButton.Group>
+		</div>
+	);
+}
+
+export function SidePanelForm({
+	children,
+	onSubmit,
+	readOnly,
+	title,
+}: ISidePanelFormProps) {
+	return (
+		<ClayForm onSubmit={onSubmit}>
+			<SidePanelContent readOnly={readOnly} title={title}>
+				{children}
+			</SidePanelContent>
+		</ClayForm>
+	);
+}
+
+SidePanelContent.Container = Container;
 
 export default SidePanelContent;
+
+interface IContainerProps {
+	children: React.ReactNode;
+	className?: string;
+}
+
+interface CommonProps extends IContainerProps {
+	readOnly?: boolean;
+	title: string;
+}
+
+interface IProps extends CommonProps {
+	onSave?: () => void;
+}
+
+interface ISidePanelFormProps extends CommonProps {
+	onSubmit?: React.FormEventHandler<HTMLFormElement>;
+}

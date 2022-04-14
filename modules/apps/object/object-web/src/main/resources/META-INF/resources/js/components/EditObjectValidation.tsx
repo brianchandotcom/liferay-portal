@@ -12,7 +12,6 @@
  * details.
  */
 
-import ClayButton from '@clayui/button';
 import ClayTabs from '@clayui/tabs';
 import {fetch} from 'frontend-js-web';
 import React, {useState} from 'react';
@@ -20,7 +19,7 @@ import React, {useState} from 'react';
 import {availableLocales, defaultLocale} from '../utils/locale';
 import {BasicInfo, Conditions} from './DataValidation/ObjectValidationTabs';
 import {useObjectValidationForm} from './ObjectValidationFormBase';
-import SidePanelContent from './SidePanelContent';
+import {SidePanelForm} from './SidePanelContent';
 
 const TABS = [
 	{
@@ -84,7 +83,10 @@ export default function EditObjectValidation({
 	} = useObjectValidationForm({initialValues, onSubmit});
 
 	return (
-		<>
+		<SidePanelForm
+			onSubmit={handleSubmit}
+			title={initialValues.name}
+		>
 			<ClayTabs className="side-panel-iframe__tabs">
 				{TABS.map(({label}, index) => (
 					<ClayTabs.Item
@@ -97,42 +99,23 @@ export default function EditObjectValidation({
 				))}
 			</ClayTabs>
 
-			<SidePanelContent className="side-panel-content--layout">
-				<SidePanelContent.Body>
-					<ClayTabs.Content activeIndex={activeIndex} fade>
-						{TABS.map(({Component, label}, index) => (
-							<ClayTabs.TabPane key={index}>
-								<Component
-									componentLabel={label}
-									defaultLocale={defaultLocale!}
-									disabled={readOnly}
-									errors={errors}
-									handleChange={handleChange}
-									locales={availableLocales}
-									setValues={setValues}
-									values={values}
-								/>
-							</ClayTabs.TabPane>
-						))}
-					</ClayTabs.Content>
-				</SidePanelContent.Body>
-
-				<SidePanelContent.Footer>
-					<ClayButton.Group spaced>
-						<ClayButton
-							displayType="secondary"
-							onClick={closeSidePanel}
-						>
-							{Liferay.Language.get('cancel')}
-						</ClayButton>
-
-						<ClayButton disabled={readOnly} onClick={handleSubmit}>
-							{Liferay.Language.get('save')}
-						</ClayButton>
-					</ClayButton.Group>
-				</SidePanelContent.Footer>
-			</SidePanelContent>
-		</>
+			<ClayTabs.Content activeIndex={activeIndex} fade>
+				{TABS.map(({Component, label}, index) => (
+					<ClayTabs.TabPane key={index}>
+						<Component
+							componentLabel={label}
+							defaultLocale={defaultLocale!}
+							disabled={readOnly}
+							errors={errors}
+							handleChange={handleChange}
+							locales={availableLocales}
+							setValues={setValues}
+							values={values}
+						/>
+					</ClayTabs.TabPane>
+				))}
+			</ClayTabs.Content>
+		</SidePanelForm>
 	);
 }
 

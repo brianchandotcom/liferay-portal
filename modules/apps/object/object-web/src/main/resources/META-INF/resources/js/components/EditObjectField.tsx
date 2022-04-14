@@ -12,7 +12,6 @@
  * details.
  */
 
-import ClayButton from '@clayui/button';
 import ClayForm, {ClayRadio, ClayRadioGroup, ClayToggle} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {useFeatureFlag} from 'data-engine-js-components-web';
@@ -37,6 +36,7 @@ import ObjectFieldFormBase, {
 import Sheet from './Sheet';
 
 import './EditObjectField.scss';
+import {SidePanelForm, closeSidePanel, openToast} from './SidePanelContent';
 
 const locales: {label: string; symbol: string}[] = [];
 const languageLabels: string[] = [];
@@ -50,11 +50,6 @@ Object.entries(languages).forEach(([languageId, label]) => {
 
 	languageLabels.push(label);
 });
-
-function closeSidePanel() {
-	const parentWindow = Liferay.Util.getOpener();
-	parentWindow.Liferay.fire('close-side-panel');
-}
 
 export default function EditObjectField({
 	forbiddenChars,
@@ -81,14 +76,12 @@ export default function EditObjectField({
 			}
 		);
 
-		const parentWindow = Liferay.Util.getOpener();
 		if (response.ok) {
 			closeSidePanel();
-			parentWindow.Liferay.Util.openToast({
+			openToast({
 				message: Liferay.Language.get(
 					'the-object-field-was-updated-successfully'
 				),
-				type: 'success',
 			});
 		}
 		else {
@@ -100,7 +93,7 @@ export default function EditObjectField({
 				(error?.type && ERRORS[error.type]) ??
 				Liferay.Language.get('an-error-occurred');
 
-			parentWindow.Liferay.Util.openToast({message, type: 'danger'});
+			openToast({message, type: 'danger'});
 		}
 	};
 
@@ -136,9 +129,11 @@ export default function EditObjectField({
 		});
 
 	return (
-		<ClayForm
+		<SidePanelForm
 			className="lfr-objects__edit-object-field"
 			onSubmit={handleSubmit}
+			readOnly={readOnly}
+			title={Liferay.Language.get('field')}
 		>
 			<Sheet title={Liferay.Language.get('basic-info')}>
 				<InputLocalized
@@ -199,17 +194,7 @@ export default function EditObjectField({
 					setValues={setValues}
 				/>
 			)}
-
-			<div className="lfr-objects__edit-object-field-container mt-4">
-				<ClayButton displayType="secondary" onClick={closeSidePanel}>
-					{Liferay.Language.get('cancel')}
-				</ClayButton>
-
-				<ClayButton disabled={readOnly} type="submit">
-					{Liferay.Language.get('save')}
-				</ClayButton>
-			</div>
-		</ClayForm>
+		</SidePanelForm>
 	);
 }
 
@@ -339,7 +324,7 @@ function MaxLengthProperties({
 
 	return (
 		<>
-			<ClayForm.Group className="lfr-objects__edit-object-field-container">
+			<ClayForm.Group>
 				<ClayToggle
 					disabled={disabled}
 					label={Liferay.Language.get('limit-characters')}
@@ -360,8 +345,8 @@ function MaxLengthProperties({
 					}}
 					toggled={!!settings.showCounter}
 				/>
-
-				<div
+				&nbsp;
+				<span
 					data-tooltip-align="top"
 					title={Liferay.Language.get(
 						'when-enabled-a-character-counter-will-be-shown-to-the-user'
@@ -371,7 +356,7 @@ function MaxLengthProperties({
 						className="lfr-objects__edit-object-field-tooltip-icon"
 						symbol="question-circle-full"
 					/>
-				</div>
+				</span>
 			</ClayForm.Group>
 			<ClayForm.Group>
 				{settings.showCounter && (

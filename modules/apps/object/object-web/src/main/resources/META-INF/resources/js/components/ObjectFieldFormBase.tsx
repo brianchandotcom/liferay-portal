@@ -476,7 +476,7 @@ function AttachmentSourceProperty({
 							)}
 						>
 							<ClayIcon
-								className="lfr-objects__edit-object-field-tooltip-icon"
+								className="lfr-objects__object-field-form-base-tooltip-icon"
 								symbol="question-circle-full"
 							/>
 						</div>

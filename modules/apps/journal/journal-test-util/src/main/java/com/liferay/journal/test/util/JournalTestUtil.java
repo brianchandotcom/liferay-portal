@@ -207,6 +207,26 @@ public class JournalTestUtil {
 	}
 
 	public static JournalArticle addArticle(
+			long groupId, long folderId, Map<Locale, String> friendlyUrlMap)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		serviceContext.setCommand(Constants.ADD);
+		serviceContext.setLayoutFullURL("http://localhost");
+
+		return addArticle(
+			RandomTestUtil.randomString(), groupId, folderId,
+			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, null, true,
+			_getLocalizedMap(RandomTestUtil.randomString()),
+			_getLocalizedMap(RandomTestUtil.randomString()), friendlyUrlMap,
+			_getLocalizedMap(RandomTestUtil.randomString()), null,
+			LocaleUtil.getSiteDefault(), null, null, false, false,
+			serviceContext);
+	}
+
+	public static JournalArticle addArticle(
 			long groupId, long folderId, ServiceContext serviceContext)
 		throws Exception {
 
@@ -352,9 +372,9 @@ public class JournalTestUtil {
 			String externalReferenceCode, long groupId, long folderId,
 			long classNameId, String articleId, boolean autoArticleId,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			Map<Locale, String> contentMap, String layoutUuid,
-			Locale defaultLocale, Date displayDate, Date expirationDate,
-			boolean workflowEnabled, boolean approved,
+			Map<Locale, String> friendlyUrlMap, Map<Locale, String> contentMap,
+			String layoutUuid, Locale defaultLocale, Date displayDate,
+			Date expirationDate, boolean workflowEnabled, boolean approved,
 			ServiceContext serviceContext)
 		throws Exception {
 
@@ -429,12 +449,29 @@ public class JournalTestUtil {
 			externalReferenceCode, serviceContext.getUserId(), groupId,
 			folderId, classNameId, 0, articleId, autoArticleId,
 			JournalArticleConstants.VERSION_DEFAULT, titleMap, descriptionMap,
-			titleMap, content, ddmStructure.getStructureKey(),
+			friendlyUrlMap, content, ddmStructure.getStructureKey(),
 			ddmTemplate.getTemplateKey(), layoutUuid, displayDateMonth,
 			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, neverExpire, 0, 0, 0, 0,
 			0, true, true, false, null, null, null, null, serviceContext);
+	}
+
+	public static JournalArticle addArticle(
+			String externalReferenceCode, long groupId, long folderId,
+			long classNameId, String articleId, boolean autoArticleId,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			Map<Locale, String> contentMap, String layoutUuid,
+			Locale defaultLocale, Date displayDate, Date expirationDate,
+			boolean workflowEnabled, boolean approved,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		return addArticle(
+			externalReferenceCode, groupId, folderId, classNameId, articleId,
+			autoArticleId, titleMap, descriptionMap, titleMap, contentMap,
+			layoutUuid, defaultLocale, displayDate, expirationDate,
+			workflowEnabled, approved, serviceContext);
 	}
 
 	public static JournalArticle addArticle(

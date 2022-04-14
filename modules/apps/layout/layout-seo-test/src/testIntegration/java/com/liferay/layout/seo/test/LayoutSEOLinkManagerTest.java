@@ -93,7 +93,7 @@ public class LayoutSEOLinkManagerTest {
 			"default-language-url",
 			() -> _testWithSiteDefaultLanguage(
 				_layout.getGroupId(), LocaleUtil.US,
-				() -> _assertLocalizedLayoutSEOLinks(
+				() -> _assertPageLocalizedLayoutSEOLinks(
 					LocaleUtil.US, "default-language-url")));
 	}
 
@@ -107,7 +107,7 @@ public class LayoutSEOLinkManagerTest {
 			"default-language-url",
 			() -> _testWithSiteDefaultLanguage(
 				_layout.getGroupId(), LocaleUtil.US,
-				() -> _assertLocalizedLayoutSEOLinks(
+				() -> _assertPageLocalizedLayoutSEOLinks(
 					LocaleUtil.SPAIN, "default-language-url")));
 	}
 
@@ -121,7 +121,7 @@ public class LayoutSEOLinkManagerTest {
 			"localized-url",
 			() -> _testWithSiteDefaultLanguage(
 				_layout.getGroupId(), LocaleUtil.US,
-				() -> _assertLocalizedLayoutSEOLinks(
+				() -> _assertPageLocalizedLayoutSEOLinks(
 					LocaleUtil.US, "localized-url")));
 	}
 
@@ -135,7 +135,7 @@ public class LayoutSEOLinkManagerTest {
 			"localized-url",
 			() -> _testWithSiteDefaultLanguage(
 				_layout.getGroupId(), LocaleUtil.US,
-				() -> _assertLocalizedLayoutSEOLinks(
+				() -> _assertPageLocalizedLayoutSEOLinks(
 					LocaleUtil.SPAIN, "localized-url")));
 	}
 
@@ -184,7 +184,7 @@ public class LayoutSEOLinkManagerTest {
 			LayoutSEOLink.Relationship.CANONICAL);
 	}
 
-	private void _assertLocalizedLayoutSEOLinks(
+	private void _assertPageLocalizedLayoutSEOLinks(
 			Locale locale, String canonicalURLConfiguration)
 		throws PortalException {
 

@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.search.experiences.blueprint.parameter.SXPParameter;
@@ -81,6 +82,7 @@ public class UserSXPParameterContributorTest {
 		MockitoAnnotations.initMocks(this);
 
 		_mockLanguage();
+		_mockPortal();
 		_mockUser();
 
 		_searchContext.setAttribute(
@@ -97,7 +99,7 @@ public class UserSXPParameterContributorTest {
 		_userSXPParameterContributor = new UserSXPParameterContributor(
 			_mockExpandoColumnLocalService(Collections.emptyList()),
 			_mockExpandoValueLocalService(Collections.emptyList()), _language,
-			_mockRoleLocalService(Collections.emptyList()),
+			_portal, _mockRoleLocalService(Collections.emptyList()),
 			_mockSegmentsEntryRetriever(segmentsEntryIds),
 			_mockUserGroupGroupRoleLocalService(Collections.emptyList()),
 			_mockUserGroupLocalService(Collections.emptyList()),
@@ -187,7 +189,7 @@ public class UserSXPParameterContributorTest {
 		_userSXPParameterContributor = new UserSXPParameterContributor(
 			_mockExpandoColumnLocalService(Collections.emptyList()),
 			_mockExpandoValueLocalService(Collections.emptyList()), _language,
-			_mockRoleLocalService(Collections.emptyList()),
+			_portal, _mockRoleLocalService(Collections.emptyList()),
 			_mockSegmentsEntryRetriever(new long[0]),
 			_mockUserGroupGroupRoleLocalService(Collections.emptyList()),
 			_mockUserGroupLocalService(Collections.emptyList()),
@@ -401,6 +403,13 @@ public class UserSXPParameterContributorTest {
 	public void testIsMale() throws Exception {
 		_testSXPParameter(
 			value -> (boolean)value == _user.isMale(), "user.is_male");
+	}
+
+	@Test
+	public void testIsOmniadmin() throws Exception {
+		_testSXPParameter(
+			value -> _portal.isOmniadmin(_user.getUserId()),
+			"user.is_omniadmin");
 	}
 
 	@Test
@@ -639,7 +648,7 @@ public class UserSXPParameterContributorTest {
 		_userSXPParameterContributor = new UserSXPParameterContributor(
 			_mockExpandoColumnLocalService(Collections.emptyList()),
 			_mockExpandoValueLocalService(Collections.emptyList()), _language,
-			_mockRoleLocalService(Collections.emptyList()),
+			_portal, _mockRoleLocalService(Collections.emptyList()),
 			_mockSegmentsEntryRetriever(new long[0]),
 			_mockUserGroupGroupRoleLocalService(Collections.emptyList()),
 			_mockUserGroupLocalService(Arrays.asList(userGroup1, userGroup2)),
@@ -739,6 +748,16 @@ public class UserSXPParameterContributorTest {
 			_language
 		).getLanguageId(
 			Matchers.any(Locale.class)
+		);
+	}
+
+	private void _mockPortal() {
+		Mockito.doReturn(
+			true
+		).when(
+			_portal
+		).isOmniadmin(
+			Mockito.anyLong()
 		);
 	}
 
@@ -974,7 +993,7 @@ public class UserSXPParameterContributorTest {
 						add(expandoValue);
 					}
 				}),
-			_language, _mockRoleLocalService(Collections.emptyList()),
+			_language, _portal, _mockRoleLocalService(Collections.emptyList()),
 			_mockSegmentsEntryRetriever(new long[0]),
 			_mockUserGroupGroupRoleLocalService(Collections.emptyList()),
 			_mockUserGroupLocalService(Collections.emptyList()),
@@ -1005,7 +1024,7 @@ public class UserSXPParameterContributorTest {
 		_userSXPParameterContributor = new UserSXPParameterContributor(
 			_mockExpandoColumnLocalService(Collections.emptyList()),
 			_mockExpandoValueLocalService(Collections.emptyList()), _language,
-			_mockRoleLocalService(Collections.emptyList()),
+			_portal, _mockRoleLocalService(Collections.emptyList()),
 			_mockSegmentsEntryRetriever(new long[0]),
 			_mockUserGroupGroupRoleLocalService(Collections.emptyList()),
 			_mockUserGroupLocalService(Collections.emptyList()),
@@ -1025,6 +1044,10 @@ public class UserSXPParameterContributorTest {
 	private Language _language;
 
 	private final Locale _locale = LocaleUtil.US;
+
+	@Mock
+	private Portal _portal;
+
 	private final SearchContext _searchContext = new SearchContext();
 	private final Set<SXPParameter> _sxpParameters = new HashSet<>();
 

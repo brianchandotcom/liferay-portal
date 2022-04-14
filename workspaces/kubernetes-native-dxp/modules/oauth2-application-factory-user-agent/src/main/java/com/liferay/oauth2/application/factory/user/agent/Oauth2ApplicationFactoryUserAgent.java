@@ -94,13 +94,13 @@ public class Oauth2ApplicationFactoryUserAgent {
 				_oAuth2ApplicationUserAgentConfiguration.description()) ||
 			!Objects.equals(
 				oAuth2Application.getHomePageURL(),
-				_oAuth2ApplicationUserAgentConfiguration.homePageUrl()) ||
+				_oAuth2ApplicationUserAgentConfiguration.homePageURL()) ||
 			!Objects.equals(
 				oAuth2Application.getPrivacyPolicyURL(),
-				_oAuth2ApplicationUserAgentConfiguration.privacyPolicyUrl()) ||
+				_oAuth2ApplicationUserAgentConfiguration.privacyPolicyURL()) ||
 			!Objects.equals(
 				oAuth2Application.getRedirectURIs(),
-				_oAuth2ApplicationUserAgentConfiguration.redirectUrl())) {
+				_oAuth2ApplicationUserAgentConfiguration.redirectURL())) {
 
 			update = true;
 		}
@@ -117,12 +117,12 @@ public class Oauth2ApplicationFactoryUserAgent {
 					oAuth2Application.getClientSecret(),
 					_oAuth2ApplicationUserAgentConfiguration.description(),
 					oAuth2Application.getFeaturesList(),
-					_oAuth2ApplicationUserAgentConfiguration.homePageUrl(),
+					_oAuth2ApplicationUserAgentConfiguration.homePageURL(),
 					oAuth2Application.getIconFileEntryId(),
 					oAuth2Application.getName(),
 					_oAuth2ApplicationUserAgentConfiguration.privacyPolicyURL(),
 					Collections.singletonList(
-						_oAuth2ApplicationUserAgentConfiguration.redirectUrl()),
+						_oAuth2ApplicationUserAgentConfiguration.redirectURL()),
 					oAuth2Application.getRememberDevice(),
 					oAuth2Application.getTrustedApplication());
 		}
@@ -183,11 +183,11 @@ public class Oauth2ApplicationFactoryUserAgent {
 				OAuth2SecureRandomGenerator.generateClientId(),
 				ClientProfile.USER_AGENT_APPLICATION.id(),
 				null, _oAuth2ApplicationUserAgentConfiguration.description(),
-				null, _oAuth2ApplicationUserAgentConfiguration.homePageUrl(), 0,
+				null, _oAuth2ApplicationUserAgentConfiguration.homePageURL(), 0,
 				_oAuth2ApplicationUserAgentConfiguration.name(),
 				_oAuth2ApplicationUserAgentConfiguration.privacyPolicyURL(),
 				Collections.singletonList(
-					_oAuth2ApplicationUserAgentConfiguration.redirectUrl()),
+					_oAuth2ApplicationUserAgentConfiguration.redirectURL()),
 				false, true, null,
 				new ServiceContext());
 

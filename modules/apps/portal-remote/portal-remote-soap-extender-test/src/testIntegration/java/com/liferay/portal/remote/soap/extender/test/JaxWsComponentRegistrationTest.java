@@ -44,10 +44,9 @@ public class JaxWsComponentRegistrationTest extends BaseJaxWsTestCase {
 	@Ignore
 	@Test
 	public void testIsRegistered() throws Exception {
-		String greeting = getGreeting(
-			"http://localhost:8080/o/soap-test/greeter?wsdl");
-
-		Assert.assertEquals("Greetings.", greeting);
+		Assert.assertEquals(
+			"Greetings.",
+			getGreeting("http://localhost:8080/o/soap-test/greeter?wsdl"));
 	}
 
 	@Ignore

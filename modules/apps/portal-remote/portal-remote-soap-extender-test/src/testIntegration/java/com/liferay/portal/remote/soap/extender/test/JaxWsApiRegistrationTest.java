@@ -41,10 +41,9 @@ public class JaxWsApiRegistrationTest extends BaseJaxWsTestCase {
 	@Ignore
 	@Test
 	public void testGreeter() throws Exception {
-		String greeting = getGreeting(
-			"http://localhost:8080/o/soap-test/greeterApi?wsdl");
-
-		Assert.assertEquals("Greetings.", greeting);
+		Assert.assertEquals(
+			"Greetings.",
+			getGreeting("http://localhost:8080/o/soap-test/greeterApi?wsdl"));
 	}
 
 	@Override

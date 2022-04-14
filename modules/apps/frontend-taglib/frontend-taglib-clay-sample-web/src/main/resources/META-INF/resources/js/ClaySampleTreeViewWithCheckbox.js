@@ -38,7 +38,7 @@ export default function ClaySampleTreeViewWithCheckbox() {
 								{id: 11, name: 'Bookmarks'},
 							],
 							id: 7,
-							name: 'Content e Data',
+							name: 'Content & Data',
 						},
 						{
 							children: [],

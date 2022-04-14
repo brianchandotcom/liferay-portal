@@ -74,7 +74,7 @@ definition {
 
 		TestUtils.assertEquals(
 			actual = "${orderCount}",
-			expected = "0");
+			expected = "${emptyCount}");
 
 		CommerceJSONShipmentsAPI._deleteAllCommerceShipments();
 

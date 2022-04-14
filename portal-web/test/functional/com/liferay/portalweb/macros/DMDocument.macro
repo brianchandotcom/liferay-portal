@@ -2474,7 +2474,7 @@ definition {
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Documents and Media",
 			configurationName = "Documents and Media Size Limits",
-			configurationScope = "Virtual Instance Scope");
+			configurationScope = "Site Scope");
 
 		if ("${indexNumber}" == "2") {
 			Click(locator1 = "Button#DUPLICATE");

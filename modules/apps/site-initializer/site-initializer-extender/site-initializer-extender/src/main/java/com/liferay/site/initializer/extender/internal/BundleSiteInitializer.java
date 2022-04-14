@@ -419,12 +419,15 @@ public class BundleSiteInitializer implements SiteInitializer {
 					serviceContext.fetchUser()
 				).build();
 
+			Map<String, ObjectDefinition> createdObjectDefinitions =
+				new HashMap<>();
+
 			Map<String, String> objectDefinitionIdsStringUtilReplaceValues =
 				_invoke(
 					() -> _addObjectDefinitions(
+						createdObjectDefinitions,
 						listTypeDefinitionIdsStringUtilReplaceValues,
-						objectDefinitionResource, serviceContext,
-						siteNavigationMenuItemSettingsBuilder));
+						objectDefinitionResource, serviceContext));
 
 			_invoke(
 				() -> _addCPDefinitions(
@@ -435,6 +438,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 				() -> _addObjectRelationships(
 					objectDefinitionIdsStringUtilReplaceValues,
 					serviceContext));
+
+			_invoke(
+				() -> _addObjectEntries(
+					createdObjectDefinitions, serviceContext,
+					siteNavigationMenuItemSettingsBuilder));
 			_invoke(
 				() -> _addPermissions(
 					objectDefinitionIdsStringUtilReplaceValues,
@@ -1608,11 +1616,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private Map<String, String> _addObjectDefinitions(
+			Map<String, ObjectDefinition> createdObjectDefinitions,
 			Map<String, String> listTypeDefinitionIdsStringUtilReplaceValues,
 			ObjectDefinitionResource objectDefinitionResource,
-			ServiceContext serviceContext,
-			SiteNavigationMenuItemSettingsBuilder
-				siteNavigationMenuItemSettingsBuilder)
+			ServiceContext serviceContext)
 		throws Exception {
 
 		Map<String, String> objectDefinitionIdsStringUtilReplaceValues =
@@ -1625,20 +1632,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 			return objectDefinitionIdsStringUtilReplaceValues;
 		}
 
-		Set<String> sortedResourcePaths = new TreeSet<>(
-			new NaturalOrderStringComparator());
-
-		sortedResourcePaths.addAll(resourcePaths);
-
-		resourcePaths = sortedResourcePaths;
-
 		List<com.liferay.object.model.ObjectDefinition> objectDefinitions =
 			_objectDefinitionLocalService.getObjectDefinitions(
 				serviceContext.getCompanyId(), true,
 				WorkflowConstants.STATUS_APPROVED);
-
-		Map<String, String> objectEntryIdsStringUtilReplaceValues =
-			new HashMap<>();
 
 		for (com.liferay.object.model.ObjectDefinition objectDefinition :
 				objectDefinitions) {
@@ -1649,10 +1646,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 
 		for (String resourcePath : resourcePaths) {
-			if (resourcePath.endsWith(".object-entries.json")) {
-				continue;
-			}
-
 			String json = SiteInitializerUtil.read(
 				resourcePath, _servletContext);
 
@@ -1686,6 +1679,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 				objectDefinitionResource.postObjectDefinitionPublish(
 					objectDefinition.getId());
+
+				createdObjectDefinitions.put(
+					objectDefinition.getName(), objectDefinition);
 			}
 			else {
 				objectDefinition =
@@ -1696,6 +1692,54 @@ public class BundleSiteInitializer implements SiteInitializer {
 			objectDefinitionIdsStringUtilReplaceValues.put(
 				"OBJECT_DEFINITION_ID:" + objectDefinition.getName(),
 				String.valueOf(objectDefinition.getId()));
+		}
+
+		return objectDefinitionIdsStringUtilReplaceValues;
+	}
+
+	private void _addObjectEntries(
+			Map<String, ObjectDefinition> createdObjectDefinitions,
+			ServiceContext serviceContext,
+			SiteNavigationMenuItemSettingsBuilder
+				siteNavigationMenuItemSettingsBuilder)
+		throws Exception {
+
+		Set<String> resourcePaths = _servletContext.getResourcePaths(
+			"/site-initializer/object-entries");
+
+		if (SetUtil.isEmpty(resourcePaths)) {
+			return;
+		}
+
+		Set<String> sortedResourcePaths = new TreeSet<>(
+			new NaturalOrderStringComparator());
+
+		sortedResourcePaths.addAll(resourcePaths);
+
+		resourcePaths = sortedResourcePaths;
+
+		Map<String, String> objectEntryIdsStringUtilReplaceValues =
+			new HashMap<>();
+
+		for (String resourcePath : resourcePaths) {
+			String json = SiteInitializerUtil.read(
+				resourcePath, _servletContext);
+
+			if (json == null) {
+				continue;
+			}
+
+			json = StringUtil.replace(
+				json, "[$", "$]", objectEntryIdsStringUtilReplaceValues);
+
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(json);
+
+			ObjectDefinition objectDefinition = createdObjectDefinitions.get(
+				jsonObject.getString("objectDefinitionName"));
+
+			if (objectDefinition == null) {
+				continue;
+			}
 
 			long groupId = serviceContext.getScopeGroupId();
 
@@ -1704,55 +1748,42 @@ public class BundleSiteInitializer implements SiteInitializer {
 					ObjectDefinitionConstants.SCOPE_COMPANY)) {
 
 				groupId = 0;
-
-				if (existingObjectDefinition != null) {
-					continue;
-				}
 			}
 
-			String objectEntriesJSON = SiteInitializerUtil.read(
-				StringUtil.replaceLast(
-					resourcePath, ".json", ".object-entries.json"),
-				_servletContext);
+			JSONArray jsonArray = jsonObject.getJSONArray("entries");
 
-			if (objectEntriesJSON == null) {
+			if (JSONUtil.isEmpty(jsonArray)) {
 				continue;
 			}
 
-			objectEntriesJSON = StringUtil.replace(
-				objectEntriesJSON, "[$", "$]",
-				objectEntryIdsStringUtilReplaceValues);
-
-			JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
-				objectEntriesJSON);
-
 			for (int i = 0; i < jsonArray.length(); i++) {
-				JSONObject jsonObject = jsonArray.getJSONObject(i);
+				JSONObject objectEntryJSONObject = jsonArray.getJSONObject(i);
 
 				ObjectEntry objectEntry =
 					_objectEntryLocalService.addObjectEntry(
 						serviceContext.getUserId(), groupId,
 						objectDefinition.getId(),
 						ObjectMapperUtil.readValue(
-							Serializable.class, String.valueOf(jsonObject)),
+							Serializable.class,
+							String.valueOf(objectEntryJSONObject)),
 						serviceContext);
 
-				if (jsonObject.has("externalReferenceCode")) {
+				if (objectEntryJSONObject.has("externalReferenceCode")) {
 					objectEntryIdsStringUtilReplaceValues.put(
 						StringBundler.concat(
 							objectDefinition.getName(), "#",
-							jsonObject.getString("externalReferenceCode")),
+							objectEntryJSONObject.getString(
+								"externalReferenceCode")),
 						String.valueOf(objectEntry.getObjectEntryId()));
 				}
 
-				String objectEntrySiteInitializerKey = jsonObject.getString(
-					"objectEntrySiteInitializerKey");
+				String objectEntrySiteInitializerKey =
+					objectEntryJSONObject.getString(
+						"objectEntrySiteInitializerKey");
 
 				if (objectEntrySiteInitializerKey == null) {
 					continue;
 				}
-
-				String objectDefinitionName = objectDefinition.getName();
 
 				siteNavigationMenuItemSettingsBuilder.put(
 					objectEntrySiteInitializerKey,
@@ -1762,14 +1793,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 							classPK = String.valueOf(
 								objectEntry.getObjectEntryId());
 							title =
-								objectDefinitionName + StringPool.SPACE +
+								objectDefinition.getName() + StringPool.SPACE +
 									objectEntry.getObjectEntryId();
 						}
 					});
 			}
 		}
-
-		return objectDefinitionIdsStringUtilReplaceValues;
 	}
 
 	private void _addObjectRelationships(

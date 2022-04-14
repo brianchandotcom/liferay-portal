@@ -52,7 +52,7 @@
 </tr>
 <tr>
 	<td>NEW_DESCRIPTION_PROJECT</td>
-	<td><td>//div[contains(@class, 'modal-content')]//input[contains(@id, 'description')]</td></td>
+	<td>//div[contains(@class, 'modal-content')]//input[contains(@id, 'description')]</td>
 	<td></td>
 </tr>
 <tr>

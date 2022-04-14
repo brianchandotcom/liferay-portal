@@ -142,7 +142,7 @@ renderResponse.setTitle(editable ? LanguageUtil.get(request, "edit-template") : 
 								ActionURLBuilder.createActionURL(
 									renderResponse
 								).setActionName(
-									"/batch_planner/edit_export_batch_planner_plan"
+									"/batch_planner/edit_export_batch_planner_plan_template"
 								).setCMD(
 									Constants.ADD
 								).setParameter(

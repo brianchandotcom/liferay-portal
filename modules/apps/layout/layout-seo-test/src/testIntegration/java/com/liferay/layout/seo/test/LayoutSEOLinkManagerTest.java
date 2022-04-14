@@ -15,6 +15,18 @@
 package com.liferay.layout.seo.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
+import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.info.item.InfoItemReference;
+import com.liferay.journal.constants.JournalFolderConstants;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.layout.display.page.LayoutDisplayPageProvider;
+import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.seo.kernel.LayoutSEOLink;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
 import com.liferay.layout.test.util.LayoutFriendlyURLRandomizerBumper;
@@ -23,9 +35,11 @@ import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -35,6 +49,7 @@ import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
@@ -185,6 +200,15 @@ public class LayoutSEOLinkManagerTest {
 			LayoutSEOLink.Relationship.CANONICAL);
 	}
 
+	private void _assertContentLocalizedLayoutSEOLinks(
+			Locale locale, String canonicalURLConfiguration)
+		throws PortalException {
+
+		_assertLocalizedLayoutSEOLinks(
+			locale, canonicalURLConfiguration,
+			FriendlyURLResolverConstants.URL_SEPARATOR_JOURNAL_ARTICLE);
+	}
+
 	private void _assertLocalizedLayoutSEOLinks(
 			Locale locale, String canonicalURLConfiguration, String urlPrefix)
 		throws PortalException {
@@ -309,6 +333,7 @@ public class LayoutSEOLinkManagerTest {
 		_themeDisplay.setResponse(new MockHttpServletResponse());
 		_themeDisplay.setScopeGroupId(_group.getGroupId());
 		_themeDisplay.setServerName("localhost");
+		_themeDisplay.setServerPort(8080);
 		_themeDisplay.setSiteGroupId(_group.getGroupId());
 		_themeDisplay.setUser(TestPropsValues.getUser());
 
@@ -329,6 +354,20 @@ public class LayoutSEOLinkManagerTest {
 		}
 
 		return null;
+	}
+
+	private void _setupForTestingContentLocalizedLayoutSEOLinks()
+		throws Exception {
+
+		_layout = _setUpLayoutJournalArticleDefaultDisplayPageTemplate();
+
+		_groupFriendlyURL = _portal.getGroupFriendlyURL(
+			_group.getPublicLayoutSet(), _themeDisplay, false, false);
+
+		_canonicalURL = StringBundler.concat(
+			_PORTAL_URL, _groupFriendlyURL,
+			FriendlyURLResolverConstants.URL_SEPARATOR_JOURNAL_ARTICLE,
+			_expectedFriendlyURLs.get(LocaleUtil.US));
 	}
 
 	private void _setupForTestingPageLocalizedLayoutSEOLinks()
@@ -357,6 +396,53 @@ public class LayoutSEOLinkManagerTest {
 		_canonicalURL = StringBundler.concat(
 			_PORTAL_URL, _groupFriendlyURL, StringPool.SLASH,
 			_expectedFriendlyURLs.get(LocaleUtil.US));
+	}
+
+	private Layout _setUpLayoutJournalArticleDefaultDisplayPageTemplate()
+		throws Exception {
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			_expectedFriendlyURLs);
+
+		DDMStructure ddmStructure = journalArticle.getDDMStructure();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				_group.getCreatorUserId(), _group.getGroupId(), 0,
+				_portal.getClassNameId(JournalArticle.class.getName()),
+				ddmStructure.getStructureId(), RandomTestUtil.randomString(),
+				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE, 0, true,
+				0, 0, 0, 0, serviceContext);
+
+		_assetDisplayPageEntryLocalService.addAssetDisplayPageEntry(
+			journalArticle.getUserId(), _group.getGroupId(),
+			_portal.getClassNameId(JournalArticle.class.getName()),
+			journalArticle.getResourcePrimKey(),
+			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+			AssetDisplayPageConstants.TYPE_DEFAULT, serviceContext);
+
+		Layout layout = _layoutLocalService.getLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		HttpServletRequest httpServletRequest = _getHttpServletRequest(layout);
+
+		httpServletRequest.setAttribute(
+			LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER,
+			_layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
+				new InfoItemReference(
+					JournalArticle.class.getName(),
+					journalArticle.getResourcePrimKey())));
+
+		serviceContext.setRequest(httpServletRequest);
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		return layout;
 	}
 
 	private void _testWithLayoutSEOCompanyConfiguration(
@@ -408,6 +494,10 @@ public class LayoutSEOLinkManagerTest {
 
 	private static final String _PORTAL_URL = "http://localhost:8080";
 
+	@Inject
+	private AssetDisplayPageEntryLocalService
+		_assetDisplayPageEntryLocalService;
+
 	private String _canonicalURL;
 
 	@Inject
@@ -434,8 +524,16 @@ public class LayoutSEOLinkManagerTest {
 	private String _groupFriendlyURL;
 	private Layout _layout;
 
+	@Inject(filter = "component.name=*.JournalArticleLayoutDisplayPageProvider")
+	private LayoutDisplayPageProvider<JournalArticle>
+		_layoutDisplayPageProvider;
+
 	@Inject
 	private LayoutLocalService _layoutLocalService;
+
+	@Inject
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 	@Inject
 	private LayoutSEOLinkManager _layoutSEOLinkManager;

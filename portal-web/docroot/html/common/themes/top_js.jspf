@@ -214,9 +214,7 @@
 
 				String completeURL = PortalUtil.getCurrentCompleteURL(request);
 
-				String canonicalURL = PortalUtil.getCanonicalURL(completeURL, themeDisplay, layout, false, false);
-
-				LayoutSEOLink layoutSEOLink = layoutSEOLinkManager.getCanonicalLayoutSEOLink(layout, themeDisplay.getLocale(), canonicalURL, PortalUtil.getAlternateURLs(canonicalURL, themeDisplay, layout));
+				LayoutSEOLink layoutSEOLink = layoutSEOLinkManager.getCanonicalLayoutSEOLink(layout, themeDisplay.getLocale(), PortalUtil.getCanonicalURL(completeURL, themeDisplay, layout, false, false), themeDisplay);
 				%>
 
 				return '<%= HtmlUtil.escapeJS(layoutSEOLink.getHref()) %>';

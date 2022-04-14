@@ -24,9 +24,11 @@ import com.liferay.portal.kernel.util.ListMergeable;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -54,6 +56,15 @@ public class TitleProviderTest {
 			new LayoutSEOLinkManager() {
 
 				@Override
+				public LayoutSEOLink getCanonicalLayoutSEOLink(
+						Layout layout, Locale locale, String canonicalURL,
+						ThemeDisplay themeDisplay)
+					throws PortalException {
+
+					return null;
+				}
+
+				@Override
 				public String getFullPageTitle(
 					Layout layout, String portletId, String tilesTitle,
 					ListMergeable<String> titleListMergeable,
@@ -68,7 +79,16 @@ public class TitleProviderTest {
 					Layout layout, Locale locale, String canonicalURL,
 					Map<Locale, String> alternateURLs) {
 
-					return null;
+					return Collections.emptyList();
+				}
+
+				@Override
+				public List<LayoutSEOLink> getLocalizedLayoutSEOLinks(
+						Layout layout, Locale locale, String canonicalURL,
+						Set<Locale> availableLocales)
+					throws PortalException {
+
+					return Collections.emptyList();
 				}
 
 			});

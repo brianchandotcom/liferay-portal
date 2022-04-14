@@ -61,7 +61,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -111,15 +110,6 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 			String canonicalURL = _portal.getCanonicalURL(
 				completeURL, themeDisplay, layout, false, false);
 
-			Map<Locale, String> alternateURLs = new HashMap<>();
-
-			for (Locale availableLocale : availableLocales) {
-				alternateURLs.put(
-					availableLocale,
-					_portal.getAlternateURL(
-						canonicalURL, themeDisplay, availableLocale, layout));
-			}
-
 			PrintWriter printWriter = httpServletResponse.getWriter();
 
 			Locale locale = _portal.getLocale(httpServletRequest);
@@ -130,7 +120,7 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 
 			for (LayoutSEOLink layoutSEOLink :
 					_layoutSEOLinkManager.getLocalizedLayoutSEOLinks(
-						layout, locale, canonicalURL, alternateURLs)) {
+						layout, locale, canonicalURL, availableLocales)) {
 
 				printWriter.println(_addLinkTag(layoutSEOLink));
 			}
@@ -253,8 +243,7 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 			LayoutSEOLink layoutSEOLink =
 				_layoutSEOLinkManager.getCanonicalLayoutSEOLink(
 					layout, themeDisplay.getLocale(), canonicalURL,
-					_portal.getAlternateURLs(
-						canonicalURL, themeDisplay, layout));
+					themeDisplay);
 
 			printWriter.println(
 				_getOpenGraphTag("og:url", layoutSEOLink.getHref()));

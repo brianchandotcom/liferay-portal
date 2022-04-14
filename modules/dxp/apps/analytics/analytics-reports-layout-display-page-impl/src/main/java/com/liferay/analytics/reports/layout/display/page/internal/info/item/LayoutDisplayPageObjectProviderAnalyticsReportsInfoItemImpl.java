@@ -164,9 +164,7 @@ public class LayoutDisplayPageObjectProviderAnalyticsReportsInfoItemImpl
 
 							LayoutSEOLink layoutSEOLink =
 								_layoutSEOLinkManager.getCanonicalLayoutSEOLink(
-									layout, locale, canonicalURL,
-									_portal.getAlternateURLs(
-										canonicalURL, themeDisplay, layout));
+									layout, locale, canonicalURL, themeDisplay);
 
 							return layoutSEOLink.getHref();
 						}

@@ -56,7 +56,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Collections;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -125,28 +124,14 @@ public class LayoutReportsDataMVCResourceCommand
 			));
 	}
 
-	private Map<Locale, String> _getAlternateURLs(
-		Layout layout, ThemeDisplay themeDisplay) {
-
-		try {
-			return _layoutSEOCanonicalURLProvider.getCanonicalURLMap(
-				layout, themeDisplay);
-		}
-		catch (PortalException portalException) {
-			_log.error(portalException);
-		}
-
-		return Collections.emptyMap();
-	}
-
 	private String _getCanonicalURL(
-		Map<Locale, String> alternateURLs, String canonicalURL, Layout layout,
-		Locale locale) {
+		String canonicalURL, Layout layout, Locale locale,
+		ThemeDisplay themeDisplay) {
 
 		try {
 			LayoutSEOLink layoutSEOLink =
 				_layoutSEOLinkManager.getCanonicalLayoutSEOLink(
-					layout, locale, canonicalURL, alternateURLs);
+					layout, locale, canonicalURL, themeDisplay);
 
 			return layoutSEOLink.getHref();
 		}
@@ -226,15 +211,22 @@ public class LayoutReportsDataMVCResourceCommand
 	}
 
 	private String _getLocaleURL(
-		Map<Locale, String> alternateURLs, String canonicalURL,
-		Locale defaultLocale, Layout layout, Locale locale) {
+		String canonicalURL, Locale defaultLocale, Layout layout, Locale locale,
+		ThemeDisplay themeDisplay) {
 
 		if (defaultLocale.equals(locale)) {
-			return _getCanonicalURL(
-				alternateURLs, canonicalURL, layout, locale);
+			return _getCanonicalURL(canonicalURL, layout, locale, themeDisplay);
 		}
 
-		return alternateURLs.get(locale);
+		try {
+			return _layoutSEOCanonicalURLProvider.getCanonicalURL(
+				layout, locale, canonicalURL, themeDisplay);
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
+
+			return canonicalURL;
+		}
 	}
 
 	private JSONArray _getPageURLsJSONArray(
@@ -248,9 +240,6 @@ public class LayoutReportsDataMVCResourceCommand
 
 		String canonicalURL = _getCanonicalURL(
 			_getCompleteURL(portletRequest), layout, themeDisplay);
-
-		Map<Locale, String> alternateURLs = _getAlternateURLs(
-			layout, themeDisplay);
 
 		return JSONUtil.putAll(
 			Optional.ofNullable(
@@ -290,8 +279,8 @@ public class LayoutReportsDataMVCResourceCommand
 			).map(
 				locale -> {
 					String url = _getLocaleURL(
-						alternateURLs, canonicalURL, defaultLocale, layout,
-						locale);
+						canonicalURL, defaultLocale, layout, locale,
+						themeDisplay);
 
 					return HashMapBuilder.<String, Object>put(
 						"languageId", LocaleUtil.toW3cLanguageId(locale)

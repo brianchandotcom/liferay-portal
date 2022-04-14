@@ -2,6 +2,8 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: dxp-configmap
+  labels:
+    app: dxp
 data:
   com.liferay.k8s.agent.configuration.v1.K8sAgentConfiguration.config: |
     namespace="$[secret:namespace]"

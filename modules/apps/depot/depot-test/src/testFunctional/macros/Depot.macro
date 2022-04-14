@@ -659,15 +659,28 @@ definition {
 			var remotePort = "8080";
 		}
 
-		JSONDepot.addDepot(
-			depotDescription = "This is the description of a remote depot",
-			depotName = "Remote Depot",
-			portalURL = "http://localhost:${remotePort}");
+		if (isSet(remoteDepotName)) {
+			JSONDepot.addDepot(
+				depotDescription = "This is the description of a remote depot",
+				depotName = "${remoteDepotName}",
+				portalURL = "http://localhost:${remotePort}");
 
-		var remoteGroupId = JSONGroupSetter.setGroupId(
-			groupName = "Remote Depot",
-			portalURL = "http://localhost:${remotePort}",
-			site = "${site}");
+			var remoteGroupId = JSONGroupSetter.setGroupId(
+				groupName = "${remoteDepotName}",
+				portalURL = "http://localhost:${remotePort}",
+				site = "${site}");
+		}
+		else {
+			JSONDepot.addDepot(
+				depotDescription = "This is the description of a remote depot",
+				depotName = "Remote Depot",
+				portalURL = "http://localhost:${remotePort}");
+
+			var remoteGroupId = JSONGroupSetter.setGroupId(
+				groupName = "Remote Depot",
+				portalURL = "http://localhost:${remotePort}",
+				site = "${site}");
+		}
 
 		JSONStaging.enableRemoteStaging(
 			branchingPrivate = "${branchingPrivate}",

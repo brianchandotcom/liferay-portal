@@ -28,5 +28,6 @@ Import-Package:\
 	\
 	!org.springframework.osgi.io.*,\
 	!org.springframework.osgi.util.*,\
+	!org.springframework.web.*,\
 	\
 	*

@@ -40,13 +40,10 @@ Import-Package:\
 	org.springframework.core.io,\
 	org.springframework.ejb.config,\
 	org.springframework.jdbc.config,\
-	org.springframework.jms.config,\
 	org.springframework.jndi,\
-	org.springframework.oxm.config,\
 	org.springframework.scheduling.config,\
 	org.springframework.scripting.config,\
 	org.springframework.transaction.config,\
-	org.springframework.web.servlet.config,\
 	\
 	*
 Provide-Capability:\

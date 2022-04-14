@@ -26,28 +26,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>EXPORT_PROCESS_APPLICATION_IN_PROGRESS</td>
-	<td>//div[contains(.,'${key_application}')]/span[contains(.,'IN PROGRESS')]</td>
+	<td>EXPORT_PROCESS_APPLICATION_STATUS</td>
+	<td>//div[contains(.,'${key_application}')]/span[contains(.,'${key_status}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>EXPORT_PROCESS_FAILED</td>
-	<td>//table//td[contains(.,'Failed')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EXPORT_PROCESS_IN_PROGRESS</td>
-	<td>//table//td[contains(.,'In Progress')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EXPORT_PROCESS_SPECIFIC_APPLICATION_SUCCESSFUL</td>
-	<td>//div[contains(.,'${key_application}')]//span[contains(.,'Successful')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EXPORT_PROCESS_SUCCESSFUL</td>
-	<td>//table//td[contains(.,'Successful')]</td>
+	<td>EXPORT_PROCESS_STATUS</td>
+	<td>//tr[contains(@class,'table-divider')]//td[contains(.,'${key_status}')]</td>
 	<td></td>
 </tr>
 <tr>

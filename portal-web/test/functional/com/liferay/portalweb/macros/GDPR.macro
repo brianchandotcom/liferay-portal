@@ -32,7 +32,7 @@ definition {
 			key_lastName = "${userLastName}",
 			locator1 = "ExportPersonalData#HEADER");
 
-		while (IsElementPresent(locator1 = "ExportPersonalData#EXPORT_PROCESS_IN_PROGRESS")) {
+		while (IsElementPresent(key_status = "In Progress", locator1 = "ExportPersonalData#EXPORT_PROCESS_STATUS")) {
 			Pause(locator1 = "3000");
 		}
 
@@ -40,17 +40,21 @@ definition {
 			for (var application : list "${applications}") {
 				AssertElementNotPresent(
 					key_application = "${application}",
-					locator1 = "ExportPersonalData#EXPORT_PROCESS_APPLICATION_IN_PROGRESS");
+					key_status = "In Progress",
+					locator1 = "ExportPersonalData#EXPORT_PROCESS_APPLICATION_STATUS");
 			}
 		}
 
-		AssertElementPresent(locator1 = "ExportPersonalData#EXPORT_PROCESS_SUCCESSFUL");
+		AssertElementPresent(
+			key_status = "Successful",
+			locator1 = "ExportPersonalData#EXPORT_PROCESS_STATUS");
 
 		if (isSet(applications)) {
 			for (var application : list "${applications}") {
 				AssertElementPresent(
 					key_application = "${application}",
-					locator1 = "ExportPersonalData#EXPORT_PROCESS_SPECIFIC_APPLICATION_SUCCESSFUL");
+					key_status = "Successful",
+					locator1 = "ExportPersonalData#EXPORT_PROCESS_APPLICATION_STATUS");
 			}
 		}
 	}

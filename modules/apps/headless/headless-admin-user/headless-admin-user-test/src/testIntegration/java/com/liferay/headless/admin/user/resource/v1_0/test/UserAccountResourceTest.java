@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.security.auth.Authenticator;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
@@ -374,6 +375,24 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		_testGetUserAccountsPage(
 			"roleNames/any(f:contains(f, 'Test role '))", userAccount1);
 		_testGetUserAccountsPage("roleNames/any(f:f eq 'Test Role')");
+
+		String groupRoleName =
+			"Test group role " + RandomTestUtil.randomString();
+
+		Role groupRole = RoleTestUtil.addRole(
+			groupRoleName, RoleConstants.TYPE_SITE);
+
+		UserGroupRoleLocalServiceUtil.addUserGroupRole(
+			userAccount2.getId(), TestPropsValues.getGroupId(),
+			groupRole.getRoleId());
+
+		_testGetUserAccountsPage(
+			String.format("userGroupRoleNames/any(f:f eq '%s')", groupRoleName),
+			userAccount2);
+		_testGetUserAccountsPage(
+			"userGroupRoleNames/any(f:contains(f, 'Test group role '))",
+			userAccount2);
+		_testGetUserAccountsPage("userGroupRoleNames/any(f:f eq 'Test Role')");
 	}
 
 	@Override

@@ -1,4 +1,5 @@
-[
+{
+	"entries": [
 	{
 		"externalReferenceCode": "RAY-001",
 		"finishDate": "2022-03-03T00:00:00Z",
@@ -43,4 +44,6 @@
 		"renewalDue": 9,
 		"startDate": "2022-03-02T00:00:00Z"
 	}
-]
+	],
+	"objectDefinitionName": "RaylifePolicy"
+}

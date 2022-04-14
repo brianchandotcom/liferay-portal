@@ -1,4 +1,5 @@
-[
+{
+	"entries": [
 	{
 		"aggregateLimit": "2000000",
 		"businessPersonalProperty": "50000",
@@ -32,4 +33,6 @@
 		"productRecallOrReplacement": true,
 		"promo": "612.5"
 	}
-]
+	],
+	"objectDefinitionName": "QuoteComparison"
+}

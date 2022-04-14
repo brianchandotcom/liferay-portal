@@ -88,9 +88,29 @@ public class AlternateURLMapperProvider {
 				Layout layout)
 			throws PortalException {
 
-			return _portal.getAlternateURL(
-				_getCanonicalFriendlyURL(canonicalURL, locale, themeDisplay),
-				themeDisplay, locale, layout);
+			return _getAlternateURL(
+				canonicalURL, _getPortalURL(themeDisplay), themeDisplay, locale,
+				layout);
+		}
+
+		@Override
+		public Map<Locale, String> getAlternateURLs(
+				String canonicalURL, ThemeDisplay themeDisplay, Layout layout,
+				Set<Locale> locales)
+			throws PortalException {
+
+			String portalURL = _getPortalURL(themeDisplay);
+
+			Map<Locale, String> alternateURLs = new HashMap<>();
+
+			for (Locale locale : locales) {
+				alternateURLs.put(
+					locale,
+					_getAlternateURL(
+						canonicalURL, portalURL, themeDisplay, locale, layout));
+			}
+
+			return alternateURLs;
 		}
 
 		protected AssetDisplayPageAlternateURLMapper(
@@ -107,8 +127,20 @@ public class AlternateURLMapperProvider {
 			_portal = portal;
 		}
 
+		private String _getAlternateURL(
+				String canonicalURL, String portalURL,
+				ThemeDisplay themeDisplay, Locale locale, Layout layout)
+			throws PortalException {
+
+			return _portal.getAlternateURL(
+				_getCanonicalFriendlyURL(
+					canonicalURL, portalURL, locale, themeDisplay),
+				themeDisplay, locale, layout);
+		}
+
 		private String _getCanonicalFriendlyURL(
-				String defaultURL, Locale locale, ThemeDisplay themeDisplay)
+				String defaultURL, String portalURL, Locale locale,
+				ThemeDisplay themeDisplay)
 			throws PortalException {
 
 			String friendlyURL = _getMappedFriendlyURL(
@@ -118,6 +150,27 @@ public class AlternateURLMapperProvider {
 				return friendlyURL;
 			}
 
+			return portalURL.concat(friendlyURL);
+		}
+
+		private String _getMappedFriendlyURL(
+				String url, Locale locale, ThemeDisplay themeDisplay)
+			throws PortalException {
+
+			if (_layoutDisplayPageObjectProvider == null) {
+				return url;
+			}
+
+			ClassName className = _classNameLocalService.getClassName(
+				_layoutDisplayPageObjectProvider.getClassNameId());
+
+			return _assetDisplayPageFriendlyURLProvider.getFriendlyURL(
+				className.getClassName(),
+				_layoutDisplayPageObjectProvider.getClassPK(), locale,
+				themeDisplay);
+		}
+
+		private String _getPortalURL(ThemeDisplay themeDisplay) {
 			TreeMap<String, String> virtualHostnames =
 				_portal.getVirtualHostnames(themeDisplay.getLayoutSet());
 
@@ -139,28 +192,9 @@ public class AlternateURLMapperProvider {
 				}
 			}
 
-			String portalURL = _portal.getPortalURL(
+			return _portal.getPortalURL(
 				virtualHostname, themeDisplay.getServerPort(),
 				themeDisplay.isSecure());
-
-			return portalURL.concat(friendlyURL);
-		}
-
-		private String _getMappedFriendlyURL(
-				String url, Locale locale, ThemeDisplay themeDisplay)
-			throws PortalException {
-
-			if (_layoutDisplayPageObjectProvider == null) {
-				return url;
-			}
-
-			ClassName className = _classNameLocalService.getClassName(
-				_layoutDisplayPageObjectProvider.getClassNameId());
-
-			return _assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-				className.getClassName(),
-				_layoutDisplayPageObjectProvider.getClassPK(), locale,
-				themeDisplay);
 		}
 
 		private final AssetDisplayPageFriendlyURLProvider

@@ -104,6 +104,16 @@ definition {
 		}
 	}
 
+	macro assertPinToolTipInfoInProduct {
+		AssertElementPresent(
+			key_sku = "${sku}",
+			locator1 = "CommerceDiagrams#DIAGRAM_PRODUCT_TOOLTIP_LINKED_SKU");
+
+		AssertElementPresent(
+			key_productName = "${productName}",
+			locator1 = "CommerceDiagrams#DIAGRAM_PRODUCT_TOOLTIP_LINKED_PRODUCT_NAME");
+	}
+
 	macro assertPinToolTipNotOpen {
 		AssertElementNotPresent(locator1 = "CommerceDiagrams#DIAGRAM_ADMIN_TOOLTIP");
 	}
@@ -281,6 +291,14 @@ definition {
 			locator1 = "CommerceDiagrams#DIAGRAM_PIN");
 
 		WaitForElementPresent(locator1 = "CommerceDiagrams#DIAGRAM_ADMIN_TOOLTIP");
+	}
+
+	macro viewPinInProduct {
+		Click(
+			key_pinNumber = "${pinNumber}",
+			locator1 = "CommerceDiagrams#DIAGRAM_PIN");
+
+		WaitForElementPresent(locator1 = "CommerceDiagrams#DIAGRAM_PRODUCT_TOOLTIP");
 	}
 
 }

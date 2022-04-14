@@ -20,37 +20,35 @@ import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.mockito.Matchers;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.mockito.Mockito;
 
 /**
  * @author Rodrigo Paulino
  */
-@PrepareForTest(LanguageUtil.class)
-@RunWith(PowerMockRunner.class)
-public class OptionsDDMFormFieldValueAccessorTest extends PowerMockito {
+public class OptionsDDMFormFieldValueAccessorTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@BeforeClass
 	public static void setUpClass() {
 		_setUpJSONFactory(new JSONFactoryImpl());
-	}
-
-	@Before
-	public void setUp() {
 		_setUpLanguageUtil();
 	}
 
@@ -110,14 +108,18 @@ public class OptionsDDMFormFieldValueAccessorTest extends PowerMockito {
 			_optionsDDMFormFieldValueAccessor, "_jsonFactory", jsonFactory);
 	}
 
-	private void _setUpLanguageUtil() {
-		mockStatic(LanguageUtil.class);
+	private static void _setUpLanguageUtil() {
+		LanguageUtil languageUtil = new LanguageUtil();
 
-		when(
-			LanguageUtil.getLanguageId(Matchers.eq(LocaleUtil.US))
+		Language language = Mockito.mock(Language.class);
+
+		Mockito.when(
+			language.getLanguageId(Matchers.eq(LocaleUtil.US))
 		).thenReturn(
 			"en_US"
 		);
+
+		languageUtil.setLanguage(language);
 	}
 
 	private static final OptionsDDMFormFieldValueAccessor

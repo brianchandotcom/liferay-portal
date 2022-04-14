@@ -51,12 +51,36 @@ definition {
 	}
 
 	@description = "LPS-147944 - Verify it is possible to view more than 20 picklists for the picklist drop-down"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewMoreThan20Picklists {
+		for (var numberPicklist : list "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21") {
+			Picklist.addPicklistViaAPI(picklistName = "Custom Picklist ${numberPicklist}");
+		}
 
-		// TODO LPS-149248 CanViewMoreThan20Picklists pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 149248",
+			objectName = "CustomObject149248",
+			pluralLabelName = "Custom Objects 149248");
 
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 149248");
+
+		ObjectAdmin.goToFieldsTab();
+
+		LexiconEntry.gotoAdd();
+
+		Type(
+			locator1 = "ObjectField#LABEL_INPUT",
+			value1 = "Custom Picklist");
+
+		ObjectField.selectType(fieldType = "Picklist");
+
+		Click(locator1 = "ObjectAdmin#OBJECT_FIELDS_PICKLIST");
+
+		for (var numberPicklist : list "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21") {
+			ObjectAdmin.viewPicklistOptionsOnFields(optionName = "Custom Picklist ${numberPicklist}");
+		}
 	}
 
 	@description = "LPS-144902 - Verify there is a description of each Field Type"

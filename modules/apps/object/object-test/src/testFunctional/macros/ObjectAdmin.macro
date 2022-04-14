@@ -1049,6 +1049,12 @@ definition {
 		}
 	}
 
+	macro viewPicklistOptionsOnFields {
+		AssertElementPresent(
+			key_optionName = "${optionName}",
+			locator1 = "ObjectAdmin#VIEW_PICKLIST_OPTIONS");
+	}
+
 	macro viewRequiredAlert {
 		AssertTextEquals.assertPartialText(
 			locator1 = "TextInput#REQUIRED_ALERT",

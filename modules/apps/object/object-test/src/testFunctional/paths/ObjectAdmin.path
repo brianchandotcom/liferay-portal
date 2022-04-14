@@ -550,6 +550,11 @@
 		<td>//input[@id ='objectRelationshipLabel']/following-sibling::div[contains(.,'Required')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>VIEW_PICKLIST_OPTIONS</td>
+		<td>//*[contains(@class,'form-control')]//option[contains(text(),'${key_optionName}')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

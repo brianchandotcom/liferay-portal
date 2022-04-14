@@ -47,6 +47,9 @@ public class ObjectActionsTableFDSView extends BaseTableFDSView {
 
 		nameFDSTableSchemaField.setContentRenderer("actionLink");
 
+		fdsTableSchemaBuilder.addFDSTableSchemaField(
+			"description", "description");
+
 		FDSTableSchemaField activeFDSTableSchemaField =
 			fdsTableSchemaBuilder.addFDSTableSchemaField("active", "active");
 

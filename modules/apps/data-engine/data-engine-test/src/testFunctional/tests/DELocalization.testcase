@@ -1753,6 +1753,8 @@ definition {
 				title = "Web Content Title ${n}");
 		}
 
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
 		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(structureName = "WC Structure Name");

@@ -114,22 +114,8 @@ public class LayoutSEOLinkManagerTest {
 			"default-language-url",
 			() -> _testWithSiteDefaultLanguage(
 				_layout.getGroupId(), LocaleUtil.US,
-				() -> {
-					List<LayoutSEOLink> layoutSEOLinks =
-						_layoutSEOLinkManager.getLocalizedLayoutSEOLinks(
-							_layout, LocaleUtil.US, _canonicalURL,
-							_expectedFriendlyURLs.keySet());
-
-					Assert.assertEquals(
-						layoutSEOLinks.toString(),
-						_expectedFriendlyURLs.size() + 2,
-						layoutSEOLinks.size());
-
-					_assertAlternateLayoutSEOLinks(layoutSEOLinks);
-
-					_assertCanonicalLayoutSEOLink(
-						layoutSEOLinks, LocaleUtil.US, "default-language-url");
-				}));
+				() -> _assertLocalizedLayoutSEOLinks(
+					LocaleUtil.US, "default-language-url")));
 	}
 
 	@Test
@@ -140,23 +126,8 @@ public class LayoutSEOLinkManagerTest {
 			"default-language-url",
 			() -> _testWithSiteDefaultLanguage(
 				_layout.getGroupId(), LocaleUtil.US,
-				() -> {
-					List<LayoutSEOLink> layoutSEOLinks =
-						_layoutSEOLinkManager.getLocalizedLayoutSEOLinks(
-							_layout, LocaleUtil.SPAIN, _canonicalURL,
-							_expectedFriendlyURLs.keySet());
-
-					Assert.assertEquals(
-						layoutSEOLinks.toString(),
-						_expectedFriendlyURLs.size() + 2,
-						layoutSEOLinks.size());
-
-					_assertAlternateLayoutSEOLinks(layoutSEOLinks);
-
-					_assertCanonicalLayoutSEOLink(
-						layoutSEOLinks, LocaleUtil.SPAIN,
-						"default-language-url");
-				}));
+				() -> _assertLocalizedLayoutSEOLinks(
+					LocaleUtil.SPAIN, "default-language-url")));
 	}
 
 	@Test
@@ -167,21 +138,8 @@ public class LayoutSEOLinkManagerTest {
 			"localized-url",
 			() -> _testWithSiteDefaultLanguage(
 				_layout.getGroupId(), LocaleUtil.US,
-				() -> {
-					List<LayoutSEOLink> layoutSEOLinks =
-						_layoutSEOLinkManager.getLocalizedLayoutSEOLinks(
-							_layout, LocaleUtil.US, _canonicalURL,
-							_expectedFriendlyURLs.keySet());
-
-					Assert.assertEquals(
-						layoutSEOLinks.toString(),
-						_expectedFriendlyURLs.size() + 2,
-						layoutSEOLinks.size());
-
-					_assertAlternateLayoutSEOLinks(layoutSEOLinks);
-					_assertCanonicalLayoutSEOLink(
-						layoutSEOLinks, LocaleUtil.US, "localized-url");
-				}));
+				() -> _assertLocalizedLayoutSEOLinks(
+					LocaleUtil.US, "localized-url")));
 	}
 
 	@Test
@@ -192,21 +150,8 @@ public class LayoutSEOLinkManagerTest {
 			"localized-url",
 			() -> _testWithSiteDefaultLanguage(
 				_layout.getGroupId(), LocaleUtil.US,
-				() -> {
-					List<LayoutSEOLink> layoutSEOLinks =
-						_layoutSEOLinkManager.getLocalizedLayoutSEOLinks(
-							_layout, LocaleUtil.SPAIN, _canonicalURL,
-							_expectedFriendlyURLs.keySet());
-
-					Assert.assertEquals(
-						layoutSEOLinks.toString(),
-						_expectedFriendlyURLs.size() + 2,
-						layoutSEOLinks.size());
-
-					_assertAlternateLayoutSEOLinks(layoutSEOLinks);
-					_assertCanonicalLayoutSEOLink(
-						layoutSEOLinks, LocaleUtil.SPAIN, "localized-url");
-				}));
+				() -> _assertLocalizedLayoutSEOLinks(
+					LocaleUtil.SPAIN, "localized-url")));
 	}
 
 	private void _assertAlternateLayoutSEOLink(
@@ -252,6 +197,24 @@ public class LayoutSEOLinkManagerTest {
 		Assert.assertEquals(
 			layoutSEOLink.getRelationship(),
 			LayoutSEOLink.Relationship.CANONICAL);
+	}
+
+	private void _assertLocalizedLayoutSEOLinks(
+			Locale locale, String canonicalURLConfiguration)
+		throws PortalException {
+
+		List<LayoutSEOLink> layoutSEOLinks =
+			_layoutSEOLinkManager.getLocalizedLayoutSEOLinks(
+				_layout, locale, _canonicalURL, _expectedFriendlyURLs.keySet());
+
+		Assert.assertEquals(
+			layoutSEOLinks.toString(), _expectedFriendlyURLs.size() + 2,
+			layoutSEOLinks.size());
+
+		_assertAlternateLayoutSEOLinks(layoutSEOLinks);
+
+		_assertCanonicalLayoutSEOLink(
+			layoutSEOLinks, locale, canonicalURLConfiguration);
 	}
 
 	private void _assertXDefaultAlternateLayoutSEOLink(

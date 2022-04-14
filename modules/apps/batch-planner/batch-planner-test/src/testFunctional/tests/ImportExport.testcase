@@ -641,6 +641,8 @@ definition {
 		}
 
 		task ("Then the user should not be able to import the file and the missing field should be highlighted red") {
+			Alert.viewErrorMessage(errorMessage = "You must map all required fields before continuing.");
+
 			AssertElementNotPresent(
 				key_text = "Start Import",
 				locator1 = "Button#ANY");

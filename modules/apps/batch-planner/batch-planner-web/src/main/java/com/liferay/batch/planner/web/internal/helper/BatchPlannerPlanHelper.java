@@ -246,7 +246,8 @@ public class BatchPlannerPlanHelper {
 	private List<BatchPlannerMapping> _getExportBatchPlannerMappings(
 		PortletRequest portletRequest) {
 
-		String[] fieldNames = portletRequest.getParameterValues("fieldName");
+		String[] fieldNames = ParamUtil.getStringValues(
+			portletRequest, "fieldName");
 
 		if (fieldNames == null) {
 			return Collections.emptyList();

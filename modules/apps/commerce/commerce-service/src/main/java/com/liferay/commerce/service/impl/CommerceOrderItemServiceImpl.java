@@ -424,6 +424,24 @@ public class CommerceOrderItemServiceImpl
 
 	@Override
 	public CommerceOrderItem updateCommerceOrderItem(
+			long commerceOrderItemId, long cpMeasurementUnitId, int quantity,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		CommerceOrderItem commerceOrderItem =
+			commerceOrderItemLocalService.getCommerceOrderItem(
+				commerceOrderItemId);
+
+		_commerceOrderModelResourcePermission.check(
+			getPermissionChecker(), commerceOrderItem.getCommerceOrderId(),
+			ActionKeys.UPDATE);
+
+		return commerceOrderItemLocalService.updateCommerceOrderItem(
+			commerceOrderItemId, cpMeasurementUnitId, quantity, serviceContext);
+	}
+
+	@Override
+	public CommerceOrderItem updateCommerceOrderItem(
 			long commerceOrderItemId, String json, int quantity,
 			CommerceContext commerceContext, ServiceContext serviceContext)
 		throws PortalException {

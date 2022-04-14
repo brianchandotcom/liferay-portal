@@ -113,7 +113,8 @@ definition {
 		}
 
 		task ("Get current date") {
-			var dayNum = DateUtil.getDate("1");
+			var dayNum = DateUtil.getDate("0");
+			var tomorrowNum = DateUtil.getDate("1");
 			var monthNum = DateUtil.getCurrentMonth();
 			var yearNum = DateUtil.getCurrentYear();
 
@@ -123,13 +124,21 @@ definition {
 
 			var i = ${dayNum} / 10;
 
+			var j = ${tomorrowNum} / 10;
+
 			if ("${i}" == "0") {
 				var dayNum = "0${dayNum}";
+			}
+
+			if ("${j}" == "0") {
+				var tomorrowNum = "0${tomorrowNum}";
 			}
 		}
 
 		task ("View Chart Entry") {
-			ACSegments.viewBreakdownChartsEntry(key_entry = "${yearNum}-${monthNum}-${dayNum}");
+			if (!IsTextEqual.isPartialText(key_entry = "${yearNum}-${monthNum}-${dayNum}", locator1 = "ACSegments#BREAKDOWN_CHART")) {
+				ACSegments.viewBreakdownChartsEntry(key_entry = "${yearNum}-${monthNum}-${tomorrowNum}");
+			}
 
 			ACSegments.viewBreakdownChartsEntry(key_entry = "100.0%");
 		}

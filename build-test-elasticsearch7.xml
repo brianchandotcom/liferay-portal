@@ -761,6 +761,8 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 
 			<prepare-elasticsearch-ltr />
 
+			<configure-elasticsearch-jdk17 />
+
 			<if>
 				<not>
 					<available file="${liferay.home}/data/elasticsearch7/repo" type="dir" />

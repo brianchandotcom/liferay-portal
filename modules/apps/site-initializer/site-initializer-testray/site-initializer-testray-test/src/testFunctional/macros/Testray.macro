@@ -75,6 +75,33 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro createTestrayTasks {
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "Testray Tasks");
+
+		LexiconEntry.gotoAdd();
+
+		Type(
+			locator1 = "TestrayTestflow#STATUS_EDIT",
+			value1 = "${value}");
+
+		Type(
+			locator1 = "TestrayTestflow#ADD_NAME_TASKS",
+			value1 = "Hotfix Tester - liferay-hotfix-1987-2008 - 7.4.10.7");
+
+		Type(
+			locator1 = "TestrayTestflow#ADD_BUILD_TASKS",
+			value1 = "41100");
+
+		Type(
+			locator1 = "ObjectPortlet#VIEW_EMPTY_LABEL_IN_DATE_ENTRY",
+			value1 = "01/04/2022");
+
+		Click(locator1 = "Button#SAVE");
+	}
+
 	macro enableTestrayTasksInPortlet {
 		Refresh();
 
@@ -120,33 +147,6 @@ definition {
 		Click(locator1 = "TestrayUser#USER_ICON_SIDEBAR");
 
 		Click(locator1 = "TestrayUser#SIGN_OUT");
-	}
-
-	macro createTestrayTasks {
-		ApplicationsMenu.gotoPortlet(
-			category = "Object",
-			panel = "Control Panel",
-			portlet = "Testray Tasks");
-
-		LexiconEntry.gotoAdd();
-
-		Type(
-			locator1 = "TestrayTestflow#STATUS_EDIT",
-			value1 = "${value}");
-
-		Type(
-			locator1 = "TestrayTestflow#ADD_NAME_TASKS",
-			value1 = "Hotfix Tester - liferay-hotfix-1987-2008 - 7.4.10.7");
-
-		Type(
-			locator1 = "TestrayTestflow#ADD_BUILD_TASKS",
-			value1 = "41100");
-
-		Type(
-			locator1 = "ObjectPortlet#VIEW_EMPTY_LABEL_IN_DATE_ENTRY",
-			value1 = "01/04/2022");
-
-		Click(locator1 = "Button#SAVE");
 	}
 
 	macro tearDownCP {

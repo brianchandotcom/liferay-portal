@@ -36,6 +36,7 @@ public class ObjectActionUtil {
 				active = serviceBuilderObjectAction.isActive();
 				dateCreated = serviceBuilderObjectAction.getCreateDate();
 				dateModified = serviceBuilderObjectAction.getModifiedDate();
+				description = serviceBuilderObjectAction.getDescription();
 				id = serviceBuilderObjectAction.getObjectActionId();
 				name = serviceBuilderObjectAction.getName();
 				objectActionExecutorKey =

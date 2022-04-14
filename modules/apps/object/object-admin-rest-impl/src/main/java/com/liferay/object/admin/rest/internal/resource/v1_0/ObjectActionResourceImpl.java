@@ -104,7 +104,7 @@ public class ObjectActionResourceImpl
 		return _toObjectAction(
 			_objectActionService.addObjectAction(
 				objectDefinitionId, objectAction.getActive(),
-				objectAction.getName(),
+				objectAction.getDescription(), objectAction.getName(),
 				objectAction.getObjectActionExecutorKey(),
 				objectAction.getObjectActionTriggerKey(),
 				UnicodePropertiesBuilder.create(
@@ -120,7 +120,7 @@ public class ObjectActionResourceImpl
 		return _toObjectAction(
 			_objectActionService.updateObjectAction(
 				objectActionId, objectAction.getActive(),
-				objectAction.getName(),
+				objectAction.getDescription(), objectAction.getName(),
 				UnicodePropertiesBuilder.create(
 					(Map<String, String>)objectAction.getParameters(), true
 				).build()));

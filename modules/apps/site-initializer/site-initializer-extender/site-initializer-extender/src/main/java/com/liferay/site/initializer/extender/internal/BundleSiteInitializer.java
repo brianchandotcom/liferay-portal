@@ -1932,6 +1932,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				_objectActionLocalService.addObjectAction(
 					serviceContext.getUserId(), objectDefinition.getId(),
 					jsonObject.getBoolean("active"),
+					jsonObject.getString("description"),
 					jsonObject.getString("name"),
 					jsonObject.getString("objectActionExecutorKey"),
 					jsonObject.getString("objectActionTriggerKey"),

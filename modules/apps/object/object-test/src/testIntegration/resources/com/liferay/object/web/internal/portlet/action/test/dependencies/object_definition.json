@@ -19,6 +19,7 @@
 	"objectActions": [
 		{
 			"active": true,
+			"description": "",
 			"name": "Action",
 			"objectActionExecutorKey": "webhook",
 			"objectActionTriggerKey": "onAfterAdd",

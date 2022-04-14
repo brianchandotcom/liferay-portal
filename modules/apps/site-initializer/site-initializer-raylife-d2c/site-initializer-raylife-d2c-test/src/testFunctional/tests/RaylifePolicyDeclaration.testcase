@@ -29,8 +29,6 @@ definition {
 	@description = "LPS-144591 - Verify that I was redirected to the 'Congrats' page after PayPal payment"
 	@priority = "5"
 	test CanReachPolicyDeclarationPageByTheForm {
-		property portal.acceptance = "quarantine";
-
 		RaylifePaymentMethod.configurationPaypal();
 
 		RaylifePaymentMethod.enablePricingPaypal();

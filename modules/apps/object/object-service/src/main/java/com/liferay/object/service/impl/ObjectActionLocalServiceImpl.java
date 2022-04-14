@@ -16,6 +16,7 @@ package com.liferay.object.service.impl;
 
 import com.liferay.object.action.executor.ObjectActionExecutorRegistry;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
+import com.liferay.object.exception.ObjectActionExecutorKeyException;
 import com.liferay.object.exception.ObjectActionNameException;
 import com.liferay.object.exception.ObjectActionTriggerKeyException;
 import com.liferay.object.model.ObjectAction;
@@ -63,7 +64,7 @@ public class ObjectActionLocalServiceImpl
 		if (!_objectActionExecutorRegistry.hasObjectActionExecutor(
 				objectActionExecutorKey)) {
 
-			throw new ObjectActionTriggerKeyException(objectActionExecutorKey);
+			throw new ObjectActionExecutorKeyException(objectActionExecutorKey);
 		}
 
 		if (!Objects.equals(

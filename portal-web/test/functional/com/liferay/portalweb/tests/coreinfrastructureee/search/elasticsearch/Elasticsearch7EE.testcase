@@ -30,7 +30,6 @@ definition {
 
 	@priority = "5"
 	test LearningToRankSmoke {
-		property elastic.override.version = "7.13.4";
 		property elasticsearch.ltr.enabled = "true";
 		property remote.elasticsearch.enabled = "true";
 		property search.environment.suite.exclude = "true";

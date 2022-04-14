@@ -86,7 +86,8 @@ public class AMGIFImageScaler implements AMImageScaler {
 			Tuple<Integer, Integer> dimension = _getDimension(bytes);
 
 			return new AMImageScaledImageImpl(
-				bytes, dimension.second, dimension.first);
+				bytes, dimension.second, dimension.first,
+				fileVersion.getMimeType());
 		}
 		catch (ExecutionException | InterruptedException | IOException |
 			   PortalException | ProcessException exception) {

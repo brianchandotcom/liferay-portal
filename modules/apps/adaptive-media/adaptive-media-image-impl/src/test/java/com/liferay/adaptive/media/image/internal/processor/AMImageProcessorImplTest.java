@@ -284,7 +284,7 @@ public class AMImageProcessorImplTest {
 				Mockito.any(FileVersion.class),
 				Mockito.any(AMImageConfigurationEntry.class))
 		).thenReturn(
-			new AMImageScaledImageImpl(new byte[100], 100, 100)
+			new AMImageScaledImageImpl(new byte[100], 100, 100, null)
 		);
 
 		_amImageProcessorImpl.process(
@@ -354,7 +354,7 @@ public class AMImageProcessorImplTest {
 				Mockito.any(FileVersion.class),
 				Mockito.any(AMImageConfigurationEntry.class))
 		).thenReturn(
-			new AMImageScaledImageImpl(new byte[100], 100, 100)
+			new AMImageScaledImageImpl(new byte[100], 100, 100, null)
 		);
 
 		_amImageProcessorImpl.process(
@@ -505,7 +505,7 @@ public class AMImageProcessorImplTest {
 		Mockito.when(
 			_amImageScaler.scaleImage(_fileVersion, amImageConfigurationEntry)
 		).thenReturn(
-			new AMImageScaledImageImpl(new byte[100], 150, 200)
+			new AMImageScaledImageImpl(new byte[100], 150, 200, null)
 		);
 
 		Mockito.doThrow(
@@ -557,7 +557,7 @@ public class AMImageProcessorImplTest {
 		Mockito.when(
 			_amImageScaler.scaleImage(_fileVersion, amImageConfigurationEntry)
 		).thenReturn(
-			new AMImageScaledImageImpl(new byte[100], 150, 200)
+			new AMImageScaledImageImpl(new byte[100], 150, 200, null)
 		);
 
 		_amImageProcessorImpl.process(_fileVersion);
@@ -676,7 +676,7 @@ public class AMImageProcessorImplTest {
 		Mockito.when(
 			_amImageScaler.scaleImage(_fileVersion, amImageConfigurationEntry)
 		).thenReturn(
-			new AMImageScaledImageImpl(new byte[100], 150, 200)
+			new AMImageScaledImageImpl(new byte[100], 150, 200, null)
 		);
 
 		Mockito.doThrow(

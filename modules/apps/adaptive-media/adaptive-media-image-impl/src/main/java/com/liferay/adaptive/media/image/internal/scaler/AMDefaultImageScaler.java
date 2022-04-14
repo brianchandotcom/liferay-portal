@@ -64,8 +64,8 @@ public class AMDefaultImageScaler implements AMImageScaler {
 			return new AMImageScaledImageImpl(
 				RenderedImageUtil.getRenderedImageContentStream(
 					scaledRenderedImage, fileVersion.getMimeType()),
-				scaledRenderedImage.getHeight(),
-				scaledRenderedImage.getWidth());
+				scaledRenderedImage.getHeight(), scaledRenderedImage.getWidth(),
+				fileVersion.getMimeType());
 		}
 		catch (AMRuntimeException.IOException | PortalException exception) {
 			throw new AMRuntimeException.IOException(

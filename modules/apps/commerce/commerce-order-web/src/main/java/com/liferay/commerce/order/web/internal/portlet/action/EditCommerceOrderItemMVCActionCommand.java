@@ -200,8 +200,6 @@ public class EditCommerceOrderItemMVCActionCommand
 		commerceOrderItem = _commerceOrderItemService.updateCommerceOrderItem(
 			commerceOrderItemId, cpMeasurementUnitId,
 			decimalQuantity.intValue(),
-			(CommerceContext)actionRequest.getAttribute(
-				CommerceWebKeys.COMMERCE_CONTEXT),
 			ServiceContextFactory.getInstance(
 				CommerceOrderItem.class.getName(), actionRequest));
 

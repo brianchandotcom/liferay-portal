@@ -146,6 +146,8 @@ public class CISystemHistoryReportUtil {
 
 		List<Callable<JSONObject>> callables = new ArrayList<>();
 
+		_totalFileCacheSize = 0L;
+
 		System.out.println(
 			"Processing " + jenkinsConsoleGzFiles.size() + " files");
 
@@ -219,6 +221,17 @@ public class CISystemHistoryReportUtil {
 							if (buildResultGzTempFile.exists()) {
 								JenkinsResultsParserUtil.delete(
 									buildResultGzTempFile);
+							}
+						}
+
+						synchronized (_totalFileCacheSize) {
+							_totalFileCacheSize += buildResultTempFile.length();
+
+							if (_totalFileCacheSize >= _MAX_FILE_CACHE_SIZE) {
+								System.out.println(
+									"SKIPPED: " + buildResultGzFile);
+
+								return null;
 							}
 						}
 
@@ -416,6 +429,8 @@ public class CISystemHistoryReportUtil {
 
 	private static final File _CI_SYSTEM_HISTORY_REPORT_DIR;
 
+	private static final long _MAX_FILE_CACHE_SIZE = 600 * 1024 * 1024;
+
 	private static final int _MONTH_COUNT;
 
 	private static final int _MONTH_RECORD_COUNT;
@@ -434,6 +449,7 @@ public class CISystemHistoryReportUtil {
 		JenkinsResultsParserUtil.getNewThreadPoolExecutor(50, true);
 	private static final Pattern _jenkinsConsolePattern = Pattern.compile(
 		"[\\s\\S]*CI_TEST_SUITE[=](?<testSuiteName>[^&]+)[\\s\\S]*");
+	private static Long _totalFileCacheSize;
 
 	static {
 		_buildProperties = new Properties() {

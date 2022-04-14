@@ -111,6 +111,8 @@ public class GetTrafficSourcesMVCResourceCommandTest {
 					() -> JSONUtil.put(
 						"organic", 3192L
 					).put(
+						"paid", 1L
+					).put(
 						"referral", 2L
 					).put(
 						"social", 385L
@@ -187,7 +189,7 @@ public class GetTrafficSourcesMVCResourceCommandTest {
 						"http//localhost/test?param_name=paid",
 						jsonObject5.getString("endpointURL"));
 					Assert.assertEquals("paid", jsonObject5.get("name"));
-					Assert.assertEquals(0, jsonObject5.getInt("value"));
+					Assert.assertEquals(1L, jsonObject5.getInt("value"));
 
 					JSONObject jsonObject6 = jsonArray.getJSONObject(4);
 

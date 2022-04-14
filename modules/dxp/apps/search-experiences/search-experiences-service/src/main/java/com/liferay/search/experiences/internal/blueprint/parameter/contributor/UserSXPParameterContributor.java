@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.expando.model.impl.ExpandoValueImpl;
@@ -94,7 +95,7 @@ public class UserSXPParameterContributor implements SXPParameterContributor {
 	public UserSXPParameterContributor(
 		ExpandoColumnLocalService expandoColumnLocalService,
 		ExpandoValueLocalService expandoValueLocalService, Language language,
-		RoleLocalService roleLocalService,
+		Portal portal, RoleLocalService roleLocalService,
 		SegmentsEntryRetriever segmentsEntryRetriever,
 		UserGroupGroupRoleLocalService userGroupGroupRoleLocalService,
 		UserGroupLocalService userGroupLocalService,
@@ -104,6 +105,7 @@ public class UserSXPParameterContributor implements SXPParameterContributor {
 		_expandoColumnLocalService = expandoColumnLocalService;
 		_expandoValueLocalService = expandoValueLocalService;
 		_language = language;
+		_portal = portal;
 		_roleLocalService = roleLocalService;
 		_segmentsEntryRetriever = segmentsEntryRetriever;
 		_userGroupGroupRoleLocalService = userGroupGroupRoleLocalService;
@@ -169,6 +171,9 @@ public class UserSXPParameterContributor implements SXPParameterContributor {
 					"user.is_gender_x"),
 				new SXPParameterContributorDefinition(
 					BooleanSXPParameter.class, "is-male", "user.is_male"),
+				new SXPParameterContributorDefinition(
+					BooleanSXPParameter.class, "is-omniadmin",
+					"user.is_omniadmin"),
 				new SXPParameterContributorDefinition(
 					BooleanSXPParameter.class, "is-signed-in",
 					"user.is_signed_in"),
@@ -452,6 +457,10 @@ public class UserSXPParameterContributor implements SXPParameterContributor {
 				"user.is_gender_x", true, !user.isFemale() && !user.isMale()));
 		sxpParameters.add(
 			new BooleanSXPParameter("user.is_male", true, user.isMale()));
+		sxpParameters.add(
+			new BooleanSXPParameter(
+				"user.is_omniadmin", true,
+				_portal.isOmniadmin(user.getUserId())));
 		sxpParameters.add(
 			new BooleanSXPParameter(
 				"user.is_signed_in", true, !user.isDefaultUser()));
@@ -751,6 +760,7 @@ public class UserSXPParameterContributor implements SXPParameterContributor {
 	private final ExpandoColumnLocalService _expandoColumnLocalService;
 	private final ExpandoValueLocalService _expandoValueLocalService;
 	private final Language _language;
+	private final Portal _portal;
 	private final RoleLocalService _roleLocalService;
 	private final SegmentsEntryRetriever _segmentsEntryRetriever;
 	private final UserGroupGroupRoleLocalService

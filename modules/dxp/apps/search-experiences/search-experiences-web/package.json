@@ -11,6 +11,9 @@
 		],
 		"testPathIgnorePatterns": [
 			"<rootDir>/test/js/mocks/*"
+		],
+		"transformIgnorePatterns": [
+			"<rootDir>/.*\\.json$"
 		]
 	},
 	"main": "js/index.es.js",

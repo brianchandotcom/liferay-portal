@@ -140,7 +140,7 @@ public class LayoutSEOLinkManagerTest {
 	}
 
 	private void _assertAlternateLayoutSEOLink(
-		Locale locale, List<LayoutSEOLink> layoutSEOLinks) {
+		Locale locale, List<LayoutSEOLink> layoutSEOLinks, String urlPrefix) {
 
 		LayoutSEOLink layoutSEOLink = _getAlternateLayoutSEOLink(
 			locale, layoutSEOLinks);
@@ -148,7 +148,8 @@ public class LayoutSEOLinkManagerTest {
 		Assert.assertNotNull(layoutSEOLink);
 
 		Assert.assertEquals(
-			_getExpectedAlternateURL(locale), layoutSEOLink.getHref());
+			_getExpectedAlternateURL(locale, urlPrefix),
+			layoutSEOLink.getHref());
 		Assert.assertEquals(
 			LocaleUtil.toW3cLanguageId(locale), layoutSEOLink.getHrefLang());
 		Assert.assertEquals(
@@ -157,10 +158,10 @@ public class LayoutSEOLinkManagerTest {
 	}
 
 	private void _assertAlternateLayoutSEOLinks(
-		List<LayoutSEOLink> layoutSEOLinks) {
+		List<LayoutSEOLink> layoutSEOLinks, String urlPrefix) {
 
 		for (Locale locale : _expectedFriendlyURLs.keySet()) {
-			_assertAlternateLayoutSEOLink(locale, layoutSEOLinks);
+			_assertAlternateLayoutSEOLink(locale, layoutSEOLinks, urlPrefix);
 		}
 
 		_assertXDefaultAlternateLayoutSEOLink(layoutSEOLinks);
@@ -168,10 +169,10 @@ public class LayoutSEOLinkManagerTest {
 
 	private void _assertCanonicalLayoutSEOLink(
 		List<LayoutSEOLink> layoutSEOLinks, Locale locale,
-		String canonicalURLConfiguration) {
+		String canonicalURLConfiguration, String urlPrefix) {
 
 		String canonicalURL = _getExpectedCanonicalURL(
-			locale, canonicalURLConfiguration);
+			locale, canonicalURLConfiguration, urlPrefix);
 
 		LayoutSEOLink layoutSEOLink = _getCanonicalLayoutSEOLink(
 			layoutSEOLinks);
@@ -184,8 +185,8 @@ public class LayoutSEOLinkManagerTest {
 			LayoutSEOLink.Relationship.CANONICAL);
 	}
 
-	private void _assertPageLocalizedLayoutSEOLinks(
-			Locale locale, String canonicalURLConfiguration)
+	private void _assertLocalizedLayoutSEOLinks(
+			Locale locale, String canonicalURLConfiguration, String urlPrefix)
 		throws PortalException {
 
 		List<LayoutSEOLink> layoutSEOLinks =
@@ -196,10 +197,18 @@ public class LayoutSEOLinkManagerTest {
 			layoutSEOLinks.toString(), _expectedFriendlyURLs.size() + 2,
 			layoutSEOLinks.size());
 
-		_assertAlternateLayoutSEOLinks(layoutSEOLinks);
+		_assertAlternateLayoutSEOLinks(layoutSEOLinks, urlPrefix);
 
 		_assertCanonicalLayoutSEOLink(
-			layoutSEOLinks, locale, canonicalURLConfiguration);
+			layoutSEOLinks, locale, canonicalURLConfiguration, urlPrefix);
+	}
+
+	private void _assertPageLocalizedLayoutSEOLinks(
+			Locale locale, String canonicalURLConfiguration)
+		throws PortalException {
+
+		_assertLocalizedLayoutSEOLinks(
+			locale, canonicalURLConfiguration, StringPool.SLASH);
 	}
 
 	private void _assertXDefaultAlternateLayoutSEOLink(
@@ -248,7 +257,7 @@ public class LayoutSEOLinkManagerTest {
 		return null;
 	}
 
-	private String _getExpectedAlternateURL(Locale locale) {
+	private String _getExpectedAlternateURL(Locale locale, String urlPrefix) {
 		String expectedLanguagePath = StringPool.BLANK;
 
 		if (!Objects.equals(LocaleUtil.US, locale)) {
@@ -256,12 +265,12 @@ public class LayoutSEOLinkManagerTest {
 		}
 
 		return StringBundler.concat(
-			_PORTAL_URL, expectedLanguagePath, _groupFriendlyURL,
+			_PORTAL_URL, expectedLanguagePath, _groupFriendlyURL, urlPrefix,
 			_expectedFriendlyURLs.get(locale));
 	}
 
 	private String _getExpectedCanonicalURL(
-		Locale locale, String canonicalURLConfiguration) {
+		Locale locale, String canonicalURLConfiguration, String urlPrefix) {
 
 		Locale canonicalLocale = locale;
 
@@ -269,7 +278,7 @@ public class LayoutSEOLinkManagerTest {
 			canonicalLocale = LocaleUtil.getDefault();
 		}
 
-		return _getExpectedAlternateURL(canonicalLocale);
+		return _getExpectedAlternateURL(canonicalLocale, urlPrefix);
 	}
 
 	private HttpServletRequest _getHttpServletRequest(Layout layout)
@@ -332,7 +341,8 @@ public class LayoutSEOLinkManagerTest {
 
 			_layout = _layoutLocalService.updateFriendlyURL(
 				TestPropsValues.getUserId(), _layout.getPlid(),
-				entry.getValue(), LocaleUtil.toLanguageId(entry.getKey()));
+				StringPool.SLASH + entry.getValue(),
+				LocaleUtil.toLanguageId(entry.getKey()));
 		}
 
 		ServiceContext serviceContext = new ServiceContext();
@@ -344,9 +354,9 @@ public class LayoutSEOLinkManagerTest {
 		_groupFriendlyURL = _portal.getGroupFriendlyURL(
 			_group.getPublicLayoutSet(), _themeDisplay, false, false);
 
-		_canonicalURL =
-			_PORTAL_URL + _groupFriendlyURL +
-				_expectedFriendlyURLs.get(LocaleUtil.US);
+		_canonicalURL = StringBundler.concat(
+			_PORTAL_URL, _groupFriendlyURL, StringPool.SLASH,
+			_expectedFriendlyURLs.get(LocaleUtil.US));
 	}
 
 	private void _testWithLayoutSEOCompanyConfiguration(
@@ -406,22 +416,19 @@ public class LayoutSEOLinkManagerTest {
 	private final Map<Locale, String> _expectedFriendlyURLs =
 		HashMapBuilder.put(
 			LocaleUtil.GERMANY,
-			StringPool.SLASH +
-				FriendlyURLNormalizerUtil.normalize(
-					RandomTestUtil.randomString(
-						LayoutFriendlyURLRandomizerBumper.INSTANCE))
+			FriendlyURLNormalizerUtil.normalize(
+				RandomTestUtil.randomString(
+					LayoutFriendlyURLRandomizerBumper.INSTANCE))
 		).put(
 			LocaleUtil.SPAIN,
-			StringPool.SLASH +
-				FriendlyURLNormalizerUtil.normalize(
-					RandomTestUtil.randomString(
-						LayoutFriendlyURLRandomizerBumper.INSTANCE))
+			FriendlyURLNormalizerUtil.normalize(
+				RandomTestUtil.randomString(
+					LayoutFriendlyURLRandomizerBumper.INSTANCE))
 		).put(
 			LocaleUtil.US,
-			StringPool.SLASH +
-				FriendlyURLNormalizerUtil.normalize(
-					RandomTestUtil.randomString(
-						LayoutFriendlyURLRandomizerBumper.INSTANCE))
+			FriendlyURLNormalizerUtil.normalize(
+				RandomTestUtil.randomString(
+					LayoutFriendlyURLRandomizerBumper.INSTANCE))
 		).build();
 	private Group _group;
 	private String _groupFriendlyURL;

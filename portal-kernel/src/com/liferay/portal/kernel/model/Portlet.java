@@ -700,6 +700,11 @@ public interface Portlet extends PersistedModel, PortletModel {
 	 */
 	public String getPortletClass();
 
+	public String getPortletConfigurationListenerClass();
+
+	public com.liferay.portal.kernel.portlet.PortletConfigurationListener
+		getPortletConfigurationListenerInstance();
+
 	/**
 	 * Returns the name of the portlet data handler class of the portlet.
 	 *
@@ -2090,6 +2095,9 @@ public interface Portlet extends PersistedModel, PortletModel {
 	 * @param portletClass the name of the portlet class of the portlet
 	 */
 	public void setPortletClass(String portletClass);
+
+	public void setPortletConfigurationListenerClass(
+		String portletConfigurationListenerClass);
 
 	/**
 	 * Sets the name of the portlet data handler class of the portlet.

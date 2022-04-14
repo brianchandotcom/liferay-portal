@@ -1009,6 +1009,18 @@ public class PortletWrapper
 		return model.getPortletClass();
 	}
 
+	@Override
+	public String getPortletConfigurationListenerClass() {
+		return model.getPortletConfigurationListenerClass();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.portlet.PortletConfigurationListener
+		getPortletConfigurationListenerInstance() {
+
+		return model.getPortletConfigurationListenerInstance();
+	}
+
 	/**
 	 * Returns the name of the portlet data handler class of the portlet.
 	 *
@@ -3033,6 +3045,14 @@ public class PortletWrapper
 	@Override
 	public void setPortletClass(String portletClass) {
 		model.setPortletClass(portletClass);
+	}
+
+	@Override
+	public void setPortletConfigurationListenerClass(
+		String portletConfigurationListenerClass) {
+
+		model.setPortletConfigurationListenerClass(
+			portletConfigurationListenerClass);
 	}
 
 	/**

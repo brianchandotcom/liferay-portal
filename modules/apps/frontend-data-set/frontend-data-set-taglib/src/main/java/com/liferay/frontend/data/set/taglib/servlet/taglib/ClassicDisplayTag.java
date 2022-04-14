@@ -155,10 +155,6 @@ public class ClassicDisplayTag extends BaseDisplayTag {
 		return _itemsPerPage;
 	}
 
-	public String getNamespace() {
-		return _namespace;
-	}
-
 	public String getNestedItemsKey() {
 		return _nestedItemsKey;
 	}
@@ -241,10 +237,6 @@ public class ClassicDisplayTag extends BaseDisplayTag {
 		_itemsPerPage = itemsPerPage;
 	}
 
-	public void setNamespace(String namespace) {
-		_namespace = namespace;
-	}
-
 	public void setNestedItemsKey(String nestedItemsKey) {
 		_nestedItemsKey = nestedItemsKey;
 	}
@@ -314,7 +306,6 @@ public class ClassicDisplayTag extends BaseDisplayTag {
 		_formId = null;
 		_formName = null;
 		_itemsPerPage = 0;
-		_namespace = null;
 		_nestedItemsKey = null;
 		_nestedItemsReferenceKey = null;
 		_pageNumber = 0;
@@ -356,8 +347,6 @@ public class ClassicDisplayTag extends BaseDisplayTag {
 				"formName", _toNullOrObject(_formName)
 			).put(
 				"id", getId()
-			).put(
-				"namespace", _namespace
 			).put(
 				"nestedItemsKey", _toNullOrObject(_nestedItemsKey)
 			).put(
@@ -470,7 +459,6 @@ public class ClassicDisplayTag extends BaseDisplayTag {
 	private String _formId;
 	private String _formName;
 	private int _itemsPerPage;
-	private String _namespace;
 	private String _nestedItemsKey;
 	private String _nestedItemsReferenceKey;
 	private int _pageNumber;

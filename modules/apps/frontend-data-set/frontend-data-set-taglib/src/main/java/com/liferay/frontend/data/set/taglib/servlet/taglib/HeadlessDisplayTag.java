@@ -114,10 +114,6 @@ public class HeadlessDisplayTag extends BaseDisplayTag {
 		return _itemsPerPage;
 	}
 
-	public String getNamespace() {
-		return _namespace;
-	}
-
 	public String getNestedItemsKey() {
 		return _nestedItemsKey;
 	}
@@ -204,10 +200,6 @@ public class HeadlessDisplayTag extends BaseDisplayTag {
 		_itemsPerPage = itemsPerPage;
 	}
 
-	public void setNamespace(String namespace) {
-		_namespace = namespace;
-	}
-
 	public void setNestedItemsKey(String nestedItemsKey) {
 		_nestedItemsKey = nestedItemsKey;
 	}
@@ -280,7 +272,6 @@ public class HeadlessDisplayTag extends BaseDisplayTag {
 		_formId = null;
 		_formName = null;
 		_itemsPerPage = 0;
-		_namespace = null;
 		_nestedItemsKey = null;
 		_nestedItemsReferenceKey = null;
 		_pageNumber = 0;
@@ -326,8 +317,6 @@ public class HeadlessDisplayTag extends BaseDisplayTag {
 				"id", getId()
 			).put(
 				"itemsActions", _fdsActionDropdownItems
-			).put(
-				"namespace", _namespace
 			).put(
 				"nestedItemsKey", _validateDataAttribute(_nestedItemsKey)
 			).put(
@@ -447,7 +436,6 @@ public class HeadlessDisplayTag extends BaseDisplayTag {
 	private String _formId;
 	private String _formName;
 	private int _itemsPerPage;
-	private String _namespace;
 	private String _nestedItemsKey;
 	private String _nestedItemsReferenceKey;
 	private int _pageNumber;

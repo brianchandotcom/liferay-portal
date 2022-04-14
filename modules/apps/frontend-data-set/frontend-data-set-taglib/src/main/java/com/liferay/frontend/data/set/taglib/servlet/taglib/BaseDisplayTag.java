@@ -19,6 +19,7 @@ import com.liferay.frontend.data.set.taglib.internal.util.ServicesProvider;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolvedPackageNameUtil;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.frontend.js.module.launcher.JSModuleResolver;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.template.react.renderer.ComponentDescriptor;
 import com.liferay.portal.template.react.renderer.ReactRenderer;
@@ -28,6 +29,7 @@ import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
 import javax.servlet.ServletContext;
@@ -61,6 +63,24 @@ public class BaseDisplayTag extends AttributesTagSupport {
 		return _id;
 	}
 
+	public String getNamespace() {
+		if (_namespace != null) {
+			return _namespace;
+		}
+
+		HttpServletRequest httpServletRequest = getRequest();
+
+		PortletResponse portletResponse =
+			(PortletResponse)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+		if (portletResponse != null) {
+			_namespace = portletResponse.getNamespace();
+		}
+
+		return _namespace;
+	}
+
 	public String getPropsTransformer() {
 		return _propsTransformer;
 	}
@@ -75,6 +95,10 @@ public class BaseDisplayTag extends AttributesTagSupport {
 
 	public void setId(String id) {
 		_id = id;
+	}
+
+	public void setNamespace(String namespace) {
+		_namespace = namespace;
 	}
 
 	/**
@@ -102,6 +126,7 @@ public class BaseDisplayTag extends AttributesTagSupport {
 	protected void cleanUp() {
 		_additionalProps = null;
 		_id = null;
+		_namespace = null;
 		_portletURL = null;
 		_propsTransformer = null;
 		_propsTransformerServletContext = null;
@@ -128,6 +153,8 @@ public class BaseDisplayTag extends AttributesTagSupport {
 		if (_additionalProps != null) {
 			props.put("additionalProps", _additionalProps);
 		}
+
+		props.put("namespace", getNamespace());
 
 		return props;
 	}
@@ -187,6 +214,7 @@ public class BaseDisplayTag extends AttributesTagSupport {
 
 	private Map<String, Object> _additionalProps;
 	private String _id;
+	private String _namespace;
 	private PortletURL _portletURL;
 	private String _propsTransformer;
 	private ServletContext _propsTransformerServletContext;

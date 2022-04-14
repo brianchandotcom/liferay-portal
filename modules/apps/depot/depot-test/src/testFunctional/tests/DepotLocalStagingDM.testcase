@@ -3240,12 +3240,17 @@ definition {
 	}
 
 	@description = "This test covers LPS-120955. It validates that a depot cannot be connected to a staged site."
-	@ignore = "Test Stub"
 	@priority = "5"
 	test DepotCannotBeConnectedToAStagedSite {
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "New Depot Name");
 
-		// TODO LPS-150073
+		DepotNavigator.openDepotSiteSettings(depotName = "New Depot Name");
 
+		Depot.connectSite(
+			connectStagedSite = "true",
+			siteList = "Site Name");
 	}
 
 }

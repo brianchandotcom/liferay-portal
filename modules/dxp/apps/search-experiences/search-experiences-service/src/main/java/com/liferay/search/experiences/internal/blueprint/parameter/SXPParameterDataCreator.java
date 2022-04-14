@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.search.experiences.blueprint.parameter.SXPParameter;
 import com.liferay.search.experiences.blueprint.parameter.contributor.SXPParameterContributorDefinition;
@@ -139,7 +140,7 @@ public class SXPParameterDataCreator
 			new TimeSXPParameterContributor(),
 			new UserSXPParameterContributor(
 				_expandoColumnLocalService, _expandoValueLocalService,
-				_language, _roleLocalService, _segmentsEntryRetriever,
+				_language, _portal, _roleLocalService, _segmentsEntryRetriever,
 				_userGroupGroupRoleLocalService, _userGroupLocalService,
 				_userGroupRoleLocalService, _userLocalService)
 		};
@@ -717,6 +718,9 @@ public class SXPParameterDataCreator
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private RoleLocalService _roleLocalService;

@@ -99,6 +99,34 @@ public class LayoutSEOLinkManagerTest {
 	}
 
 	@Test
+	public void testGetClassicContentLocalizedLayoutSEOLinksWithDefaultLocale()
+		throws Exception {
+
+		_setupForTestingContentLocalizedLayoutSEOLinks();
+
+		_testWithLayoutSEOCompanyConfiguration(
+			"default-language-url",
+			() -> _testWithSiteDefaultLanguage(
+				_layout.getGroupId(), LocaleUtil.US,
+				() -> _assertContentLocalizedLayoutSEOLinks(
+					LocaleUtil.US, "default-language-url")));
+	}
+
+	@Test
+	public void testGetClassicContentLocalizedLayoutSEOLinksWithNoDefaultLocale()
+		throws Exception {
+
+		_setupForTestingContentLocalizedLayoutSEOLinks();
+
+		_testWithLayoutSEOCompanyConfiguration(
+			"default-language-url",
+			() -> _testWithSiteDefaultLanguage(
+				_layout.getGroupId(), LocaleUtil.US,
+				() -> _assertContentLocalizedLayoutSEOLinks(
+					LocaleUtil.SPAIN, "default-language-url")));
+	}
+
+	@Test
 	public void testGetClassicLocalizedLayoutSEOLinksWithDefaultLocale()
 		throws Exception {
 
@@ -124,6 +152,34 @@ public class LayoutSEOLinkManagerTest {
 				_layout.getGroupId(), LocaleUtil.US,
 				() -> _assertPageLocalizedLayoutSEOLinks(
 					LocaleUtil.SPAIN, "default-language-url")));
+	}
+
+	@Test
+	public void testGetDefaultContentLocalizedLayoutSEOLinksWithDefaultLocale()
+		throws Exception {
+
+		_setupForTestingContentLocalizedLayoutSEOLinks();
+
+		_testWithLayoutSEOCompanyConfiguration(
+			"localized-url",
+			() -> _testWithSiteDefaultLanguage(
+				_layout.getGroupId(), LocaleUtil.US,
+				() -> _assertContentLocalizedLayoutSEOLinks(
+					LocaleUtil.US, "localized-url")));
+	}
+
+	@Test
+	public void testGetDefaultContentLocalizedLayoutSEOLinksWithNoDefaultLocale()
+		throws Exception {
+
+		_setupForTestingContentLocalizedLayoutSEOLinks();
+
+		_testWithLayoutSEOCompanyConfiguration(
+			"localized-url",
+			() -> _testWithSiteDefaultLanguage(
+				_layout.getGroupId(), LocaleUtil.US,
+				() -> _assertContentLocalizedLayoutSEOLinks(
+					LocaleUtil.SPAIN, "localized-url")));
 	}
 
 	@Test

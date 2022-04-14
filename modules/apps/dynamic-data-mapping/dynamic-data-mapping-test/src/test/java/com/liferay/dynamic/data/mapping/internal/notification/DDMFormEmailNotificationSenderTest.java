@@ -25,8 +25,10 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.HtmlImpl;
 
 import java.util.Arrays;
@@ -34,26 +36,26 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.mockito.Matchers;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.api.support.membermodification.MemberMatcher;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Rafael Praxedes
  */
-@RunWith(PowerMockRunner.class)
 public class DDMFormEmailNotificationSenderTest {
 
-	@Before
-	public void setUp() throws Exception {
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
 		_setUpDDMFormEmailNotificationSender();
 		_setUpDDMFormFieldTypeServicesTracker();
 		_setUpHtmlUtil();
@@ -143,6 +145,31 @@ public class DDMFormEmailNotificationSenderTest {
 		Assert.assertEquals("1", String.valueOf(fieldProperties.get("value")));
 	}
 
+	private static void _setUpDDMFormEmailNotificationSender()
+		throws Exception {
+
+		_ddmFormEmailNotificationSender = new DDMFormEmailNotificationSender();
+
+		ReflectionTestUtil.setFieldValue(
+			_ddmFormEmailNotificationSender, "_ddmFormFieldTypeServicesTracker",
+			_ddmFormFieldTypeServicesTracker);
+	}
+
+	private static void _setUpDDMFormFieldTypeServicesTracker() {
+		Mockito.when(
+			_ddmFormFieldTypeServicesTracker.getDDMFormFieldValueRenderer(
+				Matchers.anyString())
+		).thenReturn(
+			_defaultDDMFormFieldValueRenderer
+		);
+	}
+
+	private static void _setUpHtmlUtil() {
+		HtmlUtil htmlUtil = new HtmlUtil();
+
+		htmlUtil.setHtml(new HtmlImpl());
+	}
+
 	private DDMForm _createDDMForm(DDMFormField ddmFormField) {
 		DDMForm ddmForm = new DDMForm();
 
@@ -190,38 +217,12 @@ public class DDMFormEmailNotificationSenderTest {
 		return ddmFormInstanceRecord;
 	}
 
-	private void _setUpDDMFormEmailNotificationSender() throws Exception {
-		_ddmFormEmailNotificationSender = new DDMFormEmailNotificationSender();
-
-		MemberMatcher.field(
-			DDMFormEmailNotificationSender.class,
-			"_ddmFormFieldTypeServicesTracker"
-		).set(
-			_ddmFormEmailNotificationSender, _ddmFormFieldTypeServicesTracker
-		);
-	}
-
-	private void _setUpDDMFormFieldTypeServicesTracker() {
-		PowerMockito.when(
-			_ddmFormFieldTypeServicesTracker.getDDMFormFieldValueRenderer(
-				Matchers.anyString())
-		).thenReturn(
-			_defaultDDMFormFieldValueRenderer
-		);
-	}
-
-	private void _setUpHtmlUtil() {
-		HtmlUtil htmlUtil = new HtmlUtil();
-
-		htmlUtil.setHtml(new HtmlImpl());
-	}
-
-	private DDMFormEmailNotificationSender _ddmFormEmailNotificationSender;
-
-	@Mock
-	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
-
-	private final DefaultDDMFormFieldValueRenderer
+	private static DDMFormEmailNotificationSender
+		_ddmFormEmailNotificationSender;
+	private static final DDMFormFieldTypeServicesTracker
+		_ddmFormFieldTypeServicesTracker = Mockito.mock(
+			DDMFormFieldTypeServicesTracker.class);
+	private static final DefaultDDMFormFieldValueRenderer
 		_defaultDDMFormFieldValueRenderer =
 			new DefaultDDMFormFieldValueRenderer();
 

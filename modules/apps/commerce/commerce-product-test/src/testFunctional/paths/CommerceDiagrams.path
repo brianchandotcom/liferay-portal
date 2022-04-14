@@ -82,6 +82,22 @@
 	<td>//label[contains(.,'Type')]/../select[contains(@id,'typeInput')]</td>
 	<td></td>
 </tr>
+<!--DIAGRAM_PRODUCT_TOOLTIP-->
+<tr>
+	<td>DIAGRAM_PRODUCT_TOOLTIP</td>
+	<td>//div[contains(@class,'diagram-tooltip')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DIAGRAM_PRODUCT_TOOLTIP_LINKED_SKU</td>
+	<td>//div[contains(@class,'diagram-tooltip')]//h4//a[contains(text(),'${key_sku}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DIAGRAM_PRODUCT_TOOLTIP_LINKED_PRODUCT_NAME</td>
+	<td>//div[contains(@class,'diagram-tooltip')]//p//a[contains(text(),'${key_productName}')]</td>
+	<td></td>
+</tr>
 <!--DIAGRAM_SETTINGS-->
 <tr>
 	<td>DIAGRAM_SETTINGS_TYPE_OPTION</td>

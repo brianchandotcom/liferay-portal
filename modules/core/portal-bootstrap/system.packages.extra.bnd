@@ -296,19 +296,14 @@ Provide-Capability:\
 	@../../../lib/portal/portletmvc4spring-framework.jar,\
 	@../../../lib/portal/slf4j-api.jar,\
 	@../../../lib/portal/spring-aop.jar,\
-	@../../../lib/portal/spring-aspects.jar,\
 	@../../../lib/portal/spring-beans.jar,\
-	@../../../lib/portal/spring-context-support.jar,\
 	@../../../lib/portal/spring-context.jar,\
 	@../../../lib/portal/spring-core.jar,\
 	@../../../lib/portal/spring-expression.jar,\
 	@../../../lib/portal/spring-jdbc.jar,\
-	@../../../lib/portal/spring-jms.jar,\
 	@../../../lib/portal/spring-orm.jar,\
-	@../../../lib/portal/spring-oxm.jar,\
 	@../../../lib/portal/spring-tx.jar,\
 	@../../../lib/portal/spring-web.jar,\
-	@../../../lib/portal/spring-webmvc.jar,\
 	@../../../lib/portal/xercesImpl.jar,\
 	@../../../lib/portal/xml-apis.jar,\
 	@../../../lib/portal/xmlsec.jar,\

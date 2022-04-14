@@ -91,8 +91,7 @@ public class BatchPlannerPlanHelper {
 	}
 
 	public BatchPlannerPlan addImportBatchPlannerPlan(
-			PortletRequest portletRequest, String importFileName,
-			String importFileURI)
+			PortletRequest portletRequest, String name, String importFileURI)
 		throws PortalException {
 
 		String externalType = ParamUtil.getString(
@@ -105,8 +104,8 @@ public class BatchPlannerPlanHelper {
 
 		BatchPlannerPlan batchPlannerPlan =
 			_batchPlannerPlanService.addBatchPlannerPlan(
-				false, externalType, importFileURI, internalClassName,
-				importFileName, taskItemDelegateName, template);
+				false, externalType, importFileURI, internalClassName, name,
+				taskItemDelegateName, template);
 
 		_batchPlannerPolicyService.addBatchPlannerPolicy(
 			batchPlannerPlan.getBatchPlannerPlanId(), "containsHeaders",

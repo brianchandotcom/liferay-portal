@@ -85,6 +85,13 @@ definition {
 					value1 = "Select This Folder");
 			}
 			else {
+				if (isSet(selectBreadcrumb)) {
+					AssertClick(
+						key_breadcrumbName = "${breadcrumbName}",
+						locator1 = "BreadcrumbPortlet#BREADCRUMB_FOLDER",
+						value1 = "${breadcrumbName}");
+				}
+
 				AssertClick(
 					key_dmFolderName = "${dmRootFolderName}",
 					locator1 = "DocumentsAndMedia#SELECT_FOLDER_BUTTON",

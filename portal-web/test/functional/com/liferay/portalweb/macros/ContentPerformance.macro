@@ -31,9 +31,7 @@ definition {
 	}
 
 	macro clickDoNotShowMeThisAgain {
-		Click(
-			key_text = "Do not show me this again",
-			locator1 = "Link#ANY");
+		Click(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_DO_NOT_SHOW_AGAIN");
 	}
 
 	macro connectDXPtoAnalyticsCloudNoSync {

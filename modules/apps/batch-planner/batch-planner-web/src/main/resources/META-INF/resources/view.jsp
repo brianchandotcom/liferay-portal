@@ -59,7 +59,7 @@ SearchContainer<BatchPlannerPlanDisplay> batchPlannerPlanDisplaySearchContainer 
 
 			<liferay-ui:search-container-column-text
 				name="action"
-				value="<%= batchPlannerPlanDisplay.getAction() %>"
+				value="<%= LanguageUtil.get(request, batchPlannerPlanDisplay.getAction()) %>"
 			/>
 
 			<liferay-ui:search-container-column-text

@@ -120,6 +120,24 @@ definition {
 		ObjectPortlet.viewEntry(entry = "All people are inherently valuable; who we are is as important as what we can do.");
 	}
 
+	@description = "LPS-150797 - Verify it is possible to view object entries after adding a file in the attachment field"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanViewObjectEntriesAfterAddingAttachment {
+
+		// TODO LPS-151587 CanViewObjectEntriesAfterAddingAttachment pending implementation
+
+	}
+
+	@description = "LPS-143064 - Verify that, when seeing an object view with uploads, the user must only be able to read the first line of the text without considering its format"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewOnlyFirstLineOfUploadTextField {
+
+		// TODO LPS-151585 CanViewOnlyFirstLineOfUploadTextField pending implementation
+
+	}
+
 	@description = "LPS-142659 - Verify that a Clob entry is correctly displayed on the auto-generated table on the Custom Object Portlet"
 	@priority = "4"
 	test ClobDisplayed {

@@ -122,6 +122,15 @@ definition {
 			locator1 = "FormsAdmin#FORMS_TABLE_NAME");
 	}
 
+	@description = "LPS-143064 - Verify that, when using objects as storage type, the user must be able to map to this field type to Rich Text Field and view its entries"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanMapAndViewEntriesForRichTextField {
+
+		// TODO LPS-151597 CanMapAndViewEntriesForRichTextField pending implementation
+
+	}
+
 	@description = "LPS-142659 - Verify if it's possible to map an Object field of Clob type and view its entries (Multiple Lines)"
 	@priority = "4"
 	test CanMapClobTypeAndViewEntriesMultipleLines {

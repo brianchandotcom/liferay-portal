@@ -15,35 +15,6 @@ definition {
 		Click(locator1 = "Button#SAVE");
 	}
 
-	macro changeUserRole{
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Accounts",
-			panel = "Control Panel",
-			portlet = "Accounts");
-
-		Navigator.gotoNavTab(navTab = "Users");
-
-		Accounts.goToEntryMenuItem(
-			menuItem = "Assign Roles",
-			rowEntry = "${accountUserName}");
-
-		SelectFrame(
-			key_title = "Assign Roles",
-			locator1 = "IFrame#MODAL_ANY");
-
-		Check(
-			key_tableEntry = "${accountRoleTitle}",
-			locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
-
-		SelectFrameTop();
-
-		Button.click(button = "Done");
-
-		Alert.viewSuccessMessage();
-
-	}
-
 	macro addIdPCForCustomerPortal {
 		AssertClick(
 			locator1 = "CPSAMLAdminIdentityProviderConnection#ADD_IDENTITY_PROVIDER_BUTTON",
@@ -84,6 +55,33 @@ definition {
 		else if (isSet(idpAttributeMapping)) {
 			SAMLPortlet.addIdentityProviderConnectionAttributeMapping(idpAttributeMapping = "${idpAttributeMapping}");
 		}
+	}
+
+	macro changeUserRole {
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Accounts");
+
+		Navigator.gotoNavTab(navTab = "Users");
+
+		Accounts.goToEntryMenuItem(
+			menuItem = "Assign Roles",
+			rowEntry = "${accountUserName}");
+
+		SelectFrame(
+			key_title = "Assign Roles",
+			locator1 = "IFrame#MODAL_ANY");
+
+		Check(
+			key_tableEntry = "${accountRoleTitle}",
+			locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
+
+		SelectFrameTop();
+
+		Button.click(button = "Done");
+
+		Alert.viewSuccessMessage();
 	}
 
 	macro checkToggleHideWidget {

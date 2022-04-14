@@ -50,6 +50,11 @@
 	<td>//input[contains(@id, 'okta-signin-submit')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>PROJECT_TABLE</td>
+	<td>//div[contains(@class,'cp-project-cards')]//div[contains(@class,'project-card')]//h4[contains(@title, '${key_projectName}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

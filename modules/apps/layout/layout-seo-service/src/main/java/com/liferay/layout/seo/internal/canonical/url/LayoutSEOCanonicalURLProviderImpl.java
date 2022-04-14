@@ -155,7 +155,8 @@ public class LayoutSEOCanonicalURLProviderImpl
 				"default-language-url")) {
 
 			return alternateURLMapper.getAlternateURL(
-				canonicalURL, themeDisplay, LocaleUtil.getDefault(), layout);
+				canonicalURL, themeDisplay, LocaleUtil.getSiteDefault(),
+				layout);
 		}
 
 		return alternateURLMapper.getAlternateURL(

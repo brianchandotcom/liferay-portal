@@ -22,7 +22,7 @@ echo "[run_local] Deleting deployments"
 kubectl delete deployments.apps dxp-deployment --wait=true --ignore-not-found=true
 
 echo "[run_local] Deploy updated resources"
-kubectl apply -f k8s/dxp/
+kubectl apply -k k8s/dxp/
 kubectl wait --for=condition=available --timeout=600s deployment/dxp-deployment
 
 # forward ports so we can see it!

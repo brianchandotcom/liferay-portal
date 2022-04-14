@@ -601,6 +601,7 @@ definition {
 			threadCount = "1");
 
 		MessageboardsThread.viewCP(
+			mbAttachmentFile = "Document_1.jpg",
 			replyCount = "1",
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject",

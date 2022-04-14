@@ -58,6 +58,9 @@ import getJsModule from './utils/modules';
 import ViewsContext from './views/ViewsContext';
 import {getViewContentRenderer} from './views/index';
 
+const DEFAULT_PAGINATION_DELTA = 20;
+const DEFAULT_PAGINATION_PAGE_NUMBER = 1;
+
 const DataSet = ({
 	actionParameterName,
 	bulkActions,
@@ -98,8 +101,7 @@ const DataSet = ({
 		sidePanelId || `support-side-panel-${getRandomId()}`
 	);
 	const [delta, setDelta] = useState(
-		showPagination &&
-			(pagination.initialDelta || pagination.deltas[0].label)
+		showPagination && (pagination?.initialDelta || DEFAULT_PAGINATION_DELTA)
 	);
 
 	const [filters, setFilters] = useState(() => {
@@ -121,7 +123,10 @@ const DataSet = ({
 	const [highlightedItemsValue, setHighlightedItemsValue] = useState([]);
 	const [items, setItems] = useState(itemsProp);
 	const [itemsChanges, setItemsChanges] = useState({});
-	const [pageNumber, setPageNumber] = useState(1);
+	const [pageNumber, setPageNumber] = useState(
+		showPagination &&
+			(pagination?.initialPageNumber || DEFAULT_PAGINATION_PAGE_NUMBER)
+	);
 	const [searchParam, setSearchParam] = useState('');
 	const [selectedItemsValue, setSelectedItemsValue] = useState(
 		selectedItems || []
@@ -768,9 +773,6 @@ DataSet.defaultProps = {
 	inlineEditingSettings: null,
 	items: null,
 	itemsActions: null,
-	pagination: {
-		initialDelta: 10,
-	},
 	selectedItemsKey: 'id',
 	selectionType: 'multiple',
 	showManagementBar: true,

@@ -1,0 +1,47 @@
+.dashboard-tasks-container .dashboard-tasks-content {
+	margin-top: 30px;
+}
+
+.dashboard-tasks-container
+	.dashboard-tasks-header
+	.dashboard-tasks-title::after {
+	background-color: #4d85ff;
+	content: '';
+	height: 1px;
+	left: 28px;
+	min-width: 20px;
+	position: absolute;
+	top: 50px;
+}
+
+.dashboard-tasks-container
+	.dashboard-tasks-section.border-bottom-dashed:not(:last-child) {
+	border-bottom: 1px dashed #d3d3d4;
+	padding-bottom: 10px;
+}
+
+.dashboard-tasks-container .dashboard-tasks-subsection .arrow-icon svg,
+.dashboard-tasks-container .dashboard-tasks-header .settings-icon svg {
+	cursor: pointer;
+	height: 24px !important;
+	width: 24px !important;
+}
+
+.dashboard-tasks-container .dashboard-tasks-subsection .bubble-element {
+	height: 24px !important;
+	width: 30px !important;
+}
+
+.dashboard-tasks-container .dashboard-tasks-subsection .bubble-element,
+.dashboard-tasks-container
+	.dashboard-tasks-content
+	.dashboard-tasks-section
+	.dashboard-tasks-subsection {
+	cursor: pointer;
+}
+
+.dashboard-tasks-container
+	.dashboard-tasks-section
+	.dashboard-tasks-section-header {
+	font-weight: 900 !important;
+}

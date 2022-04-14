@@ -10,7 +10,6 @@
 					"indexed": true,
 					"layout": {
 						"borderWidth": 0,
-						"htmlTag": "Div",
 						"marginBottom": 0,
 						"marginLeft": 0,
 						"marginRight": 0,
@@ -70,7 +69,6 @@
 											"indexed": true,
 											"layout": {
 												"borderWidth": 0,
-												"htmlTag": "Div",
 												"marginBottom": 0,
 												"marginLeft": 0,
 												"marginRight": 0,
@@ -92,7 +90,6 @@
 													"indexed": true,
 													"layout": {
 														"borderWidth": 0,
-														"htmlTag": "Div",
 														"marginBottom": 0,
 														"marginLeft": 0,
 														"marginRight": 0,
@@ -155,7 +152,7 @@
 																			"id": "tablet"
 																		}
 																	],
-																	"size": 3
+																	"size": 4
 																},
 																"pageElements": [
 																	{
@@ -216,7 +213,6 @@
 																							"indexed": true,
 																							"layout": {
 																								"borderWidth": 0,
-																								"htmlTag": "Div",
 																								"marginBottom": 0,
 																								"marginLeft": 0,
 																								"marginRight": 0,
@@ -247,11 +243,10 @@
 																											{
 																												"definition": {
 																													"fragment": {
-																														"key": "fake-content"
+																														"key": "dashboard-tasks"
 																													},
 																													"fragmentConfig": {
-																														"fakeContentId": "fake content",
-																														"height": "464px"
+																														"textColor": ""
 																													},
 																													"fragmentFields": [
 																													],
@@ -361,7 +356,7 @@
 																			"id": "tablet"
 																		}
 																	],
-																	"size": 9
+																	"size": 8
 																},
 																"pageElements": [
 																	{
@@ -531,7 +526,6 @@
 																			"indexed": true,
 																			"layout": {
 																				"borderWidth": 0,
-																				"htmlTag": "Div",
 																				"marginBottom": 0,
 																				"marginLeft": 0,
 																				"marginRight": 0,
@@ -602,7 +596,6 @@
 													"indexed": true,
 													"layout": {
 														"borderWidth": 0,
-														"htmlTag": "Div",
 														"marginBottom": 0,
 														"marginLeft": 0,
 														"marginRight": 0,

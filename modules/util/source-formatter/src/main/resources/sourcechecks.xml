@@ -1204,6 +1204,10 @@
 			<description name="Checks that dependencies files are located in the correct directory." />
 			<property name="enabled" value="false" />
 		</check>
+		<check name="PoshiPauseUsageCheck">
+			<category name="Performance" />
+			<description name="Finds missing comment when using `Pause`." />
+		</check>
 		<check name="PoshiStylingCheck">
 			<category name="Styling" />
 			<description name="Applies rules to enforce consistency in code style." />

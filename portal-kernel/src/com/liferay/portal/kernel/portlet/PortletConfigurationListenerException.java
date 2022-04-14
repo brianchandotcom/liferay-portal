@@ -14,15 +14,26 @@
 
 package com.liferay.portal.kernel.portlet;
 
-import javax.portlet.PortletPreferences;
-
 /**
  * @author Lourdes Fernández Besada
  */
-public interface PortletConfigurationListener {
+public class PortletConfigurationListenerException extends RuntimeException {
 
-	public void onUpdateScope(
-			String portletId, PortletPreferences portletPreferences)
-		throws PortletConfigurationListenerException;
+	public PortletConfigurationListenerException() {
+	}
+
+	public PortletConfigurationListenerException(String msg) {
+		super(msg);
+	}
+
+	public PortletConfigurationListenerException(
+		String msg, Throwable throwable) {
+
+		super(msg, throwable);
+	}
+
+	public PortletConfigurationListenerException(Throwable throwable) {
+		super(throwable);
+	}
 
 }

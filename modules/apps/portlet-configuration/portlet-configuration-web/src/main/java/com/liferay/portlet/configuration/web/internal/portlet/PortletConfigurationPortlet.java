@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfigWrapper;
 import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletConfigurationLayoutUtil;
+import com.liferay.portal.kernel.portlet.PortletConfigurationListener;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletLayoutListener;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
@@ -1065,6 +1066,14 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 		}
 
 		portletPreferences.store();
+
+		PortletConfigurationListener portletConfigurationListener =
+			portlet.getPortletConfigurationListenerInstance();
+
+		if (portletConfigurationListener != null) {
+			portletConfigurationListener.onUpdateScope(
+				portlet.getPortletId(), portletPreferences);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

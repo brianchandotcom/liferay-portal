@@ -83,7 +83,7 @@ definition {
 			locator1 = "ClaySamplePortlet#CHECKBOX");
 	}
 
-	@description = "LRQA-65496: Verify status checked in clay checkbox indeterminate"
+	@description = "LRQA-65496: Validate that a parent checkbox is a checked state when all nested checkboxes are checked."
 	@priority = "3"
 	test ParentMustBeCheckedIfAllChildrenAreChecked {
 		task ("Given treeview with indeterminate state checkboxes") {
@@ -98,7 +98,7 @@ definition {
 				value1 = "true");
 		}
 
-		task ("When all children checkboxes states become checked") {
+		task ("When all children checkboxes states are checked") {
 			Click.clickAtNotVisible(
 				key_label = "Content & Data",
 				locator1 = "ClaySamplePortlet#CHECKBOX_NESTED");
@@ -108,21 +108,33 @@ definition {
 				locator1 = "ClaySamplePortlet#CHECKBOX_NESTED");
 		}
 
-		task ("Then the top most treeview checkbox state is checked") {
+		task ("Then the parent checkbox is checked state") {
 			AssertChecked.assertCheckedNotVisible(
 				key_label = "Liferay DXP",
 				locator1 = "ClaySamplePortlet#CHECKBOX_NESTED");
 		}
 	}
 
-	@description = "LRQA-65496: Verify status indeterminate in clay checkbox indeterminate"
+	@description = "LRQA-65496: Validate that a parent checkbox is an indeterminate state when some nested checkboxes are checked."
 	@priority = "3"
-	test ParentMustBeIndeterminateIfNotAllChildrenCheckedOrUnChecked {
+	test ParentMustBeIndeterminateIfSomeChildrenChecked {
 		task ("Given treeview with indeterminate state checkboxes") {
 			Navigator.gotoNavTab(navTab = "Form Elements");
 		}
 
-		task ("Then the state of indeterminate checkbox is indeterminate") {
+		task ("When treeview has atleast 1 child checkbox state is checked") {
+			AssertChecked.assertCheckedNotVisible(
+				key_label = "Content & Data",
+				locator1 = "ClaySamplePortlet#CHECKBOX_NESTED");
+		}
+
+		task ("And when treeview has atleast 1 child checkbox state is unchecked") {
+			IsNotChecked.isNotCheckedNotVisible(
+				key_label = "Categorization",
+				locator1 = "ClaySamplePortlet#CHECKBOX_NESTED");
+		}
+
+		task ("Then parent checkbox is indeterminate state") {
 			AssertAttributeValue(
 				attribute1 = "indeterminate",
 				key_label = "Liferay DXP",
@@ -131,14 +143,14 @@ definition {
 		}
 	}
 
-	@description = "LRQA-65496: Verify status unchecked in clay checkbox indeterminate"
+	@description = "LRQA-65496: Validate that a parent checkbox is an unchecked state when all nested checkboxes are unchecked."
 	@priority = "3"
-	test ParentMustBeUncheckedIfAllChildrenUnchecked {
+	test ParentMustBeUncheckedIfNoChildrenChecked {
 		task ("Given treeview with indeterminate state checkboxes") {
 			Navigator.gotoNavTab(navTab = "Form Elements");
 		}
 
-		task ("When children checkboxes are unchecked") {
+		task ("When all children checkboxes states are unchecked") {
 			Click.clickAtNotVisible(
 				key_label = "Design",
 				locator1 = "ClaySamplePortlet#CHECKBOX_NESTED");
@@ -148,7 +160,7 @@ definition {
 				locator1 = "ClaySamplePortlet#CHECKBOX_NESTED");
 		}
 
-		task ("Then parent checkbox is unchecked") {
+		task ("Then parent checkbox is unchecked state") {
 			Uncheck.uncheckNotVisible(
 				key_label = "Liferay DXP",
 				locator1 = "ClaySamplePortlet#CHECKBOX_NESTED");

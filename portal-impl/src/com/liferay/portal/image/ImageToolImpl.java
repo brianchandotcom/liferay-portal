@@ -734,7 +734,9 @@ public class ImageToolImpl implements ImageTool {
 
 		int type = originalBufferedImage.getType();
 
-		if (type == BufferedImage.TYPE_CUSTOM) {
+		if ((type == BufferedImage.TYPE_CUSTOM) ||
+			(type == BufferedImage.TYPE_BYTE_INDEXED)) {
+
 			type = BufferedImage.TYPE_INT_ARGB;
 		}
 

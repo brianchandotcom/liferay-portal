@@ -58,6 +58,16 @@ public class LayoutSEOCanonicalURLProviderImpl
 			Map<Locale, String> alternateURLs)
 		throws PortalException {
 
+		return getCanonicalURL(
+			layout, locale, canonicalURL, _getThemeDisplay());
+	}
+
+	@Override
+	public String getCanonicalURL(
+			Layout layout, Locale locale, String canonicalURL,
+			ThemeDisplay themeDisplay)
+		throws PortalException {
+
 		String layoutCanonicalURL = _getLayoutCanonicalURL(locale, layout);
 
 		if (Validator.isNotNull(layoutCanonicalURL)) {
@@ -65,7 +75,7 @@ public class LayoutSEOCanonicalURLProviderImpl
 		}
 
 		return _getDefaultCanonicalURL(
-			layout, locale, canonicalURL, _getThemeDisplay());
+			layout, locale, canonicalURL, themeDisplay);
 	}
 
 	@Override

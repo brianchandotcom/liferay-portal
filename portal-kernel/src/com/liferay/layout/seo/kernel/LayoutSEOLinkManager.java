@@ -16,6 +16,7 @@ package com.liferay.layout.seo.kernel;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListMergeable;
 
 import java.util.List;
@@ -29,7 +30,7 @@ import java.util.Set;
 public interface LayoutSEOLinkManager {
 
 	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #getCanonicalLayoutSEOLink(Layout, Locale, String, Set)}
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #getCanonicalLayoutSEOLink(Layout, Locale, String, ThemeDisplay)}
 	 */
 	@Deprecated
 	public default LayoutSEOLink getCanonicalLayoutSEOLink(
@@ -42,7 +43,7 @@ public interface LayoutSEOLinkManager {
 
 	public LayoutSEOLink getCanonicalLayoutSEOLink(
 			Layout layout, Locale locale, String canonicalURL,
-			Set<Locale> availableLocales)
+			ThemeDisplay themeDisplay)
 		throws PortalException;
 
 	public default String getFullPageTitle(

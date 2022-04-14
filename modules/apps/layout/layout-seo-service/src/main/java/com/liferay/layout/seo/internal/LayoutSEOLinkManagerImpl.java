@@ -69,27 +69,19 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 		throws PortalException {
 
 		return getCanonicalLayoutSEOLink(
-			layout, locale, canonicalURL, alternateURLs.keySet());
+			layout, locale, canonicalURL, _getThemeDisplay());
 	}
 
 	@Override
 	public LayoutSEOLink getCanonicalLayoutSEOLink(
 			Layout layout, Locale locale, String canonicalURL,
-			Set<Locale> availableLocales)
+			ThemeDisplay themeDisplay)
 		throws PortalException {
-
-		ThemeDisplay themeDisplay = _getThemeDisplay();
-
-		AlternateURLMapperProvider.AlternateURLMapper alternateURLMapper =
-			_alternateURLMapperProvider.getAlternateURLMapper(
-				_getHttpServletRequest());
 
 		return new LayoutSEOLinkImpl(
 			_html.escapeAttribute(
 				_layoutSEOCanonicalURLProvider.getCanonicalURL(
-					layout, locale, canonicalURL,
-					alternateURLMapper.getAlternateURLs(
-						canonicalURL, themeDisplay, layout, availableLocales))),
+					layout, locale, canonicalURL, themeDisplay)),
 			null, LayoutSEOLink.Relationship.CANONICAL);
 	}
 

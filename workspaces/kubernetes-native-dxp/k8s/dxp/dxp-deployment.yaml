@@ -17,6 +17,18 @@ spec:
       labels:
         app: dxp
     spec:
+      securityContext:
+        runAsUser: 0
+      initContainers:
+        - name: init-dxp-pv
+          image: kubernetes-native-dxp:7.4.13-k8s-native
+          command:
+          - bash
+          - -c
+          - if [ -z "$(ls -A /opt/liferay/data-pv)" ]; then chown -R 1000:1000 /opt/liferay/data-pv; ls -l /opt/liferay; cp -r /opt/liferay/data/* /opt/liferay/data-pv/; fi
+          volumeMounts:
+          - name: dxp-persistent-storage
+            mountPath: "/opt/liferay/data-pv"
       containers:
         - name: dxp
           image: kubernetes-native-dxp:7.4.13-k8s-native
@@ -76,6 +88,8 @@ spec:
           - name: dxp-logging-configmap
             mountPath: /opt/liferay/osgi/log4j
             readOnly: true
+          - name: dxp-persistent-storage
+            mountPath: "/opt/liferay/data"
       volumes:
         - name: dxp-configmap
           configMap:
@@ -83,3 +97,6 @@ spec:
         - name: dxp-logging-configmap
           configMap:
             name: dxp-logging-configmap
+        - name: dxp-persistent-storage
+          persistentVolumeClaim:
+            claimName: dxp-persistent-volume-claim

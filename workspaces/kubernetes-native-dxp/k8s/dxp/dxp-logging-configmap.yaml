@@ -2,6 +2,8 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: dxp-logging-configmap
+  labels:
+    app: dxp
 data:
   # property-like keys; each key maps to a simple value
   com.liferay.k8s.agent-log4j-ext.xml: |

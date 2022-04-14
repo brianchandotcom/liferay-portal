@@ -8,7 +8,7 @@ metadata:
 rules:
 - apiGroups: [""] # "" indicates the core API group
   resources: ["configmaps"]
-  verbs: ["get", "watch", "list"]
+  verbs: ["create", "delete", "get", "list", "patch", "update", "watch"] # create delete deletecollection get list patch update watch
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 # This role binding allows "jane" to read pods in the "default" namespace.

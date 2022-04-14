@@ -18,6 +18,7 @@ export function getActivationKeysActionsItems(
 	sessionId,
 	handleAlertStatus,
 	handleRedirectPage,
+	handleDeactivatePage,
 	productName
 ) {
 	return [
@@ -30,6 +31,16 @@ export function getActivationKeysActionsItems(
 			),
 			label: 'Generate New',
 			onClick: handleRedirectPage,
+		},
+		{
+			icon: (
+				<ClayIcon
+					className="mr-1 text-neutral-4"
+					symbol="minus-circle"
+				/>
+			),
+			label: 'Deactivate',
+			onClick: handleDeactivatePage,
 		},
 		{
 			icon: (

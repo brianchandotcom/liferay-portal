@@ -83,12 +83,15 @@ const ActionButton = ({
 	}
 
 	const handleRedirectPage = () => navigate('new');
+	const handleDeactivatePage = () => navigate('deactivate');
+
 	const activationKeysActionsItems = getActivationKeysActionsItems(
 		project?.accountKey,
 		licenseKeyDownloadURL,
 		sessionId,
 		handleAlertStatus,
 		handleRedirectPage,
+		handleDeactivatePage,
 		productName
 	);
 

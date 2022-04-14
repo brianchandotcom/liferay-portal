@@ -19,6 +19,7 @@ const productsFormatted = Object.entries(
 ]);
 
 export const PAGE_TYPES = {
+	dxpDeactivate: 'dxp_deactivate',
 	dxpNew: 'dxp_new',
 	home: 'home',
 	overview: 'overview',

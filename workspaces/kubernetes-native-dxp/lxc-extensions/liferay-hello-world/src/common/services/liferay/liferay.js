@@ -3,6 +3,7 @@ export const Liferay = window.Liferay || {
 		getCompanyGroupId: () => 0,
 		getScopeGroupId: () => 0,
 		getSiteGroupId: () => 0,
+		isSignedIn: () => false,
 	},
 	authToken: "",
 };

@@ -88,7 +88,8 @@ public class HttpInvoker {
 
 	public HttpInvoker multipart() {
 		_contentType =
-			"multipart/form-data; charset=utf-8; boundary=__MULTIPART_BOUNDARY__";
+			"multipart/form-data; charset=utf-8; " +
+				"boundary=__MULTIPART_BOUNDARY__";
 		_multipartBoundary = "__MULTIPART_BOUNDARY__";
 
 		return this;

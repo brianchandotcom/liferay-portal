@@ -1,68 +1,5 @@
 definition {
 
-	macro accountGroupsTearDown {
-		var accountGroupsList = "";
-		var count = "1";
-
-		while (IsElementPresent(key_rowNumber = "${count}", locator1 = "CommerceNavigation#ENTRY_NAME_N")) {
-			var key_rowNumber = "${count}";
-			var entryName = selenium.getText("CommerceNavigation#ENTRY_NAME_N");
-
-			if ("${entryName}" != "Guest") {
-				var accountGroupsList = StringUtil.add("${accountGroupsList}", "${entryName}");
-			}
-
-			var count = ${count} + 1;
-		}
-
-		if ("${accountGroupsList}" != "") {
-			for (var accountGroupName : list "${accountGroupsList}") {
-				ClickNoError(
-					key_entryName = "${accountGroupName}",
-					locator1 = "CommerceEntry#ENTRY_NAME_BODY_VERTICAL_ELLIPSIS_2");
-
-				CommerceEntry.clickNoError(menuItem = "Delete");
-
-				AssertElementPresent(locator1 = "Message#SUCCESS");
-
-				AssertElementNotPresent(locator1 = "Message#ERROR");
-			}
-		}
-	}
-
-	macro commerceAdminSetUp {
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.addCP(
-			userEmailAddress = "commerceuser@liferay.com",
-			userFirstName = "Commerce",
-			userLastName = "User",
-			userScreenName = "commerceuser");
-
-		CommerceEntry.createNewCurrenciesEntry(
-			code = "NCU",
-			entryName = "New Currency");
-
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
-
-		Click(locator1 = "Button#PLUS");
-
-		CommerceEntry.addNewChannelsEntry(
-			channelCurrency = "US Dollar",
-			channelName = "Test Channel",
-			channelType = "Site",
-			siteName = "Guest");
-
-		Button.clickSave();
-
-		AssertElementPresent(locator1 = "Message#SUCCESS");
-	}
-
 	macro commerceAdminTearDown {
 		var emptyCount = "0";
 
@@ -189,6 +126,8 @@ definition {
 		TestUtils.assertEquals(
 			actual = "${warehousesCount}",
 			expected = "${emptyCount}");
+
+		CommerceConfiguration.commerceInitializersTearDown();
 	}
 
 	macro commerceInitializersTearDown {
@@ -198,6 +137,21 @@ definition {
 			portlet = "Sites");
 
 		CommerceJSONSitesAPI._deleteCommerceSites();
+	}
+
+	macro commerceSetUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		if (isSet(storeFront)) {
+			CommerceConfiguration.commerceStoreFrontSetUp();
+		}
+
+		if (isSet(minium)) {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
 	}
 
 	macro commerceStoreFrontSetUp {
@@ -249,84 +203,28 @@ definition {
 		}
 	}
 
-	macro commerceStoreFrontTearDown {
-		Navigator.openURL();
+	macro commerceTearDown {
+		CommerceJSONOrdersAPI._deleteAllCommerceOrdersAndCheck();
 
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Catalog");
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if (IsElementNotPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER")) {
-			CommerceProducts.moveCatalogEntriesToRecycleBin();
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
 		}
+		else {
+			Navigator.openURL();
 
-		CommerceNavigator.gotoPortlet(
-			category = "Settings",
-			portlet = "Options");
-
-		Pause(locator1 = "3000");
-
-		CommerceOptions.deleteOptionsEntries();
-
-		User.logoutPG();
-	}
-
-	@summary = "Deletes if present, catalogs, price lists or promotions, excluding Master occurrencies"
-	macro commerceTearDownExcludingMaster {
-		var elementsList = "";
-		var count = "1";
-
-		while (IsElementPresent(key_rowNumber = "${count}", locator1 = "CommerceNavigation#ENTRY_NAME_N")) {
-			var key_rowNumber = "${count}";
-			var entryName = selenium.getText("CommerceNavigation#ENTRY_NAME_N");
-
-			if (("${entryName}" != "Master") && ("${entryName}" != "Master Base Price List") && ("${entryName}" != "Master Base Promotion")) {
-				var elementsList = StringUtil.add("${elementsList}", "${entryName}");
+			if (IsElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
+				User.logoutPG();
 			}
 
-			var count = ${count} + 1;
-		}
+			User.firstLoginPG();
 
-		if ("${elementsList}" != "") {
-			for (var catalogName : list "${elementsList}") {
-				ClickNoError(
-					key_entryName = "${catalogName}",
-					locator1 = "CommerceEntry#ENTRY_NAME_BODY_VERTICAL_ELLIPSIS");
+			CommerceConfiguration.commerceAdminTearDown();
 
-				CommerceEntry.clickNoError(menuItem = "Delete");
-
-				AssertElementPresent(locator1 = "Message#SUCCESS");
-
-				AssertElementNotPresent(locator1 = "Message#ERROR");
+			if (isSet(doLogout)) {
+				User.logoutPG();
 			}
 		}
 	}
-
-	macro enableDiagramFeature {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
-
-		Click(
-			key_text = "Catalog",
-			locator1 = "Link#ANY");
-
-		Click(
-			key_text = "Diagram Product Type",
-			locator1 = "Link#ANY");
-
-		Click.clickAtNotVisible(
-			checkboxName = "Enabled",
-			locator1 = "Checkbox#ANY_CHECKBOX");
-
-		Button.clickSave();
-
-		AssertElementPresent(locator1 = "Message#SUCCESS");
-	}
-
-	macro reindexAllSearchIndexes {
-		SearchAdministration.executeReindex();
-	}
-
 }

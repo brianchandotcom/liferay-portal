@@ -22,6 +22,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.util.DDMFormDeserializeUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormSerializeUtil;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
@@ -100,7 +101,8 @@ public class DDMStructureUpgradeProcess extends UpgradeProcess {
 					"join DDMStructureVersion on DDMStructure.structureId = ",
 					"DDMStructureVersion.structureId where ",
 					"DDMStructure.version = DDMStructureVersion.version and ",
-					"DDMStructure.classNameId = ?"));
+					"DDMStructure.classNameId = ? or DDMStructure.classNameId ",
+					"= ?"));
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
@@ -109,6 +111,8 @@ public class DDMStructureUpgradeProcess extends UpgradeProcess {
 
 			preparedStatement1.setLong(
 				1, PortalUtil.getClassNameId(DDMFormInstance.class.getName()));
+			preparedStatement1.setLong(
+				2, PortalUtil.getClassNameId(JournalArticle.class.getName()));
 
 			try (ResultSet resultSet = preparedStatement1.executeQuery()) {
 				while (resultSet.next()) {
@@ -135,7 +139,8 @@ public class DDMStructureUpgradeProcess extends UpgradeProcess {
 					"DDMStructureVersion.definition from DDMStructure inner ",
 					"join DDMStructureVersion on DDMStructure.structureId = ",
 					"DDMStructureVersion.structureId where ",
-					"DDMStructure.classNameId = ?"));
+					"DDMStructure.classNameId = ? or DDMStructure.classNameId ",
+					"= ?"));
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
@@ -144,6 +149,8 @@ public class DDMStructureUpgradeProcess extends UpgradeProcess {
 
 			preparedStatement1.setLong(
 				1, PortalUtil.getClassNameId(DDMFormInstance.class.getName()));
+			preparedStatement1.setLong(
+				2, PortalUtil.getClassNameId(JournalArticle.class.getName()));
 
 			try (ResultSet resultSet = preparedStatement1.executeQuery()) {
 				while (resultSet.next()) {

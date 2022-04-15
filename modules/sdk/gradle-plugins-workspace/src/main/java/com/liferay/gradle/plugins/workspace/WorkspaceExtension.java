@@ -19,6 +19,7 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 
+import com.liferay.gradle.plugins.workspace.configurators.DesignPacksProjectConfigurator;
 import com.liferay.gradle.plugins.workspace.configurators.ExtProjectConfigurator;
 import com.liferay.gradle.plugins.workspace.configurators.ModulesProjectConfigurator;
 import com.liferay.gradle.plugins.workspace.configurators.PluginsProjectConfigurator;
@@ -65,6 +66,8 @@ import org.gradle.api.logging.Logger;
  */
 public class WorkspaceExtension {
 
+	public static final String DEFAULT_DESIGN_PACK_DIR_NAME = "design-packs";
+
 	@SuppressWarnings("serial")
 	public WorkspaceExtension(Settings settings) {
 		_gradle = settings.getGradle();
@@ -76,6 +79,7 @@ public class WorkspaceExtension {
 		_projectConfigurators.add(new PluginsProjectConfigurator(settings));
 		_projectConfigurators.add(new ThemesProjectConfigurator(settings));
 		_projectConfigurators.add(new WarsProjectConfigurator(settings));
+		_projectConfigurators.add(new DesignPacksProjectConfigurator(settings));
 
 		_appServerTomcatVersion = GradleUtil.getProperty(
 			settings, "app.server.tomcat.version",
@@ -106,6 +110,8 @@ public class WorkspaceExtension {
 		_configsDir = _getProperty(
 			settings, "configs.dir",
 			BundleSupportConstants.DEFAULT_CONFIGS_DIR_NAME);
+		_designPackDir = _getProperty(
+			settings, "design.pack.dir", DEFAULT_DESIGN_PACK_DIR_NAME);
 		_dockerDir = _getProperty(settings, "docker.dir", _DOCKER_DIR);
 		_dockerImageLiferay = _getProperty(
 			settings, "docker.image.liferay", _getDefaultDockerImage());
@@ -261,6 +267,10 @@ public class WorkspaceExtension {
 		);
 	}
 
+	public String getDesignPackDir() {
+		return GradleUtil.toString(_designPackDir);
+	}
+
 	public String getDockerContainerId() {
 		return GradleUtil.toString(_dockerContainerId);
 	}
@@ -373,6 +383,10 @@ public class WorkspaceExtension {
 
 	public void setConfigsDir(Object configsDir) {
 		_configsDir = configsDir;
+	}
+
+	public void setDesignPackDir(Object designPackDir) {
+		_designPackDir = designPackDir;
 	}
 
 	public void setDockerContainerId(Object dockerContainerId) {
@@ -639,6 +653,7 @@ public class WorkspaceExtension {
 	private Object _bundleTokenPasswordFile;
 	private Object _bundleUrl;
 	private Object _configsDir;
+	private Object _designPackDir;
 	private Object _dockerContainerId;
 	private Object _dockerDir;
 	private Object _dockerImageId;

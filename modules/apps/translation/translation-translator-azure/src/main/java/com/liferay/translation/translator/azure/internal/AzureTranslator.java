@@ -14,7 +14,6 @@
 
 package com.liferay.translation.translator.azure.internal;
 
-import com.liferay.petra.apache.http.components.URIBuilder;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
@@ -28,13 +27,12 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.translation.translator.Translator;
 import com.liferay.translation.translator.TranslatorPacket;
 import com.liferay.translation.translator.azure.internal.configuration.AzureTranslatorConfiguration;
 
 import java.io.IOException;
-
-import java.net.URISyntaxException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -77,19 +75,22 @@ public class AzureTranslator implements Translator {
 			options.setBody(
 				_getTranslatorPacketPayload(translatorPacket),
 				ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-			options.setLocation(
-				URIBuilder.create(
-					"https://api.cognitive.microsofttranslator.com/translate"
-				).addParameter(
-					"api-version", "3.0"
-				).addParameter(
-					"from",
-					_getLanguageCode(translatorPacket.getSourceLanguageId())
-				).addParameter(
-					"to",
-					_getLanguageCode(translatorPacket.getTargetLanguageId())
-				).build(
-				).toString());
+
+			String url =
+				"https://api.cognitive.microsofttranslator.com/translate";
+
+			url = HttpComponentsUtil.addParameter(url, "api-version", "3.0");
+
+			url = HttpComponentsUtil.addParameter(
+				url, "from",
+				_getLanguageCode(translatorPacket.getSourceLanguageId()));
+
+			url = HttpComponentsUtil.addParameter(
+				url, "to",
+				_getLanguageCode(translatorPacket.getTargetLanguageId()));
+
+			options.setLocation(url);
+
 			options.setPost(true);
 
 			String json = _http.URLtoString(options);
@@ -129,8 +130,8 @@ public class AzureTranslator implements Translator {
 
 			};
 		}
-		catch (IOException | URISyntaxException exception) {
-			throw new PortalException(exception);
+		catch (IOException ioException) {
+			throw new PortalException(ioException);
 		}
 	}
 

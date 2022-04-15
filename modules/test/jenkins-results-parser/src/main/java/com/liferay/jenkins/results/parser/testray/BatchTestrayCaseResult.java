@@ -337,6 +337,10 @@ public class BatchTestrayCaseResult extends TestrayCaseResult {
 
 		AxisBuild axisBuild = getAxisBuild();
 
+		if (axisBuild == null) {
+			return null;
+		}
+
 		File jenkinsConsoleFile = new File(
 			_testrayUploadBaseDir, "jenkins-console.txt");
 		File jenkinsConsoleGzFile = new File(

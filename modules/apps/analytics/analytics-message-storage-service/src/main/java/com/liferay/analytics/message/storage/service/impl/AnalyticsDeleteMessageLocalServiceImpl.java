@@ -56,10 +56,10 @@ public class AnalyticsDeleteMessageLocalServiceImpl
 
 	@Override
 	public int getAnalyticsDeleteMessagesCount(
-		long companyId, Date gtModifiedDate) {
+		long companyId, Date modifiedDate) {
 
 		return analyticsDeleteMessagePersistence.countByC_GtM(
-			companyId, gtModifiedDate);
+			companyId, modifiedDate);
 	}
 
 }

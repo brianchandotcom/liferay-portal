@@ -29,6 +29,20 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
+	function doubleClickNotVisible {
+		WaitForSPARefresh();
+
+		selenium.waitForElementPresent();
+
+		selenium.mouseOver();
+
+		selenium.doubleClick();
+
+		selenium.assertJavaScriptErrors();
+
+		selenium.assertLiferayErrors();
+	}
+
 	function javaScriptDoubleClick {
 		WaitForSPARefresh();
 

@@ -130,11 +130,11 @@ public class LiferayJWTBearerAuthenticationHandler
 		String tokenEndpointAuthMethod = client.getTokenEndpointAuthMethod();
 
 		try {
-			if (tokenEndpointAuthMethod.equals(_CLIENT_SECRET_JWT)) {
+			if (tokenEndpointAuthMethod.equals("client_secret_jwt")) {
 				return new HmacJwsSignatureVerifier(client.getClientSecret());
 			}
 
-			if (tokenEndpointAuthMethod.equals(_PRIVATE_KEY_JWT)) {
+			if (tokenEndpointAuthMethod.equals("private_key_jwt")) {
 				Map<String, String> clientProperties = client.getProperties();
 
 				JsonWebKeys jsonWebKeys = JwkUtils.readJwkSet(
@@ -179,10 +179,6 @@ public class LiferayJWTBearerAuthenticationHandler
 
 		return false;
 	}
-
-	private static final String _CLIENT_SECRET_JWT = "client_secret_jwt";
-
-	private static final String _PRIVATE_KEY_JWT = "private_key_jwt";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LiferayJWTBearerAuthenticationHandler.class);

@@ -85,15 +85,15 @@ Below is a rough outine of the process could work:
    1. Open Insomnia REST Testing tool
    2. Under OAuth2  tab, add the following details
       1. grant_type: authorization_code
-      2. authorization_url: http://localhost:8080/o/oauth2/authorize
-      3. token_url: http://localhost:8080/o/oauth2/token
+      2. authorization_url: http://dxp.localdev.me:8080/o/oauth2/authorize
+      3. token_url: http://dxp.localdev.me:8080/o/oauth2/token
       4. client_id: <the-id-from-dxp-oauth2-application>
       5. Use PKCE
       6. Code challenge method: SHA-256
       7. Click `Fetch Tokens`
 3. Validating Access Token
    1. create a new POST method test
-   2. Use url: http://localhost:8080/o/oauth2/introspect
+   2. Use url: http://dxp.localdev.me:8080/o/oauth2/introspect
    3. Under POST body options use `Form URL Encoded` using these form values
       1. token=<access_token>
       2. client_id=<client_id>

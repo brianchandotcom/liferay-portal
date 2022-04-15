@@ -351,8 +351,9 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 	private static final Set<String> _supportedActionIds = new HashSet<>(
 		Arrays.asList(
 			ActionKeys.ASSIGN_MEMBERS, ActionKeys.ASSIGN_USER_ROLES,
-			ActionKeys.DELETE, ActionKeys.UPDATE, ActionKeys.VIEW,
-			ActionKeys.VIEW_MEMBERS, ActionKeys.VIEW_SITE_ADMINISTRATION));
+			ActionKeys.DELETE, ActionKeys.PUBLISH_STAGING, ActionKeys.UPDATE,
+			ActionKeys.VIEW, ActionKeys.VIEW_MEMBERS,
+			ActionKeys.VIEW_SITE_ADMINISTRATION));
 
 	private final ModelResourcePermission<DepotEntry>
 		_depotEntryModelResourcePermission;

@@ -9,6 +9,6 @@ data:
     name="custom-rest-service"
     description="This a custom REST service for the remote-app DEMO"
     companyId=L"20099"
-    homePageURL="http://localhost:8081"
-    redirectURL="http://localhost:8081"
+    homePageURL="http://custom-rest-service.localdev.me:8080"
+    redirectURL="http://custom-rest-service.localdev.me:8080"
     scopes=["Liferay.Headless.Admin.User.everything"]

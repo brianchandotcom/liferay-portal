@@ -40,7 +40,7 @@ class WebComponent extends HTMLElement {
 
 		if (Liferay.ThemeDisplay.isSignedIn()) {
 			fetch(
-				"http://localhost:8081/random/number"
+				"http://custom-rest-service.localdev.me:8080/random/number"
 			).then(response => response.json())
 				.then(res => {
 					let nameEls = document.getElementsByClassName('random-number');

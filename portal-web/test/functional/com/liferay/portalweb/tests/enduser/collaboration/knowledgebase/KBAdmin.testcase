@@ -484,9 +484,7 @@ definition {
 	@description = "This is a test for LPS-120917. It checks that XSS cannot be executed from the KB template name."
 	@priority = "3"
 	test CannotStoreXSSInTemplateName {
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		KBTemplate.addCP(
+		JSONKnowledgeBase.addkBTemplate(
 			kbTemplateContent = "Knowledge Base Template Content",
 			kbTemplateTitle = '''<script>alert(123)</script>''');
 

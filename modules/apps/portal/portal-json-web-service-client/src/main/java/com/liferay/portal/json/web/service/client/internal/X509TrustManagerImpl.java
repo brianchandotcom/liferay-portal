@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.petra.json.web.service.client.internal;
+package com.liferay.portal.json.web.service.client.internal;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
 

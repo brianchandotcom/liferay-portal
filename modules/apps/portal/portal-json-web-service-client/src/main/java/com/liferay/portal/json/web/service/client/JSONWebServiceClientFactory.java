@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.petra.json.web.service.client;
+package com.liferay.portal.json.web.service.client;
 
 import java.util.Map;
 

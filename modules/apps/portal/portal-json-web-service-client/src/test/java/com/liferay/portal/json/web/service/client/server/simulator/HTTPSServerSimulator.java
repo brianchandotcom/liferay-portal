@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.petra.json.web.service.client.server.simulator;
+package com.liferay.portal.json.web.service.client.server.simulator;
 
-import com.liferay.petra.json.web.service.client.keystore.KeyStoreLoader;
+import com.liferay.portal.json.web.service.client.keystore.KeyStoreLoader;
 
 import com.sun.net.httpserver.HttpsConfigurator;
 import com.sun.net.httpserver.HttpsServer;

@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.petra.json.web.service.client.internal;
+package com.liferay.portal.json.web.service.client.internal;
 
-import com.liferay.petra.json.web.service.client.JSONWebServiceException;
-import com.liferay.petra.json.web.service.client.keystore.KeyStoreLoader;
-import com.liferay.petra.json.web.service.client.server.simulator.HTTPSServerSimulator;
-import com.liferay.petra.json.web.service.client.server.simulator.constants.SimulatorConstants;
+import com.liferay.portal.json.web.service.client.JSONWebServiceException;
+import com.liferay.portal.json.web.service.client.keystore.KeyStoreLoader;
+import com.liferay.portal.json.web.service.client.server.simulator.HTTPSServerSimulator;
+import com.liferay.portal.json.web.service.client.server.simulator.constants.SimulatorConstants;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Map;

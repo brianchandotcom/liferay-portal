@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.petra.json.web.service.client;
+package com.liferay.portal.json.web.service.client;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
@@ -20,10 +20,10 @@ import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 
-import com.liferay.petra.json.web.service.client.internal.AsyncHttpClient;
-import com.liferay.petra.json.web.service.client.internal.IdleConnectionMonitorThread;
-import com.liferay.petra.json.web.service.client.internal.JSONWebServiceClientImpl;
-import com.liferay.petra.json.web.service.client.internal.X509TrustManagerImpl;
+import com.liferay.portal.json.web.service.client.internal.AsyncHttpClient;
+import com.liferay.portal.json.web.service.client.internal.IdleConnectionMonitorThread;
+import com.liferay.portal.json.web.service.client.internal.JSONWebServiceClientImpl;
+import com.liferay.portal.json.web.service.client.internal.X509TrustManagerImpl;
 
 import java.io.IOException;
 
@@ -218,7 +218,7 @@ public abstract class BaseJSONWebServiceClientImpl
 		throws JSONWebServiceInvocationException,
 			   JSONWebServiceTransportException {
 
-		Map<String, String> parameters = new HashMap<String, String>();
+		Map<String, String> parameters = new HashMap<>();
 
 		for (int i = 0; i < parametersArray.length; i += 2) {
 			parameters.put(parametersArray[i], parametersArray[i + 1]);
@@ -290,7 +290,7 @@ public abstract class BaseJSONWebServiceClientImpl
 		try {
 			TypeFactory typeFactory = _objectMapper.getTypeFactory();
 
-			List<V> list = new ArrayList<V>();
+			List<V> list = new ArrayList<>();
 
 			JavaType javaType = typeFactory.constructCollectionType(
 				list.getClass(), clazz);
@@ -1152,7 +1152,7 @@ public abstract class BaseJSONWebServiceClientImpl
 				"Expected even number of variable arguments");
 		}
 
-		List<NameValuePair> nameValuePairs = new LinkedList<NameValuePair>();
+		List<NameValuePair> nameValuePairs = new LinkedList<>();
 
 		for (int i = 0; i < keyValuesArray.length; i += 2) {
 			nameValuePairs.add(

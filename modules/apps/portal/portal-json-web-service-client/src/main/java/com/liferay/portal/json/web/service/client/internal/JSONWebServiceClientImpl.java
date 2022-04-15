@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.petra.json.web.service.client.internal;
+package com.liferay.portal.json.web.service.client.internal;
 
-import com.liferay.petra.json.web.service.client.BaseJSONWebServiceClientImpl;
-import com.liferay.petra.json.web.service.client.JSONWebServiceTransportException;
+import com.liferay.portal.json.web.service.client.BaseJSONWebServiceClientImpl;
+import com.liferay.portal.json.web.service.client.JSONWebServiceTransportException;
 
 import java.security.KeyStore;
 
@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
  * @author Igor Beslic
  */
 @Component(
-	factory = "com.liferay.petra.json.web.service.client.JSONWebServiceClient",
+	factory = "com.liferay.portal.json.web.service.client.JSONWebServiceClient",
 	service = {}
 )
 public class JSONWebServiceClientImpl extends BaseJSONWebServiceClientImpl {
@@ -118,7 +118,7 @@ public class JSONWebServiceClientImpl extends BaseJSONWebServiceClientImpl {
 			return;
 		}
 
-		Map<String, String> headers = new HashMap<String, String>();
+		Map<String, String> headers = new HashMap<>();
 
 		for (String header : headersString.split(";")) {
 			String[] headerParts = header.split("=");

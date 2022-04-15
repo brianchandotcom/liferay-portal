@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.petra.json.web.service.client.keystore;
+package com.liferay.portal.json.web.service.client.keystore;
 
 import java.io.IOException;
 import java.io.InputStream;

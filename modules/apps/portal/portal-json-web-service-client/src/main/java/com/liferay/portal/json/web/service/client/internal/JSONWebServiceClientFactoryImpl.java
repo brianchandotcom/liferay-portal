@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.petra.json.web.service.client.internal;
+package com.liferay.portal.json.web.service.client.internal;
 
-import com.liferay.petra.json.web.service.client.JSONWebServiceClient;
-import com.liferay.petra.json.web.service.client.JSONWebServiceClientFactory;
+import com.liferay.portal.json.web.service.client.JSONWebServiceClient;
+import com.liferay.portal.json.web.service.client.JSONWebServiceClientFactory;
 
 import java.util.Map;
 

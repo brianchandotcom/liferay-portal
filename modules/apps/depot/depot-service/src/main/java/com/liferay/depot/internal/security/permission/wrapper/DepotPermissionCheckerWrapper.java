@@ -16,6 +16,7 @@ package com.liferay.depot.internal.security.permission.wrapper;
 
 import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.depot.model.DepotEntry;
+import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -237,8 +238,10 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 			return false;
 		}
 
+		Group liveGroup = StagingUtil.getLiveGroup(group);
+
 		if (_userGroupRoleLocalService.hasUserGroupRole(
-				getUserId(), group.getGroupId(),
+				getUserId(), liveGroup.getGroupId(),
 				DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER, true)) {
 
 			return true;
@@ -262,17 +265,19 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 			return false;
 		}
 
+		Group liveGroup = StagingUtil.getLiveGroup(group);
+
 		if (_userGroupRoleLocalService.hasUserGroupRole(
-				getUserId(), group.getGroupId(),
+				getUserId(), liveGroup.getGroupId(),
 				DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR, true) ||
 			_userGroupRoleLocalService.hasUserGroupRole(
-				getUserId(), group.getGroupId(),
+				getUserId(), liveGroup.getGroupId(),
 				DepotRolesConstants.ASSET_LIBRARY_OWNER, true)) {
 
 			return true;
 		}
 
-		Group parentGroup = group;
+		Group parentGroup = liveGroup;
 
 		while (!parentGroup.isRoot()) {
 			parentGroup = parentGroup.getParentGroup();
@@ -294,10 +299,12 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 			return false;
 		}
 
-		long[] roleIds = getRoleIds(getUserId(), group.getGroupId());
+		Group liveGroup = StagingUtil.getLiveGroup(group);
+
+		long[] roleIds = getRoleIds(getUserId(), liveGroup.getGroupId());
 
 		Role role = _roleLocalService.getRole(
-			group.getCompanyId(), DepotRolesConstants.ASSET_LIBRARY_MEMBER);
+			liveGroup.getCompanyId(), DepotRolesConstants.ASSET_LIBRARY_MEMBER);
 
 		if (Arrays.binarySearch(roleIds, role.getRoleId()) >= 0) {
 			return true;
@@ -311,8 +318,10 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 			return false;
 		}
 
+		Group liveGroup = StagingUtil.getLiveGroup(group);
+
 		if (_userGroupRoleLocalService.hasUserGroupRole(
-				getUserId(), group.getGroupId(),
+				getUserId(), liveGroup.getGroupId(),
 				DepotRolesConstants.ASSET_LIBRARY_OWNER, true)) {
 
 			return true;

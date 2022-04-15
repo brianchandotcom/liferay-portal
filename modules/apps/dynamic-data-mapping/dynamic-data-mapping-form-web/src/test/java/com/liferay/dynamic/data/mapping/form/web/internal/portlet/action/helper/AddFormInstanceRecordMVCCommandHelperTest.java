@@ -40,6 +40,9 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -48,6 +51,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.PropsImpl;
 
 import java.util.Collections;
@@ -63,25 +67,23 @@ import javax.servlet.http.HttpServletRequest;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.ClassRule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.mockito.Matchers;
-import org.mockito.Mock;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.mockito.Mockito;
 
 /**
  * @author Leonardo Barros
  */
-@PrepareForTest(ResourceBundleUtil.class)
-@RunWith(PowerMockRunner.class)
-public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
+public class AddFormInstanceRecordMVCCommandHelperTest {
+
+	@ClassRule
+	public static LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@BeforeClass
-	public static void setUpClass() throws Exception {
+	public static void setUpClass() {
 		PropsUtil.setProps(new PropsImpl());
 
 		_setUpLanguageUtil();
@@ -157,7 +159,7 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 	public void testValidateExpirationStatus() throws Exception {
 		ThemeDisplay themeDisplay = _mockThemeDisplay();
 
-		when(
+		Mockito.when(
 			_actionRequest.getAttribute(Matchers.eq(WebKeys.THEME_DISPLAY))
 		).thenReturn(
 			themeDisplay
@@ -171,7 +173,7 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 	public void testValidateSubmissionLimitStatus() throws Exception {
 		ThemeDisplay themeDisplay = _mockThemeDisplay();
 
-		when(
+		Mockito.when(
 			_actionRequest.getAttribute(Matchers.eq(WebKeys.THEME_DISPLAY))
 		).thenReturn(
 			themeDisplay
@@ -196,16 +198,18 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 	private static void _setUpLanguageUtil() {
 		LanguageUtil languageUtil = new LanguageUtil();
 
-		languageUtil.setLanguage(mock(Language.class));
+		languageUtil.setLanguage(Mockito.mock(Language.class));
 	}
 
 	private static void _setUpResourceBundleUtil() {
-		mockStatic(ResourceBundleUtil.class);
+		ResourceBundleLoader resourceBundleLoader = Mockito.mock(
+			ResourceBundleLoader.class);
 
-		when(
-			ResourceBundleUtil.getBundle(
-				Matchers.anyString(), Matchers.any(Locale.class),
-				Matchers.any(ClassLoader.class))
+		ResourceBundleLoaderUtil.setPortalResourceBundleLoader(
+			resourceBundleLoader);
+
+		Mockito.when(
+			resourceBundleLoader.loadResourceBundle(Matchers.any(Locale.class))
 		).thenReturn(
 			ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE
 		);
@@ -273,24 +277,22 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 	}
 
 	private void _mockDDMFormEvaluator(
-			Map<String, Object> fieldChangesProperties)
-		throws Exception {
+		Map<String, Object> fieldChangesProperties) {
 
-		when(
+		Mockito.when(
 			_ddmFormEvaluator.evaluate(
 				Matchers.any(DDMFormEvaluatorEvaluateRequest.class))
 		).thenReturn(
 			DDMFormEvaluatorEvaluateResponse.Builder.newBuilder(
-				HashMapBuilder.
-					<DDMFormEvaluatorFieldContextKey, Map<String, Object>>put(
-						new DDMFormEvaluatorFieldContextKey(
-							_FIELD_NAME, _FIELD_INSTANCE_ID),
-						fieldChangesProperties
-					).put(
-						new DDMFormEvaluatorFieldContextKey(
-							_NESTED_FIELD_NAME, _NESTED_FIELD_INSTANCE_ID),
-						fieldChangesProperties
-					).build()
+				HashMapBuilder.put(
+					new DDMFormEvaluatorFieldContextKey(
+						_FIELD_NAME, _FIELD_INSTANCE_ID),
+					fieldChangesProperties
+				).put(
+					new DDMFormEvaluatorFieldContextKey(
+						_NESTED_FIELD_NAME, _NESTED_FIELD_INSTANCE_ID),
+					fieldChangesProperties
+				).build()
 			).withDisabledPagesIndexes(
 				Collections.emptySet()
 			).build()
@@ -298,12 +300,12 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 	}
 
 	private DDMFormInstance _mockDDMFormInstance() throws Exception {
-		DDMFormInstance ddmFormInstance = mock(DDMFormInstance.class);
+		DDMFormInstance ddmFormInstance = Mockito.mock(DDMFormInstance.class);
 
 		DDMFormInstanceSettings ddmFormInstanceSettings =
 			_mockDDMFormInstanceSettings();
 
-		when(
+		Mockito.when(
 			ddmFormInstance.getSettingsModel()
 		).thenReturn(
 			ddmFormInstanceSettings
@@ -316,31 +318,32 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 		_mockDDMFormInstanceRecordVersionLocalService() {
 
 		DDMFormInstanceRecordVersionLocalService
-			ddmFormInstanceRecordVersionLocalService = mock(
+			ddmFormInstanceRecordVersionLocalService = Mockito.mock(
 				DDMFormInstanceRecordVersionLocalService.class);
 
-		when(
+		Mockito.when(
 			ddmFormInstanceRecordVersionLocalService.
 				getFormInstanceRecordVersions(
 					Matchers.anyLong(), Matchers.anyLong())
 		).thenReturn(
-			Collections.singletonList(mock(DDMFormInstanceRecordVersion.class))
+			Collections.singletonList(
+				Mockito.mock(DDMFormInstanceRecordVersion.class))
 		);
 
 		return ddmFormInstanceRecordVersionLocalService;
 	}
 
 	private DDMFormInstanceSettings _mockDDMFormInstanceSettings() {
-		DDMFormInstanceSettings ddmFormInstanceSettings = mock(
+		DDMFormInstanceSettings ddmFormInstanceSettings = Mockito.mock(
 			DDMFormInstanceSettings.class);
 
-		when(
+		Mockito.when(
 			ddmFormInstanceSettings.expirationDate()
 		).thenReturn(
 			"1987-09-22"
 		);
 
-		when(
+		Mockito.when(
 			ddmFormInstanceSettings.limitToOneSubmissionPerUser()
 		).thenReturn(
 			true
@@ -350,81 +353,68 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 	}
 
 	private void _mockGetDDMFormLayout() throws Exception {
-		DDMFormInstance ddmFormInstance = mock(DDMFormInstance.class);
+		DDMFormInstance ddmFormInstance = Mockito.mock(DDMFormInstance.class);
 
-		when(
-			_ddmFormInstanceService, "getFormInstance", Matchers.anyLong()
+		Mockito.when(
+			_ddmFormInstanceService.getFormInstance(Matchers.anyLong())
 		).thenReturn(
 			ddmFormInstance
 		);
 
-		DDMStructure ddmStructure = mock(DDMStructure.class);
+		DDMStructure ddmStructure = Mockito.mock(DDMStructure.class);
 
-		when(
-			_ddmStructureLocalService, "getStructure", Matchers.anyLong()
+		Mockito.when(
+			_ddmStructureLocalService.getStructure(Matchers.anyLong())
 		).thenReturn(
 			ddmStructure
 		);
 
-		when(
-			ddmStructure, "getDDMFormLayout"
-		).thenReturn(
+		Mockito.doReturn(
 			new DDMFormLayout()
-		);
+		).when(
+			ddmStructure
+		).getDDMFormLayout();
 	}
 
 	private ThemeDisplay _mockThemeDisplay() {
-		ThemeDisplay themeDisplay = mock(ThemeDisplay.class);
+		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
 
-		when(
+		Mockito.when(
 			themeDisplay.getTimeZone()
 		).thenReturn(
 			TimeZone.getDefault()
 		);
 
-		when(
+		Mockito.when(
 			themeDisplay.getUser()
 		).thenReturn(
-			mock(User.class)
+			Mockito.mock(User.class)
 		);
 
 		return themeDisplay;
 	}
 
-	private void _setUpAddFormInstanceRecordMVCCommandHelper()
-		throws Exception {
-
+	private void _setUpAddFormInstanceRecordMVCCommandHelper() {
 		_addFormInstanceRecordMVCCommandHelper =
 			new AddFormInstanceRecordMVCCommandHelper();
 
-		field(
-			AddFormInstanceRecordMVCCommandHelper.class, "_ddmFormEvaluator"
-		).set(
-			_addFormInstanceRecordMVCCommandHelper, _ddmFormEvaluator
-		);
+		ReflectionTestUtil.setFieldValue(
+			_addFormInstanceRecordMVCCommandHelper, "_ddmFormEvaluator",
+			_ddmFormEvaluator);
 
-		field(
-			AddFormInstanceRecordMVCCommandHelper.class,
-			"_ddmFormInstanceService"
-		).set(
-			_addFormInstanceRecordMVCCommandHelper, _ddmFormInstanceService
-		);
+		ReflectionTestUtil.setFieldValue(
+			_addFormInstanceRecordMVCCommandHelper, "_ddmFormInstanceService",
+			_ddmFormInstanceService);
 
-		field(
-			AddFormInstanceRecordMVCCommandHelper.class,
-			"_ddmStructureLocalService"
-		).set(
-			_addFormInstanceRecordMVCCommandHelper, _ddmStructureLocalService
-		);
+		ReflectionTestUtil.setFieldValue(
+			_addFormInstanceRecordMVCCommandHelper, "_ddmStructureLocalService",
+			_ddmStructureLocalService);
 
-		field(
-			AddFormInstanceRecordMVCCommandHelper.class, "_portal"
-		).set(
-			_addFormInstanceRecordMVCCommandHelper, _portal
-		);
+		ReflectionTestUtil.setFieldValue(
+			_addFormInstanceRecordMVCCommandHelper, "_portal", _portal);
 
-		when(
-			_portal, "getHttpServletRequest", _actionRequest
+		Mockito.when(
+			_portal.getHttpServletRequest(_actionRequest)
 		).thenReturn(
 			_httpServletRequest
 		);
@@ -440,7 +430,7 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 		_createDDMFormValues(value);
 
 		_mockDDMFormEvaluator(
-			HashMapBuilder.<String, Object>put(
+			HashMapBuilder.put(
 				propertyName, propertyValue
 			).build());
 
@@ -464,28 +454,19 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 	private static AddFormInstanceRecordMVCCommandHelper
 		_addFormInstanceRecordMVCCommandHelper;
 
-	@Mock
-	private ActionRequest _actionRequest;
-
+	private final ActionRequest _actionRequest = Mockito.mock(
+		ActionRequest.class);
 	private DDMForm _ddmForm;
-
-	@Mock
-	private DDMFormEvaluator _ddmFormEvaluator;
-
+	private final DDMFormEvaluator _ddmFormEvaluator = Mockito.mock(
+		DDMFormEvaluator.class);
 	private DDMFormField _ddmFormField;
-
-	@Mock
-	private DDMFormInstanceService _ddmFormInstanceService;
-
+	private final DDMFormInstanceService _ddmFormInstanceService = Mockito.mock(
+		DDMFormInstanceService.class);
 	private DDMFormValues _ddmFormValues;
-
-	@Mock
-	private DDMStructureLocalService _ddmStructureLocalService;
-
-	@Mock
-	private HttpServletRequest _httpServletRequest;
-
-	@Mock
-	private Portal _portal;
+	private final DDMStructureLocalService _ddmStructureLocalService =
+		Mockito.mock(DDMStructureLocalService.class);
+	private final HttpServletRequest _httpServletRequest = Mockito.mock(
+		HttpServletRequest.class);
+	private final Portal _portal = Mockito.mock(Portal.class);
 
 }

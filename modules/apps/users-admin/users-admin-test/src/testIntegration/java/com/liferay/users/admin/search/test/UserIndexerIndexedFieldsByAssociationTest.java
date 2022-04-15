@@ -19,18 +19,23 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.DocumentBuilderFactory;
 import com.liferay.portal.search.model.uid.UIDFactory;
@@ -140,12 +145,13 @@ public class UserIndexerIndexedFieldsByAssociationTest {
 	}
 
 	@Test
-	public void testAssociationsThatIndexMoreFields() {
+	public void testAssociationsThatIndexMoreFields() throws Exception {
 		String[] fieldNames = {
 			"ancestorOrganizationIds", Field.COMPANY_ID, _CT_COLLECTION_ID,
 			Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK, Field.GROUP_ID,
 			"groupIds", "organizationIds", "organizationCount",
-			Field.SCOPE_GROUP_ID, Field.UID, "userGroupIds", Field.USER_ID
+			Field.SCOPE_GROUP_ID, Field.UID, "userGroupIds", "userGroupRoleIds",
+			"userGroupRoleNames", Field.USER_ID
 		};
 
 		UserGroup userGroup = addUserGroup();
@@ -206,14 +212,30 @@ public class UserIndexerIndexedFieldsByAssociationTest {
 
 		_userGroupLocalService.addGroupUserGroup(groupId, userGroup);
 
+		HashMap<String, String> map4 = HashMapBuilder.putAll(
+			map3
+		).put(
+			Field.GROUP_ID, String.valueOf(groupId)
+		).put(
+			Field.SCOPE_GROUP_ID, String.valueOf(groupId)
+		).build();
+
+		assertFieldValues(user, fieldNames, map4);
+
+		Role groupRole = RoleTestUtil.addRole(RoleConstants.TYPE_SITE);
+
+		_userGroupRoleLocalService.addUserGroupRole(
+			user.getUserId(), group.getGroupId(), groupRole.getRoleId());
+
 		assertFieldValues(
 			user, fieldNames,
 			HashMapBuilder.putAll(
-				map3
+				map4
 			).put(
-				Field.GROUP_ID, String.valueOf(groupId)
+				"userGroupRoleIds", String.valueOf(groupRole.getRoleId())
 			).put(
-				Field.SCOPE_GROUP_ID, String.valueOf(groupId)
+				"userGroupRoleNames",
+				StringUtil.toLowerCase(groupRole.getName())
 			).build());
 	}
 
@@ -365,6 +387,9 @@ public class UserIndexerIndexedFieldsByAssociationTest {
 
 	@Inject
 	private static UserGroupLocalService _userGroupLocalService;
+
+	@Inject
+	private static UserGroupRoleLocalService _userGroupRoleLocalService;
 
 	@Inject
 	private static UserLocalService _userLocalService;

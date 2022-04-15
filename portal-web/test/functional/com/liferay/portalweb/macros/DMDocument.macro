@@ -1184,6 +1184,19 @@ definition {
 		if (isSet(recycleBinDisabled)) {
 			LexiconEntry.delete(rowEntry = "${dmDocumentTitle}");
 		}
+		else if (isSet(deleteAll)) {
+			PortletEntry.selectAll();
+
+			Button.click(button = "Select All");
+
+			AssertTextEquals(
+				locator1 = "ManagementBar#NAVBAR_TEXT",
+				value1 = "All Selected");
+
+			Click(locator1 = "Icon#DELETE");
+
+			Alert.viewSuccessMessage();
+		}
 		else {
 			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Move to Recycle Bin",

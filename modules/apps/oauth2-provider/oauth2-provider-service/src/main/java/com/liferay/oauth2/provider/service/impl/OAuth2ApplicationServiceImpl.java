@@ -49,10 +49,6 @@ import org.osgi.service.component.annotations.Reference;
 public class OAuth2ApplicationServiceImpl
 	extends OAuth2ApplicationServiceBaseImpl {
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x)
-	 */
-	@Deprecated
 	@Override
 	public OAuth2Application addOAuth2Application(
 			List<GrantType> allowedGrantTypesList, long clientCredentialUserId,
@@ -326,10 +322,6 @@ public class OAuth2ApplicationServiceImpl
 			oAuth2ApplicationScopeAliasesId, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x)
-	 */
-	@Deprecated
 	@Override
 	public OAuth2Application updateOAuth2Application(
 			long oAuth2ApplicationId, long oAuth2ApplicationScopeAliasesId,

@@ -488,7 +488,9 @@ definition {
 			kbTemplateContent = "Knowledge Base Template Content",
 			kbTemplateTitle = '''<script>alert(123)</script>''');
 
-		KBTemplate.viewEntryMenuItem(menuItem = '''&lt;script&gt;alert(123)&lt;/script&gt;''');
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		LexiconEntry.viewAddMenuItem(menuItem = '''<script>alert(123)</script>''');
 	}
 
 	@priority = "4"

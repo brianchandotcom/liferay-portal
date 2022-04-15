@@ -56,6 +56,10 @@ public class OAuth2ApplicationTable extends BaseTable<OAuth2ApplicationTable> {
 		createColumn(
 			"allowedGrantTypes", String.class, Types.VARCHAR,
 			Column.FLAG_DEFAULT);
+	public final Column<OAuth2ApplicationTable, String>
+		clientAuthenticationMethod = createColumn(
+			"clientAuthenticationMethod", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<OAuth2ApplicationTable, Long> clientCredentialUserId =
 		createColumn(
 			"clientCredentialUserId", Long.class, Types.BIGINT,
@@ -83,6 +87,8 @@ public class OAuth2ApplicationTable extends BaseTable<OAuth2ApplicationTable> {
 	public final Column<OAuth2ApplicationTable, Long> iconFileEntryId =
 		createColumn(
 			"iconFileEntryId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<OAuth2ApplicationTable, String> jwks = createColumn(
+		"jwks", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<OAuth2ApplicationTable, String> name = createColumn(
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<OAuth2ApplicationTable, String> privacyPolicyURL =

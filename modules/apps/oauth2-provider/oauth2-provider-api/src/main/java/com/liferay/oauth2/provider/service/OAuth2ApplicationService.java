@@ -94,6 +94,17 @@ public interface OAuth2ApplicationService extends BaseService {
 			List<String> scopeAliasesList, ServiceContext serviceContext)
 		throws PortalException;
 
+	public OAuth2Application addOAuth2Application(
+			List<GrantType> allowedGrantTypesList,
+			String clientAuthenticationMethod, long clientCredentialUserId,
+			String clientId, int clientProfile, String clientSecret,
+			String description, List<String> featuresList, String homePageURL,
+			long iconFileEntryId, String jwks, String name,
+			String privacyPolicyURL, List<String> redirectURIsList,
+			boolean rememberDevice, List<String> scopeAliasesList,
+			boolean trustedApplication, ServiceContext serviceContext)
+		throws PortalException;
+
 	public OAuth2Application deleteOAuth2Application(long oAuth2ApplicationId)
 		throws PortalException;
 
@@ -167,6 +178,17 @@ public interface OAuth2ApplicationService extends BaseService {
 			long iconFileEntryId, String name, String privacyPolicyURL,
 			List<String> redirectURIsList, boolean rememberDevice,
 			boolean trustedApplication)
+		throws PortalException;
+
+	public OAuth2Application updateOAuth2Application(
+			long oAuth2ApplicationId, long oAuth2ApplicationScopeAliasesId,
+			List<GrantType> allowedGrantTypesList,
+			String clientAuthenticationMethod, long clientCredentialUserId,
+			String clientId, int clientProfile, String clientSecret,
+			String description, List<String> featuresList, String homePageURL,
+			long iconFileEntryId, String jwks, String name,
+			String privacyPolicyURL, List<String> redirectURIsList,
+			boolean rememberDevice, boolean trustedApplication)
 		throws PortalException;
 
 	public OAuth2Application updateScopeAliases(

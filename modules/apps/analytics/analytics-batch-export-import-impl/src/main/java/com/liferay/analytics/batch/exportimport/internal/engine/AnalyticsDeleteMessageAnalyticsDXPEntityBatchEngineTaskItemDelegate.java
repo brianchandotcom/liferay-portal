@@ -68,11 +68,8 @@ public class AnalyticsDeleteMessageAnalyticsDXPEntityBatchEngineTaskItemDelegate
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		int totalCount = 0;
-
 		List<AnalyticsDeleteMessage> analyticsDeleteMessages = null;
-
-		long companyId = contextCompany.getCompanyId();
+		int totalCount = 0;
 
 		Date modifiedDate = _getModifiedDate(filter);
 
@@ -80,22 +77,23 @@ public class AnalyticsDeleteMessageAnalyticsDXPEntityBatchEngineTaskItemDelegate
 			analyticsDeleteMessages =
 				_analyticsDeleteMessageLocalService.
 					getGtAnalyticsDeleteMessages(
-						companyId, modifiedDate, pagination.getStartPosition(),
+						contextCompany.getCompanyId(), modifiedDate,
+						pagination.getStartPosition(),
 						pagination.getEndPosition());
-
 			totalCount =
 				_analyticsDeleteMessageLocalService.
-					getGtAnalyticsDeleteMessagesCount(companyId, modifiedDate);
+					getGtAnalyticsDeleteMessagesCount(
+						contextCompany.getCompanyId(), modifiedDate);
 		}
 		else {
 			analyticsDeleteMessages =
 				_analyticsDeleteMessageLocalService.getAnalyticsDeleteMessages(
-					companyId, pagination.getStartPosition(),
-					pagination.getEndPosition());
-
+					contextCompany.getCompanyId(),
+					pagination.getStartPosition(), pagination.getEndPosition());
 			totalCount =
 				_analyticsDeleteMessageLocalService.
-					getAnalyticsDeleteMessagesCount(companyId);
+					getAnalyticsDeleteMessagesCount(
+						contextCompany.getCompanyId());
 		}
 
 		if (ListUtil.isEmpty(analyticsDeleteMessages)) {

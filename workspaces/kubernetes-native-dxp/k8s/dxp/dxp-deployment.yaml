@@ -53,20 +53,9 @@ spec:
             - name: LIFERAY_JPDA_ENABLED
               value: "true"
             - name: LIFERAY_MODULE_PERIOD_FRAMEWORK_PERIOD_SYSTEM_PERIOD_PACKAGES_PERIOD_EXTRA
-              valueFrom:
-                configMapKeyRef:
-                  name: dxp-configmap
-                  key: module.framework.system.packages.extra
+              value: com.microsoft.sqlserver.jdbc,com.mysql.cj.jdbc,com.mysql.jdbc,com.p6spy.engine.spy,com.sun.security.auth.module,org.hsqldb.jdbc,org.mariadb.jdbc,sun.misc,sun.net.util,sun.security.provider,javax.websocket,javax.websocket.server,org.apache.tomcat.websocket.server,com.sun.net.httpserver
             - name: LIFERAY_MODULE_PERIOD_FRAMEWORK_PERIOD_PROPERTIES_PERIOD_ORG_PERIOD_APACHE_PERIOD_FELIX_PERIOD_CONFIGADMIN_PERIOD_PLUGIN_PERIOD_INTERPOLATION_PERIOD_SECRETSDIR
-              valueFrom:
-                configMapKeyRef:
-                  name: dxp-configmap
-                  key: org.apache.felix.configadmin.plugin.interpolation.secretsdir
-            - name: LIFERAY_MODULE_PERIOD_FRAMEWORK_PERIOD_PROPERTIES_PERIOD_FELIX_PERIOD_CM_PERIOD_CONFIG_PERIOD_PLUGINS
-              valueFrom:
-                configMapKeyRef:
-                  name: dxp-configmap
-                  key: felix.cm.config.plugins
+              value: /opt/liferay/osgi/configs,/var/run/secrets/kubernetes.io/serviceaccount
             - name: GOOGLE_OIDC_CLIENT_ID
               valueFrom:
                 configMapKeyRef:

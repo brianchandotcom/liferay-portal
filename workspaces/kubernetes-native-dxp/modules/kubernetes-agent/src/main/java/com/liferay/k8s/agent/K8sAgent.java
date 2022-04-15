@@ -22,7 +22,6 @@ import java.util.Map;
 public interface K8sAgent {
 
 	public void createOrUpdateConfigMap(
-		String name, Map<String, String> labels,
-		Map<String, String> data);
+		Map<String, String> data, String name, Map<String, String> labels);
 
 }

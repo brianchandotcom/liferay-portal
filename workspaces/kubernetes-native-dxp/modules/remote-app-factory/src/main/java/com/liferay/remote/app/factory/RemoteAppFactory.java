@@ -14,18 +14,6 @@
 
 package com.liferay.remote.app.factory;
 
-import java.util.Collections;
-import java.util.Locale;
-import java.util.Map;
-
-import org.osgi.framework.Constants;
-import org.osgi.service.component.ComponentConstants;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.ConfigurationPolicy;
-import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
-
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -41,13 +29,24 @@ import com.liferay.remote.app.factory.configuration.v1.RemoteAppFactoryConfigura
 import com.liferay.remote.app.model.RemoteAppEntry;
 import com.liferay.remote.app.service.RemoteAppEntryLocalService;
 
+import java.util.Collections;
+import java.util.Locale;
+import java.util.Map;
+
+import org.osgi.framework.Constants;
+import org.osgi.service.component.ComponentConstants;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Raymond Augé
  */
 @Component(
 	configurationPid = "com.liferay.remote.app.factory.configuration.v1.RemoteAppFactoryConfiguration",
-	configurationPolicy = ConfigurationPolicy.REQUIRE,
-	immediate = true
+	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true
 )
 public class RemoteAppFactory {
 
@@ -77,8 +76,8 @@ public class RemoteAppFactory {
 			LocaleUtil.getMostRelevantLocale(),
 			remoteAppFactoryConfiguration.name());
 
-		RemoteAppEntry remoteAppEntry = _remoteAppEntryLocalService.
-			addOrUpdateCustomElementRemoteAppEntry(
+		RemoteAppEntry remoteAppEntry =
+			_remoteAppEntryLocalService.addOrUpdateCustomElementRemoteAppEntry(
 				externalReferenceCode, defaultAdminUser.getUserId(),
 				StringUtil.merge(
 					remoteAppFactoryConfiguration.webComponentCssUrl(), ","),
@@ -89,8 +88,7 @@ public class RemoteAppFactory {
 				remoteAppFactoryConfiguration.friendlyURLMapping(),
 				remoteAppFactoryConfiguration.instanceable(), nameMap,
 				remoteAppFactoryConfiguration.portletDisplayCategory(),
-				remoteAppFactoryConfiguration.portletServiceProperties(),
-				null);
+				remoteAppFactoryConfiguration.portletServiceProperties(), null);
 
 		if (remoteAppEntry.isNew()) {
 			_remoteAppEntryLocalService.updateStatus(
@@ -103,7 +101,7 @@ public class RemoteAppFactory {
 	}
 
 	@Deactivate
-	private void deactivate(Integer reason) throws PortalException {
+	protected void deactivate(Integer reason) throws PortalException {
 		if (reason ==
 				ComponentConstants.DEACTIVATION_REASON_CONFIGURATION_DELETED) {
 

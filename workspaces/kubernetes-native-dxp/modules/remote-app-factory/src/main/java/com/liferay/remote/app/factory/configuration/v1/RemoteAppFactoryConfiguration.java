@@ -15,13 +15,14 @@
 package com.liferay.remote.app.factory.configuration.v1;
 
 import aQute.bnd.annotation.metatype.Meta;
-import aQute.bnd.annotation.metatype.Meta.Type;
 
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
+/**
+ * @author Raymond Augé
+ */
 @ExtendedObjectClassDefinition(
-	category = "hidden",
-	scope = ExtendedObjectClassDefinition.Scope.COMPANY
+	category = "hidden", scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(
 	factory = true,
@@ -31,81 +32,64 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface RemoteAppFactoryConfiguration {
 
 	@Meta.AD(
-		name = "name",
-		description = "name-description",
-		type = Type.String
+		description = "name-description", name = "name", type = Meta.Type.String
 	)
 	public String name();
 
 	@Meta.AD(
-		name = "company-id",
-		description = "company-id-description",
-		type = Type.Long
+		description = "company-id-description", name = "company-id",
+		type = Meta.Type.Long
 	)
 	public long companyId();
 
 	@Meta.AD(
-		name = "description",
-		description = "description-description",
-		required = false,
-		type = Type.String
+		description = "description-description", name = "description",
+		required = false, type = Meta.Type.String
 	)
 	public String description();
 
-	@Meta.AD(
-		name = "element-name",
-		description = "element-name-description"
-	)
+	@Meta.AD(description = "element-name-description", name = "element-name")
 	public String elementName();
 
 	@Meta.AD(
-		name = "web-component-url",
-		description = "web-component-url-description"
+		description = "web-component-url-description",
+		name = "web-component-url"
 	)
 	public String[] webComponentUrl();
 
 	@Meta.AD(
-		name = "web-component-css-url",
 		description = "web-component-css-url-description",
-		required = false
+		name = "web-component-css-url", required = false
 	)
 	public String[] webComponentCssUrl();
 
 	@Meta.AD(
-		name = "web-component-top-js-url",
 		description = "web-component-top-js-url-description",
-		required = false
+		name = "web-component-top-js-url", required = false
 	)
 	public String[] webComponentTopJsUrl();
 
 	@Meta.AD(
-		name = "friendly-url-mapping",
 		description = "friendly-url-mapping-description",
-		required = false
+		name = "friendly-url-mapping", required = false
 	)
 	public String friendlyURLMapping();
 
 	@Meta.AD(
-		name = "instanceable",
-		description = "instanceable-desciption",
-		deflt = "false",
-		required = false
+		deflt = "false", description = "instanceable-desciption",
+		name = "instanceable", required = false
 	)
 	public boolean instanceable();
 
 	@Meta.AD(
-		name = "portlet-display-category",
-		description = "portlet-display-category-desciption",
-		deflt = "sample",
-		required = false
+		deflt = "sample", description = "portlet-display-category-desciption",
+		name = "portlet-display-category", required = false
 	)
 	public String portletDisplayCategory();
 
 	@Meta.AD(
-		name = "portlet-service-properties",
-		description = "portlet-service-properties-description",
-		deflt = "",
-		required = false
+		deflt = "", description = "portlet-service-properties-description",
+		name = "portlet-service-properties", required = false
 	)
 	public String portletServiceProperties();
 

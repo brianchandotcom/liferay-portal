@@ -31,7 +31,7 @@ public class InterpolationUtil {
 
 		while ((startDelim >= 0) && (stopDelim >= 0)) {
 			while ((stopDelim > 0) &&
-				(value.charAt(stopDelim - 1) == _ESCAPE_CHAR)) {
+				   (value.charAt(stopDelim - 1) == _ESCAPE_CHAR)) {
 
 				stopDelim = value.indexOf(_DELIM_STOP, stopDelim + 1);
 			}

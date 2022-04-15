@@ -14,20 +14,6 @@
 
 package com.liferay.oauth2.application.factory.user.agent;
 
-import java.io.InputStream;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-
-import org.osgi.service.component.ComponentConstants;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.ConfigurationPolicy;
-import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
-
 import com.liferay.k8s.agent.K8sAgent;
 import com.liferay.oauth2.application.factory.user.agent.configuration.v1.OAuth2ApplicationUserAgentConfiguration;
 import com.liferay.oauth2.provider.constants.ClientProfile;
@@ -47,17 +33,34 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+
+import java.io.InputStream;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
+import org.osgi.service.component.ComponentConstants;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Raymond Augé
  */
 @Component(
 	configurationPid = "com.liferay.oauth2.application.factory.user.agent.configuration.v1.OAuth2ApplicationUserAgentConfiguration",
-	configurationPolicy = ConfigurationPolicy.REQUIRE,
-	immediate = true
+	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true
 )
 public class Oauth2ApplicationFactoryUserAgent {
+
+	public static final String USER_AGENT_SUBDOMAIN =
+		".user.agent.factory.application.oauth2.liferay.com";
 
 	@Activate
 	public Oauth2ApplicationFactoryUserAgent(
@@ -130,16 +133,14 @@ public class Oauth2ApplicationFactoryUserAgent {
 			_oAuth2ApplicationUserAgentConfiguration.scopes());
 
 		oAuth2Application = _oAuth2ApplicationLocalService.updateScopeAliases(
-			oAuth2Application.getUserId(),
-			oAuth2Application.getUserName(),
-			oAuth2Application.getOAuth2ApplicationId(),
-			scopeAliasesList);
+			oAuth2Application.getUserId(), oAuth2Application.getUserName(),
+			oAuth2Application.getOAuth2ApplicationId(), scopeAliasesList);
 
 		_oAuth2Application = oAuth2Application;
 	}
 
 	@Deactivate
-	private void deactivate(Integer reason) throws PortalException {
+	protected void deactivate(Integer reason) throws PortalException {
 		if (reason ==
 				ComponentConstants.DEACTIVATION_REASON_CONFIGURATION_DELETED) {
 
@@ -161,8 +162,7 @@ public class Oauth2ApplicationFactoryUserAgent {
 		Property nameProperty = PropertyFactoryUtil.forName("name");
 
 		dynamicQuery.add(
-			nameProperty.eq(
-				_oAuth2ApplicationUserAgentConfiguration.name()));
+			nameProperty.eq(_oAuth2ApplicationUserAgentConfiguration.name()));
 
 		List<OAuth2Application> oAuth2Applications =
 			_oAuth2ApplicationLocalService.dynamicQuery(dynamicQuery);
@@ -180,31 +180,29 @@ public class Oauth2ApplicationFactoryUserAgent {
 					GrantType.AUTHORIZATION_CODE_PKCE, GrantType.JWT_BEARER),
 				user.getUserId(),
 				OAuth2SecureRandomGenerator.generateClientId(),
-				ClientProfile.USER_AGENT_APPLICATION.id(),
-				null, _oAuth2ApplicationUserAgentConfiguration.description(),
-				null, _oAuth2ApplicationUserAgentConfiguration.homePageURL(), 0,
+				ClientProfile.USER_AGENT_APPLICATION.id(), null,
+				_oAuth2ApplicationUserAgentConfiguration.description(), null,
+				_oAuth2ApplicationUserAgentConfiguration.homePageURL(), 0,
 				_oAuth2ApplicationUserAgentConfiguration.name(),
 				_oAuth2ApplicationUserAgentConfiguration.privacyPolicyURL(),
 				Collections.singletonList(
 					_oAuth2ApplicationUserAgentConfiguration.redirectURL()),
-				false, true, null,
-				new ServiceContext());
-
-		Map<String, String> data = new HashMap<>();
-
-		data.put("dxp.service_uri", "http://dxp-service");
-		data.put("oauth2.client_id", oAuth2Application.getClientId());
-		data.put(
-			"oauth2.introspection_uri",
-			"http://dxp-service/o/oauth2/introspect");
+				false, true, null, new ServiceContext());
 
 		_k8sAgent.createOrUpdateConfigMap(
+			HashMapBuilder.put(
+				"dxp.service_uri", "http://dxp-service"
+			).put(
+				"oauth2.client_id", oAuth2Application.getClientId()
+			).put(
+				"oauth2.introspection_uri",
+				"http://dxp-service/o/oauth2/introspect"
+			).build(),
 			StringBundler.concat(
 				_oAuth2ApplicationUserAgentConfiguration.name(),
 				USER_AGENT_SUBDOMAIN),
 			Collections.singletonMap(
-				"extension", _oAuth2ApplicationUserAgentConfiguration.name()),
-			data);
+				"extension", _oAuth2ApplicationUserAgentConfiguration.name()));
 
 		Class<?> clazz = getClass();
 
@@ -214,8 +212,6 @@ public class Oauth2ApplicationFactoryUserAgent {
 		return _oAuth2ApplicationLocalService.updateIcon(
 			oAuth2Application.getOAuth2ApplicationId(), inputStream);
 	}
-
-	public static final String USER_AGENT_SUBDOMAIN = ".user.agent.factory.application.oauth2.liferay.com";
 
 	private final CompanyLocalService _companyLocalService;
 	private final K8sAgent _k8sAgent;

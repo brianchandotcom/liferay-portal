@@ -50,10 +50,8 @@ public class QuerySuggestionHitsProcessor implements HitsProcessor {
 			IndexSearcherHelperUtil.suggestKeywordQueries(
 				searchContext, queryConfig.getQuerySuggestionMax());
 
-		querySuggestions = ArrayUtil.remove(
-			querySuggestions, searchContext.getKeywords());
-
-		hits.setQuerySuggestions(querySuggestions);
+		hits.setQuerySuggestions(
+			ArrayUtil.remove(querySuggestions, searchContext.getKeywords()));
 
 		return true;
 	}

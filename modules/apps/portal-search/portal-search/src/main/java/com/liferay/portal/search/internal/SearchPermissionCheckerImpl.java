@@ -369,10 +369,8 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			companyId, RoleConstants.SITE_MEMBER);
 
 		for (Group group : groups) {
-			long[] roleIds = permissionChecker.getRoleIds(
-				userId, group.getGroupId());
-
-			List<Role> groupRoles = roleLocalService.getRoles(roleIds);
+			List<Role> groupRoles = roleLocalService.getRoles(
+				permissionChecker.getRoleIds(userId, group.getGroupId()));
 
 			roles.addAll(groupRoles);
 

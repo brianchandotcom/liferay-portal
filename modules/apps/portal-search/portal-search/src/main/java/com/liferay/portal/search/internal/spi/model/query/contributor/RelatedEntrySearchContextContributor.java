@@ -42,11 +42,10 @@ public class RelatedEntrySearchContextContributor
 				searchContextContributorHelper.getSearchClassNames());
 		}
 
-		String[] entryClassNames = ArrayUtil.append(
-			searchContextContributorHelper.getSearchClassNames(),
-			fullQueryEntryClassNames);
-
-		searchContext.setEntryClassNames(entryClassNames);
+		searchContext.setEntryClassNames(
+			ArrayUtil.append(
+				searchContextContributorHelper.getSearchClassNames(),
+				fullQueryEntryClassNames));
 	}
 
 }

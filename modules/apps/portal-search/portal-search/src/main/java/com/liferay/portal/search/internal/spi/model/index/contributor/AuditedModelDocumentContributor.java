@@ -45,11 +45,11 @@ public class AuditedModelDocumentContributor
 		document.addDate(Field.CREATE_DATE, auditedModel.getCreateDate());
 		document.addDate(Field.MODIFIED_DATE, auditedModel.getModifiedDate());
 		document.addKeyword(Field.USER_ID, auditedModel.getUserId());
-
-		String userName = portal.getUserName(
-			auditedModel.getUserId(), auditedModel.getUserName());
-
-		document.addKeyword(Field.USER_NAME, userName, true);
+		document.addKeyword(
+			Field.USER_NAME,
+			portal.getUserName(
+				auditedModel.getUserId(), auditedModel.getUserName()),
+			true);
 	}
 
 	@Reference

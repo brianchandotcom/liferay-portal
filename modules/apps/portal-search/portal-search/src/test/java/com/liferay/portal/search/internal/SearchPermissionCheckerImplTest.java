@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchPermissionChecker;
-import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.UserBag;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -82,13 +81,9 @@ public class SearchPermissionCheckerImplTest {
 		_whenPermissionCheckerGetUserBag(_userBag);
 		_whenUserGetUserId(userId);
 
-		BooleanFilter booleanFilter = null;
-
-		BooleanFilter permissionBooleanFilter =
+		Assert.assertNotNull(
 			_searchPermissionChecker.getPermissionBooleanFilter(
-				0, null, userId, null, booleanFilter, new SearchContext());
-
-		Assert.assertNotNull(permissionBooleanFilter);
+				0, null, userId, null, null, new SearchContext()));
 	}
 
 	private SearchPermissionCheckerImpl _createSearchPermissionChecker() {

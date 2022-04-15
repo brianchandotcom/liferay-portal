@@ -26,4 +26,11 @@ public class PoshiSourceProcessorTest extends BaseSourceProcessorTestCase {
 		test("IncorrectComments.testmacro");
 	}
 
+	@Test
+	public void testPoshiPauseUsage() throws Exception {
+		test(
+			"PoshiPauseUsage.testmacro",
+			"Add a comment with explanation before using 'Pause'", 4);
+	}
+
 }

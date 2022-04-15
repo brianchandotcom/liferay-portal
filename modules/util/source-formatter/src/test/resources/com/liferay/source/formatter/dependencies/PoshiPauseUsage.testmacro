@@ -1,0 +1,7 @@
+definition {
+
+	macro testPoshiPauseUsage {
+		Pause(locator1 = "1000");
+	}
+
+}

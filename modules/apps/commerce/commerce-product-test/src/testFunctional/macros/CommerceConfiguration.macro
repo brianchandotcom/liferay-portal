@@ -151,7 +151,6 @@ definition {
 		if (isSet(minium)) {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 		}
-
 	}
 
 	macro commerceStoreFrontSetUp {
@@ -227,4 +226,5 @@ definition {
 			}
 		}
 	}
+
 }

@@ -113,25 +113,27 @@ public class AnalyticsDeleteMessageAnalyticsDXPEntityBatchEngineTaskItemDelegate
 	}
 
 	private Date _getModifiedDate(Filter filter) {
-		if (filter instanceof QueryFilter) {
-			QueryFilter queryFilter = (QueryFilter)filter;
-
-			Query query = queryFilter.getQuery();
-
-			if (query instanceof TermRangeQuery) {
-				TermRangeQuery termRangeQuery = (TermRangeQuery)query;
-
-				if (StringUtil.startsWith(
-						termRangeQuery.getField(), "modified")) {
-
-					String lowerTerm = termRangeQuery.getLowerTerm();
-
-					return new Date(GetterUtil.getLong(lowerTerm));
-				}
-			}
+		if (!(filter instanceof QueryFilter)) {
+			return null;
 		}
 
-		return null;
+		QueryFilter queryFilter = (QueryFilter)filter;
+
+		Query query = queryFilter.getQuery();
+
+		if (!(query instanceof TermRangeQuery)) {
+			return null;
+		}
+
+		TermRangeQuery termRangeQuery = (TermRangeQuery)query;
+
+		if (!StringUtil.startsWith(termRangeQuery.getField(), "modified")) {
+			return null;
+		}
+
+		String lowerTerm = termRangeQuery.getLowerTerm();
+
+		return new Date(GetterUtil.getLong(lowerTerm));
 	}
 
 	@Reference

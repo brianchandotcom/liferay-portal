@@ -916,6 +916,7 @@ public class DLAdminDisplayContext {
 
 			try {
 				portletPreferences.setValue(name, value);
+
 				portletPreferences.store();
 			}
 			catch (Exception exception) {

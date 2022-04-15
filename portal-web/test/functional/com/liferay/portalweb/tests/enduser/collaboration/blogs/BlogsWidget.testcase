@@ -455,12 +455,45 @@ definition {
 	}
 
 	@description = "This is a test for LPS-90983. It checks that the custom abstract can be viewed in card display template."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewCustomAbstractInCardDisplayTemplate {
+		task ("Add a blog entry with custom abstract") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title");
 
-		// TODO LPS-149974 CanViewCustomAbstractInCardDisplayTemplate pending implementation
+			BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
+			BlogsNavigator.gotoEditCP(entryTitle = "Blogs Entry Title");
+
+			Panel.expandPanel(panel = "Configuration");
+
+			BlogsEntry.addCustomAbstract(entryAbstractDescription = "Blogs Entry Abstract Description");
+
+			PortletEntry.publish();
+		}
+
+		task ("Configure widget to display abstract with card") {
+			Navigator.gotoPage(pageName = "Blogs Page");
+
+			Portlet.gotoPortletOptions(
+				portletName = "Blogs",
+				portletOption = "Configuration");
+
+			BlogsConfiguration.selectConfigurationIFrame();
+
+			BlogsConfiguration.selectDisplayTemplate(displayTemplate = "Card");
+
+			IFrame.saveConfiguration();
+		}
+
+		task ("View custom abstract is shown") {
+			Navigator.gotoPage(pageName = "Blogs Page");
+
+			BlogsEntry.viewWithAbstractDisplayTemplatePG(
+				entryAbstractDescription = "Blogs Entry Abstract Description",
+				entryTitle = "Blogs Entry Title");
+		}
 	}
 
 	@description = "This checks that a blog entry can be added, edited, saved as a draft and published via AP."

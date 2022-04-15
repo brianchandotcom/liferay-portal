@@ -1272,12 +1272,28 @@ definition {
 	}
 
 	@description = "This is a test for LPS-80502. It asserts that user can search a draft blog entry."
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanSearchForDraftEntry {
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title");
 
-		// TODO LPS-149388 CanSearchForDraftEntry pending implementation
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
+		Blogs.addDraft(
+			entryContent = "Blogs Entry Content For Draft",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		BlogsEntry.searchCP(
+			entrySearchTerm = "Blogs Entry Title",
+			entryTitle = "Blogs Entry Title",
+			position = "2");
 	}
 
 	@priority = "4"

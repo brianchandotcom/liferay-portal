@@ -35,6 +35,14 @@ public class AnalyticsDeleteMessageLocalServiceImpl
 
 	@Override
 	public List<AnalyticsDeleteMessage> getAnalyticsDeleteMessages(
+		long companyId, Date modifiedDate, int start, int end) {
+
+		return analyticsDeleteMessagePersistence.findByC_GtM(
+			companyId, modifiedDate, start, end);
+	}
+
+	@Override
+	public List<AnalyticsDeleteMessage> getAnalyticsDeleteMessages(
 		long companyId, int start, int end) {
 
 		return analyticsDeleteMessagePersistence.findByCompanyId(
@@ -44,14 +52,6 @@ public class AnalyticsDeleteMessageLocalServiceImpl
 	@Override
 	public int getAnalyticsDeleteMessagesCount(long companyId) {
 		return analyticsDeleteMessagePersistence.countByCompanyId(companyId);
-	}
-
-	@Override
-	public List<AnalyticsDeleteMessage> getAnalyticsDeleteMessages(
-		long companyId, Date modifiedDate, int start, int end) {
-
-		return analyticsDeleteMessagePersistence.findByC_GtM(
-			companyId, modifiedDate, start, end);
 	}
 
 	@Override

@@ -18,12 +18,15 @@ import com.liferay.dynamic.data.mapping.form.web.internal.display.context.helper
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownGroupItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderResponse;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletURL;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -31,6 +34,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.List;
 import java.util.Map;
@@ -42,24 +46,23 @@ import org.hamcrest.collection.IsMapContaining;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Carolina Barbosa
  */
-@PrepareForTest(PortletProviderUtil.class)
-@RunWith(PowerMockRunner.class)
-public class DDMFormAdminActionDropdownItemsProviderTest extends PowerMockito {
+public class DDMFormAdminActionDropdownItemsProviderTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
@@ -113,7 +116,7 @@ public class DDMFormAdminActionDropdownItemsProviderTest extends PowerMockito {
 
 	@Test
 	public void testGetActionDropdownItemsNotShowingDelete() throws Exception {
-		when(
+		Mockito.when(
 			_formInstancePermissionCheckerHelper.isShowDeleteIcon(
 				_ddmFormInstance)
 		).thenReturn(
@@ -132,7 +135,7 @@ public class DDMFormAdminActionDropdownItemsProviderTest extends PowerMockito {
 	public void testGetActionDropdownItemsNotShowingDuplicate()
 		throws Exception {
 
-		when(
+		Mockito.when(
 			_formInstancePermissionCheckerHelper.isShowDuplicateIcon()
 		).thenReturn(
 			false
@@ -148,7 +151,7 @@ public class DDMFormAdminActionDropdownItemsProviderTest extends PowerMockito {
 
 	@Test
 	public void testGetActionDropdownItemsNotShowingEdit() throws Exception {
-		when(
+		Mockito.when(
 			_formInstancePermissionCheckerHelper.isShowEditIcon(
 				_ddmFormInstance)
 		).thenReturn(
@@ -165,7 +168,7 @@ public class DDMFormAdminActionDropdownItemsProviderTest extends PowerMockito {
 
 	@Test
 	public void testGetActionDropdownItemsNotShowingExport() throws Exception {
-		when(
+		Mockito.when(
 			_formInstancePermissionCheckerHelper.isShowExportIcon(
 				_ddmFormInstance)
 		).thenReturn(
@@ -184,7 +187,7 @@ public class DDMFormAdminActionDropdownItemsProviderTest extends PowerMockito {
 	public void testGetActionDropdownItemsNotShowingPermissions()
 		throws Exception {
 
-		when(
+		Mockito.when(
 			_formInstancePermissionCheckerHelper.isShowPermissionsIcon(
 				_ddmFormInstance)
 		).thenReturn(
@@ -201,7 +204,7 @@ public class DDMFormAdminActionDropdownItemsProviderTest extends PowerMockito {
 
 	@Test
 	public void testGetActionDropdownItemsNotShowingShare1() throws Exception {
-		when(
+		Mockito.when(
 			_formInstancePermissionCheckerHelper.isShowShareIcon(
 				_ddmFormInstance)
 		).thenReturn(
@@ -232,7 +235,7 @@ public class DDMFormAdminActionDropdownItemsProviderTest extends PowerMockito {
 	public void testGetActionDropdownItemsNotShowingViewEntries()
 		throws Exception {
 
-		when(
+		Mockito.when(
 			_formInstancePermissionCheckerHelper.isShowViewEntriesIcon(
 				_ddmFormInstance)
 		).thenReturn(
@@ -256,9 +259,9 @@ public class DDMFormAdminActionDropdownItemsProviderTest extends PowerMockito {
 	private static void _setUpLanguageUtil() {
 		LanguageUtil languageUtil = new LanguageUtil();
 
-		Language language = mock(Language.class);
+		Language language = Mockito.mock(Language.class);
 
-		when(
+		Mockito.when(
 			language.get(
 				Mockito.any(HttpServletRequest.class), Mockito.anyString())
 		).thenAnswer(
@@ -378,7 +381,7 @@ public class DDMFormAdminActionDropdownItemsProviderTest extends PowerMockito {
 	}
 
 	private void _mockDDMFormInstance() {
-		when(
+		Mockito.when(
 			_ddmFormInstance.getFormInstanceId()
 		).thenReturn(
 			_FORM_INSTANCE_ID
@@ -386,48 +389,48 @@ public class DDMFormAdminActionDropdownItemsProviderTest extends PowerMockito {
 	}
 
 	private void _mockFormInstancePermissionCheckerHelper() throws Exception {
-		when(
+		Mockito.when(
 			_formInstancePermissionCheckerHelper.isShowDeleteIcon(
 				_ddmFormInstance)
 		).thenReturn(
 			true
 		);
 
-		when(
+		Mockito.when(
 			_formInstancePermissionCheckerHelper.isShowDuplicateIcon()
 		).thenReturn(
 			true
 		);
 
-		when(
+		Mockito.when(
 			_formInstancePermissionCheckerHelper.isShowEditIcon(
 				_ddmFormInstance)
 		).thenReturn(
 			true
 		);
 
-		when(
+		Mockito.when(
 			_formInstancePermissionCheckerHelper.isShowExportIcon(
 				_ddmFormInstance)
 		).thenReturn(
 			true
 		);
 
-		when(
+		Mockito.when(
 			_formInstancePermissionCheckerHelper.isShowPermissionsIcon(
 				_ddmFormInstance)
 		).thenReturn(
 			true
 		);
 
-		when(
+		Mockito.when(
 			_formInstancePermissionCheckerHelper.isShowShareIcon(
 				_ddmFormInstance)
 		).thenReturn(
 			true
 		);
 
-		when(
+		Mockito.when(
 			_formInstancePermissionCheckerHelper.isShowViewEntriesIcon(
 				_ddmFormInstance)
 		).thenReturn(
@@ -462,14 +465,29 @@ public class DDMFormAdminActionDropdownItemsProviderTest extends PowerMockito {
 	}
 
 	private void _setUpPortletProviderUtil() throws Exception {
-		mockStatic(PortletProviderUtil.class);
+		ServiceTrackerMap<String, ? extends PortletProvider> serviceTrackerMap =
+			Mockito.mock(ServiceTrackerMap.class);
 
-		when(
-			PortletProviderUtil.getPortletURL(
-				Mockito.any(HttpServletRequest.class), Mockito.anyString(),
-				Mockito.any())
-		).thenReturn(
+		PortletProvider portletProvider = Mockito.mock(PortletProvider.class);
+
+		Mockito.doReturn(
+			portletProvider
+		).when(
+			serviceTrackerMap
+		).getService(
+			Mockito.anyString()
+		);
+
+		ReflectionTestUtil.setFieldValue(
+			PortletProviderUtil.class, "_viewServiceTrackerMap",
+			serviceTrackerMap);
+
+		Mockito.doReturn(
 			new MockLiferayPortletURL()
+		).when(
+			portletProvider
+		).getPortletURL(
+			Mockito.any(HttpServletRequest.class)
 		);
 	}
 
@@ -499,13 +517,11 @@ public class DDMFormAdminActionDropdownItemsProviderTest extends PowerMockito {
 
 	private DDMFormAdminActionDropdownItemsProvider
 		_ddmFormAdminActionDropdownItemsProvider;
-
-	@Mock
-	private DDMFormInstance _ddmFormInstance;
-
-	@Mock
-	private FormInstancePermissionCheckerHelper
-		_formInstancePermissionCheckerHelper;
+	private final DDMFormInstance _ddmFormInstance = Mockito.mock(
+		DDMFormInstance.class);
+	private final FormInstancePermissionCheckerHelper
+		_formInstancePermissionCheckerHelper = Mockito.mock(
+			FormInstancePermissionCheckerHelper.class);
 
 	private static class TestMockLiferayPortletRenderResponse
 		extends MockLiferayPortletRenderResponse {

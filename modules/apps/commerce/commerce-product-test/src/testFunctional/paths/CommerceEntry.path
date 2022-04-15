@@ -440,9 +440,9 @@
 	<td></td>
 </tr>
 <tr>
-    <td>SALE_PRICE_FIELD</td>
-    <td>//div/input[contains(@id,'promoPrice')]</td>
-    <td></td>
+	<td>SALE_PRICE_FIELD</td>
+	<td>//div/input[contains(@id,'promoPrice')]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>ACCORDION</td>

@@ -68,14 +68,6 @@ definition {
 
 		Navigator.openURL();
 
-		CommerceJSONOrdersAPI._deleteAllCommerceOrders();
-
-		var orderCount = CommerceJSONOrdersAPI._getCommerceOrdersCount();
-
-		TestUtils.assertEquals(
-			actual = "${orderCount}",
-			expected = "${emptyCount}");
-
 		CommerceJSONShipmentsAPI._deleteAllCommerceShipments();
 
 		var shipmentsCount = CommerceJSONShipmentsAPI._getCommerceShipmentsCount();

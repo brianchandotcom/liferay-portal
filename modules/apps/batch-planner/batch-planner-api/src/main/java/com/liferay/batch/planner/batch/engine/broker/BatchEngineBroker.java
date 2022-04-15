@@ -22,6 +22,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface BatchEngineBroker {
 
-	public void submit(long batchPlannerPlanId);
+	public void submit(long batchPlannerPlanId) throws Exception;
 
 }

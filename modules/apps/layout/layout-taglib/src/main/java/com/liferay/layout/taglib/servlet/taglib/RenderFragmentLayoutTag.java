@@ -116,6 +116,13 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 			return _layoutStructure;
 		}
 
+		_layoutStructure = (LayoutStructure)httpServletRequest.getAttribute(
+			RenderLayoutStructureTag.LAYOUT_STRUCTURE);
+
+		if (_layoutStructure != null) {
+			return _layoutStructure;
+		}
+
 		_layoutStructure = LayoutStructureUtil.getLayoutStructure(
 			httpServletRequest, _getPlid(httpServletRequest));
 

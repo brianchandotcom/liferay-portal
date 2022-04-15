@@ -154,6 +154,8 @@ public class RenderLayoutStructureTag extends IncludeTag {
 		return SKIP_BODY;
 	}
 
+	protected static final String LAYOUT_STRUCTURE = "LAYOUT_STRUCTURE";
+
 	private String _getLayoutMode() {
 		HttpServletRequest httpServletRequest = getRequest();
 
@@ -838,6 +840,10 @@ public class RenderLayoutStructureTag extends IncludeTag {
 			RenderLayoutStructureDisplayContext
 				renderLayoutStructureDisplayContext)
 		throws Exception {
+
+		HttpServletRequest httpServletRequest = getRequest();
+
+		httpServletRequest.setAttribute(LAYOUT_STRUCTURE, _layoutStructure);
 
 		_renderLayoutStructure(
 			childrenItemIds, -1, renderLayoutStructureDisplayContext);

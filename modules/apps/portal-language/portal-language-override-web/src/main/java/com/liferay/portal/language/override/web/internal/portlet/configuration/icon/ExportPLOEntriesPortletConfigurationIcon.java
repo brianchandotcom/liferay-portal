@@ -66,6 +66,11 @@ public class ExportPLOEntriesPortletConfigurationIcon
 	}
 
 	@Override
+	public double getWeight() {
+		return 200;
+	}
+
+	@Override
 	public boolean isShow(PortletRequest portletRequest) {
 		try {
 			int ploEntriesCount = _ploEntryService.getPLOEntriesCount(

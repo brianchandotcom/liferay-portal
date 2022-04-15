@@ -123,7 +123,6 @@ definition {
 			}
 
 			var i = ${dayNum} / 10;
-
 			var j = ${tomorrowNum} / 10;
 
 			if ("${i}" == "0") {
@@ -136,7 +135,9 @@ definition {
 		}
 
 		task ("View Chart Entry") {
-			if (!IsTextEqual.isPartialText(key_entry = "${yearNum}-${monthNum}-${dayNum}", locator1 = "ACSegments#BREAKDOWN_CHART")) {
+			if (!(
+
+			var key_entry = "${yearNum}-${monthNum}-${dayNum}&quot;, locator1 = &quot;ACSegments#BREAKDOWN_CHART";)) {
 				ACSegments.viewBreakdownChartsEntry(key_entry = "${yearNum}-${monthNum}-${tomorrowNum}");
 			}
 

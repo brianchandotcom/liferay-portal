@@ -16,6 +16,8 @@ package com.liferay.source.formatter.checkstyle.check;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.poshi.core.util.ListUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FullIdent;
@@ -159,6 +161,35 @@ public class JSONUtilCheck extends BaseChainedMethodCheck {
 		}
 	}
 
+	private boolean _checkMethodReturnType(
+		DetailAST detailAST, String callMethodName) {
+
+		if (Validator.isNull(callMethodName)) {
+			return false;
+		}
+
+		DetailAST parentDetailAST = getParentWithTokenType(
+			detailAST, TokenTypes.OBJBLOCK);
+
+		List<DetailAST> childDetailASTList = getAllChildTokens(
+			parentDetailAST, true, TokenTypes.METHOD_DEF);
+
+		for (DetailAST tmpDetailAST : childDetailASTList) {
+			String methodName = getName(tmpDetailAST);
+
+			if (StringUtil.equals(methodName, callMethodName) &&
+				ArrayUtil.contains(
+					_VARIABLE_TYPE_NAMES, getTypeName(tmpDetailAST, true))) {
+
+				log(detailAST, _MSG_USE_JSON_UTIL_TO_STRING_2);
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private void _checkStringValueOfCalls(DetailAST detailAST) {
 		DetailAST firstChildDetailAST = detailAST.getFirstChild();
 
@@ -263,87 +294,71 @@ public class JSONUtilCheck extends BaseChainedMethodCheck {
 		}
 	}
 
-	private void _checkToJSONStringCalls(DetailAST detailAST) {
-		if (!StringUtil.equals("toJSONString", getMethodName(detailAST))) {
+	private void _checkToJSONCallMethod(
+		DetailAST detailAST, DetailAST originDetailAST) {
+
+		if (detailAST.getChildCount() == 0) {
 			return;
 		}
 
 		DetailAST firstChildDetailAST = detailAST.getFirstChild();
 
-		if (firstChildDetailAST == null) {
-			return;
-		}
+		if (firstChildDetailAST.getType() == TokenTypes.DOT) {
+			FullIdent fullIdent = FullIdent.createFullIdent(
+				firstChildDetailAST);
 
-		firstChildDetailAST = firstChildDetailAST.getFirstChild();
+			String expr = fullIdent.getText();
 
-		if (firstChildDetailAST.getType() == TokenTypes.IDENT) {
-			String variableName = getVariableName(detailAST);
-
-			String variableTypeName = getVariableTypeName(
-				detailAST, variableName, true);
-
-			if (ArrayUtil.contains(_VARIABLE_TYPE_NAMES, variableTypeName)) {
-				log(detailAST, _MSG_USE_JSON_UTIL_TO_STRING_2);
+			if (expr.startsWith("JSONUtil.")) {
+				log(originDetailAST, _MSG_USE_JSON_UTIL_TO_STRING_2);
 
 				return;
 			}
 		}
 
-		List<DetailAST> methodCallDetailASTList = getAllChildTokens(
+		_checkToJSONCallMethod(firstChildDetailAST, originDetailAST);
+	}
+
+	private void _checkToJSONStringCalls(DetailAST detailAST) {
+		if (!StringUtil.equals("toJSONString", getMethodName(detailAST))) {
+			return;
+		}
+
+		List<DetailAST> childDetailASTList = getAllChildTokens(
 			detailAST, true, TokenTypes.METHOD_CALL);
 
-		if (methodCallDetailASTList.isEmpty()) {
-			return;
-		}
+		if (!ListUtil.isEmpty(childDetailASTList) &&
+			(childDetailASTList.size() == 1)) {
 
-		List<String> chainedMethodNames = new ArrayList<>();
+			for (DetailAST tmpDetailAST : childDetailASTList) {
+				DetailAST childDetailAST = tmpDetailAST.getFirstChild();
 
-		for (DetailAST methodCallDetailAST : methodCallDetailASTList) {
-			DetailAST dotDetailAST = methodCallDetailAST.findFirstToken(
-				TokenTypes.DOT);
+				if ((childDetailAST != null) &&
+					(childDetailAST.getType() == TokenTypes.IDENT)) {
 
-			if (dotDetailAST != null) {
-				List<DetailAST> childMethodCallDetailASTList =
-					getAllChildTokens(
-						dotDetailAST, false, TokenTypes.METHOD_CALL);
+					String methodCallName = getMethodName(tmpDetailAST);
 
-				if (!childMethodCallDetailASTList.isEmpty()) {
-					continue;
+					if (_checkMethodReturnType(detailAST, methodCallName)) {
+						log(detailAST, _MSG_USE_JSON_UTIL_TO_STRING_2);
+
+						return;
+					}
 				}
 			}
-
-			BaseCheck.ChainInformation chainInformation = getChainInformation(
-				methodCallDetailAST);
-
-			chainedMethodNames = chainInformation.getMethodNames();
 		}
 
-		for (int i = 0; i < (chainedMethodNames.size() - 1); i++) {
-			String chainedMethodName = chainedMethodNames.get(i);
+		String variableName = getVariableName(detailAST);
 
-			if (!chainedMethodName.equals("put") &&
-				!chainedMethodName.equals("putAll")) {
+		String variableTypeName = getVariableTypeName(
+			detailAST, variableName, true);
 
-				return;
-			}
-		}
+		if (ArrayUtil.contains(_VARIABLE_TYPE_NAMES, variableTypeName)) {
+			log(detailAST, _MSG_USE_JSON_UTIL_TO_STRING_2);
 
-		DetailAST methodCallDetailAST = methodCallDetailASTList.get(
-			methodCallDetailASTList.size() - 1);
-
-		firstChildDetailAST = methodCallDetailAST.getFirstChild();
-
-		if (firstChildDetailAST.getType() != TokenTypes.DOT) {
 			return;
 		}
 
-		FullIdent fullIdent = FullIdent.createFullIdent(firstChildDetailAST);
-
-		String methodCall = fullIdent.getText();
-
-		if (methodCall.startsWith("JSONUtil.")) {
-			log(detailAST, _MSG_USE_JSON_UTIL_TO_STRING_2);
-		}
+		_checkToJSONCallMethod(detailAST, detailAST);
 	}
 
 	private DetailAST _getMethodCallDetailAST(

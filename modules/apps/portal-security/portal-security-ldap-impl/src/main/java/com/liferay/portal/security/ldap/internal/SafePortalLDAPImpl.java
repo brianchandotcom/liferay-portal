@@ -610,10 +610,10 @@ public class SafePortalLDAPImpl implements SafePortalLDAP {
 
 		Properties userMappings = _ldapSettings.getUserMappings(
 			ldapServerId, companyId);
-		Properties userExpandoMappings = _ldapSettings.getUserExpandoMappings(
-			ldapServerId, companyId);
 
-		PropertiesUtil.merge(userMappings, userExpandoMappings);
+		PropertiesUtil.merge(
+			userMappings,
+			_ldapSettings.getUserExpandoMappings(ldapServerId, companyId));
 
 		Properties contactMappings = _ldapSettings.getContactMappings(
 			ldapServerId, companyId);

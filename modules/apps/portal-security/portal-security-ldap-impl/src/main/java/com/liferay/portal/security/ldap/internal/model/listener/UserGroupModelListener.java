@@ -28,8 +28,6 @@ import com.liferay.portal.security.exportimport.UserExporter;
 import com.liferay.portal.security.exportimport.UserOperation;
 import com.liferay.portal.security.ldap.internal.UserImportTransactionThreadLocal;
 
-import java.util.concurrent.Callable;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferencePolicy;
@@ -88,36 +86,35 @@ public class UserGroupModelListener extends BaseModelListener<UserGroup> {
 			return;
 		}
 
-		Callable<Void> callable = CallableUtil.getCallable(
-			expandoBridgeAttributes -> {
-				if ((_userLocalService.fetchUser(userId) == null) ||
-					(_userGroupLocalService.fetchUserGroup(userGroupId) ==
-						null)) {
+		TransactionCommitCallbackUtil.registerCallback(
+			CallableUtil.getCallable(
+				expandoBridgeAttributes -> {
+					if ((_userLocalService.fetchUser(userId) == null) ||
+						(_userGroupLocalService.fetchUserGroup(userGroupId) ==
+							null)) {
 
-					return;
-				}
-
-				try {
-					_userExporter.exportUser(
-						userId, userGroupId, userOperation);
-				}
-				catch (Exception exception) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(exception);
+						return;
 					}
-				}
 
-				if (_log.isDebugEnabled()) {
+					try {
+						_userExporter.exportUser(
+							userId, userGroupId, userOperation);
+					}
+					catch (Exception exception) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(exception);
+						}
+					}
+
 					if (_log.isDebugEnabled()) {
-						StringBundler.concat(
-							"Exporting user ", userId, " to user group ",
-							userGroupId, " with user operation ",
-							userOperation.name());
+						if (_log.isDebugEnabled()) {
+							StringBundler.concat(
+								"Exporting user ", userId, " to user group ",
+								userGroupId, " with user operation ",
+								userOperation.name());
+						}
 					}
-				}
-			});
-
-		TransactionCommitCallbackUtil.registerCallback(callable);
+				}));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

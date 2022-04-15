@@ -71,11 +71,9 @@ public class LDAPConfigurationListener implements ConfigurationListener {
 					configurationEvent.getPid());
 			}
 			else {
-				Configuration configuration =
+				configurationProvider.registerConfiguration(
 					_configurationAdmin.getConfiguration(
-						configurationEvent.getPid(), StringPool.QUESTION);
-
-				configurationProvider.registerConfiguration(configuration);
+						configurationEvent.getPid(), StringPool.QUESTION));
 			}
 		}
 		catch (IOException ioException) {

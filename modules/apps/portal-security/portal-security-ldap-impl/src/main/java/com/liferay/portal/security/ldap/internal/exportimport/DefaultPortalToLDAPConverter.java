@@ -134,12 +134,11 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 		String rdnType = GetterUtil.getString(
 			groupMappings.getProperty(GroupConverterKeys.GROUP_NAME),
 			_DEFAULT_DN);
-		SafeLdapName groupsDNSafeLdapName =
-			_safePortalLDAP.getGroupsDNSafeLdapName(
-				ldapServerId, userGroup.getCompanyId());
 
 		return SafeLdapNameFactory.from(
-			rdnType, userGroup.getName(), groupsDNSafeLdapName);
+			rdnType, userGroup.getName(),
+			_safePortalLDAP.getGroupsDNSafeLdapName(
+				ldapServerId, userGroup.getCompanyId()));
 	}
 
 	@Override
@@ -458,11 +457,11 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 			userMappings.getProperty(_userDNFieldName), _DEFAULT_DN);
 		String rdnValue = _beanProperties.getStringSilent(
 			user, _userDNFieldName);
-		SafeLdapName usersDNSafeLdapName =
-			_safePortalLDAP.getUsersDNSafeLdapName(
-				ldapServerId, user.getCompanyId());
 
-		return SafeLdapNameFactory.from(rdnType, rdnValue, usersDNSafeLdapName);
+		return SafeLdapNameFactory.from(
+			rdnType, rdnValue,
+			_safePortalLDAP.getUsersDNSafeLdapName(
+				ldapServerId, user.getCompanyId()));
 	}
 
 	public void setContactReservedFieldNames(

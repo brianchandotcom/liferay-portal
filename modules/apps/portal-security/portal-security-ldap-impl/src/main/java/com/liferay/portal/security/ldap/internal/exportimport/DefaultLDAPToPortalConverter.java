@@ -53,7 +53,6 @@ import com.liferay.portal.security.ldap.util.LDAPUtil;
 import java.text.ParseException;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -80,16 +79,12 @@ public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 		LDAPGroup ldapGroup = new LDAPGroup();
 
 		ldapGroup.setCompanyId(companyId);
-
-		String description = LDAPUtil.getAttributeString(
-			attributes, groupMappings, GroupConverterKeys.DESCRIPTION);
-
-		ldapGroup.setDescription(description);
-
-		String groupName = LDAPUtil.getAttributeString(
-			attributes, groupMappings, GroupConverterKeys.GROUP_NAME);
-
-		ldapGroup.setGroupName(groupName);
+		ldapGroup.setDescription(
+			LDAPUtil.getAttributeString(
+				attributes, groupMappings, GroupConverterKeys.DESCRIPTION));
+		ldapGroup.setGroupName(
+			LDAPUtil.getAttributeString(
+				attributes, groupMappings, GroupConverterKeys.GROUP_NAME));
 
 		return ldapGroup;
 	}
@@ -190,17 +185,14 @@ public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 			contactMappings.put(ContactConverterKeys.SUFFIX, suffix);
 		}
 
-		long prefixId = _getListTypeId(
-			attributes, contactMappings, ContactConverterKeys.PREFIX,
-			ListTypeConstants.CONTACT_PREFIX);
-
-		contact.setPrefixId(prefixId);
-
-		long suffixId = _getListTypeId(
-			attributes, contactMappings, ContactConverterKeys.SUFFIX,
-			ListTypeConstants.CONTACT_SUFFIX);
-
-		contact.setSuffixId(suffixId);
+		contact.setPrefixId(
+			_getListTypeId(
+				attributes, contactMappings, ContactConverterKeys.PREFIX,
+				ListTypeConstants.CONTACT_PREFIX));
+		contact.setSuffixId(
+			_getListTypeId(
+				attributes, contactMappings, ContactConverterKeys.SUFFIX,
+				ListTypeConstants.CONTACT_SUFFIX));
 
 		String gender = LDAPUtil.getAttributeString(
 			attributes, contactMappings, ContactConverterKeys.GENDER);
@@ -217,12 +209,12 @@ public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 		}
 
 		try {
-			Date birthday = DateUtil.parseDate(
-				LDAPUtil.getAttributeString(
-					attributes, contactMappings, ContactConverterKeys.BIRTHDAY),
-				locale);
-
-			contact.setBirthday(birthday);
+			contact.setBirthday(
+				DateUtil.parseDate(
+					LDAPUtil.getAttributeString(
+						attributes, contactMappings,
+						ContactConverterKeys.BIRTHDAY),
+					locale));
 		}
 		catch (ParseException parseException) {
 			if (_log.isDebugEnabled()) {
@@ -291,10 +283,9 @@ public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 
 		ServiceContext serviceContext = new ServiceContext();
 
-		String uuid = LDAPUtil.getAttributeString(
-			attributes, userMappings, UserConverterKeys.UUID);
-
-		serviceContext.setUuid(uuid);
+		serviceContext.setUuid(
+			LDAPUtil.getAttributeString(
+				attributes, userMappings, UserConverterKeys.UUID));
 
 		ldapUser.setServiceContext(serviceContext);
 
@@ -304,18 +295,14 @@ public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 
 		user.setCompanyId(companyId);
 		user.setEmailAddress(emailAddress);
-		user.setFirstName(firstName);
-
-		String jobTitle = LDAPUtil.getAttributeString(
-			attributes, userMappings, UserConverterKeys.JOB_TITLE);
-
-		user.setJobTitle(jobTitle);
-
-		user.setLanguageId(locale.toString());
-
 		user.setOpenId(StringPool.BLANK);
+		user.setLanguageId(locale.toString());
+		user.setFirstName(firstName);
 		user.setMiddleName(middleName);
 		user.setLastName(lastName);
+		user.setJobTitle(
+			LDAPUtil.getAttributeString(
+				attributes, userMappings, UserConverterKeys.JOB_TITLE));
 		user.setPasswordUnencrypted(password);
 		user.setScreenName(screenName);
 
@@ -327,12 +314,8 @@ public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 		}
 
 		ldapUser.setUser(user);
-
-		Map<String, String[]> userExpandoAttributes = _getExpandoAttributes(
-			attributes, userExpandoMappings);
-
-		ldapUser.setUserExpandoAttributes(userExpandoAttributes);
-
+		ldapUser.setUserExpandoAttributes(
+			_getExpandoAttributes(attributes, userExpandoMappings));
 		ldapUser.setUserGroupIds(null);
 		ldapUser.setUserGroupRoles(null);
 

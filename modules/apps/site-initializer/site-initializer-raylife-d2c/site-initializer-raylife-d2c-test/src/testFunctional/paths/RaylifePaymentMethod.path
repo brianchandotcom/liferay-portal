@@ -75,6 +75,36 @@
 	<td>//input[contains(@id, 'email')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>FIELD_PASSWORD_PAYPAL</td>
+	<td>//input[contains(@id, 'password')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BUTTON_NEXT_PAYPAL</td>
+	<td>//button[contains(@class, 'actionContinue')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BUTTON_LOGIN_PAYPAL</td>
+	<td>//button[contains(@id, 'btnLogin')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEST_BUYER_PAYPAL</td>
+	<td>//p[text()='${text}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VALUE_QUOTATION_PAYPAL</td>
+	<td>//span[text()='${value}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BUTTON_CONTINUE_PAYPAL</td>
+	<td>//button[contains(@id, 'payment-submit-btn')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

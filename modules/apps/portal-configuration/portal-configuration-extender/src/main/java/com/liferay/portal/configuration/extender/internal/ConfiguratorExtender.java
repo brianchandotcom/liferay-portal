@@ -194,7 +194,7 @@ public class ConfiguratorExtender implements BundleTrackerCustomizer<Bundle> {
 		Bundle bundle, String configurationPath,
 		List<NamedConfigurationContent> namedConfigurationContents,
 		UnsafeFunction<InputStream, Dictionary<?, ?>, IOException>
-			propertyFunction,
+			propertyUnsafeFunction,
 		String filePattern) {
 
 		Enumeration<URL> enumeration = bundle.findEntries(
@@ -236,7 +236,7 @@ public class ConfiguratorExtender implements BundleTrackerCustomizer<Bundle> {
 					factoryPid, pid,
 					() -> {
 						try (InputStream inputStream = url.openStream()) {
-							return propertyFunction.apply(inputStream);
+							return propertyUnsafeFunction.apply(inputStream);
 						}
 					}));
 		}

@@ -732,7 +732,8 @@ public class CPFileImporterImpl implements CPFileImporter {
 
 	private String _replaceJournalArticleImages(
 			String content, Pattern pattern,
-			UnsafeFunction<FileEntry, String, Exception> replacementFunction,
+			UnsafeFunction<FileEntry, String, Exception>
+				replacementUnsafeFunction,
 			ClassLoader classLoader, String dependenciesFilePath,
 			ServiceContext serviceContext)
 		throws Exception {
@@ -747,7 +748,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 			FileEntry fileEntry = _fetchOrAddFileEntry(
 				classLoader, dependenciesFilePath, fileName, serviceContext);
 
-			String replacement = replacementFunction.apply(fileEntry);
+			String replacement = replacementUnsafeFunction.apply(fileEntry);
 
 			matcher.appendReplacement(sb, replacement);
 		}

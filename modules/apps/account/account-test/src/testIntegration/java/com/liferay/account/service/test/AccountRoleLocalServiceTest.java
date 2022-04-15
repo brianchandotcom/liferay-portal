@@ -564,7 +564,7 @@ public class AccountRoleLocalServiceTest {
 
 	private void _testDeleteAccountRole(
 			UnsafeFunction<AccountRole, AccountRole, PortalException>
-				deleteAccountRoleFunction)
+				deleteAccountRoleUnsafeFunction)
 		throws Exception {
 
 		AccountRole accountRole = _addAccountRole(
@@ -581,7 +581,7 @@ public class AccountRoleLocalServiceTest {
 		Assert.assertTrue(
 			ArrayUtil.contains(_getRoleIds(user), accountRole.getRoleId()));
 
-		deleteAccountRoleFunction.apply(accountRole);
+		deleteAccountRoleUnsafeFunction.apply(accountRole);
 
 		Assert.assertFalse(
 			ArrayUtil.contains(

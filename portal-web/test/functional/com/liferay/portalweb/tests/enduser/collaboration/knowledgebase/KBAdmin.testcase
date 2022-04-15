@@ -481,20 +481,6 @@ definition {
 			kbFolderName = "KB Folder 1");
 	}
 
-	@description = "This is a test for LPS-120917. It checks that XSS cannot be executed from the KB template name."
-	@priority = "3"
-	test CannotStoreXSSInTemplateName {
-		JSONKnowledgeBase.addkBTemplate(
-			kbTemplateContent = "Knowledge Base Template Content",
-			kbTemplateTitle = '''<script>alert(123)</script>''');
-
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
-
-		LexiconEntry.viewAddMenuItem(menuItem = '''<script>alert(123)</script>''');
-
-		AssertAlertNotPresent();
-	}
-
 	@priority = "4"
 	@refactordone
 	test CanRemoveParentArticle {
@@ -805,6 +791,20 @@ definition {
 		KBArticle.viewKBArticlePriorityCP(
 			kbArticleTitle = "Knowledge Base Article Parent Title 4",
 			kbPriority = "4.0");
+	}
+
+	@description = "This test covers LPS-120917. It checks that XSS cannot be executed from the KB template name."
+	@priority = "3"
+	test TemplateNameDoesNotExecuteXSS {
+		JSONKnowledgeBase.addkBTemplate(
+			kbTemplateContent = "Knowledge Base Template Content",
+			kbTemplateTitle = '''<script>alert(123)</script>''');
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		LexiconEntry.viewAddMenuItem(menuItem = '''<script>alert(123)</script>''');
+
+		AssertAlertNotPresent();
 	}
 
 }

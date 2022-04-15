@@ -8,9 +8,7 @@ definition {
 	property testray.main.component.name = "Commerce";
 
 	setUp {
-		TestCase.setUpPortalInstance();
-
-		SignIn.signInTestSetup();
+		CommerceConfiguration.commerceSetUp();
 	}
 
 	tearDown {

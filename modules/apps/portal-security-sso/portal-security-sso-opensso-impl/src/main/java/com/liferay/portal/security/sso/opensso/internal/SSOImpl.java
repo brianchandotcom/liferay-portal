@@ -74,10 +74,7 @@ public class SSOImpl implements SSO {
 
 	@Override
 	public boolean isSessionRedirectOnExpire(long companyId) {
-		OpenSSOConfiguration openSSOConfiguration = _getOpenSSOConfiguration(
-			companyId);
-
-		return _isSessionRedirectOnExpire(openSSOConfiguration);
+		return _isSessionRedirectOnExpire(_getOpenSSOConfiguration(companyId));
 	}
 
 	@Reference(unbind = "-")

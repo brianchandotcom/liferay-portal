@@ -23,6 +23,8 @@ import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderService;
+import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
+import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderItem;
 import com.liferay.headless.commerce.admin.order.internal.dto.v1_0.converter.OrderItemDTOConverter;
@@ -33,6 +35,7 @@ import com.liferay.headless.commerce.admin.order.internal.util.v1_0.OrderItemUti
 import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderItemResource;
 import com.liferay.headless.commerce.core.util.ExpandoUtil;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
+import com.liferay.headless.common.spi.odata.entity.EntityFieldsUtil;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -42,7 +45,9 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.search.expando.ExpandoBridgeIndexer;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
@@ -130,7 +135,11 @@ public class OrderItemResourceImpl
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
 		throws Exception {
 
-		return _entityModel;
+		return new OrderItemEntityModel(
+			EntityFieldsUtil.getEntityFields(
+				_portal.getClassNameId(CommerceOrderItem.class.getName()),
+				contextCompany.getCompanyId(), _expandoBridgeIndexer,
+				_expandoColumnLocalService, _expandoTableLocalService));
 	}
 
 	@Override
@@ -492,8 +501,6 @@ public class OrderItemResourceImpl
 		return _toOrderItem(commerceOrderItem.getCommerceOrderItemId());
 	}
 
-	private static final EntityModel _entityModel = new OrderItemEntityModel();
-
 	@Reference
 	private CommerceContextFactory _commerceContextFactory;
 
@@ -513,10 +520,22 @@ public class OrderItemResourceImpl
 	private CPInstanceService _cpInstanceService;
 
 	@Reference
+	private ExpandoBridgeIndexer _expandoBridgeIndexer;
+
+	@Reference
+	private ExpandoColumnLocalService _expandoColumnLocalService;
+
+	@Reference
+	private ExpandoTableLocalService _expandoTableLocalService;
+
+	@Reference
 	private OrderItemDTOConverter _orderItemDTOConverter;
 
 	@Reference
 	private OrderItemHelper _orderItemHelper;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;

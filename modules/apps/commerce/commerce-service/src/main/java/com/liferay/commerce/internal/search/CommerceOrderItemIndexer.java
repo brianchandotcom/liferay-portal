@@ -17,7 +17,6 @@ package com.liferay.commerce.internal.search;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.product.constants.CPField;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
-import com.liferay.expando.kernel.util.ExpandoBridgeIndexer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -40,6 +39,7 @@ import com.liferay.portal.kernel.search.generic.WildcardQueryImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.expando.ExpandoBridgeIndexer;
 
 import java.util.LinkedHashMap;
 import java.util.Locale;

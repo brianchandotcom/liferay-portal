@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.headless.delivery.internal.dto.v1_0.util;
+package com.liferay.headless.common.spi.odata.entity;
 
 import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;

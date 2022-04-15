@@ -14,10 +14,12 @@
 
 package com.liferay.headless.commerce.admin.order.internal.odata.entity.v1_0;
 
+import com.liferay.portal.odata.entity.ComplexEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.entity.StringEntityField;
 
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -28,8 +30,9 @@ import java.util.stream.Stream;
  */
 public class OrderItemEntityModel implements EntityModel {
 
-	public OrderItemEntityModel() {
+	public OrderItemEntityModel(List<EntityField> entityFields) {
 		_entityFieldsMap = Stream.of(
+			new ComplexEntityField("customFields", entityFields),
 			new StringEntityField("sku", locale -> "sku")
 		).collect(
 			Collectors.toMap(EntityField::getName, Function.identity())

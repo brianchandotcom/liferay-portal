@@ -554,7 +554,7 @@ definition {
 
 	@priority = "5"
 	@refactordone
-	test CanRestoreThread {
+	test CanRestoreThreadWithAttachment {
 		JSONMBMessage.addCategory(
 			categoryDescription = "MB Category Description",
 			categoryName = "MB Category Name",

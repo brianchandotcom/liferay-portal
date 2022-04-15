@@ -14,22 +14,6 @@
 
 package com.liferay.k8s.agent.internal;
 
-import java.util.Dictionary;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Objects;
-import java.util.Set;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
-import org.osgi.service.cm.Configuration;
-import org.osgi.service.cm.ConfigurationAdmin;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.ConfigurationPolicy;
-import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
-
 import com.liferay.k8s.agent.K8sAgent;
 import com.liferay.k8s.agent.configuration.v1.K8sAgentConfiguration;
 import com.liferay.k8s.agent.properties.ConfigurationProperties;
@@ -52,16 +36,29 @@ import io.fabric8.kubernetes.client.DefaultKubernetesClient;
 import io.fabric8.kubernetes.client.KubernetesClient;
 import io.fabric8.kubernetes.client.Watch;
 import io.fabric8.kubernetes.client.Watcher;
-import io.fabric8.kubernetes.client.Watcher.Action;
 import io.fabric8.kubernetes.client.WatcherException;
+
+import java.util.Dictionary;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Raymond Augé
  */
 @Component(
 	configurationPid = "com.liferay.k8s.agent.configuration.v1.K8sAgentConfiguration",
-	configurationPolicy = ConfigurationPolicy.REQUIRE,
-	immediate = true,
+	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
 	service = K8sAgent.class
 )
 public class K8sAgentImpl implements K8sAgent {
@@ -74,9 +71,8 @@ public class K8sAgentImpl implements K8sAgent {
 
 		_configurationAdmin = configurationAdmin;
 
-		_k8sAgentConfiguration =
-			ConfigurableUtil.createConfigurable(
-				K8sAgentConfiguration.class, properties);
+		_k8sAgentConfiguration = ConfigurableUtil.createConfigurable(
+			K8sAgentConfiguration.class, properties);
 
 		_executor = Executors.newSingleThreadExecutor();
 
@@ -84,9 +80,7 @@ public class K8sAgentImpl implements K8sAgent {
 			StringBundler.concat(
 				"Initializing ", _AGENT_NAME, ": ",
 				_k8sAgentConfiguration.namespace(), " ",
-				_k8sAgentConfiguration.labelSelector()
-			)
-		);
+				_k8sAgentConfiguration.labelSelector()));
 
 		Config config = Config.autoConfigure(null);
 
@@ -101,7 +95,9 @@ public class K8sAgentImpl implements K8sAgent {
 			new Watcher<ConfigMap>() {
 
 				@Override
-				public void eventReceived(Action action, ConfigMap resource) {
+				public void eventReceived(
+					Watcher.Action action, ConfigMap resource) {
+
 					_executor.submit(() -> _processConfigMap(action, resource));
 				}
 
@@ -123,11 +119,10 @@ public class K8sAgentImpl implements K8sAgent {
 
 	@Override
 	public void createOrUpdateConfigMap(
-		String name, Map<String, String> labels,
-		Map<String, String> properties) {
+		Map<String, String> properties, String name,
+		Map<String, String> labels) {
 
-		ConfigMap configMap = new ConfigMapBuilder(
-		).withNewMetadata(
+		ConfigMap configMap = new ConfigMapBuilder().withNewMetadata(
 		).withName(
 			name
 		).withLabels(
@@ -170,12 +165,12 @@ public class K8sAgentImpl implements K8sAgent {
 		}
 	}
 
-	private void _doAdd(ConfigMap configMap) {
-		Map<String,String> data = configMap.getData();
+	private void _add(ConfigMap configMap) {
+		Map<String, String> data = configMap.getData();
 
-		Set<Entry<String,String>> entrySet = data.entrySet();
+		Set<Map.Entry<String, String>> entrySet = data.entrySet();
 
-		for (Entry<String,String> entry : entrySet) {
+		for (Map.Entry<String, String> entry : entrySet) {
 			String configName = entry.getKey();
 
 			if (!configName.endsWith(_FILE_EXT)) {
@@ -192,12 +187,12 @@ public class K8sAgentImpl implements K8sAgent {
 		}
 	}
 
-	private void _doDelete(ConfigMap configMap) {
-		Map<String,String> data = configMap.getData();
+	private void _delete(ConfigMap configMap) {
+		Map<String, String> data = configMap.getData();
 
-		Set<Entry<String,String>> entrySet = data.entrySet();
+		Set<Map.Entry<String, String>> entrySet = data.entrySet();
 
-		for (Entry<String,String> entry : entrySet) {
+		for (Map.Entry<String, String> entry : entrySet) {
 			String configName = entry.getKey();
 
 			if (!configName.endsWith(_FILE_EXT)) {
@@ -213,13 +208,39 @@ public class K8sAgentImpl implements K8sAgent {
 		}
 	}
 
-	private void _doModified(ConfigMap configMap) {
-		Map<String,String> data = configMap.getData();
+	private Configuration _findExistingConfiguration(String fileName)
+		throws Exception {
+
+		Configuration[] configurations = _configurationAdmin.listConfigurations(
+			StringBundler.concat(
+				StringPool.OPEN_PARENTHESIS, _KUBERNETES_CONFIG_KEY,
+				StringPool.EQUAL, fileName, StringPool.CLOSE_PARENTHESIS));
+
+		if ((configurations != null) && (configurations.length > 0)) {
+			return configurations[0];
+		}
+
+		return null;
+	}
+
+	private Configuration _getConfiguration(String pid, String name)
+		throws Exception {
+
+		if (name != null) {
+			return _configurationAdmin.getFactoryConfiguration(
+				pid, name, StringPool.QUESTION);
+		}
+
+		return _configurationAdmin.getConfiguration(pid, StringPool.QUESTION);
+	}
+
+	private void _modified(ConfigMap configMap) {
+		Map<String, String> data = configMap.getData();
 		ObjectMeta metadata = configMap.getMetadata();
 
-		Set<Entry<String,String>> entrySet = data.entrySet();
+		Set<Map.Entry<String, String>> entrySet = data.entrySet();
 
-		for (Entry<String,String> entry : entrySet) {
+		for (Map.Entry<String, String> entry : entrySet) {
 			String configName = entry.getKey();
 
 			if (!configName.endsWith(_FILE_EXT)) {
@@ -238,18 +259,20 @@ public class K8sAgentImpl implements K8sAgent {
 		// Remove left over configurations which were deleted from the ConfigMap
 
 		try {
-			Configuration[] configurations = _configurationAdmin.listConfigurations(
-				StringBundler.concat(
-					StringPool.OPEN_PARENTHESIS,
-					_KUBERNETES_CONFIG_UID,
-					StringPool.EQUAL, metadata.getUid(),
-					StringPool.CLOSE_PARENTHESIS));
+			Configuration[] configurations =
+				_configurationAdmin.listConfigurations(
+					StringBundler.concat(
+						StringPool.OPEN_PARENTHESIS, _KUBERNETES_CONFIG_UID,
+						StringPool.EQUAL, metadata.getUid(),
+						StringPool.CLOSE_PARENTHESIS));
 
 			if (configurations != null) {
 				for (Configuration configuration : configurations) {
-					Dictionary<String,Object> properties = configuration.getProperties();
+					Dictionary<String, Object> properties =
+						configuration.getProperties();
 
-					String configKey = GetterUtil.getString(properties.get(_KUBERNETES_CONFIG_KEY));
+					String configKey = GetterUtil.getString(
+						properties.get(_KUBERNETES_CONFIG_KEY));
 
 					if (!data.containsKey(configKey)) {
 						configuration.delete();
@@ -260,34 +283,6 @@ public class K8sAgentImpl implements K8sAgent {
 		catch (Exception exception) {
 			_log.error(exception);
 		}
-	}
-
-	private Configuration _findExistingConfiguration(String fileName)
-		throws Exception {
-
-		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			StringBundler.concat(
-				StringPool.OPEN_PARENTHESIS,
-				_KUBERNETES_CONFIG_KEY,
-				StringPool.EQUAL, fileName,
-				StringPool.CLOSE_PARENTHESIS));
-
-		if ((configurations != null) && (configurations.length > 0)) {
-			return configurations[0];
-		}
-
-		return null;
-	}
-
-	private Configuration _getConfiguration(String pid, String name)
-		throws Exception {
-
-		if (name != null) {
-			return _configurationAdmin.getFactoryConfiguration(
-				pid, name, StringPool.QUESTION);
-		}
-
-		return _configurationAdmin.getConfiguration(pid, StringPool.QUESTION);
 	}
 
 	private String[] _parsePid(String path) {
@@ -314,20 +309,20 @@ public class K8sAgentImpl implements K8sAgent {
 		return new String[] {pid, null};
 	}
 
-	private void _processConfigMap(Action action, ConfigMap resource) {
+	private void _processConfigMap(Watcher.Action action, ConfigMap resource) {
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				StringBundler.concat("Processing: ", action, " ", resource));
 		}
 
-		if (action == Action.ADDED) {
-			_doAdd(resource);
+		if (action == Watcher.Action.ADDED) {
+			_add(resource);
 		}
-		else if (action == Action.DELETED) {
-			_doDelete(resource);
+		else if (action == Watcher.Action.DELETED) {
+			_delete(resource);
 		}
-		else if (action == Action.MODIFIED) {
-			_doModified(resource);
+		else if (action == Watcher.Action.MODIFIED) {
+			_modified(resource);
 		}
 	}
 
@@ -335,7 +330,6 @@ public class K8sAgentImpl implements K8sAgent {
 			String configName, String configurationContent, ObjectMeta metadata)
 		throws Exception {
 
-		String uid = metadata.getUid();
 		String resourceVersion = metadata.getResourceVersion();
 
 		String[] pid = _parsePid(configName);
@@ -346,7 +340,8 @@ public class K8sAgentImpl implements K8sAgent {
 			configuration = _getConfiguration(pid[0], pid[1]);
 		}
 		else {
-			Dictionary<String,Object> properties = configuration.getProperties();
+			Dictionary<String, Object> properties =
+				configuration.getProperties();
 
 			String existingResourceVersion = GetterUtil.getString(
 				properties.get(_KUBERNETES_CONFIG_RESOURCE_VERSION));
@@ -355,8 +350,10 @@ public class K8sAgentImpl implements K8sAgent {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						StringBundler.concat(
-							"The resourceVersion of the configuration (", existingResourceVersion,
-							") is same as that of Kubernetes (", resourceVersion,
+							"The resourceVersion of the configuration (",
+							existingResourceVersion,
+							") is same as that of Kubernetes (",
+							resourceVersion,
 							") so this action will be ignored"));
 				}
 
@@ -386,7 +383,7 @@ public class K8sAgentImpl implements K8sAgent {
 		}
 
 		dictionary.put(_KUBERNETES_CONFIG_KEY, configName);
-		dictionary.put(_KUBERNETES_CONFIG_UID, uid);
+		dictionary.put(_KUBERNETES_CONFIG_UID, metadata.getUid());
 		dictionary.put(_KUBERNETES_CONFIG_RESOURCE_VERSION, resourceVersion);
 
 		configuration.updateIfDifferent(dictionary);
@@ -420,14 +417,20 @@ public class K8sAgentImpl implements K8sAgent {
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		K8sAgentImpl.class);
-
 	private static final String _AGENT_NAME = "Kubernetes Configuration Agent";
+
 	private static final String _FILE_EXT = ".config";
-	private static final String _KUBERNETES_CONFIG_RESOURCE_VERSION = ".kubernetes.config.resource.version";
-	private static final String _KUBERNETES_CONFIG_KEY = ".kubernetes.config.key";
-	private static final String _KUBERNETES_CONFIG_UID = ".kubernetes.config.uid";
+
+	private static final String _KUBERNETES_CONFIG_KEY =
+		".kubernetes.config.key";
+
+	private static final String _KUBERNETES_CONFIG_RESOURCE_VERSION =
+		".kubernetes.config.resource.version";
+
+	private static final String _KUBERNETES_CONFIG_UID =
+		".kubernetes.config.uid";
+
+	private static final Log _log = LogFactoryUtil.getLog(K8sAgentImpl.class);
 
 	private final ConfigurationAdmin _configurationAdmin;
 	private final ExecutorService _executor;

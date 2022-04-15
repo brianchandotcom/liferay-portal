@@ -14,17 +14,15 @@
 
 package com.liferay.k8s.agent.configuration.v1;
 
-import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
-
 import aQute.bnd.annotation.metatype.Meta;
-import aQute.bnd.annotation.metatype.Meta.Type;
+
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
  * @author Raymond Augé
  */
 @ExtendedObjectClassDefinition(
-	category = "hidden",
-	scope = ExtendedObjectClassDefinition.Scope.SYSTEM
+	category = "hidden", scope = ExtendedObjectClassDefinition.Scope.SYSTEM
 )
 @Meta.OCD(
 	factory = true,
@@ -34,18 +32,15 @@ import aQute.bnd.annotation.metatype.Meta.Type;
 public interface K8sAgentConfiguration {
 
 	@Meta.AD(
-		name = "namespace",
-		description = "namespace-description",
-		type = Type.String
+		description = "namespace-description", name = "namespace",
+		type = Meta.Type.String
 	)
-	String namespace();
+	public String namespace();
 
 	@Meta.AD(
-		name = "label-selector",
-		description = "label-selector-description",
-		type = Type.String,
-		deflt = "dxp=configmap"
+		deflt = "dxp=configmap", description = "label-selector-description",
+		name = "label-selector", type = Meta.Type.String
 	)
-	String labelSelector();
+	public String labelSelector();
 
 }

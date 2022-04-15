@@ -178,14 +178,45 @@ definition {
 
 	}
 
-	@description = "[Please Update]"
-	@ignore = "Test Stub"
+	@description = "COMMERCE-8565. Add Product Name and Description to the default Diagram product renderer."
 	@priority = "4"
 	test VerifyNameAndDescriptionDefaultRender {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-8565 VerifyNameAndDescriptionDefaultRender pending implementation
+		task ("Given a Diagram with the "Type" set to "Default", a png image uploaded as "Diagram File" and "Short Description" field written inside") {
+			CommerceProducts.openProductsAdmin();
 
+			CPCommerceCatalog.newProductsEntry(
+				productCatalog = "Master",
+				productName = "Diagram Test",
+				productType = "Diagram");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Diagram");
+
+			CommerceProductImages.addDiagramImages(
+				imageTitles = "Black",
+				productType = "Diagram");
+		}
+
+		task ("When a Buyer goes into the product details of the diagram on Minium") {
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+			CommerceNavigator.searchCatalog(productName = "Diagram Test");
+
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "Diagram Test");
+		}
+
+		task ("Then the Buyer will see the name of the diagram that we created and below will we see the short description") {
+			AssertElementPresent(
+				key_productName = "Diagram Test",
+				locator1 = "CommerceDiagrams#DIAGRAM_PRODUCT_DETAIL_NAME");
+
+			AssertElementPresent(
+				key_productDescription = "Diagram Test Short Description",
+				locator1 = "CommerceDiagrams#DIAGRAM_PRODUCT_DETAIL_DESCRIPTION");
+		}
 	}
 
 	@description = "[Please Update]"

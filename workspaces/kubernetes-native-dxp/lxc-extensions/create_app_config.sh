@@ -71,8 +71,8 @@ function write_app_config {
         JS_FILES=$(jq -c "[.files[] | \"${REMOTE_APP_HOST}\" + select(endswith(\".js\"))]" build/asset-manifest.json)
 
         # If we want comma delimited string value use bellow instead
-        #CSS_FILES=$(jq -c "[.files[] | "http://localhost:8090" + select(endswith(".css"))] | join(",")' build/asset-manifest.json)
-        #JS_FILES=$(jq -c "[.files[] | "http://localhost:8090" + select(endswith(".js"))] | join(",")' build/asset-manifest.json)
+        #CSS_FILES=$(jq -c "[.files[] | \"${REMOTE_APP_HOST}\" + select(endswith(".css"))] | join(",")' build/asset-manifest.json)
+        #JS_FILES=$(jq -c "[.files[] | \"${REMOTE_APP_HOST}\" + select(endswith(".js"))] | join(",")' build/asset-manifest.json)
     fi
 
     cat <<EOF

@@ -16,8 +16,8 @@ package com.liferay.data.engine.internal.upgrade;
 
 import com.liferay.data.engine.internal.upgrade.v1_0_0.SchemaUpgradeProcess;
 import com.liferay.data.engine.internal.upgrade.v2_0_0.UpgradeCompanyId;
+import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
-import com.liferay.portal.kernel.upgrade.UpgradeCTModel;
 import com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -62,7 +62,8 @@ public class DEServiceUpgrade implements UpgradeStepRegistrator {
 				}
 
 			},
-			new UpgradeCTModel("DEDataDefinitionFieldLink", "DEDataListView"));
+			new CTModelUpgradeProcess(
+				"DEDataDefinitionFieldLink", "DEDataListView"));
 
 		registry.register(
 			"2.2.0", "2.2.1",

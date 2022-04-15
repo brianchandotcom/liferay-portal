@@ -16,9 +16,9 @@ package com.liferay.portal.json.web.service.client.internal;
 
 import com.liferay.portal.json.web.service.client.server.simulator.HTTPServerSimulator;
 import com.liferay.portal.json.web.service.client.server.simulator.constants.SimulatorConstants;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,13 +31,13 @@ import org.apache.http.message.BasicNameValuePair;
 public abstract class BaseJSONWebServiceClientTestCase {
 
 	protected Map<String, Object> getBaseProperties() {
-		Map<String, Object> properties = new HashMap<>();
-
-		properties.put("hostName", HTTPServerSimulator.HOST_ADDRESS);
-		properties.put("hostPort", HTTPServerSimulator.HOST_PORT);
-		properties.put("protocol", "http");
-
-		return properties;
+		return HashMapBuilder.<String, Object>put(
+			"hostName", HTTPServerSimulator.HOST_ADDRESS
+		).put(
+			"hostPort", HTTPServerSimulator.HOST_PORT
+		).put(
+			"protocol", "http"
+		).build();
 	}
 
 	protected List<NameValuePair> getParameters(String status) {

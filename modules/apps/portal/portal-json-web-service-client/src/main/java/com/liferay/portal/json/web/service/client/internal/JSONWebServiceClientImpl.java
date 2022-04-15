@@ -16,6 +16,9 @@ package com.liferay.portal.json.web.service.client.internal;
 
 import com.liferay.portal.json.web.service.client.BaseJSONWebServiceClientImpl;
 import com.liferay.portal.json.web.service.client.JSONWebServiceTransportException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.security.KeyStore;
 
@@ -28,9 +31,6 @@ import org.apache.http.nio.reactor.IOReactorException;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @author Ivica Cardic
@@ -55,13 +55,13 @@ public class JSONWebServiceClientImpl extends BaseJSONWebServiceClientImpl {
 
 		setClassLoader((ClassLoader)properties.get("classLoader"));
 		setHostName(getString("hostName", properties));
-		setHostPort(Integer.parseInt(getString("hostPort", properties)));
+		setHostPort(GetterUtil.getInteger(getString("hostPort", properties)));
 		setKeyStore((KeyStore)properties.get("keyStore"));
 		setLogin(getString("login", properties));
 
 		if (properties.containsKey("maxAttempts")) {
 			setMaxAttempts(
-				Integer.parseInt(getString("maxAttempts", properties)));
+				GetterUtil.getInteger(getString("maxAttempts", properties)));
 		}
 
 		setPassword(getString("password", properties));
@@ -76,7 +76,7 @@ public class JSONWebServiceClientImpl extends BaseJSONWebServiceClientImpl {
 		if (properties.containsKey("proxyHostName")) {
 			setProxyHostName(getString("proxyHostName", properties));
 			setProxyHostPort(
-				Integer.parseInt(getString("proxyHostPort", properties)));
+				GetterUtil.getInteger(getString("proxyHostPort", properties)));
 			setProxyLogin(getString("proxyLogin", properties));
 			setProxyPassword(getString("proxyPassword", properties));
 		}
@@ -124,8 +124,8 @@ public class JSONWebServiceClientImpl extends BaseJSONWebServiceClientImpl {
 			String[] headerParts = header.split("=");
 
 			if (headerParts.length != 2) {
-				if (_logger.isDebugEnabled()) {
-					_logger.debug("Ignoring invalid header " + header);
+				if (_log.isDebugEnabled()) {
+					_log.debug("Ignoring invalid header " + header);
 				}
 
 				continue;
@@ -137,7 +137,7 @@ public class JSONWebServiceClientImpl extends BaseJSONWebServiceClientImpl {
 		setHeaders(headers);
 	}
 
-	private static final Logger _logger = LoggerFactory.getLogger(
+	private static final Log _log = LogFactoryUtil.getLog(
 		JSONWebServiceClientImpl.class);
 
 }

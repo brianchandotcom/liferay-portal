@@ -14,6 +14,9 @@
 
 package com.liferay.portal.json.web.service.client.internal;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
 import java.io.Closeable;
 import java.io.IOException;
 
@@ -25,9 +28,6 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.impl.nio.client.CloseableHttpAsyncClient;
 import org.apache.http.protocol.HttpContext;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @author Ivica Cardic
@@ -78,8 +78,8 @@ public class AsyncHttpClient implements Closeable {
 				return httpResponseFuture;
 			}
 			catch (Exception exception) {
-				if (_logger.isTraceEnabled()) {
-					_logger.trace(
+				if (_log.isTraceEnabled()) {
+					_log.trace(
 						"Unable to execute HTTP request in attempt " + i,
 						exception);
 				}
@@ -88,10 +88,10 @@ public class AsyncHttpClient implements Closeable {
 					Thread.sleep(100L);
 				}
 				catch (InterruptedException interruptedException) {
-					_logger.error("Interrupted", interruptedException);
+					_log.error("Interrupted", interruptedException);
 
-					if (_logger.isInfoEnabled()) {
-						_logger.info(
+					if (_log.isInfoEnabled()) {
+						_log.info(
 							"Aborting executing after " + i + " attempts");
 					}
 				}
@@ -103,7 +103,7 @@ public class AsyncHttpClient implements Closeable {
 				" attempts");
 	}
 
-	private static final Logger _logger = LoggerFactory.getLogger(
+	private static final Log _log = LogFactoryUtil.getLog(
 		AsyncHttpClient.class);
 
 	private final CloseableHttpAsyncClient _closeableHttpAsyncClient;

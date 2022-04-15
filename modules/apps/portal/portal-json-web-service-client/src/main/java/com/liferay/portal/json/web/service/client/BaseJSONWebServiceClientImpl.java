@@ -22,8 +22,10 @@ import com.fasterxml.jackson.databind.type.TypeFactory;
 
 import com.liferay.portal.json.web.service.client.internal.AsyncHttpClient;
 import com.liferay.portal.json.web.service.client.internal.IdleConnectionMonitorThread;
-import com.liferay.portal.json.web.service.client.internal.JSONWebServiceClientImpl;
 import com.liferay.portal.json.web.service.client.internal.X509TrustManagerImpl;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.io.IOException;
 
@@ -95,9 +97,6 @@ import org.apache.http.ssl.SSLContextBuilder;
 import org.apache.http.ssl.SSLContexts;
 import org.apache.http.util.EntityUtils;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * @author Igor Beslic
  */
@@ -142,7 +141,7 @@ public abstract class BaseJSONWebServiceClientImpl
 
 			_idleConnectionMonitorThread.start();
 
-			if (_logger.isDebugEnabled()) {
+			if (_log.isDebugEnabled()) {
 				StringBuilder sb = new StringBuilder();
 
 				sb.append("Configured client for ");
@@ -152,11 +151,11 @@ public abstract class BaseJSONWebServiceClientImpl
 				sb.append(":");
 				sb.append(_hostPort);
 
-				_logger.debug(sb.toString());
+				_log.debug(sb.toString());
 			}
 		}
 		catch (Exception exception) {
-			_logger.error("Unable to configure client", exception);
+			_log.error("Unable to configure client", exception);
 		}
 	}
 
@@ -167,7 +166,7 @@ public abstract class BaseJSONWebServiceClientImpl
 				_asyncHttpClient.close();
 			}
 			catch (IOException ioException) {
-				_logger.error("Unable to close client", ioException);
+				_log.error("Unable to close client", ioException);
 			}
 
 			_asyncHttpClient = null;
@@ -610,7 +609,7 @@ public abstract class BaseJSONWebServiceClientImpl
 			afterPropertiesSet();
 		}
 		catch (IOReactorException ioReactorException) {
-			_logger.error(ioReactorException.getMessage());
+			_log.error(ioReactorException);
 		}
 	}
 
@@ -785,8 +784,8 @@ public abstract class BaseJSONWebServiceClientImpl
 
 			int statusCode = statusLine.getStatusCode();
 
-			if (_logger.isTraceEnabled()) {
-				_logger.trace("Server returned status " + statusCode);
+			if (_log.isTraceEnabled()) {
+				_log.trace("Server returned status " + statusCode);
 			}
 
 			HttpEntity httpEntity = httpResponse.getEntity();
@@ -935,7 +934,7 @@ public abstract class BaseJSONWebServiceClientImpl
 			return 0;
 		}
 
-		return Integer.parseInt(statusMatcher.group(1));
+		return GetterUtil.getInteger(statusMatcher.group(1));
 	}
 
 	protected boolean isNull(String s) {
@@ -950,7 +949,7 @@ public abstract class BaseJSONWebServiceClientImpl
 		String httpCommand, String url, List<NameValuePair> parameters,
 		List<NameValuePair> headers) {
 
-		if (!_logger.isTraceEnabled()) {
+		if (!_log.isTraceEnabled()) {
 			return;
 		}
 
@@ -976,7 +975,7 @@ public abstract class BaseJSONWebServiceClientImpl
 
 		sb.append("\n");
 
-		_logger.trace(sb.toString());
+		_log.trace(sb.toString());
 	}
 
 	protected void setProxyHost(HttpAsyncClientBuilder httpClientBuilder) {
@@ -1006,7 +1005,7 @@ public abstract class BaseJSONWebServiceClientImpl
 
 		if (matcher.find()) {
 			throw new JSONWebServiceInvocationException(
-				json, Integer.parseInt(matcher.group(2)));
+				json, GetterUtil.getInteger(matcher.group(2)));
 		}
 		else if (json.contains("exception\":\"")) {
 			throw new JSONWebServiceInvocationException(
@@ -1031,7 +1030,7 @@ public abstract class BaseJSONWebServiceClientImpl
 				new AuthScope(_hostName, _hostPort),
 				new UsernamePasswordCredentials(_login, _password));
 
-			if (_logger.isDebugEnabled()) {
+			if (_log.isDebugEnabled()) {
 				StringBuilder sb = new StringBuilder();
 
 				sb.append("Basic credentials are used for ");
@@ -1039,7 +1038,7 @@ public abstract class BaseJSONWebServiceClientImpl
 				sb.append(":");
 				sb.append(_hostPort);
 
-				_logger.debug(sb.toString());
+				_log.debug(sb.toString());
 			}
 		}
 
@@ -1051,7 +1050,7 @@ public abstract class BaseJSONWebServiceClientImpl
 			new AuthScope(_proxyHostName, _proxyHostPort),
 			_getProxyCredentials());
 
-		if (_logger.isDebugEnabled()) {
+		if (_log.isDebugEnabled()) {
 			StringBuilder sb = new StringBuilder();
 
 			sb.append("Proxy credentials are used for ");
@@ -1059,7 +1058,7 @@ public abstract class BaseJSONWebServiceClientImpl
 			sb.append(":");
 			sb.append(_hostPort);
 
-			_logger.debug(sb.toString());
+			_log.debug(sb.toString());
 		}
 
 		return credentialsProvider;
@@ -1189,8 +1188,8 @@ public abstract class BaseJSONWebServiceClientImpl
 
 	private static final Charset _CHARSET = Charset.forName("UTF-8");
 
-	private static final Logger _logger = LoggerFactory.getLogger(
-		JSONWebServiceClientImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseJSONWebServiceClientImpl.class);
 
 	private static final Pattern _errorMessagePattern = Pattern.compile(
 		"errorCode\":\\s*(\\d+).+message\":.+status\":\\s*(\\d+)");

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.json.web.service.client.internal;
 
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Map;
@@ -59,7 +60,8 @@ public class JSONWebServiceClientImplTest
 			properties.get("proxyHostName"),
 			jsonWebServiceClientImpl.getProxyHostName());
 		Assert.assertEquals(
-			Integer.parseInt(String.valueOf(properties.get("proxyHostPort"))),
+			GetterUtil.getInteger(
+				String.valueOf(properties.get("proxyHostPort"))),
 			jsonWebServiceClientImpl.getProxyHostPort());
 		Assert.assertEquals(
 			properties.get("proxyLogin"),

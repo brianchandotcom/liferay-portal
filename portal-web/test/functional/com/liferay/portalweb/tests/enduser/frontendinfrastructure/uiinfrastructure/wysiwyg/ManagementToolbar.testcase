@@ -326,7 +326,7 @@ definition {
 			SetWindowSize(value1 = "360,720");
 		}
 
-		task ("And hovers over the clear button") {
+		task ("When mouse hover over the clear button") {
 			ScrollWebElementIntoView(locator1 = "ManagementBar#CLEAR_BUTTON_MOBILE");
 
 			MouseOver.javaScriptMouseOver(locator1 = "ManagementBar#CLEAR_BUTTON_MOBILE");

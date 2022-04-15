@@ -52,14 +52,10 @@ public class PoshiPauseUsageCheck extends BaseFileCheck {
 				if (trimmedLine.startsWith("Pause(") &&
 					!previousLine.startsWith("//")) {
 
-					//addMessage(
-					//	fileName,
-					//	"Add a comment with explanation before using 'Pause'",
-					//	lineNumber);
-
-					return StringUtil.insert(
-						content, "// PLACEHOLDER\n",
-						getLineStartPos(content, lineNumber));
+					addMessage(
+						fileName,
+						"Add a comment with explanation before using 'Pause'",
+						lineNumber);
 				}
 
 				previousLine = trimmedLine;

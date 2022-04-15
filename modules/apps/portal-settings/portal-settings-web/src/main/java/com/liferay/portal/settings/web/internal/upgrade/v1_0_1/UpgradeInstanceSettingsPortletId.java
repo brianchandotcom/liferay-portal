@@ -15,13 +15,14 @@
 package com.liferay.portal.settings.web.internal.upgrade.v1_0_1;
 
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
-import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
+import com.liferay.portal.kernel.upgrade.BasePortletIdUpgradeProcess;
 import com.liferay.portal.settings.constants.PortalSettingsPortletKeys;
 
 /**
  * @author Drew Brokke
  */
-public class UpgradeInstanceSettingsPortletId extends BaseUpgradePortletId {
+public class UpgradeInstanceSettingsPortletId
+	extends BasePortletIdUpgradeProcess {
 
 	@Override
 	protected String[][] getRenamePortletIdsArray() {

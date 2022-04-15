@@ -1089,6 +1089,8 @@ definition {
 		property osgi.module.configurations = "checkInterval=&quot;1&quot;";
 		property portal.acceptance = "false";
 
+		// TODO COMMERCE-9089 Find alternative to having a pause to wait for a timed expiration and publication
+
 		task ("Given a Minium site with a buyer user") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -1113,7 +1115,7 @@ definition {
 				priceListName = "Test Price List");
 		}
 
-		task ("And given a Test Price List entry for U-Joint that is set to expire in 4 minutes") {
+		task ("And given a Test Price List entry for U-Joint that is set to expire in 2 minutes") {
 			CommercePriceLists.openPriceListsAdmin();
 
 			CommerceNavigator.gotoEntry(entryName = "Test Price List");
@@ -1131,12 +1133,12 @@ definition {
 
 			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
-			CommerceEntry.setExpirationTime(minutesToExpire = "4");
+			CommerceEntry.setExpirationTime(minutesToExpire = "2");
 
 			Button.clickSave();
 		}
 
-		task ("And given a Test Price List entry for U-Joint that is set to publish in 6 minutes") {
+		task ("And given a Test Price List entry for U-Joint that is set to publish in 3 minutes") {
 			CommerceJSONPriceListsAndPromotionsAPI._addPriceListEntry(
 				entryPrice = "10",
 				priceListName = "Test Price List",
@@ -1150,7 +1152,7 @@ definition {
 
 			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
-			CommerceEntry.setPublishTime(minutesToPublish = "6");
+			CommerceEntry.setPublishTime(minutesToPublish = "3");
 
 			Button.clickSave();
 		}
@@ -1174,7 +1176,7 @@ definition {
 		}
 
 		task ("When the first price entry expires and the buyer views the U-Joint product") {
-			Pause(locator1 = "240000");
+			Pause(locator1 = "90000");
 
 			Refresh();
 		}
@@ -1187,7 +1189,7 @@ definition {
 		}
 
 		task ("When the second price entry is published and the buyer views the U-Joint product") {
-			Pause(locator1 = "120000");
+			Pause(locator1 = "30000");
 
 			Refresh();
 		}

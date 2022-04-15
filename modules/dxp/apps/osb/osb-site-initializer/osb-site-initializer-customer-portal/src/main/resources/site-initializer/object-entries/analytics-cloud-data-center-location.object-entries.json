@@ -1,0 +1,21 @@
+{
+	"object-entries": [
+		{
+			"name": "Oregon, USA",
+			"value": "Oregon, USA"
+		},
+		{
+			"name": "London, England",
+			"value": "London, England"
+		},
+		{
+			"name": "Frankfurt, Germany",
+			"value": "Frankfurt, Germany"
+		},
+		{
+			"name": "São Paulo, Brazil",
+			"value": "São Paulo, Brazil"
+		}
+	],
+	"objectDefinitionName": "AnalyticsCloudDataCenterLocation"
+}

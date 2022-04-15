@@ -1,0 +1,49 @@
+{
+	"object-entries": [
+		{
+			"name": "Oregon, USA",
+			"value": "Oregon, USA"
+		},
+		{
+			"name": "Iowa, USA",
+			"value": "Iowa, USA"
+		},
+		{
+			"name": "London, England",
+			"value": "London, England"
+		},
+		{
+			"name": "Frankfurt, Germany",
+			"value": "Frankfurt, Germany"
+		},
+		{
+			"name": "São Paulo, Brazil",
+			"value": "São Paulo, Brazil"
+		},
+		{
+			"name": "Sydney, Australia",
+			"value": "Sydney, Australia"
+		},
+		{
+			"name": "Mumbai, India",
+			"value": "Mumbai, India"
+		},
+		{
+			"name": "Tokyo, Japan",
+			"value": "Tokyo, Japan"
+		},
+		{
+			"name": "Montreal, Canada",
+			"value": "Montreal, Canada"
+		},
+		{
+			"name": "Dubai, UAE",
+			"value": "Dubai, UAE"
+		},
+		{
+			"name": "Hamina, Finland",
+			"value": "Hamina, Finland"
+		}
+	],
+	"objectDefinitionName": "DXPCDataCenterRegion"
+}

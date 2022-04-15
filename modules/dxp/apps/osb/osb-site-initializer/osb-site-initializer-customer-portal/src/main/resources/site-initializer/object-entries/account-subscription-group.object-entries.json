@@ -1,0 +1,151 @@
+{
+	"object-entries": [
+		{
+			"accountKey": "ERC-001",
+			"hasActivation": true,
+			"menuOrder": 2,
+			"name": "DXP Cloud",
+			"tabOrder": 1
+		},
+		{
+			"accountKey": "ERC-001",
+			"hasActivation": true,
+			"menuOrder": 7,
+			"name": "Portal",
+			"tabOrder": 8
+		},
+		{
+			"accountKey": "ERC-002",
+			"hasActivation": true,
+			"menuOrder": 3,
+			"name": "DXP",
+			"tabOrder": 4
+		},
+		{
+			"accountKey": "ERC-002",
+			"hasActivation": true,
+			"name": "Partnership",
+			"tabOrder": 1
+		},
+		{
+			"accountKey": "ERC-003",
+			"hasActivation": true,
+			"menuOrder": 4,
+			"name": "Analytics Cloud",
+			"tabOrder": 5
+		},
+		{
+			"accountKey": "ERC-004",
+			"hasActivation": true,
+			"menuOrder": 7,
+			"name": "Portal",
+			"tabOrder": 8
+		},
+		{
+			"accountKey": "ERC-004",
+			"hasActivation": true,
+			"menuOrder": 5,
+			"name": "Commerce",
+			"tabOrder": 6
+		},
+		{
+			"accountKey": "ERC-005",
+			"hasActivation": true,
+			"menuOrder": 7,
+			"name": "Portal",
+			"tabOrder": 8
+		},
+		{
+			"accountKey": "ERC-005",
+			"hasActivation": true,
+			"menuOrder": 3,
+			"name": "DXP",
+			"tabOrder": 4
+		},
+		{
+			"accountKey": "ERC-006",
+			"hasActivation": true,
+			"menuOrder": 2,
+			"name": "DXP Cloud",
+			"tabOrder": 1
+		},
+		{
+			"accountKey": "ERC-006",
+			"hasActivation": true,
+			"menuOrder": 6,
+			"name": "Enterprise Search",
+			"tabOrder": 7
+		},
+		{
+			"accountKey": "ERC-006",
+			"hasActivation": true,
+			"menuOrder": 5,
+			"name": "Commerce",
+			"tabOrder": 6
+		},
+		{
+			"accountKey": "ERC-007",
+			"hasActivation": true,
+			"menuOrder": 3,
+			"name": "DXP",
+			"tabOrder": 4
+		},
+		{
+			"accountKey": "ERC-009",
+			"hasActivation": true,
+			"menuOrder": 3,
+			"name": "DXP",
+			"tabOrder": 4
+		},
+		{
+			"accountKey": "ERC-009",
+			"hasActivation": true,
+			"menuOrder": 4,
+			"name": "Analytics Cloud",
+			"tabOrder": 5
+		},
+		{
+			"accountKey": "ERC-009",
+			"hasActivation": true,
+			"menuOrder": 5,
+			"name": "Commerce",
+			"tabOrder": 6
+		},
+		{
+			"accountKey": "ERC-009",
+			"hasActivation": true,
+			"menuOrder": 1,
+			"name": "DXP Cloud",
+			"tabOrder": 2
+		},
+		{
+			"accountKey": "ERC-009",
+			"hasActivation": true,
+			"menuOrder": 6,
+			"name": "Enterprise Search",
+			"tabOrder": 7
+		},
+		{
+			"accountKey": "ERC-009",
+			"hasActivation": true,
+			"menuOrder": 7,
+			"name": "Portal",
+			"tabOrder": 8
+		},
+		{
+			"accountKey": "ERC-009",
+			"hasActivation": true,
+			"menuOrder": 100000,
+			"name": "Other",
+			"tabOrder": 9
+		},
+		{
+			"accountKey": "ERC-009",
+			"hasActivation": true,
+			"menuOrder": 100000,
+			"name": "Partnership",
+			"tabOrder": 1
+		}
+	],
+	"objectDefinitionName": "AccountSubscriptionGroup"
+}

@@ -47,7 +47,7 @@ public class AnalyticsDeleteMessageLocalServiceImpl
 	}
 
 	@Override
-	public List<AnalyticsDeleteMessage> getGtAnalyticsDeleteMessages(
+	public List<AnalyticsDeleteMessage> getAnalyticsDeleteMessages(
 		long companyId, Date modifiedDate, int start, int end) {
 
 		return analyticsDeleteMessagePersistence.findByC_GtM(
@@ -55,7 +55,7 @@ public class AnalyticsDeleteMessageLocalServiceImpl
 	}
 
 	@Override
-	public int getGtAnalyticsDeleteMessagesCount(
+	public int getAnalyticsDeleteMessagesCount(
 		long companyId, Date gtModifiedDate) {
 
 		return analyticsDeleteMessagePersistence.countByC_GtM(

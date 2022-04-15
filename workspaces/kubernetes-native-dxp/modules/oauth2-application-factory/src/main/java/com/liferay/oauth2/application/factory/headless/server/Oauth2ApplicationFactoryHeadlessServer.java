@@ -20,10 +20,6 @@ import org.osgi.service.component.annotations.ConfigurationPolicy;
 /**
  * @author Raymond Augé
  */
-@Component(
-	configurationPolicy = ConfigurationPolicy.REQUIRE,
-	immediate = true
-)
+@Component(configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true)
 public class Oauth2ApplicationFactoryHeadlessServer {
-
 }

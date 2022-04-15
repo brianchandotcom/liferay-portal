@@ -14,73 +14,62 @@
 
 package com.liferay.oauth2.application.factory.user.agent.configuration.v1;
 
-import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
-
 import aQute.bnd.annotation.metatype.Meta;
-import aQute.bnd.annotation.metatype.Meta.Type;
+
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
  * @author Raymond Augé
  */
 @ExtendedObjectClassDefinition(
-	category = "hidden",
-	scope = ExtendedObjectClassDefinition.Scope.COMPANY
+	category = "hidden", scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(
 	factory = true,
 	id = "com.liferay.oauth2.application.factory.user.agent.configuration.v1.OAuth2ApplicationUserAgentConfiguration",
-	localization = "content/Language", name = "oauth2-application-user-agent-configuration-name"
+	localization = "content/Language",
+	name = "oauth2-application-user-agent-configuration-name"
 )
 public interface OAuth2ApplicationUserAgentConfiguration {
 
 	@Meta.AD(
-		name = "name",
-		description = "name-description",
-		type = Type.String
+		description = "name-description", name = "name", type = Meta.Type.String
 	)
 	public String name();
 
 	@Meta.AD(
-		name = "description",
-		description = "description-description",
-		type = Type.String,
-		required = false
+		description = "description-description", name = "description",
+		required = false, type = Meta.Type.String
 	)
 	public String description();
 
 	@Meta.AD(
-		name = "company-id",
-		description = "company-id-description",
-		type = Type.Long
+		description = "company-id-description", name = "company-id",
+		type = Meta.Type.Long
 	)
 	public long companyId();
 
 	@Meta.AD(
-		name = "home-page-url",
-		description = "home-page-url-description",
-		type = Type.String
+		description = "home-page-url-description", name = "home-page-url",
+		type = Meta.Type.String
 	)
 	public String homePageURL();
 
 	@Meta.AD(
-		name = "privacy-policy-url",
 		description = "privacy-policy-url-description",
-		type = Type.String,
-		required = false
+		name = "privacy-policy-url", required = false, type = Meta.Type.String
 	)
 	public String privacyPolicyURL();
 
 	@Meta.AD(
-		name = "redirect-url",
-		description = "redirect-url-description",
-		type = Type.String
+		description = "redirect-url-description", name = "redirect-url",
+		type = Meta.Type.String
 	)
 	public String redirectURL();
 
 	@Meta.AD(
-		name = "scopes",
-		description = "scopes-description",
-		type = Type.String
+		description = "scopes-description", name = "scopes",
+		type = Meta.Type.String
 	)
 	public String[] scopes();
 

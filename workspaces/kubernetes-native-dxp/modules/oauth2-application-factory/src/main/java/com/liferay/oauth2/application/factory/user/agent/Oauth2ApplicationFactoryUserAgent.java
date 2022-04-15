@@ -136,6 +136,21 @@ public class Oauth2ApplicationFactoryUserAgent {
 			oAuth2Application.getUserId(), oAuth2Application.getUserName(),
 			oAuth2Application.getOAuth2ApplicationId(), scopeAliasesList);
 
+		_k8sAgent.createOrUpdateConfigMap(
+			HashMapBuilder.put(
+				"dxp.service_uri", "http://dxp-service"
+			).put(
+				"oauth2.client_id", oAuth2Application.getClientId()
+			).put(
+				"oauth2.introspection_uri",
+				"http://dxp-service/o/oauth2/introspect"
+			).build(),
+			StringBundler.concat(
+				_oAuth2ApplicationUserAgentConfiguration.name(),
+				USER_AGENT_SUBDOMAIN),
+			Collections.singletonMap(
+				"extension", _oAuth2ApplicationUserAgentConfiguration.name()));
+
 		_oAuth2Application = oAuth2Application;
 	}
 
@@ -188,21 +203,6 @@ public class Oauth2ApplicationFactoryUserAgent {
 				Collections.singletonList(
 					_oAuth2ApplicationUserAgentConfiguration.redirectURL()),
 				false, true, null, new ServiceContext());
-
-		_k8sAgent.createOrUpdateConfigMap(
-			HashMapBuilder.put(
-				"dxp.service_uri", "http://dxp-service"
-			).put(
-				"oauth2.client_id", oAuth2Application.getClientId()
-			).put(
-				"oauth2.introspection_uri",
-				"http://dxp-service/o/oauth2/introspect"
-			).build(),
-			StringBundler.concat(
-				_oAuth2ApplicationUserAgentConfiguration.name(),
-				USER_AGENT_SUBDOMAIN),
-			Collections.singletonMap(
-				"extension", _oAuth2ApplicationUserAgentConfiguration.name()));
 
 		Class<?> clazz = getClass();
 

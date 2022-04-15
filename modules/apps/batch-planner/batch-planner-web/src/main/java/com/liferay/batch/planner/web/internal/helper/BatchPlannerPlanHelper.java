@@ -35,6 +35,10 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.io.File;
+
+import java.net.URI;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -66,7 +70,7 @@ public class BatchPlannerPlanHelper {
 		BatchPlannerPlan batchPlannerPlan =
 			_batchPlannerPlanService.addBatchPlannerPlan(
 				true, externalType, StringPool.SLASH, internalClassName, name,
-				taskItemDelegateName, template);
+				0, taskItemDelegateName, template);
 
 		_batchPlannerPolicyService.addBatchPlannerPolicy(
 			batchPlannerPlan.getBatchPlannerPlanId(), "containsHeaders",
@@ -91,7 +95,7 @@ public class BatchPlannerPlanHelper {
 
 	public BatchPlannerPlan addImportBatchPlannerPlan(
 			PortletRequest portletRequest, String name, String importFileURI)
-		throws PortalException {
+		throws Exception {
 
 		String externalType = ParamUtil.getString(
 			portletRequest, "externalType", "CSV");
@@ -101,10 +105,12 @@ public class BatchPlannerPlanHelper {
 			portletRequest, "taskItemDelegateName");
 		boolean template = ParamUtil.getBoolean(portletRequest, "template");
 
+		File file = new File(new URI(importFileURI));
+
 		BatchPlannerPlan batchPlannerPlan =
 			_batchPlannerPlanService.addBatchPlannerPlan(
 				false, externalType, importFileURI, internalClassName, name,
-				taskItemDelegateName, template);
+				(int)file.length(), taskItemDelegateName, template);
 
 		_batchPlannerPolicyService.addBatchPlannerPolicy(
 			batchPlannerPlan.getBatchPlannerPlanId(), "containsHeaders",
@@ -144,7 +150,7 @@ public class BatchPlannerPlanHelper {
 	public BatchPlannerPlan copyBatchPlannerPlan(
 			long userId, long batchPlannerPlanId, String externalURL,
 			String name)
-		throws PortalException {
+		throws Exception {
 
 		User user = _userLocalService.fetchUser(userId);
 
@@ -153,6 +159,10 @@ public class BatchPlannerPlanHelper {
 
 		PermissionThreadLocal.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(user));
+
+		if (!externalURL.startsWith("file://")) {
+			externalURL = "file://" + externalURL;
+		}
 
 		try {
 			return _copyBatchPlannerPlan(batchPlannerPlanId, externalURL, name);
@@ -180,7 +190,7 @@ public class BatchPlannerPlanHelper {
 
 	private BatchPlannerPlan _copyBatchPlannerPlan(
 			long batchPlannerPlanId, String externalURL, String name)
-		throws PortalException {
+		throws Exception {
 
 		BatchPlannerPlan templateBatchPlannerPlan =
 			_batchPlannerPlanService.fetchBatchPlannerPlan(batchPlannerPlanId);
@@ -193,13 +203,14 @@ public class BatchPlannerPlanHelper {
 					" is not a template");
 		}
 
+		File file = new File(new URI(externalURL));
+
 		BatchPlannerPlan batchPlannerPlan =
 			_batchPlannerPlanService.addBatchPlannerPlan(
 				templateBatchPlannerPlan.isExport(),
-				templateBatchPlannerPlan.getExternalType(),
-				"file://" + externalURL,
-				templateBatchPlannerPlan.getInternalClassName(), name, null,
-				false);
+				templateBatchPlannerPlan.getExternalType(), externalURL,
+				templateBatchPlannerPlan.getInternalClassName(), name,
+				(int)file.length(), null, false);
 
 		List<BatchPlannerMapping> batchPlannerMappings =
 			_batchPlannerMappingService.getBatchPlannerMappings(

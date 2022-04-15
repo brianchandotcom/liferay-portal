@@ -25,7 +25,6 @@ import com.liferay.dispatch.service.DispatchTriggerLocalService;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
@@ -48,7 +47,7 @@ public class BatchPlannerDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 	public void doExecute(
 			DispatchTrigger dispatchTrigger,
 			DispatchTaskExecutorOutput dispatchTaskExecutorOutput)
-		throws PortalException {
+		throws Exception {
 
 		ExpandoBridge expandoBridge = dispatchTrigger.getExpandoBridge();
 

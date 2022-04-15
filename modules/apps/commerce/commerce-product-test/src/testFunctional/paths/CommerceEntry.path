@@ -440,6 +440,11 @@
 	<td></td>
 </tr>
 <tr>
+    <td>SALE_PRICE_FIELD</td>
+    <td>//div/input[contains(@id,'promoPrice')]</td>
+    <td></td>
+</tr>
+<tr>
 	<td>ACCORDION</td>
 	<td>//fieldset//div/a[contains(@aria-expanded,'true')]</td>
 	<td></td>

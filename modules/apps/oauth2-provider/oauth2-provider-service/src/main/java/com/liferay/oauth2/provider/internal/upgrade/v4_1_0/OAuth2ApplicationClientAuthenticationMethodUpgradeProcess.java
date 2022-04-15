@@ -30,19 +30,18 @@ public class OAuth2ApplicationClientAuthenticationMethodUpgradeProcess
 				"VARCHAR(75) null");
 		}
 
+		runSQL(
+			"update OAuth2Application set clientAuthenticationMethod = " +
+				"'client_secret_post' where (clientAuthenticationMethod is " +
+					"null or clientAuthenticationMethod = '');");
+		runSQL(
+			"update OAuth2Application set clientAuthenticationMethod = " +
+				"'none' where (clientSecret is null OR clientSecret = '');");
+
 		if (!hasColumn("OAuth2Application", "jwks")) {
 			alterTableAddColumn(
 				"OAuth2Application", "jwks", "VARCHAR(3999) null");
 		}
-
-		runSQL(
-			"UPDATE OAuth2Application SET clientAuthenticationMethod = " +
-				"'client_secret_post' WHERE (clientAuthenticationMethod is " +
-					"null or clientAuthenticationMethod = '');");
-
-		runSQL(
-			"UPDATE OAuth2Application SET clientAuthenticationMethod = " +
-				"'none' WHERE (clientSecret is NULL OR clientSecret = '');");
 	}
 
 }

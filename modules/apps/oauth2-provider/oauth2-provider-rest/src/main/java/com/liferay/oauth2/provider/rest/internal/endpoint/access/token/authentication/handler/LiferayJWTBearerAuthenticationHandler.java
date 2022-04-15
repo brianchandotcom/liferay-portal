@@ -149,8 +149,8 @@ public class LiferayJWTBearerAuthenticationHandler
 			}
 
 			throw new IllegalArgumentException(
-				"Client configures not to use JWT as client authentication " +
-					"method");
+				"Client is configured to not use JWT as a client " +
+					"authentication method");
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {

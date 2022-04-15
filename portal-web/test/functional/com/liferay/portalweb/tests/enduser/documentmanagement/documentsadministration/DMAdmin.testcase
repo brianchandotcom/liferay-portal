@@ -47,12 +47,24 @@ definition {
 	}
 
 	@description = "This is a test for LPS-91199. It checks that all files selected on different pages can be deleted."
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanDeleteAllDocumentsOnDifferentPagesAtOnce {
+		for (var entryCount : list "1,2,3,4,5") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "DM Document Title ${entryCount}",
+				groupName = "Guest",
+				mimeType = "text/txt",
+				sourceFileName = "Document_${entryCount}.txt");
+		}
 
-		// TODO LPS-148508 CanDeleteAllDocumentsOnDifferentPagesAtOnce pending implementation
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
+		Pagination.changePagination(itemsPerPage = "4");
+
+		DMDocument.deleteCP(deleteAll = "true");
+
+		DMDocument.viewDefault();
 	}
 
 	@description = "This is a test for LPS-89025. It checks that document edits are saved when hard links are enabled."

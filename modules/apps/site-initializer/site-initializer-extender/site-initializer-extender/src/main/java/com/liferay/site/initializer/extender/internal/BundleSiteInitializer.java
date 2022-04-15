@@ -1755,7 +1755,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				groupId = 0;
 			}
 
-			JSONArray jsonArray = jsonObject.getJSONArray("entries");
+			JSONArray jsonArray = jsonObject.getJSONArray("object-entries");
 
 			if (JSONUtil.isEmpty(jsonArray)) {
 				continue;

@@ -26,7 +26,7 @@
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
 		</finder>
-		<finder name="GtM_C" return-type="Collection">
+		<finder name="C_GtM" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column comparator="&gt;" name="modifiedDate" />
 		</finder>

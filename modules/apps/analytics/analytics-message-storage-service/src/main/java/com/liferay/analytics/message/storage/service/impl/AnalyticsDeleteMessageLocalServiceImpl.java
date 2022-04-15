@@ -73,7 +73,7 @@ public class AnalyticsDeleteMessageLocalServiceImpl
 	public List<AnalyticsDeleteMessage> getGtAnalyticsDeleteMessages(
 		long companyId, Date modifiedDate, int start, int end) {
 
-		return analyticsDeleteMessagePersistence.findByGtM_C(
+		return analyticsDeleteMessagePersistence.findByC_GtM(
 			companyId, modifiedDate, start, end);
 	}
 
@@ -81,7 +81,7 @@ public class AnalyticsDeleteMessageLocalServiceImpl
 	public int getGtAnalyticsDeleteMessagesCount(
 		long companyId, Date gtModifiedDate) {
 
-		return analyticsDeleteMessagePersistence.countByGtM_C(
+		return analyticsDeleteMessagePersistence.countByC_GtM(
 			companyId, gtModifiedDate);
 	}
 

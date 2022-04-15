@@ -100,16 +100,16 @@ public class AnalyticsDeleteMessageAnalyticsDXPEntityBatchEngineTaskItemDelegate
 			return Page.of(Collections.emptyList());
 		}
 
-		List<DXPEntity> dxpEntityRemoveLoggers = new ArrayList<>();
+		List<DXPEntity> dxpEntities = new ArrayList<>();
 
 		for (AnalyticsDeleteMessage analyticsDeleteMessage :
 				analyticsDeleteMessages) {
 
-			dxpEntityRemoveLoggers.add(
+			dxpEntities.add(
 				_dxpEntityDTOConverter.toDTO(analyticsDeleteMessage));
 		}
 
-		return Page.of(dxpEntityRemoveLoggers, pagination, totalCount);
+		return Page.of(dxpEntities, pagination, totalCount);
 	}
 
 	private Date _getModifiedDate(Filter filter) {

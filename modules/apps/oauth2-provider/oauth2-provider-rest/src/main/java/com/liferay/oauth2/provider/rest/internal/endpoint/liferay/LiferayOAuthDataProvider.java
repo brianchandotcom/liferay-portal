@@ -1087,7 +1087,6 @@ public class LiferayOAuthDataProvider
 				oAuth2Application.getCompanyId(),
 				oAuth2Application.getClientCredentialUserId(),
 				oAuth2Application.getClientCredentialUserName()));
-
 		client.setTokenEndpointAuthMethod(clientAuthenticationMethod);
 
 		Map<String, String> properties = client.getProperties();

@@ -194,7 +194,7 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest");
 
-		AssertLocation(value1 = "http://localhost:8080/en/web/guest");
+		AssertLocation(value1 = "http://localhost:8080/fr/web/guest");
 	}
 
 	@priority = "4"

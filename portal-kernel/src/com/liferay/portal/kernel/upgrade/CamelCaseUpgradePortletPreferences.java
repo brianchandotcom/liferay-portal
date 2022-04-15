@@ -25,7 +25,7 @@ import javax.portlet.PortletPreferences;
  * @author Julio Camarero
  */
 public class CamelCaseUpgradePortletPreferences
-	extends BaseUpgradePortletPreferences {
+	extends BasePortletPreferencesUpgradeProcess {
 
 	@Override
 	protected String upgradePreferences(

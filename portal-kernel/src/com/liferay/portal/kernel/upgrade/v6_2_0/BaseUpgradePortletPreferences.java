@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.upgrade.v6_2_0;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
+import com.liferay.portal.kernel.upgrade.BasePortletPreferencesUpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -30,7 +31,7 @@ import java.sql.ResultSet;
  * @author Alberto Chaparro
  */
 public abstract class BaseUpgradePortletPreferences
-	extends com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences {
+	extends BasePortletPreferencesUpgradeProcess {
 
 	protected void deletePortletPreferencesByOwnerType(
 			int ownerType, String whereClause, String leftColumnName,

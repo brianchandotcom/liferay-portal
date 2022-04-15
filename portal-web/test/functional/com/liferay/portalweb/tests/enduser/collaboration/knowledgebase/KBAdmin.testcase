@@ -491,6 +491,8 @@ definition {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		LexiconEntry.viewAddMenuItem(menuItem = '''<script>alert(123)</script>''');
+
+		AssertAlertNotPresent();
 	}
 
 	@priority = "4"

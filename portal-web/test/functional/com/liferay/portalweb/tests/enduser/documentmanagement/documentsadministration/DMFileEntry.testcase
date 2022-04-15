@@ -1643,12 +1643,25 @@ definition {
 	}
 
 	@description = "This test covers LPS-146237. It validates that a PDF can be previewed from the Recycle Bin."
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanPreviewPDFFromRecycleBin {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "Document_1.pdf",
+			groupName = "Guest",
+			mimeType = "application/pdf",
+			sourceFileName = "Document_1.pdf");
 
-		// TODO LPS-147937
+		JSONDocument.moveToRecycleBin(
+			dmDocumentTitle = "Document_1.pdf",
+			groupName = "Guest");
 
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
+
+		LexiconEntry.gotoEntry(rowEntry = "Document_1.pdf");
+
+		AssertVisible(
+			key_dmDocumentFileName = "Document_1.pdf",
+			locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_IMAGE_PREVIEW");
 	}
 
 	@description = "This test covers LPS-148758. It ensures that a PDF without an extension can be previewed through the latest version URL."

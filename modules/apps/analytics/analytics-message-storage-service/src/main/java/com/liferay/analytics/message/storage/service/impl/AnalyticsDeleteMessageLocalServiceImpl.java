@@ -52,7 +52,7 @@ public class AnalyticsDeleteMessageLocalServiceImpl
 	}
 
 	@Override
-	public void deleteAnalyticsModelRemoveLoggers(long companyId) {
+	public void deleteAnalyticsDeleteMessages(long companyId) {
 		analyticsDeleteMessagePersistence.removeByCompanyId(companyId);
 	}
 

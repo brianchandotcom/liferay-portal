@@ -16,10 +16,4 @@ if [ `which minikube` ];then
     fi
 fi
 
-./deploy-dxp.sh
-./lxc-extensions/custom-rest-service/deploy.sh
-./lxc-extensions/liferay-hello-world/deploy.sh
-
-# forward port to nginx ingress controller
-pkill -f "kubectl port-forward"
-(kubectl port-forward --namespace=ingress-nginx service/ingress-nginx-controller 8080:80)
+skaffold dev --port-forward

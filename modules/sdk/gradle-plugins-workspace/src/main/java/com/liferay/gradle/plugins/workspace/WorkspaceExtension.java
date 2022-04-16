@@ -66,8 +66,6 @@ import org.gradle.api.logging.Logger;
  */
 public class WorkspaceExtension {
 
-	public static final String DEFAULT_DESIGN_PACK_DIR_NAME = "design-packs";
-
 	@SuppressWarnings("serial")
 	public WorkspaceExtension(Settings settings) {
 		_gradle = settings.getGradle();
@@ -111,7 +109,7 @@ public class WorkspaceExtension {
 			settings, "configs.dir",
 			BundleSupportConstants.DEFAULT_CONFIGS_DIR_NAME);
 		_designPackDir = _getProperty(
-			settings, "design.pack.dir", DEFAULT_DESIGN_PACK_DIR_NAME);
+			settings, "design.pack.dir", _DEFAULT_DESIGN_PACK_DIR_NAME);
 		_dockerDir = _getProperty(settings, "docker.dir", _DOCKER_DIR);
 		_dockerImageLiferay = _getProperty(
 			settings, "docker.image.liferay", _getDefaultDockerImage());
@@ -629,6 +627,8 @@ public class WorkspaceExtension {
 	private static final String _BUNDLE_TOKEN_PASSWORD = null;
 
 	private static final String _BUNDLE_TOKEN_PASSWORD_FILE = null;
+
+	private static final String _DEFAULT_DESIGN_PACK_DIR_NAME = "design-packs";
 
 	private static final String _DEFAULT_WORKSPACE_CACHE_DIR_NAME =
 		".liferay/workspace";

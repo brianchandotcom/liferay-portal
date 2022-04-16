@@ -1,0 +1,34 @@
+{
+	"devDependencies": {
+		"compass-mixins": "0.12.10",
+		"gulp": "4.0.2",
+		"liferay-font-awesome": "3.5.1",
+		"liferay-frontend-css-common": "6.0.4",
+		"liferay-frontend-theme-styled": "6.0.10",
+		"liferay-frontend-theme-unstyled": "6.0.12",
+		"liferay-theme-tasks": "^11.2.2"
+	},
+	"keywords": [
+		"liferay-theme"
+	],
+	"liferayTheme": {
+		"baseTheme": "styled",
+		"fontAwesome": true,
+		"screenshot": "",
+		"templateLanguage": "ftl",
+		"version": "7.4"
+	},
+	"main": "package.json",
+	"name": "y1-theme",
+	"scripts": {
+		"build": "gulp build",
+		"deploy": "gulp deploy",
+		"extend": "gulp extend",
+		"init": "gulp init",
+		"kickstart": "gulp kickstart",
+		"status": "gulp status",
+		"upgrade": "gulp upgrade",
+		"watch": "gulp watch"
+	},
+	"version": "1.0.0"
+}

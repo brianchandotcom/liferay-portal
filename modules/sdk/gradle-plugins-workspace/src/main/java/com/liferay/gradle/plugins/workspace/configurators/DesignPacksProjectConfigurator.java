@@ -14,6 +14,7 @@
 
 package com.liferay.gradle.plugins.workspace.configurators;
 
+import com.liferay.gradle.plugins.node.NodePlugin;
 import com.liferay.gradle.plugins.node.tasks.PackageRunBuildTask;
 import com.liferay.gradle.plugins.workspace.FrontendPlugin;
 import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
@@ -58,7 +59,7 @@ import org.gradle.api.tasks.bundling.Zip;
  */
 public class DesignPacksProjectConfigurator extends BaseProjectConfigurator {
 
-	public static final String DESIGN_PACK_TASK_NAME = "ZipDesignPack";
+	public static final String DESIGN_PACK_TASK_NAME = "zipDesignPack";
 
 	public DesignPacksProjectConfigurator(Settings settings) {
 		super(settings);
@@ -167,6 +168,8 @@ public class DesignPacksProjectConfigurator extends BaseProjectConfigurator {
 
 		Zip task = GradleUtil.addTask(project, taskName, Zip.class);
 
+		task.dependsOn(NodePlugin.PACKAGE_RUN_BUILD_TASK_NAME);
+
 		_configureTaskDisableUpToDate(task);
 
 		task.into(
@@ -268,7 +271,7 @@ public class DesignPacksProjectConfigurator extends BaseProjectConfigurator {
 	}
 
 	private void _configureTaskPackageRunBuild(
-		Project project, Zip addTaskZipDesignPack) {
+		Project project, Zip taskZipDesignPack) {
 
 		TaskContainer taskContainer = project.getTasks();
 
@@ -278,7 +281,7 @@ public class DesignPacksProjectConfigurator extends BaseProjectConfigurator {
 
 				@Override
 				public void execute(PackageRunBuildTask packageRunBuildTask) {
-					packageRunBuildTask.finalizedBy(addTaskZipDesignPack);
+					packageRunBuildTask.finalizedBy(taskZipDesignPack);
 				}
 
 			});

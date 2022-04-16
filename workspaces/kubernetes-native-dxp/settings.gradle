@@ -23,5 +23,5 @@ apply plugin: "net.saliman.properties"
 apply plugin: "com.liferay.workspace"
 
 gradle.liferayWorkspace {
-  dockerImageId = "kubernetes-native-dxp:7.4.13-k8s-native"
+  dockerImageId = startParameter.projectProperties.get("docker.image.id") ?: "k8s-native-dxp"
 }

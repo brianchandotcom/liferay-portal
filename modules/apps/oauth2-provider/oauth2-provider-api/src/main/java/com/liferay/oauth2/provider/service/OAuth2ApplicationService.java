@@ -58,23 +58,9 @@ public interface OAuth2ApplicationService extends BaseService {
 	 */
 
 	/**
-	 * @deprecated As of Cavanaugh (7.4.x)
-	 */
-	@Deprecated
-	public OAuth2Application addOAuth2Application(
-			List<GrantType> allowedGrantTypesList, long clientCredentialUserId,
-			String clientId, int clientProfile, String clientSecret,
-			String description, List<String> featuresList, String homePageURL,
-			long iconFileEntryId, String name, String privacyPolicyURL,
-			List<String> redirectURIsList, boolean rememberDevice,
-			List<String> scopeAliasesList, boolean trustedApplication,
-			ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #addOAuth2Application(List, long, String, int, String,
-	 String, List, String, long, String, String, List, boolean,
+	 #addOAuth2Application(List, String, long, String, int, String,
+	 String, List, String, long, String, String, String, List, boolean,
 	 List, boolean, ServiceContext)}
 	 */
 	@Deprecated
@@ -148,8 +134,8 @@ public interface OAuth2ApplicationService extends BaseService {
 
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #updateOAuth2Application(long, long, List, long, String, int,
-	 String, String, List, String, long, String, String, List,
+	 #updateOAuth2Application(long, long, List, String, long, String, int,
+	 String, String, List, String, long, String, String, String, List,
 	 boolean, boolean)}
 	 */
 	@Deprecated
@@ -173,20 +159,6 @@ public interface OAuth2ApplicationService extends BaseService {
 			long iconFileEntryId, String name, String privacyPolicyURL,
 			List<String> redirectURIsList, long oAuth2ApplicationScopeAliasesId,
 			ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x)
-	 */
-	@Deprecated
-	public OAuth2Application updateOAuth2Application(
-			long oAuth2ApplicationId, long oAuth2ApplicationScopeAliasesId,
-			List<GrantType> allowedGrantTypesList, long clientCredentialUserId,
-			String clientId, int clientProfile, String clientSecret,
-			String description, List<String> featuresList, String homePageURL,
-			long iconFileEntryId, String name, String privacyPolicyURL,
-			List<String> redirectURIsList, boolean rememberDevice,
-			boolean trustedApplication)
 		throws PortalException;
 
 	public OAuth2Application updateOAuth2Application(

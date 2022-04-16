@@ -305,6 +305,10 @@ public interface Http {
 			_parts.put(name, value);
 		}
 
+		public boolean disableNormalizedUri() {
+			return _normalizedUri;
+		}
+
 		public Auth getAuth() {
 			return _auth;
 		}
@@ -536,6 +540,7 @@ public interface Http {
 		private List<InputStreamPart> _inputStreamParts;
 		private String _location;
 		private Method _method = Method.GET;
+		private boolean _normalizedUri = true;
 		private Map<String, String> _parts;
 		private Response _response = new Response();
 		private int _timeout;

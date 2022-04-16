@@ -112,10 +112,6 @@ public class StrutsPortlet extends LiferayPortlet {
 		throws IOException, PortletException {
 	}
 
-	@Override
-	protected void checkPath(String path) throws PortletException {
-	}
-
 	protected void include(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {

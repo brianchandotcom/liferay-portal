@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.security.permission.resource.WorkflowedModelPer
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.workflow.permission.WorkflowPermission;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.Dictionary;
 
@@ -108,10 +109,13 @@ public class JournalArticleModelResourcePermissionRegistrar {
 							_groupLocalService, JournalArticle::getId));
 					consumer.accept(
 						new JournalArticleConfigurationModelResourcePermissionLogic());
-					consumer.accept(
-						new DynamicInheritancePermissionLogic<>(
-							_journalFolderModelResourcePermission,
-							_getFetchParentFunction(), true));
+
+					if (PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
+						consumer.accept(
+							new DynamicInheritancePermissionLogic<>(
+								_journalFolderModelResourcePermission,
+								_getFetchParentFunction(), true));
+					}
 				}),
 			properties);
 	}

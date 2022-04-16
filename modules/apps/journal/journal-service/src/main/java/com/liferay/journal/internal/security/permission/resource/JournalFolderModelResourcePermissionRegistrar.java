@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.StagedModelPermissionLogic;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.Dictionary;
 
@@ -82,10 +83,13 @@ public class JournalFolderModelResourcePermissionRegistrar {
 							}
 
 						});
-					consumer.accept(
-						new DynamicInheritancePermissionLogic<>(
-							modelResourcePermission, _getFetchParentFunction(),
-							false));
+
+					if (PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
+						consumer.accept(
+							new DynamicInheritancePermissionLogic<>(
+								modelResourcePermission,
+								_getFetchParentFunction(), false));
+					}
 				},
 				actionId -> {
 					if (ActionKeys.ADD_FOLDER.equals(actionId)) {

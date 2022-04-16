@@ -21,7 +21,7 @@ spec:
         runAsUser: 0
       initContainers:
         - name: init-dxp-pv
-          image: kubernetes-native-dxp:7.4.13-k8s-native
+          image: k8s-native-dxp
           command:
           - bash
           - -c
@@ -31,7 +31,7 @@ spec:
             mountPath: "/opt/liferay/data-pv"
       containers:
         - name: dxp
-          image: kubernetes-native-dxp:7.4.13-k8s-native
+          image: k8s-native-dxp
           imagePullPolicy: Never
           resources:
             limits:

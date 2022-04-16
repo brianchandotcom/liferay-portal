@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: remote-app-a
-          image: remoteappa
+          image: remote-app-a
           imagePullPolicy: Never
           resources:
             limits:

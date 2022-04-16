@@ -4,25 +4,25 @@
 			"claimNumber": 1,
 			"claimStatus": "inInvestigation",
 			"dateFiled": "2022-03-17",
-			"externalReferenceCode": "RAY-001",
 			"name": "User Test",
-			"product": "Professional Liability"
+			"product": "Professional Liability",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-001$]"
 		},
 		{
 			"claimNumber": 2,
 			"claimStatus": "approved",
 			"dateFiled": "2022-03-04",
-			"externalReferenceCode": "RAY-002",
 			"name": "User Test 1",
-			"product": "Business Owners Policy"
+			"product": "Business Owners Policy",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-002$]"
 		},
 		{
 			"claimNumber": 3,
 			"claimStatus": "inEstimation",
 			"dateFiled": "2022-03-08",
-			"externalReferenceCode": "RAY-003",
 			"name": "User Test 2",
-			"product": "General Liability"
+			"product": "General Liability",
+			"r_policyToClaims_c_raylifePolicyId": "[$RaylifePolicy#RAYPOL-003$]"
 		}
 	],
 	"objectDefinitionName": "RaylifeClaim"

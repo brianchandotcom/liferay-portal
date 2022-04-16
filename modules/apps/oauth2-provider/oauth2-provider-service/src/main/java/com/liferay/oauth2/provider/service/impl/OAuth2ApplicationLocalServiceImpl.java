@@ -103,76 +103,9 @@ public class OAuth2ApplicationLocalServiceImpl
 	extends OAuth2ApplicationLocalServiceBaseImpl {
 
 	/**
-	 * @deprecated As of Cavanaugh (7.4.x)
-	 */
-	@Deprecated
-	@Override
-	public OAuth2Application addOAuth2Application(
-			long companyId, long userId, String userName,
-			List<GrantType> allowedGrantTypesList, long clientCredentialUserId,
-			String clientId, int clientProfile, String clientSecret,
-			String description, List<String> featuresList, String homePageURL,
-			long iconFileEntryId, String name, String privacyPolicyURL,
-			List<String> redirectURIsList, boolean rememberDevice,
-			boolean trustedApplication,
-			Consumer<OAuth2ScopeBuilder> builderConsumer,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		String clientAuthenticationMethod =
-			OAuthConstants.TOKEN_ENDPOINT_AUTH_POST;
-
-		if (Validator.isNull(clientSecret)) {
-			clientAuthenticationMethod =
-				OAuthConstants.TOKEN_ENDPOINT_AUTH_NONE;
-		}
-
-		return oAuth2ApplicationLocalService.addOAuth2Application(
-			companyId, userId, userName, allowedGrantTypesList,
-			clientAuthenticationMethod, clientCredentialUserId, clientId,
-			clientProfile, clientSecret, description, featuresList, homePageURL,
-			iconFileEntryId, null, name, privacyPolicyURL, redirectURIsList,
-			rememberDevice, trustedApplication, builderConsumer,
-			serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x)
-	 */
-	@Deprecated
-	@Override
-	public OAuth2Application addOAuth2Application(
-			long companyId, long userId, String userName,
-			List<GrantType> allowedGrantTypesList, long clientCredentialUserId,
-			String clientId, int clientProfile, String clientSecret,
-			String description, List<String> featuresList, String homePageURL,
-			long iconFileEntryId, String name, String privacyPolicyURL,
-			List<String> redirectURIsList, boolean rememberDevice,
-			List<String> scopeAliasesList, boolean trustedApplication,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		String clientAuthenticationMethod =
-			OAuthConstants.TOKEN_ENDPOINT_AUTH_POST;
-
-		if (Validator.isNull(clientSecret)) {
-			clientAuthenticationMethod =
-				OAuthConstants.TOKEN_ENDPOINT_AUTH_NONE;
-		}
-
-		return oAuth2ApplicationLocalService.addOAuth2Application(
-			companyId, userId, userName, allowedGrantTypesList,
-			clientAuthenticationMethod, clientCredentialUserId, clientId,
-			clientProfile, clientSecret, description, featuresList, homePageURL,
-			iconFileEntryId, null, name, privacyPolicyURL, redirectURIsList,
-			rememberDevice, scopeAliasesList, trustedApplication,
-			serviceContext);
-	}
-
-	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #addOAuth2Application(long, long, String, List, long, String,
-	 *             int, String, String, List, String, long, String, String,
+	 *             #addOAuth2Application(long, long, String, List, String, long, String,
+	 *             int, String, String, List, String, long, String, String, String,
 	 *             List, boolean, boolean, Consumer, ServiceContext)}
 	 */
 	@Deprecated
@@ -189,16 +122,16 @@ public class OAuth2ApplicationLocalServiceImpl
 		throws PortalException {
 
 		return addOAuth2Application(
-			companyId, userId, userName, allowedGrantTypesList, userId,
+			companyId, userId, userName, allowedGrantTypesList, null, userId,
 			clientId, clientProfile, clientSecret, description, featuresList,
-			homePageURL, iconFileEntryId, name, privacyPolicyURL,
+			homePageURL, iconFileEntryId, null, name, privacyPolicyURL,
 			redirectURIsList, false, false, builderConsumer, serviceContext);
 	}
 
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #addOAuth2Application(long, long, String, List, long, String,
-	 *             int, String, String, List, String, long, String, String,
+	 *             #addOAuth2Application(long, long, String, List, String, long, String,
+	 *             int, String, String, List, String, long, String, String, String,
 	 *             List, boolean, List, boolean, ServiceContext)} (String,
 	 *             long)}
 	 */
@@ -215,9 +148,9 @@ public class OAuth2ApplicationLocalServiceImpl
 		throws PortalException {
 
 		return addOAuth2Application(
-			companyId, userId, userName, allowedGrantTypesList, userId,
+			companyId, userId, userName, allowedGrantTypesList, null, userId,
 			clientId, clientProfile, clientSecret, description, featuresList,
-			homePageURL, iconFileEntryId, name, privacyPolicyURL,
+			homePageURL, iconFileEntryId, null, name, privacyPolicyURL,
 			redirectURIsList, false, scopeAliasesList, false, serviceContext);
 	}
 
@@ -595,8 +528,8 @@ public class OAuth2ApplicationLocalServiceImpl
 
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #updateOAuth2Application(long, long, List, long, String, int,
-	 *             String, String, List, String, long, String, String, List,
+	 *             #updateOAuth2Application(long, long, List, String, long, String, int,
+	 *             String, String, List, String, long, String, String, String, List,
 	 *             boolean, boolean)}
 	 */
 	@Deprecated
@@ -615,11 +548,11 @@ public class OAuth2ApplicationLocalServiceImpl
 
 		return updateOAuth2Application(
 			oAuth2ApplicationId, oAuth2ApplicationScopeAliasesId,
-			allowedGrantTypesList,
+			allowedGrantTypesList, null,
 			oAuth2Application.getClientCredentialUserId(), clientId,
 			clientProfile, clientSecret, description, featuresList, homePageURL,
-			iconFileEntryId, name, privacyPolicyURL, redirectURIsList, false,
-			false);
+			iconFileEntryId, null, name, privacyPolicyURL, redirectURIsList,
+			false, false);
 	}
 
 	/**
@@ -645,38 +578,6 @@ public class OAuth2ApplicationLocalServiceImpl
 			clientProfile, clientSecret, description, featuresList, homePageURL,
 			iconFileEntryId, name, privacyPolicyURL, redirectURIsList,
 			oAuth2ApplicationScopeAliasesId, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x)
-	 */
-	@Deprecated
-	@Override
-	public OAuth2Application updateOAuth2Application(
-			long oAuth2ApplicationId, long oAuth2ApplicationScopeAliasesId,
-			List<GrantType> allowedGrantTypesList, long clientCredentialUserId,
-			String clientId, int clientProfile, String clientSecret,
-			String description, List<String> featuresList, String homePageURL,
-			long iconFileEntryId, String name, String privacyPolicyURL,
-			List<String> redirectURIsList, boolean rememberDevice,
-			boolean trustedApplication)
-		throws PortalException {
-
-		String clientAuthenticationMethod =
-			OAuthConstants.TOKEN_ENDPOINT_AUTH_POST;
-
-		if (Validator.isNull(clientSecret)) {
-			clientAuthenticationMethod =
-				OAuthConstants.TOKEN_ENDPOINT_AUTH_NONE;
-		}
-
-		return oAuth2ApplicationLocalService.updateOAuth2Application(
-			oAuth2ApplicationId, oAuth2ApplicationScopeAliasesId,
-			allowedGrantTypesList, clientAuthenticationMethod,
-			clientCredentialUserId, clientId, clientProfile, clientSecret,
-			description, featuresList, homePageURL, iconFileEntryId, null, name,
-			privacyPolicyURL, redirectURIsList, rememberDevice,
-			trustedApplication);
 	}
 
 	@Override

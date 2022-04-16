@@ -70,9 +70,10 @@ public class FragmentRendererPortalInstanceLifecycleListener
 					add(GrantType.RESOURCE_OWNER_PASSWORD);
 				}
 			},
-			user.getUserId(), _clientId, ClientProfile.NATIVE_APPLICATION.id(),
-			StringPool.BLANK, null, null, null, 0, _applicationName, null,
-			Collections.emptyList(),
+			"none", user.getUserId(), _clientId,
+			ClientProfile.NATIVE_APPLICATION.id(), StringPool.BLANK, null, null,
+			null, 0, null, _applicationName, null, Collections.emptyList(),
+			false, false,
 			builder -> builder.forApplication(
 				"liferay-json-web-services",
 				"com.liferay.oauth2.provider.jsonws",

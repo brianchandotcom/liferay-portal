@@ -163,14 +163,15 @@ public class AnalyticsCloudPortalInstanceLifecycleListener
 						add(GrantType.REFRESH_TOKEN);
 					}
 				},
-				user.getUserId(),
+				"client_secret_post", user.getUserId(),
 				OAuth2SecureRandomGenerator.generateClientId(),
 				ClientProfile.WEB_APPLICATION.id(),
 				OAuth2SecureRandomGenerator.generateClientSecret(), null, null,
-				"https://analytics.liferay.com", 0, _APPLICATION_NAME, null,
+				"https://analytics.liferay.com", 0, null, _APPLICATION_NAME,
+				null,
 				Collections.singletonList(
 					"https://analytics.liferay.com/oauth/receive"),
-				this::_buildScopes, new ServiceContext());
+				false, false, this::_buildScopes, new ServiceContext());
 
 		Class<?> clazz = getClass();
 

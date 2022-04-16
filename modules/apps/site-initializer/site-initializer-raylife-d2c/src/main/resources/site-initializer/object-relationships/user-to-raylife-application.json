@@ -1,7 +1,7 @@
 {
 	"deletionType": "prevent",
 	"label": {
-		"en_US": "User to Applications"
+		"en_US": "User"
 	},
 	"name": "userToApplications",
 	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:User$]",

@@ -1,7 +1,7 @@
 {
 	"deletionType": "prevent",
 	"label": {
-		"en_US": "Policy to Claims"
+		"en_US": "Policy"
 	},
 	"name": "policyToClaims",
 	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:RaylifePolicy$]",

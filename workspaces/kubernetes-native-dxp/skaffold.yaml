@@ -16,16 +16,6 @@ build:
         - lxc-extensions/liferay-hello-world/public
         - lxc-extensions/liferay-hello-world/src
         - lxc-extensions/liferay-hello-world/package.json
-deploy:
-  kustomize:
-    paths:
-    - k8s/dxp/
-    - k8s/remoteappa/
----
-apiVersion: skaffold/v2beta28
-kind: Config
-build:
-  artifacts:
   - image: custom-rest-service
     custom:
       buildCommand: lxc-extensions/custom-rest-service/build.sh
@@ -36,4 +26,19 @@ build:
 deploy:
   kustomize:
     paths:
+    - k8s/dxp/
+    - k8s/remoteappa/
     - k8s/custom-rest-service/
+portForward:
+  - resourceType: service
+    resourceName: ingress-nginx-controller
+    namespace: ingress-nginx
+    address: 0.0.0.0
+    port: 80
+    localPort: 8080
+  - resourceType: service
+    resourceName: ingress-nginx-controller
+    namespace: ingress-nginx
+    address: 0.0.0.0
+    port: 443
+    localPort: 8443

@@ -1,6 +1,7 @@
 package com.liferay.custom.rest.service.config;
 
 import java.net.URI;
+import java.util.Arrays;
 import java.util.Collections;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -17,8 +18,9 @@ import org.springframework.security.oauth2.server.resource.introspection.SpringO
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 public class CustomRestSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -26,17 +28,21 @@ public class CustomRestSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Value("${OAUTH2_USERAGENTAPP_CLIENT_ID}")
 	String clientId;
 
+	@Value("${DXP_SERVICE_URI}")
+	String dxpServiceUri;
+
 	@Value("${OAUTH2_INTROSPECTION_URI}")
 	String introspectionUri;
 
 	@Bean
-	public static WebMvcConfigurer corsConfigurer() {
-		return new WebMvcConfigurer() {
-			@Override
-			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**").allowedOrigins("http://dxp.localdev.me:8080");
-			}
-		};
+	public CorsConfigurationSource corsConfigurationSource() {
+		CorsConfiguration configuration = new CorsConfiguration();
+		configuration.setAllowedOrigins(Arrays.asList(dxpServiceUri));
+		configuration.setAllowedMethods(Arrays.asList("DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"));
+		configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", configuration);
+		return source;
 	}
 
 	@Override
@@ -46,7 +52,7 @@ public class CustomRestSecurityConfig extends WebSecurityConfigurerAdapter {
 		).oauth2ResourceServer(
 			oauth2 -> oauth2.opaqueToken().introspector(
 				new CustomSpringOpaqueTokenIntrospector(
-					introspectionUri, this.clientId)
+					introspectionUri, clientId)
 			)
 		);
 	}
@@ -80,6 +86,7 @@ public class CustomRestSecurityConfig extends WebSecurityConfigurerAdapter {
 			body.add("token_type_hint", "access_token");
 			return body;
 		}
+
 	}
 
 }

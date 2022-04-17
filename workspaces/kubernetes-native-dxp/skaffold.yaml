@@ -16,6 +16,7 @@ build:
         - lxc-extensions/liferay-hello-world/public
         - lxc-extensions/liferay-hello-world/src
         - lxc-extensions/liferay-hello-world/package.json
+        - lxc-extensions/liferay-hello-world/build.sh
   - image: custom-rest-service
     custom:
       buildCommand: lxc-extensions/custom-rest-service/build.sh

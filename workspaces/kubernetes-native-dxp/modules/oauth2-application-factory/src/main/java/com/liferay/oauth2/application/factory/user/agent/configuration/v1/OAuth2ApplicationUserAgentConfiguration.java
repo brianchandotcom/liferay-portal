@@ -63,7 +63,7 @@ public interface OAuth2ApplicationUserAgentConfiguration {
 
 	@Meta.AD(
 		description = "redirect-url-description", name = "redirect-url",
-		type = Meta.Type.String
+		required = false, type = Meta.Type.String
 	)
 	public String redirectURL();
 

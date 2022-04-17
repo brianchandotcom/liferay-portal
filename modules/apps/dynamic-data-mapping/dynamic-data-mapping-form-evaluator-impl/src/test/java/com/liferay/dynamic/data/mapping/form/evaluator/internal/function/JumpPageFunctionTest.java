@@ -21,20 +21,15 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
-
-import org.powermock.api.mockito.PowerMockito;
 
 /**
  * @author Inácio Nery
  * @author Leonardo Barros
  */
-@RunWith(MockitoJUnitRunner.class)
-public class JumpPageFunctionTest extends PowerMockito {
+public class JumpPageFunctionTest {
 
 	@ClassRule
 	@Rule
@@ -44,7 +39,7 @@ public class JumpPageFunctionTest extends PowerMockito {
 	@Test
 	public void testExecuteAction() {
 		DefaultDDMExpressionActionHandler spyDefaultDDMExpressionActionHandler =
-			spy(new DefaultDDMExpressionActionHandler());
+			Mockito.spy(new DefaultDDMExpressionActionHandler());
 
 		JumpPageFunction jumpPageFunction = new JumpPageFunction();
 

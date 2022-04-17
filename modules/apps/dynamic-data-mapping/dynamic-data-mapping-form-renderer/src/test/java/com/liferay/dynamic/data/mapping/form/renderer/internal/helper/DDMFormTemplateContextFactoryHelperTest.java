@@ -23,24 +23,28 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceService;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.mockito.Matchers;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.mockito.Mockito;
 
 /**
  * @author Rafael Praxedes
  */
-@RunWith(PowerMockRunner.class)
-public class DDMFormTemplateContextFactoryHelperTest extends PowerMockito {
+public class DDMFormTemplateContextFactoryHelperTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
@@ -48,7 +52,7 @@ public class DDMFormTemplateContextFactoryHelperTest extends PowerMockito {
 	}
 
 	@Test
-	public void testGetEvaluableFieldNames() throws Exception {
+	public void testGetEvaluableFieldNames() {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
 		ddmForm.addDDMFormField(
@@ -106,19 +110,19 @@ public class DDMFormTemplateContextFactoryHelperTest extends PowerMockito {
 	private static void _setUpDDMFormTemplateContextFactoryHelper()
 		throws Exception {
 
-		DDMDataProviderInstance ddmDataProviderInstance = mock(
+		DDMDataProviderInstance ddmDataProviderInstance = Mockito.mock(
 			DDMDataProviderInstance.class);
 
-		when(
+		Mockito.when(
 			ddmDataProviderInstance.getUuid()
 		).thenReturn(
 			_DATA_PROVIDER_INSTANCE_UUID
 		);
 
-		DDMDataProviderInstanceService ddmDataProviderInstanceService = mock(
-			DDMDataProviderInstanceService.class);
+		DDMDataProviderInstanceService ddmDataProviderInstanceService =
+			Mockito.mock(DDMDataProviderInstanceService.class);
 
-		when(
+		Mockito.when(
 			ddmDataProviderInstanceService.getDataProviderInstance(
 				Matchers.anyLong())
 		).thenReturn(

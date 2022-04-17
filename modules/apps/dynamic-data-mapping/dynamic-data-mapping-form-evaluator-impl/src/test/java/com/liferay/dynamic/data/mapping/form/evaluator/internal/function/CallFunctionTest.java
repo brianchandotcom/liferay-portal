@@ -46,20 +46,15 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.mockito.Matchers;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.Mockito;
 import org.mockito.stubbing.Answer;
-
-import org.powermock.api.mockito.PowerMockito;
 
 /**
  * @author Leonardo Barros
  */
-@RunWith(MockitoJUnitRunner.class)
-public class CallFunctionTest extends PowerMockito {
+public class CallFunctionTest {
 
 	@ClassRule
 	@Rule
@@ -92,7 +87,7 @@ public class CallFunctionTest extends PowerMockito {
 	}
 
 	@Test
-	public void testNotAutoSelectOption() throws Exception {
+	public void testNotAutoSelectOption() {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm("field0");
 
 		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
@@ -217,26 +212,18 @@ public class CallFunctionTest extends PowerMockito {
 
 	private void _mockDDMExpressionFieldAccessor(Object... values) {
 		DDMFormEvaluatorExpressionFieldAccessor
-			ddmFormEvaluatorExpressionFieldAccessor = mock(
+			ddmFormEvaluatorExpressionFieldAccessor = Mockito.mock(
 				DDMFormEvaluatorExpressionFieldAccessor.class);
 
-		when(
+		Mockito.when(
 			ddmFormEvaluatorExpressionFieldAccessor.getFieldProperty(
 				Matchers.any(GetFieldPropertyRequest.class))
 		).then(
-			new Answer<GetFieldPropertyResponse>() {
+			(Answer<GetFieldPropertyResponse>)invocation -> {
+				GetFieldPropertyResponse.Builder builder =
+					GetFieldPropertyResponse.Builder.newBuilder(values);
 
-				@Override
-				public GetFieldPropertyResponse answer(
-						InvocationOnMock invocation)
-					throws Throwable {
-
-					GetFieldPropertyResponse.Builder builder =
-						GetFieldPropertyResponse.Builder.newBuilder(values);
-
-					return builder.build();
-				}
-
+				return builder.build();
 			}
 		);
 

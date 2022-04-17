@@ -99,3 +99,73 @@ Below is a rough outine of the process could work:
       2. client_id=<client_id>
       3. token_type_hint=access_token
       4. Click `Send`
+
+## TLS Configuration
+
+To setup TLS we need to generate a CA and domain certs. The reason for this is well explained [here](https://github.com/BenMorel/dev-certificates/).
+
+### Generate a CA
+
+From the `tls` directory execute the following:
+```bash
+$ ./create-ca.sh
+```
+
+Import the CA into your browser [as described](https://github.com/BenMorel/dev-certificates/#import-the-ca-in-your-browser).
+
+### Generate a wildcard domain Certificate
+
+From the `tls` directory again execute the following:
+
+```bash
+$ ./create-certificate.sh *.localdev.me
+```
+
+### Setup the Ingress to use the Certificate
+
+[Minikube TLS certificate with ingress addon](https://minikube.sigs.k8s.io/docs/tutorials/custom_cert_ingress/)
+
+Add the certificate to Minikube by executing:
+
+```bash
+$ kubectl -n kube-system create secret tls mkcert --key \*.localdev.me.key --cert \*.localdev.me.crt
+```
+
+Configure ingress addon
+
+```bash
+$ minikube addons configure ingress
+-- Enter custom cert(format is "namespace/secret"): kube-system/mkcert
+✅  ingress was successfully configured
+```
+
+Enable ingress addon (disable first when already enabled)
+
+```bash
+$ minikube addons disable ingress
+🌑  "The 'ingress' addon is disabled
+
+$ minikube addons enable ingress
+🔎  Verifying ingress addon...
+🌟  The 'ingress' addon is enabled
+```
+
+Verify if custom certificate was enabled
+
+```bash
+$ kubectl -n ingress-nginx get deployment ingress-nginx-controller -o yaml | grep "kube-system"
+- --default-ssl-certificate=kube-system/mkcert
+```
+
+### Enable Minikube Ingress with TLS
+
+Add a rule for each service hostname.
+
+Since the certificate is a wildcard, as long as all services are sub-domains match the wildcard domain, TLS will function for them.
+
+```bash
+kubectl create ingress common-ingress --class=nginx \
+	--rule="dxp.localdev.me/*=dxp-service:80,tls" \
+	--rule="custom-rest-service.localdev.me/*=custom-rest-service:80,tls" \
+	--rule="remote-app-a.localdev.me/*=remote-app-a:80,tls"
+```

@@ -27,18 +27,13 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
-
-import org.powermock.api.mockito.PowerMockito;
+import org.mockito.Mockito;
 
 /**
  * @author Leonardo Barros
  */
-@RunWith(MockitoJUnitRunner.class)
-public class BelongsToRoleFunctionTest extends PowerMockito {
+public class BelongsToRoleFunctionTest {
 
 	@ClassRule
 	@Rule
@@ -46,26 +41,26 @@ public class BelongsToRoleFunctionTest extends PowerMockito {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		_belongsToRoleFunction = new BelongsToRoleFunction(
 			_roleLocalService, _userGroupRoleLocalService, _userLocalService);
 	}
 
 	@Test
 	public void testCatchPortalException() throws Exception {
-		when(
+		Mockito.when(
 			_roleLocalService.fetchRole(1, "test")
 		).thenReturn(
 			_role
 		);
 
-		when(
+		Mockito.when(
 			_role.getType()
 		).thenReturn(
 			RoleConstants.TYPE_REGULAR
 		);
 
-		when(
+		Mockito.when(
 			_userLocalService.hasRoleUser(1, "test", 1, true)
 		).thenThrow(
 			new PortalException()
@@ -85,7 +80,7 @@ public class BelongsToRoleFunctionTest extends PowerMockito {
 
 	@Test
 	public void testGuestRole() {
-		when(
+		Mockito.when(
 			_roleLocalService.fetchRole(1, "Guest")
 		).thenReturn(
 			_role
@@ -104,7 +99,7 @@ public class BelongsToRoleFunctionTest extends PowerMockito {
 
 	@Test
 	public void testNotGuestRole() {
-		when(
+		Mockito.when(
 			_roleLocalService.fetchRole(2, "test")
 		).thenReturn(
 			_role
@@ -142,7 +137,7 @@ public class BelongsToRoleFunctionTest extends PowerMockito {
 
 	@Test
 	public void testRoleNotFound() {
-		when(
+		Mockito.when(
 			_roleLocalService.fetchRole(1, "test")
 		).thenReturn(
 			null
@@ -174,19 +169,19 @@ public class BelongsToRoleFunctionTest extends PowerMockito {
 	}
 
 	private boolean _callTestRegularRole(boolean returnValue) throws Exception {
-		when(
+		Mockito.when(
 			_roleLocalService.fetchRole(1, "test")
 		).thenReturn(
 			_role
 		);
 
-		when(
+		Mockito.when(
 			_role.getType()
 		).thenReturn(
 			RoleConstants.TYPE_REGULAR
 		);
 
-		when(
+		Mockito.when(
 			_userLocalService.hasRoleUser(1, "test", 1, true)
 		).thenReturn(
 			returnValue
@@ -207,19 +202,19 @@ public class BelongsToRoleFunctionTest extends PowerMockito {
 	private boolean _callTestUserGroupRole(boolean returnValue)
 		throws Exception {
 
-		when(
+		Mockito.when(
 			_roleLocalService.fetchRole(1, "test")
 		).thenReturn(
 			_role
 		);
 
-		when(
+		Mockito.when(
 			_role.getType()
 		).thenReturn(
 			RoleConstants.TYPE_ORGANIZATION
 		);
 
-		when(
+		Mockito.when(
 			_userGroupRoleLocalService.hasUserGroupRole(1, 1, "test", true)
 		).thenReturn(
 			returnValue
@@ -239,17 +234,12 @@ public class BelongsToRoleFunctionTest extends PowerMockito {
 	}
 
 	private BelongsToRoleFunction _belongsToRoleFunction;
-
-	@Mock
-	private Role _role;
-
-	@Mock
-	private RoleLocalService _roleLocalService;
-
-	@Mock
-	private UserGroupRoleLocalService _userGroupRoleLocalService;
-
-	@Mock
-	private UserLocalService _userLocalService;
+	private final Role _role = Mockito.mock(Role.class);
+	private final RoleLocalService _roleLocalService = Mockito.mock(
+		RoleLocalService.class);
+	private final UserGroupRoleLocalService _userGroupRoleLocalService =
+		Mockito.mock(UserGroupRoleLocalService.class);
+	private final UserLocalService _userLocalService = Mockito.mock(
+		UserLocalService.class);
 
 }

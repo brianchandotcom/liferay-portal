@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: custom-rest-service
-        image: custom-rest-service:1.0.0-SNAPSHOT
+        image: custom-rest-service
         imagePullPolicy: Never
         resources:
           limits:

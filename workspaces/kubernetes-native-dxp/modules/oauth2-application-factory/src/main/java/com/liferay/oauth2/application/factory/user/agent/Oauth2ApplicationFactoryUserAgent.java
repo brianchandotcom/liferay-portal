@@ -20,7 +20,6 @@ import com.liferay.oauth2.provider.constants.ClientProfile;
 import com.liferay.oauth2.provider.constants.GrantType;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
-import com.liferay.oauth2.provider.service.OAuth2ApplicationScopeAliasesLocalService;
 import com.liferay.oauth2.provider.util.OAuth2SecureRandomGenerator;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -33,11 +32,14 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.InputStream;
-
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -68,8 +70,6 @@ public class Oauth2ApplicationFactoryUserAgent {
 			@Reference K8sAgent k8sAgent,
 			@Reference OAuth2ApplicationLocalService
 				oAuth2ApplicationLocalService,
-			@Reference OAuth2ApplicationScopeAliasesLocalService
-				oAuth2ApplicationScopeAliasesLocalService,
 			@Reference UserLocalService userLocalService,
 			Map<String, Object> properties)
 		throws Exception {
@@ -82,6 +82,17 @@ public class Oauth2ApplicationFactoryUserAgent {
 		_oAuth2ApplicationUserAgentConfiguration =
 			ConfigurableUtil.createConfigurable(
 				OAuth2ApplicationUserAgentConfiguration.class, properties);
+
+		String protocol = GetterUtil.getString(
+			PropsValues.WEB_SERVER_PROTOCOL, Http.HTTP);
+		String serviceDomain = System.getenv("SERVICE_DOMAIN");
+
+		String serviceAddress = StringBundler.concat(
+			protocol, "://", serviceDomain);
+
+		_redirectURL = GetterUtil.getString(
+			_oAuth2ApplicationUserAgentConfiguration.redirectURL(),
+			serviceAddress.concat("/o/builtin/oauth2/redirect"));
 
 		Company company = _companyLocalService.getCompanyById(
 			_oAuth2ApplicationUserAgentConfiguration.companyId());
@@ -99,10 +110,7 @@ public class Oauth2ApplicationFactoryUserAgent {
 				_oAuth2ApplicationUserAgentConfiguration.homePageURL()) ||
 			!Objects.equals(
 				oAuth2Application.getPrivacyPolicyURL(),
-				_oAuth2ApplicationUserAgentConfiguration.privacyPolicyURL()) ||
-			!Objects.equals(
-				oAuth2Application.getRedirectURIs(),
-				_oAuth2ApplicationUserAgentConfiguration.redirectURL())) {
+				_oAuth2ApplicationUserAgentConfiguration.privacyPolicyURL())) {
 
 			update = true;
 		}
@@ -123,8 +131,7 @@ public class Oauth2ApplicationFactoryUserAgent {
 					oAuth2Application.getIconFileEntryId(),
 					oAuth2Application.getName(),
 					_oAuth2ApplicationUserAgentConfiguration.privacyPolicyURL(),
-					Collections.singletonList(
-						_oAuth2ApplicationUserAgentConfiguration.redirectURL()),
+					Collections.singletonList(_redirectURL),
 					oAuth2Application.getRememberDevice(),
 					oAuth2Application.getTrustedApplication());
 		}
@@ -138,12 +145,12 @@ public class Oauth2ApplicationFactoryUserAgent {
 
 		_k8sAgent.createOrUpdateConfigMap(
 			HashMapBuilder.put(
-				"dxp.service_uri", "http://dxp-service"
+				"dxp.service_uri", serviceAddress
 			).put(
 				"oauth2.client_id", oAuth2Application.getClientId()
 			).put(
 				"oauth2.introspection_uri",
-				"http://dxp-service/o/oauth2/introspect"
+				serviceAddress.concat("/o/oauth2/introspect")
 			).build(),
 			StringBundler.concat(
 				_oAuth2ApplicationUserAgentConfiguration.name(),
@@ -164,6 +171,12 @@ public class Oauth2ApplicationFactoryUserAgent {
 		}
 	}
 
+	private String _getName() {
+		return StringBundler.concat(
+			_oAuth2ApplicationUserAgentConfiguration.name(),
+			USER_AGENT_SUBDOMAIN);
+	}
+
 	private OAuth2Application _getOrAddOAuth2Application(Company company)
 		throws Exception {
 
@@ -176,8 +189,7 @@ public class Oauth2ApplicationFactoryUserAgent {
 
 		Property nameProperty = PropertyFactoryUtil.forName("name");
 
-		dynamicQuery.add(
-			nameProperty.eq(_oAuth2ApplicationUserAgentConfiguration.name()));
+		dynamicQuery.add(nameProperty.eq(_getName()));
 
 		List<OAuth2Application> oAuth2Applications =
 			_oAuth2ApplicationLocalService.dynamicQuery(dynamicQuery);
@@ -196,13 +208,13 @@ public class Oauth2ApplicationFactoryUserAgent {
 				user.getUserId(),
 				OAuth2SecureRandomGenerator.generateClientId(),
 				ClientProfile.USER_AGENT_APPLICATION.id(), null,
-				_oAuth2ApplicationUserAgentConfiguration.description(), null,
+				_oAuth2ApplicationUserAgentConfiguration.description(),
+				Arrays.asList("token.introspection"),
 				_oAuth2ApplicationUserAgentConfiguration.homePageURL(), 0,
-				_oAuth2ApplicationUserAgentConfiguration.name(),
+				_getName(),
 				_oAuth2ApplicationUserAgentConfiguration.privacyPolicyURL(),
-				Collections.singletonList(
-					_oAuth2ApplicationUserAgentConfiguration.redirectURL()),
-				false, true, null, new ServiceContext());
+				Collections.singletonList(_redirectURL), false, true, null,
+				new ServiceContext());
 
 		Class<?> clazz = getClass();
 
@@ -219,6 +231,7 @@ public class Oauth2ApplicationFactoryUserAgent {
 	private final OAuth2ApplicationLocalService _oAuth2ApplicationLocalService;
 	private final OAuth2ApplicationUserAgentConfiguration
 		_oAuth2ApplicationUserAgentConfiguration;
+	private final String _redirectURL;
 	private final UserLocalService _userLocalService;
 
 }

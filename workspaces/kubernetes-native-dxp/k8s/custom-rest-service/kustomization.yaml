@@ -1,5 +1,4 @@
 resources:
 - deployment.yaml
 - extension-configmap.yaml
-#- ingress.yaml
 - service.yaml

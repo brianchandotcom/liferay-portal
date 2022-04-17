@@ -24,31 +24,25 @@ import com.liferay.dynamic.data.mapping.form.field.type.internal.select.SelectDD
 import com.liferay.dynamic.data.mapping.form.field.type.internal.text.TextDDMFormFieldTemplateContextContributor;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.util.PortalImpl;
-
-import org.powermock.api.mockito.PowerMockito;
 
 /**
  * @author Rafael Praxedes
  */
-public class DDMFormFieldTemplateContextContributorTestHelper
-	extends PowerMockito {
+public class DDMFormFieldTemplateContextContributorTestHelper {
 
 	public CheckboxMultipleDDMFormFieldTemplateContextContributor
-			createCheckboxMultipleDDMFormFieldTemplateContextContributor()
-		throws Exception {
+		createCheckboxMultipleDDMFormFieldTemplateContextContributor() {
 
 		CheckboxMultipleDDMFormFieldTemplateContextContributor
 			checkboxMultipleDDMFormFieldTemplateContextContributor =
 				new CheckboxMultipleDDMFormFieldTemplateContextContributor();
 
-		field(
-			CheckboxMultipleDDMFormFieldTemplateContextContributor.class,
-			"jsonFactory"
-		).set(
-			checkboxMultipleDDMFormFieldTemplateContextContributor, _jsonFactory
-		);
+		ReflectionTestUtil.setFieldValue(
+			checkboxMultipleDDMFormFieldTemplateContextContributor,
+			"jsonFactory", _jsonFactory);
 
 		return checkboxMultipleDDMFormFieldTemplateContextContributor;
 	}
@@ -60,92 +54,70 @@ public class DDMFormFieldTemplateContextContributorTestHelper
 	}
 
 	public GridDDMFormFieldTemplateContextContributor
-			createGridDDMFormFieldTemplateContextContributor()
-		throws Exception {
+		createGridDDMFormFieldTemplateContextContributor() {
 
 		GridDDMFormFieldTemplateContextContributor
 			gridDDMFormFieldTemplateContextContributor =
 				new GridDDMFormFieldTemplateContextContributor();
 
-		field(
-			GridDDMFormFieldTemplateContextContributor.class, "jsonFactory"
-		).set(
-			gridDDMFormFieldTemplateContextContributor, _jsonFactory
-		);
+		ReflectionTestUtil.setFieldValue(
+			gridDDMFormFieldTemplateContextContributor, "jsonFactory",
+			_jsonFactory);
 
 		return gridDDMFormFieldTemplateContextContributor;
 	}
 
 	public NumericDDMFormFieldTemplateContextContributor
-			createNumericDDMFormFieldTemplateContextContributor()
-		throws Exception {
+		createNumericDDMFormFieldTemplateContextContributor() {
 
 		return new NumericDDMFormFieldTemplateContextContributor();
 	}
 
 	public RadioDDMFormFieldTemplateContextContributor
-			createRadioDDMFormFieldTemplateContextContributor()
-		throws Exception {
+		createRadioDDMFormFieldTemplateContextContributor() {
 
 		RadioDDMFormFieldTemplateContextContributor
 			radioDDMFormFieldTemplateContextContributor =
 				new RadioDDMFormFieldTemplateContextContributor();
 
-		field(
-			RadioDDMFormFieldTemplateContextContributor.class, "jsonFactory"
-		).set(
-			radioDDMFormFieldTemplateContextContributor, _jsonFactory
-		);
+		ReflectionTestUtil.setFieldValue(
+			radioDDMFormFieldTemplateContextContributor, "jsonFactory",
+			_jsonFactory);
 
 		return radioDDMFormFieldTemplateContextContributor;
 	}
 
 	public SelectDDMFormFieldTemplateContextContributor
-			createSelectDDMFormFieldTemplateContextContributor()
-		throws Exception {
+		createSelectDDMFormFieldTemplateContextContributor() {
 
 		SelectDDMFormFieldTemplateContextContributor
 			selectDDMFormFieldTemplateContextContributor =
 				new SelectDDMFormFieldTemplateContextContributor();
 
-		field(
-			SelectDDMFormFieldTemplateContextContributor.class,
-			"ddmFormFieldOptionsFactory"
-		).set(
+		ReflectionTestUtil.setFieldValue(
 			selectDDMFormFieldTemplateContextContributor,
-			new DDMFormFieldOptionsFactoryImpl()
-		);
+			"ddmFormFieldOptionsFactory", new DDMFormFieldOptionsFactoryImpl());
 
-		field(
-			SelectDDMFormFieldTemplateContextContributor.class, "jsonFactory"
-		).set(
-			selectDDMFormFieldTemplateContextContributor, _jsonFactory
-		);
+		ReflectionTestUtil.setFieldValue(
+			selectDDMFormFieldTemplateContextContributor, "jsonFactory",
+			_jsonFactory);
 
-		field(
-			SelectDDMFormFieldTemplateContextContributor.class, "portal"
-		).set(
-			selectDDMFormFieldTemplateContextContributor, _portal
-		);
+		ReflectionTestUtil.setFieldValue(
+			selectDDMFormFieldTemplateContextContributor, "portal", _portal);
 
 		return selectDDMFormFieldTemplateContextContributor;
 	}
 
 	public TextDDMFormFieldTemplateContextContributor
-			createTextDDMFormFieldTemplateContextContributor()
-		throws Exception {
+		createTextDDMFormFieldTemplateContextContributor() {
 
 		TextDDMFormFieldTemplateContextContributor
 			textDDMFormFieldTemplateContextContributor =
 				new TextDDMFormFieldTemplateContextContributor();
 
-		field(
-			TextDDMFormFieldTemplateContextContributor.class,
-			"ddmFormFieldOptionsFactory"
-		).set(
+		ReflectionTestUtil.setFieldValue(
 			textDDMFormFieldTemplateContextContributor,
-			new DDMFormFieldOptionsFactoryImpl()
-		);
+			"ddmFormFieldOptionsFactory", new DDMFormFieldOptionsFactoryImpl());
 
 		return textDDMFormFieldTemplateContextContributor;
 	}

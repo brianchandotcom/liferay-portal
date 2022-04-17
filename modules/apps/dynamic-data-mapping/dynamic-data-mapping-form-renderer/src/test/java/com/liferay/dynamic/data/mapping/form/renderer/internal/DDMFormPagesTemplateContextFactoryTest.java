@@ -38,7 +38,6 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormLayoutTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
-import com.liferay.google.places.util.GooglePlacesUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
@@ -61,10 +60,13 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PrefsProps;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.language.LanguageResources;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.CalendarFactoryImpl;
 import com.liferay.portal.util.FastDateFormatFactoryImpl;
 import com.liferay.portal.util.HtmlImpl;
@@ -76,41 +78,32 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.mockito.Matchers;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.core.classloader.annotations.SuppressStaticInitializationFor;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Marcellus Tavares
  */
-@PrepareForTest(
-	{
-		GooglePlacesUtil.class, LocaleThreadLocal.class,
-		ResourceBundleLoaderUtil.class, ResourceBundleUtil.class
-	}
-)
-@RunWith(PowerMockRunner.class)
-@SuppressStaticInitializationFor(
-	"com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil"
-)
-public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
+public class DDMFormPagesTemplateContextFactoryTest {
 
-	@Before
-	public void setUp() throws Exception {
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
 		_setUpCalendarFactoryUtil();
 		_setUpDDMFormFieldTypeServicesTracker();
 		_setUpFastDateFormatFactoryUtil();
@@ -406,7 +399,7 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 		ReflectionTestUtil.setFieldValue(
 			ddmFormFieldTemplateContextContributor, "_htmlParser", _htmlParser);
 
-		when(
+		Mockito.when(
 			_htmlParser.extractText(StringPool.BLANK)
 		).thenReturn(
 			StringPool.BLANK
@@ -827,21 +820,8 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 			formFieldTooltip, fieldTemplateContext.get("tooltip"));
 	}
 
-	protected void mockDDMFormFieldTypeServicesTracker(
-		String type,
-		DDMFormFieldTemplateContextContributor
-			ddmFormFieldTemplateContextContributor) {
-
-		when(
-			_ddmFormFieldTypeServicesTracker.
-				getDDMFormFieldTemplateContextContributor(Matchers.eq(type))
-		).thenReturn(
-			ddmFormFieldTemplateContextContributor
-		);
-	}
-
-	protected void setUpLanguageUtil() {
-		Language language = mock(Language.class);
+	protected static void setUpLanguageUtil() {
+		Language language = Mockito.mock(Language.class);
 
 		whenLanguageGet(
 			language, LocaleUtil.US, "this-field-is-required",
@@ -852,13 +832,208 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 		languageUtil.setLanguage(language);
 	}
 
-	protected void whenLanguageGet(
+	protected static void whenLanguageGet(
 		Language language, Locale locale, String key, String returnValue) {
 
-		when(
+		Mockito.when(
 			language.get(Matchers.any(ResourceBundle.class), Matchers.eq(key))
 		).thenReturn(
 			returnValue
+		);
+	}
+
+	protected void mockDDMFormFieldTypeServicesTracker(
+		String type,
+		DDMFormFieldTemplateContextContributor
+			ddmFormFieldTemplateContextContributor) {
+
+		Mockito.when(
+			_ddmFormFieldTypeServicesTracker.
+				getDDMFormFieldTemplateContextContributor(Matchers.eq(type))
+		).thenReturn(
+			ddmFormFieldTemplateContextContributor
+		);
+	}
+
+	private static void _setUpCalendarFactoryUtil() {
+		CalendarFactoryUtil calendarFactoryUtil = new CalendarFactoryUtil();
+
+		calendarFactoryUtil.setCalendarFactory(new CalendarFactoryImpl());
+	}
+
+	private static void _setUpDDMFormFieldTypeServicesTracker() {
+		DDMFormFieldValueAccessor<?> ddmFormFieldValueAccessor =
+			new DefaultDDMFormFieldValueAccessor();
+
+		Mockito.when(
+			_ddmFormFieldTypeServicesTracker.getDDMFormFieldValueAccessor(
+				Matchers.anyString())
+		).thenReturn(
+			(DDMFormFieldValueAccessor<Object>)ddmFormFieldValueAccessor
+		);
+	}
+
+	private static void _setUpFastDateFormatFactoryUtil() {
+		FastDateFormatFactoryUtil fastDateFormatFactoryUtil =
+			new FastDateFormatFactoryUtil();
+
+		fastDateFormatFactoryUtil.setFastDateFormatFactory(
+			new FastDateFormatFactoryImpl());
+	}
+
+	private static void _setUpGooglePlacesUtil() throws Exception {
+		ReflectionTestUtil.setFieldValue(
+			PrefsPropsUtil.class, "_prefsProps", _prefsProps);
+
+		Mockito.when(
+			_prefsProps.getPreferences(Mockito.anyLong())
+		).thenReturn(
+			_portletPreferences
+		);
+
+		Mockito.when(
+			_portletPreferences.getValue(
+				Mockito.anyString(), Mockito.anyString())
+		).thenReturn(
+			StringPool.BLANK
+		);
+
+		Mockito.when(
+			_groupLocalService.getGroup(Mockito.anyLong())
+		).thenReturn(
+			null
+		);
+	}
+
+	private static void _setUpHtmlParser() {
+		Mockito.when(
+			_htmlParser.extractText("descriptionPage")
+		).thenReturn(
+			"descriptionPage"
+		);
+
+		Mockito.when(
+			_htmlParser.extractText("Page 1")
+		).thenReturn(
+			"Page 1"
+		);
+
+		Mockito.when(
+			_htmlParser.extractText("Page 1 Description")
+		).thenReturn(
+			"Page 1 Description"
+		);
+
+		Mockito.when(
+			_htmlParser.extractText("titlePage")
+		).thenReturn(
+			"titlePage"
+		);
+
+		Mockito.when(
+			_htmlParser.extractText("<a>descriptionPage</a>")
+		).thenReturn(
+			"descriptionPage"
+		);
+
+		Mockito.when(
+			_htmlParser.extractText("<a>titlePage</a>")
+		).thenReturn(
+			"titlePage"
+		);
+	}
+
+	private static void _setUpHtmlUtil() {
+		HtmlUtil htmlUtil = new HtmlUtil();
+
+		htmlUtil.setHtml(new HtmlImpl());
+	}
+
+	private static void _setUpHttpServletRequest() {
+		_httpServletRequest = Mockito.mock(HttpServletRequest.class);
+
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setPathThemeImages(StringPool.BLANK);
+		themeDisplay.setUser(Mockito.mock(User.class));
+
+		Mockito.when(
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY)
+		).thenReturn(
+			themeDisplay
+		);
+	}
+
+	private static void _setUpLanguageResources() {
+		LanguageResources languageResources = new LanguageResources();
+
+		languageResources.setConfig(StringPool.BLANK);
+	}
+
+	private static void _setUpLocaleThreadLocal() {
+		LocaleThreadLocal.setThemeDisplayLocale(LocaleUtil.US);
+	}
+
+	private static void _setUpPortalUtil() {
+		PortalUtil portalUtil = new PortalUtil();
+
+		Portal portal = Mockito.mock(Portal.class);
+
+		ResourceBundle resourceBundle = Mockito.mock(ResourceBundle.class);
+
+		Mockito.when(
+			portal.getCompanyId(Matchers.any(PortletRequest.class))
+		).thenReturn(
+			1L
+		);
+
+		Mockito.when(
+			portal.getUserId(Matchers.any(PortletRequest.class))
+		).thenReturn(
+			1L
+		);
+
+		Mockito.when(
+			portal.getResourceBundle(Matchers.any(Locale.class))
+		).thenReturn(
+			resourceBundle
+		);
+
+		portalUtil.setPortal(portal);
+	}
+
+	private static void _setUpResourceBundle() {
+		Portal portal = Mockito.mock(Portal.class);
+
+		ResourceBundle resourceBundle = Mockito.mock(ResourceBundle.class);
+
+		Mockito.when(
+			portal.getResourceBundle(Matchers.any(Locale.class))
+		).thenReturn(
+			resourceBundle
+		);
+	}
+
+	private static void _setUpResourceBundleLoaderUtil() {
+		ResourceBundleLoader portalResourceBundleLoader = Mockito.mock(
+			ResourceBundleLoader.class);
+
+		ResourceBundleLoaderUtil.setPortalResourceBundleLoader(
+			portalResourceBundleLoader);
+	}
+
+	private static void _setUpResourceBundleUtil() {
+		ResourceBundleLoader resourceBundleLoader = Mockito.mock(
+			ResourceBundleLoader.class);
+
+		ResourceBundleLoaderUtil.setPortalResourceBundleLoader(
+			resourceBundleLoader);
+
+		Mockito.when(
+			resourceBundleLoader.loadResourceBundle(Matchers.any(Locale.class))
+		).thenReturn(
+			ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE
 		);
 	}
 
@@ -870,11 +1045,10 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 	}
 
 	private DDMFormPagesTemplateContextFactory
-			_createDDMFormPagesTemplateContextFactory(
-				DDMForm ddmForm, DDMFormLayout ddmFormLayout,
-				DDMFormValues ddmFormValues, boolean ddmFormReadOnly,
-				boolean showRequiredFieldsWarning, boolean viewMode)
-		throws Exception {
+		_createDDMFormPagesTemplateContextFactory(
+			DDMForm ddmForm, DDMFormLayout ddmFormLayout,
+			DDMFormValues ddmFormValues, boolean ddmFormReadOnly,
+			boolean showRequiredFieldsWarning, boolean viewMode) {
 
 		DDMFormRenderingContext ddmFormRenderingContext =
 			new DDMFormRenderingContext();
@@ -903,23 +1077,18 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 		return ddmFormPagesTemplateContextFactory;
 	}
 
-	private DDMFormEvaluator _getDDMFormEvaluator() throws Exception {
+	private DDMFormEvaluator _getDDMFormEvaluator() {
 		DDMExpressionFactoryImpl ddmExpressionFactoryImpl =
 			new DDMExpressionFactoryImpl();
 
 		DDMFormEvaluator ddmFormEvaluator = new DDMFormEvaluatorImpl();
 
-		field(
-			DDMFormEvaluatorImpl.class, "ddmExpressionFactory"
-		).set(
-			ddmFormEvaluator, ddmExpressionFactoryImpl
-		);
+		ReflectionTestUtil.setFieldValue(
+			ddmFormEvaluator, "ddmExpressionFactory", ddmExpressionFactoryImpl);
 
-		field(
-			DDMFormEvaluatorImpl.class, "ddmFormFieldTypeServicesTracker"
-		).set(
-			ddmFormEvaluator, _ddmFormFieldTypeServicesTracker
-		);
+		ReflectionTestUtil.setFieldValue(
+			ddmFormEvaluator, "ddmFormFieldTypeServicesTracker",
+			_ddmFormFieldTypeServicesTracker);
 
 		Map<String, DDMExpressionFunctionFactory>
 			ddmExpressionFunctionFactoryMap =
@@ -932,21 +1101,19 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 					"setVisible", () -> new SetVisibleFunction()
 				).build();
 
-		DDMExpressionFunctionTracker ddmExpressionFunctionTracker = mock(
-			DDMExpressionFunctionTracker.class);
+		DDMExpressionFunctionTracker ddmExpressionFunctionTracker =
+			Mockito.mock(DDMExpressionFunctionTracker.class);
 
-		when(
+		Mockito.when(
 			ddmExpressionFunctionTracker.getDDMExpressionFunctionFactories(
 				Matchers.any())
 		).thenReturn(
 			ddmExpressionFunctionFactoryMap
 		);
 
-		field(
-			DDMExpressionFactoryImpl.class, "ddmExpressionFunctionTracker"
-		).set(
-			ddmExpressionFactoryImpl, ddmExpressionFunctionTracker
-		);
+		ReflectionTestUtil.setFieldValue(
+			ddmExpressionFactoryImpl, "ddmExpressionFunctionTracker",
+			ddmExpressionFunctionTracker);
 
 		return ddmFormEvaluator;
 	}
@@ -969,210 +1136,32 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 		return (Map<String, Object>)fieldsColumn1Row1.get(0);
 	}
 
-	private void _setUpCalendarFactoryUtil() {
-		CalendarFactoryUtil calendarFactoryUtil = new CalendarFactoryUtil();
-
-		calendarFactoryUtil.setCalendarFactory(new CalendarFactoryImpl());
-	}
-
-	private void _setUpDDMFormFieldTypeServicesTracker() {
-		DDMFormFieldValueAccessor<?> ddmFormFieldValueAccessor =
-			new DefaultDDMFormFieldValueAccessor();
-
-		Mockito.when(
-			_ddmFormFieldTypeServicesTracker.getDDMFormFieldValueAccessor(
-				Matchers.anyString())
-		).thenReturn(
-			(DDMFormFieldValueAccessor<Object>)ddmFormFieldValueAccessor
-		);
-	}
-
-	private void _setUpFastDateFormatFactoryUtil() {
-		FastDateFormatFactoryUtil fastDateFormatFactoryUtil =
-			new FastDateFormatFactoryUtil();
-
-		fastDateFormatFactoryUtil.setFastDateFormatFactory(
-			new FastDateFormatFactoryImpl());
-	}
-
-	private void _setUpGooglePlacesUtil() {
-		mockStatic(GooglePlacesUtil.class);
-
-		when(
-			GooglePlacesUtil.getGooglePlacesAPIKey(
-				Matchers.anyLong(), Matchers.anyLong(),
-				Matchers.any(GroupLocalService.class))
-		).thenReturn(
-			StringPool.BLANK
-		);
-	}
-
-	private void _setUpHtmlParser() {
-		when(
-			_htmlParser.extractText("descriptionPage")
-		).thenReturn(
-			"descriptionPage"
-		);
-
-		when(
-			_htmlParser.extractText("Page 1")
-		).thenReturn(
-			"Page 1"
-		);
-
-		when(
-			_htmlParser.extractText("Page 1 Description")
-		).thenReturn(
-			"Page 1 Description"
-		);
-
-		when(
-			_htmlParser.extractText("titlePage")
-		).thenReturn(
-			"titlePage"
-		);
-
-		when(
-			_htmlParser.extractText("<a>descriptionPage</a>")
-		).thenReturn(
-			"descriptionPage"
-		);
-
-		when(
-			_htmlParser.extractText("<a>titlePage</a>")
-		).thenReturn(
-			"titlePage"
-		);
-	}
-
-	private void _setUpHtmlUtil() {
-		HtmlUtil htmlUtil = new HtmlUtil();
-
-		htmlUtil.setHtml(new HtmlImpl());
-	}
-
-	private void _setUpHttpServletRequest() throws Exception {
-		_httpServletRequest = Mockito.mock(HttpServletRequest.class);
-
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		themeDisplay.setPathThemeImages(StringPool.BLANK);
-		themeDisplay.setUser(Mockito.mock(User.class));
-
-		when(
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY)
-		).thenReturn(
-			themeDisplay
-		);
-	}
-
-	private void _setUpLanguageResources() {
-		LanguageResources languageResources = new LanguageResources();
-
-		languageResources.setConfig(StringPool.BLANK);
-	}
-
-	private void _setUpLocaleThreadLocal() {
-		mockStatic(LocaleThreadLocal.class);
-
-		when(
-			LocaleThreadLocal.getThemeDisplayLocale()
-		).thenReturn(
-			LocaleUtil.US
-		);
-	}
-
-	private void _setUpPortalUtil() {
-		PortalUtil portalUtil = new PortalUtil();
-
-		Portal portal = mock(Portal.class);
-
-		ResourceBundle resourceBundle = mock(ResourceBundle.class);
-
-		when(
-			portal.getCompanyId(Matchers.any(PortletRequest.class))
-		).thenReturn(
-			1L
-		);
-
-		when(
-			portal.getUserId(Matchers.any(PortletRequest.class))
-		).thenReturn(
-			1L
-		);
-
-		when(
-			portal.getResourceBundle(Matchers.any(Locale.class))
-		).thenReturn(
-			resourceBundle
-		);
-
-		portalUtil.setPortal(portal);
-	}
-
-	private void _setUpResourceBundle() {
-		Portal portal = mock(Portal.class);
-
-		ResourceBundle resourceBundle = mock(ResourceBundle.class);
-
-		when(
-			portal.getResourceBundle(Matchers.any(Locale.class))
-		).thenReturn(
-			resourceBundle
-		);
-	}
-
-	private void _setUpResourceBundleLoaderUtil() {
-		mockStatic(ResourceBundleLoaderUtil.class);
-
-		ResourceBundleLoader portalResourceBundleLoader = mock(
-			ResourceBundleLoader.class);
-
-		when(
-			ResourceBundleLoaderUtil.getPortalResourceBundleLoader()
-		).thenReturn(
-			portalResourceBundleLoader
-		);
-	}
-
-	private void _setUpResourceBundleUtil() {
-		PowerMockito.mockStatic(ResourceBundleUtil.class);
-
-		PowerMockito.when(
-			ResourceBundleUtil.getBundle(
-				Matchers.anyString(), Matchers.any(Locale.class),
-				Matchers.any(ClassLoader.class))
-		).thenReturn(
-			ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE
-		);
-	}
-
 	private static final String _HTML_WRAPPER = "<a>%s</a>";
 
 	private static final Locale _LOCALE = LocaleUtil.US;
 
 	private static final String _PORTLET_NAMESPACE = StringUtil.randomString();
 
+	private static final DDMFormFieldTypeServicesTracker
+		_ddmFormFieldTypeServicesTracker = Mockito.mock(
+			DDMFormFieldTypeServicesTracker.class);
+	private static final GroupLocalService _groupLocalService = Mockito.mock(
+		GroupLocalService.class);
+	private static final HtmlParser _htmlParser = Mockito.mock(
+		HtmlParser.class);
+	private static HttpServletRequest _httpServletRequest;
+	private static final PortletPreferences _portletPreferences = Mockito.mock(
+		PortletPreferences.class);
+	private static final PrefsProps _prefsProps = Mockito.mock(
+		PrefsProps.class);
+
 	private final DDMFormFieldTemplateContextContributorTestHelper
 		_ddmFormFieldTemplateContextContributorTestHelper =
 			new DDMFormFieldTemplateContextContributorTestHelper();
-
-	@Mock
-	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
-
-	@Mock
-	private DDMStructureLayoutLocalService _ddmStructureLayoutLocalService;
-
-	@Mock
-	private DDMStructureLocalService _ddmStructureLocalService;
-
-	@Mock
-	private GroupLocalService _groupLocalService;
-
-	@Mock
-	private HtmlParser _htmlParser;
-
-	private HttpServletRequest _httpServletRequest;
+	private final DDMStructureLayoutLocalService
+		_ddmStructureLayoutLocalService = Mockito.mock(
+			DDMStructureLayoutLocalService.class);
+	private final DDMStructureLocalService _ddmStructureLocalService =
+		Mockito.mock(DDMStructureLocalService.class);
 
 }

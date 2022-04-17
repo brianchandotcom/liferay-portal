@@ -52,6 +52,10 @@ spec:
               value: zulu11
             - name: LIFERAY_JPDA_ENABLED
               value: "true"
+            - name: LIFERAY_PORTAL_PERIOD_INSTANCE_PERIOD_PROTOCOL
+              value: https
+            - name: LIFERAY_WEB_PERIOD_SERVER_PERIOD_PROTOCOL
+              value: https
             - name: LIFERAY_MODULE_PERIOD_FRAMEWORK_PERIOD_SYSTEM_PERIOD_PACKAGES_PERIOD_EXTRA
               value: com.microsoft.sqlserver.jdbc,com.mysql.cj.jdbc,com.mysql.jdbc,com.p6spy.engine.spy,com.sun.security.auth.module,org.hsqldb.jdbc,org.mariadb.jdbc,sun.misc,sun.net.util,sun.security.provider,javax.websocket,javax.websocket.server,org.apache.tomcat.websocket.server,com.sun.net.httpserver
             - name: LIFERAY_MODULE_PERIOD_FRAMEWORK_PERIOD_PROPERTIES_PERIOD_ORG_PERIOD_APACHE_PERIOD_FELIX_PERIOD_CONFIGADMIN_PERIOD_PLUGIN_PERIOD_INTERPOLATION_PERIOD_SECRETSDIR
@@ -66,6 +70,11 @@ spec:
                 configMapKeyRef:
                   name: google-oidc-credentials-configmap
                   key: GOOGLE_OIDC_CLIENT_SECRET
+            - name: SERVICE_DOMAIN
+              valueFrom:
+                configMapKeyRef:
+                  name: google-oidc-credentials-configmap
+                  key: SERVICE_DOMAIN
           ports:
           - containerPort: 8080
           - containerPort: 8000

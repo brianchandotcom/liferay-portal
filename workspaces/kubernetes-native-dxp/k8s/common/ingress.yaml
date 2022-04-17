@@ -35,8 +35,8 @@ spec:
               number: 80
         path: /
         pathType: Prefix
-#  tls:
-#  - hosts:
-#    - dxp.localdev.me
-#    - custom-rest-service.localdev.me
-#    - remote-app-a.localdev.me
+  tls:
+  - hosts:
+    - dxp.localdev.me
+    - custom-rest-service.localdev.me
+    - remote-app-a.localdev.me

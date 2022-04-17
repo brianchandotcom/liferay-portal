@@ -6,7 +6,7 @@ import HelloFoo from './routes/hello-foo/pages/HelloFoo';
 import HelloWorld from './routes/hello-world/pages/HelloWorld';
 import './common/styles/index.scss';
 import { Liferay } from './common/services/liferay/liferay';
-import api from './common/services/liferay/api';
+import WebClient from './common/services/liferay/webclient';
 
 const App = ({ route }) => {
 	if (route === "hello-bar") {
@@ -21,35 +21,48 @@ const App = ({ route }) => {
 };
 
 class WebComponent extends HTMLElement {
+	constructor() {
+		super();
+
+		this.customRestApp = Liferay.OAuth.getUserAgentApplication('custom-rest-service');
+
+		this.webClient = new WebClient({
+			clientId:  this.customRestApp.clientId
+		});
+	}
+
+	webClient() {
+		return this.webClient;
+	}
+
 	connectedCallback() {
 		ReactDOM.render(
 			<App route={this.getAttribute("route")} />,
 			this
 		);
 
-		api('o/headless-admin-user/v1.0/my-user-account')
-			.then(response => response.json())
-			.then(res => {
+		if (Liferay.ThemeDisplay.isSignedIn()) {
+			this.webClient.fetch(
+				'o/headless-admin-user/v1.0/my-user-account'
+			).then(res => {
 				let nameEls = document.getElementsByClassName('hello-world-name');
 				if (nameEls.length > 0){
 					if (res.givenName) {
 						nameEls[0].innerHTML = res.givenName;
 					}
 				}
-		});
+			});
 
-		if (Liferay.ThemeDisplay.isSignedIn()) {
-			fetch(
-				"http://custom-rest-service.localdev.me:8080/random/number"
-			).then(response => response.json())
-				.then(res => {
-					let nameEls = document.getElementsByClassName('random-number');
-					if (nameEls.length > 0){
-						if (res) {
-							console.log("RESULT: ", res);
-							nameEls[0].innerHTML = res;
-						}
+			this.webClient.fetch(
+				`${this.customRestApp.homePageURL}/random/number`
+			).then(res => {
+				let nameEls = document.getElementsByClassName('random-number');
+				if (nameEls.length > 0) {
+					if (res) {
+						console.log("RESULT: ", res);
+						nameEls[0].innerHTML = res;
 					}
+				}
 			});
 		}
 	}

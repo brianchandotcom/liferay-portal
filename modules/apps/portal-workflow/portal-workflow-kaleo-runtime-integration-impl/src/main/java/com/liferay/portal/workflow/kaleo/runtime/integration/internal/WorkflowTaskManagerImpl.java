@@ -509,15 +509,13 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 
 			serviceContext.setCompanyId(companyId);
 
-			List<KaleoTaskInstanceToken> kaleoTaskInstanceTokens =
+			return _toWorkflowTasks(
 				_kaleoTaskInstanceTokenLocalService.getKaleoTaskInstanceTokens(
 					completed, start, end,
 					KaleoTaskInstanceTokenOrderByComparator.
 						getOrderByComparator(
 							orderByComparator, _kaleoWorkflowModelConverter),
-					serviceContext);
-
-			return _toWorkflowTasks(kaleoTaskInstanceTokens);
+					serviceContext));
 		}
 		catch (Exception exception) {
 			throw new WorkflowException(exception);
@@ -535,15 +533,13 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 
 			serviceContext.setCompanyId(companyId);
 
-			List<KaleoTaskInstanceToken> kaleoTaskInstanceTokens =
+			return _toWorkflowTasks(
 				_kaleoTaskInstanceTokenLocalService.getKaleoTaskInstanceTokens(
 					Role.class.getName(), roleId, completed, start, end,
 					KaleoTaskInstanceTokenOrderByComparator.
 						getOrderByComparator(
 							orderByComparator, _kaleoWorkflowModelConverter),
-					serviceContext);
-
-			return _toWorkflowTasks(kaleoTaskInstanceTokens);
+					serviceContext));
 		}
 		catch (Exception exception) {
 			throw new WorkflowException(exception);
@@ -589,15 +585,13 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 
 			serviceContext.setCompanyId(companyId);
 
-			List<KaleoTaskInstanceToken> kaleoTaskInstanceTokens =
+			return _toWorkflowTasks(
 				_kaleoTaskInstanceTokenLocalService.getKaleoTaskInstanceTokens(
 					User.class.getName(), userId, completed, start, end,
 					KaleoTaskInstanceTokenOrderByComparator.
 						getOrderByComparator(
 							orderByComparator, _kaleoWorkflowModelConverter),
-					serviceContext);
-
-			return _toWorkflowTasks(kaleoTaskInstanceTokens);
+					serviceContext));
 		}
 		catch (Exception exception) {
 			throw new WorkflowException(exception);
@@ -647,15 +641,13 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 				serviceContext.setUserId(userId);
 			}
 
-			List<KaleoTaskInstanceToken> kaleoTaskInstanceTokens =
+			return _toWorkflowTasks(
 				_kaleoTaskInstanceTokenLocalService.getKaleoTaskInstanceTokens(
 					workflowInstanceId, completed, start, end,
 					KaleoTaskInstanceTokenOrderByComparator.
 						getOrderByComparator(
 							orderByComparator, _kaleoWorkflowModelConverter),
-					serviceContext);
-
-			return _toWorkflowTasks(kaleoTaskInstanceTokens);
+					serviceContext));
 		}
 		catch (Exception exception) {
 			throw new WorkflowException(exception);

@@ -87,7 +87,7 @@
 </tr>
 <tr>
 	<td>GUEST</td>
-	<td>//div[@class='navigation']/ul/li/a/span[contains(.,'Guest')]</td>
+	<td>//div[contains(@class,'navigation')]//span[contains(.,'Guest')]</td>
 	<td></td>
 </tr>
 <tr>

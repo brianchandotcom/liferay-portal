@@ -46,21 +46,24 @@ public class SiteInitializerUtil {
 		URL entryURL = bundle.getEntry(
 			urlPath.substring(0, urlPath.lastIndexOf("/") + 1) + fileName);
 
-		return StringUtil.read(entryURL.openStream());
+		try (InputStream inputStream = entryURL.openStream()) {
+			return StringUtil.read(entryURL.openStream());
+		}
 	}
 
 	public static String read(
 			String resourcePath, ServletContext servletContext)
 		throws Exception {
 
-		InputStream inputStream = servletContext.getResourceAsStream(
-			resourcePath);
+		try (InputStream inputStream = servletContext.getResourceAsStream(
+				resourcePath)) {
 
-		if (inputStream == null) {
-			return null;
+			if (inputStream == null) {
+				return null;
+			}
+
+			return StringUtil.read(inputStream);
 		}
-
-		return StringUtil.read(inputStream);
 	}
 
 	public static Map<Locale, String> toMap(String values) {

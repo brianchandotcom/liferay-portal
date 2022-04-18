@@ -28,6 +28,7 @@ definition {
 		}
 		else {
 			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+
 			CommerceJSONChannelsAPI._deleteAllCommerceChannels();
 		}
 	}
@@ -47,6 +48,6 @@ definition {
 				key_title = "Robotics power the future",
 				locator1 = "Liferaybotics#HOME_TITLE");
 		}
-
 	}
+
 }

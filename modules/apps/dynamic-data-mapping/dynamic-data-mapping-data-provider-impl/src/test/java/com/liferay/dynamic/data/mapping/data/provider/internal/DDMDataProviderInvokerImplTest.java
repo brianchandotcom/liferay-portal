@@ -29,6 +29,8 @@ import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.dynamic.data.mapping.util.DDMFormInstanceFactory;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -44,33 +46,26 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.mockito.Matchers;
 import org.mockito.Mockito;
 
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
-
 /**
  * @author Leonardo Barros
  */
-@PrepareForTest(ResourceBundleUtil.class)
-@RunWith(PowerMockRunner.class)
-public class DDMDataProviderInvokerImplTest extends PowerMockito {
+public class DDMDataProviderInvokerImplTest {
 
 	@ClassRule
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@Before
-	public void setUp() {
+	@BeforeClass
+	public static void setUpClass() {
 		_setUpLanguageUtil();
 		_setUpPortalUtil();
 		_setUpResourceBundleUtil();
@@ -78,7 +73,7 @@ public class DDMDataProviderInvokerImplTest extends PowerMockito {
 
 	@Test
 	public void testDDMDataProviderInvokeCommand() throws Exception {
-		DDMDataProvider ddmDataProvider = mock(DDMDataProvider.class);
+		DDMDataProvider ddmDataProvider = Mockito.mock(DDMDataProvider.class);
 
 		DDMDataProviderRequest.Builder builder =
 			DDMDataProviderRequest.Builder.newBuilder();
@@ -88,7 +83,7 @@ public class DDMDataProviderInvokerImplTest extends PowerMockito {
 		DDMDataProviderResponse.Builder responseBuilder =
 			DDMDataProviderResponse.Builder.newBuilder();
 
-		when(
+		Mockito.when(
 			ddmDataProvider.getData(ddmDataProviderRequest)
 		).thenReturn(
 			responseBuilder.withOutput(
@@ -100,7 +95,7 @@ public class DDMDataProviderInvokerImplTest extends PowerMockito {
 			new DDMDataProviderInvokeCommand(
 				"ddmDataProviderInstanceName", ddmDataProvider,
 				ddmDataProviderRequest,
-				mock(DDMRESTDataProviderSettings.class));
+				Mockito.mock(DDMRESTDataProviderSettings.class));
 
 		DDMDataProviderResponse ddmDataProviderResponse =
 			ddmDataProviderInvokeCommand.run();
@@ -113,7 +108,7 @@ public class DDMDataProviderInvokerImplTest extends PowerMockito {
 
 	@Test
 	public void testDoInvoke() throws Exception {
-		DDMDataProviderInvokerImpl ddmDataProviderInvokerImpl = mock(
+		DDMDataProviderInvokerImpl ddmDataProviderInvokerImpl = Mockito.mock(
 			DDMDataProviderInvokerImpl.class);
 
 		DDMDataProviderRequest.Builder builder =
@@ -126,15 +121,15 @@ public class DDMDataProviderInvokerImplTest extends PowerMockito {
 
 		Optional<DDMDataProviderInstance> optional = Optional.empty();
 
-		when(
+		Mockito.when(
 			ddmDataProviderInvokerImpl.fetchDDMDataProviderInstanceOptional("2")
 		).thenReturn(
 			optional
 		);
 
-		DDMDataProvider ddmDataProvider = mock(DDMDataProvider.class);
+		DDMDataProvider ddmDataProvider = Mockito.mock(DDMDataProvider.class);
 
-		when(
+		Mockito.when(
 			ddmDataProviderInvokerImpl.getDDMDataProvider("2", optional)
 		).thenReturn(
 			ddmDataProvider
@@ -143,7 +138,7 @@ public class DDMDataProviderInvokerImplTest extends PowerMockito {
 		DDMDataProviderResponse.Builder responseBuilder =
 			DDMDataProviderResponse.Builder.newBuilder();
 
-		when(
+		Mockito.when(
 			ddmDataProvider.getData(ddmDataProviderRequest)
 		).thenReturn(
 			responseBuilder.withOutput(
@@ -151,7 +146,7 @@ public class DDMDataProviderInvokerImplTest extends PowerMockito {
 			).build()
 		);
 
-		when(
+		Mockito.when(
 			ddmDataProviderInvokerImpl.doInvoke(ddmDataProviderRequest)
 		).thenCallRealMethod();
 
@@ -166,7 +161,7 @@ public class DDMDataProviderInvokerImplTest extends PowerMockito {
 
 	@Test
 	public void testDoInvokeExternal() throws Exception {
-		DDMDataProviderInvokerImpl ddmDataProviderInvokerImpl = mock(
+		DDMDataProviderInvokerImpl ddmDataProviderInvokerImpl = Mockito.mock(
 			DDMDataProviderInvokerImpl.class);
 
 		DDMDataProviderRequest.Builder builder =
@@ -177,21 +172,21 @@ public class DDMDataProviderInvokerImplTest extends PowerMockito {
 				"1"
 			).build();
 
-		DDMDataProviderInstance ddmDataProviderInstance = mock(
+		DDMDataProviderInstance ddmDataProviderInstance = Mockito.mock(
 			DDMDataProviderInstance.class);
 
 		Optional<DDMDataProviderInstance> optional = Optional.of(
 			ddmDataProviderInstance);
 
-		when(
+		Mockito.when(
 			ddmDataProviderInvokerImpl.fetchDDMDataProviderInstanceOptional("1")
 		).thenReturn(
 			optional
 		);
 
-		DDMDataProvider ddmDataProvider = mock(DDMDataProvider.class);
+		DDMDataProvider ddmDataProvider = Mockito.mock(DDMDataProvider.class);
 
-		when(
+		Mockito.when(
 			ddmDataProviderInvokerImpl.getDDMDataProvider("1", optional)
 		).thenReturn(
 			ddmDataProvider
@@ -200,7 +195,7 @@ public class DDMDataProviderInvokerImplTest extends PowerMockito {
 		DDMDataProviderResponse.Builder responseBuilder =
 			DDMDataProviderResponse.Builder.newBuilder();
 
-		when(
+		Mockito.when(
 			ddmDataProviderInvokerImpl.doInvokeExternal(
 				ddmDataProviderInstance, ddmDataProvider,
 				ddmDataProviderRequest)
@@ -210,7 +205,7 @@ public class DDMDataProviderInvokerImplTest extends PowerMockito {
 			).build()
 		);
 
-		when(
+		Mockito.when(
 			ddmDataProviderInvokerImpl.doInvoke(ddmDataProviderRequest)
 		).thenCallRealMethod();
 
@@ -228,13 +223,13 @@ public class DDMDataProviderInvokerImplTest extends PowerMockito {
 		DDMDataProviderInvokerImpl ddmDataProviderInvokerImpl =
 			new DDMDataProviderInvokerImpl();
 
-		DDMDataProviderInstanceService ddmDataProviderInstanceService = mock(
-			DDMDataProviderInstanceService.class);
+		DDMDataProviderInstanceService ddmDataProviderInstanceService =
+			Mockito.mock(DDMDataProviderInstanceService.class);
 
 		ddmDataProviderInvokerImpl.ddmDataProviderInstanceService =
 			ddmDataProviderInstanceService;
 
-		when(
+		Mockito.when(
 			ddmDataProviderInstanceService.fetchDataProviderInstanceByUuid(
 				"test")
 		).thenReturn(
@@ -253,8 +248,8 @@ public class DDMDataProviderInvokerImplTest extends PowerMockito {
 		DDMDataProviderInvokerImpl ddmDataProviderInvokerImpl =
 			new DDMDataProviderInvokerImpl();
 
-		DDMDataProviderInstanceService ddmDataProviderInstanceService = mock(
-			DDMDataProviderInstanceService.class);
+		DDMDataProviderInstanceService ddmDataProviderInstanceService =
+			Mockito.mock(DDMDataProviderInstanceService.class);
 
 		ddmDataProviderInvokerImpl.ddmDataProviderInstanceService =
 			ddmDataProviderInstanceService;
@@ -283,16 +278,16 @@ public class DDMDataProviderInvokerImplTest extends PowerMockito {
 		DDMDataProviderInvokerImpl ddmDataProviderInvokerImpl =
 			new DDMDataProviderInvokerImpl();
 
-		DDMDataProviderInstanceService ddmDataProviderInstanceService = mock(
-			DDMDataProviderInstanceService.class);
+		DDMDataProviderInstanceService ddmDataProviderInstanceService =
+			Mockito.mock(DDMDataProviderInstanceService.class);
 
 		ddmDataProviderInvokerImpl.ddmDataProviderInstanceService =
 			ddmDataProviderInstanceService;
 
-		DDMDataProviderInstance ddmDataProviderInstance = mock(
+		DDMDataProviderInstance ddmDataProviderInstance = Mockito.mock(
 			DDMDataProviderInstance.class);
 
-		when(
+		Mockito.when(
 			ddmDataProviderInstanceService.fetchDataProviderInstance(1)
 		).thenReturn(
 			ddmDataProviderInstance
@@ -322,21 +317,21 @@ public class DDMDataProviderInvokerImplTest extends PowerMockito {
 		DDMDataProviderInvokerImpl ddmDataProviderInvokerImpl =
 			new DDMDataProviderInvokerImpl();
 
-		DDMDataProviderTracker ddmDataProviderTracker = mock(
+		DDMDataProviderTracker ddmDataProviderTracker = Mockito.mock(
 			DDMDataProviderTracker.class);
 
 		ddmDataProviderInvokerImpl.ddmDataProviderTracker =
 			ddmDataProviderTracker;
 
-		when(
+		Mockito.when(
 			ddmDataProviderTracker.getDDMDataProvider(Matchers.anyString())
 		).thenReturn(
 			null
 		);
 
-		DDMDataProvider ddmDataProvider = mock(DDMDataProvider.class);
+		DDMDataProvider ddmDataProvider = Mockito.mock(DDMDataProvider.class);
 
-		when(
+		Mockito.when(
 			ddmDataProviderTracker.getDDMDataProviderByInstanceId("1")
 		).thenReturn(
 			ddmDataProvider
@@ -359,24 +354,24 @@ public class DDMDataProviderInvokerImplTest extends PowerMockito {
 		DDMDataProviderInvokerImpl ddmDataProviderInvokerImpl =
 			new DDMDataProviderInvokerImpl();
 
-		DDMDataProviderTracker ddmDataProviderTracker = mock(
+		DDMDataProviderTracker ddmDataProviderTracker = Mockito.mock(
 			DDMDataProviderTracker.class);
 
 		ddmDataProviderInvokerImpl.ddmDataProviderTracker =
 			ddmDataProviderTracker;
 
-		DDMDataProviderInstance ddmDataProviderInstance = mock(
+		DDMDataProviderInstance ddmDataProviderInstance = Mockito.mock(
 			DDMDataProviderInstance.class);
 
-		when(
+		Mockito.when(
 			ddmDataProviderInstance.getType()
 		).thenReturn(
 			"rest"
 		);
 
-		DDMDataProvider ddmDataProvider = mock(DDMDataProvider.class);
+		DDMDataProvider ddmDataProvider = Mockito.mock(DDMDataProvider.class);
 
-		when(
+		Mockito.when(
 			ddmDataProviderTracker.getDDMDataProvider("rest")
 		).thenReturn(
 			ddmDataProvider
@@ -414,7 +409,7 @@ public class DDMDataProviderInvokerImplTest extends PowerMockito {
 
 	@Test
 	public void testInvoke() throws Exception {
-		DDMDataProviderInvokerImpl ddmDataProviderInvokerImpl = mock(
+		DDMDataProviderInvokerImpl ddmDataProviderInvokerImpl = Mockito.mock(
 			DDMDataProviderInvokerImpl.class);
 
 		DDMDataProviderRequest.Builder builder =
@@ -422,18 +417,18 @@ public class DDMDataProviderInvokerImplTest extends PowerMockito {
 
 		DDMDataProviderRequest ddmDataProviderRequest = builder.build();
 
-		when(
+		Mockito.when(
 			ddmDataProviderInvokerImpl.doInvoke(ddmDataProviderRequest)
 		).thenThrow(
 			Exception.class
 		);
 
-		when(
+		Mockito.when(
 			ddmDataProviderInvokerImpl.createDDMDataProviderErrorResponse(
 				Matchers.any(Exception.class))
 		).thenCallRealMethod();
 
-		when(
+		Mockito.when(
 			ddmDataProviderInvokerImpl.invoke(ddmDataProviderRequest)
 		).thenCallRealMethod();
 
@@ -461,20 +456,20 @@ public class DDMDataProviderInvokerImplTest extends PowerMockito {
 
 	@Test
 	public void testShortCircuitException() {
-		DDMDataProviderInvokerImpl ddmDataProviderInvokerImpl = mock(
+		DDMDataProviderInvokerImpl ddmDataProviderInvokerImpl = Mockito.mock(
 			DDMDataProviderInvokerImpl.class);
 
-		HystrixRuntimeException hystrixRuntimeException = mock(
+		HystrixRuntimeException hystrixRuntimeException = Mockito.mock(
 			HystrixRuntimeException.class);
 
-		when(
+		Mockito.when(
 			ddmDataProviderInvokerImpl.getHystrixFailureType(
 				hystrixRuntimeException)
 		).thenReturn(
 			HystrixRuntimeException.FailureType.SHORTCIRCUIT
 		);
 
-		when(
+		Mockito.when(
 			ddmDataProviderInvokerImpl.createDDMDataProviderErrorResponse(
 				hystrixRuntimeException)
 		).thenCallRealMethod();
@@ -490,7 +485,7 @@ public class DDMDataProviderInvokerImplTest extends PowerMockito {
 
 	@Test
 	public void testTimeOutChange() {
-		DDMDataProvider ddmDataProvider = mock(DDMDataProvider.class);
+		DDMDataProvider ddmDataProvider = Mockito.mock(DDMDataProvider.class);
 
 		DDMDataProviderRequest.Builder builder =
 			DDMDataProviderRequest.Builder.newBuilder();
@@ -524,20 +519,20 @@ public class DDMDataProviderInvokerImplTest extends PowerMockito {
 
 	@Test
 	public void testTimeOutException() {
-		DDMDataProviderInvokerImpl ddmDataProviderInvokerImpl = mock(
+		DDMDataProviderInvokerImpl ddmDataProviderInvokerImpl = Mockito.mock(
 			DDMDataProviderInvokerImpl.class);
 
-		HystrixRuntimeException hystrixRuntimeException = mock(
+		HystrixRuntimeException hystrixRuntimeException = Mockito.mock(
 			HystrixRuntimeException.class);
 
-		when(
+		Mockito.when(
 			ddmDataProviderInvokerImpl.getHystrixFailureType(
 				hystrixRuntimeException)
 		).thenReturn(
 			HystrixRuntimeException.FailureType.TIMEOUT
 		);
 
-		when(
+		Mockito.when(
 			ddmDataProviderInvokerImpl.createDDMDataProviderErrorResponse(
 				hystrixRuntimeException)
 		).thenCallRealMethod();
@@ -549,6 +544,42 @@ public class DDMDataProviderInvokerImplTest extends PowerMockito {
 		Assert.assertEquals(
 			DDMDataProviderResponseStatus.TIMEOUT,
 			ddmDataProviderResponse.getStatus());
+	}
+
+	private static void _setUpLanguageUtil() {
+		LanguageUtil languageUtil = new LanguageUtil();
+
+		languageUtil.setLanguage(Mockito.mock(Language.class));
+	}
+
+	private static void _setUpPortalUtil() {
+		PortalUtil portalUtil = new PortalUtil();
+
+		Portal portal = Mockito.mock(Portal.class);
+
+		ResourceBundle resourceBundle = Mockito.mock(ResourceBundle.class);
+
+		Mockito.when(
+			portal.getResourceBundle(Matchers.any(Locale.class))
+		).thenReturn(
+			resourceBundle
+		);
+
+		portalUtil.setPortal(portal);
+	}
+
+	private static void _setUpResourceBundleUtil() {
+		ResourceBundleLoader resourceBundleLoader = Mockito.mock(
+			ResourceBundleLoader.class);
+
+		ResourceBundleLoaderUtil.setPortalResourceBundleLoader(
+			resourceBundleLoader);
+
+		Mockito.when(
+			resourceBundleLoader.loadResourceBundle(Matchers.any(Locale.class))
+		).thenReturn(
+			ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE
+		);
 	}
 
 	private DDMRESTDataProviderSettings
@@ -578,40 +609,6 @@ public class DDMDataProviderInvokerImplTest extends PowerMockito {
 			hystrixCommandProperties.executionTimeoutInMilliseconds();
 
 		return hystrixProperty.get();
-	}
-
-	private void _setUpLanguageUtil() {
-		LanguageUtil languageUtil = new LanguageUtil();
-
-		languageUtil.setLanguage(PowerMockito.mock(Language.class));
-	}
-
-	private void _setUpPortalUtil() {
-		PortalUtil portalUtil = new PortalUtil();
-
-		Portal portal = PowerMockito.mock(Portal.class);
-
-		ResourceBundle resourceBundle = PowerMockito.mock(ResourceBundle.class);
-
-		PowerMockito.when(
-			portal.getResourceBundle(Matchers.any(Locale.class))
-		).thenReturn(
-			resourceBundle
-		);
-
-		portalUtil.setPortal(portal);
-	}
-
-	private void _setUpResourceBundleUtil() {
-		PowerMockito.mockStatic(ResourceBundleUtil.class);
-
-		PowerMockito.when(
-			ResourceBundleUtil.getBundle(
-				Matchers.anyString(), Matchers.any(Locale.class),
-				Matchers.any(ClassLoader.class))
-		).thenReturn(
-			ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE
-		);
 	}
 
 }

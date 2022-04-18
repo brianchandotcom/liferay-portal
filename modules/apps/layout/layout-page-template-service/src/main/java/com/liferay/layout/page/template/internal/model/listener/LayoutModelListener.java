@@ -130,16 +130,9 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 		}
 
 		try {
-			int count =
-				_segmentsExperienceLocalService.getSegmentsExperiencesCount(
-					layout.getGroupId(), _portal.getClassNameId(Layout.class),
-					layout.getPlid());
-
-			if (count > 0) {
-				_segmentsExperienceLocalService.deleteSegmentsExperiences(
-					layout.getGroupId(), _portal.getClassNameId(Layout.class),
-					layout.getPlid());
-			}
+			_segmentsExperienceLocalService.deleteSegmentsExperiences(
+				layout.getGroupId(), _portal.getClassNameId(Layout.class),
+				layout.getPlid());
 
 			if (!layout.isTypeContent()) {
 				return;

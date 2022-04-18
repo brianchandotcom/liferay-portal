@@ -70,15 +70,13 @@ public class SiteNavigationMenuLocalServiceTest {
 
 	@Test
 	public void testAddAutoSiteNavigationMenu() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		SiteNavigationMenu siteNavigationMenu =
 			_siteNavigationMenuLocalService.addSiteNavigationMenu(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				RandomTestUtil.randomString(),
-				SiteNavigationConstants.TYPE_DEFAULT, false, serviceContext);
+				SiteNavigationConstants.TYPE_DEFAULT, false,
+				ServiceContextTestUtil.getServiceContext(
+					_group.getGroupId(), TestPropsValues.getUserId()));
 
 		SiteNavigationMenu persistedSiteNavigationMenu =
 			_siteNavigationMenuPersistence.fetchByPrimaryKey(
@@ -99,14 +97,12 @@ public class SiteNavigationMenuLocalServiceTest {
 
 	@Test
 	public void testAddSiteNavigationMenu() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		SiteNavigationMenu siteNavigationMenu =
 			_siteNavigationMenuLocalService.addSiteNavigationMenu(
 				TestPropsValues.getUserId(), _group.getGroupId(),
-				RandomTestUtil.randomString(), serviceContext);
+				RandomTestUtil.randomString(),
+				ServiceContextTestUtil.getServiceContext(
+					_group.getGroupId(), TestPropsValues.getUserId()));
 
 		SiteNavigationMenu persistedSiteNavigationMenu =
 			_siteNavigationMenuPersistence.fetchByPrimaryKey(
@@ -117,15 +113,13 @@ public class SiteNavigationMenuLocalServiceTest {
 
 	@Test
 	public void testAddSiteNavigationMenuByType() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		SiteNavigationMenu siteNavigationMenu =
 			_siteNavigationMenuLocalService.addSiteNavigationMenu(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				RandomTestUtil.randomString(),
-				SiteNavigationConstants.TYPE_DEFAULT, serviceContext);
+				SiteNavigationConstants.TYPE_DEFAULT,
+				ServiceContextTestUtil.getServiceContext(
+					_group.getGroupId(), TestPropsValues.getUserId()));
 
 		SiteNavigationMenu persistedSiteNavigationMenu =
 			_siteNavigationMenuPersistence.fetchByPrimaryKey(
@@ -235,11 +229,9 @@ public class SiteNavigationMenuLocalServiceTest {
 		SiteNavigationMenuTestUtil.addSiteNavigationMenu(
 			_group, SiteNavigationConstants.TYPE_SECONDARY);
 
-		siteNavigationMenu =
+		Assert.assertNotNull(
 			_siteNavigationMenuLocalService.fetchSiteNavigationMenu(
-				_group.getGroupId(), SiteNavigationConstants.TYPE_SECONDARY);
-
-		Assert.assertNotNull(siteNavigationMenu);
+				_group.getGroupId(), SiteNavigationConstants.TYPE_SECONDARY));
 	}
 
 	@Test
@@ -253,11 +245,9 @@ public class SiteNavigationMenuLocalServiceTest {
 		SiteNavigationMenuTestUtil.addSiteNavigationMenu(
 			_group, SiteNavigationConstants.TYPE_SOCIAL);
 
-		siteNavigationMenu =
+		Assert.assertNotNull(
 			_siteNavigationMenuLocalService.fetchSiteNavigationMenu(
-				_group.getGroupId(), SiteNavigationConstants.TYPE_SOCIAL);
-
-		Assert.assertNotNull(siteNavigationMenu);
+				_group.getGroupId(), SiteNavigationConstants.TYPE_SOCIAL));
 	}
 
 	@Test

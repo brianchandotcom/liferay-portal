@@ -496,14 +496,11 @@ public class SiteNavigationMenuServiceTest {
 
 		UserTestUtil.setUser(_groupUser);
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group, _groupUser.getUserId());
-
 		_siteNavigationMenuService.updateSiteNavigationMenu(
 			siteNavigationMenu.getSiteNavigationMenuId(),
 			siteNavigationMenu.getType(), siteNavigationMenu.isAuto(),
-			serviceContext);
+			ServiceContextTestUtil.getServiceContext(
+				_group, _groupUser.getUserId()));
 	}
 
 	@Test(expected = PrincipalException.MustHavePermission.class)
@@ -516,13 +513,11 @@ public class SiteNavigationMenuServiceTest {
 
 		UserTestUtil.setUser(_groupUser);
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group, _groupUser.getUserId());
-
 		_siteNavigationMenuService.updateSiteNavigationMenu(
 			siteNavigationMenu.getSiteNavigationMenuId(),
-			RandomTestUtil.randomString(), serviceContext);
+			RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(
+				_group, _groupUser.getUserId()));
 	}
 
 	@Test

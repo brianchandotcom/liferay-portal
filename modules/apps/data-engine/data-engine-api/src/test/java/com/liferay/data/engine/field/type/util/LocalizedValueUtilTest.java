@@ -30,31 +30,27 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
-import org.mockito.runners.MockitoJUnitRunner;
-
-import org.powermock.api.mockito.PowerMockito;
+import org.mockito.Mockito;
 
 import org.skyscreamer.jsonassert.JSONAssert;
 
 /**
  * @author Mateus Santana
  */
-@RunWith(MockitoJUnitRunner.class)
-public class LocalizedValueUtilTest extends PowerMockito {
+public class LocalizedValueUtilTest {
 
 	@ClassRule
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@Before
-	public void setUp() {
+	@BeforeClass
+	public static void setUpClass() {
 		_setUpJSONFactoryUtil();
 		_setUpLanguageUtil();
 	}
@@ -176,36 +172,36 @@ public class LocalizedValueUtilTest extends PowerMockito {
 				).build()));
 	}
 
-	private void _setUpJSONFactoryUtil() {
+	private static void _setUpJSONFactoryUtil() {
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 
 		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
 	}
 
-	private void _setUpLanguageUtil() {
+	private static void _setUpLanguageUtil() {
 		LanguageUtil languageUtil = new LanguageUtil();
 
-		Language language = mock(Language.class);
+		Language language = Mockito.mock(Language.class);
 
-		when(
+		Mockito.when(
 			language.isAvailableLocale(LocaleUtil.BRAZIL)
 		).thenReturn(
 			true
 		);
 
-		when(
+		Mockito.when(
 			language.isAvailableLocale(LocaleUtil.US)
 		).thenReturn(
 			true
 		);
 
-		when(
+		Mockito.when(
 			language.getLanguageId(LocaleUtil.BRAZIL)
 		).thenReturn(
 			"pt_BR"
 		);
 
-		when(
+		Mockito.when(
 			language.getLanguageId(LocaleUtil.US)
 		).thenReturn(
 			"en_US"

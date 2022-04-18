@@ -51,7 +51,6 @@ export function selectPageContentDropdownItems(classPK, label = '') {
 			dropdownItems.push({
 				...editImage,
 				label: Liferay.Language.get('edit-image'),
-				symbolLeft: 'pencil',
 			});
 		}
 

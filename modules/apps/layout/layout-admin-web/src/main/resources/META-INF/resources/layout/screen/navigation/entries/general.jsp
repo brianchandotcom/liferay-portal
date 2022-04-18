@@ -62,7 +62,7 @@ if (Validator.isNotNull(backURL)) {
 	portletDisplay.setURLBack(backURL);
 }
 
-renderResponse.setTitle(HtmlUtil.escape(selLayout.getName(locale)));
+renderResponse.setTitle(layoutsAdminDisplayContext.getConfigurationTitle(selLayout, locale));
 %>
 
 <c:choose>

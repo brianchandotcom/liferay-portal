@@ -131,4 +131,37 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-135079. View no pop up when select user card with XSS name in memberships."
+	@priority = "4"
+	test SelectUserWithXSSNameInMemberships {
+		var firstName = '''"><script>alert(1)</script>''';
+
+		var lastName = '''"><script>alert(2)</script>''';
+
+		task ("Add a user with XSS name") {
+			User.openUsersAdmin();
+
+			User.addCP(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "${firstName}",
+				userLastName = "${lastName}",
+				userScreenName = "usersn");
+		}
+
+		task ("Assign the new user as member") {
+			Site.openSiteMembershipsAdmin(siteURLKey = "test-site-name");
+
+			Site.assignUserAsMemberCP(
+				userFirstName = "${firstName}",
+				userLastName = "${lastName}",
+				userScreenName = "usersn");
+		}
+
+		task ("View alert not shown when select user card") {
+			LexiconCard.checkCardCheckbox(card = "${firstName} ${lastName}");
+
+			AssertAlertNotPresent();
+		}
+	}
+
 }

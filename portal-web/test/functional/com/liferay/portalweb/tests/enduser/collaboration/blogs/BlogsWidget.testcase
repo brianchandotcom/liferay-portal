@@ -458,20 +458,9 @@ definition {
 	@priority = "4"
 	test CanViewCustomAbstractInCardDisplayTemplate {
 		JSONBlog.addEntry(
+			entryAbstractDescription = "Blogs Entry Abstract Description",
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
-
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		BlogsNavigator.gotoEditCP(entryTitle = "Blogs Entry Title");
-
-		Panel.expandPanel(panel = "Configuration");
-
-		BlogsEntry.addCustomAbstract(entryAbstractDescription = "Blogs Entry Abstract Description");
-
-		PortletEntry.publish();
-
-		Navigator.gotoPage(pageName = "Blogs Page");
 
 		Portlet.gotoPortletOptions(
 			portletName = "Blogs",

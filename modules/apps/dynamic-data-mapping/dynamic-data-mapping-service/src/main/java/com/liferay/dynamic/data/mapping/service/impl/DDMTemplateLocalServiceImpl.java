@@ -476,7 +476,7 @@ public class DDMTemplateLocalServiceImpl
 			classNameId, oldClassPK, type);
 
 		for (DDMTemplate oldTemplate : oldTemplates) {
-			DDMTemplate newTemplate = copyTemplate(
+			DDMTemplate newTemplate = ddmTemplateLocalService.copyTemplate(
 				userId, oldTemplate, newClassPK, oldTemplate.getNameMap(),
 				oldTemplate.getDescriptionMap(), serviceContext);
 

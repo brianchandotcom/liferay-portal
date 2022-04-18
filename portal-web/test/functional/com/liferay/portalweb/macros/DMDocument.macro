@@ -3320,6 +3320,16 @@ definition {
 		}
 	}
 
+	macro viewOlderVersionNoPublish {
+		DMNavigator.gotoDocumentVersion();
+
+		var key_dmDocumentVersionNumber = "Version ${dmDocumentVersionNumber}";
+
+		Click(locator1 = "DocumentsAndMedia#DOCUMENT_VERSION_VERTICAL_ELLIPSIS");
+
+		MenuItem.viewNotPresent(menuItem = "Publish to Live");
+	}
+
 	macro viewOlderVersionPG {
 		DMNavigator.gotoDocumentVersion();
 

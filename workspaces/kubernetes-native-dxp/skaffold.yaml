@@ -29,6 +29,7 @@ deploy:
     - k8s/dxp/
     - k8s/remoteappa/
     - k8s/custom-rest-service/
+    - k8s/common/
 portForward:
   - resourceType: service
     resourceName: ingress-nginx-controller

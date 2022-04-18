@@ -1,0 +1,42 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: common-ingress
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: dxp.localdev.me
+    http:
+      paths:
+      - backend:
+          service:
+            name: dxp-service
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
+  - host: custom-rest-service.localdev.me
+    http:
+      paths:
+      - backend:
+          service:
+            name: custom-rest-service
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
+  - host: remote-app-a.localdev.me
+    http:
+      paths:
+      - backend:
+          service:
+            name: remote-app-a
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
+#  tls:
+#  - hosts:
+#    - dxp.localdev.me
+#    - custom-rest-service.localdev.me
+#    - remote-app-a.localdev.me

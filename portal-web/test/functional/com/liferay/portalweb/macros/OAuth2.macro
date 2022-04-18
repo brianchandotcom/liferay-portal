@@ -12,6 +12,7 @@ definition {
 		OAuth2.addApplication(
 			applicationName = "${applicationName}",
 			callbackUri = '''http://martamedio.com/oauth2-tester/?url=${portalURL}&client_id=${clientId}''',
+			clientAuthenticationMethod = "${clientAuthenticationMethod}",
 			clientProfile = "Web Application");
 
 		if (isSet(checkboxCheckList)) {
@@ -46,8 +47,10 @@ definition {
 			callbackUri = "${callbackUri}",
 			checkboxCheckList = "${checkboxCheckList}",
 			checkboxUncheckList = "${checkboxUncheckList}",
+			clientAuthenticationMethod = "${clientAuthenticationMethod}",
 			clientProfile = "${clientProfile}",
 			description = "${description}",
+			jwks = "${jwks}",
 			privacyPolicyURL = "${privacyPolicyURL}",
 			websiteURL = "${websiteURL}");
 
@@ -475,6 +478,39 @@ definition {
 				text = "${privacyPolicyURL}");
 		}
 
+		if (isSet(clientAuthenticationMethod)) {
+			if ("${clientAuthenticationMethod}" == "Client Secret JWT") {
+				Select(
+					key_fieldLabel = "Client Authentication Method",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "Client Secret JWT");
+			}
+			else if ("${clientAuthenticationMethod}" == "Private Key JWT") {
+				var jwks = FileUtil.read("test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/oauth2/dependencies/jwks.txt");
+
+				Select(
+					key_fieldLabel = "Client Authentication Method",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "Private Key JWT");
+
+				PortletEntry.inputTextArea(
+					fieldId = "jwks",
+					text = "${jwks}");
+			}
+			else if ("${clientAuthenticationMethod}" == "None") {
+				Select(
+					key_fieldLabel = "Client Authentication Method",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "None");
+			}
+			else {
+				Select(
+					key_fieldLabel = "Client Authentication Method",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "Client Secret POST");
+			}
+		}
+
 		if (isSet(clientProfile)) {
 			Select(
 				key_fieldLabel = "Client Profile",
@@ -538,6 +574,14 @@ definition {
 		Button.click(button = "Launch Request");
 
 		AssertConfirm.assertConfirmationNoError(value1 = "403 - Unauthorized!");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "OAuth2#OAUTH2_TESTER_REQUEST_RESULTS",
+			value1 = "");
+	}
+
+	macro obtainOAuth2AccessNotAuthorized {
+		AssertConfirm.assertConfirmationNoError(value1 = "There's a problem with your authorization access");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "OAuth2#OAUTH2_TESTER_REQUEST_RESULTS",
@@ -711,6 +755,20 @@ definition {
 				key_text = "redirectURIs",
 				locator1 = "TextArea#ANY",
 				value1 = "${callbackUri}");
+		}
+
+		if (isSet(clientAuthenticationMethod)) {
+			AssertSelectedLabel(
+				key_fieldLabel = "Client Authentication Method",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${clientAuthenticationMethod}");
+		}
+
+		if (isSet(jwks)) {
+			AssertTextEquals.assertPartialText(
+				key_text = "jwks",
+				locator1 = "TextArea#ANY",
+				value1 = "${jwks}");
 		}
 
 		if (isSet(clientProfile)) {

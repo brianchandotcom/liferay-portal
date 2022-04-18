@@ -26,6 +26,87 @@ definition {
 	}
 
 	@priority = "4"
+	test ContentPageChangesCanBeAutomaticallyResolved {
+		property test.assert.warning.exceptions = "true";
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Content Page Name",
+			type = "content");
+
+		JSONWebcontent.addWebContent(
+			content = "Web Content Content",
+			groupName = "Site Name",
+			title = "WC WebContent Title");
+
+		JSONPublications.addPublication(publicationName = "Publication Name 1");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name 1");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Separator");
+
+		PageEditor.addWidget(
+			portletName = "Web Content Display",
+			targetFragmentName = "Separator");
+
+		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
+
+		Refresh();
+
+		PageEditor.clickPublish();
+
+		JSONPublications.addPublication(publicationName = "Publication Name 2");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name 2");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Paragraph");
+
+		PageEditor.gotoStyle(fragmentName = "Paragraph");
+
+		PageEditor.configureFragment(
+			alignment = "Right",
+			textColor = "Warning");
+
+		PageEditor.addWidget(
+			portletName = "Asset Publisher",
+			targetFragmentName = "Paragraph");
+
+		AssetPublisherPortlet.configureManualAssetSelectionPG(
+			assetTitle = "WC WebContent Title",
+			assetType = "Basic Web Content");
+
+		Refresh();
+
+		PageEditor.clickPublish();
+
+		JSONPublications.publishPublication(publicationName = "Publication Name 2");
+
+		Publications.viewPublicationPublished(publicationName = "Publication Name 2");
+
+		PublicationsNavigator.gotoPublish(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication Name 1");
+
+		AssertElementNotPresent(locator1 = "Publications#NEEDS_MANUAL_RESOLUTION_TABLE");
+
+		Publications.publishPublication(publicationName = "Publication Name 1");
+	}
+
+	@priority = "4"
 	test PublishDeletedPageWithTag {
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -145,91 +226,6 @@ definition {
 		WebContent.viewPGViaAP(
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
-	}
-
-	@priority = "4"
-	test ResolveConflictingPublicationsByDiscarding {
-		property test.assert.warning.exceptions = "true";
-
-		JSONGroup.addGroup(groupName = "Site Name");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Content Page Name",
-			type = "content");
-
-		JSONWebcontent.addWebContent(
-			content = "Web Content Content",
-			groupName = "Site Name",
-			title = "WC WebContent Title");
-
-		JSONPublications.addPublication(publicationName = "Publication Name 1");
-
-		JSONPublications.selectPublication(publicationName = "Publication Name 1");
-
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Content Page Name",
-			siteName = "Site Name");
-
-		PageEditor.addFragment(
-			collectionName = "Basic Components",
-			fragmentName = "Separator");
-
-		PageEditor.addWidget(
-			portletName = "Web Content Display",
-			targetFragmentName = "Separator");
-
-		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
-
-		Refresh();
-
-		PageEditor.clickPublish();
-
-		JSONPublications.addPublication(publicationName = "Publication Name 2");
-
-		JSONPublications.selectPublication(publicationName = "Publication Name 2");
-
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Content Page Name",
-			siteName = "Site Name");
-
-		PageEditor.addFragment(
-			collectionName = "Basic Components",
-			fragmentName = "Paragraph");
-
-		PageEditor.gotoStyle(fragmentName = "Paragraph");
-
-		PageEditor.configureFragment(
-			alignment = "Right",
-			textColor = "Warning");
-
-		PageEditor.addWidget(
-			portletName = "Asset Publisher",
-			targetFragmentName = "Paragraph");
-
-		AssetPublisherPortlet.configureManualAssetSelectionPG(
-			assetTitle = "WC WebContent Title",
-			assetType = "Basic Web Content");
-
-		Refresh();
-
-		PageEditor.clickPublish();
-
-		JSONPublications.publishPublication(publicationName = "Publication Name 2");
-
-		Publications.viewPublicationPublished(publicationName = "Publication Name 2");
-
-		PublicationsNavigator.gotoPublish(
-			gotoPublicationsAdmin = "true",
-			publicationName = "Publication Name 1");
-
-		PublicationsChanges.discardChanges(
-			changeCategory = "Content Page Name",
-			changeTitle = "Content Page Name",
-			conflictingChanges = "true",
-			entryTitle = "Content Page Name");
-
-		Publications.publishPublication(publicationName = "Publication Name 1");
 	}
 
 	@priority = "5"

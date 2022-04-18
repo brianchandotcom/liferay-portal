@@ -1,0 +1,14 @@
+definition {
+
+	macro addLiferayboticsSite {
+		ApplicationsMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites");
+
+		Site.addSiteTemplateCP(
+			siteName = "${siteName}",
+			siteTemplateName = "Liferaybotics");
+	}
+
+}

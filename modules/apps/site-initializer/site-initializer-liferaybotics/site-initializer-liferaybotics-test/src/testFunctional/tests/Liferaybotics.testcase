@@ -1,0 +1,52 @@
+@component-name = "portal-liferay-online"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Liferaybotics";
+
+	var testSiteName = "Test Liferaybotics Name";
+	var testSiteURL = "test-liferaybotics-name";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Create a new Liferaybotics Site") {
+			Liferaybotics.addLiferayboticsSite(siteName = "${testSiteName}");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+			CommerceJSONChannelsAPI._deleteAllCommerceChannels();
+		}
+	}
+
+	@description = "This is a test for LPS-150999. User Can create a Lifebotics Site"
+	@ignore = "true"
+	@priority = "5"
+	test AddLiferayboticsSite {
+		property portal.acceptance = "true";
+
+		task ("Go to Liferaybotics Site") {
+			ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		}
+
+		task ("Assert the Liferaybotics Welcome Page is present") {
+			AssertElementPresent(
+				key_title = "Robotics power the future",
+				locator1 = "Liferaybotics#HOME_TITLE");
+		}
+
+	}
+}

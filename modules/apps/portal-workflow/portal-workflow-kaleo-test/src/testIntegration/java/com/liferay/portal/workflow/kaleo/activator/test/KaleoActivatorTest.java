@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
 
 import java.util.List;
@@ -57,11 +56,9 @@ public class KaleoActivatorTest {
 
 				serviceContext.setCompanyId(company.getCompanyId());
 
-				KaleoDefinition kaleoDefinition =
+				Assert.assertNotNull(
 					_kaleoDefinitionLocalService.getKaleoDefinition(
-						"Single Approver", serviceContext);
-
-				Assert.assertNotNull(kaleoDefinition);
+						"Single Approver", serviceContext));
 			},
 			companies);
 	}

@@ -455,6 +455,7 @@ public class DDMFormTemplateContextProcessorTest {
 		).isAvailableLocale(
 			Matchers.any(Locale.class)
 		);
+
 		languageUtil.setLanguage(language);
 	}
 

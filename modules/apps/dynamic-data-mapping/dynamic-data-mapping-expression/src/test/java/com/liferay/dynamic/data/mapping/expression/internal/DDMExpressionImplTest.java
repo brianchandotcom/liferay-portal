@@ -25,6 +25,7 @@ import com.liferay.dynamic.data.mapping.expression.internal.functions.MultiplyFu
 import com.liferay.dynamic.data.mapping.expression.internal.functions.SquareFunction;
 import com.liferay.dynamic.data.mapping.expression.internal.functions.ZeroFunction;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -36,18 +37,22 @@ import java.util.Map;
 import java.util.Set;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.mockito.Mockito;
 
 /**
  * @author Marcellus Tavares
  * @author Leonardo Barros
  */
-@RunWith(PowerMockRunner.class)
-public class DDMExpressionImplTest extends PowerMockito {
+public class DDMExpressionImplTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testAddition() throws Exception {
@@ -640,7 +645,7 @@ public class DDMExpressionImplTest extends PowerMockito {
 			expression);
 
 		ddmExpressionImpl.setDDMExpressionFunctionTracker(
-			mock(DDMExpressionFunctionTracker.class));
+			Mockito.mock(DDMExpressionFunctionTracker.class));
 
 		return ddmExpressionImpl;
 	}

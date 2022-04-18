@@ -31,11 +31,14 @@ import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,30 +48,33 @@ import java.util.ResourceBundle;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.mockito.Matchers;
-import org.mockito.Mock;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.mockito.Mockito;
 
 /**
  * @author Leonardo Barros
  */
-@PrepareForTest(ResourceBundleUtil.class)
-@RunWith(PowerMockRunner.class)
-public class DDMDataProviderInstanceOutputParametersDataProviderTest
-	extends PowerMockito {
+public class DDMDataProviderInstanceOutputParametersDataProviderTest {
 
-	@Before
-	public void setUp() throws Exception {
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
+
+	@BeforeClass
+	public static void setUpClass() {
 		_setUpLanguageUtil();
 		_setUpPortalUtil();
 		_setUpResourceBundleUtil();
+	}
 
+	@Before
+	public void setUp() {
 		_ddmDataProviderInstanceOutputParametersDataProvider =
 			new DDMDataProviderInstanceOutputParametersDataProvider();
 
@@ -89,25 +95,25 @@ public class DDMDataProviderInstanceOutputParametersDataProviderTest
 			"dataProviderInstanceId", "1"
 		).build();
 
-		when(
+		Mockito.when(
 			_ddmDataProviderInstanceService.getDataProviderInstance(1)
 		).thenReturn(
 			_ddmDataProviderInstance
 		);
 
-		when(
+		Mockito.when(
 			_ddmDataProviderInstance.getType()
 		).thenReturn(
 			"rest"
 		);
 
-		when(
+		Mockito.when(
 			_ddmDataProviderTracker.getDDMDataProvider("rest")
 		).thenReturn(
 			_ddmDataProvider
 		);
 
-		when(
+		Mockito.when(
 			_ddmDataProvider.getSettings()
 		).thenReturn(
 			(Class)TestDDMDataProviderParameterSettings.class
@@ -176,7 +182,7 @@ public class DDMDataProviderInstanceOutputParametersDataProviderTest
 					ddmFormValues
 				).build();
 
-		when(
+		Mockito.when(
 			_ddmFormValuesDeserializer.deserialize(
 				Matchers.any(DDMFormValuesDeserializerDeserializeRequest.class))
 		).thenReturn(
@@ -221,7 +227,7 @@ public class DDMDataProviderInstanceOutputParametersDataProviderTest
 			"dataProviderInstanceId", "1"
 		).build();
 
-		when(
+		Mockito.when(
 			_ddmDataProviderInstanceService.getDataProviderInstance(1)
 		).thenThrow(
 			Exception.class
@@ -251,25 +257,25 @@ public class DDMDataProviderInstanceOutputParametersDataProviderTest
 			"dataProviderInstanceId", "1"
 		).build();
 
-		when(
+		Mockito.when(
 			_ddmDataProviderInstanceService.getDataProviderInstance(1)
 		).thenReturn(
 			_ddmDataProviderInstance
 		);
 
-		when(
+		Mockito.when(
 			_ddmDataProviderInstance.getType()
 		).thenReturn(
 			"rest"
 		);
 
-		when(
+		Mockito.when(
 			_ddmDataProviderTracker.getDDMDataProvider("rest")
 		).thenReturn(
 			_ddmDataProvider
 		);
 
-		when(
+		Mockito.when(
 			_ddmDataProvider.getSettings()
 		).thenReturn(
 			(Class)Object.class
@@ -293,7 +299,7 @@ public class DDMDataProviderInstanceOutputParametersDataProviderTest
 	}
 
 	@Test
-	public void testWithoutDataProviderInstanceIdParameter() throws Exception {
+	public void testWithoutDataProviderInstanceIdParameter() {
 		DDMDataProviderRequest.Builder builder =
 			DDMDataProviderRequest.Builder.newBuilder();
 
@@ -319,20 +325,20 @@ public class DDMDataProviderInstanceOutputParametersDataProviderTest
 			outputParameterNamesOptional.get());
 	}
 
-	private void _setUpLanguageUtil() {
+	private static void _setUpLanguageUtil() {
 		LanguageUtil languageUtil = new LanguageUtil();
 
-		languageUtil.setLanguage(PowerMockito.mock(Language.class));
+		languageUtil.setLanguage(Mockito.mock(Language.class));
 	}
 
-	private void _setUpPortalUtil() {
+	private static void _setUpPortalUtil() {
 		PortalUtil portalUtil = new PortalUtil();
 
-		Portal portal = mock(Portal.class);
+		Portal portal = Mockito.mock(Portal.class);
 
-		ResourceBundle resourceBundle = mock(ResourceBundle.class);
+		ResourceBundle resourceBundle = Mockito.mock(ResourceBundle.class);
 
-		when(
+		Mockito.when(
 			portal.getResourceBundle(Matchers.any(Locale.class))
 		).thenReturn(
 			resourceBundle
@@ -341,34 +347,32 @@ public class DDMDataProviderInstanceOutputParametersDataProviderTest
 		portalUtil.setPortal(portal);
 	}
 
-	private void _setUpResourceBundleUtil() {
-		PowerMockito.mockStatic(ResourceBundleUtil.class);
+	private static void _setUpResourceBundleUtil() {
+		ResourceBundleLoader resourceBundleLoader = Mockito.mock(
+			ResourceBundleLoader.class);
 
-		PowerMockito.when(
-			ResourceBundleUtil.getBundle(
-				Matchers.anyString(), Matchers.any(Locale.class),
-				Matchers.any(ClassLoader.class))
+		ResourceBundleLoaderUtil.setPortalResourceBundleLoader(
+			resourceBundleLoader);
+
+		Mockito.when(
+			resourceBundleLoader.loadResourceBundle(Matchers.any(Locale.class))
 		).thenReturn(
 			ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE
 		);
 	}
 
-	@Mock
-	private DDMDataProvider _ddmDataProvider;
-
-	@Mock
-	private DDMDataProviderInstance _ddmDataProviderInstance;
-
+	private final DDMDataProvider _ddmDataProvider = Mockito.mock(
+		DDMDataProvider.class);
+	private final DDMDataProviderInstance _ddmDataProviderInstance =
+		Mockito.mock(DDMDataProviderInstance.class);
 	private DDMDataProviderInstanceOutputParametersDataProvider
 		_ddmDataProviderInstanceOutputParametersDataProvider;
-
-	@Mock
-	private DDMDataProviderInstanceService _ddmDataProviderInstanceService;
-
-	@Mock
-	private DDMDataProviderTracker _ddmDataProviderTracker;
-
-	@Mock
-	private DDMFormValuesDeserializer _ddmFormValuesDeserializer;
+	private final DDMDataProviderInstanceService
+		_ddmDataProviderInstanceService = Mockito.mock(
+			DDMDataProviderInstanceService.class);
+	private final DDMDataProviderTracker _ddmDataProviderTracker = Mockito.mock(
+		DDMDataProviderTracker.class);
+	private final DDMFormValuesDeserializer _ddmFormValuesDeserializer =
+		Mockito.mock(DDMFormValuesDeserializer.class);
 
 }

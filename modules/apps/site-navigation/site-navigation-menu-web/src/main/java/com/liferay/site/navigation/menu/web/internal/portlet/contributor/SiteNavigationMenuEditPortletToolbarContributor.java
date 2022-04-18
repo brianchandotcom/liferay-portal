@@ -126,13 +126,13 @@ public class SiteNavigationMenuEditPortletToolbarContributor
 			_siteNavigationMenuLocalService.getSiteNavigationMenu(
 				siteNavigationMenuId);
 
-		Group group = _groupLocalService.getGroup(
-			siteNavigationMenu.getGroupId());
-
 		urlMenuItem.setURL(
 			PortletURLBuilder.create(
 				PortletProviderUtil.getPortletURL(
-					portletRequest, group, SiteNavigationMenu.class.getName(),
+					portletRequest,
+					_groupLocalService.getGroup(
+						siteNavigationMenu.getGroupId()),
+					SiteNavigationMenu.class.getName(),
 					PortletProvider.Action.EDIT)
 			).setMVCPath(
 				"/edit_site_navigation_menu.jsp"

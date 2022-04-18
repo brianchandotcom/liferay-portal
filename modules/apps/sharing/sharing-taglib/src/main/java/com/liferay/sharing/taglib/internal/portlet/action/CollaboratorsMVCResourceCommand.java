@@ -74,14 +74,14 @@ public class CollaboratorsMVCResourceCommand extends BaseMVCResourceCommand {
 				themeDisplay.getUserId());
 		}
 
-		long classNameId = _classNameLocalService.getClassNameId(
-			ParamUtil.getString(httpServletRequest, "className"));
 		long classPK = ParamUtil.getLong(httpServletRequest, "classPK");
 
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse,
 			CollaboratorsUtil.getCollaboratorsJSONObject(
-				classNameId, classPK, themeDisplay));
+				_classNameLocalService.getClassNameId(
+					ParamUtil.getString(httpServletRequest, "className")),
+				classPK, themeDisplay));
 	}
 
 	@Reference

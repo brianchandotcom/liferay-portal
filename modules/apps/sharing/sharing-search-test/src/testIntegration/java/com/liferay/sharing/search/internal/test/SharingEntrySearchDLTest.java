@@ -124,14 +124,12 @@ public class SharingEntrySearchDLTest {
 
 	@Test
 	public void testUserCanSearchSharedPrivateDocument() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		_sharingEntryLocalService.addSharingEntry(
 			TestPropsValues.getUserId(), _groupUser.getUserId(), _classNameId,
 			_fileEntry.getFileEntryId(), _group.getGroupId(), true,
-			Arrays.asList(SharingEntryAction.VIEW), null, serviceContext);
+			Arrays.asList(SharingEntryAction.VIEW), null,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
 
 		Indexer<DLFileEntry> indexer = IndexerRegistryUtil.getIndexer(
 			DLFileEntryConstants.getClassName());

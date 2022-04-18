@@ -34,11 +34,9 @@ public class BlogsEntryModelListener extends BaseModelListener<BlogsEntry> {
 	public void onBeforeRemove(BlogsEntry blogsEntry)
 		throws ModelListenerException {
 
-		long classNameId = _classNameLocalService.getClassNameId(
-			BlogsEntry.class.getName());
-
 		_sharingEntryLocalService.deleteSharingEntries(
-			classNameId, blogsEntry.getEntryId());
+			_classNameLocalService.getClassNameId(BlogsEntry.class.getName()),
+			blogsEntry.getEntryId());
 	}
 
 	@Reference

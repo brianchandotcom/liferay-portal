@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Object Test Utilities
+Bundle-SymbolicName: com.liferay.object.test.util
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.object.test.util

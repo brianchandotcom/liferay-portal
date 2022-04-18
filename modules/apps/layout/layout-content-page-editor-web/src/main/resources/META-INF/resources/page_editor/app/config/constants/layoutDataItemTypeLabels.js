@@ -12,13 +12,20 @@
  * details.
  */
 
+import {LAYOUT_DATA_ITEM_TYPES} from './layoutDataItemTypes';
+
 export const LAYOUT_DATA_ITEM_TYPE_LABELS = {
-	collection: Liferay.Language.get('collection-display'),
-	collectionItem: Liferay.Language.get('collection-item'),
-	column: Liferay.Language.get('module'),
-	container: Liferay.Language.get('container'),
-	dropZone: Liferay.Language.get('drop-zone'),
-	fragment: Liferay.Language.get('fragment'),
-	root: Liferay.Language.get('root'),
-	row: Liferay.Language.get('grid'),
+	[LAYOUT_DATA_ITEM_TYPES.collection]: Liferay.Language.get(
+		'collection-display'
+	),
+	[LAYOUT_DATA_ITEM_TYPES.collectionItem]: Liferay.Language.get(
+		'collection-item'
+	),
+	[LAYOUT_DATA_ITEM_TYPES.column]: Liferay.Language.get('module'),
+	[LAYOUT_DATA_ITEM_TYPES.container]: Liferay.Language.get('container'),
+	[LAYOUT_DATA_ITEM_TYPES.dropZone]: Liferay.Language.get('drop-zone'),
+	[LAYOUT_DATA_ITEM_TYPES.fragment]: Liferay.Language.get('fragment'),
+	[LAYOUT_DATA_ITEM_TYPES.form]: Liferay.Language.get('form'),
+	[LAYOUT_DATA_ITEM_TYPES.root]: Liferay.Language.get('root'),
+	[LAYOUT_DATA_ITEM_TYPES.row]: Liferay.Language.get('grid'),
 };

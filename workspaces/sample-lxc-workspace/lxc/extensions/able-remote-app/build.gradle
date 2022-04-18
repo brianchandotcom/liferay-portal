@@ -1,0 +1,15 @@
+apply plugin: "com.liferay.yarn.defaults.plugin"
+
+task build
+
+build {
+	dependsOn yarnInstall
+	dependsOn packageRunBuild
+}
+
+node {
+	global = false
+	nodeVersion = "16.0.0"
+	useNpm = false
+	yarnVersion = "1.22.5"
+}

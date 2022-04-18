@@ -110,248 +110,188 @@ const ACCENT_COLORS = [
 
 const SAMPLE_TEXT = 'Sample';
 
+const BACKGROUND_COLORS = [
+	{
+		color: BRAND_PRIMARY_COLORS,
+		title: Liferay.Language.get('background-primary'),
+	},
+	{
+		color: BRAND_SECONDARY_COLORS,
+		title: Liferay.Language.get('background-secondary'),
+	},
+	{
+		color: NEUTRAL_COLORS,
+		title: Liferay.Language.get('background-neutral'),
+	},
+	{
+		color: STATE_COLORS_SUCCESS,
+		title: Liferay.Language.get('background-state-success'),
+	},
+	{
+		color: STATE_COLORS_INFO,
+		title: Liferay.Language.get('background-state-info'),
+	},
+	{
+		color: STATE_COLORS_WARNING,
+		title: Liferay.Language.get('background-state-warning'),
+	},
+	{
+		color: STATE_COLORS_DANGER,
+		title: Liferay.Language.get('background-state-danger'),
+	},
+	{
+		color: ACCENT_COLORS,
+		title: Liferay.Language.get('background-accent'),
+	},
+];
+const BORDER_COLORS = [
+	{
+		color: BRAND_PRIMARY_COLORS,
+		title: Liferay.Language.get('border-primary'),
+	},
+	{
+		color: BRAND_SECONDARY_COLORS,
+		title: Liferay.Language.get('border-secondary'),
+	},
+	{
+		color: NEUTRAL_COLORS,
+		title: Liferay.Language.get('border-neutral'),
+	},
+	{
+		color: STATE_COLORS_SUCCESS,
+		title: Liferay.Language.get('border-state-success'),
+	},
+	{
+		color: STATE_COLORS_INFO,
+		title: Liferay.Language.get('border-state-info'),
+	},
+	{
+		color: STATE_COLORS_WARNING,
+		title: Liferay.Language.get('border-state-warning'),
+	},
+	{
+		color: STATE_COLORS_DANGER,
+		title: Liferay.Language.get('border-state-danger'),
+	},
+	{
+		color: ACCENT_COLORS,
+		title: Liferay.Language.get('border-accent'),
+	},
+];
+const TEXT_COLORS = [
+	{
+		color: BRAND_PRIMARY_COLORS,
+		title: Liferay.Language.get('text-primary'),
+	},
+	{
+		color: BRAND_SECONDARY_COLORS,
+		title: Liferay.Language.get('text-secondary'),
+	},
+	{
+		color: NEUTRAL_COLORS,
+		title: Liferay.Language.get('text-neutral'),
+	},
+	{
+		color: STATE_COLORS_SUCCESS,
+		title: Liferay.Language.get('text-state-success'),
+	},
+	{
+		color: STATE_COLORS_INFO,
+		title: Liferay.Language.get('text-state-info'),
+	},
+	{
+		color: STATE_COLORS_WARNING,
+		title: Liferay.Language.get('text-state-warning'),
+	},
+	{
+		color: STATE_COLORS_DANGER,
+		title: Liferay.Language.get('text-state-danger'),
+	},
+	{
+		color: ACCENT_COLORS,
+		title: Liferay.Language.get('text-accent'),
+	},
+];
+
+const ColorGroup = ({backgroundcolor, title}) => {
+	return (
+		<TokenGroup group="colors" title={title}>
+			{backgroundcolor.map((item) => (
+				<TokenItem
+					border={true}
+					className={`bg-${item}`}
+					key={item}
+					label={`bg-${item}`}
+				/>
+			))}
+		</TokenGroup>
+	);
+};
+
+const BorderGroup = ({borderColor, title}) => {
+	return (
+		<TokenGroup group="borders" title={title}>
+			{borderColor.map((item) => (
+				<TokenItem
+					border={true}
+					className={`rounded-sm border-${item}`}
+					key={item}
+					label={`border-${item}`}
+				/>
+			))}
+		</TokenGroup>
+	);
+};
+
+const TextGroup = ({textColor, title}) => {
+	return (
+		<TokenGroup group="texts" title={title}>
+			{textColor.map((item) => (
+				<TokenItem
+					border={true}
+					className={`text-${item}`}
+					key={item}
+					label={`text-${item}`}
+				>
+					{SAMPLE_TEXT}
+				</TokenItem>
+			))}
+		</TokenGroup>
+	);
+};
+
 const ColorGuide = () => {
 	return (
 		<>
-			<TokenGroup
-				group="colors"
-				title={Liferay.Language.get('background-primary')}
-			>
-				{BRAND_PRIMARY_COLORS.map((item) => (
-					<TokenItem
-						border={true}
-						className={`bg-${item}`}
-						key={item}
-						label={`bg-${item}`}
+			{BACKGROUND_COLORS.map((item, index) => {
+				return (
+					<ColorGroup
+						backgroundcolor={item.color}
+						key={index}
+						title={item.title}
 					/>
-				))}
-			</TokenGroup>
+				);
+			})}
 
-			<TokenGroup
-				group="colors"
-				title={Liferay.Language.get('background-secondary')}
-			>
-				{BRAND_SECONDARY_COLORS.map((item) => (
-					<TokenItem
-						border={true}
-						className={`bg-${item}`}
-						key={item}
-						label={`bg-${item}`}
+			{BORDER_COLORS.map((item, index) => {
+				return (
+					<BorderGroup
+						borderColor={item.color}
+						key={index}
+						title={item.title}
 					/>
-				))}
-			</TokenGroup>
+				);
+			})}
 
-			<TokenGroup
-				group="colors"
-				title={Liferay.Language.get('background-neutral')}
-			>
-				{NEUTRAL_COLORS.map((item) => (
-					<TokenItem
-						border={true}
-						className={`bg-${item}`}
-						key={item}
-						label={`bg-${item}`}
+			{TEXT_COLORS.map((item, index) => {
+				return (
+					<TextGroup
+						key={index}
+						textColor={item.color}
+						title={item.title}
 					/>
-				))}
-			</TokenGroup>
-
-			<TokenGroup
-				group="colors"
-				title={Liferay.Language.get('background-accent')}
-			>
-				{ACCENT_COLORS.map((item) => (
-					<TokenItem
-						border={true}
-						className={`bg-${item}`}
-						key={item}
-						label={`bg-${item}`}
-					/>
-				))}
-			</TokenGroup>
-
-			<TokenGroup
-				group="colors"
-				title={Liferay.Language.get('background-state-success')}
-			>
-				{STATE_COLORS_SUCCESS.map((item) => (
-					<TokenItem
-						border={true}
-						className={`bg-${item}`}
-						key={item}
-						label={`bg-${item}`}
-					/>
-				))}
-			</TokenGroup>
-
-			<TokenGroup
-				group="colors"
-				title={Liferay.Language.get('background-state-info')}
-			>
-				{STATE_COLORS_INFO.map((item) => (
-					<TokenItem
-						border={true}
-						className={`bg-${item}`}
-						key={item}
-						label={`bg-${item}`}
-					/>
-				))}
-			</TokenGroup>
-
-			<TokenGroup
-				group="colors"
-				title={Liferay.Language.get('background-state-warning')}
-			>
-				{STATE_COLORS_WARNING.map((item) => (
-					<TokenItem
-						border={true}
-						className={`bg-${item}`}
-						key={item}
-						label={`bg-${item}`}
-					/>
-				))}
-			</TokenGroup>
-
-			<TokenGroup
-				group="colors"
-				title={Liferay.Language.get('background-state-danger')}
-			>
-				{STATE_COLORS_DANGER.map((item) => (
-					<TokenItem
-						border={true}
-						className={`bg-${item}`}
-						key={item}
-						label={`bg-${item}`}
-					/>
-				))}
-			</TokenGroup>
-
-			<TokenGroup
-				group="texts"
-				title={Liferay.Language.get('text-primary')}
-			>
-				{BRAND_PRIMARY_COLORS.map((item) => (
-					<TokenItem
-						border={true}
-						className={`text-${item}`}
-						key={item}
-						label={`text-${item}`}
-					>
-						{SAMPLE_TEXT}
-					</TokenItem>
-				))}
-			</TokenGroup>
-
-			<TokenGroup
-				group="texts"
-				title={Liferay.Language.get('text-secondary')}
-			>
-				{BRAND_SECONDARY_COLORS.map((item) => (
-					<TokenItem
-						border={true}
-						className={`text-${item}`}
-						key={item}
-						label={`text-${item}`}
-					>
-						{SAMPLE_TEXT}
-					</TokenItem>
-				))}
-			</TokenGroup>
-
-			<TokenGroup
-				group="texts"
-				title={Liferay.Language.get('text-neutral')}
-			>
-				{NEUTRAL_COLORS.map((item) => (
-					<TokenItem
-						border={true}
-						className={`text-${item}`}
-						key={item}
-						label={`text-${item}`}
-					>
-						{SAMPLE_TEXT}
-					</TokenItem>
-				))}
-			</TokenGroup>
-
-			<TokenGroup
-				group="texts"
-				title={Liferay.Language.get('text-accent')}
-			>
-				{ACCENT_COLORS.map((item) => (
-					<TokenItem
-						border={true}
-						className={`text-${item}`}
-						key={item}
-						label={`text-${item}`}
-					>
-						{SAMPLE_TEXT}
-					</TokenItem>
-				))}
-			</TokenGroup>
-
-			<TokenGroup
-				group="texts"
-				title={Liferay.Language.get('text-state-success')}
-			>
-				{STATE_COLORS_SUCCESS.map((item) => (
-					<TokenItem
-						border={true}
-						className={`text-${item}`}
-						key={item}
-						label={`text-${item}`}
-					>
-						{SAMPLE_TEXT}
-					</TokenItem>
-				))}
-			</TokenGroup>
-
-			<TokenGroup
-				group="texts"
-				title={Liferay.Language.get('text-state-info')}
-			>
-				{STATE_COLORS_INFO.map((item) => (
-					<TokenItem
-						border={true}
-						className={`text-${item}`}
-						key={item}
-						label={`text-${item}`}
-					>
-						{SAMPLE_TEXT}
-					</TokenItem>
-				))}
-			</TokenGroup>
-
-			<TokenGroup
-				group="texts"
-				title={Liferay.Language.get('text-state-warning')}
-			>
-				{STATE_COLORS_WARNING.map((item) => (
-					<TokenItem
-						border={true}
-						className={`text-${item}`}
-						key={item}
-						label={`text-${item}`}
-					>
-						{SAMPLE_TEXT}
-					</TokenItem>
-				))}
-			</TokenGroup>
-
-			<TokenGroup
-				group="texts"
-				title={Liferay.Language.get('text-state-danger')}
-			>
-				{STATE_COLORS_DANGER.map((item) => (
-					<TokenItem
-						border={true}
-						className={`text-${item}`}
-						key={item}
-						label={`text-${item}`}
-					>
-						{SAMPLE_TEXT}
-					</TokenItem>
-				))}
-			</TokenGroup>
+				);
+			})}
 		</>
 	);
 };

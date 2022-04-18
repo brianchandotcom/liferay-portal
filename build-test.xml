@@ -11246,6 +11246,7 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		<prepare-selenium-recaptcha-properties />
 		<prepare-selenium-required-properties />
 		<prepare-selenium-sharepoint-properties />
+		<prepare-selenium-site-initializer-raylife-paypal-properties />
 		<prepare-selenium-testcase-properties />
 
 		<get-browser-property property.name="browser.docker.image" />

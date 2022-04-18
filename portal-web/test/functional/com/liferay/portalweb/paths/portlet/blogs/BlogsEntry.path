@@ -72,12 +72,12 @@
 </tr>
 <tr>
 	<td>CONTENT</td>
-	<td>//div[contains(@class,'entry-content')]//*[contains(@class,'cke_editable') and contains(normalize-space(),'${key_entryContent}')]</td>
+	<td>//div[contains(@class,'entry-content')]//*[contains(@class,'cke_editable') and contains(normalize-space(),'${key_entryContent}')] | //div[contains(@class,'content')]//p[contains(normalize-space(),'${key_entryContent}')] | //div[contains(@class,'header')]//*[contains(@class,'widget-mode-detail-text')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONTENT_ABSTRACT</td>
-	<td>//div[contains(@class,'content')]//p[contains(normalize-space(),'${key_entryAbstractDescription}')]</td>
+	<td>//div[contains(@class,'content')]//p[contains(normalize-space(),'${key_entryAbstractDescription}')] | //div[contains(@class,'content')]//p[contains(normalize-space(),'${key_entryAbstractDescription}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -117,7 +117,7 @@
 </tr>
 <tr>
 	<td>CONTENT_LINK</td>
-	<td>//div[contains(@class,'content')]//p[contains(.,'${key_entryContent}')]//a</td>
+	<td>//div[contains(@class,'content')]//p[contains(.,'${key_entryContent}')]//a | //div[contains(@class,'entry-content')]//*[contains(@class,'cke_editable') and contains(normalize-space(),'${key_entryContent}')]//a | //div[contains(@class,'widget-content')]//p</td>
 	<td></td>
 </tr>
 <tr>

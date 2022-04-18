@@ -48,7 +48,7 @@ definition {
 
 	@description = "This is a test for LPS-91043. It asserts that user can not publish an old file entry version to live."
 	@priority = "5"
-	test CanNotPublishOldVerion {
+	test CanNotPublishFromVerions {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",

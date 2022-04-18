@@ -72,7 +72,9 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.object.admin.rest.dto.v1_0.ObjectRelationship;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectRelationshipResource;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.io.StreamUtil;
@@ -826,6 +828,18 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals("testlisttypeentry2", listTypeEntry2.getKey());
 	}
 
+	private void _assertObjectActions(
+		ObjectDefinition objectDefinition, int objectActionsCount) {
+
+		List<ObjectAction> objectActionList =
+			_objectActionLocalService.getObjectActions(
+				objectDefinition.getObjectDefinitionId());
+
+		Assert.assertEquals(
+			objectActionList.toString(), objectActionsCount,
+			objectActionList.size());
+	}
+
 	private void _assertObjectDefinitions(
 			Group group, ServiceContext serviceContext)
 		throws Exception {
@@ -838,6 +852,7 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			objectDefinition1.getStatus(), WorkflowConstants.STATUS_APPROVED);
 
+		_assertObjectActions(objectDefinition1, 1);
 		_assertObjectEntries(group.getGroupId(), objectDefinition1, 0);
 		_assertObjectRelationships(objectDefinition1, serviceContext);
 
@@ -849,6 +864,7 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			objectDefinition2.getStatus(), WorkflowConstants.STATUS_APPROVED);
 
+		_assertObjectActions(objectDefinition2, 2);
 		_assertObjectEntries(group.getGroupId(), objectDefinition2, 0);
 
 		ObjectDefinition objectDefinition3 =
@@ -862,6 +878,7 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			objectDefinition3.getStatus(), WorkflowConstants.STATUS_APPROVED);
 
+		_assertObjectActions(objectDefinition3, 0);
 		_assertObjectEntries(0, objectDefinition3, 5);
 	}
 
@@ -1359,6 +1376,9 @@ public class BundleSiteInitializerTest {
 	@Inject
 	private ListTypeDefinitionResource.Factory
 		_listTypeDefinitionResourceFactory;
+
+	@Inject
+	private ObjectActionLocalService _objectActionLocalService;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

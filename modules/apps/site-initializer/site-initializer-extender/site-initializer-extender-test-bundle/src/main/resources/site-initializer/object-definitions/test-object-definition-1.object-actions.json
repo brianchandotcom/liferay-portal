@@ -1,0 +1,12 @@
+[
+    {
+        "active": true,
+        "name": "Test Object Action 1",
+        "objectActionExecutorKey": "webhook",
+        "objectActionTriggerKey": "onAfterAdd",
+        "parameters": {
+            "secret": "test",
+            "url": "http://localhost:8080"
+        }
+    }
+]

@@ -22,9 +22,12 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidationExpression;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Locale;
 import java.util.Map;
@@ -32,25 +35,26 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.mockito.Matchers;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.mockito.Mockito;
 
 /**
  * @author Leonardo Barros
  */
-@PrepareForTest(ResourceBundleUtil.class)
-@RunWith(PowerMockRunner.class)
 public class DDMRESTDataProviderSettingsTest {
 
-	@Before
-	public void setUp() {
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
+
+	@BeforeClass
+	public static void setUpClass() {
 		_setUpLanguageUtil();
 		_setUpPortalUtil();
 		_setUpResourceBundleUtil();
@@ -80,6 +84,41 @@ public class DDMRESTDataProviderSettingsTest {
 		_assertTimeout(ddmFormFields.get("timeout"));
 		_assertURL(ddmFormFields.get("url"));
 		_assertUsername(ddmFormFields.get("username"));
+	}
+
+	private static void _setUpLanguageUtil() {
+		LanguageUtil languageUtil = new LanguageUtil();
+
+		languageUtil.setLanguage(Mockito.mock(Language.class));
+	}
+
+	private static void _setUpPortalUtil() {
+		PortalUtil portalUtil = new PortalUtil();
+
+		Portal portal = Mockito.mock(Portal.class);
+		ResourceBundle resourceBundle = Mockito.mock(ResourceBundle.class);
+
+		Mockito.when(
+			portal.getResourceBundle(Matchers.any(Locale.class))
+		).thenReturn(
+			resourceBundle
+		);
+
+		portalUtil.setPortal(portal);
+	}
+
+	private static void _setUpResourceBundleUtil() {
+		ResourceBundleLoader resourceBundleLoader = Mockito.mock(
+			ResourceBundleLoader.class);
+
+		ResourceBundleLoaderUtil.setPortalResourceBundleLoader(
+			resourceBundleLoader);
+
+		Mockito.when(
+			resourceBundleLoader.loadResourceBundle(Matchers.any(Locale.class))
+		).thenReturn(
+			ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE
+		);
 	}
 
 	private void _assertCacheable(DDMFormField ddmFormField) {
@@ -358,39 +397,6 @@ public class DDMRESTDataProviderSettingsTest {
 		Assert.assertTrue(properties.containsKey("tooltip"));
 
 		Assert.assertEquals("text", ddmFormField.getType());
-	}
-
-	private void _setUpLanguageUtil() {
-		LanguageUtil languageUtil = new LanguageUtil();
-
-		languageUtil.setLanguage(PowerMockito.mock(Language.class));
-	}
-
-	private void _setUpPortalUtil() {
-		PortalUtil portalUtil = new PortalUtil();
-
-		Portal portal = PowerMockito.mock(Portal.class);
-		ResourceBundle resourceBundle = PowerMockito.mock(ResourceBundle.class);
-
-		PowerMockito.when(
-			portal.getResourceBundle(Matchers.any(Locale.class))
-		).thenReturn(
-			resourceBundle
-		);
-
-		portalUtil.setPortal(portal);
-	}
-
-	private void _setUpResourceBundleUtil() {
-		PowerMockito.mockStatic(ResourceBundleUtil.class);
-
-		PowerMockito.when(
-			ResourceBundleUtil.getBundle(
-				Matchers.anyString(), Matchers.any(Locale.class),
-				Matchers.any(ClassLoader.class))
-		).thenReturn(
-			ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE
-		);
 	}
 
 }

@@ -901,11 +901,10 @@ public class WorkflowTaskManagerImplTest extends BaseWorkflowManagerTestCase {
 		FileEntry fileEntry = _dlTrashService.moveFileEntryToTrash(
 			fileVersion.getFileEntryId());
 
-		WorkflowInstanceLink workflowInstanceLink = _fetchWorkflowInstanceLink(
-			DLFileEntryConstants.getClassName(),
-			fileVersion.getFileVersionId());
-
-		Assert.assertNull(workflowInstanceLink);
+		Assert.assertNull(
+			_fetchWorkflowInstanceLink(
+				DLFileEntryConstants.getClassName(),
+				fileVersion.getFileVersionId()));
 
 		_dlTrashService.restoreFileEntryFromTrash(fileVersion.getFileEntryId());
 

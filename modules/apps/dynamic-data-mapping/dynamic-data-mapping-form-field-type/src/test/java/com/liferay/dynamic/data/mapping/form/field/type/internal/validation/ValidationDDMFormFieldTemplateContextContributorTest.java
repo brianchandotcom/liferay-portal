@@ -19,26 +19,30 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Carolina Barbosa
  * @author Matheus Almeida
  */
-@RunWith(PowerMockRunner.class)
 public class ValidationDDMFormFieldTemplateContextContributorTest
 	extends BaseDDMFormFieldTypeSettingsTestCase {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	@Override
@@ -155,14 +159,10 @@ public class ValidationDDMFormFieldTemplateContextContributorTest
 				ddmFormField, ddmFormFieldRenderingContext));
 	}
 
-	private void _setUpJSONFactory() throws Exception {
-		PowerMockito.field(
-			ValidationDDMFormFieldTemplateContextContributor.class,
-			"jsonFactory"
-		).set(
-			_validationDDMFormFieldTemplateContextContributor,
-			new JSONFactoryImpl()
-		);
+	private void _setUpJSONFactory() {
+		ReflectionTestUtil.setFieldValue(
+			_validationDDMFormFieldTemplateContextContributor, "jsonFactory",
+			new JSONFactoryImpl());
 	}
 
 	private final ValidationDDMFormFieldTemplateContextContributor

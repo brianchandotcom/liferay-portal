@@ -10,7 +10,7 @@ services:
         command: java -jar baker-webhook.jar
         container_name: t7h3-baker-webhook
         environment:
-            - "LXC_EXTENSION_BAKER_WEBHOOK_SECRET=pgyP2sdYFaUreq4"
+            - LXC_EXTENSION_BAKER_WEBHOOK_SECRET=pgyP2sdYFaUreq4
         image: liferay/jdk11
         ports:
             - 9002:8080
@@ -41,13 +41,20 @@ services:
             - ./docker/provision/mysql/init:/docker-entrypoint-initdb.d
     liferay:
         container_name: t7h3-liferay
+        depends_on:
+            - database
         environment:
-            - "LXC_EXTENSION_ABLE_REMOTE_APP_URL=http://localhost:9001"
-            - "LXC_EXTENSION_BAKER_WEBHOOK_SECRET=pgyP2sdYFaUreq4"
-            - "LXC_EXTENSION_BAKER_WEBHOOK_URL=http://localhost:9002"
+            - LIFERAY_JDBC_PERIOD_DEFAULT_PERIOD_DRIVER_UPPERCASEC_LASS_UPPERCASEN_AME=com.mysql.cj.jdbc.Driver
+            - LIFERAY_JDBC_PERIOD_DEFAULT_PERIOD_PASSWORD=toor
+            - LIFERAY_JDBC_PERIOD_DEFAULT_PERIOD_USERNAME=root
+            - LIFERAY_JDBC_PERIOD_DEFAULT_PERIOD_URL=jdbc:mysql://database:3306/lportal?characterEncoding=UTF-8&dontTrackOpenResources=true&holdResultsOpenOverStatementClose=true&serverTimezone=GMT&useFastDateParsing=false&useUnicode=true
+            - LXC_EXTENSION_ABLE_REMOTE_APP_URL=http://localhost:9001
+            - LXC_EXTENSION_BAKER_WEBHOOK_SECRET=pgyP2sdYFaUreq4
+            - LXC_EXTENSION_BAKER_WEBHOOK_URL=http://localhost:9002
         image: liferay/dxp:7.4.13-u20
         ports:
             - 8080:8080
         volumes:
             - ./extensions:/opt/liferay/lxc/extensions
+            - ./docker/provision/liferay/lxc:/mnt/liferay
             - ./site-initializers:/opt/liferay/lxc/site-initializers

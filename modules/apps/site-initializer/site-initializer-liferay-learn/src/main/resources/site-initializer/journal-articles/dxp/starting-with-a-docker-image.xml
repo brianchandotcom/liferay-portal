@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US" version="1.0">
+	<dynamic-element index-type="text" instance-id="coIYNI3Q" name="content" type="rich_text">
+		<dynamic-content language-id="en_US"><![CDATA[<h1>Starting with a Docker Image</h1>
+<p>The latest versions of Liferay are available as Docker images. Follow these steps to download, launch, and begin touring the latest releases of Liferay.</p>
+<p>IMPORTANT</p>
+<p>Don't have Docker? Go here first:&nbsp;<a href="https://docs.docker.com/install/linux/docker-ce/ubuntu/">Linux</a>&nbsp;|&nbsp;<a href="https://docs.docker.com/docker-for-windows/install/">Windows</a>&nbsp;|&nbsp;<a href="https://docs.docker.com/docker-for-mac/install/">OSX</a></p>
+<h2>Get Started with Liferay Portal</h2>
+<p>Liferay Portal is the open source and community supported platform for building compelling and flexible web experiences.</p>
+<ol>
+	<li>
+	<p>Get the Docker image.</p>
+	<pre id="codecell0">
+docker pull liferay/portal:7.4.3.8-ga8
+</pre>
+	<button data-clipboard-target="#codecell0" data-tooltip="Copy"></button></li>
+	<li>
+	<p>Start the Docker image.</p>
+	<pre id="codecell1">
+docker run -it -m 8g -p 8080:8080 liferay/portal:7.4.3.8-ga8
+</pre>
+	<button data-clipboard-target="#codecell1" data-tooltip="Copy"></button>
+	<p>TIP</p>
+	<p>Wait until you see&nbsp;<code>org.apache.catalina.startup.Catalina.start&nbsp;Server&nbsp;startup&nbsp;in&nbsp;[x]&nbsp;milliseconds</code>&nbsp;to indicate startup completion.</p>
+	</li>
+	<li>
+	<p>Open your browser to&nbsp;<code>https://localhost:8080</code>.</p>
+	<p><img alt="The Liferay Portal initial landing page." src="https://learn.liferay.com/dxp/latest/en/_images/01218.png" /></p>
+	</li>
+</ol>
+<h2>Get Started With Liferay DXP</h2>
+<p>Liferay DXP is the commercially supported and enterprise ready platform used around the world, built on the foundation of Liferay Portal. Starting with the Docker image is simple and includes a trial license.</p>
+<ol>
+	<li>
+	<p>Get the Docker image.</p>
+	<pre id="codecell2">
+docker pull liferay/portal:7.4.3.8-ga8
+</pre>
+	<button data-clipboard-target="#codecell2" data-tooltip="Copy"></button></li>
+	<li>
+	<p>Start the Docker image.</p>
+	<pre id="codecell3">
+docker run -it -m 8g -p 8080:8080 liferay/portal:7.4.3.8-ga8
+</pre>
+	<button data-clipboard-target="#codecell3" data-tooltip="Copy"></button></li>
+	<li>
+	<p>Open your browser to&nbsp;<code>https://localhost:8080</code>.</p>
+	</li>
+</ol>
+<h2>What's Next</h2>
+<p>Continue our Getting Started walkthrough and learn about logging in for the first time using&nbsp;<a href="https://learn.liferay.com/dxp/latest/en/getting-started/introduction-to-the-admin-account.html">the Admin account</a>.</p>
+<p>Doing more than just checking things out? See the&nbsp;<a href="https://learn.liferay.com/dxp/latest/en/installation-and-upgrades/installing-liferay/installing-a-liferay-tomcat-bundle.html">Installing a Liferay-Tomcat Bundle</a>&nbsp;to learn more.</p>
+<p>Learn more about&nbsp;<a href="https://learn.liferay.com/dxp/latest/en/installation-and-upgrades/installing-liferay/using-liferay-docker-images.html">using Docker images</a>.</p>]]></dynamic-content>
+	</dynamic-element>
+</root>

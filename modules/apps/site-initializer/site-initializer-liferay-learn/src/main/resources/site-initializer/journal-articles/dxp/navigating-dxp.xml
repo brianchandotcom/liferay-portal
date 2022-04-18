@@ -1,0 +1,177 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US" version="1.0">
+	<dynamic-element index-type="text" instance-id="OZ6Pa7ep" name="content" type="rich_text">
+		<dynamic-content language-id="en_US"><![CDATA[<h1>Navigating DXP</h1>
+<p>Liferay DXP's out-of-the-box navigation is organized into three major areas:&nbsp;<em>Personal Menu</em>,&nbsp;<em>Global Menu</em>, and&nbsp;<em>Site Menu</em>.</p>
+<h2>Site Menu</h2>
+<p>The DXP&nbsp;<em>Site Menu</em>&nbsp;on the left side of the screen contains actions, content, and configurations that are scoped to the specific site currently being viewed. You can click on the Site Menu icon (<img alt="Site Menu" src="https://learn.liferay.com/dxp/latest/en/_images/icon-menu.png" />) in the Application Bar to expand or hide the Site Menu.</p>
+<p><img alt="Expand the Site Menu so that all options are visible." src="https://learn.liferay.com/dxp/latest/en/_images/0564.png" /></p>
+<p>The&nbsp;<em>Site Menu</em>&nbsp;indicates the selected Site. In the above example, the Site is&nbsp;<code>Liferay</code>. You can change what site you are working with by clicking the Compass Icon (&nbsp;<img alt="Compass Icon" src="https://learn.liferay.com/dxp/latest/en/_images/icon-compass.png" />&nbsp;) in the Site Menu.</p>
+<p>The following common site building and management activities can be done in the&nbsp;<em>Site Menu</em>:</p>
+<ul>
+	<li>
+	<p><a href="https://learn.liferay.com/dxp/latest/en/site-building/creating-pages/adding-pages/adding-a-page-to-a-site.html">Adding Pages</a></p>
+	</li>
+	<li>
+	<p>Creating Content</p>
+	</li>
+	<li>
+	<p><a href="https://learn.liferay.com/dxp/latest/en/site-building/building-sites/site-membership/adding-members-to-sites.html">Managing Site Memberships</a></p>
+	</li>
+	<li>
+	<p>Configuring and Optimizing Site Behavior and Functionality</p>
+	</li>
+	<li>
+	<p>And more…</p>
+	</li>
+</ul>
+<h2>Applications Bar</h2>
+<p>The&nbsp;<em>Application Bar</em>&nbsp;appears at the top of each page and application listed in the&nbsp;<a href="https://learn.liferay.com/dxp/latest/en/getting-started/navigating-dxp.html#site-menu">Site Menu</a>. The Application Bar shows an Actions (<img alt="Actions" src="https://learn.liferay.com/dxp/latest/en/_images/icon-actions.png" />) menu with different options depending on the application that is open at the moment.</p>
+<p><img alt="The actions available in the Application Bar depend on the application open at the moment." src="https://learn.liferay.com/dxp/latest/en/_images/0738.png" /></p>
+<p>When you open a Page in view mode, the available tools in the Applications Bar change depending on the Page type.</p>
+<p><img alt="Content Pages and Widget Pages show a different set of tools in the Application Bar." src="https://learn.liferay.com/dxp/latest/en/_images/0832.png" /></p>
+<p>For&nbsp;<a href="https://learn.liferay.com/dxp/latest/en/site-building/creating-pages/using-content-pages.html">Content Pages</a>&nbsp;(A), the available tools are:</p>
+<ul>
+	<li>
+	<p>Edit (<img alt="Edit" src="https://learn.liferay.com/dxp/latest/en/_images/icon-edit.png" />)</p>
+	</li>
+	<li>
+	<p>Configure Page (<img alt="Configure Page" src="https://learn.liferay.com/dxp/latest/en/_images/icon-settings.png" />)</p>
+	</li>
+	<li>
+	<p>Simulation (<img alt="Simulation" src="https://learn.liferay.com/dxp/latest/en/_images/icon-simulation.png" />)</p>
+	</li>
+	<li>
+	<p>Content Performance (<img alt="Performance" src="https://learn.liferay.com/dxp/latest/en/_images/icon-analytics.png" />)</p>
+	</li>
+	<li>
+	<p>A/B Test (<img alt="A/B Test" src="https://learn.liferay.com/dxp/latest/en/_images/icon-ab-testing.png" />)</p>
+	</li>
+	<li>
+	<p>Page Audit (<img alt="Page Audit" src="https://learn.liferay.com/dxp/latest/en/_images/icon-information.png" />)</p>
+	</li>
+</ul>
+<p>For&nbsp;<a href="https://learn.liferay.com/dxp/latest/en/site-building/creating-pages/using-widget-pages/adding-widgets-to-a-page.html">Widget Pages</a>&nbsp;(B), the available options are:</p>
+<ul>
+	<li>
+	<p>Configure Page (<img alt="Configure Page" src="https://learn.liferay.com/dxp/latest/en/_images/icon-settings.png" />)</p>
+	</li>
+	<li>
+	<p>Toggle Controls (<img alt="Toggle Controls" src="https://learn.liferay.com/dxp/latest/en/_images/icon-preview.png" />)</p>
+	</li>
+	<li>
+	<p>Add (<img alt="Add" src="https://learn.liferay.com/dxp/latest/en/_images/icon-plus.png" />)</p>
+	</li>
+	<li>
+	<p>Simulation (<img alt="Simulation" src="https://learn.liferay.com/dxp/latest/en/_images/icon-simulation.png" />)</p>
+	</li>
+	<li>
+	<p>Content Performance (<img alt="Performance" src="https://learn.liferay.com/dxp/latest/en/_images/icon-analytics.png" />)</p>
+	</li>
+	<li>
+	<p>Page Audit (<img alt="Page Audit" src="https://learn.liferay.com/dxp/latest/en/_images/icon-information.png" />)</p>
+	</li>
+</ul>
+<p>NOTE</p>
+<p>The Application Bar options for Content Pages and Widget Pages depend on your Liferay DXP version.&nbsp;Content Performance&nbsp;is available for Content Pages starting with Liferay DXP 7.3 and for Widget Pages starting with Liferay DXP 7.4. Page Audit is available starting with Liferay DXP 7.4. The Toggle Controls option is available starting with Liferay DXP 7.3.</p>
+<h2>Personal Menu</h2>
+<p>The Personal Menu is the hub for information and activities for a User that is logged in.</p>
+<p><img alt="The Liferay DXP Personal Menu is available by clicking the avatar icon in the top right." src="https://learn.liferay.com/dxp/latest/en/_images/01217.png" /></p>
+<p>Users can use the personal menu to:</p>
+<ul>
+	<li>
+	<p><a href="https://learn.liferay.com/dxp/latest/en/getting-started/introduction-to-the-admin-account.html#changing-account-information">Change account information</a>&nbsp;(Name, Password, etc.)</p>
+	</li>
+	<li>
+	<p><a href="https://learn.liferay.com/dxp/latest/en/site-building/building-sites/site-membership/adding-members-to-sites.html">See what sites they are members of</a></p>
+	</li>
+	<li>
+	<p><a href="https://learn.liferay.com/dxp/latest/en/collaboration-and-social/notifications-and-requests/user-guide/managing-notifications-and-requests.html">Review site notifications</a></p>
+	</li>
+	<li>
+	<p><a href="https://learn.liferay.com/dxp/latest/en/getting-started/introduction-to-the-admin-account.html#signing-out">Sign out</a></p>
+	</li>
+	<li>
+	<p>And more…</p>
+	</li>
+</ul>
+<h2>Global Menu</h2>
+<p>The DXP&nbsp;<em>Global Menu</em>&nbsp;contains the&nbsp;<em>Applications Menu</em>&nbsp;and the&nbsp;<em>Control Panel</em>. Click the&nbsp;<em>Applications Menu</em>&nbsp;icon (<img alt="Applications Menu icon" src="https://learn.liferay.com/dxp/latest/en/_images/icon-applications-menu.png" />) at the top of the screen to access it.</p>
+<p>NOTE</p>
+<p>By default, Users with the&nbsp;<em>Guest</em>&nbsp;or&nbsp;<em>User</em>&nbsp;roles are not able to access the Global Menu.</p>
+<p>You can also navigate to other Sites available to you from either the&nbsp;<em>Applications</em>&nbsp;or&nbsp;<em>Control Panel</em>&nbsp;tabs in the&nbsp;<em>Global Menu</em>, on the right side of the interface.</p>
+<h3>Applications Menu</h3>
+<p>The&nbsp;<em>Applications Menu</em>&nbsp;contains a variety of links to manage many different applications within your Liferay DXP server.</p>
+<p><img alt="The Applications Menu contains many global settings and important functions applicable to all sites." src="https://learn.liferay.com/dxp/latest/en/_images/02169.png" /></p>
+<p>Here are some of the applications that can be managed from the&nbsp;<em>Applications Menu</em>:</p>
+<ul>
+	<li>
+	<p><a href="https://learn.liferay.com/dxp/latest/en/content-authoring-and-management/collections-and-collection-pages/about-collections-and-collection-pages.html">Collections</a>&nbsp;and the Content Dashboard</p>
+	</li>
+	<li>
+	<p><a href="https://learn.liferay.com/dxp/latest/en/process-automation/workflow/introduction-to-workflow.html">Workflow</a></p>
+	</li>
+	<li>
+	<p><a href="https://learn.liferay.com/dxp/latest/en/building-applications/app-builder.html">App Builder</a></p>
+	</li>
+</ul>
+<h3>Commerce Menu</h3>
+<p>Beginning in Liferay 7.3 CE GA6 and Liferay DXP 7.3 GA1, Liferay Commerce 3.0 is now bundled with Liferay Portal 7.3 CE GA6 and Liferay DXP 7.3 GA1.</p>
+<p><img alt="The Commerce Menu contains all store functions." src="https://learn.liferay.com/dxp/latest/en/_images/03127.png" /></p>
+<p>Here are some functions that can be managed from the&nbsp;<em>Commerce</em>&nbsp;menu:</p>
+<ul>
+	<li>
+	<p><a href="https://learn.liferay.com/commerce/latest/en/product-management/catalogs/creating-a-new-catalog.html">Creating a New Catalog</a></p>
+	</li>
+	<li>
+	<p><a href="https://learn.liferay.com/commerce/latest/en/starting-a-store/channels/managing-channels.html">Creating a New Channel</a></p>
+	</li>
+	<li>
+	<p><a href="https://learn.liferay.com/commerce/latest/en/product-management/managing-inventory/introduction-to-managing-inventory.html">Manage Inventory</a></p>
+	</li>
+	<li>
+	<p><a href="https://learn.liferay.com/commerce/latest/en/order-management/orders/processing-an-order.html">Process Orders</a></p>
+	</li>
+	<li>
+	<p>And more..</p>
+	</li>
+</ul>
+<p>To learn more about Liferay Commerce, see&nbsp;<a href="https://learn.liferay.com/commerce/latest/en/starting-a-store/introduction-to-liferay-commerce.html">Introduction to Liferay Commerce</a>.</p>
+<h3>Control Panel</h3>
+<p>The&nbsp;<em>Control Panel</em>&nbsp;contains general administrative actions and configurations that can be scoped&nbsp;<em>globally</em>&nbsp;to the Liferay DXP installation or to a particular instance.</p>
+<p><img alt="The Control Panel is now part of the Global menu." src="https://learn.liferay.com/dxp/latest/en/_images/0492.png" /></p>
+<p>The following common administrative activities can be done in the Control Panel:</p>
+<ul>
+	<li>
+	<p><a href="https://learn.liferay.com/dxp/latest/en/users-and-permissions/users/adding-and-managing-users.html">Manage Users, Permissions, and Roles</a></p>
+	</li>
+	<li>
+	<p><a href="https://learn.liferay.com/dxp/latest/en/installation-and-upgrades/securing-liferay/authentication-basics.html">Change how users login</a></p>
+	</li>
+	<li>
+	<p><a href="https://learn.liferay.com/dxp/latest/en/site-building/building-sites/adding-a-site.html">Create new Sites</a></p>
+	</li>
+	<li>
+	<p>Add new Custom Fields to applications on the site</p>
+	</li>
+	<li>
+	<p>And more…</p>
+	</li>
+</ul>
+<h2>DXP 7.1 and 7.2</h2>
+<p>In Liferay DXP versions prior to 7.3, the contents of the Global menu are found within the Control Panel, which is located above the Site Menu on the left side of the screen.</p>
+<p><img alt="The Control Panel in DXP 7.1 and 7.2 is located above the Site Menu." src="https://learn.liferay.com/dxp/latest/en/_images/0657.png" /></p>
+<h2>What's Next</h2>
+<p>Continue our Getting Started walkthrough and learn about&nbsp;<a href="https://learn.liferay.com/dxp/latest/en/getting-started/creating-your-first-site.html">Creating Your First Site</a>.</p>
+<h2>Related Information</h2>
+<ul>
+	<li>
+	<p><a href="https://learn.liferay.com/dxp/latest/en/getting-started/creating-your-first-site.html">Creating your first Site</a></p>
+	</li>
+	<li>
+	<p><a href="https://learn.liferay.com/dxp/latest/en/getting-started/changing-your-sites-appearance.html">Changing your Site's Appearance</a></p>
+	</li>
+</ul>]]></dynamic-content>
+	</dynamic-element>
+</root>

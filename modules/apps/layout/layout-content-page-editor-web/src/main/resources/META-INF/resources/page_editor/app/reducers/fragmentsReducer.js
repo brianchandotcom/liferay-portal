@@ -15,6 +15,7 @@
 import {ADD_FRAGMENT_COMPOSITION, INIT} from '../actions/types';
 import {LAYOUT_DATA_ITEM_TYPE_LABELS} from '../config/constants/layoutDataItemTypeLabels';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
+import {config} from '../config/index';
 
 const CONTENT_DISPLAY_COLLECTION_ID = 'content-display';
 
@@ -102,6 +103,21 @@ export default function fragmentsReducer(fragments = [], action) {
 				],
 				name: Liferay.Language.get('layout-elements'),
 			});
+
+			if (config.featureFlagLps150277) {
+				newFragments[0].fragmentEntries.push({
+					data: {
+						itemType: LAYOUT_DATA_ITEM_TYPES.form,
+					},
+					icon: 'forms',
+					itemId: 'form',
+					label:
+						LAYOUT_DATA_ITEM_TYPE_LABELS[
+							LAYOUT_DATA_ITEM_TYPES.form
+						],
+					type: 'form',
+				});
+			}
 
 			newFragments.splice(2, 0, {
 				...(contentDisplayCollection ||

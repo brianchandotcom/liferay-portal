@@ -4028,6 +4028,46 @@ tell application "Safari" to quit
 		</sequential>
 	</macrodef>
 
+	<macrodef name="prepare-selenium-site-initializer-raylife-paypal-properties">
+		<sequential>
+			<if>
+				<isset property="site.initializer.raylife.d2c.paypal.client.id" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						site.initializer.raylife.d2c.paypal.client.id=${site.initializer.raylife.d2c.paypal.client.id}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="site.initializer.raylife.d2c.paypal.client.secret" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						site.initializer.raylife.d2c.paypal.client.secret=${site.initializer.raylife.d2c.paypal.client.secret}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="site.initializer.raylife.d2c.paypal.email" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						site.initializer.raylife.d2c.paypal.email=${site.initializer.raylife.d2c.paypal.email}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="site.initializer.raylife.d2c.paypal.password" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						site.initializer.raylife.d2c.paypal.password=${site.initializer.raylife.d2c.paypal.password}
+					</echo>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="prepare-selenium-testcase-properties">
 		<sequential>
 			<get-testcase-property property.name="asset.publisher.selection.style" />
@@ -10910,6 +10950,42 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
 					digital.signature.rsa.private.key=${digital.signature.rsa.private.key}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="site.initializer.raylife.d2c.paypal.client.id" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					site.initializer.raylife.d2c.paypal.client.id=${site.initializer.raylife.d2c.paypal.client.id}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="site.initializer.raylife.d2c.paypal.client.secret" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					site.initializer.raylife.d2c.paypal.client.secret=${site.initializer.raylife.d2c.paypal.client.secret}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="site.initializer.raylife.d2c.paypal.email" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					site.initializer.raylife.d2c.paypal.email=${site.initializer.raylife.d2c.paypal.email}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="site.initializer.raylife.d2c.paypal.password" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					site.initializer.raylife.d2c.paypal.password=${site.initializer.raylife.d2c.paypal.password}
 				</echo>
 			</then>
 		</if>

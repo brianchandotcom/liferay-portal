@@ -114,7 +114,7 @@ const ActivationStatusAnalyticsCloud = ({
 			title: 'Analytics Cloud Activation',
 		},
 		[STATUS_TAG_TYPE_NAMES.inProgress]: {
-			dropdownIcon: userAccount.isStaff && (
+			dropdownIcon: userAccount.isStaff && userAccount.isProvisioning && (
 				<ButtonDropDown
 					align={Align.BottomRight}
 					customDropDownButton={

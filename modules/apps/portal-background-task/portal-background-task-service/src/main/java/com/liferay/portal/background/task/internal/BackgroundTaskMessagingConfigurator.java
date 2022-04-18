@@ -78,12 +78,7 @@ public class BackgroundTaskMessagingConfigurator {
 		for (ServiceRegistration<Destination> serviceRegistration :
 				_serviceRegistrations) {
 
-			Destination destination = _bundleContext.getService(
-				serviceRegistration.getReference());
-
 			serviceRegistration.unregister();
-
-			destination.destroy();
 		}
 
 		_bundleContext = null;

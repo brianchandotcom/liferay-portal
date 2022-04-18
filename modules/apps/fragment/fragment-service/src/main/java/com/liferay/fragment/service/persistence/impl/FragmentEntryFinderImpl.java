@@ -153,7 +153,7 @@ public class FragmentEntryFinderImpl
 
 			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-			name = _customSQL.keywords(name, false, WildcardMode.SURROUND)[0];
+			name = _customSQL.keywords(name, true, WildcardMode.SURROUND)[0];
 
 			queryPos.add(groupId);
 			queryPos.add(fragmentCollectionId);
@@ -294,7 +294,7 @@ public class FragmentEntryFinderImpl
 
 			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
 
-			name = _customSQL.keywords(name, false, WildcardMode.SURROUND)[0];
+			name = _customSQL.keywords(name, true, WildcardMode.SURROUND)[0];
 
 			queryPos.add(groupId);
 			queryPos.add(fragmentCollectionId);

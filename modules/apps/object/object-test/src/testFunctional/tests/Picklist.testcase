@@ -609,12 +609,70 @@ definition {
 	}
 
 	@description = "LPS-136595 - Verify that the translated Picklist item's name will be displayed on the Object view"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test ViewTranslatedPicklistItemNameOnObjectView {
+		Picklist.addPicklistViaAPI(picklistName = "Picklist Test");
 
-		// TODO LPS-147729 ViewTranslatedPicklistItemNameOnObjectView pending implementation
+		Picklist.addPicklistItemViaAPI(
+			itemKey = "PicklistItemKeyTest",
+			itemName = "Picklist Item Name Test",
+			picklistName = "Picklist Test");
 
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 147729",
+			objectName = "CustomObject147729",
+			pluralLabelName = "Custom Objects 147729");
+
+		Picklist.gotoPicklists();
+
+		Picklist.gotoPicklistView(picklistName = "Picklist Test");
+
+		Picklist.addLanguageOnPicklist(
+			itemName = "Teste na lista",
+			newlanguage = "pt-BR");
+
+		Picklist.optionsPicklistItem(
+			itemKey = "PicklistItemKeyTest",
+			picklistItemOption = "View");
+
+		Picklist.addLanguageOnPicklistItem(
+			itemName = "Teste de entrada",
+			newlanguage = "pt-BR");
+
+		Button.clickSave();
+
+		Navigator.openURL();
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 147729");
+
+		ObjectAdmin.goToFieldsTab();
+
+		ObjectAdmin.addObjectFieldViaUI(
+			fieldLabel = "Field Picklist",
+			fieldPicklist = "Picklist Test",
+			fieldType = "Picklist");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject147729");
+
+		User.openUsersAdmin();
+
+		User.editDisplaySettingsCP(
+			languageName = "português (Brasil)",
+			userScreenName = "test");
+
+		Navigator.openURL();
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject147729");
+
+		ObjectAdmin.addObjectPicklistFieldEntryViaUI(
+			picklistOption = "Teste de entrada",
+			saveName = "Salvar");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject147729");
+
+		ObjectPortlet.viewEntry(entry = "Teste de entrada");
 	}
 
 	@description = "LPS-136595 - Verify that the translated Picklist name will be displayed on the Object Admin"

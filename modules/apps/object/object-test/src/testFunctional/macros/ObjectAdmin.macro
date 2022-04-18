@@ -185,7 +185,14 @@ definition {
 			key_picklistOption = "${picklistOption}",
 			locator1 = "ObjectAdmin#ENTRY_PICKLIST_OPTION");
 
-		Button.clickSave();
+		if (IsElementPresent(key_text = "${saveName}", locator1 = "Button#ANY")) {
+			Click(
+				key_text = "${saveName}",
+				locator1 = "Button#ANY");
+		}
+		else {
+			Button.clickSave();
+		}
 
 		WaitForSPARefresh();
 	}

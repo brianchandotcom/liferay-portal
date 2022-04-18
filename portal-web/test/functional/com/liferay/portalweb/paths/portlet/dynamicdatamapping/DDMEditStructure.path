@@ -222,7 +222,7 @@
 </tr>
 <tr>
 	<td>FORM_FIELD_CONTAINER_HELP_TEXT</td>
-	<td>//span[@class='form-text' and normalize-space(text())='${key_helpText}']</td>
+	<td>//span[@class='form-text' and normalize-space(text())='${key_helpText}'] | //div[text()='${key_helpText}']</td>
 	<td></td>
 </tr>
 <tr>

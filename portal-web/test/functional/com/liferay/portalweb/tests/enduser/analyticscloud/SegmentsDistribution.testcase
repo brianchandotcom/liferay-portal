@@ -135,9 +135,7 @@ definition {
 		}
 
 		task ("View Chart Entry") {
-			if (!(
-
-			var key_entry = "${yearNum}-${monthNum}-${dayNum}&quot;, locator1 = &quot;ACSegments#BREAKDOWN_CHART";)) {
+			if (!(IsTextEqual.isPartialText(key_entry = "${yearNum}-${monthNum}-${dayNum}", locator1 = "ACSegments#BREAKDOWN_CHART"))) {
 				ACSegments.viewBreakdownChartsEntry(key_entry = "${yearNum}-${monthNum}-${tomorrowNum}");
 			}
 

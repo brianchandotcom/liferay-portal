@@ -36,6 +36,21 @@ definition {
 		AssertElementPresent(locator1 = "ObjectField#TYPE_FIELD_DISABLED");
 	}
 
+	macro assertOptionAndDescription {
+
+		Click(locator1 = "ObjectField#TYPE_FIELD");
+
+		AssertElementPresent(
+			key_fieldType = "${option}",
+			locator1 = "ObjectField#TYPE_OPTION");
+
+		AssertTextEquals(
+			key_type = "${option}",
+			locator1 = "ObjectField#FIELD_TYPE_DESCRIPTION",
+			value1 = "${description}");
+
+	}
+
 	macro checkToggleMandatory {
 		Check.checkToggleSwitch(locator1 = "ObjectField#MANDATORY_TOGGLE");
 	}

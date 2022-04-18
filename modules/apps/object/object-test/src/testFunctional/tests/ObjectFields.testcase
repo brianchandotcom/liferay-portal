@@ -96,11 +96,27 @@ definition {
 	}
 
 	@description = "LPS-143065 - Verify if the 'Attachment' option is shown on the 'Type' dropdown"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanViewAttachmentOption {
 
-		// TODO LPS-151557 CanViewAttachmentOption pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 151557",
+			objectName = "CustomObject151557",
+			pluralLabelName = "Custom Objects 151557");
+
+		Navigator.openURL();
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 151557");
+
+		ObjectAdmin.goToFieldsTab();
+
+		LexiconEntry.gotoAdd();
+
+		ObjectField.assertOptionAndDescription(
+			option = "Attachment",
+			description = "Upload files or select from Documents and Media.");
 
 	}
 

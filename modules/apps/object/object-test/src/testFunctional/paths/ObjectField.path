@@ -8,6 +8,11 @@
 <thead><tr><td rowspan="1" colspan="3">ObjectField</td></tr></thead>
 <tbody>
 	<tr>
+		<td>FIELD_TYPE_DESCRIPTION</td>
+		<td>//div[text() = '${key_type}']/..//span[@class = 'text-small']</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>LABEL_ERROR_REQUIRED</td>
 		<td>//input[@name='label']/following-sibling::div[contains(.,'Required')]</td>
 		<td></td>

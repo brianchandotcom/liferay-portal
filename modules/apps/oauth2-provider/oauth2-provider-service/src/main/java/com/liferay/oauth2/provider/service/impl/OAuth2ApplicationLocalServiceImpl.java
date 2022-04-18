@@ -749,7 +749,7 @@ public class OAuth2ApplicationLocalServiceImpl
 					OAuthConstants.TOKEN_ENDPOINT_AUTH_POST) ||
 				 clientAuthenticationMethod.equals("client_secret_jwt")) {
 
-			// Confidential client with secret
+			// Confidential client with client secret
 
 			for (GrantType grantType : allowedGrantTypesList) {
 				if (!grantType.isSupportsConfidentialClients()) {
@@ -765,7 +765,7 @@ public class OAuth2ApplicationLocalServiceImpl
 		}
 		else if (clientAuthenticationMethod.equals("private_key_jwt")) {
 
-			// Confidential client with private/public keys
+			// Confidential client with private key
 
 			for (GrantType grantType : allowedGrantTypesList) {
 				if (!grantType.isSupportsConfidentialClients()) {

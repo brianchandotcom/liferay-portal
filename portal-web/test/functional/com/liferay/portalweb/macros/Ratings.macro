@@ -280,6 +280,16 @@ definition {
 					value1 = "${voteCount}");
 			}
 		}
+
+		if (isSet(toolTip)) {
+			MouseOver(
+				key_ratingResult = "${ratingResult}",
+				locator1 = "Ratings#THUMB");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#TOOLTIP",
+				value1 = "${ratingResult}");
+		}
 	}
 
 }

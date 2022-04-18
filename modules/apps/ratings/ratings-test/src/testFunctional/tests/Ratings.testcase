@@ -1034,10 +1034,12 @@ definition {
 
 		Ratings.viewRateThumb(
 			ratingResult = "高評価",
+			toolTip = "true",
 			voteCount = "0");
 
 		Ratings.viewRateThumb(
 			ratingResult = "低評価",
+			toolTip = "true",
 			voteCount = "0");
 	}
 

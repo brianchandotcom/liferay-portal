@@ -250,11 +250,33 @@ definition {
 	}
 
 	@description = "LPS-143065 - Verify that the Request Files option is a required field"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test RequestFilesIsRequired {
 
-		// TODO LPS-151558 RequestFilesIsRequired pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 151558",
+			objectName = "CustomObject151558",
+			pluralLabelName = "Custom Objects 151558");
+
+		Navigator.openURL();
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 151558");
+
+		ObjectAdmin.goToFieldsTab();
+
+		LexiconEntry.gotoAdd();
+
+		ObjectField.selectType(fieldType = "Attachment");
+
+		Button.clickSave();
+
+		AssertElementPresent(
+			key_fieldName = "Request Files",
+			locator1 = "ObjectField#ERROR_REQUIRED_FIELD_SPECIFIC");
+
+
 
 	}
 

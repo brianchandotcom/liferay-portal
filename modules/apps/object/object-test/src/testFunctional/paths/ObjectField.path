@@ -8,6 +8,11 @@
 <thead><tr><td rowspan="1" colspan="3">ObjectField</td></tr></thead>
 <tbody>
 	<tr>
+		<td>ERROR_REQUIRED_FIELD_SPECIFIC</td>
+		<td>//label[contains(text(), '${key_fieldName}')]/../div[contains(@class, 'form-feedback-group') and contains(.,'Required')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>FIELD_TYPE_DESCRIPTION</td>
 		<td>//div[text() = '${key_type}']/..//span[@class = 'text-small']</td>
 		<td></td>

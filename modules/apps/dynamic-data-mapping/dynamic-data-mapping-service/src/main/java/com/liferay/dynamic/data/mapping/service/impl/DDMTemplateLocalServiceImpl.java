@@ -321,6 +321,85 @@ public class DDMTemplateLocalServiceImpl
 			modelPermissions);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public DDMTemplate copyTemplate(
+			long userId, DDMTemplate template, long classPK,
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		// Template
+
+		if (!ddmWebConfiguration.enableTemplateCreation()) {
+			throw new TemplateCreationDisabledException();
+		}
+
+		User user = _userLocalService.getUser(userId);
+		String templateKey = String.valueOf(counterLocalService.increment());
+
+		boolean smallImage = template.isSmallImage();
+
+		File smallImageFile = getSmallImageFile(template);
+
+		byte[] smallImageBytes = null;
+
+		if (template.isSmallImage()) {
+			try {
+				smallImageBytes = FileUtil.getBytes(smallImageFile);
+			}
+			catch (IOException ioException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(ioException);
+				}
+			}
+
+			if ((smallImageBytes == null) &&
+				!Validator.isUrl(template.getSmallImageURL())) {
+
+				smallImage = false;
+			}
+		}
+
+		validate(
+			template.getGroupId(), template.getClassNameId(), templateKey,
+			LocaleUtil.getSiteDefault(), nameMap, template.getScript(),
+			smallImage, template.getSmallImageURL(), smallImageFile,
+			smallImageBytes);
+
+		DDMTemplate newTemplate = addTemplate(
+			user, template.getGroupId(), template.getClassNameId(), classPK,
+			template.getResourceClassNameId(), templateKey, nameMap,
+			descriptionMap, template.getType(), template.getMode(),
+			template.getLanguage(), template.getScript(),
+			template.isCacheable(), smallImage, template.getSmallImageURL(),
+			serviceContext);
+
+		// Resources
+
+		String resourceName =
+			_ddmPermissionSupport.getTemplateModelResourceName(
+				template.getResourceClassName());
+
+		_resourceLocalService.copyModelResources(
+			template.getCompanyId(), resourceName, template.getPrimaryKey(),
+			newTemplate.getPrimaryKey());
+
+		// Small image
+
+		saveImages(
+			newTemplate.getCompanyId(), smallImage,
+			newTemplate.getSmallImageId(), smallImageFile, smallImageBytes);
+
+		// Template version
+
+		addTemplateVersion(
+			user, newTemplate, DDMTemplateConstants.VERSION_DEFAULT,
+			serviceContext);
+
+		return newTemplate;
+	}
+
 	/**
 	 * Copies the template, creating a new template with all the values
 	 * extracted from the original one. This method supports defining a new name
@@ -1645,83 +1724,6 @@ public class DDMTemplateLocalServiceImpl
 		templateVersion.setStatusDate(template.getModifiedDate());
 
 		return _ddmTemplateVersionPersistence.update(templateVersion);
-	}
-
-	protected DDMTemplate copyTemplate(
-			long userId, DDMTemplate template, long classPK,
-			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		// Template
-
-		if (!ddmWebConfiguration.enableTemplateCreation()) {
-			throw new TemplateCreationDisabledException();
-		}
-
-		User user = _userLocalService.getUser(userId);
-		String templateKey = String.valueOf(counterLocalService.increment());
-
-		boolean smallImage = template.isSmallImage();
-
-		File smallImageFile = getSmallImageFile(template);
-
-		byte[] smallImageBytes = null;
-
-		if (template.isSmallImage()) {
-			try {
-				smallImageBytes = FileUtil.getBytes(smallImageFile);
-			}
-			catch (IOException ioException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(ioException);
-				}
-			}
-
-			if ((smallImageBytes == null) &&
-				!Validator.isUrl(template.getSmallImageURL())) {
-
-				smallImage = false;
-			}
-		}
-
-		validate(
-			template.getGroupId(), template.getClassNameId(), templateKey,
-			LocaleUtil.getSiteDefault(), nameMap, template.getScript(),
-			smallImage, template.getSmallImageURL(), smallImageFile,
-			smallImageBytes);
-
-		DDMTemplate newTemplate = addTemplate(
-			user, template.getGroupId(), template.getClassNameId(), classPK,
-			template.getResourceClassNameId(), templateKey, nameMap,
-			descriptionMap, template.getType(), template.getMode(),
-			template.getLanguage(), template.getScript(),
-			template.isCacheable(), smallImage, template.getSmallImageURL(),
-			serviceContext);
-
-		// Resources
-
-		String resourceName =
-			_ddmPermissionSupport.getTemplateModelResourceName(
-				template.getResourceClassName());
-
-		_resourceLocalService.copyModelResources(
-			template.getCompanyId(), resourceName, template.getPrimaryKey(),
-			newTemplate.getPrimaryKey());
-
-		// Small image
-
-		saveImages(
-			newTemplate.getCompanyId(), smallImage,
-			newTemplate.getSmallImageId(), smallImageFile, smallImageBytes);
-
-		// Template version
-
-		addTemplateVersion(
-			user, newTemplate, DDMTemplateConstants.VERSION_DEFAULT,
-			serviceContext);
-
-		return newTemplate;
 	}
 
 	protected DDMGroupServiceConfiguration getDDMGroupServiceConfiguration(

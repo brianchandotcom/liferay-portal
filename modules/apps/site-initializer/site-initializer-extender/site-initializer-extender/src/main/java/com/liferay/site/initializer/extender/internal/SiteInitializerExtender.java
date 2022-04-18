@@ -56,19 +56,32 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.remote.app.service.RemoteAppEntryLocalService;
+import com.liferay.site.initializer.extender.internal.lxc.LXCBundleDelegate;
+import com.liferay.site.initializer.extender.internal.lxc.LXCServletContextDelegate;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 import com.liferay.style.book.zip.processor.StyleBookEntryZipProcessor;
 
+import java.io.File;
+
+import java.net.MalformedURLException;
+
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.ServletContext;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.framework.wiring.BundleCapability;
 import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.component.annotations.Activate;
@@ -150,15 +163,96 @@ public class SiteInitializerExtender
 	}
 
 	@Activate
-	protected void activate(BundleContext bundleContext) {
+	protected void activate(BundleContext bundleContext)
+		throws MalformedURLException {
+
 		_bundleTracker = new BundleTracker<>(
 			bundleContext, Bundle.ACTIVE, this);
 
 		_bundleTracker.open();
+
+		File siteInitializersHome = new File(
+			PropsValues.LIFERAY_HOME, "lxc/site-initializers");
+
+		for (File siteInitializerFolder : siteInitializersHome.listFiles()) {
+			if (!siteInitializerFolder.isDirectory()) {
+				continue;
+			}
+
+			String symbolicName = "Liferay LXC Site Initializer - ".concat(
+				siteInitializerFolder.getName());
+
+			_lxcServletContextServiceRegistrations.add(
+				bundleContext.registerService(
+					ServletContext.class,
+					ProxyUtil.newDelegateProxyInstance(
+						ServletContext.class.getClassLoader(),
+						ServletContext.class,
+						new LXCServletContextDelegate(
+							siteInitializerFolder, symbolicName),
+						null),
+					MapUtil.singletonDictionary(
+						"osgi.web.symbolicname", symbolicName)));
+
+			SiteInitializerExtension siteInitializerExtension =
+				new SiteInitializerExtension(
+					_accountResourceFactory, _accountRoleLocalService,
+					_accountRoleResourceFactory, _assetCategoryLocalService,
+					_assetListEntryLocalService,
+					ProxyUtil.newDelegateProxyInstance(
+						Bundle.class.getClassLoader(), Bundle.class,
+						new LXCBundleDelegate(
+							bundleContext, symbolicName, siteInitializerFolder),
+						null),
+					_ddmStructureLocalService, _ddmTemplateLocalService,
+					_defaultDDMStructureHelper, _dlURLHelper,
+					_documentFolderResourceFactory, _documentResourceFactory,
+					_fragmentsImporter, _groupLocalService,
+					_journalArticleLocalService, _jsonFactory,
+					_layoutCopyHelper, _layoutLocalService,
+					_layoutPageTemplateEntryLocalService,
+					_layoutPageTemplatesImporter,
+					_layoutPageTemplateStructureLocalService,
+					_layoutSetLocalService, _listTypeDefinitionResource,
+					_listTypeDefinitionResourceFactory, _listTypeEntryResource,
+					_listTypeEntryResourceFactory,
+					_objectDefinitionLocalService,
+					_objectDefinitionResourceFactory,
+					_objectRelationshipResourceFactory,
+					_objectEntryLocalService, _organizationResourceFactory,
+					_portal, _portletSettingsImporter,
+					_remoteAppEntryLocalService, _resourceActionLocalService,
+					_resourcePermissionLocalService, _roleLocalService,
+					_sapEntryLocalService, _settingsFactory,
+					_siteNavigationMenuItemLocalService,
+					_siteNavigationMenuItemTypeRegistry,
+					_siteNavigationMenuLocalService,
+					_structuredContentFolderResourceFactory,
+					_styleBookEntryZipProcessor,
+					_taxonomyCategoryResourceFactory,
+					_taxonomyVocabularyResourceFactory, _themeLocalService,
+					_userAccountResourceFactory, _userLocalService,
+					_workflowDefinitionLinkLocalService,
+					_workflowDefinitionResourceFactory);
+
+			siteInitializerExtension.start();
+		}
 	}
 
 	@Deactivate
 	protected void deactivate() {
+		for (SiteInitializerExtension siteInitializerExtension :
+				_lxcSiteInitializerExtensions) {
+
+			siteInitializerExtension.destroy();
+		}
+
+		for (ServiceRegistration<?> serviceRegistration :
+				_lxcServletContextServiceRegistrations) {
+
+			serviceRegistration.unregister();
+		}
+
 		_bundleTracker.close();
 	}
 
@@ -241,6 +335,11 @@ public class SiteInitializerExtender
 
 	@Reference
 	private ListTypeEntryResource.Factory _listTypeEntryResourceFactory;
+
+	private final List<ServiceRegistration<?>>
+		_lxcServletContextServiceRegistrations = new ArrayList<>();
+	private final List<SiteInitializerExtension> _lxcSiteInitializerExtensions =
+		new ArrayList<>();
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

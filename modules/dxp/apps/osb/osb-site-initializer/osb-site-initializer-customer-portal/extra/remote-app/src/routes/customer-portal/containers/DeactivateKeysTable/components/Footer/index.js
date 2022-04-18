@@ -12,8 +12,6 @@
 import {Button as ClayButton} from '@clayui/core';
 import {useCallback, useMemo, useState} from 'react';
 import {Link} from 'react-router-dom';
-import {ALERT_DOWNLOAD_TYPE} from '../../../../utils/constants/alertDownloadType';
-import DownloadAlert from '../../../ActivationKeysTable/components/DownloadAlert';
 import DeactivateButton from '../DeactivateButton';
 
 const ACTIVATION_ROOT_ROUTER = 'activation';
@@ -86,19 +84,6 @@ const DeactivateKeysTableFooter = ({
 				}
 				urlPreviousPage={urlPreviousPage}
 			/>
-
-			{status.deactivate === ALERT_DOWNLOAD_TYPE.success && (
-				<DownloadAlert
-					downloadStatus="success"
-					message="Activation Key(s) were deactivated successfully."
-					setDownloadStatus={(value) =>
-						setStatus((previousStatus) => ({
-							...previousStatus,
-							deactivate: value,
-						}))
-					}
-				/>
-			)}
 		</div>
 	);
 };

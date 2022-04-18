@@ -46,8 +46,15 @@ const ActivationKeysTable = ({productName, project, sessionId}) => {
 		setNewKeyGeneratedAlertStatus,
 	] = useState(state?.newKeyGeneratedAlert ? 'success' : '');
 
+	const [deactivatedKeyAlertStatus, setDeactivatedKeyAlertStatus] = useState(
+		state?.deactivateKeyAlert ? 'success' : ''
+	);
+
 	const messageNewKeyGeneratedAlert =
 		'Activation Key was generated successfully';
+
+	const messageDeactivateKey =
+		'Activation Key(s) were deactivated successfully.';
 
 	const {
 		activationKeysState: [activationKeys, setActivationKeys],
@@ -230,6 +237,14 @@ const ActivationKeysTable = ({productName, project, sessionId}) => {
 					downloadStatus={newKeyGeneratedAlertStatus}
 					message={messageNewKeyGeneratedAlert}
 					setDownloadStatus={setNewKeyGeneratedAlertStatus}
+				/>
+			)}
+
+			{!!deactivatedKeyAlertStatus && (
+				<DownloadAlert
+					downloadStatus={deactivatedKeyAlertStatus}
+					message={messageDeactivateKey}
+					setDownloadStatus={setDeactivatedKeyAlertStatus}
 				/>
 			)}
 		</>

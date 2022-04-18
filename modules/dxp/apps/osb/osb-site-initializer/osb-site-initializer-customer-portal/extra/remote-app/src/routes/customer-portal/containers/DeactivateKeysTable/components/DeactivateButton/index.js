@@ -52,7 +52,7 @@ const DeactivateButton = ({
 			setIsVisibleModal(false);
 			handleDeactivate();
 
-			navigate(urlPreviousPage);
+			navigate(urlPreviousPage, {state: {deactivateKeyAlert: true}});
 
 			return setDeactivateKeysStatus(ALERT_DOWNLOAD_TYPE.success);
 		}

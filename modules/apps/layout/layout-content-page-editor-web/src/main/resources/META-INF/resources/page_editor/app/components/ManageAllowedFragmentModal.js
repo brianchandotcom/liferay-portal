@@ -20,7 +20,6 @@ import React, {useCallback, useState} from 'react';
 import {config} from '../config/index';
 import {useDispatch} from '../contexts/StoreContext';
 import updateItemConfig from '../thunks/updateItemConfig';
-import AllowedFragmentSelector from './AllowedFragmentSelector';
 import AllowedFragmentSelectorTree from './AllowedFragmentSelectorTree';
 
 const ManageAllowedFragmentModal = ({item, observer, onClose}) => {

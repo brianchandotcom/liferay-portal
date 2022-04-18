@@ -51,43 +51,31 @@ definition {
 	test CanNotPublishOldVerion {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "Document_1.jpg",
+			dmDocumentTitle = "DM Document Title",
 			groupName = "Site Name-staging",
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_1.jpg");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
-
-		DMDocument.editCP(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentDescriptionEdit = "DM Document Description Edit 1",
-			dmDocumentTitle = "Document_1.jpg",
-			dmDocumentTitleEdit = "DM Document Title Edit 1");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
-
-		DMDocument.editCP(
-			dmDocumentDescription = "DM Document Description Edit 1",
-			dmDocumentDescriptionEdit = "DM Document Description Edit 2",
-			dmDocumentTitle = "DM Document Title Edit 1",
-			dmDocumentTitleEdit = "DM Document Title Edit 2");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
-
-		DMDocument.editCP(
-			dmDocumentDescription = "DM Document Description Edit 2",
-			dmDocumentDescriptionEdit = "DM Document Description Edit 3",
-			dmDocumentTitle = "DM Document Title Edit 2",
-			dmDocumentTitleEdit = "DM Document Title Edit 3");
-
-		DMNavigator.openToEntryInAdmin(
-			dmDocumentTitle = "DM Document Title Edit 3",
+		DMNavigator.openToEditEntryInSite(
+			dmDocumentTitle = "DM Document Title",
 			groupName = "Site Name (Staging)",
 			site = "false",
 			siteURLKey = "site-name-staging");
 
-		for (var n : list "0,1,2,3") {
-			DMDocument.viewOlderVersionNoPublish(dmDocumentVersionNumber = "1.${n}");
+		DMDocument.editCmd(dmDocumentTitleEdit = "DM Document Title Edit");
+
+		Button.clickPublish();
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "DM Document Title Edit",
+			groupName = "Site Name (Staging)",
+			site = "false",
+			siteURLKey = "site-name-staging");
+
+		for (var n : list "0,1") {
+			DMDocument.viewNoItemInVersionMenu(
+				dmDocumentVersionNumber = "1.${n}",
+				menuItem = "Publish to Live");
 		}
 	}
 

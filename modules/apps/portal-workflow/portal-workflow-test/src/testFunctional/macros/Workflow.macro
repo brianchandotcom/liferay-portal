@@ -620,20 +620,8 @@ definition {
 			rowEntry = "${workflowDefinitionTitle}");
 	}
 
-	macro gotoMiniumSidebarItem {
-		if (isSet(userMenu)) {
-			MouseOver(locator1 = "CommerceAccelerators#MINIUM_SIDEBAR_USER_AVATAR");
-		}
-
-		if (isSet(moveUp)) {
-			ScrollBy(value1 = "0, -1000");
-		}
-
-		Click(
-			key_menuItem = "${menuItem}",
-			locator1 = "CommerceAccelerators#MINIUM_SIDEBAR_MENU_ITEM");
-
-		WaitForPageLoad();
+	macro openNotifications {
+		Navigator.openSpecificURL(url = "/group/control_panel/manage?p_p_id=com_liferay_notifications_web_portlet_NotificationsPortlet&p_p_lifecycle=0&p_p_state=maximized&p_v_l_s_g_id=42619&p_p_auth=1njFlr6I");
 	}
 
 	macro gotoPreviewEdit {

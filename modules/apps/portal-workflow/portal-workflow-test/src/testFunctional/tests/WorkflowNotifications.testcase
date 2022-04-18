@@ -102,9 +102,7 @@ definition {
 			urlAppend = "web/minium",
 			userEmailAddress = "buyer@liferay.com");
 
-		Workflow.gotoMiniumSidebarItem(
-			menuItem = "Notifications",
-			userMenu = "true");
+		Workflow.openNotifications();
 
 		Notifications.viewSuccessfulPublication(
 			contentBody = "for review in the workflow.",

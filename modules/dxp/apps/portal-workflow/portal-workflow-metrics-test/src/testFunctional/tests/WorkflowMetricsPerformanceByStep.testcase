@@ -241,16 +241,16 @@ definition {
 		Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
 
 		WorkflowMetricsAllItemsList.selectAndChangeNodeID(
-				nodeID = "review2",
-				nodeType = "task",
-				nodeLabel = "review",
-				update = "true");
+			nodeID = "review2",
+			nodeLabel = "review",
+			nodeType = "task",
+			update = "true");
 
-			WorkflowMetricsAllItemsList.selectAndChangeNodeID(
-				nodeID = "update2",
-				nodeType = "task",
-				nodeLabel = "update",
-				update = "true");
+		WorkflowMetricsAllItemsList.selectAndChangeNodeID(
+			nodeID = "update2",
+			nodeLabel = "update",
+			nodeType = "task",
+			update = "true");
 
 		Button.clickUpdate();
 
@@ -514,16 +514,16 @@ definition {
 		Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
 
 		WorkflowMetricsAllItemsList.selectAndChangeNodeID(
-				nodeID = "review2",
-				nodeType = "task",
-				nodeLabel = "review",
-				update = "true");
+			nodeID = "review2",
+			nodeLabel = "review",
+			nodeType = "task",
+			update = "true");
 
-			WorkflowMetricsAllItemsList.selectAndChangeNodeID(
-				nodeID = "update2",
-				nodeType = "task",
-				nodeLabel = "update",
-				update = "true");
+		WorkflowMetricsAllItemsList.selectAndChangeNodeID(
+			nodeID = "update2",
+			nodeLabel = "update",
+			nodeType = "task",
+			update = "true");
 
 		Button.clickUpdate();
 
@@ -589,19 +589,17 @@ definition {
 
 			WorkflowMetricsAllItemsList.selectAndChangeNodeID(
 				nodeID = "review2",
-				nodeType = "task",
 				nodeLabel = "review",
+				nodeType = "task",
 				update = "true");
 
 			WorkflowMetricsAllItemsList.selectAndChangeNodeID(
 				nodeID = "update2",
-				nodeType = "task",
 				nodeLabel = "update",
+				nodeType = "task",
 				update = "true");
 
 			Button.clickUpdate();
-
-
 		}
 
 		Navigator.gotoBack();
@@ -1125,15 +1123,15 @@ definition {
 			Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
 
 			WorkflowMetricsAllItemsList.selectAndChangeNodeName(
+				nodeLabel = "review",
 				nodeName = "review2",
 				nodeType = "task",
-				nodeLabel = "review",
 				update = "true");
 
 			WorkflowMetricsAllItemsList.selectAndChangeNodeName(
+				nodeLabel = "update",
 				nodeName = "update2",
 				nodeType = "task",
-				nodeLabel = "update",
 				update = "true");
 
 			Button.clickUpdate();

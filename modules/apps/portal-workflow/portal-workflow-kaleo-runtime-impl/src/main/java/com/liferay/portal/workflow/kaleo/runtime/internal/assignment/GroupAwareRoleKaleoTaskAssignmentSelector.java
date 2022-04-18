@@ -60,11 +60,10 @@ public class GroupAwareRoleKaleoTaskAssignmentSelector
 		KaleoInstanceToken kaleoInstanceToken =
 			executionContext.getKaleoInstanceToken();
 
-		Role role = _roleLocalService.getRole(
-			kaleoTaskAssignment.getAssigneeClassPK());
-
 		return _createKaleoTaskAssigments(
-			kaleoInstanceToken.getGroupId(), role);
+			kaleoInstanceToken.getGroupId(),
+			_roleLocalService.getRole(
+				kaleoTaskAssignment.getAssigneeClassPK()));
 	}
 
 	@Reference(

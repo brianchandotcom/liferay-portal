@@ -81,13 +81,10 @@ public class MultiLanguageNotificationRecipientEvaluator
 			notificationRecipientEvaluator, properties);
 
 		for (String scriptingLanguage : scriptingLanguages) {
-			String notificationRecipientEvaluatorKey =
+			_notificationRecipientEvaluators.put(
 				_getNotificationRecipientEvaluatorKey(
 					scriptingLanguage,
-					ClassUtil.getClassName(notificationRecipientEvaluator));
-
-			_notificationRecipientEvaluators.put(
-				notificationRecipientEvaluatorKey,
+					ClassUtil.getClassName(notificationRecipientEvaluator)),
 				notificationRecipientEvaluator);
 		}
 	}
@@ -101,13 +98,10 @@ public class MultiLanguageNotificationRecipientEvaluator
 			notificationRecipientEvaluator, properties);
 
 		for (String scriptingLanguage : scriptingLanguages) {
-			String notificationRecipientEvaluatorKey =
+			_notificationRecipientEvaluators.remove(
 				_getNotificationRecipientEvaluatorKey(
 					scriptingLanguage,
-					ClassUtil.getClassName(notificationRecipientEvaluator));
-
-			_notificationRecipientEvaluators.remove(
-				notificationRecipientEvaluatorKey);
+					ClassUtil.getClassName(notificationRecipientEvaluator)));
 		}
 	}
 

@@ -168,7 +168,6 @@ public class LayoutActionDropdownItemsProvider {
 								"viewCollectionItemsURL",
 								_layoutsAdminDisplayContext.
 									getViewCollectionItemsURL(layout));
-							dropdownItem.setIcon("view");
 							dropdownItem.setLabel(
 								LanguageUtil.get(
 									_httpServletRequest,

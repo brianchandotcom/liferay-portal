@@ -31,20 +31,14 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.mockito.Matchers;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
-
-import org.powermock.api.mockito.PowerMockito;
 
 /**
  * @author Leonardo Barros
  */
-@RunWith(MockitoJUnitRunner.class)
-public class DDMDataProviderInstanceSettingsImplTest extends PowerMockito {
+public class DDMDataProviderInstanceSettingsImplTest {
 
 	@ClassRule
 	@Rule
@@ -52,7 +46,7 @@ public class DDMDataProviderInstanceSettingsImplTest extends PowerMockito {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		_ddmDataProviderInstanceSettingsImpl =
 			new DDMDataProviderInstanceSettingsImpl();
 
@@ -63,14 +57,14 @@ public class DDMDataProviderInstanceSettingsImplTest extends PowerMockito {
 	}
 
 	@Test
-	public void testGetSettings() throws Exception {
-		when(
+	public void testGetSettings() {
+		Mockito.when(
 			_ddmDataProviderTracker.getDDMDataProvider(Matchers.anyString())
 		).thenReturn(
 			_ddmDataProvider
 		);
 
-		when(
+		Mockito.when(
 			_ddmDataProvider.getSettings()
 		).thenReturn(
 			(Class)TestDataProviderInstanceSettings.class
@@ -84,7 +78,7 @@ public class DDMDataProviderInstanceSettingsImplTest extends PowerMockito {
 					ddmFormValues
 				).build();
 
-		when(
+		Mockito.when(
 			_ddmFormValuesDeserializer.deserialize(Mockito.any())
 		).thenReturn(
 			ddmFormValuesDeserializerDeserializeResponse
@@ -103,8 +97,8 @@ public class DDMDataProviderInstanceSettingsImplTest extends PowerMockito {
 	}
 
 	@Test(expected = IllegalStateException.class)
-	public void testGetSettingsCatchException() throws Exception {
-		when(
+	public void testGetSettingsCatchException() {
+		Mockito.when(
 			_ddmDataProviderTracker.getDDMDataProvider(Matchers.anyString())
 		).thenThrow(
 			IllegalStateException.class
@@ -136,19 +130,15 @@ public class DDMDataProviderInstanceSettingsImplTest extends PowerMockito {
 		return ddmFormValues;
 	}
 
-	@Mock
-	private DDMDataProvider _ddmDataProvider;
-
-	@Mock
-	private DDMDataProviderInstance _ddmDataProviderInstance;
-
+	private final DDMDataProvider _ddmDataProvider = Mockito.mock(
+		DDMDataProvider.class);
+	private final DDMDataProviderInstance _ddmDataProviderInstance =
+		Mockito.mock(DDMDataProviderInstance.class);
 	private DDMDataProviderInstanceSettingsImpl
 		_ddmDataProviderInstanceSettingsImpl;
-
-	@Mock
-	private DDMDataProviderTracker _ddmDataProviderTracker;
-
-	@Mock
-	private DDMFormValuesDeserializer _ddmFormValuesDeserializer;
+	private final DDMDataProviderTracker _ddmDataProviderTracker = Mockito.mock(
+		DDMDataProviderTracker.class);
+	private final DDMFormValuesDeserializer _ddmFormValuesDeserializer =
+		Mockito.mock(DDMFormValuesDeserializer.class);
 
 }

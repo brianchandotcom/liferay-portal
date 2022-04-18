@@ -19,6 +19,7 @@ import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 
 import {ContainerWithControls} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/layout-data-items';
+import {config} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/config';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/layoutDataItemTypes';
 import {VIEWPORT_SIZES} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/viewportSizes';
 import {
@@ -26,6 +27,9 @@ import {
 	useSelectItem,
 } from '../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ControlsContext';
 import {StoreAPIContextProvider} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
+import getLayoutDataItemClassName from '../../../../../src/main/resources/META-INF/resources/page_editor/app/utils/getLayoutDataItemClassName';
+import getLayoutDataItemTopperUniqueClassName from '../../../../../src/main/resources/META-INF/resources/page_editor/app/utils/getLayoutDataItemTopperUniqueClassName';
+import getLayoutDataItemUniqueClassName from '../../../../../src/main/resources/META-INF/resources/page_editor/app/utils/getLayoutDataItemUniqueClassName';
 
 jest.mock(
 	'../../../../../src/main/resources/META-INF/resources/page_editor/app/config',
@@ -46,6 +50,8 @@ jest.mock(
 	})
 );
 
+const CONTAINER_ID = 'CONTAINER_ID';
+
 const renderContainer = ({
 	activeItemId = 'container',
 	containerConfig = {styles: {}},
@@ -55,7 +61,7 @@ const renderContainer = ({
 	const container = {
 		children: [],
 		config: containerConfig,
-		itemId: 'container',
+		itemId: CONTAINER_ID,
 		parentId: null,
 		type: LAYOUT_DATA_ITEM_TYPES.container,
 	};
@@ -136,5 +142,23 @@ describe('ContainerWithControls', () => {
 		const container = baseElement.querySelector('.page-editor__container');
 
 		expect(container).toBeVisible();
+	});
+
+	it('set classes for referencing the item', () => {
+		config.featureFlagLps132571 = true;
+
+		const {baseElement} = renderContainer();
+
+		const classes = [
+			getLayoutDataItemClassName(LAYOUT_DATA_ITEM_TYPES.container),
+			getLayoutDataItemTopperUniqueClassName(CONTAINER_ID),
+			getLayoutDataItemUniqueClassName(CONTAINER_ID),
+		];
+
+		classes.forEach((className) => {
+			const item = baseElement.querySelector(`.${className}`);
+
+			expect(item).toBeVisible();
+		});
 	});
 });

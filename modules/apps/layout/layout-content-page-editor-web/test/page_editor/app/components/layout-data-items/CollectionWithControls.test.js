@@ -21,11 +21,17 @@ import {HTML5Backend} from 'react-dnd-html5-backend';
 import {CollectionWithControls} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/layout-data-items';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/layoutDataItemTypes';
 import {VIEWPORT_SIZES} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/viewportSizes';
+import {config} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/config/index';
 import {
 	ControlsProvider,
 	useSelectItem,
 } from '../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ControlsContext';
 import {StoreAPIContextProvider} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
+import getLayoutDataItemClassName from '../../../../../src/main/resources/META-INF/resources/page_editor/app/utils/getLayoutDataItemClassName';
+import getLayoutDataItemTopperUniqueClassName from '../../../../../src/main/resources/META-INF/resources/page_editor/app/utils/getLayoutDataItemTopperUniqueClassName';
+import getLayoutDataItemUniqueClassName from '../../../../../src/main/resources/META-INF/resources/page_editor/app/utils/getLayoutDataItemUniqueClassName';
+
+const COLLECTION_ID = 'COLLECTION_ID';
 
 const renderCollection = ({
 	isActive = true,
@@ -37,7 +43,7 @@ const renderCollection = ({
 	const collection = {
 		children: [],
 		config: collectionConfig,
-		itemId: 'collection',
+		itemId: COLLECTION_ID,
 		parentId: null,
 		type: LAYOUT_DATA_ITEM_TYPES.collection,
 	};
@@ -137,5 +143,23 @@ describe('CollectionWithControls', () => {
 		);
 
 		expect(collection).toBeVisible();
+	});
+
+	it('set classes for referencing the item', () => {
+		config.featureFlagLps132571 = true;
+
+		const {baseElement} = renderCollection();
+
+		const classes = [
+			getLayoutDataItemClassName(LAYOUT_DATA_ITEM_TYPES.collection),
+			getLayoutDataItemTopperUniqueClassName(COLLECTION_ID),
+			getLayoutDataItemUniqueClassName(COLLECTION_ID),
+		];
+
+		classes.forEach((className) => {
+			const item = baseElement.querySelector(`.${className}`);
+
+			expect(item).toBeVisible();
+		});
 	});
 });

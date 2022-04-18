@@ -61,6 +61,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8531 | Test Summary: Site overview visitors by day and time card shows when individuals are viewing the site"
 	@priority = "5"
 	test ShowsWhenIndividualsViewingSite {
+		property test.name.skip.portal.instance = "SitesVisitorsDayAndTime#ShowsWhenIndividualsViewingSite";
+
 		task ("Sign in as new user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "userea@liferay.com",

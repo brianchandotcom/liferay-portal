@@ -455,6 +455,8 @@ definition {
 	@description = "Feature ID: LRAC-4266 | Automation ID: LRAC-10306 | Test Summary: Remove Attribute"
 	@priority = "5"
 	test RemoveAttribute {
+		property test.name.skip.portal.instance = "CustomEventsEventAnalysis#RemoveAttribute";
+
 		var attributeName = "pageTitle";
 		var dataSource = StringUtil.extractFirst("${assignedPropertyName}", " ");
 
@@ -516,6 +518,8 @@ definition {
 	@description = "Feature ID: LRAC-4266 | Automation ID: LRAC-10301 | Test Summary: Search Event Attribute from Event tab"
 	@priority = "3"
 	test SearchEventAttributeInEventTab {
+		property test.name.skip.portal.instance = "CustomEventsEventAnalysis#SearchEventAttributeInEventTab";
+
 		var defaultAttributeName = "pageTitle";
 		var customAttributeName = "category";
 
@@ -569,6 +573,8 @@ definition {
 	@description = "Feature ID: LRAC-4266 | Automation ID: LRAC-10295 | Test Summary: Search for events in different tabs"
 	@priority = "3"
 	test SearchEventsInDifferentTabs {
+		property test.name.skip.portal.instance = "CustomEventsEventAnalysis#SearchEventsInDifferentTabs";
+
 		var defaultEventName = "pageViewed";
 
 		task ("Fill fields and create custom event") {

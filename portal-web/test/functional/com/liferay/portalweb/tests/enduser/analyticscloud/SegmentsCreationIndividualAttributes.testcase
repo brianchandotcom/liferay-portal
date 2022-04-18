@@ -66,6 +66,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8565 | Test Summary: Add segment using an individual property 'role'"
 	@priority = "4"
 	test CanAddSegmentUsingIndividualPropertyRole {
+		property test.name.skip.portal.instance = "SegmentsCreationIndividualAttributes#CanAddSegmentUsingIndividualPropertyRole";
+
 		task ("Add a new regular role and assign to the user") {
 			JSONRole.addRegularRole(
 				roleKey = "AC Seg Reg Role",
@@ -278,6 +280,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8566 | Test Summary: Add segment using an individual property 'team'"
 	@priority = "4"
 	test CanAddSegmentUsingIndividualPropertyTeam {
+		property test.name.skip.portal.instance = "SegmentsCreationIndividualAttributes#CanAddSegmentUsingIndividualPropertyTeam";
+
 		task ("Assign the site to user") {
 			JSONGroup.assignUserToGroup(
 				groupName = "Site Name",
@@ -413,6 +417,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8567 | Test Summary: Add segment using an individual property 'user group'"
 	@priority = "4"
 	test CanAddSegmentUsingIndividualPropertyUserGroup {
+		property test.name.skip.portal.instance = "SegmentsCreationIndividualAttributes#CanAddSegmentUsingIndividualPropertyUserGroup";
+
 		task ("Add a new user group and assign to the user") {
 			JSONUserGroup.addUserGroup(
 				userGroupDescription = "UG UserGroup Description",
@@ -475,6 +481,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8569 | Test Summary: Add segment with custom field for individuals"
 	@priority = "4"
 	test CanAddSegmentWithCustomFieldsForIndividuals {
+		property test.name.skip.portal.instance = "SegmentsCreationIndividualAttributes#CanAddSegmentWithCustomFieldsForIndividuals";
+
 		task ("Add a user custom field") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Configuration",
@@ -568,6 +576,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8570 | Test Summary: Add segment with custom fields for organizations"
 	@priority = "4"
 	test CanAddSegmentWithCustomFieldsForOrganizations {
+		property test.name.skip.portal.instance = "SegmentsCreationIndividualAttributes#CanAddSegmentWithCustomFieldsForOrganizations";
+
 		task ("Add a new organization and assign to the user") {
 			JSONOrganization.addOrganization(organizationName = "Organization Name");
 

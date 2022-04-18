@@ -1437,6 +1437,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8473 | Test Summary: Filter the Segment 'Add Members' Modal"
 	@priority = "3"
 	test CanSearchUserInAddMembersModal {
+		property test.name.skip.portal.instance = "SegmentsCreation#CanSearchUserInAddMembersModal";
+
 		var emailList = "userea@liferay.com,user1@liferay.com";
 
 		task ("Add one more user with a given birth date") {
@@ -1504,6 +1506,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8133 | Test Summary: Create button shows option to create static or dynamic"
 	@priority = "5"
 	test CanSeeOptionsToCreateStaticOrDynamicSegment {
+		property test.name.skip.portal.instance = "SegmentsCreation#CanSeeOptionsToCreateStaticOrDynamicSegment";
+
 		task ("Sign in as new user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "userea@liferay.com",
@@ -1552,6 +1556,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8484 | Test Summary: Segment Form Validation"
 	@priority = "5"
 	test ViewSegmentFormValidation {
+		property test.name.skip.portal.instance = "SegmentsCreation#ViewSegmentFormValidation";
+
 		task ("Sign in as new user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "userea@liferay.com",

@@ -14,17 +14,6 @@
 
 package com.liferay.oauth2.application.factory.dynamicinclude;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 import com.liferay.oauth2.application.factory.user.agent.Oauth2ApplicationFactoryUserAgent;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
@@ -37,22 +26,27 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.util.Portal;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Raymond Augé
  */
-@Component(
-	immediate = true,
-	property = {
-
-	},
-	service = DynamicInclude.class
-)
+@Component(immediate = true, property = {}, service = DynamicInclude.class)
 public class OAuth2ApplicationsDynamicInclude implements DynamicInclude {
 
 	@Activate
 	public OAuth2ApplicationsDynamicInclude(
-		@Reference OAuth2ApplicationLocalService
-			oAuth2ApplicationLocalService,
+		@Reference OAuth2ApplicationLocalService oAuth2ApplicationLocalService,
 		@Reference Portal portal) {
 
 		_oAuth2ApplicationLocalService = oAuth2ApplicationLocalService;
@@ -70,17 +64,14 @@ public class OAuth2ApplicationsDynamicInclude implements DynamicInclude {
 		DynamicQuery dynamicQuery =
 			_oAuth2ApplicationLocalService.dynamicQuery();
 
-		Property companyIdProperty = PropertyFactoryUtil.forName(
-			"companyId");
+		Property companyIdProperty = PropertyFactoryUtil.forName("companyId");
 
-		dynamicQuery.add(companyIdProperty.eq(
-			_portal.getCompanyId(httpServletRequest)));
+		dynamicQuery.add(
+			companyIdProperty.eq(_portal.getCompanyId(httpServletRequest)));
 
 		Property nameProperty = PropertyFactoryUtil.forName("name");
 
-		dynamicQuery.add(nameProperty.like(
-			"%".concat(
-				Oauth2ApplicationFactoryUserAgent.USER_AGENT_SUBDOMAIN)));
+		dynamicQuery.add(nameProperty.like("%".concat(_SUBDOMAIN)));
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
@@ -88,20 +79,18 @@ public class OAuth2ApplicationsDynamicInclude implements DynamicInclude {
 			_oAuth2ApplicationLocalService.dynamicQuery(dynamicQuery);
 
 		for (OAuth2Application oAuth2Application : oAuth2Applications) {
-			JSONObject applicationJsonObject =
-				JSONFactoryUtil.createJSONObject();
-
-			applicationJsonObject.put("clientId", oAuth2Application.getClientId());
-			applicationJsonObject.put(
-				"homePageURL", oAuth2Application.getHomePageURL());
-
 			String name = oAuth2Application.getName();
 
-			name = name.substring(
-				0, name.length() - Oauth2ApplicationFactoryUserAgent.
-					USER_AGENT_SUBDOMAIN.length());
+			name = name.substring(0, name.length() - _SUBDOMAIN.length());
 
-			jsonObject.put(name, applicationJsonObject);
+			jsonObject.put(
+				name,
+				JSONFactoryUtil.createJSONObject(
+				).put(
+					"clientId", oAuth2Application.getClientId()
+				).put(
+					"homePageURL", oAuth2Application.getHomePageURL()
+				));
 		}
 
 		printWriter.write(
@@ -109,24 +98,26 @@ public class OAuth2ApplicationsDynamicInclude implements DynamicInclude {
 				"<script type=\"text/javascript\">",
 				"Liferay.OAuth = {",
 				"  getAuthorizeURL: function() {",
-				"    return '", _portal.getPortalURL(httpServletRequest), _portal.getPathContext(), "/o/oauth2/authorize';",
+				"    return '", _portal.getPortalURL(httpServletRequest),
+					_portal.getPathContext(), "/o/oauth2/authorize';",
 				"  },",
 				"  getBuiltInRedirectURL: function() {",
-				"    return '", _portal.getPortalURL(httpServletRequest), _portal.getPathContext(), "/o/builtin/oauth2/redirect';",
+				"    return '", _portal.getPortalURL(httpServletRequest),
+					_portal.getPathContext(), "/o/builtin/oauth2/redirect';",
 				"  },",
 				"  getIntrospectURL: function() {",
-				"    return '", _portal.getPortalURL(httpServletRequest), _portal.getPathContext(), "/o/oauth2/introspect';",
+				"    return '", _portal.getPortalURL(httpServletRequest),
+					_portal.getPathContext(), "/o/oauth2/introspect';",
 				"  },",
 				"  getTokenURL: function() {",
-				"    return '", _portal.getPortalURL(httpServletRequest), _portal.getPathContext(), "/o/oauth2/token';",
+				"    return '", _portal.getPortalURL(httpServletRequest),
+					_portal.getPathContext(), "/o/oauth2/token';",
 				"  },",
 				"  getUserAgentApplication: function(serviceName) {",
 				"    return Liferay.OAuth._userAgentApplications[serviceName];",
-				"  },",
-				"  _userAgentApplications: ", jsonObject.toJSONString(),
+				"  },", "  _userAgentApplications: ", jsonObject.toJSONString(),
 				"}",
-				"</script>"
-			));
+				"</script>"));
 	}
 
 	@Override
@@ -134,6 +125,9 @@ public class OAuth2ApplicationsDynamicInclude implements DynamicInclude {
 		dynamicIncludeRegistry.register(
 			"/html/common/themes/top_js.jspf#resources");
 	}
+
+	private static final String _SUBDOMAIN =
+		Oauth2ApplicationFactoryUserAgent.USER_AGENT_SUBDOMAIN;
 
 	private final OAuth2ApplicationLocalService _oAuth2ApplicationLocalService;
 	private final Portal _portal;

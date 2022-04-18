@@ -218,10 +218,19 @@ public class ObjectDefinitionsFieldsDisplayContext
 		String businessType, ObjectFieldSetting objectFieldSetting) {
 
 		if (Objects.equals(
-				ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT, businessType) &&
-			Objects.equals(objectFieldSetting.getName(), "maximumFileSize")) {
+				ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT, businessType)) {
 
-			return GetterUtil.getInteger(objectFieldSetting.getValue());
+			if (Objects.equals(
+					objectFieldSetting.getName(), "maximumFileSize")) {
+
+				return GetterUtil.getInteger(objectFieldSetting.getValue());
+			}
+			else if (Objects.equals(
+						objectFieldSetting.getName(),
+						"showFilesInDocumentsAndMedia")) {
+
+				return GetterUtil.getBoolean(objectFieldSetting.getValue());
+			}
 		}
 		else if (Objects.equals(
 					ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT,

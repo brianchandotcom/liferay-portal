@@ -620,10 +620,6 @@ definition {
 			rowEntry = "${workflowDefinitionTitle}");
 	}
 
-	macro openNotifications {
-		Navigator.openSpecificURL(url = "/group/control_panel/manage?p_p_id=com_liferay_notifications_web_portlet_NotificationsPortlet&p_p_lifecycle=0&p_p_state=maximized&p_v_l_s_g_id=42619&p_p_auth=1njFlr6I");
-	}
-
 	macro gotoPreviewEdit {
 		Click(locator1 = "WorkflowSubmissionsTask#PREVIEW_EDIT");
 
@@ -679,6 +675,10 @@ definition {
 		Click(locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE");
 
 		Workflow.gotoPreviewView();
+	}
+
+	macro openNotifications {
+		Navigator.openSpecificURL(url = "/group/control_panel/manage?p_p_id=com_liferay_notifications_web_portlet_NotificationsPortlet&p_p_lifecycle=0&p_p_state=maximized&p_v_l_s_g_id=42619&p_p_auth=1njFlr6I");
 	}
 
 	macro openWorkflowAdmin {

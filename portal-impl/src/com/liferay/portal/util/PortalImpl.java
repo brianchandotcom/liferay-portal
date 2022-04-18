@@ -4289,6 +4289,16 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
+	public LayoutQueryStringComposite
+		getPortletFriendlyURLMapperLayoutQueryStringComposite(
+			String url, Map<String, String[]> params,
+			Map<String, Object> requestContext) {
+
+		return _getPortletFriendlyURLMapperLayoutQueryStringComposite(
+			url, params, requestContext);
+	}
+
+	@Override
 	public String getPortletId(HttpServletRequest httpServletRequest) {
 		LiferayPortletConfig liferayPortletConfig =
 			(LiferayPortletConfig)httpServletRequest.getAttribute(

@@ -76,6 +76,16 @@ definition {
 			var indexedAsKeyword = "true";
 		}
 
+		if (("${fieldBusinessType}" == "LongText") || ("${fieldBusinessType}" == "Text")) {
+			var objectFieldSettings = '''[{
+				"name": "showCounter",
+				"value": "false"
+			}]''';
+		}
+		else {
+			var objectFieldSettings = "[]";
+		}
+
 		var curl = '''
 			${portalURL}/o/object-admin/v1.0/object-definitions/${objectId}/object-fields \
 			-H 'Content-Type: application/json' \
@@ -90,6 +100,7 @@ definition {
 			},
 			"listTypeDefinitionId": ${picklistId},
 			"name": "${fieldName}",
+			"objectFieldSettings": ${objectFieldSettings},
 			"required": ${isRequired}
 			}'
 		''';

@@ -25,6 +25,12 @@
 				"en_US": "Custom Field"
 			},
 			"name": "customObjectField",
+			"objectFieldSettings": [
+				{
+					"name": "showCounter",
+					"value": "false"
+				}
+			],
 			"required": false,
 			"type": "String"
 		}

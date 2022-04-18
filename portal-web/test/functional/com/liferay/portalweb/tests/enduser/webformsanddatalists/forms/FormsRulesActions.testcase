@@ -1117,8 +1117,8 @@ definition {
 	@description = "LPS-70446 - Verify that a Rule with 'Autofill' action can be created with Data Providers"
 	@priority = "5"
 	test CanUtilizeDataProvidersToCreateAnAutofillRule {
-		property portal.acceptance = "quarantine";
-		property portal.upstream = "quarantine";
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "FormsRulesActions#CanUtilizeDataProvidersToCreateAnAutofillRule";
 
 		var portalURL = PropsUtil.get("portal.url");
@@ -1226,9 +1226,29 @@ definition {
 			fieldName = "${fieldNameTextField}",
 			fieldValue = "country");
 
-		FormFields.viewSelectOptionsList(
+		DataEngine.waitForAutoSave();
+
+		FormFields.selectSelectOption(
 			fieldName = "${fieldNameCountries}",
 			selectOption = "Afghanistan");
+
+		FormPortlet.submitSuccessfully();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "Text Field",
+			fieldValue = "country");
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "Countries",
+			fieldValue = "Afghanistan");
 	}
 
 	@description = "LPS-75495 - Verify that the 'Show' action is not triggered when typing into an unrelated field"

@@ -16,7 +16,6 @@ package com.liferay.portal.workflow.kaleo.definition.internal.export.builder;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.workflow.kaleo.definition.Assignment;
 import com.liferay.portal.workflow.kaleo.definition.Task;
 import com.liferay.portal.workflow.kaleo.definition.TaskForm;
 import com.liferay.portal.workflow.kaleo.definition.TaskFormReference;
@@ -49,10 +48,9 @@ public class TaskNodeBuilder
 
 		Task task = new Task(kaleoNode.getName(), kaleoNode.getDescription());
 
-		Set<Assignment> assignments = buildAssigments(
-			KaleoTask.class.getName(), kaleoTask.getKaleoTaskId());
-
-		task.setAssignments(assignments);
+		task.setAssignments(
+			buildAssigments(
+				KaleoTask.class.getName(), kaleoTask.getKaleoTaskId()));
 
 		Set<TaskForm> taskForms = _buildTaskForms(kaleoTask.getKaleoTaskId());
 

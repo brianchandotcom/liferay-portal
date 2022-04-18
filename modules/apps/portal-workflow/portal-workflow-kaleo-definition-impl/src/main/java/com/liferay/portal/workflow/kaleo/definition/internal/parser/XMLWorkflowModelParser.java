@@ -275,11 +275,11 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 				if (Validator.isNotNull(name)) {
 					roleAssignment = new RoleAssignment(name, roleType);
 
-					boolean autoCreate = GetterUtil.getBoolean(
-						roleAssignmentElement.elementTextTrim("auto-create"),
-						true);
-
-					roleAssignment.setAutoCreate(autoCreate);
+					roleAssignment.setAutoCreate(
+						GetterUtil.getBoolean(
+							roleAssignmentElement.elementTextTrim(
+								"auto-create"),
+							true));
 				}
 				else {
 					roleAssignment = new RoleAssignment(roleId);
@@ -553,11 +553,11 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 
 					roleRecipient = new RoleRecipient(name, roleType);
 
-					boolean autoCreate = GetterUtil.getBoolean(
-						roleReceipientElement.elementTextTrim("auto-create"),
-						true);
-
-					roleRecipient.setAutoCreate(autoCreate);
+					roleRecipient.setAutoCreate(
+						GetterUtil.getBoolean(
+							roleReceipientElement.elementTextTrim(
+								"auto-create"),
+							true));
 				}
 
 				roleRecipient.setNotificationReceptionType(
@@ -704,20 +704,14 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 
 				taskFormReference.setCompanyId(companyId);
 
-				long groupId = GetterUtil.getLong(
-					formReferenceElement.elementTextTrim("group-id"));
-
-				taskFormReference.setGroupId(groupId);
-
-				long formId = GetterUtil.getLong(
-					formReferenceElement.elementTextTrim("form-id"));
-
-				taskFormReference.setFormId(formId);
-
-				String formUuid = formReferenceElement.elementTextTrim(
-					"form-uuid");
-
-				taskFormReference.setFormUuid(formUuid);
+				taskFormReference.setGroupId(
+					GetterUtil.getLong(
+						formReferenceElement.elementTextTrim("group-id")));
+				taskFormReference.setFormId(
+					GetterUtil.getLong(
+						formReferenceElement.elementTextTrim("form-id")));
+				taskFormReference.setFormUuid(
+					formReferenceElement.elementTextTrim("form-uuid"));
 
 				taskForm.setTaskFormReference(taskFormReference);
 			}

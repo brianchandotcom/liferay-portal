@@ -179,10 +179,7 @@ definition {
 
 		Button.clickPublish();
 
-		AssertTextEquals(
-			key_fieldFieldLabel = "Color",
-			locator1 = "WCEditWebContent#FIELD_REQUIRED_ALERT",
-			value1 = "This field is required.");
+		AssertElementPresent(locator1 = "WCEditWebContent#FIELD_REQUIRED_ALERT");
 	}
 
 	@description = "This test ensures user can set a color on the color field."

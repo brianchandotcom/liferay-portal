@@ -124,6 +124,14 @@ const AppContextProvider = ({assetsPath, children, page}) => {
 						({name}) => name === ROLE_TYPES.admin.key
 					);
 
+				const isAccountProvisioning = !!data.userAccount?.accountBriefs
+					?.find(
+						({externalReferenceCode}) =>
+							externalReferenceCode ===
+							projectExternalReferenceCode
+					)
+					?.roleBriefs?.find(({name}) => name === 'Provisioning');
+
 				const isStaff = data.userAccount?.organizationBriefs?.some(
 					(organization) => organization.name === 'Liferay Staff'
 				);
@@ -131,6 +139,7 @@ const AppContextProvider = ({assetsPath, children, page}) => {
 				const userAccount = {
 					...data.userAccount,
 					isAdmin: isAccountAdministrator,
+					isProvisioning: isAccountProvisioning,
 					isStaff,
 				};
 

@@ -202,14 +202,8 @@ public class ObjectDefinitionsFieldsDisplayContext
 
 		ListUtil.isNotEmptyForEach(
 			objectField.getObjectFieldSettings(),
-			objectFieldSetting -> jsonArray.put(
-				JSONUtil.put(
-					"name", objectFieldSetting.getName()
-				).put(
-					"value",
-					_getObjectFieldSettingValue(
-						objectField.getBusinessType(), objectFieldSetting)
-				)));
+			objectFieldSetting -> _putObjectFieldSettingJSONObject(
+				objectField.getBusinessType(), jsonArray, objectFieldSetting));
 
 		return jsonArray;
 	}
@@ -249,6 +243,19 @@ public class ObjectDefinitionsFieldsDisplayContext
 		}
 
 		return objectFieldSetting.getValue();
+	}
+
+	private void _putObjectFieldSettingJSONObject(
+		String businessType, JSONArray jsonArray,
+		ObjectFieldSetting objectFieldSetting) {
+
+		jsonArray.put(
+			JSONUtil.put(
+				"name", objectFieldSetting.getName()
+			).put(
+				"value",
+				_getObjectFieldSettingValue(businessType, objectFieldSetting)
+			));
 	}
 
 	private final ObjectFieldBusinessTypeServicesTracker

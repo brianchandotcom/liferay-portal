@@ -20,9 +20,11 @@ import com.liferay.fragment.exception.FragmentEntryConfigurationException;
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.exception.FragmentEntryNameException;
 import com.liferay.fragment.model.FragmentCollection;
+import com.liferay.fragment.model.FragmentComposition;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentEntryService;
 import com.liferay.fragment.service.persistence.FragmentEntryPersistence;
+import com.liferay.fragment.util.FragmentCompositionTestUtil;
 import com.liferay.fragment.util.FragmentEntryTestUtil;
 import com.liferay.fragment.util.FragmentTestUtil;
 import com.liferay.fragment.util.comparator.FragmentEntryCreateDateComparator;
@@ -51,7 +53,9 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -451,6 +455,147 @@ public class FragmentEntryServiceTest {
 				fragmentEntry.getFragmentEntryId());
 
 		Assert.assertEquals(name, persistedFragmentEntry.getName());
+	}
+
+	@Test
+	public void testGetFragmentCompositionsAndFragmentEntriesCaseInsensitive()
+		throws Exception {
+
+		String keyword = RandomTestUtil.randomString();
+
+		FragmentCompositionTestUtil.addFragmentComposition(
+			_fragmentCollection.getFragmentCollectionId(),
+			RandomTestUtil.randomString());
+
+		FragmentComposition fragmentComposition1 =
+			FragmentCompositionTestUtil.addFragmentComposition(
+				_fragmentCollection.getFragmentCollectionId(),
+				RandomTestUtil.randomString() + keyword);
+
+		FragmentCompositionTestUtil.addFragmentComposition(
+			_fragmentCollection.getFragmentCollectionId(),
+			RandomTestUtil.randomString());
+
+		FragmentComposition fragmentComposition2 =
+			FragmentCompositionTestUtil.addFragmentComposition(
+				_fragmentCollection.getFragmentCollectionId(),
+				RandomTestUtil.randomString() + keyword +
+					RandomTestUtil.randomString());
+
+		FragmentCompositionTestUtil.addFragmentComposition(
+			_fragmentCollection.getFragmentCollectionId(),
+			RandomTestUtil.randomString());
+
+		FragmentComposition fragmentComposition3 =
+			FragmentCompositionTestUtil.addFragmentComposition(
+				_fragmentCollection.getFragmentCollectionId(),
+				keyword + RandomTestUtil.randomString());
+
+		FragmentCompositionTestUtil.addFragmentComposition(
+			_fragmentCollection.getFragmentCollectionId(),
+			RandomTestUtil.randomString());
+
+		FragmentEntryTestUtil.addFragmentEntry(
+			_fragmentCollection.getFragmentCollectionId(),
+			RandomTestUtil.randomString());
+
+		FragmentEntry fragmentEntry1 = FragmentEntryTestUtil.addFragmentEntry(
+			_fragmentCollection.getFragmentCollectionId(),
+			RandomTestUtil.randomString() + keyword);
+
+		FragmentEntryTestUtil.addFragmentEntry(
+			_fragmentCollection.getFragmentCollectionId(),
+			RandomTestUtil.randomString());
+
+		FragmentEntry fragmentEntry2 = FragmentEntryTestUtil.addFragmentEntry(
+			_fragmentCollection.getFragmentCollectionId(),
+			RandomTestUtil.randomString() + keyword +
+				RandomTestUtil.randomString());
+
+		FragmentEntryTestUtil.addFragmentEntry(
+			_fragmentCollection.getFragmentCollectionId(),
+			RandomTestUtil.randomString());
+
+		FragmentEntry fragmentEntry3 = FragmentEntryTestUtil.addFragmentEntry(
+			_fragmentCollection.getFragmentCollectionId(),
+			keyword + RandomTestUtil.randomString());
+
+		FragmentEntryTestUtil.addFragmentEntry(
+			_fragmentCollection.getFragmentCollectionId(),
+			RandomTestUtil.randomString());
+
+		List<Object> list =
+			_fragmentEntryService.getFragmentCompositionsAndFragmentEntries(
+				_fragmentCollection.getGroupId(),
+				_fragmentCollection.getFragmentCollectionId(), keyword,
+				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+		Assert.assertEquals(list.toString(), 6, list.size());
+
+		List<FragmentComposition> fragmentCompositions = new ArrayList<>();
+		List<FragmentEntry> fragmentEntries = new ArrayList<>();
+
+		for (Object object : list) {
+			if (object instanceof FragmentComposition) {
+				FragmentComposition fragmentComposition =
+					(FragmentComposition)object;
+
+				Assert.assertTrue(
+					Objects.equals(
+						fragmentComposition.getFragmentCompositionId(),
+						fragmentComposition1.getFragmentCompositionId()) ||
+					Objects.equals(
+						fragmentComposition.getFragmentCompositionId(),
+						fragmentComposition2.getFragmentCompositionId()) ||
+					Objects.equals(
+						fragmentComposition.getFragmentCompositionId(),
+						fragmentComposition3.getFragmentCompositionId()));
+
+				fragmentCompositions.add(fragmentComposition);
+			}
+			else {
+				FragmentEntry fragmentEntry = (FragmentEntry)object;
+
+				Assert.assertTrue(
+					Objects.equals(
+						fragmentEntry.getFragmentEntryId(),
+						fragmentEntry1.getFragmentEntryId()) ||
+					Objects.equals(
+						fragmentEntry.getFragmentEntryId(),
+						fragmentEntry2.getFragmentEntryId()) ||
+					Objects.equals(
+						fragmentEntry.getFragmentEntryId(),
+						fragmentEntry3.getFragmentEntryId()));
+
+				fragmentEntries.add(fragmentEntry);
+			}
+		}
+
+		Assert.assertEquals(
+			fragmentCompositions.toString(), 3, fragmentCompositions.size());
+		Assert.assertEquals(
+			fragmentEntries.toString(), 3, fragmentEntries.size());
+
+		List<Object> lowerCaseList =
+			_fragmentEntryService.getFragmentCompositionsAndFragmentEntries(
+				_fragmentCollection.getGroupId(),
+				_fragmentCollection.getFragmentCollectionId(),
+				StringUtil.toLowerCase(keyword),
+				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+		Assert.assertEquals(lowerCaseList.toString(), list, lowerCaseList);
+
+		List<Object> upperCaseList =
+			_fragmentEntryService.getFragmentCompositionsAndFragmentEntries(
+				_fragmentCollection.getGroupId(),
+				_fragmentCollection.getFragmentCollectionId(),
+				StringUtil.toUpperCase(keyword),
+				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+		Assert.assertEquals(upperCaseList.toString(), list, upperCaseList);
 	}
 
 	@Test

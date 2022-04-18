@@ -29,8 +29,6 @@ ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT
 		module="js/components/EditObjectField"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
-				"allowMaxLength", GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-146889"))
-			).put(
 				"allowUploadDocAndMedia", GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-148112"))
 			).put(
 				"forbiddenChars", PropsUtil.getArray(PropsKeys.DL_CHAR_BLACKLIST)

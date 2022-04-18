@@ -59,7 +59,6 @@ function closeSidePanel() {
 }
 
 export default function EditObjectField({
-	allowMaxLength,
 	allowUploadDocAndMedia,
 	forbiddenChars,
 	forbiddenLastChars,
@@ -156,7 +155,6 @@ export default function EditObjectField({
 				/>
 
 				<ObjectFieldFormBase
-					allowMaxLength={allowMaxLength}
 					allowUploadDocAndMedia={allowUploadDocAndMedia}
 					disabled={disabled}
 					errors={errors}
@@ -177,20 +175,19 @@ export default function EditObjectField({
 						/>
 					)}
 
-					{allowMaxLength &&
-						(values.businessType === 'Text' ||
-							values.businessType === 'LongText') && (
-							<MaxLengthProperties
-								disabled={readOnly}
-								errors={errors}
-								objectField={values}
-								objectFieldSettings={
-									values.objectFieldSettings as ObjectFieldSetting[]
-								}
-								onSettingsChange={handleSettingsChange}
-								setValues={setValues}
-							/>
-						)}
+					{(values.businessType === 'Text' ||
+						values.businessType === 'LongText') && (
+						<MaxLengthProperties
+							disabled={readOnly}
+							errors={errors}
+							objectField={values}
+							objectFieldSettings={
+								values.objectFieldSettings as ObjectFieldSetting[]
+							}
+							onSettingsChange={handleSettingsChange}
+							setValues={setValues}
+						/>
+					)}
 				</ObjectFieldFormBase>
 			</Sheet>
 
@@ -494,7 +491,6 @@ interface IMaxLengthPropertiesProps {
 }
 
 interface IProps {
-	allowMaxLength?: boolean;
 	allowUploadDocAndMedia?: boolean;
 	forbiddenChars: string[];
 	forbiddenLastChars: string[];

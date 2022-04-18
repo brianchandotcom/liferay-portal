@@ -47,8 +47,6 @@ renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 		module="js/components/ModalAddObjectField"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
-				"allowMaxLength", GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-146889"))
-			).put(
 				"allowUploadDocAndMedia", GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-148112"))
 			).put(
 				"apiURL", objectDefinitionsFieldsDisplayContext.getAPIURL()

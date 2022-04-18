@@ -1,7 +1,7 @@
 resources:
 - dxp-configmap.yaml
 - dxp-deployment.yaml
-- dxp-ingress.yaml
+#- dxp-ingress.yaml
 - dxp-logging-configmap.yaml
 - dxp-role-and-binding.yaml
 - dxp-service.yaml

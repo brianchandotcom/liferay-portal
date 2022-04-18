@@ -1279,12 +1279,11 @@ definition {
 			entrySubtitle = "Blogs Entry Subtitle",
 			entryTitle = "Blogs Entry Title");
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		Blogs.addDraft(
-			entryContent = "Blogs Entry Content For Draft",
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
 			entrySubtitle = "Blogs Entry Subtitle",
-			entryTitle = "Blogs Entry Title");
+			entryTitle = "Blogs Entry Title",
+			workflowAction = "DRAFT");
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 

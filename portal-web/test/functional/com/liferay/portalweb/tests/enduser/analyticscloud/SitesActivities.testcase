@@ -16,6 +16,8 @@ definition {
 		ACUtils.launchDXP();
 
 		ACUtils.addSiteAndPage();
+
+		ACUtils.createBlogsAndAddToPage();
 	}
 
 	tearDown {
@@ -327,7 +329,7 @@ definition {
 		var nameList = "ac ac,liferay liferay";
 
 		task ("Connect Analytics Cloud to DXP") {
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 
 		task ("Add two new users") {
@@ -344,6 +346,8 @@ definition {
 
 		task ("Login with the users and open the site") {
 			ACUtils.navigateToSitePageWithUser(
+				actionType = "View Blog",
+				documentTitleList = "Blogs AC Title",
 				emailList = "${emailList}",
 				pageName = "AC Page",
 				siteName = "Site Name");
@@ -353,6 +357,8 @@ definition {
 			User.logoutPG();
 
 			ACUtils.navigateToSitePage(
+				actionType = "View Blog",
+				documentTitleList = "Blogs AC Title",
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -364,7 +370,7 @@ definition {
 		task ("Launch AC and go to Sites overview") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 
 			ACNavigation.goToSites();
 		}

@@ -47,13 +47,19 @@
 	{
 		"accountBriefs": [
 			{
-				"externalReferenceCode": "ERC-001"
+				"externalReferenceCode": "ERC-001",
+				"roleBriefs": [
+					"Provisioning"
+				]
 			},
 			{
 				"externalReferenceCode": "ERC-002"
 			},
 			{
-				"externalReferenceCode": "ERC-003"
+				"externalReferenceCode": "ERC-003",
+				"roleBriefs": [
+					"Provisioning"
+				]
 			},
 			{
 				"externalReferenceCode": "ERC-004"

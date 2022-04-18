@@ -29,8 +29,8 @@ import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
@@ -130,7 +130,7 @@ public class BackgroundTaskMessagingConfigurator {
 	@Reference
 	private MessageBus _messageBus;
 
-	private final Set<ServiceRegistration<Destination>> _serviceRegistrations =
-		new HashSet<>();
+	private final List<ServiceRegistration<Destination>> _serviceRegistrations =
+		new ArrayList<>();
 
 }

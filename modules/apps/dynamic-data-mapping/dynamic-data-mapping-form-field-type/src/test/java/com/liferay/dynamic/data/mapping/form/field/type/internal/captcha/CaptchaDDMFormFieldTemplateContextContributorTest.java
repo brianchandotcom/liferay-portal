@@ -18,25 +18,28 @@ import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldTypeSett
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.mockito.Matchers;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.api.mockito.expectation.PowerMockitoStubber;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.mockito.Mockito;
 
 /**
  * @author Carolina Barbosa
  */
-@RunWith(PowerMockRunner.class)
 public class CaptchaDDMFormFieldTemplateContextContributorTest
 	extends BaseDDMFormFieldTypeSettingsTestCase {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testGetParameters() throws Exception {
@@ -63,12 +66,12 @@ public class CaptchaDDMFormFieldTemplateContextContributorTest
 		throws Exception {
 
 		CaptchaDDMFormFieldTemplateContextContributor
-			captchaDDMFormFieldTemplateContextContributor = PowerMockito.spy(
+			captchaDDMFormFieldTemplateContextContributor = Mockito.spy(
 				_captchaDDMFormFieldTemplateContextContributor);
 
-		PowerMockitoStubber powerMockitoStubber = PowerMockito.doReturn(html);
-
-		powerMockitoStubber.when(
+		Mockito.doReturn(
+			html
+		).when(
 			captchaDDMFormFieldTemplateContextContributor
 		).renderCaptchaTag(
 			Matchers.any(DDMFormField.class),

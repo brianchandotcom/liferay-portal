@@ -81,7 +81,10 @@ export default function fragmentsReducer(fragments = [], action) {
 						},
 						icon: 'container',
 						itemId: 'container',
-						label: LAYOUT_DATA_ITEM_TYPE_LABELS.container,
+						label:
+							LAYOUT_DATA_ITEM_TYPE_LABELS[
+								LAYOUT_DATA_ITEM_TYPES.container
+							],
 						type: 'container',
 					},
 					{
@@ -90,7 +93,10 @@ export default function fragmentsReducer(fragments = [], action) {
 						},
 						icon: 'table',
 						itemId: 'row',
-						label: LAYOUT_DATA_ITEM_TYPE_LABELS.row,
+						label:
+							LAYOUT_DATA_ITEM_TYPE_LABELS[
+								LAYOUT_DATA_ITEM_TYPES.row
+							],
 						type: 'row',
 					},
 				],

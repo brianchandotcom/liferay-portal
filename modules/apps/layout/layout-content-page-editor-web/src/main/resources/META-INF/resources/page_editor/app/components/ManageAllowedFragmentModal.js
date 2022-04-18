@@ -76,17 +76,10 @@ const ManageAllowedFragmentModal = ({item, observer, onClose}) => {
 					)}
 				</p>
 
-				{Liferay.__FF__.enableClayTreeView ? (
-					<AllowedFragmentSelectorTree
-						dropZoneConfig={item.config}
-						onSelectedFragment={onSelectedFragment}
-					/>
-				) : (
-					<AllowedFragmentSelector
-						dropZoneConfig={item.config}
-						onSelectedFragment={onSelectedFragment}
-					/>
-				)}
+				<AllowedFragmentSelectorTree
+					dropZoneConfig={item.config}
+					onSelectedFragment={onSelectedFragment}
+				/>
 			</ClayModal.Body>
 
 			<ClayModal.Footer

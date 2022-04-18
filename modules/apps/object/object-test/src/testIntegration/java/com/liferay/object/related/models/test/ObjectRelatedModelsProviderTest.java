@@ -28,6 +28,7 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.object.test.util.ObjectFieldSettingTestUtil;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.object.util.ObjectFieldUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -101,7 +102,9 @@ public class ObjectRelatedModelsProviderTest {
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
 						"Text", "String", RandomTestUtil.randomString(),
-						StringUtil.randomId())));
+						StringUtil.randomId(),
+						ObjectFieldSettingTestUtil.getObjectFieldSettings(
+							"Text"))));
 
 		_objectDefinition1 =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(
@@ -118,7 +121,9 @@ public class ObjectRelatedModelsProviderTest {
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
 						"Text", "String", RandomTestUtil.randomString(),
-						StringUtil.randomId())));
+						StringUtil.randomId(),
+						ObjectFieldSettingTestUtil.getObjectFieldSettings(
+							"Text"))));
 
 		_objectDefinition2 =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(

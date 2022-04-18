@@ -21,6 +21,7 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldService;
+import com.liferay.object.test.util.ObjectFieldSettingTestUtil;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -191,7 +192,8 @@ public class ObjectFieldServiceTest {
 			user.getUserId(), 0, _objectDefinition.getObjectDefinitionId(),
 			"Text", "String", false, false, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			StringUtil.randomId(), true, Collections.emptyList());
+			StringUtil.randomId(), true,
+			ObjectFieldSettingTestUtil.getObjectFieldSettings("Text"));
 	}
 
 	private void _setUser(User user) {
@@ -212,7 +214,8 @@ public class ObjectFieldServiceTest {
 			objectField = _objectFieldService.addCustomObjectField(
 				0, objectDefinitionId, "Text", "String", false, false, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				StringUtil.randomId(), true, Collections.emptyList());
+				StringUtil.randomId(), true,
+				ObjectFieldSettingTestUtil.getObjectFieldSettings("Text"));
 		}
 		finally {
 			if (objectField != null) {
@@ -269,7 +272,7 @@ public class ObjectFieldServiceTest {
 				objectField.getObjectFieldId(), 0, "Text", "String", true,
 				false, LanguageUtil.getLanguageId(LocaleUtil.getDefault()),
 				LocalizedMapUtil.getLocalizedMap("baker"), "baker", true,
-				Collections.emptyList());
+				ObjectFieldSettingTestUtil.getObjectFieldSettings("Text"));
 		}
 		finally {
 			if (objectField != null) {

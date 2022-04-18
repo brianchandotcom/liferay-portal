@@ -258,7 +258,7 @@ public class ObjectDefinitionResourceImpl
 					_objectFieldLocalService.getObjectFields(
 						objectDefinition.getObjectDefinitionId()),
 					objectField -> ObjectFieldUtil.toObjectField(
-						null, objectField),
+						null, _objectFieldSettingLocalService, objectField),
 					ObjectField.class);
 				objectLayouts = transformToArray(
 					_objectLayoutLocalService.getObjectLayouts(

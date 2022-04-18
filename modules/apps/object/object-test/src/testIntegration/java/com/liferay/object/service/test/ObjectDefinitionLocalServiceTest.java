@@ -32,6 +32,7 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.system.BaseSystemObjectDefinitionMetadata;
+import com.liferay.object.test.util.ObjectFieldSettingTestUtil;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.object.util.ObjectFieldUtil;
 import com.liferay.petra.sql.dsl.Column;
@@ -201,7 +202,9 @@ public class ObjectDefinitionLocalServiceTest {
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
 						"Text", "String", RandomTestUtil.randomString(),
-						StringUtil.randomId())));
+						StringUtil.randomId(),
+						ObjectFieldSettingTestUtil.getObjectFieldSettings(
+							"Text"))));
 
 		objectDefinition =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(
@@ -233,7 +236,9 @@ public class ObjectDefinitionLocalServiceTest {
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
 						"Text", "String", RandomTestUtil.randomString(),
-						StringUtil.randomId())));
+						StringUtil.randomId(),
+						ObjectFieldSettingTestUtil.getObjectFieldSettings(
+							"Text"))));
 
 			Assert.fail();
 		}
@@ -256,7 +261,9 @@ public class ObjectDefinitionLocalServiceTest {
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
 						"Text", "String", RandomTestUtil.randomString(),
-						StringUtil.randomId())));
+						StringUtil.randomId(),
+						ObjectFieldSettingTestUtil.getObjectFieldSettings(
+							"Text"))));
 
 			Assert.fail();
 		}
@@ -277,15 +284,19 @@ public class ObjectDefinitionLocalServiceTest {
 				ObjectDefinitionConstants.SCOPE_COMPANY,
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
-						"Text", "String", "Able", "able", false),
+						"Text", "String", "Able", "able",
+						ObjectFieldSettingTestUtil.getObjectFieldSettings(
+							"Text")),
 					ObjectFieldUtil.createObjectField(
-						"Text", "String", "Baker", "baker", false)));
+						"Text", "String", "Baker", "baker",
+						ObjectFieldSettingTestUtil.getObjectFieldSettings(
+							"Text"))));
 
 		_objectFieldLocalService.addCustomObjectField(
 			TestPropsValues.getUserId(), 0,
 			objectDefinition.getObjectDefinitionId(), "Text", "String", false,
 			false, null, LocalizedMapUtil.getLocalizedMap("Charlie"), "charlie",
-			true, Collections.emptyList());
+			true, ObjectFieldSettingTestUtil.getObjectFieldSettings("Text"));
 
 		// Before publish, database table
 
@@ -331,7 +342,7 @@ public class ObjectDefinitionLocalServiceTest {
 			TestPropsValues.getUserId(), 0,
 			objectDefinition.getObjectDefinitionId(), "Text", "String", false,
 			false, null, LocalizedMapUtil.getLocalizedMap("Dog"), "dog", true,
-			Collections.emptyList());
+			ObjectFieldSettingTestUtil.getObjectFieldSettings("Text"));
 
 		// After publish, database table
 
@@ -684,7 +695,9 @@ public class ObjectDefinitionLocalServiceTest {
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
 						"Text", "String", RandomTestUtil.randomString(),
-						StringUtil.randomId())));
+						StringUtil.randomId(),
+						ObjectFieldSettingTestUtil.getObjectFieldSettings(
+							"Text"))));
 
 		try {
 			_testAddSystemObjectDefinition("Test");
@@ -711,7 +724,9 @@ public class ObjectDefinitionLocalServiceTest {
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
 						"Text", "String", RandomTestUtil.randomString(),
-						StringUtil.randomId())));
+						StringUtil.randomId(),
+						ObjectFieldSettingTestUtil.getObjectFieldSettings(
+							"Text"))));
 
 			Assert.fail();
 		}
@@ -791,7 +806,7 @@ public class ObjectDefinitionLocalServiceTest {
 			TestPropsValues.getUserId(), 0,
 			objectDefinition.getObjectDefinitionId(), "Text", "String", false,
 			false, null, LocalizedMapUtil.getLocalizedMap("Able"), "able", true,
-			Collections.emptyList());
+			ObjectFieldSettingTestUtil.getObjectFieldSettings("Text"));
 
 		// Database table
 
@@ -878,7 +893,9 @@ public class ObjectDefinitionLocalServiceTest {
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
 						"Text", "String", RandomTestUtil.randomString(),
-						StringUtil.randomId())));
+						StringUtil.randomId(),
+						ObjectFieldSettingTestUtil.getObjectFieldSettings(
+							"Text"))));
 
 		_objectDefinitionLocalService.publishCustomObjectDefinition(
 			TestPropsValues.getUserId(),
@@ -961,7 +978,8 @@ public class ObjectDefinitionLocalServiceTest {
 			objectDefinition.getObjectDefinitionId(), "Text", "String", false,
 			false, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			StringUtil.randomId(), true, Collections.emptyList());
+			StringUtil.randomId(), true,
+			ObjectFieldSettingTestUtil.getObjectFieldSettings("Text"));
 
 		objectDefinition =
 			_objectDefinitionLocalService.updateCustomObjectDefinition(
@@ -1069,7 +1087,8 @@ public class ObjectDefinitionLocalServiceTest {
 			objectDefinition.getObjectDefinitionId(), "Text", "String", false,
 			false, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			StringUtil.randomId(), true, Collections.emptyList());
+			StringUtil.randomId(), true,
+			ObjectFieldSettingTestUtil.getObjectFieldSettings("Text"));
 
 		objectDefinition =
 			_objectDefinitionLocalService.updateTitleObjectFieldId(
@@ -1137,7 +1156,9 @@ public class ObjectDefinitionLocalServiceTest {
 					Arrays.asList(
 						ObjectFieldUtil.createObjectField(
 							"Text", "String", RandomTestUtil.randomString(),
-							StringUtil.randomId())));
+							StringUtil.randomId(),
+							ObjectFieldSettingTestUtil.getObjectFieldSettings(
+								"Text"))));
 
 			objectDefinition =
 				_objectDefinitionLocalService.publishCustomObjectDefinition(
@@ -1172,7 +1193,9 @@ public class ObjectDefinitionLocalServiceTest {
 					Arrays.asList(
 						ObjectFieldUtil.createObjectField(
 							"Text", "String", RandomTestUtil.randomString(),
-							StringUtil.randomId())));
+							StringUtil.randomId(),
+							ObjectFieldSettingTestUtil.getObjectFieldSettings(
+								"Text"))));
 		}
 		finally {
 			if (objectDefinition != null) {
@@ -1197,7 +1220,9 @@ public class ObjectDefinitionLocalServiceTest {
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
 						"Text", "String", RandomTestUtil.randomString(),
-						StringUtil.randomId())));
+						StringUtil.randomId(),
+						ObjectFieldSettingTestUtil.getObjectFieldSettings(
+							"Text"))));
 
 		objectDefinition2 =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(

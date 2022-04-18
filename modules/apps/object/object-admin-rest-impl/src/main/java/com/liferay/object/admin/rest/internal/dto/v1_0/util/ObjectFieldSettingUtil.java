@@ -38,4 +38,19 @@ public class ObjectFieldSettingUtil {
 		return serviceBuilderObjectFieldSetting;
 	}
 
+	public static ObjectFieldSetting toObjectFieldSetting(
+		com.liferay.object.model.ObjectFieldSetting
+			serviceBuilderObjectFieldSetting) {
+
+		return new ObjectFieldSetting() {
+			{
+				id = serviceBuilderObjectFieldSetting.getObjectFieldSettingId();
+				name = serviceBuilderObjectFieldSetting.getName();
+				objectFieldId =
+					serviceBuilderObjectFieldSetting.getObjectFieldId();
+				value = serviceBuilderObjectFieldSetting.getValue();
+			}
+		};
+	}
+
 }

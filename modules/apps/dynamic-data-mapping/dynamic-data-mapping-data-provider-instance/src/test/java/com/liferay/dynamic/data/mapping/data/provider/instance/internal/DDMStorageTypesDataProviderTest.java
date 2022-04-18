@@ -28,30 +28,25 @@ import java.util.TreeSet;
 import java.util.stream.Stream;
 
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
-
-import org.powermock.api.mockito.PowerMockito;
+import org.mockito.Mockito;
 
 /**
  * @author Leonardo Barros
  */
-@RunWith(MockitoJUnitRunner.class)
-public class DDMStorageTypesDataProviderTest extends PowerMockito {
+public class DDMStorageTypesDataProviderTest {
 
 	@ClassRule
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@Before
-	public void setUp() {
+	@BeforeClass
+	public static void setUpClass() {
 		_ddmStorageTypesDataProvider = new DDMStorageTypesDataProvider();
 
 		_ddmStorageTypesDataProvider.ddmStorageAdapterTracker =
@@ -64,7 +59,7 @@ public class DDMStorageTypesDataProviderTest extends PowerMockito {
 	}
 
 	@Test
-	public void testMultipleStorageAdapter() throws Exception {
+	public void testMultipleStorageAdapter() {
 		Set<String> expectedSet = new TreeSet<String>() {
 			{
 				add("json");
@@ -77,7 +72,7 @@ public class DDMStorageTypesDataProviderTest extends PowerMockito {
 	}
 
 	@Test
-	public void testSingleStorageAdapter() throws Exception {
+	public void testSingleStorageAdapter() {
 		Set<String> expectedSet = new TreeSet<String>() {
 			{
 				add("json");
@@ -87,8 +82,8 @@ public class DDMStorageTypesDataProviderTest extends PowerMockito {
 		_testStorageTypes(expectedSet);
 	}
 
-	private void _testStorageTypes(Set<String> expectedSet) throws Exception {
-		when(
+	private void _testStorageTypes(Set<String> expectedSet) {
+		Mockito.when(
 			_ddmStorageAdapterTracker.getDDMStorageAdapterTypes()
 		).thenReturn(
 			expectedSet
@@ -123,9 +118,8 @@ public class DDMStorageTypesDataProviderTest extends PowerMockito {
 		Assert.assertEquals(keyValuePairs, optional.get());
 	}
 
-	@Mock
-	private DDMStorageAdapterTracker _ddmStorageAdapterTracker;
-
-	private DDMStorageTypesDataProvider _ddmStorageTypesDataProvider;
+	private static final DDMStorageAdapterTracker _ddmStorageAdapterTracker =
+		Mockito.mock(DDMStorageAdapterTracker.class);
+	private static DDMStorageTypesDataProvider _ddmStorageTypesDataProvider;
 
 }

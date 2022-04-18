@@ -84,7 +84,7 @@ definition {
 	@priority = "5"
 	test ApplicationCanBeAuthorizedWithRememberDeviceEnabled {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "OAuth2#ExternalApplicationCanBeAuthorizedAndRememberDeviceShouldBeEnabled";
+		property test.name.skip.portal.instance = "OAuth2#ApplicationCanBeAuthorizedWithRememberDeviceEnabled";
 
 		task ("Add and edit an external application with remember device enabled") {
 			OAuth2.addAndEditExternalApplication(
@@ -112,6 +112,32 @@ definition {
 
 		task ("Launch request") {
 			OAuth2.launchRequest();
+		}
+	}
+
+	@description = "This is a use case for LPS-145191 TC-1:Liferay will not issue an access token back to the client when configure OAuth 2 Application as Client Secret JWT without the client sending client info in JWT."
+	@priority = "4"
+	test ApplicationCannotBeAuthorizedWithClientSecretJWTWithoutJWTAssertion {
+		property test.name.skip.portal.instance = "OAuth2#ApplicationCannotBeAuthorizedWithClientSecretJWTWithoutJWTAssertion";
+
+		task ("Add and edit an external application") {
+			OAuth2.addAndEditExternalApplication(
+				applicationName = "My Application",
+				callbackUri = '''http://martamedio.com/oauth2-tester/?url=${portalURL}&client_id=abc123''',
+				clientAuthenticationMethod = "Client Secret JWT",
+				clientId = "abc123",
+				clientProfile = "Web Application",
+				clientSecret = "abc123");
+		}
+
+		task ("Authorize application") {
+			OAuth2.authorizeMyApplication(
+				clientId = "abc123",
+				clientSecret = "abc123");
+		}
+
+		task ("Verify OAuth2 access is not authorized") {
+			OAuth2.obtainOAuth2AccessNotAuthorized();
 		}
 	}
 
@@ -195,6 +221,39 @@ definition {
 			OAuth2.viewGrantedAuthViaAdmin(
 				applicationName = "OAuth2 Application",
 				noAuthorizations = "true");
+		}
+	}
+
+	@description = "This is a use case for LPS-145191 TC-2:Liferay will not issue an access token back to the client when configure OAuth 2 Application as Private Key JWT without the client sending client info in JWT."
+	@priority = "4"
+	test ApplicationCannotBeAuthorizedWithPrivateKeyJWTWithoutJWTAssertion {
+		property test.name.skip.portal.instance = "OAuth2#ApplicationCannotBeAuthorizedWithPrivateKeyJWTWithoutJWTAssertion";
+
+		task ("Add and edit an external application") {
+			OAuth2.addAndEditExternalApplication(
+				applicationName = "My Application",
+				callbackUri = '''http://martamedio.com/oauth2-tester/?url=${portalURL}&client_id=abc123''',
+				clientAuthenticationMethod = "Private Key JWT",
+				clientId = "abc123",
+				clientProfile = "Web Application",
+				clientSecret = "abc123");
+		}
+
+		task ("Check the content of JSON Web Key Set doesn't disappear") {
+			OAuth2.viewApplication(
+				applicationName = "My Application",
+				clientAuthenticationMethod = "Private Key JWT",
+				jwks = "p2wfqbbEOf6OrbjScvOkuoVIx5MGJy6jEqN7RkfR8P82NdwuriRLoakZcs");
+		}
+
+		task ("Authorize application") {
+			OAuth2.authorizeMyApplication(
+				clientId = "abc123",
+				clientSecret = "abc123");
+		}
+
+		task ("Verify OAuth2 access is not authorized") {
+			OAuth2.obtainOAuth2AccessNotAuthorized();
 		}
 	}
 

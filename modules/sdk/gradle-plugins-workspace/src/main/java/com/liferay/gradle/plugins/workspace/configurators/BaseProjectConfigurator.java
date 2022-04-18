@@ -185,7 +185,8 @@ public abstract class BaseProjectConfigurator implements ProjectConfigurator {
 
 		if (dirName.equals(".gradle") || dirName.equals("build") ||
 			dirName.equals("build_gradle") || dirName.equals("dist") ||
-			dirName.equals("gradle") || dirName.equals("node_modules") ||
+			dirName.equals("gradle") || dirName.equals("lxc") ||
+			dirName.equals("node_modules") ||
 			dirName.equals("node_modules_cache") || dirName.equals("src")) {
 
 			return true;

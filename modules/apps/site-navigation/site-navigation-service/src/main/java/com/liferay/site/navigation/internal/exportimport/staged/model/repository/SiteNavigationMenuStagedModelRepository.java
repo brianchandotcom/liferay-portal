@@ -146,11 +146,9 @@ public class SiteNavigationMenuStagedModelRepository
 			SiteNavigationMenu siteNavigationMenu)
 		throws PortalException {
 
-		long userId = portletDataContext.getUserId(
-			siteNavigationMenu.getUserUuid());
-
 		return _siteNavigationMenuLocalService.updateSiteNavigationMenu(
-			userId, siteNavigationMenu.getSiteNavigationMenuId(),
+			portletDataContext.getUserId(siteNavigationMenu.getUserUuid()),
+			siteNavigationMenu.getSiteNavigationMenuId(),
 			siteNavigationMenu.getGroupId(), siteNavigationMenu.getName(),
 			siteNavigationMenu.getType(), siteNavigationMenu.isAuto());
 	}

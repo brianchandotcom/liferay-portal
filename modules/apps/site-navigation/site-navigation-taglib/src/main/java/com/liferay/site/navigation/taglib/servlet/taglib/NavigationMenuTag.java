@@ -291,13 +291,11 @@ public class NavigationMenuTag extends IncludeTag {
 		while (siteNavigationMenuItem.getParentSiteNavigationMenuItemId() !=
 					0) {
 
-			siteNavigationMenuItem =
+			ancestorSiteNavigationMenuItems.add(
 				SiteNavigationMenuItemLocalServiceUtil.
 					getSiteNavigationMenuItem(
 						siteNavigationMenuItem.
-							getParentSiteNavigationMenuItemId());
-
-			ancestorSiteNavigationMenuItems.add(siteNavigationMenuItem);
+							getParentSiteNavigationMenuItemId()));
 		}
 
 		List<NavItem> navItems = new ArrayList<>(

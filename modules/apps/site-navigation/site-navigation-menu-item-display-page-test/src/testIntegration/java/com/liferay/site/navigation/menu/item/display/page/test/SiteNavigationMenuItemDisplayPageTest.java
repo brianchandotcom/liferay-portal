@@ -37,7 +37,6 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -223,12 +222,10 @@ public class SiteNavigationMenuItemDisplayPageTest {
 				_infoItemServiceTracker.getInfoItemClassDetails(
 					DisplayPageInfoItemCapability.KEY)) {
 
-			SiteNavigationMenuItemType siteNavigationMenuItemType =
+			Assert.assertNotNull(
 				_siteNavigationMenuItemTypeRegistry.
 					getSiteNavigationMenuItemType(
-						infoItemClassDetails.getClassName());
-
-			Assert.assertNotNull(siteNavigationMenuItemType);
+						infoItemClassDetails.getClassName()));
 		}
 	}
 
@@ -524,11 +521,8 @@ public class SiteNavigationMenuItemDisplayPageTest {
 	private ThemeDisplay _getThemeDisplay() throws Exception {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		Company company = _companyLocalService.getCompany(
-			_group.getCompanyId());
-
-		themeDisplay.setCompany(company);
-
+		themeDisplay.setCompany(
+			_companyLocalService.getCompany(_group.getCompanyId()));
 		themeDisplay.setPermissionChecker(
 			PermissionThreadLocal.getPermissionChecker());
 		themeDisplay.setSiteGroupId(_group.getGroupId());

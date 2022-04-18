@@ -257,12 +257,12 @@ public class NavItemUtil {
 			privateLayout = true;
 		}
 
-		List<Layout> layouts = _layoutLocalService.getLayouts(
-			themeDisplay.getScopeGroupId(), privateLayout,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-
 		return NavItem.fromLayouts(
-			httpServletRequest, layouts, themeDisplay, null);
+			httpServletRequest,
+			_layoutLocalService.getLayouts(
+				themeDisplay.getScopeGroupId(), privateLayout,
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID),
+			themeDisplay, null);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(NavItemUtil.class);

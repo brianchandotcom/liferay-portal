@@ -183,12 +183,9 @@ public class WorkflowDefinitionManagerImpl
 
 			serviceContext.setCompanyId(companyId);
 
-			KaleoDefinition kaleoDefinition =
-				_kaleoDefinitionLocalService.getKaleoDefinition(
-					name, serviceContext);
-
 			return _kaleoWorkflowModelConverter.toWorkflowDefinition(
-				kaleoDefinition);
+				_kaleoDefinitionLocalService.getKaleoDefinition(
+					name, serviceContext));
 		}
 		catch (WorkflowException workflowException) {
 			throw workflowException;
@@ -269,12 +266,9 @@ public class WorkflowDefinitionManagerImpl
 		throws WorkflowException {
 
 		try {
-			KaleoDefinitionVersion kaleoDefinitionVersion =
-				_kaleoDefinitionVersionLocalService.getKaleoDefinitionVersion(
-					companyId, name, getVersion(version));
-
 			return _kaleoWorkflowModelConverter.toWorkflowDefinition(
-				kaleoDefinitionVersion);
+				_kaleoDefinitionVersionLocalService.getKaleoDefinitionVersion(
+					companyId, name, getVersion(version)));
 		}
 		catch (WorkflowException workflowException) {
 			throw workflowException;

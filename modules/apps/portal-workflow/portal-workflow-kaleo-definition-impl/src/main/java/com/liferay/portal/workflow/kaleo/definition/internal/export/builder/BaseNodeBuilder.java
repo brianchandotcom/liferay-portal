@@ -71,24 +71,18 @@ public abstract class BaseNodeBuilder<T extends Node> implements NodeBuilder {
 	public T buildNode(KaleoNode kaleoNode) throws PortalException {
 		T node = createNode(kaleoNode);
 
-		Set<Action> actions = _buildActions(
-			kaleoNode.getCompanyId(), KaleoNode.class.getName(),
-			kaleoNode.getKaleoNodeId());
-
-		node.setActions(actions);
-
+		node.setActions(
+			_buildActions(
+				kaleoNode.getCompanyId(), KaleoNode.class.getName(),
+				kaleoNode.getKaleoNodeId()));
 		node.setLabelMap(kaleoNode.getLabelMap());
 		node.setMetadata(kaleoNode.getMetadata());
-
-		Set<Notification> notifications = _buildNotifications(
-			KaleoNode.class.getName(), kaleoNode.getKaleoNodeId());
-
-		node.setNotifications(notifications);
-
-		Set<Timer> timers = _buildTimers(
-			KaleoNode.class.getName(), kaleoNode.getKaleoNodeId());
-
-		node.setTimers(timers);
+		node.setNotifications(
+			_buildNotifications(
+				KaleoNode.class.getName(), kaleoNode.getKaleoNodeId()));
+		node.setTimers(
+			_buildTimers(
+				KaleoNode.class.getName(), kaleoNode.getKaleoNodeId()));
 
 		return node;
 	}
@@ -327,10 +321,9 @@ public abstract class BaseNodeBuilder<T extends Node> implements NodeBuilder {
 
 			timer.setActions(timerActions);
 
-			Set<Assignment> reassignments = buildAssigments(
-				KaleoTimer.class.getName(), kaleoTimer.getKaleoTimerId());
-
-			timer.setReassignments(reassignments);
+			timer.setReassignments(
+				buildAssigments(
+					KaleoTimer.class.getName(), kaleoTimer.getKaleoTimerId()));
 
 			Set<Notification> timerNotifications = _buildNotifications(
 				KaleoTimer.class.getName(), kaleoTimer.getKaleoTimerId());

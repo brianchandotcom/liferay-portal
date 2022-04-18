@@ -189,7 +189,7 @@ public class ExportImportConfigurationSettingsMapFactoryUtil {
 
 	/**
 	 * Returns an export layout settings map if the type is {@link
-	 * ExportImportConfigurationConstants#TYPE_EXPORT_LAYOUT}; otherwise,
+	 * com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants#TYPE_EXPORT_LAYOUT}; otherwise,
 	 * returns either a local or remote publish layout settings map, depending
 	 * on the staging type.
 	 *

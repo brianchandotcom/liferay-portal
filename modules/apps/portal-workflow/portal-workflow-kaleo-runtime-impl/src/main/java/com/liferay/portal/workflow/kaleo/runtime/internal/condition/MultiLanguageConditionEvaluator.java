@@ -77,10 +77,11 @@ public class MultiLanguageConditionEvaluator implements ConditionEvaluator {
 			conditionEvaluator, properties);
 
 		for (String scriptingLanguage : scriptingLanguages) {
-			String conditionEvaluatorKey = _getConditionEvaluatorKey(
-				scriptingLanguage, ClassUtil.getClassName(conditionEvaluator));
-
-			_conditionEvaluators.put(conditionEvaluatorKey, conditionEvaluator);
+			_conditionEvaluators.put(
+				_getConditionEvaluatorKey(
+					scriptingLanguage,
+					ClassUtil.getClassName(conditionEvaluator)),
+				conditionEvaluator);
 		}
 	}
 
@@ -93,10 +94,10 @@ public class MultiLanguageConditionEvaluator implements ConditionEvaluator {
 			conditionEvaluator, properties);
 
 		for (String scriptingLanguage : scriptingLanguages) {
-			String conditionEvaluatorKey = _getConditionEvaluatorKey(
-				scriptingLanguage, ClassUtil.getClassName(conditionEvaluator));
-
-			_conditionEvaluators.remove(conditionEvaluatorKey);
+			_conditionEvaluators.remove(
+				_getConditionEvaluatorKey(
+					scriptingLanguage,
+					ClassUtil.getClassName(conditionEvaluator)));
 		}
 	}
 

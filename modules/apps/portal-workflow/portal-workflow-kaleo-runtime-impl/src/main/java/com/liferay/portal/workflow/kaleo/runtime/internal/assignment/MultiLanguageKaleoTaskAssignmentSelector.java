@@ -110,13 +110,11 @@ public class MultiLanguageKaleoTaskAssignmentSelector
 			kaleoTaskAssignmentSelector, properties);
 
 		for (String scriptingLanguage : scriptingLanguages) {
-			String kaleoTaskAssignmentSelectKey =
+			_kaleoTaskAssignmentSelectors.put(
 				_getKaleoTaskAssignmentSelectKey(
 					scriptingLanguage,
-					ClassUtil.getClassName(kaleoTaskAssignmentSelector));
-
-			_kaleoTaskAssignmentSelectors.put(
-				kaleoTaskAssignmentSelectKey, kaleoTaskAssignmentSelector);
+					ClassUtil.getClassName(kaleoTaskAssignmentSelector)),
+				kaleoTaskAssignmentSelector);
 		}
 	}
 
@@ -129,12 +127,10 @@ public class MultiLanguageKaleoTaskAssignmentSelector
 			kaleoTaskAssignmentSelector, properties);
 
 		for (String scriptingLanguage : scriptingLanguages) {
-			String kaleoTaskAssignmentSelectKey =
+			_kaleoTaskAssignmentSelectors.remove(
 				_getKaleoTaskAssignmentSelectKey(
 					scriptingLanguage,
-					ClassUtil.getClassName(kaleoTaskAssignmentSelector));
-
-			_kaleoTaskAssignmentSelectors.remove(kaleoTaskAssignmentSelectKey);
+					ClassUtil.getClassName(kaleoTaskAssignmentSelector)));
 		}
 	}
 

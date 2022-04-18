@@ -123,12 +123,11 @@ public class TaskNodeExecutor extends BaseNodeExecutor {
 			KaleoNode.class.getName(), currentKaleoNode.getKaleoNodeId(),
 			ExecutionType.ON_ASSIGNMENT, executionContext);
 
-		List<KaleoTimer> kaleoTimers = kaleoTimerLocalService.getKaleoTimers(
-			KaleoNode.class.getName(), currentKaleoNode.getKaleoNodeId());
-
 		kaleoTimerInstanceTokenLocalService.addKaleoTimerInstanceTokens(
 			executionContext.getKaleoInstanceToken(),
-			executionContext.getKaleoTaskInstanceToken(), kaleoTimers,
+			executionContext.getKaleoTaskInstanceToken(),
+			kaleoTimerLocalService.getKaleoTimers(
+				KaleoNode.class.getName(), currentKaleoNode.getKaleoNodeId()),
 			executionContext.getWorkflowContext(),
 			executionContext.getServiceContext());
 
@@ -192,10 +191,8 @@ public class TaskNodeExecutor extends BaseNodeExecutor {
 				kaleoTimer.getDuration(),
 				DurationScale.parse(kaleoTimer.getScale()));
 
-			Date dueDate = _dueDateCalculator.getDueDate(
-				new Date(), delayDuration);
-
-			sortedDueDates.add(dueDate);
+			sortedDueDates.add(
+				_dueDateCalculator.getDueDate(new Date(), delayDuration));
 		}
 
 		return sortedDueDates.first();

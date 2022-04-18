@@ -347,15 +347,14 @@ public class DefaultWorkflowEngineImpl
 		throws WorkflowException {
 
 		try {
-			List<KaleoInstance> kaleoInstances =
+			return _toWorkflowInstances(
 				kaleoInstanceLocalService.getKaleoInstances(
 					userId, assetClassName, assetClassPK, completed, start, end,
 					KaleoInstanceOrderByComparator.getOrderByComparator(
 						orderByComparator, _kaleoWorkflowModelConverter,
 						serviceContext),
-					serviceContext);
-
-			return _toWorkflowInstances(kaleoInstances, serviceContext);
+					serviceContext),
+				serviceContext);
 		}
 		catch (WorkflowException workflowException) {
 			throw workflowException;
@@ -373,15 +372,14 @@ public class DefaultWorkflowEngineImpl
 		throws WorkflowException {
 
 		try {
-			List<KaleoInstance> kaleoInstances =
+			return _toWorkflowInstances(
 				kaleoInstanceLocalService.getKaleoInstances(
 					userId, assetClassNames, completed, start, end,
 					KaleoInstanceOrderByComparator.getOrderByComparator(
 						orderByComparator, _kaleoWorkflowModelConverter,
 						serviceContext),
-					serviceContext);
-
-			return _toWorkflowInstances(kaleoInstances, serviceContext);
+					serviceContext),
+				serviceContext);
 		}
 		catch (WorkflowException workflowException) {
 			throw workflowException;
@@ -400,16 +398,15 @@ public class DefaultWorkflowEngineImpl
 		throws WorkflowException {
 
 		try {
-			List<KaleoInstance> kaleoInstances =
+			return _toWorkflowInstances(
 				kaleoInstanceLocalService.getKaleoInstances(
 					workflowDefinitionName, workflowDefinitionVersion,
 					completed, start, end,
 					KaleoInstanceOrderByComparator.getOrderByComparator(
 						orderByComparator, _kaleoWorkflowModelConverter,
 						serviceContext),
-					serviceContext);
-
-			return _toWorkflowInstances(kaleoInstances, serviceContext);
+					serviceContext),
+				serviceContext);
 		}
 		catch (WorkflowException workflowException) {
 			throw workflowException;
@@ -428,11 +425,9 @@ public class DefaultWorkflowEngineImpl
 		try {
 			Definition definition = _getDefinition(bytes);
 
-			String definitionName = _getDefinitionName(
-				definition, name, serviceContext);
-
 			return _workflowDeployer.save(
-				title, definitionName, scope, definition, serviceContext);
+				title, _getDefinitionName(definition, name, serviceContext),
+				scope, definition, serviceContext);
 		}
 		catch (WorkflowException workflowException) {
 			throw workflowException;

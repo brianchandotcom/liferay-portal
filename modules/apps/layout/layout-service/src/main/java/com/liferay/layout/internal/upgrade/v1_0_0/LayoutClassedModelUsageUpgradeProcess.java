@@ -16,11 +16,8 @@ package com.liferay.layout.internal.upgrade.v1_0_0;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.asset.model.AssetEntryUsage;
-import com.liferay.asset.service.AssetEntryUsageLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -28,8 +25,8 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
-
-import java.util.List;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 /**
  * @author Eudaldo Alonso
@@ -37,22 +34,26 @@ import java.util.List;
 public class LayoutClassedModelUsageUpgradeProcess extends UpgradeProcess {
 
 	public LayoutClassedModelUsageUpgradeProcess(
-		AssetEntryLocalService assetEntryLocalService,
-		AssetEntryUsageLocalService assetEntryUsageLocalService) {
+		AssetEntryLocalService assetEntryLocalService) {
 
 		_assetEntryLocalService = assetEntryLocalService;
-		_assetEntryUsageLocalService = assetEntryUsageLocalService;
 	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
 		_upgradeSchema();
 
-		_upgradeLayoutClassedModelUsage();
+		if (hasTable("AssetEntryUsage")) {
+			_upgradeLayoutClassedModelUsage();
+		}
 	}
 
 	private void _upgradeLayoutClassedModelUsage() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
+			Statement statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery(
+				"select groupId, assetEntryId, containerKey, containerType, " +
+					"plid, type from AssetEntryUsage");
 			PreparedStatement preparedStatement =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
@@ -63,34 +64,36 @@ public class LayoutClassedModelUsageUpgradeProcess extends UpgradeProcess {
 						"containerKey, containerType, plid, type_ ) values ",
 						"(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"))) {
 
-			List<AssetEntryUsage> assetEntryUsages =
-				_assetEntryUsageLocalService.getAssetEntryUsages(
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			while (resultSet.next()) {
+				long assetEntryId = resultSet.getLong("assetEntryId");
+				long plid = resultSet.getLong("plid");
 
-			for (AssetEntryUsage assetEntryUsage : assetEntryUsages) {
 				AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-					assetEntryUsage.getAssetEntryId());
+					assetEntryId);
 
-				if ((assetEntry == null) || (assetEntryUsage.getPlid() <= 0)) {
+				if ((assetEntry == null) || (plid <= 0)) {
 					continue;
 				}
+
+				long groupId = resultSet.getLong("groupId");
+				String containerKey = resultSet.getString("containerKey");
+				long containerType = resultSet.getLong("containerType");
+				int type = resultSet.getInt("type");
 
 				preparedStatement.setLong(1, 0);
 				preparedStatement.setString(2, PortalUUIDUtil.generate());
 				preparedStatement.setLong(3, increment());
-				preparedStatement.setLong(4, assetEntryUsage.getGroupId());
+				preparedStatement.setLong(4, groupId);
 				preparedStatement.setDate(
 					5, new Date(System.currentTimeMillis()));
 				preparedStatement.setDate(
 					6, new Date(System.currentTimeMillis()));
 				preparedStatement.setLong(7, assetEntry.getClassNameId());
 				preparedStatement.setLong(8, assetEntry.getClassPK());
-				preparedStatement.setString(
-					9, assetEntryUsage.getContainerKey());
-				preparedStatement.setLong(
-					10, assetEntryUsage.getContainerType());
-				preparedStatement.setLong(11, assetEntryUsage.getPlid());
-				preparedStatement.setLong(12, assetEntryUsage.getType());
+				preparedStatement.setString(9, containerKey);
+				preparedStatement.setLong(10, containerType);
+				preparedStatement.setLong(11, plid);
+				preparedStatement.setInt(12, type);
 
 				preparedStatement.addBatch();
 			}
@@ -108,6 +111,5 @@ public class LayoutClassedModelUsageUpgradeProcess extends UpgradeProcess {
 	}
 
 	private final AssetEntryLocalService _assetEntryLocalService;
-	private final AssetEntryUsageLocalService _assetEntryUsageLocalService;
 
 }

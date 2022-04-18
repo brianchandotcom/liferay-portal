@@ -17,7 +17,6 @@ package com.liferay.layout.internal.upgrade;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
-import com.liferay.asset.service.AssetEntryUsageLocalService;
 import com.liferay.layout.internal.upgrade.v1_0_0.LayoutClassedModelUsageUpgradeProcess;
 import com.liferay.layout.internal.upgrade.v1_0_0.LayoutPermissionsUpgradeProcess;
 import com.liferay.layout.internal.upgrade.v1_0_0.LayoutUpgradeProcess;
@@ -46,8 +45,7 @@ public class LayoutServiceUpgrade implements UpgradeStepRegistrator {
 	public void register(Registry registry) {
 		registry.register(
 			"0.0.1", "1.0.0",
-			new LayoutClassedModelUsageUpgradeProcess(
-				_assetEntryLocalService, _assetEntryUsageLocalService),
+			new LayoutClassedModelUsageUpgradeProcess(_assetEntryLocalService),
 			new LayoutPermissionsUpgradeProcess());
 
 		registry.register("1.0.0", "1.0.1", new LayoutUpgradeProcess());
@@ -80,9 +78,6 @@ public class LayoutServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
-
-	@Reference
-	private AssetEntryUsageLocalService _assetEntryUsageLocalService;
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;

@@ -3304,6 +3304,16 @@ definition {
 		}
 	}
 
+	macro viewNoItemInVersionMenu {
+		DMNavigator.gotoDocumentVersion();
+
+		var key_dmDocumentVersionNumber = "Version ${dmDocumentVersionNumber}";
+
+		Click(locator1 = "DocumentsAndMedia#DOCUMENT_VERSION_VERTICAL_ELLIPSIS");
+
+		MenuItem.viewNotPresent(menuItem = "Publish to Live");
+	}
+
 	macro viewNoPermission {
 		Click(
 			key_rowEntry = "${rowEntry}",
@@ -3318,16 +3328,6 @@ definition {
 				key_tagName = StringUtil.lowerCase("${tagName}"),
 				locator1 = "DocumentsAndMedia#TAG");
 		}
-	}
-
-	macro viewOlderVersionNoPublish {
-		DMNavigator.gotoDocumentVersion();
-
-		var key_dmDocumentVersionNumber = "Version ${dmDocumentVersionNumber}";
-
-		Click(locator1 = "DocumentsAndMedia#DOCUMENT_VERSION_VERTICAL_ELLIPSIS");
-
-		MenuItem.viewNotPresent(menuItem = "Publish to Live");
 	}
 
 	macro viewOlderVersionPG {

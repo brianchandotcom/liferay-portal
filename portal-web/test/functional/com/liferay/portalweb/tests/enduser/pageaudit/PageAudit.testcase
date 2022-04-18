@@ -3469,6 +3469,8 @@ definition {
 		}
 
 		task ("Assert if cached data is displayed") {
+			PageAudit.openPanelBeforeConfiguration();
+
 			AssertElementPresent(
 				failingCheckName = "Small Tap Targets",
 				locator1 = "PageAudit#FAILING_CHECK_NAME");

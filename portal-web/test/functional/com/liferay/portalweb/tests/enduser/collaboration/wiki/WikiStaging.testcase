@@ -204,12 +204,53 @@ definition {
 	}
 
 	@description = "This is a test for LPS-95709. It ensures that an attachment for a Wiki frontpage is intact after the entry is published."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewAttachmentForFrontPageAfterPublish {
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Site Name (Staging)",
+			layoutName = "Staging Test Page",
+			site = "false",
+			widgetName = "Wiki");
 
-		// TODO LPS-150069 CanViewAttachmentForFrontPageAfterPublish pending implementation
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
 
+		JSONWiki.updateWikiPage(
+			groupName = "Site Name (Staging)",
+			site = "false",
+			wikiNodeName = "Main",
+			wikiPageContent = "Wiki FrontPage Content",
+			wikiPageName = "FrontPage");
+
+		JSONWiki.addAttachmentToWikiPage(
+			fileName = "Document_1.jpg",
+			groupName = "Site Name (Staging)",
+			mimeType = "image/jpeg",
+			site = "false",
+			wikiNodeName = "Main",
+			wikiPageName = "FrontPage");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		WikiNavigator.openToWikiPage(
+			layoutURLKey = "staging-test-page",
+			siteURLKey = "site-name",
+			wikiNodeName = "Main",
+			wikiPageTitle = "FrontPage");
+
+		WikiPage.viewPageWithAttachment(
+			attachmentFileName = "Document_1.jpg",
+			inlineImage = "true",
+			wikiPageContent = "Wiki FrontPage Content",
+			wikiPageTitle = "FrontPage");
 	}
 
 	@description = "This ensures that the added front page can be viewed in the live site after publishing."

@@ -74,9 +74,7 @@ const AppContextProvider = ({assetsPath, children}) => {
 							externalReferenceCode ===
 							projectExternalReferenceCode
 					)
-					?.roleBriefs?.find(
-						({name}) => name === 'Provisioning'
-					);
+					?.roleBriefs?.find(({name}) => name === 'Provisioning');
 
 				const isStaff = data.userAccount?.organizationBriefs?.some(
 					(organization) => organization.name === 'Liferay Staff'

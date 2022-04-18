@@ -1201,7 +1201,6 @@ definition {
 			fieldFieldLabel = "Date");
 	}
 
-	@ignore = "true"
 	@priority = "3"
 	test ViewDecimalFieldPredefinedValue {
 		Navigator.openURL();

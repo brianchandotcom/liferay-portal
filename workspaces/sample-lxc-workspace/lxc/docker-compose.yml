@@ -22,6 +22,23 @@ services:
         image: liferay/job-runner
         volumes:
             - ./extensions/charlie-job-runner/job-runner:/mnt/liferay
+    database:
+        command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci --character-set-filesystem=utf8mb4
+        container_name: mysql_server_5_7
+        deploy:
+            resources:
+                limits:
+                    memory: 1g
+        environment:
+            - MYSQL_ROOT_PASSWORD=toor
+            - MYSQL_ROOT_HOST=%
+        healthcheck:
+            test: mysqladmin ping -h 127.0.0.1 -u root --password=toor
+        image: "mysql/mysql-server:5.7"
+        ports:
+            - "3396:3306"
+        volumes:
+            - ./docker/provision/mysql/init:/docker-entrypoint-initdb.d
     liferay:
         container_name: t7h3-liferay
         environment:

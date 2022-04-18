@@ -45,6 +45,11 @@ public class ExportPLOEntriesPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
 	@Override
+	public String getCssClass() {
+		return "text-nowrap";
+	}
+
+	@Override
 	public String getMessage(PortletRequest portletRequest) {
 		return LanguageUtil.get(
 			getResourceBundle(getLocale(portletRequest)),

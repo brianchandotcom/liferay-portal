@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil;
 import com.liferay.portal.workflow.configuration.WorkflowDefinitionConfiguration;
 import com.liferay.portal.workflow.constants.WorkflowWebKeys;
@@ -157,12 +156,10 @@ public class WorkflowDefinitionPortletTab extends BaseWorkflowPortletTab {
 
 		int version = ParamUtil.getInteger(renderRequest, "version");
 
-		WorkflowDefinition workflowDefinition =
-			WorkflowDefinitionManagerUtil.getWorkflowDefinition(
-				themeDisplay.getCompanyId(), name, version);
-
 		renderRequest.setAttribute(
-			WebKeys.WORKFLOW_DEFINITION, workflowDefinition);
+			WebKeys.WORKFLOW_DEFINITION,
+			WorkflowDefinitionManagerUtil.getWorkflowDefinition(
+				themeDisplay.getCompanyId(), name, version));
 	}
 
 	private volatile boolean _companyAdministratorCanPublish;

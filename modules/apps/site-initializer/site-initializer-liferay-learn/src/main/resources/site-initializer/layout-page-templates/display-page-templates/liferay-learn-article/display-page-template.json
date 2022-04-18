@@ -1,0 +1,9 @@
+{
+	"contentSubtype": {
+		"subtypeKey": "DXP ARTICLE"
+	},
+	"contentType": {
+		"className": "com.liferay.journal.model.JournalArticle"
+	},
+	"name": "Liferay Learn Article"
+}

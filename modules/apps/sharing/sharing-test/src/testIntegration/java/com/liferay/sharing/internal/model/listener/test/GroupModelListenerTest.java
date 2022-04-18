@@ -81,14 +81,12 @@ public class GroupModelListenerTest {
 			Group.class.getName());
 		long classPK = _group.getGroupId();
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), _user.getUserId());
-
 		_sharingEntryLocalService.addSharingEntry(
 			_user.getUserId(), _groupUser.getUserId(), classNameId, classPK,
 			_group.getGroupId(), true, Arrays.asList(SharingEntryAction.VIEW),
-			null, serviceContext);
+			null,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), _user.getUserId()));
 
 		List<SharingEntry> groupSharingEntries =
 			_sharingEntryLocalService.getGroupSharingEntries(

@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -70,14 +69,12 @@ public class AddOrUpdateSharingUserNotificationTest
 			Group.class.getName());
 		long classPK = group.getGroupId();
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				group.getGroupId(), TestPropsValues.getUserId());
-
 		return _sharingEntryLocalService.addOrUpdateSharingEntry(
 			_fromUser.getUserId(), user.getUserId(), classNameId, classPK,
 			group.getGroupId(), true, Arrays.asList(SharingEntryAction.VIEW),
-			null, serviceContext);
+			null,
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId()));
 	}
 
 	@Override
@@ -99,16 +96,14 @@ public class AddOrUpdateSharingUserNotificationTest
 
 		SharingEntry sharingEntry = (SharingEntry)baseModel;
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				group.getGroupId(), TestPropsValues.getUserId());
-
 		return _sharingEntryLocalService.addOrUpdateSharingEntry(
 			sharingEntry.getUserId(), sharingEntry.getToUserId(),
 			sharingEntry.getClassNameId(), sharingEntry.getClassPK(),
 			sharingEntry.getGroupId(), sharingEntry.isShareable(),
 			Arrays.asList(SharingEntryAction.VIEW, SharingEntryAction.UPDATE),
-			sharingEntry.getExpirationDate(), serviceContext);
+			sharingEntry.getExpirationDate(),
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId()));
 	}
 
 	@Inject

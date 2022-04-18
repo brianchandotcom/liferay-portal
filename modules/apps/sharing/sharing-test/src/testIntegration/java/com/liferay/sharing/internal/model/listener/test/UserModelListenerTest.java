@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -81,14 +80,12 @@ public class UserModelListenerTest {
 			Group.class.getName());
 		long classPK = _group.getGroupId();
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), _user.getUserId());
-
 		_sharingEntryLocalService.addSharingEntry(
 			_user.getUserId(), _groupUser.getUserId(), classNameId, classPK,
 			_group.getGroupId(), true, Arrays.asList(SharingEntryAction.VIEW),
-			null, serviceContext);
+			null,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), _user.getUserId()));
 
 		List<SharingEntry> toUserSharingEntries =
 			_sharingEntryLocalService.getToUserSharingEntries(
@@ -115,14 +112,12 @@ public class UserModelListenerTest {
 			Group.class.getName());
 		long classPK = _group.getGroupId();
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), _user.getUserId());
-
 		_sharingEntryLocalService.addSharingEntry(
 			_user.getUserId(), _groupUser.getUserId(), classNameId, classPK,
 			_group.getGroupId(), true, Arrays.asList(SharingEntryAction.VIEW),
-			null, serviceContext);
+			null,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), _user.getUserId()));
 
 		List<SharingEntry> toUserSharingEntries =
 			_sharingEntryLocalService.getToUserSharingEntries(

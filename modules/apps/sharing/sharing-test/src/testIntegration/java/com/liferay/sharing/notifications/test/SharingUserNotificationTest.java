@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -132,14 +131,11 @@ public class SharingUserNotificationTest extends BaseUserNotificationTestCase {
 
 		SharingEntry sharingEntry = (SharingEntry)baseModel;
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				group.getGroupId(), TestPropsValues.getUserId());
-
 		return _sharingEntryLocalService.updateSharingEntry(
 			user.getUserId(), sharingEntry.getSharingEntryId(),
 			Arrays.asList(SharingEntryAction.VIEW), false, null,
-			serviceContext);
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId()));
 	}
 
 	private String _getExpectedNotificationMessage(User fromUser) {
@@ -155,14 +151,12 @@ public class SharingUserNotificationTest extends BaseUserNotificationTestCase {
 			model.getModelClassName());
 		long classPK = (Long)model.getPrimaryKeyObj();
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				group.getGroupId(), fromUser.getUserId());
-
 		return _sharingEntryLocalService.addOrUpdateSharingEntry(
 			fromUser.getUserId(), toUser.getUserId(), classNameId, classPK,
 			group.getGroupId(), true, Arrays.asList(SharingEntryAction.VIEW),
-			null, serviceContext);
+			null,
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), fromUser.getUserId()));
 	}
 
 	@Inject

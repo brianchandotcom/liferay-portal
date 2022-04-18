@@ -12,23 +12,18 @@
  * details.
  */
 
-package com.liferay.frontend.icons.web.internal.configuration.admin.display;
+package com.liferay.frontend.icons.web.internal.portal.settings.configuration.admin.display;
 
-import com.liferay.configuration.admin.display.ConfigurationScreen;
 import com.liferay.frontend.icons.web.internal.display.context.FrontendIconsConfigurationDisplayContext;
 import com.liferay.frontend.icons.web.internal.repository.FrontendIconsResourcePackRepository;
-import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
-
-import java.io.IOException;
+import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenContributor;
 
 import java.util.Locale;
 
 import javax.portlet.RenderResponse;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -39,12 +34,18 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Bryce Osterhaus
  */
-@Component(service = ConfigurationScreen.class)
-public class FrontendIconsConfigurationScreen implements ConfigurationScreen {
+@Component(service = PortalSettingsConfigurationScreenContributor.class)
+public class FrontendIconsPortalSettingsConfigurationScreenContributor
+	implements PortalSettingsConfigurationScreenContributor {
 
 	@Override
 	public String getCategoryKey() {
 		return "frontend-icons";
+	}
+
+	@Override
+	public String getJspPath() {
+		return "/portal_settings/frontend_icons.jsp";
 	}
 
 	@Override
@@ -55,20 +56,23 @@ public class FrontendIconsConfigurationScreen implements ConfigurationScreen {
 	@Override
 	public String getName(Locale locale) {
 		return LanguageUtil.get(
-			ResourceBundleUtil.getBundle(locale, getClass()),
-			"frontend-icons-configuration-name");
+			locale, "frontend-icons-instance-configuration-name");
 	}
 
 	@Override
-	public String getScope() {
-		return ExtendedObjectClassDefinition.Scope.COMPANY.getValue();
+	public String getSaveMVCActionCommandName() {
+		return null;
 	}
 
 	@Override
-	public void render(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws IOException {
+	public ServletContext getServletContext() {
+		return _servletContext;
+	}
+
+	@Override
+	public void setAttributes(
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
 		httpServletRequest.setAttribute(
 			FrontendIconsConfigurationDisplayContext.class.getName(),
@@ -76,18 +80,6 @@ public class FrontendIconsConfigurationScreen implements ConfigurationScreen {
 				_frontendIconsResourcePackRepository, httpServletRequest,
 				(RenderResponse)httpServletRequest.getAttribute(
 					JavaConstants.JAVAX_PORTLET_RESPONSE)));
-
-		try {
-			RequestDispatcher requestDispatcher =
-				_servletContext.getRequestDispatcher(
-					"/portal_settings/frontend_icons.jsp");
-
-			requestDispatcher.include(httpServletRequest, httpServletResponse);
-		}
-		catch (Exception exception) {
-			throw new IOException(
-				"Unable to render frontend_icons.jsp", exception);
-		}
 	}
 
 	@Reference

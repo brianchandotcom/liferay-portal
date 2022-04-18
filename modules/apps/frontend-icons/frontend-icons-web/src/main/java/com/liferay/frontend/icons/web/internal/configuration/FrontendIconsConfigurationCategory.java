@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.icons.web.internal.configuration.admin.category;
+package com.liferay.frontend.icons.web.internal.configuration;
 
 import com.liferay.configuration.admin.category.ConfigurationCategory;
 
@@ -32,7 +32,7 @@ public class FrontendIconsConfigurationCategory
 
 	@Override
 	public String getCategoryIcon() {
-		return "plus-squares";
+		return "squares";
 	}
 
 	@Override

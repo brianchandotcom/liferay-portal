@@ -21,6 +21,6 @@ FrontendIconsConfigurationDisplayContext frontendIconsConfigurationDisplayContex
 %>
 
 <react:component
-	module="js/IconConfiguration"
+	module="js/instance_settings/index"
 	props="<%= frontendIconsConfigurationDisplayContext.getProps() %>"
 />

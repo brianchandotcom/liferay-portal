@@ -24,7 +24,7 @@ import React, {useMemo, useState} from 'react';
 import AddIconPackModal from './AddIconPackModal';
 import DeleteIconModal from './DeleteIconModal';
 
-export default function IconConfiguration({
+export default function InstanceIconConfiguration({
 	deleteIconsPackResourceURL,
 	deleteIconsPackURL,
 	icons: initialIcons,
@@ -103,15 +103,7 @@ export default function IconConfiguration({
 	};
 
 	return (
-		<ClayLayout.Sheet>
-			<ClayLayout.ContentRow className="mb-5" containerElement="h2">
-				<ClayLayout.ContentCol containerElement="span" expand>
-					{Liferay.Language.get('frontend-icons-configuration-name')}
-				</ClayLayout.ContentCol>
-			</ClayLayout.ContentRow>
-
-			<h4>{Liferay.Language.get('icon-packs')}</h4>
-
+		<>
 			<label className="form-control-label">
 				<span className="form-control-label-text">
 					{Liferay.Language.get('search-icons')}
@@ -314,6 +306,6 @@ export default function IconConfiguration({
 					visible={deleteModal.visible}
 				/>
 			)}
-		</ClayLayout.Sheet>
+		</>
 	);
 }

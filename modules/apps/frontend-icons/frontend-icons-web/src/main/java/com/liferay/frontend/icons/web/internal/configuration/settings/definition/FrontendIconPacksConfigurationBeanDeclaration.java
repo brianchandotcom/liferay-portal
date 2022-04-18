@@ -12,23 +12,23 @@
  * details.
  */
 
-package com.liferay.frontend.icons.web.internal.configuration;
+package com.liferay.frontend.icons.web.internal.configuration.settings.definition;
 
-import aQute.bnd.annotation.metatype.Meta;
+import com.liferay.frontend.icons.web.internal.configuration.FrontendIconPacksConfiguration;
+import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 
-import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Bryce Osterhaus
  */
-@ExtendedObjectClassDefinition(
-	category = "frontend-icons", generateUI = false,
-	scope = ExtendedObjectClassDefinition.Scope.COMPANY
-)
-@Meta.OCD(
-	id = "com.liferay.frontend.icons.web.internal.configuration.FrontendIconsConfiguration",
-	localization = "content/Language",
-	name = "frontend-icons-configuration-name"
-)
-public interface FrontendIconsConfiguration {
+@Component(service = ConfigurationBeanDeclaration.class)
+public class FrontendIconPacksConfigurationBeanDeclaration
+	implements ConfigurationBeanDeclaration {
+
+	@Override
+	public Class<?> getConfigurationBeanClass() {
+		return FrontendIconPacksConfiguration.class;
+	}
+
 }

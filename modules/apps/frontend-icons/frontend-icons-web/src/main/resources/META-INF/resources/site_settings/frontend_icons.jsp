@@ -14,13 +14,13 @@
  */
 --%>
 
-<%@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
-taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
-taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
+<%@ include file="/init.jsp" %>
 
-<%@ page import="com.liferay.frontend.icons.web.internal.display.context.FrontendIconsConfigurationDisplayContext" %><%@
-page import="com.liferay.frontend.icons.web.internal.display.context.FrontendIconsSiteSettingsConfigurationDisplayContext" %>
+<%
+FrontendIconsSiteSettingsConfigurationDisplayContext frontendIconsSiteSettingsConfigurationDisplayContext = (FrontendIconsSiteSettingsConfigurationDisplayContext)request.getAttribute(FrontendIconsSiteSettingsConfigurationDisplayContext.class.getName());
+%>
 
-<liferay-frontend:defineObjects />
-
-<liferay-theme:defineObjects />
+<react:component
+	module="js/site_settings/index"
+	props="<%= frontendIconsSiteSettingsConfigurationDisplayContext.getProps() %>"
+/>

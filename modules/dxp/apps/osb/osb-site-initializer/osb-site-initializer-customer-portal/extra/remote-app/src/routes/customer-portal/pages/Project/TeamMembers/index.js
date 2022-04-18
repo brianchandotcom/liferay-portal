@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import {useEffect} from 'react';
 import {useOutletContext} from 'react-router-dom';
 import {useApplicationProvider} from '../../../../../common/context/AppPropertiesProvider';
 import ManageProductUser from '../../../components/ManageProductUsers';
@@ -16,12 +17,21 @@ import TeamMembersTable from '../../../containers/TeamMembersTable';
 import {useCustomerPortal} from '../../../context';
 
 const TeamMembers = () => {
-	const {project, subscriptionGroups} = useOutletContext();
-	const [{sessionId}] = useCustomerPortal();
+	const {setHasQuickLinksPanel, setHasSideMenu} = useOutletContext();
+	const [{project, sessionId, subscriptionGroups}] = useCustomerPortal();
 	const {licenseKeyDownloadURL} = useApplicationProvider();
 
+	useEffect(() => {
+		setHasQuickLinksPanel(false);
+		setHasSideMenu(true);
+	}, [setHasSideMenu, setHasQuickLinksPanel]);
+
+	if (!project || !subscriptionGroups || !sessionId) {
+		return <>Loading...</>;
+	}
+
 	return (
-		<div>
+		<>
 			<div>
 				<h1 className="m-0">Team Members</h1>
 
@@ -44,7 +54,7 @@ const TeamMembers = () => {
 					subscriptionGroups={subscriptionGroups}
 				/>
 			</div>
-		</div>
+		</>
 	);
 };
 

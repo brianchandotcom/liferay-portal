@@ -9,10 +9,13 @@
  * distribution rights of the Software.
  */
 
+import {useCustomerPortal} from '../../context';
 import SlaCard from '../SlaCard';
 import ProjectSupportSkeleton from './Skeleton';
 
-const ProjectSupport = ({project}) => {
+const ProjectSupport = () => {
+	const [{project}] = useCustomerPortal();
+
 	return (
 		<div className="container cp-project-contacs-container mb-5 mx-0">
 			<div className="row">

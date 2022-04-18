@@ -9,23 +9,14 @@
  * distribution rights of the Software.
  */
 
-import {Navigate, useOutletContext, useParams} from 'react-router-dom';
-
-const ProductsOutlet = () => {
-	const {accountKey, productId} = useParams();
-
-	const {
-		activationComponents,
-		hasAccessToCurrentProduct,
-	} = useOutletContext();
-
-	const currentProduct = activationComponents[productId];
-
-	if (!currentProduct || !hasAccessToCurrentProduct) {
-		return <Navigate replace={true} to={`/${accountKey}`} />;
-	}
-
-	return currentProduct;
-};
-
-export default ProductsOutlet;
+export default function getKebabCase(value) {
+	return (
+		value &&
+		value
+			.match(
+				/[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g
+			)
+			.map((x) => x.toLowerCase())
+			.join('-')
+	);
+}

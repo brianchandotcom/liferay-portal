@@ -27,9 +27,9 @@ DOMPurify.addHook('afterSanitizeAttributes', (node) => {
 	}
 });
 
-const QuickLinksPanel = ({accountKey}) => {
+const QuickLinksPanel = () => {
 	const [
-		{isQuickLinksExpanded, quickLinks, structuredContents},
+		{isQuickLinksExpanded, project, quickLinks, structuredContents},
 		dispatch,
 	] = useCustomerPortal();
 	const [quickLinksContents, setQuickLinksContents] = useState([]);
@@ -45,8 +45,7 @@ const QuickLinksPanel = ({accountKey}) => {
 				type: actionTypes.UPDATE_QUICK_LINKS_EXPANDED_PANEL,
 			});
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [dispatch]);
 
 	const fetchQuickLinksPanelContent = useCallback(async () => {
 		const renderedQuickLinksContents = await quickLinks.reduce(
@@ -68,7 +67,7 @@ const QuickLinksPanel = ({accountKey}) => {
 					const htmlBody = await structuredComponent.text();
 
 					accumulator.push(
-						htmlBody.replace('{{accountKey}}', accountKey)
+						htmlBody.replace('{{accountKey}}', project?.accountKey)
 					);
 				}
 
@@ -78,13 +77,17 @@ const QuickLinksPanel = ({accountKey}) => {
 		);
 
 		setQuickLinksContents(renderedQuickLinksContents);
-	}, [accountKey, quickLinks, structuredContents]);
+	}, [project?.accountKey, quickLinks, structuredContents]);
 
 	useEffect(() => {
 		if (quickLinks) {
 			fetchQuickLinksPanelContent();
 		}
 	}, [quickLinks, fetchQuickLinksPanelContent]);
+
+	if (!project) {
+		return <QuickLinksSkeleton />;
+	}
 
 	return (
 		<>

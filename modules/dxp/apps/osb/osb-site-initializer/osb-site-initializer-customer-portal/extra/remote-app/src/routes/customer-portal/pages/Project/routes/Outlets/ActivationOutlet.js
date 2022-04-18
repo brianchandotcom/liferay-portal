@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -10,83 +11,47 @@
  */
 
 import {useEffect} from 'react';
-import {Outlet, useNavigate, useOutletContext} from 'react-router-dom';
-import {PAGE_TYPES, PRODUCT_TYPES} from '../../../../utils/constants';
-import ActivationKeys from '../../ActivationKeys';
-import AnalyticsCloud from '../../AnalyticsCloud';
-import DXP from '../../DXP';
-import DXPCloud from '../../DXPCloud';
-import Portal from '../../Portal';
-
-const ACTIVATION_ROOT_ROUTER = 'activation';
+import {
+	Outlet,
+	useMatch,
+	useNavigate,
+	useOutletContext,
+	useResolvedPath,
+} from 'react-router-dom';
+import {useCustomerPortal} from '../../../../context';
+import getKebabCase from '../../../../utils/getKebabCase';
 
 const ActivationOutlet = () => {
+	const [{subscriptionGroups}] = useCustomerPortal();
+	const {setHasQuickLinksPanel, setHasSideMenu} = useOutletContext();
+
+	const isCurrentActivationRoute = !!useMatch({
+		path: useResolvedPath('').pathname,
+	});
 	const navigate = useNavigate();
 
-	const {
-		getCurrentPage,
-		project,
-		sessionId,
-		subscriptionGroups,
-		userAccount,
-	} = useOutletContext();
+	useEffect(() => {
+		setHasQuickLinksPanel(true);
+		setHasSideMenu(true);
+	}, [setHasSideMenu, setHasQuickLinksPanel]);
 
 	useEffect(() => {
-		if (getCurrentPage() === ACTIVATION_ROOT_ROUTER) {
-			const firstSubscriptionName = subscriptionGroups[0].name;
+		if (subscriptionGroups?.length && isCurrentActivationRoute) {
+			const redirectPage = getKebabCase(subscriptionGroups[0].name);
 
-			const [productKey] = Object.entries(PRODUCT_TYPES).find(
-				([, productName]) => productName === firstSubscriptionName
-			);
-
-			const pageToRedirect = PAGE_TYPES[productKey];
-
-			navigate(pageToRedirect);
+			navigate(redirectPage);
 		}
-	}, [getCurrentPage, navigate, subscriptionGroups]);
+	}, [isCurrentActivationRoute, navigate, subscriptionGroups]);
 
-	const activationComponents = {
-		[PAGE_TYPES.analyticsCloud]: (
-			<AnalyticsCloud
-				accountKey={project?.accountKey}
-				project={project}
-				sessionId={sessionId}
-				subscriptionGroups={subscriptionGroups}
-				userAccount={userAccount}
-			/>
-		),
-		[PAGE_TYPES.commerce]: (
-			<ActivationKeys.Commerce
-				accountKey={project?.accountKey}
-				sessionId={sessionId}
-			/>
-		),
-		[PAGE_TYPES.dxp]: <DXP project={project} sessionId={sessionId} />,
-		[PAGE_TYPES.portal]: <Portal project={project} sessionId={sessionId} />,
-		[PAGE_TYPES.dxpCloud]: (
-			<DXPCloud
-				project={project}
-				sessionId={sessionId}
-				subscriptionGroups={subscriptionGroups}
-				userAccount={userAccount}
-			/>
-		),
-		[PAGE_TYPES.enterpriseSearch]: (
-			<ActivationKeys.EnterpriseSearch
-				accountKey={project?.accountKey}
-				sessionId={sessionId}
-			/>
-		),
-	};
+	if (!subscriptionGroups) {
+		return <>Loading...</>;
+	}
 
 	return (
 		<Outlet
 			context={{
-				activationComponents,
-				project,
-				sessionId,
-				subscriptionGroups,
-				userAccount,
+				setHasQuickLinksPanel,
+				setHasSideMenu,
 			}}
 		/>
 	);

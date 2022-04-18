@@ -9,7 +9,9 @@
  * distribution rights of the Software.
  */
 
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
+import {useOutletContext} from 'react-router-dom';
+import {useCustomerPortal} from '../../context';
 import GenerateNewKeySkeleton from './Skeleton';
 import RequiredInformation from './pages/RequiredInformation';
 import SelectSubscription from './pages/SelectSubscription';
@@ -17,16 +19,25 @@ import {STEP_TYPES} from './utils/constants/stepType';
 
 const ACTIVATION_ROOT_ROUTER = 'activation';
 
-const GenerateNewKey = ({accountKey, productGroupName, sessionId}) => {
+const GenerateNewKey = ({productGroupName}) => {
+	const [{project, sessionId}] = useCustomerPortal();
 	const [infoSelectedKey, setInfoSelectedKey] = useState();
 	const [step, setStep] = useState(STEP_TYPES.selectDescriptions);
+	const {setHasQuickLinksPanel, setHasSideMenu} = useOutletContext();
 
-	const urlPreviousPage = `/${accountKey}/${ACTIVATION_ROOT_ROUTER}/${productGroupName.toLowerCase()}`;
+	useEffect(() => {
+		setHasQuickLinksPanel(false);
+		setHasSideMenu(false);
+	}, [setHasSideMenu, setHasQuickLinksPanel]);
+
+	const urlPreviousPage = `/${
+		project?.accountKey
+	}/${ACTIVATION_ROOT_ROUTER}/${productGroupName.toLowerCase()}`;
 
 	const StepLayout = {
 		[STEP_TYPES.generateKeys]: (
 			<RequiredInformation
-				accountKey={accountKey}
+				accountKey={project?.accountKey}
 				infoSelectedKey={infoSelectedKey}
 				sessionId={sessionId}
 				setStep={setStep}
@@ -35,7 +46,7 @@ const GenerateNewKey = ({accountKey, productGroupName, sessionId}) => {
 		),
 		[STEP_TYPES.selectDescriptions]: (
 			<SelectSubscription
-				accountKey={accountKey}
+				accountKey={project?.accountKey}
 				infoSelectedKey={infoSelectedKey}
 				productGroupName={productGroupName}
 				sessionId={sessionId}

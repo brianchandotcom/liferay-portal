@@ -9,10 +9,13 @@
  * distribution rights of the Software.
  */
 import ActivationKeysTable from '../../../containers/ActivationKeysTable';
+import {useCustomerPortal} from '../../../context';
 import DeveloperKeysLayouts from '../../../layouts/DeveloperKeysLayout';
 import {LIST_TYPES} from '../../../utils/constants';
 
-const DXP = ({project, sessionId}) => {
+const DXP = () => {
+	const [{project, sessionId}] = useCustomerPortal();
+
 	return (
 		<div className="mr-4">
 			<ActivationKeysTable

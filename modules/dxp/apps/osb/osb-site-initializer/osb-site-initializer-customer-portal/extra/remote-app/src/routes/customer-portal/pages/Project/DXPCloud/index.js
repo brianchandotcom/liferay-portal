@@ -10,15 +10,26 @@
  */
 
 import {useEffect, useState} from 'react';
+import {useOutletContext} from 'react-router-dom';
 import client from '../../../../../apolloClient';
 import {Liferay} from '../../../../../common/services/liferay';
 import {getDXPCloudEnvironment} from '../../../../../common/services/liferay/graphql/queries';
 import ActivationStatus from '../../../components/ActivationStatus/index';
+import {useCustomerPortal} from '../../../context';
 import DeveloperKeysLayouts from '../../../layouts/DeveloperKeysLayout';
 import {LIST_TYPES, PRODUCT_TYPES} from '../../../utils/constants';
 
-const DXPCloud = ({project, sessionId, subscriptionGroups, userAccount}) => {
+const DXPCloud = () => {
+	const [
+		{project, sessionId, subscriptionGroups, userAccount},
+	] = useCustomerPortal();
+	const {setHasQuickLinksPanel, setHasSideMenu} = useOutletContext();
 	const [dxpCloudEnvironment, setDxpCloudEnvironment] = useState();
+
+	useEffect(() => {
+		setHasQuickLinksPanel(true);
+		setHasSideMenu(true);
+	}, [setHasSideMenu, setHasQuickLinksPanel]);
 
 	useEffect(() => {
 		const getDxpCloudEnvironmentData = async () => {

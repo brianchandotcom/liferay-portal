@@ -10,7 +10,7 @@
  */
 import {Skeleton} from '../../../../common/components';
 
-const DeactivateKeysTable = () => {
+const DeactivateKeysTableSkeleton = () => {
 	return (
 		<div className="px-6">
 			<div className="d-flex justify-content-between mb-2">
@@ -48,4 +48,4 @@ const DeactivateKeysTable = () => {
 	);
 };
 
-export default DeactivateKeysTable;
+export default DeactivateKeysTableSkeleton;

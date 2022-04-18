@@ -16,7 +16,7 @@ import {
 	WEB_CONTENT_DXP_VERSION_TYPES,
 } from './constants';
 
-export function getWebContents({dxpVersion, slaCurrent, subscriptionGroups}) {
+export function getWebContents(dxpVersion, slaCurrent, subscriptionGroups) {
 	const webContents = [];
 	const hasProjectSLA = Object.values(SLA_TYPES).some((slaType) =>
 		slaCurrent?.includes(slaType)

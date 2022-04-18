@@ -15,6 +15,7 @@ import {useOutletContext} from 'react-router-dom';
 import client from '../../../../../apolloClient';
 import {getAccountSubscriptions} from '../../../../../common/services/liferay/graphql/queries';
 import CardSubscription from '../../../components/CardSubscription';
+import ProjectSupport from '../../../components/ProjectSupport';
 import SubscriptionsFilterByStatus from '../../../components/SubscriptionsFilterByStatus';
 import SubscriptionsNavbar from '../../../components/SubscriptionsNavbar';
 import {useCustomerPortal} from '../../../context';
@@ -24,8 +25,9 @@ import {getWebContents} from '../../../utils/getWebContents';
 import OverviewSkeleton from './Skeleton';
 
 const Overview = () => {
-	const {project, subscriptionGroups} = useOutletContext();
-	const [, dispatch] = useCustomerPortal();
+	const [{project, subscriptionGroups}, dispatch] = useCustomerPortal();
+	const {setHasQuickLinksPanel, setHasSideMenu} = useOutletContext();
+
 	const [accountSubscriptions, setAccountSubscriptions] = useState([]);
 	const [selectedSubscriptionGroup, setSelectedSubscriptionGroup] = useState(
 		''
@@ -48,11 +50,16 @@ const Overview = () => {
 	const subscriptionsCards = accountSubscriptions.filter(
 		(subscription) =>
 			subscription.accountSubscriptionGroupERC.replace(
-				`${project.accountKey}_`,
+				`${project?.accountKey}_`,
 				''
 			) === parseAccountSubscriptionGroupERC(selectedSubscriptionGroup) &&
 			selectedStatus.includes(subscription.subscriptionStatus)
 	);
+
+	useEffect(() => {
+		setHasQuickLinksPanel(true);
+		setHasSideMenu(true);
+	}, [setHasSideMenu, setHasQuickLinksPanel]);
 
 	useEffect(() => {
 		const getAllSubscriptions = async (accountKey) => {
@@ -96,76 +103,89 @@ const Overview = () => {
 			}
 		};
 
-		getAllSubscriptions(project.accountKey);
+		if (subscriptionGroups && project) {
+			getAllSubscriptions(project.accountKey);
+		}
 	}, [project, subscriptionGroups]);
 
 	useEffect(() => {
-		dispatch({
-			payload: getWebContents({
-				dxpVersion: project.dxpVersion,
-				slaCurrent: project.slaCurrent,
-				subscriptionGroups,
-			}),
-			type: actionTypes.UPDATE_QUICK_LINKS,
-		});
+		if (project && subscriptionGroups) {
+			dispatch({
+				payload: getWebContents(
+					project.dxpVersion,
+					project.slaCurrent,
+					subscriptionGroups
+				),
+				type: actionTypes.UPDATE_QUICK_LINKS,
+			});
+		}
 	}, [dispatch, project, subscriptionGroups]);
 
+	if (!project || !subscriptionGroups) {
+		return <OverviewSkeleton />;
+	}
+
 	return (
-		<div className="d-flex flex-column mr-4 mt-6">
-			<h3>Subscriptions</h3>
+		<>
+			<ProjectSupport />
+			<div className="d-flex flex-column mr-4 mt-6">
+				<h3>Subscriptions</h3>
 
-			{!!subscriptionGroupsWithSubscriptions.length && (
-				<>
-					<div
-						className={classNames('align-items-center d-flex', {
-							'justify-content-between':
-								subscriptionGroupsWithSubscriptions.length < 5,
-							'justify-content-evenly':
-								subscriptionGroupsWithSubscriptions.length > 4,
-						})}
-					>
-						<SubscriptionsNavbar
-							selectedSubscriptionGroup={
-								selectedSubscriptionGroup
-							}
-							setSelectedSubscriptionGroup={
-								setSelectedSubscriptionGroup
-							}
-							subscriptionGroups={
-								subscriptionGroupsWithSubscriptions
-							}
-						/>
+				{!!subscriptionGroupsWithSubscriptions.length && (
+					<>
+						<div
+							className={classNames('align-items-center d-flex', {
+								'justify-content-between':
+									subscriptionGroupsWithSubscriptions.length <
+									5,
+								'justify-content-evenly':
+									subscriptionGroupsWithSubscriptions.length >
+									4,
+							})}
+						>
+							<SubscriptionsNavbar
+								selectedSubscriptionGroup={
+									selectedSubscriptionGroup
+								}
+								setSelectedSubscriptionGroup={
+									setSelectedSubscriptionGroup
+								}
+								subscriptionGroups={
+									subscriptionGroupsWithSubscriptions
+								}
+							/>
 
-						<SubscriptionsFilterByStatus
-							selectedStatus={selectedStatus}
-							setSelectedStatus={setSelectedStatus}
-						/>
-					</div>
+							<SubscriptionsFilterByStatus
+								selectedStatus={selectedStatus}
+								setSelectedStatus={setSelectedStatus}
+							/>
+						</div>
 
-					<div className="cp-overview-cards-subscription d-flex flex-wrap mt-4">
-						{subscriptionsCards.length ? (
-							subscriptionsCards.map(
-								(accountSubscription, index) => (
-									<CardSubscription
-										cardSubscriptionData={
-											accountSubscription
-										}
-										key={index}
-										selectedSubscriptionGroup={
-											selectedSubscriptionGroup
-										}
-									/>
+						<div className="cp-overview-cards-subscription d-flex flex-wrap mt-4">
+							{subscriptionsCards.length ? (
+								subscriptionsCards.map(
+									(accountSubscription, index) => (
+										<CardSubscription
+											cardSubscriptionData={
+												accountSubscription
+											}
+											key={index}
+											selectedSubscriptionGroup={
+												selectedSubscriptionGroup
+											}
+										/>
+									)
 								)
-							)
-						) : (
-							<p className="mx-auto pt-5">
-								No subscriptions match these criteria.
-							</p>
-						)}
-					</div>
-				</>
-			)}
-		</div>
+							) : (
+								<p className="mx-auto pt-5">
+									No subscriptions match these criteria.
+								</p>
+							)}
+						</div>
+					</>
+				)}
+			</div>
+		</>
 	);
 };
 

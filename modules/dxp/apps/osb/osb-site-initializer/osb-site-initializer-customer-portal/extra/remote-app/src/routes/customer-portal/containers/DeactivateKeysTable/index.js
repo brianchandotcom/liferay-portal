@@ -11,7 +11,9 @@
 
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import {useCallback, useEffect, useMemo, useState} from 'react';
+import {useOutletContext} from 'react-router-dom';
 import Table from '../../../../common/components/Table';
+import {useCustomerPortal} from '../../context';
 import useGetActivationKeysData from '../ActivationKeysTable/hooks/useGetActivationKeysData';
 import usePagination from '../ActivationKeysTable/hooks/usePagination';
 import useStatusCountNavigation from '../ActivationKeysTable/hooks/useStatusCountNavigation';
@@ -28,7 +30,15 @@ import DeactivationKeysTableHeader from './components/Header';
 import useFilters from './components/Header/hooks/useFilters';
 import {DEACTIVATE_COLUMNS} from './utils/constants';
 
-const DeactivateKeysTable = ({accountKey, productName, project, sessionId}) => {
+const DeactivateKeysTable = ({productName}) => {
+	const [{project, sessionId}] = useCustomerPortal();
+	const {setHasQuickLinksPanel, setHasSideMenu} = useOutletContext();
+
+	useEffect(() => {
+		setHasQuickLinksPanel(false);
+		setHasSideMenu(false);
+	}, [setHasSideMenu, setHasQuickLinksPanel]);
+
 	const {
 		activationKeysState: [activationKeys, setActivationKeys],
 		loading,
@@ -134,7 +144,7 @@ const DeactivateKeysTable = ({accountKey, productName, project, sessionId}) => {
 			</ClayTooltipProvider>
 
 			<DeactivateKeysTableFooter
-				accountKey={accountKey}
+				accountKey={project?.accountKey}
 				activationKeysByStatusPaginatedChecked={
 					activationKeysByStatusPaginatedChecked
 				}

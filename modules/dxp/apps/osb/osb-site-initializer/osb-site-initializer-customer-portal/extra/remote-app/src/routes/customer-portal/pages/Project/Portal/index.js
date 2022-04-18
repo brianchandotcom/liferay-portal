@@ -8,11 +8,22 @@
  * permissions and limitations under the License, including but not limited to
  * distribution rights of the Software.
  */
+import {useEffect} from 'react';
+import {useOutletContext} from 'react-router-dom';
 import ActivationKeysTable from '../../../containers/ActivationKeysTable';
+import {useCustomerPortal} from '../../../context';
 import DeveloperKeysLayouts from '../../../layouts/DeveloperKeysLayout';
 import {LIST_TYPES} from '../../../utils/constants';
 
-const Portal = ({project, sessionId}) => {
+const Portal = () => {
+	const [{project, sessionId}] = useCustomerPortal();
+	const {setHasQuickLinksPanel, setHasSideMenu} = useOutletContext();
+
+	useEffect(() => {
+		setHasQuickLinksPanel(true);
+		setHasSideMenu(true);
+	}, [setHasSideMenu, setHasQuickLinksPanel]);
+
 	return (
 		<div className="mr-4">
 			<ActivationKeysTable

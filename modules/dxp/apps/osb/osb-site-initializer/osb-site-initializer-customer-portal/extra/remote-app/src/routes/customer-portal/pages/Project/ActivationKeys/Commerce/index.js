@@ -14,9 +14,10 @@ import {useEffect, useState} from 'react';
 import {Table} from '../../../../../../common/components';
 import {fetchHeadless} from '../../../../../../common/services/liferay/api';
 import {getKoroneikiAccounts} from '../../../../../../common/services/liferay/graphql/queries';
+import {useCustomerPortal} from '../../../../context';
 import ActivationKeysLayout from '../../../../layouts/ActivationKeysLayout';
 
-const Commerce = ({accountKey, sessionId}) => {
+const Commerce = () => {
 	const [
 		ActivationInstructionsData,
 		setActivationInstructionsData,
@@ -25,6 +26,9 @@ const Commerce = ({accountKey, sessionId}) => {
 		isLoadingActivationInstructions,
 		setIsLoadingActivationInstructions,
 	] = useState(false);
+
+	const [{accountKey, sessionId}] = useCustomerPortal();
+
 	const {data, loading} = useQuery(getKoroneikiAccounts, {
 		variables: {
 			filter: `accountKey eq '${accountKey}'`,

@@ -75,11 +75,9 @@ public class AnalyticsDeleteMessageAnalyticsDXPEntityBatchEngineTaskItemDelegate
 
 		if (modifiedDate != null) {
 			analyticsDeleteMessages =
-				_analyticsDeleteMessageLocalService.
-					getAnalyticsDeleteMessages(
-						contextCompany.getCompanyId(), modifiedDate,
-						pagination.getStartPosition(),
-						pagination.getEndPosition());
+				_analyticsDeleteMessageLocalService.getAnalyticsDeleteMessages(
+					contextCompany.getCompanyId(), modifiedDate,
+					pagination.getStartPosition(), pagination.getEndPosition());
 			totalCount =
 				_analyticsDeleteMessageLocalService.
 					getAnalyticsDeleteMessagesCount(

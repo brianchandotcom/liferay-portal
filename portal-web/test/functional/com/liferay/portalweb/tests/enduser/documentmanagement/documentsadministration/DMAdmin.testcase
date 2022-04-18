@@ -76,15 +76,6 @@ definition {
 		DMDocument.viewDefault();
 	}
 
-	@description = "This is a test for LPS-89025. It checks that document edits are saved when hard links are enabled."
-	@ignore = "Test Stub"
-	@priority = "5"
-	test CanEditDocumentWithHardLinksEnabled {
-
-		// TODO LPS-149385 CanEditDocumentWithHardLinksEnabled pending implementation
-
-	}
-
 	@description = "This test ensures that user is not able to upload the mimetypes files that bigger than the limit set when the admin sets a size limit for multiple mimetypes."
 	@priority = "4"
 	test CanLimitMultipleMimeTypesSize {

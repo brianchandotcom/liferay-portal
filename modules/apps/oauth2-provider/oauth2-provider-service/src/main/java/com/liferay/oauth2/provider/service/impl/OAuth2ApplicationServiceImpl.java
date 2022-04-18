@@ -47,64 +47,6 @@ import org.osgi.service.component.annotations.Reference;
 public class OAuth2ApplicationServiceImpl
 	extends OAuth2ApplicationServiceBaseImpl {
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #addOAuth2Application(List, String, long, String, int, String,
-	 *             String, List, String, long, String, String, String, List, boolean,
-	 *             List, boolean, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public OAuth2Application addOAuth2Application(
-			List<GrantType> allowedGrantTypesList, long clientCredentialUserId,
-			String clientId, int clientProfile, String clientSecret,
-			String description, List<String> featuresList, String homePageURL,
-			long iconFileEntryId, String name, String privacyPolicyURL,
-			List<String> redirectURIsList, List<String> scopeAliasesList,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		ModelResourcePermissionUtil.check(
-			_oAuth2ApplicationModelResourcePermission, getPermissionChecker(),
-			0, 0, OAuth2ProviderActionKeys.ACTION_ADD_APPLICATION);
-
-		User user = getUser();
-
-		return oAuth2ApplicationLocalService.addOAuth2Application(
-			user.getCompanyId(), user.getUserId(), user.getFullName(),
-			allowedGrantTypesList, null, clientCredentialUserId, clientId,
-			clientProfile, clientSecret, description, featuresList, homePageURL,
-			iconFileEntryId, null, name, privacyPolicyURL, redirectURIsList,
-			false, scopeAliasesList, false, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	@Override
-	public OAuth2Application addOAuth2Application(
-			List<GrantType> allowedGrantTypesList, String clientId,
-			int clientProfile, String clientSecret, String description,
-			List<String> featuresList, String homePageURL, long iconFileEntryId,
-			String name, String privacyPolicyURL, List<String> redirectURIsList,
-			List<String> scopeAliasesList, ServiceContext serviceContext)
-		throws PortalException {
-
-		ModelResourcePermissionUtil.check(
-			_oAuth2ApplicationModelResourcePermission, getPermissionChecker(),
-			0, 0, OAuth2ProviderActionKeys.ACTION_ADD_APPLICATION);
-
-		User user = getUser();
-
-		return oAuth2ApplicationLocalService.addOAuth2Application(
-			user.getCompanyId(), user.getUserId(), user.getFullName(),
-			allowedGrantTypesList, clientId, clientProfile, clientSecret,
-			description, featuresList, homePageURL, iconFileEntryId, name,
-			privacyPolicyURL, redirectURIsList, scopeAliasesList,
-			serviceContext);
-	}
-
 	@Override
 	public OAuth2Application addOAuth2Application(
 			List<GrantType> allowedGrantTypesList,
@@ -239,66 +181,6 @@ public class OAuth2ApplicationServiceImpl
 
 		return oAuth2ApplicationLocalService.updateIcon(
 			oAuth2ApplicationId, inputStream);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #updateOAuth2Application(long, long, List, String, long, String, int,
-	 *             String, String, List, String, long, String, String, String, List,
-	 *             boolean, boolean)}
-	 */
-	@Deprecated
-	@Override
-	public OAuth2Application updateOAuth2Application(
-			long oAuth2ApplicationId, List<GrantType> allowedGrantTypesList,
-			long clientCredentialUserId, String clientId, int clientProfile,
-			String clientSecret, String description, List<String> featuresList,
-			String homePageURL, long iconFileEntryId, String name,
-			String privacyPolicyURL, List<String> redirectURIsList,
-			long oAuth2ApplicationScopeAliasesId, ServiceContext serviceContext)
-		throws PortalException {
-
-		_oAuth2ApplicationModelResourcePermission.check(
-			getPermissionChecker(),
-			oAuth2ApplicationLocalService.getOAuth2Application(
-				oAuth2ApplicationId),
-			ActionKeys.UPDATE);
-
-		return oAuth2ApplicationLocalService.updateOAuth2Application(
-			oAuth2ApplicationId, oAuth2ApplicationScopeAliasesId,
-			allowedGrantTypesList, null, clientCredentialUserId, clientId,
-			clientProfile, clientSecret, description, featuresList, homePageURL,
-			iconFileEntryId, null, name, privacyPolicyURL, redirectURIsList,
-			false, false);
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	@Override
-	public OAuth2Application updateOAuth2Application(
-			long oAuth2ApplicationId, List<GrantType> allowedGrantTypesList,
-			String clientId, int clientProfile, String clientSecret,
-			String description, List<String> featuresList, String homePageURL,
-			long iconFileEntryId, String name, String privacyPolicyURL,
-			List<String> redirectURIsList, long oAuth2ApplicationScopeAliasesId,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		OAuth2Application oAuth2Application =
-			oAuth2ApplicationLocalService.getOAuth2Application(
-				oAuth2ApplicationId);
-
-		_oAuth2ApplicationModelResourcePermission.check(
-			getPermissionChecker(), oAuth2Application, ActionKeys.UPDATE);
-
-		return oAuth2ApplicationLocalService.updateOAuth2Application(
-			oAuth2ApplicationId, allowedGrantTypesList,
-			oAuth2Application.getClientCredentialUserId(), clientId,
-			clientProfile, clientSecret, description, featuresList, homePageURL,
-			iconFileEntryId, name, privacyPolicyURL, redirectURIsList,
-			oAuth2ApplicationScopeAliasesId, serviceContext);
 	}
 
 	@Override

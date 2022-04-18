@@ -30,7 +30,7 @@ AddGroupDisplayContext addGroupDisplayContext = (AddGroupDisplayContext)request.
 		validateOnBlur="<%= false %>"
 	>
 		<div class="add-group-content">
-			<liferay-frontend:edit-form-body>
+			<div class="lfr-form-content">
 				<aui:input autoFocus="<%= true %>" label="name" name="name" required="<%= true %>" />
 
 				<c:if test="<%= addGroupDisplayContext.isShowLayoutSetVisibilityPrivateCheckbox() %>">
@@ -59,7 +59,7 @@ AddGroupDisplayContext addGroupDisplayContext = (AddGroupDisplayContext)request.
 						</c:choose>
 					</aui:fieldset>
 				</c:if>
-			</liferay-frontend:edit-form-body>
+			</div>
 		</div>
 
 		<div class="add-group-loading align-items-center d-none flex-column justify-content-center">

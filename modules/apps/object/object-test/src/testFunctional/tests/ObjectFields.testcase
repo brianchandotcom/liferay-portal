@@ -98,7 +98,6 @@ definition {
 	@description = "LPS-143065 - Verify if the 'Attachment' option is shown on the 'Type' dropdown"
 	@priority = "5"
 	test CanViewAttachmentOption {
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151557",
 			objectName = "CustomObject151557",
@@ -115,9 +114,8 @@ definition {
 		LexiconEntry.gotoAdd();
 
 		ObjectField.assertOptionAndDescription(
-			option = "Attachment",
-			description = "Upload files or select from Documents and Media.");
-
+			description = "Upload files or select from Documents and Media.",
+			option = "Attachment");
 	}
 
 	@description = "LPS-143065 - Verify if there is an option on Request Files: Directly from User's Computer"
@@ -252,7 +250,6 @@ definition {
 	@description = "LPS-143065 - Verify that the Request Files option is a required field"
 	@priority = "4"
 	test RequestFilesIsRequired {
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151558",
 			objectName = "CustomObject151558",
@@ -275,9 +272,6 @@ definition {
 		AssertElementPresent(
 			key_fieldName = "Request Files",
 			locator1 = "ObjectField#ERROR_REQUIRED_FIELD_SPECIFIC");
-
-
-
 	}
 
 }

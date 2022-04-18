@@ -20,6 +20,19 @@ definition {
 		AssertElementPresent(locator1 = "ObjectField#NAME_FIELD_DISABLED");
 	}
 
+	macro assertOptionAndDescription {
+		Click(locator1 = "ObjectField#TYPE_FIELD");
+
+		AssertElementPresent(
+			key_fieldType = "${option}",
+			locator1 = "ObjectField#TYPE_OPTION");
+
+		AssertTextEquals(
+			key_type = "${option}",
+			locator1 = "ObjectField#FIELD_TYPE_DESCRIPTION",
+			value1 = "${description}");
+	}
+
 	macro assertSearchableLanguage {
 		AssertSelectedLabel(
 			locator1 = "ObjectField#SEARCHABLE_LANGUAGE_SELECT",
@@ -34,21 +47,6 @@ definition {
 
 	macro assertTypeDisabled {
 		AssertElementPresent(locator1 = "ObjectField#TYPE_FIELD_DISABLED");
-	}
-
-	macro assertOptionAndDescription {
-
-		Click(locator1 = "ObjectField#TYPE_FIELD");
-
-		AssertElementPresent(
-			key_fieldType = "${option}",
-			locator1 = "ObjectField#TYPE_OPTION");
-
-		AssertTextEquals(
-			key_type = "${option}",
-			locator1 = "ObjectField#FIELD_TYPE_DESCRIPTION",
-			value1 = "${description}");
-
 	}
 
 	macro checkToggleMandatory {

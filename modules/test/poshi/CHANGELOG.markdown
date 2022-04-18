@@ -1,5 +1,24 @@
 # Poshi Runner Change Log
 
+## 1.0.346
+
+### Core
+
+* [POSHI-325](https://issues.liferay.com/browse/POSHI-325) - Expose a way to get poshi directories for a given poshi project
+
+### Functions
+
+* [POSHI-326](https://issues.liferay.com/browse/POSHI-326) - Missing functions in Poshi standalone
+
+### Other
+
+* [LPS-148445](https://issues.liferay.com/browse/LPS-148445) - Explore the options to avoid processing JS dependencies in DXP apps
+* [LPS-149663](https://issues.liferay.com/browse/LPS-149663) - StringUtil.upperCaseFirstLetter can cause ArrayIndexOutOfBoundsException
+
+### WebDriver
+
+* [POSHI-332](https://issues.liferay.com/browse/POSHI-332) - Provide improved and alternative usage of old WebDriver.get behavior
+
 ## 1.0.344
 
 ### Other

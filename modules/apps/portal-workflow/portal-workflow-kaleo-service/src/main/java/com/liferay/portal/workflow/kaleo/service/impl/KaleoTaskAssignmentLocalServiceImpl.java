@@ -157,11 +157,9 @@ public class KaleoTaskAssignmentLocalServiceImpl
 			Role role = null;
 
 			if (Validator.isNotNull(roleAssignment.getRoleName())) {
-				int roleType = RoleUtil.getRoleType(
-					roleAssignment.getRoleType());
-
 				role = RoleUtil.getRole(
-					roleAssignment.getRoleName(), roleType,
+					roleAssignment.getRoleName(),
+					RoleUtil.getRoleType(roleAssignment.getRoleType()),
 					roleAssignment.isAutoCreate(), serviceContext);
 			}
 			else {

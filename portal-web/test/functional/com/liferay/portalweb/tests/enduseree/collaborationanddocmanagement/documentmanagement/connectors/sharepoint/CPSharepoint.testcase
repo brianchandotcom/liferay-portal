@@ -258,6 +258,12 @@ definition {
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
 
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		DMDocument.selectDocuments(dmDocumentTitle = "Document_3.doc");
+
+		AssertElementPresent(locator1 = "Icon#EDIT_TAGS_DISABLED");
+
 		DMDocument.editCP(
 			dmDocumentFileEdit = "Document_2.jpg",
 			dmDocumentTitle = "Document_3.doc");

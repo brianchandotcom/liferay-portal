@@ -323,15 +323,6 @@ public class QueryConfig implements Serializable {
 			querySuggestionScoresThreshold);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #setQuerySuggestionMax(String)}
-	 */
-	@Deprecated
-	public void setQuerySuggestionsMax(int querySuggestionMax) {
-		setQuerySuggestionMax(querySuggestionMax);
-	}
-
 	public void setScoreEnabled(boolean scoreEnabled) {
 		_attributes.put(PropsKeys.INDEX_SEARCH_SCORING_ENABLED, scoreEnabled);
 	}

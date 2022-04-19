@@ -17,24 +17,30 @@
 <%@ include file="/init.jsp" %>
 
 <%
-FDSSampleDisplayContext fdsSampleDisplayContext = (FDSSampleDisplayContext)request.getAttribute(FDSSampleWebKeys.FDS_SAMPLE_DISPLAY_CONTEXT);
+String tabs1 = ParamUtil.getString(request, "tabs1", "customized");
+
+PortletURL portletURL = PortletURLBuilder.createRenderURL(
+	renderResponse
+).setTabs1(
+	tabs1
+).buildPortletURL();
 %>
 
-<frontend-data-set:headless-display
-	additionalProps='<%=
-		HashMapBuilder.<String, Object>put(
-			"greeting", "Hello"
-		).build()
-	%>'
-	apiURL="<%= fdsSampleDisplayContext.getAPIURL() %>"
-	customViewsEnabled="<%= true %>"
-	fdsActionDropdownItems="<%= fdsSampleDisplayContext.getFDSActionDropdownItems() %>"
-	formId="fm"
-	id="<%= FDSSampleFDSNames.FDS_SAMPLES %>"
-	itemsPerPage="<%= 20 %>"
-	namespace="<%= liferayPortletResponse.getNamespace() %>"
-	pageNumber="<%= 1 %>"
-	portletURL="<%= liferayPortletResponse.createRenderURL() %>"
-	propsTransformer="js/SampleFDSPropsTransformer"
-	style="fluid"
-/>
+<clay:container-fluid>
+	<liferay-ui:tabs
+		names="customized,minimum"
+		url="<%= portletURL.toString() %>"
+	>
+		<liferay-ui:section>
+			<c:if test='<%= tabs1.equals("customized") %>'>
+				<liferay-util:include page="/partials/customized.jsp" servletContext="<%= pageContext.getServletContext() %>" />
+			</c:if>
+		</liferay-ui:section>
+
+		<liferay-ui:section>
+			<c:if test='<%= tabs1.equals("minimum") %>'>
+				<liferay-util:include page="/partials/minimum.jsp" servletContext="<%= pageContext.getServletContext() %>" />
+			</c:if>
+		</liferay-ui:section>
+	</liferay-ui:tabs>
+</clay:container-fluid>

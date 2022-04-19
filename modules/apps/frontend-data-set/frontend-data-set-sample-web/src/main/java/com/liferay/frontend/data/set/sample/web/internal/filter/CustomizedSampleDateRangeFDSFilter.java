@@ -27,10 +27,10 @@ import org.osgi.service.component.annotations.Component;
  * @author Javier de Arcos
  */
 @Component(
-	property = "frontend.data.set.name=" + FDSSampleFDSNames.FDS_SAMPLES,
+	property = "frontend.data.set.name=" + FDSSampleFDSNames.CUSTOMIZED,
 	service = FDSFilter.class
 )
-public class SampleDateRangeFDSFilter extends BaseDateRangeFDSFilter {
+public class CustomizedSampleDateRangeFDSFilter extends BaseDateRangeFDSFilter {
 
 	@Override
 	public String getId() {

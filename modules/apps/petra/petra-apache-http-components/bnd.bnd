@@ -12,12 +12,16 @@ Export-Package:\
 	org.apache.http.client.methods;version="4.5.13",\
 	org.apache.http.client.protocol;version="4.5.13",\
 	org.apache.http.client.utils;version="4.5.13",\
+	org.apache.http.concurrent;version="4.4.14",\
+	org.apache.http.config;version="4.4.14",\
 	org.apache.http.conn;version="4.5.13",\
+	org.apache.http.conn.routing;version="4.5.13",\
 	org.apache.http.conn.socket;version="4.5.13",\
 	org.apache.http.conn.ssl;version="4.5.13",\
 	org.apache.http.cookie;version="4.5.13",\
 	org.apache.http.entity;version="4.4.13",\
-	org.apache.http.entity.mime;version="4.5.5",\
+	org.apache.http.entity.mime;version="4.5.13",\
+	org.apache.http.entity.mime.content;version="4.5.13",\
 	org.apache.http.impl.client;version="4.5.13",\
 	org.apache.http.impl.conn;version="4.5.13",\
 	org.apache.http.impl.cookie;version="4.5.13",\

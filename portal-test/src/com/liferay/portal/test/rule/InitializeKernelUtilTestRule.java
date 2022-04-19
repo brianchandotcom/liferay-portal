@@ -25,8 +25,6 @@ import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -91,7 +89,6 @@ public class InitializeKernelUtilTestRule
 		_setUpFileUtil();
 		_setUpJSONFactoryUtil();
 		_setUpHtmlUtil();
-		_setUpHttpUtil();
 
 		return null;
 	}
@@ -176,21 +173,6 @@ public class InitializeKernelUtilTestRule
 		Constructor<?> constructor = clazz.getDeclaredConstructor();
 
 		htmlUtil.setHtml((Html)constructor.newInstance());
-	}
-
-	private void _setUpHttpUtil() throws ReflectiveOperationException {
-		Thread thread = Thread.currentThread();
-
-		ClassLoader classLoader = thread.getContextClassLoader();
-
-		HttpUtil httpUtil = new HttpUtil();
-
-		Class<?> clazz = classLoader.loadClass(
-			"com.liferay.portal.util.HttpImpl");
-
-		Constructor<?> constructor = clazz.getDeclaredConstructor();
-
-		httpUtil.setHttp((Http)constructor.newInstance());
 	}
 
 	private void _setUpJSONFactoryUtil() throws ReflectiveOperationException {

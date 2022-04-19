@@ -331,6 +331,38 @@ public class VerifyProperties extends VerifyProcess {
 			"com.liferay.portal.util.HttpImpl.timeout"
 		},
 		{
+			"com.liferay.portal.util.HttpImpl.max.connections.per.host",
+			"com.liferay.portal.kernel.util.Http.max.connections.per.host"
+		},
+		{
+			"com.liferay.portal.util.HttpImpl.max.total.connections",
+			"com.liferay.portal.kernel.util.Http.max.total.connections"
+		},
+		{
+			"com.liferay.portal.util.HttpImpl.proxy.auth.type",
+			"com.liferay.portal.kernel.util.Http.proxy.auth.type"
+		},
+		{
+			"com.liferay.portal.util.HttpImpl.proxy.ntlm.domain",
+			"com.liferay.portal.kernel.util.Http.proxy.ntlm.domain"
+		},
+		{
+			"com.liferay.portal.util.HttpImpl.proxy.ntlm.host",
+			"com.liferay.portal.kernel.util.Http.proxy.ntlm.host"
+		},
+		{
+			"com.liferay.portal.util.HttpImpl.proxy.password",
+			"com.liferay.portal.kernel.util.Http.proxy.password"
+		},
+		{
+			"com.liferay.portal.util.HttpImpl.proxy.username",
+			"com.liferay.portal.kernel.util.Http.proxy.username"
+		},
+		{
+			"com.liferay.portal.util.HttpImpl.timeout",
+			"com.liferay.portal.kernel.util.Http.timeout"
+		},
+		{
 			"com.liferay.util.format.PhoneNumberFormat",
 			"phone.number.format.impl"
 		},

@@ -12,12 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.util;
+package com.liferay.portal.http.internal;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.portal.util.PortalImpl;
 
 import java.lang.reflect.Field;
 

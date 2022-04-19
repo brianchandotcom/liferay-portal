@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Portal Http Implementation
+Bundle-SymbolicName: com.liferay.portal.http.impl
+Bundle-Version: 1.0.0

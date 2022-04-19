@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.util;
+package com.liferay.portal.http.internal;
 
 import com.liferay.petra.memory.FinalizeAction;
 import com.liferay.petra.memory.FinalizeManager;
@@ -36,6 +36,8 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PropsUtil;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -96,133 +98,17 @@ import org.apache.http.impl.cookie.BasicClientCookie;
 import org.apache.http.pool.PoolStats;
 import org.apache.http.util.EntityUtils;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Hugo Huijser
  * @author Shuyang Zhou
  */
+@Component(service = Http.class)
 public class HttpImpl implements Http {
-
-	public HttpImpl() {
-
-		// Mimic behavior found in
-		// http://java.sun.com/j2se/1.5.0/docs/guide/net/properties.html
-
-		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
-
-		_poolingHttpClientConnectionManager =
-			new PoolingHttpClientConnectionManager(
-				RegistryBuilder.<ConnectionSocketFactory>create(
-				).register(
-					Http.HTTP, PlainConnectionSocketFactory.getSocketFactory()
-				).register(
-					Http.HTTPS,
-					SSLConnectionSocketFactory.getSystemSocketFactory()
-				).build());
-
-		_poolingHttpClientConnectionManager.setDefaultMaxPerRoute(
-			_MAX_CONNECTIONS_PER_HOST);
-		_poolingHttpClientConnectionManager.setMaxTotal(_MAX_TOTAL_CONNECTIONS);
-
-		httpClientBuilder.setConnectionManager(
-			_poolingHttpClientConnectionManager);
-
-		RequestConfig.Builder requestConfigBuilder = RequestConfig.custom();
-
-		requestConfigBuilder = requestConfigBuilder.setConnectTimeout(_TIMEOUT);
-		requestConfigBuilder = requestConfigBuilder.setConnectionRequestTimeout(
-			_TIMEOUT);
-
-		httpClientBuilder.setDefaultRequestConfig(requestConfigBuilder.build());
-
-		SystemDefaultRoutePlanner systemDefaultRoutePlanner =
-			new SystemDefaultRoutePlanner(ProxySelector.getDefault());
-
-		httpClientBuilder.setRoutePlanner(systemDefaultRoutePlanner);
-
-		_closeableHttpClient = httpClientBuilder.build();
-
-		if (!hasProxyConfig() || Validator.isNull(_PROXY_USERNAME)) {
-			_proxyCredentials = null;
-
-			_proxyCloseableHttpClient = _closeableHttpClient;
-
-			return;
-		}
-
-		_proxyAuthPrefs.add(AuthSchemes.BASIC);
-		_proxyAuthPrefs.add(AuthSchemes.DIGEST);
-
-		if (_PROXY_AUTH_TYPE.equals("username-password")) {
-			_proxyCredentials = new UsernamePasswordCredentials(
-				_PROXY_USERNAME, _PROXY_PASSWORD);
-
-			_proxyAuthPrefs.add(AuthSchemes.NTLM);
-		}
-		else if (_PROXY_AUTH_TYPE.equals("ntlm")) {
-			_proxyCredentials = new NTCredentials(
-				_PROXY_USERNAME, _PROXY_PASSWORD, _PROXY_NTLM_HOST,
-				_PROXY_NTLM_DOMAIN);
-
-			_proxyAuthPrefs.add(0, AuthSchemes.NTLM);
-		}
-		else {
-			_proxyCredentials = null;
-		}
-
-		HttpClientBuilder proxyHttpClientBuilder = HttpClientBuilder.create();
-
-		proxyHttpClientBuilder.setRoutePlanner(systemDefaultRoutePlanner);
-
-		proxyHttpClientBuilder.setConnectionManager(
-			_poolingHttpClientConnectionManager);
-
-		requestConfigBuilder.setProxy(new HttpHost(_PROXY_HOST, _PROXY_PORT));
-		requestConfigBuilder.setProxyPreferredAuthSchemes(_proxyAuthPrefs);
-
-		proxyHttpClientBuilder.setDefaultRequestConfig(
-			requestConfigBuilder.build());
-
-		_proxyCloseableHttpClient = proxyHttpClientBuilder.build();
-	}
-
-	public void destroy() {
-		int retry = 0;
-
-		while (retry < 10) {
-			PoolStats poolStats =
-				_poolingHttpClientConnectionManager.getTotalStats();
-
-			int availableConnections = poolStats.getAvailable();
-
-			if (availableConnections <= 0) {
-				break;
-			}
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					StringBundler.concat(
-						toString(), " is waiting on ", availableConnections,
-						" connections"));
-			}
-
-			_poolingHttpClientConnectionManager.closeIdleConnections(
-				200, TimeUnit.MILLISECONDS);
-
-			try {
-				Thread.sleep(500);
-			}
-			catch (InterruptedException interruptedException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(interruptedException);
-				}
-			}
-
-			retry++;
-		}
-
-		_poolingHttpClientConnectionManager.shutdown();
-	}
 
 	@Override
 	public Cookie[] getCookies() {
@@ -427,6 +313,90 @@ public class HttpImpl implements Http {
 		return xml;
 	}
 
+	@Activate
+	protected void activate() {
+
+		// Mimic behavior found in
+		// http://java.sun.com/j2se/1.5.0/docs/guide/net/properties.html
+
+		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
+
+		_poolingHttpClientConnectionManager =
+			new PoolingHttpClientConnectionManager(
+				RegistryBuilder.<ConnectionSocketFactory>create(
+				).register(
+					Http.HTTP, PlainConnectionSocketFactory.getSocketFactory()
+				).register(
+					Http.HTTPS,
+					SSLConnectionSocketFactory.getSystemSocketFactory()
+				).build());
+
+		_poolingHttpClientConnectionManager.setDefaultMaxPerRoute(
+			_MAX_CONNECTIONS_PER_HOST);
+		_poolingHttpClientConnectionManager.setMaxTotal(_MAX_TOTAL_CONNECTIONS);
+
+		httpClientBuilder.setConnectionManager(
+			_poolingHttpClientConnectionManager);
+
+		RequestConfig.Builder requestConfigBuilder = RequestConfig.custom();
+
+		requestConfigBuilder = requestConfigBuilder.setConnectTimeout(_TIMEOUT);
+		requestConfigBuilder = requestConfigBuilder.setConnectionRequestTimeout(
+			_TIMEOUT);
+
+		httpClientBuilder.setDefaultRequestConfig(requestConfigBuilder.build());
+
+		SystemDefaultRoutePlanner systemDefaultRoutePlanner =
+			new SystemDefaultRoutePlanner(ProxySelector.getDefault());
+
+		httpClientBuilder.setRoutePlanner(systemDefaultRoutePlanner);
+
+		_closeableHttpClient = httpClientBuilder.build();
+
+		if (!hasProxyConfig() || Validator.isNull(_PROXY_USERNAME)) {
+			_proxyCredentials = null;
+
+			_proxyCloseableHttpClient = _closeableHttpClient;
+
+			return;
+		}
+
+		_proxyAuthPrefs.add(AuthSchemes.BASIC);
+		_proxyAuthPrefs.add(AuthSchemes.DIGEST);
+
+		if (_PROXY_AUTH_TYPE.equals("username-password")) {
+			_proxyCredentials = new UsernamePasswordCredentials(
+				_PROXY_USERNAME, _PROXY_PASSWORD);
+
+			_proxyAuthPrefs.add(AuthSchemes.NTLM);
+		}
+		else if (_PROXY_AUTH_TYPE.equals("ntlm")) {
+			_proxyCredentials = new NTCredentials(
+				_PROXY_USERNAME, _PROXY_PASSWORD, _PROXY_NTLM_HOST,
+				_PROXY_NTLM_DOMAIN);
+
+			_proxyAuthPrefs.add(0, AuthSchemes.NTLM);
+		}
+		else {
+			_proxyCredentials = null;
+		}
+
+		HttpClientBuilder proxyHttpClientBuilder = HttpClientBuilder.create();
+
+		proxyHttpClientBuilder.setRoutePlanner(systemDefaultRoutePlanner);
+
+		proxyHttpClientBuilder.setConnectionManager(
+			_poolingHttpClientConnectionManager);
+
+		requestConfigBuilder.setProxy(new HttpHost(_PROXY_HOST, _PROXY_PORT));
+		requestConfigBuilder.setProxyPreferredAuthSchemes(_proxyAuthPrefs);
+
+		proxyHttpClientBuilder.setDefaultRequestConfig(
+			requestConfigBuilder.build());
+
+		_proxyCloseableHttpClient = proxyHttpClientBuilder.build();
+	}
+
 	protected void addProxyCredentials(
 		URI uri, HttpClientContext httpClientContext) {
 
@@ -445,6 +415,45 @@ public class HttpImpl implements Http {
 
 		credentialsProvider.setCredentials(
 			new AuthScope(_PROXY_HOST, _PROXY_PORT), _proxyCredentials);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		int retry = 0;
+
+		while (retry < 10) {
+			PoolStats poolStats =
+				_poolingHttpClientConnectionManager.getTotalStats();
+
+			int availableConnections = poolStats.getAvailable();
+
+			if (availableConnections <= 0) {
+				break;
+			}
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						toString(), " is waiting on ", availableConnections,
+						" connections"));
+			}
+
+			_poolingHttpClientConnectionManager.closeIdleConnections(
+				200, TimeUnit.MILLISECONDS);
+
+			try {
+				Thread.sleep(500);
+			}
+			catch (InterruptedException interruptedException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(interruptedException);
+				}
+			}
+
+			retry++;
+		}
+
+		_poolingHttpClientConnectionManager.shutdown();
 	}
 
 	protected CloseableHttpClient getCloseableHttpClient(HttpHost proxyHost) {
@@ -477,7 +486,7 @@ public class HttpImpl implements Http {
 
 		int maxConnectionsPerHost = GetterUtil.getInteger(
 			PropsUtil.get(
-				HttpImpl.class.getName() + ".max.connections.per.host",
+				Http.class.getName() + ".max.connections.per.host",
 				new Filter(uri.getHost())));
 
 		if ((maxConnectionsPerHost > 0) &&
@@ -493,7 +502,7 @@ public class HttpImpl implements Http {
 		if (timeout == 0) {
 			timeout = GetterUtil.getInteger(
 				PropsUtil.get(
-					HttpImpl.class.getName() + ".timeout",
+					Http.class.getName() + ".timeout",
 					new Filter(uri.getHost())));
 		}
 
@@ -577,7 +586,7 @@ public class HttpImpl implements Http {
 			}
 
 			if (inputStreamParts != null) {
-				for (InputStreamPart inputStreamPart : inputStreamParts) {
+				for (Http.InputStreamPart inputStreamPart : inputStreamParts) {
 					ContentType contentType = ContentType.DEFAULT_BINARY;
 
 					if (inputStreamPart.getContentType() != null) {
@@ -773,10 +782,11 @@ public class HttpImpl implements Http {
 
 			RequestBuilder requestBuilder = null;
 
-			if (method.equals(Method.PATCH) || method.equals(Method.POST) ||
+			if (method.equals(Http.Method.PATCH) ||
+				method.equals(Http.Method.POST) ||
 				method.equals(Http.Method.PUT)) {
 
-				if (method.equals(Method.PATCH)) {
+				if (method.equals(Http.Method.PATCH)) {
 					requestBuilder = RequestBuilder.patch(location);
 				}
 				else if (method.equals(Http.Method.POST)) {
@@ -830,7 +840,7 @@ public class HttpImpl implements Http {
 				}
 			}
 
-			if ((method.equals(Method.PATCH) ||
+			if ((method.equals(Http.Method.PATCH) ||
 				 method.equals(Http.Method.POST) ||
 				 method.equals(Http.Method.PUT)) &&
 				((body != null) || !ListUtil.isEmpty(fileParts) ||
@@ -1023,48 +1033,47 @@ public class HttpImpl implements Http {
 	private static final int _MAX_BYTE_ARRAY_LENGTH = Integer.MAX_VALUE - 8;
 
 	private static final int _MAX_CONNECTIONS_PER_HOST = GetterUtil.getInteger(
-		PropsUtil.get(HttpImpl.class.getName() + ".max.connections.per.host"),
-		2);
+		PropsUtil.get(Http.class.getName() + ".max.connections.per.host"), 2);
 
 	private static final int _MAX_TOTAL_CONNECTIONS = GetterUtil.getInteger(
-		PropsUtil.get(HttpImpl.class.getName() + ".max.total.connections"), 20);
+		PropsUtil.get(Http.class.getName() + ".max.total.connections"), 20);
 
 	private static final String[] _NON_PROXY_HOSTS = StringUtil.split(
 		SystemProperties.get("http.nonProxyHosts"), StringPool.PIPE);
 
 	private static final String _PROXY_AUTH_TYPE = GetterUtil.getString(
-		PropsUtil.get(HttpImpl.class.getName() + ".proxy.auth.type"));
+		PropsUtil.get(Http.class.getName() + ".proxy.auth.type"));
 
 	private static final String _PROXY_HOST = GetterUtil.getString(
 		SystemProperties.get("http.proxyHost"));
 
 	private static final String _PROXY_NTLM_DOMAIN = GetterUtil.getString(
-		PropsUtil.get(HttpImpl.class.getName() + ".proxy.ntlm.domain"));
+		PropsUtil.get(Http.class.getName() + ".proxy.ntlm.domain"));
 
 	private static final String _PROXY_NTLM_HOST = GetterUtil.getString(
-		PropsUtil.get(HttpImpl.class.getName() + ".proxy.ntlm.host"));
+		PropsUtil.get(Http.class.getName() + ".proxy.ntlm.host"));
 
 	private static final String _PROXY_PASSWORD = GetterUtil.getString(
-		PropsUtil.get(HttpImpl.class.getName() + ".proxy.password"));
+		PropsUtil.get(Http.class.getName() + ".proxy.password"));
 
 	private static final int _PROXY_PORT = GetterUtil.getInteger(
 		SystemProperties.get("http.proxyPort"));
 
 	private static final String _PROXY_USERNAME = GetterUtil.getString(
-		PropsUtil.get(HttpImpl.class.getName() + ".proxy.username"));
+		PropsUtil.get(Http.class.getName() + ".proxy.username"));
 
 	private static final int _TIMEOUT = GetterUtil.getInteger(
-		PropsUtil.get(HttpImpl.class.getName() + ".timeout"), 5000);
+		PropsUtil.get(Http.class.getName() + ".timeout"), 5000);
 
 	private static final Log _log = LogFactoryUtil.getLog(HttpImpl.class);
 
 	private static final ThreadLocal<Cookie[]> _cookies = new ThreadLocal<>();
 
-	private final CloseableHttpClient _closeableHttpClient;
-	private final PoolingHttpClientConnectionManager
+	private CloseableHttpClient _closeableHttpClient;
+	private PoolingHttpClientConnectionManager
 		_poolingHttpClientConnectionManager;
 	private final List<String> _proxyAuthPrefs = new ArrayList<>();
-	private final CloseableHttpClient _proxyCloseableHttpClient;
-	private final Credentials _proxyCredentials;
+	private CloseableHttpClient _proxyCloseableHttpClient;
+	private Credentials _proxyCredentials;
 
 }

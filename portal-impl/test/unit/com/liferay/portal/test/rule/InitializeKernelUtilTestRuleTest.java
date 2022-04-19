@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 
 import org.junit.Assert;
@@ -50,11 +49,6 @@ public class InitializeKernelUtilTestRuleTest {
 	@Test
 	public void testHtmlUtil() {
 		Assert.assertNotNull(HtmlUtil.getHtml());
-	}
-
-	@Test
-	public void testHttpUtil() {
-		Assert.assertNotNull(HttpUtil.getHttp());
 	}
 
 	@Test

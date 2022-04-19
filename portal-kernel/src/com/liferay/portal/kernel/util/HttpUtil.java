@@ -109,10 +109,8 @@ public class HttpUtil {
 		return _http.URLtoString(url);
 	}
 
-	public void setHttp(Http http) {
-		_http = http;
-	}
-
-	private static Http _http;
+	private static volatile Http _http =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			Http.class, HttpUtil.class, "_http", true);
 
 }

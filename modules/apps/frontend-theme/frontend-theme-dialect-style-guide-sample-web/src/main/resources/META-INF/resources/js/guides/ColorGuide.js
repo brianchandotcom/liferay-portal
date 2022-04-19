@@ -213,85 +213,49 @@ const TEXT_COLORS = [
 	},
 ];
 
-const ColorGroup = ({backgroundcolor, title}) => {
-	return (
-		<TokenGroup group="colors" title={title}>
-			{backgroundcolor.map((item) => (
-				<TokenItem
-					border={true}
-					className={`bg-${item}`}
-					key={item}
-					label={`bg-${item}`}
-				/>
-			))}
-		</TokenGroup>
-	);
-};
-
-const BorderGroup = ({borderColor, title}) => {
-	return (
-		<TokenGroup group="borders" title={title}>
-			{borderColor.map((item) => (
-				<TokenItem
-					border={true}
-					className={`rounded-sm border-${item}`}
-					key={item}
-					label={`border-${item}`}
-				/>
-			))}
-		</TokenGroup>
-	);
-};
-
-const TextGroup = ({textColor, title}) => {
-	return (
-		<TokenGroup group="texts" title={title}>
-			{textColor.map((item) => (
-				<TokenItem
-					border={true}
-					className={`text-${item}`}
-					key={item}
-					label={`text-${item}`}
-				>
-					{SAMPLE_TEXT}
-				</TokenItem>
-			))}
-		</TokenGroup>
-	);
-};
-
 const ColorGuide = () => {
 	return (
 		<>
-			{BACKGROUND_COLORS.map((item, index) => {
-				return (
-					<ColorGroup
-						backgroundcolor={item.color}
-						key={index}
-						title={item.title}
-					/>
-				);
-			})}
+			{BACKGROUND_COLORS.map((item, index) => (
+				<TokenGroup group="colors" key={index} title={item.title}>
+					{item.color.map((color) => (
+						<TokenItem
+							border={true}
+							className={`bg-${color}`}
+							key={color}
+							label={`bg-${color}`}
+						/>
+					))}
+				</TokenGroup>
+			))}
 
-			{BORDER_COLORS.map((item, index) => {
-				return (
-					<BorderGroup
-						borderColor={item.color}
-						key={index}
-						title={item.title}
-					/>
-				);
-			})}
+			{BORDER_COLORS.map((item, index) => (
+				<TokenGroup group="colors" key={index} title={item.title}>
+					{item.color.map((color) => (
+						<TokenItem
+							border={true}
+							className={`border-${color}`}
+							key={color}
+							label={`border-${color}`}
+						/>
+					))}
+				</TokenGroup>
+			))}
 
-			{TEXT_COLORS.map((item, index) => {
-				return (
-					<TextGroup
-						key={index}
-						textColor={item.color}
-						title={item.title}
-					/>
-				);
-			})}
+			{TEXT_COLORS.map((item, index) => (
+				<TokenGroup group="colors" key={index} title={item.title}>
+					{item.color.map((color) => (
+						<TokenItem
+							border={true}
+							className={`text-${color}`}
+							key={color}
+							label={`text-${color}`}
+						>
+							{SAMPLE_TEXT}
+						</TokenItem>
+					))}
+				</TokenGroup>
+			))}
 		</>
 	);
 };

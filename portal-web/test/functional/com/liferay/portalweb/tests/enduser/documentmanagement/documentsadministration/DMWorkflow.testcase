@@ -26,15 +26,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-84593. It asserts that no error occurs after deleting the dismissed notification."
-	@ignore = "Test Stub"
-	@priority = "5"
-	test CanDeleteNotificationAfterDeletingPendingFile {
-
-		// TODO LPS-148586 CanDeleteNotificationAfterDeletingPendingFile pending implementation
-
-	}
-
 	@description = "This is a test for LPS-136855. It checks that a pending file cannot be added to another asset."
 	@priority = "4"
 	test CannotAddPendingFileToAsset {
@@ -84,6 +75,15 @@ definition {
 			imageFileName = "Document_1.png",
 			pendingEntry = "true",
 			siteName = "Site Name");
+	}
+
+	@description = "This is a test for LPS-84593. It ensures that a user cannot delete the dismissed notification after deleting the pending file."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CannotDeleteDismissedNotificationAfterDeletingPendingFile {
+
+		// TODO LPS-148586 CanDeleteNotificationAfterDeletingPendingFile pending implementation
+
 	}
 
 	@description = "This is a test for LPS-136854. It checks that the single approver workflow can be removed from a folder."

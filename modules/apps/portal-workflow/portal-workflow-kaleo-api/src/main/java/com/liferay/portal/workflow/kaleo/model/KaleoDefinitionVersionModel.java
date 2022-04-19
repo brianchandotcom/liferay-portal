@@ -177,71 +177,6 @@ public interface KaleoDefinitionVersionModel
 	public void setUserName(String userName);
 
 	/**
-	 * Returns the status by user ID of this kaleo definition version.
-	 *
-	 * @return the status by user ID of this kaleo definition version
-	 */
-	@Override
-	public long getStatusByUserId();
-
-	/**
-	 * Sets the status by user ID of this kaleo definition version.
-	 *
-	 * @param statusByUserId the status by user ID of this kaleo definition version
-	 */
-	@Override
-	public void setStatusByUserId(long statusByUserId);
-
-	/**
-	 * Returns the status by user uuid of this kaleo definition version.
-	 *
-	 * @return the status by user uuid of this kaleo definition version
-	 */
-	@Override
-	public String getStatusByUserUuid();
-
-	/**
-	 * Sets the status by user uuid of this kaleo definition version.
-	 *
-	 * @param statusByUserUuid the status by user uuid of this kaleo definition version
-	 */
-	@Override
-	public void setStatusByUserUuid(String statusByUserUuid);
-
-	/**
-	 * Returns the status by user name of this kaleo definition version.
-	 *
-	 * @return the status by user name of this kaleo definition version
-	 */
-	@AutoEscape
-	@Override
-	public String getStatusByUserName();
-
-	/**
-	 * Sets the status by user name of this kaleo definition version.
-	 *
-	 * @param statusByUserName the status by user name of this kaleo definition version
-	 */
-	@Override
-	public void setStatusByUserName(String statusByUserName);
-
-	/**
-	 * Returns the status date of this kaleo definition version.
-	 *
-	 * @return the status date of this kaleo definition version
-	 */
-	@Override
-	public Date getStatusDate();
-
-	/**
-	 * Sets the status date of this kaleo definition version.
-	 *
-	 * @param statusDate the status date of this kaleo definition version
-	 */
-	@Override
-	public void setStatusDate(Date statusDate);
-
-	/**
 	 * Returns the create date of this kaleo definition version.
 	 *
 	 * @return the create date of this kaleo definition version
@@ -475,6 +410,71 @@ public interface KaleoDefinitionVersionModel
 	 */
 	@Override
 	public void setStatus(int status);
+
+	/**
+	 * Returns the status by user ID of this kaleo definition version.
+	 *
+	 * @return the status by user ID of this kaleo definition version
+	 */
+	@Override
+	public long getStatusByUserId();
+
+	/**
+	 * Sets the status by user ID of this kaleo definition version.
+	 *
+	 * @param statusByUserId the status by user ID of this kaleo definition version
+	 */
+	@Override
+	public void setStatusByUserId(long statusByUserId);
+
+	/**
+	 * Returns the status by user uuid of this kaleo definition version.
+	 *
+	 * @return the status by user uuid of this kaleo definition version
+	 */
+	@Override
+	public String getStatusByUserUuid();
+
+	/**
+	 * Sets the status by user uuid of this kaleo definition version.
+	 *
+	 * @param statusByUserUuid the status by user uuid of this kaleo definition version
+	 */
+	@Override
+	public void setStatusByUserUuid(String statusByUserUuid);
+
+	/**
+	 * Returns the status by user name of this kaleo definition version.
+	 *
+	 * @return the status by user name of this kaleo definition version
+	 */
+	@AutoEscape
+	@Override
+	public String getStatusByUserName();
+
+	/**
+	 * Sets the status by user name of this kaleo definition version.
+	 *
+	 * @param statusByUserName the status by user name of this kaleo definition version
+	 */
+	@Override
+	public void setStatusByUserName(String statusByUserName);
+
+	/**
+	 * Returns the status date of this kaleo definition version.
+	 *
+	 * @return the status date of this kaleo definition version
+	 */
+	@Override
+	public Date getStatusDate();
+
+	/**
+	 * Sets the status date of this kaleo definition version.
+	 *
+	 * @param statusDate the status date of this kaleo definition version
+	 */
+	@Override
+	public void setStatusDate(Date statusDate);
 
 	/**
 	 * Returns <code>true</code> if this kaleo definition version is approved.

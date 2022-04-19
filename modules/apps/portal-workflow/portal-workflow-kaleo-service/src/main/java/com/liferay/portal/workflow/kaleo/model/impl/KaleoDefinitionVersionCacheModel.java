@@ -92,12 +92,6 @@ public class KaleoDefinitionVersionCacheModel
 		sb.append(userId);
 		sb.append(", userName=");
 		sb.append(userName);
-		sb.append(", statusByUserId=");
-		sb.append(statusByUserId);
-		sb.append(", statusByUserName=");
-		sb.append(statusByUserName);
-		sb.append(", statusDate=");
-		sb.append(statusDate);
 		sb.append(", createDate=");
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
@@ -118,6 +112,12 @@ public class KaleoDefinitionVersionCacheModel
 		sb.append(startKaleoNodeId);
 		sb.append(", status=");
 		sb.append(status);
+		sb.append(", statusByUserId=");
+		sb.append(statusByUserId);
+		sb.append(", statusByUserName=");
+		sb.append(statusByUserName);
+		sb.append(", statusDate=");
+		sb.append(statusDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -140,22 +140,6 @@ public class KaleoDefinitionVersionCacheModel
 		}
 		else {
 			kaleoDefinitionVersionImpl.setUserName(userName);
-		}
-
-		kaleoDefinitionVersionImpl.setStatusByUserId(statusByUserId);
-
-		if (statusByUserName == null) {
-			kaleoDefinitionVersionImpl.setStatusByUserName("");
-		}
-		else {
-			kaleoDefinitionVersionImpl.setStatusByUserName(statusByUserName);
-		}
-
-		if (statusDate == Long.MIN_VALUE) {
-			kaleoDefinitionVersionImpl.setStatusDate(null);
-		}
-		else {
-			kaleoDefinitionVersionImpl.setStatusDate(new Date(statusDate));
 		}
 
 		if (createDate == Long.MIN_VALUE) {
@@ -211,6 +195,21 @@ public class KaleoDefinitionVersionCacheModel
 
 		kaleoDefinitionVersionImpl.setStartKaleoNodeId(startKaleoNodeId);
 		kaleoDefinitionVersionImpl.setStatus(status);
+		kaleoDefinitionVersionImpl.setStatusByUserId(statusByUserId);
+
+		if (statusByUserName == null) {
+			kaleoDefinitionVersionImpl.setStatusByUserName("");
+		}
+		else {
+			kaleoDefinitionVersionImpl.setStatusByUserName(statusByUserName);
+		}
+
+		if (statusDate == Long.MIN_VALUE) {
+			kaleoDefinitionVersionImpl.setStatusDate(null);
+		}
+		else {
+			kaleoDefinitionVersionImpl.setStatusDate(new Date(statusDate));
+		}
 
 		kaleoDefinitionVersionImpl.resetOriginalValues();
 
@@ -231,10 +230,6 @@ public class KaleoDefinitionVersionCacheModel
 
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
-
-		statusByUserId = objectInput.readLong();
-		statusByUserName = objectInput.readUTF();
-		statusDate = objectInput.readLong();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 
@@ -248,6 +243,10 @@ public class KaleoDefinitionVersionCacheModel
 		startKaleoNodeId = objectInput.readLong();
 
 		status = objectInput.readInt();
+
+		statusByUserId = objectInput.readLong();
+		statusByUserName = objectInput.readUTF();
+		statusDate = objectInput.readLong();
 	}
 
 	@Override
@@ -269,16 +268,6 @@ public class KaleoDefinitionVersionCacheModel
 			objectOutput.writeUTF(userName);
 		}
 
-		objectOutput.writeLong(statusByUserId);
-
-		if (statusByUserName == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(statusByUserName);
-		}
-
-		objectOutput.writeLong(statusDate);
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
@@ -322,6 +311,17 @@ public class KaleoDefinitionVersionCacheModel
 		objectOutput.writeLong(startKaleoNodeId);
 
 		objectOutput.writeInt(status);
+
+		objectOutput.writeLong(statusByUserId);
+
+		if (statusByUserName == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(statusByUserName);
+		}
+
+		objectOutput.writeLong(statusDate);
 	}
 
 	public long mvccVersion;
@@ -330,9 +330,6 @@ public class KaleoDefinitionVersionCacheModel
 	public long companyId;
 	public long userId;
 	public String userName;
-	public long statusByUserId;
-	public String statusByUserName;
-	public long statusDate;
 	public long createDate;
 	public long modifiedDate;
 	public long kaleoDefinitionId;
@@ -343,5 +340,8 @@ public class KaleoDefinitionVersionCacheModel
 	public String version;
 	public long startKaleoNodeId;
 	public int status;
+	public long statusByUserId;
+	public String statusByUserName;
+	public long statusDate;
 
 }

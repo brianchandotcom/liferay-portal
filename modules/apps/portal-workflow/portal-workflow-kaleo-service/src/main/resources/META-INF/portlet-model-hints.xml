@@ -97,9 +97,6 @@
 		<field name="userName" type="String">
 			<hint name="max-length">200</hint>
 		</field>
-		<field name="statusByUserId" type="long" />
-		<field name="statusByUserName" type="String" />
-		<field name="statusDate" type="Date" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="kaleoDefinitionId" type="long" />
@@ -118,6 +115,9 @@
 		<field name="version" type="String" />
 		<field name="startKaleoNodeId" type="long" />
 		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
 	</model>
 	<model name="com.liferay.portal.workflow.kaleo.model.KaleoInstance">
 		<field name="mvccVersion" type="long" />

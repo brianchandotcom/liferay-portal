@@ -52,16 +52,6 @@ public class KaleoDefinitionVersionTable
 	public final Column<KaleoDefinitionVersionTable, String> userName =
 		createColumn(
 			"userName", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<KaleoDefinitionVersionTable, Long> statusByUserId =
-		createColumn(
-			"statusByUserId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<KaleoDefinitionVersionTable, String> statusByUserName =
-		createColumn(
-			"statusByUserName", String.class, Types.VARCHAR,
-			Column.FLAG_DEFAULT);
-	public final Column<KaleoDefinitionVersionTable, Date> statusDate =
-		createColumn(
-			"statusDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<KaleoDefinitionVersionTable, Date> createDate =
 		createColumn(
 			"createDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
@@ -89,6 +79,16 @@ public class KaleoDefinitionVersionTable
 	public final Column<KaleoDefinitionVersionTable, Integer> status =
 		createColumn(
 			"status", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
+	public final Column<KaleoDefinitionVersionTable, Long> statusByUserId =
+		createColumn(
+			"statusByUserId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<KaleoDefinitionVersionTable, String> statusByUserName =
+		createColumn(
+			"statusByUserName", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
+	public final Column<KaleoDefinitionVersionTable, Date> statusDate =
+		createColumn(
+			"statusDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 
 	private KaleoDefinitionVersionTable() {
 		super("KaleoDefinitionVersion", KaleoDefinitionVersionTable::new);

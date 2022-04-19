@@ -63,9 +63,6 @@ create table KaleoDefinitionVersion (
 	companyId LONG,
 	userId LONG,
 	userName VARCHAR(200) null,
-	statusByUserId LONG,
-	statusByUserName VARCHAR(75) null,
-	statusDate DATE null,
 	createDate DATE null,
 	modifiedDate DATE null,
 	kaleoDefinitionId LONG,
@@ -75,7 +72,10 @@ create table KaleoDefinitionVersion (
 	content TEXT null,
 	version VARCHAR(75) null,
 	startKaleoNodeId LONG,
-	status INTEGER
+	status INTEGER,
+	statusByUserId LONG,
+	statusByUserName VARCHAR(75) null,
+	statusDate DATE null
 );
 
 create table KaleoInstance (

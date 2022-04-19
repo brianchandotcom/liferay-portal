@@ -29,6 +29,7 @@ import ContainerAdvancedPanel from '../components/item-configuration-panels/Cont
 import ContainerGeneralPanel from '../components/item-configuration-panels/ContainerGeneralPanel';
 import {ContainerStylesPanel} from '../components/item-configuration-panels/ContainerStylesPanel';
 import EditableLinkPanel from '../components/item-configuration-panels/EditableLinkPanel';
+import FormAdvancedPanel from '../components/item-configuration-panels/FormAdvancedPanel';
 import {FormGeneralPanel} from '../components/item-configuration-panels/FormGeneralPanel';
 import {FragmentAdvancedPanel} from '../components/item-configuration-panels/FragmentAdvancedPanel';
 import {FragmentGeneralPanel} from '../components/item-configuration-panels/FragmentGeneralPanel';
@@ -60,6 +61,7 @@ export const PANEL_IDS = {
 	containerStyles: 'containerStyles',
 	editableLink: 'editableLink',
 	editableMapping: 'editableMapping',
+	formAdvancedPanel: 'formAdvancedPanel',
 	formGeneral: 'formGeneral',
 	fragmentAdvanced: 'fragmentAdvanced',
 	fragmentGeneral: 'fragmentGeneral',
@@ -116,6 +118,11 @@ export const PANELS = {
 		component: MappingPanel,
 		label: Liferay.Language.get('mapping'),
 		priority: 1,
+	},
+	[PANEL_IDS.formAdvancedPanel]: {
+		component: FormAdvancedPanel,
+		label: Liferay.Language.get('advanced'),
+		priority: 0,
 	},
 	[PANEL_IDS.formGeneral]: {
 		component: FormGeneralPanel,
@@ -235,6 +242,8 @@ export function selectPanels(activeItemId, activeItemType, state) {
 	}
 	else if (activeItem.type === LAYOUT_DATA_ITEM_TYPES.form) {
 		panelsIds = {
+			[PANEL_IDS.formAdvancedPanel]:
+				state.selectedViewportSize === VIEWPORT_SIZES.desktop,
 			[PANEL_IDS.formGeneral]:
 				state.selectedViewportSize === VIEWPORT_SIZES.desktop,
 			[PANEL_IDS.containerStyles]: true,

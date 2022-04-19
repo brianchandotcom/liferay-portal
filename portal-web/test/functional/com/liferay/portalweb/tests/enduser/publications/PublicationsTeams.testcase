@@ -81,4 +81,60 @@ definition {
 			userLastName = "userln");
 	}
 
+	@description = "Able to Publish Team with assigned User Group"
+	@priority = "4"
+	test CanPublishTeamWithAssignedUserGroup {
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		UserGroup.openUserGroupsAdmin();
+
+		UserGroup.addCP(userGroupName = "User Group Name");
+
+		Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
+
+		Site.assignUserGroupAsMemberCP(userGroupName = "User Group Name");
+
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
+
+		Site.openSiteTeamsAdmin(siteURLKey = "site-name");
+
+		Team.addCP(
+			teamDescription = "Team Description",
+			teamName = "Team Name");
+
+		Team.viewCP(
+			teamDescription = "Team Description",
+			teamName = "Team Name");
+
+		Site.openSiteTeamsAdmin(siteURLKey = "site-name");
+
+		Team.assignUserGroups(
+			teamName = "Team Name",
+			userGroupName = "User Group Name");
+
+		PublicationsNavigator.gotoReviewChanges();
+
+		PublicationsChanges.viewChanges(
+			changeCategory = "Team",
+			changeSite = "Site Name",
+			changeTitle = "Team Name",
+			changeType = "Added",
+			changeUser = "Test Test");
+
+		PublicationsChanges.viewChangesInRelationships(changeTitle = "Team & User Group (1 Added)");
+
+		JSONPublications.publishPublication(publicationName = "Publication Name");
+
+		Publications.viewPublicationPublished(publicationName = "Publication Name");
+
+		Site.openSiteTeamsAdmin(siteURLKey = "site-name");
+
+		Team.viewMemberCP(
+			membershipType = "User Group",
+			teamName = "Team Name",
+			userGroupName = "User Group Name");
+	}
+
 }

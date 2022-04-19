@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.pop.MessageListener;
 import com.liferay.portal.kernel.pop.MessageListenerException;
 import com.liferay.portal.kernel.util.ClassUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.List;
 
@@ -53,16 +52,6 @@ public class MessageListenerWrapper implements MessageListener {
 		return value;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #accept(String,
-	 *             List, Message)}
-	 */
-	@Deprecated
-	@Override
-	public boolean accept(String from, String recipient, Message message) {
-		return accept(from, ListUtil.toList(recipient), message);
-	}
-
 	@Override
 	public void deliver(String from, List<String> recipients, Message message)
 		throws MessageListenerException {
@@ -75,18 +64,6 @@ public class MessageListenerWrapper implements MessageListener {
 		}
 
 		_messageListener.deliver(from, recipients, message);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #deliver(String,
-	 *             List, Message)}
-	 */
-	@Deprecated
-	@Override
-	public void deliver(String from, String recipient, Message message)
-		throws MessageListenerException {
-
-		deliver(from, ListUtil.toList(recipient), message);
 	}
 
 	@Override

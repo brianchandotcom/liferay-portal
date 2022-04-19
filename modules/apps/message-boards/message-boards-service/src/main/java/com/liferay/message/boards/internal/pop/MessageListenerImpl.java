@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HtmlParser;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
@@ -119,16 +118,6 @@ public class MessageListenerImpl implements MessageListener {
 
 			return false;
 		}
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #accept(String,
-	 *             List, Message)}
-	 */
-	@Deprecated
-	@Override
-	public boolean accept(String from, String recipient, Message message) {
-		return accept(from, ListUtil.toList(recipient), message);
 	}
 
 	@Override
@@ -280,18 +269,6 @@ public class MessageListenerImpl implements MessageListener {
 
 			PermissionCheckerUtil.setThreadValues(null);
 		}
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #deliver(String,
-	 *             List, Message)}
-	 */
-	@Deprecated
-	@Override
-	public void deliver(String from, String recipient, Message message)
-		throws MessageListenerException {
-
-		deliver(from, ListUtil.toList(recipient), message);
 	}
 
 	@Override

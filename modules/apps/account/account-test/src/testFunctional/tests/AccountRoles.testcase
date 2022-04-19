@@ -1,0 +1,81 @@
+@component-name = "portal-user-management-and-portal-configuration"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Account";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Accounts.tearDownCP();
+		}
+	}
+
+	@description = "This is a use case for LPS-151552. This asserts saving edits in one permissions tab in Account Roles does not clear related permissions from the other tab."
+	@priority = "4"
+	test CanSavePermissionsWithoutDeletingOthers {
+		task ("Given an account role is created") {
+			Role.openRolesAdmin();
+
+			Navigator.gotoNavTab(navTab = "Account Roles");
+
+			Role.add(roleTitle = "New Account Role");
+		}
+
+		task ("When a permission is saved in 'Define Permissions' tab and another related permission is saved in 'Define Group Scope Permissions' tab") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "ADD_ENTRY",
+				resourceName = "com.liferay.blogs",
+				roleTitle = "New Account Role",
+				roleType = "account");
+
+			Role.openRolesAdmin();
+
+			Navigator.gotoNavTab(navTab = "Account Roles");
+
+			LexiconEntry.gotoEntry(rowEntry = "New Account Role");
+
+			Navigator.gotoNavTab(navTab = "Define Group Scope Permissions");
+
+			Type(
+				locator1 = "RolesPermissionsNavigation#SEARCH_FIELD",
+				value1 = "Blogs");
+
+			AssertClick(
+				locator1 = "RolesPermissionsNavigation#SITE_ADMIN_APPLICATIONS_BLOGS",
+				value1 = "Blogs");
+
+			Check(locator1 = "RolesPermissions#SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_SUBSCRIBE_CHECKBOX");
+
+			PortletEntry.save();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Then both tabs should assert the correct permissions") {
+			Navigator.gotoNavTab(navTab = "Define Permissions");
+
+			Role.viewPermissionCP(
+				permissionDefinitionValue = "Add Entry",
+				permissionNavigationValue = "Blogs > Blog Entries:");
+
+			Navigator.gotoNavTab(navTab = "Define Group Scope Permissions");
+
+			Role.viewPermissionCP(
+				permissionDefinitionValue = "Subscribe",
+				permissionNavigationValue = "Blogs > Blog Entries:");
+		}
+	}
+
+}

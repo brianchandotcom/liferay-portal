@@ -190,13 +190,12 @@
 		<column name="commerceAccountId" type="long" />
 		<column name="commerceCurrencyId" type="long" />
 		<column name="commerceOrderTypeId" type="long" />
-		<column name="commercePaymentMethodKey" type="String" />
 		<column name="commerceShippingMethodId" type="long" />
 		<column name="deliveryCommerceTermEntryId" type="long" />
 		<column name="paymentCommerceTermEntryId" type="long" />
 		<column name="shippingAddressId" type="long" />
-		<column name="transactionId" type="String" />
 		<column name="advanceStatus" type="String" />
+		<column name="commercePaymentMethodKey" type="String" />
 		<column name="couponCode" type="String" />
 		<column db-name="deliveryCTermEntryDescription" name="deliveryCommerceTermEntryDescription" type="String" />
 		<column name="deliveryCommerceTermEntryName" type="String" />
@@ -245,6 +244,7 @@
 		<column db-name="totalDiscountPctLev4WithTax" name="totalDiscountPercentageLevel4WithTaxAmount" type="BigDecimal" />
 		<column name="totalDiscountWithTaxAmount" type="BigDecimal" />
 		<column name="totalWithTaxAmount" type="BigDecimal" />
+		<column name="transactionId" type="String" />
 		<column name="lastPriceUpdateDate" type="Date" />
 		<column name="orderDate" type="Date" />
 		<column name="requestedDeliveryDate" type="Date" />

@@ -3714,4 +3714,67 @@ definition {
 		
 	}
 
+	@description = "Verify that is possible to translate fields inside a Fields Group on the Fieldset modal"
+	@priority = "4"
+	test CanTranslateFieldsGroupOnFieldset {
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DataEngine.gotoCreateNewFieldset();
+
+		FormViewBuilder.editFieldSetName(fieldSetName = "New Fieldset");
+
+		DEBuilder.addField(
+			fieldLabel = "Text",
+			fieldName = "Text");
+
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "Numeric",
+			fieldName = "Numeric",
+			targetFieldLabel = "Text");
+
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			modal = "true");
+
+		FormViewBuilder.editFieldSetName(fieldSetName = "新字段集");
+
+		DataEngine.editFieldLabel(
+				fieldFieldLabel = "Text",
+				fieldFieldLabelEdit = "文本");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Numeric",
+			fieldFieldLabelEdit = "数字");
+
+		FormViewBuilder.saveButtonFieldset();
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "New Fieldset");
+
+		PortletEntry.inputTitle(title = "Test");
+
+		DEBuilder.assertFieldsGroup(
+			fieldGroupDepth = "1",
+			fieldGroupLabel = "Fields Group",
+			fieldsLabelList = "Text,Numeric");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		PortletEntry.inputTitle(title = "Test zh-CN");
+
+		DEBuilder.assertFieldsGroup(
+			fieldGroupDepth = "1",
+			fieldGroupLabel = "Fields Group",
+			fieldsLabelList = "文本,数字");
+
+
+
+	}
+
 }

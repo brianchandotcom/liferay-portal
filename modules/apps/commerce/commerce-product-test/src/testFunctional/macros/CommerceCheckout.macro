@@ -1,5 +1,42 @@
 definition {
 
+	macro checkout {
+		WaitForElementPresent(locator1 = "CommerceAccelerators#CHECKOUT_PORTLET_BODY");
+
+		if (isSet(newAddressName)) {
+			Type(
+				key_fieldName = "Name",
+				locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT",
+				value1 = "${newAddressName}");
+
+			Type(
+				key_fieldName = "Address",
+				locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT",
+				value1 = "${newAddressAddress}");
+
+			Select(
+				key_fieldName = "Country",
+				locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_SELECT",
+				value1 = "${newAddressCountry}");
+
+			Type(
+				key_fieldName = "Zip",
+				locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT",
+				value1 = "${newAddressZipCode}");
+
+			Type(
+				key_fieldName = "City",
+				locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT",
+				value1 = "${newAddressCity}");
+
+			if (isSet(guestEmail)) {
+				Type(
+					locator1 = "CommerceAccelerators#GUEST_CHECKOUT_EMAIL",
+					value1 = "${guestEmail}");
+			}
+		}
+	}
+
 	macro initializersCheckout {
 		WaitForElementPresent(locator1 = "CommerceAccelerators#CHECKOUT_PORTLET_BODY");
 

@@ -16,13 +16,11 @@ package com.liferay.portal.encryptor;
 
 import com.liferay.portal.kernel.encryptor.Encryptor;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.security.Key;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -41,14 +39,14 @@ public class EncryptorImplTest {
 
 	@Test
 	public void testKeySerialization() throws Exception {
-		Map<String, Object> properties = new HashMap<>();
+		PropsTestUtil.setProps(
+			HashMapBuilder.<String, Object>put(
+				PropsKeys.COMPANY_ENCRYPTION_ALGORITHM, "AES"
+			).put(
+				PropsKeys.COMPANY_ENCRYPTION_KEY_SIZE, "128"
+			).build());
 
 		Encryptor encryptor = new EncryptorImpl();
-
-		properties.put(PropsKeys.COMPANY_ENCRYPTION_ALGORITHM, "AES");
-		properties.put(PropsKeys.COMPANY_ENCRYPTION_KEY_SIZE, "128");
-
-		PropsTestUtil.setProps(properties);
 
 		Key key = encryptor.generateKey();
 

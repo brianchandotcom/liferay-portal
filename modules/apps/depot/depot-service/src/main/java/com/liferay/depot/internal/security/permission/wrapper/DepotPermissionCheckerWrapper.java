@@ -353,7 +353,7 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 			ActionKeys.ASSIGN_MEMBERS, ActionKeys.ASSIGN_USER_ROLES,
 			ActionKeys.DELETE, ActionKeys.PUBLISH_STAGING, ActionKeys.UPDATE,
 			ActionKeys.VIEW, ActionKeys.VIEW_MEMBERS,
-			ActionKeys.VIEW_SITE_ADMINISTRATION));
+			ActionKeys.VIEW_SITE_ADMINISTRATION, ActionKeys.VIEW_STAGING));
 
 	private final ModelResourcePermission<DepotEntry>
 		_depotEntryModelResourcePermission;

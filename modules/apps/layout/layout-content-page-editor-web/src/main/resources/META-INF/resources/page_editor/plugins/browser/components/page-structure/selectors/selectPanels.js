@@ -43,6 +43,12 @@ const FRAGMENT_WITH_CUSTOM_PANEL = [
 	COLLECTION_APPLIED_FILTERS_FRAGMENT_ENTRY_KEY,
 ];
 
+const PANEL_TYPES = {
+	advanced: 'advanced',
+	general: 'general',
+	styles: 'styles',
+};
+
 export const PANEL_IDS = {
 	collectionAppliedFiltersGeneral: 'collectionAppliedFiltersGeneral',
 	collectionFilterGeneral: 'collectionFilterGeneral',
@@ -66,31 +72,37 @@ export const PANELS = {
 		component: CollectionAppliedFiltersGeneralPanel,
 		label: Liferay.Language.get('general'),
 		priority: 2,
+		type: PANEL_TYPES.general,
 	},
 	[PANEL_IDS.collectionFilterGeneral]: {
 		component: CollectionFilterGeneralPanel,
 		label: Liferay.Language.get('general'),
 		priority: 2,
+		type: PANEL_TYPES.general,
 	},
 	[PANEL_IDS.collectionGeneral]: {
 		component: CollectionGeneralPanel,
 		label: Liferay.Language.get('general'),
 		priority: 0,
+		type: PANEL_TYPES.general,
 	},
 	[PANEL_IDS.containerAdvanced]: {
 		component: ContainerAdvancedPanel,
 		label: Liferay.Language.get('advanced'),
 		priority: 0,
+		type: PANEL_TYPES.advanced,
 	},
 	[PANEL_IDS.containerGeneral]: {
 		component: ContainerGeneralPanel,
 		label: Liferay.Language.get('general'),
 		priority: 2,
+		type: PANEL_TYPES.general,
 	},
 	[PANEL_IDS.containerStyles]: {
 		component: ContainerStylesPanel,
 		label: Liferay.Language.get('styles'),
 		priority: 1,
+		type: PANEL_TYPES.styles,
 	},
 	[PANEL_IDS.editableLink]: {
 		component: EditableLinkPanel,
@@ -106,16 +118,19 @@ export const PANELS = {
 		component: FragmentAdvancedPanel,
 		label: Liferay.Language.get('advanced'),
 		priority: 0,
+		type: PANEL_TYPES.advanced,
 	},
 	[PANEL_IDS.fragmentGeneral]: {
 		component: FragmentGeneralPanel,
 		label: Liferay.Language.get('general'),
 		priority: 2,
+		type: PANEL_TYPES.general,
 	},
 	[PANEL_IDS.fragmentStyles]: {
 		component: FragmentStylesPanel,
 		label: Liferay.Language.get('styles'),
 		priority: 1,
+		type: PANEL_TYPES.styles,
 	},
 	[PANEL_IDS.imageSource]: {
 		component: ImageSourcePanel,
@@ -126,16 +141,19 @@ export const PANELS = {
 		component: RowAdvancedPanel,
 		label: Liferay.Language.get('advanced'),
 		priority: 0,
+		type: PANEL_TYPES.advanced,
 	},
 	[PANEL_IDS.rowGeneral]: {
 		component: RowGeneralPanel,
 		label: Liferay.Language.get('general'),
 		priority: 2,
+		type: PANEL_TYPES.general,
 	},
 	[PANEL_IDS.rowStyles]: {
 		component: RowStylesPanel,
 		label: Liferay.Language.get('styles'),
 		priority: 1,
+		type: PANEL_TYPES.styles,
 	},
 };
 

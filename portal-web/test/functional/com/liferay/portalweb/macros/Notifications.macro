@@ -169,6 +169,23 @@ definition {
 			value1 = "You do not have any notifications.");
 	}
 
+	macro viewDeletedContent {
+		AssertTextEquals(
+			locator1 = "Notifications#NOTIFICATIONS_TITLE",
+			value1 = "Notification no longer applies.");
+
+		AssertTextEquals(
+			key_contentBody = "${contentBody}",
+			locator1 = "Notifications#NOTIFICATIONS_CONTENT",
+			value1 = "${contentBody}");
+
+		if (isSet(noOptions)) {
+			AssertElementNotPresent(
+				key_contentBody = "${contentBody}",
+				locator1 = "Notifications#NOTIFICATIONS_VERTICAL_ELLIPSIS");
+		}
+	}
+
 	macro viewExpiredContent {
 		AssertTextEquals(
 			locator1 = "Notifications#NOTIFICATIONS_TITLE",

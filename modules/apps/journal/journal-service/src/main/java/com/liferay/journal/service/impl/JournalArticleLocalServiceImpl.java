@@ -8451,7 +8451,36 @@ public class JournalArticleLocalServiceImpl
 				journalGroupServiceConfiguration.emailArticleReviewBody());
 		}
 
+		String articleDiffs = StringPool.BLANK;
+
+		JournalArticle previousApprovedArticle = getPreviousApprovedArticle(
+			article);
+
+		try {
+			PortletRequestModel portletRequestModel = null;
+
+			if (!ExportImportThreadLocal.isImportInProcess()) {
+				portletRequestModel = new PortletRequestModel(
+					serviceContext.getLiferayPortletRequest(),
+					serviceContext.getLiferayPortletResponse());
+			}
+
+			articleDiffs = _journalHelper.diffHtml(
+				article.getGroupId(), article.getArticleId(),
+				previousApprovedArticle.getVersion(), article.getVersion(),
+				LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()),
+				portletRequestModel, serviceContext.getThemeDisplay());
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
+
 		SubscriptionSender subscriptionSender = new SubscriptionSender();
+
+		subscriptionSender.setContextAttribute(
+			"[$ARTICLE_DIFFS$]", _diffHtml.replaceStyles(articleDiffs), false);
 
 		subscriptionSender.setClassName(JournalArticle.class.getName());
 		subscriptionSender.setClassPK(article.getPrimaryKey());

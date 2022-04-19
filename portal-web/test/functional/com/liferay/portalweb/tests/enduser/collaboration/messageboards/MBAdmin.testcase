@@ -346,12 +346,38 @@ definition {
 	}
 
 	@description = "This is a test for LPS-68939. It ensures that the message threads appear from newest to oldest by default."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test ThreadsAreSortedFromNewestToOldestByDefault {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Message Boards Page");
 
-		// TODO LPS-150860 ThreadsAreSortedFromNewestToOldestByDefault pending implementation
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Message Boards Page",
+			widgetName = "Message Boards");
 
+		for (var threadSubjectName : list "MB Thread Message 1,MB Thread Message 2,MB Thread Message 3") {
+			JSONMBMessage.addMessage(
+				groupName = "Guest",
+				threadBody = "${threadSubjectName} Body",
+				threadSubject = "${threadSubjectName} Subject");
+		}
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		LexiconList.viewListEntrySpecific(
+			listEntry = "MB Thread Message 3 Subject",
+			position = "1");
+
+		LexiconList.viewListEntrySpecific(
+			listEntry = "MB Thread Message 2 Subject",
+			position = "2");
+
+		LexiconList.viewListEntrySpecific(
+			listEntry = "MB Thread Message 1 Subject",
+			position = "3");
 	}
 
 }

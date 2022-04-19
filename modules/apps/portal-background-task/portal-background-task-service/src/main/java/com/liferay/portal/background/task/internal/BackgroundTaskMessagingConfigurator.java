@@ -49,8 +49,6 @@ public class BackgroundTaskMessagingConfigurator {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
-
 		Destination backgroundTaskDestination = _registerDestination(
 			bundleContext, DestinationConfiguration.DESTINATION_TYPE_PARALLEL,
 			DestinationNames.BACKGROUND_TASK, 5, 10);
@@ -80,8 +78,6 @@ public class BackgroundTaskMessagingConfigurator {
 
 			serviceRegistration.unregister();
 		}
-
-		_bundleContext = null;
 	}
 
 	private Destination _registerDestination(
@@ -118,8 +114,6 @@ public class BackgroundTaskMessagingConfigurator {
 
 	@Reference
 	private BackgroundTaskThreadLocalManager _backgroundTaskThreadLocalManager;
-
-	private volatile BundleContext _bundleContext;
 
 	@Reference
 	private DestinationFactory _destinationFactory;

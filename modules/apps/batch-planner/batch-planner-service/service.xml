@@ -91,7 +91,7 @@
 			<finder-column name="companyId" />
 			<finder-column name="export" />
 		</finder>
-		<finder name="C_N" return-type="BatchPlannerPlan" unique="true">
+		<finder name="C_N" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="name" />
 		</finder>

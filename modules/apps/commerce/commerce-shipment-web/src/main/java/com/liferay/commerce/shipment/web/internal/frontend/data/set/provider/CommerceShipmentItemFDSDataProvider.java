@@ -29,6 +29,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,7 +83,8 @@ public class CommerceShipmentItemFDSDataProvider
 								getCommerceInventoryWarehouseId());
 
 				commerceInventoryWarehouseName =
-					commerceInventoryWarehouse.getName();
+					commerceInventoryWarehouse.getName(
+						_portal.getLocale(httpServletRequest));
 			}
 
 			shipmentItems.add(
@@ -122,5 +124,8 @@ public class CommerceShipmentItemFDSDataProvider
 
 	@Reference
 	private CommerceShipmentItemService _commerceShipmentItemService;
+
+	@Reference
+	private Portal _portal;
 
 }

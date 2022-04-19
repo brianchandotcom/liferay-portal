@@ -4,7 +4,6 @@ lib/development/com.liferay.bnd.invoker.jar
 tmp/lib-pre/com.liferay.osgi.service.tracker.collections.jar
 tmp/lib-pre/com.liferay.petra.concurrent.jar
 tmp/lib-pre/com.liferay.petra.content.jar
-tmp/lib-pre/com.liferay.petra.encryptor.jar
 tmp/lib-pre/com.liferay.petra.executor.jar
 tmp/lib-pre/com.liferay.petra.function.jar
 tmp/lib-pre/com.liferay.petra.io.jar

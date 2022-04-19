@@ -1324,7 +1324,7 @@ definition {
 
 		Click(
 			key_text = "download",
-			locator1 = "Icon#ANY");
+			locator1 = "ManagementBar#ANY_ICON");
 
 		DownloadTempFile();
 	}

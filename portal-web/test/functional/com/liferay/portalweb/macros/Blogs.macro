@@ -659,7 +659,9 @@ definition {
 		if (IsElementPresent.isVisible(locator1 = "Blogs#ENTRY_TABLE_ALL_CHECKBOX")) {
 			Click(locator1 = "Blogs#ENTRY_TABLE_ALL_CHECKBOX");
 
-			Click(locator1 = "Button#MOVE_TO_RECYCLE_BIN");
+			Click(
+				key_text = "trash",
+				locator1 = "ManagementBar#ANY_ICON");
 
 			VerifyElementPresent(locator1 = "Message#SUCCESS");
 		}

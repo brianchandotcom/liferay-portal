@@ -195,6 +195,17 @@ public class LayoutStructure {
 		return dropZoneLayoutStructureItem;
 	}
 
+	public LayoutStructureItem addFormStyledLayoutStructureItem(
+		String parentItemId, int position) {
+
+		FormStyledLayoutStructureItem formStyledLayoutStructureItem =
+			new FormStyledLayoutStructureItem(parentItemId);
+
+		_updateLayoutStructure(formStyledLayoutStructureItem, position);
+
+		return formStyledLayoutStructureItem;
+	}
+
 	public LayoutStructureItem addFragmentDropZoneLayoutStructureItem(
 		String parentItemId, int position) {
 

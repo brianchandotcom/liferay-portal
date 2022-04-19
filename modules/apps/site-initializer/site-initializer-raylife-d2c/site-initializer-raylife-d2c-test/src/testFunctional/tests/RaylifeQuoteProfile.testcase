@@ -1,6 +1,8 @@
 @component-name = "portal-solutions"
 definition {
 
+	property osgi.module.configuration.file.names = "com.liferay.release.feature.flag.web.internal.configuration.ReleaseFeatureFlagConfiguration.config";
+	property osgi.module.configurations = "disabledReleaseFeatureFlags=[&quot;DEACTIVATE_PRIVATE_PAGES&quot;]";
 	property portal.release = "false";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Raylife";

@@ -45,20 +45,20 @@ html#{$cadmin-selector} {
 			}
 
 			&-tablet .page-editor__layout-viewport__resizer {
-				max-width: 991px;
-				min-width: 768px;
+				max-width: minmax(991px, 100%);
+				min-width: minmax(768px, 100%);
 				width: 768px;
 			}
 
 			&-landscapeMobile .page-editor__layout-viewport__resizer {
-				max-width: 767px;
-				min-width: 576px;
+				max-width: minmax(767px, 100%);
+				min-width: minmax(576px, 100%);
 				width: 576px;
 			}
 
 			&-portraitMobile .page-editor__layout-viewport__resizer {
-				max-width: 575px;
-				min-width: 240px;
+				max-width: minmax(575px, 100%);
+				min-width: minmax(240px, 100%);
 				width: 360px;
 			}
 		}

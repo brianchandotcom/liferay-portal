@@ -3627,4 +3627,91 @@ definition {
 			fieldsetName = "新字段集");
 	}
 
+	@description = "Verify that is possible to translate fields with options on the Fieldset modal"
+	@priority = "5"
+	test CanTranslateFieldOptionOnFieldset {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DataEngine.gotoCreateNewFieldset();
+
+		FormViewBuilder.editFieldSetName(fieldSetName = "New Fieldset");
+
+		DEBuilder.addField(
+			fieldLabel = "Text",
+			fieldName = "Text");
+
+		DEBuilder.addField(
+			fieldLabel = "Multiple Selection",
+			fieldName = "Multiple Selection");
+
+		DEBuilder.addFieldOptions(
+			fieldLabel = "Multiple Selection",
+			optionValueList = "Option 1,Option 2,Option 3");
+
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			modal = "true");
+
+		FormViewBuilder.editFieldSetName(fieldSetName = "新字段集");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Text",
+			fieldFieldLabelEdit = "文本");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Multiple Selection",
+			fieldFieldLabelEdit = "复选列表框");
+
+		DEBuilder.addFieldOptions(
+			fieldLabel = "复选列表框",
+			optionValueList = "選項 1,選項 2,選項 3");
+
+		FormViewBuilder.saveButtonFieldset();
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "New Fieldset");
+
+		PortletEntry.inputTitle(title = "Test");
+
+
+		DERenderer.assertMultipleSelectionOptionIsUnchecked(
+			fieldLabel = "Multiple Selection",
+			optionValue = "Option 1");
+
+		DERenderer.assertMultipleSelectionOptionIsUnchecked(
+			fieldLabel = "Multiple Selection",
+			optionValue = "Option 2");
+
+		DERenderer.assertMultipleSelectionOptionIsUnchecked(
+			fieldLabel = "Multiple Selection",
+			optionValue = "Option 3");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		PortletEntry.inputTitle(title = "Test zh-CN");
+
+	
+
+		DERenderer.assertMultipleSelectionOptionIsUnchecked(
+			fieldLabel = "复选列表框",
+			optionValue = "選項 1");
+
+		DERenderer.assertMultipleSelectionOptionIsUnchecked(
+			fieldLabel = "复选列表框",
+			optionValue = "選項 2");
+
+		DERenderer.assertMultipleSelectionOptionIsUnchecked(
+			fieldLabel = "复选列表框",
+			optionValue = "選項 3");
+
+		
+
+		
+	}
+
 }

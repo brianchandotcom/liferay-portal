@@ -12,15 +12,14 @@
  * details.
  */
 
-export const LAYOUT_DATA_ITEM_TYPES = {
-	collection: 'collection',
-	collectionItem: 'collection-item',
-	column: 'column',
-	container: 'container',
-	dropZone: 'drop-zone',
-	form: 'form',
-	fragment: 'fragment',
-	fragmentDropZone: 'fragment-drop-zone',
-	root: 'root',
-	row: 'row',
-};
+import React from 'react';
+
+import ContainerWithControls from './ContainerWithControls';
+
+const FormWithControls = React.forwardRef((props, ref) => (
+	<form onSubmit={(event) => event.preventDefault()} ref={ref}>
+		<ContainerWithControls {...props} />
+	</form>
+));
+
+export default FormWithControls;

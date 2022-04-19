@@ -27,6 +27,7 @@ import {getResponsiveConfig} from '../utils/getResponsiveConfig';
 const LAYOUT_DATA_ITEMS_WITH_COMMON_STYLES = [
 	LAYOUT_DATA_ITEM_TYPES.collection,
 	LAYOUT_DATA_ITEM_TYPES.container,
+	LAYOUT_DATA_ITEM_TYPES.form,
 	LAYOUT_DATA_ITEM_TYPES.row,
 	LAYOUT_DATA_ITEM_TYPES.fragment,
 ];

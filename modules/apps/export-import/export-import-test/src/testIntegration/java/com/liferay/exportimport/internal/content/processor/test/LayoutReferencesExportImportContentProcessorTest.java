@@ -549,6 +549,38 @@ public class LayoutReferencesExportImportContentProcessorTest {
 	}
 
 	@Test
+	public void testRelativePublicPageURLWithSlashWithLocale()
+		throws Exception {
+
+		Group exportGroup = GroupTestUtil.addGroup();
+
+		GroupTestUtil.addLayoutSetVirtualHost(exportGroup, false);
+
+		Group importGroup = GroupTestUtil.addGroup();
+
+		GroupTestUtil.addLayoutSetVirtualHost(importGroup, false);
+
+		Locale siteDefaultLocale = _portal.getSiteDefaultLocale(exportGroup);
+
+		String layoutName = RandomTestUtil.randomString(
+			LayoutFriendlyURLRandomizerBumper.INSTANCE,
+			NumericStringRandomizerBumper.INSTANCE,
+			UniqueStringRandomizerBumper.INSTANCE);
+
+		layoutName = layoutName + StringPool.SLASH + layoutName;
+
+		Layout exportLayout = LayoutTestUtil.addTypePortletLayout(
+			exportGroup.getGroupId(), layoutName, false, null, false);
+
+		String url = StringBundler.concat(
+			StringPool.SLASH, siteDefaultLocale.getLanguage(),
+			exportLayout.getFriendlyURL());
+
+		Assert.assertEquals(
+			url, _exportAndImportLayoutURL(url, exportGroup, importGroup));
+	}
+
+	@Test
 	public void testValidateContentRelativePublicDefaultPageURLWithLocale()
 		throws Exception {
 
@@ -563,6 +595,35 @@ public class LayoutReferencesExportImportContentProcessorTest {
 			StringBundler.concat(
 				_CONTENT_PREFIX, StringPool.SLASH,
 				siteDefaultLocale.getLanguage(), _CONTENT_POSTFIX));
+	}
+
+	@Test
+	public void testValidateContentRelativePublicPageURLWithSlashWithLocale()
+		throws Exception {
+
+		Group group = GroupTestUtil.addGroup();
+
+		GroupTestUtil.addLayoutSetVirtualHost(group, false);
+
+		Locale siteDefaultLocale = _portal.getSiteDefaultLocale(group);
+
+		String layoutName = RandomTestUtil.randomString(
+			LayoutFriendlyURLRandomizerBumper.INSTANCE,
+			NumericStringRandomizerBumper.INSTANCE,
+			UniqueStringRandomizerBumper.INSTANCE);
+
+		layoutName = layoutName + StringPool.SLASH + layoutName;
+
+		Layout layout = LayoutTestUtil.addTypePortletLayout(
+			group.getGroupId(), layoutName, false, null, false);
+
+		String url = StringBundler.concat(
+			StringPool.SLASH, siteDefaultLocale.getLanguage(),
+			layout.getFriendlyURL());
+
+		_layoutReferencesExportImportContentProcessor.validateContentReferences(
+			group.getGroupId(),
+			StringBundler.concat(_CONTENT_PREFIX, url, _CONTENT_POSTFIX));
 	}
 
 	private String _exportAndImportLayoutURL(

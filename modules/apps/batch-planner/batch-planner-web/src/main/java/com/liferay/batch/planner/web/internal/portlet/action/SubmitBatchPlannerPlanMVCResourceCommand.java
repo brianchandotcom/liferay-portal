@@ -97,17 +97,18 @@ public class SubmitBatchPlannerPlanMVCResourceCommand
 		UploadPortletRequest uploadPortletRequest =
 			_portal.getUploadPortletRequest(resourceRequest);
 
-		String fileName = uploadPortletRequest.getFileName("importFile");
-
 		File importFile = _toBatchPlannerFile(
-			fileName, uploadPortletRequest.getFileAsStream("importFile"));
+			uploadPortletRequest.getFileName("importFile"),
+			uploadPortletRequest.getFileAsStream("importFile"));
 
 		try {
 			URI importFileURI = importFile.toURI();
 
 			BatchPlannerPlan batchPlannerPlan =
 				_batchPlannerPlanHelper.addImportBatchPlannerPlan(
-					resourceRequest, fileName, importFileURI.toString());
+					resourceRequest,
+					ParamUtil.getString(resourceRequest, "name"),
+					importFileURI.toString());
 
 			_batchEngineBroker.submit(batchPlannerPlan.getBatchPlannerPlanId());
 

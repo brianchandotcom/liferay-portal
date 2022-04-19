@@ -296,7 +296,7 @@ const Numeric: React.FC<IProps> = ({
 					Liferay.Language.direction[editingLanguageId] === 'rtl',
 			})}
 			disabled={readOnly}
-			id={id}
+			id={id ?? name}
 			name={`${name}${inputMask ? '_masked' : ''}`}
 			onBlur={onBlur}
 			onChange={handleChange}

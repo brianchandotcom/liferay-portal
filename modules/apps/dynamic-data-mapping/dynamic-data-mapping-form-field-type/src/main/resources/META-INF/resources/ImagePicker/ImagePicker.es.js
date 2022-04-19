@@ -299,7 +299,7 @@ const Main = ({
 		>
 			<ImagePicker
 				editingLanguageId={editingLanguageId}
-				id={id}
+				id={id ?? name}
 				inputValue={
 					transformValue(inputValue) ??
 					transformValue(value) ??

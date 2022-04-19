@@ -15,25 +15,29 @@
 package com.liferay.message.boards.internal.util;
 
 import com.liferay.portal.kernel.util.ObjectValuePair;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.InputStream;
 
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Eduardo Pérez
  */
-@RunWith(PowerMockRunner.class)
 public class MBMailMessageTest {
 
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
+
 	@Test
-	public void testAddBytes() throws Exception {
+	public void testAddBytes() {
 		MBMailMessage mbMailMessage = new MBMailMessage();
 
 		mbMailMessage.addBytes("=?UTF-8?Q?T=C3=ADlde.txt?=", new byte[0]);

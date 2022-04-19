@@ -174,7 +174,9 @@ public class CommerceShippingFixedOptionSettingTableFDSView
 						themeDisplay.getLanguageId()),
 					commerceShippingFixedOption.getName(
 						themeDisplay.getLanguageId()),
-					_getWarehouse(commerceShippingFixedOptionRel),
+					_getWarehouse(
+						commerceShippingFixedOptionRel,
+						themeDisplay.getLocale()),
 					_getZip(commerceShippingFixedOptionRel)));
 		}
 
@@ -272,7 +274,8 @@ public class CommerceShippingFixedOptionSettingTableFDSView
 	}
 
 	private String _getWarehouse(
-			CommerceShippingFixedOptionRel commerceShippingFixedOptionRel)
+			CommerceShippingFixedOptionRel commerceShippingFixedOptionRel,
+			Locale locale)
 		throws PortalException {
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
@@ -282,7 +285,7 @@ public class CommerceShippingFixedOptionSettingTableFDSView
 			return StringPool.STAR;
 		}
 
-		return commerceInventoryWarehouse.getName();
+		return commerceInventoryWarehouse.getName(locale);
 	}
 
 	private String _getZip(

@@ -513,7 +513,8 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertNotNull(commerceInventoryWarehouse);
 		Assert.assertEquals(
-			"Test Commerce Warehouse", commerceInventoryWarehouse.getName());
+			"Test Commerce Warehouse",
+			commerceInventoryWarehouse.getName(LocaleUtil.getSiteDefault()));
 	}
 
 	private void _assertCommerceNotificationTemplate(

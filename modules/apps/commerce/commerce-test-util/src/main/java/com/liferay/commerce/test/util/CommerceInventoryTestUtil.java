@@ -32,6 +32,9 @@ import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerB
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 
+import java.util.Locale;
+import java.util.Map;
+
 /**
  * @author Luca Pellizzon
  */
@@ -41,7 +44,7 @@ public class CommerceInventoryTestUtil {
 		throws Exception {
 
 		return addCommerceInventoryWarehouse(
-			RandomTestUtil.randomString(), true);
+			RandomTestUtil.randomLocaleStringMap(), true);
 	}
 
 	public static CommerceInventoryWarehouse addCommerceInventoryWarehouse(
@@ -49,7 +52,7 @@ public class CommerceInventoryTestUtil {
 		throws Exception {
 
 		return addCommerceInventoryWarehouse(
-			RandomTestUtil.randomString(), active);
+			RandomTestUtil.randomLocaleStringMap(), active);
 	}
 
 	public static CommerceInventoryWarehouse addCommerceInventoryWarehouse(
@@ -57,26 +60,18 @@ public class CommerceInventoryTestUtil {
 		throws Exception {
 
 		return addCommerceInventoryWarehouse(
-			RandomTestUtil.randomString(), active, serviceContext);
+			RandomTestUtil.randomLocaleStringMap(), active, serviceContext);
 	}
 
 	public static CommerceInventoryWarehouse addCommerceInventoryWarehouse(
-			ServiceContext serviceContext)
+			Map<Locale, String> nameMap)
 		throws Exception {
 
-		return addCommerceInventoryWarehouse(
-			RandomTestUtil.randomString(), true, serviceContext);
+		return addCommerceInventoryWarehouse(nameMap, true);
 	}
 
 	public static CommerceInventoryWarehouse addCommerceInventoryWarehouse(
-			String name)
-		throws Exception {
-
-		return addCommerceInventoryWarehouse(name, true);
-	}
-
-	public static CommerceInventoryWarehouse addCommerceInventoryWarehouse(
-			String name, boolean active)
+			Map<Locale, String> nameMap, boolean active)
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -88,7 +83,7 @@ public class CommerceInventoryTestUtil {
 
 		return CommerceInventoryWarehouseLocalServiceUtil.
 			addCommerceInventoryWarehouse(
-				null, name, RandomTestUtil.randomString(), active,
+				null, nameMap, RandomTestUtil.randomLocaleStringMap(), active,
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), region.getRegionCode(),
@@ -97,7 +92,8 @@ public class CommerceInventoryTestUtil {
 	}
 
 	public static CommerceInventoryWarehouse addCommerceInventoryWarehouse(
-			String name, boolean active, ServiceContext serviceContext)
+			Map<Locale, String> nameMap, boolean active,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		Country country = _setUpCountry(serviceContext);
@@ -106,7 +102,7 @@ public class CommerceInventoryTestUtil {
 
 		return CommerceInventoryWarehouseLocalServiceUtil.
 			addCommerceInventoryWarehouse(
-				null, name, RandomTestUtil.randomString(), active,
+				null, nameMap, RandomTestUtil.randomLocaleStringMap(), active,
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), region.getRegionCode(),
@@ -115,10 +111,18 @@ public class CommerceInventoryTestUtil {
 	}
 
 	public static CommerceInventoryWarehouse addCommerceInventoryWarehouse(
-			String name, ServiceContext serviceContext)
+			Map<Locale, String> nameMap, ServiceContext serviceContext)
 		throws Exception {
 
-		return addCommerceInventoryWarehouse(name, true, serviceContext);
+		return addCommerceInventoryWarehouse(nameMap, true, serviceContext);
+	}
+
+	public static CommerceInventoryWarehouse addCommerceInventoryWarehouse(
+			ServiceContext serviceContext)
+		throws Exception {
+
+		return addCommerceInventoryWarehouse(
+			RandomTestUtil.randomLocaleStringMap(), true, serviceContext);
 	}
 
 	public static CommerceInventoryWarehouseItem
@@ -158,7 +162,7 @@ public class CommerceInventoryTestUtil {
 
 	public static CommerceInventoryWarehouse
 			addCommerceInventoryWarehouseWithExternalReferenceCode(
-				long groupId, String name)
+				long groupId, Map<Locale, String> nameMap)
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -170,8 +174,8 @@ public class CommerceInventoryTestUtil {
 
 		return CommerceInventoryWarehouseLocalServiceUtil.
 			addCommerceInventoryWarehouse(
-				RandomTestUtil.randomString(), name,
-				RandomTestUtil.randomString(), true,
+				RandomTestUtil.randomString(), nameMap,
+				RandomTestUtil.randomLocaleStringMap(), true,
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), region.getRegionCode(),

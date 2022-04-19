@@ -56,7 +56,7 @@ CommerceInventoryWarehouse commerceInventoryWarehouse = (CommerceInventoryWareho
 
 		<liferay-security:permissionsURL
 			modelResource="<%= CommerceInventoryWarehouse.class.getName() %>"
-			modelResourceDescription="<%= commerceInventoryWarehouse.getName() %>"
+			modelResourceDescription="<%= commerceInventoryWarehouse.getName(locale) %>"
 			resourcePrimKey="<%= String.valueOf(commerceInventoryWarehouse.getCommerceInventoryWarehouseId()) %>"
 			var="permissionsCommerceInventoryWarehouseURL"
 			windowState="<%= LiferayWindowState.POP_UP.toString() %>"

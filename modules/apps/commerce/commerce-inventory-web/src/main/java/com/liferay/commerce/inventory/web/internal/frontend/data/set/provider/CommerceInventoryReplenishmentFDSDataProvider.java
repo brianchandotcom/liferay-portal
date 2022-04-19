@@ -91,7 +91,8 @@ public class CommerceInventoryReplenishmentFDSDataProvider
 				new Replenishment(
 					commerceInventoryReplenishmentItem.
 						getCommerceInventoryReplenishmentItemId(),
-					commerceInventoryWarehouse.getName(),
+					commerceInventoryWarehouse.getName(
+						_portal.getLocale(httpServletRequest)),
 					dateTimeFormat.format(
 						commerceInventoryReplenishmentItem.
 							getAvailabilityDate()),

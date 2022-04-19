@@ -82,7 +82,7 @@ if (Validator.isNotNull(backURL)) {
 
 							<tr data-commerce-inventory-warehouse-id="<%= commerceInventoryWarehouse.getCommerceInventoryWarehouseId() %>" data-commerce-inventory-warehouse-item-id="<%= commerceInventoryWarehouseItemId %>" data-index="<%= curIndex %>" data-mvcc-version="<%= mvccVersion %>">
 								<td>
-									<%= HtmlUtil.escape(commerceInventoryWarehouse.getName()) %>
+									<%= HtmlUtil.escape(commerceInventoryWarehouse.getName(locale)) %>
 								</td>
 								<td>
 									<aui:input id='<%= "commerceInventoryWarehouseItemQuantity" + curIndex %>' label="" name="commerceInventoryWarehouseItemQuantity" value="<%= quantity %>" wrapperCssClass="m-0" />

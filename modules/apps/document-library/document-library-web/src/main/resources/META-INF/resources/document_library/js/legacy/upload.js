@@ -1107,6 +1107,9 @@ AUI.add(
 								const openToastProps = {
 									autoClose: false,
 									message: `${validFilesLength} files were uploaded`,
+									toastProps: {
+										className: 'alert-full',
+									},
 									type: 'success',
 								};
 
@@ -1130,6 +1133,9 @@ AUI.add(
 									invalidFiles:
 										currentUploadData.invalidFiles,
 									title: `${invalidFilesLength} files could not be uploaded`,
+									toastProps: {
+										className: 'alert-full',
+									},
 								});
 
 								Liferay.Util.openToast({

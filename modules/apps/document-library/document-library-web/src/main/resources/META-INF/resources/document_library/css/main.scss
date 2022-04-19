@@ -1,4 +1,5 @@
 @import 'atlas-variables';
+@import 'cadmin-variables';
 
 @import 'image_editor_modal';
 
@@ -825,6 +826,12 @@ $productMenuWidth: 320px;
 	background-color: #ffffe0;
 	font-size: 1.2em;
 	padding: 0.3em;
+}
+
+html#{$cadmin-selector} .cadmin {
+	.alert.alert-full {
+		width: $cadmin-alert-notifications-max-width;
+	}
 }
 
 .autocomplete-dropdown-menu {

@@ -20,22 +20,20 @@ const DeactivationKeysTableHeader = ({
 	const [activationKeys] = activationKeysState;
 
 	return (
-		<>
-			<div className="bg-neutral-1 d-flex flex-column pb-1 pt-3 px-3 rounded">
-				<div className="d-flex">
-					<Filter
-						activationKeys={activationKeys}
-						filtersState={[filters, setFilters]}
-					/>
-				</div>
-
-				<BadgeFilter
-					activationKeysLength={activationKeys?.length}
+		<div className="bg-neutral-1 d-flex flex-column pb-1 pt-3 px-3 rounded">
+			<div className="d-flex">
+				<Filter
+					activationKeys={activationKeys}
 					filtersState={[filters, setFilters]}
-					loading={loading}
 				/>
 			</div>
-		</>
+
+			<BadgeFilter
+				activationKeysLength={activationKeys?.length}
+				filtersState={[filters, setFilters]}
+				loading={loading}
+			/>
+		</div>
 	);
 };
 

@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBus;
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -96,9 +96,8 @@ public class BackgroundTaskMessagingConfigurator {
 		_serviceRegistrations.add(
 			bundleContext.registerService(
 				Destination.class, destination,
-				HashMapDictionaryBuilder.<String, Object>put(
-					"destination.name", destination.getName()
-				).build()));
+				MapUtil.singletonDictionary(
+					"destination.name", destination.getName())));
 
 		return destination;
 	}

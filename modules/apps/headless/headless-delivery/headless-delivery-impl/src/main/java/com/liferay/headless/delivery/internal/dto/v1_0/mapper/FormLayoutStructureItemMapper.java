@@ -57,6 +57,7 @@ public class FormLayoutStructureItemMapper
 										getClassNameId());
 							}
 						};
+						indexed = formStyledLayoutStructureItem.isIndexed();
 
 						setFormSubtype(
 							() -> {

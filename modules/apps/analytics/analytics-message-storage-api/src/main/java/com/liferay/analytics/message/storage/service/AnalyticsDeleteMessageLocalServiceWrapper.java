@@ -58,6 +58,16 @@ public class AnalyticsDeleteMessageLocalServiceWrapper
 			analyticsDeleteMessage);
 	}
 
+	@Override
+	public com.liferay.analytics.message.storage.model.AnalyticsDeleteMessage
+		addAnalyticsDeleteMessage(
+			long companyId, java.util.Date createDate, String className,
+			long classPK, long userId) {
+
+		return _analyticsDeleteMessageLocalService.addAnalyticsDeleteMessage(
+			companyId, createDate, className, classPK, userId);
+	}
+
 	/**
 	 * Creates a new analytics delete message with the primary key. Does not add the analytics delete message to the database.
 	 *

@@ -18,9 +18,9 @@ import com.liferay.analytics.dxp.entity.rest.dto.v1_0.DXPEntity;
 import com.liferay.analytics.dxp.entity.rest.dto.v1_0.ExpandoField;
 import com.liferay.analytics.dxp.entity.rest.dto.v1_0.Field;
 import com.liferay.analytics.dxp.entity.rest.dto.v1_0.converter.DXPEntityDTOConverter;
-import com.liferay.analytics.message.sender.util.AnalyticsExpandoBridgeUtil;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.configuration.AnalyticsConfigurationTracker;
+import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.model.ExpandoTable;
@@ -49,6 +49,7 @@ import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -82,6 +83,59 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 			String.valueOf(baseModel.getPrimaryKeyObj()),
 			(Date)modelAttributes.get("modifiedDate"),
 			baseModel.getModelClassName());
+	}
+
+	private void _addFieldAttributes(
+		BaseModel<?> baseModel, List<Field> fields,
+		List<String> includeAttributeNames) {
+
+		Map<String, Object> modelAttributes = baseModel.getModelAttributes();
+
+		for (Map.Entry<String, Object> entry : modelAttributes.entrySet()) {
+			if (!ListUtil.isEmpty(includeAttributeNames) &&
+				!includeAttributeNames.contains(entry.getKey())) {
+
+				continue;
+			}
+
+			Field field = new Field() {
+				{
+					name = entry.getKey();
+					value = entry.getValue();
+				}
+			};
+
+			fields.add(field);
+		}
+	}
+
+	private Map<String, Serializable> _getAttributes(
+		ExpandoBridge expandoBridge, List<String> includeAttributeNames) {
+
+		Map<String, Serializable> newAttributes = new HashMap<>();
+
+		Map<String, Serializable> attributes = expandoBridge.getAttributes(
+			false);
+
+		for (Map.Entry<String, Serializable> entry : attributes.entrySet()) {
+			if (!ListUtil.isEmpty(includeAttributeNames) &&
+				!includeAttributeNames.contains(entry.getKey())) {
+
+				continue;
+			}
+
+			String dataType = ExpandoColumnConstants.getDataType(
+				expandoBridge.getAttributeType(entry.getKey()));
+
+			if (Validator.isBlank(dataType)) {
+				dataType = ExpandoColumnConstants.DATA_TYPE_TEXT;
+			}
+
+			newAttributes.put(
+				entry.getKey() + "-" + dataType, entry.getValue());
+		}
+
+		return newAttributes;
 	}
 
 	private Field[] _getExpandoColumnFields(
@@ -156,9 +210,8 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 				analyticsConfiguration.syncedUserFieldNames());
 		}
 
-		Map<String, Serializable> attributes =
-			AnalyticsExpandoBridgeUtil.getAttributes(
-				baseModel.getExpandoBridge(), includeAttributeNames);
+		Map<String, Serializable> attributes = _getAttributes(
+			baseModel.getExpandoBridge(), includeAttributeNames);
 
 		for (Map.Entry<String, Serializable> entry : attributes.entrySet()) {
 			String key = entry.getKey();
@@ -186,7 +239,7 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 		return expandoFields.toArray(new ExpandoField[0]);
 	}
 
-	private Field[] _getFields(BaseModel<?> baseModel) {
+	private Field[] _getFields(BaseModel<?> baseModel) throws Exception {
 		if (StringUtil.equals(
 				baseModel.getModelClassName(), ExpandoColumn.class.getName())) {
 
@@ -212,18 +265,29 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 
 		List<Field> fields = new ArrayList<>();
 
-		Map<String, Object> modelAttributes = baseModel.getModelAttributes();
+		List<String> includeAttributeNames = new ArrayList<>();
 
-		for (Map.Entry<String, Object> entry : modelAttributes.entrySet()) {
-			Field field = new Field() {
-				{
-					name = entry.getKey();
-					value = entry.getValue();
-				}
-			};
+		ShardedModel shardedModel = (ShardedModel)baseModel;
 
-			fields.add(field);
+		if (StringUtil.equals(
+				baseModel.getModelClassName(), User.class.getName())) {
+
+			User user = (User)baseModel;
+
+			AnalyticsConfiguration analyticsConfiguration =
+				_analyticsConfigurationTracker.getAnalyticsConfiguration(
+					shardedModel.getCompanyId());
+
+			_addFieldAttributes(
+				user.getContact(), fields,
+				ListUtil.fromArray(
+					analyticsConfiguration.syncedContactFieldNames()));
+
+			includeAttributeNames = ListUtil.fromArray(
+				analyticsConfiguration.syncedUserFieldNames());
 		}
+
+		_addFieldAttributes(baseModel, fields, includeAttributeNames);
 
 		return fields.toArray(new Field[0]);
 	}

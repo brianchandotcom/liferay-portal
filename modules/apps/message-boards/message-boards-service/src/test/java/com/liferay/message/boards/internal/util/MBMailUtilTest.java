@@ -14,26 +14,26 @@
 
 package com.liferay.message.boards.internal.util;
 
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import javax.mail.Message;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.mockito.Mockito;
-
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author John Zhao
  */
-@PrepareForTest({MBMailUtil.class, StringPool.class, PropsValues.class})
-@RunWith(PowerMockRunner.class)
 public class MBMailUtilTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testGetCategoryId() {

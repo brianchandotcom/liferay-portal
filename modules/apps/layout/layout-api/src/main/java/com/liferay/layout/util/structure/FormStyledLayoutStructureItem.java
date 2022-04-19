@@ -17,16 +17,15 @@ package com.liferay.layout.util.structure;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 
 import java.util.Objects;
 
 /**
  * @author Eudaldo Alonso
  */
-public class FormLayoutStructureItem extends LayoutStructureItem {
+public class FormStyledLayoutStructureItem extends StyledLayoutStructureItem {
 
-	public FormLayoutStructureItem(String parentItemId) {
+	public FormStyledLayoutStructureItem(String parentItemId) {
 		super(parentItemId);
 	}
 
@@ -36,17 +35,17 @@ public class FormLayoutStructureItem extends LayoutStructureItem {
 			return true;
 		}
 
-		if (!(object instanceof FormLayoutStructureItem)) {
+		if (!(object instanceof FormStyledLayoutStructureItem)) {
 			return false;
 		}
 
-		FormLayoutStructureItem formLayoutStructureItem =
-			(FormLayoutStructureItem)object;
+		FormStyledLayoutStructureItem formStyledLayoutStructureItem =
+			(FormStyledLayoutStructureItem)object;
 
 		if (!Objects.equals(
-				_classNameId, formLayoutStructureItem._classNameId) ||
+				_classNameId, formStyledLayoutStructureItem._classNameId) ||
 			!Objects.equals(
-				_classTypeId, formLayoutStructureItem._classTypeId)) {
+				_classTypeId, formStyledLayoutStructureItem._classTypeId)) {
 
 			return false;
 		}
@@ -64,7 +63,9 @@ public class FormLayoutStructureItem extends LayoutStructureItem {
 
 	@Override
 	public JSONObject getItemConfigJSONObject() {
-		return JSONUtil.put(
+		JSONObject jsonObject = super.getItemConfigJSONObject();
+
+		return jsonObject.put(
 			"classNameId", _classNameId
 		).put(
 			"classTypeId", _classTypeId
@@ -91,6 +92,8 @@ public class FormLayoutStructureItem extends LayoutStructureItem {
 
 	@Override
 	public void updateItemConfig(JSONObject itemConfigJSONObject) {
+		super.updateItemConfig(itemConfigJSONObject);
+
 		if (itemConfigJSONObject.has("classNameId")) {
 			setClassNameId(itemConfigJSONObject.getLong("classNameId"));
 		}

@@ -85,11 +85,8 @@ public class KaleoTimerInstanceTokenLocalServiceImpl
 			kaleoTimerInstanceTokenPersistence.create(
 				kaleoTimerInstanceTokenId);
 
-		long groupId = _staging.getLiveGroupId(
-			serviceContext.getScopeGroupId());
-
-		kaleoTimerInstanceToken.setGroupId(groupId);
-
+		kaleoTimerInstanceToken.setGroupId(
+			_staging.getLiveGroupId(serviceContext.getScopeGroupId()));
 		kaleoTimerInstanceToken.setCompanyId(user.getCompanyId());
 		kaleoTimerInstanceToken.setUserId(user.getUserId());
 		kaleoTimerInstanceToken.setUserName(user.getFullName());

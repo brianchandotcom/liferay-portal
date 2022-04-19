@@ -103,11 +103,8 @@ public class KaleoTaskInstanceTokenLocalServiceImpl
 		KaleoTaskInstanceToken kaleoTaskInstanceToken =
 			kaleoTaskInstanceTokenPersistence.create(kaleoTaskInstanceTokenId);
 
-		long groupId = _staging.getLiveGroupId(
-			serviceContext.getScopeGroupId());
-
-		kaleoTaskInstanceToken.setGroupId(groupId);
-
+		kaleoTaskInstanceToken.setGroupId(
+			_staging.getLiveGroupId(serviceContext.getScopeGroupId()));
 		kaleoTaskInstanceToken.setCompanyId(user.getCompanyId());
 		kaleoTaskInstanceToken.setUserId(user.getUserId());
 		kaleoTaskInstanceToken.setUserName(user.getFullName());
@@ -120,10 +117,9 @@ public class KaleoTaskInstanceTokenLocalServiceImpl
 		kaleoTaskInstanceToken.setKaleoInstanceId(
 			kaleoInstanceToken.getKaleoInstanceId());
 		kaleoTaskInstanceToken.setKaleoInstanceTokenId(kaleoInstanceTokenId);
-		kaleoTaskInstanceToken.setDueDate(dueDate);
-
 		kaleoTaskInstanceToken.setKaleoTaskId(kaleoTaskId);
 		kaleoTaskInstanceToken.setKaleoTaskName(kaleoTaskName);
+		kaleoTaskInstanceToken.setDueDate(dueDate);
 
 		if (workflowContext != null) {
 			kaleoTaskInstanceToken.setClassName(

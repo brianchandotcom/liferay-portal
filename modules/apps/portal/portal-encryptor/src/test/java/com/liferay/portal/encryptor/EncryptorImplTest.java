@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.petra.encryptor;
+package com.liferay.portal.encryptor;
 
+import com.liferay.portal.kernel.encryptor.Encryptor;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -30,9 +31,8 @@ import org.junit.Test;
 
 /**
  * @author Mika Koivisto
- * @see    com.liferay.util.EncryptorTest
  */
-public class EncryptorTest {
+public class EncryptorImplTest {
 
 	@ClassRule
 	@Rule
@@ -43,21 +43,23 @@ public class EncryptorTest {
 	public void testKeySerialization() throws Exception {
 		Map<String, Object> properties = new HashMap<>();
 
+		Encryptor encryptor = new EncryptorImpl();
+
 		properties.put(PropsKeys.COMPANY_ENCRYPTION_ALGORITHM, "AES");
 		properties.put(PropsKeys.COMPANY_ENCRYPTION_KEY_SIZE, "128");
 
 		PropsTestUtil.setProps(properties);
 
-		Key key = Encryptor.generateKey();
+		Key key = encryptor.generateKey();
 
-		String encryptedString = Encryptor.encrypt(key, "Hello World!");
+		String encryptedString = encryptor.encrypt(key, "Hello World!");
 
-		String serializedKey = Encryptor.serializeKey(key);
+		String serializedKey = encryptor.serializeKey(key);
 
-		key = Encryptor.deserializeKey(serializedKey);
+		key = encryptor.deserializeKey(serializedKey);
 
 		Assert.assertEquals(
-			"Hello World!", Encryptor.decrypt(key, encryptedString));
+			"Hello World!", encryptor.decrypt(key, encryptedString));
 	}
 
 }

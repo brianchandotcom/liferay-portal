@@ -10,7 +10,7 @@ definition {
 		MenuItem.clickNoError(menuItem = "${menuItem}");
 	}
 
-	macro gotoChangeDetailsNavbar {
+	macro gotoNavbar {
 		Click(
 			key_navBarTitle = "${navBarTitle}",
 			locator1 = "Publications#MANAGE_PUBLICATIONS_NAVBAR_TITLE");

@@ -481,7 +481,7 @@ definition {
 			changeType = "Added",
 			contentValueInPublication = "Web Content");
 
-		PublicationsNavigator.gotoChangeDetailsNavbar(navBarTitle = "Data");
+		PublicationsNavigator.gotoNavbar(navBarTitle = "Data");
 
 		PublicationsChangeDetails.viewChangeDetailsInData(
 			changeType = "Added",
@@ -501,7 +501,7 @@ definition {
 			columnName = "名称",
 			columnValueInPublication = "网页内容标题");
 
-		PublicationsNavigator.gotoChangeDetailsNavbar(navBarTitle = "Display");
+		PublicationsNavigator.gotoNavbar(navBarTitle = "Display");
 
 		PublicationsChangeDetails.viewChangeDetailsInDisplay(
 			changeType = "Added",
@@ -1045,7 +1045,7 @@ definition {
 			contentValueInPublication = "WC WebContent Content Edited",
 			diffAddedValue = "Edited");
 
-		PublicationsNavigator.gotoChangeDetailsNavbar(navBarTitle = "Data");
+		PublicationsNavigator.gotoNavbar(navBarTitle = "Data");
 
 		PublicationsChangeDetails.viewChangeDetailsInData(
 			changeType = "Modified",
@@ -1054,13 +1054,13 @@ definition {
 			columnValueInPublication = "WC WebContent Title Edited",
 			diffAddedValue = "Edited");
 
-		PublicationsNavigator.gotoChangeDetailsNavbar(navBarTitle = "Parents");
+		PublicationsNavigator.gotoNavbar(navBarTitle = "Parents");
 
 		PublicationsChangeDetails.viewChangeDetailsInParents(
 			changeParentsCategory = "Dynamic Data Mapping Template",
 			changeParentsTitle = "Basic Web Content");
 
-		PublicationsNavigator.gotoChangeDetailsNavbar(navBarTitle = "Children");
+		PublicationsNavigator.gotoNavbar(navBarTitle = "Children");
 
 		PublicationsChangeDetails.viewChangeDetailsInChildren(
 			changeChildrenCategory = "Web Content Translation",

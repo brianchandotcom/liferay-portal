@@ -436,7 +436,7 @@ definition {
 			changeType = "Added",
 			keyImage = "Document_1.jpg");
 
-		PublicationsNavigator.gotoChangeDetailsNavbar(navBarTitle = "Data");
+		PublicationsNavigator.gotoNavbar(navBarTitle = "Data");
 
 		PublicationsChangeDetails.viewChangeDetailsInData(
 			changeType = "Added",

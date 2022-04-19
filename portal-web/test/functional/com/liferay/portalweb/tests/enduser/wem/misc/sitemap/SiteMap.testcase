@@ -31,7 +31,8 @@ definition {
 	@description = "View private parend and child page via Site Map widget."
 	@priority = "4"
 	test DisplayPrivateParentAndChildPage {
-		property private.pages.enabled = "true";
+		property osgi.module.configuration.file.names = "com.liferay.release.feature.flag.web.internal.configuration.ReleaseFeatureFlagConfiguration.config";
+		property osgi.module.configurations = "disabledReleaseFeatureFlags=[&quot;DEACTIVATE_PRIVATE_PAGES&quot;]";
 
 		task ("Add a parent private page") {
 			JSONLayout.addPrivateLayout(

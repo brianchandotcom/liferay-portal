@@ -238,7 +238,8 @@ definition {
 	@priority = "4"
 	@uitest
 	test ShouldBeDisplayWithCategory {
-		property private.pages.enabled = "true";
+		property osgi.module.configuration.file.names = "com.liferay.release.feature.flag.web.internal.configuration.ReleaseFeatureFlagConfiguration.config";
+		property osgi.module.configurations = "disabledReleaseFeatureFlags=[&quot;DEACTIVATE_PRIVATE_PAGES&quot;]";
 		property testray.component.names = "Categories,Staging,Related Assets,Web Content Administration";
 
 		task ("Add a public page with JSON") {

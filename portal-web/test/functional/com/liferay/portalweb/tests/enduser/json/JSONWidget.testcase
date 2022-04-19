@@ -67,7 +67,8 @@ definition {
 	@priority = "5"
 	test AddWidgetsToPrivateLayout {
 		property osgi.app.includes = "bookmarks";
-		property private.pages.enabled = "true";
+		property osgi.module.configuration.file.names = "com.liferay.release.feature.flag.web.internal.configuration.ReleaseFeatureFlagConfiguration.config";
+		property osgi.module.configurations = "disabledReleaseFeatureFlags=[&quot;DEACTIVATE_PRIVATE_PAGES&quot;]";
 
 		task ("Add a private page") {
 			JSONLayout.addPrivateLayout(

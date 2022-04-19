@@ -281,7 +281,8 @@ definition {
 
 	@priority = "5"
 	test AddOrganizationSitePrivatePage {
-		property private.pages.enabled = "true";
+		property osgi.module.configuration.file.names = "com.liferay.release.feature.flag.web.internal.configuration.ReleaseFeatureFlagConfiguration.config";
+		property osgi.module.configurations = "disabledReleaseFeatureFlags=[&quot;DEACTIVATE_PRIVATE_PAGES&quot;]";
 		property testray.component.names = "Training";
 
 		var portalURL = PropsUtil.get("portal.url");

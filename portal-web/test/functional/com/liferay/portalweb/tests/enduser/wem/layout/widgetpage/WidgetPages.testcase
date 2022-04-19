@@ -107,7 +107,8 @@ definition {
 	@description = "The user can add a private widget page with a child page."
 	@priority = "4"
 	test AddPrivateChildPage {
-		property private.pages.enabled = "true";
+		property osgi.module.configuration.file.names = "com.liferay.release.feature.flag.web.internal.configuration.ReleaseFeatureFlagConfiguration.config";
+		property osgi.module.configurations = "disabledReleaseFeatureFlags=[&quot;DEACTIVATE_PRIVATE_PAGES&quot;]";
 
 		task ("Add a private widget page") {
 			JSONLayout.addPrivateLayout(
@@ -164,7 +165,8 @@ definition {
 	@description = "The user can add a Blogs portlet to private page."
 	@priority = "4"
 	test AddWidgetToPrivatePage {
-		property private.pages.enabled = "true";
+		property osgi.module.configuration.file.names = "com.liferay.release.feature.flag.web.internal.configuration.ReleaseFeatureFlagConfiguration.config";
+		property osgi.module.configurations = "disabledReleaseFeatureFlags=[&quot;DEACTIVATE_PRIVATE_PAGES&quot;]";
 
 		task ("Add a private widget page") {
 			JSONLayout.addPrivateLayout(

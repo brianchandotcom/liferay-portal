@@ -542,7 +542,8 @@ definition {
 	@description = "Assert a user can navigate to a Site's public or private pages via MySites widget"
 	@priority = "3"
 	test ViewSitePages {
-		property private.pages.enabled = "true";
+		property osgi.module.configuration.file.names = "com.liferay.release.feature.flag.web.internal.configuration.ReleaseFeatureFlagConfiguration.config";
+		property osgi.module.configurations = "disabledReleaseFeatureFlags=[&quot;DEACTIVATE_PRIVATE_PAGES&quot;]";
 		property testray.component.names = "Site Administration";
 
 		task ("Add a site with a public and private page") {

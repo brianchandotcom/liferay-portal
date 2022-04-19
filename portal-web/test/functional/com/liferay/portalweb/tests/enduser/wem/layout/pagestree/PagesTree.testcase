@@ -31,7 +31,8 @@ definition {
 	@description = "This is a test for LPS-103104. Can add pages of different types via page tree panel."
 	@priority = "3"
 	test AddAllTypesOfPages {
-		property private.pages.enabled = "true";
+		property osgi.module.configuration.file.names = "com.liferay.release.feature.flag.web.internal.configuration.ReleaseFeatureFlagConfiguration.config";
+		property osgi.module.configurations = "disabledReleaseFeatureFlags=[&quot;DEACTIVATE_PRIVATE_PAGES&quot;]";
 
 		task ("Add different types of pages via page tree") {
 			ApplicationsMenu.gotoSite(site = "Test Site Name");
@@ -348,8 +349,9 @@ definition {
 	@description = "This is a test for LPS-102544. Can navigate to both public and private pages from pages finder."
 	@priority = "5"
 	test NavigateToBothPageTypes {
+		property osgi.module.configuration.file.names = "com.liferay.release.feature.flag.web.internal.configuration.ReleaseFeatureFlagConfiguration.config";
+		property osgi.module.configurations = "disabledReleaseFeatureFlags=[&quot;DEACTIVATE_PRIVATE_PAGES&quot;]";
 		property portal.acceptance = "true";
-		property private.pages.enabled = "true";
 
 		task ("Add a public and private pages") {
 			JSONLayout.addPublicLayout(
@@ -412,7 +414,8 @@ definition {
 	@description = "This is a test for LPS-133709. The user can navigate to private and public pages defined in navigation menu via the Page Tree."
 	@priority = "4"
 	test NavigateToPrivateAndPublicPagesDefinedInNavigationMenu {
-		property private.pages.enabled = "true";
+		property osgi.module.configuration.file.names = "com.liferay.release.feature.flag.web.internal.configuration.ReleaseFeatureFlagConfiguration.config";
+		property osgi.module.configurations = "disabledReleaseFeatureFlags=[&quot;DEACTIVATE_PRIVATE_PAGES&quot;]";
 
 		task ("Add a public content page") {
 			JSONLayout.addPublicLayout(
@@ -855,7 +858,8 @@ definition {
 	@description = "This is a test for LPS-133709. The user can switch site navigation menus via page type selector in Page Tree."
 	@priority = "4"
 	test SwitchNavigationMenusViaPageTypeSelector {
-		property private.pages.enabled = "true";
+		property osgi.module.configuration.file.names = "com.liferay.release.feature.flag.web.internal.configuration.ReleaseFeatureFlagConfiguration.config";
+		property osgi.module.configurations = "disabledReleaseFeatureFlags=[&quot;DEACTIVATE_PRIVATE_PAGES&quot;]";
 
 		task ("Add two public pages") {
 			for (var n : list "1,2") {

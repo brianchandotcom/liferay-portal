@@ -530,8 +530,9 @@ definition {
 	@description = "This is a test for LPS-140834. The user could select style book in master page when use public pages theme."
 	@priority = "4"
 	test SelectStyleBookInMasterPageWhenUsePublicPagesTheme {
+		property osgi.module.configuration.file.names = "com.liferay.release.feature.flag.web.internal.configuration.ReleaseFeatureFlagConfiguration.config";
+		property osgi.module.configurations = "disabledReleaseFeatureFlags=[&quot;DEACTIVATE_PRIVATE_PAGES&quot;]";
 		property portal.release = "false";
-		property private.pages.enabled = "true";
 
 		task ("Add a public page and change it's theme to Minium") {
 			JSONLayout.addPublicLayout(

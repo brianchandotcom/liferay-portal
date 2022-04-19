@@ -185,7 +185,8 @@ definition {
 	@description = "Deleting firiendly URL makes it not able to access page via fridely URL."
 	@priority = "4"
 	test DeleteSiteFriendlyURL {
-		property private.pages.enabled = "true";
+		property osgi.module.configuration.file.names = "com.liferay.release.feature.flag.web.internal.configuration.ReleaseFeatureFlagConfiguration.config";
+		property osgi.module.configurations = "disabledReleaseFeatureFlags=[&quot;DEACTIVATE_PRIVATE_PAGES&quot;]";
 
 		task ("Add a site") {
 			JSONGroup.addGroup(groupName = "Site Name");
@@ -265,7 +266,8 @@ definition {
 	@description = "Could edit friendly URL and access by it."
 	@priority = "4"
 	test EditSiteFriendlyURL {
-		property private.pages.enabled = "true";
+		property osgi.module.configuration.file.names = "com.liferay.release.feature.flag.web.internal.configuration.ReleaseFeatureFlagConfiguration.config";
+		property osgi.module.configurations = "disabledReleaseFeatureFlags=[&quot;DEACTIVATE_PRIVATE_PAGES&quot;]";
 
 		var portalURL = PropsUtil.get("portal.url");
 

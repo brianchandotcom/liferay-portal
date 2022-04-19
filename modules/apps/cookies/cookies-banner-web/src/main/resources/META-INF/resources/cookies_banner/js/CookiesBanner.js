@@ -49,10 +49,7 @@ export default function ({configurationUrl}) {
 								checkCookiesConsent(cookieBanner);
 
 								Liferay.Util.getOpener().Liferay.fire(
-									'closeModal',
-									{
-										id: 'cookiesBannerConfiguration',
-									}
+									'closeModal'
 								);
 							},
 						},
@@ -65,10 +62,7 @@ export default function ({configurationUrl}) {
 								checkCookiesConsent(cookieBanner);
 
 								Liferay.Util.getOpener().Liferay.fire(
-									'closeModal',
-									{
-										id: 'cookiesBannerConfiguration',
-									}
+									'closeModal'
 								);
 							},
 						},
@@ -80,10 +74,7 @@ export default function ({configurationUrl}) {
 								checkCookiesConsent(cookieBanner);
 
 								Liferay.Util.getOpener().Liferay.fire(
-									'closeModal',
-									{
-										id: 'cookiesBannerConfiguration',
-									}
+									'closeModal'
 								);
 							},
 						},

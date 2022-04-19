@@ -309,8 +309,7 @@ public class BatchPlannerPlanServiceImpl
 			getPermissionChecker(), batchPlannerPlanId, ActionKeys.UPDATE);
 
 		return batchPlannerPlanLocalService.updateBatchPlannerPlan(
-			getUserId(), batchPlannerPlanId, externalType, internalClassName,
-			name);
+			batchPlannerPlanId, externalType, internalClassName, name);
 	}
 
 	private static volatile ModelResourcePermission<BatchPlannerPlan>

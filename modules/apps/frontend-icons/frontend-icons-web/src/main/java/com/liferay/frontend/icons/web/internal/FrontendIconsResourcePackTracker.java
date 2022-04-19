@@ -50,96 +50,12 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Bryce Osterhaus
  */
-@Component(service = {})
-public class FrontendIconsResourcePackTracker
-	implements ServiceTrackerCustomizer
-		<ServletContext, ServiceRegistration<FrontendIconsResourcePack>> {
-
-	@Override
-	public ServiceRegistration<FrontendIconsResourcePack> addingService(
-		ServiceReference<ServletContext> serviceReference) {
-
-		Bundle bundle = serviceReference.getBundle();
-
-		Dictionary<String, String> headers = bundle.getHeaders(
-			StringPool.BLANK);
-
-		if (headers == null) {
-			return null;
-		}
-
-		String iconsPath = headers.get("Liferay-Icons-Path");
-		String name = headers.get("Liferay-Icons-Pack-Name");
-
-		if (Validator.isBlank(iconsPath) || Validator.isBlank(name)) {
-			return null;
-		}
-
-		FrontendIconsResourcePack frontendIconsResourcePack =
-			_createIconResourcePack(bundle, iconsPath, name);
-
-		if (frontendIconsResourcePack == null) {
-			return null;
-		}
-
-		return _bundleContext.registerService(
-			FrontendIconsResourcePack.class, frontendIconsResourcePack,
-			MapUtil.singletonDictionary("service.ranking", 0));
-	}
-
-	@Override
-	public void modifiedService(
-		ServiceReference<ServletContext> serviceReference,
-		ServiceRegistration<FrontendIconsResourcePack> serviceRegistration) {
-	}
-
-	@Override
-	public void removedService(
-		ServiceReference<ServletContext> serviceReference,
-		ServiceRegistration<FrontendIconsResourcePack> serviceRegistration) {
-
-		Bundle bundle = serviceReference.getBundle();
-
-		Dictionary<String, String> headers = bundle.getHeaders(
-			StringPool.BLANK);
-
-		if (headers != null) {
-			String name = headers.get("Liferay-Icons-Pack-Name");
-
-			if (!Validator.isBlank(name)) {
-				try {
-					_companyLocalService.forEachCompanyId(
-						companyId -> {
-							try {
-								_frontendIconsResourcePackRepository.
-									deleteFrontendIconsResourcePack(
-										companyId, name);
-							}
-							catch (Exception exception) {
-								if (_log.isDebugEnabled()) {
-									_log.debug(exception);
-								}
-							}
-						});
-				}
-				catch (Exception exception) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(exception);
-					}
-				}
-
-				serviceRegistration.unregister();
-
-				_bundleContext.ungetService(serviceReference);
-			}
-		}
-	}
+@Component(immediate = true, service = {})
+public class FrontendIconsResourcePackTracker {
 
 	@Activate
 	protected void activate(BundleContext bundleContext)
 		throws InvalidSyntaxException {
-
-		_bundleContext = bundleContext;
 
 		_serviceTracker = new ServiceTracker<>(
 			bundleContext,
@@ -147,7 +63,9 @@ public class FrontendIconsResourcePackTracker
 				StringBundler.concat(
 					"(&(objectClass=", ServletContext.class.getName(),
 					")(osgi.web.symbolicname=*))")),
-			this);
+			new FrontendIconsResourcePackServiceTrackerCustomizer(
+				bundleContext, _companyLocalService,
+				_frontendIconsResourcePackRepository));
 
 		_serviceTracker.open();
 	}
@@ -156,60 +74,6 @@ public class FrontendIconsResourcePackTracker
 	protected void deactivate() {
 		_serviceTracker.close();
 	}
-
-	private FrontendIconsResourcePack _createIconResourcePack(
-		Bundle bundle, String iconsPath, String name) {
-
-		Enumeration<URL> entriesEnumeration = bundle.findEntries(
-			"/META-INF/resources" + iconsPath, "*.svg", true);
-
-		if (entriesEnumeration == null) {
-			return null;
-		}
-
-		while (entriesEnumeration.hasMoreElements()) {
-			URL url = entriesEnumeration.nextElement();
-
-			try {
-				FrontendIconsResourcePack frontendIconsResourcePack =
-					new FrontendIconsResourcePack(false, name);
-
-				InputStream urlInputStream = url.openStream();
-
-				frontendIconsResourcePack.addFrontendIconsResources(
-					SVGUtil.getFrontendIconsResources(
-						StringUtil.read(urlInputStream)));
-
-				_companyLocalService.forEachCompanyId(
-					companyId -> {
-						try {
-							_frontendIconsResourcePackRepository.
-								addFrontendIconsResourcePack(
-									companyId, frontendIconsResourcePack);
-						}
-						catch (Exception exception) {
-							if (_log.isDebugEnabled()) {
-								_log.debug(exception);
-							}
-						}
-					});
-
-				return frontendIconsResourcePack;
-			}
-			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(exception);
-				}
-			}
-		}
-
-		return null;
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		FrontendIconsResourcePackTracker.class);
-
-	private BundleContext _bundleContext;
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
@@ -221,5 +85,162 @@ public class FrontendIconsResourcePackTracker
 	private ServiceTracker
 		<ServletContext, ServiceRegistration<FrontendIconsResourcePack>>
 			_serviceTracker;
+
+	private static class FrontendIconsResourcePackServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer
+			<ServletContext, ServiceRegistration<FrontendIconsResourcePack>> {
+
+		@Override
+		public ServiceRegistration<FrontendIconsResourcePack> addingService(
+			ServiceReference<ServletContext> serviceReference) {
+
+			Bundle bundle = serviceReference.getBundle();
+
+			Dictionary<String, String> headers = bundle.getHeaders(
+				StringPool.BLANK);
+
+			if (headers == null) {
+				return null;
+			}
+
+			String iconsPath = headers.get("Liferay-Icons-Path");
+			String name = headers.get("Liferay-Icons-Pack-Name");
+
+			if (Validator.isBlank(iconsPath) || Validator.isBlank(name)) {
+				return null;
+			}
+
+			FrontendIconsResourcePack frontendIconsResourcePack =
+				_createIconResourcePack(bundle, iconsPath, name);
+
+			if (frontendIconsResourcePack == null) {
+				return null;
+			}
+
+			return _bundleContext.registerService(
+				FrontendIconsResourcePack.class, frontendIconsResourcePack,
+				MapUtil.singletonDictionary("service.ranking", 0));
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<ServletContext> serviceReference,
+			ServiceRegistration<FrontendIconsResourcePack>
+				serviceRegistration) {
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<ServletContext> serviceReference,
+			ServiceRegistration<FrontendIconsResourcePack>
+				serviceRegistration) {
+
+			Bundle bundle = serviceReference.getBundle();
+
+			Dictionary<String, String> headers = bundle.getHeaders(
+				StringPool.BLANK);
+
+			if (headers != null) {
+				String name = headers.get("Liferay-Icons-Pack-Name");
+
+				if (!Validator.isBlank(name)) {
+					try {
+						_companyLocalService.forEachCompanyId(
+							companyId -> {
+								try {
+									_frontendIconsResourcePackRepository.
+										deleteFrontendIconsResourcePack(
+											companyId, name);
+								}
+								catch (Exception exception) {
+									if (_log.isDebugEnabled()) {
+										_log.debug(exception);
+									}
+								}
+							});
+					}
+					catch (Exception exception) {
+						if (_log.isDebugEnabled()) {
+							_log.debug(exception);
+						}
+					}
+
+					serviceRegistration.unregister();
+
+					_bundleContext.ungetService(serviceReference);
+				}
+			}
+		}
+
+		private FrontendIconsResourcePackServiceTrackerCustomizer(
+			BundleContext bundleContext,
+			CompanyLocalService companyLocalService,
+			FrontendIconsResourcePackRepository
+				frontendIconsResourcePackRepository) {
+
+			_bundleContext = bundleContext;
+			_companyLocalService = companyLocalService;
+			_frontendIconsResourcePackRepository =
+				frontendIconsResourcePackRepository;
+		}
+
+		private FrontendIconsResourcePack _createIconResourcePack(
+			Bundle bundle, String iconsPath, String name) {
+
+			Enumeration<URL> entriesEnumeration = bundle.findEntries(
+				"/META-INF/resources" + iconsPath, "*.svg", true);
+
+			if (entriesEnumeration == null) {
+				return null;
+			}
+
+			while (entriesEnumeration.hasMoreElements()) {
+				URL url = entriesEnumeration.nextElement();
+
+				try {
+					FrontendIconsResourcePack frontendIconsResourcePack =
+						new FrontendIconsResourcePack(false, name);
+
+					InputStream urlInputStream = url.openStream();
+
+					frontendIconsResourcePack.addFrontendIconsResources(
+						SVGUtil.getFrontendIconsResources(
+							StringUtil.read(urlInputStream)));
+
+					_companyLocalService.forEachCompanyId(
+						companyId -> {
+							try {
+								_frontendIconsResourcePackRepository.
+									addFrontendIconsResourcePack(
+										companyId, frontendIconsResourcePack);
+							}
+							catch (Exception exception) {
+								if (_log.isDebugEnabled()) {
+									_log.debug(exception);
+								}
+							}
+						});
+
+					return frontendIconsResourcePack;
+				}
+				catch (Exception exception) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(exception);
+					}
+				}
+			}
+
+			return null;
+		}
+
+		private static final Log _log = LogFactoryUtil.getLog(
+			FrontendIconsResourcePackTracker.class);
+
+		private final BundleContext _bundleContext;
+		private final CompanyLocalService _companyLocalService;
+		private final FrontendIconsResourcePackRepository
+			_frontendIconsResourcePackRepository;
+
+	}
 
 }

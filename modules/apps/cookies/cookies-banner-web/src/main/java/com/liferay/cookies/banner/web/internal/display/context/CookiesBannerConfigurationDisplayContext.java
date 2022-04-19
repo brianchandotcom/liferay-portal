@@ -14,6 +14,9 @@
 
 package com.liferay.cookies.banner.web.internal.display.context;
 
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
+
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -27,6 +30,17 @@ public class CookiesBannerConfigurationDisplayContext {
 
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
+	}
+
+	public boolean isShowButtons() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (!themeDisplay.isStatePopUp()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private final RenderRequest _renderRequest;

@@ -70,7 +70,7 @@ CookiesBannerConfigurationDisplayContext cookiesBannerConfigurationDisplayContex
 				<clay:content-col>
 					<label class="toggle-switch">
 						<span class="toggle-switch-check-bar">
-							<input class="toggle-switch-check toggle-switch-check-performance" disabled type="checkbox" />
+							<input id="<%= liferayPortletResponse.getNamespace() %>togglePerformance" class="toggle-switch-check toggle-switch-check-performance" disabled type="checkbox" />
 
 							<span aria-hidden="true" class="toggle-switch-bar">
 								<span class="toggle-switch-handle"></span>
@@ -99,7 +99,7 @@ CookiesBannerConfigurationDisplayContext cookiesBannerConfigurationDisplayContex
 				<clay:content-col>
 					<label class="toggle-switch">
 						<span class="toggle-switch-check-bar">
-							<input class="toggle-switch-check toggle-switch-check-functional" disabled type="checkbox" />
+							<input class="toggle-switch-check toggle-switch-check-functional" disabled id="<%= liferayPortletResponse.getNamespace() %>toggleFunctional" type="checkbox" />
 
 							<span aria-hidden="true" class="toggle-switch-bar">
 								<span class="toggle-switch-handle"></span>
@@ -128,7 +128,7 @@ CookiesBannerConfigurationDisplayContext cookiesBannerConfigurationDisplayContex
 				<clay:content-col>
 					<label class="toggle-switch">
 						<span class="toggle-switch-check-bar">
-							<input class="toggle-switch-check toggle-switch-check-personalization" disabled type="checkbox" />
+							<input class="toggle-switch-check toggle-switch-check-personalization" disabled id="<%= liferayPortletResponse.getNamespace() %>togglePersonalization" type="checkbox" />
 
 							<span aria-hidden="true" class="toggle-switch-bar">
 								<span class="toggle-switch-handle"></span>
@@ -145,6 +145,44 @@ CookiesBannerConfigurationDisplayContext cookiesBannerConfigurationDisplayContex
 			</clay:content-row>
 		</clay:col>
 	</clay:row>
+
+	<c:if test="<%= cookiesBannerConfigurationDisplayContext.isShowButtons() %>">
+		<clay:row
+			cssClass="d-flex justify-content-end"
+		>
+			<clay:content-row
+				noGutters="true"
+				verticalAlign="center"
+			>
+				<clay:content-col>
+					<clay:button
+						displayType="secondary"
+						id='<%= liferayPortletResponse.getNamespace() + "buttonConfirm" %>'
+						label='<%= LanguageUtil.get(request, "confirm") %>'
+						small="<%= true %>"
+					/>
+				</clay:content-col>
+
+				<clay:content-col>
+					<clay:button
+						displayType="secondary"
+						id='<%= liferayPortletResponse.getNamespace() + "buttonAcceptAll" %>'
+						label='<%= LanguageUtil.get(request, "accept-all") %>'
+						small="<%= true %>"
+					/>
+				</clay:content-col>
+
+				<clay:content-col>
+					<clay:button
+						displayType="primary"
+						id='<%= liferayPortletResponse.getNamespace() + "buttonDeclineAll" %>'
+						label='<%= LanguageUtil.get(request, "decline-all") %>'
+						small="<%= true %>"
+					/>
+				</clay:content-col>
+			</clay:content-row>
+		</clay:row>
+	</c:if>
 </clay:container-fluid>
 
 <liferay-frontend:component

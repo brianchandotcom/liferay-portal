@@ -1124,6 +1124,8 @@ AUI.add(
 							}
 
 							if (invalidFilesLength) {
+								currentUploadData.invalidFiles.forEach(({target}) => target.remove())
+
 								const message = TPL_ERROR_NOTIFICATION.parse({
 									invalidFiles:
 										currentUploadData.invalidFiles,

@@ -130,7 +130,7 @@ const Table: React.FC<TableProps> = ({
 						{actions && (
 							<Cell
 								align="right"
-								className="p-0 table-action-column table-cell-expand"
+								className="py-0 table-action-column table-cell-expand"
 							>
 								{activeRow === rowIndex ? (
 									<DropDown actions={actions} item={item} />

@@ -76,7 +76,7 @@ public class ImportTranslationsMVCActionCommand extends BaseMVCActionCommand {
 		throws Exception {
 
 		if ((file == null) || !file.exists()) {
-			SessionErrors.add(actionRequest, "fileInvalid");
+			SessionErrors.add(actionRequest, "fileEmpty");
 
 			return;
 		}

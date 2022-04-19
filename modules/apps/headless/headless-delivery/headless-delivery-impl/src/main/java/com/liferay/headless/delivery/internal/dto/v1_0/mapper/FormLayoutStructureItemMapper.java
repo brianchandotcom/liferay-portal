@@ -18,8 +18,9 @@ import com.liferay.headless.delivery.dto.v1_0.FormSubtype;
 import com.liferay.headless.delivery.dto.v1_0.FormType;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.headless.delivery.dto.v1_0.PageFormDefinition;
-import com.liferay.layout.util.structure.FormLayoutStructureItem;
+import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.Portal;
 
 import org.osgi.service.component.annotations.Component;
@@ -30,11 +31,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = LayoutStructureItemMapper.class)
 public class FormLayoutStructureItemMapper
-	implements LayoutStructureItemMapper {
+	extends BaseStyledLayoutStructureItemMapper {
 
 	@Override
 	public String getClassName() {
-		return FormLayoutStructureItem.class.getName();
+		return FormStyledLayoutStructureItem.class.getName();
 	}
 
 	@Override
@@ -42,8 +43,8 @@ public class FormLayoutStructureItemMapper
 		long groupId, LayoutStructureItem layoutStructureItem,
 		boolean saveInlineContent, boolean saveMappingConfiguration) {
 
-		FormLayoutStructureItem formLayoutStructureItem =
-			(FormLayoutStructureItem)layoutStructureItem;
+		FormStyledLayoutStructureItem formStyledLayoutStructureItem =
+			(FormStyledLayoutStructureItem)layoutStructureItem;
 
 		return new PageElement() {
 			{
@@ -52,26 +53,44 @@ public class FormLayoutStructureItemMapper
 						formType = new FormType() {
 							{
 								className = _portal.getClassName(
-									formLayoutStructureItem.getClassNameId());
+									formStyledLayoutStructureItem.
+										getClassNameId());
 							}
 						};
 
 						setFormSubtype(
 							() -> {
-								if (formLayoutStructureItem.getClassTypeId() ==
-										0) {
+								long classTypeId =
+									formStyledLayoutStructureItem.
+										getClassTypeId();
 
+								if (classTypeId == 0) {
 									return null;
 								}
 
 								return new FormSubtype() {
 									{
 										subtypeId =
-											formLayoutStructureItem.
+											formStyledLayoutStructureItem.
 												getClassTypeId();
 									}
 								};
 							});
+						setFragmentStyle(
+							() -> {
+								JSONObject itemConfigJSONObject =
+									formStyledLayoutStructureItem.
+										getItemConfigJSONObject();
+
+								return toFragmentStyle(
+									itemConfigJSONObject.getJSONObject(
+										"styles"),
+									saveMappingConfiguration);
+							});
+						setFragmentViewports(
+							() -> getFragmentViewPorts(
+								formStyledLayoutStructureItem.
+									getItemConfigJSONObject()));
 					}
 				};
 				type = Type.FORM;

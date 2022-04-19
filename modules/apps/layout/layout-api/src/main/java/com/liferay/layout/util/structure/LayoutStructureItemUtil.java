@@ -55,7 +55,7 @@ public class LayoutStructureItemUtil {
 		}
 
 		if (Objects.equals(itemType, LayoutDataItemTypeConstants.TYPE_FORM)) {
-			return new FormLayoutStructureItem(parentItemId);
+			return new FormStyledLayoutStructureItem(parentItemId);
 		}
 
 		if (Objects.equals(

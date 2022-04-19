@@ -77,7 +77,7 @@ public class SXPElementCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -101,6 +101,8 @@ public class SXPElementCacheModel
 		sb.append(elementDefinitionJSON);
 		sb.append(", hidden=");
 		sb.append(hidden);
+		sb.append(", key=");
+		sb.append(key);
 		sb.append(", readOnly=");
 		sb.append(readOnly);
 		sb.append(", schemaVersion=");
@@ -109,6 +111,8 @@ public class SXPElementCacheModel
 		sb.append(title);
 		sb.append(", type=");
 		sb.append(type);
+		sb.append(", version=");
+		sb.append(version);
 		sb.append(", status=");
 		sb.append(status);
 		sb.append("}");
@@ -169,6 +173,14 @@ public class SXPElementCacheModel
 		}
 
 		sxpElementImpl.setHidden(hidden);
+
+		if (key == null) {
+			sxpElementImpl.setKey("");
+		}
+		else {
+			sxpElementImpl.setKey(key);
+		}
+
 		sxpElementImpl.setReadOnly(readOnly);
 
 		if (schemaVersion == null) {
@@ -186,6 +198,14 @@ public class SXPElementCacheModel
 		}
 
 		sxpElementImpl.setType(type);
+
+		if (version == null) {
+			sxpElementImpl.setVersion("");
+		}
+		else {
+			sxpElementImpl.setVersion(version);
+		}
+
 		sxpElementImpl.setStatus(status);
 
 		sxpElementImpl.resetOriginalValues();
@@ -212,12 +232,14 @@ public class SXPElementCacheModel
 		elementDefinitionJSON = (String)objectInput.readObject();
 
 		hidden = objectInput.readBoolean();
+		key = objectInput.readUTF();
 
 		readOnly = objectInput.readBoolean();
 		schemaVersion = objectInput.readUTF();
 		title = objectInput.readUTF();
 
 		type = objectInput.readInt();
+		version = objectInput.readUTF();
 
 		status = objectInput.readInt();
 	}
@@ -265,6 +287,13 @@ public class SXPElementCacheModel
 
 		objectOutput.writeBoolean(hidden);
 
+		if (key == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(key);
+		}
+
 		objectOutput.writeBoolean(readOnly);
 
 		if (schemaVersion == null) {
@@ -283,6 +312,13 @@ public class SXPElementCacheModel
 
 		objectOutput.writeInt(type);
 
+		if (version == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(version);
+		}
+
 		objectOutput.writeInt(status);
 	}
 
@@ -297,10 +333,12 @@ public class SXPElementCacheModel
 	public String description;
 	public String elementDefinitionJSON;
 	public boolean hidden;
+	public String key;
 	public boolean readOnly;
 	public String schemaVersion;
 	public String title;
 	public int type;
+	public String version;
 	public int status;
 
 }

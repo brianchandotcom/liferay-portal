@@ -58,10 +58,14 @@ public class SXPBlueprintTable extends BaseTable<SXPBlueprintTable> {
 		createColumn(
 			"elementInstancesJSON", Clob.class, Types.CLOB,
 			Column.FLAG_DEFAULT);
+	public final Column<SXPBlueprintTable, String> key = createColumn(
+		"key_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<SXPBlueprintTable, String> schemaVersion = createColumn(
 		"schemaVersion", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<SXPBlueprintTable, String> title = createColumn(
 		"title", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<SXPBlueprintTable, String> version = createColumn(
+		"version", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<SXPBlueprintTable, Integer> status = createColumn(
 		"status", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 	public final Column<SXPBlueprintTable, Long> statusByUserId = createColumn(

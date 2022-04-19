@@ -341,6 +341,21 @@ public interface SXPBlueprintModel
 	public void setElementInstancesJSON(String elementInstancesJSON);
 
 	/**
+	 * Returns the key of this sxp blueprint.
+	 *
+	 * @return the key of this sxp blueprint
+	 */
+	@AutoEscape
+	public String getKey();
+
+	/**
+	 * Sets the key of this sxp blueprint.
+	 *
+	 * @param key the key of this sxp blueprint
+	 */
+	public void setKey(String key);
+
+	/**
 	 * Returns the schema version of this sxp blueprint.
 	 *
 	 * @return the schema version of this sxp blueprint
@@ -453,6 +468,21 @@ public interface SXPBlueprintModel
 	 * @param defaultLocale the default locale
 	 */
 	public void setTitleMap(Map<Locale, String> titleMap, Locale defaultLocale);
+
+	/**
+	 * Returns the version of this sxp blueprint.
+	 *
+	 * @return the version of this sxp blueprint
+	 */
+	@AutoEscape
+	public String getVersion();
+
+	/**
+	 * Sets the version of this sxp blueprint.
+	 *
+	 * @param version the version of this sxp blueprint
+	 */
+	public void setVersion(String version);
 
 	/**
 	 * Returns the status of this sxp blueprint.

@@ -54,10 +54,12 @@ public class SXPElementWrapper
 		attributes.put("description", getDescription());
 		attributes.put("elementDefinitionJSON", getElementDefinitionJSON());
 		attributes.put("hidden", isHidden());
+		attributes.put("key", getKey());
 		attributes.put("readOnly", isReadOnly());
 		attributes.put("schemaVersion", getSchemaVersion());
 		attributes.put("title", getTitle());
 		attributes.put("type", getType());
+		attributes.put("version", getVersion());
 		attributes.put("status", getStatus());
 
 		return attributes;
@@ -132,6 +134,12 @@ public class SXPElementWrapper
 			setHidden(hidden);
 		}
 
+		String key = (String)attributes.get("key");
+
+		if (key != null) {
+			setKey(key);
+		}
+
 		Boolean readOnly = (Boolean)attributes.get("readOnly");
 
 		if (readOnly != null) {
@@ -154,6 +162,12 @@ public class SXPElementWrapper
 
 		if (type != null) {
 			setType(type);
+		}
+
+		String version = (String)attributes.get("version");
+
+		if (version != null) {
+			setVersion(version);
 		}
 
 		Integer status = (Integer)attributes.get("status");
@@ -292,6 +306,16 @@ public class SXPElementWrapper
 	@Override
 	public boolean getHidden() {
 		return model.getHidden();
+	}
+
+	/**
+	 * Returns the key of this sxp element.
+	 *
+	 * @return the key of this sxp element
+	 */
+	@Override
+	public String getKey() {
+		return model.getKey();
 	}
 
 	/**
@@ -491,6 +515,16 @@ public class SXPElementWrapper
 	}
 
 	/**
+	 * Returns the version of this sxp element.
+	 *
+	 * @return the version of this sxp element
+	 */
+	@Override
+	public String getVersion() {
+		return model.getVersion();
+	}
+
+	/**
 	 * Returns <code>true</code> if this sxp element is hidden.
 	 *
 	 * @return <code>true</code> if this sxp element is hidden; <code>false</code> otherwise
@@ -635,6 +669,16 @@ public class SXPElementWrapper
 	@Override
 	public void setHidden(boolean hidden) {
 		model.setHidden(hidden);
+	}
+
+	/**
+	 * Sets the key of this sxp element.
+	 *
+	 * @param key the key of this sxp element
+	 */
+	@Override
+	public void setKey(String key) {
+		model.setKey(key);
 	}
 
 	/**
@@ -819,6 +863,16 @@ public class SXPElementWrapper
 	@Override
 	public void setUuid(String uuid) {
 		model.setUuid(uuid);
+	}
+
+	/**
+	 * Sets the version of this sxp element.
+	 *
+	 * @param version the version of this sxp element
+	 */
+	@Override
+	public void setVersion(String version) {
+		model.setVersion(version);
 	}
 
 	@Override

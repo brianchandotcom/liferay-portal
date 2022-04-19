@@ -54,8 +54,10 @@ public class SXPBlueprintWrapper
 		attributes.put("configurationJSON", getConfigurationJSON());
 		attributes.put("description", getDescription());
 		attributes.put("elementInstancesJSON", getElementInstancesJSON());
+		attributes.put("key", getKey());
 		attributes.put("schemaVersion", getSchemaVersion());
 		attributes.put("title", getTitle());
+		attributes.put("version", getVersion());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
@@ -133,6 +135,12 @@ public class SXPBlueprintWrapper
 			setElementInstancesJSON(elementInstancesJSON);
 		}
 
+		String key = (String)attributes.get("key");
+
+		if (key != null) {
+			setKey(key);
+		}
+
 		String schemaVersion = (String)attributes.get("schemaVersion");
 
 		if (schemaVersion != null) {
@@ -143,6 +151,12 @@ public class SXPBlueprintWrapper
 
 		if (title != null) {
 			setTitle(title);
+		}
+
+		String version = (String)attributes.get("version");
+
+		if (version != null) {
+			setVersion(version);
 		}
 
 		Integer status = (Integer)attributes.get("status");
@@ -299,6 +313,16 @@ public class SXPBlueprintWrapper
 	@Override
 	public String getElementInstancesJSON() {
 		return model.getElementInstancesJSON();
+	}
+
+	/**
+	 * Returns the key of this sxp blueprint.
+	 *
+	 * @return the key of this sxp blueprint
+	 */
+	@Override
+	public String getKey() {
+		return model.getKey();
 	}
 
 	/**
@@ -518,6 +542,16 @@ public class SXPBlueprintWrapper
 	}
 
 	/**
+	 * Returns the version of this sxp blueprint.
+	 *
+	 * @return the version of this sxp blueprint
+	 */
+	@Override
+	public String getVersion() {
+		return model.getVersion();
+	}
+
+	/**
 	 * Returns <code>true</code> if this sxp blueprint is approved.
 	 *
 	 * @return <code>true</code> if this sxp blueprint is approved; <code>false</code> otherwise
@@ -725,6 +759,16 @@ public class SXPBlueprintWrapper
 	}
 
 	/**
+	 * Sets the key of this sxp blueprint.
+	 *
+	 * @param key the key of this sxp blueprint
+	 */
+	@Override
+	public void setKey(String key) {
+		model.setKey(key);
+	}
+
+	/**
 	 * Sets the modified date of this sxp blueprint.
 	 *
 	 * @param modifiedDate the modified date of this sxp blueprint
@@ -926,6 +970,16 @@ public class SXPBlueprintWrapper
 	@Override
 	public void setUuid(String uuid) {
 		model.setUuid(uuid);
+	}
+
+	/**
+	 * Sets the version of this sxp blueprint.
+	 *
+	 * @param version the version of this sxp blueprint
+	 */
+	@Override
+	public void setVersion(String version) {
+		model.setVersion(version);
 	}
 
 	@Override

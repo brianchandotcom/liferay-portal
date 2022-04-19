@@ -134,11 +134,11 @@ html#{$cadmin-selector} {
 			&__visibility-button {
 				color: $cadmin-secondary;
 				margin-left: 8px;
-				opacity: 0;
 				transform: translateY(1px);
+				visibility: hidden;
 
 				&--visible {
-					opacity: 1;
+					visibility: visible;
 				}
 			}
 

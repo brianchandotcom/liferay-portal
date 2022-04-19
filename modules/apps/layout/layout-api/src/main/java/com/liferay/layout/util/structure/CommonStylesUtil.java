@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.language.LanguageResources;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -59,6 +60,8 @@ public class CommonStylesUtil {
 					styleJSONObject -> availableStyleNames.add(
 						styleJSONObject.getString("name")));
 			});
+
+		Collections.sort(availableStyleNames);
 
 		_availableStyleNames = availableStyleNames;
 

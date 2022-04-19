@@ -351,29 +351,34 @@ public class LayoutReferencesExportImportContentProcessor
 
 						url = urlWithoutLocale;
 					}
-					else if (urlWithoutLocale.indexOf(StringPool.SLASH, 1) ==
-								-1) {
+					else if ((urlWithoutLocale.indexOf(StringPool.SLASH, 1) ==
+								-1) &&
+							 !localePath.equals(
+								 _PRIVATE_GROUP_SERVLET_MAPPING) &&
+							 !localePath.equals(
+								 _PRIVATE_USER_SERVLET_MAPPING) &&
+							 !localePath.equals(
+								 _PUBLIC_GROUP_SERVLET_MAPPING)) {
 
-						if (!localePath.equals(
-								_PRIVATE_GROUP_SERVLET_MAPPING) &&
-							!localePath.equals(_PRIVATE_USER_SERVLET_MAPPING) &&
-							!localePath.equals(_PUBLIC_GROUP_SERVLET_MAPPING)) {
+						urlSB.append(localePath);
 
+						url = urlWithoutLocale;
+					}
+					else {
+						Layout layout =
+							_layoutLocalService.fetchLayoutByFriendlyURL(
+								group.getGroupId(), false, urlWithoutLocale);
+
+						if (layout == null) {
+							layout =
+								_layoutLocalService.fetchLayoutByFriendlyURL(
+									group.getGroupId(), true, urlWithoutLocale);
+						}
+
+						if (layout != null) {
 							urlSB.append(localePath);
 
 							url = urlWithoutLocale;
-						}
-						else {
-							Layout layout =
-								_layoutLocalService.fetchLayoutByFriendlyURL(
-									group.getGroupId(), false,
-									urlWithoutLocale);
-
-							if (layout != null) {
-								urlSB.append(localePath);
-
-								url = urlWithoutLocale;
-							}
 						}
 					}
 				}

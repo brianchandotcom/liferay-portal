@@ -14,9 +14,9 @@
 
 package com.liferay.portal.servlet;
 
-import com.liferay.petra.encryptor.Encryptor;
-import com.liferay.petra.encryptor.EncryptorException;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.encryptor.EncryptorException;
+import com.liferay.portal.kernel.encryptor.EncryptorUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -53,7 +53,7 @@ public class EncryptedServletRequest extends HttpServletRequestWrapper {
 			for (int i = 0; i < values.length; i++) {
 				if (Validator.isNotNull(values[i])) {
 					try {
-						values[i] = Encryptor.decrypt(_key, values[i]);
+						values[i] = EncryptorUtil.decrypt(_key, values[i]);
 					}
 					catch (EncryptorException encryptorException) {
 						if (_log.isDebugEnabled()) {

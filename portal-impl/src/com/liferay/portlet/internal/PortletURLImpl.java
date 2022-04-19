@@ -15,11 +15,11 @@
 package com.liferay.portlet.internal;
 
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.petra.encryptor.Encryptor;
-import com.liferay.petra.encryptor.EncryptorException;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.encryptor.EncryptorException;
+import com.liferay.portal.kernel.encryptor.EncryptorUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -1257,7 +1257,7 @@ public class PortletURLImpl
 		}
 
 		try {
-			return URLCodec.encodeURL(Encryptor.encrypt(key, value));
+			return URLCodec.encodeURL(EncryptorUtil.encrypt(key, value));
 		}
 		catch (EncryptorException encryptorException) {
 			if (_log.isDebugEnabled()) {

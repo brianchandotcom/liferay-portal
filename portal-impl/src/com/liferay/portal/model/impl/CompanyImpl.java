@@ -15,13 +15,13 @@
 package com.liferay.portal.model.impl;
 
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
-import com.liferay.petra.encryptor.Encryptor;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.cache.thread.local.Lifecycle;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCache;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCacheManager;
+import com.liferay.portal.kernel.encryptor.EncryptorUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -181,7 +181,7 @@ public class CompanyImpl extends CompanyBaseImpl {
 			String key = getKey();
 
 			if (Validator.isNotNull(key)) {
-				_keyObj = Encryptor.deserializeKey(key);
+				_keyObj = EncryptorUtil.deserializeKey(key);
 			}
 		}
 

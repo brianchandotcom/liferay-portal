@@ -14,13 +14,13 @@
 
 package com.liferay.portal.security.auth.session;
 
-import com.liferay.petra.encryptor.Encryptor;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterNode;
+import com.liferay.portal.kernel.encryptor.EncryptorUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -179,7 +179,7 @@ public class AuthenticatedSessionManagerImpl
 
 		Cookie idCookie = new Cookie(
 			CookieKeys.ID,
-			Encryptor.encrypt(company.getKeyObj(), userIdString));
+			EncryptorUtil.encrypt(company.getKeyObj(), userIdString));
 
 		if (domain != null) {
 			idCookie.setDomain(domain);
@@ -239,7 +239,7 @@ public class AuthenticatedSessionManagerImpl
 
 			Cookie passwordCookie = new Cookie(
 				CookieKeys.PASSWORD,
-				Encryptor.encrypt(company.getKeyObj(), password));
+				EncryptorUtil.encrypt(company.getKeyObj(), password));
 
 			if (domain != null) {
 				passwordCookie.setDomain(domain);

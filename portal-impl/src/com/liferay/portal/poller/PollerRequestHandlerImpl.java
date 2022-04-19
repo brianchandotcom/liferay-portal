@@ -14,9 +14,9 @@
 
 package com.liferay.portal.poller;
 
-import com.liferay.petra.encryptor.Encryptor;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.encryptor.EncryptorUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -334,7 +334,7 @@ public class PollerRequestHandlerImpl
 			Company company = CompanyLocalServiceUtil.getCompany(companyId);
 
 			userId = GetterUtil.getLong(
-				Encryptor.decrypt(company.getKeyObj(), userIdString));
+				EncryptorUtil.decrypt(company.getKeyObj(), userIdString));
 		}
 		catch (Exception exception) {
 			_log.error(

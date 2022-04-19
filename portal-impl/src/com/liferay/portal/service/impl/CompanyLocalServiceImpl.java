@@ -19,8 +19,6 @@ import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
-import com.liferay.petra.encryptor.Encryptor;
-import com.liferay.petra.encryptor.EncryptorException;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
@@ -34,6 +32,8 @@ import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.encryptor.EncryptorException;
+import com.liferay.portal.kernel.encryptor.EncryptorUtil;
 import com.liferay.portal.kernel.exception.CompanyMxException;
 import com.liferay.portal.kernel.exception.CompanyNameException;
 import com.liferay.portal.kernel.exception.CompanyVirtualHostException;
@@ -256,7 +256,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			// Company info
 
 			try {
-				company.setKey(Encryptor.serializeKey(Encryptor.generateKey()));
+				company.setKey(
+					EncryptorUtil.serializeKey(EncryptorUtil.generateKey()));
 			}
 			catch (EncryptorException encryptorException) {
 				throw new SystemException(encryptorException);
@@ -375,7 +376,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		}
 
 		try {
-			company.setKey(Encryptor.serializeKey(Encryptor.generateKey()));
+			company.setKey(
+				EncryptorUtil.serializeKey(EncryptorUtil.generateKey()));
 		}
 		catch (EncryptorException encryptorException) {
 			throw new SystemException(encryptorException);

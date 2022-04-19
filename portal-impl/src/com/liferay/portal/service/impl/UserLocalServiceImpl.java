@@ -23,8 +23,6 @@ import com.liferay.mail.kernel.template.MailTemplate;
 import com.liferay.mail.kernel.template.MailTemplateContext;
 import com.liferay.mail.kernel.template.MailTemplateContextBuilder;
 import com.liferay.mail.kernel.template.MailTemplateFactoryUtil;
-import com.liferay.petra.encryptor.Encryptor;
-import com.liferay.petra.encryptor.EncryptorException;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -34,6 +32,8 @@ import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
+import com.liferay.portal.kernel.encryptor.EncryptorException;
+import com.liferay.portal.kernel.encryptor.EncryptorUtil;
 import com.liferay.portal.kernel.exception.CompanyMaxUsersException;
 import com.liferay.portal.kernel.exception.ContactBirthdayException;
 import com.liferay.portal.kernel.exception.ContactNameException;
@@ -1808,14 +1808,14 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		Company company = _companyPersistence.findByPrimaryKey(companyId);
 
 		try {
-			name = Encryptor.decrypt(company.getKeyObj(), name);
+			name = EncryptorUtil.decrypt(company.getKeyObj(), name);
 		}
 		catch (EncryptorException encryptorException) {
 			throw new SystemException(encryptorException);
 		}
 
 		try {
-			password = Encryptor.decrypt(company.getKeyObj(), password);
+			password = EncryptorUtil.decrypt(company.getKeyObj(), password);
 		}
 		catch (EncryptorException encryptorException) {
 			throw new SystemException(encryptorException);
@@ -2065,7 +2065,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			user.getCompanyId());
 
 		try {
-			return Encryptor.encrypt(company.getKeyObj(), name);
+			return EncryptorUtil.encrypt(company.getKeyObj(), name);
 		}
 		catch (EncryptorException encryptorException) {
 			throw new SystemException(encryptorException);

@@ -23,7 +23,6 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
-import com.liferay.petra.encryptor.Encryptor;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -41,6 +40,7 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.encryptor.EncryptorUtil;
 import com.liferay.portal.kernel.exception.ImageTypeException;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.NoSuchImageException;
@@ -7464,7 +7464,8 @@ public class PortalImpl implements Portal {
 				Company company = getCompany(httpServletRequest);
 
 				doAsUserId = GetterUtil.getLong(
-					Encryptor.decrypt(company.getKeyObj(), doAsUserIdString));
+					EncryptorUtil.decrypt(
+						company.getKeyObj(), doAsUserIdString));
 			}
 			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
@@ -7730,7 +7731,8 @@ public class PortalImpl implements Portal {
 				Company company = getCompany(httpServletRequest);
 
 				doAsUserId = GetterUtil.getLong(
-					Encryptor.decrypt(company.getKeyObj(), doAsUserIdString));
+					EncryptorUtil.decrypt(
+						company.getKeyObj(), doAsUserIdString));
 			}
 		}
 		catch (Exception exception) {

@@ -14,11 +14,8 @@
 
 package com.liferay.search.experiences.internal.upgrade;
 
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.search.experiences.internal.model.listener.CompanyModelListener;
 import com.liferay.search.experiences.internal.upgrade.v1_1_0.SXPBlueprintUpgradeProcess;
-import com.liferay.search.experiences.service.SXPElementLocalService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -36,7 +33,8 @@ public class SXPUpgradeStepRegistrator implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		if (_sxUpgradeStepRegistratorHelper != null) {
-			_sxUpgradeStepRegistratorHelper.registerInitialUpgradeSteps(registry);
+			_sxUpgradeStepRegistratorHelper.registerInitialUpgradeSteps(
+				registry);
 		}
 
 		registry.register(

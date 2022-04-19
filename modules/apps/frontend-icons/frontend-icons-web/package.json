@@ -1,7 +1,7 @@
 {
 	"dependencies": {
 	},
-	"name": "@liferay/frontend-icon-admin-web",
+	"name": "@liferay/frontend-icons-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build",
 		"checkFormat": "liferay-npm-scripts check",

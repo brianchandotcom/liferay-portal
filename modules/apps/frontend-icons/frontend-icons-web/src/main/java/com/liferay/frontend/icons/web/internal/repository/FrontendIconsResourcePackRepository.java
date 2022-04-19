@@ -14,6 +14,8 @@
 
 package com.liferay.frontend.icons.web.internal.repository;
 
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.frontend.icons.web.internal.model.FrontendIconsResource;
 import com.liferay.frontend.icons.web.internal.model.FrontendIconsResourcePack;
 import com.liferay.frontend.icons.web.internal.util.SVGUtil;
@@ -68,6 +70,18 @@ public class FrontendIconsResourcePackRepository {
 			null, 0, _REPOSITORY_NAME, folder.getFolderId(),
 			svgSpritemap.getBytes(), frontendIconsResourcePack.getName(),
 			ContentTypes.IMAGE_SVG_XML, false);
+
+		if (frontendIconsResourcePack.isEditable()) {
+			DLFileEntry dlFileEntry = _dlFileEntryLocalService.fetchFileEntry(
+				company.getGroupId(), folder.getFolderId(),
+				frontendIconsResourcePack.getName());
+
+			if (dlFileEntry != null) {
+				dlFileEntry.setExtraSettings("editable=true");
+
+				_dlFileEntryLocalService.updateDLFileEntry(dlFileEntry);
+			}
+		}
 	}
 
 	public void deleteFrontendIconsResourcePack(long companyId, String name)
@@ -77,8 +91,10 @@ public class FrontendIconsResourcePackRepository {
 
 		Folder folder = _getFolder(company);
 
-		_portletFileRepository.deletePortletFileEntry(
-			company.getGroupId(), folder.getFolderId(), name);
+		if (folder != null) {
+			_portletFileRepository.deletePortletFileEntry(
+				company.getGroupId(), folder.getFolderId(), name);
+		}
 	}
 
 	public FrontendIconsResourcePack getFrontendIconsResourcePack(
@@ -130,8 +146,16 @@ public class FrontendIconsResourcePackRepository {
 				company.getGroupId(), folder.getFolderId());
 
 		for (FileEntry fileEntry : fileEntries) {
+			String title = fileEntry.getTitle();
+
+			DLFileEntry dlFileEntry = _dlFileEntryLocalService.fetchFileEntry(
+				company.getGroupId(), folder.getFolderId(), title);
+
+			String settings = dlFileEntry.getExtraSettings();
+
 			FrontendIconsResourcePack frontendIconsResourcePack =
-				new FrontendIconsResourcePack(fileEntry.getTitle());
+				new FrontendIconsResourcePack(
+					settings.contains("editable=true"), title);
 
 			List<FrontendIconsResource> frontendIconsResources =
 				SVGUtil.getFrontendIconsResources(
@@ -179,6 +203,9 @@ public class FrontendIconsResourcePackRepository {
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 	@Reference
 	private PortletFileRepository _portletFileRepository;

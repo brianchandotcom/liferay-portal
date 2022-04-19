@@ -254,6 +254,34 @@ definition {
 			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_commerce_order_web_internal_portlet_CommerceOrderTypePortlet");
 	}
 
+	macro viewOrdersDetails {
+		AssertElementPresent(
+			key_productSku = "${productSku}",
+			locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_SKU");
+
+		AssertElementPresent(
+			key_productName = "${productName}",
+			locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_NAME");
+
+		AssertElementPresent(
+			key_productListPrice = "${productListPrice}",
+			locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_LIST_PRICE");
+
+		if (isSet(productDiscount)) {
+			AssertElementPresent(
+				key_productDiscount = "{productDiscount}",
+				locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_DISCOUNT");
+		}
+
+		AssertElementPresent(
+			key_productQuantity = "${productQuantity}",
+			locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_QUANTITY");
+
+		AssertElementPresent(
+			key_productTotalPrice = "${productTotalPrice}",
+			locator1 = "CommerceOrders#ORDER_DETAILS_TOTAL_PRICE");
+	}
+
 	macro viewOrdersEntry {
 		if (isSet(addressAddress) && isSet(addressCity) && isSet(addressZipCode)) {
 			AssertTextEquals.assertPartialText(

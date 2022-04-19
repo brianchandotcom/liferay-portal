@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.zip.ZipWriter;
-import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
+import com.liferay.portal.kernel.zip.ZipWriterFactory;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.model.SegmentsExperience;
@@ -97,7 +97,7 @@ public class ExportTranslationServlet extends HttpServlet {
 			String[] targetLanguageIds = ParamUtil.getStringValues(
 				httpServletRequest, "targetLanguageIds");
 
-			ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
+			ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
 
 			Set<Long> classPKs = SetUtil.fromArray(
 				_getClassPKs(
@@ -311,5 +311,8 @@ public class ExportTranslationServlet extends HttpServlet {
 	@Reference
 	private TranslationInfoItemFieldValuesExporterTracker
 		_translationInfoItemFieldValuesExporterTracker;
+
+	@Reference
+	private ZipWriterFactory _zipWriterFactory;
 
 }

@@ -35,7 +35,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.zip.ZipWriter;
-import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
+import com.liferay.portal.kernel.zip.ZipWriterFactory;
 import com.liferay.portal.util.RepositoryUtil;
 
 import java.io.File;
@@ -157,7 +157,7 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 
 			String zipFileName = _getZipFileName(folderId, themeDisplay);
 
-			ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
+			ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
 
 			try {
 				for (FileEntry fileEntry : fileEntries) {
@@ -207,7 +207,7 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 
 		_checkFolder(folderId);
 
-		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
+		ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
 
 		try {
 			String zipFileName = _getZipFileName(folderId, themeDisplay);
@@ -312,5 +312,8 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 
 	@Reference
 	private DLAppService _dlAppService;
+
+	@Reference
+	private ZipWriterFactory _zipWriterFactory;
 
 }

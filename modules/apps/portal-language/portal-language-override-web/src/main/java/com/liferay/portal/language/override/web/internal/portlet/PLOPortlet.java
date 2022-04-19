@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.zip.ZipWriter;
-import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
+import com.liferay.portal.kernel.zip.ZipWriterFactory;
 import com.liferay.portal.language.override.model.PLOEntry;
 import com.liferay.portal.language.override.provider.PLOOriginalTranslationProvider;
 import com.liferay.portal.language.override.service.PLOEntryLocalService;
@@ -145,7 +145,7 @@ public class PLOPortlet extends MVCPortlet {
 		throws PortletException {
 
 		try {
-			ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
+			ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
 
 			List<PLOEntry> ploEntries = _ploEntryService.getPLOEntries(
 				_portal.getCompanyId(resourceRequest));
@@ -227,5 +227,8 @@ public class PLOPortlet extends MVCPortlet {
 	private Portal _portal;
 
 	private ViewDisplayContextFactory _viewDisplayContextFactory;
+
+	@Reference
+	private ZipWriterFactory _zipWriterFactory;
 
 }

@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.zip.ZipWriter;
-import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
+import com.liferay.portal.kernel.zip.ZipWriterFactory;
 import com.liferay.style.book.constants.StyleBookPortletKeys;
 import com.liferay.style.book.exception.DuplicateStyleBookEntryKeyException;
 import com.liferay.style.book.model.StyleBookEntry;
@@ -67,7 +67,7 @@ public class StyleBookEntryZipProcessorImpl
 	public File exportStyleBookEntries(List<StyleBookEntry> styleBookEntries)
 		throws PortletException {
 
-		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
+		ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
 
 		try {
 			for (StyleBookEntry styleBookEntry : styleBookEntries) {
@@ -378,5 +378,8 @@ public class StyleBookEntryZipProcessorImpl
 
 	@Reference
 	private StyleBookEntryService _styleBookEntryEntryService;
+
+	@Reference
+	private ZipWriterFactory _zipWriterFactory;
 
 }

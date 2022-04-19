@@ -98,7 +98,7 @@ import com.liferay.portal.kernel.xml.ElementProcessor;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactory;
 import com.liferay.portal.kernel.zip.ZipWriter;
-import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
+import com.liferay.portal.kernel.zip.ZipWriterFactory;
 import com.liferay.portal.model.impl.LayoutImpl;
 import com.liferay.staging.configuration.StagingConfiguration;
 
@@ -1132,10 +1132,10 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			(_stagingConfiguration.stagingDeleteTempLAROnFailure() &&
 			 _stagingConfiguration.stagingDeleteTempLAROnSuccess())) {
 
-			return ZipWriterFactoryUtil.getZipWriter();
+			return _zipWriterFactory.getZipWriter();
 		}
 
-		return ZipWriterFactoryUtil.getZipWriter(
+		return _zipWriterFactory.getZipWriter(
 			new File(
 				SystemProperties.get(SystemProperties.TMP_DIR) +
 					StringPool.SLASH + fileName));
@@ -1543,6 +1543,9 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 	@Reference
 	private ZipReaderFactory _zipReaderFactory;
+
+	@Reference
+	private ZipWriterFactory _zipWriterFactory;
 
 	private class ManifestSummaryElementProcessor implements ElementProcessor {
 

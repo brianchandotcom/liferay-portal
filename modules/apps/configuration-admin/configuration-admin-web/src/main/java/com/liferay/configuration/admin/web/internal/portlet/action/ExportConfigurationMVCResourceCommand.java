@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.zip.ZipWriter;
-import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
+import com.liferay.portal.kernel.zip.ZipWriterFactory;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.FileInputStream;
@@ -170,7 +170,7 @@ public class ExportConfigurationMVCResourceCommand
 
 		String languageId = themeDisplay.getLanguageId();
 
-		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
+		ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
 
 		ConfigurationScopeDisplayContext configurationScopeDisplayContext =
 			ConfigurationScopeDisplayContextFactory.create(resourceRequest);
@@ -240,7 +240,7 @@ public class ExportConfigurationMVCResourceCommand
 
 		String languageId = themeDisplay.getLanguageId();
 
-		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
+		ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
 
 		String factoryPid = ParamUtil.getString(resourceRequest, "factoryPid");
 
@@ -340,5 +340,8 @@ public class ExportConfigurationMVCResourceCommand
 
 	@Reference(target = "(filter.visibility=*)")
 	private ConfigurationModelRetriever _configurationModelRetriever;
+
+	@Reference
+	private ZipWriterFactory _zipWriterFactory;
 
 }

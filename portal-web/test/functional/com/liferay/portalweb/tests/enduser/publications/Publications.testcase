@@ -722,6 +722,27 @@ definition {
 			value1 = "En progreso");
 	}
 
+	@priority = "4"
+	test NoChangesShouldDisplayAfterNavigatingPersonalAppLayouts {
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
+
+		PublicationsNavigator.gotoReviewChanges(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication Name");
+
+		AssertVisible(locator1 = "Message#EMPTY_INFO_TAGLIB");
+
+		UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
+
+		PublicationsNavigator.gotoReviewChanges(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication Name");
+
+		AssertVisible(locator1 = "Message#EMPTY_INFO_TAGLIB");
+	}
+
 	@description = "Assert publications changes can search and sort"
 	@priority = "4"
 	test PublicationsChangesCanSearchAndSort {

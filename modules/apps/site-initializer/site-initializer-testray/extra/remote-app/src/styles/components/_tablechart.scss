@@ -1,6 +1,6 @@
 .table-chart {
-	table-layout: fixed;
 	max-width: 500px;
+	table-layout: fixed;
 	.passed {
 		background-color: $passed-color;
 	}
@@ -17,8 +17,8 @@
 		background-color: $test-fix-color;
 	}
 	.table-chart-data-area {
-		opacity: 0.3;
 		border-color: $color-gray-light !important;
+		opacity: 0.3;
 
 		&:hover {
 			opacity: 1;

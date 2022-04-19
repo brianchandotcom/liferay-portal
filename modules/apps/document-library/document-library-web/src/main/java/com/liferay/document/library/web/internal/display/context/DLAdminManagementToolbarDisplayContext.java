@@ -27,7 +27,6 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.document.library.kernel.util.DLUtil;
-import com.liferay.document.library.web.internal.configuration.FFManagementToolbarConfigurationUtil;
 import com.liferay.document.library.web.internal.constants.DLWebKeys;
 import com.liferay.document.library.web.internal.display.context.helper.DLPortletInstanceSettingsHelper;
 import com.liferay.document.library.web.internal.display.context.helper.DLRequestHelper;
@@ -57,10 +56,12 @@ import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -310,9 +311,8 @@ public class DLAdminManagementToolbarDisplayContext
 						_httpServletRequest, "filter-by-navigation"));
 			}
 		).addGroup(
-			() ->
-				!FFManagementToolbarConfigurationUtil.
-					enableDesignImprovements(),
+			() -> !GetterUtil.getBoolean(
+				PropsUtil.get("feature.flag.LPS-144527")),
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(_getOrderByDropdownItems());
 				dropdownGroupItem.setLabel(
@@ -393,7 +393,7 @@ public class DLAdminManagementToolbarDisplayContext
 	@Override
 	public List<DropdownItem> getOrderDropdownItems() {
 		if (_isSearch() ||
-			!FFManagementToolbarConfigurationUtil.enableDesignImprovements()) {
+			!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-144527"))) {
 
 			return null;
 		}

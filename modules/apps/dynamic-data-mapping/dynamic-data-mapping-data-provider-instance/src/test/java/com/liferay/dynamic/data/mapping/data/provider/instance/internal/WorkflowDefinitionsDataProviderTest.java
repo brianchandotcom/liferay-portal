@@ -184,16 +184,16 @@ public class WorkflowDefinitionsDataProviderTest {
 	}
 
 	private void _setUpWorkflowDefinition(
-		WorkflowDefinition workflowDefinition1, String name, String title) {
+		WorkflowDefinition workflowDefinition, String name, String title) {
 
 		Mockito.when(
-			workflowDefinition1.getName()
+			workflowDefinition.getName()
 		).thenReturn(
 			name
 		);
 
 		Mockito.when(
-			workflowDefinition1.getTitle("en_US")
+			workflowDefinition.getTitle("en_US")
 		).thenReturn(
 			title
 		);

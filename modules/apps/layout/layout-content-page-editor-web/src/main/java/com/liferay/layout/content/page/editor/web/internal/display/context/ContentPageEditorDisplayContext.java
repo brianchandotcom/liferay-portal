@@ -472,6 +472,9 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"imageSelectorURL", _getItemSelectorURL()
 			).put(
+				"imagesPath",
+				PortalUtil.getPathContext(httpServletRequest) + "/images"
+			).put(
 				"infoItemSelectorURL", _getInfoItemSelectorURL()
 			).put(
 				"infoListSelectorURL", _getInfoListSelectorURL()

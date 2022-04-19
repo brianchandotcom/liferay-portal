@@ -82,7 +82,6 @@ public class DynamicDataMappingUpgradeProcessTest extends BaseDDMTestCase {
 		setUpLocaleUtil();
 		setUpLocalizationUtil();
 		setUpPropsUtil();
-		setUpPropsValues();
 		setUpSAXReaderUtil();
 		_setUpSecureXMLFactoryProviderUtil();
 

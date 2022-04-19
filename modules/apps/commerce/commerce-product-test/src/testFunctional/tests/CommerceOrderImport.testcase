@@ -173,14 +173,132 @@ definition {
 		}
 	}
 
-	@description = "[Please Update]"
-	@ignore = "Test Stub"
+	@description = "Verify the order import preview after a product in the order becomes unavailable"
 	@priority = "4"
 	test VerifyPreviewModal {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-7683 VerifyPreviewModal pending implementation
+		task ("Given a Minium site with a buyer user") {
+			User.logoutPG();
 
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And given a completed order with multiple products") {
+			for (var productName : list "U-Joint,Transmission Cooler Line Assembly,Torque Converters") {
+				FrontStore.addInitializerProductToCart(
+					productName = "${productName}",
+					productQuantity = "1");
+			}
+
+			WaitForElementPresent(locator1 = "CommerceEntry#ACTIVE_ORDER_ID");
+
+			CommerceNavigator.gotoMiniCart();
+
+			Button.click(button = "View Details");
+
+			Button.click(button = "Checkout");
+
+			CommerceCheckout.checkout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				shippingMethod = "Standard");
+		}
+
+		task ("And given the warehouse quanitity for one of the ordered products is set to 0") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "test test");
+
+			CommerceProducts.openProductsAdmin();
+
+			CommerceEntry.editWarehousesQuantity(
+				italyQuantity = "0",
+				northeastQuantity = "0",
+				productName = "U-Joint",
+				productSku = "MIN55861",
+				southwestQuantity = "0");
+		}
+
+		task ("When the buyer is importing the order") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
+
+			Click(locator1 = "CommerceEntry#DROPDOWN");
+
+			MenuItem.click(menuItem = "Import from Orders");
+
+			IFrame.selectModalFrame();
+
+			Button.click(button = "Select");
+		}
+
+		task ("Then the import preview shows that the product will not be imported") {
+			CommerceOrders.assertOrderImportPreviewEntry(
+				importStatus = "The specified quantity is unavailable.",
+				productName = "U-Joint",
+				productQuantity = "1",
+				productSku = "MIN55861",
+				totalPrice = "",
+				unitPrice = "");
+
+			CommerceOrders.assertOrderImportPreviewEntry(
+				importStatus = "OK",
+				productName = "Transmission Cooler Line Assembly",
+				productQuantity = "1",
+				productSku = "MIN55860",
+				totalPrice = "15.00",
+				unitPrice = "15.00");
+
+			CommerceOrders.assertOrderImportPreviewEntry(
+				importStatus = "OK",
+				productName = "Torque Converters",
+				productQuantity = "1",
+				productSku = "MIN55859",
+				totalPrice = "34.00",
+				unitPrice = "34.00");
+		}
+
+		task ("When the user imports the order") {
+			Button.click(button = "Import");
+
+			IFrame.selectTopFrame();
+		}
+
+		task ("Then only the other two products will be imported from the order") {
+			Alert.viewSuccessMessageText(successMessage = "2 rows were imported successfully.");
+
+			Refresh();
+
+			CommerceOrders.viewOrdersDetails(
+				productListPrice = "15.00",
+				productName = "Transmission Cooler Line Assembly",
+				productQuantity = "1",
+				productSku = "MIN55860",
+				productTotalPrice = "15.00");
+
+			CommerceOrders.viewOrdersDetails(
+				productListPrice = "34.00",
+				productName = "Torque Converters",
+				productQuantity = "1",
+				productSku = "MIN55859",
+				productTotalPrice = "34.00");
+
+			AssertElementNotPresent(
+				key_productName = "U-Joint",
+				locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_NAME");
+		}
 	}
-
 }

@@ -248,6 +248,43 @@ definition {
 			urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_commerce_order_web_internal_portlet_CommerceOrderPortlet");
 	}
 
+	macro assertOrderImportPreviewEntry {
+		AssertTextEquals(
+			key_columnNumber = "1",
+			key_productName = "${productName}",
+			key_value = "${productSku}",
+			locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT",
+			value1 = "${productSku}");
+
+		AssertTextEquals.assertPartialText(
+			key_columnNumber = "3",
+			key_productName = "${productName}",
+			key_value = "${unitPrice}",
+			locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT",
+			value1 = "${unitPrice}");
+
+		AssertTextEquals(
+			key_columnNumber = "4",
+			key_productName = "${productName}",
+			key_value = "${productQuantity}",
+			locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT",
+			value1 = "${productQuantity}");
+
+		AssertTextEquals.assertPartialText(
+			key_columnNumber = "5",
+			key_productName = "${productName}",
+			key_value = "${totalPrice}",
+			locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT",
+			value1 = "${totalPrice}");
+
+		AssertTextEquals.assertPartialText(
+			key_columnNumber = "6",
+			key_productName = "${productName}",
+			key_value = "${importStatus}",
+			locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT",
+			value1 = "${importStatus}");
+	}
+
 	macro openOrderTypesAdmin {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = "${baseURL}",

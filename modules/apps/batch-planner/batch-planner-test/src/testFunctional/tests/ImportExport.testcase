@@ -807,6 +807,45 @@ definition {
 		}
 	}
 
+	@description = "Verify users can recall a template during an export."
+	@priority = "3"
+	test CanRecallExportTemplate {
+		property portal.acceptance = "true";
+
+		task ("Given an account export template") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.gotoExport();
+
+			ImportExport.configureExport(
+				entityType = "Account",
+				exportFields = "name,type,description,externalReferenceCode",
+				exportFileFormat = "JSON",
+				headlessEndpoint = "/headless-admin-user",
+				templateName = "Test Account Export Template");
+		}
+
+		task ("When the user is configuring an export and selects the template") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.gotoExport();
+
+			Select(
+				key_selectFieldLabel = "Template",
+				locator1 = "ImportExport#SELECT",
+				value1 = "Test Account Export Template");
+		}
+
+		task ("Then the export should be configured according to the template") {
+			ImportExport.assertExportTemplate(
+				entityType = "Account",
+				exportFields = "name,type,description,externalReferenceCode",
+				exportFileFormat = "JSON",
+				headlessEndpoint = "/headless-admin-user",
+				templateName = "Test Account Export Template");
+		}
+	}
+
 	@description = "Verify users can save export configuration as a template during the export process"
 	@priority = "3"
 	test CanSaveTemplateDuringExport {

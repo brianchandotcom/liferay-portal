@@ -1270,11 +1270,17 @@ AUI.add(
 						var hasErrors = !!response.error;
 
 						if (hasErrors) {
-							instance._displayEntryError(
-								fileNode,
-								response.message,
-								displayStyle
+							var uploadData = instance._getCurrentUploadData();
+							var invalidFileIndex = uploadData.fileList.findIndex(
+								({name}) => file.name === name
 							);
+							var invalidFile =
+								uploadData.fileList[invalidFileIndex];
+
+							uploadData.fileList.splice(invalidFileIndex, 1);
+
+							invalidFile.errorMessage = response.message;
+							uploadData.invalidFiles.push(invalidFile);
 						}
 						else {
 							var fileEntryId = JSON.parse(event.data)

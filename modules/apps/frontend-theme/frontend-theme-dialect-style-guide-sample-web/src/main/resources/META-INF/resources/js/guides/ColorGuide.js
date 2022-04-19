@@ -112,103 +112,103 @@ const SAMPLE_TEXT = 'Sample';
 
 const BACKGROUND_COLORS = [
 	{
-		color: BRAND_PRIMARY_COLORS,
+		colors: BRAND_PRIMARY_COLORS,
 		title: Liferay.Language.get('background-primary'),
 	},
 	{
-		color: BRAND_SECONDARY_COLORS,
+		colors: BRAND_SECONDARY_COLORS,
 		title: Liferay.Language.get('background-secondary'),
 	},
 	{
-		color: NEUTRAL_COLORS,
+		colors: NEUTRAL_COLORS,
 		title: Liferay.Language.get('background-neutral'),
 	},
 	{
-		color: STATE_COLORS_SUCCESS,
+		colors: STATE_COLORS_SUCCESS,
 		title: Liferay.Language.get('background-state-success'),
 	},
 	{
-		color: STATE_COLORS_INFO,
+		colors: STATE_COLORS_INFO,
 		title: Liferay.Language.get('background-state-info'),
 	},
 	{
-		color: STATE_COLORS_WARNING,
+		colors: STATE_COLORS_WARNING,
 		title: Liferay.Language.get('background-state-warning'),
 	},
 	{
-		color: STATE_COLORS_DANGER,
+		colors: STATE_COLORS_DANGER,
 		title: Liferay.Language.get('background-state-danger'),
 	},
 	{
-		color: ACCENT_COLORS,
+		colors: ACCENT_COLORS,
 		title: Liferay.Language.get('background-accent'),
 	},
 ];
 const BORDER_COLORS = [
 	{
-		color: BRAND_PRIMARY_COLORS,
+		colors: BRAND_PRIMARY_COLORS,
 		title: Liferay.Language.get('border-primary'),
 	},
 	{
-		color: BRAND_SECONDARY_COLORS,
+		colors: BRAND_SECONDARY_COLORS,
 		title: Liferay.Language.get('border-secondary'),
 	},
 	{
-		color: NEUTRAL_COLORS,
+		colors: NEUTRAL_COLORS,
 		title: Liferay.Language.get('border-neutral'),
 	},
 	{
-		color: STATE_COLORS_SUCCESS,
+		colors: STATE_COLORS_SUCCESS,
 		title: Liferay.Language.get('border-state-success'),
 	},
 	{
-		color: STATE_COLORS_INFO,
+		colors: STATE_COLORS_INFO,
 		title: Liferay.Language.get('border-state-info'),
 	},
 	{
-		color: STATE_COLORS_WARNING,
+		colors: STATE_COLORS_WARNING,
 		title: Liferay.Language.get('border-state-warning'),
 	},
 	{
-		color: STATE_COLORS_DANGER,
+		colors: STATE_COLORS_DANGER,
 		title: Liferay.Language.get('border-state-danger'),
 	},
 	{
-		color: ACCENT_COLORS,
+		colors: ACCENT_COLORS,
 		title: Liferay.Language.get('border-accent'),
 	},
 ];
 const TEXT_COLORS = [
 	{
-		color: BRAND_PRIMARY_COLORS,
+		colors: BRAND_PRIMARY_COLORS,
 		title: Liferay.Language.get('text-primary'),
 	},
 	{
-		color: BRAND_SECONDARY_COLORS,
+		colors: BRAND_SECONDARY_COLORS,
 		title: Liferay.Language.get('text-secondary'),
 	},
 	{
-		color: NEUTRAL_COLORS,
+		colors: NEUTRAL_COLORS,
 		title: Liferay.Language.get('text-neutral'),
 	},
 	{
-		color: STATE_COLORS_SUCCESS,
+		colors: STATE_COLORS_SUCCESS,
 		title: Liferay.Language.get('text-state-success'),
 	},
 	{
-		color: STATE_COLORS_INFO,
+		colors: STATE_COLORS_INFO,
 		title: Liferay.Language.get('text-state-info'),
 	},
 	{
-		color: STATE_COLORS_WARNING,
+		colors: STATE_COLORS_WARNING,
 		title: Liferay.Language.get('text-state-warning'),
 	},
 	{
-		color: STATE_COLORS_DANGER,
+		colors: STATE_COLORS_DANGER,
 		title: Liferay.Language.get('text-state-danger'),
 	},
 	{
-		color: ACCENT_COLORS,
+		colors: ACCENT_COLORS,
 		title: Liferay.Language.get('text-accent'),
 	},
 ];
@@ -218,7 +218,7 @@ const ColorGuide = () => {
 		<>
 			{BACKGROUND_COLORS.map((item, index) => (
 				<TokenGroup group="colors" key={index} title={item.title}>
-					{item.color.map((color) => (
+					{item.colors.map((color) => (
 						<TokenItem
 							border={true}
 							className={`bg-${color}`}
@@ -231,7 +231,7 @@ const ColorGuide = () => {
 
 			{BORDER_COLORS.map((item, index) => (
 				<TokenGroup group="colors" key={index} title={item.title}>
-					{item.color.map((color) => (
+					{item.colors.map((color) => (
 						<TokenItem
 							border={true}
 							className={`border-${color}`}
@@ -244,7 +244,7 @@ const ColorGuide = () => {
 
 			{TEXT_COLORS.map((item, index) => (
 				<TokenGroup group="colors" key={index} title={item.title}>
-					{item.color.map((color) => (
+					{item.colors.map((color) => (
 						<TokenItem
 							border={true}
 							className={`text-${color}`}

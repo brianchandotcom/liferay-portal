@@ -21,6 +21,7 @@ import {config} from '../../config/index';
 import {useSelectItem} from '../../contexts/ControlsContext';
 import {useSelector} from '../../contexts/StoreContext';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
+import hasDropZoneChild from '../layout-data-items/hasDropZoneChild';
 import {CheckboxField} from './CheckboxField';
 
 function getHiddenAncestorId(layoutData, item, selectedViewportSize) {
@@ -63,7 +64,11 @@ export function HideFragmentField({
 	return (
 		<>
 			<CheckboxField
-				disabled={Boolean(hiddenAncestorId) || disabled}
+				disabled={
+					Boolean(hiddenAncestorId) ||
+					hasDropZoneChild(item, layoutData) ||
+					disabled
+				}
 				field={field}
 				onValueSelect={onValueSelect}
 				title={title}

@@ -36,8 +36,8 @@ CookiesBannerDisplayContext cookiesBannerDisplayContext = (CookiesBannerDisplayC
 
 			<clay:content-col>
 				<clay:button
-					cssClass="cookies-banner-button-configuration"
 					displayType="link"
+					id='<%= liferayPortletResponse.getNamespace() + "buttonConfiguration" %>'
 					label='<%= LanguageUtil.get(request, "configuration") %>'
 					small="<%= true %>"
 				/>
@@ -45,8 +45,8 @@ CookiesBannerDisplayContext cookiesBannerDisplayContext = (CookiesBannerDisplayC
 
 			<clay:content-col>
 				<clay:button
-					cssClass="cookies-banner-button-accept"
 					displayType="secondary"
+					id='<%= liferayPortletResponse.getNamespace() + "buttonAcceptAll" %>'
 					label='<%= LanguageUtil.get(request, "accept-all") %>'
 					small="<%= true %>"
 				/>
@@ -54,8 +54,8 @@ CookiesBannerDisplayContext cookiesBannerDisplayContext = (CookiesBannerDisplayC
 
 			<clay:content-col>
 				<clay:button
-					cssClass="cookies-banner-button-decline"
 					displayType="primary"
+					id='<%= liferayPortletResponse.getNamespace() + "buttonDeclineAll" %>'
 					label='<%= LanguageUtil.get(request, "decline-all") %>'
 					small="<%= true %>"
 				/>

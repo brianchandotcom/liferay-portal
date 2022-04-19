@@ -12,15 +12,15 @@
  * details.
  */
 
-export default function ({configurationUrl}) {
-	const buttonAccept = document.querySelector(
-		'.cookies-banner-button-accept'
+export default function ({configurationUrl, namespace}) {
+	const buttonAcceptAll = document.getElementById(
+		`${namespace}buttonAcceptAll`
 	);
-	const buttonConfiguration = document.querySelector(
-		'.cookies-banner-button-configuration'
+	const buttonConfiguration = document.getElementById(
+		`${namespace}buttonConfiguration`
 	);
-	const buttonDecline = document.querySelector(
-		'.cookies-banner-button-decline'
+	const buttonDeclineAll = document.getElementById(
+		`${namespace}buttonDeclineAll`
 	);
 	const cookieBanner = document.querySelector('.cookies-banner');
 	const editMode = document.body.classList.contains('has-edit-mode-menu');
@@ -28,7 +28,7 @@ export default function ({configurationUrl}) {
 	if (!editMode) {
 		checkCookiesConsent(cookieBanner);
 
-		buttonAccept.addEventListener(
+		buttonAcceptAll.addEventListener(
 			'click',
 			function handleButtonClickAccept() {
 				cookieBanner.style.display = 'none';
@@ -89,14 +89,11 @@ export default function ({configurationUrl}) {
 			}
 		);
 
-		buttonDecline.addEventListener(
-			'click',
-			function handleButtonClickDecline() {
-				cookieBanner.style.display = 'none';
+		buttonDeclineAll.addEventListener('click', () => {
+			cookieBanner.style.display = 'none';
 
-				cookiesDeclineAll();
-			}
-		);
+			cookiesDeclineAll();
+		});
 	}
 }
 

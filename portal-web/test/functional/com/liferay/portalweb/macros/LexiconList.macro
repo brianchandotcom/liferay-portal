@@ -55,6 +55,14 @@ definition {
 			locator1 = "LexiconList#LIST_ENTRY");
 	}
 
+	macro viewListEntrySpecific {
+		AssertTextEquals.assertPartialText(
+			key_listEntry = "${listEntry}",
+			key_position = "${position}",
+			locator1 = "LexiconList#LIST_ENTRY_SPECIFIC",
+			value1 = "${listEntry}");
+	}
+
 	macro viewListEntrySubtitle {
 		AssertTextEquals(
 			key_listEntry = "${listEntry}",

@@ -370,6 +370,14 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testMissingEmptyLinesBeforeMethodCalls() throws Exception {
+		test(
+			"MissingEmptyLinesBeforeMethodCalls.testjava",
+			"There should be an empty line before 'portletPreferences.store'",
+			26);
+	}
+
+	@Test
 	public void testMissingDiamondOperator() throws Exception {
 		test("MissingDiamondOperator.testjava",
 			new String[] {

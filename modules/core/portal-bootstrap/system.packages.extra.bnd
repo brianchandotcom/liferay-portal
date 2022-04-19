@@ -313,7 +313,6 @@ Provide-Capability:\
 	@lib/com.liferay.osgi.service.tracker.collections.jar,\
 	@lib/com.liferay.petra.concurrent.jar,\
 	@lib/com.liferay.petra.content.jar,\
-	@lib/com.liferay.petra.encryptor.jar,\
 	@lib/com.liferay.petra.executor.jar,\
 	@lib/com.liferay.petra.function.jar,\
 	@lib/com.liferay.petra.io.jar,\

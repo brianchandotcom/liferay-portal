@@ -401,6 +401,70 @@ definition {
 		}
 	}
 
+	@description = "Verify users can filter Import/Export templates by Action."
+	@priority = "3"
+	test CanFilterTemplatesByAction {
+		property portal.acceptance = "true";
+
+		task ("Given account import and export templates") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.gotoImport();
+
+			ImportExport.configureImport(
+				entityType = "Account",
+				fieldMappings = "name:Account Name,type:Account Type,description:Account Description,externalReferenceCode:External Reference Code",
+				fileName = "csv_account_import.csv",
+				headlessEndpoint = "/headless-admin-user",
+				templateName = "Test Account Import Template");
+
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.gotoExport();
+
+			ImportExport.configureExport(
+				entityType = "Account",
+				exportFields = "name,type,description,externalReferenceCode",
+				exportFileFormat = "JSON",
+				headlessEndpoint = "/headless-admin-user",
+				templateName = "Test Account Export Template");
+		}
+
+		task ("When I go to the Import/Export templates list and filter action by all") {
+			ImportExport.openImportExportAdmin();
+
+			Navigator.gotoNavTab(navTab = "Templates");
+
+			ManagementBar.setFilterAndOrder(filterBy = "All");
+		}
+
+		task ("Then both the export and import templates should be shown") {
+			LexiconEntry.viewEntryName(rowEntry = "Test Account Import Template");
+
+			LexiconEntry.viewEntryName(rowEntry = "Test Account Export Template");
+		}
+
+		task ("When I filter Action by Import") {
+			ManagementBar.setFilterAndOrder(filterBy = "Import");
+		}
+
+		task ("Then only the import template should be shown") {
+			LexiconEntry.viewEntryName(rowEntry = "Test Account Import Template");
+
+			LexiconEntry.viewNoEntry(rowEntry = "Test Account Export Template");
+		}
+
+		task ("When I filter Action by Export") {
+			ManagementBar.setFilterAndOrder(filterBy = "Export");
+		}
+
+		task ("Then only the export template should be shown") {
+			LexiconEntry.viewNoEntry(rowEntry = "Test Account Import Template");
+
+			LexiconEntry.viewEntryName(rowEntry = "Test Account Export Template");
+		}
+	}
+
 	@description = "Verify users can import entities via CSV files"
 	@priority = "3"
 	test CanImportCSVFiles {

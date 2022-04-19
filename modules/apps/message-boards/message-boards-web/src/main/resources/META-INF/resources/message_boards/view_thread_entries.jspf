@@ -41,7 +41,9 @@
 			row.setRestricted(!MBMessagePermission.contains(permissionChecker, message, ActionKeys.VIEW));
 		}
 
-		if (!MBThreadFlagLocalServiceUtil.hasThreadFlag(themeDisplay.getUserId(), thread)) {
+		boolean hasThreadFlag = MBThreadFlagLocalServiceUtil.hasThreadFlag(themeDisplay.getUserId(), thread);
+
+		if (!hasThreadFlag) {
 			row.setCssClass("list-group-item-primary");
 		}
 		%>
@@ -64,7 +66,7 @@
 				<aui:a href="<%= rowURL.toString() %>">
 					<c:if test="<%= message != null %>">
 						<c:choose>
-							<c:when test="<%= !MBThreadFlagLocalServiceUtil.hasThreadFlag(themeDisplay.getUserId(), thread) %>">
+							<c:when test="<%= !hasThreadFlag %>">
 								<span class="sr-only"><liferay-ui:message key="unread-thread" /></span>
 
 								<strong><%= message.getSubject() %></strong>

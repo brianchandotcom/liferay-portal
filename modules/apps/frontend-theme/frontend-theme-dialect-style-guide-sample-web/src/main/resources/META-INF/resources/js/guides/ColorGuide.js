@@ -144,6 +144,7 @@ const BACKGROUND_COLORS = [
 		title: Liferay.Language.get('background-accent'),
 	},
 ];
+
 const BORDER_COLORS = [
 	{
 		colors: BRAND_PRIMARY_COLORS,
@@ -178,6 +179,7 @@ const BORDER_COLORS = [
 		title: Liferay.Language.get('border-accent'),
 	},
 ];
+
 const TEXT_COLORS = [
 	{
 		colors: BRAND_PRIMARY_COLORS,

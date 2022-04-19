@@ -21,6 +21,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocal
 import com.liferay.layout.responsive.ViewportSize;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
+import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
@@ -188,23 +189,100 @@ public class AddItemMVCActionCommandTest {
 	}
 
 	@Test
+	public void testAddItemToLayoutDataItemTypeCollectionMobileLandscapeConfig()
+		throws Exception {
+
+		try (PropsTemporarySwapper propsTemporarySwapper =
+				new PropsTemporarySwapper("feature.flag.LPS-119551", "false")) {
+
+			_assertTypeCollectionMobileLandscapeConfig(null);
+		}
+
+		try (PropsTemporarySwapper propsTemporarySwapper =
+				new PropsTemporarySwapper("feature.flag.LPS-119551", "true")) {
+
+			_assertTypeCollectionMobileLandscapeConfig(1);
+		}
+	}
+
+	@Test
 	public void testAddItemToLayoutDataItemTypeRowMobileLandscapeConfig()
 		throws Exception {
 
 		try (PropsTemporarySwapper propsTemporarySwapper =
 				new PropsTemporarySwapper("feature.flag.LPS-119551", "false")) {
 
-			_assertMobileLandscapeConfig(null, null);
+			_assertTypeRowMobileLandscapeConfig(null, null);
 		}
 
 		try (PropsTemporarySwapper propsTemporarySwapper =
 				new PropsTemporarySwapper("feature.flag.LPS-119551", "true")) {
 
-			_assertMobileLandscapeConfig(1, 12);
+			_assertTypeRowMobileLandscapeConfig(1, 12);
 		}
 	}
 
-	private void _assertMobileLandscapeConfig(
+	private void _assertTypeCollectionMobileLandscapeConfig(
+			Integer expectedNumberOfColumns)
+		throws Exception {
+
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			_getMockLiferayPortletActionRequest();
+
+		mockLiferayPortletActionRequest.addParameter(
+			"itemType", LayoutDataItemTypeConstants.TYPE_COLLECTION);
+		mockLiferayPortletActionRequest.addParameter(
+			"parentItemId", _layoutStructure.getMainItemId());
+		mockLiferayPortletActionRequest.addParameter("position", "0");
+
+		JSONObject jsonObject = ReflectionTestUtil.invoke(
+			_mvcActionCommand, "_addItemToLayoutData",
+			new Class<?>[] {ActionRequest.class},
+			mockLiferayPortletActionRequest);
+
+		JSONObject layoutDataJSONObject = jsonObject.getJSONObject(
+			"layoutData");
+
+		LayoutStructure layoutStructure = LayoutStructure.of(
+			layoutDataJSONObject.toString());
+
+		LayoutStructureItem rootLayoutStructureItem =
+			layoutStructure.getLayoutStructureItem(
+				layoutStructure.getMainItemId());
+
+		List<String> childrenItemIds =
+			rootLayoutStructureItem.getChildrenItemIds();
+
+		LayoutStructureItem layoutStructureItem =
+			layoutStructure.getLayoutStructureItem(childrenItemIds.get(0));
+
+		Assert.assertEquals(
+			_layoutStructure.getMainItemId(),
+			layoutStructureItem.getParentItemId());
+		Assert.assertEquals(
+			LayoutDataItemTypeConstants.TYPE_COLLECTION,
+			layoutStructureItem.getItemType());
+		Assert.assertTrue(
+			layoutStructureItem instanceof CollectionStyledLayoutStructureItem);
+
+		CollectionStyledLayoutStructureItem
+			collectionStyledLayoutStructureItem =
+				(CollectionStyledLayoutStructureItem)layoutStructureItem;
+
+		JSONObject itemConfigJSONObject =
+			collectionStyledLayoutStructureItem.getItemConfigJSONObject();
+
+		JSONObject mobileLandscapeConfigJSONObject =
+			itemConfigJSONObject.getJSONObject(
+				ViewportSize.MOBILE_LANDSCAPE.getViewportSizeId());
+
+		Assert.assertNotNull(mobileLandscapeConfigJSONObject);
+		Assert.assertEquals(
+			expectedNumberOfColumns,
+			mobileLandscapeConfigJSONObject.get("numberOfColumns"));
+	}
+
+	private void _assertTypeRowMobileLandscapeConfig(
 			Integer expectedModulesPerRow,
 			Integer expectedColumnMobileLandscapeSize)
 		throws Exception {

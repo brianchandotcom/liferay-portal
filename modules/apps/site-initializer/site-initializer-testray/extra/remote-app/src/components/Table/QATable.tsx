@@ -63,6 +63,10 @@ const QATable: React.FC<QATableProps> = ({
 							<td>
 								<hr />
 							</td>
+
+							<td>
+								<hr />
+							</td>
 						</tr>
 					)}
 				</React.Fragment>

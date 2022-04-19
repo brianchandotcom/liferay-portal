@@ -21,6 +21,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LIST_ENTRY_SPECIFIC</td>
+	<td>//*[@data-qa-id='row'][${key_position}][contains(.,'${key_listEntry}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LIST_ENTRY_TITLE</td>
 	<td>//*[@data-qa-id='row'][contains(.,'${key_listEntry}')]//h5 | //*[@data-qa-id='row'][contains(.,'${key_listEntry}')]//h2 | //*[@data-qa-id='row'][contains(.,'${key_listEntry}')]//p[contains(@class,'h5')]</td>
 	<td></td>

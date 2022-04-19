@@ -28,15 +28,14 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Javier Gamarra
- * @author Javier de Arcos
+ * @author Marko Cikos
  */
 @Component(
 	enabled = true,
-	property = "frontend.data.set.name=" + FDSSampleFDSNames.FDS_SAMPLES,
+	property = "frontend.data.set.name=" + FDSSampleFDSNames.MINIMUM,
 	service = FDSView.class
 )
-public class SampleTableFDSView extends BaseTableFDSView {
+public class MinimumSampleTableFDSView extends BaseTableFDSView {
 
 	@Override
 	public FDSTableSchema getFDSTableSchema(Locale locale) {
@@ -44,22 +43,17 @@ public class SampleTableFDSView extends BaseTableFDSView {
 			_fdsTableSchemaBuilderFactory.create();
 
 		fdsTableSchemaBuilder.addFDSTableSchemaField("id", "id");
-		fdsTableSchemaBuilder.addFDSTableSchemaField("title", "Title");
+		fdsTableSchemaBuilder.addFDSTableSchemaField("title", "title");
 		fdsTableSchemaBuilder.addFDSTableSchemaField(
-			"description", "Description");
-		fdsTableSchemaBuilder.addFDSTableSchemaField("date", "Date");
+			"description", "description");
+		fdsTableSchemaBuilder.addFDSTableSchemaField("date", "date");
 
 		FDSTableSchemaField statusFDSTableSchemaField =
 			fdsTableSchemaBuilder.addFDSTableSchemaField("status", "status");
 
 		statusFDSTableSchemaField.setContentRenderer("status");
 
-		FDSTableSchemaField authorFDSTableSchemaField =
-			fdsTableSchemaBuilder.addFDSTableSchemaField(
-				"creator.name", "author");
-
-		authorFDSTableSchemaField.setContentRenderer(
-			"sampleCustomDataRenderer");
+		fdsTableSchemaBuilder.addFDSTableSchemaField("creator.name", "author");
 
 		return fdsTableSchemaBuilder.build();
 	}

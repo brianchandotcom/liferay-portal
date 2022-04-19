@@ -32,10 +32,10 @@ import org.osgi.service.component.annotations.Component;
  * @author Javier de Arcos
  */
 @Component(
-	property = "frontend.data.set.name=" + FDSSampleFDSNames.FDS_SAMPLES,
+	property = "frontend.data.set.name=" + FDSSampleFDSNames.CUSTOMIZED,
 	service = FDSFilter.class
 )
-public class SampleCheckBoxFDSFilter extends BaseCheckBoxFDSFilter {
+public class CustomizedSampleCheckBoxFDSFilter extends BaseCheckBoxFDSFilter {
 
 	@Override
 	public List<CheckBoxFDSFilterItem> getCheckBoxFDSFilterItems(

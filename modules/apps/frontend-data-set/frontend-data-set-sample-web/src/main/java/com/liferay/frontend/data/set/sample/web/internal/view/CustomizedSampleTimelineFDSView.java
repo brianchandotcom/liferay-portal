@@ -16,7 +16,7 @@ package com.liferay.frontend.data.set.sample.web.internal.view;
 
 import com.liferay.frontend.data.set.sample.web.internal.constants.FDSSampleFDSNames;
 import com.liferay.frontend.data.set.view.FDSView;
-import com.liferay.frontend.data.set.view.list.BaseListFDSView;
+import com.liferay.frontend.data.set.view.timeline.BaseTimelineFDSView;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -25,10 +25,15 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	enabled = false,
-	property = "frontend.data.set.name=" + FDSSampleFDSNames.FDS_SAMPLES,
+	property = "frontend.data.set.name=" + FDSSampleFDSNames.CUSTOMIZED,
 	service = FDSView.class
 )
-public class SampleListFDSView extends BaseListFDSView {
+public class CustomizedSampleTimelineFDSView extends BaseTimelineFDSView {
+
+	@Override
+	public String getDate() {
+		return "date";
+	}
 
 	@Override
 	public String getDescription() {

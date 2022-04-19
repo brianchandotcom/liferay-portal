@@ -1782,7 +1782,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			com.liferay.object.model.ObjectDefinition objectDefinition =
 				_objectDefinitionLocalService.fetchObjectDefinition(
 					serviceContext.getCompanyId(),
-					jsonObject.getString("objectDefinitionName"));
+					"C_" + jsonObject.getString("objectDefinitionName"));
 
 			if (objectDefinition == null) {
 				continue;
@@ -1818,7 +1818,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 				if (objectEntryJSONObject.has("externalReferenceCode")) {
 					objectEntryIdsStringUtilReplaceValues.put(
 						StringBundler.concat(
-							objectDefinition.getName(), "#",
+							StringUtil.removeFirst(
+								objectDefinition.getName(), "C_"),
+							"#",
 							objectEntryJSONObject.getString(
 								"externalReferenceCode")),
 						String.valueOf(objectEntry.getObjectEntryId()));

@@ -37,6 +37,12 @@ export default function ({configurationUrl, namespace}) {
 			}
 		);
 
+		const cookiePreferences = {};
+
+		Liferay.on('cookiePreferenceUpdate', (event) => {
+			cookiePreferences[event.key] = event.value;
+		});
+
 		buttonConfiguration.addEventListener(
 			'click',
 			function handleButtonClickConfiguration() {
@@ -46,6 +52,12 @@ export default function ({configurationUrl, namespace}) {
 							displayType: 'secondary',
 							label: Liferay.Language.get('confirm'),
 							onClick() {
+								Object.entries(cookiePreferences).forEach(
+									([key, value]) => {
+										setCookie(key, value);
+									}
+								);
+
 								checkCookiesConsent(cookieBanner);
 
 								Liferay.Util.getOpener().Liferay.fire(

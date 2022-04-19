@@ -12,68 +12,97 @@
  * details.
  */
 
-export default function () {
-	const toggleFunctional = document.querySelector(
-		'.toggle-switch-check-functional'
+export default function ({namespace}) {
+	const toggleFunctional = document.getElementById(
+		`${namespace}toggleFunctional`
 	);
-	const togglePerformance = document.querySelector(
-		'.toggle-switch-check-performance'
+	const togglePerformance = document.getElementById(
+		`${namespace}togglePerformance`
 	);
-	const togglePersonalization = document.querySelector(
-		'.toggle-switch-check-personalization'
-	);
-
-	if (getCookie('liferay.cookie.consent.functional') === 'accepted') {
-		toggleFunctional.checked = true;
-	}
-
-	if (getCookie('liferay.cookie.consent.performance') === 'accepted') {
-		togglePerformance.checked = true;
-	}
-
-	if (getCookie('liferay.cookie.consent.personalization') === 'accepted') {
-		togglePersonalization.checked = true;
-	}
-
-	toggleFunctional.addEventListener(
-		'click',
-		function handleToggleFunctional() {
-			if (toggleFunctional.checked) {
-				setCookie('liferay.cookie.consent.functional', 'accepted');
-			}
-			else {
-				setCookie('liferay.cookie.consent.functional', 'decline');
-			}
-		}
+	const togglePersonalization = document.getElementById(
+		`${namespace}togglePersonalization`
 	);
 
-	togglePerformance.addEventListener(
-		'click',
-		function handleTogglePerformance() {
-			if (togglePerformance.checked) {
-				setCookie('liferay.cookie.consent.performance', 'accepted');
-			}
-			else {
-				setCookie('liferay.cookie.consent.performance', 'decline');
-			}
-		}
-	);
+	toggleFunctional.addEventListener('click', () => {
+		Liferay.Util.getOpener().Liferay.fire('cookiePreferenceUpdate', {
+			key: 'liferay.cookie.consent.functional',
+			value: toggleFunctional.checked ? 'accepted' : 'declined',
+		});
+	});
 
-	togglePersonalization.addEventListener(
-		'click',
-		function handleTogglePersonalization() {
-			if (togglePersonalization.checked) {
-				setCookie('liferay.cookie.consent.personalization', 'accepted');
-			}
-			else {
-				setCookie('liferay.cookie.consent.personalization', 'decline');
-			}
-		}
-	);
+	togglePerformance.addEventListener('click', () => {
+		Liferay.Util.getOpener().Liferay.fire('cookiePreferenceUpdate', {
+			key: 'liferay.cookie.consent.performance',
+			value: togglePerformance.checked ? 'accepted' : 'declined',
+		});
+	});
+
+	togglePersonalization.addEventListener('click', () => {
+		Liferay.Util.getOpener().Liferay.fire('cookiePreferenceUpdate', {
+			key: 'liferay.cookie.consent.personalization',
+			value: togglePersonalization.checked ? 'accepted' : 'declined',
+		});
+	});
+
+	toggleFunctional.checked =
+		getCookie('liferay.cookie.consent.functional') === 'accepted';
+	togglePerformance.checked =
+		getCookie('liferay.cookie.consent.performance') === 'accepted';
+	togglePersonalization.checked =
+		getCookie('liferay.cookie.consent.personalization') === 'accepted';
 
 	toggleFunctional.removeAttribute('disabled');
 	togglePerformance.removeAttribute('disabled');
 	togglePersonalization.removeAttribute('disabled');
+
+	const buttonAcceptAll = document.getElementById(
+		`${namespace}buttonAcceptAll`
+	);
+	const buttonConfirm = document.getElementById(`${namespace}buttonConfirm`);
+	const buttonDeclineAll = document.getElementById(
+		`${namespace}buttonDeclineAll`
+	);
+
+	buttonAcceptAll.addEventListener('click', () => {
+		cookiesAcceptAll();
+
+		window.location.reload();
+	});
+
+	buttonDeclineAll.addEventListener('click', () => {
+		cookiesDeclineAll();
+
+		window.location.reload();
+	});
+
+	buttonConfirm.addEventListener('click', () => {
+		setCookie(
+			'liferay.cookie.consent.functional',
+			toggleFunctional.checked ? 'accepted' : 'decline'
+		);
+		setCookie(
+			'liferay.cookie.consent.performance',
+			togglePerformance.checked ? 'accepted' : 'decline'
+		);
+		setCookie(
+			'liferay.cookie.consent.personalization',
+			togglePersonalization.checked ? 'accepted' : 'decline'
+		);
+
+		window.location.reload();
+	});
+}
+
+function cookiesAcceptAll() {
+	setCookie('liferay.cookie.consent.functional', 'accepted');
+	setCookie('liferay.cookie.consent.performance', 'accepted');
+	setCookie('liferay.cookie.consent.personalization', 'accepted');
+}
+
+function cookiesDeclineAll() {
+	setCookie('liferay.cookie.consent.functional', 'decline');
+	setCookie('liferay.cookie.consent.performance', 'decline');
+	setCookie('liferay.cookie.consent.personalization', 'decline');
 }
 
 function getCookie(name) {

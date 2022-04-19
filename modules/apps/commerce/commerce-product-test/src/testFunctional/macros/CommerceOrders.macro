@@ -226,6 +226,22 @@ definition {
 		IFrame.selectTopFrame();
 	}
 
+	macro importFromOrder {
+		Click(locator1 = "CommerceEntry#DROPDOWN");
+
+		MenuItem.click(menuItem = "Import from Orders");
+
+		IFrame.selectModalFrame();
+
+		Search.searchCP(searchTerm = "${orderId}");
+
+		Button.click(button = "Select");
+
+		Button.click(button = "Import");
+
+		IFrame.selectTopFrame();
+	}
+
 	macro openOrdersAdmin {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = "${baseURL}",

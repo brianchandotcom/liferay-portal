@@ -1,0 +1,17 @@
+apply plugin: "com.liferay.maven.plugin.builder"
+
+buildPluginDescriptor {
+	ext {
+		autoClean = false
+	}
+
+	finalizedBy formatSource
+
+	forcedExclusions "com.ibm.icu:icu4j:2.6.1"
+	goalPrefix = "source-formatter"
+}
+
+deploy.outputs.cacheIf { false }
+
+liferay {
+ deployDir = "../../../tools" }

@@ -675,7 +675,28 @@ public class RenderLayoutStructureTag extends IncludeTag {
 
 		JspWriter jspWriter = pageContext.getOut();
 
-		jspWriter.write("<form>");
+		jspWriter.write("<form class=\"");
+
+		if (renderLayoutStructureDisplayContext.isCommonStylesFFEnabled()) {
+			jspWriter.write(
+				LayoutStructureItemCSSUtil.getLayoutStructureItemUniqueCssClass(
+					layoutStructureItem));
+			jspWriter.write(StringPool.SPACE);
+			jspWriter.write(
+				LayoutStructureItemCSSUtil.getLayoutStructureItemCssClass(
+					layoutStructureItem));
+		}
+		else {
+			jspWriter.write(
+				renderLayoutStructureDisplayContext.getCssClass(
+					(FormStyledLayoutStructureItem)layoutStructureItem));
+		}
+
+		jspWriter.write("\" style=\"");
+		jspWriter.write(
+			renderLayoutStructureDisplayContext.getStyle(
+				(FormStyledLayoutStructureItem)layoutStructureItem));
+		jspWriter.write("\">");
 
 		_renderLayoutStructure(
 			layoutStructureItem.getChildrenItemIds(),

@@ -80,6 +80,10 @@ html#{$cadmin-selector} {
 				background-color: $cadmin-light-l1;
 			}
 
+			&__buttons--hidden > button {
+				color: $cadmin-secondary-l1;
+			}
+
 			&__name {
 				color: $cadmin-dark;
 				margin-left: 4px;
@@ -135,10 +139,6 @@ html#{$cadmin-selector} {
 
 				&--visible {
 					opacity: 1;
-				}
-
-				.lexicon-icon-hidden {
-					color: $cadmin-secondary-l1;
 				}
 			}
 

@@ -14,15 +14,15 @@
 
 import {useEffect, useRef} from 'react';
 
-import {CONTAINER_WIDTH_TYPES} from '../../config/constants/containerWidthTypes';
-import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
-import {VIEWPORT_SIZES} from '../../config/constants/viewportSizes';
-import {config} from '../../config/index';
-import {useGlobalContext} from '../../contexts/GlobalContext';
-import {useSelector} from '../../contexts/StoreContext';
-import {deepEqual} from '../../utils/checkDeepEqual';
-import generateStyleSheet from '../../utils/generateStyleSheet';
-import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
+import {CONTAINER_WIDTH_TYPES} from '../config/constants/containerWidthTypes';
+import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
+import {VIEWPORT_SIZES} from '../config/constants/viewportSizes';
+import {config} from '../config/index';
+import {useGlobalContext} from '../contexts/GlobalContext';
+import {useSelector} from '../contexts/StoreContext';
+import {deepEqual} from '../utils/checkDeepEqual';
+import generateStyleSheet from '../utils/generateStyleSheet';
+import {getResponsiveConfig} from '../utils/getResponsiveConfig';
 
 const LAYOUT_DATA_ITEMS_WITH_COMMON_STYLES = [
 	LAYOUT_DATA_ITEM_TYPES.collection,

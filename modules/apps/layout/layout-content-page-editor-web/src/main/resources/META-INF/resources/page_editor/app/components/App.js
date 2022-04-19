@@ -32,6 +32,7 @@ import {reducer} from '../reducers/index';
 import selectLanguageId from '../selectors/selectLanguageId';
 import selectSegmentsExperienceId from '../selectors/selectSegmentsExperienceId';
 import {DragAndDropContextProvider} from '../utils/drag-and-drop/useDragAndDrop';
+import CommonStylesManager from './CommonStylesManager';
 import {DisplayPagePreviewItemSelector} from './DisplayPagePreviewItemSelector';
 import DragPreview from './DragPreview';
 import LayoutViewport from './LayoutViewport';
@@ -39,7 +40,6 @@ import ShortcutManager from './ShortcutManager';
 import Sidebar from './Sidebar';
 import Toolbar from './Toolbar';
 import URLParser from './URLParser';
-import CommonStylesManager from './topper/CommonStylesManager';
 
 const DEFAULT_SESSION_LENGTH = 60 * 1000;
 

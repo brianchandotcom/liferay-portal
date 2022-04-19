@@ -47,6 +47,7 @@ function FileUpload({portletNamespace}) {
 	const inputCSVSeparatorId = `${portletNamespace}csvSeparator`;
 	const inputCSVEnclosingCharacterId = `${portletNamespace}csvEnclosingCharacter`;
 	const inputFileId = `${portletNamespace}importFile`;
+	const inputNameId = `${portletNamespace}name`;
 
 	const [parserOptions, setParserOptions] = useState({
 		CSVContainsHeaders: true,
@@ -206,6 +207,23 @@ function FileUpload({portletNamespace}) {
 						</div>
 					</div>
 				</>
+			)}
+
+			{fileToBeUploaded && (
+				<ClayForm.Group>
+					<label htmlFor={inputNameId}>
+						{Liferay.Language.get('name')}
+					</label>
+
+					<ClayInput
+						defaultValue={fileToBeUploaded.name.substring(
+							0,
+							fileToBeUploaded.name.lastIndexOf('.')
+						)}
+						id={inputNameId}
+						name={inputNameId}
+					/>
+				</ClayForm.Group>
 			)}
 		</>
 	);

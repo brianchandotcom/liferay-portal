@@ -128,12 +128,17 @@ definition {
 	}
 
 	macro configureWorkflowCP {
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "${dmFolderName}");
+		if ("${dmFolderName}" == "homeFolder") {
+			Portlet.gotoPortletOptions(portletOption = "Edit");
+		}
+		else {
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Edit",
+				rowEntry = "${dmFolderName}");
 
-		if (IsElementNotPresent.isNotVisible(locator1 = "Radio#WORKFLOW_PARENT_FOLDER")) {
-			Click(locator1 = "DocumentsAndMediaEditFolder#WORKFLOW_DOCUMENT_TYPE_RESTRICTIONS_TOGGLE");
+			if (IsElementNotPresent.isNotVisible(locator1 = "Radio#WORKFLOW_PARENT_FOLDER")) {
+				Click(locator1 = "DocumentsAndMediaEditFolder#WORKFLOW_DOCUMENT_TYPE_RESTRICTIONS_TOGGLE");
+			}
 		}
 
 		if ("${workflowRestriction}" == "Parent Folder") {
@@ -172,7 +177,9 @@ definition {
 			AssertConfirm(value1 = "You are making changes to the document types. If a document in this folder or its subfolders is currently in draft or pending workflow states, you may lose some or all of its metadata. A new version will be created for all other documents. Are you sure you wish to continue?");
 		}
 		else if ("${workflowRestriction}" == "Default Workflow") {
-			Click(locator1 = "Radio#WORKFLOW_DEFAULT_WORKFLOW");
+			if (!(isSet(homeFolder))) {
+				Click(locator1 = "Radio#WORKFLOW_DEFAULT_WORKFLOW");
+			}
 
 			Select(
 				locator1 = "Select#WORKFLOW_DEFAULT",

@@ -34,6 +34,25 @@ public class AnalyticsDeleteMessageLocalServiceImpl
 	extends AnalyticsDeleteMessageLocalServiceBaseImpl {
 
 	@Override
+	public AnalyticsDeleteMessage addAnalyticsDeleteMessage(
+		long companyId, Date createDate, String className, long classPK,
+		long userId) {
+
+		AnalyticsDeleteMessage analyticsDeleteMessage =
+			analyticsDeleteMessagePersistence.create(
+				counterLocalService.increment());
+
+		analyticsDeleteMessage.setCompanyId(companyId);
+		analyticsDeleteMessage.setUserId(userId);
+		analyticsDeleteMessage.setCreateDate(createDate);
+		analyticsDeleteMessage.setModifiedDate(createDate);
+		analyticsDeleteMessage.setClassName(className);
+		analyticsDeleteMessage.setClassPK(classPK);
+
+		return analyticsDeleteMessagePersistence.update(analyticsDeleteMessage);
+	}
+
+	@Override
 	public List<AnalyticsDeleteMessage> getAnalyticsDeleteMessages(
 		long companyId, Date modifiedDate, int start, int end) {
 

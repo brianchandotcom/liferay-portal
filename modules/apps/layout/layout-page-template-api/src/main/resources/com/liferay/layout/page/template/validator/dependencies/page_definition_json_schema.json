@@ -1223,6 +1223,16 @@
 					},
 					"title": "The formConfig Schema",
 					"type": "object"
+				},
+				"fragmentStyle": {
+					"$ref": "#/definitions/FragmentStyle"
+				},
+				"fragmentViewports": {
+					"items": {
+						"$ref": "#/definitions/FragmentViewport"
+					},
+					"title": "The fragmentViewports Schema",
+					"type": "array"
 				}
 			},
 			"title": "The PageFormDefinition Schema",

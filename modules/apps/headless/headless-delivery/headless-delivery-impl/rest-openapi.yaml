@@ -3360,6 +3360,19 @@ components:
                                 - $ref: "#/components/schemas/ClassTypeReference"
                                 - $ref: "#/components/schemas/ContextReference"
                     type: object
+                fragmentStyle:
+                    allOf:
+                        - $ref: "#/components/schemas/FragmentStyle"
+                    # @review
+                    description:
+                        The fragment style of a Page form.
+                fragmentViewports:
+                    # @review
+                    description:
+                        A list of fragment viewports of a Page form.
+                    items:
+                        $ref: "#/components/schemas/FragmentViewport"
+                    type: array
             type: object
         PageFragmentInstanceDefinition:
             # @review

@@ -16,6 +16,10 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+CookiesBannerConfigurationDisplayContext cookiesBannerConfigurationDisplayContext = new CookiesBannerConfigurationDisplayContext(renderRequest, renderResponse);
+%>
+
 <clay:container-fluid
 	cssClass="container-view p-md-4"
 >

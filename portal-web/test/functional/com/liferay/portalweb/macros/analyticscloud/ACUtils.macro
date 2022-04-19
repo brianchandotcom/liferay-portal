@@ -695,6 +695,12 @@ definition {
 				pageName = "${pageName}",
 				siteName = "${siteName}");
 
+			if ("${actionType}" == "View WC") {
+				Pause(locator1 = "5000");
+
+				// Pause is necessary because the web content event is sent too fast and doesn't have time to process if you navigate to another page quickly.
+			}
+
 			if ("${actionType}" == "View Blog") {
 				BlogsNavigator.gotoPG(entryTitle = "${documentTitle}");
 			}

@@ -85,6 +85,7 @@ import {getSessionValue, setSessionValue} from './util/session.es';
 import showCapsLock from './util/show_caps_lock';
 import sub from './util/sub';
 import toCharCode from './util/to_char_code.es';
+import toggleControls from './util/toggle_controls';
 import toggleDisabled from './util/toggle_disabled';
 import zIndex from './zIndex';
 
@@ -320,6 +321,7 @@ Liferay.Util.Session = {
 	set: setSessionValue,
 };
 
+Liferay.Util.toggleControls = toggleControls;
 Liferay.Util.unescape = unescape;
 Liferay.Util.unescapeHTML = unescapeHTML;
 

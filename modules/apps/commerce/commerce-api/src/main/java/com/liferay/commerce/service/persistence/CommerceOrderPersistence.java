@@ -678,150 +678,6 @@ public interface CommerceOrderPersistence
 	public int countByUserId(long userId);
 
 	/**
-	 * Returns all the commerce orders where commerceAccountId = &#63;.
-	 *
-	 * @param commerceAccountId the commerce account ID
-	 * @return the matching commerce orders
-	 */
-	public java.util.List<CommerceOrder> findByCommerceAccountId(
-		long commerceAccountId);
-
-	/**
-	 * Returns a range of all the commerce orders where commerceAccountId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceAccountId the commerce account ID
-	 * @param start the lower bound of the range of commerce orders
-	 * @param end the upper bound of the range of commerce orders (not inclusive)
-	 * @return the range of matching commerce orders
-	 */
-	public java.util.List<CommerceOrder> findByCommerceAccountId(
-		long commerceAccountId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the commerce orders where commerceAccountId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceAccountId the commerce account ID
-	 * @param start the lower bound of the range of commerce orders
-	 * @param end the upper bound of the range of commerce orders (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce orders
-	 */
-	public java.util.List<CommerceOrder> findByCommerceAccountId(
-		long commerceAccountId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<CommerceOrder>
-			orderByComparator);
-
-	/**
-	 * Returns an ordered range of all the commerce orders where commerceAccountId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceAccountId the commerce account ID
-	 * @param start the lower bound of the range of commerce orders
-	 * @param end the upper bound of the range of commerce orders (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching commerce orders
-	 */
-	public java.util.List<CommerceOrder> findByCommerceAccountId(
-		long commerceAccountId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<CommerceOrder>
-			orderByComparator,
-		boolean useFinderCache);
-
-	/**
-	 * Returns the first commerce order in the ordered set where commerceAccountId = &#63;.
-	 *
-	 * @param commerceAccountId the commerce account ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching commerce order
-	 * @throws NoSuchOrderException if a matching commerce order could not be found
-	 */
-	public CommerceOrder findByCommerceAccountId_First(
-			long commerceAccountId,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceOrder>
-				orderByComparator)
-		throws NoSuchOrderException;
-
-	/**
-	 * Returns the first commerce order in the ordered set where commerceAccountId = &#63;.
-	 *
-	 * @param commerceAccountId the commerce account ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching commerce order, or <code>null</code> if a matching commerce order could not be found
-	 */
-	public CommerceOrder fetchByCommerceAccountId_First(
-		long commerceAccountId,
-		com.liferay.portal.kernel.util.OrderByComparator<CommerceOrder>
-			orderByComparator);
-
-	/**
-	 * Returns the last commerce order in the ordered set where commerceAccountId = &#63;.
-	 *
-	 * @param commerceAccountId the commerce account ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order
-	 * @throws NoSuchOrderException if a matching commerce order could not be found
-	 */
-	public CommerceOrder findByCommerceAccountId_Last(
-			long commerceAccountId,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceOrder>
-				orderByComparator)
-		throws NoSuchOrderException;
-
-	/**
-	 * Returns the last commerce order in the ordered set where commerceAccountId = &#63;.
-	 *
-	 * @param commerceAccountId the commerce account ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce order, or <code>null</code> if a matching commerce order could not be found
-	 */
-	public CommerceOrder fetchByCommerceAccountId_Last(
-		long commerceAccountId,
-		com.liferay.portal.kernel.util.OrderByComparator<CommerceOrder>
-			orderByComparator);
-
-	/**
-	 * Returns the commerce orders before and after the current commerce order in the ordered set where commerceAccountId = &#63;.
-	 *
-	 * @param commerceOrderId the primary key of the current commerce order
-	 * @param commerceAccountId the commerce account ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce order
-	 * @throws NoSuchOrderException if a commerce order with the primary key could not be found
-	 */
-	public CommerceOrder[] findByCommerceAccountId_PrevAndNext(
-			long commerceOrderId, long commerceAccountId,
-			com.liferay.portal.kernel.util.OrderByComparator<CommerceOrder>
-				orderByComparator)
-		throws NoSuchOrderException;
-
-	/**
-	 * Removes all the commerce orders where commerceAccountId = &#63; from the database.
-	 *
-	 * @param commerceAccountId the commerce account ID
-	 */
-	public void removeByCommerceAccountId(long commerceAccountId);
-
-	/**
-	 * Returns the number of commerce orders where commerceAccountId = &#63;.
-	 *
-	 * @param commerceAccountId the commerce account ID
-	 * @return the number of matching commerce orders
-	 */
-	public int countByCommerceAccountId(long commerceAccountId);
-
-	/**
 	 * Returns all the commerce orders where billingAddressId = &#63;.
 	 *
 	 * @param billingAddressId the billing address ID
@@ -964,6 +820,150 @@ public interface CommerceOrderPersistence
 	 * @return the number of matching commerce orders
 	 */
 	public int countByBillingAddressId(long billingAddressId);
+
+	/**
+	 * Returns all the commerce orders where commerceAccountId = &#63;.
+	 *
+	 * @param commerceAccountId the commerce account ID
+	 * @return the matching commerce orders
+	 */
+	public java.util.List<CommerceOrder> findByCommerceAccountId(
+		long commerceAccountId);
+
+	/**
+	 * Returns a range of all the commerce orders where commerceAccountId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceAccountId the commerce account ID
+	 * @param start the lower bound of the range of commerce orders
+	 * @param end the upper bound of the range of commerce orders (not inclusive)
+	 * @return the range of matching commerce orders
+	 */
+	public java.util.List<CommerceOrder> findByCommerceAccountId(
+		long commerceAccountId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the commerce orders where commerceAccountId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceAccountId the commerce account ID
+	 * @param start the lower bound of the range of commerce orders
+	 * @param end the upper bound of the range of commerce orders (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce orders
+	 */
+	public java.util.List<CommerceOrder> findByCommerceAccountId(
+		long commerceAccountId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceOrder>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the commerce orders where commerceAccountId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceAccountId the commerce account ID
+	 * @param start the lower bound of the range of commerce orders
+	 * @param end the upper bound of the range of commerce orders (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching commerce orders
+	 */
+	public java.util.List<CommerceOrder> findByCommerceAccountId(
+		long commerceAccountId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceOrder>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first commerce order in the ordered set where commerceAccountId = &#63;.
+	 *
+	 * @param commerceAccountId the commerce account ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce order
+	 * @throws NoSuchOrderException if a matching commerce order could not be found
+	 */
+	public CommerceOrder findByCommerceAccountId_First(
+			long commerceAccountId,
+			com.liferay.portal.kernel.util.OrderByComparator<CommerceOrder>
+				orderByComparator)
+		throws NoSuchOrderException;
+
+	/**
+	 * Returns the first commerce order in the ordered set where commerceAccountId = &#63;.
+	 *
+	 * @param commerceAccountId the commerce account ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce order, or <code>null</code> if a matching commerce order could not be found
+	 */
+	public CommerceOrder fetchByCommerceAccountId_First(
+		long commerceAccountId,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceOrder>
+			orderByComparator);
+
+	/**
+	 * Returns the last commerce order in the ordered set where commerceAccountId = &#63;.
+	 *
+	 * @param commerceAccountId the commerce account ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce order
+	 * @throws NoSuchOrderException if a matching commerce order could not be found
+	 */
+	public CommerceOrder findByCommerceAccountId_Last(
+			long commerceAccountId,
+			com.liferay.portal.kernel.util.OrderByComparator<CommerceOrder>
+				orderByComparator)
+		throws NoSuchOrderException;
+
+	/**
+	 * Returns the last commerce order in the ordered set where commerceAccountId = &#63;.
+	 *
+	 * @param commerceAccountId the commerce account ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce order, or <code>null</code> if a matching commerce order could not be found
+	 */
+	public CommerceOrder fetchByCommerceAccountId_Last(
+		long commerceAccountId,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceOrder>
+			orderByComparator);
+
+	/**
+	 * Returns the commerce orders before and after the current commerce order in the ordered set where commerceAccountId = &#63;.
+	 *
+	 * @param commerceOrderId the primary key of the current commerce order
+	 * @param commerceAccountId the commerce account ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce order
+	 * @throws NoSuchOrderException if a commerce order with the primary key could not be found
+	 */
+	public CommerceOrder[] findByCommerceAccountId_PrevAndNext(
+			long commerceOrderId, long commerceAccountId,
+			com.liferay.portal.kernel.util.OrderByComparator<CommerceOrder>
+				orderByComparator)
+		throws NoSuchOrderException;
+
+	/**
+	 * Removes all the commerce orders where commerceAccountId = &#63; from the database.
+	 *
+	 * @param commerceAccountId the commerce account ID
+	 */
+	public void removeByCommerceAccountId(long commerceAccountId);
+
+	/**
+	 * Returns the number of commerce orders where commerceAccountId = &#63;.
+	 *
+	 * @param commerceAccountId the commerce account ID
+	 * @return the number of matching commerce orders
+	 */
+	public int countByCommerceAccountId(long commerceAccountId);
 
 	/**
 	 * Returns all the commerce orders where shippingAddressId = &#63;.

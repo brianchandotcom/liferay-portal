@@ -61,6 +61,7 @@ public class CommerceOrderItemWrapper
 		attributes.put("CProductId", getCProductId());
 		attributes.put(
 			"parentCommerceOrderItemId", getParentCommerceOrderItemId());
+		attributes.put("shippingAddressId", getShippingAddressId());
 		attributes.put("decimalQuantity", getDecimalQuantity());
 		attributes.put("deliveryGroup", getDeliveryGroup());
 		attributes.put(
@@ -109,7 +110,6 @@ public class CommerceOrderItemWrapper
 		attributes.put("promoPriceWithTaxAmount", getPromoPriceWithTaxAmount());
 		attributes.put("quantity", getQuantity());
 		attributes.put("requestedDeliveryDate", getRequestedDeliveryDate());
-		attributes.put("shippingAddressId", getShippingAddressId());
 		attributes.put("shipSeparately", isShipSeparately());
 		attributes.put("shippable", isShippable());
 		attributes.put("shippedQuantity", getShippedQuantity());
@@ -226,6 +226,12 @@ public class CommerceOrderItemWrapper
 
 		if (parentCommerceOrderItemId != null) {
 			setParentCommerceOrderItemId(parentCommerceOrderItemId);
+		}
+
+		Long shippingAddressId = (Long)attributes.get("shippingAddressId");
+
+		if (shippingAddressId != null) {
+			setShippingAddressId(shippingAddressId);
 		}
 
 		BigDecimal decimalQuantity = (BigDecimal)attributes.get(
@@ -430,12 +436,6 @@ public class CommerceOrderItemWrapper
 
 		if (requestedDeliveryDate != null) {
 			setRequestedDeliveryDate(requestedDeliveryDate);
-		}
-
-		Long shippingAddressId = (Long)attributes.get("shippingAddressId");
-
-		if (shippingAddressId != null) {
-			setShippingAddressId(shippingAddressId);
 		}
 
 		Boolean shipSeparately = (Boolean)attributes.get("shipSeparately");

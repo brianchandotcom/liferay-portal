@@ -846,6 +846,43 @@ definition {
 		}
 	}
 
+	@description = "Verify users can recall a template during an import."
+	@priority = "3"
+	test CanRecallImportTemplate {
+		property portal.acceptance = "true";
+
+		task ("Given an account import template") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.gotoImport();
+
+			ImportExport.configureImport(
+				entityType = "Account",
+				fieldMappings = "name:Account Name,type:Account Type,description:Account Description,externalReferenceCode:External Reference Code",
+				fileName = "csv_account_import.csv",
+				headlessEndpoint = "/headless-admin-user",
+				templateName = "Test Account Import Template");
+		}
+
+		task ("When the user is configuring an import and selects the template") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.gotoImport();
+
+			Select(
+				key_selectFieldLabel = "Template",
+				locator1 = "ImportExport#SELECT",
+				value1 = "Test Account Import Template");
+		}
+
+		task ("Then the import should be configured according to the template") {
+			ImportExport.assertImportTemplate(
+				entityType = "Account",
+				headlessEndpoint = "/headless-admin-user",
+				templateName = "Test Account Import Template");
+		}
+	}
+
 	@description = "Verify users can save export configuration as a template during the export process"
 	@priority = "3"
 	test CanSaveTemplateDuringExport {

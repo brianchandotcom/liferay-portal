@@ -188,9 +188,9 @@ public class AddressCommerceCheckoutStepUtil {
 		return _commerceOrderService.updateCommerceOrder(
 			commerceOrder.getExternalReferenceCode(),
 			commerceOrder.getCommerceOrderId(), billingAddressId,
-			commerceOrder.getCommercePaymentMethodKey(),
 			commerceOrder.getCommerceShippingMethodId(), shippingAddressId,
 			commerceOrder.getAdvanceStatus(),
+			commerceOrder.getCommercePaymentMethodKey(),
 			commerceOrder.getPurchaseOrderNumber(),
 			commerceOrder.getShippingAmount(),
 			commerceOrder.getShippingOptionName(), commerceOrder.getSubtotal(),

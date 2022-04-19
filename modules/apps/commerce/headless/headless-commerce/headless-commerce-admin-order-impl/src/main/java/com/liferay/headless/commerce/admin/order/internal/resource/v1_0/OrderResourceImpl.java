@@ -304,10 +304,9 @@ public class OrderResourceImpl
 				GetterUtil.getLong(order.getBillingAddressId()),
 				commerceAccount.getCommerceAccountId(),
 				commerceCurrency.getCommerceCurrencyId(),
-				_getCommerceOrderTypeId(order), order.getPaymentMethod(),
-				commerceShippingMethodId,
+				_getCommerceOrderTypeId(order), commerceShippingMethodId,
 				GetterUtil.getLong(order.getShippingAddressId()),
-				order.getAdvanceStatus(),
+				order.getAdvanceStatus(), order.getPaymentMethod(),
 				GetterUtil.getInteger(
 					order.getOrderStatus(),
 					CommerceOrderConstants.ORDER_STATUS_PENDING),
@@ -590,15 +589,15 @@ public class OrderResourceImpl
 			GetterUtil.getLong(
 				order.getBillingAddressId(),
 				commerceOrder.getBillingAddressId()),
-			GetterUtil.getString(
-				order.getPaymentMethod(),
-				commerceOrder.getCommercePaymentMethodKey()),
 			commerceShippingMethodId,
 			GetterUtil.getLong(
 				order.getShippingAddressId(),
 				commerceOrder.getShippingAddressId()),
 			GetterUtil.getString(
 				order.getAdvanceStatus(), commerceOrder.getAdvanceStatus()),
+			GetterUtil.getString(
+				order.getPaymentMethod(),
+				commerceOrder.getCommercePaymentMethodKey()),
 			GetterUtil.getString(
 				order.getPurchaseOrderNumber(),
 				commerceOrder.getPurchaseOrderNumber()),

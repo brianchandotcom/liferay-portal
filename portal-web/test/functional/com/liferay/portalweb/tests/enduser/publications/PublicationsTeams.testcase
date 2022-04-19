@@ -1,0 +1,84 @@
+@component-name = "portal-publications"
+definition {
+
+	property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Publications";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONPublications.enablePublications();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Publications.disablePublications();
+		}
+	}
+
+	@description = "Able to Publish Team with assigned User"
+	@priority = "4"
+	test CanPublishTeamWithAssignedUser {
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
+
+		Site.assignUserAsMemberCP(
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
+
+		Site.openSiteTeamsAdmin(siteURLKey = "site-name");
+
+		Team.addCP(
+			teamDescription = "Team Description",
+			teamName = "Team Name");
+
+		Team.assignMembersCP(
+			teamName = "Team Name",
+			userScreenName = "usersn");
+
+		PublicationsNavigator.gotoReviewChanges();
+
+		PublicationsChanges.viewChanges(
+			changeCategory = "Team",
+			changeSite = "Site Name",
+			changeTitle = "Team Name",
+			changeType = "Added",
+			changeUser = "Test Test");
+
+		PublicationsChanges.viewChangesInRelationships(changeTitle = "Team & User (1 Added)");
+
+		JSONPublications.publishPublication(publicationName = "Publication Name");
+
+		Publications.viewPublicationPublished(publicationName = "Publication Name");
+
+		Site.openSiteTeamsAdmin(siteURLKey = "site-name");
+
+		Team.viewMemberCP(
+			membershipType = "User",
+			teamName = "Team Name",
+			userFirstName = "userfn",
+			userLastName = "userln");
+	}
+
+}

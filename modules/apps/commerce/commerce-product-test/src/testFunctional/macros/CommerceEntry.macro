@@ -836,6 +836,53 @@ definition {
 		Click(locator1 = "Button#BACK");
 	}
 
+	macro editWarehousesQuantity {
+		Search.searchCP(searchTerm = "${productName}");
+
+		CommerceNavigator.gotoTableListEntry(entryName = "${productName}");
+
+		CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+		CommerceNavigator.gotoTableListEntry(entryName = "${productSku}");
+
+		SelectFrame(locator1 = "IFrame#IFRAME");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Inventory");
+
+		if (isSet(italyQuantity)) {
+			Type(
+				key_value1 = "0",
+				locator1 = "CommerceEntry#WAREHOUSE_INVENTORY_ITEM_QUANTITY",
+				value1 = "${italyQuantity}");
+
+			Click(
+				key_value1 = "0",
+				locator1 = "CommerceEntry#WAREHOUSE_INVENTORY_SAVE_BUTTON");
+		}
+
+		if (isSet(northeastQuantity)) {
+			Type(
+				key_value1 = "1",
+				locator1 = "CommerceEntry#WAREHOUSE_INVENTORY_ITEM_QUANTITY",
+				value1 = "${northeastQuantity}");
+
+			Click(
+				key_value1 = "1",
+				locator1 = "CommerceEntry#WAREHOUSE_INVENTORY_SAVE_BUTTON");
+		}
+
+		if (isSet(southwestQuantity)) {
+			Type(
+				key_value1 = "2",
+				locator1 = "CommerceEntry#WAREHOUSE_INVENTORY_ITEM_QUANTITY",
+				value1 = "${southwestQuantity}");
+
+			Click(
+				key_value1 = "2",
+				locator1 = "CommerceEntry#WAREHOUSE_INVENTORY_SAVE_BUTTON");
+		}
+	}
+
 	macro getFileEntryIDFromProductMedia {
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 

@@ -212,6 +212,15 @@ definition {
 			value1 = "${changeType}");
 	}
 
+	macro viewChangesInRelationships {
+		PublicationsNavigator.gotoNavbar(navBarTitle = "Relationships");
+
+		AssertTextEquals.assertPartialText(
+			key_changeTitle = "${changeTitle}",
+			locator1 = "PublicationsChanges#RELATIONSHIPS_CHANGE_TITLE",
+			value1 = "${changeTitle}");
+	}
+
 	macro viewChangesResultNotPresent {
 		var key_changeCategory = "${changeCategory}";
 		var key_changeTitle = "${changeTitle}";

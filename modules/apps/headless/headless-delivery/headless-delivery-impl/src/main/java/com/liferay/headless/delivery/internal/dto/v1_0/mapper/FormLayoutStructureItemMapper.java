@@ -57,6 +57,7 @@ public class FormLayoutStructureItemMapper
 									formStyledLayoutStructureItem);
 							}
 						};
+						indexed = formStyledLayoutStructureItem.isIndexed();
 
 						setFragmentStyle(
 							() -> {

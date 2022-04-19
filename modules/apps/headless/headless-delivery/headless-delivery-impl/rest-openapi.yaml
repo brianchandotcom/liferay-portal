@@ -3373,6 +3373,11 @@ components:
                     items:
                         $ref: "#/components/schemas/FragmentViewport"
                     type: array
+                indexed:
+                    # @review
+                    description:
+                        A flag that indicates whether the page fragment instance is indexed or not.
+                    type: boolean
             type: object
         PageFragmentInstanceDefinition:
             # @review

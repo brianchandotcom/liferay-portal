@@ -1233,6 +1233,10 @@
 					},
 					"title": "The fragmentViewports Schema",
 					"type": "array"
+				},
+				"indexed": {
+					"title": "The indexed Schema",
+					"type": "boolean"
 				}
 			},
 			"title": "The PageFormDefinition Schema",

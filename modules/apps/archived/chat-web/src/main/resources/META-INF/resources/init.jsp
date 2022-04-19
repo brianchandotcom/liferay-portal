@@ -25,8 +25,8 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 page import="com.liferay.chat.service.StatusLocalServiceUtil" %><%@
 page import="com.liferay.chat.web.internal.util.BuddyFinderUtil" %><%@
 page import="com.liferay.chat.web.internal.util.ChatExtensionsUtil" %><%@
-page import="com.liferay.petra.encryptor.Encryptor" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
+page import="com.liferay.portal.kernel.encryptor.EncryptorUtil" %><%@
 page import="com.liferay.portal.kernel.json.JSONFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.json.JSONObject" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@

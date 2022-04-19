@@ -246,11 +246,12 @@ const Wrapper = ({
 				))
 			) : (
 				<ClayEmptyState
-					className="mt-4 page-editor__dropdown-color-picker__empty-result"
+					className="mt-4"
 					description={Liferay.Language.get(
 						'try-again-with-a-different-search'
 					)}
 					imgSrc={`${themeDisplay.getPathThemeImages()}/states/empty_state.gif`}
+					small
 					title={Liferay.Language.get('no-results-found')}
 				/>
 			)}

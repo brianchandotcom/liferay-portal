@@ -346,6 +346,21 @@ public class MissingEmptyLineCheck extends BaseCheck {
 			if ((firstChildDetailAST.getType() == TokenTypes.METHOD_CALL) &&
 				variableName.equals(getVariableName(firstChildDetailAST))) {
 
+				List<String> enforceEmptyLineBeforeMethodNames =
+					getAttributeValues(_ENFORCE_EMPTY_LINE_BEFORE_METHOD_NAMES);
+
+				String methodName = getMethodName(detailAST);
+
+				if (enforceEmptyLineBeforeMethodNames.contains(methodName) &&
+					Validator.isNull(getParameterDetailAST(detailAST))) {
+
+					log(
+						startLineNumber,
+						_MSG_MISSING_EMPTY_LINE_BEFORE_METHOD_NAME,
+						StringBundler.concat(
+							variableName, StringPool.PERIOD, methodName));
+				}
+
 				return;
 			}
 		}
@@ -674,6 +689,9 @@ public class MissingEmptyLineCheck extends BaseCheck {
 	private static final String _ENFORCE_EMPTY_LINE_AFTER_METHOD_NAMES =
 		"enforceEmptyLineAfterMethodNames";
 
+	private static final String _ENFORCE_EMPTY_LINE_BEFORE_METHOD_NAMES =
+		"enforceEmptyLineBeforeMethodNames";
+
 	private static final String _MSG_MISSING_EMPTY_LINE_AFTER_METHOD_NAME =
 		"empty.line.missing.after.method.name";
 
@@ -684,6 +702,9 @@ public class MissingEmptyLineCheck extends BaseCheck {
 	private static final String
 		_MSG_MISSING_EMPTY_LINE_AFTER_VARIABLE_REFERENCE =
 			"empty.line.missing.after.variable.reference";
+
+	private static final String _MSG_MISSING_EMPTY_LINE_BEFORE_METHOD_NAME =
+		"empty.line.missing.before.method.name";
 
 	private static final String _MSG_MISSING_EMPTY_LINE_BEFORE_VARIABLE_ASSIGN =
 		"empty.line.missing.before.variable.assign";

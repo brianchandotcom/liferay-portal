@@ -15,29 +15,32 @@
 package com.liferay.object.web.internal.object.entries.upload;
 
 import com.liferay.document.library.kernel.exception.InvalidFileException;
+import com.liferay.object.constants.ObjectActionKeys;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.web.internal.object.entries.upload.util.AttachmentValidator;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionUtil;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MimeTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.upload.UploadFileEntryHandler;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -53,20 +56,33 @@ public class AttachmentUploadFileEntryHandler
 	public FileEntry upload(UploadPortletRequest uploadPortletRequest)
 		throws IOException, PortalException {
 
+		long objectFieldId = ParamUtil.getLong(
+			uploadPortletRequest, "objectFieldId");
+
+		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+			objectFieldId);
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectField.getObjectDefinitionId());
+
+		PortletResourcePermission portletResourcePermission =
+			PortletResourcePermissionFactory.create(
+				objectDefinition.getResourceName(),
+				(permissionChecker, name, group, actionId) ->
+					permissionChecker.hasPermission(group, name, 0, actionId));
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)uploadPortletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		long folderId = ParamUtil.getLong(uploadPortletRequest, "folderId");
+		long groupId = _getGroupId(objectDefinition, themeDisplay);
 
-		ModelResourcePermissionUtil.check(
-			_folderModelResourcePermission, themeDisplay.getPermissionChecker(),
-			themeDisplay.getScopeGroupId(), folderId, ActionKeys.ADD_DOCUMENT);
+		portletResourcePermission.check(
+			themeDisplay.getPermissionChecker(), groupId,
+			ObjectActionKeys.ADD_OBJECT_ENTRY);
 
 		String fileName = uploadPortletRequest.getFileName("file");
-
-		long objectFieldId = ParamUtil.getLong(
-			uploadPortletRequest, "objectFieldId");
 
 		_attachmentValidator.validateFileExtension(fileName, objectFieldId);
 
@@ -82,18 +98,14 @@ public class AttachmentUploadFileEntryHandler
 			}
 
 			_attachmentValidator.validateFileSize(
-				fileName, file.length(), objectFieldId);
+				fileName, file.length(), objectFieldId,
+				themeDisplay.isSignedIn());
 
-			ObjectDefinition objectDefinition = _getObjectDefinition(
-				objectFieldId);
-
-			return _portletFileRepository.addPortletFileEntry(
-				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
-				objectDefinition.getClassName(), 0,
-				objectDefinition.getPortletId(), folderId, file,
-				_portletFileRepository.getUniqueFileName(
-					themeDisplay.getScopeGroupId(), folderId, fileName),
-				_mimeTypes.getContentType(file, fileName), true);
+			return TempFileEntryUtil.addTempFileEntry(
+				groupId, themeDisplay.getUserId(),
+				objectDefinition.getPortletId(),
+				TempFileEntryUtil.getTempFileName(fileName), file,
+				_mimeTypes.getContentType(file, fileName));
 		}
 		finally {
 			if (file != null) {
@@ -102,21 +114,26 @@ public class AttachmentUploadFileEntryHandler
 		}
 	}
 
-	private ObjectDefinition _getObjectDefinition(long objectFieldId) {
-		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
-			objectFieldId);
+	private long _getGroupId(
+			ObjectDefinition objectDefinition, ThemeDisplay themeDisplay)
+		throws PortalException {
 
-		return _objectDefinitionLocalService.fetchObjectDefinition(
-			objectField.getObjectDefinitionId());
+		long groupId = themeDisplay.getScopeGroupId();
+
+		if (Objects.equals(
+				ObjectDefinitionConstants.SCOPE_COMPANY,
+				objectDefinition.getScope())) {
+
+			Company company = themeDisplay.getCompany();
+
+			groupId = company.getGroupId();
+		}
+
+		return groupId;
 	}
 
 	@Reference
 	private AttachmentValidator _attachmentValidator;
-
-	@Reference(
-		target = "(model.class.name=com.liferay.portal.kernel.repository.model.Folder)"
-	)
-	private ModelResourcePermission<Folder> _folderModelResourcePermission;
 
 	@Reference
 	private MimeTypes _mimeTypes;
@@ -126,8 +143,5 @@ public class AttachmentUploadFileEntryHandler
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
-
-	@Reference
-	private PortletFileRepository _portletFileRepository;
 
 }

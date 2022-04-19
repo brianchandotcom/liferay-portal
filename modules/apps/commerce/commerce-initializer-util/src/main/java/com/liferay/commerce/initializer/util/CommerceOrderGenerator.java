@@ -212,10 +212,10 @@ public class CommerceOrderGenerator {
 
 		commerceOrder = _commerceOrderLocalService.updateCommerceOrder(
 			null, commerceOrder.getCommerceOrderId(),
+			commerceAddress.getCommerceAddressId(), commerceShippingMethodId,
 			commerceAddress.getCommerceAddressId(),
-			commerceOrder.getCommercePaymentMethodKey(),
-			commerceShippingMethodId, commerceAddress.getCommerceAddressId(),
 			commerceOrder.getAdvanceStatus(),
+			commerceOrder.getCommercePaymentMethodKey(),
 			commerceOrder.getPurchaseOrderNumber(),
 			commerceOrder.getShippingAmount(), commerceShippingOptionKey,
 			commerceOrder.getSubtotal(), commerceOrder.getTotal(),

@@ -68,9 +68,9 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 	public CommerceOrder addOrUpdateCommerceOrder(
 			String externalReferenceCode, long groupId, long billingAddressId,
 			long commerceAccountId, long commerceCurrencyId,
-			long commerceOrderTypeId, String commercePaymentMethodKey,
-			long commerceShippingMethodId, long shippingAddressId,
-			String advanceStatus, int orderStatus, int paymentStatus,
+			long commerceOrderTypeId, long commerceShippingMethodId,
+			long shippingAddressId, String advanceStatus,
+			String commercePaymentMethodKey, int orderStatus, int paymentStatus,
 			String purchaseOrderNumber, BigDecimal shippingAmount,
 			String shippingOptionName, BigDecimal shippingWithTaxAmount,
 			BigDecimal subtotal, BigDecimal subtotalWithTaxAmount,
@@ -81,8 +81,8 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 
 		return commerceOrderService.addOrUpdateCommerceOrder(
 			externalReferenceCode, groupId, billingAddressId, commerceAccountId,
-			commerceCurrencyId, commerceOrderTypeId, commercePaymentMethodKey,
-			commerceShippingMethodId, shippingAddressId, advanceStatus,
+			commerceCurrencyId, commerceOrderTypeId, commerceShippingMethodId,
+			shippingAddressId, advanceStatus, commercePaymentMethodKey,
 			orderStatus, paymentStatus, purchaseOrderNumber, shippingAmount,
 			shippingOptionName, shippingWithTaxAmount, subtotal,
 			subtotalWithTaxAmount, taxAmount, total, totalWithTaxAmount, 0, 0,
@@ -93,9 +93,9 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 	public CommerceOrder addOrUpdateCommerceOrder(
 			String externalReferenceCode, long groupId, long billingAddressId,
 			long commerceAccountId, long commerceCurrencyId,
-			long commerceOrderTypeId, String commercePaymentMethodKey,
-			long commerceShippingMethodId, long shippingAddressId,
-			String advanceStatus, int orderStatus, int paymentStatus,
+			long commerceOrderTypeId, long commerceShippingMethodId,
+			long shippingAddressId, String advanceStatus,
+			String commercePaymentMethodKey, int orderStatus, int paymentStatus,
 			String purchaseOrderNumber, BigDecimal shippingAmount,
 			String shippingOptionName, BigDecimal shippingWithTaxAmount,
 			BigDecimal subtotal, BigDecimal subtotalWithTaxAmount,
@@ -122,8 +122,8 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 		return commerceOrderLocalService.addOrUpdateCommerceOrder(
 			externalReferenceCode, getUserId(), groupId, billingAddressId,
 			commerceAccountId, commerceCurrencyId, commerceOrderTypeId,
-			commercePaymentMethodKey, commerceShippingMethodId,
-			shippingAddressId, advanceStatus, orderStatus, paymentStatus,
+			commerceShippingMethodId, shippingAddressId, advanceStatus,
+			commercePaymentMethodKey, orderStatus, paymentStatus,
 			purchaseOrderNumber, shippingAmount, shippingOptionName,
 			shippingWithTaxAmount, subtotal, subtotalWithTaxAmount, taxAmount,
 			total, totalWithTaxAmount, orderDateMonth, orderDateDay,
@@ -642,9 +642,9 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 	@Override
 	public CommerceOrder updateCommerceOrder(
 			String externalReferenceCode, long commerceOrderId,
-			long billingAddressId, String commercePaymentMethodKey,
-			long commerceShippingMethodId, long shippingAddressId,
-			String advanceStatus, String purchaseOrderNumber,
+			long billingAddressId, long commerceShippingMethodId,
+			long shippingAddressId, String advanceStatus,
+			String commercePaymentMethodKey, String purchaseOrderNumber,
 			BigDecimal shippingAmount, String shippingOptionName,
 			BigDecimal shippingWithTaxAmount, BigDecimal subtotal,
 			BigDecimal subtotalWithTaxAmount, BigDecimal taxAmount,
@@ -657,9 +657,9 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 
 		return commerceOrderLocalService.updateCommerceOrder(
 			externalReferenceCode, commerceOrderId, billingAddressId,
-			commercePaymentMethodKey, commerceShippingMethodId,
-			shippingAddressId, advanceStatus, purchaseOrderNumber,
-			shippingAmount, shippingOptionName, shippingWithTaxAmount, subtotal,
+			commerceShippingMethodId, shippingAddressId, advanceStatus,
+			commercePaymentMethodKey, purchaseOrderNumber, shippingAmount,
+			shippingOptionName, shippingWithTaxAmount, subtotal,
 			subtotalWithTaxAmount, taxAmount, total, totalWithTaxAmount,
 			totalDiscountAmount, commerceContext);
 	}
@@ -667,9 +667,9 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 	@Override
 	public CommerceOrder updateCommerceOrder(
 			String externalReferenceCode, long commerceOrderId,
-			long billingAddressId, String commercePaymentMethodKey,
-			long commerceShippingMethodId, long shippingAddressId,
-			String advanceStatus, String purchaseOrderNumber,
+			long billingAddressId, long commerceShippingMethodId,
+			long shippingAddressId, String advanceStatus,
+			String commercePaymentMethodKey, String purchaseOrderNumber,
 			BigDecimal shippingAmount, String shippingOptionName,
 			BigDecimal subtotal, BigDecimal total,
 			CommerceContext commerceContext)
@@ -680,10 +680,9 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 
 		return commerceOrderLocalService.updateCommerceOrder(
 			externalReferenceCode, commerceOrderId, billingAddressId,
-			commercePaymentMethodKey, commerceShippingMethodId,
-			shippingAddressId, advanceStatus, purchaseOrderNumber,
-			shippingAmount, shippingOptionName, subtotal, total,
-			commerceContext);
+			commerceShippingMethodId, shippingAddressId, advanceStatus,
+			commercePaymentMethodKey, purchaseOrderNumber, shippingAmount,
+			shippingOptionName, subtotal, total, commerceContext);
 	}
 
 	@Override

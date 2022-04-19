@@ -1,0 +1,9 @@
+{
+	"name": "fire",
+	"version": "1.0.0",
+	"main": "package.json",
+	"keywords": ["liferay-design-pack"],
+	"liferayDesignPack": {
+		"baseTheme": "styled"
+	}
+}

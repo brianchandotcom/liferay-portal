@@ -285,7 +285,7 @@ public interface BatchPlannerPlanLocalService
 		BatchPlannerPlan batchPlannerPlan);
 
 	public BatchPlannerPlan updateBatchPlannerPlan(
-			long userId, long batchPlannerPlanId, String externalType,
+			long batchPlannerPlanId, String externalType,
 			String internalClassName, String name)
 		throws PortalException;
 

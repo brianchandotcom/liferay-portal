@@ -52,6 +52,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -432,7 +433,7 @@ public class CommerceInventoryEngineTest {
 			"An exception shall be raised"
 		);
 
-		String name = RandomTestUtil.randomString();
+		Map<Locale, String> name = RandomTestUtil.randomLocaleStringMap();
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
 			CommerceInventoryTestUtil.
@@ -441,8 +442,8 @@ public class CommerceInventoryEngineTest {
 
 		_commerceInventoryWarehouseLocalService.addCommerceInventoryWarehouse(
 			commerceInventoryWarehouse.getExternalReferenceCode(),
-			commerceInventoryWarehouse.getName(),
-			commerceInventoryWarehouse.getDescription(),
+			commerceInventoryWarehouse.getNameMap(),
+			commerceInventoryWarehouse.getDescriptionMap(),
 			commerceInventoryWarehouse.isActive(),
 			commerceInventoryWarehouse.getStreet1(),
 			commerceInventoryWarehouse.getStreet2(),
@@ -468,14 +469,14 @@ public class CommerceInventoryEngineTest {
 			"The retrieved warehouse name is equal to the created one"
 		);
 
-		String name = RandomTestUtil.randomString();
+		Map<Locale, String> name = RandomTestUtil.randomLocaleStringMap();
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
 			CommerceInventoryTestUtil.
 				addCommerceInventoryWarehouseWithExternalReferenceCode(
 					_user.getGroupId(), name);
 
-		Assert.assertEquals(name, commerceInventoryWarehouse.getName());
+		Assert.assertEquals(name, commerceInventoryWarehouse.getNameMap());
 
 		List<CommerceInventoryWarehouse> commerceInventoryWarehouses =
 			_commerceInventoryWarehouseLocalService.

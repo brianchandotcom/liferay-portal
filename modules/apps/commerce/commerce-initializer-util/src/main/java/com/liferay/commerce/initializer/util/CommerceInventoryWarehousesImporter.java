@@ -29,11 +29,14 @@ import com.liferay.portal.kernel.service.CountryLocalService;
 import com.liferay.portal.kernel.service.RegionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -110,8 +113,11 @@ public class CommerceInventoryWarehousesImporter {
 			Region region = _regionLocalService.getRegion(
 				country.getCountryId(), regionCode);
 
-			String name = jsonObject.getString("name");
-			String description = jsonObject.getString("description");
+			Map<Locale, String> nameMap = Collections.singletonMap(
+				LocaleUtil.getSiteDefault(), jsonObject.getString("name"));
+			Map<Locale, String> descriptionMap = Collections.singletonMap(
+				LocaleUtil.getSiteDefault(),
+				jsonObject.getString("description"));
 			boolean active = jsonObject.getBoolean("active", true);
 			String street1 = jsonObject.getString("street1");
 			String street2 = jsonObject.getString("street2");
@@ -124,7 +130,7 @@ public class CommerceInventoryWarehousesImporter {
 			commerceInventoryWarehouse =
 				_commerceInventoryWarehouseLocalService.
 					addCommerceInventoryWarehouse(
-						externalReferenceCode, name, description, active,
+						externalReferenceCode, nameMap, descriptionMap, active,
 						street1, street2, street3, city, zip,
 						region.getRegionCode(), country.getA2(), latitude,
 						longitude, serviceContext);

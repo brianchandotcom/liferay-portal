@@ -311,12 +311,38 @@ definition {
 	}
 
 	@description = "This is a test for LPS-82508. It ensures that the number of threads and categories in a message board reflects the whole hierarchy."
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanViewCountsFromRootCategory {
+		JSONMBMessage.addCategory(
+			categoryDescription = "MB Category Description",
+			categoryName = "MB Category Name",
+			userEmailAddress = "test@liferay.com");
 
-		// TODO LPS-148587 CanViewCountsFromRootCategory pending implementation
+		var parentCategoryId = JSONMBMessage.getCategoryIdByName(
+			categoryName = "MB Category Name",
+			groupName = "Guest");
 
+		JSONMBMessage.addCategory(
+			categoryDescription = "MB Subcategory Description",
+			categoryName = "MB Subcategory Name",
+			groupName = "Guest",
+			parentCategoryId = "${parentCategoryId}",
+			userEmailAddress = "test@liferay.com");
+
+		for (var threadCount : list "1,2") {
+			JSONMBMessage.addMessage(
+				categoryName = "MB Subcategory Name",
+				groupName = "Guest",
+				threadBody = "MB Thread Message Body${threadCount}",
+				threadSubject = "MB Thread Message Subject${threadCount}");
+		}
+
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+
+		MessageboardsCategory.viewCP(
+			categoryCount = "1",
+			categoryName = "MB Category Name",
+			threadCount = "2");
 	}
 
 	@description = "This is a test for LPS-68939. It ensures that the message threads appear from newest to oldest by default."

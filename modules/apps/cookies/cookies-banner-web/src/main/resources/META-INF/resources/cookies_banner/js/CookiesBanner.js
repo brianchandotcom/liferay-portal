@@ -43,21 +43,6 @@ export default function ({configurationUrl}) {
 				Liferay.Util.openModal({
 					buttons: [
 						{
-							label: Liferay.Language.get('decline-all'),
-							onClick() {
-								cookiesDeclineAll();
-
-								checkCookiesConsent(cookieBanner);
-
-								Liferay.Util.getOpener().Liferay.fire(
-									'closeModal',
-									{
-										id: 'cookiesBannerConfiguration',
-									}
-								);
-							},
-						},
-						{
 							displayType: 'secondary',
 							label: Liferay.Language.get('confirm'),
 							onClick() {
@@ -76,6 +61,21 @@ export default function ({configurationUrl}) {
 							label: Liferay.Language.get('accept-all'),
 							onClick() {
 								cookiesAcceptAll();
+
+								checkCookiesConsent(cookieBanner);
+
+								Liferay.Util.getOpener().Liferay.fire(
+									'closeModal',
+									{
+										id: 'cookiesBannerConfiguration',
+									}
+								);
+							},
+						},
+						{
+							label: Liferay.Language.get('decline-all'),
+							onClick() {
+								cookiesDeclineAll();
 
 								checkCookiesConsent(cookieBanner);
 

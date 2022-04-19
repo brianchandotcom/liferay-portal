@@ -120,6 +120,18 @@ public class DisplayPageTypeContext {
 			getLayoutDisplayPageProviderByClassName(_className);
 	}
 
+	public boolean isAvailable() {
+		InfoItemDetailsProvider<?> infoItemDetailsProvider =
+			_infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemDetailsProvider.class, _className);
+
+		if (infoItemDetailsProvider == null) {
+			return false;
+		}
+
+		return true;
+	}
+
 	private final String _className;
 	private final InfoItemServiceTracker _infoItemServiceTracker;
 	private final LayoutDisplayPageInfoItemFieldValuesProviderTracker

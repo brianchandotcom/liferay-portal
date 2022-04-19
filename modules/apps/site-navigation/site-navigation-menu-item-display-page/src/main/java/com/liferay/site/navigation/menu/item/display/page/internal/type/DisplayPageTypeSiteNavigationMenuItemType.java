@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.site.navigation.menu.item.display.page.internal.display.context.DisplayPageTypeSiteNavigationMenuTypeDisplayContext;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
+import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeContext;
 
 import java.io.IOException;
 
@@ -390,6 +391,13 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 			).buildString());
 
 		return true;
+	}
+
+	@Override
+	public boolean isAvailable(
+		SiteNavigationMenuItemTypeContext siteNavigationMenuItemTypeContext) {
+
+		return _displayPageTypeContext.isAvailable();
 	}
 
 	@Override

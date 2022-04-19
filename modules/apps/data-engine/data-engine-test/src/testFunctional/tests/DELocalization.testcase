@@ -668,6 +668,192 @@ definition {
 			value1 = "12345");
 	}
 
+	@description = "Verify Default language when Portal Instance language is changed"
+	@priority = "5"
+	test CanDefaultLanguageBeChanged {
+		property test.name.skip.portal.instance = "DELocalization#CanDefaultLanguageBeChanged";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Localization",
+			configurationName = "Language",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.configureCurrentLanguagesCP(defaultPortalLanguage = "Portuguese (Brazil)");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		AssertElementPresent(
+			key_locale = "pt-BR",
+			locator1 = "Translation#CURRENT_LOCALE");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Localization",
+			configurationName = "Language",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.configureCurrentLanguagesCP(defaultPortalLanguage = "English (United States)");
+	}
+
+	@description = "Verify that upon editing Default language, translated languages are not affected"
+	@priority = "5"
+	test CanDefaultLanguageBeEditedAndRemainTranslations {
+		property test.name.skip.portal.instance = "DELocalization#CanDefaultLanguageBeEditedAndRemainTranslations";
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		AssertElementPresent(
+			key_locale = "en-US",
+			locator1 = "Translation#CURRENT_LOCALE");
+
+		DEBuilder.addField(
+			fieldLabel = "Text",
+			fieldName = "Text");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Text",
+			fieldHelp = "Help Text",
+			fieldPlaceholder = "Placeholder Text");
+
+		for (var language : list "pt-BR,zh-CN") {
+			WebContentStructures.addTranslations(localeList = "${language}");
+
+			PortletEntry.changeLocale(locale = "${language}");
+
+			DataEngine.editFieldLabel(
+				fieldFieldLabel = "Text",
+				fieldFieldLabelEdit = "Text ${language}");
+
+			DataEngine.editFieldTip(
+				fieldFieldLabel = "Text ${language}",
+				fieldHelp = "Help Text ${language}",
+				fieldPlaceholder = "Placeholder Text ${language}");
+		}
+
+		WebContentStructures.saveCP();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Localization",
+			configurationName = "Language",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.configureCurrentLanguagesCP(defaultPortalLanguage = "Portuguese (Brazil)");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		AssertElementPresent(
+			key_locale = "en-US",
+			locator1 = "Translation#CURRENT_LOCALE");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Text",
+			fieldHelp = "Help Text",
+			fieldName = "Text",
+			fieldPlaceholder = "Placeholder Text");
+
+		for (var language : list "pt-BR,zh-CN") {
+			PortletEntry.changeLocale(locale = "${language}");
+
+			DataEngine.viewField(
+				fieldFieldLabel = "Text ${language}",
+				fieldHelp = "Help Text ${language}",
+				fieldName = "Text",
+				fieldPlaceholder = "Placeholder Text ${language}");
+		}
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Localization",
+			configurationName = "Language",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.configureCurrentLanguagesCP(defaultPortalLanguage = "English (United States)");
+	}
+
+	@description = "Verify that a field without translation for a language follows default language translation"
+	@priority = "3"
+	test CanFieldWithoutTranslationFollowsDefaultLanguage {
+		property test.name.skip.portal.instance = "DELocalization#CanFieldWithoutTranslationFollowsDefaultLanguage";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Localization",
+			configurationName = "Language",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.configureCurrentLanguagesCP(defaultPortalLanguage = "Portuguese (Brazil)");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		AssertElementPresent(
+			key_locale = "pt-BR",
+			locator1 = "Translation#CURRENT_LOCALE");
+
+		DEBuilder.addField(
+			fieldLabel = "Text",
+			fieldName = "Text");
+
+		WebContentStructures.saveCP();
+
+		NavItem.click(navItem = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+		AssertElementPresent(
+			key_locale = "pt-BR",
+			locator1 = "Translation#CURRENT_LOCALE");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Localization",
+			configurationName = "Language",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.configureCurrentLanguagesCP(defaultPortalLanguage = "English (United States)");
+	}
+
 	@description = "Verify that Fieldset's translations are displayed on the Web Content"
 	@priority = "5"
 	test CanFielsetTranslationsBeShown {
@@ -1728,6 +1914,995 @@ definition {
 			fieldName = "Numeric");
 	}
 
+	@description = "Verify that is possible to translate field with options inside a Fields Group"
+	@priority = "5"
+	test CanTranslateFieldOptionInFieldsGroup {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Multiple Selection",
+			fieldName = "Multiple Selection");
+
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "Text",
+			fieldName = "Text",
+			targetFieldLabel = "Multiple Selection");
+
+		DEBuilder.addFieldOptions(
+			fieldLabel = "Multiple Selection",
+			optionValueList = "Option 1,Option 2,Option 3");
+
+		WebContentStructures.addTranslations(localeList = "zh-CN");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		FormFields.assertFieldsGroup(fieldName = "Fields Group");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Text",
+			fieldFieldLabelEdit = "文本");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Multiple Selection",
+			fieldFieldLabelEdit = "复选列表框");
+
+		DEBuilder.addFieldOptions(
+			fieldLabel = "复选列表框",
+			optionValueList = "選項 1,選項 2,選項 3");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		FormFields.assertFieldsGroup(fieldName = "Fields Group");
+
+		DEBuilder.assertFieldOptionLabels(
+			fieldFieldLabel = "Multiple Selection",
+			optionLabelList = "Option 1,Option 2,Option 3");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		FormFields.assertFieldsGroup(fieldName = "Fields Group");
+
+		DEBuilder.assertFieldOptionLabels(
+			fieldFieldLabel = "复选列表框",
+			optionLabelList = "選項 1,選項 2,選項 3");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "文本",
+			fieldName = "Text");
+	}
+
+	@description = "Verify that is possible to translate fields with options on the Fieldset modal"
+	@priority = "5"
+	test CanTranslateFieldOptionOnFieldset {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DataEngine.gotoCreateNewFieldset();
+
+		FormViewBuilder.editFieldSetName(fieldSetName = "New Fieldset");
+
+		DEBuilder.addField(
+			fieldLabel = "Text",
+			fieldName = "Text");
+
+		DEBuilder.addField(
+			fieldLabel = "Multiple Selection",
+			fieldName = "Multiple Selection");
+
+		DEBuilder.addFieldOptions(
+			fieldLabel = "Multiple Selection",
+			optionValueList = "Option 1,Option 2,Option 3");
+
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			modal = "true");
+
+		FormViewBuilder.editFieldSetName(fieldSetName = "新字段集");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Text",
+			fieldFieldLabelEdit = "文本");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Multiple Selection",
+			fieldFieldLabelEdit = "复选列表框");
+
+		DEBuilder.addFieldOptions(
+			fieldLabel = "复选列表框",
+			optionValueList = "選項 1,選項 2,選項 3");
+
+		FormViewBuilder.saveButtonFieldset();
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "New Fieldset");
+
+		PortletEntry.inputTitle(title = "Test");
+
+		DERenderer.assertMultipleSelectionOptionIsUnchecked(
+			fieldLabel = "Multiple Selection",
+			optionValue = "Option 1");
+
+		DERenderer.assertMultipleSelectionOptionIsUnchecked(
+			fieldLabel = "Multiple Selection",
+			optionValue = "Option 2");
+
+		DERenderer.assertMultipleSelectionOptionIsUnchecked(
+			fieldLabel = "Multiple Selection",
+			optionValue = "Option 3");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		PortletEntry.inputTitle(title = "Test zh-CN");
+
+		DERenderer.assertMultipleSelectionOptionIsUnchecked(
+			fieldLabel = "复选列表框",
+			optionValue = "選項 1");
+
+		DERenderer.assertMultipleSelectionOptionIsUnchecked(
+			fieldLabel = "复选列表框",
+			optionValue = "選項 2");
+
+		DERenderer.assertMultipleSelectionOptionIsUnchecked(
+			fieldLabel = "复选列表框",
+			optionValue = "選項 3");
+	}
+
+	@description = "Verify that is possible to translate fields inside a Fields Group on the Fieldset modal"
+	@priority = "4"
+	test CanTranslateFieldsGroupOnFieldset {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DataEngine.gotoCreateNewFieldset();
+
+		FormViewBuilder.editFieldSetName(fieldSetName = "New Fieldset");
+
+		DEBuilder.addField(
+			fieldLabel = "Text",
+			fieldName = "Text");
+
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "Numeric",
+			fieldName = "Numeric",
+			targetFieldLabel = "Text");
+
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			modal = "true");
+
+		FormViewBuilder.editFieldSetName(fieldSetName = "新字段集");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Text",
+			fieldFieldLabelEdit = "文本");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Numeric",
+			fieldFieldLabelEdit = "数字");
+
+		FormViewBuilder.saveButtonFieldset();
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "New Fieldset");
+
+		PortletEntry.inputTitle(title = "Test");
+
+		DEBuilder.assertFieldsGroup(
+			fieldGroupDepth = "1",
+			fieldGroupLabel = "Fields Group",
+			fieldsLabelList = "Text,Numeric");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		PortletEntry.inputTitle(title = "Test zh-CN");
+
+		DEBuilder.assertFieldsGroup(
+			fieldGroupDepth = "1",
+			fieldGroupLabel = "Fields Group",
+			fieldsLabelList = "文本,数字");
+	}
+
+	@description = "Verify that is possible to translate fields on the Fieldset modal"
+	@priority = "5"
+	test CanTranslateFieldsOnFieldset {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DataEngine.gotoCreateNewFieldset();
+
+		FormViewBuilder.editFieldSetName(fieldSetName = "New Fieldset");
+
+		DEBuilder.addField(
+			fieldLabel = "Text",
+			fieldName = "Text");
+
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			modal = "true");
+
+		FormViewBuilder.editFieldSetName(fieldSetName = "新字段集");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Text",
+			fieldFieldLabelEdit = "文本");
+
+		FormViewBuilder.saveButtonFieldset();
+
+		DataEngine.addFieldsetToBuilder(fieldsetName = "New Fieldset");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.viewFieldset(
+			fieldNameList = "Text",
+			fieldsetName = "New Fieldset");
+
+		WebContentStructures.addTranslations(localeList = "zh-CN");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		DataEngine.viewFieldset(
+			fieldNameList = "文本",
+			fieldsetName = "新字段集");
+	}
+
+	@description = "Verify that is possible to translate fields inside a Fields Group"
+	@priority = "5"
+	test CanTranslateFieldsOnFieldsGroup {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Text",
+			fieldName = "Text");
+
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "Numeric",
+			fieldName = "Numeric",
+			targetFieldLabel = "Text");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Text",
+			fieldHelp = "Help Text",
+			fieldPlaceholder = "Placeholder Text");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Numeric",
+			fieldHelp = "Help Text");
+
+		for (var language : list "pt-BR,zh-CN") {
+			WebContentStructures.addTranslations(localeList = "${language}");
+
+			PortletEntry.changeLocale(locale = "${language}");
+
+			DataEngine.editFieldLabel(
+				fieldFieldLabel = "Text",
+				fieldFieldLabelEdit = "Text ${language}");
+
+			DataEngine.editFieldTip(
+				fieldFieldLabel = "Text ${language}",
+				fieldHelp = "Help Text ${language}",
+				fieldPlaceholder = "Placeholder Text ${language}");
+
+			DataEngine.editFieldLabel(
+				fieldFieldLabel = "Numeric",
+				fieldFieldLabelEdit = "Numeric ${language}");
+
+			DataEngine.editFieldTip(
+				fieldFieldLabel = "Numeric ${language}",
+				fieldHelp = "Help Text ${language}");
+		}
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DEBuilder.assertFieldsGroup(
+			fieldGroupDepth = "1",
+			fieldGroupLabel = "Fields Group",
+			fieldsLabelList = "Text,Numeric");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Text",
+			fieldHelp = "Help Text",
+			fieldName = "Text",
+			fieldPlaceholder = "Placeholder Text");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Numeric",
+			fieldHelp = "Help Text",
+			fieldName = "Numeric");
+
+		for (var language : list "pt-BR,zh-CN") {
+			PortletEntry.changeLocale(locale = "${language}");
+
+			DEBuilder.assertFieldsGroup(
+				fieldGroupDepth = "1",
+				fieldGroupLabel = "Fields Group",
+				fieldsLabelList = "Text ${language},Numeric ${language}");
+
+			DataEngine.viewField(
+				fieldFieldLabel = "Text ${language}",
+				fieldHelp = "Help Text ${language}",
+				fieldName = "Text",
+				fieldPlaceholder = "Placeholder Text ${language}");
+
+			DataEngine.viewField(
+				fieldFieldLabel = "Numeric ${language}",
+				fieldHelp = "Help Text ${language}",
+				fieldName = "Numeric");
+		}
+	}
+
+	@description = "Verify that is possible to translate Label and Help text of Color Field"
+	@priority = "4"
+	test CanTranslateLabelAndHelpTextOnColorField {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Color",
+			fieldName = "Color");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Color",
+			fieldHelp = "Help Text");
+
+		WebContentStructures.addTranslations(localeList = "pt-BR");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Color",
+			fieldFieldLabelEdit = "Color pt-BR");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Color pt-BR",
+			fieldHelp = "Help Text pt-BR");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Color",
+			fieldHelp = "Help Text",
+			fieldName = "Color");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Color pt-BR",
+			fieldHelp = "Help Text pt-BR",
+			fieldName = "Color");
+	}
+
+	@description = "Verify that is possible to translate Label and Help text of Date Field"
+	@priority = "5"
+	test CanTranslateLabelAndHelpTextOnDateField {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Date",
+			fieldName = "Date");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Date",
+			fieldHelp = "Help Text");
+
+		WebContentStructures.addTranslations(localeList = "pt-BR");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Date",
+			fieldFieldLabelEdit = "Date pt-BR");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Date pt-BR",
+			fieldHelp = "Help Text pt-BR");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Date",
+			fieldHelp = "Help Text",
+			fieldName = "Date");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Date pt-BR",
+			fieldHelp = "Help Text pt-BR",
+			fieldName = "Date");
+	}
+
+	@description = "Verify that is possible to translate Label and Help text of Geolocation Field"
+	@priority = "4"
+	test CanTranslateLabelAndHelpTextOnGeolocationField {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Geolocation",
+			fieldName = "Geolocation");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Geolocation",
+			fieldHelp = "Help Text");
+
+		WebContentStructures.addTranslations(localeList = "pt-BR");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Geolocation",
+			fieldFieldLabelEdit = "Geolocation pt-BR");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Geolocation pt-BR",
+			fieldHelp = "Help Text pt-BR");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Geolocation",
+			fieldHelp = "Help Text",
+			fieldName = "Geolocation");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Geolocation pt-BR",
+			fieldHelp = "Help Text pt-BR",
+			fieldName = "Geolocation");
+	}
+
+	@description = "Verify that is possible to translate multiple options for Grid field"
+	@priority = "5"
+	test CanTranslateLabelAndHelpTextOnGridField {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Grid",
+			fieldName = "Grid");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Grid",
+			fieldHelp = "Help Text");
+
+		WebContentStructures.addTranslations(localeList = "pt-BR");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Grid",
+			fieldFieldLabelEdit = "Grid pt-BR");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Grid pt-BR",
+			fieldHelp = "Help Text pt-BR");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Grid",
+			fieldHelp = "Help Text",
+			fieldName = "Grid");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Grid pt-BR",
+			fieldHelp = "Help Text pt-BR",
+			fieldName = "Grid");
+	}
+
+	@description = "Verify that is possible to translate Label and Help text of Image Field"
+	@priority = "4"
+	test CanTranslateLabelAndHelpTextOnImageField {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Image",
+			fieldName = "Image");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Image",
+			fieldHelp = "Help Text");
+
+		WebContentStructures.addTranslations(localeList = "pt-BR");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Image",
+			fieldFieldLabelEdit = "Image pt-BR");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Image pt-BR",
+			fieldHelp = "Help Text pt-BR");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Image",
+			fieldHelp = "Help Text",
+			fieldName = "Image");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Image pt-BR",
+			fieldHelp = "Help Text pt-BR",
+			fieldName = "Image");
+	}
+
+	@description = "Verify that is possible to translate Label and Help text of Link to Page Field"
+	@priority = "4"
+	test CanTranslateLabelAndHelpTextOnLinkToPageField {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Link to Page",
+			fieldName = "Link to Page");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Link to Page",
+			fieldHelp = "Help Text");
+
+		WebContentStructures.addTranslations(localeList = "pt-BR");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Link to Page",
+			fieldFieldLabelEdit = "Link to Page pt-BR");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Link to Page pt-BR",
+			fieldHelp = "Help Text pt-BR");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Link to Page",
+			fieldHelp = "Help Text",
+			fieldName = "Link to Page");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Link to Page pt-BR",
+			fieldHelp = "Help Text pt-BR",
+			fieldName = "Link to Page");
+	}
+
+	@description = "Verify that is possible to translate multiple options for Multiple Selection field"
+	@priority = "5"
+	test CanTranslateLabelAndHelpTextOnMultipleSelectionField {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Multiple Selection",
+			fieldName = "Multiple Selection");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Multiple Selection",
+			fieldHelp = "Help Text");
+
+		WebContentStructures.addTranslations(localeList = "pt-BR");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Multiple Selection",
+			fieldFieldLabelEdit = "Multiple Selection pt-BR");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Multiple Selection pt-BR",
+			fieldHelp = "Help Text pt-BR");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Multiple Selection",
+			fieldHelp = "Help Text",
+			fieldName = "Multiple Selection");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Multiple Selection pt-BR",
+			fieldHelp = "Help Text pt-BR",
+			fieldName = "Multiple Selection");
+	}
+
+	@description = "Verify that is possible to translate Label and Help text of Numeric Field"
+	@priority = "5"
+	test CanTranslateLabelAndHelpTextOnNumericField {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Numeric",
+			fieldName = "Numeric");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Numeric",
+			fieldHelp = "Help Text");
+
+		WebContentStructures.addTranslations(localeList = "pt-BR");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Numeric",
+			fieldFieldLabelEdit = "Numeric pt-BR");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Numeric pt-BR",
+			fieldHelp = "Help Text pt-BR");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Numeric",
+			fieldHelp = "Help Text",
+			fieldName = "Numeric");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Numeric pt-BR",
+			fieldHelp = "Help Text pt-BR",
+			fieldName = "Numeric");
+	}
+
+	@description = "Verify that is possible to translate Label and Help text of Rich Text Field"
+	@priority = "4"
+	test CanTranslateLabelAndHelpTextOnRichTextField {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Rich Text",
+			fieldName = "Rich Text");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Rich Text",
+			fieldHelp = "Help Text");
+
+		WebContentStructures.addTranslations(localeList = "pt-BR");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Rich Text",
+			fieldFieldLabelEdit = "Rich Text pt-BR");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Rich Text pt-BR",
+			fieldHelp = "Help Text pt-BR");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Rich Text",
+			fieldHelp = "Help Text",
+			fieldName = "Rich Text");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Rich Text pt-BR",
+			fieldHelp = "Help Text pt-BR",
+			fieldName = "Rich Text");
+	}
+
+	@description = "Verify that is possible to translate multiple options for Select From List field"
+	@priority = "4"
+	test CanTranslateLabelAndHelpTextOnSelectFromListField {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Select from List",
+			fieldName = "Select from List");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Select from List",
+			fieldHelp = "Help Text");
+
+		WebContentStructures.addTranslations(localeList = "pt-BR");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Select from List",
+			fieldFieldLabelEdit = "Select from List pt-BR");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Select from List pt-BR",
+			fieldHelp = "Help Text pt-BR");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Select from List",
+			fieldHelp = "Help Text",
+			fieldName = "Select from List");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Select from List pt-BR",
+			fieldHelp = "Help Text pt-BR",
+			fieldName = "Select from List");
+	}
+
+	@description = "Verify that is possible to translate Label and Help text of Separator Field"
+	@priority = "4"
+	test CanTranslateLabelAndHelpTextOnSeparatorField {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Separator",
+			fieldName = "Separator");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Separator",
+			fieldHelp = "Help Text");
+
+		WebContentStructures.addTranslations(localeList = "pt-BR");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Separator",
+			fieldFieldLabelEdit = "Separator pt-BR");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Separator pt-BR",
+			fieldHelp = "Help Text pt-BR");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Separator",
+			fieldHelp = "Help Text",
+			fieldName = "Separator");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Separator pt-BR",
+			fieldHelp = "Help Text pt-BR",
+			fieldName = "Separator");
+	}
+
+	@description = "Verify that is possible to translate multiple options for Single Selection field"
+	@priority = "4"
+	test CanTranslateLabelAndHelpTextOnSingleSelectionField {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Single Selection",
+			fieldName = "Single Selection");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Single Selection",
+			fieldHelp = "Help Text");
+
+		WebContentStructures.addTranslations(localeList = "pt-BR");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Single Selection",
+			fieldFieldLabelEdit = "Single Selection pt-BR");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Single Selection pt-BR",
+			fieldHelp = "Help Text pt-BR");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Single Selection",
+			fieldHelp = "Help Text",
+			fieldName = "Single Selection");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Single Selection pt-BR",
+			fieldHelp = "Help Text pt-BR",
+			fieldName = "Single Selection");
+	}
+
+	@description = "Verify that is possible to translate Label and Help text of Upload Field"
+	@priority = "4"
+	test CanTranslateLabelAndHelpTextOnUploadField {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Upload",
+			fieldName = "Upload");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Upload",
+			fieldHelp = "Help Text");
+
+		WebContentStructures.addTranslations(localeList = "pt-BR");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Upload",
+			fieldFieldLabelEdit = "Upload pt-BR");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Upload pt-BR",
+			fieldHelp = "Help Text pt-BR");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Upload",
+			fieldHelp = "Help Text",
+			fieldName = "Upload");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Upload pt-BR",
+			fieldHelp = "Help Text pt-BR",
+			fieldName = "Upload");
+	}
+
+	@description = "Verify that is possible to translate Label and Help text of Web Content Field"
+	@priority = "4"
+	test CanTranslateLabelAndHelpTextOnWebContentField {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Web Content",
+			fieldName = "Web Content");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Web Content",
+			fieldHelp = "Help Text");
+
+		WebContentStructures.addTranslations(localeList = "pt-BR");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Web Content",
+			fieldFieldLabelEdit = "Web Content pt-BR");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Web Content pt-BR",
+			fieldHelp = "Help Text pt-BR");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Web Content",
+			fieldHelp = "Help Text",
+			fieldName = "Web Content");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Web Content pt-BR",
+			fieldHelp = "Help Text pt-BR",
+			fieldName = "Web Content");
+	}
+
 	@description = "This is a stubbed description"
 	@ignore = "true"
 	@priority = "5"
@@ -1735,6 +2910,56 @@ definition {
 
 		// TODO pending implementation
 
+	}
+
+	@description = "Verify that is possible to translate Label, Placeholder and Help text of Text Field"
+	@priority = "5"
+	test CanTranslateLabelPlaceholderHelpTextOnTextField {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DEBuilder.addField(
+			fieldLabel = "Text",
+			fieldName = "Text");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Text",
+			fieldHelp = "Help Text",
+			fieldPlaceholder = "Placeholder Text");
+
+		WebContentStructures.addTranslations(localeList = "pt-BR");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Text",
+			fieldFieldLabelEdit = "Text pt-BR");
+
+		DataEngine.editFieldTip(
+			fieldFieldLabel = "Text pt-BR",
+			fieldHelp = "Help Text pt-BR",
+			fieldPlaceholder = "Placeholder Text pt-BR");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Text",
+			fieldHelp = "Help Text",
+			fieldName = "Text",
+			fieldPlaceholder = "Placeholder Text");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Text pt-BR",
+			fieldHelp = "Help Text pt-BR",
+			fieldName = "Text",
+			fieldPlaceholder = "Placeholder Text pt-BR");
 	}
 
 	@description = "Verify that is possible to translate a Web Content with all fields"
@@ -2009,6 +3234,62 @@ definition {
 			webContentUploadFieldLabel = "文件",
 			webContentWebContent = "Web Content Title 2",
 			webContentWebContentFieldLabel = "网页内容");
+	}
+
+	@description = "Verify that upon changing the language of the structure to one that was translated on the fieldset, the translations are displayed"
+	@priority = "5"
+	test CanTranslationOnFieldsetPersirtsAfterChangingStructureLanguage {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Title");
+
+		DataEngine.gotoCreateNewFieldset();
+
+		FormViewBuilder.editFieldSetName(fieldSetName = "New Fieldset");
+
+		DEBuilder.addField(
+			fieldLabel = "Text",
+			fieldName = "Text");
+
+		DEBuilder.addField(
+			fieldLabel = "Numeric",
+			fieldName = "Numeric");
+
+		PortletEntry.changeLocale(
+			locale = "zh-CN",
+			modal = "true");
+
+		FormViewBuilder.editFieldSetName(fieldSetName = "新字段集");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Text",
+			fieldFieldLabelEdit = "文本");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Numeric",
+			fieldFieldLabelEdit = "数字");
+
+		FormViewBuilder.saveButtonFieldset();
+
+		DataEngine.addFieldsetToBuilder(fieldsetName = "New Fieldset");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
+
+		DataEngine.viewFieldset(
+			fieldNameList = "Text,Numeric",
+			fieldsetName = "New Fieldset");
+
+		WebContentStructures.addTranslations(localeList = "zh-CN");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		DataEngine.viewFieldset(
+			fieldNameList = "文本,数字",
+			fieldsetName = "新字段集");
 	}
 
 	@description = "Verify that translations for repeatable fields persists"
@@ -2466,1315 +3747,6 @@ definition {
 		WebContent.deleteCP(
 			siteURLKey = "test-site-name",
 			webContentTitle = "WC WebContent Title en-US");
-	}
-
-	@description = "Verify that is possible to translate Label, Placeholder and Help text of Text Field"
-	@priority = "5"
-	test CanTranslateLabelPlaceholderHelpTextOnTextField {
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "WC Structure Title");
-
-		DEBuilder.addField(
-			fieldLabel = "Text",
-			fieldName = "Text");
-
-		DataEngine.editFieldTip(
-			fieldFieldLabel = "Text",
-			fieldHelp = "Help Text",
-			fieldPlaceholder = "Placeholder Text");
-
-		WebContentStructures.addTranslations(localeList = "pt-BR");
-
-		PortletEntry.changeLocale(locale = "pt-BR");
-
-		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Text",
-			fieldFieldLabelEdit = "Text pt-BR");
-
-		DataEngine.editFieldTip(
-			fieldFieldLabel = "Text pt-BR",
-			fieldHelp = "Help Text pt-BR",
-			fieldPlaceholder = "Placeholder Text pt-BR");
-
-		WebContentStructures.saveCP();
-
-		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
-
-		DataEngine.viewField(
-			fieldFieldLabel = "Text",
-			fieldHelp = "Help Text",
-			fieldName = "Text",
-			fieldPlaceholder = "Placeholder Text");
-
-		PortletEntry.changeLocale(locale = "pt-BR");
-
-		DataEngine.viewField(
-			fieldFieldLabel = "Text pt-BR",
-			fieldHelp = "Help Text pt-BR",
-			fieldName = "Text",
-			fieldPlaceholder = "Placeholder Text pt-BR");
-
-
-	}
-
-	@description = "Verify that is possible to translate Label and Help text of Date Field"
-	@priority = "5"
-	test CanTranslateLabelAndHelpTextOnDateField {
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "WC Structure Title");
-
-		DEBuilder.addField(
-			fieldLabel = "Date",
-			fieldName = "Date");
-
-		DataEngine.editFieldTip(
-			fieldFieldLabel = "Date",
-			fieldHelp = "Help Text");
-
-		WebContentStructures.addTranslations(localeList = "pt-BR");
-
-		PortletEntry.changeLocale(locale = "pt-BR");
-
-		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Date",
-			fieldFieldLabelEdit = "Date pt-BR");
-
-		DataEngine.editFieldTip(
-			fieldFieldLabel = "Date pt-BR",
-			fieldHelp = "Help Text pt-BR");
-
-		WebContentStructures.saveCP();
-
-		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
-
-		DataEngine.viewField(
-			fieldFieldLabel = "Date",
-			fieldHelp = "Help Text",
-			fieldName = "Date");
-
-		PortletEntry.changeLocale(locale = "pt-BR");
-
-		DataEngine.viewField(
-			fieldFieldLabel = "Date pt-BR",
-			fieldHelp = "Help Text pt-BR",
-			fieldName = "Date");
-
-
-	}
-
-	@description = "Verify that is possible to translate Label and Help text of Numeric Field"
-	@priority = "5"
-	test CanTranslateLabelAndHelpTextOnNumericField {
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "WC Structure Title");
-
-		DEBuilder.addField(
-			fieldLabel = "Numeric",
-			fieldName = "Numeric");
-
-		DataEngine.editFieldTip(
-			fieldFieldLabel = "Numeric",
-			fieldHelp = "Help Text");
-
-		WebContentStructures.addTranslations(localeList = "pt-BR");
-
-		PortletEntry.changeLocale(locale = "pt-BR");
-
-		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Numeric",
-			fieldFieldLabelEdit = "Numeric pt-BR");
-
-		DataEngine.editFieldTip(
-			fieldFieldLabel = "Numeric pt-BR",
-			fieldHelp = "Help Text pt-BR");
-
-		WebContentStructures.saveCP();
-
-		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
-
-		DataEngine.viewField(
-			fieldFieldLabel = "Numeric",
-			fieldHelp = "Help Text",
-			fieldName = "Numeric");
-
-		PortletEntry.changeLocale(locale = "pt-BR");
-
-		DataEngine.viewField(
-			fieldFieldLabel = "Numeric pt-BR",
-			fieldHelp = "Help Text pt-BR",
-			fieldName = "Numeric");
-
-
-	}
-
-	@description = "Verify that is possible to translate Label and Help text of Image Field"
-	@priority = "4"
-	test CanTranslateLabelAndHelpTextOnImageField {
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "WC Structure Title");
-
-		DEBuilder.addField(
-			fieldLabel = "Image",
-			fieldName = "Image");
-
-		DataEngine.editFieldTip(
-			fieldFieldLabel = "Image",
-			fieldHelp = "Help Text");
-
-		WebContentStructures.addTranslations(localeList = "pt-BR");
-
-		PortletEntry.changeLocale(locale = "pt-BR");
-
-		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Image",
-			fieldFieldLabelEdit = "Image pt-BR");
-
-		DataEngine.editFieldTip(
-			fieldFieldLabel = "Image pt-BR",
-			fieldHelp = "Help Text pt-BR");
-
-		WebContentStructures.saveCP();
-
-		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
-
-		DataEngine.viewField(
-			fieldFieldLabel = "Image",
-			fieldHelp = "Help Text",
-			fieldName = "Image");
-
-		PortletEntry.changeLocale(locale = "pt-BR");
-
-		DataEngine.viewField(
-			fieldFieldLabel = "Image pt-BR",
-			fieldHelp = "Help Text pt-BR",
-			fieldName = "Image");
-
-
-	}
-
-	@description = "Verify that is possible to translate Label and Help text of Rich Text Field"
-	@priority = "4"
-	test CanTranslateLabelAndHelpTextOnRichTextField {
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "WC Structure Title");
-
-		DEBuilder.addField(
-			fieldLabel = "Rich Text",
-			fieldName = "Rich Text");
-
-		DataEngine.editFieldTip(
-			fieldFieldLabel = "Rich Text",
-			fieldHelp = "Help Text");
-
-		WebContentStructures.addTranslations(localeList = "pt-BR");
-
-		PortletEntry.changeLocale(locale = "pt-BR");
-
-		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Rich Text",
-			fieldFieldLabelEdit = "Rich Text pt-BR");
-
-		DataEngine.editFieldTip(
-			fieldFieldLabel = "Rich Text pt-BR",
-			fieldHelp = "Help Text pt-BR");
-
-		WebContentStructures.saveCP();
-
-		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
-
-		DataEngine.viewField(
-			fieldFieldLabel = "Rich Text",
-			fieldHelp = "Help Text",
-			fieldName = "Rich Text");
-
-		PortletEntry.changeLocale(locale = "pt-BR");
-
-		DataEngine.viewField(
-			fieldFieldLabel = "Rich Text pt-BR",
-			fieldHelp = "Help Text pt-BR",
-			fieldName = "Rich Text");
-
-
-	}
-
-	@description = "Verify that is possible to translate Label and Help text of Upload Field"
-	@priority = "4"
-	test CanTranslateLabelAndHelpTextOnUploadField {
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "WC Structure Title");
-
-		DEBuilder.addField(
-			fieldLabel = "Upload",
-			fieldName = "Upload");
-
-		DataEngine.editFieldTip(
-			fieldFieldLabel = "Upload",
-			fieldHelp = "Help Text");
-
-		WebContentStructures.addTranslations(localeList = "pt-BR");
-
-		PortletEntry.changeLocale(locale = "pt-BR");
-
-		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Upload",
-			fieldFieldLabelEdit = "Upload pt-BR");
-
-		DataEngine.editFieldTip(
-			fieldFieldLabel = "Upload pt-BR",
-			fieldHelp = "Help Text pt-BR");
-
-		WebContentStructures.saveCP();
-
-		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
-
-		DataEngine.viewField(
-			fieldFieldLabel = "Upload",
-			fieldHelp = "Help Text",
-			fieldName = "Upload");
-
-		PortletEntry.changeLocale(locale = "pt-BR");
-
-		DataEngine.viewField(
-			fieldFieldLabel = "Upload pt-BR",
-			fieldHelp = "Help Text pt-BR",
-			fieldName = "Upload");
-
-
-	}
-
-	@description = "Verify that is possible to translate Label and Help text of Color Field"
-	@priority = "4"
-	test CanTranslateLabelAndHelpTextOnColorField {
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "WC Structure Title");
-
-		DEBuilder.addField(
-			fieldLabel = "Color",
-			fieldName = "Color");
-
-		DataEngine.editFieldTip(
-			fieldFieldLabel = "Color",
-			fieldHelp = "Help Text");
-
-		WebContentStructures.addTranslations(localeList = "pt-BR");
-
-		PortletEntry.changeLocale(locale = "pt-BR");
-
-		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Color",
-			fieldFieldLabelEdit = "Color pt-BR");
-
-		DataEngine.editFieldTip(
-			fieldFieldLabel = "Color pt-BR",
-			fieldHelp = "Help Text pt-BR");
-
-		WebContentStructures.saveCP();
-
-		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
-
-		DataEngine.viewField(
-			fieldFieldLabel = "Color",
-			fieldHelp = "Help Text",
-			fieldName = "Color");
-
-		PortletEntry.changeLocale(locale = "pt-BR");
-
-		DataEngine.viewField(
-			fieldFieldLabel = "Color pt-BR",
-			fieldHelp = "Help Text pt-BR",
-			fieldName = "Color");
-
-
-	}
-
-	@description = "Verify that is possible to translate Label and Help text of Web Content Field"
-	@priority = "4"
-	test CanTranslateLabelAndHelpTextOnWebContentField {
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "WC Structure Title");
-
-		DEBuilder.addField(
-			fieldLabel = "Web Content",
-			fieldName = "Web Content");
-
-		DataEngine.editFieldTip(
-			fieldFieldLabel = "Web Content",
-			fieldHelp = "Help Text");
-
-		WebContentStructures.addTranslations(localeList = "pt-BR");
-
-		PortletEntry.changeLocale(locale = "pt-BR");
-
-		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Web Content",
-			fieldFieldLabelEdit = "Web Content pt-BR");
-
-		DataEngine.editFieldTip(
-			fieldFieldLabel = "Web Content pt-BR",
-			fieldHelp = "Help Text pt-BR");
-
-		WebContentStructures.saveCP();
-
-		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
-
-		DataEngine.viewField(
-			fieldFieldLabel = "Web Content",
-			fieldHelp = "Help Text",
-			fieldName = "Web Content");
-
-		PortletEntry.changeLocale(locale = "pt-BR");
-
-		DataEngine.viewField(
-			fieldFieldLabel = "Web Content pt-BR",
-			fieldHelp = "Help Text pt-BR",
-			fieldName = "Web Content");
-
-
-	}
-
-	@description = "Verify that is possible to translate Label and Help text of Geolocation Field"
-	@priority = "4"
-	test CanTranslateLabelAndHelpTextOnGeolocationField {
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "WC Structure Title");
-
-		DEBuilder.addField(
-			fieldLabel = "Geolocation",
-			fieldName = "Geolocation");
-
-		DataEngine.editFieldTip(
-			fieldFieldLabel = "Geolocation",
-			fieldHelp = "Help Text");
-
-		WebContentStructures.addTranslations(localeList = "pt-BR");
-
-		PortletEntry.changeLocale(locale = "pt-BR");
-
-		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Geolocation",
-			fieldFieldLabelEdit = "Geolocation pt-BR");
-
-		DataEngine.editFieldTip(
-			fieldFieldLabel = "Geolocation pt-BR",
-			fieldHelp = "Help Text pt-BR");
-
-		WebContentStructures.saveCP();
-
-		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
-
-		DataEngine.viewField(
-			fieldFieldLabel = "Geolocation",
-			fieldHelp = "Help Text",
-			fieldName = "Geolocation");
-
-		PortletEntry.changeLocale(locale = "pt-BR");
-
-		DataEngine.viewField(
-			fieldFieldLabel = "Geolocation pt-BR",
-			fieldHelp = "Help Text pt-BR",
-			fieldName = "Geolocation");
-
-
-	}
-
-	@description = "Verify that is possible to translate Label and Help text of Link to Page Field"
-	@priority = "4"
-	test CanTranslateLabelAndHelpTextOnLinkToPageField {
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "WC Structure Title");
-
-		DEBuilder.addField(
-			fieldLabel = "Link to Page",
-			fieldName = "Link to Page");
-
-		DataEngine.editFieldTip(
-			fieldFieldLabel = "Link to Page",
-			fieldHelp = "Help Text");
-
-		WebContentStructures.addTranslations(localeList = "pt-BR");
-
-		PortletEntry.changeLocale(locale = "pt-BR");
-
-		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Link to Page",
-			fieldFieldLabelEdit = "Link to Page pt-BR");
-
-		DataEngine.editFieldTip(
-			fieldFieldLabel = "Link to Page pt-BR",
-			fieldHelp = "Help Text pt-BR");
-
-		WebContentStructures.saveCP();
-
-		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
-
-		DataEngine.viewField(
-			fieldFieldLabel = "Link to Page",
-			fieldHelp = "Help Text",
-			fieldName = "Link to Page");
-
-		PortletEntry.changeLocale(locale = "pt-BR");
-
-		DataEngine.viewField(
-			fieldFieldLabel = "Link to Page pt-BR",
-			fieldHelp = "Help Text pt-BR",
-			fieldName = "Link to Page");
-
-
-	}
-
-	@description = "Verify that is possible to translate Label and Help text of Separator Field"
-	@priority = "4"
-	test CanTranslateLabelAndHelpTextOnSeparatorField {
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "WC Structure Title");
-
-		DEBuilder.addField(
-			fieldLabel = "Separator",
-			fieldName = "Separator");
-
-		DataEngine.editFieldTip(
-			fieldFieldLabel = "Separator",
-			fieldHelp = "Help Text");
-
-		WebContentStructures.addTranslations(localeList = "pt-BR");
-
-		PortletEntry.changeLocale(locale = "pt-BR");
-
-		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Separator",
-			fieldFieldLabelEdit = "Separator pt-BR");
-
-		DataEngine.editFieldTip(
-			fieldFieldLabel = "Separator pt-BR",
-			fieldHelp = "Help Text pt-BR");
-
-		WebContentStructures.saveCP();
-
-		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
-
-		DataEngine.viewField(
-			fieldFieldLabel = "Separator",
-			fieldHelp = "Help Text",
-			fieldName = "Separator");
-
-		PortletEntry.changeLocale(locale = "pt-BR");
-
-		DataEngine.viewField(
-			fieldFieldLabel = "Separator pt-BR",
-			fieldHelp = "Help Text pt-BR",
-			fieldName = "Separator");
-
-
-	}
-
-	@description = "Verify that is possible to translate multiple options for Select From List field"
-	@priority = "4"
-	test CanTranslateLabelAndHelpTextOnSelectFromListField {
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "WC Structure Title");
-
-		DEBuilder.addField(
-			fieldLabel = "Select from List",
-			fieldName = "Select from List");
-
-		DataEngine.editFieldTip(
-			fieldFieldLabel = "Select from List",
-			fieldHelp = "Help Text");
-
-		WebContentStructures.addTranslations(localeList = "pt-BR");
-
-		PortletEntry.changeLocale(locale = "pt-BR");
-
-		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Select from List",
-			fieldFieldLabelEdit = "Select from List pt-BR");
-
-		DataEngine.editFieldTip(
-			fieldFieldLabel = "Select from List pt-BR",
-			fieldHelp = "Help Text pt-BR");
-
-		WebContentStructures.saveCP();
-
-		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
-
-		DataEngine.viewField(
-			fieldFieldLabel = "Select from List",
-			fieldHelp = "Help Text",
-			fieldName = "Select from List");
-
-		PortletEntry.changeLocale(locale = "pt-BR");
-
-		DataEngine.viewField(
-			fieldFieldLabel = "Select from List pt-BR",
-			fieldHelp = "Help Text pt-BR",
-			fieldName = "Select from List");
-
-
-	}
-
-	@description = "Verify that is possible to translate multiple options for Single Selection field"
-	@priority = "4"
-	test CanTranslateLabelAndHelpTextOnSingleSelectionField {
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "WC Structure Title");
-
-		DEBuilder.addField(
-			fieldLabel = "Single Selection",
-			fieldName = "Single Selection");
-
-		DataEngine.editFieldTip(
-			fieldFieldLabel = "Single Selection",
-			fieldHelp = "Help Text");
-
-		WebContentStructures.addTranslations(localeList = "pt-BR");
-
-		PortletEntry.changeLocale(locale = "pt-BR");
-
-		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Single Selection",
-			fieldFieldLabelEdit = "Single Selection pt-BR");
-
-		DataEngine.editFieldTip(
-			fieldFieldLabel = "Single Selection pt-BR",
-			fieldHelp = "Help Text pt-BR");
-
-		WebContentStructures.saveCP();
-
-		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
-
-		DataEngine.viewField(
-			fieldFieldLabel = "Single Selection",
-			fieldHelp = "Help Text",
-			fieldName = "Single Selection");
-
-		PortletEntry.changeLocale(locale = "pt-BR");
-
-		DataEngine.viewField(
-			fieldFieldLabel = "Single Selection pt-BR",
-			fieldHelp = "Help Text pt-BR",
-			fieldName = "Single Selection");
-
-
-	}
-
-	@description = "Verify that is possible to translate multiple options for Multiple Selection field"
-	@priority = "5"
-	test CanTranslateLabelAndHelpTextOnMultipleSelectionField {
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "WC Structure Title");
-
-		DEBuilder.addField(
-			fieldLabel = "Multiple Selection",
-			fieldName = "Multiple Selection");
-
-		DataEngine.editFieldTip(
-			fieldFieldLabel = "Multiple Selection",
-			fieldHelp = "Help Text");
-
-		WebContentStructures.addTranslations(localeList = "pt-BR");
-
-		PortletEntry.changeLocale(locale = "pt-BR");
-
-		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Multiple Selection",
-			fieldFieldLabelEdit = "Multiple Selection pt-BR");
-
-		DataEngine.editFieldTip(
-			fieldFieldLabel = "Multiple Selection pt-BR",
-			fieldHelp = "Help Text pt-BR");
-
-		WebContentStructures.saveCP();
-
-		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
-
-		DataEngine.viewField(
-			fieldFieldLabel = "Multiple Selection",
-			fieldHelp = "Help Text",
-			fieldName = "Multiple Selection");
-
-		PortletEntry.changeLocale(locale = "pt-BR");
-
-		DataEngine.viewField(
-			fieldFieldLabel = "Multiple Selection pt-BR",
-			fieldHelp = "Help Text pt-BR",
-			fieldName = "Multiple Selection");
-
-
-	}
-
-	@description = "Verify that is possible to translate multiple options for Grid field"
-	@priority = "5"
-	test CanTranslateLabelAndHelpTextOnGridField {
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "WC Structure Title");
-
-		DEBuilder.addField(
-			fieldLabel = "Grid",
-			fieldName = "Grid");
-
-		DataEngine.editFieldTip(
-			fieldFieldLabel = "Grid",
-			fieldHelp = "Help Text");
-
-		WebContentStructures.addTranslations(localeList = "pt-BR");
-
-		PortletEntry.changeLocale(locale = "pt-BR");
-
-		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Grid",
-			fieldFieldLabelEdit = "Grid pt-BR");
-
-		DataEngine.editFieldTip(
-			fieldFieldLabel = "Grid pt-BR",
-			fieldHelp = "Help Text pt-BR");
-
-		WebContentStructures.saveCP();
-
-		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
-
-		DataEngine.viewField(
-			fieldFieldLabel = "Grid",
-			fieldHelp = "Help Text",
-			fieldName = "Grid");
-
-		PortletEntry.changeLocale(locale = "pt-BR");
-
-		DataEngine.viewField(
-			fieldFieldLabel = "Grid pt-BR",
-			fieldHelp = "Help Text pt-BR",
-			fieldName = "Grid");
-
-
-	}
-
-	@description = "Verify Default language when Portal Instance language is changed"
-	@priority = "5"
-	test CanDefaultLanguageBeChanged {
-
-		property test.name.skip.portal.instance = "DELocalization#CanDefaultLanguageBeChanged";
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Localization",
-			configurationName = "Language",
-			configurationScope = "Virtual Instance Scope");
-
-		PortalSettings.configureCurrentLanguagesCP(defaultPortalLanguage = "Portuguese (Brazil)");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "WC Structure Title");
-
-		AssertElementPresent(
-			key_locale = "pt-BR",
-			locator1 = "Translation#CURRENT_LOCALE");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Localization",
-			configurationName = "Language",
-			configurationScope = "Virtual Instance Scope");
-
-		PortalSettings.configureCurrentLanguagesCP(defaultPortalLanguage = "English (United States)");
-
-	}
-
-	@description = "Verify that a field without translation for a language follows default language translation"
-	@priority = "3"
-	test CanFieldWithoutTranslationFollowsDefaultLanguage {
-
-		property test.name.skip.portal.instance = "DELocalization#CanFieldWithoutTranslationFollowsDefaultLanguage";
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Localization",
-			configurationName = "Language",
-			configurationScope = "Virtual Instance Scope");
-
-		PortalSettings.configureCurrentLanguagesCP(defaultPortalLanguage = "Portuguese (Brazil)");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "WC Structure Title");
-
-		AssertElementPresent(
-			key_locale = "pt-BR",
-			locator1 = "Translation#CURRENT_LOCALE");
-
-		DEBuilder.addField(
-			fieldLabel = "Text",
-			fieldName = "Text");
-
-	
-
-		WebContentStructures.saveCP();
-
-		NavItem.click(navItem = "Web Content");
-
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
-
-		AssertElementPresent(
-			key_locale = "pt-BR",
-			locator1 = "Translation#CURRENT_LOCALE");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Localization",
-			configurationName = "Language",
-			configurationScope = "Virtual Instance Scope");
-
-		PortalSettings.configureCurrentLanguagesCP(defaultPortalLanguage = "English (United States)");
-
-	}
-
-	@description = "Verify that upon editing Default language, translated languages are not affected"
-	@priority = "5"
-	test CanDefaultLanguageBeEditedAndRemainTranslations {
-
-		property test.name.skip.portal.instance = "DELocalization#CanDefaultLanguageBeEditedAndRemainTranslations";
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "WC Structure Title");
-
-		AssertElementPresent(
-			key_locale = "en-US",
-			locator1 = "Translation#CURRENT_LOCALE");
-
-		DEBuilder.addField(
-			fieldLabel = "Text",
-			fieldName = "Text");
-
-		DataEngine.editFieldTip(
-			fieldFieldLabel = "Text",
-			fieldHelp = "Help Text",
-			fieldPlaceholder = "Placeholder Text");
-
-		
-
-		for (var language : list "pt-BR,zh-CN") {
-			WebContentStructures.addTranslations(localeList = "${language}");
-
-			PortletEntry.changeLocale(locale = "${language}");
-
-			DataEngine.editFieldLabel(
-			fieldFieldLabel = "Text",
-			fieldFieldLabelEdit = "Text ${language}");
-
-			DataEngine.editFieldTip(
-				fieldFieldLabel = "Text ${language}",
-				fieldHelp = "Help Text ${language}",
-				fieldPlaceholder = "Placeholder Text ${language}");
-		}
-
-		WebContentStructures.saveCP();
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Localization",
-			configurationName = "Language",
-			configurationScope = "Virtual Instance Scope");
-
-		PortalSettings.configureCurrentLanguagesCP(defaultPortalLanguage = "Portuguese (Brazil)");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
-
-		AssertElementPresent(
-			key_locale = "en-US",
-			locator1 = "Translation#CURRENT_LOCALE");
-
-		DataEngine.viewField(
-			fieldFieldLabel = "Text",
-			fieldHelp = "Help Text",
-			fieldName = "Text",
-			fieldPlaceholder = "Placeholder Text");
-
-		
-		for (var language : list "pt-BR,zh-CN") {
-		
-
-			PortletEntry.changeLocale(locale = "${language}");
-
-			DataEngine.viewField(
-				fieldFieldLabel = "Text ${language}",
-				fieldHelp = "Help Text ${language}",
-				fieldName = "Text",
-				fieldPlaceholder = "Placeholder Text ${language}");
-		}
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Localization",
-			configurationName = "Language",
-			configurationScope = "Virtual Instance Scope");
-
-		PortalSettings.configureCurrentLanguagesCP(defaultPortalLanguage = "English (United States)");
-
-
-	}
-
-	@description = "Verify that is possible to translate fields inside a Fields Group"
-	@priority = "5"
-	test CanTranslateFieldsOnFieldsGroup {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "WC Structure Title");
-
-		DEBuilder.addField(
-			fieldLabel = "Text",
-			fieldName = "Text");
-
-		DataEngine.addFieldNested(
-			fieldFieldLabel = "Numeric",
-			fieldName = "Numeric",
-			targetFieldLabel = "Text");
-
-		DataEngine.editFieldTip(
-			fieldFieldLabel = "Text",
-			fieldHelp = "Help Text",
-			fieldPlaceholder = "Placeholder Text");
-
-		DataEngine.editFieldTip(
-			fieldFieldLabel = "Numeric",
-			fieldHelp = "Help Text");
-
-		for (var language : list "pt-BR,zh-CN") {
-			WebContentStructures.addTranslations(localeList = "${language}");
-
-			PortletEntry.changeLocale(locale = "${language}");
-
-			DataEngine.editFieldLabel(
-			fieldFieldLabel = "Text",
-			fieldFieldLabelEdit = "Text ${language}");
-
-			DataEngine.editFieldTip(
-				fieldFieldLabel = "Text ${language}",
-				fieldHelp = "Help Text ${language}",
-				fieldPlaceholder = "Placeholder Text ${language}");
-
-			DataEngine.editFieldLabel(
-			fieldFieldLabel = "Numeric",
-			fieldFieldLabelEdit = "Numeric ${language}");
-
-			DataEngine.editFieldTip(
-				fieldFieldLabel = "Numeric ${language}",
-				fieldHelp = "Help Text ${language}");
-		}
-
-		WebContentStructures.saveCP();
-
-		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
-
-		DEBuilder.assertFieldsGroup(
-			fieldGroupDepth = "1",
-			fieldGroupLabel = "Fields Group",
-			fieldsLabelList = "Text,Numeric");
-
-		DataEngine.viewField(
-			fieldFieldLabel = "Text",
-			fieldHelp = "Help Text",
-			fieldName = "Text",
-			fieldPlaceholder = "Placeholder Text");
-
-		DataEngine.viewField(
-			fieldFieldLabel = "Numeric",
-			fieldHelp = "Help Text",
-			fieldName = "Numeric");
-
-		
-		for (var language : list "pt-BR,zh-CN") {
-		
-
-			PortletEntry.changeLocale(locale = "${language}");
-
-			DEBuilder.assertFieldsGroup(
-				fieldGroupDepth = "1",
-				fieldGroupLabel = "Fields Group",
-				fieldsLabelList = "Text ${language},Numeric ${language}");
-
-			DataEngine.viewField(
-				fieldFieldLabel = "Text ${language}",
-				fieldHelp = "Help Text ${language}",
-				fieldName = "Text",
-				fieldPlaceholder = "Placeholder Text ${language}");
-
-			DataEngine.viewField(
-				fieldFieldLabel = "Numeric ${language}",
-				fieldHelp = "Help Text ${language}",
-				fieldName = "Numeric");
-		}
-
-		
-
-		
-	}
-
-	@description = "Verify that is possible to translate field with options inside a Fields Group"
-	@priority = "5"
-	test CanTranslateFieldOptionInFieldsGroup {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "WC Structure Title");
-
-		DEBuilder.addField(
-			fieldLabel = "Multiple Selection",
-			fieldName = "Multiple Selection");
-
-		DataEngine.addFieldNested(
-			fieldFieldLabel = "Text",
-			fieldName = "Text",
-			targetFieldLabel = "Multiple Selection");
-
-		DEBuilder.addFieldOptions(
-			fieldLabel = "Multiple Selection",
-			optionValueList = "Option 1,Option 2,Option 3");
-
-
-		WebContentStructures.addTranslations(localeList = "zh-CN");
-
-		PortletEntry.changeLocale(locale = "zh-CN");
-
-		FormFields.assertFieldsGroup(fieldName = "Fields Group");
-
-		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Text",
-			fieldFieldLabelEdit = "文本");
-
-		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Multiple Selection",
-			fieldFieldLabelEdit = "复选列表框");
-
-		DEBuilder.addFieldOptions(
-			fieldLabel = "复选列表框",
-			optionValueList = "選項 1,選項 2,選項 3");
-
-		
-
-		WebContentStructures.saveCP();
-
-		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
-
-		FormFields.assertFieldsGroup(fieldName = "Fields Group");
-
-		
-
-		DEBuilder.assertFieldOptionLabels(
-			fieldFieldLabel = "Multiple Selection",
-			optionLabelList = "Option 1,Option 2,Option 3");
-
-		DataEngine.viewField(
-			fieldFieldLabel = "Text",
-			fieldName = "Text");
-
-		PortletEntry.changeLocale(locale = "zh-CN");
-
-		FormFields.assertFieldsGroup(fieldName = "Fields Group");
-
-		DEBuilder.assertFieldOptionLabels(
-			fieldFieldLabel = "复选列表框",
-			optionLabelList = "選項 1,選項 2,選項 3");
-
-		DataEngine.viewField(
-			fieldFieldLabel = "文本",
-			fieldName = "Text");
-
-		
-	}
-
-	@description = "Verify that is possible to translate fields on the Fieldset modal"
-	@priority = "5"
-	test CanTranslateFieldsOnFieldset {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "WC Structure Title");
-
-		DataEngine.gotoCreateNewFieldset();
-
-		FormViewBuilder.editFieldSetName(fieldSetName = "New Fieldset");
-
-		DEBuilder.addField(
-			fieldLabel = "Text",
-			fieldName = "Text");
-
-		PortletEntry.changeLocale(
-			locale = "zh-CN",
-			modal = "true");
-
-		FormViewBuilder.editFieldSetName(fieldSetName = "新字段集");
-
-		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Text",
-			fieldFieldLabelEdit = "文本");
-
-		FormViewBuilder.saveButtonFieldset();
-
-		DataEngine.addFieldsetToBuilder(fieldsetName = "New Fieldset");
-
-		WebContentStructures.saveCP();
-
-		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Title");
-
-		DataEngine.viewFieldset(
-			fieldNameList = "Text",
-			fieldsetName = "New Fieldset");
-
-		WebContentStructures.addTranslations(localeList = "zh-CN");
-
-		PortletEntry.changeLocale(locale = "zh-CN");
-
-		DataEngine.viewFieldset(
-			fieldNameList = "文本",
-			fieldsetName = "新字段集");
-	}
-
-	@description = "Verify that is possible to translate fields with options on the Fieldset modal"
-	@priority = "5"
-	test CanTranslateFieldOptionOnFieldset {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "WC Structure Title");
-
-		DataEngine.gotoCreateNewFieldset();
-
-		FormViewBuilder.editFieldSetName(fieldSetName = "New Fieldset");
-
-		DEBuilder.addField(
-			fieldLabel = "Text",
-			fieldName = "Text");
-
-		DEBuilder.addField(
-			fieldLabel = "Multiple Selection",
-			fieldName = "Multiple Selection");
-
-		DEBuilder.addFieldOptions(
-			fieldLabel = "Multiple Selection",
-			optionValueList = "Option 1,Option 2,Option 3");
-
-		PortletEntry.changeLocale(
-			locale = "zh-CN",
-			modal = "true");
-
-		FormViewBuilder.editFieldSetName(fieldSetName = "新字段集");
-
-		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Text",
-			fieldFieldLabelEdit = "文本");
-
-		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Multiple Selection",
-			fieldFieldLabelEdit = "复选列表框");
-
-		DEBuilder.addFieldOptions(
-			fieldLabel = "复选列表框",
-			optionValueList = "選項 1,選項 2,選項 3");
-
-		FormViewBuilder.saveButtonFieldset();
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "New Fieldset");
-
-		PortletEntry.inputTitle(title = "Test");
-
-
-		DERenderer.assertMultipleSelectionOptionIsUnchecked(
-			fieldLabel = "Multiple Selection",
-			optionValue = "Option 1");
-
-		DERenderer.assertMultipleSelectionOptionIsUnchecked(
-			fieldLabel = "Multiple Selection",
-			optionValue = "Option 2");
-
-		DERenderer.assertMultipleSelectionOptionIsUnchecked(
-			fieldLabel = "Multiple Selection",
-			optionValue = "Option 3");
-
-		PortletEntry.changeLocale(locale = "zh-CN");
-
-		PortletEntry.inputTitle(title = "Test zh-CN");
-
-	
-
-		DERenderer.assertMultipleSelectionOptionIsUnchecked(
-			fieldLabel = "复选列表框",
-			optionValue = "選項 1");
-
-		DERenderer.assertMultipleSelectionOptionIsUnchecked(
-			fieldLabel = "复选列表框",
-			optionValue = "選項 2");
-
-		DERenderer.assertMultipleSelectionOptionIsUnchecked(
-			fieldLabel = "复选列表框",
-			optionValue = "選項 3");
-
-		
-
-		
-	}
-
-	@description = "Verify that is possible to translate fields inside a Fields Group on the Fieldset modal"
-	@priority = "4"
-	test CanTranslateFieldsGroupOnFieldset {
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "WC Structure Title");
-
-		DataEngine.gotoCreateNewFieldset();
-
-		FormViewBuilder.editFieldSetName(fieldSetName = "New Fieldset");
-
-		DEBuilder.addField(
-			fieldLabel = "Text",
-			fieldName = "Text");
-
-		DataEngine.addFieldNested(
-			fieldFieldLabel = "Numeric",
-			fieldName = "Numeric",
-			targetFieldLabel = "Text");
-
-		PortletEntry.changeLocale(
-			locale = "zh-CN",
-			modal = "true");
-
-		FormViewBuilder.editFieldSetName(fieldSetName = "新字段集");
-
-		DataEngine.editFieldLabel(
-				fieldFieldLabel = "Text",
-				fieldFieldLabelEdit = "文本");
-
-		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Numeric",
-			fieldFieldLabelEdit = "数字");
-
-		FormViewBuilder.saveButtonFieldset();
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "New Fieldset");
-
-		PortletEntry.inputTitle(title = "Test");
-
-		DEBuilder.assertFieldsGroup(
-			fieldGroupDepth = "1",
-			fieldGroupLabel = "Fields Group",
-			fieldsLabelList = "Text,Numeric");
-
-		PortletEntry.changeLocale(locale = "zh-CN");
-
-		PortletEntry.inputTitle(title = "Test zh-CN");
-
-		DEBuilder.assertFieldsGroup(
-			fieldGroupDepth = "1",
-			fieldGroupLabel = "Fields Group",
-			fieldsLabelList = "文本,数字");
-
-
-
 	}
 
 }

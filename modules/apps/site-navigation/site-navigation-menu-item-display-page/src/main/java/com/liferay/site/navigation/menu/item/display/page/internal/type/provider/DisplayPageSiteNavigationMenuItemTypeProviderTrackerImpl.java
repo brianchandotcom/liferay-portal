@@ -212,11 +212,12 @@ public class DisplayPageSiteNavigationMenuItemTypeProviderTrackerImpl {
 			ServiceReference<InfoItemCapabilitiesProvider<?>> serviceReference,
 			InfoItemCapabilitiesProvider<?> infoItemCapabilitiesProvider) {
 
-			String className = GenericUtil.getGenericClassName(
-				infoItemCapabilitiesProvider);
+			String className = GetterUtil.getString(
+				serviceReference.getProperty("item.class.name"));
 
 			if (Validator.isNull(className)) {
-				return;
+				className = GenericUtil.getGenericClassName(
+					infoItemCapabilitiesProvider);
 			}
 
 			ServiceRegistration<SiteNavigationMenuItemType>

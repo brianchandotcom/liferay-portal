@@ -19,6 +19,7 @@ import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.DropZoneLayoutStructureItem;
+import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.RowStyledLayoutStructureItem;
@@ -56,6 +57,10 @@ public class LayoutDataConverter {
 		if (structureJSONArray == null) {
 			return data;
 		}
+
+		JSONArray nonindexableFragmentEntryLinkIdsJSONArray =
+			inputDataJSONObject.getJSONArray(
+				"nonIndexableFragmentEntryLinkIds");
 
 		LayoutStructure layoutStructure = new LayoutStructure();
 
@@ -176,9 +181,16 @@ public class LayoutDataConverter {
 					for (int k = 0; k < fragmentEntryLinksJSONArray.length();
 						 k++) {
 
+						String fragmentEntryLinkId =
+							fragmentEntryLinksJSONArray.getString(k);
+
+						boolean indexed = !JSONUtil.hasValue(
+							nonindexableFragmentEntryLinkIdsJSONArray,
+							fragmentEntryLinkId);
+
 						_addFragmentEntryLink(
-							fragmentEntryLinksJSONArray.getString(k),
-							inputDataJSONObject, layoutStructure,
+							fragmentEntryLinkId, inputDataJSONObject, indexed,
+							layoutStructure,
 							columnLayoutStructureItem.getItemId(), k);
 					}
 				}
@@ -189,10 +201,16 @@ public class LayoutDataConverter {
 				JSONArray fragmentEntryLinkIdsJSONArray =
 					columnJSONObject.getJSONArray("fragmentEntryLinkIds");
 
+				String fragmentEntryLinkId =
+					fragmentEntryLinkIdsJSONArray.getString(0);
+
+				boolean indexed = !JSONUtil.hasValue(
+					nonindexableFragmentEntryLinkIdsJSONArray,
+					fragmentEntryLinkId);
+
 				_addFragmentEntryLink(
-					fragmentEntryLinkIdsJSONArray.getString(0),
-					inputDataJSONObject, layoutStructure,
-					rootLayoutStructureItem.getItemId(), i);
+					fragmentEntryLinkId, inputDataJSONObject, indexed,
+					layoutStructure, rootLayoutStructureItem.getItemId(), i);
 			}
 		}
 
@@ -203,7 +221,8 @@ public class LayoutDataConverter {
 
 	private static void _addFragmentEntryLink(
 		String fragmentEntryLinkId, JSONObject inputDataJSONObject,
-		LayoutStructure layoutStructure, String parentItemId, int position) {
+		boolean indexed, LayoutStructure layoutStructure, String parentItemId,
+		int position) {
 
 		if (fragmentEntryLinkId.equals(
 				LayoutDataItemTypeConstants.TYPE_DROP_ZONE)) {
@@ -226,8 +245,13 @@ public class LayoutDataConverter {
 			return;
 		}
 
-		layoutStructure.addFragmentStyledLayoutStructureItem(
-			GetterUtil.getLong(fragmentEntryLinkId), parentItemId, position);
+		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem =
+			(FragmentStyledLayoutStructureItem)
+				layoutStructure.addFragmentStyledLayoutStructureItem(
+					GetterUtil.getLong(fragmentEntryLinkId), parentItemId,
+					position);
+
+		fragmentStyledLayoutStructureItem.setIndexed(indexed);
 	}
 
 	private static JSONObject _getBackgroundImageJSONObject(

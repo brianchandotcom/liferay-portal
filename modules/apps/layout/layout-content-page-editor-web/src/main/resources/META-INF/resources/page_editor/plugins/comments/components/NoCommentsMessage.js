@@ -15,6 +15,8 @@
 import ClayEmptyState from '@clayui/empty-state';
 import React from 'react';
 
+import {config} from '../../../app/config/index';
+
 export default function NoCommentsMessage() {
 	return (
 		<div className="p-4 text-center">
@@ -22,7 +24,7 @@ export default function NoCommentsMessage() {
 				description={Liferay.Language.get(
 					'select-a-fragment-to-add-a-comment'
 				)}
-				imgSrc={`${themeDisplay.getPathThemeImages()}/states/search_state.gif`}
+				imgSrc={`${config.imagesPath}/no_comments.svg`}
 				small
 				title={Liferay.Language.get('there-are-no-comments-yet')}
 			/>

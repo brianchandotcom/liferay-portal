@@ -23,6 +23,8 @@ definition {
 			JSONAccountEntryAPI._deleteAllAccountEntries();
 
 			BatchPlanner.batchPlannerTearDown();
+
+			JSONUser.tearDownNonAdminUsers();
 		}
 	}
 
@@ -1190,6 +1192,99 @@ definition {
 			LexiconEntry.viewNoEntry(rowEntry = "Test Channel Import Template");
 
 			LexiconEntry.viewNoEntry(rowEntry = "Test Channel Export Template");
+		}
+	}
+
+	@description = "Verify certain users can be granted permission to view specific templates."
+	@priority = "3"
+	test CanShareTemplates {
+		property portal.acceptance = "true";
+
+		task ("Given a power user") {
+			JSONUser.addUser(
+				userEmailAddress = "test1@liferay.com",
+				userFirstName = "test1",
+				userLastName = "test1",
+				userScreenName = "test1test");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "test1@liferay.com");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "Power User",
+				userEmailAddress = "test1@liferay.com");
+		}
+
+		task ("And given the power user can view the templates list") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_CONTROL_PANEL",
+				resourceName = "90",
+				roleTitle = "Power User");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "ACCESS_IN_CONTROL_PANEL",
+				resourceName = "com_liferay_batch_planner_web_internal_portlet_BatchPlannerPortlet",
+				roleTitle = "Power User");
+		}
+
+		task ("And given an account export template") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.gotoExport();
+
+			ImportExport.configureExport(
+				entityType = "Account",
+				exportFields = "name,type,description,externalReferenceCode",
+				exportFileFormat = "JSON",
+				headlessEndpoint = "/headless-admin-user",
+				templateName = "Test Account Export Template");
+		}
+
+		task ("When the power user goes to the templates list") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test1@liferay.com",
+				userLoginFullName = "test1test");
+
+			ImportExport.openImportExportAdmin();
+
+			Navigator.gotoNavTab(navTab = "Templates");
+
+			LexiconEntry.viewNoEntry(rowEntry = "Test Account Export Template");
+		}
+
+		task ("Then they cannot view the template") {
+			LexiconEntry.viewNoEntry(rowEntry = "Test Account Export Template");
+		}
+
+		task ("When the power user role is granted permission to view the template") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			ImportExport.openImportExportAdmin();
+
+			Navigator.gotoNavTab(navTab = "Templates");
+
+			LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit Permissions");
+
+			PermissionsInline.addOrRemoveAnyPermissionsFromSpecificRole(
+				addOrRemoveViewPermission = "Add",
+				permissionsKeyList = "INLINE_PERMISSIONS_VIEW_CHECKBOX",
+				roleTitle = "Power User");
+		}
+
+		task ("Then the power user can now view the template") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test1@liferay.com",
+				userLoginFullName = "test1test");
+
+			ImportExport.openImportExportAdmin();
+
+			Navigator.gotoNavTab(navTab = "Templates");
+
+			LexiconEntry.viewEntryName(rowEntry = "Test Account Export Template");
 		}
 	}
 

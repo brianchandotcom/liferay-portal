@@ -34,16 +34,15 @@ import io.fabric8.kubernetes.api.model.ObjectMeta;
 import io.fabric8.kubernetes.client.Config;
 import io.fabric8.kubernetes.client.DefaultKubernetesClient;
 import io.fabric8.kubernetes.client.KubernetesClient;
-import io.fabric8.kubernetes.client.Watch;
-import io.fabric8.kubernetes.client.Watcher;
-import io.fabric8.kubernetes.client.WatcherException;
+import io.fabric8.kubernetes.client.informers.ResourceEventHandler;
+import io.fabric8.kubernetes.client.informers.SharedIndexInformer;
+import io.fabric8.kubernetes.client.informers.SharedInformerEventListener;
+import io.fabric8.kubernetes.client.informers.SharedInformerFactory;
 
 import java.util.Dictionary;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
@@ -74,8 +73,6 @@ public class K8sAgentImpl implements K8sAgent {
 		_k8sAgentConfiguration = ConfigurableUtil.createConfigurable(
 			K8sAgentConfiguration.class, properties);
 
-		_executor = Executors.newSingleThreadExecutor();
-
 		_log.info(
 			StringBundler.concat(
 				"Initializing ", _AGENT_NAME, ": ",
@@ -86,31 +83,45 @@ public class K8sAgentImpl implements K8sAgent {
 
 		_kubernetesClient = new DefaultKubernetesClient(config);
 
-		_watch = _kubernetesClient.configMaps(
+		SharedInformerFactory sharedInformerFactory =
+			_kubernetesClient.informers();
+
+		sharedInformerFactory.addSharedInformerEventListener(
+			new SharedInformerEventListener() {
+
+				@Override
+				public void onException(Exception exception) {
+					_log.error(exception);
+				}
+
+			});
+
+		_sharedIndexInformer = _kubernetesClient.configMaps(
 		).inNamespace(
 			_k8sAgentConfiguration.namespace()
 		).withLabel(
 			_k8sAgentConfiguration.labelSelector()
-		).watch(
-			new Watcher<ConfigMap>() {
+		).inform(new ResourceEventHandler<ConfigMap>() {
 
-				@Override
-				public void eventReceived(
-					Watcher.Action action, ConfigMap resource) {
-
-					_executor.submit(() -> _processConfigMap(action, resource));
-				}
-
-				@Override
-				public void onClose(WatcherException watcherException) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(
-							"Watcher close " + _AGENT_NAME, watcherException);
-					}
-				}
-
+			@Override
+			public void onAdd(ConfigMap configMap) {
+				_add(configMap);
 			}
-		);
+
+			@Override
+			public void onDelete(
+				ConfigMap configMap, boolean deletedFinalStateUnknown) {
+
+				_delete(configMap);
+			}
+
+			@Override
+			public void onUpdate(
+				ConfigMap oldConfigMap, ConfigMap newConfigMap) {
+
+				_modified(oldConfigMap, newConfigMap);
+			}
+		});
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Initialized " + _AGENT_NAME);
@@ -156,9 +167,8 @@ public class K8sAgentImpl implements K8sAgent {
 			_log.debug("Deactivating " + _AGENT_NAME);
 		}
 
-		_watch.close();
+		_sharedIndexInformer.close();
 		_kubernetesClient.close();
-		_executor.shutdown();
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Deactivated " + _AGENT_NAME);
@@ -234,9 +244,9 @@ public class K8sAgentImpl implements K8sAgent {
 		return _configurationAdmin.getConfiguration(pid, StringPool.QUESTION);
 	}
 
-	private void _modified(ConfigMap configMap) {
-		Map<String, String> data = configMap.getData();
-		ObjectMeta metadata = configMap.getMetadata();
+	private void _modified(ConfigMap onlyConfigMap, ConfigMap newConfigMap) {
+		Map<String, String> data = newConfigMap.getData();
+		ObjectMeta metadata = newConfigMap.getMetadata();
 
 		Set<Map.Entry<String, String>> entrySet = data.entrySet();
 
@@ -249,7 +259,7 @@ public class K8sAgentImpl implements K8sAgent {
 
 			try {
 				_processConfigMapConfigFileEntry(
-					configName, entry.getValue(), configMap.getMetadata());
+					configName, entry.getValue(), newConfigMap.getMetadata());
 			}
 			catch (Exception exception) {
 				_log.error(exception);
@@ -307,23 +317,6 @@ public class K8sAgentImpl implements K8sAgent {
 		}
 
 		return new String[] {pid, null};
-	}
-
-	private void _processConfigMap(Watcher.Action action, ConfigMap resource) {
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				StringBundler.concat("Processing: ", action, " ", resource));
-		}
-
-		if (action == Watcher.Action.ADDED) {
-			_add(resource);
-		}
-		else if (action == Watcher.Action.DELETED) {
-			_delete(resource);
-		}
-		else if (action == Watcher.Action.MODIFIED) {
-			_modified(resource);
-		}
 	}
 
 	private void _processConfigMapConfigFileEntry(
@@ -433,9 +426,8 @@ public class K8sAgentImpl implements K8sAgent {
 	private static final Log _log = LogFactoryUtil.getLog(K8sAgentImpl.class);
 
 	private final ConfigurationAdmin _configurationAdmin;
-	private final ExecutorService _executor;
+	private final SharedIndexInformer<ConfigMap> _sharedIndexInformer;
 	private final K8sAgentConfiguration _k8sAgentConfiguration;
 	private final KubernetesClient _kubernetesClient;
-	private final Watch _watch;
 
 }

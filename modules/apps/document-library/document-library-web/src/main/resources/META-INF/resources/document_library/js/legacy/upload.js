@@ -1014,10 +1014,12 @@ AUI.add(
 					catch (error) {}
 
 					if (Lang.isObject(responseData)) {
-						error =
-							responseData.status &&
-							responseData.status >= 490 &&
-							responseData.status < 500;
+						error = Boolean(
+							responseData.status === 0 ||
+								(responseData.status &&
+									responseData.status >= 490 &&
+									responseData.status < 500)
+						);
 
 						if (error) {
 							message = responseData.message;

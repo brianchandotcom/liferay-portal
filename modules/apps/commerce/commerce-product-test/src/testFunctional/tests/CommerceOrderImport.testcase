@@ -100,14 +100,77 @@ definition {
 
 	}
 
-	@description = "[Please Update]"
-	@ignore = "Test Stub"
+	@description = "Verify existing orders are shown when importing an order."
 	@priority = "4"
 	test VerifyIfAllOrdersArePresent {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-7680 VerifyIfAllOrdersArePresent pending implementation
+		task ("Given a Minium site with a buyer user") {
+			User.logoutPG();
 
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And given 3 completed orders") {
+			for (var product : list "U-Joint:24,Mount:3,Torque Converters:34") {
+				var productName = StringUtil.extractFirst("${product}", ":");
+				var productUnitPrice = StringUtil.extractLast("${product}", ":");
+
+				FrontStore.addInitializerProductToCart(
+					productName = "${productName}",
+					productQuantity = "1");
+
+				CommerceNavigator.gotoMiniCart();
+
+				Button.click(button = "View Details");
+
+				Button.click(button = "Checkout");
+
+				CommerceCheckout.initializersCheckout(
+					newAddressAddress = "Test Address",
+					newAddressCity = "Test City",
+					newAddressCountry = "United States",
+					newAddressName = "Address Name",
+					newAddressZipCode = "Test Zip Code",
+					productName = "${productName}",
+					productQuantity = "1",
+					productUnitPrice = "${productUnitPrice}",
+					shippingMethod = "Standard");
+			}
+		}
+
+		task ("When the buyer tries to import an order") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
+
+			WaitForElementPresent(locator1 = "CommerceEntry#ACTIVE_ORDER_ID");
+
+			var currentOrderId = selenium.getText("CommerceEntry#ACTIVE_ORDER_ID");
+
+			Click(locator1 = "CommerceEntry#DROPDOWN");
+
+			MenuItem.click(menuItem = "Import from Orders");
+		}
+
+		task ("Then all 3 created orders should be available for import") {
+			IFrame.selectModalFrame();
+
+			var orderIds = CommerceJSONOrdersAPI._getCommerceOrderIds(orderCount = "3");
+
+			for (var orderId : list "${orderIds}") {
+				AssertElementPresent(
+					key_entryName = "${orderId}",
+					locator1 = "CommerceEntry#TABLE_LIST_TITLE");
+			}
+
+			AssertElementNotPresent(
+				key_entryName = "${currentOrderId}",
+				locator1 = "CommerceEntry#TABLE_LIST_TITLE");
+		}
 	}
 
 	@description = "[Please Update]"

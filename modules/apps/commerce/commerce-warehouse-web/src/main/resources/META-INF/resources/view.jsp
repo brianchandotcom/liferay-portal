@@ -53,7 +53,7 @@ CommerceInventoryWarehousesDisplayContext commerceInventoryWarehousesDisplayCont
 						).buildPortletURL()
 					%>'
 					name="name"
-					value="<%= HtmlUtil.escape(commerceInventoryWarehouse.getName()) %>"
+					value="<%= HtmlUtil.escape(commerceInventoryWarehouse.getName(locale)) %>"
 				/>
 
 				<liferay-ui:search-container-column-text

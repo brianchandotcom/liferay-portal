@@ -269,8 +269,8 @@ public class ReplenishmentItemResourceTest
 			_commerceInventoryWarehouseLocalService.
 				addCommerceInventoryWarehouse(
 					RandomTestUtil.randomString(),
-					RandomTestUtil.randomString(),
-					RandomTestUtil.randomString(), true,
+					RandomTestUtil.randomLocaleStringMap(),
+					RandomTestUtil.randomLocaleStringMap(), true,
 					RandomTestUtil.randomString(),
 					RandomTestUtil.randomString(),
 					RandomTestUtil.randomString(),

@@ -137,7 +137,8 @@ public class CommerceInventoryWarehouseItemFDSDataProvider
 							shipmentItemWarehouseItemQuantity),
 						commerceInventoryWarehouseItem.getQuantity(),
 						StringPool.BLANK,
-						commerceInventoryWarehouse.getName()));
+						commerceInventoryWarehouse.getName(
+							_portal.getLocale(httpServletRequest))));
 			}
 			else {
 				warehouses.add(
@@ -147,7 +148,8 @@ public class CommerceInventoryWarehouseItemFDSDataProvider
 							inputName, shipmentItemWarehouseItemQuantity, 0,
 							shipmentItemWarehouseItemQuantity),
 						0, StringPool.BLANK,
-						commerceInventoryWarehouse.getName()));
+						commerceInventoryWarehouse.getName(
+							_portal.getLocale(httpServletRequest))));
 			}
 		}
 

@@ -16,6 +16,9 @@ import {ClayModalProvider} from '@clayui/modal';
 import {HashRouter, Route, Routes} from 'react-router-dom';
 
 import Layout from './components/Layout/Layout';
+import CompareRunsComponents from './pages/CompareRuns/CompareRunsComponents';
+import CompareRunsOutlet from './pages/CompareRuns/CompareRunsOutlet';
+import CompareRunsRedirect from './pages/CompareRuns/CompareRunsRedirect';
 import Users from './pages/Manage/User';
 import UserManagement from './pages/Manage/User/User';
 import OutletBridge from './pages/OutletBridge';
@@ -160,6 +163,25 @@ const TestrayRoute = () => (
 						<Route
 							element={<TestFlowTasks />}
 							path=":testrayTaskId"
+						/>
+					</Route>
+
+					<Route element={<CompareRunsOutlet />} path="compare-runs">
+						<Route element={<CompareRunsRedirect />} index />
+
+						<Route
+							element={<CompareRunsComponents />}
+							path="components"
+						/>
+
+						<Route
+							element={<CompareRunsComponents />}
+							path="details"
+						/>
+
+						<Route
+							element={<CompareRunsComponents />}
+							path="teams"
 						/>
 					</Route>
 

@@ -13,93 +13,93 @@
  */
 
 export default function ({namespace}) {
-	const toggleFunctional = document.getElementById(
-		`${namespace}toggleFunctional`
+	const functionalToggle = document.getElementById(
+		`${namespace}functionalToggle`
 	);
-	const togglePerformance = document.getElementById(
-		`${namespace}togglePerformance`
+	const performanceToggle = document.getElementById(
+		`${namespace}performanceToggle`
 	);
-	const togglePersonalization = document.getElementById(
-		`${namespace}togglePersonalization`
+	const personalizationToggle = document.getElementById(
+		`${namespace}personalizationToggle`
 	);
 
-	toggleFunctional.addEventListener('click', () => {
+	functionalToggle.addEventListener('click', () => {
 		Liferay.Util.getOpener().Liferay.fire('cookiePreferenceUpdate', {
 			key: 'liferay.cookie.consent.functional',
-			value: toggleFunctional.checked ? 'accepted' : 'declined',
+			value: functionalToggle.checked ? 'accepted' : 'declined',
 		});
 	});
 
-	togglePerformance.addEventListener('click', () => {
+	performanceToggle.addEventListener('click', () => {
 		Liferay.Util.getOpener().Liferay.fire('cookiePreferenceUpdate', {
 			key: 'liferay.cookie.consent.performance',
-			value: togglePerformance.checked ? 'accepted' : 'declined',
+			value: performanceToggle.checked ? 'accepted' : 'declined',
 		});
 	});
 
-	togglePersonalization.addEventListener('click', () => {
+	personalizationToggle.addEventListener('click', () => {
 		Liferay.Util.getOpener().Liferay.fire('cookiePreferenceUpdate', {
 			key: 'liferay.cookie.consent.personalization',
-			value: togglePersonalization.checked ? 'accepted' : 'declined',
+			value: personalizationToggle.checked ? 'accepted' : 'declined',
 		});
 	});
 
-	toggleFunctional.checked =
+	functionalToggle.checked =
 		getCookie('liferay.cookie.consent.functional') === 'accepted';
-	togglePerformance.checked =
+	performanceToggle.checked =
 		getCookie('liferay.cookie.consent.performance') === 'accepted';
-	togglePersonalization.checked =
+	personalizationToggle.checked =
 		getCookie('liferay.cookie.consent.personalization') === 'accepted';
 
-	toggleFunctional.removeAttribute('disabled');
-	togglePerformance.removeAttribute('disabled');
-	togglePersonalization.removeAttribute('disabled');
+	functionalToggle.removeAttribute('disabled');
+	performanceToggle.removeAttribute('disabled');
+	personalizationToggle.removeAttribute('disabled');
 
-	const buttonAcceptAll = document.getElementById(
-		`${namespace}buttonAcceptAll`
+	const acceptAllButton = document.getElementById(
+		`${namespace}acceptAllButton`
 	);
-	const buttonConfirm = document.getElementById(`${namespace}buttonConfirm`);
-	const buttonDeclineAll = document.getElementById(
-		`${namespace}buttonDeclineAll`
+	const confirmButton = document.getElementById(`${namespace}confirmButton`);
+	const declineAllButton = document.getElementById(
+		`${namespace}declineAllButton`
 	);
 
-	buttonAcceptAll.addEventListener('click', () => {
-		cookiesAcceptAll();
+	acceptAllButton.addEventListener('click', () => {
+		acceptAllCookies();
 
 		window.location.reload();
 	});
 
-	buttonDeclineAll.addEventListener('click', () => {
-		cookiesDeclineAll();
-
-		window.location.reload();
-	});
-
-	buttonConfirm.addEventListener('click', () => {
+	confirmButton.addEventListener('click', () => {
 		setCookie(
 			'liferay.cookie.consent.functional',
-			toggleFunctional.checked ? 'accepted' : 'decline'
+			functionalToggle.checked ? 'accepted' : 'decline'
 		);
 		setCookie(
 			'liferay.cookie.consent.performance',
-			togglePerformance.checked ? 'accepted' : 'decline'
+			performanceToggle.checked ? 'accepted' : 'decline'
 		);
 		setCookie(
 			'liferay.cookie.consent.personalization',
-			togglePersonalization.checked ? 'accepted' : 'decline'
+			personalizationToggle.checked ? 'accepted' : 'decline'
 		);
+
+		window.location.reload();
+	});
+
+	declineAllButton.addEventListener('click', () => {
+		declineAllCookies();
 
 		window.location.reload();
 	});
 }
 
-function cookiesAcceptAll() {
+function acceptAllCookies() {
 	setCookie('liferay.cookie.consent.functional', 'accepted');
 	setCookie('liferay.cookie.consent.performance', 'accepted');
 	setCookie('liferay.cookie.consent.personalization', 'accepted');
 }
 
-function cookiesDeclineAll() {
+function declineAllCookies() {
 	setCookie('liferay.cookie.consent.functional', 'decline');
 	setCookie('liferay.cookie.consent.performance', 'decline');
 	setCookie('liferay.cookie.consent.personalization', 'decline');

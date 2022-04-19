@@ -13,14 +13,14 @@
  */
 
 export default function ({configurationUrl, namespace}) {
-	const buttonAcceptAll = document.getElementById(
-		`${namespace}buttonAcceptAll`
+	const acceptAllButton = document.getElementById(
+		`${namespace}acceptAllButton`
 	);
-	const buttonConfiguration = document.getElementById(
-		`${namespace}buttonConfiguration`
+	const configurationButton = document.getElementById(
+		`${namespace}configurationButton`
 	);
-	const buttonDeclineAll = document.getElementById(
-		`${namespace}buttonDeclineAll`
+	const declineAllButton = document.getElementById(
+		`${namespace}declineAllButton`
 	);
 	const cookieBanner = document.querySelector('.cookies-banner');
 	const editMode = document.body.classList.contains('has-edit-mode-menu');
@@ -28,83 +28,71 @@ export default function ({configurationUrl, namespace}) {
 	if (!editMode) {
 		checkCookiesConsent(cookieBanner);
 
-		buttonAcceptAll.addEventListener(
-			'click',
-			function handleButtonClickAccept() {
-				cookieBanner.style.display = 'none';
-
-				cookiesAcceptAll();
-			}
-		);
-
 		const cookiePreferences = {};
 
 		Liferay.on('cookiePreferenceUpdate', (event) => {
 			cookiePreferences[event.key] = event.value;
 		});
 
-		buttonConfiguration.addEventListener(
-			'click',
-			function handleButtonClickConfiguration() {
-				Liferay.Util.openModal({
-					buttons: [
-						{
-							displayType: 'secondary',
-							label: Liferay.Language.get('confirm'),
-							onClick() {
-								Object.entries(cookiePreferences).forEach(
-									([key, value]) => {
-										setCookie(key, value);
-									}
-								);
-
-								checkCookiesConsent(cookieBanner);
-
-								Liferay.Util.getOpener().Liferay.fire(
-									'closeModal'
-								);
-							},
-						},
-						{
-							displayType: 'secondary',
-							label: Liferay.Language.get('accept-all'),
-							onClick() {
-								cookiesAcceptAll();
-
-								checkCookiesConsent(cookieBanner);
-
-								Liferay.Util.getOpener().Liferay.fire(
-									'closeModal'
-								);
-							},
-						},
-						{
-							label: Liferay.Language.get('decline-all'),
-							onClick() {
-								cookiesDeclineAll();
-
-								checkCookiesConsent(cookieBanner);
-
-								Liferay.Util.getOpener().Liferay.fire(
-									'closeModal'
-								);
-							},
-						},
-					],
-					displayType: 'primary',
-					height: '70vh',
-					id: 'cookiesBannerConfiguration',
-					size: 'lg',
-					title: Liferay.Language.get('cookies-configuration'),
-					url: configurationUrl,
-				});
-			}
-		);
-
-		buttonDeclineAll.addEventListener('click', () => {
+		acceptAllButton.addEventListener('click', () => {
 			cookieBanner.style.display = 'none';
 
-			cookiesDeclineAll();
+			acceptAllCookies();
+		});
+
+		configurationButton.addEventListener('click', () => {
+			Liferay.Util.openModal({
+				buttons: [
+					{
+						displayType: 'secondary',
+						label: Liferay.Language.get('confirm'),
+						onClick() {
+							Object.entries(cookiePreferences).forEach(
+								([key, value]) => {
+									setCookie(key, value);
+								}
+							);
+
+							checkCookiesConsent(cookieBanner);
+
+							Liferay.Util.getOpener().Liferay.fire('closeModal');
+						},
+					},
+					{
+						displayType: 'secondary',
+						label: Liferay.Language.get('accept-all'),
+						onClick() {
+							acceptAllCookies();
+
+							checkCookiesConsent(cookieBanner);
+
+							Liferay.Util.getOpener().Liferay.fire('closeModal');
+						},
+					},
+					{
+						label: Liferay.Language.get('decline-all'),
+						onClick() {
+							declineAllCookiesDecline();
+
+							checkCookiesConsent(cookieBanner);
+
+							Liferay.Util.getOpener().Liferay.fire('closeModal');
+						},
+					},
+				],
+				displayType: 'primary',
+				height: '70vh',
+				id: 'cookiesBannerConfiguration',
+				size: 'lg',
+				title: Liferay.Language.get('cookies-configuration'),
+				url: configurationUrl,
+			});
+		});
+
+		declineAllButton.addEventListener('click', () => {
+			cookieBanner.style.display = 'none';
+
+			declineAllCookiesDecline();
 		});
 	}
 }
@@ -125,13 +113,13 @@ function checkCookiesConsent(cookieBanner) {
 	}
 }
 
-function cookiesAcceptAll() {
+function acceptAllCookies() {
 	setCookie('liferay.cookie.consent.functional', 'accepted');
 	setCookie('liferay.cookie.consent.performance', 'accepted');
 	setCookie('liferay.cookie.consent.personalization', 'accepted');
 }
 
-function cookiesDeclineAll() {
+function declineAllCookiesDecline() {
 	setCookie('liferay.cookie.consent.functional', 'decline');
 	setCookie('liferay.cookie.consent.performance', 'decline');
 	setCookie('liferay.cookie.consent.personalization', 'decline');

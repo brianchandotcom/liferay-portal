@@ -70,7 +70,7 @@ CookiesBannerConfigurationDisplayContext cookiesBannerConfigurationDisplayContex
 				<clay:content-col>
 					<label class="toggle-switch">
 						<span class="toggle-switch-check-bar">
-							<input id="<%= liferayPortletResponse.getNamespace() %>togglePerformance" class="toggle-switch-check toggle-switch-check-performance" disabled type="checkbox" />
+							<input id="<%= liferayPortletResponse.getNamespace() %>performanceToggle" class="toggle-switch-check toggle-switch-check-performance" disabled type="checkbox" />
 
 							<span aria-hidden="true" class="toggle-switch-bar">
 								<span class="toggle-switch-handle"></span>
@@ -99,7 +99,7 @@ CookiesBannerConfigurationDisplayContext cookiesBannerConfigurationDisplayContex
 				<clay:content-col>
 					<label class="toggle-switch">
 						<span class="toggle-switch-check-bar">
-							<input class="toggle-switch-check toggle-switch-check-functional" disabled id="<%= liferayPortletResponse.getNamespace() %>toggleFunctional" type="checkbox" />
+							<input class="toggle-switch-check toggle-switch-check-functional" disabled id="<%= liferayPortletResponse.getNamespace() %>functionalToggle" type="checkbox" />
 
 							<span aria-hidden="true" class="toggle-switch-bar">
 								<span class="toggle-switch-handle"></span>
@@ -128,7 +128,7 @@ CookiesBannerConfigurationDisplayContext cookiesBannerConfigurationDisplayContex
 				<clay:content-col>
 					<label class="toggle-switch">
 						<span class="toggle-switch-check-bar">
-							<input class="toggle-switch-check toggle-switch-check-personalization" disabled id="<%= liferayPortletResponse.getNamespace() %>togglePersonalization" type="checkbox" />
+							<input class="toggle-switch-check toggle-switch-check-personalization" disabled id="<%= liferayPortletResponse.getNamespace() %>personalizationToggle" type="checkbox" />
 
 							<span aria-hidden="true" class="toggle-switch-bar">
 								<span class="toggle-switch-handle"></span>
@@ -157,7 +157,7 @@ CookiesBannerConfigurationDisplayContext cookiesBannerConfigurationDisplayContex
 				<clay:content-col>
 					<clay:button
 						displayType="secondary"
-						id='<%= liferayPortletResponse.getNamespace() + "buttonConfirm" %>'
+						id='<%= liferayPortletResponse.getNamespace() + "confirmButton" %>'
 						label='<%= LanguageUtil.get(request, "confirm") %>'
 						small="<%= true %>"
 					/>
@@ -166,7 +166,7 @@ CookiesBannerConfigurationDisplayContext cookiesBannerConfigurationDisplayContex
 				<clay:content-col>
 					<clay:button
 						displayType="secondary"
-						id='<%= liferayPortletResponse.getNamespace() + "buttonAcceptAll" %>'
+						id='<%= liferayPortletResponse.getNamespace() + "acceptAllButton" %>'
 						label='<%= LanguageUtil.get(request, "accept-all") %>'
 						small="<%= true %>"
 					/>
@@ -175,7 +175,7 @@ CookiesBannerConfigurationDisplayContext cookiesBannerConfigurationDisplayContex
 				<clay:content-col>
 					<clay:button
 						displayType="primary"
-						id='<%= liferayPortletResponse.getNamespace() + "buttonDeclineAll" %>'
+						id='<%= liferayPortletResponse.getNamespace() + "declineAllButton" %>'
 						label='<%= LanguageUtil.get(request, "decline-all") %>'
 						small="<%= true %>"
 					/>

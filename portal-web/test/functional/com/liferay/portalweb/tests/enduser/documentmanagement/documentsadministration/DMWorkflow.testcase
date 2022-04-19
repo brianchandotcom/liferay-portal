@@ -78,12 +78,35 @@ definition {
 	}
 
 	@description = "This is a test for LPS-84593. It ensures that a user cannot delete the dismissed notification after deleting the pending file."
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CannotDeleteDismissedNotificationAfterDeletingPendingFile {
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
-		// TODO LPS-148586 CanDeleteNotificationAfterDeletingPendingFile pending implementation
+		DMFolder.configureWorkflowCP(
+			dmFolderName = "homeFolder",
+			homeFolder = "true",
+			workflowDefinition = "Single Approver",
+			workflowRestriction = "Default Workflow");
 
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addWithWorkflowCP(
+			dmDocumentFile = "Document_1.png",
+			dmDocumentTitle = "Document_1.png");
+
+		JSONDocument.moveToRecycleBin(
+			dmDocumentTitle = "Document_1.png",
+			groupName = "Guest");
+
+		Navigator.openURL();
+
+		Notifications.viewBadgeCount(notificationCount = "1");
+
+		Notifications.gotoNotifications();
+
+		Notifications.viewDeletedContent(
+			contentBody = "Notification for My Workflow Tasks was deleted.",
+			noOptions = "true");
 	}
 
 	@description = "This is a test for LPS-136854. It checks that the single approver workflow can be removed from a folder."

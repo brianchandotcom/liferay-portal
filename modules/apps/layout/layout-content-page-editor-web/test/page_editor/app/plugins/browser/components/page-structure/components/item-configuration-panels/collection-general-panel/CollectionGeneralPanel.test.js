@@ -29,7 +29,6 @@ jest.mock(
 	() => ({
 		config: {
 			commonStyles: [],
-			featureFlagLps119551: true,
 			searchContainerPageMaxDelta: '50',
 		},
 	})

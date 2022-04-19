@@ -16,65 +16,38 @@ import ClayForm, {ClaySelectWithOption} from '@clayui/form';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import {config} from '../../../../../../../app/config/index';
-
-const LAYOUT_OPTIONS = config.featureFlagLps119551
-	? [
-			{label: Liferay.Language.get('full-width'), value: '1'},
-			{
-				label: Liferay.Util.sub(Liferay.Language.get('x-columns'), 2),
-				value: '2',
-			},
-			{
-				label: Liferay.Util.sub(Liferay.Language.get('x-columns'), 3),
-				value: '3',
-			},
-			{
-				label: Liferay.Util.sub(Liferay.Language.get('x-columns'), 4),
-				value: '4',
-			},
-			{
-				label: Liferay.Util.sub(Liferay.Language.get('x-columns'), 5),
-				value: '5',
-			},
-			{
-				label: Liferay.Util.sub(Liferay.Language.get('x-columns'), 6),
-				value: '6',
-			},
-			{
-				label: Liferay.Util.sub(Liferay.Language.get('x-columns'), 12),
-				value: '12',
-			},
-	  ]
-	: [
-			{label: Liferay.Language.get('full-width'), value: '1'},
-			{
-				label: Liferay.Util.sub(Liferay.Language.get('x-columns'), 2),
-				value: '2',
-			},
-			{
-				label: Liferay.Util.sub(Liferay.Language.get('x-columns'), 3),
-				value: '3',
-			},
-			{
-				label: Liferay.Util.sub(Liferay.Language.get('x-columns'), 4),
-				value: '4',
-			},
-			{
-				label: Liferay.Util.sub(Liferay.Language.get('x-columns'), 5),
-				value: '5',
-			},
-			{
-				label: Liferay.Util.sub(Liferay.Language.get('x-columns'), 6),
-				value: '6',
-			},
-	  ];
+const LAYOUT_OPTIONS = [
+	{label: Liferay.Language.get('full-width'), value: '1'},
+	{
+		label: Liferay.Util.sub(Liferay.Language.get('x-columns'), 2),
+		value: '2',
+	},
+	{
+		label: Liferay.Util.sub(Liferay.Language.get('x-columns'), 3),
+		value: '3',
+	},
+	{
+		label: Liferay.Util.sub(Liferay.Language.get('x-columns'), 4),
+		value: '4',
+	},
+	{
+		label: Liferay.Util.sub(Liferay.Language.get('x-columns'), 5),
+		value: '5',
+	},
+	{
+		label: Liferay.Util.sub(Liferay.Language.get('x-columns'), 6),
+		value: '6',
+	},
+	{
+		label: Liferay.Util.sub(Liferay.Language.get('x-columns'), 12),
+		value: '12',
+	},
+];
 
 export function LayoutSelector({
 	collectionConfig,
 	collectionLayoutId,
 	handleConfigurationChanged,
-	numberOfColumns,
 }) {
 	return (
 		<ClayForm.Group small>
@@ -91,11 +64,7 @@ export function LayoutSelector({
 					})
 				}
 				options={LAYOUT_OPTIONS}
-				value={
-					config.featureFlagLps119551
-						? collectionConfig.numberOfColumns
-						: numberOfColumns
-				}
+				value={collectionConfig.numberOfColumns}
 			/>
 		</ClayForm.Group>
 	);
@@ -105,5 +74,4 @@ LayoutSelector.propTypes = {
 	collectionConfig: PropTypes.object.isRequired,
 	collectionLayoutId: PropTypes.string.isRequired,
 	handleConfigurationChanged: PropTypes.func.isRequired,
-	numberOfColumns: PropTypes.number.isRequired,
 };

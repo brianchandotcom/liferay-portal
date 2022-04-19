@@ -160,10 +160,7 @@ export function CollectionGeneralPanel({item}) {
 
 	const handleConfigurationChanged = useCallback(
 		(itemConfig) => {
-			if (
-				config.featureFlagLps119551 &&
-				selectedViewportSize !== VIEWPORT_SIZES.desktop
-			) {
+			if (selectedViewportSize !== VIEWPORT_SIZES.desktop) {
 				itemConfig = {[selectedViewportSize]: itemConfig};
 			}
 
@@ -257,38 +254,36 @@ export function CollectionGeneralPanel({item}) {
 										handleConfigurationChanged={
 											handleConfigurationChanged
 										}
-										numberOfColumns={numberOfColumns}
 									/>
 
-									{config.featureFlagLps119551 &&
-										selectedViewportSize ===
-											VIEWPORT_SIZES.desktop && (
-											<>
-												{numberOfColumns > 1 && (
-													<ShowGutterSelector
-														checked={
-															item.config.gutters
-														}
-														handleConfigurationChanged={
-															handleConfigurationChanged
-														}
-													/>
-												)}
-
-												<VerticalAlignmentSelector
-													collectionVerticalAlignmentId={
-														collectionVerticalAlignmentId
+									{selectedViewportSize ===
+										VIEWPORT_SIZES.desktop && (
+										<>
+											{numberOfColumns > 1 && (
+												<ShowGutterSelector
+													checked={
+														item.config.gutters
 													}
 													handleConfigurationChanged={
 														handleConfigurationChanged
 													}
-													value={
-														item.config
-															.verticalAlignment
-													}
 												/>
-											</>
-										)}
+											)}
+
+											<VerticalAlignmentSelector
+												collectionVerticalAlignmentId={
+													collectionVerticalAlignmentId
+												}
+												handleConfigurationChanged={
+													handleConfigurationChanged
+												}
+												value={
+													item.config
+														.verticalAlignment
+												}
+											/>
+										</>
+									)}
 								</>
 							)}
 							{selectedViewportSize ===

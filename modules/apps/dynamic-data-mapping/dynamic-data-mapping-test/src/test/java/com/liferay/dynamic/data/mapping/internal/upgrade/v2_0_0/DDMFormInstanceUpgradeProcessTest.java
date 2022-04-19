@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.internal.upgrade.v2_0_0;
 import com.liferay.dynamic.data.mapping.BaseDDMTestCase;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.model.impl.ResourceActionImpl;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -31,6 +32,7 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import org.mockito.Matchers;
+import org.mockito.Mockito;
 
 /**
  * @author Pedro Queiroz
@@ -51,7 +53,7 @@ public class DDMFormInstanceUpgradeProcessTest extends BaseDDMTestCase {
 	}
 
 	@Test
-	public void testGetNewActionIds1() throws Exception {
+	public void testGetNewActionIds1() {
 		_mockResourceActionLocalService(
 			"RecordSet", this::_createRecorSetResourceActionList,
 			"FormInstance", this::_createFormInstanceResourceActionList);
@@ -67,7 +69,7 @@ public class DDMFormInstanceUpgradeProcessTest extends BaseDDMTestCase {
 	}
 
 	@Test
-	public void testGetNewActionIds2() throws Exception {
+	public void testGetNewActionIds2() {
 		_mockResourceActionLocalService(
 			"RecordSet", this::_createRecorSetResourceActionList,
 			"FormInstance", this::_createFormInstanceResourceActionList);
@@ -112,35 +114,32 @@ public class DDMFormInstanceUpgradeProcessTest extends BaseDDMTestCase {
 	}
 
 	private void _mockResourceActionLocalService(
-			String oldName,
-			Supplier<List<ResourceAction>> oldResourceActionListSupplier,
-			String newName,
-			Supplier<List<ResourceAction>> newResourceActionListSupplier)
-		throws Exception {
+		String oldName,
+		Supplier<List<ResourceAction>> oldResourceActionListSupplier,
+		String newName,
+		Supplier<List<ResourceAction>> newResourceActionListSupplier) {
 
-		ResourceActionLocalService resourceActionLocalService = mock(
+		ResourceActionLocalService resourceActionLocalService = Mockito.mock(
 			ResourceActionLocalService.class);
 
-		when(
+		Mockito.when(
 			resourceActionLocalService.getResourceActions(Matchers.eq(oldName))
 		).thenReturn(
 			oldResourceActionListSupplier.get()
 		);
 
-		when(
+		Mockito.when(
 			resourceActionLocalService.getResourceActions(Matchers.eq(newName))
 		).thenReturn(
 			newResourceActionListSupplier.get()
 		);
 
-		field(
-			DDMFormInstanceUpgradeProcess.class, "_resourceActionLocalService"
-		).set(
-			_ddmFormInstanceUpgradeProcess, resourceActionLocalService
-		);
+		ReflectionTestUtil.setFieldValue(
+			_ddmFormInstanceUpgradeProcess, "_resourceActionLocalService",
+			resourceActionLocalService);
 	}
 
-	private void _setUpDDMFormInstanceUpgradeProcess() throws Exception {
+	private void _setUpDDMFormInstanceUpgradeProcess() {
 		_ddmFormInstanceUpgradeProcess = new DDMFormInstanceUpgradeProcess(
 			null, null, null, null, null);
 	}

@@ -69,6 +69,8 @@ public class FormStyledLayoutStructureItem extends StyledLayoutStructureItem {
 			"classNameId", _classNameId
 		).put(
 			"classTypeId", _classTypeId
+		).put(
+			"indexed", _indexed
 		);
 	}
 
@@ -82,12 +84,20 @@ public class FormStyledLayoutStructureItem extends StyledLayoutStructureItem {
 		return HashUtil.hash(0, getItemId());
 	}
 
+	public boolean isIndexed() {
+		return _indexed;
+	}
+
 	public void setClassNameId(long classNameId) {
 		_classNameId = classNameId;
 	}
 
 	public void setClassTypeId(long classTypeId) {
 		_classTypeId = classTypeId;
+	}
+
+	public void setIndexed(boolean indexed) {
+		_indexed = indexed;
 	}
 
 	@Override
@@ -101,9 +111,14 @@ public class FormStyledLayoutStructureItem extends StyledLayoutStructureItem {
 		if (itemConfigJSONObject.has("classTypeId")) {
 			setClassTypeId(itemConfigJSONObject.getLong("classTypeId"));
 		}
+
+		if (itemConfigJSONObject.has("indexed")) {
+			setIndexed(itemConfigJSONObject.getBoolean("indexed"));
+		}
 	}
 
 	private long _classNameId;
 	private long _classTypeId;
+	private boolean _indexed = true;
 
 }

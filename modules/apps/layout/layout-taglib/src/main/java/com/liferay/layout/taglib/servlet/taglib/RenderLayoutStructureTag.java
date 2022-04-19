@@ -813,6 +813,15 @@ public class RenderLayoutStructureTag extends IncludeTag {
 			else if (layoutStructureItem instanceof
 						FormStyledLayoutStructureItem) {
 
+				FormStyledLayoutStructureItem formStyledLayoutStructureItem =
+					(FormStyledLayoutStructureItem)layoutStructureItem;
+
+				if (Objects.equals(_getLayoutMode(), Constants.SEARCH) &&
+					!formStyledLayoutStructureItem.isIndexed()) {
+
+					continue;
+				}
+
 				_renderFormStyledLayoutStructureItem(
 					layoutStructureItem, renderLayoutStructureDisplayContext);
 			}

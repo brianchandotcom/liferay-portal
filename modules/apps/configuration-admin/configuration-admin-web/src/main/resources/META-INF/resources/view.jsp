@@ -37,7 +37,9 @@ ConfigurationScopeDisplayContext configurationScopeDisplayContext = Configuratio
 	/>
 </div>
 
-<liferay-ui:success key='<%= ConfigurationAdminPortletKeys.SITE_SETTINGS + "requestProcessed" %>' message="site-was-added" />
+<liferay-ui:success key='<%= ConfigurationAdminPortletKeys.SITE_SETTINGS + "requestProcessed" %>'>
+	<liferay-ui:message arguments="<%= themeDisplay.getScopeGroupName() %>" key="the-site-x-has-been-added" />
+</liferay-ui:success>
 
 <clay:container-fluid
 	cssClass="container-view"

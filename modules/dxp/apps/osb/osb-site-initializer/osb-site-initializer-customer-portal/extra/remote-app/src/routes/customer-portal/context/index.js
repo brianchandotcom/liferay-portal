@@ -244,8 +244,8 @@ const AppContextProvider = ({assetsPath, children, page}) => {
 
 				if (isValid) {
 					const isStaff = user?.organizationBriefs?.some(
-					(organization) => organization.name === 'Liferay Staff'
-				);
+						(organization) => organization.name === 'Liferay Staff'
+					);
 
 					let accountBrief;
 

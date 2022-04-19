@@ -243,13 +243,13 @@ const AppContextProvider = ({assetsPath, children, page}) => {
 				);
 
 				if (isValid) {
-					const hasRoleBriefAdministrator = user?.roleBriefs?.some(
-						(role) => role.name === 'Administrator'
-					);
+					const isStaff = user?.organizationBriefs?.some(
+					(organization) => organization.name === 'Liferay Staff'
+				);
 
 					let accountBrief;
 
-					if (hasRoleBriefAdministrator) {
+					if (isStaff) {
 						const {data: dataAccount} = await client.query({
 							query: getAccountByExternalReferenceCode,
 							variables: {

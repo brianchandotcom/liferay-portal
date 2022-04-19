@@ -60,14 +60,13 @@ const Home = ({userAccount}) => {
 
 	useEffect(() => {
 		const getProjects = async (userAccount) => {
-			const hasRoleBriefAdministrator = userAccount?.roleBriefs?.some(
-				(role) => role.name === 'Administrator'
+			const isStaff = userAccount?.organizationBriefs?.some(
+				(organization) => organization.name === 'Liferay Staff'
 			);
-
 			let accountKeysFilter;
 			let accounts = [];
 
-			if (hasRoleBriefAdministrator) {
+			if (isStaff) {
 				const {data: dataAccounts} = await client.query({
 					query: getAccounts,
 					variables: {

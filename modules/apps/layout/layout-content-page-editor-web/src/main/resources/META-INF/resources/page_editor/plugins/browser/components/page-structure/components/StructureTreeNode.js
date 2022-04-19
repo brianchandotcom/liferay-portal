@@ -481,7 +481,8 @@ function computeHover({
 		const targetIsFragment =
 			targetItem.type === LAYOUT_DATA_ITEM_TYPES.fragment;
 		const targetIsContainer =
-			targetItem.type === LAYOUT_DATA_ITEM_TYPES.container;
+			targetItem.type === LAYOUT_DATA_ITEM_TYPES.container ||
+			targetItem.type === LAYOUT_DATA_ITEM_TYPES.form;
 		const targetIsEmpty =
 			layoutDataRef.current.items[targetItem.itemId]?.children.length ===
 			0;

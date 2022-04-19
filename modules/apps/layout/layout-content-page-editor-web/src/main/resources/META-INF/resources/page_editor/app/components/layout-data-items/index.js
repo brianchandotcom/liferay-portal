@@ -20,6 +20,8 @@ export {default as ColumnWithControls} from './ColumnWithControls';
 export {default as Container} from './Container';
 export {default as ContainerWithControls} from './ContainerWithControls';
 export {default as DropZoneWithControls} from './DropZoneWithControls';
+export {default as Form} from './Form';
+export {default as FormWithControls} from './FormWithControls';
 export {default as Root} from './Root';
 export {default as Row} from './Row';
 export {default as RowWithControls} from './RowWithControls';

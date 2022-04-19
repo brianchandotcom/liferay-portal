@@ -48,7 +48,8 @@ import {TopperLabel} from './TopperLabel';
 
 function isItemHighlighted(item, layoutData, targetItemId, targetPosition) {
 	if (
-		item.type === LAYOUT_DATA_ITEM_TYPES.container &&
+		(item.type === LAYOUT_DATA_ITEM_TYPES.container ||
+			item.type === LAYOUT_DATA_ITEM_TYPES.form) &&
 		item.itemId === targetItemId &&
 		targetPosition === TARGET_POSITIONS.MIDDLE
 	) {

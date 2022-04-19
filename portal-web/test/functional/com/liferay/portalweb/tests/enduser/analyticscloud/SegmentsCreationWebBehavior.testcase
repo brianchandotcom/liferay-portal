@@ -846,8 +846,8 @@ definition {
 			userLoginFullName = "ac ac");
 
 		ACUtils.navigateToSitePage(
-			documentTitleList = "1,2,3",
 			actionType = "View WC",
+			documentTitleList = "1,2,3",
 			pageName = "AC Page",
 			siteName = "Site Name");
 

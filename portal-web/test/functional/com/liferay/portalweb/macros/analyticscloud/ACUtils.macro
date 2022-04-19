@@ -699,6 +699,7 @@ definition {
 				Pause(locator1 = "5000");
 
 				// Pause is necessary because the web content event is sent too fast and doesn't have time to process if you navigate to another page quickly.
+
 			}
 
 			if ("${actionType}" == "View Blog") {

@@ -734,8 +734,8 @@ definition {
 
 		task ("Visit page 3 times on DXP") {
 			ACUtils.navigateToSitePage(
-				documentTitleList = "1,2,3",
 				actionType = "View WC",
+				documentTitleList = "1,2,3",
 				pageName = "AC Page",
 				siteName = "Site Name");
 
@@ -934,8 +934,8 @@ definition {
 			userLoginFullName = "ac ac");
 
 		ACUtils.navigateToSitePage(
-			documentTitleList = "1,2",
 			actionType = "View WC",
+			documentTitleList = "1,2",
 			pageName = "AC Page",
 			siteName = "Site Name");
 

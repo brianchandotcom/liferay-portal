@@ -22,6 +22,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
@@ -40,11 +41,8 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import org.mockito.Matchers;
-import org.mockito.Mock;
-import org.mockito.invocation.InvocationOnMock;
+import org.mockito.Mockito;
 import org.mockito.stubbing.Answer;
-
-import org.powermock.api.support.membermodification.MemberMatcher;
 
 import org.skyscreamer.jsonassert.JSONAssert;
 
@@ -207,64 +205,50 @@ public class PollsToDDMUpgradeProcessTest extends BaseDDMTestCase {
 	private void _setUpLocalizationUtil() {
 		LocalizationUtil localizationUtil = new LocalizationUtil();
 
-		when(
+		Mockito.when(
 			_localization.getAvailableLanguageIds(Matchers.anyString())
 		).thenReturn(
 			new String[] {"en_US", "pt_BR"}
 		);
 
-		when(
+		Mockito.when(
 			_localization.getLocalization(
 				Matchers.anyString(), Matchers.anyString())
 		).then(
-			new Answer<String>() {
+			(Answer<String>)invocationOnMock -> {
+				Object[] arguments = invocationOnMock.getArguments();
 
-				public String answer(InvocationOnMock invocationOnMock)
-					throws Throwable {
+				String xml = (String)arguments[0];
 
-					Object[] arguments = invocationOnMock.getArguments();
+				String languageIdAttribute =
+					"language-id='" + arguments[1] + "'>";
 
-					String xml = (String)arguments[0];
+				String languageIdElement = xml.substring(
+					xml.indexOf(languageIdAttribute) +
+						languageIdAttribute.length());
 
-					String languageIdAttribute =
-						"language-id='" + (String)arguments[1] + "'>";
-
-					String languageIdElement = xml.substring(
-						xml.indexOf(languageIdAttribute) +
-							languageIdAttribute.length());
-
-					return languageIdElement.substring(
-						0, languageIdElement.indexOf("</"));
-				}
-
+				return languageIdElement.substring(
+					0, languageIdElement.indexOf("</"));
 			}
 		);
 
 		localizationUtil.setLocalization(_localization);
 	}
 
-	private void _setUpPollsToDDMUpgradeProcess() throws Exception {
+	private void _setUpPollsToDDMUpgradeProcess() {
 		_pollsToDDMUpgradeProcess = new PollsToDDMUpgradeProcess(
 			ddmFormLayoutJSONSerializer, null, ddmFormValuesJSONSerializer,
 			null, null);
 
-		MemberMatcher.field(
-			PollsToDDMUpgradeProcess.class, "_availableLocales"
-		).set(
-			_pollsToDDMUpgradeProcess,
-			SetUtil.fromArray(LocaleUtil.BRAZIL, LocaleUtil.US)
-		);
+		ReflectionTestUtil.setFieldValue(
+			_pollsToDDMUpgradeProcess, "_availableLocales",
+			SetUtil.fromArray(LocaleUtil.BRAZIL, LocaleUtil.US));
 
-		MemberMatcher.field(
-			PollsToDDMUpgradeProcess.class, "_defaultLocale"
-		).set(
-			_pollsToDDMUpgradeProcess, LocaleUtil.US
-		);
+		ReflectionTestUtil.setFieldValue(
+			_pollsToDDMUpgradeProcess, "_defaultLocale", LocaleUtil.US);
 	}
 
-	@Mock
-	private Localization _localization;
-
+	private final Localization _localization = Mockito.mock(Localization.class);
 	private PollsToDDMUpgradeProcess _pollsToDDMUpgradeProcess;
 
 }

@@ -60,8 +60,6 @@ public class FragmentCollectionResourcesDisplayContext {
 
 		PortletURL portletURL = PortletURLBuilder.createRenderURL(
 			_renderResponse
-		).setMVCRenderCommandName(
-			"/fragment/view"
 		).setRedirect(
 			_fragmentDisplayContext.getRedirect()
 		).setTabs1(

@@ -89,8 +89,6 @@ public class EditFragmentCollectionMVCActionCommand
 
 		return PortletURLBuilder.createRenderURL(
 			_portal.getLiferayPortletResponse(actionResponse)
-		).setMVCRenderCommandName(
-			"/fragment/view"
 		).setParameter(
 			"fragmentCollectionId", fragmentCollection.getFragmentCollectionId()
 		).buildString();

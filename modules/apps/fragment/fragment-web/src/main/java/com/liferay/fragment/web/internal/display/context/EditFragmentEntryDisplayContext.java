@@ -213,8 +213,6 @@ public class EditFragmentEntryDisplayContext {
 
 		return PortletURLBuilder.createRenderURL(
 			_renderResponse
-		).setMVCRenderCommandName(
-			"/fragment/view"
 		).setParameter(
 			"fragmentCollectionId",
 			() -> {

@@ -45,18 +45,15 @@
 	</route>
 	<route>
 		<pattern>/fragment_collection/{fragmentCollectionId:\d+}/view_resources</pattern>
-		<implicit-parameter name="mvcRenderCommandName">/fragment/view</implicit-parameter>
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
 		<implicit-parameter name="viewResources">true</implicit-parameter>
 	</route>
 	<route>
 		<pattern>/fragment_collection/{fragmentCollectionId:\d+}</pattern>
-		<implicit-parameter name="mvcRenderCommandName">/fragment/view</implicit-parameter>
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
 	</route>
 	<route>
 		<pattern>/fragment_collection/{fragmentCollectionKey}</pattern>
-		<implicit-parameter name="mvcRenderCommandName">/fragment/view</implicit-parameter>
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
 	</route>
 	<route>

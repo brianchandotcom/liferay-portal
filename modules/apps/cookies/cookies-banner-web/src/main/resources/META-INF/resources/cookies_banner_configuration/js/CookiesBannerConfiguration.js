@@ -25,31 +25,30 @@ export default function ({namespace}) {
 
 	functionalToggle.addEventListener('click', () => {
 		Liferay.Util.getOpener().Liferay.fire('cookiePreferenceUpdate', {
-			key: 'liferay.cookie.consent.functional',
-			value: functionalToggle.checked ? 'accepted' : 'declined',
+			key: 'CONSENT_TYPE_FUNCTIONAL',
+			value: functionalToggle.checked ? 'true' : 'false',
 		});
 	});
 
 	performanceToggle.addEventListener('click', () => {
 		Liferay.Util.getOpener().Liferay.fire('cookiePreferenceUpdate', {
-			key: 'liferay.cookie.consent.performance',
-			value: performanceToggle.checked ? 'accepted' : 'declined',
+			key: 'CONSENT_TYPE_PERFORMANCE',
+			value: performanceToggle.checked ? 'true' : 'false',
 		});
 	});
 
 	personalizationToggle.addEventListener('click', () => {
 		Liferay.Util.getOpener().Liferay.fire('cookiePreferenceUpdate', {
-			key: 'liferay.cookie.consent.personalization',
-			value: personalizationToggle.checked ? 'accepted' : 'declined',
+			key: 'CONSENT_TYPE_PERSONALIZATION',
+			value: personalizationToggle.checked ? 'true' : 'false',
 		});
 	});
 
-	functionalToggle.checked =
-		getCookie('liferay.cookie.consent.functional') === 'accepted';
+	functionalToggle.checked = getCookie('CONSENT_TYPE_FUNCTIONAL') === 'true';
 	performanceToggle.checked =
-		getCookie('liferay.cookie.consent.performance') === 'accepted';
+		getCookie('CONSENT_TYPE_PERFORMANCE') === 'true';
 	personalizationToggle.checked =
-		getCookie('liferay.cookie.consent.personalization') === 'accepted';
+		getCookie('CONSENT_TYPE_PERSONALIZATION') === 'true';
 
 	functionalToggle.removeAttribute('disabled');
 	performanceToggle.removeAttribute('disabled');
@@ -71,16 +70,16 @@ export default function ({namespace}) {
 
 	confirmButton.addEventListener('click', () => {
 		setCookie(
-			'liferay.cookie.consent.functional',
-			functionalToggle.checked ? 'accepted' : 'decline'
+			'CONSENT_TYPE_FUNCTIONAL',
+			functionalToggle.checked ? 'true' : 'false'
 		);
 		setCookie(
-			'liferay.cookie.consent.performance',
-			performanceToggle.checked ? 'accepted' : 'decline'
+			'CONSENT_TYPE_PERFORMANCE',
+			performanceToggle.checked ? 'true' : 'false'
 		);
 		setCookie(
-			'liferay.cookie.consent.personalization',
-			personalizationToggle.checked ? 'accepted' : 'decline'
+			'CONSENT_TYPE_PERSONALIZATION',
+			personalizationToggle.checked ? 'true' : 'false'
 		);
 
 		window.location.reload();
@@ -94,15 +93,15 @@ export default function ({namespace}) {
 }
 
 function acceptAllCookies() {
-	setCookie('liferay.cookie.consent.functional', 'accepted');
-	setCookie('liferay.cookie.consent.performance', 'accepted');
-	setCookie('liferay.cookie.consent.personalization', 'accepted');
+	setCookie('CONSENT_TYPE_FUNCTIONAL', 'true');
+	setCookie('CONSENT_TYPE_PERFORMANCE', 'true');
+	setCookie('CONSENT_TYPE_PERSONALIZATION', 'true');
 }
 
 function declineAllCookies() {
-	setCookie('liferay.cookie.consent.functional', 'decline');
-	setCookie('liferay.cookie.consent.performance', 'decline');
-	setCookie('liferay.cookie.consent.personalization', 'decline');
+	setCookie('CONSENT_TYPE_FUNCTIONAL', 'false');
+	setCookie('CONSENT_TYPE_PERFORMANCE', 'false');
+	setCookie('CONSENT_TYPE_PERSONALIZATION', 'false');
 }
 
 function getCookie(name) {

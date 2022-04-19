@@ -99,12 +99,12 @@ export default function ({configurationUrl, namespace}) {
 
 function checkCookiesConsent(cookieBanner) {
 	if (
-		getCookie('liferay.cookie.consent.functional') === 'accepted' ||
-		getCookie('liferay.cookie.consent.functional') === 'decline' ||
-		getCookie('liferay.cookie.consent.performance') === 'accepted' ||
-		getCookie('liferay.cookie.consent.performance') === 'decline' ||
-		getCookie('liferay.cookie.consent.personalization') === 'accepted' ||
-		getCookie('liferay.cookie.consent.personalization') === 'decline'
+		getCookie('CONSENT_TYPE_FUNCTIONAL') === 'true' ||
+		getCookie('CONSENT_TYPE_FUNCTIONAL') === 'false' ||
+		getCookie('CONSENT_TYPE_PERFORMANCE') === 'true' ||
+		getCookie('CONSENT_TYPE_PERFORMANCE') === 'false' ||
+		getCookie('CONSENT_TYPE_PERSONALIZATION') === 'true' ||
+		getCookie('CONSENT_TYPE_PERSONALIZATION') === 'false'
 	) {
 		cookieBanner.style.display = 'none';
 	}
@@ -114,15 +114,15 @@ function checkCookiesConsent(cookieBanner) {
 }
 
 function acceptAllCookies() {
-	setCookie('liferay.cookie.consent.functional', 'accepted');
-	setCookie('liferay.cookie.consent.performance', 'accepted');
-	setCookie('liferay.cookie.consent.personalization', 'accepted');
+	setCookie('CONSENT_TYPE_FUNCTIONAL', 'true');
+	setCookie('CONSENT_TYPE_PERFORMANCE', 'true');
+	setCookie('CONSENT_TYPE_PERSONALIZATION', 'true');
 }
 
 function declineAllCookiesDecline() {
-	setCookie('liferay.cookie.consent.functional', 'decline');
-	setCookie('liferay.cookie.consent.performance', 'decline');
-	setCookie('liferay.cookie.consent.personalization', 'decline');
+	setCookie('CONSENT_TYPE_FUNCTIONAL', 'false');
+	setCookie('CONSENT_TYPE_PERFORMANCE', 'false');
+	setCookie('CONSENT_TYPE_PERSONALIZATION', 'false');
 }
 
 function getCookie(name) {

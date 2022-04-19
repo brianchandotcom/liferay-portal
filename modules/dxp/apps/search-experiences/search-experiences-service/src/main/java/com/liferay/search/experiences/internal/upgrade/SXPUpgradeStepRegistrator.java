@@ -17,12 +17,13 @@ package com.liferay.search.experiences.internal.upgrade;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.search.experiences.internal.model.listener.CompanyModelListener;
-import com.liferay.search.experiences.internal.search.SXPElementSearchRegistrar;
 import com.liferay.search.experiences.internal.upgrade.v1_1_0.SXPBlueprintUpgradeProcess;
 import com.liferay.search.experiences.service.SXPElementLocalService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Shuyang Zhou
@@ -34,11 +35,9 @@ public class SXPUpgradeStepRegistrator implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
-		registry.registerInitialUpgradeSteps(
-			new com.liferay.search.experiences.internal.upgrade.v1_0_0.
-				SXPElementUpgradeProcess(
-					_companyLocalService, _companyModelListener,
-					_sxpElementLocalService));
+		if (_sxUpgradeStepRegistratorHelper != null) {
+			_sxUpgradeStepRegistratorHelper.registerInitialUpgradeSteps(registry);
+		}
 
 		registry.register(
 			"1.0.0", "1.1.0",
@@ -47,16 +46,10 @@ public class SXPUpgradeStepRegistrator implements UpgradeStepRegistrator {
 			new SXPBlueprintUpgradeProcess());
 	}
 
-	@Reference
-	private CompanyLocalService _companyLocalService;
-
-	@Reference
-	private CompanyModelListener _companyModelListener;
-
-	@Reference
-	private SXPElementLocalService _sxpElementLocalService;
-
-	@Reference
-	private SXPElementSearchRegistrar _sxpElementSearchRegistrar;
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private SXUpgradeStepRegistratorHelper _sxUpgradeStepRegistratorHelper;
 
 }

@@ -198,9 +198,6 @@
 		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
 		<column name="userName" type="String" />
-		<column name="statusByUserId" type="long" />
-		<column name="statusByUserName" type="String" />
-		<column name="statusDate" type="Date" />
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
 
@@ -214,6 +211,9 @@
 		<column name="version" type="String" />
 		<column name="startKaleoNodeId" type="long" />
 		<column name="status" type="int" />
+		<column name="statusByUserId" type="long" />
+		<column name="statusByUserName" type="String" />
+		<column name="statusDate" type="Date" />
 
 		<!-- Finder methods -->
 

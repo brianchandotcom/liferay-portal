@@ -847,6 +847,7 @@ definition {
 
 		ACUtils.navigateToSitePage(
 			documentTitleList = "1,2,3",
+			actionType = "View WC",
 			pageName = "AC Page",
 			siteName = "Site Name");
 

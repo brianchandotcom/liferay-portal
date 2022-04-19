@@ -51,6 +51,7 @@ definition {
 
 		task ("Go to the site page") {
 			ACUtils.navigateToSitePage(
+				actionType = "View WC",
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -79,13 +80,12 @@ definition {
 
 		task ("Assert appears on metric") {
 			var portalURL = PropsUtil.get("portal.url");
-
-			var siteName = TestCase.getSiteName(siteName = "${siteName}");
+			var dataSourceName = StringUtil.extractFirst("${assignedPropertyName}", " ");
 
 			ACAssets.viewAssetAppearsOnMetric(
 				canonicalURL = "${portalURL}/web/site-name",
 				cardTitle = "Asset Appears On",
-				pageName = "AC Page - Site Name - ${siteName}");
+				pageName = "AC Page - Site Name - ${dataSourceName}");
 		}
 	}
 
@@ -375,7 +375,7 @@ definition {
 			userLoginFullName = "ac ac");
 
 		ACUtils.navigateToSitePage(
-			documentTitleList = "1,2,3",
+			actionType = "View WC",
 			pageName = "AC Page",
 			siteName = "Site Name");
 
@@ -405,7 +405,7 @@ definition {
 
 		ACAssets.viewVisitorsBehaviorMetric(
 			metricTitle = "Views",
-			metricValue = "3");
+			metricValue = "1");
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8441 | Test Summary: Web content list is searchable"
@@ -450,6 +450,7 @@ definition {
 
 			for (var pageName : list "AC Page,AC Page 2,AC Page 3") {
 				ACUtils.navigateToSitePage(
+					actionType = "View WC",
 					pageName = "${pageName}",
 					siteName = "Site Name");
 			}
@@ -700,6 +701,7 @@ definition {
 
 		for (var pageName : list "AC Page,AC Page 2,AC Page 3") {
 			ACUtils.navigateToSitePage(
+				actionType = "View WC",
 				pageName = "${pageName}",
 				siteName = "Site Name");
 		}
@@ -730,9 +732,10 @@ definition {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 
-		task ("Visit page 4 times on DXP") {
+		task ("Visit page 3 times on DXP") {
 			ACUtils.navigateToSitePage(
-				documentTitleList = "1,2,3,4",
+				documentTitleList = "1,2,3",
+				actionType = "View WC",
 				pageName = "AC Page",
 				siteName = "Site Name");
 
@@ -762,7 +765,7 @@ definition {
 		task ("Confirm the Views number is correct") {
 			ACAssets.viewVisitorsBehaviorMetric(
 				metricTitle = "Views",
-				metricValue = "4");
+				metricValue = "3");
 		}
 	}
 
@@ -876,7 +879,7 @@ definition {
 			userLoginFullName = "ac ac");
 
 		ACUtils.navigateToSitePage(
-			documentTitleList = "1,2,3",
+			actionType = "View WC",
 			pageName = "AC Page",
 			siteName = "Site Name");
 
@@ -931,7 +934,8 @@ definition {
 			userLoginFullName = "ac ac");
 
 		ACUtils.navigateToSitePage(
-			documentTitleList = "1,2,3",
+			documentTitleList = "1,2",
+			actionType = "View WC",
 			pageName = "AC Page",
 			siteName = "Site Name");
 
@@ -956,7 +960,7 @@ definition {
 		ACNavigation.viewActiveSwitchTab(tabName = "Overview");
 
 		ACAssets.viewTechnologyDeviceViewsAndPercentage(
-			actionValue = "3 Views",
+			actionValue = "2 Views",
 			cardTitle = "Views by Technology",
 			deviceName = "Desktop",
 			percentageValue = "100%");

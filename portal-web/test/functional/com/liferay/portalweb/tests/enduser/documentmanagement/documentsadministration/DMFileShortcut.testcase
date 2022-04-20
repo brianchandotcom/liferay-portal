@@ -101,7 +101,7 @@ definition {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
-			groupName = "Site Name",
+			groupName = "Guest",
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_1.jpg");
 
@@ -121,13 +121,10 @@ definition {
 
 		DMDocument.enableActionsMenuOnPortlet();
 
-		Navigator.gotoSitePage(
-			pageName = "Documents and Media Page",
-			siteName = "Site Name");
-
-		DMDocument.addDMShortcutCP(
+		JSONDocument.addShortcut(
 			dmDocumentTitle = "DM Document Title",
-			siteName = "Site Name");
+			sourceGroupName = "Guest",
+			targetGroupName = "Site Name");
 
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -140,8 +137,7 @@ definition {
 
 		DMDocument.moveToFolderPG(
 			dmDocumentTitle = "DM Document Title",
-			dmFolderName = "DM Folder Name",
-			shortcut = "true");
+			dmFolderName = "DM Folder Name");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 

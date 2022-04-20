@@ -2,10 +2,9 @@
 definition {
 
 	property custom.properties = "javascript.single.page.application.enabled=false${line.separator}jsonws.web.service.paths.excludes=";
-	property osgi.module.configuration.file.names = "com.liferay.release.feature.flag.web.internal.configuration.ReleaseFeatureFlagConfiguration.config";
-	property osgi.module.configurations = "disabledReleaseFeatureFlags=[&quot;DISABLE_PRIVATE_LAYOUTS&quot;]";
 	property portal.release = "false";
 	property portal.upstream = "false";
+	property private.pages.enabled = "true";
 	property testray.main.component.name = "Customer Portal";
 
 	setUp {

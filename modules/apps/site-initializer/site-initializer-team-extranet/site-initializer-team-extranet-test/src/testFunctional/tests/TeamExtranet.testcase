@@ -1,11 +1,10 @@
 @component-name = "portal-liferay-online"
 definition {
 
-	property osgi.module.configuration.file.names = "com.liferay.release.feature.flag.web.internal.configuration.ReleaseFeatureFlagConfiguration.config";
-	property osgi.module.configurations = "disabledReleaseFeatureFlags=[&quot;DISABLE_PRIVATE_LAYOUTS&quot;]";
 	property osgi.modules.includes = "site-initializer-team-extranet";
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property private.pages.enabled = "true";
 	property testray.main.component.name = "Team Extranet";
 
 	var testSiteName = "Test Site Team Extranet Name";

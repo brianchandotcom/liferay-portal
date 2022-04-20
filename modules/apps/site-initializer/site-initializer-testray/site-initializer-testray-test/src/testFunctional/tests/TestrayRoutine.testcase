@@ -1,11 +1,10 @@
 @component-name = "portal-solutions"
 definition {
 
-	property osgi.module.configuration.file.names = "com.liferay.release.feature.flag.web.internal.configuration.ReleaseFeatureFlagConfiguration.config";
-	property osgi.module.configurations = "disabledReleaseFeatureFlags=[&quot;DISABLE_PRIVATE_LAYOUTS&quot;]";
 	property osgi.modules.includes = "site-initializer-testray";
 	property portal.release = "false";
 	property portal.upstream = "true";
+	property private.pages.enabled = "true";
 	property testray.main.component.name = "Testray 2";
 
 	setUp {

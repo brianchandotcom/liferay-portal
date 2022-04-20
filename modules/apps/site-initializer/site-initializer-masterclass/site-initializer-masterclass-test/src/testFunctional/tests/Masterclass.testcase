@@ -1,10 +1,9 @@
 @component-name = "portal-liferay-online"
 definition {
 
-	property osgi.module.configuration.file.names = "com.liferay.release.feature.flag.web.internal.configuration.ReleaseFeatureFlagConfiguration.config";
-	property osgi.module.configurations = "disabledReleaseFeatureFlags=[&quot;DISABLE_PRIVATE_LAYOUTS&quot;]";
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property private.pages.enabled = "true";
 	property testray.main.component.name = "Masterclass";
 
 	var testSiteName = "Test Masterclass Name";
@@ -1784,8 +1783,7 @@ definition {
 	@description = "This is a use case for LPS-140253. View no private page in style book on Masterclass site."
 	@priority = "4"
 	test ViewNoPrivatePageInStyleBooksOnMasterclassSite {
-		property osgi.module.configuration.file.names = "com.liferay.release.feature.flag.web.internal.configuration.ReleaseFeatureFlagConfiguration.config";
-		property osgi.module.configurations = "disabledReleaseFeatureFlags=[&quot;&quot;]";
+		property private.pages.enabled = "false";
 
 		task ("Go to style books") {
 			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "${testSiteURL}");

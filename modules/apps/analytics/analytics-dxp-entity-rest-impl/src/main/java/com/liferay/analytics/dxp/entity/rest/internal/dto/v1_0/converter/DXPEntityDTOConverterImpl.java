@@ -267,8 +267,6 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 
 		List<String> includeAttributeNames = new ArrayList<>();
 
-		ShardedModel shardedModel = (ShardedModel)baseModel;
-
 		if (StringUtil.equals(
 				baseModel.getModelClassName(), User.class.getName())) {
 
@@ -276,7 +274,7 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 
 			AnalyticsConfiguration analyticsConfiguration =
 				_analyticsConfigurationTracker.getAnalyticsConfiguration(
-					shardedModel.getCompanyId());
+					user.getCompanyId());
 
 			_addFieldAttributes(
 				user.getContact(), fields,
@@ -288,6 +286,19 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 		}
 
 		_addFieldAttributes(baseModel, fields, includeAttributeNames);
+
+		if (StringUtil.equals(
+				baseModel.getModelClassName(), Organization.class.getName())) {
+
+			Field field = new Field();
+
+			Organization organization = (Organization)baseModel;
+
+			field.setName("parentOrganizationName");
+			field.setValue(organization.getParentOrganizationName());
+
+			fields.add(field);
+		}
 
 		return fields.toArray(new Field[0]);
 	}

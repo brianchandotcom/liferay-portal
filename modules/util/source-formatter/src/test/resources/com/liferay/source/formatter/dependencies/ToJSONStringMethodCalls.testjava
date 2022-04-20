@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 /**
  * @author Qi Zhang
  */
-public class ToJSONStringMethod {
+public class ToJSONStringMethodCalls {
 
 	public void test() {
 		JSONUtil.put(

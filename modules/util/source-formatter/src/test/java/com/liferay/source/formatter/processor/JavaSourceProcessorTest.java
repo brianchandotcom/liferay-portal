@@ -324,8 +324,8 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
-	public void testToJSONStringMethodCheck() throws Exception {
-		test("ToJSONStringMethod.testjava",
+	public void testToJSONStringMethodCalls() throws Exception {
+		test("ToJSONStringMethodCalls.testjava",
 			new String[] {
 				"Use 'toString' instead of 'toJSONString'",
 				"Use 'toString' instead of 'toJSONString'",

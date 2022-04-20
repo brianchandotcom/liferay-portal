@@ -162,4 +162,13 @@ definition {
 		PublicationsChanges.assertPublicationsCommentsCRUDPermissions();
 	}
 
+	macro viewPublicationRoleHelpText {
+		var key_publicationRole = "${publicationRole}";
+		var key_publicationRoleHelpText = "${publicationRoleHelpText}";
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Publications#PUBLICATION_ROLE_BUTTON_HELP_TEXT",
+			value1 = "${publicationRoleHelpText}");
+	}
+
 }

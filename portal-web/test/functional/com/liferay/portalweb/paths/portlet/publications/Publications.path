@@ -107,7 +107,7 @@
 </tr>
 <tr>
 	<td>PUBLICATION_ROLE_BUTTON_HELP_TEXT</td>
-	<td>//button[strong[contains(.,'${key_publicationRole}')] and div]</td>
+	<td>//button[strong[contains(.,'${key_publicationRole}')]//following-sibling::div[contains(.,'${key_publicationRoleHelpText}')]]</td>
 	<td></td>
 </tr>
 <tr>

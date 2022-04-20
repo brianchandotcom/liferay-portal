@@ -326,9 +326,9 @@ public class JSONUtilCheck extends BaseChainedMethodCheck {
 	}
 
 	private boolean _isJSONTypeMethodCall(
-		DetailAST detailAST, String callMethodName) {
+		DetailAST detailAST, String methodName) {
 
-		if (Validator.isNull(callMethodName)) {
+		if (Validator.isNull(methodName)) {
 			return false;
 		}
 
@@ -339,7 +339,7 @@ public class JSONUtilCheck extends BaseChainedMethodCheck {
 			parentDetailAST, false, TokenTypes.METHOD_DEF);
 
 		for (DetailAST childDetailAST : childDetailASTList) {
-			if (StringUtil.equals(getName(childDetailAST), callMethodName) &&
+			if (StringUtil.equals(getName(childDetailAST), methodName) &&
 				ArrayUtil.contains(
 					_VARIABLE_TYPE_NAMES, getTypeName(childDetailAST, true))) {
 

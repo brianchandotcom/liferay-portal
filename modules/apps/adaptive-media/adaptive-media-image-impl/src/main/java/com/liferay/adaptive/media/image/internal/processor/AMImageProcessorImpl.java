@@ -28,6 +28,8 @@ import com.liferay.adaptive.media.processor.AMProcessor;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.repository.model.FileVersionWrapper;
+import com.liferay.portal.kernel.util.ContentTypes;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -122,7 +124,8 @@ public final class AMImageProcessorImpl implements AMImageProcessor {
 					amImageScaledImage.getInputStream()) {
 
 				_amImageEntryLocalService.addAMImageEntry(
-					amImageConfigurationEntry, fileVersion,
+					amImageConfigurationEntry,
+					_getScaledFileVersion(fileVersion, amImageScaledImage),
 					amImageScaledImage.getHeight(),
 					amImageScaledImage.getWidth(), inputStream,
 					amImageScaledImage.getSize());
@@ -131,6 +134,29 @@ public final class AMImageProcessorImpl implements AMImageProcessor {
 		catch (IOException ioException) {
 			throw new AMRuntimeException.IOException(ioException);
 		}
+	}
+
+	private FileVersion _getScaledFileVersion(
+		FileVersion fileVersion, AMImageScaledImage amImageScaledImage) {
+
+		String amImageScaledImageMimeType = amImageScaledImage.getMimeType();
+
+		if ((amImageScaledImageMimeType == null) ||
+			!amImageScaledImageMimeType.equals(fileVersion.getMimeType()) ||
+			amImageScaledImageMimeType.equals(
+				ContentTypes.APPLICATION_OCTET_STREAM)) {
+
+			return fileVersion;
+		}
+
+		return new FileVersionWrapper(fileVersion) {
+
+			@Override
+			public String getMimeType() {
+				return amImageScaledImageMimeType;
+			}
+
+		};
 	}
 
 	private boolean _isUpdateImageEntry(

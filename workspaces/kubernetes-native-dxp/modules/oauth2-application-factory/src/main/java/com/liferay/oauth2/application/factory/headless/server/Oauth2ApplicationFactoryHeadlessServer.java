@@ -311,7 +311,9 @@ public class Oauth2ApplicationFactoryHeadlessServer {
 		serviceUser = _userLocalService.updateLockout(serviceUser, true);
 		serviceUser = _userLocalService.updateStatus(
 			serviceUser.getUserId(), WorkflowConstants.STATUS_APPROVED,
-			serviceContext);		return null;
+			serviceContext);
+
+		return serviceUser;
 	}
 
 	private Role _getOrAddServiceRole(

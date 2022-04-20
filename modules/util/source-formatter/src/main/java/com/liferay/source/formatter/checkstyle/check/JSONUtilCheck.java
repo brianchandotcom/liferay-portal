@@ -294,31 +294,6 @@ public class JSONUtilCheck extends BaseChainedMethodCheck {
 		}
 	}
 
-	private void _checkToJSONCallMethod(
-		DetailAST detailAST, DetailAST originDetailAST) {
-
-		if (detailAST.getChildCount() == 0) {
-			return;
-		}
-
-		DetailAST firstChildDetailAST = detailAST.getFirstChild();
-
-		if (firstChildDetailAST.getType() == TokenTypes.DOT) {
-			FullIdent fullIdent = FullIdent.createFullIdent(
-				firstChildDetailAST);
-
-			String expr = fullIdent.getText();
-
-			if (expr.startsWith("JSONUtil.")) {
-				log(originDetailAST, _MSG_USE_JSON_UTIL_TO_STRING_2);
-
-				return;
-			}
-		}
-
-		_checkToJSONCallMethod(firstChildDetailAST, originDetailAST);
-	}
-
 	private void _checkToJSONStringCalls(DetailAST detailAST) {
 		if (!StringUtil.equals("toJSONString", getMethodName(detailAST))) {
 			return;
@@ -352,13 +327,11 @@ public class JSONUtilCheck extends BaseChainedMethodCheck {
 		String variableTypeName = getVariableTypeName(
 			detailAST, variableName, true);
 
-		if (ArrayUtil.contains(_VARIABLE_TYPE_NAMES, variableTypeName)) {
+		if (ArrayUtil.contains(_VARIABLE_TYPE_NAMES, variableTypeName) ||
+			_isJSONUtilCall(detailAST)) {
+
 			log(detailAST, _MSG_USE_JSON_UTIL_TO_STRING_2);
-
-			return;
 		}
-
-		_checkToJSONCallMethod(detailAST, detailAST);
 	}
 
 	private DetailAST _getMethodCallDetailAST(
@@ -382,6 +355,27 @@ public class JSONUtilCheck extends BaseChainedMethodCheck {
 		}
 
 		return null;
+	}
+
+	private boolean _isJSONUtilCall(DetailAST detailAST) {
+		if (detailAST.getChildCount() == 0) {
+			return false;
+		}
+
+		DetailAST firstChildDetailAST = detailAST.getFirstChild();
+
+		if (firstChildDetailAST.getType() == TokenTypes.DOT) {
+			FullIdent fullIdent = FullIdent.createFullIdent(
+				firstChildDetailAST);
+
+			String expr = fullIdent.getText();
+
+			if (expr.startsWith("JSONUtil.")) {
+				return true;
+			}
+		}
+
+		return _isJSONUtilCall(firstChildDetailAST);
 	}
 
 	private static final String _MSG_USE_JSON_UTIL_PUT = "json.util.put.use";

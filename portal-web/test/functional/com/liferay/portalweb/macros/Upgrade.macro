@@ -436,7 +436,7 @@ definition {
 
 		Form.closeSidebar();
 
-		Form.save();
+		PortletEntry.publish();
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",

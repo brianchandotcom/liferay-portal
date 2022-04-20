@@ -994,7 +994,7 @@ definition {
 
 		FormsAdminNavigator.gotoFormBuilder();
 
-		Form.save();
+		Form.publishForm();
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",

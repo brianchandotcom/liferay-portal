@@ -426,7 +426,17 @@ public class DDMFormDisplayContextTest {
 
 	@Test
 	public void testIsFormAvailableForLoggedUser() throws Exception {
-		DDMFormInstance ddmFormInstance = _mockDDMFormInstance();
+		DDMFormInstanceSettings ddmFormInstanceSettings = Mockito.mock(
+			DDMFormInstanceSettings.class);
+
+		Mockito.when(
+			ddmFormInstanceSettings.published()
+		).thenReturn(
+			true
+		);
+
+		DDMFormInstance ddmFormInstance = _mockDDMFormInstance(
+			ddmFormInstanceSettings);
 
 		Mockito.when(
 			_ddmFormInstanceLocalService.fetchFormInstance(Matchers.anyLong())
@@ -684,7 +694,7 @@ public class DDMFormDisplayContextTest {
 		return formInstance;
 	}
 
-	private void _mockDDMFormInstance(
+	private DDMFormInstance _mockDDMFormInstance(
 			DDMFormInstanceSettings ddmFormInstanceSettings)
 		throws Exception {
 
@@ -709,6 +719,8 @@ public class DDMFormDisplayContextTest {
 		).thenReturn(
 			ddmFormInstance
 		);
+
+		return ddmFormInstance;
 	}
 
 	private DDMFormInstanceSettings

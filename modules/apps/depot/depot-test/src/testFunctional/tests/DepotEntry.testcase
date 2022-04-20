@@ -56,9 +56,9 @@ definition {
 	}
 
 	@description = "This tests the basic flow the user will take to add a depot through the UI."
+	@e2e
 	@priority = "5"
 	@refactordone
-	@uitest
 	test CanAddDepot {
 		property environment.acceptance = "true";
 		property portal.acceptance = "true";
@@ -126,9 +126,9 @@ definition {
 	}
 
 	@description = "This ensures that a depot can be deleted in the list view."
+	@e2e
 	@priority = "5"
 	@refactordone
-	@uitest
 	test CanDeleteInListView {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -144,9 +144,9 @@ definition {
 	}
 
 	@description = "This ensures that a depot can be deleted in the table view."
+	@e2e
 	@priority = "5"
 	@refactordone
-	@uitest
 	test CanDeleteInTableView {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -287,9 +287,9 @@ definition {
 	}
 
 	@description = "This ensures that a depot can be edited in the list view."
+	@e2e
 	@priority = "5"
 	@refactordone
-	@uitest
 	test CanEditInListView {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -321,9 +321,9 @@ definition {
 	}
 
 	@description = "This ensures that a depot can be edited in the table view."
+	@e2e
 	@priority = "5"
 	@refactordone
-	@uitest
 	test CanEditInTableView {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -377,9 +377,9 @@ definition {
 	}
 
 	@description = "This ensures that a depot can be edited via settings."
+	@e2e
 	@priority = "4"
 	@refactordone
-	@uitest
 	test CanEditNameViaSettings {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",

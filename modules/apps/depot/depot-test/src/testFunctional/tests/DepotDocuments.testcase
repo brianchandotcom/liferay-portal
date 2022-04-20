@@ -146,9 +146,9 @@ definition {
 	}
 
 	@description = "This test edits the title and description of a document in a depot."
+	@e2e
 	@priority = "5"
 	@refactordone
-	@uitest
 	test CanEditDocument {
 		property portal.acceptance = "true";
 
@@ -182,9 +182,9 @@ definition {
 	}
 
 	@description = "This ensures that a folder can be edited in a depot."
+	@e2e
 	@priority = "5"
 	@refactordone
-	@uitest
 	test CanEditFolder {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",

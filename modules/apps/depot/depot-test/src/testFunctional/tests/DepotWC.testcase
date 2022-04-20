@@ -113,9 +113,9 @@ definition {
 	}
 
 	@description = "This ensures that a web content folder can be edited in a depot."
+	@e2e
 	@priority = "3"
 	@refactordone
-	@uitest
 	test CanEditFolder {
 		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
@@ -189,9 +189,9 @@ definition {
 	}
 
 	@description = "This ensures that a web content can be edited in a depot."
+	@e2e
 	@priority = "5"
 	@refactordone
-	@uitest
 	test CanEditWebContent {
 		property portal.acceptance = "true";
 

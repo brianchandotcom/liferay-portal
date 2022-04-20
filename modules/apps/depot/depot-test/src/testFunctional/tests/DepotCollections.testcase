@@ -31,9 +31,9 @@ definition {
 	}
 
 	@description = "This ensures that a manual collection in a depot can be published in the site through the Asset Publisher for local staging."
+	@e2e
 	@priority = "5"
 	@refactordone
-	@uitest
 	test CanBePublishedViaLocalStaging {
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -111,9 +111,9 @@ definition {
 	}
 
 	@description = "This ensures that a manual collection in a depot can be published in the site through the Asset Publisher for remote staging."
+	@e2e
 	@priority = "5"
 	@refactordone
-	@uitest
 	test CanBePublishedViaRemoteStaging {
 		property app.server.bundles.size = "1";
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
@@ -215,9 +215,9 @@ definition {
 	}
 
 	@description = "This ensures that the scope can be changed through dynamic selection in a depot."
+	@e2e
 	@priority = "5"
 	@refactordone
-	@uitest
 	test CanChangeScope {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
@@ -344,9 +344,9 @@ definition {
 	}
 
 	@description = "This ensures that the image is displayed by AP through Collections in a depot."
+	@e2e
 	@priority = "5"
 	@refactordone
-	@uitest
 	test CanDisplayImageInAP {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -408,9 +408,9 @@ definition {
 	}
 
 	@description = "This ensures that tagged the web content is displayed by AP through dynamic selection in a depot."
+	@e2e
 	@priority = "5"
 	@refactordone
-	@uitest
 	test CanDisplayWCWithTagInAP {
 		for (var i : list "1,2") {
 			JSONWebcontent.addWebContent(
@@ -1024,9 +1024,9 @@ definition {
 	}
 
 	@description = "This ensures that the web content created by the structure can be selected via searching for the corresponding structure name."
+	@e2e
 	@priority = "5"
 	@refactordone
-	@uitest
 	test CanSelectWCWithStructure {
 		DepotNavigator.openDepotWebContentStructuresAdmin(depotName = "Test Depot Name");
 

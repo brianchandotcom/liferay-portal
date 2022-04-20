@@ -244,9 +244,9 @@ definition {
 	}
 
 	@description = "This test asserts that an image is auto-tagged in a depot."
+	@e2e
 	@priority = "5"
 	@refactordone
-	@uitest
 	test ImageCanBeAutoTagged {
 		property test.name.skip.portal.instance = "DepotAutoTagging#ImageCanBeAutoTagged";
 

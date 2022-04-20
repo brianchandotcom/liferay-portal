@@ -297,9 +297,9 @@ definition {
 	}
 
 	@description = "This ensures that image in depot can be removed and republished in AP through widget config manual selection when enabling local staging."
+	@e2e
 	@priority = "5"
 	@refactordone
-	@uitest
 	test CanDeleteDMImage {
 		property portal.acceptance = "true";
 

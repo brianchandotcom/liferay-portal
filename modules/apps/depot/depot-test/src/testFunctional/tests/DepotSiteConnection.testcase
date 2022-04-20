@@ -37,9 +37,9 @@ definition {
 	}
 
 	@description = "This ensures that a depot can be connected to different types of sites."
+	@e2e
 	@priority = "5"
 	@refactorneeded
-	@uitest
 	test AddMultipleSites {
 		Site.openSitesAdmin();
 
@@ -185,9 +185,9 @@ definition {
 	}
 
 	@description = "This ensures that the disconnected site can not access the the depot."
+	@e2e
 	@priority = "5"
 	@refactorneeded
-	@uitest
 	test DisconnectFromSite {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -213,9 +213,9 @@ definition {
 	}
 
 	@description = "This ensures that a depot can be connected to the site."
+	@e2e
 	@priority = "5"
 	@refactorneeded
-	@uitest
 	test Smoke {
 		property portal.acceptance = "true";
 
@@ -267,9 +267,9 @@ definition {
 	}
 
 	@description = "This ensures that a connected child site can access the depot image."
+	@e2e
 	@priority = "5"
 	@refactorneeded
-	@uitest
 	test ViewImageFromChildSite {
 		JSONGroup.addChildGroup(
 			groupName = "Child Site Name",

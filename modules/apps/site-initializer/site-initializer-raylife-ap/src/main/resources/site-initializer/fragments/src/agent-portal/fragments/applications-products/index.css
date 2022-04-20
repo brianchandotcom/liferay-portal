@@ -1,0 +1,36 @@
+.applications-products-container .legend-color {
+	height: 8px;
+	width: 8px;
+}
+
+.applications-products-container .legend-title {
+	color: #5c5e5e;
+	font-size: 14px;
+}
+
+.applications-products-container .bb-chart-arcs-title {
+	dominant-baseline: central;
+	font-size: 32px;
+	font-weight: 700;
+}
+
+.applications-products-container .applications-products-title::after {
+	background-color: #4c84ff;
+	content: '';
+	display: block;
+	height: 1px;
+	margin-top: 6px;
+	position: absolute;
+	width: 19px;
+}
+
+.applications-products-tooltip {
+	background-color: #fff;
+	border: 1px solid #55c2ff;
+	border-radius: 4px;
+	color: #55c2ff;
+	font-size: 0.875rem;
+	font-style: normal;
+	font-weight: bold;
+	width: 100%;
+}

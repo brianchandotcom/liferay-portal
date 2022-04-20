@@ -12,8 +12,12 @@
  * details.
  */
 
-export * from './Application';
-export * from './Claim';
-export * from './Policy';
-export * from './Products';
-export * from './Report';
+import {axios} from './liferay/api';
+
+const headlessAPI = 'o/headless-commerce-admin-catalog/v1.0';
+
+export function getProductQuotes() {
+	return axios.get(
+		`${headlessAPI}/products?nestedFields=skus,catalog&page=1&pageSize=50`
+	);
+}

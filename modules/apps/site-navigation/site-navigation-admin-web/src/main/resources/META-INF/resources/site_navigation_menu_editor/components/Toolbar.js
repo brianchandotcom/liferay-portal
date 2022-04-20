@@ -33,6 +33,7 @@ export function Toolbar() {
 
 			<AppLayout.ToolbarItem>
 				<ClayButtonWithIcon
+					className="text-secondary"
 					displayType="unstyled"
 					monospaced
 					onClick={onSettingsButtonClick}

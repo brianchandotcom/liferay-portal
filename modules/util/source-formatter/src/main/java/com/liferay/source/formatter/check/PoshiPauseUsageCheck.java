@@ -32,6 +32,10 @@ public class PoshiPauseUsageCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
+		if (fileName.endsWith(".path")) {
+			return content;
+		}
+
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
 

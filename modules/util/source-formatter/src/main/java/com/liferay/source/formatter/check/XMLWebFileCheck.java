@@ -176,8 +176,7 @@ public class XMLWebFileCheck extends BaseFileCheck {
 			urlPatterns.add(locale);
 
 			urlPatterns.add(
-				StringUtil.replaceFirst(
-					locale, CharPool.UNDERLINE, CharPool.DASH));
+				StringUtil.replace(locale, CharPool.UNDERLINE, CharPool.DASH));
 		}
 
 		return urlPatterns;

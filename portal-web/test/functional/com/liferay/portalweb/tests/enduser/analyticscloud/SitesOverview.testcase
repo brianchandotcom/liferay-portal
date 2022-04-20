@@ -34,8 +34,6 @@ definition {
 	@description = "Sites Overview Cards appear on load"
 	@priority = "3"
 	test CanViewSitesOverviewDashboardCards {
-		property portal.acceptance = "true";
-
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
 
 		ACUtils.launchAC();

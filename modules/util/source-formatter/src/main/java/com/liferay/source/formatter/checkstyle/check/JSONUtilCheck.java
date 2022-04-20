@@ -337,7 +337,7 @@ public class JSONUtilCheck extends BaseChainedMethodCheck {
 		for (DetailAST childDetailAST : childDetailASTList) {
 			if (StringUtil.equals(getName(childDetailAST), methodName) &&
 				ArrayUtil.contains(
-					_VARIABLE_TYPE_NAMES, getTypeName(childDetailAST, true))) {
+					_VARIABLE_TYPE_NAMES, getTypeName(childDetailAST, false))) {
 
 				return true;
 			}

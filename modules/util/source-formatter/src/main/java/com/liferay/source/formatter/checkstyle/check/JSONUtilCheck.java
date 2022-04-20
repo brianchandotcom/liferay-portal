@@ -338,12 +338,12 @@ public class JSONUtilCheck extends BaseChainedMethodCheck {
 		List<DetailAST> childDetailASTList = getAllChildTokens(
 			parentDetailAST, false, TokenTypes.METHOD_DEF);
 
-		for (DetailAST tmpDetailAST : childDetailASTList) {
-			String methodName = getName(tmpDetailAST);
+		for (DetailAST childDetailAST : childDetailASTList) {
+			String methodName = getName(childDetailAST);
 
 			if (StringUtil.equals(methodName, callMethodName) &&
 				ArrayUtil.contains(
-					_VARIABLE_TYPE_NAMES, getTypeName(tmpDetailAST, true))) {
+					_VARIABLE_TYPE_NAMES, getTypeName(childDetailAST, true))) {
 
 				return true;
 			}

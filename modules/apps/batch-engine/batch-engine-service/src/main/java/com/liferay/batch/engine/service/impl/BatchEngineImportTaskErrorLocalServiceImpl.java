@@ -16,7 +16,9 @@ package com.liferay.batch.engine.service.impl;
 
 import com.liferay.batch.engine.model.BatchEngineImportTaskError;
 import com.liferay.batch.engine.service.base.BatchEngineImportTaskErrorLocalServiceBaseImpl;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 
@@ -45,9 +47,10 @@ public class BatchEngineImportTaskErrorLocalServiceImpl
 		batchEngineImportTaskError.setUserId(userId);
 		batchEngineImportTaskError.setBatchEngineImportTaskId(
 			batchEngineImportTaskId);
-		batchEngineImportTaskError.setItem(item);
+		batchEngineImportTaskError.setItem(_getItem(item, itemIndex));
 		batchEngineImportTaskError.setItemIndex(itemIndex);
-		batchEngineImportTaskError.setMessage(message);
+		batchEngineImportTaskError.setMessage(
+			message.replaceAll("\n|\r\n", StringPool.SPACE));
 
 		return batchEngineImportTaskErrorPersistence.update(
 			batchEngineImportTaskError);
@@ -67,6 +70,14 @@ public class BatchEngineImportTaskErrorLocalServiceImpl
 
 		return batchEngineImportTaskErrorPersistence.
 			countByBatchEngineImportTaskId(batchEngineImportTaskId);
+	}
+
+	private String _getItem(String item, int itemIndex) {
+		if (Validator.isNull(item)) {
+			item = "Unable to read item at index " + itemIndex;
+		}
+
+		return item;
 	}
 
 }

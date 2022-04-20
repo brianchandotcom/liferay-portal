@@ -29,18 +29,13 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
-import org.mockito.runners.MockitoJUnitRunner;
-
-import org.powermock.api.mockito.PowerMockito;
+import org.mockito.Mockito;
 
 /**
  * @author Marcos Martins
  */
-@RunWith(MockitoJUnitRunner.class)
-public class CheckboxMultipleDDMFormFieldTypeReportProcessorTest
-	extends PowerMockito {
+public class CheckboxMultipleDDMFormFieldTypeReportProcessorTest {
 
 	@ClassRule
 	@Rule
@@ -51,15 +46,16 @@ public class CheckboxMultipleDDMFormFieldTypeReportProcessorTest
 	public void testProcessDDMFormInstanceReportOnDeleteEvent()
 		throws Exception {
 
-		DDMFormFieldValue ddmFormFieldValue = mock(DDMFormFieldValue.class);
+		DDMFormFieldValue ddmFormFieldValue = Mockito.mock(
+			DDMFormFieldValue.class);
 
-		when(
+		Mockito.when(
 			ddmFormFieldValue.getName()
 		).thenReturn(
 			"field1"
 		);
 
-		when(
+		Mockito.when(
 			ddmFormFieldValue.getType()
 		).thenReturn(
 			DDMFormFieldType.CHECKBOX_MULTIPLE
@@ -74,7 +70,7 @@ public class CheckboxMultipleDDMFormFieldTypeReportProcessorTest
 			).toString());
 		value.setDefaultLocale(LocaleUtil.US);
 
-		when(
+		Mockito.when(
 			ddmFormFieldValue.getValue()
 		).thenReturn(
 			value
@@ -104,15 +100,16 @@ public class CheckboxMultipleDDMFormFieldTypeReportProcessorTest
 	public void testProcessDDMFormInstanceReportWithEmptyData()
 		throws Exception {
 
-		DDMFormFieldValue ddmFormFieldValue = mock(DDMFormFieldValue.class);
+		DDMFormFieldValue ddmFormFieldValue = Mockito.mock(
+			DDMFormFieldValue.class);
 
-		when(
+		Mockito.when(
 			ddmFormFieldValue.getName()
 		).thenReturn(
 			"field1"
 		);
 
-		when(
+		Mockito.when(
 			ddmFormFieldValue.getType()
 		).thenReturn(
 			DDMFormFieldType.CHECKBOX_MULTIPLE
@@ -127,7 +124,7 @@ public class CheckboxMultipleDDMFormFieldTypeReportProcessorTest
 			).toString());
 		value.setDefaultLocale(LocaleUtil.US);
 
-		when(
+		Mockito.when(
 			ddmFormFieldValue.getValue()
 		).thenReturn(
 			value
@@ -161,15 +158,16 @@ public class CheckboxMultipleDDMFormFieldTypeReportProcessorTest
 	public void testProcessDDMFormInstanceReportWithExistingData()
 		throws Exception {
 
-		DDMFormFieldValue ddmFormFieldValue = mock(DDMFormFieldValue.class);
+		DDMFormFieldValue ddmFormFieldValue = Mockito.mock(
+			DDMFormFieldValue.class);
 
-		when(
+		Mockito.when(
 			ddmFormFieldValue.getName()
 		).thenReturn(
 			"field1"
 		);
 
-		when(
+		Mockito.when(
 			ddmFormFieldValue.getType()
 		).thenReturn(
 			DDMFormFieldType.CHECKBOX_MULTIPLE
@@ -184,7 +182,7 @@ public class CheckboxMultipleDDMFormFieldTypeReportProcessorTest
 			).toString());
 		value.setDefaultLocale(LocaleUtil.US);
 
-		when(
+		Mockito.when(
 			ddmFormFieldValue.getValue()
 		).thenReturn(
 			value

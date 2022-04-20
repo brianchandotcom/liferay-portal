@@ -198,6 +198,49 @@
 			},
 			"type": "object"
 		},
+		"LanguageId": {
+			"properties": {
+				"ar_SA": {
+					"type": "string"
+				},
+				"ca_ES": {
+					"type": "string"
+				},
+				"de_DE": {
+					"type": "string"
+				},
+				"en_US": {
+					"type": "string"
+				},
+				"es_ES": {
+					"type": "string"
+				},
+				"fi_FI": {
+					"type": "string"
+				},
+				"fr_FR": {
+					"type": "string"
+				},
+				"hu_HU": {
+					"type": "string"
+				},
+				"ja_JP": {
+					"type": "string"
+				},
+				"nl_NL": {
+					"type": "string"
+				},
+				"pt_BR": {
+					"type": "string"
+				},
+				"sv_SE": {
+					"type": "string"
+				},
+				"zh_CN": {
+					"type": "string"
+				}
+			}
+		},
 		"Option": {
 			"properties": {
 				"label": {
@@ -329,6 +372,7 @@
 	},
 	"properties": {
 		"description_i18n": {
+			"$ref": "#/definitions/LanguageId",
 			"additionalProperties": {
 				"type": "string"
 			},
@@ -338,6 +382,7 @@
 			"$ref": "#/definitions/ElementDefinition"
 		},
 		"title_i18n": {
+			"$ref": "#/definitions/LanguageId",
 			"additionalProperties": {
 				"type": "string"
 			},

@@ -8970,58 +8970,58 @@ public class JournalArticleLocalServiceImpl
 
 		if (emailType.equals("add")) {
 			return LocalizationUtil.getMap(
-				journalGroupServiceConfiguration.emailArticleAddedSubject());
+				journalGroupServiceConfiguration.emailArticleAddedBody());
 		}
 
 		if (emailType.equals("denied")) {
 			return LocalizationUtil.getMap(
 				journalGroupServiceConfiguration.
-					emailArticleApprovalDeniedSubject());
+					emailArticleApprovalDeniedBody());
 		}
 
 		if (emailType.equals("granted")) {
 			return LocalizationUtil.getMap(
 				journalGroupServiceConfiguration.
-					emailArticleApprovalGrantedSubject());
+					emailArticleApprovalGrantedBody());
 		}
 
 		if (emailType.equals("move_to")) {
 			return LocalizationUtil.getMap(
 				journalGroupServiceConfiguration.
-					emailArticleMovedToFolderSubject());
+					emailArticleMovedToFolderBody());
 		}
 
 		if (emailType.equals("move_to_trash")) {
 			return LocalizationUtil.getMap(
 				journalGroupServiceConfiguration.
-					emailArticleMovedToTrashSubject());
+					emailArticleMovedToTrashBody());
 		}
 		else if (emailType.equals("move_from")) {
 			return LocalizationUtil.getMap(
 				journalGroupServiceConfiguration.
-					emailArticleMovedFromFolderSubject());
+					emailArticleMovedFromFolderBody());
 		}
 
 		if (emailType.equals("move_from_trash")) {
 			return LocalizationUtil.getMap(
 				journalGroupServiceConfiguration.
-					emailArticleMovedFromTrashSubject());
+					emailArticleMovedFromTrashBody());
 		}
 
 		if (emailType.equals("requested")) {
 			return LocalizationUtil.getMap(
 				journalGroupServiceConfiguration.
-					emailArticleApprovalRequestedSubject());
+					emailArticleApprovalRequestedBody());
 		}
 
 		if (emailType.equals("review")) {
 			return LocalizationUtil.getMap(
-				journalGroupServiceConfiguration.emailArticleReviewSubject());
+				journalGroupServiceConfiguration.emailArticleReviewBody());
 		}
 
 		if (emailType.equals("update")) {
 			return LocalizationUtil.getMap(
-				journalGroupServiceConfiguration.emailArticleUpdatedSubject());
+				journalGroupServiceConfiguration.emailArticleUpdatedBody());
 		}
 
 		return null;

@@ -75,7 +75,11 @@ const useCollectionConfig = () => {
 	return context.collectionConfig;
 };
 
-const useGetContent = (fragmentEntryLink, languageId, segmentsExperienceId) => {
+const useGetContent = (
+	fragmentEntryLink = {},
+	languageId,
+	segmentsExperienceId
+) => {
 	const {
 		collectionContent = {},
 		content,

@@ -297,7 +297,7 @@ const FragmentContent = ({
 						className,
 						'page-editor__fragment-content',
 						{
-							[`${fragmentEntryLink.cssClass}`]: config.featureFlagLps132571,
+							[`${fragmentEntryLink?.cssClass}`]: config.featureFlagLps132571,
 							[getLayoutDataItemUniqueClassName(
 								item.itemId
 							)]: config.featureFlagLps132571,

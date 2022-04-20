@@ -1,11 +1,1 @@
 // Check GETTING_STARTED.markdown for information regarding usage.
-
-subprojects {
-	repositories {
-		mavenLocal()
-	}
-}
-
-dependencies {
-	providedModules group: "org.apache.commons", name: "commons-collections4", version: "4.4"
-}

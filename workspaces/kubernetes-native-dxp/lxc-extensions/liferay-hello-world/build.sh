@@ -4,9 +4,6 @@ cd "$(dirname "$0")"
 
 eval $(minikube docker-env)
 
-export SERVICE_DOMAIN=remote-app-a.localdev.me
-export REMOTE_APP_HOST=https://${SERVICE_DOMAIN}
-
 echo "[run_local] Build the remote-app PoC"
 yarn install && yarn build
 docker build -t $IMAGE .

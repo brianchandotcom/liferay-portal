@@ -363,9 +363,7 @@ public class ProjectTemplateFilesTest {
 				"Undeclared \"" + expression + "\" property. Please add to " +
 					archetypeMetadataXmlPath,
 				_expressionContainedInList(declaredVariables, expression) ||
-				_expressionContainedInList(requiredPropertyNames, expression) ||
-				_expressionContainedInList(
-					_archetypeMetadataXmlDefaultPropertyNames, expression));
+				_expressionContainedInList(requiredPropertyNames, expression));
 		}
 	}
 

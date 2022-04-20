@@ -760,6 +760,10 @@ AUI.add(
 
 						file.errorMessage = response.message;
 
+						data.fileList = data.fileList.filter(
+							({name}) => file.name !== name
+						);
+
 						data.invalidFiles.push(file);
 					}
 				},

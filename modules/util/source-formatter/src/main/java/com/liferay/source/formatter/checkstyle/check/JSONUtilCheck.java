@@ -160,35 +160,6 @@ public class JSONUtilCheck extends BaseChainedMethodCheck {
 		}
 	}
 
-	private boolean _checkMethodReturnType(
-		DetailAST detailAST, String callMethodName) {
-
-		if (Validator.isNull(callMethodName)) {
-			return false;
-		}
-
-		DetailAST parentDetailAST = getParentWithTokenType(
-			detailAST, TokenTypes.OBJBLOCK);
-
-		List<DetailAST> childDetailASTList = getAllChildTokens(
-			parentDetailAST, true, TokenTypes.METHOD_DEF);
-
-		for (DetailAST tmpDetailAST : childDetailASTList) {
-			String methodName = getName(tmpDetailAST);
-
-			if (StringUtil.equals(methodName, callMethodName) &&
-				ArrayUtil.contains(
-					_VARIABLE_TYPE_NAMES, getTypeName(tmpDetailAST, true))) {
-
-				log(detailAST, _MSG_USE_JSON_UTIL_TO_STRING_2);
-
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	private void _checkStringValueOfCalls(DetailAST detailAST) {
 		DetailAST firstChildDetailAST = detailAST.getFirstChild();
 
@@ -311,7 +282,7 @@ public class JSONUtilCheck extends BaseChainedMethodCheck {
 
 				String methodCallName = getMethodName(methodCallDetailAST);
 
-				if (_checkMethodReturnType(detailAST, methodCallName)) {
+				if (_isJSONTypeMethodCall(detailAST, methodCallName)) {
 					log(detailAST, _MSG_USE_JSON_UTIL_TO_STRING_2);
 
 					return;
@@ -352,6 +323,35 @@ public class JSONUtilCheck extends BaseChainedMethodCheck {
 		}
 
 		return null;
+	}
+
+	private boolean _isJSONTypeMethodCall(
+		DetailAST detailAST, String callMethodName) {
+
+		if (Validator.isNull(callMethodName)) {
+			return false;
+		}
+
+		DetailAST parentDetailAST = getParentWithTokenType(
+			detailAST, TokenTypes.OBJBLOCK);
+
+		List<DetailAST> childDetailASTList = getAllChildTokens(
+			parentDetailAST, true, TokenTypes.METHOD_DEF);
+
+		for (DetailAST tmpDetailAST : childDetailASTList) {
+			String methodName = getName(tmpDetailAST);
+
+			if (StringUtil.equals(methodName, callMethodName) &&
+				ArrayUtil.contains(
+					_VARIABLE_TYPE_NAMES, getTypeName(tmpDetailAST, true))) {
+
+				log(detailAST, _MSG_USE_JSON_UTIL_TO_STRING_2);
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private boolean _isJSONUtilCall(DetailAST detailAST) {

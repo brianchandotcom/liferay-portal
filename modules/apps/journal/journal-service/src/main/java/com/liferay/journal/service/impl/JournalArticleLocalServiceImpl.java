@@ -8155,73 +8155,6 @@ public class JournalArticleLocalServiceImpl
 		String fromAddress =
 			journalGroupServiceConfiguration.emailFromAddress();
 
-		Map<Locale, String> localizedSubjectMap = null;
-		Map<Locale, String> localizedBodyMap = null;
-
-		int notificationType =
-			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY;
-
-		if (action.equals("add")) {
-			localizedSubjectMap = LocalizationUtil.getMap(
-				journalGroupServiceConfiguration.emailArticleAddedSubject());
-			localizedBodyMap = LocalizationUtil.getMap(
-				journalGroupServiceConfiguration.emailArticleAddedBody());
-		}
-		else if (action.equals("move_to")) {
-			localizedSubjectMap = LocalizationUtil.getMap(
-				journalGroupServiceConfiguration.
-					emailArticleMovedToFolderSubject());
-			localizedBodyMap = LocalizationUtil.getMap(
-				journalGroupServiceConfiguration.
-					emailArticleMovedToFolderBody());
-
-			notificationType =
-				JournalArticleConstants.NOTIFICATION_TYPE_MOVE_ENTRY_TO_FOLDER;
-		}
-		else if (action.equals("move_to_trash")) {
-			localizedSubjectMap = LocalizationUtil.getMap(
-				journalGroupServiceConfiguration.
-					emailArticleMovedToTrashSubject());
-			localizedBodyMap = LocalizationUtil.getMap(
-				journalGroupServiceConfiguration.
-					emailArticleMovedToTrashBody());
-
-			notificationType =
-				JournalArticleConstants.NOTIFICATION_TYPE_MOVE_ENTRY_TO_TRASH;
-		}
-		else if (action.equals("move_from")) {
-			localizedSubjectMap = LocalizationUtil.getMap(
-				journalGroupServiceConfiguration.
-					emailArticleMovedFromFolderSubject());
-			localizedBodyMap = LocalizationUtil.getMap(
-				journalGroupServiceConfiguration.
-					emailArticleMovedFromFolderBody());
-
-			notificationType =
-				JournalArticleConstants.
-					NOTIFICATION_TYPE_MOVE_ENTRY_FROM_FOLDER;
-		}
-		else if (action.equals("move_from_trash")) {
-			localizedSubjectMap = LocalizationUtil.getMap(
-				journalGroupServiceConfiguration.
-					emailArticleMovedFromTrashSubject());
-			localizedBodyMap = LocalizationUtil.getMap(
-				journalGroupServiceConfiguration.
-					emailArticleMovedFromTrashBody());
-
-			notificationType =
-				JournalArticleConstants.NOTIFICATION_TYPE_MOVE_ENTRY_FROM_TRASH;
-		}
-		else if (action.equals("update")) {
-			localizedSubjectMap = LocalizationUtil.getMap(
-				journalGroupServiceConfiguration.emailArticleUpdatedSubject());
-			localizedBodyMap = LocalizationUtil.getMap(
-				journalGroupServiceConfiguration.emailArticleUpdatedBody());
-
-			notificationType =
-				UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY;
-		}
-
 		String articleContent = StringPool.BLANK;
 		String articleDiffs = StringPool.BLANK;
 
@@ -8293,10 +8226,12 @@ public class JournalArticleLocalServiceImpl
 		subscriptionSender.setEntryURL(articleURL);
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
-		subscriptionSender.setLocalizedBodyMap(localizedBodyMap);
-		subscriptionSender.setLocalizedSubjectMap(localizedSubjectMap);
+		subscriptionSender.setLocalizedBodyMap(
+			_getLocalizedBodyMap(action, journalGroupServiceConfiguration));
+		subscriptionSender.setLocalizedSubjectMap(
+			_getLocalizedSubjectMap(action, journalGroupServiceConfiguration));
 		subscriptionSender.setMailId("journal_article", article.getId());
-		subscriptionSender.setNotificationType(notificationType);
+		subscriptionSender.setNotificationType(_getNotificationType(action));
 		subscriptionSender.setPortletId(
 			PortletProviderUtil.getPortletId(
 				JournalArticle.class.getName(), PortletProvider.Action.EDIT));
@@ -8417,40 +8352,6 @@ public class JournalArticleLocalServiceImpl
 			toAddress = tempToAddress;
 		}
 
-		Map<Locale, String> localizedSubjectMap = null;
-		Map<Locale, String> localizedBodyMap = null;
-
-		if (emailType.equals("denied")) {
-			localizedSubjectMap = LocalizationUtil.getMap(
-				journalGroupServiceConfiguration.
-					emailArticleApprovalDeniedSubject());
-			localizedBodyMap = LocalizationUtil.getMap(
-				journalGroupServiceConfiguration.
-					emailArticleApprovalDeniedBody());
-		}
-		else if (emailType.equals("granted")) {
-			localizedSubjectMap = LocalizationUtil.getMap(
-				journalGroupServiceConfiguration.
-					emailArticleApprovalGrantedSubject());
-			localizedBodyMap = LocalizationUtil.getMap(
-				journalGroupServiceConfiguration.
-					emailArticleApprovalGrantedBody());
-		}
-		else if (emailType.equals("requested")) {
-			localizedSubjectMap = LocalizationUtil.getMap(
-				journalGroupServiceConfiguration.
-					emailArticleApprovalRequestedSubject());
-			localizedBodyMap = LocalizationUtil.getMap(
-				journalGroupServiceConfiguration.
-					emailArticleApprovalRequestedBody());
-		}
-		else if (emailType.equals("review")) {
-			localizedSubjectMap = LocalizationUtil.getMap(
-				journalGroupServiceConfiguration.emailArticleReviewSubject());
-			localizedBodyMap = LocalizationUtil.getMap(
-				journalGroupServiceConfiguration.emailArticleReviewBody());
-		}
-
 		String articleDiffs = StringPool.BLANK;
 
 		JournalArticle previousApprovedArticle = getPreviousApprovedArticle(
@@ -8496,8 +8397,11 @@ public class JournalArticleLocalServiceImpl
 		subscriptionSender.setEntryURL(articleURL);
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
-		subscriptionSender.setLocalizedBodyMap(localizedBodyMap);
-		subscriptionSender.setLocalizedSubjectMap(localizedSubjectMap);
+		subscriptionSender.setLocalizedBodyMap(
+			_getLocalizedBodyMap(emailType, journalGroupServiceConfiguration));
+		subscriptionSender.setLocalizedSubjectMap(
+			_getLocalizedSubjectMap(
+				emailType, journalGroupServiceConfiguration));
 		subscriptionSender.setMailId("journal_article", article.getId());
 		subscriptionSender.setPortletId(
 			PortletProviderUtil.getPortletId(
@@ -9102,11 +9006,166 @@ public class JournalArticleLocalServiceImpl
 		return friendlyURLMap;
 	}
 
+	private Map<Locale, String> _getLocalizedBodyMap(
+		String emailType,
+		JournalGroupServiceConfiguration journalGroupServiceConfiguration) {
+
+		if (emailType.equals("add")) {
+			return LocalizationUtil.getMap(
+				journalGroupServiceConfiguration.emailArticleAddedSubject());
+		}
+
+		if (emailType.equals("denied")) {
+			return LocalizationUtil.getMap(
+				journalGroupServiceConfiguration.
+					emailArticleApprovalDeniedSubject());
+		}
+
+		if (emailType.equals("granted")) {
+			return LocalizationUtil.getMap(
+				journalGroupServiceConfiguration.
+					emailArticleApprovalGrantedSubject());
+		}
+
+		if (emailType.equals("move_to")) {
+			return LocalizationUtil.getMap(
+				journalGroupServiceConfiguration.
+					emailArticleMovedToFolderSubject());
+		}
+
+		if (emailType.equals("move_to_trash")) {
+			return LocalizationUtil.getMap(
+				journalGroupServiceConfiguration.
+					emailArticleMovedToTrashSubject());
+		}
+		else if (emailType.equals("move_from")) {
+			return LocalizationUtil.getMap(
+				journalGroupServiceConfiguration.
+					emailArticleMovedFromFolderSubject());
+		}
+
+		if (emailType.equals("move_from_trash")) {
+			return LocalizationUtil.getMap(
+				journalGroupServiceConfiguration.
+					emailArticleMovedFromTrashSubject());
+		}
+
+		if (emailType.equals("requested")) {
+			return LocalizationUtil.getMap(
+				journalGroupServiceConfiguration.
+					emailArticleApprovalRequestedSubject());
+		}
+
+		if (emailType.equals("review")) {
+			return LocalizationUtil.getMap(
+				journalGroupServiceConfiguration.emailArticleReviewSubject());
+		}
+
+		if (emailType.equals("update")) {
+			return LocalizationUtil.getMap(
+				journalGroupServiceConfiguration.emailArticleUpdatedSubject());
+		}
+
+		return null;
+	}
+
+	private Map<Locale, String> _getLocalizedSubjectMap(
+		String emailType,
+		JournalGroupServiceConfiguration journalGroupServiceConfiguration) {
+
+		if (emailType.equals("add")) {
+			return LocalizationUtil.getMap(
+				journalGroupServiceConfiguration.emailArticleAddedSubject());
+		}
+
+		if (emailType.equals("denied")) {
+			return LocalizationUtil.getMap(
+				journalGroupServiceConfiguration.
+					emailArticleApprovalDeniedSubject());
+		}
+
+		if (emailType.equals("granted")) {
+			return LocalizationUtil.getMap(
+				journalGroupServiceConfiguration.
+					emailArticleApprovalGrantedSubject());
+		}
+
+		if (emailType.equals("move_to")) {
+			return LocalizationUtil.getMap(
+				journalGroupServiceConfiguration.
+					emailArticleMovedToFolderSubject());
+		}
+
+		if (emailType.equals("move_to_trash")) {
+			return LocalizationUtil.getMap(
+				journalGroupServiceConfiguration.
+					emailArticleMovedToTrashSubject());
+		}
+
+		if (emailType.equals("move_from")) {
+			return LocalizationUtil.getMap(
+				journalGroupServiceConfiguration.
+					emailArticleMovedFromFolderSubject());
+		}
+
+		if (emailType.equals("move_from_trash")) {
+			return LocalizationUtil.getMap(
+				journalGroupServiceConfiguration.
+					emailArticleMovedFromTrashSubject());
+		}
+
+		if (emailType.equals("requested")) {
+			return LocalizationUtil.getMap(
+				journalGroupServiceConfiguration.
+					emailArticleApprovalRequestedSubject());
+		}
+
+		if (emailType.equals("review")) {
+			return LocalizationUtil.getMap(
+				journalGroupServiceConfiguration.emailArticleReviewSubject());
+		}
+
+		if (emailType.equals("update")) {
+			return LocalizationUtil.getMap(
+				journalGroupServiceConfiguration.emailArticleUpdatedSubject());
+		}
+
+		return null;
+	}
+
 	private JournalArticleModelValidator _getModelValidator() {
 		ModelValidator<JournalArticle> modelValidator =
 			ModelValidatorRegistryUtil.getModelValidator(JournalArticle.class);
 
 		return (JournalArticleModelValidator)modelValidator;
+	}
+
+	private int _getNotificationType(String emailType) {
+		if (emailType.equals("move_to")) {
+			return JournalArticleConstants.
+				NOTIFICATION_TYPE_MOVE_ENTRY_TO_FOLDER;
+		}
+
+		if (emailType.equals("move_to_trash")) {
+			return JournalArticleConstants.
+				NOTIFICATION_TYPE_MOVE_ENTRY_TO_TRASH;
+		}
+
+		if (emailType.equals("move_from")) {
+			return JournalArticleConstants.
+				NOTIFICATION_TYPE_MOVE_ENTRY_FROM_FOLDER;
+		}
+
+		if (emailType.equals("move_from_trash")) {
+			return JournalArticleConstants.
+				NOTIFICATION_TYPE_MOVE_ENTRY_FROM_TRASH;
+		}
+
+		if (emailType.equals("update")) {
+			return UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY;
+		}
+
+		return UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY;
 	}
 
 	private int _getUniqueUrlTitleCount(

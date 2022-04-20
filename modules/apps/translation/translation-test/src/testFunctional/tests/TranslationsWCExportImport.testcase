@@ -926,13 +926,14 @@ definition {
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
-		Translations.importTranslation(
+		var errorReportName = Translations.importTranslation(
 			downloadCSVErrorReport = "true",
 			fileName = "WebContentTitle-en_US_translated.zip",
 			filePath = "",
 			webContentTitle = "WebContentTitle");
 
 		Translations.viewCSVErrorReport(
+			errorReportName = "${errorReportName}",
 			reportContent = "WebContentTitle-en_US-ja_JP.xlf,The translation file does not correspond to this web content.,WebContentTitle-en_US_translated.zip",
 			viewNoSuccessfullyImportedTranslation = "WebContentTitle-en_US-es_ES");
 	}

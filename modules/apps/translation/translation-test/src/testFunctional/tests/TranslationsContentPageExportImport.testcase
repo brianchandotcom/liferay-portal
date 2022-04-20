@@ -1450,13 +1450,14 @@ definition {
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
-		Translations.importTranslation(
+		var errorReportName = Translations.importTranslation(
 			downloadCSVErrorReport = "true",
 			fileName = "ContentPage-en_US_translated.zip",
 			filePath = "",
 			pageName = "ContentPage");
 
 		Translations.viewCSVErrorReport(
+			errorReportName = "${errorReportName}",
 			reportContent = "ContentPage-en_US-es_ES.xlf,The translation file does not correspond to this page.,ContentPage-en_US_translated.zip",
 			viewNoSuccessfullyImportedTranslation = "ContentPage-en_US-ja_JP");
 	}

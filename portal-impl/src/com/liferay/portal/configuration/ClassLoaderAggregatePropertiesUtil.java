@@ -146,6 +146,10 @@ public class ClassLoaderAggregatePropertiesUtil {
 				StringUtil.toLowerCase(
 					key.substring(_ENV_OVERRIDE_PREFIX.length())));
 
+			if (newKey.equals("include-and-override")) {
+				continue;
+			}
+
 			configuration.setProperty(newKey, entry.getValue());
 
 			if (_log.isInfoEnabled()) {

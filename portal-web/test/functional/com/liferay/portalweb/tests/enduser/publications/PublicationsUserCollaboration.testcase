@@ -136,25 +136,21 @@ definition {
 			key_text = "Viewer",
 			locator1 = "Button#ANY_SECONDARY");
 
-		AssertTextEquals.assertPartialText(
-			key_publicationRole = "Viewer",
-			locator1 = "Publications#PUBLICATION_ROLE_BUTTON_HELP_TEXT",
-			value1 = "Viewers can view.");
+		PublicationsPermissions.viewPublicationRoleHelpText(
+			publicationRole = "Viewer",
+			publicationRoleHelpText = "Viewers can view.");
 
-		AssertTextEquals.assertPartialText(
-			key_publicationRole = "Editor",
-			locator1 = "Publications#PUBLICATION_ROLE_BUTTON_HELP_TEXT",
-			value1 = "Editors can view and edit.");
+		PublicationsPermissions.viewPublicationRoleHelpText(
+			publicationRole = "Editor",
+			publicationRoleHelpText = "Editors can view and edit.");
 
-		AssertTextEquals.assertPartialText(
-			key_publicationRole = "Publisher",
-			locator1 = "Publications#PUBLICATION_ROLE_BUTTON_HELP_TEXT",
-			value1 = "Publishers can view, edit, and publish.");
+		PublicationsPermissions.viewPublicationRoleHelpText(
+			publicationRole = "Publisher",
+			publicationRoleHelpText = "Publishers can view, edit, and publish.");
 
-		AssertTextEquals.assertPartialText(
-			key_publicationRole = "Admin",
-			locator1 = "Publications#PUBLICATION_ROLE_BUTTON_HELP_TEXT",
-			value1 = "Admins can view, edit, publish, and invite other users.");
+		PublicationsPermissions.viewPublicationRoleHelpText(
+			publicationRole = "Admin",
+			publicationRoleHelpText = "Admins can view, edit, publish, and invite other users.");
 	}
 
 	@priority = "5"

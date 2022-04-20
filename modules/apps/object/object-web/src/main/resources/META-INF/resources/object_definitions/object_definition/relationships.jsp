@@ -49,6 +49,8 @@ renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 			HashMapBuilder.<String, Object>put(
 				"apiURL", objectDefinitionsRelationshipsDisplayContext.getAPIURL()
 			).put(
+				"ffOneToManyRelationshipCustomAndNativeObjects", GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-151676"))
+			).put(
 				"ffOneToOneRelationshipConfigurationEnabled", objectDefinitionsRelationshipsDisplayContext.isFFOneToOneRelationshipConfigurationEnabled()
 			).put(
 				"objectDefinitionId", objectDefinition.getObjectDefinitionId()

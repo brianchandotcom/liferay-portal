@@ -35,6 +35,7 @@ const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 const ModalAddObjectRelationship: React.FC<IProps> = ({
 	apiURL,
+	ffOneToManyRelationshipCustomAndNativeObjects,
 	ffOneToOneRelationshipConfigurationEnabled,
 	objectDefinitionId,
 	observer,
@@ -42,9 +43,18 @@ const ModalAddObjectRelationship: React.FC<IProps> = ({
 	system,
 }) => {
 	const [error, setError] = useState<string>('');
+
 	const [objectDefinitions, setObjectDefinitions] = useState<
 		TObjectDefinition[]
 	>([]);
+
+	const [
+		manyToManyObjectDefinitions,
+		setManyToManyObjectDefinitions,
+	] = useState<TObjectDefinition[]>([]);
+
+	const [manyToMany, setManyToMany] = useState(false);
+
 	const initialValues: TInitialValues = {
 		label: '',
 		name: undefined,
@@ -129,40 +139,72 @@ const ModalAddObjectRelationship: React.FC<IProps> = ({
 		validate,
 	});
 
-	const makeRequest = async () => {
-		const result = await fetch(
-			'/o/object-admin/v1.0/object-definitions?page=-1',
-			{
-				headers,
-				method: 'GET',
-			}
-		);
-
-		const {items = []} = (await result.json()) as {items?: []};
-
-		const objectDefinitions = items
-			.map(({id, name, system}: TObjectDefinition) => ({
-				id,
-				name,
-				system,
-			}))
-			.filter(({system}: TObjectDefinition) => !system);
-
-		setObjectDefinitions(objectDefinitions);
-	};
-
-	const handleChangeManyToMany = () => {
-		const newObjectDefinitions = objectDefinitions.filter(
-			(objectDefinition) =>
-				objectDefinition.id !== Number(objectDefinitionId)
-		);
-
-		setObjectDefinitions(newObjectDefinitions);
-	};
-
 	useEffect(() => {
+		const makeRequest = async () => {
+			const result = await fetch(
+				'/o/object-admin/v1.0/object-definitions?page=-1',
+				{
+					headers,
+					method: 'GET',
+				}
+			);
+
+			const {items = []} = (await result.json()) as {items?: []};
+
+			const [currentObjectDefinition]: TObjectDefinition[] = items.filter(
+				({id}: TObjectDefinition) => Number(objectDefinitionId) === id
+			);
+
+			const objectDefinitions = items.map(
+				({id, name, system}: TObjectDefinition) => ({
+					id,
+					name,
+					system,
+				})
+			);
+
+			if (ffOneToManyRelationshipCustomAndNativeObjects) {
+				const manyToManyObjectDefinitions = objectDefinitions.filter(
+					(objectDefinition) =>
+						objectDefinition.id !== Number(objectDefinitionId)
+				);
+
+				setManyToManyObjectDefinitions(manyToManyObjectDefinitions);
+
+				if (currentObjectDefinition.system) {
+					const customObjectDefinitions = objectDefinitions.filter(
+						({system}: TObjectDefinition) => !system
+					);
+
+					setObjectDefinitions(customObjectDefinitions);
+
+					return;
+				}
+
+				setObjectDefinitions(objectDefinitions);
+			}
+			else {
+				const objectDefinitions = items
+					.map(({id, name, system}: TObjectDefinition) => ({
+						id,
+						name,
+						system,
+					}))
+					.filter(({system}: TObjectDefinition) => !system);
+
+				const manyToManyObjectDefinitions = objectDefinitions.filter(
+					(objectDefinition) =>
+						objectDefinition.id !== Number(objectDefinitionId)
+				);
+
+				setManyToManyObjectDefinitions(manyToManyObjectDefinitions);
+
+				setObjectDefinitions(objectDefinitions);
+			}
+		};
+
 		makeRequest();
-	}, []);
+	}, [objectDefinitionId, ffOneToManyRelationshipCustomAndNativeObjects]);
 
 	return (
 		<ClayModal observer={observer}>
@@ -201,10 +243,7 @@ const ModalAddObjectRelationship: React.FC<IProps> = ({
 						label={Liferay.Language.get('type')}
 						onChange={(type) => {
 							setValues({type});
-
-							type.value === 'manyToMany'
-								? handleChangeManyToMany()
-								: makeRequest();
+							setManyToMany(type.value === 'manyToMany');
 						}}
 						options={filteredObjectRelationshipTypes}
 						required
@@ -216,11 +255,19 @@ const ModalAddObjectRelationship: React.FC<IProps> = ({
 						id="objectDefinitionId2"
 						label={Liferay.Language.get('object')}
 						onChange={({target: {value}}: any) => {
-							const {id} = objectDefinitions[Number(value)];
+							const {id} = manyToMany
+								? manyToManyObjectDefinitions[Number(value)]
+								: objectDefinitions[Number(value)];
 
 							setValues({objectDefinitionId2: Number(id)});
 						}}
-						options={objectDefinitions.map(({name}) => name)}
+						options={
+							manyToMany
+								? manyToManyObjectDefinitions.map(
+										({name}) => name
+								  )
+								: objectDefinitions.map(({name}) => name)
+						}
 						required
 					/>
 				</ClayModal.Body>
@@ -248,6 +295,7 @@ const ModalAddObjectRelationship: React.FC<IProps> = ({
 
 interface IProps extends React.HTMLAttributes<HTMLElement> {
 	apiURL: string;
+	ffOneToManyRelationshipCustomAndNativeObjects: boolean;
 	ffOneToOneRelationshipConfigurationEnabled: boolean;
 	objectDefinitionId: number;
 	observer: any;
@@ -273,6 +321,7 @@ type TInitialValues = {
 
 const ModalWithProvider: React.FC<IProps> = ({
 	apiURL,
+	ffOneToManyRelationshipCustomAndNativeObjects,
 	ffOneToOneRelationshipConfigurationEnabled,
 	objectDefinitionId,
 	system,
@@ -295,6 +344,9 @@ const ModalWithProvider: React.FC<IProps> = ({
 			{visibleModal && (
 				<ModalAddObjectRelationship
 					apiURL={apiURL}
+					ffOneToManyRelationshipCustomAndNativeObjects={
+						ffOneToManyRelationshipCustomAndNativeObjects
+					}
 					ffOneToOneRelationshipConfigurationEnabled={
 						ffOneToOneRelationshipConfigurationEnabled
 					}

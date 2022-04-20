@@ -1,4 +1,4 @@
-#set( $versionPolicy = '${replacestring;${range;[==,==]};.*,(.*)];$1}' )
+#set ($versionPolicy = '${replacestring;${range;[==,==]};.*,(.*)];$1}')
 
 Bundle-Name: ${artifactId}
 Bundle-SymbolicName: ${package}

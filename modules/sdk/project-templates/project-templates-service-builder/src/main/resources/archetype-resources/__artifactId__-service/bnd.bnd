@@ -1,8 +1,13 @@
+#set ($versionPolicy = '${replacestring;${range;[==,==]};.*,(.*)];$1}')
+
 Bundle-Name: ${artifactId}-service
 Bundle-SymbolicName: ${package}.service
 Bundle-Version: ${version}
 Liferay-Require-SchemaVersion: 1.0.0
 Liferay-Service: true
+#if (${buildType} != "gradle")
+-consumer-policy: $versionPolicy
+#end
 #if ((${liferayVersion.startsWith("7.2")} || ${liferayVersion.startsWith("7.3")} || ${liferayVersion.startsWith("7.4")}) && (${dependencyInjector} == "ds"))
 -dsannotations-options: inherit
 #end
@@ -12,4 +17,5 @@ Liferay-Service: true
 -plugin.metatype: com.liferay.ant.bnd.metatype.MetatypePlugin
 -plugin.service: com.liferay.ant.bnd.service.ServiceAnalyzerPlugin
 #if (${liferayVersion.startsWith("7.0")} || ${liferayVersion.startsWith("7.1")} || (${dependencyInjector} == "spring"))
--plugin.spring: com.liferay.ant.bnd.spring.SpringDependencyAnalyzerPlugin#end#end
+-plugin.spring: com.liferay.ant.bnd.spring.SpringDependencyAnalyzerPlugin#end
+-provider-policy: $versionPolicy#end

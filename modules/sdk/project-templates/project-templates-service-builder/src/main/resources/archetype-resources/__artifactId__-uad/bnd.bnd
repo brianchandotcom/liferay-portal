@@ -1,6 +1,11 @@
+#set ($versionPolicy = '${replacestring;${range;[==,==]};.*,(.*)];$1}')
 Bundle-Name: ${artifactId}-uad
 Bundle-SymbolicName: ${package}.uad
 Bundle-Version: ${version}
-#if ((${liferayVersion.startsWith("7.2")} || ${liferayVersion.startsWith("7.3")}) && (${dependencyInjector} == "ds"))
--dsannotations-options: inherit
+#if (${buildType} != "gradle")
+-consumer-policy: $versionPolicy
 #end
+#if ((${liferayVersion.startsWith("7.2")} || ${liferayVersion.startsWith("7.3")}) && (${dependencyInjector} == "ds"))
+-dsannotations-options: inherit#end
+#if (${buildType} != "gradle")
+-provider-policy: $versionPolicy#end

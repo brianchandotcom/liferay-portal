@@ -1,9 +1,0 @@
-@import '../../../clay/components/tables';
-
-.commerce-compare-table {
-	@extend .table;
-}
-
-.commerce-compare-table__separator td {
-	@extend th;
-}

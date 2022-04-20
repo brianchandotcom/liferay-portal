@@ -4912,6 +4912,817 @@
 				{
 					"frontendTokens": [
 						{
+							"defaultValue": "var(--color-neutral-3)",
+							"editorType": "ColorPicker",
+							"label": "table-border-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-border-color"
+								}
+							],
+							"name": "tableBorderColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--border-radius)",
+							"label": "table-border-radius",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-border-radius"
+								}
+							],
+							"name": "tableBorderRadius",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0.0625rem",
+							"label": "table-border-width",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-border-width"
+								}
+							],
+							"name": "tableBorderWidth",
+							"type": "String"
+						},
+						{
+							"defaultValue": "none",
+							"label": "table-box-shadow",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-box-shadow"
+								}
+							],
+							"name": "tableBoxShadow",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-neutral-10)",
+							"editorType": "ColorPicker",
+							"label": "table-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-color"
+								}
+							],
+							"name": "tableColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-neutral-0)",
+							"editorType": "ColorPicker",
+							"label": "table-header-background-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-header-background-color"
+								}
+							],
+							"name": "tableHeaderBackgroundColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-neutral-8)",
+							"editorType": "ColorPicker",
+							"label": "table-header-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-header-color"
+								}
+							],
+							"name": "tableHeaderColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "middle",
+							"label": "table-header-vertical-align",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-header-vertical-align"
+								}
+							],
+							"name": "tableHeaderVerticalAlign",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-neutral-0)",
+							"editorType": "ColorPicker",
+							"label": "table-row-background-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-row-background-color"
+								}
+							],
+							"name": "tableRowBackgroundColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-action-primary-active-lighten)",
+							"editorType": "ColorPicker",
+							"label": "table-row-background-color-active",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-row-background-color-active"
+								}
+							],
+							"name": "tableRowBackgroundColorActive",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-neutral-1)",
+							"editorType": "ColorPicker",
+							"label": "table-row-background-color-alternate",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-row-background-color-alternate"
+								}
+							],
+							"name": "tableRowBackgroundColorAlternate",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-action-primary-hover-lighten)",
+							"editorType": "ColorPicker",
+							"label": "table-row-background-color-hover",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-row-background-color-hover"
+								}
+							],
+							"name": "tableRowBackgroundColorHover",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--table-row-color)",
+							"editorType": "ColorPicker",
+							"label": "table-row-color-hover",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-row-color-hover"
+								}
+							],
+							"name": "tableRowColorHover",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-neutral-9)",
+							"editorType": "ColorPicker",
+							"label": "table-title-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-title-color"
+								}
+							],
+							"name": "tableTitleColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--text-small-caps-font-size)",
+							"label": "table-title-font-size",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-title-font-size"
+								}
+							],
+							"name": "tableTitleFontSize",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--font-weight-semi-bold)",
+							"label": "table-title-font-weight",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-title-font-weight"
+								}
+							],
+							"name": "tableTitleFontWeight",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--text-paragraph-line-height)",
+							"label": "table-title-line-height",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-title-line-height"
+								}
+							],
+							"name": "tableTitleLineHeight",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--link-color)",
+							"editorType": "ColorPicker",
+							"label": "table-title-link-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-title-link-color"
+								}
+							],
+							"name": "tableTitleLinkColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--link-hover-color)",
+							"editorType": "ColorPicker",
+							"label": "table-title-link-color-hover",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-title-link-color-hover"
+								}
+							],
+							"name": "tableTitleLinkColorHover",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--link-text-decoration)",
+							"label": "table-title-link-text-decoration",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-title-link-text-decoration"
+								}
+							],
+							"name": "tableTitleLinkTextDecoration",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--link-text-decoration-hover)",
+							"label": "table-title-link-text-decoration-hover",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-title-link-text-decoration-hover"
+								}
+							],
+							"name": "tableTitleLinkTextDecorationHover",
+							"type": "String"
+						}
+					],
+					"label": "general",
+					"name": "general"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "3.5rem",
+							"label": "table-cell-min-height",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-cell-min-height"
+								}
+							],
+							"name": "tableCellMinHeight",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--spacer-3)",
+							"label": "table-cell-padding-x",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-cell-padding-x"
+								}
+							],
+							"name": "tableCellPaddingX",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--spacer-3)",
+							"label": "table-cell-padding-y",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-cell-padding-y"
+								}
+							],
+							"name": "tableCellPaddingY",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--text-paragraph-font-size)",
+							"label": "table-font-size",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-font-size"
+								}
+							],
+							"name": "tableFontSize",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--font-weight-normal)",
+							"label": "table-font-weight",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-font-weight"
+								}
+							],
+							"name": "tableFontWeight",
+							"type": "String"
+						},
+						{
+							"defaultValue": "3.5rem",
+							"label": "table-header-cell-min-height",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-header-cell-min-height"
+								}
+							],
+							"name": "tableHeaderCellMinHeight",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--spacer-3)",
+							"label": "table-header-cell-padding-x",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-header-cell-padding-x"
+								}
+							],
+							"name": "tableHeaderCellPaddingX",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--spacer-3)",
+							"label": "table-header-cell-padding-y",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-header-cell-padding-y"
+								}
+							],
+							"name": "tableHeaderCellPaddingY",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--table-font-size)",
+							"label": "table-header-font-size",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-header-font-size"
+								}
+							],
+							"name": "tableHeaderFontSize",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--font-weight-semi-bold)",
+							"label": "table-header-font-weight",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-header-font-weight"
+								}
+							],
+							"name": "tableHeaderFontWeight",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--text-paragraph-line-height)",
+							"label": "table-header-line-height",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-header-line-height"
+								}
+							],
+							"name": "tableHeaderLineHeight",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--text-paragraph-line-height)",
+							"label": "table-line-height",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-line-height"
+								}
+							],
+							"name": "tableLineHeight",
+							"type": "String"
+						}
+					],
+					"label": "table",
+					"name": "table"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "4.563rem",
+							"label": "table-lg-cell-min-height",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-lg-cell-min-height"
+								}
+							],
+							"name": "tableLgCellMinHeight",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--spacer-4)",
+							"label": "table-lg-cell-padding-x",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-lg-cell-padding-x"
+								}
+							],
+							"name": "tableLgCellPaddingX",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--spacer-4)",
+							"label": "table-lg-cell-padding-y",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-lg-cell-padding-y"
+								}
+							],
+							"name": "tableLgCellPaddingY",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--text-paragraph-font-size)",
+							"label": "table-lg-font-size",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-lg-font-size"
+								}
+							],
+							"name": "tableLgFontSize",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--font-weight-normal)",
+							"label": "table-lg-font-weight",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-lg-font-weight"
+								}
+							],
+							"name": "tableLgFontWeight",
+							"type": "String"
+						},
+						{
+							"defaultValue": "4.563rem",
+							"label": "table-lg-header-cell-min-height",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-lg-header-cell-min-height"
+								}
+							],
+							"name": "tableLgHeaderCellMinHeight",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--spacer-4)",
+							"label": "table-lg-header-cell-padding-x",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-lg-header-cell-padding-x"
+								}
+							],
+							"name": "tableLgHeaderCellPaddingX",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--spacer-4)",
+							"label": "table-lg-header-cell-padding-y",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-lg-header-cell-padding-y"
+								}
+							],
+							"name": "tableLgHeaderCellPaddingY",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--text-paragraph-font-size)",
+							"label": "table-lg-header-font-size",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-lg-header-font-size"
+								}
+							],
+							"name": "tableLgHeaderFontSize",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--font-weight-semi-bold)",
+							"label": "table-lg-header-font-weight",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-lg-header-font-weight"
+								}
+							],
+							"name": "tableLgHeaderFontWeight",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--text-paragraph-line-height)",
+							"label": "table-lg-header-line-height",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-lg-header-line-height"
+								}
+							],
+							"name": "tableLgHeaderLineHeight",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--text-paragraph-line-height)",
+							"label": "table-lg-line-height",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-lg-line-height"
+								}
+							],
+							"name": "tableLgLineHeight",
+							"type": "String"
+						}
+					],
+					"label": "table-lg",
+					"name": "table-lg"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "2.563rem",
+							"label": "table-sm-cell-min-height",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-sm-cell-min-height"
+								}
+							],
+							"name": "tableSmCellMinHeight",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--spacer-2)",
+							"label": "table-sm-cell-padding-x",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-sm-cell-padding-x"
+								}
+							],
+							"name": "tableSmCellPaddingX",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--spacer-2)",
+							"label": "table-sm-cell-padding-y",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-sm-cell-padding-y"
+								}
+							],
+							"name": "tableSmCellPaddingY",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--text-paragraph-font-size)",
+							"label": "table-sm-font-size",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-sm-font-size"
+								}
+							],
+							"name": "tableSmFontSize",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--font-weight-normal)",
+							"label": "table-sm-font-weight",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-sm-font-weight"
+								}
+							],
+							"name": "tableSmFontWeight",
+							"type": "String"
+						},
+						{
+							"defaultValue": "2.563rem",
+							"label": "table-sm-header-cell-min-height",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-sm-header-cell-min-height"
+								}
+							],
+							"name": "tableSmHeaderCellMinHeight",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--spacer-2)",
+							"label": "table-sm-header-cell-padding-x",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-sm-header-cell-padding-x"
+								}
+							],
+							"name": "tableSmHeaderCellPaddingX",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--spacer-2)",
+							"label": "table-sm-header-cell-padding-y",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-sm-header-cell-padding-y"
+								}
+							],
+							"name": "tableSmHeaderCellPaddingY",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--text-paragraph-font-size)",
+							"label": "table-sm-header-font-size",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-sm-header-font-size"
+								}
+							],
+							"name": "tableSmHeaderFontSize",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--font-weight-semi-bold)",
+							"label": "table-sm-header-font-weight",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-sm-header-font-weight"
+								}
+							],
+							"name": "tableSmHeaderFontWeight",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--text-paragraph-line-height)",
+							"label": "table-sm-header-line-height",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-sm-header-line-height"
+								}
+							],
+							"name": "tableSmHeaderLineHeight",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--text-paragraph-line-height)",
+							"label": "table-sm-line-height",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-sm-line-height"
+								}
+							],
+							"name": "tableSmLineHeight",
+							"type": "String"
+						}
+					],
+					"label": "table-sm",
+					"name": "table-sm"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "var(--color-neutral-3)",
+							"editorType": "ColorPicker",
+							"label": "table-spaced-row-border-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-spaced-row-border-color"
+								}
+							],
+							"name": "tableSpacedRowBorderColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--border-radius)",
+							"label": "table-spaced-row-border-radius",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-spaced-row-border-radius"
+								}
+							],
+							"name": "tableSpacedRowBorderRadius",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--spacer-2)",
+							"label": "table-spaced-row-border-spacing",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-spaced-row-border-spacing"
+								}
+							],
+							"name": "tableSpacedRowBorderSpacing",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0",
+							"label": "table-spaced-row-border-width",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-spaced-row-border-width"
+								}
+							],
+							"name": "tableSpacedRowBorderWidth",
+							"type": "String"
+						},
+						{
+							"defaultValue": "none",
+							"label": "table-spaced-row-box-shadow",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-spaced-row-box-shadow"
+								}
+							],
+							"name": "tableSpacedRowBoxShadow",
+							"type": "String"
+						}
+					],
+					"label": "table-spaced",
+					"name": "table-spaced"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "100px",
+							"label": "table-image-max-height",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "table-image-max-height"
+								}
+							],
+							"name": "tableImageMaxHeight",
+							"type": "String"
+						}
+					],
+					"label": "table-image",
+					"name": "table-image"
+				}
+			],
+			"label": "tables",
+			"name": "tables"
+		},
+		{
+			"frontendTokenSets": [
+				{
+					"frontendTokens": [
+						{
 							"defaultValue": "0.0625rem",
 							"label": "tab-primary-item-active-bar-border-radius",
 							"mappings": [

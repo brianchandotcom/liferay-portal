@@ -872,8 +872,64 @@ definition {
 	@priority = "4"
 	test DuplicatedObjectViewColumnsAreCorrectlyOrdered {
 
-		// TODO LPS-151590 DuplicatedObjectViewColumnsAreCorrectlyOrdered pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 151590",
+			objectName = "CustomObject151590",
+			pluralLabelName = "Custom Objects 151590");
 
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 151590");
+
+		ObjectCustomViews.goToViewsTab();
+
+		ObjectCustomViews.addObjectViewViaUI(viewName = "Custom View 151590");
+
+		ObjectCustomViews.goToViewsDetails(label = "Custom View 151590");
+
+		ObjectCustomViews.markViewAsDefault();
+
+		ObjectCustomViews.goToViewsBuilderTab();
+
+		LexiconEntry.gotoAdd();
+
+		for (var columnOption : list "Author,Creation Date,Modified Date,Workflow Status,ID") {
+			Click.clickAtNotVisible(
+				key_columnOption = "${columnOption}",
+				locator1 = "ObjectCustomViews#CHECKBOX_COLUMN_OPTION");
+		}
+
+		ObjectCustomViews.saveColumnsModal();
+
+		Button.clickSave();
+
+		SelectFrame(locator1 = "ObjectCustomViews#OBJECT_VIEW_KEBAB_MENU");
+
+		ObjectCustomViews.duplicateObjectCustomView(viewLabel = "Custom View 151590");
+
+		ObjectCustomViews.goToViewsDetails(label = "Custom View 151590 (Copy)");
+
+		ObjectCustomViews.goToViewsBuilderTab();
+
+		ObjectCustomViews.viewOrdersOfTheColumns(
+			colunmName = "Author",
+			position = "1");
+
+		ObjectCustomViews.viewOrdersOfTheColumns(
+			colunmName = "Creation Date",
+			position = "2");
+
+		ObjectCustomViews.viewOrdersOfTheColumns(
+			colunmName = "Modified Date",
+			position = "3");
+
+		ObjectCustomViews.viewOrdersOfTheColumns(
+			colunmName = "Workflow Status",
+			position = "4");
+
+		ObjectCustomViews.viewOrdersOfTheColumns(
+			colunmName = "ID",
+			position = "5");
 	}
 
 	@description = "LPS-146028 - Verify that the fields present at the Default Sort are ordered correctly"

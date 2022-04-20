@@ -610,12 +610,50 @@ definition {
 	}
 
 	@description = "This is a test for LPS-94990. It checks that a blog entry can be viewed when using a display page template."
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanViewEntryUsingDisplayPageTemplate {
+		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+			contentType = "Web Content Article",
+			displayPageTemplateEntryName = "Display Page Template Name",
+			groupName = "Guest",
+			subType = "Basic Web Content");
 
-		// TODO LPS-148504 CanViewEntryUsingDisplayPageTemplate pending implementation
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "guest");
 
+		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Template Name");
+
+		PageEditor.addWidget(portletName = "Blogs");
+
+		PageEditor.addWidget(
+			portletName = "Asset Publisher",
+			targetFragmentName = "Blogs");
+
+		PageEditor.clickPublish();
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		JSONWebcontent.addWebContent(
+			content = "Web Content Content",
+			groupName = "Guest",
+			title = "Web Content Title");
+
+		DisplayPageTemplate.selectDisplayPageTemplateForAsset(
+			assetType = "Web Content",
+			entryTitle = "Web Content Title",
+			groupName = "Guest",
+			pageName = "Display Page Template Name",
+			siteURLKey = "guest");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/w/web-content-title");
+
+		BlogsEntry.viewEntryViaAPPG(
+			assetTitle = "Blogs Entry Title",
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 	}
 
 	@description = "This test checks that blog entry can be added with special charaters."

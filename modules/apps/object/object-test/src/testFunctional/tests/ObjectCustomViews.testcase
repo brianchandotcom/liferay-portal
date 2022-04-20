@@ -310,11 +310,25 @@ definition {
 	}
 
 	@description = "LPS-146028 - Verify that the user can duplicate a object View"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanDuplicateObjectView {
 
-		// TODO LPS-151589 CanDuplicateObjectView pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 151589",
+			objectName = "CustomObject151589",
+			pluralLabelName = "Custom Objects 151589");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 151589");
+
+		ObjectCustomViews.goToViewsTab();
+
+		ObjectCustomViews.addObjectViewViaUI(viewName = "Custom View 151589");
+
+		ObjectCustomViews.duplicateObjectCustomView(viewLabel = "Custom View 151589");
+
+		ObjectCustomViews.assertObjectView(viewLabel = "Custom View 151589 (Copy)");
 
 	}
 

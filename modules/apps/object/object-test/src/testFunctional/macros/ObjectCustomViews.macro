@@ -82,6 +82,14 @@ definition {
 		DropdownMenuItem.click(menuItem = "Delete");
 	}
 
+	macro duplicateObjectCustomView {
+		Click(
+			key_objectCustomViewLabel = "${viewLabel}",
+			locator1 = "ObjectCustomViews#OBJECT_VIEW_KEBAB_MENU");
+
+		MenuItem.clickNoError(menuItem = "Duplicate");
+	}
+
 	macro editName {
 		Type(
 			locator1 = "ObjectCustomViews#OBJECT_VIEWS_NAME",

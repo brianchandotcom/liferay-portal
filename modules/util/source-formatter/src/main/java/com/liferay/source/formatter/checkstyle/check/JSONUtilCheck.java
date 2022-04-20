@@ -17,7 +17,6 @@ package com.liferay.source.formatter.checkstyle.check;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.poshi.core.util.ListUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FullIdent;
@@ -302,9 +301,7 @@ public class JSONUtilCheck extends BaseChainedMethodCheck {
 		List<DetailAST> childDetailASTList = getAllChildTokens(
 			detailAST, true, TokenTypes.METHOD_CALL);
 
-		if (!ListUtil.isEmpty(childDetailASTList) &&
-			(childDetailASTList.size() == 1)) {
-
+		if (childDetailASTList.size() == 1) {
 			for (DetailAST childDetailAST : childDetailASTList) {
 				DetailAST firstChildDetailAST = childDetailAST.getFirstChild();
 

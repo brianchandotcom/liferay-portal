@@ -345,8 +345,6 @@ public class JSONUtilCheck extends BaseChainedMethodCheck {
 				ArrayUtil.contains(
 					_VARIABLE_TYPE_NAMES, getTypeName(tmpDetailAST, true))) {
 
-				log(detailAST, _MSG_USE_JSON_UTIL_TO_STRING_2);
-
 				return true;
 			}
 		}

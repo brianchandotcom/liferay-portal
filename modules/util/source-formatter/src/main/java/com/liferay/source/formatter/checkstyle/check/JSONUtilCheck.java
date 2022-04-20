@@ -283,9 +283,9 @@ public class JSONUtilCheck extends BaseChainedMethodCheck {
 					detailAST, getMethodName(methodCallDetailAST))) {
 
 				log(detailAST, _MSG_USE_JSON_UTIL_TO_STRING_2);
-
-				return;
 			}
+
+			return;
 		}
 
 		if (ArrayUtil.contains(

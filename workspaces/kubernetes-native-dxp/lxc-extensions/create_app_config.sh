@@ -67,12 +67,8 @@ function write_app_config {
     JS_FILES=
 
     if [[ "$t" == "customElement" ]];then
-        CSS_FILES=$(jq -c "[.files[] | \"${REMOTE_APP_HOST}\" + select(endswith(\".css\"))]" build/asset-manifest.json)
-        JS_FILES=$(jq -c "[.files[] | \"${REMOTE_APP_HOST}\" + select(endswith(\".js\"))]" build/asset-manifest.json)
-
-        # If we want comma delimited string value use bellow instead
-        #CSS_FILES=$(jq -c "[.files[] | \"${REMOTE_APP_HOST}\" + select(endswith(".css"))] | join(",")' build/asset-manifest.json)
-        #JS_FILES=$(jq -c "[.files[] | \"${REMOTE_APP_HOST}\" + select(endswith(".js"))] | join(",")' build/asset-manifest.json)
+        CSS_FILES=$(jq -c "[.files[] | \"https://\$[conf:cloud.liferay.com.domain.0]\" + select(endswith(\".css\"))]" build/asset-manifest.json)
+        JS_FILES=$(jq -c "[.files[] | \"https://\$[conf:cloud.liferay.com.domain.0]\" + select(endswith(\".js\"))]" build/asset-manifest.json)
     fi
 
     cat <<EOF

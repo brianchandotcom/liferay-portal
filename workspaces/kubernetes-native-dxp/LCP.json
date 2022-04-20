@@ -1,0 +1,61 @@
+{
+  "kind": "Deployment",
+  "id": "liferay",
+  "image": "liferaycloud/liferay-dxp:7.4-5.0.0-alpha.1",
+  "memory": 8192,
+  "cpu": 8,
+  "scale": 1,
+  "ports": [
+    {
+      "port": 8080,
+      "external": false
+    }
+  ],
+  "readinessProbe": {
+    "httpGet": {
+      "path": "/c/portal/layout",
+      "port": 8080
+    },
+    "initialDelaySeconds": 120,
+    "periodSeconds": 15,
+    "timeoutSeconds": 5,
+    "failureThreshold": 3,
+    "successThreshold": 1
+  },
+  "livenessProbe": {
+    "httpGet": {
+      "path": "/c/portal/layout",
+      "port": 8080
+    },
+    "initialDelaySeconds": 480,
+    "periodSeconds": 60,
+    "timeoutSeconds": 5,
+    "failureThreshold": 3,
+    "successThreshold": 1
+  },
+  "publishNotReadyAddressesForCluster": false,
+  "env": {
+    "LCP_PROJECT_LIFERAY_CLUSTER_ENABLED": "true",
+    "LIFERAY_JVM_OPTS": "-Xms2048m -Xmx6144m"
+  },
+  "dependencies": [
+    "database",
+    "search"
+  ],
+  "volumes": {
+    "data": "/opt/liferay/data"
+  },
+  "environments": {
+    "infra": {
+      "deploy": false
+    },
+    "prd": {
+      "cpu": 12,
+      "memory": 16384,
+      "scale": 1,
+      "env": {
+        "LIFERAY_JVM_OPTS": "-Xms4096m -Xmx12288m"
+      }
+    }
+  }
+}

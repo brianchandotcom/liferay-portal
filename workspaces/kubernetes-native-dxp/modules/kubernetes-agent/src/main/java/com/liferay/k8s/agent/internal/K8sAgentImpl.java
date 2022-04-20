@@ -21,9 +21,16 @@ import com.liferay.k8s.agent.properties.ConfigurationPropertiesFactory;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.util.PropsValues;
@@ -39,7 +46,9 @@ import io.fabric8.kubernetes.client.informers.SharedIndexInformer;
 import io.fabric8.kubernetes.client.informers.SharedInformerEventListener;
 import io.fabric8.kubernetes.client.informers.SharedInformerFactory;
 
+import java.util.ArrayList;
 import java.util.Dictionary;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -64,10 +73,12 @@ public class K8sAgentImpl implements K8sAgent {
 
 	@Activate
 	public K8sAgentImpl(
+			@Reference CompanyLocalService companyLocalService,
 			@Reference ConfigurationAdmin configurationAdmin,
 			Map<String, Object> properties)
 		throws Exception {
 
+		_companyLocalService = companyLocalService;
 		_configurationAdmin = configurationAdmin;
 
 		_k8sAgentConfiguration = ConfigurableUtil.createConfigurable(
@@ -247,6 +258,17 @@ public class K8sAgentImpl implements K8sAgent {
 		return null;
 	}
 
+	private Company _getCompanyIdByEnvironment(String environment)
+		throws PortalException {
+
+		if (Objects.equals("default", environment)) {
+			return _companyLocalService.getCompanyByWebId(
+				PropsValues.COMPANY_DEFAULT_WEB_ID);
+		}
+
+		return _companyLocalService.getCompanyByWebId(environment);
+	}
+
 	private Configuration _getConfiguration(String pid, String name)
 		throws Exception {
 
@@ -389,6 +411,49 @@ public class K8sAgentImpl implements K8sAgent {
 			dictionary.put(key, configurationProperties.get(key));
 		}
 
+		Map<String, String> labels = metadata.getLabels();
+
+		for (String key : labels.keySet()) {
+			String modifiedKey = null;
+
+			if (key.contains(StringPool.SLASH)) {
+				modifiedKey = StringUtil.replace(
+					key, CharPool.SLASH , CharPool.PERIOD);
+			}
+			else {
+				modifiedKey = "lxc.".concat(key);
+			}
+
+			dictionary.put(modifiedKey, labels.get(key));
+		}
+
+		Map<String, String> annotations = metadata.getAnnotations();
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			annotations.get(_CONTEXT_ANNOTATION));
+
+		String environment = jsonObject.getString("environment", "default");
+
+		dictionary.put("cloud.liferay.com.environment", environment);
+
+		Company company = _getCompanyIdByEnvironment(environment);
+
+		dictionary.put("companyId", company.getCompanyId());
+
+		List<String> serviceDomains = new ArrayList<>();
+
+		JSONArray jsonArray = jsonObject.getJSONArray("domains");
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			serviceDomains.add(jsonArray.getString(i));
+
+			dictionary.put(
+				"cloud.liferay.com.domain." + i, jsonArray.getString(i));
+		}
+
+		dictionary.put(
+			"cloud.liferay.com.domains", serviceDomains.toArray(new String[0]));
+
 		dictionary.put(_KUBERNETES_CONFIG_KEY, configName);
 		dictionary.put(_KUBERNETES_CONFIG_UID, metadata.getUid());
 		dictionary.put(_KUBERNETES_CONFIG_RESOURCE_VERSION, resourceVersion);
@@ -437,8 +502,12 @@ public class K8sAgentImpl implements K8sAgent {
 	private static final String _KUBERNETES_CONFIG_UID =
 		".kubernetes.config.uid";
 
+	private static final String _CONTEXT_ANNOTATION =
+		"cloud.liferay.com/context-data";
+
 	private static final Log _log = LogFactoryUtil.getLog(K8sAgentImpl.class);
 
+	private final CompanyLocalService _companyLocalService;
 	private final ConfigurationAdmin _configurationAdmin;
 	private final SharedIndexInformer<ConfigMap> _sharedIndexInformer;
 	private final K8sAgentConfiguration _k8sAgentConfiguration;

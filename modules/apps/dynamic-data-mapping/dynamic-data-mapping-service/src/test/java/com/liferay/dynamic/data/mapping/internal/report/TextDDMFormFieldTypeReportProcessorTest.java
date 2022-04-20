@@ -15,7 +15,7 @@
 package com.liferay.dynamic.data.mapping.internal.report;
 
 import com.liferay.dynamic.data.mapping.constants.DDMFormInstanceReportConstants;
-import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
@@ -77,7 +77,7 @@ public class TextDDMFormFieldTypeReportProcessorTest {
 		Mockito.when(
 			ddmFormFieldValue.getType()
 		).thenReturn(
-			DDMFormFieldType.TEXT
+			DDMFormFieldTypeConstants.TEXT
 		);
 
 		Value value = new LocalizedValue();
@@ -113,7 +113,7 @@ public class TextDDMFormFieldTypeReportProcessorTest {
 			_textDDMFormFieldTypeReportProcessor.process(
 				ddmFormFieldValue,
 				JSONUtil.put(
-					"type", DDMFormFieldType.TEXT
+					"type", DDMFormFieldTypeConstants.TEXT
 				).put(
 					"values",
 					JSONUtil.putAll(
@@ -147,7 +147,8 @@ public class TextDDMFormFieldTypeReportProcessorTest {
 				DDMFormInstanceReportConstants.EVENT_ADD_RECORD_VERSION);
 
 		Assert.assertEquals(
-			DDMFormFieldType.TEXT, processedFieldJSONObject.getString("type"));
+			DDMFormFieldTypeConstants.TEXT,
+			processedFieldJSONObject.getString("type"));
 
 		JSONArray valuesJSONArray = processedFieldJSONObject.getJSONArray(
 			"values");
@@ -223,18 +224,20 @@ public class TextDDMFormFieldTypeReportProcessorTest {
 				Mockito.eq(WorkflowConstants.STATUS_APPROVED), Mockito.eq(0),
 				Mockito.eq(_VALUES_MAX_LENGTH + 1), Mockito.any())
 		).thenReturn(
-			new BaseModelSearchResult<DDMFormInstanceRecord>(
+			new BaseModelSearchResult<>(
 				ddmFormInstanceRecords, ddmFormInstanceRecords.size())
 		);
 
 		JSONObject processedFieldJSONObject =
 			_textDDMFormFieldTypeReportProcessor.process(
-				ddmFormFieldValue, JSONUtil.put("type", DDMFormFieldType.TEXT),
+				ddmFormFieldValue,
+				JSONUtil.put("type", DDMFormFieldTypeConstants.TEXT),
 				formInstanceRecordId,
 				DDMFormInstanceReportConstants.EVENT_DELETE_RECORD_VERSION);
 
 		Assert.assertEquals(
-			DDMFormFieldType.TEXT, processedFieldJSONObject.getString("type"));
+			DDMFormFieldTypeConstants.TEXT,
+			processedFieldJSONObject.getString("type"));
 
 		JSONArray valuesJSONArray = processedFieldJSONObject.getJSONArray(
 			"values");
@@ -260,7 +263,7 @@ public class TextDDMFormFieldTypeReportProcessorTest {
 		Mockito.when(
 			ddmFormFieldValue.getType()
 		).thenReturn(
-			DDMFormFieldType.TEXT
+			DDMFormFieldTypeConstants.TEXT
 		);
 
 		Value value = new LocalizedValue();
@@ -296,7 +299,7 @@ public class TextDDMFormFieldTypeReportProcessorTest {
 			_textDDMFormFieldTypeReportProcessor.process(
 				ddmFormFieldValue,
 				JSONUtil.put(
-					"type", DDMFormFieldType.TEXT
+					"type", DDMFormFieldTypeConstants.TEXT
 				).put(
 					"values", JSONFactoryUtil.createJSONObject()
 				),
@@ -304,7 +307,8 @@ public class TextDDMFormFieldTypeReportProcessorTest {
 				DDMFormInstanceReportConstants.EVENT_ADD_RECORD_VERSION);
 
 		Assert.assertEquals(
-			DDMFormFieldType.TEXT, processedFieldJSONObject.getString("type"));
+			DDMFormFieldTypeConstants.TEXT,
+			processedFieldJSONObject.getString("type"));
 
 		JSONArray valuesJSONArray = processedFieldJSONObject.getJSONArray(
 			"values");
@@ -330,7 +334,7 @@ public class TextDDMFormFieldTypeReportProcessorTest {
 		Mockito.when(
 			ddmFormFieldValue.getType()
 		).thenReturn(
-			DDMFormFieldType.TEXT
+			DDMFormFieldTypeConstants.TEXT
 		);
 
 		Value value = new LocalizedValue();
@@ -366,7 +370,7 @@ public class TextDDMFormFieldTypeReportProcessorTest {
 			_textDDMFormFieldTypeReportProcessor.process(
 				ddmFormFieldValue,
 				JSONUtil.put(
-					"type", DDMFormFieldType.TEXT
+					"type", DDMFormFieldTypeConstants.TEXT
 				).put(
 					"values",
 					JSONUtil.put(
@@ -380,7 +384,8 @@ public class TextDDMFormFieldTypeReportProcessorTest {
 				DDMFormInstanceReportConstants.EVENT_ADD_RECORD_VERSION);
 
 		Assert.assertEquals(
-			DDMFormFieldType.TEXT, processedFieldJSONObject.getString("type"));
+			DDMFormFieldTypeConstants.TEXT,
+			processedFieldJSONObject.getString("type"));
 
 		JSONArray valuesJSONArray = processedFieldJSONObject.getJSONArray(
 			"values");
@@ -410,7 +415,7 @@ public class TextDDMFormFieldTypeReportProcessorTest {
 		Mockito.when(
 			ddmFormFieldValue.getType()
 		).thenReturn(
-			DDMFormFieldType.TEXT
+			DDMFormFieldTypeConstants.TEXT
 		);
 
 		Value value = new LocalizedValue();
@@ -446,7 +451,7 @@ public class TextDDMFormFieldTypeReportProcessorTest {
 			_textDDMFormFieldTypeReportProcessor.process(
 				ddmFormFieldValue,
 				JSONUtil.put(
-					"type", DDMFormFieldType.TEXT
+					"type", DDMFormFieldTypeConstants.TEXT
 				).put(
 					"values",
 					JSONUtil.putAll(
@@ -480,7 +485,8 @@ public class TextDDMFormFieldTypeReportProcessorTest {
 				DDMFormInstanceReportConstants.EVENT_ADD_RECORD_VERSION);
 
 		Assert.assertEquals(
-			DDMFormFieldType.TEXT, processedFieldJSONObject.getString("type"));
+			DDMFormFieldTypeConstants.TEXT,
+			processedFieldJSONObject.getString("type"));
 
 		JSONArray valuesJSONArray = processedFieldJSONObject.getJSONArray(
 			"values");
@@ -516,7 +522,7 @@ public class TextDDMFormFieldTypeReportProcessorTest {
 		Mockito.when(
 			ddmFormValues.getDDMFormFieldValuesMap(true)
 		).thenReturn(
-			HashMapBuilder.<String, List<DDMFormFieldValue>>put(
+			HashMapBuilder.put(
 				"field1", Arrays.asList(ddmFormFieldValue)
 			).build()
 		);

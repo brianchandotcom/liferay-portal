@@ -15,7 +15,7 @@
 package com.liferay.dynamic.data.mapping.internal.report;
 
 import com.liferay.dynamic.data.mapping.constants.DDMFormInstanceReportConstants;
-import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
@@ -137,7 +137,7 @@ public class NumericDDMFormFieldTypeReportProcessorTest {
 				Mockito.eq(WorkflowConstants.STATUS_APPROVED), Mockito.eq(0),
 				Mockito.eq(_VALUES_MAX_LENGTH + 1), Mockito.any())
 		).thenReturn(
-			new BaseModelSearchResult<DDMFormInstanceRecord>(
+			new BaseModelSearchResult<>(
 				ddmFormInstanceRecords, ddmFormInstanceRecords.size())
 		);
 
@@ -158,7 +158,7 @@ public class NumericDDMFormFieldTypeReportProcessorTest {
 				).put(
 					"totalEntries", 5
 				).put(
-					"type", DDMFormFieldType.NUMERIC
+					"type", DDMFormFieldTypeConstants.NUMERIC
 				).put(
 					"values",
 					JSONUtil.putAll(
@@ -215,7 +215,7 @@ public class NumericDDMFormFieldTypeReportProcessorTest {
 			_numericDDMFormFieldTypeReportProcessor.process(
 				ddmFormFieldValue,
 				JSONUtil.put(
-					"type", DDMFormFieldType.NUMERIC
+					"type", DDMFormFieldTypeConstants.NUMERIC
 				).put(
 					"values", JSONFactoryUtil.createJSONObject()
 				),
@@ -259,7 +259,7 @@ public class NumericDDMFormFieldTypeReportProcessorTest {
 				).put(
 					"totalEntries", 1
 				).put(
-					"type", DDMFormFieldType.NUMERIC
+					"type", DDMFormFieldTypeConstants.NUMERIC
 				).put(
 					"values",
 					JSONUtil.put(
@@ -312,7 +312,7 @@ public class NumericDDMFormFieldTypeReportProcessorTest {
 				).put(
 					"totalEntries", 1
 				).put(
-					"type", DDMFormFieldType.NUMERIC
+					"type", DDMFormFieldTypeConstants.NUMERIC
 				).put(
 					"values",
 					JSONUtil.put(
@@ -355,7 +355,7 @@ public class NumericDDMFormFieldTypeReportProcessorTest {
 		Mockito.when(
 			ddmFormValues.getDDMFormFieldValuesMap(true)
 		).thenReturn(
-			HashMapBuilder.<String, List<DDMFormFieldValue>>put(
+			HashMapBuilder.put(
 				"field1", Arrays.asList(ddmFormFieldValue)
 			).build()
 		);
@@ -384,7 +384,7 @@ public class NumericDDMFormFieldTypeReportProcessorTest {
 		Mockito.when(
 			ddmFormFieldValue.getType()
 		).thenReturn(
-			DDMFormFieldType.NUMERIC
+			DDMFormFieldTypeConstants.NUMERIC
 		);
 
 		Value value = new LocalizedValue(defaultLocale);

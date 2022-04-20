@@ -25,6 +25,11 @@
 		<td>//button[contains(text(),'Select File')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>VIEW_CHARACTER_COUNT</td>
+		<td>//span[contains(text(),'${key_characterCount} Characters')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

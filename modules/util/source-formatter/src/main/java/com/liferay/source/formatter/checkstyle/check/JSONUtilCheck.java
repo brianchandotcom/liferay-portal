@@ -336,7 +336,7 @@ public class JSONUtilCheck extends BaseChainedMethodCheck {
 			detailAST, TokenTypes.OBJBLOCK);
 
 		List<DetailAST> childDetailASTList = getAllChildTokens(
-			parentDetailAST, true, TokenTypes.METHOD_DEF);
+			parentDetailAST, false, TokenTypes.METHOD_DEF);
 
 		for (DetailAST tmpDetailAST : childDetailASTList) {
 			String methodName = getName(tmpDetailAST);

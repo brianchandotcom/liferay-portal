@@ -46,6 +46,43 @@ definition {
 			value1 = "Error:At least one field must be added.");
 	}
 
+	@description = "This is a test for LPS-95290. It asserts that an unauthorized user can not download the file through the document URL of the staged site."
+	@priority = "5"
+	test CannotDownloadFileThroughDocumentURLOfStagedSiteWithoutPermissions {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Site Name-staging",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		DMNavigator.openToEditEntryInSite(
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Site Name (Staging)",
+			site = "false",
+			siteURLKey = "site-name-staging");
+
+		DMDocument.editCmd(dmDocumentTitleEdit = "DM Document Title Edit");
+
+		Button.clickPublish();
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "DM Document Title Edit",
+			groupName = "Site Name (Staging)",
+			site = "false",
+			siteURLKey = "site-name-staging");
+
+		var latestVersionURL = DMDocument.getLatestVersionURL();
+
+		User.logoutPG();
+
+		for (var version : list "1.0,1.1") {
+			Navigator.openSpecificURL(url = "${latestVersionURL}?version=${version}");
+
+			AssertVisible(locator1 = "Button#SIGN_IN");
+		}
+	}
+
 	@description = "This is a test for LPS-91043. It asserts that user can not publish from old versions to live."
 	@priority = "5"
 	test CanNotPublishFromOldVersions {

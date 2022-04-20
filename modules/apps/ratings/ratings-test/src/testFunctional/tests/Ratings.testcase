@@ -326,6 +326,7 @@ definition {
 
 		Ratings.viewRateThumb(
 			ratingResult = "Rate this as good",
+			toolTip = "true",
 			voteCount = "0");
 
 		Ratings.viewRateThumb(
@@ -338,6 +339,7 @@ definition {
 
 		Ratings.viewRateThumb(
 			ratingResult = "You have rated this as good",
+			toolTip = "true",
 			voteCount = "1");
 
 		Ratings.viewRateThumb(

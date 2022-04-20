@@ -1285,8 +1285,7 @@ definition {
 	@description = "This is a test for LPS-87134. View no navigation menus are automatically created after adding pages."
 	@priority = "3"
 	test ViewNoNavigationMenuAfterAddingPages {
-		property osgi.module.configuration.file.names = "com.liferay.release.feature.flag.web.internal.configuration.ReleaseFeatureFlagConfiguration.config";
-		property osgi.module.configurations = "disabledReleaseFeatureFlags=[&quot;DISABLE_PRIVATE_LAYOUTS&quot;]";
+		property private.pages.enabled = "true";
 
 		task ("Add a public page to the site") {
 			JSONLayout.addPublicLayout(

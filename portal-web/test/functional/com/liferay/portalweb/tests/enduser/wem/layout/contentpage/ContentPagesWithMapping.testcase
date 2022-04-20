@@ -565,8 +565,7 @@ definition {
 	@description = "This is a use case for LPS-120198. Link public and private pages to fragments."
 	@priority = "4"
 	test MapPageToImageFragment {
-		property osgi.module.configuration.file.names = "com.liferay.release.feature.flag.web.internal.configuration.ReleaseFeatureFlagConfiguration.config";
-		property osgi.module.configurations = "disabledReleaseFeatureFlags=[&quot;DISABLE_PRIVATE_LAYOUTS&quot;]";
+		property private.pages.enabled = "true";
 
 		task ("Add a public widget page") {
 			JSONLayout.addPublicLayout(

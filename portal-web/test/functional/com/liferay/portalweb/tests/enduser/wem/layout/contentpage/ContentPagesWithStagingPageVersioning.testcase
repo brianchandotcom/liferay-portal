@@ -300,9 +300,8 @@ definition {
 	@description = "This is a test for LPS-125755. The Site Pages Variation is enabled on content page in view mode when enable page versioning."
 	@priority = "5"
 	test PublishContentPageWithPageVariationToLive {
-		property osgi.module.configuration.file.names = "com.liferay.release.feature.flag.web.internal.configuration.ReleaseFeatureFlagConfiguration.config";
-		property osgi.module.configurations = "disabledReleaseFeatureFlags=[&quot;DISABLE_PRIVATE_LAYOUTS&quot;]";
 		property portal.acceptance = "true";
+		property private.pages.enabled = "true";
 
 		task ("Add a public content page") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-staging");

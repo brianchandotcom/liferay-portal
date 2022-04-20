@@ -37,8 +37,9 @@ definition {
 	@description = "The guest cannot view private content and page."
 	@priority = "3"
 	test CannotViewPrivateContentAndPageAsGuest {
-		property osgi.module.configuration.file.names = "com.liferay.login.web.internal.configuration.AuthLoginConfiguration.config:com.liferay.release.feature.flag.web.internal.configuration.ReleaseFeatureFlagConfiguration.config";
-		property osgi.module.configurations = "promptEnabled=&quot;true&quot;:disabledReleaseFeatureFlags=[&quot;DISABLE_PRIVATE_LAYOUTS&quot;]";
+		property osgi.module.configuration.file.names = "com.liferay.login.web.internal.configuration.AuthLoginConfiguration.config";
+		property osgi.module.configurations = "promptEnabled=&quot;true&quot;";
+		property private.pages.enabled = "true";
 		property testray.component.names = "Message Boards";
 
 		task ("Add a private page") {
@@ -137,8 +138,7 @@ definition {
 	@priority = "5"
 	test CannotViewPrivateContentAndPageAsUserWithoutPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}mail.send.blacklist=";
-		property osgi.module.configuration.file.names = "com.liferay.release.feature.flag.web.internal.configuration.ReleaseFeatureFlagConfiguration.config";
-		property osgi.module.configurations = "disabledReleaseFeatureFlags=[&quot;DISABLE_PRIVATE_LAYOUTS&quot;]";
+		property private.pages.enabled = "true";
 		property testray.component.names = "Message Boards,Training";
 
 		task ("Add a new user") {
@@ -248,9 +248,8 @@ definition {
 	@priority = "5"
 	test CannotViewPrivatePageAsUserWithoutPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property osgi.module.configuration.file.names = "com.liferay.release.feature.flag.web.internal.configuration.ReleaseFeatureFlagConfiguration.config";
-		property osgi.module.configurations = "disabledReleaseFeatureFlags=[&quot;DISABLE_PRIVATE_LAYOUTS&quot;]";
 		property portal.acceptance = "true";
+		property private.pages.enabled = "true";
 		property testray.component.names = "Permissions,Roles,Training";
 
 		task ("Add a site template") {
@@ -433,8 +432,7 @@ definition {
 	@priority = "3"
 	test ViewPrivateContentAndPageAsSiteMember {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}mail.send.blacklist=";
-		property osgi.module.configuration.file.names = "com.liferay.release.feature.flag.web.internal.configuration.ReleaseFeatureFlagConfiguration.config";
-		property osgi.module.configurations = "disabledReleaseFeatureFlags=[&quot;DISABLE_PRIVATE_LAYOUTS&quot;]";
+		property private.pages.enabled = "true";
 		property testray.component.names = "Message Boards";
 
 		task ("Add a new user") {

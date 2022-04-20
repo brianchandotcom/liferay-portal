@@ -884,9 +884,8 @@ definition {
 	@description = "This is a test for LPS-139064. Users can preview draft for a content page from Pages admin when they exist."
 	@priority = "5"
 	test PreviewDraftContentPage {
-		property osgi.module.configuration.file.names = "com.liferay.release.feature.flag.web.internal.configuration.ReleaseFeatureFlagConfiguration.config";
-		property osgi.module.configurations = "disabledReleaseFeatureFlags=[&quot;DISABLE_PRIVATE_LAYOUTS&quot;]";
 		property portal.acceptance = "true";
+		property private.pages.enabled = "true";
 
 		task ("Add a public content page") {
 			JSONLayout.addPublicLayout(

@@ -554,8 +554,7 @@ definition {
 	@priority = "3"
 	test NoGuestRolePermissionsFromPrivateLayout {
 		property custom.properties = "permissions.check.guest.enabled=false";
-		property osgi.module.configuration.file.names = "com.liferay.release.feature.flag.web.internal.configuration.ReleaseFeatureFlagConfiguration.config";
-		property osgi.module.configurations = "disabledReleaseFeatureFlags=[&quot;DISABLE_PRIVATE_LAYOUTS&quot;]";
+		property private.pages.enabled = "true";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Sites",
@@ -1626,8 +1625,7 @@ definition {
 
 	@priority = "4"
 	test ViewPrivatePageSiteMemberRole {
-		property osgi.module.configuration.file.names = "com.liferay.release.feature.flag.web.internal.configuration.ReleaseFeatureFlagConfiguration.config";
-		property osgi.module.configurations = "disabledReleaseFeatureFlags=[&quot;DISABLE_PRIVATE_LAYOUTS&quot;]";
+		property private.pages.enabled = "true";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
@@ -1688,8 +1686,7 @@ definition {
 
 	@priority = "4"
 	test ViewRegRolePermissionsDefaultView {
-		property osgi.module.configuration.file.names = "com.liferay.release.feature.flag.web.internal.configuration.ReleaseFeatureFlagConfiguration.config";
-		property osgi.module.configurations = "disabledReleaseFeatureFlags=[&quot;DISABLE_PRIVATE_LAYOUTS&quot;]";
+		property private.pages.enabled = "true";
 
 		JSONRole.addRegularRole(
 			roleKey = "Roles Regrole Name",

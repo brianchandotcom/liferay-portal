@@ -330,13 +330,13 @@ public class JSONUtilCheck extends BaseChainedMethodCheck {
 		if (!ListUtil.isEmpty(childDetailASTList) &&
 			(childDetailASTList.size() == 1)) {
 
-			for (DetailAST tmpDetailAST : childDetailASTList) {
-				DetailAST childDetailAST = tmpDetailAST.getFirstChild();
+			for (DetailAST childDetailAST : childDetailASTList) {
+				DetailAST firstChildDetailAST = childDetailAST.getFirstChild();
 
-				if ((childDetailAST != null) &&
-					(childDetailAST.getType() == TokenTypes.IDENT)) {
+				if ((firstChildDetailAST != null) &&
+					(firstChildDetailAST.getType() == TokenTypes.IDENT)) {
 
-					String methodCallName = getMethodName(tmpDetailAST);
+					String methodCallName = getMethodName(childDetailAST);
 
 					if (_checkMethodReturnType(detailAST, methodCallName)) {
 						log(detailAST, _MSG_USE_JSON_UTIL_TO_STRING_2);

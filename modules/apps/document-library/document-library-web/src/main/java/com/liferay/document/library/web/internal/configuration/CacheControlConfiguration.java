@@ -34,7 +34,7 @@ public interface CacheControlConfiguration {
 	@Meta.AD(
 		deflt = "private", description = "cache-control-description",
 		name = "cache-control", optionLabels = {"private", "public"},
-		optionValues = {"private", "public"}, required = false
+		optionValues = {"private", "public"}
 	)
 	public String cacheControl();
 

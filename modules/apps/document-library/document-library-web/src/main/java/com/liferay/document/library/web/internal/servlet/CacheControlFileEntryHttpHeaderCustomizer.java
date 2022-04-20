@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -38,6 +39,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.document.library.web.internal.configuration.CacheControlConfiguration",
+	configurationPolicy = ConfigurationPolicy.REQUIRE,
 	property = "http.header.name=" + HttpHeaders.CACHE_CONTROL,
 	service = FileEntryHttpHeaderCustomizer.class
 )

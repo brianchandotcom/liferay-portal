@@ -28,6 +28,7 @@ import org.osgi.service.cm.ConfigurationException;
 import org.osgi.service.cm.ManagedServiceFactory;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Modified;
 
 /**
@@ -35,7 +36,7 @@ import org.osgi.service.component.annotations.Modified;
  */
 @Component(
 	configurationPid = "com.liferay.document.library.web.internal.configuration.CacheControlConfiguration",
-	immediate = true,
+	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
 	property = Constants.SERVICE_PID + "=com.liferay.document.library.web.internal.configuration.CacheControlConfiguration.scoped",
 	service = {
 		CacheControlConfigurationManagedServiceFactory.class,

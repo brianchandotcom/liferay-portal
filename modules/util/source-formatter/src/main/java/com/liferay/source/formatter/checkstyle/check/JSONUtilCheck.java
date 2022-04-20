@@ -291,7 +291,7 @@ public class JSONUtilCheck extends BaseChainedMethodCheck {
 		String variableName = getVariableName(detailAST);
 
 		String variableTypeName = getVariableTypeName(
-			detailAST, variableName, true);
+			detailAST, variableName, false);
 
 		if (ArrayUtil.contains(_VARIABLE_TYPE_NAMES, variableTypeName) ||
 			_isJSONUtilCall(detailAST)) {

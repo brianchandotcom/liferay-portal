@@ -13,12 +13,14 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
-import React from 'react';
+import {useModal} from '@clayui/modal';
+import React, {useState} from 'react';
 
 import {SIDEBAR_PANEL_IDS} from '../constants/sidebarPanelIds';
 import {useSetSidebarPanelId} from '../contexts/SidebarPanelIdContext';
 import {AddItemDropDown} from './AddItemDropdown';
 import {AppLayout} from './AppLayout';
+import {PreviewModal} from './PreviewModal';
 
 export function Toolbar() {
 	const setSidebarPanelId = useSetSidebarPanelId();
@@ -27,9 +29,26 @@ export function Toolbar() {
 		setSidebarPanelId(SIDEBAR_PANEL_IDS.menuSettings);
 	};
 
+	const [previewModalOpen, setPreviewModalOpen] = useState(false);
+
+	const {observer} = useModal({
+		onClose: () => setPreviewModalOpen(false),
+	});
+
 	return (
 		<>
 			<AppLayout.ToolbarItem expand />
+
+			<AppLayout.ToolbarItem>
+				<ClayButtonWithIcon
+					className="text-secondary"
+					displayType="unstyled"
+					monospaced
+					onClick={() => setPreviewModalOpen(true)}
+					small
+					symbol="view"
+				/>
+			</AppLayout.ToolbarItem>
 
 			<AppLayout.ToolbarItem>
 				<ClayButtonWithIcon
@@ -49,6 +68,8 @@ export function Toolbar() {
 					}
 				/>
 			</AppLayout.ToolbarItem>
+
+			{previewModalOpen && <PreviewModal observer={observer} />}
 		</>
 	);
 }

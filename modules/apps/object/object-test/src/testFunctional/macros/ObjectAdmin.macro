@@ -129,6 +129,14 @@ definition {
 
 		if (isSet(fieldType)) {
 			ObjectField.selectType(fieldType = "${fieldType}");
+
+			if ("${fieldType}" == "Attachment") {
+				Click(locator1 = "ObjectField#REQUEST_FILES_INPUT");
+
+				Click(
+					key_fieldType = "${fieldAttachment}",
+					locator1 = "ObjectField#TYPE_OPTION");
+			}
 		}
 
 		if ("${isMandatory}" == "true") {

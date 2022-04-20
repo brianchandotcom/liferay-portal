@@ -121,11 +121,6 @@
 		<td></td>
 	</tr>
 	<tr>
-		<td>SEARCH_RESULT_RELATIONSHIP_ENTRY</td>
-		<td>//button[contains(@class,'dropdown-item')]//span[contains(text(),'${key_entry}')]</td>
-		<td></td>
-	</tr>
-	<tr>
 		<td>SEARCH_ENTRY_ON_RELATIONSHIP_FIELD_LABEL_SPECIFIC</td>
 		<td>//label[contains(text(),'${key_relationshipFieldLabel}')]/..//input[contains(@placeholder,'Search')]</td>
 		<td></td>

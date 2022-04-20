@@ -247,7 +247,7 @@ definition {
 	macro viewImageResolutionTableEntry {
 		var key_imageName = "${imageName}";
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "AdaptiveMediaTable#NAME",
 			value1 = "${imageName}");
 

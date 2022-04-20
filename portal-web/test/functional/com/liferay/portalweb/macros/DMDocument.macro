@@ -1990,11 +1990,6 @@ definition {
 
 			Click(locator1 = "Icon#MOVE");
 		}
-		else if (isSet(shortcut)) {
-			Click(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS_SHORTCUT");
-
-			MenuItem.click(menuItem = "Move");
-		}
 		else {
 			Click(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS");
 

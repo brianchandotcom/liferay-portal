@@ -16,7 +16,6 @@
 
 import './EditObjectField.scss';
 export default function EditObjectField({
-	allowUploadDocAndMedia,
 	forbiddenChars,
 	forbiddenLastChars,
 	forbiddenNames,
@@ -27,7 +26,6 @@ export default function EditObjectField({
 	readOnly,
 }: IProps): JSX.Element;
 interface IProps {
-	allowUploadDocAndMedia?: boolean;
 	forbiddenChars: string[];
 	forbiddenLastChars: string[];
 	forbiddenNames: string[];

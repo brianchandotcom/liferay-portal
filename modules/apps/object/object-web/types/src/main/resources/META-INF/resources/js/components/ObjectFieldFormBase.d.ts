@@ -16,7 +16,6 @@ import React, {ChangeEventHandler, ReactNode} from 'react';
 import {FormError} from '../hooks/useForm';
 import './ObjectFieldFormBase.scss';
 export default function ObjectFieldFormBase({
-	allowUploadDocAndMedia,
 	children,
 	disabled,
 	errors,
@@ -58,7 +57,6 @@ interface IUseObjectFieldForm {
 	onSubmit: (field: ObjectField) => void;
 }
 interface IProps {
-	allowUploadDocAndMedia?: boolean;
 	children?: ReactNode;
 	disabled?: boolean;
 	errors: ObjectFieldErrors;

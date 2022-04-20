@@ -15,13 +15,11 @@
 /// <reference types="react" />
 
 export default function ModalWithProvider({
-	allowUploadDocAndMedia,
 	apiURL,
 	objectFieldTypes,
 	objectName,
 }: IProps): JSX.Element;
 interface IProps {
-	allowUploadDocAndMedia: boolean;
 	apiURL: string;
 	objectFieldTypes: ObjectFieldType[];
 	objectName: string;

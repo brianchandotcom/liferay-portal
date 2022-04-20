@@ -933,12 +933,71 @@ definition {
 	}
 
 	@description = "LPS-146028 - Verify that the fields present at the Default Sort are ordered correctly"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test DuplicatedObjectViewFieldsAreCorrectlyOrdered {
 
-		// TODO LPS-151591 DuplicatedObjectViewFieldsAreCorrectlyOrdered pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 151591",
+			objectName = "CustomObject151591",
+			pluralLabelName = "Custom Objects 151591");
 
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field A",
+			fieldName = "customObjectFieldA151591",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject151591");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field B",
+			fieldName = "customObjectFieldB151591",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject151591");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 151591");
+
+		ObjectCustomViews.goToViewsTab();
+
+		ObjectCustomViews.addObjectViewViaUI(viewName = "Custom View 151591");
+
+		ObjectCustomViews.goToViewsDetails(label = "Custom View 151591");
+
+		ObjectCustomViews.markViewAsDefault();
+
+		ObjectCustomViews.goToViewsBuilderTab();
+
+		LexiconEntry.gotoAdd();
+
+		for (var columnOption : list "Custom Field A,Custom Field B") {
+			Click.clickAtNotVisible(
+				key_columnOption = "${columnOption}",
+				locator1 = "ObjectCustomViews#CHECKBOX_COLUMN_OPTION");
+		}
+
+		ObjectCustomViews.saveColumnsModal();
+
+		Button.clickSave();
+
+		SelectFrame(locator1 = "ObjectCustomViews#OBJECT_VIEW_KEBAB_MENU");
+
+		ObjectCustomViews.duplicateObjectCustomView(viewLabel = "Custom View 151591");
+
+		ObjectCustomViews.goToViewsDetails(label = "Custom View 151591 (Copy)");
+
+		ObjectCustomViews.goToViewsBuilderTab();
+
+		ObjectCustomViews.viewOrdersOfTheColumns(
+			colunmName = "Custom Field A",
+			position = "1");
+
+		ObjectCustomViews.viewOrdersOfTheColumns(
+			colunmName = "Custom Field B",
+			position = "2");
 	}
 
 	@description = "LPS-135394 - Verify the empty state for the View Builder tab"

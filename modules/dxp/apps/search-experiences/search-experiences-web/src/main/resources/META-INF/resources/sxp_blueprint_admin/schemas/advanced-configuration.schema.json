@@ -1,0 +1,27 @@
+{
+	"$id": "advanced-configuration.schema.json",
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"properties": {
+		"source": {
+			"properties": {
+				"excludes": {
+					"items": {
+						"type": "string"
+					},
+					"type": "array"
+				},
+				"fetchSource": {
+					"type": "boolean"
+				},
+				"includes": {
+					"items": {
+						"type": "string"
+					},
+					"type": "array"
+				}
+			},
+			"type": "object"
+		}
+	},
+	"type": "object"
+}

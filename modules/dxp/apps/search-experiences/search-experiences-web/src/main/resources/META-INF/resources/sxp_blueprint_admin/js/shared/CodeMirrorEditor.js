@@ -565,20 +565,19 @@ const CodeMirrorEditor = React.forwardRef(
 				// Enable autocomplete if `autocompleteSchema` is defined.
 
 				if (autocompleteSchema && jsonAutocompleteEnabled) {
-					CodeMirror.registerHelper('hint', 'json', (cm) =>
-						getCodeMirrorHints(
-							cm,
-							autocompleteSchema,
-							availableLanguages
-						)
-					);
-
 					codeMirror.on('keyup', (cm, event) => {
+						const hint = () =>
+							getCodeMirrorHints(
+								cm,
+								autocompleteSchema,
+								availableLanguages
+							);
+
 						if (
 							!cm.state.completionActive &&
 							!AUTOCOMPLETE_EXCLUDED_KEYS.has(event.key)
 						) {
-							codeMirror.showHint();
+							codeMirror.showHint({hint});
 						}
 					});
 				}

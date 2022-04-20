@@ -1,0 +1,48 @@
+{
+	"$id": "parameter-configuration.schema.json",
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"definitions": {
+		"Parameter": {
+			"properties": {
+				"defaultValue": {
+					"type": "object"
+				},
+				"format": {
+					"type": "string"
+				},
+				"max": {
+					"type": "object"
+				},
+				"min": {
+					"type": "object"
+				},
+				"type": {
+					"enum": [
+						"Boolean",
+						"Date",
+						"Double",
+						"Float",
+						"Integer",
+						"IntegerArray",
+						"Long",
+						"LongArray",
+						"String",
+						"StringArray",
+						"TimeRange"
+					],
+					"type": "string"
+				}
+			},
+			"type": "object"
+		}
+	},
+	"properties": {
+		"parameters": {
+			"additionalProperties": {
+				"$ref": "#/definitions/Parameter"
+			},
+			"type": "object"
+		}
+	},
+	"type": "object"
+}

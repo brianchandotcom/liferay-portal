@@ -1,0 +1,1101 @@
+{
+	"$id": "aggregation-configuration.schema.json",
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"definitions": {
+		"Aggregation": {
+			"properties": {
+				"aggs": {
+					"additionalProperties": {
+						"$ref": "#/definitions/Aggregations"
+					},
+					"type": "object"
+				},
+				"background_filter": {
+					"$ref": "#/definitions/Query"
+				},
+				"buckets_path": {
+					"type": [
+						"string",
+						"object"
+					]
+				},
+				"distance_type": {
+					"enum": [
+						"arc",
+						"plane"
+					],
+					"type": "string"
+				},
+				"enabled": {
+					"type": "boolean"
+				},
+				"exclude": {
+					"type": [
+						"array",
+						"string"
+					]
+				},
+				"execution_hint": {
+					"type": "string"
+				},
+				"extended_bounds": {
+					"$ref": "#/definitions/Bound"
+				},
+				"field": {
+					"type": "string"
+				},
+				"format": {
+					"type": "string"
+				},
+				"gap_policy": {
+					"enum": [
+						"instant_zeros",
+						"skip"
+					],
+					"type": "string"
+				},
+				"hard_bounds": {
+					"$ref": "#/definitions/Bound"
+				},
+				"hdr": {
+					"properties": {
+						"number_of_significant_value_digits": {
+							"minimum": 1,
+							"type": "number"
+						}
+					},
+					"type": "object"
+				},
+				"include": {
+					"type": [
+						"array",
+						"string"
+					]
+				},
+				"keyed": {
+					"type": "boolean"
+				},
+				"min_doc_count": {
+					"minimum": 1,
+					"type": "number"
+				},
+				"missing": {
+					"type": [
+						"number",
+						"string"
+					]
+				},
+				"offset": {
+					"type": [
+						"number",
+						"string"
+					]
+				},
+				"order": {
+					"type": "object"
+				},
+				"percents": {
+					"items": {
+						"type": "number"
+					},
+					"type": "array"
+				},
+				"ranges": {
+					"items": {
+						"$ref": "#/definitions/Range"
+					},
+					"type": "array"
+				},
+				"script": {
+					"$ref": "#/definitions/Script"
+				},
+				"shard_min_doc_count": {
+					"minimum": 1,
+					"type": "number"
+				},
+				"shard_size": {
+					"minimum": 1,
+					"type": "number"
+				},
+				"sigma": {
+					"type": "number"
+				},
+				"size": {
+					"minimum": 1,
+					"type": "number"
+				},
+				"sort": {
+					"$ref": "#/definitions/Sort"
+				},
+				"tdigest": {
+					"properties": {
+						"compression": {
+							"minimum": 0,
+							"type": "number"
+						}
+					},
+					"type": "object"
+				},
+				"unit": {
+					"enum": [
+						"cm",
+						"ft",
+						"in",
+						"km",
+						"m",
+						"mi",
+						"mm",
+						"yd"
+					],
+					"type": "string"
+				},
+				"window": {
+					"minimum": 0,
+					"type": "number"
+				}
+			},
+			"type": "object"
+		},
+		"Aggregations": {
+			"properties": {
+				"aggs": {
+					"additionalProperties": {
+						"$ref": "#/definitions/Aggregations"
+					},
+					"type": "object"
+				},
+				"avg": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Aggregation"
+						}
+					],
+					"required": [
+						"field"
+					],
+					"type": "object"
+				},
+				"avg_bucket": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Aggregation"
+						}
+					],
+					"required": [
+						"buckets_path"
+					],
+					"type": "object"
+				},
+				"bucket_script": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Aggregation"
+						}
+					],
+					"required": [
+						"buckets_path",
+						"script"
+					],
+					"type": "object"
+				},
+				"bucket_selector": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Aggregation"
+						}
+					],
+					"required": [
+						"buckets_path",
+						"script"
+					],
+					"type": "object"
+				},
+				"bucket_sort": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Aggregation"
+						}
+					],
+					"type": "object"
+				},
+				"cardinality": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Aggregation"
+						}
+					],
+					"properties": {
+						"precision_threshold": {
+							"maximum": 40000,
+							"minimum": 0,
+							"type": "number"
+						}
+					},
+					"required": [
+						"field"
+					],
+					"type": "object"
+				},
+				"cumulative_sum": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Aggregation"
+						}
+					],
+					"required": [
+						"buckets_path"
+					],
+					"type": "object"
+				},
+				"date_histogram": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Aggregation"
+						}
+					],
+					"properties": {
+						"date_histogram_interval": {
+							"enum": [
+								"minute",
+								"1m",
+								"hour",
+								"1h",
+								"day",
+								"1d",
+								"week",
+								"1w",
+								"month",
+								"1M",
+								"quarter",
+								"1q",
+								"year",
+								"1y"
+							],
+							"type": "string"
+						}
+					},
+					"required": [
+						"field"
+					],
+					"type": "object"
+				},
+				"date_range": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Aggregation"
+						}
+					],
+					"required": [
+						"field"
+					],
+					"type": "object"
+				},
+				"derivative": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Aggregation"
+						}
+					],
+					"required": [
+						"buckets_path"
+					],
+					"type": "object"
+				},
+				"diversified_sampler": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Aggregation"
+						}
+					],
+					"properties": {
+						"max_docs_per_value": {
+							"type": "number"
+						}
+					},
+					"required": [
+						"field"
+					],
+					"type": "object"
+				},
+				"extended_stats": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Aggregation"
+						}
+					],
+					"type": "object"
+				},
+				"extended_stats_bucket": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Aggregation"
+						}
+					],
+					"required": [
+						"buckets_path"
+					],
+					"type": "object"
+				},
+				"filter": {
+					"$ref": "#/definitions/Query"
+				},
+				"filters": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Aggregation"
+						}
+					],
+					"properties": {
+						"filters": {
+							"type": [
+								"array",
+								"object"
+							]
+						},
+						"other_bucket": {
+							"type": "boolean"
+						},
+						"other_bucket_key": {
+							"type": "string"
+						}
+					},
+					"required": [
+						"filters"
+					],
+					"type": "object"
+				},
+				"geo_bounds": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Aggregation"
+						}
+					],
+					"properties": {
+						"wrap_longitude": {
+							"type": "boolean"
+						}
+					},
+					"required": [
+						"field"
+					],
+					"type": "object"
+				},
+				"geo_centroid": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Aggregation"
+						}
+					],
+					"required": [
+						"field"
+					],
+					"type": "object"
+				},
+				"geo_distance": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Aggregation"
+						}
+					],
+					"properties": {
+						"origin": {
+							"pattern": "^[0-9]+(\\.[0-9]+)?\\,[0-9]+(\\.[0-9]+)?$",
+							"type": "string"
+						}
+					},
+					"required": [
+						"field",
+						"origin"
+					],
+					"type": "object"
+				},
+				"geohash_grid": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Aggregation"
+						}
+					],
+					"properties": {
+						"precision": {
+							"maximum": 12,
+							"minimum": 1,
+							"type": "number"
+						}
+					},
+					"required": [
+						"field"
+					],
+					"type": "object"
+				},
+				"global": {
+					"type": "object"
+				},
+				"histogram": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Aggregation"
+						}
+					],
+					"properties": {
+						"interval": {
+							"type": "number"
+						}
+					},
+					"required": [
+						"field"
+					],
+					"type": "object"
+				},
+				"max": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Aggregation"
+						}
+					],
+					"required": [
+						"field"
+					],
+					"type": "object"
+				},
+				"max_bucket": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Aggregation"
+						}
+					],
+					"required": [
+						"buckets_path"
+					],
+					"type": "object"
+				},
+				"min": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Aggregation"
+						}
+					],
+					"required": [
+						"field"
+					],
+					"type": "object"
+				},
+				"min_bucket": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Aggregation"
+						}
+					],
+					"required": [
+						"buckets_path"
+					],
+					"type": "object"
+				},
+				"missing": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Aggregation"
+						}
+					],
+					"required": [
+						"field"
+					],
+					"type": "object"
+				},
+				"moving_function": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Aggregation"
+						}
+					],
+					"required": [
+						"buckets_path",
+						"script",
+						"window"
+					],
+					"type": "object"
+				},
+				"nested": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Aggregation"
+						}
+					],
+					"properties": {
+						"path": {
+							"type": "string"
+						}
+					},
+					"required": [
+						"path"
+					],
+					"type": "object"
+				},
+				"percentile_ranks": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Aggregation"
+						}
+					],
+					"properties": {
+						"values": {
+							"items": {
+								"type": "number"
+							},
+							"type": "array"
+						}
+					},
+					"required": [
+						"field",
+						"values"
+					],
+					"type": "object"
+				},
+				"percentiles": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Aggregation"
+						}
+					],
+					"required": [
+						"field"
+					],
+					"type": "object"
+				},
+				"percentiles_bucket": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Aggregation"
+						}
+					],
+					"required": [
+						"buckets_path"
+					],
+					"type": "object"
+				},
+				"range": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Aggregation"
+						}
+					],
+					"required": [
+						"field",
+						"ranges"
+					],
+					"type": "object"
+				},
+				"reverse_nested": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Aggregation"
+						}
+					],
+					"properties": {
+						"path": {
+							"type": "string"
+						}
+					},
+					"type": "object"
+				},
+				"sampler": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Aggregation"
+						}
+					],
+					"type": "object"
+				},
+				"scripted_metric": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Aggregation"
+						}
+					],
+					"properties": {
+						"combine_script": {
+							"$ref": "#/definitions/Script"
+						},
+						"init_script": {
+							"$ref": "#/definitions/Script"
+						},
+						"map_script": {
+							"$ref": "#/definitions/Script"
+						},
+						"params": {
+							"type": "object"
+						},
+						"reduce_script": {
+							"$ref": "#/definitions/Script"
+						}
+					},
+					"required": [
+						"combine_script",
+						"map_script",
+						"reduce_script"
+					],
+					"type": "object"
+				},
+				"serial_differencing": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Aggregation"
+						}
+					],
+					"properties": {
+						"lag": {
+							"minimum": 1,
+							"type": "number"
+						}
+					},
+					"required": [
+						"buckets_path"
+					],
+					"type": "object"
+				},
+				"significant_terms": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Aggregation"
+						},
+						{
+							"$ref": "#/definitions/SignificanceHeuristics"
+						}
+					],
+					"required": [
+						"field"
+					],
+					"type": "object"
+				},
+				"significant_text": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Aggregation"
+						},
+						{
+							"$ref": "#/definitions/SignificanceHeuristics"
+						}
+					],
+					"properties": {
+						"filter_duplicate_text": {
+							"type": "boolean"
+						}
+					},
+					"required": [
+						"field"
+					],
+					"type": "object"
+				},
+				"stats": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Aggregation"
+						}
+					],
+					"required": [
+						"field"
+					],
+					"type": "object"
+				},
+				"stats_bucket": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Aggregation"
+						}
+					],
+					"required": [
+						"buckets_path"
+					],
+					"type": "object"
+				},
+				"sum": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Aggregation"
+						}
+					],
+					"required": [
+						"field"
+					],
+					"type": "object"
+				},
+				"sum_bucket": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Aggregation"
+						}
+					],
+					"required": [
+						"buckets_path"
+					],
+					"type": "object"
+				},
+				"terms": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Aggregation"
+						}
+					],
+					"properties": {
+						"collect_mode": {
+							"enum": [
+								"breadth_first",
+								"depth_first"
+							],
+							"type": "string"
+						},
+						"show_term_doc_count_error": {
+							"type": "boolean"
+						}
+					},
+					"required": [
+						"field"
+					],
+					"type": "object"
+				},
+				"top_hits": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Aggregation"
+						}
+					],
+					"properties": {
+						"_source": {
+							"$ref": "#/definitions/Source"
+						},
+						"docvalue_fields": {
+							"items": {
+								"type": "string"
+							},
+							"type": "array"
+						},
+						"explain": {
+							"type": "boolean"
+						},
+						"from": {
+							"minimum": 0,
+							"type": "number"
+						},
+						"highlight": {
+							"$ref": "#/definitions/Highlight"
+						},
+						"script_fields": {
+							"items": {
+								"$ref": "#/definitions/Script"
+							},
+							"type": "array"
+						},
+						"track_scores": {
+							"type": "boolean"
+						},
+						"version": {
+							"type": "boolean"
+						}
+					},
+					"type": "object"
+				},
+				"value_count": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Aggregation"
+						}
+					],
+					"required": [
+						"field"
+					],
+					"type": "object"
+				},
+				"weighted_avg": {
+					"allOf": [
+						{
+							"$ref": "#/definitions/Aggregation"
+						}
+					],
+					"properties": {
+						"value": {
+							"properties": {
+								"field": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"field"
+							],
+							"type": "object"
+						},
+						"weight": {
+							"properties": {
+								"field": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"field"
+							],
+							"type": "object"
+						}
+					},
+					"type": "object"
+				}
+			}
+		},
+		"Bound": {
+			"properties": {
+				"max": {
+					"type": [
+						"number",
+						"string"
+					]
+				},
+				"min": {
+					"type": [
+						"number",
+						"string"
+					]
+				}
+			},
+			"type": "object"
+		},
+		"Highlight": {
+			"properties": {
+				"fragment_offset": {
+					"minimum": 0,
+					"type": "number"
+				},
+				"fragment_size": {
+					"minimum": 0,
+					"type": "number"
+				},
+				"number_of_fragments": {
+					"minimum": 0,
+					"type": "number"
+				},
+				"post_tags": {
+					"items": {
+						"type": "string"
+					},
+					"type": "array",
+					"uniqueItems": true
+				},
+				"pre_tags": {
+					"items": {
+						"type": "string"
+					},
+					"type": "array",
+					"uniqueItems": true
+				},
+				"require_field_match": {
+					"type": "boolean"
+				},
+				"type": {
+					"enum": [
+						"fvh",
+						"plain",
+						"unified"
+					],
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"NestedSort": {
+			"properties": {
+				"filter": {
+					"type": "object"
+				},
+				"nested": {
+					"$ref": "#/definitions/NestedSort"
+				},
+				"path": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"path"
+			],
+			"type": "object"
+		},
+		"Query": {
+			"type": "object"
+		},
+		"Range": {
+			"properties": {
+				"from": {
+					"type": [
+						"number",
+						"string"
+					]
+				},
+				"key": {
+					"type": "string"
+				},
+				"to": {
+					"type": [
+						"number",
+						"string"
+					]
+				}
+			},
+			"type": "object"
+		},
+		"Script": {
+			"anyOf": [
+				{
+					"properties": {
+						"id": {
+							"type": "string"
+						},
+						"params": {
+							"type": "object"
+						}
+					},
+					"required": [
+						"id"
+					],
+					"type": "object"
+				},
+				{
+					"properties": {
+						"_options": {
+							"type": "object"
+						},
+						"lang": {
+							"enum": [
+								"expression",
+								"java",
+								"mustache",
+								"painless"
+							],
+							"type": "string"
+						},
+						"params": {
+							"type": "object"
+						},
+						"source": {
+							"type": "string"
+						}
+					},
+					"required": [
+						"source"
+					],
+					"type": "object"
+				}
+			],
+			"type": "object"
+		},
+		"SignificanceHeuristics": {
+			"properties": {
+				"chi_square": {
+					"properties": {
+						"background_is_superset": {
+							"type": "boolean"
+						},
+						"include_negatives": {
+							"type": "boolean"
+						}
+					},
+					"type": "object"
+				},
+				"gnd": {
+					"properties": {
+						"background_is_superset": {
+							"type": "boolean"
+						}
+					},
+					"type": "object"
+				},
+				"jlh": {
+					"type": "object"
+				},
+				"mutual_information": {
+					"properties": {
+						"background_is_superset": {
+							"type": "boolean"
+						},
+						"include_negatives": {
+							"type": "boolean"
+						}
+					},
+					"type": "object"
+				},
+				"percentage": {
+					"type": "object"
+				},
+				"script_heuristic": {
+					"properties": {
+						"script": {
+							"$ref": "#/definitions/Script"
+						}
+					},
+					"required": [
+						"script"
+					],
+					"type": "object"
+				}
+			},
+			"type": "object"
+		},
+		"Sort": {
+			"properties": {
+				"missing": {
+					"type": "string"
+				},
+				"mode": {
+					"enum": [
+						"avg",
+						"max",
+						"median",
+						"min",
+						"sum"
+					],
+					"type": "string"
+				},
+				"nested": {
+					"$ref": "#/definitions/NestedSort"
+				},
+				"order": {
+					"$ref": "#/definitions/SortOrder"
+				}
+			},
+			"type": [
+				"string",
+				"object"
+			]
+		},
+		"SortOrder": {
+			"enum": [
+				"asc",
+				"desc"
+			],
+			"type": "string"
+		},
+		"Source": {
+			"properties": {
+				"excludes": {
+					"items": {
+						"type": "string"
+					},
+					"type": "array"
+				},
+				"includes": {
+					"items": {
+						"type": "string"
+					},
+					"type": "array"
+				}
+			},
+			"type": [
+				"boolean",
+				"object"
+			]
+		}
+	},
+	"properties": {
+		"aggs": {
+			"additionalProperties": {
+				"$ref": "#/definitions/Aggregations"
+			},
+			"type": "object"
+		}
+	},
+	"type": "object"
+}

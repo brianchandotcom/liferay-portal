@@ -14,6 +14,9 @@
 
 package com.liferay.site.navigation.admin.web.internal.display.context;
 
+import com.liferay.dynamic.data.mapping.constants.DDMTemplateConstants;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
@@ -22,24 +25,32 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.theme.NavItem;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.admin.constants.SiteNavigationAdminPortletKeys;
+import com.liferay.site.navigation.admin.web.internal.security.permission.resource.DDMTemplatePermission;
 import com.liferay.site.navigation.admin.web.internal.security.permission.resource.SiteNavigationMenuPermission;
 import com.liferay.site.navigation.admin.web.internal.util.SiteNavigationMenuPortletUtil;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
@@ -51,7 +62,9 @@ import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeContext;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.staging.StagingGroupHelperUtil;
+import com.liferay.template.constants.TemplatePortletKeys;
 
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -266,6 +279,9 @@ public class SiteNavigationAdminDisplayContext {
 				"/site_navigation_admin/delete_site_navigation_menu_item"
 			).buildString()
 		).put(
+			"displayTemplateOptions",
+			_getDDMTemplateJSONArray(_httpServletRequest)
+		).put(
 			"editSiteNavigationMenuItemParentURL",
 			() -> PortletURLBuilder.createActionURL(
 				_liferayPortletResponse
@@ -296,6 +312,8 @@ public class SiteNavigationAdminDisplayContext {
 			"id", _liferayPortletResponse.getNamespace() + "sidebar"
 		).put(
 			"languageId", themeDisplay.getLanguageId()
+		).put(
+			"previewSiteNavigationMenuURL", _getPreviewSiteNavigationMenuURL()
 		).put(
 			"redirect", PortalUtil.getCurrentURL(_liferayPortletRequest)
 		).put(
@@ -439,6 +457,67 @@ public class SiteNavigationAdminDisplayContext {
 		return addURL.toString();
 	}
 
+	private JSONArray _getDDMTemplateJSONArray(
+		HttpServletRequest httpServletRequest) {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		for (DDMTemplate ddmTemplate : _getDDMTemplates(httpServletRequest)) {
+			jsonArray.put(
+				JSONUtil.put(
+					"label",
+					HtmlUtil.escape(
+						ddmTemplate.getName(themeDisplay.getLocale()))
+				).put(
+					"value", HtmlUtil.escape(ddmTemplate.getTemplateKey())
+				));
+		}
+
+		return jsonArray;
+	}
+
+	private List<DDMTemplate> _getDDMTemplates(
+		HttpServletRequest httpServletRequest) {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		try {
+			List<DDMTemplate> ddmTemplates =
+				DDMTemplateLocalServiceUtil.getTemplates(
+					_getGroupIds(themeDisplay.getScopeGroup()),
+					PortalUtil.getClassNameId(NavItem.class.getName()), 0L);
+
+			return ListUtil.filter(
+				ddmTemplates,
+				ddmTemplate -> {
+					try {
+						if (!DDMTemplatePermission.contains(
+								themeDisplay.getPermissionChecker(),
+								ddmTemplate.getTemplateId(), ActionKeys.VIEW) ||
+							!DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY.equals(
+								ddmTemplate.getType())) {
+
+							return false;
+						}
+					}
+					catch (Exception exception) {
+						return false;
+					}
+
+					return true;
+				});
+		}
+		catch (Exception exception) {
+			return Collections.emptyList();
+		}
+	}
+
 	private DropdownItem _getDropdownItem(
 		SiteNavigationMenuItemType siteNavigationMenuItemType,
 		ThemeDisplay themeDisplay) {
@@ -478,6 +557,46 @@ public class SiteNavigationAdminDisplayContext {
 		).setLabel(
 			siteNavigationMenuItemType.getLabel(themeDisplay.getLocale())
 		).build();
+	}
+
+	private long[] _getGroupIds(Group group) {
+		if (group.isLayout()) {
+			group = group.getParentGroup();
+		}
+
+		long groupId = group.getGroupId();
+
+		if (group.isStagingGroup()) {
+			Group liveGroup = group.getLiveGroup();
+
+			if (!liveGroup.isStagedPortlet(TemplatePortletKeys.TEMPLATE)) {
+				groupId = liveGroup.getGroupId();
+			}
+		}
+
+		try {
+			return PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId);
+		}
+		catch (PortalException portalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(portalException);
+			}
+		}
+
+		return new long[] {groupId};
+	}
+
+	private String _getPreviewSiteNavigationMenuURL() {
+		LiferayPortletURL resourceURL =
+			(LiferayPortletURL)_liferayPortletResponse.createResourceURL();
+
+		resourceURL.setCopyCurrentRenderParameters(false);
+		resourceURL.setResourceID(
+			"/site_navigation_admin/get_site_navigation_menu_preview");
+		resourceURL.setParameter(
+			"siteNavigationMenuId", String.valueOf(getSiteNavigationMenuId()));
+
+		return resourceURL.toString();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

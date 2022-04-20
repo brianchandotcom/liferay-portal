@@ -18,6 +18,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>LABEL_ACCEPTED_FILE_EXTENSIONS</td>
+		<td>//div[@class = 'form-group']//label[contains(text(),'Accepted File Extensions')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>LABEL_ERROR_REQUIRED</td>
 		<td>//input[@name='label']/following-sibling::div[contains(.,'Required')]</td>
 		<td></td>
@@ -30,6 +35,11 @@
 	<tr>
 		<td>LABEL_LOCALIZED</td>
 		<td>//div[contains(@class,'lfr-objects__input-localized')]//input</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>LABEL_MAXIMUM_FILE_SIZE</td>
+		<td>//div[@class = 'form-group']//label[contains(text(),'Maximum File Size')]</td>
 		<td></td>
 	</tr>
 	<tr>

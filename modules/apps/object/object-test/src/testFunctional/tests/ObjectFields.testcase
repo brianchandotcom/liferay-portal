@@ -206,12 +206,32 @@ definition {
 	}
 
 	@description = "LPS-143065 - Verify if a side panel containing the Field name, Typem Request Files, Accepted File Extensions, and Maximum File Size fields"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewSidePanelOptions {
 
-		// TODO LPS-151560 CanViewSidePanelOptions pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 151560",
+			objectName = "CustomObject151560",
+			pluralLabelName = "Custom Objects 151560");
 
+		Navigator.openURL();
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 151560");
+
+		ObjectAdmin.goToFieldsTab();
+
+		ObjectAdmin.addObjectFieldViaUI(
+			fieldLabel = "Custom Attachment",
+			fieldType = "Attachment",
+			fieldAttachment = "Upload Directly from the User's Computer");
+
+		ObjectAdmin.goToFieldsDetails(label = "Custom Attachment");
+
+		AssertElementPresent(locator1 = "ObjectField#LABEL_ACCEPTED_FILE_EXTENSIONS");
+
+		AssertElementPresent(locator1 = "ObjectField#LABEL_MAXIMUM_FILE_SIZE");
 	}
 
 	@description = "LPS-144902 - Verify there is a description of each Field Type"

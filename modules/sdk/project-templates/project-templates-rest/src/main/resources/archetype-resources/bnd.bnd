@@ -1,7 +1,11 @@
+#set( $versionPolicy = '${replacestring;${range;[==,==]};.*,(.*)];$1}' )
+
 Bundle-Name: ${artifactId}
 Bundle-SymbolicName: ${package}
 Bundle-Version: ${version}
 Liferay-Configuration-Path: /configuration
 #if (${buildType} != "gradle")
+-consumer-policy: $versionPolicy
 -metatype: *
--plugin.metatype: com.liferay.ant.bnd.metatype.MetatypePlugin#end
+-plugin.metatype: com.liferay.ant.bnd.metatype.MetatypePlugin
+-provider-policy: $versionPolicy#end

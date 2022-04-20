@@ -1,10 +1,14 @@
+#set( $versionPolicy = '${replacestring;${range;[==,==]};.*,(.*)];$1}' )
+
 Bundle-Name: ${artifactId}
 Bundle-SymbolicName: ${package}
 Bundle-Version: ${version}
 Liferay-Theme-Contributor-Type: ${contributorType}
 Web-ContextPath: /${contributorType}-theme-contributor
 #if (${buildType} != "gradle")
+-consumer-policy: $versionPolicy
 -metatype: *
 -plugin.metatype: com.liferay.ant.bnd.metatype.MetatypePlugin
 -plugin.sass: com.liferay.ant.bnd.sass.SassAnalyzerPlugin
+-provider-policy: $versionPolicy
 -sass: *#end

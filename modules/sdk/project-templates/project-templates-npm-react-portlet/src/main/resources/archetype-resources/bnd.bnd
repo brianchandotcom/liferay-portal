@@ -1,9 +1,12 @@
+#set( $versionPolicy = '${replacestring;${range;[==,==]};.*,(.*)];$1}' )
+
 Bundle-Name: ${artifactId}
 Bundle-SymbolicName: ${package}
 Bundle-Version: ${version}
 Export-Package: ${package}.constants
 Web-ContextPath: /${artifactId}
 #if (${buildType} != "gradle")
+-consumer-policy: $versionPolicy
 #if (${liferayVersion.startsWith("7.1")})-contract: JavaPortlet,JavaServlet
 #end
 -jsp: *.jsp,*.jspf,*.jspx
@@ -13,4 +16,5 @@ Web-ContextPath: /${artifactId}
 -plugin.npm: com.liferay.ant.bnd.npm.NpmAnalyzerPlugin
 -plugin.resourcebundle: com.liferay.ant.bnd.resource.bundle.ResourceBundleLoaderAnalyzerPlugin
 -plugin.sass: com.liferay.ant.bnd.sass.SassAnalyzerPlugin
+-provider-policy: $versionPolicy
 -sass: *#end

@@ -14,7 +14,9 @@
 
 package com.liferay.depot.internal.model.listener;
 
+import com.liferay.depot.model.DepotAppCustomization;
 import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotAppCustomizationLocalService;
 import com.liferay.depot.service.DepotEntryGroupRelLocalService;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
@@ -27,6 +29,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -67,6 +71,11 @@ public class GroupModelListener extends BaseModelListener<Group> {
 					group, serviceContext);
 
 				group.setClassPK(depotEntry.getDepotEntryId());
+
+				Group liveGroup = group.getLiveGroup();
+
+				_copyDepotAppCustomizations(
+					depotEntry.getDepotEntryId(), liveGroup.getClassPK());
 			}
 		}
 		catch (PortalException portalException) {
@@ -84,6 +93,23 @@ public class GroupModelListener extends BaseModelListener<Group> {
 			group.getGroupId());
 	}
 
+	private void _copyDepotAppCustomizations(
+			long newDepotEntryId, long oldDepotEntryId)
+		throws PortalException {
+
+		List<DepotAppCustomization> depotAppCustomizations =
+			_depotAppCustomizationLocalService.getDepotAppCustomizations(
+				oldDepotEntryId);
+
+		for (DepotAppCustomization depotAppCustomization :
+				depotAppCustomizations) {
+
+			_depotAppCustomizationLocalService.updateDepotAppCustomization(
+				newDepotEntryId, depotAppCustomization.getEnabled(),
+				depotAppCustomization.getPortletId());
+		}
+	}
+
 	private boolean _isStaging(ServiceContext serviceContext) {
 		if (serviceContext == null) {
 			return false;
@@ -91,6 +117,10 @@ public class GroupModelListener extends BaseModelListener<Group> {
 
 		return ParamUtil.getBoolean(serviceContext, "staging");
 	}
+
+	@Reference
+	private DepotAppCustomizationLocalService
+		_depotAppCustomizationLocalService;
 
 	@Reference
 	private DepotEntryGroupRelLocalService _depotEntryGroupRelLocalService;

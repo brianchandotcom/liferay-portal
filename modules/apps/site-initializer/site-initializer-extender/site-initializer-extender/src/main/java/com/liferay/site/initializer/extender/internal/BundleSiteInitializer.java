@@ -2528,15 +2528,33 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private void _addStyleBookEntries(ServiceContext serviceContext)
 		throws Exception {
 
-		URL url = _bundle.getEntry("/style-books.zip");
+		Enumeration<URL> enumeration = _bundle.findEntries(
+			"/site-initializer/style-books", StringPool.STAR, true);
 
-		if (url == null) {
+		if (enumeration == null) {
 			return;
+		}
+
+		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
+
+		while (enumeration.hasMoreElements()) {
+			URL url = enumeration.nextElement();
+
+			String fileName = url.getFile();
+
+			if (fileName.endsWith("/")) {
+				continue;
+			}
+
+			zipWriter.addEntry(
+				StringUtil.removeFirst(
+					fileName, "/site-initializer/style-books/"),
+				url.openStream());
 		}
 
 		_styleBookEntryZipProcessor.importStyleBookEntries(
 			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-			FileUtil.createTempFile(url.openStream()), false);
+			zipWriter.getFile(), false);
 	}
 
 	private Map<String, String> _addTaxonomyCategories(

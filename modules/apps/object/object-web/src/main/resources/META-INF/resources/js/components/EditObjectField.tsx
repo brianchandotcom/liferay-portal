@@ -222,7 +222,7 @@ function SearchableContainer({
 	}, [objectField.indexedLanguageId]);
 
 	return (
-		<Sheet className="mt-4" title={Liferay.Language.get('searchable')}>
+		<Sheet title={Liferay.Language.get('searchable')}>
 			<ClayForm.Group>
 				<ClayToggle
 					disabled={disabled}

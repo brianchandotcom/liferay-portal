@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cronjob
+  labels:
+    dxp: configmap
+data:
+  com.liferay.oauth2.application.factory.headless.server.configuration.v1.Oauth2ApplicationHeadlessServerConfiguration-cronjob.config: |
+    name="cronjob"
+    description="This is a cronjob"
+    companyId=L"20099"
+    homePageURL="https://cronjob.locadev.me"
+    scopes=["Liferay.Headless.Admin.User.everything"]

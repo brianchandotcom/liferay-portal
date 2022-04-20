@@ -175,6 +175,20 @@ public class K8sAgentImpl implements K8sAgent {
 		}
 	}
 
+	@Override
+	public void deleteConfigMap(String name) {
+		_kubernetesClient.configMaps(
+		).inNamespace(
+			_k8sAgentConfiguration.namespace()
+		).withName(
+			name
+		).delete();
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(StringBundler.concat("Delted ", name));
+		}
+	}
+
 	private void _add(ConfigMap configMap) {
 		Map<String, String> data = configMap.getData();
 

@@ -58,6 +58,9 @@ public class CommerceOrderTable extends BaseTable<CommerceOrderTable> {
 		"createDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<CommerceOrderTable, Date> modifiedDate = createColumn(
 		"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderTable, Long> billingAddressId =
+		createColumn(
+			"billingAddressId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<CommerceOrderTable, Long> commerceAccountId =
 		createColumn(
 			"commerceAccountId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
@@ -69,40 +72,30 @@ public class CommerceOrderTable extends BaseTable<CommerceOrderTable> {
 		createColumn(
 			"commerceOrderTypeId", Long.class, Types.BIGINT,
 			Column.FLAG_DEFAULT);
-	public final Column<CommerceOrderTable, Long> billingAddressId =
-		createColumn(
-			"billingAddressId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<CommerceOrderTable, Long> shippingAddressId =
-		createColumn(
-			"shippingAddressId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<CommerceOrderTable, String> commercePaymentMethodKey =
-		createColumn(
-			"commercePaymentMethodKey", String.class, Types.VARCHAR,
-			Column.FLAG_DEFAULT);
-	public final Column<CommerceOrderTable, Clob> transactionId = createColumn(
-		"transactionId", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<CommerceOrderTable, Long> commerceShippingMethodId =
 		createColumn(
 			"commerceShippingMethodId", Long.class, Types.BIGINT,
-			Column.FLAG_DEFAULT);
-	public final Column<CommerceOrderTable, String> shippingOptionName =
-		createColumn(
-			"shippingOptionName", String.class, Types.VARCHAR,
-			Column.FLAG_DEFAULT);
-	public final Column<CommerceOrderTable, String> purchaseOrderNumber =
-		createColumn(
-			"purchaseOrderNumber", String.class, Types.VARCHAR,
-			Column.FLAG_DEFAULT);
-	public final Column<CommerceOrderTable, String> couponCode = createColumn(
-		"couponCode", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<CommerceOrderTable, Date> lastPriceUpdateDate =
-		createColumn(
-			"lastPriceUpdateDate", Date.class, Types.TIMESTAMP,
 			Column.FLAG_DEFAULT);
 	public final Column<CommerceOrderTable, Long> deliveryCommerceTermEntryId =
 		createColumn(
 			"deliveryCommerceTermEntryId", Long.class, Types.BIGINT,
 			Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderTable, Long> paymentCommerceTermEntryId =
+		createColumn(
+			"paymentCommerceTermEntryId", Long.class, Types.BIGINT,
+			Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderTable, Long> shippingAddressId =
+		createColumn(
+			"shippingAddressId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderTable, String> advanceStatus =
+		createColumn(
+			"advanceStatus", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderTable, String> commercePaymentMethodKey =
+		createColumn(
+			"commercePaymentMethodKey", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderTable, String> couponCode = createColumn(
+		"couponCode", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CommerceOrderTable, Clob>
 		deliveryCommerceTermEntryDescription = createColumn(
 			"deliveryCTermEntryDescription", Clob.class, Types.CLOB,
@@ -111,10 +104,18 @@ public class CommerceOrderTable extends BaseTable<CommerceOrderTable> {
 		deliveryCommerceTermEntryName = createColumn(
 			"deliveryCommerceTermEntryName", String.class, Types.VARCHAR,
 			Column.FLAG_DEFAULT);
-	public final Column<CommerceOrderTable, Long> paymentCommerceTermEntryId =
+	public final Column<CommerceOrderTable, Date> lastPriceUpdateDate =
 		createColumn(
-			"paymentCommerceTermEntryId", Long.class, Types.BIGINT,
+			"lastPriceUpdateDate", Date.class, Types.TIMESTAMP,
 			Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderTable, Boolean> manuallyAdjusted =
+		createColumn(
+			"manuallyAdjusted", Boolean.class, Types.BOOLEAN,
+			Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderTable, Date> orderDate = createColumn(
+		"orderDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderTable, Integer> orderStatus = createColumn(
+		"orderStatus", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 	public final Column<CommerceOrderTable, Clob>
 		paymentCommerceTermEntryDescription = createColumn(
 			"paymentCTermEntryDescription", Clob.class, Types.CLOB,
@@ -123,27 +124,18 @@ public class CommerceOrderTable extends BaseTable<CommerceOrderTable> {
 		paymentCommerceTermEntryName = createColumn(
 			"paymentCommerceTermEntryName", String.class, Types.VARCHAR,
 			Column.FLAG_DEFAULT);
-	public final Column<CommerceOrderTable, BigDecimal> subtotal = createColumn(
-		"subtotal", BigDecimal.class, Types.DECIMAL, Column.FLAG_DEFAULT);
-	public final Column<CommerceOrderTable, BigDecimal> subtotalDiscountAmount =
+	public final Column<CommerceOrderTable, Integer> paymentStatus =
 		createColumn(
-			"subtotalDiscountAmount", BigDecimal.class, Types.DECIMAL,
+			"paymentStatus", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderTable, String> printedNote = createColumn(
+		"printedNote", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderTable, String> purchaseOrderNumber =
+		createColumn(
+			"purchaseOrderNumber", String.class, Types.VARCHAR,
 			Column.FLAG_DEFAULT);
-	public final Column<CommerceOrderTable, BigDecimal>
-		subtotalDiscountPercentageLevel1 = createColumn(
-			"subtotalDiscountPercentLevel1", BigDecimal.class, Types.DECIMAL,
-			Column.FLAG_DEFAULT);
-	public final Column<CommerceOrderTable, BigDecimal>
-		subtotalDiscountPercentageLevel2 = createColumn(
-			"subtotalDiscountPercentLevel2", BigDecimal.class, Types.DECIMAL,
-			Column.FLAG_DEFAULT);
-	public final Column<CommerceOrderTable, BigDecimal>
-		subtotalDiscountPercentageLevel3 = createColumn(
-			"subtotalDiscountPercentLevel3", BigDecimal.class, Types.DECIMAL,
-			Column.FLAG_DEFAULT);
-	public final Column<CommerceOrderTable, BigDecimal>
-		subtotalDiscountPercentageLevel4 = createColumn(
-			"subtotalDiscountPercentLevel4", BigDecimal.class, Types.DECIMAL,
+	public final Column<CommerceOrderTable, Date> requestedDeliveryDate =
+		createColumn(
+			"requestedDeliveryDate", Date.class, Types.TIMESTAMP,
 			Column.FLAG_DEFAULT);
 	public final Column<CommerceOrderTable, BigDecimal> shippingAmount =
 		createColumn(
@@ -168,6 +160,80 @@ public class CommerceOrderTable extends BaseTable<CommerceOrderTable> {
 	public final Column<CommerceOrderTable, BigDecimal>
 		shippingDiscountPercentageLevel4 = createColumn(
 			"shippingDiscountPercentLevel4", BigDecimal.class, Types.DECIMAL,
+			Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderTable, BigDecimal>
+		shippingDiscountPercentageLevel1WithTaxAmount = createColumn(
+			"shippingDiscountPctLev1WithTax", BigDecimal.class, Types.DECIMAL,
+			Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderTable, BigDecimal>
+		shippingDiscountPercentageLevel2WithTaxAmount = createColumn(
+			"shippingDiscountPctLev2WithTax", BigDecimal.class, Types.DECIMAL,
+			Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderTable, BigDecimal>
+		shippingDiscountPercentageLevel3WithTaxAmount = createColumn(
+			"shippingDiscountPctLev3WithTax", BigDecimal.class, Types.DECIMAL,
+			Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderTable, BigDecimal>
+		shippingDiscountPercentageLevel4WithTaxAmount = createColumn(
+			"shippingDiscountPctLev4WithTax", BigDecimal.class, Types.DECIMAL,
+			Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderTable, BigDecimal>
+		shippingDiscountWithTaxAmount = createColumn(
+			"shippingDiscountWithTaxAmount", BigDecimal.class, Types.DECIMAL,
+			Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderTable, String> shippingOptionName =
+		createColumn(
+			"shippingOptionName", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderTable, BigDecimal> shippingWithTaxAmount =
+		createColumn(
+			"shippingWithTaxAmount", BigDecimal.class, Types.DECIMAL,
+			Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderTable, BigDecimal> subtotal = createColumn(
+		"subtotal", BigDecimal.class, Types.DECIMAL, Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderTable, BigDecimal> subtotalDiscountAmount =
+		createColumn(
+			"subtotalDiscountAmount", BigDecimal.class, Types.DECIMAL,
+			Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderTable, BigDecimal>
+		subtotalDiscountPercentageLevel1 = createColumn(
+			"subtotalDiscountPercentLevel1", BigDecimal.class, Types.DECIMAL,
+			Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderTable, BigDecimal>
+		subtotalDiscountPercentageLevel2 = createColumn(
+			"subtotalDiscountPercentLevel2", BigDecimal.class, Types.DECIMAL,
+			Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderTable, BigDecimal>
+		subtotalDiscountPercentageLevel3 = createColumn(
+			"subtotalDiscountPercentLevel3", BigDecimal.class, Types.DECIMAL,
+			Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderTable, BigDecimal>
+		subtotalDiscountPercentageLevel4 = createColumn(
+			"subtotalDiscountPercentLevel4", BigDecimal.class, Types.DECIMAL,
+			Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderTable, BigDecimal>
+		subtotalDiscountPercentageLevel1WithTaxAmount = createColumn(
+			"subtotalDiscountPctLev1WithTax", BigDecimal.class, Types.DECIMAL,
+			Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderTable, BigDecimal>
+		subtotalDiscountPercentageLevel2WithTaxAmount = createColumn(
+			"subtotalDiscountPctLev2WithTax", BigDecimal.class, Types.DECIMAL,
+			Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderTable, BigDecimal>
+		subtotalDiscountPercentageLevel3WithTaxAmount = createColumn(
+			"subtotalDiscountPctLev3WithTax", BigDecimal.class, Types.DECIMAL,
+			Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderTable, BigDecimal>
+		subtotalDiscountPercentageLevel4WithTaxAmount = createColumn(
+			"subtotalDiscountPctLev4WithTax", BigDecimal.class, Types.DECIMAL,
+			Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderTable, BigDecimal>
+		subtotalDiscountWithTaxAmount = createColumn(
+			"subtotalDiscountWithTaxAmount", BigDecimal.class, Types.DECIMAL,
+			Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderTable, BigDecimal> subtotalWithTaxAmount =
+		createColumn(
+			"subtotalWithTaxAmount", BigDecimal.class, Types.DECIMAL,
 			Column.FLAG_DEFAULT);
 	public final Column<CommerceOrderTable, BigDecimal> taxAmount =
 		createColumn(
@@ -194,62 +260,6 @@ public class CommerceOrderTable extends BaseTable<CommerceOrderTable> {
 		totalDiscountPercentageLevel4 = createColumn(
 			"totalDiscountPercentageLevel4", BigDecimal.class, Types.DECIMAL,
 			Column.FLAG_DEFAULT);
-	public final Column<CommerceOrderTable, BigDecimal> subtotalWithTaxAmount =
-		createColumn(
-			"subtotalWithTaxAmount", BigDecimal.class, Types.DECIMAL,
-			Column.FLAG_DEFAULT);
-	public final Column<CommerceOrderTable, BigDecimal>
-		subtotalDiscountWithTaxAmount = createColumn(
-			"subtotalDiscountWithTaxAmount", BigDecimal.class, Types.DECIMAL,
-			Column.FLAG_DEFAULT);
-	public final Column<CommerceOrderTable, BigDecimal>
-		subtotalDiscountPercentageLevel1WithTaxAmount = createColumn(
-			"subtotalDiscountPctLev1WithTax", BigDecimal.class, Types.DECIMAL,
-			Column.FLAG_DEFAULT);
-	public final Column<CommerceOrderTable, BigDecimal>
-		subtotalDiscountPercentageLevel2WithTaxAmount = createColumn(
-			"subtotalDiscountPctLev2WithTax", BigDecimal.class, Types.DECIMAL,
-			Column.FLAG_DEFAULT);
-	public final Column<CommerceOrderTable, BigDecimal>
-		subtotalDiscountPercentageLevel3WithTaxAmount = createColumn(
-			"subtotalDiscountPctLev3WithTax", BigDecimal.class, Types.DECIMAL,
-			Column.FLAG_DEFAULT);
-	public final Column<CommerceOrderTable, BigDecimal>
-		subtotalDiscountPercentageLevel4WithTaxAmount = createColumn(
-			"subtotalDiscountPctLev4WithTax", BigDecimal.class, Types.DECIMAL,
-			Column.FLAG_DEFAULT);
-	public final Column<CommerceOrderTable, BigDecimal> shippingWithTaxAmount =
-		createColumn(
-			"shippingWithTaxAmount", BigDecimal.class, Types.DECIMAL,
-			Column.FLAG_DEFAULT);
-	public final Column<CommerceOrderTable, BigDecimal>
-		shippingDiscountWithTaxAmount = createColumn(
-			"shippingDiscountWithTaxAmount", BigDecimal.class, Types.DECIMAL,
-			Column.FLAG_DEFAULT);
-	public final Column<CommerceOrderTable, BigDecimal>
-		shippingDiscountPercentageLevel1WithTaxAmount = createColumn(
-			"shippingDiscountPctLev1WithTax", BigDecimal.class, Types.DECIMAL,
-			Column.FLAG_DEFAULT);
-	public final Column<CommerceOrderTable, BigDecimal>
-		shippingDiscountPercentageLevel2WithTaxAmount = createColumn(
-			"shippingDiscountPctLev2WithTax", BigDecimal.class, Types.DECIMAL,
-			Column.FLAG_DEFAULT);
-	public final Column<CommerceOrderTable, BigDecimal>
-		shippingDiscountPercentageLevel3WithTaxAmount = createColumn(
-			"shippingDiscountPctLev3WithTax", BigDecimal.class, Types.DECIMAL,
-			Column.FLAG_DEFAULT);
-	public final Column<CommerceOrderTable, BigDecimal>
-		shippingDiscountPercentageLevel4WithTaxAmount = createColumn(
-			"shippingDiscountPctLev4WithTax", BigDecimal.class, Types.DECIMAL,
-			Column.FLAG_DEFAULT);
-	public final Column<CommerceOrderTable, BigDecimal> totalWithTaxAmount =
-		createColumn(
-			"totalWithTaxAmount", BigDecimal.class, Types.DECIMAL,
-			Column.FLAG_DEFAULT);
-	public final Column<CommerceOrderTable, BigDecimal>
-		totalDiscountWithTaxAmount = createColumn(
-			"totalDiscountWithTaxAmount", BigDecimal.class, Types.DECIMAL,
-			Column.FLAG_DEFAULT);
 	public final Column<CommerceOrderTable, BigDecimal>
 		totalDiscountPercentageLevel1WithTaxAmount = createColumn(
 			"totalDiscountPctLev1WithTax", BigDecimal.class, Types.DECIMAL,
@@ -266,26 +276,16 @@ public class CommerceOrderTable extends BaseTable<CommerceOrderTable> {
 		totalDiscountPercentageLevel4WithTaxAmount = createColumn(
 			"totalDiscountPctLev4WithTax", BigDecimal.class, Types.DECIMAL,
 			Column.FLAG_DEFAULT);
-	public final Column<CommerceOrderTable, String> advanceStatus =
-		createColumn(
-			"advanceStatus", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<CommerceOrderTable, Integer> paymentStatus =
-		createColumn(
-			"paymentStatus", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
-	public final Column<CommerceOrderTable, Date> orderDate = createColumn(
-		"orderDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
-	public final Column<CommerceOrderTable, Integer> orderStatus = createColumn(
-		"orderStatus", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
-	public final Column<CommerceOrderTable, String> printedNote = createColumn(
-		"printedNote", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<CommerceOrderTable, Date> requestedDeliveryDate =
-		createColumn(
-			"requestedDeliveryDate", Date.class, Types.TIMESTAMP,
+	public final Column<CommerceOrderTable, BigDecimal>
+		totalDiscountWithTaxAmount = createColumn(
+			"totalDiscountWithTaxAmount", BigDecimal.class, Types.DECIMAL,
 			Column.FLAG_DEFAULT);
-	public final Column<CommerceOrderTable, Boolean> manuallyAdjusted =
+	public final Column<CommerceOrderTable, BigDecimal> totalWithTaxAmount =
 		createColumn(
-			"manuallyAdjusted", Boolean.class, Types.BOOLEAN,
+			"totalWithTaxAmount", BigDecimal.class, Types.DECIMAL,
 			Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderTable, Clob> transactionId = createColumn(
+		"transactionId", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<CommerceOrderTable, Integer> status = createColumn(
 		"status", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 	public final Column<CommerceOrderTable, Long> statusByUserId = createColumn(

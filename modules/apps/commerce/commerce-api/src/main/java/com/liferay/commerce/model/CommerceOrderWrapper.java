@@ -55,49 +55,40 @@ public class CommerceOrderWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("billingAddressId", getBillingAddressId());
 		attributes.put("commerceAccountId", getCommerceAccountId());
 		attributes.put("commerceCurrencyId", getCommerceCurrencyId());
 		attributes.put("commerceOrderTypeId", getCommerceOrderTypeId());
-		attributes.put("billingAddressId", getBillingAddressId());
-		attributes.put("shippingAddressId", getShippingAddressId());
-		attributes.put(
-			"commercePaymentMethodKey", getCommercePaymentMethodKey());
-		attributes.put("transactionId", getTransactionId());
 		attributes.put(
 			"commerceShippingMethodId", getCommerceShippingMethodId());
-		attributes.put("shippingOptionName", getShippingOptionName());
-		attributes.put("purchaseOrderNumber", getPurchaseOrderNumber());
-		attributes.put("couponCode", getCouponCode());
-		attributes.put("lastPriceUpdateDate", getLastPriceUpdateDate());
 		attributes.put(
 			"deliveryCommerceTermEntryId", getDeliveryCommerceTermEntryId());
+		attributes.put(
+			"paymentCommerceTermEntryId", getPaymentCommerceTermEntryId());
+		attributes.put("shippingAddressId", getShippingAddressId());
+		attributes.put("advanceStatus", getAdvanceStatus());
+		attributes.put(
+			"commercePaymentMethodKey", getCommercePaymentMethodKey());
+		attributes.put("couponCode", getCouponCode());
 		attributes.put(
 			"deliveryCommerceTermEntryDescription",
 			getDeliveryCommerceTermEntryDescription());
 		attributes.put(
 			"deliveryCommerceTermEntryName",
 			getDeliveryCommerceTermEntryName());
-		attributes.put(
-			"paymentCommerceTermEntryId", getPaymentCommerceTermEntryId());
+		attributes.put("lastPriceUpdateDate", getLastPriceUpdateDate());
+		attributes.put("manuallyAdjusted", isManuallyAdjusted());
+		attributes.put("orderDate", getOrderDate());
+		attributes.put("orderStatus", getOrderStatus());
 		attributes.put(
 			"paymentCommerceTermEntryDescription",
 			getPaymentCommerceTermEntryDescription());
 		attributes.put(
 			"paymentCommerceTermEntryName", getPaymentCommerceTermEntryName());
-		attributes.put("subtotal", getSubtotal());
-		attributes.put("subtotalDiscountAmount", getSubtotalDiscountAmount());
-		attributes.put(
-			"subtotalDiscountPercentageLevel1",
-			getSubtotalDiscountPercentageLevel1());
-		attributes.put(
-			"subtotalDiscountPercentageLevel2",
-			getSubtotalDiscountPercentageLevel2());
-		attributes.put(
-			"subtotalDiscountPercentageLevel3",
-			getSubtotalDiscountPercentageLevel3());
-		attributes.put(
-			"subtotalDiscountPercentageLevel4",
-			getSubtotalDiscountPercentageLevel4());
+		attributes.put("paymentStatus", getPaymentStatus());
+		attributes.put("printedNote", getPrintedNote());
+		attributes.put("purchaseOrderNumber", getPurchaseOrderNumber());
+		attributes.put("requestedDeliveryDate", getRequestedDeliveryDate());
 		attributes.put("shippingAmount", getShippingAmount());
 		attributes.put("shippingDiscountAmount", getShippingDiscountAmount());
 		attributes.put(
@@ -112,6 +103,53 @@ public class CommerceOrderWrapper
 		attributes.put(
 			"shippingDiscountPercentageLevel4",
 			getShippingDiscountPercentageLevel4());
+		attributes.put(
+			"shippingDiscountPercentageLevel1WithTaxAmount",
+			getShippingDiscountPercentageLevel1WithTaxAmount());
+		attributes.put(
+			"shippingDiscountPercentageLevel2WithTaxAmount",
+			getShippingDiscountPercentageLevel2WithTaxAmount());
+		attributes.put(
+			"shippingDiscountPercentageLevel3WithTaxAmount",
+			getShippingDiscountPercentageLevel3WithTaxAmount());
+		attributes.put(
+			"shippingDiscountPercentageLevel4WithTaxAmount",
+			getShippingDiscountPercentageLevel4WithTaxAmount());
+		attributes.put(
+			"shippingDiscountWithTaxAmount",
+			getShippingDiscountWithTaxAmount());
+		attributes.put("shippingOptionName", getShippingOptionName());
+		attributes.put("shippingWithTaxAmount", getShippingWithTaxAmount());
+		attributes.put("subtotal", getSubtotal());
+		attributes.put("subtotalDiscountAmount", getSubtotalDiscountAmount());
+		attributes.put(
+			"subtotalDiscountPercentageLevel1",
+			getSubtotalDiscountPercentageLevel1());
+		attributes.put(
+			"subtotalDiscountPercentageLevel2",
+			getSubtotalDiscountPercentageLevel2());
+		attributes.put(
+			"subtotalDiscountPercentageLevel3",
+			getSubtotalDiscountPercentageLevel3());
+		attributes.put(
+			"subtotalDiscountPercentageLevel4",
+			getSubtotalDiscountPercentageLevel4());
+		attributes.put(
+			"subtotalDiscountPercentageLevel1WithTaxAmount",
+			getSubtotalDiscountPercentageLevel1WithTaxAmount());
+		attributes.put(
+			"subtotalDiscountPercentageLevel2WithTaxAmount",
+			getSubtotalDiscountPercentageLevel2WithTaxAmount());
+		attributes.put(
+			"subtotalDiscountPercentageLevel3WithTaxAmount",
+			getSubtotalDiscountPercentageLevel3WithTaxAmount());
+		attributes.put(
+			"subtotalDiscountPercentageLevel4WithTaxAmount",
+			getSubtotalDiscountPercentageLevel4WithTaxAmount());
+		attributes.put(
+			"subtotalDiscountWithTaxAmount",
+			getSubtotalDiscountWithTaxAmount());
+		attributes.put("subtotalWithTaxAmount", getSubtotalWithTaxAmount());
 		attributes.put("taxAmount", getTaxAmount());
 		attributes.put("total", getTotal());
 		attributes.put("totalDiscountAmount", getTotalDiscountAmount());
@@ -127,41 +165,6 @@ public class CommerceOrderWrapper
 		attributes.put(
 			"totalDiscountPercentageLevel4",
 			getTotalDiscountPercentageLevel4());
-		attributes.put("subtotalWithTaxAmount", getSubtotalWithTaxAmount());
-		attributes.put(
-			"subtotalDiscountWithTaxAmount",
-			getSubtotalDiscountWithTaxAmount());
-		attributes.put(
-			"subtotalDiscountPercentageLevel1WithTaxAmount",
-			getSubtotalDiscountPercentageLevel1WithTaxAmount());
-		attributes.put(
-			"subtotalDiscountPercentageLevel2WithTaxAmount",
-			getSubtotalDiscountPercentageLevel2WithTaxAmount());
-		attributes.put(
-			"subtotalDiscountPercentageLevel3WithTaxAmount",
-			getSubtotalDiscountPercentageLevel3WithTaxAmount());
-		attributes.put(
-			"subtotalDiscountPercentageLevel4WithTaxAmount",
-			getSubtotalDiscountPercentageLevel4WithTaxAmount());
-		attributes.put("shippingWithTaxAmount", getShippingWithTaxAmount());
-		attributes.put(
-			"shippingDiscountWithTaxAmount",
-			getShippingDiscountWithTaxAmount());
-		attributes.put(
-			"shippingDiscountPercentageLevel1WithTaxAmount",
-			getShippingDiscountPercentageLevel1WithTaxAmount());
-		attributes.put(
-			"shippingDiscountPercentageLevel2WithTaxAmount",
-			getShippingDiscountPercentageLevel2WithTaxAmount());
-		attributes.put(
-			"shippingDiscountPercentageLevel3WithTaxAmount",
-			getShippingDiscountPercentageLevel3WithTaxAmount());
-		attributes.put(
-			"shippingDiscountPercentageLevel4WithTaxAmount",
-			getShippingDiscountPercentageLevel4WithTaxAmount());
-		attributes.put("totalWithTaxAmount", getTotalWithTaxAmount());
-		attributes.put(
-			"totalDiscountWithTaxAmount", getTotalDiscountWithTaxAmount());
 		attributes.put(
 			"totalDiscountPercentageLevel1WithTaxAmount",
 			getTotalDiscountPercentageLevel1WithTaxAmount());
@@ -174,13 +177,10 @@ public class CommerceOrderWrapper
 		attributes.put(
 			"totalDiscountPercentageLevel4WithTaxAmount",
 			getTotalDiscountPercentageLevel4WithTaxAmount());
-		attributes.put("advanceStatus", getAdvanceStatus());
-		attributes.put("paymentStatus", getPaymentStatus());
-		attributes.put("orderDate", getOrderDate());
-		attributes.put("orderStatus", getOrderStatus());
-		attributes.put("printedNote", getPrintedNote());
-		attributes.put("requestedDeliveryDate", getRequestedDeliveryDate());
-		attributes.put("manuallyAdjusted", isManuallyAdjusted());
+		attributes.put(
+			"totalDiscountWithTaxAmount", getTotalDiscountWithTaxAmount());
+		attributes.put("totalWithTaxAmount", getTotalWithTaxAmount());
+		attributes.put("transactionId", getTransactionId());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
@@ -252,6 +252,12 @@ public class CommerceOrderWrapper
 			setModifiedDate(modifiedDate);
 		}
 
+		Long billingAddressId = (Long)attributes.get("billingAddressId");
+
+		if (billingAddressId != null) {
+			setBillingAddressId(billingAddressId);
+		}
+
 		Long commerceAccountId = (Long)attributes.get("commerceAccountId");
 
 		if (commerceAccountId != null) {
@@ -270,16 +276,37 @@ public class CommerceOrderWrapper
 			setCommerceOrderTypeId(commerceOrderTypeId);
 		}
 
-		Long billingAddressId = (Long)attributes.get("billingAddressId");
+		Long commerceShippingMethodId = (Long)attributes.get(
+			"commerceShippingMethodId");
 
-		if (billingAddressId != null) {
-			setBillingAddressId(billingAddressId);
+		if (commerceShippingMethodId != null) {
+			setCommerceShippingMethodId(commerceShippingMethodId);
+		}
+
+		Long deliveryCommerceTermEntryId = (Long)attributes.get(
+			"deliveryCommerceTermEntryId");
+
+		if (deliveryCommerceTermEntryId != null) {
+			setDeliveryCommerceTermEntryId(deliveryCommerceTermEntryId);
+		}
+
+		Long paymentCommerceTermEntryId = (Long)attributes.get(
+			"paymentCommerceTermEntryId");
+
+		if (paymentCommerceTermEntryId != null) {
+			setPaymentCommerceTermEntryId(paymentCommerceTermEntryId);
 		}
 
 		Long shippingAddressId = (Long)attributes.get("shippingAddressId");
 
 		if (shippingAddressId != null) {
 			setShippingAddressId(shippingAddressId);
+		}
+
+		String advanceStatus = (String)attributes.get("advanceStatus");
+
+		if (advanceStatus != null) {
+			setAdvanceStatus(advanceStatus);
 		}
 
 		String commercePaymentMethodKey = (String)attributes.get(
@@ -289,50 +316,10 @@ public class CommerceOrderWrapper
 			setCommercePaymentMethodKey(commercePaymentMethodKey);
 		}
 
-		String transactionId = (String)attributes.get("transactionId");
-
-		if (transactionId != null) {
-			setTransactionId(transactionId);
-		}
-
-		Long commerceShippingMethodId = (Long)attributes.get(
-			"commerceShippingMethodId");
-
-		if (commerceShippingMethodId != null) {
-			setCommerceShippingMethodId(commerceShippingMethodId);
-		}
-
-		String shippingOptionName = (String)attributes.get(
-			"shippingOptionName");
-
-		if (shippingOptionName != null) {
-			setShippingOptionName(shippingOptionName);
-		}
-
-		String purchaseOrderNumber = (String)attributes.get(
-			"purchaseOrderNumber");
-
-		if (purchaseOrderNumber != null) {
-			setPurchaseOrderNumber(purchaseOrderNumber);
-		}
-
 		String couponCode = (String)attributes.get("couponCode");
 
 		if (couponCode != null) {
 			setCouponCode(couponCode);
-		}
-
-		Date lastPriceUpdateDate = (Date)attributes.get("lastPriceUpdateDate");
-
-		if (lastPriceUpdateDate != null) {
-			setLastPriceUpdateDate(lastPriceUpdateDate);
-		}
-
-		Long deliveryCommerceTermEntryId = (Long)attributes.get(
-			"deliveryCommerceTermEntryId");
-
-		if (deliveryCommerceTermEntryId != null) {
-			setDeliveryCommerceTermEntryId(deliveryCommerceTermEntryId);
 		}
 
 		String deliveryCommerceTermEntryDescription = (String)attributes.get(
@@ -350,11 +337,28 @@ public class CommerceOrderWrapper
 			setDeliveryCommerceTermEntryName(deliveryCommerceTermEntryName);
 		}
 
-		Long paymentCommerceTermEntryId = (Long)attributes.get(
-			"paymentCommerceTermEntryId");
+		Date lastPriceUpdateDate = (Date)attributes.get("lastPriceUpdateDate");
 
-		if (paymentCommerceTermEntryId != null) {
-			setPaymentCommerceTermEntryId(paymentCommerceTermEntryId);
+		if (lastPriceUpdateDate != null) {
+			setLastPriceUpdateDate(lastPriceUpdateDate);
+		}
+
+		Boolean manuallyAdjusted = (Boolean)attributes.get("manuallyAdjusted");
+
+		if (manuallyAdjusted != null) {
+			setManuallyAdjusted(manuallyAdjusted);
+		}
+
+		Date orderDate = (Date)attributes.get("orderDate");
+
+		if (orderDate != null) {
+			setOrderDate(orderDate);
+		}
+
+		Integer orderStatus = (Integer)attributes.get("orderStatus");
+
+		if (orderStatus != null) {
+			setOrderStatus(orderStatus);
 		}
 
 		String paymentCommerceTermEntryDescription = (String)attributes.get(
@@ -370,6 +374,135 @@ public class CommerceOrderWrapper
 
 		if (paymentCommerceTermEntryName != null) {
 			setPaymentCommerceTermEntryName(paymentCommerceTermEntryName);
+		}
+
+		Integer paymentStatus = (Integer)attributes.get("paymentStatus");
+
+		if (paymentStatus != null) {
+			setPaymentStatus(paymentStatus);
+		}
+
+		String printedNote = (String)attributes.get("printedNote");
+
+		if (printedNote != null) {
+			setPrintedNote(printedNote);
+		}
+
+		String purchaseOrderNumber = (String)attributes.get(
+			"purchaseOrderNumber");
+
+		if (purchaseOrderNumber != null) {
+			setPurchaseOrderNumber(purchaseOrderNumber);
+		}
+
+		Date requestedDeliveryDate = (Date)attributes.get(
+			"requestedDeliveryDate");
+
+		if (requestedDeliveryDate != null) {
+			setRequestedDeliveryDate(requestedDeliveryDate);
+		}
+
+		BigDecimal shippingAmount = (BigDecimal)attributes.get(
+			"shippingAmount");
+
+		if (shippingAmount != null) {
+			setShippingAmount(shippingAmount);
+		}
+
+		BigDecimal shippingDiscountAmount = (BigDecimal)attributes.get(
+			"shippingDiscountAmount");
+
+		if (shippingDiscountAmount != null) {
+			setShippingDiscountAmount(shippingDiscountAmount);
+		}
+
+		BigDecimal shippingDiscountPercentageLevel1 =
+			(BigDecimal)attributes.get("shippingDiscountPercentageLevel1");
+
+		if (shippingDiscountPercentageLevel1 != null) {
+			setShippingDiscountPercentageLevel1(
+				shippingDiscountPercentageLevel1);
+		}
+
+		BigDecimal shippingDiscountPercentageLevel2 =
+			(BigDecimal)attributes.get("shippingDiscountPercentageLevel2");
+
+		if (shippingDiscountPercentageLevel2 != null) {
+			setShippingDiscountPercentageLevel2(
+				shippingDiscountPercentageLevel2);
+		}
+
+		BigDecimal shippingDiscountPercentageLevel3 =
+			(BigDecimal)attributes.get("shippingDiscountPercentageLevel3");
+
+		if (shippingDiscountPercentageLevel3 != null) {
+			setShippingDiscountPercentageLevel3(
+				shippingDiscountPercentageLevel3);
+		}
+
+		BigDecimal shippingDiscountPercentageLevel4 =
+			(BigDecimal)attributes.get("shippingDiscountPercentageLevel4");
+
+		if (shippingDiscountPercentageLevel4 != null) {
+			setShippingDiscountPercentageLevel4(
+				shippingDiscountPercentageLevel4);
+		}
+
+		BigDecimal shippingDiscountPercentageLevel1WithTaxAmount =
+			(BigDecimal)attributes.get(
+				"shippingDiscountPercentageLevel1WithTaxAmount");
+
+		if (shippingDiscountPercentageLevel1WithTaxAmount != null) {
+			setShippingDiscountPercentageLevel1WithTaxAmount(
+				shippingDiscountPercentageLevel1WithTaxAmount);
+		}
+
+		BigDecimal shippingDiscountPercentageLevel2WithTaxAmount =
+			(BigDecimal)attributes.get(
+				"shippingDiscountPercentageLevel2WithTaxAmount");
+
+		if (shippingDiscountPercentageLevel2WithTaxAmount != null) {
+			setShippingDiscountPercentageLevel2WithTaxAmount(
+				shippingDiscountPercentageLevel2WithTaxAmount);
+		}
+
+		BigDecimal shippingDiscountPercentageLevel3WithTaxAmount =
+			(BigDecimal)attributes.get(
+				"shippingDiscountPercentageLevel3WithTaxAmount");
+
+		if (shippingDiscountPercentageLevel3WithTaxAmount != null) {
+			setShippingDiscountPercentageLevel3WithTaxAmount(
+				shippingDiscountPercentageLevel3WithTaxAmount);
+		}
+
+		BigDecimal shippingDiscountPercentageLevel4WithTaxAmount =
+			(BigDecimal)attributes.get(
+				"shippingDiscountPercentageLevel4WithTaxAmount");
+
+		if (shippingDiscountPercentageLevel4WithTaxAmount != null) {
+			setShippingDiscountPercentageLevel4WithTaxAmount(
+				shippingDiscountPercentageLevel4WithTaxAmount);
+		}
+
+		BigDecimal shippingDiscountWithTaxAmount = (BigDecimal)attributes.get(
+			"shippingDiscountWithTaxAmount");
+
+		if (shippingDiscountWithTaxAmount != null) {
+			setShippingDiscountWithTaxAmount(shippingDiscountWithTaxAmount);
+		}
+
+		String shippingOptionName = (String)attributes.get(
+			"shippingOptionName");
+
+		if (shippingOptionName != null) {
+			setShippingOptionName(shippingOptionName);
+		}
+
+		BigDecimal shippingWithTaxAmount = (BigDecimal)attributes.get(
+			"shippingWithTaxAmount");
+
+		if (shippingWithTaxAmount != null) {
+			setShippingWithTaxAmount(shippingWithTaxAmount);
 		}
 
 		BigDecimal subtotal = (BigDecimal)attributes.get("subtotal");
@@ -417,50 +550,54 @@ public class CommerceOrderWrapper
 				subtotalDiscountPercentageLevel4);
 		}
 
-		BigDecimal shippingAmount = (BigDecimal)attributes.get(
-			"shippingAmount");
+		BigDecimal subtotalDiscountPercentageLevel1WithTaxAmount =
+			(BigDecimal)attributes.get(
+				"subtotalDiscountPercentageLevel1WithTaxAmount");
 
-		if (shippingAmount != null) {
-			setShippingAmount(shippingAmount);
+		if (subtotalDiscountPercentageLevel1WithTaxAmount != null) {
+			setSubtotalDiscountPercentageLevel1WithTaxAmount(
+				subtotalDiscountPercentageLevel1WithTaxAmount);
 		}
 
-		BigDecimal shippingDiscountAmount = (BigDecimal)attributes.get(
-			"shippingDiscountAmount");
+		BigDecimal subtotalDiscountPercentageLevel2WithTaxAmount =
+			(BigDecimal)attributes.get(
+				"subtotalDiscountPercentageLevel2WithTaxAmount");
 
-		if (shippingDiscountAmount != null) {
-			setShippingDiscountAmount(shippingDiscountAmount);
+		if (subtotalDiscountPercentageLevel2WithTaxAmount != null) {
+			setSubtotalDiscountPercentageLevel2WithTaxAmount(
+				subtotalDiscountPercentageLevel2WithTaxAmount);
 		}
 
-		BigDecimal shippingDiscountPercentageLevel1 =
-			(BigDecimal)attributes.get("shippingDiscountPercentageLevel1");
+		BigDecimal subtotalDiscountPercentageLevel3WithTaxAmount =
+			(BigDecimal)attributes.get(
+				"subtotalDiscountPercentageLevel3WithTaxAmount");
 
-		if (shippingDiscountPercentageLevel1 != null) {
-			setShippingDiscountPercentageLevel1(
-				shippingDiscountPercentageLevel1);
+		if (subtotalDiscountPercentageLevel3WithTaxAmount != null) {
+			setSubtotalDiscountPercentageLevel3WithTaxAmount(
+				subtotalDiscountPercentageLevel3WithTaxAmount);
 		}
 
-		BigDecimal shippingDiscountPercentageLevel2 =
-			(BigDecimal)attributes.get("shippingDiscountPercentageLevel2");
+		BigDecimal subtotalDiscountPercentageLevel4WithTaxAmount =
+			(BigDecimal)attributes.get(
+				"subtotalDiscountPercentageLevel4WithTaxAmount");
 
-		if (shippingDiscountPercentageLevel2 != null) {
-			setShippingDiscountPercentageLevel2(
-				shippingDiscountPercentageLevel2);
+		if (subtotalDiscountPercentageLevel4WithTaxAmount != null) {
+			setSubtotalDiscountPercentageLevel4WithTaxAmount(
+				subtotalDiscountPercentageLevel4WithTaxAmount);
 		}
 
-		BigDecimal shippingDiscountPercentageLevel3 =
-			(BigDecimal)attributes.get("shippingDiscountPercentageLevel3");
+		BigDecimal subtotalDiscountWithTaxAmount = (BigDecimal)attributes.get(
+			"subtotalDiscountWithTaxAmount");
 
-		if (shippingDiscountPercentageLevel3 != null) {
-			setShippingDiscountPercentageLevel3(
-				shippingDiscountPercentageLevel3);
+		if (subtotalDiscountWithTaxAmount != null) {
+			setSubtotalDiscountWithTaxAmount(subtotalDiscountWithTaxAmount);
 		}
 
-		BigDecimal shippingDiscountPercentageLevel4 =
-			(BigDecimal)attributes.get("shippingDiscountPercentageLevel4");
+		BigDecimal subtotalWithTaxAmount = (BigDecimal)attributes.get(
+			"subtotalWithTaxAmount");
 
-		if (shippingDiscountPercentageLevel4 != null) {
-			setShippingDiscountPercentageLevel4(
-				shippingDiscountPercentageLevel4);
+		if (subtotalWithTaxAmount != null) {
+			setSubtotalWithTaxAmount(subtotalWithTaxAmount);
 		}
 
 		BigDecimal taxAmount = (BigDecimal)attributes.get("taxAmount");
@@ -510,120 +647,6 @@ public class CommerceOrderWrapper
 			setTotalDiscountPercentageLevel4(totalDiscountPercentageLevel4);
 		}
 
-		BigDecimal subtotalWithTaxAmount = (BigDecimal)attributes.get(
-			"subtotalWithTaxAmount");
-
-		if (subtotalWithTaxAmount != null) {
-			setSubtotalWithTaxAmount(subtotalWithTaxAmount);
-		}
-
-		BigDecimal subtotalDiscountWithTaxAmount = (BigDecimal)attributes.get(
-			"subtotalDiscountWithTaxAmount");
-
-		if (subtotalDiscountWithTaxAmount != null) {
-			setSubtotalDiscountWithTaxAmount(subtotalDiscountWithTaxAmount);
-		}
-
-		BigDecimal subtotalDiscountPercentageLevel1WithTaxAmount =
-			(BigDecimal)attributes.get(
-				"subtotalDiscountPercentageLevel1WithTaxAmount");
-
-		if (subtotalDiscountPercentageLevel1WithTaxAmount != null) {
-			setSubtotalDiscountPercentageLevel1WithTaxAmount(
-				subtotalDiscountPercentageLevel1WithTaxAmount);
-		}
-
-		BigDecimal subtotalDiscountPercentageLevel2WithTaxAmount =
-			(BigDecimal)attributes.get(
-				"subtotalDiscountPercentageLevel2WithTaxAmount");
-
-		if (subtotalDiscountPercentageLevel2WithTaxAmount != null) {
-			setSubtotalDiscountPercentageLevel2WithTaxAmount(
-				subtotalDiscountPercentageLevel2WithTaxAmount);
-		}
-
-		BigDecimal subtotalDiscountPercentageLevel3WithTaxAmount =
-			(BigDecimal)attributes.get(
-				"subtotalDiscountPercentageLevel3WithTaxAmount");
-
-		if (subtotalDiscountPercentageLevel3WithTaxAmount != null) {
-			setSubtotalDiscountPercentageLevel3WithTaxAmount(
-				subtotalDiscountPercentageLevel3WithTaxAmount);
-		}
-
-		BigDecimal subtotalDiscountPercentageLevel4WithTaxAmount =
-			(BigDecimal)attributes.get(
-				"subtotalDiscountPercentageLevel4WithTaxAmount");
-
-		if (subtotalDiscountPercentageLevel4WithTaxAmount != null) {
-			setSubtotalDiscountPercentageLevel4WithTaxAmount(
-				subtotalDiscountPercentageLevel4WithTaxAmount);
-		}
-
-		BigDecimal shippingWithTaxAmount = (BigDecimal)attributes.get(
-			"shippingWithTaxAmount");
-
-		if (shippingWithTaxAmount != null) {
-			setShippingWithTaxAmount(shippingWithTaxAmount);
-		}
-
-		BigDecimal shippingDiscountWithTaxAmount = (BigDecimal)attributes.get(
-			"shippingDiscountWithTaxAmount");
-
-		if (shippingDiscountWithTaxAmount != null) {
-			setShippingDiscountWithTaxAmount(shippingDiscountWithTaxAmount);
-		}
-
-		BigDecimal shippingDiscountPercentageLevel1WithTaxAmount =
-			(BigDecimal)attributes.get(
-				"shippingDiscountPercentageLevel1WithTaxAmount");
-
-		if (shippingDiscountPercentageLevel1WithTaxAmount != null) {
-			setShippingDiscountPercentageLevel1WithTaxAmount(
-				shippingDiscountPercentageLevel1WithTaxAmount);
-		}
-
-		BigDecimal shippingDiscountPercentageLevel2WithTaxAmount =
-			(BigDecimal)attributes.get(
-				"shippingDiscountPercentageLevel2WithTaxAmount");
-
-		if (shippingDiscountPercentageLevel2WithTaxAmount != null) {
-			setShippingDiscountPercentageLevel2WithTaxAmount(
-				shippingDiscountPercentageLevel2WithTaxAmount);
-		}
-
-		BigDecimal shippingDiscountPercentageLevel3WithTaxAmount =
-			(BigDecimal)attributes.get(
-				"shippingDiscountPercentageLevel3WithTaxAmount");
-
-		if (shippingDiscountPercentageLevel3WithTaxAmount != null) {
-			setShippingDiscountPercentageLevel3WithTaxAmount(
-				shippingDiscountPercentageLevel3WithTaxAmount);
-		}
-
-		BigDecimal shippingDiscountPercentageLevel4WithTaxAmount =
-			(BigDecimal)attributes.get(
-				"shippingDiscountPercentageLevel4WithTaxAmount");
-
-		if (shippingDiscountPercentageLevel4WithTaxAmount != null) {
-			setShippingDiscountPercentageLevel4WithTaxAmount(
-				shippingDiscountPercentageLevel4WithTaxAmount);
-		}
-
-		BigDecimal totalWithTaxAmount = (BigDecimal)attributes.get(
-			"totalWithTaxAmount");
-
-		if (totalWithTaxAmount != null) {
-			setTotalWithTaxAmount(totalWithTaxAmount);
-		}
-
-		BigDecimal totalDiscountWithTaxAmount = (BigDecimal)attributes.get(
-			"totalDiscountWithTaxAmount");
-
-		if (totalDiscountWithTaxAmount != null) {
-			setTotalDiscountWithTaxAmount(totalDiscountWithTaxAmount);
-		}
-
 		BigDecimal totalDiscountPercentageLevel1WithTaxAmount =
 			(BigDecimal)attributes.get(
 				"totalDiscountPercentageLevel1WithTaxAmount");
@@ -660,47 +683,24 @@ public class CommerceOrderWrapper
 				totalDiscountPercentageLevel4WithTaxAmount);
 		}
 
-		String advanceStatus = (String)attributes.get("advanceStatus");
+		BigDecimal totalDiscountWithTaxAmount = (BigDecimal)attributes.get(
+			"totalDiscountWithTaxAmount");
 
-		if (advanceStatus != null) {
-			setAdvanceStatus(advanceStatus);
+		if (totalDiscountWithTaxAmount != null) {
+			setTotalDiscountWithTaxAmount(totalDiscountWithTaxAmount);
 		}
 
-		Integer paymentStatus = (Integer)attributes.get("paymentStatus");
+		BigDecimal totalWithTaxAmount = (BigDecimal)attributes.get(
+			"totalWithTaxAmount");
 
-		if (paymentStatus != null) {
-			setPaymentStatus(paymentStatus);
+		if (totalWithTaxAmount != null) {
+			setTotalWithTaxAmount(totalWithTaxAmount);
 		}
 
-		Date orderDate = (Date)attributes.get("orderDate");
+		String transactionId = (String)attributes.get("transactionId");
 
-		if (orderDate != null) {
-			setOrderDate(orderDate);
-		}
-
-		Integer orderStatus = (Integer)attributes.get("orderStatus");
-
-		if (orderStatus != null) {
-			setOrderStatus(orderStatus);
-		}
-
-		String printedNote = (String)attributes.get("printedNote");
-
-		if (printedNote != null) {
-			setPrintedNote(printedNote);
-		}
-
-		Date requestedDeliveryDate = (Date)attributes.get(
-			"requestedDeliveryDate");
-
-		if (requestedDeliveryDate != null) {
-			setRequestedDeliveryDate(requestedDeliveryDate);
-		}
-
-		Boolean manuallyAdjusted = (Boolean)attributes.get("manuallyAdjusted");
-
-		if (manuallyAdjusted != null) {
-			setManuallyAdjusted(manuallyAdjusted);
+		if (transactionId != null) {
+			setTransactionId(transactionId);
 		}
 
 		Integer status = (Integer)attributes.get("status");

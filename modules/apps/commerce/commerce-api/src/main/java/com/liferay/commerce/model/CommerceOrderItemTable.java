@@ -83,6 +83,9 @@ public class CommerceOrderItemTable extends BaseTable<CommerceOrderItemTable> {
 		parentCommerceOrderItemId = createColumn(
 			"parentCommerceOrderItemId", Long.class, Types.BIGINT,
 			Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderItemTable, Long> shippingAddressId =
+		createColumn(
+			"shippingAddressId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<CommerceOrderItemTable, BigDecimal> decimalQuantity =
 		createColumn(
 			"decimalQuantity", BigDecimal.class, Types.DECIMAL,
@@ -189,9 +192,6 @@ public class CommerceOrderItemTable extends BaseTable<CommerceOrderItemTable> {
 		createColumn(
 			"requestedDeliveryDate", Date.class, Types.TIMESTAMP,
 			Column.FLAG_DEFAULT);
-	public final Column<CommerceOrderItemTable, Long> shippingAddressId =
-		createColumn(
-			"shippingAddressId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<CommerceOrderItemTable, Boolean> shipSeparately =
 		createColumn(
 			"shipSeparately", Boolean.class, Types.BOOLEAN,

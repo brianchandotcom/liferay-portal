@@ -86,46 +86,64 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
+		<field name="billingAddressId" type="long" />
 		<field name="commerceAccountId" type="long" />
 		<field name="commerceCurrencyId" type="long" />
 		<field name="commerceOrderTypeId" type="long" />
-		<field name="billingAddressId" type="long" />
-		<field name="shippingAddressId" type="long" />
-		<field name="commercePaymentMethodKey" type="String" />
-		<field name="transactionId" type="String">
-			<hint-collection name="CLOB" />
-		</field>
 		<field name="commerceShippingMethodId" type="long" />
-		<field name="shippingOptionName" type="String">
-			<hint name="max-length">255</hint>
-		</field>
-		<field name="purchaseOrderNumber" type="String" />
-		<field name="couponCode" type="String" />
-		<field name="lastPriceUpdateDate" type="Date" />
 		<field name="deliveryCommerceTermEntryId" type="long" />
+		<field name="paymentCommerceTermEntryId" type="long" />
+		<field name="shippingAddressId" type="long" />
+		<field name="advanceStatus" type="String" />
+		<field name="commercePaymentMethodKey" type="String" />
+		<field name="couponCode" type="String" />
 		<field name="deliveryCommerceTermEntryDescription" type="String">
 			<hint-collection name="CLOB" />
 			<sanitize content-type="text/plain" modes="ALL" />
 		</field>
 		<field name="deliveryCommerceTermEntryName" type="String" />
-		<field name="paymentCommerceTermEntryId" type="long" />
+		<field name="lastPriceUpdateDate" type="Date" />
+		<field name="manuallyAdjusted" type="boolean" />
+		<field name="orderDate" type="Date" />
+		<field name="orderStatus" type="int" />
 		<field name="paymentCommerceTermEntryDescription" type="String">
 			<hint-collection name="CLOB" />
 			<sanitize content-type="text/plain" modes="ALL" />
 		</field>
 		<field name="paymentCommerceTermEntryName" type="String" />
-		<field name="subtotal" type="BigDecimal" />
-		<field name="subtotalDiscountAmount" type="BigDecimal" />
-		<field name="subtotalDiscountPercentageLevel1" type="BigDecimal" />
-		<field name="subtotalDiscountPercentageLevel2" type="BigDecimal" />
-		<field name="subtotalDiscountPercentageLevel3" type="BigDecimal" />
-		<field name="subtotalDiscountPercentageLevel4" type="BigDecimal" />
+		<field name="paymentStatus" type="int" />
+		<field name="printedNote" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="purchaseOrderNumber" type="String" />
+		<field name="requestedDeliveryDate" type="Date" />
 		<field name="shippingAmount" type="BigDecimal" />
 		<field name="shippingDiscountAmount" type="BigDecimal" />
 		<field name="shippingDiscountPercentageLevel1" type="BigDecimal" />
 		<field name="shippingDiscountPercentageLevel2" type="BigDecimal" />
 		<field name="shippingDiscountPercentageLevel3" type="BigDecimal" />
 		<field name="shippingDiscountPercentageLevel4" type="BigDecimal" />
+		<field name="shippingDiscountPercentageLevel1WithTaxAmount" type="BigDecimal" />
+		<field name="shippingDiscountPercentageLevel2WithTaxAmount" type="BigDecimal" />
+		<field name="shippingDiscountPercentageLevel3WithTaxAmount" type="BigDecimal" />
+		<field name="shippingDiscountPercentageLevel4WithTaxAmount" type="BigDecimal" />
+		<field name="shippingDiscountWithTaxAmount" type="BigDecimal" />
+		<field name="shippingOptionName" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="shippingWithTaxAmount" type="BigDecimal" />
+		<field name="subtotal" type="BigDecimal" />
+		<field name="subtotalDiscountAmount" type="BigDecimal" />
+		<field name="subtotalDiscountPercentageLevel1" type="BigDecimal" />
+		<field name="subtotalDiscountPercentageLevel2" type="BigDecimal" />
+		<field name="subtotalDiscountPercentageLevel3" type="BigDecimal" />
+		<field name="subtotalDiscountPercentageLevel4" type="BigDecimal" />
+		<field name="subtotalDiscountPercentageLevel1WithTaxAmount" type="BigDecimal" />
+		<field name="subtotalDiscountPercentageLevel2WithTaxAmount" type="BigDecimal" />
+		<field name="subtotalDiscountPercentageLevel3WithTaxAmount" type="BigDecimal" />
+		<field name="subtotalDiscountPercentageLevel4WithTaxAmount" type="BigDecimal" />
+		<field name="subtotalDiscountWithTaxAmount" type="BigDecimal" />
+		<field name="subtotalWithTaxAmount" type="BigDecimal" />
 		<field name="taxAmount" type="BigDecimal" />
 		<field name="total" type="BigDecimal" />
 		<field name="totalDiscountAmount" type="BigDecimal" />
@@ -133,33 +151,15 @@
 		<field name="totalDiscountPercentageLevel2" type="BigDecimal" />
 		<field name="totalDiscountPercentageLevel3" type="BigDecimal" />
 		<field name="totalDiscountPercentageLevel4" type="BigDecimal" />
-		<field name="subtotalWithTaxAmount" type="BigDecimal" />
-		<field name="subtotalDiscountWithTaxAmount" type="BigDecimal" />
-		<field name="subtotalDiscountPercentageLevel1WithTaxAmount" type="BigDecimal" />
-		<field name="subtotalDiscountPercentageLevel2WithTaxAmount" type="BigDecimal" />
-		<field name="subtotalDiscountPercentageLevel3WithTaxAmount" type="BigDecimal" />
-		<field name="subtotalDiscountPercentageLevel4WithTaxAmount" type="BigDecimal" />
-		<field name="shippingWithTaxAmount" type="BigDecimal" />
-		<field name="shippingDiscountWithTaxAmount" type="BigDecimal" />
-		<field name="shippingDiscountPercentageLevel1WithTaxAmount" type="BigDecimal" />
-		<field name="shippingDiscountPercentageLevel2WithTaxAmount" type="BigDecimal" />
-		<field name="shippingDiscountPercentageLevel3WithTaxAmount" type="BigDecimal" />
-		<field name="shippingDiscountPercentageLevel4WithTaxAmount" type="BigDecimal" />
-		<field name="totalWithTaxAmount" type="BigDecimal" />
-		<field name="totalDiscountWithTaxAmount" type="BigDecimal" />
 		<field name="totalDiscountPercentageLevel1WithTaxAmount" type="BigDecimal" />
 		<field name="totalDiscountPercentageLevel2WithTaxAmount" type="BigDecimal" />
 		<field name="totalDiscountPercentageLevel3WithTaxAmount" type="BigDecimal" />
 		<field name="totalDiscountPercentageLevel4WithTaxAmount" type="BigDecimal" />
-		<field name="advanceStatus" type="String" />
-		<field name="paymentStatus" type="int" />
-		<field name="orderDate" type="Date" />
-		<field name="orderStatus" type="int" />
-		<field name="printedNote" type="String">
-			<hint-collection name="TEXTAREA" />
+		<field name="totalDiscountWithTaxAmount" type="BigDecimal" />
+		<field name="totalWithTaxAmount" type="BigDecimal" />
+		<field name="transactionId" type="String">
+			<hint-collection name="CLOB" />
 		</field>
-		<field name="requestedDeliveryDate" type="Date" />
-		<field name="manuallyAdjusted" type="boolean" />
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />
 		<field name="statusByUserName" type="String" />
@@ -182,6 +182,7 @@
 		<field name="CPMeasurementUnitId" type="long" />
 		<field name="CProductId" type="long" />
 		<field name="parentCommerceOrderItemId" type="long" />
+		<field name="shippingAddressId" type="long" />
 		<field name="decimalQuantity" type="BigDecimal" />
 		<field name="deliveryGroup" type="String" />
 		<field name="deliveryMaxSubscriptionCycles" type="long" />
@@ -216,7 +217,6 @@
 		<field name="promoPriceWithTaxAmount" type="BigDecimal" />
 		<field name="quantity" type="int" />
 		<field name="requestedDeliveryDate" type="Date" />
-		<field name="shippingAddressId" type="long" />
 		<field name="shipSeparately" type="boolean" />
 		<field name="shippable" type="boolean" />
 		<field name="shippedQuantity" type="int" />

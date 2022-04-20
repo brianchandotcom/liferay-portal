@@ -476,8 +476,18 @@ public class AssetVocabularyLocalServiceImpl
 			Sort sort)
 		throws PortalException {
 
+		return searchVocabularies(
+			companyId, new long[] {groupId}, title, null, start, end, sort);
+	}
+
+	@Override
+	public BaseModelSearchResult<AssetVocabulary> searchVocabularies(
+			long companyId, long[] groupIds, String title,
+			int[] visibilityTypes, int start, int end, Sort sort)
+		throws PortalException {
+
 		SearchContext searchContext = buildSearchContext(
-			companyId, groupId, title, start, end, sort);
+			companyId, groupIds, title, visibilityTypes, start, end, sort);
 
 		return searchVocabularies(searchContext);
 	}
@@ -555,15 +565,16 @@ public class AssetVocabularyLocalServiceImpl
 	}
 
 	protected SearchContext buildSearchContext(
-		long companyId, long groupId, String title, int start, int end,
-		Sort sort) {
+		long companyId, long[] groupIds, String title, int[] visibilityTypes,
+		int start, int end, Sort sort) {
 
 		SearchContext searchContext = new SearchContext();
 
 		searchContext.setAttribute(Field.TITLE, title);
+		searchContext.setAttribute(Field.VISIBILITY_TYPE, visibilityTypes);
 		searchContext.setCompanyId(companyId);
 		searchContext.setEnd(end);
-		searchContext.setGroupIds(new long[] {groupId});
+		searchContext.setGroupIds(groupIds);
 		searchContext.setKeywords(title);
 		searchContext.setSorts(sort);
 		searchContext.setStart(start);

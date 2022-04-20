@@ -4906,6 +4906,2085 @@
 			],
 			"label": "navigation",
 			"name": "navigation"
+		},
+		{
+			"frontendTokenSets": [
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "0.0625rem",
+							"label": "tab-primary-item-active-bar-border-radius",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-primary-item-active-bar-border-radius"
+								}
+							],
+							"name": "tabPrimaryItemActiveBarBorderRadius",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-brand-primary)",
+							"editorType": "ColorPicker",
+							"label": "tab-primary-item-active-bar-color-active",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-primary-item-active-bar-color-active"
+								}
+							],
+							"name": "tabPrimaryItemActiveBarColorActive",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-brand-primary-darken-1)",
+							"editorType": "ColorPicker",
+							"label": "tab-primary-item-active-bar-color-hover",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-primary-item-active-bar-color-hover"
+								}
+							],
+							"name": "tabPrimaryItemActiveBarColorHover",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0.1875rem",
+							"label": "tab-primary-item-active-bar-thickness",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-primary-item-active-bar-thickness"
+								}
+							],
+							"name": "tabPrimaryItemActiveBarThickness",
+							"type": "String"
+						},
+						{
+							"defaultValue": "transparent",
+							"editorType": "ColorPicker",
+							"label": "tab-primary-item-background-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-primary-item-background-color"
+								}
+							],
+							"name": "tabPrimaryItemBackgroundColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "transparent",
+							"editorType": "ColorPicker",
+							"label": "tab-primary-item-background-color-active",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-primary-item-background-color-active"
+								}
+							],
+							"name": "tabPrimaryItemBackgroundColorActive",
+							"type": "String"
+						},
+						{
+							"defaultValue": "transparent",
+							"editorType": "ColorPicker",
+							"label": "tab-primary-item-background-color-disabled",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-primary-item-background-color-disabled"
+								}
+							],
+							"name": "tabPrimaryItemBackgroundColorDisabled",
+							"type": "String"
+						},
+						{
+							"defaultValue": "transparent",
+							"editorType": "ColorPicker",
+							"label": "tab-primary-item-background-color-hover",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-primary-item-background-color-hover"
+								}
+							],
+							"name": "tabPrimaryItemBackgroundColorHover",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-neutral-3)",
+							"editorType": "ColorPicker",
+							"label": "tab-primary-item-border-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-primary-item-border-color"
+								}
+							],
+							"name": "tabPrimaryItemBorderColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-neutral-3)",
+							"editorType": "ColorPicker",
+							"label": "tab-primary-item-border-color-active",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-primary-item-border-color-active"
+								}
+							],
+							"name": "tabPrimaryItemBorderColorActive",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-neutral-3)",
+							"editorType": "ColorPicker",
+							"label": "tab-primary-item-border-color-hover",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-primary-item-border-color-hover"
+								}
+							],
+							"name": "tabPrimaryItemBorderColorHover",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0",
+							"label": "tab-primary-item-border-radius",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-primary-item-border-radius"
+								}
+							],
+							"name": "tabPrimaryItemBorderRadius",
+							"type": "String"
+						},
+						{
+							"defaultValue": "none",
+							"label": "tab-primary-item-box-shadow-active",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-primary-item-box-shadow-active"
+								}
+							],
+							"name": "tabPrimaryItemBoxShadowActive",
+							"type": "String"
+						},
+						{
+							"defaultValue": "none",
+							"label": "tab-primary-item-box-shadow-hover",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-primary-item-box-shadow-hover"
+								}
+							],
+							"name": "tabPrimaryItemBoxShadowHover",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-neutral-7)",
+							"editorType": "ColorPicker",
+							"label": "tab-primary-item-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-primary-item-color"
+								}
+							],
+							"name": "tabPrimaryItemColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-brand-primary)",
+							"editorType": "ColorPicker",
+							"label": "tab-primary-item-color-active",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-primary-item-color-active"
+								}
+							],
+							"name": "tabPrimaryItemColorActive",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-action-neutral-disabled)",
+							"editorType": "ColorPicker",
+							"label": "tab-primary-item-color-disabled",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-primary-item-color-disabled"
+								}
+							],
+							"name": "tabPrimaryItemColorDisabled",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-brand-primary-darken-1)",
+							"editorType": "ColorPicker",
+							"label": "tab-primary-item-color-hover",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-primary-item-color-hover"
+								}
+							],
+							"name": "tabPrimaryItemColorHover",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--text-paragraph-font-size)",
+							"label": "tab-primary-item-font-size",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-primary-item-font-size"
+								}
+							],
+							"name": "tabPrimaryItemFontSize",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--font-weight-bold)",
+							"label": "tab-primary-item-font-weight",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-primary-item-font-weight"
+								}
+							],
+							"name": "tabPrimaryItemFontWeight",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--font-weight-bold)",
+							"label": "tab-primary-item-font-weight-active",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-primary-item-font-weight-active"
+								}
+							],
+							"name": "tabPrimaryItemFontWeightActive",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-neutral-7)",
+							"editorType": "ColorPicker",
+							"label": "tab-primary-item-icon-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-primary-item-icon-color"
+								}
+							],
+							"name": "tabPrimaryItemIconColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-brand-primary)",
+							"editorType": "ColorPicker",
+							"label": "tab-primary-item-icon-color-active",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-primary-item-icon-color-active"
+								}
+							],
+							"name": "tabPrimaryItemIconColorActive",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-action-neutral-disabled)",
+							"editorType": "ColorPicker",
+							"label": "tab-primary-item-icon-color-disabled",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-primary-item-icon-color-disabled"
+								}
+							],
+							"name": "tabPrimaryItemIconColorDisabled",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-brand-primary-darken-1)",
+							"editorType": "ColorPicker",
+							"label": "tab-primary-item-icon-color-hover",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-primary-item-icon-color-hover"
+								}
+							],
+							"name": "tabPrimaryItemIconColorHover",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--text-paragraph-font-size)",
+							"label": "tab-primary-item-icon-font-size",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-primary-item-icon-font-size"
+								}
+							],
+							"name": "tabPrimaryItemIconFontSize",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--spacer-3)",
+							"label": "tab-primary-item-inline-item-spacer-x",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-primary-item-inline-item-spacer-x"
+								}
+							],
+							"name": "tabPrimaryItemInlineItemSpacerX",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--spacer-3)",
+							"label": "tab-primary-item-inline-item-spacer-y",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-primary-item-inline-item-spacer-y"
+								}
+							],
+							"name": "tabPrimaryItemInlineItemSpacerY",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--text-paragraph-line-height)",
+							"label": "tab-primary-item-line-height",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-primary-item-line-height"
+								}
+							],
+							"name": "tabPrimaryItemLineHeight",
+							"type": "String"
+						}
+					],
+					"label": "primary",
+					"name": "primary"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "auto",
+							"label": "tab-primary-horizontal-item-active-bar-width",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-primary-horizontal-item-active-bar-width"
+								}
+							],
+							"name": "tabPrimaryHorizontalItemActiveBarWidth",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0.03125rem",
+							"label": "tab-primary-horizontal-item-border-bottom-width",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-primary-horizontal-item-border-bottom-width"
+								}
+							],
+							"name": "tabPrimaryHorizontalItemBorderBottomWidth",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0",
+							"label": "tab-primary-horizontal-item-border-left-width",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-primary-horizontal-item-border-left-width"
+								}
+							],
+							"name": "tabPrimaryHorizontalItemBorderLeftWidth",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0",
+							"label": "tab-primary-horizontal-item-border-right-width",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-primary-horizontal-item-border-right-width"
+								}
+							],
+							"name": "tabPrimaryHorizontalItemBorderRightWidth",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0",
+							"label": "tab-primary-horizontal-item-border-top-width",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-primary-horizontal-item-border-top-width"
+								}
+							],
+							"name": "tabPrimaryHorizontalItemBorderTopWidth",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--spacer-3)",
+							"label": "tab-primary-horizontal-item-padding-x",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-primary-horizontal-item-padding-x"
+								}
+							],
+							"name": "tabPrimaryHorizontalItemPaddingX",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--spacer-3)",
+							"label": "tab-primary-horizontal-item-padding-y",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-primary-horizontal-item-padding-y"
+								}
+							],
+							"name": "tabPrimaryHorizontalItemPaddingY",
+							"type": "String"
+						}
+					],
+					"label": "primary-horizontal",
+					"name": "primary-horizontal"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "auto",
+							"label": "tab-primary-vertical-item-active-bar-height",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-primary-vertical-item-active-bar-height"
+								}
+							],
+							"name": "tabPrimaryVerticalItemActiveBarHeight",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0",
+							"label": "tab-primary-vertical-item-border-bottom-width",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-primary-vertical-item-border-bottom-width"
+								}
+							],
+							"name": "tabPrimaryVerticalItemBorderBottomWidth",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0.0625rem",
+							"label": "tab-primary-vertical-item-border-left-width",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-primary-vertical-item-border-left-width"
+								}
+							],
+							"name": "tabPrimaryVerticalItemBorderLeftWidth",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0",
+							"label": "tab-primary-vertical-item-border-right-width",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-primary-vertical-item-border-right-width"
+								}
+							],
+							"name": "tabPrimaryVerticalItemBorderRightWidth",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0",
+							"label": "tab-primary-vertical-item-border-top-width",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-primary-vertical-item-border-top-width"
+								}
+							],
+							"name": "tabPrimaryVerticalItemBorderTopWidth",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--spacer-3)",
+							"label": "tab-primary-vertical-item-padding-x",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-primary-vertical-item-padding-x"
+								}
+							],
+							"name": "tabPrimaryVerticalItemPaddingX",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--spacer-3)",
+							"label": "tab-primary-vertical-item-padding-y",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-primary-vertical-item-padding-y"
+								}
+							],
+							"name": "tabPrimaryVerticalItemPaddingY",
+							"type": "String"
+						}
+					],
+					"label": "primary-vertical",
+					"name": "primary-vertical"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "0.0625rem",
+							"label": "tab-secondary-item-active-bar-border-radius",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-secondary-item-active-bar-border-radius"
+								}
+							],
+							"name": "tabSecondaryItemActiveBarBorderRadius",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-brand-primary)",
+							"editorType": "ColorPicker",
+							"label": "tab-secondary-item-active-bar-color-active",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-secondary-item-active-bar-color-active"
+								}
+							],
+							"name": "tabSecondaryItemActiveBarColorActive",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-brand-primary-darken-1)",
+							"editorType": "ColorPicker",
+							"label": "tab-secondary-item-active-bar-color-hover",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-secondary-item-active-bar-color-hover"
+								}
+							],
+							"name": "tabSecondaryItemActiveBarColorHover",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0.1875rem",
+							"label": "tab-secondary-item-active-bar-thickness",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-secondary-item-active-bar-thickness"
+								}
+							],
+							"name": "tabSecondaryItemActiveBarThickness",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-neutral-1)",
+							"editorType": "ColorPicker",
+							"label": "tab-secondary-item-background-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-secondary-item-background-color"
+								}
+							],
+							"name": "tabSecondaryItemBackgroundColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-neutral-1)",
+							"editorType": "ColorPicker",
+							"label": "tab-secondary-item-background-color-active",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-secondary-item-background-color-active"
+								}
+							],
+							"name": "tabSecondaryItemBackgroundColorActive",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-neutral-1)",
+							"editorType": "ColorPicker",
+							"label": "tab-secondary-item-background-color-disabled",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-secondary-item-background-color-disabled"
+								}
+							],
+							"name": "tabSecondaryItemBackgroundColorDisabled",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-neutral-1)",
+							"editorType": "ColorPicker",
+							"label": "tab-secondary-item-background-color-hover",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-secondary-item-background-color-hover"
+								}
+							],
+							"name": "tabSecondaryItemBackgroundColorHover",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-neutral-3)",
+							"editorType": "ColorPicker",
+							"label": "tab-secondary-item-border-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-secondary-item-border-color"
+								}
+							],
+							"name": "tabSecondaryItemBorderColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-neutral-3)",
+							"editorType": "ColorPicker",
+							"label": "tab-secondary-item-border-color-active",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-secondary-item-border-color-active"
+								}
+							],
+							"name": "tabSecondaryItemBorderColorActive",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-neutral-3)",
+							"editorType": "ColorPicker",
+							"label": "tab-secondary-item-border-color-hover",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-secondary-item-border-color-hover"
+								}
+							],
+							"name": "tabSecondaryItemBorderColorHover",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0",
+							"label": "tab-secondary-item-border-radius",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-secondary-item-border-radius"
+								}
+							],
+							"name": "tabSecondaryItemBorderRadius",
+							"type": "String"
+						},
+						{
+							"defaultValue": "none",
+							"label": "tab-secondary-item-box-shadow-active",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-secondary-item-box-shadow-active"
+								}
+							],
+							"name": "tabSecondaryItemBoxShadowActive",
+							"type": "String"
+						},
+						{
+							"defaultValue": "none",
+							"label": "tab-secondary-item-box-shadow-hover",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-secondary-item-box-shadow-hover"
+								}
+							],
+							"name": "tabSecondaryItemBoxShadowHover",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-neutral-8)",
+							"editorType": "ColorPicker",
+							"label": "tab-secondary-item-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-secondary-item-color"
+								}
+							],
+							"name": "tabSecondaryItemColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-neutral-10)",
+							"editorType": "ColorPicker",
+							"label": "tab-secondary-item-color-active",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-secondary-item-color-active"
+								}
+							],
+							"name": "tabSecondaryItemColorActive",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-action-neutral-disabled)",
+							"editorType": "ColorPicker",
+							"label": "tab-secondary-item-color-disabled",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-secondary-item-color-disabled"
+								}
+							],
+							"name": "tabSecondaryItemColorDisabled",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-neutral-10)",
+							"editorType": "ColorPicker",
+							"label": "tab-secondary-item-color-hover",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-secondary-item-color-hover"
+								}
+							],
+							"name": "tabSecondaryItemColorHover",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--text-paragraph-font-size)",
+							"label": "tab-secondary-item-font-size",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-secondary-item-font-size"
+								}
+							],
+							"name": "tabSecondaryItemFontSize",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--font-weight-normal)",
+							"label": "tab-secondary-item-font-weight",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-secondary-item-font-weight"
+								}
+							],
+							"name": "tabSecondaryItemFontWeight",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--font-weight-bold)",
+							"label": "tab-secondary-item-font-weight-active",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-secondary-item-font-weight-active"
+								}
+							],
+							"name": "tabSecondaryItemFontWeightActive",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-neutral-7)",
+							"editorType": "ColorPicker",
+							"label": "tab-secondary-item-icon-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-secondary-item-icon-color"
+								}
+							],
+							"name": "tabSecondaryItemIconColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-brand-primary)",
+							"editorType": "ColorPicker",
+							"label": "tab-secondary-item-icon-color-active",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-secondary-item-icon-color-active"
+								}
+							],
+							"name": "tabSecondaryItemIconColorActive",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-action-neutral-disabled)",
+							"editorType": "ColorPicker",
+							"label": "tab-secondary-item-icon-color-disabled",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-secondary-item-icon-color-disabled"
+								}
+							],
+							"name": "tabSecondaryItemIconColorDisabled",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-brand-primary-darken-1)",
+							"editorType": "ColorPicker",
+							"label": "tab-secondary-item-icon-color-hover",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-secondary-item-icon-color-hover"
+								}
+							],
+							"name": "tabSecondaryItemIconColorHover",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--text-paragraph-font-size);",
+							"label": "tab-secondary-item-icon-font-size",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-secondary-item-icon-font-size"
+								}
+							],
+							"name": "tabSecondaryItemIconFontSize",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--spacer-2)",
+							"label": "tab-secondary-item-inline-item-spacer-x",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-secondary-item-inline-item-spacer-x"
+								}
+							],
+							"name": "tabSecondaryItemInlineItemSpacerX",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--spacer-2)",
+							"label": "tab-secondary-item-inline-item-spacer-y",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-secondary-item-inline-item-spacer-y"
+								}
+							],
+							"name": "tabSecondaryItemInlineItemSpacerY",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--text-paragraph-line-height)",
+							"label": "tab-secondary-item-line-height",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-secondary-item-line-height"
+								}
+							],
+							"name": "tabSecondaryItemLineHeight",
+							"type": "String"
+						}
+					],
+					"label": "secondary",
+					"name": "secondary"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "auto",
+							"label": "tab-secondary-horizontal-item-active-bar-width",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-secondary-horizontal-item-active-bar-width"
+								}
+							],
+							"name": "tabSecondaryHorizontalItemActiveBarWidth",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0.0625rem",
+							"label": "tab-secondary-horizontal-item-border-bottom-width",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-secondary-horizontal-item-border-bottom-width"
+								}
+							],
+							"name": "tabSecondaryHorizontalItemBorderBottomWidth",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0.0625rem",
+							"label": "tab-secondary-horizontal-item-border-left-width",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-secondary-horizontal-item-border-left-width"
+								}
+							],
+							"name": "tabSecondaryHorizontalItemBorderLeftWidth",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0.0625rem",
+							"label": "tab-secondary-horizontal-item-border-right-width",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-secondary-horizontal-item-border-right-width"
+								}
+							],
+							"name": "tabSecondaryHorizontalItemBorderRightWidth",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0.0625rem",
+							"label": "tab-secondary-horizontal-item-border-top-width",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-secondary-horizontal-item-border-top-width"
+								}
+							],
+							"name": "tabSecondaryHorizontalItemBorderTopWidth",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--spacer-3)",
+							"label": "tab-secondary-horizontal-item-padding-x",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-secondary-horizontal-item-padding-x"
+								}
+							],
+							"name": "tabSecondaryHorizontalItemPaddingX",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--spacer-3)",
+							"label": "tab-secondary-horizontal-item-padding-y",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-secondary-horizontal-item-padding-y"
+								}
+							],
+							"name": "tabSecondaryHorizontalItemPaddingY",
+							"type": "String"
+						}
+					],
+					"label": "secondary-horizontal",
+					"name": "secondary-horizontal"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "auto",
+							"label": "tab-secondary-vertical-item-active-bar-height",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-secondary-vertical-item-active-bar-height"
+								}
+							],
+							"name": "tabSecondaryVerticalItemActiveBarHeight",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0.0625rem",
+							"label": "tab-secondary-vertical-item-border-bottom-width",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-secondary-vertical-item-border-bottom-width"
+								}
+							],
+							"name": "tabSecondaryVerticalItemBorderBottomWidth",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0.0625rem",
+							"label": "tab-secondary-vertical-item-border-left-width",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-secondary-vertical-item-border-left-width"
+								}
+							],
+							"name": "tabSecondaryVerticalItemBorderLeftWidth",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0.0625rem",
+							"label": "tab-secondary-vertical-item-border-right-width",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-secondary-vertical-item-border-right-width"
+								}
+							],
+							"name": "tabSecondaryVerticalItemBorderRightWidth",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0.0625rem",
+							"label": "tab-secondary-vertical-item-border-top-width",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-secondary-vertical-item-border-top-width"
+								}
+							],
+							"name": "tabSecondaryVerticalItemBorderTopWidth",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--spacer-3)",
+							"label": "tab-secondary-vertical-item-padding-x",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-secondary-vertical-item-padding-x"
+								}
+							],
+							"name": "tabSecondaryVerticalItemPaddingX",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--spacer-3)",
+							"label": "tab-secondary-vertical-item-padding-y",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-secondary-vertical-item-padding-y"
+								}
+							],
+							"name": "tabSecondaryVerticalItemPaddingY",
+							"type": "String"
+						}
+					],
+					"label": "secondary-vertical",
+					"name": "secondary-vertical"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "0.0625rem",
+							"label": "tab-tertiary-item-active-bar-border-radius",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-tertiary-item-active-bar-border-radius"
+								}
+							],
+							"name": "tabTertiaryItemActiveBarBorderRadius",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-brand-primary)",
+							"editorType": "ColorPicker",
+							"label": "tab-tertiary-item-active-bar-color-active",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-tertiary-item-active-bar-color-active"
+								}
+							],
+							"name": "tabTertiaryItemActiveBarColorActive",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-brand-primary-darken-1)",
+							"editorType": "ColorPicker",
+							"label": "tab-tertiary-item-active-bar-color-hover",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-tertiary-item-active-bar-color-hover"
+								}
+							],
+							"name": "tabTertiaryItemActiveBarColorHover",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0.1875rem",
+							"label": "tab-tertiary-item-active-bar-thickness",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-tertiary-item-active-bar-thickness"
+								}
+							],
+							"name": "tabTertiaryItemActiveBarThickness",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-neutral-0)",
+							"editorType": "ColorPicker",
+							"label": "tab-tertiary-item-background-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-tertiary-item-background-color"
+								}
+							],
+							"name": "tabTertiaryItemBackgroundColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-neutral-0)",
+							"editorType": "ColorPicker",
+							"label": "tab-tertiary-item-background-color-active",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-tertiary-item-background-color-active"
+								}
+							],
+							"name": "tabTertiaryItemBackgroundColorActive",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-neutral-0)",
+							"editorType": "ColorPicker",
+							"label": "tab-tertiary-item-background-color-disabled",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-tertiary-item-background-color-disabled"
+								}
+							],
+							"name": "tabTertiaryItemBackgroundColorDisabled",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-neutral-0)",
+							"editorType": "ColorPicker",
+							"label": "tab-tertiary-item-background-color-hover",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-tertiary-item-background-color-hover"
+								}
+							],
+							"name": "tabTertiaryItemBackgroundColorHover",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-neutral-3)",
+							"editorType": "ColorPicker",
+							"label": "tab-tertiary-item-border-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-tertiary-item-border-color"
+								}
+							],
+							"name": "tabTertiaryItemBorderColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-neutral-3)",
+							"editorType": "ColorPicker",
+							"label": "tab-tertiary-item-border-color-active",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-tertiary-item-border-color-active"
+								}
+							],
+							"name": "tabTertiaryItemBorderColorActive",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-neutral-3)",
+							"editorType": "ColorPicker",
+							"label": "tab-tertiary-item-border-color-hover",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-tertiary-item-border-color-hover"
+								}
+							],
+							"name": "tabTertiaryItemBorderColorHover",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0",
+							"label": "tab-tertiary-item-border-radius",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-tertiary-item-border-radius"
+								}
+							],
+							"name": "tabTertiaryItemBorderRadius",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--elevation-fluffy-2) rgba(77, 133, 255, 0.1)",
+							"label": "tab-tertiary-item-box-shadow-active",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-tertiary-item-box-shadow-active"
+								}
+							],
+							"name": "tabTertiaryItemBoxShadowActive",
+							"type": "String"
+						},
+						{
+							"defaultValue": "none",
+							"label": "tab-tertiary-item-box-shadow-hover",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-tertiary-item-box-shadow-hover"
+								}
+							],
+							"name": "tabTertiaryItemBoxShadowHover",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-neutral-8)",
+							"editorType": "ColorPicker",
+							"label": "tab-tertiary-item-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-tertiary-item-color"
+								}
+							],
+							"name": "tabTertiaryItemColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-neutral-8)",
+							"editorType": "ColorPicker",
+							"label": "tab-tertiary-item-color-active",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-tertiary-item-color-active"
+								}
+							],
+							"name": "tabTertiaryItemColorActive",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-action-neutral-disabled)",
+							"editorType": "ColorPicker",
+							"label": "tab-tertiary-item-color-disabled",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-tertiary-item-color-disabled"
+								}
+							],
+							"name": "tabTertiaryItemColorDisabled",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-neutral-8)",
+							"editorType": "ColorPicker",
+							"label": "tab-tertiary-item-color-hover",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-tertiary-item-color-hover"
+								}
+							],
+							"name": "tabTertiaryItemColorHover",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--text-paragraph-font-size);",
+							"label": "tab-tertiary-item-font-size",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-tertiary-item-font-size"
+								}
+							],
+							"name": "tabTertiaryItemFontSize",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--font-weight-normal)",
+							"label": "tab-tertiary-item-font-weight",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-tertiary-item-font-weight"
+								}
+							],
+							"name": "tabTertiaryItemFontWeight",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--font-weight-bolder)",
+							"label": "tab-tertiary-item-font-weight-active",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-tertiary-item-font-weight-active"
+								}
+							],
+							"name": "tabTertiaryItemFontWeightActive",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-neutral-7)",
+							"editorType": "ColorPicker",
+							"label": "tab-tertiary-item-icon-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-tertiary-item-icon-color"
+								}
+							],
+							"name": "tabTertiaryItemIconColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-brand-primary)",
+							"editorType": "ColorPicker",
+							"label": "tab-tertiary-item-icon-color-active",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-tertiary-item-icon-color-active"
+								}
+							],
+							"name": "tabTertiaryItemIconColorActive",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-action-neutral-disabled)",
+							"editorType": "ColorPicker",
+							"label": "tab-tertiary-item-icon-color-disabled",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-tertiary-item-icon-color-disabled"
+								}
+							],
+							"name": "tabTertiaryItemIconColorDisabled",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-brand-primary-darken-1)",
+							"editorType": "ColorPicker",
+							"label": "tab-tertiary-item-icon-color-hover",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-tertiary-item-icon-color-hover"
+								}
+							],
+							"name": "tabTertiaryItemIconColorHover",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--text-paragraph-font-size)",
+							"label": "tab-tertiary-item-icon-font-size",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-tertiary-item-icon-font-size"
+								}
+							],
+							"name": "tabTertiaryItemIconFontSize",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--spacer-2)",
+							"label": "tab-tertiary-item-inline-item-spacer-x",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-tertiary-item-inline-item-spacer-x"
+								}
+							],
+							"name": "tabTertiaryItemInlineItemSpacerX",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--spacer-2)",
+							"label": "tab-tertiary-item-inline-item-spacer-y",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-tertiary-item-inline-item-spacer-y"
+								}
+							],
+							"name": "tabTertiaryItemInlineItemSpacerY",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--text-paragraph-line-height)",
+							"label": "tab-tertiary-item-line-height",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-tertiary-item-line-height"
+								}
+							],
+							"name": "tabTertiaryItemLineHeight",
+							"type": "String"
+						}
+					],
+					"label": "tertiary",
+					"name": "tertiary"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "auto",
+							"label": "tab-tertiary-horizontal-item-active-bar-width",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-tertiary-horizontal-item-active-bar-width"
+								}
+							],
+							"name": "tabTertiaryHorizontalItemActiveBarWidth",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0.0625rem",
+							"label": "tab-tertiary-horizontal-item-border-bottom-width",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-tertiary-horizontal-item-border-bottom-width"
+								}
+							],
+							"name": "tabTertiaryHorizontalItemBorderBottomWidth",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0",
+							"label": "tab-tertiary-horizontal-item-border-left-width",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-tertiary-horizontal-item-border-left-width"
+								}
+							],
+							"name": "tabTertiaryHorizontalItemBorderLeftWidth",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0",
+							"label": "tab-tertiary-horizontal-item-border-right-width",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-tertiary-horizontal-item-border-right-width"
+								}
+							],
+							"name": "tabTertiaryHorizontalItemBorderRightWidth",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0",
+							"label": "tab-tertiary-horizontal-item-border-top-width",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-tertiary-horizontal-item-border-top-width"
+								}
+							],
+							"name": "tabTertiaryHorizontalItemBorderTopWidth",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--spacer-3)",
+							"label": "tab-tertiary-horizontal-item-padding-x",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-tertiary-horizontal-item-padding-x"
+								}
+							],
+							"name": "tabTertiaryHorizontalItemPaddingX",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--spacer-3)",
+							"label": "tab-tertiary-horizontal-item-padding-y",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-tertiary-horizontal-item-padding-y"
+								}
+							],
+							"name": "tabTertiaryHorizontalItemPaddingY",
+							"type": "String"
+						}
+					],
+					"label": "tertiary-horizontal",
+					"name": "tertiary-horizontal"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "auto",
+							"label": "tab-tertiary-vertical-item-active-bar-height",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-tertiary-vertical-item-active-bar-height"
+								}
+							],
+							"name": "tabTertiaryVerticalItemActiveBarHeight",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0.0625rem",
+							"label": "tab-tertiary-vertical-item-border-bottom-width",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-tertiary-vertical-item-border-bottom-width"
+								}
+							],
+							"name": "tabTertiaryVerticalItemBorderBottomWidth",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0",
+							"label": "tab-tertiary-vertical-item-border-left-width",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-tertiary-vertical-item-border-left-width"
+								}
+							],
+							"name": "tabTertiaryVerticalItemBorderLeftWidth",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0",
+							"label": "tab-tertiary-vertical-item-border-right-width",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-tertiary-vertical-item-border-right-width"
+								}
+							],
+							"name": "tabTertiaryVerticalItemBorderRightWidth",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0",
+							"label": "tab-tertiary-vertical-item-border-top-width",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-tertiary-vertical-item-border-top-width"
+								}
+							],
+							"name": "tabTertiaryVerticalItemBorderTopWidth",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--spacer-3)",
+							"label": "tab-tertiary-vertical-item-padding-x",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-tertiary-vertical-item-padding-x"
+								}
+							],
+							"name": "tabTertiaryVerticalItemPaddingX",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--spacer-3)",
+							"label": "tab-tertiary-vertical-item-padding-y",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-tertiary-vertical-item-padding-y"
+								}
+							],
+							"name": "tabTertiaryVerticalItemPaddingY",
+							"type": "String"
+						}
+					],
+					"label": "tertiary-vertical",
+					"name": "tertiary-vertical"
+				},
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "var(--color-neutral-1)",
+							"editorType": "ColorPicker",
+							"label": "tab-segment-background-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-segment-background-color"
+								}
+							],
+							"name": "tabSegmentBackgroundColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-neutral-3)",
+							"editorType": "ColorPicker",
+							"label": "tab-segment-border-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-segment-border-color"
+								}
+							],
+							"name": "tabSegmentBorderColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--border-radius-pill)",
+							"label": "tab-segment-border-radius",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-segment-border-radius"
+								}
+							],
+							"name": "tabSegmentBorderRadius",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0.0625rem",
+							"label": "tab-segment-border-width",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-segment-border-width"
+								}
+							],
+							"name": "tabSegmentBorderWidth",
+							"type": "String"
+						},
+						{
+							"defaultValue": "transparent",
+							"editorType": "ColorPicker",
+							"label": "tab-segment-item-background-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-segment-item-background-color"
+								}
+							],
+							"name": "tabSegmentItemBackgroundColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-action-primary-active)",
+							"editorType": "ColorPicker",
+							"label": "tab-segment-item-background-color-active",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-segment-item-background-color-active"
+								}
+							],
+							"name": "tabSegmentItemBackgroundColorActive",
+							"type": "String"
+						},
+						{
+							"defaultValue": "transparent",
+							"editorType": "ColorPicker",
+							"label": "tab-segment-item-background-color-disabled",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-segment-item-background-color-disabled"
+								}
+							],
+							"name": "tabSegmentItemBackgroundColorDisabled",
+							"type": "String"
+						},
+						{
+							"defaultValue": "transparent",
+							"editorType": "ColorPicker",
+							"label": "tab-segment-item-background-color-hover",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-segment-item-background-color-hover"
+								}
+							],
+							"name": "tabSegmentItemBackgroundColorHover",
+							"type": "String"
+						},
+						{
+							"defaultValue": "transparent",
+							"editorType": "ColorPicker",
+							"label": "tab-segment-item-border-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-segment-item-border-color"
+								}
+							],
+							"name": "tabSegmentItemBorderColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "transparent",
+							"editorType": "ColorPicker",
+							"label": "tab-segment-item-border-color-active",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-segment-item-border-color-active"
+								}
+							],
+							"name": "tabSegmentItemBorderColorActive",
+							"type": "String"
+						},
+						{
+							"defaultValue": "transparent",
+							"editorType": "ColorPicker",
+							"label": "tab-segment-item-border-color-disabled",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-segment-item-border-color-disabled"
+								}
+							],
+							"name": "tabSegmentItemBorderColorDisabled",
+							"type": "String"
+						},
+						{
+							"defaultValue": "transparent",
+							"editorType": "ColorPicker",
+							"label": "tab-segment-item-border-color-hover",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-segment-item-border-color-hover"
+								}
+							],
+							"name": "tabSegmentItemBorderColorHover",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--border-radius-pill)",
+							"label": "tab-segment-item-border-radius",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-segment-item-border-radius"
+								}
+							],
+							"name": "tabSegmentItemBorderRadius",
+							"type": "String"
+						},
+						{
+							"defaultValue": "0",
+							"label": "tab-segment-item-border-width",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-segment-item-border-width"
+								}
+							],
+							"name": "tabSegmentItemBorderWidth",
+							"type": "String"
+						},
+						{
+							"defaultValue": "none",
+							"label": "tab-segment-item-box-shadow-active",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-segment-item-box-shadow-active"
+								}
+							],
+							"name": "tabSegmentItemBoxShadowActive",
+							"type": "String"
+						},
+						{
+							"defaultValue": "none",
+							"label": "tab-segment-item-box-shadow-hover",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-segment-item-box-shadow-hover"
+								}
+							],
+							"name": "tabSegmentItemBoxShadowHover",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-neutral-6)",
+							"editorType": "ColorPicker",
+							"label": "tab-segment-item-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-segment-item-color"
+								}
+							],
+							"name": "tabSegmentItemColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-neutral-0)",
+							"editorType": "ColorPicker",
+							"label": "tab-segment-item-color-active",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-segment-item-color-active"
+								}
+							],
+							"name": "tabSegmentItemColorActive",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-neutral-3)",
+							"editorType": "ColorPicker",
+							"label": "tab-segment-item-color-disabled",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-segment-item-color-disabled"
+								}
+							],
+							"name": "tabSegmentItemColorDisabled",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-action-primary-active)",
+							"editorType": "ColorPicker",
+							"label": "tab-segment-item-color-hover",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-segment-item-color-hover"
+								}
+							],
+							"name": "tabSegmentItemColorHover",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--text-paragraph-font-size)",
+							"label": "tab-segment-item-font-size",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-segment-item-font-size"
+								}
+							],
+							"name": "tabSegmentItemFontSize",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--font-weight-bold)",
+							"label": "tab-segment-item-font-weight",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-segment-item-font-weight"
+								}
+							],
+							"name": "tabSegmentItemFontWeight",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--font-weight-bold)",
+							"label": "tab-segment-item-font-weight-active",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-segment-item-font-weight-active"
+								}
+							],
+							"name": "tabSegmentItemFontWeightActive",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-neutral-6)",
+							"editorType": "ColorPicker",
+							"label": "tab-segment-item-icon-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-segment-item-icon-color"
+								}
+							],
+							"name": "tabSegmentItemIconColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-neutral-0)",
+							"editorType": "ColorPicker",
+							"label": "tab-segment-item-icon-color-active",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-segment-item-icon-color-active"
+								}
+							],
+							"name": "tabSegmentItemIconColorActive",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-neutral-3)",
+							"editorType": "ColorPicker",
+							"label": "tab-segment-item-icon-color-disabled",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-segment-item-icon-color-disabled"
+								}
+							],
+							"name": "tabSegmentItemIconColorDisabled",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-action-primary-active)",
+							"editorType": "ColorPicker",
+							"label": "tab-segment-item-icon-color-hover",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-segment-item-icon-color-hover"
+								}
+							],
+							"name": "tabSegmentItemIconColorHover",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--text-paragraph-font-size)",
+							"label": "tab-segment-item-icon-font-size",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-segment-item-icon-font-size"
+								}
+							],
+							"name": "tabSegmentItemIconFontSize",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--spacer-3)",
+							"label": "tab-segment-item-inline-item-spacer-x",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-segment-item-inline-item-spacer-x"
+								}
+							],
+							"name": "tabSegmentItemInlineItemSpacerX",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--spacer-3)",
+							"label": "tab-segment-item-inline-item-spacer-y",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-segment-item-inline-item-spacer-y"
+								}
+							],
+							"name": "tabSegmentItemInlineItemSpacerY",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--text-paragraph-line-height)",
+							"label": "tab-segment-item-line-height",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-segment-item-line-height"
+								}
+							],
+							"name": "tabSegmentItemLineHeight",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--spacer-1)",
+							"label": "tab-segment-padding-x",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-segment-padding-x"
+								}
+							],
+							"name": "tabSegmentPaddingX",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--spacer-1)",
+							"label": "tab-segment-padding-y",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-segment-padding-y"
+								}
+							],
+							"name": "tabSegmentPaddingY",
+							"type": "String"
+						}
+					],
+					"label": "segment",
+					"name": "segment"
+				}
+			],
+			"label": "tabs",
+			"name": "tabs"
 		}
 	]
 }

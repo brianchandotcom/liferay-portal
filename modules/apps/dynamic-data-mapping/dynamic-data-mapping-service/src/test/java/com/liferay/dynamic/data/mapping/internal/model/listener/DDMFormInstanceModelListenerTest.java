@@ -25,19 +25,13 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
-
-import org.powermock.api.mockito.PowerMockito;
 
 /**
  * @author Marcos Martins
  */
-@RunWith(MockitoJUnitRunner.class)
-public class DDMFormInstanceModelListenerTest extends PowerMockito {
+public class DDMFormInstanceModelListenerTest {
 
 	@ClassRule
 	@Rule
@@ -54,16 +48,16 @@ public class DDMFormInstanceModelListenerTest extends PowerMockito {
 
 	@Test
 	public void testOnAfterCreate() throws PortalException {
-		when(
+		Mockito.when(
 			_ddmFormInstanceReportLocalService.addFormInstanceReport(
 				Mockito.anyLong())
 		).thenThrow(
 			new NoSuchFormInstanceException()
 		);
 
-		DDMFormInstance ddmFormInstance = mock(DDMFormInstance.class);
+		DDMFormInstance ddmFormInstance = Mockito.mock(DDMFormInstance.class);
 
-		when(
+		Mockito.when(
 			ddmFormInstance.getFormInstanceId()
 		).thenReturn(
 			0L
@@ -74,16 +68,16 @@ public class DDMFormInstanceModelListenerTest extends PowerMockito {
 
 	@Test
 	public void testOnBeforeRemove() throws PortalException {
-		when(
+		Mockito.when(
 			_ddmFormInstanceReportLocalService.
 				getFormInstanceReportByFormInstanceId(Mockito.anyLong())
 		).thenThrow(
 			new NoSuchFormInstanceReportException()
 		);
 
-		DDMFormInstance ddmFormInstance = mock(DDMFormInstance.class);
+		DDMFormInstance ddmFormInstance = Mockito.mock(DDMFormInstance.class);
 
-		when(
+		Mockito.when(
 			ddmFormInstance.getFormInstanceId()
 		).thenReturn(
 			0L
@@ -97,9 +91,8 @@ public class DDMFormInstanceModelListenerTest extends PowerMockito {
 	}
 
 	private DDMFormInstanceModelListener _ddmFormInstanceModelListener;
-
-	@Mock
-	private DDMFormInstanceReportLocalService
-		_ddmFormInstanceReportLocalService;
+	private final DDMFormInstanceReportLocalService
+		_ddmFormInstanceReportLocalService = Mockito.mock(
+			DDMFormInstanceReportLocalService.class);
 
 }

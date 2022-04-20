@@ -63,6 +63,10 @@ definition {
 			panel = "Control Panel",
 			portlet = "Accounts");
 
+		Click(
+			key_accountName = "${accountName}",
+			locator1 = "CustomerPortalSite#ACCOUNT_NAME");
+
 		Navigator.gotoNavTab(navTab = "Users");
 
 		Accounts.goToEntryMenuItem(
@@ -156,6 +160,12 @@ definition {
 		Alert.viewSuccessMessage();
 
 		CustomerPortal.customerPortalApisTearDown();
+	}
+
+	macro enterOnProject {
+		Click(
+			key_projectName = "${projectName}",
+			locator1 = "CustomerPortalSite#PROJECT_TABLE_NAME");
 	}
 
 	macro loginOktaToUpdateCP {

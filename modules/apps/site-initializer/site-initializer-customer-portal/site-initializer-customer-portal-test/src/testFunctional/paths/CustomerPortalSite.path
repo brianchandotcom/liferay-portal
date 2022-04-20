@@ -51,8 +51,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PROJECT_TABLE</td>
-	<td>//div[contains(@class,'cp-project-cards')]//div[contains(@class,'project-card')]//h4[contains(@title, '${key_projectName}')]</td>
+	<td>PROJECT_TABLE_NAME</td>
+	<td>//div[contains(@class,'card-body')]//h4[contains(@title,'${key_projectName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACCOUNT_NAME</td>
+	<td>//td[contains(@class,'table-title')]//a[contains(text(),'${key_accountName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GETTING_STARTED_MODAL</td>
+	<td>//header[contains(@class,'p-4')]//h2[contains(text(),'Let’s set up your project')]</td>
 	<td></td>
 </tr>
 </tbody>

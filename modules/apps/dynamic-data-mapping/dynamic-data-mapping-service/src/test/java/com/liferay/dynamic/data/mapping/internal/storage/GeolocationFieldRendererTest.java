@@ -21,30 +21,31 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.JavaDetector;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Locale;
 
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.mockito.Matchers;
-import org.mockito.Mock;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.mockito.Mockito;
 
 /**
  * @author Adolfo Pérez
  */
-@PrepareForTest(LanguageUtil.class)
-@RunWith(PowerMockRunner.class)
-public class GeolocationFieldRendererTest extends PowerMockito {
+public class GeolocationFieldRendererTest {
 
-	@Before
-	public void setUp() {
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
+
+	@BeforeClass
+	public static void setUpClass() {
 		_setUpLanguageUtil();
 	}
 
@@ -82,11 +83,7 @@ public class GeolocationFieldRendererTest extends PowerMockito {
 		}
 	}
 
-	private Field _createField() {
-		return new Field("field", "{latitude: 9.8765, longitude: 1.2345}");
-	}
-
-	private void _setUpLanguageUtil() {
+	private static void _setUpLanguageUtil() {
 		_whenLanguageGet(LocaleUtil.SPAIN, "latitude", "Latitud");
 		_whenLanguageGet(LocaleUtil.SPAIN, "longitude", "Longitud");
 		_whenLanguageGet(LocaleUtil.US, "latitude", "Latitude");
@@ -97,17 +94,20 @@ public class GeolocationFieldRendererTest extends PowerMockito {
 		languageUtil.setLanguage(_language);
 	}
 
-	private void _whenLanguageGet(
+	private static void _whenLanguageGet(
 		Locale locale, String key, String returnValue) {
 
-		when(
+		Mockito.when(
 			_language.get(Matchers.eq(locale), Matchers.eq(key))
 		).thenReturn(
 			returnValue
 		);
 	}
 
-	@Mock
-	private Language _language;
+	private Field _createField() {
+		return new Field("field", "{latitude: 9.8765, longitude: 1.2345}");
+	}
+
+	private static final Language _language = Mockito.mock(Language.class);
 
 }

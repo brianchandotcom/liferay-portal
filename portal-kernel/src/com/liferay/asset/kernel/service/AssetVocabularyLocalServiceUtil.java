@@ -604,6 +604,17 @@ public class AssetVocabularyLocalServiceUtil {
 			companyId, groupId, title, start, end, sort);
 	}
 
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult
+		<AssetVocabulary> searchVocabularies(
+				long companyId, long[] groupIds, String title,
+				int[] visibilityTypes, int start, int end,
+				com.liferay.portal.kernel.search.Sort sort)
+			throws PortalException {
+
+		return getService().searchVocabularies(
+			companyId, groupIds, title, visibilityTypes, start, end, sort);
+	}
+
 	/**
 	 * Updates the asset vocabulary in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

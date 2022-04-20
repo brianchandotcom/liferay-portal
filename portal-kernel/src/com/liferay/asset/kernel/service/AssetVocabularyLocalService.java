@@ -485,6 +485,12 @@ public interface AssetVocabularyLocalService
 			Sort sort)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<AssetVocabulary> searchVocabularies(
+			long companyId, long[] groupIds, String title,
+			int[] visibilityTypes, int start, int end, Sort sort)
+		throws PortalException;
+
 	/**
 	 * Updates the asset vocabulary in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

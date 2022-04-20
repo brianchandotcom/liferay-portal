@@ -32,14 +32,13 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.translation.info.field.TranslationInfoFieldChecker;
 import com.liferay.translation.snapshot.TranslationSnapshot;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -132,14 +131,14 @@ public class ViewTranslationDisplayContext {
 		Collection<InfoFieldValue<Object>> infoFieldValues =
 			infoItemFieldValues.getInfoFieldValues(infoField.getUniqueId());
 
-		Stream<InfoFieldValue<Object>> stream = infoFieldValues.stream();
+		List<String> stringValues = new ArrayList<>();
 
-		return stream.map(
-			infoFieldValue -> GetterUtil.getString(
-				infoFieldValue.getValue(locale))
-		).collect(
-			Collectors.toList()
-		);
+		for (InfoFieldValue<Object> infoFieldValue : infoFieldValues) {
+			stringValues.add(
+				GetterUtil.getString(infoFieldValue.getValue(locale)));
+		}
+
+		return stringValues;
 	}
 
 	public String getTargetLanguageId() {

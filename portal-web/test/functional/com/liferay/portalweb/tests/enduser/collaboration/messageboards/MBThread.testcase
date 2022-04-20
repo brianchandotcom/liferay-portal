@@ -710,4 +710,29 @@ definition {
 			threadSubject = '''<script>alert(123);</script>''');
 	}
 
+	@description = "This is a test for LPS-68939. It ensures that the message threads appear from newest to oldest by default."
+	@priority = "4"
+	test ThreadsAreSortedFromNewestToOldestByDefault {
+		for (var threadSubjectName : list "MB Thread Message 1,MB Thread Message 2,MB Thread Message 3") {
+			JSONMBMessage.addMessage(
+				groupName = "Guest",
+				threadBody = "${threadSubjectName} Body",
+				threadSubject = "${threadSubjectName} Subject");
+		}
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsThread.viewPG(
+			position = "1",
+			threadSubject = "MB Thread Message 3 Subject");
+
+		MessageboardsThread.viewPG(
+			position = "2",
+			threadSubject = "MB Thread Message 2 Subject");
+
+		MessageboardsThread.viewPG(
+			position = "3",
+			threadSubject = "MB Thread Message 1 Subject");
+	}
+
 }

@@ -1693,6 +1693,12 @@ public class LayoutsAdminDisplayContext {
 			}
 		}
 
+		if (!selGroup.isLayoutSetPrototype() &&
+			!selGroup.isPrivateLayoutsEnabled()) {
+
+			return false;
+		}
+
 		return true;
 	}
 

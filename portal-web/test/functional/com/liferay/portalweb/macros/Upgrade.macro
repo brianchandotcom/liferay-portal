@@ -2962,6 +2962,11 @@ definition {
 	macro viewAndAddImageResolution {
 		AdaptiveMedia.openAdaptiveMediaAdmin();
 
+		AdaptiveMedia.viewImageResolutionTableEntry(
+			imageName = "Preview",
+			maxHeight = "Auto",
+			maxWidth = "1000");
+
 		AdaptiveMedia.selectAdaptiveMediaImage(imageName = "Thumbnail 300x300");
 
 		AdaptiveMedia.viewNumberOfAdaptedImages(numberOfAdaptedImages = "1/1");

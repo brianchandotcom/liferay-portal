@@ -764,6 +764,8 @@ definition {
 	@priority = "5"
 	test ViewAllBlogsShownInAssetList {
 		property portal.acceptance = "true";
+		property portal.release = "true";
+
 		ACUtils.createBlogsAndAddToPage(entryTitle = "Test 2");
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");

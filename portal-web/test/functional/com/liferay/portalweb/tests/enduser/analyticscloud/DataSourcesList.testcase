@@ -24,6 +24,8 @@ definition {
 	@priority = "5"
 	test DataSourceListShowsAllDataSources {
 		property portal.acceptance = "true";
+		property portal.release = "true";
+
 		var dataSourceList = "";
 
 		for (var n : list "1,2,3") {

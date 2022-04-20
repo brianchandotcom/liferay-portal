@@ -333,6 +333,8 @@ definition {
 	@priority = "5"
 	test CustomEventIsShownInAC {
 		property portal.acceptance = "true";
+		property portal.release = "true";
+
 		task ("Fill fields and create custom event") {
 			var customEventName = ACCustomEvents.generateCustomEventName();
 

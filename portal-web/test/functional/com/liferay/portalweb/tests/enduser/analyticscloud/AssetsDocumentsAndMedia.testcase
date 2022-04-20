@@ -1000,6 +1000,8 @@ definition {
 	@priority = "5"
 	test VisitorBehaviorCardShowsExpectedAmountOfPreviewsInDM {
 		property portal.acceptance = "true";
+		property portal.release = "true";
+
 		var documentNameList = "DM AC Title,DM AC Title";
 
 		task ("Connect the DXP to AC") {

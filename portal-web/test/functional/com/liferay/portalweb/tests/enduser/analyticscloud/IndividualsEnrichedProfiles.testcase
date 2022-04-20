@@ -51,6 +51,7 @@ definition {
 	@priority = "5"
 	test IncreaseByOneWhenAnonymousIndividualConvertedToKnownIndividual {
 		property portal.acceptance = "true";
+		property portal.release = "true";
 
 		task ("Add a new user") {
 			JSONUser.addUser(

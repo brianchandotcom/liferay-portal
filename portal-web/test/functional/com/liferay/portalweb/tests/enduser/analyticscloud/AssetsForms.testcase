@@ -722,6 +722,7 @@ definition {
 	@priority = "5"
 	test VisitorBehaviorCardShowsExpectedAmountOfViews {
 		property portal.acceptance = "true";
+		property portal.release = "true";
 		property test.name.skip.portal.instance = "AssetsForms#VisitorBehaviorCardShowsExpectedAmountOfViews";
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");

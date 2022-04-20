@@ -1,6 +1,7 @@
 @component-name = "portal-frontend-infrastructure"
 definition {
 
+	property custom.properties = "feature.flag.LPS-144527=true";
 	property osgi.module.configuration.file.names = "com.liferay.document.library.web.internal.configuration.FFManagementToolbarConfiguration.config:com.liferay.frontend.taglib.clay.internal.configuration.FFManagementToolbarConfiguration.config";
 	property osgi.module.configurations = "enableDesignImprovements=&quot;true&quot;:showDesignImprovements=&quot;true&quot;";
 	property osgi.modules.includes = "frontend-taglib-clay-sample-web";

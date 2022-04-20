@@ -196,32 +196,26 @@ export default function useFilters(setFilterTerm, productName) {
 			) {
 				if (
 					!isNaN(filters.keyType.value.hasOnPremise) &&
-					filters.keyType.value.hasOnPremise
+					filters.keyType.value.hasOnPremise &&
+					!filters.keyType.value.maxNodes &&
+					!filters.keyType.value.minNodes
 				) {
 					hasFilterPill = true;
-					filtersKeyType.push(
-						"not contains(licenseEntryType, 'cluster')"
-					);
+					filtersKeyType.push('maxClusterNodes eq 0');
 				}
 
 				if (
-					!isNaN(filters.keyType.value.hasVirtualCluster) &&
-					filters.keyType.value.hasVirtualCluster
+					(!isNaN(filters.keyType.value.hasVirtualCluster) &&
+						filters.keyType.value.hasVirtualCluster &&
+						!filters.keyType.value.maxNodes &&
+						!filters.keyType.value.minNodes) ||
+					(!isNaN(filters.keyType.value.hasCluster) &&
+						filters.keyType.value.hasCluster &&
+						!filters.keyType.value.maxNodes &&
+						!filters.keyType.value.minNodes)
 				) {
 					hasFilterPill = true;
-					filtersKeyType.push(
-						"contains(licenseEntryType, 'virtual')"
-					);
-				}
-
-				if (
-					!isNaN(filters.keyType.value.hasCluster) &&
-					filters.keyType.value.hasCluster
-				) {
-					hasFilterPill = true;
-					filtersKeyType.push(
-						"contains(licenseEntryType, 'cluster')"
-					);
+					filtersKeyType.push('maxClusterNodes gt 0');
 				}
 			}
 			else {
@@ -232,20 +226,22 @@ export default function useFilters(setFilterTerm, productName) {
 				filtersKeyType.push(
 					`maxClusterNodes le ${filters.keyType.value.maxNodes}`
 				);
-				showOnPrem = true;
+				if (filters.keyType.value.hasOnPremise) {
+					showOnPrem = true;
+				}
 			}
 
 			if (filters.keyType.value.minNodes) {
 				filtersKeyType.push(
 					`maxClusterNodes ge ${filters.keyType.value.minNodes}`
 				);
-				showOnPrem = true;
+				if (filters.keyType.value.hasOnPremise) {
+					showOnPrem = true;
+				}
 			}
 
 			if (showOnPrem) {
-				filtersKeyType.push(
-					" or not contains(licenseEntryType, 'cluster')"
-				);
+				filtersKeyType.push(' or maxClusterNodes eq 0');
 			}
 
 			if (filtersKeyType.length) {

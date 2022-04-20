@@ -280,9 +280,9 @@ public class JSONUtilCheck extends BaseChainedMethodCheck {
 			if ((firstChildDetailAST != null) &&
 				(firstChildDetailAST.getType() == TokenTypes.IDENT)) {
 
-				String methodCallName = getMethodName(methodCallDetailAST);
+				if (_isJSONTypeMethodCall(
+						detailAST, getMethodName(methodCallDetailAST))) {
 
-				if (_isJSONTypeMethodCall(detailAST, methodCallName)) {
 					log(detailAST, _MSG_USE_JSON_UTIL_TO_STRING_2);
 
 					return;

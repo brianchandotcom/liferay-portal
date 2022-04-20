@@ -21,6 +21,8 @@ import com.liferay.depot.service.persistence.DepotEntryPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 
+import java.util.List;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -40,6 +42,14 @@ public class DepotAppCustomizationLocalServiceImpl
 
 		return depotAppCustomizationPersistence.fetchByD_P(
 			depotEntryId, portletId);
+	}
+
+	@Override
+	public List<DepotAppCustomization> getDepotAppCustomizations(
+		long depotEntryId) {
+
+		return depotAppCustomizationPersistence.findByDepotEntryId(
+			depotEntryId);
 	}
 
 	@Override

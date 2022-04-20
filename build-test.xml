@@ -4074,23 +4074,6 @@ tell application "Safari" to quit
 				</then>
 			</if>
 
-			<get-testcase-property property.name="private.pages.enabled" />
-
-			<if>
-				<isset property="private.pages.enabled" />
-				<then>
-					<if>
-						<equals arg1="${private.pages.enabled}" arg2="true" />
-						<then>
-							<echo file="${liferay.home}/osgi/configs/com.liferay.release.feature.flag.web.internal.configuration.ReleaseFeatureFlagConfiguration.config">disabledReleaseFeatureFlags=["DISABLE_PRIVATE_LAYOUTS"]</echo>
-						</then>
-						<else>
-							<echo file="${liferay.home}/osgi/configs/com.liferay.release.feature.flag.web.internal.configuration.ReleaseFeatureFlagConfiguration.config">disabledReleaseFeatureFlags=[""]</echo>
-						</else>
-					</if>
-				</then>
-			</if>
-
 			<get-testcase-property property.name="proxy.server.enabled" />
 
 			<if>
@@ -4099,6 +4082,18 @@ tell application "Safari" to quit
 					<echo append="true" file="${test.ext.properties.file}">
 						proxy.server.enabled=true
 					</echo>
+				</then>
+			</if>
+
+			<get-testcase-property property.name="release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS" />
+
+			<if>
+				<isset property="release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS" />
+				<then>
+					<equals arg1="${release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS}" arg2="true" />
+					<then>
+						<echo file="${liferay.home}/osgi/configs/com.liferay.release.feature.flag.web.internal.configuration.ReleaseFeatureFlagConfiguration.config">disabledReleaseFeatureFlags=["DEACTIVATE_PRIVATE_LAYOUTS"]</echo>
+					</then>
 				</then>
 			</if>
 

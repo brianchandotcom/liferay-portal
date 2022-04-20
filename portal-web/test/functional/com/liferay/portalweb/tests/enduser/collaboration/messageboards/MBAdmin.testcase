@@ -367,17 +367,17 @@ definition {
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
-		LexiconList.viewListEntrySpecific(
-			listEntry = "MB Thread Message 3 Subject",
-			position = "1");
+		MessageboardsThread.viewPG(
+			position = "1",
+			threadSubject = "MB Thread Message 3 Subject");
 
-		LexiconList.viewListEntrySpecific(
-			listEntry = "MB Thread Message 2 Subject",
-			position = "2");
+		MessageboardsThread.viewPG(
+			position = "2",
+			threadSubject = "MB Thread Message 2 Subject");
 
-		LexiconList.viewListEntrySpecific(
-			listEntry = "MB Thread Message 1 Subject",
-			position = "3");
+		MessageboardsThread.viewPG(
+			position = "3",
+			threadSubject = "MB Thread Message 1 Subject");
 	}
 
 }

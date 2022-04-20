@@ -59,7 +59,7 @@
 			<url-pattern>/ca/c/portal/protected</url-pattern>
 			<url-pattern>/ca-AD/c/portal/protected</url-pattern>
 			<url-pattern>/ca-ES/c/portal/protected</url-pattern>
-			<url-pattern>/ca-ES_VALENCIA/c/portal/protected</url-pattern>
+			<url-pattern>/ca-ES-VALENCIA/c/portal/protected</url-pattern>
 			<url-pattern>/ca_AD/c/portal/protected</url-pattern>
 			<url-pattern>/ca_ES/c/portal/protected</url-pattern>
 			<url-pattern>/ca_ES_VALENCIA/c/portal/protected</url-pattern>
@@ -171,7 +171,7 @@
 			<url-pattern>/sl_SI/c/portal/protected</url-pattern>
 			<url-pattern>/sr/c/portal/protected</url-pattern>
 			<url-pattern>/sr-RS/c/portal/protected</url-pattern>
-			<url-pattern>/sr-RS_latin/c/portal/protected</url-pattern>
+			<url-pattern>/sr-RS-latin/c/portal/protected</url-pattern>
 			<url-pattern>/sr_RS/c/portal/protected</url-pattern>
 			<url-pattern>/sr_RS_latin/c/portal/protected</url-pattern>
 			<url-pattern>/sv/c/portal/protected</url-pattern>

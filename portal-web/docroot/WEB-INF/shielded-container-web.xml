@@ -298,7 +298,7 @@
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>I18n Servlet</servlet-name>
-		<url-pattern>/ca-ES_VALENCIA/*</url-pattern>
+		<url-pattern>/ca-ES-VALENCIA/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>I18n Servlet</servlet-name>
@@ -746,7 +746,7 @@
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>I18n Servlet</servlet-name>
-		<url-pattern>/sr-RS_latin/*</url-pattern>
+		<url-pattern>/sr-RS-latin/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>I18n Servlet</servlet-name>

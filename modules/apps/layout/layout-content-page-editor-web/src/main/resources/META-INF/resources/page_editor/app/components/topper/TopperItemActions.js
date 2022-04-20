@@ -30,6 +30,7 @@ import canBeRemoved from '../../utils/canBeRemoved';
 import canBeSaved from '../../utils/canBeSaved';
 import updateItemStyle from '../../utils/updateItemStyle';
 import SaveFragmentCompositionModal from '../SaveFragmentCompositionModal';
+import hasDropZoneChild from '../layout-data-items/hasDropZoneChild';
 
 export default function TopperItemActions({item}) {
 	const [active, setActive] = useState(false);
@@ -49,7 +50,10 @@ export default function TopperItemActions({item}) {
 	const dropdownItems = useMemo(() => {
 		const items = [];
 
-		if (item.type !== LAYOUT_DATA_ITEM_TYPES.dropZone) {
+		if (
+			item.type !== LAYOUT_DATA_ITEM_TYPES.dropZone &&
+			!hasDropZoneChild(item, layoutData)
+		) {
 			items.push({
 				action: () => {
 					updateItemStyle({

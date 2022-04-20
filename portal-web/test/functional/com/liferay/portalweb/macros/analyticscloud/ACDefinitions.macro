@@ -7,7 +7,7 @@ definition {
 
 		for (var x : list "${key_queryList}") {
 			if ("${flag}" == "0") {
-				Click(locator1 = "Button#PLUS");
+				Click(locator1 = "Icon#PLUS");
 
 				Type(
 					locator1 = "ACDefinitions#SEARCH_QUERY_INPUT",
@@ -37,7 +37,7 @@ definition {
 	}
 
 	macro addSearchQuerySuccessfully {
-		Click(locator1 = "Button#PLUS");
+		Click(locator1 = "Icon#PLUS");
 
 		Type(
 			locator1 = "ACDefinitions#SEARCH_QUERY_INPUT",

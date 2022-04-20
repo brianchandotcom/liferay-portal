@@ -15,9 +15,18 @@
 import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
-import React from 'react';
+import React, {useState} from 'react';
 
-const FileSizeField = ({mimeType, size}) => {
+const FileSizeField = ({handleOnChange, mimeType, size}) => {
+	const [mimeTypeValue, setMimeTypeValue] = useState(mimeType);
+	const [sizeValue, setSizeValue] = useState(size);
+
+	const onInputBlur = () => {
+		if (mimeTypeValue && sizeValue) {
+			handleOnChange(mimeTypeValue, sizeValue);
+		}
+	};
+
 	return (
 		<ClayLayout.Row>
 			<ClayLayout.Col md="6">
@@ -34,8 +43,10 @@ const FileSizeField = ({mimeType, size}) => {
 
 				<ClayInput
 					id="mimeType"
+					onBlur={onInputBlur}
+					onChange={(event) => setMimeTypeValue(event.target.value)}
 					type="text"
-					value={mimeType}
+					value={mimeTypeValue}
 				/>
 			</ClayLayout.Col>
 
@@ -45,7 +56,9 @@ const FileSizeField = ({mimeType, size}) => {
 
 					<span
 						className="inline-item-after lfr-portal-tooltip tooltip-icon"
-						title={Liferay.Language.get('maximum-file-size-help-message')}
+						title={Liferay.Language.get(
+							'maximum-file-size-help-message'
+						)}
 					>
 						<ClayIcon symbol="question-circle-full" />
 					</span>
@@ -53,22 +66,28 @@ const FileSizeField = ({mimeType, size}) => {
 
 				<ClayInput
 					id="size"
+					onBlur={onInputBlur}
+					onChange={(event) => setSizeValue(event.target.value)}
 					type="number"
-					value={size}
+					value={sizeValue}
 				/>
 			</ClayLayout.Col>
 		</ClayLayout.Row>
 	);
-}
+};
 
-const FileSizePerMimeType = ({description = 'file-size-mimetype-description'}) => {
+const FileSizePerMimeType = ({
+	description = 'file-size-mimetype-description',
+}) => {
+	const addMimeTypeSizeLimit = (mimeType, size) => {
+		console.log('TODO save ' + mimeType + ' ' + size);
+	};
+
 	return (
 		<>
-			<p className="text-muted">
-				{Liferay.Language.get(description)}
-			</p>
+			<p className="text-muted">{Liferay.Language.get(description)}</p>
 
-			<FileSizeField />
+			<FileSizeField handleOnChange={addMimeTypeSizeLimit} />
 		</>
 	);
 };

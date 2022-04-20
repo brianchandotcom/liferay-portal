@@ -93,8 +93,8 @@ function ItemConfigurationContent({activePanel, setActivePanel}) {
 			nextActivePanelId = sameTypePanel.panelId;
 		}
 		else {
-			nextActivePanelId = panels[0]?.panelId ?? '';
-			nextActivePanelType = panels[0]?.type || null;
+			nextActivePanelId = panels[0]?.panelId;
+			nextActivePanelType = panels[0]?.type;
 		}
 
 		setActivePanel({id: nextActivePanelId, type: nextActivePanelType});

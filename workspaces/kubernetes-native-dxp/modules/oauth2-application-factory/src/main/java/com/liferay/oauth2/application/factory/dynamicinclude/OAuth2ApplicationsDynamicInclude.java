@@ -115,7 +115,8 @@ public class OAuth2ApplicationsDynamicInclude implements DynamicInclude {
 				"  },",
 				"  getUserAgentApplication: function(serviceName) {",
 				"    return Liferay.OAuth._userAgentApplications[serviceName];",
-				"  },", "  _userAgentApplications: ", jsonObject.toJSONString(),
+				"  },",
+				"  _userAgentApplications: ", jsonObject.toJSONString(),
 				"}",
 				"</script>"));
 	}

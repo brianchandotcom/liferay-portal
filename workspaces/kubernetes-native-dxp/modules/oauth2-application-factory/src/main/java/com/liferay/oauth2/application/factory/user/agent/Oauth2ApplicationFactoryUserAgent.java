@@ -22,6 +22,8 @@ import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
 import com.liferay.oauth2.provider.util.OAuth2SecureRandomGenerator;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -63,7 +65,7 @@ import org.osgi.service.component.annotations.Reference;
 public class Oauth2ApplicationFactoryUserAgent {
 
 	public static final String USER_AGENT_SUBDOMAIN =
-		".user.agent.factory.application.oauth2.liferay.com";
+		".user.agent.oauth2.liferay.com";
 
 	@Activate
 	public Oauth2ApplicationFactoryUserAgent(
@@ -91,15 +93,16 @@ public class Oauth2ApplicationFactoryUserAgent {
 		String serviceAddress = StringBundler.concat(
 			protocol, "://", serviceDomain);
 
-		_redirectURL = GetterUtil.getString(
-			_oAuth2ApplicationUserAgentConfiguration.redirectURL(),
-			serviceAddress.concat("/o/builtin/oauth2/redirect"));
+		List<String> redirectURIsList = Collections.singletonList(
+			GetterUtil.getString(
+				_oAuth2ApplicationUserAgentConfiguration.redirectURL(),
+				serviceAddress.concat("/o/builtin/oauth2/redirect")));
 
 		Company company = _companyLocalService.getCompanyById(
 			_oAuth2ApplicationUserAgentConfiguration.companyId());
 
 		OAuth2Application oAuth2Application = _getOrAddOAuth2Application(
-			company);
+			company, redirectURIsList);
 
 		boolean update = false;
 
@@ -111,7 +114,9 @@ public class Oauth2ApplicationFactoryUserAgent {
 				_oAuth2ApplicationUserAgentConfiguration.homePageURL()) ||
 			!Objects.equals(
 				oAuth2Application.getPrivacyPolicyURL(),
-				_oAuth2ApplicationUserAgentConfiguration.privacyPolicyURL())) {
+				_oAuth2ApplicationUserAgentConfiguration.privacyPolicyURL()) ||
+			!Objects.equals(
+				oAuth2Application.getRedirectURIsList(), redirectURIsList)) {
 
 			update = true;
 		}
@@ -132,8 +137,7 @@ public class Oauth2ApplicationFactoryUserAgent {
 					oAuth2Application.getIconFileEntryId(),
 					oAuth2Application.getName(),
 					_oAuth2ApplicationUserAgentConfiguration.privacyPolicyURL(),
-					Collections.singletonList(_redirectURL),
-					oAuth2Application.getRememberDevice(),
+					redirectURIsList, oAuth2Application.getRememberDevice(),
 					oAuth2Application.getTrustedApplication());
 		}
 
@@ -146,16 +150,26 @@ public class Oauth2ApplicationFactoryUserAgent {
 
 		_k8sAgent.createOrUpdateConfigMap(
 			HashMapBuilder.put(
-				"dxp.service_uri", serviceAddress
+				"authorization_uri",
+				serviceAddress.concat("/o/oauth2/authorize")
 			).put(
-				"oauth2.client_id", oAuth2Application.getClientId()
+				"client_id", oAuth2Application.getClientId()
 			).put(
-				"oauth2.introspection_uri",
+				"introspection_uri",
 				serviceAddress.concat("/o/oauth2/introspect")
+			).put(
+				"redirect_uris",
+				StringUtil.merge(redirectURIsList, StringPool.SPACE)
+			).put(
+				"scopes",
+				StringUtil.merge(scopeAliasesList, StringPool.SPACE)
+			).put(
+				"service_uri", serviceAddress
+			).put(
+				"token_uri",
+				serviceAddress.concat("/o/oauth2/token")
 			).build(),
-			StringBundler.concat(
-				_oAuth2ApplicationUserAgentConfiguration.name(),
-				USER_AGENT_SUBDOMAIN),
+			_getName(),
 			Collections.singletonMap(
 				"extension", _oAuth2ApplicationUserAgentConfiguration.name()));
 
@@ -169,6 +183,8 @@ public class Oauth2ApplicationFactoryUserAgent {
 
 			_oAuth2ApplicationLocalService.deleteOAuth2Application(
 				_oAuth2Application);
+
+			_k8sAgent.deleteConfigMap(_getName());
 		}
 	}
 
@@ -178,7 +194,8 @@ public class Oauth2ApplicationFactoryUserAgent {
 			USER_AGENT_SUBDOMAIN);
 	}
 
-	private OAuth2Application _getOrAddOAuth2Application(Company company)
+	private OAuth2Application _getOrAddOAuth2Application(
+			Company company, List<String> redirectURIsList)
 		throws Exception {
 
 		DynamicQuery dynamicQuery =
@@ -214,7 +231,7 @@ public class Oauth2ApplicationFactoryUserAgent {
 				_oAuth2ApplicationUserAgentConfiguration.homePageURL(), 0,
 				_getName(),
 				_oAuth2ApplicationUserAgentConfiguration.privacyPolicyURL(),
-				Collections.singletonList(_redirectURL), false, true, null,
+				redirectURIsList, false, true, null,
 				new ServiceContext());
 
 		Class<?> clazz = getClass();
@@ -232,7 +249,6 @@ public class Oauth2ApplicationFactoryUserAgent {
 	private final OAuth2ApplicationLocalService _oAuth2ApplicationLocalService;
 	private final OAuth2ApplicationUserAgentConfiguration
 		_oAuth2ApplicationUserAgentConfiguration;
-	private final String _redirectURL;
 	private final UserLocalService _userLocalService;
 
 }

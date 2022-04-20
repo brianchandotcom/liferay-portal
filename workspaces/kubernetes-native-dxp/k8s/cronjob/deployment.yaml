@@ -1,0 +1,41 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: cronjob
+  labels:
+    app: cronjob
+spec:
+  schedule: "* * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+          - name: cronjob
+            image: cronjob
+            resources:
+              limits:
+                memory: "100Mi"
+                cpu: "10m"
+            env:
+              - name: CLIENT_ID
+                valueFrom:
+                  configMapKeyRef:
+                    key: client_id
+                    name: cronjob.headless.server.oauth2.liferay.com
+              - name: CLIENT_SECRET
+                valueFrom:
+                  configMapKeyRef:
+                    key: client_secret
+                    name: cronjob.headless.server.oauth2.liferay.com
+              - name: SERVICE_URI
+                valueFrom:
+                  configMapKeyRef:
+                    key: service_uri
+                    name: cronjob.headless.server.oauth2.liferay.com
+              - name: TOKEN_URI
+                valueFrom:
+                  configMapKeyRef:
+                    key: token_uri
+                    name: cronjob.headless.server.oauth2.liferay.com

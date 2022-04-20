@@ -33,6 +33,8 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -121,7 +123,7 @@ public class FrontendIconsResourcePackRepository {
 
 			return frontendIconsResourcePack;
 		}
-		catch (Exception exception) {
+		catch (IOException | PortalException exception) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(exception);
 			}
@@ -132,7 +134,7 @@ public class FrontendIconsResourcePackRepository {
 
 	public List<FrontendIconsResourcePack> getFrontendIconsResourcePacks(
 			long companyId)
-		throws Exception {
+		throws IOException, PortalException {
 
 		List<FrontendIconsResourcePack> frontendIconsResourcePacks =
 			new ArrayList<>();

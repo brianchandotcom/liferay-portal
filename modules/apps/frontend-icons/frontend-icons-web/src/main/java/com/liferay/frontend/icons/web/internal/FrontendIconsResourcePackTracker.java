@@ -19,13 +19,16 @@ import com.liferay.frontend.icons.web.internal.repository.FrontendIconsResourceP
 import com.liferay.frontend.icons.web.internal.util.SVGUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.repository.UndeployedExternalRepositoryException;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.net.URL;
@@ -152,16 +155,19 @@ public class FrontendIconsResourcePackTracker {
 										deleteFrontendIconsResourcePack(
 											companyId, name);
 								}
-								catch (Exception exception) {
+								catch (UndeployedExternalRepositoryException
+											undeployedExternalRepositoryException) {
+
 									if (_log.isDebugEnabled()) {
-										_log.debug(exception);
+										_log.debug(
+											undeployedExternalRepositoryException);
 									}
 								}
 							});
 					}
-					catch (Exception exception) {
+					catch (PortalException portalException) {
 						if (_log.isDebugEnabled()) {
-							_log.debug(exception);
+							_log.debug(portalException);
 						}
 					}
 
@@ -214,16 +220,19 @@ public class FrontendIconsResourcePackTracker {
 									addFrontendIconsResourcePack(
 										companyId, frontendIconsResourcePack);
 							}
-							catch (Exception exception) {
+							catch (UndeployedExternalRepositoryException
+										undeployedExternalRepositoryException) {
+
 								if (_log.isDebugEnabled()) {
-									_log.debug(exception);
+									_log.debug(
+										undeployedExternalRepositoryException);
 								}
 							}
 						});
 
 					return frontendIconsResourcePack;
 				}
-				catch (Exception exception) {
+				catch (IOException | PortalException exception) {
 					if (_log.isDebugEnabled()) {
 						_log.debug(exception);
 					}

@@ -24,7 +24,7 @@ import selectLanguageId from '../../selectors/selectLanguageId';
 const TOPPER_BAR_HEIGHT = 24;
 const TOPPER_BAR_BORDER_WIDTH = 2;
 
-export function TopperLabel({children, itemElement}) {
+export function TopperLabel({children, itemElement, style}) {
 	const globalContext = useGlobalContext();
 	const languageId = useSelector(selectLanguageId);
 	const layoutData = useSelector((state) => state.layoutData);
@@ -187,7 +187,7 @@ export function TopperLabel({children, itemElement}) {
 					'tbar',
 					{'page-editor__topper__bar--inset': positionConfig.isInset}
 				)}
-				style={positionConfig.style}
+				style={{...style, ...positionConfig.style}}
 			>
 				{children}
 			</div>
@@ -197,4 +197,5 @@ export function TopperLabel({children, itemElement}) {
 
 TopperLabel.propTypes = {
 	itemElement: PropTypes.object,
+	style: PropTypes.object,
 };

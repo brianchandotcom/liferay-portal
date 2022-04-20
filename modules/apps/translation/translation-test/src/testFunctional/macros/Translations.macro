@@ -348,7 +348,11 @@ definition {
 			if (isSet(downloadCSVErrorReport)) {
 				Button.click(button = "Download CSV Error Report");
 
+				var errorReportName = selenium.getAttribute("//a[normalize-space()='Download CSV Error Report']@download");
+
 				DownloadTempFile();
+
+				return "${errorReportName}";
 			}
 
 			if (isSet(uploadAnotherFile)) {

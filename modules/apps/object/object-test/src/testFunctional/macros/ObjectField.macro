@@ -33,6 +33,19 @@ definition {
 			value1 = "${description}");
 	}
 
+	macro assertOptionAndDescriptionOnRequestFiles {
+		Click(locator1 = "ObjectField#REQUEST_FILES_INPUT");
+
+		AssertElementPresent(
+			key_fieldType = "${option}",
+			locator1 = "ObjectField#TYPE_OPTION");
+
+		AssertTextEquals(
+			key_type = "${option}",
+			locator1 = "ObjectField#FIELD_TYPE_DESCRIPTION",
+			value1 = "${description}");
+	}
+
 	macro assertSearchableLanguage {
 		AssertSelectedLabel(
 			locator1 = "ObjectField#SEARCHABLE_LANGUAGE_SELECT",

@@ -119,11 +119,29 @@ definition {
 	}
 
 	@description = "LPS-143065 - Verify if there is an option on Request Files: Directly from User's Computer"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewDirectlyFromUsersComputerOption {
 
-		// TODO LPS-151559 CanViewDirectlyFromUsersComputerOption pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 151559",
+			objectName = "CustomObject151559",
+			pluralLabelName = "Custom Objects 151559");
+
+		Navigator.openURL();
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 151559");
+
+		ObjectAdmin.goToFieldsTab();
+
+		LexiconEntry.gotoAdd();
+
+		ObjectField.selectType(fieldType = "Attachment");
+
+		ObjectField.assertOptionAndDescriptionOnRequestFiles(
+			option = "Upload Directly from the User's Computer",
+			description = "Files can be stored in an object entry or in a specific folder in Documents and Media.");
 
 	}
 

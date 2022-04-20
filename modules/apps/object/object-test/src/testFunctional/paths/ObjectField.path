@@ -14,7 +14,7 @@
 	</tr>
 	<tr>
 		<td>FIELD_TYPE_DESCRIPTION</td>
-		<td>//div[text() = '${key_type}']/..//span[@class = 'text-small']</td>
+		<td>//div[text() = "${key_type}"]/..//span[@class = 'text-small']</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -53,6 +53,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>REQUEST_FILES_INPUT</td>
+		<td>//label[contains(text(), 'Request Files')]/..//input[@placeholder='Choose an Option']</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>SEARCHABLE_LANGUAGE_SELECT</td>
 		<td>//select[@name="indexedLanguageId"]</td>
 		<td></td>
@@ -79,7 +84,7 @@
 	</tr>
 	<tr>
 		<td>TYPE_OPTION</td>
-		<td>//button[@class='dropdown-item']//div[contains(text(),'${key_fieldType}')]</td>
+		<td>//button[@class='dropdown-item']//div[contains(text(),"${key_fieldType}")]</td>
 		<td></td>
 	</tr>
 	<tr>

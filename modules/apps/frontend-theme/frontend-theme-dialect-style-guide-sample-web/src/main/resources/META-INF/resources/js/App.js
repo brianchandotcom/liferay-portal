@@ -23,6 +23,7 @@ import ColorGuide from './guides/ColorGuide';
 import FormGuide from './guides/FormGuide';
 import GeneralGuide from './guides/GeneralGuide';
 import LabelGuide from './guides/LabelGuide';
+import TabsGuide from './guides/TabsGuide';
 import TypographyGuide from './guides/TypographyGuide';
 
 const TABS = [
@@ -60,6 +61,11 @@ const TABS = [
 		content: <LabelGuide />,
 		hash: '#labels',
 		label: Liferay.Language.get('labels'),
+	},
+	{
+		content: <TabsGuide />,
+		hash: '#tabs',
+		label: Liferay.Language.get('tabs'),
 	},
 ];
 

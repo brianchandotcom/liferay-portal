@@ -332,10 +332,6 @@ definition {
 
 		Blueprints.openBlueprintsAdmin();
 
-		Blueprints.createBlueprint(title = "Test Blueprint");
-
-		Blueprints.addElement(element = "Custom JSON Element");
-
 		var elementSourceJson = '''
 {
   "elementDefinition": {
@@ -374,14 +370,20 @@ definition {
     }
   },
   "title_i18n": {
-    "en_US": "Custom JSON Element"
+    "en_US": "Test Element"
   }
 }
 		''';
 
-		Type.typeCodeMirrorEditorNoError(
-			locator1 = "Blueprints#CODE_MIRROR_EDITOR",
-			value1 = "${elementSourceJson}");
+		Blueprints.createElement(
+			elementSourceJson = "${elementSourceJson}",
+			title = "Test Element");
+
+		Blueprints.openBlueprintsAdmin();
+
+		Blueprints.createBlueprint(title = "Test Blueprint");
+
+		Blueprints.addElement(element = "Test Element");
 
 		PortletEntry.save();
 

@@ -42,3 +42,12 @@ dependencies {
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-string")
 }
+
+processResources {
+	doLast {
+		copy {
+			from new File(projectDir, "src/main/resources/site-initializer/thumbnail.png")
+			into new File(projectDir, "classes/META-INF/resources/images")
+		}
+	}
+}

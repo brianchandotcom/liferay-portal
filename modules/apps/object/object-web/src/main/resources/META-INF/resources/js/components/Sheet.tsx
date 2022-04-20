@@ -15,9 +15,11 @@
 import classNames from 'classnames';
 import React from 'react';
 
+import './Sheet.scss';
+
 export default function Sheet({children, className, title}: IProps) {
 	return (
-		<div className={classNames('sheet', className)}>
+		<div className={classNames('lfr-objects__sheet sheet', className)}>
 			<h2 className="sheet-title">{title} </h2>
 
 			{children}

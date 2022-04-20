@@ -59,6 +59,17 @@ interface ObjectValidation {
 	script: string;
 }
 
+interface ObjectValidationRuleElement {
+	items: ObjectValidationRuleElementItem[];
+	label: string;
+}
+
+interface ObjectValidationRuleElementItem {
+	content: string;
+	label: string;
+	tooltip: string;
+}
+
 interface ObjectValidationType {
 	label: string;
 }

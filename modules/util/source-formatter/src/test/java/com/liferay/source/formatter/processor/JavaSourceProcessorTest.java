@@ -332,7 +332,7 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"Use 'toString' instead of 'toJSONString'",
 				"Use 'toString' instead of 'toJSONString'"
 			},
-			new Integer[] {32, 41, 45, 70});
+			new Integer[] {30, 39, 43, 67});
 	}
 
 	@Test

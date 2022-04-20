@@ -16,8 +16,6 @@ package com.liferay.source.formatter.dependencies;
 
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 /**
  * @author Qi Zhang
@@ -65,7 +63,6 @@ public class ToJSONStringMethodCalls {
 		);
 	}
 
-	@Override
 	public String toString() {
 		return toJSONObject().toJSONString();
 	}
@@ -73,7 +70,5 @@ public class ToJSONStringMethodCalls {
 	private String _testString() {
 		return "senderEmailAddress";
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(JSONUtilCheck.class);
 
 }

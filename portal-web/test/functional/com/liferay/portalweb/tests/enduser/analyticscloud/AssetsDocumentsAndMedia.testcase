@@ -999,6 +999,7 @@ definition {
 	@description = "Documents visitor behavior card shows expected amount of views"
 	@priority = "5"
 	test VisitorBehaviorCardShowsExpectedAmountOfPreviewsInDM {
+		property portal.acceptance = "true";
 		var documentNameList = "DM AC Title,DM AC Title";
 
 		task ("Connect the DXP to AC") {

@@ -529,6 +529,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8159 | Test Summary: The properties list in settings shows a list of all properties in the workspace"
 	@priority = "5"
 	test PropertiesListInSettingsShowsListOfAllPropertiesInTheWorkspace {
+		property portal.acceptance = "true";
+
 		ACDXPSettings.connectDXPtoAnalyticsCloud();
 
 		ACUtils.launchAC();

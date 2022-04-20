@@ -710,7 +710,7 @@ definition {
 	}
 
 	macro viewCSVErrorReport {
-		var fileContent = TestCase.getTempFileContent(fileName = "translation-error.csv");
+		var fileContent = TestCase.getTempFileContent(fileName = "${errorReportName}");
 
 		if (contains("${fileContent}", "${reportContent}")) {
 			echo("The import translation error can be viewed in the report.");

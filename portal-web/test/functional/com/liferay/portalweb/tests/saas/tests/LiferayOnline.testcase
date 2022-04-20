@@ -85,21 +85,21 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-135077. Raylife initializer is not deployed and is not shown on inicializer list"
+	@description = "This is a test for LPS-151826 related with LPS-135077. Raylife AP initializer is not deployed and is not shown on inicializer list"
 	@priority = "4"
-	test CannotSelectInitializerWithoutDeploy {
+	test CannotSelectInitializerWithoutDeployRaylifeAP {
 		property osgi.app.includes = "gogo-shell";
 		property test.name.skip.portal.instance = "LiferayOnline#CannotSelectInitializerWithoutDeploy";
 
 		task ("Go to Gogo Shell Admin and Stop Raylife Module") {
 			GogoShell.openGogoShellAdmin();
 
-			var moduleId = GogoShell.getModuleID(moduleName = "com.liferay.site.initializer.raylife");
+			var moduleId = GogoShell.getModuleID(moduleName = "com.liferay.site.initializer.raylife.ap");
 
 			GogoShell.stopModule(moduleId = "${moduleId}");
 
 			GogoShell.viewModuleStatus(
-				moduleName = "com.liferay.site.initializer.raylife",
+				moduleName = "com.liferay.site.initializer.raylife.ap",
 				moduleStatus = "Resolved");
 		}
 
@@ -115,7 +115,7 @@ definition {
 			Click(locator1 = "OpenIDConnectLogin#OPENID_CONNECT_DROPDOWN_MENU");
 
 			AssertElementNotPresent(
-				key_providerNname = "Raylife",
+				key_providerNname = "Raylife AP",
 				locator1 = "OpenIDConnectLogin#OPENID_CONNECT_DROPDOWN_OPTION");
 		}
 
@@ -125,7 +125,52 @@ definition {
 			GogoShell.startModule(moduleId = "${moduleId}");
 
 			GogoShell.viewModuleStatus(
-				moduleName = "com.liferay.site.initializer.raylife",
+				moduleName = "com.liferay.site.initializer.raylife.ap",
+				moduleStatus = "Active");
+		}
+	}
+
+	@description = "This is a test for LPS-135077. Raylife D2C initializer is not deployed and is not shown on inicializer list"
+	@priority = "4"
+	test CannotSelectInitializerWithoutDeployRaylifeD2C {
+		property osgi.app.includes = "gogo-shell";
+		property test.name.skip.portal.instance = "LiferayOnline#CannotSelectInitializerWithoutDeploy";
+
+		task ("Go to Gogo Shell Admin and Stop Raylife Module") {
+			GogoShell.openGogoShellAdmin();
+
+			var moduleId = GogoShell.getModuleID(moduleName = "com.liferay.site.initializer.raylife.d2c");
+
+			GogoShell.stopModule(moduleId = "${moduleId}");
+
+			GogoShell.viewModuleStatus(
+				moduleName = "com.liferay.site.initializer.raylife.d2c",
+				moduleStatus = "Resolved");
+		}
+
+		task ("Go to Add a New Virtual Instance and Assert the Raylife Module is Not Present") {
+			PortalInstances.openVirtualInstancesAdmin();
+
+			LexiconEntry.gotoAdd();
+
+			Type(
+				locator1 = "TextInput#WEB_ID",
+				value1 = "Test");
+
+			Click(locator1 = "OpenIDConnectLogin#OPENID_CONNECT_DROPDOWN_MENU");
+
+			AssertElementNotPresent(
+				key_providerNname = "Raylife D2C",
+				locator1 = "OpenIDConnectLogin#OPENID_CONNECT_DROPDOWN_OPTION");
+		}
+
+		task ("Go to Gogo Shell Admin and Start Raylife Module") {
+			GogoShell.openGogoShellAdmin();
+
+			GogoShell.startModule(moduleId = "${moduleId}");
+
+			GogoShell.viewModuleStatus(
+				moduleName = "com.liferay.site.initializer.raylife.d2c",
 				moduleStatus = "Active");
 		}
 	}

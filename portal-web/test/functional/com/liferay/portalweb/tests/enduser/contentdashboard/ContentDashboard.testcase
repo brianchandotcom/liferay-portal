@@ -891,6 +891,59 @@ definition {
 		}
 	}
 
+	@description = "LPS-151808 Bug: The button Metrics is shown for web content in Pending status"
+	@priority = "4"
+	test CheckMetricsIconofPendingWebContent {
+		task ("Create a default Display Page Template") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			Button.clickPublish();
+
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+		}
+
+		task ("Configure Web Content Article workflow to Single Approver") {
+			ProductMenu.gotoPortlet(
+				category = "Configuration",
+				portlet = "Workflow");
+
+			Workflow.configureWorkflow(
+				workflowDefinition = "Single Approver",
+				workflowResourceValue = "Web Content Article");
+		}
+
+		task ("Create a Web Content") {
+			JSONWebcontent.addWebContent(
+				content = "Webcontent Content",
+				groupName = "Test Site Name",
+				title = "Webcontent Title");
+		}
+
+		task ("Navigate to Content Dashboard") {
+			ContentDashboard.goToContentDashboard();
+		}
+
+		task ("Check that Metrics icon is not present") {
+			Click.clickNoMouseOver(locator1 = "ContentDashboard#ROW_PANEL_WC");
+
+			AssertElementNotPresent(locator1 = "ContentPerformance#ICON_VIEW_METRICS");
+		}
+
+		task ("Check that Metrics option is not present at dropdown") {
+			Click(locator1 = "ContentDashboard#ASSET_MENU_DROPDOWN_BUTTON");
+
+			AssertElementNotPresent(locator1 = "ContentDashboard#VIEW_OPTION");
+		}
+	}
+
 	@description = "LPS-122873 When any web content is unassigned to a Vocab1's category, the relative ordering of categories remain the same"
 	@priority = "3"
 	test CheckOrderEvenWithSomeUnassignedCategories {

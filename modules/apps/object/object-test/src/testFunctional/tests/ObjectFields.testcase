@@ -121,7 +121,6 @@ definition {
 	@description = "LPS-143065 - Verify if there is an option on Request Files: Directly from User's Computer"
 	@priority = "4"
 	test CanViewDirectlyFromUsersComputerOption {
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151559",
 			objectName = "CustomObject151559",
@@ -140,9 +139,8 @@ definition {
 		ObjectField.selectType(fieldType = "Attachment");
 
 		ObjectField.assertOptionAndDescriptionOnRequestFiles(
-			option = "Upload Directly from the User's Computer",
-			description = "Files can be stored in an object entry or in a specific folder in Documents and Media.");
-
+			description = "Files can be stored in an object entry or in a specific folder in Documents and Media.",
+			option = "Upload Directly from the User's Computer");
 	}
 
 	@description = "LPS-146523 - Verify if there's an option on Request Files: Upload and Select from Documents and Media Item Selector"
@@ -208,7 +206,6 @@ definition {
 	@description = "LPS-143065 - Verify if a side panel containing the Field name, Typem Request Files, Accepted File Extensions, and Maximum File Size fields"
 	@priority = "4"
 	test CanViewSidePanelOptions {
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151560",
 			objectName = "CustomObject151560",
@@ -223,9 +220,9 @@ definition {
 		ObjectAdmin.goToFieldsTab();
 
 		ObjectAdmin.addObjectFieldViaUI(
+			fieldAttachment = "Upload Directly from the User's Computer",
 			fieldLabel = "Custom Attachment",
-			fieldType = "Attachment",
-			fieldAttachment = "Upload Directly from the User's Computer");
+			fieldType = "Attachment");
 
 		ObjectAdmin.goToFieldsDetails(label = "Custom Attachment");
 

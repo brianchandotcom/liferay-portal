@@ -211,6 +211,76 @@ definition {
 		return "${fileEntryId}";
 	}
 
+	@summary = "This calls the JSON WS API to add a document shortcut"
+	macro addShortcut {
+		Variables.assertDefined(parameterList = "${targetGroupName},${sourceGroupName},${dmDocumentTitle}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var targetRepositoryId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "${targetGroupName}");
+
+		var sourceRepositoryId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "${sourceGroupName}");
+
+		if (isSet(sourceFolderName)) {
+			Variables.assertDefined(parameterList = "${sourceFolderName}");
+
+			if (isSet(sourceParentFolderName)) {
+				var sourceParentFolderId = JSONDocumentAPI._getFolderIdByFolderName(
+					groupName = "${sourceGroupName}",
+					name = "${sourceParentFolderName}");
+			}
+			else {
+				var sourceParentFolderId = "0";
+			}
+
+			var sourceFolderId = JSONDocumentAPI._getFolderIdByFolderName(
+				groupName = "${targetGroupName}",
+				name = "${targetFolderName}",
+				parentFolderId = "${sourceParentFolderNames}");
+		}
+		else {
+			var sourceFolderId = "0";
+		}
+
+		var fileEntryId = JSONDocument.getFileEntryId(
+			dmDocumentTitle = "${dmDocumentTitle}",
+			folderId = "${sourceFolderId}",
+			groupName = "${sourceGroupName}",
+			portalURL = "${baseURL}");
+
+		if (isSet(targetFolderName)) {
+			Variables.assertDefined(parameterList = "${targetFolderName}");
+
+			if (isSet(targetParentFolderName)) {
+				var targetParentFolderId = JSONDocumentAPI._getFolderIdByFolderName(
+					groupName = "${targetGroupName}",
+					name = "${targetParentFolderName}");
+			}
+			else {
+				var targetParentFolderId = "0";
+			}
+
+			var targetFolderId = JSONDocumentAPI._getFolderIdByFolderName(
+				groupName = "${targetGroupName}",
+				name = "${targetFolderName}",
+				parentFolderId = "${targetParentFolderId}");
+		}
+		else {
+			var targetFolderId = "0";
+		}
+
+		var curl = '''
+			${portalURL}/api/jsonws/dlfileshortcut/add-file-shortcut  \
+                -u test@liferay.com:test \
+                -d groupId=${targetRepositoryId} \
+                -d repositoryId=${sourceRepositoryId} \
+                -d folderId=${targetFolderId} \
+                -d toFileEntryId=${fileEntryId}
+        ''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
 	@summary = "This calls the JSON WS API to delete a Document entry"
 	macro deleteFile {
 		var portalURL = JSONCompany.getPortalURL();

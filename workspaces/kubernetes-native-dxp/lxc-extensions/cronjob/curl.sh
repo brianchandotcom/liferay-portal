@@ -10,10 +10,12 @@ RESULT=$(curl \
 
 ACCESS_TOKEN=$(echo "$RESULT" | jq -r '.access_token')
 
-curl \
+EMAIL_ADDRESS=$(curl \
   -L \
   -s \
   --cacert ca.crt \
   -H "Authorization: Bearer $ACCESS_TOKEN" \
   "$SERVICE_URI/o/headless-admin-user/v1.0/my-user-account" \
-  | jq
+  | jq '.emailAddress')
+
+echo "Email address of service account: $EMAIL_ADDRESS"

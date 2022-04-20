@@ -1,17 +1,22 @@
 #!/bin/bash
 
-if [ `which minikube` ];then
+if [ `which minikube` ]; then
     eval $(minikube docker-env) && echo "[run_local] Using minikube docker-env"
     R=$?
 
     MINIKUBE_STATUS=$(minikube status -o json | jq -r '.APIServer')
-    if [ "$MINIKUBE_STATUS" != "Running" ];then
+    if [ "$MINIKUBE_STATUS" != "Running" ]; then
         echo "[run_local] Starting minikube ..."
-        minikube start --cpus 8 --memory 16364
+        if [[ "$OSTYPE" == "darwin"* ]]; then
+            minikube start --cpus 8 --memory 16364 --vm=true --driver=hyperkit
+        else
+            minikube start --cpus 8 --memory 16364
+        fi
+
         minikube addons enable ingress
 
         MINIKUBE_TLS_CERT=$(kubectl -n ingress-nginx get deployment ingress-nginx-controller -o json | jq '.spec.template.spec.containers[0].args | index("--default-ssl-certificate=kube-system/mkcert")')
-        if ! [[ $yournumber =~ '^[0-9]+$' ]] ; then
+        if ! [[ $yournumber =~ '^[0-9]+$' ]]; then
             kubectl -n kube-system create secret tls mkcert --key tls/localdev.me.key --cert tls/localdev.me.crt
             printf '%s\n' "kube-system/mkcert" Y | minikube addons configure ingress
             minikube addons disable ingress
@@ -37,7 +42,7 @@ if [ `which minikube` ];then
         minikube addons enable ingress
     fi
 
-    if [ $R -gt 0 ];then
+    if [ $R -gt 0 ]; then
         eval $(minikube docker-env) && echo "[run_local] Using minikube docker-env"
     fi
 else
@@ -45,12 +50,8 @@ else
     exit 1
 fi
 
-if [ `which skaffold` ];then
-    if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-        skaffold dev
-    else
-        skaffold dev --port-forward
-    fi
+if [ `which skaffold` ]; then
+    skaffold dev
 else
     echo "Please install skaffold. See https://skaffold.dev/docs/install/"
     exit 1

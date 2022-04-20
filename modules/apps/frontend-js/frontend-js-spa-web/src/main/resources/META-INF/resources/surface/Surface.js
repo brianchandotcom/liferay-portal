@@ -194,10 +194,41 @@ class Surface extends Disposable {
 	maybeWrapContentAsDefault_() {
 		var element = this.getElement();
 		if (element && !this.defaultChild) {
+			var childNodesToWrap = [];
+
+			element.childNodes.forEach((childNode) => {
+
+				/*
+				 * Some child nodes must be kept out of the Senna surface.
+				 *
+				 * We don't have any good mechanism to do it and we don't want
+				 * to put anything in place given all this is more or less
+				 * legacy.
+				 *
+				 * Thus, we simply skip some nodes that are known to us and
+				 * leave them as direct children of <body>, outside the default
+				 * Senna surface.
+				 *
+				 * See LPS-151462 for more information.
+				 */
+				if (childNode.classList) {
+					if (
+						childNode.classList.contains('yui3-dd-proxy') ||
+						childNode.classList.contains('yui3-dd-shim')
+					) {
+						return;
+					}
+				}
+
+				childNodesToWrap.push(childNode);
+			});
+
 			var fragment = document.createDocumentFragment();
-			while (element.firstChild) {
-				fragment.appendChild(element.firstChild);
-			}
+
+			childNodesToWrap.forEach((childNode) => {
+				fragment.appendChild(childNode);
+			});
+
 			this.defaultChild = this.addContent(Surface.DEFAULT, fragment);
 			this.transition(null, this.defaultChild);
 		}

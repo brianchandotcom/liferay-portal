@@ -208,6 +208,11 @@ AUI.add(
 					value: STR_BLANK,
 				},
 
+				documentLibraryNamespace: {
+					validator: isString,
+					value: STR_BLANK,
+				},
+
 				entriesContainer: {
 					// eslint-disable-next-line @liferay/aui/no-one
 					validator: A.one,
@@ -1117,13 +1122,27 @@ AUI.add(
 									type: 'success',
 								};
 
-								if (!invalidFilesLength) {
+								if (
+									!currentUploadData.folder &&
+									!invalidFilesLength
+								) {
+									var reloadButtonClassName =
+										'dl-reload-button';
+
 									openToastProps.message =
 										openToastProps.message +
-										' <button class="dl-reload">Reload</button>';
+										` <button class="btn btn-sm btn-link alert-link ${reloadButtonClassName}">Reload</button>`;
 
-									openToastProps.onClick = (...args) => {
-										console.log({args});
+									openToastProps.onClick = ({event}) => {
+										if (
+											event.target.classList.contains(
+												reloadButtonClassName
+											)
+										) {
+											Liferay.Portlet.refresh(
+												`#p_p_id${instance._documentLibraryNamespace}`
+											);
+										}
 									};
 								}
 
@@ -1656,6 +1675,9 @@ AUI.add(
 					instance._columnNames = instance.get('columnNames');
 					instance._dimensions = instance.get('dimensions');
 					instance._displayStyle = instance.get('displayStyle');
+					instance._documentLibraryNamespace = instance.get(
+						'documentLibraryNamespace'
+					);
 					instance._entriesContainer = instance.get(
 						'entriesContainer'
 					);

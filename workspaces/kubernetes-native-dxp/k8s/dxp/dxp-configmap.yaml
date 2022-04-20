@@ -18,8 +18,8 @@ data:
       ]
     issuerURL=""
     jwksURI=""
-    openIdConnectClientId="$[secret:google.oidc.client.id]"
-    openIdConnectClientSecret="$[secret:google.oidc.client.secret]"
+    openIdConnectClientId="$[env:GOOGLE_OIDC_CLIENT_ID]"
+    openIdConnectClientSecret="$[env:GOOGLE_OIDC_CLIENT_SECRET]"
     providerName="Google"
     registeredIdTokenSigningAlg=""
     scopes="openid\ email\ profile"

@@ -1115,7 +1115,10 @@ AUI.add(
 							if (validFilesLength) {
 								const openToastProps = {
 									autoClose: false,
-									message: `${validFilesLength} files were uploaded`,
+									message: Liferay.Util.sub(
+										instance._strings.xValidFilesUploaded,
+										validFilesLength
+									),
 									toastProps: {
 										className: 'alert-full',
 									},
@@ -1131,7 +1134,7 @@ AUI.add(
 
 									openToastProps.message =
 										openToastProps.message +
-										` <button class="btn btn-sm btn-link alert-link ${reloadButtonClassName}">Reload</button>`;
+										` <button class="btn btn-sm btn-link alert-link ${reloadButtonClassName}">${instance._strings.reloadButton}</button>`;
 
 									openToastProps.onClick = ({event}) => {
 										if (
@@ -1159,7 +1162,10 @@ AUI.add(
 								const message = TPL_ERROR_NOTIFICATION.parse({
 									invalidFiles:
 										currentUploadData.invalidFiles,
-									title: `${invalidFilesLength} files could not be uploaded`,
+									title: Liferay.Util.sub(
+										instance._strings.xInvalidFilesUploaded,
+										invalidFilesLength
+									),
 									toastProps: {
 										className: 'alert-full',
 									},
@@ -1697,6 +1703,13 @@ AUI.add(
 					instance._strings = {
 						invalidFileSize: Liferay.Language.get(
 							'please-enter-a-file-with-a-valid-file-size-no-larger-than-x'
+						),
+						reloadButton: Liferay.Language.get('reload'),
+						xInvalidFilesUploaded: Liferay.Language.get(
+							'x-files-could-not-be-uploaded'
+						),
+						xValidFilesUploaded: Liferay.Language.get(
+							'x-files-were-uploaded'
 						),
 						zeroByteFile: Liferay.Language.get(
 							'the-file-contains-no-data-and-cannot-be-uploaded.-please-use-the-classic-uploader'

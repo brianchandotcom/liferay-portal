@@ -301,4 +301,5 @@ definition {
 				locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_NAME");
 		}
 	}
+
 }

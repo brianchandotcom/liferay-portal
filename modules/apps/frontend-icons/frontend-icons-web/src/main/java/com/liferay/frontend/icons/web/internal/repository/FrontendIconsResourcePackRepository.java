@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portlet.documentlibrary.store.StoreFactory;
 
 import java.io.IOException;
 
@@ -211,6 +212,9 @@ public class FrontendIconsResourcePackRepository {
 
 	@Reference
 	private PortletFileRepository _portletFileRepository;
+
+	@Reference(target = "(dl.store.impl.enabled=true)")
+	private StoreFactory _storeFactory;
 
 	@Reference
 	private UserLocalService _userLocalService;

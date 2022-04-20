@@ -52,6 +52,7 @@ export {Layout} from './core/components/PageRenderer/Layout.es';
 export {default as Pages} from './core/components/Pages.es';
 export * from './core/config/index.es';
 export {ConfigProvider, useConfig} from './core/hooks/useConfig.es';
+export {useFlag} from './core/hooks/useFlag';
 export {FormProvider, useForm, useFormState} from './core/hooks/useForm.es';
 export {PageProvider, usePage} from './core/hooks/usePage.es';
 export {useFieldTypesResource} from './core/hooks/useResource.es';

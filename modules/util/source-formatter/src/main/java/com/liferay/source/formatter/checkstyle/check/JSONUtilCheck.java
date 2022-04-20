@@ -359,9 +359,9 @@ public class JSONUtilCheck extends BaseChainedMethodCheck {
 			FullIdent fullIdent = FullIdent.createFullIdent(
 				firstChildDetailAST);
 
-			String expr = fullIdent.getText();
+			String methodCall = fullIdent.getText();
 
-			if (expr.startsWith("JSONUtil.")) {
+			if (methodCall.startsWith("JSONUtil.")) {
 				return true;
 			}
 		}

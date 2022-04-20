@@ -611,7 +611,6 @@ definition {
 	}
 
 	@description = "LPS-106219 - Verify that the user can filter, by Process Step, instances with pending tasks in parallel"
-	@ignore = "true"
 	@priority = "3"
 	test UserCanFilterInstanceWithPendingTasksInParallelByStep {
 		property portal.acceptance = "true";
@@ -622,9 +621,15 @@ definition {
 			panel = "Applications",
 			portlet = "Process Builder");
 
-		Workflow.uploadDefinition(
-			workflowDefinitionFile = "multi-task-process-workflow-definition.xml",
-			workflowDefinitionTitle = "Multi Task Process");
+		Workflow.addNewDefinition(workflowDefinitionTitle = "Multi Task Process");
+
+		ProcessBuilderKaleoDesignerReact.uploadDefinition(workflowDefinitionFile = "multi-task-process-workflow-definition.xml");
+
+		ProcessBuilderKaleoDesignerReact.diagramSourceSwitchView();
+
+		Button.clickPublish();
+
+		Navigator.gotoBack();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 

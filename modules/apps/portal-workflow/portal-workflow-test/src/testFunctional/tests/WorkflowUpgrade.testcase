@@ -93,7 +93,6 @@ definition {
 		Upgrade.approveWorkflow();
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test ViewWorkflowArchive70106 {
 		property data.archive.type = "data-archive-workflow";
@@ -105,7 +104,6 @@ definition {
 		Upgrade.publishWorkflowDefinition();
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test ViewWorkflowArchive621015 {
 		property data.archive.type = "data-archive-workflow";
@@ -117,7 +115,6 @@ definition {
 		Upgrade.publishWorkflowDefinition();
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test ViewWorkflowArchive621021 {
 		property data.archive.type = "data-archive-workflow";

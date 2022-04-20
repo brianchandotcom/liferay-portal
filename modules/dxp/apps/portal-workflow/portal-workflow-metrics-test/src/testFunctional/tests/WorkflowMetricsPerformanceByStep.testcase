@@ -355,9 +355,13 @@ definition {
 			panel = "Applications",
 			portlet = "Process Builder");
 
-		Workflow.uploadDefinition(
-			workflowDefinitionFile = "11-transitions-workflow-definition.xml",
-			workflowDefinitionTitle = "11 Transitions Definition");
+		Workflow.addNewDefinition(workflowDefinitionTitle = "11 Transitions Definition");
+
+		ProcessBuilderKaleoDesignerReact.uploadDefinition(workflowDefinitionFile = "11-transitions-workflow-definition.xml");
+
+		ProcessBuilderKaleoDesignerReact.diagramSourceSwitchView();
+
+		PortletEntry.publish();
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "11 Transitions Definition");
 
@@ -889,9 +893,13 @@ definition {
 			panel = "Applications",
 			portlet = "Process Builder");
 
-		Workflow.uploadDefinition(
-			workflowDefinitionFile = "single-approver-updated-workflow-definition.xml",
-			workflowDefinitionTitle = "Single Approver Updated");
+		Workflow.addNewDefinition(workflowDefinitionTitle = "Single Approver Updated");
+
+		ProcessBuilderKaleoDesignerReact.uploadDefinition(workflowDefinitionFile = "single-approver-updated-workflow-definition.xml");
+
+		ProcessBuilderKaleoDesignerReact.diagramSourceSwitchView();
+
+		PortletEntry.publish();
 
 		Navigator.openURL();
 
@@ -1261,7 +1269,6 @@ definition {
 	}
 
 	@description = "LPS-100677 - Verify that searching steps containing non-ascii chars is possible"
-	@ignore = "true"
 	@priority = "3"
 	test UserCanSearchNonAsciiChars {
 		property portal.acceptance = "true";
@@ -1272,9 +1279,15 @@ definition {
 			panel = "Applications",
 			portlet = "Process Builder");
 
-		Workflow.uploadDefinition(
-			workflowDefinitionFile = "11-transitions-update-workflow-definition.xml",
-			workflowDefinitionTitle = "11 Transitions Update");
+		Workflow.addNewDefinition(workflowDefinitionTitle = "11 Transitions Update");
+
+		ProcessBuilderKaleoDesignerReact.uploadDefinition(workflowDefinitionFile = "11-transitions-update-workflow-definition.xml");
+
+		ProcessBuilderKaleoDesignerReact.diagramSourceSwitchView();
+
+		Button.clickPublish();
+
+		Navigator.gotoBack();
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "11 Transitions Update");
 

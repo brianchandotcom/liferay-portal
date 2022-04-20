@@ -16,9 +16,15 @@ definition {
 			panel = "Applications",
 			portlet = "Process Builder");
 
-		Workflow.uploadDefinition(
-			workflowDefinitionFile = "xss-workflow-definition.xml",
-			workflowDefinitionTitle = '''<script>alert(123);</script>''');
+		Workflow.addNewDefinition(workflowDefinitionTitle = '''<script>alert(123);</script>''');
+
+		ProcessBuilderKaleoDesignerReact.uploadDefinition(workflowDefinitionFile = "xss-workflow-definition.xml");
+
+		ProcessBuilderKaleoDesignerReact.diagramSourceSwitchView();
+
+		Button.clickPublish();
+
+		Navigator.gotoBack();
 
 		Navigator.openURL();
 

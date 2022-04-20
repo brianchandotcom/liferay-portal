@@ -540,7 +540,6 @@ definition {
 	}
 
 	@description = "LRQA-55451 Exceptions Check"
-	@ignore = "true"
 	@priority = "5"
 	test BulkReassignWorkflowInstancesExceptions {
 		property portal.acceptance = "true";
@@ -581,7 +580,6 @@ definition {
 	}
 
 	@description = "LRQA-57667 - Automate LPS-108138: As a Operation Manager, I want to transition a multi-task workflow instance while analyzing my process metrics"
-	@ignore = "true"
 	@priority = "5"
 	test BulkTransitionWorkflowTasks {
 		property portal.acceptance = "true";
@@ -594,9 +592,15 @@ definition {
 			panel = "Applications",
 			portlet = "Process Builder");
 
-		Workflow.uploadDefinition(
-			workflowDefinitionFile = "quarterly-reports-review-process-workflow-definition.xml",
-			workflowDefinitionTitle = "Fork Reviews Workflow");
+		Workflow.addNewDefinition(workflowDefinitionTitle = "Fork Reviews Workflow");
+
+		ProcessBuilderKaleoDesignerReact.uploadDefinition(workflowDefinitionFile = "quarterly-reports-review-process-workflow-definition.xml");
+
+		ProcessBuilderKaleoDesignerReact.diagramSourceSwitchView();
+
+		Button.clickPublish();
+
+		Navigator.gotoBack();
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
@@ -1564,7 +1568,6 @@ definition {
 	}
 
 	@description = "LRQA-53660 Automate LPS-105495 single-task work"
-	@ignore = "true"
 	@priority = "5"
 	test SingleTaskWorkflowTransition {
 		property portal.acceptance = "true";
@@ -1720,7 +1723,9 @@ definition {
 
 		Workflow.duplicateSingleApproverWorkflow(workflowName = "Single Approver Edited");
 
-		KaleoDesigner.deleteNode(nodeNodeLabel = "update");
+		ProcessBuilderKaleoDesignerReact.selectNodeByLabel(nodeLabel = "update");
+
+		ProcessBuilderKaleoDesignerReact.deleteNodeOrConnection(title = "Delete Task Node");
 
 		Button.clickUpdate();
 
@@ -2122,7 +2127,6 @@ definition {
 	}
 
 	@description = "LRQA-53646 - Automate LPS-88573: Search and order the reports list"
-	@ignore = "true"
 	@priority = "5"
 	test ValidateWorkflowProcessListOnMetrics {
 		property portal.acceptance = "true";
@@ -2135,25 +2139,49 @@ definition {
 
 		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow 1");
 
-		PortletEntry.publish();
+		ProcessBuilderKaleoDesignerReact.addConnector(
+			connectorIn = "end",
+			connectorLabel = "Start-End Connector",
+			connectorOut = "start",
+			key_direction = "right");
+
+		Button.clickPublish();
 
 		Navigator.gotoBack();
 
 		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow 2");
 
-		PortletEntry.publish();
+		ProcessBuilderKaleoDesignerReact.addConnector(
+			connectorIn = "end",
+			connectorLabel = "Start-End Connector",
+			connectorOut = "start",
+			key_direction = "right");
+
+		Button.clickPublish();
 
 		Navigator.gotoBack();
 
 		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow 3");
 
-		PortletEntry.publish();
+		ProcessBuilderKaleoDesignerReact.addConnector(
+			connectorIn = "end",
+			connectorLabel = "Start-End Connector",
+			connectorOut = "start",
+			key_direction = "right");
+
+		Button.clickPublish();
 
 		Navigator.gotoBack();
 
 		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow 4");
 
-		PortletEntry.publish();
+		ProcessBuilderKaleoDesignerReact.addConnector(
+			connectorIn = "end",
+			connectorLabel = "Start-End Connector",
+			connectorOut = "start",
+			key_direction = "right");
+
+		Button.clickPublish();
 
 		Navigator.gotoBack();
 
@@ -2433,9 +2461,13 @@ definition {
 			panel = "Applications",
 			portlet = "Process Builder");
 
-		Workflow.uploadDefinition(
-			workflowDefinitionFile = "xss-workflow-definition.xml",
-			workflowDefinitionTitle = "New Uploaded Definition");
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Uploaded Definition");
+
+		ProcessBuilderKaleoDesignerReact.uploadDefinition(workflowDefinitionFile = "xss-workflow-definition.xml");
+
+		ProcessBuilderKaleoDesignerReact.diagramSourceSwitchView();
+
+		PortletEntry.publish();
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "New Uploaded Definition");
 

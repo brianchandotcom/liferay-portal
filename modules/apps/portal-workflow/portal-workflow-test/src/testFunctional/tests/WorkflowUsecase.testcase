@@ -311,7 +311,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.diagramSourceSwitchView();
 
-		Button.clickPublish();
+		PortletEntry.publish();
 
 		Navigator.gotoBack();
 
@@ -477,7 +477,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.diagramSourceSwitchView();
 
-		Button.clickPublish();
+		PortletEntry.publish();
 
 		Navigator.gotoBack();
 

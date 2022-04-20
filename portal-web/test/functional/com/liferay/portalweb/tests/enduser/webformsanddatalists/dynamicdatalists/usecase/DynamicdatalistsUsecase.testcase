@@ -82,6 +82,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-50557."
+	@ignore = "true"
 	@priority = "4"
 	test AddListWithXSSWorkflowDefinition {
 		property test.name.skip.portal.instance = "DynamicdatalistUsecase#AddListWithXSSWorkflowDefinition";
@@ -91,9 +92,13 @@ definition {
 			panel = "Applications",
 			portlet = "Process Builder");
 
-		Workflow.uploadDefinition(
-			workflowDefinitionFile = "xss-workflow-definition.xml",
-			workflowDefinitionTitle = "New Uploaded Definition");
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Uploaded Definition");
+
+		ProcessBuilderKaleoDesignerReact.uploadDefinition(workflowDefinitionFile = "xss-workflow-definition.xml");
+
+		ProcessBuilderKaleoDesignerReact.diagramSourceSwitchView();
+
+		PortletEntry.publish();
 
 		Navigator.openURL();
 

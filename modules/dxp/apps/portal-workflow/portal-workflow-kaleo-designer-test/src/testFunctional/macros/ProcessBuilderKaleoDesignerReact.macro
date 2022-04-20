@@ -221,6 +221,12 @@ definition {
 			locator1 = "ProcessBuilderKaleoDesignerReact#DIAGRAM_NODE");
 	}
 
+	macro selectNodeByLabel {
+		Click(
+			key_nodeLabel = "${nodeLabel}",
+			locator1 = "ProcessBuilderKaleoDesignerReact#DIAGRAM_NODE_LABEL");
+	}
+
 	macro selectTranslationLanguage {
 		var key_translationOptionSelected = "${translationOptionSelected}";
 		var key_translationOption = "${newTranslationOption}";

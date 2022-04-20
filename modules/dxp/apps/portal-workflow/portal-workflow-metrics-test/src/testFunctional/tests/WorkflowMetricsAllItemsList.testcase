@@ -186,7 +186,6 @@ definition {
 	}
 
 	@description = "Verify that the users are able to identify the current nodes of the instance in the workflow, when there is multiple statuses"
-	@ignore = "true"
 	@priority = "4"
 	test CanIdentifyMultipleCurrentNode {
 		property portal.acceptance = "true";
@@ -194,9 +193,15 @@ definition {
 
 		Workflow.openWorkflowListView();
 
-		Workflow.uploadDefinition(
-			workflowDefinitionFile = "multi-task-process-workflow-definition.xml",
-			workflowDefinitionTitle = "Multi Task Process");
+		Workflow.addNewDefinition(workflowDefinitionTitle = "Multi Task Process");
+
+		ProcessBuilderKaleoDesignerReact.uploadDefinition(workflowDefinitionFile = "multi-task-process-workflow-definition.xml");
+
+		ProcessBuilderKaleoDesignerReact.diagramSourceSwitchView();
+
+		Button.clickPublish();
+
+		Navigator.gotoBack();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -2398,9 +2403,15 @@ definition {
 			panel = "Applications",
 			portlet = "Process Builder");
 
-		Workflow.uploadDefinition(
-			workflowDefinitionFile = "similar-single-approver-workflow-definition.xml",
-			workflowDefinitionTitle = "Similar Single Approver Process");
+		Workflow.addNewDefinition(workflowDefinitionTitle = "Similar Single Approver Process");
+
+		ProcessBuilderKaleoDesignerReact.uploadDefinition(workflowDefinitionFile = "similar-single-approver-workflow-definition.xml");
+
+		ProcessBuilderKaleoDesignerReact.diagramSourceSwitchView();
+
+		Button.clickPublish();
+
+		Navigator.gotoBack();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -2598,7 +2609,6 @@ definition {
 	}
 
 	@description = "LPS-86652 - Verify that hovering the cursor on the process step, when it contains more than 1 option, the toolip will display a bullet list"
-	@ignore = "true"
 	@priority = "3"
 	test TooltipDisplaysStepsListWhenMultipleItems {
 		property portal.acceptance = "true";
@@ -2609,9 +2619,15 @@ definition {
 			panel = "Applications",
 			portlet = "Process Builder");
 
-		Workflow.uploadDefinition(
-			workflowDefinitionFile = "multi-task-process-workflow-definition.xml",
-			workflowDefinitionTitle = "Multi Task Process");
+		Workflow.addNewDefinition(workflowDefinitionTitle = "Multi Task Process");
+
+		ProcessBuilderKaleoDesignerReact.uploadDefinition(workflowDefinitionFile = "multi-task-process-workflow-definition.xml");
+
+		ProcessBuilderKaleoDesignerReact.diagramSourceSwitchView();
+
+		Button.clickPublish();
+
+		Navigator.gotoBack();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -2713,7 +2729,6 @@ definition {
 	}
 
 	@description = "Verify that when the user clicks the link in the detail modal, the Workflow in use is displayed"
-	@ignore = "true"
 	@priority = "5"
 	test TrackApprovalDisplayWorkflowInUse {
 		property portal.acceptance = "true";
@@ -2721,9 +2736,15 @@ definition {
 
 		Workflow.openWorkflowListView();
 
-		Workflow.uploadDefinition(
-			workflowDefinitionFile = "multi-task-process-workflow-definition.xml",
-			workflowDefinitionTitle = "Multi Task Process");
+		Workflow.addNewDefinition(workflowDefinitionTitle = "Multi Task Process");
+
+		ProcessBuilderKaleoDesignerReact.uploadDefinition(workflowDefinitionFile = "multi-task-process-workflow-definition.xml");
+
+		ProcessBuilderKaleoDesignerReact.diagramSourceSwitchView();
+
+		Button.clickPublish();
+
+		Navigator.gotoBack();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 
@@ -2741,7 +2762,7 @@ definition {
 
 		WorkflowMetricsAllItemsList.goToTrackWorkflowlink();
 
-		WorkflowMetricsAllItemsList.viewNodesDisplayed(nodesTrackWorkflow = "Start,task1,task2,task3,End");
+		WorkflowMetricsAllItemsList.viewNodesDisplayed(nodesTrackWorkflow = "start,task1,task2,task3,end");
 	}
 
 	@description = "LPS-108138 - Verify that, in All Items page, when the users select an instance that can't be transitioned by them, the option to transition is not available to be selected"
@@ -2843,9 +2864,15 @@ definition {
 			panel = "Applications",
 			portlet = "Process Builder");
 
-		Workflow.uploadDefinition(
-			workflowDefinitionFile = "multi-task-process-workflow-definition.xml",
-			workflowDefinitionTitle = "Multi Task Process");
+		Workflow.addNewDefinition(workflowDefinitionTitle = "Multi Task Process");
+
+		ProcessBuilderKaleoDesignerReact.uploadDefinition(workflowDefinitionFile = "multi-task-process-workflow-definition.xml");
+
+		ProcessBuilderKaleoDesignerReact.diagramSourceSwitchView();
+
+		Button.clickPublish();
+
+		Navigator.gotoBack();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
 

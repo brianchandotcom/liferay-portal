@@ -1,65 +1,102 @@
 <?xml version="1.0"?>
 
 <workflow-definition
-	xmlns="urn:liferay.com:liferay-workflow_6.2.0"
+	xmlns="urn:liferay.com:liferay-workflow_7.4.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="urn:liferay.com:liferay-workflow_6.2.0 http://www.liferay.com/dtd/liferay-workflow-definition_6_2_0.xsd"
+	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>Quarterly Reports Review Process</name>
 	<version>1</version>
 	<fork>
-		<name>Governor's Review</name>
+		<id>Governor's Review</id>
+		<description>Split the workflow into multiple paths.</description>
 		<metadata>
 			<![CDATA[
 				{
 					"xy": [
-						189,
-						194
+						25,
+						67.00001525878906
 					]
 				}
 			]]>
 		</metadata>
+		<labels>
+			<label language-id="en_US">
+				Governor's Review
+			</label>
+		</labels>
 		<transitions>
 			<transition>
-				<name>Board Member Review 1</name>
+				<labels>
+					<label language-id="en_US">
+						Board Member Review 1
+					</label>
+				</labels>
+				<id>Governor's Review_Board Member Review 1_Board Member Review 1</id>
 				<target>Board Member Review 1</target>
 				<default>true</default>
 			</transition>
 			<transition>
-				<name>Board Member Review 2</name>
+				<labels>
+					<label language-id="en_US">
+						Board Member Review 2
+					</label>
+				</labels>
+				<id>Governor's Review_Board Member Review 2_Board Member Review 2</id>
 				<target>Board Member Review 2</target>
 				<default>false</default>
 			</transition>
 			<transition>
-				<name>Board Member Review 3</name>
+				<labels>
+					<label language-id="en_US">
+						Board Member Review 3
+					</label>
+				</labels>
+				<id>Governor's Review_Board Member Review 3_Board Member Review 3</id>
 				<target>Board Member Review 3</target>
 				<default>false</default>
 			</transition>
 			<transition>
-				<name>Board Member Review 4</name>
+				<labels>
+					<label language-id="en_US">
+						Board Member Review 4
+					</label>
+				</labels>
+				<id>Governor's Review_Board Member Review 4_Board Member Review 4</id>
 				<target>Board Member Review 4</target>
 				<default>false</default>
 			</transition>
 			<transition>
-				<name>Board Member Review 5</name>
+				<labels>
+					<label language-id="en_US">
+						Board Member Review 5
+					</label>
+				</labels>
+				<id>Governor's Review_Board Member Review 5_Board Member Review 5</id>
 				<target>Board Member Review 5</target>
 				<default>false</default>
 			</transition>
 			<transition>
-				<name>Board Member Review 6</name>
+				<labels>
+					<label language-id="en_US">
+						Board Member Review 6
+					</label>
+				</labels>
+				<id>Governor's Review_Board Member Review 6_Board Member Review 6</id>
 				<target>Board Member Review 6</target>
 				<default>false</default>
 			</transition>
 		</transitions>
 	</fork>
 	<join>
-		<name>Governor's Approval</name>
+		<id>Governor's Approval</id>
+		<description>All interactions need to be closed.</description>
 		<metadata>
 			<![CDATA[
 				{
 					"xy": [
-						629,
-						193
+						685,
+						335.99998474121094
 					]
 				}
 			]]>
@@ -76,49 +113,71 @@
 				<template-language>text</template-language>
 				<notification-type>user-notification</notification-type>
 				<recipients>
-					<user/>
+					<user />
 				</recipients>
 				<execution-type>onEntry</execution-type>
 			</notification>
 		</actions>
+		<labels>
+			<label language-id="en_US">
+				Governor's Approval
+			</label>
+		</labels>
 		<transitions>
 			<transition>
-				<name>Approve</name>
+				<labels>
+					<label language-id="en_US">
+						Approve
+					</label>
+				</labels>
+				<id>Approve</id>
 				<target>Published</target>
 				<default>true</default>
 			</transition>
 		</transitions>
 	</join>
 	<state>
-		<name>Submitted</name>
+		<id>Submitted</id>
+		<description>Begin a workflow.</description>
 		<metadata>
 			<![CDATA[
 				{
 					"xy": [
-						21,
-						205
+						41,
+						274.99998474121094
 					]
 				}
 			]]>
 		</metadata>
 		<initial>true</initial>
+		<labels>
+			<label language-id="en_US">
+				Submitted
+			</label>
+		</labels>
 		<transitions>
 			<transition>
-				<name>Submit for Board Review</name>
+				<labels>
+					<label language-id="en_US">
+						Submit for Board Review
+					</label>
+				</labels>
+				<id>Submit for Board Review</id>
 				<target>Governor's Review</target>
 				<default>true</default>
 			</transition>
 		</transitions>
 	</state>
 	<state>
-		<name>Published</name>
+		<id>Published</id>
+		<description>Conclude the workflow.</description>
 		<metadata>
 			<![CDATA[
 				{
 					"terminal": true,
 					"xy": [
-						833,
-						202
+						682,
+						126.00001525878906
 					]
 				}
 			]]>
@@ -139,15 +198,21 @@
 				<execution-type>onEntry</execution-type>
 			</action>
 		</actions>
+		<labels>
+			<label language-id="en_US">
+				Published
+			</label>
+		</labels>
 	</state>
 	<task>
-		<name>Board Member Review 1</name>
+		<id>Board Member Review 1</id>
+		<description>Ask a user to work on the item.</description>
 		<metadata>
 			<![CDATA[
 				{
 					"xy": [
-						381,
-						13
+						384,
+						67
 					]
 				}
 			]]>
@@ -164,7 +229,7 @@
 				<template-language>text</template-language>
 				<notification-type>user-notification</notification-type>
 				<recipients>
-					<assignees/>
+					<assignees />
 				</recipients>
 				<execution-type>onAssignment</execution-type>
 			</notification>
@@ -178,6 +243,11 @@
 				</role>
 			</roles>
 		</assignments>
+		<labels>
+			<label language-id="en_US">
+				Board Member Review 1
+			</label>
+		</labels>
 		<task-timers>
 			<task-timer>
 				<name>Review Reminder</name>
@@ -185,38 +255,42 @@
 					<duration>3</duration>
 					<scale>day</scale>
 				</delay>
-				<blocking>false</blocking>
+				<blocking>true</blocking>
 				<timer-actions>
-					<timer-notification>
-						<name>Please Complete Your Review</name>
-						<template>
-							<![CDATA[It has been 72 hours. Please finish your review asap.]]>
-						</template>
-						<template-language>text</template-language>
-						<notification-type>user-notification</notification-type>
-						<recipients>
-							<user/>
-						</recipients>
-					</timer-notification>
+					<timer-action>
+						<name>action 1</name>
+						<description></description>
+						<script>
+							<![CDATA[example 1]]>
+						</script>
+						<script-language>groovy</script-language>
+						<priority>1</priority>
+					</timer-action>
 				</timer-actions>
 			</task-timer>
 		</task-timers>
 		<transitions>
 			<transition>
-				<name>Approve 1</name>
+				<labels>
+					<label language-id="en_US">
+						Approve 1
+					</label>
+				</labels>
+				<id>Approve 1</id>
 				<target>Governor's Approval</target>
 				<default>true</default>
 			</transition>
 		</transitions>
 	</task>
 	<task>
-		<name>Board Member Review 2</name>
+		<id>Board Member Review 2</id>
+		<description>Ask a user to work on the item.</description>
 		<metadata>
 			<![CDATA[
 				{
 					"xy": [
-						380,
-						143
+						376,
+						172.99998474121094
 					]
 				}
 			]]>
@@ -233,7 +307,7 @@
 				<template-language>text</template-language>
 				<notification-type>user-notification</notification-type>
 				<recipients>
-					<assignees/>
+					<assignees />
 				</recipients>
 				<execution-type>onAssignment</execution-type>
 			</notification>
@@ -247,6 +321,11 @@
 				</role>
 			</roles>
 		</assignments>
+		<labels>
+			<label language-id="en_US">
+				Board Member Review 2
+			</label>
+		</labels>
 		<task-timers>
 			<task-timer>
 				<name>Review Reminder</name>
@@ -254,32 +333,36 @@
 					<duration>3</duration>
 					<scale>day</scale>
 				</delay>
-				<blocking>false</blocking>
+				<blocking>true</blocking>
 				<timer-actions>
-					<timer-notification>
-						<name>Please Complete Your Review</name>
-						<template>
-							<![CDATA[It has been 72 hours. Please finish your review asap.]]>
-						</template>
-						<template-language>text</template-language>
-						<notification-type>user-notification</notification-type>
-						<recipients>
-							<user/>
-						</recipients>
-					</timer-notification>
+					<timer-action>
+						<name>action 2</name>
+						<description></description>
+						<script>
+							<![CDATA[example 2]]>
+						</script>
+						<script-language>groovy</script-language>
+						<priority>1</priority>
+					</timer-action>
 				</timer-actions>
 			</task-timer>
 		</task-timers>
 		<transitions>
 			<transition>
-				<name>Approve 2</name>
+				<labels>
+					<label language-id="en_US">
+						Approve 2
+					</label>
+				</labels>
+				<id>Approve 2</id>
 				<target>Governor's Approval</target>
 				<default>true</default>
 			</transition>
 		</transitions>
 	</task>
 	<task>
-		<name>Board Member Review 3</name>
+		<id>Board Member Review 3</id>
+		<description>Ask a user to work on the item.</description>
 		<metadata>
 			<![CDATA[
 				{
@@ -302,7 +385,7 @@
 				<template-language>text</template-language>
 				<notification-type>user-notification</notification-type>
 				<recipients>
-					<assignees/>
+					<assignees />
 				</recipients>
 				<execution-type>onAssignment</execution-type>
 			</notification>
@@ -316,6 +399,11 @@
 				</role>
 			</roles>
 		</assignments>
+		<labels>
+			<label language-id="en_US">
+				Board Member Review 3
+			</label>
+		</labels>
 		<task-timers>
 			<task-timer>
 				<name>Review Reminder</name>
@@ -323,32 +411,36 @@
 					<duration>3</duration>
 					<scale>day</scale>
 				</delay>
-				<blocking>false</blocking>
+				<blocking>true</blocking>
 				<timer-actions>
-					<timer-notification>
-						<name>Please Complete Your Review</name>
-						<template>
-							<![CDATA[It has been 72 hours. Please finish your review asap.]]>
-						</template>
-						<template-language>text</template-language>
-						<notification-type>user-notification</notification-type>
-						<recipients>
-							<user/>
-						</recipients>
-					</timer-notification>
+					<timer-action>
+						<name>action 3</name>
+						<description></description>
+						<script>
+							<![CDATA[example 3]]>
+						</script>
+						<script-language>groovy</script-language>
+						<priority>1</priority>
+					</timer-action>
 				</timer-actions>
 			</task-timer>
 		</task-timers>
 		<transitions>
 			<transition>
-				<name>Approve 3</name>
+				<labels>
+					<label language-id="en_US">
+						Approve 3
+					</label>
+				</labels>
+				<id>Approve 3</id>
 				<target>Governor's Approval</target>
 				<default>true</default>
 			</transition>
 		</transitions>
 	</task>
 	<task>
-		<name>Board Member Review 4</name>
+		<id>Board Member Review 4</id>
+		<description>Ask a user to work on the item.</description>
 		<metadata>
 			<![CDATA[
 				{
@@ -371,7 +463,7 @@
 				<template-language>text</template-language>
 				<notification-type>user-notification</notification-type>
 				<recipients>
-					<assignees/>
+					<assignees />
 				</recipients>
 				<execution-type>onAssignment</execution-type>
 			</notification>
@@ -385,6 +477,11 @@
 				</role>
 			</roles>
 		</assignments>
+		<labels>
+			<label language-id="en_US">
+				Board Member Review 4
+			</label>
+		</labels>
 		<task-timers>
 			<task-timer>
 				<name>Review Reminder</name>
@@ -392,71 +489,96 @@
 					<duration>3</duration>
 					<scale>day</scale>
 				</delay>
-				<blocking>false</blocking>
+				<blocking>true</blocking>
 				<timer-actions>
-					<timer-notification>
-						<name>Please Complete Your Review</name>
-						<template>
-							<![CDATA[It has been 72 hours. Please finish your review asap.]]>
-						</template>
-						<template-language>text</template-language>
-						<notification-type>user-notification</notification-type>
-						<recipients>
-							<user/>
-						</recipients>
-					</timer-notification>
+					<timer-action>
+						<name>action 4</name>
+						<description></description>
+						<script>
+							<![CDATA[example 4]]>
+						</script>
+						<script-language>groovy</script-language>
+						<priority>1</priority>
+					</timer-action>
 				</timer-actions>
 			</task-timer>
 		</task-timers>
 		<transitions>
 			<transition>
-				<name>Approve 4</name>
+				<labels>
+					<label language-id="en_US">
+						Approve 4
+					</label>
+				</labels>
+				<id>Approve 4</id>
 				<target>Governor's Approval</target>
 				<default>true</default>
 			</transition>
 		</transitions>
 	</task>
 	<task>
-		<name>Board Member Review 5</name>
+		<id>Board Member Review 5</id>
+		<description>Ask a user to work on the item.</description>
 		<metadata>
 			<![CDATA[
 				{
 					"xy": [
-						379,
-						463
+						373.9999694824219,
+						634.0000152587891
 					]
 				}
 			]]>
 		</metadata>
 		<assignments>
-			<user/>
+			<user />
 		</assignments>
+		<labels>
+			<label language-id="en_US">
+				Board Member Review 5
+			</label>
+		</labels>
 		<transitions>
 			<transition>
-				<name>Approve 5</name>
+				<labels>
+					<label language-id="en_US">
+						Approve 5
+					</label>
+				</labels>
+				<id>Approve 5</id>
 				<target>Governor's Approval</target>
 				<default>true</default>
 			</transition>
 		</transitions>
 	</task>
 	<task>
-		<name>Board Member Review 6</name>
+		<id>Board Member Review 6</id>
+		<description>Ask a user to work on the item.</description>
 		<metadata>
 			<![CDATA[
 				{
 					"xy": [
-						375,
-						423
+						374,
+						516.0000152587891
 					]
 				}
 			]]>
 		</metadata>
 		<assignments>
-			<user/>
+			<user />
 		</assignments>
+		<labels>
+			<label language-id="en_US">
+				Board Member Review 6
+			</label>
+		</labels>
 		<transitions>
 			<transition>
-				<name>Approve 6</name>
+				<labels>
+					<label language-id="en_US">
+						Approve 6
+					</label>
+				</labels>
+				<id>Approve 6</id>
 				<target>Governor's Approval</target>
 				<default>true</default>
 			</transition>

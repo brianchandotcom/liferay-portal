@@ -312,7 +312,6 @@ definition {
 	@description = "LPS-146028 - Verify that the user can duplicate a object View"
 	@priority = "4"
 	test CanDuplicateObjectView {
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151589",
 			objectName = "CustomObject151589",
@@ -329,7 +328,6 @@ definition {
 		ObjectCustomViews.duplicateObjectCustomView(viewLabel = "Custom View 151589");
 
 		ObjectCustomViews.assertObjectView(viewLabel = "Custom View 151589 (Copy)");
-
 	}
 
 	@description = "LPS-135394 - Verify the Name is required when creating a View"
@@ -871,7 +869,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "4"
 	test DuplicatedObjectViewColumnsAreCorrectlyOrdered {
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151590",
 			objectName = "CustomObject151590",
@@ -935,7 +932,6 @@ definition {
 	@description = "LPS-146028 - Verify that the fields present at the Default Sort are ordered correctly"
 	@priority = "4"
 	test DuplicatedObjectViewFieldsAreCorrectlyOrdered {
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151591",
 			objectName = "CustomObject151591",

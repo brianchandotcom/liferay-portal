@@ -66,6 +66,9 @@ public class AssetVocabularyModelDocumentContributor
 				assetVocabulary.getDefaultLanguageId(),
 				assetVocabulary.getGroupId()),
 			true, true);
+
+		document.addNumber(
+			Field.VISIBILITY_TYPE, assetVocabulary.getVisibilityType());
 	}
 
 	private Locale _getSiteDefaultLocale(long groupId) {

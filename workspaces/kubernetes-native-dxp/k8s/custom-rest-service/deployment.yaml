@@ -29,15 +29,15 @@ spec:
           - name: DXP_SERVICE_URI
             valueFrom:
               configMapKeyRef:
-                key: dxp.service_uri
-                name: custom-rest-service.user.agent.factory.application.oauth2.liferay.com
+                key: service_uri
+                name: custom-rest-service.user.agent.oauth2.liferay.com
           - name: OAUTH2_INTROSPECTION_URI
             valueFrom:
               configMapKeyRef:
-                key: oauth2.introspection_uri
-                name: custom-rest-service.user.agent.factory.application.oauth2.liferay.com
+                key: introspection_uri
+                name: custom-rest-service.user.agent.oauth2.liferay.com
           - name: OAUTH2_USERAGENTAPP_CLIENT_ID
             valueFrom:
               configMapKeyRef:
-                key: oauth2.client_id
-                name: custom-rest-service.user.agent.factory.application.oauth2.liferay.com
+                key: client_id
+                name: custom-rest-service.user.agent.oauth2.liferay.com

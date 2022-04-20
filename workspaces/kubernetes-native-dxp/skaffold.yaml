@@ -24,12 +24,19 @@ build:
         paths:
         - lxc-extensions/custom-rest-service/src/**/*
         - lxc-extensions/custom-rest-service/pom.xml
+  - image: cronjob
+    custom:
+      buildCommand: lxc-extensions/cronjob/build.sh
+      dependencies:
+        paths:
+        - lxc-extensions/cronjob/curl.sh
 deploy:
   kustomize:
     paths:
     - k8s/dxp/
     - k8s/remoteappa/
     - k8s/custom-rest-service/
+    - k8s/cronjob/
     - k8s/common/
 portForward:
   - resourceType: service

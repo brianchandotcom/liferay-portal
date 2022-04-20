@@ -24,4 +24,6 @@ public interface K8sAgent {
 	public void createOrUpdateConfigMap(
 		Map<String, String> data, String name, Map<String, String> labels);
 
+	public void deleteConfigMap(String name);
+
 }

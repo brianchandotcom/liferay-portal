@@ -263,6 +263,12 @@ public class DepotAppCustomizationLocalServiceUtil {
 		return getService().getDepotAppCustomizations(start, end);
 	}
 
+	public static List<DepotAppCustomization> getDepotAppCustomizations(
+		long depotEntryId) {
+
+		return getService().getDepotAppCustomizations(depotEntryId);
+	}
+
 	/**
 	 * Returns the number of depot app customizations.
 	 *

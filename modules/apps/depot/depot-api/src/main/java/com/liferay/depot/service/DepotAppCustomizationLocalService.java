@@ -239,6 +239,10 @@ public interface DepotAppCustomizationLocalService
 	public List<DepotAppCustomization> getDepotAppCustomizations(
 		int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DepotAppCustomization> getDepotAppCustomizations(
+		long depotEntryId);
+
 	/**
 	 * Returns the number of depot app customizations.
 	 *

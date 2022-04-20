@@ -13,13 +13,12 @@
  */
 
 import ClayForm, {ClayToggle} from '@clayui/form';
-import ClayIcon from '@clayui/icon';
-import {ClayTooltipProvider} from '@clayui/tooltip';
 import {
 	FormCustomSelect,
 	FormError,
 	Input,
 	Select,
+	Toggle,
 	invalidateRequired,
 	useForm,
 } from '@liferay/object-js-components-web';
@@ -506,7 +505,7 @@ function AttachmentSourceProperty({
 
 			{settings.fileSource === 'userComputer' && (
 				<ClayForm.Group className="lfr-objects__object-field-form-base-container">
-					<ClayToggle
+					<Toggle
 						disabled={disabled}
 						label={Liferay.Language.get(
 							'show-files-in-documents-and-media'
@@ -514,21 +513,11 @@ function AttachmentSourceProperty({
 						name="showFilesInDocumentsAndMedia"
 						onToggle={toggleShowFiles}
 						toggled={!!settings.showFilesInDocumentsAndMedia}
+						tooltip={Liferay.Language.get(
+							'when-activated-users-can-define-a-folder-within-documents-and-media-to-display-the-files-leave-it-unchecked-for-files-to-be-stored-individually-per-entry'
+						)}
+						tooltipAlign="top"
 					/>
-
-					<ClayTooltipProvider>
-						<div
-							data-tooltip-align="top"
-							title={Liferay.Language.get(
-								'when-activated-users-can-define-a-folder-within-documents-and-media-to-display-the-files-leave-it-unchecked-for-files-to-be-stored-individually-per-entry'
-							)}
-						>
-							<ClayIcon
-								className="lfr-objects__object-field-form-base-tooltip-icon"
-								symbol="question-circle-full"
-							/>
-						</div>
-					</ClayTooltipProvider>
 				</ClayForm.Group>
 			)}
 		</>

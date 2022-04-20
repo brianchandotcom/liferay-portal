@@ -301,7 +301,7 @@ definition {
 	@priority = "5"
 	test PublishContentPageWithPageVariationToLive {
 		property portal.acceptance = "true";
-		property private.pages.enabled = "true";
+		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 
 		task ("Add a public content page") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name-staging");

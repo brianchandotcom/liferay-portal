@@ -3,7 +3,7 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property private.pages.enabled = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Masterclass";
 
 	var testSiteName = "Test Masterclass Name";
@@ -1783,7 +1783,7 @@ definition {
 	@description = "This is a use case for LPS-140253. View no private page in style book on Masterclass site."
 	@priority = "4"
 	test ViewNoPrivatePageInStyleBooksOnMasterclassSite {
-		property private.pages.enabled = "false";
+		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "false";
 
 		task ("Go to style books") {
 			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "${testSiteURL}");

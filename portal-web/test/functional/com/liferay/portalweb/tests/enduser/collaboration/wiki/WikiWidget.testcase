@@ -63,7 +63,7 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanNavigateToOtherPageByEditorLink {
-		property private.pages.enabled = "true";
+		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 
 		JSONLayout.addPrivateLayout(
 			groupName = "Guest",

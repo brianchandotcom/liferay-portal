@@ -885,7 +885,7 @@ definition {
 	@priority = "5"
 	test PreviewDraftContentPage {
 		property portal.acceptance = "true";
-		property private.pages.enabled = "true";
+		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 
 		task ("Add a public content page") {
 			JSONLayout.addPublicLayout(

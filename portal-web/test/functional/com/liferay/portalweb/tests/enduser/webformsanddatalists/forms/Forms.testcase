@@ -41,7 +41,7 @@ definition {
 	test AddFormInGlobal {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
-		property private.pages.enabled = "true";
+		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 		property test.name.skip.portal.instance = "Forms#AddFormInGlobal";
 		property testray.component.names = "Training";
 

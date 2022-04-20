@@ -114,7 +114,7 @@ definition {
 	@priority = "4"
 	@uitest
 	test AddPrivatePage {
-		property private.pages.enabled = "true";
+		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 
 		task ("Add a private page") {
 			PagesAdmin.addPrivatePage(pageName = "Test Private Page");

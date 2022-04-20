@@ -531,7 +531,7 @@ definition {
 	@priority = "4"
 	test SelectStyleBookInMasterPageWhenUsePublicPagesTheme {
 		property portal.release = "false";
-		property private.pages.enabled = "true";
+		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 
 		task ("Add a public page and change it's theme to Minium") {
 			JSONLayout.addPublicLayout(

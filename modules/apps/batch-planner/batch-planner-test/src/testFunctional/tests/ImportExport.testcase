@@ -356,7 +356,7 @@ definition {
 			ImportExport.assertExecutionEntry(
 				entityType = "Account",
 				executionAction = "Import",
-				executionName = "csv_account_import.csv",
+				executionName = "csv_account_import",
 				executionStatus = "Completed");
 
 			ImportExport.assertExecutionEntry(
@@ -374,7 +374,7 @@ definition {
 			ImportExport.assertExecutionEntry(
 				entityType = "Account",
 				executionAction = "Import",
-				executionName = "csv_account_import.csv",
+				executionName = "csv_account_import",
 				executionStatus = "Completed");
 
 			ImportExport.assertNoExecutionEntry(
@@ -398,7 +398,7 @@ definition {
 			ImportExport.assertNoExecutionEntry(
 				entityType = "Account",
 				executionAction = "Import",
-				executionName = "csv_account_import.csv",
+				executionName = "csv_account_import",
 				executionStatus = "Completed");
 		}
 	}
@@ -1001,14 +1001,14 @@ definition {
 		task ("When I go to the Import/Export center and search executions by name") {
 			ImportExport.openImportExportAdmin();
 
-			Search.searchCP(searchTerm = "csv_account_import.csv");
+			Search.searchCP(searchTerm = "csv_account_import");
 		}
 
 		task ("Then only executions with the name keyword should be shown") {
 			ImportExport.assertExecutionEntry(
 				entityType = "Account",
 				executionAction = "Import",
-				executionName = "csv_account_import.csv",
+				executionName = "csv_account_import",
 				executionStatus = "Completed");
 
 			ImportExport.assertNoExecutionEntry(
@@ -1020,7 +1020,7 @@ definition {
 			ImportExport.assertNoExecutionEntry(
 				entityType = "Channel",
 				executionAction = "Import",
-				executionName = "csv_channel_import.csv",
+				executionName = "csv_channel_import",
 				executionStatus = "Completed");
 
 			ImportExport.assertNoExecutionEntry(
@@ -1038,7 +1038,7 @@ definition {
 			ImportExport.assertExecutionEntry(
 				entityType = "Channel",
 				executionAction = "Import",
-				executionName = "csv_channel_import.csv",
+				executionName = "csv_channel_import",
 				executionStatus = "Completed");
 
 			ImportExport.assertExecutionEntry(
@@ -1050,7 +1050,7 @@ definition {
 			ImportExport.assertNoExecutionEntry(
 				entityType = "Account",
 				executionAction = "Import",
-				executionName = "csv_account_import.csv",
+				executionName = "csv_account_import",
 				executionStatus = "Completed");
 
 			ImportExport.assertNoExecutionEntry(
@@ -1070,7 +1070,7 @@ definition {
 			ImportExport.assertExecutionEntry(
 				entityType = "Channel",
 				executionAction = "Import",
-				executionName = "csv_channel_import.csv",
+				executionName = "csv_channel_import",
 				executionStatus = "Completed");
 
 			ImportExport.assertNoExecutionEntry(
@@ -1082,7 +1082,7 @@ definition {
 			ImportExport.assertNoExecutionEntry(
 				entityType = "Account",
 				executionAction = "Import",
-				executionName = "csv_account_import.csv",
+				executionName = "csv_account_import",
 				executionStatus = "Completed");
 
 			ImportExport.assertNoExecutionEntry(
@@ -1396,13 +1396,13 @@ definition {
 			ImportExport.assertExecutionEntry(
 				entityType = "Account",
 				executionAction = "Import",
-				executionName = "csv_account_import_error.csv",
+				executionName = "csv_account_import_error",
 				executionStatus = "Failed");
 
 			ImportExport.assertExecutionEntry(
 				entityType = "Account",
 				executionAction = "Import",
-				executionName = "csv_account_import.csv",
+				executionName = "csv_account_import",
 				executionStatus = "Completed");
 		}
 

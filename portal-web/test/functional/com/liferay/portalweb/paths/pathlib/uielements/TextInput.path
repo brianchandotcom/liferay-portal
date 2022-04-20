@@ -51,6 +51,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ANY_PLACEHOLDER</td>
+	<td>//input[contains(@placeholder,'${key_placeHolder}') and not(contains(@class,'disabled'))]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ASSET_PRIORITY</td>
 	<td>//input[contains(@id,'assetPriority')]</td>
 	<td></td>

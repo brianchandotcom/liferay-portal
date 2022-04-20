@@ -173,6 +173,12 @@ definition {
 	macro configureImport {
 		UploadDependencyFile.uploadFile(fileName = "${fileName}");
 
+		if (isSet(importName)) {
+			Type(
+				locator1 = "TextInput#NAME",
+				value1 = "${importName}");
+		}
+
 		if (isSet(csvSeparator)) {
 			Type(
 				key_text = "CSV Separator",
@@ -259,6 +265,12 @@ definition {
 
 		UploadDependencyFile.uploadFile(fileName = "${fileName}");
 
+		if (isSet(importName)) {
+			Type(
+				locator1 = "TextInput#NAME",
+				value1 = "${importName}");
+		}
+
 		if (isSet(csvSeparator)) {
 			Type(
 				key_text = "CSV Separator",
@@ -339,7 +351,8 @@ definition {
 		Button.click(button = "Save as Template");
 
 		Type(
-			locator1 = "TextInput#NAME",
+			key_placeHolder = "Template Name",
+			locator1 = "TextInput#ANY_PLACEHOLDER",
 			value1 = "${templateName}");
 
 		Button.clickSave();

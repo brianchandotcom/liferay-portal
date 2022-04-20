@@ -6954,42 +6954,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/httpclient.jar</file-name>
-				<version>4.5.13</version>
-				<project-name>HttpComponents</project-name>
-				<project-url>http://hc.apache.org</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/portal/httpcore.jar</file-name>
-				<version>4.4.14</version>
-				<project-name>HttpComponents</project-name>
-				<project-url>http://hc.apache.org</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/portal/httpmime.jar</file-name>
-				<version>4.5.13</version>
-				<project-name>HttpComponents</project-name>
-				<project-url>http://hc.apache.org</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/istack-commons-runtime.jar</file-name>
 				<version>3.0.7</version>
 				<project-name>Jaxb Istack Commons</project-name>

@@ -81,6 +81,7 @@ export default function ({namespace}) {
 			'CONSENT_TYPE_PERSONALIZATION',
 			personalizationToggle.checked ? 'true' : 'false'
 		);
+		setCookie('CONSENT_TYPE_STRICTLY_NECESSARY', 'true');
 
 		window.location.reload();
 	});
@@ -96,12 +97,14 @@ function acceptAllCookies() {
 	setCookie('CONSENT_TYPE_FUNCTIONAL', 'true');
 	setCookie('CONSENT_TYPE_PERFORMANCE', 'true');
 	setCookie('CONSENT_TYPE_PERSONALIZATION', 'true');
+	setCookie('CONSENT_TYPE_STRICTLY_NECESSARY', 'true');
 }
 
 function declineAllCookies() {
 	setCookie('CONSENT_TYPE_FUNCTIONAL', 'false');
 	setCookie('CONSENT_TYPE_PERFORMANCE', 'false');
 	setCookie('CONSENT_TYPE_PERSONALIZATION', 'false');
+	setCookie('CONSENT_TYPE_STRICTLY_NECESSARY', 'true');
 }
 
 function getCookie(name) {

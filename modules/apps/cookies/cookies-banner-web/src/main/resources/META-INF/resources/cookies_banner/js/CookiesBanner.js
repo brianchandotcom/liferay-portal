@@ -53,6 +53,11 @@ export default function ({configurationUrl, namespace}) {
 								}
 							);
 
+							setCookie(
+								'CONSENT_TYPE_STRICTLY_NECESSARY',
+								'true'
+							);
+
 							checkCookiesConsent(cookieBanner);
 
 							Liferay.Util.getOpener().Liferay.fire('closeModal');
@@ -117,12 +122,14 @@ function acceptAllCookies() {
 	setCookie('CONSENT_TYPE_FUNCTIONAL', 'true');
 	setCookie('CONSENT_TYPE_PERFORMANCE', 'true');
 	setCookie('CONSENT_TYPE_PERSONALIZATION', 'true');
+	setCookie('CONSENT_TYPE_STRICTLY_NECESSARY', 'true');
 }
 
 function declineAllCookiesDecline() {
 	setCookie('CONSENT_TYPE_FUNCTIONAL', 'false');
 	setCookie('CONSENT_TYPE_PERFORMANCE', 'false');
 	setCookie('CONSENT_TYPE_PERSONALIZATION', 'false');
+	setCookie('CONSENT_TYPE_STRICTLY_NECESSARY', 'true');
 }
 
 function getCookie(name) {

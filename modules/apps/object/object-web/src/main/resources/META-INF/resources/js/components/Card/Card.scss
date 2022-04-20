@@ -1,32 +1,21 @@
-$borderColor: #e7e7ed;
-$bgColor: #fff;
+@import 'atlas-variables';
 
-.object-admin-card {
-	background-color: $bgColor;
-	border: 1px solid $borderColor;
+.lfr-objects__card {
+	background-color: $white;
+	border: 1px solid $gray-300;
 	border-radius: 4px;
-	margin-bottom: 1.5rem;
+	margin: 1.5rem 1.5rem 0;
 
-	&:last-child {
-		margin-bottom: 0;
-	}
-
-	& &__body {
+	&-body {
 		padding: 1.5rem;
-
-		&:last-child {
-			margin-bottom: 0;
-		}
 	}
 
-	& &__header {
-		border-bottom: 1px solid $borderColor;
-		display: flex;
-		justify-content: space-between;
-		padding: 1.5em;
+	&-header {
+		border-bottom: 1px solid $gray-300;
+		padding: 1.5rem;
 	}
 
-	& &__title {
+	&-title {
 		margin: 0;
 	}
 }

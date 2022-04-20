@@ -14,13 +14,13 @@
 
 import React, {ChangeEventHandler, useState} from 'react';
 
+import Card from '../Card/Card';
 import Editor from '../Editor/Editor';
 import InputLocalized from '../Form/InputLocalized/InputLocalized';
 import Select from '../Form/Select';
 import ObjectValidationFormBase, {
 	ObjectValidationErrors,
 } from '../ObjectValidationFormBase';
-import Sheet from '../Sheet';
 
 function BasicInfo({
 	componentLabel,
@@ -41,7 +41,7 @@ function BasicInfo({
 
 	return (
 		<>
-			<Sheet title={componentLabel}>
+			<Card title={componentLabel}>
 				<InputLocalized
 					disabled={disabled}
 					error={errors.name}
@@ -66,7 +66,7 @@ function BasicInfo({
 					setValues={setValues}
 					values={values}
 				/>
-			</Sheet>
+			</Card>
 
 			<TriggerEventContainer
 				disabled={disabled}
@@ -93,15 +93,15 @@ function Conditions({
 
 	return (
 		<>
-			<Sheet title={Liferay.Language.get('groovy')}>
+			<Card title={Liferay.Language.get('groovy')}>
 				<Editor
 					content={values.script}
 					disabled={disabled}
 					setValues={setValues}
 				/>
-			</Sheet>
+			</Card>
 
-			<Sheet title={Liferay.Language.get('error-message')}>
+			<Card title={Liferay.Language.get('error-message')}>
 				<InputLocalized
 					disabled={disabled}
 					error={errors.errorLabel}
@@ -115,21 +115,21 @@ function Conditions({
 					selectedLocale={locale}
 					translations={values.errorLabel as LocalizedValue<string>}
 				/>
-			</Sheet>
+			</Card>
 		</>
 	);
 }
 
 function TriggerEventContainer({disabled, eventTypes}: ITriggerEventProps) {
 	return (
-		<Sheet title={Liferay.Language.get('trigger-event')}>
+		<Card title={Liferay.Language.get('trigger-event')}>
 			<Select
 				disabled={disabled}
 				label={Liferay.Language.get('event')}
 				options={eventTypes}
 				value={0}
 			/>
-		</Sheet>
+		</Card>
 	);
 }
 

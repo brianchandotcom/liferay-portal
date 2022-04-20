@@ -234,15 +234,13 @@ const CustomView: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 				))}
 			</ClayTabs>
 
-			<SidePanelContent.Container>
-				<ClayTabs.Content activeIndex={activeIndex} fade>
-					{TABS.map(({Component}, index) => (
-						<ClayTabs.TabPane key={index}>
-							{!loading && <Component />}
-						</ClayTabs.TabPane>
-					))}
-				</ClayTabs.Content>
-			</SidePanelContent.Container>
+			<ClayTabs.Content activeIndex={activeIndex} fade>
+				{TABS.map(({Component}, index) => (
+					<ClayTabs.TabPane key={index}>
+						{!loading && <Component />}
+					</ClayTabs.TabPane>
+				))}
+			</ClayTabs.Content>
 		</SidePanelContent>
 	);
 };

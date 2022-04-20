@@ -32,20 +32,7 @@ export function openToast(options: {
 	parentWindow.Liferay.Util.openToast(options);
 }
 
-export function Container({children, className}: IContainerProps) {
-	return (
-		<div
-			className={classNames(
-				'lfr-objects__side-panel-content-container',
-				className
-			)}
-		>
-			{children}
-		</div>
-	);
-}
-
-export function SidePanelContent({
+export default function SidePanelContent({
 	children,
 	className,
 	onSave,
@@ -105,10 +92,6 @@ export function SidePanelForm({
 		</ClayForm>
 	);
 }
-
-SidePanelContent.Container = Container;
-
-export default SidePanelContent;
 
 interface IContainerProps {
 	children: React.ReactNode;

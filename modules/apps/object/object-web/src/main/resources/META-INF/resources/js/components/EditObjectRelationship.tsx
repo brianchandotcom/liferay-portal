@@ -24,10 +24,10 @@ import {
 } from '../utils/locale';
 import {objectRelationshipTypes} from '../utils/objectRelationshipTypes';
 import {firstLetterUppercase} from '../utils/string';
+import Card from './Card/Card';
 import CustomSelect from './Form/CustomSelect/CustomSelect';
 import Input from './Form/Input';
 import InputLocalized from './Form/InputLocalized/InputLocalized';
-import Sheet from './Sheet';
 import {SidePanelForm, closeSidePanel, openToast} from './SidePanelContent';
 
 const HEADERS = new Headers({
@@ -113,7 +113,7 @@ export default function EditObjectRelationship({
 			readOnly={readOnly}
 			title={Liferay.Language.get('relationship')}
 		>
-			<Sheet title={Liferay.Language.get('basic-info')}>
+			<Card title={Liferay.Language.get('basic-info')}>
 				{isReverse && (
 					<ClayAlert
 						displayType="warning"
@@ -170,7 +170,7 @@ export default function EditObjectRelationship({
 					required
 					value={firstLetterUppercase(values.deletionType)}
 				/>
-			</Sheet>
+			</Card>
 		</SidePanelForm>
 	);
 }

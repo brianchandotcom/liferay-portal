@@ -19,27 +19,19 @@ export declare function openToast(options: {
 	message: string;
 	type?: 'danger' | 'success';
 }): void;
-export declare function Container({
-	children,
-	className,
-}: IContainerProps): JSX.Element;
-export declare function SidePanelContent({
+export default function SidePanelContent({
 	children,
 	className,
 	onSave,
 	readOnly,
 	title,
 }: IProps): JSX.Element;
-export declare namespace SidePanelContent {
-	var Container: typeof import('./SidePanelContent').Container;
-}
 export declare function SidePanelForm({
 	children,
 	onSubmit,
 	readOnly,
 	title,
 }: ISidePanelFormProps): JSX.Element;
-export default SidePanelContent;
 interface IContainerProps {
 	children: React.ReactNode;
 	className?: string;
@@ -54,3 +46,4 @@ interface IProps extends CommonProps {
 interface ISidePanelFormProps extends CommonProps {
 	onSubmit?: React.FormEventHandler<HTMLFormElement>;
 }
+export {};

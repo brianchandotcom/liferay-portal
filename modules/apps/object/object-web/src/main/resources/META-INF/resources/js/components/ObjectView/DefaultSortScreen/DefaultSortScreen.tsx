@@ -42,6 +42,7 @@ export function DefaultSortScreen() {
 	return (
 		<>
 			<ClayAlert
+				className="lfr-objects__side-panel-content-container"
 				displayType="info"
 				title={`${Liferay.Language.get('info')}:`}
 			>

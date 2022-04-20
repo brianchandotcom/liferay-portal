@@ -227,7 +227,7 @@
 	</tr>
 	<tr>
 		<td>VIEW_SEARCHABLE_SECTION_DISABLED</td>
-		<td>//div//h2[text()='Searchable']/..//label[contains(@class,'toggle-switch simple-toggle-switch disabled')]</td>
+		<td>//h3[(@class='lfr-objects__card-title') and text()='Searchable']/../..//label[contains(@class,'toggle-switch simple-toggle-switch disabled')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -237,7 +237,7 @@
 	</tr>
 	<tr>
 		<td>SEARCHABLE_SECTION_TITLE</td>
-		<td>//h2[contains (text(), 'Searchable')]</td>
+		<td>//h3[(@class='lfr-objects__card-title') and text()='Searchable']</td>
 		<td></td>
 	</tr>
 	<tr>

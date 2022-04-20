@@ -14,12 +14,13 @@
 
 import React from 'react';
 import './Card.scss';
-declare const Card: React.FC<React.HTMLAttributes<HTMLElement>> & {
-	Body: React.FC<ICardBodyProps>;
-	Header: React.FC<ICardHeaderProps>;
-};
-interface ICardBodyProps extends React.HTMLAttributes<HTMLElement> {}
-interface ICardHeaderProps extends React.HTMLAttributes<HTMLElement> {
+export default function Card({
+	children,
+	className,
+	title,
+	...otherProps
+}: IProps): JSX.Element;
+interface IProps extends React.HTMLAttributes<HTMLDivElement> {
 	title: string;
 }
-export default Card;
+export {};

@@ -26,6 +26,7 @@ import {
 	updateFieldSettings,
 } from '../utils/fieldSettings';
 import {defaultLanguageId, defaultLocale} from '../utils/locale';
+import Card from './Card/Card';
 import Input from './Form/Input';
 import InputLocalized from './Form/InputLocalized/InputLocalized';
 import Select from './Form/Select';
@@ -33,10 +34,9 @@ import ObjectFieldFormBase, {
 	ObjectFieldErrors,
 	useObjectFieldForm,
 } from './ObjectFieldFormBase';
-import Sheet from './Sheet';
+import {SidePanelForm, closeSidePanel, openToast} from './SidePanelContent';
 
 import './EditObjectField.scss';
-import {SidePanelForm, closeSidePanel, openToast} from './SidePanelContent';
 
 const locales: {label: string; symbol: string}[] = [];
 const languageLabels: string[] = [];
@@ -135,7 +135,7 @@ export default function EditObjectField({
 			readOnly={readOnly}
 			title={Liferay.Language.get('field')}
 		>
-			<Sheet title={Liferay.Language.get('basic-info')}>
+			<Card title={Liferay.Language.get('basic-info')}>
 				<InputLocalized
 					disabled={readOnly}
 					error={errors.label}
@@ -182,7 +182,7 @@ export default function EditObjectField({
 							/>
 						)}
 				</ObjectFieldFormBase>
-			</Sheet>
+			</Card>
 
 			{values.DBType !== 'Blob' && (
 				<SearchableContainer
@@ -222,7 +222,7 @@ function SearchableContainer({
 	}, [objectField.indexedLanguageId]);
 
 	return (
-		<Sheet title={Liferay.Language.get('searchable')}>
+		<Card title={Liferay.Language.get('searchable')}>
 			<ClayForm.Group>
 				<ClayToggle
 					disabled={disabled}
@@ -286,7 +286,7 @@ function SearchableContainer({
 					value={selectedLanguage}
 				/>
 			)}
-		</Sheet>
+		</Card>
 	);
 }
 

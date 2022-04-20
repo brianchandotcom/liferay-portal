@@ -104,9 +104,6 @@
 /portal/dom4j.jar
 /portal/hibernate-core.jar
 /portal/hikaricp.jar
-/portal/httpclient.jar
-/portal/httpcore.jar
-/portal/httpmime.jar
 /portal/isoparser.jar
 /portal/istack-commons-runtime.jar
 /portal/jabsorb.jar

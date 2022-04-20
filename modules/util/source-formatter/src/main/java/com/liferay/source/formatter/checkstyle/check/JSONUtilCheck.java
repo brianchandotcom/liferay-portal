@@ -302,20 +302,19 @@ public class JSONUtilCheck extends BaseChainedMethodCheck {
 			detailAST, true, TokenTypes.METHOD_CALL);
 
 		if (methodCallDetailASTList.size() == 1) {
-			for (DetailAST methodCallDetailAST : methodCallDetailASTList) {
-				DetailAST firstChildDetailAST =
-					methodCallDetailAST.getFirstChild();
+			DetailAST methodCallDetailAST = methodCallDetailASTList.get(0);
 
-				if ((firstChildDetailAST != null) &&
-					(firstChildDetailAST.getType() == TokenTypes.IDENT)) {
+			DetailAST firstChildDetailAST = methodCallDetailAST.getFirstChild();
 
-					String methodCallName = getMethodName(methodCallDetailAST);
+			if ((firstChildDetailAST != null) &&
+				(firstChildDetailAST.getType() == TokenTypes.IDENT)) {
 
-					if (_checkMethodReturnType(detailAST, methodCallName)) {
-						log(detailAST, _MSG_USE_JSON_UTIL_TO_STRING_2);
+				String methodCallName = getMethodName(methodCallDetailAST);
 
-						return;
-					}
+				if (_checkMethodReturnType(detailAST, methodCallName)) {
+					log(detailAST, _MSG_USE_JSON_UTIL_TO_STRING_2);
+
+					return;
 				}
 			}
 		}

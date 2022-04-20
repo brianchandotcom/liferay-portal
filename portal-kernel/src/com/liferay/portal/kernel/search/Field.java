@@ -199,6 +199,8 @@ public class Field implements Serializable {
 
 	public static final String VIEW_ACTION_ID = "viewActionId";
 
+	public static final String VISIBILITY_TYPE = "visibilityType";
+
 	public static String getLocalizedName(Locale locale, String name) {
 		if (locale == null) {
 			return name;

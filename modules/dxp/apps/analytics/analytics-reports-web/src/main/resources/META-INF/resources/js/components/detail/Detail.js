@@ -32,6 +32,7 @@ const TRAFFIC_CHANNELS = {
 
 export default function Detail({
 	currentPage,
+	featureFlag,
 	handleDetailPeriodChange,
 	loadingData,
 	onCurrentPageChange,
@@ -42,8 +43,6 @@ export default function Detail({
 	trafficSourcesDataProvider,
 	trafficVolumeDataProvider,
 }) {
-	const featureFlag = true;
-
 	const chartDispatch = useContext(ChartDispatchContext);
 
 	const storeDispatch = useContext(StoreDispatchContext);

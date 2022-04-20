@@ -27,6 +27,7 @@ import '../../css/analytics-reports-app.scss';
 
 export default function AnalyticsReports({
 	analyticsReportsDataURL,
+	featureFlag,
 	hoverOrFocusEventTriggered,
 	isPanelStateOpen,
 }) {
@@ -128,6 +129,7 @@ export default function AnalyticsReports({
 								<Navigation
 									author={data?.author}
 									canonicalURL={data?.canonicalURL}
+									featureFlag={featureFlag}
 									onSelectedLanguageClick={
 										handleSelectedLanguageClick
 									}

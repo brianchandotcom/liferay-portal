@@ -1,10 +1,9 @@
 @component-name = "portal-commerce"
 definition {
 
-	property osgi.module.configuration.file.names = "com.liferay.release.feature.flag.web.internal.configuration.ReleaseFeatureFlagConfiguration.config";
-	property osgi.module.configurations = "disabledReleaseFeatureFlags=[&quot;DISABLE_PRIVATE_LAYOUTS&quot;]";
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property private.pages.enabled = "true";
 	property testray.main.component.name = "Product Info Management";
 
 	setUp {
@@ -19,9 +18,10 @@ definition {
 	@priority = "3"
 	test AllowMultiplePriceEntriesInTheSamePromotion {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
-		property osgi.module.configuration.file.names = "com.liferay.commerce.price.list.configuration.CommercePriceEntryConfiguration.config:com.liferay.release.feature.flag.web.internal.configuration.ReleaseFeatureFlagConfiguration.config";
-		property osgi.module.configurations = "checkInterval=&quot;1&quot;:disabledReleaseFeatureFlags=[&quot;DISABLE_PRIVATE_LAYOUTS&quot;]";
+		property osgi.module.configuration.file.names = "com.liferay.commerce.price.list.configuration.CommercePriceEntryConfiguration.config";
+		property osgi.module.configurations = "checkInterval=&quot;1&quot;";
 		property portal.acceptance = "false";
+		property private.pages.enabled = "true";
 
 		// TODO COMMERCE-9089 Find alternative to having a pause to wait for a timed expiration and publication
 

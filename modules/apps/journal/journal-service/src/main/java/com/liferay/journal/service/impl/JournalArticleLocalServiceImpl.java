@@ -126,7 +126,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -8151,9 +8150,18 @@ public class JournalArticleLocalServiceImpl
 
 		String articleTitle = article.getTitle(serviceContext.getLanguageId());
 
-		String fromName = journalGroupServiceConfiguration.emailFromName();
+		String articleURL = JournalUtil.getJournalControlPanelLink(
+			article.getFolderId(), article.getGroupId(),
+			serviceContext.getLiferayPortletResponse());
+
 		String fromAddress =
 			journalGroupServiceConfiguration.emailFromAddress();
+
+		_populateSubscriptionSender(
+			article, articleURL, action, fromAddress,
+			journalGroupServiceConfiguration.emailFromName(),
+			journalGroupServiceConfiguration, serviceContext,
+			subscriptionSender);
 
 		String articleContent = StringPool.BLANK;
 
@@ -8181,13 +8189,6 @@ public class JournalArticleLocalServiceImpl
 
 		subscriptionSender.setContextAttribute(
 			"[$ARTICLE_CONTENT$]", articleContent, false);
-		subscriptionSender.setContextAttribute(
-			"[$ARTICLE_DIFFS$]", _getArticleDiffs(article, serviceContext),
-			false);
-
-		String articleURL = JournalUtil.getJournalControlPanelLink(
-			article.getFolderId(), article.getGroupId(),
-			serviceContext.getLiferayPortletResponse());
 
 		String folderName = StringPool.BLANK;
 
@@ -8205,30 +8206,12 @@ public class JournalArticleLocalServiceImpl
 			WorkflowConstants.getStatusLabel(article.getStatus()));
 
 		subscriptionSender.setContextAttributes(
-			"[$ARTICLE_ID$]", article.getArticleId(), "[$ARTICLE_TITLE$]",
-			articleTitle, "[$ARTICLE_URL$]", articleURL, "[$ARTICLE_VERSION$]",
-			article.getVersion(), "[$FOLDER_NAME$]", folderName,
-			"[$ARTICLE_STATUS$]", articleStatus);
+			"[$FOLDER_NAME$]", folderName, "[$ARTICLE_STATUS$]", articleStatus);
 
-		subscriptionSender.setContextCreatorUserPrefix("ARTICLE");
-		subscriptionSender.setCreatorUserId(article.getUserId());
 		subscriptionSender.setCurrentUserId(userId);
 		subscriptionSender.setEntryTitle(articleTitle);
-		subscriptionSender.setEntryURL(articleURL);
-		subscriptionSender.setFrom(fromAddress, fromName);
-		subscriptionSender.setHtmlFormat(true);
-		subscriptionSender.setLocalizedBodyMap(
-			_getLocalizedBodyMap(action, journalGroupServiceConfiguration));
-		subscriptionSender.setLocalizedSubjectMap(
-			_getLocalizedSubjectMap(action, journalGroupServiceConfiguration));
-		subscriptionSender.setMailId("journal_article", article.getId());
 		subscriptionSender.setNotificationType(_getNotificationType(action));
-		subscriptionSender.setPortletId(
-			PortletProviderUtil.getPortletId(
-				JournalArticle.class.getName(), PortletProvider.Action.EDIT));
 		subscriptionSender.setReplyToAddress(fromAddress);
-		subscriptionSender.setScopeGroupId(article.getGroupId());
-		subscriptionSender.setServiceContext(serviceContext);
 
 		subscriptionSender.flushNotificationsAsync();
 	}
@@ -8322,9 +8305,6 @@ public class JournalArticleLocalServiceImpl
 			return;
 		}
 
-		Company company = _companyLocalService.getCompany(
-			article.getCompanyId());
-
 		String fromName = journalGroupServiceConfiguration.emailFromName();
 		String fromAddress =
 			journalGroupServiceConfiguration.emailFromAddress();
@@ -8345,35 +8325,15 @@ public class JournalArticleLocalServiceImpl
 
 		SubscriptionSender subscriptionSender = new SubscriptionSender();
 
-		subscriptionSender.setContextAttribute(
-			"[$ARTICLE_DIFFS$]", _getArticleDiffs(article, serviceContext),
-			false);
+		_populateSubscriptionSender(
+			article, articleURL, emailType, fromAddress, fromName,
+			journalGroupServiceConfiguration, serviceContext,
+			subscriptionSender);
 
-		subscriptionSender.setClassName(JournalArticle.class.getName());
 		subscriptionSender.setClassPK(article.getPrimaryKey());
-		subscriptionSender.setCompanyId(company.getCompanyId());
-		subscriptionSender.setContextAttributes(
-			"[$ARTICLE_ID$]", article.getArticleId(), "[$ARTICLE_TITLE$]",
-			article.getTitle(serviceContext.getLanguageId()), "[$ARTICLE_URL$]",
-			articleURL, "[$ARTICLE_USER_NAME$]", article.getUserName(),
-			"[$ARTICLE_VERSION$]", article.getVersion());
-		subscriptionSender.setContextCreatorUserPrefix("ARTICLE");
-		subscriptionSender.setCreatorUserId(article.getUserId());
+		subscriptionSender.setContextAttribute(
+			"[$ARTICLE_USER_NAME$]", article.getUserName());
 		subscriptionSender.setEntryTitle(article.getTitle(user.getLocale()));
-		subscriptionSender.setEntryURL(articleURL);
-		subscriptionSender.setFrom(fromAddress, fromName);
-		subscriptionSender.setHtmlFormat(true);
-		subscriptionSender.setLocalizedBodyMap(
-			_getLocalizedBodyMap(emailType, journalGroupServiceConfiguration));
-		subscriptionSender.setLocalizedSubjectMap(
-			_getLocalizedSubjectMap(
-				emailType, journalGroupServiceConfiguration));
-		subscriptionSender.setMailId("journal_article", article.getId());
-		subscriptionSender.setPortletId(
-			PortletProviderUtil.getPortletId(
-				JournalArticle.class.getName(), PortletProvider.Action.EDIT));
-		subscriptionSender.setScopeGroupId(article.getGroupId());
-		subscriptionSender.setServiceContext(serviceContext);
 
 		subscriptionSender.addRuntimeSubscribers(toAddress, toName);
 
@@ -9241,6 +9201,39 @@ public class JournalArticleLocalServiceImpl
 		}
 
 		return urlTitleMap;
+	}
+
+	private void _populateSubscriptionSender(
+		JournalArticle article, String articleURL, String emailType,
+		String fromAddress, String fromName,
+		JournalGroupServiceConfiguration journalGroupServiceConfiguration,
+		ServiceContext serviceContext, SubscriptionSender subscriptionSender) {
+
+		subscriptionSender.setClassName(article.getModelClassName());
+		subscriptionSender.setCompanyId(article.getCompanyId());
+		subscriptionSender.setContextAttribute(
+			"[$ARTICLE_DIFFS$]", _getArticleDiffs(article, serviceContext),
+			false);
+		subscriptionSender.setContextAttributes(
+			"[$ARTICLE_ID$]", article.getArticleId(), "[$ARTICLE_TITLE$]",
+			article.getTitle(serviceContext.getLanguageId()), "[$ARTICLE_URL$]",
+			articleURL, "[$ARTICLE_VERSION$]", article.getVersion());
+		subscriptionSender.setContextCreatorUserPrefix("ARTICLE");
+		subscriptionSender.setCreatorUserId(article.getUserId());
+		subscriptionSender.setEntryURL(articleURL);
+		subscriptionSender.setFrom(fromAddress, fromName);
+		subscriptionSender.setHtmlFormat(true);
+		subscriptionSender.setLocalizedBodyMap(
+			_getLocalizedBodyMap(emailType, journalGroupServiceConfiguration));
+		subscriptionSender.setLocalizedSubjectMap(
+			_getLocalizedSubjectMap(
+				emailType, journalGroupServiceConfiguration));
+		subscriptionSender.setMailId("journal_article", article.getId());
+		subscriptionSender.setPortletId(
+			PortletProviderUtil.getPortletId(
+				JournalArticle.class.getName(), PortletProvider.Action.EDIT));
+		subscriptionSender.setScopeGroupId(article.getGroupId());
+		subscriptionSender.setServiceContext(serviceContext);
 	}
 
 	private String _replaceTempImages(JournalArticle article, String content)

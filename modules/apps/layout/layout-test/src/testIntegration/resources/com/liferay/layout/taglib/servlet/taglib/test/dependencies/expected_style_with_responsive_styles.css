@@ -1,0 +1,33 @@
+.lfr-layout-structure-item-container {
+	margin-bottom: var(--spacer-3,1rem) !important;
+	margin-left: var(--spacer-3,1rem) !important;
+	margin-right: var(--spacer-3,1rem) !important;
+	margin-top: var(--spacer-3,1rem) !important;
+}
+
+@media screen and (max-width: 991px) {
+	.lfr-layout-structure-item-container {
+		margin-bottom: var(--spacer-4,1.5rem) !important;
+		margin-left: var(--spacer-4,1.5rem) !important;
+		margin-right: var(--spacer-4,1.5rem) !important;
+		margin-top: var(--spacer-4,1.5rem) !important;
+	}
+}
+
+@media screen and (max-width: 767px) {
+	.lfr-layout-structure-item-container {
+		margin-bottom: var(--spacer-1,0.25rem) !important;
+		margin-left: var(--spacer-1,0.25rem) !important;
+		margin-right: var(--spacer-1,0.25rem) !important;
+		margin-top: var(--spacer-1,0.25rem) !important;
+	}
+}
+
+@media screen and (max-width: 575px) {
+	.lfr-layout-structure-item-container {
+		margin-bottom: var(--spacer-2,0.5rem) !important;
+		margin-left: var(--spacer-2,0.5rem) !important;
+		margin-right: var(--spacer-2,0.5rem) !important;
+		margin-top: var(--spacer-2,0.5rem) !important;
+	}
+}

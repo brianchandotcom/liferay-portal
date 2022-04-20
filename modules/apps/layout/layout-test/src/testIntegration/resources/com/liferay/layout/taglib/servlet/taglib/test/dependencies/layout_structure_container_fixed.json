@@ -1,0 +1,35 @@
+{
+	"deletedItems": [
+	],
+	"items": {
+		"container": {
+			"children": [
+			],
+			"config": {
+				"styles": {
+					"marginBottom": "1",
+					"marginLeft": "2",
+					"marginRight": "3",
+					"marginTop": "4"
+				},
+				"widthType": "fixed"
+			},
+			"itemId": "container",
+			"parentId": "root",
+			"type": "container"
+		},
+		"root": {
+			"children": [
+				"container"
+			],
+			"itemId": "root",
+			"parentId": "",
+			"type": "root"
+		}
+	},
+	"rootItems": {
+		"dropZone": "",
+		"main": "root"
+	},
+	"version": 1.1
+}

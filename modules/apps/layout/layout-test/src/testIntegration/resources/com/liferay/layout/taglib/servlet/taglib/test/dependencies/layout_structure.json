@@ -1,0 +1,55 @@
+{
+	"deletedItems": [
+	],
+	"items": {
+		"container": {
+			"children": [
+			],
+			"config": {
+				"styles": {
+					"backgroundColor": "warningColor",
+					"borderColor": "infoColor",
+					"borderRadius": "borderRadiusSm",
+					"borderWidth": "2",
+					"fontFamily": "fontFamilySansSerif",
+					"fontSize": "fontSizeSm",
+					"fontWeight": "fontWeightNormal",
+					"height": "200px",
+					"marginBottom": "1",
+					"marginLeft": "2",
+					"marginRight": "3",
+					"marginTop": "4",
+					"maxHeight": "201px",
+					"maxWidth": "202px",
+					"minHeight": "203px",
+					"minWidth": "204px",
+					"opacity": "50",
+					"overflow": "visible",
+					"paddingBottom": "7",
+					"paddingLeft": "8",
+					"paddingRight": "6",
+					"paddingTop": "5",
+					"textAlign": "center",
+					"width": "205px"
+				},
+				"widthType": "fluid"
+			},
+			"itemId": "container",
+			"parentId": "root",
+			"type": "container"
+		},
+		"root": {
+			"children": [
+				"container"
+			],
+			"itemId": "root",
+			"parentId": "",
+			"type": "root"
+		}
+	},
+	"rootItems": {
+		"dropZone": "",
+		"main": "root"
+	},
+	"version": 1.1
+}

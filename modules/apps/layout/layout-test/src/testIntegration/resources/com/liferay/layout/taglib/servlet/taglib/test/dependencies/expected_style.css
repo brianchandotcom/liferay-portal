@@ -1,0 +1,26 @@
+.lfr-layout-structure-item-container {
+	background-color: var(--warning) !important;
+	border-color: var(--info) !important;
+	border-radius: var(--border-radius-sm) !important;
+	border-style: solid; border-width: 2px !important;
+	font-family: var(--font-family-sans-serif) !important;
+	font-size: var(--font-size-sm) !important;
+	font-weight: var(--font-weight-normal) !important;
+	height: 200px !important;
+	margin-bottom: var(--spacer-1, 0.25rem) !important;
+	margin-left: var(--spacer-2, 0.5rem) !important;
+	margin-right: var(--spacer-3, 1rem) !important;
+	margin-top: var(--spacer-4, 1.5rem) !important;
+	max-height: 201px !important;
+	max-width: 202px !important;
+	min-height: 203px !important;
+	min-width: 204px !important;
+	opacity: 0.5 !important;
+	overflow: visible !important;
+	padding-bottom: var(--spacer-7, 6rem) !important;
+	padding-left: var(--spacer-8,7. 5rem) !important;
+	padding-right: var(--spacer-6, 4.5rem) !important;
+	padding-top: var(--spacer-5, 3rem) !important;
+	text-align: center !important;
+	width: 205px !important;
+}

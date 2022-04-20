@@ -120,6 +120,43 @@ definition {
 		PublicationsPermissions.assertEditorPermissions(publicationName = "Publication Name 2");
 	}
 
+	@priority = "3"
+	test ExplainEachRoleInInviteUsers {
+		JSONPublications.enablePublications();
+
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		PublicationsNavigator.gotoReviewChanges(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication Name");
+
+		Click(locator1 = "Icon#PLUS");
+
+		Click(
+			key_text = "Viewer",
+			locator1 = "Button#ANY_SECONDARY");
+
+		AssertTextEquals.assertPartialText(
+			key_publicationRole = "Viewer",
+			locator1 = "Publications#PUBLICATION_ROLE_BUTTON_HELP_TEXT",
+			value1 = "Viewers can view.");
+
+		AssertTextEquals.assertPartialText(
+			key_publicationRole = "Editor",
+			locator1 = "Publications#PUBLICATION_ROLE_BUTTON_HELP_TEXT",
+			value1 = "Editors can view and edit.");
+
+		AssertTextEquals.assertPartialText(
+			key_publicationRole = "Publisher",
+			locator1 = "Publications#PUBLICATION_ROLE_BUTTON_HELP_TEXT",
+			value1 = "Publishers can view, edit, and publish.");
+
+		AssertTextEquals.assertPartialText(
+			key_publicationRole = "Admin",
+			locator1 = "Publications#PUBLICATION_ROLE_BUTTON_HELP_TEXT",
+			value1 = "Admins can view, edit, publish, and invite other users.");
+	}
+
 	@priority = "5"
 	test InviteUserAsAdmin {
 		for (var userNumber : list "1,2") {

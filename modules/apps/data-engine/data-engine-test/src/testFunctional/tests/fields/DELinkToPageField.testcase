@@ -202,12 +202,12 @@ definition {
 
 		DERenderer.assertContentInLinktoPageField(
 			index = "1",
-			linkToPageContent = "Public Pages > Test Page Name",
+			linkToPageContent = "Pages > Test Page Name",
 			linkToPageFieldLabel = "Link to Page");
 
 		DERenderer.assertContentInLinktoPageField(
 			index = "2",
-			linkToPageContent = "Public Pages > Test Page Name",
+			linkToPageContent = "Pages > Test Page Name",
 			linkToPageFieldLabel = "Link to Page");
 	}
 
@@ -243,7 +243,7 @@ definition {
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
 		DERenderer.assertContentInLinktoPageField(
-			linkToPageContent = "Public Pages > Test Page Name",
+			linkToPageContent = "Pages > Test Page Name",
 			linkToPageFieldLabel = "Link to Page");
 	}
 

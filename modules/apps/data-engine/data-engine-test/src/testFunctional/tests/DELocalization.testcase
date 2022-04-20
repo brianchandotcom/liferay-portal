@@ -3593,7 +3593,7 @@ definition {
 
 		DERenderer.assertContentInLinktoPageField(
 			index = "1",
-			linkToPageContent = "Public Pages > Test Page Name 1",
+			linkToPageContent = "Pages > Test Page Name 1",
 			linkToPageFieldLabel = "Link to Page");
 
 		PortletEntry.changeLocale(locale = "zh-CN");
@@ -3604,7 +3604,7 @@ definition {
 
 		DERenderer.assertContentInLinktoPageField(
 			index = "1",
-			linkToPageContent = "Public Pages > Test Page Name 2",
+			linkToPageContent = "Pages > Test Page Name 2",
 			linkToPageFieldLabel = "网页链接");
 	}
 

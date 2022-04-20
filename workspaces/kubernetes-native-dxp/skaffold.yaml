@@ -40,16 +40,9 @@ deploy:
     - k8s/custom-rest-service/
     - k8s/cronjob/
     - k8s/common/
-portForward:
-  - resourceType: service
-    resourceName: ingress-nginx-controller
-    namespace: ingress-nginx
-    address: 0.0.0.0
-    port: 80
-    localPort: 8080
-  - resourceType: service
-    resourceName: ingress-nginx-controller
-    namespace: ingress-nginx
-    address: 0.0.0.0
-    port: 443
-    localPort: 8443
+    hooks:
+      after:
+      - host:
+          command: ["./darwin_patch.sh"]
+          os:
+          - darwin

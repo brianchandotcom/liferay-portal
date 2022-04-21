@@ -197,8 +197,9 @@ const SelectionControls = ({
 							<ManagementToolbar.Item className="nav-item-shrink">
 								<LinkOrButton
 									aria-label={
-										showDesignImprovements &&
-										Liferay.Language.get('clear')
+										showDesignImprovements
+											? Liferay.Language.get('clear')
+											: undefined
 									}
 									className="nav-link"
 									displayType="unstyled"
@@ -216,11 +217,14 @@ const SelectionControls = ({
 										onClearButtonClick(event);
 									}}
 									symbol={
-										showDesignImprovements && 'times-circle'
+										showDesignImprovements
+											? 'times-circle'
+											: undefined
 									}
 									title={
-										showDesignImprovements &&
-										Liferay.Language.get('clear')
+										showDesignImprovements
+											? Liferay.Language.get('clear')
+											: undefined
 									}
 								>
 									<span className="text-truncate-inline">

@@ -99,10 +99,11 @@ const FilterOrderControls = ({
 								<span
 									className="navbar-breakpoint-d-none"
 									title={
-										showDesignImprovements &&
-										Liferay.Language.get(
-											'show-filter-options'
-										)
+										showDesignImprovements
+											? Liferay.Language.get(
+													'show-filter-options'
+											  )
+											: undefined
 									}
 								>
 									<ClayIcon symbol="filter" />

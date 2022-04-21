@@ -198,7 +198,7 @@ export default function InstanceIconConfiguration({
 													}
 												>
 													<ClayIcon
-														spritemap={`/o/icons/${iconPackName}.svg?${referenceTime}`}
+														spritemap={`/o/icons/pack/${iconPackName}.svg?${referenceTime}`}
 														symbol={icon.name}
 													/>
 

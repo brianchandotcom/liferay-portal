@@ -25,6 +25,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ page import="com.liferay.asset.vocabulary.item.selector.web.internal.constants.AssetVocabularyItemSelectorWebKeys" %><%@
 page import="com.liferay.asset.vocabulary.item.selector.web.internal.display.context.SelectAssetVocabulariesManagementToolbarDisplayContext" %><%@
 page import="com.liferay.asset.vocabulary.item.selector.web.internal.display.context.SelectAssetVocabularyItemSelectorDisplayContext" %><%@
+page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %>
 
 <liferay-frontend:defineObjects />

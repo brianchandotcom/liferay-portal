@@ -34,6 +34,20 @@ SelectAssetVocabularyItemSelectorDisplayContext selectAssetVocabularyItemSelecto
 			keyProperty="vocabularyId"
 			modelVar="assetVocabulary"
 		>
+
+			<%
+			row.setData(
+				HashMapBuilder.<String, Object>put(
+					"group-id", String.valueOf(assetVocabulary.getGroupId())
+				).put(
+					"title", assetVocabulary.getTitle(locale)
+				).put(
+					"uuid", assetVocabulary.getUuid()
+				).put(
+					"vocabulary-id", String.valueOf(assetVocabulary.getVocabularyId())
+				).build());
+			%>
+
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-expand table-cell-minw-200 table-title"
 				name="vocabularies"

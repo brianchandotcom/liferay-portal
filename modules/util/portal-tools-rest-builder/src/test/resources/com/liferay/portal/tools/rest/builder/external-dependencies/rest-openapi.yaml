@@ -1,0 +1,22 @@
+components:
+    schemas:
+        ExternalReferenceElement1:
+            description:
+                Component 1 to test the schema import
+            properties:
+                name:
+                    type: string
+                value:
+                    type: string
+        ExternalReferenceElement2:
+            description:
+                Component 2 to test the schema import
+            properties:
+                name:
+                    type: string
+                value:
+                    type: string
+info:
+    title: ""
+    version: "1.0.0"
+openapi: "3.0.1"

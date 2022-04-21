@@ -61,6 +61,8 @@ public class RESTBuilderTest {
 		_assertResourceFilesExist(filesPath, "Folder");
 		_assertResourceFilesExist(filesPath, "Test");
 
+		_assertDtoFileExist(filesPath, "UnreferencedSchemaComponent");
+
 		_assertPropertiesWithHyphens(
 			filesPath, "Test", "property-with-hyphens");
 		_assertPropertiesWithXML(filesPath, "Test", "xmlProperty");
@@ -78,6 +80,16 @@ public class RESTBuilderTest {
 		FileUtils.deleteDirectory(sampleImplDir);
 
 		Assert.assertFalse(sampleImplDir.exists());
+	}
+
+	private void _assertDtoFileExist(String filesPath, String resourceName) {
+		File dtoFolderFile = new File(
+			_getResourcePath(
+				filesPath,
+				"/sample-api/src/main/java/com/example/sample/dto/v1_0_0/",
+				resourceName, ".java"));
+
+		Assert.assertTrue(dtoFolderFile.exists());
 	}
 
 	private void _assertForcePredictableOperationId(String filesPath)
@@ -171,14 +183,6 @@ public class RESTBuilderTest {
 
 		Assert.assertTrue(propertiesFile.exists());
 
-		File dtoFolderFile = new File(
-			_getResourcePath(
-				filesPath,
-				"/sample-api/src/main/java/com/example/sample/dto/v1_0_0/",
-				resourceName, ".java"));
-
-		Assert.assertTrue(dtoFolderFile.exists());
-
 		File resourceFolderFile = new File(
 			_getResourcePath(
 				filesPath,
@@ -186,6 +190,8 @@ public class RESTBuilderTest {
 				resourceName, "Resource.java"));
 
 		Assert.assertTrue(resourceFolderFile.exists());
+
+		_assertDtoFileExist(filesPath, resourceName);
 	}
 
 	private String _getDependenciesPath() {

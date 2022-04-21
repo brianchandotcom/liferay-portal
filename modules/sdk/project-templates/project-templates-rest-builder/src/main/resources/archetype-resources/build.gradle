@@ -4,8 +4,6 @@ subprojects {
 	resolutionStrategy.force 'com.liferay:com.liferay.portal.vulcan.api:6.9.0'
 #elseif (${liferayVersion.startsWith("7.3")})
 	resolutionStrategy.force 'com.liferay:com.liferay.portal.vulcan.api:7.19.2'
-#else
-	resolutionStrategy.force 'com.liferay:com.liferay.portal.vulcan.api:@com.liferay.portal.vulcan.api.version@'
 #end
 	}
 }

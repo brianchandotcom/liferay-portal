@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Component;
 	property = "frontend.data.set.name=" + FDSSampleFDSNames.CUSTOMIZED,
 	service = FDSView.class
 )
-public class CustomizedSampleListFDSView extends BaseListFDSView {
+public class CustomizedListFDSView extends BaseListFDSView {
 
 	@Override
 	public String getDescription() {

@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "frontend.data.set.name=" + FDSSampleFDSNames.MINIMUM,
 	service = FDSView.class
 )
-public class MinimumSampleTableFDSView extends BaseTableFDSView {
+public class MinimumTableFDSView extends BaseTableFDSView {
 
 	@Override
 	public FDSTableSchema getFDSTableSchema(Locale locale) {

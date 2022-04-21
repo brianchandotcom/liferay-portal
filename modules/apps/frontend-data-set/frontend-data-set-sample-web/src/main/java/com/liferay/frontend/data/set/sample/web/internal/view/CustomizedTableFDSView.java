@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "frontend.data.set.name=" + FDSSampleFDSNames.CUSTOMIZED,
 	service = FDSView.class
 )
-public class CustomizedSampleTableFDSView extends BaseTableFDSView {
+public class CustomizedTableFDSView extends BaseTableFDSView {
 
 	@Override
 	public FDSTableSchema getFDSTableSchema(Locale locale) {

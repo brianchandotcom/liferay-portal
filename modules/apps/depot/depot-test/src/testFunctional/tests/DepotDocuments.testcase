@@ -138,7 +138,7 @@ definition {
 
 		PortletEntry.selectAll();
 
-		Click(locator1 = "Button#MOVE_TO_RECYCLE_BIN");
+		Click(locator1 = "Icon#MOVE_TO_RECYCLE_BIN");
 
 		Alert.viewSuccessMessage();
 

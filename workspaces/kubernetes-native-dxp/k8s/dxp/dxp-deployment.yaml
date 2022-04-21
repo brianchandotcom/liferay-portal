@@ -52,6 +52,8 @@ spec:
               value: zulu11
             - name: LIFERAY_JPDA_ENABLED
               value: "true"
+            - name: LIFERAY_COMPANY_PERIOD_SECURITY_PERIOD_STRANGERS_PERIOD_VERIFY
+              value: "false"
             - name: LIFERAY_WEB_PERIOD_SERVER_PERIOD_PROTOCOL
               value: https
             - name: LIFERAY_MODULE_PERIOD_FRAMEWORK_PERIOD_SYSTEM_PERIOD_PACKAGES_PERIOD_EXTRA

@@ -24,8 +24,7 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlParser;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -33,21 +32,22 @@ import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
-import org.mockito.Mock;
-
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.mockito.Mockito;
 
 /**
  * @author Marcellus Tavares
  */
-@PrepareForTest({PortalClassLoaderUtil.class, ResourceBundleUtil.class})
-@RunWith(PowerMockRunner.class)
 public class NumericDDMFormFieldTemplateContextContributorTest
 	extends BaseDDMFormFieldTypeSettingsTestCase {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	@Override
@@ -329,16 +329,14 @@ public class NumericDDMFormFieldTemplateContextContributorTest
 			_numericDDMFormFieldTemplateContextContributor, "_htmlParser",
 			_htmlParser);
 
-		when(
+		Mockito.when(
 			_htmlParser.extractText(StringPool.BLANK)
 		).thenReturn(
 			StringPool.BLANK
 		);
 	}
 
-	@Mock
-	private HtmlParser _htmlParser;
-
+	private final HtmlParser _htmlParser = Mockito.mock(HtmlParser.class);
 	private final Locale _locale = LocaleUtil.US;
 	private final NumericDDMFormFieldTemplateContextContributor
 		_numericDDMFormFieldTemplateContextContributor =

@@ -419,6 +419,32 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 	}
 
 	@Test
+	public void testImportExportLayoutPageTemplateEntryFragmentImageFieldImageMappedAndLinkMapped()
+		throws Exception {
+
+		_addImageFragmentEntry();
+
+		Map<String, String> numberValuesMap = HashMapBuilder.put(
+			"CLASS_PK",
+			() -> {
+				JournalArticle journalArticle = _addJournalArticle(
+					_group1.getGroupId());
+
+				return String.valueOf(journalArticle.getResourcePrimKey());
+			}
+		).build();
+
+		File expectedFile = _generateZipFile(
+			"fragment/image_field/image_mapped_and_link_mapped/expected",
+			numberValuesMap, null);
+		File inputFile = _generateZipFile(
+			"fragment/image_field/image_mapped_and_link_mapped/input",
+			numberValuesMap, null);
+
+		_validateImportExport(expectedFile, inputFile);
+	}
+
+	@Test
 	public void testImportExportLayoutPageTemplateEntryFragmentTextFieldFragmentAvailableMappedContentAvailable()
 		throws Exception {
 

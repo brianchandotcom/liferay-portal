@@ -14,6 +14,7 @@
 
 package com.liferay.oauth2.application.factory.dynamicinclude;
 
+import com.liferay.oauth2.application.factory.OAuth2ApplicationFactoryConstants;
 import com.liferay.oauth2.application.factory.user.agent.Oauth2ApplicationFactoryUserAgent;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
@@ -128,7 +129,7 @@ public class OAuth2ApplicationsDynamicInclude implements DynamicInclude {
 	}
 
 	private static final String _SUBDOMAIN =
-		Oauth2ApplicationFactoryUserAgent.USER_AGENT_SUBDOMAIN;
+		OAuth2ApplicationFactoryConstants.USER_AGENT_SUBDOMAIN;
 
 	private final OAuth2ApplicationLocalService _oAuth2ApplicationLocalService;
 	private final Portal _portal;

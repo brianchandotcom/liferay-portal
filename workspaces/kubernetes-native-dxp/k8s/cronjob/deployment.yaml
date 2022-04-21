@@ -19,23 +19,35 @@ spec:
                 memory: "100Mi"
                 cpu: "10m"
             env:
-              - name: CLIENT_ID
+              - name: LIFERAY_OAUTH2_HEADLESS_SERVER_CLIENT_ID
                 valueFrom:
                   configMapKeyRef:
-                    key: client_id
-                    name: cronjob.headless.server.oauth2.liferay.com
-              - name: CLIENT_SECRET
+                    key: liferay_oauth2_headless_server_client_id
+                    name: cronjob.extension.liferay.com
+              - name: LIFERAY_OAUTH2_HEADLESS_SERVER_CLIENT_SECRET
                 valueFrom:
                   configMapKeyRef:
-                    key: client_secret
-                    name: cronjob.headless.server.oauth2.liferay.com
-              - name: SERVICE_URI
+                    key: liferay_oauth2_headless_server_client_secret
+                    name: cronjob.extension.liferay.com
+              - name: LIFERAY_OAUTH2_AUTHORIZATION_URI
                 valueFrom:
                   configMapKeyRef:
-                    key: service_uri
-                    name: cronjob.headless.server.oauth2.liferay.com
-              - name: TOKEN_URI
+                    key: liferay_oauth2_authorization_uri
+                    name: cronjob.extension.liferay.com
+              - name: LIFERAY_OAUTH2_INTROSPECTION_URI
                 valueFrom:
                   configMapKeyRef:
-                    key: token_uri
-                    name: cronjob.headless.server.oauth2.liferay.com
+                    key: liferay_oauth2_introspection_uri
+                    name: cronjob.extension.liferay.com
+              - name: LIFERAY_OAUTH2_REDIRECT_URIS
+                valueFrom:
+                  configMapKeyRef:
+                    key: liferay_oauth2_redirect_uris
+                    name: cronjob.extension.liferay.com
+              - name: LIFERAY_OAUTH2_TOKEN_URI
+                valueFrom:
+                  configMapKeyRef:
+                    key: liferay_oauth2_token_uri
+                    name: cronjob.extension.liferay.com
+              - name: LIFERAY_SERVICE_DOMAINS
+                value: dxp.localdev.me

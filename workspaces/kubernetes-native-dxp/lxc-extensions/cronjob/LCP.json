@@ -1,0 +1,12 @@
+{
+  "kind": "Deployment",
+  "id": "cronjob",
+  "cpu": 0.25,
+  "scale": 1,
+  "memory": 50,
+  "environments": {
+    "infra": {
+      "deploy": false
+    }
+  }
+}

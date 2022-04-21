@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: customrestservice
+  labels:
+    app: customrestservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: customrestservice
+  template:
+    metadata:
+      labels:
+        app: customrestservice
+    spec:
+      containers:
+      - name: customrestservice
+        image: customrestservice
+        imagePullPolicy: Never
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 8081
+        - containerPort: 8000
+        env:
+          - name: LIFERAY_OAUTH2_USER_AGENT_CLIENT_ID
+            valueFrom:
+              configMapKeyRef:
+                key: liferay_oauth2_user_agent_client_id
+                name: customrestservice.extension.liferay.com
+          - name: LIFERAY_OAUTH2_AUTHORIZATION_URI
+            valueFrom:
+              configMapKeyRef:
+                key: liferay_oauth2_authorization_uri
+                name: customrestservice.extension.liferay.com
+          - name: LIFERAY_OAUTH2_INTROSPECTION_URI
+            valueFrom:
+              configMapKeyRef:
+                key: liferay_oauth2_introspection_uri
+                name: customrestservice.extension.liferay.com
+          - name: LIFERAY_OAUTH2_REDIRECT_URIS
+            valueFrom:
+              configMapKeyRef:
+                key: liferay_oauth2_redirect_uris
+                name: customrestservice.extension.liferay.com
+          - name: LIFERAY_OAUTH2_TOKEN_URI
+            valueFrom:
+              configMapKeyRef:
+                key: liferay_oauth2_token_uri
+                name: customrestservice.extension.liferay.com
+          - name: LIFERAY_SERVICE_DOMAINS
+            value: dxp.localdev.me

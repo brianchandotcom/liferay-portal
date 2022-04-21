@@ -15,22 +15,22 @@ spec:
               number: 80
         path: /
         pathType: Prefix
-  - host: custom-rest-service.localdev.me
+  - host: customrestservice.localdev.me
     http:
       paths:
       - backend:
           service:
-            name: custom-rest-service
+            name: customrestservice
             port:
               number: 80
         path: /
         pathType: Prefix
-  - host: remote-app-a.localdev.me
+  - host: liferayhelloworld.localdev.me
     http:
       paths:
       - backend:
           service:
-            name: remote-app-a
+            name: liferayhelloworld
             port:
               number: 80
         path: /
@@ -38,5 +38,5 @@ spec:
   tls:
   - hosts:
     - dxp.localdev.me
-    - custom-rest-service.localdev.me
-    - remote-app-a.localdev.me
+    - customrestservice.localdev.me
+    - liferayhelloworld.localdev.me

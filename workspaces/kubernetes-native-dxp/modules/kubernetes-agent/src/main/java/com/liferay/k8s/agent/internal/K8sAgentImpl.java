@@ -52,6 +52,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Predicate;
 
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
@@ -141,34 +142,64 @@ public class K8sAgentImpl implements K8sAgent {
 
 	@Override
 	public void createOrUpdateConfigMap(
-		Map<String, String> properties, String name,
-		Map<String, String> labels) {
+		Map<String, String> data, Map<String, String> labels,
+		String name) {
 
-		ConfigMap configMap = new ConfigMapBuilder().withNewMetadata(
-		).withName(
-			name
-		).withLabels(
-			labels
-		).endMetadata(
-		).addToData(
-			properties
-		).build();
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(StringBundler.concat("Creating ", configMap));
-		}
-
-		configMap = _kubernetesClient.configMaps(
+		ConfigMap configMap = _kubernetesClient.configMaps(
 		).inNamespace(
 			_k8sAgentConfiguration.namespace()
 		).withName(
 			name
-		).createOrReplace(
-			configMap
-		);
+		).get();
 
-		if (_log.isDebugEnabled()) {
-			_log.debug(StringBundler.concat("Created ", configMap));
+		if (configMap == null) {
+			configMap = new ConfigMapBuilder().withNewMetadata(
+			).withNamespace(
+				_k8sAgentConfiguration.namespace()
+			).withName(
+				name
+			).withLabels(
+				labels
+			).endMetadata(
+			).addToData(
+				data
+			).build();
+
+			configMap = _kubernetesClient.configMaps(
+			).withName(
+				name
+			).createOrReplace(
+				configMap
+			);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(StringBundler.concat("Created ", configMap));
+			}
+		}
+		else {
+			Map<String,String> currentData = configMap.getData();
+
+			ObjectMeta metadata = configMap.getMetadata();
+			Map<String, String> currentLabels = metadata.getLabels();
+
+			if (!Objects.equals(currentData, data) ||
+				!Objects.equals(currentLabels, labels)) {
+
+				currentData.putAll(data);
+				currentLabels.putAll(labels);
+
+				configMap = _kubernetesClient.configMaps(
+				).withName(
+					name
+				).createOrReplace(
+					configMap
+				);
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(StringBundler.concat("Updated ", configMap));
+				}
+			}
+
 		}
 	}
 
@@ -188,15 +219,49 @@ public class K8sAgentImpl implements K8sAgent {
 
 	@Override
 	public void deleteConfigMap(String name) {
-		_kubernetesClient.configMaps(
+		ConfigMap configMap = _kubernetesClient.configMaps(
 		).inNamespace(
 			_k8sAgentConfiguration.namespace()
 		).withName(
 			name
-		).delete();
+		).get();
 
-		if (_log.isDebugEnabled()) {
-			_log.debug(StringBundler.concat("Delted ", name));
+		if (configMap != null) {
+			_kubernetesClient.configMaps(
+			).delete(
+				configMap
+			);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(StringBundler.concat("Deleted ", name));
+			}
+		}
+	}
+
+	@Override
+	public void deleteConfigMapByLabels(
+		String name, Predicate<Map<String, String>> predicate) {
+
+		ConfigMap configMap = _kubernetesClient.configMaps(
+		).inNamespace(
+			_k8sAgentConfiguration.namespace()
+		).withName(
+			name
+		).get();
+
+		if (configMap != null) {
+			ObjectMeta objectMeta = configMap.getMetadata();
+
+			if (predicate.test(objectMeta.getLabels())) {
+				_kubernetesClient.configMaps(
+				).delete(
+					configMap
+				);
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(StringBundler.concat("Delted ", name));
+				}
+			}
 		}
 	}
 

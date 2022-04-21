@@ -128,7 +128,7 @@ $ ./create-certificate.sh *.localdev.me
 Add the certificate to Minikube by executing:
 
 ```bash
-$ kubectl -n kube-system create secret tls mkcert --key \*.localdev.me.key --cert \*.localdev.me.crt
+$ kubectl -n kube-system create secret tls mkcert --key tls/localdev.me.key --cert tls/localdev.me.crt
 ```
 
 Configure ingress addon
@@ -166,6 +166,6 @@ Since the certificate is a wildcard, as long as all services are sub-domains mat
 ```bash
 kubectl create ingress common-ingress --class=nginx \
 	--rule="dxp.localdev.me/*=dxp-service:80,tls" \
-	--rule="custom-rest-service.localdev.me/*=custom-rest-service:80,tls" \
+	--rule="customrestservice.localdev.me/*=customrestservice:80,tls" \
 	--rule="remote-app-a.localdev.me/*=remote-app-a:80,tls"
 ```

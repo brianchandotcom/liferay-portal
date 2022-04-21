@@ -39,7 +39,7 @@
     "GOOGLE_OIDC_CLIENT_SECRET": "@GOOGLE_OIDC_CLIENT_SECRET",
     "LCP_PROJECT_LIFERAY_CLUSTER_ENABLED": "true",
     "LIFERAY_JPDA_ENABLED": "true",
-    "LIFERAY_JVM_OPTS": "-Xms2048m -Xmx6144m",
+    "LIFERAY_JVM_OPTS": "-Xms2048m -Xmx6144m --add-opens=jdk.naming.dns/com.sun.jndi.dns=java.naming",
     "LIFERAY_MODULE_PERIOD_FRAMEWORK_PERIOD_PROPERTIES_PERIOD_ORG_PERIOD_APACHE_PERIOD_FELIX_PERIOD_CONFIGADMIN_PERIOD_PLUGIN_PERIOD_INTERPOLATION_PERIOD_SECRETSDIR":
       "/opt/liferay/osgi/configs,/var/run/secrets/kubernetes.io/serviceaccount"
   },

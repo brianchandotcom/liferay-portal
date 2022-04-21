@@ -15,6 +15,7 @@
 package com.liferay.oauth2.application.factory.user.agent;
 
 import com.liferay.k8s.agent.K8sAgent;
+import com.liferay.oauth2.application.factory.OAuth2ApplicationFactoryConstants;
 import com.liferay.oauth2.application.factory.user.agent.configuration.v1.OAuth2ApplicationUserAgentConfiguration;
 import com.liferay.oauth2.provider.constants.ClientProfile;
 import com.liferay.oauth2.provider.constants.GrantType;
@@ -63,9 +64,6 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true
 )
 public class Oauth2ApplicationFactoryUserAgent {
-
-	public static final String USER_AGENT_SUBDOMAIN =
-		".user.agent.oauth2.liferay.com";
 
 	@Activate
 	public Oauth2ApplicationFactoryUserAgent(
@@ -150,28 +148,32 @@ public class Oauth2ApplicationFactoryUserAgent {
 
 		_k8sAgent.createOrUpdateConfigMap(
 			HashMapBuilder.put(
-				"authorization_uri",
+				"liferay_oauth2_authorization_uri",
 				serviceAddress.concat("/o/oauth2/authorize")
 			).put(
-				"client_id", oAuth2Application.getClientId()
-			).put(
-				"introspection_uri",
+				"liferay_oauth2_introspection_uri",
 				serviceAddress.concat("/o/oauth2/introspect")
 			).put(
-				"redirect_uris",
+				"liferay_oauth2_redirect_uris",
 				StringUtil.merge(redirectURIsList, StringPool.SPACE)
 			).put(
-				"scopes",
-				StringUtil.merge(scopeAliasesList, StringPool.SPACE)
-			).put(
-				"service_uri", serviceAddress
-			).put(
-				"token_uri",
+				"liferay_oauth2_token_uri",
 				serviceAddress.concat("/o/oauth2/token")
+			).put(
+				"liferay_oauth2_user_agent_client_id",
+				oAuth2Application.getClientId()
+			).put(
+				"liferay_oauth2_user_agent_scopes",
+				StringUtil.merge(scopeAliasesList, StringPool.SPACE)
 			).build(),
-			_getName(),
-			Collections.singletonMap(
-				"extension", _oAuth2ApplicationUserAgentConfiguration.name()));
+			HashMapBuilder.put(
+				"extension", _oAuth2ApplicationUserAgentConfiguration.name()
+			).put(
+				OAuth2ApplicationFactoryConstants.
+					USER_AGENT_SUBDOMAIN.substring(1),
+				"true"
+			).build(),
+			_getConfigMapName());
 
 		_oAuth2Application = oAuth2Application;
 	}
@@ -184,14 +186,26 @@ public class Oauth2ApplicationFactoryUserAgent {
 			_oAuth2ApplicationLocalService.deleteOAuth2Application(
 				_oAuth2Application);
 
-			_k8sAgent.deleteConfigMap(_getName());
+			_k8sAgent.deleteConfigMapByLabels(
+				_getConfigMapName(),
+				labels -> !labels.containsKey(
+					OAuth2ApplicationFactoryConstants.
+						HEADLESS_SERVER_SUBDOMAIN.substring(1)
+				)
+			);
 		}
+	}
+
+	private String _getConfigMapName() {
+		return StringBundler.concat(
+			_oAuth2ApplicationUserAgentConfiguration.name(),
+			OAuth2ApplicationFactoryConstants.EXTENSION_SUBDOMAIN);
 	}
 
 	private String _getName() {
 		return StringBundler.concat(
 			_oAuth2ApplicationUserAgentConfiguration.name(),
-			USER_AGENT_SUBDOMAIN);
+			OAuth2ApplicationFactoryConstants.USER_AGENT_SUBDOMAIN);
 	}
 
 	private OAuth2Application _getOrAddOAuth2Application(

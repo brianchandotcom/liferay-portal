@@ -31,6 +31,7 @@ import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 import com.liferay.k8s.agent.K8sAgent;
+import com.liferay.oauth2.application.factory.OAuth2ApplicationFactoryConstants;
 import com.liferay.oauth2.application.factory.headless.server.configuration.v1.Oauth2ApplicationHeadlessServerConfiguration;
 import com.liferay.oauth2.provider.constants.ClientProfile;
 import com.liferay.oauth2.provider.constants.GrantType;
@@ -74,9 +75,6 @@ import com.liferay.portal.util.PropsValues;
 	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true
 )
 public class Oauth2ApplicationFactoryHeadlessServer {
-
-	public static final String HEADLESS_SERVER_SUBDOMAIN =
-		"headless.server.oauth2.liferay.com";
 
 	@Activate
 	public Oauth2ApplicationFactoryHeadlessServer(
@@ -159,31 +157,36 @@ public class Oauth2ApplicationFactoryHeadlessServer {
 
 		_k8sAgent.createOrUpdateConfigMap(
 			HashMapBuilder.put(
-				"authorization_uri",
+				"liferay_oauth2_authorization_uri",
 				serviceAddress.concat("/o/oauth2/authorize")
 			).put(
-				"client_id", oAuth2Application.getClientId()
+				"liferay_oauth2_headless_server_client_id",
+				oAuth2Application.getClientId()
 			).put(
-				"client_secret", oAuth2Application.getClientSecret()
+				"liferay_oauth2_headless_server_client_secret",
+				oAuth2Application.getClientSecret()
 			).put(
-				"introspection_uri",
-				serviceAddress.concat("/o/oauth2/introspect")
-			).put(
-				"redirect_uris",
-				StringUtil.merge(redirectURIsList, StringPool.SPACE)
-			).put(
-				"scopes",
+				"liferay_oauth2_headless_server_scopes",
 				StringUtil.merge(scopeAliasesList, StringPool.SPACE)
 			).put(
-				"service_uri", serviceAddress
+				"liferay_oauth2_introspection_uri",
+				serviceAddress.concat("/o/oauth2/introspect")
 			).put(
-				"token_uri",
+				"liferay_oauth2_redirect_uris",
+				StringUtil.merge(redirectURIsList, StringPool.SPACE)
+			).put(
+				"liferay_oauth2_token_uri",
 				serviceAddress.concat("/o/oauth2/token")
 			).build(),
-			_getName(),
-			Collections.singletonMap(
+			HashMapBuilder.put(
 				"extension",
-				_oAuth2ApplicationHeadlessServerConfiguration.name()));
+				_oAuth2ApplicationHeadlessServerConfiguration.name()
+			).put(
+				OAuth2ApplicationFactoryConstants.
+					HEADLESS_SERVER_SUBDOMAIN.substring(1),
+				"true"
+			).build(),
+			_getConfigMapName());
 
 		_oAuth2Application = oAuth2Application;
 	}
@@ -196,20 +199,72 @@ public class Oauth2ApplicationFactoryHeadlessServer {
 			_oAuth2ApplicationLocalService.deleteOAuth2Application(
 				_oAuth2Application);
 
-			_k8sAgent.deleteConfigMap(_getName());
+			_k8sAgent.deleteConfigMapByLabels(
+				_getConfigMapName(),
+				labels -> !labels.containsKey(
+					OAuth2ApplicationFactoryConstants.
+						USER_AGENT_SUBDOMAIN.substring(1)
+				)
+			);
 		}
+	}
+
+	private User _addOrUpdateServiceUser(
+			Company company, ServiceContext serviceContext)
+		throws PortalException {
+
+		User user = _userLocalService.getDefaultUser(company.getCompanyId());
+
+		String password = OAuth2SecureRandomGenerator.
+			generateClientSecret();
+
+		Date birthdayDate = DateUtil.newDate();
+
+		Calendar calendar = CalendarFactoryUtil.getCalendar();
+
+		calendar.setTime(birthdayDate);
+
+		User serviceUser = _userLocalService.addOrUpdateUser(
+			_getName(), user.getUserId(), user.getCompanyId(), false, password,
+			password, false,
+			_oAuth2ApplicationHeadlessServerConfiguration.name(),
+			_getEmailAddress(), company.getLocale(), _getFirstName(), null,
+			"Service Account", 0, 0, false, calendar.get(Calendar.MONTH),
+			calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.YEAR),
+			null, false, serviceContext);
+
+		serviceUser = _userLocalService.updateAgreedToTermsOfUse(
+			serviceUser.getUserId(), true);
+		serviceUser = _userLocalService.updateLockout(serviceUser, true);
+		serviceUser = _userLocalService.updateStatus(
+			serviceUser.getUserId(), WorkflowConstants.STATUS_APPROVED,
+			serviceContext);
+
+		return serviceUser;
+	}
+
+	private String _getFirstName() {
+		return StringBundler.concat(
+			"(", _oAuth2ApplicationHeadlessServerConfiguration.name(), ")");
+	}
+
+	private String _getConfigMapName() {
+		return StringBundler.concat(
+			_oAuth2ApplicationHeadlessServerConfiguration.name(),
+			OAuth2ApplicationFactoryConstants.EXTENSION_SUBDOMAIN);
 	}
 
 	private String _getEmailAddress() {
 		return StringBundler.concat(
 			_oAuth2ApplicationHeadlessServerConfiguration.name(), "@",
-			HEADLESS_SERVER_SUBDOMAIN);
+			OAuth2ApplicationFactoryConstants.
+				HEADLESS_SERVER_SUBDOMAIN.substring(1));
 	}
 
 	private String _getName() {
 		return StringBundler.concat(
-			_oAuth2ApplicationHeadlessServerConfiguration.name(), ".",
-			HEADLESS_SERVER_SUBDOMAIN);
+			_oAuth2ApplicationHeadlessServerConfiguration.name(),
+			OAuth2ApplicationFactoryConstants.HEADLESS_SERVER_SUBDOMAIN);
 	}
 
 	private OAuth2Application _getOrAddOAuth2Application(
@@ -279,41 +334,6 @@ public class Oauth2ApplicationFactoryHeadlessServer {
 
 		return _oAuth2ApplicationLocalService.updateIcon(
 			oAuth2Application.getOAuth2ApplicationId(), inputStream);
-	}
-
-	private User _addOrUpdateServiceUser(
-			Company company, ServiceContext serviceContext)
-		throws PortalException {
-
-		User user = _userLocalService.getDefaultUser(company.getCompanyId());
-
-		String password = OAuth2SecureRandomGenerator.
-			generateClientSecret();
-
-		Date birthdayDate = DateUtil.newDate();
-
-		Calendar calendar = CalendarFactoryUtil.getCalendar();
-
-		calendar.setTime(birthdayDate);
-
-		User serviceUser = _userLocalService.addOrUpdateUser(
-			_getName(), user.getUserId(), user.getCompanyId(), false, password,
-			password, false, _getName(), _getEmailAddress(),
-			company.getLocale(),
-			_oAuth2ApplicationHeadlessServerConfiguration.name(), null,
-			HEADLESS_SERVER_SUBDOMAIN, 0, 0, false,
-			calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH),
-			calendar.get(Calendar.YEAR), "Service Account",
-			false, serviceContext);
-
-		serviceUser = _userLocalService.updateAgreedToTermsOfUse(
-			serviceUser.getUserId(), true);
-		serviceUser = _userLocalService.updateLockout(serviceUser, true);
-		serviceUser = _userLocalService.updateStatus(
-			serviceUser.getUserId(), WorkflowConstants.STATUS_APPROVED,
-			serviceContext);
-
-		return serviceUser;
 	}
 
 	private Role _getOrAddServiceRole(

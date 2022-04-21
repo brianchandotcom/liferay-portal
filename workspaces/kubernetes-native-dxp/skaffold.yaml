@@ -10,23 +10,24 @@ build:
       dependencies:
         paths:
         - configs/common/**/*
+        - configs/local/**/*
         - modules/**/*
-  - image: remote-app-a
+  - image: liferayhelloworld
     custom:
-      buildCommand: lxc-extensions/liferay-hello-world/build.sh
+      buildCommand: lxc-extensions/liferayhelloworld/build.sh
       dependencies:
         paths:
-        - lxc-extensions/liferay-hello-world/public
-        - lxc-extensions/liferay-hello-world/src
-        - lxc-extensions/liferay-hello-world/package.json
-        - lxc-extensions/liferay-hello-world/build.sh
-  - image: custom-rest-service
+        - lxc-extensions/liferayhelloworld/public
+        - lxc-extensions/liferayhelloworld/src
+        - lxc-extensions/liferayhelloworld/package.json
+        - lxc-extensions/liferayhelloworld/build.sh
+  - image: customrestservice
     custom:
-      buildCommand: lxc-extensions/custom-rest-service/build.sh
+      buildCommand: lxc-extensions/customrestservice/build.sh
       dependencies:
         paths:
-        - lxc-extensions/custom-rest-service/src/**/*
-        - lxc-extensions/custom-rest-service/pom.xml
+        - lxc-extensions/customrestservice/src/**/*
+        - lxc-extensions/customrestservice/pom.xml
   - image: cronjob
     custom:
       buildCommand: lxc-extensions/cronjob/build.sh
@@ -37,8 +38,8 @@ deploy:
   kustomize:
     paths:
     - k8s/dxp/
-    - k8s/remoteappa/
-    - k8s/custom-rest-service/
+    - k8s/liferayhelloworld/
+    - k8s/customrestservice/
     - k8s/cronjob/
     - k8s/common/
     hooks:

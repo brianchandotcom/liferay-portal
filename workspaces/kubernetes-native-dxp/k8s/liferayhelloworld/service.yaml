@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: liferayhelloworld
+spec:
+  selector:
+    app: liferayhelloworld
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80

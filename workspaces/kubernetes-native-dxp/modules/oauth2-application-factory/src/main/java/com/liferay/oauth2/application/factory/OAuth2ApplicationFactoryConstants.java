@@ -12,22 +12,20 @@
  * details.
  */
 
-package com.liferay.k8s.agent;
-
-import java.util.Map;
-import java.util.function.Predicate;
+package com.liferay.oauth2.application.factory;
 
 /**
  * @author Raymond Augé
  */
-public interface K8sAgent {
+public class OAuth2ApplicationFactoryConstants {
 
-	public void createOrUpdateConfigMap(
-		Map<String, String> data, Map<String, String> labels, String name);
+	public static final String EXTENSION_SUBDOMAIN =
+		".extension.liferay.com";
 
-	public void deleteConfigMap(String name);
+	public static final String HEADLESS_SERVER_SUBDOMAIN =
+		".headless.server.oauth2.liferay.com";
 
-	public void deleteConfigMapByLabels(
-		String name, Predicate<Map<String, String>> predicate);
+	public static final String USER_AGENT_SUBDOMAIN =
+		".user.agent.oauth2.liferay.com";
 
 }

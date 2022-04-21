@@ -38,7 +38,7 @@ export default function ({
 	const editMode = document.body.classList.contains('has-edit-mode-menu');
 
 	if (!editMode) {
-		checkCookiesConsent(cookieBanner, optionalCookies);
+		checkCookiesConsent(cookieBanner, optionalCookies, requiredCookies);
 
 		const cookiePreferences = {};
 
@@ -75,7 +75,11 @@ export default function ({
 								setCookie(requiredCookie, 'true');
 							});
 
-							checkCookiesConsent(cookieBanner, optionalCookies);
+							checkCookiesConsent(
+								cookieBanner,
+								optionalCookies,
+								requiredCookies
+							);
 
 							Liferay.Util.getOpener().Liferay.fire('closeModal');
 						},
@@ -86,7 +90,11 @@ export default function ({
 						onClick() {
 							acceptAllCookies(optionalCookies, requiredCookies);
 
-							checkCookiesConsent(cookieBanner, optionalCookies);
+							checkCookiesConsent(
+								cookieBanner,
+								optionalCookies,
+								requiredCookies
+							);
 
 							Liferay.Util.getOpener().Liferay.fire('closeModal');
 						},
@@ -96,7 +104,11 @@ export default function ({
 						onClick() {
 							declineAllCookies(optionalCookies, requiredCookies);
 
-							checkCookiesConsent(cookieBanner, optionalCookies);
+							checkCookiesConsent(
+								cookieBanner,
+								optionalCookies,
+								requiredCookies
+							);
 
 							Liferay.Util.getOpener().Liferay.fire('closeModal');
 						},
@@ -119,13 +131,10 @@ export default function ({
 	}
 }
 
-function checkCookiesConsent(cookieBanner, optionalCookies) {
+function checkCookiesConsent(cookieBanner, optionalCookies, requiredCookies) {
 	if (
-		optionalCookies.some(
-			(optionalCookie) =>
-				getCookie(optionalCookie) === 'true' ||
-				getCookie(optionalCookie) === 'false'
-		)
+		optionalCookies.every((optionalCookie) => getCookie(optionalCookie)) &&
+		requiredCookies.every((requiredCookie) => getCookie(requiredCookie))
 	) {
 		cookieBanner.style.display = 'none';
 	}

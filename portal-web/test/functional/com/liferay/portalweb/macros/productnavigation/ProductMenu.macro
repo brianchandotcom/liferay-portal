@@ -35,9 +35,16 @@ definition {
 
 		ProductMenuHelper.openProductMenu();
 
-		AssertClick(
-			locator1 = "ProductMenu#LIVE_LINK",
-			value1 = "Live");
+		if (isSet(remoteStaging)) {
+			AssertClick(
+				locator1 = "ProductMenu#LIVE_LINK",
+				value1 = "Remote Live");
+		}
+		else {
+			AssertClick(
+				locator1 = "ProductMenu#LIVE_LINK",
+				value1 = "Live");
+		}
 	}
 
 	@summary = "Navigate to Product Menu > Sites > Sites Modal > ${site}"

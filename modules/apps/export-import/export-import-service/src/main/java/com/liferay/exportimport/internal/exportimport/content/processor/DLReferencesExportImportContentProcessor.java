@@ -35,13 +35,17 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
+import com.liferay.portal.kernel.repository.friendly.url.resolver.FileEntryFriendlyURLResolver;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
@@ -59,6 +63,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -171,7 +176,20 @@ public class DLReferencesExportImportContentProcessor
 				return map;
 			}
 
-			if (Objects.equals(pathArray[2], "portlet_file_entry")) {
+			if (Objects.equals(
+					pathArray[2],
+					FriendlyURLResolverConstants.URL_SEPARATOR_Y_FILE_ENTRY)) {
+
+				map.put(
+					"friendlyURL",
+					new String[] {
+						StringUtils.substringBefore(
+							HttpComponentsUtil.decodeURL(pathArray[4]),
+							StringPool.POUND)
+					});
+				map.put("groupName", new String[] {pathArray[3]});
+			}
+			else if (Objects.equals(pathArray[2], "portlet_file_entry")) {
 				map.put("groupId", new String[] {pathArray[3]});
 				map.put(
 					"title",
@@ -296,6 +314,17 @@ public class DLReferencesExportImportContentProcessor
 							dlFileEntry.getFileEntryId());
 					}
 				}
+				else if (map.containsKey("friendlyURL")) {
+					String friendlyURL = MapUtil.getString(map, "friendlyURL");
+
+					Optional<FileEntry> fileEntryOptional = _resolveFileEntry(
+						MapUtil.getString(map, "groupName"), friendlyURL);
+
+					fileEntry = fileEntryOptional.orElseThrow(
+						() -> new NoSuchFileEntryException(
+							"No file entry found for friendly URL " +
+								friendlyURL));
+				}
 			}
 		}
 		catch (Exception exception) {
@@ -308,6 +337,20 @@ public class DLReferencesExportImportContentProcessor
 		}
 
 		return fileEntry;
+	}
+
+	private Group _getGroup(String name) throws Exception {
+		Group group = _groupLocalService.fetchFriendlyURLGroup(
+			CompanyThreadLocal.getCompanyId(), StringPool.SLASH + name);
+
+		if (group != null) {
+			return group;
+		}
+
+		User user = _userLocalService.getUserByScreenName(
+			CompanyThreadLocal.getCompanyId(), name);
+
+		return user.getGroup();
 	}
 
 	private String _getUuid(String s) {
@@ -631,6 +674,20 @@ public class DLReferencesExportImportContentProcessor
 		return content;
 	}
 
+	private Optional<FileEntry> _resolveFileEntry(
+			String groupName, String friendlyURL)
+		throws Exception {
+
+		if (_fileEntryFriendlyURLResolver == null) {
+			return Optional.empty();
+		}
+
+		Group group = _getGroup(groupName);
+
+		return _fileEntryFriendlyURLResolver.resolveFriendlyURL(
+			group.getGroupId(), friendlyURL);
+	}
+
 	private void _validateDLReferences(long groupId, String content)
 		throws PortalException {
 
@@ -804,9 +861,15 @@ public class DLReferencesExportImportContentProcessor
 	private DLURLHelper _dlURLHelper;
 
 	@Reference
+	private FileEntryFriendlyURLResolver _fileEntryFriendlyURLResolver;
+
+	@Reference
 	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

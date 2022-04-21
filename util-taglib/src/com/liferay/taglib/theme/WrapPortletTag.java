@@ -20,10 +20,10 @@ import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.theme.ThemeUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.servlet.PipingServletResponseFactory;
 import com.liferay.taglib.util.ParamAndPropertyAncestorTagImpl;
-import com.liferay.taglib.util.ThemeUtil;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;

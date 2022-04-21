@@ -15,9 +15,9 @@
 package com.liferay.taglib.theme;
 
 import com.liferay.portal.kernel.model.Theme;
+import com.liferay.portal.kernel.theme.ThemeUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.servlet.PipingServletResponseFactory;
-import com.liferay.taglib.util.ThemeUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;

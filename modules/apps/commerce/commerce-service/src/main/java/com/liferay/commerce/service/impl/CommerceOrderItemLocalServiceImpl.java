@@ -757,9 +757,9 @@ public class CommerceOrderItemLocalServiceImpl
 		CommerceOrderItem commerceOrderItem =
 			commerceOrderItemPersistence.findByPrimaryKey(commerceOrderItemId);
 
+		commerceOrderItem.setShippingAddressId(shippingAddressId);
 		commerceOrderItem.setDeliveryGroup(deliveryGroup);
 		commerceOrderItem.setPrintedNote(printedNote);
-		commerceOrderItem.setShippingAddressId(shippingAddressId);
 
 		return commerceOrderItemPersistence.update(commerceOrderItem);
 	}
@@ -780,10 +780,10 @@ public class CommerceOrderItemLocalServiceImpl
 		CommerceOrderItem commerceOrderItem =
 			commerceOrderItemPersistence.findByPrimaryKey(commerceOrderItemId);
 
+		commerceOrderItem.setShippingAddressId(shippingAddressId);
 		commerceOrderItem.setDeliveryGroup(deliveryGroup);
 		commerceOrderItem.setPrintedNote(printedNote);
 		commerceOrderItem.setRequestedDeliveryDate(requestedDeliveryDate);
-		commerceOrderItem.setShippingAddressId(shippingAddressId);
 
 		return commerceOrderItemPersistence.update(commerceOrderItem);
 	}

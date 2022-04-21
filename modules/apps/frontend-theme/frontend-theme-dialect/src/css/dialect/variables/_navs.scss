@@ -1,4 +1,4 @@
-// Nav Base Link
+// Nav Base
 
 $nav-base-link: (
 	after: (
@@ -10,12 +10,6 @@ $nav-base-link: (
 		right: 0,
 		width: auto,
 	),
-);
-
-// Nav Vertical
-
-$nav-vertical: (
-	flex-direction: column,
 );
 
 // Nav Primary
@@ -396,4 +390,10 @@ $nav-segment-link: (
 	inline-item-before: (
 		margin-right: var(--tab-segment-item-inline-item-spacer-x),
 	),
+);
+
+// Nav Vertical
+
+$nav-vertical: (
+	flex-direction: column,
 );

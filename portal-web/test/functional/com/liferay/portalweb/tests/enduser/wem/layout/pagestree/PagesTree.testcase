@@ -641,8 +641,8 @@ definition {
 		}
 
 		task ("Preview draft via Page Tree") {
-			PagesAdmin.gotoPageEllipsisMenuItem(
-				menuItem = "Preview Draft",
+			PagesFinder.gotoPageEllipsisItem(
+				item = "Preview Draft",
 				pageName = "Test Page Name*");
 
 			SelectWindow.selectPopUp(locator1 = "null");
@@ -675,8 +675,8 @@ definition {
 		}
 
 		task ("Preview draft via Page Tree") {
-			PagesAdmin.gotoPageEllipsisMenuItem(
-				menuItem = "Preview Draft",
+			PagesFinder.gotoPageEllipsisItem(
+				item = "Preview Draft",
 				pageName = "Test Page Name*");
 
 			SelectWindow.selectPopUp(locator1 = "null");

@@ -36,10 +36,9 @@ public class GradleStylingCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		content = _sortMapKeys("transformKeys", content);
-
 		content = _fixMissingLineBreakAfterOpenCurlyBrace(content);
 		content = _fixMissingLineBreakBeforeCloseCurlyBrace(content);
+		content = _sortMapKeys("transformKeys", content);
 		content = _stylingCheck(content, _stylingPattern1, "$1$2 {\n\t$3\n}$4");
 		content = _stylingCheck(content, _stylingPattern2, "$1$2 = $3$4");
 

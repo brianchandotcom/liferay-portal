@@ -437,6 +437,36 @@ public class SegmentsExperienceLocalServiceTest {
 	}
 
 	@Test
+	public void testDeleteSegmentsExperienceWithZeroPriority()
+		throws Exception {
+
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId());
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.appendSegmentsExperience(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				segmentsEntry.getSegmentsEntryId(), _classNameId, _classPK,
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomBoolean(),
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		SegmentsExperience zeroPrioritySegmentsExperience =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				_group.getGroupId(), _classNameId, _classPK, _PRIORITY_DEFAULT);
+
+		_segmentsExperienceLocalService.deleteSegmentsExperience(
+			zeroPrioritySegmentsExperience.getSegmentsExperienceId());
+
+		segmentsExperience =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				segmentsExperience.getSegmentsExperienceId());
+
+		Assert.assertEquals(
+			_PRIORITY_DEFAULT, segmentsExperience.getPriority());
+	}
+
+	@Test
 	public void testFetchDefaultSegmentsExperienceId() throws PortalException {
 		long defaultSegmentsExperienceId =
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(

@@ -12,14 +12,17 @@
  * details.
  */
 
-package com.liferay.commerce.product.type.grouped.web.internal.constants;
+package com.liferay.commerce.product.type.grouped.constants;
 
 /**
- * @author Andrea Di Giorgi
+ * @author Alessio Antonio Rendina
  */
 public class GroupedCPTypeWebKeys {
 
 	public static final String CP_DEFINITION_GROUPED_ENTRIES =
 		"CP_DEFINITION_GROUPED_ENTRIES";
+
+	public static final String GROUPED_CP_TYPE_HELPER =
+		"GROUPED_CP_TYPE_HELPER";
 
 }

@@ -953,6 +953,7 @@
 		<exception>DuplicateCommerceShippingOptionAccountEntryRel</exception>
 		<exception>GuestCartItemMaxAllowed</exception>
 		<exception>GuestCartMaxAllowed</exception>
+		<exception>MaxPriceValue</exception>
 		<exception>ProductBundle</exception>
 	</exceptions>
 </service-builder>

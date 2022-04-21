@@ -18,13 +18,11 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
-import com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration;
 import com.liferay.content.dashboard.web.internal.item.action.ContentDashboardItemActionProviderTracker;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtypeFactory;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtypeFactoryTracker;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -32,23 +30,15 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
 
-import java.util.Map;
 import java.util.Optional;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceRegistration;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Cristina González
  */
-@Component(
-	configurationPid = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration",
-	service = {}
-)
+@Component(service = ContentDashboardItemFactory.class)
 public class BlogsEntryContentDashboardItemFactory
 	implements ContentDashboardItemFactory<BlogsEntry> {
 
@@ -87,29 +77,6 @@ public class BlogsEntryContentDashboardItemFactory
 				BlogsEntry.class.getName());
 	}
 
-	@Activate
-	protected void activate(
-		BundleContext bundleContext, Map<String, Object> properties) {
-
-		FFBlogsEntryContentDashboardItemConfiguration
-			ffBlogsEntryContentDashboardItemConfiguration =
-				ConfigurableUtil.createConfigurable(
-					FFBlogsEntryContentDashboardItemConfiguration.class,
-					properties);
-
-		if (ffBlogsEntryContentDashboardItemConfiguration.blogsEntryEnabled()) {
-			_serviceRegistration = bundleContext.registerService(
-				ContentDashboardItemFactory.class, this, null);
-		}
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		if (_serviceRegistration != null) {
-			_serviceRegistration.unregister();
-		}
-	}
-
 	@Reference
 	protected InfoItemServiceTracker infoItemServiceTracker;
 
@@ -135,9 +102,6 @@ public class BlogsEntryContentDashboardItemFactory
 
 	@Reference
 	private Portal _portal;
-
-	private ServiceRegistration<ContentDashboardItemFactory>
-		_serviceRegistration;
 
 	@Reference
 	private UserLocalService _userLocalService;

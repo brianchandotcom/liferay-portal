@@ -15,8 +15,8 @@
 package com.liferay.on.demand.admin.web.internal.portlet;
 
 import com.liferay.on.demand.admin.web.internal.constants.OnDemandAdminPortletKeys;
+import com.liferay.portal.kernel.portlet.BaseControlPanelEntry;
 import com.liferay.portal.kernel.portlet.ControlPanelEntry;
-import com.liferay.portal.kernel.portlet.OmniadminControlPanelEntry;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -28,5 +28,5 @@ import org.osgi.service.component.annotations.Component;
 	property = "javax.portlet.name=" + OnDemandAdminPortletKeys.ON_DEMAND_ADMIN,
 	service = ControlPanelEntry.class
 )
-public class OnDemandAdminControlPanelEntry extends OmniadminControlPanelEntry {
+public class OnDemandAdminControlPanelEntry extends BaseControlPanelEntry {
 }

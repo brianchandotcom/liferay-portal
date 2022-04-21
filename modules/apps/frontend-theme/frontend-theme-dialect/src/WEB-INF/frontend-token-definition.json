@@ -4975,7 +4975,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "transparent",
+							"defaultValue": "var(--tab-primary-item-background-color)",
 							"editorType": "ColorPicker",
 							"label": "tab-primary-item-background-color-active",
 							"mappings": [
@@ -4988,7 +4988,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "transparent",
+							"defaultValue": "var(--tab-primary-item-background-color)",
 							"editorType": "ColorPicker",
 							"label": "tab-primary-item-background-color-disabled",
 							"mappings": [
@@ -5001,7 +5001,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "transparent",
+							"defaultValue": "var(--tab-primary-item-background-color)",
 							"editorType": "ColorPicker",
 							"label": "tab-primary-item-background-color-hover",
 							"mappings": [
@@ -5027,7 +5027,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-neutral-3)",
+							"defaultValue": "var(--tab-primary-item-border-color)",
 							"editorType": "ColorPicker",
 							"label": "tab-primary-item-border-color-active",
 							"mappings": [
@@ -5040,7 +5040,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-neutral-3)",
+							"defaultValue": "var(--tab-primary-item-border-color)",
 							"editorType": "ColorPicker",
 							"label": "tab-primary-item-border-color-hover",
 							"mappings": [
@@ -5102,7 +5102,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-brand-primary)",
+							"defaultValue": "var(--color-action-primary-default)",
 							"editorType": "ColorPicker",
 							"label": "tab-primary-item-color-active",
 							"mappings": [
@@ -5128,7 +5128,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-brand-primary-darken-1)",
+							"defaultValue": "var(--color-action-primary-hover)",
 							"editorType": "ColorPicker",
 							"label": "tab-primary-item-color-hover",
 							"mappings": [
@@ -5165,7 +5165,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--font-weight-bold)",
+							"defaultValue": "var(--tab-primary-item-font-weight)",
 							"label": "tab-primary-item-font-weight-active",
 							"mappings": [
 								{
@@ -5190,7 +5190,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-brand-primary)",
+							"defaultValue": "var(--color-action-primary-default)",
 							"editorType": "ColorPicker",
 							"label": "tab-primary-item-icon-color-active",
 							"mappings": [
@@ -5216,7 +5216,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-brand-primary-darken-1)",
+							"defaultValue": "var(--color-action-primary-hover)",
 							"editorType": "ColorPicker",
 							"label": "tab-primary-item-icon-color-hover",
 							"mappings": [
@@ -5475,7 +5475,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-brand-primary)",
+							"defaultValue": "var(--color-action-primary-default)",
 							"editorType": "ColorPicker",
 							"label": "tab-secondary-item-active-bar-color-active",
 							"mappings": [
@@ -5488,7 +5488,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-brand-primary-darken-1)",
+							"defaultValue": "var(--color-action-primary-default)",
 							"editorType": "ColorPicker",
 							"label": "tab-secondary-item-active-bar-color-hover",
 							"mappings": [
@@ -5526,7 +5526,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-neutral-1)",
+							"defaultValue": "var(--color-neutral-0)",
 							"editorType": "ColorPicker",
 							"label": "tab-secondary-item-background-color-active",
 							"mappings": [
@@ -5539,7 +5539,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-neutral-1)",
+							"defaultValue": "var(--tab-secondary-item-background-color)",
 							"editorType": "ColorPicker",
 							"label": "tab-secondary-item-background-color-disabled",
 							"mappings": [
@@ -5552,7 +5552,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-neutral-1)",
+							"defaultValue": "var(--tab-secondary-item-background-color)",
 							"editorType": "ColorPicker",
 							"label": "tab-secondary-item-background-color-hover",
 							"mappings": [
@@ -5578,7 +5578,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-neutral-3)",
+							"defaultValue": "transparent",
 							"editorType": "ColorPicker",
 							"label": "tab-secondary-item-border-color-active",
 							"mappings": [
@@ -5591,7 +5591,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-neutral-3)",
+							"defaultValue": "var(--tab-secondary-item-border-color)",
 							"editorType": "ColorPicker",
 							"label": "tab-secondary-item-border-color-hover",
 							"mappings": [
@@ -5741,7 +5741,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-brand-primary)",
+							"defaultValue": "var(--tab-secondary-item-icon-color)",
 							"editorType": "ColorPicker",
 							"label": "tab-secondary-item-icon-color-active",
 							"mappings": [
@@ -5767,7 +5767,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-brand-primary-darken-1)",
+							"defaultValue": "var(--tab-secondary-item-icon-color)",
 							"editorType": "ColorPicker",
 							"label": "tab-secondary-item-icon-color-hover",
 							"mappings": [
@@ -6026,7 +6026,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-brand-primary)",
+							"defaultValue": "var(--color-action-primary-default)",
 							"editorType": "ColorPicker",
 							"label": "tab-tertiary-item-active-bar-color-active",
 							"mappings": [
@@ -6039,7 +6039,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-brand-primary-darken-1)",
+							"defaultValue": "var(--color-action-primary-hover)",
 							"editorType": "ColorPicker",
 							"label": "tab-tertiary-item-active-bar-color-hover",
 							"mappings": [
@@ -6077,7 +6077,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-neutral-0)",
+							"defaultValue": "var(--tab-tertiary-item-background-color)",
 							"editorType": "ColorPicker",
 							"label": "tab-tertiary-item-background-color-active",
 							"mappings": [
@@ -6090,7 +6090,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-neutral-0)",
+							"defaultValue": "var(--tab-tertiary-item-background-color)",
 							"editorType": "ColorPicker",
 							"label": "tab-tertiary-item-background-color-disabled",
 							"mappings": [
@@ -6103,7 +6103,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-neutral-0)",
+							"defaultValue": "var(--tab-tertiary-item-background-color)",
 							"editorType": "ColorPicker",
 							"label": "tab-tertiary-item-background-color-hover",
 							"mappings": [
@@ -6129,7 +6129,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-neutral-3)",
+							"defaultValue": "transparent",
 							"editorType": "ColorPicker",
 							"label": "tab-tertiary-item-border-color-active",
 							"mappings": [
@@ -6142,7 +6142,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-neutral-3)",
+							"defaultValue": "var(--tab-tertiary-item-border-color)",
 							"editorType": "ColorPicker",
 							"label": "tab-tertiary-item-border-color-hover",
 							"mappings": [
@@ -6204,7 +6204,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-neutral-8)",
+							"defaultValue": "var(--tab-tertiary-item-color)",
 							"editorType": "ColorPicker",
 							"label": "tab-tertiary-item-color-active",
 							"mappings": [
@@ -6230,7 +6230,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-neutral-8)",
+							"defaultValue": "var(--tab-tertiary-item-color)",
 							"editorType": "ColorPicker",
 							"label": "tab-tertiary-item-color-hover",
 							"mappings": [
@@ -6292,7 +6292,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-brand-primary)",
+							"defaultValue": "var(--tab-tertiary-item-icon-color)",
 							"editorType": "ColorPicker",
 							"label": "tab-tertiary-item-icon-color-active",
 							"mappings": [
@@ -6318,7 +6318,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-brand-primary-darken-1)",
+							"defaultValue": "var(--tab-tertiary-item-icon-color)",
 							"editorType": "ColorPicker",
 							"label": "tab-tertiary-item-icon-color-hover",
 							"mappings": [
@@ -6641,7 +6641,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "transparent",
+							"defaultValue": "var(--tab-segment-item-background-color)",
 							"editorType": "ColorPicker",
 							"label": "tab-segment-item-background-color-disabled",
 							"mappings": [
@@ -6654,7 +6654,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "transparent",
+							"defaultValue": "var(--tab-segment-item-background-color)",
 							"editorType": "ColorPicker",
 							"label": "tab-segment-item-background-color-hover",
 							"mappings": [
@@ -6680,7 +6680,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "transparent",
+							"defaultValue": "var(--tab-segment-item-border-color)",
 							"editorType": "ColorPicker",
 							"label": "tab-segment-item-border-color-active",
 							"mappings": [
@@ -6693,7 +6693,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "transparent",
+							"defaultValue": "var(--tab-segment-item-border-color)",
 							"editorType": "ColorPicker",
 							"label": "tab-segment-item-border-color-disabled",
 							"mappings": [
@@ -6706,7 +6706,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "transparent",
+							"defaultValue": "var(--tab-segment-item-border-color)",
 							"editorType": "ColorPicker",
 							"label": "tab-segment-item-border-color-hover",
 							"mappings": [
@@ -6743,7 +6743,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "none",
+							"defaultValue": "var(--elevation-tight-2) rgba(89, 36, 235, 0.25)",
 							"label": "tab-segment-item-box-shadow-active",
 							"mappings": [
 								{
@@ -6780,7 +6780,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-neutral-0)",
+							"defaultValue": "var(--color-action-primary-inverted)",
 							"editorType": "ColorPicker",
 							"label": "tab-segment-item-color-active",
 							"mappings": [
@@ -6793,7 +6793,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-neutral-3)",
+							"defaultValue": "var(--color-action-neutral-disabled)",
 							"editorType": "ColorPicker",
 							"label": "tab-segment-item-color-disabled",
 							"mappings": [
@@ -6819,7 +6819,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--text-paragraph-font-size)",
+							"defaultValue": "var(--text-link-small-font-size)",
 							"label": "tab-segment-item-font-size",
 							"mappings": [
 								{
@@ -6843,7 +6843,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--font-weight-bold)",
+							"defaultValue": "var(--tab-segment-item-font-weight)",
 							"label": "tab-segment-item-font-weight-active",
 							"mappings": [
 								{
@@ -6855,7 +6855,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-neutral-6)",
+							"defaultValue": "var(--tab-segment-item-color)",
 							"editorType": "ColorPicker",
 							"label": "tab-segment-item-icon-color",
 							"mappings": [
@@ -6868,7 +6868,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-neutral-0)",
+							"defaultValue": "var(--tab-segment-item-color-active)",
 							"editorType": "ColorPicker",
 							"label": "tab-segment-item-icon-color-active",
 							"mappings": [
@@ -6881,7 +6881,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-neutral-3)",
+							"defaultValue": "var(--tab-segment-item-color-disabled)",
 							"editorType": "ColorPicker",
 							"label": "tab-segment-item-icon-color-disabled",
 							"mappings": [
@@ -6894,7 +6894,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--color-action-primary-active)",
+							"defaultValue": "var(--tab-segment-item-color-hover)",
 							"editorType": "ColorPicker",
 							"label": "tab-segment-item-icon-color-hover",
 							"mappings": [
@@ -6943,7 +6943,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "var(--text-paragraph-line-height)",
+							"defaultValue": "var(--text-link-small-line-height)",
 							"label": "tab-segment-item-line-height",
 							"mappings": [
 								{

@@ -1,0 +1,55 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragment": {
+						"key": "test-image-fragment"
+					},
+					"fragmentConfig": {
+					},
+					"fragmentFields": [
+						{
+							"id": "image-id",
+							"value": {
+								"fragmentImage": {
+									"description": {
+										"value_i18n": {
+											"en_US": "Bear",
+											"es_ES": "Tigre"
+										}
+									},
+									"url": {
+										"value_i18n": {
+											"en_US": "https://www.collinsdictionary.com/images/full/bear_259894163.jpg",
+											"es_ES": "https://www.collinsdictionary.com/images/full/tiger_299825813_1000.jpg?version=4.0.251"
+										}
+									}
+								},
+								"fragmentLink": {
+									"value": {
+										"href": {
+											"value_i18n": {
+												"en_US": "http://www.bear.com",
+												"es_ES": "http://www.tigre.es"
+											}
+										},
+										"target": "Blank"
+									}
+								}
+							}
+						}
+					],
+					"indexed": true
+				},
+				"type": "Fragment"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"colorSchemeName": "01",
+		"themeName": "Classic"
+	},
+	"version": 1.1
+}

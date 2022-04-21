@@ -482,6 +482,20 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 	}
 
 	@Test
+	public void testImportExportLayoutPageTemplateEntryFragmentImageFieldImageURLAndLinkURL()
+		throws Exception {
+
+		_addImageFragmentEntry();
+
+		File expectedFile = _generateZipFile(
+			"fragment/image_field/image_url_and_link_url/expected", null, null);
+		File inputFile = _generateZipFile(
+			"fragment/image_field/image_url_and_link_url/input", null, null);
+
+		_validateImportExport(expectedFile, inputFile);
+	}
+
+	@Test
 	public void testImportExportLayoutPageTemplateEntryFragmentTextFieldFragmentAvailableMappedContentAvailable()
 		throws Exception {
 

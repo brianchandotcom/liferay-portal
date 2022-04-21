@@ -19,7 +19,12 @@ import {
 	setCookie,
 } from '../../js/CookiesUtil';
 
-export default function ({namespace, showButtons}) {
+export default function ({
+	namespace,
+	optionalCookies,
+	requiredCookies,
+	showButtons,
+}) {
 	const toggleSwitches = Array.from(
 		document.querySelectorAll(
 			`#${namespace}cookiesBannerConfigurationForm [data-cookie-key]`
@@ -53,7 +58,7 @@ export default function ({namespace, showButtons}) {
 		);
 
 		acceptAllButton.addEventListener('click', () => {
-			acceptAllCookies();
+			acceptAllCookies(optionalCookies, requiredCookies);
 
 			window.location.reload();
 		});
@@ -66,13 +71,15 @@ export default function ({namespace, showButtons}) {
 				);
 			});
 
-			setCookie('CONSENT_TYPE_STRICTLY_NECESSARY', 'true');
+			requiredCookies.forEach((requiredCookie) => {
+				setCookie(requiredCookie, 'true');
+			});
 
 			window.location.reload();
 		});
 
 		declineAllButton.addEventListener('click', () => {
-			declineAllCookies();
+			declineAllCookies(optionalCookies, requiredCookies);
 
 			window.location.reload();
 		});

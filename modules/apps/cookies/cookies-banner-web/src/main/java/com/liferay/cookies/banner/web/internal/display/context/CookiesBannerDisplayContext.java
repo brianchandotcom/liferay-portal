@@ -25,18 +25,18 @@ import javax.portlet.RenderResponse;
 /**
  * @author Eduardo García
  */
-public class CookiesBannerDisplayContext {
+public class CookiesBannerDisplayContext
+	extends BaseCookiesBannerDisplayContext {
 
 	public CookiesBannerDisplayContext(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		_renderRequest = renderRequest;
-		_renderResponse = renderResponse;
+		super(renderRequest, renderResponse);
 	}
 
 	public Object getConfigurationURL() {
 		return PortletURLBuilder.createRenderURL(
-			_renderResponse
+			renderResponse
 		).setMVCPath(
 			"/cookies_banner_configuration/view.jsp"
 		).setWindowState(
@@ -50,8 +50,5 @@ public class CookiesBannerDisplayContext {
 
 		return "";
 	}
-
-	private final RenderRequest _renderRequest;
-	private final RenderResponse _renderResponse;
 
 }

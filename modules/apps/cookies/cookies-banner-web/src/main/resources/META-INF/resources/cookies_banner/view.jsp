@@ -69,6 +69,10 @@ CookiesBannerDisplayContext cookiesBannerDisplayContext = (CookiesBannerDisplayC
 	context='<%=
 		HashMapBuilder.<String, Object>put(
 			"configurationUrl", cookiesBannerDisplayContext.getConfigurationURL()
+		).put(
+			"optionalCookies", cookiesBannerDisplayContext.getOptionalCookies()
+		).put(
+			"requiredCookies", cookiesBannerDisplayContext.getRequiredCookies()
 		).build()
 	%>'
 	module="cookies_banner/js/CookiesBanner"

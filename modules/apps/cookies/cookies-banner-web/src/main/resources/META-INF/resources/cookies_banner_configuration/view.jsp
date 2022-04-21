@@ -190,6 +190,10 @@ CookiesBannerConfigurationDisplayContext cookiesBannerConfigurationDisplayContex
 	componentId="CookiesBannerConfiguration"
 	context='<%=
 		HashMapBuilder.<String, Object>put(
+			"optionalCookies", cookiesBannerConfigurationDisplayContext.getOptionalCookies()
+		).put(
+			"requiredCookies", cookiesBannerConfigurationDisplayContext.getRequiredCookies()
+		).put(
 			"showButtons", cookiesBannerConfigurationDisplayContext.isShowButtons()
 		).build()
 	%>'

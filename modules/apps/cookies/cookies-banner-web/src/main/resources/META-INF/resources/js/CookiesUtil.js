@@ -12,18 +12,24 @@
  * details.
  */
 
-export function acceptAllCookies() {
-	setCookie('CONSENT_TYPE_FUNCTIONAL', 'true');
-	setCookie('CONSENT_TYPE_PERFORMANCE', 'true');
-	setCookie('CONSENT_TYPE_PERSONALIZATION', 'true');
-	setCookie('CONSENT_TYPE_STRICTLY_NECESSARY', 'true');
+export function acceptAllCookies(optionalCookies, requiredCookies) {
+	optionalCookies.forEach((optionalCookie) => {
+		setCookie(optionalCookie, 'true');
+	});
+
+	requiredCookies.forEach((requiredCookie) => {
+		setCookie(requiredCookie, 'true');
+	});
 }
 
-export function declineAllCookies() {
-	setCookie('CONSENT_TYPE_FUNCTIONAL', 'false');
-	setCookie('CONSENT_TYPE_PERFORMANCE', 'false');
-	setCookie('CONSENT_TYPE_PERSONALIZATION', 'false');
-	setCookie('CONSENT_TYPE_STRICTLY_NECESSARY', 'true');
+export function declineAllCookies(optionalCookies, requiredCookies) {
+	optionalCookies.forEach((optionalCookie) => {
+		setCookie(optionalCookie, 'false');
+	});
+
+	requiredCookies.forEach((requiredCookie) => {
+		setCookie(requiredCookie, 'true');
+	});
 }
 
 export function getCookie(name) {

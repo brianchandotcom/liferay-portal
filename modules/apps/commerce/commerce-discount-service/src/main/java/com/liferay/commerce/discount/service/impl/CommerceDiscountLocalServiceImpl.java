@@ -22,6 +22,7 @@ import com.liferay.commerce.discount.exception.CommerceDiscountCouponCodeExcepti
 import com.liferay.commerce.discount.exception.CommerceDiscountDisplayDateException;
 import com.liferay.commerce.discount.exception.CommerceDiscountExpirationDateException;
 import com.liferay.commerce.discount.exception.CommerceDiscountLimitationTypeException;
+import com.liferay.commerce.discount.exception.CommerceDiscountMaxPriceValueException;
 import com.liferay.commerce.discount.exception.CommerceDiscountTargetException;
 import com.liferay.commerce.discount.exception.CommerceDiscountTitleException;
 import com.liferay.commerce.discount.exception.DuplicateCommerceDiscountException;
@@ -1139,6 +1140,8 @@ public class CommerceDiscountLocalServiceImpl
 			serviceContext.getCompanyId(), commerceDiscountId, title, target,
 			useCouponCode, couponCode, limitationType);
 
+		_validatePrice(maximumDiscountAmount, level1, level2, level3, level4);
+
 		Date date = new Date();
 
 		Date displayDate = PortalUtil.getDate(
@@ -1215,6 +1218,8 @@ public class CommerceDiscountLocalServiceImpl
 		validate(
 			serviceContext.getCompanyId(), commerceDiscountId, title, target,
 			useCouponCode, couponCode, limitationType);
+
+		_validatePrice(maximumDiscountAmount, level1, level2, level3, level4);
 
 		Date date = new Date();
 
@@ -1904,6 +1909,23 @@ public class CommerceDiscountLocalServiceImpl
 		}
 
 		return predicate.withParentheses();
+	}
+
+	private void _validatePrice(
+			BigDecimal maxDiscountAmount, BigDecimal level1, BigDecimal level2,
+			BigDecimal level3, BigDecimal level4)
+		throws CommerceDiscountMaxPriceValueException {
+
+		BigDecimal maxValue = BigDecimal.valueOf(999999999.99);
+
+		if ((maxDiscountAmount.compareTo(maxValue) > 0) ||
+			(level1.compareTo(maxValue) > 0) ||
+			(level2.compareTo(maxValue) > 0) ||
+			(level3.compareTo(maxValue) > 0) ||
+			(level4.compareTo(maxValue) > 0)) {
+
+			throw new CommerceDiscountMaxPriceValueException();
+		}
 	}
 
 	private static final String[] _SELECTED_FIELD_NAMES = {

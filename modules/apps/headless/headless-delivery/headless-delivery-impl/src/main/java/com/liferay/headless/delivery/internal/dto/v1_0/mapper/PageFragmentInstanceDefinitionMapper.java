@@ -841,6 +841,10 @@ public class PageFragmentInstanceDefinitionMapper {
 			fragmentLinkValues.put(languageId, fragmentLinkValue);
 		}
 
+		if (fragmentLinkValues.isEmpty()) {
+			return null;
+		}
+
 		return fragmentLinkValues;
 	}
 

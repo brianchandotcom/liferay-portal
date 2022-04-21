@@ -524,6 +524,15 @@ public class FragmentLayoutStructureItemImporter
 			jsonObject.put("href", value);
 		}
 
+		Map<String, Object> valueI18nMap = (Map<String, Object>)hrefMap.get(
+			"value_i18n");
+
+		if (valueI18nMap != null) {
+			jsonObject.put("href", valueI18nMap);
+
+			return jsonObject;
+		}
+
 		processMapping(
 			jsonObject, layoutStructureItemImporterContext,
 			(Map<String, Object>)hrefMap.get("mapping"));

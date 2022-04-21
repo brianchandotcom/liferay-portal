@@ -19,6 +19,7 @@ import com.liferay.commerce.discount.exception.CommerceDiscountCouponCodeExcepti
 import com.liferay.commerce.discount.exception.NoSuchDiscountException;
 import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.discount.service.CommerceDiscountService;
+import com.liferay.commerce.exception.MaxPriceValueException;
 import com.liferay.commerce.pricing.constants.CommercePricingPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -70,6 +71,17 @@ public class EditCommerceDiscountMVCActionCommand extends BaseMVCActionCommand {
 
 				SessionErrors.add(
 					actionRequest, throwable.getClass(), throwable);
+
+				String redirect = ParamUtil.getString(
+					actionRequest, "redirect");
+
+				sendRedirect(actionRequest, actionResponse, redirect);
+			}
+			else if (throwable instanceof MaxPriceValueException) {
+				hideDefaultErrorMessage(actionRequest);
+				hideDefaultSuccessMessage(actionRequest);
+
+				SessionErrors.add(actionRequest, throwable.getClass());
 
 				String redirect = ParamUtil.getString(
 					actionRequest, "redirect");

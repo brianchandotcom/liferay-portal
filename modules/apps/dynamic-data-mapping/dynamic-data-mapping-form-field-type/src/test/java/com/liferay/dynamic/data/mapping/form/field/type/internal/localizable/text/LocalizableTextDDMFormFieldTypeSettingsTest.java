@@ -23,10 +23,12 @@ import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.dynamic.data.mapping.util.DDMFormLayoutFactory;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Locale;
 import java.util.Map;
@@ -34,22 +36,23 @@ import java.util.ResourceBundle;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.mockito.Matchers;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.mockito.Mockito;
 
 /**
  * @author Gabriel Ibson
  */
-@PrepareForTest({PortalClassLoaderUtil.class, ResourceBundleUtil.class})
-@RunWith(PowerMockRunner.class)
 public class LocalizableTextDDMFormFieldTypeSettingsTest
 	extends BaseDDMFormFieldTypeSettingsTestCase {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	@Override
@@ -112,17 +115,17 @@ public class LocalizableTextDDMFormFieldTypeSettingsTest
 	private void _setUpLanguageUtil() {
 		LanguageUtil languageUtil = new LanguageUtil();
 
-		languageUtil.setLanguage(PowerMockito.mock(Language.class));
+		languageUtil.setLanguage(Mockito.mock(Language.class));
 	}
 
 	private void _setUpPortalUtil() {
 		PortalUtil portalUtil = new PortalUtil();
 
-		Portal portal = mock(Portal.class);
+		Portal portal = Mockito.mock(Portal.class);
 
-		ResourceBundle resourceBundle = mock(ResourceBundle.class);
+		ResourceBundle resourceBundle = Mockito.mock(ResourceBundle.class);
 
-		when(
+		Mockito.when(
 			portal.getResourceBundle(Matchers.any(Locale.class))
 		).thenReturn(
 			resourceBundle
@@ -132,12 +135,14 @@ public class LocalizableTextDDMFormFieldTypeSettingsTest
 	}
 
 	private void _setUpResourceBundleUtil() {
-		PowerMockito.mockStatic(ResourceBundleUtil.class);
+		ResourceBundleLoader resourceBundleLoader = Mockito.mock(
+			ResourceBundleLoader.class);
 
-		PowerMockito.when(
-			ResourceBundleUtil.getBundle(
-				Matchers.anyString(), Matchers.any(Locale.class),
-				Matchers.any(ClassLoader.class))
+		ResourceBundleLoaderUtil.setPortalResourceBundleLoader(
+			resourceBundleLoader);
+
+		Mockito.when(
+			resourceBundleLoader.loadResourceBundle(Matchers.any(Locale.class))
 		).thenReturn(
 			ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE
 		);

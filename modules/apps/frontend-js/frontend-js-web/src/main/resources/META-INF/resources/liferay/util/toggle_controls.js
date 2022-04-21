@@ -15,8 +15,6 @@
 import getLexiconIcon from './get_lexicon_icon';
 import {setSessionValue} from './session.es';
 
-const EDIT_CONTROLS_STATE = Liferay._editControlsState;
-
 const MAP_TOGGLE_STATE = {
 	false: {
 		cssClass: 'controls-hidden',
@@ -41,7 +39,7 @@ export default function toggleControls(node) {
 		return;
 	}
 
-	let controlsVisible = EDIT_CONTROLS_STATE === 'visible';
+	let controlsVisible = Liferay._editControlsState === 'visible';
 
 	let currentState = MAP_TOGGLE_STATE[controlsVisible];
 

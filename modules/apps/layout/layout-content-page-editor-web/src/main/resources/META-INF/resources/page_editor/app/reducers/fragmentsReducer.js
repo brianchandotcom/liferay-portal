@@ -105,21 +105,27 @@ export default function fragmentsReducer(fragments = [], action) {
 			});
 
 			if (config.featureFlagLps150277) {
-				newFragments[0].fragmentEntries.push({
-					data: {
-						itemType: LAYOUT_DATA_ITEM_TYPES.form,
-					},
-					icon: 'forms',
-					itemId: 'form',
-					label:
-						LAYOUT_DATA_ITEM_TYPE_LABELS[
-							LAYOUT_DATA_ITEM_TYPES.form
-						],
-					type: 'form',
+				newFragments.splice(2, 0, {
+					fragmentCollectionId: 'form-components',
+					fragmentEntries: [
+						{
+							data: {
+								itemType: LAYOUT_DATA_ITEM_TYPES.form,
+							},
+							icon: 'forms',
+							itemId: 'form',
+							label:
+								LAYOUT_DATA_ITEM_TYPE_LABELS[
+									LAYOUT_DATA_ITEM_TYPES.form
+								],
+							type: 'form',
+						},
+					],
+					name: Liferay.Language.get('form-components'),
 				});
 			}
 
-			newFragments.splice(2, 0, {
+			newFragments.splice(3, 0, {
 				...(contentDisplayCollection ||
 					DEFAULT_CONTENT_DISPLAY_COLLECTION),
 

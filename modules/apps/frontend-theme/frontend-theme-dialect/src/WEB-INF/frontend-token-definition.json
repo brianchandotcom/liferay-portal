@@ -6955,6 +6955,30 @@
 							"type": "String"
 						},
 						{
+							"defaultValue": "0.375rem",
+							"label": "tab-segment-item-padding-x",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-segment-item-padding-x"
+								}
+							],
+							"name": "tabSegmentItemPaddingX",
+							"type": "String"
+						},
+						{
+							"defaultValue": "var(--spacer-3)",
+							"label": "tab-segment-item-padding-y",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "tab-segment-item-padding-y"
+								}
+							],
+							"name": "tabSegmentItemPaddingY",
+							"type": "String"
+						},
+						{
 							"defaultValue": "var(--spacer-1)",
 							"label": "tab-segment-padding-x",
 							"mappings": [

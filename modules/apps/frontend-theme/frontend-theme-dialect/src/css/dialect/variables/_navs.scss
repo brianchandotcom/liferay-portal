@@ -352,6 +352,7 @@ $nav-segment-link: (
 	font-size: var(--tab-segment-item-font-size),
 	font-weight: var(--tab-segment-item-font-weight),
 	line-height: var(--tab-segment-item-line-height),
+	padding: var(--tab-segment-item-padding-x) var(--tab-segment-item-padding-y),
 	active-class: (
 		background-color: var(--tab-segment-item-background-color-active),
 		border-color: var(--tab-segment-item-border-color-active),

@@ -2149,12 +2149,17 @@ definition {
 	}
 
 	@description = "This test covers LPS-72443. It validates that a user can navigate to the remote site using the staging toolbar."
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanNavigateToRemoteLiveViaToolbar {
+		Navigator.gotoSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
 
-		// TODO LPS-150078
+		ProductMenu.gotoLiveSite(
+			remoteStaging = "true",
+			site = "Site Name");
 
+		AssertLocation.assertPartialLocation(value1 = "http://localhost:9080/group/remote-site");
 	}
 
 	@description = "This ensures that a document pending review cannot be searched for in a staged site when enabling remote staging."

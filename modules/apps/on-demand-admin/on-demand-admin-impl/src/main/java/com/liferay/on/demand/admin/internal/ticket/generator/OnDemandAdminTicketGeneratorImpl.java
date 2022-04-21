@@ -15,6 +15,7 @@
 package com.liferay.on.demand.admin.internal.ticket.generator;
 
 import com.liferay.on.demand.admin.constants.OnDemandAdminConstants;
+import com.liferay.on.demand.admin.internal.helper.OnDemandAdminHelper;
 import com.liferay.on.demand.admin.ticket.generator.OnDemandAdminTicketGenerator;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -46,6 +47,9 @@ public class OnDemandAdminTicketGeneratorImpl
 	@Override
 	public Ticket generate(Company company, long requestorUserId)
 		throws PortalException {
+
+		_onDemandAdminHelper.checkRequestAdministratorAccessPermission(
+			company.getCompanyId(), requestorUserId);
 
 		User user = _addOnDemandAdminUser(company, requestorUserId);
 
@@ -95,6 +99,9 @@ public class OnDemandAdminTicketGeneratorImpl
 			StringPool.UNDERLINE, requestorUserId, StringPool.UNDERLINE,
 			userId);
 	}
+
+	@Reference
+	private OnDemandAdminHelper _onDemandAdminHelper;
 
 	@Reference
 	private RoleLocalService _roleLocalService;

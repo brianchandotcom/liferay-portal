@@ -17,4 +17,5 @@
  */
 export const FRAGMENT_TYPES = {
 	composition: 'composition',
+	input: 'input',
 };

@@ -22,8 +22,8 @@ import org.junit.Test;
 public class GradleSourceProcessorTest extends BaseSourceProcessorTestCase {
 
 	@Test
-	public void testLineBreakCheck() throws Exception {
-		test("LineBreak.testgradle");
+	public void testMissingLineBreaksAroundCurlyBraces() throws Exception {
+		test("MissingLineBreaksAroundCurlyBraces.testgradle");
 	}
 
 	@Test
@@ -39,4 +39,5 @@ public class GradleSourceProcessorTest extends BaseSourceProcessorTestCase {
 	public void testStylingCheck() throws Exception {
 		test("StylingCheck.testgradle");
 	}
+
 }

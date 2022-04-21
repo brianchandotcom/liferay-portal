@@ -46,7 +46,7 @@ const SaveTemplateModal = ({
 	namespace,
 	observer,
 }) => {
-	const inputNameId = namespace + 'name';
+	const inputNameId = namespace + 'templateName';
 	const isMounted = useIsMounted();
 	const [errorMessage, setErrorMessage] = useState();
 	const [loadingResponse, setLoadingResponse] = useState(false);

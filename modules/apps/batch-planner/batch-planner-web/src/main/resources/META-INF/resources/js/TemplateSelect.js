@@ -116,7 +116,7 @@ const TemplateSelect = ({
 		});
 	};
 
-	const selectId = `${portletNamespace}templateName`;
+	const selectId = `${portletNamespace}templateSelect`;
 
 	return (
 		<ClayForm.Group>

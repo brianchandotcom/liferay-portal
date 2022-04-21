@@ -55,7 +55,7 @@ const TOPPER_STYLES = [
 	'shadow',
 ];
 
-export default function generateStyleSheet(styles, {hasTopper = true} = {}) {
+export default function generateStyleSheet(styles, {itemsWithTopper} = {}) {
 	let css = '';
 
 	Object.entries(styles).forEach(([itemId, itemStyles]) => {
@@ -69,7 +69,10 @@ export default function generateStyleSheet(styles, {hasTopper = true} = {}) {
 
 			const {cssTemplate} = config.commonStylesFields[styleName];
 
-			if (hasTopper && TOPPER_STYLES.includes(styleName)) {
+			if (
+				itemsWithTopper.has(itemId) &&
+				TOPPER_STYLES.includes(styleName)
+			) {
 				topperCSS += `${replaceValue(
 					cssTemplate,
 					getValue(itemId, styleName, styleValue)

@@ -23,6 +23,7 @@ import {useSelector} from '../contexts/StoreContext';
 import {deepEqual} from '../utils/checkDeepEqual';
 import generateStyleSheet from '../utils/generateStyleSheet';
 import {getResponsiveConfig} from '../utils/getResponsiveConfig';
+import hasInnerCommonStyles from '../utils/hasInnerCustomStyles';
 
 const LAYOUT_DATA_ITEMS_WITH_COMMON_STYLES = [
 	LAYOUT_DATA_ITEM_TYPES.collection,
@@ -34,6 +35,7 @@ const LAYOUT_DATA_ITEMS_WITH_COMMON_STYLES = [
 export default function CommonStylesManager() {
 	const stylesPerViewportRef = useRef({});
 	const masterStylesPerViewportRef = useRef({});
+	const fragmentEntryLinksRef = useRef({});
 
 	const layoutData = useSelector((state) => state.layoutData);
 	const masterLayoutData = useSelector(
@@ -43,6 +45,12 @@ export default function CommonStylesManager() {
 		(state) => state.selectedViewportSize
 	);
 
+	useSelector((state) => {
+		fragmentEntryLinksRef.current = state.fragmentEntryLinks;
+
+		return null;
+	});
+
 	const globalContext = useGlobalContext();
 
 	useEffect(() => {
@@ -50,7 +58,8 @@ export default function CommonStylesManager() {
 			stylesPerViewportRef.current[selectedViewportSize] || {};
 
 		const {styleSheet, styles} = calculateStyles({
-			hasTopper: true,
+			fragmentEntryLinks: fragmentEntryLinksRef.current,
+			isMaster: true,
 			items: Object.values(layoutData.items),
 			previousStyleSheet,
 			previousStyles,
@@ -78,7 +87,8 @@ export default function CommonStylesManager() {
 			masterStylesPerViewportRef.current[selectedViewportSize] || {};
 
 		const {styleSheet, styles} = calculateStyles({
-			hasTopper: false,
+			fragmentEntryLinks: fragmentEntryLinksRef.current,
+			isMaster: false,
 			items: Object.values(masterLayoutData.items),
 			previousStyleSheet,
 			previousStyles,
@@ -153,12 +163,14 @@ function filterStyles({item, selectedViewportSize, styles}) {
 }
 
 function calculateStyles({
-	hasTopper,
+	fragmentEntryLinks,
+	isMaster,
 	items,
 	previousStyleSheet,
 	previousStyles,
 	selectedViewportSize,
 }) {
+	const itemsWithTopper = new Set();
 	const nextStyles = {};
 
 	items.forEach((item) => {
@@ -173,6 +185,20 @@ function calculateStyles({
 				selectedViewportSize,
 				styles,
 			});
+
+			if (!isMaster) {
+				return;
+			}
+
+			const fragmentEntryLink =
+				fragmentEntryLinks[item.config.fragmentEntryLinkId];
+
+			if (
+				item.type !== LAYOUT_DATA_ITEM_TYPES.fragment ||
+				!hasInnerCommonStyles(fragmentEntryLink?.editableValues)
+			) {
+				itemsWithTopper.add(item.itemId);
+			}
 		}
 	});
 
@@ -182,7 +208,7 @@ function calculateStyles({
 		!deepEqual(previousStyles, nextStyles)
 	) {
 		const styleSheet = generateStyleSheet(nextStyles, {
-			hasTopper,
+			itemsWithTopper,
 		});
 
 		return {styleSheet, styles: nextStyles};

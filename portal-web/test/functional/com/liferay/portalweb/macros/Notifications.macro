@@ -39,6 +39,8 @@ definition {
 
 		MenuItem.clickNoError(menuItem = "Delete");
 
+		Alert.viewSuccessMessage();
+
 		AssertElementNotPresent(locator1 = "Notifications#NOTIFICATIONS_CONTENT");
 	}
 

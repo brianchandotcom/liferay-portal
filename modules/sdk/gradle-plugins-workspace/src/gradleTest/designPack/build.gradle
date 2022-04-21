@@ -24,7 +24,7 @@ node {
 }
 
 runGradleTest {
-	dependsOn ":design-packs:my-theme:zipDesignPack"
+	dependsOn ":design-packs:fire:zipDesignPack"
 
 	doLast {
 		outputPaths.each{

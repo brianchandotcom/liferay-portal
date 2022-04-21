@@ -14,10 +14,12 @@
 
 package com.liferay.gradle.plugins.workspace.configurators;
 
-import com.liferay.gradle.plugins.node.NodePlugin;
-import com.liferay.gradle.plugins.node.tasks.PackageRunBuildTask;
-import com.liferay.gradle.plugins.workspace.FrontendPlugin;
+import com.liferay.gradle.plugins.LiferayBasePlugin;
+import com.liferay.gradle.plugins.css.builder.CSSBuilderPlugin;
+import com.liferay.gradle.plugins.theme.builder.BuildThemeTask;
+import com.liferay.gradle.plugins.theme.builder.ThemeBuilderPlugin;
 import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
+import com.liferay.gradle.plugins.workspace.WorkspacePlugin;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
 import com.liferay.gradle.util.Validator;
 
@@ -48,10 +50,15 @@ import org.gradle.api.file.DirectoryProperty;
 import org.gradle.api.initialization.Settings;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.ExtensionAware;
+import org.gradle.api.plugins.JavaPlugin;
+import org.gradle.api.plugins.WarPlugin;
+import org.gradle.api.plugins.WarPluginConvention;
 import org.gradle.api.provider.Property;
 import org.gradle.api.specs.Spec;
+import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.TaskOutputs;
+import org.gradle.api.tasks.bundling.War;
 import org.gradle.api.tasks.bundling.Zip;
 
 /**
@@ -79,30 +86,48 @@ public class DesignPacksProjectConfigurator extends BaseProjectConfigurator {
 
 			_defaultRootDirs = Collections.singleton(dir);
 		}
+
+		_defaultRepositoryEnabled = GradleUtil.getProperty(
+			settings,
+			WorkspacePlugin.PROPERTY_PREFIX + NAME +
+				".default.repository.enabled",
+			_DEFAULT_REPOSITORY_ENABLED);
 	}
 
 	@Override
 	public void apply(Project project) {
-		File packageJsonFile = project.file("package.json");
+		WorkspaceExtension workspaceExtension = GradleUtil.getExtension(
+			(ExtensionAware)project.getGradle(), WorkspaceExtension.class);
 
-		if (packageJsonFile.exists()) {
-			WorkspaceExtension workspaceExtension = GradleUtil.getExtension(
-				(ExtensionAware)project.getGradle(), WorkspaceExtension.class);
+		GradleUtil.applyPlugin(project, LiferayBasePlugin.class);
+		GradleUtil.applyPlugin(project, WarPlugin.class);
 
-			GradleUtil.applyPlugin(project, FrontendPlugin.class);
+		_configureTaskProcessResources(project);
 
-			Zip zipDesignPackTask = _addTaskZipDesignPack(
-				project, DESIGN_PACK_TASK_NAME, workspaceExtension);
-
-			zipDesignPackTask.setDescription(
-				"Assembles design pack project (zip).");
-
-			zipDesignPackTask.setGroup(BasePlugin.BUILD_GROUP);
-
-			_configureTaskDesignPack(project, zipDesignPackTask);
-
-			_configureTaskPackageRunBuild(project, zipDesignPackTask);
+		if (isDefaultRepositoryEnabled()) {
+			GradleUtil.addDefaultRepositories(project);
 		}
+
+		GradleUtil.applyPlugin(project, ThemeBuilderPlugin.class);
+
+		_addDependenciesParentThemes(project);
+
+		_addDependenciesPortalCommonCSS(project);
+
+		_configureTaskBuildTheme(project);
+		_configureWar(project);
+
+		Zip zipDesignPackTask = _addTaskZipDesignPack(
+			project, DESIGN_PACK_TASK_NAME, workspaceExtension);
+
+		zipDesignPackTask.setDescription(
+			"Assembles design pack project (zip).");
+
+		zipDesignPackTask.setGroup(BasePlugin.BUILD_GROUP);
+
+		_configureTaskDesignPack(project, zipDesignPackTask);
+
+		_configureTaskWarForZipDesignPack(project, zipDesignPackTask);
 	}
 
 	@Override
@@ -113,6 +138,10 @@ public class DesignPacksProjectConfigurator extends BaseProjectConfigurator {
 	@Override
 	public String getName() {
 		return NAME;
+	}
+
+	public boolean isDefaultRepositoryEnabled() {
+		return _defaultRepositoryEnabled;
 	}
 
 	@Override
@@ -134,12 +163,10 @@ public class DesignPacksProjectConfigurator extends BaseProjectConfigurator {
 						return FileVisitResult.SKIP_SUBTREE;
 					}
 
-					Path gulpfileJsPath = dirPath.resolve("gulpfile.js");
 					Path packageJsonPath = dirPath.resolve("package.json");
 
-					if (Files.exists(gulpfileJsPath) &&
-						Files.exists(packageJsonPath) &&
-						_isLiferayTheme(packageJsonPath)) {
+					if (Files.exists(packageJsonPath) &&
+						_isLiferayDesignPack(packageJsonPath)) {
 
 						projectDirs.add(dirPath.toFile());
 
@@ -161,14 +188,38 @@ public class DesignPacksProjectConfigurator extends BaseProjectConfigurator {
 
 	protected static final String NAME = "design.pack";
 
+	private void _addDependenciesParentThemes(Project project) {
+		GradleUtil.addDependency(
+			project, ThemeBuilderPlugin.PARENT_THEMES_CONFIGURATION_NAME,
+			"com.liferay", "com.liferay.frontend.theme.styled",
+			"latest.release");
+		GradleUtil.addDependency(
+			project, ThemeBuilderPlugin.PARENT_THEMES_CONFIGURATION_NAME,
+			"com.liferay", "com.liferay.frontend.theme.unstyled",
+			"latest.release");
+		GradleUtil.addDependency(
+			project, ThemeBuilderPlugin.PARENT_THEMES_CONFIGURATION_NAME,
+			"com.liferay.plugins", "classic-theme", "latest.release");
+	}
+
+	private void _addDependenciesPortalCommonCSS(Project project) {
+		GradleUtil.addDependency(
+			project, CSSBuilderPlugin.PORTAL_COMMON_CSS_CONFIGURATION_NAME,
+			"com.liferay", "com.liferay.frontend.css.common", "latest.release",
+			false);
+		GradleUtil.addDependency(
+			project, CSSBuilderPlugin.PORTAL_COMMON_CSS_CONFIGURATION_NAME,
+			"org.webjars", "font-awesome", "latest.release", false);
+	}
+
 	@SuppressWarnings("serial")
 	private Zip _addTaskZipDesignPack(
 		Project project, String taskName,
 		final WorkspaceExtension workspaceExtension) {
 
 		Zip task = GradleUtil.addTask(project, taskName, Zip.class);
-
-		task.dependsOn(NodePlugin.PACKAGE_RUN_BUILD_TASK_NAME);
+		
+		task.dependsOn(CSSBuilderPlugin.BUILD_CSS_TASK_NAME);
 
 		_configureTaskDisableUpToDate(task);
 
@@ -192,7 +243,10 @@ public class DesignPacksProjectConfigurator extends BaseProjectConfigurator {
 
 				@SuppressWarnings("unused")
 				public void doCall(CopySpec copySpec) {
-					copySpec.from(new File(project.getBuildDir(), "css"));
+					copySpec.from(
+						new File(
+							project.getBuildDir(),
+							"buildTheme/css/.sass-cache"));
 					copySpec.setIncludeEmptyDirs(false);
 					copySpec.include("**/clay.css");
 					copySpec.include("**/clay_rtl.css");
@@ -209,6 +263,33 @@ public class DesignPacksProjectConfigurator extends BaseProjectConfigurator {
 			new File(project.getProjectDir(), "dist"));
 
 		return task;
+	}
+
+	@SuppressWarnings("unchecked")
+	private void _configureTaskBuildTheme(Project project) {
+		File packageJsonFile = project.file("package.json");
+
+		if (!packageJsonFile.exists()) {
+			return;
+		}
+
+		BuildThemeTask buildThemeTask = (BuildThemeTask)GradleUtil.getTask(
+			project, ThemeBuilderPlugin.BUILD_THEME_TASK_NAME);
+
+		Map<String, Object> packageJsonMap = _getPackageJsonMap(
+			packageJsonFile);
+
+		Map<String, String> liferayDesignPackMap =
+			(Map<String, String>)packageJsonMap.get("liferayDesignPack");
+
+		String baseTheme = liferayDesignPackMap.get("baseTheme");
+
+		if (baseTheme.equals("styled") || baseTheme.equals("unstyled")) {
+			baseTheme = "_" + baseTheme;
+		}
+
+		buildThemeTask.setParentName(baseTheme);
+		buildThemeTask.setTemplateExtension("ftl");
 	}
 
 	private void _configureTaskDesignPack(Project project, Zip zipTask) {
@@ -249,8 +330,8 @@ public class DesignPacksProjectConfigurator extends BaseProjectConfigurator {
 				public void execute(Task task) {
 					project.delete(
 						new File(
-							project.getProjectDir(),
-							"dist/" + project.getName() + ".war"));
+							project.getBuildDir(),
+							"libs/" + project.getName() + ".war"));
 				}
 
 			});
@@ -270,21 +351,58 @@ public class DesignPacksProjectConfigurator extends BaseProjectConfigurator {
 			});
 	}
 
-	private void _configureTaskPackageRunBuild(
+	private void _configureTaskProcessResources(Project project) {
+		project.afterEvaluate(
+			curProject -> {
+				if (GradleUtil.hasTask(
+						curProject, CSSBuilderPlugin.BUILD_CSS_TASK_NAME)) {
+
+					Copy copy = (Copy)GradleUtil.getTask(
+						project, JavaPlugin.PROCESS_RESOURCES_TASK_NAME);
+
+					if (copy != null) {
+						copy.dependsOn(CSSBuilderPlugin.BUILD_CSS_TASK_NAME);
+
+						copy.exclude("**/*.css");
+						copy.exclude("**/*.scss");
+
+						copy.filesMatching(
+							"**/.sass-cache/",
+							fileCopyDetails -> {
+								String path = fileCopyDetails.getPath();
+
+								fileCopyDetails.setPath(
+									path.replace(".sass-cache/", ""));
+							});
+
+						copy.setIncludeEmptyDirs(false);
+					}
+				}
+			});
+	}
+
+	private void _configureTaskWarForZipDesignPack(
 		Project project, Zip taskZipDesignPack) {
 
 		TaskContainer taskContainer = project.getTasks();
 
 		taskContainer.withType(
-			PackageRunBuildTask.class,
-			new Action<PackageRunBuildTask>() {
+			War.class,
+			new Action<War>() {
 
 				@Override
-				public void execute(PackageRunBuildTask packageRunBuildTask) {
-					packageRunBuildTask.finalizedBy(taskZipDesignPack);
+				public void execute(War war) {
+					war.finalizedBy(taskZipDesignPack);
 				}
 
 			});
+	}
+
+	private void _configureWar(Project project) {
+		WarPluginConvention warPluginConvention = GradleUtil.getConvention(
+			project, WarPluginConvention.class);
+
+		warPluginConvention.setWebAppDirName("src");
 	}
 
 	@SuppressWarnings("unchecked")
@@ -299,12 +417,12 @@ public class DesignPacksProjectConfigurator extends BaseProjectConfigurator {
 	}
 
 	@SuppressWarnings("unchecked")
-	private boolean _isLiferayTheme(Path packageJsonPath) {
+	private boolean _isLiferayDesignPack(Path packageJsonPath) {
 		Map<String, Object> packageJsonMap = _getPackageJsonMap(
 			packageJsonPath.toFile());
 
 		Map<String, Object> liferayTheme =
-			(Map<String, Object>)packageJsonMap.get("liferayTheme");
+			(Map<String, Object>)packageJsonMap.get("liferayDesignPack");
 
 		if (liferayTheme != null) {
 			return true;
@@ -313,6 +431,9 @@ public class DesignPacksProjectConfigurator extends BaseProjectConfigurator {
 		return false;
 	}
 
+	private static final boolean _DEFAULT_REPOSITORY_ENABLED = true;
+
+	private final boolean _defaultRepositoryEnabled;
 	private final Set<File> _defaultRootDirs;
 
 }

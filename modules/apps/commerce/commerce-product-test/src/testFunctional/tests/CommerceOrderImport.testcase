@@ -72,14 +72,65 @@ definition {
 
 	}
 
-	@description = "[Please Update]"
-	@ignore = "Test Stub"
+	@description = "Verify users can import an existing order into a new order"
 	@priority = "4"
 	test ImportFromOrder {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-7681 ImportFromOrder pending implementation
+		task ("Given a Minium site with a buyer user") {
+			User.logoutPG();
 
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And given a completed order") {
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+
+			WaitForElementPresent(locator1 = "CommerceEntry#ACTIVE_ORDER_ID");
+
+			var activeOrderId = selenium.getText("CommerceEntry#ACTIVE_ORDER_ID");
+
+			CommerceNavigator.gotoMiniCart();
+
+			Button.click(button = "View Details");
+
+			Button.click(button = "Checkout");
+
+			CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				productName = "U-Joint",
+				productQuantity = "1",
+				productUnitPrice = "24",
+				shippingMethod = "Standard");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+		}
+
+		task ("When the buyer is creating a new order") {
+			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
+		}
+
+		task ("Then they should be able to import the existing order") {
+			CommerceOrders.importFromOrder(orderId = "${activeOrderId}");
+
+			Alert.viewSuccessMessageText(successMessage = "1 row was imported successfully.");
+
+			CommerceOrders.viewOrdersDetails(
+				productListPrice = "24.00",
+				productName = "U-Joint",
+				productQuantity = "1",
+				productSku = "MIN55861",
+				productTotalPrice = "24.00");
+		}
 	}
 
 	@description = "[Please Update]"

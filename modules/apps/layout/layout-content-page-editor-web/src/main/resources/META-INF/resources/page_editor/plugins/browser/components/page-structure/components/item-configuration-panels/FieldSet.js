@@ -18,6 +18,7 @@ import React from 'react';
 
 import {FRAGMENT_CONFIGURATION_FIELDS} from '../../../../../../app/components/fragment-configuration-fields/index';
 import {CONTAINER_WIDTH_TYPES} from '../../../../../../app/config/constants/containerWidthTypes';
+import {FRAGMENT_ENTRY_TYPES} from '../../../../../../app/config/constants/fragmentEntryTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../../app/config/constants/layoutDataItemTypes';
 import {VIEWPORT_SIZES} from '../../../../../../app/config/constants/viewportSizes';
 import {useSelector} from '../../../../../../app/contexts/StoreContext';
@@ -39,6 +40,31 @@ export function fieldIsDisabled(item, field) {
 	);
 }
 
+function getAvailableFields(item, fields, fragmentEntryLinks, viewportSize) {
+	let availableFields = fields;
+
+	if (viewportSize !== VIEWPORT_SIZES.desktop) {
+		availableFields = fields.filter(
+			(field) => field.responsive || field.name === 'backgroundImage'
+		);
+	}
+
+	if (item.type !== LAYOUT_DATA_ITEM_TYPES.fragment) {
+		return availableFields;
+	}
+
+	const fragmentEntryLink =
+		fragmentEntryLinks[item.config.fragmentEntryLinkId];
+
+	if (fragmentEntryLink.fragmentEntryType === FRAGMENT_ENTRY_TYPES.input) {
+		availableFields = availableFields.filter(
+			(field) => field.name !== 'display'
+		);
+	}
+
+	return availableFields;
+}
+
 export function FieldSet({
 	fields,
 	item = {},
@@ -49,15 +75,14 @@ export function FieldSet({
 }) {
 	const store = useSelector((state) => state);
 
-	const {selectedViewportSize} = store;
+	const {fragmentEntryLinks, selectedViewportSize} = store;
 
-	const availableFields =
-		selectedViewportSize === VIEWPORT_SIZES.desktop
-			? fields
-			: fields.filter(
-					(field) =>
-						field.responsive || field.name === 'backgroundImage'
-			  );
+	const availableFields = getAvailableFields(
+		item,
+		fields,
+		fragmentEntryLinks,
+		selectedViewportSize
+	);
 
 	return availableFields.length > 0 && label ? (
 		<Collapse label={label} open>

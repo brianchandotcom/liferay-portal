@@ -120,7 +120,11 @@
 		<dependency>
 			<groupId>com.liferay</groupId>
 			<artifactId>com.liferay.portal.vulcan.api</artifactId>
+#if (${liferayVersion.startsWith("7.3")})
+			<version>7.19.2</version>
+#else
 			<version>@com.liferay.portal.vulcan.api.version@</version>
+#end
 			<scope>provided</scope>
 		</dependency>
 		<dependency>

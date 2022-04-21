@@ -304,7 +304,7 @@ AUI.add(
 							),
 							uploader.on(
 								'uploadcomplete',
-								instance._detectFolderUploadError,
+								instance._detectUploadError,
 								instance,
 								data
 							),
@@ -755,10 +755,12 @@ AUI.add(
 					handles.length = 0;
 				},
 
-				_detectFolderUploadError(event, data) {
+				_detectUploadError(event, data, response) {
 					var instance = this;
 
-					var response = instance._getUploadResponse(event.data);
+					data = data || instance._getCurrentUploadData();
+					response =
+						response || instance._getUploadResponse(event.data);
 
 					if (response.error) {
 						var file = event.file;
@@ -1313,17 +1315,7 @@ AUI.add(
 						var hasErrors = !!response.error;
 
 						if (hasErrors) {
-							var uploadData = instance._getCurrentUploadData();
-							var invalidFileIndex = uploadData.fileList.findIndex(
-								({name}) => file.name === name
-							);
-							var invalidFile =
-								uploadData.fileList[invalidFileIndex];
-
-							uploadData.fileList.splice(invalidFileIndex, 1);
-
-							invalidFile.errorMessage = response.message;
-							uploadData.invalidFiles.push(invalidFile);
+							instance._detectUploadError(event, null, response);
 						}
 						else {
 							var fileEntryId = JSON.parse(event.data)

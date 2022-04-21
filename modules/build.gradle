@@ -25,8 +25,8 @@ ext {
 	projectTemplateTokens = [
 		"biz.aQute.bnd.version": "5.2.0",
 		"com.liferay.ant.bnd.version": "3.2.8",
-		"com.liferay.css.builder.version": "3.0.3",
-		"com.liferay.gradle.plugins.css.builder.version": "5.0.2",
+		"com.liferay.css.builder.version": "3.1.0",
+		"com.liferay.gradle.plugins.css.builder.version": "5.0.4",
 		"com.liferay.gradle.plugins.theme.builder.version": "2.0.17",
 		"com.liferay.gradle.plugins.workspace.version": "3.4.38",
 		"com.liferay.portal.tools.bundle.support.version": "3.7.3",

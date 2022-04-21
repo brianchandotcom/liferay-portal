@@ -23,10 +23,13 @@ import com.liferay.depot.util.SiteConnectedGroupGroupProviderUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -95,6 +98,18 @@ public class SelectAssetVocabularyItemSelectorDisplayContext {
 		_assetVocabulariesSearchContainer = searchContainer;
 
 		return _assetVocabulariesSearchContainer;
+	}
+
+	public String getVocabularyGroupDescriptiveName(long groupId)
+		throws PortalException {
+
+		if (groupId == _themeDisplay.getCompanyGroupId()) {
+			return LanguageUtil.get(_httpServletRequest, "global");
+		}
+
+		Group group = GroupLocalServiceUtil.fetchGroup(groupId);
+
+		return group.getDescriptiveName(_themeDisplay.getLocale());
 	}
 
 	private List<AssetVocabulary> _getAssetVocabularies() {

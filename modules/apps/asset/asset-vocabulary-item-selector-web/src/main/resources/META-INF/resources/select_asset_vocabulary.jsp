@@ -62,6 +62,12 @@ SelectAssetVocabularyItemSelectorDisplayContext selectAssetVocabularyItemSelecto
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
+				cssClass="table-cell-expand"
+				name="site-or-asset-library"
+				value="<%= selectAssetVocabularyItemSelectorDisplayContext.getVocabularyGroupDescriptiveName(assetVocabulary.getGroupId()) %>"
+			/>
+
+			<liferay-ui:search-container-column-text
 				cssClass="table-column-text-center"
 				name="categories"
 				value="<%= String.valueOf(assetVocabulary.getCategoriesCount()) %>"

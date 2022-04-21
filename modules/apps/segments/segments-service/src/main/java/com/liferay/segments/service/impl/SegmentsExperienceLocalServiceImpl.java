@@ -244,7 +244,9 @@ public class SegmentsExperienceLocalServiceImpl
 
 		// Segments experiences priorities
 
-		_updateSegmentExperiencesPriority(segmentsExperience);
+		if (!GroupThreadLocal.isDeleteInProcess()) {
+			_updateSegmentExperiencesPriority(segmentsExperience);
+		}
 
 		// Segments experiments
 

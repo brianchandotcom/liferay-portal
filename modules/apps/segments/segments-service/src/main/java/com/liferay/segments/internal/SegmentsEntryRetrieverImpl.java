@@ -19,11 +19,11 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.segments.SegmentsEntryRetriever;
 import com.liferay.segments.configuration.provider.SegmentsConfigurationProvider;
 import com.liferay.segments.constants.SegmentsEntryConstants;
@@ -52,23 +52,15 @@ public class SegmentsEntryRetrieverImpl implements SegmentsEntryRetriever {
 	public long[] getSegmentsEntryIds(
 		long groupId, long userId, Context context) {
 
-		Group group = _groupLocalService.fetchGroup(groupId);
-
-		if (group == null) {
-			_log.error("Invalid group " + groupId);
-
-			return new long[] {SegmentsEntryConstants.ID_DEFAULT};
-		}
-
 		try {
 			if (!_segmentsConfigurationProvider.isSegmentationEnabled(
-					group.getCompanyId())) {
+					_getCompanyId(groupId))) {
 
 				return new long[] {SegmentsEntryConstants.ID_DEFAULT};
 			}
 		}
-		catch (ConfigurationException configurationException) {
-			_log.error(configurationException);
+		catch (PortalException portalException) {
+			_log.error(portalException);
 		}
 
 		Optional<long[]> segmentsEntryIdsOptional =
@@ -109,6 +101,16 @@ public class SegmentsEntryRetrieverImpl implements SegmentsEntryRetriever {
 		return segmentsEntryIds;
 	}
 
+	private long _getCompanyId(long groupId) throws PortalException {
+		if (groupId == 0) {
+			return _portal.getDefaultCompanyId();
+		}
+
+		Group group = _groupLocalService.getGroup(groupId);
+
+		return group.getCompanyId();
+	}
+
 	private Optional<HttpServletRequest> _getHttpServletRequestOptional() {
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
@@ -138,6 +140,9 @@ public class SegmentsEntryRetrieverImpl implements SegmentsEntryRetriever {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private SegmentsConfigurationProvider _segmentsConfigurationProvider;

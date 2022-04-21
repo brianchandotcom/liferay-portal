@@ -44,7 +44,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -64,7 +63,6 @@ import com.liferay.staging.StagingGroupHelper;
 import com.liferay.staging.StagingGroupHelperUtil;
 import com.liferay.template.constants.TemplatePortletKeys;
 
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -280,7 +278,7 @@ public class SiteNavigationAdminDisplayContext {
 			).buildString()
 		).put(
 			"displayTemplateOptions",
-			_getDDMTemplateJSONArray(_httpServletRequest)
+			_getDDMTemplatesJSONArray(_httpServletRequest)
 		).put(
 			"editSiteNavigationMenuItemParentURL",
 			() -> PortletURLBuilder.createActionURL(
@@ -457,16 +455,34 @@ public class SiteNavigationAdminDisplayContext {
 		return addURL.toString();
 	}
 
-	private JSONArray _getDDMTemplateJSONArray(
+	private JSONArray _getDDMTemplatesJSONArray(
 		HttpServletRequest httpServletRequest) {
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		List<DDMTemplate> ddmTemplates =
+			DDMTemplateLocalServiceUtil.getTemplates(
+				_getGroupIds(themeDisplay.getScopeGroup()),
+				PortalUtil.getClassNameId(NavItem.class.getName()), 0L);
 
-		for (DDMTemplate ddmTemplate : _getDDMTemplates(httpServletRequest)) {
+		for (DDMTemplate ddmTemplate : ddmTemplates) {
+			try {
+				if (!DDMTemplatePermission.contains(
+						themeDisplay.getPermissionChecker(),
+						ddmTemplate.getTemplateId(), ActionKeys.VIEW) ||
+					!DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY.equals(
+						ddmTemplate.getType())) {
+
+					continue;
+				}
+			}
+			catch (Exception exception) {
+			}
+
 			jsonArray.put(
 				JSONUtil.put(
 					"label",
@@ -478,44 +494,6 @@ public class SiteNavigationAdminDisplayContext {
 		}
 
 		return jsonArray;
-	}
-
-	private List<DDMTemplate> _getDDMTemplates(
-		HttpServletRequest httpServletRequest) {
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		try {
-			List<DDMTemplate> ddmTemplates =
-				DDMTemplateLocalServiceUtil.getTemplates(
-					_getGroupIds(themeDisplay.getScopeGroup()),
-					PortalUtil.getClassNameId(NavItem.class.getName()), 0L);
-
-			return ListUtil.filter(
-				ddmTemplates,
-				ddmTemplate -> {
-					try {
-						if (!DDMTemplatePermission.contains(
-								themeDisplay.getPermissionChecker(),
-								ddmTemplate.getTemplateId(), ActionKeys.VIEW) ||
-							!DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY.equals(
-								ddmTemplate.getType())) {
-
-							return false;
-						}
-					}
-					catch (Exception exception) {
-						return false;
-					}
-
-					return true;
-				});
-		}
-		catch (Exception exception) {
-			return Collections.emptyList();
-		}
 	}
 
 	private DropdownItem _getDropdownItem(

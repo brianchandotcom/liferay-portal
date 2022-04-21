@@ -27,6 +27,7 @@ import {useSelector} from '../../contexts/StoreContext';
 import {getFrontendTokenValue} from '../../utils/getFrontendTokenValue';
 import getLayoutDataItemTopperUniqueClassName from '../../utils/getLayoutDataItemTopperUniqueClassName';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
+import hasInnerCommonStyles from '../../utils/hasInnerCustomStyles';
 import {isValidSpacingOption} from '../../utils/isValidSpacingOption';
 import FragmentContent from '../fragment-content/FragmentContent';
 import Topper from '../topper/Topper';
@@ -48,9 +49,12 @@ const FragmentWithControls = React.forwardRef(({item}, ref) => {
 	const itemConfig = getResponsiveConfig(item.config, selectedViewportSize);
 	const [setRef, itemElement] = useSetRef(ref);
 
+	const fragmentEntryLink =
+		fragmentEntryLinks[item.config.fragmentEntryLinkId];
+
 	const editableValues = useMemo(() => {
 		const fieldNames = [];
-		const fragment = fragmentEntryLinks[item.config.fragmentEntryLinkId];
+		const fragment = fragmentEntryLink;
 
 		if (fragment) {
 			fragment.configuration?.fieldSets?.forEach((fieldSet) => {
@@ -75,7 +79,7 @@ const FragmentWithControls = React.forwardRef(({item}, ref) => {
 					]?.[fieldName] || {}
 			);
 		}
-	}, [item, fragmentEntryLinks]);
+	}, [fragmentEntryLink]);
 
 	useEffect(() => {
 		if (editableValues.length) {
@@ -114,9 +118,9 @@ const FragmentWithControls = React.forwardRef(({item}, ref) => {
 	return (
 		<Topper
 			className={classNames({
-				[getLayoutDataItemTopperUniqueClassName(
-					item.itemId
-				)]: config.featureFlagLps132571,
+				[getLayoutDataItemTopperUniqueClassName(item.itemId)]:
+					config.featureFlagLps132571 &&
+					!hasInnerCommonStyles(fragmentEntryLink.editableValues),
 				[`mb-${marginBottom}`]: isValidSpacingOption(marginBottom),
 				[`ml-${marginLeft}`]: isValidSpacingOption(marginLeft),
 				[`mr-${marginRight}`]: isValidSpacingOption(marginRight),

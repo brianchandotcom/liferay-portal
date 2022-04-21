@@ -40,6 +40,7 @@ import {getCommonStyleByName} from '../../utils/getCommonStyleByName';
 import {getFrontendTokenValue} from '../../utils/getFrontendTokenValue';
 import getLayoutDataItemUniqueClassName from '../../utils/getLayoutDataItemUniqueClassName';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
+import hasInnerCommonStyles from '../../utils/hasInnerCustomStyles';
 import {isValidSpacingOption} from '../../utils/isValidSpacingOption';
 import useBackgroundImageValue from '../../utils/useBackgroundImageValue';
 import {useId} from '../../utils/useId';
@@ -298,9 +299,9 @@ const FragmentContent = ({
 						'page-editor__fragment-content',
 						{
 							[`${fragmentEntryLink?.cssClass}`]: config.featureFlagLps132571,
-							[getLayoutDataItemUniqueClassName(
-								item.itemId
-							)]: config.featureFlagLps132571,
+							[getLayoutDataItemUniqueClassName(item.itemId)]:
+								config.featureFlagLps132571 &&
+								!hasInnerCommonStyles(editableValues),
 							'page-editor__fragment-content--portlet-topper-hidden': !canConfigureWidgets,
 							[`mb-${marginBottom}`]:
 								isValidSpacingOption(marginBottom) &&

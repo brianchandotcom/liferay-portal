@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
+import com.liferay.asset.vocabulary.item.selector.AssetVocabularyItemSelectorReturnType;
 import com.liferay.asset.vocabulary.item.selector.criterion.AssetVocabularyItemSelectorCriterion;
 import com.liferay.depot.util.SiteConnectedGroupGroupProviderUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -114,6 +115,10 @@ public class SelectAssetVocabularyItemSelectorDisplayContext {
 		return _itemSelectedEventName;
 	}
 
+	public String getReturnType() {
+		return AssetVocabularyItemSelectorReturnType.class.getName();
+	}
+
 	public String getVocabularyGroupDescriptiveName(long groupId)
 		throws PortalException {
 
@@ -124,6 +129,10 @@ public class SelectAssetVocabularyItemSelectorDisplayContext {
 		Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 
 		return group.getDescriptiveName(_themeDisplay.getLocale());
+	}
+
+	public boolean isMultiSelection() {
+		return _assetVocabularyItemSelectorCriterion.isMultiSelection();
 	}
 
 	private List<AssetVocabulary> _getAssetVocabularies() {

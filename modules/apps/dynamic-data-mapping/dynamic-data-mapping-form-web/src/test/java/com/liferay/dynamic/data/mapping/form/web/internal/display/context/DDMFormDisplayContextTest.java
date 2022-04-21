@@ -901,23 +901,24 @@ public class DDMFormDisplayContextTest {
 	private void _setUpPortalUtil() {
 		PortalUtil portalUtil = new PortalUtil();
 
-		portalUtil.setPortal(Mockito.mock(Portal.class));
+		Portal portal = Mockito.mock(Portal.class);
+
+		portalUtil.setPortal(portal);
 
 		Mockito.when(
-			PortalUtil.getHttpServletRequest(Matchers.any(RenderRequest.class))
+			portal.getHttpServletRequest(Matchers.any(RenderRequest.class))
 		).thenReturn(
 			_request
 		);
 
 		Mockito.when(
-			PortalUtil.getLiferayPortletRequest(
-				Matchers.any(RenderRequest.class))
+			portal.getLiferayPortletRequest(Matchers.any(RenderRequest.class))
 		).thenReturn(
 			Mockito.mock(LiferayPortletRequest.class)
 		);
 
 		Mockito.when(
-			PortalUtil.getOriginalServletRequest(
+			portal.getOriginalServletRequest(
 				Matchers.any(HttpServletRequest.class))
 		).thenReturn(
 			_mockHttpServletRequest

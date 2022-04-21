@@ -56,11 +56,13 @@ public class SelectAssetVocabularyItemSelectorDisplayContext {
 		HttpServletRequest httpServletRequest,
 		AssetVocabularyItemSelectorCriterion
 			assetVocabularyItemSelectorCriterion,
-		PortletURL portletURL, RenderResponse renderResponse) {
+		String itemSelectedEventName, PortletURL portletURL,
+		RenderResponse renderResponse) {
 
 		_httpServletRequest = httpServletRequest;
 		_assetVocabularyItemSelectorCriterion =
 			assetVocabularyItemSelectorCriterion;
+		_itemSelectedEventName = itemSelectedEventName;
 		_portletURL = portletURL;
 		_renderResponse = renderResponse;
 
@@ -106,6 +108,10 @@ public class SelectAssetVocabularyItemSelectorDisplayContext {
 		_assetVocabulariesSearchContainer = searchContainer;
 
 		return _assetVocabulariesSearchContainer;
+	}
+
+	public String getItemSelectedEventName() {
+		return _itemSelectedEventName;
 	}
 
 	public String getVocabularyGroupDescriptiveName(long groupId)
@@ -208,6 +214,7 @@ public class SelectAssetVocabularyItemSelectorDisplayContext {
 		_assetVocabularyItemSelectorCriterion;
 	private long[] _groupIds;
 	private final HttpServletRequest _httpServletRequest;
+	private final String _itemSelectedEventName;
 	private final PortletURL _portletURL;
 	private final RenderResponse _renderResponse;
 	private final ThemeDisplay _themeDisplay;

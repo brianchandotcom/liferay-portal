@@ -85,7 +85,8 @@ public class AssetVocabularyItemSelectorView
 				SELECT_ASSET_VOCABULARY_ITEM_SELECTOR_DISPLAY_CONTEXT,
 			new SelectAssetVocabularyItemSelectorDisplayContext(
 				(HttpServletRequest)servletRequest,
-				assetVocabularyItemSelectorCriterion, portletURL,
+				assetVocabularyItemSelectorCriterion, itemSelectedEventName,
+				portletURL,
 				(RenderResponse)servletRequest.getAttribute(
 					JavaConstants.JAVAX_PORTLET_RESPONSE)));
 

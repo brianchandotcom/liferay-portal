@@ -14,12 +14,16 @@
 
 package com.liferay.object.rest.internal.jaxrs.application;
 
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.object.rest.internal.jaxrs.container.request.filter.ObjectDefinitionIdContainerRequestFilter;
 import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResourceImpl;
 import com.liferay.object.rest.internal.resource.v1_0.OpenAPIResourceImpl;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.openapi.DTOProperty;
 import com.liferay.portal.vulcan.openapi.OpenAPISchemaFilter;
@@ -59,7 +63,10 @@ public class ObjectEntryApplication extends Application {
 				_objectDefinitionId, _objectDefinitionName));
 		objects.add(
 			new OpenAPIResourceImpl(
-				_openAPIResource, _getOpenAPISchemaFilter(_applicationPath),
+				_objectDefinitionLocalService.fetchObjectDefinition(
+					_objectDefinitionId),
+				_getObjectRelationshipsRelatedObjects(), _openAPIResource,
+				_getOpenAPISchemaFilter(_applicationPath),
 				new HashSet<Class<?>>() {
 					{
 						add(ObjectEntryResourceImpl.class);
@@ -108,6 +115,29 @@ public class ObjectEntryApplication extends Application {
 			objectField.getName(), objectField.getDBType());
 	}
 
+	private Map<ObjectRelationship, ObjectDefinition>
+		_getObjectRelationshipsRelatedObjects() {
+
+		Map<ObjectRelationship, ObjectDefinition>
+			objectRelationshipObjectDefinitionMap = new HashMap<>();
+		List<ObjectRelationship> objectRelationships =
+			_objectRelationshipLocalService.getObjectRelationships(
+				_objectDefinitionId);
+
+		for (ObjectRelationship objectRelationship : objectRelationships) {
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.fetchObjectDefinition(
+					objectRelationship.getObjectDefinitionId2());
+
+			if (objectDefinition != null) {
+				objectRelationshipObjectDefinitionMap.put(
+					objectRelationship, objectDefinition);
+			}
+		}
+
+		return objectRelationshipObjectDefinitionMap;
+	}
+
 	private OpenAPISchemaFilter _getOpenAPISchemaFilter(
 		String applicationPath) {
 
@@ -141,12 +171,19 @@ public class ObjectEntryApplication extends Application {
 	private String _applicationName;
 	private String _applicationPath;
 	private Long _objectDefinitionId;
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
 	private String _objectDefinitionName;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
 
 	private List<ObjectField> _objectFields;
+
+	@Reference
+	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
 	@Reference
 	private OpenAPIResource _openAPIResource;

@@ -13,46 +13,26 @@
  */
 
 export default function ({namespace}) {
-	const functionalToggle = document.getElementById(
-		`${namespace}functionalToggle`
-	);
-	const performanceToggle = document.getElementById(
-		`${namespace}performanceToggle`
-	);
-	const personalizationToggle = document.getElementById(
-		`${namespace}personalizationToggle`
+	const toggleSwitches = Array.from(
+		document.querySelectorAll(
+			`#${namespace}cookiesBannerConfigurationForm [data-cookie-key]`
+		)
 	);
 
-	functionalToggle.addEventListener('click', () => {
-		Liferay.Util.getOpener().Liferay.fire('cookiePreferenceUpdate', {
-			key: 'CONSENT_TYPE_FUNCTIONAL',
-			value: functionalToggle.checked ? 'true' : 'false',
+	toggleSwitches.forEach((toggleSwitch) => {
+		const cookieKey = toggleSwitch.dataset.cookieKey;
+
+		toggleSwitch.addEventListener('click', () => {
+			Liferay.Util.getOpener().Liferay.fire('cookiePreferenceUpdate', {
+				key: cookieKey,
+				value: toggleSwitch.checked ? 'true' : 'false',
+			});
 		});
+
+		toggleSwitch.checked = getCookie(cookieKey) === 'true';
+
+		toggleSwitch.removeAttribute('disabled');
 	});
-
-	performanceToggle.addEventListener('click', () => {
-		Liferay.Util.getOpener().Liferay.fire('cookiePreferenceUpdate', {
-			key: 'CONSENT_TYPE_PERFORMANCE',
-			value: performanceToggle.checked ? 'true' : 'false',
-		});
-	});
-
-	personalizationToggle.addEventListener('click', () => {
-		Liferay.Util.getOpener().Liferay.fire('cookiePreferenceUpdate', {
-			key: 'CONSENT_TYPE_PERSONALIZATION',
-			value: personalizationToggle.checked ? 'true' : 'false',
-		});
-	});
-
-	functionalToggle.checked = getCookie('CONSENT_TYPE_FUNCTIONAL') === 'true';
-	performanceToggle.checked =
-		getCookie('CONSENT_TYPE_PERFORMANCE') === 'true';
-	personalizationToggle.checked =
-		getCookie('CONSENT_TYPE_PERSONALIZATION') === 'true';
-
-	functionalToggle.removeAttribute('disabled');
-	performanceToggle.removeAttribute('disabled');
-	personalizationToggle.removeAttribute('disabled');
 
 	const acceptAllButton = document.getElementById(
 		`${namespace}acceptAllButton`
@@ -69,18 +49,13 @@ export default function ({namespace}) {
 	});
 
 	confirmButton.addEventListener('click', () => {
-		setCookie(
-			'CONSENT_TYPE_FUNCTIONAL',
-			functionalToggle.checked ? 'true' : 'false'
-		);
-		setCookie(
-			'CONSENT_TYPE_PERFORMANCE',
-			performanceToggle.checked ? 'true' : 'false'
-		);
-		setCookie(
-			'CONSENT_TYPE_PERSONALIZATION',
-			personalizationToggle.checked ? 'true' : 'false'
-		);
+		toggleSwitches.forEach((toggleSwitch) => {
+			setCookie(
+				toggleSwitch.dataset.cookieKey,
+				toggleSwitch.checked ? 'true' : 'false'
+			);
+		});
+
 		setCookie('CONSENT_TYPE_STRICTLY_NECESSARY', 'true');
 
 		window.location.reload();

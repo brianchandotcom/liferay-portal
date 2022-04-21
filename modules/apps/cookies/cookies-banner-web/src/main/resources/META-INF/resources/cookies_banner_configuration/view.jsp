@@ -22,6 +22,7 @@ CookiesBannerConfigurationDisplayContext cookiesBannerConfigurationDisplayContex
 
 <clay:container-fluid
 	cssClass="container-view p-md-4"
+	id='<%= liferayPortletResponse.getNamespace() + "cookiesBannerConfigurationForm" %>'
 >
 	<clay:row>
 		<clay:col
@@ -70,7 +71,7 @@ CookiesBannerConfigurationDisplayContext cookiesBannerConfigurationDisplayContex
 				<clay:content-col>
 					<label class="toggle-switch">
 						<span class="toggle-switch-check-bar">
-							<input id="<%= liferayPortletResponse.getNamespace() %>performanceToggle" class="toggle-switch-check toggle-switch-check-performance" disabled type="checkbox" />
+							<input class="toggle-switch-check" data-cookie-key="CONSENT_TYPE_PERFORMANCE" disabled type="checkbox" />
 
 							<span aria-hidden="true" class="toggle-switch-bar">
 								<span class="toggle-switch-handle"></span>
@@ -99,7 +100,7 @@ CookiesBannerConfigurationDisplayContext cookiesBannerConfigurationDisplayContex
 				<clay:content-col>
 					<label class="toggle-switch">
 						<span class="toggle-switch-check-bar">
-							<input class="toggle-switch-check toggle-switch-check-functional" disabled id="<%= liferayPortletResponse.getNamespace() %>functionalToggle" type="checkbox" />
+							<input class="toggle-switch-check" data-cookie-key="CONSENT_TYPE_FUNCTIONAL" disabled type="checkbox" />
 
 							<span aria-hidden="true" class="toggle-switch-bar">
 								<span class="toggle-switch-handle"></span>
@@ -128,7 +129,7 @@ CookiesBannerConfigurationDisplayContext cookiesBannerConfigurationDisplayContex
 				<clay:content-col>
 					<label class="toggle-switch">
 						<span class="toggle-switch-check-bar">
-							<input class="toggle-switch-check toggle-switch-check-personalization" disabled id="<%= liferayPortletResponse.getNamespace() %>personalizationToggle" type="checkbox" />
+							<input class="toggle-switch-check" data-cookie-key="CONSENT_TYPE_PERSONALIZATION" disabled type="checkbox" />
 
 							<span aria-hidden="true" class="toggle-switch-bar">
 								<span class="toggle-switch-handle"></span>

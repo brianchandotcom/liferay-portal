@@ -58,7 +58,16 @@ SelectAssetVocabularyItemSelectorDisplayContext selectAssetVocabularyItemSelecto
 					icon="vocabulary"
 				/>
 
-				<b><%= HtmlUtil.escape(assetVocabulary.getTitle(locale)) %></b>
+				<c:choose>
+					<c:when test="<%= selectAssetVocabularyItemSelectorDisplayContext.isMultiSelection() %>">
+						<b><%= HtmlUtil.escape(assetVocabulary.getTitle(locale)) %></b>
+					</c:when>
+					<c:otherwise>
+						<a class="vocabulary" title="<%= HtmlUtil.escape(assetVocabulary.getTitle(locale)) %>">
+							<%= HtmlUtil.escape(assetVocabulary.getTitle(locale)) %>
+						</a>
+					</c:otherwise>
+				</c:choose>
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
@@ -85,3 +94,46 @@ SelectAssetVocabularyItemSelectorDisplayContext selectAssetVocabularyItemSelecto
 		/>
 	</liferay-ui:search-container>
 </aui:form>
+
+<c:if test="<%= !selectAssetVocabularyItemSelectorDisplayContext.isMultiSelection() %>">
+	<aui:script require="frontend-js-web/liferay/delegate/delegate.es as delegateModule">
+		var delegate = delegateModule.default;
+
+		var selectItemHandler = delegate(
+			document.querySelector('#<portlet:namespace />assetVocabularies'),
+			'click',
+			'.vocabulary',
+			(event) => {
+				var target = event.delegateTarget;
+
+				var row = target.closest('tr');
+
+				var data = row.dataset;
+
+				var itemValue = {
+					groupId: data.groupId,
+					title: data.title,
+					uuid: data.uuid,
+					vocabularyId: data.vocabularyId,
+				};
+
+				Liferay.Util.getOpener().Liferay.fire(
+					'<%= selectAssetVocabularyItemSelectorDisplayContext.getItemSelectedEventName() %>',
+					{
+						data: {
+							returnType:
+								'<%= selectAssetVocabularyItemSelectorDisplayContext.getReturnType() %>',
+							value: itemValue,
+						},
+					}
+				);
+			}
+		);
+
+		Liferay.on('destroyPortlet', function removeListener() {
+			selectItemHandler.dispose();
+
+			Liferay.detach('destroyPortlet', removeListener);
+		});
+	</aui:script>
+</c:if>

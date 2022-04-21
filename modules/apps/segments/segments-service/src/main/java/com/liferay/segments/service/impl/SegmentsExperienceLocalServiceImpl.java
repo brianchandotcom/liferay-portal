@@ -641,20 +641,10 @@ public class SegmentsExperienceLocalServiceImpl
 				return;
 			}
 
-			int lowestPriority = _getLowestPriority(
-				segmentsExperience.getGroupId(),
-				segmentsExperience.getClassNameId(),
-				segmentsExperience.getClassPK());
-
 			int highestPriority = _getHighestPriority(
 				segmentsExperience.getGroupId(),
 				segmentsExperience.getClassNameId(),
 				segmentsExperience.getClassPK());
-
-			segmentsExperiences = _updateSegmentExperiencesPriority(
-				segmentsExperiences, lowestPriority - 1, -1);
-
-			segmentsExperiencePersistence.flush();
 
 			_updateSegmentExperiencesPriority(
 				segmentsExperiences, highestPriority - 1, -1);

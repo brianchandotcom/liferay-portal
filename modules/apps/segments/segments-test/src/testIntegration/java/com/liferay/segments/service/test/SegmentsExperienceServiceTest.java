@@ -93,9 +93,6 @@ public class SegmentsExperienceServiceTest {
 		_classNameId = _classNameLocalService.getClassNameId(Layout.class);
 
 		_classPK = layout.getPlid();
-
-		_segmentsExperienceLocalService.deleteSegmentsExperiences(
-			_group.getGroupId(), _classNameId, layout.getPlid());
 	}
 
 	@Test

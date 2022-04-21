@@ -1162,7 +1162,13 @@ AUI.add(
 							if (invalidFilesLength) {
 								if (!currentUploadData.folder) {
 									currentUploadData.invalidFiles.forEach(
-										({target}) => target.remove()
+										(invalidFile) => {
+											invalidFile.target?.remove();
+
+											invalidFile.progressBar?.destroy();
+											invalidFile.overlay?.destroy();
+											invalidFile.target?.destroy();
+										}
 									);
 								}
 

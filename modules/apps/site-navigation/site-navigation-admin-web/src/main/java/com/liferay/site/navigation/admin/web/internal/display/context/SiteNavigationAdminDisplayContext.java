@@ -96,16 +96,15 @@ public class SiteNavigationAdminDisplayContext {
 			siteNavigationMenuItemTypeRegistry;
 		_siteNavigationMenuLocalService = siteNavigationMenuLocalService;
 		_siteNavigationMenuService = siteNavigationMenuService;
+
+		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	public List<DropdownItem> getAddSiteNavigationMenuItemDropdownItems() {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		SiteNavigationMenuItemTypeContext siteNavigationMenuItemTypeContext =
 			new DefaultSiteNavigationMenuItemTypeContext(
-				themeDisplay.getScopeGroup());
+				_themeDisplay.getScopeGroup());
 
 		List<SiteNavigationMenuItemType> siteNavigationMenuItemTypes =
 			_siteNavigationMenuItemTypeRegistry.
@@ -123,10 +122,10 @@ public class SiteNavigationAdminDisplayContext {
 				Comparator.comparing(
 					siteNavigationMenuItemType ->
 						siteNavigationMenuItemType.getLabel(
-							themeDisplay.getLocale()))
+							_themeDisplay.getLocale()))
 			).map(
 				siteNavigationMenuItemType -> _getDropdownItem(
-					siteNavigationMenuItemType, themeDisplay)
+					siteNavigationMenuItemType, _themeDisplay)
 			).collect(
 				Collectors.toList()
 			)
@@ -206,22 +205,14 @@ public class SiteNavigationAdminDisplayContext {
 	}
 
 	public SiteNavigationMenu getPrimarySiteNavigationMenu() {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		return _siteNavigationMenuLocalService.fetchPrimarySiteNavigationMenu(
-			themeDisplay.getScopeGroupId());
+			_themeDisplay.getScopeGroupId());
 	}
 
 	public SearchContainer<SiteNavigationMenu> getSearchContainer() {
 		if (_searchContainer != null) {
 			return _searchContainer;
 		}
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
 
 		SearchContainer<SiteNavigationMenu> searchContainer =
 			new SearchContainer(
@@ -237,20 +228,20 @@ public class SiteNavigationAdminDisplayContext {
 		if (Validator.isNotNull(getKeywords())) {
 			searchContainer.setResultsAndTotal(
 				() -> _siteNavigationMenuService.getSiteNavigationMenus(
-					themeDisplay.getScopeGroupId(), getKeywords(),
+					_themeDisplay.getScopeGroupId(), getKeywords(),
 					searchContainer.getStart(), searchContainer.getEnd(),
 					searchContainer.getOrderByComparator()),
 				_siteNavigationMenuService.getSiteNavigationMenusCount(
-					themeDisplay.getScopeGroupId(), getKeywords()));
+					_themeDisplay.getScopeGroupId(), getKeywords()));
 		}
 		else {
 			searchContainer.setResultsAndTotal(
 				() -> _siteNavigationMenuService.getSiteNavigationMenus(
-					themeDisplay.getScopeGroupId(), searchContainer.getStart(),
+					_themeDisplay.getScopeGroupId(), searchContainer.getStart(),
 					searchContainer.getEnd(),
 					searchContainer.getOrderByComparator()),
 				_siteNavigationMenuService.getSiteNavigationMenusCount(
-					themeDisplay.getScopeGroupId()));
+					_themeDisplay.getScopeGroupId()));
 		}
 
 		searchContainer.setRowChecker(
@@ -262,10 +253,6 @@ public class SiteNavigationAdminDisplayContext {
 	}
 
 	public Map<String, Object> getSiteNavigationContext() throws Exception {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		return HashMapBuilder.<String, Object>put(
 			"addSiteNavigationMenuItemOptions",
 			getAddSiteNavigationMenuItemDropdownItems()
@@ -277,8 +264,7 @@ public class SiteNavigationAdminDisplayContext {
 				"/site_navigation_admin/delete_site_navigation_menu_item"
 			).buildString()
 		).put(
-			"displayTemplateOptions",
-			_getDDMTemplatesJSONArray(_httpServletRequest)
+			"displayTemplateOptions", _getDDMTemplatesJSONArray()
 		).put(
 			"editSiteNavigationMenuItemParentURL",
 			() -> PortletURLBuilder.createActionURL(
@@ -309,7 +295,7 @@ public class SiteNavigationAdminDisplayContext {
 		).put(
 			"id", _liferayPortletResponse.getNamespace() + "sidebar"
 		).put(
-			"languageId", themeDisplay.getLanguageId()
+			"languageId", _themeDisplay.getLanguageId()
 		).put(
 			"previewSiteNavigationMenuURL", _getPreviewSiteNavigationMenuURL()
 		).put(
@@ -320,7 +306,7 @@ public class SiteNavigationAdminDisplayContext {
 			"siteNavigationMenuItems",
 			SiteNavigationMenuPortletUtil.getSiteNavigationMenuItemsJSONArray(
 				0, getSiteNavigationMenuId(),
-				_siteNavigationMenuItemTypeRegistry, themeDisplay)
+				_siteNavigationMenuItemTypeRegistry, _themeDisplay)
 		).put(
 			"siteNavigationMenuName", getSiteNavigationMenuName()
 		).build();
@@ -365,11 +351,7 @@ public class SiteNavigationAdminDisplayContext {
 	}
 
 	public boolean hasEditPermission() {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		Group group = themeDisplay.getScopeGroup();
+		Group group = _themeDisplay.getScopeGroup();
 
 		StagingGroupHelper stagingGroupHelper =
 			StagingGroupHelperUtil.getStagingGroupHelper();
@@ -390,12 +372,8 @@ public class SiteNavigationAdminDisplayContext {
 			return _updatePermission;
 		}
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		_updatePermission = SiteNavigationMenuPermission.contains(
-			themeDisplay.getPermissionChecker(), getSiteNavigationMenuId(),
+			_themeDisplay.getPermissionChecker(), getSiteNavigationMenuId(),
 			ActionKeys.UPDATE);
 
 		return _updatePermission;
@@ -425,12 +403,8 @@ public class SiteNavigationAdminDisplayContext {
 				"/add_site_navigation_menu_item_redirect.jsp"
 			).setPortletResource(
 				() -> {
-					ThemeDisplay themeDisplay =
-						(ThemeDisplay)_httpServletRequest.getAttribute(
-							WebKeys.THEME_DISPLAY);
-
 					PortletDisplay portletDisplay =
-						themeDisplay.getPortletDisplay();
+						_themeDisplay.getPortletDisplay();
 
 					return portletDisplay.getId();
 				}
@@ -455,24 +429,18 @@ public class SiteNavigationAdminDisplayContext {
 		return addURL.toString();
 	}
 
-	private JSONArray _getDDMTemplatesJSONArray(
-		HttpServletRequest httpServletRequest) {
-
+	private JSONArray _getDDMTemplatesJSONArray() {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
 
 		List<DDMTemplate> ddmTemplates =
 			DDMTemplateLocalServiceUtil.getTemplates(
-				_getGroupIds(themeDisplay.getScopeGroup()),
+				_getGroupIds(_themeDisplay.getScopeGroup()),
 				PortalUtil.getClassNameId(NavItem.class.getName()), 0L);
 
 		for (DDMTemplate ddmTemplate : ddmTemplates) {
 			try {
 				if (!DDMTemplatePermission.contains(
-						themeDisplay.getPermissionChecker(),
+						_themeDisplay.getPermissionChecker(),
 						ddmTemplate.getTemplateId(), ActionKeys.VIEW) ||
 					!DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY.equals(
 						ddmTemplate.getType())) {
@@ -487,7 +455,7 @@ public class SiteNavigationAdminDisplayContext {
 				JSONUtil.put(
 					"label",
 					HtmlUtil.escape(
-						ddmTemplate.getName(themeDisplay.getLocale()))
+						ddmTemplate.getName(_themeDisplay.getLocale()))
 				).put(
 					"value", HtmlUtil.escape(ddmTemplate.getTemplateKey())
 				));
@@ -595,6 +563,7 @@ public class SiteNavigationAdminDisplayContext {
 		_siteNavigationMenuLocalService;
 	private String _siteNavigationMenuName;
 	private final SiteNavigationMenuService _siteNavigationMenuService;
+	private final ThemeDisplay _themeDisplay;
 	private Boolean _updatePermission;
 
 }

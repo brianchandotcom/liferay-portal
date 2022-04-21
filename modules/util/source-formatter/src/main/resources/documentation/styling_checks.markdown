@@ -12,7 +12,7 @@ BNDCapabilityCheck | .bnd | Sorts and applies logic to fix line breaks to proper
 [BNDImportsCheck](check/bnd_imports_check.markdown#bndimportscheck) | .bnd | Sorts class names and checks for use of wildcards in property values for `-conditionalpackage`, `-exportcontents` and `Export-Package`. |
 BNDLineBreaksCheck | .bnd | Finds missing and unnecessary line breaks in `.bnd` files. |
 BNDRunInstructionsOrderCheck | .bndrun | Sorts definition keys alphabetically. |
-BNDStylingCheck | .bnd | Applies rules to enforce consisteny in code style. |
+BNDStylingCheck | .bnd | Applies rules to enforce consistency in code style. |
 BNDWhitespaceCheck | .bnd | Finds missing and unnecessary whitespace in `.bnd` files. |
 CSSCommentsCheck | .css or .scss | Validates comments in `.css` files. |
 CSSImportsCheck | .css or .scss | Sorts and groups imports in `.css` files. |
@@ -36,22 +36,22 @@ FTLEmptyLinesCheck | .ftl | Finds missing and unnecessary empty lines. |
 FTLImportsCheck | .ftl | Sorts and groups imports in `.ftl` files. |
 FTLLiferayVariableOrderCheck | .ftl | Sorts assign statement of `liferay_*` variables. |
 FTLStringRelationalOperatorCheck | .ftl | Finds cases of `==` or `!=` where `stringUtil.equals`, `validator.isNotNull` or `validator.isNull` can be used instead. |
-FTLStylingCheck | .ftl | Applies rules to enforce consisteny in code style. |
+FTLStylingCheck | .ftl | Applies rules to enforce consistency in code style. |
 FTLTagAttributesCheck | .ftl | Sorts and formats attributes values in tags. |
 FTLTagCheck | .ftl | Finds cases where consecutive `#assign` can be combined. |
 FTLWhitespaceCheck | .ftl | Finds missing and unnecessary whitespace in `.ftl` files. |
 [GetterUtilCheck](check/getter_util_check.markdown#getterutilcheck) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds cases where the default value is passed to `GetterUtil.get*` or `ParamUtil.get*`. |
 GradleBlockOrderCheck | .gradle | Sorts logic in gradle build files. |
-GradleBodyCheck | .gradle | Applies rules to enforce consisteny in the body of gradle build files. |
+GradleBodyCheck | .gradle | Applies rules to enforce consistency in the body of gradle build files. |
 GradleImportsCheck | .gradle | Sorts and groups imports in `.gradle` files. |
 GradleIndentationCheck | .gradle | Finds incorrect indentation in gradle build files. |
-GradleStylingCheck | .gradle | Applies rules to enforce consisteny in code style. |
+GradleStylingCheck | .gradle | Applies rules to enforce consistency in code style. |
 [GradleTaskCreationCheck](check/gradle_task_creation_check.markdown#gradletaskcreationcheck) | .gradle | Checks that a task is declared on a separate line before the closure. |
 HTMLEmptyLinesCheck | .html or .path | Finds missing and unnecessary empty lines. |
 HTMLWhitespaceCheck | .html or .path | Finds missing and unnecessary whitespace in `.html` files. |
 [IfStatementCheck](check/if_statement_check.markdown#ifstatementcheck) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds empty if-statements and consecutive if-statements with identical bodies |
 InstanceofOrderCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Check the order of `instanceof` calls. |
-JSONStylingCheck | .ipynb, .json or .npmbridgerc | Applies rules to enforce consisteny in code style. |
+JSONStylingCheck | .ipynb, .json or .npmbridgerc | Applies rules to enforce consistency in code style. |
 [JSONUtilCheck](check/json_util_check.markdown#jsonutilcheck) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks for utilization of class `JSONUtil`. |
 JSPCoreTaglibCheck | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds cases where a `c:choose` or `c:if` tag can be used instead of an if-statement. |
 JSPEmptyLinesCheck | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds missing and unnecessary empty lines. |
@@ -61,11 +61,11 @@ JSPIndentationCheck | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds incorrect in
 JSPInlineVariableCheck | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds cases where variables can be inlined. |
 JSPJavaParserCheck | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Performs JavaParser on `.java` files. |
 JSPLineBreakCheck | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds missing and unnecessary line breaks in `.jsp` lines. |
-JSPStylingCheck | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Applies rules to enforce consisteny in code style. |
+JSPStylingCheck | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Applies rules to enforce consistency in code style. |
 JSPVarNameCheck | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks that values of attribute `var` follow naming conventions. |
 JSPVariableOrderCheck | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks if variable names are in alphabetical order. |
 JSPWhitespaceCheck | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds missing and unnecessary whitespace in `.jsp` files. |
-JSStylingCheck | .js or .jsx | Applies rules to enforce consisteny in code style. |
+JSStylingCheck | .js or .jsx | Applies rules to enforce consistency in code style. |
 JSWhitespaceCheck | .js or .jsx | Finds missing and unnecessary whitespace in `.js` files. |
 JavaAggregateTestRuleParameterOrderCheck | .java | Checks the order of parameters in `new AggregateTestRule` calls. |
 JavaAnnotationDefaultAttributeCheck | .java | Finds cases where the default value is passed to annotations in package `*.bnd.annotations` or `*.bind.annotations`. |
@@ -83,17 +83,17 @@ JavaReturnStatementCheck | .java | Finds unnecessary `else` statement (when `if`
 JavaServiceObjectCheck | .java | Checks for correct use of `*.is*` instead of `*.get*` when calling methods generated by ServiceBuilder. |
 [JavaSignatureParametersCheck](check/java_signature_parameters_check.markdown#javasignatureparameterscheck) | .java | Checks the order of parameters. |
 [JavaStaticImportsCheck](check/java_static_imports_check.markdown#javastaticimportscheck) | .java | Checks that there are no static imports. |
-JavaStylingCheck | .java | Applies rules to enforce consisteny in code style. |
+JavaStylingCheck | .java | Applies rules to enforce consistency in code style. |
 [JavaSwitchCheck](check/java_switch_check.markdown#javaswitchcheck) | .java | Checks that `if/else` statement is used instead of `switch` statement. |
 JavaTermDividersCheck | .java | Finds missing or unnecessary empty lines between javaterms. |
 JavaTermOrderCheck | .java | Checks the order of javaterms. |
-JavaTermStylingCheck | .java | Applies rules to enforce consisteny in code style. |
+JavaTermStylingCheck | .java | Applies rules to enforce consistency in code style. |
 [LambdaCheck](check/lambda_check.markdown#lambdacheck) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks that `lambda` statements are as simple as possible. |
 [ListUtilCheck](check/list_util_check.markdown#listutilcheck) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks for utilization of class `ListUtil`. |
 LiteralStringEqualsCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds cases where `Objects.equals` should be used. |
 [LogMessageCheck](check/message_check.markdown#messagecheck) | .java | Validates messages that are passed to `log.*` calls. |
 MarkdownFileExtensionCheck | .markdown or .md | Finds `markdown` files with `.md` extension (use `.markdown`). |
-MarkdownStylingCheck | .markdown or .md | Applies rules to enforce consisteny in code style. |
+MarkdownStylingCheck | .markdown or .md | Applies rules to enforce consistency in code style. |
 MarkdownWhitespaceCheck | .markdown or .md | Finds missing and unnecessary whitespace in `.markdown` files. |
 MethodCallsOrderCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Sorts method calls for certain object (for example, `put` calls in `java.util.HashMap`). |
 [MethodParamPadCheck](https://checkstyle.sourceforge.io/config_whitespace.html#MethodParamPad) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks the padding between the identifier of a method definition, constructor definition, method call, or constructor invocation; and the left parenthesis of the parameter list. |
@@ -114,7 +114,7 @@ OperatorOperandCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Verifies t
 OperatorOrderCheck | .java | Verifies that when an operator has a literal string or a number as one of the operands, it is always on the right hand side. |
 [OperatorWrapCheck](https://checkstyle.sourceforge.io/config_whitespace.html#OperatorWrap) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks the policy on how to wrap lines on operators. |
 PlusStatementCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Performs several checks to statements where `+` is used for concatenation. |
-PoshiStylingCheck | .function, .jar, .lar, .macro, .path, .testcase, .war or .zip | Applies rules to enforce consisteny in code style. |
+PoshiStylingCheck | .function, .jar, .lar, .macro, .path, .testcase, .war or .zip | Applies rules to enforce consistency in code style. |
 PoshiVariableNameCheck | .function, .jar, .lar, .macro, .path, .testcase, .war or .zip | Checks variable names for correct use of `camelCase`. |
 PropertiesCommentsCheck | .eslintignore, .prettierignore or .properties | Validates comments in `.properties` files. |
 PropertiesDefinitionKeysCheck | .eslintignore, .prettierignore or .properties | Sorts definition keys in `liferay-plugin-package.properties` file. |
@@ -123,15 +123,15 @@ PropertiesEmptyLinesCheck | .eslintignore, .prettierignore or .properties | Find
 PropertiesLanguageKeysOrderCheck | .eslintignore, .prettierignore or .properties | Sort language keys in `Language.properties` file. |
 PropertiesLongLinesCheck | .eslintignore, .prettierignore or .properties | Finds lines that are longer than the specified maximum line length. |
 PropertiesMultiLineValuesOrderCheck | .eslintignore, .prettierignore or .properties | Verifies that property with multiple values is not on a single line. |
-PropertiesSQLStylingCheck | .eslintignore, .prettierignore or .properties | Applies rules to enforce consisteny in code style. |
-PropertiesStylingCheck | .eslintignore, .prettierignore or .properties | Applies rules to enforce consisteny in code style. |
+PropertiesSQLStylingCheck | .eslintignore, .prettierignore or .properties | Applies rules to enforce consistency in code style. |
+PropertiesStylingCheck | .eslintignore, .prettierignore or .properties | Applies rules to enforce consistency in code style. |
 PropertiesWhitespaceCheck | .eslintignore, .prettierignore or .properties | Finds missing and unnecessary whitespace in `.properties` files. |
 PythonClassesAndMethodsOrderCheck | .py | Checks the order of classes and methods. |
 PythonImportsCheck | .py | Sorts and groups imports in `.py` files. |
-PythonStylingCheck | .py | Applies rules to enforce consisteny in code style. |
+PythonStylingCheck | .py | Applies rules to enforce consistency in code style. |
 PythonWhitespaceCheck | .py | Finds missing and unnecessary whitespace. |
 SQLEmptyLinesCheck | .sql | Finds missing and unnecessary empty lines. |
-SQLStylingCheck | .sql | Applies rules to enforce consisteny in code style. |
+SQLStylingCheck | .sql | Applies rules to enforce consistency in code style. |
 SemiColonCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds cases of unnecessary semicolon. |
 SingleStatementClauseCheck | .java | Verifies that `for`, `if` or `while` statement always uses curly braces. |
 SizeIsZeroCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds cases of calls like `list.size() == 0` (use `list.isEmpty()` instead). |
@@ -140,7 +140,7 @@ SoyEmptyLinesCheck | .soy | Finds missing and unnecessary empty lines. |
 [StringLiteralEqualityCheck](https://checkstyle.sourceforge.io/config_coding.html#StringLiteralEquality) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks that string literals are not used with == or !=. |
 TLDElementOrderCheck | .tld | Checks the order of attributers in `.tld` file. |
 TXTEmptyLinesCheck | .txt | Finds missing and unnecessary empty lines. |
-TXTStylingCheck | .txt | Applies rules to enforce consisteny in code style. |
+TXTStylingCheck | .txt | Applies rules to enforce consistency in code style. |
 TernaryOperatorCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds use of ternary operator in `java` files (use if statement instead). |
 UnnecessaryMethodCallCheck | .java | Finds unnecessary method calls. |
 [UnnecessaryParenthesesCheck](https://checkstyle.sourceforge.io/config_coding.html#UnnecessaryParentheses) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks if unnecessary parentheses are used in a statement or expression. |
@@ -148,7 +148,7 @@ UnnecessaryMethodCallCheck | .java | Finds unnecessary method calls. |
 [WhitespaceAroundCheck](https://checkstyle.sourceforge.io/config_whitespace.html#WhitespaceAround) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks that a token is surrounded by whitespace. |
 WhitespaceCheck | .cfg, .config, .cql, .css, .dtd, .expect, .gradle, .groovy, .scss, .sh, .soy, .sql, .tld, .ts, .tsx, Dockerfile or packageinfo | Finds missing and unnecessary whitespace. |
 XMLCustomSQLOrderCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks the order of attributes in `custom-sql` file. |
-XMLCustomSQLStylingCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Applies rules to enforce consisteny in code style for `.xml` files in directory `custom-sql`. |
+XMLCustomSQLStylingCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Applies rules to enforce consistency in code style for `.xml` files in directory `custom-sql`. |
 XMLDDLStructuresFileCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks the order of attributes in `-structures.xml` file. |
 XMLDTDVersionCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks the DTD version in `*.xml` file. |
 [XMLEchoMessageCheck](check/xml_echo_message_check.markdown#xmlechomessagecheck) | .action, .function, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks the echo message attributes in `*.xml` file. |
@@ -167,7 +167,7 @@ XMLPortletPreferencesFileCheck | .action, .function, .jrxml, .macro, .pom, .proj
 XMLResourceActionsFileCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks the order of elements in files in directory `resource-actions`. |
 XMLSpringFileCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks the order of elements in `*-spring.xml` file. |
 XMLStrutsConfigFileCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks the order of elements in `struts-config.xml` file. |
-XMLStylingCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Applies rules to enforce consisteny in code style. |
+XMLStylingCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Applies rules to enforce consistency in code style. |
 XMLTestIgnorableErrorLinesFileCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks the order of elements in `test-ignorable-error-lines.xml` file. |
 XMLTilesDefsFileCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks the order of elements in `tiles-defs.xml` file. |
 XMLToggleFileCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks the order of elements in `.toggle` file. |
@@ -176,5 +176,5 @@ XMLWorkflowDefinitionFileNameCheck | .action, .function, .jrxml, .macro, .pom, .
 YMLDefinitionOrderCheck | .yaml or .yml | Sorts definitions alphabetically in `.yml` files. |
 YMLEmptyLinesCheck | .yaml or .yml | Finds missing and unnecessary empty lines. |
 YMLLongLinesCheck | .yaml or .yml | Finds lines that are longer than the specified maximum line length. |
-YMLStylingCheck | .yaml or .yml | Applies rules to enforce consisteny in code style. |
+YMLStylingCheck | .yaml or .yml | Applies rules to enforce consistency in code style. |
 YMLWhitespaceCheck | .yaml or .yml | Finds missing and unnecessary whitespace in `.yml` files. |

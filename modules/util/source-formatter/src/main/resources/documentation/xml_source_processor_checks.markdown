@@ -6,7 +6,7 @@ XMLBuildFileCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-preventi
 XMLCDATACheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Performs several checks on `CDATA` inside `xml`. |
 XMLCheckstyleFileCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Performs several checks on `checkstyle.xml` file. |
 XMLCustomSQLOrderCheck | [Styling](styling_checks.markdown#styling-checks) | Checks the order of attributes in `custom-sql` file. |
-XMLCustomSQLStylingCheck | [Styling](styling_checks.markdown#styling-checks) | Applies rules to enforce consisteny in code style for `.xml` files in directory `custom-sql`. |
+XMLCustomSQLStylingCheck | [Styling](styling_checks.markdown#styling-checks) | Applies rules to enforce consistency in code style for `.xml` files in directory `custom-sql`. |
 XMLDDLStructuresFileCheck | [Styling](styling_checks.markdown#styling-checks) | Checks the order of attributes in `-structures.xml` file. |
 XMLDTDVersionCheck | [Styling](styling_checks.markdown#styling-checks) | Checks the DTD version in `*.xml` file. |
 [XMLEchoMessageCheck](check/xml_echo_message_check.markdown#xmlechomessagecheck) | [Styling](styling_checks.markdown#styling-checks) | Checks the echo message attributes in `*.xml` file. |
@@ -34,7 +34,7 @@ XMLServiceReferenceCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-p
 XMLSourcechecksFileCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Performs several checks on `sourcechecks.xml` file. |
 XMLSpringFileCheck | [Styling](styling_checks.markdown#styling-checks) | Checks the order of elements in `*-spring.xml` file. |
 XMLStrutsConfigFileCheck | [Styling](styling_checks.markdown#styling-checks) | Checks the order of elements in `struts-config.xml` file. |
-XMLStylingCheck | [Styling](styling_checks.markdown#styling-checks) | Applies rules to enforce consisteny in code style. |
+XMLStylingCheck | [Styling](styling_checks.markdown#styling-checks) | Applies rules to enforce consistency in code style. |
 XMLSuppressionsFileCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Performs several checks on `source-formatter-suppressions.xml` file. |
 XMLTagAttributesCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Performs several checks on tag attributes. |
 XMLTestIgnorableErrorLinesFileCheck | [Styling](styling_checks.markdown#styling-checks) | Checks the order of elements in `test-ignorable-error-lines.xml` file. |

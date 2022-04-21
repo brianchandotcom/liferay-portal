@@ -9,6 +9,7 @@ build:
       buildCommand: ./gradlew resolve buildDockerImage -Pdocker.image.id=$IMAGE
       dependencies:
         paths:
+        - configs/common/**/*
         - modules/**/*
   - image: remote-app-a
     custom:

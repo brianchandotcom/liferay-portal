@@ -48,8 +48,6 @@ spec:
             successThreshold: 1
             timeoutSeconds: 30
           env:
-            - name: JAVA_VERSION
-              value: zulu11
             - name: LIFERAY_JPDA_ENABLED
               value: "true"
             - name: LIFERAY_COMPANY_PERIOD_SECURITY_PERIOD_STRANGERS_PERIOD_VERIFY
@@ -80,21 +78,9 @@ spec:
           - containerPort: 8000
           - containerPort: 11311
           volumeMounts:
-          - name: dxp-configmap
-            mountPath: "/opt/liferay/osgi/configs"
-            readOnly: true
-          - name: dxp-logging-configmap
-            mountPath: /opt/liferay/osgi/log4j
-            readOnly: true
           - name: dxp-persistent-storage
             mountPath: "/opt/liferay/data"
       volumes:
-        - name: dxp-configmap
-          configMap:
-            name: dxp-configmap
-        - name: dxp-logging-configmap
-          configMap:
-            name: dxp-logging-configmap
         - name: dxp-persistent-storage
           persistentVolumeClaim:
             claimName: dxp-persistent-volume-claim

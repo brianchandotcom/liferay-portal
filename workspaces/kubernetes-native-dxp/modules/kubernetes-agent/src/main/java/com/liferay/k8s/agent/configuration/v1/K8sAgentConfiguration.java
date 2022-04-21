@@ -32,15 +32,15 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface K8sAgentConfiguration {
 
 	@Meta.AD(
-		description = "namespace-description", name = "namespace",
-		type = Meta.Type.String
-	)
-	public String namespace();
-
-	@Meta.AD(
 		deflt = "dxp=configmap", description = "label-selector-description",
 		name = "label-selector", type = Meta.Type.String
 	)
 	public String labelSelector();
+
+	@Meta.AD(
+		description = "namespace-description", name = "namespace",
+		type = Meta.Type.String
+	)
+	public String namespace();
 
 }

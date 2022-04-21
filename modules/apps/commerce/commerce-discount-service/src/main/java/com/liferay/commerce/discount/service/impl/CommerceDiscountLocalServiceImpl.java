@@ -22,6 +22,7 @@ import com.liferay.commerce.discount.exception.CommerceDiscountCouponCodeExcepti
 import com.liferay.commerce.discount.exception.CommerceDiscountDisplayDateException;
 import com.liferay.commerce.discount.exception.CommerceDiscountExpirationDateException;
 import com.liferay.commerce.discount.exception.CommerceDiscountLimitationTypeException;
+import com.liferay.commerce.discount.exception.CommerceDiscountMaxPriceValueException;
 import com.liferay.commerce.discount.exception.CommerceDiscountTargetException;
 import com.liferay.commerce.discount.exception.CommerceDiscountTitleException;
 import com.liferay.commerce.discount.exception.DuplicateCommerceDiscountException;
@@ -282,9 +283,10 @@ public class CommerceDiscountLocalServiceImpl
 
 		User user = userLocalService.getUser(userId);
 
-		validate(
-			serviceContext.getCompanyId(), 0, title, target, useCouponCode,
-			couponCode, limitationType);
+		_validate(
+			0, serviceContext.getCompanyId(), title, target, useCouponCode,
+			couponCode, limitationType, maximumDiscountAmount, level1, level2,
+			level3, level4);
 
 		Date date = new Date();
 
@@ -1135,9 +1137,10 @@ public class CommerceDiscountLocalServiceImpl
 		CommerceDiscount commerceDiscount =
 			commerceDiscountPersistence.findByPrimaryKey(commerceDiscountId);
 
-		validate(
-			serviceContext.getCompanyId(), commerceDiscountId, title, target,
-			useCouponCode, couponCode, limitationType);
+		_validate(
+			commerceDiscountId, serviceContext.getCompanyId(), title, target,
+			useCouponCode, couponCode, limitationType, maximumDiscountAmount,
+			level1, level2, level3, level4);
 
 		Date date = new Date();
 
@@ -1212,9 +1215,10 @@ public class CommerceDiscountLocalServiceImpl
 		CommerceDiscount commerceDiscount =
 			commerceDiscountPersistence.findByPrimaryKey(commerceDiscountId);
 
-		validate(
-			serviceContext.getCompanyId(), commerceDiscountId, title, target,
-			useCouponCode, couponCode, limitationType);
+		_validate(
+			commerceDiscountId, serviceContext.getCompanyId(), title, target,
+			useCouponCode, couponCode, limitationType, maximumDiscountAmount,
+			level1, level2, level3, level4);
 
 		Date date = new Date();
 
@@ -1605,47 +1609,6 @@ public class CommerceDiscountLocalServiceImpl
 			serviceContext, workflowContext);
 	}
 
-	protected void validate(
-			long companyId, long commerceDiscountId, String title,
-			String target, boolean useCouponCode, String couponCode,
-			String limitationType)
-		throws PortalException {
-
-		if (Validator.isNull(title)) {
-			throw new CommerceDiscountTitleException();
-		}
-
-		CommerceDiscountTarget commerceDiscountTarget =
-			_commerceDiscountTargetRegistry.getCommerceDiscountTarget(target);
-
-		if (commerceDiscountTarget == null) {
-			throw new CommerceDiscountTargetException();
-		}
-
-		if (useCouponCode) {
-			if (Validator.isNull(couponCode)) {
-				throw new CommerceDiscountCouponCodeException();
-			}
-
-			CommerceDiscount commerceDiscount =
-				commerceDiscountPersistence.fetchByC_C_First(
-					companyId, couponCode,
-					new CommerceDiscountCreateDateComparator(true));
-
-			if (((commerceDiscountId <= 0) && (commerceDiscount != null)) ||
-				((commerceDiscount != null) &&
-				 (commerceDiscountId !=
-					 commerceDiscount.getCommerceDiscountId()))) {
-
-				throw new DuplicateCommerceDiscountException();
-			}
-		}
-
-		if (Validator.isNull(limitationType)) {
-			throw new CommerceDiscountLimitationTypeException();
-		}
-	}
-
 	protected void validateExternalReferenceCode(
 			String externalReferenceCode, long companyId)
 		throws PortalException {
@@ -1904,6 +1867,61 @@ public class CommerceDiscountLocalServiceImpl
 		}
 
 		return predicate.withParentheses();
+	}
+
+	private void _validate(
+			long commerceDiscountId, long companyId, String title,
+			String target, boolean useCouponCode, String couponCode,
+			String limitationType, BigDecimal maxDiscountAmount,
+			BigDecimal level1, BigDecimal level2, BigDecimal level3,
+			BigDecimal level4)
+		throws PortalException {
+
+		if (Validator.isNull(title)) {
+			throw new CommerceDiscountTitleException();
+		}
+
+		CommerceDiscountTarget commerceDiscountTarget =
+			_commerceDiscountTargetRegistry.getCommerceDiscountTarget(target);
+
+		if (commerceDiscountTarget == null) {
+			throw new CommerceDiscountTargetException();
+		}
+
+		if (useCouponCode) {
+			if (Validator.isNull(couponCode)) {
+				throw new CommerceDiscountCouponCodeException();
+			}
+
+			CommerceDiscount commerceDiscount =
+				commerceDiscountPersistence.fetchByC_C_First(
+					companyId, couponCode,
+					new CommerceDiscountCreateDateComparator(true));
+
+			if (((commerceDiscountId <= 0) && (commerceDiscount != null)) ||
+				((commerceDiscount != null) &&
+				 (commerceDiscountId !=
+					 commerceDiscount.getCommerceDiscountId()))) {
+
+				throw new DuplicateCommerceDiscountException();
+			}
+		}
+
+		if (Validator.isNull(limitationType)) {
+			throw new CommerceDiscountLimitationTypeException();
+		}
+
+		BigDecimal maxValue = BigDecimal.valueOf(999999999.99);
+
+		if (((maxDiscountAmount != null) &&
+			 (maxDiscountAmount.compareTo(maxValue) > 0)) ||
+			((level1 != null) && (level1.compareTo(maxValue) > 0)) ||
+			((level2 != null) && (level2.compareTo(maxValue) > 0)) ||
+			((level3 != null) && (level3.compareTo(maxValue) > 0)) ||
+			((level4 != null) && (level4.compareTo(maxValue) > 0))) {
+
+			throw new CommerceDiscountMaxPriceValueException();
+		}
 	}
 
 	private static final String[] _SELECTED_FIELD_NAMES = {

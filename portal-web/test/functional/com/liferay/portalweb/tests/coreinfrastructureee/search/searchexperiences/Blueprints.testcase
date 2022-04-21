@@ -379,6 +379,18 @@ definition {
 			elementSourceJson = "${elementSourceJson}",
 			title = "Test Element");
 
+		Blueprints.editElement(element = "Test Element");
+
+		Type(
+			locator1 = "TextInput#SEARCH",
+			value1 = "employee");
+
+		AssertElementPresent(
+			key_text = "Employee",
+			locator1 = "Button#ANY");
+
+		PortletEntry.save();
+
 		Blueprints.openBlueprintsAdmin();
 
 		Blueprints.createBlueprint(title = "Test Blueprint");

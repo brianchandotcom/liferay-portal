@@ -14,24 +14,28 @@
 
 package com.liferay.saml.opensaml.integration.internal.credential;
 
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.saml.opensaml.integration.internal.BaseSamlTestCase;
 
 import net.shibboleth.utilities.java.support.resolver.CriteriaSet;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.opensaml.core.criterion.EntityIdCriterion;
 import org.opensaml.security.credential.Credential;
 
-import org.powermock.modules.junit4.PowerMockRunner;
-
 /**
  * @author Mika Koivisto
  */
-@RunWith(PowerMockRunner.class)
 public class CredentialResolverTest extends BaseSamlTestCase {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testResolveIdpCredential() throws Exception {

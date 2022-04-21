@@ -1,5 +1,7 @@
 apply plugin: "com.liferay.maven.plugin.builder"
 
+#if (${projectType} != "workspace")apply plugin: "war"#end
+
 buildPluginDescriptor {
 	ext {
 		autoClean = false
@@ -11,7 +13,27 @@ buildPluginDescriptor {
 	goalPrefix = "source-formatter"
 }
 
-deploy.outputs.cacheIf { false }
+dummy1 { false }
+
+dummy2 { String a = "{}" }
+
+dummy3 {}
 
 liferay {
  deployDir = "../../../tools" }
+
+if (test =~ /\d{10}/) {
+	println test
+}
+
+Pattern pattern = ~/\d{10}/
+
+println "curlyBraceInQuotes{}"
+
+println 'curlyBraceInQuotes{}'
+
+String curlyBraceInQuotes = '''\
+{}'''
+
+dependencies {
+	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")}

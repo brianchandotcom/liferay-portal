@@ -137,7 +137,7 @@ const Tabs = (props) => {
 
 	return (
 		<>
-			<ClayTabs className={className} modern={false}>
+			<ClayTabs className={className} displayType="custom">
 				{TABS_NAME.map((name, i) => (
 					<ClayTabs.Item
 						active={activeTabKeyValue === i}

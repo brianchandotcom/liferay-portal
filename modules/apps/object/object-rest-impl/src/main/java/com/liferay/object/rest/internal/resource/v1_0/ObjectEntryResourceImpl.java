@@ -201,6 +201,18 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 	}
 
 	@Override
+	public ObjectEntry putCurrentObjectEntry(
+			Long currentObjectEntryId, String objectRelationshipName,
+			Long relatedObjectEntryId)
+		throws Exception {
+
+		return _objectEntryManager.addObjectRelationshipMappingTableValues(
+			_getDTOConverterContext(currentObjectEntryId),
+			contextUser.getUserId(), _objectDefinition, objectRelationshipName,
+			currentObjectEntryId, relatedObjectEntryId);
+	}
+
+	@Override
 	public ObjectEntry putObjectEntry(
 			Long objectEntryId, ObjectEntry objectEntry)
 		throws Exception {

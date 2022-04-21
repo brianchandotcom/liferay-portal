@@ -74,9 +74,8 @@ public class StylesFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	@Override
 	public String processFragmentEntryLinkHTML(
-			FragmentEntryLink fragmentEntryLink, String html,
-			FragmentEntryProcessorContext fragmentEntryProcessorContext)
-		throws PortalException {
+		FragmentEntryLink fragmentEntryLink, String html,
+		FragmentEntryProcessorContext fragmentEntryProcessorContext) {
 
 		Document document = _getDocument(html);
 
@@ -136,21 +135,25 @@ public class StylesFragmentEntryProcessor implements FragmentEntryProcessor {
 	}
 
 	private LayoutStructureItem _getLayoutStructureItem(
-			FragmentEntryLink fragmentEntryLink)
-		throws PortalException {
+		FragmentEntryLink fragmentEntryLink) {
 
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			_layoutPageTemplateStructureLocalService.
-				fetchLayoutPageTemplateStructure(
-					fragmentEntryLink.getGroupId(), fragmentEntryLink.getPlid(),
-					true);
+		try {
+			LayoutPageTemplateStructure layoutPageTemplateStructure =
+				_layoutPageTemplateStructureLocalService.
+					fetchLayoutPageTemplateStructure(
+						fragmentEntryLink.getGroupId(),
+						fragmentEntryLink.getPlid(), true);
 
-		LayoutStructure layoutStructure = LayoutStructure.of(
-			layoutPageTemplateStructure.getData(
-				fragmentEntryLink.getSegmentsExperienceId()));
+			LayoutStructure layoutStructure = LayoutStructure.of(
+				layoutPageTemplateStructure.getData(
+					fragmentEntryLink.getSegmentsExperienceId()));
 
-		return layoutStructure.getLayoutStructureItemByFragmentEntryLinkId(
-			fragmentEntryLink.getFragmentEntryLinkId());
+			return layoutStructure.getLayoutStructureItemByFragmentEntryLinkId(
+				fragmentEntryLink.getFragmentEntryLinkId());
+		}
+		catch (Exception exception) {
+			return null;
+		}
 	}
 
 	@Reference

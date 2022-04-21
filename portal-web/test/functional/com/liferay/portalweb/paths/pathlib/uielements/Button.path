@@ -137,7 +137,7 @@
 </tr>
 <tr>
 	<td>TRASH_ENABLED</td>
-	<td>//button[*[name()='svg'][contains(@class,'lexicon-icon-trash')]]</td>
+	<td>//button[*[name()='svg'][contains(@class,'lexicon-icon-trash')]] | //a[contains(@class,'btn')]/*[name()='svg'][contains(@class,'trash')]</td>
 	<td></td>
 </tr>
 <tr>

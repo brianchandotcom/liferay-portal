@@ -715,6 +715,17 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 
+	private void _addImageFragmentEntry() throws Exception {
+		String html =
+			"<img data-lfr-editable-id=\"image-id\" " +
+				"data-lfr-editable-type=\"image\" " +
+					"src=\"https://example.com/image.jpeg\"/>";
+
+		_addFragmentEntry(
+			_group1.getGroupId(), "test-image-fragment", "Test Image Fragment",
+			html);
+	}
+
 	private JournalArticle _addJournalArticle(long groupId) throws Exception {
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
 			groupId, RandomTestUtil.randomString(),

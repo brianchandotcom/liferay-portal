@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.struts.Definition;
 import com.liferay.portal.struts.TilesUtil;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.opensaml.integration.internal.BaseSamlTestCase;
 import com.liferay.saml.opensaml.integration.internal.binding.SamlBinding;
@@ -42,8 +43,9 @@ import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.mockito.Mockito;
 
@@ -53,9 +55,6 @@ import org.opensaml.saml.common.xml.SAMLConstants;
 import org.opensaml.saml.saml2.core.LogoutRequest;
 import org.opensaml.saml.saml2.core.NameID;
 
-import org.powermock.core.classloader.annotations.PowerMockIgnore;
-import org.powermock.modules.junit4.PowerMockRunner;
-
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
@@ -63,9 +62,12 @@ import org.springframework.mock.web.MockHttpServletResponse;
  * @author Matthew Tambara
  * @author William Newbury
  */
-@PowerMockIgnore("javax.security.*")
-@RunWith(PowerMockRunner.class)
 public class SingleLogoutProfileIntegrationTest extends BaseSamlTestCase {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	@Override
@@ -130,7 +132,7 @@ public class SingleLogoutProfileIntegrationTest extends BaseSamlTestCase {
 
 	@Test
 	public void testPerformIdpSpLogoutValidSloRequestInfo() throws Exception {
-		when(
+		Mockito.when(
 			_samlIdpSpConnectionLocalService.getSamlIdpSpConnection(
 				COMPANY_ID, SP_ENTITY_ID)
 		).thenReturn(
@@ -147,7 +149,7 @@ public class SingleLogoutProfileIntegrationTest extends BaseSamlTestCase {
 
 		samlIdpSpSessions.add(samlIdpSpSessionImpl);
 
-		when(
+		Mockito.when(
 			_samlIdpSpSessionLocalService.getSamlIdpSpSessions(SESSION_ID)
 		).thenReturn(
 			samlIdpSpSessions
@@ -282,14 +284,14 @@ public class SingleLogoutProfileIntegrationTest extends BaseSamlTestCase {
 			prepareSamlPeerBinding(
 				IDP_ENTITY_ID, NameID.EMAIL, null, "test@liferay.com"));
 
-		when(
+		Mockito.when(
 			_samlSpSessionLocalService.fetchSamlSpSessionByJSessionId(
 				Mockito.anyString())
 		).thenReturn(
 			samlSpSession
 		);
 
-		when(
+		Mockito.when(
 			_samlSpSessionLocalService.fetchSamlSpSessionBySamlSpSessionKey(
 				Mockito.anyString())
 		).thenReturn(

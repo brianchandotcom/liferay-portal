@@ -560,13 +560,13 @@ definition {
 				AssertElementPresent(locator1 = "//div[contains(@class,'container-fluid')]/div[contains(@class,'row')]//div[contains(@class,'col')][${n}]");
 			}
 
-			AssertElementPresent(locator1 = "//div[contains(@class,'col-4')][1]");
+			AssertElementPresent(locator1 = "//div[contains(@class,'col-md-4')][1]");
 
-			AssertElementNotPresent(locator1 = "//div[contains(@class,'col-4')][2]");
+			AssertElementNotPresent(locator1 = "//div[contains(@class,'col-md-4')][2]");
 
-			AssertElementNotPresent(locator1 = "//div[contains(@class,'col-4')][3]");
+			AssertElementNotPresent(locator1 = "//div[contains(@class,'col-md-4')][3]");
 
-			var thirdModuleWidth = selenium.getElementWidth("//div[contains(@class,'container-fluid')]/div[contains(@class,'row')]//div[contains(@class,'col')][3]");
+			var thirdModuleWidth = selenium.getElementWidth("//div[contains(@class,'container-fluid')]/div[contains(@class,'row')]//div[contains(@class,'col-12')][3]");
 
 			TestUtils.assertNotEquals(
 				actual = "${thirdModuleWidth}",

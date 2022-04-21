@@ -24,24 +24,27 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.lang.reflect.Field;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
-
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Pedro Queiroz
  */
-@RunWith(PowerMockRunner.class)
 public class DDMFormTaglibUtilTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	public void setUp() throws Exception {
@@ -141,13 +144,11 @@ public class DDMFormTaglibUtilTest {
 	private final DDMFormTaglibUtil _ddmFormTaglibUtil =
 		new DDMFormTaglibUtil();
 	private DDMStructure _ddmStructure;
-
-	@Mock
-	private DDMStructureLocalService _ddmStructureLocalService;
-
+	private final DDMStructureLocalService _ddmStructureLocalService =
+		Mockito.mock(DDMStructureLocalService.class);
 	private DDMStructureVersion _ddmStructureVersion;
-
-	@Mock
-	private DDMStructureVersionLocalService _ddmStructureVersionLocalService;
+	private final DDMStructureVersionLocalService
+		_ddmStructureVersionLocalService = Mockito.mock(
+			DDMStructureVersionLocalService.class);
 
 }

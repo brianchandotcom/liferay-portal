@@ -4090,10 +4090,12 @@ tell application "Safari" to quit
 			<if>
 				<isset property="release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS" />
 				<then>
-					<equals arg1="${release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS}" arg2="true" />
-					<then>
-						<echo file="${liferay.home}/osgi/configs/com.liferay.release.feature.flag.web.internal.configuration.ReleaseFeatureFlagConfiguration.config">disabledReleaseFeatureFlags=["DEACTIVATE_PRIVATE_LAYOUTS"]</echo>
-					</then>
+					<if>
+						<equals arg1="${release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS}" arg2="true" />
+						<then>
+							<echo file="${liferay.home}/osgi/configs/com.liferay.release.feature.flag.web.internal.configuration.ReleaseFeatureFlagConfiguration.config">disabledReleaseFeatureFlags=["DEACTIVATE_PRIVATE_LAYOUTS"]</echo>
+						</then>
+					</if>
 				</then>
 			</if>
 

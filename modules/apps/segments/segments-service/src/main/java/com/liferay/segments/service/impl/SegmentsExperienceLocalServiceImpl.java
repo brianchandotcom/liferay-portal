@@ -606,24 +606,17 @@ public class SegmentsExperienceLocalServiceImpl
 		return segmentsExperience;
 	}
 
-	private List<SegmentsExperience> _updateSegmentExperiencesPriority(
+	private void _updateSegmentExperiencesPriority(
 		List<SegmentsExperience> segmentsExperiences, int initialPriority,
 		int offset) {
 
 		int currentPriority = initialPriority;
 
-		List<SegmentsExperience> updatedSegmentsExperiences = new ArrayList<>();
-
 		for (SegmentsExperience segmentsExperience : segmentsExperiences) {
 			segmentsExperience.setPriority(currentPriority);
 
-			updatedSegmentsExperiences.add(
-				segmentsExperiencePersistence.update(segmentsExperience));
-
 			currentPriority = currentPriority + offset;
 		}
-
-		return updatedSegmentsExperiences;
 	}
 
 	private void _updateSegmentExperiencesPriority(

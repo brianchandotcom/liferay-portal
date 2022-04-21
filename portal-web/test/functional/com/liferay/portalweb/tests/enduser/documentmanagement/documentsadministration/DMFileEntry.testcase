@@ -2160,12 +2160,28 @@ definition {
 	}
 
 	@description = "This is a test for LPS-80857. It checks that the user will stay in the same folder context after filtering."
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanStayInFolderAfterFiltering {
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest");
 
-		// TODO LPS-150082 CanStayInFolderAfterFiltering pending implementation
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			folderName = "DM Folder Name",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
 
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+
+		ManagementBar.setFilterAndOrder(menuItem = "Recent");
+
+		DMDocument.viewDocumentTitleCmdPG(dmDocumentTitle = "DM Document Title");
 	}
 
 	@description = "This ensures that the user can create a document with edited display page template."

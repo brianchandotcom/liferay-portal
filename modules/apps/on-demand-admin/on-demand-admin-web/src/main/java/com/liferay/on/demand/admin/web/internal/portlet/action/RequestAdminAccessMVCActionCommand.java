@@ -50,7 +50,7 @@ public class RequestAdminAccessMVCActionCommand extends BaseMVCActionCommand {
 		long companyId = ParamUtil.getLong(actionRequest, "companyId");
 
 		String loginURL = _onDemandAdminManager.getLoginURL(
-			_companyLocalService.getCompany(companyId),
+			actionRequest, _companyLocalService.getCompany(companyId),
 			_portal.getUserId(actionRequest));
 
 		if (Validator.isNotNull(loginURL)) {

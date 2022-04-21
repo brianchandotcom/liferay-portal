@@ -32,6 +32,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Date;
 
+import javax.portlet.PortletRequest;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -71,15 +73,20 @@ public class OnDemandAdminManagerImpl implements OnDemandAdminManager {
 	}
 
 	@Override
-	public String getLoginURL(Company company, long userId)
+	public String getLoginURL(
+			PortletRequest portletRequest, Company company, long userId)
 		throws PortalException {
 
 		StringBundler sb = new StringBundler(3);
 
+		boolean secure = _portal.isSecure(
+			_portal.getHttpServletRequest(portletRequest));
+
 		sb.append(
 			_portal.getPortalURL(
 				company.getVirtualHostname(),
-				_portal.getPortalServerPort(false), false));
+				_portal.getPortalServerPort(secure), secure));
+
 		sb.append("?ticketKey=");
 
 		Ticket ticket = _onDemandAdminTicketGenerator.generate(company, userId);

@@ -748,6 +748,10 @@ public class SegmentsExperienceLocalServiceImpl
 					segmentsExperience.getClassPK(),
 					segmentsExperience.getPriority()));
 
+			if (ListUtil.isEmpty(segmentsExperiences)) {
+				return;
+			}
+
 			int lowestPriority = _getLowestPriority(
 				segmentsExperience.getGroupId(),
 				segmentsExperience.getClassNameId(),
@@ -773,6 +777,10 @@ public class SegmentsExperienceLocalServiceImpl
 					segmentsExperience.getClassNameId(),
 					segmentsExperience.getClassPK(),
 					segmentsExperience.getPriority()));
+
+			if (ListUtil.isEmpty(segmentsExperiences)) {
+				return;
+			}
 
 			_updateSegmentExperiencesPriority(
 				segmentsExperiences, segmentsExperience.getPriority(), +1);

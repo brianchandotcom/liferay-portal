@@ -38,7 +38,7 @@
 		<dependency>
 			<groupId>com.liferay</groupId>
 			<artifactId>com.liferay.portal.vulcan.api</artifactId>
-			<version>${vulcan.api.version}</version>
+			<version>6.9.0</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -117,6 +117,12 @@
 			<scope>provided</scope>
 		</dependency>
 #else
+		<dependency>
+			<groupId>com.liferay</groupId>
+			<artifactId>com.liferay.portal.vulcan.api</artifactId>
+			<version>@com.liferay.portal.vulcan.api.version@</version>
+			<scope>provided</scope>
+		</dependency>
 		<dependency>
 			<groupId>com.liferay.portal</groupId>
 			<artifactId>release.${product}.api</artifactId>

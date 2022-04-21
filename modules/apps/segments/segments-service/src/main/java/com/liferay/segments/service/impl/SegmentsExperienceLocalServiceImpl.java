@@ -46,8 +46,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -517,26 +515,6 @@ public class SegmentsExperienceLocalServiceImpl
 			segmentsExperience.getClassNameId(),
 			segmentsExperience.getClassPK());
 
-		if ((segmentsExperience.getPriority() ==
-				(SegmentsExperienceConstants.PRIORITY_DEFAULT + 1)) &&
-			(newPriority == SegmentsExperienceConstants.PRIORITY_DEFAULT)) {
-
-			return _swapSegmentsExperiences(
-				lowestPriority,
-				SegmentsExperienceConstants.PRIORITY_DEFAULT - 1,
-				segmentsExperience);
-		}
-		else if ((segmentsExperience.getPriority() ==
-					(SegmentsExperienceConstants.PRIORITY_DEFAULT - 1)) &&
-				 (newPriority ==
-					 SegmentsExperienceConstants.PRIORITY_DEFAULT)) {
-
-			return _swapSegmentsExperiences(
-				lowestPriority,
-				SegmentsExperienceConstants.PRIORITY_DEFAULT + 1,
-				segmentsExperience);
-		}
-
 		return _swapSegmentsExperience(
 			lowestPriority, newPriority, segmentsExperience);
 	}
@@ -584,33 +562,6 @@ public class SegmentsExperienceLocalServiceImpl
 		return classPK;
 	}
 
-	private List<SegmentsExperience> _getSegmentExperiences(
-		SegmentsExperience segmentsExperience) {
-
-		List<SegmentsExperience> aboveSegmentsExperiences =
-			segmentsExperiencePersistence.findByG_C_C_GtP(
-				segmentsExperience.getGroupId(),
-				segmentsExperience.getClassNameId(),
-				segmentsExperience.getClassPK(),
-				segmentsExperience.getPriority());
-
-		List<SegmentsExperience> belowSegmentsExperiences =
-			segmentsExperiencePersistence.findByG_C_C_LtP(
-				segmentsExperience.getGroupId(),
-				segmentsExperience.getClassNameId(),
-				segmentsExperience.getClassPK(),
-				segmentsExperience.getPriority());
-
-		return Stream.concat(
-			Stream.concat(
-				aboveSegmentsExperiences.stream(),
-				Stream.of(segmentsExperience)),
-			belowSegmentsExperiences.stream()
-		).collect(
-			Collectors.toList()
-		);
-	}
-
 	private SegmentsExperience _swapSegmentsExperience(
 		int lowestPriority, int priority,
 		SegmentsExperience segmentsExperience) {
@@ -655,55 +606,6 @@ public class SegmentsExperienceLocalServiceImpl
 		return segmentsExperience;
 	}
 
-	private SegmentsExperience _swapSegmentsExperiences(
-		int lowestPriority, int priority,
-		SegmentsExperience segmentsExperience) {
-
-		List<SegmentsExperience> segmentsExperiences = _getSegmentExperiences(
-			segmentsExperience);
-
-		if (ListUtil.isEmpty(segmentsExperiences)) {
-			segmentsExperience.setPriority(priority);
-
-			return segmentsExperiencePersistence.update(segmentsExperience);
-		}
-
-		Stream<SegmentsExperience> stream = segmentsExperiences.stream();
-
-		int top = Math.toIntExact(
-			stream.filter(
-				currentSegmentsExperience ->
-					currentSegmentsExperience.getSegmentsExperienceId() !=
-						segmentsExperience.getSegmentsExperienceId()
-			).filter(
-				currentSegmentsExperience ->
-					currentSegmentsExperience.getPriority() >= 0
-			).count());
-
-		if (priority < 0) {
-			top = top - 1;
-		}
-		else if (priority > 0) {
-			top = top + 1;
-		}
-
-		int bottom = lowestPriority - 1;
-
-		if (priority < 0) {
-			bottom = bottom - 2;
-		}
-
-		segmentsExperiences = _updateSegmentExperiencesPriority(
-			segmentsExperiences, bottom, -1);
-
-		segmentsExperiencePersistence.flush();
-
-		_updateSegmentExperiencesPriority(segmentsExperiences, top, -1);
-
-		return segmentsExperiencePersistence.fetchByPrimaryKey(
-			segmentsExperience.getSegmentsExperienceId());
-	}
-
 	private List<SegmentsExperience> _updateSegmentExperiencesPriority(
 		List<SegmentsExperience> segmentsExperiences, int initialPriority,
 		int offset) {
@@ -713,23 +615,10 @@ public class SegmentsExperienceLocalServiceImpl
 		List<SegmentsExperience> updatedSegmentsExperiences = new ArrayList<>();
 
 		for (SegmentsExperience segmentsExperience : segmentsExperiences) {
-			if (currentPriority ==
-					SegmentsExperienceConstants.PRIORITY_DEFAULT) {
-
-				currentPriority =
-					SegmentsExperienceConstants.PRIORITY_DEFAULT + offset;
-			}
-
 			segmentsExperience.setPriority(currentPriority);
 
 			updatedSegmentsExperiences.add(
 				segmentsExperiencePersistence.update(segmentsExperience));
-
-			if (currentPriority ==
-					(SegmentsExperienceConstants.PRIORITY_DEFAULT + offset)) {
-
-				segmentsExperiencePersistence.flush();
-			}
 
 			currentPriority = currentPriority + offset;
 		}
@@ -769,6 +658,8 @@ public class SegmentsExperienceLocalServiceImpl
 
 			_updateSegmentExperiencesPriority(
 				segmentsExperiences, highestPriority - 1, -1);
+
+			segmentsExperiencePersistence.flush();
 		}
 		else {
 			List<SegmentsExperience> segmentsExperiences = new ArrayList<>(

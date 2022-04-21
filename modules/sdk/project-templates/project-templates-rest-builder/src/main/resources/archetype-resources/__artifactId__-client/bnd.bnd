@@ -1,3 +1,8 @@
+#set ($versionPolicy = '${replacestring;${range;[==,==]};.*,(.*)];$1}')
+
 Bundle-Name: ${artifactId}-client
 Bundle-SymbolicName: ${package}.client
 Bundle-Version: ${version}
+#if (${buildType} != "gradle")
+-consumer-policy: $versionPolicy
+-provider-policy: $versionPolicy#end

@@ -1,6 +1,11 @@
+#set ($versionPolicy = '${replacestring;${range;[==,==]};.*,(.*)];$1}')
+
 Bundle-Name: ${artifactId}-api
 Bundle-SymbolicName: ${package}.api
 Bundle-Version: ${version}
 Export-Package:\
 	${package}.dto.v1_0,\
 	${package}.resource.v1_0
+#if (${buildType} != "gradle")
+-consumer-policy: $versionPolicy
+-provider-policy: $versionPolicy#end

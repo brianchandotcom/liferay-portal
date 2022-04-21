@@ -1,8 +1,11 @@
+#set ($versionPolicy = '${replacestring;${range;[==,==]};.*,(.*)];$1}')
+
 Bundle-Name: ${artifactId}-test
 Bundle-SymbolicName: ${package}.test
 Bundle-Version: ${version}
 #if (${buildType} != "gradle")
+-consumer-policy: $versionPolicy
 -includeresource: ${package}.client.jar=../${artifactId}-client/target/${artifactId}-client-${version}.jar;lib:=true
 #else
 -includeresource: ${package}.client.jar=../${artifactId}-client/build/libs/${package}.client-${version}.jar;lib:=true
-#end
+-provider-policy: $versionPolicy#end

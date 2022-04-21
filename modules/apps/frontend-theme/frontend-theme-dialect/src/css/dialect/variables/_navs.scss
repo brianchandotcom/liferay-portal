@@ -66,7 +66,7 @@ $nav-underline-link: (
 		border-color: var(--tab-primary-item-border-color-hover),
 		color: var(--tab-primary-item-color-hover),
 		box-shadow: var(--tab-primary-item-box-shadow-hover),
-		font-weight: var(--tab-primary-item-font-weight-active),
+		font-weight: var(--tab-primary-item-font-weight),
 		after: (
 			background-color: var(--tab-primary-item-active-bar-color-hover),
 			content: '',
@@ -276,7 +276,7 @@ $nav-tertiary-link: map-deep-merge(
 			border-color: var(--tab-tertiary-item-border-color-hover),
 			color: var(--tab-tertiary-item-color-hover),
 			box-shadow: var(--tab-tertiary-item-box-shadow-hover),
-			font-weight: var(--tab-tertiary-item-font-weight-active),
+			font-weight: var(--tab-tertiary-item-font-weight),
 			after: (
 				background-color:
 					var(--tab-tertiary-item-active-bar-color-hover),

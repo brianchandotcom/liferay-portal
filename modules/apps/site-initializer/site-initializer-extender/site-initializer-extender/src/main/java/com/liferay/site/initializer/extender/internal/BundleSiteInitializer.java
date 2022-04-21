@@ -1793,21 +1793,23 @@ public class BundleSiteInitializer implements SiteInitializer {
 			for (int i = 0; i < jsonArray.length(); i++) {
 				JSONObject objectEntryJSONObject = jsonArray.getJSONObject(i);
 
+				String externalReferenceCode = objectEntryJSONObject.getString(
+					"externalReferenceCode");
+
 				ObjectEntry objectEntry =
-					_objectEntryLocalService.addObjectEntry(
-						serviceContext.getUserId(), groupId,
-						objectDefinition.getObjectDefinitionId(),
+					_objectEntryLocalService.addOrUpdateObjectEntry(
+						externalReferenceCode, serviceContext.getUserId(),
+						groupId, objectDefinition.getObjectDefinitionId(),
 						ObjectMapperUtil.readValue(
 							Serializable.class,
 							String.valueOf(objectEntryJSONObject)),
 						serviceContext);
 
-				if (objectEntryJSONObject.has("externalReferenceCode")) {
+				if (Validator.isNotNull(externalReferenceCode)) {
 					objectEntryIdsStringUtilReplaceValues.put(
 						StringBundler.concat(
 							objectDefinition.getShortName(), "#",
-							objectEntryJSONObject.getString(
-								"externalReferenceCode")),
+							externalReferenceCode),
 						String.valueOf(objectEntry.getObjectEntryId()));
 				}
 

@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayButton from '@clayui/button';
 import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
@@ -71,6 +72,26 @@ const FileSizeField = ({handleOnChange, mimeType, size}) => {
 					type="number"
 					value={sizeValue}
 				/>
+
+				<ClayButton
+					aria-label={Liferay.Language.get('remove')}
+					className="dm-field-repeatable-delete-button"
+					small
+					title={Liferay.Language.get('remove')}
+					type="button"
+				>
+					<ClayIcon symbol="hr" />
+				</ClayButton>
+
+				<ClayButton
+					aria-label={Liferay.Language.get('add')}
+					className="dm-field-repeatable-duplicate-button"
+					small
+					title={Liferay.Language.get('duplicate')}
+					type="button"
+				>
+					<ClayIcon symbol="plus" />
+				</ClayButton>
 			</ClayLayout.Col>
 		</ClayLayout.Row>
 	);

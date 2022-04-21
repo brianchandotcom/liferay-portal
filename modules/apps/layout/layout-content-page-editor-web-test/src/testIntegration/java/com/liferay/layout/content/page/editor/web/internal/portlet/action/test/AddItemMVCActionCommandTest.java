@@ -44,7 +44,6 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.props.test.util.PropsTemporarySwapper;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -192,34 +191,14 @@ public class AddItemMVCActionCommandTest {
 	public void testAddItemToLayoutDataItemTypeCollectionMobileLandscapeConfig()
 		throws Exception {
 
-		try (PropsTemporarySwapper propsTemporarySwapper =
-				new PropsTemporarySwapper("feature.flag.LPS-119551", "false")) {
-
-			_assertTypeCollectionMobileLandscapeConfig(null);
-		}
-
-		try (PropsTemporarySwapper propsTemporarySwapper =
-				new PropsTemporarySwapper("feature.flag.LPS-119551", "true")) {
-
-			_assertTypeCollectionMobileLandscapeConfig(1);
-		}
+		_assertTypeCollectionMobileLandscapeConfig(1);
 	}
 
 	@Test
 	public void testAddItemToLayoutDataItemTypeRowMobileLandscapeConfig()
 		throws Exception {
 
-		try (PropsTemporarySwapper propsTemporarySwapper =
-				new PropsTemporarySwapper("feature.flag.LPS-119551", "false")) {
-
-			_assertTypeRowMobileLandscapeConfig(null, null);
-		}
-
-		try (PropsTemporarySwapper propsTemporarySwapper =
-				new PropsTemporarySwapper("feature.flag.LPS-119551", "true")) {
-
-			_assertTypeRowMobileLandscapeConfig(1, 12);
-		}
+		_assertTypeRowMobileLandscapeConfig(1, 12);
 	}
 
 	private void _assertTypeCollectionMobileLandscapeConfig(

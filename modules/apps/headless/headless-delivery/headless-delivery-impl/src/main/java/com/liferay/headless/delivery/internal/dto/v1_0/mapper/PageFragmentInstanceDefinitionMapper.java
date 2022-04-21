@@ -577,6 +577,9 @@ public class PageFragmentInstanceDefinitionMapper {
 		Map<String, String> localizedValues =
 			LocalizedValueUtil.toLocalizedValues(jsonObject);
 
+		Map<String, String> localizedURLs = _toLocalizedURLs(
+			localizedJSONObjects, localizedValues);
+
 		return new FragmentFieldImage() {
 			{
 				fragmentImage = new FragmentImage() {
@@ -588,7 +591,9 @@ public class PageFragmentInstanceDefinitionMapper {
 
 						setFragmentImageClassPKReference(
 							() -> {
-								if (MapUtil.isEmpty(localizedJSONObjects)) {
+								if (MapUtil.isEmpty(localizedJSONObjects) ||
+									MapUtil.isNotEmpty(localizedURLs)) {
+
 									return null;
 								}
 
@@ -598,10 +603,6 @@ public class PageFragmentInstanceDefinitionMapper {
 							});
 						setUrl(
 							() -> {
-								if (MapUtil.isNotEmpty(localizedJSONObjects)) {
-									return null;
-								}
-
 								if (FragmentMappedValueUtil.
 										isSaveFragmentMappedValue(
 											jsonObject, saveMapping)) {
@@ -615,7 +616,7 @@ public class PageFragmentInstanceDefinitionMapper {
 
 								return new FragmentInlineValue() {
 									{
-										value_i18n = localizedValues;
+										value_i18n = localizedURLs;
 									}
 								};
 							});
@@ -816,6 +817,29 @@ public class PageFragmentInstanceDefinitionMapper {
 		}
 
 		return fragmentLinkValues;
+	}
+
+	private Map<String, String> _toLocalizedURLs(
+		Map<String, JSONObject> localizedJSONObjects,
+		Map<String, String> localizedValues) {
+
+		HashMap<String, String> localizedURLs = new HashMap<String, String>() {
+			{
+				for (Map.Entry<String, JSONObject> entry :
+						localizedJSONObjects.entrySet()) {
+
+					JSONObject localizedJSONObject = entry.getValue();
+
+					put(entry.getKey(), localizedJSONObject.getString("url"));
+				}
+			}
+		};
+
+		if (!localizedURLs.isEmpty()) {
+			return localizedURLs;
+		}
+
+		return localizedValues;
 	}
 
 	private Map<String, JSONObject> _toLocalizedValueJSONObjects(

@@ -21,6 +21,7 @@ import getAllPortals from '../../../../../app/components/layout-data-items/getAl
 import hasDropZoneChild from '../../../../../app/components/layout-data-items/hasDropZoneChild';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../app/config/constants/editableFragmentEntryProcessor';
 import {EDITABLE_TYPES} from '../../../../../app/config/constants/editableTypes';
+import {FRAGMENT_ENTRY_TYPES} from '../../../../../app/config/constants/fragmentEntryTypes';
 import {ITEM_TYPES} from '../../../../../app/config/constants/itemTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../app/config/constants/layoutDataItemTypes';
 import {LAYOUT_TYPES} from '../../../../../app/config/constants/layoutTypes';
@@ -279,6 +280,21 @@ function isItemHidden(item, selectedViewportSize) {
 	return responsiveConfig.styles.display === 'none';
 }
 
+function isHidable(item, fragmentEntryLinks, layoutData) {
+	if (!isRemovable(item, layoutData)) {
+		return false;
+	}
+
+	if (item.type !== LAYOUT_DATA_ITEM_TYPES.fragment) {
+		return true;
+	}
+
+	const fragmentEntryLink =
+		fragmentEntryLinks[item.config.fragmentEntryLinkId];
+
+	return fragmentEntryLink.fragmentEntryType !== FRAGMENT_ENTRY_TYPES.input;
+}
+
 function isRemovable(item, layoutData) {
 	if (
 		item.type === LAYOUT_DATA_ITEM_TYPES.dropZone ||
@@ -380,6 +396,7 @@ function visit(
 					dragAndDropHoveredItemId,
 					draggable: false,
 					expanded: childId === activeItemId,
+					hidable: false,
 					hidden: false,
 					hiddenAncestor: hasHiddenAncestor || hidden,
 					icon: EDITABLE_TYPE_ICONS[type],
@@ -489,6 +506,9 @@ function visit(
 		expanded:
 			item.itemId === activeItemId ||
 			dragAndDropHoveredItemId === item.itemId,
+		hidable:
+			!itemInMasterLayout &&
+			isHidable(item, fragmentEntryLinks, layoutData),
 		hidden,
 		hiddenAncestor: hasHiddenAncestor,
 		icon,

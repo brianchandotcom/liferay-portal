@@ -316,7 +316,7 @@ function StructureTreeNodeContent({
 						node.hidden || node.hiddenAncestor,
 				})}
 			>
-				{(node.removable || node.hidden) && (
+				{(node.hidable || node.hidden) && (
 					<VisibilityButton
 						dispatch={dispatch}
 						node={node}

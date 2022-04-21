@@ -18,6 +18,7 @@ import com.liferay.asset.categories.item.selector.AssetCategoryTreeNodeItemSelec
 import com.liferay.asset.categories.item.selector.criterion.AssetCategoryTreeNodeItemSelectorCriterion;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
+import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributor;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
@@ -1618,6 +1619,9 @@ public class ContentPageEditorDisplayContext {
 						"fragmentEntryLinkId",
 						String.valueOf(
 							fragmentEntryLink.getFragmentEntryLinkId())
+					).put(
+						"fragmentType",
+						FragmentConstants.getTypeLabel(fragmentEntry.getType())
 					).put(
 						"masterLayout",
 						layout.getMasterLayoutPlid() ==

@@ -15,20 +15,31 @@
 package com.liferay.site.navigation.admin.web.internal.portlet.action;
 
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
+import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.admin.constants.SiteNavigationAdminPortletKeys;
 import com.liferay.site.navigation.taglib.servlet.taglib.NavigationMenuTag;
+import com.liferay.taglib.util.ThemeUtil;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -57,6 +68,10 @@ public class GetSiteNavigationMenuPreviewMVCResourceCommand
 		HttpServletResponse httpServletResponse =
 			_portal.getHttpServletResponse(resourceResponse);
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 		long siteNavigationMenuId = ParamUtil.getLong(
 			resourceRequest, "siteNavigationMenuId");
 
@@ -76,9 +91,33 @@ public class GetSiteNavigationMenuPreviewMVCResourceCommand
 
 		navigationMenuTag.doTag(httpServletRequest, pipingServletResponse);
 
+		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
+			themeDisplay.getScopeGroupId(), false);
+
+		themeDisplay.setLayoutSet(layoutSet);
+		themeDisplay.setLookAndFeel(
+			layoutSet.getTheme(), layoutSet.getColorScheme());
+
+		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
+
+		Document document = Jsoup.parse(
+			ThemeUtil.include(
+				ServletContextPool.get(StringPool.BLANK), httpServletRequest,
+				httpServletResponse, "portal_normal.ftl", layoutSet.getTheme(),
+				false));
+
+		Element bodyElement = document.body();
+
+		bodyElement.html(unsyncStringWriter.toString());
+
+		ServletResponseUtil.write(httpServletResponse, document.html());
+
 		ServletResponseUtil.write(
 			httpServletResponse, unsyncStringWriter.toString());
 	}
+
+	@Reference
+	private LayoutSetLocalService _layoutSetLocalService;
 
 	@Reference
 	private Portal _portal;

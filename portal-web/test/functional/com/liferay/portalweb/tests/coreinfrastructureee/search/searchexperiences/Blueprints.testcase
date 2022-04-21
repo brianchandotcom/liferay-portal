@@ -437,18 +437,11 @@ definition {
 	}
 
 	test AssertNonAdminsCannotAccessBlueprintsPortlet {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userScreenName = "usersn");
-
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
@@ -1007,8 +1000,6 @@ definition {
 	}
 
 	test DefineBlueprintsRolePermissions {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
 		JSONRole.addRegularRole(
 			roleKey = "Search Blueprints Admin",
 			roleTitle = "Search Blueprints Admin");
@@ -1045,11 +1036,6 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
-
 		JSONRole.assignRoleToUser(
 			roleTitle = "Search Blueprints Admin",
 			userEmailAddress = "userea@liferay.com");
@@ -1083,8 +1069,6 @@ definition {
 	}
 
 	test DefineElementsRolePermissions {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
 		JSONRole.addRegularRole(
 			roleKey = "Search Elements Admin",
 			roleTitle = "Search Elements Admin");
@@ -1120,11 +1104,6 @@ definition {
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userScreenName = "usersn");
-
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
 
 		JSONRole.assignRoleToUser(
 			roleTitle = "Search Elements Admin",

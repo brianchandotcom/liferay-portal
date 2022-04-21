@@ -168,8 +168,6 @@ definition {
 
 	@priority = "4"
 	test AssertNonAdminsCannotAddCertainWidgets {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
 		JSONRole.addRegularRole(
 			roleKey = "Can Add Widgets",
 			roleTitle = "Can Add Widgets");
@@ -185,20 +183,13 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
-
 		JSONRole.assignRoleToUser(
 			roleTitle = "Can Add Widgets",
 			userEmailAddress = "userea@liferay.com");
 
-		User.logoutPG();
-
-		User.loginPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Profile");
 
@@ -2414,18 +2405,11 @@ definition {
 	@description = "This is a use case for LPS-84035."
 	@priority = "5"
 	test ViewCreatedSearchPagePermissions {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userScreenName = "usersn");
-
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
 
 		JSONUser.addUserToSite(
 			groupName = "Guest",
@@ -2478,9 +2462,7 @@ definition {
 				locator1 = "Portlet#BODY");
 		}
 
-		User.loginPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
+		User.loginPG(userEmailAddress = "userea@liferay.com");
 
 		SearchPortlets.searchEmbedded(searchTerm = "WC Title");
 
@@ -2501,18 +2483,11 @@ definition {
 	@description = "This is a use case for LPS-84035."
 	@priority = "5"
 	test ViewDefaultSearchPagePermissions {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userScreenName = "usersn");
-
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
 
 		JSONUser.addUserToSite(
 			groupName = "Guest",
@@ -2559,9 +2534,7 @@ definition {
 			searchAssetType = "Web Content Article",
 			searchTerm = "WC Title");
 
-		User.loginPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
+		User.loginPG(userEmailAddress = "userea@liferay.com");
 
 		SearchPortlets.searchEmbedded(searchTerm = "WC Title");
 

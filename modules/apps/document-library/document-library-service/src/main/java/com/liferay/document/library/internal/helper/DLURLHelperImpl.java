@@ -226,53 +226,18 @@ public class DLURLHelperImpl implements DLURLHelper {
 		FileEntry fileEntry, FileVersion fileVersion, ThemeDisplay themeDisplay,
 		String queryString, boolean appendVersion, boolean absoluteURL) {
 
-		String friendlyURL = _getFriendlyURL(
-			fileEntry.getFileEntryId(), themeDisplay);
+		String previewURLPrefix = _getPreviewURLPrefix(
+			themeDisplay, absoluteURL);
 
-		if (Validator.isNotNull(friendlyURL)) {
-			return friendlyURL;
+		String previewURL = _getFriendlyURL(
+			fileEntry.getFileEntryId(), themeDisplay, previewURLPrefix,
+			queryString);
+
+		if (Validator.isNull(previewURL)) {
+			previewURL = _getPreviewUuidURL(
+				fileEntry, fileVersion, previewURLPrefix, queryString,
+				appendVersion);
 		}
-
-		StringBundler sb = new StringBundler(15);
-
-		if ((themeDisplay != null) && absoluteURL) {
-			sb.append(themeDisplay.getPortalURL());
-		}
-
-		sb.append(_portal.getPathContext());
-		sb.append("/documents/");
-		sb.append(fileEntry.getRepositoryId());
-		sb.append(StringPool.SLASH);
-		sb.append(fileEntry.getFolderId());
-		sb.append(StringPool.SLASH);
-
-		String fileName = fileEntry.getFileName();
-
-		if (fileEntry.isInTrash()) {
-			fileName = _trashHelper.getOriginalTitle(fileEntry.getFileName());
-		}
-
-		sb.append(URLCodec.encodeURL(HtmlUtil.unescape(fileName)));
-
-		sb.append(StringPool.SLASH);
-		sb.append(URLCodec.encodeURL(fileEntry.getUuid()));
-
-		if (appendVersion) {
-			sb.append("?version=");
-			sb.append(fileVersion.getVersion());
-			sb.append("&t=");
-		}
-		else {
-			sb.append("?t=");
-		}
-
-		Date modifiedDate = fileVersion.getModifiedDate();
-
-		sb.append(modifiedDate.getTime());
-
-		sb.append(queryString);
-
-		String previewURL = sb.toString();
 
 		if ((themeDisplay != null) && themeDisplay.isAddSessionIdToURL()) {
 			return _portal.getURLWithSessionId(
@@ -472,7 +437,8 @@ public class DLURLHelperImpl implements DLURLHelper {
 	}
 
 	private String _getFriendlyURL(
-		long fileEntryId, ThemeDisplay themeDisplay) {
+		long fileEntryId, ThemeDisplay themeDisplay, String previewURLPrefix,
+		String queryString) {
 
 		if (!_ffFriendlyURLEntryFileEntryConfiguration.enabled() ||
 			(fileEntryId == 0)) {
@@ -490,9 +456,8 @@ public class DLURLHelperImpl implements DLURLHelper {
 
 		StringBundler sb = new StringBundler(6);
 
-		sb.append(themeDisplay.getPortalURL());
-		sb.append("/documents");
-		sb.append(FriendlyURLResolverConstants.URL_SEPARATOR_X_FILE_ENTRY);
+		sb.append(previewURLPrefix);
+		sb.append(FriendlyURLResolverConstants.URL_SEPARATOR_Y_FILE_ENTRY);
 
 		Group group = themeDisplay.getScopeGroup();
 
@@ -500,6 +465,8 @@ public class DLURLHelperImpl implements DLURLHelper {
 
 		sb.append(StringPool.SLASH);
 		sb.append(friendlyURLEntry.getUrlTitle());
+
+		sb.append(queryString.replaceFirst("&", "?"));
 
 		return sb.toString();
 	}
@@ -525,6 +492,63 @@ public class DLURLHelperImpl implements DLURLHelper {
 		}
 
 		return thumbnailSrc;
+	}
+
+	private String _getPreviewURLPrefix(
+		ThemeDisplay themeDisplay, boolean absoluteURL) {
+
+		StringBundler sb = new StringBundler(3);
+
+		if ((themeDisplay != null) && absoluteURL) {
+			sb.append(themeDisplay.getPortalURL());
+		}
+
+		sb.append(_portal.getPathContext());
+		sb.append("/documents/");
+
+		return sb.toString();
+	}
+
+	private String _getPreviewUuidURL(
+		FileEntry fileEntry, FileVersion fileVersion, String previewURLPrefix,
+		String queryString, boolean appendVersion) {
+
+		StringBundler sb = new StringBundler(13);
+
+		sb.append(previewURLPrefix);
+
+		sb.append(fileEntry.getRepositoryId());
+		sb.append(StringPool.SLASH);
+		sb.append(fileEntry.getFolderId());
+		sb.append(StringPool.SLASH);
+
+		String fileName = fileEntry.getFileName();
+
+		if (fileEntry.isInTrash()) {
+			fileName = _trashHelper.getOriginalTitle(fileEntry.getFileName());
+		}
+
+		sb.append(URLCodec.encodeURL(HtmlUtil.unescape(fileName)));
+
+		sb.append(StringPool.SLASH);
+		sb.append(URLCodec.encodeURL(fileEntry.getUuid()));
+
+		if (appendVersion) {
+			sb.append("?version=");
+			sb.append(fileVersion.getVersion());
+			sb.append("&t=");
+		}
+		else {
+			sb.append("?t=");
+		}
+
+		Date modifiedDate = fileVersion.getModifiedDate();
+
+		sb.append(modifiedDate.getTime());
+
+		sb.append(queryString);
+
+		return sb.toString();
 	}
 
 	@Reference

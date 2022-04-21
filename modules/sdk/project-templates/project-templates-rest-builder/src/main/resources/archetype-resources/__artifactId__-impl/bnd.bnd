@@ -1,5 +1,4 @@
 #set ($versionPolicy = '${replacestring;${range;[==,==]};.*,(.*)];$1}')
-
 Bundle-Name: ${artifactId}-impl
 Bundle-SymbolicName: ${package}.impl
 Bundle-Version: ${version}

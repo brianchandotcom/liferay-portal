@@ -16,6 +16,7 @@ package com.liferay.commerce.price.list.service.impl;
 
 import com.liferay.commerce.price.list.exception.CommercePriceEntryDisplayDateException;
 import com.liferay.commerce.price.list.exception.CommercePriceEntryExpirationDateException;
+import com.liferay.commerce.price.list.exception.CommercePriceListMaxPriceValueException;
 import com.liferay.commerce.price.list.exception.DuplicateCommercePriceEntryException;
 import com.liferay.commerce.price.list.exception.NoSuchPriceEntryException;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
@@ -962,6 +963,10 @@ public class CommercePriceEntryLocalServiceImpl
 			displayDateMinute, user.getTimeZone(),
 			CommercePriceEntryDisplayDateException.class);
 
+		_validatePrice(
+			price, discountLevel1, discountLevel2, discountLevel3,
+			discountLevel4);
+
 		if (!neverExpire) {
 			expirationDate = PortalUtil.getDate(
 				expirationDateMonth, expirationDateDay, expirationDateYear,
@@ -1478,6 +1483,28 @@ public class CommercePriceEntryLocalServiceImpl
 				}
 			)
 		);
+	}
+
+	private void _validatePrice(
+			BigDecimal price, BigDecimal discountLevel1,
+			BigDecimal discountLevel2, BigDecimal discountLevel3,
+			BigDecimal discountLevel4)
+		throws CommercePriceListMaxPriceValueException {
+
+		BigDecimal maxValue = BigDecimal.valueOf(999999999.99);
+
+		if (((price != null) && (price.compareTo(maxValue) > 0)) ||
+			((discountLevel1 != null) &&
+			 (discountLevel1.compareTo(maxValue) > 0)) ||
+			((discountLevel2 != null) &&
+			 (discountLevel2.compareTo(maxValue) > 0)) ||
+			((discountLevel3 != null) &&
+			 (discountLevel3.compareTo(maxValue) > 0)) ||
+			((discountLevel4 != null) &&
+			 (discountLevel4.compareTo(maxValue) > 0))) {
+
+			throw new CommercePriceListMaxPriceValueException();
+		}
 	}
 
 	private static final String[] _SELECTED_FIELD_NAMES = {

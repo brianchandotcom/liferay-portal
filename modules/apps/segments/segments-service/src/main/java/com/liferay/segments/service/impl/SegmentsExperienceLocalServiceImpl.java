@@ -46,7 +46,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -625,27 +624,21 @@ public class SegmentsExperienceLocalServiceImpl
 	private int _getHighestPriority(
 		long groupId, long classNameId, long classPK) {
 
-		return Optional.ofNullable(
+		SegmentsExperience segmentsExperience =
 			segmentsExperiencePersistence.fetchByG_C_C_First(
-				groupId, classNameId, classPK, null)
-		).map(
-			SegmentsExperience::getPriority
-		).orElse(
-			SegmentsExperienceConstants.PRIORITY_DEFAULT
-		);
+				groupId, classNameId, classPK, null);
+
+		return segmentsExperience.getPriority();
 	}
 
 	private int _getLowestPriority(
 		long groupId, long classNameId, long classPK) {
 
-		return Optional.ofNullable(
+		SegmentsExperience segmentsExperience =
 			segmentsExperiencePersistence.fetchByG_C_C_Last(
-				groupId, classNameId, classPK, null)
-		).map(
-			SegmentsExperience::getPriority
-		).orElse(
-			SegmentsExperienceConstants.PRIORITY_DEFAULT
-		);
+				groupId, classNameId, classPK, null);
+
+		return segmentsExperience.getPriority();
 	}
 
 	private long _getPublishedLayoutClassPK(long classPK) {

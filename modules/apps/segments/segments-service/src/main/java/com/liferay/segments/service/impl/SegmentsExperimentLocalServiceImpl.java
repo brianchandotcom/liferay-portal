@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.constants.SegmentsExperimentConstants;
 import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.exception.LockedSegmentsExperimentException;
@@ -65,7 +64,6 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
@@ -497,16 +495,11 @@ public class SegmentsExperimentLocalServiceImpl
 		SegmentsExperience controlSegmentsExperience,
 		SegmentsExperience variantSegmentsExperience) {
 
-		int lowestSegmentsExperiencePriority = Optional.ofNullable(
+		SegmentsExperience segmentsExperience =
 			segmentsExperiencePersistence.fetchByG_C_C_Last(
 				controlSegmentsExperience.getGroupId(),
 				controlSegmentsExperience.getClassNameId(),
-				controlSegmentsExperience.getClassPK(), null)
-		).map(
-			SegmentsExperience::getPriority
-		).orElse(
-			SegmentsExperienceConstants.PRIORITY_DEFAULT
-		);
+				controlSegmentsExperience.getClassPK(), null);
 
 		int controlSegmentsExperiencePriority =
 			controlSegmentsExperience.getPriority();
@@ -514,13 +507,13 @@ public class SegmentsExperimentLocalServiceImpl
 			variantSegmentsExperience.getPriority();
 
 		controlSegmentsExperience.setPriority(
-			lowestSegmentsExperiencePriority - 1);
+			segmentsExperience.getPriority() - 1);
 
 		controlSegmentsExperience = segmentsExperiencePersistence.update(
 			controlSegmentsExperience);
 
 		variantSegmentsExperience.setPriority(
-			lowestSegmentsExperiencePriority - 2);
+			segmentsExperience.getPriority() - 2);
 
 		variantSegmentsExperience = segmentsExperiencePersistence.update(
 			variantSegmentsExperience);

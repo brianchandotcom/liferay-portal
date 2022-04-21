@@ -77,7 +77,8 @@ public class SubmitBatchPlannerPlanMVCResourceCommand
 		throws Exception {
 
 		BatchPlannerPlan batchPlannerPlan =
-			_batchPlannerPlanHelper.addExportBatchPlannerPlan(resourceRequest);
+			_batchPlannerPlanHelper.addExportBatchPlannerPlan(
+				resourceRequest, null);
 
 		if (!batchPlannerPlan.isTemplate()) {
 			_batchEngineBroker.submit(batchPlannerPlan.getBatchPlannerPlanId());

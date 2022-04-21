@@ -66,7 +66,8 @@ public class EditExportBatchPlannerPlanTemplateMVCActionCommand
 		try {
 			BatchPlannerPlan batchPlannerPlan =
 				_batchPlannerPlanHelper.addExportBatchPlannerPlan(
-					actionRequest);
+					actionRequest,
+					ParamUtil.getString(actionRequest, "templateName"));
 
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse,

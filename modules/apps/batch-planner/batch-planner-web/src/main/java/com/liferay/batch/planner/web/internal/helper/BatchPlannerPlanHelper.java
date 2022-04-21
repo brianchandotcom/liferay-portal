@@ -52,14 +52,13 @@ import org.osgi.service.component.annotations.Reference;
 public class BatchPlannerPlanHelper {
 
 	public BatchPlannerPlan addExportBatchPlannerPlan(
-			PortletRequest portletRequest)
+			PortletRequest portletRequest, String name)
 		throws Exception {
 
 		String externalType = ParamUtil.getString(
 			portletRequest, "externalType");
 		String internalClassName = ParamUtil.getString(
 			portletRequest, "internalClassName");
-		String name = ParamUtil.getString(portletRequest, "name");
 		String taskItemDelegateName = ParamUtil.getString(
 			portletRequest, "taskItemDelegateName");
 		boolean template = ParamUtil.getBoolean(portletRequest, "template");

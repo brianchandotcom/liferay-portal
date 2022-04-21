@@ -16,9 +16,12 @@ package com.liferay.asset.vocabulary.item.selector.web.internal;
 
 import com.liferay.asset.vocabulary.item.selector.AssetVocabularyItemSelectorReturnType;
 import com.liferay.asset.vocabulary.item.selector.criterion.AssetVocabularyItemSelectorCriterion;
+import com.liferay.asset.vocabulary.item.selector.web.internal.constants.AssetVocabularyItemSelectorWebKeys;
+import com.liferay.asset.vocabulary.item.selector.web.internal.display.context.SelectAssetVocabularyItemSelectorDisplayContext;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
 
 import java.io.IOException;
 
@@ -27,12 +30,14 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletURL;
+import javax.portlet.RenderResponse;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -74,6 +79,15 @@ public class AssetVocabularyItemSelectorView
 		throws IOException, ServletException {
 
 		ServletContext servletContext = getServletContext();
+
+		servletRequest.setAttribute(
+			AssetVocabularyItemSelectorWebKeys.
+				SELECT_ASSET_VOCABULARY_ITEM_SELECTOR_DISPLAY_CONTEXT,
+			new SelectAssetVocabularyItemSelectorDisplayContext(
+				(HttpServletRequest)servletRequest,
+				assetVocabularyItemSelectorCriterion, portletURL,
+				(RenderResponse)servletRequest.getAttribute(
+					JavaConstants.JAVAX_PORTLET_RESPONSE)));
 
 		RequestDispatcher requestDispatcher =
 			servletContext.getRequestDispatcher("/select_asset_vocabulary.jsp");

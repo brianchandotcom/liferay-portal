@@ -66,7 +66,7 @@ export default function SiteIconPackConfiguration({
 
 			<ClayLayout.ContentRow className="mb-2" containerElement="code">
 				{window.location.host +
-					`/o/icons/site/${Liferay.ThemeDisplay.getSiteGroupId()}.svg`}
+					`/o/icons/pack/site/${Liferay.ThemeDisplay.getSiteGroupId()}.svg`}
 			</ClayLayout.ContentRow>
 
 			<label className="form-control-label">
@@ -108,7 +108,7 @@ export default function SiteIconPackConfiguration({
 													key={icon.name}
 												>
 													<ClayIcon
-														spritemap={`/o/icons/${iconPackName}.svg?${referenceTime}`}
+														spritemap={`/o/icons/pack/${iconPackName}.svg?${referenceTime}`}
 														symbol={icon.name}
 													/>
 

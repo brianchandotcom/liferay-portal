@@ -1,7 +1,88 @@
+components:
+    schemas:
+        Country:
+            properties:
+                a2:
+                    pattern: "[A-Z]{2}"
+                    type: string
+                a3:
+                    pattern: "[A-Z]{3}"
+                    type: string
+                active:
+                    default: true
+                    type: boolean
+                billingAllowed:
+                    default: true
+                    type: boolean
+                groupFilterEnabled:
+                    default: false
+                    type: boolean
+                id:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                idd:
+                    type: integer
+                name:
+                    type: string
+                number:
+                    type: integer
+                position:
+                    default: 0.0
+                    format: double
+                    type: number
+                regions:
+                    items:
+                        $ref: "#/components/schemas/Region"
+                    readOnly: true
+                    type: array
+                shippingAllowed:
+                    default: true
+                    type: boolean
+                subjectToVAT:
+                    default: false
+                    type: boolean
+                title_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
+                zipRequired:
+                    default: true
+                    type: boolean
+            required:
+                - a2
+                - a3
+                - name
+                - number
+            type: object
+        Region:
+            properties:
+                active:
+                    default: true
+                    type: boolean
+                countryId:
+                    format: int64
+                    type: integer
+                id:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                name:
+                    type: string
+                regionCode:
+                    type: string
+                title_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
+            required:
+                - regionCode
+                - name
 info:
     description:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
-        'com.liferay.headless.admin.user.client', and version '1.0.0'."
+        'com.liferay.headless.admin.user.client', and version '1.0.0'.. A Java client JAR is available for use with the
+        group ID 'com.liferay', artifact ID 'com.liferay.headless.admin.address.client', and version '1.0.0'."
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"

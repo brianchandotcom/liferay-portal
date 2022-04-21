@@ -1114,13 +1114,13 @@ AUI.add(
 
 							var currentUploadData = instance._getCurrentUploadData();
 
-							const invalidFilesLength =
+							var invalidFilesLength =
 								currentUploadData.invalidFiles.length;
-							const validFilesLength =
+							var validFilesLength =
 								currentUploadData.fileList.length;
 
 							if (validFilesLength) {
-								const openToastProps = {
+								var openToastProps = {
 									autoClose: false,
 									message: Liferay.Util.sub(
 										instance._strings.xValidFilesUploaded,
@@ -1172,7 +1172,7 @@ AUI.add(
 									);
 								}
 
-								const message = TPL_ERROR_NOTIFICATION.parse({
+								var message = TPL_ERROR_NOTIFICATION.parse({
 									invalidFiles:
 										currentUploadData.invalidFiles,
 									title: Liferay.Util.sub(

@@ -67,6 +67,7 @@ const renderCommonStylesManager = ({
 	return render(
 		<StoreAPIContextProvider
 			getState={() => ({
+				fragmentEntryLinks: [],
 				layoutData: {
 					items: {
 						itemId: {

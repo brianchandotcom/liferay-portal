@@ -113,12 +113,6 @@ public class SegmentsExperienceLocalServiceImpl
 		int lowestPriority = _getLowestPriority(
 			groupId, classNameId, _getPublishedLayoutClassPK(classPK));
 
-		if ((lowestPriority - 1) ==
-				SegmentsExperienceConstants.PRIORITY_DEFAULT) {
-
-			lowestPriority = lowestPriority - 1;
-		}
-
 		return addSegmentsExperience(
 			userId, groupId, segmentsEntryId, classNameId, classPK, nameMap,
 			lowestPriority - 1, active, typeSettingsUnicodeProperties,
@@ -215,12 +209,6 @@ public class SegmentsExperienceLocalServiceImpl
 
 		int highestPriority = _getHighestPriority(
 			groupId, classNameId, _getPublishedLayoutClassPK(classPK));
-
-		if ((highestPriority + 1) ==
-				SegmentsExperienceConstants.PRIORITY_DEFAULT) {
-
-			highestPriority = highestPriority + 1;
-		}
 
 		return addSegmentsExperience(
 			userId, groupId, segmentsEntryId, classNameId, classPK, nameMap,

@@ -57,4 +57,62 @@ definition {
 		}
 	}
 
+	@description = "This test ensures that uploaded files will be limited in size in a depot when setting the limit of a mimetype using the type and a wildcard."
+	@priority = "4"
+	test CanLimitSizeUsingWildcardInDepot {
+		OSGiConfig.copyOSGiConfigFile(
+			osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/enduser/documentmanagement/documentsadministration/dependencies",
+			osgiConfigFileName = "com.liferay.document.library.internal.configuration.DLSizeLimitConfiguration.config");
+
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.xlsx",
+			dmDocumentTitle = "DM Document Title");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_3.xls",
+			dmDocumentTitle = "DM Document Title Can not upload",
+			validationError = "Please enter a file with a valid file size no larger than 20 KB.");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		LexiconCard.viewCardNotPresent(card = "DM Document Title Can not upload");
+
+		LexiconCard.viewCardTitle(card = "DM Document Title");
+	}
+
+	@description = "This test ensures that uploaded files will be limited in size in a site when setting the limit of a mimetype using the type and a wildcard."
+	@priority = "4"
+	test CanLimitSizeUsingWildcardInSite {
+		OSGiConfig.copyOSGiConfigFile(
+			osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/enduser/documentmanagement/documentsadministration/dependencies",
+			osgiConfigFileName = "com.liferay.document.library.internal.configuration.DLSizeLimitConfiguration.config");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.docx",
+			dmDocumentTitle = "DM Document Title");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_2.doc",
+			dmDocumentTitle = "DM Document Title Can not upload",
+			validationError = "Please enter a file with a valid file size no larger than 20 KB.");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		LexiconCard.viewCardNotPresent(card = "DM Document Title Can not upload");
+
+		LexiconCard.viewCardTitle(card = "DM Document Title");
+	}
+
 }

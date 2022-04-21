@@ -2804,8 +2804,8 @@ definition {
 		Site.openSiteSettingsAdmin(siteURLKey = "my-site");
 
 		Site.addVirtualHostsURLCP(
-			publicPageVirtualHostURL = "www.able.com",
-			publicVirtualHosts = "true");
+			pageVirtualHosts = "true",
+			publicPageVirtualHostURL = "www.able.com");
 
 		Navigator.gotoBack();
 

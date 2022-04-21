@@ -21,6 +21,7 @@ import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.asset.vocabulary.item.selector.criterion.AssetVocabularyItemSelectorCriterion;
 import com.liferay.depot.util.SiteConnectedGroupGroupProviderUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -93,6 +94,13 @@ public class SelectAssetVocabularyItemSelectorDisplayContext {
 		}
 		else {
 			searchContainer.setResultsAndTotal(_getAssetVocabularies());
+		}
+
+		searchContainer.setRowChecker(null);
+
+		if (_assetVocabularyItemSelectorCriterion.isMultiSelection()) {
+			searchContainer.setRowChecker(
+				new EmptyOnClickRowChecker(_renderResponse));
 		}
 
 		_assetVocabulariesSearchContainer = searchContainer;

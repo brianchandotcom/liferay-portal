@@ -28,6 +28,7 @@ const PaginatedList = ({
 	children,
 	data,
 	emptyState,
+	hrefConstructor,
 	showEmptyState,
 	totalCount,
 }) => {
@@ -65,9 +66,7 @@ const PaginatedList = ({
 							className="c-mt-4 w-100"
 							deltas={deltas}
 							ellipsisBuffer={3}
-							hrefConstructor={(page) =>
-								`?page=${page}&pagesize=${activeDelta}`
-							}
+							hrefConstructor={hrefConstructor}
 							onDeltaChange={changeDelta}
 							onPageChange={(page) => {
 								if (changePage) {

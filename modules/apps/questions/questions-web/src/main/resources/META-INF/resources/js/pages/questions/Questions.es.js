@@ -590,6 +590,13 @@ export default withRouter(
 										/>
 									)
 								}
+								hrefConstructor={(page) =>
+									`${getFullPath('questions')}${
+										context.historyRouterBasePath
+											? ''
+											: '#/'
+									}questions/${sectionTitle}?page=${page}&pagesize=${pageSize}`
+								}
 								loading={loading}
 								totalCount={totalCount}
 							>

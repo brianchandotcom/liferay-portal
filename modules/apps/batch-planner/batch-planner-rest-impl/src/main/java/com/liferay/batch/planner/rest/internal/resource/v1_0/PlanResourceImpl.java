@@ -123,7 +123,7 @@ public class PlanResourceImpl extends BasePlanResourceImpl {
 		BatchPlannerPlan batchPlannerPlan =
 			_batchPlannerPlanService.addBatchPlannerPlan(
 				plan.getExport(), plan.getExternalType(), plan.getExternalURL(),
-				plan.getInternalClassName(), plan.getName(),
+				plan.getInternalClassName(), plan.getName(), 0,
 				plan.getTaskItemDelegateName(), plan.getTemplate());
 
 		Mapping[] mappings = plan.getMappings();

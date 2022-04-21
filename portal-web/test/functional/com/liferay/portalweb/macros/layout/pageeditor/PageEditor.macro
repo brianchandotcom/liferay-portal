@@ -1653,20 +1653,20 @@ definition {
 
 		if (isSet(listStyle)) {
 			AssertElementPresent(
-				key_fieldLabel = "List Style",
+				key_fieldLabel = "Style Display",
 				key_groupLabel = "Templates",
 				key_value = "${listStyle}",
 				locator1 = "Select#GROUPED_SELECT_VALUE");
 
 			Select(
-				key_fieldLabel = "List Style",
+				key_fieldLabel = "Style Display",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "${listStyle}");
 
 			PageEditor.waitForAutoSave();
 
 			AssertSelectedLabel(
-				key_fieldLabel = "List Style",
+				key_fieldLabel = "Style Display",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "${listStyle}");
 

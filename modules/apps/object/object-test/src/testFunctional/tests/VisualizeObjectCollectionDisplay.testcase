@@ -70,7 +70,7 @@ definition {
 			locator1 = "VisualizeObjectCollectionDisplay#FRAGMENT_COLLECTION");
 
 		Select(
-			key_fieldLabel = "List Style",
+			key_fieldLabel = "Style Display",
 			locator1 = "Select#GENERIC_SELECT_FIELD",
 			value1 = "Table");
 

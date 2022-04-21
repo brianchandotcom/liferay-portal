@@ -32,7 +32,6 @@ FDSSampleDisplayContext fdsSampleDisplayContext = (FDSSampleDisplayContext)reque
 	formId="fm"
 	id="<%= FDSSampleFDSNames.CUSTOMIZED %>"
 	itemsPerPage="<%= 10 %>"
-	pageNumber="<%= 2 %>"
 	propsTransformer="js/SampleFDSPropsTransformer"
 	style="fluid"
 />

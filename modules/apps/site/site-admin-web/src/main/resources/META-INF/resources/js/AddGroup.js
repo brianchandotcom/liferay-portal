@@ -25,6 +25,14 @@ export default function ({namespace}) {
 		event.preventDefault();
 		event.stopPropagation();
 
+		const alertContainer = document.querySelector(
+			'.add-group-alert-container'
+		);
+
+		if (alertContainer.hasChildNodes()) {
+			alertContainer.firstChild.remove();
+		}
+
 		content.classList.toggle('d-none');
 		loading.classList.add('d-flex');
 		loading.classList.remove('d-none');
@@ -57,8 +65,14 @@ export default function ({namespace}) {
 				}
 				else {
 					Liferay.Util.openToast({
+						autoClose: false,
+						container: alertContainer,
 						message: response.error,
+						toastProps: {
+							onClose: null,
+						},
 						type: 'danger',
+						variant: 'stripe',
 					});
 
 					content.classList.toggle('d-none');

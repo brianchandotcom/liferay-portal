@@ -20,6 +20,8 @@
 AddGroupDisplayContext addGroupDisplayContext = (AddGroupDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
+<div class="add-group-alert-container"></div>
+
 <clay:container-fluid>
 	<liferay-frontend:edit-form
 		action="<%= addGroupDisplayContext.getAddGroupURL() %>"

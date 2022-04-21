@@ -133,11 +133,18 @@ export function useSelectorCallback(
 		[]
 	);
 
-	const [selectorState, setSelectorState] = useReducer(
-		(state, nextState) =>
-			compareEqual(state, nextState) ? state : nextState,
-		initialState
-	);
+	const [selectorState, setSelectorState] = useReducer((state, nextState) => {
+
+		// If nextState is undefined, we consider this an accidental
+		// outdated-props issue. If you need to use an empty real state,
+		// use null instead.
+
+		if (nextState === undefined) {
+			return state;
+		}
+
+		return compareEqual(state, nextState) ? state : nextState;
+	}, initialState);
 
 	/* eslint-disable-next-line react-hooks/exhaustive-deps */
 	const selectorCallback = useCallback(selector, dependencies);

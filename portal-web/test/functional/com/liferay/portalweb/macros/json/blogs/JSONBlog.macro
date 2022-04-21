@@ -334,19 +334,24 @@ definition {
 			var site = "true";
 		}
 
-		if (isSet(newEntryContent)) {
-			var entryContent = "${newEntryContent}";
-		}
-
 		if (!(isSet(entrySubtitle))) {
 			var entrySubtitle = "";
+		}
+
+		if (!(isSet(newEntryTitle))) {
+			var newEntryTitle = "${entryTitle}";
+		}
+
+		if (!(isSet(newEntryContent))) {
+			var contentXml = JSONBlogSetter.setContentXML(content = "${entryContent}");
+		}
+		else {
+			var contentXml = JSONBlogSetter.setContentXML(content = "${newEntryContent}");
 		}
 
 		if (!(isSet(newFriendlyURL))) {
 			var newFriendlyURL = "";
 		}
-
-		var contentXml = JSONBlogSetter.setContentXML(content = "${entryContent}");
 
 		var entryId = JSONBlog.getBlogEntryId(
 			entryTitle = "${entryTitle}",
@@ -394,7 +399,7 @@ definition {
 			${portalURL}/api/jsonws/blogs.blogsentry/update-entry \
 			-u ${userEmailAddress}:${userPassword} \
 			-d entryId=${entryId} \
-			-d title=${entryTitle} \
+			-d title=${newEntryTitle} \
 			-d subtitle=${entrySubtitle} \
 			-d urlTitle=${newFriendlyURL} \
 			-d description= \

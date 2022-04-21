@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -28,6 +29,15 @@ import org.junit.runner.RunWith;
 @DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class PlanResourceTest extends BasePlanResourceTestCase {
+
+	@Override
+	@Test
+	public void testGetPlanTemplate() throws Exception {
+		assertHttpResponseStatusCode(
+			200,
+			planResource.getPlanTemplateHttpResponse(
+				"com.liferay.headless.admin.user.dto.v1_0.Account"));
+	}
 
 	@Override
 	protected Plan randomPatchPlan() {

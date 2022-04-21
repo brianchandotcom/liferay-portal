@@ -188,5 +188,10 @@ CookiesBannerConfigurationDisplayContext cookiesBannerConfigurationDisplayContex
 
 <liferay-frontend:component
 	componentId="CookiesBannerConfiguration"
+	context='<%=
+		HashMapBuilder.<String, Object>put(
+			"showButtons", cookiesBannerConfigurationDisplayContext.isShowButtons()
+		).build()
+	%>'
 	module="cookies_banner_configuration/js/CookiesBannerConfiguration"
 />

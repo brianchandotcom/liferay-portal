@@ -19,7 +19,7 @@ import {
 	setCookie,
 } from '../../js/CookiesUtil';
 
-export default function ({namespace}) {
+export default function ({namespace, showButtons}) {
 	const toggleSwitches = Array.from(
 		document.querySelectorAll(
 			`#${namespace}cookiesBannerConfigurationForm [data-cookie-key]`
@@ -41,36 +41,40 @@ export default function ({namespace}) {
 		toggleSwitch.removeAttribute('disabled');
 	});
 
-	const acceptAllButton = document.getElementById(
-		`${namespace}acceptAllButton`
-	);
-	const confirmButton = document.getElementById(`${namespace}confirmButton`);
-	const declineAllButton = document.getElementById(
-		`${namespace}declineAllButton`
-	);
+	if (showButtons) {
+		const acceptAllButton = document.getElementById(
+			`${namespace}acceptAllButton`
+		);
+		const confirmButton = document.getElementById(
+			`${namespace}confirmButton`
+		);
+		const declineAllButton = document.getElementById(
+			`${namespace}declineAllButton`
+		);
 
-	acceptAllButton.addEventListener('click', () => {
-		acceptAllCookies();
+		acceptAllButton.addEventListener('click', () => {
+			acceptAllCookies();
 
-		window.location.reload();
-	});
-
-	confirmButton.addEventListener('click', () => {
-		toggleSwitches.forEach((toggleSwitch) => {
-			setCookie(
-				toggleSwitch.dataset.cookieKey,
-				toggleSwitch.checked ? 'true' : 'false'
-			);
+			window.location.reload();
 		});
 
-		setCookie('CONSENT_TYPE_STRICTLY_NECESSARY', 'true');
+		confirmButton.addEventListener('click', () => {
+			toggleSwitches.forEach((toggleSwitch) => {
+				setCookie(
+					toggleSwitch.dataset.cookieKey,
+					toggleSwitch.checked ? 'true' : 'false'
+				);
+			});
 
-		window.location.reload();
-	});
+			setCookie('CONSENT_TYPE_STRICTLY_NECESSARY', 'true');
 
-	declineAllButton.addEventListener('click', () => {
-		declineAllCookies();
+			window.location.reload();
+		});
 
-		window.location.reload();
-	});
+		declineAllButton.addEventListener('click', () => {
+			declineAllCookies();
+
+			window.location.reload();
+		});
+	}
 }

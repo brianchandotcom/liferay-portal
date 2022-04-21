@@ -28,7 +28,17 @@ export default function ({configurationUrl, namespace}) {
 	if (!editMode) {
 		checkCookiesConsent(cookieBanner);
 
-		const cookiePreferences = {};
+		const cookiePreferences = {
+			CONSENT_TYPE_FUNCTIONAL: Boolean(
+				getCookie('CONSENT_TYPE_FUNCTIONAL')
+			).toString(),
+			CONSENT_TYPE_PERFORMANCE: Boolean(
+				getCookie('CONSENT_TYPE_PERFORMANCE')
+			).toString(),
+			CONSENT_TYPE_PERSONALIZATION: Boolean(
+				getCookie('CONSENT_TYPE_PERSONALIZATION')
+			).toString(),
+		};
 
 		Liferay.on('cookiePreferenceUpdate', (event) => {
 			cookiePreferences[event.key] = event.value;

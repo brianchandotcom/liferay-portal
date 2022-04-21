@@ -71,7 +71,7 @@
 		</check>
 		<check name="BNDStylingCheck">
 			<category name="Styling" />
-			<description name="Applies rules to enforce consisteny in code style." />
+			<description name="Applies rules to enforce consistency in code style." />
 		</check>
 		<check name="BNDWhitespaceCheck">
 			<category name="Styling" />
@@ -225,7 +225,7 @@
 		</check>
 		<check name="FTLStylingCheck">
 			<category name="Styling" />
-			<description name="Applies rules to enforce consisteny in code style." />
+			<description name="Applies rules to enforce consistency in code style." />
 		</check>
 		<check name="FTLTagAttributesCheck">
 			<category name="Styling" />
@@ -247,7 +247,7 @@
 		</check>
 		<check name="GradleBodyCheck">
 			<category name="Styling" />
-			<description name="Applies rules to enforce consisteny in the body of gradle build files." />
+			<description name="Applies rules to enforce consistency in the body of gradle build files." />
 		</check>
 		<check name="GradleDependenciesCheck">
 			<category name="Performance" />
@@ -297,7 +297,7 @@
 		</check>
 		<check name="GradleStylingCheck">
 			<category name="Styling" />
-			<description name="Applies rules to enforce consisteny in code style." />
+			<description name="Applies rules to enforce consistency in code style." />
 		</check>
 		<check name="GradleTaskCreationCheck">
 			<category name="Styling" />
@@ -558,7 +558,7 @@
 		</check>
 		<check name="JavaStylingCheck">
 			<category name="Styling" />
-			<description name="Applies rules to enforce consisteny in code style." />
+			<description name="Applies rules to enforce consistency in code style." />
 		</check>
 		<check name="JavaSystemExceptionCheck">
 			<category name="Bug Prevention" />
@@ -574,7 +574,7 @@
 		</check>
 		<check name="JavaTermStylingCheck">
 			<category name="Styling" />
-			<description name="Applies rules to enforce consisteny in code style." />
+			<description name="Applies rules to enforce consistency in code style." />
 		</check>
 		<check name="MethodCallsOrderCheck">
 			<category name="Styling" />
@@ -873,7 +873,7 @@
 	<source-processor name="JSONSourceProcessor">
 		<check name="JSONStylingCheck">
 			<category name="Styling" />
-			<description name="Applies rules to enforce consisteny in code style." />
+			<description name="Applies rules to enforce consistency in code style." />
 		</check>
 		<check name="JSONValidationCheck">
 			<category name="Bug Prevention" />
@@ -1002,7 +1002,7 @@
 		</check>
 		<check name="JSPStylingCheck">
 			<category name="Styling" />
-			<description name="Applies rules to enforce consisteny in code style." />
+			<description name="Applies rules to enforce consistency in code style." />
 		</check>
 		<check name="JSPTagAttributesCheck">
 			<category name="Bug Prevention" />
@@ -1136,7 +1136,7 @@
 		</check>
 		<check name="JSStylingCheck">
 			<category name="Styling" />
-			<description name="Applies rules to enforce consisteny in code style." />
+			<description name="Applies rules to enforce consistency in code style." />
 			<property name="enabled" value="false" />
 		</check>
 		<check name="JSWhitespaceCheck">
@@ -1179,7 +1179,7 @@
 		</check>
 		<check name="MarkdownStylingCheck">
 			<category name="Styling" />
-			<description name="Applies rules to enforce consisteny in code style." />
+			<description name="Applies rules to enforce consistency in code style." />
 		</check>
 		<check name="MarkdownWhitespaceCheck">
 			<category name="Styling" />
@@ -1206,7 +1206,7 @@
 		</check>
 		<check name="PoshiStylingCheck">
 			<category name="Styling" />
-			<description name="Applies rules to enforce consisteny in code style." />
+			<description name="Applies rules to enforce consistency in code style." />
 		</check>
 		<check name="PoshiVariableNameCheck">
 			<category name="Styling" />
@@ -1277,11 +1277,11 @@
 		</check>
 		<check name="PropertiesSQLStylingCheck">
 			<category name="Styling" />
-			<description name="Applies rules to enforce consisteny in code style." />
+			<description name="Applies rules to enforce consistency in code style." />
 		</check>
 		<check name="PropertiesStylingCheck">
 			<category name="Styling" />
-			<description name="Applies rules to enforce consisteny in code style." />
+			<description name="Applies rules to enforce consistency in code style." />
 		</check>
 		<check name="PropertiesWhitespaceCheck">
 			<category name="Styling" />
@@ -1328,7 +1328,7 @@
 		</check>
 		<check name="PythonStylingCheck">
 			<category name="Styling" />
-			<description name="Applies rules to enforce consisteny in code style." />
+			<description name="Applies rules to enforce consistency in code style." />
 			<property name="maxLineLength" value="80" />
 		</check>
 		<check name="PythonWhitespaceCheck">
@@ -1363,7 +1363,7 @@
 		</check>
 		<check name="SQLStylingCheck">
 			<category name="Styling" />
-			<description name="Applies rules to enforce consisteny in code style." />
+			<description name="Applies rules to enforce consistency in code style." />
 		</check>
 		<check name="WhitespaceCheck">
 			<category name="Styling" />
@@ -1403,7 +1403,7 @@
 		</check>
 		<check name="TXTStylingCheck">
 			<category name="Styling" />
-			<description name="Applies rules to enforce consisteny in code style." />
+			<description name="Applies rules to enforce consistency in code style." />
 		</check>
 	</source-processor>
 	<source-processor name="UpgradeSourceProcessor">
@@ -1427,7 +1427,7 @@
 		</check>
 		<check name="XMLCustomSQLStylingCheck">
 			<category name="Styling" />
-			<description name="Applies rules to enforce consisteny in code style for `.xml` files in directory `custom-sql`." />
+			<description name="Applies rules to enforce consistency in code style for `.xml` files in directory `custom-sql`." />
 		</check>
 		<check name="XMLDDLStructuresFileCheck">
 			<category name="Styling" />
@@ -1518,7 +1518,7 @@
 		</check>
 		<check name="XMLStylingCheck">
 			<category name="Styling" />
-			<description name="Applies rules to enforce consisteny in code style." />
+			<description name="Applies rules to enforce consistency in code style." />
 		</check>
 		<check name="XMLSuppressionsFileCheck">
 			<category name="Bug Prevention" />
@@ -1606,7 +1606,7 @@
 		</check>
 		<check name="YMLStylingCheck">
 			<category name="Styling" />
-			<description name="Applies rules to enforce consisteny in code style." />
+			<description name="Applies rules to enforce consistency in code style." />
 		</check>
 		<check name="YMLWhitespaceCheck">
 			<category name="Styling" />

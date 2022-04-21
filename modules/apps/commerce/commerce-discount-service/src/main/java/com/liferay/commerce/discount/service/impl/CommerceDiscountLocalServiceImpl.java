@@ -37,6 +37,7 @@ import com.liferay.commerce.discount.service.base.CommerceDiscountLocalServiceBa
 import com.liferay.commerce.discount.target.CommerceDiscountTarget;
 import com.liferay.commerce.discount.target.CommerceDiscountTargetRegistry;
 import com.liferay.commerce.discount.util.comparator.CommerceDiscountCreateDateComparator;
+import com.liferay.commerce.exception.MaxPriceValueException;
 import com.liferay.commerce.pricing.model.CommercePricingClass;
 import com.liferay.commerce.pricing.service.CommercePricingClassLocalService;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -1139,6 +1140,8 @@ public class CommerceDiscountLocalServiceImpl
 			serviceContext.getCompanyId(), commerceDiscountId, title, target,
 			useCouponCode, couponCode, limitationType);
 
+		_validatePrice(maximumDiscountAmount, level1, level2, level3, level4);
+
 		Date date = new Date();
 
 		Date displayDate = PortalUtil.getDate(
@@ -1215,6 +1218,8 @@ public class CommerceDiscountLocalServiceImpl
 		validate(
 			serviceContext.getCompanyId(), commerceDiscountId, title, target,
 			useCouponCode, couponCode, limitationType);
+
+		_validatePrice(maximumDiscountAmount, level1, level2, level3, level4);
 
 		Date date = new Date();
 
@@ -1904,6 +1909,23 @@ public class CommerceDiscountLocalServiceImpl
 		}
 
 		return predicate.withParentheses();
+	}
+
+	private void _validatePrice(
+			BigDecimal maxDiscountAmount, BigDecimal level1, BigDecimal level2,
+			BigDecimal level3, BigDecimal level4)
+		throws MaxPriceValueException {
+
+		BigDecimal maxValue = BigDecimal.valueOf(999999999.99);
+
+		if ((maxDiscountAmount.compareTo(maxValue) > 0) ||
+			(level1.compareTo(maxValue) > 0) ||
+			(level2.compareTo(maxValue) > 0) ||
+			(level3.compareTo(maxValue) > 0) ||
+			(level4.compareTo(maxValue) > 0)) {
+
+			throw new MaxPriceValueException();
+		}
 	}
 
 	private static final String[] _SELECTED_FIELD_NAMES = {

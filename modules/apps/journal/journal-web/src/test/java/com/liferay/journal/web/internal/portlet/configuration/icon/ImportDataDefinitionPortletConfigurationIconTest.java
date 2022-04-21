@@ -14,22 +14,22 @@
 
 package com.liferay.journal.web.internal.portlet.configuration.icon;
 
-import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Marcela Cunha
  */
-@PrepareForTest({ResourceBundleUtil.class, LanguageUtil.class})
-@RunWith(PowerMockRunner.class)
 public class ImportDataDefinitionPortletConfigurationIconTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testGetJspPath() {

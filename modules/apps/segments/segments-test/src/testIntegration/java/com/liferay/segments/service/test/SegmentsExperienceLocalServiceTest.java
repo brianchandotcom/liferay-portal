@@ -431,6 +431,13 @@ public class SegmentsExperienceLocalServiceTest {
 
 	@Test
 	public void testFetchDefaultSegmentsExperienceId() throws PortalException {
+		long defaultSegmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				_classPK);
+
+		_segmentsExperienceLocalService.deleteSegmentsExperience(
+			defaultSegmentsExperienceId);
+
 		SegmentsExperience segmentsExperience =
 			_segmentsExperienceLocalService.addDefaultSegmentsExperience(
 				TestPropsValues.getUserId(), _classPK,
@@ -443,7 +450,16 @@ public class SegmentsExperienceLocalServiceTest {
 	}
 
 	@Test
-	public void testFetchDefaultSegmentsExperienceIdWithNonexistingDefaultExperience() {
+	public void testFetchDefaultSegmentsExperienceIdWithNonexistingDefaultExperience()
+		throws PortalException {
+
+		long defaultSegmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				_classPK);
+
+		_segmentsExperienceLocalService.deleteSegmentsExperience(
+			defaultSegmentsExperienceId);
+
 		Assert.assertEquals(
 			SegmentsExperienceConstants.ID_DEFAULT,
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
@@ -451,7 +467,15 @@ public class SegmentsExperienceLocalServiceTest {
 	}
 
 	@Test
-	public void testFetchDefaultSegmentsExperienceIdWithNonexistingPlid() {
+	public void testFetchDefaultSegmentsExperienceIdWithNonexistingPlid()
+		throws PortalException {
+		long defaultSegmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				_classPK);
+
+		_segmentsExperienceLocalService.deleteSegmentsExperience(
+			defaultSegmentsExperienceId);
+
 		Assert.assertEquals(
 			SegmentsExperienceConstants.ID_DEFAULT,
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(

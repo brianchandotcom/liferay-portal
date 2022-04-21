@@ -111,6 +111,9 @@ public class DLSizeLimitManagedServiceFactoryTest {
 					).build())) {
 
 			Assert.assertEquals(
+				1234, _getCompanyMimeTypeSizeLimit("image/jpg"));
+
+			Assert.assertEquals(
 				5678, _getCompanyMimeTypeSizeLimit("image/png"));
 		}
 	}

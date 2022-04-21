@@ -14,17 +14,23 @@
 
 package com.liferay.frontend.icons.web.internal.servlet;
 
+import com.liferay.frontend.icons.web.internal.configuration.FrontendIconPacksConfiguration;
 import com.liferay.frontend.icons.web.internal.model.FrontendIconsResourcePack;
 import com.liferay.frontend.icons.web.internal.repository.FrontendIconsResourcePackRepository;
 import com.liferay.frontend.icons.web.internal.util.SVGUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -43,9 +49,10 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"osgi.http.whiteboard.context.path=/icons",
+		"osgi.http.whiteboard.servlet.name=com.liferay.frontend.icons.web.internal.servlet.FrontendIconsServlet",
 		"osgi.http.whiteboard.servlet.pattern=/icons/*"
 	},
-	service = Servlet.class
+	service = {FrontendIconsServlet.class, Servlet.class}
 )
 public class FrontendIconsServlet extends HttpServlet {
 
@@ -68,14 +75,23 @@ public class FrontendIconsServlet extends HttpServlet {
 				return;
 			}
 
-			FrontendIconsResourcePack frontendIconsResourcePack =
-				_frontendIconsResourcePackRepository.
-					getFrontendIconsResourcePack(
-						(Long)httpServletRequest.getAttribute(
-							WebKeys.COMPANY_ID),
-						matcher.group(1));
+			String packOrSite = matcher.group(1);
+			String packNameOrSiteId = matcher.group(2);
 
-			if (frontendIconsResourcePack == null) {
+			String[] iconPacks;
+
+			if (packOrSite.equals("site")) {
+				FrontendIconPacksConfiguration frontendIconPacksConfiguration =
+					_configurationProvider.getGroupConfiguration(
+						FrontendIconPacksConfiguration.class,
+						GetterUtil.getLong(packNameOrSiteId));
+
+				iconPacks = frontendIconPacksConfiguration.selectedIconPacks();
+			}
+			else if (packOrSite.equals("pack")) {
+				iconPacks = new String[] {packNameOrSiteId};
+			}
+			else {
 				httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
 
 				return;
@@ -83,10 +99,29 @@ public class FrontendIconsServlet extends HttpServlet {
 
 			PrintWriter printWriter = httpServletResponse.getWriter();
 
-			printWriter.write(
-				SVGUtil.getSVGSpritemap(frontendIconsResourcePack));
+			List<FrontendIconsResourcePack> frontendIconsResourcePacks =
+				new ArrayList<>();
+
+			for (String iconPack : iconPacks) {
+				FrontendIconsResourcePack frontendIconsResourcePack =
+					_frontendIconsResourcePackRepository.
+						getFrontendIconsResourcePack(
+							(Long)httpServletRequest.getAttribute(
+								WebKeys.COMPANY_ID),
+							iconPack);
+
+				frontendIconsResourcePacks.add(frontendIconsResourcePack);
+			}
+
+			if (frontendIconsResourcePacks.isEmpty()) {
+				httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
+			}
+			else {
+				printWriter.write(
+					SVGUtil.getSVGSpritemap(frontendIconsResourcePacks));
+			}
 		}
-		catch (Exception exception) {
+		catch (ConfigurationException | IOException exception) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(exception);
 			}
@@ -98,13 +133,14 @@ public class FrontendIconsServlet extends HttpServlet {
 	private static final Log _log = LogFactoryUtil.getLog(
 		FrontendIconsServlet.class);
 
-	private static final Pattern _pattern = Pattern.compile("^/(.*).svg");
+	private static final Pattern _pattern = Pattern.compile(
+		"^/(.*?)/(.*?).svg");
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private FrontendIconsResourcePackRepository
 		_frontendIconsResourcePackRepository;
-
-	@Reference
-	private Portal _portal;
 
 }

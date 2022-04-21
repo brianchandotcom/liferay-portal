@@ -52,12 +52,11 @@ const FragmentWithControls = React.forwardRef(({item}, ref) => {
 	const fragmentEntryLink =
 		fragmentEntryLinks[item.config.fragmentEntryLinkId];
 
-	const editableValues = useMemo(() => {
+	const mappedEditableValues = useMemo(() => {
 		const fieldNames = [];
-		const fragment = fragmentEntryLink;
 
-		if (fragment) {
-			fragment.configuration?.fieldSets?.forEach((fieldSet) => {
+		if (fragmentEntryLink) {
+			fragmentEntryLink.configuration?.fieldSets?.forEach((fieldSet) => {
 				fieldSet.fields.forEach((field) => {
 					if (FIELD_TYPES.includes(field.type)) {
 						fieldNames.push(field.name);
@@ -67,14 +66,14 @@ const FragmentWithControls = React.forwardRef(({item}, ref) => {
 
 			const filteredFieldNames = fieldNames.filter(
 				(fieldName) =>
-					fragment.editableValues[
+					fragmentEntryLink.editableValues[
 						FREEMARKER_FRAGMENT_ENTRY_PROCESSOR
 					]?.[fieldName]?.classPK
 			);
 
 			return filteredFieldNames.map(
 				(fieldName) =>
-					fragment.editableValues[
+					fragmentEntryLink.editableValues[
 						FREEMARKER_FRAGMENT_ENTRY_PROCESSOR
 					]?.[fieldName] || {}
 			);
@@ -82,18 +81,19 @@ const FragmentWithControls = React.forwardRef(({item}, ref) => {
 	}, [fragmentEntryLink]);
 
 	useEffect(() => {
-		if (editableValues.length) {
-			const someEditableIsHovered = editableValues.some((editableValue) =>
-				isHovered({
-					editableValue,
-					hoveredItemId,
-					hoveredItemType,
-				})
+		if (mappedEditableValues.length) {
+			const someEditableIsHovered = mappedEditableValues.some(
+				(editableValue) =>
+					isHovered({
+						editableValue,
+						hoveredItemId,
+						hoveredItemType,
+					})
 			);
 
 			setHovered(someEditableIsHovered);
 		}
-	}, [hoveredItemType, hoveredItemId, editableValues]);
+	}, [hoveredItemType, hoveredItemId, mappedEditableValues]);
 
 	const {
 		display,

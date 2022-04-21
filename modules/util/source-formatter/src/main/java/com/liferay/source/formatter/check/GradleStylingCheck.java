@@ -19,6 +19,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.check.util.SourceUtil;
 
 import java.util.Map;
@@ -37,10 +38,119 @@ public class GradleStylingCheck extends BaseFileCheck {
 
 		content = _sortMapKeys("transformKeys", content);
 
+		content = _fixMissingLineBreakAfterOpenCurlyBrace(content);
+		content = _fixMissingLineBreakBeforeCloseCurlyBrace(content);
 		content = _stylingCheck(content, _stylingPattern1, "$1$2 {\n\t$3\n}$4");
 		content = _stylingCheck(content, _stylingPattern2, "$1$2 = $3$4");
 
 		return content;
+	}
+
+	private String _fixMissingLineBreakAfterOpenCurlyBrace(String content) {
+		int openCurlyBracePosition = -1;
+
+		while (true) {
+			openCurlyBracePosition = content.indexOf(
+				"{", openCurlyBracePosition + 1);
+
+			if (openCurlyBracePosition == -1) {
+				break;
+			}
+
+			char previousChar = content.charAt(openCurlyBracePosition - 1);
+
+			if (previousChar == CharPool.DOLLAR) {
+				continue;
+			}
+
+			int[] multiLineStringsPositions = SourceUtil.getMultiLinePositions(
+				content, _multiLineStringsPattern);
+
+			char nextChar = content.charAt(openCurlyBracePosition + 1);
+
+			if ((nextChar == CharPool.NEW_LINE) ||
+				ToolsUtil.isInsideQuotes(content, openCurlyBracePosition) ||
+				SourceUtil.isInsideMultiLines(
+					SourceUtil.getLineNumber(content, openCurlyBracePosition),
+					multiLineStringsPositions) ||
+				_isInRegexPattern(content, openCurlyBracePosition)) {
+
+				continue;
+			}
+
+			return StringUtil.insert(content, "\n", openCurlyBracePosition + 1);
+		}
+
+		return content;
+	}
+
+	private String _fixMissingLineBreakBeforeCloseCurlyBrace(String content) {
+		int closeCurlyBracePosition = -1;
+
+		while (true) {
+			closeCurlyBracePosition = content.indexOf(
+				"}", closeCurlyBracePosition + 1);
+
+			if (closeCurlyBracePosition == -1) {
+				break;
+			}
+
+			int[] multiLineStringsPositions = SourceUtil.getMultiLinePositions(
+				content, _multiLineStringsPattern);
+
+			char previousChar = content.charAt(closeCurlyBracePosition - 1);
+
+			if ((previousChar == CharPool.NEW_LINE) ||
+				(previousChar == CharPool.TAB) ||
+				ToolsUtil.isInsideQuotes(content, closeCurlyBracePosition) ||
+				SourceUtil.isInsideMultiLines(
+					SourceUtil.getLineNumber(content, closeCurlyBracePosition),
+					multiLineStringsPositions) ||
+				_isInRegexPattern(content, closeCurlyBracePosition)) {
+
+				continue;
+			}
+
+			return StringUtil.insert(content, "\n", closeCurlyBracePosition);
+		}
+
+		return content;
+	}
+
+	private boolean _isInRegexPattern(String content, int position) {
+		int lineNumber = getLineNumber(content, position);
+
+		String line = getLine(content, lineNumber);
+
+		if (line.contains("=~ /")) {
+			int regexPatternStartPos = content.indexOf(
+				"=~ /", getLineStartPos(content, lineNumber));
+
+			int regexPatternEndPos = regexPatternStartPos + 3;
+
+			while (true) {
+				regexPatternEndPos = content.indexOf(
+					"/", regexPatternEndPos + 1);
+
+				if (regexPatternEndPos == -1) {
+					break;
+				}
+
+				char previousChar = content.charAt(regexPatternEndPos - 1);
+
+				if (previousChar == CharPool.BACK_SLASH) {
+					continue;
+				}
+
+				if ((position > regexPatternStartPos) &&
+					(position < regexPatternEndPos)) {
+
+					return true;
+				}
+			}
+		}
+
+		return false;
 	}
 
 	private String _sortMapKeys(String mapName, String content) {

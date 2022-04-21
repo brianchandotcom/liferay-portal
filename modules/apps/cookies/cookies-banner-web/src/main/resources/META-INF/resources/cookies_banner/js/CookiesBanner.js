@@ -12,6 +12,13 @@
  * details.
  */
 
+import {
+	acceptAllCookies,
+	declineAllCookies,
+	getCookie,
+	setCookie,
+} from '../../js/CookiesUtil';
+
 export default function ({configurationUrl, namespace}) {
 	const acceptAllButton = document.getElementById(
 		`${namespace}acceptAllButton`
@@ -87,7 +94,7 @@ export default function ({configurationUrl, namespace}) {
 					{
 						label: Liferay.Language.get('decline-all'),
 						onClick() {
-							declineAllCookiesDecline();
+							declineAllCookies();
 
 							checkCookiesConsent(cookieBanner);
 
@@ -107,7 +114,7 @@ export default function ({configurationUrl, namespace}) {
 		declineAllButton.addEventListener('click', () => {
 			cookieBanner.style.display = 'none';
 
-			declineAllCookiesDecline();
+			declineAllCookies();
 		});
 	}
 }
@@ -126,47 +133,4 @@ function checkCookiesConsent(cookieBanner) {
 	else {
 		cookieBanner.style.display = 'block';
 	}
-}
-
-function acceptAllCookies() {
-	setCookie('CONSENT_TYPE_FUNCTIONAL', 'true');
-	setCookie('CONSENT_TYPE_PERFORMANCE', 'true');
-	setCookie('CONSENT_TYPE_PERSONALIZATION', 'true');
-	setCookie('CONSENT_TYPE_STRICTLY_NECESSARY', 'true');
-}
-
-function declineAllCookiesDecline() {
-	setCookie('CONSENT_TYPE_FUNCTIONAL', 'false');
-	setCookie('CONSENT_TYPE_PERFORMANCE', 'false');
-	setCookie('CONSENT_TYPE_PERSONALIZATION', 'false');
-	setCookie('CONSENT_TYPE_STRICTLY_NECESSARY', 'true');
-}
-
-function getCookie(name) {
-	const cookieName = name + '=';
-	const cookieSet = document.cookie.split(';');
-
-	for (let i = 0; i < cookieSet.length; i++) {
-		let c = cookieSet[i];
-
-		while (c.charAt(0) === ' ') {
-			c = c.substring(1, c.length);
-		}
-
-		if (c.indexOf(cookieName) === 0) {
-			return c.substring(cookieName.length, c.length);
-		}
-	}
-
-	return null;
-}
-
-function setCookie(name, value, days = 180) {
-	const date = new Date();
-
-	date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
-
-	const expires = '; expires=' + date.toUTCString();
-
-	document.cookie = name + '=' + (value || '') + expires + '; path=/';
 }

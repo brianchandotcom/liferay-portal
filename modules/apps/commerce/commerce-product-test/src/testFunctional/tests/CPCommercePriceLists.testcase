@@ -680,7 +680,7 @@ definition {
 			key_entryName = "AccountGroup1",
 			locator1 = "CommerceEntry#TABLE_ELIGIBILITY_ACCOUNT_GROUPS");
 
-		ClickNoError(locator1 = "Button#MOVE_TO_RECYCLE_BIN");
+		ClickNoError(locator1 = "Button#TRASH_ENABLED");
 
 		Button.clickPublish();
 

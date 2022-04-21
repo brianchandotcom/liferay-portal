@@ -90,7 +90,7 @@
 #if (${liferayVersion.startsWith("7.0")})
 				<version>3.0.0</version>
 #else
-				<version>@com.liferay.css.builder.version@</version>
+				<version>3.0.3</version>
 #end
 				<executions>
 					<execution>

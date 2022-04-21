@@ -16,7 +16,7 @@ dependencies {
 #if (${liferayVersion.startsWith("7.0")})
 	cssBuilder group: "com.liferay", name: "com.liferay.css.builder", version: "3.0.0"
 #else
-	cssBuilder group: "com.liferay", name: "com.liferay.css.builder", version: "@com.liferay.css.builder.version@"
+	cssBuilder group: "com.liferay", name: "com.liferay.css.builder", version: "3.0.3"
 #end
 	parentThemes group: "com.liferay", name: "com.liferay.frontend.theme.styled"
 	parentThemes group: "com.liferay", name: "com.liferay.frontend.theme.unstyled"

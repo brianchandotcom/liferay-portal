@@ -287,8 +287,8 @@ public class CommerceVirtualOrderItemLocalServiceTest {
 	private CommerceOrder _setCommerceOrderStatuses(
 		CommerceOrder commerceOrder, int paymentStatus, int orderStatus) {
 
-		commerceOrder.setPaymentStatus(paymentStatus);
 		commerceOrder.setOrderStatus(orderStatus);
+		commerceOrder.setPaymentStatus(paymentStatus);
 
 		return _commerceOrderLocalService.updateCommerceOrder(commerceOrder);
 	}

@@ -69,27 +69,6 @@ public class SegmentsExperienceLocalServiceImpl
 
 		Layout layout = _layoutLocalService.getLayout(plid);
 
-		int priority = 0;
-
-		SegmentsExperience segmentsExperience =
-			segmentsExperiencePersistence.fetchByG_C_C_P(
-				layout.getGroupId(),
-				classNameLocalService.getClassNameId(Layout.class),
-				_getPublishedLayoutClassPK(layout.getPlid()), priority);
-
-		if (segmentsExperience != null) {
-			priority = _getLowestPriority(
-				layout.getGroupId(),
-				classNameLocalService.getClassNameId(Layout.class),
-				_getPublishedLayoutClassPK(layout.getPlid()));
-
-			if ((priority - 1) ==
-					SegmentsExperienceConstants.PRIORITY_DEFAULT) {
-
-				priority = priority - 1;
-			}
-		}
-
 		return addSegmentsExperience(
 			userId, layout.getGroupId(), SegmentsEntryConstants.ID_DEFAULT,
 			SegmentsExperienceConstants.KEY_DEFAULT,
@@ -99,7 +78,7 @@ public class SegmentsExperienceLocalServiceImpl
 				LocaleUtil.getSiteDefault(),
 				LanguageUtil.get(
 					LocaleUtil.getSiteDefault(), "default-experience-name")),
-			priority, true, new UnicodeProperties(true), serviceContext);
+			0, true, new UnicodeProperties(true), serviceContext);
 	}
 
 	@Override

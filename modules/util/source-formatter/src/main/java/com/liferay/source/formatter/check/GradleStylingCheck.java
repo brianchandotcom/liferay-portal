@@ -121,31 +121,39 @@ public class GradleStylingCheck extends BaseFileCheck {
 
 		String line = getLine(content, lineNumber);
 
-		if (line.contains("=~ /")) {
-			int regexPatternStartPos = content.indexOf(
-				"=~ /", getLineStartPos(content, lineNumber));
+		if (!line.contains("~ /") && !line.contains("~/")) {
+			return false;
+		}
 
-			int regexPatternEndPos = regexPatternStartPos + 3;
+		int regexPatternStartPos = content.indexOf(
+			"~ /", getLineStartPos(content, lineNumber));
 
-			while (true) {
-				regexPatternEndPos = content.indexOf(
-					"/", regexPatternEndPos + 1);
+		int regexPatternEndPos = -1;
 
-				if (regexPatternEndPos == -1) {
-					break;
-				}
+		if (regexPatternStartPos != -1) {
+			regexPatternEndPos = regexPatternStartPos + 2;
+		}
+		else {
+			regexPatternEndPos = regexPatternStartPos + 1;
+		}
 
-				char previousChar = content.charAt(regexPatternEndPos - 1);
+		while (true) {
+			regexPatternEndPos = content.indexOf("/", regexPatternEndPos + 1);
 
-				if (previousChar == CharPool.BACK_SLASH) {
-					continue;
-				}
+			if (regexPatternEndPos == -1) {
+				break;
+			}
 
-				if ((position > regexPatternStartPos) &&
-					(position < regexPatternEndPos)) {
+			char previousChar = content.charAt(regexPatternEndPos - 1);
 
-					return true;
-				}
+			if (previousChar == CharPool.BACK_SLASH) {
+				continue;
+			}
+
+			if ((position > regexPatternStartPos) &&
+				(position < regexPatternEndPos)) {
+
+				return true;
 			}
 		}
 

@@ -765,13 +765,18 @@ AUI.add(
 					if (response.error) {
 						var file = event.file;
 
-						file.errorMessage = response.message;
-
-						data.fileList = data.fileList.filter(
-							({name}) => file.name !== name
+						var invalidFileIndex = data.fileList.findIndex(
+							({name}) => file.name === name
 						);
 
-						data.invalidFiles.push(file);
+						if (invalidFileIndex !== -1) {
+							var invalidFile = data.fileList[invalidFileIndex];
+							invalidFile.errorMessage = response.message;
+
+							data.fileList.splice(invalidFileIndex, 1);
+
+							data.invalidFiles.push(invalidFile);
+						}
 					}
 				},
 

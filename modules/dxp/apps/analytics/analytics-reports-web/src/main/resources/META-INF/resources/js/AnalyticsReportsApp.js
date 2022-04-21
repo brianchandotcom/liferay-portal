@@ -15,6 +15,8 @@ import React, {useEffect, useState} from 'react';
 
 import AnalyticsReports from './components/AnalyticsReports';
 
+import '../css/main.scss';
+
 const setInitialOpenPanelState = async (stateCallback) => {
 	const ANALYTICS_REPORTS_OPEN_PANEL_VALUE = 'open';
 	const ANALYTICS_REPORTS_PANEL_ID =

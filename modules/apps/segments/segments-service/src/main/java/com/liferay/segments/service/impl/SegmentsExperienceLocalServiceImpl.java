@@ -607,19 +607,6 @@ public class SegmentsExperienceLocalServiceImpl
 	}
 
 	private void _updateSegmentExperiencesPriority(
-		List<SegmentsExperience> segmentsExperiences, int initialPriority,
-		int offset) {
-
-		int currentPriority = initialPriority;
-
-		for (SegmentsExperience segmentsExperience : segmentsExperiences) {
-			segmentsExperience.setPriority(currentPriority);
-
-			currentPriority = currentPriority + offset;
-		}
-	}
-
-	private void _updateSegmentExperiencesPriority(
 		SegmentsExperience segmentsExperience) {
 
 		if (segmentsExperience.getPriority() >= 0) {
@@ -634,15 +621,14 @@ public class SegmentsExperienceLocalServiceImpl
 				return;
 			}
 
-			int highestPriority = _getHighestPriority(
-				segmentsExperience.getGroupId(),
-				segmentsExperience.getClassNameId(),
-				segmentsExperience.getClassPK());
+			for (SegmentsExperience curSegmentsExperience :
+					segmentsExperiences) {
 
-			_updateSegmentExperiencesPriority(
-				segmentsExperiences, highestPriority - 1, -1);
+				curSegmentsExperience.setPriority(
+					curSegmentsExperience.getPriority() - 1);
 
-			segmentsExperiencePersistence.flush();
+				segmentsExperiencePersistence.update(curSegmentsExperience);
+			}
 		}
 		else {
 			List<SegmentsExperience> segmentsExperiences = new ArrayList<>(
@@ -656,8 +642,14 @@ public class SegmentsExperienceLocalServiceImpl
 				return;
 			}
 
-			_updateSegmentExperiencesPriority(
-				segmentsExperiences, segmentsExperience.getPriority(), +1);
+			for (SegmentsExperience curSegmentsExperience :
+					segmentsExperiences) {
+
+				curSegmentsExperience.setPriority(
+					curSegmentsExperience.getPriority() + 1);
+
+				segmentsExperiencePersistence.update(curSegmentsExperience);
+			}
 		}
 	}
 

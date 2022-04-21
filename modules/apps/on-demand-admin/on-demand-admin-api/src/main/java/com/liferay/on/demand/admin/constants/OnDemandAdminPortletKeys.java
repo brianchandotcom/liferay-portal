@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.on.demand.admin.web.internal.constants;
+package com.liferay.on.demand.admin.constants;
 
 /**
  * @author Pei-Jung Lan

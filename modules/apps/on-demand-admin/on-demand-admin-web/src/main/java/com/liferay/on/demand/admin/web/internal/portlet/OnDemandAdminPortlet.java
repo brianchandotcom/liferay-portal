@@ -14,7 +14,7 @@
 
 package com.liferay.on.demand.admin.web.internal.portlet;
 
-import com.liferay.on.demand.admin.web.internal.constants.OnDemandAdminPortletKeys;
+import com.liferay.on.demand.admin.constants.OnDemandAdminPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;

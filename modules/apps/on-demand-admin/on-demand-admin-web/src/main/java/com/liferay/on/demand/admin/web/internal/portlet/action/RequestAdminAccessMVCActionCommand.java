@@ -14,8 +14,8 @@
 
 package com.liferay.on.demand.admin.web.internal.portlet.action;
 
+import com.liferay.on.demand.admin.constants.OnDemandAdminPortletKeys;
 import com.liferay.on.demand.admin.manager.OnDemandAdminManager;
-import com.liferay.on.demand.admin.web.internal.constants.OnDemandAdminPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.CompanyLocalService;

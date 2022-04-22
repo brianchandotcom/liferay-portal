@@ -141,9 +141,14 @@ definition {
 	@description = "This test covers LPS-141587. It validates that if the 'Delete Application Data Before Importing' option is selected the Doc Lib will not increase in size after the LAR import."
 	@priority = "4"
 	test DLSizeDoesNotIncreaseIfAppDataIsDeletedBeforeImport {
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.jpg,Document_2.pdf");
+		for (var entryCount : list "1,2") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "Document_${entryCount}.jpg",
+				groupName = "Guest",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_${entryCount}.jpg");
+		}
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1");
 

@@ -19,6 +19,12 @@ const SUBSCRIPTION = 'Subscription';
 export default function useFilters(setFilterTerm, productName) {
 	const [filters, setFilters] = useState(INITIAL_FILTER);
 
+	// eslint-disable-next-line no-console
+	console.log(
+		'🚀 ~ file: useFilters.js ~ line 200 ~ useEffect ~ filters.keyType.value.hasOnPremise',
+		filters.keyType.value.hasOnPremise
+	);
+
 	useEffect(() => {
 		let initialFilter = `active eq true and startswith(productName,'${productName}')`;
 		let hasFilterPill = false;
@@ -195,7 +201,6 @@ export default function useFilters(setFilterTerm, productName) {
 				)
 			) {
 				if (
-					!isNaN(filters.keyType.value.hasOnPremise) &&
 					filters.keyType.value.hasOnPremise &&
 					!filters.keyType.value.maxNodes &&
 					!filters.keyType.value.minNodes
@@ -205,20 +210,15 @@ export default function useFilters(setFilterTerm, productName) {
 				}
 
 				if (
-					(!isNaN(filters.keyType.value.hasVirtualCluster) &&
-						filters.keyType.value.hasVirtualCluster &&
-						!filters.keyType.value.maxNodes &&
-						!filters.keyType.value.minNodes) ||
-					(!isNaN(filters.keyType.value.hasCluster) &&
-						filters.keyType.value.hasCluster &&
-						!filters.keyType.value.maxNodes &&
-						!filters.keyType.value.minNodes)
+					(filters.keyType.value.hasVirtualCluster ||
+						filters.keyType.value.hasCluster) &&
+					!filters.keyType.value.maxNodes &&
+					!filters.keyType.value.minNodes
 				) {
 					hasFilterPill = true;
 					filtersKeyType.push('maxClusterNodes gt 0');
 				}
-			}
-			else {
+			} else {
 				hasFilterPill = true;
 			}
 
@@ -227,7 +227,7 @@ export default function useFilters(setFilterTerm, productName) {
 					`maxClusterNodes le ${filters.keyType.value.maxNodes}`
 				);
 				if (filters.keyType.value.hasOnPremise) {
-					showOnPrem = true;
+					showOnPrem = filters.keyType.value.hasOnPremise;
 				}
 			}
 
@@ -236,7 +236,7 @@ export default function useFilters(setFilterTerm, productName) {
 					`maxClusterNodes ge ${filters.keyType.value.minNodes}`
 				);
 				if (filters.keyType.value.hasOnPremise) {
-					showOnPrem = true;
+					showOnPrem = filters.keyType.value.hasOnPremise;
 				}
 			}
 

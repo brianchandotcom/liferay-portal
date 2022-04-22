@@ -24,6 +24,7 @@ import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItemCSSUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -46,6 +47,15 @@ import org.osgi.service.component.annotations.Reference;
 	service = FragmentEntryProcessor.class
 )
 public class StylesFragmentEntryProcessor implements FragmentEntryProcessor {
+
+	@Override
+	public JSONArray getDataAttributesJSONArray() {
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-132571"))) {
+			return null;
+		}
+
+		return JSONUtil.put("lfr-styles");
+	}
 
 	@Override
 	public JSONObject getDefaultEditableValuesJSONObject(

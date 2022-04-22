@@ -79,6 +79,83 @@ public class SamlUtilTest extends BaseSamlTestCase {
 	}
 
 	@Test
+	public void testGetAttributesMapEachAttributeMappedExactlyOnce() {
+		List<Attribute> attributes = new ArrayList<>();
+
+		attributes.add(
+			OpenSamlUtil.buildAttribute("attribute1", "attribute1Value"));
+		attributes.add(
+			OpenSamlUtil.buildAttribute("attribute2", "attribute2Value"));
+
+		Properties attributeMappingsProperties = new Properties();
+
+		attributeMappingsProperties.put("attribute1", "attribute3");
+		attributeMappingsProperties.put("attribute2", "attribute1");
+
+		Map<String, List<Serializable>> attributesMap =
+			SamlUtil.getAttributesMap(attributes, attributeMappingsProperties);
+
+		List<Serializable> serializables = attributesMap.get("attribute1");
+
+		Assert.assertArrayEquals(
+			"Attribute which is explicitly mapped should not be implicitly " +
+				"mapped also",
+			new String[] {"attribute2Value"}, serializables.toArray());
+
+		Assert.assertEquals(
+			"attribute1Value",
+			SamlUtil.getValueAsString("attribute3", attributesMap));
+	}
+
+	@Test
+	public void testGetAttributesMapExplicitMappingHasHigherPriority() {
+		List<Attribute> attributes = new ArrayList<>();
+
+		attributes.add(
+			OpenSamlUtil.buildAttribute("uuid", "testImplicitMapped"));
+		attributes.add(
+			OpenSamlUtil.buildAttribute("UUID", "testExplicitMapped"));
+
+		Properties attributeMappingsProperties = new Properties();
+
+		attributeMappingsProperties.put("UUID", "uuid");
+
+		Map<String, List<Serializable>> attributesMap =
+			SamlUtil.getAttributesMap(attributes, attributeMappingsProperties);
+
+		List<Serializable> serializables = attributesMap.get("uuid");
+
+		Assert.assertArrayEquals(
+			"Explicitly mapped attribute should take priority over " +
+				"implicitly mapped ones",
+			new String[] {"testExplicitMapped", "testImplicitMapped"},
+			serializables.toArray());
+
+		Assert.assertEquals(
+			"testExplicitMapped",
+			SamlUtil.getValueAsString("uuid", attributesMap));
+	}
+
+	@Test
+	public void testGetAttributesMapFallbackToImplicitMapping() {
+		List<Attribute> attributes = new ArrayList<>();
+
+		attributes.add(
+			OpenSamlUtil.buildAttribute("uuid", "testImplicitMapped"));
+
+		Properties attributeMappingsProperties = new Properties();
+
+		attributeMappingsProperties.put("UUID", "uuid");
+
+		Assert.assertEquals(
+			"testImplicitMapped",
+			SamlUtil.getValueAsString(
+				"uuid",
+				SamlUtil.getAttributesMap(
+					attributes, attributeMappingsProperties)));
+	}
+
+	@Test
 	public void testGetAttributesMapWithMapping() {
 		List<Attribute> attributes = new ArrayList<>();
 

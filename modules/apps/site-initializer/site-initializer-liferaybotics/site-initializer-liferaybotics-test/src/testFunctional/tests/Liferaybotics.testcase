@@ -51,6 +51,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-150999. User can navigate to a Home Page after Lifebotics site is created"
+	@ignore = "true"
 	@priority = "4"
 	test LiferayboticsHomePage {
 		property portal.acceptance = "true";

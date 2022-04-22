@@ -61,6 +61,9 @@ jest.mock(
 	})
 );
 
+const ITEM_ID = 'ITEM_ID';
+const MASTER_ITEM_ID = 'ITEM_ID';
+
 const renderCommonStylesManager = ({
 	selectedViewportSize = VIEWPORT_SIZES.desktop,
 } = {}) => {
@@ -85,7 +88,7 @@ const renderCommonStylesManager = ({
 									marginTop: '2',
 								},
 							},
-							itemId: 'itemId',
+							itemId: ITEM_ID,
 							type: LAYOUT_DATA_ITEM_TYPES.row,
 						},
 					},
@@ -93,7 +96,7 @@ const renderCommonStylesManager = ({
 				masterLayout: {
 					masterLayoutData: {
 						items: {
-							masterItemId: {
+							[MASTER_ITEM_ID]: {
 								config: {
 									[VIEWPORT_SIZES.tablet]: {
 										styles: {
@@ -108,7 +111,7 @@ const renderCommonStylesManager = ({
 										marginTop: '2',
 									},
 								},
-								itemId: 'masterItemId',
+								itemId: MASTER_ITEM_ID,
 								type: LAYOUT_DATA_ITEM_TYPES.container,
 							},
 						},
@@ -150,11 +153,11 @@ describe('CommonStylesManager', () => {
 		renderCommonStylesManager();
 
 		const expected = `
-			.${getLayoutDataItemUniqueClassName('itemId')} {
+			.${getLayoutDataItemUniqueClassName(ITEM_ID)} {
 				background-color: var(--danger) !important;
 			}
 			
-			.${getLayoutDataItemTopperUniqueClassName('itemId')} {
+			.${getLayoutDataItemTopperUniqueClassName(ITEM_ID)} {
 				margin-bottom: var(--spacer-3, 1rem) !important;
 				margin-top: var(--spacer-2, 0.5rem) !important;
 			}`;
@@ -168,7 +171,7 @@ describe('CommonStylesManager', () => {
 		renderCommonStylesManager();
 
 		const expected = `
-			.${getLayoutDataItemUniqueClassName('masterItemId')} {
+			.${getLayoutDataItemUniqueClassName(MASTER_ITEM_ID)} {
 				background-color: var(--danger) !important;
 				margin-bottom: var(--spacer-3, 1rem) !important;
 				margin-top: var(--spacer-2, 0.5rem) !important;
@@ -185,11 +188,11 @@ describe('CommonStylesManager', () => {
 		});
 
 		const expected = `
-			.${getLayoutDataItemUniqueClassName('itemId')} {
+			.${getLayoutDataItemUniqueClassName(ITEM_ID)} {
 				background-color: var(--primary) !important;
 			}
 			
-			.${getLayoutDataItemTopperUniqueClassName('itemId')} {
+			.${getLayoutDataItemTopperUniqueClassName(ITEM_ID)} {
 				margin-bottom: var(--spacer-2, 0.5rem) !important;
 				margin-top: var(--spacer-2, 0.5rem) !important;
 			}`;

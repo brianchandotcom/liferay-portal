@@ -16,23 +16,27 @@ package com.liferay.vldap.server.internal.directory.builder;
 
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.comparator.UserScreenNameComparator;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.mockito.Mockito;
-
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author William Newbury
  */
-@RunWith(PowerMockRunner.class)
 public class UsersBuilderTest extends BaseDirectoryBuilderTestCase {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	@Override
@@ -44,15 +48,15 @@ public class UsersBuilderTest extends BaseDirectoryBuilderTestCase {
 
 	@Test
 	public void testBuildDirectories() throws Exception {
-		User user = mock(User.class);
+		User user = Mockito.mock(User.class);
 
-		when(
+		Mockito.when(
 			user.getScreenName()
 		).thenReturn(
 			"testScreenName"
 		);
 
-		when(
+		Mockito.when(
 			userLocalService.search(
 				Mockito.anyLong(), Mockito.anyString(), Mockito.anyString(),
 				Mockito.anyString(), Mockito.anyString(), Mockito.anyString(),

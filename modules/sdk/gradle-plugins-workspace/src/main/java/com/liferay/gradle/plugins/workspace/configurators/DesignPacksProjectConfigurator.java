@@ -218,7 +218,7 @@ public class DesignPacksProjectConfigurator extends BaseProjectConfigurator {
 		final WorkspaceExtension workspaceExtension) {
 
 		Zip task = GradleUtil.addTask(project, taskName, Zip.class);
-		
+
 		task.dependsOn(CSSBuilderPlugin.BUILD_CSS_TASK_NAME);
 
 		_configureTaskDisableUpToDate(task);

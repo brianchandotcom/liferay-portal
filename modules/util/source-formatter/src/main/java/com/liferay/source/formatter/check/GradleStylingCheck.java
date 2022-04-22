@@ -16,6 +16,7 @@ package com.liferay.source.formatter.check;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -36,8 +37,7 @@ public class GradleStylingCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		content = _fixMissingLineBreakAfterOpenCurlyBrace(content);
-		content = _fixMissingLineBreakBeforeCloseCurlyBrace(content);
+		content = _fixMissingLineBreakAroundCurlyBraces(content);
 		content = _sortMapKeys("transformKeys", content);
 		content = _stylingCheck(content, _stylingPattern1, "$1$2 {\n\t$3\n}$4");
 		content = _stylingCheck(content, _stylingPattern2, "$1$2 = $3$4");
@@ -45,12 +45,12 @@ public class GradleStylingCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private String _fixMissingLineBreakAfterOpenCurlyBrace(String content) {
+	private String _fixMissingLineBreakAroundCurlyBraces(String content) {
 		int openCurlyBracePosition = -1;
 
 		while (true) {
 			openCurlyBracePosition = content.indexOf(
-				"{", openCurlyBracePosition + 1);
+				StringPool.OPEN_CURLY_BRACE, openCurlyBracePosition + 1);
 
 			if (openCurlyBracePosition == -1) {
 				break;
@@ -65,10 +65,7 @@ public class GradleStylingCheck extends BaseFileCheck {
 			int[] multiLineStringsPositions = SourceUtil.getMultiLinePositions(
 				content, _multiLineStringsPattern);
 
-			char nextChar = content.charAt(openCurlyBracePosition + 1);
-
-			if ((nextChar == CharPool.NEW_LINE) ||
-				ToolsUtil.isInsideQuotes(content, openCurlyBracePosition) ||
+			if (ToolsUtil.isInsideQuotes(content, openCurlyBracePosition) ||
 				SourceUtil.isInsideMultiLines(
 					SourceUtil.getLineNumber(content, openCurlyBracePosition),
 					multiLineStringsPositions) ||
@@ -77,40 +74,54 @@ public class GradleStylingCheck extends BaseFileCheck {
 				continue;
 			}
 
-			return StringUtil.insert(content, "\n", openCurlyBracePosition + 1);
-		}
+			int closeCurlyBracePosition = openCurlyBracePosition;
 
-		return content;
-	}
+			while (true) {
+				closeCurlyBracePosition = content.indexOf(
+					StringPool.CLOSE_CURLY_BRACE, closeCurlyBracePosition + 1);
 
-	private String _fixMissingLineBreakBeforeCloseCurlyBrace(String content) {
-		int closeCurlyBracePosition = -1;
+				if (closeCurlyBracePosition == -1) {
+					break;
+				}
 
-		while (true) {
-			closeCurlyBracePosition = content.indexOf(
-				"}", closeCurlyBracePosition + 1);
+				if (ToolsUtil.isInsideQuotes(
+						content, closeCurlyBracePosition) ||
+					SourceUtil.isInsideMultiLines(
+						SourceUtil.getLineNumber(
+							content, closeCurlyBracePosition),
+						multiLineStringsPositions) ||
+					_isInRegexPattern(content, closeCurlyBracePosition)) {
 
-			if (closeCurlyBracePosition == -1) {
-				break;
+					continue;
+				}
+
+				String curlyBraceContent = content.substring(
+					openCurlyBracePosition, closeCurlyBracePosition + 1);
+
+				int level = getLevel(
+					curlyBraceContent, StringPool.OPEN_CURLY_BRACE,
+					StringPool.CLOSE_CURLY_BRACE);
+
+				if (level != 0) {
+					continue;
+				}
+
+				previousChar = content.charAt(closeCurlyBracePosition - 1);
+
+				if ((previousChar != CharPool.NEW_LINE) &&
+					(previousChar != CharPool.TAB)) {
+
+					return StringUtil.insert(
+						content, "\n", closeCurlyBracePosition);
+				}
+
+				char nextChar = content.charAt(openCurlyBracePosition + 1);
+
+				if (nextChar != CharPool.NEW_LINE) {
+					return StringUtil.insert(
+						content, "\n", openCurlyBracePosition + 1);
+				}
 			}
-
-			int[] multiLineStringsPositions = SourceUtil.getMultiLinePositions(
-				content, _multiLineStringsPattern);
-
-			char previousChar = content.charAt(closeCurlyBracePosition - 1);
-
-			if ((previousChar == CharPool.NEW_LINE) ||
-				(previousChar == CharPool.TAB) ||
-				ToolsUtil.isInsideQuotes(content, closeCurlyBracePosition) ||
-				SourceUtil.isInsideMultiLines(
-					SourceUtil.getLineNumber(content, closeCurlyBracePosition),
-					multiLineStringsPositions) ||
-				_isInRegexPattern(content, closeCurlyBracePosition)) {
-
-				continue;
-			}
-
-			return StringUtil.insert(content, "\n", closeCurlyBracePosition);
 		}
 
 		return content;

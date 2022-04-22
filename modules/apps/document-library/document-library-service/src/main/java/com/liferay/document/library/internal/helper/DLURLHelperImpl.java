@@ -466,7 +466,9 @@ public class DLURLHelperImpl implements DLURLHelper {
 		sb.append(StringPool.SLASH);
 		sb.append(friendlyURLEntry.getUrlTitle());
 
-		sb.append(queryString.replaceFirst("&", "?"));
+		if (Validator.isNotNull(queryString)) {
+			sb.append(queryString.replaceFirst("&", "?"));
+		}
 
 		return sb.toString();
 	}

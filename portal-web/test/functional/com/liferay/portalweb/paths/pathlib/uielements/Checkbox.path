@@ -91,11 +91,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DEIETED_DATA</td>
-	<td>//label[contains(.,'Delete')]/input[contains(@id,'DELETE')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>DELETIONS</td>
 	<td>//label[contains(.,'Deletions')]/input[contains(@id,'DELETIONS')]</td>
 	<td></td>

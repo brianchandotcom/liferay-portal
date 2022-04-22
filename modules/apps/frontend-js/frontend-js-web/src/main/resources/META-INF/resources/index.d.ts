@@ -639,4 +639,32 @@ export class PortletBase {
  * arguments and context are used, replacing those of any previously pending
  * calls.
  */
-export default function throttle(fn: () => void, interval: number): () => void;
+export function throttle(fn: () => void, interval: number): () => void;
+
+export function openToast({
+	autoClose,
+	container,
+	containerId,
+	message,
+	onClick,
+	onClose,
+	renderData,
+	title,
+	toastProps,
+	type,
+	variant,
+}: {
+	autoClose?: number | boolean;
+	container?: HTMLElement;
+	containerId?: string;
+	message?: string;
+	onClick?: () => void;
+	onClose?: () => void;
+	renderData?: {portletId: string};
+	title?: string;
+	toastProps?: Object;
+	type?: string;
+	variant?: string;
+}): void;
+
+export function fetch(resource: string | Request, init?: Object): Promise<any>;

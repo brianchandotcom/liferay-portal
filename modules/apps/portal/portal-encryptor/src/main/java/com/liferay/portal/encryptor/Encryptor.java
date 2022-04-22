@@ -68,7 +68,7 @@ public class Encryptor {
 
 		byte[] encryptedBytes = Base64.decode(encryptedString);
 
-		return decryptUnencodedAsString(key, encryptedBytes);
+		return _decryptUnencodedAsString(key, encryptedBytes);
 	}
 
 	public static byte[] decryptUnencodedAsBytes(Key key, byte[] encryptedBytes)
@@ -102,7 +102,7 @@ public class Encryptor {
 		}
 	}
 
-	public static String decryptUnencodedAsString(
+	private static String _decryptUnencodedAsString(
 			Key key, byte[] encryptedBytes)
 		throws EncryptorException {
 
@@ -184,10 +184,10 @@ public class Encryptor {
 	}
 
 	public static Key generateKey() throws EncryptorException {
-		return generateKey(KEY_ALGORITHM);
+		return _generateKey(KEY_ALGORITHM);
 	}
 
-	public static Key generateKey(String algorithm) throws EncryptorException {
+	private static Key _generateKey(String algorithm) throws EncryptorException {
 		try {
 			KeyGenerator keyGenerator = KeyGenerator.getInstance(algorithm);
 

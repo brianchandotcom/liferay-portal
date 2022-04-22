@@ -18,8 +18,6 @@ import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
 
@@ -56,13 +54,6 @@ public interface DLViewFileVersionDisplayContext extends DLDisplayContext {
 	public long getDiscussionClassPK();
 
 	public String getDiscussionLabel(Locale locale);
-
-	public default String getDownloadURL(
-			FileEntry fileEntry, FileVersion fileVersion, boolean useVersion)
-		throws PortalException {
-
-		return null;
-	}
 
 	public default String getIconFileMimeType() {
 		return "document-default";

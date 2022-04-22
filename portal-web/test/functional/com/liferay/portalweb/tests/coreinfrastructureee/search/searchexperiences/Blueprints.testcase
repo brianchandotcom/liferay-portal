@@ -381,13 +381,13 @@ definition {
 
 		Blueprints.editElement(element = "Test Element");
 
-		Type(
-			locator1 = "TextInput#SEARCH",
-			value1 = "employee");
+		Click(
+			item = "user",
+			locator1 = "Blueprints#ELEMENTS_EDIT_PAGE_PREDEFINED_VARIABLES_SIDEBAR_ITEM");
 
 		AssertElementPresent(
-			key_text = "Employee",
-			locator1 = "Button#ANY");
+			item = "Employee",
+			locator1 = "Blueprints#ELEMENTS_EDIT_PAGE_PREDEFINED_VARIABLES_SIDEBAR_ITEM");
 
 		PortletEntry.save();
 

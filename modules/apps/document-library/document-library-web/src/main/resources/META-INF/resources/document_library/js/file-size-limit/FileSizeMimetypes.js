@@ -18,7 +18,14 @@ import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import React, {useState} from 'react';
 
-const FileSizeField = ({handleOnChange, mimeType, size}) => {
+const FileSizeField = ({
+	handleAddClick,
+	handleOnChange,
+	handleRemoveClick,
+	index,
+	mimeType,
+	size,
+}) => {
 	const [mimeTypeValue, setMimeTypeValue] = useState(mimeType);
 	const [sizeValue, setSizeValue] = useState(size);
 
@@ -29,7 +36,7 @@ const FileSizeField = ({handleOnChange, mimeType, size}) => {
 	};
 
 	return (
-		<ClayLayout.Row>
+		<ClayLayout.Row className="mt-3">
 			<ClayLayout.Col md="6">
 				<label htmlFor="mimeType">
 					{Liferay.Language.get('mime-type')}
@@ -73,19 +80,23 @@ const FileSizeField = ({handleOnChange, mimeType, size}) => {
 					value={sizeValue}
 				/>
 
-				<ClayButton
-					aria-label={Liferay.Language.get('remove')}
-					className="dm-field-repeatable-delete-button"
-					small
-					title={Liferay.Language.get('remove')}
-					type="button"
-				>
-					<ClayIcon symbol="hr" />
-				</ClayButton>
+				{index > 0 && (
+					<ClayButton
+						aria-label={Liferay.Language.get('remove')}
+						className="dm-field-repeatable-delete-button"
+						onClick={() => handleRemoveClick(index)}
+						small
+						title={Liferay.Language.get('remove')}
+						type="button"
+					>
+						<ClayIcon symbol="hr" />
+					</ClayButton>
+				)}
 
 				<ClayButton
 					aria-label={Liferay.Language.get('add')}
 					className="dm-field-repeatable-duplicate-button"
+					onClick={() => handleAddClick(index)}
 					small
 					title={Liferay.Language.get('duplicate')}
 					type="button"
@@ -100,15 +111,43 @@ const FileSizeField = ({handleOnChange, mimeType, size}) => {
 const FileSizePerMimeType = ({
 	description = 'file-size-mimetype-description',
 }) => {
-	const addMimeTypeSizeLimit = (mimeType, size) => {
+	const emptyObj = {mimeType: '', size: ''};
+
+	const saveMimeTypeSizeLimit = (mimeType, size) => {
 		console.log('TODO save ' + mimeType + ' ' + size);
 	};
+
+	const addRow = (index) => {
+		const tempList = [...sizesList];
+		tempList.splice(index + 1, 0, emptyObj);
+		setSizesList(tempList);
+	};
+
+	const removeRow = (index) => {
+		const tempList = [...sizesList];
+		tempList.splice(index, 1);
+		setSizesList(tempList);
+	};
+
+	const initialList = [emptyObj];
+
+	const [sizesList, setSizesList] = useState(initialList);
 
 	return (
 		<>
 			<p className="text-muted">{Liferay.Language.get(description)}</p>
 
-			<FileSizeField handleOnChange={addMimeTypeSizeLimit} />
+			{sizesList.map((item, index) => (
+				<FileSizeField
+					handleAddClick={addRow}
+					handleOnChange={saveMimeTypeSizeLimit}
+					handleRemoveClick={removeRow}
+					index={index}
+					key={index}
+					mimeType={item.mimeType}
+					size={item.size}
+				/>
+			))}
 		</>
 	);
 };

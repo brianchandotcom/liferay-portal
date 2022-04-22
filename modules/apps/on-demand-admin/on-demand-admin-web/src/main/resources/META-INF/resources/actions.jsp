@@ -29,7 +29,7 @@ Company rowObjectCompany = (Company)row.getObject();
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<c:if test="<%= rowObjectCompany.getCompanyId() != PortalUtil.getDefaultCompanyId() %>">
+	<c:if test="<%= (rowObjectCompany.getCompanyId() != PortalUtil.getDefaultCompanyId()) && PortletPermissionUtil.contains(permissionChecker, 0, 0, OnDemandAdminPortletKeys.ON_DEMAND_ADMIN, OnDemandAdminActionKeys.REQUEST_ADMINISTRATOR_ACCESS, true) %>">
 		<portlet:actionURL name="/on_demand_admin/request_admin_access" var="requestAdminAccessURL">
 			<portlet:param name="companyId" value="<%= String.valueOf(rowObjectCompany.getCompanyId()) %>" />
 		</portlet:actionURL>

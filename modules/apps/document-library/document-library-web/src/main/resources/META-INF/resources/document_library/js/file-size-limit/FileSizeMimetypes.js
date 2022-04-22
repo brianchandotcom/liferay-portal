@@ -31,13 +31,13 @@ const FileSizeField = ({
 	const [sizeValue, setSizeValue] = useState(size);
 
 	return (
-		<ClayLayout.Row className="mt-3">
+		<ClayLayout.Row className="mt-4">
 			<ClayLayout.Col md="6">
 				<label htmlFor="mimeType">
-					{Liferay.Language.get('mime-type')}
+					{Liferay.Language.get('mime-type-field-label')}
 
 					<span
-						className="inline-item-after lfr-portal-tooltip tooltip-icon"
+						className="inline-item-after text-muted"
 						title={Liferay.Language.get('mime-type-help-message')}
 					>
 						<ClayIcon symbol="question-circle-full" />
@@ -58,7 +58,7 @@ const FileSizeField = ({
 					{Liferay.Language.get('maximum-file-size')}
 
 					<span
-						className="inline-item-after lfr-portal-tooltip tooltip-icon"
+						className="inline-item-after text-muted"
 						title={Liferay.Language.get(
 							'maximum-file-size-help-message'
 						)}

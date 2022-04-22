@@ -49,7 +49,7 @@ public class ExportImportPortletConfigurationIcon
 
 	@Override
 	public String getIconCssClass() {
-		return "download";
+		return "order-arrow";
 	}
 
 	@Override

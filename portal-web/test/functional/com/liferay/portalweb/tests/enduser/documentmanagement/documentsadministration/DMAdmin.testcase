@@ -150,20 +150,6 @@ definition {
 				sourceFileName = "Document_${entryCount}.jpg");
 		}
 
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1");
-
-		DMDocument.viewCP(
-			dmDocumentSize = "13 KB",
-			dmDocumentTitle = "Document_1");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_2");
-
-		DMDocument.viewCP(
-			dmDocumentSize = "14 KB",
-			dmDocumentTitle = "Document_2");
-
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		LAR.exportPortlet(larFileName = "DM.portlet.lar");

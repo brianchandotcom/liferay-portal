@@ -16,6 +16,11 @@
 	<td>//h1[@class='text-uppercase']//div[contains(text(),'${key_title}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>MENU_LABEL_NAME</td>
+	<td>//span[@class='text-truncate' and contains (text(),'${labelOption}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

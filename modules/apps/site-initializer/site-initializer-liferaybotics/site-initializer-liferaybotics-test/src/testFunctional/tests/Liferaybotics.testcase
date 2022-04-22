@@ -50,4 +50,26 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-150999. User can navigate to a Home Page after Lifebotics site is created"
+	@priority = "4"
+	test LiferayboticsHomePage {
+		property portal.acceptance = "true";
+
+		task ("Go to Liferaybotics Site") {
+			ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		}
+
+		task ("Go to  Home Page on Liferaybotics Site") {
+			Click(
+				labelOption = "Home",
+				locator1 = "Liferaybotics#MENU_LABEL_NAME");
+		}
+
+		task ("Assert the Home Page is present") {
+			AssertElementPresent(
+				key_title = "Robotics power the future",
+				locator1 = "Liferaybotics#HOME_TITLE");
+		}
+	}
+
 }

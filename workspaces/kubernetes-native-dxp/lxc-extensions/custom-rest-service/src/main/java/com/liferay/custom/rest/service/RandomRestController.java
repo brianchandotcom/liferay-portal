@@ -49,7 +49,7 @@ public class RandomRestController {
 	}
 
 	@PutMapping(value = "/user/{id}")
-	public void updateUser(@PathVariable Long id, BearerTokenAuthentication authentication) {
+	public void updateGivenName(@PathVariable Long id, HttpEntity<String> requestEntity, BearerTokenAuthentication authentication) {
 		OAuth2AccessToken authToken = authentication.getToken();
 		String accessToken = authToken.getTokenValue();
 
@@ -57,8 +57,10 @@ public class RandomRestController {
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		headers.set("Authorization", "Bearer " + accessToken);
 
+		String newGivenName = requestEntity.getBody();
+
 		HttpEntity<String> entity = new HttpEntity<String>(
-			"{\"givenName\":\"" + _randomAlpha(4) + "\"}", headers);
+			"{\"givenName\":\"" + newGivenName + "\"}", headers);
 		RestTemplate restTemplate = new RestTemplate();
 		restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
 		String result = restTemplate.patchForObject(

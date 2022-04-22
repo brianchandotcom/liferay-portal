@@ -20,7 +20,13 @@ class WebClient {
         return this._fetch(url, options).then(
             (response) => {
                 if (response.ok) {
-                    return response.json();
+                    const contentType = response.headers.get('content-type');
+                    if (contentType && contentType.indexOf('application/json') !== -1) {
+                      return response.json();
+                    }
+                    else {
+                      return Promise.resolve(response);
+                    }
                 }
                 return Promise.reject(response);
             }

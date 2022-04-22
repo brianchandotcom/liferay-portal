@@ -7,6 +7,7 @@ import HelloWorld from './routes/hello-world/pages/HelloWorld';
 import './common/styles/index.scss';
 import { Liferay } from './common/services/liferay/liferay';
 import WebClient from './common/services/liferay/webclient';
+import NameForm from './common/components/NameForm';
 
 const App = ({ route }) => {
 	if (route === "hello-bar") {
@@ -17,7 +18,12 @@ const App = ({ route }) => {
 		return <HelloFoo />;
 	}
 
-	return <HelloWorld />;
+	return (
+		<div>
+			<HelloWorld />
+			<NameForm />
+		</div>
+	);
 };
 
 class WebComponent extends HTMLElement {
@@ -59,7 +65,6 @@ class WebComponent extends HTMLElement {
 				let nameEls = document.getElementsByClassName('random-number');
 				if (nameEls.length > 0) {
 					if (res) {
-						console.log("RESULT: ", res);
 						nameEls[0].innerHTML = res;
 					}
 				}

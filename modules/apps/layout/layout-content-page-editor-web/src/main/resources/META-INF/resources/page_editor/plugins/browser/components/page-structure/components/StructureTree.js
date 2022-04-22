@@ -29,12 +29,12 @@ import {useActiveItemId} from '../../../../../app/contexts/ControlsContext';
 import {useSelector} from '../../../../../app/contexts/StoreContext';
 import selectCanUpdateEditables from '../../../../../app/selectors/selectCanUpdateEditables';
 import selectCanUpdateItemConfiguration from '../../../../../app/selectors/selectCanUpdateItemConfiguration';
+import selectLayoutDataItemLabel from '../../../../../app/selectors/selectLayoutDataItemLabel';
 import {selectPageContents} from '../../../../../app/selectors/selectPageContents';
 import canActivateEditable from '../../../../../app/utils/canActivateEditable';
 import {DragAndDropContextProvider} from '../../../../../app/utils/drag-and-drop/useDragAndDrop';
 import isMapped from '../../../../../app/utils/editable-value/isMapped';
 import isMappedToCollection from '../../../../../app/utils/editable-value/isMappedToCollection';
-import getLayoutDataItemLabel from '../../../../../app/utils/getLayoutDataItemLabel';
 import getMappingFieldsKey from '../../../../../app/utils/getMappingFieldsKey';
 import {getResponsiveConfig} from '../../../../../app/utils/getResponsiveConfig';
 import getSelectedField from '../../../../../app/utils/getSelectedField';
@@ -495,7 +495,7 @@ function visit(
 		id: item.itemId,
 		isMasterItem: !isMasterPage && itemInMasterLayout,
 		itemType: ITEM_TYPES.layoutDataItem,
-		name: getLayoutDataItemLabel(item, fragmentEntryLinks),
+		name: selectLayoutDataItemLabel({fragmentEntryLinks}, item),
 		nameInfo: getNameInfo(item),
 		onHoverNode,
 		parentItemId: item.parentId,

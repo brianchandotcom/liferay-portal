@@ -15,23 +15,17 @@
 import {LAYOUT_DATA_ITEM_TYPE_LABELS} from '../config/constants/layoutDataItemTypeLabels';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 
-export default function getLayoutDataItemLabel(item, fragmentEntryLinks) {
+export default function selectLayoutDataItemLabel({fragmentEntryLinks}, item) {
 	if (
 		item.type === LAYOUT_DATA_ITEM_TYPES.fragment &&
-		item.config &&
-		item.config.fragmentEntryLinkId &&
-		fragmentEntryLinks[item.config.fragmentEntryLinkId]
+		fragmentEntryLinks[item.config?.fragmentEntryLinkId]?.name
 	) {
 		return fragmentEntryLinks[item.config.fragmentEntryLinkId].name;
 	}
 
-	const itemTypeKey = Object.keys(LAYOUT_DATA_ITEM_TYPES).find(
-		(key) => LAYOUT_DATA_ITEM_TYPES[key] === item.type
+	return (
+		LAYOUT_DATA_ITEM_TYPE_LABELS[item.type] ||
+		item.type ||
+		Liferay.Language.get('element')
 	);
-
-	if (itemTypeKey in LAYOUT_DATA_ITEM_TYPE_LABELS) {
-		return LAYOUT_DATA_ITEM_TYPE_LABELS[itemTypeKey];
-	}
-
-	return item.type;
 }

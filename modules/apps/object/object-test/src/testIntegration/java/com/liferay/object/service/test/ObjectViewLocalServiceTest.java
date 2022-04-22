@@ -35,12 +35,15 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
+import org.apache.commons.lang3.RandomStringUtils;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -373,7 +376,8 @@ public class ObjectViewLocalServiceTest {
 			"Roger", "roger");
 
 		ObjectViewColumn objectViewColumn2 = _createObjectViewColumn(
-			RandomTestUtil.randomString(), "f" + RandomTestUtil.randomString());
+			RandomTestUtil.randomString(),
+			StringUtil.toLowerCase(RandomStringUtils.randomAlphabetic(5)));
 
 		objectViewColumn2.setObjectFieldName("roger");
 
@@ -384,7 +388,8 @@ public class ObjectViewLocalServiceTest {
 		throws Exception {
 
 		ObjectViewColumn objectViewColumn = _createObjectViewColumn(
-			RandomTestUtil.randomString(), "f" + RandomTestUtil.randomString());
+			RandomTestUtil.randomString(),
+			StringUtil.toLowerCase(RandomStringUtils.randomAlphabetic(5)));
 
 		objectViewColumn.setLabelMap(LocalizedMapUtil.getLocalizedMap(""));
 
@@ -396,7 +401,8 @@ public class ObjectViewLocalServiceTest {
 		throws Exception {
 
 		ObjectViewColumn objectViewColumn = _createObjectViewColumn(
-			RandomTestUtil.randomString(), "f" + RandomTestUtil.randomString());
+			RandomTestUtil.randomString(),
+			StringUtil.toLowerCase(RandomStringUtils.randomAlphabetic(5)));
 
 		objectViewColumn.setObjectFieldName("zebra");
 

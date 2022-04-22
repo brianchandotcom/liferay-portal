@@ -473,9 +473,7 @@ public class PingbackMethodImplTest {
 				"<body><a href='http://", _TARGET_URI, "'>", _EXCERPT_BODY,
 				"</a></body>"));
 
-		HttpUtil httpUtil = new HttpUtil();
-
-		httpUtil.setHttp(_http);
+		ReflectionTestUtil.setFieldValue(HttpUtil.class, "_http", _http);
 	}
 
 	private void _setUpInetAddressLookup() throws Exception {

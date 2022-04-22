@@ -23,6 +23,7 @@ import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -115,14 +116,13 @@ public class SXPBlueprintSearchRequestContributorTest {
 		_test(
 			new String[] {"diamond bar city", "walnut city"},
 			() -> {
-				HttpUtil httpUtil = new HttpUtil();
-
 				try (ConfigurationTemporarySwapper
 						configurationTemporarySwapper =
 							_getConfigurationTemporarySwapper(
 								"2345", "34.94.32.240", "true")) {
 
-					httpUtil.setHttp(
+					ReflectionTestUtil.setFieldValue(
+						HttpUtil.class, "_http",
 						_getHttp(
 							JSONUtil.put(
 								"city", "diamond bar"
@@ -131,7 +131,8 @@ public class SXPBlueprintSearchRequestContributorTest {
 					_assertSearch("[diamond bar city]", "34.94.32.240", "city");
 				}
 				finally {
-					httpUtil.setHttp(_http);
+					ReflectionTestUtil.setFieldValue(
+						HttpUtil.class, "_http", _http);
 				}
 
 				try (ConfigurationTemporarySwapper
@@ -139,7 +140,8 @@ public class SXPBlueprintSearchRequestContributorTest {
 							_getConfigurationTemporarySwapper(
 								"2345", "91.233.116.229", "true")) {
 
-					httpUtil.setHttp(
+					ReflectionTestUtil.setFieldValue(
+						HttpUtil.class, "_http",
 						_getHttp(
 							JSONUtil.put(
 								"city", "walnut"
@@ -148,7 +150,8 @@ public class SXPBlueprintSearchRequestContributorTest {
 					_assertSearch("[walnut city]", "91.233.116.229", "city");
 				}
 				finally {
-					httpUtil.setHttp(_http);
+					ReflectionTestUtil.setFieldValue(
+						HttpUtil.class, "_http", _http);
 				}
 			});
 	}

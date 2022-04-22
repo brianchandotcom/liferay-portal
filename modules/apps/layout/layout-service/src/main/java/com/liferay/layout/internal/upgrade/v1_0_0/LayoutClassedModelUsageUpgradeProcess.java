@@ -53,7 +53,7 @@ public class LayoutClassedModelUsageUpgradeProcess extends UpgradeProcess {
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery(
 				"select groupId, assetEntryId, containerKey, containerType, " +
-					"plid, type from AssetEntryUsage");
+					"plid, type_ from AssetEntryUsage");
 			PreparedStatement preparedStatement =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
@@ -78,7 +78,7 @@ public class LayoutClassedModelUsageUpgradeProcess extends UpgradeProcess {
 				long groupId = resultSet.getLong("groupId");
 				String containerKey = resultSet.getString("containerKey");
 				long containerType = resultSet.getLong("containerType");
-				int type = resultSet.getInt("type");
+				int type = resultSet.getInt("type_");
 
 				preparedStatement.setLong(1, 0);
 				preparedStatement.setString(2, PortalUUIDUtil.generate());

@@ -76,16 +76,6 @@ public class AsahInterestTermAssetListAssetEntryQueryProcessor
 		assetEntryQuery.setAnyKeywords(interestTerms);
 	}
 
-	@Override
-	public void processAssetEntryQuery(
-		String userId, UnicodeProperties unicodeProperties,
-		AssetEntryQuery assetEntryQuery) {
-
-		processAssetEntryQuery(
-			_portal.getDefaultCompanyId(), userId, unicodeProperties,
-			assetEntryQuery);
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		AsahInterestTermAssetListAssetEntryQueryProcessor.class);
 

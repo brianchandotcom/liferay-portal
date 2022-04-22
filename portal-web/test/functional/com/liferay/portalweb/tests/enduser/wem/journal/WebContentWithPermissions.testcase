@@ -335,4 +335,107 @@ definition {
 		AssertTextNotPresent(value1 = "WC WebContent Content");
 	}
 
+	@description = "A new user with power user role can add a web content based on global structure with edited default values."
+	@priority = "3"
+	test AddWebContentWithGlobalStructureAndEditedDefaultValues {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		task ("Add a web content structure with a Text field in global site") {
+			WebContentNavigator.openWebContentStructuresAdmin(siteURLKey = "global");
+
+			WebContentStructures.addCP(
+				structureDescription = "Structure Description",
+				structureName = "Global Structure Name");
+
+			DataEngine.addField(
+				fieldFieldLabel = "Text",
+				fieldName = "Text");
+
+			WebContentStructures.saveCP(
+				addRoleViewPermissions = "Power User",
+				structureName = "Global Structure Name");
+		}
+
+		task ("Add a web content template associated with new structure in global site") {
+			WebContentNavigator.openWebContentTemplatesAdmin(siteURLKey = "global");
+
+			WebContentTemplates.addCP(
+				structureName = "Global Structure Name",
+				templateDescription = "Global Template Description",
+				templateName = "Global Template Name");
+		}
+
+		task ("Add permissions to Power User role") {
+			WebContentTemplates.addRoleViewPermissions(
+				roles = "Power User",
+				templateName = "Template Name");
+
+			IFrame.closeFrame();
+		}
+
+		task ("Edit the default values of new structure") {
+			NavItem.gotoStructures();
+
+			WebContentStructures.editStructureDefaultValuesCP(structureName = "Global Structure Name");
+
+			WebContent.addWithStructureCP(webContentText = "Edited Text Field");
+
+			PortletEntry.save();
+		}
+
+		task ("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "Userfn",
+				userLastName = "Userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Assign the user to Power User role") {
+			JSONRole.assignRoleToUser(
+				roleTitle = "Power User",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Assign the user to site") {
+			JSONUser.addUserToSite(
+				groupName = "Test Site Name",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Assign the administrator role to new user") {
+			JSONRole.assignSiteRoleToUser(
+				groupName = "Test Site Name",
+				roleTitle = "Site Administrator",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Add a draft web content based on global structure") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "Global Structure Name");
+
+			WebContent.addWithStructureCP(
+				saveAsDraft = "true",
+				structureName = "Global Structure",
+				webContentText = "Web Content Text",
+				webContentTitle = "Web Content Title");
+		}
+
+		task ("View web content is shown in web content admin after published") {
+			PortletEntry.publish();
+
+			WebContent.viewTitle(webContentTitle = "Web Content Title");
+		}
+	}
+
 }

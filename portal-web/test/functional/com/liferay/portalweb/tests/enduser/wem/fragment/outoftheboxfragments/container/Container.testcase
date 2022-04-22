@@ -440,9 +440,6 @@ definition {
 	@description = "This is a test for LPS-147394. View warning message and view change in DOM and Page Elements panel."
 	@priority = "4"
 	test ConfigureHTMLTagOfContainer {
-		property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration.config";
-		property osgi.module.configurations = "fragmentAdvancedOptionsEnabled=&quot;true&quot;";
-
 		task ("Add a Container to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Content Page Name",

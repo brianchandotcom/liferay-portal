@@ -19,21 +19,31 @@ import ClayLayout from '@clayui/layout';
 import ClayPanel from '@clayui/panel';
 import React, {useMemo, useState} from 'react';
 
+import {getSpritemapPath} from '../../index';
 import AddIconPackModal from './AddIconPackModal';
+
+import type {IIconPacks} from '../../types';
+
+interface IProps {
+	allIconResourcePacks: IIconPacks;
+	portletNamespace: string;
+	saveSiteIconPacksURL: string;
+	siteIconResourcePacks: string[];
+}
 
 export default function SiteIconPackConfiguration({
 	allIconResourcePacks: icons,
 	portletNamespace,
 	saveSiteIconPacksURL,
 	siteIconResourcePacks,
-}) {
+}: IProps) {
 	const [selectedPacks, setSelectedPacks] = useState(siteIconResourcePacks);
 	const [searchQuery, setSearchQuery] = useState('');
 	const [showAddModal, setShowAddModal] = useState(false);
 
 	const iconPackNames = Object.keys(icons);
 
-	const filteredIcons = useMemo(() => {
+	const filteredIcons: IIconPacks = useMemo(() => {
 		return iconPackNames.reduce((acc, packName) => {
 			return {
 				...acc,
@@ -65,8 +75,7 @@ export default function SiteIconPackConfiguration({
 			</ClayLayout.ContentRow>
 
 			<ClayLayout.ContentRow className="mb-2" containerElement="code">
-				{window.location.host +
-					`/o/icons/pack/site/${Liferay.ThemeDisplay.getSiteGroupId()}.svg`}
+				{window.location.host + getSpritemapPath()}
 			</ClayLayout.ContentRow>
 
 			<label className="form-control-label">
@@ -108,7 +117,9 @@ export default function SiteIconPackConfiguration({
 													key={icon.name}
 												>
 													<ClayIcon
-														spritemap={`/o/icons/pack/${iconPackName}.svg?${referenceTime}`}
+														spritemap={`${getSpritemapPath(
+															iconPackName
+														)}?${referenceTime}`}
 														symbol={icon.name}
 													/>
 

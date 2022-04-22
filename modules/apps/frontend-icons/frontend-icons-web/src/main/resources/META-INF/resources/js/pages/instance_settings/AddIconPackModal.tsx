@@ -22,18 +22,34 @@ import classNames from 'classnames';
 import {fetch, openToast} from 'frontend-js-web';
 import React, {useMemo, useRef, useState} from 'react';
 
+import {getSpritemapPath} from '../../index';
+
+import type {IIconPack, IIconPacks} from '../../types';
+
+interface IProps {
+	existingIconPackName?: string;
+	icons: IIconPacks;
+	onIconsChange: (iconPacks: IIconPacks) => void;
+	onVisibleChange: (visible: boolean) => void;
+	portletNamespace: string;
+	saveFromExistingIconsActionURL: string;
+	saveFromSpritemapActionURL: string;
+	uploadSpritemap?: boolean;
+	visible: boolean;
+}
+
 export default function AddIconPackModal({
-	existingIconPackName,
+	existingIconPackName = '',
 	icons,
+	onIconsChange,
+	onVisibleChange,
 	portletNamespace,
 	saveFromExistingIconsActionURL,
 	saveFromSpritemapActionURL,
-	setIcons,
-	setVisible,
 	uploadSpritemap = true,
 	visible,
-}) {
-	const svgFileInputRef = useRef();
+}: IProps) {
+	const svgFileInputRef = useRef<HTMLInputElement>();
 
 	const [iconPackName, setIconPackName] = useState(existingIconPackName);
 	const [loading, setLoading] = useState(false);
@@ -41,7 +57,7 @@ export default function AddIconPackModal({
 
 	const {observer, onClose} = useModal({
 		onClose: () => {
-			setVisible(false);
+			onVisibleChange(false);
 		},
 	});
 
@@ -49,6 +65,15 @@ export default function AddIconPackModal({
 		setLoading(true);
 
 		const formData = new FormData();
+
+		if (
+			!(
+				svgFileInputRef?.current?.files &&
+				svgFileInputRef?.current?.files[0]
+			)
+		) {
+			return;
+		}
 
 		formData.append(
 			portletNamespace + 'svgFile',
@@ -60,8 +85,8 @@ export default function AddIconPackModal({
 			body: formData,
 			method: 'post',
 		})
-			.then((response) => response.json())
-			.then((iconPack) => {
+			.then((response: Response) => response.json())
+			.then((iconPack: IIconPack) => {
 				openToast({
 					message: Liferay.Language.get('icon-added'),
 					title: Liferay.Language.get('success'),
@@ -75,7 +100,7 @@ export default function AddIconPackModal({
 
 				newIcons[iconPackName] = iconPack;
 
-				setIcons(newIcons);
+				onIconsChange(newIcons);
 				setLoading(false);
 
 				onClose();
@@ -97,8 +122,8 @@ export default function AddIconPackModal({
 			body: formData,
 			method: 'post',
 		})
-			.then((response) => response.json())
-			.then((iconPack) => {
+			.then((response: Response) => response.json())
+			.then((iconPack: IIconPack) => {
 				openToast({
 					message: Liferay.Language.get('icon-added'),
 					title: Liferay.Language.get('success'),
@@ -112,7 +137,7 @@ export default function AddIconPackModal({
 
 				newIcons[iconPackName] = iconPack;
 
-				setIcons(newIcons);
+				onIconsChange(newIcons);
 				setLoading(false);
 
 				onClose();
@@ -123,100 +148,106 @@ export default function AddIconPackModal({
 		? handleUploadSpritemapSubmit
 		: handleSelectIconsSubmit;
 
-	return (
-		visible && (
-			<ClayModal observer={observer} size="lg">
-				<ClayModal.Header withTitle>
-					{Liferay.Language.get('add-icon-pack')}
-				</ClayModal.Header>
+	return visible ? (
+		<ClayModal observer={observer} size="lg">
+			<ClayModal.Header withTitle>
+				{Liferay.Language.get('add-icon-pack')}
+			</ClayModal.Header>
 
-				<ClayModal.Body>
-					<ClayForm
-						onSubmit={(event) => {
-							event.preventDefault();
-						}}
-					>
+			<ClayModal.Body>
+				<ClayForm
+					onSubmit={(event) => {
+						event.preventDefault();
+					}}
+				>
+					<ClayForm.Group>
+						<label htmlFor={portletNamespace + 'name'}>
+							{Liferay.Language.get('pack-name')}
+						</label>
+
+						<ClayInput
+							name={portletNamespace + 'name'}
+							onChange={(event) =>
+								setIconPackName(event.target.value)
+							}
+							placeholder="Name"
+							readOnly={!!existingIconPackName}
+							type="text"
+							value={iconPackName}
+						/>
+					</ClayForm.Group>
+
+					{uploadSpritemap ? (
 						<ClayForm.Group>
-							<label htmlFor={portletNamespace + 'name'}>
-								{Liferay.Language.get('pack-name')}
+							<label htmlFor={portletNamespace + 'svgFile'}>
+								{Liferay.Language.get('svg-file')}
 							</label>
 
 							<ClayInput
-								name={portletNamespace + 'name'}
-								onChange={(event) =>
-									setIconPackName(event.target.value)
-								}
-								placeholder="Name"
-								readOnly={existingIconPackName}
-								type="text"
-								value={iconPackName}
+								accept=".svg"
+								name={portletNamespace + 'svgFile'}
+								ref={svgFileInputRef as any}
+								type="file"
 							/>
 						</ClayForm.Group>
+					) : (
+						<IconPicker
+							existingIconPackName={existingIconPackName}
+							icons={icons}
+							onSelectedIconsChange={setSelectedIcons}
+							selectedIcons={selectedIcons}
+						/>
+					)}
+				</ClayForm>
+			</ClayModal.Body>
 
-						{uploadSpritemap ? (
-							<ClayForm.Group>
-								<label htmlFor={portletNamespace + 'svgFile'}>
-									{Liferay.Language.get('svg-file')}
-								</label>
-
-								<ClayInput
-									accept=".svg"
-									name={portletNamespace + 'svgFile'}
-									ref={svgFileInputRef}
-									type="file"
+			<ClayModal.Footer
+				last={
+					<ClayButton.Group spaced>
+						<ClayButton
+							disabled={loading}
+							onClick={() => {
+								handleSubmit();
+							}}
+							type="submit"
+						>
+							{loading ? (
+								<ClayLoadingIndicator
+									className="d-inline-block m-0"
+									small
 								/>
-							</ClayForm.Group>
-						) : (
-							<IconPicker
-								existingIconPackName={existingIconPackName}
-								icons={icons}
-								selectedIcons={selectedIcons}
-								setSelectedIcons={setSelectedIcons}
-							/>
-						)}
-					</ClayForm>
-				</ClayModal.Body>
+							) : (
+								Liferay.Language.get('save')
+							)}
+						</ClayButton>
 
-				<ClayModal.Footer
-					last={
-						<ClayButton.Group spaced>
-							<ClayButton
-								disabled={loading}
-								onClick={() => {
-									handleSubmit();
-								}}
-								type="submit"
-							>
-								{loading ? (
-									<ClayLoadingIndicator
-										className="d-inline-block m-0"
-										small
-									/>
-								) : (
-									Liferay.Language.get('save')
-								)}
-							</ClayButton>
+						<ClayButton displayType="secondary" onClick={onClose}>
+							{Liferay.Language.get('cancel')}
+						</ClayButton>
+					</ClayButton.Group>
+				}
+			/>
+		</ClayModal>
+	) : null;
+}
 
-							<ClayButton
-								displayType="secondary"
-								onClick={onClose}
-							>
-								{Liferay.Language.get('cancel')}
-							</ClayButton>
-						</ClayButton.Group>
-					}
-				/>
-			</ClayModal>
-		)
-	);
+interface ISelectedIcons {
+	[iconPackName: string]: string[];
+}
+
+interface IIconPickerProps {
+	existingIconPackName: string;
+	icons: IIconPacks;
+	onSelectedIconsChange: (selectedIcons: ISelectedIcons) => void;
+	selectedIcons: ISelectedIcons;
 }
 
 function IconPicker({
 	existingIconPackName,
 	icons,
+	onSelectedIconsChange,
 	selectedIcons,
-	setSelectedIcons,
-}) {
+}: IIconPickerProps) {
 	const referenceTime = useMemo(
 		() => new Date().getTime(),
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -233,14 +264,14 @@ function IconPicker({
 					<div className="d-flex" key={iconPackName}>
 						<ClayPanel
 							collapsable
-							displayTitle={`${iconPackName} (${icons.length})`}
+							displayTitle={`${iconPackName} (${icons?.length})`}
 							displayType="secondary"
 							showCollapseIcon={true}
 							style={{flex: 1}}
 						>
 							<ClayPanel.Body className="list-group-card">
 								<ul className="list-group">
-									{icons.map((icon) => (
+									{icons?.map((icon) => (
 										<li
 											className="list-group-card-item w-25"
 											key={icon.name}
@@ -262,7 +293,7 @@ function IconPicker({
 														icon.name
 													);
 
-													setSelectedIcons({
+													onSelectedIconsChange({
 														...selectedIcons,
 														[iconPackName]: isSelected
 															? selectedIconsFromCurrentPackName.filter(
@@ -280,7 +311,9 @@ function IconPicker({
 												}}
 											>
 												<ClayIcon
-													spritemap={`/o/icons/pack/${iconPackName}.svg?${referenceTime}`}
+													spritemap={`${getSpritemapPath(
+														iconPackName
+													)}?${referenceTime}`}
 													symbol={icon.name}
 												/>
 

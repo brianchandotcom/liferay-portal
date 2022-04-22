@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,15 +11,28 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/init.jsp" %>
+/// <reference types="react" />
 
-<%
-FrontendIconsConfigurationDisplayContext frontendIconsConfigurationDisplayContext = (FrontendIconsConfigurationDisplayContext)request.getAttribute(FrontendIconsConfigurationDisplayContext.class.getName());
-%>
-
-<react:component
-	module="js/pages/instance_settings/index"
-	props="<%= frontendIconsConfigurationDisplayContext.getProps() %>"
-/>
+import type {IIconPacks} from '../../types';
+interface IProps {
+	deleteIconsPackResourceURL: string;
+	iconPackName: string;
+	icons: IIconPacks;
+	onIconsChange: (newIcons: IIconPacks) => void;
+	onVisibleChange: (visible: boolean) => void;
+	portletNamespace: string;
+	selectedIcon: string;
+	visible: boolean;
+}
+export default function DeleteIconModal({
+	deleteIconsPackResourceURL,
+	iconPackName,
+	icons,
+	onIconsChange,
+	onVisibleChange,
+	portletNamespace,
+	selectedIcon,
+	visible,
+}: IProps): JSX.Element | null;
+export {};

@@ -105,15 +105,15 @@ public class FrontendIconsResourcePackTracker {
 				return null;
 			}
 
-			String iconsPath = headers.get("Liferay-Icons-Path");
+			String path = headers.get("Liferay-Icons-Path");
 			String name = headers.get("Liferay-Icons-Pack-Name");
 
-			if (Validator.isBlank(iconsPath) || Validator.isBlank(name)) {
+			if (Validator.isBlank(path) || Validator.isBlank(name)) {
 				return null;
 			}
 
 			FrontendIconsResourcePack frontendIconsResourcePack =
-				_createFrontendIconsResourcePack(bundle, iconsPath, name);
+				_createFrontendIconsResourcePack(bundle, name, path);
 
 			if (frontendIconsResourcePack == null) {
 				return null;
@@ -194,10 +194,10 @@ public class FrontendIconsResourcePackTracker {
 		}
 
 		private FrontendIconsResourcePack _createFrontendIconsResourcePack(
-			Bundle bundle, String iconsPath, String name) {
+			Bundle bundle, String name, String path) {
 
 			Enumeration<URL> entriesEnumeration = bundle.findEntries(
-				"/META-INF/resources" + iconsPath, "*.svg", true);
+				"/META-INF/resources" + path, "*.svg", true);
 
 			if (entriesEnumeration == null) {
 				return null;

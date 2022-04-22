@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,15 +11,5 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/init.jsp" %>
-
-<%
-FrontendIconsConfigurationDisplayContext frontendIconsConfigurationDisplayContext = (FrontendIconsConfigurationDisplayContext)request.getAttribute(FrontendIconsConfigurationDisplayContext.class.getName());
-%>
-
-<react:component
-	module="js/pages/instance_settings/index"
-	props="<%= frontendIconsConfigurationDisplayContext.getProps() %>"
-/>
+export default function getSpritemapPath(iconPack: String): string;

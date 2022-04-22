@@ -64,6 +64,20 @@ definition {
 		DMDocument.viewStagingDetailsManagementBar(dmDocumentTitle = "Document_3.txt");
 	}
 
+	@description = "This test covers LPS-72443. It validates that a user can navigate to the remote site using the staging toolbar."
+	@priority = "5"
+	test CanNavigateToRemoteLiveViaToolbar {
+		Navigator.gotoSitePage(
+			pageName = "Staging DM Page",
+			siteName = "Site Name");
+
+		ProductMenu.gotoLiveSite(
+			remoteStaging = "true",
+			site = "Site Name");
+
+		AssertLocation.assertPartialLocation(value1 = "http://localhost:9080/group/remote-site");
+	}
+
 	@description = "This ensures that the document using custom document type can be deleted and republished."
 	@priority = "5"
 	@refactorneeded

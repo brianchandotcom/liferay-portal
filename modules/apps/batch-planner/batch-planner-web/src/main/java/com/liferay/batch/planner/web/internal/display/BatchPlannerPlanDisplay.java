@@ -79,6 +79,14 @@ public class BatchPlannerPlanDisplay {
 		return false;
 	}
 
+	public boolean isStatusFailed() {
+		if (_status == BatchPlannerPlanConstants.STATUS_FAILED) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public static class Builder {
 
 		public Builder action(String action) {

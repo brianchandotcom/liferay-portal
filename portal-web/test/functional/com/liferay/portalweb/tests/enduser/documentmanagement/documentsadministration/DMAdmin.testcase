@@ -166,7 +166,7 @@ definition {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		LAR.importPortlet(
-			importDeletedData = "true",
+			deleteApplicationData = "true",
 			larFileName = "DM.portlet.lar");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1");

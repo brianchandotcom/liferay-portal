@@ -160,19 +160,23 @@ definition {
 			deleteApplicationData = "true",
 			larFileName = "DM.portlet.lar");
 
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1");
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "Document_1.jpg",
+			groupName = "Guest",
+			siteURLKey = "guest");
 
 		DMDocument.viewCP(
 			dmDocumentSize = "13 KB",
-			dmDocumentTitle = "Document_1");
+			dmDocumentTitle = "Document_1.jpg");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_2");
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "Document_2.jpg",
+			groupName = "Guest",
+			siteURLKey = "guest");
 
 		DMDocument.viewCP(
-			dmDocumentSize = "14 KB",
-			dmDocumentTitle = "Document_2");
+			dmDocumentSize = "30 KB",
+			dmDocumentTitle = "Document_2.jpg");
 	}
 
 	@description = "This is a use case for LPS-50760."

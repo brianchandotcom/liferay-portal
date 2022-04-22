@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.comparator.UserScreenNameComparator;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.vldap.server.internal.BaseVLDAPTestCase;
 import com.liferay.vldap.server.internal.directory.FilterConstraint;
 import com.liferay.vldap.server.internal.directory.ldap.Directory;
@@ -28,19 +29,22 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.mockito.Mockito;
-
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author William Newbury
  * @author Matthew Tambara
  */
-@RunWith(PowerMockRunner.class)
 public class OrganizationBuilderTest extends BaseVLDAPTestCase {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testBuildDirectoriesWithInvalidFilterConstraints()
@@ -72,7 +76,7 @@ public class OrganizationBuilderTest extends BaseVLDAPTestCase {
 
 		setUpOrganizations();
 
-		when(
+		Mockito.when(
 			userLocalService.fetchUserByScreenName(
 				Mockito.anyLong(), Mockito.anyString())
 		).thenReturn(
@@ -154,7 +158,7 @@ public class OrganizationBuilderTest extends BaseVLDAPTestCase {
 
 		setUpOrganizations();
 
-		when(
+		Mockito.when(
 			userLocalService.fetchUserByScreenName(
 				Mockito.anyLong(), Mockito.anyString())
 		).thenReturn(
@@ -212,15 +216,15 @@ public class OrganizationBuilderTest extends BaseVLDAPTestCase {
 	}
 
 	protected void setUpOrganizations() throws Exception {
-		Organization organization = mock(Organization.class);
+		Organization organization = Mockito.mock(Organization.class);
 
-		when(
+		Mockito.when(
 			organization.getName()
 		).thenReturn(
 			"testName"
 		);
 
-		when(
+		Mockito.when(
 			organization.getOrganizationId()
 		).thenReturn(
 			PRIMARY_KEY
@@ -231,14 +235,14 @@ public class OrganizationBuilderTest extends BaseVLDAPTestCase {
 
 		organizations.add(organization);
 
-		when(
+		Mockito.when(
 			organizationLocalService.dynamicQuery(
 				Mockito.any(DynamicQuery.class))
 		).thenReturn(
 			organizations
 		);
 
-		when(
+		Mockito.when(
 			_user.getOrganizations()
 		).thenReturn(
 			organizations
@@ -246,15 +250,15 @@ public class OrganizationBuilderTest extends BaseVLDAPTestCase {
 	}
 
 	protected void setUpUsers() {
-		_user = mock(User.class);
+		_user = Mockito.mock(User.class);
 
-		when(
+		Mockito.when(
 			_user.getScreenName()
 		).thenReturn(
 			"testScreenName"
 		);
 
-		when(
+		Mockito.when(
 			userLocalService.search(
 				Mockito.anyLong(), Mockito.anyString(), Mockito.anyString(),
 				Mockito.anyString(), Mockito.anyString(), Mockito.anyString(),

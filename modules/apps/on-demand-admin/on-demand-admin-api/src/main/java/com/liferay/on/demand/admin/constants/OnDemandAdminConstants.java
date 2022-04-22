@@ -19,6 +19,10 @@ package com.liferay.on.demand.admin.constants;
  */
 public class OnDemandAdminConstants {
 
+	public static final String
+		AUDIT_EVENT_TYPE_ON_DEMAND_ADMIN_TICKET_GENERATED =
+			"ON_DEMAND_ADMIN_TICKET_GENERATED";
+
 	public static final String SCREEN_NAME_PREFIX_ON_DEMAND_ADMIN =
 		"on_demand_admin";
 

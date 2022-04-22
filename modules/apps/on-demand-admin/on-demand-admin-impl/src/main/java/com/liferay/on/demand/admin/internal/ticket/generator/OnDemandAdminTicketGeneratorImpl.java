@@ -19,6 +19,8 @@ import com.liferay.on.demand.admin.internal.helper.OnDemandAdminHelper;
 import com.liferay.on.demand.admin.ticket.generator.OnDemandAdminTicketGenerator;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.audit.AuditMessage;
+import com.liferay.portal.kernel.audit.AuditRouter;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Role;
@@ -29,6 +31,7 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.security.audit.event.generators.util.AuditMessageBuilder;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.Date;
@@ -52,6 +55,13 @@ public class OnDemandAdminTicketGeneratorImpl
 			company.getCompanyId(), requestorUserId);
 
 		User user = _addOnDemandAdminUser(company, requestorUserId);
+
+		AuditMessage auditMessage = AuditMessageBuilder.buildAuditMessage(
+			OnDemandAdminConstants.
+				AUDIT_EVENT_TYPE_ON_DEMAND_ADMIN_TICKET_GENERATED,
+			User.class.getName(), requestorUserId, null);
+
+		_auditRouter.route(auditMessage);
 
 		return _ticketLocalService.addDistinctTicket(
 			user.getCompanyId(), User.class.getName(), user.getUserId(),
@@ -99,6 +109,9 @@ public class OnDemandAdminTicketGeneratorImpl
 			StringPool.UNDERLINE, requestorUserId, StringPool.UNDERLINE,
 			userId);
 	}
+
+	@Reference
+	private AuditRouter _auditRouter;
 
 	@Reference
 	private OnDemandAdminHelper _onDemandAdminHelper;

@@ -59,11 +59,7 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-
-import org.powermock.api.mockito.PowerMockito;
 
 /**
  * @author Adam Brandizzi
@@ -77,8 +73,6 @@ public class SearchBarPortletDisplayContextFactoryTest {
 
 	@Before
 	public void setUp() {
-		MockitoAnnotations.initMocks(this);
-
 		_setUpLanguageUtil();
 		_setUpPortal();
 		_setUpThemeDisplay();
@@ -360,7 +354,7 @@ public class SearchBarPortletDisplayContextFactoryTest {
 	private void _setUpLanguageUtil() {
 		LanguageUtil languageUtil = new LanguageUtil();
 
-		languageUtil.setLanguage(PowerMockito.mock(Language.class));
+		languageUtil.setLanguage(Mockito.mock(Language.class));
 	}
 
 	private void _setUpPortal() {
@@ -426,31 +420,18 @@ public class SearchBarPortletDisplayContextFactoryTest {
 		);
 	}
 
-	@Mock
-	private Group _group;
-
-	@Mock
-	private Http _http;
-
-	@Mock
-	private LayoutLocalService _layoutLocalService;
-
-	@Mock
-	private Portal _portal;
-
-	@Mock
-	private PortletDisplay _portletDisplay;
-
-	@Mock
-	private PortletPreferencesLookup _portletPreferencesLookup;
-
-	@Mock
-	private PortletSharedSearchRequest _portletSharedSearchRequest;
-
-	@Mock
-	private SearchBarPrecedenceHelper _searchBarPrecedenceHelper;
-
-	@Mock
-	private ThemeDisplay _themeDisplay;
+	private final Group _group = Mockito.mock(Group.class);
+	private final LayoutLocalService _layoutLocalService = Mockito.mock(
+		LayoutLocalService.class);
+	private final Portal _portal = Mockito.mock(Portal.class);
+	private final PortletDisplay _portletDisplay = Mockito.mock(
+		PortletDisplay.class);
+	private final PortletPreferencesLookup _portletPreferencesLookup =
+		Mockito.mock(PortletPreferencesLookup.class);
+	private final PortletSharedSearchRequest _portletSharedSearchRequest =
+		Mockito.mock(PortletSharedSearchRequest.class);
+	private final SearchBarPrecedenceHelper _searchBarPrecedenceHelper =
+		Mockito.mock(SearchBarPrecedenceHelper.class);
+	private final ThemeDisplay _themeDisplay = Mockito.mock(ThemeDisplay.class);
 
 }

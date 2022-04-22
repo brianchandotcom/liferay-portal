@@ -48,6 +48,7 @@ import org.hibernate.boot.registry.BootstrapServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.dialect.Dialect;
 import org.hibernate.engine.spi.SessionFactoryImplementor;
+import org.hibernate.internal.SessionFactoryImpl;
 import org.hibernate.metamodel.spi.MetamodelImplementor;
 import org.hibernate.type.spi.TypeConfiguration;
 
@@ -194,10 +195,7 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 			metamodelImplementor.getTypeConfiguration();
 
 		try {
-			Field metamodelField = ReflectionUtil.getDeclaredField(
-				sessionFactory.getClass(), "metamodel");
-
-			metamodelField.set(
+			_META_MODEL_FIELD.set(
 				sessionFactory,
 				ProxyUtil.newDelegateProxyInstance(
 					MetamodelImplementor.class.getClassLoader(),
@@ -268,12 +266,24 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 		}
 	}
 
+	private static final Field _META_MODEL_FIELD;
+
 	private static final String[] _PRELOAD_CLASS_NAMES =
 		PropsValues.
 			SPRING_HIBERNATE_CONFIGURATION_PROXY_FACTORY_PRELOAD_CLASSLOADER_CLASSES;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalHibernateConfiguration.class);
+
+	static {
+		try {
+			_META_MODEL_FIELD = ReflectionUtil.getDeclaredField(
+				SessionFactoryImpl.class, "metamodel");
+		}
+		catch (Exception exception) {
+			throw new ExceptionInInitializerError(exception);
+		}
+	}
 
 	private DataSource _dataSource;
 	private boolean _mvccEnabled = true;

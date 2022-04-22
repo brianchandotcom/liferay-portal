@@ -218,7 +218,8 @@ export default function useFilters(setFilterTerm, productName) {
 					hasFilterPill = true;
 					filtersKeyType.push('maxClusterNodes gt 0');
 				}
-			} else {
+			}
+			else {
 				hasFilterPill = true;
 			}
 

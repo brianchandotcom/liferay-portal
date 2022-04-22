@@ -22,7 +22,7 @@
 </tr>
 <tr>
 	<td>THUMB</td>
-	<td>//div[contains(@class,'ratings-thumbs')]//button[contains(@title,'${key_ratingResult}') or contains(@data-title,'${key_ratingResult}')]</td>
+	<td>//div[contains(@class,'ratings-thumbs')]//button[contains(@title,'${key_ratingResult}') or contains(@data-restore-title,'${key_ratingResult}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -67,6 +67,11 @@ public class LayoutDataConverter {
 			inputDataJSONObject.getJSONArray(
 				"nonIndexableFragmentEntryLinkIds");
 
+		if (nonindexableFragmentEntryLinkIdsJSONArray == null) {
+			nonindexableFragmentEntryLinkIdsJSONArray =
+				JSONFactoryUtil.createJSONArray();
+		}
+
 		for (int i = 0; i < structureJSONArray.length(); i++) {
 			JSONObject inputRowJSONObject = structureJSONArray.getJSONObject(i);
 

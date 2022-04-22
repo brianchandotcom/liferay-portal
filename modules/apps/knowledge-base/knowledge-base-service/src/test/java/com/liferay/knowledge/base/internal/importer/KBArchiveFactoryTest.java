@@ -15,12 +15,14 @@
 package com.liferay.knowledge.base.internal.importer;
 
 import com.liferay.knowledge.base.configuration.KBGroupServiceConfiguration;
-import com.liferay.knowledge.base.constants.KBConstants;
 import com.liferay.knowledge.base.exception.KBArticleImportException;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
+import com.liferay.portal.kernel.settings.SettingsLocator;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.zip.ZipReader;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -29,41 +31,37 @@ import java.util.Iterator;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.mockito.Mockito;
-import org.mockito.stubbing.OngoingStubbing;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.api.mockito.expectation.ConstructorExpectationSetup;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Adolfo Pérez
  */
-@PrepareForTest({GroupServiceSettingsLocator.class, KBArchiveFactory.class})
-@RunWith(PowerMockRunner.class)
 public class KBArchiveFactoryTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	public void setUp() throws Exception {
 		_kbArchiveFactory.setConfigurationProvider(_configurationProvider);
 
-		ConstructorExpectationSetup<GroupServiceSettingsLocator>
-			groupServiceSettingsLocatorConstructorExpectationSetup =
-				PowerMockito.whenNew(GroupServiceSettingsLocator.class);
+		Mockito.doReturn(
+			_kbGroupServiceConfiguration
+		).when(
+			_configurationProvider
+		).getConfiguration(
+			Mockito.any(), Mockito.any(SettingsLocator.class)
+		);
 
-		OngoingStubbing<GroupServiceSettingsLocator>
-			groupServiceSettingsLocatorOngoingStubbing =
-				groupServiceSettingsLocatorConstructorExpectationSetup.
-					withArguments(
-						Mockito.anyLong(),
-						Mockito.eq(KBConstants.SERVICE_NAME));
-
-		groupServiceSettingsLocatorOngoingStubbing.thenReturn(
-			_groupServiceSettingsLocator);
+		ReflectionTestUtil.setFieldValue(
+			_kbArchiveFactory, "_configurationProvider",
+			_configurationProvider);
 
 		Mockito.when(
 			_configurationProvider.getConfiguration(

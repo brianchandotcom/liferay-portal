@@ -16,6 +16,7 @@ import ClayButton from '@clayui/button';
 import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
+import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
 const FileSizeField = ({
@@ -109,6 +110,7 @@ const FileSizeField = ({
 };
 
 const FileSizePerMimeType = ({
+	currentSizes,
 	description = 'file-size-mimetype-description',
 }) => {
 	const emptyObj = {mimeType: '', size: ''};
@@ -129,9 +131,7 @@ const FileSizePerMimeType = ({
 		setSizesList(tempList);
 	};
 
-	const initialList = [emptyObj];
-
-	const [sizesList, setSizesList] = useState(initialList);
+	const [sizesList, setSizesList] = useState(currentSizes || [emptyObj]);
 
 	return (
 		<>
@@ -150,6 +150,16 @@ const FileSizePerMimeType = ({
 			))}
 		</>
 	);
+};
+
+FileSizePerMimeType.propTypes = {
+	currentSizes: PropTypes.arrayOf(
+		PropTypes.shape({
+			mimeType: PropTypes.string,
+			size: PropTypes.number,
+		})
+	),
+	description: PropTypes.string,
 };
 
 export default FileSizePerMimeType;

@@ -40,7 +40,11 @@ public class CommentStyling {
 		//int e;
 		int e = c + d;
 
-		System.out.println(e);
+		// Nonexisting blogs entry
+
+		int f = e + 1;
+
+		System.out.println(f);
 	}
 
 }

@@ -130,7 +130,7 @@ definition {
 		}
 
 		task ("View Chart Entry") {
-			if (!(IsTextEqual.isPartialText(key_entry = "${yearNum}-${monthNum}-${dayNum}", locator1 = "ACSegments#BREAKDOWN_CHART"))) {
+			if (!(IsTextEqual.isPartialText(locator1 = "ACSegments#BREAKDOWN_CHART", value1 = "${yearNum}-${monthNum}-${dayNum}"))) {
 				ACSegments.viewBreakdownChartsEntry(key_entry = "${yearNum}-${monthNum}-${tomorrowNum}");
 			}
 

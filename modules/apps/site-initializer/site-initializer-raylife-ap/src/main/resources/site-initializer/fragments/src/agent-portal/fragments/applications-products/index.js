@@ -48,38 +48,41 @@ export default function () {
 					'h2',
 				]);
 
-				productQuotesResult?.value?.data?.items?.map((item, index) => {
-					const countApplications = applicationsResult?.value?.data?.items?.filter(
-						(application) =>
-							Number(application.productQuote) === item.productId
-					).length;
+				productQuotesResult?.value?.data?.items?.map(
+					(productQuote, index) => {
+						const countApplications = applicationsResult?.value?.data?.items?.filter(
+							(application) =>
+								Number(application.productQuote) ===
+								productQuote.productId
+						).length;
 
-					const shortDescription = Object.values(
-						item.shortDescription
-					)[0];
-					const [fullName] = Object.values(item.name);
+						const shortDescription = Object.values(
+							productQuote.shortDescription
+						)[0];
 
-					let [productName] = Object.values(item.name);
+						const [fullName] = Object.values(productQuote.name);
+						let productName = fullName;
 
-					const productAbbrevation = productName
-						.split(' ')
-						.map((product) => product.charAt(0))
-						.join('');
+						const productAbbrevation = productName
+							.split(' ')
+							.map((product) => product.charAt(0))
+							.join('');
 
-					if (productName?.length > 15) {
-						productName =
-							shortDescription === ''
-								? productAbbrevation
-								: shortDescription;
+						if (productName?.length > 15) {
+							productName =
+								shortDescription === ''
+									? productAbbrevation
+									: shortDescription;
+						}
+
+						colorsObj[fullName] = colorsArray[index];
+						columnsArr[index] = [
+							fullName,
+							countApplications,
+							productName,
+						];
 					}
-
-					colorsObj[fullName] = colorsArray[index];
-					columnsArr[index] = [
-						fullName,
-						countApplications,
-						productName,
-					];
-				});
+				);
 
 				setColumns(columnsArr);
 				setColors(colorsObj);
@@ -131,7 +134,7 @@ export default function () {
 									1
 								);
 
-								return `<div class="d-flex applications-products-tooltip p-2"'><spam class="d-flex w-100 mr-2">${title}</spam> <spam>${percent}%</spam></div>`;
+								return `<div class="applications-products-tooltip bg-neutral-0 d-flex font-weight-bold rounded-sm p-2"><span class="d-flex mr-2 w-100">${title}</span> ${percent}%</div>`;
 							},
 						}}
 					/>

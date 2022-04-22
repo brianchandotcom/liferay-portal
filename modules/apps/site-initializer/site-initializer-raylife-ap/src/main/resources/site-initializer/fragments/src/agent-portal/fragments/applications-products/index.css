@@ -15,7 +15,7 @@
 }
 
 .applications-products-container .applications-products-title::after {
-	background-color: #4c84ff;
+	background-color: var(--primary);
 	content: '';
 	display: block;
 	height: 1px;
@@ -24,13 +24,10 @@
 	width: 19px;
 }
 
-.applications-products-tooltip {
-	background-color: #fff;
+.applications-products-container .applications-products-tooltip {
 	border: 1px solid #55c2ff;
-	border-radius: 4px;
 	color: #55c2ff;
 	font-size: 0.875rem;
 	font-style: normal;
-	font-weight: bold;
 	width: 100%;
 }

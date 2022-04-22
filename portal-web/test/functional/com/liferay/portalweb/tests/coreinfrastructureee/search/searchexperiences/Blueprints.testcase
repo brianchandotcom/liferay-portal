@@ -294,7 +294,8 @@ definition {
 		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "Liferay Web Content,Liferay Blogs Entry");
 	}
 
-	test ApplyBlueprintWithUserCustomExpandoFieldElement {
+	@description = "This is a use case for LPS-147264."
+	test ApplyUserCustomFieldVariableToCustomElement {
 		JSONWebcontent.addWebContent(
 			content = "",
 			groupName = "Guest",

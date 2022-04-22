@@ -1,16 +1,3 @@
-.applications-products-container .legend-color {
-	height: 8px;
-	width: 8px;
-}
-.applications-products-container .legend-title {
-	color: #5c5e5e;
-	font-size: 14px;
-}
-.applications-products-container .bb-chart-arcs-title {
-	dominant-baseline: central;
-	font-size: 32px;
-	font-weight: 700;
-}
 .applications-products-container .applications-products-title::after {
 	background-color: var(--primary);
 	content: '';
@@ -20,6 +7,7 @@
 	position: absolute;
 	width: 19px;
 }
+
 .applications-products-container .applications-products-tooltip {
 	border: 1px solid #55c2ff;
 	color: #55c2ff;
@@ -28,6 +16,22 @@
 	width: 100%;
 }
 
-.chart-legend {
+.applications-products-container .bb-chart-arcs-title {
+	dominant-baseline: central;
+	font-size: 32px;
+	font-weight: 700;
+}
+
+.applications-products-container .chart-legend {
 	line-height: 2;
+}
+
+.applications-products-container .legend-color {
+	height: 8px;
+	width: 8px;
+}
+
+.applications-products-container .legend-title {
+	color: #5c5e5e;
+	font-size: 14px;
 }

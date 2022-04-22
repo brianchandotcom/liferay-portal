@@ -30,9 +30,14 @@ import {
 	useSelectItem,
 } from '../../contexts/ControlsContext';
 import {useEditableProcessorUniqueId} from '../../contexts/EditableProcessorContext';
-import {useDispatch, useSelector} from '../../contexts/StoreContext';
+import {
+	useDispatch,
+	useSelector,
+	useSelectorCallback,
+} from '../../contexts/StoreContext';
 import selectCanUpdateItemConfiguration from '../../selectors/selectCanUpdateItemConfiguration';
 import selectCanUpdatePageStructure from '../../selectors/selectCanUpdatePageStructure';
+import selectLayoutDataItemLabel from '../../selectors/selectLayoutDataItemLabel';
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 import moveItem from '../../thunks/moveItem';
 import {TARGET_POSITIONS} from '../../utils/drag-and-drop/constants/targetPositions';
@@ -40,7 +45,6 @@ import {
 	useDragItem,
 	useDropTarget,
 } from '../../utils/drag-and-drop/useDragAndDrop';
-import getLayoutDataItemLabel from '../../utils/getLayoutDataItemLabel';
 import {useId} from '../../utils/useId';
 import {fromControlsId} from '../layout-data-items/Collection';
 import TopperItemActions from './TopperItemActions';
@@ -112,7 +116,6 @@ function TopperContent({
 	const commentsPanelId = config.sidebarPanels?.comments?.sidebarPanelId;
 	const dispatch = useDispatch();
 	const editableProcessorUniqueId = useEditableProcessorUniqueId();
-	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
 	const layoutData = useSelector((state) => state.layoutData);
 	const hoverItem = useHoverItem();
 	const {
@@ -132,9 +135,10 @@ function TopperContent({
 
 	const canBeDragged = canUpdatePageStructure && !editableProcessorUniqueId;
 
-	const name =
-		getLayoutDataItemLabel(item, fragmentEntryLinks) ||
-		Liferay.Language.get('element');
+	const name = useSelectorCallback(
+		(state) => selectLayoutDataItemLabel(state, item),
+		[item]
+	);
 
 	const onDragEnd = (parentItemId, position) =>
 		dispatch(

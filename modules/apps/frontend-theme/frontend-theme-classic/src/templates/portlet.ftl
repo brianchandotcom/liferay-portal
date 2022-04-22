@@ -45,7 +45,7 @@
 						<menu class="portlet-topper-toolbar" id="portlet-topper-toolbar_${portlet_id}" type="toolbar">
 							<#assign portletConfigurationIcon = portlet_configuration_icons[0] />
 
-							<#if portletConfigurationIcon.getIconCssClass()??>
+							<#if portletConfigurationIcon.getIconCssClass()?? && portletConfigurationIcon.getOnClick(renderRequest, renderResponse)??>
 								<@liferay_ui["icon"]
 									icon="${portletConfigurationIcon.getIconCssClass()}"
 									markupView="lexicon"

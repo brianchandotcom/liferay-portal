@@ -91,6 +91,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PENDING_ORDERS_BILLING_ADDRESS_DROPDOWN</td>
+	<td>//select[@title= 'billing-address-id']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PENDING_ORDERS_SHIPPING_ADDRESS_DROPDOWN</td>
+	<td>//select[@title= 'shipping-address-id']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ORDER_PRICES_SEPARETED</td>
 	<td>//dt[contains(text(), '${key_priceName}')]//../following-sibling::dd[1]</td>
 	<td></td>

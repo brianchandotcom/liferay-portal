@@ -46,17 +46,7 @@ AUI.add(
 
 		var CSS_SEARCHCONTAINER = 'searchcontainer';
 
-		var CSS_UPLOAD_ERROR = 'upload-error';
-
-		var CSS_UPLOAD_SUCCESS = 'upload-success';
-
-		var CSS_UPLOAD_WARNING = 'upload-warning';
-
 		var DOC = A.config.doc;
-
-		var ERROR_RESULTS_MIXED = 1;
-
-		var PATH_THEME_IMAGES = themeDisplay.getPathThemeImages();
 
 		var REGEX_AUDIO = /\.(aac|auif|bwf|flac|mp3|mp4|m4a|wav|wma)$/i;
 
@@ -82,8 +72,6 @@ AUI.add(
 		var SELECTOR_ENTRY_DISPLAY_STYLE = STR_DOT + CSS_ENTRY_DISPLAY_STYLE;
 
 		var SELECTOR_ENTRY_LINK = STR_DOT + CSS_ENTRY_LINK;
-
-		var SELECTOR_IMAGE_ICON = 'img.icon';
 
 		var SELECTOR_SEARCH_CONTAINER = STR_DOT + CSS_SEARCHCONTAINER;
 
@@ -145,18 +133,6 @@ AUI.add(
 
 		var TPL_ENTRY_WRAPPER =
 			'<dd class="card-page-item card-page-item-asset" data-title="{title}"></dd>';
-
-		var TPL_ERROR_FOLDER = new A.Template(
-			'<span class="lfr-status-success-label">{validFilesLength}</span>',
-
-			'<span class="lfr-status-error-label">{invalidFilesLength}</span>',
-
-			'<ul class="list-unstyled">',
-			'<tpl for="invalidFiles">',
-			'<li><b>{name}</b>: {errorMessage}</li>',
-			'</tpl>',
-			'</ul>'
-		);
 
 		var TPL_ERROR_NOTIFICATION = new A.Template(
 			'{title}',
@@ -293,8 +269,7 @@ AUI.add(
 								'alluploadscomplete',
 								instance._showFolderUploadComplete,
 								instance,
-								data,
-								displayStyle
+								data
 							),
 							uploader.on(
 								'totaluploadprogress',
@@ -470,23 +445,11 @@ AUI.add(
 						SELECTOR_DATA_FOLDER
 					);
 
-					var entriesClickDelegateHandle = entriesContainer.delegate(
-						'click',
-						(event) => {
-							event.preventDefault();
-						},
-						STR_DOT +
-							CSS_UPLOAD_ERROR +
-							STR_SPACE +
-							SELECTOR_ENTRY_LINK
-					);
-
 					instance._eventHandles = [
 						onDataRequestHandle,
 						onDragOverHandle,
 						onDropHandle,
 						entriesDragDelegateHandle,
-						entriesClickDelegateHandle,
 					];
 				},
 
@@ -778,78 +741,6 @@ AUI.add(
 							data.invalidFiles.push(invalidFile);
 						}
 					}
-				},
-
-				_displayEntryError(node, message, displayStyle) {
-					var instance = this;
-
-					if (displayStyle === STR_LIST) {
-						var imageIcon = node.one(SELECTOR_IMAGE_ICON);
-
-						imageIcon.attr(
-							'src',
-							PATH_THEME_IMAGES + '/common/close.png'
-						);
-					}
-					else {
-						node.addClass(CSS_UPLOAD_ERROR);
-					}
-
-					instance._displayError(node, message);
-				},
-
-				_displayError(node, message) {
-					var instance = this;
-
-					node.attr('data-message', message);
-
-					var tooltipDelegate = instance._tooltipDelegate;
-
-					if (!tooltipDelegate) {
-						tooltipDelegate = new A.TooltipDelegate({
-							formatter(val) {
-								return instance._formatTooltip(val, this);
-							},
-							trigger: '.app-view-entry.upload-error',
-							visible: false,
-						});
-
-						instance._tooltipDelegate = tooltipDelegate;
-					}
-
-					return node;
-				},
-
-				_displayResult(node, displayStyle, error) {
-					var resultsNode = node;
-
-					if (resultsNode) {
-						var uploadResultClass = CSS_UPLOAD_SUCCESS;
-
-						if (error) {
-							resultsNode
-								.removeClass(CSS_UPLOAD_ERROR)
-								.removeClass(CSS_UPLOAD_WARNING);
-
-							if (error === true) {
-								uploadResultClass = CSS_UPLOAD_ERROR;
-							}
-							else if (error === ERROR_RESULTS_MIXED) {
-								uploadResultClass = CSS_UPLOAD_WARNING;
-							}
-						}
-
-						resultsNode.addClass(uploadResultClass);
-						resultsNode.addClass(CSS_ENTRY_DISPLAY_STYLE);
-					}
-				},
-
-				_formatTooltip(val, tooltip) {
-					tooltip.set('zIndex', 2);
-
-					var node = tooltip.get('trigger');
-
-					return node.attr('data-message');
 				},
 
 				_getCurrentUploadData() {
@@ -1349,12 +1240,6 @@ AUI.add(
 								fileEntryId
 							);
 						}
-
-						instance._displayResult(
-							fileNode,
-							displayStyle,
-							hasErrors
-						);
 					}
 
 					file.overlay.hide();
@@ -1380,38 +1265,8 @@ AUI.add(
 					);
 				},
 
-				_showFolderUploadComplete(_event, uploadData, displayStyle) {
-					var instance = this;
-
+				_showFolderUploadComplete(_event, uploadData) {
 					var folderEntry = uploadData.target;
-					var invalidFiles = uploadData.invalidFiles;
-					var totalFilesLength = uploadData.fileList.length;
-
-					var invalidFilesLength = invalidFiles.length;
-
-					var hasErrors = invalidFilesLength !== 0;
-
-					if (hasErrors && invalidFilesLength !== totalFilesLength) {
-						hasErrors = ERROR_RESULTS_MIXED;
-					}
-
-					instance._displayResult(
-						folderEntry,
-						displayStyle,
-						hasErrors
-					);
-
-					if (hasErrors) {
-						instance._displayError(
-							folderEntry,
-							TPL_ERROR_FOLDER.parse({
-								invalidFiles,
-								invalidFilesLength,
-								validFilesLength:
-									totalFilesLength - invalidFilesLength,
-							})
-						);
-					}
 
 					folderEntry.overlay.hide();
 				},
@@ -1665,10 +1520,6 @@ AUI.add(
 						instance._uploader.destroy();
 					}
 
-					if (instance._tooltipDelegate) {
-						instance._tooltipDelegate.destroy();
-					}
-
 					instance._detachSubscriptions();
 
 					new A.EventHandle(instance._eventHandles).detach();
@@ -1736,7 +1587,6 @@ AUI.add(
 			'aui-parse-content',
 			'aui-progressbar',
 			'aui-template-deprecated',
-			'aui-tooltip',
 			'liferay-search-container',
 			'querystring-parse-simple',
 			'uploader',

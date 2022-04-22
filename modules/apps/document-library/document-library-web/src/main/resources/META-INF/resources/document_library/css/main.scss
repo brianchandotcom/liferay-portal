@@ -549,26 +549,6 @@ $productMenuWidth: 320px;
 		.entry-title-text {
 			background: no-repeat 0 50%;
 		}
-
-		&.upload-error,
-		&.upload-success,
-		&.upload-warning {
-			.entry-title-text {
-				padding-left: 20px;
-			}
-		}
-
-		&.upload-error .entry-title-text {
-			background-image: url(@theme_image_path@/messages/error.png);
-		}
-
-		&.upload-success .entry-title-text {
-			background-image: url(@theme_image_path@/messages/success.png);
-		}
-
-		&.upload-warning .entry-title-text {
-			background-image: url(@theme_image_path@/messages/alert.png);
-		}
 	}
 
 	.app-view-entry-taglib.entry-display-style.display-descriptive {

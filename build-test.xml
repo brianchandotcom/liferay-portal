@@ -11431,10 +11431,6 @@ log.sanitizer.enabled=false</echo>
 
 		<antcall inheritAll="false" target="compile-test" />
 
-		<record-test-class-file-names />
-
-		<antcall inheritAll="false" target="record-test-plugin-names" />
-
 		<echo if:set="env.JENKINS_HOME">
 ANT_OPTS=${env.ANT_OPTS}</echo>
 

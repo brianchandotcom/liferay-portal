@@ -303,12 +303,39 @@ definition {
 	}
 
 	@description = "This test covers LPS-143369. It validates that an email notification can be received after a Blog update is scheduled and the time is reached."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test EmailIsReceivedWhenUpdateReachesScheduledTime {
+		property custom.properties = "company.default.time.zone=America/Los_Angeles${line.separator}jsonws.web.service.paths.excludes=";
+		property test.smtp.server.enabled = "true";
 
-		// TODO LPS-147824
+		JSONBlog.subscribeToBlogsWidget(
+			groupName = "Guest",
+			userEmailAddress = "userea@liferay.com");
 
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		JSONBlog.updateEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			groupName = "Guest",
+			increaseMinutes = "1",
+			newDisplayDate = "true",
+			newEntryContent = "Blogs Entry Content Edit");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		Navigator.gotoNavItem(navItem = "Not Published (1)");
+
+		Pause(locator1 = "60000");
+
+		MockMock.viewMail(
+			asset = "Test Test Updated",
+			content = "Blogs Entry Title",
+			recipient = "userfn userln",
+			sender = "Joe Bloggs",
+			subject = "Test Test Updated");
 	}
 
 	@priority = "4"

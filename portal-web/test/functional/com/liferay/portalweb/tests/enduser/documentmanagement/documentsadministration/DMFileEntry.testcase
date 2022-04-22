@@ -2182,7 +2182,9 @@ definition {
 
 		ManagementBar.setFilterAndOrder(menuItem = "Recent");
 
-		DMDocument.viewDocumentTitleCmdPG(dmDocumentTitle = "DM Document Title");
+		DMDocument.viewStatus(
+			dmDocumentStatus = "Approved",
+			dmDocumentTitle = "DM Document Title");
 	}
 
 	@description = "This ensures that the user can create a document with edited display page template."

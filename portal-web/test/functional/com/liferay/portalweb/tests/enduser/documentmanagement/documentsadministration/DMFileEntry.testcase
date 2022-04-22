@@ -2175,9 +2175,10 @@ definition {
 			mimeType = "application/msword",
 			sourceFileName = "Document_1.doc");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+		DMNavigator.openToFolderInAdmin(
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest",
+			siteURLKey = "guest");
 
 		ManagementBar.setFilterAndOrder(menuItem = "Recent");
 

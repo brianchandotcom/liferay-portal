@@ -21,20 +21,14 @@ import React, {useState} from 'react';
 
 const FileSizeField = ({
 	handleAddClick,
-	handleOnChange,
 	handleRemoveClick,
 	index,
 	mimeType,
+	portletNamespace,
 	size,
 }) => {
 	const [mimeTypeValue, setMimeTypeValue] = useState(mimeType);
 	const [sizeValue, setSizeValue] = useState(size);
-
-	const onInputBlur = () => {
-		if (mimeTypeValue && sizeValue) {
-			handleOnChange(mimeTypeValue, sizeValue);
-		}
-	};
 
 	return (
 		<ClayLayout.Row className="mt-3">
@@ -52,7 +46,7 @@ const FileSizeField = ({
 
 				<ClayInput
 					id="mimeType"
-					onBlur={onInputBlur}
+					name={`${portletNamespace}mimeType_${index}`}
 					onChange={(event) => setMimeTypeValue(event.target.value)}
 					type="text"
 					value={mimeTypeValue}
@@ -75,7 +69,7 @@ const FileSizeField = ({
 
 				<ClayInput
 					id="size"
-					onBlur={onInputBlur}
+					name={`${portletNamespace}size_${index}`}
 					onChange={(event) => setSizeValue(event.target.value)}
 					type="number"
 					value={sizeValue}
@@ -112,12 +106,9 @@ const FileSizeField = ({
 const FileSizePerMimeType = ({
 	currentSizes,
 	description = 'file-size-mimetype-description',
+	portletNamespace,
 }) => {
 	const emptyObj = {mimeType: '', size: ''};
-
-	const saveMimeTypeSizeLimit = (mimeType, size) => {
-		console.log('TODO save ' + mimeType + ' ' + size);
-	};
 
 	const addRow = (index) => {
 		const tempList = [...sizesList];
@@ -140,11 +131,11 @@ const FileSizePerMimeType = ({
 			{sizesList.map((item, index) => (
 				<FileSizeField
 					handleAddClick={addRow}
-					handleOnChange={saveMimeTypeSizeLimit}
 					handleRemoveClick={removeRow}
 					index={index}
 					key={index}
 					mimeType={item.mimeType}
+					portletNamespace={portletNamespace}
 					size={item.size}
 				/>
 			))}
@@ -160,6 +151,7 @@ FileSizePerMimeType.propTypes = {
 		})
 	),
 	description: PropTypes.string,
+	portletNamespace: PropTypes.string.isRequired,
 };
 
 export default FileSizePerMimeType;

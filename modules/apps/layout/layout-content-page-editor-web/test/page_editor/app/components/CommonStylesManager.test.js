@@ -70,12 +70,14 @@ const MASTER_ITEM_ID = 'ITEM_ID';
 
 const renderCommonStylesManager = ({
 	selectedViewportSize = VIEWPORT_SIZES.desktop,
+	editableValues = {},
 } = {}) => {
 	return render(
 		<StoreAPIContextProvider
 			getState={() => ({
 				fragmentEntryLinks: {
 					fragmentEntryLinkId: {
+						editableValues,
 						fragmentEntryLinkId: 'fragmentEntryLink',
 					},
 				},
@@ -228,6 +230,37 @@ describe('CommonStylesManager', () => {
 				margin-top: var(--spacer-3, 1rem) !important;
 			}
 
+			.${getLayoutDataItemUniqueClassName(ITEM_ID)} {
+				background-color: var(--primary) !important;
+			}
+			
+			.${getLayoutDataItemTopperUniqueClassName(ITEM_ID)} {
+				margin-bottom: var(--spacer-2, 0.5rem) !important;
+				margin-top: var(--spacer-2, 0.5rem) !important;
+			}`;
+
+		const style = document.getElementById('layout-common-styles');
+
+		expect(normalize(style.innerHTML)).toBe(normalize(expected));
+	});
+
+	it('does not add styles to the topper if the fragment has inner common styles', () => {
+		renderCommonStylesManager({
+			editableValues: {
+				['com.liferay.fragment.entry.processor.styles.StylesFragmentEntryProcessor']: {
+					hasCommonStyles: true,
+				},
+			},
+			selectedViewportSize: VIEWPORT_SIZES.tablet,
+		});
+
+		const expected = `
+			.${getLayoutDataItemUniqueClassName(FRAGMENT_ID)} {
+				background-color: var(--info) !important;
+				margin-bottom: var(--spacer-2, 0.5rem) !important;
+				margin-top: var(--spacer-3, 1rem) !important;
+			}
+			
 			.${getLayoutDataItemUniqueClassName(ITEM_ID)} {
 				background-color: var(--primary) !important;
 			}

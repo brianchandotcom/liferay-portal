@@ -230,8 +230,7 @@ public class DLURLHelperImpl implements DLURLHelper {
 			themeDisplay, absoluteURL);
 
 		String previewURL = _getFriendlyURL(
-			fileEntry.getFileEntryId(), themeDisplay, appendVersion,
-			previewURLPrefix, queryString);
+			appendVersion, fileEntry, previewURLPrefix, queryString);
 
 		if (Validator.isNull(previewURL)) {
 			previewURL = _getPreviewUuidURL(
@@ -437,18 +436,20 @@ public class DLURLHelperImpl implements DLURLHelper {
 	}
 
 	private String _getFriendlyURL(
-		long fileEntryId, ThemeDisplay themeDisplay, boolean appendVersion,
-		String previewURLPrefix, String queryString) {
+		boolean appendVersion, FileEntry fileEntry, String previewURLPrefix,
+		String queryString) {
 
 		if (!_ffFriendlyURLEntryFileEntryConfiguration.enabled() ||
-			appendVersion || (fileEntryId == 0)) {
+			appendVersion || (fileEntry == null) ||
+			(fileEntry.getFileEntryId() == 0)) {
 
 			return null;
 		}
 
 		FriendlyURLEntry friendlyURLEntry =
 			_friendlyURLEntryLocalService.fetchMainFriendlyURLEntry(
-				_portal.getClassNameId(FileEntry.class), fileEntryId);
+				_portal.getClassNameId(FileEntry.class),
+				fileEntry.getFileEntryId());
 
 		if (friendlyURLEntry == null) {
 			return null;
@@ -459,7 +460,12 @@ public class DLURLHelperImpl implements DLURLHelper {
 		sb.append(previewURLPrefix);
 		sb.append(FriendlyURLResolverConstants.URL_SEPARATOR_Y_FILE_ENTRY);
 
-		Group group = themeDisplay.getScopeGroup();
+		Group group = _groupLocalService.fetchGroup(fileEntry.getGroupId());
+
+		if (group == null) {
+			group = _groupLocalService.fetchGroup(
+				friendlyURLEntry.getGroupId());
+		}
 
 		sb.append(group.getFriendlyURL());
 

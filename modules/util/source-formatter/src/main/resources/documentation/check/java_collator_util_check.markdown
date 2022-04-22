@@ -2,7 +2,7 @@
 
 Instead of getting an instance of Collator by calling
 `java.text.Collator.getInstance(java.util.Locale)` we should be calling
-`com.liferay.portal.kernel.util.CollatorUtil.getInstance(java.util.Locale)`
+`com.liferay.portal.kernel.util.CollatorUtil.getInstance(java.util.Locale)`.
 
 Example:
 

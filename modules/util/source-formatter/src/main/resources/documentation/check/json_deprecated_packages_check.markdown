@@ -1,9 +1,9 @@
 ## JSONDeprecatedPackagesCheck
 
-Do not use deprecated packages in `package.json`
+Do not use deprecated packages in `package.json`.
 
 Deprecated packages can be specified with property `deprecatedPackageNames` in
-`source-formatter.properties`
+`source-formatter.properties`.
 
 ### Example
 ```

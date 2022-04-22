@@ -69,7 +69,7 @@ classes easier to find.
 
 #### Example
 
-Say there is a interface in kernel with the package
+Say there is an interface in kernel with the package
 `com.liferay.portal.kernel.a.b.c` and we're implementing the class in blogs
 service. Then the best place to put the class would be
 `com.liferay.blogs.internal.a.b.c`.

@@ -1,12 +1,12 @@
 ## StringMethodsCheck
 
 Methods that deal with case sensitivity in `java.util.String` are inefficient.
-While in reality most Strings contain `ASCII` characters only, the methods will
-use `Unicode` detection.
+While in reality most strings contain ASCII characters only, the methods will
+use Unicode detection.
 
 The methods in `com.liferay.portal.kernel.util.StringUtil` will assume the
-String only contains `ASCII` which makes the detection much faster. When a
-`non-ASCII` character is detected if will fall back on the methods in
+string only contains ASCII which makes the detection much faster. When a
+non-ASCII character is detected it will fall back on the methods in
 `java.util.String`.
 
 So instead of the following methods in `java.util.String` use, the counterpart
@@ -19,10 +19,10 @@ in `com.liferay.portal.kernel.util.StringUtil` instead.
 
 ---
 
-For better performance, enforce Character replacement over CharSequence/String
+For better performance, enforce character replacement over `CharSequence`/`String`
 replacement, when possible.
 
-Instead of `StringUtil.replace(s, "$", "DOLLAR")` we should use
+Instead of `StringUtil.replace(s, "$", "DOLLAR")`, we should use
 `StringUtil.replace(s, '$', "DOLLAR")`.
 
 Instead of `s.replace("$", "%")` we should use `s.replace('$', '%')`.

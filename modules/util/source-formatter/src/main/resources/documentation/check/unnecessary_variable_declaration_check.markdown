@@ -1,6 +1,6 @@
 ## UnnecessaryVariableDeclarationCheck
 
-No need to declare variable that is reassigned another value without being used.
+No need to declare a variable that is reassigned another value without being used first.
 
 ### Example
 
@@ -24,7 +24,7 @@ String s = "example";
 
 ---
 
-No need to declare variable that is returned right after.
+No need to declare a variable that will be returned immediately after.
 
 ### Example
 

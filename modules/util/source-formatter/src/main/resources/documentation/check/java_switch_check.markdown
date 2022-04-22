@@ -1,6 +1,6 @@
 ## JavaSwitchCheck
 
-Avoid using `switch` statements. Instead use `if/else` statements.
+Avoid using `switch` statements. Instead, use `if/else` statements.
 
 ### Example
 

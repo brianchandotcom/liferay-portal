@@ -11,7 +11,7 @@ public interface PersistentAuditMessageProcessorConfiguration {
 }
 ```
 
-Corresponding class with key = `audit`
+Corresponding class with key = `audit`:
 
 ```java
 package com.liferay.configuration.admin.web.internal.category;

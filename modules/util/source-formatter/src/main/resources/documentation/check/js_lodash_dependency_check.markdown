@@ -1,3 +1,3 @@
 ## JSLodashDependencyCheck
 
-Do not use `AUI._*` in `js` files
+Do not use `AUI._*` in `js` files.

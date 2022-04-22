@@ -1,8 +1,8 @@
 ## JavaMetaAnnotationsCheck
 
 When using `aQute.bnd.annotation.metatype.Meta` annotations, we should use `-`
-as delimeter for values of the `description` and `name` of the attribute. For
-values of the `id` of the attribute, we use `.` as the delimeter.
+as delimiter for values of the `description` and `name` of the attribute. For
+values of the `id` of the attribute, we use `.` as the delimiter.
 
 The reason for this is that for `description` and `name` we retrieve translated
 values from `language.properties`.

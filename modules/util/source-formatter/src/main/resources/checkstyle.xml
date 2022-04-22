@@ -300,7 +300,7 @@
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.ConstructorMissingEmptyLineCheck">
 			<property name="category" value="Styling" />
-			<property name="description" value="Checks for line breaks when assiging variables in constructor." />
+			<property name="description" value="Checks for line breaks when assigning variables in constructor." />
 			<message key="empty.line.missing" value="There should be an empty line before line ''{0}''" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.ConsumerTypeAnnotationCheck">

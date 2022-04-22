@@ -20,7 +20,7 @@ public Map<String, Object> getUserMap(User user) {
 }
 ```
 
-Also incorrect:
+Also, incorrect:
 
 ```java
 public Map<String, Object> getUserMap(User user) {

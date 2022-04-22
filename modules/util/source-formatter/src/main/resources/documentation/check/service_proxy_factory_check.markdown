@@ -1,7 +1,7 @@
 ## ServiceProxyFactoryCheck
 
 Pass the current class as the second parameter when calling method
-`ServiceProxyFactory.newServiceTrackedInstance`
+`ServiceProxyFactory.newServiceTrackedInstance`.
 
 ### Example
 

@@ -22,7 +22,7 @@ import com.liferay.source.formatter.check.util.SourceUtil;
 /**
  * @author Seiphon Wang
  */
-public class IncorrectFilePahCheck extends BaseFileCheck {
+public class IncorrectFilePathCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(

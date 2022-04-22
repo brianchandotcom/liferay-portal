@@ -1,3 +1,3 @@
 ## JSONValidationCheck
 
-Files ending with `.json` should have always have valid JSON.
+Files ending with `.json` should always have valid JSON.

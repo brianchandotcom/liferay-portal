@@ -1,6 +1,6 @@
 ## JavaHelperUtilCheck
 
-- Classes that only have `static` method (`public` or `protected`) should be
+- Classes that only have `static` methods (`public` or `protected`) should be
 ending with `Util` instead of `Helper`.
 
 #### Exceptions:

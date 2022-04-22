@@ -1,6 +1,6 @@
 ## AttributeOrderCheck
 
-Attributes in anonymous class should be sorted.
+Attributes in an anonymous class should be sorted.
 
 ### Example
 

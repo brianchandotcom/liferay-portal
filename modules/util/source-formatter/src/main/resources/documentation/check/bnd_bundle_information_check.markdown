@@ -1,7 +1,7 @@
 ## BNDBundleInformationCheck
 
 `bnd.bnd` should always contain the following headers:
-`Bundle-Version`, `Bundle-Name` and `Bundle-SymbolicName`
+`Bundle-Version`, `Bundle-Name` and `Bundle-SymbolicName`.
 
 The `Bundle-Name` and `Bundle-SymbolicName` should match the directory path of
 the module.

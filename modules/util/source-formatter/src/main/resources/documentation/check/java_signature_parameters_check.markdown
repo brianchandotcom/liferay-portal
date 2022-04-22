@@ -5,7 +5,7 @@ alphabetically:
 
 `HttpServletRequest`, `HttpServletResponse`, `LiferayPortletRequest`,
 `LiferayPortletResponse`, `PortletRequest`, `PortletResponse`, `RenderRequest`,
-and `RenderResponse`
+and `RenderResponse`.
 
 ### Example
 

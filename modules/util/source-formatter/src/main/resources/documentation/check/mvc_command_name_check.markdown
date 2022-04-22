@@ -1,6 +1,6 @@
 ## MVCCommandNameCheck
 
-Naming rules for values of `mvc.command.name`
+Naming rules for values of `mvc.command.name`.
 
 - The value should start with `/` and consist of a **path name** and an
 **action name**: `/path_name/action_name`

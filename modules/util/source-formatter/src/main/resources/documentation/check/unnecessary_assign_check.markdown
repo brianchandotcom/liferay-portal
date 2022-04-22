@@ -1,7 +1,6 @@
 ## UnnecessaryAssignCheck
 
-No need to assign call to variable that is reassigned another value without
-being used.
+No need to assign a variable that will be reassigned without being used first.
 
 ### Example
 
@@ -25,7 +24,7 @@ s = "example";
 
 ---
 
-No need to assign call to variable that is returned right after.
+No need to assign a variable if it will be returned immediately after.
 
 ### Example
 
@@ -77,7 +76,7 @@ public List<String> method() {
 ```
 ---
 
-No need to assign call to variable that is not used after the call.
+No need to assign a method call's output to a variable if it will not be used after.
 
 ### Example
 

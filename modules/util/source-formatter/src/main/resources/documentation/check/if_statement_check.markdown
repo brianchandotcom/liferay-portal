@@ -1,6 +1,6 @@
 ## IfStatementCheck
 
-In if-statements we use parentheses in the following cases:
+In if-statements, we use parentheses in the following cases:
 
 * Around expressions that use arithmetic or relational operators.
 

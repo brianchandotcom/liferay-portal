@@ -3,9 +3,8 @@
 When concatenating more than 3 String objects, we should make use of
 `StringBundler` instead of using the plus operator.
 
-If we do not already have a `StringBundler` object available and we have all the
-String objects available, we should call the method
-`StringBundler.concat(String...)`
+If a `StringBundler` object does not exist and all the String objects are
+available, we should call the method `StringBundler.concat(String...)`.
 
 #### Example
 

@@ -1,6 +1,6 @@
 ## JSPFunctionNameCheck
 
-Function names in `*.jsp` should conform `[a-z0-9][_a-zA-Z0-9]`
+Function names in `*.jsp` should conform `[a-z0-9][_a-zA-Z0-9]`.
 
 ### Example
 

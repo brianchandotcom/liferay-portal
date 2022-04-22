@@ -1,6 +1,6 @@
 ## JSPServiceUtilCheck
 
-Do not make calls to methods in `*ServiceUtil` from module jsp.
+Do not make calls to methods in `*ServiceUtil` from module JSP.
 
 Instead, globally used service calls should be moved to the controller and
 results should be passed as a request attribute. In case, there are many usages

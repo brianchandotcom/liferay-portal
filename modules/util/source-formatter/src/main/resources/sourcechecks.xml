@@ -10,9 +10,9 @@
 			<category name="Bug Prevention" />
 			<description name="Checks that `/src/*/java/` only contains `.java` files." />
 		</check>
-		<check name="IncorrectFilePahCheck">
+		<check name="IncorrectFilePathCheck">
 			<category name="Bug Prevention" />
-			<description name="Checks that file path conatins illegal characters." />
+			<description name="Checks that file path contains illegal characters." />
 		</check>
 		<check name="NonbreakingSpaceCheck">
 			<category name="Styling" />
@@ -82,7 +82,7 @@
 
 		<check name="BNDExportsCheck">
 			<category name="Bug Prevention" />
-			<description name="Checks that modules not ending with `-api`, `-client`, `-spi`, `-tablig`, `-test-util` do not export packages." />
+			<description name="Checks that modules not ending with `-api`, `-client`, `-spi`, `-taglib`, `-test-util` do not export packages." />
 		</check>
 		<check name="BNDImportsCheck">
 			<category name="Styling" />
@@ -109,7 +109,7 @@
 		</check>
 		<check name="BNDIncludeResourceCheck">
 			<category name="Bug Prevention" />
-			<description name="Checks for unnesecarry including of `test-classes/integration`." />
+			<description name="Checks for unnecessary including of `test-classes/integration`." />
 			<property name="checkTestIncludeResource" value="true" />
 		</check>
 		<check name="BNDLiferayEnterpriseAppCheck">
@@ -339,7 +339,7 @@
 	<source-processor name="JavaSourceProcessor">
 		<check name="ArrayCheck">
 			<category name="Performance" />
-			<description name="Checks if performance can be improved by using different mehods that can be used by collections." />
+			<description name="Checks if performance can be improved by using different methods that can be used by collections." />
 		</check>
 		<check name="CopyrightCheck">
 			<category name="Styling" />
@@ -437,7 +437,7 @@
 		</check>
 		<check name="JavaEmptyLineAfterSuperCallCheck">
 			<category name="Miscellaneous" />
-			<description name="Finds missing emptly line after a `super` call." />
+			<description name="Finds missing empty line after a `super` call." />
 		</check>
 		<check name="JavaEmptyLinesCheck">
 			<category name="Styling" />
@@ -546,7 +546,7 @@
 		</check>
 		<check name="JavaStaticMethodCheck">
 			<category name="Bug Prevention" />
-			<description name="Finds cases where methods are unncessarily declared static." />
+			<description name="Finds cases where methods are unnecessarily declared static." />
 		</check>
 		<check name="JavaStaticVariableDependencyCheck">
 			<category name="Bug Prevention" />
@@ -594,7 +594,7 @@
 		</check>
 		<check name="UnparameterizedClassCheck">
 			<category name="Bug Prevention" />
-			<description name="Finds `Class` instantation without generic type." />
+			<description name="Finds `Class` instantiation without generic type." />
 		</check>
 		<check name="ValidatorEqualsCheck">
 			<category name="Performance" />
@@ -703,7 +703,7 @@
 		</check>
 		<check name="JavaServiceTrackerFactoryCheck">
 			<category name="Performance" />
-			<description name="Checks that there are no calls to deprecatred method `ServiceTrackerFactory.open(java.lang.Class)`." />
+			<description name="Checks that there are no calls to deprecated method `ServiceTrackerFactory.open(java.lang.Class)`." />
 		</check>
 		<check name="JavaServiceUtilCheck">
 			<category name="Bug Prevention" />
@@ -771,7 +771,7 @@
 		</check>
 		<check name="JavaUpgradeConnectionCheck">
 			<category name="Bug Prevention" />
-			<description name="Finds cases where `DataAccess.getConnection` is used (instead of using the availabe global variable `connection`)." />
+			<description name="Finds cases where `DataAccess.getConnection` is used (instead of using the available global variable `connection`)." />
 		</check>
 		<check name="JavaUpgradeIndexCheck">
 			<category name="Bug Prevention" />
@@ -790,7 +790,7 @@
 		</check>
 		<check name="JavaVerifyUpgradeConnectionCheck">
 			<category name="Bug Prevention" />
-			<description name="Finds cases where `DataAccess.getConnection` is used (instead of using the availabe global variable `connection`)." />
+			<description name="Finds cases where `DataAccess.getConnection` is used (instead of using the available global variable `connection`)." />
 		</check>
 		<check name="JavaXMLSecurityCheck">
 			<category name="Security" />
@@ -908,7 +908,7 @@
 	<source-processor name="JSPSourceProcessor">
 		<check name="ArrayCheck">
 			<category name="Performance" />
-			<description name="Checks if performance can be improved by using different mehods that can be used by collections." />
+			<description name="Checks if performance can be improved by using different methods that can be used by collections." />
 		</check>
 		<check name="CopyrightCheck">
 			<category name="Styling" />
@@ -934,7 +934,7 @@
 		</check>
 		<check name="JSPDefineObjectsCheck">
 			<category name="Performance" />
-			<description name="Checks for unnesecarry duplication of code that already exists in `defineObjects`." />
+			<description name="Checks for unnecessary duplication of code that already exists in `defineObjects`." />
 		</check>
 		<check name="JSPEmptyLinesCheck">
 			<category name="Styling" />
@@ -1046,7 +1046,7 @@
 		</check>
 		<check name="UnparameterizedClassCheck">
 			<category name="Bug Prevention" />
-			<description name="Finds `Class` instantation without generic type." />
+			<description name="Finds `Class` instantiation without generic type." />
 		</check>
 		<check name="ValidatorEqualsCheck">
 			<category name="Performance" />
@@ -1373,7 +1373,7 @@
 	<source-processor name="TLDSourceProcessor">
 		<check name="TLDElementOrderCheck">
 			<category name="Styling" />
-			<description name="Checks the order of attributers in `.tld` file." />
+			<description name="Checks the order of attributes in `.tld` file." />
 		</check>
 		<check name="TLDTypeCheck">
 			<category name="Bug Prevention" />
@@ -1558,7 +1558,7 @@
 		</check>
 		<check name="XMLIvyFileCheck">
 			<category name="Styling" />
-			<description name="Checks the order of dependcies in `ivy.xml` file." />
+			<description name="Checks the order of dependencies in `ivy.xml` file." />
 		</check>
 		<check name="XMLServiceReferenceCheck">
 			<category name="Bug Prevention" />

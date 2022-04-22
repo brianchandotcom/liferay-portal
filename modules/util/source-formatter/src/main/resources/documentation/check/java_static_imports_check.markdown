@@ -68,8 +68,8 @@ import com.liferay.portal.kernel.util.ActionKeys;
 doSomething(ActionKeys.UPDATE);
 ```
 
-In case there is already an imported class with the same name, use the Fully
-Qualified Name instead.
+In case there is already an imported class with the same name, use the fully
+qualified name instead.
 
 #### Example
 

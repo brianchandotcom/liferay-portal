@@ -1,6 +1,6 @@
 ## JavaAnonymousInnerClassCheck
 
-Avoid duplicate variable/parameter name in Anonymous Inner Class. Although the
+Avoid duplicate variable/parameter name in anonymous inner class. Although the
 code will compile without problems, it is confusing and can easily lead to bugs.
 
 ### Example

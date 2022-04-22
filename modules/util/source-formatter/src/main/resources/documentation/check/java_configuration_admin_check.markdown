@@ -1,7 +1,7 @@
 ## JavaConfigurationAdminCheck
 
 OSGi Configurations are shared across bundles but are not created with
-`location == "?"`
+`location == "?"`.
 
 Binding configurations to a specific location can lead to errors.
 

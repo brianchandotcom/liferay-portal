@@ -19,12 +19,6 @@ const SUBSCRIPTION = 'Subscription';
 export default function useFilters(setFilterTerm, productName) {
 	const [filters, setFilters] = useState(INITIAL_FILTER);
 
-	// eslint-disable-next-line no-console
-	console.log(
-		'🚀 ~ file: useFilters.js ~ line 200 ~ useEffect ~ filters.keyType.value.hasOnPremise',
-		filters.keyType.value.hasOnPremise
-	);
-
 	useEffect(() => {
 		let initialFilter = `active eq true and startswith(productName,'${productName}')`;
 		let hasFilterPill = false;

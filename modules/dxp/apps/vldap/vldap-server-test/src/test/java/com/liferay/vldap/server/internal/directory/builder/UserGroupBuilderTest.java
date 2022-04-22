@@ -17,6 +17,7 @@ package com.liferay.vldap.server.internal.directory.builder;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.vldap.server.internal.BaseVLDAPTestCase;
 import com.liferay.vldap.server.internal.directory.FilterConstraint;
 import com.liferay.vldap.server.internal.directory.ldap.Directory;
@@ -26,18 +27,21 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.mockito.Mockito;
-
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author William Newbury
  */
-@RunWith(PowerMockRunner.class)
 public class UserGroupBuilderTest extends BaseVLDAPTestCase {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	@Override
@@ -53,7 +57,7 @@ public class UserGroupBuilderTest extends BaseVLDAPTestCase {
 	public void testBuildDirectoriesInvalidUserGroupDescription()
 		throws Exception {
 
-		when(
+		Mockito.when(
 			userLocalService.fetchUserByScreenName(
 				Mockito.anyLong(), Mockito.anyString())
 		).thenReturn(
@@ -79,7 +83,7 @@ public class UserGroupBuilderTest extends BaseVLDAPTestCase {
 
 	@Test
 	public void testBuildDirectoriesInvalidUserGroupName() throws Exception {
-		when(
+		Mockito.when(
 			userLocalService.fetchUserByScreenName(
 				Mockito.anyLong(), Mockito.anyString())
 		).thenReturn(
@@ -134,7 +138,7 @@ public class UserGroupBuilderTest extends BaseVLDAPTestCase {
 
 	@Test
 	public void testBuildDirectoriesNullOu() throws Exception {
-		when(
+		Mockito.when(
 			userLocalService.fetchUserByScreenName(
 				Mockito.anyLong(), Mockito.anyString())
 		).thenReturn(
@@ -162,7 +166,7 @@ public class UserGroupBuilderTest extends BaseVLDAPTestCase {
 
 	@Test
 	public void testBuildDirectoriesNullUser() throws Exception {
-		when(
+		Mockito.when(
 			userLocalService.fetchUserByScreenName(
 				Mockito.anyLong(), Mockito.anyString())
 		).thenReturn(
@@ -188,7 +192,7 @@ public class UserGroupBuilderTest extends BaseVLDAPTestCase {
 
 	@Test
 	public void testBuildDirectoriesValidScreenName() throws Exception {
-		when(
+		Mockito.when(
 			userLocalService.fetchUserByScreenName(
 				Mockito.anyLong(), Mockito.anyString())
 		).thenReturn(
@@ -265,21 +269,21 @@ public class UserGroupBuilderTest extends BaseVLDAPTestCase {
 	}
 
 	protected void setUpUserGroups() {
-		UserGroup userGroup = mock(UserGroup.class);
+		UserGroup userGroup = Mockito.mock(UserGroup.class);
 
-		when(
+		Mockito.when(
 			userGroup.getDescription()
 		).thenReturn(
 			"testDescription"
 		);
 
-		when(
+		Mockito.when(
 			userGroup.getName()
 		).thenReturn(
 			"testName"
 		);
 
-		when(
+		Mockito.when(
 			userGroup.getUserGroupId()
 		).thenReturn(
 			PRIMARY_KEY
@@ -290,13 +294,13 @@ public class UserGroupBuilderTest extends BaseVLDAPTestCase {
 
 		userGroups.add(userGroup);
 
-		when(
+		Mockito.when(
 			userGroupLocalService.dynamicQuery(Mockito.any(DynamicQuery.class))
 		).thenReturn(
 			userGroups
 		);
 
-		when(
+		Mockito.when(
 			_user.getUserGroups()
 		).thenReturn(
 			userGroups
@@ -304,9 +308,9 @@ public class UserGroupBuilderTest extends BaseVLDAPTestCase {
 	}
 
 	protected void setUpUsers() {
-		_user = mock(User.class);
+		_user = Mockito.mock(User.class);
 
-		when(
+		Mockito.when(
 			_user.getScreenName()
 		).thenReturn(
 			"testScreenName"

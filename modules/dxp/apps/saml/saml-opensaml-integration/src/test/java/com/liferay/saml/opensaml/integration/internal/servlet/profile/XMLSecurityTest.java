@@ -84,7 +84,7 @@ public class XMLSecurityTest extends BaseSamlTestCase {
 
 		SamlSpIdpConnection samlSpIdpConnection = new SamlSpIdpConnectionImpl();
 
-		when(
+		Mockito.when(
 			samlSpIdpConnectionLocalService.getSamlSpIdpConnection(
 				Mockito.eq(COMPANY_ID), Mockito.eq(IDP_ENTITY_ID))
 		).thenReturn(
@@ -319,7 +319,7 @@ public class XMLSecurityTest extends BaseSamlTestCase {
 
 		samlSpIdpConnection.setSamlIdpEntityId(IDP_ENTITY_ID);
 
-		when(
+		Mockito.when(
 			samlSpIdpConnectionLocalService.getSamlSpIdpConnection(
 				Mockito.eq(COMPANY_ID), Mockito.eq(IDP_ENTITY_ID))
 		).thenReturn(

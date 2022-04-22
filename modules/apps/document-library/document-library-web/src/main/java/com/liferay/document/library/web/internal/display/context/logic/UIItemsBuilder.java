@@ -1334,6 +1334,10 @@ public class UIItemsBuilder {
 		return false;
 	}
 
+	public boolean isDownloadActionAvailable() throws PortalException {
+		return _fileEntryDisplayContextHelper.isDownloadActionAvailable();
+	}
+
 	public boolean isEditActionAvailable() throws PortalException {
 		if (((_fileShortcut != null) &&
 			 !_fileShortcutDisplayContextHelper.isEditActionAvailable()) ||

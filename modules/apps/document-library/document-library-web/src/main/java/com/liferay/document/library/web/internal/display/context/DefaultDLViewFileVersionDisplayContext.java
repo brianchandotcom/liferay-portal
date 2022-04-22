@@ -127,8 +127,7 @@ public class DefaultDLViewFileVersionDisplayContext
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
-						_fileEntryDisplayContextHelper::
-							isDownloadActionAvailable,
+						_uiItemsBuilder::isDownloadActionAvailable,
 						_uiItemsBuilder.createDownloadDropdownItem()
 					).add(
 						_uiItemsBuilder::isViewOriginalFileActionAvailable,

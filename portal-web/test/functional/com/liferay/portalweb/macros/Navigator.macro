@@ -72,6 +72,19 @@ definition {
 			value1 = "${pageName}");
 	}
 
+	macro gotoLiveView {
+		if (isSet(remoteStaging)) {
+			Click(
+				key_navItem = "Go to Remote Live",
+				locator1 = "NavBar#NAV_ITEM_REDIRECTION");
+		}
+		else {
+			Click(
+				key_navItem = "Live",
+				locator1 = "NavBar#NAV_ITEM_REDIRECTION");
+		}
+	}
+
 	macro gotoLoginPage {
 		AssertClick(
 			locator1 = "UserBar#USER_SIGN_IN",

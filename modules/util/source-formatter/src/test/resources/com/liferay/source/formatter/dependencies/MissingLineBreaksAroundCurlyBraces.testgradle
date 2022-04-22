@@ -28,6 +28,8 @@ if (test =~ /\d{10}/) {
 
 Pattern pattern = ~/\d{10}/
 
+assert pomNode.scm.tag.text().matches(/[a-f\d]{40}/)
+
 println "curlyBraceInQuotes{}"
 
 println 'curlyBraceInQuotes{}'

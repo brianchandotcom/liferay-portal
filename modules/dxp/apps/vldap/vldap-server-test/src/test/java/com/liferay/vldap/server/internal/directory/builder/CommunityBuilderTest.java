@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.comparator.UserScreenNameComparator;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.vldap.server.internal.BaseVLDAPTestCase;
 import com.liferay.vldap.server.internal.directory.FilterConstraint;
 import com.liferay.vldap.server.internal.directory.ldap.Directory;
@@ -28,18 +29,21 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.mockito.Mockito;
-
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author William Newbury
  */
-@RunWith(PowerMockRunner.class)
 public class CommunityBuilderTest extends BaseVLDAPTestCase {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testBuildDirectoriesWithInvalidFilterConstraints()
@@ -69,13 +73,13 @@ public class CommunityBuilderTest extends BaseVLDAPTestCase {
 		setUpGroups();
 		setUpUsers();
 
-		when(
+		Mockito.when(
 			_user.getGroups()
 		).thenReturn(
 			_groups
 		);
 
-		when(
+		Mockito.when(
 			userLocalService.fetchUserByScreenName(
 				Mockito.anyLong(), Mockito.anyString())
 		).thenReturn(
@@ -103,13 +107,13 @@ public class CommunityBuilderTest extends BaseVLDAPTestCase {
 		setUpGroups();
 		setUpUsers();
 
-		when(
+		Mockito.when(
 			_user.getGroups()
 		).thenReturn(
 			_groups
 		);
 
-		when(
+		Mockito.when(
 			userLocalService.fetchUserByScreenName(
 				Mockito.anyLong(), Mockito.anyString())
 		).thenReturn(
@@ -138,7 +142,7 @@ public class CommunityBuilderTest extends BaseVLDAPTestCase {
 		setUpGroups();
 		setUpUsers();
 
-		when(
+		Mockito.when(
 			groupLocalService.search(
 				Mockito.anyLong(), Mockito.anyString(), Mockito.anyString(),
 				Mockito.any(LinkedHashMap.class), Mockito.anyBoolean(),
@@ -171,7 +175,7 @@ public class CommunityBuilderTest extends BaseVLDAPTestCase {
 		setUpGroups();
 		setUpUsers();
 
-		when(
+		Mockito.when(
 			groupLocalService.getCompanyGroups(
 				Mockito.anyLong(), Mockito.anyInt(), Mockito.anyInt())
 		).thenReturn(
@@ -208,13 +212,13 @@ public class CommunityBuilderTest extends BaseVLDAPTestCase {
 		setUpGroups();
 		setUpUsers();
 
-		when(
+		Mockito.when(
 			_user.getGroups()
 		).thenReturn(
 			_groups
 		);
 
-		when(
+		Mockito.when(
 			userLocalService.fetchUserByScreenName(
 				Mockito.anyLong(), Mockito.anyString())
 		).thenReturn(
@@ -275,33 +279,33 @@ public class CommunityBuilderTest extends BaseVLDAPTestCase {
 	}
 
 	protected void setUpGroups() {
-		Group group = mock(Group.class);
+		Group group = Mockito.mock(Group.class);
 
-		when(
+		Mockito.when(
 			group.getDescription()
 		).thenReturn(
 			"testDescription"
 		);
 
-		when(
+		Mockito.when(
 			group.getDescription(LocaleUtil.getDefault())
 		).thenReturn(
 			"testDescription"
 		);
 
-		when(
+		Mockito.when(
 			group.getGroupId()
 		).thenReturn(
 			PRIMARY_KEY
 		);
 
-		when(
+		Mockito.when(
 			group.getName()
 		).thenReturn(
 			"testName"
 		);
 
-		when(
+		Mockito.when(
 			group.getName(LocaleUtil.getDefault())
 		).thenReturn(
 			"testName"
@@ -311,15 +315,15 @@ public class CommunityBuilderTest extends BaseVLDAPTestCase {
 	}
 
 	protected void setUpUsers() {
-		_user = mock(User.class);
+		_user = Mockito.mock(User.class);
 
-		when(
+		Mockito.when(
 			_user.getScreenName()
 		).thenReturn(
 			"testScreenName"
 		);
 
-		when(
+		Mockito.when(
 			userLocalService.search(
 				Mockito.anyLong(), Mockito.anyString(), Mockito.anyString(),
 				Mockito.anyString(), Mockito.anyString(), Mockito.anyString(),

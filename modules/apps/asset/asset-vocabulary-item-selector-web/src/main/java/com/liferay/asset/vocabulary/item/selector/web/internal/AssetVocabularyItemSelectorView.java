@@ -16,12 +16,10 @@ package com.liferay.asset.vocabulary.item.selector.web.internal;
 
 import com.liferay.asset.vocabulary.item.selector.AssetVocabularyItemSelectorReturnType;
 import com.liferay.asset.vocabulary.item.selector.criterion.AssetVocabularyItemSelectorCriterion;
-import com.liferay.asset.vocabulary.item.selector.web.internal.constants.AssetVocabularyItemSelectorWebKeys;
-import com.liferay.asset.vocabulary.item.selector.web.internal.display.context.SelectAssetVocabularyItemSelectorDisplayContext;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
+import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.JavaConstants;
 
 import java.io.IOException;
 
@@ -30,10 +28,7 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletURL;
-import javax.portlet.RenderResponse;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -56,10 +51,6 @@ public class AssetVocabularyItemSelectorView
 		return AssetVocabularyItemSelectorCriterion.class;
 	}
 
-	public ServletContext getServletContext() {
-		return _servletContext;
-	}
-
 	@Override
 	public List<ItemSelectorReturnType> getSupportedItemSelectorReturnTypes() {
 		return _supportedItemSelectorReturnTypes;
@@ -78,31 +69,22 @@ public class AssetVocabularyItemSelectorView
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 
-		ServletContext servletContext = getServletContext();
-
-		servletRequest.setAttribute(
-			AssetVocabularyItemSelectorWebKeys.
-				SELECT_ASSET_VOCABULARY_ITEM_SELECTOR_DISPLAY_CONTEXT,
-			new SelectAssetVocabularyItemSelectorDisplayContext(
-				(HttpServletRequest)servletRequest,
-				assetVocabularyItemSelectorCriterion, itemSelectedEventName,
-				portletURL,
-				(RenderResponse)servletRequest.getAttribute(
-					JavaConstants.JAVAX_PORTLET_RESPONSE)));
-
-		RequestDispatcher requestDispatcher =
-			servletContext.getRequestDispatcher("/select_asset_vocabulary.jsp");
-
-		requestDispatcher.include(servletRequest, servletResponse);
+		_itemSelectorViewDescriptorRenderer.renderHTML(
+			servletRequest, servletResponse,
+			assetVocabularyItemSelectorCriterion, portletURL,
+			itemSelectedEventName, search,
+			new AssetVocabularyItemSelectorViewDescriptor(
+				assetVocabularyItemSelectorCriterion,
+				(HttpServletRequest)servletRequest, portletURL));
 	}
 
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.singletonList(
 			new AssetVocabularyItemSelectorReturnType());
 
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.asset.vocabulary.item.selector.web)"
-	)
-	private ServletContext _servletContext;
+	@Reference
+	private ItemSelectorViewDescriptorRenderer
+		<AssetVocabularyItemSelectorCriterion>
+			_itemSelectorViewDescriptorRenderer;
 
 }

@@ -31,6 +31,8 @@ import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -179,29 +181,38 @@ public class BatchPlannerPlanServiceTest {
 
 	@Test
 	public void testSearchBatchPlannerPlan() throws Exception {
-		for (int i = 0; i < 60; i++) {
-			boolean export = false;
+		try (LogCapture logCapture1 = LoggerTestUtil.configureLog4JLogger(
+				"org.hibernate.engine.jdbc.batch.internal.BatchingBatch",
+				LoggerTestUtil.OFF);
+			LogCapture logCapture2 = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.batch.engine.internal." +
+					"BatchEngineExportTaskExecutorImpl",
+				LoggerTestUtil.OFF)) {
 
-			if ((i % 2) == 0) {
-				export = true;
+			for (int i = 0; i < 60; i++) {
+				boolean export = false;
+
+				if ((i % 2) == 0) {
+					export = true;
+				}
+
+				_submitPlan(
+					export, _INTERNAL_CLASS_NAME_CHANNEL,
+					RandomTestUtil.randomString());
 			}
 
-			_submitPlan(
-				export, _INTERNAL_CLASS_NAME_CHANNEL,
-				RandomTestUtil.randomString());
+			_submitPlan(true, _INTERNAL_CLASS_NAME_CHANNEL, "name1");
+			_submitPlan(true, _INTERNAL_CLASS_NAME_CHANNEL, "name2");
+			_submitPlan(true, _INTERNAL_CLASS_NAME_CHANNEL, "name3");
+			_submitPlan(false, _INTERNAL_CLASS_NAME_CHANNEL, "name4");
+			_submitPlan(false, _INTERNAL_CLASS_NAME_CHANNEL, "name5");
+
+			BatchPlannerPlan batchPlannerPlan = _submitPlan(
+				false, _INTERNAL_CLASS_NAME_CHANNEL, "name6");
+
+			_testSearchExportBatchPlannerLogs(batchPlannerPlan.getCompanyId());
+			_testSearchImportBatchPlannerLogs(batchPlannerPlan.getCompanyId());
 		}
-
-		_submitPlan(true, _INTERNAL_CLASS_NAME_CHANNEL, "name1");
-		_submitPlan(true, _INTERNAL_CLASS_NAME_CHANNEL, "name2");
-		_submitPlan(true, _INTERNAL_CLASS_NAME_CHANNEL, "name3");
-		_submitPlan(false, _INTERNAL_CLASS_NAME_CHANNEL, "name4");
-		_submitPlan(false, _INTERNAL_CLASS_NAME_CHANNEL, "name5");
-
-		BatchPlannerPlan batchPlannerPlan = _submitPlan(
-			false, _INTERNAL_CLASS_NAME_CHANNEL, "name6");
-
-		_testSearchExportBatchPlannerLogs(batchPlannerPlan.getCompanyId());
-		_testSearchImportBatchPlannerLogs(batchPlannerPlan.getCompanyId());
 	}
 
 	@Test

@@ -27,19 +27,13 @@ import java.util.logging.Level;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Miguel Pastor
  */
-@RunWith(PowerMockRunner.class)
-public class PortalBeanLocatorUtilTest extends PowerMockito {
+public class PortalBeanLocatorUtilTest {
 
 	@After
 	public void tearDown() {
@@ -76,7 +70,7 @@ public class PortalBeanLocatorUtilTest extends PowerMockito {
 
 	@Test
 	public void testLocateExistingBean() {
-		when(
+		Mockito.when(
 			_beanLocator.locate("existingBean")
 		).thenReturn(
 			new String("existingBean")
@@ -89,12 +83,16 @@ public class PortalBeanLocatorUtilTest extends PowerMockito {
 		Assert.assertNotNull(bean);
 		Assert.assertEquals("existingBean", bean);
 
-		Mockito.verify(_beanLocator, Mockito.times(1));
+		Mockito.verify(
+			_beanLocator, Mockito.times(1)
+		).locate(
+			"existingBean"
+		);
 	}
 
 	@Test
 	public void testLocateNonexistingBean() {
-		when(
+		Mockito.when(
 			_beanLocator.locate("nonExistingBean")
 		).thenReturn(
 			null
@@ -106,10 +104,13 @@ public class PortalBeanLocatorUtilTest extends PowerMockito {
 
 		Assert.assertNull(bean);
 
-		Mockito.verify(_beanLocator, Mockito.times(1));
+		Mockito.verify(
+			_beanLocator, Mockito.times(1)
+		).locate(
+			"nonExistingBean"
+		);
 	}
 
-	@Mock
-	private BeanLocator _beanLocator;
+	private final BeanLocator _beanLocator = Mockito.mock(BeanLocator.class);
 
 }

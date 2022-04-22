@@ -21,6 +21,6 @@ FrontendIconsSiteSettingsConfigurationDisplayContext frontendIconsSiteSettingsCo
 %>
 
 <react:component
-	module="js/site_settings/index"
+	module="js/pages/site_settings/index"
 	props="<%= frontendIconsSiteSettingsConfigurationDisplayContext.getProps() %>"
 />

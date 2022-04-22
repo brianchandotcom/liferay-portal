@@ -21,8 +21,20 @@ import ClayPanel from '@clayui/panel';
 import {fetch, openToast} from 'frontend-js-web';
 import React, {useMemo, useState} from 'react';
 
+import {getSpritemapPath} from '../../index';
 import AddIconPackModal from './AddIconPackModal';
 import DeleteIconModal from './DeleteIconModal';
+
+import type {IIconPacks} from '../../types';
+
+interface IProps {
+	deleteIconsPackResourceURL: string;
+	deleteIconsPackURL: string;
+	icons: IIconPacks;
+	portletNamespace: string;
+	saveFromExistingIconsActionURL: string;
+	saveFromSpritemapActionURL: string;
+}
 
 export default function InstanceIconConfiguration({
 	deleteIconsPackResourceURL,
@@ -31,15 +43,31 @@ export default function InstanceIconConfiguration({
 	portletNamespace,
 	saveFromExistingIconsActionURL,
 	saveFromSpritemapActionURL,
-}) {
+}: IProps) {
 	const [searchQuery, setSearchQuery] = useState('');
 	const [icons, setIcons] = useState(initialIcons);
-	const [addModal, setAddModal] = useState({visible: false});
-	const [deleteModal, setDeleteModal] = useState({visible: false});
+	const [addModal, setAddModal] = useState<{
+		existingIconPackName?: string;
+		uploadSpritemap?: boolean;
+		visible?: boolean;
+	}>({
+		existingIconPackName: '',
+		uploadSpritemap: false,
+		visible: false,
+	});
+	const [deleteModal, setDeleteModal] = useState<{
+		iconPackName: string;
+		selectedIcon: string;
+		visible: boolean;
+	}>({
+		iconPackName: '',
+		selectedIcon: '',
+		visible: false,
+	});
 
 	const iconPackNames = Object.keys(icons);
 
-	const filteredIcons = useMemo(() => {
+	const filteredIcons: IIconPacks = useMemo(() => {
 		return iconPackNames.reduce((acc, packName) => {
 			return {
 				...acc,
@@ -64,14 +92,14 @@ export default function InstanceIconConfiguration({
 		[icons]
 	);
 
-	const handleDelete = (iconPackName) => {
+	const handleDelete = (iconPackName: string) => {
 		if (
 			!confirm(
 				Liferay.Util.sub(
 					Liferay.Language.get(
-						'are-you-sure-you-want-to-delete-the-x-icon-pack',
-						[iconPackName]
-					)
+						'are-you-sure-you-want-to-delete-the-x-icon-pack'
+					),
+					[iconPackName]
 				)
 			)
 		) {
@@ -198,7 +226,9 @@ export default function InstanceIconConfiguration({
 													}
 												>
 													<ClayIcon
-														spritemap={`/o/icons/pack/${iconPackName}.svg?${referenceTime}`}
+														spritemap={`${getSpritemapPath(
+															iconPackName
+														)}?${referenceTime}`}
 														symbol={icon.name}
 													/>
 
@@ -223,8 +253,9 @@ export default function InstanceIconConfiguration({
 
 						<ClayButtonWithIcon
 							borderless
+							className="ml-2 mt-1"
 							disabled={!filteredIcons[iconPackName].editable}
-							displayType="secondary ml-2 mt-1"
+							displayType="secondary"
 							onClick={() => handleDelete(iconPackName)}
 							small
 							symbol="times-circle"
@@ -272,18 +303,18 @@ export default function InstanceIconConfiguration({
 				<AddIconPackModal
 					existingIconPackName={addModal.existingIconPackName}
 					icons={icons}
-					portletNamespace={portletNamespace}
-					saveFromExistingIconsActionURL={
-						saveFromExistingIconsActionURL
-					}
-					saveFromSpritemapActionURL={saveFromSpritemapActionURL}
-					setIcons={setIcons}
-					setVisible={(visible) =>
+					onIconsChange={setIcons}
+					onVisibleChange={(visible) =>
 						setAddModal((previousModal) => ({
 							...previousModal,
 							visible,
 						}))
 					}
+					portletNamespace={portletNamespace}
+					saveFromExistingIconsActionURL={
+						saveFromExistingIconsActionURL
+					}
+					saveFromSpritemapActionURL={saveFromSpritemapActionURL}
 					uploadSpritemap={addModal.uploadSpritemap}
 					visible={addModal.visible}
 				/>
@@ -294,15 +325,15 @@ export default function InstanceIconConfiguration({
 					deleteIconsPackResourceURL={deleteIconsPackResourceURL}
 					iconPackName={deleteModal.iconPackName}
 					icons={icons}
-					portletNamespace={portletNamespace}
-					selectedIcon={deleteModal.selectedIcon}
-					setIcons={setIcons}
-					setVisible={(visible) =>
+					onIconsChange={setIcons}
+					onVisibleChange={(visible) =>
 						setDeleteModal((previousModal) => ({
 							...previousModal,
 							visible,
 						}))
 					}
+					portletNamespace={portletNamespace}
+					selectedIcon={deleteModal.selectedIcon}
 					visible={deleteModal.visible}
 				/>
 			)}

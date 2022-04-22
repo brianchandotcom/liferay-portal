@@ -18,6 +18,7 @@ import com.liferay.frontend.icons.web.internal.configuration.FrontendIconPacksCo
 import com.liferay.frontend.icons.web.internal.model.FrontendIconsResourcePack;
 import com.liferay.frontend.icons.web.internal.repository.FrontendIconsResourcePackRepository;
 import com.liferay.frontend.icons.web.internal.util.SVGUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -62,7 +63,7 @@ public class FrontendIconsServlet extends HttpServlet {
 		HttpServletResponse httpServletResponse) {
 
 		try {
-			httpServletResponse.setCharacterEncoding("UTF-8");
+			httpServletResponse.setCharacterEncoding(StringPool.UTF8);
 			httpServletResponse.setContentType(ContentTypes.IMAGE_SVG_XML);
 			httpServletResponse.setStatus(HttpServletResponse.SC_OK);
 

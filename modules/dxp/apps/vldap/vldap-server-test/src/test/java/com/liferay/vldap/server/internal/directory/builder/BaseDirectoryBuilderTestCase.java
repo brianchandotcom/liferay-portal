@@ -23,14 +23,10 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.runner.RunWith;
-
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author William Newbury
  */
-@RunWith(PowerMockRunner.class)
 public abstract class BaseDirectoryBuilderTestCase extends BaseVLDAPTestCase {
 
 	protected void doTestBuildDirectories() throws Exception {

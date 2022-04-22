@@ -102,21 +102,6 @@ public class Encryptor {
 		}
 	}
 
-	private static String _decryptUnencodedAsString(
-			Key key, byte[] encryptedBytes)
-		throws EncryptorException {
-
-		try {
-			byte[] decryptedBytes = decryptUnencodedAsBytes(
-				key, encryptedBytes);
-
-			return new String(decryptedBytes, ENCODING);
-		}
-		catch (Exception exception) {
-			throw new EncryptorException(exception);
-		}
-	}
-
 	public static Key deserializeKey(String base64String) {
 		byte[] bytes = Base64.decode(base64String);
 
@@ -187,7 +172,28 @@ public class Encryptor {
 		return _generateKey(KEY_ALGORITHM);
 	}
 
-	private static Key _generateKey(String algorithm) throws EncryptorException {
+	public static String serializeKey(Key key) {
+		return Base64.encode(key.getEncoded());
+	}
+
+	private static String _decryptUnencodedAsString(
+			Key key, byte[] encryptedBytes)
+		throws EncryptorException {
+
+		try {
+			byte[] decryptedBytes = decryptUnencodedAsBytes(
+				key, encryptedBytes);
+
+			return new String(decryptedBytes, ENCODING);
+		}
+		catch (Exception exception) {
+			throw new EncryptorException(exception);
+		}
+	}
+
+	private static Key _generateKey(String algorithm)
+		throws EncryptorException {
+
 		try {
 			KeyGenerator keyGenerator = KeyGenerator.getInstance(algorithm);
 
@@ -198,10 +204,6 @@ public class Encryptor {
 		catch (Exception exception) {
 			throw new EncryptorException(exception);
 		}
-	}
-
-	public static String serializeKey(Key key) {
-		return Base64.encode(key.getEncoded());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(Encryptor.class);

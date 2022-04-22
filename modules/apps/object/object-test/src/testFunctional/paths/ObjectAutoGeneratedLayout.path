@@ -35,6 +35,16 @@
 		<td>//div[contains(label,'Maximum File Size')]/input[@class='form-control' and contains(@type,'number')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>DELETE_ATTACHMENT_ICON</td>
+		<td>//*[contains(@class,'lexicon-icon-times-circle-full')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>FILE_ON_ATTACHMENT</td>
+		<td>//div[contains(@class,'lfr-objects__attachment-title') and contains(button,'${key_fileName}')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

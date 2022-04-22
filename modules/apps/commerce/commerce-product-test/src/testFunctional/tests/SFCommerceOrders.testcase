@@ -143,6 +143,32 @@ definition {
 			productName = "U-Joint",
 			productQuantity = "1");
 
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
+
+		Click(
+			key_orderAuthor = "Test Test",
+			locator1 = "CommerceAccelerators#ORDERS_ENTRY_VIEW_BUTTON");
+
+		Click(
+			key_text = "billing-address-id",
+			locator1 = "CommerceOrders#PENDING_ORDERS_BILLING_ADDRESS_DROPDOWN");
+
+		Select(
+			locator1 = "CommerceOrders#PENDING_ORDERS_BILLING_ADDRESS_DROPDOWN",
+			value1 = "Test");
+
+		Click(
+			key_text = "shipping-address-id",
+			locator1 = "CommerceOrders#PENDING_ORDERS_SHIPPING_ADDRESS_DROPDOWN");
+
+		Select(
+			locator1 = "CommerceOrders#PENDING_ORDERS_SHIPPING_ADDRESS_DROPDOWN",
+			value1 = "Test");
+
+		Button.clickSave();
+
+		Refresh();
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Order Management",
 			panel = "Commerce",
@@ -154,47 +180,22 @@ definition {
 
 		CommerceEntry.clickNoError(menuItem = "View");
 
-		Click(
-			key_buttonName = "Add",
-			key_titleName = "Billing Address",
-			locator1 = "CommerceOrders#ORDER_GENERAL_DETAILS_ADD_EDIT_BUTTON");
+		var street = "Test Street";
+		var city = "Roma, Roma, 00100";
 
-		SelectFrame(locator1 = "IFrame#MODAL_IFRAME");
+		for (var address : list "${street},${city}") {
+			AssertTextEquals.assertPartialText(
+				key_titleName = "Billing Address",
+				locator1 = "CommerceOrders#ORDER_GENERAL_DETAILS_DESCRIPTION",
+				value1 = "${address}");
+		}
 
-		Click.clickNoWaitForVisible(
-			key_radioOption = "",
-			locator1 = "CommerceEntry#RADIO_BUTTON");
-
-		Button.click(button = "Submit");
-
-		SelectFrameTop();
-
-		Click(
-			key_buttonName = "Add",
-			key_titleName = "Shipping Address",
-			locator1 = "CommerceOrders#ORDER_GENERAL_DETAILS_ADD_EDIT_BUTTON");
-
-		SelectFrame(locator1 = "IFrame#MODAL_IFRAME");
-
-		Click.clickNoWaitForVisible(
-			key_radioOption = "",
-			locator1 = "CommerceEntry#RADIO_BUTTON");
-
-		Button.click(button = "Submit");
-
-		SelectFrameTop();
-
-		Refresh();
-
-		AssertTextEquals.assertPartialText(
-			key_titleName = "Billing Address",
-			locator1 = "CommerceOrders#ORDER_GENERAL_DETAILS_DESCRIPTION",
-			value1 = "Test Street, Roma");
-
-		AssertTextEquals.assertPartialText(
-			key_titleName = "Shipping Address",
-			locator1 = "CommerceOrders#ORDER_GENERAL_DETAILS_DESCRIPTION",
-			value1 = "Test Street, Roma");
+		for (var address : list "${street},${city}") {
+			AssertTextEquals.assertPartialText(
+				key_titleName = "Shipping Address",
+				locator1 = "CommerceOrders#ORDER_GENERAL_DETAILS_DESCRIPTION",
+				value1 = "${address}");
+		}
 	}
 
 	@description = "COMMERCE-6383. As a buyer, I want to be able to Reorder the Placed Order by clicking on 'Reorder' button"

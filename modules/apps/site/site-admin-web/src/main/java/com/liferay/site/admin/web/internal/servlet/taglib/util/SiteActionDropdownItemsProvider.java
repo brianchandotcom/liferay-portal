@@ -70,40 +70,68 @@ public class SiteActionDropdownItemsProvider {
 		boolean hasUpdatePermission = GroupPermissionUtil.contains(
 			_themeDisplay.getPermissionChecker(), _group, ActionKeys.UPDATE);
 
-		return DropdownItemListBuilder.add(
-			() -> hasUpdatePermission && (count > 0),
-			_getViewChildSitesActionUnsafeConsumer()
-		).add(
-			() ->
-				hasUpdatePermission &&
-				_siteAdminDisplayContext.hasAddChildSitePermission(_group),
-			_getAddChildSiteActionUnsafeConsumer()
-		).add(
-			() -> hasUpdatePermission,
-			_getViewSiteSettingsActionUnsafeConsumer()
-		).add(
-			() -> _group.isActive() && (_group.getPublicLayoutsPageCount() > 0),
-			_getViewSitePublicPagesActionUnsafeConsumer()
-		).add(
-			() ->
-				_group.isActive() && (_group.getPrivateLayoutsPageCount() > 0),
-			_getViewSitePrivatePagesActionUnsafeConsumer()
-		).add(
-			() -> _hasEditAssignmentsPermission(),
-			_getLeaveSiteActionUnsafeConsumer()
-		).add(
-			() ->
-				hasUpdatePermission && _group.isActive() &&
-				!_group.isCompany() && !_group.isGuest(),
-			_getDeactivateSiteActionUnsafeConsumer()
-		).add(
-			() ->
-				hasUpdatePermission && !_group.isActive() &&
-				!_group.isCompany(),
-			_getActivateSiteActionUnsafeConsumer()
-		).add(
-			() -> _hasDeleteGroupPermission(),
-			_getDeleteSiteActionUnsafeConsumer()
+		return DropdownItemListBuilder.addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						() ->
+							hasUpdatePermission && !_group.isActive() &&
+							!_group.isCompany(),
+						_getActivateSiteActionUnsafeConsumer()
+					).add(
+						() ->
+							hasUpdatePermission && _group.isActive() &&
+							!_group.isCompany() && !_group.isGuest(),
+						_getDeactivateSiteActionUnsafeConsumer()
+					).add(
+						() -> _hasEditAssignmentsPermission(),
+						_getLeaveSiteActionUnsafeConsumer()
+					).build());
+				dropdownGroupItem.setSeparator(true);
+			}
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						() ->
+							hasUpdatePermission &&
+							_siteAdminDisplayContext.hasAddChildSitePermission(
+								_group),
+						_getAddChildSiteActionUnsafeConsumer()
+					).add(
+						() -> hasUpdatePermission && (count > 0),
+						_getViewChildSitesActionUnsafeConsumer()
+					).build());
+				dropdownGroupItem.setSeparator(true);
+			}
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						() ->
+							_group.isActive() &&
+							(_group.getPrivateLayoutsPageCount() > 0),
+						_getViewSitePrivatePagesActionUnsafeConsumer()
+					).add(
+						() ->
+							_group.isActive() &&
+							(_group.getPublicLayoutsPageCount() > 0),
+						_getViewSitePublicPagesActionUnsafeConsumer()
+					).add(
+						() -> hasUpdatePermission,
+						_getViewSiteSettingsActionUnsafeConsumer()
+					).build());
+				dropdownGroupItem.setSeparator(true);
+			}
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						() -> _hasDeleteGroupPermission(),
+						_getDeleteSiteActionUnsafeConsumer()
+					).build());
+				dropdownGroupItem.setSeparator(true);
+			}
 		).build();
 	}
 

@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,15 +11,23 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/init.jsp" %>
+package com.liferay.frontend.icons.web.internal.constants;
 
-<%
-FrontendIconsConfigurationDisplayContext frontendIconsConfigurationDisplayContext = (FrontendIconsConfigurationDisplayContext)request.getAttribute(FrontendIconsConfigurationDisplayContext.class.getName());
-%>
+/**
+ * @author Bryce Osterhaus
+ */
+public class IconsWebConstants {
 
-<react:component
-	module="js/pages/instance_settings/index"
-	props="<%= frontendIconsConfigurationDisplayContext.getProps() %>"
-/>
+	public static final String BLOGS_PORTLET_INSTANCE_CONFIGURATION =
+		"BLOGS_PORTLET_INSTANCE_CONFIGURATION";
+
+	public static final String PACK = "pack";
+
+	public static final String SITE = "site";
+
+	public static final String SPRITEMAP_BASE_PATH = "/o/icons";
+
+	public static final String SYSTEM_ICON_PACK = "clay";
+
+}

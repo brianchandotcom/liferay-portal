@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,15 +11,16 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/init.jsp" %>
+const ICONS_CONFIG = (window as any)._FRONTEND_ICONS;
 
-<%
-FrontendIconsConfigurationDisplayContext frontendIconsConfigurationDisplayContext = (FrontendIconsConfigurationDisplayContext)request.getAttribute(FrontendIconsConfigurationDisplayContext.class.getName());
-%>
+export function getSpritemapPath(iconPack?: String) {
+	const packOrSite = iconPack ? 'pack' : 'site';
+	const iconPackOrSiteId = iconPack || Liferay.ThemeDisplay.getSiteGroupId();
 
-<react:component
-	module="js/pages/instance_settings/index"
-	props="<%= frontendIconsConfigurationDisplayContext.getProps() %>"
-/>
+	return `${ICONS_CONFIG.basePath}/${packOrSite}/${iconPackOrSiteId}.svg`;
+}
+
+export function getSystemSpritemapPath() {
+	return ICONS_CONFIG.systemSpritemapPath;
+}

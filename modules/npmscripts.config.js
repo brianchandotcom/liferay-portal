@@ -41,6 +41,9 @@ module.exports = {
 					'@liferay/frontend-data-set-web': {
 						'/': '*',
 					},
+					'@liferay/frontend-icons-web': {
+						'/': '*',
+					},
 					'@liferay/frontend-js-a11y-web': {
 						'/': '*',
 					},
@@ -375,6 +378,7 @@ module.exports = {
 			'dynamic-data-mapping-form-renderer',
 		],
 		imports: {
+			'@liferay/frontend-icons-web': [],
 			'@liferay/frontend-js-state-web': [],
 			'frontend-js-react-web': [
 				'classnames',

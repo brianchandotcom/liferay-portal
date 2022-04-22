@@ -144,13 +144,14 @@ public class JavaStylingCheck extends BaseStylingCheck {
 			String commentContent = matcher.group(1);
 
 			if (commentContent.startsWith(StringPool.SPACE)) {
-				for (String e : _REPLACE_WORDS) {
-					if (commentContent.contains(e)) {
-						int index = e.indexOf(StringPool.DASH);
+				for (String hyphenWord : _HYPHEN_WORDS) {
+					if (commentContent.contains(hyphenWord)) {
+						int index = hyphenWord.indexOf(StringPool.DASH);
 
 						return StringUtil.replaceFirst(
-							content, e,
-							e.substring(0, index) + e.substring(index + 1),
+							content, hyphenWord,
+							hyphenWord.substring(0, index) +
+								hyphenWord.substring(index + 1),
 							matcher.start(1));
 					}
 				}
@@ -198,7 +199,7 @@ public class JavaStylingCheck extends BaseStylingCheck {
 		return content;
 	}
 
-	private static final String[] _REPLACE_WORDS = {"Non-existing"};
+	private static final String[] _HYPHEN_WORDS = {"Non-existing"};
 
 	private static final Pattern _incorrectJavadocPattern = Pattern.compile(
 		"(\n([\t ]*)/\\*)(\n\\2 \\*)");

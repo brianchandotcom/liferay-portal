@@ -30,6 +30,7 @@ import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.jdbc.OutputBlob;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -88,9 +89,20 @@ public class BatchEngineExportTaskExecutorImpl
 					batchEngineExportTask,
 				throwable);
 
-			_updateBatchEngineExportTask(
-				BatchEngineTaskExecuteStatus.FAILED, batchEngineExportTask,
-				throwable.getMessage());
+			try {
+				BatchEngineExportTask currentBatchEngineExportTask =
+					_batchEngineExportTaskLocalService.getBatchEngineExportTask(
+						batchEngineExportTask.getPrimaryKey());
+
+				_updateBatchEngineExportTask(
+					BatchEngineTaskExecuteStatus.FAILED,
+					currentBatchEngineExportTask, throwable.getMessage());
+			}
+			catch (PortalException portalException) {
+				_log.error(
+					"Unable to update batch engine export task ",
+					portalException);
+			}
 		}
 	}
 

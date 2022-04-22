@@ -53,6 +53,9 @@ jest.mock(
 				dangerColor: {
 					cssVariable: 'danger',
 				},
+				infoColor: {
+					cssVariable: 'info',
+				},
 				primaryColor: {
 					cssVariable: 'primary',
 				},
@@ -61,6 +64,7 @@ jest.mock(
 	})
 );
 
+const FRAGMENT_ID = 'FRAGMENT_ID';
 const ITEM_ID = 'ITEM_ID';
 const MASTER_ITEM_ID = 'ITEM_ID';
 
@@ -70,10 +74,28 @@ const renderCommonStylesManager = ({
 	return render(
 		<StoreAPIContextProvider
 			getState={() => ({
-				fragmentEntryLinks: [],
+				fragmentEntryLinks: {
+					fragmentEntryLinkId: {
+						fragmentEntryLinkId: 'fragmentEntryLink',
+					},
+				},
 				layoutData: {
 					items: {
-						itemId: {
+						[FRAGMENT_ID]: {
+							children: [],
+							config: {
+								fragmentEntryLinkId: 'fragmentEntryLinkId',
+
+								styles: {
+									backgroundColor: 'infoColor',
+									marginBottom: '2',
+									marginTop: '3',
+								},
+							},
+							itemId: FRAGMENT_ID,
+							type: LAYOUT_DATA_ITEM_TYPES.fragment,
+						},
+						[ITEM_ID]: {
 							config: {
 								[VIEWPORT_SIZES.tablet]: {
 									styles: {
@@ -153,6 +175,15 @@ describe('CommonStylesManager', () => {
 		renderCommonStylesManager();
 
 		const expected = `
+			.${getLayoutDataItemUniqueClassName(FRAGMENT_ID)} {
+				background-color: var(--info) !important;
+			}
+			
+			.${getLayoutDataItemTopperUniqueClassName(FRAGMENT_ID)} {
+				margin-bottom: var(--spacer-2, 0.5rem) !important;
+				margin-top: var(--spacer-3, 1rem) !important;
+			}
+
 			.${getLayoutDataItemUniqueClassName(ITEM_ID)} {
 				background-color: var(--danger) !important;
 			}
@@ -188,6 +219,15 @@ describe('CommonStylesManager', () => {
 		});
 
 		const expected = `
+			.${getLayoutDataItemUniqueClassName(FRAGMENT_ID)} {
+				background-color: var(--info) !important;
+			}
+			
+			.${getLayoutDataItemTopperUniqueClassName(FRAGMENT_ID)} {
+				margin-bottom: var(--spacer-2, 0.5rem) !important;
+				margin-top: var(--spacer-3, 1rem) !important;
+			}
+
 			.${getLayoutDataItemUniqueClassName(ITEM_ID)} {
 				background-color: var(--primary) !important;
 			}

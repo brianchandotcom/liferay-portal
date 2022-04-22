@@ -12,8 +12,16 @@
  * details.
  */
 
+import {axios} from './liferay/api';
+
+const DeliveryAPI = 'o/c/raylifepolicies';
+
 export function getPoliciesStatus(totalCount) {
 	return new Promise((resolve) => {
 		resolve({data: {totalCount}});
 	});
+}
+
+export function getPolicies() {
+	return axios.get(`${DeliveryAPI}/`);
 }

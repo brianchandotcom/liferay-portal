@@ -15,11 +15,14 @@
 package com.liferay.document.library.web.internal.util;
 
 import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryService;
 import com.liferay.depot.service.DepotEntryServiceUtil;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -29,19 +32,13 @@ import java.util.List;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.mockito.Matchers;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.mockito.Mockito;
 
 /**
  * @author Alicia García
  */
-@PrepareForTest({GroupLocalServiceUtil.class, DepotEntryServiceUtil.class})
-@RunWith(PowerMockRunner.class)
 public class DLFolderUtilTest {
 
 	@ClassRule
@@ -51,25 +48,33 @@ public class DLFolderUtilTest {
 
 	@Test
 	public void testValidateDepotFolder() throws PortalException {
-		PowerMockito.mockStatic(GroupLocalServiceUtil.class);
+		GroupLocalService groupLocalService = Mockito.mock(
+			GroupLocalService.class);
 
 		long depotGroupId = RandomTestUtil.randomLong();
 
 		Group depotGroup = _getDepotGroup(depotGroupId);
 
-		PowerMockito.when(
-			GroupLocalServiceUtil.getGroup(Matchers.anyLong())
+		ReflectionTestUtil.setFieldValue(
+			GroupLocalServiceUtil.class, "_service", groupLocalService);
+
+		Mockito.when(
+			groupLocalService.getGroup(Matchers.anyLong())
 		).thenReturn(
 			depotGroup
 		);
 
-		PowerMockito.mockStatic(DepotEntryServiceUtil.class);
+		DepotEntryService depotEntryService = Mockito.mock(
+			DepotEntryService.class);
 
 		List<DepotEntry> depotEntries = _getGroupConnectedDepotEntries(
 			depotGroupId);
 
-		PowerMockito.when(
-			DepotEntryServiceUtil.getGroupConnectedDepotEntries(
+		ReflectionTestUtil.setFieldValue(
+			DepotEntryServiceUtil.class, "_service", depotEntryService);
+
+		Mockito.when(
+			depotEntryService.getGroupConnectedDepotEntries(
 				Matchers.anyLong(), Matchers.anyInt(), Matchers.anyInt())
 		).thenReturn(
 			depotEntries
@@ -82,29 +87,37 @@ public class DLFolderUtilTest {
 
 	@Test(expected = NoSuchFolderException.class)
 	public void testValidateDepotFolderNotConnected() throws PortalException {
-		PowerMockito.mockStatic(GroupLocalServiceUtil.class);
+		GroupLocalService groupLocalService = Mockito.mock(
+			GroupLocalService.class);
 
 		long depotGroupId = RandomTestUtil.randomLong();
 
 		Group depotGroup = _getDepotGroup(depotGroupId);
 
-		PowerMockito.when(
-			GroupLocalServiceUtil.getGroup(Matchers.anyLong())
+		Mockito.when(
+			groupLocalService.getGroup(Matchers.anyLong())
 		).thenReturn(
 			depotGroup
 		);
 
-		PowerMockito.mockStatic(DepotEntryServiceUtil.class);
+		ReflectionTestUtil.setFieldValue(
+			GroupLocalServiceUtil.class, "_service", groupLocalService);
+
+		DepotEntryService depotEntryService = Mockito.mock(
+			DepotEntryService.class);
 
 		List<DepotEntry> depotEntries = _getGroupConnectedDepotEntries(
 			RandomTestUtil.randomLong());
 
-		PowerMockito.when(
-			DepotEntryServiceUtil.getGroupConnectedDepotEntries(
+		Mockito.when(
+			depotEntryService.getGroupConnectedDepotEntries(
 				Matchers.anyLong(), Matchers.anyInt(), Matchers.anyInt())
 		).thenReturn(
 			depotEntries
 		);
+
+		ReflectionTestUtil.setFieldValue(
+			DepotEntryServiceUtil.class, "_service", depotEntryService);
 
 		DLFolderUtil.validateDepotFolder(
 			RandomTestUtil.randomLong(), depotGroup.getGroupId(),
@@ -112,9 +125,9 @@ public class DLFolderUtilTest {
 	}
 
 	private DepotEntry _addDepotEntry(long depotGroupId) {
-		DepotEntry depotEntry = PowerMockito.mock(DepotEntry.class);
+		DepotEntry depotEntry = Mockito.mock(DepotEntry.class);
 
-		PowerMockito.doReturn(
+		Mockito.doReturn(
 			depotGroupId
 		).when(
 			depotEntry
@@ -124,15 +137,15 @@ public class DLFolderUtilTest {
 	}
 
 	private Group _getDepotGroup(long groupId) {
-		Group group = PowerMockito.mock(Group.class);
+		Group group = Mockito.mock(Group.class);
 
-		PowerMockito.doReturn(
+		Mockito.doReturn(
 			groupId
 		).when(
 			group
 		).getGroupId();
 
-		PowerMockito.doReturn(
+		Mockito.doReturn(
 			true
 		).when(
 			group

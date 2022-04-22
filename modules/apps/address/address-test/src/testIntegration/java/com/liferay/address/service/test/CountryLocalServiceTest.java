@@ -155,43 +155,27 @@ public class CountryLocalServiceTest {
 
 	@Test
 	public void testSearchCountries() throws Exception {
-		Country country = _addCountry(
-			"a1", "a11", true, RandomTestUtil.randomString());
-
 		String keywords = RandomTestUtil.randomString();
 
-		List<Country> expectedCountries = Arrays.asList(
-			_addCountry("a2", "a22", true, keywords),
-			_addCountry(
-				"a3", "a33", true, keywords + RandomTestUtil.randomString()));
+		Country country1 = _addCountry(
+			"a1", "a11", true, RandomTestUtil.randomString());
 
-		_addCountry("a4", "a44", false, RandomTestUtil.randomString());
+		Country country2 = _addCountry("a2", "a22", true, keywords);
+		Country country3 = _addCountry(
+			"a3", "a33", true, keywords + RandomTestUtil.randomString());
+		Country country4 = _addCountry(
+			"a4", "a44", false, keywords + RandomTestUtil.randomString());
 
-		BaseModelSearchResult<Country> baseModelSearchResult =
-			_countryLocalService.searchCountries(
-				country.getCompanyId(), true, keywords, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS,
-				OrderByComparatorFactoryUtil.create("Country", "name", true));
-
-		Assert.assertEquals(
-			expectedCountries.size(), baseModelSearchResult.getLength());
-		Assert.assertEquals(
-			expectedCountries, baseModelSearchResult.getBaseModels());
+		_testSearchCountries(keywords, true, country2, country3);
+		_testSearchCountries(keywords, false, country4);
+		_testSearchCountries(keywords, null, country2, country3, country4);
 
 		String localizedCountryName = RandomTestUtil.randomString();
 
 		_countryLocalService.updateCountryLocalization(
-			country, "de_DE", localizedCountryName);
+			country1, "de_DE", localizedCountryName);
 
-		baseModelSearchResult = _countryLocalService.searchCountries(
-			country.getCompanyId(), true, localizedCountryName,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-
-		Assert.assertEquals(1, baseModelSearchResult.getLength());
-
-		List<Country> countries = baseModelSearchResult.getBaseModels();
-
-		Assert.assertEquals(country, countries.get(0));
+		_testSearchCountries(localizedCountryName, true, country1);
 	}
 
 	@Test
@@ -309,6 +293,28 @@ public class CountryLocalServiceTest {
 			Assert.assertEquals(
 				expectedCountries.get(start + i), actualCountries.get(i));
 		}
+	}
+
+	private void _testSearchCountries(
+			String keywords, Boolean active, Country... expectedCountries)
+		throws Exception {
+
+		List<Country> expectedCountriesList = Arrays.asList(expectedCountries);
+
+		OrderByComparator<Country> orderByComparator =
+			OrderByComparatorFactoryUtil.create("Country", "name", true);
+
+		Arrays.sort(expectedCountries, orderByComparator);
+
+		BaseModelSearchResult<Country> baseModelSearchResult =
+			_countryLocalService.searchCountries(
+				TestPropsValues.getCompanyId(), active, keywords,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, orderByComparator);
+
+		Assert.assertEquals(
+			expectedCountriesList.size(), baseModelSearchResult.getLength());
+		Assert.assertEquals(
+			expectedCountriesList, baseModelSearchResult.getBaseModels());
 	}
 
 	@Inject

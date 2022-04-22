@@ -161,7 +161,7 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 																add(
 																	dropdownItem -> {
 																		dropdownItem.setData(data);
-																		dropdownItem.setHref(dlViewFileVersionDisplayContext.getDownloadURL(fileEntry, fileVersion, true));
+																		dropdownItem.setHref(DLURLHelperUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK, false, true));
 																		dropdownItem.setLabel(LanguageUtil.get(httpServletRequest, "this-version"));
 																		dropdownItem.setSeparator(true);
 																	});
@@ -197,7 +197,7 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 													data-analytics-file-entry-id="<%= fileEntry.getFileEntryId() %>"
 													data-analytics-file-entry-title="<%= fileEntry.getTitle() %>"
 													displayType="primary"
-													href="<%= dlViewFileVersionDisplayContext.getDownloadURL(fileEntry, fileVersion, false) %>"
+													href="<%= DLURLHelperUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK, false, true) %>"
 													label="download"
 													small="<%= true %>"
 													title='<%= LanguageUtil.format(resourceBundle, "file-size-x", LanguageUtil.formatStorageSize(fileVersion.getSize(), locale), false) %>'
@@ -211,7 +211,7 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 									<div class="btn-group-item" data-analytics-file-entry-id="<%= String.valueOf(fileEntry.getFileEntryId()) %>" data-analytics-file-entry-title="<%= String.valueOf(fileEntry.getTitle()) %>">
 										<clay:link
 											displayType="primary"
-											href="<%= dlViewFileVersionDisplayContext.getDownloadURL(fileEntry, fileVersion, false) %>"
+											href="<%= DLURLHelperUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK, false, true) %>"
 											label="download"
 											small="<%= true %>"
 											title='<%= LanguageUtil.format(resourceBundle, "file-size-x", LanguageUtil.formatStorageSize(fileVersion.getSize(), locale), false) %>'

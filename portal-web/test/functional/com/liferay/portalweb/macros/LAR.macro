@@ -262,7 +262,9 @@ definition {
 			}
 
 			if ("${deleteApplicationData}" == "true") {
-				Check(locator1 = "Checkbox#DEIETED_DATA");
+				Check(
+					checkboxName = "Delete Application Data Before Importing",
+					locator1 = "Checkbox#ANY_CHECKBOX");
 			}
 
 			if ("${importDeletions}" == "true") {

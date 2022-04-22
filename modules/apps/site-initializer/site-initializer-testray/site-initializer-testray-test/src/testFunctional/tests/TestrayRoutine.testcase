@@ -32,23 +32,13 @@ definition {
 	test CanEnterARoutine {
 		ApplicationsMenu.gotoSite(site = "Testray 2");
 
-		Testray.createProjectTestray(key_name = "Liferay Portal 7.2");
+		Testray.createProjectTestray(key_name = "Liferay Portal 7.3");
 
-		Click(
-			key_projectName = "Liferay Portal 7.2",
-			locator1 = "Testray#PROJECT_NAME_BUTTON");
+		Testray.goToProjectPage(projectName = "Liferay Portal 7.3");
 
-		Click(locator1 = "Testray#ADD_PROJECT");
+		TestrayRoutines.createRoutineTestray(key_name = "Routine Test");
 
-		Type(
-			locator1 = "TestrayManage#NEW_OPTION_NAME",
-			value1 = "EE Pull Request");
-
-		Click(locator1 = "TestrayManage#SAVE_BUTTON");
-
-		AssertElementPresent(
-			key_projectName = "EE Pull Request",
-			locator1 = "Testray#PROJECT_NAME_BUTTON");
+		Testray.assertCreatedRoutine(key_name = "Routine Test");
 	}
 
 	@description = "LPS-150165 - Verify the user can access a project on Project Directory."
@@ -56,15 +46,11 @@ definition {
 	test CanEnterOnRoutineTab {
 		ApplicationsMenu.gotoSite(site = "Testray 2");
 
-		Testray.createProjectTestray(key_name = "Liferay Portal 7.2");
+		Testray.createProjectTestray(key_name = "Liferay Portal 7.3");
 
-		Click(
-			key_projectName = "Liferay Portal 7.2",
-			locator1 = "Testray#PROJECT_NAME_BUTTON");
+		Testray.goToProjectPage(projectName = "Liferay Portal 7.3");
 
-		AssertElementPresent(
-			key_pageTabTilte = "Routines",
-			locator1 = "TestrayHeader#PAGE_TAB_TITLE");
+		TestrayHeader.assertTabPageTitle(pageTabTitle = "Routines");
 	}
 
 }

@@ -36,9 +36,9 @@ definition {
 
 		ApplicationsMenu.gotoSite(key_site = "Testray 2");
 
-		Click(locator1 = "TestrayTestflow#TESTFLOW_SIDEBAR");
+		TestrayLayout.clickTestfowOnSidebar();
 
-		AssertElementPresent(locator1 = "TestrayTestflow#STATUS_ABANDONED");
+		TestrayTestflow.assertStatusTasks(key_value = "ABANDONED");
 	}
 
 	@description = "LPS-150028 - Verify if the user will see the results with Complete status."
@@ -50,9 +50,9 @@ definition {
 
 		ApplicationsMenu.gotoSite(key_site = "Testray 2");
 
-		Click(locator1 = "TestrayTestflow#TESTFLOW_SIDEBAR");
+		TestrayLayout.clickTestfowOnSidebar();
 
-		AssertElementPresent(locator1 = "TestrayTestflow#STATUS_COMPLETE");
+		TestrayTestflow.assertStatusTasks(key_value = "COMPLETE");
 	}
 
 	@description = "LPS-150026 - Verify if the user will see the results with In Analysis status."
@@ -62,13 +62,11 @@ definition {
 
 		Testray.createTestrayTasks(value = "1");
 
-		Refresh();
-
 		ApplicationsMenu.gotoSite(key_site = "Testray 2");
 
-		Click(locator1 = "TestrayTestflow#TESTFLOW_SIDEBAR");
+		TestrayLayout.clickTestfowOnSidebar();
 
-		AssertElementPresent(locator1 = "TestrayTestflow#STATUS_IN_ANALYSIS");
+		TestrayTestflow.assertStatusTasks(key_value = "IN ANALYSIS");
 	}
 
 	@description = "LPS-150027 - Verify if the user will see the results with Open status."
@@ -82,9 +80,9 @@ definition {
 
 		ApplicationsMenu.gotoSite(key_site = "Testray 2");
 
-		Click(locator1 = "TestrayTestflow#TESTFLOW_SIDEBAR");
+		TestrayLayout.clickTestfowOnSidebar();
 
-		AssertElementPresent(locator1 = "TestrayTestflow#STATUS_OPEN");
+		TestrayTestflow.assertStatusTasks(key_value = "OPEN");
 	}
 
 }

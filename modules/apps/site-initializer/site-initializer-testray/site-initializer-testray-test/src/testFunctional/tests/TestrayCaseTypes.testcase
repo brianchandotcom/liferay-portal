@@ -32,11 +32,9 @@ definition {
 	test CanAcessCaseTypeModal {
 		ApplicationsMenu.gotoSite(site = "Testray 2");
 
-		Click(locator1 = "TestrayManage#MANAGE_SIDEBAR");
+		TestrayLayout.clickManageOnSidebar();
 
-		Click(
-			key_itemvalue = "Case Types",
-			locator1 = "TestrayDropdown#DROPDOWN_ITEM");
+		TestrayManage.selectOptionsManage(key_itemvalue = "Case Types");
 
 		AssertElementPresent(
 			key_title = "Case Types",
@@ -48,11 +46,9 @@ definition {
 	test CanAddNewCaseTypes {
 		ApplicationsMenu.gotoSite(site = "Testray 2");
 
-		Click(locator1 = "TestrayManage#MANAGE_SIDEBAR");
+		TestrayLayout.clickManageOnSidebar();
 
-		Click(
-			key_itemvalue = "Case Types",
-			locator1 = "TestrayDropdown#DROPDOWN_ITEM");
+		TestrayManage.selectOptionsManage(key_itemvalue = "Case Types");
 
 		Click(locator1 = "TestrayManage#ADD_OPTIONS");
 

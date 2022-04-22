@@ -19,7 +19,7 @@ definition {
 	}
 
 	macro clickResultsOnSidebar {
-		Click(locator1 = "TestrayLayout#RESULTS_SIDEBAR");
+		Click(locator1 = "Testray#RESULTS_SIDEBAR");
 	}
 
 	macro clickTestfowOnSidebar {

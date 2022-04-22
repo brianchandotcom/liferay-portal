@@ -16,26 +16,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>STATUS_IN_ANALYSIS</td>
-	<td>//span[contains(., 'IN ANALYSIS')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>STATUS_ABANDONED</td>
-	<td>//span[contains(., 'ABANDONED')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>STATUS_COMPLETE</td>
-	<td>//span[contains(., 'COMPLETE')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>STATUS_OPEN</td>
-	<td>//span[contains(., 'OPEN')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>STATUS_EDIT</td>
 	<td>//div[contains(@data-field-name, 'dueStatus')]//input[contains(@type, 'text')]</td>
 	<td></td>
@@ -48,6 +28,11 @@
 <tr>
 	<td>ADD_BUILD_TASKS</td>
 	<td>//div[contains(@class, 'panel-group')]//div[contains(@data-field-name, 'buildToTasks')]//input[contains(@type, 'text')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STATUS_TASKS</td>
+	<td>//div[(@class='testray-content')]//div[contains(@class, 'table-responsive') and contains(., '${key_value}')]</td>
 	<td></td>
 </tr>
 </tbody>

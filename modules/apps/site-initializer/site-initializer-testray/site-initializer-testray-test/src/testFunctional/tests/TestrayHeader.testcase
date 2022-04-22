@@ -32,15 +32,15 @@ definition {
 	test CanGoToArchivedRoutines {
 		ApplicationsMenu.gotoSite(site = "Testray 2");
 
-		Testray.createProjectTestray(key_name = "Liferay Portal 7.0");
+		Testray.createProjectTestray(key_name = "Liferay Portal 7.3");
 
-		Testray.goToProjectPage(projectName = "Liferay Portal 7.0");
+		Testray.goToProjectPage(projectName = "Liferay Portal 7.3");
 
 		Testray.goToProjectPage(projectName = "Hotfix Tester");
 
 		Testray.projectTabNavigator(navTabName = "Archived");
 
-		TestrayHeader.assertTabPageTitle(pageTabTilte = "Archived");
+		TestrayHeader.assertTabPageTitle(pageTabTitle = "Archived");
 	}
 
 	@description = "LPS-150531 - Verify by clicking on 'Current' it goes to Current Builds."
@@ -58,7 +58,7 @@ definition {
 
 		Testray.projectTabNavigator(navTabName = "Current");
 
-		TestrayHeader.assertTabPageTitle(pageTabTilte = "Build History");
+		TestrayHeader.assertTabPageTitle(pageTabTitle = "Build History");
 	}
 
 	@description = "LPS-150529 - Verify that user can navigate trough the breadcrumb on header."
@@ -74,13 +74,13 @@ definition {
 
 		Testray.goToProjectPage(projectName = "Hotfix Tester - liferay-hotfix-4079-7310 - 7.3.10.3 FP3 HF4079 - 17611 - 2022-02-11[02:58:43]");
 
-		TestrayHeader.clickBreadcrumbTilte(breadcrumbName = "Hotfix Tester");
+		TestrayHeader.clickBreadcrumbTitle(breadcrumbName = "Hotfix Tester");
 
-		TestrayHeader.assertTabPageTitle(pageTabTilte = "Build History");
+		TestrayHeader.assertTabPageTitle(pageTabTitle = "Build History");
 
-		TestrayHeader.clickBreadcrumbTilte(breadcrumbName = "Liferay Portal 7.3");
+		TestrayHeader.clickBreadcrumbTitle(breadcrumbName = "Liferay Portal 7.3");
 
-		TestrayHeader.assertTabPageTitle(pageTabTilte = "Routines");
+		TestrayHeader.assertTabPageTitle(pageTabTitle = "Routines");
 	}
 
 }

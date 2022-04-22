@@ -34,17 +34,11 @@ definition {
 
 		Testray.createProjectTestray(key_name = "Liferay Portal 7.4");
 
-		Click(
-			key_projectName = "Liferay Portal 7.4",
-			locator1 = "Testray#PROJECT_NAME_BUTTON");
+		Testray.goToProjectPage(projectName = "Liferay Portal 7.4");
 
-		Click(
-			key_navTabName = "Suites",
-			locator1 = "Testray#PROJECT_NAVIGATOR_TAB_BUTTON");
+		Testray.projectTabNavigator(navTabName = "Suites");
 
-		AssertElementPresent(
-			key_pageTabTilte = "Suites",
-			locator1 = "TestrayHeader#PAGE_TAB_TITLE");
+		TestrayHeader.assertTabPageTitle(pageTabTitle = "Suites");
 	}
 
 	@description = "LPS-150819 - Verify if the user can enter a suite."
@@ -54,13 +48,9 @@ definition {
 
 		Testray.createProjectTestray(key_name = "Liferay Portal 7.4");
 
-		Click(
-			key_projectName = "Liferay Portal 7.4",
-			locator1 = "Testray#PROJECT_NAME_BUTTON");
+		Testray.goToProjectPage(projectName = "Liferay Portal 7.4");
 
-		Click(
-			key_navTabName = "Suites",
-			locator1 = "Testray#PROJECT_NAVIGATOR_TAB_BUTTON");
+		Testray.projectTabNavigator(navTabName = "Suites");
 
 		TestraySuites.createSuiteTestray();
 

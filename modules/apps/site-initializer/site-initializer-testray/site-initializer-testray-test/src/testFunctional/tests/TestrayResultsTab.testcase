@@ -32,19 +32,13 @@ definition {
 	test CanAcessCasesPage {
 		ApplicationsMenu.gotoSite(site = "Testray 2");
 
-		Testray.createProjectTestray(key_name = "Liferay Portal 7.2");
+		Testray.createProjectTestray(key_name = "Liferay Portal 7.4");
 
-		Click(
-			key_projectName = "Liferay Portal 7.",
-			locator1 = "Testray#PROJECT_NAME_BUTTON");
+		Testray.goToProjectPage(projectName = "Liferay Portal 7.4");
 
-		Click(
-			key_navTabName = "Cases",
-			locator1 = "Testray#PROJECT_NAVIGATOR_TAB_BUTTON");
+		Testray.projectTabNavigator(navTabName = "Cases");
 
-		AssertElementPresent(
-			key_title = "Cases",
-			locator1 = "Testray#NAME_TITLE");
+		Testray.viewOverviewTab(rowValue = "Cases");
 	}
 
 	@description = "LPS-150344 - Verify if when you click on the Requirements tab, the Requirements page is shown."
@@ -52,19 +46,13 @@ definition {
 	test CanAcessRequirementsPage {
 		ApplicationsMenu.gotoSite(site = "Testray 2");
 
-		Testray.createProjectTestray(key_name = "Liferay Portal 7.2");
+		Testray.createProjectTestray(key_name = "Liferay Portal 7.4");
 
-		Click(
-			key_projectName = "Liferay Portal 7.2",
-			locator1 = "Testray#PROJECT_NAME_BUTTON");
+		Testray.goToProjectPage(projectName = "Liferay Portal 7.4");
 
-		Click(
-			key_navTabName = "Requirements",
-			locator1 = "Testray#PROJECT_NAVIGATOR_TAB_BUTTON");
+		Testray.projectTabNavigator(navTabName = "Requirements");
 
-		AssertElementPresent(
-			key_title = "Requirements",
-			locator1 = "Testray#NAME_TITLE");
+		Testray.viewOverviewTab(rowValue = "Requirements");
 	}
 
 	@description = "LPS-150342 - Verify if when you click on the Suites tab, the Suites page is shown."
@@ -72,19 +60,13 @@ definition {
 	test CanAcessSuitesPage {
 		ApplicationsMenu.gotoSite(site = "Testray 2");
 
-		Testray.createProjectTestray(key_name = "Liferay Portal 7.2");
+		Testray.createProjectTestray(key_name = "Liferay Portal 7.4");
 
-		Click(
-			key_projectName = "Liferay Portal 7.2",
-			locator1 = "Testray#PROJECT_NAME_BUTTON");
+		Testray.goToProjectPage(projectName = "Liferay Portal 7.4");
 
-		Click(
-			key_navTabName = "Suites",
-			locator1 = "Testray#PROJECT_NAVIGATOR_TAB_BUTTON");
+		Testray.projectTabNavigator(navTabName = "Suites");
 
-		AssertElementPresent(
-			key_title = "Suites",
-			locator1 = "Testray#NAME_TITLE");
+		Testray.viewOverviewTab(rowValue = "Suites");
 	}
 
 }

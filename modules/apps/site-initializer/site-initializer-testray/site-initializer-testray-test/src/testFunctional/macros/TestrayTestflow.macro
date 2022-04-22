@@ -1,0 +1,9 @@
+definition {
+
+	macro assertStatusTasks {
+		AssertElementPresent(
+			key_value = "${key_value}",
+			locator1 = "TestrayTestflow#STATUS_TASKS");
+	}
+
+}

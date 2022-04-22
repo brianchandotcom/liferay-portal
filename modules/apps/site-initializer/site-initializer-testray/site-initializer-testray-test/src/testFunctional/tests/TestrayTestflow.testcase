@@ -32,7 +32,7 @@ definition {
 	test CanAcessCurrentTab {
 		ApplicationsMenu.gotoSite(site = "Testray 2");
 
-		Click(locator1 = "TestrayTestflow#TESTFLOW_SIDEBAR");
+		TestrayLayout.clickTestfowOnSidebar();
 
 		Click(
 			key_navTabName = "Archived",
@@ -52,7 +52,7 @@ definition {
 	test CanAcessTestflowPage {
 		ApplicationsMenu.gotoSite(site = "Testray 2");
 
-		Click(locator1 = "TestrayTestflow#TESTFLOW_SIDEBAR");
+		TestrayLayout.clickTestfowOnSidebar();
 
 		AssertElementPresent(
 			key_title = "Tasks",

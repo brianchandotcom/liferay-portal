@@ -1,0 +1,85 @@
+@component-name = "portal-solutions"
+definition {
+
+	property osgi.modules.includes = "site-initializer-testray";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Testray 2";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Testray.createTestraySite(siteName = "Testray 2");
+
+		Refresh();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		Testray.tearDownCP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "LPS-150230 - Verify if it is possible to go the Overview tab."
+	@priority = "4"
+	test CanAcessOverviewTab {
+		ApplicationsMenu.gotoSite(site = "Testray 2");
+
+		Testray.createProjectTestray(key_name = "Liferay Portal 7.3");
+
+		Testray.goToProjectPage(projectName = "Liferay Portal 7.3");
+
+		Testray.projectTabNavigator(navTabName = "Overview");
+
+		TestrayHeader.assertTabPageTitle(pageTabTitle = "Overview");
+	}
+
+	@description = "LPS-150231 - Verify if the user can see the creation date."
+	@priority = "3"
+	test CanSeeCreationDate {
+		ApplicationsMenu.gotoSite(site = "Testray 2");
+
+		Testray.createProjectTestray(key_name = "Liferay Portal 7.3");
+
+		Testray.goToProjectPage(projectName = "Liferay Portal 7.3");
+
+		Testray.projectTabNavigator(navTabName = "Overview");
+
+		Testray.viewOverviewTab(rowValue = "Date  Created");
+	}
+
+	@description = "LPS-150232 - Verify if the user can see the creation user."
+	@priority = "3"
+	test CanSeeCreationUser {
+		ApplicationsMenu.gotoSite(site = "Testray 2");
+
+		Testray.createProjectTestray(key_name = "Liferay Portal 7.3");
+
+		Testray.goToProjectPage(projectName = "Liferay Portal 7.3");
+
+		Testray.projectTabNavigator(navTabName = "Overview");
+
+		Testray.viewOverviewTab(rowValue = "Created By");
+	}
+
+	@description = "LPS-150232 - Verify if the user can see the descripion."
+	@priority = "3"
+	test CanSeeProjectDescription {
+		ApplicationsMenu.gotoSite(site = "Testray 2");
+
+		Testray.createProjectTestray(key_name = "Liferay Portal 7.3");
+
+		Testray.goToProjectPage(projectName = "Liferay Portal 7.3");
+
+		Testray.projectTabNavigator(navTabName = "Overview");
+
+		Testray.viewOverviewTab(rowValue = "Description");
+	}
+
+} 

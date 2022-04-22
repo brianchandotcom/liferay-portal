@@ -32,7 +32,7 @@ definition {
 	test CanAcessManageUser {
 		ApplicationsMenu.gotoSite(site = "Testray 2");
 
-		Click(locator1 = "TestrayUser#USER_ICON_SIDEBAR");
+		TestrayLayout.clickUserOnSidebar();
 
 		Click(locator1 = "TestrayUser#MANAGE_ACCOUNT");
 

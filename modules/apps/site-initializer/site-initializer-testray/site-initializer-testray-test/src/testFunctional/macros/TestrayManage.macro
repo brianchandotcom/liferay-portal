@@ -1,0 +1,9 @@
+definition {
+
+	macro selectOptionsManage {
+		Click(
+			key_itemvalue = "${key_itemvalue}",
+			locator1 = "TestrayDropdown#DROPDOWN_ITEM");
+	}
+
+}

@@ -30,6 +30,8 @@ definition {
 	@description = "LPS-149446 - Verify if user can change the Component Page by clicking on Page number selector."
 	@priority = "5"
 	test CanChangeComponentPageByClickingOnNumber {
+		property portal.upstream = "quarantine";
+
 		ApplicationsMenu.gotoSite(site = "Testray 2");
 
 		Testray.createProjectTestray(key_name = "Liferay Portal 7.4");
@@ -50,6 +52,8 @@ definition {
 	@description = "LPS-149446 - Verify if user can change the items per page by clicking on 'Items per Page button'."
 	@priority = "3"
 	test CanChangeItemsShownOnPage {
+		property portal.upstream = "quarantine";
+
 		ApplicationsMenu.gotoSite(site = "Testray 2");
 
 		Testray.createProjectTestray(key_name = "Liferay Portal 7.4");
@@ -76,6 +80,8 @@ definition {
 	@description = "LPS-149446 - Verify if user can go to the next and previous page by clicking on '>' and '<' buttons."
 	@priority = "3"
 	test CanChangePageOnNextAndPrevioustButton {
+		property portal.upstream = "quarantine";
+
 		ApplicationsMenu.gotoSite(site = "Testray 2");
 
 		Testray.createProjectTestray(key_name = "Liferay Portal 7.0");

@@ -34,11 +34,11 @@ definition {
 
 		TestrayLayout.clickTestfowOnSidebar();
 
-		TestrayLayout.assertTabPageTitle(pageTabTilte = "Tasks");
+		TestrayLayout.assertTabPageTitle(pageTabTitle = "Tasks");
 
 		TestrayLayout.clickResultsOnSidebar();
 
-		TestrayLayout.assertTabPageTitle(pageTabTilte = "Projects");
+		TestrayLayout.assertTabPageTitle(pageTabTitle = "Projects");
 	}
 
 	@description = "LPS-150539 - Verify that by clicking in Testray icon on sidebar the user is redirected to the Project Directory page."
@@ -48,11 +48,11 @@ definition {
 
 		TestrayLayout.clickTestfowOnSidebar();
 
-		TestrayLayout.assertTabPageTitle(pageTabTilte = "Tasks");
+		TestrayLayout.assertTabPageTitle(pageTabTitle = "Tasks");
 
 		TestrayLayout.clickLogoOnSidebar();
 
-		TestrayLayout.assertTabPageTitle(pageTabTilte = "Projects");
+		TestrayLayout.assertTabPageTitle(pageTabTitle = "Projects");
 	}
 
 	@description = "LPS-150540 - Verify that by clicking on Manage on sidebar shows a Management Options Dropdown on sidebar."

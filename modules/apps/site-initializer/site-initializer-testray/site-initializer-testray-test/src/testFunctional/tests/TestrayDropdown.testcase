@@ -32,20 +32,20 @@ definition {
 	test CanAcessProjectByDropdown {
 		ApplicationsMenu.gotoSite(site = "Testray 2");
 
-		Testray.createProjectTestray(key_name = "Liferay Portal 7.");
+		Testray.createProjectTestray(key_name = "Liferay Portal 7.4");
 
-		Click(
-			key_projectName = "Liferay Portal 7.",
-			locator1 = "Testray#PROJECT_NAME_BUTTON");
+		Testray.createProjectTestray(key_name = "Liferay Portal 7.3");
+
+		Testray.goToProjectPage(projectName = "Liferay Portal 7.4");
 
 		Click(locator1 = "TestrayDropdown#DROPDOWN_PROJECT");
 
 		Click(
-			key_itemvalue = "Liferay Portal 7.",
+			key_itemvalue = "Liferay Portal 7.3",
 			locator1 = "TestrayDropdown#DROPDOWN_ITEM");
 
 		AssertElementPresent(
-			key_projectName = "Liferay Portal 7.",
+			key_projectName = "Liferay Portal 7.3",
 			locator1 = "TestrayDropdown#PROJECT_NAME_BREADCRUMBS");
 	}
 
@@ -54,11 +54,9 @@ definition {
 	test CanAcessProjectDirectoryByDropdown {
 		ApplicationsMenu.gotoSite(site = "Testray 2");
 
-		Testray.createProjectTestray(key_name = "Liferay Portal 7.");
+		Testray.createProjectTestray(key_name = "Liferay Portal 7.4");
 
-		Click(
-			key_projectName = "Liferay Portal 7.",
-			locator1 = "Testray#PROJECT_NAME_BUTTON");
+		Testray.goToProjectPage(projectName = "Liferay Portal 7.4");
 
 		Click(locator1 = "TestrayDropdown#DROPDOWN_PROJECT");
 
@@ -86,7 +84,7 @@ definition {
 	test CanNotAcessDropdownOnTestfow {
 		ApplicationsMenu.gotoSite(site = "Testray 2");
 
-		Click(locator1 = "TestrayTestflow#TESTFLOW_SIDEBAR");
+		TestrayLayout.clickResultsOnSidebar();
 
 		AssertElementNotPresent(locator1 = "TestrayDropdown#DROPDOWN_PROJECT");
 	}

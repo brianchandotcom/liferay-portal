@@ -11,11 +11,6 @@
 
 <tbody>
 <tr>
-	<td>OPTIONS_MANAGE</td>
-	<td>//span[contains(text(),'Options')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>OPTIONS_MODAL</td>
 	<td>//div[contains(@class, 'modal-content')]</td>
 	<td></td>

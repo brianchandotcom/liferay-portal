@@ -170,4 +170,16 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro assertCreatedRoutine {
+		AssertElementPresent(
+			key_projectName = "${key_name}",
+			locator1 = "Testray#PROJECT_NAME_BUTTON");
+	}
+
+	macro viewOverviewTab {
+		AssertElementPresent(
+			key_rowValue = "${rowValue}",
+			locator1 = "Testray#OVERVIEW_LAYOUT_VALUES");
+	}
+
 }

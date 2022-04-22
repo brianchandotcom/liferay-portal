@@ -10,4 +10,22 @@ definition {
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 	}
 
+	macro assertStatusBuildDisabled {
+		AssertElementPresent(
+			key_item = "${key_item}",
+			locator1 = "TestrayRoutines#STATUS_BUILD_HISTORY_DISABLED");
+	}
+
+	macro clickStatusBuildHistory {
+		Click(
+			key_item = "${key_item}",
+			locator1 = "TestrayRoutines#STATUS_BUILD_HISTORY");
+	}
+
+	macro goToRoutine {
+		Click(
+			key_projectName = "${key_projectName}",
+			locator1 = "Testray#PROJECT_NAME_BUTTON");
+	}
+
 }

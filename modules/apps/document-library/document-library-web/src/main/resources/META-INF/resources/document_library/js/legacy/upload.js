@@ -1179,14 +1179,14 @@ AUI.add(
 										instance._strings.xInvalidFilesUploaded,
 										invalidFilesLength
 									),
-									toastProps: {
-										className: 'alert-full',
-									},
 								});
 
 								Liferay.Util.openToast({
 									autoClose: false,
 									message,
+									toastProps: {
+										className: 'alert-full',
+									},
 									type: 'danger',
 								});
 							}

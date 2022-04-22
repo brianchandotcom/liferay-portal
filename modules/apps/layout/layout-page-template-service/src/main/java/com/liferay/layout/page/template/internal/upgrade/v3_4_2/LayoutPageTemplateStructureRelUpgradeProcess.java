@@ -259,6 +259,10 @@ public class LayoutPageTemplateStructureRelUpgradeProcess
 							fragmentEntryLink.getConfiguration()),
 					fragmentConfigValuesJSONObject, stylesJSONObject);
 
+				if (_isEmpty(fragmentConfigValuesJSONObject)) {
+					continue;
+				}
+
 				_replaceAlign(fragmentConfigValuesJSONObject, stylesJSONObject);
 				_replaceBorderRadius(
 					fragmentConfigValuesJSONObject, stylesJSONObject);

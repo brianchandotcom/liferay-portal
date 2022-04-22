@@ -195,6 +195,55 @@ definition {
 		}
 	}
 
+	@description = "The user can add a web content via Web Content Display widget based on global structure and local template."
+	@priority = "4"
+	test AddWebContentWithGlobalStructureAndLocalTemplate {
+		property testray.component.names = "Web Content Administration";
+
+		task ("Add a web content global structure with a text field") {
+			WebContentNavigator.openWebContentStructuresAdmin(siteURLKey = "global");
+
+			WebContentStructures.addCP(
+				structureDescription = "Global WC Structure Description",
+				structureName = "Global WC Structure Name");
+
+			DataEngine.addField(
+				fieldFieldLabel = "Text",
+				fieldName = "Text");
+
+			WebContentStructures.saveCP();
+		}
+
+		task ("Add a web content template in local site associated to global structure") {
+			WebContentNavigator.openWebContentTemplatesAdmin(siteURLKey = "test-site-name");
+
+			WebContentTemplates.addCP(
+				structureName = "Global WC Structure Name",
+				templateDescription = "Local WC Template Description",
+				templateFieldNames = "Text",
+				templateName = "Local WC Template Name");
+		}
+
+		task ("Add a web content via Web Content Display based on global structure and local template") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			WebContentDisplayPortlet.add(
+				fieldLabelList = "Text",
+				structureName = "Global WC Structure Name",
+				templateName = "Local WC Template Name",
+				webContentTextSingleLine = "Web Content Text",
+				webContentTitle = "Web Content Title");
+		}
+
+		task ("View web content is shown in WCD") {
+			WebContentDisplayPortlet.viewContent(
+				webContentContent = "Web Content Text",
+				webContentTitle = "Web Content Title");
+		}
+	}
+
 	@description = "This is a use case for LPS-70386. View a web content with portlet URL in Web Content Display."
 	@priority = "5"
 	test AddWebContentWithPortletURL {
@@ -797,6 +846,74 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 				webContentContent = "Web Content Content Edit",
 				webContentTitle = "Web Content Title Edit");
 		}
+	}
+
+	@description = "Can edit a web content from global structure in web content display widget."
+	@priority = "4"
+	test EditWebContentFromGlobalStructure {
+		task ("Add a web content structure with a Text field in global site") {
+			WebContentNavigator.openWebContentStructuresAdmin(siteURLKey = "global");
+
+			WebContentStructures.addCP(
+				structureDescription = "Structure Description",
+				structureName = "Global Structure Name");
+
+			DataEngine.addField(
+				fieldFieldLabel = "Text",
+				fieldName = "Text");
+
+			WebContentStructures.saveCP(structureName = "Global WC Structure Name");
+		}
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "global");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "Global WC Structure Name",
+			templateDescription = "Global WC Template Description",
+			templateFieldNames = "Text",
+			templateName = "Global WC Template Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Web Content Display Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Web Content Display Page",
+			widgetName = "Web Content Display");
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name");
+
+		WebContentDisplayPortlet.add(
+			fieldLabelList = "Text",
+			structureName = "Global WC Structure Name",
+			templateName = "Global WC Template Name",
+			webContentTextSingleLine = "WC WebContent Text",
+			webContentTitle = "WC WebContent Title");
+
+		WebContentDisplayPortlet.viewContent(
+			webContentContent = "WC WebContent Text",
+			webContentTitle = "WC WebContent Title");
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Test Site Name");
+
+		WebContentDisplayPortletNavigator.gotoEdit(
+			menuItem = "Edit Web Content",
+			webContentTitle = "WC WebContent Title");
+
+		WebContentDisplayPortlet.edit(
+			webContentTextSingleLine = "WC WebContent Text Edit",
+			webContentTitleEdit = "WC WebContent Title Edit");
+
+		WebContentDisplayPortlet.viewContent(
+			webContentContent = "WC WebContent Text Edit",
+			webContentTitle = "WC WebContent Title Edit");
 	}
 
 	@description = "User can view a specific web content in the search bar in Web Content Display widget."

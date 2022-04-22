@@ -261,6 +261,10 @@ definition {
 				LAR._mirrorWithOverwriting();
 			}
 
+			if ("${importDeletedData}" == "true") {
+				Check(locator1 = "Checkbox#DEIETED_DATA");
+			}
+
 			if ("${importDeletions}" == "true") {
 				Check(locator1 = "Checkbox#DELETIONS");
 			}
@@ -587,6 +591,7 @@ definition {
 			cannotImport = "${cannotImport}",
 			copyAsNew = "${copyAsNew}",
 			failureExpected = "${failureExpected}",
+			importDeletedData = "${importDeletedData}",
 			importDeletions = "${importDeletions}",
 			importPermissions = "${importPermissions}",
 			importSchemaVersionMismatching = "${importSchemaVersionMismatching}",

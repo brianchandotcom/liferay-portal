@@ -139,12 +139,49 @@ definition {
 	}
 
 	@description = "This test covers LPS-141587. It validates that if the 'Delete Application Data Before Importing' option is selected the Doc Lib will not increase in size after the LAR import."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test DLSizeDoesNotIncreaseIfAppDataIsDeletedBeforeImport {
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
-		// TODO LPS-149404
+		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.jpg,Document_2.pdf");
 
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1");
+
+		DMDocument.viewCP(
+			dmDocumentSize = "13 KB",
+			dmDocumentTitle = "Document_1");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_2");
+
+		DMDocument.viewCP(
+			dmDocumentSize = "14 KB",
+			dmDocumentTitle = "Document_2");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		LAR.exportPortlet(larFileName = "DM.portlet.lar");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		LAR.importPortlet(
+			importDeletedData = "true",
+			larFileName = "DM.portlet.lar");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1");
+
+		DMDocument.viewCP(
+			dmDocumentSize = "13 KB",
+			dmDocumentTitle = "Document_1");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_2");
+
+		DMDocument.viewCP(
+			dmDocumentSize = "14 KB",
+			dmDocumentTitle = "Document_2");
 	}
 
 	@description = "This is a use case for LPS-50760."

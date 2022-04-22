@@ -71,9 +71,7 @@ definition {
 			pageName = "Staging DM Page",
 			siteName = "Site Name");
 
-		ProductMenu.gotoLiveSite(
-			remoteStaging = "true",
-			site = "Site Name");
+		Navigator.gotoLiveView(remoteStaging = "true");
 
 		AssertLocation.assertPartialLocation(value1 = "http://localhost:9080/group/remote-site");
 	}

@@ -59,7 +59,7 @@ definition {
 	@priority = "5"
 	test CanAcessServerAdministrationPage {
 		property portal.upstream = "quarantine";
-		
+
 		ApplicationsMenu.gotoSite(site = "Testray 2");
 
 		TestrayLayout.clickManageOnSidebar();
@@ -93,7 +93,7 @@ definition {
 		TestrayLayout.clickManageOnSidebar();
 
 		TestrayManage.selectOptionsManage(key_itemvalue = "Manage User");
-		
+
 		AssertElementPresent(
 			key_title = "Users",
 			locator1 = "Testray#NAME_TITLE");

@@ -67,6 +67,8 @@ definition {
 	@description = "This test covers LPS-72443. It validates that a user can navigate to the remote site using the staging toolbar."
 	@priority = "5"
 	test CanNavigateToRemoteLiveViaToolbar {
+		property test.name.skip.portal.instance = "DMRemoteStagingDM#CanNavigateToRemoteLiveViaToolbar";
+
 		Navigator.gotoSitePage(
 			pageName = "Staging DM Page",
 			siteName = "Site Name");

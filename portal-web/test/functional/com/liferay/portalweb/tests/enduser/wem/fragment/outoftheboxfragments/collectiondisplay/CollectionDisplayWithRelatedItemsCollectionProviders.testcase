@@ -205,7 +205,7 @@ definition {
 			for (var title : list "Category Name 1,Category Name 2,Category Name 3") {
 				AssertTextEquals(
 					key_colPosition = "1",
-					key_element = "//div[@class='row'][${n}]//div[@aria-label='Button']//*[contains(@data-lfr-editable-id,'link')]",
+					key_element = "//div[contains(@class,'row')][${n}]//div[@aria-label='Button']//*[contains(@data-lfr-editable-id,'link')]",
 					key_fragmentName = "Collection Display",
 					key_rowPosition = "1",
 					locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",
@@ -219,7 +219,7 @@ definition {
 			for (var title : list "Category Name 1,Category Name 2") {
 				AssertTextEquals(
 					key_colPosition = "1",
-					key_element = "//div[@class='row'][${n}]//div[@aria-label='Button']//*[contains(@data-lfr-editable-id,'link')]",
+					key_element = "//div[contains(@class,'row')][${n}]//div[@aria-label='Button']//*[contains(@data-lfr-editable-id,'link')]",
 					key_fragmentName = "Collection Display",
 					key_rowPosition = "2",
 					locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",
@@ -230,7 +230,7 @@ definition {
 
 			AssertTextEquals(
 				key_colPosition = "1",
-				key_element = "//div[@class='row']//div[@aria-label='Button']//*[contains(@data-lfr-editable-id,'link')]",
+				key_element = "//div[contains(@class,'row')]//div[@aria-label='Button']//*[contains(@data-lfr-editable-id,'link')]",
 				key_fragmentName = "Collection Display",
 				key_rowPosition = "3",
 				locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",
@@ -619,7 +619,7 @@ definition {
 			for (var title : list "Blogs Entry Title,Web Content Title") {
 				AssertTextEquals(
 					key_colPosition = "1",
-					key_element = "//div[@class='row'][${n}]//div[@aria-label='Button']//*[contains(@data-lfr-editable-id,'link')]",
+					key_element = "//div[contains(@class,'row')][${n}]//div[@aria-label='Button']//*[contains(@data-lfr-editable-id,'link')]",
 					key_fragmentName = "Collection Display",
 					key_rowPosition = "1",
 					locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",
@@ -633,7 +633,7 @@ definition {
 			for (var title : list "Document Title,Web Content Title") {
 				AssertTextEquals(
 					key_colPosition = "1",
-					key_element = "//div[@class='row'][${n}]//div[@aria-label='Button']//*[contains(@data-lfr-editable-id,'link')]",
+					key_element = "//div[contains(@class,'row')][${n}]//div[@aria-label='Button']//*[contains(@data-lfr-editable-id,'link')]",
 					key_fragmentName = "Collection Display",
 					key_rowPosition = "2",
 					locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",
@@ -647,7 +647,7 @@ definition {
 			for (var title : list "Document Title,Blogs Entry Title") {
 				AssertTextEquals(
 					key_colPosition = "1",
-					key_element = "//div[@class='row'][${n}]//div[@aria-label='Button']//*[contains(@data-lfr-editable-id,'link')]",
+					key_element = "//div[contains(@class,'row')][${n}]//div[@aria-label='Button']//*[contains(@data-lfr-editable-id,'link')]",
 					key_fragmentName = "Collection Display",
 					key_rowPosition = "3",
 					locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",

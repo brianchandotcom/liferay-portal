@@ -101,6 +101,7 @@ SiteAdminDisplayContext siteAdminDisplayContext = (SiteAdminDisplayContext)reque
 			<c:when test='<%= Objects.equals(siteAdminDisplayContext.getDisplayStyle(), "icon") %>'>
 				<liferay-ui:search-container-column-text>
 					<clay:vertical-card
+						propsTransformer="js/SiteDropdownDefaultPropsTransformer"
 						verticalCard="<%= new SiteVerticalCard(curGroup, liferayPortletRequest, liferayPortletResponse, searchContainer.getRowChecker(), siteAdminDisplayContext) %>"
 					/>
 				</liferay-ui:search-container-column-text>

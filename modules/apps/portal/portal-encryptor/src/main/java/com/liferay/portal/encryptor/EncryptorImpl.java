@@ -12,9 +12,11 @@
  * details.
  */
 
-package com.liferay.petra.encryptor;
+package com.liferay.portal.encryptor;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.encryptor.Encryptor;
+import com.liferay.portal.kernel.encryptor.EncryptorException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Base64;
@@ -37,12 +39,15 @@ import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.spec.SecretKeySpec;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
  * @author Mika Koivisto
  */
-public class Encryptor {
+@Component(service = Encryptor.class)
+public class EncryptorImpl implements Encryptor {
 
 	public static final String ENCODING = Digester.ENCODING;
 
@@ -57,13 +62,14 @@ public class Encryptor {
 		PropsUtil.get(PropsKeys.COMPANY_ENCRYPTION_KEY_SIZE));
 
 	public static final String PROVIDER_CLASS = GetterUtil.getString(
-		SystemProperties.get(Encryptor.class.getName() + ".provider.class"),
-		Encryptor.SUN_PROVIDER_CLASS);
+		SystemProperties.get(EncryptorImpl.class.getName() + ".provider.class"),
+		EncryptorImpl.SUN_PROVIDER_CLASS);
 
 	public static final String SUN_PROVIDER_CLASS =
 		"com.sun.crypto.provider.SunJCE";
 
-	public static String decrypt(Key key, String encryptedString)
+	@Override
+	public String decrypt(Key key, String encryptedString)
 		throws EncryptorException {
 
 		byte[] encryptedBytes = Base64.decode(encryptedString);
@@ -71,7 +77,8 @@ public class Encryptor {
 		return _decryptUnencodedAsString(key, encryptedBytes);
 	}
 
-	public static byte[] decryptUnencodedAsBytes(Key key, byte[] encryptedBytes)
+	@Override
+	public byte[] decryptUnencodedAsBytes(Key key, byte[] encryptedBytes)
 		throws EncryptorException {
 
 		String algorithm = key.getAlgorithm();
@@ -102,15 +109,15 @@ public class Encryptor {
 		}
 	}
 
-	public static Key deserializeKey(String base64String) {
+	@Override
+	public Key deserializeKey(String base64String) {
 		byte[] bytes = Base64.decode(base64String);
 
-		return new SecretKeySpec(bytes, Encryptor.KEY_ALGORITHM);
+		return new SecretKeySpec(bytes, EncryptorImpl.KEY_ALGORITHM);
 	}
 
-	public static String encrypt(Key key, String plainText)
-		throws EncryptorException {
-
+	@Override
+	public String encrypt(Key key, String plainText) throws EncryptorException {
 		if (key == null) {
 			if (_log.isWarnEnabled()) {
 				_log.warn("Skip encrypting based on a null key");
@@ -124,7 +131,8 @@ public class Encryptor {
 		return Base64.encode(encryptedBytes);
 	}
 
-	public static byte[] encryptUnencoded(Key key, byte[] plainBytes)
+	@Override
+	public byte[] encryptUnencoded(Key key, byte[] plainBytes)
 		throws EncryptorException {
 
 		String algorithm = key.getAlgorithm();
@@ -155,7 +163,8 @@ public class Encryptor {
 		}
 	}
 
-	public static byte[] encryptUnencoded(Key key, String plainText)
+	@Override
+	public byte[] encryptUnencoded(Key key, String plainText)
 		throws EncryptorException {
 
 		try {
@@ -168,16 +177,17 @@ public class Encryptor {
 		}
 	}
 
-	public static Key generateKey() throws EncryptorException {
+	@Override
+	public Key generateKey() throws EncryptorException {
 		return _generateKey(KEY_ALGORITHM);
 	}
 
-	public static String serializeKey(Key key) {
+	@Override
+	public String serializeKey(Key key) {
 		return Base64.encode(key.getEncoded());
 	}
 
-	private static String _decryptUnencodedAsString(
-			Key key, byte[] encryptedBytes)
+	private String _decryptUnencodedAsString(Key key, byte[] encryptedBytes)
 		throws EncryptorException {
 
 		try {
@@ -191,9 +201,7 @@ public class Encryptor {
 		}
 	}
 
-	private static Key _generateKey(String algorithm)
-		throws EncryptorException {
-
+	private Key _generateKey(String algorithm) throws EncryptorException {
 		try {
 			KeyGenerator keyGenerator = KeyGenerator.getInstance(algorithm);
 
@@ -206,12 +214,8 @@ public class Encryptor {
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(Encryptor.class);
+	private static final Log _log = LogFactoryUtil.getLog(EncryptorImpl.class);
 
-	private static final Map<String, Cipher> _decryptCipherMap =
-		new ConcurrentHashMap<>(1, 1F, 1);
-	private static final Map<String, Cipher> _encryptCipherMap =
-		new ConcurrentHashMap<>(1, 1F, 1);
 	private static final Provider _provider;
 
 	static {
@@ -247,5 +251,10 @@ public class Encryptor {
 			throw new ExceptionInInitializerError(reflectiveOperationException);
 		}
 	}
+
+	private final Map<String, Cipher> _decryptCipherMap =
+		new ConcurrentHashMap<>(1, 1F, 1);
+	private final Map<String, Cipher> _encryptCipherMap =
+		new ConcurrentHashMap<>(1, 1F, 1);
 
 }

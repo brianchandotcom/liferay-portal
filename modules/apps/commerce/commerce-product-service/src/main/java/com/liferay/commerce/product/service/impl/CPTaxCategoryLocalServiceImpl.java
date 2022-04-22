@@ -15,6 +15,7 @@
 package com.liferay.commerce.product.service.impl;
 
 import com.liferay.commerce.product.exception.CPTaxCategoryNameException;
+import com.liferay.commerce.product.exception.DuplicateCPTaxCategoryException;
 import com.liferay.commerce.product.model.CPTaxCategory;
 import com.liferay.commerce.product.service.base.CPTaxCategoryLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -73,7 +74,7 @@ public class CPTaxCategoryLocalServiceImpl
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
 
-		validate(nameMap);
+		validate(user.getCompanyId(), 0, externalReferenceCode, nameMap);
 
 		long cpTaxCategoryId = counterLocalService.increment();
 
@@ -186,13 +187,36 @@ public class CPTaxCategoryLocalServiceImpl
 		CPTaxCategory cpTaxCategory = cpTaxCategoryPersistence.findByPrimaryKey(
 			cpTaxCategoryId);
 
-		validate(nameMap);
+		validate(
+			cpTaxCategory.getCompanyId(), cpTaxCategoryId,
+			externalReferenceCode, nameMap);
 
 		cpTaxCategory.setExternalReferenceCode(externalReferenceCode);
 		cpTaxCategory.setNameMap(nameMap);
 		cpTaxCategory.setDescriptionMap(descriptionMap);
 
 		return cpTaxCategoryPersistence.update(cpTaxCategory);
+	}
+
+	protected void validate(
+			long companyId, long cpTaxCategoryId, String externalReferenceCode,
+			Map<Locale, String> nameMap)
+		throws PortalException {
+
+		if (Validator.isNotNull(externalReferenceCode)) {
+			CPTaxCategory cpTaxCategory = cpTaxCategoryPersistence.fetchByC_ERC(
+				companyId, externalReferenceCode);
+
+			if ((cpTaxCategory != null) &&
+				(cpTaxCategory.getCPTaxCategoryId() != cpTaxCategoryId)) {
+
+				throw new DuplicateCPTaxCategoryException(
+					"There is another commerce tax category with external " +
+						"reference code " + externalReferenceCode);
+			}
+		}
+
+		validate(nameMap);
 	}
 
 	protected void validate(Map<Locale, String> nameMap)

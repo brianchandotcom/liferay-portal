@@ -24,6 +24,7 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.commerce.product.exception.CPTaxCategoryNameException" %><%@
+page import="com.liferay.commerce.product.exception.DuplicateCPTaxCategoryException" %><%@
 page import="com.liferay.commerce.product.model.CPTaxCategory" %><%@
 page import="com.liferay.commerce.product.tax.category.web.internal.display.context.CPTaxCategoryDisplayContext" %><%@
 page import="com.liferay.petra.portlet.url.builder.PortletURLBuilder" %><%@

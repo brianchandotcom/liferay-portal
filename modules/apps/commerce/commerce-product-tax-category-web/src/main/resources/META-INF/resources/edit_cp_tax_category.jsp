@@ -42,6 +42,7 @@ else {
 
 	<div class="lfr-form-content">
 		<liferay-ui:error exception="<%= CPTaxCategoryNameException.class %>" message="please-enter-a-valid-name" />
+		<liferay-ui:error exception="<%= DuplicateCPTaxCategoryException.class %>" message="please-enter-a-unique-external-reference-code" />
 
 		<aui:model-context bean="<%= cpTaxCategory %>" model="<%= CPTaxCategory.class %>" />
 

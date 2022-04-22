@@ -1082,6 +1082,7 @@
 		<exception>DuplicateCPDefinitionOptionRelKey</exception>
 		<exception>DuplicateCProduct</exception>
 		<exception>DuplicateCPSpecificationOptionKey</exception>
+		<exception>DuplicateCPTaxCategory</exception>
 		<exception>InvalidCommerceChannelType</exception>
 		<exception>NoSuchSkuContributorCPDefinitionOptionRel</exception>
 	</exceptions>

@@ -16,6 +16,7 @@ package com.liferay.commerce.product.tax.category.web.internal.portlet.action;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.exception.CPTaxCategoryNameException;
+import com.liferay.commerce.product.exception.DuplicateCPTaxCategoryException;
 import com.liferay.commerce.product.exception.NoSuchCPTaxCategoryException;
 import com.liferay.commerce.product.model.CPTaxCategory;
 import com.liferay.commerce.product.service.CPTaxCategoryService;
@@ -78,7 +79,9 @@ public class EditCPTaxCategoryMVCActionCommand extends BaseMVCActionCommand {
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
-			else if (exception instanceof CPTaxCategoryNameException) {
+			else if (exception instanceof CPTaxCategoryNameException ||
+					 exception instanceof DuplicateCPTaxCategoryException) {
+
 				hideDefaultErrorMessage(actionRequest);
 				hideDefaultSuccessMessage(actionRequest);
 

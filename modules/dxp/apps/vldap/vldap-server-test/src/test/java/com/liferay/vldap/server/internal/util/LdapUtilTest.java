@@ -24,12 +24,12 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.powermock.api.mockito.PowerMockito;
+import org.mockito.Mockito;
 
 /**
  * @author Jonathan McCann
  */
-public class LdapUtilTest extends PowerMockito {
+public class LdapUtilTest {
 
 	@ClassRule
 	@Rule
@@ -38,9 +38,9 @@ public class LdapUtilTest extends PowerMockito {
 
 	@Test
 	public void testBuildName() {
-		Company company = mock(Company.class);
+		Company company = Mockito.mock(Company.class);
 
-		when(
+		Mockito.when(
 			company.getWebId()
 		).thenReturn(
 			"liferay.com"

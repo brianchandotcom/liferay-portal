@@ -50,6 +50,28 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-150999. User can navigate to a Dashboard Page after Lifebotics site is created"
+	@priority = "4"
+	test LiferayboticsDashboardPage {
+		property portal.acceptance = "true";
+
+		task ("Go to Liferaybotics Site") {
+			ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		}
+
+		task ("Go to  Dashboard Page on Liferaybotics Site") {
+			Click(
+				labelOption = "Dashboard",
+				locator1 = "Liferaybotics#MENU_LABEL_NAME");
+		}
+
+		task ("Assert the Dashboard Page is present") {
+			AssertElementPresent(
+				key_title = "Latest News",
+				locator1 = "Liferaybotics#DASHBOARD_TITLE");
+		}
+	}
+
 	@description = "This is a test for LPS-150999. User can navigate to a Home Page after Lifebotics site is created"
 	@ignore = "true"
 	@priority = "4"

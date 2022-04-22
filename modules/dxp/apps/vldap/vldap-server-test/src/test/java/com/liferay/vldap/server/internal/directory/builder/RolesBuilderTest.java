@@ -14,17 +14,22 @@
 
 package com.liferay.vldap.server.internal.directory.builder;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
 
 /**
  * @author William Newbury
  */
-@RunWith(PowerMockRunner.class)
 public class RolesBuilderTest extends BaseDirectoryBuilderTestCase {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	@Override

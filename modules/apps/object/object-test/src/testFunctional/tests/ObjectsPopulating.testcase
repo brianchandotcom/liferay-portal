@@ -26,6 +26,8 @@ definition {
 	@description = "LPS-133365 - Verify if it's possible to map an Object field and view its entries in a Field Group"
 	@priority = "4"
 	test CanMapAndViewEntriesForFieldGroup {
+		property portal.upstream = "quarantine";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 214",
 			objectName = "CustomObject214",

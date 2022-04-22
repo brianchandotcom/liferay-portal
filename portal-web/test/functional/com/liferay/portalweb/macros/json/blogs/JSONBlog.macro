@@ -324,6 +324,39 @@ definition {
 		JSONCurlUtil.delete("${curl}");
 	}
 
+	@summary = "This calls the headless API to subscribe to the blog widget"
+	macro subscribeToBlogsWidget {
+		Variables.assertDefined(parameterList = "${groupName}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(site))) {
+			var site = "true";
+		}
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		var groupId = JSONGroupAPI._getGroupIdByName(
+			grandParentGroupName = "${grandParentGroupName}",
+			groupName = "${groupName}",
+			parentGroupName = "${parentGroupName}",
+			site = "${site}");
+
+		var curl = '''
+				${portalURL}/o/headless-delivery/v1.0/sites/${groupId}/blog-postings/subscribe \
+				-H Content-Type: application/json \
+				-u ${userEmailAddress}:${userPassword}
+		''';
+
+		JSONCurlUtil.put("${curl}");
+	}
+
 	@summary = "This calls the JSON WS API to update a blog entry"
 	macro updateEntry {
 		Variables.assertDefined(parameterList = "${entryTitle},${groupName}");

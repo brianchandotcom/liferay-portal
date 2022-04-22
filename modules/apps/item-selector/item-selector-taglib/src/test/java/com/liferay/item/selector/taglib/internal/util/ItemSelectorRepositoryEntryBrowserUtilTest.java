@@ -17,26 +17,26 @@ package com.liferay.item.selector.taglib.internal.util;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
-import com.liferay.item.selector.taglib.ItemSelectorRepositoryEntryBrowserReturnTypeUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.mockito.Mockito;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Roberto Díaz
  */
-@PrepareForTest(ItemSelectorRepositoryEntryBrowserReturnTypeUtil.class)
-@RunWith(PowerMockRunner.class)
-public class ItemSelectorRepositoryEntryBrowserUtilTest extends PowerMockito {
+public class ItemSelectorRepositoryEntryBrowserUtilTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testGetItemSelectorReturnTypeClassNameWithoutResolver()
@@ -75,43 +75,15 @@ public class ItemSelectorRepositoryEntryBrowserUtilTest extends PowerMockito {
 	}
 
 	@Test
-	public void testGetValueWithoutResolver() throws Exception {
-		_initMocks();
-
-		FileEntry fileEntry = mock(FileEntry.class);
-		ThemeDisplay themeDisplay = mock(ThemeDisplay.class);
-
-		Assert.assertEquals(
-			"ItemSelectorRepositoryEntryBrowserReturnTypeUtilValue",
-			ItemSelectorRepositoryEntryBrowserUtil.getValue(
-				null, new FileEntryItemSelectorReturnType(), fileEntry,
-				themeDisplay));
-	}
-
-	@Test
 	public void testGetValueWithResolver() throws Exception {
-		_initMocks();
-
-		FileEntry fileEntry = mock(FileEntry.class);
-		ThemeDisplay themeDisplay = mock(ThemeDisplay.class);
+		FileEntry fileEntry = Mockito.mock(FileEntry.class);
+		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
 
 		Assert.assertEquals(
 			"TestFileEntryItemSelectorReturnTypeResolverValue",
 			ItemSelectorRepositoryEntryBrowserUtil.getValue(
 				new TestFileEntryItemSelectorReturnTypeResolver(),
 				new TestItemSelectorReturnType(), fileEntry, themeDisplay));
-	}
-
-	private void _initMocks() throws Exception {
-		mockStatic(ItemSelectorRepositoryEntryBrowserReturnTypeUtil.class);
-
-		when(
-			ItemSelectorRepositoryEntryBrowserReturnTypeUtil.getValue(
-				Mockito.any(FileEntryItemSelectorReturnType.class),
-				Mockito.any(FileEntry.class), Mockito.any(ThemeDisplay.class))
-		).thenReturn(
-			"ItemSelectorRepositoryEntryBrowserReturnTypeUtilValue"
-		);
 	}
 
 	private class TestFileEntryItemSelectorReturnTypeResolver

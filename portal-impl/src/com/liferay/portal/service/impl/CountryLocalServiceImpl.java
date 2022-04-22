@@ -318,7 +318,7 @@ public class CountryLocalServiceImpl extends CountryLocalServiceBaseImpl {
 	}
 
 	private GroupByStep _getGroupByStep(
-			FromStep fromStep, long companyId, boolean active, String keywords)
+			FromStep fromStep, long companyId, Boolean active, String keywords)
 		throws PortalException {
 
 		JoinStep joinStep = fromStep.from(
@@ -334,8 +334,10 @@ public class CountryLocalServiceImpl extends CountryLocalServiceBaseImpl {
 				Predicate predicate = CountryTable.INSTANCE.companyId.eq(
 					companyId);
 
-				predicate = predicate.and(
-					CountryTable.INSTANCE.active.eq(active));
+				if (active != null) {
+					predicate = predicate.and(
+						CountryTable.INSTANCE.active.eq(active));
+				}
 
 				if (Validator.isNotNull(keywords)) {
 					String[] terms = CustomSQLUtil.keywords(keywords, true);

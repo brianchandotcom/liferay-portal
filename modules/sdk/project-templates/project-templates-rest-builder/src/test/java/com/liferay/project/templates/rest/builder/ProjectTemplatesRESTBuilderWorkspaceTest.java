@@ -130,7 +130,8 @@ public class ProjectTemplatesRESTBuilderWorkspaceTest
 		}
 		else {
 			writeGradlePropertiesInWorkspace(
-				gradleWorkspaceDir, "liferay.workspace.product=portal-7.4-ga16");
+				gradleWorkspaceDir,
+				"liferay.workspace.product=portal-7.4-ga16");
 		}
 
 		File gradleWorkspaceModulesDir = new File(
@@ -228,9 +229,13 @@ public class ProjectTemplatesRESTBuilderWorkspaceTest
 				projectPath = ":modules:" + _name;
 			}
 
-			_testBuildTemplateRESTBuilder(
-				gradleProjectDir, mavenProjectDir, gradleWorkspaceDir, _name,
-				_packageName, projectPath);
+			if (_liferayVersion.startsWith("7.1") ||
+				_liferayVersion.startsWith("7.2")) {
+
+				_testBuildTemplateRESTBuilder(
+					gradleProjectDir, mavenProjectDir, gradleWorkspaceDir,
+					_name, _packageName, projectPath);
+			}
 		}
 	}
 

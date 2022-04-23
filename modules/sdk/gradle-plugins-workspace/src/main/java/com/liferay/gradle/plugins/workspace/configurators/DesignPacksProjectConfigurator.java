@@ -71,22 +71,6 @@ public class DesignPacksProjectConfigurator extends BaseProjectConfigurator {
 	public DesignPacksProjectConfigurator(Settings settings) {
 		super(settings);
 
-		String defaultRootDirNames = GradleUtil.getProperty(
-			settings, getDefaultRootDirPropertyName(), (String)null);
-
-		if (Validator.isNotNull(defaultRootDirNames)) {
-			_defaultRootDirs = new HashSet<>();
-
-			for (String dirName : defaultRootDirNames.split("\\s*,\\s*")) {
-				_defaultRootDirs.add(new File(settings.getRootDir(), dirName));
-			}
-		}
-		else {
-			File dir = new File(settings.getRootDir(), getDefaultRootDirName());
-
-			_defaultRootDirs = Collections.singleton(dir);
-		}
-
 		_defaultRepositoryEnabled = GradleUtil.getProperty(
 			settings,
 			WorkspacePlugin.PROPERTY_PREFIX + NAME +
@@ -121,11 +105,6 @@ public class DesignPacksProjectConfigurator extends BaseProjectConfigurator {
 		_configureTaskDesignPack(project, zipDesignPackTask);
 
 		_configureTaskWarForZipDesignPack(project, zipDesignPackTask);
-	}
-
-	@Override
-	public Iterable<File> getDefaultRootDirs() {
-		return _defaultRootDirs;
 	}
 
 	@Override
@@ -396,6 +375,5 @@ public class DesignPacksProjectConfigurator extends BaseProjectConfigurator {
 	private static final boolean _DEFAULT_REPOSITORY_ENABLED = true;
 
 	private final boolean _defaultRepositoryEnabled;
-	private final Set<File> _defaultRootDirs;
 
 }

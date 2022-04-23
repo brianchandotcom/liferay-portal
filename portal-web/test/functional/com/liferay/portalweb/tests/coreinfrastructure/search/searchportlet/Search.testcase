@@ -3053,6 +3053,67 @@ definition {
 		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "Apple,Banana,Cantaloupe");
 	}
 
+	test ViewSortWidgetConfigurationFeatureFlagUI {
+		property custom.properties = "feature.flag.LPS-134052=false";
+
+		for (var title : list "Banana,Apple,Cherry") {
+			JSONWebcontent.addWebContent(
+				content = "Content ",
+				groupName = "Guest",
+				title = "${title}");
+		}
+
+		SearchPortlets.searchEmbedded(searchTerm = "Content");
+
+		SearchPortlets.addWidgets(searchPortletList = "Sort");
+
+		Refresh();
+
+		Portlet.gotoPortletOptions(
+			portletName = "Sort",
+			portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		AssertElementPresent(locator1 = "Button#ADD_ROW");
+
+		AssertElementNotPresent(locator1 = "Button#TRASH_ENABLED");
+
+		IFrame.closeFrame();
+
+		SearchPortlets.chooseSortOption(sortOption = "Title");
+
+		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "Apple,Banana,Cherry");
+
+		Portlet.shutdownServer();
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "portal-ext-properties-update -Dupdate.properties.original=feature.flag.LPS-134052=false -Dupdate.properties=feature.flag.LPS-134052=true");
+
+		Portlet.startServer(deleteLiferayHome = "false");
+
+		SearchPortlets.searchEmbedded(searchTerm = "Content");
+
+		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "Apple,Banana,Cherry");
+
+		Portlet.gotoPortletOptions(
+			portletName = "Sort",
+			portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		AssertElementPresent(locator1 = "Button#TRASH_ENABLED");
+
+		AssertElementNotPresent(locator1 = "Button#ADD_ROW");
+
+		IFrame.closeFrame();
+
+		SearchPortlets.chooseSortOption(sortOption = "Created");
+
+		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "Cherry,Apple,Banana");
+	}
+
 	@priority = "4"
 	test ViewStagedAndLiveContentInSearchResults {
 		JSONGroup.addGroup(groupName = "Site Name");

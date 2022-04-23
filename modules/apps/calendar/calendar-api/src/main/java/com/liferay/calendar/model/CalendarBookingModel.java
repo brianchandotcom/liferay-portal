@@ -770,16 +770,6 @@ public interface CalendarBookingModel
 	public long getTrashEntryClassPK();
 
 	/**
-	 * Returns the trash handler for this calendar booking.
-	 *
-	 * @return the trash handler for this calendar booking
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler();
-
-	/**
 	 * Returns <code>true</code> if this calendar booking is in the Recycle Bin.
 	 *
 	 * @return <code>true</code> if this calendar booking is in the Recycle Bin; <code>false</code> otherwise

@@ -867,7 +867,8 @@ public class JournalFolderModelImpl
 		}
 
 		com.liferay.portal.kernel.trash.TrashHandler trashHandler =
-			getTrashHandler();
+			com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil.
+				getTrashHandler(getModelClassName());
 
 		if (Validator.isNotNull(
 				trashHandler.getContainerModelClassName(getPrimaryKey()))) {
@@ -911,16 +912,6 @@ public class JournalFolderModelImpl
 		return getPrimaryKey();
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
-		return com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil.
-			getTrashHandler(getModelClassName());
-	}
-
 	@Override
 	public boolean isInTrash() {
 		if (getStatus() == WorkflowConstants.STATUS_IN_TRASH) {
@@ -934,7 +925,8 @@ public class JournalFolderModelImpl
 	@Override
 	public boolean isInTrashContainer() {
 		com.liferay.portal.kernel.trash.TrashHandler trashHandler =
-			getTrashHandler();
+			com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil.
+				getTrashHandler(getModelClassName());
 
 		if ((trashHandler == null) ||
 			Validator.isNull(

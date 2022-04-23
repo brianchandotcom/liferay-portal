@@ -793,18 +793,6 @@ public class CalendarBookingWrapper
 	}
 
 	/**
-	 * Returns the trash handler for this calendar booking.
-	 *
-	 * @return the trash handler for this calendar booking
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
-		return model.getTrashHandler();
-	}
-
-	/**
 	 * Returns the user ID of this calendar booking.
 	 *
 	 * @return the user ID of this calendar booking

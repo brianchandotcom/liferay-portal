@@ -546,18 +546,6 @@ public class MBThreadWrapper
 	}
 
 	/**
-	 * Returns the trash handler for this message boards thread.
-	 *
-	 * @return the trash handler for this message boards thread
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
-		return model.getTrashHandler();
-	}
-
-	/**
 	 * Returns the user ID of this message boards thread.
 	 *
 	 * @return the user ID of this message boards thread

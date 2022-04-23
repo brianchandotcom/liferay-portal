@@ -426,18 +426,6 @@ public class WikiNodeWrapper
 	}
 
 	/**
-	 * Returns the trash handler for this wiki node.
-	 *
-	 * @return the trash handler for this wiki node
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
-		return model.getTrashHandler();
-	}
-
-	/**
 	 * Returns the user ID of this wiki node.
 	 *
 	 * @return the user ID of this wiki node

@@ -287,18 +287,6 @@ public class ReadingTimeEntryWrapper
 	}
 
 	/**
-	 * Returns the trash handler for this reading time entry.
-	 *
-	 * @return the trash handler for this reading time entry
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
-		return model.getTrashHandler();
-	}
-
-	/**
 	 * Returns the uuid of this reading time entry.
 	 *
 	 * @return the uuid of this reading time entry

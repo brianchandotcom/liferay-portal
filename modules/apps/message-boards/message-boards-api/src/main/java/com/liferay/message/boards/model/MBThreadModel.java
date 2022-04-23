@@ -506,16 +506,6 @@ public interface MBThreadModel
 	public long getTrashEntryClassPK();
 
 	/**
-	 * Returns the trash handler for this message boards thread.
-	 *
-	 * @return the trash handler for this message boards thread
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler();
-
-	/**
 	 * Returns <code>true</code> if this message boards thread is in the Recycle Bin.
 	 *
 	 * @return <code>true</code> if this message boards thread is in the Recycle Bin; <code>false</code> otherwise

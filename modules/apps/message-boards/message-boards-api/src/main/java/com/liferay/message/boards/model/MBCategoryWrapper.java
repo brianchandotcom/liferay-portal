@@ -454,18 +454,6 @@ public class MBCategoryWrapper
 	}
 
 	/**
-	 * Returns the trash handler for this message boards category.
-	 *
-	 * @return the trash handler for this message boards category
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
-		return model.getTrashHandler();
-	}
-
-	/**
 	 * Returns the user ID of this message boards category.
 	 *
 	 * @return the user ID of this message boards category

@@ -534,16 +534,6 @@ public interface WikiPageModel
 	public long getTrashEntryClassPK();
 
 	/**
-	 * Returns the trash handler for this wiki page.
-	 *
-	 * @return the trash handler for this wiki page
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler();
-
-	/**
 	 * Returns <code>true</code> if this wiki page is in the Recycle Bin.
 	 *
 	 * @return <code>true</code> if this wiki page is in the Recycle Bin; <code>false</code> otherwise

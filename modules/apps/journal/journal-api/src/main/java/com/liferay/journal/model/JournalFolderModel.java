@@ -432,16 +432,6 @@ public interface JournalFolderModel
 	public long getTrashEntryClassPK();
 
 	/**
-	 * Returns the trash handler for this journal folder.
-	 *
-	 * @return the trash handler for this journal folder
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler();
-
-	/**
 	 * Returns <code>true</code> if this journal folder is in the Recycle Bin.
 	 *
 	 * @return <code>true</code> if this journal folder is in the Recycle Bin; <code>false</code> otherwise

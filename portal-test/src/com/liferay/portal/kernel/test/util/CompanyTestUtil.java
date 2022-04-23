@@ -95,7 +95,7 @@ public class CompanyTestUtil {
 		CompanyThreadLocal.setCompanyId(companyId);
 
 		LocaleThreadLocal.setDefaultLocale(
-			LocaleUtil.fromLanguageId(defaultLanguageId));
+			LocaleUtil.fromLanguageId(defaultLanguageId, false));
 	}
 
 }

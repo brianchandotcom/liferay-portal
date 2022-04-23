@@ -209,7 +209,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	}
 
 	public SegmentTestClassGroup getSegmentTestClassGroup(int segmentId) {
-		if ((_segmentTestClassGroups.size() - 1) > segmentId) {
+		if ((_segmentTestClassGroups.size() - 1) < segmentId) {
 			return null;
 		}
 

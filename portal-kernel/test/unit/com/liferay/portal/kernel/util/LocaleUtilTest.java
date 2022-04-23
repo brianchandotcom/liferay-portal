@@ -160,7 +160,7 @@ public class LocaleUtilTest {
 			false
 		);
 
-		Assert.assertNotNull(LocaleUtil.fromLanguageId("it_IT", false, false));
+		Assert.assertNotNull(LocaleUtil.fromLanguageId("it_IT", false));
 
 		Assert.assertSame(
 			LocaleUtil.fromLanguageId("it_IT", false),

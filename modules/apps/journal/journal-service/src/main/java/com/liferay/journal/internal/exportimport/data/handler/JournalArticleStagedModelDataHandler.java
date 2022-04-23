@@ -83,6 +83,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.trash.TrashHandler;
+import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -1160,7 +1161,8 @@ public class JournalArticleStagedModelDataHandler
 			return;
 		}
 
-		TrashHandler trashHandler = existingArticle.getTrashHandler();
+		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
+			JournalArticle.class.getName());
 
 		if (trashHandler.isRestorable(existingArticle.getResourcePrimKey())) {
 			trashHandler.restoreTrashEntry(

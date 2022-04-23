@@ -69,7 +69,6 @@ import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 import com.liferay.style.book.constants.StyleBookPortletKeys;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
-import com.liferay.style.book.web.internal.configuration.FFStyleBookConfigurationUtil;
 import com.liferay.style.book.web.internal.constants.StyleBookWebKeys;
 
 import java.util.Collections;
@@ -193,9 +192,6 @@ public class EditStyleBookEntryDisplayContext {
 			"styleBookEntryId", _getStyleBookEntryId()
 		).put(
 			"themeName", _getThemeName()
-		).put(
-			"tokenReuseEnabled",
-			FFStyleBookConfigurationUtil.tokenReuseEnabled()
 		).build();
 	}
 

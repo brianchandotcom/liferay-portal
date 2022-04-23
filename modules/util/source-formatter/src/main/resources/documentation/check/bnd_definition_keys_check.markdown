@@ -1,6 +1,6 @@
 ## BNDDefinitionKeysCheck
 
-Definition keys in *.bnd files have to match either:
+Definition keys in `*.bnd` files have to match either:
 
 * a key defined in
 [BUNDLE\_SPECIFIC\_HEADERS](http://grepcode.com/file/repo1.maven.org/maven2/biz.aQute.bnd/bnd/2.1.0/aQute/bnd/osgi/Constants.java#Constants.0BUNDLE_SPECIFIC_HEADERS),

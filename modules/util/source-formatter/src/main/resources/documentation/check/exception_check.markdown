@@ -33,7 +33,7 @@ Correct:
 
 **Solution 1:**
 
-Catch and throw the specific exceptions properly for the `caller` method:
+Catch and throw the specific exceptions properly for the caller method:
 
 ```java
 public void validateUser(User user)
@@ -60,7 +60,7 @@ private void _validateUserId(long userId) throws InvalidUserIdException {
 
 **Solution 2:**
 
-Throw `java.lang.Exception` for the `called` method:
+Throw `java.lang.Exception` for the called method:
 
 ```java
 public void validateUser(User user) throws Exception {

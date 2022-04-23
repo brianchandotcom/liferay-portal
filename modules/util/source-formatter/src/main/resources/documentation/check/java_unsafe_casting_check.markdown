@@ -1,6 +1,6 @@
 ## JavaUnsafeCastingCheck
 
-To avoid ClassCastExceptions, we want to use
+To avoid `ClassCastExceptions`, we want to use
 `PortalUtil.getLiferayPortletRequest(renderRequest)` or
 `PortalUtil.getLiferayPortletResponse(renderResponse)`.
 

@@ -3,12 +3,12 @@
 ### Naming
 
 #### Follow File Location
-The java package name should match the directory structure of the location of
-the java file.
+The package name should match the directory structure of the location of
+the `.java` file.
 
 #### Example
 
-The correct package for class UserLocalServiceImpl located in
+The correct package for class `UserLocalServiceImpl` located in
 `portal-impl\com\liferay\portal\service\impl\` is
 
 ```java
@@ -17,19 +17,19 @@ package com.liferay.portal.service.impl;
 
 #### Follow Modules Settings
 For modules, the package name should match the `Bundle-SymbolicName` specified
-in the bnd settings.
+in the BND settings.
 
 #### Example
 
 ```
-Bundle-SymbolicName: com.liferay.freemarker.osgi.bridge
+`Bundle-SymbolicName`: com.liferay.freemarker.osgi.bridge
 ```
 The package name for all files inside the module should start with
 `com.liferay.freemarker.osgi.bridge`
 
 #### Exceptions
 
-1. Bundle-SymbolicName ending with `.api` or `.test`
+1. `Bundle-SymbolicName` ending with `.api` or `.test`
 
 ```
 Bundle-SymbolicName: com.liferay.blogs.api
@@ -42,7 +42,7 @@ Bundle-SymbolicName: com.liferay.blogs.test
 The package name for all files inside the module should start with
 `com.liferay.blogs`.
 
-1. Bundle-SymbolicName ending with `.impl`
+1. `Bundle-SymbolicName` ending with `.impl`
 
 ```
 Bundle-SymbolicName: com.liferay.blogs.demo.data.creator.impl

@@ -19,6 +19,6 @@ order.
 
 See also:
 
-- http://jan.baresovi.cz/dr/en/java-collator-spaces
-- https://docs.oracle.com/javase/7/docs/api/java/text/RuleBasedCollator.html
-- https://stackoverflow.com/questions/15230339/collator-compares-strings-weird
+- <http://jan.baresovi.cz/dr/en/java-collator-spaces>
+- <https://docs.oracle.com/javase/7/docs/api/java/text/RuleBasedCollator.html>
+- <https://stackoverflow.com/questions/15230339/collator-compares-strings-weird>

@@ -1,8 +1,8 @@
 ## CompanyIterationCheck
 
 It is required to use one of the following methods:
-`com.liferay.portal.kernel.service.CompanyLocalService#forEachCompany`
-`com.liferay.portal.kernel.service.CompanyLocalService#forEachCompanyId`
+- `com.liferay.portal.kernel.service.CompanyLocalService#forEachCompany`
+- `com.liferay.portal.kernel.service.CompanyLocalService#forEachCompanyId`
 
 When iterating companies. In that way, we ensure that the thread locals are initialized properly.
 

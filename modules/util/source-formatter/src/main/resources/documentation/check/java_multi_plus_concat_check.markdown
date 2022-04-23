@@ -1,9 +1,9 @@
 ## JavaMultiPlusConcatCheck
 
-When concatenating more than 3 String objects, we should make use of
+When concatenating more than 3 `String` objects, we should make use of
 `StringBundler` instead of using the plus operator.
 
-If a `StringBundler` object does not exist and all the String objects are
+If a `StringBundler` object does not exist and all the `String` objects are
 available, we should call the method `StringBundler.concat(String...)`.
 
 #### Example
@@ -32,9 +32,9 @@ sb.append(".");
 _log(sb.toString());
 ```
 
-When concatenating more than 3 arguments, but not all of those are Strings
-object, we should still use `StringBundler.concat` and convert the arguments
-that are not a String object first.
+When concatenating more than 3 arguments, but not all of those are `String`
+objects, we should still use `StringBundler.concat` and convert the arguments
+that are not a `String` object first.
 
 #### Example
 

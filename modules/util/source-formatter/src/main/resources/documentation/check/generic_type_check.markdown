@@ -48,4 +48,4 @@ searchContainer.setResults(results);
 ---
 
 For more information on how to use Generics, see
-https://docs.oracle.com/javase/tutorial/java/generics/index.html
+<https://docs.oracle.com/javase/tutorial/java/generics/index.html>.

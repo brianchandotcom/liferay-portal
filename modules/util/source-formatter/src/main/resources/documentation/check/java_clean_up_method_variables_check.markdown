@@ -1,6 +1,6 @@
 ## JavaCleanUpMethodVariablesCheck
 
-When a *Tag.java contains a `cleanUp` method, we have to make sure that for all
+When a `*Tag.java` contains a `cleanUp` method, we have to make sure that for all
 the variables in the `cleanUp` method, the value is the same as the initial
 value for the variable.
 

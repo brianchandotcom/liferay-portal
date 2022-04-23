@@ -6,7 +6,7 @@ Update calls should be reassigned to the model when the model is used
 afterwards, in case the Hibernate session has a different model than what is
 passed.
 
-See https://docs.jboss.org/hibernate/orm/3.5/javadocs/org/hibernate/Session.html#merge(java.lang.Object)
+See <https://docs.jboss.org/hibernate/orm/3.5/javadocs/org/hibernate/Session.html#merge(java.lang.Object)>.
 
 This can cause squashed updates or single threaded MVCC failures.
 

@@ -28,7 +28,7 @@ Locale locale = LocaleUtil.fromLanguageId(languageId);
 
 ## Registering classes
 
-When the order of Upgrade classes matter, make it clear by breaking them up with
+When the order of `Upgrade` classes matter, make it clear by breaking them up with
 a minor version increment when registering the classes.
 
 ### Example
@@ -56,7 +56,7 @@ registry.register(
 
 ## ServiceUtil
 
-In Upgrade classes, we should not be making calls to `*ServiceUtil` classes.
+In `Upgrade` classes, we should not be making calls to `*ServiceUtil` classes.
 When a column has been added in the new version, it will do so via an
 `ALTER TABLE` sql statement. At this point, in the upgrade code, that column has
 not been added, but the Hibernate XML file assumes it is there in
@@ -67,7 +67,7 @@ We need to do it manually via SQL statements.
 
 ## Timestamp vs. Date
 
-In Upgrade classes use the type `Timestamp` instead of the type `Date`.
+In `Upgrade` classes use the type `Timestamp` instead of the type `Date`.
 Using `Timestamp` can result in a `java.lang.ClassCastException` when using
 `SQL Server`.
 

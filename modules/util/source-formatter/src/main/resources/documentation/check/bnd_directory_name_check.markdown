@@ -8,10 +8,10 @@ should always match the directory name of the application.
 The directories of the modules inside the application
 `\apps\bookmarks` should all start with `bookmarks-`:
 
-* bookmarks-api
-* bookmarks-service
-* bookmarks-test
-* bookmarks-web
+* `bookmarks-api`
+* `bookmarks-service`
+* `bookmarks-test`
+* `bookmarks-web`
 
 ---
 

@@ -4,7 +4,7 @@ Do not set the initial value of `StopWatch` to `null`.
 
 When using `StopWatch` to record time for logging, we should set the initial value of `StopWatch` to `new StopWatch()`.
 
-If the user changes the log level at execution time, the following code can result in a NullPointerException.
+If the user changes the log level at execution time, the following code can result in a `NullPointerException`.
 
 ```java
 StopWatch stopWatch = null;

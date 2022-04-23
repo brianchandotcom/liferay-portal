@@ -1,13 +1,13 @@
 ## JavaUpgradeIndexCheck
 
-Creating or dropping Service Builder indexes manually during an UpgradeProcess
+Creating or dropping Service Builder indexes manually during an `UpgradeProcess`
 class is not necessary. Liferay reviews and syncs all these indexes after
 executing an upgrade process.
 
 ### Special cases
 
 If you need to create a temporary index due to performance reasons you have to
-name it IX_TEMP and drop it after the upgrade logic.
+name it `IX_TEMP` and drop it after the upgrade logic.
 
 #### Example:
 
@@ -24,7 +24,7 @@ finally {
 
 If you want to force the regeneration of Service Builder indexes during an
 upgrade process, you can achieve it using the method:
-_com.liferay.portal.kernel.upgrade.UpgradeProcess.updateIndexes_
+`com.liferay.portal.kernel.upgrade.UpgradeProcess.updateIndexes`.
 
 #### Example
 
@@ -33,7 +33,7 @@ updateIndexes(GroupTable.class);
 ```
 
 If you want to force the regeneration of Service Builder indexes with no upgrade
-process, you can just register a DummyUpgradeStep and that will force the
+process, you can just register a `DummyUpgradeStep` and that will force the
 indexes update.
 
 #### Example

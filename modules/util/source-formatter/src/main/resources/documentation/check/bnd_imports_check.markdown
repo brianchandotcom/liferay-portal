@@ -1,6 +1,6 @@
 ## BNDImportsCheck
 
-Wildcards are not allowed in 'bnd' files.
+Wildcards are not allowed in `bnd` files.
 
 ### Example
 

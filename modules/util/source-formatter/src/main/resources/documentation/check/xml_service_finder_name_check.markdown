@@ -3,7 +3,6 @@
 The rules for finder name:
 
 - Only one finder column: Finder name should start with the combination of comparator prefix and finder column name.
-
 - Two or more finder columns: Finder names in `service.xml` should be combined by finder column names(at least the first character) following by each comparator prefix with delimiter `_`.
 
 ### Comparator prefixes:

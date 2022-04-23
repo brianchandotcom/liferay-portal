@@ -66,11 +66,12 @@ spec:
                 configMapKeyRef:
                   name: google-oidc-credentials-configmap
                   key: GOOGLE_OIDC_CLIENT_SECRET
-            - name: SERVICE_DOMAIN
-              valueFrom:
-                configMapKeyRef:
-                  name: google-oidc-credentials-configmap
-                  key: SERVICE_DOMAIN
+            - name: LCP_SERVICE_DOMAIN
+              value: localdev.me
+            - name: LCP_PROJECT_ID
+              value: dxp
+            - name: WEBSERVER_SERVICE_HOST
+              value: ""
           ports:
           - containerPort: 8080
           - containerPort: 8000

@@ -15,6 +15,7 @@
 package com.liferay.oauth2.application.factory.user.agent;
 
 import com.liferay.k8s.agent.K8sAgent;
+import com.liferay.oauth2.application.factory.CompanyDomainProvider;
 import com.liferay.oauth2.application.factory.OAuth2ApplicationFactoryConstants;
 import com.liferay.oauth2.application.factory.user.agent.configuration.v1.OAuth2ApplicationUserAgentConfiguration;
 import com.liferay.oauth2.provider.constants.ClientProfile;
@@ -30,6 +31,8 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -48,6 +51,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.SortedSet;
 
 import org.osgi.service.component.ComponentConstants;
 import org.osgi.service.component.annotations.Activate;
@@ -67,6 +71,7 @@ public class Oauth2ApplicationFactoryUserAgent {
 
 	@Activate
 	public Oauth2ApplicationFactoryUserAgent(
+			@Reference CompanyDomainProvider companyDomainProvider,
 			@Reference CompanyLocalService companyLocalService,
 			@Reference K8sAgent k8sAgent,
 			@Reference OAuth2ApplicationLocalService
@@ -74,6 +79,13 @@ public class Oauth2ApplicationFactoryUserAgent {
 			@Reference UserLocalService userLocalService,
 			Map<String, Object> properties)
 		throws Exception {
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				StringBundler.concat(
+					"Creating or Updating User Agent profile request with: ",
+					properties));
+		}
 
 		_companyLocalService = companyLocalService;
 		_k8sAgent = k8sAgent;
@@ -84,20 +96,22 @@ public class Oauth2ApplicationFactoryUserAgent {
 			ConfigurableUtil.createConfigurable(
 				OAuth2ApplicationUserAgentConfiguration.class, properties);
 
+		Company company = _companyLocalService.getCompanyById(
+			_oAuth2ApplicationUserAgentConfiguration.companyId());
+
+		SortedSet<String> companyDomains =
+			companyDomainProvider.getCompanyDomains(company.getCompanyId());
+
 		String protocol = GetterUtil.getString(
 			PropsValues.WEB_SERVER_PROTOCOL, Http.HTTP);
-		String serviceDomain = System.getenv("SERVICE_DOMAIN");
 
 		String serviceAddress = StringBundler.concat(
-			protocol, "://", serviceDomain);
+			protocol, "://", companyDomains.first());
 
 		List<String> redirectURIsList = Collections.singletonList(
 			GetterUtil.getString(
 				_oAuth2ApplicationUserAgentConfiguration.redirectURL(),
 				serviceAddress.concat("/o/builtin/oauth2/redirect")));
-
-		Company company = _companyLocalService.getCompanyById(
-			_oAuth2ApplicationUserAgentConfiguration.companyId());
 
 		OAuth2Application oAuth2Application = _getOrAddOAuth2Application(
 			company, redirectURIsList);
@@ -176,12 +190,25 @@ public class Oauth2ApplicationFactoryUserAgent {
 			_getConfigMapName());
 
 		_oAuth2Application = oAuth2Application;
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				StringBundler.concat(
+					"Completed User Agent profile request: ",
+					_oAuth2Application));
+		}
 	}
 
 	@Deactivate
 	protected void deactivate(Integer reason) throws PortalException {
 		if (reason ==
 				ComponentConstants.DEACTIVATION_REASON_CONFIGURATION_DELETED) {
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"Deleting User Agent Request: ", _oAuth2Application));
+			}
 
 			_oAuth2ApplicationLocalService.deleteOAuth2Application(
 				_oAuth2Application);
@@ -256,6 +283,9 @@ public class Oauth2ApplicationFactoryUserAgent {
 		return _oAuth2ApplicationLocalService.updateIcon(
 			oAuth2Application.getOAuth2ApplicationId(), inputStream);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		Oauth2ApplicationFactoryUserAgent.class);
 
 	private final CompanyLocalService _companyLocalService;
 	private final K8sAgent _k8sAgent;

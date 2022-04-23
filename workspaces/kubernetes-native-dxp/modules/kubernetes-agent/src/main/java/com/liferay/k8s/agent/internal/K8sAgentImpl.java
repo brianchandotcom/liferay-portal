@@ -23,6 +23,9 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -30,6 +33,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.VirtualHost;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -266,7 +270,21 @@ public class K8sAgentImpl implements K8sAgent {
 	}
 
 	private void _add(ConfigMap configMap) {
+		if (_log.isDebugEnabled()) {
+			_log.debug(StringBundler.concat("Adding: ", configMap));
+		}
+
 		Map<String, String> data = configMap.getData();
+
+		if (data == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"Data is null, skipping: ", configMap));
+			}
+
+			return;
+		}
 
 		Set<Map.Entry<String, String>> entrySet = data.entrySet();
 
@@ -288,7 +306,21 @@ public class K8sAgentImpl implements K8sAgent {
 	}
 
 	private void _delete(ConfigMap configMap) {
+		if (_log.isDebugEnabled()) {
+			_log.debug(StringBundler.concat("Deleting: ", configMap));
+		}
+
 		Map<String, String> data = configMap.getData();
+
+		if (data == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"Data is null, skipping: ", configMap));
+			}
+
+			return;
+		}
 
 		Set<Map.Entry<String, String>> entrySet = data.entrySet();
 
@@ -331,7 +363,33 @@ public class K8sAgentImpl implements K8sAgent {
 				PropsValues.COMPANY_DEFAULT_WEB_ID);
 		}
 
-		return _companyLocalService.getCompanyByWebId(environment);
+		DynamicQuery dynamicQuery = _companyLocalService.dynamicQuery();
+
+		Property webIdProperty = PropertyFactoryUtil.forName("webId");
+
+		// TODO: rationalize this against the scheme for mapping environments to
+		// virtual instances
+
+		String webId = environment;
+
+		dynamicQuery.add(webIdProperty.eq(webId));
+
+		List<Company> companies = _companyLocalService.dynamicQuery(
+			dynamicQuery);
+
+		if (!companies.isEmpty()) {
+			return companies.get(0);
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				StringBundler.concat(
+					"Could not locate a company by webId: ", webId,
+					". Using the default."));
+		}
+
+		return _companyLocalService.getCompanyByWebId(
+			PropsValues.COMPANY_DEFAULT_WEB_ID);
 	}
 
 	private Configuration _getConfiguration(String pid, String name)
@@ -346,24 +404,31 @@ public class K8sAgentImpl implements K8sAgent {
 	}
 
 	private void _modified(ConfigMap onlyConfigMap, ConfigMap newConfigMap) {
+		if (_log.isDebugEnabled()) {
+			_log.debug(StringBundler.concat("Modifying:", newConfigMap));
+		}
+
 		Map<String, String> data = newConfigMap.getData();
 		ObjectMeta metadata = newConfigMap.getMetadata();
 
-		Set<Map.Entry<String, String>> entrySet = data.entrySet();
+		if (data != null) {
+			Set<Map.Entry<String, String>> entrySet = data.entrySet();
 
-		for (Map.Entry<String, String> entry : entrySet) {
-			String configName = entry.getKey();
+			for (Map.Entry<String, String> entry : entrySet) {
+				String configName = entry.getKey();
 
-			if (!configName.endsWith(_FILE_EXT)) {
-				continue;
-			}
+				if (!configName.endsWith(_FILE_EXT)) {
+					continue;
+				}
 
-			try {
-				_processConfigMapConfigFileEntry(
-					configName, entry.getValue(), newConfigMap.getMetadata());
-			}
-			catch (Exception exception) {
-				_log.error(exception);
+				try {
+					_processConfigMapConfigFileEntry(
+						configName, entry.getValue(),
+						newConfigMap.getMetadata());
+				}
+				catch (Exception exception) {
+					_log.error(exception);
+				}
 			}
 		}
 
@@ -385,7 +450,7 @@ public class K8sAgentImpl implements K8sAgent {
 					String configKey = GetterUtil.getString(
 						properties.get(_KUBERNETES_CONFIG_KEY));
 
-					if (!data.containsKey(configKey)) {
+					if (data == null || !data.containsKey(configKey)) {
 						configuration.delete();
 					}
 				}

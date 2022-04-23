@@ -22,6 +22,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.SortedSet;
 
 import org.osgi.service.component.ComponentConstants;
 import org.osgi.service.component.annotations.Activate;
@@ -31,6 +32,7 @@ import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 import com.liferay.k8s.agent.K8sAgent;
+import com.liferay.oauth2.application.factory.CompanyDomainProvider;
 import com.liferay.oauth2.application.factory.OAuth2ApplicationFactoryConstants;
 import com.liferay.oauth2.application.factory.headless.server.configuration.v1.Oauth2ApplicationHeadlessServerConfiguration;
 import com.liferay.oauth2.provider.constants.ClientProfile;
@@ -47,6 +49,8 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
@@ -78,6 +82,7 @@ public class Oauth2ApplicationFactoryHeadlessServer {
 
 	@Activate
 	public Oauth2ApplicationFactoryHeadlessServer(
+			@Reference CompanyDomainProvider companyDomainProvider,
 			@Reference CompanyLocalService companyLocalService,
 			@Reference K8sAgent k8sAgent,
 			@Reference OAuth2ApplicationLocalService
@@ -87,6 +92,13 @@ public class Oauth2ApplicationFactoryHeadlessServer {
 			@Reference UserLocalService userLocalService,
 			Map<String, Object> properties)
 		throws Exception {
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				StringBundler.concat(
+					"Creating or Updating Headless Server profile request ",
+					"with: ", properties));
+		}
 
 		_companyLocalService = companyLocalService;
 		_k8sAgent = k8sAgent;
@@ -99,20 +111,22 @@ public class Oauth2ApplicationFactoryHeadlessServer {
 			ConfigurableUtil.createConfigurable(
 				Oauth2ApplicationHeadlessServerConfiguration.class, properties);
 
+		Company company = _companyLocalService.getCompanyById(
+			_oAuth2ApplicationHeadlessServerConfiguration.companyId());
+
+		SortedSet<String> companyDomains =
+			companyDomainProvider.getCompanyDomains(company.getCompanyId());
+
 		String protocol = GetterUtil.getString(
 			PropsValues.WEB_SERVER_PROTOCOL, Http.HTTP);
-		String serviceDomain = System.getenv("SERVICE_DOMAIN");
 
 		String serviceAddress = StringBundler.concat(
-			protocol, "://", serviceDomain);
+			protocol, "://", companyDomains.first());
 
 		List<String> redirectURIsList = Collections.singletonList(
 			GetterUtil.getString(
 				_oAuth2ApplicationHeadlessServerConfiguration.redirectURL(),
 				serviceAddress.concat("/o/builtin/oauth2/redirect")));
-
-		Company company = _companyLocalService.getCompanyById(
-			_oAuth2ApplicationHeadlessServerConfiguration.companyId());
 
 		OAuth2Application oAuth2Application = _getOrAddOAuth2Application(
 			company, redirectURIsList);
@@ -189,6 +203,13 @@ public class Oauth2ApplicationFactoryHeadlessServer {
 			_getConfigMapName());
 
 		_oAuth2Application = oAuth2Application;
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				StringBundler.concat(
+					"Completed Headless Server profile request: ",
+					_oAuth2Application));
+		}
 	}
 
 	@Deactivate
@@ -353,6 +374,9 @@ public class Oauth2ApplicationFactoryHeadlessServer {
 				company.getLocale(), _OAUTH2_CLIENT_CREDENTIALS_ROLE_TITLE),
 			null, RoleConstants.TYPE_REGULAR, null, serviceContext);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		Oauth2ApplicationFactoryHeadlessServer.class);
 
 	private final static String _OAUTH2_CLIENT_CREDENTIALS_ROLE =
 		"oauth2-client-credentials-role";

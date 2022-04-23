@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# env | sort
+
 RESULT=$(curl \
   -s \
   --data client_id=$LIFERAY_OAUTH2_HEADLESS_SERVER_CLIENT_ID \

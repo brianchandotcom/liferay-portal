@@ -96,8 +96,6 @@ public class DesignPacksProjectConfigurator extends BaseProjectConfigurator {
 
 	@Override
 	public void apply(Project project) {
-		WorkspaceExtension workspaceExtension = GradleUtil.getExtension(
-			(ExtensionAware)project.getGradle(), WorkspaceExtension.class);
 
 		GradleUtil.applyPlugin(project, LiferayBasePlugin.class);
 		GradleUtil.applyPlugin(project, NodePlugin.class);
@@ -113,7 +111,7 @@ public class DesignPacksProjectConfigurator extends BaseProjectConfigurator {
 		_configureWar(project);
 
 		Zip zipDesignPackTask = _addTaskZipDesignPack(
-			project, DESIGN_PACK_TASK_NAME, workspaceExtension);
+			project, DESIGN_PACK_TASK_NAME);
 
 		zipDesignPackTask.setDescription(
 			"Assembles design pack project (zip).");
@@ -185,8 +183,7 @@ public class DesignPacksProjectConfigurator extends BaseProjectConfigurator {
 
 	@SuppressWarnings("serial")
 	private Zip _addTaskZipDesignPack(
-		Project project, String taskName,
-		final WorkspaceExtension workspaceExtension) {
+		Project project, String taskName) {
 
 		Zip task = GradleUtil.addTask(project, taskName, Zip.class);
 
@@ -195,21 +192,6 @@ public class DesignPacksProjectConfigurator extends BaseProjectConfigurator {
 		_configureTaskDisableUpToDate(task);
 
 		task.into(
-			new Callable<String>() {
-
-				@Override
-				public String call() throws Exception {
-					String bundleDistRootDirName =
-						workspaceExtension.getBundleDistRootDirName();
-
-					if (Validator.isNull(bundleDistRootDirName)) {
-						bundleDistRootDirName = "";
-					}
-
-					return bundleDistRootDirName;
-				}
-
-			},
 			new Closure<Void>(task) {
 
 				@SuppressWarnings("unused")

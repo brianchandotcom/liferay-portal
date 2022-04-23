@@ -100,19 +100,14 @@ public class DesignPacksProjectConfigurator extends BaseProjectConfigurator {
 			(ExtensionAware)project.getGradle(), WorkspaceExtension.class);
 
 		GradleUtil.applyPlugin(project, LiferayBasePlugin.class);
+		GradleUtil.applyPlugin(project, NodePlugin.class);
 		GradleUtil.applyPlugin(project, WarPlugin.class);
-
-		_configureTaskProcessResources(project);
 
 		if (isDefaultRepositoryEnabled()) {
 			GradleUtil.addDefaultRepositories(project);
 		}
 
 		GradleUtil.applyPlugin(project, ThemeBuilderPlugin.class);
-
-		_addDependenciesParentThemes(project);
-
-		_addDependenciesPortalCommonCSS(project);
 
 		_configureTaskBuildTheme(project);
 		_configureWar(project);
@@ -187,30 +182,6 @@ public class DesignPacksProjectConfigurator extends BaseProjectConfigurator {
 	}
 
 	protected static final String NAME = "design.pack";
-
-	private void _addDependenciesParentThemes(Project project) {
-		GradleUtil.addDependency(
-			project, ThemeBuilderPlugin.PARENT_THEMES_CONFIGURATION_NAME,
-			"com.liferay", "com.liferay.frontend.theme.styled",
-			"latest.release");
-		GradleUtil.addDependency(
-			project, ThemeBuilderPlugin.PARENT_THEMES_CONFIGURATION_NAME,
-			"com.liferay", "com.liferay.frontend.theme.unstyled",
-			"latest.release");
-		GradleUtil.addDependency(
-			project, ThemeBuilderPlugin.PARENT_THEMES_CONFIGURATION_NAME,
-			"com.liferay.plugins", "classic-theme", "latest.release");
-	}
-
-	private void _addDependenciesPortalCommonCSS(Project project) {
-		GradleUtil.addDependency(
-			project, CSSBuilderPlugin.PORTAL_COMMON_CSS_CONFIGURATION_NAME,
-			"com.liferay", "com.liferay.frontend.css.common", "latest.release",
-			false);
-		GradleUtil.addDependency(
-			project, CSSBuilderPlugin.PORTAL_COMMON_CSS_CONFIGURATION_NAME,
-			"org.webjars", "font-awesome", "latest.release", false);
-	}
 
 	@SuppressWarnings("serial")
 	private Zip _addTaskZipDesignPack(
@@ -289,7 +260,46 @@ public class DesignPacksProjectConfigurator extends BaseProjectConfigurator {
 		}
 
 		buildThemeTask.setParentName(baseTheme);
-		buildThemeTask.setTemplateExtension("ftl");
+
+		Map<String, String> dependenciesMap =
+			(Map<String, String>)packageJsonMap.get("dependencies");
+
+		Project rootProject = project.getRootProject();
+
+		buildThemeTask.doFirst(new Action<Task>() {
+
+			@Override
+			public void execute(Task task) {
+				for (String key : dependenciesMap.keySet()) {
+
+					project.copy(
+						new Action<CopySpec>() {
+
+							@Override
+							public void execute(CopySpec copySpec) {
+
+								File nodeModule =
+									project.file("node_modules/" + key);
+
+								if (nodeModule.exists()) {
+									copySpec.from(nodeModule);
+								}
+
+								nodeModule =
+									rootProject.file("node_modules/" + key);
+
+								if (nodeModule.exists()) {
+									copySpec.from(nodeModule);
+								}
+
+								copySpec.into(
+									buildThemeTask.getOutputDir() + "/css/" + key);
+								copySpec.setIncludeEmptyDirs(false);
+							}
+						});
+				}
+			}
+		});
 	}
 
 	private void _configureTaskDesignPack(Project project, Zip zipTask) {
@@ -348,36 +358,6 @@ public class DesignPacksProjectConfigurator extends BaseProjectConfigurator {
 					return false;
 				}
 
-			});
-	}
-
-	private void _configureTaskProcessResources(Project project) {
-		project.afterEvaluate(
-			curProject -> {
-				if (GradleUtil.hasTask(
-						curProject, CSSBuilderPlugin.BUILD_CSS_TASK_NAME)) {
-
-					Copy copy = (Copy)GradleUtil.getTask(
-						project, JavaPlugin.PROCESS_RESOURCES_TASK_NAME);
-
-					if (copy != null) {
-						copy.dependsOn(CSSBuilderPlugin.BUILD_CSS_TASK_NAME);
-
-						copy.exclude("**/*.css");
-						copy.exclude("**/*.scss");
-
-						copy.filesMatching(
-							"**/.sass-cache/",
-							fileCopyDetails -> {
-								String path = fileCopyDetails.getPath();
-
-								fileCopyDetails.setPath(
-									path.replace(".sass-cache/", ""));
-							});
-
-						copy.setIncludeEmptyDirs(false);
-					}
-				}
 			});
 	}
 

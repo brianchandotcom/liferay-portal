@@ -16,7 +16,7 @@ XMLFriendlyURLRoutesFileCheck | [Styling](styling_checks.markdown#styling-checks
 XMLHBMFileCheck | [Styling](styling_checks.markdown#styling-checks) | Checks the order of imports in `*-hbm.xml` file. |
 XMLImportsCheck | [Styling](styling_checks.markdown#styling-checks) | Sorts and groups imports in `.xml` files. |
 XMLIndentationCheck | [Styling](styling_checks.markdown#styling-checks) | Finds incorrect indentation in `.xml` files. |
-XMLIvyFileCheck | [Styling](styling_checks.markdown#styling-checks) | Checks the order of dependcies in `ivy.xml` file. |
+XMLIvyFileCheck | [Styling](styling_checks.markdown#styling-checks) | Checks the order of dependencies in `ivy.xml` file. |
 XMLLog4jFileCheck | [Styling](styling_checks.markdown#styling-checks) | Checks the order of categories in `*-log4j.xml` file. |
 XMLLookAndFeelCompatibilityVersionCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Finds missing attribute `version` in `compatibility` element in `*--look-and-feel.xml` file. |
 XMLLookAndFeelFileCheck | [Styling](styling_checks.markdown#styling-checks) | Checks the order of attributes in `*--look-and-feel.xml` file. |

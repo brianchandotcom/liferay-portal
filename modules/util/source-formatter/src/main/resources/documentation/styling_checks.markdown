@@ -20,7 +20,7 @@ CSSPropertiesOrderCheck | .css or .scss | Sorts properties in `.css` files. |
 [ChainingCheck](check/chaining_check.markdown#chainingcheck) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks that chaining is only applied on certain types and methods. |
 CodeownersWhitespaceCheck | CODEOWNERS | Finds missing and unnecessary whitespace in `CODEOWNERS` files. |
 ConfigDefinitionKeysCheck | .cfg or .config | Sorts definition keys in `.config` files. |
-[ConstructorMissingEmptyLineCheck](check/constructor_missing_empty_line_check.markdown#constructormissingemptylinecheck) | .java | Checks for line breaks when assiging variables in constructor. |
+[ConstructorMissingEmptyLineCheck](check/constructor_missing_empty_line_check.markdown#constructormissingemptylinecheck) | .java | Checks for line breaks when assigning variables in constructor. |
 ContractionsCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds contractions in Strings (such as `can't` or `you're`). |
 [CopyrightCheck](check/copyright_check.markdown#copyrightcheck) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Validates `copyright` header. |
 [DefaultComesLastCheck](https://checkstyle.sourceforge.io/config_coding.html#DefaultComesLast) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks that the `default` is after all the cases in a `switch` statement. |
@@ -138,7 +138,7 @@ SizeIsZeroCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds cases of 
 SlantedQuotesCheck | | Finds `slanted quote` (`\u201a`, `\u201b`, `\u201c`, `\u201d`, `\u201e`, `\u201f`, `\u2018` or `\u2019`) characters. |
 SoyEmptyLinesCheck | .soy | Finds missing and unnecessary empty lines. |
 [StringLiteralEqualityCheck](https://checkstyle.sourceforge.io/config_coding.html#StringLiteralEquality) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks that string literals are not used with == or !=. |
-TLDElementOrderCheck | .tld | Checks the order of attributers in `.tld` file. |
+TLDElementOrderCheck | .tld | Checks the order of attributes in `.tld` file. |
 TXTEmptyLinesCheck | .txt | Finds missing and unnecessary empty lines. |
 TXTStylingCheck | .txt | Applies rules to enforce consistency in code style. |
 TernaryOperatorCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds use of ternary operator in `java` files (use if statement instead). |
@@ -158,7 +158,7 @@ XMLFriendlyURLRoutesFileCheck | .action, .function, .jrxml, .macro, .pom, .proje
 XMLHBMFileCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks the order of imports in `*-hbm.xml` file. |
 XMLImportsCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Sorts and groups imports in `.xml` files. |
 XMLIndentationCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .tld, .toggle, .tpl, .wsdl, .xml or .xsd | Finds incorrect indentation in `.xml` files. |
-XMLIvyFileCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks the order of dependcies in `ivy.xml` file. |
+XMLIvyFileCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks the order of dependencies in `ivy.xml` file. |
 XMLLog4jFileCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks the order of categories in `*-log4j.xml` file. |
 XMLLookAndFeelFileCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks the order of attributes in `*--look-and-feel.xml` file. |
 XMLModelHintsFileCheck | .action, .function, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks the order of attributes in `*-model-hints.xml` file. |

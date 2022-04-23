@@ -16,7 +16,7 @@ Java2HTMLCheck | .java | Finds incorrect use of `.java.html` in `.jsp` files. |
 JavaDiamondOperatorCheck | .java | Finds cases where Diamond Operator is not used. |
 JavaDuplicateVariableCheck | .java | Finds variables where a variable with the same name already exists in an extended class. |
 [JavaElseStatementCheck](check/java_else_statement_check.markdown#javaelsestatementcheck) | .java | Finds unnecessary `else` statements (when the `if` statement ends with a `return` statement). |
-JavaEmptyLineAfterSuperCallCheck | .java | Finds missing emptly line after a `super` call. |
+JavaEmptyLineAfterSuperCallCheck | .java | Finds missing empty line after a `super` call. |
 [JavaUnusedSourceFormatterChecksCheck](check/java_unused_source_formatter_checks_check.markdown#javaunusedsourceformattercheckscheck) | .java | Finds `*Check` classes that are not configured. |
 [MapBuilderCheck](check/builder_check.markdown#buildercheck) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks that `ConcurrentHashMapBuilder`, `HashMapBuilder`, `LinkedHashMapBuilder` or `TreeMapBuilder` is used when possible. |
 [PortletURLBuilderCheck](check/builder_check.markdown#buildercheck) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks that `PortletURLBuilder` is used when possible. |

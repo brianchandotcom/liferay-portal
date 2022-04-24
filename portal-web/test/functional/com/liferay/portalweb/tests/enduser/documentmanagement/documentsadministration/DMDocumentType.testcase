@@ -803,14 +803,16 @@ definition {
 			dmDocumentTypeFieldNames = "Text",
 			dmDocumentTypeName = "DM Document Type Name");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		DMDocument.addCP(
+		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.txt",
 			dmDocumentTitle = "DM Document Title",
 			dmDocumentTypeName = "DM Document Type Name",
-			navTab = "Documents and Media",
 			textField = "Test Text");
+
+		AssertConsoleTextNotPresent(value1 = "NoSuchFileEntryMetadataException");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 

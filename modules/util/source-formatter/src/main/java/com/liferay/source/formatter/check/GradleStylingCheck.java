@@ -78,16 +78,15 @@ public class GradleStylingCheck extends BaseFileCheck {
 			char nextChar = content.charAt(openCurlyBracePosition + 1);
 
 			if (nextChar != CharPool.NEW_LINE) {
-				int nextCloseCurlyBracePosition =
-					content.indexOf(StringPool.CLOSE_CURLY_BRACE,
-						openCurlyBracePosition + 1);
+				int nextCloseCurlyBracePosition = content.indexOf(
+					StringPool.CLOSE_CURLY_BRACE, openCurlyBracePosition + 1);
 
 				if (nextCloseCurlyBracePosition == -1) {
 					continue;
 				}
 
-				char nextCloseCurlyBraceChar =
-					content.charAt(nextCloseCurlyBracePosition + 1);
+				char nextCloseCurlyBraceChar = content.charAt(
+					nextCloseCurlyBracePosition + 1);
 
 				if (nextCloseCurlyBraceChar != CharPool.PERIOD) {
 					return StringUtil.insert(
@@ -128,7 +127,7 @@ public class GradleStylingCheck extends BaseFileCheck {
 					continue;
 				}
 
-				if (closeCurlyBracePosition < content.length() - 1) {
+				if (closeCurlyBracePosition < (content.length() - 1)) {
 					nextChar = content.charAt(closeCurlyBracePosition + 1);
 
 					if (nextChar == CharPool.PERIOD) {

@@ -75,6 +75,26 @@ public class GradleStylingCheck extends BaseFileCheck {
 				continue;
 			}
 
+			char nextChar = content.charAt(openCurlyBracePosition + 1);
+
+			if (nextChar != CharPool.NEW_LINE) {
+				int nextCloseCurlyBracePosition =
+					content.indexOf(StringPool.CLOSE_CURLY_BRACE,
+						openCurlyBracePosition + 1);
+
+				if (nextCloseCurlyBracePosition == -1) {
+					continue;
+				}
+
+				char nextCloseCurlyBraceChar =
+					content.charAt(nextCloseCurlyBracePosition + 1);
+
+				if (nextCloseCurlyBraceChar != CharPool.PERIOD) {
+					return StringUtil.insert(
+						content, "\n", openCurlyBracePosition + 1);
+				}
+			}
+
 			int closeCurlyBracePosition = openCurlyBracePosition;
 
 			while (true) {
@@ -108,6 +128,14 @@ public class GradleStylingCheck extends BaseFileCheck {
 					continue;
 				}
 
+				if (closeCurlyBracePosition < content.length() - 1) {
+					nextChar = content.charAt(closeCurlyBracePosition + 1);
+
+					if (nextChar == CharPool.PERIOD) {
+						continue;
+					}
+				}
+
 				previousChar = content.charAt(closeCurlyBracePosition - 1);
 
 				if ((previousChar != CharPool.NEW_LINE) &&
@@ -115,14 +143,6 @@ public class GradleStylingCheck extends BaseFileCheck {
 
 					return StringUtil.insert(
 						content, "\n", closeCurlyBracePosition);
-				}
-
-				char nextChar = content.charAt(openCurlyBracePosition + 1);
-
-				if (nextChar != CharPool.NEW_LINE) {
-
-					return StringUtil.insert(
-						content, "\n", openCurlyBracePosition + 1);
 				}
 			}
 		}

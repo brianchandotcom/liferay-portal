@@ -2,18 +2,34 @@ import { Liferay } from './liferay';
 import { create } from 'pkce';
 
 class WebClient {
-    constructor({
+
+    static FromParameters({
             clientId,
+            homePageURL,
             authorizeURL = Liferay.OAuth.getAuthorizeURL(),
             tokenURL = Liferay.OAuth.getTokenURL(),
-            redirectURL = Liferay.OAuth.getBuiltInRedirectURL()
+            redirectURIs = [Liferay.OAuth.getBuiltInRedirectURL()],
         }) {
+        const webClient = new WebClient();
+        webClient.clientId = clientId;
+        webClient.homePageURL = homePageURL;
+        webClient.authorizeURL = authorizeURL;
+        webClient.tokenURL = tokenURL;
+        webClient.redirectURIs = redirectURIs;
+        webClient.encodedRedirectURL = encodeURIComponent(webClient.redirectURL[0]);
+        return webClient;
+    }
 
-        this.clientId = clientId;
-        this.authorizeURL = authorizeURL;
-        this.tokenURL = tokenURL;
-        this.redirectURL = redirectURL;
-        this.encodedRedirectURL = encodeURIComponent(this.redirectURL);
+    static FromUserAgentApplication(userAgentApplicationId) {
+        const userAgentApplication = Liferay.OAuth.getUserAgentApplication(userAgentApplicationId);
+        const webClient = new WebClient();
+        webClient.clientId = userAgentApplication.clientId;
+        webClient.homePageURL = userAgentApplication.homePageURL;
+        webClient.authorizeURL = Liferay.OAuth.getAuthorizeURL();
+        webClient.tokenURL = Liferay.OAuth.getTokenURL();
+        webClient.redirectURIs = userAgentApplication.redirectURIs
+        webClient.encodedRedirectURL = encodeURIComponent(webClient.redirectURIs[0]);
+        return webClient;
     }
 
     async fetch(url, options = {}) {
@@ -83,37 +99,23 @@ class WebClient {
     }
 
     _fetch(url, options = {}) {
-        if (!url.includes("//")) {
-            return fetch(window.location.origin + "/" + url, {
-                headers: {
-                    "Content-Type": "application/json",
-                    "x-csrf-token": Liferay.authToken,
-                },
-                ...options
-            });
+        if (url.includes("//") && !url.startsWith(this.homePageURL)) {
+            throw new Error(`This client only supports calls to ${this.homePageURL}`);
         }
-        else if (url.startsWith(window.location.origin)) {
-            return fetch(url, {
-                headers: {
-                    "Content-Type": "application/json",
-                    "x-csrf-token": Liferay.authToken,
-                },
-                ...options
-            });
+        if (!url.startsWith(this.homePageURL)) {
+            url = `${this.homePageURL}/${url}`;
         }
-        else {
-            return this.token().then(
-                (response) => {
-                    return fetch(url, {
-                        headers: {
-                            "Content-Type": "application/json",
-                            "Authorization": `Bearer ${response.access_token}`,
-                        },
-                        ...options
-                    });
-                }
-            )
-        }
+        return this.token().then(
+            (response) => {
+                return fetch(url, {
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${response.access_token}`,
+                    },
+                    ...options
+                });
+            }
+        );
     }
 
     _requestNewToken() {

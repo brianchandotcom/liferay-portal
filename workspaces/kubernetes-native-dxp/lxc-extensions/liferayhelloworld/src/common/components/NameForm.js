@@ -1,6 +1,5 @@
 import React from 'react';
-import { Liferay } from '../services/liferay/liferay';
-import WebClient from '../services/liferay/webclient';
+import api from '../../common/services/liferay/api';
 
 class NameForm extends React.Component {
   constructor(props) {
@@ -10,15 +9,7 @@ class NameForm extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
 
-    this.customRestApp = Liferay.OAuth.getUserAgentApplication('customrestservice');
-
-    this.webClient = new WebClient({
-      clientId: this.customRestApp.clientId
-    });
-  }
-
-  webClient() {
-    return this.webClient;
+    this.webClient = props.webClient;
   }
 
   handleChange(event) {
@@ -26,11 +17,11 @@ class NameForm extends React.Component {
   }
 
   handleSubmit(event) {
-    this.webClient.fetch(
+    api(
       'o/headless-admin-user/v1.0/my-user-account'
     ).then(res => {
       this.webClient.fetch(
-        `${this.customRestApp.homePageURL}/random/user/${res.id}`, {
+        `random/user/${res.id}`, {
           method: 'PUT',
           body: this.state.value
         }

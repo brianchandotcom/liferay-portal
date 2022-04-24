@@ -15,7 +15,6 @@
 package com.liferay.oauth2.application.factory.dynamicinclude;
 
 import com.liferay.oauth2.application.factory.OAuth2ApplicationFactoryConstants;
-import com.liferay.oauth2.application.factory.user.agent.Oauth2ApplicationFactoryUserAgent;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
 import com.liferay.petra.string.StringBundler;
@@ -91,6 +90,9 @@ public class OAuth2ApplicationsDynamicInclude implements DynamicInclude {
 					"clientId", oAuth2Application.getClientId()
 				).put(
 					"homePageURL", oAuth2Application.getHomePageURL()
+				).put(
+					"redirectURIs", JSONFactoryUtil.createJSONArray(
+						oAuth2Application.getRedirectURIsList())
 				));
 		}
 

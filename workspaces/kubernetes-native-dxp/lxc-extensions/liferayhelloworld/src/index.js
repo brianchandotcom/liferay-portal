@@ -1,27 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import HelloBar from './routes/hello-bar/pages/HelloBar';
-import HelloFoo from './routes/hello-foo/pages/HelloFoo';
 import HelloWorld from './routes/hello-world/pages/HelloWorld';
 import './common/styles/index.scss';
+import api from './common/services/liferay/api';
 import { Liferay } from './common/services/liferay/liferay';
 import WebClient from './common/services/liferay/webclient';
 import NameForm from './common/components/NameForm';
 
-const App = ({ route }) => {
-	if (route === "hello-bar") {
-		return <HelloBar />;
-	}
-
-	if (route === "hello-foo") {
-		return <HelloFoo />;
-	}
-
+const App = ({ webClient }) => {
 	return (
 		<div>
 			<HelloWorld />
-			<NameForm />
+			<NameForm webClient={webClient} />
 		</div>
 	);
 };
@@ -30,25 +21,17 @@ class WebComponent extends HTMLElement {
 	constructor() {
 		super();
 
-		this.customRestApp = Liferay.OAuth.getUserAgentApplication('customrestservice');
-
-		this.webClient = new WebClient({
-			clientId:  this.customRestApp.clientId
-		});
-	}
-
-	webClient() {
-		return this.webClient;
+		this.webClient = WebClient.FromUserAgentApplication('customrestservice');
 	}
 
 	connectedCallback() {
 		ReactDOM.render(
-			<App route={this.getAttribute("route")} />,
+			<App webClient={this.webClient} />,
 			this
 		);
 
 		if (Liferay.ThemeDisplay.isSignedIn()) {
-			this.webClient.fetch(
+			api(
 				'o/headless-admin-user/v1.0/my-user-account'
 			).then(res => {
 				let nameEls = document.getElementsByClassName('hello-world-name');
@@ -60,7 +43,7 @@ class WebComponent extends HTMLElement {
 			});
 
 			this.webClient.fetch(
-				`${this.customRestApp.homePageURL}/random/number`
+				'random/number'
 			).then(res => {
 				let nameEls = document.getElementsByClassName('random-number');
 				if (nameEls.length > 0) {

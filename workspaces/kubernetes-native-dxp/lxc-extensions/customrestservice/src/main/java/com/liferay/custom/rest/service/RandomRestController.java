@@ -3,7 +3,6 @@ package com.liferay.custom.rest.service;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
 
-import java.util.Arrays;
 import java.util.Optional;
 import java.util.stream.Stream;
 

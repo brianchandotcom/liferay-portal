@@ -26,6 +26,8 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.VirtualHost;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -97,6 +99,15 @@ public class CompanyDomainProvider {
 		String lcpProjectId = System.getenv("LCP_PROJECT_ID");
 		String webserverServiceHost = System.getenv("WEBSERVER_SERVICE_HOST");
 
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				StringBundler.concat(
+					"Attempting to detect LCP Domain from environment using: ",
+					"LCP_SERVICE_DOMAIN=", lcpServiceDomain, " LCP_PROJECT_ID=",
+					lcpProjectId, " WEBSERVER_SERVICE_HOST=",
+					webserverServiceHost));
+		}
+
 		String lcpDomain = null;
 
 		if (Validator.isNotNull(lcpServiceDomain) &&
@@ -114,6 +125,9 @@ public class CompanyDomainProvider {
 			domains.add(lcpDomain);
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CompanyDomainProvider.class);
 
 	private final CompanyLocalService _companyLocalService;
 	private final Portal _portal;

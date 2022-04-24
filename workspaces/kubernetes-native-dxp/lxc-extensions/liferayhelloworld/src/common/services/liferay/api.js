@@ -9,7 +9,20 @@ const baseFetch = async (url, options = {}) => {
 			"x-csrf-token": Liferay.authToken,
 		},
 		...options,
-	});
+	}).then(
+		(response) => {
+			if (response.ok) {
+				const contentType = response.headers.get('content-type');
+				if (contentType && contentType.indexOf('application/json') !== -1) {
+				  return response.json();
+				}
+				else {
+				  return Promise.resolve(response);
+				}
+			}
+			return Promise.reject(response);
+		}
+	);
 };
 
 export default baseFetch;

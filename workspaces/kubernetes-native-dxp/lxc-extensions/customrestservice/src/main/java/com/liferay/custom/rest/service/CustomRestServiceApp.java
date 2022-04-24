@@ -7,6 +7,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class CustomRestServiceApp {
 
 	public static void main(String[] args) {
+//		System.getenv().entrySet().stream().sorted(
+//			(a, b) -> a.getKey().compareTo(b.getKey())
+//		).forEach(
+//			e -> System.out.println(e.getKey() + "=" + e.getValue())
+//		);
+
 		SpringApplication.run(CustomRestServiceApp.class, args);
 	}
 

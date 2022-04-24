@@ -146,7 +146,7 @@ public class DDMStructureContentDashboardItemSubtypeTest {
 				"title",
 				ddmStructureContentDashboardItemSubtype.getFullLabel(
 					LocaleUtil.US)
-			).toJSONString(),
+			).toString(),
 			ddmStructureContentDashboardItemSubtype.toJSONString(
 				LocaleUtil.US));
 	}

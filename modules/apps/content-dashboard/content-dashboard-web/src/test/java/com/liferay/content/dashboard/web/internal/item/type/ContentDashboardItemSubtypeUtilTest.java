@@ -218,7 +218,7 @@ public class ContentDashboardItemSubtypeUtilTest {
 					"className", className
 				).put(
 					"classPK", classPK
-				).toJSONString();
+				).toString();
 			}
 
 		};

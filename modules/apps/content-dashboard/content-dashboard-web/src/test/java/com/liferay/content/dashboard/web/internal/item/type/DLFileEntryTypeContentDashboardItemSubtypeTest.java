@@ -151,7 +151,7 @@ public class DLFileEntryTypeContentDashboardItemSubtypeTest {
 				"title",
 				dLFileEntryTypeContentDashboardItemSubtype.getFullLabel(
 					LocaleUtil.US)
-			).toJSONString(),
+			).toString(),
 			dLFileEntryTypeContentDashboardItemSubtype.toJSONString(
 				LocaleUtil.US));
 	}

@@ -142,7 +142,7 @@ public class DDMStructureContentDashboardItemSubtype
 			"entryClassName", _infoItemReference.getClassName()
 		).put(
 			"title", getFullLabel(locale)
-		).toJSONString();
+		).toString();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

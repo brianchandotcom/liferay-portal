@@ -68,7 +68,7 @@ public class BlogsEntryContentDashboardItemSubtype
 			"entryClassName", BlogsEntry.class.getName()
 		).put(
 			"title", getFullLabel(locale)
-		).toJSONString();
+		).toString();
 	}
 
 }

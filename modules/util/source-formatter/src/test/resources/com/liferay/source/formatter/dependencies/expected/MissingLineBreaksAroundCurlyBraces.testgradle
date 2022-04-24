@@ -7,11 +7,17 @@ buildPluginDescriptor {
 		autoClean = false
 	}
 
+	if (unexpectedLines.findAll{line.contains(it)}.size() > 0) {
+		unexpectedLinesDetected++
+	}
+
 	finalizedBy formatSource
 
 	forcedExclusions "com.ibm.icu:icu4j:2.6.1"
 	goalPrefix = "source-formatter"
 }
+
+//dummy1 { false }
 
 dummy1 {
 	false

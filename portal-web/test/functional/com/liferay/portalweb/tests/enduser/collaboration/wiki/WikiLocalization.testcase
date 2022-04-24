@@ -88,15 +88,7 @@ definition {
 	test CanViewTableOfContentsInJapanese {
 		var portalURL = PropsUtil.get("portal.url");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Localization",
-			configurationName = "Language",
-			configurationScope = "Virtual Instance Scope");
+		PortalSettings.openToConfigInInstanceSettings(portlet = "Language");
 
 		PortalSettings.configureCurrentLanguagesCP(
 			currentPortalLanguages = "English (United Kingdom),Japanese (Japan)",

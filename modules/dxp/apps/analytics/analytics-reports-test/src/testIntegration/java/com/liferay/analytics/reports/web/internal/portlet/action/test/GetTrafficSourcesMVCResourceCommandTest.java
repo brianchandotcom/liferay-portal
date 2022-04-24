@@ -340,8 +340,8 @@ public class GetTrafficSourcesMVCResourceCommandTest {
 								ResourceBundleUtil.getString(
 									resourceBundle, "social")
 							)
-						).toJSONString(),
-						jsonArray.toJSONString());
+						).toString(),
+						jsonArray.toString());
 				});
 		}
 		finally {

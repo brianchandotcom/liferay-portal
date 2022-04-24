@@ -80,8 +80,8 @@ public class HistoricalMetricTest {
 					))
 			).put(
 				"value", historicalMetric.getValue()
-			).toJSONString(),
-			jsonObject.toJSONString());
+			).toString(),
+			jsonObject.toString());
 	}
 
 	private String _formatDate(Date date) {

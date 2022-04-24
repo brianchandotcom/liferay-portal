@@ -58,7 +58,7 @@ public class FileEntryVideoEmbeddableHTMLItemSelectorReturnTypeResolver
 				fileEntry.getFileVersion(), themeDisplay.getRequest())
 		).put(
 			"title", fileEntry.getTitle()
-		).toJSONString();
+		).toString();
 	}
 
 	@Reference

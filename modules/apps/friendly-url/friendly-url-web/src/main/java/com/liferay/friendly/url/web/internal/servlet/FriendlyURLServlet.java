@@ -309,7 +309,7 @@ public class FriendlyURLServlet extends HttpServlet {
 		ServletOutputStream servletOutputStream =
 			httpServletResponse.getOutputStream();
 
-		servletOutputStream.print(jsonObject.toJSONString());
+		servletOutputStream.print(jsonObject.toString());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

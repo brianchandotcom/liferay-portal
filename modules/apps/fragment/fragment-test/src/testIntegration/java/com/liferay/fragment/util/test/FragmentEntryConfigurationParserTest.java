@@ -56,8 +56,8 @@ public class FragmentEntryConfigurationParserTest {
 				_read("expected-configuration-default-values.json"));
 
 		Assert.assertEquals(
-			expectedConfigurationDefaultValuesJSONObject.toJSONString(),
-			configurationDefaultValuesJSONObject.toJSONString());
+			expectedConfigurationDefaultValuesJSONObject.toString(),
+			configurationDefaultValuesJSONObject.toString());
 	}
 
 	@Test
@@ -97,7 +97,7 @@ public class FragmentEntryConfigurationParserTest {
 						language)));
 
 		Assert.assertEquals(
-			expectedConfigurationTranslatedJSONObject.toJSONString(),
+			expectedConfigurationTranslatedJSONObject.toString(),
 			_fragmentEntryConfigurationParser.translateConfiguration(
 				configurationJSONObject, _getResourceBundle(language)));
 	}

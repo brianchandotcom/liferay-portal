@@ -398,7 +398,7 @@ public class ObjectDefinitionGraphQLTest {
 		options.setBody(
 			JSONUtil.put(
 				"query", queryGraphQLField.toString()
-			).toJSONString(),
+			).toString(),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 		options.setLocation("http://localhost:8080/o/graphql");
 		options.setPost(true);

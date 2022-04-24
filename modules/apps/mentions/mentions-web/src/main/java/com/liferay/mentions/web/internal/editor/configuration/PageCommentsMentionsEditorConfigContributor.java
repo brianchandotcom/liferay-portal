@@ -52,7 +52,7 @@ public class PageCommentsMentionsEditorConfigContributor
 				"plid", themeDisplay.getPlid()
 			).put(
 				"strategy", "pageEditorCommentStrategy"
-			).toJSONString()
+			)
 		).buildPortletURL();
 	}
 

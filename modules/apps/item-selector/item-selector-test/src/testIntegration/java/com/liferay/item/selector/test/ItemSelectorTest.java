@@ -62,7 +62,7 @@ public class ItemSelectorTest {
 						JSONUtil.put(
 							"desiredItemSelectorReturnTypes",
 							URLItemSelectorReturnType.class.getName()
-						).toJSONString()))));
+						).toString()))));
 	}
 
 	@Test
@@ -78,7 +78,7 @@ public class ItemSelectorTest {
 						JSONUtil.put(
 							"desiredItemSelectorReturnTypes",
 							URLItemSelectorReturnType.class.getName()
-						).toJSONString())));
+						).toString())));
 
 		Assert.assertEquals(
 			itemSelectorCriteria.toString(), 1, itemSelectorCriteria.size());
@@ -113,14 +113,14 @@ public class ItemSelectorTest {
 						JSONUtil.put(
 							"desiredItemSelectorReturnTypes",
 							URLItemSelectorReturnType.class.getName()
-						).toJSONString()),
+						).toString()),
 					"&_com_liferay_item_selector_web_portlet",
 					"_ItemSelectorPortlet_1_json=",
 					URLCodec.encodeURL(
 						JSONUtil.put(
 							"desiredItemSelectorReturnTypes",
 							DownloadURLItemSelectorReturnType.class.getName()
-						).toJSONString())));
+						).toString())));
 
 		Assert.assertEquals(
 			itemSelectorCriteria.toString(), 2, itemSelectorCriteria.size());
@@ -171,14 +171,14 @@ public class ItemSelectorTest {
 						JSONUtil.put(
 							"desiredItemSelectorReturnTypes",
 							URLItemSelectorReturnType.class.getName()
-						).toJSONString()),
+						).toString()),
 					"&_com_liferay_item_selector_web_portlet",
 					"_ItemSelectorPortlet_1_json=",
 					URLCodec.encodeURL(
 						JSONUtil.put(
 							"desiredItemSelectorReturnTypes",
 							DownloadURLItemSelectorReturnType.class.getName()
-						).toJSONString())));
+						).toString())));
 
 		Assert.assertEquals(
 			itemSelectorCriteria.toString(), 2, itemSelectorCriteria.size());

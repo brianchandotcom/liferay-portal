@@ -16,12 +16,11 @@ package com.liferay.gradle.plugins.workspace.configurators;
 
 import com.liferay.gradle.plugins.LiferayBasePlugin;
 import com.liferay.gradle.plugins.css.builder.CSSBuilderPlugin;
+import com.liferay.gradle.plugins.node.NodePlugin;
 import com.liferay.gradle.plugins.theme.builder.BuildThemeTask;
 import com.liferay.gradle.plugins.theme.builder.ThemeBuilderPlugin;
-import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
 import com.liferay.gradle.plugins.workspace.WorkspacePlugin;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
-import com.liferay.gradle.util.Validator;
 
 import groovy.json.JsonSlurper;
 
@@ -49,13 +48,10 @@ import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.DirectoryProperty;
 import org.gradle.api.initialization.Settings;
 import org.gradle.api.plugins.BasePlugin;
-import org.gradle.api.plugins.ExtensionAware;
-import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.WarPlugin;
 import org.gradle.api.plugins.WarPluginConvention;
 import org.gradle.api.provider.Property;
 import org.gradle.api.specs.Spec;
-import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.TaskOutputs;
 import org.gradle.api.tasks.bundling.War;
@@ -80,16 +76,14 @@ public class DesignPacksProjectConfigurator extends BaseProjectConfigurator {
 
 	@Override
 	public void apply(Project project) {
-
-		GradleUtil.applyPlugin(project, LiferayBasePlugin.class);
-		GradleUtil.applyPlugin(project, NodePlugin.class);
-		GradleUtil.applyPlugin(project, WarPlugin.class);
-
 		if (isDefaultRepositoryEnabled()) {
 			GradleUtil.addDefaultRepositories(project);
 		}
 
+		GradleUtil.applyPlugin(project, LiferayBasePlugin.class);
+		GradleUtil.applyPlugin(project, NodePlugin.class);
 		GradleUtil.applyPlugin(project, ThemeBuilderPlugin.class);
+		GradleUtil.applyPlugin(project, WarPlugin.class);
 
 		_configureTaskBuildTheme(project);
 		_configureWar(project);
@@ -161,9 +155,7 @@ public class DesignPacksProjectConfigurator extends BaseProjectConfigurator {
 	protected static final String NAME = "design.pack";
 
 	@SuppressWarnings("serial")
-	private Zip _addTaskZipDesignPack(
-		Project project, String taskName) {
-
+	private Zip _addTaskZipDesignPack(Project project, String taskName) {
 		Zip task = GradleUtil.addTask(project, taskName, Zip.class);
 
 		task.dependsOn(CSSBuilderPlugin.BUILD_CSS_TASK_NAME);
@@ -208,6 +200,8 @@ public class DesignPacksProjectConfigurator extends BaseProjectConfigurator {
 		BuildThemeTask buildThemeTask = (BuildThemeTask)GradleUtil.getTask(
 			project, ThemeBuilderPlugin.BUILD_THEME_TASK_NAME);
 
+		buildThemeTask.dependsOn(NodePlugin.NPM_INSTALL_TASK_NAME);
+
 		Map<String, Object> packageJsonMap = _getPackageJsonMap(
 			packageJsonFile);
 
@@ -227,40 +221,42 @@ public class DesignPacksProjectConfigurator extends BaseProjectConfigurator {
 
 		Project rootProject = project.getRootProject();
 
-		buildThemeTask.doFirst(new Action<Task>() {
+		buildThemeTask.doFirst(
+			new Action<Task>() {
 
-			@Override
-			public void execute(Task task) {
-				for (String key : dependenciesMap.keySet()) {
+				@Override
+				public void execute(Task task) {
+					for (String key : dependenciesMap.keySet()) {
+						project.copy(
+							new Action<CopySpec>() {
 
-					project.copy(
-						new Action<CopySpec>() {
+								@Override
+								public void execute(CopySpec copySpec) {
+									File nodeModule = project.file(
+										"node_modules/" + key);
 
-							@Override
-							public void execute(CopySpec copySpec) {
+									if (nodeModule.exists()) {
+										copySpec.from(nodeModule);
+									}
 
-								File nodeModule =
-									project.file("node_modules/" + key);
+									nodeModule = rootProject.file(
+										"node_modules/" + key);
 
-								if (nodeModule.exists()) {
-									copySpec.from(nodeModule);
+									if (nodeModule.exists()) {
+										copySpec.from(nodeModule);
+									}
+
+									copySpec.into(
+										buildThemeTask.getOutputDir() +
+											"/css/" + key);
+									copySpec.setIncludeEmptyDirs(false);
 								}
 
-								nodeModule =
-									rootProject.file("node_modules/" + key);
-
-								if (nodeModule.exists()) {
-									copySpec.from(nodeModule);
-								}
-
-								copySpec.into(
-									buildThemeTask.getOutputDir() + "/css/" + key);
-								copySpec.setIncludeEmptyDirs(false);
-							}
-						});
+							});
+					}
 				}
-			}
-		});
+
+			});
 	}
 
 	private void _configureTaskDesignPack(Project project, Zip zipTask) {

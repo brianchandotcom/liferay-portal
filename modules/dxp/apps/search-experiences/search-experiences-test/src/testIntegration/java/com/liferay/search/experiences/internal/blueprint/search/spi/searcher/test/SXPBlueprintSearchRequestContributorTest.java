@@ -126,7 +126,7 @@ public class SXPBlueprintSearchRequestContributorTest {
 						_getHttp(
 							JSONUtil.put(
 								"city", "diamond bar"
-							).toJSONString()));
+							).toString()));
 
 					_assertSearch("[diamond bar city]", "34.94.32.240", "city");
 				}
@@ -143,7 +143,7 @@ public class SXPBlueprintSearchRequestContributorTest {
 						_getHttp(
 							JSONUtil.put(
 								"city", "walnut"
-							).toJSONString()));
+							).toString()));
 
 					_assertSearch("[walnut city]", "91.233.116.229", "city");
 				}

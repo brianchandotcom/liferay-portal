@@ -100,7 +100,7 @@ public class SXPElementResourceTest extends BaseSXPElementResourceTestCase {
 				"description", description
 			).put(
 				"title", title
-			).toJSONString());
+			).toString());
 
 		SXPElement postSXPElement = testPostSXPElement_addSXPElement(
 			sxpElement);

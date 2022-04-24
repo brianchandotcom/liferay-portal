@@ -96,7 +96,7 @@ public class SXPBlueprintResourceTest extends BaseSXPBlueprintResourceTestCase {
 				"description", RandomTestUtil.randomString()
 			).put(
 				"title", RandomTestUtil.randomString()
-			).toJSONString());
+			).toString());
 
 		SXPBlueprint postSXPBlueprint = testPostSXPBlueprint_addSXPBlueprint(
 			sxpBlueprint);

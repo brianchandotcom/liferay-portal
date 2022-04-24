@@ -34,7 +34,7 @@ if (themeDisplay.isSignedIn() && (parts.length > 1)) {
 				"firstName", user.getFirstName()
 			).put(
 				"lastName", user.getLastName()
-			).toJSONString(),
+			).toString(),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 		options.setLocation("https://api.hubspot.com/conversations/v3/visitor-identification/tokens/create?hapikey=" + parts[1]);
 		options.setPost(true);

@@ -129,7 +129,7 @@ public class RankingGetVisibleResultsBuilderTest
 				))
 		).put(
 			"total", 1
-		).toJSONString();
+		).toString();
 	}
 
 	private void _setUpRankingSearchRequestHelper() {

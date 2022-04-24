@@ -80,7 +80,7 @@ public class RankingJSONBuilderTest extends BaseRankingResultsBuilderTestCase {
 			"pinned", false
 		).put(
 			"title", "theTitle"
-		).toJSONString();
+		).toString();
 	}
 
 	private RankingJSONBuilder _rankingJSONBuilder;

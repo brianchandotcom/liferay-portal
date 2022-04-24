@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.trash.kernel.util.TrashUtil;
+import com.liferay.trash.TrashHelper;
 
 import java.io.InputStream;
 
@@ -98,7 +98,7 @@ public class DLFileEntryCTDisplayRenderer
 	@Override
 	public String getTitle(Locale locale, DLFileEntry dlFileEntry) {
 		if (dlFileEntry.isInTrash()) {
-			return TrashUtil.getOriginalTitle(dlFileEntry.getTitle());
+			return _trashHelper.getOriginalTitle(dlFileEntry.getTitle());
 		}
 
 		return dlFileEntry.getTitle();
@@ -141,6 +141,9 @@ public class DLFileEntryCTDisplayRenderer
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private TrashHelper _trashHelper;
 
 	@Reference(policyOption = ReferencePolicyOption.GREEDY)
 	private VideoProcessor _videoProcessor;

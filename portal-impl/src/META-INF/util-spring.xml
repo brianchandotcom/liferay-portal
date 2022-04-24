@@ -364,10 +364,6 @@
 	<bean class="com.liferay.social.kernel.util.SocialRelationTypesUtil" id="com.liferay.social.kernel.util.SocialRelationTypesUtil">
 		<property name="socialRelationTypes" ref="com.liferay.social.kernel.util.SocialRelationTypes" />
 	</bean>
-	<bean class="com.liferay.portlet.trash.util.TrashImpl" id="com.liferay.trash.kernel.util.Trash" />
-	<bean class="com.liferay.trash.kernel.util.TrashUtil" id="com.liferay.trash.kernel.util.TrashUtil">
-		<property name="trash" ref="com.liferay.trash.kernel.util.Trash" />
-	</bean>
 	<bean class="com.liferay.portlet.usersadmin.util.UsersAdminImpl" id="com.liferay.users.admin.kernel.util.UsersAdmin" />
 	<bean class="com.liferay.users.admin.kernel.util.UsersAdminUtil" id="com.liferay.users.admin.kernel.util.UsersAdminUtil">
 		<property name="usersAdmin" ref="com.liferay.users.admin.kernel.util.UsersAdmin" />

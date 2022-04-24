@@ -88,7 +88,7 @@ public class DDMFormFieldValidationExpressionTest {
 					).put(
 						"type", "dateField"
 					)
-				).toJSONString(),
+				).toString(),
 				null));
 	}
 
@@ -111,7 +111,7 @@ public class DDMFormFieldValidationExpressionTest {
 					).put(
 						"type", "dateField"
 					)
-				).toJSONString(),
+				).toString(),
 				null));
 	}
 
@@ -134,7 +134,7 @@ public class DDMFormFieldValidationExpressionTest {
 					).put(
 						"type", "dateField"
 					)
-				).toJSONString(),
+				).toString(),
 				null));
 	}
 

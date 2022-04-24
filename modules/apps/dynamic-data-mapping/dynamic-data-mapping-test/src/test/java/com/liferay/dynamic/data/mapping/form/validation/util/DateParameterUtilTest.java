@@ -220,7 +220,7 @@ public class DateParameterUtilTest {
 			).put(
 				"unit", unit
 			)
-		).toJSONString();
+		).toString();
 	}
 
 }

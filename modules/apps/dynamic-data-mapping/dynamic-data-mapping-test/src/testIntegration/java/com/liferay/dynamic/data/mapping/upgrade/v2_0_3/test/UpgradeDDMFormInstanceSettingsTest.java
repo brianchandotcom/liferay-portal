@@ -191,7 +191,7 @@ public class UpgradeDDMFormInstanceSettingsTest {
 
 		jsonObject.put("fieldValues", fieldValuesJSONArray);
 
-		return jsonObject.toJSONString();
+		return jsonObject.toString();
 	}
 
 	protected JSONArray getAvailableLanguagesJSONArray(String languageId) {

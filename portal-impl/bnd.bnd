@@ -40,8 +40,6 @@ Export-Package:\
 	com.liferay.portlet.documentlibrary.util,\
 	com.liferay.portlet.expando.model.impl,\
 	com.liferay.portlet.layoutsadmin.display.context,\
-	com.liferay.portlet.trash,\
-	com.liferay.portlet.trash.util,\
 	com.liferay.portlet.usersadmin.search
 Import-Package: *
 Include-Resource: classes

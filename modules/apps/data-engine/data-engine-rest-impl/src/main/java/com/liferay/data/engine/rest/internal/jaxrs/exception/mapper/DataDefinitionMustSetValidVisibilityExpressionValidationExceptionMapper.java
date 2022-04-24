@@ -52,7 +52,7 @@ public class
 				mustSetValidVisibilityExpression.getVisibilityExpression()
 			).put(
 				"fieldName", mustSetValidVisibilityExpression.getFieldName()
-			).toJSONString(),
+			).toString(),
 			Response.Status.BAD_REQUEST,
 			mustSetValidVisibilityExpression.getMessage(),
 			"MustSetValidVisibilityExpression");

@@ -54,7 +54,7 @@ public class
 			).put(
 				"property",
 				mustSetValidAvailableLocalesForProperty.getProperty()
-			).toJSONString(),
+			).toString(),
 			Response.Status.BAD_REQUEST,
 			mustSetValidAvailableLocalesForProperty.getMessage(),
 			"MustSetValidAvailableLocalesForProperty");

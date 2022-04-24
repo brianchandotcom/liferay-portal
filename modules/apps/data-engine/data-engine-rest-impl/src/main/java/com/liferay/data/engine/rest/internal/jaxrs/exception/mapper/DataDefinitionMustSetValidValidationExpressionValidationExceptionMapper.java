@@ -52,7 +52,7 @@ public class
 				mustSetValidValidationExpression.getValidationExpression()
 			).put(
 				"fieldName", mustSetValidValidationExpression.getFieldName()
-			).toJSONString(),
+			).toString(),
 			Response.Status.BAD_REQUEST,
 			mustSetValidValidationExpression.getMessage(),
 			"MustSetValidValidationExpression");

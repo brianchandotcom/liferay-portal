@@ -86,8 +86,6 @@ definition {
 	@description = "This test covers LPS-144498. It validates that once localized, the Table of Contents uses the current language translation."
 	@priority = "3"
 	test CanViewTableOfContentsInJapanese {
-		var portalURL = PropsUtil.get("portal.url");
-
 		JSONWiki.addWikiPage(
 			groupName = "Guest",
 			wikiNodeName = "Main",

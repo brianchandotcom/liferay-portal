@@ -252,8 +252,8 @@ public class ExpressionVisitorImplTest {
 				"propertyName", "title"
 			).put(
 				"value", "title1"
-			).toJSONString(),
-			jsonObject.toJSONString());
+			).toString(),
+			jsonObject.toString());
 	}
 
 	@Test
@@ -419,8 +419,8 @@ public class ExpressionVisitorImplTest {
 				"propertyName", "title"
 			).put(
 				"value", JSONUtil.putAll("title1", "title2")
-			).toJSONString(),
-			jsonObject.toJSONString());
+			).toString(),
+			jsonObject.toString());
 	}
 
 	@Test
@@ -444,8 +444,8 @@ public class ExpressionVisitorImplTest {
 				"propertyName", "title"
 			).put(
 				"value", "title1"
-			).toJSONString(),
-			jsonObject.toJSONString());
+			).toString(),
+			jsonObject.toString());
 	}
 
 	@Test
@@ -472,8 +472,8 @@ public class ExpressionVisitorImplTest {
 				"propertyName", "id"
 			).put(
 				"value", "4"
-			).toJSONString(),
-			jsonObject.toJSONString());
+			).toString(),
+			jsonObject.toString());
 	}
 
 	private static final EntityModel _entityModel = new EntityModel() {

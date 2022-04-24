@@ -83,7 +83,7 @@ public class GetSegmentsFieldValueNameMVCResourceCommandTest {
 			"fieldValueName", fieldValueName);
 
 		Assert.assertEquals(
-			expectedJSONObject.toJSONString(), jsonObject.toJSONString());
+			expectedJSONObject.toString(), jsonObject.toString());
 	}
 
 	@Test
@@ -105,7 +105,7 @@ public class GetSegmentsFieldValueNameMVCResourceCommandTest {
 					entityName, fieldName, RandomTestUtil.randomString(),
 					LocaleUtil.getDefault());
 
-		Assert.assertEquals("{}", jsonObject.toJSONString());
+		Assert.assertEquals("{}", jsonObject.toString());
 	}
 
 	private SegmentsFieldCustomizer _createSegmentsFieldCustomizer(

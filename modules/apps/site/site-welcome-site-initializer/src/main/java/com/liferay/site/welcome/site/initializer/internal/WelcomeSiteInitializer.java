@@ -334,7 +334,7 @@ public class WelcomeSiteInitializer implements SiteInitializer {
 								LanguageUtil.get(locale, "welcome-to-liferay"));
 						}
 
-						return jsonObject.toJSONString();
+						return jsonObject.toString();
 					}
 				).build());
 

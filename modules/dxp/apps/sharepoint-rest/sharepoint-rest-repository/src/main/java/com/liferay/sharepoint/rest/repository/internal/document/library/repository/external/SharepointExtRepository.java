@@ -861,7 +861,7 @@ public class SharepointExtRepository implements ExtRepository {
 			"Authorization", "Bearer " + _getAccessToken());
 		httpRequestWithBody.header(
 			"Content-Type", "application/json; odata=verbose");
-		httpRequestWithBody.body(jsonObject.toJSONString());
+		httpRequestWithBody.body(jsonObject.toString());
 
 		HttpResponse<String> httpResponse = httpRequestWithBody.asString();
 

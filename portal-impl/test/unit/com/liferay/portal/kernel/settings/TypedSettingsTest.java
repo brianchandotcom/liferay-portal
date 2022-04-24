@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.settings;
 
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -87,15 +86,15 @@ public class TypedSettingsTest {
 		ReflectionTestUtil.setFieldValue(
 			JSONFactoryUtil.class, "_jsonFactory", new JSONFactoryImpl());
 
-		JSONObject jsonObject = JSONUtil.put(
-			"en_GB", "value_en_GB"
-		).put(
-			"en_US", "value_en_US"
-		).put(
-			"es_ES", "value_es_ES"
-		);
-
-		modifiableSettings.setValue(_KEY, jsonObject.toJSONString());
+		modifiableSettings.setValue(
+			_KEY,
+			JSONUtil.put(
+				"en_GB", "value_en_GB"
+			).put(
+				"en_US", "value_en_US"
+			).put(
+				"es_ES", "value_es_ES"
+			).toString());
 
 		_typedSettings = new TypedSettings(
 			modifiableSettings, _availableLocales);

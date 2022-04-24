@@ -422,7 +422,7 @@ public class ExpandoValueImpl extends ExpandoValueBaseImpl {
 
 		validate(ExpandoColumnConstants.GEOLOCATION);
 
-		setData(dataJSONObject.toJSONString());
+		setData(dataJSONObject.toString());
 	}
 
 	@Override

@@ -17,6 +17,8 @@ buildPluginDescriptor {
 	goalPrefix = "source-formatter"
 }
 
+sourceDirs = files(sourceSets.main.allSource.srcDirs.findAll { it.directory })
+
 //dummy1 { false }
 
 dummy1 {

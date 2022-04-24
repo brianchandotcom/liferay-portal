@@ -75,20 +75,21 @@ public class GradleStylingCheck extends BaseFileCheck {
 				continue;
 			}
 
+			int nextCloseCurlyBracePosition = content.indexOf(
+				StringPool.CLOSE_CURLY_BRACE, openCurlyBracePosition + 1);
+
+			if ((nextCloseCurlyBracePosition == -1) ||
+				_isInParenthesis(content, nextCloseCurlyBracePosition)) {
+
+				continue;
+			}
+
 			char nextChar = content.charAt(openCurlyBracePosition + 1);
 
 			if (nextChar != CharPool.NEW_LINE) {
-				int nextCloseCurlyBracePosition = content.indexOf(
-					StringPool.CLOSE_CURLY_BRACE, openCurlyBracePosition + 1);
+				nextChar = content.charAt(nextCloseCurlyBracePosition + 1);
 
-				if (nextCloseCurlyBracePosition == -1) {
-					continue;
-				}
-
-				char nextCloseCurlyBraceChar = content.charAt(
-					nextCloseCurlyBracePosition + 1);
-
-				if (nextCloseCurlyBraceChar != CharPool.PERIOD) {
+				if (nextChar != CharPool.PERIOD) {
 					return StringUtil.insert(
 						content, "\n", openCurlyBracePosition + 1);
 				}
@@ -111,7 +112,8 @@ public class GradleStylingCheck extends BaseFileCheck {
 							content, closeCurlyBracePosition),
 						multiLineStringsPositions) ||
 					_isInRegexPattern(content, closeCurlyBracePosition) ||
-					_isInAnnotation(content, closeCurlyBracePosition)) {
+					_isInAnnotation(content, closeCurlyBracePosition) ||
+					_isInParenthesis(content, closeCurlyBracePosition)) {
 
 					continue;
 				}
@@ -157,6 +159,26 @@ public class GradleStylingCheck extends BaseFileCheck {
 		line = line.trim();
 
 		if (line.startsWith("//")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isInParenthesis(String content, int position) {
+		int nextCloseParenthesisPosition = content.indexOf(
+			StringPool.CLOSE_PARENTHESIS, position);
+
+		if (nextCloseParenthesisPosition == -1) {
+			return false;
+		}
+
+		int nextOpenParenthesisPosition = content.indexOf(
+			StringPool.OPEN_PARENTHESIS, position);
+
+		if ((nextOpenParenthesisPosition == -1) ||
+			(nextOpenParenthesisPosition > nextCloseParenthesisPosition)) {
+
 			return true;
 		}
 

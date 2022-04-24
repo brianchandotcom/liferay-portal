@@ -98,7 +98,7 @@ public class WikiAttachmentImageCreoleEditorConfigContributorTest {
 			getJSONObjectWithDefaultItemSelectorURL();
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			originalJSONObject.toJSONString());
+			originalJSONObject.toString());
 
 		WikiAttachmentImageCreoleEditorConfigContributor
 			wikiAttachmentImageCreoleEditorConfigContributor =
@@ -111,18 +111,17 @@ public class WikiAttachmentImageCreoleEditorConfigContributorTest {
 			populateConfigJSONObject(
 				jsonObject, _inputEditorTaglibAttributes, null, null);
 
-		JSONObject expectedJSONObject = JSONUtil.put(
-			"filebrowserImageBrowseLinkUrl",
-			"itemSelectorPortletURLWithUrlSelectionViews"
-		).put(
-			"filebrowserImageBrowseUrl",
-			"itemSelectorPortletURLWithUrlSelectionViews"
-		).put(
-			"removePlugins", "plugin1,ae_addimages"
-		);
-
 		JSONAssert.assertEquals(
-			expectedJSONObject.toJSONString(), jsonObject.toJSONString(), true);
+			JSONUtil.put(
+				"filebrowserImageBrowseLinkUrl",
+				"itemSelectorPortletURLWithUrlSelectionViews"
+			).put(
+				"filebrowserImageBrowseUrl",
+				"itemSelectorPortletURLWithUrlSelectionViews"
+			).put(
+				"removePlugins", "plugin1,ae_addimages"
+			).toString(),
+			jsonObject.toString(), true);
 	}
 
 	@Test
@@ -188,18 +187,17 @@ public class WikiAttachmentImageCreoleEditorConfigContributorTest {
 				jsonObject, _inputEditorTaglibAttributes, new ThemeDisplay(),
 				requestBackedPortletURLFactory);
 
-		JSONObject expectedJSONObject = JSONUtil.put(
-			"filebrowserImageBrowseLinkUrl",
-			"itemSelectorPortletURLWithWikiUrlAndUploadSelectionViews"
-		).put(
-			"filebrowserImageBrowseUrl",
-			"itemSelectorPortletURLWithWikiUrlAndUploadSelectionViews"
-		).put(
-			"removePlugins", "plugin1"
-		);
-
 		JSONAssert.assertEquals(
-			expectedJSONObject.toJSONString(), jsonObject.toJSONString(), true);
+			JSONUtil.put(
+				"filebrowserImageBrowseLinkUrl",
+				"itemSelectorPortletURLWithWikiUrlAndUploadSelectionViews"
+			).put(
+				"filebrowserImageBrowseUrl",
+				"itemSelectorPortletURLWithWikiUrlAndUploadSelectionViews"
+			).put(
+				"removePlugins", "plugin1"
+			).toString(),
+			jsonObject.toString(), true);
 	}
 
 	@Test
@@ -213,7 +211,7 @@ public class WikiAttachmentImageCreoleEditorConfigContributorTest {
 			getJSONObjectWithDefaultItemSelectorURL();
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			originalJSONObject.toJSONString());
+			originalJSONObject.toString());
 
 		WikiAttachmentImageCreoleEditorConfigContributor
 			wikiAttachmentImageCreoleEditorConfigContributor =
@@ -227,12 +225,12 @@ public class WikiAttachmentImageCreoleEditorConfigContributorTest {
 				jsonObject, _inputEditorTaglibAttributes, null, null);
 
 		JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject(
-			originalJSONObject.toJSONString());
+			originalJSONObject.toString());
 
 		expectedJSONObject.put("removePlugins", "plugin1");
 
 		JSONAssert.assertEquals(
-			expectedJSONObject.toJSONString(), jsonObject.toJSONString(), true);
+			expectedJSONObject.toString(), jsonObject.toString(), true);
 	}
 
 	@Test
@@ -246,7 +244,7 @@ public class WikiAttachmentImageCreoleEditorConfigContributorTest {
 			getJSONObjectWithDefaultItemSelectorURL();
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			originalJSONObject.toJSONString());
+			originalJSONObject.toString());
 
 		WikiAttachmentImageCreoleEditorConfigContributor
 			wikiAttachmentImageCreoleEditorConfigContributor =
@@ -260,12 +258,12 @@ public class WikiAttachmentImageCreoleEditorConfigContributorTest {
 				jsonObject, _inputEditorTaglibAttributes, null, null);
 
 		JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject(
-			originalJSONObject.toJSONString());
+			originalJSONObject.toString());
 
 		expectedJSONObject.put("removePlugins", "plugin1");
 
 		JSONAssert.assertEquals(
-			expectedJSONObject.toJSONString(), jsonObject.toJSONString(), true);
+			expectedJSONObject.toString(), jsonObject.toString(), true);
 	}
 
 	protected JSONObject getJSONObjectWithDefaultItemSelectorURL() {

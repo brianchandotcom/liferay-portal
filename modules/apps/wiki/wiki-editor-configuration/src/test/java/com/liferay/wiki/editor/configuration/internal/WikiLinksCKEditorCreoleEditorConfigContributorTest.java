@@ -113,20 +113,19 @@ public class WikiLinksCKEditorCreoleEditorConfigContributorTest {
 			getJSONObjectWithDefaultItemSelectorURL();
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			originalJSONObject.toJSONString());
+			originalJSONObject.toString());
 
 		_wikiLinksCKEditorCreoleEditorConfigContributor.
 			populateConfigJSONObject(
 				jsonObject, _inputEditorTaglibAttributes, null, null);
 
-		JSONObject expectedJSONObject = JSONUtil.put(
-			"filebrowserBrowseUrl", "oneTabItemSelectorPortletURL"
-		).put(
-			"removePlugins", "plugin1"
-		);
-
 		JSONAssert.assertEquals(
-			expectedJSONObject.toJSONString(), jsonObject.toJSONString(), true);
+			JSONUtil.put(
+				"filebrowserBrowseUrl", "oneTabItemSelectorPortletURL"
+			).put(
+				"removePlugins", "plugin1"
+			).toString(),
+			jsonObject.toString(), true);
 	}
 
 	@Test
@@ -137,20 +136,19 @@ public class WikiLinksCKEditorCreoleEditorConfigContributorTest {
 			getJSONObjectWithDefaultItemSelectorURL();
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			originalJSONObject.toJSONString());
+			originalJSONObject.toString());
 
 		_wikiLinksCKEditorCreoleEditorConfigContributor.
 			populateConfigJSONObject(
 				jsonObject, _inputEditorTaglibAttributes, null, null);
 
-		JSONObject expectedJSONObject = JSONUtil.put(
-			"filebrowserBrowseUrl", "twoTabsItemSelectorPortletURL"
-		).put(
-			"removePlugins", "plugin1"
-		);
-
 		JSONAssert.assertEquals(
-			expectedJSONObject.toJSONString(), jsonObject.toJSONString(), true);
+			JSONUtil.put(
+				"filebrowserBrowseUrl", "twoTabsItemSelectorPortletURL"
+			).put(
+				"removePlugins", "plugin1"
+			).toString(),
+			jsonObject.toString(), true);
 	}
 
 	@Test
@@ -163,20 +161,19 @@ public class WikiLinksCKEditorCreoleEditorConfigContributorTest {
 			getJSONObjectWithDefaultItemSelectorURL();
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			originalJSONObject.toJSONString());
+			originalJSONObject.toString());
 
 		_wikiLinksCKEditorCreoleEditorConfigContributor.
 			populateConfigJSONObject(
 				jsonObject, _inputEditorTaglibAttributes, null, null);
 
-		JSONObject expectedJSONObject = JSONUtil.put(
-			"filebrowserBrowseUrl", "oneTabItemSelectorPortletURL"
-		).put(
-			"removePlugins", "plugin1"
-		);
-
 		JSONAssert.assertEquals(
-			expectedJSONObject.toJSONString(), jsonObject.toJSONString(), true);
+			JSONUtil.put(
+				"filebrowserBrowseUrl", "oneTabItemSelectorPortletURL"
+			).put(
+				"removePlugins", "plugin1"
+			).toString(),
+			jsonObject.toString(), true);
 	}
 
 	protected JSONObject getJSONObjectWithDefaultItemSelectorURL() {

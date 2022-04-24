@@ -678,6 +678,19 @@ definition {
 				value1 = "${viewableBy}");
 		}
 
+		if (isSet(textField)) {
+			if (isSet(fieldFieldLabel)) {
+				var key_fieldLabel = "${fieldFieldLabel}";
+			}
+			else {
+				var key_fieldLabel = "Text";
+			}
+
+			Type(
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${textField}");
+		}
+
 		AssertClick(
 			locator1 = "Button#PUBLISH",
 			value1 = "Publish");

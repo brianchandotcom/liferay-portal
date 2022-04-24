@@ -5,5 +5,5 @@ createDockerContainer {
 }
 
 runGradleTest {
-	dependsOn "assertLog"
+	dependsOn "assertLog", "stopContainer"
 }

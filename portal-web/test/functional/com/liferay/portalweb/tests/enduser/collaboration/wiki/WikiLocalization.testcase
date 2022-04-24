@@ -88,24 +88,28 @@ definition {
 	test CanViewTableOfContentsInJapanese {
 		var portalURL = PropsUtil.get("portal.url");
 
+		JSONWiki.addWikiPage(
+			groupName = "Guest",
+			wikiNodeName = "Main",
+			wikiPageContent = "<<TableOfContents>>",
+			wikiPageName = "Wiki Page Title");
+
 		PortalSettings.openToConfigInInstanceSettings(portlet = "Language");
 
 		PortalSettings.configureCurrentLanguagesCP(
 			currentPortalLanguages = "English (United Kingdom),Japanese (Japan)",
 			defaultPortalLanguage = "Japanese (Japan)");
 
-		Navigator.gotoSpecificURLPage(
-			pageName = "Wiki Test Page",
-			url = "${portalURL}/en/");
-
-		WikiPage.addFrontPagePG(
-			creoleSource = "true",
-			wikiPageContent = "<<TableOfContents>>");
+		WikiNavigator.openToWikiPage(
+			layoutURLKey = "wiki-test-page",
+			siteURLKey = "guest",
+			wikiNodeName = "Main",
+			wikiPageTitle = "Wiki Page Title");
 
 		WikiPage.viewPG(
 			wikiPageContent = "目次 [-]",
 			wikiPageContentGeneric = "true",
-			wikiPageTitle = "FrontPage");
+			wikiPageTitle = "Wiki Page Title");
 	}
 
 }

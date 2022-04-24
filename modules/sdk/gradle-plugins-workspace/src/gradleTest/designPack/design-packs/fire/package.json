@@ -1,4 +1,7 @@
 {
+	"dependencies": {
+		"sassy-inputs": "1.0.6"
+	},
 	"keywords": [
 		"liferay-design-pack"
 	],

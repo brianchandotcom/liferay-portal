@@ -15,6 +15,7 @@
 package com.liferay.gradle.plugins.workspace.configurators;
 
 import com.liferay.gradle.plugins.LiferayBasePlugin;
+import com.liferay.gradle.plugins.css.builder.BuildCSSTask;
 import com.liferay.gradle.plugins.css.builder.CSSBuilderPlugin;
 import com.liferay.gradle.plugins.node.NodePlugin;
 import com.liferay.gradle.plugins.theme.builder.BuildThemeTask;
@@ -44,15 +45,18 @@ import java.util.concurrent.Callable;
 import org.gradle.api.Action;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
+import org.gradle.api.file.ConfigurableFileCollection;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.DirectoryProperty;
+import org.gradle.api.file.RegularFile;
 import org.gradle.api.initialization.Settings;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.WarPlugin;
-import org.gradle.api.plugins.WarPluginConvention;
 import org.gradle.api.provider.Property;
+import org.gradle.api.provider.Provider;
 import org.gradle.api.specs.Spec;
-import org.gradle.api.tasks.TaskContainer;
+import org.gradle.api.tasks.Copy;
+import org.gradle.api.tasks.Delete;
 import org.gradle.api.tasks.TaskOutputs;
 import org.gradle.api.tasks.bundling.War;
 import org.gradle.api.tasks.bundling.Zip;
@@ -62,7 +66,7 @@ import org.gradle.api.tasks.bundling.Zip;
  */
 public class DesignPacksProjectConfigurator extends BaseProjectConfigurator {
 
-	public static final String DESIGN_PACK_TASK_NAME = "zipDesignPack";
+	public static final String BUILD_DESIGN_PACK_TASK_NAME = "buildDesignPack";
 
 	public DesignPacksProjectConfigurator(Settings settings) {
 		super(settings);
@@ -80,25 +84,27 @@ public class DesignPacksProjectConfigurator extends BaseProjectConfigurator {
 			GradleUtil.addDefaultRepositories(project);
 		}
 
+		GradleUtil.applyPlugin(project, BasePlugin.class);
 		GradleUtil.applyPlugin(project, LiferayBasePlugin.class);
 		GradleUtil.applyPlugin(project, NodePlugin.class);
 		GradleUtil.applyPlugin(project, ThemeBuilderPlugin.class);
 		GradleUtil.applyPlugin(project, WarPlugin.class);
 
-		_configureTaskBuildTheme(project);
-		_configureWar(project);
+		BuildThemeTask buildThemeTask = _configureTaskBuildTheme(project);
 
-		Zip zipDesignPackTask = _addTaskZipDesignPack(
-			project, DESIGN_PACK_TASK_NAME);
+		BuildCSSTask buildCSSTask = _configureTaskBuildCSS(project);
 
-		zipDesignPackTask.setDescription(
-			"Assembles design pack project (zip).");
+		War war = (War)GradleUtil.getTask(project, WarPlugin.WAR_TASK_NAME);
 
-		zipDesignPackTask.setGroup(BasePlugin.BUILD_GROUP);
+		war.setEnabled(false);
 
-		_configureTaskDesignPack(project, zipDesignPackTask);
+		Zip zip = _addTaskBuildDesignPack(
+			project, buildCSSTask, buildThemeTask);
 
-		_configureTaskWarForZipDesignPack(project, zipDesignPackTask);
+		_configureRootTaskDistBundle(project, zip);
+
+		_configureTaskClean(project);
+		_configureTaskDeploy(project);
 	}
 
 	@Override
@@ -155,52 +161,103 @@ public class DesignPacksProjectConfigurator extends BaseProjectConfigurator {
 	protected static final String NAME = "design.pack";
 
 	@SuppressWarnings("serial")
-	private Zip _addTaskZipDesignPack(Project project, String taskName) {
-		Zip task = GradleUtil.addTask(project, taskName, Zip.class);
+	private Zip _addTaskBuildDesignPack(
+		Project project, BuildCSSTask buildCSSTask,
+		BuildThemeTask buildThemeTask) {
 
-		task.dependsOn(CSSBuilderPlugin.BUILD_CSS_TASK_NAME);
+		Zip zip = GradleUtil.addTask(
+			project, BUILD_DESIGN_PACK_TASK_NAME, Zip.class);
 
-		_configureTaskDisableUpToDate(task);
+		_configureTaskDisableUpToDate(zip);
 
-		task.into(
-			new Closure<Void>(task) {
+		zip.dependsOn(buildCSSTask);
 
-				@SuppressWarnings("unused")
-				public void doCall(CopySpec copySpec) {
-					copySpec.from(
-						new File(
-							project.getBuildDir(),
-							"buildTheme/css/.sass-cache"));
-					copySpec.setIncludeEmptyDirs(false);
-					copySpec.include("**/clay.css");
-					copySpec.include("**/clay_rtl.css");
-					copySpec.include("**/main.css");
-					copySpec.include("**/main_rtl.css");
-				}
+		zip.from(new File(buildThemeTask.getOutputDir(), "/css/"));
 
-			});
+		zip.include("*.css");
+
+		zip.setDescription("Assembles design pack.");
+		zip.setGroup(BasePlugin.BUILD_GROUP);
+		zip.setIncludeEmptyDirs(false);
+
+		Property<String> archiveBaseNameProperty = zip.getArchiveBaseName();
+
+		archiveBaseNameProperty.set(
+			project.provider(
+				new Callable<String>() {
+
+					@Override
+					public String call() throws Exception {
+						StringBuilder sb = new StringBuilder();
+
+						sb.append(project.getName());
+
+						return sb.toString();
+					}
+
+				}));
 
 		DirectoryProperty destinationDirectoryProperty =
-			task.getDestinationDirectory();
+			zip.getDestinationDirectory();
 
 		destinationDirectoryProperty.set(
 			new File(project.getProjectDir(), "dist"));
 
-		return task;
+		return zip;
+	}
+
+	@SuppressWarnings({"serial", "unused"})
+	private void _configureRootTaskDistBundle(Project project, Zip zip) {
+		Task assembleTask = GradleUtil.getTask(
+			project, BasePlugin.ASSEMBLE_TASK_NAME);
+
+		Copy copy = (Copy)GradleUtil.getTask(
+			project.getRootProject(),
+			RootProjectConfigurator.DIST_BUNDLE_TASK_NAME);
+
+		copy.dependsOn(assembleTask);
+
+		copy.into(
+			"deploy",
+			new Closure<Void>(project) {
+
+				public void doCall(CopySpec copySpec) {
+					Project project = assembleTask.getProject();
+
+					Provider<RegularFile> fileProvider = zip.getArchiveFile();
+
+					ConfigurableFileCollection configurableFileCollection =
+						project.files(fileProvider);
+
+					configurableFileCollection.builtBy(assembleTask);
+
+					copySpec.from(fileProvider);
+				}
+
+			});
+	}
+
+	private BuildCSSTask _configureTaskBuildCSS(Project project) {
+		BuildCSSTask buildCSSTask = (BuildCSSTask)GradleUtil.getTask(
+			project, CSSBuilderPlugin.BUILD_CSS_TASK_NAME);
+
+		buildCSSTask.setOutputDirName(".");
+
+		return buildCSSTask;
 	}
 
 	@SuppressWarnings("unchecked")
-	private void _configureTaskBuildTheme(Project project) {
-		File packageJsonFile = project.file("package.json");
-
-		if (!packageJsonFile.exists()) {
-			return;
-		}
-
+	private BuildThemeTask _configureTaskBuildTheme(Project project) {
 		BuildThemeTask buildThemeTask = (BuildThemeTask)GradleUtil.getTask(
 			project, ThemeBuilderPlugin.BUILD_THEME_TASK_NAME);
 
-		buildThemeTask.dependsOn(NodePlugin.NPM_INSTALL_TASK_NAME);
+		buildThemeTask.setDiffsDir(project.file("src"));
+
+		File packageJsonFile = project.file("package.json");
+
+		if (!packageJsonFile.exists()) {
+			return buildThemeTask;
+		}
 
 		Map<String, Object> packageJsonMap = _getPackageJsonMap(
 			packageJsonFile);
@@ -219,89 +276,65 @@ public class DesignPacksProjectConfigurator extends BaseProjectConfigurator {
 		Map<String, String> dependenciesMap =
 			(Map<String, String>)packageJsonMap.get("dependencies");
 
-		Project rootProject = project.getRootProject();
+		if (!dependenciesMap.isEmpty()) {
+			buildThemeTask.dependsOn(NodePlugin.NPM_INSTALL_TASK_NAME);
 
-		buildThemeTask.doFirst(
-			new Action<Task>() {
+			Project rootProject = project.getRootProject();
 
-				@Override
-				public void execute(Task task) {
-					for (String key : dependenciesMap.keySet()) {
-						project.copy(
-							new Action<CopySpec>() {
+			buildThemeTask.doFirst(
+				new Action<Task>() {
 
-								@Override
-								public void execute(CopySpec copySpec) {
-									File nodeModule = project.file(
-										"node_modules/" + key);
+					@Override
+					public void execute(Task task) {
+						for (String key : dependenciesMap.keySet()) {
+							project.copy(
+								new Action<CopySpec>() {
 
-									if (nodeModule.exists()) {
-										copySpec.from(nodeModule);
+									@Override
+									public void execute(CopySpec copySpec) {
+										File nodeModule = project.file(
+											"node_modules/" + key);
+
+										if (nodeModule.exists()) {
+											copySpec.from(nodeModule);
+										}
+
+										nodeModule = rootProject.file(
+											"node_modules/" + key);
+
+										if (nodeModule.exists()) {
+											copySpec.from(nodeModule);
+										}
+
+										copySpec.into(
+											buildThemeTask.getOutputDir() +
+												"/css/" + key);
+										copySpec.setIncludeEmptyDirs(false);
 									}
 
-									nodeModule = rootProject.file(
-										"node_modules/" + key);
-
-									if (nodeModule.exists()) {
-										copySpec.from(nodeModule);
-									}
-
-									copySpec.into(
-										buildThemeTask.getOutputDir() +
-											"/css/" + key);
-									copySpec.setIncludeEmptyDirs(false);
-								}
-
-							});
+								});
+						}
 					}
-				}
 
-			});
+				});
+		}
+
+		return buildThemeTask;
 	}
 
-	private void _configureTaskDesignPack(Project project, Zip zipTask) {
-		Property<String> archiveBaseNameProperty = zipTask.getArchiveBaseName();
+	private void _configureTaskClean(Project project) {
+		Delete delete = (Delete)GradleUtil.getTask(
+			project, BasePlugin.CLEAN_TASK_NAME);
 
-		archiveBaseNameProperty.set(
-			project.provider(
-				new Callable<String>() {
+		delete.delete("build", "dist");
+	}
 
-					@Override
-					public String call() throws Exception {
-						StringBuilder sb = new StringBuilder();
+	private void _configureTaskDeploy(Project project) {
+		Copy copy = (Copy)GradleUtil.getTask(
+			project, LiferayBasePlugin.DEPLOY_TASK_NAME);
 
-						sb.append(project.getName());
-
-						return sb.toString();
-					}
-
-				}));
-
-		Property<String> archiveVersion = zipTask.getArchiveVersion();
-
-		archiveVersion.set(
-			project.provider(
-				new Callable<String>() {
-
-					@Override
-					public String call() throws Exception {
-						return null;
-					}
-
-				}));
-
-		zipTask.doLast(
-			new Action<Task>() {
-
-				@Override
-				public void execute(Task task) {
-					project.delete(
-						new File(
-							project.getBuildDir(),
-							"libs/" + project.getName() + ".war"));
-				}
-
-			});
+		copy.dependsOn("build");
+		copy.from(_getZipFile(project));
 	}
 
 	private void _configureTaskDisableUpToDate(Task task) {
@@ -318,30 +351,6 @@ public class DesignPacksProjectConfigurator extends BaseProjectConfigurator {
 			});
 	}
 
-	private void _configureTaskWarForZipDesignPack(
-		Project project, Zip taskZipDesignPack) {
-
-		TaskContainer taskContainer = project.getTasks();
-
-		taskContainer.withType(
-			War.class,
-			new Action<War>() {
-
-				@Override
-				public void execute(War war) {
-					war.finalizedBy(taskZipDesignPack);
-				}
-
-			});
-	}
-
-	private void _configureWar(Project project) {
-		WarPluginConvention warPluginConvention = GradleUtil.getConvention(
-			project, WarPluginConvention.class);
-
-		warPluginConvention.setWebAppDirName("src");
-	}
-
 	@SuppressWarnings("unchecked")
 	private Map<String, Object> _getPackageJsonMap(File packageJsonFile) {
 		if (!packageJsonFile.exists()) {
@@ -351,6 +360,11 @@ public class DesignPacksProjectConfigurator extends BaseProjectConfigurator {
 		JsonSlurper jsonSlurper = new JsonSlurper();
 
 		return (Map<String, Object>)jsonSlurper.parse(packageJsonFile);
+	}
+
+	private File _getZipFile(Project project) {
+		return project.file(
+			"dist/" + GradleUtil.getArchivesBaseName(project) + ".zip");
 	}
 
 	@SuppressWarnings("unchecked")

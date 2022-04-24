@@ -77,12 +77,14 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.social.SocialActivityManagerUtil;
+import com.liferay.portal.kernel.trash.helper.TrashHelper;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -102,7 +104,6 @@ import com.liferay.trash.kernel.model.TrashEntry;
 import com.liferay.trash.kernel.model.TrashVersion;
 import com.liferay.trash.kernel.service.TrashEntryLocalService;
 import com.liferay.trash.kernel.service.TrashVersionLocalService;
-import com.liferay.trash.kernel.util.TrashUtil;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.io.Serializable;
@@ -475,7 +476,7 @@ public class DLAppHelperLocalServiceImpl
 		// Social
 
 		JSONObject extraDataJSONObject = JSONUtil.put(
-			"title", TrashUtil.getOriginalTitle(fileShortcut.getToTitle()));
+			"title", _trashHelper.getOriginalTitle(fileShortcut.getToTitle()));
 
 		SocialActivityManagerUtil.addActivity(
 			userId, fileShortcut, SocialActivityConstants.TYPE_MOVE_TO_TRASH,
@@ -636,14 +637,14 @@ public class DLAppHelperLocalServiceImpl
 			return;
 		}
 
-		String originalTitle = TrashUtil.getOriginalTitle(
+		String originalTitle = _trashHelper.getOriginalTitle(
 			dlFileEntry.getTitle());
 
 		String title = _dlFileEntryLocalService.getUniqueTitle(
 			dlFileEntry.getGroupId(), newFolderId, dlFileEntry.getFileEntryId(),
 			originalTitle, dlFileEntry.getExtension());
 
-		String originalFileName = TrashUtil.getOriginalTitle(
+		String originalFileName = _trashHelper.getOriginalTitle(
 			dlFileEntry.getTitle(), "fileName");
 
 		String fileName = originalFileName;
@@ -761,7 +762,7 @@ public class DLAppHelperLocalServiceImpl
 				RestoreEntryException.INVALID_STATUS);
 		}
 
-		String originalName = TrashUtil.getOriginalTitle(dlFolder.getName());
+		String originalName = _trashHelper.getOriginalTitle(dlFolder.getName());
 
 		dlFolder.setName(
 			_dlFolderLocalService.getUniqueFolderName(
@@ -1382,7 +1383,7 @@ public class DLAppHelperLocalServiceImpl
 				"title", dlFileEntry.getTitle()
 			).build());
 
-		String trashTitle = TrashUtil.getTrashTitle(trashEntry.getEntryId());
+		String trashTitle = _trashHelper.getTrashTitle(trashEntry.getEntryId());
 
 		dlFileEntry.setFileName(trashTitle);
 		dlFileEntry.setTitle(trashTitle);
@@ -1399,7 +1400,7 @@ public class DLAppHelperLocalServiceImpl
 		// Social
 
 		JSONObject extraDataJSONObject = JSONUtil.put(
-			"title", TrashUtil.getOriginalTitle(fileEntry.getTitle()));
+			"title", _trashHelper.getOriginalTitle(fileEntry.getTitle()));
 
 		SocialActivityManagerUtil.addActivity(
 			userId, fileEntry, SocialActivityConstants.TYPE_MOVE_TO_TRASH,
@@ -1507,7 +1508,7 @@ public class DLAppHelperLocalServiceImpl
 				"title", dlFolder.getName()
 			).build());
 
-		dlFolder.setName(TrashUtil.getTrashTitle(trashEntry.getEntryId()));
+		dlFolder.setName(_trashHelper.getTrashTitle(trashEntry.getEntryId()));
 
 		dlFolder = _dlFolderPersistence.update(dlFolder);
 
@@ -1946,6 +1947,11 @@ public class DLAppHelperLocalServiceImpl
 		_ratingsStatsLocalService.deleteStats(
 			DLFileEntryConstants.getClassName(), fileEntryId);
 	}
+
+	private static volatile TrashHelper _trashHelper =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			TrashHelper.class, DLAppHelperLocalServiceImpl.class,
+			"_trashHelper", false);
 
 	@BeanReference(type = AssetCategoryLocalService.class)
 	private AssetCategoryLocalService _assetCategoryLocalService;

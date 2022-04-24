@@ -69,7 +69,8 @@ public class GradleStylingCheck extends BaseFileCheck {
 				SourceUtil.isInsideMultiLines(
 					SourceUtil.getLineNumber(content, openCurlyBracePosition),
 					multiLineStringsPositions) ||
-				_isInRegexPattern(content, openCurlyBracePosition)) {
+				_isInRegexPattern(content, openCurlyBracePosition) ||
+				_isInAnnotation(content, openCurlyBracePosition)) {
 
 				continue;
 			}
@@ -90,7 +91,8 @@ public class GradleStylingCheck extends BaseFileCheck {
 						SourceUtil.getLineNumber(
 							content, closeCurlyBracePosition),
 						multiLineStringsPositions) ||
-					_isInRegexPattern(content, closeCurlyBracePosition)) {
+					_isInRegexPattern(content, closeCurlyBracePosition) ||
+					_isInAnnotation(content, closeCurlyBracePosition)) {
 
 					continue;
 				}
@@ -118,6 +120,7 @@ public class GradleStylingCheck extends BaseFileCheck {
 				char nextChar = content.charAt(openCurlyBracePosition + 1);
 
 				if (nextChar != CharPool.NEW_LINE) {
+
 					return StringUtil.insert(
 						content, "\n", openCurlyBracePosition + 1);
 				}
@@ -125,6 +128,20 @@ public class GradleStylingCheck extends BaseFileCheck {
 		}
 
 		return content;
+	}
+
+	private boolean _isInAnnotation(String content, int position) {
+		int lineNumber = getLineNumber(content, position);
+
+		String line = getLine(content, lineNumber);
+
+		line = line.trim();
+
+		if (line.startsWith("//")) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private boolean _isInRegexPattern(String content, int position) {

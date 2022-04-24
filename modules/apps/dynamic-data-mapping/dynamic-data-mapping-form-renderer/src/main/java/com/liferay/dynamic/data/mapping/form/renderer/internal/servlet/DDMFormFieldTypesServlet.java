@@ -114,7 +114,7 @@ public class DDMFormFieldTypesServlet extends HttpServlet {
 		httpServletResponse.setStatus(HttpServletResponse.SC_OK);
 
 		ServletResponseUtil.write(
-			httpServletResponse, fieldTypesJSONArray.toJSONString());
+			httpServletResponse, fieldTypesJSONArray.toString());
 	}
 
 	@Reference

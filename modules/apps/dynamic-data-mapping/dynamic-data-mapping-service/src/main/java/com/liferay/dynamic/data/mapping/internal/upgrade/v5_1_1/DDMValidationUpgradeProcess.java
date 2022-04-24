@@ -126,7 +126,7 @@ public class DDMValidationUpgradeProcess extends UpgradeProcess {
 
 				if (_upgradeDefinition(definitionJSONObject)) {
 					updatePreparedStatement1.setString(
-						1, definitionJSONObject.toJSONString());
+						1, definitionJSONObject.toString());
 
 					long structureId = resultSet.getLong("structureId");
 
@@ -156,7 +156,7 @@ public class DDMValidationUpgradeProcess extends UpgradeProcess {
 
 				if (_upgradeDefinition(definitionJSONObject)) {
 					updatePreparedStatement.setString(
-						1, definitionJSONObject.toJSONString());
+						1, definitionJSONObject.toString());
 					updatePreparedStatement.setLong(
 						2, resultSet.getLong("structureVersionId"));
 

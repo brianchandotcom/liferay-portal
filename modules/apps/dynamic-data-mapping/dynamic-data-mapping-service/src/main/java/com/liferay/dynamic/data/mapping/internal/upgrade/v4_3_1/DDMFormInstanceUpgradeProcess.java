@@ -84,7 +84,7 @@ public class DDMFormInstanceUpgradeProcess extends UpgradeProcess {
 
 				if (_upgradeSettings(settingsJSONObject)) {
 					updatePreparedStatement.setString(
-						1, settingsJSONObject.toJSONString());
+						1, settingsJSONObject.toString());
 					updatePreparedStatement.setLong(
 						2, resultSet.getLong(idColumnName));
 

@@ -200,7 +200,7 @@ public class DDMFormFieldValidationUpgradeProcess extends UpgradeProcess {
 			}
 		}
 
-		return definitionJSONObject.toJSONString();
+		return definitionJSONObject.toString();
 	}
 
 	private final JSONFactory _jsonFactory;

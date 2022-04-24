@@ -285,7 +285,7 @@ public class DDMDataProviderInstanceServiceImpl
 				"fieldValues", _filterFieldValues(fieldValuesJSONArray));
 
 			ddmDataProviderInstance.setDefinition(
-				definitionJSONObject.toJSONString());
+				definitionJSONObject.toString());
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {

@@ -65,7 +65,7 @@ public class DDMFormInstanceSettingsUpgradeProcess extends UpgradeProcess {
 					_updateSettings(settingsJSONObject);
 
 					preparedStatement2.setString(
-						1, settingsJSONObject.toJSONString());
+						1, settingsJSONObject.toString());
 
 					preparedStatement2.setLong(
 						2, resultSet.getLong("formInstanceId"));
@@ -91,7 +91,7 @@ public class DDMFormInstanceSettingsUpgradeProcess extends UpgradeProcess {
 
 		settingsJSONObject.put("fieldValues", fieldValuesJSONArray);
 
-		return settingsJSONObject.toJSONString();
+		return settingsJSONObject.toString();
 	}
 
 	private void _convertToJSONArrayValue(

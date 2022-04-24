@@ -80,7 +80,7 @@ public class DDMContentUpgradeProcess extends UpgradeProcess {
 							definitionJSONObject.getJSONArray("fields"))) {
 
 						preparedStatement2.setString(
-							1, dataJSONObject.toJSONString());
+							1, dataJSONObject.toString());
 
 						long contentId = resultSet.getLong("contentId");
 

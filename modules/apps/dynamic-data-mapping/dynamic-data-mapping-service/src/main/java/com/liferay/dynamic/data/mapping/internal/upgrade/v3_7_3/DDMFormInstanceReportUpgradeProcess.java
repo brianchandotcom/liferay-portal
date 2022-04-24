@@ -256,7 +256,7 @@ public class DDMFormInstanceReportUpgradeProcess extends UpgradeProcess {
 						ddmFormFieldTypeReportProcessor.process(
 							ddmFormFieldValue,
 							_jsonFactory.createJSONObject(
-								fieldJSONObject.toJSONString()),
+								fieldJSONObject.toString()),
 							formInstanceRecordId,
 							DDMFormInstanceReportConstants.
 								EVENT_ADD_RECORD_VERSION);

@@ -127,7 +127,7 @@ public class DDMFormInstanceUpgradeProcess extends UpgradeProcess {
 					settingsJSONObject.getJSONArray("fieldValues"));
 
 				updatePreparedStatement1.setString(
-					1, settingsJSONObject.toJSONString());
+					1, settingsJSONObject.toString());
 
 				long formInstanceId = resultSet.getLong("formInstanceId");
 
@@ -163,7 +163,7 @@ public class DDMFormInstanceUpgradeProcess extends UpgradeProcess {
 						settingsJSONObject.getJSONArray("fieldValues"));
 
 					updatePreparedStatement.setString(
-						1, settingsJSONObject.toJSONString());
+						1, settingsJSONObject.toString());
 
 					updatePreparedStatement.setLong(
 						2, resultSet.getLong("formInstanceVersionId"));

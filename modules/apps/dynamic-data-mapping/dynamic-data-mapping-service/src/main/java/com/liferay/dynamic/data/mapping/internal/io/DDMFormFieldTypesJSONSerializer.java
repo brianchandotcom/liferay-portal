@@ -75,7 +75,7 @@ public class DDMFormFieldTypesJSONSerializer
 
 		DDMFormFieldTypesSerializerSerializeResponse.Builder builder =
 			DDMFormFieldTypesSerializerSerializeResponse.Builder.newBuilder(
-				jsonArray.toJSONString());
+				jsonArray.toString());
 
 		return builder.build();
 	}

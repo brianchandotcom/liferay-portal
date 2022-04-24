@@ -321,7 +321,7 @@ public class DDMDataDefinitionConverterImpl
 						))));
 		}
 
-		return jsonArray.toJSONString();
+		return jsonArray.toString();
 	}
 
 	private LocalizedValue _getEmptyLocalizedValue(Locale defaultLocale) {

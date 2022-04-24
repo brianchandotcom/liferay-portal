@@ -14,8 +14,8 @@
 
 package com.liferay.portal.kernel.trash;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.trash.kernel.util.TrashUtil;
 
 /**
  * @author Alexander Chow
@@ -29,7 +29,7 @@ public abstract class BaseTrashRenderer implements TrashRenderer {
 
 	@Override
 	public String getNewName(String oldName, String token) {
-		return TrashUtil.getNewName(oldName, token);
+		return StringBundler.concat(oldName, StringPool.SPACE, token);
 	}
 
 }

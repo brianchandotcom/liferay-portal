@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.trash.TrashHandler;
+import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -35,7 +37,6 @@ import com.liferay.ratings.kernel.service.RatingsEntryLocalServiceUtil;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalServiceUtil;
 import com.liferay.ratings.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
-import com.liferay.trash.kernel.util.TrashUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
@@ -357,7 +358,14 @@ public class RatingsTag extends IncludeTag {
 
 	private boolean _isInTrash() throws PortalException {
 		if (_inTrash == null) {
-			return TrashUtil.isInTrash(_className, _classPK);
+			TrashHandler trashHandler =
+				TrashHandlerRegistryUtil.getTrashHandler(_className);
+
+			if (trashHandler == null) {
+				return false;
+			}
+
+			return trashHandler.isInTrash(_classPK);
 		}
 
 		return _inTrash;

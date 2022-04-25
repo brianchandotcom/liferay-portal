@@ -19,6 +19,7 @@ import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.vocabulary.item.selector.AssetVocabularyItemSelectorReturnType;
 import com.liferay.asset.vocabulary.item.selector.criterion.AssetVocabularyItemSelectorCriterion;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -32,6 +33,8 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.site.navigation.menu.item.layout.constants.SiteNavigationMenuItemTypeConstants;
+import com.liferay.site.navigation.menu.item.vocabulary.internal.constants.VocabularySiteNavigationMenuTypeConstants;
+import com.liferay.site.navigation.menu.item.vocabulary.internal.display.context.VocabularySiteNavigationMenuTypeDisplayContext;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeContext;
@@ -242,11 +245,32 @@ public class VocabularySiteNavigationMenuItemType
 		throws IOException {
 	}
 
+	@Override
+	public void renderEditPage(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse,
+			SiteNavigationMenuItem siteNavigationMenuItem)
+		throws IOException {
+
+		httpServletRequest.setAttribute(
+			VocabularySiteNavigationMenuTypeConstants.
+				VOCABULARY_SITE_NAVIGATION_MENU_TYPE_DISPLAY_CONTEXT,
+			new VocabularySiteNavigationMenuTypeDisplayContext(
+				httpServletRequest, _itemSelector, siteNavigationMenuItem));
+
+		_jspRenderer.renderJSP(
+			_servletContext, httpServletRequest, httpServletResponse,
+			"/edit_vocabulary.jsp");
+	}
+
 	@Reference
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 	@Reference
 	private ItemSelector _itemSelector;
+
+	@Reference
+	private JSPRenderer _jspRenderer;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.site.navigation.menu.item.vocabulary)",

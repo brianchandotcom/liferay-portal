@@ -13,4 +13,4 @@
  */
 
 export declare function getSpritemapPath(iconPack?: String): string;
-export declare function getSystemSpritemapPath(): any;
+export declare function getSystemSpritemapPath(): string;

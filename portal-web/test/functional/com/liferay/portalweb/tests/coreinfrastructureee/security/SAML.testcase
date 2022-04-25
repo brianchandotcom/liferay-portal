@@ -1476,6 +1476,7 @@ definition {
 	@priority = "4"
 	test CannotLoginWithInvalidCustomFieldMappingInSAML {
 		property app.server.bundles.size = "0";
+		property portal.release = "quarantine";
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "SAML#CannotLoginWithInvalidCustomFieldMappingInSAML";
 
@@ -2905,6 +2906,7 @@ definition {
 	@priority = "4"
 	test DuplicatedCustomFieldMappingCannotBeSavedInSAML {
 		property app.server.bundles.size = "0";
+		property portal.release = "quarantine";
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "SAML#DuplicatedCustomFieldMappingCannotBeSavedInSAML";
 
@@ -3100,6 +3102,7 @@ definition {
 	@priority = "4"
 	test SPInitiatedSSODoesNotSyncAttributesIfNotMapped {
 		property app.server.bundles.size = "0";
+		property portal.release = "quarantine";
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "SAML#SPInitiatedSSODoesNotSyncAttributesIfNotMapped";
 
@@ -3445,6 +3448,7 @@ definition {
 	@priority = "4"
 	test SPInitiatedSSOSyncsUserAttributesFromMultipleIdPToSPCustomMapping {
 		property app.server.bundles.size = "0";
+		property portal.release = "quarantine";
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "SAML#SPInitiatedSSOSyncsUserAttributesFromMultipleIdPToSPCustomMapping";
 
@@ -4664,6 +4668,7 @@ definition {
 	@priority = "4"
 	test ViewSPInitiatedSSOWithSAMLAttributeScreenNameUsedForUserMatchingMultipleIdP {
 		property app.server.bundles.size = "0";
+		property portal.release = "quarantine";
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "SAML#ViewSPInitiatedSSOWithSAMLAttributeScreenNameUsedForUserMatchingMultipleIdP";
 

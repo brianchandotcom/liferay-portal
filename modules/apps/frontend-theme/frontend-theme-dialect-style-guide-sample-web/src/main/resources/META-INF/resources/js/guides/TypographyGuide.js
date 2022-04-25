@@ -163,6 +163,12 @@ const TypographyGuide = () => {
 					</TokenItem>
 				))}
 			</TokenGroup>
+
+			<TokenGroup group="texts" title={Liferay.Language.get('other')}>
+				<TokenItem border={true} label="mark, .mark" size="large">
+					The <mark>quick brown fox</mark> jumps over the lazy dog
+				</TokenItem>
+			</TokenGroup>
 		</>
 	);
 };

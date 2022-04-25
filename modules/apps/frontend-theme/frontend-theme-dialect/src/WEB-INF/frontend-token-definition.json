@@ -2159,6 +2159,18 @@
 							],
 							"name": "hrBorderMarginY",
 							"type": "String"
+						},
+						{
+							"defaultValue": "var(--color-brand-secondary-lighten-5)",
+							"label": "marked-text-background-color",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "marked-text-background-color"
+								}
+							],
+							"name": "markedTextBackgroundColor",
+							"type": "String"
 						}
 					],
 					"label": "other",

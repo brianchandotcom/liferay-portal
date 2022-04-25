@@ -103,3 +103,7 @@ $transition-collapse: height var(--transition-collapse);
 $btn-transition: color var(--transition-base),
 	background-color var(--transition-base), border-color var(--transition-base),
 	box-shadow var(--transition-base);
+
+// Other
+
+$mark-bg: var(--marked-text-background-color);

@@ -154,7 +154,7 @@ public class ContentDashboardAdminPortlet extends MVCPortlet {
 				new ContentDashboardAdminManagementToolbarDisplayContext(
 					_assetCategoryLocalService, _assetVocabularyLocalService,
 					contentDashboardAdminDisplayContext, _groupLocalService,
-					_portal.getHttpServletRequest(renderRequest),
+					_portal.getHttpServletRequest(renderRequest), _language,
 					liferayPortletRequest, liferayPortletResponse,
 					_portal.getLocale(renderRequest), _userLocalService);
 

@@ -83,10 +83,7 @@ export default function EditObjectValidation({
 	} = useObjectValidationForm({initialValues, onSubmit});
 
 	return (
-		<SidePanelForm
-			onSubmit={handleSubmit}
-			title={initialValues.name}
-		>
+		<SidePanelForm onSubmit={handleSubmit} title={initialValues.name}>
 			<ClayTabs className="side-panel-iframe__tabs">
 				{TABS.map(({label}, index) => (
 					<ClayTabs.Item

@@ -27,8 +27,8 @@ const TABLE_VARIANTS = [
 		label: 'table-divided',
 	},
 	{
-		className: 'bg-neutral-3 px-2 table-spaced',
-		label: 'table-spaced',
+		className: 'table-spaced',
+		tokenClassName: 'bg-neutral-3 px-2',
 	},
 	{
 		className: 'table-bordered',
@@ -116,7 +116,11 @@ const Table = ({className, hover = false, responsive = false}) => {
 };
 
 const TableTokenItem = ({item}) => (
-	<TokenItem label={item.label ? item.label : item.className} size="large">
+	<TokenItem
+		className={item.tokenClassName}
+		label={item.label ? item.label : item.className}
+		size="large"
+	>
 		<Table
 			className={item.className}
 			hover={item.hover}

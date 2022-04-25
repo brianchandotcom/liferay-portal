@@ -32,7 +32,7 @@ if (message != null) {
 
 <div class="hide selected" id="<portlet:namespace />selectedFileNameMetadataContainer"></div>
 
-<c:if test="<%= (message != null) && trashHelper.isTrashEnabled(scopeGroupId) && MBMessagePermission.contains(permissionChecker, message, ActionKeys.UPDATE) %>">
+<c:if test="<%= (message != null) && trashHelper.isTrashEnabled(scopeGroupId) %>">
 	<div align="right">
 		<a href="javascript:;" id="view-removed-attachments-link" style='display: <%= (deletedAttachmentsFileEntriesCount > 0) ? "initial" : "none" %>;'>
 			<liferay-ui:message arguments="<%= deletedAttachmentsFileEntriesCount %>" key='<%= (deletedAttachmentsFileEntriesCount == 1) ? "x-recently-removed-attachment" : "x-recently-removed-attachments" %>' /> &raquo;

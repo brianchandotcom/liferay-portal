@@ -587,25 +587,6 @@ public class AssetVocabularyLocalServiceUtil {
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
 		<AssetVocabulary> searchVocabularies(
-				long companyId, long groupId, String title, int start, int end)
-			throws PortalException {
-
-		return getService().searchVocabularies(
-			companyId, groupId, title, start, end);
-	}
-
-	public static com.liferay.portal.kernel.search.BaseModelSearchResult
-		<AssetVocabulary> searchVocabularies(
-				long companyId, long groupId, String title, int start, int end,
-				com.liferay.portal.kernel.search.Sort sort)
-			throws PortalException {
-
-		return getService().searchVocabularies(
-			companyId, groupId, title, start, end, sort);
-	}
-
-	public static com.liferay.portal.kernel.search.BaseModelSearchResult
-		<AssetVocabulary> searchVocabularies(
 				long companyId, long[] groupIds, String title,
 				int[] visibilityTypes, int start, int end,
 				com.liferay.portal.kernel.search.Sort sort)

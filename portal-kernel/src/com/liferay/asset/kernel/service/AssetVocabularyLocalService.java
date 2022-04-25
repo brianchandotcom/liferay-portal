@@ -476,17 +476,6 @@ public interface AssetVocabularyLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<AssetVocabulary> searchVocabularies(
-			long companyId, long groupId, String title, int start, int end)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BaseModelSearchResult<AssetVocabulary> searchVocabularies(
-			long companyId, long groupId, String title, int start, int end,
-			Sort sort)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BaseModelSearchResult<AssetVocabulary> searchVocabularies(
 			long companyId, long[] groupIds, String title,
 			int[] visibilityTypes, int start, int end, Sort sort)
 		throws PortalException;

@@ -79,7 +79,7 @@ function getCodeMirrorHints(cm, autocompleteSchema, availableLanguages) {
 	const start = token.start - 1;
 	const end = token.end;
 
-	if (token.type !== 'string property') {
+	if (token.type !== 'string property' && token.type !== 'string') {
 		return;
 	}
 
@@ -118,6 +118,23 @@ function getCodeMirrorHints(cm, autocompleteSchema, availableLanguages) {
 			...linePropertyBracketList,
 		];
 	}
+
+	// Get the property on current line to check for an enum list later.
+
+	const currentProperty = cm
+		.getLineTokens(cursor.line)
+		.filter((token) => {
+			if (token.end > cursor.ch) {
+				return false;
+			}
+
+			return (
+				token.string.length > 1 &&
+				token.string.startsWith('"') &&
+				token.string.endsWith('"')
+			);
+		})
+		.map((token) => removeQuotes(token.string));
 
 	// Filter the `propertyBracketList` to get only the parent properties.
 
@@ -179,9 +196,43 @@ function getCodeMirrorHints(cm, autocompleteSchema, availableLanguages) {
 		availableLanguages
 	);
 
-	// Filter matched strings.
-
 	const search = token.string.match(/[@]?\w+/);
+
+	// Return a filtered enum list if the property on the current line
+	// matches a property inside schemaProperties with an enum.
+
+	if (token.type === 'string') {
+		const property = list.find(
+			(item) => item.name === currentProperty.at(-1)
+		);
+
+		if (property?.enum) {
+			let enumList = property.enum;
+
+			if (search !== null) {
+				enumList = property.enum.filter(
+					(item) =>
+						item.toLowerCase().indexOf(search[0].toLowerCase()) > -1
+				);
+			}
+
+			return {
+				from: CodeMirror.Pos(cursor.line, start + 2),
+				list: enumList.map((item) => {
+					return {
+						displayText: `${item}`,
+						text: `${item}"`,
+					};
+				}),
+
+				to: CodeMirror.Pos(cursor.line, end),
+			};
+		}
+
+		return;
+	}
+
+	// Filter matched strings.
 
 	if (search !== null) {
 		list = list.filter((item) => {
@@ -367,6 +418,7 @@ function getSchemaProperties(
 			// Get `type` value, forward $ref reference if defined.
 
 			let type = schema.properties[name].type || '';
+			let enumList = schema.properties[name].enum;
 
 			if (
 				schema.properties[name].$ref &&
@@ -383,6 +435,11 @@ function getSchemaProperties(
 				);
 
 				type = refSchema.type || '';
+				enumList = refSchema.enum;
+			}
+
+			if (type === 'string' && enumList) {
+				return {enum: enumList, name, type};
 			}
 
 			return {

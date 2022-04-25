@@ -15,11 +15,14 @@
 package com.liferay.site.navigation.menu.item.vocabulary.internal.type;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.site.navigation.menu.item.layout.constants.SiteNavigationMenuItemTypeConstants;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 
 import java.util.Locale;
 
+import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeContext;
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -44,5 +47,16 @@ public class VocabularySiteNavigationMenuItemType
 	@Override
 	public String getType() {
 		return SiteNavigationMenuItemTypeConstants.VOCABULARY;
+	}
+
+	@Override
+	public boolean isAvailable(
+		SiteNavigationMenuItemTypeContext siteNavigationMenuItemTypeContext) {
+
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-146502"))) {
+			return true;
+		}
+
+		return false;
 	}
 }

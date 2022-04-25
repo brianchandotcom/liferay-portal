@@ -428,6 +428,7 @@ definition {
 			workflowTask = "Review");
 
 		Workflow.approveTaskByActions(
+			completedTask = "viewDetails",
 			workflowAssetTitle = "Translation of WC WebContent Title to es-ES",
 			workflowAssetType = "Translation",
 			workflowTask = "Review");

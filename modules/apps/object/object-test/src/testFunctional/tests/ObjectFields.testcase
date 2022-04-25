@@ -195,11 +195,53 @@ definition {
 	}
 
 	@description = "LPS-146889 - Verify that 'Set the Maximum Number of Characters' toggle is available for Text and Long Text fields"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanViewSetMaximumCharactersOption {
 
-		// TODO LPS-151569 CanViewSetMaximumCharactersOption pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 151569",
+			objectName = "CustomObject151569",
+			pluralLabelName = "Custom Objects 151569");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field Text",
+			fieldName = "customObjectFieldText",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject151569");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "LongText",
+			fieldLabelName = "Custom Field Long Text",
+			fieldName = "customObjectFieldLongText",
+			fieldType = "Clob",
+			isRequired = "false",
+			objectName = "CustomObject151569");
+
+		Navigator.openURL();
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 151569");
+
+		ObjectAdmin.goToFieldsTab();
+
+		ObjectAdmin.goToFieldsDetails(label = "Custom Field Text");
+
+		AssertElementPresent(
+			locator1 = "ObjectField#DEFAULT_TOGGLE_SWITCH",
+			key_labelName = "Limit Characters");
+
+		ObjectField.closeModal();
+
+		SelectFrame(locator1 = "ObjectAdmin#SELECT_OBJECT_FIELD");
+
+		ObjectAdmin.goToFieldsDetails(label = "Custom Field Long Text");
+
+		AssertElementPresent(
+			locator1 = "ObjectField#DEFAULT_TOGGLE_SWITCH",
+			key_labelName = "Limit Characters");
 
 	}
 

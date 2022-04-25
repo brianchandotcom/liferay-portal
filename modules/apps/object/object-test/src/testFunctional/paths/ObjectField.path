@@ -43,6 +43,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>DEFAULT_TOGGLE_SWITCH</td>
+		<td>//span[@class='toggle-switch-label' and contains(text(), '${key_labelName}')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>MANDATORY_TOGGLE</td>
 		<td>//input[@name="required"]</td>
 		<td></td>
@@ -50,6 +55,11 @@
 	<tr>
 		<td>MANDATORY_TOGGLE_DISABLED</td>
 		<td>//input[@name="required" and @disabled]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>MODAL_CLOSE_BUTTON</td>
+		<td>//button[contains(@class, 'close')]</td>
 		<td></td>
 	</tr>
 	<tr>

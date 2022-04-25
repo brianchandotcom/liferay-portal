@@ -62,6 +62,10 @@ definition {
 		AssertElementPresent(locator1 = "ObjectField#TYPE_FIELD_DISABLED");
 	}
 
+	macro closeModal {
+		Click(locator1 = "ObjectField#MODAL_CLOSE_BUTTON");
+	}
+
 	macro checkToggleMandatory {
 		Check.checkToggleSwitch(locator1 = "ObjectField#MANDATORY_TOGGLE");
 	}

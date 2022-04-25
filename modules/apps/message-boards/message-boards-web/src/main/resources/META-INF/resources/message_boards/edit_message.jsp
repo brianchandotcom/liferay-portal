@@ -158,7 +158,7 @@ if (portletTitleBasedNavigation) {
 		</liferay-ui:error>
 
 		<%
-			DLConfiguration dlConfiguration = ConfigurationProviderUtil.getSystemConfiguration(DLConfiguration.class);
+		DLConfiguration dlConfiguration = ConfigurationProviderUtil.getSystemConfiguration(DLConfiguration.class);
 		%>
 
 		<liferay-ui:error exception="<%= FileExtensionException.class %>">

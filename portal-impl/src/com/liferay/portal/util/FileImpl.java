@@ -61,8 +61,6 @@ import java.util.Properties;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-import org.apache.commons.io.FileUtils;
-
 /**
  * @author Brian Wing Shun Chan
  * @author Alexander Chow
@@ -581,7 +579,7 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 
 	@Override
 	public void mkdirs(File file) throws IOException {
-		FileUtils.forceMkdir(file);
+		Files.createDirectories(file.toPath());
 	}
 
 	@Override
@@ -614,10 +612,18 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 
 		try {
 			if (source.isDirectory()) {
-				FileUtils.moveDirectory(source, destination);
+				if (!source.renameTo(destination)) {
+					copyDirectory(source, destination);
+
+					deltree(source);
+				}
 			}
 			else {
-				FileUtils.moveFile(source, destination);
+				if (!source.renameTo(destination)) {
+					copyFile(source, destination);
+
+					delete(source);
+				}
 			}
 		}
 		catch (IOException ioException) {
@@ -797,7 +803,12 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 
 	@Override
 	public void touch(File file) throws IOException {
-		FileUtils.touch(file);
+		if (file.exists()) {
+			file.setLastModified(System.currentTimeMillis());
+		}
+		else {
+			file.createNewFile();
+		}
 	}
 
 	@Override

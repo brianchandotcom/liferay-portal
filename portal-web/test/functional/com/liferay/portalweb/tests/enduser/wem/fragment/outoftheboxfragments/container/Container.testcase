@@ -1123,4 +1123,99 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-149591. The user could view topper of Container when dragging fragment inside it."
+	@priority = "5"
+	test ViewTopperOfContainerWhenDragFragmentInsideIt {
+		task ("Given a Page designer has a content page with fragment compositions") {
+			task ("Add the first Container to page") {
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Content Page Name",
+					siteName = "Test Site Name");
+
+				PageEditor.addFragment(
+					collectionName = "Layout Elements",
+					fragmentName = "Container");
+			}
+
+			task ("Add a Heading fragment into Container") {
+				PageEditor.addElementToContainer(
+					collectionName = "Basic Components",
+					fragmentName = "Heading",
+					navTab = "Fragments");
+			}
+
+			task ("Add the second Container below the first one") {
+				PageEditor.addFragment(
+					collectionName = "Layout Elements",
+					fragmentName = "Container",
+					targetFragmentName = "Container");
+			}
+
+			task ("Add a Button fragment into the second Container") {
+				PageEditor.addElementToContainer(
+					collectionName = "Basic Components",
+					fragmentName = "Button",
+					navTab = "Fragments",
+					position = "2");
+			}
+		}
+
+		task ("When the Page designer dragging a new Heading fragment inside the first Container") {
+			DragOver.dragOverAtBottom(
+				key_collectionName = "Basic Components",
+				key_fragmentName = "Heading",
+				key_targetFragmentName = "Heading",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+				locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET");
+		}
+
+		task ("Then the Page designer view the topper of the first Container") {
+			AssertElementPresent(
+				index = "1",
+				key_fragmentName = "Container",
+				locator1 = "Fragment#ACTIVE_FRAGMENT_LABEL");
+		}
+
+		task ("When the Page designer dragging a new Heading fragment between Containers") {
+			Refresh();
+
+			WaitForPageLoad();
+
+			DragOver(
+				key_collectionName = "Basic Components",
+				key_fragmentName = "Heading",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+				locator2 = "PageEditor#FRAGMENT_DROP_TARGET");
+		}
+
+		task ("Then the Page designer cannot view any topper of Container") {
+			for (var i : list "1,2") {
+				AssertElementNotPresent(
+					index = "${i}",
+					key_fragmentName = "Container",
+					locator1 = "Fragment#ACTIVE_FRAGMENT_LABEL");
+			}
+		}
+
+		task ("When the Page designer dragging a new Heading fragment inside the second Container") {
+			Refresh();
+
+			WaitForPageLoad();
+
+			DragOver.dragOverAtBottom(
+				key_collectionName = "Basic Components",
+				key_fragmentName = "Heading",
+				key_targetFragmentName = "Button",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+				locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET");
+		}
+
+		task ("Then the Page designer view the topper of the second Container") {
+			AssertElementPresent(
+				index = "2",
+				key_fragmentName = "Container",
+				locator1 = "Fragment#ACTIVE_FRAGMENT_LABEL");
+		}
+	}
+
 }

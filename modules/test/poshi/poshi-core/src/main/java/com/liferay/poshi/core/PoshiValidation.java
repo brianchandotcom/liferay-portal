@@ -38,6 +38,8 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang.StringUtils;
+
 import org.dom4j.Attribute;
 import org.dom4j.Element;
 
@@ -315,6 +317,13 @@ public class PoshiValidation {
 
 		String elementName = poshiElement.getName();
 
+		if (elementName.equals("contains")) {
+			validateEscapedString(
+				poshiElement, poshiElement.attributeValue("string"));
+			validateEscapedString(
+				poshiElement, poshiElement.attributeValue("substring"));
+		}
+
 		if (elementName.equals("and") || elementName.equals("or")) {
 			validateHasChildElements(poshiElement, filePath);
 			validateHasNoAttributes(poshiElement);
@@ -502,6 +511,25 @@ public class PoshiValidation {
 		validateHasNoAttributes(thenElement);
 
 		parseElements(thenElement);
+	}
+
+	protected static void validateEscapedString(
+		PoshiElement poshiElement, String attributeValue) {
+
+		if (attributeValue.contains("\"")) {
+			int escapedQuoteCount = StringUtils.countMatches(
+				attributeValue, "\\\"");
+			int quoteCount = StringUtils.countMatches(attributeValue, "\"");
+
+			if ((escapedQuoteCount != quoteCount) ||
+				!((escapedQuoteCount % 2) == 0)) {
+
+				_exceptions.add(
+					new PoshiElementException(
+						poshiElement,
+						"Unescaped quotes in contains parameter string"));
+			}
+		}
 	}
 
 	protected static void validateExecuteElement(PoshiElement poshiElement) {
@@ -915,7 +943,7 @@ public class PoshiValidation {
 			poshiElement.elements());
 
 		List<String> conditionTags = Arrays.asList(
-			"and", "condition", "contains", "equals", "isset", "not", "or");
+			"and", "condition", "equals", "contains", "isset", "not", "or");
 
 		if (fileName.equals("function")) {
 			conditionTags = Arrays.asList(

@@ -207,6 +207,7 @@ public class SiteActionDropdownItemsProvider {
 				).setParameter(
 					"groupId", _group.getGroupId()
 				).buildString());
+			dropdownItem.setIcon("trash");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "delete"));
 		};

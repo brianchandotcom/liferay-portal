@@ -16,6 +16,7 @@ import ClayAlert from '@clayui/alert';
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm, {ClayCheckbox, ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import ClayLabel from '@clayui/label';
 import classNames from 'classnames';
 import {TranslationAdminSelector} from 'frontend-js-components-web';
 import {fetch, objectToFormData, openSelectionModal} from 'frontend-js-web';
@@ -123,7 +124,7 @@ function DisplayPageItemContextualSidebar({
 					data-tooltip-align="top"
 					title={Liferay.Language.get('use-custom-name-help')}
 				>
-					<ClayIcon symbol="question-circle-full" />
+					<ClayIcon symbol="question-circle" />
 				</span>
 			</ClayForm.Group>
 
@@ -220,7 +221,7 @@ function DisplayPageItemContextualSidebar({
 						{Liferay.Language.get('type')}
 					</p>
 
-					<p className="list-group-text">{type}</p>
+					<ClayLabel displayType="secondary">{type}</ClayLabel>
 				</div>
 			</ClayForm.Group>
 

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -114,11 +115,14 @@ public class ObjectDefinitionsValidationsDisplayContext
 				objectRequestHelper.getLocale(),
 				objectValidationRule.getEngine())
 		).put(
-			"errorLabel", objectValidationRule.getErrorLabel()
+			"errorLabel",
+			LocalizationUtil.getLocalizationMap(
+				objectValidationRule.getErrorLabel())
 		).put(
 			"id", objectValidationRule.getObjectValidationRuleId()
 		).put(
-			"name", objectValidationRule.getName()
+			"name",
+			LocalizationUtil.getLocalizationMap(objectValidationRule.getName())
 		).put(
 			"script", objectValidationRule.getScript()
 		);

@@ -97,15 +97,6 @@ public class DLURLHelperImpl implements DLURLHelper {
 			return url;
 		}
 
-		String friendlyURL = _getFriendlyURL(
-			appendVersion, fileEntry,
-			_getPreviewURLPrefix(themeDisplay, absoluteURL), queryString);
-
-		if (Validator.isNotNull(friendlyURL)) {
-			return HttpComponentsUtil.addParameter(
-				friendlyURL, "download", true);
-		}
-
 		return HttpComponentsUtil.addParameter(
 			getPreviewURL(
 				fileEntry, fileVersion, themeDisplay, queryString,

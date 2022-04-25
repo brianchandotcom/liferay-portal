@@ -185,9 +185,8 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 							).buildString()));
 					labelItem.setCloseable(true);
 					labelItem.setLabel(
-						StringBundler.concat(
-							_language.get(httpServletRequest, "category"),
-							StringPool.COLON,
+						_getLabel(
+							"category",
 							Optional.ofNullable(
 								_assetCategoryLocalService.fetchAssetCategory(
 									assetCategoryId)
@@ -214,10 +213,8 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 					).buildString());
 				labelItem.setCloseable(true);
 				labelItem.setLabel(
-					StringBundler.concat(
-						_language.get(
-							httpServletRequest, "site-or-asset-library"),
-						": ", _getScopeLabel(scopeId)));
+					_getLabel(
+						"site-or-asset-library", _getScopeLabel(scopeId)));
 			});
 
 		List<? extends ContentDashboardItemSubtype>
@@ -243,19 +240,15 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 									Stream<String> stream =
 										fileExtensions.stream();
 
-									return stream.filter(
-										curFileExtension -> !Objects.equals(
-											curFileExtension, fileExtension)
-									).toArray(
-										String[]::new
-									);
-								}
-							).buildString()));
+								return stream.filter(
+									curFileExtension -> !Objects.equals(
+										curFileExtension, fileExtension)
+								).toArray(
+									String[]::new
+								);
+							}));
 					labelItem.setCloseable(true);
-					labelItem.setLabel(
-						StringBundler.concat(
-							_language.get(httpServletRequest, "extension"),
-							": ", fileExtension));
+					labelItem.setLabel(_getLabel("extension", fileExtension));
 				});
 		}
 
@@ -271,8 +264,8 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 							contentDashboardItemSubtype));
 					labelItem.setCloseable(true);
 					labelItem.setLabel(
-						StringBundler.concat(
-							_language.get(httpServletRequest, "subtype"), ": ",
+						_getLabel(
+							"subtype",
 							contentDashboardItemSubtype.getFullLabel(_locale)));
 				});
 		}
@@ -305,9 +298,8 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 							).buildString()));
 					labelItem.setCloseable(true);
 					labelItem.setLabel(
-						StringBundler.concat(
-							_language.get(httpServletRequest, "author"),
-							StringPool.COLON,
+						_getLabel(
+							"author",
 							_language.get(
 								httpServletRequest,
 								Optional.ofNullable(
@@ -335,8 +327,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 					).buildString());
 				labelItem.setCloseable(true);
 				labelItem.setLabel(
-					_language.get(httpServletRequest, "status") + ": " +
-						_getStatusLabel(status));
+					_getLabel("status", _getStatusLabel(status)));
 			});
 
 		Set<String> assetTagIds =
@@ -365,10 +356,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 								}
 							).buildString()));
 					labelItem.setCloseable(true);
-					labelItem.setLabel(
-						StringBundler.concat(
-							_language.get(httpServletRequest, "tag"),
-							StringPool.COLON, assetTagId));
+					labelItem.setLabel(_getLabel("tag", assetTagId));
 				});
 		}
 
@@ -789,6 +777,12 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 		};
 	}
 
+	private String _getLabel(String key, String value) {
+		return StringBundler.concat(
+			_language.get(httpServletRequest, key), StringPool.COLON,
+			StringPool.SPACE, value);
+	}
+
 	private String _getRemoveContentDashboardItemSubtypePayloadsURL(
 			List<? extends ContentDashboardItemSubtype>
 				contentDashboardItemSubtypes,
@@ -822,6 +816,31 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 				)
 			).buildString();
 		}
+	}
+
+	private String _getRemoveLabelURL(
+			String name,
+			PortletURLBuilder.UnsafeSupplier<Object, Exception>
+				valueUnsafeSupplier)
+		throws PortletException {
+
+		return String.valueOf(
+			PortletURLBuilder.create(
+				PortletURLUtil.clone(currentURLObj, liferayPortletResponse)
+			).setParameter(
+				name, valueUnsafeSupplier
+			).buildString());
+	}
+
+	private String _getRemoveLabelURL(String name, String value)
+		throws PortletException {
+
+		return String.valueOf(
+			PortletURLBuilder.create(
+				PortletURLUtil.clone(currentURLObj, liferayPortletResponse)
+			).setParameter(
+				name, value
+			).buildString());
 	}
 
 	private String _getScopeLabel(long scopeId) {

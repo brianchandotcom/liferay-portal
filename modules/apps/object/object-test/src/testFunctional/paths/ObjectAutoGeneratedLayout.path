@@ -45,6 +45,11 @@
 		<td>//div[contains(@class,'lfr-objects__attachment-title') and contains(button,'${key_fileName}')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>VIEW_IMAGE</td>
+		<td>//img[contains(@src,'${key_imageTitle}')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

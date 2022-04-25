@@ -124,6 +124,28 @@ definition {
 			value1 = "${publicationTitle}");
 	}
 
+	macro uncheckAllPages {
+		if ((IsElementNotPresent(locator1 = "PagesConfiguration#PAGES_ALL_PAGES_CHECKED")) && (IsElementPresent(locator1 = "PagesConfiguration#PAGES_ANY_PAGE_CHECKED"))) {
+			Click(locator1 = "PagesConfiguration#PAGES_ALL_PAGES_CHECKBOX");
+
+			Click(locator1 = "PagesConfiguration#PAGES_ALL_PAGES_CHECKBOX");
+		}
+		else {
+			Click(locator1 = "PagesConfiguration#PAGES_ALL_PAGES_CHECKBOX");
+		}
+	}
+
+	macro uncheckAllPublicPages {
+		if ((IsElementNotPresent(locator1 = "PagesConfiguration#PAGES_ALL_PUBLIC_PAGES_CHECKED")) && (IsElementPresent(locator1 = "PagesConfiguration#PAGES_ANY_PAGE_CHECKED"))) {
+			Click(locator1 = "PagesConfiguration#PAGES_ALL_PUBLIC_PAGES_CHECKBOX");
+
+			Click(locator1 = "PagesConfiguration#PAGES_ALL_PUBLIC_PAGES_CHECKBOX");
+		}
+		else {
+			Click(locator1 = "PagesConfiguration#PAGES_ALL_PUBLIC_PAGES_CHECKBOX");
+		}
+	}
+
 	macro uncheckContentNameList {
 		for (var contentName : list "${uncheckContentNameList}") {
 			Uncheck.uncheckToggleSwitch(
@@ -138,10 +160,10 @@ definition {
 
 	macro uncheckPages {
 		if (IsElementPresent(locator1 = "PagesConfiguration#PAGES_ALL_PAGES_CHECKBOX")) {
-			Uncheck(locator1 = "PagesConfiguration#PAGES_ALL_PAGES_CHECKBOX");
+			ContentConfiguration.uncheckAllPages();
 		}
 		else {
-			Uncheck(locator1 = "PagesConfiguration#PAGES_ALL_PUBLIC_PAGES_CHECKBOX");
+			ContentConfiguration.uncheckAllPublicPages();
 		}
 	}
 

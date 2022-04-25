@@ -51,13 +51,28 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGES_ALL_PAGES_CHECKED</td>
+	<td>//li/div[contains(@class,'checked') and normalize-space()='Pages']//span[contains(@class,'icon-check')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGES_ALL_PUBLIC_PAGES_CHECKBOX</td>
 	<td>xpath=(//div[contains(.,'Public Pages')]//span[contains(@class,'icon-check')])[1]</td>
 	<td></td>
 </tr>
 <tr>
+	<td>PAGES_ALL_PUBLIC_PAGES_CHECKED</td>
+	<td>//li/div[contains(@class,'checked') and contains(.,'Public Pages')]//span[contains(@class,'icon-check')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGES_ALL_PRIVATE_PAGES_CHECKBOX</td>
 	<td>xpath=(//div[contains(.,'Private Pages')]//span[contains(@class,'icon-check')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGES_ANY_PAGE_CHECKED</td>
+	<td>//li/div[contains(@class,'checked')]//span[contains(@class,'icon-check')]</td>
 	<td></td>
 </tr>
 <tr>

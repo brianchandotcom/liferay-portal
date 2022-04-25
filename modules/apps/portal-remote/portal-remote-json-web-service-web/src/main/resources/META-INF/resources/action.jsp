@@ -210,7 +210,7 @@ String signature = ParamUtil.getString(request, "signature");
 					array: {},
 					file: {},
 					other: {},
-					string: {}
+					string: {},
 				};
 			</aui:script>
 
@@ -243,27 +243,17 @@ String signature = ParamUtil.getString(request, "signature");
 
 					<c:choose>
 						<c:when test="<%= methodParameterTypeClass.equals(File.class) %>">
-	
-	
 							<aui:input id='<%= "field" + i %>' label="<%= methodParameterName %>" name="<%= methodParameterName %>" suffix="<%= methodParameterTypeClassName %>" type="file" />
-	
-	
 						</c:when>
-	
 						<c:when test="<%= methodParameterTypeClass.equals(boolean.class) || methodParameterTypeClass.equals(Boolean.class) %>">
-	
-	
 							<aui:field-wrapper label="<%= methodParameterName %>">
 								<aui:input checked="<%= true %>" id='<%= "fieldTrue" + i %>' inlineField="<%= true %>" label="<%= Boolean.TRUE.toString() %>" name="<%= methodParameterName %>" type="radio" value="<%= true %>" />
-	
+
 								<aui:input id='<%= "fieldFalse" + i %>' inlineField="<%= true %>" label="<%= Boolean.FALSE.toString() %>" name="<%= methodParameterName %>" type="radio" value="<%= false %>" />
-	
+
 								<span class="suffix"><%= methodParameterTypeClassName %></span>
 							</aui:field-wrapper>
-	
-	
 						</c:when>
-	
 						<c:when test="<%= methodParameterTypeClass.isArray() || methodParameterTypeClass.isEnum() || methodParameterTypeClass.isPrimitive() || methodParameterTypeClass.equals(Byte.class) || methodParameterTypeClass.equals(Character.class) || methodParameterTypeClass.equals(Date.class) || methodParameterTypeClass.equals(Double.class) || methodParameterTypeClass.equals(Float.class) || methodParameterTypeClass.equals(Integer.class) || methodParameterTypeClass.equals(List.class) || methodParameterTypeClass.equals(Locale.class) || methodParameterTypeClass.equals(Long.class) || methodParameterTypeClass.equals(Map.class) || methodParameterTypeClass.equals(Short.class) || methodParameterTypeClass.equals(String.class) || methodParameterTypeClass.equals(Void.class) %>">
 
 							<%
@@ -273,18 +263,11 @@ String signature = ParamUtil.getString(request, "signature");
 								size = 60;
 							}
 							%>
-	
+
 							<aui:input id='<%= "field" + i %>' label="<%= methodParameterName %>" name="<%= methodParameterName %>" rows="1" size="<%= size %>" suffix="<%= methodParameterTypeClassName %>" type="textarea" />
-	
-	
 						</c:when>
-	
 						<c:otherwise>
-	
-	
 							<aui:input id='<%= "field" + i %>' label="<%= methodParameterName %>" name='<%= "+" + methodParameterName %>' size="<%= 10 %>" suffix="<%= methodParameterTypeClassName %>" />
-	
-	
 						</c:otherwise>
 					</c:choose>
 
@@ -304,7 +287,9 @@ String signature = ParamUtil.getString(request, "signature");
 						}
 						%>
 
-						Liferay.TPL_DATA_TYPES['<%= jsObjectType %>']['<%= methodParameterName %>'] = true;
+						Liferay.TPL_DATA_TYPES['<%= jsObjectType %>'][
+							'<%= methodParameterName %>'
+						] = true;
 					</aui:script>
 
 				<%
@@ -333,7 +318,7 @@ String signature = ParamUtil.getString(request, "signature");
 			var fileType = tplDataTypes.file;
 			var stringType = tplDataTypes.string;
 
-			var formatDataType = function(key, value, includeNull) {
+			var formatDataType = function (key, value, includeNull) {
 				value = decodeURIComponent(value.replace(/\+/g, ' '));
 				value = escape(value);
 
@@ -341,7 +326,7 @@ String signature = ParamUtil.getString(request, "signature");
 					value = 'null';
 				}
 				else if (stringType[key]) {
-					value = '\'' + value + '\'';
+					value = "'" + value + "'";
 				}
 				else if (arrayType[key]) {
 					if (!value && includeNull) {
@@ -355,7 +340,7 @@ String signature = ParamUtil.getString(request, "signature");
 				return value;
 			};
 
-			var formatCurlDataType = function(key, value, includeNull) {
+			var formatCurlDataType = function (key, value, includeNull) {
 				var filePath = fileType[key];
 
 				if (!multipart || !filePath) {
@@ -371,7 +356,7 @@ String signature = ParamUtil.getString(request, "signature");
 			curlTpl.formatDataType = formatCurlDataType;
 			scriptTpl.formatDataType = A.rbind(formatDataType, scriptTpl, true);
 
-			urlTpl.toURIParam = function(value) {
+			urlTpl.toURIParam = function (value) {
 				value = A.Lang.String.uncamelize(value, '-');
 
 				return value.toLowerCase();
@@ -384,185 +369,171 @@ String signature = ParamUtil.getString(request, "signature");
 			var serviceOutput = A.one('#serviceOutput');
 			var serviceResults = A.one('#serviceResults');
 
-			form.on(
-				'submit',
-				function(event) {
-					event.halt();
+			form.on('submit', (event) => {
+				event.halt();
 
-					var output = A.all([curlExample, jsExample, urlExample, serviceOutput]);
+				var output = A.all([curlExample, jsExample, urlExample, serviceOutput]);
 
-					output.empty().addClass('loading-results');
+				output.empty().addClass('loading-results');
 
-					var formEl = form.getDOM();
+				var formEl = form.getDOM();
 
-					var formQueryString = A.IO.prototype._serialize(formEl);
+				var formQueryString = A.IO.prototype._serialize(formEl);
 
-					var query_elements = formQueryString.split("&");
+				var query_elements = formQueryString.split('&');
 
-					var PLUS_ENCODING = "%2B";
-					var MINUS_ENCODING = "%2D";
+				var PLUS_ENCODING = '%2B';
+				var MINUS_ENCODING = '%2D';
 
-					for (var i = 0 ; i < query_elements.length ; i++) {
-						var query_map = query_elements[i].split("=");
+				for (var i = 0; i < query_elements.length; i++) {
+					var query_map = query_elements[i].split('=');
 
-						var key = query_map[0];
+					var key = query_map[0];
 
-						var plus_bool = ((key.indexOf(PLUS_ENCODING) == 0) || (key.indexOf("+") == 0));
-						var minus_bool = ((key.indexOf(MINUS_ENCODING) == 0) || (key.indexOf("-") == 0));
+					var plus_bool =
+						key.indexOf(PLUS_ENCODING) == 0 || key.indexOf('+') == 0;
+					var minus_bool =
+						key.indexOf(MINUS_ENCODING) == 0 || key.indexOf('-') == 0;
 
-						if (plus_bool || minus_bool) {
-							var value = "";
+					if (plus_bool || minus_bool) {
+						var value = '';
 
-							for (var j = 1; j < query_map.length ; j++) {
-								value += query_map[j];
-							}
+						for (var j = 1; j < query_map.length; j++) {
+							value += query_map[j];
+						}
 
-							if (value.length > 0) {
-								if (minus_bool) {
-									key = key.replace(MINUS_ENCODING,"-");
-									var node = A.one('[name=' + key + ']');
-
-									key = key.replace("-", "+");
-									node.attr("name", key);
-								}
-							}
-							else if (plus_bool) {
-								key = key.replace(PLUS_ENCODING,"+");
+						if (value.length > 0) {
+							if (minus_bool) {
+								key = key.replace(MINUS_ENCODING, '-');
 								var node = A.one('[name=' + key + ']');
 
-								key = key.replace("+", "-");
-								node.attr("name", key);
+								key = key.replace('-', '+');
+								node.attr('name', key);
 							}
+						}
+						else if (plus_bool) {
+							key = key.replace(PLUS_ENCODING, '+');
+							var node = A.one('[name=' + key + ']');
+
+							key = key.replace('+', '-');
+							node.attr('name', key);
 						}
 					}
-
-					formEl = form.getDOM();
-
-					Liferay.Service(
-						'<%= jsonWebServiceActionMapping.getPath() %>',
-						formEl,
-						function(obj) {
-							serviceOutput.html(Liferay.Util.escapeHTML(JSON.stringify(obj, null, 2)));
-
-							output.removeClass('loading-results');
-
-							location.hash = '#serviceResults';
-						}
-					);
-
-					formQueryString = A.IO.prototype._serialize(formEl);
-
-					formQueryString = formQueryString.replace(PLUS_ENCODING, "+");
-					formQueryString = formQueryString.replace(MINUS_ENCODING, "-");
-
-					if (multipart) {
-						formQueryString += Object.keys(tplDataTypes.file).map(
-							function(item, index) {
-								return '&' + item + '=';
-							}
-						).join('');
-					}
-
-					var curlData = [];
-					var scriptData = [];
-
-					var ignoreFields = {
-						formDate: true,
-						p_auth: true
-					};
-
-					formQueryString.replace(
-						REGEX_QUERY_STRING,
-						function(match, key, value) {
-							if (!ignoreFields[key]) {
-								curlData.push(
-									{
-										key: key,
-										value: value
-									}
-								);
-
-								scriptData.push(
-									{
-										key: key,
-										value: value
-									}
-								);
-							}
-						}
-					);
-
-					var tplCurlData = {
-						data: curlData,
-						flag: multipart ? 'F' : 'd'
-					};
-
-					var tplScriptData = {
-						data: scriptData
-					};
-
-					curlTpl.render(tplCurlData, curlExample);
-					scriptTpl.render(tplScriptData, jsExample);
-
-					var urlTplData = {
-						data: [],
-						extraData: []
-					};
-
-					var extraFields = {
-						p_auth: true
-					};
-
-					formQueryString.replace(
-						REGEX_QUERY_STRING,
-						function(match, key, value) {
-							if (!ignoreFields[key]) {
-								if (extraFields[key]) {
-									urlTplData.extraData.push(
-										{
-											key: key,
-											value: value
-										}
-									);
-								}
-								else {
-									urlTplData.data.push(
-										{
-											key: key,
-											value: value
-										}
-									);
-
-								}
-							}
-						}
-					);
-
-					urlTpl.render(urlTplData, urlExample);
-
-					serviceResults.show();
 				}
-			);
+
+				formEl = form.getDOM();
+
+				Liferay.Service(
+					'<%= jsonWebServiceActionMapping.getPath() %>',
+					formEl,
+					(obj) => {
+						serviceOutput.html(
+							Liferay.Util.escapeHTML(JSON.stringify(obj, null, 2))
+						);
+
+						output.removeClass('loading-results');
+
+						location.hash = '#serviceResults';
+					}
+				);
+
+				formQueryString = A.IO.prototype._serialize(formEl);
+
+				formQueryString = formQueryString.replace(PLUS_ENCODING, '+');
+				formQueryString = formQueryString.replace(MINUS_ENCODING, '-');
+
+				if (multipart) {
+					formQueryString += Object.keys(tplDataTypes.file)
+						.map((item, index) => {
+							return '&' + item + '=';
+						})
+						.join('');
+				}
+
+				var curlData = [];
+				var scriptData = [];
+
+				var ignoreFields = {
+					formDate: true,
+					p_auth: true,
+				};
+
+				formQueryString.replace(REGEX_QUERY_STRING, (match, key, value) => {
+					if (!ignoreFields[key]) {
+						curlData.push({
+							key: key,
+							value: value,
+						});
+
+						scriptData.push({
+							key: key,
+							value: value,
+						});
+					}
+				});
+
+				var tplCurlData = {
+					data: curlData,
+					flag: multipart ? 'F' : 'd',
+				};
+
+				var tplScriptData = {
+					data: scriptData,
+				};
+
+				curlTpl.render(tplCurlData, curlExample);
+				scriptTpl.render(tplScriptData, jsExample);
+
+				var urlTplData = {
+					data: [],
+					extraData: [],
+				};
+
+				var extraFields = {
+					p_auth: true,
+				};
+
+				formQueryString.replace(REGEX_QUERY_STRING, (match, key, value) => {
+					if (!ignoreFields[key]) {
+						if (extraFields[key]) {
+							urlTplData.extraData.push({
+								key: key,
+								value: value,
+							});
+						}
+						else {
+							urlTplData.data.push({
+								key: key,
+								value: value,
+							});
+						}
+					}
+				});
+
+				urlTpl.render(urlTplData, urlExample);
+
+				serviceResults.show();
+			});
 		</aui:script>
 
 		<textarea class="hide" id="scriptTpl">
 Liferay.Service(
-  '<%= jsonWebServiceActionMapping.getPath() %>',
-  <tpl if="data.length">{
+'<%= jsonWebServiceActionMapping.getPath() %>',
+<tpl if="data.length">{
 <%= StringPool.FOUR_SPACES %><tpl for="data">{key}: {[this.formatDataType(values.key, values.value)]}<tpl if="!$last">,
 <%= StringPool.FOUR_SPACES %></tpl></tpl>
-  },
-  </tpl>function(obj) {
+},
+</tpl>function(obj) {
 <%= StringPool.FOUR_SPACES %>console.log(obj);
-  }
+}
 );
 		</textarea>
 
 		<textarea class="hide" id="curlTpl">
 curl <%= themeDisplay.getPortalURL() + jsonWSPath + jsonWebServiceActionMapping.getPath() %> \\
-  -u test@liferay.com:test <tpl if="data.length">\\
-  <tpl for="data">-{parent.flag} {key}={[this.formatDataType(values.key, values.value)]} <tpl if="!$last">\\
-  </tpl></tpl></tpl>
+-u test@liferay.com:test <tpl if="data.length">\\
+<tpl for="data">-{parent.flag} {key}={[this.formatDataType(values.key, values.value)]} <tpl if="!$last">\\
+</tpl></tpl></tpl>
 		</textarea>
 
 		<textarea class="hide" id="urlTpl">

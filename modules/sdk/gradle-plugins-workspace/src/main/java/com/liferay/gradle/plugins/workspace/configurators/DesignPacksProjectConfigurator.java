@@ -20,6 +20,7 @@ import com.liferay.gradle.plugins.css.builder.CSSBuilderPlugin;
 import com.liferay.gradle.plugins.node.NodePlugin;
 import com.liferay.gradle.plugins.theme.builder.BuildThemeTask;
 import com.liferay.gradle.plugins.theme.builder.ThemeBuilderPlugin;
+import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
 import com.liferay.gradle.plugins.workspace.WorkspacePlugin;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
 
@@ -37,8 +38,10 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
@@ -51,6 +54,7 @@ import org.gradle.api.file.DirectoryProperty;
 import org.gradle.api.file.RegularFile;
 import org.gradle.api.initialization.Settings;
 import org.gradle.api.plugins.BasePlugin;
+import org.gradle.api.plugins.ExtensionAware;
 import org.gradle.api.plugins.WarPlugin;
 import org.gradle.api.provider.Property;
 import org.gradle.api.provider.Provider;
@@ -88,7 +92,10 @@ public class DesignPacksProjectConfigurator extends BaseProjectConfigurator {
 		GradleUtil.applyPlugin(project, LiferayBasePlugin.class);
 		GradleUtil.applyPlugin(project, NodePlugin.class);
 		GradleUtil.applyPlugin(project, ThemeBuilderPlugin.class);
-		GradleUtil.applyPlugin(project, WarPlugin.class);
+
+		_addDependenciesParentThemes(project);
+
+		_addDependenciesPortalCommonCSS(project);
 
 		BuildThemeTask buildThemeTask = _configureTaskBuildTheme(project);
 
@@ -160,6 +167,27 @@ public class DesignPacksProjectConfigurator extends BaseProjectConfigurator {
 
 	protected static final String NAME = "design.pack";
 
+	private void _addDependenciesParentThemes(Project project) {
+		GradleUtil.addDependency(
+			project, ThemeBuilderPlugin.PARENT_THEMES_CONFIGURATION_NAME,
+			"com.liferay", "com.liferay.frontend.theme.styled",
+			"latest.release");
+		GradleUtil.addDependency(
+			project, ThemeBuilderPlugin.PARENT_THEMES_CONFIGURATION_NAME,
+			"com.liferay", "com.liferay.frontend.theme.unstyled",
+			"latest.release");
+		GradleUtil.addDependency(
+			project, ThemeBuilderPlugin.PARENT_THEMES_CONFIGURATION_NAME,
+			"com.liferay.plugins", "classic-theme", "latest.release");
+	}
+
+	private void _addDependenciesPortalCommonCSS(Project project) {
+		GradleUtil.addDependency(
+			project, CSSBuilderPlugin.PORTAL_COMMON_CSS_CONFIGURATION_NAME,
+			"com.liferay", "com.liferay.frontend.css.common", "latest.release",
+			false);
+	}
+
 	@SuppressWarnings("serial")
 	private Zip _addTaskBuildDesignPack(
 		Project project, BuildCSSTask buildCSSTask,
@@ -172,13 +200,8 @@ public class DesignPacksProjectConfigurator extends BaseProjectConfigurator {
 
 		zip.dependsOn(buildCSSTask);
 
-		zip.from(new File(buildThemeTask.getOutputDir(), "/css/"));
-
-		zip.include("*.css");
-
 		zip.setDescription("Assembles design pack.");
 		zip.setGroup(BasePlugin.BUILD_GROUP);
-		zip.setIncludeEmptyDirs(false);
 
 		Property<String> archiveBaseNameProperty = zip.getArchiveBaseName();
 
@@ -197,11 +220,34 @@ public class DesignPacksProjectConfigurator extends BaseProjectConfigurator {
 
 				}));
 
+		zip.into(
+			new Callable<String>() {
+
+				@Override
+				public String call() throws Exception {
+					return "";
+				}
+
+			},
+			new Closure<Void>(zip) {
+
+				@SuppressWarnings("unused")
+				public void doCall(CopySpec copySpec) {
+					copySpec.from(
+						new File(buildThemeTask.getOutputDir(), "/css/"));
+					copySpec.setIncludeEmptyDirs(false);
+					copySpec.include("*.css");
+				}
+
+			});
+
 		DirectoryProperty destinationDirectoryProperty =
 			zip.getDestinationDirectory();
 
 		destinationDirectoryProperty.set(
 			new File(project.getProjectDir(), "dist"));
+
+		buildCSSTask.finalizedBy(zip);
 
 		return zip;
 	}
@@ -273,38 +319,63 @@ public class DesignPacksProjectConfigurator extends BaseProjectConfigurator {
 
 		buildThemeTask.setParentName(baseTheme);
 
+		Map<String, String> allDependencyMap = new HashMap<>();
+
 		Map<String, String> dependenciesMap =
 			(Map<String, String>)packageJsonMap.get("dependencies");
 
-		if (!dependenciesMap.isEmpty()) {
-			buildThemeTask.dependsOn(NodePlugin.NPM_INSTALL_TASK_NAME);
+		Map<String, String> devDependenciesMap =
+			(Map<String, String>)packageJsonMap.get("devDependencies");
 
-			Project rootProject = project.getRootProject();
+		if (Objects.nonNull(dependenciesMap)) {
+			allDependencyMap.putAll(dependenciesMap);
+		}
+
+		if (Objects.nonNull(devDependenciesMap)) {
+			allDependencyMap.putAll(devDependenciesMap);
+		}
+
+		if (!allDependencyMap.isEmpty()) {
+			buildThemeTask.dependsOn(NodePlugin.NPM_INSTALL_TASK_NAME);
 
 			buildThemeTask.doFirst(
 				new Action<Task>() {
 
 					@Override
 					public void execute(Task task) {
-						for (String key : dependenciesMap.keySet()) {
+						WorkspaceExtension workspaceExtension =
+							GradleUtil.getExtension(
+								(ExtensionAware)project.getGradle(),
+								WorkspaceExtension.class);
+
+						String nodePackageManager =
+							workspaceExtension.getNodePackageManager();
+
+						File nodeMoudleDir;
+
+						if (Objects.equals(nodePackageManager, "yarn")) {
+							Project rootProject = project.getRootProject();
+
+							nodeMoudleDir = rootProject.file("node_modules");
+						}
+						else {
+							nodeMoudleDir = project.file("node_modules");
+						}
+
+						for (String key : allDependencyMap.keySet()) {
+							final File dependencyDir = new File(
+								nodeMoudleDir, key);
+
+							if (!dependencyDir.exists()) {
+								continue;
+							}
+
 							project.copy(
 								new Action<CopySpec>() {
 
 									@Override
 									public void execute(CopySpec copySpec) {
-										File nodeModule = project.file(
-											"node_modules/" + key);
-
-										if (nodeModule.exists()) {
-											copySpec.from(nodeModule);
-										}
-
-										nodeModule = rootProject.file(
-											"node_modules/" + key);
-
-										if (nodeModule.exists()) {
-											copySpec.from(nodeModule);
-										}
+										copySpec.from(dependencyDir);
 
 										copySpec.into(
 											buildThemeTask.getOutputDir() +

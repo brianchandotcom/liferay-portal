@@ -134,9 +134,6 @@ const Suite = () => {
 							`/project/${projectId}/cases/${id}`,
 					}}
 					transformData={(data) => data?.cases}
-					variables={{
-						filter: `suiteId eq ${testraySuiteId}`,
-					}}
 				/>
 			</Container>
 		</LoadingWrapper>

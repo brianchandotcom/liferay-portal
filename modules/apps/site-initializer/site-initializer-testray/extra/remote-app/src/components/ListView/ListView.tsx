@@ -36,7 +36,7 @@ type LiferayQueryResponse<T = any> = {
 	totalCount: number;
 };
 
-type ListViewProps<T = any> = {
+export type ListViewProps<T = any> = {
 	forceRefetch?: number;
 	managementToolbarProps?: {
 		visible?: boolean;
@@ -117,6 +117,23 @@ const ListView: React.FC<ListViewProps> = ({
 		return <Loading />;
 	}
 
+	const Pagination = () => (
+		<ClayPaginationBarWithBasicItems
+			activeDelta={pageSize}
+			activePage={page}
+			deltas={deltas}
+			ellipsisBuffer={PAGINATION.ellipsisBuffer}
+			labels={{
+				paginationResults: i18n.translate('showing-x-to-x-of-x'),
+				perPageItems: i18n.translate('x-items'),
+				selectPerPageItems: i18n.translate('x-items'),
+			}}
+			onDeltaChange={(delta) => onRefetch({pageSize: delta})}
+			onPageChange={(page) => onRefetch({page})}
+			totalItems={totalCount}
+		/>
+	);
+
 	return (
 		<>
 			{managementToolbarVisible && (
@@ -132,6 +149,10 @@ const ListView: React.FC<ListViewProps> = ({
 
 			{!!items.length && (
 				<>
+					<div className="mt-4">
+						<Pagination />
+					</div>
+
 					<Table
 						{...tableProps}
 						columns={columns}
@@ -140,22 +161,7 @@ const ListView: React.FC<ListViewProps> = ({
 						selectedRows={selectedRows}
 					/>
 
-					<ClayPaginationBarWithBasicItems
-						activeDelta={pageSize}
-						activePage={page}
-						deltas={deltas}
-						ellipsisBuffer={PAGINATION.ellipsisBuffer}
-						labels={{
-							paginationResults: i18n.translate(
-								'showing-x-to-x-of-x'
-							),
-							perPageItems: i18n.translate('x-items'),
-							selectPerPageItems: i18n.translate('x-items'),
-						}}
-						onDeltaChange={(delta) => onRefetch({pageSize: delta})}
-						onPageChange={(page) => onRefetch({page})}
-						totalItems={totalCount}
-					/>
+					<Pagination />
 				</>
 			)}
 		</>

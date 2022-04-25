@@ -21,6 +21,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.petra.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -534,13 +535,16 @@ public class SiteNavigationAdminDisplayContext {
 
 	private String _getPreviewSiteNavigationMenuURL() {
 		LiferayPortletURL resourceURL =
-			(LiferayPortletURL)_liferayPortletResponse.createResourceURL();
+			(LiferayPortletURL)ResourceURLBuilder.createResourceURL(
+				_liferayPortletResponse
+			).setParameter(
+				"siteNavigationMenuId",
+				String.valueOf(getSiteNavigationMenuId())
+			).setResourceID(
+				"/site_navigation_admin/get_site_navigation_menu_preview"
+			).buildResourceURL();
 
 		resourceURL.setCopyCurrentRenderParameters(false);
-		resourceURL.setResourceID(
-			"/site_navigation_admin/get_site_navigation_menu_preview");
-		resourceURL.setParameter(
-			"siteNavigationMenuId", String.valueOf(getSiteNavigationMenuId()));
 
 		return resourceURL.toString();
 	}

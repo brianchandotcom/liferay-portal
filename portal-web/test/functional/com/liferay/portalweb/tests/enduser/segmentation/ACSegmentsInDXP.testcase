@@ -96,6 +96,7 @@ definition {
 	and I have connected my DXP instance with AC
 	when I create an Individual Segment in AC and it shows in the DXP Segments administration
 	then I don't see the edit action"
+	@ignore = "true"
 	@priority = "3"
 	test CheckNotEditableSegmentFromACAtDXP {
 		task ("Update Segments Analytics Cloud in System Settings") {
@@ -120,6 +121,7 @@ definition {
 	}
 
 	@description = "LPS-111465 When a default virtual instance/company is not synced to AC, none of the segments created on AC for other virtual instances are listed in People > Segments"
+	@ignore = "true"
 	@priority = "5"
 	test DefaultInstanceNotSynchronizedWithAC {
 		property portal.acceptance = "true";
@@ -184,6 +186,7 @@ definition {
 	when I create an Individual Segment in AC and it shows in the DXP Segments administration
 	and I delete the segment
 	Then in the next sync time, the segment will appear again"
+	@ignore = "true"
 	@priority = "4"
 	test PersistSegmentFromACAtDXP {
 		task ("Change 'Check Interval' at Segment Analytics Cloud in System Settings") {
@@ -270,6 +273,7 @@ definition {
 	}
 
 	@description = "LPS-94938 Validate if the user is redirected to the segment page details when he tries to see the detail of the imported segment from Analytics Cloud into DXP	"
+	@ignore = "true"
 	@priority = "5"
 	test RedirectToSegmentPageAC {
 		property portal.acceptance = "true";
@@ -302,6 +306,7 @@ definition {
 	}
 
 	@description = "LPS-94938 Validate if the user is redirected to the not found Analytics Cloud page, when he tries to see the detail of the imported segment from Analytics Cloud into DXP, one time that the segment does not exist in Analytics Cloud anymore"
+	@ignore = "true"
 	@priority = "4"
 	test RedirectToSegmentPageErrorAC {
 		property portal.acceptance = "true";
@@ -381,6 +386,7 @@ definition {
 	}
 
 	@description = "LPS-94938 Validate if the user have the text unlinked when he tries to see the detail of the imported segment from Analytics Cloud into DXP, one time that the connection with Analytics Cloud does not exist anymore"
+	@ignore = "true"
 	@priority = "4"
 	test ShoudNotRedirectToSegmentPageAC {
 		property portal.acceptance = "true";

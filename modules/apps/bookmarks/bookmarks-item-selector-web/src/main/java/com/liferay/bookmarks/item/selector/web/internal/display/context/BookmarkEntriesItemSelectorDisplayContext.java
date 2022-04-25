@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletException;
@@ -124,18 +123,12 @@ public class BookmarkEntriesItemSelectorDisplayContext {
 				entriesSearchContainer.getOrderByCol(),
 				entriesSearchContainer.getOrderByType()));
 
-		entriesSearchContainer.setTotal(
-			BookmarksEntryServiceUtil.getGroupEntriesCount(
-				themeDisplay.getScopeGroupId()));
-
-		List<BookmarksEntry> entriesResults =
+		entriesSearchContainer.setResultsAndTotal(
 			BookmarksEntryServiceUtil.getEntries(
 				themeDisplay.getScopeGroupId(), 0,
 				entriesSearchContainer.getStart(),
 				entriesSearchContainer.getEnd(),
-				entriesSearchContainer.getOrderByComparator());
-
-		entriesSearchContainer.setResults(entriesResults);
+				entriesSearchContainer.getOrderByComparator()));
 
 		_entriesSearchContainer = entriesSearchContainer;
 

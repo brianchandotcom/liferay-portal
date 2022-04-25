@@ -20,8 +20,10 @@ definition {
 			ACUtils.launchDXP();
 		}
 
-		task ("Add a new site with a public widget page") {
+		task ("Add a blog to the page") {
 			ACUtils.addSiteAndPage();
+
+			ACUtils.createBlogsAndAddToPage();
 		}
 
 		task ("Connect the DXP to AC") {
@@ -71,6 +73,8 @@ definition {
 
 		task ("View the site page") {
 			ACUtils.navigateToSitePage(
+				actionType = "View Blog",
+				documentTitleList = "Blogs AC Title",
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}

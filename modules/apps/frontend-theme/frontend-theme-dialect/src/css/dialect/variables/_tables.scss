@@ -12,6 +12,18 @@ $table-font-size: var(--table-font-size);
 $table-hover-bg: var(--table-row-background-color-hover);
 $table-hover-color: var(--table-row-color-hover);
 
+$c-table-base: (
+	font-weight: var(--table-font-weight),
+);
+
+$c-table-base-cell: (
+	height: var(--table-cell-min-height),
+);
+
+$c-table-tbody: (
+	background-color: $table-bg,
+);
+
 $table-title: (
 	color: var(--table-title-color),
 	font-weight: var(--table-title-font-weight),
@@ -28,23 +40,10 @@ $table-title-link: (
 	text-decoration: var(--table-title-link-text-decoration),
 );
 
-$c-table-base: (
-	font-weight: var(--table-font-weight),
-);
+// Table Head
 
-$c-table-base-cell: (
-	height: var(--table-cell-min-height),
-);
-
-$c-table-tbody: (
-	background-color: $table-bg,
-);
-
-// Table Bordered
-
-$table-bordered-thead-cell: (
-	border-bottom-width: 0,
-);
+$table-head-bg: var(--table-header-background-color);
+$table-head-color: var(--table-header-color);
 
 // Table List
 
@@ -76,17 +75,13 @@ $c-table-list-tbody: (
 $table-list-title: $table-title;
 $table-list-title-link: $table-title-link;
 
-//Table Head
+// Table List Head
 
-$table-head-bg: var(--table-header-background-color);
 $table-list-head-bg: $table-head-bg;
-$table-head-color: var(--table-header-color);
 $table-list-head-font-size: var(--table-header-font-size);
 $table-list-head-font-weight: var(--table-header-font-weight);
 $table-list-head-height: var(--table-header-cell-min-height);
 $table-list-head-vertical-alignment: var(--table-header-vertical-align);
-
-
 
 // Table Spaced
 
@@ -124,5 +119,13 @@ $table-spaced-cell: (
 	border-top: var(--table-spaced-row-border-width) solid
 		var(--table-spaced-row-border-color),
 );
+
+// Table Bordered
+
+$table-bordered-thead-cell: (
+	border-bottom-width: 0,
+);
+
+// Table Image
 
 $table-img-max-height: var(--table-image-max-height);

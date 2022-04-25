@@ -7,15 +7,6 @@
 	}
 }
 
-// Table Bordered
-
-.table-bordered thead {
-	td,
-	th {
-		@include clay-css($table-bordered-thead-cell);
-	}
-}
-
 // Table Header
 
 th {
@@ -25,6 +16,48 @@ th {
 	--table-font-size: var(--table-header-font-size);
 	--table-font-weight: var(--table-header-font-weight);
 	--table-line-height: var(--table-header-line-height);
+}
+
+// Table Spaced
+
+.table-spaced {
+	--table-border-radius: var(--table-spaced-row-border-radius);
+	--table-border-width: 0;
+
+	@include clay-css($table-spaced);
+
+	&,
+	thead {
+		td,
+		th {
+			@include clay-css($table-spaced-cell);
+		}
+	}
+
+	tr {
+		@include clay-css(map-deep-get($table-spaced, table-row));
+	}
+
+	td:first-child,
+	th:first-child,
+	.table-cell-start {
+		@include clay-css(map-deep-get($table-spaced, table-cell-start));
+	}
+
+	td:last-child,
+	th:last-child,
+	.table-cell-end {
+		@include clay-css(map-deep-get($table-spaced, table-cell-end));
+	}
+}
+
+// Table Bordered
+
+.table-bordered thead {
+	td,
+	th {
+		@include clay-css($table-bordered-thead-cell);
+	}
 }
 
 // Table Sizes
@@ -60,38 +93,5 @@ th {
 		--table-header-font-size: var(--table-sm-header-font-size);
 		--table-header-font-weight: var(--table-sm-header-font-weight);
 		--table-header-line-height: var(--table-sm-header-line-height);
-	}
-}
-
-// Table Spaced
-
-.table-spaced {
-	--table-border-radius: var(--table-spaced-row-border-radius);
-	--table-border-width: 0;
-
-	@include clay-css($table-spaced);
-
-	&,
-	thead {
-		td,
-		th {
-			@include clay-css($table-spaced-cell);
-		}
-	}
-
-	tr {
-		@include clay-css(map-deep-get($table-spaced, table-row));
-	}
-
-	td:first-child,
-	th:first-child,
-	.table-cell-start {
-		@include clay-css(map-deep-get($table-spaced, table-cell-start));
-	}
-
-	td:last-child,
-	th:last-child,
-	.table-cell-end {
-		@include clay-css(map-deep-get($table-spaced, table-cell-end));
 	}
 }

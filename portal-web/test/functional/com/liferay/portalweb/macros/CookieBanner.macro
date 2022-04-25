@@ -5,11 +5,13 @@ definition {
 	}
 
 	macro checkIfCookiesHasSixMonthsAsExpirationDate {
-		CookieHelper.checkSelectedCookieExpirationDate(cookieName = "liferay.cookie.consent.performance");
+		CookieHelper.checkSelectedCookieExpirationDate(cookieName = "CONSENT_TYPE_PERFORMANCE");
 
-		CookieHelper.checkSelectedCookieExpirationDate(cookieName = "liferay.cookie.consent.functional");
+		CookieHelper.checkSelectedCookieExpirationDate(cookieName = "CONSENT_TYPE_FUNCTIONAL");
 
-		CookieHelper.checkSelectedCookieExpirationDate(cookieName = "liferay.cookie.consent.personalization");
+		CookieHelper.checkSelectedCookieExpirationDate(cookieName = "CONSENT_TYPE_PERSONALIZATION");
+
+		CookieHelper.checkSelectedCookieExpirationDate(cookieName = "CONSENT_TYPE_STRICTLY_NECESSARY");
 	}
 
 	macro cookiesBannerAcceptAll {

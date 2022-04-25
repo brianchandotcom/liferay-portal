@@ -29,30 +29,38 @@ definition {
 
 	macro checkAllCookieAreAcceptedAndSaved {
 		CookieHelper._checkSelectedCookieValue(
-			cookieName = "liferay.cookie.consent.performance",
-			expectedCookieValue = "accepted");
+			cookieName = "CONSENT_TYPE_PERFORMANCE",
+			expectedCookieValue = "true");
 
 		CookieHelper._checkSelectedCookieValue(
-			cookieName = "liferay.cookie.consent.functional",
-			expectedCookieValue = "accepted");
+			cookieName = "CONSENT_TYPE_FUNCTIONAL",
+			expectedCookieValue = "true");
 
 		CookieHelper._checkSelectedCookieValue(
-			cookieName = "liferay.cookie.consent.personalization",
-			expectedCookieValue = "accepted");
+			cookieName = "CONSENT_TYPE_PERSONALIZATION",
+			expectedCookieValue = "true");
+
+		CookieHelper._checkSelectedCookieValue(
+			cookieName = "CONSENT_TYPE_STRICTLY_NECESSARY",
+			expectedCookieValue = "true");
 	}
 
 	macro checkAllCookieAreDeclinedAndSaved {
 		CookieHelper._checkSelectedCookieValue(
-			cookieName = "liferay.cookie.consent.performance",
-			expectedCookieValue = "decline");
+			cookieName = "CONSENT_TYPE_PERFORMANCE",
+			expectedCookieValue = "false");
 
 		CookieHelper._checkSelectedCookieValue(
-			cookieName = "liferay.cookie.consent.functional",
-			expectedCookieValue = "decline");
+			cookieName = "CONSENT_TYPE_FUNCTIONAL",
+			expectedCookieValue = "false");
 
 		CookieHelper._checkSelectedCookieValue(
-			cookieName = "liferay.cookie.consent.personalization",
-			expectedCookieValue = "decline");
+			cookieName = "CONSENT_TYPE_PERSONALIZATION",
+			expectedCookieValue = "false");
+
+		CookieHelper._checkSelectedCookieValue(
+			cookieName = "CONSENT_TYPE_STRICTLY_NECESSARY",
+			expectedCookieValue = "true");
 	}
 
 	@description = "Check if cookie named as '${cookieName}' lasts for 6 months. Requires Chrome 87."

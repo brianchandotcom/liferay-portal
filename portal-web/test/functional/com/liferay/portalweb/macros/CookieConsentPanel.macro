@@ -63,6 +63,8 @@ definition {
 		Check.checkToggleSwitch(locator1 = "CookieConsentPanel#FUNCTIONAL_COOKIES_TOGGLE");
 
 		Check.checkToggleSwitch(locator1 = "CookieConsentPanel#PERSONALIZATION_COOKIES_TOGGLE");
+
+		Click(locator1 = "CookieConsentPanel#CONFIRM_BUTTON");
 	}
 
 	macro verifyAllElementsArePresent {
@@ -95,22 +97,24 @@ definition {
 		WaitForElementPresent(locator1 = "CookieConsentPanel#CONFIRM_BUTTON");
 
 		WaitForElementPresent(locator1 = "CookieConsentPanel#ACCEPT_ALL_BUTTON");
-
-		WaitForElementPresent(locator1 = "CookieConsentPanel#CLOSE_BUTTON");
 	}
 
 	macro verifyCookiesAreNotPresent {
 		CookieHelper.checkSelectedCookieIsNotPresent(
-			cookieName = "liferay.cookie.consent.performance",
-			expectedCookieValue = "accepted");
+			cookieName = "CONSENT_TYPE_PERFORMANCE",
+			expectedCookieValue = "true");
 
 		CookieHelper.checkSelectedCookieIsNotPresent(
-			cookieName = "liferay.cookie.consent.functional",
-			expectedCookieValue = "accepted");
+			cookieName = "CONSENT_TYPE_FUNCTIONAL",
+			expectedCookieValue = "true");
 
 		CookieHelper.checkSelectedCookieIsNotPresent(
-			cookieName = "liferay.cookie.consent.personalization",
-			expectedCookieValue = "accepted");
+			cookieName = "CONSENT_TYPE_PERSONALIZATION",
+			expectedCookieValue = "true");
+
+		CookieHelper.checkSelectedCookieIsNotPresent(
+			cookieName = "CONSENT_TYPE_STRICTLY_NECESSARY",
+			expectedCookieValue = "true");
 	}
 
 }

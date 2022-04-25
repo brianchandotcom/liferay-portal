@@ -629,6 +629,8 @@ public class SegmentsExperienceLocalServiceImpl
 					curSegmentsExperience.getPriority() - 1);
 
 				segmentsExperiencePersistence.update(curSegmentsExperience);
+
+				segmentsExperiencePersistence.flush();
 			}
 		}
 		else {

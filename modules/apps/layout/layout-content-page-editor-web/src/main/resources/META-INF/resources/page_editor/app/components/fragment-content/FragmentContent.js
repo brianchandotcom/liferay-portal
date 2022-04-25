@@ -301,7 +301,7 @@ const FragmentContent = ({
 							[`${fragmentEntryLink?.cssClass}`]: config.featureFlagLps132571,
 							[getLayoutDataItemUniqueClassName(item.itemId)]:
 								config.featureFlagLps132571 &&
-								!hasInnerCommonStyles(editableValues),
+								!hasInnerCommonStyles(fragmentEntryLink),
 							'page-editor__fragment-content--portlet-topper-hidden': !canConfigureWidgets,
 							[`mb-${marginBottom}`]:
 								isValidSpacingOption(marginBottom) &&

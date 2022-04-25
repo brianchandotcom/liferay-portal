@@ -120,7 +120,7 @@ const FragmentWithControls = React.forwardRef(({item}, ref) => {
 			className={classNames({
 				[getLayoutDataItemTopperUniqueClassName(item.itemId)]:
 					config.featureFlagLps132571 &&
-					!hasInnerCommonStyles(fragmentEntryLink.editableValues),
+					!hasInnerCommonStyles(fragmentEntryLink),
 				[`mb-${marginBottom}`]: isValidSpacingOption(marginBottom),
 				[`ml-${marginLeft}`]: isValidSpacingOption(marginLeft),
 				[`mr-${marginRight}`]: isValidSpacingOption(marginRight),

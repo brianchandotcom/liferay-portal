@@ -60,7 +60,7 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 			Comment comment =
 				testDeleteSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCode_addComment();
 
-			// Nonexisting blogs entry
+			// Nonexistent blogs entry
 
 			assertHttpResponseStatusCode(
 				404,
@@ -71,7 +71,7 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 						comment.getExternalReferenceCode()));
 		}
 
-		// Nonexisting comment
+		// Nonexistent comment
 
 		assertHttpResponseStatusCode(
 			204,
@@ -113,7 +113,7 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 			Comment comment1 =
 				testDeleteSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_addComment();
 
-			// Nonexisting parent comment
+			// Nonexistent parent comment
 
 			assertHttpResponseStatusCode(
 				404,
@@ -140,7 +140,7 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 						comment3.getExternalReferenceCode()));
 		}
 
-		// Nonexisting comment
+		// Nonexistent comment
 
 		assertHttpResponseStatusCode(
 			204,
@@ -182,7 +182,7 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 			Comment comment =
 				testDeleteSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCode_addComment();
 
-			// Nonexisting document
+			// Nonexistent document
 
 			assertHttpResponseStatusCode(
 				404,
@@ -193,7 +193,7 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 						comment.getExternalReferenceCode()));
 		}
 
-		// Nonexisting comment
+		// Nonexistent comment
 
 		assertHttpResponseStatusCode(
 			204,
@@ -235,7 +235,7 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 			Comment comment =
 				testDeleteSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCode_addComment();
 
-			// Nonexisting journal article
+			// Nonexistent journal article
 
 			assertHttpResponseStatusCode(
 				404,
@@ -246,7 +246,7 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 						comment.getExternalReferenceCode()));
 		}
 
-		// Nonexisting comment
+		// Nonexistent comment
 
 		assertHttpResponseStatusCode(
 			204,
@@ -288,7 +288,7 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 			Comment comment =
 				testGetSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCode_addComment();
 
-			// Nonexisting blogs entry
+			// Nonexistent blogs entry
 
 			assertHttpResponseStatusCode(
 				404,
@@ -299,7 +299,7 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 						comment.getExternalReferenceCode()));
 		}
 
-		// Nonexisting comment
+		// Nonexistent comment
 
 		assertHttpResponseStatusCode(
 			404,
@@ -341,7 +341,7 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 			Comment comment1 =
 				testGetSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_addComment();
 
-			// Nonexisting parent comment
+			// Nonexistent parent comment
 
 			assertHttpResponseStatusCode(
 				404,
@@ -368,7 +368,7 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 						comment3.getExternalReferenceCode()));
 		}
 
-		// Nonexisting comment
+		// Nonexistent comment
 
 		assertHttpResponseStatusCode(
 			404,
@@ -410,7 +410,7 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 			Comment comment =
 				testGetSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCode_addComment();
 
-			// Nonexisting document
+			// Nonexistent document
 
 			assertHttpResponseStatusCode(
 				404,
@@ -421,7 +421,7 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 						comment.getExternalReferenceCode()));
 		}
 
-		// Nonexisting comment
+		// Nonexistent comment
 
 		assertHttpResponseStatusCode(
 			404,
@@ -463,7 +463,7 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 			Comment comment =
 				testGetSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCode_addComment();
 
-			// Nonexisting structured content
+			// Nonexistent structured content
 
 			assertHttpResponseStatusCode(
 				404,
@@ -474,7 +474,7 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 						comment.getExternalReferenceCode()));
 		}
 
-		// Nonexisting comment
+		// Nonexistent comment
 
 		assertHttpResponseStatusCode(
 			404,

@@ -59,7 +59,7 @@ public class ConfigurationPersistenceManagerTest {
 	@Test
 	public void testConfigurationOverride() throws IOException {
 
-		// Override nonexisting configuration
+		// Override nonexistent configuration
 
 		String testPid = "testPid";
 

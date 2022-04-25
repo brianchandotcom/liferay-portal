@@ -395,7 +395,8 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 
 		BaseModelSearchResult<AssetVocabulary> baseModelSearchResult =
 			assetVocabularyLocalService.searchVocabularies(
-				user.getCompanyId(), groupId, title, start, end, sort);
+				user.getCompanyId(), new long[] {groupId}, title, null, start,
+				end, sort);
 
 		List<AssetVocabulary> vocabularies =
 			baseModelSearchResult.getBaseModels();

@@ -221,18 +221,14 @@ export default function useFilters(setFilterTerm, productName) {
 				filtersKeyType.push(
 					`maxClusterNodes le ${filters.keyType.value.maxNodes}`
 				);
-				if (filters.keyType.value.hasOnPremise) {
-					showOnPrem = filters.keyType.value.hasOnPremise;
-				}
+				showOnPrem = filters.keyType.value.hasOnPremise;
 			}
 
 			if (filters.keyType.value.minNodes) {
 				filtersKeyType.push(
 					`maxClusterNodes ge ${filters.keyType.value.minNodes}`
 				);
-				if (filters.keyType.value.hasOnPremise) {
-					showOnPrem = filters.keyType.value.hasOnPremise;
-				}
+				showOnPrem = filters.keyType.value.hasOnPremise;
 			}
 
 			if (showOnPrem) {

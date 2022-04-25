@@ -14,9 +14,8 @@
 
 package com.liferay.oauth2.application.factory;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -55,14 +54,14 @@ public class CompanyDomainProvider {
 		_virtualHostLocalService = virtualHostLocalService;
 	}
 
-	public SortedSet<String> getCompanyDomains(long companyId) {
-		SortedSet<String> domains = new TreeSet<>();
+	public List<String> getCompanyDomains(long companyId) {
+		List<String> domains = new ArrayList<>();
 
 		_addLCPDomain(domains);
 
 		Company company = _companyLocalService.fetchCompanyById(companyId);
 
-		if (company != null) {
+		if ((company != null) && !domains.contains(company.getWebId())) {
 			domains.add(company.getWebId());
 		}
 
@@ -76,25 +75,38 @@ public class CompanyDomainProvider {
 			dynamicQuery);
 
 		for (VirtualHost virtualHost : virtualHosts) {
-			domains.add(virtualHost.getHostname());
+			if (!domains.contains(virtualHost.getHostname())) {
+				domains.add(virtualHost.getHostname());
+			}
 		}
 
 		String cdnHostHttp = _portal.getCDNHostHttp(companyId);
 
-		if (Validator.isNotNull(cdnHostHttp)) {
+		if (Validator.isNotNull(cdnHostHttp) &&
+			!domains.contains(cdnHostHttp)) {
+
 			domains.add(cdnHostHttp);
 		}
 
 		String cdnHostHttps = _portal.getCDNHostHttps(companyId);
 
-		if (Validator.isNotNull(cdnHostHttps)) {
+		if (Validator.isNotNull(cdnHostHttps) &&
+			!domains.contains(cdnHostHttps)) {
+
 			domains.add(cdnHostHttps);
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				StringBundler.concat(
+					"For companyId ", companyId,
+					" found the following domains ", domains));
 		}
 
 		return domains;
 	}
 
-	private void _addLCPDomain(SortedSet<String> domains) {
+	private void _addLCPDomain(List<String> domains) {
 		String lcpServiceDomain = System.getenv("LCP_SERVICE_DOMAIN");
 		String lcpProjectId = System.getenv("LCP_PROJECT_ID");
 		String webserverServiceHost = System.getenv("WEBSERVER_SERVICE_HOST");
@@ -121,7 +133,7 @@ public class CompanyDomainProvider {
 			lcpDomain = "webserver-".concat(lcpDomain);
 		}
 
-		if (lcpDomain != null) {
+		if ((lcpDomain != null) && !domains.contains(lcpDomain)) {
 			domains.add(lcpDomain);
 		}
 	}

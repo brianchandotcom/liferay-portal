@@ -21,12 +21,18 @@ spec:
         - name: liferayhelloworld
           image: liferayhelloworld
           imagePullPolicy: Never
+          ports:
+          - containerPort: 80
           resources:
             limits:
               cpu: "200m"
               memory: "50Mi"
           env:
             - name: CORS_ALLOWED_ORIGIN
-              value: dxp.local
-          ports:
-          - containerPort: 80
+              value: dxp.localdev.me
+            - name: LCP_SERVICE_DOMAIN
+              value: localdev.me
+            - name: LCP_PROJECT_ID
+              value: dxp
+            - name: WEBSERVER_SERVICE_HOST
+              value: ""

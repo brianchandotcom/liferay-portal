@@ -1,11 +1,8 @@
 package com.liferay.custom.rest.service.config;
 
-import static java.util.stream.Collectors.toList;
-
 import java.net.URI;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -28,11 +25,17 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @Configuration
 public class CustomRestSecurityConfig extends WebSecurityConfigurerAdapter {
 
+	@Value("${LCP_SERVICE_DOMAIN}")
+	String lcpServiceDomain;
+
+	@Value("${LCP_PROJECT_ID}")
+	String lcpProjectId;
+
+	@Value("${WEBSERVER_SERVICE_HOST}")
+	String webserverServiceHost;
+
 	@Value("${LIFERAY_OAUTH2_USER_AGENT_CLIENT_ID}")
 	String clientId;
-
-	@Value("${LIFERAY_SERVICE_DOMAINS}")
-	String liferayServiceDomains;
 
 	@Value("${LIFERAY_OAUTH2_INTROSPECTION_URI}")
 	String introspectionUri;
@@ -41,13 +44,7 @@ public class CustomRestSecurityConfig extends WebSecurityConfigurerAdapter {
 	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
 		configuration.setAllowedOrigins(
-			Stream.of(
-				liferayServiceDomains.split("\\s*,\\s*")
-			).map(
-				"https://"::concat
-			).collect(
-				toList()
-			)
+			Collections.singletonList("https://" + lcpDomain())
 		);
 		configuration.setAllowedMethods(Arrays.asList("DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"));
 		configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
@@ -58,14 +55,40 @@ public class CustomRestSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.cors().and().authorizeRequests(
-			authz -> authz.anyRequest().authenticated()
+		http.cors(
+		).and(
+		).authorizeRequests(
+		).antMatchers(
+			"/"
+		).permitAll(
+		).anyRequest(
+		).authenticated(
+		).and(
 		).oauth2ResourceServer(
 			oauth2 -> oauth2.opaqueToken().introspector(
 				new CustomSpringOpaqueTokenIntrospector(
 					introspectionUri, clientId)
 			)
 		);
+	}
+
+	@Bean
+	String lcpDomain() {
+		String lcpDomain = null;
+
+		if ((lcpServiceDomain != null && !lcpServiceDomain.isEmpty()) &&
+			(lcpProjectId != null && !lcpProjectId.isEmpty())) {
+
+			lcpDomain = lcpProjectId.concat(".").concat(lcpServiceDomain);
+		}
+
+		if (lcpDomain != null && webserverServiceHost != null &&
+			!webserverServiceHost.isEmpty()) {
+
+			lcpDomain = "webserver-".concat(lcpDomain);
+		}
+
+		return lcpDomain;
 	}
 
 	private static class CustomSpringOpaqueTokenIntrospector extends SpringOpaqueTokenIntrospector {

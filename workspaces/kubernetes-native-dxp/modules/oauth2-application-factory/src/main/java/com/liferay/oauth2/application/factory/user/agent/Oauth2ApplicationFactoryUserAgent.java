@@ -51,7 +51,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.SortedSet;
 
 import org.osgi.service.component.ComponentConstants;
 import org.osgi.service.component.annotations.Activate;
@@ -99,14 +98,14 @@ public class Oauth2ApplicationFactoryUserAgent {
 		Company company = _companyLocalService.getCompanyById(
 			_oAuth2ApplicationUserAgentConfiguration.companyId());
 
-		SortedSet<String> companyDomains =
+		List<String> companyDomains =
 			companyDomainProvider.getCompanyDomains(company.getCompanyId());
 
 		String protocol = GetterUtil.getString(
 			PropsValues.WEB_SERVER_PROTOCOL, Http.HTTP);
 
 		String serviceAddress = StringBundler.concat(
-			protocol, "://", companyDomains.first());
+			protocol, "://", companyDomains.get(0));
 
 		List<String> redirectURIsList = Collections.singletonList(
 			GetterUtil.getString(
@@ -169,7 +168,7 @@ public class Oauth2ApplicationFactoryUserAgent {
 				serviceAddress.concat("/o/oauth2/introspect")
 			).put(
 				"liferay_oauth2_redirect_uris",
-				StringUtil.merge(redirectURIsList, StringPool.SPACE)
+				StringUtil.merge(redirectURIsList, StringPool.COMMA)
 			).put(
 				"liferay_oauth2_token_uri",
 				serviceAddress.concat("/o/oauth2/token")
@@ -178,7 +177,10 @@ public class Oauth2ApplicationFactoryUserAgent {
 				oAuth2Application.getClientId()
 			).put(
 				"liferay_oauth2_user_agent_scopes",
-				StringUtil.merge(scopeAliasesList, StringPool.SPACE)
+				StringUtil.merge(scopeAliasesList, StringPool.COMMA)
+			).put(
+				"liferay_service_domains",
+				StringUtil.merge(companyDomains, StringPool.COMMA)
 			).build(),
 			HashMapBuilder.put(
 				"extension", _oAuth2ApplicationUserAgentConfiguration.name()

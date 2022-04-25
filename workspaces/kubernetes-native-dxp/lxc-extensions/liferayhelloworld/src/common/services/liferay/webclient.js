@@ -16,7 +16,7 @@ class WebClient {
         webClient.authorizeURL = authorizeURL;
         webClient.tokenURL = tokenURL;
         webClient.redirectURIs = redirectURIs;
-        webClient.encodedRedirectURL = encodeURIComponent(webClient.redirectURL[0]);
+        webClient.encodedRedirectURL = encodeURIComponent(webClient.redirectURIs[0]);
         return webClient;
     }
 
@@ -163,7 +163,7 @@ class WebClient {
             body: new URLSearchParams({
                 'grant_type': 'authorization_code',
                 'code': code,
-                'redirect_uri': webclient.redirectURL,
+                'redirect_uri': webclient.redirectURIs[0],
                 'client_id': webclient.clientId,
                 'code_verifier': codePair.codeVerifier
             })

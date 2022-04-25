@@ -4,11 +4,12 @@ import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
 
 import java.util.Optional;
-import java.util.stream.Stream;
+
+import javax.annotation.Resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -26,8 +27,9 @@ import org.springframework.web.client.RestTemplate;
 @RequestMapping(value = "/random")
 public class RandomRestController {
 
-	@Value("${LIFERAY_SERVICE_DOMAINS}")
-	String liferayServiceDomains;
+	@Resource
+	@Qualifier("lcpDomain")
+	String lcpDomain;
 
 	private static final Logger logger = LoggerFactory.getLogger(RandomRestController.class);
 
@@ -65,11 +67,7 @@ public class RandomRestController {
 		RestTemplate restTemplate = new RestTemplate();
 		restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
 		String result = restTemplate.patchForObject(
-			Stream.of(
-				liferayServiceDomains.split("\\s*,\\s*")
-			).map(
-				"https://"::concat
-			).findFirst().orElse("${LIFERAY_SERVICE_DOMAINS}") + "/o/headless-admin-user/v1.0/user-accounts/" + id,
+			"https://" + lcpDomain + "/o/headless-admin-user/v1.0/user-accounts/" + id,
 			entity, String.class);
 		logger.info("User patched " + result);
 	}

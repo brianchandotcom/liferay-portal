@@ -12,12 +12,17 @@ RESULT=$(curl \
 
 ACCESS_TOKEN=$(echo "$RESULT" | jq -r '.access_token')
 
+LCP_DOMAIN="${LCP_PROJECT_ID}.${LCP_SERVICE_DOMAIN}"
+if [ "${WEBSERVER_SERVICE_HOST}x" != "x" ];then
+  LCP_DOMAIN="webserver-${LCP_DOMAIN}"
+fi
+
 EMAIL_ADDRESS=$(curl \
   -L \
   -s \
   --cacert ca.crt \
   -H "Authorization: Bearer $ACCESS_TOKEN" \
-  "https://${LIFERAY_SERVICE_DOMAINS}/o/headless-admin-user/v1.0/my-user-account" \
+  "https://${LCP_DOMAIN}/o/headless-admin-user/v1.0/my-user-account" \
   | jq '.emailAddress')
 
 echo "Email address of service account: $EMAIL_ADDRESS"

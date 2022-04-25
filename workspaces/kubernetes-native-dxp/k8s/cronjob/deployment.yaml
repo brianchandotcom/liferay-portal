@@ -49,5 +49,9 @@ spec:
                   configMapKeyRef:
                     key: liferay_oauth2_token_uri
                     name: cronjob.extension.liferay.com
-              - name: LIFERAY_SERVICE_DOMAINS
-                value: dxp.localdev.me
+              - name: LCP_SERVICE_DOMAIN
+                value: localdev.me
+              - name: LCP_PROJECT_ID
+                value: dxp
+              - name: WEBSERVER_SERVICE_HOST
+                value: ""

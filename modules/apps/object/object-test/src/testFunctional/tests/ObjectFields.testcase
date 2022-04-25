@@ -155,7 +155,6 @@ definition {
 	@description = "LPS-146889 - Verify that when turn on the 'Set the Maximum Number of Characters' a Maximum Number of Characters field is shown"
 	@priority = "4"
 	test CanViewMaximumCharactersField {
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151570",
 			objectName = "CustomObject151570",
@@ -180,11 +179,10 @@ definition {
 		ObjectAdmin.goToFieldsDetails(label = "Custom Field Text");
 
 		Click(
-			locator1 = "ObjectField#DEFAULT_TOGGLE_SWITCH",
-			key_labelName = "Limit Characters");
+			key_labelName = "Limit Characters",
+			locator1 = "ObjectField#DEFAULT_TOGGLE_SWITCH");
 
 		AssertElementPresent(locator1 = "ObjectField#MAXIMUM_NUMBER_CHARACTERS_OPTION");
-
 	}
 
 	@description = "LPS-147944 - Verify it is possible to view more than 20 picklists for the picklist drop-down"
@@ -223,7 +221,6 @@ definition {
 	@description = "LPS-146889 - Verify that 'Set the Maximum Number of Characters' toggle is available for Text and Long Text fields"
 	@priority = "5"
 	test CanViewSetMaximumCharactersOption {
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151569",
 			objectName = "CustomObject151569",
@@ -256,8 +253,8 @@ definition {
 		ObjectAdmin.goToFieldsDetails(label = "Custom Field Text");
 
 		AssertElementPresent(
-			locator1 = "ObjectField#DEFAULT_TOGGLE_SWITCH",
-			key_labelName = "Limit Characters");
+			key_labelName = "Limit Characters",
+			locator1 = "ObjectField#DEFAULT_TOGGLE_SWITCH");
 
 		ObjectField.closeModal();
 
@@ -266,9 +263,8 @@ definition {
 		ObjectAdmin.goToFieldsDetails(label = "Custom Field Long Text");
 
 		AssertElementPresent(
-			locator1 = "ObjectField#DEFAULT_TOGGLE_SWITCH",
-			key_labelName = "Limit Characters");
-
+			key_labelName = "Limit Characters",
+			locator1 = "ObjectField#DEFAULT_TOGGLE_SWITCH");
 	}
 
 	@description = "LPS-143065 - Verify if a side panel containing the Field name, Typem Request Files, Accepted File Extensions, and Maximum File Size fields"

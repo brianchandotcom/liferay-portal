@@ -63,16 +63,17 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 			_batchPlannerPlanLocalService.getBatchPlannerPlan(
 				batchPlannerPlanId);
 
+		_batchPlannerPlanLocalService.updateStatus(
+			batchPlannerPlan.getBatchPlannerPlanId(),
+			BatchPlannerPlanConstants.STATUS_QUEUED);
+
 		try {
 			if (batchPlannerPlan.isExport()) {
-				batchPlannerPlan = _submitExportTask(batchPlannerPlan);
+				_submitExportTask(batchPlannerPlan);
 			}
 			else {
-				batchPlannerPlan = _submitImportTask(batchPlannerPlan);
+				_submitImportTask(batchPlannerPlan);
 			}
-
-			_batchPlannerPlanLocalService.updateActive(
-				batchPlannerPlan.getBatchPlannerPlanId(), true);
 		}
 		catch (Exception exception) {
 			_batchPlannerPlanLocalService.updateStatus(
@@ -172,8 +173,7 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 		return null;
 	}
 
-	private BatchPlannerPlan _submitExportTask(
-			BatchPlannerPlan batchPlannerPlan)
+	private void _submitExportTask(BatchPlannerPlan batchPlannerPlan)
 		throws Exception {
 
 		_exportTaskResource.setContextCompany(
@@ -197,14 +197,9 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 			String.valueOf(batchPlannerPlan.getBatchPlannerPlanId()),
 			StringUtil.merge(headerNames, StringPool.COMMA),
 			batchPlannerPlan.getTaskItemDelegateName());
-
-		return _batchPlannerPlanLocalService.updateStatus(
-			batchPlannerPlan.getBatchPlannerPlanId(),
-			BatchPlannerPlanConstants.STATUS_QUEUED);
 	}
 
-	private BatchPlannerPlan _submitImportTask(
-			BatchPlannerPlan batchPlannerPlan)
+	private void _submitImportTask(BatchPlannerPlan batchPlannerPlan)
 		throws Exception {
 
 		_importTaskResource.setContextCompany(
@@ -236,10 +231,6 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 							file.getName(), new FileInputStream(file),
 							file.length())),
 					null, Collections.emptyMap()));
-
-			return _batchPlannerPlanLocalService.updateStatus(
-				batchPlannerPlan.getBatchPlannerPlanId(),
-				BatchPlannerPlanConstants.STATUS_QUEUED);
 		}
 		finally {
 			FileUtil.delete(file);

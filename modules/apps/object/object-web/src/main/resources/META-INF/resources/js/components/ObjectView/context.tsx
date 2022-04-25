@@ -23,6 +23,7 @@ import {
 	TObjectViewColumn,
 	TObjectViewSortColumn,
 	TState,
+	TWorkflowStatus,
 } from './types';
 interface IViewContextProps extends Array<TState | Function> {
 	0: typeof initialState;
@@ -33,6 +34,7 @@ const ViewContext = createContext({} as IViewContextProps);
 
 const METADATAS = [
 	{
+		businessType: 'Author',
 		checked: false,
 		filtered: true,
 		id: 1,
@@ -46,6 +48,7 @@ const METADATAS = [
 		type: 'metadata',
 	},
 	{
+		businessType: 'Creation Date',
 		checked: false,
 		filtered: true,
 		id: 2,
@@ -59,6 +62,7 @@ const METADATAS = [
 		type: 'metadata',
 	},
 	{
+		businessType: 'Modified Date',
 		checked: false,
 		filtered: true,
 		id: 3,
@@ -72,6 +76,7 @@ const METADATAS = [
 		type: 'metadata',
 	},
 	{
+		businessType: 'Workflow Status',
 		checked: false,
 		filtered: true,
 		id: 4,
@@ -89,6 +94,7 @@ const METADATAS = [
 		type: 'metadata',
 	},
 	{
+		businessType: 'Id',
 		checked: false,
 		filtered: true,
 		id: 5,
@@ -555,6 +561,7 @@ interface IViewContextProviderProps extends React.HTMLAttributes<HTMLElement> {
 	value: {
 		isViewOnly: boolean;
 		objectViewId: string;
+		workflowStatusJSONArray: TWorkflowStatus[];
 	};
 }
 

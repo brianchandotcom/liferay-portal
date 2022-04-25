@@ -16,7 +16,12 @@ import {TYPES} from './context';
 export declare type TName = {
 	[key: string]: string;
 };
+export declare type TWorkflowStatus = {
+	label: string;
+	value: string;
+};
 export declare type TObjectField = {
+	businessType: string;
 	checked: boolean;
 	filtered?: boolean | undefined;
 	id: number;
@@ -76,6 +81,7 @@ export declare type TState = {
 	objectFields: TObjectField[];
 	objectView: TObjectView;
 	objectViewId: string;
+	workflowStatusJSONArray: TWorkflowStatus[];
 };
 export declare type TAction = {
 	payload: {

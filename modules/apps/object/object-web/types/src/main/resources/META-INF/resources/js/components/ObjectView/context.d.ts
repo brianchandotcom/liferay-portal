@@ -13,7 +13,7 @@
  */
 
 import React from 'react';
-import {TAction, TState} from './types';
+import {TAction, TState, TWorkflowStatus} from './types';
 interface IViewContextProps extends Array<TState | Function> {
 	0: typeof initialState;
 	1: React.Dispatch<React.ReducerAction<React.Reducer<TState, TAction>>>;
@@ -40,6 +40,7 @@ interface IViewContextProviderProps extends React.HTMLAttributes<HTMLElement> {
 	value: {
 		isViewOnly: boolean;
 		objectViewId: string;
+		workflowStatusJSONArray: TWorkflowStatus[];
 	};
 }
 export declare function ViewContextProvider({

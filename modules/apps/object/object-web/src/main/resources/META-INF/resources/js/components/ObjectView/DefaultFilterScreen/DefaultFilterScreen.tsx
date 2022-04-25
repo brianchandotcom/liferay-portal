@@ -12,9 +12,11 @@
  * details.
  */
 
+import {useModal} from '@clayui/modal';
 import React, {useContext, useState} from 'react';
 
 import {BuilderScreen} from '../BuilderScreen/BuilderScreen';
+import {ModalAddDefaultFilterColumn} from '../ModalAddDefaultFilterColumn/ModalAddDefaultFilterColumn';
 import ViewContext from '../context';
 
 export function DefaultFilterScreen() {
@@ -22,24 +24,42 @@ export function DefaultFilterScreen() {
 
 	const {objectViewFilterColumns} = objectView;
 
-	const [_, setVisibleModal] = useState(false);
+	const [editingFilter, setEditingFilter] = useState(false);
+
+	const [visibleModal, setVisibleModal] = useState(false);
+
+	const {observer, onClose} = useModal({
+		onClose: () => setVisibleModal(false),
+	});
 
 	return (
-		<BuilderScreen
-			emptyState={{
-				buttonText: Liferay.Language.get('new-default-filter'),
-				description: Liferay.Language.get(
-					'start-creating-a-filter-to-display-specific-data'
-				),
-				title: Liferay.Language.get('no-filter-was-created-yet'),
-			}}
-			firstColumnHeader={Liferay.Language.get('filter-by')}
-			objectColumns={objectViewFilterColumns ?? []}
-			onVisibleEditModal={setVisibleModal}
-			onVisibleModal={setVisibleModal}
-			secondColumnHeader={Liferay.Language.get('type')}
-			thirdColumnHeader={Liferay.Language.get('value')}
-			title={Liferay.Language.get('default-filters')}
-		/>
+		<>
+			<BuilderScreen
+				emptyState={{
+					buttonText: Liferay.Language.get('new-default-filter'),
+					description: Liferay.Language.get(
+						'start-creating-a-filter-to-dipslay-a-specifc-data'
+					),
+					title: Liferay.Language.get('no-filter-was-created-yet'),
+				}}
+				firstColumnHeader={Liferay.Language.get('filter-by')}
+				objectColumns={objectViewFilterColumns ?? []}
+				onEditing={setEditingFilter}
+				onVisibleEditModal={setVisibleModal}
+				onVisibleModal={setVisibleModal}
+				secondColumnHeader={Liferay.Language.get('type')}
+				thirdColumnHeader={Liferay.Language.get('value')}
+				title={Liferay.Language.get('default-filters')}
+			/>
+
+			{visibleModal && (
+				<ModalAddDefaultFilterColumn
+					editingFilter={editingFilter}
+					header={Liferay.Language.get('new-default-filter')}
+					observer={observer}
+					onClose={onClose}
+				/>
+			)}
+		</>
 	);
 }

@@ -18,7 +18,13 @@ export type TName = {
 	[key: string]: string;
 };
 
+export type TWorkflowStatus = {
+	label: string;
+	value: string;
+};
+
 export type TObjectField = {
+	businessType: string;
 	checked: boolean;
 	filtered?: boolean | undefined;
 	id: number;
@@ -84,6 +90,7 @@ export type TState = {
 	objectFields: TObjectField[];
 	objectView: TObjectView;
 	objectViewId: string;
+	workflowStatusJSONArray: TWorkflowStatus[];
 };
 
 export type TAction = {

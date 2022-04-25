@@ -12,12 +12,18 @@
  * details.
  */
 
-import React from 'react';
-import {TWorkflowStatus} from './types';
-interface ICustomViewWrapperProps extends React.HTMLAttributes<HTMLElement> {
-	isViewOnly: boolean;
-	objectViewId: string;
-	workflowStatusJSONArray: TWorkflowStatus[];
+/// <reference types="react" />
+
+export declare function ModalAddDefaultFilterColumn({
+	editingFilter,
+	header,
+	observer,
+	onClose,
+}: IProps): JSX.Element;
+interface IProps {
+	editingFilter: boolean;
+	header: string;
+	observer: any;
+	onClose: () => void;
 }
-declare const CustomViewWrapper: React.FC<ICustomViewWrapperProps>;
-export default CustomViewWrapper;
+export {};

@@ -25,7 +25,7 @@ import {DefaultFilterScreen} from './DefaultFilterScreen/DefaultFilterScreen';
 import {DefaultSortScreen} from './DefaultSortScreen/DefaultSortScreen';
 import ViewBuilderScreen from './ViewBuilderScreen/ViewBuilderScreen';
 import ViewContext, {TYPES, ViewContextProvider} from './context';
-import {TObjectField, TObjectView} from './types';
+import {TObjectField, TObjectView, TWorkflowStatus} from './types';
 
 const TABS = [
 	{
@@ -247,17 +247,20 @@ const CustomView: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 interface ICustomViewWrapperProps extends React.HTMLAttributes<HTMLElement> {
 	isViewOnly: boolean;
 	objectViewId: string;
+	workflowStatusJSONArray: TWorkflowStatus[];
 }
 
 const CustomViewWrapper: React.FC<ICustomViewWrapperProps> = ({
 	isViewOnly,
 	objectViewId,
+	workflowStatusJSONArray,
 }) => {
 	return (
 		<ViewContextProvider
 			value={{
 				isViewOnly,
 				objectViewId,
+				workflowStatusJSONArray,
 			}}
 		>
 			<CustomView />

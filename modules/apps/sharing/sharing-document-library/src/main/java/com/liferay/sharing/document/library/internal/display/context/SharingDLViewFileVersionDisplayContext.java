@@ -187,7 +187,8 @@ public class SharingDLViewFileVersionDisplayContext
 	}
 
 	/**
-	 * @see com.liferay.document.library.opener.onedrive.web.internal.display.context.DLOpenerOneDriveDLViewFileVersionDisplayContext#_addEditInOffice365UIItem(List, BaseUIItem)
+	 * @see com.liferay.document.library.opener.onedrive.web.internal.display.context.DLOpenerOneDriveDLViewFileVersionDisplayContext#_addEditInOffice365UIItem(
+	 *      List, BaseUIItem)
 	 */
 	private <T extends BaseUIItem> List<T> _addSharingUIItem(
 		List<T> uiItems, T sharingUIItem) {

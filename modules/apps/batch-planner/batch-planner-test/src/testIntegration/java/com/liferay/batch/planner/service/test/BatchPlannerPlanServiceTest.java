@@ -200,8 +200,8 @@ public class BatchPlannerPlanServiceTest {
 		BatchPlannerPlan batchPlannerPlan = _submitPlan(
 			false, _INTERNAL_CLASS_NAME_CHANNEL, "name6");
 
-		_testSearchExportBatchPlannerLogs(batchPlannerPlan.getCompanyId());
-		_testSearchImportBatchPlannerLogs(batchPlannerPlan.getCompanyId());
+		_testSearchExportBatchPlannerPlans(batchPlannerPlan.getCompanyId());
+		_testSearchImportBatchPlannerPlans(batchPlannerPlan.getCompanyId());
 	}
 
 	@Test
@@ -256,7 +256,7 @@ public class BatchPlannerPlanServiceTest {
 		return batchPlannerPlan;
 	}
 
-	private void _testSearchExportBatchPlannerLogs(long companyId)
+	private void _testSearchExportBatchPlannerPlans(long companyId)
 		throws Exception {
 
 		List<BatchPlannerPlan> batchPlannerPlans =
@@ -288,7 +288,7 @@ public class BatchPlannerPlanServiceTest {
 			batchPlannerPlans.toString(), 0, batchPlannerPlans.size());
 	}
 
-	private void _testSearchImportBatchPlannerLogs(long companyId)
+	private void _testSearchImportBatchPlannerPlans(long companyId)
 		throws Exception {
 
 		List<BatchPlannerPlan> batchPlannerPlans =
@@ -304,6 +304,12 @@ public class BatchPlannerPlanServiceTest {
 
 		Assert.assertEquals(
 			batchPlannerPlans.toString(), 33, batchPlannerPlans.size());
+
+		for (BatchPlannerPlan batchPlannerPlan : batchPlannerPlans) {
+			Assert.assertEquals(
+				BatchPlannerPlanConstants.STATUS_FAILED,
+				batchPlannerPlan.getStatus());
+		}
 
 		batchPlannerPlans = _batchPlannerPlanService.getBatchPlannerPlans(
 			companyId, false, false, RandomTestUtil.randomString(), 0,

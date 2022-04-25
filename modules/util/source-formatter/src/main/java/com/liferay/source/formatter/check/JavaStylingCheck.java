@@ -54,34 +54,6 @@ public class JavaStylingCheck extends BaseStylingCheck {
 		return formatStyling(content);
 	}
 
-	private boolean _checkIsJavaSourceComment(String commentContent) {
-		if (commentContent.contains(StringPool.SEMICOLON) ||
-			commentContent.endsWith(StringPool.COMMA) ||
-			commentContent.endsWith("||") || commentContent.endsWith("&&")) {
-
-			return true;
-		}
-
-		int level = getLevel(
-			commentContent,
-			new String[] {
-				StringPool.OPEN_BRACKET, StringPool.OPEN_CURLY_BRACE,
-				StringPool.OPEN_PARENTHESIS
-			},
-			new String[] {
-				StringPool.CLOSE_BRACKET, StringPool.CLOSE_CURLY_BRACE,
-				StringPool.CLOSE_PARENTHESIS
-			});
-
-		if ((level != 0) || commentContent.matches(".+\\..+") ||
-			commentContent.matches(".+=.+")) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	private String _fixAuthorNames(String content) {
 		content = content.replaceFirst(
 			"(@author +)Adolfo P.rez", "$1Adolfo P\u00e9rez");
@@ -171,7 +143,7 @@ public class JavaStylingCheck extends BaseStylingCheck {
 		while (matcher.find()) {
 			String commentContent = matcher.group(1);
 
-			if (_checkIsJavaSourceComment(commentContent)) {
+			if (_isCommentedOutCode(commentContent)) {
 				continue;
 			}
 
@@ -224,6 +196,34 @@ public class JavaStylingCheck extends BaseStylingCheck {
 		}
 
 		return content;
+	}
+
+	private boolean _isCommentedOutCode(String commentContent) {
+		if (commentContent.contains(StringPool.SEMICOLON) ||
+			commentContent.endsWith(StringPool.COMMA) ||
+			commentContent.endsWith("||") || commentContent.endsWith("&&")) {
+
+			return true;
+		}
+
+		int level = getLevel(
+			commentContent,
+			new String[] {
+				StringPool.OPEN_BRACKET, StringPool.OPEN_CURLY_BRACE,
+				StringPool.OPEN_PARENTHESIS
+			},
+			new String[] {
+				StringPool.CLOSE_BRACKET, StringPool.CLOSE_CURLY_BRACE,
+				StringPool.CLOSE_PARENTHESIS
+			});
+
+		if ((level != 0) || commentContent.matches(".+\\..+") ||
+			commentContent.matches(".+=.+")) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final String[] _CORRECT_WORDS = {

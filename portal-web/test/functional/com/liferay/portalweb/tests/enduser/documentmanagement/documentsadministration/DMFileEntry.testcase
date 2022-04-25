@@ -2740,12 +2740,33 @@ definition {
 	}
 
 	@description = "This is a test for LPS-94829. It ensures that the wildcard can be defined with other file extensions."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test WildcardCanBeDefinedWithOtherFileExtensions {
+		DMDocument.updateFileExtensions(
+			fieldValue = ".doc",
+			indexNumber = "2");
 
-		// TODO LPS-148982 WildcardCanBeDefinedWithOtherFileExtensions pending implementation
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1.doc",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
 
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_2.jpg",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpg");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		for (var dmDocumentTitleList : list "Document_2.jpg,Document_1.doc") {
+			DMDocument.viewStatus(
+				dmDocumentStatus = "Approved",
+				dmDocumentTitle = "${dmDocumentTitleList}");
+		}
 	}
 
 }

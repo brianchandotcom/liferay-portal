@@ -991,97 +991,11 @@ AUI.add(
 							AArray.invoke(navigationOverlays, 'show');
 						});
 
-						uploader.after('alluploadscomplete', () => {
-							AArray.invoke(navigationOverlays, 'hide');
-
-							var emptyMessage = instance._getEmptyMessage();
-
-							if (
-								emptyMessage &&
-								!emptyMessage.hasClass('hide')
-							) {
-								emptyMessage.hide(true);
-							}
-
-							var currentUploadData = instance._getCurrentUploadData();
-
-							var invalidFilesLength =
-								currentUploadData.invalidFiles.length;
-							var validFilesLength =
-								currentUploadData.fileList.length;
-
-							if (validFilesLength) {
-								var openToastProps = {
-									autoClose: false,
-									message: Liferay.Util.sub(
-										instance._strings.xValidFilesUploaded,
-										validFilesLength
-									),
-									toastProps: {
-										className: 'alert-full',
-									},
-									type: 'success',
-								};
-
-								if (
-									!currentUploadData.folder &&
-									!invalidFilesLength
-								) {
-									var reloadButtonClassName =
-										'dl-reload-button';
-
-									openToastProps.message =
-										openToastProps.message +
-										` <button class="btn btn-sm btn-link alert-link ${reloadButtonClassName}">${instance._strings.reloadButton}</button>`;
-
-									openToastProps.onClick = ({event}) => {
-										if (
-											event.target.classList.contains(
-												reloadButtonClassName
-											)
-										) {
-											Liferay.Portlet.refresh(
-												`#p_p_id${instance._documentLibraryNamespace}`
-											);
-										}
-									};
-								}
-
-								Liferay.Util.openToast(openToastProps);
-							}
-
-							if (invalidFilesLength) {
-								if (!currentUploadData.folder) {
-									currentUploadData.invalidFiles.forEach(
-										(invalidFile) => {
-											invalidFile.target?.remove();
-
-											invalidFile.progressBar?.destroy();
-											invalidFile.overlay?.destroy();
-											invalidFile.target?.destroy();
-										}
-									);
-								}
-
-								var message = TPL_ERROR_NOTIFICATION.parse({
-									invalidFiles:
-										currentUploadData.invalidFiles,
-									title: Liferay.Util.sub(
-										instance._strings.xInvalidFilesUploaded,
-										invalidFilesLength
-									),
-								});
-
-								Liferay.Util.openToast({
-									autoClose: false,
-									message,
-									toastProps: {
-										className: 'alert-full',
-									},
-									type: 'danger',
-								});
-							}
-						});
+						uploader.after(
+							'alluploadscomplete',
+							instance._onAllUploadsComplete,
+							instance
+						);
 
 						uploader.get(STR_BOUNDING_BOX).hide();
 
@@ -1119,6 +1033,92 @@ AUI.add(
 							!A.Object.isEmpty(queue.currentFiles)) &&
 						queue._currentState === UploaderQueue.UPLOADING
 					);
+				},
+
+				_onAllUploadsComplete() {
+					var instance = this;
+					var navigationOverlays = instance._getNavigationOverlays();
+
+					AArray.invoke(navigationOverlays, 'hide');
+
+					var emptyMessage = instance._getEmptyMessage();
+
+					if (emptyMessage && !emptyMessage.hasClass('hide')) {
+						emptyMessage.hide(true);
+					}
+
+					var currentUploadData = instance._getCurrentUploadData();
+
+					var invalidFilesLength =
+						currentUploadData.invalidFiles.length;
+					var validFilesLength = currentUploadData.fileList.length;
+
+					if (validFilesLength) {
+						var openToastProps = {
+							autoClose: false,
+							message: Liferay.Util.sub(
+								instance._strings.xValidFilesUploaded,
+								validFilesLength
+							),
+							toastProps: {
+								className: 'alert-full',
+							},
+							type: 'success',
+						};
+
+						if (!currentUploadData.folder && !invalidFilesLength) {
+							var reloadButtonClassName = 'dl-reload-button';
+
+							openToastProps.message =
+								openToastProps.message +
+								` <button class="btn btn-sm btn-link alert-link ${reloadButtonClassName}">${instance._strings.reloadButton}</button>`;
+
+							openToastProps.onClick = ({event}) => {
+								if (
+									event.target.classList.contains(
+										reloadButtonClassName
+									)
+								) {
+									Liferay.Portlet.refresh(
+										`#p_p_id${instance._documentLibraryNamespace}`
+									);
+								}
+							};
+						}
+
+						Liferay.Util.openToast(openToastProps);
+					}
+
+					if (invalidFilesLength) {
+						if (!currentUploadData.folder) {
+							currentUploadData.invalidFiles.forEach(
+								(invalidFile) => {
+									invalidFile.target?.remove();
+
+									invalidFile.progressBar?.destroy();
+									invalidFile.overlay?.destroy();
+									invalidFile.target?.destroy();
+								}
+							);
+						}
+
+						var message = TPL_ERROR_NOTIFICATION.parse({
+							invalidFiles: currentUploadData.invalidFiles,
+							title: Liferay.Util.sub(
+								instance._strings.xInvalidFilesUploaded,
+								invalidFilesLength
+							),
+						});
+
+						Liferay.Util.openToast({
+							autoClose: false,
+							message,
+							toastProps: {
+								className: 'alert-full',
+							},
+							type: 'danger',
+						});
+					}
 				},
 
 				_onDataRequest(event) {

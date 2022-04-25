@@ -71,6 +71,10 @@ public class BuildFactory {
 			return new DefaultTopLevelBuild(url, (TopLevelBuild)parentBuild);
 		}
 
+		if (jobName.contains("-downstream")) {
+			return new DownstreamBuild(url, (TopLevelBuild)parentBuild);
+		}
+
 		if (jobName.contains("-source-format")) {
 			return new SourceFormatBuild(url, (TopLevelBuild)parentBuild);
 		}

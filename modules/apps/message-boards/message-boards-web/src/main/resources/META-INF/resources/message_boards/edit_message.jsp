@@ -243,7 +243,7 @@ if (portletTitleBasedNavigation) {
 
 			<c:if test="<%= MBCategoryPermission.contains(permissionChecker, scopeGroupId, categoryId, ActionKeys.ADD_FILE) %>">
 				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="attachments">
-					<liferay-util:include page="/message_boards/edit_message_attachment.jsp" servletContext="<%= application %>" />
+					<%@ include file="/message_boards/edit_message_attachment.jspf" %>
 
 					<div class="<%= (existingAttachmentsFileEntries.size() == 0) ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />fileAttachments">
 						<liferay-ui:search-container

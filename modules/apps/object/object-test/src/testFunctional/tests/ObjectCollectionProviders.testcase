@@ -24,11 +24,71 @@ definition {
 	}
 
 	@description = "LPS-135388 - Verify it is possible to search for an object's entry with the search experience in collection providers"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanSearchForObjectEntryOnSearchExperience {
 
-		// TODO LPS-145750 CanSearchForObjectEntryOnSearchExperience pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 145750",
+			objectName = "CustomObject145750",
+			pluralLabelName = "Custom Objects 145750");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject145750");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject145750");
+
+		for (var fieldEntry : list "A,B") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customObjectField",
+				objectName = "CustomObject145750",
+				value = "${fieldEntry}");
+		}
+
+		Navigator.openURL();
+
+		ContentPages.addPage(pageName = "Blank Display Page");
+
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Collection Display");
+
+		PageEditor.editCollectionDisplay(
+			fragmentName = "Collection Display",
+			infoListProviderName = "Custom Objects 145750");
+
+		PageEditor.editCollectionDisplay(
+			fragmentName = "Collection Display",
+			listStyle = "Table",
+			selectedName = "Custom Objects 145750");
+
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			dropTarget = "Header",
+			fragmentName = "Collection Filter",
+			targetFragmentName = "Collection Display");
+
+		PageEditor.editCollectionFilter(
+			fragmentName = "Collection Filter",
+			targetCollection = "Custom Objects 145750");
+
+		PageEditor.editCollectionFilter(
+			filter = "Keywords",
+			fragmentName = "Collection Filter");
+
+		PageEditor.clickPublish();
+
+		Navigator.gotoPage(pageName = "Blank Display Page");
+
+		Page.searchInCollectionFilter(searchTerm = "A");
+
+		VisualizeObjectCollectionDisplay.assertTableEntriesPresent(entries = "A");
+
+		VisualizeObjectCollectionDisplay.assertTableEntriesNotPresent(entries = "B");
 
 	}
 

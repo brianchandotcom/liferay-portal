@@ -20,31 +20,50 @@ package com.liferay.source.formatter.dependencies;
 public class CommentStyling {
 
 	public void method() {
+
 		// Test1
-		int a = 0;
+
+		System.out.println("Test 1.");
+
 		//Test2
-        int b = 0;
-        ///Test3
-        int c = a + b;
-        //	Todo Test4
-        int d = b + c;
 
-        //int e;
-        int e = c + d;
+		System.out.println("Test 2.");
 
-        // Non-existing blogs entry
-        int f = e + 1;
+		///Test3
 
-		// Nonexisting comment
-		int g = f + e;
+		System.out.println("Test 3.");
 
-		// Override nonexisting configuration
-		int h = g + f;
+		//	TODO Test4
+
+		System.out.println("Test 4.");
+
+		//int e;
+
+		System.out.println("Test 5.");
+
+		// Non-existing blog A
+
+		System.out.println("Test 6.");
+
+		// Nonexisting blog B
+
+		System.out.println("Test 7.");
+
+		// Override non-existing configuration A
+
+		System.out.println("Test 8.");
+
+		// Override nonexisting configuration B
+
+		System.out.println("Test 9.");
 
 		// todo test
 
-		//int nonexisting = a;
-		System.out.println(h);
+		System.out.println("Test 10.");
+
+		//int nonexisting = 0;
+
+		System.out.println("Test 11.");
 	}
 
 }

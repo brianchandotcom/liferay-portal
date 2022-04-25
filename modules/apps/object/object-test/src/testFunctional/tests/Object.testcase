@@ -24,12 +24,15 @@ definition {
 	}
 
 	@description = "LPS-135406 - Verify it is not possible to delete native fields of objects native"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CannotDeleteFieldsFromNativeObjects {
+		ObjectAdmin.openObjectAdmin();
 
-		// TODO LPS-151497 CannotDeleteFieldsFromNativeObjects pending implementation
+		ObjectPortlet.selectCustomObject(label = "User");
 
+		ObjectAdmin.goToFieldsTab();
+
+		AssertElementNotPresent(locator1 = "Icon#DELETE");
 	}
 
 	@description = "LPS-135406 - Verify it is the user is not able to delete a relationship of object native"

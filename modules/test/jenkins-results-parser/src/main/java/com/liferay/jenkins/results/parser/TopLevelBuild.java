@@ -430,6 +430,38 @@ public abstract class TopLevelBuild extends BaseBuild {
 		return downstreamBatchBuilds;
 	}
 
+	public DownstreamBuild getDownstreamBuild(String axisName) {
+		for (Build downstreamBuild : getDownstreamBuilds(null)) {
+			String downstreamAxisName = downstreamBuild.getParameterValue(
+				"JOB_VARIANT");
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(downstreamAxisName)) {
+				continue;
+			}
+
+			String downstreamAxisVariable = downstreamBuild.getParameterValue(
+				"AXIS_VARIABLE");
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(
+					downstreamAxisVariable)) {
+
+				continue;
+			}
+
+			downstreamAxisName += "/" + downstreamAxisVariable;
+
+			if (!axisName.equals(downstreamAxisName) ||
+				!(downstreamBuild instanceof DownstreamBuild)) {
+
+				continue;
+			}
+
+			return (DownstreamBuild)downstreamBuild;
+		}
+
+		return null;
+	}
+
 	@Override
 	public Element getGitHubMessageElement() {
 		Collections.sort(

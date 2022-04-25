@@ -143,8 +143,8 @@
 		<async-supported>true</async-supported>
 	</servlet>
 	<servlet>
-		<servlet-name>JSON Web Service Servlet</servlet-name>
-		<servlet-class>com.liferay.portal.jsonwebservice.JSONWebServiceServlet</servlet-class>
+		<servlet-name>JSON Web Service Redirect Servlet</servlet-name>
+		<servlet-class>com.liferay.portal.jsonwebservice.JSONWebServiceRedirectServlet</servlet-class>
 		<async-supported>true</async-supported>
 	</servlet>
 	<servlet>
@@ -917,7 +917,7 @@
 		<url-pattern>/api/json/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
-		<servlet-name>JSON Web Service Servlet</servlet-name>
+		<servlet-name>JSON Web Service Redirect Servlet</servlet-name>
 		<url-pattern>/api/jsonws/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>

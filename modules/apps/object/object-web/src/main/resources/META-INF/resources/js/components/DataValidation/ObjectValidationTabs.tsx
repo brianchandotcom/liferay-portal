@@ -20,6 +20,7 @@ import Select from '../Form/Select';
 import ObjectValidationFormBase, {
 	ObjectValidationErrors,
 } from '../ObjectValidationFormBase';
+import Sheet from '../Sheet';
 
 function BasicInfo({
 	componentLabel,
@@ -40,9 +41,7 @@ function BasicInfo({
 
 	return (
 		<>
-			<div className="sheet">
-				<h2 className="sheet-title">{componentLabel}</h2>
-
+			<Sheet title={componentLabel}>
 				<InputLocalized
 					disabled={disabled}
 					error={errors.name}
@@ -67,7 +66,7 @@ function BasicInfo({
 					setValues={setValues}
 					values={values}
 				/>
-			</div>
+			</Sheet>
 
 			<TriggerEventContainer
 				disabled={disabled}
@@ -94,23 +93,15 @@ function Conditions({
 
 	return (
 		<>
-			<div className="sheet">
-				<h2 className="sheet-title">
-					{Liferay.Language.get('groovy')}
-				</h2>
-
+			<Sheet title={Liferay.Language.get('groovy')}>
 				<Editor
 					content={values.script}
 					disabled={disabled}
 					setValues={setValues}
 				/>
-			</div>
+			</Sheet>
 
-			<div className="mt-4 sheet">
-				<h2 className="sheet-title">
-					{Liferay.Language.get('error-message')}
-				</h2>
-
+			<Sheet title={Liferay.Language.get('error-message')}>
 				<InputLocalized
 					disabled={disabled}
 					error={errors.errorLabel}
@@ -124,25 +115,21 @@ function Conditions({
 					selectedLocale={locale}
 					translations={values.errorLabel as LocalizedValue<string>}
 				/>
-			</div>
+			</Sheet>
 		</>
 	);
 }
 
 function TriggerEventContainer({disabled, eventTypes}: ITriggerEventProps) {
 	return (
-		<div className="mt-4 sheet">
-			<h2 className="sheet-title">
-				{Liferay.Language.get('trigger-event')}
-			</h2>
-
+		<Sheet title={Liferay.Language.get('trigger-event')}>
 			<Select
 				disabled={disabled}
 				label={Liferay.Language.get('event')}
 				options={eventTypes}
 				value={0}
 			/>
-		</div>
+		</Sheet>
 	);
 }
 

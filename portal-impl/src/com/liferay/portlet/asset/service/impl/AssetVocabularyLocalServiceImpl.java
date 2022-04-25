@@ -464,24 +464,6 @@ public class AssetVocabularyLocalServiceImpl
 
 	@Override
 	public BaseModelSearchResult<AssetVocabulary> searchVocabularies(
-			long companyId, long groupId, String title, int start, int end)
-		throws PortalException {
-
-		return searchVocabularies(companyId, groupId, title, start, end, null);
-	}
-
-	@Override
-	public BaseModelSearchResult<AssetVocabulary> searchVocabularies(
-			long companyId, long groupId, String title, int start, int end,
-			Sort sort)
-		throws PortalException {
-
-		return searchVocabularies(
-			companyId, new long[] {groupId}, title, null, start, end, sort);
-	}
-
-	@Override
-	public BaseModelSearchResult<AssetVocabulary> searchVocabularies(
 			long companyId, long[] groupIds, String title,
 			int[] visibilityTypes, int start, int end, Sort sort)
 		throws PortalException {

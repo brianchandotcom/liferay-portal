@@ -234,7 +234,8 @@ public class JavaStylingCheck extends BaseStylingCheck {
 		Pattern.compile("([\n\t])(synchronized) (private|public|protected)");
 	private static final Map<String, String[]> _incorrectWordsMap =
 		HashMapBuilder.put(
-			"nonexistent", new String[] {"nonexisting", "non-existing"}
+			"nonexistent",
+			new String[] {"nonexisting", "non-existent", "non-existing"}
 		).put(
 			"TODO", new String[] {"todo", "to-do"}
 		).build();

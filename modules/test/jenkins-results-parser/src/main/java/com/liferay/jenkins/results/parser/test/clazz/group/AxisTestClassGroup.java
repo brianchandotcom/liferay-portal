@@ -61,6 +61,10 @@ public class AxisTestClassGroup extends BaseTestClassGroup {
 		return _batchTestClassGroup;
 	}
 
+	public String getDownstreamJobName() {
+		return _batchTestClassGroup.getDownstreamJobName();
+	}
+
 	@Override
 	public Job getJob() {
 		return _batchTestClassGroup.getJob();

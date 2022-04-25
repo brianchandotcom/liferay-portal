@@ -399,30 +399,28 @@ public class GCSStore implements Store {
 				"Unable to authenticate with GCS", ioException);
 		}
 
-		RetrySettings retrySettings = RetrySettings.newBuilder(
-		).setInitialRetryDelay(
-			Duration.ofMillis(_gcsStoreConfiguration.initialRetryDelay())
-		).setInitialRpcTimeout(
-			Duration.ofMillis(_gcsStoreConfiguration.initialRPCTimeout())
-		).setJittered(
-			_gcsStoreConfiguration.retryJitter()
-		).setMaxAttempts(
-			_gcsStoreConfiguration.maxRetryAttempts()
-		).setMaxRetryDelay(
-			Duration.ofMillis(_gcsStoreConfiguration.maxRetryDelay())
-		).setMaxRpcTimeout(
-			Duration.ofMillis(_gcsStoreConfiguration.maxRPCTimeout())
-		).setRetryDelayMultiplier(
-			_gcsStoreConfiguration.retryDelayMultiplier()
-		).setRpcTimeoutMultiplier(
-			_gcsStoreConfiguration.rpcTimeoutMultiplier()
-		).build();
-
 		StorageOptions storageOptions = StorageOptions.newBuilder(
 		).setCredentials(
 			_googleCredentials
 		).setRetrySettings(
-			retrySettings
+			RetrySettings.newBuilder(
+			).setInitialRetryDelay(
+				Duration.ofMillis(_gcsStoreConfiguration.initialRetryDelay())
+			).setInitialRpcTimeout(
+				Duration.ofMillis(_gcsStoreConfiguration.initialRPCTimeout())
+			).setJittered(
+				_gcsStoreConfiguration.retryJitter()
+			).setMaxAttempts(
+				_gcsStoreConfiguration.maxRetryAttempts()
+			).setMaxRetryDelay(
+				Duration.ofMillis(_gcsStoreConfiguration.maxRetryDelay())
+			).setMaxRpcTimeout(
+				Duration.ofMillis(_gcsStoreConfiguration.maxRPCTimeout())
+			).setRetryDelayMultiplier(
+				_gcsStoreConfiguration.retryDelayMultiplier()
+			).setRpcTimeoutMultiplier(
+				_gcsStoreConfiguration.rpcTimeoutMultiplier()
+			).build()
 		).build();
 
 		_gcsStore = storageOptions.getService();

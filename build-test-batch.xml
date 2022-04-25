@@ -526,7 +526,8 @@ mariadb.executable=${mariadb.executable}]]></echo>
 		<sequential>
 			<beanshell>
 				<![CDATA[
-					import org.apache.commons.io.FileUtils;
+					import java.nio.file.Files;
+
 					import org.apache.commons.lang.StringUtils;
 
 					String projectDir = project.getProperty("project.dir");
@@ -611,7 +612,7 @@ mariadb.executable=${mariadb.executable}]]></echo>
 						List releasedAppDirs = new ArrayList();
 
 						for (File appBndFile : appBndFiles) {
-							String fileContent = FileUtils.readFileToString(appBndFile);
+							String fileContent = new String(Files.readAllBytes(appBndFile.toPath()));
 
 							if (fileContent.contains("Liferay-Releng-Bundle: true")) {
 								releasedAppDirs.add(appBndFile.getParentFile());

@@ -48,6 +48,7 @@ public class GradleStylingCheck extends BaseFileCheck {
 	private String _fixMissingLineBreakAroundCurlyBraces(String content) {
 		int openCurlyBracePosition = -1;
 
+		outerLoop:
 		while (true) {
 			openCurlyBracePosition = content.indexOf(
 				StringPool.OPEN_CURLY_BRACE, openCurlyBracePosition + 1);
@@ -75,26 +76,6 @@ public class GradleStylingCheck extends BaseFileCheck {
 				continue;
 			}
 
-			int nextCloseCurlyBracePosition = content.indexOf(
-				StringPool.CLOSE_CURLY_BRACE, openCurlyBracePosition + 1);
-
-			if ((nextCloseCurlyBracePosition == -1) ||
-				_isInParenthesis(content, nextCloseCurlyBracePosition)) {
-
-				continue;
-			}
-
-			char nextChar = content.charAt(openCurlyBracePosition + 1);
-
-			if (nextChar != CharPool.NEW_LINE) {
-				nextChar = content.charAt(nextCloseCurlyBracePosition + 1);
-
-				if (nextChar != CharPool.PERIOD) {
-					return StringUtil.insert(
-						content, "\n", openCurlyBracePosition + 1);
-				}
-			}
-
 			int closeCurlyBracePosition = openCurlyBracePosition;
 
 			while (true) {
@@ -112,8 +93,7 @@ public class GradleStylingCheck extends BaseFileCheck {
 							content, closeCurlyBracePosition),
 						multiLineStringsPositions) ||
 					_isInRegexPattern(content, closeCurlyBracePosition) ||
-					_isInSingleLineComment(content, closeCurlyBracePosition) ||
-					_isInParenthesis(content, closeCurlyBracePosition)) {
+					_isInSingleLineComment(content, closeCurlyBracePosition)) {
 
 					continue;
 				}
@@ -129,11 +109,15 @@ public class GradleStylingCheck extends BaseFileCheck {
 					continue;
 				}
 
+				char nextChar;
+
 				if (closeCurlyBracePosition < (content.length() - 1)) {
 					nextChar = content.charAt(closeCurlyBracePosition + 1);
 
-					if (nextChar == CharPool.PERIOD) {
-						continue;
+					if ((nextChar == CharPool.CLOSE_PARENTHESIS) ||
+						(nextChar == CharPool.PERIOD)) {
+
+						continue outerLoop;
 					}
 				}
 
@@ -145,30 +129,17 @@ public class GradleStylingCheck extends BaseFileCheck {
 					return StringUtil.insert(
 						content, "\n", closeCurlyBracePosition);
 				}
+
+				nextChar = content.charAt(openCurlyBracePosition + 1);
+
+				if (nextChar != CharPool.NEW_LINE) {
+					return StringUtil.insert(
+						content, "\n", openCurlyBracePosition + 1);
+				}
 			}
 		}
 
 		return content;
-	}
-
-	private boolean _isInParenthesis(String content, int position) {
-		int nextCloseParenthesisPosition = content.indexOf(
-			StringPool.CLOSE_PARENTHESIS, position);
-
-		if (nextCloseParenthesisPosition == -1) {
-			return false;
-		}
-
-		int nextOpenParenthesisPosition = content.indexOf(
-			StringPool.OPEN_PARENTHESIS, position);
-
-		if ((nextOpenParenthesisPosition == -1) ||
-			(nextOpenParenthesisPosition > nextCloseParenthesisPosition)) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private boolean _isInRegexPattern(String content, int position) {

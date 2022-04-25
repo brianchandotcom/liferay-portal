@@ -90,6 +90,13 @@ public class DLURLHelperImpl implements DLURLHelper {
 		FileEntry fileEntry, FileVersion fileVersion, ThemeDisplay themeDisplay,
 		String queryString, boolean appendVersion, boolean absoluteURL) {
 
+		String url = _getDLFileVersionURLProviderURL(
+			fileVersion, themeDisplay, DLFileVersionURLProvider.Type.DOWNLOAD);
+
+		if (Validator.isNotNull(url)) {
+			return url;
+		}
+
 		String friendlyURL = _getFriendlyURL(
 			appendVersion, fileEntry,
 			_getPreviewURLPrefix(themeDisplay, absoluteURL), queryString);
@@ -97,13 +104,6 @@ public class DLURLHelperImpl implements DLURLHelper {
 		if (Validator.isNotNull(friendlyURL)) {
 			return HttpComponentsUtil.addParameter(
 				friendlyURL, "download", true);
-		}
-
-		String url = _getDLFileVersionURLProviderURL(
-			fileVersion, themeDisplay, DLFileVersionURLProvider.Type.DOWNLOAD);
-
-		if (Validator.isNotNull(url)) {
-			return url;
 		}
 
 		return HttpComponentsUtil.addParameter(

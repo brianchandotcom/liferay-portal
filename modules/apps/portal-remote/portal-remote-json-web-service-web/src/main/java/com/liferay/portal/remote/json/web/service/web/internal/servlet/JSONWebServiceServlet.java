@@ -29,14 +29,26 @@ import java.io.IOException;
 import java.util.Locale;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.Servlet;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Igor Spasic
  */
+@Component(
+	immediate = true,
+	property = {
+		"osgi.http.whiteboard.context.path=/portal/api/jsonws",
+		"osgi.http.whiteboard.servlet.name=com.liferay.portal.remote.json.web.service.extender.internal.servlet.JSONWebServiceServlet",
+		"osgi.http.whiteboard.servlet.pattern=/portal/api/jsonws/*"
+	},
+	service = Servlet.class
+)
 public class JSONWebServiceServlet extends JSONServlet {
 
 	@Override

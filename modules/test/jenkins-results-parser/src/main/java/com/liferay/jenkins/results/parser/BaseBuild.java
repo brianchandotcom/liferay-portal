@@ -2772,21 +2772,35 @@ public abstract class BaseBuild implements Build {
 			tableRowElements.addAll(getJenkinsReportStopWatchRecordElements());
 		}
 
-		List<Build> downstreamBuilds = getDownstreamBuilds(result, status);
+		List<Build> builds = getDownstreamBuilds(result, status);
 
-		Collections.sort(
-			downstreamBuilds, new BaseBuild.BuildDisplayNameComparator());
+		Collections.sort(builds, new BaseBuild.BuildDisplayNameComparator());
 
-		for (Build downstreamBuild : downstreamBuilds) {
-			if (!(downstreamBuild instanceof BaseBuild)) {
+		String batchName = null;
+
+		for (Build build : builds) {
+			if (!(build instanceof BaseBuild)) {
 				continue;
 			}
 
-			BaseBuild downstreamBaseBuild = (BaseBuild)downstreamBuild;
+			if (build instanceof DownstreamBuild) {
+				DownstreamBuild downstreamBuild = (DownstreamBuild)build;
+
+				String downstreamBatchName = downstreamBuild.getBatchName();
+
+				if (!Objects.equals(batchName, downstreamBatchName)) {
+					tableRowElements.add(
+						Dom4JUtil.getNewElement(
+							"th", null, downstreamBatchName));
+
+					batchName = downstreamBatchName;
+				}
+			}
+
+			BaseBuild baseBuild = (BaseBuild)build;
 
 			tableRowElements.addAll(
-				downstreamBaseBuild.getJenkinsReportTableRowElements(
-					result, status));
+				baseBuild.getJenkinsReportTableRowElements(result, status));
 		}
 
 		return tableRowElements;

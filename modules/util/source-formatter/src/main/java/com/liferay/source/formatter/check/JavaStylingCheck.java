@@ -54,6 +54,34 @@ public class JavaStylingCheck extends BaseStylingCheck {
 		return formatStyling(content);
 	}
 
+	private boolean _checkIsJavaSourceComment(String commentContent) {
+		if (commentContent.contains(StringPool.SEMICOLON) ||
+			commentContent.endsWith(StringPool.COMMA) ||
+			commentContent.endsWith("||") || commentContent.endsWith("&&")) {
+
+			return true;
+		}
+
+		int level = getLevel(
+			commentContent,
+			new String[] {
+				StringPool.OPEN_BRACKET, StringPool.OPEN_CURLY_BRACE,
+				StringPool.OPEN_PARENTHESIS
+			},
+			new String[] {
+				StringPool.CLOSE_BRACKET, StringPool.CLOSE_CURLY_BRACE,
+				StringPool.CLOSE_PARENTHESIS
+			});
+
+		if ((level != 0) || commentContent.matches(".+\\..+") ||
+			commentContent.matches(".+=.+")) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private String _fixAuthorNames(String content) {
 		content = content.replaceFirst(
 			"(@author +)Adolfo P.rez", "$1Adolfo P\u00e9rez");
@@ -143,43 +171,42 @@ public class JavaStylingCheck extends BaseStylingCheck {
 		while (matcher.find()) {
 			String commentContent = matcher.group(1);
 
+			if (_checkIsJavaSourceComment(commentContent)) {
+				continue;
+			}
+
 			if (commentContent.startsWith(StringPool.SPACE)) {
-				for (String hyphenWord : _HYPHEN_WORDS) {
-					if (commentContent.contains(hyphenWord)) {
-						int index = hyphenWord.indexOf(StringPool.DASH);
+				for (int i = 0; i < _INCORRECT_WORDS.length; i++) {
+					Pattern pattern = Pattern.compile(
+						".*(" + _INCORRECT_WORDS[i] + ").*",
+						Pattern.CASE_INSENSITIVE);
+
+					Matcher incorrectWordMatcher = pattern.matcher(
+						commentContent);
+
+					if (incorrectWordMatcher.find()) {
+						String incorrectWord = incorrectWordMatcher.group(1);
+
+						if (StringUtil.equals(incorrectWord, "TODO")) {
+							continue;
+						}
+
+						String replaceWord = _CORRECT_WORDS[i];
+
+						char firstWord = incorrectWord.charAt(0);
+
+						if (Character.isUpperCase(firstWord)) {
+							char[] replaceWordArray = replaceWord.toCharArray();
+
+							replaceWordArray[0] -= 32;
+							replaceWord = String.valueOf(replaceWordArray);
+						}
 
 						return StringUtil.replaceFirst(
-							content, hyphenWord,
-							hyphenWord.substring(0, index) +
-								hyphenWord.substring(index + 1),
+							content, incorrectWord, replaceWord,
 							matcher.start(1));
 					}
 				}
-
-				continue;
-			}
-
-			if (commentContent.contains(StringPool.SEMICOLON) ||
-				commentContent.endsWith(StringPool.COMMA) ||
-				commentContent.endsWith("||") ||
-				commentContent.endsWith("&&")) {
-
-				continue;
-			}
-
-			int level = getLevel(
-				commentContent,
-				new String[] {
-					StringPool.OPEN_BRACKET, StringPool.OPEN_CURLY_BRACE,
-					StringPool.OPEN_PARENTHESIS
-				},
-				new String[] {
-					StringPool.CLOSE_BRACKET, StringPool.CLOSE_CURLY_BRACE,
-					StringPool.CLOSE_PARENTHESIS
-				});
-
-			if ((level != 0) || commentContent.matches(".+\\..+") ||
-				commentContent.matches(".+=.+")) {
 
 				continue;
 			}
@@ -199,7 +226,13 @@ public class JavaStylingCheck extends BaseStylingCheck {
 		return content;
 	}
 
-	private static final String[] _HYPHEN_WORDS = {"Non-existing"};
+	private static final String[] _CORRECT_WORDS = {
+		"nonexistent", "nonexistent", "nonexistent", "TODO"
+	};
+
+	private static final String[] _INCORRECT_WORDS = {
+		"nonexisting to", "nonexisting", "non-existing", "todo"
+	};
 
 	private static final Pattern _incorrectJavadocPattern = Pattern.compile(
 		"(\n([\t ]*)/\\*)(\n\\2 \\*)");

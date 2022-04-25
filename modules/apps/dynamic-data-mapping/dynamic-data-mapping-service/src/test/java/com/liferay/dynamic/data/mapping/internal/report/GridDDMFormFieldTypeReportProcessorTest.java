@@ -15,9 +15,9 @@
 package com.liferay.dynamic.data.mapping.internal.report;
 
 import com.liferay.dynamic.data.mapping.constants.DDMFormInstanceReportConstants;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
-import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -70,7 +70,7 @@ public class GridDDMFormFieldTypeReportProcessorTest {
 			_gridDDMFormFieldTypeReportProcessor.process(
 				ddmFormFieldValue,
 				JSONUtil.put(
-					"type", DDMFormFieldType.GRID
+					"type", DDMFormFieldTypeConstants.GRID
 				).put(
 					"values",
 					JSONFactoryUtil.createJSONObject(
@@ -104,7 +104,7 @@ public class GridDDMFormFieldTypeReportProcessorTest {
 			_gridDDMFormFieldTypeReportProcessor.process(
 				ddmFormFieldValue,
 				JSONUtil.put(
-					"type", DDMFormFieldType.GRID
+					"type", DDMFormFieldTypeConstants.GRID
 				).put(
 					"values", JSONFactoryUtil.createJSONObject()
 				),
@@ -112,7 +112,8 @@ public class GridDDMFormFieldTypeReportProcessorTest {
 				DDMFormInstanceReportConstants.EVENT_ADD_RECORD_VERSION);
 
 		Assert.assertEquals(
-			DDMFormFieldType.GRID, processedFieldJSONObject.getString("type"));
+			DDMFormFieldTypeConstants.GRID,
+			processedFieldJSONObject.getString("type"));
 
 		JSONObject valuesJSONObject = processedFieldJSONObject.getJSONObject(
 			"values");
@@ -138,7 +139,7 @@ public class GridDDMFormFieldTypeReportProcessorTest {
 			_gridDDMFormFieldTypeReportProcessor.process(
 				ddmFormFieldValue,
 				JSONUtil.put(
-					"type", DDMFormFieldType.GRID
+					"type", DDMFormFieldTypeConstants.GRID
 				).put(
 					"values", JSONFactoryUtil.createJSONObject()
 				),
@@ -146,7 +147,8 @@ public class GridDDMFormFieldTypeReportProcessorTest {
 				DDMFormInstanceReportConstants.EVENT_ADD_RECORD_VERSION);
 
 		Assert.assertEquals(
-			DDMFormFieldType.GRID, processedFieldJSONObject.getString("type"));
+			DDMFormFieldTypeConstants.GRID,
+			processedFieldJSONObject.getString("type"));
 
 		JSONObject valuesJSONObject = processedFieldJSONObject.getJSONObject(
 			"values");
@@ -170,7 +172,7 @@ public class GridDDMFormFieldTypeReportProcessorTest {
 			_gridDDMFormFieldTypeReportProcessor.process(
 				ddmFormFieldValue,
 				JSONUtil.put(
-					"type", DDMFormFieldType.GRID
+					"type", DDMFormFieldTypeConstants.GRID
 				).put(
 					"values",
 					JSONFactoryUtil.createJSONObject(
@@ -232,7 +234,7 @@ public class GridDDMFormFieldTypeReportProcessorTest {
 		Mockito.when(
 			ddmFormFieldValue.getType()
 		).thenReturn(
-			DDMFormFieldType.GRID
+			DDMFormFieldTypeConstants.GRID
 		);
 
 		Value value = new LocalizedValue();

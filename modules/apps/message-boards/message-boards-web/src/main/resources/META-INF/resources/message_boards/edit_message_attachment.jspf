@@ -14,14 +14,6 @@
  */
 --%>
 
-<%
-int deletedAttachmentsFileEntriesCount = 0;
-
-if (message != null) {
-	deletedAttachmentsFileEntriesCount = message.getDeletedAttachmentsFileEntriesCount();
-}
-%>
-
 <div class="lfr-dynamic-uploader" id="<portlet:namespace />uploaderContainer">
 	<div class="lfr-upload-container" id="<portlet:namespace />fileUpload"></div>
 </div>
@@ -33,6 +25,14 @@ if (message != null) {
 <div class="hide selected" id="<portlet:namespace />selectedFileNameMetadataContainer"></div>
 
 <c:if test="<%= (message != null) && trashHelper.isTrashEnabled(scopeGroupId) %>">
+	<%
+		int deletedAttachmentsFileEntriesCount = 0;
+
+		if (message != null) {
+			deletedAttachmentsFileEntriesCount = message.getDeletedAttachmentsFileEntriesCount();
+		}
+	%>
+
 	<div align="right">
 		<a href="javascript:;" id="view-removed-attachments-link" style='display: <%= (deletedAttachmentsFileEntriesCount > 0) ? "initial" : "none" %>;'>
 			<liferay-ui:message arguments="<%= deletedAttachmentsFileEntriesCount %>" key='<%= (deletedAttachmentsFileEntriesCount == 1) ? "x-recently-removed-attachment" : "x-recently-removed-attachments" %>' /> &raquo;

@@ -14,7 +14,6 @@
 
 /// <reference types="react" />
 
-import './EditObjectRelationship.scss';
 export default function EditObjectRelationship({
 	deletionTypes,
 	hasUpdateObjectDefinitionPermission,

@@ -21,21 +21,17 @@ ObjectDefinitionsRelationshipsDisplayContext objectDefinitionsRelationshipsDispl
 ObjectRelationship objectRelationship = (ObjectRelationship)request.getAttribute(ObjectWebKeys.OBJECT_RELATIONSHIP);
 %>
 
-<liferay-frontend:side-panel-content
-	title='<%= LanguageUtil.get(request, "relationship") %>'
->
-	<react:component
-		module="js/components/EditObjectRelationship"
-		props='<%=
-			HashMapBuilder.<String, Object>put(
-				"deletionTypes", objectDefinitionsRelationshipsDisplayContext.getObjectRelationshipDeletionTypesJSONArray()
-			).put(
-				"hasUpdateObjectDefinitionPermission", objectDefinitionsRelationshipsDisplayContext.hasUpdateObjectDefinitionPermission()
-			).put(
-				"isReverse", objectRelationship.isReverse()
-			).put(
-				"objectRelationship", objectDefinitionsRelationshipsDisplayContext.getObjectRelationshipJSONObject(objectRelationship)
-			).build()
-		%>'
-	/>
-</liferay-frontend:side-panel-content>
+<react:component
+	module="js/components/EditObjectRelationship"
+	props='<%=
+		HashMapBuilder.<String, Object>put(
+			"deletionTypes", objectDefinitionsRelationshipsDisplayContext.getObjectRelationshipDeletionTypesJSONArray()
+		).put(
+			"hasUpdateObjectDefinitionPermission", objectDefinitionsRelationshipsDisplayContext.hasUpdateObjectDefinitionPermission()
+		).put(
+			"isReverse", objectRelationship.isReverse()
+		).put(
+			"objectRelationship", objectDefinitionsRelationshipsDisplayContext.getObjectRelationshipJSONObject(objectRelationship)
+		).build()
+	%>'
+/>

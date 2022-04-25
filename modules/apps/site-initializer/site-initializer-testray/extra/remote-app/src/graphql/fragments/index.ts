@@ -14,6 +14,7 @@
 
 export * from './liferayRole';
 export * from './liferayUserAccount';
+export * from './testrayAttachment';
 export * from './testrayCase';
 export * from './testrayCaseType';
 export * from './testrayComponent';

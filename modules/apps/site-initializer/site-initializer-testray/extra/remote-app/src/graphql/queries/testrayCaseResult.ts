@@ -30,6 +30,27 @@ export type TestrayCaseResult = {
 	startDate: string;
 };
 
+export const getCaseResultsAggregation = gql`
+	query getCaseResultAggregation(
+		$aggregation: String = ""
+		$filter: String = ""
+	) {
+		caseResultAggregation(aggregation: $aggregation, filter: $filter)
+			@rest(
+				type: "C_CaseResult"
+				path: "caseresults/?aggregationTerms={args.aggregation}&filter={args.filter}"
+			) {
+			facets {
+				facetValues {
+					numberOfOccurrences
+					term
+				}
+				facetCriteria
+			}
+		}
+	}
+`;
+
 export const getCaseResults = gql`
 	query getCaseResults(
 		$filter: String = ""

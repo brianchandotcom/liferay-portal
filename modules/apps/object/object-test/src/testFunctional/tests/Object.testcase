@@ -33,12 +33,29 @@ definition {
 	}
 
 	@description = "LPS-135406 - Verify it is the user is not able to delete a relationship of object native"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CannotDeleteRelationshipFromNativeObject {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 151498",
+			objectName = "CustomObject151498",
+			pluralLabelName = "Custom Objects 151498");
 
-		// TODO LPS-151498 CannotDeleteRelationshipFromNativeObject pending implementation
+		ObjectAdmin.addObjectRelationshipViaAPI(
+			objectName_1 = "User",
+			objectName_2 = "CustomObject151498",
+			relationshipLabel = "Relationship",
+			relationshipName = "relationship",
+			relationshipType = "oneToMany");
 
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "User");
+
+		Click(
+			key_tabName = "Relationship",
+			locator1 = "ObjectAdmin#ENTRY_RELATIONSHIP_TAB");
+
+		AssertElementNotPresent(locator1 = "Icon#DELETE");
 	}
 
 	@description = "LPS-135406 - Verify it is not possible to delete a relationship field of custom object from a native object"

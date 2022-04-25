@@ -255,7 +255,11 @@ function computeHoverItself({initialOffset, items, monitor, rtl, source}) {
 		}
 	}
 
-	if (!newParentId || newParentId === sourceItem.siteNavigationMenuItemId) {
+	if (
+		!newParentId ||
+		newParentId === sourceItem.siteNavigationMenuItemId ||
+		itemIsDynamic(newParentId, items)
+	) {
 		return;
 	}
 
@@ -305,10 +309,22 @@ function computeHoverAnotherItem({
 			: targetItem.parentSiteNavigationMenuItemId;
 	}
 
+	if (itemIsDynamic(newParentId, items)) {
+		return;
+	}
+
 	return {
 		currentOffset,
 		direction,
 		newIndex,
 		newParentId,
 	};
+}
+
+function itemIsDynamic(siteNavigationMenuItemId, items) {
+	const item = items.find(
+		(item) => item.siteNavigationMenuItemId === siteNavigationMenuItemId
+	);
+
+	return item?.dynamic;
 }

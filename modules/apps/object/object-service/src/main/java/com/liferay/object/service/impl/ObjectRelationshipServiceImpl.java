@@ -130,6 +130,22 @@ public class ObjectRelationshipServiceImpl
 
 	@Override
 	public List<ObjectRelationship> getObjectRelationships(
+			long objectDefinitionId1)
+		throws PortalException {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId1);
+
+		_objectDefinitionModelResourcePermission.check(
+			getPermissionChecker(), objectDefinition.getObjectDefinitionId(),
+			ActionKeys.VIEW);
+
+		return objectRelationshipLocalService.getObjectRelationships(
+			objectDefinitionId1);
+	}
+
+	@Override
+	public List<ObjectRelationship> getObjectRelationships(
 			long objectDefinitionId1, int start, int end)
 		throws PortalException {
 
@@ -142,6 +158,22 @@ public class ObjectRelationshipServiceImpl
 
 		return objectRelationshipLocalService.getObjectRelationships(
 			objectDefinitionId1, start, end);
+	}
+
+	@Override
+	public List<ObjectRelationship> getObjectRelationshipsByObjectDefinitionId2(
+			long objectDefinitionId2)
+		throws PortalException {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId2);
+
+		_objectDefinitionModelResourcePermission.check(
+			getPermissionChecker(), objectDefinition.getObjectDefinitionId(),
+			ActionKeys.VIEW);
+
+		return objectRelationshipLocalService.
+			getObjectRelationshipsByObjectDefinitionId2(objectDefinitionId2);
 	}
 
 	@Override

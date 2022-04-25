@@ -26,15 +26,6 @@ import java.util.Map;
  */
 public interface LayoutSEOCanonicalURLProvider {
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #getCanonicalURL(Layout, Locale, String, ThemeDisplay)}
-	 */
-	@Deprecated
-	public String getCanonicalURL(
-			Layout layout, Locale locale, String canonicalURL,
-			Map<Locale, String> alternateURLs)
-		throws PortalException;
-
 	public String getCanonicalURL(
 			Layout layout, Locale locale, String canonicalURL,
 			ThemeDisplay themeDisplay)

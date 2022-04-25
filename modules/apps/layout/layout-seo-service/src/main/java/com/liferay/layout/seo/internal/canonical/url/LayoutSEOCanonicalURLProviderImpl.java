@@ -55,16 +55,6 @@ public class LayoutSEOCanonicalURLProviderImpl
 	@Override
 	public String getCanonicalURL(
 			Layout layout, Locale locale, String canonicalURL,
-			Map<Locale, String> alternateURLs)
-		throws PortalException {
-
-		return getCanonicalURL(
-			layout, locale, canonicalURL, _getThemeDisplay());
-	}
-
-	@Override
-	public String getCanonicalURL(
-			Layout layout, Locale locale, String canonicalURL,
 			ThemeDisplay themeDisplay)
 		throws PortalException {
 
@@ -187,17 +177,6 @@ public class LayoutSEOCanonicalURLProviderImpl
 		}
 
 		return layoutSEOEntry.getCanonicalURL(locale);
-	}
-
-	private ThemeDisplay _getThemeDisplay() {
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		if (serviceContext != null) {
-			return serviceContext.getThemeDisplay();
-		}
-
-		return null;
 	}
 
 	private AlternateURLMapperProvider _alternateURLMapperProvider;

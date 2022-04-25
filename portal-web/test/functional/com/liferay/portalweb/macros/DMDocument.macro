@@ -2495,10 +2495,23 @@ definition {
 			key_text = "fileExtensions",
 			locator1 = "TextArea#ANY");
 
-		Type(
-			key_text = "fileExtensions",
-			locator1 = "TextArea#ANY",
-			value1 = "${fieldValue}");
+		if ("${indexNumber}" == "2") {
+			Click(
+				key_label = "Add Duplicate Field File Extensions",
+				locator1 = "Button#DUPLICATE_SPECIFIC");
+
+			Type(
+				key_indexNumber = "${indexNumber}",
+				key_label = "File Extensions",
+				locator1 = "TextArea#ANY_LABELED_N",
+				value1 = "${fieldValue}");
+		}
+		else {
+			Type(
+				key_text = "fileExtensions",
+				locator1 = "TextArea#ANY",
+				value1 = "${fieldValue}");
+		}
 
 		SystemSettings.saveConfiguration();
 	}

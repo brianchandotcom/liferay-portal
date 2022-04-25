@@ -590,4 +590,75 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-146029. View the defined layout style of Grid in the non-desktop viewport."
+	@priority = "4"
+	test ViewDefinedGridLayoutStyleInNonDesktopViewport {
+		property test.name.skip.portal.instance = "Grid#ViewDefinedGridLayoutStyleInNonDesktopViewport";
+
+		task ("Add a Grid to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Grid");
+		}
+
+		task ("Configure the Grid") {
+			PageEditor.editLayoutGrid(
+				columnCount = "6",
+				panel = "General");
+		}
+
+		task ("Change to the Landscape Phone viewport") {
+			PageEditor.switchViewport(deviceType = "Landscape Phone");
+		}
+
+		task ("Get current column width") {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
+
+			var columnWidth = Css.getCssValue(
+				attribute = "width",
+				element = "//div[contains(@class,'col-12')]");
+
+			var columnWidth = StringUtil.extractDigits("${columnWidth}");
+
+			echo("${columnWidth}");
+
+			SelectFrame(value1 = "relative=top");
+		}
+
+		task ("Configure the Grid") {
+			Select(
+				key_fieldLabel = "Layout",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "2 Modules per Row");
+		}
+
+		task ("Get current column width") {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
+
+			var columnWidth2 = Css.getCssValue(
+				attribute = "width",
+				element = "//div[contains(@class,'col-6')]");
+
+			var columnWidth2 = StringUtil.extractDigits("${columnWidth2}");
+
+			echo("${columnWidth2}");
+
+			SelectFrame(value1 = "relative=top");
+		}
+
+		task ("Assert 2*columnWidth2 equal to columnWidth") {
+			var columnWidth2 = 2 * ${columnWidth2};
+
+			echo("${columnWidth2}");
+
+			TestUtils.assertEquals(
+				actual = "${columnWidth2}",
+				expected = "${columnWidth}");
+		}
+	}
+
 }

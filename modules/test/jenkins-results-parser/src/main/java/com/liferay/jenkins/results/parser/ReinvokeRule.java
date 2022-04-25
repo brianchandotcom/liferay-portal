@@ -76,13 +76,24 @@ public class ReinvokeRule {
 		Matcher matcher = null;
 
 		if (axisVariablePattern != null) {
-			if (!(build instanceof AxisBuild)) {
+			String axisVariable = null;
+
+			if (build instanceof AxisBuild) {
+				AxisBuild axisBuild = (AxisBuild)build;
+
+				axisVariable = axisBuild.getAxisVariable();
+			}
+			else if (build instanceof DownstreamBuild) {
+				DownstreamBuild downstreamBuild = (DownstreamBuild)build;
+
+				axisVariable = downstreamBuild.getAxisVariable();
+			}
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(axisVariable)) {
 				return false;
 			}
 
-			AxisBuild axisBuild = (AxisBuild)build;
-
-			matcher = axisVariablePattern.matcher(axisBuild.getAxisVariable());
+			matcher = axisVariablePattern.matcher(axisVariable);
 
 			if (!matcher.find()) {
 				return false;

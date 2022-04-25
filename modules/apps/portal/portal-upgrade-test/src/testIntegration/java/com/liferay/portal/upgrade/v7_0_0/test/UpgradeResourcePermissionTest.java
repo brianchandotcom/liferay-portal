@@ -136,11 +136,8 @@ public class UpgradeResourcePermissionTest extends UpgradeResourcePermission {
 	protected long addResourcePermission(String primKey, long actionIds) {
 		ResourcePermission resourcePermission = new ResourcePermissionImpl();
 
-		long resourcePermissionId = _counterLocalService.increment(
-			ResourcePermission.class.getName());
-
-		resourcePermission.setResourcePermissionId(resourcePermissionId);
-
+		resourcePermission.setResourcePermissionId(
+			_counterLocalService.increment(ResourcePermission.class.getName()));
 		resourcePermission.setCompanyId(_user.getCompanyId());
 		resourcePermission.setName(
 			UpgradeResourcePermissionTest.class.getName());

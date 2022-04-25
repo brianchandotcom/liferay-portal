@@ -164,25 +164,19 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 				labelItem -> {
 					labelItem.putData(
 						"removeLabelURL",
-						String.valueOf(
-							PortletURLBuilder.create(
-								PortletURLUtil.clone(
-									currentURLObj, liferayPortletResponse)
-							).setParameter(
-								"assetCategoryId",
-								() -> {
-									Stream<Long> stream =
-										assetCategoryIds.stream();
+						_getRemoveLabelURL(
+							"assetCategoryId",
+							() -> {
+								Stream<Long> stream = assetCategoryIds.stream();
 
-									return stream.filter(
-										id -> id != assetCategoryId
-									).map(
-										String::valueOf
-									).toArray(
-										String[]::new
-									);
-								}
-							).buildString()));
+								return stream.filter(
+									id -> id != assetCategoryId
+								).map(
+									String::valueOf
+								).toArray(
+									String[]::new
+								);
+							}));
 					labelItem.setCloseable(true);
 					labelItem.setLabel(
 						_getLabel(
@@ -205,12 +199,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 			labelItem -> {
 				labelItem.putData(
 					"removeLabelURL",
-					PortletURLBuilder.create(
-						PortletURLUtil.clone(
-							currentURLObj, liferayPortletResponse)
-					).setParameter(
-						"scopeId", (String)null
-					).buildString());
+					_getRemoveLabelURL("scopeId", (String)null));
 				labelItem.setCloseable(true);
 				labelItem.setLabel(
 					_getLabel(
@@ -230,15 +219,10 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 				labelItem -> {
 					labelItem.putData(
 						"removeLabelURL",
-						String.valueOf(
-							PortletURLBuilder.create(
-								PortletURLUtil.clone(
-									currentURLObj, liferayPortletResponse)
-							).setParameter(
-								"fileExtension",
-								() -> {
-									Stream<String> stream =
-										fileExtensions.stream();
+						_getRemoveLabelURL(
+							"fileExtension",
+							() -> {
+								Stream<String> stream = fileExtensions.stream();
 
 								return stream.filter(
 									curFileExtension -> !Objects.equals(
@@ -278,24 +262,19 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 				labelItem -> {
 					labelItem.putData(
 						"removeLabelURL",
-						String.valueOf(
-							PortletURLBuilder.create(
-								PortletURLUtil.clone(
-									currentURLObj, liferayPortletResponse)
-							).setParameter(
-								"authorIds",
-								() -> {
-									Stream<Long> stream = authorIds.stream();
+						_getRemoveLabelURL(
+							"authorIds",
+							() -> {
+								Stream<Long> stream = authorIds.stream();
 
-									return stream.filter(
-										id -> id != authorId
-									).map(
-										String::valueOf
-									).toArray(
-										String[]::new
-									);
-								}
-							).buildString()));
+								return stream.filter(
+									id -> id != authorId
+								).map(
+									String::valueOf
+								).toArray(
+									String[]::new
+								);
+							}));
 					labelItem.setCloseable(true);
 					labelItem.setLabel(
 						_getLabel(
@@ -319,12 +298,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 			labelItem -> {
 				labelItem.putData(
 					"removeLabelURL",
-					PortletURLBuilder.create(
-						PortletURLUtil.clone(
-							currentURLObj, liferayPortletResponse)
-					).setParameter(
-						"status", (String)null
-					).buildString());
+					_getRemoveLabelURL("status", (String)null));
 				labelItem.setCloseable(true);
 				labelItem.setLabel(
 					_getLabel("status", _getStatusLabel(status)));
@@ -338,23 +312,17 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 				labelItem -> {
 					labelItem.putData(
 						"removeLabelURL",
-						String.valueOf(
-							PortletURLBuilder.create(
-								PortletURLUtil.clone(
-									currentURLObj, liferayPortletResponse)
-							).setParameter(
-								"assetTagId",
-								() -> {
-									Stream<String> stream =
-										assetTagIds.stream();
+						_getRemoveLabelURL(
+							"assetTagId",
+							() -> {
+								Stream<String> stream = assetTagIds.stream();
 
-									return stream.filter(
-										id -> !Objects.equals(id, assetTagId)
-									).toArray(
-										String[]::new
-									);
-								}
-							).buildString()));
+								return stream.filter(
+									id -> !Objects.equals(id, assetTagId)
+								).toArray(
+									String[]::new
+								);
+							}));
 					labelItem.setCloseable(true);
 					labelItem.setLabel(_getLabel("tag", assetTagId));
 				});

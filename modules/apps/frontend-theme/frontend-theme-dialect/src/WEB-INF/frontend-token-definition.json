@@ -5332,7 +5332,7 @@
 				{
 					"frontendTokens": [
 						{
-							"defaultValue": "4.563rem",
+							"defaultValue": "4.5625rem",
 							"label": "table-lg-cell-min-height",
 							"mappings": [
 								{
@@ -5392,7 +5392,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "4.563rem",
+							"defaultValue": "4.5625rem",
 							"label": "table-lg-header-cell-min-height",
 							"mappings": [
 								{
@@ -5482,7 +5482,7 @@
 				{
 					"frontendTokens": [
 						{
-							"defaultValue": "2.563rem",
+							"defaultValue": "2.5625rem",
 							"label": "table-sm-cell-min-height",
 							"mappings": [
 								{
@@ -5542,7 +5542,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "2.563rem",
+							"defaultValue": "2.5625rem",
 							"label": "table-sm-header-cell-min-height",
 							"mappings": [
 								{

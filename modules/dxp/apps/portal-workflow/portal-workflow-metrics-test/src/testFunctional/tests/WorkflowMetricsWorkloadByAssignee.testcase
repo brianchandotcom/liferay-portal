@@ -544,7 +544,7 @@ definition {
 			panel = "Applications",
 			portlet = "Process Builder");
 
-		Workflow.addNewDefinition(workflowDefinitionTitle = "12 transitions");
+		Workflow.addNewDefinition(workflowDefinitionTitle = "12 Transitions Definition");
 
 		ProcessBuilderKaleoDesignerReact.uploadDefinition(workflowDefinitionFile = "12-transitions-workflow-definition.xml");
 

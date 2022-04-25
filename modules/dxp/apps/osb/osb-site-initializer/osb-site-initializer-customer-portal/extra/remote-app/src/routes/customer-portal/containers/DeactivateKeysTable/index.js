@@ -10,8 +10,7 @@
  */
 
 import {ClayTooltipProvider} from '@clayui/tooltip';
-import {useCallback, useEffect, useMemo, useState} from 'react';
-import {useOutletContext} from 'react-router-dom';
+import {useCallback, useMemo, useState} from 'react';
 import Table from '../../../../common/components/Table';
 import {useCustomerPortal} from '../../context';
 import useGetActivationKeysData from '../ActivationKeysTable/hooks/useGetActivationKeysData';
@@ -60,17 +59,11 @@ const DeactivateKeysTable = ({productName}) => {
 
 	const activationKeysByStatusPaginatedChecked = useMemo(
 		() =>
-			activationKeysByStatusPaginated.filter(({id}) =>
+			activationKeys.filter(({id}) =>
 				activationKeysIdChecked.includes(id)
 			) || [],
-		[activationKeysByStatusPaginated, activationKeysIdChecked]
+		[activationKeys, activationKeysIdChecked]
 	);
-
-	useEffect(() => {
-		if (activationKeysByStatusPaginated.length) {
-			setActivationKeysIdChecked([]);
-		}
-	}, [activationKeysByStatusPaginated]);
 
 	const getDeactivationKeysRows = useCallback(
 		(activationKey) => ({

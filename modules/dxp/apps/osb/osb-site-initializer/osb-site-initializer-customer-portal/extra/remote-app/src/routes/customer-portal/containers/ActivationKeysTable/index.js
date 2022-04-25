@@ -11,7 +11,7 @@
 import {ButtonWithIcon} from '@clayui/core';
 import {useModal} from '@clayui/modal';
 import {ClayTooltipProvider} from '@clayui/tooltip';
-import {useCallback, useEffect, useMemo, useState} from 'react';
+import {useCallback, useMemo, useState} from 'react';
 import {useLocation} from 'react-router-dom';
 import RoundedGroupButtons from '../../../../common/components/RoundedGroupButtons';
 import Table from '../../../../common/components/Table';
@@ -83,17 +83,11 @@ const ActivationKeysTable = ({productName, project, sessionId}) => {
 
 	const activationKeysByStatusPaginatedChecked = useMemo(
 		() =>
-			activationKeysByStatusPaginated.filter(({id}) =>
+			activationKeys.filter(({id}) =>
 				activationKeysIdChecked.includes(id)
 			) || [],
-		[activationKeysByStatusPaginated, activationKeysIdChecked]
+		[activationKeys, activationKeysIdChecked]
 	);
-
-	useEffect(() => {
-		if (activationKeysByStatusPaginated.length) {
-			setActivationKeysIdChecked([]);
-		}
-	}, [activationKeysByStatusPaginated]);
 
 	const handleAlertStatus = useCallback((hasSuccessfullyDownloadedKeys) => {
 		setDownloadStatus(

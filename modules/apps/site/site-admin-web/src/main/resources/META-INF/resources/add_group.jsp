@@ -25,7 +25,7 @@ AddGroupDisplayContext addGroupDisplayContext = (AddGroupDisplayContext)request.
 <clay:container-fluid>
 	<liferay-frontend:edit-form
 		action="<%= addGroupDisplayContext.getAddGroupURL() %>"
-		cssClass="add-group-form"
+		cssClass="add-group-form pt-0"
 		method="post"
 		name="fm"
 		onSubmit="event.preventDefault();"

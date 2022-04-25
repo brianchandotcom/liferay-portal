@@ -19,7 +19,7 @@ $table-title: (
 	line-height: var(--table-title-line-height),
 );
 
-$table-link: (
+$table-title-link: (
 	color: var(--table-title-link-color),
 	hover: (
 		color: var(--table-title-link-color-hover),
@@ -74,7 +74,7 @@ $c-table-list-tbody: (
 );
 
 $table-list-title: $table-title;
-$table-list-title-link: $table-link;
+$table-list-title-link: $table-title-link;
 
 //Table Head
 

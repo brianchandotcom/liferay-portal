@@ -118,7 +118,7 @@ definition {
 			locator1 = "BlogsEntry#TITLE",
 			value1 = "${entryTitle}");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "BlogsEntry#CONTENT",
 			value1 = "${entryContent}");
 

@@ -451,7 +451,7 @@ definition {
 
 		var key_entryContent = "${entryContent}";
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "BlogsEntry#CONTENT",
 			value1 = "${entryContent}");
 
@@ -579,7 +579,7 @@ definition {
 			locator1 = "BlogsEntry#TITLE",
 			value1 = "${entryTitle}");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "BlogsEntry#CONTENT",
 			value1 = "${entryContent}");
 
@@ -882,7 +882,7 @@ definition {
 			locator1 = "BlogsEntry#TITLE",
 			value1 = "${entryTitle}");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			key_entryContent = "${entryContent}",
 			locator1 = "BlogsEntry#CONTENT",
 			value1 = "${entryContent}");
@@ -938,7 +938,7 @@ definition {
 
 		var key_entryContent = "${entryContent}";
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "BlogsEntry#CONTENT",
 			value1 = "${entryContent}");
 	}
@@ -999,7 +999,7 @@ definition {
 		}
 
 		if (isSet(entryContent)) {
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				locator1 = "BlogsEntry#CONTENT",
 				value1 = "${entryContent}");
 		}
@@ -1106,7 +1106,7 @@ definition {
 		if (isSet(entryContent)) {
 			var key_entryContent = "${entryContent}";
 
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				locator1 = "BlogsEntry#CONTENT",
 				value1 = "${entryContent}");
 		}
@@ -1328,7 +1328,7 @@ definition {
 
 		var key_entryContent = "${entryContent}";
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "BlogsEntry#CONTENT",
 			value1 = "${entryContent}");
 	}
@@ -1728,7 +1728,7 @@ definition {
 			locator1 = "BlogsEntry#TITLE",
 			value1 = "${entryTitle}");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "BlogsEntry#CONTENT",
 			value1 = "${entryContent}");
 
@@ -1751,7 +1751,7 @@ definition {
 			locator1 = "BlogsEntry#TITLE",
 			value1 = "${entryTitle2}");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "BlogsEntry#CONTENT",
 			value1 = "${entryContent2}");
 	}

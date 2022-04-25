@@ -2657,6 +2657,8 @@ definition {
 	@description = "This is a use case for LPS-143852."
 	@priority = "4"
 	test ViewVirtualHostStagingPublicPageAsGuest {
+		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+
 		task ("Delete Staging Test Page") {
 			JSONLayout.deletePublicLayout(
 				groupName = "Site Name",

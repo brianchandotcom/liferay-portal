@@ -621,8 +621,9 @@ public class SegmentsExperienceLocalServiceImpl
 				return;
 			}
 
-			for (SegmentsExperience curSegmentsExperience :
-					segmentsExperiences) {
+			for (int i = segmentsExperiences.size(); i > 0; i--) {
+				SegmentsExperience curSegmentsExperience =
+					segmentsExperiences.get(i - 1);
 
 				curSegmentsExperience.setPriority(
 					curSegmentsExperience.getPriority() - 1);

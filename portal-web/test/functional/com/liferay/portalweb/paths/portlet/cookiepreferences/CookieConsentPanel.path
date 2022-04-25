@@ -22,17 +22,17 @@
 </tr>
 <tr>
 	<td>PERFORMANCE_COOKIES_TOGGLE</td>
-	<td>//input[contains(@class,'toggle-switch-check-performance')]</td>
+	<td>//input[contains(@data-cookie-key,'CONSENT_TYPE_PERFORMANCE')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FUNCTIONAL_COOKIES_TOGGLE</td>
-	<td>//input[contains(@class,'toggle-switch-check-functional')]</td>
+	<td>//input[contains(@data-cookie-key,'CONSENT_TYPE_FUNCTIONAL')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PERSONALIZATION_COOKIES_TOGGLE</td>
-	<td>//input[contains(@class,'toggle-switch-check-personalization')]</td>
+	<td>//input[contains(@data-cookie-key,'CONSENT_TYPE_PERSONALIZATION')]</td>
 	<td></td>
 </tr>
 <tr>

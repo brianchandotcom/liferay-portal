@@ -53,7 +53,7 @@ import org.osgi.service.component.annotations.Reference;
 		"osgi.http.whiteboard.servlet.name=com.liferay.frontend.icons.web.internal.servlet.FrontendIconsServlet",
 		"osgi.http.whiteboard.servlet.pattern=/icons/*"
 	},
-	service = {FrontendIconsServlet.class, Servlet.class}
+	service = {Servlet.class}
 )
 public class FrontendIconsServlet extends HttpServlet {
 

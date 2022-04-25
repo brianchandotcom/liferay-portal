@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBProcessContext;
 import com.liferay.portal.kernel.dao.db.IndexMetadata;
 import com.liferay.portal.kernel.dao.db.IndexMetadataFactoryUtil;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -49,17 +48,9 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import javax.sql.DataSource;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceReference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -204,42 +195,6 @@ public abstract class UpgradeProcess
 						dbInspector.getSchema()));
 			}
 		}
-	}
-
-	protected Connection getConnection() throws Exception {
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		if (bundle != null) {
-			BundleContext bundleContext = bundle.getBundleContext();
-
-			Collection<ServiceReference<DataSource>> serviceReferences =
-				bundleContext.getServiceReferences(
-					DataSource.class,
-					StringBundler.concat(
-						"(origin.bundle.symbolic.name=",
-						bundle.getSymbolicName(), ")"));
-
-			Iterator<ServiceReference<DataSource>> iterator =
-				serviceReferences.iterator();
-
-			if (iterator.hasNext()) {
-				ServiceReference<DataSource> serviceReference = iterator.next();
-
-				DataSource dataSource = bundleContext.getService(
-					serviceReference);
-
-				try {
-					if (dataSource != null) {
-						return dataSource.getConnection();
-					}
-				}
-				finally {
-					bundleContext.ungetService(serviceReference);
-				}
-			}
-		}
-
-		return DataAccess.getConnection();
 	}
 
 	/**

@@ -19,6 +19,8 @@ import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ThrowableCollector;
@@ -28,10 +30,14 @@ import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
+
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -39,14 +45,25 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.naming.NamingException;
+
+import javax.sql.DataSource;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 /**
  * @author Hugo Huijser
@@ -222,6 +239,28 @@ public abstract class BaseDBProcess implements DBProcess {
 		return db.dropIndexes(connection, tableName, columnName);
 	}
 
+	protected Connection getConnection() throws Exception {
+		boolean partitionConcurrencyEnabled = false;
+
+		if (GetterUtil.getBoolean(
+				PropsUtil.get("database.partition.enabled")) &&
+			GetterUtil.getBoolean(
+				PropsUtil.get("database.partition.thread.pool.enabled"),
+				true)) {
+
+			partitionConcurrencyEnabled = true;
+		}
+
+		if (partitionConcurrencyEnabled) {
+			return (Connection)ProxyUtil.newProxyInstance(
+				ClassLoader.getSystemClassLoader(),
+				new Class<?>[] {Connection.class},
+				new ConnectionThreadProxyHandler(this));
+		}
+
+		return _getConnection();
+	}
+
 	protected String[] getPrimaryKeyColumnNames(
 			Connection connection, String tableName)
 		throws SQLException {
@@ -335,6 +374,42 @@ public abstract class BaseDBProcess implements DBProcess {
 
 	protected Connection connection;
 
+	private Connection _getConnection() throws Exception {
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+		if (bundle != null) {
+			BundleContext bundleContext = bundle.getBundleContext();
+
+			Collection<ServiceReference<DataSource>> serviceReferences =
+				bundleContext.getServiceReferences(
+					DataSource.class,
+					StringBundler.concat(
+						"(origin.bundle.symbolic.name=",
+						bundle.getSymbolicName(), ")"));
+
+			Iterator<ServiceReference<DataSource>> iterator =
+				serviceReferences.iterator();
+
+			if (iterator.hasNext()) {
+				ServiceReference<DataSource> serviceReference = iterator.next();
+
+				DataSource dataSource = bundleContext.getService(
+					serviceReference);
+
+				try {
+					if (dataSource != null) {
+						return dataSource.getConnection();
+					}
+				}
+				finally {
+					bundleContext.ungetService(serviceReference);
+				}
+			}
+		}
+
+		return DataAccess.getConnection();
+	}
+
 	private <T> void _processConcurrently(
 			UnsafeSupplier<T, Exception> unsafeSupplier,
 			UnsafeConsumer<T, Exception> unsafeConsumer,
@@ -408,5 +483,78 @@ public abstract class BaseDBProcess implements DBProcess {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(BaseDBProcess.class);
+
+	private static class ConnectionThreadProxyHandler
+		implements InvocationHandler {
+
+		public ConnectionThreadProxyHandler(BaseDBProcess baseDBProcess) {
+			_baseDBProcess = baseDBProcess;
+		}
+
+		@Override
+		public Object invoke(Object proxy, Method method, Object[] args)
+			throws Throwable {
+
+			String methodName = method.getName();
+
+			if (methodName.equals("close")) {
+				for (long threadId : _currentThreads) {
+					Connection connection = _connectionMap.remove(threadId);
+
+					if (connection != null) {
+						method.invoke(connection, args);
+					}
+				}
+
+				_currentThreads.clear();
+
+				return null;
+			}
+
+			return method.invoke(_getConnection(), args);
+		}
+
+		private Connection _getConnection() {
+			Thread thread = Thread.currentThread();
+
+			long threadId = thread.getId();
+
+			Connection connection = _connectionMap.get(threadId);
+
+			if (connection == null) {
+				try {
+					connection = _baseDBProcess._getConnection();
+
+					Connection prevConnection = _connectionMap.putIfAbsent(
+						threadId, connection);
+
+					if (prevConnection != null) {
+						connection.close();
+
+						connection = prevConnection;
+					}
+					else {
+						_currentThreads.add(threadId);
+					}
+				}
+				catch (Exception exception) {
+					_log.error(
+						"Unable to obtain a database connection ", exception);
+				}
+			}
+
+			return connection;
+		}
+
+		private static final Log _log = LogFactoryUtil.getLog(
+			ConnectionThreadProxyHandler.class);
+
+		private static final Map<Long, Connection> _connectionMap =
+			new ConcurrentHashMap<>();
+
+		private final BaseDBProcess _baseDBProcess;
+		private volatile List<Long> _currentThreads = new ArrayList<>();
+
+	}
 
 }

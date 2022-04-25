@@ -14,7 +14,7 @@
 
 package com.liferay.frontend.icons.web.internal.servlet.taglib;
 
-import com.liferay.frontend.icons.util.FrontendIconsUtil;
+import com.liferay.portal.kernal.icons.IconsUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -50,11 +50,11 @@ public class SpritemapLocationTopHeadDynamicInclude extends BaseDynamicInclude {
 		printWriter.write("window._FRONTEND_ICONS = {");
 		printWriter.write("basePath:");
 		printWriter.write("\"");
-		printWriter.write(FrontendIconsUtil.getBasePath());
+		printWriter.write(IconsUtil.getBasePath());
 		printWriter.write("\",");
 		printWriter.write("systemSpritemapPath:");
 		printWriter.write("\"");
-		printWriter.write(FrontendIconsUtil.getSystemSpritemapPath());
+		printWriter.write(IconsUtil.getSystemSpritemapPath());
 		printWriter.write("\"};");
 		printWriter.write("</script>");
 	}

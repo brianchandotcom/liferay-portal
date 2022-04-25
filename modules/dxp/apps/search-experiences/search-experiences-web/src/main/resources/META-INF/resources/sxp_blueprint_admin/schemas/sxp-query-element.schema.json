@@ -203,10 +203,34 @@
 				"ar_SA": {
 					"type": "string"
 				},
+				"bg_BG": {
+					"type": "string"
+				},
+				"ca_AD": {
+					"type": "string"
+				},
 				"ca_ES": {
 					"type": "string"
 				},
+				"ca_ES_VALENCIA": {
+					"type": "string"
+				},
+				"cs_CZ": {
+					"type": "string"
+				},
+				"da_DK": {
+					"type": "string"
+				},
 				"de_DE": {
+					"type": "string"
+				},
+				"el_GR": {
+					"type": "string"
+				},
+				"en_AU": {
+					"type": "string"
+				},
+				"en_GB": {
 					"type": "string"
 				},
 				"en_US": {
@@ -215,28 +239,121 @@
 				"es_ES": {
 					"type": "string"
 				},
+				"et_EE": {
+					"type": "string"
+				},
+				"eu_ES": {
+					"type": "string"
+				},
+				"fa_IR": {
+					"type": "string"
+				},
 				"fi_FI": {
+					"type": "string"
+				},
+				"fr_CA": {
 					"type": "string"
 				},
 				"fr_FR": {
 					"type": "string"
 				},
+				"gl_ES": {
+					"type": "string"
+				},
+				"hi_IN": {
+					"type": "string"
+				},
+				"hr_HR": {
+					"type": "string"
+				},
 				"hu_HU": {
+					"type": "string"
+				},
+				"in_ID": {
+					"type": "string"
+				},
+				"it_IT": {
+					"type": "string"
+				},
+				"iw_IL": {
 					"type": "string"
 				},
 				"ja_JP": {
 					"type": "string"
 				},
+				"kk_KZ": {
+					"type": "string"
+				},
+				"ko_KR": {
+					"type": "string"
+				},
+				"lo_LA": {
+					"type": "string"
+				},
+				"lt_LT": {
+					"type": "string"
+				},
+				"ms_MY": {
+					"type": "string"
+				},
+				"nb_NO": {
+					"type": "string"
+				},
+				"nl_BE": {
+					"type": "string"
+				},
 				"nl_NL": {
+					"type": "string"
+				},
+				"pl_PL": {
 					"type": "string"
 				},
 				"pt_BR": {
 					"type": "string"
 				},
+				"pt_PT": {
+					"type": "string"
+				},
+				"ro_RO": {
+					"type": "string"
+				},
+				"ru_RU": {
+					"type": "string"
+				},
+				"sk_SK": {
+					"type": "string"
+				},
+				"sl_SI": {
+					"type": "string"
+				},
+				"sr_RS": {
+					"type": "string"
+				},
+				"sr_RS_latin": {
+					"type": "string"
+				},
 				"sv_SE": {
 					"type": "string"
 				},
+				"ta_IN": {
+					"type": "string"
+				},
+				"th_TH": {
+					"type": "string"
+				},
+				"tr_TR": {
+					"type": "string"
+				},
+				"uk_UA": {
+					"type": "string"
+				},
+				"vi_VN": {
+					"type": "string"
+				},
 				"zh_CN": {
+					"type": "string"
+				},
+				"zh_TW": {
 					"type": "string"
 				}
 			}

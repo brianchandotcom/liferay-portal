@@ -71,9 +71,12 @@ th {
 
 	@include clay-css($table-spaced);
 
-	thead tr th,
-	td {
-		@include clay-css($table-spaced-cell);
+	&,
+	thead {
+		td,
+		th {
+			@include clay-css($table-spaced-cell);
+		}
 	}
 
 	tr {

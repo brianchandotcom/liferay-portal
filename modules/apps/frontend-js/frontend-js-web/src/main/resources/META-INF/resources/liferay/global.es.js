@@ -63,6 +63,7 @@ import getPortletId from './util/get_portlet_id';
 import getPortletNamespace from './util/get_portlet_namespace.es';
 import getTop from './util/get_top';
 import getURLWithSessionId from './util/get_url_with_session_id';
+import getWindow from './util/get_window';
 import {
 	MAP_HTML_CHARS_ESCAPED,
 	escapeHTML,
@@ -230,6 +231,7 @@ Liferay.Util.getPortletId = getPortletId;
 Liferay.Util.getPortletNamespace = getPortletNamespace;
 Liferay.Util.getTop = getTop;
 Liferay.Util.getURLWithSessionId = getURLWithSessionId;
+Liferay.Util.getWindow = getWindow;
 Liferay.Util.groupBy = groupBy;
 
 /**

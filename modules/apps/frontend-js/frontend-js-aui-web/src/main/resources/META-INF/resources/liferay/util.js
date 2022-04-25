@@ -414,17 +414,6 @@
 		},
 
 		/**
-		 * @deprecated As of Cavanaugh (7.4.x), replaced by `openModal`
-		 */
-		getWindow(id) {
-			if (!id) {
-				id = Util.getWindowName();
-			}
-
-			return Util.getTop().Liferay.Util.Window.getById(id);
-		},
-
-		/**
 		 * @deprecated As of Cavanaugh (7.4.x), replaced by `window.name`
 		 */
 		getWindowName() {

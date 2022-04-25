@@ -347,6 +347,8 @@ declare module Liferay {
 
 		export function getURLWithSessionId(url: string): string;
 
+		export function getWindow(windowId?: string): Window;
+
 		/**
 		 * Performs navigation to the given url. If SPA is enabled, it will route the
 		 * request through the SPA engine. If not, it will simple change the document

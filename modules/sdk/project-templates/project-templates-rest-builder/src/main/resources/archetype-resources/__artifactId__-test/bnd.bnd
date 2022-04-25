@@ -1,4 +1,4 @@
-#set (${versionPolicy} = '${replacestring;${range;[==,==]};.*,(.*)];$1}')
+#set ($versionPolicy = '${replacestring;${range;[==,==]};.*,(.*)];$1}')
 Bundle-Name: ${artifactId}-test
 Bundle-SymbolicName: ${package}.test
 Bundle-Version: ${version}
@@ -7,4 +7,4 @@ Bundle-Version: ${version}
 -includeresource: ${package}.client.jar=../${artifactId}-client/target/${artifactId}-client-${version}.jar;lib:=true
 #else
 -includeresource: ${package}.client.jar=../${artifactId}-client/build/libs/${package}.client-${version}.jar;lib:=true
--provider-policy: ${versionPolicy#end}
+-provider-policy: ${versionPolicy}#end

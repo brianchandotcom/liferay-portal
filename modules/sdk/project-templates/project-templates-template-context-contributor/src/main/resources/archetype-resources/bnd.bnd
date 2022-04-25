@@ -1,4 +1,4 @@
-#set (${versionPolicy} = '${replacestring;${range;[==,==]};.*,(.*)];$1}')
+#set ($versionPolicy = '${replacestring;${range;[==,==]};.*,(.*)];$1}')
 Bundle-Name: ${artifactId}
 Bundle-SymbolicName: ${package}
 Bundle-Version: ${version}
@@ -6,4 +6,4 @@ Bundle-Version: ${version}
 -consumer-policy: ${versionPolicy}
 -metatype: *
 -plugin.metatype: com.liferay.ant.bnd.metatype.MetatypePlugin
--provider-policy: ${versionPolicy#end}
+-provider-policy: ${versionPolicy}#end

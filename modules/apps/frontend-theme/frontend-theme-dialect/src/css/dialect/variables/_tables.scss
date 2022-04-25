@@ -59,18 +59,18 @@ $c-table-list: (
 	box-shadow: var(--table-box-shadow),
 );
 
-$c-table-list-tbody: (
-	background-color: var(--table-row-background-color),
+$c-table-list-cell: (
+	border-color: $table-border-color,
+	border-top-width: var(--table-border-width),
+	line-height: var(--table-line-height),
 );
 
 $c-table-list-tfoot: (
 	background-color: var(--table-row-background-color),
 );
 
-$c-table-list-cell: (
-	border-color: $table-border-color,
-	border-top-width: var(--table-border-width),
-	line-height: var(--table-line-height),
+$c-table-list-tbody: (
+	background-color: var(--table-row-background-color),
 );
 
 $table-list-title: $table-title;

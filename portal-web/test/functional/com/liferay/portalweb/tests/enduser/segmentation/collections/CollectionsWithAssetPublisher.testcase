@@ -273,11 +273,7 @@ definition {
 
 			Click(locator1 = "APConfiguration#ASSET_SELECTION_ASSET_LIST");
 
-			Alert.viewSuccessMessage();
-
 			Panel.expandPanel(panel = "Select Collection");
-
-			Alert.closeMessage(messageType = "SUCCESS");
 
 			Button.clickSelect();
 
@@ -316,11 +312,7 @@ definition {
 
 			Click(locator1 = "APConfiguration#ASSET_SELECTION_ASSET_LIST");
 
-			Alert.viewSuccessMessage();
-
 			Panel.expandPanel(panel = "Select Collection");
-
-			Alert.closeMessage(messageType = "SUCCESS");
 
 			Button.clickSelect();
 
@@ -369,11 +361,7 @@ definition {
 
 			Click(locator1 = "APConfiguration#ASSET_SELECTION_ASSET_LIST");
 
-			Alert.viewSuccessMessage();
-
 			Panel.expandPanel(panel = "Select Collection");
-
-			Alert.closeMessage(messageType = "SUCCESS");
 
 			Button.clickSelect();
 
@@ -418,11 +406,7 @@ definition {
 
 			Click(locator1 = "APConfiguration#ASSET_SELECTION_ASSET_LIST");
 
-			Alert.viewSuccessMessage();
-
 			Panel.expandPanel(panel = "Select Collection");
-
-			Alert.closeMessage(messageType = "SUCCESS");
 
 			Button.clickSelect();
 
@@ -462,11 +446,7 @@ definition {
 
 			Click(locator1 = "APConfiguration#ASSET_SELECTION_ASSET_LIST");
 
-			Alert.viewSuccessMessage();
-
 			Panel.expandPanel(panel = "Select Collection");
-
-			Alert.closeMessage(messageType = "SUCCESS");
 
 			Button.clickSelect();
 
@@ -507,11 +487,7 @@ definition {
 
 			Click(locator1 = "APConfiguration#ASSET_SELECTION_ASSET_LIST");
 
-			Alert.viewSuccessMessage();
-
 			Panel.expandPanel(panel = "Select Collection");
-
-			Alert.closeMessage(messageType = "SUCCESS");
 
 			Button.clickSelect();
 

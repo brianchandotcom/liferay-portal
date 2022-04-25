@@ -24,7 +24,6 @@
 
 		<!-- Portal -->
 
-		<action forward="portal.api.jsonws" path="/portal/api/jsonws" />
 		<action path="/portal/edit_layout" type="com.liferay.portal.action.EditLayoutAction" />
 		<action forward="/portal/emoticons.jsp" path="/portal/emoticons" />
 		<action forward="portal.error" path="/portal/error" />

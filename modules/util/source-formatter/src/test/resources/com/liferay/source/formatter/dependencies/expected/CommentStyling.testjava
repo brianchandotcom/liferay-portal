@@ -64,6 +64,10 @@ public class CommentStyling {
 		//int nonexisting = 0;
 
 		System.out.println("Test 11.");
+
+		// nonexistent blog C
+
+		System.out.println("Test 12.");
 	}
 
 }

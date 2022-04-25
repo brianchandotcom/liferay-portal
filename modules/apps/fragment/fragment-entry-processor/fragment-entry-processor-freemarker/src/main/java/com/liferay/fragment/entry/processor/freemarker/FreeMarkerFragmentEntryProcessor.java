@@ -14,11 +14,16 @@
 
 package com.liferay.fragment.entry.processor.freemarker;
 
+import com.liferay.fragment.constants.FragmentConstants;
+import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.entry.processor.freemarker.internal.configuration.FreeMarkerFragmentEntryProcessorConfiguration;
+import com.liferay.fragment.entry.processor.freemarker.internal.templateparser.InputTemplateNode;
 import com.liferay.fragment.exception.FragmentEntryContentException;
+import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
+import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.petra.io.DummyWriter;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
@@ -141,6 +146,12 @@ public class FreeMarkerFragmentEntryProcessor
 					fragmentEntryProcessorContext.getSegmentsEntryIds())
 			).build());
 
+		if (_isInputFragmentEntryType(fragmentEntryLink)) {
+			template.put(
+				"input",
+				new InputTemplateNode("label", "name", "type", "value"));
+		}
+
 		template.prepareTaglib(
 			fragmentEntryProcessorContext.getHttpServletRequest(),
 			fragmentEntryProcessorContext.getHttpServletResponse());
@@ -254,6 +265,31 @@ public class FreeMarkerFragmentEntryProcessor
 		return false;
 	}
 
+	private boolean _isInputFragmentEntryType(
+		FragmentEntryLink fragmentEntryLink) {
+
+		FragmentEntry fragmentEntry = null;
+
+		if (Validator.isNotNull(fragmentEntryLink.getRendererKey())) {
+			fragmentEntry =
+				_fragmentCollectionContributorTracker.getFragmentEntry(
+					fragmentEntryLink.getRendererKey());
+		}
+
+		if (fragmentEntry == null) {
+			fragmentEntry = _fragmentEntryLocalService.fetchFragmentEntry(
+				fragmentEntryLink.getFragmentEntryId());
+		}
+
+		if ((fragmentEntry != null) &&
+			(fragmentEntry.getType() == FragmentConstants.TYPE_INPUT)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		FreeMarkerFragmentEntryProcessor.class);
 
@@ -261,6 +297,13 @@ public class FreeMarkerFragmentEntryProcessor
 	private ConfigurationProvider _configurationProvider;
 
 	@Reference
+	private FragmentCollectionContributorTracker
+		_fragmentCollectionContributorTracker;
+
+	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
+
+	@Reference
+	private FragmentEntryLocalService _fragmentEntryLocalService;
 
 }

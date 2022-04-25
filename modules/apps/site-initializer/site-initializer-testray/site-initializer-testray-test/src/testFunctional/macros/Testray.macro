@@ -99,11 +99,11 @@ definition {
 
 		Type(
 			locator1 = "TestrayTestflow#ADD_BUILD_TASKS",
-			value1 = "41100");
+			value1 = "40704");
 
 		Type(
 			locator1 = "ObjectPortlet#VIEW_EMPTY_LABEL_IN_DATE_ENTRY",
-			value1 = "01/04/2022");
+			value1 = "04/01/2022");
 
 		Click(locator1 = "Button#SAVE");
 	}
@@ -136,6 +136,12 @@ definition {
 	macro goToProjectPage {
 		Click(
 			key_projectName = "${projectName}",
+			locator1 = "Testray#PROJECT_NAME_BUTTON");
+	}
+
+	macro goToRoutine {
+		Click(
+			key_projectName = "${key_name}",
 			locator1 = "Testray#PROJECT_NAME_BUTTON");
 	}
 
@@ -178,8 +184,8 @@ definition {
 
 	macro viewOverviewTab {
 		AssertElementPresent(
-			key_rowValue = "${rowValue}",
-			locator1 = "Testray#OVERVIEW_LAYOUT_VALUES");
+			key_title = "${key_value}",
+			locator1 = "Testray#NAME_TITLE");
 	}
 
 }

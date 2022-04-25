@@ -36,7 +36,7 @@ definition {
 
 		AssertElementPresent(
 			key_value = "ci:test",
-			locator1 = "Testray#NEW_DESCRIPTION_PROJECT");
+			locator1 = "Testray#DESCRIPTION_PROJECT");
 	}
 
 	@description = "LPS-150822 - Verify if the user can see the Project Name Column."

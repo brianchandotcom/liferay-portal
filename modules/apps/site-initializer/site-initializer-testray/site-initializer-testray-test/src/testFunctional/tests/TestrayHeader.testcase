@@ -30,13 +30,17 @@ definition {
 	@description = "LPS-150530 - Verify by clicking on 'Archived' it goes to Archived Builds."
 	@priority = "4"
 	test CanGoToArchivedRoutines {
+		property portal.upstream = "quarantine";
+
 		ApplicationsMenu.gotoSite(site = "Testray 2");
 
 		Testray.createProjectTestray(key_name = "Liferay Portal 7.3");
 
 		Testray.goToProjectPage(projectName = "Liferay Portal 7.3");
 
-		Testray.goToProjectPage(projectName = "Hotfix Tester");
+		TestrayRoutines.createRoutineTestray(key_name = "Hotfix Tester");
+
+		TestrayRoutines.goToRoutine(key_projectName = "Hotfix Tester");
 
 		Testray.projectTabNavigator(navTabName = "Archived");
 
@@ -48,11 +52,13 @@ definition {
 	test CanGoToCurrentRoutines {
 		ApplicationsMenu.gotoSite(site = "Testray 2");
 
-		Testray.createProjectTestray(key_name = "Liferay Portal 7.0");
+		Testray.createProjectTestray(key_name = "Liferay Portal 7.4");
 
-		Testray.goToProjectPage(projectName = "Liferay Portal 7.0");
+		Testray.goToProjectPage(projectName = "Liferay Portal 7.4");
 
-		Testray.goToProjectPage(projectName = "Hotfix Tester");
+		TestrayRoutines.createRoutineTestray(key_name = "Hotfix Tester");
+
+		TestrayRoutines.goToRoutine(key_projectName = "Hotfix Tester");
 
 		Testray.projectTabNavigator(navTabName = "Archived");
 
@@ -64,13 +70,17 @@ definition {
 	@description = "LPS-150529 - Verify that user can navigate trough the breadcrumb on header."
 	@priority = "5"
 	test CanNavigateWithBreadcrumb {
+		property portal.upstream = "quarantine";
+
 		ApplicationsMenu.gotoSite(site = "Testray 2");
 
 		Testray.createProjectTestray(key_name = "Liferay Portal 7.3");
 
 		Testray.goToProjectPage(projectName = "Liferay Portal 7.3");
 
-		Testray.goToProjectPage(projectName = "Hotfix Tester");
+		TestrayRoutines.createRoutineTestray(key_name = "Hotfix Tester");
+
+		TestrayRoutines.goToRoutine(key_projectName = "Hotfix Tester");
 
 		Testray.goToProjectPage(projectName = "Hotfix Tester - liferay-hotfix-4079-7310 - 7.3.10.3 FP3 HF4079 - 17611 - 2022-02-11[02:58:43]");
 

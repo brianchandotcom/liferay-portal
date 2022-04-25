@@ -32,6 +32,8 @@ definition {
 	test CanUserEnterAProject {
 		ApplicationsMenu.gotoSite(site = "Testray 2");
 
+		Testray.createProjectTestray(key_name = "Liferay Portal 7.3");
+
 		Testray.goToProjectPage(projectName = "Liferay Portal 7.3");
 
 		Testray.assertProjectTitleHeader(projectName = "Liferay Portal 7.3");

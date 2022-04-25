@@ -56,6 +56,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DESCRIPTION_PROJECT</td>
+	<td>//td[contains(text(),'${key_value}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NAME_TITLE</td>
 	<td>//h5[contains(text(),'${key_title}')]</td>
 	<td></td>

@@ -36,6 +36,8 @@ public interface TrashHelper {
 
 	public String getOriginalTitle(String title);
 
+	public String getOriginalTitle(String title, String paramName);
+
 	public String getTrashTitle(long entryId);
 
 	public PortletURL getViewContentURL(

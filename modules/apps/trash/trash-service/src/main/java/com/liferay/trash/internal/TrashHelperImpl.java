@@ -118,6 +118,11 @@ public class TrashHelperImpl implements TrashHelper {
 	}
 
 	@Override
+	public String getOriginalTitle(String title, String paramName) {
+		return _getOriginalTitle(title, paramName, _TRASH_PREFIX);
+	}
+
+	@Override
 	public String getTrashTitle(long entryId) {
 		return _getTrashTitle(entryId, _TRASH_PREFIX);
 	}

@@ -16,6 +16,7 @@ package com.liferay.portal.remote.json.web.service.web.internal.servlet;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.jsonwebservice.JSONWebServiceServiceAction;
+import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.Portal;
@@ -74,8 +75,11 @@ public class JSONWebServiceServlet extends JSONServlet {
 			return;
 		}
 
+		ServletContext servletContext = ServletContextPool.get(
+			StringPool.BLANK);
+
 		RequestDispatcher requestDispatcher =
-			httpServletRequest.getRequestDispatcher(
+			servletContext.getRequestDispatcher(
 				Portal.PATH_MAIN + "/portal/api/jsonws");
 
 		requestDispatcher.forward(httpServletRequest, httpServletResponse);

@@ -2,7 +2,7 @@
 definition {
 
 	property custom.properties = "feature.flag.LPS-142518=true";
-	property portal.release = "true";
+	property portal.release = "quarantine";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Security";
 
@@ -84,11 +84,9 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-142518. TC-5 When End-User accept selected cookies, only selected cookies are saved. Blocked by LPS-150990."
+	@description = "This is a use case for LPS-142518. TC-5 When End-User accept selected cookies, only selected cookies are saved."
 	@priority = "5"
 	test CookieConsentPanelAcceptsOnlySelectedCookies {
-		property portal.release = "quarantine";
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "CookiePreferences#CookieConsentPanelAcceptsOnlySelectedCookies";
 
 		task ("Given: User opens the Cookie Consent portlet from the Cookie Banner via Configuration link") {
@@ -106,11 +104,9 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-142518. TC-7 Verify that Cookie Consent Panel could be added to a Site Page. Blocked by LPS-150992."
+	@description = "This is a use case for LPS-142518. TC-7 Verify that Cookie Consent Panel could be added to a Site Page."
 	@priority = "5"
 	test CookieConsentPanelCouldBeAddedToASitePage {
-		property portal.release = "quarantine";
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "CookiePreferences#CookieConsentPanelCouldBeAddedToASitePage";
 
 		task ("Given: User creates a site page and adds Cookie Consent Configuration widget to it.") {

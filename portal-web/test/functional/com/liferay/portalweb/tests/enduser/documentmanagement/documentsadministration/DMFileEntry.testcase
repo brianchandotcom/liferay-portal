@@ -1113,12 +1113,17 @@ definition {
 	}
 
 	@description = "This test covers LPS-115949. It validates that resource allocation for forked processes can be controlled through portal.properties."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanLimitForkedProcessResourceAllocation {
+		property custom.properties = "dl.file.entry.preview.fork.process.jvm.options=-Xmx0m";
 
-		// TODO LPS-150080
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "large_file.pdf",
+			groupName = "Guest",
+			mimeType = "application/pdf",
+			sourceFileName = "large_file.pdf");
 
+		AssertConsoleTextPresent(value1 = "Unable to process file version");
 	}
 
 	@description = "This test ensures that only the last two versions of a file are kept when the max version limit is set."

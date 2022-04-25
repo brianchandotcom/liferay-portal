@@ -104,7 +104,7 @@ const Header = () => {
 
 									<div className="d-flex flex-row">
 										<p
-											className="header-title text-paragraph-lg"
+											className="header-title text-paragraph-xl"
 											title={header.title}
 										>
 											{header.title}

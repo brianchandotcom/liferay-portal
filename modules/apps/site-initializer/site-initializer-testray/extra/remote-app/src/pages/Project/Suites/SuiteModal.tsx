@@ -25,6 +25,7 @@ import {withVisibleContent} from '../../../hoc/withVisibleContent';
 import useFormModal, {FormModalOptions} from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
 import yupSchema, {yupResolver} from '../../../schema/yup';
+import {CaseListView} from '../Cases';
 import SuiteSelectCasesModal from './SuiteSelectCasesModal';
 
 type SuiteFormData = {
@@ -56,6 +57,7 @@ const SuiteModal: React.FC<SuiteModalProps> = ({
 	});
 
 	const smartSuite = watch('smartSuite');
+	const caseParameters = watch('caseParameters');
 
 	const _onSubmit = (form: SuiteFormData) => {
 		onSubmit(
@@ -74,7 +76,6 @@ const SuiteModal: React.FC<SuiteModalProps> = ({
 	};
 
 	const {modal} = useFormModal({
-		isVisible: false,
 		onSave: (value) => setValue('caseParameters', value),
 	});
 
@@ -99,54 +100,54 @@ const SuiteModal: React.FC<SuiteModalProps> = ({
 			title={i18n.translate('new-suite')}
 			visible
 		>
-			<div>
-				<Input
-					label={i18n.translate('name')}
-					name="name"
-					{...inputProps}
-				/>
+			<Input label={i18n.translate('name')} name="name" {...inputProps} />
 
-				<Input
-					label={i18n.translate('description')}
-					name="description"
-					type="textarea"
-					{...inputProps}
-				/>
+			<Input
+				label={i18n.translate('description')}
+				name="description"
+				type="textarea"
+				{...inputProps}
+			/>
 
-				<ClayCheckbox
-					checked={smartSuite}
-					label={i18n.translate('smart-suite')}
-					onChange={() => setValue('smartSuite', !smartSuite)}
-				/>
+			<ClayCheckbox
+				checked={smartSuite}
+				label={i18n.translate('smart-suite')}
+				onChange={() => setValue('smartSuite', !smartSuite)}
+			/>
 
-				<ClayButton.Group className="mb-4">
-					<ClayButton
-						disabled={smartSuite}
-						displayType="secondary"
-						onClick={modal.open}
-					>
-						{i18n.translate('select-cases')}
-					</ClayButton>
+			<ClayButton.Group className="mb-4">
+				<ClayButton
+					disabled={smartSuite}
+					displayType="secondary"
+					onClick={modal.open}
+				>
+					{i18n.translate('select-cases')}
+				</ClayButton>
 
-					<ClayButton
-						className="ml-3"
-						disabled={!smartSuite}
-						displayType="secondary"
-						onClick={modal.open}
-					>
-						{i18n.translate('select-case-parameters')}
-					</ClayButton>
-				</ClayButton.Group>
+				<ClayButton
+					className="ml-3"
+					disabled={!smartSuite}
+					displayType="secondary"
+					onClick={modal.open}
+				>
+					{i18n.translate('select-case-parameters')}
+				</ClayButton>
+			</ClayButton.Group>
 
+			{!caseParameters && (
 				<ClayAlert>There are no linked cases.</ClayAlert>
+			)}
 
-				<SuiteSelectCasesModal
-					modal={modal}
-					type={
-						smartSuite ? 'select-case-parameters' : 'select-cases'
-					}
-				/>
-			</div>
+			<SuiteSelectCasesModal
+				modal={modal}
+				type={smartSuite ? 'select-case-parameters' : 'select-cases'}
+			/>
+
+			<CaseListView
+				listViewProps={{
+					managementToolbarProps: {visible: false},
+				}}
+			/>
 		</Modal>
 	);
 };

@@ -22,6 +22,7 @@ import {
 	SelectCasesParameters,
 	getSelectCasesParameters,
 } from '../../../graphql/queries';
+import {withVisibleContent} from '../../../hoc/withVisibleContent';
 import {FormModalOptions} from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
 
@@ -183,4 +184,4 @@ const SuiteSelectCasesModal: React.FC<SuiteSelectCasesModalProps> = ({
 	);
 };
 
-export default SuiteSelectCasesModal;
+export default withVisibleContent(SuiteSelectCasesModal);

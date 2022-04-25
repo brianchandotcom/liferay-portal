@@ -70,7 +70,7 @@ public class GradleStylingCheck extends BaseFileCheck {
 					SourceUtil.getLineNumber(content, openCurlyBracePosition),
 					multiLineStringsPositions) ||
 				_isInRegexPattern(content, openCurlyBracePosition) ||
-				_isInAnnotation(content, openCurlyBracePosition)) {
+				_isInSingleLineComment(content, openCurlyBracePosition)) {
 
 				continue;
 			}
@@ -112,7 +112,7 @@ public class GradleStylingCheck extends BaseFileCheck {
 							content, closeCurlyBracePosition),
 						multiLineStringsPositions) ||
 					_isInRegexPattern(content, closeCurlyBracePosition) ||
-					_isInAnnotation(content, closeCurlyBracePosition) ||
+					_isInSingleLineComment(content, closeCurlyBracePosition) ||
 					_isInParenthesis(content, closeCurlyBracePosition)) {
 
 					continue;
@@ -149,20 +149,6 @@ public class GradleStylingCheck extends BaseFileCheck {
 		}
 
 		return content;
-	}
-
-	private boolean _isInAnnotation(String content, int position) {
-		int lineNumber = getLineNumber(content, position);
-
-		String line = getLine(content, lineNumber);
-
-		line = line.trim();
-
-		if (line.startsWith("//")) {
-			return true;
-		}
-
-		return false;
 	}
 
 	private boolean _isInParenthesis(String content, int position) {
@@ -218,6 +204,20 @@ public class GradleStylingCheck extends BaseFileCheck {
 		if ((position > regexPatternStartPos) &&
 			(position < regexPatternEndPos)) {
 
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isInSingleLineComment(String content, int position) {
+		int lineNumber = getLineNumber(content, position);
+
+		String line = getLine(content, lineNumber);
+
+		line = line.trim();
+
+		if (line.startsWith("//")) {
 			return true;
 		}
 

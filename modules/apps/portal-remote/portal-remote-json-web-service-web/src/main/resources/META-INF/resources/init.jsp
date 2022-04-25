@@ -14,15 +14,41 @@
  */
 --%>
 
-<%@ include file="/html/portal/init.jsp" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<%@ page import="com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionMapping" %><%@
+<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
+
+<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
+taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
+
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page import="com.liferay.petra.string.CharPool" %><%@
+page import="com.liferay.petra.string.StringPool" %><%@
+page import="com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionMapping" %><%@
 page import="com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil" %><%@
-page import="com.liferay.portal.kernel.util.MethodParameter" %>
+page import="com.liferay.portal.kernel.security.auth.AuthTokenUtil" %><%@
+page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
+page import="com.liferay.portal.kernel.util.HttpComponentsUtil" %><%@
+page import="com.liferay.portal.kernel.util.MethodParameter" %><%@
+page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
+page import="com.liferay.portal.kernel.util.Validator" %><%@
+page import="com.liferay.portal.util.PropsValues" %>
 
 <%@ page import="java.io.File" %>
 
 <%@ page import="java.lang.reflect.Method" %>
+
+<%@ page import="java.util.Date" %><%@
+page import="java.util.LinkedHashMap" %><%@
+page import="java.util.LinkedHashSet" %><%@
+page import="java.util.List" %><%@
+page import="java.util.Locale" %><%@
+page import="java.util.Map" %><%@
+page import="java.util.Set" %>
+
+<liferay-theme:defineObjects />
 
 <%
 String jsonWSPath = themeDisplay.getPathContext() + "/api/jsonws";

@@ -14,11 +14,11 @@
  */
 --%>
 
-<%@ include file="/html/portal/api/jsonws/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <c:if test="<%= PropsValues.JSONWS_WEB_SERVICE_API_DISCOVERABLE %>">
 	<style>
-		<%@ include file="/html/portal/api/jsonws/css.jspf" %>
+		<%@ include file="/css.jspf" %>
 	</style>
 
 	<div id="wrapper">
@@ -41,11 +41,11 @@
 				<div class="container-fluid">
 					<aui:row>
 						<aui:col cssClass="lfr-api-navigation p-3" width="<%= 25 %>">
-							<liferay-util:include page="/html/portal/api/jsonws/actions.jsp" />
+							<liferay-util:include page="/actions.jsp" />
 						</aui:col>
 
 						<aui:col cssClass="lfr-api-details p-3" width="<%= 75 %>">
-							<liferay-util:include page="/html/portal/api/jsonws/action.jsp" />
+							<liferay-util:include page="/action.jsp" />
 						</aui:col>
 					</aui:row>
 				</div>

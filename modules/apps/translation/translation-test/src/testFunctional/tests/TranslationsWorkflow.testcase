@@ -344,7 +344,7 @@ definition {
 			value1 = "Approved");
 	}
 
-	@description = "This ensures that a new version of a published WC can be created and submitted for publication once a new translation is approved."
+	@description = "This ensures that a new version of a published WC can be created and submitted for publication once a new translation is approved. Also covers LPS-120491, it ensures that no errors occur when viewing a completed translations task."
 	@priority = "5"
 	@refactordone
 	test CanApproveNewTranslationForPublishedWC {

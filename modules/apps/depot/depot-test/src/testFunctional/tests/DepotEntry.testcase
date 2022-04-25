@@ -387,6 +387,8 @@ definition {
 
 		DepotNavigator.openDepotAdmin();
 
+		AssertElementNotPresent(locator1 = "Portlet#OPTIONS_ICON");
+
 		DepotNavigator.gotoDepotPortlet(
 			depotName = "Test Depot Name",
 			portlet = "Asset Library Settings");

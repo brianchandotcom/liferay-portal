@@ -213,7 +213,7 @@ Locale defaultLocale = themeDisplay.getSiteDefaultLocale();
 
 String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 
-CaptchaConfiguration captchaConfiguration = (CaptchaConfiguration)ConfigurationProviderUtil.getSystemConfiguration(CaptchaConfiguration.class);
+CaptchaConfiguration captchaConfiguration = MBRequestUtil.getCaptchaConfiguration(request);
 
 MBGroupServiceSettings mbGroupServiceSettings = MBRequestUtil.getMBGroupServiceSettings(request, themeDisplay.getSiteGroupId());
 

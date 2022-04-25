@@ -626,7 +626,7 @@ definition {
 
 		Staging.configurePublishToLive(
 			checkContentNameList = "Blogs",
-			checkPageName = "Public Pages");
+			checkPageName = "Pages");
 
 		Staging.savePublishTemplate(
 			publishTemplateDescription = "Publish Template Description Edit",

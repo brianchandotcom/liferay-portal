@@ -20,10 +20,6 @@ $c-table-base-cell: (
 	height: var(--table-cell-min-height),
 );
 
-$c-table-tbody: (
-	background-color: $table-bg,
-);
-
 $table-title: (
 	color: var(--table-title-color),
 	font-size: var(--table-title-font-size),

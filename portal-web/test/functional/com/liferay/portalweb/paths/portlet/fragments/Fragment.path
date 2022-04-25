@@ -90,6 +90,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ACTIVE_FRAGMENT_LABEL</td>
+	<td>xpath=(//div[@aria-label='${key_fragmentName}'])[${index}][contains(@class,'highlighted')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FRAGMENT_LINK</td>
 	<td>//a[contains(@href,'${key_url}')]${key_append}</td>
 	<td></td>

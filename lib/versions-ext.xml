@@ -1131,19 +1131,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/commons-io.jar</file-name>
-				<version>2.8.0</version>
-				<project-name>Commons IO</project-name>
-				<project-url>http://commons.apache.org/io</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-						<copyright-notice>Copyright (c) 2001-2007 The Apache Software Foundation</copyright-notice>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/commons-lang.jar</file-name>
 				<version>2.6</version>
 				<project-name>Commons Lang</project-name>

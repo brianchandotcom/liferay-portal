@@ -48,13 +48,13 @@ public class CommentStyling {
 
 		int g = f + e;
 
-		// nonexistent comment
+		// Override nonexistent configuration
 
 		int h = g + f;
 
 		// TODO test
-		// int nonexisting = a;
 
+		//int nonexisting = a;
 		System.out.println(h);
 	}
 

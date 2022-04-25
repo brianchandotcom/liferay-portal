@@ -376,7 +376,7 @@ definition {
 		DepotNavigator.gotoDepot(depotName = "Edited Test Depot Name");
 	}
 
-	@description = "This ensures that a depot can be edited via settings."
+	@description = "This ensures that a depot can be edited via settings. Also covers LPS-146116, it ensures that there is no kebab menu on depot admin page."
 	@e2e
 	@priority = "4"
 	@refactordone

@@ -153,11 +153,37 @@ definition {
 	}
 
 	@description = "LPS-146889 - Verify that when turn on the 'Set the Maximum Number of Characters' a Maximum Number of Characters field is shown"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewMaximumCharactersField {
 
-		// TODO LPS-151570 CanViewMaximumCharactersField pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 151570",
+			objectName = "CustomObject151570",
+			pluralLabelName = "Custom Objects 151570");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field Text",
+			fieldName = "customObjectFieldText",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject151570");
+
+		Navigator.openURL();
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 151570");
+
+		ObjectAdmin.goToFieldsTab();
+
+		ObjectAdmin.goToFieldsDetails(label = "Custom Field Text");
+
+		Click(
+			locator1 = "ObjectField#DEFAULT_TOGGLE_SWITCH",
+			key_labelName = "Limit Characters");
+
+		AssertElementPresent(locator1 = "ObjectField#MAXIMUM_NUMBER_CHARACTERS_OPTION");
 
 	}
 

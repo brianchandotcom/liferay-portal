@@ -43,6 +43,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>MAXIMUM_NUMBER_CHARACTERS_OPTION</td>
+		<td>//label[contains(text(),'Maximum Number of Characters')]/..//input</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>DEFAULT_TOGGLE_SWITCH</td>
 		<td>//span[@class='toggle-switch-label' and contains(text(), '${key_labelName}')]</td>
 		<td></td>

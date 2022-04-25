@@ -91,10 +91,8 @@ public class PermissionUtil {
 
 		for (String roleName : roleNames) {
 			try {
-				Role role = roleLocalService.getRole(
-					company.getCompanyId(), roleName);
-
-				roles.add(role);
+				roles.add(
+					roleLocalService.getRole(company.getCompanyId(), roleName));
 			}
 			catch (NoSuchRoleException noSuchRoleException) {
 				if (_log.isDebugEnabled()) {

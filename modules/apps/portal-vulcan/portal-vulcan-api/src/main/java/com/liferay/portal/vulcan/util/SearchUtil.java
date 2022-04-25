@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.search.generic.MatchAllQuery;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.search.aggregation.AggregationResult;
 import com.liferay.portal.search.searcher.SearchResponse;
@@ -71,11 +70,9 @@ public class SearchUtil {
 		Object[] orderByComparatorColumns = _getOrderByComparatorColumns(sorts);
 
 		if (orderByComparatorColumns != null) {
-			OrderByComparator<T> orderByComparator =
+			queryDefinition.setOrderByComparator(
 				OrderByComparatorFactoryUtil.create(
-					clazz.getSimpleName(), orderByComparatorColumns);
-
-			queryDefinition.setOrderByComparator(orderByComparator);
+					clazz.getSimpleName(), orderByComparatorColumns));
 		}
 
 		queryDefinition.setStart(pagination.getStartPosition());

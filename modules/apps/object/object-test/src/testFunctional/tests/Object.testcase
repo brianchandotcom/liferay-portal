@@ -51,9 +51,7 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "User");
 
-		Click(
-			key_tabName = "Relationship",
-			locator1 = "ObjectAdmin#ENTRY_RELATIONSHIP_TAB");
+		ObjectAdmin.gotoRelationshipsTab();
 
 		AssertElementNotPresent(locator1 = "Icon#DELETE");
 	}

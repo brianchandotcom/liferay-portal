@@ -60,7 +60,7 @@
 </tr>
 <tr>
 	<td>COLLECTION_ITEM</td>
-	<td>xpath=(//div[contains(@id,'main-content')]//div[contains(@class,'row')])[${key_rowPosition}]/div[contains(@class,'col')][${key_colPosition}]</td>
+	<td>xpath=(//div[contains(@id,'main-content')]//div[contains(@class,'row')][not(.//label)])[${key_rowPosition}]/div[contains(@class,'col')][${key_colPosition}]</td>
 	<td></td>
 </tr>
 <tr>

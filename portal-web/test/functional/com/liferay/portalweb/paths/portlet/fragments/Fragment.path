@@ -13,7 +13,7 @@
 <!--COLLECTION_DISPLAY_CELL-->
 <tr>
 	<td>FRAGMENT_TEXT_IN_COLLECTION_DISPLAY</td>
-	<td>//section[contains(@id,'content')]//div[contains(@class,'row')][${row}]/div[contains(@class,'col')][${column}]//*[not(self::script)][not(contains(@class,'tbar'))][normalize-space(text())]</td>
+	<td>//section[contains(@id,'content')]//div[contains(@class,'row')][${row}]/div[contains(@class,'col')][not(.//label)][${column}]//*[not(contains(@class,'tbar'))][normalize-space(text())]</td>
 	<td></td>
 </tr>
 <tr>

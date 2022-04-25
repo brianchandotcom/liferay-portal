@@ -245,6 +245,11 @@ export function useObjectFieldForm({
 			errors.businessType = REQUIRED_MSG;
 		}
 		else if (field.businessType === 'Attachment') {
+			const uploadRequestSizeLimit = Math.floor(
+				Liferay.PropsValues.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE /
+					1048576
+			);
+
 			if (
 				invalidateRequired(
 					settings.acceptedFileExtensions as string | undefined
@@ -257,6 +262,14 @@ export function useObjectFieldForm({
 			}
 			if (!settings.maximumFileSize && settings.maximumFileSize !== 0) {
 				errors.maximumFileSize = REQUIRED_MSG;
+			}
+			else if (settings.maximumFileSize > uploadRequestSizeLimit) {
+				errors.maximumFileSize = Liferay.Util.sub(
+					Liferay.Language.get(
+						'file-size-is-larger-than-maximum-upload-request-size-x-mb'
+					),
+					uploadRequestSizeLimit
+				);
 			}
 			else if (settings.maximumFileSize < 0) {
 				errors.maximumFileSize = Liferay.Util.sub(

@@ -258,7 +258,7 @@ export function selectPanels(activeItemId, activeItemType, state) {
 		};
 	}
 	else if (activeItem.type === LAYOUT_DATA_ITEM_TYPES.fragment) {
-		const {fragmentEntryKey, fragmentType} = state.fragmentEntryLinks[
+		const {fragmentEntryKey, fragmentEntryType} = state.fragmentEntryLinks[
 			activeItem.config.fragmentEntryLinkId
 		];
 
@@ -267,7 +267,7 @@ export function selectPanels(activeItemId, activeItemType, state) {
 				state.selectedViewportSize === VIEWPORT_SIZES.desktop,
 			[PANEL_IDS.fragmentStyles]: true,
 			[PANEL_IDS.fragmentGeneral]:
-				fragmentType !== FRAGMENT_TYPES.input &&
+				fragmentEntryType !== FRAGMENT_TYPES.input &&
 				!FRAGMENT_WITH_CUSTOM_PANEL.includes(fragmentEntryKey),
 			[PANEL_IDS.collectionAppliedFiltersGeneral]:
 				fragmentEntryKey ===
@@ -277,7 +277,7 @@ export function selectPanels(activeItemId, activeItemType, state) {
 				fragmentEntryKey === COLLECTION_FILTER_FRAGMENT_ENTRY_KEY &&
 				state.selectedViewportSize === VIEWPORT_SIZES.desktop,
 			[PANEL_IDS.formInputGeneral]:
-				fragmentType === FRAGMENT_TYPES.input &&
+				fragmentEntryKey === FRAGMENT_TYPES.input &&
 				state.selectedViewportSize === VIEWPORT_SIZES.desktop,
 		};
 	}

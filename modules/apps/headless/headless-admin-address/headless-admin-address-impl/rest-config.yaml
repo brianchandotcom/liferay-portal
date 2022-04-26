@@ -1,0 +1,9 @@
+apiDir: "../headless-admin-address-api/src/main/java"
+apiPackagePath: "com.liferay.headless.admin.address"
+application:
+    baseURI: "/headless-admin-address"
+    className: "HeadlessAdminAddressApplication"
+    name: "Liferay.Headless.Admin.Address"
+author: "Drew Brokke"
+clientDir: "../headless-admin-address-client/src/main/java"
+testDir: "../headless-admin-address-test/src/testIntegration/java"

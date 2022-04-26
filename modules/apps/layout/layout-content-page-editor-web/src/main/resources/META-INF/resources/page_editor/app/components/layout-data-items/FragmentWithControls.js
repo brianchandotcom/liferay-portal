@@ -23,7 +23,7 @@ import {
 	useHoveredItemId,
 	useHoveredItemType,
 } from '../../contexts/ControlsContext';
-import {useSelector} from '../../contexts/StoreContext';
+import {useSelector, useSelectorCallback} from '../../contexts/StoreContext';
 import {getFrontendTokenValue} from '../../utils/getFrontendTokenValue';
 import getLayoutDataItemTopperUniqueClassName from '../../utils/getLayoutDataItemTopperUniqueClassName';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
@@ -37,20 +37,20 @@ import isHovered from './isHovered';
 const FIELD_TYPES = ['itemSelector', 'collectionSelector'];
 
 const FragmentWithControls = React.forwardRef(({item}, ref) => {
-	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
 	const hoveredItemType = useHoveredItemType();
 	const hoveredItemId = useHoveredItemId();
 	const [hovered, setHovered] = useState(false);
 	const selectedViewportSize = useSelector(
 		(state) => state.selectedViewportSize
 	);
+	const fragmentEntryLink = useSelectorCallback(
+		(state) => state.fragmentEntryLinks[item.config.fragmentEntryLinkId],
+		[item.config.fragmentEntryLinkId]
+	);
 
 	const getPortals = useCallback((element) => getAllPortals(element), []);
 	const itemConfig = getResponsiveConfig(item.config, selectedViewportSize);
 	const [setRef, itemElement] = useSetRef(ref);
-
-	const fragmentEntryLink =
-		fragmentEntryLinks[item.config.fragmentEntryLinkId];
 
 	const mappedEditableValues = useMemo(() => {
 		const fieldNames = [];

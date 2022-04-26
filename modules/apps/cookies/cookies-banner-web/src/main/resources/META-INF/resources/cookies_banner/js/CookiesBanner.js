@@ -100,6 +100,7 @@ export default function ({
 						},
 					},
 					{
+						displayType: 'secondary',
 						label: Liferay.Language.get('decline-all'),
 						onClick() {
 							declineAllCookies(optionalCookies, requiredCookies);

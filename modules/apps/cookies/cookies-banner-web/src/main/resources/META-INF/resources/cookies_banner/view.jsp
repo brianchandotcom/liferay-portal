@@ -54,7 +54,7 @@ CookiesBannerDisplayContext cookiesBannerDisplayContext = (CookiesBannerDisplayC
 
 			<clay:content-col>
 				<clay:button
-					displayType="primary"
+					displayType="secondary"
 					id='<%= liferayPortletResponse.getNamespace() + "declineAllButton" %>'
 					label='<%= LanguageUtil.get(request, "decline-all") %>'
 					small="<%= true %>"

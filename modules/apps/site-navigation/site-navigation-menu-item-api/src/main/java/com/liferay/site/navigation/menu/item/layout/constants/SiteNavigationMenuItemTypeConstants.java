@@ -19,6 +19,8 @@ package com.liferay.site.navigation.menu.item.layout.constants;
  */
 public class SiteNavigationMenuItemTypeConstants {
 
+	public static final String ASSET_VOCABULARY = "asset_vocabulary";
+
 	public static final String LAYOUT = "layout";
 
 	public static final String NODE = "node";

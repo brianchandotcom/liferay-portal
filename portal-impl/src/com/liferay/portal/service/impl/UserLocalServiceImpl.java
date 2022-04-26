@@ -165,7 +165,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PwdGenerator;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -4537,93 +4536,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			user, workflowServiceContext);
 
 		return getUserByEmailAddress(companyId, emailAddress);
-	}
-
-	/**
-	 * Updates a user account that was automatically created when a guest user
-	 * participated in an action (e.g. posting a comment) and only provided his
-	 * name and email address.
-	 *
-	 * @param      creatorUserId the primary key of the creator
-	 * @param      companyId the primary key of the user's company
-	 * @param      autoPassword whether a password should be automatically
-	 *             generated for the user
-	 * @param      password1 the user's password
-	 * @param      password2 the user's password confirmation
-	 * @param      autoScreenName whether a screen name should be automatically
-	 *             generated for the user
-	 * @param      screenName the user's screen name
-	 * @param      emailAddress the user's email address
-	 * @param      facebookId the user's facebook ID
-	 * @param      openId the user's OpenID
-	 * @param      locale the user's locale
-	 * @param      firstName the user's first name
-	 * @param      middleName the user's middle name
-	 * @param      lastName the user's last name
-	 * @param      prefixId the user's name prefix ID
-	 * @param      suffixId the user's name suffix ID
-	 * @param      male whether the user is male
-	 * @param      birthdayMonth the user's birthday month (0-based, meaning 0
-	 *             for January)
-	 * @param      birthdayDay the user's birthday day
-	 * @param      birthdayYear the user's birthday year
-	 * @param      jobTitle the user's job title
-	 * @param      updateUserInformation whether to update the user's
-	 *             information
-	 * @param      sendEmail whether to send the user an email notification
-	 *             about their new account
-	 * @param      serviceContext the service context to be applied (optionally
-	 *             <code>null</code>). Can set expando bridge attributes for the
-	 *             user.
-	 * @return     the user
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #updateIncompleteUser(long, long, boolean, String, String,
-	 *             boolean, String, String, Locale, String, String, String,
-	 *             long, long, boolean, int, int, int, String, boolean, boolean,
-	 *             ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public User updateIncompleteUser(
-			long creatorUserId, long companyId, boolean autoPassword,
-			String password1, String password2, boolean autoScreenName,
-			String screenName, String emailAddress, long facebookId,
-			String openId, Locale locale, String firstName, String middleName,
-			String lastName, long prefixId, long suffixId, boolean male,
-			int birthdayMonth, int birthdayDay, int birthdayYear,
-			String jobTitle, boolean updateUserInformation, boolean sendEmail,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		User user = getUserByEmailAddress(companyId, emailAddress);
-
-		if (facebookId > 0) {
-			autoPassword = false;
-
-			if ((password1 == null) || (password2 == null)) {
-				password1 = PwdGenerator.getPassword();
-
-				password2 = password1;
-			}
-
-			sendEmail = false;
-		}
-
-		if (updateUserInformation) {
-			validateOpenId(companyId, user.getUserId(), openId);
-		}
-
-		user = userLocalService.updateIncompleteUser(
-			creatorUserId, companyId, autoPassword, password1, password2,
-			autoScreenName, screenName, emailAddress, locale, firstName,
-			middleName, lastName, prefixId, suffixId, male, birthdayMonth,
-			birthdayDay, birthdayYear, jobTitle, updateUserInformation,
-			sendEmail, serviceContext);
-
-		user.setFacebookId(facebookId);
-		user.setOpenId(openId);
-
-		return userLocalService.updateUser(user);
 	}
 
 	/**

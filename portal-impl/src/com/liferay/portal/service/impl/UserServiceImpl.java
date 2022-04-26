@@ -2254,10 +2254,10 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 		return userLocalService.updateIncompleteUser(
 			creatorUserId, companyId, autoPassword, password1, password2,
-			autoScreenName, screenName, emailAddress, facebookId, openId,
-			locale, firstName, middleName, lastName, prefixId, suffixId, male,
-			birthdayMonth, birthdayDay, birthdayYear, jobTitle,
-			updateUserInformation, sendEmail, serviceContext);
+			autoScreenName, screenName, emailAddress, locale, firstName,
+			middleName, lastName, prefixId, suffixId, male, birthdayMonth,
+			birthdayDay, birthdayYear, jobTitle, updateUserInformation,
+			sendEmail, serviceContext);
 	}
 
 	/**

@@ -182,15 +182,13 @@ public class JavaStylingCheck extends BaseStylingCheck {
 							continue;
 						}
 
-						String replacement = correctWord;
-
 						if (Character.isUpperCase(matchedWord.charAt(0))) {
-							replacement = StringUtil.upperCaseFirstLetter(
-								replacement);
+							correctWord = StringUtil.upperCaseFirstLetter(
+								correctWord);
 						}
 
 						return StringUtil.replaceFirst(
-							content, matchedWord, replacement,
+							content, matchedWord, correctWord,
 							matcher.start(1));
 					}
 				}

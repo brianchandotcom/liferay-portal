@@ -127,30 +127,30 @@ public class LayoutSEOLinkManagerTest {
 	}
 
 	@Test
-	public void testGetClassicPageLocalizedLayoutSEOLinksWithDefaultLocale()
+	public void testGetClassicLayoutLocalizedLayoutSEOLinksWithDefaultLocale()
 		throws Exception {
 
-		_setupForTestingPageLocalizedLayoutSEOLinks();
+		_setupForTestingLayoutLocalizedLayoutSEOLinks();
 
 		_testWithLayoutSEOCompanyConfiguration(
 			"default-language-url",
 			() -> _testWithSiteDefaultLanguage(
 				_layout.getGroupId(), LocaleUtil.US,
-				() -> _assertPageLocalizedLayoutSEOLinks(
+				() -> _assertLayoutLocalizedLayoutSEOLinks(
 					LocaleUtil.US, "default-language-url")));
 	}
 
 	@Test
-	public void testGetClassicPageLocalizedLayoutSEOLinksWithNoDefaultLocale()
+	public void testGetClassicLayoutLocalizedLayoutSEOLinksWithNoDefaultLocale()
 		throws Exception {
 
-		_setupForTestingPageLocalizedLayoutSEOLinks();
+		_setupForTestingLayoutLocalizedLayoutSEOLinks();
 
 		_testWithLayoutSEOCompanyConfiguration(
 			"default-language-url",
 			() -> _testWithSiteDefaultLanguage(
 				_layout.getGroupId(), LocaleUtil.US,
-				() -> _assertPageLocalizedLayoutSEOLinks(
+				() -> _assertLayoutLocalizedLayoutSEOLinks(
 					LocaleUtil.SPAIN, "default-language-url")));
 	}
 
@@ -183,30 +183,30 @@ public class LayoutSEOLinkManagerTest {
 	}
 
 	@Test
-	public void testGetDefaultPageLocalizedLayoutSEOLinksWithDefaultLocale()
+	public void testGetDefaultLayoutLocalizedLayoutSEOLinksWithDefaultLocale()
 		throws Exception {
 
-		_setupForTestingPageLocalizedLayoutSEOLinks();
+		_setupForTestingLayoutLocalizedLayoutSEOLinks();
 
 		_testWithLayoutSEOCompanyConfiguration(
 			"localized-url",
 			() -> _testWithSiteDefaultLanguage(
 				_layout.getGroupId(), LocaleUtil.US,
-				() -> _assertPageLocalizedLayoutSEOLinks(
+				() -> _assertLayoutLocalizedLayoutSEOLinks(
 					LocaleUtil.US, "localized-url")));
 	}
 
 	@Test
-	public void testGetDefaultPageLocalizedLayoutSEOLinksWithNoDefaultLocale()
+	public void testGetDefaultLayoutLocalizedLayoutSEOLinksWithNoDefaultLocale()
 		throws Exception {
 
-		_setupForTestingPageLocalizedLayoutSEOLinks();
+		_setupForTestingLayoutLocalizedLayoutSEOLinks();
 
 		_testWithLayoutSEOCompanyConfiguration(
 			"localized-url",
 			() -> _testWithSiteDefaultLanguage(
 				_layout.getGroupId(), LocaleUtil.US,
-				() -> _assertPageLocalizedLayoutSEOLinks(
+				() -> _assertLayoutLocalizedLayoutSEOLinks(
 					LocaleUtil.SPAIN, "localized-url")));
 	}
 
@@ -265,6 +265,14 @@ public class LayoutSEOLinkManagerTest {
 			FriendlyURLResolverConstants.URL_SEPARATOR_JOURNAL_ARTICLE);
 	}
 
+	private void _assertLayoutLocalizedLayoutSEOLinks(
+			Locale locale, String canonicalURLConfiguration)
+		throws PortalException {
+
+		_assertLocalizedLayoutSEOLinks(
+			locale, canonicalURLConfiguration, StringPool.SLASH);
+	}
+
 	private void _assertLocalizedLayoutSEOLinks(
 			Locale locale, String canonicalURLConfiguration, String urlPrefix)
 		throws PortalException {
@@ -281,14 +289,6 @@ public class LayoutSEOLinkManagerTest {
 
 		_assertCanonicalLayoutSEOLink(
 			layoutSEOLinks, locale, canonicalURLConfiguration, urlPrefix);
-	}
-
-	private void _assertPageLocalizedLayoutSEOLinks(
-			Locale locale, String canonicalURLConfiguration)
-		throws PortalException {
-
-		_assertLocalizedLayoutSEOLinks(
-			locale, canonicalURLConfiguration, StringPool.SLASH);
 	}
 
 	private void _assertXDefaultAlternateLayoutSEOLink(
@@ -426,7 +426,7 @@ public class LayoutSEOLinkManagerTest {
 			_expectedFriendlyURLs.get(LocaleUtil.US));
 	}
 
-	private void _setupForTestingPageLocalizedLayoutSEOLinks()
+	private void _setupForTestingLayoutLocalizedLayoutSEOLinks()
 		throws Exception {
 
 		_layout = LayoutTestUtil.addTypePortletLayout(_group);

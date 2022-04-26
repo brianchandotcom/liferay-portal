@@ -900,15 +900,19 @@ public class LayoutPageTemplatesImporterImpl
 			PageTemplateCollectionEntry pageTemplateCollectionEntry =
 				entry.getValue();
 
-			LayoutPageTemplateCollection layoutPageTemplateCollection =
-				_getLayoutPageTemplateCollection(
-					groupId, layoutPageTemplateCollectionId,
-					pageTemplateCollectionEntry, overwrite);
+			Map<String, PageTemplateEntry> pageTemplatesEntries =
+				pageTemplateCollectionEntry.getPageTemplatesEntries();
 
-			_processPageTemplateEntries(
-				groupId, layoutPageTemplateCollection,
-				pageTemplateCollectionEntry.getPageTemplatesEntries(),
-				overwrite, zipFile);
+			if (MapUtil.isNotEmpty(pageTemplatesEntries)) {
+				LayoutPageTemplateCollection layoutPageTemplateCollection =
+					_getLayoutPageTemplateCollection(
+						groupId, layoutPageTemplateCollectionId,
+						pageTemplateCollectionEntry, overwrite);
+
+				_processPageTemplateEntries(
+					groupId, layoutPageTemplateCollection, pageTemplatesEntries,
+					overwrite, zipFile);
+			}
 		}
 	}
 

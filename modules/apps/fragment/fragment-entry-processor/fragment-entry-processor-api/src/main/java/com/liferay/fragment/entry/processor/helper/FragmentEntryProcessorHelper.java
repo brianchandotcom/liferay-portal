@@ -16,7 +16,6 @@ package com.liferay.fragment.entry.processor.helper;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.type.WebImage;
@@ -25,6 +24,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * @author Eudaldo Alonso
@@ -48,14 +48,15 @@ public interface FragmentEntryProcessorHelper {
 	public long getFileEntryId(WebImage webImage);
 
 	public Object getMappedCollectionValue(
-			JSONObject jsonObject,
-			FragmentEntryProcessorContext fragmentEntryProcessorContext)
+			Optional<Object> displayObjectOptional, JSONObject jsonObject,
+			Locale locale)
 		throws PortalException;
 
 	public Object getMappedInfoItemFieldValue(
 			JSONObject jsonObject,
 			Map<Long, InfoItemFieldValues> infoItemFieldValuesMap,
-			FragmentEntryProcessorContext fragmentEntryProcessorContext)
+			Locale locale, String mode, long previewClassPK,
+			String previewVersion)
 		throws PortalException;
 
 	public Object getMappedInfoItemFieldValue(

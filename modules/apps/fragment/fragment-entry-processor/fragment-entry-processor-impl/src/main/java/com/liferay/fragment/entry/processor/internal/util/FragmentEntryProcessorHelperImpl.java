@@ -17,8 +17,6 @@ package com.liferay.fragment.entry.processor.internal.util;
 import com.liferay.asset.info.display.contributor.util.ContentAccessor;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
-import com.liferay.fragment.processor.DefaultFragmentEntryProcessorContext;
-import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.formatter.InfoCollectionTextFormatter;
 import com.liferay.info.formatter.InfoTextFormatter;
@@ -213,15 +211,12 @@ public class FragmentEntryProcessorHelperImpl
 
 	@Override
 	public Object getMappedCollectionValue(
-		JSONObject jsonObject,
-		FragmentEntryProcessorContext fragmentEntryProcessorContext) {
+		Optional<Object> displayObjectOptional, JSONObject jsonObject,
+		Locale locale) {
 
 		if (!isMappedCollection(jsonObject)) {
 			return JSONFactoryUtil.createJSONObject();
 		}
-
-		Optional<Object> displayObjectOptional =
-			fragmentEntryProcessorContext.getDisplayObjectOptional();
 
 		if (!displayObjectOptional.isPresent()) {
 			return null;
@@ -259,21 +254,18 @@ public class FragmentEntryProcessorHelperImpl
 
 		return getMappedInfoItemFieldValue(
 			jsonObject.getString("collectionFieldId"),
-			infoItemFieldValuesProvider,
-			fragmentEntryProcessorContext.getLocale(),
-			displayObjectOptional.get());
+			infoItemFieldValuesProvider, locale, displayObjectOptional.get());
 	}
 
 	@Override
 	public Object getMappedInfoItemFieldValue(
 			JSONObject jsonObject,
 			Map<Long, InfoItemFieldValues> infoItemFieldValuesMap,
-			FragmentEntryProcessorContext fragmentEntryProcessorContext)
+			Locale locale, String mode, long previewClassPK,
+			String previewVersion)
 		throws PortalException {
 
-		if (!isMapped(jsonObject) &&
-			!isAssetDisplayPage(fragmentEntryProcessorContext.getMode())) {
-
+		if (!isMapped(jsonObject) && !isAssetDisplayPage(mode)) {
 			return JSONFactoryUtil.createJSONObject();
 		}
 
@@ -302,15 +294,11 @@ public class FragmentEntryProcessorHelperImpl
 			return null;
 		}
 
-		if (fragmentEntryProcessorContext.getPreviewClassPK() > 0) {
-			infoItemIdentifier = new ClassPKInfoItemIdentifier(
-				fragmentEntryProcessorContext.getPreviewClassPK());
+		if (previewClassPK > 0) {
+			infoItemIdentifier = new ClassPKInfoItemIdentifier(previewClassPK);
 
-			if (Validator.isNotNull(
-					fragmentEntryProcessorContext.getPreviewVersion())) {
-
-				infoItemIdentifier.setVersion(
-					fragmentEntryProcessorContext.getPreviewVersion());
+			if (Validator.isNotNull(previewVersion)) {
+				infoItemIdentifier.setVersion(previewVersion);
 			}
 		}
 
@@ -347,7 +335,7 @@ public class FragmentEntryProcessorHelperImpl
 
 		return getMappedInfoItemFieldValue(
 			jsonObject.getString("fieldId"), infoItemFieldValuesProvider,
-			fragmentEntryProcessorContext.getLocale(), object);
+			locale, object);
 	}
 
 	@Override
@@ -358,19 +346,9 @@ public class FragmentEntryProcessorHelperImpl
 			int previewType)
 		throws PortalException {
 
-		DefaultFragmentEntryProcessorContext
-			defaultFragmentEntryProcessorContext =
-				new DefaultFragmentEntryProcessorContext(
-					null, null, mode, locale);
-
-		defaultFragmentEntryProcessorContext.setPreviewClassNameId(
-			previewClassNameId);
-		defaultFragmentEntryProcessorContext.setPreviewClassPK(previewClassPK);
-		defaultFragmentEntryProcessorContext.setPreviewType(previewType);
-
 		return getMappedInfoItemFieldValue(
-			jsonObject, infoDisplaysFieldValues,
-			defaultFragmentEntryProcessorContext);
+			jsonObject, infoDisplaysFieldValues, locale, mode, previewClassPK,
+			StringPool.BLANK);
 	}
 
 	@Override

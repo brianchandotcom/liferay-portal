@@ -16,12 +16,16 @@ import ClayForm from '@clayui/form';
 import React, {ChangeEventHandler, useEffect, useState} from 'react';
 
 import Editor from '../Editor/Editor';
+import Sidebar from '../Editor/Sidebar/Sidebar';
+import {useChannel} from '../Editor/Sidebar/useChannel';
 import InputLocalized from '../Form/InputLocalized/InputLocalized';
 import Select from '../Form/Select';
 import ObjectValidationFormBase, {
 	ObjectValidationErrors,
 } from '../ObjectValidationFormBase';
 import {getTranslations} from './utils';
+
+import '../Editor/Editor.scss';
 
 function BasicInfo({
 	componentLabel,
@@ -94,6 +98,7 @@ function Conditions({
 	disabled,
 	errors,
 	locales,
+	objectValidationRuleElements,
 	setValues,
 	values,
 }: IConditions) {
@@ -103,6 +108,7 @@ function Conditions({
 			symbol: string;
 		}
 	);
+	const inputChannel = useChannel();
 
 	useEffect(() => {
 		if (typeof values.errorLabel === 'string') {
@@ -118,17 +124,31 @@ function Conditions({
 	}, []);
 
 	return (
-		<ClayForm className="lfr-objects__groovy-field">
-			<div className="sheet">
-				<h2 className="sheet-title">
-					{Liferay.Language.get('groovy')}
-				</h2>
+		<ClayForm>
+			<div className="lfr-objects__object-data-validation-alt-sheet">
+				<div className="lfr-objects__object-data-validation-title-divider">
+					<h2 className="sheet-title">
+						{values.engine === 'groovy'
+							? Liferay.Language.get('groovy')
+							: Liferay.Language.get('ddm')}
+					</h2>
+				</div>
 
-				<Editor
-					content={values.script}
-					disabled={disabled}
-					setValues={setValues}
-				/>
+				<div className="lfr-objects__object-data-validation-editor-container">
+					<Editor
+						content={values.script}
+						disabled={disabled}
+						inputChannel={inputChannel}
+						setValues={setValues}
+					/>
+
+					<Sidebar
+						inputChannel={inputChannel}
+						objectValidationRuleElements={
+							objectValidationRuleElements
+						}
+					/>
+				</div>
 			</div>
 
 			<div className="mt-4 sheet">
@@ -165,7 +185,6 @@ function TriggerEventContainer({disabled, eventTypes}: ITriggerEventProps) {
 				disabled={disabled}
 				label={Liferay.Language.get('event')}
 				options={eventTypes}
-				value={0}
 			/>
 		</div>
 	);
@@ -193,6 +212,7 @@ interface IConditions {
 	errors: ObjectValidationErrors;
 	handleChange: ChangeEventHandler<HTMLInputElement>;
 	locales: Array<any>;
+	objectValidationRuleElements: ObjectValidationRuleElement[];
 	setValues: (values: Partial<ObjectValidation>) => void;
 	values: Partial<ObjectValidation>;
 }

@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.model.PortletPreferencesIds;
 import com.liferay.portal.kernel.model.PublicRenderParameter;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
@@ -168,11 +167,9 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		PortletPreferences portletPreferences = _getPortletPreferences(
-			themeDisplay, portlet.getPortletId());
-
 		actionRequest = ActionUtil.getWrappedActionRequest(
-			actionRequest, portletPreferences);
+			actionRequest,
+			_getPortletPreferences(themeDisplay, portlet.getPortletId()));
 
 		ConfigurationAction configurationAction = _getConfigurationAction(
 			portlet);
@@ -601,12 +598,10 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 			if (mvcPath.endsWith("edit_configuration.jsp") ||
 				mvcPath.endsWith("edit_public_render_parameters.jsp")) {
 
-				ThemeDisplay themeDisplay =
-					(ThemeDisplay)renderRequest.getAttribute(
-						WebKeys.THEME_DISPLAY);
-
 				PortletPreferences portletPreferences = _getPortletPreferences(
-					themeDisplay, portlet.getPortletId());
+					(ThemeDisplay)renderRequest.getAttribute(
+						WebKeys.THEME_DISPLAY),
+					portlet.getPortletId());
 
 				renderRequest = ActionUtil.getWrappedRenderRequest(
 					renderRequest, portletPreferences);
@@ -902,12 +897,9 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 			return null;
 		}
 
-		PortletPreferencesIds portletPreferencesIds =
-			PortletPreferencesFactoryUtil.getPortletPreferencesIds(
-				themeDisplay.getRequest(), layout, portletId);
-
 		return _portletPreferencesLocalService.getPreferences(
-			portletPreferencesIds);
+			PortletPreferencesFactoryUtil.getPortletPreferencesIds(
+				themeDisplay.getRequest(), layout, portletId));
 	}
 
 	private String _getPortletTitle(

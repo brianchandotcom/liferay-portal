@@ -167,11 +167,9 @@ public class PortletConfigurationCSSPortletDisplayContext {
 
 			String languageId = LocaleUtil.toLanguageId(curLocale);
 
-			String portletTitle = PortalUtil.getPortletTitle(
-				portlet, servletContext, curLocale);
-
 			String portletSetupTitle = _portletSetup.getValue(
-				"portletSetupTitle_" + languageId, portletTitle);
+				"portletSetupTitle_" + languageId,
+				PortalUtil.getPortletTitle(portlet, servletContext, curLocale));
 
 			customTitleMap.put(curLocale, portletSetupTitle);
 		}

@@ -33,9 +33,6 @@ CommercePriceListDisplayContext commercePriceListDisplayContext = (CommercePrice
 			formName="fm"
 			id="<%= CommercePricingFDSNames.PRICE_LISTS %>"
 			itemsPerPage="<%= 10 %>"
-			namespace="<%= liferayPortletResponse.getNamespace() %>"
-			pageNumber="<%= 1 %>"
-			portletURL="<%= currentURLObj %>"
 			style="stacked"
 		/>
 	</aui:form>

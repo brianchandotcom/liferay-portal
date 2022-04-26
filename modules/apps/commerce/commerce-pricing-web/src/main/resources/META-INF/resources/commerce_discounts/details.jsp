@@ -22,8 +22,6 @@ CommerceDiscountDisplayContext commerceDiscountDisplayContext = (CommerceDiscoun
 CommerceDiscount commerceDiscount = commerceDiscountDisplayContext.getCommerceDiscount();
 long commerceDiscountId = commerceDiscountDisplayContext.getCommerceDiscountId();
 
-PortletURL portletDiscountRuleURL = commerceDiscountDisplayContext.getPortletDiscountRuleURL();
-
 boolean neverExpire = ParamUtil.getBoolean(request, "neverExpire", true);
 
 if ((commerceDiscount != null) && (commerceDiscount.getExpirationDate() != null)) {

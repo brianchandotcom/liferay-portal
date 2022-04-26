@@ -27,9 +27,6 @@ CommercePricingClassDisplayContext commercePricingClassDisplayContext = (Commerc
 			dataProviderKey="<%= CommercePricingFDSNames.PRICING_CLASSES %>"
 			id="<%= CommercePricingFDSNames.PRICING_CLASSES %>"
 			itemsPerPage="<%= 10 %>"
-			namespace="<%= liferayPortletResponse.getNamespace() %>"
-			pageNumber="<%= 1 %>"
-			portletURL="<%= currentURLObj %>"
 			style="fluid"
 		/>
 	</div>

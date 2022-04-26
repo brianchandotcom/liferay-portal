@@ -35,9 +35,6 @@ PortletURL portletURL = commerceDiscountDisplayContext.getPortletURL();
 			formName="fm"
 			id="<%= CommercePricingFDSNames.DISCOUNTS %>"
 			itemsPerPage="<%= 10 %>"
-			namespace="<%= liferayPortletResponse.getNamespace() %>"
-			pageNumber="<%= 1 %>"
-			portletURL="<%= portletURL %>"
 			style="stacked"
 		/>
 	</aui:form>

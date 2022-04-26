@@ -84,9 +84,6 @@
 			formName="fm"
 			id="<%= CommercePricingFDSNames.DISCOUNT_QUALIFIER_ACCOUNTS %>"
 			itemsPerPage="<%= 10 %>"
-			namespace="<%= liferayPortletResponse.getNamespace() %>"
-			pageNumber="<%= 1 %>"
-			portletURL="<%= portletDiscountRuleURL %>"
 		/>
 	</commerce-ui:panel>
 </c:if>

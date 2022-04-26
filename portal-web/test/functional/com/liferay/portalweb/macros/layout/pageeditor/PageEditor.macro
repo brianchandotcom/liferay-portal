@@ -2635,6 +2635,14 @@ definition {
 
 				PageEditor.waitForAutoSave();
 			}
+
+			if ("${hideFromSiteSearchResults}" == "true") {
+				Check.checkNotVisible(
+					checkboxName = "Hide from Site Search Results",
+					locator1 = "Checkbox#ANY_CHECKBOX");
+
+				PageEditor.waitForAutoSave();
+			}
 		}
 	}
 

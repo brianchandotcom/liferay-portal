@@ -211,10 +211,6 @@ public class AssetVocabularySiteNavigationMenuTypeDisplayContext {
 
 				return itemDetailsURL.toString();
 			}
-		).put(
-			"modalTitle",
-			LanguageUtil.format(
-				_themeDisplay.getLocale(), "select-x", "vocabulary")
 		).build();
 	}
 

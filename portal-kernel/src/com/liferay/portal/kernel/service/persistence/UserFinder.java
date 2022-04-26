@@ -23,9 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface UserFinder {
 
-	public java.util.Map<Long, Integer> countByGroups(
-		long companyId, int status, long[] groupIds);
-
 	public int countByKeywords(
 		long companyId, String keywords, int status,
 		java.util.LinkedHashMap<String, Object> params);

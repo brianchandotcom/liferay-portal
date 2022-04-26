@@ -1083,7 +1083,6 @@ AUI.add(
 
 					if (validFilesLength) {
 						var openToastProps = {
-							autoClose: false,
 							message: Liferay.Util.sub(
 								instance._strings.xValidFilesUploaded,
 								validFilesLength
@@ -1168,7 +1167,6 @@ AUI.add(
 						});
 
 						Liferay.Util.openToast({
-							autoClose: false,
 							message,
 							toastProps: {
 								className: 'alert-full',

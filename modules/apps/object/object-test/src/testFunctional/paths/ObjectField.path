@@ -18,6 +18,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>INPUT_MAXIMUM_FILE_SIZE</td>
+		<td>//label[contains(text(),'Maximum File Size')]/..//input</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>LABEL_ACCEPTED_FILE_EXTENSIONS</td>
 		<td>//div[@class = 'form-group']//label[contains(text(),'Accepted File Extensions')]</td>
 		<td></td>

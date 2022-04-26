@@ -70,6 +70,7 @@ import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -96,6 +97,11 @@ public class LayoutSEOLinkManagerTest {
 		_group = GroupTestUtil.addGroup();
 
 		LayoutTestUtil.addTypePortletLayout(_group);
+	}
+
+	@After
+	public void tearDown() {
+		ServiceContextThreadLocal.popServiceContext();
 	}
 
 	@Test

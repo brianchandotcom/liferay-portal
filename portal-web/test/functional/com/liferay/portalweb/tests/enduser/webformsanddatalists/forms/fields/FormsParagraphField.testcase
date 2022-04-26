@@ -646,8 +646,6 @@ definition {
 
 		Form.save();
 
-		Alert.viewSuccessMessageText(successMessage = "Your request completed successfully.");
-
 		FormsAdminNavigator.gotoBack();
 
 		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");

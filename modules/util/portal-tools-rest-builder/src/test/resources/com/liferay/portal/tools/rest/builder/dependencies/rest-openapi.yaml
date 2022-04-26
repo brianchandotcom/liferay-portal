@@ -78,6 +78,26 @@ info:
     version: "1.0.0"
 openapi: "3.0.1"
 paths:
+    /document:
+        post:
+            operationId: postDocument
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Document"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Document"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Document"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Document"
     /document/{documentId}:
         get:
             operationId: getDocumentForcePredictableOperationIdTest
@@ -111,6 +131,25 @@ paths:
                                 type: array
                     description:
                         "OK"
+        post:
+            operationId: postFolder
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Folder"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Folder"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Folder"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Folder"
     /folder/count:
         get:
             description:

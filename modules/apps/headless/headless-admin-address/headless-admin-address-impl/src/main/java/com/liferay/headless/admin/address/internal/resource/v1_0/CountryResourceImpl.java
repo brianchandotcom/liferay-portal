@@ -20,8 +20,13 @@ import com.liferay.headless.admin.address.resource.v1_0.CountryResource;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.CountryService;
+import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+
+import java.util.Collections;
+
+import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -51,6 +56,13 @@ public class CountryResourceImpl extends BaseCountryResourceImpl {
 		return Page.of(
 			transform(countries.getBaseModels(), this::_toCountry), pagination,
 			countries.getLength());
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		return () -> Collections.emptyMap();
 	}
 
 	private Country _toCountry(

@@ -1,0 +1,267 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.site.navigation.menu.item.asset.vocabulary.internal.display.context;
+
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
+import com.liferay.asset.vocabulary.item.selector.AssetVocabularyItemSelectorReturnType;
+import com.liferay.asset.vocabulary.item.selector.criterion.AssetVocabularyItemSelectorCriterion;
+import com.liferay.item.selector.ItemSelector;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.petra.portlet.url.builder.ResourceURLBuilder;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.site.navigation.model.SiteNavigationMenuItem;
+
+import java.util.Map;
+
+import javax.portlet.PortletResponse;
+
+import javax.servlet.http.HttpServletRequest;
+
+/**
+ * @author Lourdes Fernández Besada
+ */
+public class AssetVocabularySiteNavigationMenuTypeDisplayContext {
+
+	public AssetVocabularySiteNavigationMenuTypeDisplayContext(
+		HttpServletRequest httpServletRequest, ItemSelector itemSelector,
+		SiteNavigationMenuItem siteNavigationMenuItem) {
+
+		_httpServletRequest = httpServletRequest;
+		_itemSelector = itemSelector;
+		_siteNavigationMenuItem = siteNavigationMenuItem;
+
+		PortletResponse portletResponse =
+			(PortletResponse)_httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+		_liferayPortletResponse = PortalUtil.getLiferayPortletResponse(
+			portletResponse);
+
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			UnicodePropertiesBuilder.fastLoad(
+				_siteNavigationMenuItem.getTypeSettings()
+			).build();
+
+		_assetVocabulary = AssetVocabularyLocalServiceUtil.fetchAssetVocabulary(
+			GetterUtil.getLong(typeSettingsUnicodeProperties.get("classPK")));
+	}
+
+	public Map<String, Object> getAssetVocabularyContextualSidebarContext()
+		throws Exception {
+
+		return HashMapBuilder.<String, Object>put(
+			"assetVocabulary",
+			() -> {
+				UnicodeProperties typeSettingsUnicodeProperties =
+					UnicodePropertiesBuilder.fastLoad(
+						_siteNavigationMenuItem.getTypeSettings()
+					).build();
+
+				return HashMapBuilder.<String, Object>put(
+					"classPK",
+					GetterUtil.getLong(
+						typeSettingsUnicodeProperties.get("classPK"))
+				).put(
+					"groupId",
+					GetterUtil.getLong(
+						typeSettingsUnicodeProperties.get("groupId"))
+				).put(
+					"title",
+					() -> {
+						if (_assetVocabulary != null) {
+							return _assetVocabulary.getTitle(
+								_themeDisplay.getLocale());
+						}
+
+						return typeSettingsUnicodeProperties.get("title");
+					}
+				).put(
+					"type", "type"
+				).put(
+					"uuid", typeSettingsUnicodeProperties.get("uuid")
+				).build();
+			}
+		).put(
+			"chooseAssetVocabularyProps",
+			_getChooseAssetVocabularyButtonContext()
+		).put(
+			"defaultLanguageId",
+			LocaleUtil.toLanguageId(LocaleUtil.getMostRelevantLocale())
+		).put(
+			"locales",
+			JSONUtil.toJSONArray(
+				LanguageUtil.getAvailableLocales(
+					_themeDisplay.getSiteGroupId()),
+				locale -> {
+					String w3cLanguageId = LocaleUtil.toW3cLanguageId(locale);
+
+					return JSONUtil.put(
+						"id", LocaleUtil.toLanguageId(locale)
+					).put(
+						"label", w3cLanguageId
+					).put(
+						"symbol", StringUtil.toLowerCase(w3cLanguageId)
+					);
+				})
+		).put(
+			"localizedNames",
+			() -> {
+				UnicodeProperties typeSettingsUnicodeProperties =
+					UnicodePropertiesBuilder.fastLoad(
+						_siteNavigationMenuItem.getTypeSettings()
+					).build();
+
+				return JSONFactoryUtil.createJSONObject(
+					typeSettingsUnicodeProperties.getProperty(
+						"localizedNames", "{}"));
+			}
+		).put(
+			"namespace", _liferayPortletResponse.getNamespace()
+		).put(
+			"numberOfCategories",
+			() -> {
+				if (_assetVocabulary == null) {
+					return 0;
+				}
+
+				return _assetVocabulary.getCategoriesCount();
+			}
+		).put(
+			"showAssetVocabularyLevel",
+			() -> {
+				UnicodeProperties typeSettingsUnicodeProperties =
+					UnicodePropertiesBuilder.fastLoad(
+						_siteNavigationMenuItem.getTypeSettings()
+					).build();
+
+				return GetterUtil.getBoolean(
+					typeSettingsUnicodeProperties.get(
+						"showAssetVocabularyLevel"));
+			}
+		).put(
+			"siteName",
+			() -> {
+				UnicodeProperties typeSettingsUnicodeProperties =
+					UnicodePropertiesBuilder.fastLoad(
+						_siteNavigationMenuItem.getTypeSettings()
+					).build();
+
+				long groupId = GetterUtil.getLong(
+					typeSettingsUnicodeProperties.get("groupId"));
+
+				if (groupId == _themeDisplay.getCompanyGroupId()) {
+					return LanguageUtil.get(_httpServletRequest, "global");
+				}
+
+				Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+				return group.getDescriptiveName(_themeDisplay.getLocale());
+			}
+		).put(
+			"useCustomName",
+			() -> {
+				UnicodeProperties typeSettingsUnicodeProperties =
+					UnicodePropertiesBuilder.fastLoad(
+						_siteNavigationMenuItem.getTypeSettings()
+					).build();
+
+				return GetterUtil.getBoolean(
+					typeSettingsUnicodeProperties.get("useCustomName"));
+			}
+		).build();
+	}
+
+	private Map<String, Object> _getChooseAssetVocabularyButtonContext() {
+		return HashMapBuilder.<String, Object>put(
+			"assetVocabularySelectorURL",
+			() -> {
+				AssetVocabularyItemSelectorCriterion
+					assetVocabularyItemSelectorCriterion =
+						new AssetVocabularyItemSelectorCriterion();
+
+				assetVocabularyItemSelectorCriterion.
+					setDesiredItemSelectorReturnTypes(
+						new AssetVocabularyItemSelectorReturnType());
+				assetVocabularyItemSelectorCriterion.
+					setIncludeAncestorSiteAndDepotGroupIds(true);
+				assetVocabularyItemSelectorCriterion.
+					setIncludeInternalVocabularies(false);
+
+				RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+					RequestBackedPortletURLFactoryUtil.create(
+						_httpServletRequest);
+
+				return PortletURLBuilder.create(
+					_itemSelector.getItemSelectorURL(
+						requestBackedPortletURLFactory,
+						_liferayPortletResponse.getNamespace() +
+							"selectAssetVocabulary",
+						assetVocabularyItemSelectorCriterion)
+				).buildString();
+			}
+		).put(
+			"eventName",
+			_liferayPortletResponse.getNamespace() + "selectVocabulary"
+		).put(
+			"getAssetVocabularyDetailsURL",
+			() -> {
+				LiferayPortletURL itemDetailsURL =
+					(LiferayPortletURL)ResourceURLBuilder.createResourceURL(
+						_liferayPortletResponse
+					).setResourceID(
+						"/navigation_menu/get_asset_vocabulary_details"
+					).buildResourceURL();
+
+				itemDetailsURL.setCopyCurrentRenderParameters(false);
+
+				return itemDetailsURL.toString();
+			}
+		).put(
+			"modalTitle",
+			LanguageUtil.format(
+				_themeDisplay.getLocale(), "select-x", "vocabulary")
+		).build();
+	}
+
+	private final AssetVocabulary _assetVocabulary;
+	private final HttpServletRequest _httpServletRequest;
+	private final ItemSelector _itemSelector;
+	private final LiferayPortletResponse _liferayPortletResponse;
+	private final SiteNavigationMenuItem _siteNavigationMenuItem;
+	private final ThemeDisplay _themeDisplay;
+
+}

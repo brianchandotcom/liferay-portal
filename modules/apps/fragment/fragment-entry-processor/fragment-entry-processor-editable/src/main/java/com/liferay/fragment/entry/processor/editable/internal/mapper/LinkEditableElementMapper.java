@@ -82,7 +82,9 @@ public class LinkEditableElementMapper implements EditableElementMapper {
 		if (collectionMapped) {
 			href = GetterUtil.getString(
 				_fragmentEntryProcessorHelper.getMappedCollectionValue(
-					configJSONObject, fragmentEntryProcessorContext));
+					fragmentEntryProcessorContext.getDisplayObjectOptional(),
+					configJSONObject,
+					fragmentEntryProcessorContext.getLocale()));
 		}
 		else if (layoutMapped) {
 			href = GetterUtil.getString(
@@ -93,7 +95,10 @@ public class LinkEditableElementMapper implements EditableElementMapper {
 			href = GetterUtil.getString(
 				_fragmentEntryProcessorHelper.getMappedInfoItemFieldValue(
 					configJSONObject, new HashMap<>(),
-					fragmentEntryProcessorContext));
+					fragmentEntryProcessorContext.getLocale(),
+					fragmentEntryProcessorContext.getMode(),
+					fragmentEntryProcessorContext.getPreviewClassPK(),
+					fragmentEntryProcessorContext.getPreviewVersion()));
 		}
 		else if (assetDisplayPage && configJSONObject.has("mappedField")) {
 			HttpServletRequest httpServletRequest =

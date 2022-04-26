@@ -245,7 +245,10 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 				Object fieldValue =
 					_fragmentEntryProcessorHelper.getMappedInfoItemFieldValue(
 						editableValueJSONObject, infoDisplaysFieldValues,
-						fragmentEntryProcessorContext);
+						fragmentEntryProcessorContext.getLocale(),
+						fragmentEntryProcessorContext.getMode(),
+						fragmentEntryProcessorContext.getPreviewClassPK(),
+						fragmentEntryProcessorContext.getPreviewVersion());
 
 				if (fieldValue != null) {
 					String fieldId = editableValueJSONObject.getString(
@@ -270,7 +273,10 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 				Object fieldValue =
 					_fragmentEntryProcessorHelper.getMappedCollectionValue(
-						editableValueJSONObject, fragmentEntryProcessorContext);
+						fragmentEntryProcessorContext.
+							getDisplayObjectOptional(),
+						editableValueJSONObject,
+						fragmentEntryProcessorContext.getLocale());
 
 				if (fieldValue != null) {
 					String fieldId = editableValueJSONObject.getString(

@@ -285,13 +285,18 @@ public class BackgroundImageFragmentEntryProcessor
 
 			return _fragmentEntryProcessorHelper.getMappedInfoItemFieldValue(
 				editableValueJSONObject, infoDisplaysFieldValues,
-				fragmentEntryProcessorContext);
+				fragmentEntryProcessorContext.getLocale(),
+				fragmentEntryProcessorContext.getMode(),
+				fragmentEntryProcessorContext.getPreviewClassPK(),
+				fragmentEntryProcessorContext.getPreviewVersion());
 		}
 		else if (_fragmentEntryProcessorHelper.isMappedCollection(
 					editableValueJSONObject)) {
 
 			return _fragmentEntryProcessorHelper.getMappedCollectionValue(
-				editableValueJSONObject, fragmentEntryProcessorContext);
+				fragmentEntryProcessorContext.getDisplayObjectOptional(),
+				editableValueJSONObject,
+				fragmentEntryProcessorContext.getLocale());
 		}
 
 		return null;

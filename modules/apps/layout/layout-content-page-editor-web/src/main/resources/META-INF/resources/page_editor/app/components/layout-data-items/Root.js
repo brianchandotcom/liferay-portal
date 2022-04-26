@@ -12,7 +12,6 @@
  * details.
  */
 
-import classNames from 'classnames';
 import React from 'react';
 
 import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
@@ -29,13 +28,9 @@ const Root = React.forwardRef(({children, item}, ref) => {
 
 	return (
 		<TopperEmpty item={item}>
-			<div className={classNames('page-editor__root')} ref={ref}>
+			<div className="page-editor__root" ref={ref}>
 				{isEmpty ? (
-					<div
-						className={classNames(
-							'page-editor__no-fragments-message'
-						)}
-					>
+					<div className="page-editor__no-fragments-message">
 						<div className="page-editor__no-fragments-message__title">
 							{Liferay.Language.get('place-fragments-here')}
 						</div>

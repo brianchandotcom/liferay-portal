@@ -1,7 +1,7 @@
 import java.util.zip.ZipEntry
 import java.util.zip.ZipFile
 
-List<String> outputPaths = new ArrayList<>();
+List<String> outputPaths = []
 
 task runGradleTest
 

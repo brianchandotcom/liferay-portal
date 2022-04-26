@@ -17,7 +17,6 @@ package com.liferay.gradle.plugins.workspace.configurators;
 import com.liferay.gradle.plugins.LiferayBasePlugin;
 import com.liferay.gradle.plugins.css.builder.BuildCSSTask;
 import com.liferay.gradle.plugins.css.builder.CSSBuilderPlugin;
-import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.node.NodePlugin;
 import com.liferay.gradle.plugins.theme.builder.BuildThemeTask;
 import com.liferay.gradle.plugins.theme.builder.ThemeBuilderPlugin;
@@ -216,11 +215,7 @@ public class DesignPacksProjectConfigurator extends BaseProjectConfigurator {
 
 					@Override
 					public String call() throws Exception {
-						StringBuilder sb = new StringBuilder();
-
-						sb.append(project.getName());
-
-						return sb.toString();
+						return project.getName();
 					}
 
 				}));

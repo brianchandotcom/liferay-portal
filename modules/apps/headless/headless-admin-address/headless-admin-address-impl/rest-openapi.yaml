@@ -127,3 +127,96 @@ paths:
                                     $ref: "#/components/schemas/Country"
                                 type: array
             tags: ["Country"]
+    "/countries/by-a2/{a2}":
+        get:
+            parameters:
+                - in: path
+                  name: a2
+                  required: true
+                  schema:
+                      pattern: "[A-Z]{2}"
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Country"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Country"
+            tags: ["Country"]
+    "/countries/by-a3/{a3}":
+        get:
+            parameters:
+                - in: path
+                  name: a3
+                  required: true
+                  schema:
+                      pattern: "[A-Z]{3}"
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Country"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Country"
+            tags: ["Country"]
+    "/countries/by-name/{name}":
+        get:
+            parameters:
+                - in: path
+                  name: name
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Country"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Country"
+            tags: ["Country"]
+    "/countries/by-number/{number}":
+        get:
+            parameters:
+                - in: path
+                  name: number
+                  required: true
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Country"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Country"
+            tags: ["Country"]
+    "/countries/{countryId}":
+        get:
+            parameters:
+                - in: path
+                  name: countryId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Country"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Country"
+            tags: ["Country"]

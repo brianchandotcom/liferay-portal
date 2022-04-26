@@ -15,7 +15,6 @@
 package com.liferay.site.navigation.menu.item.asset.vocabulary.internal.portlet.action;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -96,8 +95,7 @@ public class AddAssetVocabularySiteNavigationMenuItemsMVCActionCommand
 						"groupId",
 						assetVocabularyJSONObject.getString("groupId")
 					).put(
-						"title",
-						assetVocabularyJSONObject.getString("title")
+						"title", assetVocabularyJSONObject.getString("title")
 					).put(
 						"type", "asset-vocabulary"
 					).put(

@@ -243,8 +243,7 @@ public class AssetVocabularySiteNavigationMenuItemType
 		}
 		catch (JSONException jsonException) {
 			_log.error(
-				"Unable to get parse from localized names: " +
-					localizedNames,
+				"Unable to get parse from localized names: " + localizedNames,
 				jsonException);
 		}
 

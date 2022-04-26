@@ -17,6 +17,8 @@ import PropTypes from 'prop-types';
 import React, {forwardRef, useCallback, useEffect, useRef} from 'react';
 
 const BASEPATH = '/o/frontend-editor-ckeditor-web/ckeditor/';
+const CONTEXT_URL = Liferay.ThemeDisplay.getPathContext();
+const CURRENT_PATH = CONTEXT_URL ? CONTEXT_URL + BASEPATH : BASEPATH;
 
 /**
  * This component contains shared code between
@@ -108,8 +110,8 @@ const BaseEditor = forwardRef(
 	}
 );
 
-CKEditor.editorUrl = `${BASEPATH}ckeditor.js`;
-window.CKEDITOR_BASEPATH = BASEPATH;
+CKEditor.editorUrl = `${CURRENT_PATH}ckeditor.js`;
+window.CKEDITOR_BASEPATH = CURRENT_PATH;
 
 BaseEditor.displayName = 'BaseEditor';
 

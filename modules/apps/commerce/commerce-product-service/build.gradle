@@ -38,6 +38,7 @@ dependencies {
 	compileOnly project(":apps:friendly-url:friendly-url-api")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-clay")
 	compileOnly project(":apps:journal:journal-api")
+	compileOnly project(":apps:object:object-api")
 	compileOnly project(":apps:portal-search:portal-search-spi")
 	compileOnly project(":apps:portal-vulcan:portal-vulcan-api")
 	compileOnly project(":apps:portal:portal-dao-orm-custom-sql-api")

@@ -553,7 +553,7 @@ AUI.add(
 
 						entryTitle.setContent(name);
 
-						instance._removeEmptyResultsMessage(searchContainer);
+						instance._hideEmptyResultsMessage(searchContainer);
 
 						var searchContainerWrapper = document.querySelector(
 							'div.lfr-search-container-wrapper'
@@ -593,13 +593,7 @@ AUI.add(
 				_createEntryRow(name, size) {
 					var instance = this;
 
-					var searchContainerNode = instance._entriesContainer.one(
-						SELECTOR_SEARCH_CONTAINER
-					);
-
-					var searchContainer = Liferay.SearchContainer.get(
-						searchContainerNode.attr('id')
-					);
+					var searchContainer = instance._getSearchContainer();
 
 					var columnValues = instance._columnNames.map(
 						(item, index) => {
@@ -897,6 +891,18 @@ AUI.add(
 					return navigationOverlays;
 				},
 
+				_getSearchContainer() {
+					var instance = this;
+
+					var searchContainerNode = instance._entriesContainer.one(
+						SELECTOR_SEARCH_CONTAINER
+					);
+
+					return Liferay.SearchContainer.get(
+						searchContainerNode.attr('id')
+					);
+				},
+
 				_getTargetFolderId(target) {
 					var instance = this;
 
@@ -1018,6 +1024,20 @@ AUI.add(
 					return uploader;
 				},
 
+				_hideEmptyResultsMessage(searchContainer) {
+					var id = searchContainer.getAttribute('id');
+
+					var emptyResultsMessage = document.getElementById(
+						`${id}EmptyResultsMessage`
+					);
+
+					if (emptyResultsMessage) {
+						emptyResultsMessage.style.display = 'none';
+
+						emptyResultsMessage.classList.remove('hide');
+					}
+				},
+
 				_isUploading() {
 					var instance = this;
 
@@ -1041,17 +1061,23 @@ AUI.add(
 
 					AArray.invoke(navigationOverlays, 'hide');
 
-					var emptyMessage = instance._getEmptyMessage();
-
-					if (emptyMessage && !emptyMessage.hasClass('hide')) {
-						emptyMessage.hide(true);
-					}
-
 					var currentUploadData = instance._getCurrentUploadData();
 
 					var invalidFilesLength =
 						currentUploadData.invalidFiles.length;
 					var validFilesLength = currentUploadData.fileList.length;
+
+					var searchContainer = instance._getSearchContainer();
+
+					var emptyMessage = instance._getEmptyMessage();
+
+					if (
+						emptyMessage &&
+						!emptyMessage.hasClass('hide') &&
+						!validFilesLength
+					) {
+						emptyMessage.hide(true);
+					}
 
 					if (validFilesLength) {
 						var openToastProps = {
@@ -1100,6 +1126,21 @@ AUI.add(
 									invalidFile.target?.destroy();
 								}
 							);
+
+							var entriesContainer = instance.get(
+								'entriesContainer'
+							);
+
+							if (
+								!validFilesLength &&
+								!searchContainer.getSize()
+							) {
+								instance._showEmptyResultsMessage(
+									entriesContainer.one(
+										SELECTOR_SEARCH_CONTAINER
+									)
+								);
+							}
 						}
 
 						var message = TPL_ERROR_NOTIFICATION.parse({
@@ -1190,7 +1231,7 @@ AUI.add(
 					}
 				},
 
-				_removeEmptyResultsMessage(searchContainer) {
+				_showEmptyResultsMessage(searchContainer) {
 					var id = searchContainer.getAttribute('id');
 
 					var emptyResultsMessage = document.getElementById(
@@ -1198,7 +1239,7 @@ AUI.add(
 					);
 
 					if (emptyResultsMessage) {
-						emptyResultsMessage.style.display = 'none';
+						emptyResultsMessage.style.display = 'block';
 
 						emptyResultsMessage.classList.remove('hide');
 					}

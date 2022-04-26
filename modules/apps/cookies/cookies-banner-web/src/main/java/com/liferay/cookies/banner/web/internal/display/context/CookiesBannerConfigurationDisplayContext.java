@@ -14,11 +14,14 @@
 
 package com.liferay.cookies.banner.web.internal.display.context;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Eduardo García
@@ -30,6 +33,20 @@ public class CookiesBannerConfigurationDisplayContext
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		super(renderRequest, renderResponse);
+	}
+
+	public String getCookiesDescription(
+		String cookie, HttpServletRequest httpServletRequest) {
+
+		return LanguageUtil.get(
+			httpServletRequest, "cookies-description[" + cookie + "]");
+	}
+
+	public String getCookiesTitle(
+		String cookie, HttpServletRequest httpServletRequest) {
+
+		return LanguageUtil.get(
+			httpServletRequest, "cookies-title[" + cookie + "]");
 	}
 
 	public boolean isShowButtons() {

@@ -311,6 +311,11 @@ public class AssetVocabularySiteNavigationMenuItemType
 	}
 
 	@Override
+	public boolean isDynamic() {
+		return true;
+	}
+
+	@Override
 	public boolean isItemSelector() {
 		return true;
 	}

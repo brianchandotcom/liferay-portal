@@ -86,7 +86,7 @@ export function FormGeneralPanel({item}) {
 						<SelectField
 							disabled={availableItemTypes.length === 0}
 							field={{
-								label: Liferay.Language.get('item-type'),
+								label: Liferay.Language.get('subtype'),
 								name: 'classTypeId',
 								typeOptions: {
 									validValues: [

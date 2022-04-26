@@ -754,7 +754,7 @@
 			<finder-column name="CPInstanceId" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="CPMeasurementUnit" remote-service="true" uuid="true">
+	<entity external-reference-code="true" local-service="true" name="CPMeasurementUnit" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 

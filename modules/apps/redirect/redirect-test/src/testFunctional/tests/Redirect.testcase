@@ -929,9 +929,9 @@ definition {
 
 		var portalURL = PropsUtil.get("portal.url");
 
-		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/my-url-that-does-not-exist");
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/my-url-that-does-not-exist");
 
-		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+		Redirect.openRedirectAdmin(siteURLKey = "guest");
 
 		Redirect.view404URLsTab(disabled404Tracking = "true");
 
@@ -941,7 +941,7 @@ definition {
 
 		PortletEntry.save();
 
-		Redirect.open404URLsAdmin(siteURLKey = "test-site-name");
+		Redirect.open404URLsAdmin(siteURLKey = "guest");
 
 		Redirect.view404URLsDefault();
 	}

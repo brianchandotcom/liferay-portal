@@ -1361,6 +1361,17 @@ definition {
 			value1 = "Download");
 	}
 
+	macro downloadWithDirectoryIndexing {
+		var portalURL = PropsUtil.get("portal.url");
+		var key_text = "${dmDocumentTitle}";
+
+		Navigator.openSpecificURL(url = "${portalURL}/documents/${siteURLKey}/");
+
+		AssertClick(
+			locator1 = "Link#ANY",
+			value1 = "${dmDocumentTitle}");
+	}
+
 	macro editCategoryTags {
 		SelectFrame(value1 = "relative=top");
 
@@ -1829,6 +1840,18 @@ definition {
 		PortletEntry.save();
 
 		IFrame.closeFrame();
+	}
+
+	macro enableDirectoryIndexing {
+		var siteURLKey = "${siteURLKey}";
+
+		Ratings._openToConfigInSiteSettings(
+			portletKey = "site-configuration-documents-and-media",
+			siteURLKey = "${siteURLKey}");
+
+		FormFields.enableSwitch(fieldName = "Enable Directory Indexing");
+
+		Button.clickSave();
 	}
 
 	macro expandInfo {

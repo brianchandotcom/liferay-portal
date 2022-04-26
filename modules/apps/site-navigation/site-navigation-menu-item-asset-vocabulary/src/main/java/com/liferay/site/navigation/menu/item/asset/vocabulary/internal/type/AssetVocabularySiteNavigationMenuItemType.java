@@ -15,8 +15,11 @@
 package com.liferay.site.navigation.menu.item.asset.vocabulary.internal.type;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.site.navigation.menu.item.layout.constants.SiteNavigationMenuItemTypeConstants;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
+import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeContext;
 
 import java.util.Locale;
 
@@ -47,6 +50,17 @@ public class AssetVocabularySiteNavigationMenuItemType
 	@Override
 	public String getType() {
 		return SiteNavigationMenuItemTypeConstants.ASSET_VOCABULARY;
+	}
+
+	@Override
+	public boolean isAvailable(
+		SiteNavigationMenuItemTypeContext siteNavigationMenuItemTypeContext) {
+
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-146502"))) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Reference(

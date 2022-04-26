@@ -24,11 +24,39 @@ definition {
 	}
 
 	@description = "LPS-146889 - Verify that when turn on the 'Set the Maximum Number of Characters' on a Text the Maximum Number of Characters field has the 280 value as default"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test 280IsDefaultMaximumCharacterText {
 
-		// TODO LPS-151571 280IsDefaultMaximumCharacterText pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 151571",
+			objectName = "CustomObject151571",
+			pluralLabelName = "Custom Objects 151571");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field Text",
+			fieldName = "customObjectFieldText",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject151571");
+
+		Navigator.openURL();
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 151571");
+
+		ObjectAdmin.goToFieldsTab();
+
+		ObjectAdmin.goToFieldsDetails(label = "Custom Field Text");
+
+		Click(
+			key_labelName = "Limit Characters",
+			locator1 = "ObjectField#DEFAULT_TOGGLE_SWITCH");
+
+		AssertElementPresent(
+			value1 = "280",
+			locator1 = "ObjectField#MAXIMUM_NUMBER_CHARACTERS_OPTION");
 
 	}
 

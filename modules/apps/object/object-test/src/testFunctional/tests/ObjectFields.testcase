@@ -144,11 +144,29 @@ definition {
 	}
 
 	@description = "LPS-146523 - Verify if there's an option on Request Files: Upload and Select from Documents and Media Item Selector"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanViewDocumentsAndMediaOption {
 
-		// TODO LPS-151562 CanViewDocumentsAndMediaOption pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 151562",
+			objectName = "CustomObject151562",
+			pluralLabelName = "Custom Objects 151562");
+
+		Navigator.openURL();
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 151562");
+
+		ObjectAdmin.goToFieldsTab();
+
+		LexiconEntry.gotoAdd();
+
+		ObjectField.selectType(fieldType = "Attachment");
+
+		ObjectField.assertOptionAndDescriptionOnRequestFiles(
+			description = "Users can upload or select existing files from Documents and Media.",
+			option = "Upload or Select from Documents and Media Item Selector");
 
 	}
 

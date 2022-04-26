@@ -80,6 +80,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -429,8 +430,7 @@ public class DDMFormDisplayContext {
 			return submitLabel;
 		}
 
-		ResourceBundle resourceBundle = _getResourceBundle(
-			getLocale(_getHttpServletRequest(), getDDMForm()));
+		ResourceBundle resourceBundle = _getResourceBundle();
 
 		if (_hasWorkflowEnabled(getFormInstance(), getThemeDisplay())) {
 			DDMFormInstanceRecord ddmFormInstanceRecord =
@@ -1064,11 +1064,13 @@ public class DDMFormDisplayContext {
 		}
 	}
 
-	private ResourceBundle _getResourceBundle(Locale locale) {
-		ResourceBundle portalResourceBundle = _portal.getResourceBundle(locale);
+	private ResourceBundle _getResourceBundle() {
+		ResourceBundle portalResourceBundle = _portal.getResourceBundle(
+			LocaleThreadLocal.getThemeDisplayLocale());
 
 		ResourceBundle moduleResourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
+			"content.Language", LocaleThreadLocal.getThemeDisplayLocale(),
+			getClass());
 
 		return new AggregateResourceBundle(
 			moduleResourceBundle, portalResourceBundle);

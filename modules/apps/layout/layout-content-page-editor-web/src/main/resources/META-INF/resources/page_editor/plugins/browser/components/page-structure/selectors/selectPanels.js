@@ -277,7 +277,7 @@ export function selectPanels(activeItemId, activeItemType, state) {
 				fragmentEntryKey === COLLECTION_FILTER_FRAGMENT_ENTRY_KEY &&
 				state.selectedViewportSize === VIEWPORT_SIZES.desktop,
 			[PANEL_IDS.formInputGeneral]:
-				fragmentEntryKey === FRAGMENT_TYPES.input &&
+				fragmentEntryType === FRAGMENT_TYPES.input &&
 				state.selectedViewportSize === VIEWPORT_SIZES.desktop,
 		};
 	}

@@ -17,7 +17,7 @@ import SegmentsExperimentsContext from './context.es';
 import APIService from './util/APIService.es';
 
 export default function ({context, portletNamespace, props}) {
-	const isAnalyticsSync = false;
+	const isAnalyticsSync = props.analyticsData?.isSynced;
 	const {endpoints, imagesPath, page} = context;
 	const {
 		calculateSegmentsExperimentEstimatedDurationURL,
@@ -99,6 +99,12 @@ export default function ({context, portletNamespace, props}) {
 			</div>
 		</SegmentsExperimentsContext.Provider>
 	) : (
-		<ConnectToAC />
+		<ConnectToAC
+			analyticsCloudTrialURL={props.analyticsData?.cloudTrialURL}
+			analyticsURL={props.analyticsData?.url}
+			hideAnalyticsReportsPanelURL={props.hideSegmentsExperimentPanelURL}
+			isAnalyticsConnected={props.analyticsData?.isConnected}
+			pathToAssets={props.pathToAssets}
+		/>
 	);
 }

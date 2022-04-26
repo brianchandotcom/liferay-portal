@@ -112,13 +112,3 @@ ConnectToAC.propTypes = {
 	isAnalyticsConnected: PropTypes.bool.isRequired,
 	pathToAssets: PropTypes.string.isRequired,
 };
-
-ConnectToAC.defaultProps = {
-	analyticsCloudTrialURL:
-		'https://www.liferay.com/products/analytics-cloud/get-started',
-	analyticsURL: 'https://analytics-uat.liferay.com/workspace/253875',
-	hideAnalyticsReportsPanelURL:
-		'http\x3a\x2f\x2flocalhost\x3a8080\x2fhome\x3fp_p_id\x3dcom_liferay_segments_experiment_web_internal_portlet_SegmentsExperimentPortlet\x26p_p_lifecycle\x3d1\x26p_p_state\x3dnormal\x26p_p_mode\x3dview\x26_com_liferay_segments_experiment_web_internal_portlet_SegmentsExperimentPortlet_javax\x2eportlet\x2eaction\x3d\x252Fsegments_experiment\x252Fhide_segments_experiment_panel\x26_com_liferay_segments_experiment_web_internal_portlet_SegmentsExperimentPortlet_redirect\x3d\x252Fhome\x26p_auth\x3doQ8yYwFT',
-	isAnalyticsConnected: false,
-	pathToAssets: '/o/segments-experiment-web',
-};

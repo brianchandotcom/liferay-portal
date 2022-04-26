@@ -18,7 +18,6 @@ import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.DefaultFragmentEntryProcessorContext;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
-import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
 import com.liferay.layout.content.page.editor.listener.ContentPageEditorListener;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
@@ -162,11 +161,6 @@ public class DropZoneContentPageEditorListener
 	private void _updateLayoutPageTemplateStructure(
 			FragmentEntryLink fragmentEntryLink)
 		throws PortalException {
-
-		DefaultFragmentRendererContext defaultFragmentRendererContext =
-			new DefaultFragmentRendererContext(fragmentEntryLink);
-
-		defaultFragmentRendererContext.setMode(FragmentEntryLinkConstants.EDIT);
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();

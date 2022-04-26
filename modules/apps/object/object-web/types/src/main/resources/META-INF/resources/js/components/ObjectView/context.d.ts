@@ -19,6 +19,21 @@ interface IViewContextProps extends Array<TState | Function> {
 	1: React.Dispatch<React.ReducerAction<React.Reducer<TState, TAction>>>;
 }
 declare const ViewContext: React.Context<IViewContextProps>;
+export declare const METADATAS: {
+	checked: boolean;
+	filtered: boolean;
+	id: number;
+	indexed: boolean;
+	indexedAsKeyword: boolean;
+	indexedLanguageId: string;
+	label: {
+		[x: string]: string;
+	};
+	listTypeDefinitionId: boolean;
+	name: string;
+	required: boolean;
+	type: string;
+}[];
 export declare enum TYPES {
 	ADD_OBJECT_FIELDS = 'ADD_OBJECT_FIELDS',
 	ADD_OBJECT_VIEW = 'ADD_OBJECT_VIEW',

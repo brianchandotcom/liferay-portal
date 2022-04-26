@@ -32,7 +32,7 @@ const ViewContext = createContext({} as IViewContextProps);
 
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
-const METADATAS = [
+export const METADATAS = [
 	{
 		checked: false,
 		filtered: true,

@@ -61,16 +61,6 @@ public class AssetVocabularySiteNavigationMenuTypeDisplayContext {
 		_itemSelector = itemSelector;
 		_siteNavigationMenuItem = siteNavigationMenuItem;
 
-		PortletResponse portletResponse =
-			(PortletResponse)_httpServletRequest.getAttribute(
-				JavaConstants.JAVAX_PORTLET_RESPONSE);
-
-		_liferayPortletResponse = PortalUtil.getLiferayPortletResponse(
-			portletResponse);
-
-		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		UnicodeProperties typeSettingsUnicodeProperties =
 			UnicodePropertiesBuilder.fastLoad(
 				_siteNavigationMenuItem.getTypeSettings()
@@ -78,6 +68,12 @@ public class AssetVocabularySiteNavigationMenuTypeDisplayContext {
 
 		_assetVocabulary = AssetVocabularyLocalServiceUtil.fetchAssetVocabulary(
 			GetterUtil.getLong(typeSettingsUnicodeProperties.get("classPK")));
+
+		_liferayPortletResponse = PortalUtil.getLiferayPortletResponse(
+			(PortletResponse)_httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE));
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	public Map<String, Object> getAssetVocabularyContextualSidebarContext()

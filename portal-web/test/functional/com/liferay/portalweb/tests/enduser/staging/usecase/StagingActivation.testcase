@@ -51,7 +51,7 @@ definition {
 		Staging.viewPublicationSummary(
 			dateRestrictionOption = "From Last Publish Date",
 			deletions = "true",
-			pagesOption = "Public Pages",
+			pagesOption = "Pages",
 			permissions = "true",
 			publicationTitle = "summCheck");
 	}

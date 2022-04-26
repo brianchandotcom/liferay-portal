@@ -1,0 +1,87 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Fragments";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-150921. The user could view message when the parent fragment is hidden from search."
+	@priority = "5"
+	test ViewMessageWhenParentFragmentIsHiddenFromSiteSearchResults {
+		task ("Given a Page creator has a content page with fragment composition") {
+			task ("Add a Container to page") {
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name");
+
+				PageEditor.addFragment(
+					collectionName = "Layout Elements",
+					fragmentName = "Container");
+			}
+
+			task ("Add a Heading fragment into Container") {
+				PageEditor.addElementToContainer(
+					collectionName = "Basic Components",
+					fragmentName = "Heading",
+					navTab = "Fragments");
+			}
+		}
+
+		task ("When the Page creator hides the Container from Site Search Results") {
+			PageEditor.editLayoutContainer(
+				hideFromSiteSearchResults = "true",
+				panel = "Advanced");
+		}
+
+		task ("Then the Page creator could view warning message on Advanced panel of Heading fragment") {
+			PageEditor.gotoAdvanced(fragmentName = "Heading");
+
+			AssertTextEquals(
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_SECONDARY_TEXT",
+				value1 = "This configuration is inherited.");
+		}
+
+		task ("When the Page creator click the Go to parent fragment to edit link") {
+			Button.click(button = "Go to parent fragment to edit.");
+		}
+
+		task ("Then the Page creator should access to the Advanced panel of Container") {
+			AssertVisible(
+				key_fieldLabel = "HTML Tag",
+				locator1 = "FormFields#LABEL");
+
+			PageEditor.viewFragmentHeaderVisible(fragmentName = "Container");
+		}
+	}
+
+}

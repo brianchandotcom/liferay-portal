@@ -172,6 +172,16 @@ export function useSelector(selector, compareEqual = DEFAULT_COMPARE_EQUAL) {
 	return useSelectorCallback(selector, [], compareEqual);
 }
 
+export function useSelectorRef(selector) {
+	const ref = useRef(null);
+
+	useSelector((state) => {
+		ref.current = selector(state);
+	});
+
+	return ref;
+}
+
 function useThunk([state, dispatch]) {
 	const isMounted = useIsMounted();
 	const stateRef = useRef(state);

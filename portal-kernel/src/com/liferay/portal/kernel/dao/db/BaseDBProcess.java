@@ -509,12 +509,10 @@ public abstract class BaseDBProcess implements DBProcess {
 				return null;
 			}
 
-			return method.invoke(_getConnection(), args);
-		}
-
-		private Connection _getConnection() {
-			return _connectionMap.computeIfAbsent(
-				Thread.currentThread(), thread -> _getConnection());
+			return method.invoke(
+				_connectionMap.computeIfAbsent(
+					Thread.currentThread(), thread -> _getConnection()),
+				args);
 		}
 
 		private final Map<Thread, Connection> _connectionMap =

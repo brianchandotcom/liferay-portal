@@ -274,6 +274,7 @@ paths:
             tags: ["ObjectEntry"]
     "/{currentObjectEntryId}/{objectRelationshipName}/{relatedObjectEntryId}":
         put:
+            operationId: putCurrentObjectEntry
             parameters:
                 - in: path
                   name: currentObjectEntryId

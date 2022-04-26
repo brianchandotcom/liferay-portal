@@ -37,7 +37,7 @@ String sectionName = StringPool.BLANK;
 			fieldPrefix="settings"
 			fieldPrefixSeparator="--"
 			name="adminEmailUserAddedSubject"
-			xml='<%= LocalizationUtil.getLocalizationXmlFromPreferences(companyPortletPreferences, renderRequest, "adminEmailUserAddedSubject", "settings", ContentUtil.get(PortalClassLoaderUtil.getClassLoader(), PropsValues.ADMIN_EMAIL_USER_ADDED_SUBJECT)) %>'
+			xml='<%= LocalizationUtil.getLocalizationXmlFromPreferences(companyPortletPreferences, renderRequest, "adminEmailUserAddedSubject", "settings", StringUtil.read(PortalClassLoaderUtil.getClassLoader(), PropsValues.ADMIN_EMAIL_USER_ADDED_SUBJECT)) %>'
 		/>
 	</aui:field-wrapper>
 
@@ -45,7 +45,7 @@ String sectionName = StringPool.BLANK;
 
 	<liferay-frontend:email-notification-settings
 		bodyLabel='<%= LanguageUtil.get(resourceBundle, "body-without-password") %>'
-		emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(companyPortletPreferences, renderRequest, "adminEmailUserAddedNoPasswordBody", "settings", ContentUtil.get(PortalClassLoaderUtil.getClassLoader(), PropsValues.ADMIN_EMAIL_USER_ADDED_NO_PASSWORD_BODY)) %>'
+		emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(companyPortletPreferences, renderRequest, "adminEmailUserAddedNoPasswordBody", "settings", StringUtil.read(PortalClassLoaderUtil.getClassLoader(), PropsValues.ADMIN_EMAIL_USER_ADDED_NO_PASSWORD_BODY)) %>'
 		emailParam="adminEmailUserAddedNoPassword"
 		fieldPrefix="settings"
 		helpMessage='<%= LanguageUtil.get(resourceBundle, "account-created-notification-body-without-password-help") %>'
@@ -57,7 +57,7 @@ String sectionName = StringPool.BLANK;
 
 	<liferay-frontend:email-notification-settings
 		bodyLabel='<%= LanguageUtil.get(resourceBundle, "body-with-password-link") %>'
-		emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(companyPortletPreferences, renderRequest, "adminEmailUserAddedResetPasswordBody", "settings", ContentUtil.get(PortalClassLoaderUtil.getClassLoader(), PropsValues.ADMIN_EMAIL_USER_ADDED_RESET_PASSWORD_BODY)) %>'
+		emailBody='<%= LocalizationUtil.getLocalizationXmlFromPreferences(companyPortletPreferences, renderRequest, "adminEmailUserAddedResetPasswordBody", "settings", StringUtil.read(PortalClassLoaderUtil.getClassLoader(), PropsValues.ADMIN_EMAIL_USER_ADDED_RESET_PASSWORD_BODY)) %>'
 		emailParam="adminEmailUserAddedResetPassword"
 		fieldPrefix="settings"
 		helpMessage='<%= LanguageUtil.get(resourceBundle, "account-created-notification-body-with-password-reset-help") %>'

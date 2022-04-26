@@ -40,7 +40,6 @@ dependencies {
 	compileOnly project(":apps:layout:layout-prototype-api")
 	compileOnly project(":apps:layout:layout-seo-api")
 	compileOnly project(":apps:layout:layout-taglib")
-	compileOnly project(":apps:petra:petra-content")
 	compileOnly project(":apps:petra:petra-portlet-url-builder")
 	compileOnly project(":apps:portal:portal-aop-api")
 	compileOnly project(":apps:product-navigation:product-navigation-control-menu-api")

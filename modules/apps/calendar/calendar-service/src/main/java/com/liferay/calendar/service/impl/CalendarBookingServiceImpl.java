@@ -23,7 +23,6 @@ import com.liferay.calendar.service.CalendarService;
 import com.liferay.calendar.service.base.CalendarBookingServiceBaseImpl;
 import com.liferay.calendar.util.JCalendarUtil;
 import com.liferay.calendar.workflow.constants.CalendarBookingWorkflowConstants;
-import com.liferay.petra.content.ContentUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -49,6 +48,8 @@ import com.liferay.rss.model.SyndFeed;
 import com.liferay.rss.model.SyndLink;
 import com.liferay.rss.model.SyndModelFactory;
 import com.liferay.rss.util.RSSUtil;
+
+import java.io.IOException;
 
 import java.text.Format;
 
@@ -967,9 +968,18 @@ public class CalendarBookingServiceImpl extends CalendarBookingServiceBaseImpl {
 			return calendarBooking.getTitle(themeDisplay.getLocale());
 		}
 
-		String content = ContentUtil.get(
-			CalendarServiceConfigurationValues.class.getClassLoader(),
-			CalendarServiceConfigurationValues.CALENDAR_RSS_TEMPLATE);
+		String content = null;
+
+		try {
+			content = StringUtil.read(
+				CalendarServiceConfigurationValues.class.getClassLoader(),
+				CalendarServiceConfigurationValues.CALENDAR_RSS_TEMPLATE);
+		}
+		catch (IOException ioException) {
+			_log.error(
+				"Unable to read the content for " +
+					CalendarServiceConfigurationValues.CALENDAR_RSS_TEMPLATE);
+		}
 
 		TimeZone timeZone = themeDisplay.getTimeZone();
 

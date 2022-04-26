@@ -30,7 +30,7 @@ import com.liferay.mail.kernel.template.MailTemplate;
 import com.liferay.mail.kernel.template.MailTemplateContext;
 import com.liferay.mail.kernel.template.MailTemplateContextBuilder;
 import com.liferay.mail.kernel.template.MailTemplateFactoryUtil;
-import com.liferay.petra.content.ContentUtil;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -565,8 +565,17 @@ public class AnnouncementsEntryLocalServiceImpl
 
 		Class<?> clazz = getClass();
 
-		String body = ContentUtil.get(
-			clazz.getClassLoader(), PropsValues.ANNOUNCEMENTS_EMAIL_BODY);
+		String body = null;
+
+		try {
+			body = StringUtil.read(
+				clazz.getClassLoader(), PropsValues.ANNOUNCEMENTS_EMAIL_BODY);
+		}
+		catch (IOException ioException) {
+			_log.error(
+				"Unable to read the content for: " +
+					PropsValues.ANNOUNCEMENTS_EMAIL_BODY);
+		}
 
 		String fromAddress = PrefsPropsUtil.getStringFromNames(
 			entry.getCompanyId(), PropsKeys.ANNOUNCEMENTS_EMAIL_FROM_ADDRESS,
@@ -574,8 +583,19 @@ public class AnnouncementsEntryLocalServiceImpl
 		String fromName = PrefsPropsUtil.getStringFromNames(
 			entry.getCompanyId(), PropsKeys.ANNOUNCEMENTS_EMAIL_FROM_NAME,
 			PropsKeys.ADMIN_EMAIL_FROM_NAME);
-		String subject = ContentUtil.get(
-			clazz.getClassLoader(), PropsValues.ANNOUNCEMENTS_EMAIL_SUBJECT);
+
+		String subject = null;
+
+		try {
+			subject = StringUtil.read(
+				clazz.getClassLoader(),
+				PropsValues.ANNOUNCEMENTS_EMAIL_SUBJECT);
+		}
+		catch (IOException ioException) {
+			_log.error(
+				"Unable to read the content for: " +
+					PropsValues.ANNOUNCEMENTS_EMAIL_SUBJECT);
+		}
 
 		Company company = _companyLocalService.getCompany(entry.getCompanyId());
 

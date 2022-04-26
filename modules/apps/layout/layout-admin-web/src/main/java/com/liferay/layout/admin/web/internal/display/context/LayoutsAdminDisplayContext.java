@@ -30,9 +30,9 @@ import com.liferay.layout.util.comparator.LayoutCreateDateComparator;
 import com.liferay.layout.util.comparator.LayoutRelevanceComparator;
 import com.liferay.layout.util.template.LayoutConverter;
 import com.liferay.layout.util.template.LayoutConverterRegistry;
-import com.liferay.petra.content.ContentUtil;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -91,6 +91,8 @@ import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalServiceUtil;
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.taglib.security.PermissionsURLTag;
+
+import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -1909,17 +1911,33 @@ public class LayoutsAdminDisplayContext {
 		LayoutSet layoutSet = getSelLayoutSet();
 
 		if (layoutSet != null) {
-			return GetterUtil.getString(
-				layoutSet.getSettingsProperty(
-					layoutSet.isPrivateLayout() + "-robots.txt"),
-				ContentUtil.get(
-					RobotsUtil.class.getClassLoader(),
-					PropsValues.ROBOTS_TXT_WITH_SITEMAP));
+			try {
+				return GetterUtil.getString(
+					layoutSet.getSettingsProperty(
+						layoutSet.isPrivateLayout() + "-robots.txt"),
+					StringUtil.read(
+						RobotsUtil.class.getClassLoader(),
+						PropsValues.ROBOTS_TXT_WITH_SITEMAP));
+			}
+			catch (IOException ioException) {
+				_log.error(
+					"Unable to read the content for: " +
+						PropsValues.ROBOTS_TXT_WITH_SITEMAP);
+			}
 		}
 
-		return ContentUtil.get(
-			RobotsUtil.class.getClassLoader(),
-			PropsValues.ROBOTS_TXT_WITHOUT_SITEMAP);
+		try {
+			return StringUtil.read(
+				RobotsUtil.class.getClassLoader(),
+				PropsValues.ROBOTS_TXT_WITHOUT_SITEMAP);
+		}
+		catch (IOException ioException) {
+			_log.error(
+				"Unable to read the content for: " +
+					PropsValues.ROBOTS_TXT_WITHOUT_SITEMAP);
+
+			return null;
+		}
 	}
 
 	private String _getThemeId() {

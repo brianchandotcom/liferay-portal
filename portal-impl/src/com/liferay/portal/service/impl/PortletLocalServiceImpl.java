@@ -17,7 +17,6 @@ package com.liferay.portal.service.impl;
 import com.liferay.admin.kernel.util.PortalMyAccountApplicationType;
 import com.liferay.expando.kernel.model.CustomAttributesDisplay;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
-import com.liferay.petra.content.ContentUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -108,6 +107,8 @@ import com.liferay.portlet.UndeployedPortlet;
 import com.liferay.portlet.extra.config.ExtraPortletAppConfig;
 import com.liferay.portlet.extra.config.ExtraPortletAppConfigRegistry;
 import com.liferay.util.JS;
+
+import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -1279,9 +1280,15 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		if (xml == null) {
 			Class<?> clazz = getClass();
 
-			xml = ContentUtil.get(
-				clazz.getClassLoader(),
-				"com/liferay/portal/deploy/dependencies/liferay-display.xml");
+			String filePath =
+				"com/liferay/portal/deploy/dependencies/liferay-display.xml";
+
+			try {
+				xml = StringUtil.read(clazz.getClassLoader(), filePath);
+			}
+			catch (IOException ioException) {
+				_log.error("Unable to read the content for: " + filePath);
+			}
 		}
 
 		Document document = UnsecureSAXReaderUtil.read(xml, true);

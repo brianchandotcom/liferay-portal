@@ -15,8 +15,8 @@
 package com.liferay.flags.internal.messaging;
 
 import com.liferay.flags.configuration.FlagsGroupServiceConfiguration;
-import com.liferay.petra.content.ContentUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -170,10 +170,10 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 		String fromName = flagsGroupServiceConfiguration.emailFromName();
 		String fromAddress = flagsGroupServiceConfiguration.emailFromAddress();
 
-		String subject = ContentUtil.get(
+		String subject = StringUtil.read(
 			FlagsRequestMessageListener.class.getClassLoader(),
 			flagsGroupServiceConfiguration.emailSubject());
-		String body = ContentUtil.get(
+		String body = StringUtil.read(
 			FlagsRequestMessageListener.class.getClassLoader(),
 			flagsGroupServiceConfiguration.emailBody());
 

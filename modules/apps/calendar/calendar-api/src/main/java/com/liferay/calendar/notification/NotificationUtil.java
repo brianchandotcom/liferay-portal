@@ -17,8 +17,8 @@ package com.liferay.calendar.notification;
 import com.liferay.calendar.configuration.CalendarServiceConfigurationKeys;
 import com.liferay.calendar.configuration.CalendarServiceConfigurationUtil;
 import com.liferay.calendar.model.CalendarNotificationTemplate;
-import com.liferay.petra.content.ContentUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
@@ -44,7 +44,7 @@ public class NotificationUtil {
 		String templatePath = CalendarServiceConfigurationUtil.get(
 			propertyName, filter);
 
-		return ContentUtil.get(
+		return StringUtil.read(
 			NotificationUtil.class.getClassLoader(), templatePath);
 	}
 

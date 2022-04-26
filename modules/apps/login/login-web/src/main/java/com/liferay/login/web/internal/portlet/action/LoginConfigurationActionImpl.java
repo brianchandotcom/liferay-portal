@@ -15,14 +15,18 @@
 package com.liferay.login.web.internal.portlet.action;
 
 import com.liferay.login.web.constants.LoginPortletKeys;
-import com.liferay.petra.content.ContentUtil;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.util.PropsValues;
+
+import java.io.IOException;
 
 import java.util.Enumeration;
 
@@ -56,18 +60,33 @@ public class LoginConfigurationActionImpl extends DefaultConfigurationAction {
 		String languageId = LocaleUtil.toLanguageId(
 			LocaleUtil.getSiteDefault());
 
-		removeDefaultValue(
-			portletRequest, portletPreferences,
-			"emailPasswordResetBody_" + languageId,
-			ContentUtil.get(
-				PortalClassLoaderUtil.getClassLoader(),
-				PropsValues.ADMIN_EMAIL_PASSWORD_RESET_BODY));
-		removeDefaultValue(
-			portletRequest, portletPreferences,
-			"emailPasswordResetSubject_" + languageId,
-			ContentUtil.get(
-				PortalClassLoaderUtil.getClassLoader(),
-				PropsValues.ADMIN_EMAIL_PASSWORD_RESET_SUBJECT));
+		try {
+			removeDefaultValue(
+				portletRequest, portletPreferences,
+				"emailPasswordResetBody_" + languageId,
+				StringUtil.read(
+					PortalClassLoaderUtil.getClassLoader(),
+					PropsValues.ADMIN_EMAIL_PASSWORD_RESET_BODY));
+		}
+		catch (IOException ioException) {
+			_log.error(
+				"Unable to read the content for: " +
+					PropsValues.ADMIN_EMAIL_PASSWORD_RESET_BODY);
+		}
+
+		try {
+			removeDefaultValue(
+				portletRequest, portletPreferences,
+				"emailPasswordResetSubject_" + languageId,
+				StringUtil.read(
+					PortalClassLoaderUtil.getClassLoader(),
+					PropsValues.ADMIN_EMAIL_PASSWORD_RESET_SUBJECT));
+		}
+		catch (IOException ioException) {
+			_log.error(
+				"Unable to read the content for: " +
+					PropsValues.ADMIN_EMAIL_PASSWORD_RESET_SUBJECT);
+		}
 
 		String[] discardLegacyKeys = ParamUtil.getStringValues(
 			portletRequest, "discardLegacyKey");
@@ -100,5 +119,8 @@ public class LoginConfigurationActionImpl extends DefaultConfigurationAction {
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		LoginConfigurationActionImpl.class);
 
 }

@@ -368,40 +368,46 @@ public abstract class BaseDBProcess implements DBProcess {
 
 	protected Connection connection;
 
-	private Connection _getConnection() throws Exception {
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
+	private Connection _getConnection() {
+		try {
+			Bundle bundle = FrameworkUtil.getBundle(getClass());
 
-		if (bundle != null) {
-			BundleContext bundleContext = bundle.getBundleContext();
+			if (bundle != null) {
+				BundleContext bundleContext = bundle.getBundleContext();
 
-			Collection<ServiceReference<DataSource>> serviceReferences =
-				bundleContext.getServiceReferences(
-					DataSource.class,
-					StringBundler.concat(
-						"(origin.bundle.symbolic.name=",
-						bundle.getSymbolicName(), ")"));
+				Collection<ServiceReference<DataSource>> serviceReferences =
+					bundleContext.getServiceReferences(
+						DataSource.class,
+						StringBundler.concat(
+							"(origin.bundle.symbolic.name=",
+							bundle.getSymbolicName(), ")"));
 
-			Iterator<ServiceReference<DataSource>> iterator =
-				serviceReferences.iterator();
+				Iterator<ServiceReference<DataSource>> iterator =
+					serviceReferences.iterator();
 
-			if (iterator.hasNext()) {
-				ServiceReference<DataSource> serviceReference = iterator.next();
+				if (iterator.hasNext()) {
+					ServiceReference<DataSource> serviceReference =
+						iterator.next();
 
-				DataSource dataSource = bundleContext.getService(
-					serviceReference);
+					DataSource dataSource = bundleContext.getService(
+						serviceReference);
 
-				try {
-					if (dataSource != null) {
-						return dataSource.getConnection();
+					try {
+						if (dataSource != null) {
+							return dataSource.getConnection();
+						}
+					}
+					finally {
+						bundleContext.ungetService(serviceReference);
 					}
 				}
-				finally {
-					bundleContext.ungetService(serviceReference);
-				}
 			}
-		}
 
-		return DataAccess.getConnection();
+			return DataAccess.getConnection();
+		}
+		catch (Exception exception) {
+			return ReflectionUtil.throwException(exception);
+		}
 	}
 
 	private <T> void _processConcurrently(

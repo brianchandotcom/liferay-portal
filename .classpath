@@ -3,7 +3,6 @@
 	<classpathentry excluding="**/.svn/**|.svn/" kind="src" path="definitions"/>
 	<classpathentry excluding="**/.svn/**|.svn/" kind="src" path="modules/core/osgi-service-tracker-collections/src/main/java"/>
 	<classpathentry excluding="**/.svn/**|.svn/" kind="src" path="modules/apps/petra/petra-content/src/main/java"/>
-	<classpathentry excluding="**/.svn/**|.svn/" kind="src" path="modules/apps/petra/petra-encryptor/src/main/java"/>
 	<classpathentry excluding="**/.svn/**|.svn/" kind="src" path="modules/apps/petra/petra-log4j/src/main/java"/>
 	<classpathentry excluding="**/.svn/**|.svn/" kind="src" path="modules/apps/petra/petra-mail/src/main/java"/>
 	<classpathentry excluding="**/.svn/**|.svn/" kind="src" path="modules/apps/petra/petra-portlet-url-builder/src/main/java"/>

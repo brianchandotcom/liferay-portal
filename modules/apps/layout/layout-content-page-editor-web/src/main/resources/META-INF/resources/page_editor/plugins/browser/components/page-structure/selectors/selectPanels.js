@@ -122,6 +122,7 @@ export const PANELS = {
 		component: FormAdvancedPanel,
 		label: Liferay.Language.get('advanced'),
 		priority: 0,
+		type: PANEL_TYPES.advanced,
 	},
 	[PANEL_IDS.formGeneral]: {
 		component: FormGeneralPanel,

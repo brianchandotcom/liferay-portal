@@ -14,6 +14,7 @@
 
 package com.liferay.fragment.entry.processor.editable;
 
+import com.liferay.asset.info.display.contributor.util.ContentAccessorUtil;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.entry.processor.editable.mapper.EditableElementMapper;
 import com.liferay.fragment.entry.processor.editable.parser.EditableElementParser;
@@ -30,11 +31,16 @@ import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.template.StringTemplateResource;
+import com.liferay.portal.kernel.template.Template;
+import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -224,7 +230,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 						value = editableElementParser.parseFieldValue(
 							fieldValue);
 
-						value = _fragmentEntryProcessorHelper.processTemplate(
+						value = _processTemplate(
 							value, fragmentEntryProcessorContext);
 					}
 					else {
@@ -252,7 +258,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 					value = editableElementParser.parseFieldValue(fieldValue);
 
-					value = _fragmentEntryProcessorHelper.processTemplate(
+					value = _processTemplate(
 						value, fragmentEntryProcessorContext);
 				}
 				else {
@@ -277,7 +283,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 					value = editableElementParser.parseFieldValue(fieldValue);
 
-					value = _fragmentEntryProcessorHelper.processTemplate(
+					value = _processTemplate(
 						value, fragmentEntryProcessorContext);
 				}
 				else {
@@ -490,6 +496,31 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		}
 
 		return false;
+	}
+
+	private String _processTemplate(
+			String html,
+			FragmentEntryProcessorContext fragmentEntryProcessorContext)
+		throws PortalException {
+
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+
+		Template template = TemplateManagerUtil.getTemplate(
+			TemplateConstants.LANG_TYPE_FTL,
+			new StringTemplateResource("template_id", "[#ftl] " + html), true);
+
+		template.prepareTaglib(
+			fragmentEntryProcessorContext.getHttpServletRequest(),
+			fragmentEntryProcessorContext.getHttpServletResponse());
+
+		template.put(TemplateConstants.WRITER, unsyncStringWriter);
+		template.put("contentAccessorUtil", ContentAccessorUtil.getInstance());
+
+		template.prepare(fragmentEntryProcessorContext.getHttpServletRequest());
+
+		template.processTemplate(unsyncStringWriter);
+
+		return unsyncStringWriter.toString();
 	}
 
 	private void _validateAttribute(Element element, String attributeName)

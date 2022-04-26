@@ -70,11 +70,6 @@ public interface FragmentEntryProcessorHelper {
 		InfoItemFieldValuesProvider infoItemFieldValuesProvider, Locale locale,
 		Object object);
 
-	public Object getMappedLayoutValue(
-			JSONObject jsonObject,
-			FragmentEntryProcessorContext fragmentEntryProcessorContext)
-		throws PortalException;
-
 	public boolean isAssetDisplayPage(String mode);
 
 	public boolean isMapped(JSONObject jsonObject);
@@ -82,10 +77,5 @@ public interface FragmentEntryProcessorHelper {
 	public boolean isMappedCollection(JSONObject jsonObject);
 
 	public boolean isMappedLayout(JSONObject jsonObject);
-
-	public String processTemplate(
-			String html,
-			FragmentEntryProcessorContext fragmentEntryProcessorContext)
-		throws PortalException;
 
 }

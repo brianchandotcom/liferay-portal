@@ -1010,6 +1010,105 @@ definition {
 			displayDate = "${displayDate}");
 	}
 
+	@description = "LPS-115305 - Verify that the asset creator can view the workflow notifications after the task is assigned to another user."
+	@priority = "3"
+	test CanViewWorkflowNotificationsAssignedToOtherUser {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		Navigator.openURL();
+
+		for (var userScreenName : list "author1,author2") {
+			JSONUser.addUser(
+				userEmailAddress = "${userScreenName}ea@liferay.com",
+				userFirstName = "${userScreenName}",
+				userLastName = "${userScreenName}",
+				userScreenName = "${userScreenName}");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "${userScreenName}ea@liferay.com");
+
+			JSONUser.addUserToSite(
+				groupName = "Guest",
+				userEmailAddress = "${userScreenName}ea@liferay.com");
+
+			JSONRole.assignSiteRoleToUser(
+				groupName = "Guest",
+				roleTitle = "Site Content Reviewer",
+				userEmailAddress = "${userScreenName}ea@liferay.com");
+		}
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		Role.definePermissionCP(
+			permissionDefinitionKey = "SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX",
+			permissionDefinitionValue = "Add Entry",
+			permissionNavigationKey = "SITE_ADMIN_CONTENT_BLOGS",
+			permissionNavigationValue = "Blogs",
+			roleTitle = "Site Member",
+			roleType = "Site");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Blogs Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Blogs Page",
+			widgetName = "Blogs");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "author1ea@liferay.com",
+			userLoginFullName = "author1 author1");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		Blogs.addWithWorkflow(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		Navigator.openURL();
+
+		Notifications.gotoNotifications();
+
+		AssertClick(
+			locator1 = "Notifications#NOTIFICATIONS_WORKFLOW_TITLE",
+			value1 = "author1 author1 sent you a Blogs Entry for review in the workflow.");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "author2ea@liferay.com",
+			userLoginFullName = "author2 author2");
+
+		Navigator.openURL();
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "author1ea@liferay.com",
+			userLoginFullName = "author1 author1");
+
+		Navigator.gotoNotifications();
+
+		AssertClick(
+			locator1 = "Notifications#NOTIFICATIONS_WORKFLOW_TITLE",
+			value1 = "author1 author1 sent you a Blogs Entry for review in the workflow.");
+	}
+
 	@description = "Verify that in Update Due Date, the due date is required"
 	@priority = "3"
 	test DueDateIsRequired {

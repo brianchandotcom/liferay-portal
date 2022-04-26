@@ -1,5 +1,4 @@
 com/liferay/document/library/kernel/model/DLFileVersion.getExtraSettingsProperties()Lcom/liferay/portal/kernel/util/UnicodeProperties;:SAFE
-com/liferay/petra/log4j/Levels.ALL_LEVELS:SAFE
 com/liferay/portal/convert/ConvertProcess.getConfigurationErrorMessage()Ljava/lang/String;:SAFE
 com/liferay/portal/convert/ConvertProcess.getDescription()Ljava/lang/String;:SAFE
 com/liferay/portal/convert/ConvertProcess.getParameterDescription()Ljava/lang/String;:SAFE
@@ -10,5 +9,6 @@ com/liferay/portal/kernel/servlet/SessionMessages.get(UNKNOWN,"scriptOutput"):SA
 com/liferay/portal/kernel/util/ReleaseInfo.getReleaseInfo()Ljava/lang/String;:SAFE
 com/liferay/portal/kernel/util/StringUtil.split(Ljava/lang/String;C)[Ljava/lang/String;:1
 com/liferay/portal/kernel/util/StringUtil.upperCaseFirstLetter(Ljava/lang/String;)Ljava/lang/String;:0
+com/liferay/portal/log4j/Levels.ALL_LEVELS:SAFE
 com/liferay/taglib/aui/base/BaseInputTag.setValue(Ljava/lang/Object;)V:0#0
 com/liferay/taglib/aui/base/BaseOptionTag.setLabel(Ljava/lang/Object;)V:0#0

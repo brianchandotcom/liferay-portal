@@ -10702,7 +10702,6 @@ com/liferay/journal/model/JournalArticleDisplay.getContent()Ljava/lang/String;:S
 com/liferay/knowledge/base/model/KBArticleModel.getContent()Ljava/lang/String;:SAFE
 com/liferay/knowledge/base/model/KBTemplateModel.getContent()Ljava/lang/String;:SAFE
 com/liferay/knowledge/base/web/internal/util/KBArticleAssetEntriesUtil.getURL(Ljavax/servlet/http/HttpServletRequest;Lcom/liferay/portal/kernel/theme/ThemeDisplay;Lcom/liferay/asset/kernel/model/AssetRendererFactory;Lcom/liferay/asset/kernel/model/AssetRenderer;)Ljava/lang/String;:SAFE
-com/liferay/petra/log4j/Levels.ALL_LEVELS:SAFE
 com/liferay/petra/string/StringBundler.toString():SAFE@com.liferay.portal.workflow.kaleo.designer.web.internal.upgrade.v1_0_2.UpgradeKaleoDefinition
 com/liferay/polls/model/PollsChoice.getDescription(Ljava/util/Locale;)Ljava/lang/String;:1
 com/liferay/polls/model/PollsChoice.getName()Ljava/lang/String;:0
@@ -10749,6 +10748,7 @@ com/liferay/portal/kernel/util/StringUtil.toLowerCase(Ljava/lang/String;)Ljava/l
 com/liferay/portal/kernel/util/StringUtil.upperCaseFirstLetter(Ljava/lang/String;)Ljava/lang/String;:0
 com/liferay/portal/kernel/workflow/WorkflowConstants.getStatusLabel(I)Ljava/lang/String;:SAFE
 com/liferay/portal/kernel/workflow/WorkflowHandler.getIconCssClass()Ljava/lang/String;:SAFE
+com/liferay/portal/log4j/Levels.ALL_LEVELS:SAFE
 com/liferay/portal/workflow/kaleo/definition/exception/KaleoDefinitionValidationException$EmptyNotificationTemplate.getNode()Ljava/lang/String;:SAFE
 com/liferay/portal/workflow/kaleo/definition/exception/KaleoDefinitionValidationException$MultipleInitialStateNodes.getState1()Ljava/lang/String;:SAFE
 com/liferay/portal/workflow/kaleo/definition/exception/KaleoDefinitionValidationException$MultipleInitialStateNodes.getState2()Ljava/lang/String;:SAFE

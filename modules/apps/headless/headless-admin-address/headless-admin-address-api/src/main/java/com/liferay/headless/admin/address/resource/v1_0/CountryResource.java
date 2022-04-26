@@ -62,6 +62,16 @@ public interface CountryResource {
 			Boolean active, String search, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
+	public Country getCountryByA2(String a2) throws Exception;
+
+	public Country getCountryByA3(String a3) throws Exception;
+
+	public Country getCountryByName(String name) throws Exception;
+
+	public Country getCountryByNumber(Integer number) throws Exception;
+
+	public Country getCountry(Long countryId) throws Exception;
+
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
 	}

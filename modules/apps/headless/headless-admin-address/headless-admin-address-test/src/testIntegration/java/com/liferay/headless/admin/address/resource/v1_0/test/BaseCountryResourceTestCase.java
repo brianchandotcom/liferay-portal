@@ -434,6 +434,320 @@ public abstract class BaseCountryResourceTestCase {
 		return testGraphQLCountry_addCountry();
 	}
 
+	@Test
+	public void testGetCountryByA2() throws Exception {
+		Country postCountry = testGetCountryByA2_addCountry();
+
+		Country getCountry = countryResource.getCountryByA2(
+			postCountry.getA2());
+
+		assertEquals(postCountry, getCountry);
+		assertValid(getCountry);
+	}
+
+	protected Country testGetCountryByA2_addCountry() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetCountryByA2() throws Exception {
+		Country country = testGraphQLGetCountryByA2_addCountry();
+
+		Assert.assertTrue(
+			equals(
+				country,
+				CountrySerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"countryByA2",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"a2",
+											"\"" + country.getA2() + "\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/countryByA2"))));
+	}
+
+	@Test
+	public void testGraphQLGetCountryByA2NotFound() throws Exception {
+		String irrelevantA2 = "\"" + RandomTestUtil.randomString() + "\"";
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"countryByA2",
+						new HashMap<String, Object>() {
+							{
+								put("a2", irrelevantA2);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Country testGraphQLGetCountryByA2_addCountry() throws Exception {
+		return testGraphQLCountry_addCountry();
+	}
+
+	@Test
+	public void testGetCountryByA3() throws Exception {
+		Country postCountry = testGetCountryByA3_addCountry();
+
+		Country getCountry = countryResource.getCountryByA3(
+			postCountry.getA3());
+
+		assertEquals(postCountry, getCountry);
+		assertValid(getCountry);
+	}
+
+	protected Country testGetCountryByA3_addCountry() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetCountryByA3() throws Exception {
+		Country country = testGraphQLGetCountryByA3_addCountry();
+
+		Assert.assertTrue(
+			equals(
+				country,
+				CountrySerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"countryByA3",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"a3",
+											"\"" + country.getA3() + "\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/countryByA3"))));
+	}
+
+	@Test
+	public void testGraphQLGetCountryByA3NotFound() throws Exception {
+		String irrelevantA3 = "\"" + RandomTestUtil.randomString() + "\"";
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"countryByA3",
+						new HashMap<String, Object>() {
+							{
+								put("a3", irrelevantA3);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Country testGraphQLGetCountryByA3_addCountry() throws Exception {
+		return testGraphQLCountry_addCountry();
+	}
+
+	@Test
+	public void testGetCountryByName() throws Exception {
+		Country postCountry = testGetCountryByName_addCountry();
+
+		Country getCountry = countryResource.getCountryByName(
+			postCountry.getName());
+
+		assertEquals(postCountry, getCountry);
+		assertValid(getCountry);
+	}
+
+	protected Country testGetCountryByName_addCountry() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetCountryByName() throws Exception {
+		Country country = testGraphQLGetCountryByName_addCountry();
+
+		Assert.assertTrue(
+			equals(
+				country,
+				CountrySerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"countryByName",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"name",
+											"\"" + country.getName() + "\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/countryByName"))));
+	}
+
+	@Test
+	public void testGraphQLGetCountryByNameNotFound() throws Exception {
+		String irrelevantName = "\"" + RandomTestUtil.randomString() + "\"";
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"countryByName",
+						new HashMap<String, Object>() {
+							{
+								put("name", irrelevantName);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Country testGraphQLGetCountryByName_addCountry()
+		throws Exception {
+
+		return testGraphQLCountry_addCountry();
+	}
+
+	@Test
+	public void testGetCountryByNumber() throws Exception {
+		Country postCountry = testGetCountryByNumber_addCountry();
+
+		Country getCountry = countryResource.getCountryByNumber(
+			postCountry.getNumber());
+
+		assertEquals(postCountry, getCountry);
+		assertValid(getCountry);
+	}
+
+	protected Country testGetCountryByNumber_addCountry() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetCountryByNumber() throws Exception {
+		Country country = testGraphQLGetCountryByNumber_addCountry();
+
+		Assert.assertTrue(
+			equals(
+				country,
+				CountrySerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"countryByNumber",
+								new HashMap<String, Object>() {
+									{
+										put("number", country.getNumber());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/countryByNumber"))));
+	}
+
+	@Test
+	public void testGraphQLGetCountryByNumberNotFound() throws Exception {
+		Integer irrelevantNumber = RandomTestUtil.randomInt();
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"countryByNumber",
+						new HashMap<String, Object>() {
+							{
+								put("number", irrelevantNumber);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Country testGraphQLGetCountryByNumber_addCountry()
+		throws Exception {
+
+		return testGraphQLCountry_addCountry();
+	}
+
+	@Test
+	public void testGetCountry() throws Exception {
+		Country postCountry = testGetCountry_addCountry();
+
+		Country getCountry = countryResource.getCountry(postCountry.getId());
+
+		assertEquals(postCountry, getCountry);
+		assertValid(getCountry);
+	}
+
+	protected Country testGetCountry_addCountry() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetCountry() throws Exception {
+		Country country = testGraphQLGetCountry_addCountry();
+
+		Assert.assertTrue(
+			equals(
+				country,
+				CountrySerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"country",
+								new HashMap<String, Object>() {
+									{
+										put("countryId", country.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/country"))));
+	}
+
+	@Test
+	public void testGraphQLGetCountryNotFound() throws Exception {
+		Long irrelevantCountryId = RandomTestUtil.randomLong();
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"country",
+						new HashMap<String, Object>() {
+							{
+								put("countryId", irrelevantCountryId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Country testGraphQLGetCountry_addCountry() throws Exception {
+		return testGraphQLCountry_addCountry();
+	}
+
 	protected Country testGraphQLCountry_addCountry() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");

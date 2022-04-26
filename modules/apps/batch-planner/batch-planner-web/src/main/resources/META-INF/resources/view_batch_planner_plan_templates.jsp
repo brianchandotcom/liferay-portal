@@ -54,16 +54,8 @@ BatchPlannerPlanTemplateManagementToolbarDisplayContext batchPlannerPlanTemplate
 					).build());
 				%>
 
-				<portlet:renderURL var="rowURL">
-					<portlet:param name="mvcRenderCommandName" value='<%= batchPlannerPlan.isExport() ?"/batch_planner/edit_export_batch_planner_plan" : "/batch_planner/edit_import_batch_planner_plan" %>' />
-					<portlet:param name="backURL" value="<%= currentURL %>" />
-					<portlet:param name="batchPlannerPlanId" value="<%= String.valueOf(batchPlannerPlan.getBatchPlannerPlanId()) %>" />
-					<portlet:param name="editable" value="true" />
-				</portlet:renderURL>
-
 				<liferay-ui:search-container-column-text
-					cssClass="font-weight-bold important"
-					href="<%= rowURL %>"
+					cssClass="font-weight-bold"
 					name="name"
 					value="<%= HtmlUtil.escape(batchPlannerPlan.getName()) %>"
 				/>

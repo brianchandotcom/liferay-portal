@@ -19,6 +19,7 @@ import com.liferay.headless.admin.address.client.dto.v1_0.Country;
 import com.liferay.headless.admin.address.client.pagination.Page;
 import com.liferay.headless.admin.address.client.pagination.Pagination;
 import com.liferay.headless.admin.address.client.serdes.v1_0.CountrySerDes;
+import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.service.CountryLocalService;
@@ -28,6 +29,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 
@@ -143,6 +145,55 @@ public class CountryResourceTest extends BaseCountryResourceTestCase {
 		throws Exception {
 
 		return _addCountry(country);
+	}
+
+	@Override
+	protected void testGetCountriesPageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer<EntityField, Country, Country, Exception>
+				unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		String keywords = RandomTestUtil.randomString();
+
+		Country country1 = randomCountry();
+		Country country2 = randomCountry();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(entityField, country1, country2);
+		}
+
+		country1.setName(keywords + country1.getName());
+
+		country1 = testGetCountriesPage_addCountry(country1);
+
+		country2.setName(keywords + country2.getName());
+
+		country2 = testGetCountriesPage_addCountry(country2);
+
+		for (EntityField entityField : entityFields) {
+			Page<Country> ascPage = countryResource.getCountriesPage(
+				null, keywords, Pagination.of(1, 2),
+				entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(country1, country2),
+				(List<Country>)ascPage.getItems());
+
+			Page<Country> descPage = countryResource.getCountriesPage(
+				null, keywords, Pagination.of(1, 2),
+				entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(country2, country1),
+				(List<Country>)descPage.getItems());
+		}
 	}
 
 	@Override

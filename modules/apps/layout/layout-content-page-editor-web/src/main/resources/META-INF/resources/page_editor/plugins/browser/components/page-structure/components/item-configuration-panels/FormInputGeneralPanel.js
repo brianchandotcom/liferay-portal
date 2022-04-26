@@ -131,9 +131,7 @@ export function FormInputGeneralPanel({item}) {
 	if (!formConfiguration) {
 		return (
 			<p className="alert alert-info text-center" role="alert">
-				{Liferay.Language.get(
-					'you-need-to-put-inputs-inside-a-form-item'
-				)}
+				you-need-to-put-inputs-inside-a-form-item
 			</p>
 		);
 	}
@@ -141,9 +139,7 @@ export function FormInputGeneralPanel({item}) {
 	if (!formConfiguration.classNameId || !formConfiguration.classTypeId) {
 		return (
 			<p className="alert alert-info text-center" role="alert">
-				{Liferay.Language.get(
-					'you-need-to-select-a-form-item-type-first'
-				)}
+				you-need-to-select-a-form-item-type-first
 			</p>
 		);
 	}

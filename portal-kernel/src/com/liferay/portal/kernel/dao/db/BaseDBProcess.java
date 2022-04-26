@@ -240,18 +240,12 @@ public abstract class BaseDBProcess implements DBProcess {
 	}
 
 	protected Connection getConnection() throws Exception {
-		boolean partitionConcurrencyEnabled = false;
-
 		if (GetterUtil.getBoolean(
 				PropsUtil.get("database.partition.enabled")) &&
 			GetterUtil.getBoolean(
 				PropsUtil.get("database.partition.thread.pool.enabled"),
 				true)) {
 
-			partitionConcurrencyEnabled = true;
-		}
-
-		if (partitionConcurrencyEnabled) {
 			return (Connection)ProxyUtil.newProxyInstance(
 				ClassLoader.getSystemClassLoader(),
 				new Class<?>[] {Connection.class},

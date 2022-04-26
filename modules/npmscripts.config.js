@@ -406,6 +406,7 @@ module.exports = {
 				'react-dnd-html5-backend',
 				'react-dom',
 			],
+			'frontend-js-components-web': [],
 			'frontend-js-web': [],
 			'frontend-taglib-clay': [
 				'@clayui/alert',

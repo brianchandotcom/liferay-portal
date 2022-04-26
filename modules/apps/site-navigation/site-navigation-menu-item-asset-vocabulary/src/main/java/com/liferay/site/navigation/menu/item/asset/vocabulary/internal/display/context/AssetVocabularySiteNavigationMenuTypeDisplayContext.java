@@ -99,7 +99,7 @@ public class AssetVocabularySiteNavigationMenuTypeDisplayContext {
 					return _typeSettingsUnicodeProperties.get("title");
 				}
 			).put(
-				"type", "type"
+				"type", "asset-vocabulary"
 			).put(
 				"uuid", _typeSettingsUnicodeProperties.get("uuid")
 			).build()

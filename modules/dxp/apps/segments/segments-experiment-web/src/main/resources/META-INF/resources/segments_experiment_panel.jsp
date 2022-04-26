@@ -20,7 +20,6 @@
 SegmentsExperimentDisplayContext segmentsExperimentDisplayContext = (SegmentsExperimentDisplayContext)request.getAttribute(SegmentsExperimentWebKeys.SEGMENTS_EXPERIMENT_DISPLAY_CONTEXT);
 %>
 
-
 <div class="inline-item my-5 p-5 w-100">
 	<span aria-hidden="true" class="loading-animation"></span>
 </div>
@@ -29,4 +28,3 @@ SegmentsExperimentDisplayContext segmentsExperimentDisplayContext = (SegmentsExp
 	module="js/SegmentsExperimentApp.es"
 	props="<%= segmentsExperimentDisplayContext.getData() %>"
 />
-	

@@ -37,8 +37,6 @@ import isHovered from './isHovered';
 const FIELD_TYPES = ['itemSelector', 'collectionSelector'];
 
 const FragmentWithControls = React.forwardRef(({item}, ref) => {
-	const hoveredItemType = useHoveredItemType();
-	const hoveredItemId = useHoveredItemId();
 	const [hovered, setHovered] = useState(false);
 	const selectedViewportSize = useSelector(
 		(state) => state.selectedViewportSize
@@ -51,6 +49,72 @@ const FragmentWithControls = React.forwardRef(({item}, ref) => {
 	const getPortals = useCallback((element) => getAllPortals(element), []);
 	const itemConfig = getResponsiveConfig(item.config, selectedViewportSize);
 	const [setRef, itemElement] = useSetRef(ref);
+
+	const {
+		display,
+		marginBottom,
+		marginLeft,
+		marginRight,
+		marginTop,
+		maxWidth,
+		minWidth,
+		shadow,
+		width,
+	} = itemConfig.styles;
+
+	const style = {};
+
+	style.boxShadow = getFrontendTokenValue(shadow);
+	style.display = display;
+	style.maxWidth = maxWidth;
+	style.minWidth = minWidth;
+	style.width = width;
+
+	return (
+		<>
+			<HoverHandler
+				fragmentEntryLink={fragmentEntryLink}
+				hovered={hovered}
+				setHovered={setHovered}
+			/>
+			<Topper
+				className={classNames({
+					[getLayoutDataItemTopperUniqueClassName(item.itemId)]:
+						config.featureFlagLps132571 &&
+						!hasInnerCommonStyles(fragmentEntryLink),
+					[`mb-${marginBottom}`]: isValidSpacingOption(marginBottom),
+					[`ml-${marginLeft}`]: isValidSpacingOption(marginLeft),
+					[`mr-${marginRight}`]: isValidSpacingOption(marginRight),
+					[`mt-${marginTop}`]: isValidSpacingOption(marginTop),
+					'page-editor__topper--hovered': hovered,
+				})}
+				item={item}
+				itemElement={itemElement}
+				style={style}
+			>
+				<FragmentContent
+					elementRef={setRef}
+					fragmentEntryLinkId={item.config.fragmentEntryLinkId}
+					getPortals={getPortals}
+					item={item}
+					withinTopper
+				/>
+			</Topper>
+		</>
+	);
+});
+
+FragmentWithControls.displayName = 'FragmentWithControls';
+
+FragmentWithControls.propTypes = {
+	item: getLayoutDataItemPropTypes().isRequired,
+};
+
+export default FragmentWithControls;
+
+const HoverHandler = ({fragmentEntryLink, hovered, setHovered}) => {
+	const hoveredItemType = useHoveredItemType();
+	const hoveredItemId = useHoveredItemId();
 
 	const mappedEditableValues = useMemo(() => {
 		const fieldNames = [];
@@ -91,61 +155,17 @@ const FragmentWithControls = React.forwardRef(({item}, ref) => {
 					})
 			);
 
-			setHovered(someEditableIsHovered);
+			if (hovered !== someEditableIsHovered) {
+				setHovered(someEditableIsHovered);
+			}
 		}
-	}, [hoveredItemType, hoveredItemId, mappedEditableValues]);
+	}, [
+		hoveredItemType,
+		hoveredItemId,
+		mappedEditableValues,
+		setHovered,
+		hovered,
+	]);
 
-	const {
-		display,
-		marginBottom,
-		marginLeft,
-		marginRight,
-		marginTop,
-		maxWidth,
-		minWidth,
-		shadow,
-		width,
-	} = itemConfig.styles;
-
-	const style = {};
-
-	style.boxShadow = getFrontendTokenValue(shadow);
-	style.display = display;
-	style.maxWidth = maxWidth;
-	style.minWidth = minWidth;
-	style.width = width;
-
-	return (
-		<Topper
-			className={classNames({
-				[getLayoutDataItemTopperUniqueClassName(item.itemId)]:
-					config.featureFlagLps132571 &&
-					!hasInnerCommonStyles(fragmentEntryLink),
-				[`mb-${marginBottom}`]: isValidSpacingOption(marginBottom),
-				[`ml-${marginLeft}`]: isValidSpacingOption(marginLeft),
-				[`mr-${marginRight}`]: isValidSpacingOption(marginRight),
-				[`mt-${marginTop}`]: isValidSpacingOption(marginTop),
-				'page-editor__topper--hovered': hovered,
-			})}
-			item={item}
-			itemElement={itemElement}
-			style={style}
-		>
-			<FragmentContent
-				elementRef={setRef}
-				fragmentEntryLinkId={item.config.fragmentEntryLinkId}
-				getPortals={getPortals}
-				item={item}
-				withinTopper
-			/>
-		</Topper>
-	);
-});
-
-FragmentWithControls.displayName = 'FragmentWithControls';
-
-FragmentWithControls.propTypes = {
-	item: getLayoutDataItemPropTypes().isRequired,
+	return null;
 };
-
-export default FragmentWithControls;

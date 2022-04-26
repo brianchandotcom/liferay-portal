@@ -14,12 +14,25 @@
 
 import React from 'react';
 
+import {useSelectorCallback} from '../../contexts/StoreContext';
+import isItemEmpty from '../../utils/isItemEmpty';
 import ContainerWithControls from './ContainerWithControls';
+import Root from './Root';
 
-const FormWithControls = React.forwardRef((props, ref) => (
-	<form onSubmit={(event) => event.preventDefault()} ref={ref}>
-		<ContainerWithControls {...props} />
-	</form>
-));
+const FormWithControls = React.forwardRef(({children, item, ...rest}, ref) => {
+	const isEmpty = useSelectorCallback(
+		(state) =>
+			isItemEmpty(item, state.layoutData, state.selectedViewportSize),
+		[item]
+	);
+
+	return (
+		<form onSubmit={(event) => event.preventDefault()} ref={ref}>
+			<ContainerWithControls {...rest} item={item}>
+				{isEmpty ? <Root item={item} /> : children}
+			</ContainerWithControls>
+		</form>
+	);
+});
 
 export default FormWithControls;

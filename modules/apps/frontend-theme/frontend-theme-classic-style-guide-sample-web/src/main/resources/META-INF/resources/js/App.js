@@ -63,7 +63,7 @@ const GRAYS = [
 
 const HEADINGS = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
 
-const SAMPLE_TEXT = 'The quick brown fox jumps over the lazy dog';
+const SAMPLE_TEXT = 'The quick brown fox jumps over the lazy dog.';
 
 const SHADOWS = ['shadow', 'shadow-sm', 'shadow-lg'];
 

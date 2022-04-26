@@ -19,7 +19,7 @@ import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {VIEWPORT_SIZES} from '../config/constants/viewportSizes';
 import {config} from '../config/index';
 import {useGlobalContext} from '../contexts/GlobalContext';
-import {useSelector} from '../contexts/StoreContext';
+import {useSelector, useSelectorRef} from '../contexts/StoreContext';
 import {deepEqual} from '../utils/checkDeepEqual';
 import generateStyleSheet from '../utils/generateStyleSheet';
 import {getResponsiveConfig} from '../utils/getResponsiveConfig';
@@ -36,7 +36,6 @@ const LAYOUT_DATA_ITEMS_WITH_COMMON_STYLES = [
 export default function CommonStylesManager() {
 	const stylesPerViewportRef = useRef({});
 	const masterStylesPerViewportRef = useRef({});
-	const fragmentEntryLinksRef = useRef({});
 
 	const layoutData = useSelector((state) => state.layoutData);
 	const masterLayoutData = useSelector(
@@ -46,11 +45,9 @@ export default function CommonStylesManager() {
 		(state) => state.selectedViewportSize
 	);
 
-	useSelector((state) => {
-		fragmentEntryLinksRef.current = state.fragmentEntryLinks;
-
-		return null;
-	});
+	const fragmentEntryLinksRef = useSelectorRef(
+		(state) => state.fragmentEntryLinks
+	);
 
 	const globalContext = useGlobalContext();
 
@@ -77,7 +74,12 @@ export default function CommonStylesManager() {
 			id: 'layout-common-styles',
 			styleSheet,
 		});
-	}, [layoutData.items, selectedViewportSize, globalContext]);
+	}, [
+		layoutData.items,
+		selectedViewportSize,
+		globalContext,
+		fragmentEntryLinksRef,
+	]);
 
 	useEffect(() => {
 		if (!masterLayoutData) {
@@ -106,7 +108,12 @@ export default function CommonStylesManager() {
 			id: 'layout-master-common-styles',
 			styleSheet,
 		});
-	}, [masterLayoutData, selectedViewportSize, globalContext]);
+	}, [
+		masterLayoutData,
+		selectedViewportSize,
+		globalContext,
+		fragmentEntryLinksRef,
+	]);
 
 	return null;
 }

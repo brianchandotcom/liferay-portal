@@ -33,6 +33,7 @@ import {
 import {
 	useDispatch,
 	useSelector,
+	useSelectorRef,
 } from '../../../../../app/contexts/StoreContext';
 import selectCanUpdatePageStructure from '../../../../../app/selectors/selectCanUpdatePageStructure';
 import selectSegmentsExperienceId from '../../../../../app/selectors/selectSegmentsExperienceId';
@@ -174,18 +175,13 @@ function StructureTreeNodeContent({
 	const dispatch = useDispatch();
 	const hoverItem = useHoverItem();
 	const nodeRef = useRef();
-	const layoutDataRef = useRef();
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 	const selectedViewportSize = useSelector(
 		(state) => state.selectedViewportSize
 	);
 	const selectItem = useSelectItem();
 
-	useSelector((store) => {
-		layoutDataRef.current = store.layoutData;
-
-		return null;
-	});
+	const layoutDataRef = useSelectorRef((store) => store.layoutData);
 
 	const item = {
 		children: node.children,

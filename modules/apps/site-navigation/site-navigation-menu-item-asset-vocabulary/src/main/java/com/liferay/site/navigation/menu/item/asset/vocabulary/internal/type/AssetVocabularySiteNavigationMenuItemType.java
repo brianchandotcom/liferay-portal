@@ -16,9 +16,15 @@ package com.liferay.site.navigation.menu.item.asset.vocabulary.internal.type;
 
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.asset.vocabulary.item.selector.AssetVocabularyItemSelectorReturnType;
+import com.liferay.asset.vocabulary.item.selector.criterion.AssetVocabularyItemSelectorCriterion;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.item.selector.ItemSelector;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -30,10 +36,18 @@ import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeContext;
 
+import java.io.IOException;
+
 import java.util.Locale;
 import java.util.Map;
 
+import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -85,8 +99,72 @@ public class AssetVocabularySiteNavigationMenuItemType
 	}
 
 	@Override
+	public String getAddTitle(Locale locale) {
+		return LanguageUtil.format(locale, "select-x", "vocabularies");
+	}
+
+	@Override
+	public PortletURL getAddURL(
+		RenderRequest renderRequest, RenderResponse renderResponse) {
+
+		return PortletURLBuilder.createActionURL(
+			renderResponse
+		).setActionName(
+			"/navigation_menu" +
+				"/add_asset_vocabulary_type_site_navigation_menu_items"
+		).setParameter(
+			"siteNavigationMenuItemType",
+			SiteNavigationMenuItemTypeConstants.ASSET_VOCABULARY
+		).buildPortletURL();
+	}
+
+	@Override
+	public String getIcon() {
+		return "vocabulary";
+	}
+
+	@Override
+	public String getItemSelectorURL(HttpServletRequest httpServletRequest) {
+		RenderResponse renderResponse =
+			(RenderResponse)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+		AssetVocabularyItemSelectorCriterion
+			assetVocabularyItemSelectorCriterion =
+				new AssetVocabularyItemSelectorCriterion();
+
+		assetVocabularyItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			new AssetVocabularyItemSelectorReturnType());
+		assetVocabularyItemSelectorCriterion.
+			setIncludeAncestorSiteAndDepotGroupIds(true);
+		assetVocabularyItemSelectorCriterion.setIncludeInternalVocabularies(
+			false);
+		assetVocabularyItemSelectorCriterion.setMultiSelection(
+			isMultiSelection());
+
+		return PortletURLBuilder.create(
+			_itemSelector.getItemSelectorURL(
+				RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
+				renderResponse.getNamespace() + "selectItem",
+				assetVocabularyItemSelectorCriterion)
+		).setParameter(
+			"multipleSelection", isMultiSelection()
+		).buildString();
+	}
+
+	@Override
 	public String getLabel(Locale locale) {
 		return LanguageUtil.get(locale, "vocabulary");
+	}
+
+	@Override
+	public String getName(String typeSettings) {
+		UnicodeProperties typeSettingsUnicodeProperties =
+			UnicodePropertiesBuilder.fastLoad(
+				typeSettings
+			).build();
+
+		return typeSettingsUnicodeProperties.get("title");
 	}
 
 	@Override
@@ -149,8 +227,28 @@ public class AssetVocabularySiteNavigationMenuItemType
 		return false;
 	}
 
+	@Override
+	public boolean isItemSelector() {
+		return true;
+	}
+
+	@Override
+	public boolean isMultiSelection() {
+		return true;
+	}
+
+	@Override
+	public void renderAddPage(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws IOException {
+	}
+
 	@Reference
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
+
+	@Reference
+	private ItemSelector _itemSelector;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.site.navigation.menu.item.asset.vocabulary)",

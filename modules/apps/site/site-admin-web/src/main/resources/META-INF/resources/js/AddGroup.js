@@ -18,8 +18,12 @@ export default function ({namespace}) {
 		'.add-group-form .add-group-content'
 	);
 	const footer = document.querySelector('.add-group-form .sheet-footer');
-
 	const form = document.getElementById(`${namespace}fm`);
+	const formInput = document.getElementById(`${namespace}name`);
+
+	setTimeout(() => {
+		formInput.focus();
+	}, 100);
 
 	form.addEventListener('submit', (event) => {
 		event.preventDefault();

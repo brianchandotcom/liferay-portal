@@ -88,7 +88,7 @@ public class SegmentsExperienceServiceTest {
 
 		_user = UserTestUtil.addGroupUser(_group, _role.getName());
 
-		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		_classNameId = _classNameLocalService.getClassNameId(Layout.class);
 

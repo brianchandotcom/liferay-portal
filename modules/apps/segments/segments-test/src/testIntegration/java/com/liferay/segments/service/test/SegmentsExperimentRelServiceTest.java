@@ -79,7 +79,7 @@ public class SegmentsExperimentRelServiceTest {
 
 		_user = UserTestUtil.addGroupUser(_group, _role.getName());
 
-		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		_classNameId = _classNameLocalService.getClassNameId(Layout.class);
 
@@ -118,7 +118,7 @@ public class SegmentsExperimentRelServiceTest {
 	}
 
 	private SegmentsExperience _addSegmentsExperience() throws Exception {
-		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		return SegmentsTestUtil.addSegmentsExperience(
 			_group.getGroupId(),

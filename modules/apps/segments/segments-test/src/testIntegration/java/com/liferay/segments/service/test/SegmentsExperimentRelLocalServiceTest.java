@@ -299,7 +299,7 @@ public class SegmentsExperimentRelLocalServiceTest {
 	}
 
 	private SegmentsExperience _addSegmentsExperience() throws Exception {
-		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		return SegmentsTestUtil.addSegmentsExperience(
 			_group.getGroupId(),

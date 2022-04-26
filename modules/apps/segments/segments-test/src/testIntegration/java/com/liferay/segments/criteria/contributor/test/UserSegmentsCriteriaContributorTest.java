@@ -278,7 +278,7 @@ public class UserSegmentsCriteriaContributorTest {
 
 		themeDisplay.setCompany(company);
 
-		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		themeDisplay.setLayout(layout);
 		themeDisplay.setLayoutSet(layout.getLayoutSet());

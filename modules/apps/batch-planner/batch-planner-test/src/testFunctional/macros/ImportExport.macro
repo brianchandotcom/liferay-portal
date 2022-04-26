@@ -1,5 +1,16 @@
 definition {
 
+	macro assertDownloadedFileContent {
+		var fileContent = TestCase.getTempFileContent(fileName = "${fileName}");
+
+		if (contains("${fileContent}", "${downloadedContent}")) {
+			echo("The exported file content matches the expected file content.");
+		}
+		else {
+			fail("The exported file content does not match the expected file content.");
+		}
+	}
+
 	macro assertExecutionEntry {
 		AssertElementPresent(
 			key_entityType = "${entityType}",

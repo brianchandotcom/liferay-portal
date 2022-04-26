@@ -1,0 +1,4 @@
+{
+	"articleBody": "<h2>Summary</h2>\n          <p>In preparation for an upcoming major image release, Liferay\n  Cloud   has published an update to the API that may impact the way you\n  use DXP   Cloud. The upcoming release will bring significant\n  improvements to the   backup and database services and increase the\n  reliability of the   database itself and the restore process. We will\n  share more on these   improvements in an upcoming communication.</p>\n          <h2>Workflow Changes</h2>",
+	"title": "API Update Release Announcement"
+}

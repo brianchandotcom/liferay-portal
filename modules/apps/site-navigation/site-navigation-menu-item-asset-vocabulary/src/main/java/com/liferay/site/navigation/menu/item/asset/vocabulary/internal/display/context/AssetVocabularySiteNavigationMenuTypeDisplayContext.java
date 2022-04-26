@@ -61,13 +61,12 @@ public class AssetVocabularySiteNavigationMenuTypeDisplayContext {
 		_itemSelector = itemSelector;
 		_siteNavigationMenuItem = siteNavigationMenuItem;
 
-		UnicodeProperties typeSettingsUnicodeProperties =
-			UnicodePropertiesBuilder.fastLoad(
-				_siteNavigationMenuItem.getTypeSettings()
-			).build();
+		_typeSettingsUnicodeProperties = UnicodePropertiesBuilder.fastLoad(
+			_siteNavigationMenuItem.getTypeSettings()
+		).build();
 
 		_assetVocabulary = AssetVocabularyLocalServiceUtil.fetchAssetVocabulary(
-			GetterUtil.getLong(typeSettingsUnicodeProperties.get("classPK")));
+			GetterUtil.getLong(_typeSettingsUnicodeProperties.get("classPK")));
 
 		_liferayPortletResponse = PortalUtil.getLiferayPortletResponse(
 			(PortletResponse)_httpServletRequest.getAttribute(
@@ -82,19 +81,14 @@ public class AssetVocabularySiteNavigationMenuTypeDisplayContext {
 		return HashMapBuilder.<String, Object>put(
 			"assetVocabulary",
 			() -> {
-				UnicodeProperties typeSettingsUnicodeProperties =
-					UnicodePropertiesBuilder.fastLoad(
-						_siteNavigationMenuItem.getTypeSettings()
-					).build();
-
 				return HashMapBuilder.<String, Object>put(
 					"classPK",
 					GetterUtil.getLong(
-						typeSettingsUnicodeProperties.get("classPK"))
+						_typeSettingsUnicodeProperties.get("classPK"))
 				).put(
 					"groupId",
 					GetterUtil.getLong(
-						typeSettingsUnicodeProperties.get("groupId"))
+						_typeSettingsUnicodeProperties.get("groupId"))
 				).put(
 					"title",
 					() -> {
@@ -103,12 +97,12 @@ public class AssetVocabularySiteNavigationMenuTypeDisplayContext {
 								_themeDisplay.getLocale());
 						}
 
-						return typeSettingsUnicodeProperties.get("title");
+						return _typeSettingsUnicodeProperties.get("title");
 					}
 				).put(
 					"type", "type"
 				).put(
-					"uuid", typeSettingsUnicodeProperties.get("uuid")
+					"uuid", _typeSettingsUnicodeProperties.get("uuid")
 				).build();
 			}
 		).put(
@@ -136,13 +130,8 @@ public class AssetVocabularySiteNavigationMenuTypeDisplayContext {
 		).put(
 			"localizedNames",
 			() -> {
-				UnicodeProperties typeSettingsUnicodeProperties =
-					UnicodePropertiesBuilder.fastLoad(
-						_siteNavigationMenuItem.getTypeSettings()
-					).build();
-
 				return JSONFactoryUtil.createJSONObject(
-					typeSettingsUnicodeProperties.getProperty(
+					_typeSettingsUnicodeProperties.getProperty(
 						"localizedNames", "{}"));
 			}
 		).put(
@@ -159,25 +148,15 @@ public class AssetVocabularySiteNavigationMenuTypeDisplayContext {
 		).put(
 			"showAssetVocabularyLevel",
 			() -> {
-				UnicodeProperties typeSettingsUnicodeProperties =
-					UnicodePropertiesBuilder.fastLoad(
-						_siteNavigationMenuItem.getTypeSettings()
-					).build();
-
 				return GetterUtil.getBoolean(
-					typeSettingsUnicodeProperties.get(
+					_typeSettingsUnicodeProperties.get(
 						"showAssetVocabularyLevel"));
 			}
 		).put(
 			"siteName",
 			() -> {
-				UnicodeProperties typeSettingsUnicodeProperties =
-					UnicodePropertiesBuilder.fastLoad(
-						_siteNavigationMenuItem.getTypeSettings()
-					).build();
-
 				long groupId = GetterUtil.getLong(
-					typeSettingsUnicodeProperties.get("groupId"));
+					_typeSettingsUnicodeProperties.get("groupId"));
 
 				if (groupId == _themeDisplay.getCompanyGroupId()) {
 					return LanguageUtil.get(_httpServletRequest, "global");
@@ -190,13 +169,8 @@ public class AssetVocabularySiteNavigationMenuTypeDisplayContext {
 		).put(
 			"useCustomName",
 			() -> {
-				UnicodeProperties typeSettingsUnicodeProperties =
-					UnicodePropertiesBuilder.fastLoad(
-						_siteNavigationMenuItem.getTypeSettings()
-					).build();
-
 				return GetterUtil.getBoolean(
-					typeSettingsUnicodeProperties.get("useCustomName"));
+					_typeSettingsUnicodeProperties.get("useCustomName"));
 			}
 		).build();
 	}
@@ -259,5 +233,6 @@ public class AssetVocabularySiteNavigationMenuTypeDisplayContext {
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final SiteNavigationMenuItem _siteNavigationMenuItem;
 	private final ThemeDisplay _themeDisplay;
+	private final UnicodeProperties _typeSettingsUnicodeProperties;
 
 }

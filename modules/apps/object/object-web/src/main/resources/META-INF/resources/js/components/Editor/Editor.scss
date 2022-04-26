@@ -1,9 +1,17 @@
-.lfr-objects__editor__CodeMirrorEditor {
-	border: 1px solid #a7a9bc;
-	flex-grow: 1;
+.lfr-objects {
+	&__object-editor__CodeMirrorEditor {
+		border: 1px solid #e7e7ed;
+		flex-grow: 1;
+		height: 400px;
+		margin: 24px;
+		width: 100%;
 
-	> .CodeMirror {
-		height: 300px;
-		min-width: 500px;
+		> .CodeMirror {
+			height: 398px;
+		}
+
+		.CodeMirror-wrap pre {
+			word-break: break-word;
+		}
 	}
 }

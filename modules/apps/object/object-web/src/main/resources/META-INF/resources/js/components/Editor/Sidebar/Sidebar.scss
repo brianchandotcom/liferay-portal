@@ -1,0 +1,76 @@
+.lfr-objects {
+	&__object-data-validation-alt-sheet {
+		background-color: #fff;
+		border-color: #e7e7ed;
+		border-radius: 0.25rem;
+		border-style: solid;
+		border-width: 0.0625rem;
+		display: flex;
+		flex-direction: column;
+		height: 526px;
+		padding-bottom: 0.0625rem;
+		padding-top: 1.5rem;
+	}
+
+	&__object-data-validation-title-divider {
+		border-bottom: 1px solid #e7e7ed;
+		padding-left: 24px;
+	}
+
+	&__object-data-validation-editor-container {
+		display: flex;
+		height: 450px;
+	}
+
+	&__object-editor-sidebar-element-button {
+		align-items: center;
+		border-radius: 4px;
+		display: flex;
+		font-weight: normal;
+		height: 35px;
+		justify-content: space-between;
+		margin: 2px 0;
+		width: 100%;
+	}
+
+	&__object-editor-sidebar-element-button:hover {
+		background-color: #f1f2f5;
+
+		.lfr-objects__object-editor-sidebar-element-preview-icon {
+			display: block;
+			margin-top: 0;
+		}
+	}
+
+	&__object-editor-sidebar-element-preview-icon {
+		display: none;
+	}
+
+	&__object-editor-sidebar-element-label {
+		min-width: 135px;
+	}
+
+	&__object-editor-sidebar-element-label-container {
+		overflow: hidden;
+		text-align: start;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		width: 100%;
+	}
+
+	&__object-editor-sidebar-element-popover-container {
+		display: flex;
+		justify-content: flex-end;
+		width: 20%;
+	}
+
+	&__object-editor-sidebar {
+		border-left: 1px solid #e7e7ed;
+		overflow-x: hidden;
+		width: 365px;
+	}
+
+	&__object-editor-sidebar-collapsable-button-list {
+		margin-bottom: 15px;
+	}
+}

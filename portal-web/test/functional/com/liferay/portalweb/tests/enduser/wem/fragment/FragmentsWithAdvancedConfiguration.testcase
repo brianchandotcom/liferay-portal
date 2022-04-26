@@ -202,9 +202,7 @@ definition {
 
 			PageEditor.gotoAdvanced(fragmentName = "Button");
 
-			Click.javaScriptClick(
-				checkboxName = "Hide from Site Search Results",
-				locator1 = "Checkbox#ANY_CHECKBOX");
+			PageEditor.configureFragment(hideFromSiteSearchResults = "true");
 		}
 
 		task ("Publish the page") {
@@ -318,9 +316,7 @@ definition {
 
 			PageEditor.gotoAdvanced(fragmentName = "Paragraph");
 
-			Click.javaScriptClick(
-				checkboxName = "Hide from Site Search Results",
-				locator1 = "Checkbox#ANY_CHECKBOX");
+			PageEditor.configureFragment(hideFromSiteSearchResults = "true");
 
 			PageEditor.clickPublish();
 		}

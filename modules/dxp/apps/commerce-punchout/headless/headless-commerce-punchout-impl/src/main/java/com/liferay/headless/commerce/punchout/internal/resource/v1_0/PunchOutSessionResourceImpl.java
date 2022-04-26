@@ -235,7 +235,6 @@ public class PunchOutSessionResourceImpl
 		String password2 = StringPool.BLANK;
 		boolean autoScreenName = true;
 		String screenName = StringPool.BLANK;
-		String openId = StringPool.BLANK;
 		Locale locale = LocaleUtil.getDefault();
 		long prefixId = 0;
 		long suffixId = 0;
@@ -250,10 +249,10 @@ public class PunchOutSessionResourceImpl
 
 		com.liferay.portal.kernel.model.User user = _userLocalService.addUser(
 			creatorUserId, companyId, autoPassword, password1, password2,
-			autoScreenName, screenName, email, 0, openId, locale, firstName,
-			middleName, lastName, prefixId, suffixId, false, birthdayMonth,
-			birthdayDay, birthdayYear, jobTitle, new long[] {groupId},
-			organizationIds, roleIds, userGroupIds, sendEmail,
+			autoScreenName, screenName, email, locale, firstName, middleName,
+			lastName, prefixId, suffixId, false, birthdayMonth, birthdayDay,
+			birthdayYear, jobTitle, new long[] {groupId}, organizationIds,
+			roleIds, userGroupIds, sendEmail,
 			_serviceContextHelper.getServiceContext(groupId));
 
 		user = _userLocalService.updateLastLogin(

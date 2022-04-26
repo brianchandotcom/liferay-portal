@@ -145,8 +145,7 @@ public class UserTestUtil {
 		String password2 = StringPool.BLANK;
 		boolean autoScreenName = true;
 		String screenName = StringPool.BLANK;
-		long facebookId = 0;
-		String openId = StringPool.BLANK;
+
 		Locale locale = LocaleUtil.getDefault();
 		String firstName = "UserServiceTest";
 		String middleName = StringPool.BLANK;
@@ -172,11 +171,11 @@ public class UserTestUtil {
 
 			return UserServiceUtil.addUser(
 				TestPropsValues.getCompanyId(), autoPassword, password1,
-				password2, autoScreenName, screenName, emailAddress, facebookId,
-				openId, locale, firstName, middleName, lastName, prefixId,
-				suffixId, male, birthdayMonth, birthdayDay, birthdayYear,
-				jobTitle, groupIds, organizationIds, roleIds, userGroupIds,
-				sendMail, serviceContext);
+				password2, autoScreenName, screenName, emailAddress, locale,
+				firstName, middleName, lastName, prefixId, suffixId, male,
+				birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
+				organizationIds, roleIds, userGroupIds, sendMail,
+				serviceContext);
 		}
 
 		String emailAddress =
@@ -185,10 +184,10 @@ public class UserTestUtil {
 		return UserLocalServiceUtil.addUser(
 			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
 			autoPassword, password1, password2, autoScreenName, screenName,
-			emailAddress, facebookId, openId, locale, firstName, middleName,
-			lastName, prefixId, suffixId, male, birthdayMonth, birthdayDay,
-			birthdayYear, jobTitle, groupIds, organizationIds, roleIds,
-			userGroupIds, sendMail, serviceContext);
+			emailAddress, locale, firstName, middleName, lastName, prefixId,
+			suffixId, male, birthdayMonth, birthdayDay, birthdayYear, jobTitle,
+			groupIds, organizationIds, roleIds, userGroupIds, sendMail,
+			serviceContext);
 	}
 
 	public static User addUser(Company company) throws Exception {
@@ -261,8 +260,6 @@ public class UserTestUtil {
 
 		String password1 = password;
 		String password2 = password;
-		long facebookId = 0;
-		String openId = StringPool.BLANK;
 		String middleName = StringPool.BLANK;
 		long prefixId = 0;
 		long suffixId = 0;
@@ -278,9 +275,9 @@ public class UserTestUtil {
 
 		return UserLocalServiceUtil.addUser(
 			userId, companyId, autoPassword, password1, password2,
-			Validator.isNull(screenName), screenName, emailAddress, facebookId,
-			openId, locale, firstName, middleName, lastName, prefixId, suffixId,
-			male, birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
+			Validator.isNull(screenName), screenName, emailAddress, locale,
+			firstName, middleName, lastName, prefixId, suffixId, male,
+			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
 			organizationIds, roleIds, userGroupIds, sendMail, serviceContext);
 	}
 

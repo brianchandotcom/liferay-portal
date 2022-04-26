@@ -176,12 +176,10 @@ public class RedirectNotFoundEntriesManagementToolbarDisplayContext
 					).buildString());
 
 				labelItem.setCloseable(true);
-
-				String label = String.format(
-					"%s: %s", LanguageUtil.get(httpServletRequest, "type"),
-					LanguageUtil.get(httpServletRequest, getNavigation()));
-
-				labelItem.setLabel(label);
+				labelItem.setLabel(
+					String.format(
+						"%s: %s", LanguageUtil.get(httpServletRequest, "type"),
+						LanguageUtil.get(httpServletRequest, getNavigation())));
 			}
 		).add(
 			() -> _getFilterDate() != 0,
@@ -195,12 +193,10 @@ public class RedirectNotFoundEntriesManagementToolbarDisplayContext
 					).buildString());
 
 				labelItem.setCloseable(true);
-
-				String label = String.format(
-					"%s: %s", LanguageUtil.get(httpServletRequest, "date"),
-					_getFilterDateLabel(_getFilterDate()));
-
-				labelItem.setLabel(label);
+				labelItem.setLabel(
+					String.format(
+						"%s: %s", LanguageUtil.get(httpServletRequest, "date"),
+						_getFilterDateLabel(_getFilterDate())));
 			}
 		).build();
 	}

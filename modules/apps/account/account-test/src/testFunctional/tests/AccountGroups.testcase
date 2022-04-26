@@ -576,6 +576,82 @@ definition {
 		}
 	}
 
+	@description = "This test asserts the user with Assign Account permission can unassign account from account group."
+	@priority = "3"
+	test CanUnassignAccountFromAccountGroupWithPermissions {
+		task ("Given A new User/Accounts/Account Groups exists") {
+			JSONUser.addUser(
+				userEmailAddress = "userea1@liferay.com",
+				userFirstName = "userfn1",
+				userLastName = "userln1",
+				userScreenName = "usersn1");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea1@liferay.com");
+
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Account for Account Group",
+				accountEntryType = "Business");
+
+			JSONAccountGroup.addAccountGroup(
+				accountGroupDescription = "This is an Account Group unassigned with Accounts.",
+				accountGroupName = "AG Name with Accounts");
+
+			task ("And A new Regular role with assign account permission") {
+				JSONRole.addRegularRole(roleTitle = "Assign Account Reg Role");
+
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "VIEW_CONTROL_PANEL",
+					resourceName = "90",
+					roleTitle = "Assign Account Reg Role");
+
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "ACCESS_IN_CONTROL_PANEL",
+					resourceName = "com_liferay_account_admin_web_internal_portlet_AccountGroupsAdminPortlet",
+					roleTitle = "Assign Account Reg Role");
+
+				for (var resourceAction : list "VIEW,VIEW_ACCOUNTS,ASSIGN_ACCOUNTS") {
+					Permissions.definePermissionViaJSONAPI(
+						resourceAction = "${resourceAction}",
+						resourceName = "com.liferay.account.model.AccountGroup",
+						roleTitle = "Assign Account Reg Role");
+				}
+			}
+		}
+
+		task ("When Assign the user with regular role") {
+			JSONRole.assignRoleToUser(
+				roleTitle = "Assign Account Reg Role",
+				userEmailAddress = "userea1@liferay.com");
+
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea1@liferay.com",
+				userLoginFullName = "userfn1 userln1");
+
+			task ("And the new user assign Account to Account group") {
+				AccountGroups.openAccountGroupsAdmin();
+
+				LexiconEntry.gotoEntry(rowEntry = "AG Name with Accounts");
+
+				AccountGroups.addAssignee(
+					accountGroupName = "AG Name with Accounts",
+					assigneeNames = "Account for Account Group");
+			}
+		}
+
+		task ("Then the new user can unassign Account from Account group") {
+			AccountGroups.openAccountGroupsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "AG Name with Accounts");
+
+			AccountGroups.removeAccount(
+				accountGroupName = "Account for Account Group",
+				removeType = "Toolbar Remove Icon");
+		}
+	}
+
 	@description = "This test asserts the user with View Account permission can view account in account group."
 	@priority = "3"
 	test CanViewAccountsAssignedToAccountGroupWithPermissions {

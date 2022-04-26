@@ -1,6 +1,6 @@
 ## Kubernetes Native DXP
 
-1. Make sure you have [minikube installed](https://minikube.sigs.k8s.io/docs/start/)
+1. Make sure you have [minikube](https://minikube.sigs.k8s.io/docs/start/), [skaffold](https://skaffold.dev/docs/install/) are installed.
 
 1. Run the `run_local.sh` script in the workspace root:
 
@@ -10,11 +10,22 @@
 
 ### Debug DXP
 
-DXP is ready debugging on port `8000`.
+DXP is ready debugging on port `8000`. Open a port-forward to a dxp pod:
+```bash
+kubectl port-forward $DXP_POD 8000 &
+```
+
+Then connect with a remote debugger.
 
 ### Telnet to Gogo Shell
 
-Gogo shell is available to connect at port `11311`
+Gogo shell is available to connect at port `11311`. Open a port-forward to a dxp pod
+
+```bash
+kubectl port-forward $DXP_POD 11311 &
+```
+
+Then telnet to that port:
 
 ```bash
 telnet localhost 11311
@@ -56,6 +67,17 @@ listconfigurations "(service.pid=$PID)"
 
 # PS: listconfigirations does not create a configuration if it's missing, `configuration` command does
 ```
+
+## SANDBOX
+
+https://console.innovationspoc.liferay.sh/projects/innovationspoc1-dev/overview
+
+```bash
+LCP_SECRET_CI_CUSTOMER_USER=customer
+LCP_SECRET_CI_CUSTOMER_PASSWORD=e4JsdMa9KPDoBhh2au1JbiqLzxGxm6
+```
+
+
 
 ## Trusted Communication Demo
 

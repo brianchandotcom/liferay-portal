@@ -16,13 +16,13 @@ import {VIEWPORT_SIZES} from '../config/constants/viewportSizes';
 import {getResponsiveConfig} from './getResponsiveConfig';
 
 export default function isItemEmpty(
-	column,
+	item,
 	layoutData,
 	selectedViewportSize = VIEWPORT_SIZES.desktop
 ) {
 	return (
-		!column.children.length ||
-		column.children.every((childId) =>
+		!item.children.length ||
+		item.children.every((childId) =>
 			isItemHidden(layoutData, childId, selectedViewportSize)
 		)
 	);

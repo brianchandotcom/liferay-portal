@@ -61,16 +61,15 @@ public class AssetVocabularySiteNavigationMenuTypeDisplayContext {
 		_itemSelector = itemSelector;
 		_siteNavigationMenuItem = siteNavigationMenuItem;
 
-		UnicodeProperties typeSettingsUnicodeProperties =
-			UnicodePropertiesBuilder.fastLoad(
-				_siteNavigationMenuItem.getTypeSettings()
-			).build();
+		_typeSettingsUnicodeProperties = UnicodePropertiesBuilder.fastLoad(
+			siteNavigationMenuItem.getTypeSettings()
+		).build();
 
 		_assetVocabulary = AssetVocabularyLocalServiceUtil.fetchAssetVocabulary(
-			GetterUtil.getLong(typeSettingsUnicodeProperties.get("classPK")));
+			GetterUtil.getLong(_typeSettingsUnicodeProperties.get("classPK")));
 
 		_liferayPortletResponse = PortalUtil.getLiferayPortletResponse(
-			(PortletResponse)_httpServletRequest.getAttribute(
+			(PortletResponse)httpServletRequest.getAttribute(
 				JavaConstants.JAVAX_PORTLET_RESPONSE));
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -81,36 +80,29 @@ public class AssetVocabularySiteNavigationMenuTypeDisplayContext {
 
 		return HashMapBuilder.<String, Object>put(
 			"assetVocabulary",
-			() -> {
-				UnicodeProperties typeSettingsUnicodeProperties =
-					UnicodePropertiesBuilder.fastLoad(
-						_siteNavigationMenuItem.getTypeSettings()
-					).build();
-
-				return HashMapBuilder.<String, Object>put(
-					"classPK",
-					GetterUtil.getLong(
-						typeSettingsUnicodeProperties.get("classPK"))
-				).put(
-					"groupId",
-					GetterUtil.getLong(
-						typeSettingsUnicodeProperties.get("groupId"))
-				).put(
-					"title",
-					() -> {
-						if (_assetVocabulary != null) {
-							return _assetVocabulary.getTitle(
-								_themeDisplay.getLocale());
-						}
-
-						return typeSettingsUnicodeProperties.get("title");
+			() -> HashMapBuilder.<String, Object>put(
+				"classPK",
+				GetterUtil.getLong(
+					_typeSettingsUnicodeProperties.get("classPK"))
+			).put(
+				"groupId",
+				GetterUtil.getLong(
+					_typeSettingsUnicodeProperties.get("groupId"))
+			).put(
+				"title",
+				() -> {
+					if (_assetVocabulary != null) {
+						return _assetVocabulary.getTitle(
+							_themeDisplay.getLocale());
 					}
-				).put(
-					"type", "type"
-				).put(
-					"uuid", typeSettingsUnicodeProperties.get("uuid")
-				).build();
-			}
+
+					return _typeSettingsUnicodeProperties.get("title");
+				}
+			).put(
+				"type", "type"
+			).put(
+				"uuid", _typeSettingsUnicodeProperties.get("uuid")
+			).build()
 		).put(
 			"chooseAssetVocabularyProps",
 			_getChooseAssetVocabularyButtonContext()
@@ -135,16 +127,9 @@ public class AssetVocabularySiteNavigationMenuTypeDisplayContext {
 				})
 		).put(
 			"localizedNames",
-			() -> {
-				UnicodeProperties typeSettingsUnicodeProperties =
-					UnicodePropertiesBuilder.fastLoad(
-						_siteNavigationMenuItem.getTypeSettings()
-					).build();
-
-				return JSONFactoryUtil.createJSONObject(
-					typeSettingsUnicodeProperties.getProperty(
-						"localizedNames", "{}"));
-			}
+			() -> JSONFactoryUtil.createJSONObject(
+				_typeSettingsUnicodeProperties.getProperty(
+					"localizedNames", "{}"))
 		).put(
 			"namespace", _liferayPortletResponse.getNamespace()
 		).put(
@@ -158,26 +143,13 @@ public class AssetVocabularySiteNavigationMenuTypeDisplayContext {
 			}
 		).put(
 			"showAssetVocabularyLevel",
-			() -> {
-				UnicodeProperties typeSettingsUnicodeProperties =
-					UnicodePropertiesBuilder.fastLoad(
-						_siteNavigationMenuItem.getTypeSettings()
-					).build();
-
-				return GetterUtil.getBoolean(
-					typeSettingsUnicodeProperties.get(
-						"showAssetVocabularyLevel"));
-			}
+			() -> GetterUtil.getBoolean(
+				_typeSettingsUnicodeProperties.get("showAssetVocabularyLevel"))
 		).put(
 			"siteName",
 			() -> {
-				UnicodeProperties typeSettingsUnicodeProperties =
-					UnicodePropertiesBuilder.fastLoad(
-						_siteNavigationMenuItem.getTypeSettings()
-					).build();
-
 				long groupId = GetterUtil.getLong(
-					typeSettingsUnicodeProperties.get("groupId"));
+					_typeSettingsUnicodeProperties.get("groupId"));
 
 				if (groupId == _themeDisplay.getCompanyGroupId()) {
 					return LanguageUtil.get(_httpServletRequest, "global");
@@ -189,15 +161,8 @@ public class AssetVocabularySiteNavigationMenuTypeDisplayContext {
 			}
 		).put(
 			"useCustomName",
-			() -> {
-				UnicodeProperties typeSettingsUnicodeProperties =
-					UnicodePropertiesBuilder.fastLoad(
-						_siteNavigationMenuItem.getTypeSettings()
-					).build();
-
-				return GetterUtil.getBoolean(
-					typeSettingsUnicodeProperties.get("useCustomName"));
-			}
+			() -> GetterUtil.getBoolean(
+				_typeSettingsUnicodeProperties.get("useCustomName"))
 		).build();
 	}
 
@@ -259,5 +224,6 @@ public class AssetVocabularySiteNavigationMenuTypeDisplayContext {
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final SiteNavigationMenuItem _siteNavigationMenuItem;
 	private final ThemeDisplay _themeDisplay;
+	private final UnicodeProperties _typeSettingsUnicodeProperties;
 
 }

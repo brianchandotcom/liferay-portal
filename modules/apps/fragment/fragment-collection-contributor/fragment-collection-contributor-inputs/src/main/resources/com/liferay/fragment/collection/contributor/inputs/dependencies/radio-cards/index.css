@@ -1,0 +1,35 @@
+.forms-radio-cards {
+	align-items: stretch;
+	display: flex;
+	gap: 1em;
+}
+
+.forms-radio-cards .input-label {
+	flex-basis: 0;
+	flex-grow: 1;
+	flex-shrink: 1;
+}
+
+.forms-radio-cards .input-label input {
+	display: none;
+}
+
+.forms-radio-cards .input-label span {
+	border: solid rgba(0, 0, 0, 0.2) thin;
+	border-radius: 4px;
+	cursor: pointer;
+	display: flex;
+	flex-direction: column;
+	font-size: 1em;
+	height: 100%;
+	margin: 0 auto;
+	overflow: hidden;
+	padding: 1em;
+	text-align: center;
+	width: 100%;
+}
+
+.forms-radio-cards .input-input:checked + span {
+	border-color: blue;
+	box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
+}

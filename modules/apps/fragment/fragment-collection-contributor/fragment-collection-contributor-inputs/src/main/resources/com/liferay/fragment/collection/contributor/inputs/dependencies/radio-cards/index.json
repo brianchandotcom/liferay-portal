@@ -1,0 +1,23 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "int",
+					"defaultValue": "3",
+					"description": "number-of-options",
+					"label": "Number Of Options",
+					"name": "numberOfOptions",
+					"type": "text",
+					"typeOptions": {
+						"validation": {
+							"min": 1,
+							"type": "number"
+						}
+					}
+				}
+			],
+			"label": "radio-cards-options"
+		}
+	]
+}

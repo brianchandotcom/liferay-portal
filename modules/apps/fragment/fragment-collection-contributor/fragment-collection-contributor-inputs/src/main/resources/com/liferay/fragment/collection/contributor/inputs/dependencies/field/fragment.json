@@ -1,0 +1,7 @@
+{
+	"cacheable": true,
+	"fragmentEntryKey": "field",
+	"icon": "order-form-pencil",
+	"name": "field",
+	"type": "input"
+}

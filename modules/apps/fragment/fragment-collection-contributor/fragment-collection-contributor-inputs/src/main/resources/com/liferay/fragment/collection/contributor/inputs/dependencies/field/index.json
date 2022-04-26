@@ -1,0 +1,37 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "text",
+					"label": "type",
+					"name": "inputType",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"value": "date"
+							},
+							{
+								"value": "datetime-local"
+							},
+							{
+								"value": "email"
+							},
+							{
+								"value": "number"
+							},
+							{
+								"value": "time"
+							},
+							{
+								"value": "text"
+							}
+						]
+					}
+				}
+			]
+		}
+	]
+}

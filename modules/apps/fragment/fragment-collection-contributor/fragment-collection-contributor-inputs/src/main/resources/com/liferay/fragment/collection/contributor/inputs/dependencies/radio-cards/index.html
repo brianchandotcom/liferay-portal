@@ -1,0 +1,9 @@
+<div class="forms-radio-cards">
+	[#list input.options as option]
+		<label>
+			<input class="input-input" name="${input.name}" type="radio" value="${option.value}" />
+
+			<span class="input-span">${option.label}</span>
+		</label>
+	[/#list]
+</div>

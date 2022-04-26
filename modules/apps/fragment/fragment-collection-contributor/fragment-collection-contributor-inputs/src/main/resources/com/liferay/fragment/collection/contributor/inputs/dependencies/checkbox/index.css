@@ -1,0 +1,10 @@
+.forms-checkbox .input-label {
+	align-items: center;
+	cursor: pointer;
+	display: flex;
+	font-size: 1rem;
+}
+
+.forms-checkbox .input-input {
+	margin-right: 1ch;
+}

@@ -1,0 +1,10 @@
+.forms-radio .input-label {
+	align-items: center;
+	display: flex;
+	font-size: 1em;
+	margin: 0.25em 0;
+}
+
+.forms-radio .input-input {
+	margin-right: 1ch;
+}

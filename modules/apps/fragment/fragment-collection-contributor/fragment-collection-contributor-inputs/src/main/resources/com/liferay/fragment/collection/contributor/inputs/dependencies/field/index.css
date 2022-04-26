@@ -1,0 +1,15 @@
+.forms-field.form-group {
+	margin-bottom: 0;
+}
+
+.forms-field label {
+	width: 100%;
+}
+
+.forms-field span {
+	display: block;
+}
+
+.forms-field .form-control {
+	width: 100%;
+}

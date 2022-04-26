@@ -230,7 +230,7 @@ public class DLURLHelperImpl implements DLURLHelper {
 			themeDisplay, absoluteURL);
 
 		String previewURL = _getFriendlyURL(
-			appendVersion, fileEntry, previewURLPrefix, queryString);
+			fileEntry, previewURLPrefix, queryString, appendVersion);
 
 		if (Validator.isNull(previewURL)) {
 			previewURL = _getPreviewUuidURL(
@@ -436,8 +436,8 @@ public class DLURLHelperImpl implements DLURLHelper {
 	}
 
 	private String _getFriendlyURL(
-		boolean appendVersion, FileEntry fileEntry, String previewURLPrefix,
-		String queryString) {
+		FileEntry fileEntry, String previewURLPrefix, String queryString,
+		boolean appendVersion) {
 
 		if (!_ffFriendlyURLEntryFileEntryConfiguration.enabled() ||
 			appendVersion || (fileEntry == null) ||

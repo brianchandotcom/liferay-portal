@@ -104,6 +104,19 @@ export default function fragmentsReducer(fragments = [], action) {
 				name: Liferay.Language.get('layout-elements'),
 			});
 
+			let formComponentsCollection = {fragmentEntries: []};
+
+			const formComponentsCollectionIndex = newFragments.findIndex(
+				(collection) => collection.fragmentCollectionId === 'INPUTS'
+			);
+
+			if (formComponentsCollectionIndex !== -1) {
+				[formComponentsCollection] = newFragments.splice(
+					formComponentsCollectionIndex,
+					1
+				);
+			}
+
 			if (config.featureFlagLps150277) {
 				newFragments.splice(2, 0, {
 					fragmentCollectionId: 'form-components',
@@ -120,6 +133,7 @@ export default function fragmentsReducer(fragments = [], action) {
 								],
 							type: 'form',
 						},
+						...formComponentsCollection.fragmentEntries,
 					],
 					name: Liferay.Language.get('form-components'),
 				});

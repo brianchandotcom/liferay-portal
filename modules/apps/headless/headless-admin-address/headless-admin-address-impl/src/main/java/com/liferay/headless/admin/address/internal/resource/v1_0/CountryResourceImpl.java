@@ -62,6 +62,37 @@ public class CountryResourceImpl extends BaseCountryResourceImpl {
 	}
 
 	@Override
+	public Country getCountry(Long countryId) throws Exception {
+		return _toCountry(_countryService.getCountry(countryId));
+	}
+
+	@Override
+	public Country getCountryByA2(String a2) throws Exception {
+		return _toCountry(
+			_countryService.getCountryByA2(contextCompany.getCompanyId(), a2));
+	}
+
+	@Override
+	public Country getCountryByA3(String a3) throws Exception {
+		return _toCountry(
+			_countryService.getCountryByA3(contextCompany.getCompanyId(), a3));
+	}
+
+	@Override
+	public Country getCountryByName(String name) throws Exception {
+		return _toCountry(
+			_countryService.getCountryByName(
+				contextCompany.getCompanyId(), name));
+	}
+
+	@Override
+	public Country getCountryByNumber(Integer number) throws Exception {
+		return _toCountry(
+			_countryService.getCountryByNumber(
+				contextCompany.getCompanyId(), String.valueOf(number)));
+	}
+
+	@Override
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
 		throws Exception {
 

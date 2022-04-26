@@ -249,7 +249,7 @@ public abstract class BaseDBProcess implements DBProcess {
 			return (Connection)ProxyUtil.newProxyInstance(
 				ClassLoader.getSystemClassLoader(),
 				new Class<?>[] {Connection.class},
-				new ConnectionThreadProxyInvocationHandler(this));
+				new ConnectionThreadProxyInvocationHandler());
 		}
 
 		return _getConnection();
@@ -478,7 +478,7 @@ public abstract class BaseDBProcess implements DBProcess {
 
 	private static final Log _log = LogFactoryUtil.getLog(BaseDBProcess.class);
 
-	private static class ConnectionThreadProxyInvocationHandler
+	private class ConnectionThreadProxyInvocationHandler
 		implements InvocationHandler {
 
 		@Override
@@ -504,12 +504,6 @@ public abstract class BaseDBProcess implements DBProcess {
 			return method.invoke(_getConnection(), args);
 		}
 
-		private ConnectionThreadProxyInvocationHandler(
-			BaseDBProcess baseDBProcess) {
-
-			_baseDBProcess = baseDBProcess;
-		}
-
 		private Connection _getConnection() {
 			Thread thread = Thread.currentThread();
 
@@ -519,7 +513,7 @@ public abstract class BaseDBProcess implements DBProcess {
 
 			if (connection == null) {
 				try {
-					connection = _baseDBProcess._getConnection();
+					connection = _getConnection();
 
 					Connection prevConnection = _connectionMap.putIfAbsent(
 						threadId, connection);
@@ -542,13 +536,8 @@ public abstract class BaseDBProcess implements DBProcess {
 			return connection;
 		}
 
-		private static final Log _log = LogFactoryUtil.getLog(
-			ConnectionThreadProxyInvocationHandler.class);
-
-		private static final Map<Long, Connection> _connectionMap =
+		private final Map<Long, Connection> _connectionMap =
 			new ConcurrentHashMap<>();
-
-		private final BaseDBProcess _baseDBProcess;
 		private volatile List<Long> _currentThreads = new ArrayList<>();
 
 	}

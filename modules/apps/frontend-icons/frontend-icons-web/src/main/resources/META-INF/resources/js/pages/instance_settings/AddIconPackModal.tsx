@@ -49,7 +49,7 @@ export default function AddIconPackModal({
 	uploadSpritemap = true,
 	visible,
 }: IProps) {
-	const svgFileInputRef = useRef<HTMLInputElement>();
+	const svgFileInputRef = useRef<HTMLInputElement>(null);
 
 	const [iconPackName, setIconPackName] = useState(existingIconPackName);
 	const [loading, setLoading] = useState(false);
@@ -66,19 +66,13 @@ export default function AddIconPackModal({
 
 		const formData = new FormData();
 
-		if (
-			!(
-				svgFileInputRef?.current?.files &&
-				svgFileInputRef?.current?.files[0]
-			)
-		) {
+		const {files} = svgFileInputRef.current as {files: FileList};
+
+		if (!files[0]) {
 			return;
 		}
 
-		formData.append(
-			portletNamespace + 'svgFile',
-			svgFileInputRef.current.files[0]
-		);
+		formData.append(portletNamespace + 'svgFile', files[0]);
 		formData.append(portletNamespace + 'name', iconPackName);
 
 		return fetch(saveFromSpritemapActionURL, {
@@ -186,7 +180,7 @@ export default function AddIconPackModal({
 							<ClayInput
 								accept=".svg"
 								name={portletNamespace + 'svgFile'}
-								ref={svgFileInputRef as any}
+								ref={svgFileInputRef}
 								type="file"
 							/>
 						</ClayForm.Group>

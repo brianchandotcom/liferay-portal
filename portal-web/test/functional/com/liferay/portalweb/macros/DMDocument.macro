@@ -1363,11 +1363,11 @@ definition {
 
 	macro downloadWithDirectoryIndexing {
 		var portalURL = PropsUtil.get("portal.url");
-		var key_text = "${dmDocumentTitle}";
 
 		Navigator.openSpecificURL(url = "${portalURL}/documents/${siteURLKey}/");
 
 		AssertClick(
+			key_text = "${dmDocumentTitle}",
 			locator1 = "Link#ANY",
 			value1 = "${dmDocumentTitle}");
 	}

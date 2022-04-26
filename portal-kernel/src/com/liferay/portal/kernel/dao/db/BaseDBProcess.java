@@ -481,10 +481,6 @@ public abstract class BaseDBProcess implements DBProcess {
 	private static class ConnectionThreadProxyHandler
 		implements InvocationHandler {
 
-		public ConnectionThreadProxyHandler(BaseDBProcess baseDBProcess) {
-			_baseDBProcess = baseDBProcess;
-		}
-
 		@Override
 		public Object invoke(Object proxy, Method method, Object[] args)
 			throws Throwable {
@@ -506,6 +502,10 @@ public abstract class BaseDBProcess implements DBProcess {
 			}
 
 			return method.invoke(_getConnection(), args);
+		}
+
+		private ConnectionThreadProxyHandler(BaseDBProcess baseDBProcess) {
+			_baseDBProcess = baseDBProcess;
 		}
 
 		private Connection _getConnection() {

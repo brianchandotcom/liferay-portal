@@ -11,8 +11,8 @@
 import {ButtonWithIcon} from '@clayui/core';
 import {useModal} from '@clayui/modal';
 import {ClayTooltipProvider} from '@clayui/tooltip';
-import {useCallback, useMemo, useState} from 'react';
-import {useLocation} from 'react-router-dom';
+import {useCallback, useEffect, useMemo, useState} from 'react';
+import {useLocation, useOutletContext} from 'react-router-dom';
 import RoundedGroupButtons from '../../../../common/components/RoundedGroupButtons';
 import Table from '../../../../common/components/Table';
 import {useApplicationProvider} from '../../../../common/context/AppPropertiesProvider';
@@ -41,6 +41,13 @@ const ActivationKeysTable = ({productName, project, sessionId}) => {
 	const [isVisibleModal, setIsVisibleModal] = useState(false);
 	const [downloadStatus, setDownloadStatus] = useState('');
 	const {state} = useLocation();
+	const {setHasQuickLinksPanel, setHasSideMenu} = useOutletContext();
+
+	useEffect(() => {
+		setHasQuickLinksPanel(true);
+		setHasSideMenu(true);
+	}, [setHasSideMenu, setHasQuickLinksPanel]);
+
 	const [
 		newKeyGeneratedAlertStatus,
 		setNewKeyGeneratedAlertStatus,

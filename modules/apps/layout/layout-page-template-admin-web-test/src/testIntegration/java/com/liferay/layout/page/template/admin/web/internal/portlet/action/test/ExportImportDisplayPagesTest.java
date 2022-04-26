@@ -259,8 +259,8 @@ public class ExportImportDisplayPagesTest {
 			actualRootLayoutStructureItem.getItemConfigJSONObject();
 
 		Assert.assertEquals(
-			expectedItemConfigJSONObject.toJSONString(),
-			actualItemConfigJSONObject.toJSONString());
+			expectedItemConfigJSONObject.toString(),
+			actualItemConfigJSONObject.toString());
 
 		Assert.assertEquals(
 			expectedRootLayoutStructureItem.getItemType(),

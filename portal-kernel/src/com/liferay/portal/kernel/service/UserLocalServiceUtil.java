@@ -2303,60 +2303,6 @@ public class UserLocalServiceUtil {
 		return getService().searchCounts(companyId, status, groupIds);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #searchBySocial(long, int[], String, int, int)}
-	 */
-	@Deprecated
-	public static List<User> searchSocial(
-			long userId, int[] socialRelationTypes, String keywords, int start,
-			int end)
-		throws PortalException {
-
-		return getService().searchSocial(
-			userId, socialRelationTypes, keywords, start, end);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #searchBySocial(long, long[], String, int, int)}
-	 */
-	@Deprecated
-	public static List<User> searchSocial(
-		long companyId, long[] groupIds, String keywords, int start, int end) {
-
-		return getService().searchSocial(
-			companyId, groupIds, keywords, start, end);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #searchBySocial(long, long[], String, int, int,
-	 OrderByComparator)}
-	 */
-	@Deprecated
-	public static List<User> searchSocial(
-		long companyId, long[] groupIds, String keywords, int start, int end,
-		OrderByComparator<User> orderByComparator) {
-
-		return getService().searchSocial(
-			companyId, groupIds, keywords, start, end, orderByComparator);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #searchBySocial(long[], long, int[], String, int, int)}
-	 */
-	@Deprecated
-	public static List<User> searchSocial(
-			long[] groupIds, long userId, int[] socialRelationTypes,
-			String keywords, int start, int end)
-		throws PortalException {
-
-		return getService().searchSocial(
-			groupIds, userId, socialRelationTypes, keywords, start, end);
-	}
-
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult<User>
 			searchUsers(
 				long companyId, String keywords, int status,

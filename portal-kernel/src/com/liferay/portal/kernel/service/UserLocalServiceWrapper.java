@@ -2534,65 +2534,6 @@ public class UserLocalServiceWrapper
 		return _userLocalService.searchCounts(companyId, status, groupIds);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #searchBySocial(long, int[], String, int, int)}
-	 */
-	@Deprecated
-	@Override
-	public java.util.List<User> searchSocial(
-			long userId, int[] socialRelationTypes, String keywords, int start,
-			int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _userLocalService.searchSocial(
-			userId, socialRelationTypes, keywords, start, end);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #searchBySocial(long, long[], String, int, int)}
-	 */
-	@Deprecated
-	@Override
-	public java.util.List<User> searchSocial(
-		long companyId, long[] groupIds, String keywords, int start, int end) {
-
-		return _userLocalService.searchSocial(
-			companyId, groupIds, keywords, start, end);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #searchBySocial(long, long[], String, int, int,
-	 OrderByComparator)}
-	 */
-	@Deprecated
-	@Override
-	public java.util.List<User> searchSocial(
-		long companyId, long[] groupIds, String keywords, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<User>
-			orderByComparator) {
-
-		return _userLocalService.searchSocial(
-			companyId, groupIds, keywords, start, end, orderByComparator);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #searchBySocial(long[], long, int[], String, int, int)}
-	 */
-	@Deprecated
-	@Override
-	public java.util.List<User> searchSocial(
-			long[] groupIds, long userId, int[] socialRelationTypes,
-			String keywords, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _userLocalService.searchSocial(
-			groupIds, userId, socialRelationTypes, keywords, start, end);
-	}
-
 	@Override
 	public com.liferay.portal.kernel.search.BaseModelSearchResult<User>
 			searchUsers(

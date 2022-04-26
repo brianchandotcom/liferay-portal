@@ -27,12 +27,6 @@
 					<encoding>UTF-8</encoding>
 				</source-folder>
 				<source-folder>
-					<label>modules\apps\petra\petra-log4j\src\main\java</label>
-					<type>java</type>
-					<location>modules/apps/petra/petra-log4j/src/main/java</location>
-					<encoding>UTF-8</encoding>
-				</source-folder>
-				<source-folder>
 					<label>modules\apps\petra\petra-portlet-url-builder\src\main\java</label>
 					<type>java</type>
 					<location>modules/apps/petra/petra-portlet-url-builder/src/main/java</location>
@@ -120,6 +114,12 @@
 					<label>modules\core\petra\petra-url-pattern-mapper\src\main\java</label>
 					<type>java</type>
 					<location>modules/core/petra/petra-url-pattern-mapper/src/main/java</location>
+					<encoding>UTF-8</encoding>
+				</source-folder>
+				<source-folder>
+					<label>modules\apps\portal\portal-log4j\src\main\java</label>
+					<type>java</type>
+					<location>modules/apps/portal/portal-log4j/src/main/java</location>
 					<encoding>UTF-8</encoding>
 				</source-folder>
 				<source-folder>
@@ -231,10 +231,6 @@
 			<view>
 				<items>
 					<source-folder style="packages">
-						<label>modules\apps\petra\petra-log4j\src</label>
-						<location>modules/apps/petra/petra-log4j/src</location>
-					</source-folder>
-					<source-folder style="packages">
 						<label>modules\apps\petra\petra-xml\src</label>
 						<location>modules/apps/petra/petra-xml/src</location>
 					</source-folder>
@@ -277,6 +273,10 @@
 					<source-folder style="packages">
 						<label>modules\core\petra\petra-string\src</label>
 						<location>modules/core/petra/petra-string/src</location>
+					</source-folder>
+					<source-folder style="packages">
+						<label>modules\apps\portal\portal-log4j\src</label>
+						<location>modules/apps/portal/portal-log4j/src</location>
 					</source-folder>
 					<source-folder style="packages">
 						<label>portal-impl\src</label>
@@ -345,7 +345,6 @@
 		</general-data>
 		<java-data xmlns="http://www.netbeans.org/ns/freeform-project-java/4">
 			<compilation-unit>
-				<package-root>modules/apps/petra/petra-log4j/src/main/java</package-root>
 				<package-root>modules/apps/petra/petra-xml/src/main/java</package-root>
 				<package-root>modules/core/petra/petra-concurrent/src/main/java</package-root>
 				<package-root>modules/core/petra/petra-executor/src/main/java</package-root>
@@ -359,6 +358,7 @@
 				<package-root>modules/core/petra/petra-sql-dsl-api/src/main/java</package-root>
 				<package-root>modules/core/petra/petra-sql-dsl-spi/src/main/java</package-root>
 				<package-root>modules/core/petra/petra-string/src/main/java</package-root>
+				<package-root>modules/apps/portal/portal-log4j/src/main/java</package-root>
 				<package-root>portal-impl/src</package-root>
 				<package-root>portal-impl/test/unit</package-root>
 				<package-root>portal-kernel/src</package-root>

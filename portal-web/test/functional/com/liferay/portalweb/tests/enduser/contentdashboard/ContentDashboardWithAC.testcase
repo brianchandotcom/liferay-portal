@@ -192,6 +192,137 @@ definition {
 		}
 	}
 
+	@description = "LPS-152076 Bug: Content Performance Panel is not visible form Content dashboard if the user doesn't have Control Access Permission"
+	@priority = "4"
+	test ViewMetricsButtonUserWithoutControlAccessPermission {
+		task ("Add Display Page and mark it as default") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			Button.clickPublish();
+
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+		}
+
+		task ("Create First WC via JSON") {
+			JSONWebcontent.addWebContent(
+				content = "WC Content",
+				groupName = "Test Site Name",
+				title = "WC Title 1");
+		}
+
+		task ("Create an User") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Create a role") {
+			JSONRole.addRegularRole(
+				roleKey = "Test Role Name",
+				roleTitle = "Test Role Name");
+		}
+
+		task ("Add all Content Dashboard permissions to role") {
+			for (var resourceActionIndex : list "VIEW,ADD_TO_PAGE,CONFIGURATION,PERMISSIONS,PREFERENCES,ACCESS_IN_CONTROL_PANEL") {
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "${resourceActionIndex}",
+					resourceName = "com_liferay_content_dashboard_web_portlet_ContentDashboardAdminPortlet",
+					roleTitle = "Test Role Name");
+			}
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_CONTROL_PANEL",
+				resourceName = "90",
+				roleTitle = "Test Role Name");
+		}
+
+		task ("Add all Web Content permissions to role") {
+			for (var resourceActionIndex : list "ADD_STRUCTURE,ADD_FOLDER,ADD_FEED,ADD_ARTICLE,VIEW,UPDATE,SUBSCRIBE,PERMISSIONS,ADD_TEMPLATE") {
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "${resourceActionIndex}",
+					resourceName = "com.liferay.journal",
+					roleTitle = "Test Role Name");
+			}
+
+			for (var resourceActionIndex : list "ADD_DISCUSSION,VIEW,UPDATE_DISCUSSION,UPDATE,SUBSCRIBE,PERMISSIONS,EXPIRE,DELETE_DISCUSSION,DELETE") {
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "${resourceActionIndex}",
+					resourceName = "com.liferay.journal.model.JournalArticle",
+					roleTitle = "Test Role Name");
+			}
+
+			for (var resourceActionIndex : list "VIEW,UPDATE,SUBSCRIBE,PERMISSIONS,DELETE,ADD_SUBFOLDER,ADD_ARTICLE,ACCESS") {
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "${resourceActionIndex}",
+					resourceName = "com.liferay.journal.model.JournalFolder",
+					roleTitle = "Test Role Name");
+			}
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_SITE_ADMINISTRATION",
+				resourceName = "com.liferay.portal.kernel.model.Group",
+				roleTitle = "Test Role Name");
+
+			for (var resourceActionIndex : list "VIEW,ACCESS_IN_CONTROL_PANEL") {
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "${resourceActionIndex}",
+					resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
+					roleTitle = "Test Role Name");
+			}
+		}
+
+		task ("Set role to user") {
+			JSONRole.assignRoleToUser(
+				roleTitle = "Test Role Name",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Login with created user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Go to Content Dashboard") {
+			ContentDashboard.goToContentDashboard();
+		}
+
+		task ("Check that user can see metrics sidebar") {
+			ContentDashboard.openViewMetricsByDropdownMenu();
+
+			AssertVisible(locator1 = "ContentDashboard#CONTENT_PERFORMANCE_TITLE_PANEL");
+		}
+
+		task ("Login with Test user to allow Teardown") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+		}
+
+		task ("Delete Role created") {
+			JSONRole.deleteRole(roleTitle = "Test Role Name");
+		}
+
+		task ("Delete User created") {
+			JSONUser.deleteUserByEmailAddress(userEmailAddress = "userea@liferay.com");
+		}
+	}
+
 	@description = "LPS-136512 Given A document associated with a Display Page
 	When the user clicks on the "Metrics" button in the hover action
 	Then the Content Performance panel is displayed"

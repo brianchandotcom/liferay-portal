@@ -201,6 +201,8 @@ definition {
 			AccountGroups.addAssignee(
 				accountGroupName = "AG Name with Accounts",
 				assigneeNames = "Account for Account Group");
+
+			AccountGroups.viewAssignee(assigneeName = "Account for Account Group");
 		}
 	}
 

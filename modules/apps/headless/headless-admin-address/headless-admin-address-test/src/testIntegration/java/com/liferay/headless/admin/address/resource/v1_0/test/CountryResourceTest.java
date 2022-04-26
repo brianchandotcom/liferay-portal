@@ -197,12 +197,66 @@ public class CountryResourceTest extends BaseCountryResourceTestCase {
 	}
 
 	@Override
+	protected Country testGetCountry_addCountry() throws Exception {
+		return _addCountry(randomCountry());
+	}
+
+	@Override
+	protected Country testGetCountryByA2_addCountry() throws Exception {
+		return _addCountry(randomCountry());
+	}
+
+	@Override
+	protected Country testGetCountryByA3_addCountry() throws Exception {
+		return _addCountry(randomCountry());
+	}
+
+	@Override
+	protected Country testGetCountryByName_addCountry() throws Exception {
+		return _addCountry(randomCountry());
+	}
+
+	@Override
+	protected Country testGetCountryByNumber_addCountry() throws Exception {
+		return _addCountry(randomCountry());
+	}
+
+	@Override
 	protected Country testGraphQLCountry_addCountry() throws Exception {
 		return _addCountry(randomCountry());
 	}
 
 	@Override
 	protected Country testGraphQLGetCountriesPage_addCountry()
+		throws Exception {
+
+		return _addCountry(randomCountry());
+	}
+
+	@Override
+	protected Country testGraphQLGetCountry_addCountry() throws Exception {
+		return _addCountry(randomCountry());
+	}
+
+	@Override
+	protected Country testGraphQLGetCountryByA2_addCountry() throws Exception {
+		return _addCountry(randomCountry());
+	}
+
+	@Override
+	protected Country testGraphQLGetCountryByA3_addCountry() throws Exception {
+		return _addCountry(randomCountry());
+	}
+
+	@Override
+	protected Country testGraphQLGetCountryByName_addCountry()
+		throws Exception {
+
+		return _addCountry(randomCountry());
+	}
+
+	@Override
+	protected Country testGraphQLGetCountryByNumber_addCountry()
 		throws Exception {
 
 		return _addCountry(randomCountry());

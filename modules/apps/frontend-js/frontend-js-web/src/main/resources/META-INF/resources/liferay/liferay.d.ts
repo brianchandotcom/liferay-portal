@@ -232,7 +232,7 @@ declare module Liferay {
 	namespace ThemeDisplay {
 		export function getDefaultLanguageId(): string;
 		export function getLanguageId(): Language.Locale;
-		export function getSiteGroupId(): string | number;
+		export function getSiteGroupId(): number;
 	}
 
 	namespace Util {

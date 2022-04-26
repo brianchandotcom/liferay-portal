@@ -975,10 +975,10 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 		User user = userLocalService.addUserWithWorkflow(
 			creatorUserId, companyId, autoPassword, password1, password2,
-			autoScreenName, screenName, emailAddress, facebookId, openId,
-			locale, firstName, middleName, lastName, prefixId, suffixId, male,
-			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
-			organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
+			autoScreenName, screenName, emailAddress, locale, firstName,
+			middleName, lastName, prefixId, suffixId, male, birthdayMonth,
+			birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds,
+			roleIds, userGroupIds, sendEmail, serviceContext);
 
 		checkMembership(
 			new long[] {user.getUserId()}, groupIds, organizationIds, roleIds,

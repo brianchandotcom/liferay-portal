@@ -2,7 +2,6 @@
 
 <suppressions>
 	<source-check>
-		<suppress checks="JavaXMLSecurityCheck" files="petra-log4j/src/main/java/com/liferay/petra/log4j/internal/Log4jConfigUtil\.java" />
 		<suppress checks="JavaXMLSecurityCheck" files="petra-xml/src/main/java/com/liferay/petra/xml/Dom4jUtil\.java" />
 	</source-check>
 </suppressions>

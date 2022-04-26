@@ -18,6 +18,9 @@
 
 <%
 CookiesBannerConfigurationDisplayContext cookiesBannerConfigurationDisplayContext = new CookiesBannerConfigurationDisplayContext(renderRequest, renderResponse);
+
+String[] optionalCookies = cookiesBannerConfigurationDisplayContext.getOptionalCookies();
+String[] requiredCookies = cookiesBannerConfigurationDisplayContext.getRequiredCookies();
 %>
 
 <clay:container-fluid
@@ -37,113 +40,71 @@ CookiesBannerConfigurationDisplayContext cookiesBannerConfigurationDisplayContex
 		<clay:col
 			size="12"
 		>
-			<clay:content-row
-				noGutters="true"
-				verticalAlign="center"
-			>
-				<clay:content-col
-					expand="<%= true %>"
+
+			<%
+			for (String requiredCookie : requiredCookies) {
+			%>
+
+				<clay:content-row
+					noGutters="true"
+					verticalAlign="center"
 				>
-					<h2><%= LanguageUtil.get(request, "strictly-necessary-cookies") %></h2>
-				</clay:content-col>
+					<clay:content-col
+						expand="<%= true %>"
+					>
+						<h2><%= cookiesBannerConfigurationDisplayContext.getCookieTitle(requiredCookie, request) %></h2>
+					</clay:content-col>
 
-				<clay:content-col>
-					<span class="pr-2 text-primary"><%= LanguageUtil.get(request, "always-active") %></span>
-				</clay:content-col>
-			</clay:content-row>
+					<clay:content-col>
+						<span class="pr-2 text-primary"><%= LanguageUtil.get(request, "always-active") %></span>
+					</clay:content-col>
+				</clay:content-row>
 
-			<clay:content-row
-				cssClass="mb-3"
-			>
-				<p><%= LanguageUtil.get(request, "strictly-necessary-cookies-description") %></p>
-			</clay:content-row>
-
-			<clay:content-row
-				noGutters="true"
-				verticalAlign="center"
-			>
-				<clay:content-col
-					expand="<%= true %>"
+				<clay:content-row
+					cssClass="mb-3"
 				>
-					<h2><%= LanguageUtil.get(request, "performance-cookies") %></h2>
-				</clay:content-col>
+					<p><%= cookiesBannerConfigurationDisplayContext.getCookieDescription(requiredCookie, request) %></p>
+				</clay:content-row>
 
-				<clay:content-col>
-					<label class="toggle-switch">
-						<span class="toggle-switch-check-bar">
-							<input class="toggle-switch-check" data-cookie-key="<%= CookiesConstants.NAME_CONSENT_TYPE_PERFORMANCE %>" disabled type="checkbox" />
+			<%
+			}
 
-							<span aria-hidden="true" class="toggle-switch-bar">
-								<span class="toggle-switch-handle"></span>
+			for (String optionalCookie : optionalCookies) {
+			%>
+
+				<clay:content-row
+					noGutters="true"
+					verticalAlign="center"
+				>
+					<clay:content-col
+						expand="<%= true %>"
+					>
+						<h2><%= cookiesBannerConfigurationDisplayContext.getCookieTitle(optionalCookie, request) %></h2>
+					</clay:content-col>
+
+					<clay:content-col>
+						<label class="toggle-switch">
+							<span class="toggle-switch-check-bar">
+								<input class="toggle-switch-check" data-cookie-key="<%= optionalCookie %>" disabled type="checkbox" />
+
+								<span aria-hidden="true" class="toggle-switch-bar">
+									<span class="toggle-switch-handle"></span>
+								</span>
 							</span>
-						</span>
-					</label>
-				</clay:content-col>
-			</clay:content-row>
+						</label>
+					</clay:content-col>
+				</clay:content-row>
 
-			<clay:content-row
-				cssClass="mb-3"
-			>
-				<p><%= LanguageUtil.get(request, "performance-cookies-description") %></p>
-			</clay:content-row>
-
-			<clay:content-row
-				noGutters="true"
-				verticalAlign="center"
-			>
-				<clay:content-col
-					expand="<%= true %>"
+				<clay:content-row
+					cssClass="mb-3"
 				>
-					<h2><%= LanguageUtil.get(request, "functional-cookies") %></h2>
-				</clay:content-col>
+					<p><%= cookiesBannerConfigurationDisplayContext.getCookieDescription(optionalCookie, request) %></p>
+				</clay:content-row>
 
-				<clay:content-col>
-					<label class="toggle-switch">
-						<span class="toggle-switch-check-bar">
-							<input class="toggle-switch-check" data-cookie-key="<%= CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL %>" disabled type="checkbox" />
+			<%
+			}
+			%>
 
-							<span aria-hidden="true" class="toggle-switch-bar">
-								<span class="toggle-switch-handle"></span>
-							</span>
-						</span>
-					</label>
-				</clay:content-col>
-			</clay:content-row>
-
-			<clay:content-row
-				cssClass="mb-3"
-			>
-				<p><%= LanguageUtil.get(request, "functional-cookies-description") %></p>
-			</clay:content-row>
-
-			<clay:content-row
-				noGutters="true"
-				verticalAlign="center"
-			>
-				<clay:content-col
-					expand="<%= true %>"
-				>
-					<h2><%= LanguageUtil.get(request, "personalization-cookies") %></h2>
-				</clay:content-col>
-
-				<clay:content-col>
-					<label class="toggle-switch">
-						<span class="toggle-switch-check-bar">
-							<input class="toggle-switch-check" data-cookie-key="<%= CookiesConstants.NAME_CONSENT_TYPE_PERSONALIZATION %>" disabled type="checkbox" />
-
-							<span aria-hidden="true" class="toggle-switch-bar">
-								<span class="toggle-switch-handle"></span>
-							</span>
-						</span>
-					</label>
-				</clay:content-col>
-			</clay:content-row>
-
-			<clay:content-row
-				cssClass="mb-3"
-			>
-				<p><%= LanguageUtil.get(request, "personalization-cookies-description") %></p>
-			</clay:content-row>
 		</clay:col>
 	</clay:row>
 
@@ -190,9 +151,9 @@ CookiesBannerConfigurationDisplayContext cookiesBannerConfigurationDisplayContex
 	componentId="CookiesBannerConfiguration"
 	context='<%=
 		HashMapBuilder.<String, Object>put(
-			"optionalCookies", cookiesBannerConfigurationDisplayContext.getOptionalCookies()
+			"optionalCookies", optionalCookies
 		).put(
-			"requiredCookies", cookiesBannerConfigurationDisplayContext.getRequiredCookies()
+			"requiredCookies", requiredCookies
 		).put(
 			"showButtons", cookiesBannerConfigurationDisplayContext.isShowButtons()
 		).build()

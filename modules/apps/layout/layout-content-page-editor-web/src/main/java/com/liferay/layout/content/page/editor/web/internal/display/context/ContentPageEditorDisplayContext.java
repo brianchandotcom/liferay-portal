@@ -18,7 +18,6 @@ import com.liferay.asset.categories.item.selector.AssetCategoryTreeNodeItemSelec
 import com.liferay.asset.categories.item.selector.criterion.AssetCategoryTreeNodeItemSelectorCriterion;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
-import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributor;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
@@ -1376,6 +1375,10 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"fragmentEntryKey", fragmentEntry.getFragmentEntryKey()
 			).put(
+				"fragmentEntryType", fragmentEntry.getType()
+			).put(
+				"icon", fragmentEntry.getIcon()
+			).put(
 				"name", fragmentEntry.getName()
 			).build();
 		}
@@ -1620,9 +1623,6 @@ public class ContentPageEditorDisplayContext {
 						String.valueOf(
 							fragmentEntryLink.getFragmentEntryLinkId())
 					).put(
-						"fragmentType",
-						FragmentConstants.getTypeLabel(fragmentEntry.getType())
-					).put(
 						"masterLayout",
 						layout.getMasterLayoutPlid() ==
 							fragmentEntryLink.getPlid()
@@ -1634,10 +1634,6 @@ public class ContentPageEditorDisplayContext {
 						_getFragmentEntry(
 							fragmentEntryLink, fragmentEntry, content)
 					).build();
-
-				if (fragmentEntry != null) {
-					fragmentEntryLinkMap.put("icon", fragmentEntry.getIcon());
-				}
 
 				fragmentEntryLinksMap.put(
 					String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),

@@ -515,30 +515,8 @@ public abstract class BaseDBProcess implements DBProcess {
 		private Connection _getConnection() {
 			Thread thread = Thread.currentThread();
 
-			long threadId = thread.getId();
-
-			Connection connection = _connectionMap.get(threadId);
-
-			if (connection == null) {
-				try {
-					connection = _getConnection();
-
-					Connection prevConnection = _connectionMap.putIfAbsent(
-						threadId, connection);
-
-					if (prevConnection != null) {
-						connection.close();
-
-						connection = prevConnection;
-					}
-				}
-				catch (Exception exception) {
-					_log.error(
-						"Unable to obtain a database connection ", exception);
-				}
-			}
-
-			return connection;
+			return _connectionMap.computeIfAbsent(
+				thread.getId(), threadId -> _getConnection());
 		}
 
 		private final Map<Long, Connection> _connectionMap =

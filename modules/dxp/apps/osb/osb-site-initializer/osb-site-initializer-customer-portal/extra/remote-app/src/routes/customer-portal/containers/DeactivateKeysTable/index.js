@@ -10,7 +10,8 @@
  */
 
 import {ClayTooltipProvider} from '@clayui/tooltip';
-import {useCallback, useMemo, useState} from 'react';
+import {useCallback, useEffect, useMemo, useState} from 'react';
+import {useOutletContext} from 'react-router-dom';
 import Table from '../../../../common/components/Table';
 import {useCustomerPortal} from '../../context';
 import useGetActivationKeysData from '../ActivationKeysTable/hooks/useGetActivationKeysData';

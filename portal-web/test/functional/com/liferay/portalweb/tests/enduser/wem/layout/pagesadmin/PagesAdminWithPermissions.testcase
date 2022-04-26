@@ -24,6 +24,8 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
+			JSONUser.tearDownNonAdminUsers();
+
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 		}
 	}

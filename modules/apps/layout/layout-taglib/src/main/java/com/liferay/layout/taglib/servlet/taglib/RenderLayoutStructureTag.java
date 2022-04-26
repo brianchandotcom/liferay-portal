@@ -480,7 +480,7 @@ public class RenderLayoutStructureTag extends IncludeTag {
 	}
 
 	private void _renderColumnLayoutStructureItem(
-			LayoutStructureItem layoutStructureItem,
+			LayoutStructureItem layoutStructureItem, int collectionElementIndex,
 			RenderLayoutStructureDisplayContext
 				renderLayoutStructureDisplayContext)
 		throws Exception {
@@ -503,14 +503,14 @@ public class RenderLayoutStructureTag extends IncludeTag {
 		colTag.doStartTag();
 
 		_renderLayoutStructure(
-			layoutStructureItem.getChildrenItemIds(),
+			layoutStructureItem.getChildrenItemIds(), collectionElementIndex,
 			renderLayoutStructureDisplayContext);
 
 		colTag.doEndTag();
 	}
 
 	private void _renderContainerStyledLayoutStructureItem(
-			LayoutStructureItem layoutStructureItem,
+			LayoutStructureItem layoutStructureItem, int collectionElementIndex,
 			RenderLayoutStructureDisplayContext
 				renderLayoutStructureDisplayContext)
 		throws Exception {
@@ -602,7 +602,7 @@ public class RenderLayoutStructureTag extends IncludeTag {
 		jspWriter.write("\">");
 
 		_renderLayoutStructure(
-			layoutStructureItem.getChildrenItemIds(),
+			layoutStructureItem.getChildrenItemIds(), collectionElementIndex,
 			renderLayoutStructureDisplayContext);
 
 		jspWriter.write("</");
@@ -615,7 +615,7 @@ public class RenderLayoutStructureTag extends IncludeTag {
 	}
 
 	private void _renderDropZoneLayoutStructureItem(
-			LayoutStructureItem layoutStructureItem,
+			LayoutStructureItem layoutStructureItem, int collectionElementIndex,
 			RenderLayoutStructureDisplayContext
 				renderLayoutStructureDisplayContext)
 		throws Exception {
@@ -674,7 +674,7 @@ public class RenderLayoutStructureTag extends IncludeTag {
 		else {
 			_renderLayoutStructure(
 				layoutStructureItem.getChildrenItemIds(),
-				renderLayoutStructureDisplayContext);
+				collectionElementIndex, renderLayoutStructureDisplayContext);
 		}
 	}
 
@@ -692,7 +692,7 @@ public class RenderLayoutStructureTag extends IncludeTag {
 	}
 
 	private void _renderFormStyledLayoutStructureItem(
-			LayoutStructureItem layoutStructureItem,
+			LayoutStructureItem layoutStructureItem, int collectionElementIndex,
 			RenderLayoutStructureDisplayContext
 				renderLayoutStructureDisplayContext)
 		throws Exception {
@@ -723,7 +723,7 @@ public class RenderLayoutStructureTag extends IncludeTag {
 		jspWriter.write("\">");
 
 		_renderLayoutStructure(
-			layoutStructureItem.getChildrenItemIds(),
+			layoutStructureItem.getChildrenItemIds(), collectionElementIndex,
 			renderLayoutStructureDisplayContext);
 
 		jspWriter.write("</form>");
@@ -834,7 +834,8 @@ public class RenderLayoutStructureTag extends IncludeTag {
 			}
 			else if (layoutStructureItem instanceof ColumnLayoutStructureItem) {
 				_renderColumnLayoutStructureItem(
-					layoutStructureItem, renderLayoutStructureDisplayContext);
+					layoutStructureItem, collectionElementIndex,
+					renderLayoutStructureDisplayContext);
 			}
 			else if (layoutStructureItem instanceof
 						ContainerStyledLayoutStructureItem) {
@@ -850,13 +851,15 @@ public class RenderLayoutStructureTag extends IncludeTag {
 				}
 
 				_renderContainerStyledLayoutStructureItem(
-					layoutStructureItem, renderLayoutStructureDisplayContext);
+					layoutStructureItem, collectionElementIndex,
+					renderLayoutStructureDisplayContext);
 			}
 			else if (layoutStructureItem instanceof
 						DropZoneLayoutStructureItem) {
 
 				_renderDropZoneLayoutStructureItem(
-					layoutStructureItem, renderLayoutStructureDisplayContext);
+					layoutStructureItem, collectionElementIndex,
+					renderLayoutStructureDisplayContext);
 			}
 			else if (layoutStructureItem instanceof
 						FormStyledLayoutStructureItem) {
@@ -871,7 +874,8 @@ public class RenderLayoutStructureTag extends IncludeTag {
 				}
 
 				_renderFormStyledLayoutStructureItem(
-					layoutStructureItem, renderLayoutStructureDisplayContext);
+					layoutStructureItem, collectionElementIndex,
+					renderLayoutStructureDisplayContext);
 			}
 			else if (layoutStructureItem instanceof
 						FragmentStyledLayoutStructureItem) {
@@ -903,7 +907,8 @@ public class RenderLayoutStructureTag extends IncludeTag {
 				}
 
 				_renderRowStyledLayoutStructureItem(
-					layoutStructureItem, renderLayoutStructureDisplayContext);
+					layoutStructureItem, collectionElementIndex,
+					renderLayoutStructureDisplayContext);
 			}
 			else {
 				_renderLayoutStructure(
@@ -929,7 +934,7 @@ public class RenderLayoutStructureTag extends IncludeTag {
 	}
 
 	private void _renderRowStyledLayoutStructureItem(
-			LayoutStructureItem layoutStructureItem,
+			LayoutStructureItem layoutStructureItem, int collectionElementIndex,
 			RenderLayoutStructureDisplayContext
 				renderLayoutStructureDisplayContext)
 		throws Exception {
@@ -1026,7 +1031,7 @@ public class RenderLayoutStructureTag extends IncludeTag {
 
 			_renderLayoutStructure(
 				layoutStructureItem.getChildrenItemIds(),
-				renderLayoutStructureDisplayContext);
+				collectionElementIndex, renderLayoutStructureDisplayContext);
 
 			rowTag.doEndTag();
 
@@ -1044,7 +1049,7 @@ public class RenderLayoutStructureTag extends IncludeTag {
 
 			_renderLayoutStructure(
 				layoutStructureItem.getChildrenItemIds(),
-				renderLayoutStructureDisplayContext);
+				collectionElementIndex, renderLayoutStructureDisplayContext);
 
 			rowTag.doEndTag();
 		}

@@ -14,6 +14,8 @@
 
 package com.liferay.batch.planner.web.internal.display.context;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
@@ -22,6 +24,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.List;
 import java.util.Objects;
@@ -45,6 +48,41 @@ public class BatchPlannerPlanManagementToolbarDisplayContext
 		super(
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
 			searchContainer);
+	}
+
+	@Override
+	public CreationMenu getCreationMenu() {
+		return CreationMenuBuilder.addDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setHref(
+					PortletURLBuilder.createRenderURL(
+						liferayPortletResponse
+					).setMVCRenderCommandName(
+						"/batch_planner/edit_export_batch_planner_plan"
+					).setBackURL(
+						PortalUtil.getCurrentURL(httpServletRequest)
+					).setNavigation(
+						"export"
+					).buildPortletURL());
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "export-file"));
+			}
+		).addDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setHref(
+					PortletURLBuilder.createRenderURL(
+						liferayPortletResponse
+					).setMVCRenderCommandName(
+						"/batch_planner/edit_import_batch_planner_plan"
+					).setBackURL(
+						PortalUtil.getCurrentURL(httpServletRequest)
+					).setNavigation(
+						"import"
+					).buildPortletURL());
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "import-file"));
+			}
+		).build();
 	}
 
 	@Override

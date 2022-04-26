@@ -24,8 +24,12 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+
+import java.util.concurrent.FutureTask;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -94,13 +98,29 @@ public class UpgradeDatabaseConnectionsTest {
 			}
 
 			if (partitionConcurrencyEnabled) {
-				Assert.assertTrue(
-					ProxyUtil.isProxyClass(connection.getClass()));
+				Assert.assertNotSame(
+					_captureRealConnection(), _captureRealConnection());
 			}
 			else {
-				Assert.assertTrue(
-					!ProxyUtil.isProxyClass(connection.getClass()));
+				Assert.assertSame(
+					_captureRealConnection(), _captureRealConnection());
 			}
+		}
+
+		private Connection _captureRealConnection() throws Exception {
+			FutureTask<Connection> futureTask = new FutureTask<>(
+				() -> {
+					DatabaseMetaData databaseMetaData =
+						connection.getMetaData();
+
+					return databaseMetaData.getConnection();
+				});
+
+			Thread thread = new Thread(futureTask);
+
+			thread.start();
+
+			return futureTask.get();
 		}
 
 	}

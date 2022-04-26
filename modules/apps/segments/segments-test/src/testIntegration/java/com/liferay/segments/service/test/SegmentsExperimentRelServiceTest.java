@@ -118,12 +118,12 @@ public class SegmentsExperimentRelServiceTest {
 	}
 
 	private SegmentsExperience _addSegmentsExperience() throws Exception {
-		long classNameId = _classNameLocalService.getClassNameId(
-			Layout.class.getName());
 		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
 
 		return SegmentsTestUtil.addSegmentsExperience(
-			_group.getGroupId(), classNameId, layout.getPlid());
+			_group.getGroupId(),
+			_classNameLocalService.getClassNameId(Layout.class.getName()),
+			layout.getPlid());
 	}
 
 	private SegmentsExperiment _addSegmentsExperiment() throws Exception {

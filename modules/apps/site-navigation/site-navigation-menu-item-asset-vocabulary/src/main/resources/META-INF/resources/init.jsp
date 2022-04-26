@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,20 +12,16 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.site.navigation.menu.item.layout.constants;
+<%@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
+taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
-/**
- * @author Eudaldo Alonso
- */
-public class SiteNavigationMenuItemTypeConstants {
+<%@ page import="com.liferay.site.navigation.menu.item.asset.vocabulary.internal.constants.AssetVocabularySiteNavigationMenuTypeConstants" %><%@
+page import="com.liferay.site.navigation.menu.item.asset.vocabulary.internal.display.context.AssetVocabularySiteNavigationMenuTypeDisplayContext" %>
 
-	public static final String ASSET_VOCABULARY = "asset_vocabulary";
+<liferay-frontend:defineObjects />
 
-	public static final String LAYOUT = "layout";
+<liferay-theme:defineObjects />
 
-	public static final String NODE = "node";
-
-	public static final String URL = "url";
-
-}
+<%@ include file="/init-ext.jsp" %>

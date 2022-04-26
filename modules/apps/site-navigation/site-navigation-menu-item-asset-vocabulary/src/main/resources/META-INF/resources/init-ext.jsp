@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,20 +12,4 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-
-package com.liferay.site.navigation.menu.item.layout.constants;
-
-/**
- * @author Eudaldo Alonso
- */
-public class SiteNavigationMenuItemTypeConstants {
-
-	public static final String ASSET_VOCABULARY = "asset_vocabulary";
-
-	public static final String LAYOUT = "layout";
-
-	public static final String NODE = "node";
-
-	public static final String URL = "url";
-
-}
+--%>

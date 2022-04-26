@@ -12,19 +12,8 @@
  * details.
  */
 
-package com.liferay.site.navigation.menu.item.layout.constants;
-
-/**
- * @author Eudaldo Alonso
- */
-public class SiteNavigationMenuItemTypeConstants {
-
-	public static final String ASSET_VOCABULARY = "asset_vocabulary";
-
-	public static final String LAYOUT = "layout";
-
-	public static final String NODE = "node";
-
-	public static final String URL = "url";
-
+function AssetVocabularyContextualSidebar() {
+	return '';
 }
+
+export default AssetVocabularyContextualSidebar;

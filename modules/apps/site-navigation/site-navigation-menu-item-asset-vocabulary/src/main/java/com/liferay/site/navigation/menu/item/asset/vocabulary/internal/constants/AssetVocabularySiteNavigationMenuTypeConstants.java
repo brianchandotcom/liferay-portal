@@ -12,19 +12,15 @@
  * details.
  */
 
-package com.liferay.site.navigation.menu.item.layout.constants;
+package com.liferay.site.navigation.menu.item.asset.vocabulary.internal.constants;
 
 /**
- * @author Eudaldo Alonso
+ * @author Lourdes Fernández Besada
  */
-public class SiteNavigationMenuItemTypeConstants {
+public class AssetVocabularySiteNavigationMenuTypeConstants {
 
-	public static final String ASSET_VOCABULARY = "asset_vocabulary";
-
-	public static final String LAYOUT = "layout";
-
-	public static final String NODE = "node";
-
-	public static final String URL = "url";
+	public static final String
+		ASSET_VOCABULARY_SITE_NAVIGATION_MENU_TYPE_DISPLAY_CONTEXT =
+			"ASSET_VOCABULARY_SITE_NAVIGATION_MENU_TYPE_DISPLAY_CONTEXT";
 
 }

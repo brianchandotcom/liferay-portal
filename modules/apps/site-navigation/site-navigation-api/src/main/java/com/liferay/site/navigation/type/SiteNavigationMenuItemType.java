@@ -194,6 +194,10 @@ public interface SiteNavigationMenuItemType {
 		return false;
 	}
 
+	public default boolean isDynamic() {
+		return false;
+	}
+
 	public default boolean isItemSelector() {
 		return false;
 	}

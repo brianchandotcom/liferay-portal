@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,20 +12,17 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.site.navigation.menu.item.layout.constants;
+<%@ include file="/init.jsp" %>
 
-/**
- * @author Eudaldo Alonso
- */
-public class SiteNavigationMenuItemTypeConstants {
+<%
+AssetVocabularySiteNavigationMenuTypeDisplayContext assetVocabularySiteNavigationMenuTypeDisplayContext = (AssetVocabularySiteNavigationMenuTypeDisplayContext)request.getAttribute(AssetVocabularySiteNavigationMenuTypeConstants.ASSET_VOCABULARY_SITE_NAVIGATION_MENU_TYPE_DISPLAY_CONTEXT);
+%>
 
-	public static final String ASSET_VOCABULARY = "asset_vocabulary";
-
-	public static final String LAYOUT = "layout";
-
-	public static final String NODE = "node";
-
-	public static final String URL = "url";
-
-}
+<div>
+	<react:component
+		module="js/AssetVocabularyContextualSidebar"
+		props="<%= assetVocabularySiteNavigationMenuTypeDisplayContext.getAssetVocabularyContextualSidebarContext() %>"
+	/>
+</div>

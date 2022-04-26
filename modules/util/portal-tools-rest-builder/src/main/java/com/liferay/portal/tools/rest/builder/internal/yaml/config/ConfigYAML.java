@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools.rest.builder.internal.yaml.config;
 
+import java.util.List;
+
 /**
  * @author Peter Shin
  */
@@ -41,6 +43,10 @@ public class ConfigYAML {
 
 	public String getClientMavenGroupId() {
 		return _clientMavenGroupId;
+	}
+
+	public List<String> getDisabledBatchEntities() {
+		return _disabledBatchEntities;
 	}
 
 	public String getGraphQLNamespace() {
@@ -131,6 +137,10 @@ public class ConfigYAML {
 		_clientMavenGroupId = clientMavenGroupId;
 	}
 
+	public void setDisabledBatchEntities(List<String> disabledBatchEntities) {
+		_disabledBatchEntities = disabledBatchEntities;
+	}
+
 	public void setForceClientVersionDescription(
 		boolean forceClientVersionDescription) {
 
@@ -211,6 +221,7 @@ public class ConfigYAML {
 	private String _author;
 	private String _clientDir;
 	private String _clientMavenGroupId;
+	private List<String> _disabledBatchEntities;
 	private boolean _forceClientVersionDescription = true;
 	private boolean _forcePredictableContentApplicationXML = true;
 	private boolean _forcePredictableOperationId;

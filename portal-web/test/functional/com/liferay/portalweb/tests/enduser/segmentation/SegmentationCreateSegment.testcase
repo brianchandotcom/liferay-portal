@@ -2203,6 +2203,61 @@ definition {
 		}
 	}
 
+	@description = "LPS-152077 Bug: Error updating segment which contains a non-existing segment"
+	@priority = "4"
+	test DeleteUnavailableSegmentCriteria {
+		task ("Create a first segment with any criteria") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "Email Address",
+				groupName = "Guest",
+				operator = "contains",
+				segmentName = "First Segment",
+				text = "test");
+		}
+
+		task ("Create a second segment usign two criterias, one being the first segment") {
+			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
+
+			LexiconEntry.gotoAdd();
+
+			Segmentation.fillTitle(titleField = "Second Segment");
+
+			Segmentation.gotoSidebar(fieldType = "Segments");
+
+			Segmentation.addProperties(propertyOption = "Segment");
+
+			Segmentation.fillProperty(selectLink = "First Segment");
+
+			Segmentation.gotoSidebar(fieldType = "User");
+
+			Segmentation.addProperties(propertyOption = "First Name");
+
+			Segmentation.fillProperty(propertyField = "liferay");
+
+			Button.clickSave();
+		}
+
+		task ("Delete the first criteria") {
+			Segmentation.deleteSegment(entry = "First Segment");
+		}
+
+		task ("Remove from second segment criteria related to the first segment") {
+			Segmentation.editSegment(entry = "Second Segment");
+
+			Button.clickDelete();
+
+			Button.clickSave();
+		}
+
+		task ("Check that the segment was actually updated") {
+			Segmentation.editSegment(entry = "Second Segment");
+
+			AssertElementNotPresent(
+				locator1 = "Segmentation#CONDITIONS_PROPERTY_NAME",
+				propertyName = "Segment");
+		}
+	}
+
 	@description = "LPS-130917 Given Instance Settings > Segments
 	When the user clicks on Analytics Cloud Segments tab
 	Then help text of Interest Terms Cache Expiration Time will be: Define the time (in seconds) before clearing the Interest Terms cache."

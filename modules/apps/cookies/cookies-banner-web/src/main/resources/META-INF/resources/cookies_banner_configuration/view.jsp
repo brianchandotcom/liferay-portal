@@ -71,7 +71,7 @@ CookiesBannerConfigurationDisplayContext cookiesBannerConfigurationDisplayContex
 				<clay:content-col>
 					<label class="toggle-switch">
 						<span class="toggle-switch-check-bar">
-							<input class="toggle-switch-check" data-cookie-key="CONSENT_TYPE_PERFORMANCE" disabled type="checkbox" />
+							<input class="toggle-switch-check" data-cookie-key="<%= CookiesConstants.NAME_CONSENT_TYPE_PERFORMANCE %>" disabled type="checkbox" />
 
 							<span aria-hidden="true" class="toggle-switch-bar">
 								<span class="toggle-switch-handle"></span>
@@ -100,7 +100,7 @@ CookiesBannerConfigurationDisplayContext cookiesBannerConfigurationDisplayContex
 				<clay:content-col>
 					<label class="toggle-switch">
 						<span class="toggle-switch-check-bar">
-							<input class="toggle-switch-check" data-cookie-key="CONSENT_TYPE_FUNCTIONAL" disabled type="checkbox" />
+							<input class="toggle-switch-check" data-cookie-key="<%= CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL %>" disabled type="checkbox" />
 
 							<span aria-hidden="true" class="toggle-switch-bar">
 								<span class="toggle-switch-handle"></span>
@@ -129,7 +129,7 @@ CookiesBannerConfigurationDisplayContext cookiesBannerConfigurationDisplayContex
 				<clay:content-col>
 					<label class="toggle-switch">
 						<span class="toggle-switch-check-bar">
-							<input class="toggle-switch-check" data-cookie-key="CONSENT_TYPE_PERSONALIZATION" disabled type="checkbox" />
+							<input class="toggle-switch-check" data-cookie-key="<%= CookiesConstants.NAME_CONSENT_TYPE_PERSONALIZATION %>" disabled type="checkbox" />
 
 							<span aria-hidden="true" class="toggle-switch-bar">
 								<span class="toggle-switch-handle"></span>

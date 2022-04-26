@@ -14,6 +14,8 @@
 
 package com.liferay.cookies.banner.web.internal.display.context;
 
+import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
+
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -31,13 +33,14 @@ public class BaseCookiesBannerDisplayContext {
 
 	public String[] getOptionalCookies() {
 		return new String[] {
-			"CONSENT_TYPE_FUNCTIONAL", "CONSENT_TYPE_PERFORMANCE",
-			"CONSENT_TYPE_PERSONALIZATION"
+			CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL,
+			CookiesConstants.NAME_CONSENT_TYPE_PERFORMANCE,
+			CookiesConstants.NAME_CONSENT_TYPE_PERSONALIZATION
 		};
 	}
 
 	public String[] getRequiredCookies() {
-		return new String[] {"CONSENT_TYPE_STRICTLY_NECESSARY"};
+		return new String[] {CookiesConstants.NAME_CONSENT_TYPE_NECESSARY};
 	}
 
 	protected final RenderRequest renderRequest;

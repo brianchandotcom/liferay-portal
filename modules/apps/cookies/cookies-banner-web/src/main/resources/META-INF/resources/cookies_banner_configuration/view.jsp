@@ -33,7 +33,7 @@ String[] requiredCookies = cookiesBannerConfigurationDisplayContext.getRequiredC
 			size="12"
 		>
 			<p>
-				<%= LanguageUtil.get(request, "cookies-banner-configuration-message") %>
+				<liferay-ui:message key="cookies-banner-configuration-message" />
 			</p>
 		</clay:col>
 
@@ -56,7 +56,7 @@ String[] requiredCookies = cookiesBannerConfigurationDisplayContext.getRequiredC
 					</clay:content-col>
 
 					<clay:content-col>
-						<span class="pr-2 text-primary"><%= LanguageUtil.get(request, "always-active") %></span>
+						<span class="pr-2 text-primary"><liferay-ui:message key="always-active" /></span>
 					</clay:content-col>
 				</clay:content-row>
 

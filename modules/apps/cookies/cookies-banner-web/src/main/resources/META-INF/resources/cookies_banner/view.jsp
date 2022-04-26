@@ -31,7 +31,7 @@ CookiesBannerDisplayContext cookiesBannerDisplayContext = (CookiesBannerDisplayC
 			<clay:content-col
 				expand="<%= true %>"
 			>
-				<span><%= LanguageUtil.get(request, "cookies-banner-message") %></span>
+				<span><liferay-ui:message key="cookies-banner-message" /></span>
 			</clay:content-col>
 
 			<clay:content-col>

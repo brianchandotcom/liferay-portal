@@ -17,14 +17,17 @@ package com.liferay.headless.admin.address.internal.resource.v1_0;
 import com.liferay.headless.admin.address.dto.v1_0.Country;
 import com.liferay.headless.admin.address.internal.dto.v1_0.converter.CountryResourceDTOConverter;
 import com.liferay.headless.admin.address.resource.v1_0.CountryResource;
+import com.liferay.portal.kernel.model.CountryTable;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.CountryService;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.odata.entity.DoubleEntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.odata.entity.StringEntityField;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-
-import java.util.Collections;
 
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -51,7 +54,7 @@ public class CountryResourceImpl extends BaseCountryResourceImpl {
 			countries = _countryService.searchCountries(
 				contextCompany.getCompanyId(), active, search,
 				pagination.getStartPosition(), pagination.getEndPosition(),
-				null);
+				_toOrderByComparator(sorts));
 
 		return Page.of(
 			transform(countries.getBaseModels(), this::_toCountry), pagination,
@@ -62,7 +65,9 @@ public class CountryResourceImpl extends BaseCountryResourceImpl {
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
 		throws Exception {
 
-		return () -> Collections.emptyMap();
+		return () -> EntityModel.toEntityFieldsMap(
+			new StringEntityField("name", locale -> "name"),
+			new DoubleEntityField("position", locale -> "position"));
 	}
 
 	private Country _toCountry(
@@ -70,6 +75,22 @@ public class CountryResourceImpl extends BaseCountryResourceImpl {
 		throws Exception {
 
 		return _countryResourceDTOConverter.toDTO(serviceBuilderCountry);
+	}
+
+	private OrderByComparator<com.liferay.portal.kernel.model.Country>
+		_toOrderByComparator(Sort[] sorts) {
+
+		if (sorts == null) {
+			return null;
+		}
+
+		for (Sort sort : sorts) {
+			return OrderByComparatorFactoryUtil.create(
+				CountryTable.INSTANCE.getTableName(), sort.getFieldName(),
+				String.valueOf(!sort.isReverse()));
+		}
+
+		return null;
 	}
 
 	@Reference

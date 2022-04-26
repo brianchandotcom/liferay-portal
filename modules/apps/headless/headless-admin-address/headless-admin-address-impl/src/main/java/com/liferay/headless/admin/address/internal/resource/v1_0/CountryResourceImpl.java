@@ -15,13 +15,11 @@
 package com.liferay.headless.admin.address.internal.resource.v1_0;
 
 import com.liferay.headless.admin.address.dto.v1_0.Country;
-import com.liferay.headless.admin.address.dto.v1_0.Region;
+import com.liferay.headless.admin.address.internal.dto.v1_0.converter.CountryResourceDTOConverter;
 import com.liferay.headless.admin.address.resource.v1_0.CountryResource;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.CountryService;
-import com.liferay.portal.kernel.service.RegionService;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -56,59 +54,16 @@ public class CountryResourceImpl extends BaseCountryResourceImpl {
 	}
 
 	private Country _toCountry(
-		com.liferay.portal.kernel.model.Country serviceBuilderCountry) {
+			com.liferay.portal.kernel.model.Country serviceBuilderCountry)
+		throws Exception {
 
-		Region[] regionsArray = transformToArray(
-			_regionService.getRegions(serviceBuilderCountry.getCountryId()),
-			this::_toRegion, Region.class);
-
-		return new Country() {
-			{
-				setA2(serviceBuilderCountry.getA2());
-				setA3(serviceBuilderCountry.getA3());
-				setActive(serviceBuilderCountry.getActive());
-				setBillingAllowed(serviceBuilderCountry.getBillingAllowed());
-				setGroupFilterEnabled(
-					serviceBuilderCountry.getGroupFilterEnabled());
-				setId(serviceBuilderCountry.getCountryId());
-
-				String idd = serviceBuilderCountry.getIdd();
-
-				if (Validator.isNotNull(idd)) {
-					setIdd(Integer.valueOf(idd));
-				}
-
-				setName(serviceBuilderCountry.getName());
-				setNumber(Integer.valueOf(serviceBuilderCountry.getNumber()));
-				setPosition(serviceBuilderCountry.getPosition());
-				setRegions(regionsArray);
-				setShippingAllowed(serviceBuilderCountry.getShippingAllowed());
-				setSubjectToVAT(serviceBuilderCountry.getSubjectToVAT());
-				setTitle_i18n(serviceBuilderCountry.getLanguageIdToTitleMap());
-				setZipRequired(serviceBuilderCountry.getZipRequired());
-			}
-		};
+		return _countryResourceDTOConverter.toDTO(serviceBuilderCountry);
 	}
 
-	private Region _toRegion(
-		com.liferay.portal.kernel.model.Region serviceBuilderRegion) {
-
-		return new Region() {
-			{
-				setActive(serviceBuilderRegion.getActive());
-				setCountryId(serviceBuilderRegion.getCountryId());
-				setId(serviceBuilderRegion.getRegionId());
-				setName(serviceBuilderRegion.getName());
-				setRegionCode(serviceBuilderRegion.getRegionCode());
-				setTitle_i18n(serviceBuilderRegion.getLanguageIdToTitleMap());
-			}
-		};
-	}
+	@Reference
+	private CountryResourceDTOConverter _countryResourceDTOConverter;
 
 	@Reference
 	private CountryService _countryService;
-
-	@Reference
-	private RegionService _regionService;
 
 }

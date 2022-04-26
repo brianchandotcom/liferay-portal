@@ -86,18 +86,12 @@ public class UpgradeDatabaseConnectionsTest {
 		protected void process(UnsafeConsumer<Long, Exception> unsafeConsumer)
 			throws Exception {
 
-			boolean partitionConcurrencyEnabled = false;
-
 			if (GetterUtil.getBoolean(
 					PropsUtil.get("database.partition.enabled")) &&
 				GetterUtil.getBoolean(
 					PropsUtil.get("database.partition.thread.pool.enabled"),
 					true)) {
 
-				partitionConcurrencyEnabled = true;
-			}
-
-			if (partitionConcurrencyEnabled) {
 				Assert.assertNotSame(
 					_captureRealConnection(), _captureRealConnection());
 			}

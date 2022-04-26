@@ -460,6 +460,64 @@ definition {
 		}
 	}
 
+	@description = "The user can add a web content via Web Content Display widget based on global structure and local template."
+	@priority = "4"
+	test AddWebContentWithGlobalStructureAndLocalTemplate {
+		task ("Add a web content global structure with a text field") {
+			WebContentNavigator.openWebContentStructuresAdmin(siteURLKey = "global");
+
+			WebContentStructures.addCP(
+				structureDescription = "Global WC Structure Description",
+				structureName = "Global WC Structure Name");
+
+			DataEngine.addField(
+				fieldFieldLabel = "Text",
+				fieldName = "Text");
+
+			WebContentStructures.saveCP();
+		}
+
+		task ("Add a web content template in local site associated to global structure") {
+			WebContentNavigator.openWebContentTemplatesAdmin(siteURLKey = "test-site-name");
+
+			WebContentTemplates.addCP(
+				structureName = "Global WC Structure Name",
+				templateDescription = "Local WC Template Description",
+				templateFieldNames = "Text",
+				templateName = "Local WC Template Name");
+		}
+
+		task ("Add a Web Content Display widget to widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				widgetName = "Web Content Display");
+		}
+
+		task ("Add a web content via Web Content Display based on global structure and local template") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			WebContentDisplayPortlet.add(
+				fieldLabelList = "Text",
+				structureName = "Global WC Structure Name",
+				templateName = "Local WC Template Name",
+				webContentTextSingleLine = "Web Content Text",
+				webContentTitle = "Web Content Title");
+		}
+
+		task ("View web content is shown in WCD") {
+			WebContentDisplayPortlet.viewContent(
+				webContentContent = "Web Content Text",
+				webContentTitle = "Web Content Title");
+		}
+	}
+
 	@description = "The user can add a web content with image field."
 	@priority = "4"
 	test AddWebContentWithImageField {
@@ -948,6 +1006,77 @@ definition {
 			WebContent.viewSelectedTemplateCP(
 				templateName = "Template Edit",
 				webContentTitle = "Web Content Title");
+		}
+	}
+
+	@description = "Can edit a web content from global structure in web content display widget."
+	@priority = "4"
+	test EditWebContentFromGlobalStructure {
+		task ("Add a web content structure with a Text field in global site") {
+			WebContentNavigator.openWebContentStructuresAdmin(siteURLKey = "global");
+
+			WebContentStructures.addCP(structureName = "Global WC Structure Name");
+
+			DataEngine.addField(
+				fieldFieldLabel = "Text",
+				fieldName = "Text");
+
+			WebContentStructures.saveCP(structureName = "Global WC Structure Name");
+		}
+
+		task ("Add a web content template in global site associated to global structure") {
+			WebContentNavigator.openWebContentTemplatesAdmin(siteURLKey = "global");
+
+			WebContentTemplates.addCP(
+				structureName = "Global WC Structure Name",
+				templateFieldNames = "Text",
+				templateName = "Global WC Template Name");
+		}
+
+		task ("Add a Web Content Display widget to widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				widgetName = "Web Content Display");
+		}
+
+		task ("Add a web content via Web Content Display based on global structure and global template") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			WebContentDisplayPortlet.add(
+				fieldLabelList = "Text",
+				structureName = "Global WC Structure Name",
+				templateName = "Global WC Template Name",
+				webContentTextSingleLine = "Web Content Text",
+				webContentTitle = "Web Content Title");
+		}
+
+		task ("View web content is shown in WCD") {
+			WebContentDisplayPortlet.viewContent(
+				webContentContent = "Web Content Text",
+				webContentTitle = "Web Content Title");
+		}
+
+		task ("Edit the web content via WCD") {
+			WebContentDisplayPortletNavigator.gotoEdit(
+				menuItem = "Edit Web Content",
+				webContentTitle = "Web Content Title");
+
+			WebContentDisplayPortlet.edit(
+				webContentTextSingleLine = "Web Content Text Edit",
+				webContentTitleEdit = "Web Content Title Edit");
+		}
+
+		task ("View edited web contet is shown in WCD") {
+			WebContentDisplayPortlet.viewContent(
+				webContentContent = "Web Content Text Edit",
+				webContentTitle = "Web Content Title Edit");
 		}
 	}
 

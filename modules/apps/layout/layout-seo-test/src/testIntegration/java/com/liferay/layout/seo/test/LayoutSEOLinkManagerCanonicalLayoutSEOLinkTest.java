@@ -98,12 +98,9 @@ public class LayoutSEOLinkManagerCanonicalLayoutSEOLinkTest {
 			RandomTestUtil.randomString(), _themeDisplay, _layout, false,
 			false);
 
-		Map<Locale, String> alternateURLs = _portal.getAlternateURLs(
-			canonicalURL, _themeDisplay, _layout);
-
 		LayoutSEOLink canonicalLayoutSEOLink =
 			_layoutSEOLinkManager.getCanonicalLayoutSEOLink(
-				_layout, LocaleUtil.getDefault(), canonicalURL, alternateURLs);
+				_layout, LocaleUtil.getDefault(), canonicalURL, _themeDisplay);
 
 		Assert.assertEquals(canonicalURL, canonicalLayoutSEOLink.getHref());
 	}
@@ -116,9 +113,6 @@ public class LayoutSEOLinkManagerCanonicalLayoutSEOLinkTest {
 			RandomTestUtil.randomString(), _themeDisplay, _layout, false,
 			false);
 
-		Map<Locale, String> alternateURLs = _portal.getAlternateURLs(
-			canonicalURL, _themeDisplay, _layout);
-
 		_layoutSEOEntryLocalService.updateLayoutSEOEntry(
 			TestPropsValues.getUserId(), _group.getGroupId(), false,
 			_layout.getLayoutId(), false,
@@ -128,7 +122,7 @@ public class LayoutSEOLinkManagerCanonicalLayoutSEOLinkTest {
 
 		LayoutSEOLink canonicalLayoutSEOLink =
 			_layoutSEOLinkManager.getCanonicalLayoutSEOLink(
-				_layout, LocaleUtil.getDefault(), canonicalURL, alternateURLs);
+				_layout, LocaleUtil.getDefault(), canonicalURL, _themeDisplay);
 
 		Assert.assertEquals(canonicalURL, canonicalLayoutSEOLink.getHref());
 	}
@@ -147,12 +141,9 @@ public class LayoutSEOLinkManagerCanonicalLayoutSEOLinkTest {
 		String canonicalURL = _portal.getCanonicalURL(
 			RandomTestUtil.randomString(), _themeDisplay, _layout, true, false);
 
-		Map<Locale, String> alternateURLs = _portal.getAlternateURLs(
-			canonicalURL, _themeDisplay, _layout);
-
 		LayoutSEOLink canonicalLayoutSEOLink =
 			_layoutSEOLinkManager.getCanonicalLayoutSEOLink(
-				_layout, LocaleUtil.getDefault(), canonicalURL, alternateURLs);
+				_layout, LocaleUtil.getDefault(), canonicalURL, _themeDisplay);
 
 		Assert.assertEquals(
 			"http://example.com", canonicalLayoutSEOLink.getHref());
@@ -171,7 +162,7 @@ public class LayoutSEOLinkManagerCanonicalLayoutSEOLinkTest {
 			() -> {
 				LayoutSEOLink canonicalLayoutSEOLink =
 					_layoutSEOLinkManager.getCanonicalLayoutSEOLink(
-						_layout, LocaleUtil.CHINA, canonicalURL, alternateURLs);
+						_layout, LocaleUtil.CHINA, canonicalURL, _themeDisplay);
 
 				Assert.assertEquals(
 					alternateURLs.getOrDefault(LocaleUtil.CHINA, canonicalURL),

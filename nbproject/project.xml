@@ -33,12 +33,6 @@
 					<encoding>UTF-8</encoding>
 				</source-folder>
 				<source-folder>
-					<label>modules\apps\petra\petra-encryptor\src\main\java</label>
-					<type>java</type>
-					<location>modules/apps/petra/petra-encryptor/src/main/java</location>
-					<encoding>UTF-8</encoding>
-				</source-folder>
-				<source-folder>
 					<label>modules\apps\petra\petra-log4j\src\main\java</label>
 					<type>java</type>
 					<location>modules/apps/petra/petra-log4j/src/main/java</location>
@@ -253,10 +247,6 @@
 						<location>modules/apps/petra/petra-content/src</location>
 					</source-folder>
 					<source-folder style="packages">
-						<label>modules\apps\petra\petra-encryptor\src</label>
-						<location>modules/apps/petra/petra-encryptor/src</location>
-					</source-folder>
-					<source-folder style="packages">
 						<label>modules\apps\petra\petra-log4j\src</label>
 						<location>modules/apps/petra/petra-log4j/src</location>
 					</source-folder>
@@ -376,7 +366,6 @@
 		<java-data xmlns="http://www.netbeans.org/ns/freeform-project-java/4">
 			<compilation-unit>
 				<package-root>modules/apps/petra/petra-content/src/main/java</package-root>
-				<package-root>modules/apps/petra/petra-encryptor/src/main/java</package-root>
 				<package-root>modules/apps/petra/petra-log4j/src/main/java</package-root>
 				<package-root>modules/apps/petra/petra-mail/src/main/java</package-root>
 				<package-root>modules/apps/petra/petra-xml/src/main/java</package-root>

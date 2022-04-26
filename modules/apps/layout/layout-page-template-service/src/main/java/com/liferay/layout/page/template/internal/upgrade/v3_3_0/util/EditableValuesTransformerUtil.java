@@ -88,7 +88,7 @@ public class EditableValuesTransformerUtil {
 			}
 		}
 
-		return newEditableValuesJSONObject.toJSONString();
+		return newEditableValuesJSONObject.toString();
 	}
 
 	private static JSONObject _getFragmentEntryProcessorJSONObject(

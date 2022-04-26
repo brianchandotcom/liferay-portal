@@ -14,89 +14,122 @@
 
 package com.liferay.commerce.pricing.web.internal.constants;
 
+import com.liferay.commerce.pricing.constants.CommercePricingPortletKeys;
+
 /**
  * @author Riccardo Alberti
  * @author Alessio Antonio Rendina
  */
 public class CommercePricingFDSNames {
 
-	public static final String DISCOUNT_CATEGORIES = "discountCategories";
+	public static final String DISCOUNT_CATEGORIES =
+		CommercePricingPortletKeys.COMMERCE_DISCOUNT + "-discountCategories";
 
 	public static final String DISCOUNT_PRICING_CLASSES =
-		"discountPricingClasses";
+		CommercePricingPortletKeys.COMMERCE_DISCOUNT +
+			"-discountPricingClasses";
 
 	public static final String DISCOUNT_PRODUCT_DEFINITIONS =
-		"discountProductDefinitions";
+		CommercePricingPortletKeys.COMMERCE_DISCOUNT +
+			"-discountProductDefinitions";
 
 	public static final String DISCOUNT_QUALIFIER_ACCOUNT_GROUPS =
-		"discountQualifierAccountGroups";
+		CommercePricingPortletKeys.COMMERCE_DISCOUNT +
+			"-discountQualifierAccountGroups";
 
 	public static final String DISCOUNT_QUALIFIER_ACCOUNTS =
-		"discountQualifierAccounts";
+		CommercePricingPortletKeys.COMMERCE_DISCOUNT +
+			"-discountQualifierAccounts";
 
 	public static final String DISCOUNT_QUALIFIER_CHANNELS =
-		"discountQualifierChannels";
+		CommercePricingPortletKeys.COMMERCE_DISCOUNT +
+			"-discountQualifierChannels";
 
 	public static final String DISCOUNT_QUALIFIER_ORDER_TYPES =
-		"discountQualifierOrderTypes";
+		CommercePricingPortletKeys.COMMERCE_DISCOUNT +
+			"-discountQualifierOrderTypes";
 
 	public static final String DISCOUNT_RULE_PRODUCT_DEFINITIONS =
-		"discountRuleProductDefinitions";
+		CommercePricingPortletKeys.COMMERCE_DISCOUNT +
+			"-discountRuleProductDefinitions";
 
-	public static final String DISCOUNT_RULES = "discountRules";
+	public static final String DISCOUNT_RULES =
+		CommercePricingPortletKeys.COMMERCE_DISCOUNT + "-discountRules";
 
-	public static final String DISCOUNT_SKUS = "discountSkus";
+	public static final String DISCOUNT_SKUS =
+		CommercePricingPortletKeys.COMMERCE_DISCOUNT + "-discountSkus";
 
-	public static final String DISCOUNTS = "discounts";
+	public static final String DISCOUNTS =
+		CommercePricingPortletKeys.COMMERCE_DISCOUNT + "-discounts";
 
-	public static final String INSTANCE_PRICE_ENTRIES = "instancePriceEntries";
+	public static final String INSTANCE_PRICE_ENTRIES =
+		CommercePricingPortletKeys.COMMERCE_PRICE_LIST +
+			"-instancePriceEntries";
 
 	public static final String INSTANCE_TIER_PRICE_ENTRIES =
-		"instanceTierPriceEntries";
+		CommercePricingPortletKeys.COMMERCE_PRICE_LIST +
+			"-instanceTierPriceEntries";
 
-	public static final String PRICE_LIST_ENTRIES = "priceListEntries";
+	public static final String PRICE_LIST_ENTRIES =
+		CommercePricingPortletKeys.COMMERCE_PRICE_LIST + "-priceListEntries";
 
 	public static final String PRICE_LIST_QUALIFIER_ACCOUNT_GROUPS =
-		"priceListQualifierAccountGroups";
+		CommercePricingPortletKeys.COMMERCE_PRICE_LIST +
+			"-priceListQualifierAccountGroups";
 
 	public static final String PRICE_LIST_QUALIFIER_ACCOUNTS =
-		"priceListQualifierAccounts";
+		CommercePricingPortletKeys.COMMERCE_PRICE_LIST +
+			"-priceListQualifierAccounts";
 
 	public static final String PRICE_LIST_QUALIFIER_CHANNELS =
-		"priceListQualifierChannels";
+		CommercePricingPortletKeys.COMMERCE_PRICE_LIST +
+			"-priceListQualifierChannels";
 
 	public static final String PRICE_LIST_QUALIFIER_ORDER_TYPES =
-		"priceListQualifierOrderTypes";
+		CommercePricingPortletKeys.COMMERCE_PRICE_LIST +
+			"-priceListQualifierOrderTypes";
 
-	public static final String PRICE_LISTS = "priceLists";
+	public static final String PRICE_LISTS =
+		CommercePricingPortletKeys.COMMERCE_PRICE_LIST + "-priceLists";
 
 	public static final String PRICE_MODIFIER_CATEGORIES =
-		"priceModifierCategories";
+		CommercePricingPortletKeys.COMMERCE_PRICE_LIST +
+			"-priceModifierCategories";
 
 	public static final String PRICE_MODIFIER_PRICING_CLASSES =
-		"priceModifierPricingClasses";
+		CommercePricingPortletKeys.COMMERCE_PRICE_LIST +
+			"-priceModifierPricingClasses";
 
 	public static final String PRICE_MODIFIER_PRODUCT_DEFINITIONS =
-		"priceModifierProductDefinitions";
+		CommercePricingPortletKeys.COMMERCE_PRICE_LIST +
+			"-priceModifierProductDefinitions";
 
-	public static final String PRICE_MODIFIERS = "priceModifiers";
+	public static final String PRICE_MODIFIERS =
+		CommercePricingPortletKeys.COMMERCE_PRICE_LIST + "-priceModifiers";
 
-	public static final String PRICING_CLASSES = "pricingClasses";
+	public static final String PRICING_CLASSES =
+		CommercePricingPortletKeys.COMMERCE_PRICING_CLASSES + "-pricingClasses";
 
 	public static final String PRICING_CLASSES_DISCOUNTS =
-		"pricingClassesDiscounts";
+		CommercePricingPortletKeys.COMMERCE_PRICING_CLASSES +
+			"-pricingClassesDiscounts";
 
 	public static final String PRICING_CLASSES_PRICE_LISTS =
-		"pricingClassesPriceLists";
+		CommercePricingPortletKeys.COMMERCE_PRICING_CLASSES +
+			"-pricingClassesPriceLists";
 
 	public static final String PRICING_CLASSES_PRODUCT_DEFINITIONS =
-		"pricingClassesCPDefinitions";
+		CommercePricingPortletKeys.COMMERCE_PRICING_CLASSES +
+			"-pricingClassesCPDefinitions";
 
 	public static final String PRODUCT_PRICING_CLASSES =
-		"productPricingClasses";
+		CommercePricingPortletKeys.COMMERCE_PRICING_CLASSES +
+			"-productPricingClasses";
 
-	public static final String PROMOTION_ENTRIES = "promotionEntries";
+	public static final String PROMOTION_ENTRIES =
+		CommercePricingPortletKeys.COMMERCE_PRICE_LIST + "-promotionEntries";
 
-	public static final String TIER_PRICE_ENTRIES = "tierPriceEntries";
+	public static final String TIER_PRICE_ENTRIES =
+		CommercePricingPortletKeys.COMMERCE_PRICE_LIST + "-tierPriceEntries";
 
 }

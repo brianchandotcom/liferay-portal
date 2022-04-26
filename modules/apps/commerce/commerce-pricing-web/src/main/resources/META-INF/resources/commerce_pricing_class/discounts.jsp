@@ -38,9 +38,6 @@ CommercePricingClass commercePricingClass = commercePricingClassDiscountDisplayC
 				dataProviderKey="<%= CommercePricingFDSNames.PRICING_CLASSES_DISCOUNTS %>"
 				id="<%= CommercePricingFDSNames.PRICING_CLASSES_DISCOUNTS %>"
 				itemsPerPage="<%= 10 %>"
-				namespace="<%= liferayPortletResponse.getNamespace() %>"
-				pageNumber="<%= 1 %>"
-				portletURL="<%= currentURLObj %>"
 				style="stacked"
 			/>
 		</div>

@@ -95,9 +95,6 @@
 					formName="fm"
 					id="<%= CommercePricingFDSNames.DISCOUNT_PRODUCT_DEFINITIONS %>"
 					itemsPerPage="<%= 10 %>"
-					namespace="<%= liferayPortletResponse.getNamespace() %>"
-					pageNumber="<%= 1 %>"
-					portletURL="<%= portletDiscountRuleURL %>"
 				/>
 			</commerce-ui:panel>
 		</div>

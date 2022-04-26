@@ -35,9 +35,6 @@ long commercePriceListId = commercePriceListDisplayContext.getCommercePriceListI
 			formName="fm"
 			id="<%= CommercePricingFDSNames.PRICE_MODIFIERS %>"
 			itemsPerPage="<%= 10 %>"
-			namespace="<%= liferayPortletResponse.getNamespace() %>"
-			pageNumber="<%= 1 %>"
-			portletURL="<%= currentURLObj %>"
 			style="stacked"
 		/>
 	</div>

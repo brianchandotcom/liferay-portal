@@ -92,9 +92,6 @@
 					formName="fm"
 					id="<%= CommercePricingFDSNames.DISCOUNT_QUALIFIER_ORDER_TYPES %>"
 					itemsPerPage="<%= 10 %>"
-					namespace="<%= liferayPortletResponse.getNamespace() %>"
-					pageNumber="<%= 1 %>"
-					portletURL="<%= currentURLObj %>"
 				/>
 			</commerce-ui:panel>
 		</div>

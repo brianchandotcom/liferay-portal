@@ -22,8 +22,6 @@ CommerceDiscountQualifiersDisplayContext commerceDiscountQualifiersDisplayContex
 CommerceDiscount commerceDiscount = commerceDiscountQualifiersDisplayContext.getCommerceDiscount();
 long commerceDiscountId = commerceDiscountQualifiersDisplayContext.getCommerceDiscountId();
 
-PortletURL portletDiscountRuleURL = commerceDiscountQualifiersDisplayContext.getPortletDiscountRuleURL();
-
 String accountQualifiers = ParamUtil.getString(request, "accountQualifiers", commerceDiscountQualifiersDisplayContext.getActiveAccountEligibility());
 String channelQualifiers = ParamUtil.getString(request, "channelQualifiers", commerceDiscountQualifiersDisplayContext.getActiveChannelEligibility());
 String orderTypeQualifiers = ParamUtil.getString(request, "orderTypeQualifiers", commerceDiscountQualifiersDisplayContext.getActiveOrderTypeEligibility());

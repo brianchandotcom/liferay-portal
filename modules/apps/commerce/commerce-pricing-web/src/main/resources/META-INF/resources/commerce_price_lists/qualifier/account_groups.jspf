@@ -94,9 +94,6 @@
 					formName="fm"
 					id="<%= CommercePricingFDSNames.PRICE_LIST_QUALIFIER_ACCOUNT_GROUPS %>"
 					itemsPerPage="<%= 10 %>"
-					namespace="<%= liferayPortletResponse.getNamespace() %>"
-					pageNumber="<%= 1 %>"
-					portletURL="<%= currentURLObj %>"
 				/>
 			</commerce-ui:panel>
 		</div>

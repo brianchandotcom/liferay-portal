@@ -101,9 +101,6 @@ long commercePriceModifierId = commercePriceListDisplayContext.getCommercePriceM
 					formName="fm"
 					id="<%= CommercePricingFDSNames.PRICE_MODIFIER_CATEGORIES %>"
 					itemsPerPage="<%= 10 %>"
-					namespace="<%= liferayPortletResponse.getNamespace() %>"
-					pageNumber="<%= 1 %>"
-					portletURL="<%= currentURLObj %>"
 				/>
 			</commerce-ui:panel>
 		</div>

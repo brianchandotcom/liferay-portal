@@ -42,9 +42,6 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 			formName="fm"
 			id="<%= CommercePricingFDSNames.INSTANCE_TIER_PRICE_ENTRIES %>"
 			itemsPerPage="<%= 10 %>"
-			namespace="<%= liferayPortletResponse.getNamespace() %>"
-			pageNumber="<%= 1 %>"
-			portletURL="<%= portletURL %>"
 			style="stacked"
 		/>
 	</aui:form>

@@ -30,6 +30,7 @@ import {ContainerStylesPanel} from '../components/item-configuration-panels/Cont
 import EditableLinkPanel from '../components/item-configuration-panels/EditableLinkPanel';
 import FormAdvancedPanel from '../components/item-configuration-panels/FormAdvancedPanel';
 import {FormGeneralPanel} from '../components/item-configuration-panels/FormGeneralPanel';
+import {FormInputGeneralPanel} from '../components/item-configuration-panels/FormInputGeneralPanel';
 import {FragmentAdvancedPanel} from '../components/item-configuration-panels/FragmentAdvancedPanel';
 import {FragmentGeneralPanel} from '../components/item-configuration-panels/FragmentGeneralPanel';
 import {FragmentStylesPanel} from '../components/item-configuration-panels/FragmentStylesPanel';
@@ -62,6 +63,7 @@ export const PANEL_IDS = {
 	editableMapping: 'editableMapping',
 	formAdvancedPanel: 'formAdvancedPanel',
 	formGeneral: 'formGeneral',
+	formInputGeneral: 'formInputGeneral',
 	fragmentAdvanced: 'fragmentAdvanced',
 	fragmentGeneral: 'fragmentGeneral',
 	fragmentStyles: 'fragmentStyles',
@@ -128,6 +130,12 @@ export const PANELS = {
 		component: FormGeneralPanel,
 		label: Liferay.Language.get('general'),
 		priority: 2,
+	},
+	[PANEL_IDS.formInputGeneral]: {
+		component: FormInputGeneralPanel,
+		label: Liferay.Language.get('general'),
+		priority: 2,
+		type: PANEL_TYPES.general,
 	},
 	[PANEL_IDS.fragmentAdvanced]: {
 		component: FragmentAdvancedPanel,
@@ -267,6 +275,9 @@ export function selectPanels(activeItemId, activeItemType, state) {
 				state.selectedViewportSize === VIEWPORT_SIZES.desktop,
 			[PANEL_IDS.collectionFilterGeneral]:
 				fragmentEntryKey === COLLECTION_FILTER_FRAGMENT_ENTRY_KEY &&
+				state.selectedViewportSize === VIEWPORT_SIZES.desktop,
+			[PANEL_IDS.formInputGeneral]:
+				fragmentType === FRAGMENT_TYPES.input &&
 				state.selectedViewportSize === VIEWPORT_SIZES.desktop,
 		};
 	}

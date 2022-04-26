@@ -12,6 +12,12 @@
 				"en-US": "Domain"
 			},
 			"name": "domain",
+			"objectFieldSettings": [
+				{
+					"name": "showCounter",
+					"value": "false"
+				}
+			],
 			"required": true
 		}
 	],

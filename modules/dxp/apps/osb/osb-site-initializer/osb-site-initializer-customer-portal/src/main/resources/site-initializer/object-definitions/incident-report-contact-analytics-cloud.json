@@ -12,6 +12,12 @@
 				"en-US": "Email Address"
 			},
 			"name": "emailAddress",
+			"objectFieldSettings": [
+				{
+					"name": "showCounter",
+					"value": "false"
+				}
+			],
 			"required": true
 		},
 		{

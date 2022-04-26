@@ -12,6 +12,12 @@
 				"en-US": "Name"
 			},
 			"name": "name",
+			"objectFieldSettings": [
+				{
+					"name": "showCounter",
+					"value": "false"
+				}
+			],
 			"required": true
 		},
 		{
@@ -22,6 +28,12 @@
 				"en-US": "Value"
 			},
 			"name": "value",
+			"objectFieldSettings": [
+				{
+					"name": "showCounter",
+					"value": "false"
+				}
+			],
 			"required": true
 		}
 	],

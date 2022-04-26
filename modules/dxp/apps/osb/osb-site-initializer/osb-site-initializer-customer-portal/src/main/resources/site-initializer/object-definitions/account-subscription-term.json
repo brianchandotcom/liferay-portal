@@ -12,6 +12,12 @@
 				"en-US": "Account Key"
 			},
 			"name": "accountKey",
+			"objectFieldSettings": [
+				{
+					"name": "showCounter",
+					"value": "false"
+				}
+			],
 			"required": true
 		},
 		{
@@ -22,6 +28,12 @@
 				"en-US": "Account Subscription ERC"
 			},
 			"name": "accountSubscriptionERC",
+			"objectFieldSettings": [
+				{
+					"name": "showCounter",
+					"value": "false"
+				}
+			],
 			"required": false
 		},
 		{
@@ -32,6 +44,12 @@
 				"en-US": "Account Subscription Group ERC"
 			},
 			"name": "accountSubscriptionGroupERC",
+			"objectFieldSettings": [
+				{
+					"name": "showCounter",
+					"value": "false"
+				}
+			],
 			"required": false
 		},
 		{
@@ -52,6 +70,12 @@
 				"en-US": "Instance Size"
 			},
 			"name": "instanceSize",
+			"objectFieldSettings": [
+				{
+					"name": "showCounter",
+					"value": "false"
+				}
+			],
 			"required": false
 		},
 		{
@@ -92,6 +116,12 @@
 				"en-US": "Status"
 			},
 			"name": "subscriptionTermStatus",
+			"objectFieldSettings": [
+				{
+					"name": "showCounter",
+					"value": "false"
+				}
+			],
 			"required": false
 		}
 	],

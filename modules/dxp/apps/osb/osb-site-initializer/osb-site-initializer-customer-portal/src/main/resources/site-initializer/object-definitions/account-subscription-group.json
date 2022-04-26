@@ -12,6 +12,12 @@
 				"en-US": "Account Key"
 			},
 			"name": "accountKey",
+			"objectFieldSettings": [
+				{
+					"name": "showCounter",
+					"value": "false"
+				}
+			],
 			"required": true
 		},
 		{
@@ -32,6 +38,12 @@
 				"en-US": "Activation Status"
 			},
 			"name": "activationStatus",
+			"objectFieldSettings": [
+				{
+					"name": "showCounter",
+					"value": "false"
+				}
+			],
 			"required": false
 		},
 		{
@@ -52,6 +64,12 @@
 				"en-US": "Manage Contacts URL"
 			},
 			"name": "manageContactsURL",
+			"objectFieldSettings": [
+				{
+					"name": "showCounter",
+					"value": "false"
+				}
+			],
 			"required": false
 		},
 		{
@@ -62,6 +80,12 @@
 				"en-US": "Name"
 			},
 			"name": "name",
+			"objectFieldSettings": [
+				{
+					"name": "showCounter",
+					"value": "false"
+				}
+			],
 			"required": false
 		},
 		{

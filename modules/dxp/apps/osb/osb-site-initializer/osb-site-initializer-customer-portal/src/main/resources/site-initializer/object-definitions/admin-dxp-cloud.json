@@ -12,6 +12,12 @@
 				"en-US": "First Name"
 			},
 			"name": "firstName",
+			"objectFieldSettings": [
+				{
+					"name": "showCounter",
+					"value": "false"
+				}
+			],
 			"required": true
 		},
 		{
@@ -22,6 +28,12 @@
 				"en-US": "Last Name"
 			},
 			"name": "lastName",
+			"objectFieldSettings": [
+				{
+					"name": "showCounter",
+					"value": "false"
+				}
+			],
 			"required": true
 		},
 		{
@@ -32,6 +44,12 @@
 				"en-US": "Github Username"
 			},
 			"name": "githubUsername",
+			"objectFieldSettings": [
+				{
+					"name": "showCounter",
+					"value": "false"
+				}
+			],
 			"required": true
 		},
 		{
@@ -42,6 +60,12 @@
 				"en-US": "Email Address"
 			},
 			"name": "emailAddress",
+			"objectFieldSettings": [
+				{
+					"name": "showCounter",
+					"value": "false"
+				}
+			],
 			"required": true
 		},
 		{

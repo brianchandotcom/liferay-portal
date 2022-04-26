@@ -73,45 +73,6 @@ PortletURL configurationRenderURL = (PortletURL)request.getAttribute("configurat
 	<aui:input inlineLabel="right" label="exclude-assets-with-0-views" labelCssClass="simple-toggle-switch" name="preferences--excludeZeroViewCount--" type="toggle-switch" value="<%= assetPublisherDisplayContext.isExcludeZeroViewCount() %>" />
 </c:if>
 
-<aui:script sandbox="<%= true %>">
-	var displayStyleSelect = document.getElementById(
-		'<portlet:namespace />displayStyle'
-	);
-
-	function showHiddenFields() {
-		var displayStyle = displayStyleSelect.value;
-
-		var hiddenFields = document.querySelectorAll('.hidden-field');
-
-		Array.prototype.forEach.call(hiddenFields, (field) => {
-			var fieldContainer = field.closest('.form-group');
-
-			if (fieldContainer) {
-				var fieldClassList = field.classList;
-				var fieldContainerClassList = fieldContainer.classList;
-
-				if (
-					displayStyle === 'full-content' &&
-					(fieldClassList.contains('show-asset-title') ||
-						fieldClassList.contains('show-context-link') ||
-						fieldClassList.contains('show-extra-info'))
-				) {
-					fieldContainerClassList.remove('hide');
-				}
-				else if (
-					displayStyle === 'abstracts' &&
-					fieldClassList.contains('abstract-length')
-				) {
-					fieldContainerClassList.remove('hide');
-				}
-				else {
-					fieldContainerClassList.add('hide');
-				}
-			}
-		});
-	}
-
-	showHiddenFields();
-
-	displayStyleSelect.addEventListener('change', showHiddenFields);
-</aui:script>
+<liferay-frontend:component
+	module="js/DisplaySettings"
+/>

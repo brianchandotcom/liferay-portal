@@ -3537,63 +3537,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		return counts;
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #searchBySocial(long, int[], String, int, int)}
-	 */
-	@Deprecated
-	@Override
-	public List<User> searchSocial(
-			long userId, int[] socialRelationTypes, String keywords, int start,
-			int end)
-		throws PortalException {
-
-		return searchBySocial(
-			userId, socialRelationTypes, keywords, start, end);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #searchBySocial(long, long[], String, int, int)}
-	 */
-	@Deprecated
-	@Override
-	public List<User> searchSocial(
-		long companyId, long[] groupIds, String keywords, int start, int end) {
-
-		return searchBySocial(companyId, groupIds, keywords, start, end);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #searchBySocial(long, long[], String, int, int,
-	 *             OrderByComparator)}
-	 */
-	@Deprecated
-	@Override
-	public List<User> searchSocial(
-		long companyId, long[] groupIds, String keywords, int start, int end,
-		OrderByComparator<User> orderByComparator) {
-
-		return searchBySocial(
-			companyId, groupIds, keywords, start, end, orderByComparator);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #searchBySocial(long[], long, int[], String, int, int)}
-	 */
-	@Deprecated
-	@Override
-	public List<User> searchSocial(
-			long[] groupIds, long userId, int[] socialRelationTypes,
-			String keywords, int start, int end)
-		throws PortalException {
-
-		return searchBySocial(
-			groupIds, userId, socialRelationTypes, keywords, start, end);
-	}
-
 	@Override
 	public BaseModelSearchResult<User> searchUsers(
 			long companyId, String keywords, int status,

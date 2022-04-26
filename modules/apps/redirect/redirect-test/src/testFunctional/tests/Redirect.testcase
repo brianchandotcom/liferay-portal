@@ -931,6 +931,14 @@ definition {
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/guest/my-url-that-does-not-exist");
 
+		AssertTextEquals(
+			locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
+			value1 = "Not Found");
+
+		AssertElementNotPresent(
+			key_title = "Welcome to Liferay",
+			locator1 = "Masterclass#FRAGMENT_HEADING");
+
 		Redirect.openRedirectAdmin(siteURLKey = "guest");
 
 		Redirect.view404URLsTab(disabled404Tracking = "true");

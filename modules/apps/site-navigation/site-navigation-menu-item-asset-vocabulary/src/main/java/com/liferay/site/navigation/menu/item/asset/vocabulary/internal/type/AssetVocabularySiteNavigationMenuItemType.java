@@ -23,8 +23,14 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -192,6 +198,59 @@ public class AssetVocabularySiteNavigationMenuItemType
 	}
 
 	@Override
+	public String getTitle(
+		SiteNavigationMenuItem siteNavigationMenuItem, Locale locale) {
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			UnicodePropertiesBuilder.fastLoad(
+				siteNavigationMenuItem.getTypeSettings()
+			).build();
+
+		String defaultTitle = typeSettingsUnicodeProperties.getProperty(
+			"title");
+
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.fetchAssetVocabulary(
+				GetterUtil.getLong(
+					typeSettingsUnicodeProperties.get("classPK")));
+
+		String defaultLanguageId = typeSettingsUnicodeProperties.getProperty(
+			Field.DEFAULT_LANGUAGE_ID,
+			LocaleUtil.toLanguageId(LocaleUtil.getMostRelevantLocale()));
+
+		if (assetVocabulary != null) {
+			defaultTitle = assetVocabulary.getTitle(defaultLanguageId);
+		}
+
+		if (!GetterUtil.getBoolean(
+				typeSettingsUnicodeProperties.get("useCustomName"))) {
+
+			return defaultTitle;
+		}
+
+		String localizedNames = typeSettingsUnicodeProperties.getProperty(
+			"localizedNames", "{}");
+
+		try {
+			JSONObject localizedNamesJSONObject =
+				JSONFactoryUtil.createJSONObject(localizedNames);
+
+			return localizedNamesJSONObject.getString(
+				LocaleUtil.toLanguageId(locale),
+				localizedNamesJSONObject.getString(
+					defaultLanguageId, defaultTitle));
+		}
+		catch (JSONException jsonException) {
+			_log.error(
+				"Unable to get localizedNamesJSONObject from localizedNames: " +
+					localizedNames,
+				jsonException);
+		}
+
+		return defaultTitle;
+	}
+
+	@Override
 	public String getType() {
 		return SiteNavigationMenuItemTypeConstants.ASSET_VOCABULARY;
 	}
@@ -285,6 +344,9 @@ public class AssetVocabularySiteNavigationMenuItemType
 			_servletContext, httpServletRequest, httpServletResponse,
 			"/edit_asset_vocabulary_type.jsp");
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AssetVocabularySiteNavigationMenuItemType.class);
 
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;

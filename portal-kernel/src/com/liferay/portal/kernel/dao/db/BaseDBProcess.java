@@ -488,15 +488,17 @@ public abstract class BaseDBProcess implements DBProcess {
 			String methodName = method.getName();
 
 			if (methodName.equals("close")) {
-				for (long threadId : _currentThreads) {
-					Connection connection = _connectionMap.remove(threadId);
+				Collection<Connection> connections = _connectionMap.values();
 
-					if (connection != null) {
-						method.invoke(connection, args);
-					}
+				Iterator<Connection> iterator = connections.iterator();
+
+				while (iterator.hasNext()) {
+					Connection connection = iterator.next();
+
+					iterator.remove();
+
+					method.invoke(connection, args);
 				}
-
-				_currentThreads.clear();
 
 				return null;
 			}
@@ -523,9 +525,6 @@ public abstract class BaseDBProcess implements DBProcess {
 
 						connection = prevConnection;
 					}
-					else {
-						_currentThreads.add(threadId);
-					}
 				}
 				catch (Exception exception) {
 					_log.error(
@@ -538,7 +537,6 @@ public abstract class BaseDBProcess implements DBProcess {
 
 		private final Map<Long, Connection> _connectionMap =
 			new ConcurrentHashMap<>();
-		private volatile List<Long> _currentThreads = new ArrayList<>();
 
 	}
 

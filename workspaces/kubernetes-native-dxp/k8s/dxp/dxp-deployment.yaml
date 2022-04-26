@@ -40,7 +40,7 @@ spec:
           livenessProbe:
             failureThreshold: 360
             httpGet:
-              path: /c/portal/layout
+              path: /health
               port: 8080
               scheme: HTTP
             initialDelaySeconds: 300

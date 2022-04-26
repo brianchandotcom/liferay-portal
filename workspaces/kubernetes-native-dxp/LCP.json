@@ -13,7 +13,7 @@
   ],
   "readinessProbe": {
     "httpGet": {
-      "path": "/web/guest/home",
+      "path": "/health",
       "port": 8080
     },
     "initialDelaySeconds": 120,
@@ -24,7 +24,7 @@
   },
   "livenessProbe": {
     "httpGet": {
-      "path": "/web/guest/home",
+      "path": "/health",
       "port": 8080
     },
     "initialDelaySeconds": 480,

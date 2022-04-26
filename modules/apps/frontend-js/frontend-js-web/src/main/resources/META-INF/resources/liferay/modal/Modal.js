@@ -210,7 +210,7 @@ const Modal = ({
 								}}
 							></div>
 						) : (
-							<ClayModal.Title>{title}</ClayModal.Title>
+							title
 						)}
 					</ClayModal.Header>
 

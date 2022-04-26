@@ -922,7 +922,7 @@ definition {
 			locator1 = "ContentRow#ENTRY_CONTENT_REDIRECT_DESTINATION_URL_COLUMN");
 	}
 
-	@description = "This ensures that the 404 tab is not shown and no new 404 tracking is performed when 404 tracking is disabled."
+	@description = "This ensures that the 404 tab is not shown and no new 404 tracking is performed when 404 tracking is disabled. Also covers LPS-121346, it ensures that the home page is not shown when accessing a not existing page."
 	@priority = "5"
 	test CannotView404ByDefault {
 		property test.name.skip.portal.instance = "Redirect#CannotView404ByDefault";

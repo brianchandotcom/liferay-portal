@@ -15,6 +15,7 @@
 package com.liferay.site.navigation.menu.item.asset.vocabulary.internal.type;
 
 import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.vocabulary.item.selector.AssetVocabularyItemSelectorReturnType;
 import com.liferay.asset.vocabulary.item.selector.criterion.AssetVocabularyItemSelectorCriterion;
@@ -171,6 +172,26 @@ public class AssetVocabularySiteNavigationMenuItemType
 	}
 
 	@Override
+	public String getStatusIcon(SiteNavigationMenuItem siteNavigationMenuItem) {
+		UnicodeProperties typeSettingsUnicodeProperties =
+			UnicodePropertiesBuilder.fastLoad(
+				siteNavigationMenuItem.getTypeSettings()
+			).build();
+
+		int numCategories =
+			_assetCategoryLocalService.getVocabularyCategoriesCount(
+				GetterUtil.getLong(
+					typeSettingsUnicodeProperties.get("classPK")));
+
+		if (numCategories > 0) {
+			return SiteNavigationMenuItemType.super.getStatusIcon(
+				siteNavigationMenuItem);
+		}
+
+		return "warning-full";
+	}
+
+	@Override
 	public String getType() {
 		return SiteNavigationMenuItemTypeConstants.ASSET_VOCABULARY;
 	}
@@ -264,6 +285,9 @@ public class AssetVocabularySiteNavigationMenuItemType
 			_servletContext, httpServletRequest, httpServletResponse,
 			"/edit_asset_vocabulary_type.jsp");
 	}
+
+	@Reference
+	private AssetCategoryLocalService _assetCategoryLocalService;
 
 	@Reference
 	private AssetVocabularyLocalService _assetVocabularyLocalService;

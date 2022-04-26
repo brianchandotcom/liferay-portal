@@ -110,7 +110,7 @@ public class OAuth2AuthorizationLocalServiceImpl
 		Date purgeDate = new Date();
 
 		purgeDate.setTime(
-			purgeDate.getTime() +
+			purgeDate.getTime() -
 				_expiredAuthorizationsAfterlifeDurationMillis);
 
 		for (OAuth2Authorization oAuth2Authorization :

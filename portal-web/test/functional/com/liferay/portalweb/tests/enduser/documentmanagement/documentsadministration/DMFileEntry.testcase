@@ -2557,6 +2557,72 @@ definition {
 			locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_IMAGE_PREVIEW");
 	}
 
+	@description = "This is a test for LPS-145630. It checks that the DOCs linked in web articles content can be updated."
+	@priority = "4"
+	test DucumentLinkedInWCCanBeUpdated {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "Document_1.doc",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		WebContentNavigator.openToAddBasicArticle(
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		PortletEntry.inputTitle(title = "Web Content Title");
+
+		CKEditor.addTextWithLink(
+			displayText = "Web Content Content",
+			dmDocumentTitle = "Document_1.doc",
+			fieldLabel = "content");
+
+		PortletEntry.publish();
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Test Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Test Page",
+			widgetName = "Web Content Display");
+
+		Navigator.gotoPage(pageName = "Test Page");
+
+		WebContentDisplayPortlet.selectWebContent(webContentTitle = "Web Content Title");
+
+		IFrame.closeFrame();
+
+		Click(
+			key_portletName = "Web Content Display",
+			locator1 = "Portlet#BODY",
+			value1 = "Web Content Content");
+
+		ImportExport.assertDownloadedFileContent(
+			downloadedContent = "This is a *.doc file.",
+			fileName = "Document_1.doc");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.editCP(
+			dmDocumentFileEdit = "Document_2.doc",
+			dmDocumentFileNameEdit = "Document_2.doc",
+			dmDocumentTitle = "Document_1.doc",
+			dmDocumentTitleEdit = "Document_2.doc");
+
+		Navigator.gotoPage(pageName = "Test Page");
+
+		Click(
+			key_portletName = "Web Content Display",
+			locator1 = "Portlet#BODY",
+			value1 = "Web Content Content");
+
+		ImportExport.assertDownloadedFileContent(
+			downloadedContent = "This is a test document 2.",
+			fileName = "Document_2.doc");
+	}
+
 	@description = "This test covers LPS-112571. It ensures that a gif file can be added to editor normally after disabling the gif mime type from the adaptive media of the system settings."
 	@priority = "3"
 	@refactorneeded
@@ -2602,15 +2668,6 @@ definition {
 	test NoZipFileIsCreatedIfDownloadResultsInError {
 
 		// TODO LPS-149394
-
-	}
-
-	@description = "This is a test for LPS-145630. It checks that the PDFs linked in web articles content can be updated."
-	@ignore = "Test Stub"
-	@priority = "4"
-	test PDFLinkedInWCCanBeUpdated {
-
-		// TODO LPS-149475 PDFLinkedInWCCanBeUpdated pending implementation
 
 	}
 

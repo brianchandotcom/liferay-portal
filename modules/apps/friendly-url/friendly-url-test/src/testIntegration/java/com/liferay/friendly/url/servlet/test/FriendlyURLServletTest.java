@@ -402,6 +402,13 @@ public class FriendlyURLServletTest {
 	}
 
 	@Test
+	public void testServiceRedirectWithMatchingLocalizedPermanentRedirectEntry()
+		throws Exception {
+
+		_testServiceRedirect("hu/path", true, 301);
+	}
+
+	@Test
 	public void testServiceRedirectWithMatchingPermanentRedirectEntry()
 		throws Exception {
 

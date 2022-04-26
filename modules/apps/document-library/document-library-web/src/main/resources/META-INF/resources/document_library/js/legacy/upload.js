@@ -620,9 +620,11 @@ AUI.add(
 						}
 					);
 
-					var row = searchContainer.addRow(columnValues, A.guid());
+					var rowid = A.guid();
+					var row = searchContainer.addRow(columnValues, rowid);
 
 					row.attr('data-draggable', true);
+					row.attr('data-rowid', rowid);
 
 					return row;
 				},
@@ -1117,13 +1119,27 @@ AUI.add(
 
 					if (invalidFilesLength) {
 						if (!currentUploadData.folder) {
+							var displayStyle = instance._getDisplayStyle();
+
 							currentUploadData.invalidFiles.forEach(
 								(invalidFile) => {
-									invalidFile.target?.remove();
+									if (invalidFile.target) {
+										if (displayStyle !== STR_LIST) {
+											invalidFile.target.remove();
+											invalidFile.target.destroy();
+										}
+										else {
+											searchContainer.deleteRow(
+												invalidFile.target,
+												invalidFile.target.getAttribute(
+													'data-rowid'
+												)
+											);
+										}
+									}
 
 									invalidFile.progressBar?.destroy();
 									invalidFile.overlay?.destroy();
-									invalidFile.target?.destroy();
 								}
 							);
 

@@ -90,6 +90,10 @@ public interface ObjectEntryResource {
 			ObjectEntry objectEntry)
 		throws Exception;
 
+	public ObjectEntry putCurrentObjectRelationshipNameRelatedObject(
+			Long currentObjectId, String relationshipName, Long relatedObjectId)
+		throws Exception;
+
 	public void deleteObjectEntry(Long objectEntryId) throws Exception;
 
 	public Response deleteObjectEntryBatch(String callbackURL, Object object)

@@ -75,19 +75,6 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Response createDocumentBatch(
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_documentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			documentResource -> documentResource.postDocumentBatch(
-				callbackURL, object));
-	}
-
-	@GraphQLField
 	public Folder createFolder(@GraphQLName("folder") Folder folder)
 		throws Exception {
 

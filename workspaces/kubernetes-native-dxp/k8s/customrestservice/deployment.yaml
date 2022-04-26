@@ -26,6 +26,16 @@ spec:
         - containerPort: 8081
         - containerPort: 8000
         env:
+          - name: AMADEUS_CLIENT_ID
+            valueFrom:
+              configMapKeyRef:
+                name: amadeus-credentials-configmap
+                key: AMADEUS_CLIENT_ID
+          - name: AMADEUS_CLIENT_SECRET
+            valueFrom:
+              configMapKeyRef:
+                name: amadeus-credentials-configmap
+                key: AMADEUS_CLIENT_SECRET
           - name: LIFERAY_OAUTH2_USER_AGENT_CLIENT_ID
             valueFrom:
               configMapKeyRef:

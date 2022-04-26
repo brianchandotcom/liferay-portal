@@ -22,6 +22,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import com.amadeus.Amadeus;
+
 @Configuration
 public class CustomRestSecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -39,6 +41,12 @@ public class CustomRestSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Value("${LIFERAY_OAUTH2_INTROSPECTION_URI}")
 	String introspectionUri;
+
+	@Value("${AMADEUS_CLIENT_ID}")
+	String amadeusClientId;
+
+	@Value("${AMADEUS_CLIENT_SECRET}")
+	String amadeusClientSecret;
 
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
@@ -70,6 +78,11 @@ public class CustomRestSecurityConfig extends WebSecurityConfigurerAdapter {
 					introspectionUri, clientId)
 			)
 		);
+	}
+
+	@Bean
+	Amadeus amadeusClient() {
+		return Amadeus.builder(amadeusClientId, amadeusClientSecret).build();
 	}
 
 	@Bean

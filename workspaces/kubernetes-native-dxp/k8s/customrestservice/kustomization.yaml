@@ -2,3 +2,7 @@ resources:
 - deployment.yaml
 - extension-configmap.yaml
 - service.yaml
+configMapGenerator:
+- name: amadeus-credentials-configmap
+  envs:
+  - ENV

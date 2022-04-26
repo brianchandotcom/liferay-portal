@@ -33,6 +33,12 @@
 			<artifactId>commons-lang3</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>com.amadeus</groupId>
+			<artifactId>amadeus-java</artifactId>
+			<version>5.9.0</version>
+		</dependency>
+
 		<!-- runtime -->
 		<dependency>
 			<groupId>com.nimbusds</groupId>

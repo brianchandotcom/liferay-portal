@@ -87,18 +87,19 @@ public class AssetVocabularySiteNavigationMenuItemType
 				siteNavigationMenuItem.getTypeSettings()
 			).build();
 
-		long vocabularyId = GetterUtil.getLong(
+		long assetVocabularyId = GetterUtil.getLong(
 			typeSettingsUnicodeProperties.get("classPK"));
 
 		AssetVocabulary assetVocabulary =
-			_assetVocabularyLocalService.fetchAssetVocabulary(vocabularyId);
+			_assetVocabularyLocalService.fetchAssetVocabulary(
+				assetVocabularyId);
 
 		if (assetVocabulary == null) {
 			return false;
 		}
 
 		siteNavigationMenuItemElement.addAttribute(
-			"vocabulary-id", String.valueOf(vocabularyId));
+			"asset-vocabulary-id", String.valueOf(assetVocabularyId));
 
 		portletDataContext.addReferenceElement(
 			siteNavigationMenuItem, siteNavigationMenuItemElement,
@@ -265,7 +266,7 @@ public class AssetVocabularySiteNavigationMenuItemType
 			siteNavigationMenuItem);
 
 		long classPK = GetterUtil.getLong(
-			element.attributeValue("vocabulary-id"));
+			element.attributeValue("asset-vocabulary-id"));
 
 		if (classPK <= 0) {
 			return false;
@@ -293,7 +294,7 @@ public class AssetVocabularySiteNavigationMenuItemType
 			).put(
 				"title", assetVocabulary.getTitle(LocaleUtil.getSiteDefault())
 			).put(
-				"type", "vocabulary"
+				"type", "asset-vocabulary"
 			).buildString());
 
 		return true;

@@ -60,11 +60,12 @@ public class GetAssetVocabularyDetailsMVCResourceCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long vocabularyId = ParamUtil.getLong(resourceRequest, "vocabularyId");
+		long assetVocabularyId = ParamUtil.getLong(
+			resourceRequest, "vocabularyId");
 
 		try {
 			AssetVocabulary assetVocabulary =
-				_assetVocabularyLocalService.getVocabulary(vocabularyId);
+				_assetVocabularyLocalService.getVocabulary(assetVocabularyId);
 
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
@@ -90,7 +91,7 @@ public class GetAssetVocabularyDetailsMVCResourceCommand
 				));
 		}
 		catch (PortalException portalException) {
-			_log.error("Unable to get vocabulary", portalException);
+			_log.error("Unable to get asset vocabulary", portalException);
 
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,

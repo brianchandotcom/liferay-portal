@@ -77,9 +77,10 @@ public class AddAssetVocabularySiteNavigationMenuItemsMVCActionCommand
 				ParamUtil.getString(actionRequest, "items"));
 
 			for (int i = 0; i < jsonArray.length(); i++) {
-				JSONObject vocabularyJSONObject = jsonArray.getJSONObject(i);
+				JSONObject assetVocabularyJSONObject = jsonArray.getJSONObject(
+					i);
 
-				if (vocabularyJSONObject == null) {
+				if (assetVocabularyJSONObject == null) {
 					continue;
 				}
 
@@ -91,15 +92,17 @@ public class AddAssetVocabularySiteNavigationMenuItemsMVCActionCommand
 							true
 						).put(
 							"classPK",
-							vocabularyJSONObject.getString("vocabularyId")
+							assetVocabularyJSONObject.getString("vocabularyId")
 						).put(
-							"groupId", vocabularyJSONObject.getString("groupId")
+							"groupId",
+							assetVocabularyJSONObject.getString("groupId")
 						).put(
-							"title", vocabularyJSONObject.getString("title")
+							"title",
+							assetVocabularyJSONObject.getString("title")
 						).put(
-							"type", "vocabulary"
+							"type", "asset-vocabulary"
 						).put(
-							"uuid", vocabularyJSONObject.getString("uuid")
+							"uuid", assetVocabularyJSONObject.getString("uuid")
 						).buildString(),
 						serviceContext);
 				}
@@ -114,8 +117,9 @@ public class AddAssetVocabularySiteNavigationMenuItemsMVCActionCommand
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					StringBundler.concat(
-						"Unable to add vocabulary site navigation menu items ",
-						"for site navigation menu ID ", siteNavigationMenuId));
+						"Unable to add asset vocabulary site navigation menu ",
+						"items for site navigation menu ID ",
+						siteNavigationMenuId));
 			}
 
 			jsonObject.put(

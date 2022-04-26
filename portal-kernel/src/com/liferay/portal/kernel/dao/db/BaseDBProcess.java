@@ -513,13 +513,11 @@ public abstract class BaseDBProcess implements DBProcess {
 		}
 
 		private Connection _getConnection() {
-			Thread thread = Thread.currentThread();
-
 			return _connectionMap.computeIfAbsent(
-				thread.getId(), threadId -> _getConnection());
+				Thread.currentThread(), thread -> _getConnection());
 		}
 
-		private final Map<Long, Connection> _connectionMap =
+		private final Map<Thread, Connection> _connectionMap =
 			new ConcurrentHashMap<>();
 
 	}

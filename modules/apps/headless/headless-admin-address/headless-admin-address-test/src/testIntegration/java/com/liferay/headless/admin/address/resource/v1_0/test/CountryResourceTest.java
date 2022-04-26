@@ -16,19 +16,28 @@ package com.liferay.headless.admin.address.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.address.client.dto.v1_0.Country;
+import com.liferay.headless.admin.address.client.pagination.Page;
+import com.liferay.headless.admin.address.client.pagination.Pagination;
+import com.liferay.headless.admin.address.client.serdes.v1_0.CountrySerDes;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.service.CountryLocalService;
 import com.liferay.portal.kernel.test.randomizerbumpers.RandomizerBumper;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -48,6 +57,67 @@ public class CountryResourceTest extends BaseCountryResourceTestCase {
 
 			_updateExistingCountryInfo(country.getA2(), country.getA3());
 		}
+	}
+
+	@Override
+	@Test
+	public void testGetCountriesPage() throws Exception {
+		Page<Country> page = countryResource.getCountriesPage(
+			null, null, Pagination.of(1, _getPageSize()), null);
+
+		long totalCount = page.getTotalCount();
+
+		Country country1 = testGetCountriesPage_addCountry(randomCountry());
+
+		Country country2 = testGetCountriesPage_addCountry(randomCountry());
+
+		page = countryResource.getCountriesPage(
+			null, null, Pagination.of(1, _getPageSize()), null);
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(country1, (List<Country>)page.getItems());
+		assertContains(country2, (List<Country>)page.getItems());
+		assertValid(page);
+	}
+
+	@Override
+	@Test
+	public void testGraphQLGetCountriesPage() throws Exception {
+		GraphQLField graphQLField = new GraphQLField(
+			"countries",
+			HashMapBuilder.<String, Object>put(
+				"page", 1
+			).put(
+				"pageSize", _getPageSize()
+			).build(),
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		JSONObject countriesJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/countries");
+
+		long totalCount = countriesJSONObject.getLong("totalCount");
+
+		Country country1 = testGraphQLGetCountriesPage_addCountry();
+		Country country2 = testGraphQLGetCountriesPage_addCountry();
+
+		countriesJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/countries");
+
+		Assert.assertEquals(
+			totalCount + 2, countriesJSONObject.getLong("totalCount"));
+
+		assertContains(
+			country1,
+			Arrays.asList(
+				CountrySerDes.toDTOs(countriesJSONObject.getString("items"))));
+		assertContains(
+			country2,
+			Arrays.asList(
+				CountrySerDes.toDTOs(countriesJSONObject.getString("items"))));
 	}
 
 	@Override
@@ -104,6 +174,10 @@ public class CountryResourceTest extends BaseCountryResourceTestCase {
 			_countryResourceDTOConverter.toDTO(serviceBuilderCountry);
 
 		return Country.toDTO(String.valueOf(apiCountry));
+	}
+
+	private int _getPageSize() {
+		return _countryA2s.size() + 10;
 	}
 
 	private RandomizerBumper<String> _getRandomizerBumper(

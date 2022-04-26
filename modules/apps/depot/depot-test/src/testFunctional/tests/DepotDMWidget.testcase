@@ -198,7 +198,6 @@ definition {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
-			folderName = "Depot Folder Name",
 			groupName = "Test Depot Name",
 			mimeType = "application/msword",
 			sourceFileName = "Document_1.doc");

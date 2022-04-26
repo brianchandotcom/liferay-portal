@@ -306,11 +306,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SIDEBAR_SITE_SCOPE_ITEM</td>
-	<td>//li[contains(@class,'nav-item')]//a[(text()='${key_scopeItem}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>

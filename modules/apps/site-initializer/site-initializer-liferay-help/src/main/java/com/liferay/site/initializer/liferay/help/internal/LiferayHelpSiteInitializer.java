@@ -15,7 +15,9 @@
 package com.liferay.site.initializer.liferay.help.internal;
 
 import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseArticle;
+import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseFolder;
 import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseArticleResource;
+import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseFolderResource;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -75,7 +77,8 @@ public class LiferayHelpSiteInitializer implements SiteInitializer {
 	public void initialize(long groupId) throws InitializationException {
 		try {
 			_addKBEntries(
-				0, "/site-initializer/knowledge-base-articles",
+				KnowledbeBaseParentType.FOLDER, 0,
+				"/site-initializer/knowledge-base-articles",
 				_createServiceContext(groupId));
 		}
 		catch (Exception exception) {
@@ -89,18 +92,22 @@ public class LiferayHelpSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addKBArticle(
+			KnowledbeBaseParentType knowledbeBaseParentType,
 			long parentResourcePrimKey, String resourcePath,
 			JSONObject jsonObject, ServiceContext serviceContext)
 		throws Exception {
 
 		KnowledgeBaseArticle knowledgeBaseArticle = _addKnowledgeBaseArticle(
-			parentResourcePrimKey, jsonObject, serviceContext);
+			knowledbeBaseParentType, parentResourcePrimKey, jsonObject,
+			serviceContext);
 
 		_addKBEntries(
-			knowledgeBaseArticle.getId(), resourcePath, serviceContext);
+			KnowledbeBaseParentType.ARTICLE, knowledgeBaseArticle.getId(),
+			resourcePath, serviceContext);
 	}
 
 	private void _addKBEntries(
+			KnowledbeBaseParentType knowledbeBaseParentType,
 			long parentResourcePrimKey, String parentResourcePath,
 			ServiceContext serviceContext)
 		throws Exception {
@@ -127,18 +134,36 @@ public class LiferayHelpSiteInitializer implements SiteInitializer {
 
 			if (jsonObject.has("articleBody")) {
 				_addKBArticle(
-					parentResourcePrimKey,
+					knowledbeBaseParentType, parentResourcePrimKey,
 					resourcePath.substring(
 						0, resourcePath.indexOf(".metadata.json")),
 					jsonObject, serviceContext);
 			}
 			else {
-				throw new UnsupportedOperationException();
+				_addKBFolder(
+					parentResourcePrimKey,
+					resourcePath.substring(
+						0, resourcePath.indexOf(".metadata.json")),
+					jsonObject, serviceContext);
 			}
 		}
 	}
 
+	private void _addKBFolder(
+			long parentResourcePrimKey, String resourcePath,
+			JSONObject jsonObject, ServiceContext serviceContext)
+		throws Exception {
+
+		KnowledgeBaseFolder knowledgeBaseFolder = _addKnowledgeBaseFolder(
+			parentResourcePrimKey, jsonObject, serviceContext);
+
+		_addKBEntries(
+			KnowledbeBaseParentType.FOLDER, knowledgeBaseFolder.getId(),
+			resourcePath, serviceContext);
+	}
+
 	private KnowledgeBaseArticle _addKnowledgeBaseArticle(
+			KnowledbeBaseParentType knowledbeBaseParentType,
 			long parentResourcePrimKey, JSONObject jsonObject,
 			ServiceContext serviceContext)
 		throws Exception {
@@ -152,16 +177,50 @@ public class LiferayHelpSiteInitializer implements SiteInitializer {
 				serviceContext.fetchUser()
 			).build();
 
-		if (parentResourcePrimKey != 0) {
+		if (knowledbeBaseParentType == KnowledbeBaseParentType.ARTICLE) {
 			return knowledgeBaseArticleResource.
 				postKnowledgeBaseArticleKnowledgeBaseArticle(
 					parentResourcePrimKey,
 					KnowledgeBaseArticle.toDTO(jsonObject.toString()));
 		}
 
-		return knowledgeBaseArticleResource.postSiteKnowledgeBaseArticle(
-			serviceContext.getScopeGroupId(),
-			KnowledgeBaseArticle.toDTO(jsonObject.toString()));
+		if (parentResourcePrimKey == 0) {
+			return knowledgeBaseArticleResource.postSiteKnowledgeBaseArticle(
+				serviceContext.getScopeGroupId(),
+				KnowledgeBaseArticle.toDTO(jsonObject.toString()));
+		}
+
+		return knowledgeBaseArticleResource.
+			postKnowledgeBaseFolderKnowledgeBaseArticle(
+				parentResourcePrimKey,
+				KnowledgeBaseArticle.toDTO(jsonObject.toJSONString()));
+	}
+
+	private KnowledgeBaseFolder _addKnowledgeBaseFolder(
+			long parentResourcePrimKey, JSONObject jsonObject,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		KnowledgeBaseFolderResource.Builder knowledgeBaseFolderResourceBuilder =
+			_knowledgeBaseFolderResourceFactory.create();
+
+		KnowledgeBaseFolderResource knowledgeBaseFolderResource =
+			knowledgeBaseFolderResourceBuilder.httpServletRequest(
+				serviceContext.getRequest()
+			).user(
+				serviceContext.fetchUser()
+			).build();
+
+		if (parentResourcePrimKey == 0) {
+			return knowledgeBaseFolderResource.postSiteKnowledgeBaseFolder(
+				serviceContext.getScopeGroupId(),
+				KnowledgeBaseFolder.toDTO(jsonObject.toString()));
+		}
+
+		return knowledgeBaseFolderResource.
+			postKnowledgeBaseFolderKnowledgeBaseFolder(
+				parentResourcePrimKey,
+				KnowledgeBaseFolder.toDTO(jsonObject.toString()));
 	}
 
 	private ServiceContext _createServiceContext(long groupId)
@@ -201,6 +260,10 @@ public class LiferayHelpSiteInitializer implements SiteInitializer {
 	private KnowledgeBaseArticleResource.Factory
 		_knowledgeBaseArticleResourceFactory;
 
+	@Reference
+	private KnowledgeBaseFolderResource.Factory
+		_knowledgeBaseFolderResourceFactory;
+
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.site.initializer.liferay.help)"
 	)
@@ -208,5 +271,11 @@ public class LiferayHelpSiteInitializer implements SiteInitializer {
 
 	@Reference
 	private UserLocalService _userLocalService;
+
+	private static enum KnowledbeBaseParentType {
+
+		ARTICLE, FOLDER
+
+	}
 
 }

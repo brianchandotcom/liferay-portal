@@ -1551,6 +1551,86 @@ public class SXPBlueprintSearchResultTest {
 	}
 
 	@Test
+	public void testSchedulingAware() throws Exception {
+		_updateConfigurationJSON(
+			"queryConfiguration", JSONUtil.put("applyIndexerClauses", false));
+
+		Calendar calendar = CalendarFactoryUtil.getCalendar();
+
+		calendar.add(Calendar.DAY_OF_MONTH, +1);
+
+		Date displayDate = calendar.getTime();
+
+		_journalArticles.add(
+			JournalTestUtil.addArticle(
+				_group.getGroupId(), 0,
+				PortalUtil.getClassNameId(JournalArticle.class),
+				StringPool.BLANK, true,
+				HashMapBuilder.put(
+					LocaleUtil.US, "Article Scheduled"
+				).build(),
+				null,
+				HashMapBuilder.put(
+					LocaleUtil.US, StringPool.BLANK
+				).build(),
+				null, LocaleUtil.getSiteDefault(), displayDate, null, false,
+				true, _serviceContext));
+
+		_updateElementInstancesJSON(
+			new Object[] {
+				HashMapBuilder.<String, Object>put(
+					"boost", 1
+				).put(
+					"fields", new String[] {"title_${context.language_id}^2"}
+				).put(
+					"fuzziness", "AUTO"
+				).put(
+					"keywords", "${keywords}"
+				).put(
+					"minimum_should_match", 0
+				).put(
+					"operator", "or"
+				).put(
+					"slop", 0
+				).put(
+					"type", "best_fields"
+				).build()
+			},
+			new String[] {"Text Match Over Multiple Fields"});
+
+		_keywords = "Article";
+
+		_assertSearch("[Article Scheduled]");
+
+		_updateElementInstancesJSON(
+			new Object[] {
+				HashMapBuilder.<String, Object>put(
+					"boost", 1
+				).put(
+					"fields", new String[] {"title_${context.language_id}^2"}
+				).put(
+					"fuzziness", "AUTO"
+				).put(
+					"keywords", "${keywords}"
+				).put(
+					"minimum_should_match", 0
+				).put(
+					"operator", "or"
+				).put(
+					"slop", 0
+				).put(
+					"type", "best_fields"
+				).build(),
+				null
+			},
+			new String[] {
+				"Text Match Over Multiple Fields", "Scheduling Aware"
+			});
+
+		_assertSearch("[]");
+	}
+
+	@Test
 	public void testSearch() throws Exception {
 		_setUpJournalArticles(
 			new String[] {"Los Angeles", "Orange County"},

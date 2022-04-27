@@ -83,7 +83,8 @@ public class AssetVocabularyItemDescriptor
 
 	@Override
 	public String getSubtitle(Locale locale) {
-		return _assetVocabulary.getDescription(locale);
+		return LanguageUtil.format(
+			locale, "x-categories", _assetVocabulary.getCategoriesCount());
 	}
 
 	@Override
@@ -137,6 +138,9 @@ public class AssetVocabularyItemDescriptor
 	public boolean isCompact() {
 		return true;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AssetVocabularyItemDescriptor.class);
 
 	private final AssetVocabulary _assetVocabulary;
 	private final HttpServletRequest _httpServletRequest;

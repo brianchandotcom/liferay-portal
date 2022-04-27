@@ -45,12 +45,15 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Props;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.test.rule.Inject;
@@ -63,7 +66,9 @@ import java.sql.Connection;
 import java.util.Arrays;
 import java.util.Collections;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -80,6 +85,18 @@ public class ObjectFieldLocalServiceTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@BeforeClass
+	public static void setUpClass() {
+		_props = PropsUtil.getProps();
+
+		PropsTestUtil.setProps("feature.flag.LPS-146889", "true");
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		PropsUtil.setProps(_props);
+	}
 
 	@Test
 	public void testAddSystemObjectField() throws Exception {
@@ -968,6 +985,8 @@ public class ObjectFieldLocalServiceTest {
 				objectDefinition2);
 		}
 	}
+
+	private static Props _props;
 
 	@Inject
 	private DLAppLocalService _dlAppLocalService;

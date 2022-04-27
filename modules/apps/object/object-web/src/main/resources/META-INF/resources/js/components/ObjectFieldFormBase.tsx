@@ -85,6 +85,8 @@ export default function ObjectFieldFormBase({
 	objectName,
 	setValues,
 }: IProps) {
+	const flags = useFeatureFlag();
+
 	const businessTypeMap = useMemo(() => {
 		const businessTypeMap = new Map<string, ObjectFieldType>();
 
@@ -128,12 +130,14 @@ export default function ObjectFieldFormBase({
 
 			case 'LongText':
 			case 'Text':
-				objectFieldSettings = [
-					{
-						name: 'showCounter',
-						value: false,
-					},
-				];
+				if (flags['LPS-146889']) {
+					objectFieldSettings = [
+						{
+							name: 'showCounter',
+							value: false,
+						},
+					];
+				}
 				break;
 
 			default:

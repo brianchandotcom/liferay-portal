@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -57,6 +58,11 @@ public class LongTextObjectFieldBusinessType
 
 	@Override
 	public Set<String> getAllowedObjectFieldSettingsNames() {
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-146889"))) {
+			return ObjectFieldBusinessType.super.
+				getAllowedObjectFieldSettingsNames();
+		}
+
 		return SetUtil.fromArray("maxLength");
 	}
 
@@ -100,6 +106,10 @@ public class LongTextObjectFieldBusinessType
 			"displayStyle", "multiline"
 		).build();
 
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-146889"))) {
+			return properties;
+		}
+
 		List<ObjectFieldSetting> objectFieldSettings =
 			_objectFieldSettingLocalService.getObjectFieldSettings(
 				objectField.getObjectFieldId());
@@ -114,6 +124,11 @@ public class LongTextObjectFieldBusinessType
 
 	@Override
 	public Set<String> getRequiredObjectFieldSettingsNames() {
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-146889"))) {
+			return ObjectFieldBusinessType.super.
+				getRequiredObjectFieldSettingsNames();
+		}
+
 		return SetUtil.fromArray("showCounter");
 	}
 
@@ -125,6 +140,10 @@ public class LongTextObjectFieldBusinessType
 
 		ObjectFieldBusinessType.super.validateObjectFieldSettings(
 			objectFieldName, objectFieldSettings);
+
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-146889"))) {
+			return;
+		}
 
 		for (ObjectFieldSetting objectFieldSetting : objectFieldSettings) {
 			if (Objects.equals(objectFieldSetting.getName(), "maxLength") &&

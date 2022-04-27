@@ -228,8 +228,10 @@ definition {
 		property elastic.pki.authentication.enabled = "true";
 		property elastic.xpack.enabled = "true";
 		property elasticsearch.jdk11.enabled = "true";
-		property portal.suite.search.engine = "";
-		property portal.upstream = "jdk11";
+		property environment.acceptance = "openjdk11";
+		property portal.release = "openjdk11";
+		property portal.suite.search.engine = "openjdk11";
+		property portal.upstream = "openjdk11";
 		property remote.elasticsearch.enabled = "true";
 		property search.environment.suite.exclude = "true";
 		property test.name.skip.portal.instance = "Elasticsearch7EE#XPackPkiAuthenticationWithJDK11";
@@ -298,8 +300,10 @@ definition {
 	test XPackWithJDK11 {
 		property elastic.xpack.enabled = "true";
 		property elasticsearch.jdk11.enabled = "true";
-		property portal.suite.search.engine = "";
-		property portal.upstream = "jdk11";
+		property environment.acceptance = "openjdk11";
+		property portal.release = "openjdk11";
+		property portal.suite.search.engine = "openjdk11";
+		property portal.upstream = "openjdk11";
 		property remote.elasticsearch.enabled = "true";
 		property search.environment.suite.exclude = "true";
 		property test.assert.warning.exceptions = "true";

@@ -4361,17 +4361,15 @@ definition {
 				locator1 = "PageEditor#GRID_CONFIGURATION_LAYOUT");
 		}
 
-		if (isSet(spaceBetweenColumns)) {
-			if ("${spaceBetweenColumns}" == "true") {
-				AssertElementNotPresent(
-					key_position = "${position}",
-					locator1 = "PageEditor#GRID_CONFIGURATION_COLUMNS_NO_GUTTER");
-			}
-			else if ("${spaceBetweenColumns}" == "false") {
-				AssertElementPresent(
-					key_position = "${position}",
-					locator1 = "PageEditor#GRID_CONFIGURATION_COLUMNS_NO_GUTTER");
-			}
+		if ("${spaceBetweenColumns}" == "true") {
+			AssertElementNotPresent(
+				key_position = "${position}",
+				locator1 = "PageEditor#GRID_CONFIGURATION_COLUMNS_NO_GUTTER");
+		}
+		else if ("${spaceBetweenColumns}" == "false") {
+			AssertElementPresent(
+				key_position = "${position}",
+				locator1 = "PageEditor#GRID_CONFIGURATION_COLUMNS_NO_GUTTER");
 		}
 
 		if ("${verticalAlignment}" == "Top") {

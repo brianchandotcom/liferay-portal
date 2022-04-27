@@ -231,6 +231,22 @@
 	<td>//div[contains(@class,'widget-content')]/p | //div[contains(@class,'asset-summary')]</td>
 	<td></td>
 </tr>
+<!--REVIEW_THREAD_MESSAGE_SUBJECT-->
+<tr>
+	<td>REVIEW_PAGE_ELEMENTS_DISPLAYS</td>
+	<td>//span[contains(@class, 'control-label') and contains(., '${key_reviewDisplay}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_BOARD_SUBJECT_TITLE</td>
+	<td>//span[contains(@class, 'taglib-text ') and contains(., 'Thread Message Subject')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAME_AUTHOR</td>
+	<td>//span[contains(@class, 'user-info') and contains(., '${key_nameAuthor}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

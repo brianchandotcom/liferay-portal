@@ -134,19 +134,19 @@ definition {
 
 		for (var list : list "${elements}") {
 			AssertElementPresent(
-				key_resultBarMessage = "${list}",
-				locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_RESULT_BAR");
+				key_reviewDisplay = "${list}",
+				locator1 = "MyWorkflowTasks#REVIEW_PAGE_ELEMENTS_DISPLAYS");
 		}
 
 		AssertElementPresent(
-			key_resultBarMessage = "${titleMessageBoard}",
-			locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_RESULT_BAR");
+			key_reviewDisplay = "${titleMessageBoard}",
+			locator1 = "MyWorkflowTasks#MESSAGE_BOARD_SUBJECT_TITLE");
 
 		AssertElementPresent(locator1 = "MyWorkflowTasks#SUMMARY_TEXT_CONTENT");
 
 		AssertElementPresent(
-			key_resultBarMessage = "${nameAuthor}",
-			locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_RESULT_BAR");
+			key_nameAuthor = "${nameAuthor}",
+			locator1 = "MyWorkflowTasks#NAME_AUTHOR");
 
 		AssertElementPresent(locator1 = "IFrame#IFRAME");
 	}

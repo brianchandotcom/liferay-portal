@@ -20,6 +20,7 @@ import React, {useEffect, useRef} from 'react';
 
 import {addMappingFields} from '../../../../../app/actions/index';
 import {fromControlsId} from '../../../../../app/components/layout-data-items/Collection';
+import {REQUIRED_FIELD_DATA} from '../../../../../app/config/constants/formModalData';
 import {ITEM_ACTIVATION_ORIGINS} from '../../../../../app/config/constants/itemActivationOrigins';
 import {ITEM_TYPES} from '../../../../../app/config/constants/itemTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../app/config/constants/layoutDataItemTypes';
@@ -56,7 +57,10 @@ import {
 } from '../../../../../app/utils/drag-and-drop/useDragAndDrop';
 import getFirstControlsId from '../../../../../app/utils/getFirstControlsId';
 import getMappingFieldsKey from '../../../../../app/utils/getMappingFieldsKey';
+import hideFragment from '../../../../../app/utils/hideFragment';
+import openWarningModal from '../../../../../app/utils/openWarningModal';
 import updateItemStyle from '../../../../../app/utils/updateItemStyle';
+import useHasInputChild from '../../../../../app/utils/useHasInputChild';
 
 const HOVER_EXPAND_DELAY = 1000;
 
@@ -371,6 +375,8 @@ const VisibilityButton = ({
 	selectedViewportSize,
 	visible,
 }) => {
+	const hasInputChild = useHasInputChild();
+
 	return (
 		<ClayButton
 			aria-label={Liferay.Util.sub(
@@ -387,16 +393,30 @@ const VisibilityButton = ({
 			)}
 			disabled={node.isMasterItem || node.hiddenAncestor}
 			displayType="unstyled"
-			onClick={() =>
-				updateItemStyle({
-					dispatch,
-					itemId: node.id,
-					segmentsExperienceId,
-					selectedViewportSize,
-					styleName: 'display',
-					styleValue: node.hidden ? 'block' : 'none',
-				})
-			}
+			onClick={() => {
+				if (!node.hidden && hasInputChild()) {
+					openWarningModal({
+						action: () =>
+							hideFragment({
+								dispatch,
+								itemId: node.id,
+								segmentsExperienceId,
+								selectedViewportSize,
+							}),
+						...REQUIRED_FIELD_DATA,
+					});
+				}
+				else {
+					updateItemStyle({
+						dispatch,
+						itemId: node.id,
+						segmentsExperienceId,
+						selectedViewportSize,
+						styleName: 'display',
+						styleValue: node.hidden ? 'block' : 'none',
+					});
+				}
+			}}
 		>
 			<ClayIcon
 				symbol={node.hidden || node.hiddenAncestor ? 'hidden' : 'view'}

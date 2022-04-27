@@ -19,10 +19,15 @@ import React from 'react';
 
 import useControlledState from '../../../core/hooks/useControlledState';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
+import {REQUIRED_FIELD_DATA} from '../../config/constants/formModalData';
 import {VIEWPORT_SIZES} from '../../config/constants/viewportSizes';
 import {useSelectItem} from '../../contexts/ControlsContext';
-import {useSelector} from '../../contexts/StoreContext';
+import {useDispatch, useSelector} from '../../contexts/StoreContext';
+import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
+import hideFragment from '../../utils/hideFragment';
+import openWarningModal from '../../utils/openWarningModal';
+import useHasInputChild from '../../utils/useHasInputChild';
 import hasDropZoneChild from '../layout-data-items/hasDropZoneChild';
 
 function getHiddenAncestorId(layoutData, item, selectedViewportSize) {
@@ -54,6 +59,9 @@ export function HideFragmentField({
 	const selectedViewportSize = useSelector(
 		(state) => state.selectedViewportSize
 	);
+	const dispatch = useDispatch();
+	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
+	const hasInputChild = useHasInputChild();
 	const selectItem = useSelectItem();
 
 	const [nextValue, setNextValue] = useControlledState(value || false);
@@ -97,8 +105,22 @@ export function HideFragmentField({
 									: customValues.unchecked;
 							}
 
-							setNextValue(eventValue);
-							onValueSelect(field.name, eventValue);
+							if (hasInputChild()) {
+								openWarningModal({
+									action: () =>
+										hideFragment({
+											dispatch,
+											itemId: item.itemId,
+											segmentsExperienceId,
+											selectedViewportSize,
+										}),
+									...REQUIRED_FIELD_DATA,
+								});
+							}
+							else {
+								setNextValue(eventValue);
+								onValueSelect(field.name, eventValue);
+							}
 						}}
 					/>
 

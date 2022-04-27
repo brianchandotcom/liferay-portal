@@ -166,10 +166,16 @@ public class AssetListEntryExportImportContentProcessor
 					queryValues.split(","));
 
 				for (long categoryId : categoryIds) {
-					StagedModelDataHandlerUtil.exportReferenceStagedModel(
-						portletDataContext, stagedModel,
-						_assetCategoryLocalService.getCategory(categoryId),
-						PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+					AssetCategory assetCategory =
+						_assetCategoryLocalService.fetchAssetCategory(
+							categoryId);
+
+					if (assetCategory != null) {
+						StagedModelDataHandlerUtil.exportReferenceStagedModel(
+							portletDataContext, stagedModel,
+							_assetCategoryLocalService.getCategory(categoryId),
+							PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+					}
 				}
 			}
 		}

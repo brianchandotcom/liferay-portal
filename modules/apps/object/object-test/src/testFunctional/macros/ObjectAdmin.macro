@@ -849,6 +849,8 @@ definition {
 		Click(
 			key_name = "${fieldName}",
 			locator1 = "CreateObject#SELECT_OBJECT_FIELD_IN_TABLE");
+
+		SelectFrame(locator1 = "IFrame#IFRAME");
 	}
 
 	macro gotoRelationshipsTab {

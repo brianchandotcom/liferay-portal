@@ -275,6 +275,15 @@ definition {
 	}
 
 	@priority = "5"
+	test ViewSearchPortletsConfigurationArchive740 {
+		property data.archive.type = "data-archive-search-portlets";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.4.0";
+
+		Upgrade.viewSearchPortletsConfiguration();
+	}
+
+	@priority = "5"
 	test ViewSearchPortletsConfigurationArchive7110 {
 		property data.archive.type = "data-archive-search-portlets";
 		property portal.version = "7.1.10";
@@ -286,6 +295,16 @@ definition {
 	test ViewSearchPortletsConfigurationArchive7210 {
 		property data.archive.type = "data-archive-search-portlets";
 		property portal.version = "7.2.10";
+		property test.assert.warning.exceptions = "true";
+		property test.run.environment = "EE";
+
+		Upgrade.viewSearchPortletsConfiguration();
+	}
+
+	@priority = "5"
+	test ViewSearchPortletsConfigurationArchive7413 {
+		property data.archive.type = "data-archive-search-portlets";
+		property portal.version = "7.4.13";
 		property test.assert.warning.exceptions = "true";
 		property test.run.environment = "EE";
 

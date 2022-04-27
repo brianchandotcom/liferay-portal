@@ -1,5 +1,42 @@
 definition {
 
+	macro activateScheduleTrigger {
+		LexiconEntry.gotoEntry(rowEntry = "${trigger}");
+
+		Navigator.gotoNavTab(navTab = "Job Scheduler Trigger");
+
+		Check.checkToggleSwitch(locator1 = "CommerceEntry#ACTIVE_CHECKBOX");
+
+		Type(
+			key_text = "Cron Expression",
+			locator1 = "TextInput#ANY",
+			value1 = "${cronExpression}");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Button.clickCancel();
+	}
+
+	macro addScheduleTrigger {
+		Click(locator1 = "Button#ADD");
+
+		MenuItem.click(menuItem = "${taskExecutorType}");
+
+		Type(
+			locator1 = "TextInput#NAME",
+			value1 = "${triggerName}");
+
+		Type.typeAceEditor(
+			locator1 = "TextArea#ACE_EDITOR",
+			value1 = "${triggerProperties}");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro openJobSchedulerAdmin {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = "${baseURL}",

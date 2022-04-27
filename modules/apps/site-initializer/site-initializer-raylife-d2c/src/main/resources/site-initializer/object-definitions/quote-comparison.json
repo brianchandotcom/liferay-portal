@@ -22,6 +22,12 @@
 				"en_US": "Category"
 			},
 			"name": "category",
+			"objectFieldSettings": [
+				{
+					"name": "showCounter",
+					"value": "false"
+				}
+			],
 			"required": false
 		},
 		{
@@ -32,6 +38,12 @@
 				"en_US": "Price"
 			},
 			"name": "price",
+			"objectFieldSettings": [
+				{
+					"name": "showCounter",
+					"value": "false"
+				}
+			],
 			"required": false
 		},
 		{
@@ -42,6 +54,12 @@
 				"en_US": "Promo"
 			},
 			"name": "promo",
+            "objectFieldSettings": [
+                {
+                    "name": "showCounter",
+                    "value": "false"
+                }
+            ],
 			"required": true
 		},
 		{
@@ -52,6 +70,12 @@
 				"en_US": "Per Occurance Limit"
 			},
 			"name": "perOccuranceLimit",
+			"objectFieldSettings": [
+				{
+					"name": "showCounter",
+					"value": "false"
+				}
+			],
 			"required": true
 		},
 		{
@@ -62,6 +86,12 @@
 				"en_US": "Aggregate Limit"
 			},
 			"name": "aggregateLimit",
+			"objectFieldSettings": [
+				{
+					"name": "showCounter",
+					"value": "false"
+				}
+			],
 			"required": true
 		},
 		{
@@ -72,6 +102,12 @@
 				"en_US": "Business Personal Property"
 			},
 			"name": "businessPersonalProperty",
+            "objectFieldSettings": [
+                {
+                    "name": "showCounter",
+                    "value": "false"
+                }
+            ],
 			"required": false
 		},
 		{
@@ -92,6 +128,12 @@
 				"en_US": "Money and Securities"
 			},
 			"name": "moneyAndSecurities",
+			"objectFieldSettings": [
+				{
+					"name": "showCounter",
+					"value": "false"
+				}
+			],
 			"required": false
 		}
 	],

@@ -38,8 +38,8 @@
 			},
 			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:ClaimStatus$]",
 			"name": "claimStatus",
-			"required": false,
-			"type": "String"
+            "required": false,
+            "type": "String"
 		},
 		{
 			"DBType": "String",
@@ -50,8 +50,14 @@
 				"en_US": "Name"
 			},
 			"name": "name",
-			"required": false,
-			"type": "String"
+            "objectFieldSettings": [
+                {
+                    "name": "showCounter",
+                    "value": "false"
+                }
+            ],
+            "required": false,
+            "type": "String"
 		},
 		{
 			"DBType": "String",
@@ -62,8 +68,14 @@
 				"en_US": "Product"
 			},
 			"name": "product",
-			"required": false,
-			"type": "String"
+            "objectFieldSettings": [
+                {
+                    "name": "showCounter",
+                    "value": "false"
+                }
+            ],
+            "required": false,
+            "type": "String"
 		}
 	],
 	"panelAppOrder": "100",

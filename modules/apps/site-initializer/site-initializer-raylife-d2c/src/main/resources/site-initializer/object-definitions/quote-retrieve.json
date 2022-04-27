@@ -12,6 +12,12 @@
 				"en_US": "Quote Retrieve Link"
 			},
 			"name": "quoteRetrieveLink",
+            "objectFieldSettings": [
+                {
+                    "name": "showCounter",
+                    "value": "false"
+                }
+            ],
 			"required": true
 		},
 		{
@@ -22,6 +28,12 @@
 				"en_US": "Product Name"
 			},
 			"name": "productName",
+			"objectFieldSettings": [
+				{
+					"name": "showCounter",
+					"value": "false"
+				}
+			],
 			"required": true
 		},
 		{
@@ -32,6 +44,12 @@
 				"en_US": "Retrieve E-mail"
 			},
 			"name": "retrieveEmail",
+			"objectFieldSettings": [
+				{
+					"name": "showCounter",
+					"value": "false"
+				}
+			],
 			"required": true
 		}
 	],

@@ -57,7 +57,7 @@ class FlightSearch extends React.Component {
               <input
                 name="from"
                 type="text"
-                value="DFW"
+                defaultValue="DFW"
                 onChange={this.handleInputChange} />
             </td>
           </tr>
@@ -69,7 +69,7 @@ class FlightSearch extends React.Component {
               <input
                 name="to"
                 type="text"
-                value="BER"
+                defaultValue="BER"
                 onChange={this.handleInputChange} />
             </td>
           </tr>
@@ -81,7 +81,7 @@ class FlightSearch extends React.Component {
               <input
                 name="departureDate"
                 type="date"
-                value="2022-06-01"
+                defaultValue="2022-06-01"
                 onChange={this.handleInputChange} />
             </td>
           </tr>
@@ -93,7 +93,7 @@ class FlightSearch extends React.Component {
               <input
                 name="adults"
                 type="number"
-                value="2"
+                defaultValue="2"
                 onChange={this.handleInputChange} />
             </td>
           </tr>

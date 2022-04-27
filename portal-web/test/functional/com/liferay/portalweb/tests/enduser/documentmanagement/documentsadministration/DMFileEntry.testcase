@@ -2780,6 +2780,8 @@ definition {
 	@description = "This is a test for LPS-94829. It ensures that the wildcard can be defined with other file extensions."
 	@priority = "4"
 	test WildcardCanBeDefinedWithOtherFileExtensions {
+		property test.name.skip.portal.instance = "DMFileEntry#WildcardCanBeDefinedWithOtherFileExtensions";
+
 		DMDocument.updateFileExtensions(
 			fieldValue = ".doc",
 			indexNumber = "2");

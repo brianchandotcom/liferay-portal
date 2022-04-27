@@ -66,7 +66,25 @@ public class CountryLocalServiceImpl extends CountryLocalServiceBaseImpl {
 		throws PortalException {
 
 		if (fetchCountryByA2(serviceContext.getCompanyId(), a2) != null) {
-			throw new DuplicateCountryException();
+			throw new DuplicateCountryException(
+				"a2 belongs to another country");
+		}
+
+		if (fetchCountryByA3(serviceContext.getCompanyId(), a3) != null) {
+			throw new DuplicateCountryException(
+				"a3 belongs to another country");
+		}
+
+		if (fetchCountryByName(serviceContext.getCompanyId(), name) != null) {
+			throw new DuplicateCountryException(
+				"name belongs to another country");
+		}
+
+		if (fetchCountryByNumber(serviceContext.getCompanyId(), number) !=
+				null) {
+
+			throw new DuplicateCountryException(
+				"number belongs to another country");
 		}
 
 		validate(a2, a3, idd, name, number);

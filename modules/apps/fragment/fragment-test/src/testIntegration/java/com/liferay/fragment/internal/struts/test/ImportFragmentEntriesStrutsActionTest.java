@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.upload.FileItem;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelperUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ProgressTracker;
@@ -49,6 +50,7 @@ import com.liferay.portal.upload.UploadPortletRequestImpl;
 import com.liferay.portal.upload.UploadServletRequestImpl;
 import com.liferay.portal.util.PropsValues;
 
+import java.io.File;
 import java.io.OutputStream;
 
 import java.net.URL;
@@ -192,7 +194,9 @@ public class ImportFragmentEntriesStrutsActionTest {
 			() -> {
 				LiferayFileItemFactory fileItemFactory =
 					new LiferayFileItemFactory(
-						UploadServletRequestImpl.getTempDir());
+						new File(
+							UploadServletRequestConfigurationHelperUtil.
+								getTempDir()));
 
 				LiferayFileItem liferayFileItem = fileItemFactory.createItem(
 					RandomTestUtil.randomString(),

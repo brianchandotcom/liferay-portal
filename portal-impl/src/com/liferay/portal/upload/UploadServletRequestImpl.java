@@ -60,10 +60,6 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 public class UploadServletRequestImpl
 	extends HttpServletRequestWrapper implements UploadServletRequest {
 
-	public static File getTempDir() {
-		return _getTempDir(null);
-	}
-
 	public UploadServletRequestImpl(HttpServletRequest httpServletRequest) {
 		this(httpServletRequest, 0, null, 0, 0);
 	}
@@ -93,7 +89,7 @@ public class UploadServletRequestImpl
 			}
 			else {
 				servletFileUpload = new ServletFileUpload(
-					new LiferayFileItemFactory(getTempDir()));
+					new LiferayFileItemFactory(_getTempDir(null)));
 			}
 
 			long uploadServletRequestImplMaxSize =
@@ -637,7 +633,7 @@ public class UploadServletRequestImpl
 		return sortedFileItems;
 	}
 
-	private static File _getTempDir(String configuredTempDir) {
+	private File _getTempDir(String configuredTempDir) {
 		if (Validator.isNotNull(configuredTempDir)) {
 			return new File(configuredTempDir);
 		}

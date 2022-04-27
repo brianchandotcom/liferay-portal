@@ -29,13 +29,14 @@ import com.liferay.portal.kernel.upload.FileItem;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ProgressTracker;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplayFactory;
 import com.liferay.portal.upload.LiferayFileItem;
 import com.liferay.portal.upload.LiferayFileItemFactory;
 import com.liferay.portal.upload.LiferayServletRequest;
-import com.liferay.portal.upload.UploadServletRequestImpl;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -92,7 +93,7 @@ public class PortletContainerTestUtil {
 		Map<String, FileItem[]> fileParameters = new HashMap<>();
 
 		LiferayFileItemFactory fileItemFactory = new LiferayFileItemFactory(
-			UploadServletRequestImpl.getTempDir());
+			new File(SystemProperties.get(SystemProperties.TMP_DIR)));
 
 		for (int i = 0; i < size; i++) {
 			String fileParameter = "fileParameter" + i;

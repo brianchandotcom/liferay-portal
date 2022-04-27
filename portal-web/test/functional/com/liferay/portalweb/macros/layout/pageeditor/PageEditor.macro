@@ -1637,36 +1637,6 @@ definition {
 			}
 		}
 
-		if (isSet(layout)) {
-			Select(
-				key_fieldLabel = "Layout",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "${layout}");
-
-			PageEditor.waitForAutoSave();
-
-			AssertSelectedLabel(
-				key_fieldLabel = "Layout",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "${layout}");
-		}
-
-		if ("${spaceBetweenColumns}" == "true") {
-			Check.checkNotVisible(
-				checkboxName = "Show Gutter",
-				locator1 = "Checkbox#ANY_CHECKBOX");
-
-			PageEditor.waitForAutoSave();
-		}
-
-		if ("${spaceBetweenColumns}" == "false") {
-			Uncheck.uncheckToggleSwitch(
-				checkboxName = "Show Gutter",
-				locator1 = "Checkbox#ANY_CHECKBOX");
-
-			PageEditor.waitForAutoSave();
-		}
-
 		if (isSet(styleDisplay)) {
 			AssertElementPresent(
 				key_fieldLabel = "Style Display",
@@ -1699,6 +1669,36 @@ definition {
 					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = "${listItemStyle}");
 			}
+		}
+
+		if (isSet(layout)) {
+			Select(
+				key_fieldLabel = "Layout",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${layout}");
+
+			PageEditor.waitForAutoSave();
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Layout",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${layout}");
+		}
+
+		if ("${spaceBetweenColumns}" == "true") {
+			Check.checkNotVisible(
+				checkboxName = "Show Gutter",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			PageEditor.waitForAutoSave();
+		}
+
+		if ("${spaceBetweenColumns}" == "false") {
+			Uncheck.uncheckToggleSwitch(
+				checkboxName = "Show Gutter",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			PageEditor.waitForAutoSave();
 		}
 
 		if (isSet(pagination)) {

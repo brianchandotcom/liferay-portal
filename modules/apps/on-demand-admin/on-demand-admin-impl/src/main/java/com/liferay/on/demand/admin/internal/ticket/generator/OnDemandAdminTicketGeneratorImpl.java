@@ -75,7 +75,7 @@ public class OnDemandAdminTicketGeneratorImpl
 
 		User requestorUser = _userLocalService.getUser(userId);
 
-		Date date = requestorUser.getBirthday();
+		Date date = new Date();
 
 		Role role = _roleLocalService.getRole(
 			company.getCompanyId(), RoleConstants.ADMINISTRATOR);

@@ -12,11 +12,11 @@
 			},
 			"name": "field1",
 			"objectFieldSettings": [
-                {
-                    "name": "showCounter",
-                    "value": "false"
-                }
-            ],
+				{
+					"name": "showCounter",
+					"value": "false"
+				}
+			],
 			"required": false,
 			"type": "String"
 		}

@@ -73,14 +73,14 @@
 				"en_US": "Name"
 			},
 			"name": "name",
-            "objectFieldSettings": [
-                {
-                    "name": "showCounter",
-                    "value": "false"
-                }
-            ],
-            "required": false,
-            "type": "String"
+			"objectFieldSettings": [
+				{
+					"name": "showCounter",
+					"value": "false"
+				}
+			],
+			"required": false,
+			"type": "String"
 		},
 		{
 			"DBType": "String",
@@ -91,14 +91,14 @@
 				"en_US": "Policy Number"
 			},
 			"name": "policyNumber",
-            "objectFieldSettings": [
-                {
-                    "name": "showCounter",
-                    "value": "false"
-                }
-            ],
-            "required": false,
-            "type": "String"
+			"objectFieldSettings": [
+				{
+					"name": "showCounter",
+					"value": "false"
+				}
+			],
+			"required": false,
+			"type": "String"
 		},
 		{
 			"DBType": "String",
@@ -109,14 +109,14 @@
 				"en_US": "Product"
 			},
 			"name": "product",
-            "objectFieldSettings": [
-                {
-                    "name": "showCounter",
-                    "value": "false"
-                }
-            ],
-            "required": false,
-            "type": "String"
+			"objectFieldSettings": [
+				{
+					"name": "showCounter",
+					"value": "false"
+				}
+			],
+			"required": false,
+			"type": "String"
 		}
 	],
 	"panelAppOrder": "100",

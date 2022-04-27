@@ -12,12 +12,12 @@
 				"en_US": "Quote Retrieve Link"
 			},
 			"name": "quoteRetrieveLink",
-            "objectFieldSettings": [
-                {
-                    "name": "showCounter",
-                    "value": "false"
-                }
-            ],
+			"objectFieldSettings": [
+				{
+					"name": "showCounter",
+					"value": "false"
+				}
+			],
 			"required": true
 		},
 		{

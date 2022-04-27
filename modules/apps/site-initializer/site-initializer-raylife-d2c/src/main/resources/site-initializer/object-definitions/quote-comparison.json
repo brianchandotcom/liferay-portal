@@ -54,12 +54,12 @@
 				"en_US": "Promo"
 			},
 			"name": "promo",
-            "objectFieldSettings": [
-                {
-                    "name": "showCounter",
-                    "value": "false"
-                }
-            ],
+			"objectFieldSettings": [
+				{
+					"name": "showCounter",
+					"value": "false"
+				}
+			],
 			"required": true
 		},
 		{
@@ -102,12 +102,12 @@
 				"en_US": "Business Personal Property"
 			},
 			"name": "businessPersonalProperty",
-            "objectFieldSettings": [
-                {
-                    "name": "showCounter",
-                    "value": "false"
-                }
-            ],
+			"objectFieldSettings": [
+				{
+					"name": "showCounter",
+					"value": "false"
+				}
+			],
 			"required": false
 		},
 		{

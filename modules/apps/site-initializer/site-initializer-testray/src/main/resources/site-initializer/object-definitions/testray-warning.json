@@ -12,14 +12,14 @@
 				"en_US": "Content"
 			},
 			"name": "content",
-            "objectFieldSettings": [
-                {
-                    "name": "showCounter",
-                    "value": "false"
-                }
-            ],
-            "required": false,
-            "type": "Clob"
+			"objectFieldSettings": [
+				{
+					"name": "showCounter",
+					"value": "false"
+				}
+			],
+			"required": false,
+			"type": "Clob"
 		}
 	],
 	"pluralLabel": {

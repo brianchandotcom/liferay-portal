@@ -22,7 +22,7 @@ definition {
 	}
 
 	@priority = "4"
-	test AssertSimilarResultsDisplayTemplate {
+	test AssertDisplayTemplate {
 		for (var count : list "1,2,3") {
 			JSONWebcontent.addWebContent(
 				content = "WC Content",
@@ -70,7 +70,7 @@ definition {
 	}
 
 	@priority = "4"
-	test AssertSimilarResultsDisplayWithBlogsWidget {
+	test AssertDisplayWithBlogsWidget {
 		for (var count : list "1,2,3") {
 			JSONBlog.addEntry(
 				entryContent = "Blogs Entry Content",
@@ -116,7 +116,7 @@ definition {
 	}
 
 	@priority = "4"
-	test AssertSimilarResultsMatchesAssetType {
+	test AssertMatchesAssetType {
 		for (var count : list "1,2,3") {
 			JSONBlog.addEntry(
 				entryContent = "Blogs Content",
@@ -296,7 +296,7 @@ definition {
 	}
 
 	@priority = "4"
-	test CanViewSimilarResultsFromOtherSitesWithDocumentsWidget {
+	test CanViewFromOtherSitesWithDocumentsWidget {
 		for (var siteName : list "Site Name 1,Site Name 2,Site Name 3") {
 			JSONGroup.addGroup(groupName = "${siteName}");
 		}
@@ -347,7 +347,7 @@ definition {
 	}
 
 	@priority = "4"
-	test CanViewSimilarResultsFromSearchResults {
+	test CanViewFromSearchResults {
 		for (var count : list "1,2,3") {
 			JSONDocument.addFile(
 				dmDocumentDescription = "DM Content",
@@ -391,7 +391,7 @@ definition {
 	}
 
 	@priority = "4"
-	test ConfigureSimilarResultsDocumentFrequency {
+	test ConfigureDocumentFrequency {
 		property test.name.skip.portal.instance = "SimilarResults#ConfigureSimilarResultsDocumentFrequency";
 
 		JSONWebcontent.addWebContent(
@@ -458,7 +458,7 @@ definition {
 	}
 
 	@priority = "4"
-	test ConfigureSimilarResultsFields {
+	test ConfigureFields {
 		JSONBlog.addEntry(
 			entryContent = "Content",
 			entryTitle = "No Match Content");
@@ -507,7 +507,7 @@ definition {
 	}
 
 	@priority = "4"
-	test ConfigureSimilarResultsMaximumItemDisplay {
+	test ConfigureMaximumItemDisplay {
 		for (var titleName : list "Alpha,Bravo,Charlie,Delta,Echo,Foxtrot") {
 			JSONWebcontent.addWebContent(
 				content = "${titleName}",
@@ -548,7 +548,7 @@ definition {
 	}
 
 	@priority = "4"
-	test ConfigureSimilarResultsMaximumQueryTerms {
+	test ConfigureMaximumQueryTerms {
 		for (var count : list "One, Two, Three") {
 			JSONWebcontent.addWebContent(
 				content = "WC Content",
@@ -582,7 +582,7 @@ definition {
 	}
 
 	@priority = "4"
-	test ConfigureSimilarResultsMinimumShouldMatch {
+	test ConfigureMinimumShouldMatch {
 		JSONWebcontent.addWebContent(
 			content = "WC Content",
 			groupName = "Guest",
@@ -642,7 +642,7 @@ definition {
 	}
 
 	@priority = "4"
-	test ConfigureSimilarResultsStopWords {
+	test ConfigureStopWords {
 		JSONWebcontent.addWebContent(
 			content = "No Match",
 			groupName = "Guest",
@@ -702,7 +702,7 @@ definition {
 	}
 
 	@priority = "4"
-	test ConfigureSimilarResultsTermFrequency {
+	test ConfigureTermFrequency {
 		for (var count : list "One, Two, Three") {
 			JSONWebcontent.addWebContent(
 				content = "WC Content",
@@ -761,7 +761,7 @@ definition {
 	}
 
 	@priority = "4"
-	test ConfigureSimilarResultsWordLength {
+	test ConfigureWordLength {
 		JSONWebcontent.addWebContent(
 			content = "WC Content",
 			groupName = "Guest",
@@ -882,7 +882,7 @@ definition {
 	}
 
 	@priority = "4"
-	test ViewSimilarResultsOnContentPages {
+	test ViewOnContentPages {
 		JSONWebcontent.addWebContent(
 			content = "WC Content",
 			groupName = "Guest",
@@ -938,7 +938,7 @@ definition {
 	}
 
 	@priority = "4"
-	test ViewSimilarResultsWithDifferentScope {
+	test ViewWithDifferentScope {
 		for (var siteName : list "Site Name 1,Site Name 2,Site Name 3") {
 			JSONGroup.addGroup(groupName = "${siteName}");
 		}

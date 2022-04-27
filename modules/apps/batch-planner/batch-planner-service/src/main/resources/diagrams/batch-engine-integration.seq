@@ -1,0 +1,30 @@
+# sequencediagram.com
+
+bottomparticipants
+
+title Batch Planner and Batch Engine Interaction
+
+actor "Import/Export" as IE
+participant "BatchPlanner\nBatch Engine Broker" as BPBroker
+entity "BatchPlanner Plan\nPersistence" as BPPersistence
+participant "BatchPlanner\nListener" as BPListener
+participant "Batch Engine\nHeadless" as BatchEngine
+entity "Batch Engine\nPersistence" as BEIPersistence
+control "Batch Engine\nExecutor" as BEExecutor
+
+IE-:2>BPBroker:submit
+activate BPBroker
+BPBroker->BPPersistence:Update PLAN\nstatus=QUEUED
+BPBroker-->BatchEngine:Submit file
+
+BatchEngine->BEIPersistence:create item record
+activate BEIPersistence
+BEIPersistence->BatchEngine:New item record created
+deactivate BEIPersistence
+BatchEngine->BEExecutor:execute
+BEExecutor-->BEIPersistence:update item\nstatus=RUNNING
+BEIPersistence-->BPListener:item updated
+BPListener->BPPersistence:Update PLAN\nstatus=RUNNING
+BPBroker->BPPersistence:Update PLAN\nactive=true
+BPBroker->IE:submitted
+deactivate BPBroker

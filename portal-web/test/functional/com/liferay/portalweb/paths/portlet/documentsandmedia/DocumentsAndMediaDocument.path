@@ -25,6 +25,17 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--AUDIO_GENERATION-->
+<tr>
+	<td>AUDIO_PREVIEW</td>
+	<td>//audio[contains(@class,'preview-file-audio')]//source[contains(@src,'${key_audioName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--CUSTOM_FIELD-->
 <tr>
 	<td>CUSTOM_FIELD_BUTTON</td>
@@ -54,6 +65,99 @@
 <tr>
 	<td>CUSTOM_FIELD_VALUE</td>
 	<td>//div[contains(@class,'ddm-field-group')]//span[contains(.,'${customFieldValue}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DETAILS_PANEL-->
+<tr>
+	<td>DETAILS_URL</td>
+	<td>//div[label[contains(.,'Latest Version URL')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DOCUMENT_DETAILS-->
+<tr>
+	<td>DOCUMENT_DETAILS_DOWNLOAD</td>
+	<td>//div[@class='sidebar-section']//a[@title='File Size ${key_dmDocumentSize}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_DETAILS_DROPDOWN</td>
+	<td>//li/a[contains(@class,'dropdown-toggle')]/span[contains(.,'Details')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_DETAILS_EMPTY_STATE_PREVIEW</td>
+	<td>//div[contains(@class,'preview-file-error-container')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_DETAILS_LATEST_VERSION_URL</td>
+	<td>//input[contains(@id,'urlInput') and contains(@value,'${key_latestVersionURL}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_DETAILS_IMAGE_PREVIEW</td>
+	<td>//div[contains(@class,'preview-file-container')]//img[contains(@src,'${key_dmDocumentFileName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_DETAILS_SIZE</td>
+	<td>//div[contains(@class,'sidebar-body')]//dd[contains(.,'${key_dmDocumentSize}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_DETAILS_UPLOADER</td>
+	<td>//div[contains(@class,'sidebar-body')]//dt[contains(.,'Created')]/following-sibling::dd[contains(.,'${key_dmDocumentUploader}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_DETAILS_URL</td>
+	<td>//div[contains(@class,'sidebar-section')]//label[contains(.,'URL')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_DETAILS_VERSION</td>
+	<td>//div[@class='sidebar-header']//span[contains(@class,'label-item') and contains(.,'Version') and contains(.,'${key_dmDocumentVersionNumber}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_DETAILS_VERSION_LOCKED</td>
+	<td>//div[contains(@class,'sidebar-body')]//span[contains(@class,'version icon-lock')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_DETAILS_WEBDAV_URL</td>
+	<td>//div[contains(@class,'sidebar-section')]//label[contains(.,'WebDAV URL')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_DETAILS_WEBDAV_URL_LINK</td>
+	<td>//input[contains(@id,'webDavURLInput') and contains(@value,'${key_webDavurl}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_DETAILS_WORKFLOW</td>
+	<td>//div[contains(@class,'sidebar-header')]//span[contains(@class,'workflow-status')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DOCUMENT_EXTRACTED_METADATA-->
+<tr>
+	<td>DOCUMENT_EXTRACTED_METADATA_FIELD</td>
+	<td>//div[contains(@id,'documentLibraryMetadataPanel')]//label[contains(.,'${key_metadataLabel}')]/../../div[contains(.,'${key_metadataData}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -167,88 +271,6 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--DOCUMENT_DETAILS-->
-<tr>
-	<td>DOCUMENT_DETAILS_DOWNLOAD</td>
-	<td>//div[@class='sidebar-section']//a[@title='File Size ${key_dmDocumentSize}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DOCUMENT_DETAILS_DROPDOWN</td>
-	<td>//li/a[contains(@class,'dropdown-toggle')]/span[contains(.,'Details')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DOCUMENT_DETAILS_EMPTY_STATE_PREVIEW</td>
-	<td>//div[contains(@class,'preview-file-error-container')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DOCUMENT_DETAILS_LATEST_VERSION_URL</td>
-	<td>//input[contains(@id,'urlInput') and contains(@value,'${key_latestVersionURL}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DOCUMENT_DETAILS_IMAGE_PREVIEW</td>
-	<td>//div[contains(@class,'preview-file-container')]//img[contains(@src,'${key_dmDocumentFileName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DOCUMENT_DETAILS_SIZE</td>
-	<td>//div[contains(@class,'sidebar-body')]//dd[contains(.,'${key_dmDocumentSize}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DOCUMENT_DETAILS_UPLOADER</td>
-	<td>//div[contains(@class,'sidebar-body')]//dt[contains(.,'Created')]/following-sibling::dd[contains(.,'${key_dmDocumentUploader}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DOCUMENT_DETAILS_URL</td>
-	<td>//div[contains(@class,'sidebar-section')]//label[contains(.,'URL')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DOCUMENT_DETAILS_VERSION</td>
-	<td>//div[@class='sidebar-header']//span[contains(@class,'label-item') and contains(.,'Version') and contains(.,'${key_dmDocumentVersionNumber}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DOCUMENT_DETAILS_VERSION_LOCKED</td>
-	<td>//div[contains(@class,'sidebar-body')]//span[contains(@class,'version icon-lock')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DOCUMENT_DETAILS_WEBDAV_URL</td>
-	<td>//div[contains(@class,'sidebar-section')]//label[contains(.,'WebDAV URL')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DOCUMENT_DETAILS_WEBDAV_URL_LINK</td>
-	<td>//input[contains(@id,'webDavURLInput') and contains(@value,'${key_webDavurl}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DOCUMENT_DETAILS_WORKFLOW</td>
-	<td>//div[contains(@class,'sidebar-header')]//span[contains(@class,'workflow-status')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--DOCUMENT_EXTRACTED_METADATA-->
-<tr>
-	<td>DOCUMENT_EXTRACTED_METADATA_FIELD</td>
-	<td>//div[contains(@id,'documentLibraryMetadataPanel')]//label[contains(.,'${key_metadataLabel}')]/../../div[contains(.,'${key_metadataData}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--DOCUMENT_TOOLBAR-->
 <tr>
 	<td>DOCUMENT_TOOLBAR_DOWNLOAD</td>
@@ -302,17 +324,6 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--DETAILS_PANEL-->
-<tr>
-	<td>DETAILS_URL</td>
-	<td>//div[label[contains(.,'Latest Version URL')]]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--METADATA_PANEL-->
 <tr>
 	<td>METADATA_PANEL_DATE</td>
@@ -347,12 +358,6 @@
 <tr>
 	<td></td>
 	<td></td>
-	<td></td>
-</tr>
-<!--AUDIO_GENERATION-->
-<tr>
-	<td>AUDIO_PREVIEW</td>
-	<td>//audio[contains(@class,'preview-file-audio')]//source[contains(@src,'${key_audioName}')]</td>
 	<td></td>
 </tr>
 <!--VIDEO_GENERATION-->

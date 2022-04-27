@@ -4,6 +4,8 @@ import java.net.URI;
 import java.util.Arrays;
 import java.util.Collections;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,6 +25,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.amadeus.Amadeus;
+import com.liferay.custom.rest.service.FlightApiController;
 
 @Configuration
 public class CustomRestSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -80,8 +83,12 @@ public class CustomRestSecurityConfig extends WebSecurityConfigurerAdapter {
 		);
 	}
 
+	private static final Logger logger = LoggerFactory.getLogger(CustomRestSecurityConfig.class);
+
 	@Bean
 	Amadeus amadeusClient() {
+		logger.info("amadeusClientId: " + amadeusClientId);
+		logger.info("amadeusClientSecret: " + amadeusClientSecret);
 		return Amadeus.builder(amadeusClientId, amadeusClientSecret).build();
 	}
 

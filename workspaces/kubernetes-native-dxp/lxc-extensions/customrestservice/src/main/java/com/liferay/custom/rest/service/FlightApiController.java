@@ -45,7 +45,8 @@ public class FlightApiController {
 
 	@ExceptionHandler(value = ResponseException.class)
     public ResponseEntity<String> handleResponseException(ResponseException responseException) {
-        return new ResponseEntity<String>("Response exception: " + responseException.getMessage(), HttpStatus.NOT_FOUND);
+		logger.error(responseException.getMessage());
+        return new ResponseEntity<String>("Response exception: " + responseException.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 	@GetMapping(value = "/search")

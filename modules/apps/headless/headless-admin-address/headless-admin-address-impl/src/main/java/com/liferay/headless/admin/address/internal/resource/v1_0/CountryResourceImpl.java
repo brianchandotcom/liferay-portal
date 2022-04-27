@@ -20,8 +20,11 @@ import com.liferay.headless.admin.address.resource.v1_0.CountryResource;
 import com.liferay.portal.kernel.model.CountryTable;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.service.CountryLocalService;
 import com.liferay.portal.kernel.service.CountryService;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.odata.entity.DoubleEntityField;
@@ -103,6 +106,28 @@ public class CountryResourceImpl extends BaseCountryResourceImpl {
 		return _entityModel;
 	}
 
+	@Override
+	public Country postCountry(Country country) throws Exception {
+		com.liferay.portal.kernel.model.Country serviceBuilderCountry =
+			_countryService.addCountry(
+				country.getA2(), country.getA3(),
+				GetterUtil.getBoolean(country.getActive(), true),
+				GetterUtil.getBoolean(country.getBillingAllowed(), true),
+				String.valueOf(country.getIdd()), country.getName(),
+				String.valueOf(country.getNumber()),
+				GetterUtil.getDouble(country.getPosition()),
+				GetterUtil.getBoolean(country.getShippingAllowed(), true),
+				GetterUtil.getBoolean(country.getSubjectToVAT()),
+				GetterUtil.getBoolean(country.getZipRequired(), true),
+				ServiceContextFactory.getInstance(
+					Country.class.getName(), contextHttpServletRequest));
+
+		return _toCountry(
+			_countryLocalService.updateGroupFilterEnabled(
+				serviceBuilderCountry.getCountryId(),
+				GetterUtil.getBoolean(country.getGroupFilterEnabled())));
+	}
+
 	private Country _toCountry(
 			com.liferay.portal.kernel.model.Country serviceBuilderCountry)
 		throws Exception {
@@ -133,6 +158,9 @@ public class CountryResourceImpl extends BaseCountryResourceImpl {
 		() -> EntityModel.toEntityFieldsMap(
 			new StringEntityField("name", locale -> "name"),
 			new DoubleEntityField("position", locale -> "position"));
+
+	@Reference
+	private CountryLocalService _countryLocalService;
 
 	@Reference
 	private CountryResourceDTOConverter _countryResourceDTOConverter;

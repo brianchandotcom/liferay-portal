@@ -47,7 +47,7 @@ public class CPMeasurementUnitServiceImpl
 			CPActionKeys.MANAGE_COMMERCE_PRODUCT_MEASUREMENT_UNITS);
 
 		return cpMeasurementUnitLocalService.addCPMeasurementUnit(
-			nameMap, key, rate, primary, priority, type, serviceContext);
+			null, nameMap, key, rate, primary, priority, type, serviceContext);
 	}
 
 	@Override

@@ -45,8 +45,8 @@ public class CPMeasurementUnitTableReferenceDefinitionTest
 
 	@Override
 	protected CTModel<?> addCTModel() throws Exception {
-		return _cpMeasurementUnitService.addCPMeasurementUnit(
-			RandomTestUtil.randomLocaleStringMap(),
+		return _cpMeasurementUnitLocalService.addCPMeasurementUnit(
+			null, RandomTestUtil.randomLocaleStringMap(),
 			CPMeasurementUnitTableReferenceDefinitionTest.class.getSimpleName(),
 			RandomTestUtil.nextDouble(), RandomTestUtil.randomBoolean(),
 			RandomTestUtil.nextDouble(), RandomTestUtil.nextInt(),
@@ -54,6 +54,6 @@ public class CPMeasurementUnitTableReferenceDefinitionTest
 	}
 
 	@Inject
-	private CPMeasurementUnitLocalService _cpMeasurementUnitService;
+	private CPMeasurementUnitLocalService _cpMeasurementUnitLocalService;
 
 }

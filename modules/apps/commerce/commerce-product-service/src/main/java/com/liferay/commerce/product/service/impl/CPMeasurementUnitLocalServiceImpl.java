@@ -41,8 +41,8 @@ public class CPMeasurementUnitLocalServiceImpl
 
 	@Override
 	public CPMeasurementUnit addCPMeasurementUnit(
-			Map<Locale, String> nameMap, String key, double rate,
-			boolean primary, double priority, int type,
+			String externalReferenceCode, Map<Locale, String> nameMap,
+			String key, double rate, boolean primary, double priority, int type,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -59,6 +59,7 @@ public class CPMeasurementUnitLocalServiceImpl
 		CPMeasurementUnit cpMeasurementUnit =
 			cpMeasurementUnitPersistence.create(cpMeasurementUnitId);
 
+		cpMeasurementUnit.setExternalReferenceCode(externalReferenceCode);
 		cpMeasurementUnit.setGroupId(serviceContext.getScopeGroupId());
 		cpMeasurementUnit.setCompanyId(user.getCompanyId());
 		cpMeasurementUnit.setUserId(user.getUserId());
@@ -298,7 +299,8 @@ public class CPMeasurementUnitLocalServiceImpl
 
 		if (cpMeasurementUnit == null) {
 			cpMeasurementUnitLocalService.addCPMeasurementUnit(
-				nameMap, key, rate, primary, priority, type, serviceContext);
+				null, nameMap, key, rate, primary, priority, type,
+				serviceContext);
 		}
 	}
 

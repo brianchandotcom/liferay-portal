@@ -1,0 +1,91 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Fragments";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-111561. The user could configure grid layout of Collection Display."
+	@priority = "5"
+	test ConfigureGridLayoutOfCollectionDisplay {
+		property custom.properties = "feature.flag.LPS-119551=true";
+
+		task ("Given the user has created a collection page, added a Collection Display Fragment and a Collection with several items") {
+			task ("Add five web contents") {
+				for (var i : list "1,2,3,4,5") {
+					JSONWebcontent.addWebContent(
+						content = "Web Content Content ${i}",
+						groupName = "Test Site Name",
+						title = "Web Content Title ${i}");
+				}
+			}
+
+			task ("Add a dynamic collection for Web Content Article and Basic Web Content") {
+				JSONAssetlist.addDynamicAssetListEntryWithItemType(
+					groupName = "Test Site Name",
+					itemSubtype = "Basic Web Content",
+					itemType = "Web Content Article",
+					title = "Dynamic Collection");
+			}
+
+			task ("Add a collection page based on the dynamic collection") {
+				PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+				ContentPages.addCollectionPage(
+					collectionName = "Dynamic Collection",
+					pageName = "Test Page Name",
+					tabName = "Collections");
+			}
+		}
+
+		task ("When the user configures the grid layout of the Collection Display") {
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				layout = "6 Columns",
+				selectedName = "Dynamic Collection");
+		}
+
+		task ("Then the Collection Display fragment shows the collection items in the selected number of columns") {
+			PageEditor.viewCollectionDisplayStyle(
+				columnCount = "6",
+				layout = "2",
+				position = "1");
+
+			var n = "1";
+
+			for (var text : list "Web Content Title 5,Web Content Title 4,Web Content Title 3,Web Content Title 2,Web Content Title 1,") {
+				AssertTextEquals(
+					key_columnNumber = "${n}",
+					key_position = "1",
+					locator1 = "PageEditor#COLLECTION_DISPLAY_COLUMN",
+					value1 = "${text}");
+
+				var n = ${n} + 1;
+			}
+		}
+	}
+
+}

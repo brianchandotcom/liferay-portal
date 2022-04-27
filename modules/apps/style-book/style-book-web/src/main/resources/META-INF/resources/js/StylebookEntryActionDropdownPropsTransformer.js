@@ -14,19 +14,19 @@
 
 import {openSelectionModal, openSimpleInputModal} from 'frontend-js-web';
 
+import openDeleteStyleBookModal from './openDeleteStyleBookModal';
+
 const ACTIONS = {
 	copyStyleBookEntry({copyStyleBookEntryURL}) {
 		submitForm(document.hrefFm, copyStyleBookEntryURL);
 	},
 
 	deleteStyleBookEntry({deleteStyleBookEntryURL}) {
-		if (
-			confirm(
-				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
-			)
-		) {
-			submitForm(document.hrefFm, deleteStyleBookEntryURL);
-		}
+		openDeleteStyleBookModal({
+			onDelete: () => {
+				submitForm(document.hrefFm, deleteStyleBookEntryURL);
+			},
+		});
 	},
 
 	deleteStyleBookEntryPreview({deleteStyleBookEntryPreviewURL}) {

@@ -14,6 +14,7 @@
 
 package com.liferay.layout.page.template.admin.web.internal.upload;
 
+import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.upload.UniqueFileNameProvider;
 import com.liferay.upload.UploadFileEntryHandler;
@@ -61,18 +63,49 @@ public class LayoutPageTemplateEntryPreviewUploadFileEntryHandler
 			ActionKeys.UPDATE);
 
 		String fileName = uploadPortletRequest.getFileName(_PARAMETER_NAME);
-		String contentType = uploadPortletRequest.getContentType(
-			_PARAMETER_NAME);
+
+		if (Validator.isNotNull(fileName)) {
+			String contentType = uploadPortletRequest.getContentType(
+				_PARAMETER_NAME);
+
+			try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
+					_PARAMETER_NAME)) {
+
+				String uniqueFileName = _uniqueFileNameProvider.provide(
+					fileName,
+					curFileName -> _exists(themeDisplay, curFileName));
+
+				return TempFileEntryUtil.addTempFileEntry(
+					themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
+					_TEMP_FOLDER_NAME, uniqueFileName, inputStream,
+					contentType);
+			}
+		}
+
+		return _editImageFileEntry(uploadPortletRequest, themeDisplay);
+	}
+
+	private FileEntry _editImageFileEntry(
+			UploadPortletRequest uploadPortletRequest,
+			ThemeDisplay themeDisplay)
+		throws IOException, PortalException {
+
+		long fileEntryId = ParamUtil.getLong(
+			uploadPortletRequest, "fileEntryId");
+
+		FileEntry fileEntry = _dlAppService.getFileEntry(fileEntryId);
 
 		try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
-				_PARAMETER_NAME)) {
+				"imageBlob")) {
 
 			String uniqueFileName = _uniqueFileNameProvider.provide(
-				fileName, curFileName -> _exists(themeDisplay, curFileName));
+				fileEntry.getFileName(),
+				curFileName -> _exists(themeDisplay, curFileName));
 
 			return TempFileEntryUtil.addTempFileEntry(
 				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
-				_TEMP_FOLDER_NAME, uniqueFileName, inputStream, contentType);
+				_TEMP_FOLDER_NAME, uniqueFileName, inputStream,
+				uploadPortletRequest.getContentType("imageBlob"));
 		}
 	}
 
@@ -104,6 +137,9 @@ public class LayoutPageTemplateEntryPreviewUploadFileEntryHandler
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutPageTemplateEntryPreviewUploadFileEntryHandler.class);
+
+	@Reference
+	private DLAppService _dlAppService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.layout.page.template.model.LayoutPageTemplateEntry)"

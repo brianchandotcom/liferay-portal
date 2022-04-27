@@ -24,85 +24,78 @@ const FileSizeField = ({
 	handleAddClick,
 	handleRemoveClick,
 	index,
-	mimeType,
+	mimeType = '',
 	portletNamespace,
-	size,
-}) => {
-	const [mimeTypeValue, setMimeTypeValue] = useState(mimeType);
-	const [sizeValue, setSizeValue] = useState(size);
+	size = '',
+}) => (
+	<ClayLayout.Row className="mt-4">
+		<ClayLayout.Col md="6">
+			<label htmlFor="mimeType">
+				{Liferay.Language.get('mime-type-field-label')}
 
-	return (
-		<ClayLayout.Row className="mt-4">
-			<ClayLayout.Col md="6">
-				<label htmlFor="mimeType">
-					{Liferay.Language.get('mime-type-field-label')}
+				<span
+					className="inline-item-after text-muted"
+					title={Liferay.Language.get('mime-type-help-message')}
+				>
+					<ClayIcon symbol="question-circle-full" />
+				</span>
+			</label>
 
-					<span
-						className="inline-item-after text-muted"
-						title={Liferay.Language.get('mime-type-help-message')}
-					>
-						<ClayIcon symbol="question-circle-full" />
-					</span>
-				</label>
+			<ClayInput
+				defaultValue={mimeType}
+				id="mimeType"
+				name={`${portletNamespace}mimeType_${index}`}
+				type="text"
+			/>
+		</ClayLayout.Col>
 
-				<ClayInput
-					id="mimeType"
-					name={`${portletNamespace}mimeType_${index}`}
-					onChange={(event) => setMimeTypeValue(event.target.value)}
-					type="text"
-					value={mimeTypeValue}
-				/>
-			</ClayLayout.Col>
+		<ClayLayout.Col md="6">
+			<label htmlFor="size">
+				{Liferay.Language.get('maximum-file-size')}
 
-			<ClayLayout.Col md="6">
-				<label htmlFor="size">
-					{Liferay.Language.get('maximum-file-size')}
+				<span
+					className="inline-item-after text-muted"
+					title={Liferay.Language.get(
+						'maximum-file-size-help-message'
+					)}
+				>
+					<ClayIcon symbol="question-circle-full" />
+				</span>
+			</label>
 
-					<span
-						className="inline-item-after text-muted"
-						title={Liferay.Language.get(
-							'maximum-file-size-help-message'
-						)}
-					>
-						<ClayIcon symbol="question-circle-full" />
-					</span>
-				</label>
+			<ClayInput
+				defaultValue={size}
+				id="size"
+				name={`${portletNamespace}size_${index}`}
+				type="number"
+			/>
 
-				<ClayInput
-					id="size"
-					name={`${portletNamespace}size_${index}`}
-					onChange={(event) => setSizeValue(event.target.value)}
-					type="number"
-					value={sizeValue}
-				/>
-
-				{index > 0 && (
-					<ClayButton
-						aria-label={Liferay.Language.get('remove')}
-						className="dm-field-repeatable-delete-button"
-						onClick={() => handleRemoveClick(index)}
-						small
-						title={Liferay.Language.get('remove')}
-						type="button"
-					>
-						<ClayIcon symbol="hr" />
-					</ClayButton>
-				)}
-
+			{index > 0 && (
 				<ClayButton
-					aria-label={Liferay.Language.get('add')}
-					className="dm-field-repeatable-duplicate-button"
-					onClick={() => handleAddClick(index)}
+					aria-label={Liferay.Language.get('remove')}
+					className="dm-field-repeatable-delete-button"
+					onClick={() => handleRemoveClick(index)}
 					small
-					title={Liferay.Language.get('duplicate')}
+					title={Liferay.Language.get('remove')}
 					type="button"
 				>
-					<ClayIcon symbol="plus" />
+					<ClayIcon symbol="hr" />
 				</ClayButton>
-			</ClayLayout.Col>
-		</ClayLayout.Row>
-	);
-};
+			)}
+
+			<ClayButton
+				aria-label={Liferay.Language.get('add')}
+				className="dm-field-repeatable-duplicate-button"
+				onClick={() => handleAddClick(index)}
+				small
+				title={Liferay.Language.get('duplicate')}
+				type="button"
+			>
+				<ClayIcon symbol="plus" />
+			</ClayButton>
+		</ClayLayout.Col>
+	</ClayLayout.Row>
+);
 
 const FileSizePerMimeType = ({
 	currentSizes,

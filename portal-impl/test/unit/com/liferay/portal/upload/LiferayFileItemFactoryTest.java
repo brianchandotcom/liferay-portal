@@ -39,7 +39,7 @@ public class LiferayFileItemFactoryTest {
 	@Test
 	public void testConstructor() throws Exception {
 		LiferayFileItemFactory liferayFileItemFactory =
-			new LiferayFileItemFactory(temporaryFolder.getRoot(), 0);
+			new LiferayFileItemFactory(temporaryFolder.getRoot(), 0, null);
 
 		Assert.assertNotNull(liferayFileItemFactory);
 	}
@@ -47,7 +47,7 @@ public class LiferayFileItemFactoryTest {
 	@Test
 	public void testCreateItem() throws Exception {
 		LiferayFileItemFactory liferayFileItemFactory =
-			new LiferayFileItemFactory(temporaryFolder.getRoot(), 0);
+			new LiferayFileItemFactory(temporaryFolder.getRoot(), 0, null);
 
 		FileItem fileItem = liferayFileItemFactory.createItem(
 			"fieldName", "contentType", false, "fileName");
@@ -58,7 +58,7 @@ public class LiferayFileItemFactoryTest {
 	@Test
 	public void testCreateItemWithInvalidTempDir() throws Exception {
 		LiferayFileItemFactory liferayFileItemFactory =
-			new LiferayFileItemFactory(new File("file://foo"), 0);
+			new LiferayFileItemFactory(new File("file://foo"), 0, null);
 
 		FileItem fileItem = liferayFileItemFactory.createItem(
 			"fieldName", "contentType", false, "fileName");
@@ -69,7 +69,7 @@ public class LiferayFileItemFactoryTest {
 	@Test
 	public void testCreateItemWithNullTempDir() throws Exception {
 		LiferayFileItemFactory liferayFileItemFactory =
-			new LiferayFileItemFactory(null, 0);
+			new LiferayFileItemFactory(null, 0, null);
 
 		FileItem fileItem = liferayFileItemFactory.createItem(
 			"fieldName", "contentType", false, "fileName");
@@ -80,7 +80,7 @@ public class LiferayFileItemFactoryTest {
 	@Test
 	public void testCreateItemWithNullValues() throws Exception {
 		LiferayFileItemFactory liferayFileItemFactory =
-			new LiferayFileItemFactory(temporaryFolder.getRoot(), 0);
+			new LiferayFileItemFactory(temporaryFolder.getRoot(), 0, null);
 
 		FileItem fileItem = liferayFileItemFactory.createItem(
 			null, null, false, null);

@@ -93,7 +93,7 @@ public class PortletContainerTestUtil {
 		Map<String, FileItem[]> fileParameters = new HashMap<>();
 
 		LiferayFileItemFactory fileItemFactory = new LiferayFileItemFactory(
-			new File(SystemProperties.get(SystemProperties.TMP_DIR)));
+			new File(SystemProperties.get(SystemProperties.TMP_DIR)), 0, null);
 
 		for (int i = 0; i < size; i++) {
 			String fileParameter = "fileParameter" + i;

@@ -56,8 +56,14 @@
 				"en_US": "Errors"
 			},
 			"name": "errors",
-			"required": false,
-			"type": "Clob"
+            "objectFieldSettings": [
+                {
+                    "name": "showCounter",
+                    "value": "false"
+                }
+            ],
+            "required": false,
+            "type": "Clob"
 		},
 		{
 			"DBType": "Integer",

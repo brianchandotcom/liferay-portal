@@ -23,8 +23,14 @@
 				"en_US": "Name"
 			},
 			"name": "name",
-			"required": false,
-			"type": "String"
+            "objectFieldSettings": [
+                {
+                    "name": "showCounter",
+                    "value": "false"
+                }
+            ],
+            "required": false,
+            "type": "String"
 		},
 		{
 			"DBType": "String",
@@ -34,8 +40,14 @@
 				"en_US": "Description"
 			},
 			"name": "description",
-			"required": false,
-			"type": "String"
+            "objectFieldSettings": [
+                {
+                    "name": "showCounter",
+                    "value": "false"
+                }
+            ],
+            "required": false,
+            "type": "String"
 		},
 		{
 			"DBType": "Boolean",
@@ -67,8 +79,14 @@
 				"en_US": "Git Hash"
 			},
 			"name": "gitHash",
-			"required": false,
-			"type": "String"
+            "objectFieldSettings": [
+                {
+                    "name": "showCounter",
+                    "value": "false"
+                }
+            ],
+            "required": false,
+            "type": "String"
 		},
 		{
 			"DBType": "String",
@@ -78,8 +96,14 @@
 				"en_US": "Git Hub Compare URLs"
 			},
 			"name": "githubCompareURLs",
-			"required": false,
-			"type": "String"
+            "objectFieldSettings": [
+                {
+                    "name": "showCounter",
+                    "value": "false"
+                }
+            ],
+            "required": false,
+            "type": "String"
 		},
 		{
 			"DBType": "Boolean",

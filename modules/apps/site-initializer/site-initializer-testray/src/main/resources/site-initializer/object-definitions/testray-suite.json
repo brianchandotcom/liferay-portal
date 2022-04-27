@@ -12,6 +12,12 @@
 				"en_US": "Name"
 			},
 			"name": "name",
+            "objectFieldSettings": [
+                {
+                    "name": "showCounter",
+                    "value": "false"
+                }
+            ],
 			"required": false,
 			"type": "String"
 		},
@@ -23,6 +29,12 @@
 				"en_US": "Description"
 			},
 			"name": "description",
+            "objectFieldSettings": [
+                {
+                    "name": "showCounter",
+                    "value": "false"
+                }
+            ],
 			"required": false,
 			"type": "String"
 		},
@@ -34,8 +46,14 @@
 				"en_US": "Case Parameters"
 			},
 			"name": "caseParameters",
-			"required": false,
-			"type": "Clob"
+            "objectFieldSettings": [
+                {
+                    "name": "showCounter",
+                    "value": "false"
+                }
+            ],
+            "required": false,
+            "type": "Clob"
 		},
 		{
 			"DBType": "String",
@@ -45,6 +63,12 @@
 				"en_US": "Type"
 			},
 			"name": "type",
+            "objectFieldSettings": [
+                {
+                    "name": "showCounter",
+                    "value": "false"
+                }
+            ],
 			"required": false,
 			"type": "String"
 		}

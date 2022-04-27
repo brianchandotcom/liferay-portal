@@ -45,8 +45,14 @@
 				"en_US": "Name"
 			},
 			"name": "name",
-			"required": false,
-			"type": "String"
+            "objectFieldSettings": [
+                {
+                    "name": "showCounter",
+                    "value": "false"
+                }
+            ],
+            "required": false,
+            "type": "String"
 		},
 		{
 			"DBType": "Integer",

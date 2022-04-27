@@ -19,9 +19,10 @@ import ClayModal, {ClayModalProvider, useModal} from '@clayui/modal';
 import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-import useForm from '../hooks/useForm';
-import CustomSelect from './Form/CustomSelect/CustomSelect';
-import Input from './Form/Input';
+import {CustomItem} from './Form/CustomSelect/CustomSelect';
+import ObjectActionFormBase, {
+	useObjectActionForm,
+} from './ObjectActionFormBase';
 
 const headers = new Headers({
 	'Accept': 'application/json',
@@ -35,38 +36,11 @@ const ModalAddObjectAction: React.FC<IProps> = ({
 	observer,
 	onClose,
 }) => {
-	const initialValues: TInitialValues = {
-		name: '',
-		objectActionExecutor: {
-			description: '',
-			key: '',
-			label: '',
-		},
-		objectActionTrigger: {
-			description: '',
-			key: '',
-			label: '',
-		},
-		secret: '',
-		url: '',
-	};
 	const [error, setError] = useState<string>('');
 
-	const onSubmit = async ({
-		name,
-		objectActionExecutor,
-		objectActionTrigger,
-		secret,
-		url,
-	}: TInitialValues) => {
+	const onSubmit = async (objectAction: ObjectAction) => {
 		const response = await fetch(apiURL, {
-			body: JSON.stringify({
-				active: true,
-				name,
-				objectActionExecutorKey: objectActionExecutor.key,
-				objectActionTriggerKey: objectActionTrigger.key,
-				parameters: {secret, url},
-			}),
+			body: JSON.stringify(objectAction),
 			headers,
 			method: 'POST',
 		});
@@ -80,40 +54,21 @@ const ModalAddObjectAction: React.FC<IProps> = ({
 			window.location.reload();
 		}
 		else {
-			const {
-				title = Liferay.Language.get('an-error-occurred'),
-			} = (await response.json()) as {title?: string};
+			const {title} = (await response.json()) as {title?: string};
 
-			setError(title);
+			setError(title ?? Liferay.Language.get('an-error-occurred'));
 		}
 	};
 
-	const validate = (values: TInitialValues) => {
-		const errors: any = {};
-
-		if (!values.name) {
-			errors.name = Liferay.Language.get('required');
-		}
-
-		if (!values.objectActionTrigger.label) {
-			errors.objectActionTrigger = Liferay.Language.get('required');
-		}
-
-		if (!values.objectActionExecutor.label) {
-			errors.objectActionExecutor = Liferay.Language.get('required');
-		}
-
-		if (values.objectActionExecutor.label === 'Webhook' && !values.url) {
-			errors.url = Liferay.Language.get('required');
-		}
-
-		return errors;
-	};
-
-	const {errors, handleChange, handleSubmit, setValues, values} = useForm({
-		initialValues,
+	const {
+		errors,
+		handleChange,
+		handleSubmit,
+		setValues,
+		values,
+	} = useObjectActionForm({
+		initialValues: {active: true},
 		onSubmit,
-		validate,
 	});
 
 	return (
@@ -128,64 +83,19 @@ const ModalAddObjectAction: React.FC<IProps> = ({
 						<ClayAlert displayType="danger">{error}</ClayAlert>
 					)}
 
-					<Input
-						error={errors.name}
-						id="objectActionName"
-						label={Liferay.Language.get('action-name')}
-						name="name"
-						onChange={handleChange}
-						required
-						value={values.name}
+					<ObjectActionFormBase
+						errors={errors}
+						handleChange={handleChange}
+						objectAction={values}
+						objectActionExecutors={objectActionExecutors}
+						objectActionTriggers={objectActionTriggers}
+						setValues={setValues}
 					/>
-
-					<CustomSelect
-						error={errors.objectActionTrigger}
-						label={Liferay.Language.get('when[object]')}
-						onChange={(objectActionTrigger: any) =>
-							setValues({objectActionTrigger})
-						}
-						options={objectActionTriggers}
-						required
-						value={values.objectActionTrigger.label}
-					/>
-
-					<CustomSelect
-						error={errors.objectActionExecutor}
-						label={Liferay.Language.get('then[object]')}
-						onChange={(objectActionExecutor: any) =>
-							setValues({objectActionExecutor})
-						}
-						options={objectActionExecutors}
-						required
-						value={values.objectActionExecutor.label}
-					/>
-
-					{values.objectActionExecutor.label === 'Webhook' && (
-						<>
-							<Input
-								error={errors.url}
-								id="objectActionExecutorUrl"
-								label={Liferay.Language.get('url')}
-								name="url"
-								onChange={handleChange}
-								required
-								value={values.url}
-							/>
-
-							<Input
-								id="objectActionExecutorSecret"
-								label={Liferay.Language.get('secret')}
-								name="secret"
-								onChange={handleChange}
-								value={values.secret}
-							/>
-						</>
-					)}
 				</ClayModal.Body>
 
 				<ClayModal.Footer
 					last={
-						<ClayButton.Group key={1} spaced>
+						<ClayButton.Group spaced>
 							<ClayButton
 								displayType="secondary"
 								onClick={() => onClose()}
@@ -206,37 +116,11 @@ const ModalAddObjectAction: React.FC<IProps> = ({
 
 interface IProps extends React.HTMLAttributes<HTMLElement> {
 	apiURL: string;
-	objectActionExecutors: TObjectActionExecutor[];
-	objectActionTriggers: TObjectActionTrigger[];
+	objectActionExecutors: CustomItem[];
+	objectActionTriggers: CustomItem[];
 	observer: any;
 	onClose: () => void;
 }
-
-type TObjectActionTrigger = {
-	description: string;
-	key: string;
-	label: string;
-};
-
-type TObjectActionExecutor = {
-	description: string;
-	key: string;
-	label: string;
-};
-
-type TObjectAction = {
-	description: string;
-	key: string;
-	label: string;
-};
-
-type TInitialValues = {
-	name: string;
-	objectActionExecutor: TObjectAction;
-	objectActionTrigger: TObjectAction;
-	secret: string;
-	url: string;
-};
 
 const ModalWithProvider: React.FC<IProps> = ({
 	apiURL,

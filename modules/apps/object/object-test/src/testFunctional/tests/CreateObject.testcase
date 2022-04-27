@@ -4246,7 +4246,7 @@ definition {
 
 		ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
 
-		ObjectAdmin.viewFieldDetails();
+		ObjectAdmin.viewDetails();
 	}
 
 	@description = "LPS-135549 - Verify it is possible to view the Details of a Field by clicking on its name"
@@ -4950,7 +4950,7 @@ definition {
 
 		ObjectAdmin.selectKebabMenuOption(kebabOption = "View");
 
-		ObjectAdmin.viewFieldDetails();
+		ObjectAdmin.viewDetails();
 	}
 
 	@description = "LPS-135397 - Verify if it's possible to view a tab of relationship with entries"

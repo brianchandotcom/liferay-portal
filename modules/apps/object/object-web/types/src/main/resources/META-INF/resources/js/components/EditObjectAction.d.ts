@@ -12,14 +12,17 @@
  * details.
  */
 
-import React from 'react';
-import {CustomItem} from './Form/CustomSelect/CustomSelect';
-interface IProps extends React.HTMLAttributes<HTMLElement> {
-	apiURL: string;
-	objectActionExecutors: CustomItem[];
-	objectActionTriggers: CustomItem[];
-	observer: any;
-	onClose: () => void;
+/// <reference types="react" />
+
+import {IObjectActionFormBaseProps} from './ObjectActionFormBase';
+export default function EditObjectAction({
+	objectAction,
+	objectActionExecutors,
+	objectActionTriggers,
+	readOnly,
+}: IProps): JSX.Element;
+interface IProps extends IObjectActionFormBaseProps {
+	objectAction: ObjectAction;
+	readOnly?: boolean;
 }
-declare const ModalWithProvider: React.FC<IProps>;
-export default ModalWithProvider;
+export {};

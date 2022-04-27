@@ -275,7 +275,7 @@ definition {
 	}
 
 	macro checkToggleActive {
-		Check.checkToggleSwitch(locator1 = "CreateObject#TOGGLE_ACTIVE");
+		Check.checkToggleSwitch(locator1 = "CreateObject#ACTIVE_TOGGLE");
 
 		WaitForSPARefresh();
 
@@ -291,7 +291,7 @@ definition {
 	}
 
 	macro checkToggleInactive {
-		Uncheck.uncheckToggleSwitch(locator1 = "CreateObject#TOGGLE_INACTIVE");
+		Uncheck.uncheckToggleSwitch(locator1 = "CreateObject#ACTIVE_TOGGLE");
 
 		WaitForSPARefresh();
 

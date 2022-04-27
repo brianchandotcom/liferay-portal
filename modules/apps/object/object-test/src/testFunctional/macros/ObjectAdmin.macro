@@ -34,7 +34,7 @@ definition {
 		LexiconEntry.gotoAdd();
 
 		Type(
-			locator1 = "ObjectAdmin#ADD_ACTION_NAME_FIELD",
+			locator1 = "ObjectAdmin#ACTION_NAME_FIELD",
 			value1 = "${actionName}");
 
 		if (isSet(whenAction)) {
@@ -55,13 +55,13 @@ definition {
 
 		if (isSet(urlAction)) {
 			Type(
-				locator1 = "ObjectAdmin#ADD_URL_ACTION_FIELD",
+				locator1 = "ObjectAdmin#ACTION_URL_FIELD",
 				value1 = "${urlAction}");
 		}
 
 		if (isSet(secretAction)) {
 			Type(
-				locator1 = "ObjectAdmin#ADD_SECRET_ACTION_FIELD",
+				locator1 = "ObjectAdmin#ACTION_SECRET_FIELD",
 				value1 = "${secretAction}");
 		}
 
@@ -783,7 +783,7 @@ definition {
 	macro editObjectAction {
 		ObjectAdmin.goToActionDetails(viewEntry = "${viewEntry}");
 
-		ObjectAdmin.viewSidePanel();
+		ObjectAdmin.viewDetails();
 
 		if (isSet(newActionName)) {
 			Type(
@@ -1028,7 +1028,7 @@ definition {
 			type = "Long Text");
 	}
 
-	macro viewFieldDetails {
+	macro viewDetails {
 		SelectFrame(locator1 = "IFrame#IFRAME");
 
 		AssertElementPresent(locator1 = "ObjectAdmin#FIELDS_DETAILS_IFRAME");
@@ -1076,14 +1076,6 @@ definition {
 		AssertTextEquals.assertPartialText(
 			locator1 = "TextInput#REQUIRED_ALERT",
 			value1 = "${requiredAlert}");
-	}
-
-	macro viewSidePanel {
-		SelectFrame(locator1 = "IFrame#IFRAME");
-
-		AssertElementPresent(locator1 = "ObjectAdmin#SIDE_PANEL");
-
-		AssertElementPresent(locator1 = "ObjectAdmin#SIDE_PANEL_TITLE");
 	}
 
 	macro viewSystemObject {

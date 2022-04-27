@@ -466,8 +466,8 @@
 		<td></td>
 	</tr>
 	<tr>
-		<td>ADD_ACTION_NAME_FIELD</td>
-		<td>//input[@id='objectActionName']</td>
+		<td>ACTION_NAME_FIELD</td>
+		<td>//input[@name='name']</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -481,13 +481,13 @@
 		<td></td>
 	</tr>
 	<tr>
-		<td>ADD_URL_ACTION_FIELD</td>
-		<td>//input[@id='objectActionExecutorUrl']</td>
+		<td>ACTION_URL_FIELD</td>
+		<td>//input[@name='url']</td>
 		<td></td>
 	</tr>
 	<tr>
-		<td>ADD_SECRET_ACTION_FIELD</td>
-		<td>//input[@id='objectActionExecutorSecret']</td>
+		<td>ACTION_SECRET_FIELD</td>
+		<td>//input[@name='secret']</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -502,7 +502,7 @@
 	</tr>
 	<tr>
 		<td>VIEW_ACTION_NAME_ON_SIDE_PANEL</td>
-		<td>//input[@id='_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_name']</td>
+		<td>//input[@name='name']</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -553,16 +553,6 @@
 	<tr>
 		<td>VIEW_PICKLIST_OPTIONS</td>
 		<td>//*[contains(@class,'form-control')]//option[contains(text(),'${key_optionName}')]</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>SIDE_PANEL</td>
-		<td>//div[contains(@class, 'side-panel-iframe')]</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>SIDE_PANEL_TITLE</td>
-		<td>//div[contains(@class, 'side-panel-iframe')]//h3[contains(@class, 'mb-0')]</td>
 		<td></td>
 	</tr>
 </tbody>

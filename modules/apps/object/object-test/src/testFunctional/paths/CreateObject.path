@@ -61,18 +61,13 @@
 		<td></td>
 	</tr>
 	<tr>
-		<td>TOGGLE_ACTIVE</td>
-		<td>//input[@id = '_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_active']</td>
+		<td>ACTIVE_TOGGLE</td>
+		<td>//input[@type='checkbox']</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>TOGGLE_COLLAPSIBLE</td>
 		<td>//input[@aria-label = 'Collapsible']</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>TOGGLE_INACTIVE</td>
-		<td>//input[@id = '_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_active']</td>
 		<td></td>
 	</tr>
 	<tr>

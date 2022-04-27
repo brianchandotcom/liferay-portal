@@ -147,13 +147,13 @@ public class ObjectDefinitionsActionsDisplayContext
 						"object-action-executor-help[" +
 							objectActionExecutor.getKey() + "]")
 				).put(
-					"key", objectActionExecutor.getKey()
-				).put(
 					"label",
 					LanguageUtil.get(
 						objectRequestHelper.getLocale(),
 						"object-action-executor[" +
 							objectActionExecutor.getKey() + "]")
+				).put(
+					"value", objectActionExecutor.getKey()
 				));
 		}
 
@@ -195,13 +195,13 @@ public class ObjectDefinitionsActionsDisplayContext
 						"object-action-trigger-help[" +
 							objectActionTrigger.getKey() + "]")
 				).put(
-					"key", objectActionTrigger.getKey()
-				).put(
 					"label",
 					LanguageUtil.get(
 						objectRequestHelper.getLocale(),
 						"object-action-trigger[" +
 							objectActionTrigger.getKey() + "]")
+				).put(
+					"value", objectActionTrigger.getKey()
 				)));
 
 		return objectActionTriggersJSONArray;

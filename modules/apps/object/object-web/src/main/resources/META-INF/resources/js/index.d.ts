@@ -12,6 +12,23 @@
  * details.
  */
 
+interface ObjectAction {
+	active: boolean;
+	id?: number;
+	name: string;
+	objectActionExecutorKey: string;
+	objectActionTriggerKey: string;
+	parameters?: {
+		secret?: string;
+		url?: string;
+	};
+}
+
+interface ObjectActionParameters {
+	secret: string;
+	url: string;
+}
+
 type ObjectFieldBusinessType = 'Attachment' | 'LongText' | 'Picklist' | 'Text';
 
 interface ObjectFieldType {

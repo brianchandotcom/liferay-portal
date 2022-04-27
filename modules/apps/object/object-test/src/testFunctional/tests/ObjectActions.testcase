@@ -68,7 +68,7 @@ definition {
 
 		ObjectAdmin.goToActionDetails(viewEntry = "Action Name");
 
-		ObjectAdmin.viewSidePanel();
+		ObjectAdmin.viewDetails();
 
 		Type(
 			locator1 = "ObjectAdmin#VIEW_ACTION_NAME_ON_SIDE_PANEL",
@@ -76,7 +76,7 @@ definition {
 
 		Button.clickCancel();
 
-		AssertElementNotPresent(locator1 = "ObjectAdmin#SIDE_PANEL");
+		AssertElementNotPresent(locator1 = "ObjectAdmin#FIELDS_DETAILS_IFRAME");
 
 		Refresh();
 

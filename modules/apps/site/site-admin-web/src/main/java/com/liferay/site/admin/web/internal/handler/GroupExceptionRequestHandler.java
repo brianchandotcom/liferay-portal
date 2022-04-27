@@ -150,11 +150,8 @@ public class GroupExceptionRequestHandler {
 		sb.append(
 			LanguageUtil.format(
 				themeDisplay.getRequest(),
-				"the-x-cannot-contain-the-following-invalid-characters-x",
-				new String[] {
-					SiteConstants.NAME_LABEL,
-					SiteConstants.NAME_INVALID_CHARACTERS
-				}));
+				"it-cannot-contain-the-following-invalid-characters-x",
+				SiteConstants.NAME_INVALID_CHARACTERS));
 
 		sb.append(StringPool.SPACE);
 
@@ -164,10 +161,8 @@ public class GroupExceptionRequestHandler {
 		sb.append(
 			LanguageUtil.format(
 				themeDisplay.getRequest(),
-				"the-x-cannot-contain-more-than-x-characters",
-				new String[] {
-					SiteConstants.NAME_LABEL, String.valueOf(groupKeyMaxLength)
-				}));
+				"more-than-x-characters-are-not-allowed",
+				String.valueOf(groupKeyMaxLength)));
 
 		return sb.toString();
 	}

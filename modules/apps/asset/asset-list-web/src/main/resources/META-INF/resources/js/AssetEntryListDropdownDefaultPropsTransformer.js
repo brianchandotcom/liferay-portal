@@ -14,15 +14,15 @@
 
 import {openModal, openSimpleInputModal} from 'frontend-js-web';
 
+import openDeleteAssetEntryListModal from './openDeleteAssetEntryListModal';
+
 const ACTIONS = {
 	deleteAssetListEntry(itemData) {
-		if (
-			confirm(
-				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
-			)
-		) {
-			this.send(itemData.deleteAssetListEntryURL);
-		}
+		openDeleteAssetEntryListModal({
+			onDelete: () => {
+				this.send(itemData.deleteAssetListEntryURL);
+			},
+		});
 	},
 
 	permissionsAssetEntryList(itemData) {

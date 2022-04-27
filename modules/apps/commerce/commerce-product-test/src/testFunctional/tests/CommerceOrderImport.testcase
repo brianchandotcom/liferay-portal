@@ -192,6 +192,8 @@ definition {
 					productQuantity = "1",
 					productUnitPrice = "${productUnitPrice}",
 					shippingMethod = "Standard");
+
+				CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
 			}
 		}
 

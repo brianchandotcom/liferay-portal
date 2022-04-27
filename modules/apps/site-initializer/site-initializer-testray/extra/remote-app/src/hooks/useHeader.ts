@@ -116,4 +116,6 @@ const useHeader = ({
 	};
 };
 
+export {useHeader};
+
 export default useHeader;

@@ -61,13 +61,14 @@ public class AssetVocabularyItemDescriptor
 				WebKeys.THEME_DISPLAY);
 
 		return JSONUtil.put(
+			"assetVocabularyId",
+			String.valueOf(_assetVocabulary.getVocabularyId())
+		).put(
 			"groupId", String.valueOf(_assetVocabulary.getGroupId())
 		).put(
 			"title", _assetVocabulary.getTitle(themeDisplay.getLocale())
 		).put(
 			"uuid", _assetVocabulary.getUuid()
-		).put(
-			"vocabularyId", String.valueOf(_assetVocabulary.getVocabularyId())
 		).toString();
 	}
 

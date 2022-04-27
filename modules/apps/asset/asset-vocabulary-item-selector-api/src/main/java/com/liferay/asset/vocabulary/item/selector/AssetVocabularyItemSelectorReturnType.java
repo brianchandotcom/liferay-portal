@@ -22,6 +22,9 @@ import com.liferay.item.selector.ItemSelectorReturnType;
  *
  * <ul>
  * <li>
+ * <code>assetVocabularyId</code>: The vocabularyId of the selected vocabulary
+ * </li>
+ * <li>
  * <code>groupId</code>: The vocabularyId of the selected vocabulary
  * </li>
  * <li>
@@ -29,9 +32,6 @@ import com.liferay.item.selector.ItemSelectorReturnType;
  * </li>
  * <li>
  * <code>uuid</code>: The uuid of the selected vocabulary
- * </li>
- * <li>
- * <code>vocabularyId</code>: The vocabularyId of the selected vocabulary
  * </li>
  * </ul>
  *

@@ -14,13 +14,13 @@
 
 import ClayAutocomplete from '@clayui/autocomplete';
 import ClayDropDown from '@clayui/drop-down';
-import React, {ReactNode, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 
 import FieldBase from '../FieldBase';
 
 import './CustomSelect.scss';
 
-export default function CustomSelect<T extends IItem = IItem>({
+export default function CustomSelect<T extends CustomItem = CustomItem>({
 	className,
 	disabled,
 	error,
@@ -72,9 +72,11 @@ export default function CustomSelect<T extends IItem = IItem>({
 							>
 								<div>{option.label}</div>
 
-								<span className="text-small">
-									{option.description}
-								</span>
+								{option.description && (
+									<span className="text-small">
+										{option.description}
+									</span>
+								)}
 							</ClayDropDown.Item>
 						))}
 					</ClayDropDown.ItemList>
@@ -84,13 +86,12 @@ export default function CustomSelect<T extends IItem = IItem>({
 	);
 }
 
-interface IItem {
+export interface CustomItem {
 	description?: string;
 	label: string;
 	value?: string;
 }
-interface IProps<T extends IItem = IItem> {
-	children?: ReactNode;
+interface IProps<T extends CustomItem = CustomItem> {
 	className?: string;
 	disabled?: boolean;
 	error?: string;

@@ -156,9 +156,7 @@ export function ModalAddDefaultSortColumn({
 						}}
 						options={SORT_OPTIONS}
 						value={selectedObjetSort.label}
-					>
-						{({label}: any) => <div>{label}</div>}
-					</CustomSelect>
+					/>
 				</ClayModal.Body>
 
 				<ClayModal.Footer

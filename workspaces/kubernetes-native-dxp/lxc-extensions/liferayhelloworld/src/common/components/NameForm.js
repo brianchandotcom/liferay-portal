@@ -1,5 +1,5 @@
 import React from 'react';
-import api from '../../common/services/liferay/api';
+import api from '../services/liferay/api';
 
 class NameForm extends React.Component {
   constructor(props) {
@@ -36,10 +36,10 @@ class NameForm extends React.Component {
     return (
       <form onSubmit={this.handleSubmit}>
         <label>
-          New Name:
+          Set Given Name:
           <input type="text" value={this.state.value} onChange={this.handleChange} />
         </label>
-        <input type="submit" value="Update" />
+        <input type="submit" value="Set" />
       </form>
     );
   }

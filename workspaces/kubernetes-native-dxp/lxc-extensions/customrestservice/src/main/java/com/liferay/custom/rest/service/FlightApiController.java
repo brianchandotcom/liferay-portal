@@ -4,6 +4,8 @@ package com.liferay.custom.rest.service;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
@@ -96,7 +98,18 @@ public class FlightApiController {
 		leg.airline = segment.getCarrierCode();
 		leg.departureCode = segment.getDeparture().getIataCode();
 		leg.arrivalCode = segment.getArrival().getIataCode();
-		leg.duration = segment.getDuration();
+
+		Matcher matcher = _durationPattern.matcher(segment.getDuration().trim());
+
+		if (matcher.matches()) {
+			leg.duration = matcher.group(1) + (matcher.groupCount() == 5 ? matcher.group(3) : "");
+		}
+		else {
+			leg.duration = segment.getDuration();
+		}
+
 		return leg;
 	}
+
+	private static Pattern _durationPattern = Pattern.compile("PT(([0-9]+)H)?(([0-9]+)M)?");
 }

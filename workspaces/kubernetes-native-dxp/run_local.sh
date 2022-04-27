@@ -8,7 +8,7 @@ if [ `which minikube` ]; then
     if [ "$MINIKUBE_STATUS" != "Running" ]; then
         echo "[run_local] Starting minikube ..."
         if [[ "$OSTYPE" == "darwin"* ]]; then
-            minikube start --cpus 8 --memory 16364 --vm=true --driver=hyperkit
+            minikube start --cpus 10 --memory 24576 --disk-size=120g --vm=true --driver=hyperkit
         else
             minikube start --cpus 8 --memory 16364
         fi

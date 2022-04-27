@@ -167,7 +167,7 @@ public class FrontendClayApplication extends Application {
 				ServletContextUtil.getClayDataSetDisplaySettingsNamespace(
 					httpServletRequest, id),
 				"activeViewSettingsJSON",
-				currentActiveViewSettingsJSONObject.toJSONString());
+				currentActiveViewSettingsJSONObject.toString());
 
 			return Response.ok(
 			).build();

@@ -176,7 +176,7 @@ public class FDSApplication extends Application {
 				ServletContextUtil.getFDSSettingsNamespace(
 					httpServletRequest, id),
 				"activeViewSettingsJSON",
-				currentActiveViewSettingsJSONObject.toJSONString());
+				currentActiveViewSettingsJSONObject.toString());
 
 			return Response.ok(
 			).build();

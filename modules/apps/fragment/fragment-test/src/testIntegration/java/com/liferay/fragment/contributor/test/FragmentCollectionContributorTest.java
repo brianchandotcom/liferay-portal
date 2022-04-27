@@ -120,6 +120,9 @@ public class FragmentCollectionContributorTest {
 		public static final String TEST_FRAGMENT_COLLECTION_KEY =
 			"test-fragment-collection-contributor";
 
+		public static final String TEST_INPUT_FRAGMENT_ENTRY =
+			"test-input-fragment-entry";
+
 		public static final String TEST_SECTION_FRAGMENT_ENTRY =
 			"test-section-fragment-entry";
 
@@ -143,6 +146,10 @@ public class FragmentCollectionContributorTest {
 			if (type == FragmentConstants.TYPE_COMPONENT) {
 				fragmentEntries.add(
 					_getFragmentEntry(TEST_COMPONENT_FRAGMENT_ENTRY, type));
+			}
+			else if (type == FragmentConstants.TYPE_INPUT) {
+				fragmentEntries.add(
+					_getFragmentEntry(TEST_INPUT_FRAGMENT_ENTRY, type));
 			}
 			else if (type == FragmentConstants.TYPE_SECTION) {
 				fragmentEntries.add(

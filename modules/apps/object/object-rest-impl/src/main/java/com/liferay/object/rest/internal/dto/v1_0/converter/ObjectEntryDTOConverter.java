@@ -34,6 +34,7 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.util.ObjectEntryFieldValueUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -47,6 +48,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
+import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.io.Serializable;
@@ -56,6 +58,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriInfo;
@@ -330,13 +334,83 @@ public class ObjectEntryDTOConverter
 			}
 		}
 
+		if (nestedFieldsDepth > 0) {
+			List<ObjectRelationship> objectRelationships =
+				_objectRelationshipLocalService.getObjectRelationships(
+					objectDefinition.getObjectDefinitionId());
+
+			Stream<ObjectRelationship> objectRelationshipsStream =
+				objectRelationships.stream();
+
+			List<ObjectRelationship> manyToManyRelationships =
+				objectRelationshipsStream.filter(
+					objectRelationship -> Objects.equals(
+						objectRelationship.getType(),
+						ObjectRelationshipConstants.TYPE_MANY_TO_MANY)
+				).collect(
+					Collectors.toList()
+				);
+
+			manyToManyRelationships.forEach(
+				objectRelationship -> {
+					try {
+						boolean reverse = objectRelationship.isReverse();
+
+						if (objectRelationship.isReverse()) {
+							objectRelationship =
+								_objectRelationshipLocalService.
+									fetchReverseObjectRelationship(
+										objectRelationship, false);
+						}
+
+						Pagination pagination = Pagination.of(1, 20);
+
+						List<com.liferay.object.model.ObjectEntry>
+							manyToManyRelatedObjectEntries =
+								_objectEntryLocalService.
+									getManyToManyRelatedObjectEntries(
+										objectEntry.getGroupId(),
+										objectRelationship.
+											getObjectRelationshipId(),
+										objectEntry.getObjectEntryId(), reverse,
+										pagination.getStartPosition(),
+										pagination.getEndPosition());
+
+						Stream<com.liferay.object.model.ObjectEntry>
+							manyToManyRelatedObjectEntriesStream =
+								manyToManyRelatedObjectEntries.stream();
+
+						map.put(
+							objectRelationship.getName(),
+							manyToManyRelatedObjectEntriesStream.map(
+								objectEntry1 -> {
+									try {
+										return _toDTO(
+											_getDTOConverterContext(
+												dtoConverterContext,
+												objectEntry1.
+													getObjectEntryId()),
+											nestedFieldsDepth - 1,
+											objectEntry1);
+									}
+									catch (Exception exception) {
+										exception.printStackTrace();
+
+										return null;
+									}
+								}
+							).toArray());
+					}
+					catch (PortalException portalException) {
+						portalException.printStackTrace();
+					}
+				});
+		}
+
 		values.remove(objectDefinition.getPKObjectFieldName());
 
 		return map;
 	}
-
-	@Reference
-	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

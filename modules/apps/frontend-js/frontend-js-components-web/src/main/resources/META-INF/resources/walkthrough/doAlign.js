@@ -12,15 +12,19 @@
  * details.
  */
 
-export {default as Treeview} from './treeview/Treeview';
+import domAlign from 'dom-align';
 
-export {default as ManagementToolbar} from './management_toolbar/ManagementToolbar';
+function isRtl(element) {
+	return window.getComputedStyle(element).direction === 'rtl';
+}
 
-export {
-	activeLanguageIdsAtom,
-	selectedLanguageIdAtom,
-} from './translation_manager/state';
-
-export {default as TranslationAdminModal} from './translation_manager/TranslationAdminModal';
-export {default as TranslationAdminSelector} from './translation_manager/TranslationAdminSelector';
-export {default as Walkthrough} from './walkthrough/Walkthrough';
+export function doAlign({sourceElement, targetElement, ...config}) {
+	return domAlign(sourceElement, targetElement, {
+		...config,
+		overflow: {
+			adjustX: true,
+			adjustY: true,
+		},
+		useCssRight: isRtl(sourceElement),
+	});
+}

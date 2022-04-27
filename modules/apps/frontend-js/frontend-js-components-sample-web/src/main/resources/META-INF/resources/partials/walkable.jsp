@@ -16,21 +16,30 @@
 
 <%@ include file="/init.jsp" %>
 
-<div class="frontend-js-components-sample-web">
-	<liferay-ui:tabs
-		names="Translation Manager, Management Toolbar, Walkable"
-		refresh="<%= false %>"
-	>
-		<liferay-ui:section>
-			<liferay-util:include page="/partials/translation_manager.jsp" servletContext="<%= application %>" />
-		</liferay-ui:section>
+<clay:container-fluid>
+	<clay:row>
+		<clay:col>
+			<h2>Walkable Sample</h2>
 
-		<liferay-ui:section>
-			<liferay-util:include page="/partials/management_toolbar.jsp" servletContext="<%= application %>" />
-		</liferay-ui:section>
+			<div class="btn-group">
+				<div class="btn-group-item">
+					<clay:button displayType="primary" id="step1" label="Step 1"></clay:button>
+				</div>
 
-		<liferay-ui:section>
-			<liferay-util:include page="/partials/walkable.jsp" servletContext="<%= application %>" />
-		</liferay-ui:section>
-	</liferay-ui:tabs>
-</div>
+				<div class="btn-group-item">
+					<clay:button displayType="primary" id="step2" label="Step 2"></clay:button>
+				</div>
+
+				<div class="btn-group-item">
+					<clay:button displayType="primary" id="step3" label="Step 3"></clay:button>
+				</div>
+			</div>
+		</clay:col>
+	</clay:row>
+
+	<div>
+		<react:component
+			module="js/WalkableSample"
+		/>
+	</div>
+</clay:container-fluid>

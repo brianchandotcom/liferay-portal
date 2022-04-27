@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.upload.UploadServletRequest;
 import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelperUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProgressTracker;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -82,7 +83,12 @@ public class UploadServletRequestImpl
 
 			ServletFileUpload servletFileUpload = new ServletFileUpload(
 				new LiferayFileItemFactory(
-					_getTempDir(location), fileSizeThreshold,
+					new File(
+						GetterUtil.getString(
+							location,
+							UploadServletRequestConfigurationHelperUtil.
+								getTempDir())),
+					fileSizeThreshold,
 					httpServletRequest.getCharacterEncoding()));
 
 			long uploadServletRequestImplMaxSize =
@@ -623,23 +629,8 @@ public class UploadServletRequestImpl
 		return sortedFileItems;
 	}
 
-	private File _getTempDir(String configuredTempDir) {
-		if (Validator.isNotNull(configuredTempDir)) {
-			return new File(configuredTempDir);
-		}
-
-		if (_tempDir == null) {
-			_tempDir = new File(
-				UploadServletRequestConfigurationHelperUtil.getTempDir());
-		}
-
-		return _tempDir;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		UploadServletRequestImpl.class);
-
-	private static File _tempDir;
 
 	private final Map<String, FileItem[]> _fileParameters;
 	private final LiferayServletRequest _liferayServletRequest;

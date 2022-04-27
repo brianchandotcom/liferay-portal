@@ -604,7 +604,7 @@ definition {
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
 				infoItemRelatedListProviderName = "Items with This Category",
-				listStyle = "Bulleted List");
+				styleDisplay = "Bulleted List");
 		}
 
 		task ("View the no items message is shown in Collection Display") {

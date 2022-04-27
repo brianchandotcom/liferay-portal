@@ -1567,7 +1567,7 @@ definition {
 			PageEditor.editCollectionDisplay(
 				assetListName = "Dynamic Collection Test",
 				fragmentName = "Collection Display",
-				listStyle = "Bulleted List");
+				styleDisplay = "Bulleted List");
 
 			Button.clickPublish();
 
@@ -1689,7 +1689,7 @@ definition {
 			PageEditor.editCollectionDisplay(
 				assetListName = "Dynamic Collection Test",
 				fragmentName = "Collection Display",
-				listStyle = "Bulleted List");
+				styleDisplay = "Bulleted List");
 
 			Button.clickPublish();
 
@@ -1812,7 +1812,7 @@ definition {
 			PageEditor.editCollectionDisplay(
 				assetListName = "Dynamic Collection Test",
 				fragmentName = "Collection Display",
-				listStyle = "Bulleted List");
+				styleDisplay = "Bulleted List");
 
 			Button.clickPublish();
 
@@ -2268,7 +2268,7 @@ definition {
 			PageEditor.editCollectionDisplay(
 				assetListName = "Manual Collection Test",
 				fragmentName = "Collection Display",
-				listStyle = "Bulleted List");
+				styleDisplay = "Bulleted List");
 
 			Button.clickPublish();
 
@@ -2361,7 +2361,7 @@ definition {
 			PageEditor.editCollectionDisplay(
 				assetListName = "Manual Collection Test",
 				fragmentName = "Collection Display",
-				listStyle = "Bulleted List");
+				styleDisplay = "Bulleted List");
 
 			Button.clickPublish();
 
@@ -2475,7 +2475,7 @@ definition {
 			PageEditor.editCollectionDisplay(
 				assetListName = "Manual Collection Test",
 				fragmentName = "Collection Display",
-				listStyle = "Bulleted List");
+				styleDisplay = "Bulleted List");
 
 			Button.clickPublish();
 

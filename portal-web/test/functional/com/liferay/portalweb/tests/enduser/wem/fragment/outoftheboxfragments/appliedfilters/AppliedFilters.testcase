@@ -100,8 +100,8 @@ definition {
 		task ("Select the Bordered List in Collection Display") {
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
-				listStyle = "Bordered List",
-				selectedName = "Dynamic Collection");
+				selectedName = "Dynamic Collection",
+				styleDisplay = "Bordered List");
 		}
 
 		task ("Add an Applied Filters above the Container") {
@@ -322,8 +322,8 @@ definition {
 		task ("Select the Bordered List in Collection Display") {
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
-				listStyle = "Bordered List",
-				selectedName = "Dynamic Collection");
+				selectedName = "Dynamic Collection",
+				styleDisplay = "Bordered List");
 		}
 
 		task ("Add an Applied Filters above the Container") {
@@ -469,8 +469,8 @@ definition {
 		task ("Select the Bordered List in Collection Display") {
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
-				listStyle = "Bordered List",
-				selectedName = "Dynamic Collection");
+				selectedName = "Dynamic Collection",
+				styleDisplay = "Bordered List");
 		}
 
 		task ("Add an Applied Filters above the Container") {
@@ -689,8 +689,8 @@ definition {
 		task ("Select the Bordered List in Collection Display") {
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
-				listStyle = "Bordered List",
-				selectedName = "Dynamic Collection");
+				selectedName = "Dynamic Collection",
+				styleDisplay = "Bordered List");
 		}
 
 		task ("Add a Grid above the Container") {

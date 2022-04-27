@@ -72,8 +72,8 @@ definition {
 				displayAllPages = "true",
 				fragmentName = "Collection Display",
 				listItemStyle = "Title",
-				listStyle = "Bordered List",
-				maxNumberOfItemsPerPage = "5");
+				maxNumberOfItemsPerPage = "5",
+				styleDisplay = "Bordered List");
 		}
 
 		task ("View only 5 web contents shown in page 1 of Collection Display in page editor") {

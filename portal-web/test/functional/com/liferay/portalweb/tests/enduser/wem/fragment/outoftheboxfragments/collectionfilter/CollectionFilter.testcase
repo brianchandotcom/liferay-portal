@@ -118,7 +118,7 @@ definition {
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
 				infoListProviderName = "Basic Web Content",
-				listStyle = "Bordered List");
+				styleDisplay = "Bordered List");
 		}
 
 		task ("View the title of three web contents shown in the first Collection Display") {
@@ -140,7 +140,7 @@ definition {
 				fragmentName = "Collection Display",
 				index = "2",
 				infoListProviderName = "Basic Document",
-				listStyle = "Bulleted List");
+				styleDisplay = "Bulleted List");
 		}
 
 		task ("View the title of documents shown in the second Collection Display") {
@@ -386,8 +386,8 @@ definition {
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
 				listItemStyle = "Title",
-				listStyle = "Bordered List",
-				selectedName = "Manual Collection");
+				selectedName = "Manual Collection",
+				styleDisplay = "Bordered List");
 		}
 
 		task ("Add a Grid above the Container") {
@@ -665,7 +665,7 @@ definition {
 			PageEditor.editCollectionDisplay(
 				assetListName = "Hot Sale",
 				fragmentName = "Collection Display",
-				listStyle = "Bordered List");
+				styleDisplay = "Bordered List");
 		}
 
 		task ("Add a Collection Filter above the Collection Display") {
@@ -1189,9 +1189,9 @@ definition {
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
 				listItemStyle = "Title",
-				listStyle = "Inline List",
 				maxNumberOfItemsToDisplay = "6",
-				selectedName = "Dynamic Collection");
+				selectedName = "Dynamic Collection",
+				styleDisplay = "Inline List");
 		}
 
 		task ("Add a Grid above the Container") {
@@ -1827,9 +1827,9 @@ definition {
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
 				listItemStyle = "Title",
-				listStyle = "Bordered List",
 				maxNumberOfItemsToDisplay = "6",
-				selectedName = "Dynamic Collection");
+				selectedName = "Dynamic Collection",
+				styleDisplay = "Bordered List");
 		}
 
 		task ("Add a Collection Filter above the Container") {
@@ -2080,9 +2080,9 @@ definition {
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
 				listItemStyle = "Title",
-				listStyle = "Inline List",
 				maxNumberOfItemsToDisplay = "6",
-				selectedName = "Manual Collection");
+				selectedName = "Manual Collection",
+				styleDisplay = "Inline List");
 		}
 
 		task ("Add a Grid above the Container") {
@@ -2406,9 +2406,9 @@ definition {
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
 				listItemStyle = "Title",
-				listStyle = "Bulleted List",
 				maxNumberOfItemsToDisplay = "6",
-				selectedName = "Manual Collection");
+				selectedName = "Manual Collection",
+				styleDisplay = "Bulleted List");
 		}
 
 		task ("Add a Collection Filter above the Container") {
@@ -2734,9 +2734,9 @@ definition {
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
 				listItemStyle = "Title",
-				listStyle = "Bordered List",
 				maxNumberOfItemsToDisplay = "6",
-				selectedName = "Manual Collection");
+				selectedName = "Manual Collection",
+				styleDisplay = "Bordered List");
 		}
 
 		task ("Add a Collection Filter above the Container") {
@@ -2980,9 +2980,9 @@ definition {
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
 				listItemStyle = "Title",
-				listStyle = "Numbered List",
 				maxNumberOfItemsToDisplay = "6",
-				selectedName = "Manual Collection");
+				selectedName = "Manual Collection",
+				styleDisplay = "Numbered List");
 		}
 
 		task ("Add a Collection Filter above the Container") {
@@ -3224,7 +3224,7 @@ definition {
 			PageEditor.editCollectionDisplay(
 				assetListName = "Levis",
 				fragmentName = "Collection Display",
-				listStyle = "Bordered List");
+				styleDisplay = "Bordered List");
 		}
 
 		task ("Select the Tesla in the second Collection Display and Select the Bordered List as List Style") {
@@ -3232,7 +3232,7 @@ definition {
 				assetListName = "Tesla",
 				fragmentName = "Collection Display",
 				index = "2",
-				listStyle = "Bordered List");
+				styleDisplay = "Bordered List");
 		}
 
 		task ("Select the Levis as Target Collection and Select the Keywords as Filter in the first Collection Filter") {
@@ -3473,8 +3473,8 @@ definition {
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
 				listItemStyle = "Title",
-				listStyle = "Bordered List",
-				selectedName = "Dynamic Collection");
+				selectedName = "Dynamic Collection",
+				styleDisplay = "Bordered List");
 		}
 
 		task ("Add a Grid above the Container") {
@@ -3928,7 +3928,7 @@ definition {
 			PageEditor.editCollectionDisplay(
 				assetListName = "Dynamic Collection",
 				fragmentName = "Collection Display",
-				listStyle = "Bordered List");
+				styleDisplay = "Bordered List");
 		}
 
 		task ("Add a Collection Filter above the Collection Display") {

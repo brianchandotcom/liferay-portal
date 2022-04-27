@@ -1689,7 +1689,7 @@ definition {
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
 				infoItemRelatedListProviderName = "Basic Web Content",
-				listStyle = "Bordered List");
+				styleDisplay = "Bordered List");
 
 			PageEditor.clickPublish();
 		}
@@ -1934,7 +1934,7 @@ definition {
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
 				infoItemRelatedListProviderName = "DM Document Type Name",
-				listStyle = "Bordered List");
+				styleDisplay = "Bordered List");
 
 			PageEditor.clickPublish();
 		}
@@ -2078,7 +2078,7 @@ definition {
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
 				infoItemRelatedListProviderName = "WC Structure Name",
-				listStyle = "Bordered List");
+				styleDisplay = "Bordered List");
 
 			PageEditor.clickPublish();
 		}
@@ -2269,7 +2269,7 @@ definition {
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
 				infoItemRelatedListProviderName = "Related Assets",
-				listStyle = "Bordered List");
+				styleDisplay = "Bordered List");
 
 			PageEditor.clickPublish();
 		}

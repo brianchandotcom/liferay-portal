@@ -106,7 +106,7 @@ definition {
 				columnNumber = "1",
 				fragmentName = "Collection Display",
 				infoListProviderName = "Recent Content",
-				listStyle = "Bordered List");
+				styleDisplay = "Bordered List");
 		}
 
 		task ("Add a Collection Display to the second module") {
@@ -136,7 +136,7 @@ definition {
 				assetListName = "Manual Collection",
 				fragmentName = "Collection Display",
 				index = "3",
-				listStyle = "Bulleted List");
+				styleDisplay = "Bulleted List");
 		}
 
 		task ("View the title of assets are shown in the first module") {
@@ -257,7 +257,7 @@ definition {
 				assetListName = "Manual Collection",
 				columnNumber = "1",
 				fragmentName = "Collection Display",
-				listStyle = "Bordered List");
+				styleDisplay = "Bordered List");
 		}
 
 		task ("Add a Collection Display to the second module") {
@@ -287,7 +287,7 @@ definition {
 				fragmentName = "Collection Display",
 				index = "3",
 				infoListProviderName = "Most Viewed Assets",
-				listStyle = "Bulleted List");
+				styleDisplay = "Bulleted List");
 		}
 
 		task ("View the title of web content shown in the first module") {
@@ -1116,7 +1116,7 @@ definition {
 				fragmentName = "Collection Display",
 				infoListProviderName = "Highest Rated Assets",
 				listItemStyle = "Abstract",
-				listStyle = "Bordered List");
+				styleDisplay = "Bordered List");
 		}
 
 		task ("Assert the Abstract of collection items are shown in Bordered List") {
@@ -1183,8 +1183,8 @@ definition {
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
 				listItemStyle = "Abstract",
-				listStyle = "Bulleted List",
-				selectedName = "Highest Rated Assets");
+				selectedName = "Highest Rated Assets",
+				styleDisplay = "Bulleted List");
 		}
 
 		task ("Assert the Abstract of collection items are shown in Bulleted List") {
@@ -1247,8 +1247,8 @@ definition {
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
 				listItemStyle = "Abstract",
-				listStyle = "Inline List",
-				selectedName = "Highest Rated Assets");
+				selectedName = "Highest Rated Assets",
+				styleDisplay = "Inline List");
 		}
 
 		task ("Assert the Abstract of collection items are shown in Inline List") {
@@ -1311,8 +1311,8 @@ definition {
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
 				listItemStyle = "Abstract",
-				listStyle = "Numbered List",
-				selectedName = "Highest Rated Assets");
+				selectedName = "Highest Rated Assets",
+				styleDisplay = "Numbered List");
 		}
 
 		task ("Assert the Abstract of collection items are shown in Numbered List") {
@@ -1375,8 +1375,8 @@ definition {
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
 				listItemStyle = "Abstract",
-				listStyle = "Unstyled List",
-				selectedName = "Highest Rated Assets");
+				selectedName = "Highest Rated Assets",
+				styleDisplay = "Unstyled List");
 		}
 
 		task ("Assert the Abstract of collection items are shown in Unstyled List") {
@@ -1644,7 +1644,7 @@ definition {
 				fragmentName = "Collection Display",
 				infoListProviderName = "Highest Rated Assets",
 				listItemStyle = "Full Content",
-				listStyle = "Bordered List");
+				styleDisplay = "Bordered List");
 		}
 
 		task ("Assert the Full Content of collection items are shown in Bordered List") {
@@ -1711,8 +1711,8 @@ definition {
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
 				listItemStyle = "Full Content",
-				listStyle = "Bulleted List",
-				selectedName = "Highest Rated Assets");
+				selectedName = "Highest Rated Assets",
+				styleDisplay = "Bulleted List");
 		}
 
 		task ("Assert the Full Content of collection items are shown in Bulleted List") {
@@ -1775,8 +1775,8 @@ definition {
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
 				listItemStyle = "Full Content",
-				listStyle = "Inline List",
-				selectedName = "Highest Rated Assets");
+				selectedName = "Highest Rated Assets",
+				styleDisplay = "Inline List");
 		}
 
 		task ("Assert the Full Content of collection items are shown in Inline List") {
@@ -1839,8 +1839,8 @@ definition {
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
 				listItemStyle = "Full Content",
-				listStyle = "Numbered List",
-				selectedName = "Highest Rated Assets");
+				selectedName = "Highest Rated Assets",
+				styleDisplay = "Numbered List");
 		}
 
 		task ("Assert the Full Content of collection items are shown in Numbered List") {
@@ -1903,8 +1903,8 @@ definition {
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
 				listItemStyle = "Full Content",
-				listStyle = "Unstyled List",
-				selectedName = "Highest Rated Assets");
+				selectedName = "Highest Rated Assets",
+				styleDisplay = "Unstyled List");
 		}
 
 		task ("Assert the Full Content of collection items are shown in Unstyled List") {

@@ -1944,7 +1944,7 @@ definition {
 				assetListName = "Dynamic Collection",
 				fragmentName = "Collection Display",
 				listItemStyle = "Title",
-				listStyle = "Bordered List");
+				styleDisplay = "Bordered List");
 		}
 
 		task ("Assert the Title of collection items are shown in Bordered List") {
@@ -1987,8 +1987,8 @@ definition {
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
 				listItemStyle = "Title",
-				listStyle = "Bulleted List",
-				selectedName = "Dynamic Collection");
+				selectedName = "Dynamic Collection",
+				styleDisplay = "Bulleted List");
 		}
 
 		task ("Assert the Title of collection items are shown in Bulleted List") {
@@ -2027,8 +2027,8 @@ definition {
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
 				listItemStyle = "Title",
-				listStyle = "Inline List",
-				selectedName = "Dynamic Collection");
+				selectedName = "Dynamic Collection",
+				styleDisplay = "Inline List");
 		}
 
 		task ("Assert the Title of collection items are shown in Inline List") {
@@ -2067,8 +2067,8 @@ definition {
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
 				listItemStyle = "Title",
-				listStyle = "Numbered List",
-				selectedName = "Dynamic Collection");
+				selectedName = "Dynamic Collection",
+				styleDisplay = "Numbered List");
 		}
 
 		task ("Assert the Title of collection items are shown in Numbered List") {
@@ -2107,8 +2107,8 @@ definition {
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
 				listItemStyle = "Title",
-				listStyle = "Unstyled List",
-				selectedName = "Dynamic Collection");
+				selectedName = "Dynamic Collection",
+				styleDisplay = "Unstyled List");
 		}
 
 		task ("Assert the Title of collection items are shown in Unstyled List") {

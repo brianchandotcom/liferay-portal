@@ -140,6 +140,36 @@ public class AssetVocabularySiteNavigationMenuItemType
 		).buildPortletURL();
 	}
 
+	public List<SiteNavigationMenuItem> getChildren(
+			HttpServletRequest httpServletRequest,
+			SiteNavigationMenuItem siteNavigationMenuItem)
+		throws Exception {
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			UnicodePropertiesBuilder.fastLoad(
+				siteNavigationMenuItem.getTypeSettings()
+			).build();
+
+		if (Objects.equals(
+				typeSettingsUnicodeProperties.get("type"),
+				"asset-vocabulary")) {
+
+			return _getChildSiteNavigationMenuItem(
+				0,
+				GetterUtil.getLong(
+					typeSettingsUnicodeProperties.get("classPK")),
+				httpServletRequest,
+				siteNavigationMenuItem.getSiteNavigationMenuItemId());
+		}
+
+		return _getChildSiteNavigationMenuItem(
+			GetterUtil.getLong(typeSettingsUnicodeProperties.get("classPK")),
+			GetterUtil.getLong(
+				typeSettingsUnicodeProperties.get("assetVocabularyId")),
+			httpServletRequest,
+			siteNavigationMenuItem.getSiteNavigationMenuItemId());
+	}
+
 	@Override
 	public String getIcon() {
 		return "vocabulary";

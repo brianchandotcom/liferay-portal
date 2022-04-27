@@ -919,6 +919,85 @@ definition {
 		}
 	}
 
+	@description = "Verify users can schedule an import"
+	@priority = "3"
+	test CanScheduleImport {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "ImportExport#CanScheduleImport";
+
+		task ("Given an account import template") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.gotoImport();
+
+			ImportExport.configureImport(
+				entityType = "admin.user.dto.v1_0.Account",
+				fieldMappings = "name:Account Name,type:Account Type,description:Account Description",
+				fileName = "csv_account_import.csv",
+				templateName = "Test Account Import Template");
+		}
+
+		task ("When the user schedules this import for a given time") {
+			var templateId = JSONBatchPlannerPlansAPI._getBatchPlannerPlanIds();
+
+			JobScheduler.openJobSchedulerAdmin();
+
+			var filePath = TestCase.getDependenciesDirPath(fileName = "csv_account_import.csv");
+
+			JobScheduler.addScheduleTrigger(
+				taskExecutorType = "batch-planner-executor-name",
+				triggerName = "Scheduled Account Import",
+				triggerProperties = '''batchPlannerPlanId=${templateId}
+					external-file-url=${filePath}''');
+
+			var currentMinute = DateUtil.getFormattedCurrentDate("mm", "UTC");
+
+			JobScheduler.activateScheduleTrigger(
+				cronExpression = "0 ${currentMinute} * ? * *",
+				trigger = "Scheduled Account Import");
+		}
+
+		task ("Then the import is triggered automatically at that time") {
+			Refresh();
+
+			AssertElementPresent(
+				key_rowEntry = "Scheduled Account Import",
+				key_rowStatus = "Success",
+				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_STATUS");
+
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.assertExecutionEntry(
+				entityType = "Account",
+				executionAction = "Import",
+				executionName = "Triggered by Scheduled Account Import",
+				executionStatus = "Completed");
+
+			Accounts.openAccountsAdmin();
+
+			Accounts.viewAccountDetails(
+				accountDescription = "Test Business Account Description",
+				accountName = "Test Business Account",
+				accountType = "Business");
+
+			Navigator.gotoBack();
+
+			Accounts.viewAccountDetails(
+				accountDescription = "Test Guest Account Description",
+				accountName = "Test Guest Account",
+				accountType = "Guest");
+
+			Navigator.gotoBack();
+
+			Accounts.viewAccountDetails(
+				accountDescription = "Test Person Account Description",
+				accountName = "Test Person Account",
+				accountType = "Person");
+
+			JSONJobScheduler._deleteJobSchedulerTrigger(triggerName = "Scheduled Account Import");
+		}
+	}
+
 	@description = "Verify users can search Import/Exports executions by name and action."
 	@priority = "3"
 	test CanSearchExecutions {

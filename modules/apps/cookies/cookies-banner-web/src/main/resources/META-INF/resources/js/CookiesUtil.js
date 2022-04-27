@@ -12,22 +12,22 @@
  * details.
  */
 
-export function acceptAllCookies(optionalCookies, requiredCookies) {
-	optionalCookies.forEach((optionalCookie) => {
+export function acceptAllCookies(optionalCookieNames, requiredCookieNames) {
+	optionalCookieNames.forEach((optionalCookie) => {
 		setCookie(optionalCookie, 'true');
 	});
 
-	requiredCookies.forEach((requiredCookie) => {
+	requiredCookieNames.forEach((requiredCookie) => {
 		setCookie(requiredCookie, 'true');
 	});
 }
 
-export function declineAllCookies(optionalCookies, requiredCookies) {
-	optionalCookies.forEach((optionalCookie) => {
+export function declineAllCookies(optionalCookieNames, requiredCookieNames) {
+	optionalCookieNames.forEach((optionalCookie) => {
 		setCookie(optionalCookie, 'false');
 	});
 
-	requiredCookies.forEach((requiredCookie) => {
+	requiredCookieNames.forEach((requiredCookie) => {
 		setCookie(requiredCookie, 'true');
 	});
 }

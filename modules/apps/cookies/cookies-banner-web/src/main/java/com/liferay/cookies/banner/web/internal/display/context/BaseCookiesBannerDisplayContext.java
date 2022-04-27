@@ -31,7 +31,7 @@ public class BaseCookiesBannerDisplayContext {
 		this.renderResponse = renderResponse;
 	}
 
-	public String[] getOptionalCookies() {
+	public String[] getOptionalCookieNames() {
 		return new String[] {
 			CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL,
 			CookiesConstants.NAME_CONSENT_TYPE_PERFORMANCE,
@@ -39,7 +39,7 @@ public class BaseCookiesBannerDisplayContext {
 		};
 	}
 
-	public String[] getRequiredCookies() {
+	public String[] getRequiredCookieNames() {
 		return new String[] {CookiesConstants.NAME_CONSENT_TYPE_NECESSARY};
 	}
 

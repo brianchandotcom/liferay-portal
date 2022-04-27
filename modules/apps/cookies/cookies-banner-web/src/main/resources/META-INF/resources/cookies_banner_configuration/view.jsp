@@ -19,8 +19,8 @@
 <%
 CookiesBannerConfigurationDisplayContext cookiesBannerConfigurationDisplayContext = new CookiesBannerConfigurationDisplayContext(renderRequest, renderResponse);
 
-String[] optionalCookies = cookiesBannerConfigurationDisplayContext.getOptionalCookies();
-String[] requiredCookies = cookiesBannerConfigurationDisplayContext.getRequiredCookies();
+String[] optionalCookieNames = cookiesBannerConfigurationDisplayContext.getOptionalCookieNames();
+String[] requiredCookieNames = cookiesBannerConfigurationDisplayContext.getRequiredCookieNames();
 %>
 
 <clay:container-fluid
@@ -42,7 +42,7 @@ String[] requiredCookies = cookiesBannerConfigurationDisplayContext.getRequiredC
 		>
 
 			<%
-			for (String requiredCookie : requiredCookies) {
+			for (String requiredCookieName : requiredCookieNames) {
 			%>
 
 				<clay:content-row
@@ -52,7 +52,7 @@ String[] requiredCookies = cookiesBannerConfigurationDisplayContext.getRequiredC
 					<clay:content-col
 						expand="<%= true %>"
 					>
-						<h2><%= cookiesBannerConfigurationDisplayContext.getCookieTitle(requiredCookie, request) %></h2>
+						<h2><%= cookiesBannerConfigurationDisplayContext.getCookieTitle(requiredCookieName, request) %></h2>
 					</clay:content-col>
 
 					<clay:content-col>
@@ -63,13 +63,13 @@ String[] requiredCookies = cookiesBannerConfigurationDisplayContext.getRequiredC
 				<clay:content-row
 					cssClass="mb-3"
 				>
-					<p><%= cookiesBannerConfigurationDisplayContext.getCookieDescription(requiredCookie, request) %></p>
+					<p><%= cookiesBannerConfigurationDisplayContext.getCookieDescription(requiredCookieName, request) %></p>
 				</clay:content-row>
 
 			<%
 			}
 
-			for (String optionalCookie : optionalCookies) {
+			for (String optionalCookieName : optionalCookieNames) {
 			%>
 
 				<clay:content-row
@@ -79,13 +79,13 @@ String[] requiredCookies = cookiesBannerConfigurationDisplayContext.getRequiredC
 					<clay:content-col
 						expand="<%= true %>"
 					>
-						<h2><%= cookiesBannerConfigurationDisplayContext.getCookieTitle(optionalCookie, request) %></h2>
+						<h2><%= cookiesBannerConfigurationDisplayContext.getCookieTitle(optionalCookieName, request) %></h2>
 					</clay:content-col>
 
 					<clay:content-col>
 						<label class="toggle-switch">
 							<span class="toggle-switch-check-bar">
-								<input class="toggle-switch-check" data-cookie-key="<%= optionalCookie %>" disabled type="checkbox" />
+								<input class="toggle-switch-check" data-cookie-key="<%= optionalCookieName %>" disabled type="checkbox" />
 
 								<span aria-hidden="true" class="toggle-switch-bar">
 									<span class="toggle-switch-handle"></span>
@@ -98,7 +98,7 @@ String[] requiredCookies = cookiesBannerConfigurationDisplayContext.getRequiredC
 				<clay:content-row
 					cssClass="mb-3"
 				>
-					<p><%= cookiesBannerConfigurationDisplayContext.getCookieDescription(optionalCookie, request) %></p>
+					<p><%= cookiesBannerConfigurationDisplayContext.getCookieDescription(optionalCookieName, request) %></p>
 				</clay:content-row>
 
 			<%
@@ -151,9 +151,9 @@ String[] requiredCookies = cookiesBannerConfigurationDisplayContext.getRequiredC
 	componentId="CookiesBannerConfiguration"
 	context='<%=
 		HashMapBuilder.<String, Object>put(
-			"optionalCookies", optionalCookies
+			"optionalCookieNames", optionalCookieNames
 		).put(
-			"requiredCookies", requiredCookies
+			"requiredCookieNames", requiredCookieNames
 		).put(
 			"showButtons", cookiesBannerConfigurationDisplayContext.isShowButtons()
 		).build()

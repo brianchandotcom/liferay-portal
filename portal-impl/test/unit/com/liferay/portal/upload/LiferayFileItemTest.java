@@ -115,7 +115,7 @@ public class LiferayFileItemTest {
 			});
 
 		_liferayFileItemFactory = new LiferayFileItemFactory(
-			FileUtil.createTempFolder());
+			FileUtil.createTempFolder(), 0);
 	}
 
 	@Test

@@ -80,17 +80,9 @@ public class UploadServletRequestImpl
 
 			httpSession.removeAttribute(ProgressTracker.PERCENT);
 
-			ServletFileUpload servletFileUpload;
-
-			if (fileSizeThreshold > 0) {
-				servletFileUpload = new ServletFileUpload(
-					new LiferayFileItemFactory(
-						_getTempDir(location), fileSizeThreshold));
-			}
-			else {
-				servletFileUpload = new ServletFileUpload(
-					new LiferayFileItemFactory(_getTempDir(location)));
-			}
+			ServletFileUpload servletFileUpload = new ServletFileUpload(
+				new LiferayFileItemFactory(
+					_getTempDir(location), fileSizeThreshold));
 
 			long uploadServletRequestImplMaxSize =
 				UploadServletRequestConfigurationHelperUtil.getMaxSize();

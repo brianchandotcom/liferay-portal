@@ -25,13 +25,15 @@ public class LiferayFileItemFactory extends DiskFileItemFactory {
 
 	public static final int DEFAULT_SIZE = 1024;
 
-	public LiferayFileItemFactory(File tempDir) {
-		this(tempDir, DEFAULT_SIZE);
-	}
-
 	public LiferayFileItemFactory(File tempDir, int sizeThreshold) {
 		_tempDir = tempDir;
-		_sizeThreshold = sizeThreshold;
+
+		if (sizeThreshold > 0) {
+			_sizeThreshold = sizeThreshold;
+		}
+		else {
+			_sizeThreshold = DEFAULT_SIZE;
+		}
 	}
 
 	@Override

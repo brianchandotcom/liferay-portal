@@ -196,7 +196,8 @@ public class ImportFragmentEntriesStrutsActionTest {
 					new LiferayFileItemFactory(
 						new File(
 							UploadServletRequestConfigurationHelperUtil.
-								getTempDir()));
+								getTempDir()),
+						0);
 
 				LiferayFileItem liferayFileItem = fileItemFactory.createItem(
 					RandomTestUtil.randomString(),

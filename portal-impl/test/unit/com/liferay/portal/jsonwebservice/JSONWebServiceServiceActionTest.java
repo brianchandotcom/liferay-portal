@@ -248,7 +248,7 @@ public class JSONWebServiceServiceActionTest
 		throws IOException {
 
 		LiferayFileItemFactory liferayFileItemFactory =
-			new LiferayFileItemFactory(null);
+			new LiferayFileItemFactory(null, 0);
 
 		LiferayFileItem liferayFileItem = liferayFileItemFactory.createItem(
 			StringUtil.randomString(), StringUtil.randomString(), true,

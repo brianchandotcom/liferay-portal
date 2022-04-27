@@ -42,5 +42,21 @@ export function getActivationKeysDownloadItems(
 			},
 			tooltip: TOOLTIP_CLASSNAMES_TYPES.dropDownItem,
 		},
+		{
+			icon: <ClayIcon className="mr-1 text-neutral-4" symbol="list" />,
+			label: 'Individual Keys (multiple files)',
+			onClick: async () => {
+				const downloadedAggregated = await downloadAggregatedActivationKey(
+					selectedKeysIDs,
+					licenseKeyDownloadURL,
+					sessionId,
+					selectedKeysObjects,
+					projectName
+				);
+
+				return handleAlertStatus(downloadedAggregated);
+			},
+			tooltip: TOOLTIP_CLASSNAMES_TYPES.dropDownItem,
+		},
 	];
 }

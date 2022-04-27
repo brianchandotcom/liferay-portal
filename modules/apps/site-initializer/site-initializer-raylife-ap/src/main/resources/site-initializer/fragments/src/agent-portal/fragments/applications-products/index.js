@@ -17,6 +17,8 @@ import React, {useEffect, useRef, useState} from 'react';
 
 import {getApplications, getProductQuotes} from '../../../common/services/';
 
+const MAX_NAME_LENGHT = 15;
+
 export default function () {
 	const chartRef = useRef();
 	const [columns, setColumns] = useState([]);
@@ -68,7 +70,7 @@ export default function () {
 							.map((product) => product.charAt(0))
 							.join('');
 
-						if (productName?.length > 15) {
+						if (productName?.length > MAX_NAME_LENGHT) {
 							productName =
 								shortDescription === ''
 									? productAbbrevation
@@ -143,7 +145,7 @@ export default function () {
 				<div className="d-flex flex-column">
 					{chartData?.columns?.map((column, index) => (
 						<div
-							className="d-flex flex-row justify-content-between"
+							className="d-flex flex-row justify-content-between legend-container"
 							key={index}
 						>
 							<div className="align-items-center d-flex flex-row justify-content-between mr-2">
@@ -155,18 +157,12 @@ export default function () {
 									}}
 								></div>
 
-								<span
-									className="legend-title"
-									style={{color: '#5C5E5E', fontSize: '14px'}}
-								>
+								<span className="legend-title">
 									{column[2]}
 								</span>
 							</div>
 
-							<span
-								className="font-weight-bolder legend-value"
-								style={{fontSize: '14px'}}
-							>
+							<span className="font-weight-bolder">
 								{column[1]}
 							</span>
 						</div>

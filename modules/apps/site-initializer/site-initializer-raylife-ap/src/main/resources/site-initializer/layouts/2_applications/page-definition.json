@@ -4,12 +4,12 @@
 			{
 				"definition": {
 					"fragmentStyle": {
-						"borderWidth": "0"
+						"borderWidth": "0",
+						"textAlign": ""
 					},
 					"indexed": true,
 					"layout": {
 						"borderWidth": 0,
-						"htmlTag": "Div",
 						"marginBottom": 0,
 						"marginLeft": 0,
 						"marginRight": 0,
@@ -82,7 +82,8 @@
 											"fragmentFields": [
 											],
 											"fragmentStyle": {
-												"marginLeft": "3"
+												"marginLeft": "3",
+												"textAlign": ""
 											},
 											"indexed": true
 										},
@@ -96,13 +97,13 @@
 									{
 										"definition": {
 											"fragmentStyle": {
-												"borderWidth": "0"
+												"borderWidth": "0",
+												"textAlign": ""
 											},
 											"indexed": true,
 											"layout": {
 												"borderWidth": 0,
 												"contentDisplay": "FlexRow",
-												"htmlTag": "Div",
 												"marginBottom": 0,
 												"marginLeft": 0,
 												"marginRight": 0,
@@ -135,7 +136,6 @@
 													"indexed": true,
 													"layout": {
 														"borderWidth": 0,
-														"htmlTag": "Div",
 														"marginBottom": 0,
 														"marginLeft": 0,
 														"marginRight": 0,
@@ -158,7 +158,6 @@
 													"indexed": true,
 													"layout": {
 														"borderWidth": 0,
-														"htmlTag": "Div",
 														"marginBottom": 0,
 														"marginLeft": 0,
 														"marginRight": 0,
@@ -252,7 +251,6 @@
 																			"indexed": true,
 																			"layout": {
 																				"borderWidth": 0,
-																				"htmlTag": "Div",
 																				"marginBottom": 0,
 																				"marginLeft": 0,
 																				"marginRight": 0,
@@ -275,7 +273,6 @@
 																					"indexed": true,
 																					"layout": {
 																						"borderWidth": 0,
-																						"htmlTag": "Div",
 																						"marginBottom": 0,
 																						"marginLeft": 0,
 																						"marginRight": 0,
@@ -298,7 +295,6 @@
 																							"indexed": true,
 																							"layout": {
 																								"borderWidth": 0,
-																								"htmlTag": "Div",
 																								"marginBottom": 2,
 																								"marginLeft": 0,
 																								"marginRight": 0,
@@ -382,11 +378,70 @@
 																															{
 																																"definition": {
 																																	"fragment": {
-																																		"key": "fake-content"
+																																		"key": "applications-products"
 																																	},
 																																	"fragmentConfig": {
-																																		"fakeContentId": "fake content",
-																																		"height": "257px"
+																																	},
+																																	"fragmentFields": [
+																																	],
+																																	"indexed": true
+																																},
+																																"type": "Fragment"
+																															}
+																														],
+																														"type": "FragmentDropZone"
+																													}
+																												],
+																												"type": "Fragment"
+																											}
+																										],
+																										"type": "Column"
+																									},
+																									{
+																										"definition": {
+																											"columnViewports": [
+																												{
+																													"columnViewportDefinition": {
+																													},
+																													"id": "landscapeMobile"
+																												},
+																												{
+																													"columnViewportDefinition": {
+																														"size": 12
+																													},
+																													"id": "portraitMobile"
+																												},
+																												{
+																													"columnViewportDefinition": {
+																														"size": 4
+																													},
+																													"id": "tablet"
+																												}
+																											],
+																											"size": 4
+																										},
+																										"pageElements": [
+																											{
+																												"definition": {
+																													"fragment": {
+																														"key": "section"
+																													},
+																													"fragmentConfig": {
+																														"sectionId": "primary"
+																													},
+																													"fragmentFields": [
+																													],
+																													"indexed": true
+																												},
+																												"pageElements": [
+																													{
+																														"pageElements": [
+																															{
+																																"definition": {
+																																	"fragment": {
+																																		"key": "applications-status"
+																																	},
+																																	"fragmentConfig": {
 																																	},
 																																	"fragmentFields": [
 																																	],
@@ -465,69 +520,6 @@
 																											}
 																										],
 																										"type": "Column"
-																									},
-																									{
-																										"definition": {
-																											"columnViewports": [
-																												{
-																													"columnViewportDefinition": {
-																													},
-																													"id": "landscapeMobile"
-																												},
-																												{
-																													"columnViewportDefinition": {
-																														"size": 12
-																													},
-																													"id": "portraitMobile"
-																												},
-																												{
-																													"columnViewportDefinition": {
-																														"size": 4
-																													},
-																													"id": "tablet"
-																												}
-																											],
-																											"size": 4
-																										},
-																										"pageElements": [
-																											{
-																												"definition": {
-																													"fragment": {
-																														"key": "section"
-																													},
-																													"fragmentConfig": {
-																														"sectionId": "primary"
-																													},
-																													"fragmentFields": [
-																													],
-																													"indexed": true
-																												},
-																												"pageElements": [
-																													{
-																														"pageElements": [
-																															{
-																																"definition": {
-																																	"fragment": {
-																																		"key": "fake-content"
-																																	},
-																																	"fragmentConfig": {
-																																		"fakeContentId": "fake content",
-																																		"height": "257px"
-																																	},
-																																	"fragmentFields": [
-																																	],
-																																	"indexed": true
-																																},
-																																"type": "Fragment"
-																															}
-																														],
-																														"type": "FragmentDropZone"
-																													}
-																												],
-																												"type": "Fragment"
-																											}
-																										],
-																										"type": "Column"
 																									}
 																								],
 																								"type": "Row"
@@ -544,7 +536,6 @@
 																							"indexed": true,
 																							"layout": {
 																								"borderWidth": 0,
-																								"htmlTag": "Div",
 																								"marginBottom": 0,
 																								"marginLeft": 0,
 																								"marginRight": 0,
@@ -617,7 +608,6 @@
 																			"indexed": true,
 																			"layout": {
 																				"borderWidth": 0,
-																				"htmlTag": "Div",
 																				"marginBottom": 0,
 																				"marginLeft": 0,
 																				"marginRight": 0,
@@ -640,7 +630,6 @@
 																					"indexed": true,
 																					"layout": {
 																						"borderWidth": 0,
-																						"htmlTag": "Div",
 																						"marginBottom": 0,
 																						"marginLeft": 0,
 																						"marginRight": 0,
@@ -663,7 +652,6 @@
 																							"indexed": true,
 																							"layout": {
 																								"borderWidth": 0,
-																								"htmlTag": "Div",
 																								"marginBottom": 2,
 																								"marginLeft": 0,
 																								"marginRight": 0,
@@ -901,7 +889,6 @@
 																							"indexed": true,
 																							"layout": {
 																								"borderWidth": 0,
-																								"htmlTag": "Div",
 																								"marginBottom": 0,
 																								"marginLeft": 0,
 																								"marginRight": 0,
@@ -974,7 +961,6 @@
 																			"indexed": true,
 																			"layout": {
 																				"borderWidth": 0,
-																				"htmlTag": "Div",
 																				"marginBottom": 0,
 																				"marginLeft": 0,
 																				"marginRight": 0,
@@ -997,7 +983,6 @@
 																					"indexed": true,
 																					"layout": {
 																						"borderWidth": 0,
-																						"htmlTag": "Div",
 																						"marginBottom": 0,
 																						"marginLeft": 0,
 																						"marginRight": 0,
@@ -1020,7 +1005,6 @@
 																							"indexed": true,
 																							"layout": {
 																								"borderWidth": 0,
-																								"htmlTag": "Div",
 																								"marginBottom": 2,
 																								"marginLeft": 0,
 																								"marginRight": 0,
@@ -1258,7 +1242,6 @@
 																							"indexed": true,
 																							"layout": {
 																								"borderWidth": 0,
-																								"htmlTag": "Div",
 																								"marginBottom": 0,
 																								"marginLeft": 0,
 																								"marginRight": 0,
@@ -1331,7 +1314,6 @@
 																			"indexed": true,
 																			"layout": {
 																				"borderWidth": 0,
-																				"htmlTag": "Div",
 																				"marginBottom": 0,
 																				"marginLeft": 0,
 																				"marginRight": 0,
@@ -1354,7 +1336,6 @@
 																					"indexed": true,
 																					"layout": {
 																						"borderWidth": 0,
-																						"htmlTag": "Div",
 																						"marginBottom": 0,
 																						"marginLeft": 0,
 																						"marginRight": 0,
@@ -1377,7 +1358,6 @@
 																							"indexed": true,
 																							"layout": {
 																								"borderWidth": 0,
-																								"htmlTag": "Div",
 																								"marginBottom": 2,
 																								"marginLeft": 0,
 																								"marginRight": 0,
@@ -1615,7 +1595,6 @@
 																							"indexed": true,
 																							"layout": {
 																								"borderWidth": 0,
-																								"htmlTag": "Div",
 																								"marginBottom": 0,
 																								"marginLeft": 0,
 																								"marginRight": 0,
@@ -1702,7 +1681,6 @@
 													"indexed": true,
 													"layout": {
 														"borderWidth": 0,
-														"htmlTag": "Div",
 														"marginBottom": 0,
 														"marginLeft": 0,
 														"marginRight": 0,

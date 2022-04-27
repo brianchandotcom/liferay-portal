@@ -1,3 +1,8 @@
+.applications-products-container .legend-container {
+	font-size: 14px;
+	width: 130px;
+}
+
 .applications-products-container .legend-color {
 	height: 8px;
 	width: 8px;
@@ -5,7 +10,6 @@
 
 .applications-products-container .legend-title {
 	color: #5c5e5e;
-	font-size: 14px;
 }
 
 .applications-products-container .bb-chart-arcs-title {

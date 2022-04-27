@@ -51,7 +51,7 @@ definition {
 
 		task ("Assign the user to site") {
 			JSONUser.addUserToSite(
-				groupName = "Guest",
+				groupName = "Test Site Name",
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -115,7 +115,7 @@ definition {
 		}
 
 		task ("View global search template is not shown when page creation") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			LexiconEntry.gotoAddMenuItem(menuItem = "Page");
 
@@ -148,7 +148,7 @@ definition {
 		}
 
 		task ("View global search template is shown when page creation") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			LexiconEntry.gotoAddMenuItem(menuItem = "Page");
 

@@ -18,6 +18,7 @@ import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
+import uuidv4 from 'uuid/v4';
 
 const FileSizeField = ({
 	handleAddClick,
@@ -108,11 +109,11 @@ const FileSizePerMimeType = ({
 	description = 'file-size-mimetype-description',
 	portletNamespace,
 }) => {
-	const emptyObj = {mimeType: '', size: ''};
+	const emptyRow = () => ({id: uuidv4(), mimeType: '', size: ''});
 
 	const addRow = (index) => {
 		const tempList = [...sizesList];
-		tempList.splice(index + 1, 0, emptyObj);
+		tempList.splice(index + 1, 0, emptyRow());
 		setSizesList(tempList);
 	};
 
@@ -122,7 +123,7 @@ const FileSizePerMimeType = ({
 		setSizesList(tempList);
 	};
 
-	const [sizesList, setSizesList] = useState(currentSizes || [emptyObj]);
+	const [sizesList, setSizesList] = useState(currentSizes || [emptyRow()]);
 
 	return (
 		<>
@@ -133,7 +134,7 @@ const FileSizePerMimeType = ({
 					handleAddClick={addRow}
 					handleRemoveClick={removeRow}
 					index={index}
-					key={index}
+					key={item.id}
 					mimeType={item.mimeType}
 					portletNamespace={portletNamespace}
 					size={item.size}

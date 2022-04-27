@@ -3616,6 +3616,35 @@ definition {
 		PageEditor.viewFragmentNotPresent(fragmentName = "${fragmentName}");
 	}
 
+	macro viewCollectionDisplayStyle {
+		if (isSet(columnCount)) {
+			var i = "0";
+
+			while ("${i}" != "${columnCount}") {
+				var columnNumber = ${i} + 1;
+
+				AssertElementPresent(
+					key_columnNumber = "${columnNumber}",
+					key_position = "${position}",
+					locator1 = "PageEditor#COLLECTION_DISPLAY_COLUMN");
+			}
+
+			var columnNumber = ${columnCount} + 1;
+
+			AssertElementNotPresent(
+				key_columnNumber = "${columnNumber}",
+				key_position = "${position}",
+				locator1 = "PageEditor#COLLECTION_DISPLAY_COLUMN");
+		}
+
+		if (isSet(layout)) {
+			AssertElementPresent(
+				key_layout = "${layout}",
+				key_position = "${position}",
+				locator1 = "PageEditor#COLLECTION_DISPLAY_CONFIGURATION_LAYOUT");
+		}
+	}
+
 	macro viewCollectionItem {
 		if (!(isSet(column))) {
 			var column = "1";

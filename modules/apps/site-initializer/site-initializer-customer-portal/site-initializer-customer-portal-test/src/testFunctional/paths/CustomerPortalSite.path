@@ -80,6 +80,11 @@
 	<td>//div[contains(@class,'d-flex')]//h2[contains(text(),'Invite Your Team Members')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SKIP_FOR_NOW_BUTTON</td>
+	<td>//div[contains(@class,'d-flex')]//button[contains(@class,'btn-outline-borderless')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -1470,8 +1470,10 @@ public class ContentPageEditorDisplayContext {
 		Map<String, Object> fragmentEntryLinksMap = new HashMap<>();
 
 		List<FragmentEntryLink> fragmentEntryLinks = new ArrayList<>(
-			FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinksByPlid(
-				getGroupId(), themeDisplay.getPlid()));
+			FragmentEntryLinkLocalServiceUtil.
+				getFragmentEntryLinksBySegmentsExperienceId(
+					getGroupId(), getSegmentsExperienceId(),
+					themeDisplay.getPlid()));
 
 		Layout layout = themeDisplay.getLayout();
 

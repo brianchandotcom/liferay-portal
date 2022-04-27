@@ -65,24 +65,31 @@ public class LayoutPageTemplateEntryPreviewUploadFileEntryHandler
 		String fileName = uploadPortletRequest.getFileName(_PARAMETER_NAME);
 
 		if (Validator.isNotNull(fileName)) {
-			String contentType = uploadPortletRequest.getContentType(
-				_PARAMETER_NAME);
-
 			try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
 					_PARAMETER_NAME)) {
 
-				String uniqueFileName = _uniqueFileNameProvider.provide(
-					fileName,
-					curFileName -> _exists(themeDisplay, curFileName));
-
-				return TempFileEntryUtil.addTempFileEntry(
-					themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
-					_TEMP_FOLDER_NAME, uniqueFileName, inputStream,
-					contentType);
+				return _addTempFileEntry(
+					fileName, inputStream, _PARAMETER_NAME,
+					uploadPortletRequest, themeDisplay);
 			}
 		}
 
 		return _editImageFileEntry(uploadPortletRequest, themeDisplay);
+	}
+
+	private FileEntry _addTempFileEntry(
+			String fileName, InputStream inputStream, String parameterName,
+			UploadPortletRequest uploadPortletRequest,
+			ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		String uniqueFileName = _uniqueFileNameProvider.provide(
+			fileName, curFileName -> _exists(themeDisplay, curFileName));
+
+		return TempFileEntryUtil.addTempFileEntry(
+			themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
+			_TEMP_FOLDER_NAME, uniqueFileName, inputStream,
+			uploadPortletRequest.getContentType(parameterName));
 	}
 
 	private FileEntry _editImageFileEntry(
@@ -98,14 +105,9 @@ public class LayoutPageTemplateEntryPreviewUploadFileEntryHandler
 		try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
 				"imageBlob")) {
 
-			String uniqueFileName = _uniqueFileNameProvider.provide(
-				fileEntry.getFileName(),
-				curFileName -> _exists(themeDisplay, curFileName));
-
-			return TempFileEntryUtil.addTempFileEntry(
-				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
-				_TEMP_FOLDER_NAME, uniqueFileName, inputStream,
-				uploadPortletRequest.getContentType("imageBlob"));
+			return _addTempFileEntry(
+				fileEntry.getFileName(), inputStream, "imageBlob",
+				uploadPortletRequest, themeDisplay);
 		}
 	}
 

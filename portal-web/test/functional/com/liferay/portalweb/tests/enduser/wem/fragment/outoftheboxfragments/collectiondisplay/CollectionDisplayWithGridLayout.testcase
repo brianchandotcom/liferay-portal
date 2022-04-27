@@ -88,4 +88,80 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-111561. The grid layout of Collection Display defined in Desktop viewport should be propagated to other viewports."
+	@priority = "4"
+	test PropagateGridLayoutDefinedInDesktopToOtherViewports {
+		property custom.properties = "feature.flag.LPS-119551=true";
+
+		task ("Given the user has created a collection page, added a Collection Display Fragment and a Collection with several items") {
+			task ("Add five web contents") {
+				for (var i : list "1,2,3,4,5") {
+					JSONWebcontent.addWebContent(
+						content = "Web Content Content ${i}",
+						groupName = "Test Site Name",
+						title = "Web Content Title ${i}");
+				}
+			}
+
+			task ("Add a dynamic collection for Web Content Article and Basic Web Content") {
+				JSONAssetlist.addDynamicAssetListEntryWithItemType(
+					groupName = "Test Site Name",
+					itemSubtype = "Basic Web Content",
+					itemType = "Web Content Article",
+					title = "Dynamic Collection");
+			}
+
+			task ("Add a collection page based on the dynamic collection") {
+				PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+				ContentPages.addCollectionPage(
+					collectionName = "Dynamic Collection",
+					pageName = "Test Page Name",
+					tabName = "Collections");
+			}
+		}
+
+		task ("When the user changes to Tablet viewport") {
+			PageEditor.viewCollectionDisplayStyle(
+				columnCount = "1",
+				layout = "12",
+				position = "1");
+
+			PageEditor.switchViewport(deviceType = "Tablet");
+		}
+
+		task ("Then the user could see the grid layout same with default value in Desktop viewport") {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
+
+			PageEditor.viewCollectionDisplayStyle(
+				columnCount = "1",
+				layout = "12",
+				position = "1");
+
+			SelectFrame(value1 = "relative=top");
+		}
+
+		task ("When the user configures the grid layout of the Collection Display in Desktop viewport then changes to Tablet viewport") {
+			PageEditor.switchViewport(deviceType = "Desktop");
+
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				layout = "4 Columns",
+				selectedName = "Dynamic Collection",
+				spaceBetweenColumns = "false");
+		}
+
+		task ("Then the user could see the grid layout defined in Desktop viewport") {
+			PageEditor.switchViewport(deviceType = "Tablet");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
+
+			PageEditor.viewCollectionDisplayStyle(
+				columnCount = "4",
+				layout = "3",
+				position = "1",
+				spaceBetweenColumns = "false");
+		}
+	}
+
 }

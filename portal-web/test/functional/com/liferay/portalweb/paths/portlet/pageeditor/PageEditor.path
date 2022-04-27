@@ -50,7 +50,7 @@
 </tr>
 <tr>
 	<td>COLLECTION_DISPLAY_COLUMN</td>
-	<td>xpath=(//div[@aria-label='Collection Display'])[${key_position}]//div[contains(@class,'col-')][${key_columnNumber}]</td>
+	<td>xpath=(//div[@aria-label='Collection Display'])[${key_position}]//div[contains(@class,'row')][${key_rowNumber}]//div[contains(@class,'col-')][${key_columnNumber}]</td>
 	<td></td>
 </tr>
 <tr>

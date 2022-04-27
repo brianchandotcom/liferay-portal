@@ -90,7 +90,7 @@ public class AddAssetVocabularySiteNavigationMenuItemsMVCActionCommand
 						true
 					).put(
 						"classPK",
-						assetVocabularyJSONObject.getString("vocabularyId")
+						assetVocabularyJSONObject.getString("assetVocabularyId")
 					).put(
 						"groupId",
 						assetVocabularyJSONObject.getString("groupId")

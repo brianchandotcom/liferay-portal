@@ -61,7 +61,7 @@ public class GetAssetVocabularyDetailsMVCResourceCommand
 			WebKeys.THEME_DISPLAY);
 
 		long assetVocabularyId = ParamUtil.getLong(
-			resourceRequest, "vocabularyId");
+			resourceRequest, "assetVocabularyId");
 
 		try {
 			AssetVocabulary assetVocabulary =

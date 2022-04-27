@@ -89,7 +89,7 @@
 </tr>
 <tr>
 	<td>TRANSLATIONS_PREVIEW_TITLE</td>
-	<td>//div[contains(@class,'form-group')]//input[contains(@id,'MyWorkflowTaskPortlet_Title') and contains(@value,'${key_titleValue}') and @readonly='readonly'] </td>
+	<td>//div[contains(@class,'form-group')]//input[contains(@id,'MyWorkflowTaskPortlet') and contains(@value,'${key_titleValue}') and @readonly='readonly'] </td>
 	<td></td>
 </tr>
 <!--PROCESS_BUILDER_FILTER_AND_ORDER-->

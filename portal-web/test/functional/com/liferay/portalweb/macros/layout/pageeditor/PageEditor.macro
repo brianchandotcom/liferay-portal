@@ -3659,6 +3659,17 @@ definition {
 				key_position = "${position}",
 				locator1 = "PageEditor#COLLECTION_DISPLAY_CONFIGURATION_LAYOUT");
 		}
+
+		if ("${spaceBetweenColumns}" == "true") {
+			AssertElementNotPresent(
+				key_position = "${position}",
+				locator1 = "PageEditor#COLLECTION_DISPLAY_COLUMNS_NO_GUTTER");
+		}
+		else if ("${spaceBetweenColumns}" == "false") {
+			AssertElementPresent(
+				key_position = "${position}",
+				locator1 = "PageEditor#COLLECTION_DISPLAY_COLUMNS_NO_GUTTER");
+		}
 	}
 
 	macro viewCollectionItem {

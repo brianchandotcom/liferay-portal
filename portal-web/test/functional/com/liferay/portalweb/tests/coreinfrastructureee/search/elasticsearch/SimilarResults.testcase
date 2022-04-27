@@ -760,65 +760,6 @@ definition {
 			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
 	}
 
-	@priority = "4"
-	test ConfigureWordLength {
-		JSONWebcontent.addWebContent(
-			content = "WC Content",
-			groupName = "Guest",
-			title = "Alpha Bravo");
-
-		JSONWebcontent.addWebContent(
-			content = "WC Content",
-			groupName = "Guest",
-			title = "Alpha Bravo Charlie");
-
-		JSONWebcontent.addWebContent(
-			content = "WC Content",
-			groupName = "Guest",
-			title = "Charlie");
-
-		SearchPortlets.setupSimilarResultsPage();
-
-		SearchPortlets.configureSimilarResults(
-			displayTemplate = "Compact Layout",
-			fields = "localized_title_en_US",
-			minimumDocumentFrequency = "1",
-			minimumTermFrequency = "1",
-			minimumWordLength = "6");
-
-		AssetPublisherPortlet.clickAssetTitle(assetTitle = "Alpha Bravo Charlie");
-
-		AssertElementPresent(
-			key_linkResultTitle = "Charlie",
-			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
-
-		AssertElementNotPresent(
-			key_linkResultTitle = "Alpha Bravo",
-			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
-
-		SearchPortlets.configureSimilarResults(minimumWordLength = "8");
-
-		AssertElementNotPresent(
-			key_linkResultTitle = "Alpha Bravo",
-			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
-
-		AssertElementNotPresent(
-			key_linkResultTitle = "Charlie",
-			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
-
-		SearchPortlets.configureSimilarResults(
-			maximumWordLength = "5",
-			minimumWordLength = "5");
-
-		AssertElementPresent(
-			key_linkResultTitle = "Alpha Bravo",
-			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
-
-		AssertElementNotPresent(
-			key_linkResultTitle = "Charlie",
-			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
-	}
-
 	test ConfigureViewInContextLinkBehavior {
 		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 			contentType = "Blogs Entry",
@@ -879,6 +820,65 @@ definition {
 			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
 
 		ControlMenu.viewHeaderTitle(headerTitle = "Blogs Display Page");
+	}
+
+	@priority = "4"
+	test ConfigureWordLength {
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Guest",
+			title = "Alpha Bravo");
+
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Guest",
+			title = "Alpha Bravo Charlie");
+
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Guest",
+			title = "Charlie");
+
+		SearchPortlets.setupSimilarResultsPage();
+
+		SearchPortlets.configureSimilarResults(
+			displayTemplate = "Compact Layout",
+			fields = "localized_title_en_US",
+			minimumDocumentFrequency = "1",
+			minimumTermFrequency = "1",
+			minimumWordLength = "6");
+
+		AssetPublisherPortlet.clickAssetTitle(assetTitle = "Alpha Bravo Charlie");
+
+		AssertElementPresent(
+			key_linkResultTitle = "Charlie",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementNotPresent(
+			key_linkResultTitle = "Alpha Bravo",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		SearchPortlets.configureSimilarResults(minimumWordLength = "8");
+
+		AssertElementNotPresent(
+			key_linkResultTitle = "Alpha Bravo",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementNotPresent(
+			key_linkResultTitle = "Charlie",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		SearchPortlets.configureSimilarResults(
+			maximumWordLength = "5",
+			minimumWordLength = "5");
+
+		AssertElementPresent(
+			key_linkResultTitle = "Alpha Bravo",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+		AssertElementNotPresent(
+			key_linkResultTitle = "Charlie",
+			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
 	}
 
 	@priority = "4"

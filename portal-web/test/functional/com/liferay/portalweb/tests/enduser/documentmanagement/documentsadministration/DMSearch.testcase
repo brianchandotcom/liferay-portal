@@ -49,12 +49,27 @@ definition {
 	}
 
 	@description = "This is a test for LPS-98063. It checks that a user can search for document by synonyms."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanSearchForDocumentBySynonyms {
+		property test.run.environment = "EE";
 
-		// TODO LPS-149367 CanSearchForDocumentBySynonyms pending implementation
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "apple",
+			groupName = "Guest",
+			mimeType = "image/png",
+			sourceFileName = "Document_1.png");
 
+		SearchTuning.openSynonymsAdmin();
+
+		SearchTuning.addSynonymSet(synonyms = "apple,fruit");
+
+		Navigator.openURL();
+
+		SearchPortlets.searchEmbedded(searchTerm = "fruit");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "apple",
+			searchAssetType = "Document");
 	}
 
 	@priority = "4"

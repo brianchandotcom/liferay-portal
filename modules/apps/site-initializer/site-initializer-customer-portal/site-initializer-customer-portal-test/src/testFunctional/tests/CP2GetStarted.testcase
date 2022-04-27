@@ -30,24 +30,66 @@ definition {
 	@description = "LPS-145260 - Verify if when user completes the on-boarding flow or skips through it, Get Started page doesn't appears again."
 	@priority = "4"
 	test GetStartedDontAppearASecondTime {
+		CustomerPortal.changeUserRole(
+			accountName = "Test Account 01",
+			accountRoleTitle = "Account Administrator",
+			accountUserName = "Test Test");
+
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+
+		CustomerPortal.enterOnProject(projectName = "Test Account 01");
+
+		CustomerPortal.clickOnStartProjectSetup();
+
+		CustomerPortal.clickOnSkipForNowButton();
+
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+
+		CustomerPortal.enterOnProject(projectName = "Test Account 01");
+
+		CustomerPortal.viewSubcriptionsPage();
 	}
 
 	@description = "LPS-145256 - Verify if the non-admin user with just one project is redirected to the Project Overview page."
 	@priority = "4"
 	test IfWithOneProjectUserIsRedirectedToProjectOverview {
+
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+
+		CustomerPortal.enterOnProject(projectName = "Test Account 01");
+
+		CustomerPortal.viewSubcriptionsPage();
+
 	}
 
 	@description = "LPS-143374 - Verify if the button 'Start Project Setup' is present."
 	@priority = "4"
 	test IsStartProjectButtonPresent {
+		CustomerPortal.changeUserRole(
+			accountName = "Test Account 01",
+			accountRoleTitle = "Account Administrator",
+			accountUserName = "Test Test");
+
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+
+		CustomerPortal.enterOnProject(projectName = "Test Account 01");
+
+		CustomerPortal.viewStartProjectSetupButton();
 	}
 
 	@description = "LPS-145255 - Verify if the get started page is shown for user when admin profile logs in for the first time."
 	@priority = "5"
 	test IsStartProjectShowingInFirstTime {
-		CustomerPortal.changeUserRole();
+		CustomerPortal.changeUserRole(
+			accountName = "Test Account 01",
+			accountRoleTitle = "Account Administrator",
+			accountUserName = "Test Test");
 
 		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+
+		CustomerPortal.enterOnProject(projectName = "Test Account 01");
+
+		CustomerPortal.viewGetStartedModal();
 	}
 
 	@description = "LPS-145259 - Verify that the Get Started button takes the user to the Invite Your Team Members page."
@@ -61,11 +103,18 @@ definition {
 		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
 
 		CustomerPortal.enterOnProject(projectName = "Test Account 01");
+
+		CustomerPortal.clickOnStartProjectSetup();
+
+		CustomerPortal.viewInviteTeamMembersModalPage();
 	}
 
 	@description = "LPS-145258 - Verify if the non-admin user with more than one project is redirected to the All Projects page."
 	@priority = "4"
 	test WithMoreThanOneProjectIsRedirectedToAllProjects {
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+
+		CustomerPortal.viewAllProjectsTitlePage();
 	}
 
 }

@@ -16,14 +16,12 @@ package com.liferay.portal.upload;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.upload.FileItem;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.tools.ToolDependencies;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.disk.DiskFileItem;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -108,8 +106,8 @@ public class UploadServletRequestImplTest {
 	}
 
 	private FileItem _getFileItem(String fieldName, long size) {
-		FileItem fileItem = new DiskFileItem(
-			fieldName, null, false, null, 0, null);
+		FileItem fileItem = new LiferayFileItem(
+			fieldName, null, false, null, 0, null, null);
 
 		ReflectionTestUtil.setFieldValue(fileItem, "size", size);
 

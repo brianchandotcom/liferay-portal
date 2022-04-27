@@ -533,7 +533,9 @@ public class JobFactory {
 		if (jobName.startsWith("test-portal-testsuite-upstream-controller(") ||
 			jobName.equals("test-results-consistency-report-controller") ||
 			jobName.startsWith(
-				"test-qa-websites-functional-daily-controller(")) {
+				"test-qa-websites-functional-daily-controller(") ||
+			jobName.startsWith(
+				"test-qa-websites-functional-weekly-controller(")) {
 
 			if (jsonObject != null) {
 				job = new SimpleJob(jsonObject);

@@ -106,7 +106,7 @@ const FileSizeField = ({
 
 const FileSizePerMimeType = ({
 	currentSizes,
-	description = 'file-size-mimetype-description',
+	description = Liferay.Language.get('file-size-mimetype-description'),
 	portletNamespace,
 }) => {
 	const emptyRow = () => ({id: uuidv4(), mimeType: '', size: ''});

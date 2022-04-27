@@ -196,7 +196,7 @@ public class AssetVocabularySiteNavigationMenuTypeDisplayContext {
 			}
 		).put(
 			"eventName",
-			_liferayPortletResponse.getNamespace() + "selectVocabulary"
+			_liferayPortletResponse.getNamespace() + "selectAssetVocabulary"
 		).put(
 			"getAssetVocabularyDetailsURL",
 			() -> {

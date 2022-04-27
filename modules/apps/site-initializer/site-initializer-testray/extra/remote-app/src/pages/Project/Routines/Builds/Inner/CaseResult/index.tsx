@@ -78,8 +78,8 @@ const CaseResult = () => {
 
 	return (
 		<ClayLayout.Row>
-			<ClayLayout.Col xs={12}>
-				<ClayButton.Group className="ml-3" spaced>
+			<ClayLayout.Col className="p-0" xs={12}>
+				<ClayButton.Group className="mb-3 ml-3" spaced>
 					<ClayButton>{i18n.translate('assign')}</ClayButton>
 
 					<ClayButton displayType="secondary">
@@ -105,7 +105,7 @@ const CaseResult = () => {
 			</ClayLayout.Col>
 
 			<ClayLayout.Col xs={9}>
-				<Container className="mt-4" title="Test Details">
+				<Container className="mt-4" collapsable title="Test Details">
 					<QATable
 						items={[
 							{
@@ -189,7 +189,7 @@ const CaseResult = () => {
 					/>
 				</Container>
 
-				<Container className="mt-4" title="Case Details">
+				<Container className="mt-4" collapsable title="Case Details">
 					<QATable
 						items={[
 							{
@@ -230,7 +230,11 @@ const CaseResult = () => {
 			</ClayLayout.Col>
 
 			<ClayLayout.Col xs={3}>
-				<Container className="mt-4" title={i18n.translate('dates')}>
+				<Container
+					className=""
+					collapsable
+					title={i18n.translate('dates')}
+				>
 					<QATable
 						items={[
 							{

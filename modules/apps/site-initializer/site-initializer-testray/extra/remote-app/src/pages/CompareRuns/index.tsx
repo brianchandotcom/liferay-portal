@@ -24,7 +24,7 @@ const CompareRuns: React.FC = () => {
 	const {colors, columns, data} = useTableChartData();
 
 	return (
-		<Container title={i18n.translate('details')}>
+		<Container collapsable title={i18n.translate('details')}>
 			<div className="d-flex flex-wrap">
 				<div className="col-8 col-lg-8 col-md-12">
 					<QATable

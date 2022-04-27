@@ -29,6 +29,7 @@ import {
 } from '../../../graphql/queries';
 import useHeader from '../../../hooks/useHeader';
 import i18n from '../../../i18n';
+import dayjs from '../../../util/date';
 
 const Suite = () => {
 	const {projectId, testraySuiteId} = useParams();
@@ -62,7 +63,7 @@ const Suite = () => {
 
 	return (
 		<LoadingWrapper isLoading={loading}>
-			<Container title={i18n.translate('details')}>
+			<Container collapsable title={i18n.translate('details')}>
 				<QATable
 					items={[
 						{
@@ -71,11 +72,15 @@ const Suite = () => {
 						},
 						{
 							title: i18n.translate('create-date'),
-							value: testraySuite?.dateCreated,
+							value: dayjs(testraySuite?.dateCreated).format(
+								'lll'
+							),
 						},
 						{
 							title: i18n.translate('date-last-modified'),
-							value: testraySuite?.dateModified,
+							value: dayjs(testraySuite?.dateModified).format(
+								'lll'
+							),
 						},
 						{
 							title: i18n.translate('created-by'),
@@ -87,6 +92,7 @@ const Suite = () => {
 
 			<Container
 				className="mt-4"
+				collapsable
 				title={i18n.translate('case-parameters')}
 			>
 				<QATable

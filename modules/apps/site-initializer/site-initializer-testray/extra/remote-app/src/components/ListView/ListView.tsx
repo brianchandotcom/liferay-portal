@@ -169,12 +169,27 @@ const ListView: React.FC<ListViewProps> = ({
 };
 
 const ListViewWithContext: React.FC<
-	ListViewProps & {initialContext?: ListViewContextProviderProps}
-> = ({initialContext, ...otherProps}) => {
+	ListViewProps & {
+		initialContext?: ListViewContextProviderProps;
+		viewPermission?: boolean;
+	}
+> = ({initialContext, viewPermission = true, ...otherProps}) => {
+	if (viewPermission) {
+		return (
+			<ListViewContextProvider {...initialContext}>
+				<ListView {...otherProps} />
+			</ListViewContextProvider>
+		);
+	}
+
 	return (
-		<ListViewContextProvider {...initialContext}>
-			<ListView {...otherProps} />
-		</ListViewContextProvider>
+		<EmptyState
+			description={i18n.translate(
+				'you-do-not-have-permissions-to-access-this-app-contact-the-app-administrator-to-request-the-access'
+			)}
+			title={i18n.translate('no-permissions')}
+			type="NO_ACCESS"
+		/>
 	);
 };
 

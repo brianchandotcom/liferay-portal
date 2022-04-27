@@ -17,13 +17,24 @@ import {useEffect} from 'react';
 import Container from '../../components/Layout/Container';
 import ListView from '../../components/ListView/ListView';
 import {getProjects} from '../../graphql/queries';
-import useHeader from '../../hooks/useHeader';
+import {useAccountContext, useHeader} from '../../hooks';
 import i18n from '../../i18n';
+import {SecurityPermissions} from '../../types';
 import ProjectModal from './ProjectModal';
 import useProjectActions from './useProjectActions';
 
-const Projects = ({addHeading = true, PageContainer = Container}) => {
-	const {actions, formModal} = useProjectActions();
+type ProjectsProps = {
+	PageContainer: React.FC;
+	addHeading?: boolean;
+};
+
+const Projects: React.FC<ProjectsProps & SecurityPermissions> = ({
+	addHeading = true,
+	PageContainer = Container,
+	security,
+	permissions,
+}) => {
+	const {actions, formModal} = useProjectActions(security, permissions);
 
 	const {setHeading} = useHeader({shouldUpdate: false});
 
@@ -44,7 +55,9 @@ const Projects = ({addHeading = true, PageContainer = Container}) => {
 				<ListView
 					forceRefetch={formModal.forceRefetch}
 					managementToolbarProps={{
-						addButton: () => formModal.modal.open(),
+						addButton: permissions.CREATE
+							? () => formModal.modal.open()
+							: undefined,
 					}}
 					query={getProjects}
 					tableProps={{
@@ -64,6 +77,7 @@ const Projects = ({addHeading = true, PageContainer = Container}) => {
 							`/project/${project.id}/routines`,
 					}}
 					transformData={(data) => data?.c?.projects}
+					viewPermission={permissions.INDEX}
 				/>
 			</PageContainer>
 
@@ -72,4 +86,27 @@ const Projects = ({addHeading = true, PageContainer = Container}) => {
 	);
 };
 
-export default Projects;
+const ProjectPermissions: React.FC<ProjectsProps> = (props) => {
+	const {security} = useAccountContext();
+
+	const permissions = security.permissions('TestrayProject', [
+		'INDEX',
+		'CREATE',
+		'UPDATE',
+		'DELETE',
+	]);
+
+	if (permissions) {
+		return (
+			<Projects
+				{...props}
+				permissions={permissions}
+				security={security}
+			/>
+		);
+	}
+
+	return null;
+};
+
+export default ProjectPermissions;

@@ -1371,6 +1371,8 @@ definition {
 			configurationName = "JavaScript Loader",
 			configurationScope = "System Scope");
 
+		Refresh();
+
 		for (var fieldName : list "applyVersioning,exposeGlobal") {
 			FormFields.viewCheckboxNotChecked(fieldName = "${fieldName}");
 		}

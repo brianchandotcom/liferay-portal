@@ -108,7 +108,7 @@ definition {
 			fieldName = "Numeric",
 			fieldValue = "1,1");
 
-		FormPortlet.submitLocalizedSuccessfully(buttonName = "Submeter");
+		FormPortlet.submitSuccessfully();
 	}
 
 	@description = "Verify that a Numeric Field can be created"
@@ -1295,7 +1295,7 @@ definition {
 			fieldName = "Numeric",
 			fieldValue = "1000");
 
-		FormPortlet.submitLocalizedSuccessfully(buttonName = "Submeter");
+		FormPortlet.submitSuccessfully();
 	}
 
 	@description = "LRQA-70003 - Verify if the decimal input mask is working in the rules"
@@ -1440,7 +1440,7 @@ definition {
 			fieldName = "Numeric",
 			fieldValue = "2222222222222");
 
-		FormPortlet.submitLocalizedSuccessfully(buttonName = "Submeter");
+		FormPortlet.submitSuccessfully();
 	}
 
 	@description = "Verify that input mask on integers working on rules"

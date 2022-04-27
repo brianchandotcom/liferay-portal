@@ -1446,7 +1446,7 @@ definition {
 			fieldName = "Date",
 			fieldValue = "01/01/${futureYear}");
 
-		FormPortlet.submitLocalizedSuccessfully(buttonName = "Submeter");
+		FormPortlet.submitSuccessfully();
 	}
 
 	@description = "Verify if that with date validation in the datefield the error message appears correctly on forms"

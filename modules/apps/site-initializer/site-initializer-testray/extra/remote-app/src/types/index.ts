@@ -12,6 +12,13 @@
  * details.
  */
 
+import {Security} from '../security';
+import {
+	TestrayActions,
+	TestrayEntities,
+	TestrayRoles,
+} from '../security/RolePermission';
+
 export type ActionMap<M extends {[index: string]: any}> = {
 	[Key in keyof M]: M[Key] extends undefined
 		? {
@@ -32,3 +39,23 @@ export enum SortOption {
 	ASC = 'asc',
 	DESC = 'desc',
 }
+
+export type Action<T = any> = {
+	action?: (item: T) => void;
+	name: string;
+	permission?: keyof typeof TestrayActions | boolean;
+};
+
+export type SecurityPermissions = {
+	permissions: PermissionCheck;
+	security: Security;
+};
+
+export type Actions = keyof typeof TestrayActions;
+export type Entity = keyof TestrayEntities;
+export type Roles = keyof typeof TestrayRoles;
+export type PermissionCheck = Partial<
+	{
+		[key in Actions]: boolean;
+	}
+>;

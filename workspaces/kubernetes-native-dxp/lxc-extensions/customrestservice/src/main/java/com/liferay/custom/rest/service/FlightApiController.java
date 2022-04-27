@@ -2,6 +2,7 @@ package com.liferay.custom.rest.service;
 
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
@@ -53,29 +54,61 @@ public class FlightApiController {
 	public ResponseEntity<List<FlightDetail>> search(@RequestParam String origin, @RequestParam String destination, @RequestParam Optional<String> departureDate, @RequestParam Optional<Integer> adults) throws ResponseException {
 		logger.info("Flight search " + origin + " -> " + destination);
 
-		FlightOfferSearch[] flightOffers = amadeus.shopping.flightOffersSearch.get(
-			Params.with(
-				"originLocationCode", origin
-			).and(
-				"destinationLocationCode", destination
-			).and(
-				"departureDate", departureDate.orElse("2022-06-01")
-			).and(
-				"adults", adults.orElse(2)
-			)
-		);
+		logger.info("calling API with id " + amadeus.getConfiguration().getClientId());
+		logger.info("calling API with secret " + amadeus.getConfiguration().getClientSecret());
 
-		logger.info("# of offers found: " + flightOffers.length);
+		List<FlightDetail> flightDetails = Collections.emptyList();
 
-		List<FlightDetail> flightDetails = Arrays.stream(
-			flightOffers
-		).map(
-			FlightApiController::_toDetail
-		).collect(
-			Collectors.toList()
-		);
+		try {
+			FlightOfferSearch[] flightOffers = amadeus.shopping.flightOffersSearch.get(
+				Params.with(
+					"originLocationCode", origin
+				).and(
+					"destinationLocationCode", destination
+				).and(
+					"departureDate", departureDate.orElse("2022-06-01")
+				).and(
+					"adults", adults.orElse(2)
+				)
+			);
+
+			logger.info("# of offers found: " + flightOffers.length);
+
+			flightDetails = Arrays.stream(
+				flightOffers
+			).map(
+				FlightApiController::_toDetail
+			).collect(
+				Collectors.toList()
+			);
+		} catch (Exception e) {
+			logger.error("API failed, falling back to mock data", e);
+			
+			flightDetails = _mockDetails(origin, destination);
+		}
 
 		return new ResponseEntity<List<FlightDetail>>(flightDetails, HttpStatus.OK);
+	}
+
+	private List<FlightDetail> _mockDetails(String origin, String destination) {
+		FlightDetail fd = new FlightDetail();
+
+		fd.totalDuration = "PT14H30M";
+		Leg leg1 = new Leg();
+		leg1.airline = "AA";
+		leg1.departureCode = origin;
+		leg1.arrivalCode = "LHR";
+		leg1.duration = "PT8H44M";
+
+		Leg leg2 = new Leg();
+		leg2.airline = "BA";
+		leg2.departureCode = "LHR";
+		leg2.arrivalCode = destination;
+		leg2.duration = "PT3H10M";
+
+		fd.legs = new Leg[] {leg1, leg2};
+		
+		return Collections.singletonList(fd);
 	}
 
 	private static FlightDetail _toDetail(FlightOfferSearch offer) {

@@ -56,16 +56,16 @@ spec:
               value: https
             - name: LIFERAY_MODULE_PERIOD_FRAMEWORK_PERIOD_PROPERTIES_PERIOD_ORG_PERIOD_APACHE_PERIOD_FELIX_PERIOD_CONFIGADMIN_PERIOD_PLUGIN_PERIOD_INTERPOLATION_PERIOD_SECRETSDIR
               value: /opt/liferay/osgi/configs,/var/run/secrets/kubernetes.io/serviceaccount
-            - name: GOOGLE_OIDC_CLIENT_ID
+            - name: GCP_OIDC_CLIENT_ID
               valueFrom:
                 configMapKeyRef:
-                  name: google-oidc-credentials-configmap
-                  key: GOOGLE_OIDC_CLIENT_ID
-            - name: GOOGLE_OIDC_CLIENT_SECRET
+                  name: gcp-oidc-credentials-configmap
+                  key: GCP_OIDC_CLIENT_ID
+            - name: GCP_OIDC_CLIENT_SECRET
               valueFrom:
                 configMapKeyRef:
-                  name: google-oidc-credentials-configmap
-                  key: GOOGLE_OIDC_CLIENT_SECRET
+                  name: gcp-oidc-credentials-configmap
+                  key: GCP_OIDC_CLIENT_SECRET
             - name: LCP_SERVICE_DOMAIN
               value: localdev.me
             - name: LCP_PROJECT_ID

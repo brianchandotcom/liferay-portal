@@ -4,6 +4,6 @@ resources:
 - dxp-service.yaml
 - dxp-volume.yaml
 configMapGenerator:
-- name: google-oidc-credentials-configmap
+- name: gcp-oidc-credentials-configmap
   envs:
   - ENV

@@ -25,7 +25,6 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.amadeus.Amadeus;
-import com.liferay.custom.rest.service.FlightApiController;
 
 @Configuration
 public class CustomRestSecurityConfig extends WebSecurityConfigurerAdapter {

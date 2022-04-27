@@ -91,6 +91,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>INPUT_NAME</td>
+		<td>//input[contains(@id,'_com_liferay_document_library_web_portlet_DLAdminPortlet_name')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>OBJECT_PORTLET_HEADER</td>
 		<td>//span[@data-qa-id='headerTitle' and contains (text(),'${key_objectLabel}')]</td>
 		<td></td>
@@ -131,9 +136,9 @@
 		<td></td>
 	</tr>
 	<tr>
-	<td>SORT_FIELD</td>
-	<td>//button[@class='btn-sorting inline-item text-nowrap text-truncate-inline btn btn-sm btn-unstyled' and contains(text(), '${key_sortFieldName}')]</td>
-	<td></td>
+		<td>SORT_FIELD</td>
+		<td>//button[@class='btn-sorting inline-item text-nowrap text-truncate-inline btn btn-sm btn-unstyled' and contains(text(), '${key_sortFieldName}')]</td>
+		<td></td>
 	</tr>
 	<tr>
 		<td>VIEW_ENTRY_BUTTON</td>

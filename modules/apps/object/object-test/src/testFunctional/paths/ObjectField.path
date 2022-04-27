@@ -8,6 +8,11 @@
 <thead><tr><td rowspan="1" colspan="3">ObjectField</td></tr></thead>
 <tbody>
 	<tr>
+		<td>DOCUMENT_NAME</td>
+		<td>//p[contains(@class,'card-title text-truncate')]//a</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>ERROR_REQUIRED_FIELD_SPECIFIC</td>
 		<td>//label[contains(text(), '${key_fieldName}')]/../div[contains(@class, 'form-feedback-group') and contains(.,'Required')]</td>
 		<td></td>

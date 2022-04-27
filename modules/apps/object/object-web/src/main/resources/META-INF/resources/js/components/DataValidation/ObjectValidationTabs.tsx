@@ -13,7 +13,7 @@
  */
 
 import ClayForm from '@clayui/form';
-import React, {ChangeEventHandler, useEffect, useState} from 'react';
+import React, {ChangeEventHandler, useState} from 'react';
 
 import Editor from '../Editor/Editor';
 import Sidebar from '../Editor/Sidebar/Sidebar';
@@ -23,7 +23,6 @@ import Select from '../Form/Select';
 import ObjectValidationFormBase, {
 	ObjectValidationErrors,
 } from '../ObjectValidationFormBase';
-import {getTranslations} from './utils';
 
 import '../Editor/Editor.scss';
 
@@ -43,16 +42,6 @@ function BasicInfo({
 			symbol: string;
 		}
 	);
-
-	useEffect(() => {
-		if (typeof values.name === 'string') {
-			const nameTranslations = getTranslations(values.name, 'Name');
-
-			setValues({name: nameTranslations});
-		}
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
 
 	return (
 		<ClayForm className="lfr-objects__edit-object-validation">
@@ -109,19 +98,6 @@ function Conditions({
 		}
 	);
 	const inputChannel = useChannel();
-
-	useEffect(() => {
-		if (typeof values.errorLabel === 'string') {
-			const errorLabelTranslations = getTranslations(
-				values.errorLabel,
-				'ErrorLabel'
-			);
-
-			setValues({errorLabel: errorLabelTranslations});
-		}
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
 
 	return (
 		<ClayForm>

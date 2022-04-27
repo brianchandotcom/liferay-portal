@@ -72,7 +72,7 @@
 </tr>
 <tr>
 	<td>CONTENT</td>
-	<td>//div[contains(@class,'entry-content')]//*[contains(@class,'cke_editable') and contains(normalize-space(),'${key_entryContent}')] | //div[contains(@class,'content')]//p[contains(normalize-space(),'${key_entryContent}')] | //div[contains(@class,'header')]//*[contains(@class,'widget-mode-detail-text')] | //div[contains(@class,'widget-content')]</td>
+	<td>//div[contains(@class,'entry-content')]//*[contains(@class,'cke_editable') and contains(normalize-space(),'${key_entryContent}')] | //div[contains(@class,'content')]//p[contains(normalize-space(),'${key_entryContent}')] | //div[contains(@class,'header')]//*[contains(@class,'widget-mode-detail-text')][contains(normalize-space(),'${key_entryContent}')] | //div[contains(@class,'widget-content')][contains(normalize-space(),'${key_entryContent}')]</td>
 	<td></td>
 </tr>
 <tr>

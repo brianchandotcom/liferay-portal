@@ -117,7 +117,7 @@
 </tr>
 <tr>
 	<td>CONTENT_LINK</td>
-	<td>//div[contains(@class,'content')]//p[contains(.,'${key_entryContent}')]//a | //div[contains(@class,'entry-content')]//*[contains(@class,'cke_editable') and contains(normalize-space(),'${key_entryContent}')]//a | //div[contains(@class,'widget-content')]//p</td>
+	<td>//div[contains(@class,'content')]//p[contains(.,'${key_entryContent}')]//a | //div[contains(@class,'entry-content')]//*[contains(@class,'cke_editable') and contains(normalize-space(),'${key_entryContent}')]//a | //div[contains(@class,'widget-content')]//a[contains(normalize-space(),'${key_entryContent}')] | //div[contains(@class,'widget-content')]//p</td>
 	<td></td>
 </tr>
 <tr>

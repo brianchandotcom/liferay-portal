@@ -175,7 +175,7 @@ public class LayoutDDMFormFieldTemplateContextContributor
 				jsonObject.put("value", layout.getFriendlyURL(defaultLocale));
 			}
 
-			return jsonObject.toJSONString();
+			return jsonObject.toString();
 		}
 		catch (JSONException jsonException) {
 			if (_log.isDebugEnabled()) {

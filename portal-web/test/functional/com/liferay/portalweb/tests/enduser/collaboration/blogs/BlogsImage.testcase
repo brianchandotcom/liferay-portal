@@ -491,12 +491,17 @@ definition {
 	}
 
 	@description = "This is a test for LPS-67276. It ensures that the success message for the cover image does not display after publishing with the empty required fields."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test SuccessMessageForCoverImageDoesNotDisplayAfterPublishingWithEmptyRequiredFields {
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
-		// TODO LPS-148984 SuccessMessageForCoverImageDoesNotDisplayAfterPublishingWithEmptyRequiredFields pending implementation
+		Blogs.addEntryWithUploadedCoverImage(
+			coverImageName = "Document_1",
+			entryContent = "",
+			entryTitle = "",
+			uploadFileName = "Document_1.jpg");
 
+		BlogsEntry.publishWithInvalidTitle();
 	}
 
 }

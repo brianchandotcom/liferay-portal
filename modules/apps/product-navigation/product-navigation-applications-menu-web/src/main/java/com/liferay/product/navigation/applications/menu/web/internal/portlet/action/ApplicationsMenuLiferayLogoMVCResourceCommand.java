@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.util.PropsUtil;
@@ -68,6 +69,8 @@ public class ApplicationsMenuLiferayLogoMVCResourceCommand
 		if (inputStream == null) {
 			return;
 		}
+
+		resourceResponse.setContentType(ContentTypes.IMAGE_PNG);
 
 		PortletResponseUtil.write(resourceResponse, inputStream);
 	}

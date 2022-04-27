@@ -178,7 +178,14 @@ public class TranslationEntryLocalServiceImpl
 		actionableDynamicQuery.setPerformActionMethod(
 			(TranslationEntry translationEntry) -> {
 				translationEntryLocalService.deleteTranslationEntry(
-					translationEntry));
+					translationEntry);
+
+				_workflowInstanceLinkLocalService.deleteWorkflowInstanceLink(
+					translationEntry.getCompanyId(),
+					translationEntry.getGroupId(),
+					TranslationEntry.class.getName(),
+					translationEntry.getTranslationEntryId());
+			});
 
 		actionableDynamicQuery.performActions();
 	}

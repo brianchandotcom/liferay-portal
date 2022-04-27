@@ -48,6 +48,7 @@ public class CPMeasurementUnitWrapper
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("uuid", getUuid());
+		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("CPMeasurementUnitId", getCPMeasurementUnitId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -84,6 +85,13 @@ public class CPMeasurementUnitWrapper
 
 		if (uuid != null) {
 			setUuid(uuid);
+		}
+
+		String externalReferenceCode = (String)attributes.get(
+			"externalReferenceCode");
+
+		if (externalReferenceCode != null) {
+			setExternalReferenceCode(externalReferenceCode);
 		}
 
 		Long CPMeasurementUnitId = (Long)attributes.get("CPMeasurementUnitId");
@@ -224,6 +232,16 @@ public class CPMeasurementUnitWrapper
 	@Override
 	public String getDefaultLanguageId() {
 		return model.getDefaultLanguageId();
+	}
+
+	/**
+	 * Returns the external reference code of this cp measurement unit.
+	 *
+	 * @return the external reference code of this cp measurement unit
+	 */
+	@Override
+	public String getExternalReferenceCode() {
+		return model.getExternalReferenceCode();
 	}
 
 	/**
@@ -510,6 +528,16 @@ public class CPMeasurementUnitWrapper
 	@Override
 	public void setCtCollectionId(long ctCollectionId) {
 		model.setCtCollectionId(ctCollectionId);
+	}
+
+	/**
+	 * Sets the external reference code of this cp measurement unit.
+	 *
+	 * @param externalReferenceCode the external reference code of this cp measurement unit
+	 */
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		model.setExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**

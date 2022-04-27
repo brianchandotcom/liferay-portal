@@ -117,6 +117,21 @@ public interface CPMeasurementUnitModel
 	public void setUuid(String uuid);
 
 	/**
+	 * Returns the external reference code of this cp measurement unit.
+	 *
+	 * @return the external reference code of this cp measurement unit
+	 */
+	@AutoEscape
+	public String getExternalReferenceCode();
+
+	/**
+	 * Sets the external reference code of this cp measurement unit.
+	 *
+	 * @param externalReferenceCode the external reference code of this cp measurement unit
+	 */
+	public void setExternalReferenceCode(String externalReferenceCode);
+
+	/**
 	 * Returns the cp measurement unit ID of this cp measurement unit.
 	 *
 	 * @return the cp measurement unit ID of this cp measurement unit

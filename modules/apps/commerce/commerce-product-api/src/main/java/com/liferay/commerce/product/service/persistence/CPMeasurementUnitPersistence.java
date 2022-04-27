@@ -906,6 +906,59 @@ public interface CPMeasurementUnitPersistence
 	public int countByC_P_T(long companyId, boolean primary, int type);
 
 	/**
+	 * Returns the cp measurement unit where companyId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchCPMeasurementUnitException</code> if it could not be found.
+	 *
+	 * @param companyId the company ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the matching cp measurement unit
+	 * @throws NoSuchCPMeasurementUnitException if a matching cp measurement unit could not be found
+	 */
+	public CPMeasurementUnit findByC_ERC(
+			long companyId, String externalReferenceCode)
+		throws NoSuchCPMeasurementUnitException;
+
+	/**
+	 * Returns the cp measurement unit where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the matching cp measurement unit, or <code>null</code> if a matching cp measurement unit could not be found
+	 */
+	public CPMeasurementUnit fetchByC_ERC(
+		long companyId, String externalReferenceCode);
+
+	/**
+	 * Returns the cp measurement unit where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param externalReferenceCode the external reference code
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching cp measurement unit, or <code>null</code> if a matching cp measurement unit could not be found
+	 */
+	public CPMeasurementUnit fetchByC_ERC(
+		long companyId, String externalReferenceCode, boolean useFinderCache);
+
+	/**
+	 * Removes the cp measurement unit where companyId = &#63; and externalReferenceCode = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the cp measurement unit that was removed
+	 */
+	public CPMeasurementUnit removeByC_ERC(
+			long companyId, String externalReferenceCode)
+		throws NoSuchCPMeasurementUnitException;
+
+	/**
+	 * Returns the number of cp measurement units where companyId = &#63; and externalReferenceCode = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the number of matching cp measurement units
+	 */
+	public int countByC_ERC(long companyId, String externalReferenceCode);
+
+	/**
 	 * Caches the cp measurement unit in the entity cache if it is enabled.
 	 *
 	 * @param cpMeasurementUnit the cp measurement unit

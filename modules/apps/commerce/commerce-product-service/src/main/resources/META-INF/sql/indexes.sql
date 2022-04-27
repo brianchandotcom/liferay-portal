@@ -101,6 +101,7 @@ create index IX_842818AD on CPInstanceOptionValueRel (uuid_[$COLUMN_LENGTH:75$],
 create unique index IX_BF0C9D99 on CPInstanceOptionValueRel (uuid_[$COLUMN_LENGTH:75$], groupId, ctCollectionId);
 
 create index IX_262058AD on CPMeasurementUnit (companyId, ctCollectionId);
+create index IX_8639FE6C on CPMeasurementUnit (companyId, externalReferenceCode[$COLUMN_LENGTH:75$], ctCollectionId);
 create unique index IX_7AC67B41 on CPMeasurementUnit (companyId, key_[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_583ED653 on CPMeasurementUnit (companyId, primary_, type_, ctCollectionId);
 create index IX_9CF40D04 on CPMeasurementUnit (companyId, type_, ctCollectionId);

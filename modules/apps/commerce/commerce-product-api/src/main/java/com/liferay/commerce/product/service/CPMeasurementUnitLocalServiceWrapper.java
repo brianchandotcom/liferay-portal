@@ -60,13 +60,15 @@ public class CPMeasurementUnitLocalServiceWrapper
 
 	@Override
 	public CPMeasurementUnit addCPMeasurementUnit(
+			String externalReferenceCode,
 			java.util.Map<java.util.Locale, String> nameMap, String key,
 			double rate, boolean primary, double priority, int type,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpMeasurementUnitLocalService.addCPMeasurementUnit(
-			nameMap, key, rate, primary, priority, type, serviceContext);
+			externalReferenceCode, nameMap, key, rate, primary, priority, type,
+			serviceContext);
 	}
 
 	/**
@@ -265,6 +267,35 @@ public class CPMeasurementUnitLocalServiceWrapper
 	}
 
 	/**
+	 * Returns the cp measurement unit with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the cp measurement unit's external reference code
+	 * @return the matching cp measurement unit, or <code>null</code> if a matching cp measurement unit could not be found
+	 */
+	@Override
+	public CPMeasurementUnit fetchCPMeasurementUnitByExternalReferenceCode(
+		long companyId, String externalReferenceCode) {
+
+		return _cpMeasurementUnitLocalService.
+			fetchCPMeasurementUnitByExternalReferenceCode(
+				companyId, externalReferenceCode);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCPMeasurementUnitByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	@Override
+	public CPMeasurementUnit fetchCPMeasurementUnitByReferenceCode(
+		long companyId, String externalReferenceCode) {
+
+		return _cpMeasurementUnitLocalService.
+			fetchCPMeasurementUnitByReferenceCode(
+				companyId, externalReferenceCode);
+	}
+
+	/**
 	 * Returns the cp measurement unit matching the UUID and group.
 	 *
 	 * @param uuid the cp measurement unit's UUID
@@ -315,6 +346,24 @@ public class CPMeasurementUnitLocalServiceWrapper
 
 		return _cpMeasurementUnitLocalService.getCPMeasurementUnit(
 			companyId, key);
+	}
+
+	/**
+	 * Returns the cp measurement unit with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the cp measurement unit's external reference code
+	 * @return the matching cp measurement unit
+	 * @throws PortalException if a matching cp measurement unit could not be found
+	 */
+	@Override
+	public CPMeasurementUnit getCPMeasurementUnitByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpMeasurementUnitLocalService.
+			getCPMeasurementUnitByExternalReferenceCode(
+				companyId, externalReferenceCode);
 	}
 
 	/**

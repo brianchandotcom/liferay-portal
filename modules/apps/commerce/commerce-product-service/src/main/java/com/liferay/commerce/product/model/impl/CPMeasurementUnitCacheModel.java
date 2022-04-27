@@ -78,7 +78,7 @@ public class CPMeasurementUnitCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -86,6 +86,8 @@ public class CPMeasurementUnitCacheModel
 		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append(", CPMeasurementUnitId=");
 		sb.append(CPMeasurementUnitId);
 		sb.append(", groupId=");
@@ -132,6 +134,14 @@ public class CPMeasurementUnitCacheModel
 		}
 		else {
 			cpMeasurementUnitImpl.setUuid(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			cpMeasurementUnitImpl.setExternalReferenceCode("");
+		}
+		else {
+			cpMeasurementUnitImpl.setExternalReferenceCode(
+				externalReferenceCode);
 		}
 
 		cpMeasurementUnitImpl.setCPMeasurementUnitId(CPMeasurementUnitId);
@@ -197,6 +207,7 @@ public class CPMeasurementUnitCacheModel
 
 		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
+		externalReferenceCode = objectInput.readUTF();
 
 		CPMeasurementUnitId = objectInput.readLong();
 
@@ -232,6 +243,13 @@ public class CPMeasurementUnitCacheModel
 		}
 		else {
 			objectOutput.writeUTF(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
 		}
 
 		objectOutput.writeLong(CPMeasurementUnitId);
@@ -279,6 +297,7 @@ public class CPMeasurementUnitCacheModel
 	public long mvccVersion;
 	public long ctCollectionId;
 	public String uuid;
+	public String externalReferenceCode;
 	public long CPMeasurementUnitId;
 	public long groupId;
 	public long companyId;

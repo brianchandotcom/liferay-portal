@@ -81,14 +81,14 @@ public class CPMeasurementUnitModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
-		{"uuid_", Types.VARCHAR}, {"CPMeasurementUnitId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"name", Types.VARCHAR}, {"key_", Types.VARCHAR},
-		{"rate", Types.DOUBLE}, {"primary_", Types.BOOLEAN},
-		{"priority", Types.DOUBLE}, {"type_", Types.INTEGER},
-		{"lastPublishDate", Types.TIMESTAMP}
+		{"uuid_", Types.VARCHAR}, {"externalReferenceCode", Types.VARCHAR},
+		{"CPMeasurementUnitId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"name", Types.VARCHAR},
+		{"key_", Types.VARCHAR}, {"rate", Types.DOUBLE},
+		{"primary_", Types.BOOLEAN}, {"priority", Types.DOUBLE},
+		{"type_", Types.INTEGER}, {"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -98,6 +98,7 @@ public class CPMeasurementUnitModelImpl
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("CPMeasurementUnitId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -115,7 +116,7 @@ public class CPMeasurementUnitModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CPMeasurementUnit (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,CPMeasurementUnitId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,key_ VARCHAR(75) null,rate DOUBLE,primary_ BOOLEAN,priority DOUBLE,type_ INTEGER,lastPublishDate DATE null,primary key (CPMeasurementUnitId, ctCollectionId))";
+		"create table CPMeasurementUnit (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,CPMeasurementUnitId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,key_ VARCHAR(75) null,rate DOUBLE,primary_ BOOLEAN,priority DOUBLE,type_ INTEGER,lastPublishDate DATE null,primary key (CPMeasurementUnitId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table CPMeasurementUnit";
 
@@ -159,38 +160,44 @@ public class CPMeasurementUnitModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long GROUPID_COLUMN_BITMASK = 2L;
+	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 2L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long KEY_COLUMN_BITMASK = 4L;
+	public static final long GROUPID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long PRIMARY_COLUMN_BITMASK = 8L;
+	public static final long KEY_COLUMN_BITMASK = 8L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long TYPE_COLUMN_BITMASK = 16L;
+	public static final long PRIMARY_COLUMN_BITMASK = 16L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 32L;
+	public static final long TYPE_COLUMN_BITMASK = 32L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 64L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long PRIORITY_COLUMN_BITMASK = 64L;
+	public static final long PRIORITY_COLUMN_BITMASK = 128L;
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.commerce.product.service.util.ServiceProps.get(
@@ -311,6 +318,13 @@ public class CPMeasurementUnitModelImpl
 		attributeSetterBiConsumers.put(
 			"uuid",
 			(BiConsumer<CPMeasurementUnit, String>)CPMeasurementUnit::setUuid);
+		attributeGetterFunctions.put(
+			"externalReferenceCode",
+			CPMeasurementUnit::getExternalReferenceCode);
+		attributeSetterBiConsumers.put(
+			"externalReferenceCode",
+			(BiConsumer<CPMeasurementUnit, String>)
+				CPMeasurementUnit::setExternalReferenceCode);
 		attributeGetterFunctions.put(
 			"CPMeasurementUnitId", CPMeasurementUnit::getCPMeasurementUnitId);
 		attributeSetterBiConsumers.put(
@@ -446,6 +460,35 @@ public class CPMeasurementUnitModelImpl
 	@Deprecated
 	public String getOriginalUuid() {
 		return getColumnOriginalValue("uuid_");
+	}
+
+	@JSON
+	@Override
+	public String getExternalReferenceCode() {
+		if (_externalReferenceCode == null) {
+			return "";
+		}
+		else {
+			return _externalReferenceCode;
+		}
+	}
+
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_externalReferenceCode = externalReferenceCode;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalExternalReferenceCode() {
+		return getColumnOriginalValue("externalReferenceCode");
 	}
 
 	@JSON
@@ -968,6 +1011,8 @@ public class CPMeasurementUnitModelImpl
 		cpMeasurementUnitImpl.setMvccVersion(getMvccVersion());
 		cpMeasurementUnitImpl.setCtCollectionId(getCtCollectionId());
 		cpMeasurementUnitImpl.setUuid(getUuid());
+		cpMeasurementUnitImpl.setExternalReferenceCode(
+			getExternalReferenceCode());
 		cpMeasurementUnitImpl.setCPMeasurementUnitId(getCPMeasurementUnitId());
 		cpMeasurementUnitImpl.setGroupId(getGroupId());
 		cpMeasurementUnitImpl.setCompanyId(getCompanyId());
@@ -999,6 +1044,8 @@ public class CPMeasurementUnitModelImpl
 			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		cpMeasurementUnitImpl.setUuid(
 			this.<String>getColumnOriginalValue("uuid_"));
+		cpMeasurementUnitImpl.setExternalReferenceCode(
+			this.<String>getColumnOriginalValue("externalReferenceCode"));
 		cpMeasurementUnitImpl.setCPMeasurementUnitId(
 			this.<Long>getColumnOriginalValue("CPMeasurementUnitId"));
 		cpMeasurementUnitImpl.setGroupId(
@@ -1121,6 +1168,18 @@ public class CPMeasurementUnitModelImpl
 
 		if ((uuid != null) && (uuid.length() == 0)) {
 			cpMeasurementUnitCacheModel.uuid = null;
+		}
+
+		cpMeasurementUnitCacheModel.externalReferenceCode =
+			getExternalReferenceCode();
+
+		String externalReferenceCode =
+			cpMeasurementUnitCacheModel.externalReferenceCode;
+
+		if ((externalReferenceCode != null) &&
+			(externalReferenceCode.length() == 0)) {
+
+			cpMeasurementUnitCacheModel.externalReferenceCode = null;
 		}
 
 		cpMeasurementUnitCacheModel.CPMeasurementUnitId =
@@ -1288,6 +1347,7 @@ public class CPMeasurementUnitModelImpl
 	private long _mvccVersion;
 	private long _ctCollectionId;
 	private String _uuid;
+	private String _externalReferenceCode;
 	private long _CPMeasurementUnitId;
 	private long _groupId;
 	private long _companyId;
@@ -1337,6 +1397,8 @@ public class CPMeasurementUnitModelImpl
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("uuid_", _uuid);
+		_columnOriginalValues.put(
+			"externalReferenceCode", _externalReferenceCode);
 		_columnOriginalValues.put("CPMeasurementUnitId", _CPMeasurementUnitId);
 		_columnOriginalValues.put("groupId", _groupId);
 		_columnOriginalValues.put("companyId", _companyId);
@@ -1383,33 +1445,35 @@ public class CPMeasurementUnitModelImpl
 
 		columnBitmasks.put("uuid_", 4L);
 
-		columnBitmasks.put("CPMeasurementUnitId", 8L);
+		columnBitmasks.put("externalReferenceCode", 8L);
 
-		columnBitmasks.put("groupId", 16L);
+		columnBitmasks.put("CPMeasurementUnitId", 16L);
 
-		columnBitmasks.put("companyId", 32L);
+		columnBitmasks.put("groupId", 32L);
 
-		columnBitmasks.put("userId", 64L);
+		columnBitmasks.put("companyId", 64L);
 
-		columnBitmasks.put("userName", 128L);
+		columnBitmasks.put("userId", 128L);
 
-		columnBitmasks.put("createDate", 256L);
+		columnBitmasks.put("userName", 256L);
 
-		columnBitmasks.put("modifiedDate", 512L);
+		columnBitmasks.put("createDate", 512L);
 
-		columnBitmasks.put("name", 1024L);
+		columnBitmasks.put("modifiedDate", 1024L);
 
-		columnBitmasks.put("key_", 2048L);
+		columnBitmasks.put("name", 2048L);
 
-		columnBitmasks.put("rate", 4096L);
+		columnBitmasks.put("key_", 4096L);
 
-		columnBitmasks.put("primary_", 8192L);
+		columnBitmasks.put("rate", 8192L);
 
-		columnBitmasks.put("priority", 16384L);
+		columnBitmasks.put("primary_", 16384L);
 
-		columnBitmasks.put("type_", 32768L);
+		columnBitmasks.put("priority", 32768L);
 
-		columnBitmasks.put("lastPublishDate", 65536L);
+		columnBitmasks.put("type_", 65536L);
+
+		columnBitmasks.put("lastPublishDate", 131072L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

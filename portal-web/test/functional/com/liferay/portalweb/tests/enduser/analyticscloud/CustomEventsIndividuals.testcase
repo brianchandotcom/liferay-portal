@@ -1,9 +1,9 @@
 @component-name = "portal-analytics-cloud"
 definition {
 
-	property custom.properties = "jsonws.web.service.paths.excludes=";
 	property analytics.cloud.release = "true";
 	property analytics.cloud.upstream = "true";
+	property custom.properties = "jsonws.web.service.paths.excludes=";
 	property portal.release = "false";
 	property portal.upstream = "true";
 	property property.group = "analytics.cloud.profile";

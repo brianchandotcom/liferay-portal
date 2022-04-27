@@ -300,20 +300,28 @@ public class CountryLocalServiceImpl extends CountryLocalServiceBaseImpl {
 			String a2, String a3, String idd, String name, String number)
 		throws PortalException {
 
-		if (Validator.isNull(a2) || (a2.length() != 2)) {
-			throw new CountryA2Exception();
+		if (Validator.isNull(a2)) {
+			throw new CountryA2Exception("Missing a2");
 		}
 
-		if (Validator.isNull(a3) || (a3.length() != 3)) {
-			throw new CountryA3Exception();
+		if (a2.length() != 2) {
+			throw new CountryA2Exception("a2 must be exactly two characters");
+		}
+
+		if (Validator.isNull(a3)) {
+			throw new CountryA3Exception("Missing a3");
+		}
+
+		if (a3.length() != 3) {
+			throw new CountryA3Exception("a3 must be exactly three characters");
 		}
 
 		if (Validator.isNull(name)) {
-			throw new CountryNameException();
+			throw new CountryNameException("Missing name");
 		}
 
 		if (Validator.isNull(number)) {
-			throw new CountryNumberException();
+			throw new CountryNumberException("Missing number");
 		}
 	}
 

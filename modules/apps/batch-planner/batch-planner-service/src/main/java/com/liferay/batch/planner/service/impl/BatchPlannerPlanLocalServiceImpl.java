@@ -76,6 +76,7 @@ public class BatchPlannerPlanLocalServiceImpl
 		batchPlannerPlan.setCompanyId(user.getCompanyId());
 		batchPlannerPlan.setUserId(userId);
 		batchPlannerPlan.setUserName(user.getFullName());
+		batchPlannerPlan.setActive(true);
 		batchPlannerPlan.setExport(export);
 		batchPlannerPlan.setExternalType(externalType);
 		batchPlannerPlan.setExternalURL(externalURL);
@@ -96,6 +97,28 @@ public class BatchPlannerPlanLocalServiceImpl
 	}
 
 	@Override
+	public void deactivateBatchPlannerPlan(String batchEngineTaskERC) {
+		BatchPlannerPlan batchPlannerPlan =
+			batchPlannerPlanPersistence.fetchByPrimaryKey(
+				GetterUtil.getLong(batchEngineTaskERC));
+
+		if (batchPlannerPlan == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"Unable to update batch planner plan for batch engine ",
+						"task ERC ", batchEngineTaskERC));
+			}
+
+			return;
+		}
+
+		batchPlannerPlan.setActive(false);
+
+		batchPlannerPlanPersistence.update(batchPlannerPlan);
+	}
+
+	@Override
 	public BatchPlannerPlan deleteBatchPlannerPlan(long batchPlannerPlanId)
 		throws PortalException {
 
@@ -112,43 +135,6 @@ public class BatchPlannerPlanLocalServiceImpl
 			batchPlannerPlanId);
 
 		return batchPlannerPlan;
-	}
-
-	@Override
-	public BatchPlannerPlan updateActive(
-		boolean active, String batchEngineTaskERC) {
-
-		BatchPlannerPlan batchPlannerPlan =
-			batchPlannerPlanPersistence.fetchByPrimaryKey(
-				GetterUtil.getLong(batchEngineTaskERC));
-
-		if (batchPlannerPlan == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					StringBundler.concat(
-						"Unable to update batch planner plan for batch engine ",
-						"task ERC ", batchEngineTaskERC));
-			}
-
-			return null;
-		}
-
-		batchPlannerPlan.setActive(active);
-
-		return batchPlannerPlanPersistence.update(batchPlannerPlan);
-	}
-
-	@Override
-	public BatchPlannerPlan updateActive(
-			long batchPlannerPlanId, boolean active)
-		throws PortalException {
-
-		BatchPlannerPlan batchPlannerPlan =
-			batchPlannerPlanPersistence.findByPrimaryKey(batchPlannerPlanId);
-
-		batchPlannerPlan.setActive(active);
-
-		return batchPlannerPlanPersistence.update(batchPlannerPlan);
 	}
 
 	@Override

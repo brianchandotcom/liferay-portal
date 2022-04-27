@@ -49,8 +49,8 @@ public class BatchEngineImportTaskModelListener
 		throws ModelListenerException {
 
 		try {
-			_batchPlannerPlanLocalService.updateActive(
-				false, batchEngineImportTask.getExternalReferenceCode());
+			_batchPlannerPlanLocalService.deactivateBatchPlannerPlan(
+				batchEngineImportTask.getExternalReferenceCode());
 		}
 		catch (Exception exception) {
 			_log.error(exception);

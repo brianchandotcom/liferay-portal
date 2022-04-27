@@ -48,8 +48,8 @@ public class BatchEngineExportTaskModelListener
 		throws ModelListenerException {
 
 		try {
-			_batchPlannerPlanLocalService.updateActive(
-				false, batchEngineExportTask.getExternalReferenceCode());
+			_batchPlannerPlanLocalService.deactivateBatchPlannerPlan(
+				batchEngineExportTask.getExternalReferenceCode());
 		}
 		catch (Exception exception) {
 			_log.error(exception);

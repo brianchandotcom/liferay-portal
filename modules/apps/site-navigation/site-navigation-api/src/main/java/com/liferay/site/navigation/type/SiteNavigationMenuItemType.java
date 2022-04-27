@@ -28,6 +28,8 @@ import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 
 import java.io.IOException;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletURL;
@@ -59,6 +61,18 @@ public interface SiteNavigationMenuItemType {
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		return null;
+	}
+
+	public default List<SiteNavigationMenuItem> getChildren(
+			HttpServletRequest httpServletRequest,
+			SiteNavigationMenuItem siteNavigationMenuItem)
+		throws Exception {
+
+		if (isDynamic()) {
+			return Collections.emptyList();
+		}
+
+		throw new UnsupportedOperationException();
 	}
 
 	public default String getIcon() {
@@ -110,6 +124,18 @@ public interface SiteNavigationMenuItemType {
 		throws Exception {
 
 		return StringPool.BLANK;
+	}
+
+	public default List<SiteNavigationMenuItem> getSiteNavigationMenuItems(
+			HttpServletRequest httpServletRequest,
+			SiteNavigationMenuItem siteNavigationMenuItem)
+		throws Exception {
+
+		if (isDynamic()) {
+			return Collections.emptyList();
+		}
+
+		throw new UnsupportedOperationException();
 	}
 
 	public default String getStatusIcon(

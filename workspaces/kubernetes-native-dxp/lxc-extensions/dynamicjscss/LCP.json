@@ -1,12 +1,11 @@
 {
   "kind": "Deployment",
-  "id": "customrestservice",
-  "image": "customrestservice",
-  "cpu": 0.2,
+  "id": "dynamicjscss",
+  "cpu": 0.1,
   "scale": 1,
-  "memory": 300,
+  "memory": 50,
   "loadBalancer": {
-    "targetPort": 8081,
+    "targetPort": 80,
     "cdn": true
   },
   "environments": {
@@ -15,7 +14,7 @@
     },
     "dev": {
       "loadBalancer": {
-        "targetPort": 8081,
+        "targetPort": 80,
         "cdn": false
       }
     }

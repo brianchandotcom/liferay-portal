@@ -28,6 +28,12 @@ build:
         paths:
         - lxc-extensions/customrestservice/src/**/*
         - lxc-extensions/customrestservice/pom.xml
+  - image: dynamicjscss
+    custom:
+      buildCommand: lxc-extensions/dynamicjscss/build.sh
+      dependencies:
+        paths:
+        - lxc-extensions/dynamicjscss/**/*
   - image: cronjob
     custom:
       buildCommand: lxc-extensions/cronjob/build.sh
@@ -40,6 +46,7 @@ deploy:
     - k8s/dxp/
     - k8s/liferayhelloworld/
     - k8s/customrestservice/
+    - k8s/dynamicjscss/
     - k8s/cronjob/
     - k8s/common/
     hooks:

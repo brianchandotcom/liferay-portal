@@ -92,14 +92,14 @@ export default function AnalyticsReportsApp({context, portletNamespace}) {
 		analyticsReportsPanelToggle
 	);
 
+	const visualizingAPage = analyticsReportsPanelToggle;
+
 	return (
 		<div id={`${portletNamespace}-analytics-reports-root`}>
 			<AnalyticsReports
 				analyticsReportsDataURL={analyticsReportsDataURL}
 				hoverOrFocusEventTriggered={hoverOrFocusEventTriggered}
-				isPanelStateOpen={
-					analyticsReportsPanelToggle ? isPanelStateOpen : true
-				}
+				isPanelStateOpen={visualizingAPage ? isPanelStateOpen : true}
 			/>
 		</div>
 	);

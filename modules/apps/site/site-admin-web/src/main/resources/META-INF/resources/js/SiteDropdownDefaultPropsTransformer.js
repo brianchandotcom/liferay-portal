@@ -12,6 +12,8 @@
  * details.
  */
 
+import openDeleteStyleBookModal from './openDeleteSiteModal';
+
 const ACTIONS = {
 	activateSite(itemData) {
 		this.send(itemData.activateSiteURL);
@@ -28,13 +30,11 @@ const ACTIONS = {
 	},
 
 	deleteSite(itemData) {
-		if (
-			confirm(
-				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
-			)
-		) {
-			this.send(itemData.deleteSiteURL);
-		}
+		openDeleteStyleBookModal({
+			onDelete: () => {
+				this.send(itemData.deleteSiteURL);
+			},
+		});
 	},
 
 	leaveSite(itemData) {

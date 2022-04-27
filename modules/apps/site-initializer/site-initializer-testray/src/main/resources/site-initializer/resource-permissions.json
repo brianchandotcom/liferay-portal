@@ -1,0 +1,30 @@
+[
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Project$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "UPDATE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Project$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "DELETE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Project$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "ADD_OBJECT_ENTRY",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Project$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	}
+]

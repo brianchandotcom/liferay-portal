@@ -1,0 +1,26 @@
+[
+	{
+		"actions": [],
+		"name": "Testray Administrator",
+		"scope": 1,
+		"type": 1
+	},
+	{
+		"actions": [],
+		"name": "Testray User",
+		"scope": 1,
+		"type": 1
+	},
+	{
+		"actions": [],
+		"name": "Testray Analyst",
+		"scope": 1,
+		"type": 1
+	},
+	{
+		"actions": [],
+		"name": "Testray Lead",
+		"scope": 1,
+		"type": 1
+	}
+]

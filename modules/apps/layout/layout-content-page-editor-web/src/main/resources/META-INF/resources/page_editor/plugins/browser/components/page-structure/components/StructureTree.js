@@ -21,6 +21,7 @@ import getAllPortals from '../../../../../app/components/layout-data-items/getAl
 import hasDropZoneChild from '../../../../../app/components/layout-data-items/hasDropZoneChild';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../app/config/constants/editableFragmentEntryProcessor';
 import {EDITABLE_TYPES} from '../../../../../app/config/constants/editableTypes';
+import {FORM_MAPPING_SOURCES} from '../../../../../app/config/constants/formMappingSources';
 import {FRAGMENT_ENTRY_TYPES} from '../../../../../app/config/constants/fragmentEntryTypes';
 import {ITEM_TYPES} from '../../../../../app/config/constants/itemTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../app/config/constants/layoutDataItemTypes';
@@ -515,6 +516,10 @@ function visit(
 		id: item.itemId,
 		isMasterItem: !isMasterPage && itemInMasterLayout,
 		itemType: ITEM_TYPES.layoutDataItem,
+		mapped:
+			item.type === LAYOUT_DATA_ITEM_TYPES.form
+				? formIsMapped(item)
+				: false,
 		name: selectLayoutDataItemLabel({fragmentEntryLinks}, item),
 		nameInfo: getNameInfo(item),
 		onHoverNode,
@@ -522,4 +527,19 @@ function visit(
 		removable: !itemInMasterLayout && isRemovable(item, layoutData),
 		type: item.type,
 	};
+}
+
+function formIsMapped(item) {
+	if (item.config.classNameId && item.config.classNameId !== '0') {
+		return true;
+	}
+
+	if (config.layoutType === LAYOUT_TYPES.display) {
+		return (
+			item.config.mappingSource === FORM_MAPPING_SOURCES.displayPage ||
+			item.config.mappingSource === undefined
+		);
+	}
+
+	return false;
 }

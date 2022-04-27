@@ -85,6 +85,9 @@ public class FragmentCollectionContributorTest {
 					TEST_COMPONENT_FRAGMENT_ENTRY));
 		Assert.assertNotNull(
 			fragmentEntries.get(
+				TestFragmentCollectionContributor.TEST_INPUT_FRAGMENT_ENTRY));
+		Assert.assertNotNull(
+			fragmentEntries.get(
 				TestFragmentCollectionContributor.TEST_SECTION_FRAGMENT_ENTRY));
 		Assert.assertNull(
 			fragmentEntries.get(

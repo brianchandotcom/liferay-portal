@@ -208,52 +208,10 @@ public class AssetVocabularySiteNavigationMenuItemType
 			return Arrays.asList(siteNavigationMenuItem);
 		}
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		if (themeDisplay == null) {
-			return Collections.emptyList();
-		}
-
-		List<SiteNavigationMenuItem> siteNavigationMenuItems =
-			new ArrayList<>();
-
-		for (AssetCategory assetCategory :
-				_assetCategoryLocalService.getVocabularyCategories(
-					0,
-					GetterUtil.getLong(
-						typeSettingsUnicodeProperties.get("classPK")),
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			SiteNavigationMenuItem categorySiteNavigationMenuItem =
-				siteNavigationMenuItem.cloneWithOriginalValues();
-
-			categorySiteNavigationMenuItem.setTypeSettings(
-				UnicodePropertiesBuilder.create(
-					true
-				).put(
-					"assetVocabularyId",
-					String.valueOf(assetCategory.getVocabularyId())
-				).put(
-					"classPK", String.valueOf(assetCategory.getCategoryId())
-				).put(
-					"groupId", String.valueOf(assetCategory.getGroupId())
-				).put(
-					"regularURL",
-					_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-						AssetCategory.class.getName(),
-						assetCategory.getCategoryId(), themeDisplay)
-				).put(
-					"title", assetCategory.getTitle(themeDisplay.getLocale())
-				).put(
-					"type", "asset-category"
-				).buildString());
-
-			siteNavigationMenuItems.add(categorySiteNavigationMenuItem);
-		}
-
-		return siteNavigationMenuItems;
+		return _getChildSiteNavigationMenuItem(
+			0, GetterUtil.getLong(typeSettingsUnicodeProperties.get("classPK")),
+			httpServletRequest,
+			siteNavigationMenuItem.getSiteNavigationMenuItemId());
 	}
 
 	@Override
@@ -426,6 +384,62 @@ public class AssetVocabularySiteNavigationMenuItemType
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,
 			"/edit_asset_vocabulary_type.jsp");
+	}
+
+	private List<SiteNavigationMenuItem> _getChildSiteNavigationMenuItem(
+			long parentCategoryId, long vocabularyId,
+			HttpServletRequest httpServletRequest,
+			long vocabularySiteNavigationMenuItemId)
+		throws Exception {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (themeDisplay == null) {
+			return Collections.emptyList();
+		}
+
+		SiteNavigationMenuItem vocabularySiteNavigationMenuItem =
+			_siteNavigationMenuItemLocalService.getSiteNavigationMenuItem(
+				vocabularySiteNavigationMenuItemId);
+
+		List<SiteNavigationMenuItem> siteNavigationMenuItems =
+			new ArrayList<>();
+
+		for (AssetCategory assetCategory :
+				_assetCategoryLocalService.getVocabularyCategories(
+					parentCategoryId, vocabularyId, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null)) {
+
+			SiteNavigationMenuItem categorySiteNavigationMenuItem =
+				vocabularySiteNavigationMenuItem.cloneWithOriginalValues();
+
+			categorySiteNavigationMenuItem.setTypeSettings(
+				UnicodePropertiesBuilder.create(
+					true
+				).put(
+					"assetVocabularyId",
+					String.valueOf(assetCategory.getVocabularyId())
+				).put(
+					"classPK", String.valueOf(assetCategory.getCategoryId())
+				).put(
+					"groupId", String.valueOf(assetCategory.getGroupId())
+				).put(
+					"regularURL",
+					_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
+						AssetCategory.class.getName(),
+						assetCategory.getCategoryId(), themeDisplay)
+				).put(
+					"title", assetCategory.getTitle(themeDisplay.getLocale())
+				).put(
+					"type", "asset-category"
+				).buildString());
+
+			siteNavigationMenuItems.add(categorySiteNavigationMenuItem);
+		}
+
+		return siteNavigationMenuItems;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

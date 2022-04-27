@@ -89,6 +89,104 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-111561. The user could customize grid layout of Collection Display in non-desktop viewport."
+	@priority = "4"
+	test CustomizeGridLayoutOfCollectionDisplayInNonDesktopViewport {
+		property custom.properties = "feature.flag.LPS-119551=true";
+
+		task ("Given the user has created a collection page, added a Collection Display Fragment and a Collection with several items") {
+			task ("Add five web contents") {
+				for (var i : list "1,2,3,4,5") {
+					JSONWebcontent.addWebContent(
+						content = "Web Content Content ${i}",
+						groupName = "Test Site Name",
+						title = "Web Content Title ${i}");
+				}
+			}
+
+			task ("Add a dynamic collection for Web Content Article and Basic Web Content") {
+				JSONAssetlist.addDynamicAssetListEntryWithItemType(
+					groupName = "Test Site Name",
+					itemSubtype = "Basic Web Content",
+					itemType = "Web Content Article",
+					title = "Dynamic Collection");
+			}
+
+			task ("Add a collection page based on the dynamic collection") {
+				PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+				ContentPages.addCollectionPage(
+					collectionName = "Dynamic Collection",
+					pageName = "Test Page Name",
+					tabName = "Collections");
+			}
+		}
+
+		task ("When the user configures the grid layout of the Collection Display in Tablet viewport") {
+			PageEditor.switchViewport(deviceType = "Tablet");
+
+			PageEditor.editCollectionDisplay(
+				deviceType = "Tablet",
+				fragmentName = "Collection Display",
+				layout = "4 Columns");
+		}
+
+		task ("Then the Collection Display fragment shows the collection items in the selected number of columns for Tablet viewport") {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
+
+			PageEditor.viewCollectionDisplayStyle(
+				columnCount = "4",
+				layout = "3",
+				position = "1");
+
+			var n = "1";
+
+			for (var text : list "Web Content Title 5,Web Content Title 4,Web Content Title 3,Web Content Title 2") {
+				AssertTextEquals(
+					key_columnNumber = "${n}",
+					key_position = "1",
+					key_rowNumber = "1",
+					locator1 = "PageEditor#COLLECTION_DISPLAY_COLUMN",
+					value1 = "${text}");
+
+				var n = ${n} + 1;
+			}
+
+			AssertTextEquals(
+				key_columnNumber = "1",
+				key_position = "1",
+				key_rowNumber = "2",
+				locator1 = "PageEditor#COLLECTION_DISPLAY_COLUMN",
+				value1 = "Web Content Title 1");
+
+			SelectFrame(value1 = "relative=top");
+		}
+
+		task ("When the user changes to Desktop viewport") {
+			PageEditor.switchViewport(deviceType = "Desktop");
+		}
+
+		task ("Then the Collection Display fragment has Full Width layout") {
+			PageEditor.viewCollectionDisplayStyle(
+				columnCount = "1",
+				layout = "12",
+				position = "1");
+		}
+
+		task ("When the user changes to Portrait Phone viewport") {
+			PageEditor.switchViewport(deviceType = "Portrait Phone");
+		}
+
+		task ("Then the Collection Display fragment has Full Width layout") {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
+
+			PageEditor.viewCollectionDisplayStyle(
+				columnCount = "1",
+				layout = "12",
+				position = "1");
+		}
+	}
+
 	@description = "This is a test for LPS-111561. The grid layout of Collection Display defined in Desktop viewport should be propagated to other viewports."
 	@priority = "4"
 	test PropagateGridLayoutDefinedInDesktopToOtherViewports {

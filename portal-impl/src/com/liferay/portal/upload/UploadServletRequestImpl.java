@@ -89,7 +89,7 @@ public class UploadServletRequestImpl
 			}
 			else {
 				servletFileUpload = new ServletFileUpload(
-					new LiferayFileItemFactory(_getTempDir(null)));
+					new LiferayFileItemFactory(_getTempDir(location)));
 			}
 
 			long uploadServletRequestImplMaxSize =

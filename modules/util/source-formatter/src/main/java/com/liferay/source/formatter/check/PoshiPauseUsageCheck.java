@@ -17,10 +17,18 @@ package com.liferay.source.formatter.check;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.io.IOException;
+import java.io.File;
+import java.io.FileInputStream;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Alan Huang
@@ -30,9 +38,15 @@ public class PoshiPauseUsageCheck extends BaseFileCheck {
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
-		throws IOException {
+		throws Exception {
 
 		if (fileName.endsWith(".path")) {
+			return content;
+		}
+
+		List<String> jiraProjectKeys = _getJIRAProjectKeys();
+
+		if (jiraProjectKeys.isEmpty()) {
 			return content;
 		}
 
@@ -53,12 +67,27 @@ public class PoshiPauseUsageCheck extends BaseFileCheck {
 
 				String trimmedLine = StringUtil.trimLeading(line);
 
-				if (trimmedLine.startsWith("Pause(") &&
-					!previousLine.startsWith("//")) {
+				if (!trimmedLine.startsWith("Pause(")) {
+					previousLine = trimmedLine;
 
+					continue;
+				}
+
+				if (previousLine.startsWith("//")) {
+					String jiraTicketId = _getJIRATicketId(
+						previousLine, jiraProjectKeys);
+
+					if (Validator.isNull(jiraTicketId)) {
+						addMessage(
+							fileName,
+							"Missing a required JIRA project in comment " +
+								"before using 'Pause'",
+							lineNumber);
+					}
+				}
+				else {
 					addMessage(
-						fileName,
-						"Add a comment with explanation before using 'Pause'",
+						fileName, "Missing a comment before using 'Pause'",
 						lineNumber);
 				}
 
@@ -67,6 +96,41 @@ public class PoshiPauseUsageCheck extends BaseFileCheck {
 		}
 
 		return content;
+	}
+
+	private List<String> _getJIRAProjectKeys() throws Exception {
+		File propertiesFile = getFile("ci.properties", getMaxDirLevel());
+
+		if (propertiesFile != null) {
+			Properties properties = new Properties();
+
+			properties.load(new FileInputStream(propertiesFile));
+
+			if (properties.containsKey("jira.project.keys")) {
+				return ListUtil.fromString(
+					properties.getProperty("jira.project.keys"),
+					StringPool.COMMA);
+			}
+		}
+
+		return Collections.emptyList();
+	}
+
+	private String _getJIRATicketId(
+		String comment, List<String> jiraProjectKeys) {
+
+		for (String jiraProjectKey : jiraProjectKeys) {
+			Pattern pattern = Pattern.compile(
+				".*?(\\b" + jiraProjectKey + "-\\d+)");
+
+			Matcher matcher = pattern.matcher(comment);
+
+			if (matcher.find()) {
+				return matcher.group(1);
+			}
+		}
+
+		return null;
 	}
 
 }

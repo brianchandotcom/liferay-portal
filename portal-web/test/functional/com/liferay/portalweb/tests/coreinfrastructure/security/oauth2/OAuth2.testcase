@@ -1926,6 +1926,32 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-130869. OAuth2 token introspection should work with empty client secret for PKCE application."
+	@priority = "4"
+	test TokenIntrospectionShouldWorkWithEmptyClientSecretForPKCE {
+		property test.name.skip.portal.instance = "OAuth2#TokenIntrospectionShouldWorkWithEmptyClientSecretForPKCE";
+
+		task ("Given: Add and edit an PKCE application") {
+			OAuth2.addAndEditExternalApplication(
+				applicationName = "My Application",
+				callbackUri = '''http://martamedio.com/oauth2-tester/pkce/?url=${portalURL}&client_id=pkce''',
+				checkboxCheckList = "Token Introspection",
+				checkboxUncheckList = "Authorization Code,Client Credentials,JWT_BEARER,Resource Owner Password Credentials",
+				clientAuthenticationMethod = "None",
+				clientId = "pkce",
+				clientProfile = "Other",
+				clientSecret = "");
+		}
+
+		task ("When: Authorize PKCE application") {
+			OAuth2.authorizePKCEApplication(clientId = "pkce");
+		}
+
+		task ("Then: Verify server returns information about the token") {
+			OAuth2.introspectAccessToken(requestResult = '''active":true,"client_id":"pkce''');
+		}
+	}
+
 	@description = "This is a use case for LPS-129395. External applications have trusted label in OAuth 2 admin page when they are created with the trusted device option."
 	@priority = "5"
 	test TrustedExternalPropertyShouldBeVisible {

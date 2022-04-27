@@ -92,6 +92,18 @@ definition {
 		Check.checkToggleSwitch(locator1 = "CP2LiferayContact#HIDE_WIDGET");
 	}
 
+	macro clickOnStartProjectSetup {
+		Click(locator1 = "CustomerPortalSite#START_PROJECT_SETUP_BUTTON");
+	}
+
+	macro clickOnSkipForNowButton{
+		Click(locator1 = "CustomerPortalSite#START_PROJECT_SETUP_BUTTON");
+	}
+
+	macro viewStartProjectSetupButton {
+		AssertElementPresent(locator1 = "CustomerPortalSite#SKIP_FOR_NOW_BUTTON");
+	}
+
 	macro createCPSite {
 		ApplicationsMenu.gotoPortlet(
 			category = "Sites",
@@ -353,12 +365,24 @@ definition {
 		}
 	}
 
+	macro viewInviteTeamMembersModalPage {
+		AssertElementPresent(locator1 = "CustomerPortalSite#START_PROJECT_SETUP_BUTTON");
+	}
+
 	macro viewKoroneikiInfo {
 		Click(
 			key_text = "",
 			locator1 = "Icon#ANY_VERTICAL_ELLIPSIS");
 
 		MenuItem.click(menuItem = "View");
+	}
+
+	macro viewSubcriptionsPage {
+		AssertElementPresent("CustomerPortalSite#SUBCRIPTIONS_PROJECT_INSIDE_PAGE");
+	}
+
+	macro viewGetStartedModal { {
+		AssertElementPresent("CustomerPortalSite#GETTING_STARTED_MODAL");
 	}
 
 }

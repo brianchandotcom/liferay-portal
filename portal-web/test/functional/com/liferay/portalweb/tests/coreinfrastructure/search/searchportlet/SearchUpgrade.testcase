@@ -238,6 +238,15 @@ definition {
 	}
 
 	@priority = "5"
+	test ViewResultRankingsEntryArchive7413 {
+		property data.archive.type = "data-archive-search-result-rankings";
+		property portal.version = "7.4.13";
+		property test.run.environment = "EE";
+
+		Upgrade.viewResultRankingsEntry();
+	}
+
+	@priority = "5"
 	test ViewSearchPortletsConfigurationArchive713 {
 		property data.archive.type = "data-archive-search-portlets";
 		property database.types = "mariadb,mysql,postgresql";

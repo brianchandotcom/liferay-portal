@@ -15,6 +15,7 @@
 package com.liferay.on.demand.admin.internal.ticket.generator;
 
 import com.liferay.on.demand.admin.constants.OnDemandAdminConstants;
+import com.liferay.on.demand.admin.internal.configuration.OnDemandAdminConfiguration;
 import com.liferay.on.demand.admin.internal.helper.OnDemandAdminHelper;
 import com.liferay.on.demand.admin.ticket.generator.OnDemandAdminTicketGenerator;
 import com.liferay.petra.string.StringBundler;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.TicketLocalService;
@@ -63,10 +65,19 @@ public class OnDemandAdminTicketGeneratorImpl
 
 		_auditRouter.route(auditMessage);
 
+		OnDemandAdminConfiguration onDemandAdminConfiguration =
+			_configurationProvider.getSystemConfiguration(
+				OnDemandAdminConfiguration.class);
+
+		int expirationTime =
+			onDemandAdminConfiguration.authenticationTokenExpirationTime();
+
 		return _ticketLocalService.addDistinctTicket(
 			user.getCompanyId(), User.class.getName(), user.getUserId(),
 			OnDemandAdminConstants.TICKET_TYPE_ON_DEMAND_ADMIN_LOGIN, null,
-			new Date(System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(5)),
+			new Date(
+				System.currentTimeMillis() +
+					TimeUnit.MINUTES.toMillis(expirationTime)),
 			null);
 	}
 
@@ -113,6 +124,9 @@ public class OnDemandAdminTicketGeneratorImpl
 
 	@Reference
 	private AuditRouter _auditRouter;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private OnDemandAdminHelper _onDemandAdminHelper;

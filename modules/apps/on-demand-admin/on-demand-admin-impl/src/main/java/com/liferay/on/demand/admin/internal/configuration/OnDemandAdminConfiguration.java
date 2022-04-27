@@ -30,6 +30,13 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface OnDemandAdminConfiguration {
 
 	@Meta.AD(
+		deflt = "5",
+		description = "authentication-token-expiration-time-description",
+		name = "authentication-token-expiration-time", required = false
+	)
+	public int authenticationTokenExpirationTime();
+
+	@Meta.AD(
 		deflt = "24", description = "clean-up-interval-description",
 		name = "clean-up-interval", required = false
 	)

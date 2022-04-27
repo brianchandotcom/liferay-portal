@@ -17,7 +17,6 @@ import React from 'react';
 import {useSelectorCallback} from '../../contexts/StoreContext';
 import isItemEmpty from '../../utils/isItemEmpty';
 import ContainerWithControls from './ContainerWithControls';
-import Root from './Root';
 
 const FormWithControls = React.forwardRef(({children, item, ...rest}, ref) => {
 	const isEmpty = useSelectorCallback(
@@ -29,10 +28,20 @@ const FormWithControls = React.forwardRef(({children, item, ...rest}, ref) => {
 	return (
 		<form onSubmit={(event) => event.preventDefault()} ref={ref}>
 			<ContainerWithControls {...rest} item={item}>
-				{isEmpty ? <Root item={item} /> : children}
+				{isEmpty ? <FormEmptyState /> : children}
 			</ContainerWithControls>
 		</form>
 	);
 });
 
 export default FormWithControls;
+
+function FormEmptyState() {
+	return (
+		<div className="page-editor__no-fragments-message">
+			<div className="page-editor__no-fragments-message__title">
+				{Liferay.Language.get('place-fragments-here')}
+			</div>
+		</div>
+	);
+}

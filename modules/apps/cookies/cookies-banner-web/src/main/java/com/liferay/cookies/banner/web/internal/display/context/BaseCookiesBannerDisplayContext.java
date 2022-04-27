@@ -32,18 +32,24 @@ public class BaseCookiesBannerDisplayContext {
 	}
 
 	public String[] getOptionalCookieNames() {
-		return new String[] {
-			CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL,
-			CookiesConstants.NAME_CONSENT_TYPE_PERFORMANCE,
-			CookiesConstants.NAME_CONSENT_TYPE_PERSONALIZATION
-		};
+		return _OPTIONAL_COOKIE_NAMES;
 	}
 
 	public String[] getRequiredCookieNames() {
-		return new String[] {CookiesConstants.NAME_CONSENT_TYPE_NECESSARY};
+		return _REQUIRED_COOKIE_NAMES;
 	}
 
 	protected final RenderRequest renderRequest;
 	protected final RenderResponse renderResponse;
+
+	private static final String[] _OPTIONAL_COOKIE_NAMES = {
+		CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL,
+		CookiesConstants.NAME_CONSENT_TYPE_PERFORMANCE,
+		CookiesConstants.NAME_CONSENT_TYPE_PERSONALIZATION
+	};
+
+	private static final String[] _REQUIRED_COOKIE_NAMES = {
+		CookiesConstants.NAME_CONSENT_TYPE_NECESSARY
+	};
 
 }

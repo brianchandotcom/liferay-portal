@@ -18,27 +18,36 @@ import {DeleteProject} from '../../graphql/mutations';
 import {TestrayProject} from '../../graphql/queries';
 import useFormModal from '../../hooks/useFormModal';
 import i18n from '../../i18n';
+import {Security} from '../../security';
+import {Action, PermissionCheck} from '../../types';
 
-const useProjectActions = () => {
+const useProjectActions = (
+	security: Security,
+	permissions: PermissionCheck
+) => {
 	const [onDeleteProject] = useMutation(DeleteProject);
 
 	const formModal = useFormModal();
 	const modal = formModal.modal;
 
+	const actions: Action[] = [
+		{
+			action: (item: TestrayProject) => modal.open(item),
+			name: i18n.translate('edit'),
+			permission: permissions.EDIT,
+		},
+		{
+			action: ({id}: TestrayProject) =>
+				onDeleteProject({variables: {id}})
+					.then(() => modal.onSave())
+					.catch(modal.onError),
+			name: i18n.translate('delete'),
+			permission: permissions.DELETE,
+		},
+	];
+
 	return {
-		actions: [
-			{
-				action: (item: TestrayProject) => modal.open(item),
-				name: i18n.translate('edit'),
-			},
-			{
-				action: ({id}: TestrayProject) =>
-					onDeleteProject({variables: {id}})
-						.then(() => modal.onSave())
-						.catch(modal.onError),
-				name: i18n.translate('delete'),
-			},
-		],
+		actions: security.filterActions(actions, 'TestrayProject'),
 		formModal,
 	};
 };

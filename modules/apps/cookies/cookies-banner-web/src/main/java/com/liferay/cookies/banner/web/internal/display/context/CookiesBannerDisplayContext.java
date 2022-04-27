@@ -17,26 +17,20 @@ package com.liferay.cookies.banner.web.internal.display.context;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 
-import java.util.Locale;
-
-import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 /**
  * @author Eduardo García
  */
-public class CookiesBannerDisplayContext
-	extends BaseCookiesBannerDisplayContext {
+public class CookiesBannerDisplayContext {
 
-	public CookiesBannerDisplayContext(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
-
-		super(renderRequest, renderResponse);
+	public CookiesBannerDisplayContext(RenderResponse renderResponse) {
+		_renderResponse = renderResponse;
 	}
 
 	public Object getConfigurationURL() {
 		return PortletURLBuilder.createRenderURL(
-			renderResponse
+			_renderResponse
 		).setMVCPath(
 			"/cookies_banner_configuration/view.jsp"
 		).setWindowState(
@@ -44,11 +38,6 @@ public class CookiesBannerDisplayContext
 		).buildString();
 	}
 
-	public String getContent(Locale locale) {
-
-		// TODO
-
-		return "";
-	}
+	private final RenderResponse _renderResponse;
 
 }

@@ -17,7 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CookiesBannerConfigurationDisplayContext cookiesBannerConfigurationDisplayContext = new CookiesBannerConfigurationDisplayContext(renderRequest, renderResponse);
+CookiesBannerConfigurationDisplayContext cookiesBannerConfigurationDisplayContext = new CookiesBannerConfigurationDisplayContext(renderRequest);
+
+CookiesManager cookiesManager = (CookiesManager)request.getAttribute(CookiesBannerWebKeys.COOKIES_MANAGER);
 %>
 
 <clay:container-fluid
@@ -39,7 +41,7 @@ CookiesBannerConfigurationDisplayContext cookiesBannerConfigurationDisplayContex
 		>
 
 			<%
-			for (String requiredCookieName : cookiesBannerConfigurationDisplayContext.getRequiredCookieNames()) {
+			for (String requiredCookieName : cookiesManager.getRequiredCookieNames()) {
 			%>
 
 				<clay:content-row
@@ -66,7 +68,7 @@ CookiesBannerConfigurationDisplayContext cookiesBannerConfigurationDisplayContex
 			<%
 			}
 
-			for (String optionalCookieName : cookiesBannerConfigurationDisplayContext.getOptionalCookieNames()) {
+			for (String optionalCookieName : cookiesManager.getOptionalCookieNames()) {
 			%>
 
 				<clay:content-row
@@ -148,9 +150,9 @@ CookiesBannerConfigurationDisplayContext cookiesBannerConfigurationDisplayContex
 	componentId="CookiesBannerConfiguration"
 	context='<%=
 		HashMapBuilder.<String, Object>put(
-			"optionalCookieNames", cookiesBannerConfigurationDisplayContext.getOptionalCookieNames()
+			"optionalCookieNames", cookiesManager.getOptionalCookieNames()
 		).put(
-			"requiredCookieNames", cookiesBannerConfigurationDisplayContext.getRequiredCookieNames()
+			"requiredCookieNames", cookiesManager.getRequiredCookieNames()
 		).put(
 			"showButtons", cookiesBannerConfigurationDisplayContext.isShowButtons()
 		).build()

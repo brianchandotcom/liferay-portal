@@ -18,6 +18,8 @@
 
 <%
 CookiesBannerDisplayContext cookiesBannerDisplayContext = (CookiesBannerDisplayContext)request.getAttribute(CookiesBannerWebKeys.COOKIES_BANNER_DISPLAY_CONTEXT);
+
+CookiesManager cookiesManager = (CookiesManager)request.getAttribute(CookiesBannerWebKeys.COOKIES_MANAGER);
 %>
 
 <clay:container-fluid
@@ -70,9 +72,9 @@ CookiesBannerDisplayContext cookiesBannerDisplayContext = (CookiesBannerDisplayC
 		HashMapBuilder.<String, Object>put(
 			"configurationUrl", cookiesBannerDisplayContext.getConfigurationURL()
 		).put(
-			"optionalCookieNames", cookiesBannerDisplayContext.getOptionalCookieNames()
+			"optionalCookieNames", cookiesManager.getOptionalCookieNames()
 		).put(
-			"requiredCookieNames", cookiesBannerDisplayContext.getRequiredCookieNames()
+			"requiredCookieNames", cookiesManager.getRequiredCookieNames()
 		).build()
 	%>'
 	module="cookies_banner/js/CookiesBanner"

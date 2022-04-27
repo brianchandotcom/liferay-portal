@@ -26,6 +26,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ page import="com.liferay.cookies.banner.web.internal.constants.CookiesBannerWebKeys" %><%@
 page import="com.liferay.cookies.banner.web.internal.display.context.CookiesBannerConfigurationDisplayContext" %><%@
 page import="com.liferay.cookies.banner.web.internal.display.context.CookiesBannerDisplayContext" %><%@
+page import="com.liferay.portal.kernel.cookies.CookiesManager" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %>
 

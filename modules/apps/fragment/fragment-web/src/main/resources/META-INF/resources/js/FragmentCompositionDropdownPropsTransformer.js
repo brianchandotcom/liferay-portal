@@ -14,15 +14,15 @@
 
 import {openSelectionModal, openSimpleInputModal} from 'frontend-js-web';
 
+import openDeleteFragmentModal from './openDeleteFragmentModal';
+
 const ACTIONS = {
 	deleteFragmentComposition({deleteFragmentCompositionURL}) {
-		if (
-			confirm(
-				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
-			)
-		) {
-			submitForm(document.hrefFm, deleteFragmentCompositionURL);
-		}
+		openDeleteFragmentModal({
+			onDelete: () => {
+				submitForm(document.hrefFm, deleteFragmentCompositionURL);
+			},
+		});
 	},
 
 	deleteFragmentCompositionPreview({deleteFragmentCompositionPreviewURL}) {

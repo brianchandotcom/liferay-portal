@@ -14,6 +14,8 @@
 
 import {openSelectionModal, openSimpleInputModal} from 'frontend-js-web';
 
+import openDeleteFragmentModal from './openDeleteFragmentModal';
+
 export default function propsTransformer({
 	additionalProps: {
 		copyFragmentEntryURL,
@@ -78,20 +80,19 @@ export default function propsTransformer({
 	};
 
 	const deleteFragmentCompositionsAndFragmentEntries = () => {
-		if (
-			confirm(
-				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
-			)
-		) {
-			const form = document.getElementById(`${portletNamespace}fm`);
+		openDeleteFragmentModal({
+			multiple: true,
+			onDelete: () => {
+				const form = document.getElementById(`${portletNamespace}fm`);
 
-			if (form) {
-				submitForm(
-					form,
-					deleteFragmentCompositionsAndFragmentEntriesURL
-				);
-			}
-		}
+				if (form) {
+					submitForm(
+						form,
+						deleteFragmentCompositionsAndFragmentEntriesURL
+					);
+				}
+			},
+		});
 	};
 
 	const exportFragmentCompositionsAndFragmentEntries = () => {

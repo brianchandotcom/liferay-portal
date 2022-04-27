@@ -14,6 +14,8 @@
 
 import {openModal, openSelectionModal} from 'frontend-js-web';
 
+import openDeleteFragmentCollectionModal from './openDeleteFragmentCollectionModal';
+
 export const ACTIONS = {
 	deleteCollections({
 		deleteFragmentCollectionURL,
@@ -35,26 +37,23 @@ export const ACTIONS = {
 					return;
 				}
 
-				if (
-					confirm(
-						Liferay.Language.get(
-							'are-you-sure-you-want-to-delete-the-selected-entries'
-						)
-					)
-				) {
-					let input = form.elements[`${portletNamespace}rowIds`];
+				openDeleteFragmentCollectionModal({
+					multiple: true,
+					onDelete: () => {
+						let input = form.elements[`${portletNamespace}rowIds`];
 
-					if (!input) {
-						input = document.createElement('input');
-						input.name = `${portletNamespace}rowIds`;
-					}
+						if (!input) {
+							input = document.createElement('input');
+							input.name = `${portletNamespace}rowIds`;
+						}
 
-					input.value = selectedItems.map((item) => item.value);
+						input.value = selectedItems.map((item) => item.value);
 
-					form.appendChild(input);
-				}
+						form.appendChild(input);
 
-				submitForm(form, deleteFragmentCollectionURL);
+						submitForm(form, deleteFragmentCollectionURL);
+					},
+				});
 			},
 			null,
 			portletNamespace

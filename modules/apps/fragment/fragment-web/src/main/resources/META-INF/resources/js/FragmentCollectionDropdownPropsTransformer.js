@@ -14,15 +14,15 @@
 
 import {openModal} from 'frontend-js-web';
 
+import openDeleteFragmentCollectionModal from './openDeleteFragmentCollectionModal';
+
 const ACTIONS = {
 	deleteFragmentCollection({deleteFragmentCollectionURL}) {
-		if (
-			confirm(
-				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
-			)
-		) {
-			submitForm(document.hrefFm, deleteFragmentCollectionURL);
-		}
+		openDeleteFragmentCollectionModal({
+			onDelete: () => {
+				submitForm(document.hrefFm, deleteFragmentCollectionURL);
+			},
+		});
 	},
 	openImportCollectionView({viewImportURL}) {
 		openModal({

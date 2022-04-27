@@ -54,6 +54,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>COLLECTION_DISPLAY_COLUMNS_NO_GUTTER</td>
+	<td>xpath=(//div[@aria-label='Collection Display'])[${key_position}]//div[contains(@class,'row') and contains(@class,'no-gutters')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>COLLECTION_DISPLAY_CONFIGURATION_LAYOUT</td>
 	<td>xpath=(//div[@aria-label='Collection Display'])[${key_position}]//div[contains(@class,'col-${key_layout}')]</td>
 	<td></td>

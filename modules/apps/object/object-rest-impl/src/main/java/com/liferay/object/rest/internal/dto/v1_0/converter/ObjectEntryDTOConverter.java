@@ -420,32 +420,51 @@ public class ObjectEntryDTOConverter
 
 			objectRelationships.forEach(
 				objectRelationship -> {
-					Object[] objectEntries = new ObjectEntry[0];
+					Optional<UriInfo> uriInfoOptional =
+						dtoConverterContext.getUriInfoOptional();
 
-					if (Objects.equals(
-							objectRelationship.getType(),
-							ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
+					if (uriInfoOptional.map(
+							UriInfo::getQueryParameters
+						).map(
+							queryParameters -> queryParameters.getFirst(
+								"nestedFields")
+						).map(
+							nestedFields -> nestedFields.contains(
+								objectRelationship.getName())
+						).orElse(
+							false
+						)) {
 
-						objectEntries = _getManyToManyRelationshipObjectEntries(
-							dtoConverterContext, nestedFieldsDepth,
-							objectRelationship, objectEntry);
-					}
-					else if (Objects.equals(
+						Object[] objectEntries = new ObjectEntry[0];
+
+						if (Objects.equals(
 								objectRelationship.getType(),
-								ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
+								ObjectRelationshipConstants.
+									TYPE_MANY_TO_MANY)) {
 
-						try {
 							objectEntries =
-								_getOneToManyRelationshipObjectEntries(
+								_getManyToManyRelationshipObjectEntries(
 									dtoConverterContext, nestedFieldsDepth,
 									objectRelationship, objectEntry);
 						}
-						catch (PortalException e) {
-							e.printStackTrace();
-						}
-					}
+						else if (Objects.equals(
+									objectRelationship.getType(),
+									ObjectRelationshipConstants.
+										TYPE_ONE_TO_MANY)) {
 
-					map.put(objectRelationship.getName(), objectEntries);
+							try {
+								objectEntries =
+									_getOneToManyRelationshipObjectEntries(
+										dtoConverterContext, nestedFieldsDepth,
+										objectRelationship, objectEntry);
+							}
+							catch (PortalException e) {
+								e.printStackTrace();
+							}
+						}
+
+						map.put(objectRelationship.getName(), objectEntries);
+					}
 				});
 		}
 

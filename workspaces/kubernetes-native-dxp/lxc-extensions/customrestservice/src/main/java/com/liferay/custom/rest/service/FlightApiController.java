@@ -98,13 +98,13 @@ public class FlightApiController {
 		leg1.airline = "AA";
 		leg1.departureCode = origin;
 		leg1.arrivalCode = "LHR";
-		leg1.duration = "PT8H44M";
+		leg1.duration = "8hr 44min";
 
 		Leg leg2 = new Leg();
 		leg2.airline = "BA";
 		leg2.departureCode = "LHR";
 		leg2.arrivalCode = destination;
-		leg2.duration = "PT3H10M";
+		leg2.duration = "3hr 10min";
 
 		fd.legs = new Leg[] {leg1, leg2};
 		

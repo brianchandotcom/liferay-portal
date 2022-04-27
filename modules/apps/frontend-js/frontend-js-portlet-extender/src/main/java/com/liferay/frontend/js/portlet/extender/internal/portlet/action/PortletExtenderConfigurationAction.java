@@ -80,7 +80,7 @@ public class PortletExtenderConfigurationAction
 		_ddmFormValuesFactory = ddmFormValuesFactory;
 		_preferencesJSONObject = preferencesJSONObject;
 
-		_ddmForm = ddm.getDDMForm(preferencesJSONObject.toJSONString());
+		_ddmForm = ddm.getDDMForm(preferencesJSONObject.toString());
 
 		_ddmFormFieldsMap = _ddmForm.getDDMFormFieldsMap(true);
 

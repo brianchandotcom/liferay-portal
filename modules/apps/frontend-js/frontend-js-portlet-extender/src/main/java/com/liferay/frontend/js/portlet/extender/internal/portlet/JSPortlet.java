@@ -180,7 +180,7 @@ public class JSPortlet extends MVCPortlet implements ManagedService {
 			}
 		}
 
-		return _escapeJSON(portletPreferencesJSONObject.toJSONString());
+		return _escapeJSON(portletPreferencesJSONObject.toString());
 	}
 
 	private String _getSystemConfiguration() {

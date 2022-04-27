@@ -65,6 +65,21 @@
 	<td>//header[contains(@class,'p-4')]//h2[contains(text(),'Let’s set up your project')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SUBCRIPTIONS_PROJECT_INSIDE_PAGE</td>
+	<td>//div[contains(@class,'d-flex')]//h3</td>
+	<td></td>
+</tr>
+<tr>
+	<td>START_PROJECT_SETUP_BUTTON</td>
+	<td>//div[contains(@class,'d-flex')]//button[contains(@class,'btn-primary')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITE_TEAM_MEMBERS_TITLE</td>
+	<td>//div[contains(@class,'d-flex')]//h2[contains(text(),'Invite Your Team Members')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

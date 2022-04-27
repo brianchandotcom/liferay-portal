@@ -156,6 +156,9 @@ public class RenderLayoutStructureTag extends IncludeTag {
 		return SKIP_BODY;
 	}
 
+	protected static final String COLLECTION_ELEMENT_INDEX =
+		RenderLayoutStructureTag.class.getName() + "#COLLECTION_ELEMENT_INDEX";
+
 	protected static final String LAYOUT_STRUCTURE =
 		RenderLayoutStructureTag.class.getName() + "#LAYOUT_STRUCTURE";
 
@@ -358,9 +361,15 @@ public class RenderLayoutStructureTag extends IncludeTag {
 
 						colTag.doStartTag();
 
+						httpServletRequest.setAttribute(
+							COLLECTION_ELEMENT_INDEX, index);
+
 						_renderLayoutStructure(
 							layoutStructureItem.getChildrenItemIds(), index,
 							renderLayoutStructureDisplayContext);
+
+						httpServletRequest.removeAttribute(
+							COLLECTION_ELEMENT_INDEX);
 
 						colTag.doEndTag();
 					}

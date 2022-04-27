@@ -49,6 +49,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>COLLECTION_DISPLAY_COLUMN</td>
+	<td>xpath=(//div[@aria-label='Collection Display'])[${key_position}]//div[contains(@class,'col-')][${key_columnNumber}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COLLECTION_DISPLAY_CONFIGURATION_LAYOUT</td>
+	<td>xpath=(//div[@aria-label='Collection Display'])[${key_position}]//div[contains(@class,'col-${key_layout}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>COLLECTION_CELL</td>
 	<td>//div[contains(@class,'collection-item') and contains(.,'${key_entryTitle}')] | //div[contains(@class,'collection__block') and contains(.,'${key_content}')]</td>
 	<td></td>

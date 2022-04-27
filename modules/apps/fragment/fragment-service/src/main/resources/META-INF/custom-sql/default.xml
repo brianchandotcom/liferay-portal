@@ -22,7 +22,7 @@
 			WHERE
 				(FragmentComposition.groupId = ?) AND
 				(FragmentComposition.fragmentCollectionId = ?) AND
-				(FragmentComposition.name LIKE ?) AND
+				(LOWER(FragmentComposition.name) LIKE ?) AND
 				([$STATUS$])
 		]]>
 	</sql>
@@ -55,7 +55,7 @@
 					(FragmentEntry.head = [$TRUE$]) OR
 					(FragmentEntry.headId = FragmentEntry.fragmentEntryId)
 				) AND
-				(FragmentEntry.name LIKE ?) AND
+				(LOWER(FragmentEntry.name) LIKE ?) AND
 				([$STATUS$])
 		]]>
 	</sql>
@@ -82,7 +82,7 @@
 			WHERE
 				(FragmentComposition.groupId = ?) AND
 				(FragmentComposition.fragmentCollectionId = ?) AND
-				(FragmentComposition.name LIKE ?) AND
+				(LOWER(FragmentComposition.name) LIKE ?) AND
 				([$STATUS$])
 		]]>
 	</sql>
@@ -117,7 +117,7 @@
 					(FragmentEntry.head = [$TRUE$]) OR
 					(FragmentEntry.headId = FragmentEntry.fragmentEntryId)
 				) AND
-				(FragmentEntry.name LIKE ?) AND
+				(LOWER(FragmentEntry.name) LIKE ?) AND
 				([$STATUS$])
 		]]>
 	</sql>

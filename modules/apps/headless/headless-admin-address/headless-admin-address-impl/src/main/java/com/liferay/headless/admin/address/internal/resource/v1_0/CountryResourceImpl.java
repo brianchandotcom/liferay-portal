@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.model.CountryTable;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.CountryService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.odata.entity.DoubleEntityField;
@@ -28,6 +29,9 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.entity.StringEntityField;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -111,17 +115,20 @@ public class CountryResourceImpl extends BaseCountryResourceImpl {
 	private OrderByComparator<com.liferay.portal.kernel.model.Country>
 		_toOrderByComparator(Sort[] sorts) {
 
-		if (sorts == null) {
+		if (ArrayUtil.isEmpty(sorts)) {
 			return null;
 		}
 
+		List<Object> objects = new ArrayList<>();
+
 		for (Sort sort : sorts) {
-			return OrderByComparatorFactoryUtil.create(
-				CountryTable.INSTANCE.getTableName(), sort.getFieldName(),
-				String.valueOf(!sort.isReverse()));
+			objects.add(sort.getFieldName());
+			objects.add(!sort.isReverse());
 		}
 
-		return null;
+		return OrderByComparatorFactoryUtil.create(
+			CountryTable.INSTANCE.getTableName(),
+			objects.toArray(new Object[0]));
 	}
 
 	@Reference

@@ -844,17 +844,13 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testGetSearchBaseWithNullIdentifiers() throws Exception {
-		Method getSearchBaseMethod = _clazz.getDeclaredMethod(
-			"getSearchBase", String.class, long.class, LinkedHashMap.class,
-			List.class, Organization.class, Company.class);
-
-		getSearchBaseMethod.setAccessible(true);
-
 		List<Identifier> identifiers = new ArrayList<>();
 
-		getSearchBaseMethod.invoke(
-			_classInstance, "Liferay", 0, new LinkedHashMap<String, Object>(),
-			identifiers, _organization, company);
+		DirectoryTree directoryTree = new DirectoryTree();
+
+		directoryTree.getSearchBase(
+			"Liferay", 0, new LinkedHashMap<>(), identifiers, _organization,
+			company);
 	}
 
 	@Test

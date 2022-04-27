@@ -65,6 +65,7 @@ import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -937,7 +938,10 @@ public class RenderLayoutStructureTag extends IncludeTag {
 		httpServletRequest.setAttribute(LAYOUT_STRUCTURE, _layoutStructure);
 
 		_renderLayoutStructure(
-			childrenItemIds, -1, renderLayoutStructureDisplayContext);
+			childrenItemIds,
+			GetterUtil.getInteger(
+				httpServletRequest.getAttribute(COLLECTION_ELEMENT_INDEX), -1),
+			renderLayoutStructureDisplayContext);
 	}
 
 	private void _renderRowStyledLayoutStructureItem(

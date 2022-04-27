@@ -967,26 +967,6 @@ public class ContentPageEditorDisplayContext {
 			themeDisplay.getPlid());
 	}
 
-	private Map<String, Object> _getContributedFragmentEntry(
-		String rendererKey) {
-
-		Map<String, FragmentEntry> fragmentEntries =
-			_fragmentCollectionContributorTracker.getFragmentEntries(
-				themeDisplay.getLocale());
-
-		FragmentEntry fragmentEntry = fragmentEntries.get(rendererKey);
-
-		if (fragmentEntry != null) {
-			return HashMapBuilder.<String, Object>put(
-				"fragmentEntryId", 0
-			).put(
-				"name", fragmentEntry.getName()
-			).build();
-		}
-
-		return Collections.emptyMap();
-	}
-
 	private Map<String, Object> _getDefaultConfigurations() {
 		if (_defaultConfigurations != null) {
 			return _defaultConfigurations;
@@ -1383,16 +1363,7 @@ public class ContentPageEditorDisplayContext {
 			).build();
 		}
 
-		String rendererKey = fragmentEntryLink.getRendererKey();
-
-		if (Validator.isNotNull(rendererKey)) {
-			Map<String, Object> contributedFragmentEntries =
-				_getContributedFragmentEntry(rendererKey);
-
-			if (!contributedFragmentEntries.isEmpty()) {
-				return contributedFragmentEntries;
-			}
-
+		if (Validator.isNotNull(fragmentEntryLink.getRendererKey())) {
 			FragmentRenderer fragmentRenderer =
 				_fragmentRendererTracker.getFragmentRenderer(
 					fragmentEntryLink.getRendererKey());

@@ -208,7 +208,7 @@ definition {
 
 		DMDocument.setRootFolder(
 			depotName = "Test Depot Name",
-			selectRootFolder = "true");
+			selectRootFolder = "Home");
 
 		Navigator.openSitePage(
 			pageName = "Documents and Media Page",

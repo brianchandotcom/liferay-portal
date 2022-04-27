@@ -85,6 +85,11 @@
 	<td>//div[contains(@class,'d-flex')]//button[contains(@class,'btn-outline-borderless')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>PROJECT_TITLE_MAIN_PAGE</td>
+	<td>//div//h2[contains(@id,'project-title')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -385,4 +385,8 @@ definition {
 		AssertElementPresent("CustomerPortalSite#GETTING_STARTED_MODAL");
 	}
 
+	macro viewAllProjectsTitlePage { {
+		AssertElementPresent("CustomerPortalSite#PROJECT_TITLE_MAIN_PAGE");
+	}
+
 }

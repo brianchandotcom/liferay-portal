@@ -3633,6 +3633,10 @@ definition {
 	}
 
 	macro viewCollectionDisplayStyle {
+		if (!(isSet(rowNumber))) {
+			var rowNumer = "1";
+		}
+
 		if (isSet(columnCount)) {
 			var i = "0";
 
@@ -3642,6 +3646,7 @@ definition {
 				AssertElementPresent(
 					key_columnNumber = "${columnNumber}",
 					key_position = "${position}",
+					key_rowNumber = "${rowNumer}",
 					locator1 = "PageEditor#COLLECTION_DISPLAY_COLUMN");
 			}
 
@@ -3650,6 +3655,7 @@ definition {
 			AssertElementNotPresent(
 				key_columnNumber = "${columnNumber}",
 				key_position = "${position}",
+				key_rowNumber = "${rowNumer}",
 				locator1 = "PageEditor#COLLECTION_DISPLAY_COLUMN");
 		}
 

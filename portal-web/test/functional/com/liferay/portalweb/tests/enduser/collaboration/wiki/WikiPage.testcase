@@ -594,12 +594,33 @@ definition {
 	}
 
 	@description = "This is a test for LPS-71134. It ensures that an exported wiki page can be imported using default mirror strategy between different sites."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanImportPageBetweenDifferentSites {
+		for (var siteName : list "Site Name 1,Site Name 2") {
+			JSONGroup.addGroup(groupName = "${siteName}");
+		}
 
-		// TODO LPS-149057 CanImportPageBetweenDifferentSites pending implementation
+		JSONWiki.addWikiPage(
+			groupName = "Site Name 1",
+			wikiNodeName = "Main",
+			wikiPageContent = "Wiki Page Content",
+			wikiPageName = "Wiki Page Title");
 
+		WikiNavigator.openWikiAdmin(siteURLKey = "site-name-1");
+
+		LAR.exportPortlet(larFileName = "Wiki.portlet.lar");
+
+		WikiNavigator.openWikiAdmin(siteURLKey = "site-name-2");
+
+		LAR.importPortlet(larFileName = "Wiki.portlet.lar");
+
+		WikiNavigator.openWikiAdmin(siteURLKey = "site-name-2");
+
+		WikiNode.viewCP(
+			numberOfWikiPages = "2",
+			wikiNodeName = "Main 2");
+
+		AssertConsoleTextNotPresent(value1 = "com.liferay.wiki.exception.DuplicateNodeNameException");
 	}
 
 	@description = "This ensures that a wiki page can link to other wiki page, also covers LPS-81914."

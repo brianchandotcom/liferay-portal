@@ -38,7 +38,7 @@ public class ExperimentResourceTest extends BaseExperimentResourceTestCase {
 
 	@Override
 	protected Experiment testDeleteExperiment_addExperiment() throws Exception {
-		Layout layout = LayoutTestUtil.addTypePortletLayout(testGroup);
+		Layout layout = LayoutTestUtil.addTypeContentLayout(testGroup);
 
 		SegmentsExperience segmentsExperience =
 			SegmentsTestUtil.addSegmentsExperience(

@@ -20,12 +20,7 @@ import {config} from '../config/index';
 import {useHasStyleErrors} from '../contexts/StyleErrorsContext';
 import {StyleErrorsModal} from './StyleErrorsModal';
 
-export default function PublishButton({
-	canPublish,
-	formRef,
-	handleSubmit,
-	label,
-}) {
+export default function PublishButton({canPublish, formRef, label, onPublish}) {
 	const hasStyleErrors = useHasStyleErrors();
 	const [openStyleErrorsModal, setOpenStyleErrorsModal] = useState(false);
 
@@ -45,10 +40,9 @@ export default function PublishButton({
 					onClick={
 						hasStyleErrors
 							? () => setOpenStyleErrorsModal(true)
-							: handleSubmit
+							: onPublish
 					}
 					small
-					type={hasStyleErrors ? 'button' : 'submit'}
 				>
 					{label}
 				</ClayButton>
@@ -57,7 +51,7 @@ export default function PublishButton({
 			{openStyleErrorsModal && hasStyleErrors && (
 				<StyleErrorsModal
 					onCloseModal={() => setOpenStyleErrorsModal(false)}
-					onSubmit={handleSubmit}
+					onPublish={onPublish}
 				/>
 			)}
 		</>
@@ -67,6 +61,6 @@ export default function PublishButton({
 PublishButton.propTypes = {
 	canPublish: PropTypes.bool,
 	formRef: PropTypes.object,
-	handleSubmit: PropTypes.func,
 	label: PropTypes.string,
+	onPublish: PropTypes.func,
 };

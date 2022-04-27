@@ -15,12 +15,8 @@
 package com.liferay.client.extension.internal.upgrade;
 
 import com.liferay.portal.kernel.dao.db.DBInspector;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-
-import java.sql.Connection;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -35,42 +31,42 @@ public class ClientExtensionInitialUpgradeStepRegistrator
 
 	@Override
 	public void register(Registry registry) {
-
-		// TODO Remove suppression in source-formatter-suppressions.xml
-
-		try (Connection connection = DataAccess.getConnection()) {
-			DBInspector dbInspector = new DBInspector(connection);
-
-			if (!dbInspector.hasTable("RemoteAppEntry")) {
-				return;
-			}
-		}
-		catch (Exception exception) {
-			_log.error(exception);
-
-			return;
-		}
-
 		registry.registerInitialUpgradeSteps(
-			new com.liferay.client.extension.internal.upgrade.v1_0_1.
-				RemoteAppEntryUpgradeProcess(),
-			new com.liferay.client.extension.internal.upgrade.v2_0_0.
-				RemoteAppEntryUpgradeProcess(),
-			new com.liferay.client.extension.internal.upgrade.v2_1_0.
-				ResourcePermissionsUpgradeProcess(),
-			new com.liferay.client.extension.internal.upgrade.v2_2_0.
-				RemoteAppEntryUpgradeProcess(),
-			new com.liferay.client.extension.internal.upgrade.v2_3_0.
-				RemoteAppEntryUpgradeProcess(),
-			new com.liferay.client.extension.internal.upgrade.v2_4_0.
-				RemoteAppEntryUpgradeProcess(),
-			new com.liferay.client.extension.internal.upgrade.v2_5_0.
-				RemoteAppEntryUpgradeProcess(),
-			new com.liferay.client.extension.internal.upgrade.v3_0_0.
-				ClientExtensionEntryUpgradeProcess());
-	}
+			new UpgradeProcess() {
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		ClientExtensionInitialUpgradeStepRegistrator.class);
+				@Override
+				protected void doUpgrade() throws Exception {
+					DBInspector dbInspector = new DBInspector(connection);
+
+					if (!dbInspector.hasTable("RemoteAppEntry")) {
+						return;
+					}
+
+					for (UpgradeProcess upgradeProcess :
+							new UpgradeProcess[] {
+								new com.liferay.client.extension.internal.
+									upgrade.v1_0_1.RemoteAppEntryUpgradeProcess(),
+								new com.liferay.client.extension.internal.
+									upgrade.v2_0_0.RemoteAppEntryUpgradeProcess(),
+								new com.liferay.client.extension.internal.
+									upgrade.v2_1_0.ResourcePermissionsUpgradeProcess(),
+								new com.liferay.client.extension.internal.
+									upgrade.v2_2_0.RemoteAppEntryUpgradeProcess(),
+								new com.liferay.client.extension.internal.
+									upgrade.v2_3_0.RemoteAppEntryUpgradeProcess(),
+								new com.liferay.client.extension.internal.
+									upgrade.v2_4_0.RemoteAppEntryUpgradeProcess(),
+								new com.liferay.client.extension.internal.
+									upgrade.v2_5_0.RemoteAppEntryUpgradeProcess(),
+								new com.liferay.client.extension.internal.
+									upgrade.v3_0_0.ClientExtensionEntryUpgradeProcess()
+							}) {
+
+						upgradeProcess.upgrade();
+					}
+				}
+
+			});
+	}
 
 }

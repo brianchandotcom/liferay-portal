@@ -127,6 +127,25 @@ paths:
                                     $ref: "#/components/schemas/Country"
                                 type: array
             tags: ["Country"]
+        post:
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Country"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Country"
+            responses:
+                201:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Country"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Country"
+            tags: ["Country"]
     "/countries/by-a2/{a2}":
         get:
             operationId: getCountryByA2

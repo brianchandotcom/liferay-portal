@@ -22,11 +22,11 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
-import com.liferay.object.test.util.ObjectFieldSettingTestUtil;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.object.util.ObjectFieldBuilder;
 import com.liferay.object.util.ObjectFieldUtil;
@@ -52,6 +52,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
@@ -92,12 +93,9 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 				"alpha"
 			).objectFieldSettings(
 				Arrays.asList(
-					ObjectFieldSettingTestUtil.createObjectFieldSetting(
-						"acceptedFileExtensions", "txt"),
-					ObjectFieldSettingTestUtil.createObjectFieldSetting(
-						"fileSource", "userComputer"),
-					ObjectFieldSettingTestUtil.createObjectFieldSetting(
-						"maximumFileSize", "100"))
+					_createObjectFieldSetting("acceptedFileExtensions", "txt"),
+					_createObjectFieldSetting("fileSource", "userComputer"),
+					_createObjectFieldSetting("maximumFileSize", "100"))
 			).build());
 		_testAttachment(
 			objectFieldBuilder.indexedAsKeyword(
@@ -469,9 +467,7 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 	public void testSearchByTitleValue() throws Exception {
 		_addObjectDefinition(
 			ObjectFieldUtil.createObjectField(
-				"Text", "String", false, false, null, "Alpha", "alpha",
-				ObjectFieldSettingTestUtil.getObjectFieldSettings("Text"),
-				false));
+				"Text", "String", false, false, null, "Alpha", "alpha", false));
 
 		ObjectEntry objectEntry = _addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
@@ -544,12 +540,24 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 		Assert.assertEquals(count, baseModelSearchResult.getLength());
 	}
 
+	private ObjectFieldSetting _createObjectFieldSetting(
+		String name, String value) {
+
+		ObjectFieldSetting objectFieldSetting =
+			_objectFieldSettingLocalService.createObjectFieldSetting(0L);
+
+		objectFieldSetting.setName(name);
+		objectFieldSetting.setValue(value);
+
+		return objectFieldSetting;
+	}
+
 	private long _getTitleObjectFieldId() throws Exception {
 		ObjectField objectField = _objectFieldLocalService.addCustomObjectField(
 			TestPropsValues.getUserId(), 0,
 			_objectDefinition.getObjectDefinitionId(), "Text", "String", true,
 			true, null, LocalizedMapUtil.getLocalizedMap("Beta"), "beta", false,
-			ObjectFieldSettingTestUtil.getObjectFieldSettings("Text"));
+			Collections.emptyList());
 
 		return objectField.getObjectFieldId();
 	}
@@ -602,9 +610,7 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 		_addObjectDefinition(
 			ObjectFieldUtil.createObjectField(
 				businessType, dbType, indexed, indexedAsKeyword,
-				analyzed ? "en_US" : null, "Alpha", "alpha",
-				ObjectFieldSettingTestUtil.getObjectFieldSettings(businessType),
-				false));
+				analyzed ? "en_US" : null, "Alpha", "alpha", false));
 
 		String text = "The quick brown fox jumps over the lazy dog";
 

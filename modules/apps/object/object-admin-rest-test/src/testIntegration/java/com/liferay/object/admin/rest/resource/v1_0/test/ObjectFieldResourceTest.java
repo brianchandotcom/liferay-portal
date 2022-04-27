@@ -16,7 +16,6 @@ package com.liferay.object.admin.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectField;
-import com.liferay.object.admin.rest.client.dto.v1_0.ObjectFieldSetting;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -89,15 +88,6 @@ public class ObjectFieldResourceTest extends BaseObjectFieldResourceTestCase {
 			Collections.singletonMap(
 				LocaleUtil.US.toString(), "a" + objectField.getName()));
 		objectField.setName("a" + objectField.getName());
-		objectField.setObjectFieldSettings(
-			new ObjectFieldSetting[] {
-				new ObjectFieldSetting() {
-					{
-						setName("showCounter");
-						setValue("false");
-					}
-				}
-			});
 
 		return objectField;
 	}

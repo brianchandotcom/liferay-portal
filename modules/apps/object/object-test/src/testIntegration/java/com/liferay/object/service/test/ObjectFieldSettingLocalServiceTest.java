@@ -23,7 +23,6 @@ import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
-import com.liferay.object.test.util.ObjectFieldSettingTestUtil;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -31,6 +30,8 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import java.util.Collections;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -67,7 +68,7 @@ public class ObjectFieldSettingLocalServiceTest {
 			false, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			StringUtil.randomId(), RandomTestUtil.randomBoolean(),
-			ObjectFieldSettingTestUtil.getObjectFieldSettings("Text"));
+			Collections.emptyList());
 	}
 
 	@AfterClass

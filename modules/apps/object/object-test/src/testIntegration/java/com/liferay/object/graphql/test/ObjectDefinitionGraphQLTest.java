@@ -20,7 +20,6 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectEntryLocalServiceUtil;
-import com.liferay.object.test.util.ObjectFieldSettingTestUtil;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.object.util.ObjectFieldUtil;
 import com.liferay.petra.string.StringBundler;
@@ -84,8 +83,6 @@ public class ObjectDefinitionGraphQLTest {
 					ObjectFieldUtil.createObjectField(
 						"Text", "String", true, true, null,
 						RandomTestUtil.randomString(), _objectFieldName,
-						ObjectFieldSettingTestUtil.getObjectFieldSettings(
-							"Text"),
 						false)));
 
 		_objectDefinition =

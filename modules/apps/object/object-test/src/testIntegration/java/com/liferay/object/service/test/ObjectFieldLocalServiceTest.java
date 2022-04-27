@@ -19,6 +19,7 @@ import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.ObjectFieldBusinessTypeException;
 import com.liferay.object.exception.ObjectFieldDBTypeException;
@@ -35,8 +36,8 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
+import com.liferay.object.service.ObjectFieldSettingLocalServiceUtil;
 import com.liferay.object.service.ObjectRelationshipLocalService;
-import com.liferay.object.test.util.ObjectFieldSettingTestUtil;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.object.util.ObjectFieldUtil;
 import com.liferay.petra.string.StringBundler;
@@ -65,6 +66,8 @@ import java.sql.Connection;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -129,8 +132,7 @@ public class ObjectFieldLocalServiceTest {
 			_testAddSystemObjectField(
 				ObjectFieldUtil.createObjectField(
 					businessType, "", "Able", "able",
-					ObjectFieldSettingTestUtil.getObjectFieldSettings(
-						businessType)));
+					_getObjectFieldSettings(businessType)));
 		}
 
 		String businessType = RandomTestUtil.randomString();
@@ -212,8 +214,7 @@ public class ObjectFieldLocalServiceTest {
 			_testAddSystemObjectField(
 				ObjectFieldUtil.createObjectField(
 					"Text", null, "String", true, true, "en_US", "", 0, "able",
-					ObjectFieldSettingTestUtil.getObjectFieldSettings("Text"),
-					false));
+					_getObjectFieldSettings("Text"), false));
 
 			Assert.fail();
 		}
@@ -230,7 +231,7 @@ public class ObjectFieldLocalServiceTest {
 			_testAddSystemObjectField(
 				ObjectFieldUtil.createObjectField(
 					"Text", "String", "", "able",
-					ObjectFieldSettingTestUtil.getObjectFieldSettings("Text")));
+					_getObjectFieldSettings("Text")));
 
 			Assert.fail();
 		}
@@ -246,7 +247,7 @@ public class ObjectFieldLocalServiceTest {
 			_testAddSystemObjectField(
 				ObjectFieldUtil.createObjectField(
 					"Text", "String", "Able", "",
-					ObjectFieldSettingTestUtil.getObjectFieldSettings("Text")));
+					_getObjectFieldSettings("Text")));
 
 			Assert.fail();
 		}
@@ -259,14 +260,13 @@ public class ObjectFieldLocalServiceTest {
 
 		_testAddSystemObjectField(
 			ObjectFieldUtil.createObjectField(
-				"Text", "String", " able ",
-				ObjectFieldSettingTestUtil.getObjectFieldSettings("Text")));
+				"Text", "String", " able ", _getObjectFieldSettings("Text")));
 
 		try {
 			_testAddSystemObjectField(
 				ObjectFieldUtil.createObjectField(
 					"Text", "String", "abl e",
-					ObjectFieldSettingTestUtil.getObjectFieldSettings("Text")));
+					_getObjectFieldSettings("Text")));
 
 			Assert.fail();
 		}
@@ -280,7 +280,7 @@ public class ObjectFieldLocalServiceTest {
 			_testAddSystemObjectField(
 				ObjectFieldUtil.createObjectField(
 					"Text", "String", "abl-e",
-					ObjectFieldSettingTestUtil.getObjectFieldSettings("Text")));
+					_getObjectFieldSettings("Text")));
 
 			Assert.fail();
 		}
@@ -295,8 +295,7 @@ public class ObjectFieldLocalServiceTest {
 		try {
 			_testAddSystemObjectField(
 				ObjectFieldUtil.createObjectField(
-					"Text", "String", "Able",
-					ObjectFieldSettingTestUtil.getObjectFieldSettings("Text")));
+					"Text", "String", "Able", _getObjectFieldSettings("Text")));
 
 			Assert.fail();
 		}
@@ -311,14 +310,14 @@ public class ObjectFieldLocalServiceTest {
 		_testAddSystemObjectField(
 			ObjectFieldUtil.createObjectField(
 				"Text", "String", "a123456789a123456789a123456789a1234567891",
-				ObjectFieldSettingTestUtil.getObjectFieldSettings("Text")));
+				_getObjectFieldSettings("Text")));
 
 		try {
 			_testAddSystemObjectField(
 				ObjectFieldUtil.createObjectField(
 					"Text", "String",
 					"a123456789a123456789a123456789a12345678912",
-					ObjectFieldSettingTestUtil.getObjectFieldSettings("Text")));
+					_getObjectFieldSettings("Text")));
 
 			Assert.fail();
 		}
@@ -342,8 +341,7 @@ public class ObjectFieldLocalServiceTest {
 				_testAddSystemObjectField(
 					ObjectFieldUtil.createObjectField(
 						"Text", "String", reservedName,
-						ObjectFieldSettingTestUtil.getObjectFieldSettings(
-							"Text")));
+						_getObjectFieldSettings("Text")));
 
 				Assert.fail();
 			}
@@ -364,7 +362,7 @@ public class ObjectFieldLocalServiceTest {
 				objectDefinitionName,
 				ObjectFieldUtil.createObjectField(
 					"Text", "String", pkObjectFieldName,
-					ObjectFieldSettingTestUtil.getObjectFieldSettings("Text")));
+					_getObjectFieldSettings("Text")));
 
 			Assert.fail();
 		}
@@ -380,10 +378,10 @@ public class ObjectFieldLocalServiceTest {
 			_testAddSystemObjectField(
 				ObjectFieldUtil.createObjectField(
 					"Text", "String", "Able", "able",
-					ObjectFieldSettingTestUtil.getObjectFieldSettings("Text")),
+					_getObjectFieldSettings("Text")),
 				ObjectFieldUtil.createObjectField(
 					"Text", "String", "Able", "able",
-					ObjectFieldSettingTestUtil.getObjectFieldSettings("Text")));
+					_getObjectFieldSettings("Text")));
 
 			Assert.fail();
 		}
@@ -396,8 +394,7 @@ public class ObjectFieldLocalServiceTest {
 	@Test
 	public void testDeleteObjectField1() throws Exception {
 		ObjectField ableObjectField = ObjectFieldUtil.createObjectField(
-			"Text", "String", "able",
-			ObjectFieldSettingTestUtil.getObjectFieldSettings("Text"));
+			"Text", "String", "able", _getObjectFieldSettings("Text"));
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
@@ -431,7 +428,7 @@ public class ObjectFieldLocalServiceTest {
 			TestPropsValues.getUserId(), 0,
 			objectDefinition.getObjectDefinitionId(), "Text", "String", false,
 			true, "", LocalizedMapUtil.getLocalizedMap("able"), "able", false,
-			ObjectFieldSettingTestUtil.getObjectFieldSettings("Text"));
+			_getObjectFieldSettings("Text"));
 
 		Assert.assertNotNull(ableObjectField);
 
@@ -449,7 +446,7 @@ public class ObjectFieldLocalServiceTest {
 			TestPropsValues.getUserId(), 0,
 			objectDefinition.getObjectDefinitionId(), "Text", "String", false,
 			true, "", LocalizedMapUtil.getLocalizedMap("baker"), "baker", false,
-			ObjectFieldSettingTestUtil.getObjectFieldSettings("Text"));
+			_getObjectFieldSettings("Text"));
 
 		ObjectField bakerObjectField =
 			_objectFieldLocalService.fetchObjectField(
@@ -486,8 +483,7 @@ public class ObjectFieldLocalServiceTest {
 	@Test
 	public void testDeleteObjectField2() throws Exception {
 		ObjectField ableObjectField = ObjectFieldUtil.createObjectField(
-			"Text", "String", "able",
-			ObjectFieldSettingTestUtil.getObjectFieldSettings("Text"));
+			"Text", "String", "able", _getObjectFieldSettings("Text"));
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.addSystemObjectDefinition(
@@ -521,7 +517,7 @@ public class ObjectFieldLocalServiceTest {
 			TestPropsValues.getUserId(), 0,
 			objectDefinition.getObjectDefinitionId(), "Text", "String", false,
 			true, "", LocalizedMapUtil.getLocalizedMap("baker"), "baker", false,
-			ObjectFieldSettingTestUtil.getObjectFieldSettings("Text"));
+			_getObjectFieldSettings("Text"));
 
 		ObjectField bakerObjectField =
 			_objectFieldLocalService.fetchObjectField(
@@ -567,12 +563,9 @@ public class ObjectFieldLocalServiceTest {
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			"upload", false,
 			Arrays.asList(
-				ObjectFieldSettingTestUtil.createObjectFieldSetting(
-					"acceptedFileExtensions", "txt"),
-				ObjectFieldSettingTestUtil.createObjectFieldSetting(
-					"fileSource", "userComputer"),
-				ObjectFieldSettingTestUtil.createObjectFieldSetting(
-					"maximumFileSize", "100")));
+				_createObjectFieldSetting("acceptedFileExtensions", "txt"),
+				_createObjectFieldSetting("fileSource", "userComputer"),
+				_createObjectFieldSetting("maximumFileSize", "100")));
 
 		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
 			null, TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
@@ -669,10 +662,8 @@ public class ObjectFieldLocalServiceTest {
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"text", false,
 				Arrays.asList(
-					ObjectFieldSettingTestUtil.createObjectFieldSetting(
-						"anySetting", "10"),
-					ObjectFieldSettingTestUtil.createObjectFieldSetting(
-						"showCounter", "true")));
+					_createObjectFieldSetting("anySetting", "10"),
+					_createObjectFieldSetting("showCounter", "true")));
 		}
 		catch (ObjectFieldSettingNameException.NotAllowedNames
 					objectFieldSettingNameException) {
@@ -691,12 +682,9 @@ public class ObjectFieldLocalServiceTest {
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			StringUtil.randomId(), false,
 			Arrays.asList(
-				ObjectFieldSettingTestUtil.createObjectFieldSetting(
-					"acceptedFileExtensions", "jpg, png"),
-				ObjectFieldSettingTestUtil.createObjectFieldSetting(
-					"fileSource", "userComputer"),
-				ObjectFieldSettingTestUtil.createObjectFieldSetting(
-					"maximumFileSize", "100")));
+				_createObjectFieldSetting("acceptedFileExtensions", "jpg, png"),
+				_createObjectFieldSetting("fileSource", "userComputer"),
+				_createObjectFieldSetting("maximumFileSize", "100")));
 
 		_assertObjectFieldSetting(
 			"acceptedFileExtensions", objectField.getObjectFieldId(),
@@ -712,12 +700,9 @@ public class ObjectFieldLocalServiceTest {
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			StringUtil.randomId(), false,
 			Arrays.asList(
-				ObjectFieldSettingTestUtil.createObjectFieldSetting(
-					"acceptedFileExtensions", "jpg"),
-				ObjectFieldSettingTestUtil.createObjectFieldSetting(
-					"fileSource", "documentsAndMedia"),
-				ObjectFieldSettingTestUtil.createObjectFieldSetting(
-					"maximumFileSize", "10")));
+				_createObjectFieldSetting("acceptedFileExtensions", "jpg"),
+				_createObjectFieldSetting("fileSource", "documentsAndMedia"),
+				_createObjectFieldSetting("maximumFileSize", "10")));
 
 		_assertObjectFieldSetting(
 			"acceptedFileExtensions", objectField.getObjectFieldId(), "jpg");
@@ -732,8 +717,7 @@ public class ObjectFieldLocalServiceTest {
 			objectField.getObjectFieldId(), 0, "Text", "String", true, false,
 			null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			StringUtil.randomId(), false,
-			ObjectFieldSettingTestUtil.getObjectFieldSettings("Text"));
+			StringUtil.randomId(), false, _getObjectFieldSettings("Text"));
 
 		Assert.assertNull(
 			_objectFieldSettingLocalService.fetchObjectFieldSetting(
@@ -751,10 +735,8 @@ public class ObjectFieldLocalServiceTest {
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			StringUtil.randomId(), false,
 			Arrays.asList(
-				ObjectFieldSettingTestUtil.createObjectFieldSetting(
-					"maxLength", "10"),
-				ObjectFieldSettingTestUtil.createObjectFieldSetting(
-					"showCounter", "true")));
+				_createObjectFieldSetting("maxLength", "10"),
+				_createObjectFieldSetting("showCounter", "true")));
 
 		_assertObjectFieldSetting(
 			"maxLength", objectField.getObjectFieldId(), "10");
@@ -766,7 +748,8 @@ public class ObjectFieldLocalServiceTest {
 			null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			StringUtil.randomId(), false,
-			ObjectFieldSettingTestUtil.getObjectFieldSettings("Text"));
+			Collections.singletonList(
+				_createObjectFieldSetting("showCounter", "false")));
 
 		ObjectFieldSetting objectFieldSetting =
 			_objectFieldSettingLocalService.fetchObjectFieldSetting(
@@ -830,8 +813,7 @@ public class ObjectFieldLocalServiceTest {
 		objectField = _objectFieldLocalService.updateCustomObjectField(
 			objectField.getObjectFieldId(), 0, "Text", "String", true, false,
 			indexedLanguageId, LocalizedMapUtil.getLocalizedMap("baker"),
-			"baker", true,
-			ObjectFieldSettingTestUtil.getObjectFieldSettings("Text"));
+			"baker", true, _getObjectFieldSettings("Text"));
 
 		Assert.assertEquals("baker_", objectField.getDBColumnName());
 		Assert.assertEquals("String", objectField.getDBType());
@@ -852,7 +834,7 @@ public class ObjectFieldLocalServiceTest {
 		objectField = _objectFieldLocalService.updateCustomObjectField(
 			objectField.getObjectFieldId(), 0, "Integer", "Integer", false,
 			true, "", LocalizedMapUtil.getLocalizedMap("charlie"), "charlie",
-			false, ObjectFieldSettingTestUtil.getObjectFieldSettings("Text"));
+			false, _getObjectFieldSettings("Text"));
 
 		Assert.assertEquals("baker_", objectField.getDBColumnName());
 		Assert.assertEquals("String", objectField.getDBType());
@@ -883,6 +865,38 @@ public class ObjectFieldLocalServiceTest {
 
 		Assert.assertEquals(name, objectFieldSetting.getName());
 		Assert.assertEquals(value, objectFieldSetting.getValue());
+	}
+
+	private ObjectFieldSetting _createObjectFieldSetting(
+		String name, String value) {
+
+		ObjectFieldSetting objectFieldSetting =
+			_objectFieldSettingLocalService.createObjectFieldSetting(0L);
+
+		objectFieldSetting.setName(name);
+		objectFieldSetting.setValue(value);
+
+		return objectFieldSetting;
+	}
+
+	private List<ObjectFieldSetting> _getObjectFieldSettings(
+		String businessType) {
+
+		if (Objects.equals(
+				businessType, ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT) ||
+			Objects.equals(
+				businessType, ObjectFieldConstants.BUSINESS_TYPE_TEXT)) {
+
+			ObjectFieldSetting objectFieldSetting =
+				ObjectFieldSettingLocalServiceUtil.createObjectFieldSetting(0);
+
+			objectFieldSetting.setName("showCounter");
+			objectFieldSetting.setValue("false");
+
+			return Collections.singletonList(objectFieldSetting);
+		}
+
+		return null;
 	}
 
 	private boolean _hasColumn(String tableName, String columnName)

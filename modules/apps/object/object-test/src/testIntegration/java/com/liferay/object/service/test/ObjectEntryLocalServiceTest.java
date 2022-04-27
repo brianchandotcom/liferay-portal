@@ -41,7 +41,6 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectValidationRuleLocalService;
-import com.liferay.object.test.util.ObjectFieldSettingTestUtil;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.object.util.ObjectFieldUtil;
 import com.liferay.petra.string.StringBundler;
@@ -132,9 +131,7 @@ public class ObjectEntryLocalServiceTest {
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
 						"Text", "String", RandomTestUtil.randomString(),
-						StringUtil.randomId(),
-						ObjectFieldSettingTestUtil.getObjectFieldSettings(
-							"Text"))));
+						StringUtil.randomId())));
 
 		_irrelevantObjectDefinition =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(
@@ -182,52 +179,34 @@ public class ObjectEntryLocalServiceTest {
 						"birthday", false),
 					ObjectFieldUtil.createObjectField(
 						"Text", "String", true, true, null, "Email Address",
-						"emailAddress",
-						ObjectFieldSettingTestUtil.getObjectFieldSettings(
-							"Text"),
-						false),
+						"emailAddress", false),
 					ObjectFieldUtil.createObjectField(
 						"Text", "String", true, true, null,
-						"Email Address Required", "emailAddressRequired",
-						ObjectFieldSettingTestUtil.getObjectFieldSettings(
-							"Text"),
-						true),
+						"Email Address Required", "emailAddressRequired", true),
 					ObjectFieldUtil.createObjectField(
 						"Text", "String", true, true, null,
-						"Email Address Domain", "emailAddressDomain",
-						ObjectFieldSettingTestUtil.getObjectFieldSettings(
-							"Text"),
-						false),
+						"Email Address Domain", "emailAddressDomain", false),
 					ObjectFieldUtil.createObjectField(
 						"Text", "String", true, false, null, "First Name",
-						"firstName",
-						ObjectFieldSettingTestUtil.getObjectFieldSettings(
-							"Text"),
-						false),
+						"firstName", false),
 					ObjectFieldUtil.createObjectField(
 						"Decimal", "Double", true, false, null, "Height",
 						"height", false),
 					ObjectFieldUtil.createObjectField(
 						"Text", "String", true, false, null, "Last Name",
-						"lastName",
-						ObjectFieldSettingTestUtil.getObjectFieldSettings(
-							"Text"),
-						false),
+						"lastName", false),
 					ObjectFieldUtil.createObjectField(
-						_listTypeDefinition.getListTypeDefinitionId(),
-						"Picklist", null, "String", true, false, null,
+						_listTypeDefinition.getListTypeDefinitionId(), "Text",
+						null, "String", true, false, null,
 						"List Type Entry Key", "listTypeEntryKey", false),
 					ObjectFieldUtil.createObjectField(
-						_listTypeDefinition.getListTypeDefinitionId(),
-						"Picklist", null, "String", true, false, null,
+						_listTypeDefinition.getListTypeDefinitionId(), "Text",
+						null, "String", true, false, null,
 						"List Type Entry Key Required",
 						"listTypeEntryKeyRequired", true),
 					ObjectFieldUtil.createObjectField(
 						"Text", "String", true, false, null, "Middle Name",
-						"middleName",
-						ObjectFieldSettingTestUtil.getObjectFieldSettings(
-							"Text"),
-						false),
+						"middleName", false),
 					ObjectFieldUtil.createObjectField(
 						"Integer", "Integer", true, false, null,
 						"Number of Books Written", "numberOfBooksWritten",
@@ -237,10 +216,7 @@ public class ObjectEntryLocalServiceTest {
 						"portrait", false),
 					ObjectFieldUtil.createObjectField(
 						"LongText", "Clob", false, false, null, "Script",
-						"script",
-						ObjectFieldSettingTestUtil.getObjectFieldSettings(
-							"LongText"),
-						false)));
+						"script", false)));
 
 		_objectDefinition =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(
@@ -259,12 +235,9 @@ public class ObjectEntryLocalServiceTest {
 			true, false, null, LocalizedMapUtil.getLocalizedMap("Upload"),
 			"upload", false,
 			Arrays.asList(
-				ObjectFieldSettingTestUtil.createObjectFieldSetting(
-					"acceptedFileExtensions", "txt"),
-				ObjectFieldSettingTestUtil.createObjectFieldSetting(
-					"fileSource", "userComputer"),
-				ObjectFieldSettingTestUtil.createObjectFieldSetting(
-					"maximumFileSize", "100")));
+				_createObjectFieldSetting("acceptedFileExtensions", "txt"),
+				_createObjectFieldSetting("fileSource", "userComputer"),
+				_createObjectFieldSetting("maximumFileSize", "100")));
 		_objectFieldLocalService.addCustomObjectField(
 			TestPropsValues.getUserId(), 0,
 			_objectDefinition.getObjectDefinitionId(), "Decimal", "Double",
@@ -1864,6 +1837,18 @@ public class ObjectEntryLocalServiceTest {
 		}
 	}
 
+	private ObjectFieldSetting _createObjectFieldSetting(
+		String name, String value) {
+
+		ObjectFieldSetting objectFieldSetting =
+			_objectFieldSettingLocalService.createObjectFieldSetting(0L);
+
+		objectFieldSetting.setName(name);
+		objectFieldSetting.setValue(value);
+
+		return objectFieldSetting;
+	}
+
 	private BigDecimal _getBigDecimal(long value) {
 		BigDecimal bigDecimal = BigDecimal.valueOf(value);
 
@@ -1937,9 +1922,7 @@ public class ObjectEntryLocalServiceTest {
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
 						"Text", "String", RandomTestUtil.randomString(),
-						StringUtil.randomId(),
-						ObjectFieldSettingTestUtil.getObjectFieldSettings(
-							"Text"))));
+						StringUtil.randomId())));
 
 		objectDefinition =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(

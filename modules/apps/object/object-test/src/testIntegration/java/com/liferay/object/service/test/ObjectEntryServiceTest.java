@@ -22,7 +22,6 @@ import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectEntryService;
-import com.liferay.object.test.util.ObjectFieldSettingTestUtil;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.object.util.ObjectFieldUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -92,16 +91,10 @@ public class ObjectEntryServiceTest {
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
 						"Text", "String", true, false, null, "First Name",
-						"firstName",
-						ObjectFieldSettingTestUtil.getObjectFieldSettings(
-							"Text"),
-						false),
+						"firstName", false),
 					ObjectFieldUtil.createObjectField(
 						"Text", "String", true, false, null, "Last Name",
-						"lastName",
-						ObjectFieldSettingTestUtil.getObjectFieldSettings(
-							"Text"),
-						false)));
+						"lastName", false)));
 
 		_objectDefinition =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(

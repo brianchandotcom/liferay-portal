@@ -25,7 +25,6 @@ import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
-import com.liferay.object.test.util.ObjectFieldSettingTestUtil;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.object.util.ObjectFieldUtil;
 import com.liferay.petra.string.StringPool;
@@ -84,10 +83,7 @@ public class ObjectActionLocalServiceTest {
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
 						"Text", "String", true, true, null, "First Name",
-						"firstName",
-						ObjectFieldSettingTestUtil.getObjectFieldSettings(
-							"Text"),
-						true)));
+						"firstName", true)));
 
 		_objectDefinition =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(

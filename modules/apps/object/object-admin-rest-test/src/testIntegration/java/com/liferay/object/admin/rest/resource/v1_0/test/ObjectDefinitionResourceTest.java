@@ -17,7 +17,6 @@ package com.liferay.object.admin.rest.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectField;
-import com.liferay.object.admin.rest.client.dto.v1_0.ObjectFieldSetting;
 import com.liferay.object.admin.rest.client.pagination.Page;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.exception.NoSuchObjectDefinitionException;
@@ -138,15 +137,6 @@ public class ObjectDefinitionResourceTest
 						setDBType(ObjectField.DBType.create("String"));
 						setLabel(Collections.singletonMap("en_US", "Column"));
 						setName("column");
-						setObjectFieldSettings(
-							new ObjectFieldSetting[] {
-								new ObjectFieldSetting() {
-									{
-										setName("showCounter");
-										setValue("false");
-									}
-								}
-							});
 					}
 				}
 			});

@@ -38,12 +38,6 @@
 				"en_US": "Text Field 1"
 			},
 			"name": "textField1",
-			"objectFieldSettings": [
-				{
-					"name": "showCounter",
-					"value": "false"
-				}
-			],
 			"required": false,
 			"type": "String"
 		},
@@ -57,12 +51,6 @@
 				"en_US": "Text Field 2"
 			},
 			"name": "textField2",
-			"objectFieldSettings": [
-				{
-					"name": "showCounter",
-					"value": "false"
-				}
-			],
 			"required": false,
 			"type": "String"
 		}

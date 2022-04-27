@@ -22,7 +22,6 @@ import com.liferay.object.model.ObjectValidationRule;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectValidationRuleLocalService;
 import com.liferay.object.service.ObjectValidationRuleService;
-import com.liferay.object.test.util.ObjectFieldSettingTestUtil;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.object.util.ObjectFieldUtil;
 import com.liferay.portal.kernel.model.User;
@@ -74,9 +73,7 @@ public class ObjectValidationRuleServiceTest {
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
 						"Text", "String", RandomTestUtil.randomString(),
-						"textField",
-						ObjectFieldSettingTestUtil.getObjectFieldSettings(
-							"Text"))));
+						"textField")));
 		_originalName = PrincipalThreadLocal.getName();
 		_originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
@@ -90,9 +87,7 @@ public class ObjectValidationRuleServiceTest {
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
 						"Text", "String", RandomTestUtil.randomString(),
-						"textField",
-						ObjectFieldSettingTestUtil.getObjectFieldSettings(
-							"Text"))));
+						"textField")));
 		_user = TestPropsValues.getUser();
 	}
 

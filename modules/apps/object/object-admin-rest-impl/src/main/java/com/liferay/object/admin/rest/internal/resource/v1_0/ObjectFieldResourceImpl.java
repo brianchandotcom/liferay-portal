@@ -202,7 +202,7 @@ public class ObjectFieldResourceImpl
 						objectField.getObjectDefinitionId());
 				}
 			).build(),
-			_objectFieldSettingLocalService, objectField);
+			objectField);
 	}
 
 	private ObjectField _toObjectField(

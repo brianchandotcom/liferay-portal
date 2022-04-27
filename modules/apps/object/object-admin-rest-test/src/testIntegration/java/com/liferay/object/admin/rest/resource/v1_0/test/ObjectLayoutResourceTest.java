@@ -25,7 +25,6 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
-import com.liferay.object.test.util.ObjectFieldSettingTestUtil;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -64,7 +63,7 @@ public class ObjectLayoutResourceTest extends BaseObjectLayoutResourceTestCase {
 			TestPropsValues.getUserId(), 0,
 			_objectDefinition.getObjectDefinitionId(), "Text", "String", false,
 			false, null, LocalizedMapUtil.getLocalizedMap("Able"), "able", true,
-			ObjectFieldSettingTestUtil.getObjectFieldSettings("Text"));
+			Collections.emptyList());
 	}
 
 	@After

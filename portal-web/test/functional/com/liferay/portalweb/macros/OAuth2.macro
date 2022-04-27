@@ -11,9 +11,10 @@ definition {
 
 		OAuth2.addApplication(
 			applicationName = "${applicationName}",
-			callbackUri = '''http://martamedio.com/oauth2-tester/?url=${portalURL}&client_id=${clientId}''',
+			callbackUri = "${callbackUri}",
+			checkboxUncheckList = "${checkboxUncheckList}",
 			clientAuthenticationMethod = "${clientAuthenticationMethod}",
-			clientProfile = "Web Application");
+			clientProfile = "${clientProfile}");
 
 		if (isSet(checkboxCheckList)) {
 			Check(
@@ -221,6 +222,34 @@ definition {
 			value1 = "${clientSecret}");
 
 		Button.click(button = "Obtain OAuth2 Access");
+	}
+
+	macro authorizePKCEApplication {
+		Navigator.openSpecificURL(url = "http://martamedio.com/oauth2-tester/pkce/");
+
+		if (isSet(portalURL)) {
+			Type(
+				locator1 = "OAuth2#OAUTH2_TESTER_PORTAL_URL",
+				value1 = "${portalURL}");
+		}
+
+		Type(
+			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_ID",
+			value1 = "${clientId}");
+
+		Button.click(button = "Generate a Code Challenge");
+
+		var codeChallenge = selenium.getElementValue("OAuth2#OAUTH2_TESTER_CODE_CHALLENGE");
+
+		Button.click(button = "Authorize My Application (PKCE)");
+
+		Button.click(button = "Authorize");
+
+		Type(
+			locator1 = "OAuth2#OAUTH2_TESTER_EXCHANGE_CODE",
+			value1 = "${codeChallenge}");
+
+		Button.click(button = "Obtain Access Token");
 	}
 
 	macro deleteApplication {
@@ -552,6 +581,16 @@ definition {
 		}
 
 		PortletEntry.save();
+	}
+
+	macro introspectAccessToken {
+		AssertElementPresent(locator1 = "OAuth2#OAUTH2_TESTER_REQUEST_URL");
+
+		Button.click(button = "Introspect Access Token");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "OAuth2#OAUTH2_TESTER_REQUEST_RESULTS",
+			value1 = "${requestResult}");
 	}
 
 	macro launchRequest {

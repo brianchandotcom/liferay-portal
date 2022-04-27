@@ -184,6 +184,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>OAUTH2_TESTER_CODE_CHALLENGE</td>
+	<td>//input[contains(@id,'codeChallenge')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OAUTH2_TESTER_EXCHANGE_CODE</td>
+	<td>//input[contains(@id,'exchangeCode')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>OAUTH2_TESTER_REQUEST_URL</td>
 	<td>//input[contains(@id,'url')]</td>
 	<td></td>

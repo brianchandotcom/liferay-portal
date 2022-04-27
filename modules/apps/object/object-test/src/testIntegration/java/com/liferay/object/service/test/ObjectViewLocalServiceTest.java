@@ -255,7 +255,8 @@ public class ObjectViewLocalServiceTest {
 					objectViewColumnFieldNameException) {
 
 			Assert.assertEquals(
-				"Already exist an object view column with field name: roger",
+				"There is already an object view column with the object " +
+					"field name: roger",
 				objectViewColumnFieldNameException.getMessage());
 		}
 

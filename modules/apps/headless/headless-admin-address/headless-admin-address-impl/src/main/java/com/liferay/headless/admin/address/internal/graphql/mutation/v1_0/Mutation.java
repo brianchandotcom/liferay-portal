@@ -14,6 +14,8 @@
 
 package com.liferay.headless.admin.address.internal.graphql.mutation.v1_0;
 
+import com.liferay.headless.admin.address.dto.v1_0.Country;
+import com.liferay.headless.admin.address.resource.v1_0.CountryResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.search.Sort;
@@ -21,6 +23,8 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 
 import java.util.function.BiFunction;
 
@@ -29,6 +33,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.service.component.ComponentServiceObjects;
@@ -39,6 +44,37 @@ import org.osgi.service.component.ComponentServiceObjects;
  */
 @Generated("")
 public class Mutation {
+
+	public static void setCountryResourceComponentServiceObjects(
+		ComponentServiceObjects<CountryResource>
+			countryResourceComponentServiceObjects) {
+
+		_countryResourceComponentServiceObjects =
+			countryResourceComponentServiceObjects;
+	}
+
+	@GraphQLField
+	public Country createCountry(@GraphQLName("country") Country country)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_countryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			countryResource -> countryResource.postCountry(country));
+	}
+
+	@GraphQLField
+	public Response createCountryBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_countryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			countryResource -> countryResource.postCountryBatch(
+				callbackURL, object));
+	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
 			_applyComponentServiceObjects(
@@ -77,6 +113,25 @@ public class Mutation {
 			componentServiceObjects.ungetService(resource);
 		}
 	}
+
+	private void _populateResourceContext(CountryResource countryResource)
+		throws Exception {
+
+		countryResource.setContextAcceptLanguage(_acceptLanguage);
+		countryResource.setContextCompany(_company);
+		countryResource.setContextHttpServletRequest(_httpServletRequest);
+		countryResource.setContextHttpServletResponse(_httpServletResponse);
+		countryResource.setContextUriInfo(_uriInfo);
+		countryResource.setContextUser(_user);
+		countryResource.setGroupLocalService(_groupLocalService);
+		countryResource.setRoleLocalService(_roleLocalService);
+
+		countryResource.setVulcanBatchEngineImportTaskResource(
+			_vulcanBatchEngineImportTaskResource);
+	}
+
+	private static ComponentServiceObjects<CountryResource>
+		_countryResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
 	private com.liferay.portal.kernel.model.Company _company;

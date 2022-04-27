@@ -435,6 +435,23 @@ public abstract class BaseCountryResourceTestCase {
 	}
 
 	@Test
+	public void testPostCountry() throws Exception {
+		Country randomCountry = randomCountry();
+
+		Country postCountry = testPostCountry_addCountry(randomCountry);
+
+		assertEquals(randomCountry, postCountry);
+		assertValid(postCountry);
+	}
+
+	protected Country testPostCountry_addCountry(Country country)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetCountryByA2() throws Exception {
 		Country postCountry = testGetCountryByA2_addCountry();
 

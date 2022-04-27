@@ -3,12 +3,12 @@ definition {
 
 	property elasticsearch.ccr.enabled = "true";
 	property elasticsearch.multiple.connections = "true";
-	property environment.acceptance = "false";
 	property minimum.slave.ram = "24";
 	property portal.release = "true";
 	property portal.suite.search.engine = "elasticsearch7";
 	property portal.upstream = "true";
 	property remote.elasticsearch.enabled = "true";
+	property search.environment.suite.exclude = "true";
 	property test.run.environment = "EE";
 	property testray.main.component.name = "Elasticsearch Impl";
 

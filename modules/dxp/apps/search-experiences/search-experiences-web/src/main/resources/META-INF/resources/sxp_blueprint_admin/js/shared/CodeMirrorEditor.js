@@ -235,9 +235,10 @@ function getCodeMirrorHints(cm, autocompleteSchema, availableLanguages) {
 	// Filter matched strings.
 
 	if (search !== null) {
-		list = list.filter((item) => {
-			return item.name.indexOf(search) > -1;
-		});
+		list = list.filter(
+			(item) =>
+				item.name.toLowerCase().indexOf(search[0].toLowerCase()) > -1
+		);
 	}
 
 	return {

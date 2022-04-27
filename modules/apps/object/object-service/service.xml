@@ -153,6 +153,10 @@
 			<finder-column name="groupId" />
 			<finder-column name="objectDefinitionId" />
 		</finder>
+		<finder name="U_ODI" return-type="Collection">
+			<finder-column name="userId" />
+			<finder-column name="objectDefinitionId" />
+		</finder>
 		<finder name="ODI_NotS" return-type="Collection">
 			<finder-column name="objectDefinitionId" />
 			<finder-column comparator="!=" name="status" />
@@ -587,6 +591,7 @@
 		<exception>ObjectDefinitionScope</exception>
 		<exception>ObjectDefinitionStatus</exception>
 		<exception>ObjectDefinitionVersion</exception>
+		<exception>ObjectEntrySubmissionLimit</exception>
 		<exception>ObjectEntryValues</exception>
 		<exception>ObjectFieldBusinessType</exception>
 		<exception>ObjectFieldDBType</exception>

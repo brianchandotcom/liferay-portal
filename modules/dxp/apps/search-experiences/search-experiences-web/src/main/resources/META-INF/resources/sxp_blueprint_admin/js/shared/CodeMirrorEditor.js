@@ -480,6 +480,22 @@ function getSchemaProperties(
 		}
 	}
 
+	// If property is not available in schema's properties, persist with
+	// schema's additionalProperties instead.
+
+	if (schema.additionalProperties) {
+		if (!fullSchema) {
+			fullSchema = schema;
+		}
+
+		return getSchemaProperties(
+			schema.additionalProperties,
+			propertyPathList.slice(1),
+			availableLanguages,
+			fullSchema
+		);
+	}
+
 	return [];
 }
 

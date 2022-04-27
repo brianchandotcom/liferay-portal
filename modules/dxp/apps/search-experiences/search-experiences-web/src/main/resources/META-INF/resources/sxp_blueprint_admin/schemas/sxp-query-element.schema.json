@@ -330,9 +330,6 @@
 	"properties": {
 		"description_i18n": {
 			"$ref": "LanguageId",
-			"additionalProperties": {
-				"type": "string"
-			},
 			"type": "object"
 		},
 		"elementDefinition": {
@@ -340,9 +337,6 @@
 		},
 		"title_i18n": {
 			"$ref": "LanguageId",
-			"additionalProperties": {
-				"type": "string"
-			},
 			"type": "object"
 		}
 	},

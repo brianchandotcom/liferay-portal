@@ -35,8 +35,8 @@
   },
   "publishNotReadyAddressesForCluster": false,
   "env": {
-    "GOOGLE_OIDC_CLIENT_ID": "@GOOGLE_OIDC_CLIENT_ID",
-    "GOOGLE_OIDC_CLIENT_SECRET": "@GOOGLE_OIDC_CLIENT_SECRET",
+    "GCP_OIDC_CLIENT_ID": "@gcp-oidc-client-id",
+    "GCP_OIDC_CLIENT_SECRET": "@gcp-oidc-client-secret",
     "LCP_PROJECT_LIFERAY_CLUSTER_ENABLED": "true",
     "LIFERAY_JPDA_ENABLED": "true",
     "LIFERAY_JVM_OPTS": "-Xms2048m -Xmx6144m -XX:MaxMetaspaceSize=1g -XX:+UnlockDiagnosticVMOptions -XX:NativeMemoryTracking=detail -XX:+PrintNMTStatistics",

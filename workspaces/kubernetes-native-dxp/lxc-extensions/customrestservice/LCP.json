@@ -9,6 +9,10 @@
     "targetPort": 8081,
     "cdn": true
   },
+  "env": {
+    "AMADEUS_CLIENT_ID": "@amadeus-client-id",
+    "AMADEUS_CLIENT_SECRET": "@amadeus-client-secret"
+  },
   "environments": {
     "infra": {
       "deploy": false

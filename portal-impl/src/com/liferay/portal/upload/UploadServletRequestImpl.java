@@ -64,10 +64,6 @@ public class UploadServletRequestImpl
 		return _getTempDir(null);
 	}
 
-	public static void setTempDir(File tempDir) {
-		_tempDir = tempDir;
-	}
-
 	public UploadServletRequestImpl(HttpServletRequest httpServletRequest) {
 		this(httpServletRequest, 0, null, 0, 0);
 	}

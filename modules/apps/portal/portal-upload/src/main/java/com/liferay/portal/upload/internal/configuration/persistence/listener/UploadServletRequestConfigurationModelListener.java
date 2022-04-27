@@ -20,9 +20,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.upload.UploadServletRequestImpl;
 import com.liferay.portal.upload.internal.configuration.UploadServletRequestConfiguration;
 
 import java.io.File;
@@ -42,19 +40,6 @@ import org.osgi.service.component.annotations.Component;
 )
 public class UploadServletRequestConfigurationModelListener
 	implements ConfigurationModelListener {
-
-	@Override
-	public void onAfterSave(String pid, Dictionary<String, Object> properties)
-		throws ConfigurationModelListenerException {
-
-		String tempDir = (String)properties.get("tempDir");
-
-		if (Validator.isNull(tempDir)) {
-			tempDir = SystemProperties.get(SystemProperties.TMP_DIR);
-		}
-
-		UploadServletRequestImpl.setTempDir(new File(tempDir));
-	}
 
 	@Override
 	public void onBeforeSave(String pid, Dictionary<String, Object> properties)

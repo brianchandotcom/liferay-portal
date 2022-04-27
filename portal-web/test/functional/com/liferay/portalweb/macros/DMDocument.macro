@@ -1370,6 +1370,8 @@ definition {
 			key_text = "${dmDocumentTitle}",
 			locator1 = "Link#ANY",
 			value1 = "${dmDocumentTitle}");
+
+		DownloadTempFile();
 	}
 
 	macro editCategoryTags {
@@ -1843,15 +1845,15 @@ definition {
 	}
 
 	macro enableDirectoryIndexing {
-		var siteURLKey = "${siteURLKey}";
-
-		Ratings._openToConfigInSiteSettings(
-			portletKey = "site-configuration-documents-and-media",
+		DMNavigator.openToConfigInSiteSettings(
+			portlet = "Documents and Media",
 			siteURLKey = "${siteURLKey}");
 
 		FormFields.enableSwitch(fieldName = "Enable Directory Indexing");
 
 		Button.clickSave();
+
+		Alert.viewSuccessMessage();
 	}
 
 	macro expandInfo {

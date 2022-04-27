@@ -73,6 +73,15 @@ public class DefaultPredicate
 	}
 
 	@Override
+	public Predicate not(Expression<Boolean> expression) {
+		if (expression == null) {
+			return this;
+		}
+
+		return new DefaultPredicate(this, Operand.NOT, expression);
+	}
+
+	@Override
 	public void toSQL(
 		Consumer<String> consumer, ASTNodeListener astNodeListener) {
 

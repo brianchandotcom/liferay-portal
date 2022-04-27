@@ -25,8 +25,38 @@
 	}
 }
 
+.col.col-lg-3.col-md-3,
+.col.col-lg-4.col-md-4,
+.col.col-lg-5.col-md-5 {
+	.lfr-de__form-report {
+		display: block;
+	}
+
+	.report-cards-shortcut {
+		display: none;
+	}
+
+	.custom-chart-size {
+		&.pie-chart {
+			display: block;
+			margin-left: 0;
+		}
+	}
+}
+
+@media (max-width: 768px) {
+	.report-cards-shortcut {
+		display: none;
+	}
+}
+
+@media (min-width: 768px) {
+	.lfr-de__form-report {
+		display: flex;
+	}
+}
+
 .lfr-de__form-report {
-	display: flex;
 	max-width: 808px;
 
 	&-sidebar {
@@ -289,7 +319,7 @@
 	}
 
 	.card-item {
-		width: 808px;
+		max-width: 808px;
 	}
 
 	.card-item::before {

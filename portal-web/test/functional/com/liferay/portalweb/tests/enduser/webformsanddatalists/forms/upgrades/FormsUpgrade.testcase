@@ -80,6 +80,9 @@ definition {
 	test ViewAndDeleteFormEntryAfterUpgrade704 {
 		property data.archive.type = "data-archive-form-entry";
 		property database.types = "mariadb,mysql,postgresql";
+		property portal.acceptance = "quarantine";
+		property portal.release = "quarantine";
+		property portal.upstream = "quarantine";
 		property portal.version = "7.0.4";
 
 		Upgrade.viewAndDeleteFormEntry();
@@ -89,6 +92,9 @@ definition {
 	test ViewAndDeleteFormEntryAfterUpgrade70106 {
 		property data.archive.type = "data-archive-form-entry";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.acceptance = "quarantine";
+		property portal.release = "quarantine";
+		property portal.upstream = "quarantine";
 		property portal.version = "7.0.10.6";
 
 		Upgrade.viewAndDeleteFormEntry();

@@ -92,16 +92,12 @@ definition {
 		Check.checkToggleSwitch(locator1 = "CP2LiferayContact#HIDE_WIDGET");
 	}
 
+	macro clickOnSkipForNowButton {
+		Click(locator1 = "CustomerPortalSite#START_PROJECT_SETUP_BUTTON");
+	}
+
 	macro clickOnStartProjectSetup {
 		Click(locator1 = "CustomerPortalSite#START_PROJECT_SETUP_BUTTON");
-	}
-
-	macro clickOnSkipForNowButton{
-		Click(locator1 = "CustomerPortalSite#START_PROJECT_SETUP_BUTTON");
-	}
-
-	macro viewStartProjectSetupButton {
-		AssertElementPresent(locator1 = "CustomerPortalSite#SKIP_FOR_NOW_BUTTON");
 	}
 
 	macro createCPSite {
@@ -365,8 +361,16 @@ definition {
 		}
 	}
 
+	macro viewAllProjectsTitlePage {
+		AssertElementPresent(locator1 = "CustomerPortalSite#PROJECT_TITLE_MAIN_PAGE");
+	}
+
+	macro viewGetStartedModal {
+		AssertElementPresent(locator1 = "CustomerPortalSite#GETTING_STARTED_MODAL");
+	}
+
 	macro viewInviteTeamMembersModalPage {
-		AssertElementPresent(locator1 = "CustomerPortalSite#START_PROJECT_SETUP_BUTTON");
+		AssertElementPresent(locator1 = "CustomerPortalSite#INVITE_TEAM_MEMBERS_TITLE");
 	}
 
 	macro viewKoroneikiInfo {
@@ -377,16 +381,12 @@ definition {
 		MenuItem.click(menuItem = "View");
 	}
 
+	macro viewStartProjectSetupButton {
+		AssertElementPresent(locator1 = "CustomerPortalSite#START_PROJECT_SETUP_BUTTON");
+	}
+
 	macro viewSubcriptionsPage {
-		AssertElementPresent("CustomerPortalSite#SUBCRIPTIONS_PROJECT_INSIDE_PAGE");
-	}
-
-	macro viewGetStartedModal { {
-		AssertElementPresent("CustomerPortalSite#GETTING_STARTED_MODAL");
-	}
-
-	macro viewAllProjectsTitlePage { {
-		AssertElementPresent("CustomerPortalSite#PROJECT_TITLE_MAIN_PAGE");
+		AssertElementPresent(locator1 = "CustomerPortalSite#SUBCRIPTIONS_PROJECT_INSIDE_PAGE");
 	}
 
 }

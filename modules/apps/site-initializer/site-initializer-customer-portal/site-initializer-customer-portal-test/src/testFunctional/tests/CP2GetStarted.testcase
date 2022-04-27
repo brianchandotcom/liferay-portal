@@ -14,6 +14,7 @@ definition {
 		//CustomerPortal.setUpForCP20();
 
 		CustomerPortal.createCPSite(siteName = "Customer Portal");
+
 	}
 
 	tearDown {
@@ -53,13 +54,11 @@ definition {
 	@description = "LPS-145256 - Verify if the non-admin user with just one project is redirected to the Project Overview page."
 	@priority = "4"
 	test IfWithOneProjectUserIsRedirectedToProjectOverview {
-
 		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
 
 		CustomerPortal.enterOnProject(projectName = "Test Account 01");
 
 		CustomerPortal.viewSubcriptionsPage();
-
 	}
 
 	@description = "LPS-143374 - Verify if the button 'Start Project Setup' is present."

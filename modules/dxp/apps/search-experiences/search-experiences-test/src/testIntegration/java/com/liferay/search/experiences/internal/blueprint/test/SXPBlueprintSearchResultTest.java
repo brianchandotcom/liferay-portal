@@ -167,8 +167,6 @@ public class SXPBlueprintSearchResultTest {
 					"com.liferay.journal.model.JournalArticle",
 					"com.liferay.journal.model.JournalFolder")));
 
-		_updateSXPBlueprint();
-
 		_journalFolder = JournalFolderServiceUtil.addFolder(
 			_group.getGroupId(), 0, "Folder cola", StringPool.BLANK,
 			_serviceContext);
@@ -855,8 +853,6 @@ public class SXPBlueprintSearchResultTest {
 			JSONUtil.put(
 				"parameters",
 				JSONUtil.put("myparam", JSONUtil.put("type", "String"))));
-
-		_updateSXPBlueprint();
 
 		_setUpJournalArticles(
 			new String[] {"cola cola", ""},
@@ -2106,12 +2102,15 @@ public class SXPBlueprintSearchResultTest {
 	}
 
 	private void _updateConfigurationJSON(
-		String configurationName, JSONObject jsonObject) {
+			String configurationName, JSONObject jsonObject)
+		throws Exception {
 
 		_sxpBlueprint.setConfigurationJSON(
 			_configurationJSONObject.put(
 				configurationName, jsonObject
 			).toString());
+
+		_updateSXPBlueprint();
 	}
 
 	private void _updateElementInstancesJSON(

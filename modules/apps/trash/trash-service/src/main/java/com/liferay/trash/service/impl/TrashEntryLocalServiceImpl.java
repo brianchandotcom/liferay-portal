@@ -46,8 +46,10 @@ import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.trash.TrashHelper;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.trash.model.TrashEntry;
 import com.liferay.trash.model.TrashVersion;
 import com.liferay.trash.model.impl.TrashEntryImpl;
@@ -179,9 +181,7 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 
 				Date date = getMaxAge(group);
 
-				if (createDate.before(date) ||
-					!_trashHelper.isTrashEnabled(group)) {
-
+				if (createDate.before(date) || !_isTrashEnabled(group)) {
 					TrashHandler trashHandler =
 						TrashHandlerRegistryUtil.getTrashHandler(
 							trashEntry.getClassName());
@@ -461,7 +461,18 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 
 		calendar.setTime(new Date());
 
-		calendar.add(Calendar.MINUTE, -_trashHelper.getMaxAge(group));
+		int trashEntriesMaxAge = PrefsPropsUtil.getInteger(
+			group.getCompanyId(), PropsKeys.TRASH_ENTRIES_MAX_AGE,
+			PropsValues.TRASH_ENTRIES_MAX_AGE);
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			group.getParentLiveGroupTypeSettingsProperties();
+
+		calendar.add(
+			Calendar.MINUTE,
+			-GetterUtil.getInteger(
+				typeSettingsUnicodeProperties.getProperty("trashEntriesMaxAge"),
+				trashEntriesMaxAge));
 
 		return calendar.getTime();
 	}
@@ -531,6 +542,21 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 		return entries;
 	}
 
+	private boolean _isTrashEnabled(Group group) {
+		boolean companyTrashEnabled = PrefsPropsUtil.getBoolean(
+			group.getCompanyId(), PropsKeys.TRASH_ENABLED);
+
+		if (!companyTrashEnabled) {
+			return false;
+		}
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			group.getParentLiveGroupTypeSettingsProperties();
+
+		return GetterUtil.getBoolean(
+			typeSettingsUnicodeProperties.getProperty("trashEnabled"), true);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		TrashEntryLocalServiceImpl.class);
 
@@ -545,9 +571,6 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 
 	@Reference
 	private SystemEventLocalService _systemEventLocalService;
-
-	@Reference
-	private TrashHelper _trashHelper;
 
 	@Reference
 	private TrashVersionPersistence _trashVersionPersistence;

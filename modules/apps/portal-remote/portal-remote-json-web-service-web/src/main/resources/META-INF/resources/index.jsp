@@ -41,11 +41,11 @@
 				<div class="container-fluid">
 					<aui:row>
 						<aui:col cssClass="lfr-api-navigation p-3" width="<%= 25 %>">
-							<liferay-util:include page="/actions.jsp" />
+							<liferay-util:include page="/actions.jsp" servletContext="<%= application %>" />
 						</aui:col>
 
 						<aui:col cssClass="lfr-api-details p-3" width="<%= 75 %>">
-							<liferay-util:include page="/action.jsp" />
+							<liferay-util:include page="/action.jsp" servletContext="<%= application %>" />
 						</aui:col>
 					</aui:row>
 				</div>

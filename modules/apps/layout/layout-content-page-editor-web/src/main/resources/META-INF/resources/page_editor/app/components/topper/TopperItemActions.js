@@ -28,7 +28,7 @@ import duplicateItem from '../../thunks/duplicateItem';
 import canBeDuplicated from '../../utils/canBeDuplicated';
 import canBeRemoved from '../../utils/canBeRemoved';
 import canBeSaved from '../../utils/canBeSaved';
-import updateItemStyle from '../../utils/updateItemStyle';
+import hideFragment from '../../utils/hideFragment';
 import SaveFragmentCompositionModal from '../SaveFragmentCompositionModal';
 import hasDropZoneChild from '../layout-data-items/hasDropZoneChild';
 
@@ -56,13 +56,11 @@ export default function TopperItemActions({item}) {
 		) {
 			items.push({
 				action: () => {
-					updateItemStyle({
+					hideFragment({
 						dispatch,
 						itemId: item.itemId,
 						segmentsExperienceId,
 						selectedViewportSize,
-						styleName: 'display',
-						styleValue: 'none',
 					});
 				},
 				icon: 'hidden',

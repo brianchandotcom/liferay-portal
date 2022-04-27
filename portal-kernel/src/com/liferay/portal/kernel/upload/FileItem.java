@@ -33,8 +33,6 @@ public interface FileItem {
 
 	public String getContentType();
 
-	public String getEncodedString();
-
 	public String getFieldName();
 
 	public String getFileName();
@@ -62,8 +60,6 @@ public interface FileItem {
 	public boolean isFormField();
 
 	public boolean isInMemory();
-
-	public void setString(String encode);
 
 	public void write(File file) throws Exception;
 

@@ -23,7 +23,9 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
  */
 public class LiferayFileItemFactory extends DiskFileItemFactory {
 
-	public LiferayFileItemFactory(File tempDir, int sizeThreshold) {
+	public LiferayFileItemFactory(
+		File tempDir, int sizeThreshold, String encoding) {
+
 		_tempDir = tempDir;
 
 		if (sizeThreshold > 0) {
@@ -32,6 +34,8 @@ public class LiferayFileItemFactory extends DiskFileItemFactory {
 		else {
 			_sizeThreshold = _DEFAULT_SIZE;
 		}
+
+		_encoding = encoding;
 	}
 
 	@Override
@@ -41,11 +45,12 @@ public class LiferayFileItemFactory extends DiskFileItemFactory {
 
 		return new LiferayFileItem(
 			fieldName, contentType, formField, fileName, _sizeThreshold,
-			_tempDir);
+			_tempDir, _encoding);
 	}
 
 	private static final int _DEFAULT_SIZE = 1024;
 
+	private final String _encoding;
 	private final int _sizeThreshold;
 	private final File _tempDir;
 

@@ -82,7 +82,8 @@ public class UploadServletRequestImpl
 
 			ServletFileUpload servletFileUpload = new ServletFileUpload(
 				new LiferayFileItemFactory(
-					_getTempDir(location), fileSizeThreshold));
+					_getTempDir(location), fileSizeThreshold,
+					httpServletRequest.getCharacterEncoding()));
 
 			long uploadServletRequestImplMaxSize =
 				UploadServletRequestConfigurationHelperUtil.getMaxSize();
@@ -148,9 +149,6 @@ public class UploadServletRequestImpl
 				}
 
 				if (liferayFileItem.isFormField()) {
-					liferayFileItem.setString(
-						httpServletRequest.getCharacterEncoding());
-
 					String fieldName = liferayFileItem.getFieldName();
 
 					if (!_regularParameters.containsKey(fieldName)) {
@@ -176,7 +174,7 @@ public class UploadServletRequestImpl
 							WebKeys.UPLOAD_EXCEPTION, uploadException);
 					}
 
-					values.add(liferayFileItem.getEncodedString());
+					values.add(liferayFileItem.getString());
 
 					continue;
 				}

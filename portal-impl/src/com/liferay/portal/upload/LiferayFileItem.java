@@ -53,7 +53,7 @@ public class LiferayFileItem extends DiskFileItem implements FileItem {
 
 	public LiferayFileItem(
 		String fieldName, String contentType, boolean formField,
-		String fileName, int sizeThreshold, File repository) {
+		String fileName, int sizeThreshold, File repository, String encoding) {
 
 		super(
 			fieldName, contentType, formField, fileName, sizeThreshold,
@@ -62,6 +62,7 @@ public class LiferayFileItem extends DiskFileItem implements FileItem {
 		_fileName = fileName;
 		_sizeThreshold = sizeThreshold;
 		_repository = repository;
+		_encoding = encoding;
 	}
 
 	@Override
@@ -77,11 +78,6 @@ public class LiferayFileItem extends DiskFileItem implements FileItem {
 
 			return ContentTypes.APPLICATION_OCTET_STREAM;
 		}
-	}
-
-	@Override
-	public String getEncodedString() {
-		return _encodedString;
 	}
 
 	@Override
@@ -185,21 +181,16 @@ public class LiferayFileItem extends DiskFileItem implements FileItem {
 			return StringPool.BLANK;
 		}
 
-		if (_encodedString == null) {
-			return super.getString();
+		if (isFormField() && (_encoding != null)) {
+			try {
+				return super.getString(_encoding);
+			}
+			catch (UnsupportedEncodingException unsupportedEncodingException) {
+				_log.error(unsupportedEncodingException);
+			}
 		}
 
-		return _encodedString;
-	}
-
-	@Override
-	public void setString(String encode) {
-		try {
-			_encodedString = getString(encode);
-		}
-		catch (UnsupportedEncodingException unsupportedEncodingException) {
-			_log.error(unsupportedEncodingException);
-		}
+		return super.getString();
 	}
 
 	@Override
@@ -242,7 +233,7 @@ public class LiferayFileItem extends DiskFileItem implements FileItem {
 
 	private static int _counter;
 
-	private String _encodedString;
+	private final String _encoding;
 	private String _fileName;
 	private final File _repository;
 	private final int _sizeThreshold;

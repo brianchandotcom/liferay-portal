@@ -30,11 +30,11 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-136413. The global page template is not shown in pages admin for user without permission."
+	@description = "This is a test for LPS-136413. The global page template is invisible to user without permission in page creation."
 	@priority = "4"
-	test GlobalTemplateIsNotVisibleToUserWithoutPermission {
+	test GlobalTemplateIsInvisibleToUserWithoutPermissionInPageCreation {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property test.name.skip.portal.instance = "PagesAdminWithPermissions#GlobalTemplateIsNotVisibleToUserWithoutPermission";
+		property test.name.skip.portal.instance = "PagesAdminWithPermissions#GlobalTemplateIsInvisibleToUserWithoutPermissionInPageCreation";
 
 		task ("Add a new user") {
 			JSONUser.addUser(

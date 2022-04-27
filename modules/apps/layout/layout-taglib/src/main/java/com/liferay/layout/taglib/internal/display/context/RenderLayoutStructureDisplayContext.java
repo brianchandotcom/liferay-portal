@@ -477,7 +477,6 @@ public class RenderLayoutStructureDisplayContext {
 
 	public DefaultFragmentRendererContext getDefaultFragmentRendererContext(
 		FragmentEntryLink fragmentEntryLink, String itemId,
-		List<String> collectionStyledLayoutStructureItemIds,
 		int collectionElementIndex) {
 
 		DefaultFragmentRendererContext defaultFragmentRendererContext =
@@ -512,7 +511,7 @@ public class RenderLayoutStructureDisplayContext {
 
 		defaultFragmentRendererContext.
 			setCollectionStyledLayoutStructureItemIds(
-				collectionStyledLayoutStructureItemIds);
+				getCollectionStyledLayoutStructureItemIds());
 		defaultFragmentRendererContext.setCollectionElementIndex(
 			collectionElementIndex);
 

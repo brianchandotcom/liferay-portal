@@ -20,3 +20,10 @@ export const liferayRoleFragment = gql`
 		name
 	}
 `;
+
+export const LiferayRoleBrief = gql`
+	fragment RoleBriefFragment on RoleBrief {
+		id
+		name
+	}
+`;

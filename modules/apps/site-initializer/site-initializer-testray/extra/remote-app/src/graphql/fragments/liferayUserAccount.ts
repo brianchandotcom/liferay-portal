@@ -14,7 +14,11 @@
 
 import {gql} from '@apollo/client';
 
+import {LiferayRoleBrief} from './liferayRole';
+
 export const liferayUserAccountFragment = gql`
+	${LiferayRoleBrief}
+
 	fragment LiferayUserAccountFragment on UserAccount {
 		additionalName
 		alternateName
@@ -23,5 +27,8 @@ export const liferayUserAccountFragment = gql`
 		givenName
 		id
 		image
+		roleBriefs {
+			...RoleBriefFragment
+		}
 	}
 `;

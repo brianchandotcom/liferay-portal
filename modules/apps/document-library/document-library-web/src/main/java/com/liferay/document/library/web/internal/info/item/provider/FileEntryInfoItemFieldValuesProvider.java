@@ -133,9 +133,13 @@ public class FileEntryInfoItemFieldValuesProvider
 					FileVersion fileVersion = fileEntry.getFileVersion();
 
 					DLFileEntryMetadata dlFileEntryMetadata =
-						_dlFileEntryMetadataLocalService.getFileEntryMetadata(
+						_dlFileEntryMetadataLocalService.fetchFileEntryMetadata(
 							ddmStructure.getStructureId(),
 							fileVersion.getFileVersionId());
+
+					if (dlFileEntryMetadata == null) {
+						continue;
+					}
 
 					infoFieldValues.addAll(
 						_ddmFormValuesInfoFieldValuesProvider.

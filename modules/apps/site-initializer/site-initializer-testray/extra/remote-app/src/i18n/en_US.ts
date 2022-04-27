@@ -147,6 +147,7 @@ export default {
 	'new-suite': 'New Suite',
 	'new-task': 'New Task',
 	'new-user-account': 'New User Account',
+	'no-permissions': 'No Permissions',
 	'no-results-found': 'No results found',
 	'operating-system': 'Operating System',
 	'options': 'Options',
@@ -237,6 +238,8 @@ export default {
 	'x-items': '{0} Items',
 	'x-minutes': '{0} Minutes',
 	'x-results-for-x': '{0} Results for {1}',
+	'you-do-not-have-permissions-to-access-this-app-contact-the-app-administrator-to-request-the-access':
+		'You do not have permissions to access this app. Contact the app administrator to request the access.',
 	'you-must-have-at-least-one-column-selected':
 		'You must have at least one column selected',
 	'your-request-completed-successfully':

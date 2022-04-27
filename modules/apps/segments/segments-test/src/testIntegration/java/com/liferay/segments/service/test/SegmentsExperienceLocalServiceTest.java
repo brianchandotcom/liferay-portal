@@ -87,18 +87,17 @@ public class SegmentsExperienceLocalServiceTest {
 	}
 
 	@Test
-	public void testAddSegmentsExperience() throws Exception {
+	public void testAddSegmentsExperienceActive() throws Exception {
 		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
 			_group.getGroupId());
 		Map<Locale, String> nameMap = RandomTestUtil.randomLocaleStringMap();
 		int priority = RandomTestUtil.randomInt();
-		boolean active = RandomTestUtil.randomBoolean();
 
 		SegmentsExperience segmentsExperience =
 			_segmentsExperienceLocalService.addSegmentsExperience(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				segmentsEntry.getSegmentsEntryId(), _classNameId, _classPK,
-				nameMap, priority, active, new UnicodeProperties(true),
+				nameMap, priority, true, new UnicodeProperties(true),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		Assert.assertEquals(
@@ -107,20 +106,44 @@ public class SegmentsExperienceLocalServiceTest {
 		Assert.assertEquals(_classNameId, segmentsExperience.getClassNameId());
 		Assert.assertEquals(_classPK, segmentsExperience.getClassPK());
 		Assert.assertEquals(nameMap, segmentsExperience.getNameMap());
-		Assert.assertEquals(active, segmentsExperience.isActive());
+		Assert.assertTrue(segmentsExperience.isActive());
 		Assert.assertEquals(
 			StringPool.BLANK, segmentsExperience.getTypeSettings());
 
-		long expectedCount = 1;
+		Assert.assertEquals(
+			2,
+			_segmentsExperienceLocalService.getSegmentsExperiencesCount(
+				_group.getGroupId(), _classNameId, _classPK, true));
+	}
 
-		if (active) {
-			expectedCount = 2;
-		}
+	@Test
+	public void testAddSegmentsExperienceInactive() throws Exception {
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId());
+		Map<Locale, String> nameMap = RandomTestUtil.randomLocaleStringMap();
+		int priority = RandomTestUtil.randomInt();
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.addSegmentsExperience(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				segmentsEntry.getSegmentsEntryId(), _classNameId, _classPK,
+				nameMap, priority, false, new UnicodeProperties(true),
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		Assert.assertEquals(
-			expectedCount,
+			segmentsEntry.getSegmentsEntryId(),
+			segmentsExperience.getSegmentsEntryId());
+		Assert.assertEquals(_classNameId, segmentsExperience.getClassNameId());
+		Assert.assertEquals(_classPK, segmentsExperience.getClassPK());
+		Assert.assertEquals(nameMap, segmentsExperience.getNameMap());
+		Assert.assertFalse(segmentsExperience.isActive());
+		Assert.assertEquals(
+			StringPool.BLANK, segmentsExperience.getTypeSettings());
+
+		Assert.assertEquals(
+			1,
 			_segmentsExperienceLocalService.getSegmentsExperiencesCount(
-				_group.getGroupId(), _classNameId, _classPK, active));
+				_group.getGroupId(), _classNameId, _classPK, false));
 	}
 
 	@Test

@@ -262,7 +262,6 @@ definition {
 	@description = "This is a test for LRQA-70153. Verify that the user can review the thread through My Workflow Tasks."
 	@priority = "3"
 	test CanReviewThreadThroughMyWorkflowTasks {
-
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
 			panel = "Site Administration",
@@ -284,8 +283,6 @@ definition {
 		MyWorkflowTasks.viewTaskAssignedAndAssertTextsPresent(
 			nameAuthor = "Test Test",
 			titleMessageBoard = "Thread Message Subject");
-
-			
 	}
 
 	@ignore = "true"

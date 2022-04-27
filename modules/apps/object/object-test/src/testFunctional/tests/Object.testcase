@@ -69,12 +69,37 @@ definition {
 	}
 
 	@description = "LPS-135406 - Verify it is possible to update the label of relationship field of custom object from a native object"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanUpdateRelationshipFieldLabelFromNativeObject {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 151501",
+			objectName = "CustomObject151501",
+			pluralLabelName = "Custom Objects 151501");
 
-		// TODO LPS-151501 CanUpdateRelationshipFieldLabelFromNativeObject pending implementation
+		ObjectAdmin.addObjectRelationshipViaAPI(
+			objectName_1 = "User",
+			objectName_2 = "CustomObject151501",
+			relationshipLabel = "Relationship",
+			relationshipName = "relationship",
+			relationshipType = "oneToMany");
 
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 151501");
+
+		ObjectAdmin.goToFieldsTab();
+
+		ObjectAdmin.goToFieldsDetails(label = "Relationship");
+
+		CreateObject.editLabel(labelName = "New Relationship");
+
+		Button.clickSave();
+
+		Refresh();
+
+		AssertElementPresent(
+			key_label = "New Relationship",
+			locator1 = "ObjectAdmin#SELECT_OBJECT_FIELD");
 	}
 
 	@description = "LPS-135406 - Verify it is possible to update the label of relationship of native object"

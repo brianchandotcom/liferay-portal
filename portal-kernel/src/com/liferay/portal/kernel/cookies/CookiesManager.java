@@ -54,6 +54,10 @@ public interface CookiesManager {
 
 	public String getDomain(String host);
 
+	public String[] getOptionalCookieNames();
+
+	public String[] getRequiredCookieNames();
+
 	public boolean hasConsentType(
 		int consentType, HttpServletRequest httpServletRequest);
 

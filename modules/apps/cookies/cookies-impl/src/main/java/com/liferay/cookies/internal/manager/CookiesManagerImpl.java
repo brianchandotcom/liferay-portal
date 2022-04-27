@@ -262,6 +262,14 @@ public class CookiesManagerImpl implements CookiesManager {
 		return domain;
 	}
 
+	public String[] getOptionalCookieNames() {
+		return _OPTIONAL_COOKIE_NAMES;
+	}
+
+	public String[] getRequiredCookieNames() {
+		return _REQUIRED_COOKIE_NAMES;
+	}
+
 	@Override
 	public boolean hasConsentType(
 		int consentType, HttpServletRequest httpServletRequest) {
@@ -386,6 +394,16 @@ public class CookiesManagerImpl implements CookiesManager {
 
 		return cookie.getValue();
 	}
+
+	private static final String[] _OPTIONAL_COOKIE_NAMES = {
+		CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL,
+		CookiesConstants.NAME_CONSENT_TYPE_PERFORMANCE,
+		CookiesConstants.NAME_CONSENT_TYPE_PERSONALIZATION
+	};
+
+	private static final String[] _REQUIRED_COOKIE_NAMES = {
+		CookiesConstants.NAME_CONSENT_TYPE_NECESSARY
+	};
 
 	private static final String _SESSION_COOKIE_DOMAIN = PropsUtil.get(
 		PropsKeys.SESSION_COOKIE_DOMAIN);

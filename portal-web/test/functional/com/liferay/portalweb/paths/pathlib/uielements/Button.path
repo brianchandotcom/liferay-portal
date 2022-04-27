@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>ADD</td>
-	<td>//button[contains(@id, 'addButton')]</td>
+	<td>//button[contains(@id, 'addButton')] | //button[contains(@data-qa-id, 'addButton')]</td>
 	<td></td>
 </tr>
 <tr>

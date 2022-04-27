@@ -1170,7 +1170,7 @@ public class SXPBlueprintSearchResultTest {
 				).build(),
 				null,
 				HashMapBuilder.put(
-					LocaleUtil.US, ""
+					LocaleUtil.US, StringPool.BLANK
 				).build(),
 				LocaleUtil.getSiteDefault(), false, true, _serviceContext));
 
@@ -1337,7 +1337,7 @@ public class SXPBlueprintSearchResultTest {
 				).build(),
 				null,
 				HashMapBuilder.put(
-					LocaleUtil.US, ""
+					LocaleUtil.US, StringPool.BLANK
 				).build(),
 				LocaleUtil.getSiteDefault(), true, false, _serviceContext));
 

@@ -1369,7 +1369,12 @@ definition {
 	test CannotExecuteXSSWhenAccessingHTMLFile {
 		DMDocument.enableDirectoryIndexing(siteURLKey = "guest");
 
-		JSONDocument.addFileWithUploadedFile();
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "The file is a basic HTML file with a simple JavaScript",
+			dmDocumentTitle = "xss_test",
+			groupName = "Guest",
+			mimeType = "code/html",
+			sourceFileName = "xss_test.html");
 
 		DMDocument.downloadWithDirectoryIndexing(
 			dmDocumentTitle = "xss_test",

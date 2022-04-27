@@ -54,8 +54,8 @@ public interface BatchPlannerPlanService extends BaseService {
 	 */
 	public BatchPlannerPlan addBatchPlannerPlan(
 			boolean export, String externalType, String externalURL,
-			String internalClassName, String name, String taskItemDelegateName,
-			boolean template)
+			String internalClassName, String name, int size,
+			String taskItemDelegateName, boolean template)
 		throws PortalException;
 
 	public BatchPlannerPlan deleteBatchPlannerPlan(long batchPlannerPlanId)

@@ -63,13 +63,13 @@ public class BatchPlannerPlanLocalServiceUtil {
 
 	public static BatchPlannerPlan addBatchPlannerPlan(
 			long userId, boolean export, String externalType,
-			String externalURL, String internalClassName, String name,
+			String externalURL, String internalClassName, String name, int size,
 			String taskItemDelegateName, boolean template)
 		throws PortalException {
 
 		return getService().addBatchPlannerPlan(
 			userId, export, externalType, externalURL, internalClassName, name,
-			taskItemDelegateName, template);
+			size, taskItemDelegateName, template);
 	}
 
 	/**
@@ -92,6 +92,10 @@ public class BatchPlannerPlanLocalServiceUtil {
 		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
+	}
+
+	public static void deactivateBatchPlannerPlan(String batchEngineTaskERC) {
+		getService().deactivateBatchPlannerPlan(batchEngineTaskERC);
 	}
 
 	/**
@@ -299,20 +303,6 @@ public class BatchPlannerPlanLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static BatchPlannerPlan updateActive(
-			boolean active, String batchEngineTaskERC)
-		throws PortalException {
-
-		return getService().updateActive(active, batchEngineTaskERC);
-	}
-
-	public static BatchPlannerPlan updateActive(
-			long batchPlannerPlanId, boolean active)
-		throws PortalException {
-
-		return getService().updateActive(batchPlannerPlanId, active);
-	}
-
 	/**
 	 * Updates the batch planner plan in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -336,6 +326,13 @@ public class BatchPlannerPlanLocalServiceUtil {
 
 		return getService().updateBatchPlannerPlan(
 			batchPlannerPlanId, externalType, internalClassName, name);
+	}
+
+	public static BatchPlannerPlan updateStatus(
+			long batchPlannerPlanId, int status)
+		throws PortalException {
+
+		return getService().updateStatus(batchPlannerPlanId, status);
 	}
 
 	public static BatchPlannerPlanLocalService getService() {

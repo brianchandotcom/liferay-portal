@@ -263,6 +263,8 @@ AUI.add(
 					var displayStyle = instance._getDisplayStyle();
 					var uploader = instance._getUploader();
 
+					instance._detachSubscriptions();
+
 					if (data.folder) {
 						handles.push(
 							uploader.on(

@@ -32,8 +32,7 @@ export type StatusBadgeProps = {
 const StatusBadge: React.FC<StatusBadgeProps> = ({children, type}) => (
 	<span
 		className={classNames(
-			'label',
-			'text-uppercase',
+			'label text-uppercase text-nowrap',
 			statusBarClassNames[type] || type
 		)}
 	>

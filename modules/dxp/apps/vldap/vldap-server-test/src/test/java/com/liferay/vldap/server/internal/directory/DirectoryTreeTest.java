@@ -63,7 +63,6 @@ import com.liferay.vldap.server.internal.directory.ldap.UserDirectory;
 import com.liferay.vldap.server.internal.directory.ldap.UserGroupDirectory;
 import com.liferay.vldap.server.internal.directory.ldap.UserGroupsDirectory;
 import com.liferay.vldap.server.internal.directory.ldap.UsersDirectory;
-import com.liferay.vldap.server.internal.util.LdapUtil;
 
 import java.lang.reflect.Method;
 
@@ -86,6 +85,7 @@ import org.apache.directory.api.ldap.model.filter.PresenceNode;
 import org.apache.directory.api.ldap.model.filter.SubstringNode;
 import org.apache.directory.api.ldap.model.message.SearchScope;
 import org.apache.directory.api.ldap.model.name.Dn;
+import org.apache.directory.api.ldap.model.name.Rdn;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -95,12 +95,9 @@ import org.junit.Test;
 
 import org.mockito.Mockito;
 
-import org.powermock.core.classloader.annotations.PrepareForTest;
-
 /**
  * @author Jonathan McCann
  */
-@PrepareForTest(LdapUtil.class)
 public class DirectoryTreeTest extends BaseVLDAPTestCase {
 
 	@ClassRule
@@ -340,14 +337,27 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 
 	@Test
 	public void testGetIdentifiersWithNullRdnType() throws Exception {
-		Dn dn = new Dn("cn=test,ou=test,ou=Users,ou=liferay.com,o=Liferay");
+		Dn dn = Mockito.spy(
+			new Dn("cn=test,ou=test,ou=Users,ou=liferay.com,o=Liferay"));
 
-		spy(LdapUtil.class);
+		Rdn rdn = Mockito.mock(Rdn.class);
 
-		doReturn(
+		Mockito.when(
+			dn.getRdn(Mockito.anyInt())
+		).thenReturn(
+			rdn
+		);
+
+		Mockito.when(
+			rdn.getNormType()
+		).thenReturn(
 			null
-		).when(
-			LdapUtil.class, "getRdnType", dn, 4
+		);
+
+		Mockito.when(
+			rdn.getValue(Mockito.any())
+		).thenReturn(
+			""
 		);
 
 		Method getIdentifiersMethod = _clazz.getDeclaredMethod(
@@ -363,14 +373,35 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 
 	@Test
 	public void testGetIdentifiersWithNullRdnValue() throws Exception {
-		Dn dn = new Dn("cn=test,ou=test,ou=Users,ou=liferay.com,o=Liferay");
+		Dn dn = Mockito.spy(
+			new Dn("cn=test,ou=test,ou=Users,ou=liferay.com,o=Liferay"));
 
-		spy(LdapUtil.class);
+		Rdn rdn = Mockito.mock(Rdn.class);
 
-		doReturn(
+		Mockito.when(
+			dn.getRdn(Mockito.anyInt())
+		).thenReturn(
+			rdn
+		);
+
+		Mockito.when(
+			rdn.getNormType()
+		).thenReturn(
+			""
+		);
+
+		Object valueObject = Mockito.mock(Object.class);
+
+		Mockito.when(
+			rdn.getValue(Mockito.anyString())
+		).thenReturn(
+			valueObject
+		);
+
+		Mockito.when(
+			valueObject.toString()
+		).thenReturn(
 			null
-		).when(
-			LdapUtil.class, "getRdnValue", dn, 4
 		);
 
 		Method getIdentifiersMethod = _clazz.getDeclaredMethod(
@@ -770,7 +801,7 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 		CompanyLocalService companyLocalService = getMockPortalService(
 			CompanyLocalServiceUtil.class, CompanyLocalService.class);
 
-		when(
+		Mockito.when(
 			companyLocalService.getCompanyByWebId(Mockito.eq("test"))
 		).thenThrow(
 			new NoSuchCompanyException()
@@ -1497,23 +1528,23 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 	}
 
 	private void _setUpExpando() {
-		ExpandoBridge expandoBridge = mock(ExpandoBridge.class);
+		ExpandoBridge expandoBridge = Mockito.mock(ExpandoBridge.class);
 
-		when(
+		Mockito.when(
 			expandoBridge.getAttribute(
 				Mockito.eq("sambaLMPassword"), Mockito.eq(false))
 		).thenReturn(
 			"testLMPassword"
 		);
 
-		when(
+		Mockito.when(
 			expandoBridge.getAttribute(
 				Mockito.eq("sambaNTPassword"), Mockito.eq(false))
 		).thenReturn(
 			"testNTPassword"
 		);
 
-		when(
+		Mockito.when(
 			_user.getExpandoBridge()
 		).thenReturn(
 			expandoBridge
@@ -1524,10 +1555,10 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 		FastDateFormat fastDateFormat = FastDateFormat.getInstance(
 			"yyyyMMddHHmmss.SSSZ", null, LocaleUtil.getDefault());
 
-		FastDateFormatFactory fastDateFormatFactory = mock(
+		FastDateFormatFactory fastDateFormatFactory = Mockito.mock(
 			FastDateFormatFactory.class);
 
-		when(
+		Mockito.when(
 			fastDateFormatFactory.getSimpleDateFormat(Mockito.anyString())
 		).thenReturn(
 			fastDateFormat
@@ -1541,22 +1572,22 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 	}
 
 	private void _setUpGroup() throws Exception {
-		Group group = mock(Group.class);
+		Group group = Mockito.mock(Group.class);
 
-		when(
+		Mockito.when(
 			groupLocalService.fetchGroup(
 				Mockito.eq(PRIMARY_KEY), Mockito.eq("testGroupName"))
 		).thenReturn(
 			group
 		);
 
-		when(
+		Mockito.when(
 			groupLocalService.fetchGroup(Mockito.eq(PRIMARY_KEY))
 		).thenReturn(
 			group
 		);
 
-		when(
+		Mockito.when(
 			group.getName(LocaleUtil.getDefault())
 		).thenReturn(
 			"testGroupName"
@@ -1564,22 +1595,22 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 	}
 
 	private void _setUpOrganization() throws Exception {
-		_organization = mock(Organization.class);
+		_organization = Mockito.mock(Organization.class);
 
-		when(
+		Mockito.when(
 			organizationLocalService.fetchOrganization(
 				Mockito.eq(PRIMARY_KEY), Mockito.eq("testOrganizationName"))
 		).thenReturn(
 			_organization
 		);
 
-		when(
+		Mockito.when(
 			_organization.getGroupId()
 		).thenReturn(
 			PRIMARY_KEY
 		);
 
-		when(
+		Mockito.when(
 			_organization.getName()
 		).thenReturn(
 			"testOrganizationName"
@@ -1587,11 +1618,11 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 	}
 
 	private void _setUpPasswordPolicy() throws Exception {
-		PasswordPolicy passwordPolicy = mock(PasswordPolicy.class);
+		PasswordPolicy passwordPolicy = Mockito.mock(PasswordPolicy.class);
 
 		setUpPasswordPolicy(passwordPolicy);
 
-		when(
+		Mockito.when(
 			_user.getPasswordPolicy()
 		).thenReturn(
 			passwordPolicy
@@ -1599,15 +1630,15 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 	}
 
 	private void _setUpRole() throws Exception {
-		Role role = mock(Role.class);
+		Role role = Mockito.mock(Role.class);
 
-		when(
+		Mockito.when(
 			role.getName()
 		).thenReturn(
 			"testRoleName"
 		);
 
-		when(
+		Mockito.when(
 			roleLocalService.fetchRole(
 				Mockito.eq(PRIMARY_KEY), Mockito.eq("testRoleName"))
 		).thenReturn(
@@ -1616,21 +1647,21 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 	}
 
 	private void _setUpUserGroups() throws Exception {
-		UserGroup userGroup = mock(UserGroup.class);
+		UserGroup userGroup = Mockito.mock(UserGroup.class);
 
-		when(
+		Mockito.when(
 			userGroup.getName()
 		).thenReturn(
 			"testUserGroupName"
 		);
 
-		when(
+		Mockito.when(
 			userGroup.getUserGroupId()
 		).thenReturn(
 			PRIMARY_KEY
 		);
 
-		when(
+		Mockito.when(
 			userGroupLocalService.fetchUserGroup(
 				Mockito.anyLong(), Mockito.anyString())
 		).thenReturn(
@@ -1639,22 +1670,22 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 	}
 
 	private void _setUpUsers() {
-		_user = mock(User.class);
+		_user = Mockito.mock(User.class);
 
-		when(
+		Mockito.when(
 			_user.getScreenName()
 		).thenReturn(
 			"testScreenName"
 		);
 
-		when(
+		Mockito.when(
 			userLocalService.fetchUserByScreenName(
 				Mockito.anyLong(), Mockito.anyString())
 		).thenReturn(
 			_user
 		);
 
-		when(
+		Mockito.when(
 			userLocalService.search(
 				Mockito.anyLong(), Mockito.anyString(), Mockito.anyString(),
 				Mockito.anyString(), Mockito.anyString(), Mockito.anyString(),

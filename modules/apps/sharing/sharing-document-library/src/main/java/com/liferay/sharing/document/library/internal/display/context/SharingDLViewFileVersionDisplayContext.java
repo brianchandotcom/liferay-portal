@@ -19,6 +19,7 @@ import com.liferay.document.library.display.context.BaseDLViewFileVersionDisplay
 import com.liferay.document.library.display.context.DLUIItemKeys;
 import com.liferay.document.library.display.context.DLViewFileVersionDisplayContext;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownGroupItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -169,7 +170,18 @@ public class SharingDLViewFileVersionDisplayContext
 		int i = 1;
 
 		for (DropdownItem dropdownItem : dropdownItems) {
-			if (Objects.equals("download", dropdownItem.get("icon"))) {
+			if (dropdownItem instanceof DropdownGroupItem) {
+				DropdownGroupItem dropdownGroupItem =
+					(DropdownGroupItem)dropdownItem;
+
+				if (_addSharingDropdownItemGroup(
+						(List<DropdownItem>)dropdownGroupItem.get("items"),
+						sharingDropdownItem)) {
+
+					return dropdownItems;
+				}
+			}
+			else if (Objects.equals("download", dropdownItem.get("icon"))) {
 				break;
 			}
 
@@ -184,6 +196,40 @@ public class SharingDLViewFileVersionDisplayContext
 		}
 
 		return dropdownItems;
+	}
+
+	private boolean _addSharingDropdownItemGroup(
+		List<DropdownItem> dropdownItems, DropdownItem sharingDropdownItem) {
+
+		int i = 1;
+
+		for (DropdownItem dropdownItem : dropdownItems) {
+			if (dropdownItem instanceof DropdownGroupItem) {
+				DropdownGroupItem dropdownGroupItem =
+					(DropdownGroupItem)dropdownItem;
+
+				if (_addSharingDropdownItemGroup(
+						(List<DropdownItem>)dropdownGroupItem.get("items"),
+						sharingDropdownItem)) {
+
+					return true;
+				}
+			}
+			else if (Objects.equals("download", dropdownItem.get("icon"))) {
+				break;
+			}
+			else {
+				i++;
+			}
+		}
+
+		if (i < dropdownItems.size()) {
+			dropdownItems.add(i, sharingDropdownItem);
+
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

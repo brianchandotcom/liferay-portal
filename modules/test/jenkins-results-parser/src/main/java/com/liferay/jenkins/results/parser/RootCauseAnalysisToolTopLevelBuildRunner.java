@@ -352,6 +352,16 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 		return getBuildParameter(_NAME_BUILD_PARAMETER_PORTAL_GITHUB_URL);
 	}
 
+	Private int _getRetestAmount() {
+		String retestAmount = getBuildParameter(_NAME_BUILD_PARAMETER_RETEST_AMOUNT);
+
+		if ((retestAmount == null) || retestAmount.isEmpty()) {
+			return 1;
+		}
+
+		return Integer.parseInt(retestAmount);
+	}
+
 	private List<String> _getTestList() {
 		String portalBatchTestSelector = getBuildParameter(
 			_NAME_BUILD_PARAMETER_PORTAL_BATCH_TEST_SELECTOR);

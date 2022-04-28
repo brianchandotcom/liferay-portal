@@ -1,5 +1,15 @@
 definition {
 
+	macro checkTableCheckbox {
+		Check(
+			key_tableEntry = "${tableEntry}",
+			locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
+
+		AssertChecked.assertCheckedNotVisible(
+			key_tableEntry = "${tableEntry}",
+			locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
+	}
+
 	macro clickEllipsisItem {
 		Click.waitForMenuToggleJSClick(
 			key_tableEntry = "${tableEntry}",

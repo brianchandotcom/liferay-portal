@@ -1,0 +1,8 @@
+{
+	"cssPath": "index.css",
+	"fragmentEntryKey": "resource",
+	"htmlPath": "index.html",
+	"jsPath": "index.js",
+	"name": "resource",
+	"type": "component"
+}

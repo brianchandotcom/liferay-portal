@@ -27,7 +27,6 @@ import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.util.comparator.FragmentEntryCreateDateComparator;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.CompanyConstants;
@@ -53,7 +52,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.io.File;
-import java.io.IOException;
 
 import java.net.URL;
 
@@ -98,7 +96,9 @@ public class FragmentsImporterTest {
 
 		_user = TestPropsValues.getUser();
 
-		_file = _generateZipFile(_FRAGMENTS_PATH);
+		_file = _generateZipFile();
+
+		_resourcesFile = _generateResourcesZipFile();
 	}
 
 	@After
@@ -439,7 +439,7 @@ public class FragmentsImporterTest {
 
 	private void _addZipWriterEntry(
 			ZipWriter zipWriter, String path, String key)
-		throws IOException {
+		throws Exception {
 
 		if (Validator.isNull(key)) {
 			return;
@@ -449,29 +449,38 @@ public class FragmentsImporterTest {
 
 		String zipPath = StringUtil.removeSubstring(entryPath, _FRAGMENTS_PATH);
 
+		zipPath = StringUtil.removeSubstring(zipPath, _DEPENDENCIES_PATH);
+
 		URL url = _bundle.getEntry(entryPath);
 
 		zipWriter.addEntry(zipPath, url.openStream());
 	}
 
-	private File _generateZipFile(String path) throws Exception {
+	private File _generateResourcesZipFile() throws Exception {
+		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
+
+		_addZipWriterEntry(
+			zipWriter, _DEPENDENCIES_PATH + "resources-collection",
+			"collection.json");
+		_addZipWriterEntry(
+			zipWriter, _RESOURCE_FRAGMENTS_PATH + "resources", "image.png");
+		_populateZipWriter(_RESOURCE_FRAGMENTS_PATH, zipWriter, false);
+
+		return zipWriter.getFile();
+	}
+
+	private File _generateZipFile() throws Exception {
 		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
 
 		URL collectionURL = _bundle.getEntry(
-			path + FragmentExportImportConstants.FILE_NAME_COLLECTION);
+			_FRAGMENTS_PATH +
+				FragmentExportImportConstants.FILE_NAME_COLLECTION);
 
 		zipWriter.addEntry(
 			FragmentExportImportConstants.FILE_NAME_COLLECTION,
 			collectionURL.openStream());
 
-		Enumeration<URL> enumeration = _bundle.findEntries(
-			path, FragmentExportImportConstants.FILE_NAME_FRAGMENT, true);
-
-		while (enumeration.hasMoreElements()) {
-			URL url = enumeration.nextElement();
-
-			_populateZipWriter(zipWriter, url);
-		}
+		_populateZipWriter(_FRAGMENTS_PATH, zipWriter, true);
 
 		return zipWriter.getFile();
 	}
@@ -513,26 +522,40 @@ public class FragmentsImporterTest {
 			actualFragmentEntries.size());
 	}
 
-	private void _populateZipWriter(ZipWriter zipWriter, URL url)
-		throws IOException, JSONException {
+	private void _populateZipWriter(
+			String basePath, ZipWriter zipWriter,
+			boolean calculateFragmentEntryType)
+		throws Exception {
 
-		String content = StringUtil.read(url.openStream());
+		Enumeration<URL> enumeration = _bundle.findEntries(
+			basePath, FragmentExportImportConstants.FILE_NAME_FRAGMENT, true);
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(content);
+		while (enumeration.hasMoreElements()) {
+			URL url = enumeration.nextElement();
 
-		_addFragmentEntryType(jsonObject);
+			String content = StringUtil.read(url.openStream());
 
-		String path = FileUtil.getPath(url.getPath());
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(content);
 
-		_addZipWriterEntry(
-			zipWriter, path, FragmentExportImportConstants.FILE_NAME_FRAGMENT);
-		_addZipWriterEntry(
-			zipWriter, path, jsonObject.getString("configurationPath"));
-		_addZipWriterEntry(zipWriter, path, jsonObject.getString("cssPath"));
-		_addZipWriterEntry(zipWriter, path, jsonObject.getString("htmlPath"));
-		_addZipWriterEntry(zipWriter, path, jsonObject.getString("jsPath"));
-		_addZipWriterEntry(
-			zipWriter, path, jsonObject.getString("thumbnailPath"));
+			if (calculateFragmentEntryType) {
+				_addFragmentEntryType(jsonObject);
+			}
+
+			String path = FileUtil.getPath(url.getPath());
+
+			_addZipWriterEntry(
+				zipWriter, path,
+				FragmentExportImportConstants.FILE_NAME_FRAGMENT);
+			_addZipWriterEntry(
+				zipWriter, path, jsonObject.getString("configurationPath"));
+			_addZipWriterEntry(
+				zipWriter, path, jsonObject.getString("cssPath"));
+			_addZipWriterEntry(
+				zipWriter, path, jsonObject.getString("htmlPath"));
+			_addZipWriterEntry(zipWriter, path, jsonObject.getString("jsPath"));
+			_addZipWriterEntry(
+				zipWriter, path, jsonObject.getString("thumbnailPath"));
+		}
 	}
 
 	private void _testResources(
@@ -544,7 +567,8 @@ public class FragmentsImporterTest {
 
 		try {
 			_fragmentsImporter.importFragmentEntries(
-				_user.getUserId(), _group.getGroupId(), 0, _file, true);
+				_user.getUserId(), _group.getGroupId(), 0, _resourcesFile,
+				true);
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
@@ -565,7 +589,8 @@ public class FragmentsImporterTest {
 
 		try {
 			_fragmentsImporter.importFragmentEntries(
-				_user.getUserId(), _group.getGroupId(), 0, _file, true);
+				_user.getUserId(), _group.getGroupId(), 0, _resourcesFile,
+				true);
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
@@ -600,8 +625,14 @@ public class FragmentsImporterTest {
 		Assert.assertTrue(css, css.contains(resourceReference));
 	}
 
+	private static final String _DEPENDENCIES_PATH =
+		"com/liferay/fragment/dependencies/";
+
 	private static final String _FRAGMENTS_PATH =
-		"com/liferay/fragment/dependencies/fragments/";
+		_DEPENDENCIES_PATH + "fragments/";
+
+	private static final String _RESOURCE_FRAGMENTS_PATH =
+		_DEPENDENCIES_PATH + "resources-collection/";
 
 	private Bundle _bundle;
 
@@ -625,6 +656,7 @@ public class FragmentsImporterTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
+	private File _resourcesFile;
 	private User _user;
 
 }

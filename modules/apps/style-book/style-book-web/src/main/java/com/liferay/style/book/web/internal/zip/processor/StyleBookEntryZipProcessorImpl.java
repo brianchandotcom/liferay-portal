@@ -348,13 +348,13 @@ public class StyleBookEntryZipProcessorImpl
 			String thumbnailPath = jsonObject.getString("thumbnailPath");
 
 			if (Validator.isNotNull(thumbnailPath)) {
-				long previewFileEntryId = _getPreviewFileEntryId(
-					userId, groupId, zipFile, StyleBookEntry.class.getName(),
-					styleBookEntry.getStyleBookEntryId(), fileName,
-					thumbnailPath);
-
 				_styleBookEntryEntryService.updatePreviewFileEntryId(
-					styleBookEntry.getStyleBookEntryId(), previewFileEntryId);
+					styleBookEntry.getStyleBookEntryId(),
+					_getPreviewFileEntryId(
+						userId, groupId, zipFile,
+						StyleBookEntry.class.getName(),
+						styleBookEntry.getStyleBookEntryId(), fileName,
+						thumbnailPath));
 			}
 		}
 	}

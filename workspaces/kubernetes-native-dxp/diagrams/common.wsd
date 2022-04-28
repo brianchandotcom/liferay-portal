@@ -1,13 +1,13 @@
 @startuml common
 
-/'autonumber'/
+autonumber
 /'scale 0.9'/
 
 hide footbox
 
 skinparam {
     dpi 150
-    handwritten true
+    /'handwritten true'/
     shadowing false
     style strictuml
 

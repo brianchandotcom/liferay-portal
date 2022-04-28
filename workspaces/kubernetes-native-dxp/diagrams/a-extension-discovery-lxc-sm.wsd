@@ -1,0 +1,20 @@
+@startuml Deploy LXC-SM Custom Service
+!include common.wsd
+title Deploy LXC-SM Custom Service
+actor developer
+participant lcp
+participant api
+box "Kubernetes cluster"
+    participant "k8s-api" as k8s
+    participant dxp
+    participant "custom\nservice" as extension
+end box
+
+developer -> lcp : deploy\ncustom\nservice
+lcp -> api : upload\ncustom\nservice
+api -> api : parse\ncustom\nservice\nLCP.json
+api -> k8s : create\ncustom\nservice\ndeployment
+k8s -> extension : create\ncustom\nservice\npods
+activate extension
+
+@enduml

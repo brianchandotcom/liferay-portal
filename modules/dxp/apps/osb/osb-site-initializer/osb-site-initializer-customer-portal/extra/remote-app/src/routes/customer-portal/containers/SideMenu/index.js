@@ -84,47 +84,45 @@ const SideMenu = () => {
 			<ul className="list-unstyled mr-2">
 				<MenuItem to="">{MENU_TYPES.overview}</MenuItem>
 
-				{subscriptionGroups.length > 0 ? (
-					<li>
-						<Button
-							appendIcon="angle-right-small"
-							appendIconClassName="ml-auto"
-							className={classNames(
-								'align-items-center btn-borderless d-flex px-3 py-2 rounded text-neutral-10 w-100',
-								{
-									'cp-product-activation-active': isOpenedProductsMenu,
-									'cp-products-list-active': hasSomeMenuItemActive,
-								}
-							)}
-							onClick={() =>
-								setIsOpenedProductsMenu(
-									(previousIsOpenedProductsMenu) =>
-										!previousIsOpenedProductsMenu
-								)
+				<li>
+					<Button
+						appendIcon={
+							subscriptionGroups.length > 0 && 'angle-right-small'
+						}
+						appendIconClassName="ml-auto"
+						className={classNames(
+							'align-items-center btn-borderless d-flex px-3 py-2 rounded w-100',
+							{
+								'cp-product-activation-active': isOpenedProductsMenu,
+								'cp-products-list-active': hasSomeMenuItemActive,
+								'text-neutral-4': subscriptionGroups.length < 1,
+								'text-neutral-10':
+									subscriptionGroups.length > 0,
 							}
-						>
-							{MENU_TYPES.productActivation}
-						</Button>
+						)}
+						disabled={subscriptionGroups.length < 1}
+						onClick={() =>
+							setIsOpenedProductsMenu(
+								(previousIsOpenedProductsMenu) =>
+									!previousIsOpenedProductsMenu
+							)
+						}
+					>
+						{MENU_TYPES.productActivation}
+					</Button>
 
-						<ul
-							className={classNames(
-								'cp-products-list list-unstyled ml-3 overflow-hidden mb-1',
-								{
-									'cp-products-list-active': isOpenedProductsMenu,
-								}
-							)}
-							ref={productActivationMenuRef}
-						>
-							{accountSubscriptionGroupsMenuItem}
-						</ul>
-					</li>
-				) : (
-					<li>
-						<p className="align-items-center font-weight-semi-bold pb-0 pt-2 px-3 text-neutral-4 w-100">
-							Product activation
-						</p>
-					</li>
-				)}
+					<ul
+						className={classNames(
+							'cp-products-list list-unstyled ml-3 overflow-hidden mb-1',
+							{
+								'cp-products-list-active': isOpenedProductsMenu,
+							}
+						)}
+						ref={productActivationMenuRef}
+					>
+						{accountSubscriptionGroupsMenuItem}
+					</ul>
+				</li>
 
 				<MenuItem to={getKebabCase(MENU_TYPES.teamMembers)}>
 					{MENU_TYPES.teamMembers}

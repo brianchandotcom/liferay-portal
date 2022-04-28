@@ -22,7 +22,7 @@
 	}
 
 	button {
-		&:hover {
+		&:not([disabled]):hover {
 			background-color: var(--color-action-primary-hover-lighten);
 			border-color: var(--btn-default-border-color);
 			color: var(--color-action-primary-hover) !important;

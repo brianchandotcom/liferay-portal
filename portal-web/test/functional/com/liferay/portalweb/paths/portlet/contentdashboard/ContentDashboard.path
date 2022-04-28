@@ -201,7 +201,7 @@
 </tr>
 <tr>
 	<td>FILTER_CATEGORY_NAME</td>
-	<td>//*[contains(@class,'label') and contains(text(),'Category:${categoryName}')]</td>
+	<td>//*[contains(@class,'label') and contains(text(),'Category: ${categoryName}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -44,7 +44,8 @@ export class Security {
 			const userRole = role.name.replace(' ', '_').toUpperCase() as Roles;
 
 			const rolePermission =
-				rolePermissions[userRole] || rolePermissions.TESTRAY_USER;
+				rolePermissions[userRole] ||
+				rolePermissions.TESTRAY_ADMINISTRATOR;
 
 			const hasPermission = rolePermission[entity]?.includes(permission);
 

@@ -288,6 +288,190 @@ public class OrderItemResourceImpl
 			_commerceOrderService.getCommerceOrder(id), orderItem);
 	}
 
+	@Override
+	public OrderItem putOrderItem(Long id, OrderItem orderItem)
+		throws Exception {
+
+		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
+			orderItem.getOrderId());
+
+		CommerceOrderItem commerceOrderItem =
+			_commerceOrderItemService.updateCommerceOrderItem(
+				id, GetterUtil.getString(orderItem.getOptions(), "[]"),
+				GetterUtil.getInteger(orderItem.getQuantity()),
+				_commerceContextFactory.create(
+					contextCompany.getCompanyId(), commerceOrder.getGroupId(),
+					contextUser.getUserId(), commerceOrder.getCommerceOrderId(),
+					commerceOrder.getCommerceAccountId()),
+				_serviceContextHelper.getServiceContext(
+					commerceOrder.getScopeGroupId()));
+
+		// Pricing
+
+		PortletResourcePermission portletResourcePermission =
+			_commerceOrderModelResourcePermission.
+				getPortletResourcePermission();
+
+		if (portletResourcePermission.contains(
+				PermissionThreadLocal.getPermissionChecker(),
+				commerceOrder.getGroupId(),
+				CommerceActionKeys.MANAGE_COMMERCE_ORDER_PRICES)) {
+
+			commerceOrderItem =
+				_commerceOrderItemService.updateCommerceOrderItemPrices(
+					commerceOrderItem.getCommerceOrderItemId(),
+					(BigDecimal)GetterUtil.getNumber(
+						orderItem.getDiscountAmount()),
+					(BigDecimal)GetterUtil.getNumber(
+						orderItem.getDiscountWithTaxAmount()),
+					(BigDecimal)GetterUtil.getNumber(
+						orderItem.getDiscountPercentageLevel1()),
+					(BigDecimal)GetterUtil.getNumber(
+						orderItem.getDiscountPercentageLevel1WithTaxAmount()),
+					(BigDecimal)GetterUtil.getNumber(
+						orderItem.getDiscountPercentageLevel2()),
+					(BigDecimal)GetterUtil.getNumber(
+						orderItem.getDiscountPercentageLevel2WithTaxAmount()),
+					(BigDecimal)GetterUtil.getNumber(
+						orderItem.getDiscountPercentageLevel3()),
+					(BigDecimal)GetterUtil.getNumber(
+						orderItem.getDiscountPercentageLevel3WithTaxAmount()),
+					(BigDecimal)GetterUtil.getNumber(
+						orderItem.getDiscountPercentageLevel4()),
+					(BigDecimal)GetterUtil.getNumber(
+						orderItem.getDiscountPercentageLevel4WithTaxAmount()),
+					(BigDecimal)GetterUtil.getNumber(orderItem.getFinalPrice()),
+					(BigDecimal)GetterUtil.getNumber(
+						orderItem.getFinalPriceWithTaxAmount()),
+					(BigDecimal)GetterUtil.getNumber(orderItem.getPromoPrice()),
+					(BigDecimal)GetterUtil.getNumber(
+						orderItem.getPromoPriceWithTaxAmount()),
+					(BigDecimal)GetterUtil.getNumber(orderItem.getUnitPrice()),
+					(BigDecimal)GetterUtil.getNumber(
+						orderItem.getUnitPriceWithTaxAmount()));
+		}
+
+		// Expando
+
+		Map<String, ?> customFields = _getExpandoBridgeAttributes(orderItem);
+
+		if ((customFields != null) && !customFields.isEmpty()) {
+			ExpandoUtil.updateExpando(
+				contextCompany.getCompanyId(), CommerceOrderItem.class,
+				commerceOrderItem.getPrimaryKey(), customFields);
+		}
+
+		return _toOrderItem(commerceOrderItem.getCommerceOrderItemId());
+	}
+
+	@Override
+	public OrderItem putOrderItemByExternalReferenceCode(
+			String externalReferenceCode, OrderItem orderItem)
+		throws Exception {
+
+		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
+			GetterUtil.getLong(orderItem.getOrderId()));
+
+		CommerceOrderItem commerceOrderItem =
+			_commerceOrderItemService.fetchByExternalReferenceCode(
+				externalReferenceCode, contextCompany.getCompanyId());
+
+		if (commerceOrderItem == null) {
+			commerceOrderItem = OrderItemUtil.addCommerceOrderItem(
+				_cpInstanceService, _commerceOrderItemService,
+				_commerceOrderModelResourcePermission, orderItem, commerceOrder,
+				_commerceContextFactory.create(
+					contextCompany.getCompanyId(), commerceOrder.getGroupId(),
+					contextUser.getUserId(), commerceOrder.getCommerceOrderId(),
+					commerceOrder.getCommerceAccountId()),
+				_serviceContextHelper.getServiceContext(
+					commerceOrder.getGroupId()));
+
+			commerceOrderItem =
+				_commerceOrderItemService.updateExternalReferenceCode(
+					commerceOrderItem.getCommerceOrderItemId(),
+					externalReferenceCode);
+		}
+		else {
+			commerceOrderItem =
+				_commerceOrderItemService.updateCommerceOrderItem(
+					commerceOrderItem.getCommerceOrderItemId(),
+					GetterUtil.getString(orderItem.getOptions(), "[]"),
+					GetterUtil.getInteger(orderItem.getQuantity()),
+					_commerceContextFactory.create(
+						contextCompany.getCompanyId(),
+						commerceOrder.getGroupId(), contextUser.getUserId(),
+						commerceOrder.getCommerceOrderId(),
+						commerceOrder.getCommerceAccountId()),
+					_serviceContextHelper.getServiceContext(
+						commerceOrder.getGroupId()));
+
+			// Pricing
+
+			PortletResourcePermission portletResourcePermission =
+				_commerceOrderModelResourcePermission.
+					getPortletResourcePermission();
+
+			if (portletResourcePermission.contains(
+					PermissionThreadLocal.getPermissionChecker(),
+					commerceOrder.getGroupId(),
+					CommerceActionKeys.MANAGE_COMMERCE_ORDER_PRICES)) {
+
+				commerceOrderItem =
+					_commerceOrderItemService.updateCommerceOrderItemPrices(
+						commerceOrderItem.getCommerceOrderItemId(),
+						(BigDecimal)GetterUtil.getNumber(
+							orderItem.getDiscountAmount()),
+						(BigDecimal)GetterUtil.getNumber(
+							orderItem.getDiscountWithTaxAmount()),
+						(BigDecimal)GetterUtil.getNumber(
+							orderItem.getDiscountPercentageLevel1()),
+						(BigDecimal)GetterUtil.getNumber(
+							orderItem.
+								getDiscountPercentageLevel1WithTaxAmount()),
+						(BigDecimal)GetterUtil.getNumber(
+							orderItem.getDiscountPercentageLevel2()),
+						(BigDecimal)GetterUtil.getNumber(
+							orderItem.
+								getDiscountPercentageLevel2WithTaxAmount()),
+						(BigDecimal)GetterUtil.getNumber(
+							orderItem.getDiscountPercentageLevel3()),
+						(BigDecimal)GetterUtil.getNumber(
+							orderItem.
+								getDiscountPercentageLevel3WithTaxAmount()),
+						(BigDecimal)GetterUtil.getNumber(
+							orderItem.getDiscountPercentageLevel4()),
+						(BigDecimal)GetterUtil.getNumber(
+							orderItem.
+								getDiscountPercentageLevel4WithTaxAmount()),
+						(BigDecimal)GetterUtil.getNumber(
+							orderItem.getFinalPrice()),
+						(BigDecimal)GetterUtil.getNumber(
+							orderItem.getFinalPriceWithTaxAmount()),
+						(BigDecimal)GetterUtil.getNumber(
+							orderItem.getPromoPrice()),
+						(BigDecimal)GetterUtil.getNumber(
+							orderItem.getPromoPriceWithTaxAmount()),
+						(BigDecimal)GetterUtil.getNumber(
+							orderItem.getUnitPrice()),
+						(BigDecimal)GetterUtil.getNumber(
+							orderItem.getUnitPriceWithTaxAmount()));
+			}
+		}
+
+		// Expando
+
+		Map<String, ?> customFields = _getExpandoBridgeAttributes(orderItem);
+
+		if ((customFields != null) && !customFields.isEmpty()) {
+			ExpandoUtil.updateExpando(
+				contextCompany.getCompanyId(), CommerceOrderItem.class,
+				commerceOrderItem.getPrimaryKey(), customFields);
+		}
+
+		return _toOrderItem(commerceOrderItem.getCommerceOrderItemId());
+	}
+
 	private OrderItem _addOrderItem(
 			CommerceOrder commerceOrder, OrderItem orderItem)
 		throws Exception {
@@ -393,11 +577,21 @@ public class OrderItemResourceImpl
 			contextAcceptLanguage.getPreferredLocale());
 	}
 
+	private OrderItem _toOrderItem(CommerceOrderItem commerceOrderItem)
+		throws Exception {
+
+		return _toOrderItem(commerceOrderItem.getCommerceOrderItemId());
+	}
+
 	private OrderItem _toOrderItem(long commerceOrderItemId) throws Exception {
 		return _orderItemDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
 				commerceOrderItemId,
 				contextAcceptLanguage.getPreferredLocale()));
+	}
+
+	private OrderItem _toOrderItem(OrderItem orderItem) throws Exception {
+		return _toOrderItem(orderItem.getId());
 	}
 
 	private OrderItem _updateOrderItem(

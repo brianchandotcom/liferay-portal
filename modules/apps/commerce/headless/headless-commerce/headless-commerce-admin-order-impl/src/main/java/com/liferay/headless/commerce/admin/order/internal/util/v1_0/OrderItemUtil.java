@@ -58,7 +58,9 @@ public class OrderItemUtil {
 			cpInstance = cpInstanceService.getCPInstance(orderItem.getSkuId());
 		}
 
-		if (orderItem.getSkuExternalReferenceCode() != null) {
+		if ((cpInstance == null) &&
+			(orderItem.getSkuExternalReferenceCode() != null)) {
+
 			cpInstance = cpInstanceService.fetchByExternalReferenceCode(
 				orderItem.getSkuExternalReferenceCode(),
 				serviceContext.getCompanyId());
@@ -90,7 +92,8 @@ public class OrderItemUtil {
 
 			commerceOrderItem =
 				commerceOrderItemService.importCommerceOrderItem(
-					orderItem.getExternalReferenceCode(), orderItem.getId(),
+					GetterUtil.getString(orderItem.getExternalReferenceCode()),
+					GetterUtil.getLong(orderItem.getId()),
 					commerceOrder.getCommerceOrderId(),
 					cpInstance.getCPInstanceId(),
 					GetterUtil.getString(orderItem.getUnitOfMeasure()),

@@ -6,5 +6,9 @@
 	</checkstyle>
 	<source-check>
 		<suppress checks="GradleDependenciesCheck" files=".*" />
+		<suppress checks="PoshiPauseUsageCheck" files="site-initializer-customer-portal/site-initializer-customer-portal-test/src/testFunctional/macros/CustomerPortal\.macro" />
+		<suppress checks="PoshiPauseUsageCheck" files="site-initializer-customer-portal/site-initializer-customer-portal-test/src/testFunctional/tests/CustomerPortalSite\.testcase" />
+		<suppress checks="PoshiPauseUsageCheck" files="site-initializer-raylife-d2c/site-initializer-raylife-d2c-test/src/testFunctional/macros/Raylife\.macro" />
+		<suppress checks="PoshiPauseUsageCheck" files="site-initializer-raylife-d2c/site-initializer-raylife-d2c-test/src/testFunctional/tests/RaylifeSite\.testcase" />
 	</source-check>
 </suppressions>

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="PoshiPauseUsageCheck" files="portal-workflow-test/src/testFunctional/macros/Workflow\.macro" />
+		<suppress checks="PoshiPauseUsageCheck" files="portal-workflow-test/src/testFunctional/macros/WorkflowDocumentsAndMedia\.macro" />
+		<suppress checks="PoshiPauseUsageCheck" files="portal-workflow-test/src/testFunctional/tests/WorkflowUsecase\.testcase" />
+	</source-check>
+</suppressions>

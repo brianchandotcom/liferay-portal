@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="PoshiPauseUsageCheck" files="data-engine-test/src/testFunctional/macros/App\.macro" />
+		<suppress checks="PoshiPauseUsageCheck" files="data-engine-test/src/testFunctional/macros/AppBuilderAdmin\.macro" />
+		<suppress checks="PoshiPauseUsageCheck" files="data-engine-test/src/testFunctional/macros/FormViewBuilder\.macro" />
+		<suppress checks="PoshiPauseUsageCheck" files="data-engine-test/src/testFunctional/macros/TableViewBuilder\.macro" />
+		<suppress checks="PoshiPauseUsageCheck" files="data-engine-test/src/testFunctional/tests/documentsadministration/fields/DMFieldsets\.testcase" />
+		<suppress checks="PoshiPauseUsageCheck" files="data-engine-test/src/testFunctional/tests/wem/translations/LocalizedSimpleFieldsetsStructure\.testcase" />
+	</source-check>
+</suppressions>

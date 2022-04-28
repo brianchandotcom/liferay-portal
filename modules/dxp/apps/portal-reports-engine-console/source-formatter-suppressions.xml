@@ -2,6 +2,10 @@
 
 <suppressions>
 	<source-check>
+		<suppress checks="PoshiPauseUsageCheck" files="portal-reports-engine-console-test/src/testFunctional/macros/ReportsAdmin\.macro" />
+		<suppress checks="PoshiPauseUsageCheck" files="portal-reports-engine-console-test/src/testFunctional/macros/ReportsDisplayPortlet\.macro" />
+		<suppress checks="PoshiPauseUsageCheck" files="portal-reports-engine-console-test/src/testFunctional/tests/CPReportsadmin\.testcase" />
+		<suppress checks="PoshiPauseUsageCheck" files="portal-reports-engine-console-test/src/testFunctional/tests/ReportsUsecase\.testcase" />
 		<suppress checks="XMLServiceReferenceCheck" files="portal-reports-engine-console-service/service\.xml" />
 	</source-check>
 </suppressions>

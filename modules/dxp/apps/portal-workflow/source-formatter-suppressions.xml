@@ -8,6 +8,17 @@
 	</checkstyle>
 	<source-check>
 		<suppress checks="JSONPackageJSONCheck" files="portal-workflow-kaleo-designer-web/package\.json" />
+		<suppress checks="PoshiPauseUsageCheck" files="portal-workflow-kaleo-designer-test/src/testFunctional/macros/KaleoDesigner\.macro" />
+		<suppress checks="PoshiPauseUsageCheck" files="portal-workflow-kaleo-forms-test/src/testFunctional/macros/KaleoFormsAdmin\.macro" />
+		<suppress checks="PoshiPauseUsageCheck" files="portal-workflow-kaleo-forms-test/src/testFunctional/tests/KaleoformsUsecase\.testcase" />
+		<suppress checks="PoshiPauseUsageCheck" files="portal-workflow-metrics-test/src/testFunctional/macros/WorkflowMetrics\.macro" />
+		<suppress checks="PoshiPauseUsageCheck" files="portal-workflow-metrics-test/src/testFunctional/tests/WorkflowMetricsAllItemsList\.testcase" />
+		<suppress checks="PoshiPauseUsageCheck" files="portal-workflow-metrics-test/src/testFunctional/tests/WorkflowMetricsAllItemsListReassignTasks\.testcase" />
+		<suppress checks="PoshiPauseUsageCheck" files="portal-workflow-metrics-test/src/testFunctional/tests/WorkflowMetricsCompletionVelocity\.testcase" />
+		<suppress checks="PoshiPauseUsageCheck" files="portal-workflow-metrics-test/src/testFunctional/tests/WorkflowMetricsProcessListView\.testcase" />
+		<suppress checks="PoshiPauseUsageCheck" files="portal-workflow-metrics-test/src/testFunctional/tests/WorkflowMetricsSLA\.testcase" />
+		<suppress checks="PoshiPauseUsageCheck" files="portal-workflow-metrics-test/src/testFunctional/tests/WorkflowMetricsWorkloadByAssignee\.testcase" />
+		<suppress checks="PoshiPauseUsageCheck" files="portal-workflow-metrics-test/src/testFunctional/tests/WorkflowMetricsWorkloadByStep\.testcase" />
 		<suppress checks="PoshiVariableNameCheck" files="portal-workflow-kaleo-designer-test/src/testFunctional/tests/Kaleodesigner\.testcase" />
 	</source-check>
 </suppressions>

@@ -3,5 +3,6 @@
 <suppressions>
 	<source-check>
 		<suppress checks="JavaAPISignatureCheck" files="object-api/src/main/java/com/liferay/object/scope/ObjectScopeProvider\.java" />
+		<suppress checks="PoshiPauseUsageCheck" files="object-test/src/testFunctional/macros/ObjectAdmin\.macro" />
 	</source-check>
 </suppressions>

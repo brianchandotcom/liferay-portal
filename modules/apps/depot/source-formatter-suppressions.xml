@@ -3,5 +3,14 @@
 <suppressions>
 	<source-check>
 		<suppress checks="IfStatementCheck" files="depot-service/src/main/java/com/liferay/depot/internal/security/permission/contributor/DepotRoleContributor\.java" />
+		<suppress checks="PoshiPauseUsageCheck" files="depot-test/src/testFunctional/macros/Depot\.macro" />
+		<suppress checks="PoshiPauseUsageCheck" files="depot-test/src/testFunctional/macros/DepotNavigator\.macro" />
+		<suppress checks="PoshiPauseUsageCheck" files="depot-test/src/testFunctional/tests/DepotLocalization\.testcase" />
+		<suppress checks="PoshiPauseUsageCheck" files="depot-test/src/testFunctional/tests/DepotLocalStagingDM\.testcase" />
+		<suppress checks="PoshiPauseUsageCheck" files="depot-test/src/testFunctional/tests/DepotPermission\.testcase" />
+		<suppress checks="PoshiPauseUsageCheck" files="depot-test/src/testFunctional/tests/DepotRecycleBin\.testcase" />
+		<suppress checks="PoshiPauseUsageCheck" files="depot-test/src/testFunctional/tests/DepotRemoteStagingDM\.testcase" />
+		<suppress checks="PoshiPauseUsageCheck" files="depot-test/src/testFunctional/tests/DepotSiteConnection\.testcase" />
+		<suppress checks="PoshiPauseUsageCheck" files="depot-test/src/testFunctional/tests/DepotVideoShortcut\.testcase" />
 	</source-check>
 </suppressions>

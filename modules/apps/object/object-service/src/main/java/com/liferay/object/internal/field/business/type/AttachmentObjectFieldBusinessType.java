@@ -14,7 +14,6 @@
 
 package com.liferay.object.internal.field.business.type;
 
-import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.util.DLValidatorUtil;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.dynamic.data.mapping.form.field.type.constants.ObjectDDMFormFieldTypeConstants;
@@ -30,13 +29,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Repository;
-import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
-import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -56,8 +48,6 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -121,25 +111,6 @@ public class AttachmentObjectFieldBusinessType
 		ObjectFieldRenderingContext objectFieldRenderingContext) {
 
 		Map<String, Object> properties = HashMapBuilder.<String, Object>put(
-			"folderId",
-			() -> {
-				if (Validator.isNull(
-						objectFieldRenderingContext.getPortletId())) {
-
-					return null;
-				}
-
-				Folder folder = _getFolder(objectFieldRenderingContext);
-
-				if (folder == null) {
-					return null;
-				}
-
-				return folder.getFolderId();
-			}
-		).put(
-			"objectEntryId", objectFieldRenderingContext.getObjectEntryId()
-		).put(
 			"objectFieldId", objectField.getObjectFieldId()
 		).put(
 			"portletId", objectFieldRenderingContext.getPortletId()
@@ -185,84 +156,6 @@ public class AttachmentObjectFieldBusinessType
 		_validateObjectFieldSettingMaximumFileSize(
 			objectFieldName,
 			objectFieldSettingsValuesMap.get("maximumFileSize"));
-	}
-
-	private Folder _addFolder(
-		long userId, long repositoryId, HttpServletRequest httpServletRequest) {
-
-		try {
-			return _portletFileRepository.addPortletFolder(
-				userId, repositoryId,
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				String.valueOf(userId),
-				ServiceContextFactory.getInstance(httpServletRequest));
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
-
-			return null;
-		}
-	}
-
-	private Folder _getFolder(
-		ObjectFieldRenderingContext objectFieldRenderingContext) {
-
-		Repository repository = _getRepository(
-			objectFieldRenderingContext.getGroupId(),
-			objectFieldRenderingContext.getPortletId(),
-			objectFieldRenderingContext.getHttpServletRequest());
-
-		if (repository == null) {
-			return null;
-		}
-
-		try {
-			return _portletFileRepository.getPortletFolder(
-				repository.getRepositoryId(),
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				String.valueOf(objectFieldRenderingContext.getUserId()));
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
-
-			return _addFolder(
-				objectFieldRenderingContext.getUserId(),
-				repository.getRepositoryId(),
-				objectFieldRenderingContext.getHttpServletRequest());
-		}
-	}
-
-	private Repository _getRepository(
-		long groupId, String portletId, HttpServletRequest httpServletRequest) {
-
-		Repository repository = _portletFileRepository.fetchPortletRepository(
-			groupId, portletId);
-
-		if (repository != null) {
-			return repository;
-		}
-
-		try {
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				httpServletRequest);
-
-			serviceContext.setAddGroupPermissions(true);
-			serviceContext.setAddGuestPermissions(true);
-
-			return _portletFileRepository.addPortletRepository(
-				groupId, portletId, serviceContext);
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
-
-			return null;
-		}
 	}
 
 	private void _validateObjectFieldSettingFileSource(
@@ -384,13 +277,7 @@ public class AttachmentObjectFieldBusinessType
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		AttachmentObjectFieldBusinessType.class);
-
 	@Reference
 	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;
-
-	@Reference
-	private PortletFileRepository _portletFileRepository;
 
 }

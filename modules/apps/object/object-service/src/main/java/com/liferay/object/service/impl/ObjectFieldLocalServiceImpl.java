@@ -260,7 +260,14 @@ public class ObjectFieldLocalServiceImpl
 	public ObjectField getObjectField(long objectDefinitionId, String name)
 		throws PortalException {
 
-		return objectFieldPersistence.findByODI_N(objectDefinitionId, name);
+		ObjectField objectField = objectFieldPersistence.findByODI_N(
+			objectDefinitionId, name);
+
+		objectField.setObjectFieldSettings(
+			_objectFieldSettingPersistence.findByObjectFieldId(
+				objectField.getObjectFieldId()));
+
+		return objectField;
 	}
 
 	@Override

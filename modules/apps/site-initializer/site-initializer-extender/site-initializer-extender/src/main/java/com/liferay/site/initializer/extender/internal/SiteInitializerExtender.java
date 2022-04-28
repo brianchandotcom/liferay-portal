@@ -34,8 +34,6 @@ import com.liferay.headless.admin.user.resource.v1_0.UserAccountResource;
 import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowDefinitionResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentFolderResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
-import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseArticleResource;
-import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseFolderResource;
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentFolderResource;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
@@ -122,9 +120,8 @@ public class SiteInitializerExtender
 				_dlURLHelper, _documentFolderResourceFactory,
 				_documentResourceFactory, _fragmentsImporter,
 				_groupLocalService, _journalArticleLocalService, _jsonFactory,
-				_knowledgeBaseArticleResourceFactory,
-				_knowledgeBaseFolderResourceFactory, _layoutCopyHelper,
-				_layoutLocalService, _layoutPageTemplateEntryLocalService,
+				_layoutCopyHelper, _layoutLocalService,
+				_layoutPageTemplateEntryLocalService,
 				_layoutPageTemplatesImporter,
 				_layoutPageTemplateStructureLocalService,
 				_layoutSetLocalService, _listTypeDefinitionResource,
@@ -228,9 +225,8 @@ public class SiteInitializerExtender
 				_dlURLHelper, _documentFolderResourceFactory,
 				_documentResourceFactory, _fragmentsImporter,
 				_groupLocalService, _journalArticleLocalService, _jsonFactory,
-				_knowledgeBaseArticleResourceFactory,
-				_knowledgeBaseFolderResourceFactory, _layoutCopyHelper,
-				_layoutLocalService, _layoutPageTemplateEntryLocalService,
+				_layoutCopyHelper, _layoutLocalService,
+				_layoutPageTemplateEntryLocalService,
 				_layoutPageTemplatesImporter,
 				_layoutPageTemplateStructureLocalService,
 				_layoutSetLocalService, _listTypeDefinitionResource,
@@ -315,14 +311,6 @@ public class SiteInitializerExtender
 
 	@Reference
 	private JSONFactory _jsonFactory;
-
-	@Reference
-	private KnowledgeBaseArticleResource.Factory
-		_knowledgeBaseArticleResourceFactory;
-
-	@Reference
-	private KnowledgeBaseFolderResource.Factory
-		_knowledgeBaseFolderResourceFactory;
 
 	@Reference
 	private LayoutCopyHelper _layoutCopyHelper;

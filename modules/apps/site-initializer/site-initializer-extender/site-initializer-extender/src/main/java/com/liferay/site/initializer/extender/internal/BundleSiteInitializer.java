@@ -57,8 +57,6 @@ import com.liferay.headless.delivery.dto.v1_0.DocumentFolder;
 import com.liferay.headless.delivery.dto.v1_0.StructuredContentFolder;
 import com.liferay.headless.delivery.resource.v1_0.DocumentFolderResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
-import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseArticleResource;
-import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseFolderResource;
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentFolderResource;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
@@ -200,11 +198,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		FragmentsImporter fragmentsImporter,
 		GroupLocalService groupLocalService,
 		JournalArticleLocalService journalArticleLocalService,
-		JSONFactory jsonFactory,
-		KnowledgeBaseArticleResource.Factory
-			knowledgeBaseArticleResourceFactory,
-		KnowledgeBaseFolderResource.Factory knowledgeBaseFolderResourceFactory,
-		LayoutCopyHelper layoutCopyHelper,
+		JSONFactory jsonFactory, LayoutCopyHelper layoutCopyHelper,
 		LayoutLocalService layoutLocalService,
 		LayoutPageTemplateEntryLocalService layoutPageTemplateEntryLocalService,
 		LayoutPageTemplatesImporter layoutPageTemplatesImporter,
@@ -257,10 +251,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_groupLocalService = groupLocalService;
 		_journalArticleLocalService = journalArticleLocalService;
 		_jsonFactory = jsonFactory;
-		_knowledgeBaseArticleResourceFactory =
-			knowledgeBaseArticleResourceFactory;
-		_knowledgeBaseFolderResourceFactory =
-			knowledgeBaseFolderResourceFactory;
 		_layoutCopyHelper = layoutCopyHelper;
 		_layoutLocalService = layoutLocalService;
 		_layoutPageTemplateEntryLocalService =
@@ -387,7 +377,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 					assetListEntryIdsStringUtilReplaceValues,
 					documentsStringUtilReplaceValues, serviceContext));
 
-			_invoke(() -> _addKnowledgeBaseArticles(serviceContext));
 			_invoke(() -> _addOrganizations(serviceContext));
 			_invoke(() -> _addSAPEntries(serviceContext));
 			_invoke(() -> _addSiteConfiguration(serviceContext));
@@ -1278,14 +1267,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 			documentsStringUtilReplaceValues,
 			"/site-initializer/journal-articles", serviceContext,
 			siteNavigationMenuItemSettingsBuilder);
-	}
-
-	private void _addKnowledgeBaseArticles(ServiceContext serviceContext)
-		throws Exception {
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(serviceContext);
-		}
 	}
 
 	private Layout _addLayout(
@@ -3318,10 +3299,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final GroupLocalService _groupLocalService;
 	private final JournalArticleLocalService _journalArticleLocalService;
 	private final JSONFactory _jsonFactory;
-	private final KnowledgeBaseArticleResource.Factory
-		_knowledgeBaseArticleResourceFactory;
-	private final KnowledgeBaseFolderResource.Factory
-		_knowledgeBaseFolderResourceFactory;
 	private final LayoutCopyHelper _layoutCopyHelper;
 	private final LayoutLocalService _layoutLocalService;
 	private final LayoutPageTemplateEntryLocalService

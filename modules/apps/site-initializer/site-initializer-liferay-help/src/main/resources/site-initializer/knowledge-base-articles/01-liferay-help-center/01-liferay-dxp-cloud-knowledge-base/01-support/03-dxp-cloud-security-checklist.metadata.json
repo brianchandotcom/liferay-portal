@@ -1,0 +1,4 @@
+{
+	"articleBody": "<h2>Introduction</h2>\n          <p>This security checklist was created by the Liferay Team to\n  offer   another measure of protection for customer projects. The\n  checklist   covers best practices for Liferay DXP Cloud. For Liferay\n  DXP security   considerations and best practices, please refer to\n    the <a\n    href=\"https://help.liferay.com/hc/articles/360029045311-Introduction-to-Application-Security\"\n    target=\"_self\">Liferay Help Center</a>.</p>\n          <p>   <em>Disclaimer: The items in this checklist are\n    suggested     best     practices and it will be the end-user’s\n    responsibility to implement.</em></p>",
+	"title": "DXP Cloud Security Checklist"
+}

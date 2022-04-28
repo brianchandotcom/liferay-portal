@@ -34,8 +34,6 @@ import com.liferay.headless.admin.user.resource.v1_0.UserAccountResource;
 import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowDefinitionResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentFolderResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
-import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseArticleResource;
-import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseFolderResource;
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentFolderResource;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
@@ -96,11 +94,7 @@ public class SiteInitializerExtension {
 		FragmentsImporter fragmentsImporter,
 		GroupLocalService groupLocalService,
 		JournalArticleLocalService journalArticleLocalService,
-		JSONFactory jsonFactory,
-		KnowledgeBaseArticleResource.Factory
-			knowledgeBaseArticleResourceFactory,
-		KnowledgeBaseFolderResource.Factory knowledgeBaseFolderResourceFactory,
-		LayoutCopyHelper layoutCopyHelper,
+		JSONFactory jsonFactory, LayoutCopyHelper layoutCopyHelper,
 		LayoutLocalService layoutLocalService,
 		LayoutPageTemplateEntryLocalService layoutPageTemplateEntryLocalService,
 		LayoutPageTemplatesImporter layoutPageTemplatesImporter,
@@ -148,10 +142,8 @@ public class SiteInitializerExtension {
 			ddmTemplateLocalService, defaultDDMStructureHelper, dlURLHelper,
 			documentFolderResourceFactory, documentResourceFactory,
 			fragmentsImporter, groupLocalService, journalArticleLocalService,
-			jsonFactory, knowledgeBaseArticleResourceFactory,
-			knowledgeBaseFolderResourceFactory, layoutCopyHelper,
-			layoutLocalService, layoutPageTemplateEntryLocalService,
-			layoutPageTemplatesImporter,
+			jsonFactory, layoutCopyHelper, layoutLocalService,
+			layoutPageTemplateEntryLocalService, layoutPageTemplatesImporter,
 			layoutPageTemplateStructureLocalService, layoutSetLocalService,
 			listTypeDefinitionResource, listTypeDefinitionResourceFactory,
 			listTypeEntryResource, listTypeEntryResourceFactory,

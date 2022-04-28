@@ -1,0 +1,4 @@
+{
+	"articleBody": "<p>Our Jenkins integration supports Git repositories hosted on GitHub,\n  GitLab, and Bitbucket.</p>\n          <p>Read the documentation for more information:</p>\n          <ul>  <li>     <a\n      href=\"https://learn.liferay.com/dxp-cloud/latest/en/getting-started/configuring-your-github-repository.html\"\n      target=\"_self\">Configuring Your GitHub Repository</a></li>  <li>\n      <a\n      href=\"https://learn.liferay.com/dxp-cloud/latest/en/getting-started/configuring-your-gitlab-repository.html\"\n      target=\"_self\">Configuring Your GitLab Repository</a></li>  <li>\n      <a\n      href=\"https://learn.liferay.com/dxp-cloud/latest/en/getting-started/configuring-your-bitbucket-repository.html\"\n      target=\"_self\">Configuring Your Bitbucket Repository</a></li> </ul>",
+	"title": "Do you support Bitbucket/GitLab integration?"
+}

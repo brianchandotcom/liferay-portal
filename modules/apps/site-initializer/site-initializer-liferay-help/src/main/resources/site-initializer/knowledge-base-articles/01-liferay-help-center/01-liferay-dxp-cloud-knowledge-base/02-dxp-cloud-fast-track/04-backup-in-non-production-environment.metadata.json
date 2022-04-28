@@ -1,0 +1,4 @@
+{
+	"articleBody": "<aside>Fast Track: This article is part of Liferay's Fast Track\n  publication program, providing a repository of solutions delivered\n  while supporting our customers. In the interest of providing helpful\n  knowledge immediately, these articles may be presented in an unedited\n  form. Fast Track articles are unverified and users are responsible for\n  verifying how well the information fits with their particular\n  situation and project requirements.</aside>\n       <section> <section id=\"issue\"> <h2>Issue</h2>  <ul>  <li>How to\n        configure backup in a non-production environment</li> </ul>\n  </section>  <section id=\"environment\"> <h2>Environment</h2>  <ul>\n        <li>Liferay DXP Cloud</li> </ul> </section>  <section\n    id=\"resolution\"> <h2>Resolution</h2> </section> </section>",
+	"title": "Backup in non-production environment"
+}

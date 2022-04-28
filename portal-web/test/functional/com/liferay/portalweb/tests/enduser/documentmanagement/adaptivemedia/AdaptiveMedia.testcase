@@ -338,12 +338,41 @@ definition {
 	}
 
 	@description = "This is a test for LPS-78626. It ensures that a reloaded image can be viewed after changing the screen resolution."
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanRenderImageAfterChangingScreenResolution {
+		var fileEntryId = JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1.jpg",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
 
-		// TODO LPS-148675 CanRenderImageAfterChangingScreenResolution pending implementation
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
+		DMNavigator.gotoDocumentPermissionsCP(dmDocumentTitle = "Document_1");
+
+		PermissionsInline.addOrRemoveViewPermissionFromAllRoles(
+			addOrRemoveViewPermission = "Remove",
+			roleList = "Guest");
+
+		JSONBlog.addEntryWithImage(
+			coverImageId = "${fileEntryId}",
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			groupName = "Guest");
+
+		BlogsNavigator.openToEditEntryInSite(
+			entryTitle = "Blogs Entry Title",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		SetWindowSize(value1 = "200,720");
+
+		AssertVisible(
+			key_coverImageName = "Document_1",
+			locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_UNPUBLISHED");
+
+		AssertConsoleTextNotPresent(value1 = "com.liferay.adaptive.media.exception.AMRuntimeException");
 	}
 
 	@priority = "5"

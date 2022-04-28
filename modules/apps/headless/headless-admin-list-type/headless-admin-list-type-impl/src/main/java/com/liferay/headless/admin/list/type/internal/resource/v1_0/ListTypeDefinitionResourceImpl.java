@@ -39,6 +39,8 @@ import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
+import java.util.Locale;
+
 import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
@@ -137,9 +139,19 @@ public class ListTypeDefinitionResourceImpl
 					listTypeDefinition.getName_i18n())));
 	}
 
+	private Locale _getLocale() {
+		if (contextUser != null) {
+			return contextUser.getLocale();
+		}
+
+		return contextAcceptLanguage.getPreferredLocale();
+	}
+
 	private ListTypeDefinition _toListTypeDefinition(
 		com.liferay.list.type.model.ListTypeDefinition
 			serviceBuilderListTypeDefinition) {
+
+		Locale locale = _getLocale();
 
 		return new ListTypeDefinition() {
 			{
@@ -198,11 +210,9 @@ public class ListTypeDefinitionResourceImpl
 							getListTypeDefinitionId(),
 						QueryUtil.ALL_POS, QueryUtil.ALL_POS),
 					listTypeEntry -> ListTypeEntryUtil.toListTypeEntry(
-						null, contextAcceptLanguage.getPreferredLocale(),
-						listTypeEntry),
+						null, locale, listTypeEntry),
 					ListTypeEntry.class);
-				name = serviceBuilderListTypeDefinition.getName(
-					contextAcceptLanguage.getPreferredLocale());
+				name = serviceBuilderListTypeDefinition.getName(locale);
 				name_i18n = LocalizedMapUtil.getI18nMap(
 					serviceBuilderListTypeDefinition.getNameMap());
 			}

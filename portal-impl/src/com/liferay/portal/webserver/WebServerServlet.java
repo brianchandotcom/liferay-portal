@@ -1544,7 +1544,8 @@ public class WebServerServlet extends HttpServlet {
 				throw new PrincipalException();
 			}
 		}
-		else if (Validator.isNumber(pathArray[0])) {
+		else if (Objects.equals(pathArray[0], _PATH_SEPARATOR_FILE_ENTRY) ||
+				 Validator.isNumber(pathArray[0])) {
 
 			// Check for sendFile
 

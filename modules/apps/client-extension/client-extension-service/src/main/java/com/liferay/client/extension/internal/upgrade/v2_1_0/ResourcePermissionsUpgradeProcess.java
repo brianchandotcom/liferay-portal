@@ -14,6 +14,7 @@
 
 package com.liferay.client.extension.internal.upgrade.v2_1_0;
 
+import com.liferay.client.extension.model.RemoteAppEntry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -66,8 +67,7 @@ public class ResourcePermissionsUpgradeProcess extends UpgradeProcess {
 				preparedStatement.setLong(1, mvccVersion);
 				preparedStatement.setLong(2, increment());
 				preparedStatement.setLong(3, companyId);
-				preparedStatement.setString(
-					4, "com.liferay.remote.app.model.RemoteAppEntry");
+				preparedStatement.setString(4, RemoteAppEntry.class.getName());
 				preparedStatement.setInt(5, ResourceConstants.SCOPE_INDIVIDUAL);
 				preparedStatement.setString(
 					6, String.valueOf(remoteAppEntryId));
@@ -80,8 +80,7 @@ public class ResourcePermissionsUpgradeProcess extends UpgradeProcess {
 				preparedStatement.setLong(12, mvccVersion);
 				preparedStatement.setLong(13, increment());
 				preparedStatement.setLong(14, companyId);
-				preparedStatement.setString(
-					15, "com.liferay.remote.app.model.RemoteAppEntry");
+				preparedStatement.setString(15, RemoteAppEntry.class.getName());
 				preparedStatement.setInt(
 					16, ResourceConstants.SCOPE_INDIVIDUAL);
 				preparedStatement.setString(

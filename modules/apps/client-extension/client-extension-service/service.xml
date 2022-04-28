@@ -38,11 +38,11 @@
 		<column name="statusDate" type="Date" />
 	</entity>
 	<exceptions>
+		<exception>DuplicateClientExtensionEntryExternalReferenceCode</exception>
 		<exception>ClientExtensionEntryCustomElementCSSURLs</exception>
 		<exception>ClientExtensionEntryCustomElementHTMLElementName</exception>
 		<exception>ClientExtensionEntryCustomElementURLs</exception>
 		<exception>ClientExtensionEntryFriendlyURLMapping</exception>
 		<exception>ClientExtensionEntryIFrameURL</exception>
-		<exception>DuplicateClientExtensionEntryExternalReferenceCode</exception>
 	</exceptions>
 </service-builder>

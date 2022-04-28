@@ -1461,10 +1461,10 @@ public class PoshiValidation {
 			return;
 		}
 
-		LiferaySeleniumMethod seleniumMethod = PoshiContext.getSeleniumMethod(
-			seleniumMethodName);
+		LiferaySeleniumMethod liferaySeleniumMethod =
+			PoshiContext.getLiferaySeleniumMethod(seleniumMethodName);
 
-		int seleniumParameterCount = seleniumMethod.getParameterCount();
+		int seleniumParameterCount = liferaySeleniumMethod.getParameterCount();
 
 		List<String> methodParameterValues =
 			PoshiScriptParserUtil.getMethodParameterValues(

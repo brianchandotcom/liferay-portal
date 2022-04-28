@@ -106,7 +106,7 @@ public class PoshiContext {
 		_poshiPropertyNames.clear();
 		_rootElements.clear();
 		_rootVarElements.clear();
-		_seleniumMethods.clear();
+		_liferaySeleniumMethods.clear();
 		_testCaseDescriptions.clear();
 		_testCaseNamespacedClassCommandNames.clear();
 		_testCaseNamespacedClassNames.clear();
@@ -223,6 +223,12 @@ public class PoshiContext {
 		String className, String namespace) {
 
 		return _rootElements.get("function#" + namespace + "." + className);
+	}
+
+	public static LiferaySeleniumMethod getLiferaySeleniumMethod(
+		String methodName) {
+
+		return _liferaySeleniumMethods.get(methodName);
 	}
 
 	public static Element getMacroCommandElement(
@@ -459,10 +465,6 @@ public class PoshiContext {
 
 		return _rootVarElements.get(
 			classType + "#" + namespace + "." + className);
-	}
-
-	public static LiferaySeleniumMethod getSeleniumMethod(String methodName) {
-		return _seleniumMethods.get(methodName);
 	}
 
 	public static List<List<String>> getTestBatchGroups(
@@ -1312,10 +1314,11 @@ public class PoshiContext {
 		Method[] methods = LiferaySelenium.class.getMethods();
 
 		for (Method method : methods) {
-			LiferaySeleniumMethod seleniumMethod = new LiferaySeleniumMethod(
-				method);
+			LiferaySeleniumMethod liferaySeleniumMethod =
+				new LiferaySeleniumMethod(method);
 
-			_seleniumMethods.put(method.getName(), seleniumMethod);
+			_liferaySeleniumMethods.put(
+				method.getName(), liferaySeleniumMethod);
 		}
 	}
 
@@ -1915,6 +1918,8 @@ public class PoshiContext {
 		Collections.synchronizedSet(new HashSet<>());
 	private static final Map<String, Integer> _functionLocatorCounts =
 		Collections.synchronizedMap(new HashMap<>());
+	private static final Map<String, LiferaySeleniumMethod>
+		_liferaySeleniumMethods = Collections.synchronizedMap(new HashMap<>());
 	private static final Set<String> _macroFileNames =
 		Collections.synchronizedSet(new HashSet<>());
 	private static final Pattern _namespaceClassCommandNamePattern =
@@ -1940,8 +1945,6 @@ public class PoshiContext {
 	private static final Map<String, Element> _rootElements =
 		Collections.synchronizedMap(new HashMap<>());
 	private static final Map<String, List<Element>> _rootVarElements =
-		Collections.synchronizedMap(new HashMap<>());
-	private static final Map<String, LiferaySeleniumMethod> _seleniumMethods =
 		Collections.synchronizedMap(new HashMap<>());
 	private static final Map<String, String> _testCaseDescriptions =
 		Collections.synchronizedMap(new HashMap<>());

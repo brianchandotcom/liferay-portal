@@ -44,8 +44,8 @@ public class LiferaySeleniumMethod {
 	}
 
 	public List<String> getParameterNames() {
-		if (_uniqueSeleniumMethods.containsKey(getMethodName())) {
-			return Arrays.asList(_uniqueSeleniumMethods.get(getMethodName()));
+		if (_liferaySeleniumMethods.containsKey(getMethodName())) {
+			return Arrays.asList(_liferaySeleniumMethods.get(getMethodName()));
 		}
 
 		int parameterCount = getParameterCount();
@@ -54,27 +54,16 @@ public class LiferaySeleniumMethod {
 			return Collections.emptyList();
 		}
 
-		return _seleniumParameterNames.subList(0, parameterCount);
+		return _defaultParameterNames.subList(0, parameterCount);
 	}
 
+	private static final List<String> _defaultParameterNames = Arrays.asList(
+		"locator1", "value1", "locator2");
 	private static final List<String> _javaScriptMethodNames = Arrays.asList(
 		"assertJavaScript", "executeJavaScript", "getJavaScriptResult",
 		"waitForJavaScript", "waitForJavaScriptNoError", "verifyJavaScript");
-	private static final List<String> _seleniumParameterNames = Arrays.asList(
-		"locator1", "value1", "locator2");
 
-	private final Method _method;
-	private final List<String> _uniqueMethodNames = Arrays.asList(
-		"assertAlertText", "assertConfirmation", "assertConsoleTextNotPresent",
-		"assertConsoleTextPresent", "assertHTMLSourceTextNotPresent",
-		"assertHTMLSourceTextPresent", "assertLocation", "assertNotLocation",
-		"assertPartialConfirmation", "assertPartialLocation",
-		"assertTextNotPresent", "assertTextPresent", "isConsoleTextNotPresent",
-		"isConsoleTextPresent", "scrollBy", "typeAlert", "waitForConfirmation",
-		"waitForConsoleTextNotPresent", "waitForConsoleTextPresent",
-		"waitForTextNotPresent", "waitForTextPresent");
-
-	private final Map<String, String[]> _uniqueSeleniumMethods =
+	private final Map<String, String[]> _liferaySeleniumMethods =
 		new HashMap<String, String[]>() {
 			{
 				put(
@@ -84,7 +73,7 @@ public class LiferaySeleniumMethod {
 					"ocularAssertElementImage",
 					new String[] {"locator1", "value1", "value2"});
 
-				for (String methodName : _uniqueMethodNames) {
+				for (String methodName : _singleValueMethodNames) {
 					String[] params = {"value1"};
 
 					put(methodName, params);
@@ -97,5 +86,16 @@ public class LiferaySeleniumMethod {
 				}
 			}
 		};
+
+	private final Method _method;
+	private final List<String> _singleValueMethodNames = Arrays.asList(
+		"assertAlertText", "assertConfirmation", "assertConsoleTextNotPresent",
+		"assertConsoleTextPresent", "assertHTMLSourceTextNotPresent",
+		"assertHTMLSourceTextPresent", "assertLocation", "assertNotLocation",
+		"assertPartialConfirmation", "assertPartialLocation",
+		"assertTextNotPresent", "assertTextPresent", "isConsoleTextNotPresent",
+		"isConsoleTextPresent", "scrollBy", "typeAlert", "waitForConfirmation",
+		"waitForConsoleTextNotPresent", "waitForConsoleTextPresent",
+		"waitForTextNotPresent", "waitForTextPresent");
 
 }

@@ -69,7 +69,7 @@ const ActionButton = ({
 				items={activationKeysDownloadItems}
 				label="Download"
 				menuElementAttrs={{
-					className: 'p-0',
+					className: 'p-0 cp-drop-down-action-button',
 				}}
 			/>
 		);

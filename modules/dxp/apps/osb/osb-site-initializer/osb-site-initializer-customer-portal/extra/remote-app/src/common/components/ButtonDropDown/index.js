@@ -51,7 +51,7 @@ const ButtonDropDown = ({
 					}) => (
 						<ClayDropDown.Item
 							className={classNames(
-								'font-weight-semi-bold px-3 rounded-xs',
+								'font-weight-semi-bold text-paragraph-sm px-3 rounded-xs',
 								customOptionStyle,
 								{
 									'cp-common-drop-down-item text-neutral-8': !disabled,

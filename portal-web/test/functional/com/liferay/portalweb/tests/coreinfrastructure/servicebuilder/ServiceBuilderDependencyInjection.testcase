@@ -30,19 +30,19 @@ definition {
 
 		AntCommand(
 			locator1 = "build-test.xml",
-			value1 = "build-service -Dgradle.file.path=/modules/test/spring-service-builder-test-service");
+			value1 = "build-service -Dgradle.file.path=/modules/util/portal-tools-service-builder-spring-sample-service");
 
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
 		AntCommand(
 			locator1 = "build-test.xml",
-			value1 = "deploy-osgi-module-to-specific-bundle -Dmodule.base.dir=/modules/test/spring-service-builder-test-api -DliferayHome=${liferayHome}");
+			value1 = "deploy-osgi-module-to-specific-bundle -Dmodule.base.dir=/modules/util/portal-tools-service-builder-spring-sample-api -DliferayHome=${liferayHome}");
 
 		AntCommand(
 			locator1 = "build-test.xml",
-			value1 = "deploy-osgi-module-to-specific-bundle -Dmodule.base.dir=/modules/test/spring-service-builder-test-service -DliferayHome=${liferayHome}");
+			value1 = "deploy-osgi-module-to-specific-bundle -Dmodule.base.dir=/modules/util/portal-tools-service-builder-spring-sample-service -DliferayHome=${liferayHome}");
 
-		WaitForConsoleTextPresent(value1 = "STARTED com.liferay.spring.service.builder.test.service_");
+		WaitForConsoleTextPresent(value1 = "STARTED com.liferay.portal.tools.service.builder.spring.sample.service_");
 	}
 
 }

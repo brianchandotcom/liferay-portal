@@ -17,6 +17,7 @@ package com.liferay.portal.url.builder.internal;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
+import com.liferay.portal.url.builder.internal.util.CacheHelper;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -34,8 +35,12 @@ public class AbsolutePortalURLBuilderFactoryImpl
 	public AbsolutePortalURLBuilder getAbsolutePortalURLBuilder(
 		HttpServletRequest httpServletRequest) {
 
-		return new AbsolutePortalURLBuilderImpl(_portal, httpServletRequest);
+		return new AbsolutePortalURLBuilderImpl(
+			_cacheHelper, _portal, httpServletRequest);
 	}
+
+	@Reference
+	private CacheHelper _cacheHelper;
 
 	@Reference
 	private Portal _portal;

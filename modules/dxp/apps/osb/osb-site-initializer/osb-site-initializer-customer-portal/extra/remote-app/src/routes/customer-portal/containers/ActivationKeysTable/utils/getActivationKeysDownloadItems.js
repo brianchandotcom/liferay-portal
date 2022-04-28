@@ -21,6 +21,7 @@ export function getActivationKeysDownloadItems(
 	selectedKeysIDs,
 	licenseKeyDownloadURL,
 	sessionId,
+	handleMultipleAlertStatus,
 	handleAlertStatus,
 	selectedKeysObjects,
 	projectName
@@ -56,7 +57,7 @@ export function getActivationKeysDownloadItems(
 					projectName
 				);
 
-				return handleAlertStatus(downloadedMultiple);
+				return handleMultipleAlertStatus(downloadedMultiple);
 			},
 			tooltip: TOOLTIP_CLASSNAMES_TYPES.dropDownItem,
 		},

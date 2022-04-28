@@ -34,7 +34,18 @@ const ActionButton = ({
 		(hasSuccessfullyDownloadedKeys) =>
 			setStatus((previousStatus) => ({
 				...previousStatus,
-				download: hasSuccessfullyDownloadedKeys
+				downloadAggregated: hasSuccessfullyDownloadedKeys
+					? ALERT_DOWNLOAD_TYPE.success
+					: ALERT_DOWNLOAD_TYPE.danger,
+			})),
+		[setStatus]
+	);
+
+	const handleMultipleAlertStatus = useCallback(
+		(hasSuccessfullyDownloadedKeys) =>
+			setStatus((previousStatus) => ({
+				...previousStatus,
+				downloadMultiple: hasSuccessfullyDownloadedKeys
 					? ALERT_DOWNLOAD_TYPE.success
 					: ALERT_DOWNLOAD_TYPE.danger,
 			})),
@@ -47,6 +58,7 @@ const ActionButton = ({
 			filterCheckedActivationKeys,
 			licenseKeyDownloadURL,
 			sessionId,
+			handleMultipleAlertStatus,
 			handleAlertStatus,
 			activationKeysByStatusPaginatedChecked,
 			project.name

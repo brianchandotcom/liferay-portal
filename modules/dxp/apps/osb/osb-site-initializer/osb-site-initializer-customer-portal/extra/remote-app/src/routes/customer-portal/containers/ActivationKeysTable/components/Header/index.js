@@ -13,6 +13,7 @@ import ClayAlert from '@clayui/alert';
 import {useCallback, useMemo, useState} from 'react';
 import {ALERT_DOWNLOAD_TYPE} from '../../../../utils/constants/alertDownloadType';
 import {ALERT_ACTIVATION_AGGREGATED_KEYS_DOWNLOAD_TEXT} from '../../utils/constants/alertAggregateKeysDownloadText';
+import {ALERT_ACTIVATION_MULTIPLE_KEYS_DOWNLOAD_TEXT} from '../../utils/constants/alertMultipleKeysDownloadText';
 import {DOWNLOADABLE_LICENSE_KEYS} from '../../utils/constants/downlodableLicenseKeys';
 import ActionButton from '../ActionButton';
 import BadgeFilter from '../BadgeFilter';
@@ -33,7 +34,8 @@ const ActivationKeysTableHeader = ({
 
 	const [status, setStatus] = useState({
 		deactivate: '',
-		download: '',
+		downloadAggregated: '',
+		downloadMultiple: '',
 	});
 
 	const filterCheckedActivationKeys = useMemo(
@@ -142,18 +144,35 @@ const ActivationKeysTableHeader = ({
 				/>
 			</div>
 
-			{status.download && (
+			{status.downloadAggregated && (
 				<DownloadAlert
-					downloadStatus={status.download}
+					downloadStatus={status.downloadAggregated}
 					message={
 						ALERT_ACTIVATION_AGGREGATED_KEYS_DOWNLOAD_TEXT[
-							status.download
+							status.downloadAggregated
 						]
 					}
 					setDownloadStatus={(value) =>
 						setStatus((previousStatus) => ({
 							...previousStatus,
-							download: value,
+							downloadAggregated: value,
+						}))
+					}
+				/>
+			)}
+
+			{status.downloadMultiple && (
+				<DownloadAlert
+					downloadStatus={status.downloadMultiple}
+					message={
+						ALERT_ACTIVATION_MULTIPLE_KEYS_DOWNLOAD_TEXT[
+							status.downloadMultiple
+						]
+					}
+					setDownloadStatus={(value) =>
+						setStatus((previousStatus) => ({
+							...previousStatus,
+							downloadMultiple: value,
 						}))
 					}
 				/>

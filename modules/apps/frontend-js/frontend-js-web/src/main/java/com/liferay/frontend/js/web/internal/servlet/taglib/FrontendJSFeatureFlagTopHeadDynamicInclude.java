@@ -12,12 +12,10 @@
  * details.
  */
 
-package com.liferay.frontend.js.components.web.internal.servlet.taglib;
+package com.liferay.frontend.js.web.internal.servlet.taglib;
 
-import com.liferay.frontend.js.components.web.internal.configuration.FFFrontendJSComponentsConfiguration;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -31,18 +29,15 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 
 /**
- * @author Julien Castelain
+ * @author Bryce Osterhaus
  */
 @Component(
-	configurationPid = "com.liferay.frontend.js.components.web.internal.configuration.FFFrontendJSComponentsConfiguration",
 	immediate = true, service = DynamicInclude.class
 )
-public class FrontendComponentsTopHeadDynamicInclude
+public class FrontendJSFeatureFlagTopHeadDynamicInclude
 	extends BaseDynamicInclude {
 
 	@Override
@@ -59,13 +54,13 @@ public class FrontendComponentsTopHeadDynamicInclude
 		sb.append("Liferay.__FF__ = Liferay.__FF__ || {};");
 		sb.append(
 			_buildFeatureFlagJSGlobalVariable(
-				"enableClayTreeView",
-				_ffFrontendJSComponentsConfiguration.enableClayTreeView()));
+				"LPS-144630"));
 		sb.append(
 			_buildFeatureFlagJSGlobalVariable(
-				"customDialogsEnabled",
-				GetterUtil.getBoolean(
-					PropsUtil.get("feature.flag.customDialogsEnabled"))));
+				"LPS-148659"));
+		sb.append(
+			_buildFeatureFlagJSGlobalVariable(
+				"LPS-145112"));
 		sb.append("</script>");
 
 		printWriter.println(sb);
@@ -76,23 +71,15 @@ public class FrontendComponentsTopHeadDynamicInclude
 		dynamicIncludeRegistry.register("/html/common/themes/top_head.jsp#pre");
 	}
 
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_ffFrontendJSComponentsConfiguration =
-			ConfigurableUtil.createConfigurable(
-				FFFrontendJSComponentsConfiguration.class, properties);
-	}
-
 	private String _buildFeatureFlagJSGlobalVariable(
-		String featureFlagName, boolean validator) {
+		String ticketName) {
+
+			boolean validator = GetterUtil.getBoolean(
+					PropsUtil.get("feature.flag." + ticketName));
 
 		return StringBundler.concat(
-			"Liferay.__FF__.", featureFlagName, " = ", validator,
+			"Liferay.__FF__['", ticketName, "'] = ", validator,
 			StringPool.SEMICOLON);
 	}
-
-	private volatile FFFrontendJSComponentsConfiguration
-		_ffFrontendJSComponentsConfiguration;
 
 }

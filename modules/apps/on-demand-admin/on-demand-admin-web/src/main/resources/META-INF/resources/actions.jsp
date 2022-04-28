@@ -30,14 +30,30 @@ Company rowObjectCompany = (Company)row.getObject();
 	showWhenSingleIcon="<%= true %>"
 >
 	<c:if test="<%= (rowObjectCompany.getCompanyId() != PortalUtil.getDefaultCompanyId()) && PortletPermissionUtil.contains(permissionChecker, 0, 0, OnDemandAdminPortletKeys.ON_DEMAND_ADMIN, OnDemandAdminActionKeys.REQUEST_ADMINISTRATOR_ACCESS, true) %>">
-		<portlet:actionURL name="/on_demand_admin/request_admin_access" var="requestAdminAccessURL">
+		<portlet:renderURL var="dialogURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+			<portlet:param name="mvcPath" value="/justification.jsp" />
 			<portlet:param name="companyId" value="<%= String.valueOf(rowObjectCompany.getCompanyId()) %>" />
-		</portlet:actionURL>
+		</portlet:renderURL>
 
 		<liferay-ui:icon
+			id="requestAdminAccessLink"
 			message="request-administrator-access"
-			target="_blank"
-			url="<%= requestAdminAccessURL %>"
+			onClick='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "openModal(event);" %>'
+			url="<%= dialogURL %>"
 		/>
 	</c:if>
 </liferay-ui:icon-menu>
+
+<aui:script>
+	function <portlet:namespace />openModal(event) {
+		Liferay.Util.openModal({
+			disableAutoClose: true,
+			height: '60vh',
+			id: '<portlet:namespace />requestAdminAccessDialog',
+			iframeBodyCssClass: '',
+			size: 'md',
+			title: '<liferay-ui:message key="request-administrator-access" />',
+			url: event.currentTarget.href,
+		});
+	}
+</aui:script>

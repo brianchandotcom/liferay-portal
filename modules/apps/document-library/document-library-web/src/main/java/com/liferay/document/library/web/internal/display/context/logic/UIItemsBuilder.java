@@ -944,6 +944,8 @@ public class UIItemsBuilder {
 		if (!_versioningStrategy.isOverridable()) {
 			return DropdownItemBuilder.setHref(
 				portletURL.toString()
+			).setIcon(
+				"unlock"
 			).setLabel(
 				LanguageUtil.get(_httpServletRequest, "checkin")
 			).build();
@@ -973,6 +975,8 @@ public class UIItemsBuilder {
 			StringBundler.concat(
 				_getNamespace(), "showVersionDetailsDialog('",
 				HtmlUtil.escapeJS(portletURL.toString()), "');")
+		).setIcon(
+			"unlock"
 		).setLabel(
 			LanguageUtil.get(_httpServletRequest, "checkin")
 		).build();
@@ -987,7 +991,7 @@ public class UIItemsBuilder {
 				"fileEntryId", _fileEntry.getFileEntryId()
 			).buildString()
 		).setIcon(
-			"download"
+			"lock"
 		).setLabel(
 			LanguageUtil.get(_httpServletRequest, "checkout[document]")
 		).build();

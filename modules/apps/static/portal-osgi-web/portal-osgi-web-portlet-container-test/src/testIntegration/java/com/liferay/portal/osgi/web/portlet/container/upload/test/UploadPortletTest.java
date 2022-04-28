@@ -94,13 +94,12 @@ public class UploadPortletTest extends BasePortletContainerTestCase {
 
 				PortletURL portletURL = resourceResponse.createActionURL();
 
-				String portalAuthenticationToken = MapUtil.getString(
-					HttpComponentsUtil.getParameterMap(
-						HttpComponentsUtil.getQueryString(
-							portletURL.toString())),
-					"p_auth");
-
-				printWriter.write(portalAuthenticationToken);
+				printWriter.write(
+					MapUtil.getString(
+						HttpComponentsUtil.getParameterMap(
+							HttpComponentsUtil.getQueryString(
+								portletURL.toString())),
+						"p_auth"));
 			}
 
 		};

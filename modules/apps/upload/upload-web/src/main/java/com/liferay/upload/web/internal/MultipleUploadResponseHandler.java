@@ -127,6 +127,7 @@ public class MultipleUploadResponseHandler implements UploadResponseHandler {
 					_language.formatStorageSize(
 						fileSizeException.getMaxSize(),
 						themeDisplay.getLocale()));
+
 				errorType = ServletResponseConstants.SC_FILE_SIZE_EXCEPTION;
 			}
 			else if (portalException instanceof UploadRequestSizeException) {

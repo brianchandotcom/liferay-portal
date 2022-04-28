@@ -1544,6 +1544,113 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-145292. The user could view new icons on dropdown menu of web content admin."
+	@priority = "4"
+	test ViewDropdownMenuIconsInWebContentAdmin {
+		task ("Given a Web Content creator has a new web content") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
+
+		task ("When the Web Content creator open the dropdown menu of management toolbar after selecting the new web content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			ManagementBar.clickSelectAllCheckbox();
+
+			Click(locator1 = "ManagementBar#MORE_ACTIONS_ELLIPSIS");
+		}
+
+		task ("Then the Web Content creator can see the new icons on the dropdown menu") {
+			DropdownMenuItem.viewIcon(iconList = "time,move-folder,trash");
+		}
+
+		task ("When the Web Content creator open the ellipsis dropdown menu of web content") {
+			LexiconEntry.openEntryMenu(rowEntry = "Web Content Title");
+		}
+
+		task ("Then the Web Content creator can see the new icons on the dropdown menu") {
+			DropdownMenuItem.viewIcon(iconList = "pencil,view,automatic-translate,time,bell-on,date-time,list-ul,copy,upload,download,move-folder,password-policies,trash");
+		}
+
+		task ("When the Web Content creator access the view history page and open the ellipsis dropdown menu of web content") {
+			MenuItem.click(menuItem = "View History");
+
+			LexiconEntry.openEntryMenu(rowEntry = "Web Content Title");
+		}
+
+		task ("Then the Web Content creator can see the new icons on the dropdown menu") {
+			DropdownMenuItem.viewIcon(iconList = "view,time,copy,trash");
+		}
+
+		task ("When the Web Content creator open the dropdown menu of management toolbar after selecting all versions") {
+			ManagementBar.clickSelectAllCheckbox();
+
+			Click(locator1 = "ManagementBar#MORE_ACTIONS_ELLIPSIS");
+		}
+
+		task ("Then the Web Content creator can see the new icons on the dropdown menu") {
+			DropdownMenuItem.viewIcon(iconList = "time,trash");
+		}
+
+		task ("Given a Web Content creator has a new web content structure") {
+			WebContentStructures.openWebContentStructuresAdmin(siteURLKey = "test-site-name");
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			DataEngine.addField(
+				fieldFieldLabel = "Text",
+				fieldName = "Text");
+
+			WebContentStructures.saveCP();
+		}
+
+		task ("When the Web Content creator open the dropdown menu of management toolbar after selecting new structure") {
+			ManagementBar.clickSelectAllCheckbox();
+
+			Click(locator1 = "ManagementBar#MORE_ACTIONS_ELLIPSIS");
+		}
+
+		task ("Then the Web Content creator can see the new icon on the dropdown menu") {
+			DropdownMenuItem.viewIcon(iconList = "trash");
+		}
+
+		task ("When the Web Content creator open the ellipsis dropdown menu of new strucure") {
+			LexiconEntry.openEntryMenu(rowEntry = "WC Structure Name");
+		}
+
+		task ("Then the Web Content creator can see the new icons on the dropdown menu") {
+			DropdownMenuItem.viewIcon(iconList = "pencil,copy,upload,password-policies,trash");
+		}
+
+		task ("Given a Web Content creator has a new web content template") {
+			WebContentTemplates.openWebContentTemplatesAdmin(siteURLKey = "test-site-name");
+
+			WebContentTemplates.addCP(templateName = "WC Template Name");
+		}
+
+		task ("When the Web Content creator open the dropdown menu of management toolbar after selecting new template") {
+			ManagementBar.clickSelectAllCheckbox();
+
+			Click(locator1 = "ManagementBar#MORE_ACTIONS_ELLIPSIS");
+		}
+
+		task ("Then the Web Content creator can see the new icon on the dropdown menu") {
+			DropdownMenuItem.viewIcon(iconList = "trash");
+		}
+
+		task ("When the Web Content creator openo the ellipsis dropdown menu of new template") {
+			Click.waitForMenuToggleJSClick(
+				key_card = "WC Template Name",
+				locator1 = "Card#CARD_ELLIPSIS");
+		}
+
+		task ("Then the Web Content creator can see the new icons on the dropdown menu") {
+			DropdownMenuItem.viewIcon(iconList = "pencil,copy,password-policies,trash");
+		}
+	}
+
 	@priority = "4"
 	test ViewMultipleCategoriesViaWebContent {
 		property testray.component.names = "Categories,Web Content Administration";

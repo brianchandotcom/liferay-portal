@@ -14,13 +14,14 @@ dxp -> k8s : watch for\next-configmaps
 developer -> lcp : deploy\nextension
 lcp -> api : upload\nextension
 api -> api : parse\nextension\nLCP.json &\nconfigurations
-par
+par this happens in parallel
 api -> k8s : create\nextension\ndeployment
 k8s -> extension : create\nextension\npods
 activate extension
 else
 api -> k8s : create\next-configmap
 k8s -> dxp : announce\next-configmap
+dxp -> dxp : creates OSGi\nconfiguration
 end
 
 @enduml

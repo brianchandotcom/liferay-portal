@@ -1150,7 +1150,6 @@ definition {
 	}
 
 	@description = "LRQA-53628 Automate LPS-98517 [Dashboard] Filter items list by assignee name"
-	@ignore = "true"
 	@priority = "5"
 	test FilterAllItemsListByAssigneeName {
 		property portal.acceptance = "true";

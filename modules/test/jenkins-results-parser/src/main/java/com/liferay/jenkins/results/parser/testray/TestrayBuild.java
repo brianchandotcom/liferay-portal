@@ -452,9 +452,10 @@ public class TestrayBuild {
 
 		JSONObject buildResultJSONObject = _getBuildResultJSONObject();
 
+		_result = _getResult(buildResultJSONObject);
+
 		_downstreamBuildDurations = _getDownstreamBuildDurations(
 			buildResultJSONObject);
-		_result = _getResult(buildResultJSONObject);
 		_topLevelActiveBuildDuration = _getTopLevelActiveBuildDuration(
 			buildResultJSONObject);
 		_topLevelBuildDuration = _getTopLevelBuildDuration(

@@ -41,6 +41,8 @@ BatchPlannerPlanDisplay batchPlannerPlanDisplay = (BatchPlannerPlanDisplay)resul
 				HashMapBuilder.<String, Object>put(
 					"externalReferenceCode", batchPlannerPlanDisplay.getBatchPlannerPlanId()
 				).put(
+					"fileName", batchPlannerPlanDisplay.getTitle()
+				).put(
 					"HTMLElementId", liferayPortletResponse.getNamespace() + "downloadErrorReport" + batchPlannerPlanDisplay.getBatchPlannerPlanId()
 				).put(
 					"type", "errorReport"
@@ -61,6 +63,8 @@ BatchPlannerPlanDisplay batchPlannerPlanDisplay = (BatchPlannerPlanDisplay)resul
 			context='<%=
 				HashMapBuilder.<String, Object>put(
 					"externalReferenceCode", batchPlannerPlanDisplay.getBatchPlannerPlanId()
+				).put(
+					"fileName", batchPlannerPlanDisplay.getTitle()
 				).put(
 					"HTMLElementId", liferayPortletResponse.getNamespace() + "downloadOriginalFile" + batchPlannerPlanDisplay.getBatchPlannerPlanId()
 				).put(

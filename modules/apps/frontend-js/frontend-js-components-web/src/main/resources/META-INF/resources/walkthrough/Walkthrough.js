@@ -19,7 +19,7 @@ import {OverlayMask} from '@clayui/core';
 import {ClayCheckbox} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import ClayPopover from '@clayui/popover';
-import {ReactPortal} from '@liferay/frontend-js-react-web';
+import {ReactPortal, usePrevious} from '@liferay/frontend-js-react-web';
 import PropTypes from 'prop-types';
 import React, {
 	forwardRef,
@@ -72,6 +72,8 @@ const Walkthrough = ({closeOnClickOutside, closeable, skippable, steps}) => {
 		}
 	}, [steps, currentStepIndex]);
 
+	const previousTrigger = usePrevious(memoizedTriggerReference);
+
 	return (
 		<>
 			<WalkthroughStep
@@ -91,6 +93,7 @@ const Walkthrough = ({closeOnClickOutside, closeable, skippable, steps}) => {
 						setCurrentStepIndex(maybePreviousIndex);
 					}
 				}}
+				previousTrigger={previousTrigger}
 				skippable={skippable}
 				stepIndex={currentStepIndex}
 				stepLength={steps.length}
@@ -123,8 +126,10 @@ const WalkthroughStep = ({
 	closeOnClickOutside,
 	closeable,
 	content,
+	darkbg,
 	onNext,
 	onPrevious,
+	previousTrigger,
 	skippable,
 	stepIndex,
 	stepLength,
@@ -154,6 +159,12 @@ const WalkthroughStep = ({
 
 	const align = useCallback(() => {
 		if (trigger && popoverRef?.current) {
+			if (!darkbg && previousTrigger !== trigger) {
+				trigger.classList.add('walkthrough-element-shadow');
+
+				previousTrigger.classList.remove('walkthrough-element-shadow');
+			}
+
 			doAlign({
 				offset: [OVERLAY_OFFSET_X, OVERLAY_OFFSET_Y],
 				points: ['tl', 'tr'],
@@ -161,7 +172,7 @@ const WalkthroughStep = ({
 				targetElement: trigger,
 			});
 		}
-	}, [popoverRef, trigger]);
+	}, [popoverRef, trigger, darkbg, previousTrigger]);
 
 	useEffect(() => {
 		if (popoverRef?.current) {
@@ -179,11 +190,13 @@ const WalkthroughStep = ({
 				/>
 			)}
 
-			<OverlayMask
-				bounds={bounds}
-				onBoundsChange={setBounds}
-				visible={popoverVisible}
-			/>
+			{darkbg && (
+				<OverlayMask
+					bounds={bounds}
+					onBoundsChange={setBounds}
+					visible={popoverVisible}
+				/>
+			)}
 
 			{popoverVisible && (
 				<ReactPortal>

@@ -34,6 +34,20 @@
 					<clay:button displayType="primary" id="step3" label="Step 3"></clay:button>
 				</div>
 			</div>
+
+			<clay:alert
+				displayType="info"
+				id="step4"
+				message="Whassup?"
+				title="Info"
+			/>
+
+			<clay:alert
+				displayType="info"
+				id="step5"
+				message="Whassup 2?"
+				title="Info 2"
+			/>
 		</clay:col>
 	</clay:row>
 

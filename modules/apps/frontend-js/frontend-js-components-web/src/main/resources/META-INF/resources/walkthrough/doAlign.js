@@ -21,10 +21,6 @@ function isRtl(element) {
 export function doAlign({sourceElement, targetElement, ...config}) {
 	return domAlign(sourceElement, targetElement, {
 		...config,
-		overflow: {
-			adjustX: true,
-			adjustY: true,
-		},
 		useCssRight: isRtl(sourceElement),
 	});
 }

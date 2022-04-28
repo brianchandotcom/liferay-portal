@@ -36,6 +36,17 @@ const CURRENT_PAGE_MOCK = {
 			nodeToHighlight: '#step3',
 			title: 'Title 3',
 		},
+		{
+			content: '<span>Content 4</span><br/><code>Hello4</code>',
+			darkbg: true,
+			nodeToHighlight: '#step4',
+			title: 'Title 4',
+		},
+		{
+			content: '<span>Content 5</span><br/><code>Hello5</code>',
+			nodeToHighlight: '#step5',
+			title: 'Title 5',
+		},
 	],
 };
 

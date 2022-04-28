@@ -1,0 +1,97 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Content and Application Templates";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-145292. The user could view new icons on dropdown menu of template."
+	@priority = "4"
+	test ViewDropdownMenuIconsInTemplatesAdmin {
+		task ("Given a Template creator has an Information Template") {
+			task ("Add an information template for Blogs Entry") {
+				InformationTemplates.openInformationTemplatesAdmin(siteURLKey = "test-site-name");
+
+				InformationTemplates.addCP(
+					informationTemplateName = "Test Information Template",
+					itemType = "Blogs Entry");
+			}
+		}
+
+		task ("When the Template creator open the ellipsis dropdown menu of information template") {
+			InformationTemplates.openInformationTemplatesAdmin(siteURLKey = "test-site-name");
+
+			Click.waitForMenuToggleJSClick(
+				key_tableEntry = "Test Information Template",
+				locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
+		}
+
+		task ("Then the Template creator can see the new icons on the dropdown menu") {
+			DropdownMenuItem.viewIcon(iconList = "pencil,copy,password-policies,trash");
+		}
+
+		task ("When the Template creator open the dropdown menu of management toolbar after selecting the new information template") {
+			LexiconTable.checkTableCheckbox(tableEntry = "Test Information Template");
+
+			Click(locator1 = "ManagementBar#MORE_ACTIONS_ELLIPSIS");
+		}
+
+		task ("Then the Template creator can see the new icon on the dropdown menu") {
+			DropdownMenuItem.viewIcon(iconList = "trash");
+		}
+
+		task ("Given a Template creator has a Widget Template") {
+			task ("Add a widget template for Breadcrumb widget") {
+				ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
+
+				ApplicationDisplayTemplates.addCP(
+					adtType = "Breadcrumb",
+					fieldNameList = "Breadcrumb Entry");
+			}
+		}
+
+		task ("When the Template creator opens the ellipsis dropdown menu of widget template") {
+			Click.waitForMenuToggleJSClick(
+				key_tableEntry = "Breadcrumb Test ADT",
+				locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
+		}
+
+		task ("Then the Template creator will can the new icons on the dropdown menu") {
+			DropdownMenuItem.viewIcon(iconList = "pencil,copy,password-policies,trash");
+		}
+
+		task ("When the Template creator open the dropdown menu of management toolbar after selecting the new wiget template") {
+			LexiconTable.checkTableCheckbox(tableEntry = "Breadcrumb Test ADT");
+
+			Click(locator1 = "ManagementBar#MORE_ACTIONS_ELLIPSIS");
+		}
+
+		task ("Then the Template creator can see the new icon on the dropdown menu") {
+			DropdownMenuItem.viewIcon(iconList = "trash");
+		}
+	}
+
+}

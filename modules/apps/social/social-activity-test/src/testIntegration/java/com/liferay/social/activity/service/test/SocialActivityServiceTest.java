@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.constants.TestDataConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -175,16 +174,13 @@ public class SocialActivityServiceTest {
 	protected FileEntry addFileEntry(String fileName, String title)
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		return DLAppLocalServiceUtil.addFileEntry(
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
 			ContentTypes.TEXT_PLAIN, title, StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK, TestDataConstants.TEST_BYTE_ARRAY, null, null,
-			serviceContext);
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
 	}
 
 	protected void deleteGuestPermission(FileEntry fileEntry) throws Exception {

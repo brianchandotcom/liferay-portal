@@ -131,12 +131,24 @@ definition {
 	}
 
 	@description = "This is a test for LPS-67548. It ensures that the history can be viewed in wiki details."
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanViewHistoryInDetails {
+		JSONWiki.updateWikiPage(
+			groupName = "Guest",
+			wikiNodeName = "Main",
+			wikiPageContent = "Wiki FrontPage Content",
+			wikiPageName = "FrontPage");
 
-		// TODO LPS-149058 CanViewHistoryInDetails pending implementation
+		Navigator.gotoPage(pageName = "Wiki Test Page");
 
+		WikiPage.addComment(entryComment = "Wiki Page Comment");
+
+		WikiPage.viewSummary(
+			wikiPageRevision = "1.0",
+			wikiPageTitle = "FrontPage",
+			wikiVersionSummary = "New");
+
+		AssertConsoleTextNotPresent(value1 = "java.sql.SQLException");
 	}
 
 	@description = "This is a test for LPS-136997. It checks that pages can be viewed using the Tree Menu."

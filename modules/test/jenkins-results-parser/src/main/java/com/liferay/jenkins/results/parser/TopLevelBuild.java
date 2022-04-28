@@ -45,6 +45,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeMap;
@@ -1534,10 +1535,39 @@ public abstract class TopLevelBuild extends BaseBuild {
 			builds.addAll(getDownstreamBuilds(null));
 		}
 
+		Element batchListElement = null;
+		String batchName = null;
+
 		for (Build build : builds) {
 			String result = build.getResult();
 
 			if (result.equals("SUCCESS") == success) {
+				if (build instanceof DownstreamBuild) {
+					DownstreamBuild downstreamBuild = (DownstreamBuild)build;
+
+					if (!Objects.equals(
+							batchName, downstreamBuild.getBatchName())) {
+
+						batchName = downstreamBuild.getBatchName();
+
+						Element batchListItemElement = Dom4JUtil.getNewElement(
+							"li", jobSummaryListElement);
+
+						batchListItemElement.addText(batchName);
+
+						batchListElement = Dom4JUtil.getNewElement(
+							"ul", batchListItemElement);
+					}
+
+					Element batchListItemElement = Dom4JUtil.getNewElement(
+						"li", batchListElement);
+
+					batchListItemElement.add(
+						build.getGitHubMessageBuildAnchorElement());
+
+					continue;
+				}
+
 				Element jobSummaryListItemElement = Dom4JUtil.getNewElement(
 					"li", jobSummaryListElement);
 

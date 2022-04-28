@@ -50,6 +50,36 @@
 		<td>//img[contains(@src,'${key_imageTitle}')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>EDIT_RICH_TEXT</td>
+		<td>//body[contains(@class,'cke_editable')]//${key_specificType}//${key_type}[contains(text(),'${key_richText}')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>BOLD_TYPE_RICH_TEXT</td>
+		<td>//span[contains(@class,'bold_icon')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>ITALIC_TYPE_RICH_TEXT</td>
+		<td>//span[contains(@class,'italic_icon')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>UNDERLINE_TYPE_RICH_TEXT</td>
+		<td>//span[contains(@class,'underline_icon')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>NUMBEREDLIST_TYPE_RICH_TEXT</td>
+		<td>//span[contains(@class,'numberedlist_icon')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>BULLETEDLIST_TYPE_RICH_TEXT</td>
+		<td>//span[contains(@class,'bulletedlist_icon')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

@@ -323,6 +323,10 @@ paths:
                   required: true
                   schema:
                       type: string
+                - in: query
+                  name: fileName
+                  schema:
+                      type: string
             responses:
                 200:
                     content:
@@ -338,6 +342,10 @@ paths:
                 - in: path
                   name: externalReferenceCode
                   required: true
+                  schema:
+                      type: string
+                - in: query
+                  name: fileName
                   schema:
                       type: string
             responses:
@@ -569,6 +577,10 @@ paths:
                   schema:
                       format: int64
                       type: integer
+                - in: query
+                  name: fileName
+                  schema:
+                      type: string
             responses:
                 200:
                     content:
@@ -587,6 +599,10 @@ paths:
                   schema:
                       format: int64
                       type: integer
+                - in: query
+                  name: fileName
+                  schema:
+                      type: string
             responses:
                 200:
                     content:

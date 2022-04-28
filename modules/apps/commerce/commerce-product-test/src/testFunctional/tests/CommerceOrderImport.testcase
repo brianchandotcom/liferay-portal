@@ -497,14 +497,43 @@ definition {
 		}
 	}
 
-	@description = "[Please Update]"
-	@ignore = "Test Stub"
-	@priority = "4"
+	@description = "Verify an empty state message is displayed when buyers try importing an order when there are no orders"
+	@priority = "3"
 	test TryImportWithoutOrders {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-7856 TryImportWithoutOrders pending implementation
+		task ("Given a Minium site with a buyer user") {
+			User.logoutPG();
 
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And given the user is creating a new order") {
+			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
+		}
+
+		task ("When the user tries to import an order when there are no orders to import") {
+			Click(locator1 = "CommerceEntry#DROPDOWN");
+
+			MenuItem.viewPresent(menuItem = "Import from Orders");
+
+			MenuItem.click(menuItem = "Import from Orders");
+
+			IFrame.selectModalFrame();
+		}
+
+		task ("Then no order is present") {
+			AssertElementNotPresent(
+				key_entryName = "",
+				locator1 = "CommerceEntry#TABLE_LIST_TITLE");
+		}
+
+		task ("And an empty state message is displayed") {
+			AssertElementPresent(locator1 = "Message#EMPTY_STATE_INFO");
+		}
 	}
 
 	@description = "Verify existing orders are shown when importing an order."

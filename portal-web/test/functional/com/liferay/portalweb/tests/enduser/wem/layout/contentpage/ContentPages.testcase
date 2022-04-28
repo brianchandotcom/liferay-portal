@@ -690,29 +690,34 @@ definition {
 				navTab = "Widgets",
 				portletName = "Blogs");
 
-			PageEditor.addElementToContainer(
-				collectionName = "Basic Components",
-				fragmentName = "HTML",
-				navTab = "Fragments",
-				targetElementName = "Blogs");
-
-			PageEditor.addElementToContainer(
-				collectionName = "Basic Components",
-				fragmentName = "Button",
-				navTab = "Fragments",
-				targetElementName = "HTML");
-
-			PageEditor.addElementToContainer(
-				collectionName = "Basic Components",
-				fragmentName = "Heading",
-				navTab = "Fragments",
-				targetElementName = "Button");
+			for (var fragmentName : list "HTML,Button,Heading") {
+				PageEditor.addElementToContainer(
+					collectionName = "Basic Components",
+					fragmentName = "${fragmentName}",
+					navTab = "Fragments",
+					targetElementName = "Blogs");
+			}
 		}
 
 		task ("Hide Blogs and HTML") {
-			PageEditor.hideFragmentViaPageStructure(fragmentName = "Blogs");
+			for (var fragmentName : list "Blogs,HTML") {
+				PageEditor.hideFragmentViaPageStructure(fragmentName = "${fragmentName}");
+			}
+		}
 
-			PageEditor.hideFragmentViaPageStructure(fragmentName = "HTML");
+		task ("View Blogs widget and HTML fragment are not shown") {
+			for (var portletName : list "Blogs,HTML") {
+				AssertNotVisible(
+					index = "1",
+					key_fragmentName = "${portletName}",
+					locator1 = "Fragment#FRAGMENT_LABEL");
+			}
+		}
+
+		task ("View Button and Heading are shown") {
+			for (var fragmentName : list "Button,Heading") {
+				PageEditor.viewFragment(fragmentName = "${fragmentName}");
+			}
 		}
 
 		task ("Hide the container") {
@@ -725,10 +730,33 @@ definition {
 			}
 		}
 
-		task ("From the sidebar fragment tree, show HTML and Button") {
-			PageEditor.unhideFragmentViaPageStructure(fragmentName = "HTML");
+		task ("Unhide the Container and HTML ") {
+			for (var fragmentName : list "Container,HTML") {
+				PageEditor.unhideFragmentViaPageStructure(fragmentName = "${fragmentName}");
+			}
+		}
 
-			PageEditor.hideFragmentViaPageStructure(fragmentName = "Button");
+		task ("Hide the Button and Heading fragment") {
+			for (var fragmentName : list "Button,Heading") {
+				PageEditor.hideFragmentViaPageStructure(fragmentName = "${fragmentName}");
+			}
+		}
+
+		task ("View Blogs, Button and Heading are not shown") {
+			for (var portletName : list "Blogs,Button,Heading") {
+				AssertNotVisible(
+					index = "1",
+					key_fragmentName = "${portletName}",
+					locator1 = "Fragment#FRAGMENT_LABEL");
+			}
+		}
+
+		task ("View HTML fragment is shown") {
+			PageEditor.viewFragment(fragmentName = "HTML");
+		}
+
+		task ("Hide the container") {
+			PageEditor.hideFragmentViaHeader(fragmentName = "Container");
 		}
 
 		task ("Assert no fragment or widget is shown") {
@@ -741,21 +769,17 @@ definition {
 			PageEditor.unhideFragmentViaPageStructure(fragmentName = "Container");
 		}
 
-		task ("Assert only Heading and HTML fragments are shown") {
+		task ("Assert only HTML fragments is shown") {
 			AssertTextNotPresent(
 				locator1 = "Message#EMPTY_INFO",
 				value1 = "No entries were found.");
 
-			AssertNotVisible(
-				fragmentName = "button",
-				id = "link",
-				index = "1",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
-
-			PageEditor.viewFragmentEditableText(
-				editableText = "Heading Example",
-				fragmentName = "Heading",
-				id = "element-text");
+			for (var portletName : list "Blogs,Button,Heading") {
+				AssertNotVisible(
+					index = "1",
+					key_fragmentName = "${portletName}",
+					locator1 = "Fragment#FRAGMENT_LABEL");
+			}
 
 			PageEditor.viewFragmentEditableText(
 				editableText = "HTML Example A paragraph is a self-contained unit of a discourse in writing dealing with a particular point or idea. Paragraphs are usually an expected part of formal writing, used to organize longer prose.",

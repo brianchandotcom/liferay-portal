@@ -118,6 +118,8 @@ public class SharingMenuItemFactoryImpl
 
 				return "javascript:" + sharingOnClickMethod;
 			}
+		).setIcon(
+			"share"
 		).setLabel(
 			_getSharingLabel(httpServletRequest)
 		).build();

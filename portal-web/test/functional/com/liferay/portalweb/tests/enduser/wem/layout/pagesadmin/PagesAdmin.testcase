@@ -1396,6 +1396,83 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-145292. The user could view new icons on dropdown menu of page in pages admin."
+	@priority = "4"
+	test ViewDropdownMenuIconsInPagesAdmin {
+		task ("Given a Page designer has a widget page with a custom portlet") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Widget Page Name");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Widget Page Name",
+				widgetName = "Web Content Display");
+
+			Navigator.gotoSitePage(
+				pageName = "Widget Page Name",
+				siteName = "Test Site name");
+
+			Portlet.viewSpecificPG(portletName = "Web Content Display");
+		}
+
+		task ("When the Page designer open the ellipsis dropdown menu of widget page") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			PagesAdmin.openPageEllipsisMenu(pageName = "Widget Page Name");
+		}
+
+		task ("Then the Page designer can see the new icons on the dropdown menu") {
+			DropdownMenuItem.viewIcon(iconList = "view,page,copy,cog,password-policies,trash");
+		}
+
+		task ("When the Page designer pen the dropdown menu of management toolbar after selecting the new widget page") {
+			PagesAdmin.selectPageItem(pageName = "Widget Page Name");
+
+			Click(locator1 = "ManagementBar#MORE_ACTIONS_ELLIPSIS");
+		}
+
+		task ("Then the Page designer can see the new icons on the dropdown menu") {
+			DropdownMenuItem.viewIcon(iconList = "page,trash");
+		}
+
+		task ("When the Page designer access the Orphan Widgets menu of widget page") {
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Orphan Widgets",
+				pageName = "Widget Page Name");
+		}
+
+		task ("Then the Page designer can see the new icon icon on orphan widget entries") {
+			for (var entryName : list "Menu Display,Search Bar,User Personal Bar") {
+				AssertVisible(
+					key_listEntry = "${entryName}",
+					key_text = "trash",
+					locator1 = "LexiconList#ANY_ICON");
+			}
+		}
+
+		task ("Given a Page designer has a published content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Content Page Name",
+				type = "content");
+
+			JSONLayout.publishLayout(
+				groupName = "Test Site Name",
+				layoutName = "Content Page Name");
+		}
+
+		task ("When the Page designer open the ellipsis dropdown menu of content page") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			PagesAdmin.openPageEllipsisMenu(pageName = "Content Page Name");
+		}
+
+		task ("Then the Page designer can see the new icons on the dropdown menu") {
+			DropdownMenuItem.viewIcon(iconList = "pencil,automatic-translate,view,copy,upload,download,cog,password-policies,trash");
+		}
+	}
+
 	@description = "This is a test for LPS-110108. Management Toolbar shows count of selected items and all visible items are selected after checking the Select All checkbox."
 	@priority = "5"
 	test ViewNumberOfSelectedPagesOnManagementToolbar {

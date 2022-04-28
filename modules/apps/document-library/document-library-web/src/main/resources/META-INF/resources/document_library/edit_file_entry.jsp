@@ -554,7 +554,7 @@ renderResponse.setTitle(headerTitle);
 
 						<c:if test="<%= (fileEntry != null) && dlAdminDisplayContext.isAutoTaggingEnabled() %>">
 							<clay:checkbox
-								checked="<%= false %>"
+								checked="<%= dlAdminDisplayContext.isUpdateAutoTags() %>"
 								id='<%= liferayPortletResponse.getNamespace() + "updateAutoTags" %>'
 								label='<%= LanguageUtil.get(request, "update-auto-tags") %>'
 								name='<%= liferayPortletResponse.getNamespace() + "updateAutoTags" %>'

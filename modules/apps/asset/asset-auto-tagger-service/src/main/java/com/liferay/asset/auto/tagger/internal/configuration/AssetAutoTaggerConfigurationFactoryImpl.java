@@ -95,6 +95,11 @@ public class AssetAutoTaggerConfigurationFactoryImpl
 				return _assetAutoTaggerSystemConfiguration.enabled();
 			}
 
+			@Override
+			public boolean isUpdateAutoTags() {
+				return false;
+			}
+
 		};
 	}
 
@@ -165,6 +170,11 @@ public class AssetAutoTaggerConfigurationFactoryImpl
 			return _assetAutoTaggerCompanyConfiguration.enabled();
 		}
 
+		@Override
+		public boolean isUpdateAutoTags() {
+			return _assetAutoTaggerCompanyConfiguration.updateAutoTags();
+		}
+
 		private final AssetAutoTaggerCompanyConfiguration
 			_assetAutoTaggerCompanyConfiguration;
 
@@ -227,6 +237,11 @@ public class AssetAutoTaggerConfigurationFactoryImpl
 
 				return _assetAutoTaggerCompanyConfiguration.isEnabled();
 			}
+		}
+
+		@Override
+		public boolean isUpdateAutoTags() {
+			return _assetAutoTaggerCompanyConfiguration.isUpdateAutoTags();
 		}
 
 		private final AssetAutoTaggerConfiguration

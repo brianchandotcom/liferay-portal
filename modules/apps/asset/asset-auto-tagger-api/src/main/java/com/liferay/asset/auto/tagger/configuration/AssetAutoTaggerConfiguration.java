@@ -25,4 +25,6 @@ public interface AssetAutoTaggerConfiguration {
 
 	public boolean isEnabled();
 
+	public boolean isUpdateAutoTags();
+
 }

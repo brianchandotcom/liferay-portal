@@ -58,7 +58,7 @@ public class FileBackedServletContextDelegate {
 		return null;
 	}
 
-	public InputStream getResourceAsStream(String path) {
+	public InputStream getResourceAsInputStream(String path) {
 		File file = new File(_file, PathUtil.removePrefix(path));
 
 		if (file.exists()) {

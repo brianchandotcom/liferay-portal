@@ -5,7 +5,7 @@ definition {
 	}
 
 	macro clickPublish {
-		Button.clickNoError(button = "Publish");
+		Button.click(button = "Publish");
 
 		if (IsTextEqual(locator1 = "Modal#HEADER", value1 = "Style Errors Detected")) {
 			AssertTextEquals(

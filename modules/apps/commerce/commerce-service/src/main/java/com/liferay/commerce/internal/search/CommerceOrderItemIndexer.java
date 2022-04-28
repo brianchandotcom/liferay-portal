@@ -84,16 +84,19 @@ public class CommerceOrderItemIndexer extends BaseIndexer<CommerceOrderItem> {
 			BooleanFilter contextBooleanFilter, SearchContext searchContext)
 		throws Exception {
 
-		long commerceOrderId = GetterUtil.getLong(
-			searchContext.getAttribute(FIELD_COMMERCE_ORDER_ID));
+		Long commerceOrderId = (Long)searchContext.getAttribute(
+			FIELD_COMMERCE_ORDER_ID);
 
-		contextBooleanFilter.addTerm(FIELD_COMMERCE_ORDER_ID, commerceOrderId);
+		if (commerceOrderId != null) {
+			contextBooleanFilter.addRequiredTerm(
+				FIELD_COMMERCE_ORDER_ID, commerceOrderId);
+		}
 
 		Long parentCommerceOrderItemId = (Long)searchContext.getAttribute(
 			FIELD_PARENT_COMMERCE_ORDER_ITEM_ID);
 
 		if (parentCommerceOrderItemId != null) {
-			contextBooleanFilter.addTerm(
+			contextBooleanFilter.addRequiredTerm(
 				FIELD_PARENT_COMMERCE_ORDER_ITEM_ID, parentCommerceOrderItemId);
 		}
 	}

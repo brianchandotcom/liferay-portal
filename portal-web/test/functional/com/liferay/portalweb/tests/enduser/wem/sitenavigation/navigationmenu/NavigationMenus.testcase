@@ -1109,6 +1109,36 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-145292. The user could view new icons on dropdown menu of navigation menu."
+	@priority = "4"
+	test ViewDropdownMenuIconsInNavigationAdmin {
+		task ("Given a Navigation menu creator has a new navigation menu") {
+			JSONSitenavigation.addSiteNavigationMenu(
+				groupName = "Test Site Name",
+				siteNavigationMenuName = "Navigation Menu Name");
+		}
+
+		task ("When the Navigation menu creator open the ellipsis dropdown menu of navigation menu") {
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+
+			LexiconEntry.openEntryMenu(rowEntry = "Navigation Menu Name");
+		}
+
+		task ("Then the Navigation menu creator can see the new icons on the dropdown menu") {
+			DropdownMenuItem.viewIcon(iconList = "pencil,password-policies,trash");
+		}
+
+		task ("When the Navigation menu creator open the dropdown menu of management toolbar after selecting the new navigation menu") {
+			LexiconTable.checkTableCheckbox(tableEntry = "Navigation Menu Name");
+
+			Click(locator1 = "ManagementBar#MORE_ACTIONS_ELLIPSIS");
+		}
+
+		task ("Then the Navigation menu creator can see the new icon on the dropdown menu") {
+			DropdownMenuItem.viewIcon(iconList = "trash");
+		}
+	}
+
 	@description = "This is a test for LPS-125802. View the hierarchy of items when change the order."
 	@priority = "4"
 	test ViewHierarchyOfItemsWhenChangeOrder {

@@ -14,8 +14,8 @@
 
 package com.liferay.client.extension.web.internal.portlet.action;
 
-import com.liferay.client.extension.model.ClientExtensionEntry;
-import com.liferay.client.extension.service.ClientExtensionEntryService;
+import com.liferay.client.extension.model.RemoteAppEntry;
+import com.liferay.client.extension.service.RemoteAppEntryService;
 import com.liferay.client.extension.web.internal.constants.RemoteAppAdminPortletKeys;
 import com.liferay.client.extension.web.internal.constants.RemoteAppAdminWebKeys;
 import com.liferay.client.extension.web.internal.display.context.EditRemoteAppEntryDisplayContext;
@@ -52,7 +52,7 @@ public class EditRemoteAppEntryMVCRenderCommand implements MVCRenderCommand {
 			renderRequest.setAttribute(
 				RemoteAppAdminWebKeys.EDIT_REMOTE_APP_ENTRY_DISPLAY_CONTEXT,
 				new EditRemoteAppEntryDisplayContext(
-					renderRequest, _getClientExtensionEntry(renderRequest)));
+					renderRequest, _getRemoteAppEntry(renderRequest)));
 
 			return "/admin/edit_remote_app_entry.jsp";
 		}
@@ -61,20 +61,20 @@ public class EditRemoteAppEntryMVCRenderCommand implements MVCRenderCommand {
 		}
 	}
 
-	private ClientExtensionEntry _getClientExtensionEntry(RenderRequest renderRequest)
+	private RemoteAppEntry _getRemoteAppEntry(RenderRequest renderRequest)
 		throws PortalException {
 
-		long clientExtensionEntryId = ParamUtil.getLong(
-			renderRequest, "clientExtensionEntryId");
+		long remoteAppEntryId = ParamUtil.getLong(
+			renderRequest, "remoteAppEntryId");
 
-		if (clientExtensionEntryId != 0) {
-			return _clientExtensionEntryService.getClientExtensionEntry(clientExtensionEntryId);
+		if (remoteAppEntryId != 0) {
+			return _remoteAppEntryService.getRemoteAppEntry(remoteAppEntryId);
 		}
 
 		return null;
 	}
 
 	@Reference
-	private ClientExtensionEntryService _clientExtensionEntryService;
+	private RemoteAppEntryService _remoteAppEntryService;
 
 }

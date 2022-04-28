@@ -14,7 +14,7 @@
 
 package com.liferay.client.extension.web.internal.portlet;
 
-import com.liferay.client.extension.model.ClientExtensionEntry;
+import com.liferay.client.extension.model.RemoteAppEntry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper;
@@ -35,8 +35,8 @@ import javax.portlet.WindowState;
 public class RemoteAppEntryFriendlyURLMapper
 	extends DefaultFriendlyURLMapper implements FriendlyURLMapper {
 
-	public RemoteAppEntryFriendlyURLMapper(ClientExtensionEntry clientExtensionEntry) {
-		_mapping = clientExtensionEntry.getFriendlyURLMapping();
+	public RemoteAppEntryFriendlyURLMapper(RemoteAppEntry remoteAppEntry) {
+		_mapping = remoteAppEntry.getFriendlyURLMapping();
 
 		Router router = new RouterImpl();
 

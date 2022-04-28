@@ -60,15 +60,15 @@ public class RemoteAppEntryFDSActionProvider implements FDSActionProvider {
 		RemoteAppFDSEntry remoteAppFDSEntry = (RemoteAppFDSEntry)model;
 
 		return DropdownItemListBuilder.add(
-			dropdownItem -> _buildEditClientExtensionEntryAction(
+			dropdownItem -> _buildEditRemoteAppEntryAction(
 				dropdownItem, httpServletRequest, remoteAppFDSEntry)
 		).add(
-			dropdownItem -> _buildDeleteClientExtensionEntryAction(
+			dropdownItem -> _buildDeleteRemoteAppEntryAction(
 				dropdownItem, httpServletRequest, remoteAppFDSEntry)
 		).build();
 	}
 
-	private void _buildDeleteClientExtensionEntryAction(
+	private void _buildDeleteRemoteAppEntryAction(
 		DropdownItem dropdownItem, HttpServletRequest httpServletRequest,
 		RemoteAppFDSEntry remoteAppFDSEntry) {
 
@@ -78,32 +78,32 @@ public class RemoteAppEntryFDSActionProvider implements FDSActionProvider {
 			).setActionName(
 				"/remote_app_admin/delete_remote_app_entry"
 			).setParameter(
-				"clientExtensionEntryId", remoteAppFDSEntry.getClientExtensionEntryId()
+				"remoteAppEntryId", remoteAppFDSEntry.getRemoteAppEntryId()
 			).buildString());
 
 		dropdownItem.setIcon("times-circle");
 		dropdownItem.setLabel(_getMessage(httpServletRequest, "delete"));
 	}
 
-	private void _buildEditClientExtensionEntryAction(
+	private void _buildEditRemoteAppEntryAction(
 		DropdownItem dropdownItem, HttpServletRequest httpServletRequest,
 		RemoteAppFDSEntry remoteAppFDSEntry) {
 
-		PortletURL editClientExtensionEntryURL = PortletURLBuilder.create(
+		PortletURL editRemoteAppEntryURL = PortletURLBuilder.create(
 			_getRenderURL(httpServletRequest)
 		).setMVCRenderCommandName(
 			"/remote_app_admin/edit_remote_app_entry"
 		).setParameter(
-			"clientExtensionEntryId", remoteAppFDSEntry.getClientExtensionEntryId()
+			"remoteAppEntryId", remoteAppFDSEntry.getRemoteAppEntryId()
 		).buildPortletURL();
 
 		String currentURL = ParamUtil.getString(
 			httpServletRequest, "currentURL",
 			_portal.getCurrentURL(httpServletRequest));
 
-		editClientExtensionEntryURL.setParameter("redirect", currentURL);
+		editRemoteAppEntryURL.setParameter("redirect", currentURL);
 
-		dropdownItem.setHref(editClientExtensionEntryURL);
+		dropdownItem.setHref(editRemoteAppEntryURL);
 		dropdownItem.setLabel(_getMessage(httpServletRequest, "edit"));
 	}
 

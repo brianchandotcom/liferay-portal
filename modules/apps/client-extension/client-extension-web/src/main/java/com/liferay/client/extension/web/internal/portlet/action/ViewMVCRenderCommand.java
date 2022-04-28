@@ -14,7 +14,7 @@
 
 package com.liferay.client.extension.web.internal.portlet.action;
 
-import com.liferay.client.extension.service.ClientExtensionEntryService;
+import com.liferay.client.extension.service.RemoteAppEntryService;
 import com.liferay.client.extension.web.internal.constants.RemoteAppAdminPortletKeys;
 import com.liferay.client.extension.web.internal.constants.RemoteAppAdminWebKeys;
 import com.liferay.client.extension.web.internal.display.context.RemoteAppAdminDisplayContext;
@@ -53,6 +53,6 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	@Reference
-	private ClientExtensionEntryService _clientExtensionEntryService;
+	private RemoteAppEntryService _remoteAppEntryService;
 
 }

@@ -14,7 +14,7 @@
 
 package com.liferay.client.extension.web.internal.portlet.action;
 
-import com.liferay.client.extension.service.ClientExtensionEntryService;
+import com.liferay.client.extension.service.RemoteAppEntryService;
 import com.liferay.client.extension.web.internal.constants.RemoteAppAdminPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -45,10 +45,10 @@ public class DeleteRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long clientExtensionEntryId = ParamUtil.getLong(
-			actionRequest, "clientExtensionEntryId");
+		long remoteAppEntryId = ParamUtil.getLong(
+			actionRequest, "remoteAppEntryId");
 
-		_clientExtensionEntryService.deleteClientExtensionEntry(clientExtensionEntryId);
+		_remoteAppEntryService.deleteRemoteAppEntry(remoteAppEntryId);
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 
@@ -58,6 +58,6 @@ public class DeleteRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	@Reference
-	private ClientExtensionEntryService _clientExtensionEntryService;
+	private RemoteAppEntryService _remoteAppEntryService;
 
 }

@@ -14,9 +14,9 @@
 
 package com.liferay.client.extension.web.internal.portlet.action;
 
-import com.liferay.client.extension.constants.ClientExtensionConstants;
-import com.liferay.client.extension.model.ClientExtensionEntry;
-import com.liferay.client.extension.service.ClientExtensionEntryService;
+import com.liferay.client.extension.constants.RemoteAppConstants;
+import com.liferay.client.extension.model.RemoteAppEntry;
+import com.liferay.client.extension.service.RemoteAppEntryService;
 import com.liferay.client.extension.web.internal.constants.RemoteAppAdminPortletKeys;
 import com.liferay.client.extension.web.internal.constants.RemoteAppAdminWebKeys;
 import com.liferay.client.extension.web.internal.display.context.EditRemoteAppEntryDisplayContext;
@@ -81,7 +81,7 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest.setAttribute(
 				RemoteAppAdminWebKeys.EDIT_REMOTE_APP_ENTRY_DISPLAY_CONTEXT,
 				new EditRemoteAppEntryDisplayContext(
-					actionRequest, _getClientExtensionEntry(actionRequest)));
+					actionRequest, _getRemoteAppEntry(actionRequest)));
 
 			actionResponse.setRenderParameter(
 				"mvcPath", "/admin/edit_remote_app_entry.jsp");
@@ -103,8 +103,8 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "sourceCodeURL");
 		String type = ParamUtil.getString(actionRequest, "type");
 
-		if (type.equals(ClientExtensionConstants.TYPE_CUSTOM_ELEMENT)) {
-			_clientExtensionEntryService.addCustomElementClientExtensionEntry(
+		if (type.equals(RemoteAppConstants.TYPE_CUSTOM_ELEMENT)) {
+			_remoteAppEntryService.addCustomElementRemoteAppEntry(
 				StringPool.BLANK,
 				StringUtil.merge(
 					ParamUtil.getStringValues(
@@ -120,29 +120,29 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 				description, friendlyURLMapping, instanceable, nameMap,
 				portletCategoryName, properties, sourceCodeURL);
 		}
-		else if (type.equals(ClientExtensionConstants.TYPE_IFRAME)) {
-			_clientExtensionEntryService.addIFrameClientExtensionEntry(
+		else if (type.equals(RemoteAppConstants.TYPE_IFRAME)) {
+			_remoteAppEntryService.addIFrameRemoteAppEntry(
 				description, friendlyURLMapping,
 				ParamUtil.getString(actionRequest, "iFrameURL"), instanceable,
 				nameMap, portletCategoryName, properties, sourceCodeURL);
 		}
 	}
 
-	private ClientExtensionEntry _getClientExtensionEntry(ActionRequest actionRequest)
+	private RemoteAppEntry _getRemoteAppEntry(ActionRequest actionRequest)
 		throws PortalException {
 
-		long clientExtensionEntryId = ParamUtil.getLong(
-			actionRequest, "clientExtensionEntryId");
+		long remoteAppEntryId = ParamUtil.getLong(
+			actionRequest, "remoteAppEntryId");
 
-		if (clientExtensionEntryId != 0) {
-			return _clientExtensionEntryService.getClientExtensionEntry(clientExtensionEntryId);
+		if (remoteAppEntryId != 0) {
+			return _remoteAppEntryService.getRemoteAppEntry(remoteAppEntryId);
 		}
 
 		return null;
 	}
 
 	private void _update(ActionRequest actionRequest) throws PortalException {
-		ClientExtensionEntry clientExtensionEntry = _getClientExtensionEntry(actionRequest);
+		RemoteAppEntry remoteAppEntry = _getRemoteAppEntry(actionRequest);
 
 		String description = ParamUtil.getString(actionRequest, "description");
 		String friendlyURLMapping = ParamUtil.getString(
@@ -156,11 +156,11 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "sourceCodeURL");
 
 		if (Objects.equals(
-				clientExtensionEntry.getType(),
-				ClientExtensionConstants.TYPE_CUSTOM_ELEMENT)) {
+				remoteAppEntry.getType(),
+				RemoteAppConstants.TYPE_CUSTOM_ELEMENT)) {
 
-			_clientExtensionEntryService.updateCustomElementClientExtensionEntry(
-				clientExtensionEntry.getClientExtensionEntryId(),
+			_remoteAppEntryService.updateCustomElementRemoteAppEntry(
+				remoteAppEntry.getRemoteAppEntryId(),
 				StringUtil.merge(
 					ParamUtil.getStringValues(
 						actionRequest, "customElementCSSURLs"),
@@ -176,10 +176,10 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 				properties, sourceCodeURL);
 		}
 		else if (Objects.equals(
-					clientExtensionEntry.getType(), ClientExtensionConstants.TYPE_IFRAME)) {
+					remoteAppEntry.getType(), RemoteAppConstants.TYPE_IFRAME)) {
 
-			_clientExtensionEntryService.updateIFrameClientExtensionEntry(
-				clientExtensionEntry.getClientExtensionEntryId(), description,
+			_remoteAppEntryService.updateIFrameRemoteAppEntry(
+				remoteAppEntry.getRemoteAppEntryId(), description,
 				friendlyURLMapping,
 				ParamUtil.getString(actionRequest, "iFrameURL"), nameMap,
 				portletCategoryName, properties, sourceCodeURL);
@@ -187,6 +187,6 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	@Reference
-	private ClientExtensionEntryService _clientExtensionEntryService;
+	private RemoteAppEntryService _remoteAppEntryService;
 
 }

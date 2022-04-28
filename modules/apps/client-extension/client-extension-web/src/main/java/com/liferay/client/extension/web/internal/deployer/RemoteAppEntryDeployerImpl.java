@@ -14,9 +14,9 @@
 
 package com.liferay.client.extension.web.internal.deployer;
 
-import com.liferay.client.extension.constants.ClientExtensionConstants;
-import com.liferay.client.extension.deployer.ClientExtensionEntryDeployer;
-import com.liferay.client.extension.model.ClientExtensionEntry;
+import com.liferay.client.extension.constants.RemoteAppConstants;
+import com.liferay.client.extension.deployer.RemoteAppEntryDeployer;
+import com.liferay.client.extension.model.RemoteAppEntry;
 import com.liferay.client.extension.web.internal.portlet.RemoteAppEntryFriendlyURLMapper;
 import com.liferay.client.extension.web.internal.portlet.RemoteAppEntryPortlet;
 import com.liferay.client.extension.web.internal.portlet.action.RemoteAppEntryConfigurationAction;
@@ -45,23 +45,23 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = ClientExtensionEntryDeployer.class)
-public class ClientExtensionEntryDeployerImpl implements ClientExtensionEntryDeployer {
+@Component(immediate = true, service = RemoteAppEntryDeployer.class)
+public class RemoteAppEntryDeployerImpl implements RemoteAppEntryDeployer {
 
 	@Override
-	public List<ServiceRegistration<?>> deploy(ClientExtensionEntry clientExtensionEntry) {
+	public List<ServiceRegistration<?>> deploy(RemoteAppEntry remoteAppEntry) {
 		List<ServiceRegistration<?>> serviceRegistrations = new ArrayList<>();
 
-		serviceRegistrations.add(_registerConfigurationAction(clientExtensionEntry));
+		serviceRegistrations.add(_registerConfigurationAction(remoteAppEntry));
 
-		if (!clientExtensionEntry.isInstanceable() &&
-			Validator.isNotNull(clientExtensionEntry.getFriendlyURLMapping())) {
+		if (!remoteAppEntry.isInstanceable() &&
+			Validator.isNotNull(remoteAppEntry.getFriendlyURLMapping())) {
 
 			serviceRegistrations.add(
-				_registerFriendlyURLMapper(clientExtensionEntry));
+				_registerFriendlyURLMapper(remoteAppEntry));
 		}
 
-		serviceRegistrations.add(_registerPortlet(clientExtensionEntry));
+		serviceRegistrations.add(_registerPortlet(remoteAppEntry));
 
 		return serviceRegistrations;
 	}
@@ -71,8 +71,8 @@ public class ClientExtensionEntryDeployerImpl implements ClientExtensionEntryDep
 		_bundleContext = bundleContext;
 	}
 
-	private String _getPortletCategoryName(ClientExtensionEntry clientExtensionEntry) {
-		String portletCategoryName = clientExtensionEntry.getPortletCategoryName();
+	private String _getPortletCategoryName(RemoteAppEntry remoteAppEntry) {
+		String portletCategoryName = remoteAppEntry.getPortletCategoryName();
 
 		if (Validator.isNull(portletCategoryName)) {
 			return "category.remote-apps";
@@ -81,51 +81,51 @@ public class ClientExtensionEntryDeployerImpl implements ClientExtensionEntryDep
 		return portletCategoryName;
 	}
 
-	private String _getPortletId(ClientExtensionEntry clientExtensionEntry) {
+	private String _getPortletId(RemoteAppEntry remoteAppEntry) {
 		return "com_liferay_remote_app_web_internal_portlet_" +
-			"RemoteAppEntryPortlet_" + clientExtensionEntry.getClientExtensionEntryId();
+			"RemoteAppEntryPortlet_" + remoteAppEntry.getRemoteAppEntryId();
 	}
 
 	private ServiceRegistration<ConfigurationAction>
-		_registerConfigurationAction(ClientExtensionEntry clientExtensionEntry) {
+		_registerConfigurationAction(RemoteAppEntry remoteAppEntry) {
 
 		return _bundleContext.registerService(
 			ConfigurationAction.class, new RemoteAppEntryConfigurationAction(),
 			HashMapDictionaryBuilder.<String, Object>put(
-				"javax.portlet.name", _getPortletId(clientExtensionEntry)
+				"javax.portlet.name", _getPortletId(remoteAppEntry)
 			).build());
 	}
 
 	private ServiceRegistration<FriendlyURLMapper> _registerFriendlyURLMapper(
-		ClientExtensionEntry clientExtensionEntry) {
+		RemoteAppEntry remoteAppEntry) {
 
 		return _bundleContext.registerService(
 			FriendlyURLMapper.class,
-			new RemoteAppEntryFriendlyURLMapper(clientExtensionEntry),
+			new RemoteAppEntryFriendlyURLMapper(remoteAppEntry),
 			HashMapDictionaryBuilder.<String, Object>put(
-				"javax.portlet.name", _getPortletId(clientExtensionEntry)
+				"javax.portlet.name", _getPortletId(remoteAppEntry)
 			).build());
 	}
 
 	private ServiceRegistration<Portlet> _registerPortlet(
-		ClientExtensionEntry clientExtensionEntry) {
+		RemoteAppEntry remoteAppEntry) {
 
-		String portletName = _getPortletId(clientExtensionEntry);
+		String portletName = _getPortletId(remoteAppEntry);
 
 		Dictionary<String, Object> dictionary =
 			HashMapDictionaryBuilder.<String, Object>put(
-				"com.liferay.portlet.company", clientExtensionEntry.getCompanyId()
+				"com.liferay.portlet.company", remoteAppEntry.getCompanyId()
 			).put(
 				"com.liferay.portlet.css-class-wrapper", "portlet-remote-app"
 			).put(
 				"com.liferay.portlet.display-category",
-				_getPortletCategoryName(clientExtensionEntry)
+				_getPortletCategoryName(remoteAppEntry)
 			).put(
 				"com.liferay.portlet.instanceable",
-				clientExtensionEntry.isInstanceable()
+				remoteAppEntry.isInstanceable()
 			).put(
 				"javax.portlet.display-name",
-				clientExtensionEntry.getName(LocaleUtil.US)
+				remoteAppEntry.getName(LocaleUtil.US)
 			).put(
 				"javax.portlet.name", portletName
 			).put(
@@ -133,12 +133,12 @@ public class ClientExtensionEntryDeployerImpl implements ClientExtensionEntryDep
 			).build();
 
 		if (Objects.equals(
-				clientExtensionEntry.getType(),
-				ClientExtensionConstants.TYPE_CUSTOM_ELEMENT)) {
+				remoteAppEntry.getType(),
+				RemoteAppConstants.TYPE_CUSTOM_ELEMENT)) {
 
-			String customElementURLs = clientExtensionEntry.getCustomElementURLs();
+			String customElementURLs = remoteAppEntry.getCustomElementURLs();
 
-			if (clientExtensionEntry.isCustomElementUseESM()) {
+			if (remoteAppEntry.isCustomElementUseESM()) {
 				_remoteAppTopHeadDynamicInclude.registerURLs(
 					portletName, customElementURLs.split(StringPool.NEW_LINE));
 			}
@@ -149,7 +149,7 @@ public class ClientExtensionEntryDeployerImpl implements ClientExtensionEntryDep
 			}
 
 			String customElementCSSURLs =
-				clientExtensionEntry.getCustomElementCSSURLs();
+				remoteAppEntry.getCustomElementCSSURLs();
 
 			if (Validator.isNotNull(customElementCSSURLs)) {
 				dictionary.put(
@@ -158,7 +158,7 @@ public class ClientExtensionEntryDeployerImpl implements ClientExtensionEntryDep
 			}
 		}
 		else if (Objects.equals(
-					clientExtensionEntry.getType(), ClientExtensionConstants.TYPE_IFRAME)) {
+					remoteAppEntry.getType(), RemoteAppConstants.TYPE_IFRAME)) {
 
 			dictionary.put(
 				"com.liferay.portlet.footer-portlet-css",
@@ -166,12 +166,12 @@ public class ClientExtensionEntryDeployerImpl implements ClientExtensionEntryDep
 		}
 		else {
 			throw new IllegalArgumentException(
-				"Invalid remote app entry type: " + clientExtensionEntry.getType());
+				"Invalid remote app entry type: " + remoteAppEntry.getType());
 		}
 
 		return _bundleContext.registerService(
 			Portlet.class,
-			new RemoteAppEntryPortlet(_npmResolver, clientExtensionEntry),
+			new RemoteAppEntryPortlet(_npmResolver, remoteAppEntry),
 			dictionary);
 	}
 

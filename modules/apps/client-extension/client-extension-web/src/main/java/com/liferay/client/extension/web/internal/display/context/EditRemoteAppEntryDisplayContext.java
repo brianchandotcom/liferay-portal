@@ -14,12 +14,12 @@
 
 package com.liferay.client.extension.web.internal.display.context;
 
-import com.liferay.client.extension.constants.ClientExtensionConstants;
-import com.liferay.client.extension.exception.ClientExtensionEntryCustomElementCSSURLsException;
-import com.liferay.client.extension.exception.ClientExtensionEntryCustomElementHTMLElementNameException;
-import com.liferay.client.extension.exception.ClientExtensionEntryCustomElementURLsException;
-import com.liferay.client.extension.exception.ClientExtensionEntryIFrameURLException;
-import com.liferay.client.extension.model.ClientExtensionEntry;
+import com.liferay.client.extension.constants.RemoteAppConstants;
+import com.liferay.client.extension.exception.RemoteAppEntryCustomElementCSSURLsException;
+import com.liferay.client.extension.exception.RemoteAppEntryCustomElementHTMLElementNameException;
+import com.liferay.client.extension.exception.RemoteAppEntryCustomElementURLsException;
+import com.liferay.client.extension.exception.RemoteAppEntryIFrameURLException;
+import com.liferay.client.extension.model.RemoteAppEntry;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SelectOption;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
@@ -50,14 +50,14 @@ import javax.servlet.http.HttpServletRequest;
 public class EditRemoteAppEntryDisplayContext {
 
 	public EditRemoteAppEntryDisplayContext(
-		PortletRequest portletRequest, ClientExtensionEntry clientExtensionEntry) {
+		PortletRequest portletRequest, RemoteAppEntry remoteAppEntry) {
 
 		_portletRequest = portletRequest;
-		_clientExtensionEntry = clientExtensionEntry;
+		_remoteAppEntry = remoteAppEntry;
 	}
 
 	public String getCmd() {
-		if (_clientExtensionEntry == null) {
+		if (_remoteAppEntry == null) {
 			return Constants.ADD;
 		}
 
@@ -67,9 +67,9 @@ public class EditRemoteAppEntryDisplayContext {
 	public String[] getCustomElementCSSURLs() {
 		String[] customElementCSSURLs = StringPool.EMPTY_ARRAY;
 
-		if (_clientExtensionEntry != null) {
+		if (_remoteAppEntry != null) {
 			String customElementCSSURLsString =
-				_clientExtensionEntry.getCustomElementCSSURLs();
+				_remoteAppEntry.getCustomElementCSSURLs();
 
 			customElementCSSURLs = customElementCSSURLsString.split(
 				StringPool.NEW_LINE);
@@ -88,9 +88,9 @@ public class EditRemoteAppEntryDisplayContext {
 	public String[] getCustomElementURLs() {
 		String[] customElementURLs = StringPool.EMPTY_ARRAY;
 
-		if (_clientExtensionEntry != null) {
+		if (_remoteAppEntry != null) {
 			String customElementURLsString =
-				_clientExtensionEntry.getCustomElementURLs();
+				_remoteAppEntry.getCustomElementURLs();
 
 			customElementURLs = customElementURLsString.split(
 				StringPool.NEW_LINE);
@@ -108,12 +108,12 @@ public class EditRemoteAppEntryDisplayContext {
 
 	public String getDescription() {
 		return BeanParamUtil.getString(
-			_clientExtensionEntry, _portletRequest, "description");
+			_remoteAppEntry, _portletRequest, "description");
 	}
 
 	public String getName() {
 		return BeanParamUtil.getString(
-			_clientExtensionEntry, _portletRequest, "name");
+			_remoteAppEntry, _portletRequest, "name");
 	}
 
 	public List<SelectOption> getPortletCategoryNameSelectOptions()
@@ -128,7 +128,7 @@ public class EditRemoteAppEntryDisplayContext {
 			themeDisplay.getCompanyId(), WebKeys.PORTLET_CATEGORY);
 
 		String portletCategoryName = BeanPropertiesUtil.getString(
-			_clientExtensionEntry, "portletCategoryName", "category.remote-apps");
+			_remoteAppEntry, "portletCategoryName", "category.remote-apps");
 
 		boolean found = false;
 
@@ -180,41 +180,41 @@ public class EditRemoteAppEntryDisplayContext {
 		return ParamUtil.getString(_portletRequest, "redirect");
 	}
 
-	public ClientExtensionEntry getClientExtensionEntry() {
-		return _clientExtensionEntry;
+	public RemoteAppEntry getRemoteAppEntry() {
+		return _remoteAppEntry;
 	}
 
-	public long getClientExtensionEntryId() {
+	public long getRemoteAppEntryId() {
 		return BeanParamUtil.getLong(
-			_clientExtensionEntry, _portletRequest, "clientExtensionEntryId");
+			_remoteAppEntry, _portletRequest, "remoteAppEntryId");
 	}
 
 	public String getTitle() {
-		if (_clientExtensionEntry == null) {
+		if (_remoteAppEntry == null) {
 			return LanguageUtil.get(_getHttpServletRequest(), "new-remote-app");
 		}
 
 		ThemeDisplay themeDisplay = _getThemeDisplay();
 
-		return _clientExtensionEntry.getName(themeDisplay.getLocale());
+		return _remoteAppEntry.getName(themeDisplay.getLocale());
 	}
 
 	public boolean isCustomElementUseESM() {
 		return BeanParamUtil.getBoolean(
-			_clientExtensionEntry, _getHttpServletRequest(), "customElementUseESM");
+			_remoteAppEntry, _getHttpServletRequest(), "customElementUseESM");
 	}
 
-	public boolean isEditingClientExtensionEntryType(String type) {
-		return type.equals(_getClientExtensionEntryType());
+	public boolean isEditingRemoteAppEntryType(String type) {
+		return type.equals(_getRemoteAppEntryType());
 	}
 
 	public boolean isInstanceable() {
 		return BeanParamUtil.getBoolean(
-			_clientExtensionEntry, _getHttpServletRequest(), "instanceable");
+			_remoteAppEntry, _getHttpServletRequest(), "instanceable");
 	}
 
 	public boolean isInstanceableDisabled() {
-		if (_clientExtensionEntry != null) {
+		if (_remoteAppEntry != null) {
 			return true;
 		}
 
@@ -222,7 +222,7 @@ public class EditRemoteAppEntryDisplayContext {
 	}
 
 	public boolean isTypeDisabled() {
-		if (_clientExtensionEntry != null) {
+		if (_remoteAppEntry != null) {
 			return true;
 		}
 
@@ -232,23 +232,23 @@ public class EditRemoteAppEntryDisplayContext {
 	private String _getErrorSection() {
 		if (MultiSessionErrors.contains(
 				_portletRequest,
-				ClientExtensionEntryIFrameURLException.class.getName())) {
+				RemoteAppEntryIFrameURLException.class.getName())) {
 
-			return ClientExtensionConstants.TYPE_IFRAME;
+			return RemoteAppConstants.TYPE_IFRAME;
 		}
 
 		if (MultiSessionErrors.contains(
 				_portletRequest,
-				ClientExtensionEntryCustomElementCSSURLsException.class.getName()) ||
+				RemoteAppEntryCustomElementCSSURLsException.class.getName()) ||
 			MultiSessionErrors.contains(
 				_portletRequest,
-				ClientExtensionEntryCustomElementHTMLElementNameException.class.
+				RemoteAppEntryCustomElementHTMLElementNameException.class.
 					getName()) ||
 			MultiSessionErrors.contains(
 				_portletRequest,
-				ClientExtensionEntryCustomElementURLsException.class.getName())) {
+				RemoteAppEntryCustomElementURLsException.class.getName())) {
 
-			return ClientExtensionConstants.TYPE_CUSTOM_ELEMENT;
+			return RemoteAppConstants.TYPE_CUSTOM_ELEMENT;
 		}
 
 		return null;
@@ -258,18 +258,18 @@ public class EditRemoteAppEntryDisplayContext {
 		return PortalUtil.getHttpServletRequest(_portletRequest);
 	}
 
-	private String _getClientExtensionEntryType() {
+	private String _getRemoteAppEntryType() {
 		String errorSection = _getErrorSection();
 
 		if (errorSection != null) {
 			return errorSection;
 		}
 
-		if (_clientExtensionEntry == null) {
-			return ClientExtensionConstants.TYPE_IFRAME;
+		if (_remoteAppEntry == null) {
+			return RemoteAppConstants.TYPE_IFRAME;
 		}
 
-		return _clientExtensionEntry.getType();
+		return _remoteAppEntry.getType();
 	}
 
 	private ThemeDisplay _getThemeDisplay() {
@@ -280,6 +280,6 @@ public class EditRemoteAppEntryDisplayContext {
 	}
 
 	private final PortletRequest _portletRequest;
-	private final ClientExtensionEntry _clientExtensionEntry;
+	private final RemoteAppEntry _remoteAppEntry;
 
 }

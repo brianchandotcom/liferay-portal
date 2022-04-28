@@ -21,7 +21,7 @@ RemoteAppAdminDisplayContext remoteAppAdminDisplayContext = (RemoteAppAdminDispl
 %>
 
 <frontend-data-set:classic-display
-	actionParameterName="clientExtensionEntryId"
+	actionParameterName="remoteAppEntryId"
 	creationMenu="<%= remoteAppAdminDisplayContext.getCreationMenu() %>"
 	dataProviderKey="<%= RemoteAppAdminFDSNames.REMOTE_APP_ENTRIES %>"
 	formName="fm"
@@ -30,7 +30,7 @@ RemoteAppAdminDisplayContext remoteAppAdminDisplayContext = (RemoteAppAdminDispl
 	namespace="<%= liferayPortletResponse.getNamespace() %>"
 	pageNumber="<%= 1 %>"
 	portletURL="<%= remoteAppAdminDisplayContext.getCurrentPortletURL() %>"
-	selectedItemsKey="clientExtensionEntryId"
+	selectedItemsKey="remoteAppEntryId"
 	selectionType="multiple"
 	style="fluid"
 />

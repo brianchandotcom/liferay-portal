@@ -16,11 +16,11 @@
 
 <%@ include file="/init.jsp" %>
 
-<%@ page import="com.liferay.client.extension.exception.ClientExtensionEntryCustomElementCSSURLsException" %><%@
-page import="com.liferay.client.extension.exception.ClientExtensionEntryCustomElementHTMLElementNameException" %><%@
-page import="com.liferay.client.extension.exception.ClientExtensionEntryCustomElementURLsException" %><%@
-page import="com.liferay.client.extension.exception.ClientExtensionEntryFriendlyURLMappingException" %><%@
-page import="com.liferay.client.extension.exception.ClientExtensionEntryIFrameURLException" %><%@
+<%@ page import="com.liferay.client.extension.exception.RemoteAppEntryCustomElementCSSURLsException" %><%@
+page import="com.liferay.client.extension.exception.RemoteAppEntryCustomElementHTMLElementNameException" %><%@
+page import="com.liferay.client.extension.exception.RemoteAppEntryCustomElementURLsException" %><%@
+page import="com.liferay.client.extension.exception.RemoteAppEntryFriendlyURLMappingException" %><%@
+page import="com.liferay.client.extension.exception.RemoteAppEntryIFrameURLException" %><%@
 page import="com.liferay.client.extension.web.internal.constants.RemoteAppAdminFDSNames" %><%@
 page import="com.liferay.client.extension.web.internal.constants.RemoteAppAdminWebKeys" %><%@
 page import="com.liferay.client.extension.web.internal.display.context.EditRemoteAppEntryDisplayContext" %><%@

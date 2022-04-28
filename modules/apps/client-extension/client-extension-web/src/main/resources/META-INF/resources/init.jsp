@@ -25,8 +25,8 @@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.client.extension.constants.ClientExtensionConstants" %><%@
-page import="com.liferay.client.extension.model.ClientExtensionEntry" %><%@
+<%@ page import="com.liferay.client.extension.constants.RemoteAppConstants" %><%@
+page import="com.liferay.client.extension.model.RemoteAppEntry" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %>
 
 <%@ page import="javax.portlet.WindowState" %>

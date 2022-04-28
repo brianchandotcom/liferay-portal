@@ -14,8 +14,8 @@
 
 package com.liferay.client.extension.web.internal.frontend.data.set.model;
 
-import com.liferay.client.extension.constants.ClientExtensionConstants;
-import com.liferay.client.extension.model.ClientExtensionEntry;
+import com.liferay.client.extension.constants.RemoteAppConstants;
+import com.liferay.client.extension.model.RemoteAppEntry;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -26,33 +26,33 @@ import java.util.Locale;
  */
 public class RemoteAppFDSEntry {
 
-	public RemoteAppFDSEntry(ClientExtensionEntry clientExtensionEntry, Locale locale) {
-		_clientExtensionEntry = clientExtensionEntry;
+	public RemoteAppFDSEntry(RemoteAppEntry remoteAppEntry, Locale locale) {
+		_remoteAppEntry = remoteAppEntry;
 		_locale = locale;
 	}
 
 	public String getName() {
-		return _clientExtensionEntry.getName(_locale);
+		return _remoteAppEntry.getName(_locale);
 	}
 
-	public long getClientExtensionEntryId() {
-		return _clientExtensionEntry.getClientExtensionEntryId();
+	public long getRemoteAppEntryId() {
+		return _remoteAppEntry.getRemoteAppEntryId();
 	}
 
 	public StatusInfo getStatus() {
 		String label = WorkflowConstants.getStatusLabel(
-			_clientExtensionEntry.getStatus());
+			_remoteAppEntry.getStatus());
 
 		return new StatusInfo(label, LanguageUtil.get(_locale, label));
 	}
 
 	public String getType() {
-		String type = _clientExtensionEntry.getType();
+		String type = _remoteAppEntry.getType();
 
-		if (type.equals(ClientExtensionConstants.TYPE_CUSTOM_ELEMENT)) {
+		if (type.equals(RemoteAppConstants.TYPE_CUSTOM_ELEMENT)) {
 			return LanguageUtil.get(_locale, "custom-element");
 		}
-		else if (type.equals(ClientExtensionConstants.TYPE_IFRAME)) {
+		else if (type.equals(RemoteAppConstants.TYPE_IFRAME)) {
 			return LanguageUtil.get(_locale, "iframe");
 		}
 
@@ -60,6 +60,6 @@ public class RemoteAppFDSEntry {
 	}
 
 	private final Locale _locale;
-	private final ClientExtensionEntry _clientExtensionEntry;
+	private final RemoteAppEntry _remoteAppEntry;
 
 }

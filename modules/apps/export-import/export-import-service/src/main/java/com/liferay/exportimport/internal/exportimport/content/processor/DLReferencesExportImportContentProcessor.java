@@ -473,9 +473,16 @@ public class DLReferencesExportImportContentProcessor
 
 				exportedReferenceSB.append("[$dl-reference=");
 				exportedReferenceSB.append(path);
-				exportedReferenceSB.append("$,$include-uuid=");
-				exportedReferenceSB.append(
-					dlReferenceParameters.containsKey("uuid"));
+
+				if (dlReferenceParameters.containsKey("friendlyURL")) {
+					exportedReferenceSB.append("$,$include-friendlyURL");
+				}
+				else {
+					exportedReferenceSB.append("$,$include-uuid=");
+					exportedReferenceSB.append(
+						dlReferenceParameters.containsKey("uuid"));
+				}
+
 				exportedReferenceSB.append("$]");
 
 				if (fileEntry.isInTrash()) {
@@ -556,7 +563,10 @@ public class DLReferencesExportImportContentProcessor
 			}
 
 			while (content.contains(
-						"[$dl-reference=" + path + "$,$include-uuid=false$]") ||
+						"[$dl-reference=" + path +
+							"$,$include-friendlyURL$]") ||
+				   content.contains(
+					   "[$dl-reference=" + path + "$,$include-uuid=false$]") ||
 				   content.contains(
 					   "[$dl-reference=" + path + "$,$include-uuid=true$]")) {
 
@@ -648,6 +658,8 @@ public class DLReferencesExportImportContentProcessor
 				String urlWithoutUUID = url.substring(
 					0, url.lastIndexOf(StringPool.SLASH));
 
+				String exportedReferenceFriendlyURL =
+					"[$dl-reference=" + path + "$,$include-friendlyURL$]";
 				String exportedReferenceWithoutUUID =
 					"[$dl-reference=" + path + "$,$include-uuid=false$]";
 				String exportedReferenceWithUUID =
@@ -664,6 +676,8 @@ public class DLReferencesExportImportContentProcessor
 							"#include-uuid=true#]";
 				}
 
+				content = StringUtil.replace(
+					content, exportedReferenceFriendlyURL, url);
 				content = StringUtil.replace(
 					content, exportedReferenceWithUUID, url);
 				content = StringUtil.replace(

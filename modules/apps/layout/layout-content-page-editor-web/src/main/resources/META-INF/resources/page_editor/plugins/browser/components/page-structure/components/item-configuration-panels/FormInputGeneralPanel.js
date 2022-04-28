@@ -14,8 +14,9 @@
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {openToast} from 'frontend-js-web';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
+import {ALLOWED_INPUT_TYPES} from '../../../../../../app/config/constants/allowedInputTypes';
 import {COMMON_STYLES_ROLES} from '../../../../../../app/config/constants/commonStylesRoles';
 import {EDITABLE_TYPES} from '../../../../../../app/config/constants/editableTypes';
 import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../app/config/constants/freemarkerFragmentEntryProcessor';
@@ -82,6 +83,20 @@ export function FormInputGeneralPanel({item}) {
 		[item.itemId]
 	);
 
+	const inputType = useMemo(() => {
+		const element = document.createElement('div');
+		element.innerHTML = fragmentEntryLink.content;
+
+		if (element.querySelector('select')) {
+			return 'select';
+		}
+		else if (element.querySelector('textarea')) {
+			return 'textarea';
+		}
+
+		return element.querySelector('input')?.type || 'text';
+	}, [fragmentEntryLink.content]);
+
 	const handleValueSelect = (event) =>
 		dispatch(
 			updateEditableValues({
@@ -111,7 +126,20 @@ export function FormInputGeneralPanel({item}) {
 			classTypeId,
 			onNetworkStatus: () => {},
 		})
-			.then(setFields)
+			.then((nextFields) =>
+				setFields(
+					nextFields
+						.map((fieldset) => ({
+							...fieldset,
+							fields: fieldset.fields.filter((field) =>
+								ALLOWED_INPUT_TYPES[field.type]?.includes(
+									inputType
+								)
+							),
+						}))
+						.filter((fieldset) => fieldset.fields.length)
+				)
+			)
 			.catch((error) => {
 				if (process.env.NODE_ENV === 'development') {
 					console.error(error);
@@ -126,7 +154,7 @@ export function FormInputGeneralPanel({item}) {
 
 				setFields([]);
 			});
-	}, [formConfiguration]);
+	}, [formConfiguration, inputType]);
 
 	if (!formConfiguration) {
 		return (

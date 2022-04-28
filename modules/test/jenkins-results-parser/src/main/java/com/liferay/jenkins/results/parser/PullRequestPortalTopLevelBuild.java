@@ -509,10 +509,24 @@ public class PullRequestPortalTopLevelBuild
 			return null;
 		}
 
+		String branchName = getBranchName();
+		Job.BuildProfile buildProfile = getBuildProfile();
+		String jobName = getJobName();
+		String repositoryName = getBaseGitRepositoryName();
+		String stableTestSuiteName = "stable";
+
 		try {
 			_stableJob = JobFactory.newJob(
-				getBuildProfile(), getJobName(), null, null, getBranchName(),
-				null, getBaseGitRepositoryName(), "stable", getBranchName());
+				buildProfile, jobName, null, null, branchName, null,
+				repositoryName, stableTestSuiteName, branchName);
+
+			BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
+
+			buildDatabase.putJob(
+				JobFactory.getKey(
+					buildProfile, jobName, null, branchName, null,
+					repositoryName, stableTestSuiteName, branchName),
+				_stableJob);
 		}
 		catch (Exception exception) {
 			System.out.println("Unable to create stable job for " + jobName);

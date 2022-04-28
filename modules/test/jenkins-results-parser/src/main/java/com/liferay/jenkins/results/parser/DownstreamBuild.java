@@ -17,6 +17,7 @@ package com.liferay.jenkins.results.parser;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import java.util.ArrayList;
@@ -40,8 +41,32 @@ public class DownstreamBuild extends BaseBuild {
 	}
 
 	@Override
+	public void findDownstreamBuilds() {
+	}
+
+	@Override
 	public URL getArtifactsBaseURL() {
-		return null;
+		TopLevelBuild topLevelBuild = getTopLevelBuild();
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(topLevelBuild.getArtifactsBaseURL());
+		sb.append("/");
+		sb.append(getJobVariant());
+		sb.append("/");
+		sb.append(getAxisVariable());
+
+		try {
+			return new URL(sb.toString());
+		}
+		catch (MalformedURLException malformedURLException) {
+			return null;
+		}
+	}
+
+	public String getAxisName() {
+		return JenkinsResultsParserUtil.combine(
+			getJobVariant(), "/", getAxisVariable());
 	}
 
 	public String getAxisVariable() {
@@ -83,16 +108,68 @@ public class DownstreamBuild extends BaseBuild {
 	public String getDisplayName() {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(getParameterValue("JOB_VARIANT"));
-
-		String axisVariable = getParameterValue("AXIS_VARIABLE");
-
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(axisVariable)) {
-			sb.append("/");
-			sb.append(axisVariable);
-		}
+		sb.append(getJobVariant());
+		sb.append("/");
+		sb.append(getAxisVariable());
 
 		return sb.toString();
+	}
+
+	@Override
+	public Element getGitHubMessageElement() {
+		String status = getStatus();
+
+		if (!status.equals("completed") && (getParentBuild() != null)) {
+			return null;
+		}
+
+		String result = getResult();
+
+		if (result.equals("SUCCESS")) {
+			return null;
+		}
+
+		Element messageElement = Dom4JUtil.getNewElement(
+			"div", null,
+			Dom4JUtil.getNewAnchorElement(
+				getBuildURL() + "/consoleText", null, getDisplayName()));
+
+		if (result.equals("ABORTED")) {
+			messageElement.add(
+				Dom4JUtil.toCodeSnippetElement("Build was aborted"));
+		}
+
+		if (result.equals("FAILURE")) {
+			Element failureMessageElement = getFailureMessageElement();
+
+			if (failureMessageElement != null) {
+				messageElement.add(failureMessageElement);
+			}
+		}
+
+		if (result.equals("UNSTABLE")) {
+			List<Element> failureElements = getTestResultGitHubElements(
+				getUniqueFailureTestResults());
+
+			List<Element> upstreamJobFailureElements =
+				getTestResultGitHubElements(getUpstreamJobFailureTestResults());
+
+			if (!upstreamJobFailureElements.isEmpty()) {
+				upstreamJobFailureMessageElement = messageElement.createCopy();
+
+				Dom4JUtil.getOrderedListElement(
+					upstreamJobFailureElements,
+					upstreamJobFailureMessageElement, 3);
+			}
+
+			Dom4JUtil.getOrderedListElement(failureElements, messageElement, 3);
+
+			if (failureElements.isEmpty()) {
+				return null;
+			}
+		}
+
+		return messageElement;
 	}
 
 	@Override
@@ -110,6 +187,23 @@ public class DownstreamBuild extends BaseBuild {
 		}
 
 		return testResults;
+	}
+
+	@Override
+	public List<TestResult> getUniqueFailureTestResults() {
+		List<TestResult> uniqueFailureTestResults = new ArrayList<>();
+
+		for (TestResult testResult : getTestResults(null)) {
+			if (!testResult.isFailing()) {
+				continue;
+			}
+
+			if (testResult.isUniqueFailure()) {
+				uniqueFailureTestResults.add(testResult);
+			}
+		}
+
+		return uniqueFailureTestResults;
 	}
 
 	@Override
@@ -191,6 +285,18 @@ public class DownstreamBuild extends BaseBuild {
 	@Override
 	protected Element getGitHubMessageJobResultsElement() {
 		return null;
+	}
+
+	protected List<Element> getTestResultGitHubElements(
+		List<TestResult> testResults) {
+
+		List<Element> testResultGitHubElements = new ArrayList<>();
+
+		for (TestResult testResult : testResults) {
+			testResultGitHubElements.add(testResult.getGitHubElement());
+		}
+
+		return testResultGitHubElements;
 	}
 
 }

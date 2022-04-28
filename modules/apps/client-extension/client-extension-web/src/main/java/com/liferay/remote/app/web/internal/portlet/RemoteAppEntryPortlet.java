@@ -172,7 +172,7 @@ public class RemoteAppEntryPortlet extends MVCPortlet {
 		ScriptData scriptData = new ScriptData();
 
 		String moduleName = _npmResolver.resolveModuleName(
-			"@liferay/client-extension-web/remote_protocol/bridge");
+			"@liferay/remote-app-web/remote_protocol/bridge");
 
 		scriptData.append(
 			null, "RemoteProtocolBridge.default()",

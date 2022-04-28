@@ -19,7 +19,7 @@ import {
 
 const originalAddEventListener = window.__proto__.addEventListener;
 
-describe('client-extension-web', () => {
+describe('remote-app-web', () => {
 	let iframe;
 	let init;
 	let ms;

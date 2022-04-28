@@ -1,4 +1,4 @@
-Bundle-Name: Liferay Client Extension Web
-Bundle-SymbolicName: com.liferay.client.extension.web
+Bundle-Name: Liferay Remote App Web
+Bundle-SymbolicName: com.liferay.remote.app.web
 Bundle-Version: 2.0.27
-Web-ContextPath: /client-extension-web
+Web-ContextPath: /remote-app-web

@@ -14,13 +14,13 @@
 
 package com.liferay.client.extension.service.http;
 
-import com.liferay.client.extension.service.RemoteAppEntryServiceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.HttpPrincipal;
 import com.liferay.portal.kernel.service.http.TunnelUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
+import com.liferay.client.extension.service.RemoteAppEntryServiceUtil;
 
 /**
  * Provides the HTTP utility for the
@@ -192,9 +192,8 @@ public class RemoteAppEntryServiceHttp {
 		}
 	}
 
-	public static com.liferay.client.extension.model.RemoteAppEntry
-			getRemoteAppEntry(
-				HttpPrincipal httpPrincipal, long remoteAppEntryId)
+	public static com.liferay.client.extension.model.RemoteAppEntry getRemoteAppEntry(
+			HttpPrincipal httpPrincipal, long remoteAppEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {

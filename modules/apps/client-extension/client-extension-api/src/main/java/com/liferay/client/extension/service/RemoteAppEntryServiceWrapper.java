@@ -56,13 +56,11 @@ public class RemoteAppEntryServiceWrapper
 	}
 
 	@Override
-	public com.liferay.client.extension.model.RemoteAppEntry
-			addIFrameRemoteAppEntry(
-				String description, String friendlyURLMapping, String iFrameURL,
-				boolean instanceable,
-				java.util.Map<java.util.Locale, String> nameMap,
-				String portletCategoryName, String properties,
-				String sourceCodeURL)
+	public com.liferay.client.extension.model.RemoteAppEntry addIFrameRemoteAppEntry(
+			String description, String friendlyURLMapping, String iFrameURL,
+			boolean instanceable,
+			java.util.Map<java.util.Locale, String> nameMap,
+			String portletCategoryName, String properties, String sourceCodeURL)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _remoteAppEntryService.addIFrameRemoteAppEntry(
@@ -71,8 +69,8 @@ public class RemoteAppEntryServiceWrapper
 	}
 
 	@Override
-	public com.liferay.client.extension.model.RemoteAppEntry
-			deleteRemoteAppEntry(long remoteAppEntryId)
+	public com.liferay.client.extension.model.RemoteAppEntry deleteRemoteAppEntry(
+			long remoteAppEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _remoteAppEntryService.deleteRemoteAppEntry(remoteAppEntryId);

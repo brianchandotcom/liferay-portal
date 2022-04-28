@@ -14,14 +14,6 @@
 
 package com.liferay.client.extension.service.persistence.impl;
 
-import com.liferay.client.extension.exception.NoSuchRemoteAppEntryException;
-import com.liferay.client.extension.model.RemoteAppEntry;
-import com.liferay.client.extension.model.RemoteAppEntryTable;
-import com.liferay.client.extension.model.impl.RemoteAppEntryImpl;
-import com.liferay.client.extension.model.impl.RemoteAppEntryModelImpl;
-import com.liferay.client.extension.service.persistence.RemoteAppEntryPersistence;
-import com.liferay.client.extension.service.persistence.RemoteAppEntryUtil;
-import com.liferay.client.extension.service.persistence.impl.constants.RemoteAppPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -56,6 +48,14 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUID;
+import com.liferay.client.extension.exception.NoSuchRemoteAppEntryException;
+import com.liferay.client.extension.model.RemoteAppEntry;
+import com.liferay.client.extension.model.RemoteAppEntryTable;
+import com.liferay.client.extension.model.impl.RemoteAppEntryImpl;
+import com.liferay.client.extension.model.impl.RemoteAppEntryModelImpl;
+import com.liferay.client.extension.service.persistence.RemoteAppEntryPersistence;
+import com.liferay.client.extension.service.persistence.RemoteAppEntryUtil;
+import com.liferay.client.extension.service.persistence.impl.constants.RemoteAppPersistenceConstants;
 
 import java.io.Serializable;
 

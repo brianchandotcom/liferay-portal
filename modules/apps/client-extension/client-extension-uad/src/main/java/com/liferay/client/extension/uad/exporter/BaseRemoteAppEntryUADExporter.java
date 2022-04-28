@@ -14,11 +14,11 @@
 
 package com.liferay.client.extension.uad.exporter;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.client.extension.model.RemoteAppEntry;
 import com.liferay.client.extension.service.RemoteAppEntryLocalService;
 import com.liferay.client.extension.uad.constants.RemoteAppUADConstants;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.user.associated.data.exporter.DynamicQueryUADExporter;
 
 import org.osgi.service.component.annotations.Reference;

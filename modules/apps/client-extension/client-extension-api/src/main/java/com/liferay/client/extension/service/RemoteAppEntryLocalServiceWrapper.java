@@ -58,13 +58,11 @@ public class RemoteAppEntryLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.client.extension.model.RemoteAppEntry
-			addIFrameRemoteAppEntry(
-				long userId, String description, String friendlyURLMapping,
-				String iFrameURL, boolean instanceable,
-				java.util.Map<java.util.Locale, String> nameMap,
-				String portletCategoryName, String properties,
-				String sourceCodeURL)
+	public com.liferay.client.extension.model.RemoteAppEntry addIFrameRemoteAppEntry(
+			long userId, String description, String friendlyURLMapping,
+			String iFrameURL, boolean instanceable,
+			java.util.Map<java.util.Locale, String> nameMap,
+			String portletCategoryName, String properties, String sourceCodeURL)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _remoteAppEntryLocalService.addIFrameRemoteAppEntry(
@@ -129,8 +127,8 @@ public class RemoteAppEntryLocalServiceWrapper
 	 * @return the new remote app entry
 	 */
 	@Override
-	public com.liferay.client.extension.model.RemoteAppEntry
-		createRemoteAppEntry(long remoteAppEntryId) {
+	public com.liferay.client.extension.model.RemoteAppEntry createRemoteAppEntry(
+		long remoteAppEntryId) {
 
 		return _remoteAppEntryLocalService.createRemoteAppEntry(
 			remoteAppEntryId);
@@ -159,8 +157,8 @@ public class RemoteAppEntryLocalServiceWrapper
 	 * @throws PortalException if a remote app entry with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.client.extension.model.RemoteAppEntry
-			deleteRemoteAppEntry(long remoteAppEntryId)
+	public com.liferay.client.extension.model.RemoteAppEntry deleteRemoteAppEntry(
+			long remoteAppEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _remoteAppEntryLocalService.deleteRemoteAppEntry(
@@ -179,10 +177,8 @@ public class RemoteAppEntryLocalServiceWrapper
 	 * @throws PortalException
 	 */
 	@Override
-	public com.liferay.client.extension.model.RemoteAppEntry
-			deleteRemoteAppEntry(
-				com.liferay.client.extension.model.RemoteAppEntry
-					remoteAppEntry)
+	public com.liferay.client.extension.model.RemoteAppEntry deleteRemoteAppEntry(
+			com.liferay.client.extension.model.RemoteAppEntry remoteAppEntry)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _remoteAppEntryLocalService.deleteRemoteAppEntry(remoteAppEntry);
@@ -299,8 +295,8 @@ public class RemoteAppEntryLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.client.extension.model.RemoteAppEntry
-		fetchRemoteAppEntry(long remoteAppEntryId) {
+	public com.liferay.client.extension.model.RemoteAppEntry fetchRemoteAppEntry(
+		long remoteAppEntryId) {
 
 		return _remoteAppEntryLocalService.fetchRemoteAppEntry(
 			remoteAppEntryId);
@@ -476,10 +472,9 @@ public class RemoteAppEntryLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.client.extension.model.RemoteAppEntry>
-			search(
-				long companyId, String keywords, int start, int end,
-				com.liferay.portal.kernel.search.Sort sort)
+	public java.util.List<com.liferay.client.extension.model.RemoteAppEntry> search(
+			long companyId, String keywords, int start, int end,
+			com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _remoteAppEntryLocalService.search(
@@ -545,9 +540,8 @@ public class RemoteAppEntryLocalServiceWrapper
 	 * @return the remote app entry that was updated
 	 */
 	@Override
-	public com.liferay.client.extension.model.RemoteAppEntry
-		updateRemoteAppEntry(
-			com.liferay.client.extension.model.RemoteAppEntry remoteAppEntry) {
+	public com.liferay.client.extension.model.RemoteAppEntry updateRemoteAppEntry(
+		com.liferay.client.extension.model.RemoteAppEntry remoteAppEntry) {
 
 		return _remoteAppEntryLocalService.updateRemoteAppEntry(remoteAppEntry);
 	}

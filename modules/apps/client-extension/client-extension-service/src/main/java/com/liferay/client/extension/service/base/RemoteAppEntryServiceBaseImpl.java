@@ -14,10 +14,6 @@
 
 package com.liferay.client.extension.service.base;
 
-import com.liferay.client.extension.model.RemoteAppEntry;
-import com.liferay.client.extension.service.RemoteAppEntryService;
-import com.liferay.client.extension.service.RemoteAppEntryServiceUtil;
-import com.liferay.client.extension.service.persistence.RemoteAppEntryPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -27,6 +23,10 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.client.extension.model.RemoteAppEntry;
+import com.liferay.client.extension.service.RemoteAppEntryService;
+import com.liferay.client.extension.service.RemoteAppEntryServiceUtil;
+import com.liferay.client.extension.service.persistence.RemoteAppEntryPersistence;
 
 import java.lang.reflect.Field;
 

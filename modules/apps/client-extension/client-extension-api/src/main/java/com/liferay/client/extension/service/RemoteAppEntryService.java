@@ -14,7 +14,6 @@
 
 package com.liferay.client.extension.service;
 
-import com.liferay.client.extension.model.RemoteAppEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -23,6 +22,7 @@ import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.client.extension.model.RemoteAppEntry;
 
 import java.util.Locale;
 import java.util.Map;

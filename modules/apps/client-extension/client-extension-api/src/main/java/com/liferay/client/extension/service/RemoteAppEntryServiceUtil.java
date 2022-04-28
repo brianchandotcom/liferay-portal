@@ -14,8 +14,8 @@
 
 package com.liferay.client.extension.service;
 
-import com.liferay.client.extension.model.RemoteAppEntry;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.client.extension.model.RemoteAppEntry;
 
 import java.util.Map;
 

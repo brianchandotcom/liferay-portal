@@ -14,10 +14,10 @@
 
 package com.liferay.client.extension.service.persistence;
 
-import com.liferay.client.extension.model.RemoteAppEntry;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.client.extension.model.RemoteAppEntry;
 
 import java.io.Serializable;
 
@@ -200,8 +200,7 @@ public class RemoteAppEntryUtil {
 	 */
 	public static RemoteAppEntry findByUuid_First(
 			String uuid, OrderByComparator<RemoteAppEntry> orderByComparator)
-		throws com.liferay.client.extension.exception.
-			NoSuchRemoteAppEntryException {
+		throws com.liferay.client.extension.exception.NoSuchRemoteAppEntryException {
 
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
@@ -229,8 +228,7 @@ public class RemoteAppEntryUtil {
 	 */
 	public static RemoteAppEntry findByUuid_Last(
 			String uuid, OrderByComparator<RemoteAppEntry> orderByComparator)
-		throws com.liferay.client.extension.exception.
-			NoSuchRemoteAppEntryException {
+		throws com.liferay.client.extension.exception.NoSuchRemoteAppEntryException {
 
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
@@ -260,8 +258,7 @@ public class RemoteAppEntryUtil {
 	public static RemoteAppEntry[] findByUuid_PrevAndNext(
 			long remoteAppEntryId, String uuid,
 			OrderByComparator<RemoteAppEntry> orderByComparator)
-		throws com.liferay.client.extension.exception.
-			NoSuchRemoteAppEntryException {
+		throws com.liferay.client.extension.exception.NoSuchRemoteAppEntryException {
 
 		return getPersistence().findByUuid_PrevAndNext(
 			remoteAppEntryId, uuid, orderByComparator);
@@ -328,8 +325,7 @@ public class RemoteAppEntryUtil {
 	public static RemoteAppEntry[] filterFindByUuid_PrevAndNext(
 			long remoteAppEntryId, String uuid,
 			OrderByComparator<RemoteAppEntry> orderByComparator)
-		throws com.liferay.client.extension.exception.
-			NoSuchRemoteAppEntryException {
+		throws com.liferay.client.extension.exception.NoSuchRemoteAppEntryException {
 
 		return getPersistence().filterFindByUuid_PrevAndNext(
 			remoteAppEntryId, uuid, orderByComparator);
@@ -454,8 +450,7 @@ public class RemoteAppEntryUtil {
 	public static RemoteAppEntry findByUuid_C_First(
 			String uuid, long companyId,
 			OrderByComparator<RemoteAppEntry> orderByComparator)
-		throws com.liferay.client.extension.exception.
-			NoSuchRemoteAppEntryException {
+		throws com.liferay.client.extension.exception.NoSuchRemoteAppEntryException {
 
 		return getPersistence().findByUuid_C_First(
 			uuid, companyId, orderByComparator);
@@ -489,8 +484,7 @@ public class RemoteAppEntryUtil {
 	public static RemoteAppEntry findByUuid_C_Last(
 			String uuid, long companyId,
 			OrderByComparator<RemoteAppEntry> orderByComparator)
-		throws com.liferay.client.extension.exception.
-			NoSuchRemoteAppEntryException {
+		throws com.liferay.client.extension.exception.NoSuchRemoteAppEntryException {
 
 		return getPersistence().findByUuid_C_Last(
 			uuid, companyId, orderByComparator);
@@ -525,8 +519,7 @@ public class RemoteAppEntryUtil {
 	public static RemoteAppEntry[] findByUuid_C_PrevAndNext(
 			long remoteAppEntryId, String uuid, long companyId,
 			OrderByComparator<RemoteAppEntry> orderByComparator)
-		throws com.liferay.client.extension.exception.
-			NoSuchRemoteAppEntryException {
+		throws com.liferay.client.extension.exception.NoSuchRemoteAppEntryException {
 
 		return getPersistence().findByUuid_C_PrevAndNext(
 			remoteAppEntryId, uuid, companyId, orderByComparator);
@@ -599,8 +592,7 @@ public class RemoteAppEntryUtil {
 	public static RemoteAppEntry[] filterFindByUuid_C_PrevAndNext(
 			long remoteAppEntryId, String uuid, long companyId,
 			OrderByComparator<RemoteAppEntry> orderByComparator)
-		throws com.liferay.client.extension.exception.
-			NoSuchRemoteAppEntryException {
+		throws com.liferay.client.extension.exception.NoSuchRemoteAppEntryException {
 
 		return getPersistence().filterFindByUuid_C_PrevAndNext(
 			remoteAppEntryId, uuid, companyId, orderByComparator);
@@ -648,8 +640,7 @@ public class RemoteAppEntryUtil {
 	 */
 	public static RemoteAppEntry findByC_ERC(
 			long companyId, String externalReferenceCode)
-		throws com.liferay.client.extension.exception.
-			NoSuchRemoteAppEntryException {
+		throws com.liferay.client.extension.exception.NoSuchRemoteAppEntryException {
 
 		return getPersistence().findByC_ERC(companyId, externalReferenceCode);
 	}
@@ -691,8 +682,7 @@ public class RemoteAppEntryUtil {
 	 */
 	public static RemoteAppEntry removeByC_ERC(
 			long companyId, String externalReferenceCode)
-		throws com.liferay.client.extension.exception.
-			NoSuchRemoteAppEntryException {
+		throws com.liferay.client.extension.exception.NoSuchRemoteAppEntryException {
 
 		return getPersistence().removeByC_ERC(companyId, externalReferenceCode);
 	}
@@ -746,8 +736,7 @@ public class RemoteAppEntryUtil {
 	 * @throws NoSuchRemoteAppEntryException if a remote app entry with the primary key could not be found
 	 */
 	public static RemoteAppEntry remove(long remoteAppEntryId)
-		throws com.liferay.client.extension.exception.
-			NoSuchRemoteAppEntryException {
+		throws com.liferay.client.extension.exception.NoSuchRemoteAppEntryException {
 
 		return getPersistence().remove(remoteAppEntryId);
 	}
@@ -764,8 +753,7 @@ public class RemoteAppEntryUtil {
 	 * @throws NoSuchRemoteAppEntryException if a remote app entry with the primary key could not be found
 	 */
 	public static RemoteAppEntry findByPrimaryKey(long remoteAppEntryId)
-		throws com.liferay.client.extension.exception.
-			NoSuchRemoteAppEntryException {
+		throws com.liferay.client.extension.exception.NoSuchRemoteAppEntryException {
 
 		return getPersistence().findByPrimaryKey(remoteAppEntryId);
 	}

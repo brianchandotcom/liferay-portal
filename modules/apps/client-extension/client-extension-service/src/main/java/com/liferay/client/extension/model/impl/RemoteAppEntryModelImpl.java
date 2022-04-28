@@ -14,8 +14,6 @@
 
 package com.liferay.client.extension.model.impl;
 
-import com.liferay.client.extension.model.RemoteAppEntry;
-import com.liferay.client.extension.model.RemoteAppEntryModel;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
@@ -38,6 +36,8 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.client.extension.model.RemoteAppEntry;
+import com.liferay.client.extension.model.RemoteAppEntryModel;
 
 import java.io.Serializable;
 

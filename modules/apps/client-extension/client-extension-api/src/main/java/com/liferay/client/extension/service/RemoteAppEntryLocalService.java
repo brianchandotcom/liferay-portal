@@ -14,7 +14,6 @@
 
 package com.liferay.client.extension.service;
 
-import com.liferay.client.extension.model.RemoteAppEntry;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.cluster.Clusterable;
@@ -37,6 +36,7 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.client.extension.model.RemoteAppEntry;
 
 import java.io.Serializable;
 

@@ -14,11 +14,11 @@
 
 package com.liferay.client.extension.model.impl;
 
-import com.liferay.client.extension.model.RemoteAppEntry;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
+import com.liferay.client.extension.model.RemoteAppEntry;
 
 import java.io.Externalizable;
 import java.io.IOException;

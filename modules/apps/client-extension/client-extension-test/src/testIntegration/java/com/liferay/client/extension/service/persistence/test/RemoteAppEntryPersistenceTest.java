@@ -15,11 +15,6 @@
 package com.liferay.client.extension.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.client.extension.exception.NoSuchRemoteAppEntryException;
-import com.liferay.client.extension.model.RemoteAppEntry;
-import com.liferay.client.extension.service.RemoteAppEntryLocalServiceUtil;
-import com.liferay.client.extension.service.persistence.RemoteAppEntryPersistence;
-import com.liferay.client.extension.service.persistence.RemoteAppEntryUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -38,6 +33,11 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
+import com.liferay.client.extension.exception.NoSuchRemoteAppEntryException;
+import com.liferay.client.extension.model.RemoteAppEntry;
+import com.liferay.client.extension.service.RemoteAppEntryLocalServiceUtil;
+import com.liferay.client.extension.service.persistence.RemoteAppEntryPersistence;
+import com.liferay.client.extension.service.persistence.RemoteAppEntryUtil;
 
 import java.io.Serializable;
 

@@ -376,12 +376,13 @@ definition {
 
 			Alert.viewSuccessMessageText(successMessage = "1 row was imported successfully.");
 
-			CommerceOrders.viewOrdersDetails(
-				productListPrice = "24.00",
+			CommerceAcceleratorsInitializer.reviewOrder(
+				orderAuthor = "Buyer User",
 				productName = "U-Joint",
+				productPrice = "24.00",
 				productQuantity = "1",
 				productSku = "MIN55861",
-				productTotalPrice = "24.00");
+				productUnitPrice = "24.00");
 		}
 	}
 
@@ -644,19 +645,21 @@ definition {
 
 			Refresh();
 
-			CommerceOrders.viewOrdersDetails(
-				productListPrice = "15.00",
+			CommerceAcceleratorsInitializer.reviewOrder(
+				orderAuthor = "Buyer User",
 				productName = "Transmission Cooler Line Assembly",
+				productPrice = "15.00",
 				productQuantity = "1",
 				productSku = "MIN55860",
-				productTotalPrice = "15.00");
+				productUnitPrice = "15.00");
 
-			CommerceOrders.viewOrdersDetails(
-				productListPrice = "34.00",
+			CommerceAcceleratorsInitializer.reviewOrder(
+				orderAuthor = "Buyer User",
 				productName = "Torque Converters",
+				productPrice = "34.00",
 				productQuantity = "1",
 				productSku = "MIN55859",
-				productTotalPrice = "34.00");
+				productUnitPrice = "34.00");
 
 			AssertElementNotPresent(
 				key_productName = "U-Joint",

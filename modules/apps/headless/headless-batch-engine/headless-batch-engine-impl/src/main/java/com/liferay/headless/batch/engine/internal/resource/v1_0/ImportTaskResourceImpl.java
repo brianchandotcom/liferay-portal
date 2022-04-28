@@ -31,6 +31,7 @@ import com.liferay.headless.batch.engine.dto.v1_0.FailedItem;
 import com.liferay.headless.batch.engine.dto.v1_0.ImportTask;
 import com.liferay.headless.batch.engine.internal.resource.v1_0.util.ParametersUtil;
 import com.liferay.headless.batch.engine.resource.v1_0.ImportTaskResource;
+import com.liferay.normalizer.Normalizer;
 import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
@@ -135,18 +136,19 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 
 	@Override
 	public Response getImportTaskByExternalReferenceCodeContent(
-			String externalReferenceCode)
+			String externalReferenceCode, String fileName)
 		throws Exception {
 
 		return _getImportTaskContent(
 			_batchEngineImportTaskLocalService.
 				getBatchEngineImportTaskByExternalReferenceCode(
-					contextCompany.getCompanyId(), externalReferenceCode));
+					contextCompany.getCompanyId(), externalReferenceCode),
+			fileName);
 	}
 
 	@Override
 	public Response getImportTaskByExternalReferenceCodeFailedItemReport(
-			String externalReferenceCode)
+			String externalReferenceCode, String fileName)
 		throws Exception {
 
 		BatchEngineImportTask batchEngineImportTask =
@@ -155,21 +157,25 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 					contextCompany.getCompanyId(), externalReferenceCode);
 
 		return _getImportTaskFailedItemReport(
-			batchEngineImportTask.getBatchEngineImportTaskId());
+			batchEngineImportTask.getBatchEngineImportTaskId(), fileName);
 	}
 
 	@Override
-	public Response getImportTaskContent(Long importTaskId) throws Exception {
-		return _getImportTaskContent(
-			_batchEngineImportTaskLocalService.getBatchEngineImportTask(
-				importTaskId));
-	}
-
-	@Override
-	public Response getImportTaskFailedItemReport(Long importTaskId)
+	public Response getImportTaskContent(Long importTaskId, String fileName)
 		throws Exception {
 
-		return _getImportTaskFailedItemReport(importTaskId);
+		return _getImportTaskContent(
+			_batchEngineImportTaskLocalService.getBatchEngineImportTask(
+				importTaskId),
+			fileName);
+	}
+
+	@Override
+	public Response getImportTaskFailedItemReport(
+			Long importTaskId, String fileName)
+		throws Exception {
+
+		return _getImportTaskFailedItemReport(importTaskId, fileName);
 	}
 
 	@Override
@@ -324,7 +330,7 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 	}
 
 	private Response _getImportTaskContent(
-		BatchEngineImportTask batchEngineImportTask) {
+		BatchEngineImportTask batchEngineImportTask, String fileName) {
 
 		BatchEngineTaskExecuteStatus batchEngineTaskExecuteStatus =
 			BatchEngineTaskExecuteStatus.valueOf(
@@ -343,15 +349,21 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 				batchEngineImportTask.getBatchEngineImportTaskId()),
 			outputStream);
 
+		String normalizedFileName =
+			(fileName != null) ? _normalizeFileName(fileName) :
+				StringUtil.randomString();
+
 		return Response.ok(
 			streamingOutput
 		).header(
 			"content-disposition",
-			"attachment; filename=" + StringUtil.randomString() + ".zip"
+			"attachment; filename=" + normalizedFileName + ".zip"
 		).build();
 	}
 
-	private Response _getImportTaskFailedItemReport(long importTaskId) {
+	private Response _getImportTaskFailedItemReport(
+		long importTaskId, String fileName) {
+
 		StreamingOutput streamingOutput = outputStream -> {
 			try (BufferedWriter bufferedWriter = new BufferedWriter(
 					new OutputStreamWriter(outputStream))) {
@@ -377,11 +389,15 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 			}
 		};
 
+		String normalizedFileName =
+			(fileName != null) ? _normalizeFileName(fileName) :
+				StringUtil.randomString();
+
 		return Response.ok(
 			streamingOutput
 		).header(
 			"Content-Disposition",
-			"attachment; filename=" + StringUtil.randomString() + ".csv"
+			"attachment; filename=" + normalizedFileName + "_Errors.csv"
 		).build();
 	}
 
@@ -419,8 +435,17 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 				binaryFile.getInputStream());
 		}
 		else {
+			String fileName = binaryFile.getFileName();
+
+			String fileExtension = _file.getExtension(fileName);
+
+			String trimmedFileName = fileName.replaceAll(
+				"-.*.", "." + fileExtension);
+
+			String normalizedFileName = _normalizeFileName(trimmedFileName);
+
 			entry = _getContentAndExtensionFromUncompressedFile(
-				binaryFile.getFileName(), binaryFile.getInputStream());
+				normalizedFileName, binaryFile.getInputStream());
 		}
 
 		return _importFile(
@@ -467,6 +492,10 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 				batchEngineImportTask));
 
 		return _toImportTask(batchEngineImportTask);
+	}
+
+	private String _normalizeFileName(String fileName) {
+		return _normalizer.normalizeToAscii(fileName);
 	}
 
 	private FailedItem _toFailedItem(
@@ -567,6 +596,9 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 
 	@Reference
 	private ItemClassRegistry _itemClassRegistry;
+
+	@Reference
+	private Normalizer _normalizer;
 
 	@Reference
 	private PortalExecutorManager _portalExecutorManager;

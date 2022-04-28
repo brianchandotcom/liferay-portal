@@ -92,6 +92,10 @@ public class LayoutStructureItemUtil {
 			layoutStructure.getLayoutStructureItem(
 				layoutStructureItem.getParentItemId());
 
+		if (parentLayoutStructureItem == null) {
+			return null;
+		}
+
 		if (Objects.equals(parentLayoutStructureItem.getItemType(), itemType)) {
 			return parentLayoutStructureItem;
 		}
@@ -116,6 +120,10 @@ public class LayoutStructureItemUtil {
 		LayoutStructureItem parentLayoutStructureItem =
 			layoutStructure.getLayoutStructureItem(
 				layoutStructureItem.getParentItemId());
+
+		if (parentLayoutStructureItem == null) {
+			return false;
+		}
 
 		if (Objects.equals(parentLayoutStructureItem.getItemType(), itemType)) {
 			return true;

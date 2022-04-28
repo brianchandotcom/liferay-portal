@@ -469,6 +469,8 @@ public class PortalInstances {
 				return 0;
 			}
 
+			CompanyThreadLocal.setCompanyId(virtualHost.getCompanyId());
+
 			if (virtualHost.getLayoutSetId() != 0) {
 				LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
 					virtualHost.getLayoutSetId());

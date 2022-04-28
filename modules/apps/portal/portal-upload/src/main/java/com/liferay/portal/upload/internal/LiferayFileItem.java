@@ -208,7 +208,7 @@ public class LiferayFileItem extends DiskFileItem implements FileItem {
 	private static int _counter;
 
 	private final String _encoding;
-	private String _fileName;
+	private final String _fileName;
 	private final File _repository;
 	private final int _sizeThreshold;
 

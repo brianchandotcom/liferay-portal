@@ -87,8 +87,6 @@ definition {
 					locator1 = "CommerceAccelerators#GUEST_CHECKOUT_EMAIL",
 					value1 = "${guestEmail}");
 			}
-
-			Click(locator1 = "Button#CONTINUE");
 		}
 
 		Click(locator1 = "Button#CONTINUE");

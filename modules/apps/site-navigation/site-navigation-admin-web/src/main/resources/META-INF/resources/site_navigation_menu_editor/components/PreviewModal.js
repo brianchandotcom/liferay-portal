@@ -47,7 +47,7 @@ export function PreviewModal({observer}) {
 	);
 
 	return (
-		<ClayModal observer={observer}>
+		<ClayModal observer={observer} size="xl">
 			<ClayModal.Header>
 				{Liferay.Language.get('preview-menu')}
 			</ClayModal.Header>
@@ -75,7 +75,7 @@ export function PreviewModal({observer}) {
 					)}
 
 					<iframe
-						className={classNames('border-0 h-100 mt-4 w-100', {
+						className={classNames('border-0 h-75 mt-4 w-100', {
 							'd-none': loading,
 						})}
 						onLoad={() => {

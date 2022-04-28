@@ -688,6 +688,161 @@ public interface ObjectEntryPersistence extends BasePersistence<ObjectEntry> {
 	public int countByG_ODI(long groupId, long objectDefinitionId);
 
 	/**
+	 * Returns all the object entries where userId = &#63; and objectDefinitionId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param objectDefinitionId the object definition ID
+	 * @return the matching object entries
+	 */
+	public java.util.List<ObjectEntry> findByU_ODI(
+		long userId, long objectDefinitionId);
+
+	/**
+	 * Returns a range of all the object entries where userId = &#63; and objectDefinitionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param objectDefinitionId the object definition ID
+	 * @param start the lower bound of the range of object entries
+	 * @param end the upper bound of the range of object entries (not inclusive)
+	 * @return the range of matching object entries
+	 */
+	public java.util.List<ObjectEntry> findByU_ODI(
+		long userId, long objectDefinitionId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the object entries where userId = &#63; and objectDefinitionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param objectDefinitionId the object definition ID
+	 * @param start the lower bound of the range of object entries
+	 * @param end the upper bound of the range of object entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object entries
+	 */
+	public java.util.List<ObjectEntry> findByU_ODI(
+		long userId, long objectDefinitionId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ObjectEntry>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the object entries where userId = &#63; and objectDefinitionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param objectDefinitionId the object definition ID
+	 * @param start the lower bound of the range of object entries
+	 * @param end the upper bound of the range of object entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching object entries
+	 */
+	public java.util.List<ObjectEntry> findByU_ODI(
+		long userId, long objectDefinitionId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ObjectEntry>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first object entry in the ordered set where userId = &#63; and objectDefinitionId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param objectDefinitionId the object definition ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object entry
+	 * @throws NoSuchObjectEntryException if a matching object entry could not be found
+	 */
+	public ObjectEntry findByU_ODI_First(
+			long userId, long objectDefinitionId,
+			com.liferay.portal.kernel.util.OrderByComparator<ObjectEntry>
+				orderByComparator)
+		throws NoSuchObjectEntryException;
+
+	/**
+	 * Returns the first object entry in the ordered set where userId = &#63; and objectDefinitionId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param objectDefinitionId the object definition ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object entry, or <code>null</code> if a matching object entry could not be found
+	 */
+	public ObjectEntry fetchByU_ODI_First(
+		long userId, long objectDefinitionId,
+		com.liferay.portal.kernel.util.OrderByComparator<ObjectEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the last object entry in the ordered set where userId = &#63; and objectDefinitionId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param objectDefinitionId the object definition ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object entry
+	 * @throws NoSuchObjectEntryException if a matching object entry could not be found
+	 */
+	public ObjectEntry findByU_ODI_Last(
+			long userId, long objectDefinitionId,
+			com.liferay.portal.kernel.util.OrderByComparator<ObjectEntry>
+				orderByComparator)
+		throws NoSuchObjectEntryException;
+
+	/**
+	 * Returns the last object entry in the ordered set where userId = &#63; and objectDefinitionId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param objectDefinitionId the object definition ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object entry, or <code>null</code> if a matching object entry could not be found
+	 */
+	public ObjectEntry fetchByU_ODI_Last(
+		long userId, long objectDefinitionId,
+		com.liferay.portal.kernel.util.OrderByComparator<ObjectEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the object entries before and after the current object entry in the ordered set where userId = &#63; and objectDefinitionId = &#63;.
+	 *
+	 * @param objectEntryId the primary key of the current object entry
+	 * @param userId the user ID
+	 * @param objectDefinitionId the object definition ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next object entry
+	 * @throws NoSuchObjectEntryException if a object entry with the primary key could not be found
+	 */
+	public ObjectEntry[] findByU_ODI_PrevAndNext(
+			long objectEntryId, long userId, long objectDefinitionId,
+			com.liferay.portal.kernel.util.OrderByComparator<ObjectEntry>
+				orderByComparator)
+		throws NoSuchObjectEntryException;
+
+	/**
+	 * Removes all the object entries where userId = &#63; and objectDefinitionId = &#63; from the database.
+	 *
+	 * @param userId the user ID
+	 * @param objectDefinitionId the object definition ID
+	 */
+	public void removeByU_ODI(long userId, long objectDefinitionId);
+
+	/**
+	 * Returns the number of object entries where userId = &#63; and objectDefinitionId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param objectDefinitionId the object definition ID
+	 * @return the number of matching object entries
+	 */
+	public int countByU_ODI(long userId, long objectDefinitionId);
+
+	/**
 	 * Returns all the object entries where objectDefinitionId = &#63; and status &ne; &#63;.
 	 *
 	 * @param objectDefinitionId the object definition ID

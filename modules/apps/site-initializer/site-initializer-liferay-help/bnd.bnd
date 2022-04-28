@@ -1,5 +1,0 @@
-Bundle-Name: Liferay Site Initializer Liferay Help
-Bundle-SymbolicName: com.liferay.site.initializer.liferay.help
-Bundle-Version: 1.0.0
-Liferay-Site-Initializer-Name: Liferay Help
-Web-ContextPath: /site-initializer-liferay-help

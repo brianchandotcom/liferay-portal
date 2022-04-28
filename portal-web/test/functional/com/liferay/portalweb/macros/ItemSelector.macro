@@ -287,6 +287,8 @@ definition {
 	macro previewEmbeddedVideo {
 		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
 
+		WaitForPageLoad();
+
 		if (isSet(invalidURL)) {
 			if (contains("${invalidURL}", "youtube")) {
 				SelectFrame.selectFrameNoLoading(locator1 = "IFrame#EXTERNAL_VIDEO_IFRAME");

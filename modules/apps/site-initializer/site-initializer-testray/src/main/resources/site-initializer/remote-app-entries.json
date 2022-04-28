@@ -14,7 +14,7 @@
 			"en_US": "Testray"
 		},
 		"portletCategoryName": "category.remote-apps",
-		"clientExtensionEntryKey": "TESTRAY",
-		"widgetName": "com_liferay_remote_app_web_internal_portlet_RemoteAppEntryPortlet_[$CLIENT_EXTENSION_ENTRY_ID:TESTRAY$]"
+		"remoteAppEntryKey": "TESTRAY",
+		"widgetName": "com_liferay_remote_app_web_internal_portlet_RemoteAppEntryPortlet_[$REMOTE_APP_ENTRY_ID:TESTRAY$]"
 	}
 ]

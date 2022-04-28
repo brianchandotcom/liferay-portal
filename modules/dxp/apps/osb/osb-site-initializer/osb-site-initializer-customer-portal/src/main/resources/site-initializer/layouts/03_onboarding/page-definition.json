@@ -24,7 +24,7 @@
 									"portletSetupPortletDecoratorId": "barebone",
 									"properties": "okta-session-url: https://login-dev.liferay.com/api/v1/sessions/me/\nroute: onboarding\nlicense-key-download-url: https://webserver-lrprovisioning-uat.lfr.cloud/o/provisioning-rest/v1.0"
 								},
-								"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:CUSTOMER-PORTAL$]"
+								"widgetName": "[$REMOTE_APP_ENTRY_ID:CUSTOMER-PORTAL$]"
 							}
 						},
 						"type": "Widget"

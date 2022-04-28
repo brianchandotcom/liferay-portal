@@ -22,8 +22,8 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
-import com.liferay.client.extension.model.ClientExtensionEntry;
-import com.liferay.client.extension.service.ClientExtensionEntryLocalService;
+import com.liferay.client.extension.model.RemoteAppEntry;
+import com.liferay.client.extension.service.RemoteAppEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
@@ -188,7 +188,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		AccountRoleResource.Factory accountRoleResourceFactory,
 		AssetCategoryLocalService assetCategoryLocalService,
 		AssetListEntryLocalService assetListEntryLocalService, Bundle bundle,
-		ClientExtensionEntryLocalService clientExtensionEntryLocalService,
 		DDMStructureLocalService ddmStructureLocalService,
 		DDMTemplateLocalService ddmTemplateLocalService,
 		DefaultDDMStructureHelper defaultDDMStructureHelper,
@@ -215,6 +214,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		ObjectRelationshipResource.Factory objectRelationshipResourceFactory,
 		ObjectEntryLocalService objectEntryLocalService,
 		OrganizationResource.Factory organizationResourceFactory, Portal portal,
+		RemoteAppEntryLocalService remoteAppEntryLocalService,
 		ResourceActionLocalService resourceActionLocalService,
 		ResourcePermissionLocalService resourcePermissionLocalService,
 		RoleLocalService roleLocalService,
@@ -240,7 +240,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_assetCategoryLocalService = assetCategoryLocalService;
 		_assetListEntryLocalService = assetListEntryLocalService;
 		_bundle = bundle;
-		_clientExtensionEntryLocalService = clientExtensionEntryLocalService;
 		_ddmStructureLocalService = ddmStructureLocalService;
 		_ddmTemplateLocalService = ddmTemplateLocalService;
 		_defaultDDMStructureHelper = defaultDDMStructureHelper;
@@ -270,6 +269,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_objectEntryLocalService = objectEntryLocalService;
 		_organizationResourceFactory = organizationResourceFactory;
 		_portal = portal;
+		_remoteAppEntryLocalService = remoteAppEntryLocalService;
 		_resourceActionLocalService = resourceActionLocalService;
 		_resourcePermissionLocalService = resourcePermissionLocalService;
 		_roleLocalService = roleLocalService;
@@ -438,16 +438,16 @@ public class BundleSiteInitializer implements SiteInitializer {
 					objectDefinitionIdsStringUtilReplaceValues,
 					serviceContext));
 
-			Map<String, String> clientExtensionEntryIdsStringUtilReplaceValues =
+			Map<String, String> remoteAppEntryIdsStringUtilReplaceValues =
 				_invoke(
-					() -> _addClientExtensionEntries(
+					() -> _addRemoteAppEntries(
 						documentsStringUtilReplaceValues, serviceContext));
 
 			_invoke(
 				() -> _addLayoutsContent(
 					assetListEntryIdsStringUtilReplaceValues,
-					clientExtensionEntryIdsStringUtilReplaceValues,
-					documentsStringUtilReplaceValues, layouts, serviceContext,
+					documentsStringUtilReplaceValues, layouts,
+					remoteAppEntryIdsStringUtilReplaceValues, serviceContext,
 					siteNavigationMenuItemSettingsBuilder.build(),
 					taxonomyCategoryIdsStringUtilReplaceValues));
 
@@ -624,80 +624,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 				map, true
 			).buildString(),
 			serviceContext);
-	}
-
-	private Map<String, String> _addClientExtensionEntries(
-			Map<String, String> documentsStringUtilReplaceValues,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		String json = SiteInitializerUtil.read(
-			"/site-initializer/remote-app-entries.json", _servletContext);
-
-		if (json == null) {
-			return Collections.emptyMap();
-		}
-
-		Map<String, String> clientExtensionEntryIdsStringUtilReplaceValues =
-			new HashMap<>();
-
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
-
-		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-			StringBundler sb = new StringBundler();
-
-			JSONObject propertiesJSONObject = jsonObject.getJSONObject(
-				"properties");
-
-			if (propertiesJSONObject != null) {
-				for (String key : propertiesJSONObject.keySet()) {
-					sb.append(key);
-					sb.append(StringPool.EQUAL);
-					sb.append(propertiesJSONObject.getString(key));
-					sb.append(StringPool.NEW_LINE);
-				}
-			}
-
-			ClientExtensionEntry clientExtensionEntry =
-				_clientExtensionEntryLocalService.
-					addOrUpdateCustomElementClientExtensionEntry(
-						jsonObject.getString("externalReferenceCode"),
-						serviceContext.getUserId(),
-						StringUtil.replace(
-							StringUtil.merge(
-								JSONUtil.toStringArray(
-									jsonObject.getJSONArray("cssURLs")),
-								StringPool.NEW_LINE),
-							"[$", "$]", documentsStringUtilReplaceValues),
-						jsonObject.getString("htmlElementName"),
-						StringUtil.replace(
-							StringUtil.merge(
-								JSONUtil.toStringArray(
-									jsonObject.getJSONArray("elementURLs")),
-								StringPool.NEW_LINE),
-							"[$", "$]", documentsStringUtilReplaceValues),
-						false, StringPool.BLANK, StringPool.BLANK,
-						jsonObject.getBoolean("instanceable"),
-						SiteInitializerUtil.toMap(
-							jsonObject.getString("name_i18n")),
-						jsonObject.getString("portletCategoryName"),
-						sb.toString(), StringPool.BLANK);
-
-			clientExtensionEntryIdsStringUtilReplaceValues.put(
-				"CLIENT_EXTENSION_ENTRY_ID:" +
-					jsonObject.getString("clientExtensionEntryKey"),
-				StringUtil.replace(
-					jsonObject.getString("widgetName"),
-					StringBundler.concat(
-						"[$CLIENT_EXTENSION_ENTRY_ID:",
-						jsonObject.getString("clientExtensionEntryKey"), "$]"),
-					String.valueOf(
-						clientExtensionEntry.getClientExtensionEntryId())));
-		}
-
-		return clientExtensionEntryIdsStringUtilReplaceValues;
 	}
 
 	private void _addCPDefinitions(
@@ -1298,8 +1224,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 	private void _addLayoutContent(
 			Map<String, String> assetListEntryIdsStringUtilReplaceValues,
-			Map<String, String> clientExtensionEntryIdsStringUtilReplaceValues,
 			Map<String, String> documentsStringUtilReplaceValues, Layout layout,
+			Map<String, String> remoteAppEntryIdsStringUtilReplaceValues,
 			String resourcePath, ServiceContext serviceContext,
 			Map<String, String> taxonomyCategoryIdsStringUtilReplaceValues)
 		throws Exception {
@@ -1320,9 +1246,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 			HashMapBuilder.putAll(
 				assetListEntryIdsStringUtilReplaceValues
 			).putAll(
-				clientExtensionEntryIdsStringUtilReplaceValues
-			).putAll(
 				documentsStringUtilReplaceValues
+			).putAll(
+				remoteAppEntryIdsStringUtilReplaceValues
 			).putAll(
 				taxonomyCategoryIdsStringUtilReplaceValues
 			).build());
@@ -1538,9 +1464,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 	private void _addLayoutsContent(
 			Map<String, String> assetListEntryIdsStringUtilReplaceValues,
-			Map<String, String> clientExtensionEntryIdsStringUtilReplaceValues,
 			Map<String, String> documentsStringUtilReplaceValues,
-			Map<String, Layout> layouts, ServiceContext serviceContext,
+			Map<String, Layout> layouts,
+			Map<String, String> remoteAppEntryIdsStringUtilReplaceValues,
+			ServiceContext serviceContext,
 			Map<String, SiteNavigationMenuItemSetting>
 				siteNavigationMenuItemSettings,
 			Map<String, String> taxonomyCategoryIdsStringUtilReplaceValues)
@@ -1549,10 +1476,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 		for (Map.Entry<String, Layout> entry : layouts.entrySet()) {
 			_addLayoutContent(
 				assetListEntryIdsStringUtilReplaceValues,
-				clientExtensionEntryIdsStringUtilReplaceValues,
 				documentsStringUtilReplaceValues, entry.getValue(),
-				entry.getKey(), serviceContext,
-				taxonomyCategoryIdsStringUtilReplaceValues);
+				remoteAppEntryIdsStringUtilReplaceValues, entry.getKey(),
+				serviceContext, taxonomyCategoryIdsStringUtilReplaceValues);
 		}
 
 		_addSiteNavigationMenus(serviceContext, siteNavigationMenuItemSettings);
@@ -2083,6 +2009,79 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		_commerceSiteInitializer.addPortletSettings(
 			_classLoader, serviceContext, _servletContext);
+	}
+
+	private Map<String, String> _addRemoteAppEntries(
+			Map<String, String> documentsStringUtilReplaceValues,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		String json = SiteInitializerUtil.read(
+			"/site-initializer/remote-app-entries.json", _servletContext);
+
+		if (json == null) {
+			return Collections.emptyMap();
+		}
+
+		Map<String, String> remoteAppEntryIdsStringUtilReplaceValues =
+			new HashMap<>();
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			StringBundler sb = new StringBundler();
+
+			JSONObject propertiesJSONObject = jsonObject.getJSONObject(
+				"properties");
+
+			if (propertiesJSONObject != null) {
+				for (String key : propertiesJSONObject.keySet()) {
+					sb.append(key);
+					sb.append(StringPool.EQUAL);
+					sb.append(propertiesJSONObject.getString(key));
+					sb.append(StringPool.NEW_LINE);
+				}
+			}
+
+			RemoteAppEntry remoteAppEntry =
+				_remoteAppEntryLocalService.
+					addOrUpdateCustomElementRemoteAppEntry(
+						jsonObject.getString("externalReferenceCode"),
+						serviceContext.getUserId(),
+						StringUtil.replace(
+							StringUtil.merge(
+								JSONUtil.toStringArray(
+									jsonObject.getJSONArray("cssURLs")),
+								StringPool.NEW_LINE),
+							"[$", "$]", documentsStringUtilReplaceValues),
+						jsonObject.getString("htmlElementName"),
+						StringUtil.replace(
+							StringUtil.merge(
+								JSONUtil.toStringArray(
+									jsonObject.getJSONArray("elementURLs")),
+								StringPool.NEW_LINE),
+							"[$", "$]", documentsStringUtilReplaceValues),
+						false, StringPool.BLANK, StringPool.BLANK,
+						jsonObject.getBoolean("instanceable"),
+						SiteInitializerUtil.toMap(
+							jsonObject.getString("name_i18n")),
+						jsonObject.getString("portletCategoryName"),
+						sb.toString(), StringPool.BLANK);
+
+			remoteAppEntryIdsStringUtilReplaceValues.put(
+				"REMOTE_APP_ENTRY_ID:" +
+					jsonObject.getString("remoteAppEntryKey"),
+				StringUtil.replace(
+					jsonObject.getString("widgetName"),
+					StringBundler.concat(
+						"[$REMOTE_APP_ENTRY_ID:",
+						jsonObject.getString("remoteAppEntryKey"), "$]"),
+					String.valueOf(remoteAppEntry.getRemoteAppEntryId())));
+		}
+
+		return remoteAppEntryIdsStringUtilReplaceValues;
 	}
 
 	private void _addResourcePermissions(
@@ -3284,8 +3283,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final AssetListEntryLocalService _assetListEntryLocalService;
 	private final Bundle _bundle;
 	private final ClassLoader _classLoader;
-	private final ClientExtensionEntryLocalService
-		_clientExtensionEntryLocalService;
 	private CommerceSiteInitializer _commerceSiteInitializer;
 	private final DDMStructureLocalService _ddmStructureLocalService;
 	private final DDMTemplateLocalService _ddmTemplateLocalService;
@@ -3319,6 +3316,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_objectRelationshipResourceFactory;
 	private final OrganizationResource.Factory _organizationResourceFactory;
 	private final Portal _portal;
+	private final RemoteAppEntryLocalService _remoteAppEntryLocalService;
 	private final ResourceActionLocalService _resourceActionLocalService;
 	private final ResourcePermissionLocalService
 		_resourcePermissionLocalService;

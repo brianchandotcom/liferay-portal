@@ -15,7 +15,7 @@
 			"en_US": "Raylife Agent Portal"
 		},
 		"portletCategoryName": "category.remote-apps",
-		"clientExtensionEntryKey": "RAYLIFEAGENTPORTAL",
-		"widgetName": "com_liferay_remote_app_web_internal_portlet_RemoteAppEntryPortlet_[$CLIENT_EXTENSION_ENTRY_ID:RAYLIFEAGENTPORTAL$]"
+		"remoteAppEntryKey": "RAYLIFEAGENTPORTAL",
+		"widgetName": "com_liferay_remote_app_web_internal_portlet_RemoteAppEntryPortlet_[$REMOTE_APP_ENTRY_ID:RAYLIFEAGENTPORTAL$]"
 	}
 ]

@@ -14,7 +14,7 @@
 			"en_US": "Raylife"
 		},
 		"portletCategoryName": "category.remote-apps",
-		"clientExtensionEntryKey": "RAYLIFE",
-		"widgetName": "com_liferay_remote_app_web_internal_portlet_RemoteAppEntryPortlet_[$CLIENT_EXTENSION_ENTRY_ID:RAYLIFE$]"
+		"remoteAppEntryKey": "RAYLIFE",
+		"widgetName": "com_liferay_remote_app_web_internal_portlet_RemoteAppEntryPortlet_[$REMOTE_APP_ENTRY_ID:RAYLIFE$]"
 	}
 ]

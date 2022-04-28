@@ -24,7 +24,7 @@
 									"portletSetupPortletDecoratorId": "barebone",
 									"properties": "page:home\nroute:portal"
 								},
-								"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:CUSTOMER-PORTAL$]"
+								"widgetName": "[$REMOTE_APP_ENTRY_ID:CUSTOMER-PORTAL$]"
 							}
 						},
 						"type": "Widget"

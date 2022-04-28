@@ -25,7 +25,7 @@
 							"widgetInstance": {
 								"widgetConfig": {
 								},
-								"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:TESTRAY$]"
+								"widgetName": "[$REMOTE_APP_ENTRY_ID:TESTRAY$]"
 							}
 						},
 						"type": "Widget"

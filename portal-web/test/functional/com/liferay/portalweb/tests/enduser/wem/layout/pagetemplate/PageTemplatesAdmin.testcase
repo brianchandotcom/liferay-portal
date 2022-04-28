@@ -48,4 +48,147 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-145292. The user could view new icons on dropdown menu of page template."
+	@priority = "4"
+	test ViewDropdownMenuIconsInPageTemplatesAdmin {
+		task ("Given a Page Template creator has a new Display Page Template") {
+			task ("Add a display page template for Web Content Article and Basic Web Content") {
+				JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+					contentType = "Web Content Article",
+					displayPageTemplateEntryName = "Display Page Name",
+					groupName = "Test Site Name",
+					subType = "Basic Web Content");
+
+				DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+				DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+				PageEditor.clickPublish();
+			}
+		}
+
+		task ("When the Page Template creator open the ellipsis dropdown menu of display page template") {
+			Click.waitForMenuToggleJSClick(
+				key_card = "Display Page Name",
+				locator1 = "Card#CARD_ELLIPSIS");
+		}
+
+		task ("Then the Page Template creator can see the new icons on the dropdown menu") {
+			DropdownMenuItem.viewIcon(iconList = "pencil,change,upload,cog,password-policies,trash");
+		}
+
+		task ("When the Page Template creator open the dropdown menu of management toolbar after selecting the new display page template") {
+			LexiconCard.checkCardCheckbox(card = "Display Page Name");
+
+			Click(locator1 = "ManagementBar#MORE_ACTIONS_ELLIPSIS");
+		}
+
+		task ("Then the Page Template creator can see the new icon on the dropdown menu") {
+			DropdownMenuItem.viewIcon(iconList = "upload,trash");
+		}
+
+		task ("Given a Page Template creator has a new Page Template Set with a Content and Widget Page Template") {
+			task ("Add a Page Template Sets") {
+				JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+					groupName = "Test Site Name",
+					layoutPageTemplateCollectionName = "Test Page Template Set");
+			}
+
+			task ("Add a content and widget page template") {
+				for (var type : list "Content,Widget") {
+					JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
+						groupName = "Test Site Name",
+						layoutPageTemplateCollectionName = "Test Page Template Set",
+						layoutPageTemplateEntryName = "${type} Template Name",
+						layoutPageTemplateStatus = "Approved",
+						layoutPageTemplateType = "${type} Page Template");
+				}
+			}
+		}
+
+		task ("When the Page Template creator open the ellipsis dropdown menu of Page Template Sets") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			Click.waitForMenuToggleJSClick(locator1 = "NavNested#NAV_NESTED_ELLIPSIS");
+		}
+
+		task ("Then the Page Template creator can see the new icon on the dropdown menu") {
+			DropdownMenuItem.viewIcon(iconList = "trash");
+		}
+
+		task ("When the Page Template creator open the ellipsis dropdown menu of custom page template set") {
+			Click.waitForMenuToggleJSClick(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
+		}
+
+		task ("Then the Page Template creator can see the new icons on the dropdown menu") {
+			DropdownMenuItem.viewIcon(iconList = "pencil,password-policies,trash");
+		}
+
+		task ("When the Page Template creator open the ellipsis dropdown menu of content template") {
+			Click.waitForMenuToggleJSClick(
+				key_card = "Content Template Name",
+				locator1 = "Card#CARD_ELLIPSIS");
+		}
+
+		task ("Then the Page Template creator can see the new icons on the dropdown menu") {
+			DropdownMenuItem.viewIcon(iconList = "pencil,move-folder,change,upload,cog,password-policies,trash");
+		}
+
+		task ("When the Page Template creator open the ellipsis dropdown menu of widget template") {
+			Click.waitForMenuToggleJSClick(
+				key_card = "Widget Template Name",
+				locator1 = "Card#CARD_ELLIPSIS");
+		}
+
+		task ("Then the Page Template creator can see the new icons on the dropdown menu") {
+			DropdownMenuItem.viewIcon(iconList = "pencil,move-folder,change,cog,password-policies,trash");
+		}
+
+		task ("When the Page Template creator open the dropdown menu of management toolbar after selecting the new templates") {
+			ManagementBar.clickSelectAllCheckbox();
+
+			Click(locator1 = "ManagementBar#MORE_ACTIONS_ELLIPSIS");
+		}
+
+		task ("Then the Page Template creator can see the new icons on the dropdown menu") {
+			DropdownMenuItem.viewIcon(iconList = "upload,trash");
+		}
+
+		task ("Given a Page Template creator has a new Masters Template") {
+			task ("Add a custom master") {
+				JSONLayoutpagetemplate.addMasterPageTemplateEntry(
+					groupName = "Test Site Name",
+					masterPageTemplateEntryName = "Custom Masters Page Template");
+
+				MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
+				MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
+
+				Button.click(button = "Publish Master");
+
+				Alert.viewSuccessMessage();
+			}
+		}
+
+		task ("When the Page Template creator open the ellipsis dropdown menu of masters template") {
+			Click.waitForMenuToggleJSClick(
+				key_card = "Custom Masters Page Template",
+				locator1 = "Card#CARD_ELLIPSIS");
+		}
+
+		task ("Then the Page Template creator can see the new icons on the dropdown menu") {
+			DropdownMenuItem.viewIcon(iconList = "pencil,change,upload,copy,password-policies,trash");
+		}
+
+		task ("When the Page Template creator open the dropdown menu of management toolbar after selecting the new masters tamplate") {
+			LexiconCard.checkCardCheckbox(card = "Custom Masters Page Template");
+
+			Click(locator1 = "ManagementBar#MORE_ACTIONS_ELLIPSIS");
+		}
+
+		task ("Then the Page Template creator can see the new icons on the dropdown menu") {
+			DropdownMenuItem.viewIcon(iconList = "upload,trash");
+		}
+	}
+
 }

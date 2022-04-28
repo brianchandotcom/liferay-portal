@@ -2057,11 +2057,69 @@ public abstract class BaseBuild implements Build {
 
 		@Override
 		public int compare(Build build1, Build build2) {
-			String displayName1 = build1.getDisplayName();
-			String displayName2 = build2.getDisplayName();
+			String axisName1 = _getAxisName(build1);
+			String axisName2 = _getAxisName(build2);
 
-			return displayName1.compareTo(displayName2);
+			Matcher matcher1 = _pattern.matcher(axisName1);
+			Matcher matcher2 = _pattern.matcher(axisName2);
+
+			if (!matcher1.find() || !matcher2.find()) {
+				String displayName1 = build1.getDisplayName();
+				String displayName2 = build2.getDisplayName();
+
+				return displayName1.compareTo(displayName2);
+			}
+
+			String batchName1 = matcher1.group("batchName");
+			String batchName2 = matcher2.group("batchName");
+
+			if (!batchName1.equals(batchName2)) {
+				return batchName1.compareTo(batchName2);
+			}
+
+			Integer segment1 = Integer.valueOf(matcher1.group("segment"));
+			Integer segment2 = Integer.valueOf(matcher2.group("segment"));
+
+			if (!segment1.equals(segment2)) {
+				return segment1.compareTo(segment2);
+			}
+
+			String axisString1 = matcher1.group("axis");
+			String axisString2 = matcher2.group("axis");
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(axisString1) ||
+				JenkinsResultsParserUtil.isNullOrEmpty(axisString2)) {
+
+				String displayName1 = build1.getDisplayName();
+				String displayName2 = build2.getDisplayName();
+
+				return displayName1.compareTo(displayName2);
+			}
+
+			Integer axis1 = Integer.valueOf(axisString1);
+			Integer axis2 = Integer.valueOf(axisString2);
+
+			return axis1.compareTo(axis2);
 		}
+
+		private String _getAxisName(Build build) {
+			if (build instanceof AxisBuild) {
+				AxisBuild axisBuild = (AxisBuild)build;
+
+				return axisBuild.getAxisNumber();
+			}
+
+			if (build instanceof DownstreamBuild) {
+				DownstreamBuild downstreamBuild = (DownstreamBuild)build;
+
+				return downstreamBuild.getAxisName();
+			}
+
+			return build.getJobVariant();
+		}
+
+		private static final Pattern _pattern = Pattern.compile(
+			"(?<batchName>[^/]+)/(?<segment>\\d+)(/(?<axis>\\d+))?");
 
 	}
 

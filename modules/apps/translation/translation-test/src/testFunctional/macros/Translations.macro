@@ -488,7 +488,7 @@ definition {
 		}
 
 		AntCommand(
-			locator1 = "build-test.xml",
+			locator1 = "build-test-translation.xml",
 			value1 = "update-translation-file -Doperation=${operation} -Dcontentpage.translation.fragment.target.original=<![CDATA[${fragmentContent}]]></target> -Dcontentpage.translation.fragment.target=<![CDATA[${fragmentContentTranslation}]]></target> -Dcontentpage.translation.title.target.original=<![CDATA[${pageName}]]></target> -Dcontentpage.translation.title.target=<![CDATA[${pageNameTranslation}]]></target> -Dtranslation.file.encoding=${encoding} -Dtranslation.file.name=${translationFileName} -Dcontentpage.translation.file=${contentPageTranslation} -Dtranslation.zip.file.name=${translationZipFileName}");
 	}
 
@@ -572,12 +572,12 @@ definition {
 
 		if ("${os}" == "true") {
 			AntCommand(
-				locator1 = "build-test.xml",
+				locator1 = "build-test-translation.xml",
 				value1 = "update-translation-file -Doperation=${operation} -Dtranslation.content.target.original=60![CDATA[60p62${webContentContent}60/p62]]6260/target62 -Dtranslation.content.target=60![CDATA[60p62${contentTranslation}60/p62]]6260/target62 -Dtranslation.description.target.original=60![CDATA[60p62${webContentDescription}60/p62]]6260/target62 -Dtranslation.description.target=60![CDATA[60p62${descriptionTranslation}60/p62]]6260/target62 -Dtranslation.file.encoding=${encoding} -Dtranslation.title.target.original=60![CDATA[${webContentTitle}]]6260/target62 -Dtranslation.title.target=60![CDATA[${titleTranslation}]]6260/target62 -Dtranslation.zip.file.name=${translationZipFileName} -Dtranslation.file.name=${translationFileName} -Dtranslation.file.rename=${translationFileRename}");
 		}
 		else {
 			AntCommand(
-				locator1 = "build-test.xml",
+				locator1 = "build-test-translation.xml",
 				value1 = "update-translation-file -Doperation=${operation} -Dtranslation.content.target.original=<![CDATA[<p>${webContentContent}</p>]]></target> -Dtranslation.content.target=<![CDATA[<p>${contentTranslation}</p>]]></target> -Dtranslation.description.target.original=<![CDATA[<p>${webContentDescription}</p>]]></target> -Dtranslation.description.target=<![CDATA[<p>${descriptionTranslation}</p>]]></target> -Dtranslation.file.encoding=${encoding} -Dtranslation.title.target.original=<![CDATA[${webContentTitle}]]></target> -Dtranslation.title.target=<![CDATA[${titleTranslation}]]></target> -Dtranslation.zip.file.name=${translationZipFileName} -Dtranslation.file.name=${translationFileName} -Dtranslation.file.rename=${translationFileRename}");
 		}
 	}
@@ -625,7 +625,7 @@ definition {
 		}
 
 		AntCommand(
-			locator1 = "build-test.xml",
+			locator1 = "build-test-translation.xml",
 			value1 = "update-translation-file-id -Dtranslation.file.name=${translationFileName} -Dtranslation.entry.type=${translationEntryType} -Dtranslation.zip.file.name=${translationZipFileName}");
 	}
 

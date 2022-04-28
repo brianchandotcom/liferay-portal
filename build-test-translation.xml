@@ -1,0 +1,166 @@
+<?xml version="1.0"?>
+
+<project basedir="." default="test" name="build-test-translation" xmlns:antelope="antlib:ise.antelope.tasks" xmlns:if="ant:if" xmlns:unless="ant:unless">
+	<import file="build-test.xml" />
+
+	<target name="copy-translation-file">
+		<copy
+			file="${selenium.output.dir.name}/${translation.zip.file.name}/${translation.file.name}"
+			tofile="${selenium.output.dir.name}/${translation.file.name}"
+		/>
+	</target>
+
+	<target name="unzip-temp-file">
+		<antelope:stringutil property="fileName" string="${fileName}">
+			<antelope:replace regex="\*" replacement=" " />
+		</antelope:stringutil>
+
+		<unzip
+			dest="${selenium.output.dir.name}"
+			src="${selenium.output.dir.name}/${fileName}"
+		/>
+	</target>
+
+	<target name="update-translation-file">
+		<var name="translation.file.type" value="xlf" />
+
+		<antelope:stringutil property="translation.file.name" string="${translation.file.name}">
+			<antelope:replace regex="\*" replacement=" " />
+		</antelope:stringutil>
+
+		<antelope:stringutil property="translation.zip.file.name" string="${translation.zip.file.name}">
+			<antelope:replace regex="\*" replacement=" " />
+		</antelope:stringutil>
+
+		<if>
+			<equals arg1="${translation.zip.file.name}" arg2="WCGeneralName" />
+			<then>
+				<var name="translation.zip.file.name" value="Web Content Article Translations-en_US" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${operation}" arg2="unzip" />
+			<then>
+				<unzip
+					dest="${selenium.output.dir.name}/${translation.zip.file.name}"
+					src="${selenium.output.dir.name}/${translation.zip.file.name}.zip"
+				/>
+			</then>
+		</if>
+		<if>
+			<equals arg1="${translation.file.rename}" arg2="true" />
+			<then>
+				<move
+					file="${selenium.output.dir.name}/${translation.zip.file.name}/${translation.file.name}.${translation.file.type}"
+					tofile="${selenium.output.dir.name}/${translation.zip.file.name}/${translation.file.name}.xliff"
+				/>
+
+				<var name="translation.file.type" value="xliff" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${contentpage.translation.file}" arg2="true" />
+			<then>
+				<pathconvert property="translation.file.path">
+					<path>
+						<fileset
+							dir="${selenium.output.dir.name}/${translation.zip.file.name}"
+							includes="*${translation.file.name}.${translation.file.type}"
+						/>
+					</path>
+				</pathconvert>
+				<replace
+					file="${translation.file.path}"
+					token="${contentpage.translation.title.target.original}"
+					value="${contentpage.translation.title.target}"
+				/>
+				<replace
+					file="${translation.file.path}"
+					token="${contentpage.translation.fragment.target.original}"
+					value="${contentpage.translation.fragment.target}"
+				/>
+			</then>
+			<else>
+				<replace
+					file="${selenium.output.dir.name}/${translation.zip.file.name}/${translation.file.name}.${translation.file.type}"
+					token="${translation.title.target.original}"
+					value="${translation.title.target}"
+				/>
+				<replace
+					file="${selenium.output.dir.name}/${translation.zip.file.name}/${translation.file.name}.${translation.file.type}"
+					token="${translation.content.target.original}"
+					value="${translation.content.target}"
+				/>
+				<replace
+					file="${selenium.output.dir.name}/${translation.zip.file.name}/${translation.file.name}.${translation.file.type}"
+					token="${translation.description.target.original}"
+					value="${translation.description.target}"
+				/>
+			</else>
+		</if>
+
+		<if>
+			<equals arg1="${translation.file.encoding}" arg2="utf8" />
+			<then>
+				<pathconvert property="translation.file.path">
+					<path>
+						<fileset
+							dir="${selenium.output.dir.name}/${translation.zip.file.name}"
+							includes="*${translation.file.name}.${translation.file.type}"
+						/>
+					</path>
+				</pathconvert>
+
+				<propertyregex
+					input="${translation.file.path}"
+					property="translation.utf8.file.path"
+					regexp=".xlf"
+					replace="_utf8.xlf"
+				/>
+
+				<copy
+					file="${translation.file.path}"
+					outputencoding="UTF-8"
+					tofile="${translation.utf8.file.path}"
+				/>
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${operation}" arg2="zip" />
+			<then>
+				<zip
+					basedir="${selenium.output.dir.name}/${translation.zip.file.name}"
+					destfile="${selenium.output.dir.name}/${translation.zip.file.name}_translated.zip"
+				/>
+			</then>
+		</if>
+	</target>
+
+	<target name="update-translation-file-id">
+		<var name="translation.file.type" value="xlf" />
+
+		<antelope:stringutil property="translation.file.name" string="${translation.file.name}">
+			<antelope:replace regex="\*" replacement=" " />
+		</antelope:stringutil>
+
+		<antelope:stringutil property="translation.zip.file.name" string="${translation.zip.file.name}">
+			<antelope:replace regex="\*" replacement=" " />
+		</antelope:stringutil>
+
+		<if>
+			<equals arg1="${translation.zip.file.name}" arg2="WCGeneralName" />
+			<then>
+				<var name="translation.zip.file.name" value="Web Content Article Translations-en_US" />
+			</then>
+		</if>
+
+		<replace
+			file="${selenium.output.dir.name}/${translation.zip.file.name}/${translation.file.name}.${translation.file.type}"
+			token="${translation.entry.type}:"
+			value="${translation.entry.type}:1"
+		/>
+	</target>
+</project>

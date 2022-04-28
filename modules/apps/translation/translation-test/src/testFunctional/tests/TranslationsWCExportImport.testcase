@@ -232,7 +232,7 @@ definition {
 			webContentTitle = "WebContentTitle2");
 
 		AntCommand(
-			locator1 = "build-test.xml",
+			locator1 = "build-test-translation.xml",
 			value1 = "copy-translation-file -Dtranslation.zip.file.name=WebContentTitle2-en_US -Dtranslation.file.name=WebContentTitle2-en_US-de_DE.xlf");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
@@ -740,11 +740,11 @@ definition {
 			webContentTitle = "WebContentTitle2");
 
 		AntCommand(
-			locator1 = "build-test.xml",
+			locator1 = "build-test-translation.xml",
 			value1 = "copy-translation-file -Dtranslation.zip.file.name=WebContentTitle2-en_US -Dtranslation.file.name=WebContentTitle2-en_US-ja_JP.xlf");
 
 		AntCommand(
-			locator1 = "build-test.xml",
+			locator1 = "build-test-translation.xml",
 			value1 = "copy-translation-file -Dtranslation.zip.file.name=WebContentTitle2-en_US -Dtranslation.file.name=WebContentTitle2-en_US-zh_CN.xlf");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");

@@ -63,7 +63,7 @@ definition {
 		Translations.assertFileNameFromTempFolder(pageName = "TranslationContentPage");
 
 		AntCommand(
-			locator1 = "build-test.xml",
+			locator1 = "build-test-translation.xml",
 			value1 = "unzip-temp-file -DfileName=TranslationContentPage-en_US.zip");
 
 		for (var fileName : list "TranslationContentPage (NewAnyoneExperience1)-en_US-es_ES.xlf,TranslationContentPage (NewAnyoneExperience2)-en_US-es_ES.xlf") {
@@ -105,7 +105,7 @@ definition {
 		Translations.assertFileNameFromTempFolder(pageName = "TranslationContentPage");
 
 		AntCommand(
-			locator1 = "build-test.xml",
+			locator1 = "build-test-translation.xml",
 			value1 = "unzip-temp-file -DfileName=TranslationContentPage-en_US.zip");
 
 		for (var fileName : list "TranslationContentPage (NewAnyoneExperience)-en_US-ja_JP.xlf,TranslationContentPage (NewAnyoneExperience)-en_US-es_ES.xlf") {
@@ -146,7 +146,7 @@ definition {
 		Translations.assertFileNameFromTempFolder(pageName = "TranslationContentPage");
 
 		AntCommand(
-			locator1 = "build-test.xml",
+			locator1 = "build-test-translation.xml",
 			value1 = "unzip-temp-file -DfileName=TranslationContentPage-en_US.zip");
 
 		for (var fileName : list "TranslationContentPage-en_US-ja_JP.xlf,TranslationContentPage-en_US-es_ES.xlf,TranslationContentPage (NewAnyoneExperience)-en_US-ja_JP.xlf,TranslationContentPage (NewAnyoneExperience)-en_US-es_ES.xlf") {
@@ -889,7 +889,7 @@ definition {
 			languageList = "Spanish (Spain)");
 
 		AntCommand(
-			locator1 = "build-test.xml",
+			locator1 = "build-test-translation.xml",
 			value1 = "unzip-temp-file -DfileName=TranslationContentPage1-en_US.zip");
 
 		Translations.importTranslation(
@@ -936,7 +936,7 @@ definition {
 			languageList = "Spanish (Spain)");
 
 		AntCommand(
-			locator1 = "build-test.xml",
+			locator1 = "build-test-translation.xml",
 			value1 = "unzip-temp-file -DfileName=TranslationContentPage-en_US.zip");
 
 		ContentPagesNavigator.openEditContentPage(
@@ -1059,7 +1059,7 @@ definition {
 			translationZipFileName = "TranslationContentPage3-en_US");
 
 		AntCommand(
-			locator1 = "build-test.xml",
+			locator1 = "build-test-translation.xml",
 			value1 = "copy-translation-file -Dtranslation.zip.file.name=TranslationContentPage3-en_US -Dtranslation.file.name=TranslationContentPage3-en_US-es_ES.xlf");
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
@@ -1505,7 +1505,7 @@ definition {
 		var fileName = StringUtil.replace("Page Translations-en_US.zip", " ", "*");
 
 		AntCommand(
-			locator1 = "build-test.xml",
+			locator1 = "build-test-translation.xml",
 			value1 = "unzip-temp-file -DfileName=${fileName}");
 
 		for (var fileName : list "TranslationContentPage1-en_US-es_ES.xlf,TranslationContentPage2-en_US-es_ES.xlf") {

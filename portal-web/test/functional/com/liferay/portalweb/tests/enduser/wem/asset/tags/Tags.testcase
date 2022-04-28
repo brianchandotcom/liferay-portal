@@ -306,6 +306,36 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-145292. The user could view new icons on dropdown menu of tags admin."
+	@priority = "4"
+	test ViewDropdownMenuIconsInTagsAdmin {
+		task ("Given a Tags creator has a new tag") {
+			JSONAssettag.addTag(
+				groupName = "Test Site Name",
+				tagName = "tagname");
+		}
+
+		task ("When the  Tags creator open the ellipsis dropdown menu of new tag") {
+			Tag.openTagsAdmin(siteURLKey = "test-site-name");
+
+			LexiconEntry.openEntryMenu(rowEntry = "tagname");
+		}
+
+		task ("Then the Tags creator can see the new icons on the dropdown menu") {
+			DropdownMenuItem.viewIcon(iconList = "pencil,merge,trash");
+		}
+
+		task ("When the Tags creator open the dropdown menu of management toolbar after selecting new tag") {
+			ManagementBar.clickSelectAllCheckbox();
+
+			Click(locator1 = "ManagementBar#MORE_ACTIONS_ELLIPSIS");
+		}
+
+		task ("Then the Tags creator can see the new icons on the dropdown menu") {
+			DropdownMenuItem.viewIcon(iconList = "merge,trash");
+		}
+	}
+
 	@description = "View pagination in tags admin."
 	@priority = "4"
 	test ViewTagsPagination {

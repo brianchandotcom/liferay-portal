@@ -111,7 +111,7 @@ public class UploadServletRequestImpl
 				((contentLength == -1) ||
 				 (contentLength > uploadServletRequestImplMaxSize))) {
 
-				fileItemList = sort(fileItemList);
+				fileItemList = _sort(fileItemList);
 			}
 
 			for (FileItem fileItem : fileItemList) {
@@ -564,7 +564,7 @@ public class UploadServletRequestImpl
 		return inputStream;
 	}
 
-	protected List<FileItem> sort(List<FileItem> fileItems) {
+	private List<FileItem> _sort(List<FileItem> fileItems) {
 		Map<String, GroupedFileItems> groupedFileItemsMap = new HashMap<>();
 
 		for (FileItem fileItem : fileItems) {

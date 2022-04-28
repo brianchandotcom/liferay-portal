@@ -612,6 +612,9 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 		_NAME_BUILD_PARAMETER_PORTAL_UPSTREAM_BRANCH_NAME =
 			"PORTAL_UPSTREAM_BRANCH_NAME";
 
+	private static final String _NAME_BUILD_PARAMETER_RETEST_AMOUNT =
+		"RETEST_AMOUNT";
+
 	private static final Pattern _compareURLPattern = Pattern.compile(
 		JenkinsResultsParserUtil.combine(
 			"https://github.com/(?<username>[^/]+)/(?<repositoryName>[^/]+)",

@@ -74,15 +74,13 @@ public class LiferaySeleniumMethod {
 					new String[] {"locator1", "value1", "value2"});
 
 				for (String methodName : _singleValueMethodNames) {
-					String[] params = {"value1"};
-
-					put(methodName, params);
+					put(methodName, new String[] {"value1"});
 				}
 
 				for (String methodName : _javaScriptMethodNames) {
-					String[] params = {"value1", "value2", "value3"};
-
-					put(methodName, params);
+					put(
+						methodName,
+						new String[] {"value1", "value2", "value3"});
 				}
 			}
 		};

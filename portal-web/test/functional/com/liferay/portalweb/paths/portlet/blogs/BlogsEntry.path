@@ -16,6 +16,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENTRY_COVER_IMAGE_CAPTION_LINK_CHECK_ICON</td>
+	<td>//span[contains(@class,'check_icon')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_COVER_IMAGE_CAPTION_LINK_ICON</td>
+	<td>//div[contains(@class,'coverImageCaptionEditor')]//*[contains(@class,'cke_button_icon')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_COVER_IMAGE_CAPTION_LINK_INPUT</td>
+	<td>//input[contains(@class,'textinput')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENTRY_COVER_IMAGE</td>
 	<td>//div[contains(@class,'cover-image') and contains(@style,'${key_uploadFileName}')] | //div[contains(@class,'cover-image')]//img</td>
 	<td></td>

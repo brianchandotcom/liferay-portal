@@ -661,4 +661,61 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-145292. The user could view new icons on dropdown menu of fragment."
+	@priority = "4"
+	test ViewDropdownMenuIconsInFragmentsAdmin {
+		task ("Given a Fragments creator has a new Fragment Set and custom fragment") {
+			task ("Add a Fragment Set") {
+				JSONFragment.addFragmentCollection(
+					groupName = "Test Site Name",
+					name = "New Fragment Set Name");
+			}
+
+			task ("Add a fragment") {
+				JSONFragment.addSection(
+					collectionName = "New Fragment Set Name",
+					groupName = "Test Site Name",
+					name = "Fragment Name");
+			}
+		}
+
+		task ("When the Fragments creator open the ellipsis dropdown menu of custom fragment") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			Click.waitForMenuToggleJSClick(
+				key_card = "Fragment Name",
+				locator1 = "Card#CARD_ELLIPSIS");
+		}
+
+		task ("Then the Fragments creator can see the new icons on the dropdown menu of custom fragment") {
+			DropdownMenuItem.viewIcon(iconList = "pencil,change,upload,copy,move-folder,trash");
+		}
+
+		task ("When the Fragments creator open the ellipsis dropdown menu of custom fragment set") {
+			Click.waitForMenuToggleJSClick(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
+		}
+
+		task ("Then the Fragments creator can see the new icons on the dropdown menu of custom fragment set") {
+			DropdownMenuItem.viewIcon(iconList = "pencil,upload,import,trash");
+		}
+
+		task ("When the Fragments creator open the ellipsis dropdown menu on the Fragment Sets") {
+			Click.waitForMenuToggleJSClick(locator1 = "NavNested#NAV_NESTED_ELLIPSIS");
+		}
+
+		task ("Then the Fragments creator can see the new icons on the dropdown menu of Framents Sets") {
+			DropdownMenuItem.viewIcon(iconList = "upload,import,trash");
+		}
+
+		task ("When the Fragments creator open the dropdown menu of management toolbar after selecting the new fragment") {
+			LexiconCard.checkCardCheckbox(card = "Fragment Name");
+
+			Click(locator1 = "ManagementBar#MORE_ACTIONS_ELLIPSIS");
+		}
+
+		task ("Then the Fragments creator can see the new icons on the dropdown menu") {
+			DropdownMenuItem.viewIcon(iconList = "upload,copy,move-folder,trash");
+		}
+	}
+
 }

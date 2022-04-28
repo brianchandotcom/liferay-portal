@@ -99,6 +99,10 @@ public abstract class BaseImportTaskResourceImpl implements ImportTaskResource {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
 				name = "externalReferenceCode"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "fileName"
 			)
 		}
 	)
@@ -115,7 +119,10 @@ public abstract class BaseImportTaskResourceImpl implements ImportTaskResource {
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("externalReferenceCode")
-			String externalReferenceCode)
+			String externalReferenceCode,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("fileName")
+			String fileName)
 		throws Exception {
 
 		Response.ResponseBuilder responseBuilder = Response.ok();
@@ -133,6 +140,10 @@ public abstract class BaseImportTaskResourceImpl implements ImportTaskResource {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
 				name = "externalReferenceCode"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "fileName"
 			)
 		}
 	)
@@ -149,7 +160,10 @@ public abstract class BaseImportTaskResourceImpl implements ImportTaskResource {
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("externalReferenceCode")
-			String externalReferenceCode)
+			String externalReferenceCode,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("fileName")
+			String fileName)
 		throws Exception {
 
 		Response.ResponseBuilder responseBuilder = Response.ok();
@@ -610,6 +624,10 @@ public abstract class BaseImportTaskResourceImpl implements ImportTaskResource {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
 				name = "importTaskId"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "fileName"
 			)
 		}
 	)
@@ -624,7 +642,10 @@ public abstract class BaseImportTaskResourceImpl implements ImportTaskResource {
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("importTaskId")
-			Long importTaskId)
+			Long importTaskId,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("fileName")
+			String fileName)
 		throws Exception {
 
 		Response.ResponseBuilder responseBuilder = Response.ok();
@@ -642,6 +663,10 @@ public abstract class BaseImportTaskResourceImpl implements ImportTaskResource {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
 				name = "importTaskId"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "fileName"
 			)
 		}
 	)
@@ -656,7 +681,10 @@ public abstract class BaseImportTaskResourceImpl implements ImportTaskResource {
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("importTaskId")
-			Long importTaskId)
+			Long importTaskId,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("fileName")
+			String fileName)
 		throws Exception {
 
 		Response.ResponseBuilder responseBuilder = Response.ok();

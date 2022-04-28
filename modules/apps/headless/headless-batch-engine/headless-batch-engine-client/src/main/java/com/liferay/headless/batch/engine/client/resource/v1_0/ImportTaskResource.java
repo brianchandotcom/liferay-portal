@@ -50,21 +50,21 @@ public interface ImportTaskResource {
 		throws Exception;
 
 	public void getImportTaskByExternalReferenceCodeContent(
-			String externalReferenceCode)
+			String externalReferenceCode, String fileName)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getImportTaskByExternalReferenceCodeContentHttpResponse(
-				String externalReferenceCode)
+				String externalReferenceCode, String fileName)
 		throws Exception;
 
 	public void getImportTaskByExternalReferenceCodeFailedItemReport(
-			String externalReferenceCode)
+			String externalReferenceCode, String fileName)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getImportTaskByExternalReferenceCodeFailedItemReportHttpResponse(
-				String externalReferenceCode)
+				String externalReferenceCode, String fileName)
 		throws Exception;
 
 	public ImportTask deleteImportTask(
@@ -142,17 +142,19 @@ public interface ImportTaskResource {
 	public HttpInvoker.HttpResponse getImportTaskHttpResponse(Long importTaskId)
 		throws Exception;
 
-	public void getImportTaskContent(Long importTaskId) throws Exception;
-
-	public HttpInvoker.HttpResponse getImportTaskContentHttpResponse(
-			Long importTaskId)
+	public void getImportTaskContent(Long importTaskId, String fileName)
 		throws Exception;
 
-	public void getImportTaskFailedItemReport(Long importTaskId)
+	public HttpInvoker.HttpResponse getImportTaskContentHttpResponse(
+			Long importTaskId, String fileName)
+		throws Exception;
+
+	public void getImportTaskFailedItemReport(
+			Long importTaskId, String fileName)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getImportTaskFailedItemReportHttpResponse(
-			Long importTaskId)
+			Long importTaskId, String fileName)
 		throws Exception;
 
 	public static class Builder {
@@ -311,12 +313,12 @@ public interface ImportTaskResource {
 		}
 
 		public void getImportTaskByExternalReferenceCodeContent(
-				String externalReferenceCode)
+				String externalReferenceCode, String fileName)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getImportTaskByExternalReferenceCodeContentHttpResponse(
-					externalReferenceCode);
+					externalReferenceCode, fileName);
 
 			String content = httpResponse.getContent();
 
@@ -346,7 +348,7 @@ public interface ImportTaskResource {
 
 		public HttpInvoker.HttpResponse
 				getImportTaskByExternalReferenceCodeContentHttpResponse(
-					String externalReferenceCode)
+					String externalReferenceCode, String fileName)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -369,6 +371,10 @@ public interface ImportTaskResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (fileName != null) {
+				httpInvoker.parameter("fileName", String.valueOf(fileName));
+			}
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
@@ -384,12 +390,12 @@ public interface ImportTaskResource {
 		}
 
 		public void getImportTaskByExternalReferenceCodeFailedItemReport(
-				String externalReferenceCode)
+				String externalReferenceCode, String fileName)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getImportTaskByExternalReferenceCodeFailedItemReportHttpResponse(
-					externalReferenceCode);
+					externalReferenceCode, fileName);
 
 			String content = httpResponse.getContent();
 
@@ -419,7 +425,7 @@ public interface ImportTaskResource {
 
 		public HttpInvoker.HttpResponse
 				getImportTaskByExternalReferenceCodeFailedItemReportHttpResponse(
-					String externalReferenceCode)
+					String externalReferenceCode, String fileName)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -442,6 +448,10 @@ public interface ImportTaskResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (fileName != null) {
+				httpInvoker.parameter("fileName", String.valueOf(fileName));
+			}
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
@@ -1244,9 +1254,11 @@ public interface ImportTaskResource {
 			return httpInvoker.invoke();
 		}
 
-		public void getImportTaskContent(Long importTaskId) throws Exception {
+		public void getImportTaskContent(Long importTaskId, String fileName)
+			throws Exception {
+
 			HttpInvoker.HttpResponse httpResponse =
-				getImportTaskContentHttpResponse(importTaskId);
+				getImportTaskContentHttpResponse(importTaskId, fileName);
 
 			String content = httpResponse.getContent();
 
@@ -1275,7 +1287,7 @@ public interface ImportTaskResource {
 		}
 
 		public HttpInvoker.HttpResponse getImportTaskContentHttpResponse(
-				Long importTaskId)
+				Long importTaskId, String fileName)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1299,6 +1311,10 @@ public interface ImportTaskResource {
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
+			if (fileName != null) {
+				httpInvoker.parameter("fileName", String.valueOf(fileName));
+			}
+
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
@@ -1312,11 +1328,13 @@ public interface ImportTaskResource {
 			return httpInvoker.invoke();
 		}
 
-		public void getImportTaskFailedItemReport(Long importTaskId)
+		public void getImportTaskFailedItemReport(
+				Long importTaskId, String fileName)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getImportTaskFailedItemReportHttpResponse(importTaskId);
+				getImportTaskFailedItemReportHttpResponse(
+					importTaskId, fileName);
 
 			String content = httpResponse.getContent();
 
@@ -1345,7 +1363,8 @@ public interface ImportTaskResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				getImportTaskFailedItemReportHttpResponse(Long importTaskId)
+				getImportTaskFailedItemReportHttpResponse(
+					Long importTaskId, String fileName)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1368,6 +1387,10 @@ public interface ImportTaskResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (fileName != null) {
+				httpInvoker.parameter("fileName", String.valueOf(fileName));
+			}
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +

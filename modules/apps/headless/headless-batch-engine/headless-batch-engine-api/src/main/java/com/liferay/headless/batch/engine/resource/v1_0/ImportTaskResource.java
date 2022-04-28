@@ -61,11 +61,11 @@ public interface ImportTaskResource {
 		throws Exception;
 
 	public Response getImportTaskByExternalReferenceCodeContent(
-			String externalReferenceCode)
+			String externalReferenceCode, String fileName)
 		throws Exception;
 
 	public Response getImportTaskByExternalReferenceCodeFailedItemReport(
-			String externalReferenceCode)
+			String externalReferenceCode, String fileName)
 		throws Exception;
 
 	public ImportTask deleteImportTask(
@@ -104,9 +104,11 @@ public interface ImportTaskResource {
 
 	public ImportTask getImportTask(Long importTaskId) throws Exception;
 
-	public Response getImportTaskContent(Long importTaskId) throws Exception;
+	public Response getImportTaskContent(Long importTaskId, String fileName)
+		throws Exception;
 
-	public Response getImportTaskFailedItemReport(Long importTaskId)
+	public Response getImportTaskFailedItemReport(
+			Long importTaskId, String fileName)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

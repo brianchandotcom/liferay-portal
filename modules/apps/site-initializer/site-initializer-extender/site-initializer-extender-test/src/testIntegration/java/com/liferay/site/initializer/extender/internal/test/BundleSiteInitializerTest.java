@@ -21,8 +21,8 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
-import com.liferay.client.extension.model.ClientExtensionEntry;
-import com.liferay.client.extension.service.ClientExtensionEntryLocalService;
+import com.liferay.client.extension.model.RemoteAppEntry;
+import com.liferay.client.extension.service.RemoteAppEntryLocalService;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseLocalService;
 import com.liferay.commerce.notification.model.CommerceNotificationTemplate;
@@ -220,7 +220,7 @@ public class BundleSiteInitializerTest {
 			_assertOrganizations(serviceContext);
 			_assertPermissions(group);
 			_assertPortletSettings(group);
-			_assertClientExtension(group);
+			_assertRemoteApp(group);
 			_assertSAPEntries(group);
 			_assertSiteConfiguration(group.getGroupId());
 			_assertSiteNavigationMenu(group);
@@ -401,21 +401,6 @@ public class BundleSiteInitializerTest {
 			"TESTVOC0002", testAssetVocabulary2.getExternalReferenceCode());
 
 		_assertAssetCategories(group);
-	}
-
-	private void _assertClientExtension(Group group) throws Exception {
-		ClientExtensionEntry clientExtensionEntry =
-			_clientExtensionEntryLocalService.
-				fetchClientExtensionEntryByExternalReferenceCode(
-					group.getCompanyId(), "ERC001");
-
-		Assert.assertNotNull(clientExtensionEntry);
-		Assert.assertEquals(
-			"category.remote-apps",
-			clientExtensionEntry.getPortletCategoryName());
-		Assert.assertEquals(
-			"liferay-test-remote-app",
-			clientExtensionEntry.getCustomElementHTMLElementName());
 	}
 
 	private void _assertCommerceCatalogs(Group group) throws Exception {
@@ -1022,6 +1007,20 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals("${aField.getData()}", ddmTemplate.getScript());
 	}
 
+	private void _assertRemoteApp(Group group) throws Exception {
+		RemoteAppEntry remoteAppEntry =
+			_remoteAppEntryLocalService.
+				fetchRemoteAppEntryByExternalReferenceCode(
+					group.getCompanyId(), "ERC001");
+
+		Assert.assertNotNull(remoteAppEntry);
+		Assert.assertEquals(
+			"category.remote-apps", remoteAppEntry.getPortletCategoryName());
+		Assert.assertEquals(
+			"liferay-test-remote-app",
+			remoteAppEntry.getCustomElementHTMLElementName());
+	}
+
 	private void _assertResourcePermission(Group group) throws Exception {
 		Role role = _roleLocalService.fetchRole(
 			group.getCompanyId(), "Test Role 1");
@@ -1317,9 +1316,6 @@ public class BundleSiteInitializerTest {
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 	@Inject
-	private ClientExtensionEntryLocalService _clientExtensionEntryLocalService;
-
-	@Inject
 	private CommerceCatalogLocalService _commerceCatalogLocalService;
 
 	@Inject
@@ -1403,6 +1399,9 @@ public class BundleSiteInitializerTest {
 	@Inject
 	private ProductSpecificationResource.Factory
 		_productSpecificationResourceFactory;
+
+	@Inject
+	private RemoteAppEntryLocalService _remoteAppEntryLocalService;
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

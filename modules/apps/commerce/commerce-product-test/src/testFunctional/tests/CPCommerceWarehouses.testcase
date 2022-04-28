@@ -1145,20 +1145,6 @@ definition {
 
 		Button.clickSave();
 
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			panel = "Commerce",
-			portlet = "Catalogs");
-
-		Click(locator1 = "Button#PLUS");
-
-		CommerceEntry.addNewCatalogsEntry(
-			catalogCurrency = "US Dollar",
-			catalogLanguage = "English (United States)",
-			catalogName = "Master");
-
-		Button.click(button = "Submit");
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Product Management",
 			panel = "Commerce",
@@ -1196,9 +1182,15 @@ definition {
 
 		Search.searchCP(searchTerm = "default");
 
-		AssertVisible(
-			key_productQuantity = "50",
-			locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_QUANTITY");
+		AssertElementPresent(
+			key_quantity = "50",
+			key_sku = "default",
+			locator1 = "CommerceInventory#INVENTORY_SKU_ON_HAND_QUANTITY");
+
+		AssertElementPresent(
+			key_quantity = "50",
+			key_sku = "default",
+			locator1 = "CommerceInventory#INVENTORY_SKU_AVAILABLE_QUANTITY");
 	}
 
 }

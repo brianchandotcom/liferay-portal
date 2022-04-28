@@ -24,7 +24,8 @@
 	<liferay-frontend:edit-form
 		action="<%= requestAdminAccessURL %>"
 		method="post"
-		name="fm"
+		name="requestAdminAccessFm"
+		onSubmit="event.preventDefault();"
 		validateOnBlur="<%= false %>"
 	>
 		<liferay-frontend:edit-form-body>
@@ -38,3 +39,26 @@
 		</div>
 	</liferay-frontend:edit-form>
 </div>
+
+<aui:script>
+	const form = document.getElementById(
+		'<portlet:namespace />requestAdminAccessFm'
+	);
+
+	form.addEventListener('submit', (event) => {
+		const redirectURL = new URL(form.action);
+
+		const input = form.querySelector(
+			'input#<portlet:namespace />justification'
+		);
+
+		redirectURL.searchParams.set(
+			'<portlet:namespace />justification',
+			input.value
+		);
+
+		window.open(redirectURL.toString(), '_blank', 'noopener,noreferrer');
+
+		Liferay.Util.getOpener().Liferay.fire('closeModal');
+	});
+</aui:script>

@@ -3574,7 +3574,7 @@ definition {
 		task ("Assert if both Web Contents are displayed") {
 			AssertTextPresent(
 				locator1 = "ContentDashboard#FILTER_TEXT",
-				value1 = "Tag:test_tag");
+				value1 = "Tag: test_tag");
 
 			ContentDashboard.searchValue(webContentTitle = "Web Content Title 1");
 
@@ -4557,7 +4557,7 @@ definition {
 
 			AssertTextPresent(
 				locator1 = "ContentDashboard#FILTER_TEXT",
-				value1 = "Author:Test Test");
+				value1 = "Author: Test Test");
 		}
 	}
 

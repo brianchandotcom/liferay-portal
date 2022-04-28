@@ -25,6 +25,10 @@ import java.util.Objects;
  */
 public class FormStyledLayoutStructureItem extends StyledLayoutStructureItem {
 
+	public static final int DISPLAY_PAGE_ITEM_TYPE = 1;
+
+	public static final int OTHER_ITEM_TYPE = 2;
+
 	public FormStyledLayoutStructureItem(String parentItemId) {
 		super(parentItemId);
 	}
@@ -45,7 +49,9 @@ public class FormStyledLayoutStructureItem extends StyledLayoutStructureItem {
 		if (!Objects.equals(
 				_classNameId, formStyledLayoutStructureItem._classNameId) ||
 			!Objects.equals(
-				_classTypeId, formStyledLayoutStructureItem._classTypeId)) {
+				_classTypeId, formStyledLayoutStructureItem._classTypeId) ||
+			!Objects.equals(
+				_formConfig, formStyledLayoutStructureItem._formConfig)) {
 
 			return false;
 		}
@@ -61,6 +67,10 @@ public class FormStyledLayoutStructureItem extends StyledLayoutStructureItem {
 		return _classTypeId;
 	}
 
+	public int getFormConfig() {
+		return _formConfig;
+	}
+
 	@Override
 	public JSONObject getItemConfigJSONObject() {
 		JSONObject jsonObject = super.getItemConfigJSONObject();
@@ -69,6 +79,8 @@ public class FormStyledLayoutStructureItem extends StyledLayoutStructureItem {
 			"classNameId", _classNameId
 		).put(
 			"classTypeId", _classTypeId
+		).put(
+			"formConfig", _formConfig
 		).put(
 			"indexed", _indexed
 		);
@@ -96,6 +108,10 @@ public class FormStyledLayoutStructureItem extends StyledLayoutStructureItem {
 		_classTypeId = classTypeId;
 	}
 
+	public void setFormConfig(int formConfig) {
+		_formConfig = formConfig;
+	}
+
 	public void setIndexed(boolean indexed) {
 		_indexed = indexed;
 	}
@@ -112,6 +128,10 @@ public class FormStyledLayoutStructureItem extends StyledLayoutStructureItem {
 			setClassTypeId(itemConfigJSONObject.getLong("classTypeId"));
 		}
 
+		if (itemConfigJSONObject.has("formConfig")) {
+			setFormConfig(itemConfigJSONObject.getInt("formConfig"));
+		}
+
 		if (itemConfigJSONObject.has("indexed")) {
 			setIndexed(itemConfigJSONObject.getBoolean("indexed"));
 		}
@@ -119,6 +139,7 @@ public class FormStyledLayoutStructureItem extends StyledLayoutStructureItem {
 
 	private long _classNameId;
 	private long _classTypeId;
+	private int _formConfig = DISPLAY_PAGE_ITEM_TYPE;
 	private boolean _indexed = true;
 
 }

@@ -25,7 +25,6 @@ import org.osgi.framework.ServiceRegistration;
  */
 public interface ClientExtensionEntryDeployer {
 
-	public List<ServiceRegistration<?>> deploy(
-		ClientExtensionEntry clientExtensionEntry);
+	public List<ServiceRegistration<?>> deploy(ClientExtensionEntry clientExtensionEntry);
 
 }

@@ -16,12 +16,12 @@ package com.liferay.client.extension.service.impl;
 
 import com.liferay.client.extension.constants.ClientExtensionConstants;
 import com.liferay.client.extension.deployer.ClientExtensionEntryDeployer;
+import com.liferay.client.extension.exception.DuplicateClientExtensionEntryExternalReferenceCodeException;
 import com.liferay.client.extension.exception.ClientExtensionEntryCustomElementCSSURLsException;
 import com.liferay.client.extension.exception.ClientExtensionEntryCustomElementHTMLElementNameException;
 import com.liferay.client.extension.exception.ClientExtensionEntryCustomElementURLsException;
 import com.liferay.client.extension.exception.ClientExtensionEntryFriendlyURLMappingException;
 import com.liferay.client.extension.exception.ClientExtensionEntryIFrameURLException;
-import com.liferay.client.extension.exception.DuplicateClientExtensionEntryExternalReferenceCodeException;
 import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.service.base.ClientExtensionEntryLocalServiceBaseImpl;
 import com.liferay.petra.string.CharPool;
@@ -121,8 +121,8 @@ public class ClientExtensionEntryLocalServiceImpl
 
 		_validateFriendlyURLMapping(friendlyURLMapping);
 
-		ClientExtensionEntry clientExtensionEntry =
-			clientExtensionEntryPersistence.create(clientExtensionEntryId);
+		ClientExtensionEntry clientExtensionEntry = clientExtensionEntryPersistence.create(
+			clientExtensionEntryId);
 
 		clientExtensionEntry.setExternalReferenceCode(externalReferenceCode);
 		clientExtensionEntry.setCompanyId(user.getCompanyId());
@@ -140,14 +140,12 @@ public class ClientExtensionEntryLocalServiceImpl
 		clientExtensionEntry.setPortletCategoryName(portletCategoryName);
 		clientExtensionEntry.setProperties(properties);
 		clientExtensionEntry.setSourceCodeURL(sourceCodeURL);
-		clientExtensionEntry.setType(
-			ClientExtensionConstants.TYPE_CUSTOM_ELEMENT);
+		clientExtensionEntry.setType(ClientExtensionConstants.TYPE_CUSTOM_ELEMENT);
 		clientExtensionEntry.setStatus(WorkflowConstants.STATUS_DRAFT);
 		clientExtensionEntry.setStatusByUserId(userId);
 		clientExtensionEntry.setStatusDate(new Date());
 
-		clientExtensionEntry = clientExtensionEntryPersistence.update(
-			clientExtensionEntry);
+		clientExtensionEntry = clientExtensionEntryPersistence.update(clientExtensionEntry);
 
 		_addResources(clientExtensionEntry);
 
@@ -168,9 +166,8 @@ public class ClientExtensionEntryLocalServiceImpl
 
 		_validateIFrameURL(iFrameURL);
 
-		ClientExtensionEntry clientExtensionEntry =
-			clientExtensionEntryPersistence.create(
-				counterLocalService.increment());
+		ClientExtensionEntry clientExtensionEntry = clientExtensionEntryPersistence.create(
+			counterLocalService.increment());
 
 		User user = _userLocalService.getUser(userId);
 
@@ -191,8 +188,7 @@ public class ClientExtensionEntryLocalServiceImpl
 		clientExtensionEntry.setStatusByUserId(userId);
 		clientExtensionEntry.setStatusDate(new Date());
 
-		clientExtensionEntry = clientExtensionEntryPersistence.update(
-			clientExtensionEntry);
+		clientExtensionEntry = clientExtensionEntryPersistence.update(clientExtensionEntry);
 
 		_addResources(clientExtensionEntry);
 
@@ -218,13 +214,12 @@ public class ClientExtensionEntryLocalServiceImpl
 					user.getCompanyId(), externalReferenceCode);
 
 		if (clientExtensionEntry != null) {
-			return clientExtensionEntryLocalService.
-				updateCustomElementClientExtensionEntry(
-					userId, clientExtensionEntry.getClientExtensionEntryId(),
-					customElementCSSURLs, customElementHTMLElementName,
-					customElementURLs, customElementUseESM, description,
-					friendlyURLMapping, nameMap, portletCategoryName,
-					properties, sourceCodeURL);
+			return clientExtensionEntryLocalService.updateCustomElementClientExtensionEntry(
+				userId, clientExtensionEntry.getClientExtensionEntryId(),
+				customElementCSSURLs, customElementHTMLElementName,
+				customElementURLs, customElementUseESM, description,
+				friendlyURLMapping, nameMap, portletCategoryName, properties,
+				sourceCodeURL);
 		}
 
 		return addCustomElementClientExtensionEntry(
@@ -235,42 +230,35 @@ public class ClientExtensionEntryLocalServiceImpl
 	}
 
 	@Override
+	public ClientExtensionEntry deleteClientExtensionEntry(long clientExtensionEntryId)
+		throws PortalException {
+
+		ClientExtensionEntry clientExtensionEntry =
+			clientExtensionEntryPersistence.findByPrimaryKey(clientExtensionEntryId);
+
+		return deleteClientExtensionEntry(clientExtensionEntry);
+	}
+
+	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
-	public ClientExtensionEntry deleteClientExtensionEntry(
-			ClientExtensionEntry clientExtensionEntry)
+	public ClientExtensionEntry deleteClientExtensionEntry(ClientExtensionEntry clientExtensionEntry)
 		throws PortalException {
 
 		clientExtensionEntryPersistence.remove(clientExtensionEntry);
 
 		_resourceLocalService.deleteResource(
-			clientExtensionEntry.getCompanyId(),
-			ClientExtensionEntry.class.getName(),
+			clientExtensionEntry.getCompanyId(), ClientExtensionEntry.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL,
 			clientExtensionEntry.getClientExtensionEntryId());
 
-		clientExtensionEntryLocalService.undeployClientExtensionEntry(
-			clientExtensionEntry);
+		clientExtensionEntryLocalService.undeployClientExtensionEntry(clientExtensionEntry);
 
 		return clientExtensionEntry;
 	}
 
-	@Override
-	public ClientExtensionEntry deleteClientExtensionEntry(
-			long clientExtensionEntryId)
-		throws PortalException {
-
-		ClientExtensionEntry clientExtensionEntry =
-			clientExtensionEntryPersistence.findByPrimaryKey(
-				clientExtensionEntryId);
-
-		return deleteClientExtensionEntry(clientExtensionEntry);
-	}
-
 	@Clusterable
 	@Override
-	public void deployClientExtensionEntry(
-		ClientExtensionEntry clientExtensionEntry) {
-
+	public void deployClientExtensionEntry(ClientExtensionEntry clientExtensionEntry) {
 		undeployClientExtensionEntry(clientExtensionEntry);
 
 		_serviceRegistrationsMaps.put(
@@ -292,8 +280,7 @@ public class ClientExtensionEntryLocalServiceImpl
 		for (int i = 0; i < 10; i++) {
 			Hits hits = indexer.search(searchContext);
 
-			List<ClientExtensionEntry> clientExtensionEntries =
-				_getClientExtensionEntries(hits);
+			List<ClientExtensionEntry> clientExtensionEntries = _getClientExtensionEntries(hits);
 
 			if (clientExtensionEntries != null) {
 				return clientExtensionEntries;
@@ -325,18 +312,14 @@ public class ClientExtensionEntryLocalServiceImpl
 			clientExtensionEntryLocalService.getClientExtensionEntries(
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		for (ClientExtensionEntry clientExtensionEntry :
-				clientExtensionEntries) {
-
+		for (ClientExtensionEntry clientExtensionEntry : clientExtensionEntries) {
 			deployClientExtensionEntry(clientExtensionEntry);
 		}
 	}
 
 	@Clusterable
 	@Override
-	public void undeployClientExtensionEntry(
-		ClientExtensionEntry clientExtensionEntry) {
-
+	public void undeployClientExtensionEntry(ClientExtensionEntry clientExtensionEntry) {
 		List<ServiceRegistration<?>> serviceRegistrations =
 			_serviceRegistrationsMaps.remove(
 				clientExtensionEntry.getClientExtensionEntryId());
@@ -353,12 +336,11 @@ public class ClientExtensionEntryLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ClientExtensionEntry updateCustomElementClientExtensionEntry(
-			long userId, long clientExtensionEntryId,
-			String customElementCSSURLs, String customElementHTMLElementName,
-			String customElementURLs, boolean customElementUseESM,
-			String description, String friendlyURLMapping,
-			Map<Locale, String> nameMap, String portletCategoryName,
-			String properties, String sourceCodeURL)
+			long userId, long clientExtensionEntryId, String customElementCSSURLs,
+			String customElementHTMLElementName, String customElementURLs,
+			boolean customElementUseESM, String description,
+			String friendlyURLMapping, Map<Locale, String> nameMap,
+			String portletCategoryName, String properties, String sourceCodeURL)
 		throws PortalException {
 
 		customElementCSSURLs = StringUtil.trim(customElementCSSURLs);
@@ -373,11 +355,9 @@ public class ClientExtensionEntryLocalServiceImpl
 		_validateFriendlyURLMapping(friendlyURLMapping);
 
 		ClientExtensionEntry clientExtensionEntry =
-			clientExtensionEntryPersistence.findByPrimaryKey(
-				clientExtensionEntryId);
+			clientExtensionEntryPersistence.findByPrimaryKey(clientExtensionEntryId);
 
-		clientExtensionEntryLocalService.undeployClientExtensionEntry(
-			clientExtensionEntry);
+		clientExtensionEntryLocalService.undeployClientExtensionEntry(clientExtensionEntry);
 
 		clientExtensionEntry.setCustomElementCSSURLs(customElementCSSURLs);
 		clientExtensionEntry.setCustomElementHTMLElementName(
@@ -394,8 +374,7 @@ public class ClientExtensionEntryLocalServiceImpl
 		clientExtensionEntry.setStatusByUserId(userId);
 		clientExtensionEntry.setStatusDate(new Date());
 
-		clientExtensionEntry = clientExtensionEntryPersistence.update(
-			clientExtensionEntry);
+		clientExtensionEntry = clientExtensionEntryPersistence.update(clientExtensionEntry);
 
 		return _startWorkflowInstance(userId, clientExtensionEntry);
 	}
@@ -416,11 +395,9 @@ public class ClientExtensionEntryLocalServiceImpl
 		_validateIFrameURL(iFrameURL);
 
 		ClientExtensionEntry clientExtensionEntry =
-			clientExtensionEntryPersistence.findByPrimaryKey(
-				clientExtensionEntryId);
+			clientExtensionEntryPersistence.findByPrimaryKey(clientExtensionEntryId);
 
-		clientExtensionEntryLocalService.undeployClientExtensionEntry(
-			clientExtensionEntry);
+		clientExtensionEntryLocalService.undeployClientExtensionEntry(clientExtensionEntry);
 
 		clientExtensionEntry.setDescription(description);
 		clientExtensionEntry.setFriendlyURLMapping(friendlyURLMapping);
@@ -433,8 +410,7 @@ public class ClientExtensionEntryLocalServiceImpl
 		clientExtensionEntry.setStatusByUserId(userId);
 		clientExtensionEntry.setStatusDate(new Date());
 
-		clientExtensionEntry = clientExtensionEntryPersistence.update(
-			clientExtensionEntry);
+		clientExtensionEntry = clientExtensionEntryPersistence.update(clientExtensionEntry);
 
 		return _startWorkflowInstance(userId, clientExtensionEntry);
 	}
@@ -446,22 +422,19 @@ public class ClientExtensionEntryLocalServiceImpl
 		throws PortalException {
 
 		ClientExtensionEntry clientExtensionEntry =
-			clientExtensionEntryPersistence.findByPrimaryKey(
-				clientExtensionEntryId);
+			clientExtensionEntryPersistence.findByPrimaryKey(clientExtensionEntryId);
 
 		if (status == clientExtensionEntry.getStatus()) {
 			return clientExtensionEntry;
 		}
 
 		if (status == WorkflowConstants.STATUS_APPROVED) {
-			clientExtensionEntryLocalService.deployClientExtensionEntry(
-				clientExtensionEntry);
+			clientExtensionEntryLocalService.deployClientExtensionEntry(clientExtensionEntry);
 		}
 		else if (clientExtensionEntry.getStatus() ==
 					WorkflowConstants.STATUS_APPROVED) {
 
-			clientExtensionEntryLocalService.undeployClientExtensionEntry(
-				clientExtensionEntry);
+			clientExtensionEntryLocalService.undeployClientExtensionEntry(clientExtensionEntry);
 		}
 
 		User user = _userLocalService.getUser(userId);
@@ -483,11 +456,9 @@ public class ClientExtensionEntryLocalServiceImpl
 		throws PortalException {
 
 		_resourceLocalService.addResources(
-			clientExtensionEntry.getCompanyId(), 0,
-			clientExtensionEntry.getUserId(),
+			clientExtensionEntry.getCompanyId(), 0, clientExtensionEntry.getUserId(),
 			ClientExtensionEntry.class.getName(),
-			clientExtensionEntry.getClientExtensionEntryId(), false, true,
-			true);
+			clientExtensionEntry.getClientExtensionEntryId(), false, true, true);
 	}
 
 	private SearchContext _buildSearchContext(
@@ -532,8 +503,7 @@ public class ClientExtensionEntryLocalServiceImpl
 				document.get(Field.ENTRY_CLASS_PK));
 
 			ClientExtensionEntry clientExtensionEntry =
-				clientExtensionEntryPersistence.fetchByPrimaryKey(
-					clientExtensionEntryId);
+				clientExtensionEntryPersistence.fetchByPrimaryKey(clientExtensionEntryId);
 
 			if (clientExtensionEntry == null) {
 				clientExtensionEntries = null;
@@ -569,8 +539,8 @@ public class ClientExtensionEntryLocalServiceImpl
 		return WorkflowHandlerRegistryUtil.startWorkflowInstance(
 			clientExtensionEntry.getCompanyId(), company.getGroupId(), userId,
 			ClientExtensionEntry.class.getName(),
-			clientExtensionEntry.getClientExtensionEntryId(),
-			clientExtensionEntry, serviceContext,
+			clientExtensionEntry.getClientExtensionEntryId(), clientExtensionEntry,
+			serviceContext,
 			Collections.singletonMap(
 				WorkflowConstants.CONTEXT_URL,
 				Optional.ofNullable(
@@ -703,10 +673,10 @@ public class ClientExtensionEntryLocalServiceImpl
 	private BundleContext _bundleContext;
 
 	@Reference
-	private ClientExtensionEntryDeployer _clientExtensionEntryDeployer;
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
-	private CompanyLocalService _companyLocalService;
+	private ClientExtensionEntryDeployer _clientExtensionEntryDeployer;
 
 	private final Set<String> _reservedCustomElementHTMLElementNames =
 		SetUtil.fromArray(

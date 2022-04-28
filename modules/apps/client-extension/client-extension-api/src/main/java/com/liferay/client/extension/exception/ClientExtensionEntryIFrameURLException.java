@@ -28,9 +28,7 @@ public class ClientExtensionEntryIFrameURLException extends PortalException {
 		super(msg);
 	}
 
-	public ClientExtensionEntryIFrameURLException(
-		String msg, Throwable throwable) {
-
+	public ClientExtensionEntryIFrameURLException(String msg, Throwable throwable) {
 		super(msg, throwable);
 	}
 

@@ -25,9 +25,7 @@ public class ClientExtensionEntryCustomElementHTMLElementNameException
 	public ClientExtensionEntryCustomElementHTMLElementNameException() {
 	}
 
-	public ClientExtensionEntryCustomElementHTMLElementNameException(
-		String msg) {
-
+	public ClientExtensionEntryCustomElementHTMLElementNameException(String msg) {
 		super(msg);
 	}
 

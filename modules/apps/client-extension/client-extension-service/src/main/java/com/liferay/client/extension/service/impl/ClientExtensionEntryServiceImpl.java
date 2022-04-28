@@ -39,8 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = AopService.class
 )
-public class ClientExtensionEntryServiceImpl
-	extends ClientExtensionEntryServiceBaseImpl {
+public class ClientExtensionEntryServiceImpl extends ClientExtensionEntryServiceBaseImpl {
 
 	@Override
 	public ClientExtensionEntry addCustomElementClientExtensionEntry(
@@ -55,13 +54,11 @@ public class ClientExtensionEntryServiceImpl
 		_portletResourcePermission.check(
 			getPermissionChecker(), null, ActionKeys.ADD_ENTRY);
 
-		return clientExtensionEntryLocalService.
-			addCustomElementClientExtensionEntry(
-				externalReferenceCode, getUserId(), customElementCSSURLs,
-				customElementHTMLElementName, customElementURLs,
-				customElementUseESM, description, friendlyURLMapping,
-				instanceable, nameMap, portletCategoryName, properties,
-				sourceCodeURL);
+		return clientExtensionEntryLocalService.addCustomElementClientExtensionEntry(
+			externalReferenceCode, getUserId(), customElementCSSURLs,
+			customElementHTMLElementName, customElementURLs,
+			customElementUseESM, description, friendlyURLMapping, instanceable,
+			nameMap, portletCategoryName, properties, sourceCodeURL);
 	}
 
 	@Override
@@ -81,8 +78,7 @@ public class ClientExtensionEntryServiceImpl
 	}
 
 	@Override
-	public ClientExtensionEntry deleteClientExtensionEntry(
-			long clientExtensionEntryId)
+	public ClientExtensionEntry deleteClientExtensionEntry(long clientExtensionEntryId)
 		throws PortalException {
 
 		_clientExtensionEntryModelResourcePermission.check(
@@ -93,15 +89,13 @@ public class ClientExtensionEntryServiceImpl
 	}
 
 	@Override
-	public ClientExtensionEntry getClientExtensionEntry(
-			long clientExtensionEntryId)
+	public ClientExtensionEntry getClientExtensionEntry(long clientExtensionEntryId)
 		throws PortalException {
 
 		_clientExtensionEntryModelResourcePermission.check(
 			getPermissionChecker(), clientExtensionEntryId, ActionKeys.VIEW);
 
-		return clientExtensionEntryLocalService.getClientExtensionEntry(
-			clientExtensionEntryId);
+		return clientExtensionEntryLocalService.getClientExtensionEntry(clientExtensionEntryId);
 	}
 
 	@Override
@@ -116,12 +110,11 @@ public class ClientExtensionEntryServiceImpl
 		_clientExtensionEntryModelResourcePermission.check(
 			getPermissionChecker(), clientExtensionEntryId, ActionKeys.UPDATE);
 
-		return clientExtensionEntryLocalService.
-			updateCustomElementClientExtensionEntry(
-				getUserId(), clientExtensionEntryId, customElementCSSURLs,
-				customElementHTMLElementName, customElementURLs,
-				customElementUseESM, description, friendlyURLMapping, nameMap,
-				portletCategoryName, properties, sourceCodeURL);
+		return clientExtensionEntryLocalService.updateCustomElementClientExtensionEntry(
+			getUserId(), clientExtensionEntryId, customElementCSSURLs,
+			customElementHTMLElementName, customElementURLs,
+			customElementUseESM, description, friendlyURLMapping, nameMap,
+			portletCategoryName, properties, sourceCodeURL);
 	}
 
 	@Override
@@ -135,22 +128,20 @@ public class ClientExtensionEntryServiceImpl
 		_clientExtensionEntryModelResourcePermission.check(
 			getPermissionChecker(), clientExtensionEntryId, ActionKeys.UPDATE);
 
-		return clientExtensionEntryLocalService.
-			updateIFrameClientExtensionEntry(
-				getUserId(), clientExtensionEntryId, description,
-				friendlyURLMapping, iFrameURL, nameMap, portletCategoryName,
-				properties, sourceCodeURL);
+		return clientExtensionEntryLocalService.updateIFrameClientExtensionEntry(
+			getUserId(), clientExtensionEntryId, description, friendlyURLMapping,
+			iFrameURL, nameMap, portletCategoryName, properties, sourceCodeURL);
 	}
+
+	@Reference(
+		target = "(resource.name=" + ClientExtensionConstants.RESOURCE_NAME + ")"
+	)
+	private PortletResourcePermission _portletResourcePermission;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.client.extension.model.ClientExtensionEntry)"
 	)
 	private ModelResourcePermission<ClientExtensionEntry>
 		_clientExtensionEntryModelResourcePermission;
-
-	@Reference(
-		target = "(resource.name=" + ClientExtensionConstants.RESOURCE_NAME + ")"
-	)
-	private PortletResourcePermission _portletResourcePermission;
 
 }

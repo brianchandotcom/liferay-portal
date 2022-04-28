@@ -35,9 +35,7 @@ public class ClientExtensionEntryCustomElementCSSURLsException
 		super(msg, throwable);
 	}
 
-	public ClientExtensionEntryCustomElementCSSURLsException(
-		Throwable throwable) {
-
+	public ClientExtensionEntryCustomElementCSSURLsException(Throwable throwable) {
 		super(throwable);
 	}
 

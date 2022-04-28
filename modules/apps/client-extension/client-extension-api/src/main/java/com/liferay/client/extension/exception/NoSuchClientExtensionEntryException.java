@@ -28,9 +28,7 @@ public class NoSuchClientExtensionEntryException extends NoSuchModelException {
 		super(msg);
 	}
 
-	public NoSuchClientExtensionEntryException(
-		String msg, Throwable throwable) {
-
+	public NoSuchClientExtensionEntryException(String msg, Throwable throwable) {
 		super(msg, throwable);
 	}
 

@@ -78,7 +78,17 @@ public class CISystemStatusReportUtil {
 
 						@Override
 						public String call() throws Exception {
-							return testrayBuild.getResult();
+							try {
+								return testrayBuild.getResult();
+							}
+							catch (Exception exception) {
+								System.out.println(
+									"Unable to get build result for testray " +
+										"build: " + testrayBuild.getURL());
+								exception.printStackTrace();
+							}
+
+							return null;
 						}
 
 					});

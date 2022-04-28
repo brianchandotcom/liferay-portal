@@ -308,11 +308,11 @@ definition {
 
 			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
 
-			Collection.deleteCollection(collectionName = "Collection Name");
+			PageTemplatesAdmin.deletePageTemplateSet(setName = "Collection Name");
 		}
 
 		task ("Assert the collection was deleted") {
-			Collection.viewNotPresent(rowEntry = "Collection Name");
+			PageTemplatesAdmin.viewPageTemplateSetNotPresent(setName = "Collection Name");
 		}
 	}
 

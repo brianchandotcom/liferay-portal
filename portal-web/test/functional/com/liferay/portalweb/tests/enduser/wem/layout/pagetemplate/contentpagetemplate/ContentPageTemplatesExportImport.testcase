@@ -685,7 +685,7 @@ definition {
 		task ("Delete the page template collection") {
 			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
 
-			Collection.deleteCollection(collectionName = "Page Template Collection");
+			PageTemplatesAdmin.deletePageTemplateSet(setName = "Page Template Collection");
 		}
 
 		task ("Import the previously exported page template") {

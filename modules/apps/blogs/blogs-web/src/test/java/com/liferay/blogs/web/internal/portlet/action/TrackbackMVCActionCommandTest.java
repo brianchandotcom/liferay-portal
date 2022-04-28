@@ -16,44 +16,36 @@ package com.liferay.blogs.web.internal.portlet.action;
 
 import com.liferay.blogs.exception.NoSuchEntryException;
 import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.blogs.service.BlogsEntryService;
+import com.liferay.blogs.service.BlogsEntryServiceUtil;
 import com.liferay.blogs.web.internal.trackback.Trackback;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Collections;
-import java.util.function.Function;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.mockito.Matchers;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-import org.mockito.internal.stubbing.answers.CallsRealMethods;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -61,16 +53,19 @@ import org.springframework.mock.web.MockHttpServletResponse;
 /**
  * @author André de Oliveira
  */
-@PrepareForTest(ActionUtil.class)
-@RunWith(PowerMockRunner.class)
-public class TrackbackMVCActionCommandTest extends PowerMockito {
+public class TrackbackMVCActionCommandTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	public void setUp() throws Exception {
-		MockitoAnnotations.initMocks(this);
+		ReflectionTestUtil.setFieldValue(
+			BlogsEntryServiceUtil.class, "_service", _blogsEntryService);
 
 		_setUpActionRequest();
-		_setUpActionUtil();
 		_setUpBlogsEntry();
 		_setUpPortalUtil();
 		_setUpPortletPreferencesFactoryUtil();
@@ -81,7 +76,7 @@ public class TrackbackMVCActionCommandTest extends PowerMockito {
 	public void testDisabledComments() throws Exception {
 		_whenGetEntryThenReturn(_blogsEntry);
 
-		when(
+		Mockito.when(
 			_portletPreferences.getValue("enableComments", null)
 		).thenReturn(
 			"false"
@@ -154,7 +149,7 @@ public class TrackbackMVCActionCommandTest extends PowerMockito {
 			Matchers.eq("__excerpt__"),
 			Matchers.eq(_mockHttpServletRequest.getRemoteAddr()),
 			Matchers.eq("__blogName__"), Matchers.eq("__title__"),
-			(Function<String, ServiceContext>)Matchers.any()
+			Matchers.any()
 		);
 	}
 
@@ -162,7 +157,7 @@ public class TrackbackMVCActionCommandTest extends PowerMockito {
 	public void testTrackbacksNotEnabled() throws Exception {
 		_whenGetEntryThenReturn(_blogsEntry);
 
-		when(
+		Mockito.when(
 			_blogsEntry.isAllowTrackbacks()
 		).thenReturn(
 			false
@@ -214,31 +209,27 @@ public class TrackbackMVCActionCommandTest extends PowerMockito {
 	}
 
 	private void _setUpActionRequest() {
-		when(
+		Mockito.when(
 			_actionRequest.getAttribute(WebKeys.THEME_DISPLAY)
 		).thenReturn(
 			_themeDisplay
 		);
 
-		when(
+		Mockito.when(
 			_actionRequest.getPreferences()
 		).thenReturn(
 			_portletPreferences
 		);
 
-		when(
+		Mockito.when(
 			_actionRequest.getAttribute(WebKeys.BLOGS_ENTRY)
 		).thenReturn(
 			_blogsEntry
 		);
 	}
 
-	private void _setUpActionUtil() {
-		mockStatic(ActionUtil.class, new CallsRealMethods());
-	}
-
 	private void _setUpBlogsEntry() {
-		when(
+		Mockito.when(
 			_blogsEntry.isAllowTrackbacks()
 		).thenReturn(
 			true
@@ -248,22 +239,22 @@ public class TrackbackMVCActionCommandTest extends PowerMockito {
 	private void _setUpPortalUtil() throws Exception {
 		PortalUtil portalUtil = new PortalUtil();
 
-		Portal portal = mock(Portal.class);
+		Portal portal = Mockito.mock(Portal.class);
 
-		when(
-			portal.getOriginalServletRequest((HttpServletRequest)Matchers.any())
+		Mockito.when(
+			portal.getOriginalServletRequest(Matchers.any())
 		).thenReturn(
 			_mockOriginalServletRequest
 		);
 
-		when(
-			portal.getHttpServletRequest((PortletRequest)Matchers.any())
+		Mockito.when(
+			portal.getHttpServletRequest(Matchers.any())
 		).thenReturn(
 			_mockHttpServletRequest
 		);
 
-		when(
-			portal.getHttpServletResponse((PortletResponse)Matchers.any())
+		Mockito.when(
+			portal.getHttpServletResponse(Matchers.any())
 		).thenReturn(
 			_mockHttpServletResponse
 		);
@@ -275,10 +266,10 @@ public class TrackbackMVCActionCommandTest extends PowerMockito {
 		PortletPreferencesFactoryUtil portletPreferencesFactoryUtil =
 			new PortletPreferencesFactoryUtil();
 
-		PortletPreferencesFactory portletPreferencesFactory = mock(
+		PortletPreferencesFactory portletPreferencesFactory = Mockito.mock(
 			PortletPreferencesFactory.class);
 
-		when(
+		Mockito.when(
 			portletPreferencesFactory.getExistingPortletSetup(
 				Mockito.any(PortletRequest.class))
 		).thenReturn(
@@ -289,48 +280,56 @@ public class TrackbackMVCActionCommandTest extends PowerMockito {
 			portletPreferencesFactory);
 	}
 
-	private void _setUpPropsUtil() throws Exception {
+	private void _setUpPropsUtil() {
 		PropsTestUtil.setProps(Collections.emptyMap());
 	}
 
-	private void _whenGetEntryThenReturn(BlogsEntry blogsEntry) {
-		stub(
-			method(ActionUtil.class, "getEntry", PortletRequest.class)
-		).toReturn(
+	private void _whenGetEntryThenReturn(BlogsEntry blogsEntry)
+		throws Exception {
+
+		Mockito.when(
+			_actionRequest.getParameter(Mockito.anyString())
+		).thenReturn(
+			String.valueOf(10L)
+		);
+
+		Mockito.when(
+			_blogsEntryService.getEntry(Mockito.anyLong())
+		).thenReturn(
 			blogsEntry
 		);
 	}
 
 	private void _whenGetEntryThenThrow(Throwable throwable) throws Exception {
-		stub(
-			method(ActionUtil.class, "getEntry", PortletRequest.class)
-		).toThrow(
+		Mockito.when(
+			_actionRequest.getParameter(Mockito.anyString())
+		).thenReturn(
+			String.valueOf(10L)
+		);
+
+		Mockito.when(
+			_blogsEntryService.getEntry(Mockito.anyLong())
+		).thenThrow(
 			throwable
 		);
 	}
 
-	@Mock
-	private ActionRequest _actionRequest;
-
-	@Mock
-	private ActionResponse _actionResponse;
-
-	@Mock
-	private BlogsEntry _blogsEntry;
-
+	private final ActionRequest _actionRequest = Mockito.mock(
+		ActionRequest.class);
+	private final ActionResponse _actionResponse = Mockito.mock(
+		ActionResponse.class);
+	private final BlogsEntry _blogsEntry = Mockito.mock(BlogsEntry.class);
+	private final BlogsEntryService _blogsEntryService = Mockito.mock(
+		BlogsEntryService.class);
 	private final MockHttpServletRequest _mockHttpServletRequest =
 		new MockHttpServletRequest();
 	private final MockHttpServletResponse _mockHttpServletResponse =
 		new MockHttpServletResponse();
 	private final MockHttpServletRequest _mockOriginalServletRequest =
 		new MockHttpServletRequest();
-
-	@Mock
-	private PortletPreferences _portletPreferences;
-
+	private final PortletPreferences _portletPreferences = Mockito.mock(
+		PortletPreferences.class);
 	private final ThemeDisplay _themeDisplay = new ThemeDisplay();
-
-	@Mock
-	private Trackback _trackback;
+	private final Trackback _trackback = Mockito.mock(Trackback.class);
 
 }

@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 
 <model-hints>
-	<model name="com.liferay.client.extension.model.ClientExtensionEntry">
+	<model name="com.liferay.client.extension.model.RemoteAppEntry">
 		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="externalReferenceCode" type="String" />
-		<field name="clientExtensionEntryId" type="long" />
+		<field name="remoteAppEntryId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />

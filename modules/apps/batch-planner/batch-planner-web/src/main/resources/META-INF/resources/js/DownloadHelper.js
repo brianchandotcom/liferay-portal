@@ -16,17 +16,22 @@ import {fetch} from 'frontend-js-web';
 
 import {HEADLESS_BATCH_ENGINE_URL} from './constants';
 
-const getEndpoint = (type, externalReferenceCode) => {
+const getEndpoint = (type, externalReferenceCode, fileName) => {
 	const endpoints = {
 		batchPlannerTemplate: `/o/batch-planner/v1.0/plans/${externalReferenceCode}/template`,
-		errorReport: `${HEADLESS_BATCH_ENGINE_URL}/import-task/by-external-reference-code/${externalReferenceCode}/failed-items/report`,
-		importFile: `${HEADLESS_BATCH_ENGINE_URL}/import-task/by-external-reference-code/${externalReferenceCode}/content`,
+		errorReport: `${HEADLESS_BATCH_ENGINE_URL}/import-task/by-external-reference-code/${externalReferenceCode}/failed-items/report?fileName=${fileName}`,
+		importFile: `${HEADLESS_BATCH_ENGINE_URL}/import-task/by-external-reference-code/${externalReferenceCode}/content?fileName=${fileName}`,
 	};
 
 	return endpoints[type];
 };
 
-export default function ({HTMLElementId, externalReferenceCode, type}) {
+export default function ({
+	HTMLElementId,
+	externalReferenceCode,
+	fileName,
+	type,
+}) {
 	document
 		.getElementById(HTMLElementId)
 		.addEventListener('click', (event) => {
@@ -42,24 +47,26 @@ export default function ({HTMLElementId, externalReferenceCode, type}) {
 						.value;
 			}
 
-			fetch(getEndpoint(type, externalReferenceCode)).then((response) => {
-				response.blob().then((blob) => {
-					const LinkElement = document.createElement('a');
+			fetch(getEndpoint(type, externalReferenceCode, fileName)).then(
+				(response) => {
+					response.blob().then((blob) => {
+						const LinkElement = document.createElement('a');
 
-					LinkElement.href = URL.createObjectURL(blob);
+						LinkElement.href = URL.createObjectURL(blob);
 
-					const fileName = response.headers
-						.get('Content-Disposition')
-						.match(/filename=(.*)/)[1];
+						const fileName = response.headers
+							.get('Content-Disposition')
+							.match(/filename=(.*)/)[1];
 
-					LinkElement.download = fileName;
+						LinkElement.download = fileName;
 
-					document.body.appendChild(LinkElement);
+						document.body.appendChild(LinkElement);
 
-					LinkElement.click();
+						LinkElement.click();
 
-					LinkElement.remove();
-				});
-			});
+						LinkElement.remove();
+					});
+				}
+			);
 		});
 }

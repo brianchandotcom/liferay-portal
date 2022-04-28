@@ -37,6 +37,8 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
@@ -88,9 +90,16 @@ public class JSLoaderTopHeadDynamicInclude extends BaseDynamicInclude {
 		printWriter.write(String.valueOf(_details.waitTimeout() * 1000));
 		printWriter.write(
 			"};</script><script data-senna-track=\"permanent\" src=\"");
-		printWriter.write(_servletContext.getContextPath());
-		printWriter.write("/loader.js?t=");
-		printWriter.write(_lastModified);
+
+		AbsolutePortalURLBuilder absolutePortalURLBuilder =
+			_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
+				httpServletRequest);
+
+		printWriter.write(
+			absolutePortalURLBuilder.forBundleScript(
+				_bundle, "/loader.js"
+			).build());
+
 		printWriter.write("\" type=\"");
 		printWriter.write(ContentTypes.TEXT_JAVASCRIPT);
 		printWriter.write("\"></script>");
@@ -104,7 +113,11 @@ public class JSLoaderTopHeadDynamicInclude extends BaseDynamicInclude {
 
 	@Activate
 	@Modified
-	protected void activate(Map<String, Object> properties) {
+	protected void activate(
+		BundleContext bundleContext, Map<String, Object> properties) {
+
+		_bundle = bundleContext.getBundle();
+
 		_details = ConfigurableUtil.createConfigurable(
 			Details.class, properties);
 		_lastModified = String.valueOf(System.currentTimeMillis());
@@ -123,7 +136,7 @@ public class JSLoaderTopHeadDynamicInclude extends BaseDynamicInclude {
 			_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
 				httpServletRequest);
 
-		return absolutePortalURLBuilder.forWhiteboard(
+		return absolutePortalURLBuilder.forAPIRequest(
 			"/js_resolve_modules"
 		).build();
 	}
@@ -149,6 +162,7 @@ public class JSLoaderTopHeadDynamicInclude extends BaseDynamicInclude {
 	@Reference
 	private AbsolutePortalURLBuilderFactory _absolutePortalURLBuilderFactory;
 
+	private volatile Bundle _bundle;
 	private volatile Details _details;
 	private volatile String _lastModified;
 

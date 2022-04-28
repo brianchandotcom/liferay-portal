@@ -1,0 +1,549 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"indexed": true,
+					"layout": {
+						"borderWidth": 0,
+						"marginBottom": 0,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 0,
+						"paddingBottom": 0,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 0,
+						"widthType": "Fluid"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragmentStyle": {
+								"marginLeft": "7",
+								"marginRight": "7",
+								"marginTop": "5"
+							},
+							"indexed": true,
+							"layout": {
+								"borderWidth": 0,
+								"marginBottom": 0,
+								"marginLeft": 8,
+								"marginRight": 8,
+								"marginTop": 4,
+								"paddingBottom": 0,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 0,
+								"widthType": "Fluid"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"indexed": true,
+									"layout": {
+										"borderWidth": 0,
+										"marginBottom": 0,
+										"marginLeft": 0,
+										"marginRight": 0,
+										"marginTop": 0,
+										"paddingBottom": 0,
+										"paddingLeft": 0,
+										"paddingRight": 0,
+										"paddingTop": 0,
+										"widthType": "Fluid"
+									}
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "BASIC_COMPONENT-heading"
+											},
+											"fragmentConfig": {
+												"headingLevel": "h3"
+											},
+											"fragmentFields": [
+												{
+													"id": "element-text",
+													"value": {
+														"fragmentLink": {},
+														"text": {
+															"value_i18n": {
+																"en_US": "Cookie List"
+															}
+														}
+													}
+												}
+											],
+											"fragmentStyle": {
+												"marginBottom": "5"
+											},
+											"indexed": true
+										},
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "BASIC_COMPONENT-paragraph"
+											},
+											"fragmentConfig": {},
+											"fragmentFields": [
+												{
+													"id": "element-text",
+													"value": {
+														"fragmentLink": {},
+														"text": {
+															"value_i18n": {
+																"en_US": "A cookie is a small piece of data (text file) that a website – when visited by a user – asks your browser to store on your device in order to remember information about you, such as your language preference or login information. Those cookies are set by us and called first-party cookies. We also use third-party cookies – which are cookies from a domain different than the domain of the website you are visiting – for our advertising and marketing efforts. More specifically, we use cookies and other tracking technologies for the following purposes:"
+															}
+														}
+													}
+												}
+											],
+											"fragmentStyle": {
+												"textAlign": "justify"
+											},
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "Section"
+							},
+							{
+								"definition": {
+									"indexed": true,
+									"layout": {
+										"borderWidth": 0,
+										"marginBottom": 0,
+										"marginLeft": 0,
+										"marginRight": 0,
+										"marginTop": 0,
+										"paddingBottom": 0,
+										"paddingLeft": 0,
+										"paddingRight": 0,
+										"paddingTop": 0,
+										"widthType": "Fluid"
+									}
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragmentStyle": {
+												"marginBottom": "5",
+												"marginTop": "3"
+											},
+											"indexed": true,
+											"layout": {
+												"borderWidth": 0,
+												"marginBottom": 4,
+												"marginLeft": 0,
+												"marginRight": 0,
+												"marginTop": 1,
+												"paddingBottom": 0,
+												"paddingLeft": 0,
+												"paddingRight": 0,
+												"paddingTop": 0,
+												"widthType": "Fluid"
+											}
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-heading"
+													},
+													"fragmentConfig": {
+														"headingLevel": "h5"
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {},
+																"text": {
+																	"value_i18n": {
+																		"en_US": "Strictly Necessary Cookies"
+																	}
+																}
+															}
+														}
+													],
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-paragraph"
+													},
+													"fragmentConfig": {},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {},
+																"text": {
+																	"value_i18n": {
+																		"en_US": "These cookies are necessary for the website to function and cannot be switched off in our systems. These cookies do not store any personally identifiable information."
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"textAlign": "justify"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-html"
+													},
+													"fragmentConfig": {},
+													"fragmentFields": [
+														{
+															"id": "element-html",
+															"value": {
+																"html": {
+																	"value_i18n": {
+																		"en_US": "<table class=\"table table-bordered\">\n  <tbody>\n    <tr>\n      <th>Cookie Subgroup</th>\n      <th>Cookies</th>\n      <th>Cookies used</th>\n      <th>Lifespan</th>\n    </tr>\n    <tr>\n      <td>\n        <a href=\"http://customer.liferay.com/\" target=\"_blank\">customer.liferay.com</a>\n      </td>\n      <td>\n        <a href=\"https://cookiepedia.co.uk/cookies/JSESSIONID\" target=\"_blank\">JSESSIONID</a>\n      </td>\n      <td>First Party</td>\n      <td>Session</td>\n    </tr>\n    <tr>\n      <td><a href=\"http://liferay.com/\" target=\"_blank\">liferay.com</a></td>\n      <td>\n        <a href=\"https://cookiepedia.co.uk/cookies/_dc_gtm_UA-xxxxxxxx\" target=\"_blank\">_dc_gtm_UA-xxxxxxxx</a>,\n        <a href=\"https://cookiepedia.co.uk/cookies/OptanonAlertBoxClosed\" target=\"_blank\">OptanonAlertBoxClosed</a>,\n        <a href=\"https://cookiepedia.co.uk/cookies/eupubconsent\" target=\"_blank\">eupubconsent</a>,\n        <a href=\"https://cookiepedia.co.uk/cookies/OptanonConsent\" target=\"_blank\">OptanonConsent</a>\n      </td>\n      <td>First Party</td>\n      <td>A few seconds, 365 Days,</td>\n    </tr>\n    <tr>\n      <td>\n        <a href=\"http://www-cdn.liferay.com/\" target=\"_blank\">www-cdn.liferay.com</a>\n      </td>\n      <td>\n        <a href=\"https://cookiepedia.co.uk/cookies/SERVER_ID\" target=\"_blank\">SERVER_ID</a>,\n        <a href=\"https://cookiepedia.co.uk/cookies/LFR_SESSION_STATE_ZZZZZ\" target=\"_blank\">LFR_SESSION_STATE_ZZZZZ</a>\n      </td>\n      <td>First Party</td>\n      <td>Session, Session</td>\n    </tr>\n    <tr>\n      <td><a href=\"http://liferay.com/\" target=\"_blank\">liferay.com</a></td>\n      <td>ID</td>\n      <td>First Party</td>\n      <td>364 Days</td>\n    </tr>\n    <tr>\n      <td><a href=\"http://liferay.com/\" target=\"_blank\">liferay.com</a></td>\n      <td>\n        <a href=\"https://cookiepedia.co.uk/cookies/COMPANY_ID\" target=\"_blank\">COMPANY_ID</a>\n      </td>\n      <td>First Party</td>\n      <td>364 Days</td>\n    </tr>\n  </tbody>\n</table>"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"marginTop": "3"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Section"
+									},
+									{
+										"definition": {
+											"fragmentStyle": {
+												"marginBottom": "5",
+												"marginTop": "3"
+											},
+											"indexed": true,
+											"layout": {
+												"borderWidth": 0,
+												"marginBottom": 4,
+												"marginLeft": 0,
+												"marginRight": 0,
+												"marginTop": 1,
+												"paddingBottom": 0,
+												"paddingLeft": 0,
+												"paddingRight": 0,
+												"paddingTop": 0,
+												"widthType": "Fluid"
+											}
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-heading"
+													},
+													"fragmentConfig": {
+														"headingLevel": "h5"
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {},
+																"text": {
+																	"value_i18n": {
+																		"en_US": "Functional Cookies"
+																	}
+																}
+															}
+														}
+													],
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-paragraph"
+													},
+													"fragmentConfig": {},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {},
+																"text": {
+																	"value_i18n": {
+																		"en_US": "These cookies enable the website to provide enhanced functionality and personalisation. They may be set by us or by third party providers whose services we have added to our pages. If you do not allow these cookies then some or all of these services may not function properly."
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"textAlign": "justify"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-html"
+													},
+													"fragmentConfig": {},
+													"fragmentFields": [
+														{
+															"id": "element-html",
+															"value": {
+																"html": {
+																	"value_i18n": {
+																		"en_US": "<table class=\"table table-bordered\">\n  <tbody>\n    <tr>\n      <th>Cookie Subgroup</th>\n      <th>Cookies</th>\n      <th>Cookies used</th>\n      <th>Lifespan</th>\n    </tr>\n    <tr>\n      <td>\n        <a href=\"http://partner.liferay.com/\" target=\"_blank\">partner.liferay.com</a>\n      </td>\n      <td>\n        <a href=\"https://cookiepedia.co.uk/cookies/GUEST_LANGUAGE_ID\" target=\"_blank\">GUEST_LANGUAGE_ID</a>\n      </td>\n      <td>First Party</td>\n      <td>364 Days</td>\n    </tr>\n    <tr>\n      <td><a href=\"http://liferay.com/\" target=\"_blank\">www.liferay.com</a></td>\n      <td>\n        <a href=\"https://cookiepedia.co.uk/cookies/COOKIE_SUPPORT\" target=\"_blank\">COOKIE_SUPPORT</a>\n      </td>\n      <td>First Party</td>\n      <td>364 Days</td>\n    </tr>\n    <tr>\n      <td><a href=\"http://liferay.com/\" target=\"_blank\">liferay.com</a></td>\n      <td>\n        <a href=\"https://cookiepedia.co.uk/cookies/rxVisitor\" target=\"_blank\">rxVisitor</a>\n      </td>\n      <td>First Party</td>\n      <td>Session</td>\n    </tr>\n    <tr>\n      <td><a href=\"http://liferay.com/\" target=\"_blank\">liferay.com</a></td>\n      <td>\n        <a href=\"https://cookiepedia.co.uk/cookies/REMEMBER_ME\" target=\"_blank\">REMEMBER_ME</a>\n      </td>\n      <td>First Party</td>\n      <td>364 Days</td>\n    </tr>\n    <tr>\n      <td><a href=\"http://liferay.com/\" target=\"_blank\">liferay.com</a></td>\n      <td>\n        <a href=\"https://cookiepedia.co.uk/cookies/LOGIN\" target=\"_blank\">LOGIN</a>\n      </td>\n      <td>First Party</td>\n      <td>364 Days</td>\n    </tr>\n    <tr>\n      <td><a href=\"http://liferay.com/\" target=\"_blank\">liferay.com</a></td>\n      <td>\n        <a href=\"https://cookiepedia.co.uk/cookies/PASSWORD\" target=\"_blank\">PASSWORD</a>\n      </td>\n      <td>First Party</td>\n      <td>364 Days</td>\n    </tr>\n  </tbody>\n</table>"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"marginTop": "3"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Section"
+									},
+									{
+										"definition": {
+											"fragmentStyle": {
+												"marginBottom": "5",
+												"marginTop": "3"
+											},
+											"indexed": true,
+											"layout": {
+												"borderWidth": 0,
+												"marginBottom": 4,
+												"marginLeft": 0,
+												"marginRight": 0,
+												"marginTop": 1,
+												"paddingBottom": 0,
+												"paddingLeft": 0,
+												"paddingRight": 0,
+												"paddingTop": 0,
+												"widthType": "Fluid"
+											}
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-heading"
+													},
+													"fragmentConfig": {
+														"headingLevel": "h5"
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {},
+																"text": {
+																	"value_i18n": {
+																		"en_US": "Performance Cookies"
+																	}
+																}
+															}
+														}
+													],
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-paragraph"
+													},
+													"fragmentConfig": {},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {},
+																"text": {
+																	"value_i18n": {
+																		"en_US": "These cookies allow us to count visits and traffic sources so we can measure and improve the performance of our site. They help us to know which pages are the most and least popular and see how visitors move around the site. All information these cookies collect is aggregated and therefore anonymous."
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"textAlign": "justify"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-html"
+													},
+													"fragmentConfig": {},
+													"fragmentFields": [
+														{
+															"id": "element-html",
+															"value": {
+																"html": {
+																	"value_i18n": {
+																		"en_US": "<table class=\"table table-bordered\">\n  <tbody>\n    <tr>\n      <th>Cookie Subgroup</th>\n      <th>Cookies</th>\n      <th>Cookies used</th>\n      <th>Lifespan</th>\n    </tr>\n    <tr>\n      <td><a href=\"http://liferay.com/\" target=\"_blank\">liferay.com</a></td>\n      <td>\n        <a href=\"https://cookiepedia.co.uk/cookies/dtPC\" target=\"_blank\">dtPC</a>,\n        <a href=\"https://cookiepedia.co.uk/cookies/_mkto_trk\" target=\"_blank\">_mkto_trk</a>,\n        <a href=\"https://cookiepedia.co.uk/cookies/_ga\" target=\"_blank\">_ga</a>,\n        <a href=\"https://cookiepedia.co.uk/cookies/_gclxxxx\" target=\"_blank\">_gclxxxx</a>,\n        <a href=\"https://cookiepedia.co.uk/cookies/OSB_UTM\" target=\"_blank\">OSB_UTM</a>,\n        <a href=\"https://cookiepedia.co.uk/cookies/_gat_UA-\" target=\"_blank\">_gat_UA-</a>,\n        <a href=\"https://cookiepedia.co.uk/cookies/_gid\" target=\"_blank\">_gid</a>\n      </td>\n      <td>First Party</td>\n      <td>\n        Session, 729 Days, A few seconds, 89 Days, 7 Days, A few seconds, A few\n        seconds\n      </td>\n    </tr>\n    <tr>\n      <td><a href=\"http://liferay.com/\" target=\"_blank\">www.liferay.com</a></td>\n      <td>\n        <a href=\"https://cookiepedia.co.uk/cookies/rxvt\" target=\"_blank\">rxvt</a>,\n        <a href=\"https://cookiepedia.co.uk/cookies/dtLatC\" target=\"_blank\">dtLatC</a>,\n        <a href=\"https://cookiepedia.co.uk/cookies/ac_client_user_id\" target=\"_blank\">ac_client_user_id</a>,\n        <a href=\"https://cookiepedia.co.uk/cookies/dtSa\" target=\"_blank\">dtSa</a>,\n        <a href=\"https://cookiepedia.co.uk/cookies/dtCookie\" target=\"_blank\">dtCookie</a>\n      </td>\n      <td>First Party</td>\n      <td>A few seconds, A few seconds, 364 Days, Session, Session</td>\n    </tr>\n  </tbody>\n</table>"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"marginTop": "3"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Section"
+									},
+									{
+										"definition": {
+											"fragmentStyle": {
+												"marginBottom": "5",
+												"marginTop": "3"
+											},
+											"indexed": true,
+											"layout": {
+												"borderWidth": 0,
+												"marginBottom": 4,
+												"marginLeft": 0,
+												"marginRight": 0,
+												"marginTop": 1,
+												"paddingBottom": 0,
+												"paddingLeft": 0,
+												"paddingRight": 0,
+												"paddingTop": 0,
+												"widthType": "Fluid"
+											}
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-heading"
+													},
+													"fragmentConfig": {
+														"headingLevel": "h5"
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {},
+																"text": {
+																	"value_i18n": {
+																		"en_US": "Personalization Cookies"
+																	}
+																}
+															}
+														}
+													],
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-paragraph"
+													},
+													"fragmentConfig": {},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {},
+																"text": {
+																	"value_i18n": {
+																		"en_US": "These cookies may be set through our site by our advertising/social media partners. They do not store directly personal information, but are based on uniquely identifying your browser and internet device to offer you to share content on social media or to show you relevant content or ads on our website or other platforms."
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"textAlign": "justify"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-html"
+													},
+													"fragmentConfig": {},
+													"fragmentFields": [
+														{
+															"id": "element-html",
+															"value": {
+																"html": {
+																	"value_i18n": {
+																		"en_US": "<table class=\"table table-bordered\">\n  <tbody>\n    <tr>\n      <th>Cookie Subgroup</th>\n      <th>Cookies</th>\n      <th>Cookies used</th>\n      <th>Lifespan</th>\n    </tr>\n    <tr>\n      <td><a href=\"http://liferay.com/\" target=\"_blank\">liferay.com</a></td>\n      <td>\n        <a href=\"https://cookiepedia.co.uk/cookies/_fbp\" target=\"_blank\">_fbp</a>,\n        <a href=\"https://cookiepedia.co.uk/cookies/_gat_xxxxxxxxxxxxxxxxxxxxxxxxxx\" target=\"_blank\">_gat_xxxxxxxxxxxxxxxxxxxxxxxxxx</a>,\n        <a href=\"https://cookiepedia.co.uk/cookies/_fbc\" target=\"_blank\">_fbc</a>\n      </td>\n      <td>First Party</td>\n      <td>89 Days, A few seconds, 89 Days</td>\n    </tr>\n  </tbody>\n</table>"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"marginTop": "3"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Section"
+									}
+								],
+								"type": "Section"
+							}
+						],
+						"type": "Section"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"themeName": "Dialect"
+	}
+}

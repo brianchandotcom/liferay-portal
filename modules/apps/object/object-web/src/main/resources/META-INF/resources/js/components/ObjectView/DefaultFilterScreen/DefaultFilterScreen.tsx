@@ -29,7 +29,7 @@ export function DefaultFilterScreen() {
 			emptyState={{
 				buttonText: Liferay.Language.get('new-default-filter'),
 				description: Liferay.Language.get(
-					'start-creating-a-filter-to-dipslay-a-specifc-data'
+					'start-creating-a-filter-to-display-specific-data'
 				),
 				title: Liferay.Language.get('no-filter-was-created-yet'),
 			}}

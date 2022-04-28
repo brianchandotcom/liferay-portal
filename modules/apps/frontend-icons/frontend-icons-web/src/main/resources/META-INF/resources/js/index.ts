@@ -20,6 +20,10 @@ const BASE_PATH = '/o/icons';
 const SYSTEM_ICON_PACK = 'clay';
 
 export function getSpritemapPath(iconPack?: String) {
+	if (!Liferay.__FF__['LPS-145112']) {
+		return Liferay.ThemeDisplay.getPathThemeImages() + '/clay/icons.svg';
+	}
+
 	const packOrSite = iconPack ? 'pack' : 'site';
 	const iconPackOrSiteId = iconPack || Liferay.ThemeDisplay.getSiteGroupId();
 
@@ -27,5 +31,9 @@ export function getSpritemapPath(iconPack?: String) {
 }
 
 export function getSystemSpritemapPath() {
+	if (!Liferay.__FF__['LPS-145112']) {
+		return Liferay.ThemeDisplay.getPathThemeImages() + '/clay/icons.svg';
+	}
+
 	return getSpritemapPath(SYSTEM_ICON_PACK);
 }

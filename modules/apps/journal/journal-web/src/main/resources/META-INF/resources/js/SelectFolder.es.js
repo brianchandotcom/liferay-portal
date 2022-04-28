@@ -55,7 +55,7 @@ const SelectFolder = ({itemSelectorSaveEvent, nodes}) => {
 				</ClayInput.Group>
 			</ClayForm.Group>
 
-			{Liferay.__FF__.enableClayTreeView ? (
+			{Liferay.__FF__['LPS-144630'] ? (
 				<FolderTree
 					filterQuery={filterQuery}
 					handleSelectionChange={handleSelectionChange}

@@ -202,7 +202,9 @@ definition {
 				accountGroupName = "AG Name with Accounts",
 				assigneeNames = "Account for Account Group");
 
-			AccountGroups.viewAssignee(assigneeName = "Account for Account Group");
+			LexiconTable.viewTableEntryPartialText(
+				tableEntry = "Account for Account Group",
+				tableEntryPartialText = "Account for Account Group");
 		}
 	}
 

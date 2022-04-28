@@ -216,6 +216,51 @@ definition {
 			expectedCount = "1");
 	}
 
+	@priority = "4"
+	test CanSetVirtualHostViaPages {
+		property test.name.skip.portal.instance = "DatabasePartitioning#CanSetVirtualHostViaPages";
+
+		PortalInstances.openVirtualInstancesAdmin();
+
+		PortalInstances.addCP(
+			mailDomain = "www.able.com",
+			virtualHost = "www.able.com",
+			webId = "www.able.com");
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://www.able.com:8080",
+			userEmailAddress = "test@www.able.com");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Site Settings");
+
+		Site.addVirtualHostsURLCP(
+			pageVirtualHosts = "true",
+			pageVirtualHostURL = "www.baker.com");
+
+		Navigator.openSpecificURL(url = "http://www.baker.com:8080");
+
+		AssertLocation.assertPartialLocation(value1 = "http://www.baker.com:8080");
+
+		SignOut.signOut();
+
+		User.firstLoginPG();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "Server Administration");
+
+		ServerAdministration.executeServerResourcesActions(actionsDescription = "Clear the database cache.");
+
+		Navigator.openSpecificURL(url = "http://www.baker.com:8080");
+
+		AssertConsoleTextNotPresent(value1 = "com.liferay.portal.kernel.exception.NoSuchLayoutSetException: No LayoutSet exists with the primary key");
+	}
+
 	@priority = "5"
 	test DeleteCompany {
 		property custom.properties = "database.partition.schema.name.prefix=testPartition";

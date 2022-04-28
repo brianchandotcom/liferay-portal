@@ -39,6 +39,7 @@ import com.liferay.portal.vulcan.yaml.YAMLUtil;
 import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -83,10 +84,13 @@ public class PlanResourceImpl extends BasePlanResourceImpl {
 
 	@Override
 	public Response getPlanTemplate(String internalClassName) throws Exception {
-		Map<String, Field> dtoEntityFields = OpenAPIUtil.getDTOEntityFields(
-			internalClassName, _getOpenAPIYAML(internalClassName));
+		String simpleClassName = internalClassName.substring(
+			internalClassName.lastIndexOf(StringPool.PERIOD) + 1);
 
-		return _getResponse(dtoEntityFields);
+		Map<String, Field> dtoEntityFields = OpenAPIUtil.getDTOEntityFields(
+			simpleClassName, _getOpenAPIYAML(internalClassName));
+
+		return _getResponse(simpleClassName, dtoEntityFields);
 	}
 
 	@Override
@@ -173,8 +177,19 @@ public class PlanResourceImpl extends BasePlanResourceImpl {
 		return YAMLUtil.loadOpenAPIYAML((String)response.getEntity());
 	}
 
-	private Response _getResponse(Map<String, Field> dtoEntityFields) {
-		Set<Map.Entry<String, Field>> set = dtoEntityFields.entrySet();
+	private Response _getResponse(
+		String dtoEntityName, Map<String, Field> dtoEntityFields) {
+
+		Map<String, Field> effectiveDTOEntityFields = new HashMap<>();
+
+		dtoEntityFields.forEach(
+			(name, field) -> {
+				if (!name.startsWith("x-")) {
+					effectiveDTOEntityFields.put(name, field);
+				}
+			});
+
+		Set<Map.Entry<String, Field>> set = effectiveDTOEntityFields.entrySet();
 
 		Iterator<Map.Entry<String, Field>> iterator = set.iterator();
 
@@ -202,7 +217,8 @@ public class PlanResourceImpl extends BasePlanResourceImpl {
 				headerSB.toString(), System.lineSeparator(), lineSB.toString())
 		).header(
 			"content-disposition",
-			"attachment; filename=" + StringUtil.randomString() + ".csv"
+			"attachment; filename=" + StringUtil.toLowerCase(dtoEntityName) +
+				"-import-template.csv"
 		).build();
 	}
 

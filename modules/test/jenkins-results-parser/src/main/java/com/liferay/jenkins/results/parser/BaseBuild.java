@@ -512,43 +512,61 @@ public abstract class BaseBuild implements Build {
 
 			JSONArray buildResultsJSONArray = new JSONArray();
 
-			for (Build downstreamBuild : getDownstreamBuilds(null)) {
+			for (Build build : getDownstreamBuilds(null)) {
 				JSONObject buildResultJSONObject = new JSONObject();
 
-				if (downstreamBuild instanceof AxisBuild) {
-					AxisBuild downstreamAxisBuild = (AxisBuild)downstreamBuild;
+				String axisName = null;
 
-					buildResultJSONObject.put(
-						"axisName", downstreamAxisBuild.getAxisName());
+				if (build instanceof AxisBuild) {
+					AxisBuild axisBuild = (AxisBuild)build;
+
+					axisName = axisBuild.getAxisName();
+				}
+				else if (build instanceof DownstreamBuild) {
+					DownstreamBuild downstreamBuild = (DownstreamBuild)build;
+
+					axisName = downstreamBuild.getAxisName();
+				}
+
+				if (!JenkinsResultsParserUtil.isNullOrEmpty(axisName)) {
+					buildResultJSONObject.put("axisName", axisName);
 				}
 
 				if (dataTypesList.contains("buildURL")) {
-					buildResultJSONObject.put(
-						"buildURL", downstreamBuild.getBuildURL());
+					buildResultJSONObject.put("buildURL", build.getBuildURL());
 				}
 
 				if (dataTypesList.contains("duration")) {
-					buildResultJSONObject.put(
-						"duration", downstreamBuild.getDuration());
+					buildResultJSONObject.put("duration", build.getDuration());
 				}
 
-				buildResultJSONObject.put(
-					"result", downstreamBuild.getResult());
+				buildResultJSONObject.put("result", build.getResult());
 
-				if ((downstreamBuild instanceof AxisBuild) &&
-					dataTypesList.contains("stopWatchRecords")) {
+				if (dataTypesList.contains("stopWatchRecords")) {
+					StopWatchRecordsGroup stopWatchRecordsGroup = null;
 
-					AxisBuild downstreamAxisBuild = (AxisBuild)downstreamBuild;
+					if (build instanceof AxisBuild) {
+						AxisBuild axisBuild = (AxisBuild)build;
 
-					StopWatchRecordsGroup stopWatchRecordsGroup =
-						downstreamAxisBuild.getStopWatchRecordsGroup();
+						stopWatchRecordsGroup =
+							axisBuild.getStopWatchRecordsGroup();
+					}
+					else if (build instanceof DownstreamBuild) {
+						DownstreamBuild downstreamBuild =
+							(DownstreamBuild)build;
 
-					JSONArray stopWatchRecordsGroupJSONArray =
-						stopWatchRecordsGroup.getJSONArray();
+						stopWatchRecordsGroup =
+							downstreamBuild.getStopWatchRecordsGroup();
+					}
 
-					if (stopWatchRecordsGroupJSONArray.length() > 0) {
-						buildResultJSONObject.put(
-							"stopWatchRecords", stopWatchRecordsGroupJSONArray);
+					if (stopWatchRecordsGroup != null) {
+						JSONArray jsonArray =
+							stopWatchRecordsGroup.getJSONArray();
+
+						if (jsonArray.length() > 0) {
+							buildResultJSONObject.put(
+								"stopWatchRecords", jsonArray);
+						}
 					}
 				}
 

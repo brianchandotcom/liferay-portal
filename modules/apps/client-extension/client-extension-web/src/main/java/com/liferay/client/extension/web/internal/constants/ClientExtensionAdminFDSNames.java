@@ -19,7 +19,6 @@ package com.liferay.client.extension.web.internal.constants;
  */
 public class ClientExtensionAdminFDSNames {
 
-	public static final String CLIENT_EXTENSION_ENTRIES =
-		"clientExtensionEntries";
+	public static final String CLIENT_EXTENSION_ENTRIES = "clientExtensionEntries";
 
 }

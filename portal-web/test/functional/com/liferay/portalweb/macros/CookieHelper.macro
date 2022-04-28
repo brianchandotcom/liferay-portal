@@ -41,7 +41,7 @@ definition {
 			expectedCookieValue = "true");
 
 		CookieHelper._checkSelectedCookieValue(
-			cookieName = "CONSENT_TYPE_STRICTLY_NECESSARY",
+			cookieName = "CONSENT_TYPE_NECESSARY",
 			expectedCookieValue = "true");
 	}
 
@@ -59,7 +59,7 @@ definition {
 			expectedCookieValue = "false");
 
 		CookieHelper._checkSelectedCookieValue(
-			cookieName = "CONSENT_TYPE_STRICTLY_NECESSARY",
+			cookieName = "CONSENT_TYPE_NECESSARY",
 			expectedCookieValue = "true");
 	}
 

@@ -113,7 +113,7 @@ definition {
 			expectedCookieValue = "true");
 
 		CookieHelper.checkSelectedCookieIsNotPresent(
-			cookieName = "CONSENT_TYPE_STRICTLY_NECESSARY",
+			cookieName = "CONSENT_TYPE_NECESSARY",
 			expectedCookieValue = "true");
 	}
 

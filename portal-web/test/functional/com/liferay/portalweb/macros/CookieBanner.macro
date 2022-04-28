@@ -11,7 +11,7 @@ definition {
 
 		CookieHelper.checkSelectedCookieExpirationDate(cookieName = "CONSENT_TYPE_PERSONALIZATION");
 
-		CookieHelper.checkSelectedCookieExpirationDate(cookieName = "CONSENT_TYPE_STRICTLY_NECESSARY");
+		CookieHelper.checkSelectedCookieExpirationDate(cookieName = "CONSENT_TYPE_NECESSARY");
 	}
 
 	macro cookiesBannerAcceptAll {

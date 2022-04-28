@@ -16,10 +16,14 @@ import ClayTabs from '@clayui/tabs';
 import {fetch} from 'frontend-js-web';
 import React, {useState} from 'react';
 
-import {availableLocales, defaultLocale} from '../utils/locale';
+import {
+	availableLocales,
+	defaultLanguageId,
+	defaultLocale,
+} from '../utils/locale';
 import {BasicInfo, Conditions} from './DataValidation/ObjectValidationTabs';
 import {useObjectValidationForm} from './ObjectValidationFormBase';
-import {SidePanelForm} from './SidePanelContent';
+import {SidePanelForm, closeSidePanel, openToast} from './SidePanelContent';
 
 const TABS = [
 	{
@@ -31,11 +35,6 @@ const TABS = [
 		label: Liferay.Language.get('conditions'),
 	},
 ];
-
-function closeSidePanel() {
-	const parentWindow = Liferay.Util.getOpener();
-	parentWindow.Liferay.fire('close-side-panel');
-}
 
 export default function EditObjectValidation({
 	objectValidationRule: initialValues,
@@ -56,21 +55,18 @@ export default function EditObjectValidation({
 			}
 		);
 
-		const parentWindow = Liferay.Util.getOpener();
-
 		if (response.ok) {
 			closeSidePanel();
-			parentWindow.Liferay.Util.openToast({
+			openToast({
 				message: Liferay.Language.get(
 					'the-object-validation-was-updated-successfully'
 				),
-				type: 'success',
 			});
 		}
 		else {
 			const message = Liferay.Language.get('an-error-occurred');
 
-			parentWindow.Liferay.Util.openToast({message, type: 'danger'});
+			openToast({message, type: 'danger'});
 		}
 	};
 
@@ -83,7 +79,10 @@ export default function EditObjectValidation({
 	} = useObjectValidationForm({initialValues, onSubmit});
 
 	return (
-		<SidePanelForm onSubmit={handleSubmit} title={initialValues.name}>
+		<SidePanelForm
+			onSubmit={handleSubmit}
+			title={initialValues.name?.[defaultLanguageId]}
+		>
 			<ClayTabs className="side-panel-iframe__tabs">
 				{TABS.map(({label}, index) => (
 					<ClayTabs.Item

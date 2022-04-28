@@ -1334,12 +1334,29 @@ definition {
 	}
 
 	@description = "This is a test for LPS-90966. It checks that the caption link will keep persisting."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test LinkToImageInCaptionPersistsAfterBeingAdded {
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
-		// TODO LPS-149365 LinkToImageInCaptionPersistsAfterBeingAdded pending implementation
+		Blogs.addEntryWithUploadedCoverImage(
+			captionField = "Cover Image Caption",
+			coverImageName = "Document_1",
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			navTab = "Blog Images",
+			uploadFileName = "Document_1.jpg");
 
+		BlogsEntry.addCoverImageCaptionWithLink(
+			captionField = "Caption",
+			captionFieldLink = "www.google.com");
+
+		Button.clickPublish();
+
+		BlogsNavigator.gotoEditCP(entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.viewCoverImageCaptionWithLink(
+			captionField = "Caption",
+			captionFieldLink = "www.google.com");
 	}
 
 	@description = "This test covers LPS-133714. The blog entry creator receives a notification of its own blog"

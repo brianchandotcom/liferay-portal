@@ -40,9 +40,7 @@ public class RemoteAppEntryUpgradeProcess extends UpgradeProcess {
 			alterTableAddColumn("RemoteAppEntry", "customElementURLs", "TEXT");
 		}
 
-		if (hasColumn("RemoteAppEntry", "url")) {
-			alterColumnName("RemoteAppEntry", "url", "iFrameURL STRING null");
-		}
+		alterColumnName("RemoteAppEntry", "url", "iFrameURL STRING null");
 
 		if (!hasColumn("RemoteAppEntry", "instanceable")) {
 			alterTableAddColumn("RemoteAppEntry", "instanceable", "BOOLEAN");

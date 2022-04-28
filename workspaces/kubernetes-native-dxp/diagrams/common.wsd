@@ -1,0 +1,35 @@
+@startuml common
+
+/'autonumber'/
+/'scale 0.9'/
+
+hide footbox
+
+skinparam {
+    dpi 150
+    handwritten true
+    shadowing false
+    style strictuml
+
+    ArrowColor black
+    ArrowFontName Courier
+    DefaultTextAlignment center
+    BackgroundColor White
+    RoundCorner 6
+    ResponseMessageBelowArrow true
+    noteTextAlignment left
+}
+
+skinparam rectangle {
+    BackgroundColor transparent
+    BorderColor #ffffff
+
+    BorderColor<< groupe >> #888888
+    BorderColor<< dmz >> #555555
+}
+
+skinparam sequence {
+    LifeLineBorderColor black
+    ParticipantBorderColor black
+}
+@enduml

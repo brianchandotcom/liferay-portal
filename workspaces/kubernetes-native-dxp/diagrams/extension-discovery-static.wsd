@@ -1,0 +1,20 @@
+@startuml Discover Static LXC Extension
+!include common.wsd
+title Discover Static LXC Extension
+actor developer
+participant lcp
+participant api
+participant extension
+participant k8s
+participant dxp
+
+dxp -> k8s : watch for\next-configmaps
+developer -> lcp : deploy\nextension
+lcp -> api : upload\nextension
+api -> api : parse\nextension\nLCP.json &\nconfigurations
+api -> k8s : create\nextension\ndeployment
+k8s -> extension : create\nextension\npods
+api -> k8s : create\next-configmap
+k8s -> dxp : announce\next-configmap
+
+@enduml

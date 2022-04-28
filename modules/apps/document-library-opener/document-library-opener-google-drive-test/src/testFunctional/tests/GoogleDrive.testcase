@@ -216,6 +216,12 @@ definition {
 	test CancelGoogleDocCreation {
 		property test.name.skip.portal.instance = "GoogleDrive#CancelGoogleDocCreation";
 
+		DMNavigator.openToConfigInSystemSettings(portlet = "Google Drive");
+
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Reset Default Values");
+
+		Google.enableGoogleDrive(instanceSettings = "true");
+
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Google Doc");

@@ -26,7 +26,7 @@ definition {
 
 		AntCommand(
 			locator1 = "build-test.xml",
-			value1 = "update-service-builder-spring");
+			value1 = "update-service-builder-spring-sample-to-ds");
 
 		AntCommand(
 			locator1 = "build-test.xml",

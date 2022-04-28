@@ -125,7 +125,6 @@ definition {
 	@description = "LPS-143064 - Verify that, when using objects as storage type, the user must be able to map to this field type to Rich Text Field and view its entries"
 	@priority = "4"
 	test CanMapAndViewEntriesForRichTextField {
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151597",
 			objectName = "CustomObject151597",
@@ -170,7 +169,6 @@ definition {
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject151597");
 
 		ObjectPortlet.viewEntry(entry = "By building a vibrant business, making technology useful, and investing in communities, we make it possible for people to reach their full potential to serve others.");
-
 	}
 
 	@description = "LPS-142659 - Verify if it's possible to map an Object field of Clob type and view its entries (Multiple Lines)"

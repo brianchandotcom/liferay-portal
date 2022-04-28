@@ -1,0 +1,10 @@
+{
+    "private": true,
+    "workspaces": {
+        "packages": [
+            "design-packs/fire",
+            "themes/y1-theme",
+            "lxc-extensions/liferayhelloworld"
+        ]
+    }
+}

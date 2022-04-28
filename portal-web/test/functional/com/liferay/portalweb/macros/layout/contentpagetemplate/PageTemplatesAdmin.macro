@@ -101,6 +101,14 @@ definition {
 		LexiconCard.delete(card = "${pageTemplateName}");
 	}
 
+	macro deletePageTemplateSet {
+		Navigator.gotoNavNested(navNested = "${setName}");
+
+		LexiconEntry.gotoEllipsisMenuItemNoError(menuItem = "Delete");
+
+		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
+	}
+
 	macro gotoPageTemplate {
 		LexiconCard.clickCardTitleLink(card = "${pageTemplateName}");
 	}
@@ -169,6 +177,18 @@ definition {
 
 	macro viewPageTemplatePresent {
 		LexiconCard.viewCardPresent(card = "${pageTemplateName}");
+	}
+
+	macro viewPageTemplateSetNotPresent {
+		AssertElementNotPresent(
+			key_navNested = "${setName}",
+			locator1 = "NavNested#NAV_NESTED_LINK");
+	}
+
+	macro viewPageTemplateSetPresent {
+		AssertElementPresent(
+			key_navNested = "${setName}",
+			locator1 = "NavNested#NAV_NESTED_LINK");
 	}
 
 }

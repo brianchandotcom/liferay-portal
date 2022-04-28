@@ -343,11 +343,7 @@ definition {
 			productName = "U-Joint",
 			productQuantity = "1");
 
-		CommerceNavigator.gotoMiniCart();
-
-		Button.click(button = "View Details");
-
-		Button.click(button = "Checkout");
+		CommerceCheckout.gotoCheckout();
 
 		Click(locator1 = "Icon#PLUS");
 
@@ -424,11 +420,7 @@ definition {
 			productName = "U-Joint",
 			productQuantity = "1");
 
-		CommerceNavigator.gotoMiniCart();
-
-		Button.click(button = "View Details");
-
-		Button.click(button = "Checkout");
+		CommerceCheckout.gotoCheckout();
 
 		Type(
 			locator1 = "TextInput#DISCOUNT",
@@ -492,11 +484,7 @@ definition {
 			productName = "U-Joint",
 			productQuantity = "1");
 
-		CommerceNavigator.gotoMiniCart();
-
-		Button.click(button = "View Details");
-
-		Button.click(button = "Checkout");
+		CommerceCheckout.gotoCheckout();
 
 		Type(
 			locator1 = "TextInput#DISCOUNT",

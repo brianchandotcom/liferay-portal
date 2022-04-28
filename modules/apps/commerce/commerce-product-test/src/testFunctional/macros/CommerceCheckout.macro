@@ -53,6 +53,14 @@ definition {
 		Click(locator1 = "Button#CONTINUE");
 	}
 
+	macro gotoCheckout {
+		CommerceNavigator.gotoMiniCart();
+
+		Button.click(button = "View Details");
+
+		Button.click(button = "Checkout");
+	}
+
 	macro initializersCheckout {
 		WaitForElementPresent(locator1 = "CommerceAccelerators#CHECKOUT_PORTLET_BODY");
 

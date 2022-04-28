@@ -69,11 +69,7 @@ definition {
 
 		var orderId = selenium.getText("CommerceEntry#ACTIVE_ORDER_ID");
 
-		CommerceNavigator.gotoMiniCart();
-
-		Button.click(button = "View Details");
-
-		Button.click(button = "Checkout");
+		CommerceCheckout.gotoCheckout();
 
 		CommerceCheckout.initializersCheckout(
 			newAddressAddress = "Test Address",
@@ -180,11 +176,7 @@ definition {
 			productName = "ABS Sensor",
 			productQuantity = "1");
 
-		CommerceNavigator.gotoMiniCart();
-
-		Button.click(button = "View Details");
-
-		Button.click(button = "Checkout");
+		CommerceCheckout.gotoCheckout();
 
 		CommerceCheckout.initializersCheckout(
 			newAddressAddress = "Test Address",
@@ -260,11 +252,7 @@ definition {
 			productName = "U-Joint",
 			productQuantity = "1");
 
-		CommerceNavigator.gotoMiniCart();
-
-		Button.click(button = "View Details");
-
-		Button.click(button = "Checkout");
+		CommerceCheckout.gotoCheckout();
 
 		CommerceCheckout.initializersCheckout(
 			newAddressAddress = "Test Address",
@@ -406,11 +394,7 @@ definition {
 
 		Refresh();
 
-		CommerceNavigator.gotoMiniCart();
-
-		Button.click(button = "View Details");
-
-		Button.click(button = "Checkout");
+		CommerceCheckout.gotoCheckout();
 
 		CommerceCheckout.initializersCheckout(
 			newAddressAddress = "Test Address",
@@ -476,11 +460,7 @@ definition {
 				productQuantity = "1");
 		}
 
-		CommerceNavigator.gotoMiniCart();
-
-		Button.click(button = "View Details");
-
-		Button.click(button = "Checkout");
+		CommerceCheckout.gotoCheckout();
 
 		WaitForElementPresent(locator1 = "CommerceAccelerators#CHECKOUT_PORTLET_BODY");
 
@@ -593,11 +573,7 @@ definition {
 			productName = "U-Joint",
 			productQuantity = "1");
 
-		CommerceNavigator.gotoMiniCart();
-
-		Button.click(button = "View Details");
-
-		Button.click(button = "Checkout");
+		CommerceCheckout.gotoCheckout();
 
 		CommerceCheckout.initializersCheckout(
 			newAddressAddress = "Test Address",
@@ -685,11 +661,7 @@ definition {
 			productName = "U-Joint",
 			productQuantity = "1");
 
-		CommerceNavigator.gotoMiniCart();
-
-		Button.click(button = "View Details");
-
-		Button.click(button = "Checkout");
+		CommerceCheckout.gotoCheckout();
 
 		Pause(locator1 = "3000");
 
@@ -795,11 +767,7 @@ definition {
 			productName = "U-Joint",
 			productQuantity = "1");
 
-		CommerceNavigator.gotoMiniCart();
-
-		Button.click(button = "View Details");
-
-		Button.click(button = "Checkout");
+		CommerceCheckout.gotoCheckout();
 
 		WaitForElementPresent(locator1 = "CommerceAccelerators#CHECKOUT_PORTLET_BODY");
 
@@ -942,11 +910,7 @@ definition {
 			productName = "Transmission Cooler Line Assembly",
 			productQuantity = "1");
 
-		CommerceNavigator.gotoMiniCart();
-
-		Button.click(button = "View Details");
-
-		Button.click(button = "Checkout");
+		CommerceCheckout.gotoCheckout();
 
 		WaitForElementPresent(locator1 = "CommerceAccelerators#CHECKOUT_PORTLET_BODY");
 
@@ -1236,11 +1200,7 @@ definition {
 			productName = "U-Joint",
 			productQuantity = "1");
 
-		CommerceNavigator.gotoMiniCart();
-
-		Button.click(button = "View Details");
-
-		Button.click(button = "Checkout");
+		CommerceCheckout.gotoCheckout();
 
 		WaitForElementPresent(locator1 = "CommerceAccelerators#CHECKOUT_PORTLET_BODY");
 
@@ -1393,11 +1353,7 @@ definition {
 
 		var orderId = selenium.getText("CommerceEntry#ACTIVE_ORDER_ID");
 
-		CommerceNavigator.gotoMiniCart();
-
-		Button.click(button = "View Details");
-
-		Button.click(button = "Checkout");
+		CommerceCheckout.gotoCheckout();
 
 		CommerceCheckout.initializersCheckout(
 			newAddressAddress = "Test Address",
@@ -1553,11 +1509,7 @@ definition {
 			productName = "U-Joint",
 			productQuantity = "1");
 
-		CommerceNavigator.gotoMiniCart();
-
-		Button.click(button = "View Details");
-
-		Button.click(button = "Checkout");
+		CommerceCheckout.gotoCheckout();
 
 		WaitForElementPresent(locator1 = "CommerceAccelerators#CHECKOUT_PORTLET_BODY");
 
@@ -1682,11 +1634,7 @@ definition {
 
 		Refresh();
 
-		CommerceNavigator.gotoMiniCart();
-
-		Button.click(button = "View Details");
-
-		Button.click(button = "Checkout");
+		CommerceCheckout.gotoCheckout();
 
 		CommerceCheckout.initializersCheckout(
 			newAddressAddress = "Test Address",
@@ -1786,11 +1734,7 @@ definition {
 
 		Refresh();
 
-		CommerceNavigator.gotoMiniCart();
-
-		Button.click(button = "View Details");
-
-		Button.click(button = "Checkout");
+		CommerceCheckout.gotoCheckout();
 
 		Type(
 			key_fieldName = "Name",

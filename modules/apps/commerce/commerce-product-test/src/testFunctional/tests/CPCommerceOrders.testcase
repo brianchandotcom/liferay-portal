@@ -252,11 +252,7 @@ definition {
 
 		Pause(locator1 = "5000");
 
-		CommerceNavigator.gotoMiniCart();
-
-		Button.click(button = "View Details");
-
-		Button.click(button = "Checkout");
+		CommerceCheckout.gotoCheckout();
 
 		Pause(locator1 = "3000");
 
@@ -330,11 +326,7 @@ definition {
 
 		Pause(locator1 = "5000");
 
-		CommerceNavigator.gotoMiniCart();
-
-		Button.click(button = "View Details");
-
-		Button.click(button = "Checkout");
+		CommerceCheckout.gotoCheckout();
 
 		Pause(locator1 = "3000");
 
@@ -443,11 +435,7 @@ definition {
 
 		Refresh();
 
-		CommerceNavigator.gotoMiniCart();
-
-		Button.click(button = "View Details");
-
-		Button.click(button = "Checkout");
+		CommerceCheckout.gotoCheckout();
 
 		Pause(locator1 = "5000");
 
@@ -853,11 +841,7 @@ definition {
 
 		Refresh();
 
-		CommerceNavigator.gotoMiniCart();
-
-		Button.click(button = "View Details");
-
-		Button.click(button = "Checkout");
+		CommerceCheckout.gotoCheckout();
 
 		CommerceCheckout.initializersCheckout(
 			newAddressAddress = "Test Address",
@@ -1068,11 +1052,7 @@ definition {
 
 		Pause(locator1 = "5000");
 
-		CommerceNavigator.gotoMiniCart();
-
-		Button.click(button = "View Details");
-
-		Button.click(button = "Checkout");
+		CommerceCheckout.gotoCheckout();
 
 		Pause(locator1 = "3000");
 

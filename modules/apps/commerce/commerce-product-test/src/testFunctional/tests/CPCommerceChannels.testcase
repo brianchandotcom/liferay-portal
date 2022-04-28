@@ -1562,11 +1562,7 @@ definition {
 			productName = "U-Joint",
 			productQuantity = "1");
 
-		CommerceNavigator.gotoMiniCart();
-
-		Button.click(button = "View Details");
-
-		Button.click(button = "Checkout");
+		CommerceCheckout.gotoCheckout();
 
 		Pause(locator1 = "3000");
 
@@ -2214,11 +2210,7 @@ definition {
 			productName = "U-Joint",
 			productQuantity = "1");
 
-		CommerceNavigator.gotoMiniCart();
-
-		Button.click(button = "View Details");
-
-		Button.click(button = "Checkout");
+		CommerceCheckout.gotoCheckout();
 
 		Pause(locator1 = "3000");
 

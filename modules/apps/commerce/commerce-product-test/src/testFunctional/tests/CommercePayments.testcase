@@ -72,11 +72,7 @@ definition {
 
 		Refresh();
 
-		CommerceNavigator.gotoMiniCart();
-
-		Button.click(button = "View Details");
-
-		Button.click(button = "Checkout");
+		CommerceCheckout.gotoCheckout();
 
 		CommerceCheckout.initializersCheckout(
 			newAddressAddress = "Test Address",
@@ -164,11 +160,7 @@ definition {
 			productName = "U-Joint",
 			productQuantity = "1");
 
-		CommerceNavigator.gotoMiniCart();
-
-		Button.click(button = "View Details");
-
-		Button.click(button = "Checkout");
+		CommerceCheckout.gotoCheckout();
 
 		CommerceCheckout.initializersCheckout(
 			newAddressAddress = "Test Address",

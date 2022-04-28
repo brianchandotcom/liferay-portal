@@ -320,11 +320,7 @@ definition {
 			productName = "ABS Sensor",
 			productQuantity = "1");
 
-		CommerceNavigator.gotoMiniCart();
-
-		Button.click(button = "View Details");
-
-		Button.click(button = "Checkout");
+		CommerceCheckout.gotoCheckout();
 
 		CommerceCheckout.initializersCheckout(
 			newAddressAddress = "Test Address",
@@ -476,11 +472,7 @@ definition {
 			productName = "U-Joint",
 			productQuantity = "2");
 
-		CommerceNavigator.gotoMiniCart();
-
-		Button.click(button = "View Details");
-
-		Button.click(button = "Checkout");
+		CommerceCheckout.gotoCheckout();
 
 		CommerceCheckout.initializersCheckout(
 			newAddressAddress = "Test Address",

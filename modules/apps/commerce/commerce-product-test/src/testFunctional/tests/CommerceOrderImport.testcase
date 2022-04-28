@@ -421,14 +421,80 @@ definition {
 		}
 	}
 
-	@description = "[Please Update]"
-	@ignore = "Test Stub"
-	@priority = "4"
+	@description = "Verify orders can be searched when importing an order"
+	@priority = "3"
 	test ImportFromOrderUseSearchBar {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-7686 ImportFromOrderUseSearchBar pending implementation
+		task ("Given a Minium site with a buyer user") {
+			User.logoutPG();
 
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And given 2 completed orders") {
+			for (var product : list "U-Joint:24,Torque Converters:34") {
+				var productName = StringUtil.extractFirst("${product}", ":");
+				var productUnitPrice = StringUtil.extractLast("${product}", ":");
+
+				FrontStore.addInitializerProductToCart(
+					productName = "${productName}",
+					productQuantity = "1");
+
+				CommerceNavigator.gotoMiniCart();
+
+				Button.click(button = "View Details");
+
+				Button.click(button = "Checkout");
+
+				CommerceCheckout.initializersCheckout(
+					newAddressAddress = "Test Address",
+					newAddressCity = "Test City",
+					newAddressCountry = "United States",
+					newAddressName = "Address Name",
+					newAddressZipCode = "Test Zip Code",
+					productName = "${productName}",
+					productQuantity = "1",
+					productUnitPrice = "${productUnitPrice}",
+					shippingMethod = "Standard");
+
+				CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+			}
+		}
+
+		task ("And given the buyer is importing an order") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
+
+			Click(locator1 = "CommerceEntry#DROPDOWN");
+
+			MenuItem.click(menuItem = "Import from Orders");
+
+			IFrame.selectModalFrame();
+		}
+
+		task ("When the buyer searches the ID of a completed order") {
+			var orderIds = CommerceJSONOrdersAPI._getCommerceOrderIds(orderCount = "2");
+
+			var orderId1 = StringUtil.extractFirst("${orderIds}", ",");
+			var orderId2 = StringUtil.extractLast("${orderIds}", ",");
+
+			Search.searchCP(searchTerm = "${orderId1}");
+		}
+
+		task ("Then only that order should appear") {
+			AssertElementPresent(
+				key_entryName = "${orderId1}",
+				locator1 = "CommerceEntry#TABLE_LIST_TITLE");
+
+			AssertElementNotPresent(
+				key_entryName = "${orderId2}",
+				locator1 = "CommerceEntry#TABLE_LIST_TITLE");
+		}
 	}
 
 	@description = "[Please Update]"

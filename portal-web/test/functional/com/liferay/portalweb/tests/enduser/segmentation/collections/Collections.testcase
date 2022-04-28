@@ -3599,6 +3599,60 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-145292. The user could view new icons on dropdown menu of collection."
+	@priority = "4"
+	test ViewDropdownMenuIconsInCollectionsAdmin {
+		task ("Given a Collection creator has a dynamic collection") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article",
+				title = "Dynamic Collection");
+		}
+
+		task ("When the Collection creator open the ellipsis dropdown menu of a variation") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection");
+
+			Click.waitForMenuToggleJSClick(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
+		}
+
+		task ("Then the Collection creator can see the new icon on the dropdown menu") {
+			DropdownMenuItem.viewIcon(iconList = "view");
+		}
+
+		task ("When the Collection creator open the ellipsis dropdown menu of dynamic collection") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			LexiconList.clickEllipsis(listEntry = "Dynamic Collection");
+		}
+
+		task ("Then the Collection creator can see the new icons on the dropdown menu") {
+			DropdownMenuItem.viewIcon(iconList = "pencil,list-ul,password-policies,trash");
+		}
+
+		task ("When the Collection creator open the dropdown menu of management toolbar after selecting the new collection") {
+			LexiconEntry.selectEntry(key_rowEntry = "Dynamic Collection");
+
+			Click(locator1 = "ManagementBar#MORE_ACTIONS_ELLIPSIS");
+		}
+
+		task ("Then the Collection creator can see the new icon on the dropdown menu") {
+			DropdownMenuItem.viewIcon(iconList = "trash");
+		}
+
+		task ("When the Collection creator open the ellipsis dropdown menu of any collection providers") {
+			Navigator.gotoNavTab(navTab = "Collection Providers");
+
+			LexiconList.clickEllipsis(listEntry = "Most Viewed Assets");
+		}
+
+		task ("Then the Collection creator can see the new icon on the dropdown menu") {
+			DropdownMenuItem.viewIcon(iconList = "view");
+		}
+	}
+
 	@description = "This is for LPS-101228. Validate if web content articles matching with content sets based on grouped keywords displayed correctly in Asset Publisher."
 	@priority = "4"
 	test ViewWCViaAPWithAssetListBasedOnGroupedKeywords {

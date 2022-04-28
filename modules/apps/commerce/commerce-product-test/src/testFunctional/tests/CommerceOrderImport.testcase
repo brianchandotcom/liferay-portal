@@ -26,6 +26,15 @@ definition {
 				userScreenName = "buyeruser",
 				userSiteMembership = "Minium");
 		}
+
+		task ("Setup: Login to the Minium site as the buyer user") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
 	}
 
 	tearDown {
@@ -37,16 +46,7 @@ definition {
 	test AbortImport {
 		property portal.acceptance = "false";
 
-		task ("Given a Minium site with a buyer user") {
-			User.logoutPG();
-
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "buyer@liferay.com");
-		}
-
-		task ("And given a completed order") {
+		task ("Given a completed order") {
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
 				productQuantity = "1");
@@ -129,16 +129,7 @@ definition {
 	test AbortImportFromPreview {
 		property portal.acceptance = "false";
 
-		task ("Given a Minium site with a buyer user") {
-			User.logoutPG();
-
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "buyer@liferay.com");
-		}
-
-		task ("And given a completed order") {
+		task ("Given a completed order") {
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
 				productQuantity = "1");
@@ -183,7 +174,7 @@ definition {
 
 		task ("Then the modal is closed and the buyer stays on the same page") {
 			AssertElementNotPresent(locator1 = "IFrame#MODAL_BODY");
-	
+
 			AssertLocation.assertPartialLocation(value1 = "group/minium/pending-orders");
 		}
 
@@ -211,16 +202,7 @@ definition {
 	test DeleteAnEntryIntoAnOrder {
 		property portal.acceptance = "false";
 
-		task ("Given a Minium site with a buyer user") {
-			User.logoutPG();
-
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "buyer@liferay.com");
-		}
-
-		task ("And given a completed order") {
+		task ("Given a completed order") {
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
 				productQuantity = "1");
@@ -287,16 +269,7 @@ definition {
 	test EditOrder {
 		property portal.acceptance = "false";
 
-		task ("Given a Minium site with a buyer user") {
-			User.logoutPG();
-
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "buyer@liferay.com");
-		}
-
-		task ("And given a completed order") {
+		task ("Given a completed order") {
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
 				productQuantity = "1");
@@ -369,16 +342,7 @@ definition {
 	test ImportFromOrder {
 		property portal.acceptance = "false";
 
-		task ("Given a Minium site with a buyer user") {
-			User.logoutPG();
-
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "buyer@liferay.com");
-		}
-
-		task ("And given a completed order") {
+		task ("Given a completed order") {
 			FrontStore.addInitializerProductToCart(
 				productName = "U-Joint",
 				productQuantity = "1");
@@ -426,16 +390,7 @@ definition {
 	test ImportFromOrderUseSearchBar {
 		property portal.acceptance = "false";
 
-		task ("Given a Minium site with a buyer user") {
-			User.logoutPG();
-
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "buyer@liferay.com");
-		}
-
-		task ("And given 2 completed orders") {
+		task ("Given 2 completed orders") {
 			for (var product : list "U-Joint:24,Torque Converters:34") {
 				var productName = StringUtil.extractFirst("${product}", ":");
 				var productUnitPrice = StringUtil.extractLast("${product}", ":");
@@ -502,16 +457,7 @@ definition {
 	test TryImportWithoutOrders {
 		property portal.acceptance = "false";
 
-		task ("Given a Minium site with a buyer user") {
-			User.logoutPG();
-
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "buyer@liferay.com");
-		}
-
-		task ("And given the user is creating a new order") {
+		task ("Given the user is creating a new order") {
 			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
 		}
 
@@ -541,16 +487,7 @@ definition {
 	test VerifyIfAllOrdersArePresent {
 		property portal.acceptance = "false";
 
-		task ("Given a Minium site with a buyer user") {
-			User.logoutPG();
-
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "buyer@liferay.com");
-		}
-
-		task ("And given 3 completed orders") {
+		task ("Given 3 completed orders") {
 			for (var product : list "U-Joint:24,Mount:3,Torque Converters:34") {
 				var productName = StringUtil.extractFirst("${product}", ":");
 				var productUnitPrice = StringUtil.extractLast("${product}", ":");
@@ -616,16 +553,7 @@ definition {
 	test VerifyPreviewModal {
 		property portal.acceptance = "false";
 
-		task ("Given a Minium site with a buyer user") {
-			User.logoutPG();
-
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "buyer@liferay.com");
-		}
-
-		task ("And given a completed order with multiple products") {
+		task ("Given a completed order with multiple products") {
 			for (var productName : list "U-Joint,Transmission Cooler Line Assembly,Torque Converters") {
 				FrontStore.addInitializerProductToCart(
 					productName = "${productName}",

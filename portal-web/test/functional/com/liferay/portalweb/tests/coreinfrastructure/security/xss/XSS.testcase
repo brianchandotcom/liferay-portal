@@ -470,7 +470,7 @@ definition {
 		}
 
 		task ("Assert correct HTML source text") {
-			var actualScript = '''<script>alert(123);</script>''';
+			var actualScript = ''' <script>alert(123);</script>''';
 
 			var escapedScript = '''&lt;script&gt;alert(123);&lt;/script&gt;''';
 

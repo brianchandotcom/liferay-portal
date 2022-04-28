@@ -168,6 +168,23 @@ definition {
 			userId = "${userId}");
 	}
 
+	macro addUserWithRole {
+		JSONUser.addUser(
+			userEmailAddress = "${userEmailAddress}",
+			userFirstName = "${userFirstName}",
+			userLastName = "${userLastName}",
+			userScreenName = "${userScreenName}");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "${userEmailAddress}");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "${roleTitle}",
+			userEmailAddress = "${userEmailAddress}");
+	}
+
 	macro agreeToTermsAndAnswerReminderQuery {
 		Variables.assertDefined(parameterList = "${userEmailAddress}");
 

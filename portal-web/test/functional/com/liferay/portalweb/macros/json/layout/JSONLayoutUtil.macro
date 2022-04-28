@@ -201,7 +201,7 @@ definition {
 			var portletId = "com_liferay_social_user_statistics_web_portlet_SocialUserStatisticsPortlet";
 		}
 		else if ("${widgetName}" == "Vanilla Counter") {
-			var portletId = "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_remoteAppEntryId";
+			var portletId = "com_liferay_remote_app_web_internal_portlet_RemoteAppEntryPortlet_remoteAppEntryId";
 		}
 		else if ("${widgetName}" == "Web Content Display") {
 			var portletId = "com_liferay_journal_content_web_portlet_JournalContentPortlet";

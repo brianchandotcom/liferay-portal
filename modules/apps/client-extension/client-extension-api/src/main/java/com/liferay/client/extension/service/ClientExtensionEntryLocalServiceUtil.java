@@ -45,23 +45,6 @@ public class ClientExtensionEntryLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.client.extension.service.impl.ClientExtensionEntryLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-
-	/**
-	 * Adds the client extension entry to the database. Also notifies the appropriate model listeners.
-	 *
-	 * <p>
-	 * <strong>Important:</strong> Inspect ClientExtensionEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
-	 * </p>
-	 *
-	 * @param clientExtensionEntry the client extension entry
-	 * @return the client extension entry that was added
-	 */
-	public static ClientExtensionEntry addClientExtensionEntry(
-		ClientExtensionEntry clientExtensionEntry) {
-
-		return getService().addClientExtensionEntry(clientExtensionEntry);
-	}
-
 	public static ClientExtensionEntry addCustomElementClientExtensionEntry(
 			String externalReferenceCode, long userId,
 			String customElementCSSURLs, String customElementHTMLElementName,
@@ -90,16 +73,13 @@ public class ClientExtensionEntryLocalServiceUtil {
 			nameMap, portletCategoryName, properties, sourceCodeURL);
 	}
 
-	public static ClientExtensionEntry
-			addOrUpdateCustomElementClientExtensionEntry(
-				String externalReferenceCode, long userId,
-				String customElementCSSURLs,
-				String customElementHTMLElementName, String customElementURLs,
-				boolean customElementUseESM, String description,
-				String friendlyURLMapping, boolean instanceable,
-				Map<java.util.Locale, String> nameMap,
-				String portletCategoryName, String properties,
-				String sourceCodeURL)
+	public static ClientExtensionEntry addOrUpdateCustomElementClientExtensionEntry(
+			String externalReferenceCode, long userId,
+			String customElementCSSURLs, String customElementHTMLElementName,
+			String customElementURLs, boolean customElementUseESM,
+			String description, String friendlyURLMapping, boolean instanceable,
+			Map<java.util.Locale, String> nameMap, String portletCategoryName,
+			String properties, String sourceCodeURL)
 		throws PortalException {
 
 		return getService().addOrUpdateCustomElementClientExtensionEntry(
@@ -110,15 +90,19 @@ public class ClientExtensionEntryLocalServiceUtil {
 	}
 
 	/**
-	 * Creates a new client extension entry with the primary key. Does not add the client extension entry to the database.
+	 * Adds the remote app entry to the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param clientExtensionEntryId the primary key for the new client extension entry
-	 * @return the new client extension entry
+	 * <p>
+	 * <strong>Important:</strong> Inspect ClientExtensionEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
+	 * @param clientExtensionEntry the remote app entry
+	 * @return the remote app entry that was added
 	 */
-	public static ClientExtensionEntry createClientExtensionEntry(
-		long clientExtensionEntryId) {
+	public static ClientExtensionEntry addClientExtensionEntry(
+		ClientExtensionEntry clientExtensionEntry) {
 
-		return getService().createClientExtensionEntry(clientExtensionEntryId);
+		return getService().addClientExtensionEntry(clientExtensionEntry);
 	}
 
 	/**
@@ -132,39 +116,13 @@ public class ClientExtensionEntryLocalServiceUtil {
 	}
 
 	/**
-	 * Deletes the client extension entry from the database. Also notifies the appropriate model listeners.
+	 * Creates a new remote app entry with the primary key. Does not add the remote app entry to the database.
 	 *
-	 * <p>
-	 * <strong>Important:</strong> Inspect ClientExtensionEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
-	 * </p>
-	 *
-	 * @param clientExtensionEntry the client extension entry
-	 * @return the client extension entry that was removed
-	 * @throws PortalException
+	 * @param clientExtensionEntryId the primary key for the new remote app entry
+	 * @return the new remote app entry
 	 */
-	public static ClientExtensionEntry deleteClientExtensionEntry(
-			ClientExtensionEntry clientExtensionEntry)
-		throws PortalException {
-
-		return getService().deleteClientExtensionEntry(clientExtensionEntry);
-	}
-
-	/**
-	 * Deletes the client extension entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * <p>
-	 * <strong>Important:</strong> Inspect ClientExtensionEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
-	 * </p>
-	 *
-	 * @param clientExtensionEntryId the primary key of the client extension entry
-	 * @return the client extension entry that was removed
-	 * @throws PortalException if a client extension entry with the primary key could not be found
-	 */
-	public static ClientExtensionEntry deleteClientExtensionEntry(
-			long clientExtensionEntryId)
-		throws PortalException {
-
-		return getService().deleteClientExtensionEntry(clientExtensionEntryId);
+	public static ClientExtensionEntry createClientExtensionEntry(long clientExtensionEntryId) {
+		return getService().createClientExtensionEntry(clientExtensionEntryId);
 	}
 
 	/**
@@ -177,9 +135,42 @@ public class ClientExtensionEntryLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static void deployClientExtensionEntry(
-		ClientExtensionEntry clientExtensionEntry) {
+	/**
+	 * Deletes the remote app entry with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect ClientExtensionEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
+	 * @param clientExtensionEntryId the primary key of the remote app entry
+	 * @return the remote app entry that was removed
+	 * @throws PortalException if a remote app entry with the primary key could not be found
+	 */
+	public static ClientExtensionEntry deleteClientExtensionEntry(long clientExtensionEntryId)
+		throws PortalException {
 
+		return getService().deleteClientExtensionEntry(clientExtensionEntryId);
+	}
+
+	/**
+	 * Deletes the remote app entry from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect ClientExtensionEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
+	 * @param clientExtensionEntry the remote app entry
+	 * @return the remote app entry that was removed
+	 * @throws PortalException
+	 */
+	public static ClientExtensionEntry deleteClientExtensionEntry(
+			ClientExtensionEntry clientExtensionEntry)
+		throws PortalException {
+
+		return getService().deleteClientExtensionEntry(clientExtensionEntry);
+	}
+
+	public static void deployClientExtensionEntry(ClientExtensionEntry clientExtensionEntry) {
 		getService().deployClientExtensionEntry(clientExtensionEntry);
 	}
 
@@ -268,22 +259,19 @@ public class ClientExtensionEntryLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static ClientExtensionEntry fetchClientExtensionEntry(
-		long clientExtensionEntryId) {
-
+	public static ClientExtensionEntry fetchClientExtensionEntry(long clientExtensionEntryId) {
 		return getService().fetchClientExtensionEntry(clientExtensionEntryId);
 	}
 
 	/**
-	 * Returns the client extension entry with the matching external reference code and company.
+	 * Returns the remote app entry with the matching external reference code and company.
 	 *
 	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the client extension entry's external reference code
-	 * @return the matching client extension entry, or <code>null</code> if a matching client extension entry could not be found
+	 * @param externalReferenceCode the remote app entry's external reference code
+	 * @return the matching remote app entry, or <code>null</code> if a matching remote app entry could not be found
 	 */
-	public static ClientExtensionEntry
-		fetchClientExtensionEntryByExternalReferenceCode(
-			long companyId, String externalReferenceCode) {
+	public static ClientExtensionEntry fetchClientExtensionEntryByExternalReferenceCode(
+		long companyId, String externalReferenceCode) {
 
 		return getService().fetchClientExtensionEntryByExternalReferenceCode(
 			companyId, externalReferenceCode);
@@ -301,15 +289,14 @@ public class ClientExtensionEntryLocalServiceUtil {
 	}
 
 	/**
-	 * Returns the client extension entry with the matching UUID and company.
+	 * Returns the remote app entry with the matching UUID and company.
 	 *
-	 * @param uuid the client extension entry's UUID
+	 * @param uuid the remote app entry's UUID
 	 * @param companyId the primary key of the company
-	 * @return the matching client extension entry, or <code>null</code> if a matching client extension entry could not be found
+	 * @return the matching remote app entry, or <code>null</code> if a matching remote app entry could not be found
 	 */
-	public static ClientExtensionEntry
-		fetchClientExtensionEntryByUuidAndCompanyId(
-			String uuid, long companyId) {
+	public static ClientExtensionEntry fetchClientExtensionEntryByUuidAndCompanyId(
+		String uuid, long companyId) {
 
 		return getService().fetchClientExtensionEntryByUuidAndCompanyId(
 			uuid, companyId);
@@ -319,80 +306,6 @@ public class ClientExtensionEntryLocalServiceUtil {
 		getActionableDynamicQuery() {
 
 		return getService().getActionableDynamicQuery();
-	}
-
-	/**
-	 * Returns a range of all the client extension entries.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.client.extension.model.impl.ClientExtensionEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of client extension entries
-	 * @param end the upper bound of the range of client extension entries (not inclusive)
-	 * @return the range of client extension entries
-	 */
-	public static List<ClientExtensionEntry> getClientExtensionEntries(
-		int start, int end) {
-
-		return getService().getClientExtensionEntries(start, end);
-	}
-
-	/**
-	 * Returns the number of client extension entries.
-	 *
-	 * @return the number of client extension entries
-	 */
-	public static int getClientExtensionEntriesCount() {
-		return getService().getClientExtensionEntriesCount();
-	}
-
-	/**
-	 * Returns the client extension entry with the primary key.
-	 *
-	 * @param clientExtensionEntryId the primary key of the client extension entry
-	 * @return the client extension entry
-	 * @throws PortalException if a client extension entry with the primary key could not be found
-	 */
-	public static ClientExtensionEntry getClientExtensionEntry(
-			long clientExtensionEntryId)
-		throws PortalException {
-
-		return getService().getClientExtensionEntry(clientExtensionEntryId);
-	}
-
-	/**
-	 * Returns the client extension entry with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the client extension entry's external reference code
-	 * @return the matching client extension entry
-	 * @throws PortalException if a matching client extension entry could not be found
-	 */
-	public static ClientExtensionEntry
-			getClientExtensionEntryByExternalReferenceCode(
-				long companyId, String externalReferenceCode)
-		throws PortalException {
-
-		return getService().getClientExtensionEntryByExternalReferenceCode(
-			companyId, externalReferenceCode);
-	}
-
-	/**
-	 * Returns the client extension entry with the matching UUID and company.
-	 *
-	 * @param uuid the client extension entry's UUID
-	 * @param companyId the primary key of the company
-	 * @return the matching client extension entry
-	 * @throws PortalException if a matching client extension entry could not be found
-	 */
-	public static ClientExtensionEntry
-			getClientExtensionEntryByUuidAndCompanyId(
-				String uuid, long companyId)
-		throws PortalException {
-
-		return getService().getClientExtensionEntryByUuidAndCompanyId(
-			uuid, companyId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
@@ -428,6 +341,75 @@ public class ClientExtensionEntryLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	/**
+	 * Returns a range of all the remote app entries.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.client.extension.model.impl.ClientExtensionEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of remote app entries
+	 * @param end the upper bound of the range of remote app entries (not inclusive)
+	 * @return the range of remote app entries
+	 */
+	public static List<ClientExtensionEntry> getClientExtensionEntries(int start, int end) {
+		return getService().getClientExtensionEntries(start, end);
+	}
+
+	/**
+	 * Returns the number of remote app entries.
+	 *
+	 * @return the number of remote app entries
+	 */
+	public static int getClientExtensionEntriesCount() {
+		return getService().getClientExtensionEntriesCount();
+	}
+
+	/**
+	 * Returns the remote app entry with the primary key.
+	 *
+	 * @param clientExtensionEntryId the primary key of the remote app entry
+	 * @return the remote app entry
+	 * @throws PortalException if a remote app entry with the primary key could not be found
+	 */
+	public static ClientExtensionEntry getClientExtensionEntry(long clientExtensionEntryId)
+		throws PortalException {
+
+		return getService().getClientExtensionEntry(clientExtensionEntryId);
+	}
+
+	/**
+	 * Returns the remote app entry with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the remote app entry's external reference code
+	 * @return the matching remote app entry
+	 * @throws PortalException if a matching remote app entry could not be found
+	 */
+	public static ClientExtensionEntry getClientExtensionEntryByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
+		throws PortalException {
+
+		return getService().getClientExtensionEntryByExternalReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the remote app entry with the matching UUID and company.
+	 *
+	 * @param uuid the remote app entry's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching remote app entry
+	 * @throws PortalException if a matching remote app entry could not be found
+	 */
+	public static ClientExtensionEntry getClientExtensionEntryByUuidAndCompanyId(
+			String uuid, long companyId)
+		throws PortalException {
+
+		return getService().getClientExtensionEntryByUuidAndCompanyId(
+			uuid, companyId);
+	}
+
 	public static List<ClientExtensionEntry> search(
 			long companyId, String keywords, int start, int end,
 			com.liferay.portal.kernel.search.Sort sort)
@@ -442,35 +424,16 @@ public class ClientExtensionEntryLocalServiceUtil {
 		return getService().searchCount(companyId, keywords);
 	}
 
-	public static void undeployClientExtensionEntry(
-		ClientExtensionEntry clientExtensionEntry) {
-
+	public static void undeployClientExtensionEntry(ClientExtensionEntry clientExtensionEntry) {
 		getService().undeployClientExtensionEntry(clientExtensionEntry);
 	}
 
-	/**
-	 * Updates the client extension entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * <p>
-	 * <strong>Important:</strong> Inspect ClientExtensionEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
-	 * </p>
-	 *
-	 * @param clientExtensionEntry the client extension entry
-	 * @return the client extension entry that was updated
-	 */
-	public static ClientExtensionEntry updateClientExtensionEntry(
-		ClientExtensionEntry clientExtensionEntry) {
-
-		return getService().updateClientExtensionEntry(clientExtensionEntry);
-	}
-
 	public static ClientExtensionEntry updateCustomElementClientExtensionEntry(
-			long userId, long clientExtensionEntryId,
-			String customElementCSSURLs, String customElementHTMLElementName,
-			String customElementURLs, boolean customElementUseESM,
-			String description, String friendlyURLMapping,
-			Map<java.util.Locale, String> nameMap, String portletCategoryName,
-			String properties, String sourceCodeURL)
+			long userId, long clientExtensionEntryId, String customElementCSSURLs,
+			String customElementHTMLElementName, String customElementURLs,
+			boolean customElementUseESM, String description,
+			String friendlyURLMapping, Map<java.util.Locale, String> nameMap,
+			String portletCategoryName, String properties, String sourceCodeURL)
 		throws PortalException {
 
 		return getService().updateCustomElementClientExtensionEntry(
@@ -492,12 +455,27 @@ public class ClientExtensionEntryLocalServiceUtil {
 			iFrameURL, nameMap, portletCategoryName, properties, sourceCodeURL);
 	}
 
+	/**
+	 * Updates the remote app entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect ClientExtensionEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
+	 * @param clientExtensionEntry the remote app entry
+	 * @return the remote app entry that was updated
+	 */
+	public static ClientExtensionEntry updateClientExtensionEntry(
+		ClientExtensionEntry clientExtensionEntry) {
+
+		return getService().updateClientExtensionEntry(clientExtensionEntry);
+	}
+
 	public static ClientExtensionEntry updateStatus(
 			long userId, long clientExtensionEntryId, int status)
 		throws PortalException {
 
-		return getService().updateStatus(
-			userId, clientExtensionEntryId, status);
+		return getService().updateStatus(userId, clientExtensionEntryId, status);
 	}
 
 	public static ClientExtensionEntryLocalService getService() {

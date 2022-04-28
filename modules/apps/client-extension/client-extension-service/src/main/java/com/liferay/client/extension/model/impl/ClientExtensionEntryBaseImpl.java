@@ -35,7 +35,7 @@ public abstract class ClientExtensionEntryBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a client extension entry model instance should use the <code>ClientExtensionEntry</code> interface instead.
+	 * Never modify or reference this class directly. All methods that expect a remote app entry model instance should use the <code>ClientExtensionEntry</code> interface instead.
 	 */
 	@Override
 	public void persist() {
@@ -43,8 +43,7 @@ public abstract class ClientExtensionEntryBaseImpl
 			ClientExtensionEntryLocalServiceUtil.addClientExtensionEntry(this);
 		}
 		else {
-			ClientExtensionEntryLocalServiceUtil.updateClientExtensionEntry(
-				this);
+			ClientExtensionEntryLocalServiceUtil.updateClientExtensionEntry(this);
 		}
 	}
 

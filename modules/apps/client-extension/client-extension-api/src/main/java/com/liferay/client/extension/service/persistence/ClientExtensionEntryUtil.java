@@ -26,7 +26,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * The persistence utility for the client extension entry service. This utility wraps <code>com.liferay.client.extension.service.persistence.impl.ClientExtensionEntryPersistenceImpl</code> and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
+ * The persistence utility for the remote app entry service. This utility wraps <code>com.liferay.client.extension.service.persistence.impl.ClientExtensionEntryPersistenceImpl</code> and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
  *
  * <p>
  * Caching information and settings can be found in <code>portal.properties</code>
@@ -106,9 +106,7 @@ public class ClientExtensionEntryUtil {
 	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#update(com.liferay.portal.kernel.model.BaseModel)
 	 */
-	public static ClientExtensionEntry update(
-		ClientExtensionEntry clientExtensionEntry) {
-
+	public static ClientExtensionEntry update(ClientExtensionEntry clientExtensionEntry) {
 		return getPersistence().update(clientExtensionEntry);
 	}
 
@@ -116,33 +114,32 @@ public class ClientExtensionEntryUtil {
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#update(com.liferay.portal.kernel.model.BaseModel, ServiceContext)
 	 */
 	public static ClientExtensionEntry update(
-		ClientExtensionEntry clientExtensionEntry,
-		ServiceContext serviceContext) {
+		ClientExtensionEntry clientExtensionEntry, ServiceContext serviceContext) {
 
 		return getPersistence().update(clientExtensionEntry, serviceContext);
 	}
 
 	/**
-	 * Returns all the client extension entries where uuid = &#63;.
+	 * Returns all the remote app entries where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
-	 * @return the matching client extension entries
+	 * @return the matching remote app entries
 	 */
 	public static List<ClientExtensionEntry> findByUuid(String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
 	/**
-	 * Returns a range of all the client extension entries where uuid = &#63;.
+	 * Returns a range of all the remote app entries where uuid = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ClientExtensionEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
-	 * @param start the lower bound of the range of client extension entries
-	 * @param end the upper bound of the range of client extension entries (not inclusive)
-	 * @return the range of matching client extension entries
+	 * @param start the lower bound of the range of remote app entries
+	 * @param end the upper bound of the range of remote app entries (not inclusive)
+	 * @return the range of matching remote app entries
 	 */
 	public static List<ClientExtensionEntry> findByUuid(
 		String uuid, int start, int end) {
@@ -151,17 +148,17 @@ public class ClientExtensionEntryUtil {
 	}
 
 	/**
-	 * Returns an ordered range of all the client extension entries where uuid = &#63;.
+	 * Returns an ordered range of all the remote app entries where uuid = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ClientExtensionEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
-	 * @param start the lower bound of the range of client extension entries
-	 * @param end the upper bound of the range of client extension entries (not inclusive)
+	 * @param start the lower bound of the range of remote app entries
+	 * @param end the upper bound of the range of remote app entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching client extension entries
+	 * @return the ordered range of matching remote app entries
 	 */
 	public static List<ClientExtensionEntry> findByUuid(
 		String uuid, int start, int end,
@@ -171,18 +168,18 @@ public class ClientExtensionEntryUtil {
 	}
 
 	/**
-	 * Returns an ordered range of all the client extension entries where uuid = &#63;.
+	 * Returns an ordered range of all the remote app entries where uuid = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ClientExtensionEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
-	 * @param start the lower bound of the range of client extension entries
-	 * @param end the upper bound of the range of client extension entries (not inclusive)
+	 * @param start the lower bound of the range of remote app entries
+	 * @param end the upper bound of the range of remote app entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching client extension entries
+	 * @return the ordered range of matching remote app entries
 	 */
 	public static List<ClientExtensionEntry> findByUuid(
 		String uuid, int start, int end,
@@ -194,16 +191,15 @@ public class ClientExtensionEntryUtil {
 	}
 
 	/**
-	 * Returns the first client extension entry in the ordered set where uuid = &#63;.
+	 * Returns the first remote app entry in the ordered set where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching client extension entry
-	 * @throws NoSuchClientExtensionEntryException if a matching client extension entry could not be found
+	 * @return the first matching remote app entry
+	 * @throws NoSuchClientExtensionEntryException if a matching remote app entry could not be found
 	 */
 	public static ClientExtensionEntry findByUuid_First(
-			String uuid,
-			OrderByComparator<ClientExtensionEntry> orderByComparator)
+			String uuid, OrderByComparator<ClientExtensionEntry> orderByComparator)
 		throws com.liferay.client.extension.exception.
 			NoSuchClientExtensionEntryException {
 
@@ -211,30 +207,28 @@ public class ClientExtensionEntryUtil {
 	}
 
 	/**
-	 * Returns the first client extension entry in the ordered set where uuid = &#63;.
+	 * Returns the first remote app entry in the ordered set where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching client extension entry, or <code>null</code> if a matching client extension entry could not be found
+	 * @return the first matching remote app entry, or <code>null</code> if a matching remote app entry could not be found
 	 */
 	public static ClientExtensionEntry fetchByUuid_First(
-		String uuid,
-		OrderByComparator<ClientExtensionEntry> orderByComparator) {
+		String uuid, OrderByComparator<ClientExtensionEntry> orderByComparator) {
 
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
 
 	/**
-	 * Returns the last client extension entry in the ordered set where uuid = &#63;.
+	 * Returns the last remote app entry in the ordered set where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching client extension entry
-	 * @throws NoSuchClientExtensionEntryException if a matching client extension entry could not be found
+	 * @return the last matching remote app entry
+	 * @throws NoSuchClientExtensionEntryException if a matching remote app entry could not be found
 	 */
 	public static ClientExtensionEntry findByUuid_Last(
-			String uuid,
-			OrderByComparator<ClientExtensionEntry> orderByComparator)
+			String uuid, OrderByComparator<ClientExtensionEntry> orderByComparator)
 		throws com.liferay.client.extension.exception.
 			NoSuchClientExtensionEntryException {
 
@@ -242,27 +236,26 @@ public class ClientExtensionEntryUtil {
 	}
 
 	/**
-	 * Returns the last client extension entry in the ordered set where uuid = &#63;.
+	 * Returns the last remote app entry in the ordered set where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching client extension entry, or <code>null</code> if a matching client extension entry could not be found
+	 * @return the last matching remote app entry, or <code>null</code> if a matching remote app entry could not be found
 	 */
 	public static ClientExtensionEntry fetchByUuid_Last(
-		String uuid,
-		OrderByComparator<ClientExtensionEntry> orderByComparator) {
+		String uuid, OrderByComparator<ClientExtensionEntry> orderByComparator) {
 
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
 
 	/**
-	 * Returns the client extension entries before and after the current client extension entry in the ordered set where uuid = &#63;.
+	 * Returns the remote app entries before and after the current remote app entry in the ordered set where uuid = &#63;.
 	 *
-	 * @param clientExtensionEntryId the primary key of the current client extension entry
+	 * @param clientExtensionEntryId the primary key of the current remote app entry
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next client extension entry
-	 * @throws NoSuchClientExtensionEntryException if a client extension entry with the primary key could not be found
+	 * @return the previous, current, and next remote app entry
+	 * @throws NoSuchClientExtensionEntryException if a remote app entry with the primary key could not be found
 	 */
 	public static ClientExtensionEntry[] findByUuid_PrevAndNext(
 			long clientExtensionEntryId, String uuid,
@@ -275,7 +268,75 @@ public class ClientExtensionEntryUtil {
 	}
 
 	/**
-	 * Removes all the client extension entries where uuid = &#63; from the database.
+	 * Returns all the remote app entries that the user has permission to view where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching remote app entries that the user has permission to view
+	 */
+	public static List<ClientExtensionEntry> filterFindByUuid(String uuid) {
+		return getPersistence().filterFindByUuid(uuid);
+	}
+
+	/**
+	 * Returns a range of all the remote app entries that the user has permission to view where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ClientExtensionEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of remote app entries
+	 * @param end the upper bound of the range of remote app entries (not inclusive)
+	 * @return the range of matching remote app entries that the user has permission to view
+	 */
+	public static List<ClientExtensionEntry> filterFindByUuid(
+		String uuid, int start, int end) {
+
+		return getPersistence().filterFindByUuid(uuid, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the remote app entries that the user has permissions to view where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ClientExtensionEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of remote app entries
+	 * @param end the upper bound of the range of remote app entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching remote app entries that the user has permission to view
+	 */
+	public static List<ClientExtensionEntry> filterFindByUuid(
+		String uuid, int start, int end,
+		OrderByComparator<ClientExtensionEntry> orderByComparator) {
+
+		return getPersistence().filterFindByUuid(
+			uuid, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns the remote app entries before and after the current remote app entry in the ordered set of remote app entries that the user has permission to view where uuid = &#63;.
+	 *
+	 * @param clientExtensionEntryId the primary key of the current remote app entry
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next remote app entry
+	 * @throws NoSuchClientExtensionEntryException if a remote app entry with the primary key could not be found
+	 */
+	public static ClientExtensionEntry[] filterFindByUuid_PrevAndNext(
+			long clientExtensionEntryId, String uuid,
+			OrderByComparator<ClientExtensionEntry> orderByComparator)
+		throws com.liferay.client.extension.exception.
+			NoSuchClientExtensionEntryException {
+
+		return getPersistence().filterFindByUuid_PrevAndNext(
+			clientExtensionEntryId, uuid, orderByComparator);
+	}
+
+	/**
+	 * Removes all the remote app entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
 	 */
@@ -284,21 +345,31 @@ public class ClientExtensionEntryUtil {
 	}
 
 	/**
-	 * Returns the number of client extension entries where uuid = &#63;.
+	 * Returns the number of remote app entries where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
-	 * @return the number of matching client extension entries
+	 * @return the number of matching remote app entries
 	 */
 	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
 	/**
-	 * Returns all the client extension entries where uuid = &#63; and companyId = &#63;.
+	 * Returns the number of remote app entries that the user has permission to view where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the number of matching remote app entries that the user has permission to view
+	 */
+	public static int filterCountByUuid(String uuid) {
+		return getPersistence().filterCountByUuid(uuid);
+	}
+
+	/**
+	 * Returns all the remote app entries where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
-	 * @return the matching client extension entries
+	 * @return the matching remote app entries
 	 */
 	public static List<ClientExtensionEntry> findByUuid_C(
 		String uuid, long companyId) {
@@ -307,7 +378,7 @@ public class ClientExtensionEntryUtil {
 	}
 
 	/**
-	 * Returns a range of all the client extension entries where uuid = &#63; and companyId = &#63;.
+	 * Returns a range of all the remote app entries where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ClientExtensionEntryModelImpl</code>.
@@ -315,9 +386,9 @@ public class ClientExtensionEntryUtil {
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
-	 * @param start the lower bound of the range of client extension entries
-	 * @param end the upper bound of the range of client extension entries (not inclusive)
-	 * @return the range of matching client extension entries
+	 * @param start the lower bound of the range of remote app entries
+	 * @param end the upper bound of the range of remote app entries (not inclusive)
+	 * @return the range of matching remote app entries
 	 */
 	public static List<ClientExtensionEntry> findByUuid_C(
 		String uuid, long companyId, int start, int end) {
@@ -326,7 +397,7 @@ public class ClientExtensionEntryUtil {
 	}
 
 	/**
-	 * Returns an ordered range of all the client extension entries where uuid = &#63; and companyId = &#63;.
+	 * Returns an ordered range of all the remote app entries where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ClientExtensionEntryModelImpl</code>.
@@ -334,10 +405,10 @@ public class ClientExtensionEntryUtil {
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
-	 * @param start the lower bound of the range of client extension entries
-	 * @param end the upper bound of the range of client extension entries (not inclusive)
+	 * @param start the lower bound of the range of remote app entries
+	 * @param end the upper bound of the range of remote app entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching client extension entries
+	 * @return the ordered range of matching remote app entries
 	 */
 	public static List<ClientExtensionEntry> findByUuid_C(
 		String uuid, long companyId, int start, int end,
@@ -348,7 +419,7 @@ public class ClientExtensionEntryUtil {
 	}
 
 	/**
-	 * Returns an ordered range of all the client extension entries where uuid = &#63; and companyId = &#63;.
+	 * Returns an ordered range of all the remote app entries where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ClientExtensionEntryModelImpl</code>.
@@ -356,11 +427,11 @@ public class ClientExtensionEntryUtil {
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
-	 * @param start the lower bound of the range of client extension entries
-	 * @param end the upper bound of the range of client extension entries (not inclusive)
+	 * @param start the lower bound of the range of remote app entries
+	 * @param end the upper bound of the range of remote app entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching client extension entries
+	 * @return the ordered range of matching remote app entries
 	 */
 	public static List<ClientExtensionEntry> findByUuid_C(
 		String uuid, long companyId, int start, int end,
@@ -372,13 +443,13 @@ public class ClientExtensionEntryUtil {
 	}
 
 	/**
-	 * Returns the first client extension entry in the ordered set where uuid = &#63; and companyId = &#63;.
+	 * Returns the first remote app entry in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching client extension entry
-	 * @throws NoSuchClientExtensionEntryException if a matching client extension entry could not be found
+	 * @return the first matching remote app entry
+	 * @throws NoSuchClientExtensionEntryException if a matching remote app entry could not be found
 	 */
 	public static ClientExtensionEntry findByUuid_C_First(
 			String uuid, long companyId,
@@ -391,12 +462,12 @@ public class ClientExtensionEntryUtil {
 	}
 
 	/**
-	 * Returns the first client extension entry in the ordered set where uuid = &#63; and companyId = &#63;.
+	 * Returns the first remote app entry in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching client extension entry, or <code>null</code> if a matching client extension entry could not be found
+	 * @return the first matching remote app entry, or <code>null</code> if a matching remote app entry could not be found
 	 */
 	public static ClientExtensionEntry fetchByUuid_C_First(
 		String uuid, long companyId,
@@ -407,13 +478,13 @@ public class ClientExtensionEntryUtil {
 	}
 
 	/**
-	 * Returns the last client extension entry in the ordered set where uuid = &#63; and companyId = &#63;.
+	 * Returns the last remote app entry in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching client extension entry
-	 * @throws NoSuchClientExtensionEntryException if a matching client extension entry could not be found
+	 * @return the last matching remote app entry
+	 * @throws NoSuchClientExtensionEntryException if a matching remote app entry could not be found
 	 */
 	public static ClientExtensionEntry findByUuid_C_Last(
 			String uuid, long companyId,
@@ -426,12 +497,12 @@ public class ClientExtensionEntryUtil {
 	}
 
 	/**
-	 * Returns the last client extension entry in the ordered set where uuid = &#63; and companyId = &#63;.
+	 * Returns the last remote app entry in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching client extension entry, or <code>null</code> if a matching client extension entry could not be found
+	 * @return the last matching remote app entry, or <code>null</code> if a matching remote app entry could not be found
 	 */
 	public static ClientExtensionEntry fetchByUuid_C_Last(
 		String uuid, long companyId,
@@ -442,14 +513,14 @@ public class ClientExtensionEntryUtil {
 	}
 
 	/**
-	 * Returns the client extension entries before and after the current client extension entry in the ordered set where uuid = &#63; and companyId = &#63;.
+	 * Returns the remote app entries before and after the current remote app entry in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
-	 * @param clientExtensionEntryId the primary key of the current client extension entry
+	 * @param clientExtensionEntryId the primary key of the current remote app entry
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next client extension entry
-	 * @throws NoSuchClientExtensionEntryException if a client extension entry with the primary key could not be found
+	 * @return the previous, current, and next remote app entry
+	 * @throws NoSuchClientExtensionEntryException if a remote app entry with the primary key could not be found
 	 */
 	public static ClientExtensionEntry[] findByUuid_C_PrevAndNext(
 			long clientExtensionEntryId, String uuid, long companyId,
@@ -462,7 +533,81 @@ public class ClientExtensionEntryUtil {
 	}
 
 	/**
-	 * Removes all the client extension entries where uuid = &#63; and companyId = &#63; from the database.
+	 * Returns all the remote app entries that the user has permission to view where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching remote app entries that the user has permission to view
+	 */
+	public static List<ClientExtensionEntry> filterFindByUuid_C(
+		String uuid, long companyId) {
+
+		return getPersistence().filterFindByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of all the remote app entries that the user has permission to view where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ClientExtensionEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of remote app entries
+	 * @param end the upper bound of the range of remote app entries (not inclusive)
+	 * @return the range of matching remote app entries that the user has permission to view
+	 */
+	public static List<ClientExtensionEntry> filterFindByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
+		return getPersistence().filterFindByUuid_C(uuid, companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the remote app entries that the user has permissions to view where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ClientExtensionEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of remote app entries
+	 * @param end the upper bound of the range of remote app entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching remote app entries that the user has permission to view
+	 */
+	public static List<ClientExtensionEntry> filterFindByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<ClientExtensionEntry> orderByComparator) {
+
+		return getPersistence().filterFindByUuid_C(
+			uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns the remote app entries before and after the current remote app entry in the ordered set of remote app entries that the user has permission to view where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param clientExtensionEntryId the primary key of the current remote app entry
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next remote app entry
+	 * @throws NoSuchClientExtensionEntryException if a remote app entry with the primary key could not be found
+	 */
+	public static ClientExtensionEntry[] filterFindByUuid_C_PrevAndNext(
+			long clientExtensionEntryId, String uuid, long companyId,
+			OrderByComparator<ClientExtensionEntry> orderByComparator)
+		throws com.liferay.client.extension.exception.
+			NoSuchClientExtensionEntryException {
+
+		return getPersistence().filterFindByUuid_C_PrevAndNext(
+			clientExtensionEntryId, uuid, companyId, orderByComparator);
+	}
+
+	/**
+	 * Removes all the remote app entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
@@ -472,23 +617,34 @@ public class ClientExtensionEntryUtil {
 	}
 
 	/**
-	 * Returns the number of client extension entries where uuid = &#63; and companyId = &#63;.
+	 * Returns the number of remote app entries where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
-	 * @return the number of matching client extension entries
+	 * @return the number of matching remote app entries
 	 */
 	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
 	/**
-	 * Returns the client extension entry where companyId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchClientExtensionEntryException</code> if it could not be found.
+	 * Returns the number of remote app entries that the user has permission to view where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the number of matching remote app entries that the user has permission to view
+	 */
+	public static int filterCountByUuid_C(String uuid, long companyId) {
+		return getPersistence().filterCountByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns the remote app entry where companyId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchClientExtensionEntryException</code> if it could not be found.
 	 *
 	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
-	 * @return the matching client extension entry
-	 * @throws NoSuchClientExtensionEntryException if a matching client extension entry could not be found
+	 * @return the matching remote app entry
+	 * @throws NoSuchClientExtensionEntryException if a matching remote app entry could not be found
 	 */
 	public static ClientExtensionEntry findByC_ERC(
 			long companyId, String externalReferenceCode)
@@ -499,11 +655,11 @@ public class ClientExtensionEntryUtil {
 	}
 
 	/**
-	 * Returns the client extension entry where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the remote app entry where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
-	 * @return the matching client extension entry, or <code>null</code> if a matching client extension entry could not be found
+	 * @return the matching remote app entry, or <code>null</code> if a matching remote app entry could not be found
 	 */
 	public static ClientExtensionEntry fetchByC_ERC(
 		long companyId, String externalReferenceCode) {
@@ -512,12 +668,12 @@ public class ClientExtensionEntryUtil {
 	}
 
 	/**
-	 * Returns the client extension entry where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the remote app entry where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
 	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching client extension entry, or <code>null</code> if a matching client extension entry could not be found
+	 * @return the matching remote app entry, or <code>null</code> if a matching remote app entry could not be found
 	 */
 	public static ClientExtensionEntry fetchByC_ERC(
 		long companyId, String externalReferenceCode, boolean useFinderCache) {
@@ -527,11 +683,11 @@ public class ClientExtensionEntryUtil {
 	}
 
 	/**
-	 * Removes the client extension entry where companyId = &#63; and externalReferenceCode = &#63; from the database.
+	 * Removes the remote app entry where companyId = &#63; and externalReferenceCode = &#63; from the database.
 	 *
 	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
-	 * @return the client extension entry that was removed
+	 * @return the remote app entry that was removed
 	 */
 	public static ClientExtensionEntry removeByC_ERC(
 			long companyId, String externalReferenceCode)
@@ -542,11 +698,11 @@ public class ClientExtensionEntryUtil {
 	}
 
 	/**
-	 * Returns the number of client extension entries where companyId = &#63; and externalReferenceCode = &#63;.
+	 * Returns the number of remote app entries where companyId = &#63; and externalReferenceCode = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
-	 * @return the number of matching client extension entries
+	 * @return the number of matching remote app entries
 	 */
 	public static int countByC_ERC(
 		long companyId, String externalReferenceCode) {
@@ -555,41 +711,39 @@ public class ClientExtensionEntryUtil {
 	}
 
 	/**
-	 * Caches the client extension entry in the entity cache if it is enabled.
+	 * Caches the remote app entry in the entity cache if it is enabled.
 	 *
-	 * @param clientExtensionEntry the client extension entry
+	 * @param clientExtensionEntry the remote app entry
 	 */
 	public static void cacheResult(ClientExtensionEntry clientExtensionEntry) {
 		getPersistence().cacheResult(clientExtensionEntry);
 	}
 
 	/**
-	 * Caches the client extension entries in the entity cache if it is enabled.
+	 * Caches the remote app entries in the entity cache if it is enabled.
 	 *
-	 * @param clientExtensionEntries the client extension entries
+	 * @param clientExtensionEntries the remote app entries
 	 */
-	public static void cacheResult(
-		List<ClientExtensionEntry> clientExtensionEntries) {
-
+	public static void cacheResult(List<ClientExtensionEntry> clientExtensionEntries) {
 		getPersistence().cacheResult(clientExtensionEntries);
 	}
 
 	/**
-	 * Creates a new client extension entry with the primary key. Does not add the client extension entry to the database.
+	 * Creates a new remote app entry with the primary key. Does not add the remote app entry to the database.
 	 *
-	 * @param clientExtensionEntryId the primary key for the new client extension entry
-	 * @return the new client extension entry
+	 * @param clientExtensionEntryId the primary key for the new remote app entry
+	 * @return the new remote app entry
 	 */
 	public static ClientExtensionEntry create(long clientExtensionEntryId) {
 		return getPersistence().create(clientExtensionEntryId);
 	}
 
 	/**
-	 * Removes the client extension entry with the primary key from the database. Also notifies the appropriate model listeners.
+	 * Removes the remote app entry with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param clientExtensionEntryId the primary key of the client extension entry
-	 * @return the client extension entry that was removed
-	 * @throws NoSuchClientExtensionEntryException if a client extension entry with the primary key could not be found
+	 * @param clientExtensionEntryId the primary key of the remote app entry
+	 * @return the remote app entry that was removed
+	 * @throws NoSuchClientExtensionEntryException if a remote app entry with the primary key could not be found
 	 */
 	public static ClientExtensionEntry remove(long clientExtensionEntryId)
 		throws com.liferay.client.extension.exception.
@@ -598,21 +752,18 @@ public class ClientExtensionEntryUtil {
 		return getPersistence().remove(clientExtensionEntryId);
 	}
 
-	public static ClientExtensionEntry updateImpl(
-		ClientExtensionEntry clientExtensionEntry) {
-
+	public static ClientExtensionEntry updateImpl(ClientExtensionEntry clientExtensionEntry) {
 		return getPersistence().updateImpl(clientExtensionEntry);
 	}
 
 	/**
-	 * Returns the client extension entry with the primary key or throws a <code>NoSuchClientExtensionEntryException</code> if it could not be found.
+	 * Returns the remote app entry with the primary key or throws a <code>NoSuchClientExtensionEntryException</code> if it could not be found.
 	 *
-	 * @param clientExtensionEntryId the primary key of the client extension entry
-	 * @return the client extension entry
-	 * @throws NoSuchClientExtensionEntryException if a client extension entry with the primary key could not be found
+	 * @param clientExtensionEntryId the primary key of the remote app entry
+	 * @return the remote app entry
+	 * @throws NoSuchClientExtensionEntryException if a remote app entry with the primary key could not be found
 	 */
-	public static ClientExtensionEntry findByPrimaryKey(
-			long clientExtensionEntryId)
+	public static ClientExtensionEntry findByPrimaryKey(long clientExtensionEntryId)
 		throws com.liferay.client.extension.exception.
 			NoSuchClientExtensionEntryException {
 
@@ -620,52 +771,50 @@ public class ClientExtensionEntryUtil {
 	}
 
 	/**
-	 * Returns the client extension entry with the primary key or returns <code>null</code> if it could not be found.
+	 * Returns the remote app entry with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param clientExtensionEntryId the primary key of the client extension entry
-	 * @return the client extension entry, or <code>null</code> if a client extension entry with the primary key could not be found
+	 * @param clientExtensionEntryId the primary key of the remote app entry
+	 * @return the remote app entry, or <code>null</code> if a remote app entry with the primary key could not be found
 	 */
-	public static ClientExtensionEntry fetchByPrimaryKey(
-		long clientExtensionEntryId) {
-
+	public static ClientExtensionEntry fetchByPrimaryKey(long clientExtensionEntryId) {
 		return getPersistence().fetchByPrimaryKey(clientExtensionEntryId);
 	}
 
 	/**
-	 * Returns all the client extension entries.
+	 * Returns all the remote app entries.
 	 *
-	 * @return the client extension entries
+	 * @return the remote app entries
 	 */
 	public static List<ClientExtensionEntry> findAll() {
 		return getPersistence().findAll();
 	}
 
 	/**
-	 * Returns a range of all the client extension entries.
+	 * Returns a range of all the remote app entries.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ClientExtensionEntryModelImpl</code>.
 	 * </p>
 	 *
-	 * @param start the lower bound of the range of client extension entries
-	 * @param end the upper bound of the range of client extension entries (not inclusive)
-	 * @return the range of client extension entries
+	 * @param start the lower bound of the range of remote app entries
+	 * @param end the upper bound of the range of remote app entries (not inclusive)
+	 * @return the range of remote app entries
 	 */
 	public static List<ClientExtensionEntry> findAll(int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
 	/**
-	 * Returns an ordered range of all the client extension entries.
+	 * Returns an ordered range of all the remote app entries.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ClientExtensionEntryModelImpl</code>.
 	 * </p>
 	 *
-	 * @param start the lower bound of the range of client extension entries
-	 * @param end the upper bound of the range of client extension entries (not inclusive)
+	 * @param start the lower bound of the range of remote app entries
+	 * @param end the upper bound of the range of remote app entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of client extension entries
+	 * @return the ordered range of remote app entries
 	 */
 	public static List<ClientExtensionEntry> findAll(
 		int start, int end,
@@ -675,21 +824,20 @@ public class ClientExtensionEntryUtil {
 	}
 
 	/**
-	 * Returns an ordered range of all the client extension entries.
+	 * Returns an ordered range of all the remote app entries.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ClientExtensionEntryModelImpl</code>.
 	 * </p>
 	 *
-	 * @param start the lower bound of the range of client extension entries
-	 * @param end the upper bound of the range of client extension entries (not inclusive)
+	 * @param start the lower bound of the range of remote app entries
+	 * @param end the upper bound of the range of remote app entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of client extension entries
+	 * @return the ordered range of remote app entries
 	 */
 	public static List<ClientExtensionEntry> findAll(
-		int start, int end,
-		OrderByComparator<ClientExtensionEntry> orderByComparator,
+		int start, int end, OrderByComparator<ClientExtensionEntry> orderByComparator,
 		boolean useFinderCache) {
 
 		return getPersistence().findAll(
@@ -697,16 +845,16 @@ public class ClientExtensionEntryUtil {
 	}
 
 	/**
-	 * Removes all the client extension entries from the database.
+	 * Removes all the remote app entries from the database.
 	 */
 	public static void removeAll() {
 		getPersistence().removeAll();
 	}
 
 	/**
-	 * Returns the number of client extension entries.
+	 * Returns the number of remote app entries.
 	 *
-	 * @return the number of client extension entries
+	 * @return the number of remote app entries
 	 */
 	public static int countAll() {
 		return getPersistence().countAll();

@@ -24,7 +24,7 @@ import com.liferay.user.associated.data.exporter.DynamicQueryUADExporter;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * Provides the base implementation for the client extension entry UAD exporter.
+ * Provides the base implementation for the remote app entry UAD exporter.
  *
  * <p>
  * This implementation exists only as a container for the default methods
@@ -50,8 +50,7 @@ public abstract class BaseClientExtensionEntryUADExporter
 
 	@Override
 	protected String[] doGetUserIdFieldNames() {
-		return ClientExtensionUADConstants.
-			USER_ID_FIELD_NAMES_CLIENT_EXTENSION_ENTRY;
+		return ClientExtensionUADConstants.USER_ID_FIELD_NAMES_REMOTE_APP_ENTRY;
 	}
 
 	@Override

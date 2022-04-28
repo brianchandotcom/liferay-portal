@@ -37,26 +37,6 @@ public class ClientExtensionEntryLocalServiceWrapper
 		_clientExtensionEntryLocalService = clientExtensionEntryLocalService;
 	}
 
-	/**
-	 * Adds the client extension entry to the database. Also notifies the appropriate model listeners.
-	 *
-	 * <p>
-	 * <strong>Important:</strong> Inspect ClientExtensionEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
-	 * </p>
-	 *
-	 * @param clientExtensionEntry the client extension entry
-	 * @return the client extension entry that was added
-	 */
-	@Override
-	public com.liferay.client.extension.model.ClientExtensionEntry
-		addClientExtensionEntry(
-			com.liferay.client.extension.model.ClientExtensionEntry
-				clientExtensionEntry) {
-
-		return _clientExtensionEntryLocalService.addClientExtensionEntry(
-			clientExtensionEntry);
-	}
-
 	@Override
 	public com.liferay.client.extension.model.ClientExtensionEntry
 			addCustomElementClientExtensionEntry(
@@ -70,13 +50,11 @@ public class ClientExtensionEntryLocalServiceWrapper
 				String sourceCodeURL)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _clientExtensionEntryLocalService.
-			addCustomElementClientExtensionEntry(
-				externalReferenceCode, userId, customElementCSSURLs,
-				customElementHTMLElementName, customElementURLs,
-				customElementUseESM, description, friendlyURLMapping,
-				instanceable, nameMap, portletCategoryName, properties,
-				sourceCodeURL);
+		return _clientExtensionEntryLocalService.addCustomElementClientExtensionEntry(
+			externalReferenceCode, userId, customElementCSSURLs,
+			customElementHTMLElementName, customElementURLs,
+			customElementUseESM, description, friendlyURLMapping, instanceable,
+			nameMap, portletCategoryName, properties, sourceCodeURL);
 	}
 
 	@Override
@@ -117,10 +95,38 @@ public class ClientExtensionEntryLocalServiceWrapper
 	}
 
 	/**
-	 * Creates a new client extension entry with the primary key. Does not add the client extension entry to the database.
+	 * Adds the remote app entry to the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param clientExtensionEntryId the primary key for the new client extension entry
-	 * @return the new client extension entry
+	 * <p>
+	 * <strong>Important:</strong> Inspect ClientExtensionEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
+	 * @param clientExtensionEntry the remote app entry
+	 * @return the remote app entry that was added
+	 */
+	@Override
+	public com.liferay.client.extension.model.ClientExtensionEntry addClientExtensionEntry(
+		com.liferay.client.extension.model.ClientExtensionEntry clientExtensionEntry) {
+
+		return _clientExtensionEntryLocalService.addClientExtensionEntry(clientExtensionEntry);
+	}
+
+	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel createPersistedModel(
+			java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _clientExtensionEntryLocalService.createPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	 * Creates a new remote app entry with the primary key. Does not add the remote app entry to the database.
+	 *
+	 * @param clientExtensionEntryId the primary key for the new remote app entry
+	 * @return the new remote app entry
 	 */
 	@Override
 	public com.liferay.client.extension.model.ClientExtensionEntry
@@ -134,46 +140,23 @@ public class ClientExtensionEntryLocalServiceWrapper
 	 * @throws PortalException
 	 */
 	@Override
-	public com.liferay.portal.kernel.model.PersistedModel createPersistedModel(
-			java.io.Serializable primaryKeyObj)
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+			com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _clientExtensionEntryLocalService.createPersistedModel(
-			primaryKeyObj);
+		return _clientExtensionEntryLocalService.deletePersistedModel(persistedModel);
 	}
 
 	/**
-	 * Deletes the client extension entry from the database. Also notifies the appropriate model listeners.
+	 * Deletes the remote app entry with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * <p>
 	 * <strong>Important:</strong> Inspect ClientExtensionEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
 	 * </p>
 	 *
-	 * @param clientExtensionEntry the client extension entry
-	 * @return the client extension entry that was removed
-	 * @throws PortalException
-	 */
-	@Override
-	public com.liferay.client.extension.model.ClientExtensionEntry
-			deleteClientExtensionEntry(
-				com.liferay.client.extension.model.ClientExtensionEntry
-					clientExtensionEntry)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _clientExtensionEntryLocalService.deleteClientExtensionEntry(
-			clientExtensionEntry);
-	}
-
-	/**
-	 * Deletes the client extension entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * <p>
-	 * <strong>Important:</strong> Inspect ClientExtensionEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
-	 * </p>
-	 *
-	 * @param clientExtensionEntryId the primary key of the client extension entry
-	 * @return the client extension entry that was removed
-	 * @throws PortalException if a client extension entry with the primary key could not be found
+	 * @param clientExtensionEntryId the primary key of the remote app entry
+	 * @return the remote app entry that was removed
+	 * @throws PortalException if a remote app entry with the primary key could not be found
 	 */
 	@Override
 	public com.liferay.client.extension.model.ClientExtensionEntry
@@ -185,24 +168,31 @@ public class ClientExtensionEntryLocalServiceWrapper
 	}
 
 	/**
+	 * Deletes the remote app entry from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect ClientExtensionEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
+	 * @param clientExtensionEntry the remote app entry
+	 * @return the remote app entry that was removed
 	 * @throws PortalException
 	 */
 	@Override
-	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-			com.liferay.portal.kernel.model.PersistedModel persistedModel)
+	public com.liferay.client.extension.model.ClientExtensionEntry
+			deleteClientExtensionEntry(
+				com.liferay.client.extension.model.ClientExtensionEntry
+					clientExtensionEntry)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _clientExtensionEntryLocalService.deletePersistedModel(
-			persistedModel);
+		return _clientExtensionEntryLocalService.deleteClientExtensionEntry(clientExtensionEntry);
 	}
 
 	@Override
 	public void deployClientExtensionEntry(
-		com.liferay.client.extension.model.ClientExtensionEntry
-			clientExtensionEntry) {
+		com.liferay.client.extension.model.ClientExtensionEntry clientExtensionEntry) {
 
-		_clientExtensionEntryLocalService.deployClientExtensionEntry(
-			clientExtensionEntry);
+		_clientExtensionEntryLocalService.deployClientExtensionEntry(clientExtensionEntry);
 	}
 
 	@Override
@@ -289,8 +279,7 @@ public class ClientExtensionEntryLocalServiceWrapper
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 
-		return _clientExtensionEntryLocalService.dynamicQueryCount(
-			dynamicQuery);
+		return _clientExtensionEntryLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
 	/**
@@ -318,11 +307,11 @@ public class ClientExtensionEntryLocalServiceWrapper
 	}
 
 	/**
-	 * Returns the client extension entry with the matching external reference code and company.
+	 * Returns the remote app entry with the matching external reference code and company.
 	 *
 	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the client extension entry's external reference code
-	 * @return the matching client extension entry, or <code>null</code> if a matching client extension entry could not be found
+	 * @param externalReferenceCode the remote app entry's external reference code
+	 * @return the matching remote app entry, or <code>null</code> if a matching remote app entry could not be found
 	 */
 	@Override
 	public com.liferay.client.extension.model.ClientExtensionEntry
@@ -343,22 +332,20 @@ public class ClientExtensionEntryLocalServiceWrapper
 		fetchClientExtensionEntryByReferenceCode(
 			long companyId, String externalReferenceCode) {
 
-		return _clientExtensionEntryLocalService.
-			fetchClientExtensionEntryByReferenceCode(
-				companyId, externalReferenceCode);
+		return _clientExtensionEntryLocalService.fetchClientExtensionEntryByReferenceCode(
+			companyId, externalReferenceCode);
 	}
 
 	/**
-	 * Returns the client extension entry with the matching UUID and company.
+	 * Returns the remote app entry with the matching UUID and company.
 	 *
-	 * @param uuid the client extension entry's UUID
+	 * @param uuid the remote app entry's UUID
 	 * @param companyId the primary key of the company
-	 * @return the matching client extension entry, or <code>null</code> if a matching client extension entry could not be found
+	 * @return the matching remote app entry, or <code>null</code> if a matching remote app entry could not be found
 	 */
 	@Override
 	public com.liferay.client.extension.model.ClientExtensionEntry
-		fetchClientExtensionEntryByUuidAndCompanyId(
-			String uuid, long companyId) {
+		fetchClientExtensionEntryByUuidAndCompanyId(String uuid, long companyId) {
 
 		return _clientExtensionEntryLocalService.
 			fetchClientExtensionEntryByUuidAndCompanyId(uuid, companyId);
@@ -371,106 +358,21 @@ public class ClientExtensionEntryLocalServiceWrapper
 		return _clientExtensionEntryLocalService.getActionableDynamicQuery();
 	}
 
-	/**
-	 * Returns a range of all the client extension entries.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.client.extension.model.impl.ClientExtensionEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of client extension entries
-	 * @param end the upper bound of the range of client extension entries (not inclusive)
-	 * @return the range of client extension entries
-	 */
-	@Override
-	public java.util.List
-		<com.liferay.client.extension.model.ClientExtensionEntry>
-			getClientExtensionEntries(int start, int end) {
-
-		return _clientExtensionEntryLocalService.getClientExtensionEntries(
-			start, end);
-	}
-
-	/**
-	 * Returns the number of client extension entries.
-	 *
-	 * @return the number of client extension entries
-	 */
-	@Override
-	public int getClientExtensionEntriesCount() {
-		return _clientExtensionEntryLocalService.
-			getClientExtensionEntriesCount();
-	}
-
-	/**
-	 * Returns the client extension entry with the primary key.
-	 *
-	 * @param clientExtensionEntryId the primary key of the client extension entry
-	 * @return the client extension entry
-	 * @throws PortalException if a client extension entry with the primary key could not be found
-	 */
-	@Override
-	public com.liferay.client.extension.model.ClientExtensionEntry
-			getClientExtensionEntry(long clientExtensionEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _clientExtensionEntryLocalService.getClientExtensionEntry(
-			clientExtensionEntryId);
-	}
-
-	/**
-	 * Returns the client extension entry with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the client extension entry's external reference code
-	 * @return the matching client extension entry
-	 * @throws PortalException if a matching client extension entry could not be found
-	 */
-	@Override
-	public com.liferay.client.extension.model.ClientExtensionEntry
-			getClientExtensionEntryByExternalReferenceCode(
-				long companyId, String externalReferenceCode)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _clientExtensionEntryLocalService.
-			getClientExtensionEntryByExternalReferenceCode(
-				companyId, externalReferenceCode);
-	}
-
-	/**
-	 * Returns the client extension entry with the matching UUID and company.
-	 *
-	 * @param uuid the client extension entry's UUID
-	 * @param companyId the primary key of the company
-	 * @return the matching client extension entry
-	 * @throws PortalException if a matching client extension entry could not be found
-	 */
-	@Override
-	public com.liferay.client.extension.model.ClientExtensionEntry
-			getClientExtensionEntryByUuidAndCompanyId(
-				String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _clientExtensionEntryLocalService.
-			getClientExtensionEntryByUuidAndCompanyId(uuid, companyId);
-	}
-
 	@Override
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
 		getExportActionableDynamicQuery(
 			com.liferay.exportimport.kernel.lar.PortletDataContext
 				portletDataContext) {
 
-		return _clientExtensionEntryLocalService.
-			getExportActionableDynamicQuery(portletDataContext);
+		return _clientExtensionEntryLocalService.getExportActionableDynamicQuery(
+			portletDataContext);
 	}
 
 	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
 
-		return _clientExtensionEntryLocalService.
-			getIndexableActionableDynamicQuery();
+		return _clientExtensionEntryLocalService.getIndexableActionableDynamicQuery();
 	}
 
 	/**
@@ -491,16 +393,94 @@ public class ClientExtensionEntryLocalServiceWrapper
 			java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _clientExtensionEntryLocalService.getPersistedModel(
-			primaryKeyObj);
+		return _clientExtensionEntryLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	 * Returns a range of all the remote app entries.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.client.extension.model.impl.ClientExtensionEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of remote app entries
+	 * @param end the upper bound of the range of remote app entries (not inclusive)
+	 * @return the range of remote app entries
+	 */
+	@Override
+	public java.util.List<com.liferay.client.extension.model.ClientExtensionEntry>
+		getClientExtensionEntries(int start, int end) {
+
+		return _clientExtensionEntryLocalService.getClientExtensionEntries(start, end);
+	}
+
+	/**
+	 * Returns the number of remote app entries.
+	 *
+	 * @return the number of remote app entries
+	 */
+	@Override
+	public int getClientExtensionEntriesCount() {
+		return _clientExtensionEntryLocalService.getClientExtensionEntriesCount();
+	}
+
+	/**
+	 * Returns the remote app entry with the primary key.
+	 *
+	 * @param clientExtensionEntryId the primary key of the remote app entry
+	 * @return the remote app entry
+	 * @throws PortalException if a remote app entry with the primary key could not be found
+	 */
+	@Override
+	public com.liferay.client.extension.model.ClientExtensionEntry getClientExtensionEntry(
+			long clientExtensionEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _clientExtensionEntryLocalService.getClientExtensionEntry(clientExtensionEntryId);
+	}
+
+	/**
+	 * Returns the remote app entry with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the remote app entry's external reference code
+	 * @return the matching remote app entry
+	 * @throws PortalException if a matching remote app entry could not be found
+	 */
+	@Override
+	public com.liferay.client.extension.model.ClientExtensionEntry
+			getClientExtensionEntryByExternalReferenceCode(
+				long companyId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _clientExtensionEntryLocalService.
+			getClientExtensionEntryByExternalReferenceCode(
+				companyId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the remote app entry with the matching UUID and company.
+	 *
+	 * @param uuid the remote app entry's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching remote app entry
+	 * @throws PortalException if a matching remote app entry could not be found
+	 */
+	@Override
+	public com.liferay.client.extension.model.ClientExtensionEntry
+			getClientExtensionEntryByUuidAndCompanyId(String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _clientExtensionEntryLocalService.getClientExtensionEntryByUuidAndCompanyId(
+			uuid, companyId);
 	}
 
 	@Override
-	public java.util.List
-		<com.liferay.client.extension.model.ClientExtensionEntry> search(
+	public java.util.List<com.liferay.client.extension.model.ClientExtensionEntry>
+			search(
 				long companyId, String keywords, int start, int end,
 				com.liferay.portal.kernel.search.Sort sort)
-			throws com.liferay.portal.kernel.exception.PortalException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _clientExtensionEntryLocalService.search(
 			companyId, keywords, start, end, sort);
@@ -510,44 +490,20 @@ public class ClientExtensionEntryLocalServiceWrapper
 	public int searchCount(long companyId, String keywords)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _clientExtensionEntryLocalService.searchCount(
-			companyId, keywords);
+		return _clientExtensionEntryLocalService.searchCount(companyId, keywords);
 	}
 
 	@Override
 	public void undeployClientExtensionEntry(
-		com.liferay.client.extension.model.ClientExtensionEntry
-			clientExtensionEntry) {
+		com.liferay.client.extension.model.ClientExtensionEntry clientExtensionEntry) {
 
-		_clientExtensionEntryLocalService.undeployClientExtensionEntry(
-			clientExtensionEntry);
-	}
-
-	/**
-	 * Updates the client extension entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * <p>
-	 * <strong>Important:</strong> Inspect ClientExtensionEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
-	 * </p>
-	 *
-	 * @param clientExtensionEntry the client extension entry
-	 * @return the client extension entry that was updated
-	 */
-	@Override
-	public com.liferay.client.extension.model.ClientExtensionEntry
-		updateClientExtensionEntry(
-			com.liferay.client.extension.model.ClientExtensionEntry
-				clientExtensionEntry) {
-
-		return _clientExtensionEntryLocalService.updateClientExtensionEntry(
-			clientExtensionEntry);
+		_clientExtensionEntryLocalService.undeployClientExtensionEntry(clientExtensionEntry);
 	}
 
 	@Override
 	public com.liferay.client.extension.model.ClientExtensionEntry
 			updateCustomElementClientExtensionEntry(
-				long userId, long clientExtensionEntryId,
-				String customElementCSSURLs,
+				long userId, long clientExtensionEntryId, String customElementCSSURLs,
 				String customElementHTMLElementName, String customElementURLs,
 				boolean customElementUseESM, String description,
 				String friendlyURLMapping,
@@ -556,12 +512,11 @@ public class ClientExtensionEntryLocalServiceWrapper
 				String sourceCodeURL)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _clientExtensionEntryLocalService.
-			updateCustomElementClientExtensionEntry(
-				userId, clientExtensionEntryId, customElementCSSURLs,
-				customElementHTMLElementName, customElementURLs,
-				customElementUseESM, description, friendlyURLMapping, nameMap,
-				portletCategoryName, properties, sourceCodeURL);
+		return _clientExtensionEntryLocalService.updateCustomElementClientExtensionEntry(
+			userId, clientExtensionEntryId, customElementCSSURLs,
+			customElementHTMLElementName, customElementURLs,
+			customElementUseESM, description, friendlyURLMapping, nameMap,
+			portletCategoryName, properties, sourceCodeURL);
 	}
 
 	@Override
@@ -574,11 +529,27 @@ public class ClientExtensionEntryLocalServiceWrapper
 				String sourceCodeURL)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _clientExtensionEntryLocalService.
-			updateIFrameClientExtensionEntry(
-				userId, clientExtensionEntryId, description, friendlyURLMapping,
-				iFrameURL, nameMap, portletCategoryName, properties,
-				sourceCodeURL);
+		return _clientExtensionEntryLocalService.updateIFrameClientExtensionEntry(
+			userId, clientExtensionEntryId, description, friendlyURLMapping,
+			iFrameURL, nameMap, portletCategoryName, properties, sourceCodeURL);
+	}
+
+	/**
+	 * Updates the remote app entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect ClientExtensionEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
+	 * @param clientExtensionEntry the remote app entry
+	 * @return the remote app entry that was updated
+	 */
+	@Override
+	public com.liferay.client.extension.model.ClientExtensionEntry
+		updateClientExtensionEntry(
+			com.liferay.client.extension.model.ClientExtensionEntry clientExtensionEntry) {
+
+		return _clientExtensionEntryLocalService.updateClientExtensionEntry(clientExtensionEntry);
 	}
 
 	@Override

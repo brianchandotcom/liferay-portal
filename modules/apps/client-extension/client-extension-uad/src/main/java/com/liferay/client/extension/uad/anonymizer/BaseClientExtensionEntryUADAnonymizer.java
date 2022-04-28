@@ -27,7 +27,7 @@ import com.liferay.user.associated.data.anonymizer.DynamicQueryUADAnonymizer;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * Provides the base implementation for the client extension entry UAD anonymizer.
+ * Provides the base implementation for the remote app entry UAD anonymizer.
  *
  * <p>
  * This implementation exists only as a container for the default methods
@@ -43,8 +43,7 @@ public abstract class BaseClientExtensionEntryUADAnonymizer
 
 	@Override
 	public void autoAnonymize(
-			ClientExtensionEntry clientExtensionEntry, long userId,
-			User anonymousUser)
+			ClientExtensionEntry clientExtensionEntry, long userId, User anonymousUser)
 		throws PortalException {
 
 		if (clientExtensionEntry.getUserId() == userId) {
@@ -56,20 +55,15 @@ public abstract class BaseClientExtensionEntryUADAnonymizer
 
 		if (clientExtensionEntry.getStatusByUserId() == userId) {
 			clientExtensionEntry.setStatusByUserId(anonymousUser.getUserId());
-			clientExtensionEntry.setStatusByUserName(
-				anonymousUser.getFullName());
+			clientExtensionEntry.setStatusByUserName(anonymousUser.getFullName());
 		}
 
-		clientExtensionEntryLocalService.updateClientExtensionEntry(
-			clientExtensionEntry);
+		clientExtensionEntryLocalService.updateClientExtensionEntry(clientExtensionEntry);
 	}
 
 	@Override
-	public void delete(ClientExtensionEntry clientExtensionEntry)
-		throws PortalException {
-
-		clientExtensionEntryLocalService.deleteClientExtensionEntry(
-			clientExtensionEntry);
+	public void delete(ClientExtensionEntry clientExtensionEntry) throws PortalException {
+		clientExtensionEntryLocalService.deleteClientExtensionEntry(clientExtensionEntry);
 	}
 
 	@Override
@@ -97,13 +91,10 @@ public abstract class BaseClientExtensionEntryUADAnonymizer
 
 	@Override
 	protected String[] doGetUserIdFieldNames() {
-		return ClientExtensionUADConstants.
-			USER_ID_FIELD_NAMES_CLIENT_EXTENSION_ENTRY;
+		return ClientExtensionUADConstants.USER_ID_FIELD_NAMES_REMOTE_APP_ENTRY;
 	}
 
-	protected AssetEntry fetchAssetEntry(
-		ClientExtensionEntry clientExtensionEntry) {
-
+	protected AssetEntry fetchAssetEntry(ClientExtensionEntry clientExtensionEntry) {
 		return assetEntryLocalService.fetchEntry(
 			ClientExtensionEntry.class.getName(),
 			clientExtensionEntry.getClientExtensionEntryId());

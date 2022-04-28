@@ -20,7 +20,7 @@ package com.liferay.client.extension.uad.constants;
  */
 public class ClientExtensionUADConstants {
 
-	public static final String[] USER_ID_FIELD_NAMES_CLIENT_EXTENSION_ENTRY = {
+	public static final String[] USER_ID_FIELD_NAMES_REMOTE_APP_ENTRY = {
 		"userId", "statusByUserId"
 	};
 

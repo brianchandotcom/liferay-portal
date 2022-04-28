@@ -31,8 +31,7 @@ import org.osgi.annotation.versioning.ProviderType;
 	"com.liferay.client.extension.model.impl.ClientExtensionEntryImpl"
 )
 @ProviderType
-public interface ClientExtensionEntry
-	extends ClientExtensionEntryModel, PersistedModel {
+public interface ClientExtensionEntry extends PersistedModel, ClientExtensionEntryModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -40,24 +39,23 @@ public interface ClientExtensionEntry
 	 * Never modify this interface directly. Add methods to <code>com.liferay.client.extension.model.impl.ClientExtensionEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public static final Accessor<ClientExtensionEntry, Long>
-		CLIENT_EXTENSION_ENTRY_ID_ACCESSOR =
-			new Accessor<ClientExtensionEntry, Long>() {
+		REMOTE_APP_ENTRY_ID_ACCESSOR = new Accessor<ClientExtensionEntry, Long>() {
 
-				@Override
-				public Long get(ClientExtensionEntry clientExtensionEntry) {
-					return clientExtensionEntry.getClientExtensionEntryId();
-				}
+			@Override
+			public Long get(ClientExtensionEntry clientExtensionEntry) {
+				return clientExtensionEntry.getClientExtensionEntryId();
+			}
 
-				@Override
-				public Class<Long> getAttributeClass() {
-					return Long.class;
-				}
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
 
-				@Override
-				public Class<ClientExtensionEntry> getTypeClass() {
-					return ClientExtensionEntry.class;
-				}
+			@Override
+			public Class<ClientExtensionEntry> getTypeClass() {
+				return ClientExtensionEntry.class;
+			}
 
-			};
+		};
 
 }

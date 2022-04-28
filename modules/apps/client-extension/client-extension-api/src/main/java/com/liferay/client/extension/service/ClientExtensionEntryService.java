@@ -50,7 +50,7 @@ public interface ClientExtensionEntryService extends BaseService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.client.extension.service.impl.ClientExtensionEntryServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the client extension entry remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ClientExtensionEntryServiceUtil} if injection and service tracking are not available.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.client.extension.service.impl.ClientExtensionEntryServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the remote app entry remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ClientExtensionEntryServiceUtil} if injection and service tracking are not available.
 	 */
 	public ClientExtensionEntry addCustomElementClientExtensionEntry(
 			String externalReferenceCode, String customElementCSSURLs,
@@ -67,13 +67,7 @@ public interface ClientExtensionEntryService extends BaseService {
 			String portletCategoryName, String properties, String sourceCodeURL)
 		throws PortalException;
 
-	public ClientExtensionEntry deleteClientExtensionEntry(
-			long clientExtensionEntryId)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ClientExtensionEntry getClientExtensionEntry(
-			long clientExtensionEntryId)
+	public ClientExtensionEntry deleteClientExtensionEntry(long clientExtensionEntryId)
 		throws PortalException;
 
 	/**
@@ -82,6 +76,10 @@ public interface ClientExtensionEntryService extends BaseService {
 	 * @return the OSGi service identifier
 	 */
 	public String getOSGiServiceIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ClientExtensionEntry getClientExtensionEntry(long clientExtensionEntryId)
+		throws PortalException;
 
 	public ClientExtensionEntry updateCustomElementClientExtensionEntry(
 			long clientExtensionEntryId, String customElementCSSURLs,

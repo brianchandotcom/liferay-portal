@@ -65,18 +65,10 @@ public class ClientExtensionEntryServiceUtil {
 			portletCategoryName, properties, sourceCodeURL);
 	}
 
-	public static ClientExtensionEntry deleteClientExtensionEntry(
-			long clientExtensionEntryId)
+	public static ClientExtensionEntry deleteClientExtensionEntry(long clientExtensionEntryId)
 		throws PortalException {
 
 		return getService().deleteClientExtensionEntry(clientExtensionEntryId);
-	}
-
-	public static ClientExtensionEntry getClientExtensionEntry(
-			long clientExtensionEntryId)
-		throws PortalException {
-
-		return getService().getClientExtensionEntry(clientExtensionEntryId);
 	}
 
 	/**
@@ -86,6 +78,12 @@ public class ClientExtensionEntryServiceUtil {
 	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static ClientExtensionEntry getClientExtensionEntry(long clientExtensionEntryId)
+		throws PortalException {
+
+		return getService().getClientExtensionEntry(clientExtensionEntryId);
 	}
 
 	public static ClientExtensionEntry updateCustomElementClientExtensionEntry(

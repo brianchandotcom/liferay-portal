@@ -67,23 +67,8 @@ public interface ClientExtensionEntryLocalService
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.client.extension.service.impl.ClientExtensionEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the client extension entry local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ClientExtensionEntryLocalServiceUtil} if injection and service tracking are not available.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.client.extension.service.impl.ClientExtensionEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the remote app entry local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ClientExtensionEntryLocalServiceUtil} if injection and service tracking are not available.
 	 */
-
-	/**
-	 * Adds the client extension entry to the database. Also notifies the appropriate model listeners.
-	 *
-	 * <p>
-	 * <strong>Important:</strong> Inspect ClientExtensionEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
-	 * </p>
-	 *
-	 * @param clientExtensionEntry the client extension entry
-	 * @return the client extension entry that was added
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public ClientExtensionEntry addClientExtensionEntry(
-		ClientExtensionEntry clientExtensionEntry);
-
 	@Indexable(type = IndexableType.REINDEX)
 	public ClientExtensionEntry addCustomElementClientExtensionEntry(
 			String externalReferenceCode, long userId,
@@ -112,14 +97,17 @@ public interface ClientExtensionEntryLocalService
 		throws PortalException;
 
 	/**
-	 * Creates a new client extension entry with the primary key. Does not add the client extension entry to the database.
+	 * Adds the remote app entry to the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param clientExtensionEntryId the primary key for the new client extension entry
-	 * @return the new client extension entry
+	 * <p>
+	 * <strong>Important:</strong> Inspect ClientExtensionEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
+	 * @param clientExtensionEntry the remote app entry
+	 * @return the remote app entry that was added
 	 */
-	@Transactional(enabled = false)
-	public ClientExtensionEntry createClientExtensionEntry(
-		long clientExtensionEntryId);
+	@Indexable(type = IndexableType.REINDEX)
+	public ClientExtensionEntry addClientExtensionEntry(ClientExtensionEntry clientExtensionEntry);
 
 	/**
 	 * @throws PortalException
@@ -128,37 +116,13 @@ public interface ClientExtensionEntryLocalService
 		throws PortalException;
 
 	/**
-	 * Deletes the client extension entry from the database. Also notifies the appropriate model listeners.
+	 * Creates a new remote app entry with the primary key. Does not add the remote app entry to the database.
 	 *
-	 * <p>
-	 * <strong>Important:</strong> Inspect ClientExtensionEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
-	 * </p>
-	 *
-	 * @param clientExtensionEntry the client extension entry
-	 * @return the client extension entry that was removed
-	 * @throws PortalException
+	 * @param clientExtensionEntryId the primary key for the new remote app entry
+	 * @return the new remote app entry
 	 */
-	@Indexable(type = IndexableType.DELETE)
-	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
-	public ClientExtensionEntry deleteClientExtensionEntry(
-			ClientExtensionEntry clientExtensionEntry)
-		throws PortalException;
-
-	/**
-	 * Deletes the client extension entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * <p>
-	 * <strong>Important:</strong> Inspect ClientExtensionEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
-	 * </p>
-	 *
-	 * @param clientExtensionEntryId the primary key of the client extension entry
-	 * @return the client extension entry that was removed
-	 * @throws PortalException if a client extension entry with the primary key could not be found
-	 */
-	@Indexable(type = IndexableType.DELETE)
-	public ClientExtensionEntry deleteClientExtensionEntry(
-			long clientExtensionEntryId)
-		throws PortalException;
+	@Transactional(enabled = false)
+	public ClientExtensionEntry createClientExtensionEntry(long clientExtensionEntryId);
 
 	/**
 	 * @throws PortalException
@@ -167,9 +131,39 @@ public interface ClientExtensionEntryLocalService
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
+	/**
+	 * Deletes the remote app entry with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect ClientExtensionEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
+	 * @param clientExtensionEntryId the primary key of the remote app entry
+	 * @return the remote app entry that was removed
+	 * @throws PortalException if a remote app entry with the primary key could not be found
+	 */
+	@Indexable(type = IndexableType.DELETE)
+	public ClientExtensionEntry deleteClientExtensionEntry(long clientExtensionEntryId)
+		throws PortalException;
+
+	/**
+	 * Deletes the remote app entry from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect ClientExtensionEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
+	 * @param clientExtensionEntry the remote app entry
+	 * @return the remote app entry that was removed
+	 * @throws PortalException
+	 */
+	@Indexable(type = IndexableType.DELETE)
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
+	public ClientExtensionEntry deleteClientExtensionEntry(ClientExtensionEntry clientExtensionEntry)
+		throws PortalException;
+
 	@Clusterable
-	public void deployClientExtensionEntry(
-		ClientExtensionEntry clientExtensionEntry);
+	public void deployClientExtensionEntry(ClientExtensionEntry clientExtensionEntry);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> T dslQuery(DSLQuery dslQuery);
@@ -244,20 +238,18 @@ public interface ClientExtensionEntryLocalService
 		DynamicQuery dynamicQuery, Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ClientExtensionEntry fetchClientExtensionEntry(
-		long clientExtensionEntryId);
+	public ClientExtensionEntry fetchClientExtensionEntry(long clientExtensionEntryId);
 
 	/**
-	 * Returns the client extension entry with the matching external reference code and company.
+	 * Returns the remote app entry with the matching external reference code and company.
 	 *
 	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the client extension entry's external reference code
-	 * @return the matching client extension entry, or <code>null</code> if a matching client extension entry could not be found
+	 * @param externalReferenceCode the remote app entry's external reference code
+	 * @return the matching remote app entry, or <code>null</code> if a matching remote app entry could not be found
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ClientExtensionEntry
-		fetchClientExtensionEntryByExternalReferenceCode(
-			long companyId, String externalReferenceCode);
+	public ClientExtensionEntry fetchClientExtensionEntryByExternalReferenceCode(
+		long companyId, String externalReferenceCode);
 
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchClientExtensionEntryByExternalReferenceCode(long, String)}
@@ -268,11 +260,11 @@ public interface ClientExtensionEntryLocalService
 		long companyId, String externalReferenceCode);
 
 	/**
-	 * Returns the client extension entry with the matching UUID and company.
+	 * Returns the remote app entry with the matching UUID and company.
 	 *
-	 * @param uuid the client extension entry's UUID
+	 * @param uuid the remote app entry's UUID
 	 * @param companyId the primary key of the company
-	 * @return the matching client extension entry, or <code>null</code> if a matching client extension entry could not be found
+	 * @return the matching remote app entry, or <code>null</code> if a matching remote app entry could not be found
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ClientExtensionEntry fetchClientExtensionEntryByUuidAndCompanyId(
@@ -280,67 +272,6 @@ public interface ClientExtensionEntryLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	/**
-	 * Returns a range of all the client extension entries.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.client.extension.model.impl.ClientExtensionEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of client extension entries
-	 * @param end the upper bound of the range of client extension entries (not inclusive)
-	 * @return the range of client extension entries
-	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<ClientExtensionEntry> getClientExtensionEntries(
-		int start, int end);
-
-	/**
-	 * Returns the number of client extension entries.
-	 *
-	 * @return the number of client extension entries
-	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getClientExtensionEntriesCount();
-
-	/**
-	 * Returns the client extension entry with the primary key.
-	 *
-	 * @param clientExtensionEntryId the primary key of the client extension entry
-	 * @return the client extension entry
-	 * @throws PortalException if a client extension entry with the primary key could not be found
-	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ClientExtensionEntry getClientExtensionEntry(
-			long clientExtensionEntryId)
-		throws PortalException;
-
-	/**
-	 * Returns the client extension entry with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the client extension entry's external reference code
-	 * @return the matching client extension entry
-	 * @throws PortalException if a matching client extension entry could not be found
-	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ClientExtensionEntry getClientExtensionEntryByExternalReferenceCode(
-			long companyId, String externalReferenceCode)
-		throws PortalException;
-
-	/**
-	 * Returns the client extension entry with the matching UUID and company.
-	 *
-	 * @param uuid the client extension entry's UUID
-	 * @param companyId the primary key of the company
-	 * @return the matching client extension entry
-	 * @throws PortalException if a matching client extension entry could not be found
-	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ClientExtensionEntry getClientExtensionEntryByUuidAndCompanyId(
-			String uuid, long companyId)
-		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
@@ -364,6 +295,65 @@ public interface ClientExtensionEntryLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	/**
+	 * Returns a range of all the remote app entries.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.client.extension.model.impl.ClientExtensionEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of remote app entries
+	 * @param end the upper bound of the range of remote app entries (not inclusive)
+	 * @return the range of remote app entries
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ClientExtensionEntry> getClientExtensionEntries(int start, int end);
+
+	/**
+	 * Returns the number of remote app entries.
+	 *
+	 * @return the number of remote app entries
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getClientExtensionEntriesCount();
+
+	/**
+	 * Returns the remote app entry with the primary key.
+	 *
+	 * @param clientExtensionEntryId the primary key of the remote app entry
+	 * @return the remote app entry
+	 * @throws PortalException if a remote app entry with the primary key could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ClientExtensionEntry getClientExtensionEntry(long clientExtensionEntryId)
+		throws PortalException;
+
+	/**
+	 * Returns the remote app entry with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the remote app entry's external reference code
+	 * @return the matching remote app entry
+	 * @throws PortalException if a matching remote app entry could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ClientExtensionEntry getClientExtensionEntryByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
+		throws PortalException;
+
+	/**
+	 * Returns the remote app entry with the matching UUID and company.
+	 *
+	 * @param uuid the remote app entry's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching remote app entry
+	 * @throws PortalException if a matching remote app entry could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ClientExtensionEntry getClientExtensionEntryByUuidAndCompanyId(
+			String uuid, long companyId)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ClientExtensionEntry> search(
 			long companyId, String keywords, int start, int end, Sort sort)
@@ -374,31 +364,15 @@ public interface ClientExtensionEntryLocalService
 		throws PortalException;
 
 	@Clusterable
-	public void undeployClientExtensionEntry(
-		ClientExtensionEntry clientExtensionEntry);
-
-	/**
-	 * Updates the client extension entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * <p>
-	 * <strong>Important:</strong> Inspect ClientExtensionEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
-	 * </p>
-	 *
-	 * @param clientExtensionEntry the client extension entry
-	 * @return the client extension entry that was updated
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public ClientExtensionEntry updateClientExtensionEntry(
-		ClientExtensionEntry clientExtensionEntry);
+	public void undeployClientExtensionEntry(ClientExtensionEntry clientExtensionEntry);
 
 	@Indexable(type = IndexableType.REINDEX)
 	public ClientExtensionEntry updateCustomElementClientExtensionEntry(
-			long userId, long clientExtensionEntryId,
-			String customElementCSSURLs, String customElementHTMLElementName,
-			String customElementURLs, boolean customElementUseESM,
-			String description, String friendlyURLMapping,
-			Map<Locale, String> nameMap, String portletCategoryName,
-			String properties, String sourceCodeURL)
+			long userId, long clientExtensionEntryId, String customElementCSSURLs,
+			String customElementHTMLElementName, String customElementURLs,
+			boolean customElementUseESM, String description,
+			String friendlyURLMapping, Map<Locale, String> nameMap,
+			String portletCategoryName, String properties, String sourceCodeURL)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -408,6 +382,19 @@ public interface ClientExtensionEntryLocalService
 			Map<Locale, String> nameMap, String portletCategoryName,
 			String properties, String sourceCodeURL)
 		throws PortalException;
+
+	/**
+	 * Updates the remote app entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect ClientExtensionEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
+	 * @param clientExtensionEntry the remote app entry
+	 * @return the remote app entry that was updated
+	 */
+	@Indexable(type = IndexableType.REINDEX)
+	public ClientExtensionEntry updateClientExtensionEntry(ClientExtensionEntry clientExtensionEntry);
 
 	@Indexable(type = IndexableType.REINDEX)
 	public ClientExtensionEntry updateStatus(

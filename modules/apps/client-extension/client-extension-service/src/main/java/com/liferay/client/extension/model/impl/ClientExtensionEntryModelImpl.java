@@ -71,13 +71,12 @@ import java.util.function.Function;
  */
 @JSON(strict = true)
 public class ClientExtensionEntryModelImpl
-	extends BaseModelImpl<ClientExtensionEntry>
-	implements ClientExtensionEntryModel {
+	extends BaseModelImpl<ClientExtensionEntry> implements ClientExtensionEntryModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a client extension entry model instance should use the <code>ClientExtensionEntry</code> interface instead.
+	 * Never modify or reference this class directly. All methods that expect a remote app entry model instance should use the <code>ClientExtensionEntry</code> interface instead.
 	 */
 	public static final String TABLE_NAME = "ClientExtensionEntry";
 
@@ -134,8 +133,7 @@ public class ClientExtensionEntryModelImpl
 	public static final String TABLE_SQL_CREATE =
 		"create table ClientExtensionEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,clientExtensionEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,customElementCSSURLs TEXT null,customElementHTMLElementName VARCHAR(255) null,customElementURLs TEXT null,customElementUseESM BOOLEAN,description TEXT null,friendlyURLMapping VARCHAR(75) null,iFrameURL STRING null,instanceable BOOLEAN,name STRING null,portletCategoryName VARCHAR(75) null,properties TEXT null,sourceCodeURL STRING null,type_ VARCHAR(75) null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
-	public static final String TABLE_SQL_DROP =
-		"drop table ClientExtensionEntry";
+	public static final String TABLE_SQL_DROP = "drop table ClientExtensionEntry";
 
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY clientExtensionEntry.clientExtensionEntryId ASC";
@@ -172,7 +170,7 @@ public class ClientExtensionEntryModelImpl
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long CLIENTEXTENSIONENTRYID_COLUMN_BITMASK = 8L;
+	public static final long REMOTEAPPENTRYID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -225,8 +223,8 @@ public class ClientExtensionEntryModelImpl
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<String, Function<ClientExtensionEntry, Object>>
-			attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<ClientExtensionEntry, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
 		for (Map.Entry<String, Function<ClientExtensionEntry, Object>> entry :
 				attributeGetterFunctions.entrySet()) {
@@ -279,72 +277,56 @@ public class ClientExtensionEntryModelImpl
 		_attributeSetterBiConsumers;
 
 	static {
-		Map<String, Function<ClientExtensionEntry, Object>>
-			attributeGetterFunctions =
-				new LinkedHashMap
-					<String, Function<ClientExtensionEntry, Object>>();
-		Map<String, BiConsumer<ClientExtensionEntry, ?>>
-			attributeSetterBiConsumers =
-				new LinkedHashMap
-					<String, BiConsumer<ClientExtensionEntry, ?>>();
+		Map<String, Function<ClientExtensionEntry, Object>> attributeGetterFunctions =
+			new LinkedHashMap<String, Function<ClientExtensionEntry, Object>>();
+		Map<String, BiConsumer<ClientExtensionEntry, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<ClientExtensionEntry, ?>>();
 
 		attributeGetterFunctions.put(
 			"mvccVersion", ClientExtensionEntry::getMvccVersion);
 		attributeSetterBiConsumers.put(
 			"mvccVersion",
-			(BiConsumer<ClientExtensionEntry, Long>)
-				ClientExtensionEntry::setMvccVersion);
+			(BiConsumer<ClientExtensionEntry, Long>)ClientExtensionEntry::setMvccVersion);
 		attributeGetterFunctions.put("uuid", ClientExtensionEntry::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
-			(BiConsumer<ClientExtensionEntry, String>)
-				ClientExtensionEntry::setUuid);
+			(BiConsumer<ClientExtensionEntry, String>)ClientExtensionEntry::setUuid);
 		attributeGetterFunctions.put(
-			"externalReferenceCode",
-			ClientExtensionEntry::getExternalReferenceCode);
+			"externalReferenceCode", ClientExtensionEntry::getExternalReferenceCode);
 		attributeSetterBiConsumers.put(
 			"externalReferenceCode",
 			(BiConsumer<ClientExtensionEntry, String>)
 				ClientExtensionEntry::setExternalReferenceCode);
 		attributeGetterFunctions.put(
-			"clientExtensionEntryId",
-			ClientExtensionEntry::getClientExtensionEntryId);
+			"clientExtensionEntryId", ClientExtensionEntry::getClientExtensionEntryId);
 		attributeSetterBiConsumers.put(
 			"clientExtensionEntryId",
 			(BiConsumer<ClientExtensionEntry, Long>)
 				ClientExtensionEntry::setClientExtensionEntryId);
-		attributeGetterFunctions.put(
-			"companyId", ClientExtensionEntry::getCompanyId);
+		attributeGetterFunctions.put("companyId", ClientExtensionEntry::getCompanyId);
 		attributeSetterBiConsumers.put(
 			"companyId",
-			(BiConsumer<ClientExtensionEntry, Long>)
-				ClientExtensionEntry::setCompanyId);
+			(BiConsumer<ClientExtensionEntry, Long>)ClientExtensionEntry::setCompanyId);
 		attributeGetterFunctions.put("userId", ClientExtensionEntry::getUserId);
 		attributeSetterBiConsumers.put(
 			"userId",
-			(BiConsumer<ClientExtensionEntry, Long>)
-				ClientExtensionEntry::setUserId);
-		attributeGetterFunctions.put(
-			"userName", ClientExtensionEntry::getUserName);
+			(BiConsumer<ClientExtensionEntry, Long>)ClientExtensionEntry::setUserId);
+		attributeGetterFunctions.put("userName", ClientExtensionEntry::getUserName);
 		attributeSetterBiConsumers.put(
 			"userName",
-			(BiConsumer<ClientExtensionEntry, String>)
-				ClientExtensionEntry::setUserName);
+			(BiConsumer<ClientExtensionEntry, String>)ClientExtensionEntry::setUserName);
 		attributeGetterFunctions.put(
 			"createDate", ClientExtensionEntry::getCreateDate);
 		attributeSetterBiConsumers.put(
 			"createDate",
-			(BiConsumer<ClientExtensionEntry, Date>)
-				ClientExtensionEntry::setCreateDate);
+			(BiConsumer<ClientExtensionEntry, Date>)ClientExtensionEntry::setCreateDate);
 		attributeGetterFunctions.put(
 			"modifiedDate", ClientExtensionEntry::getModifiedDate);
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
-			(BiConsumer<ClientExtensionEntry, Date>)
-				ClientExtensionEntry::setModifiedDate);
+			(BiConsumer<ClientExtensionEntry, Date>)ClientExtensionEntry::setModifiedDate);
 		attributeGetterFunctions.put(
-			"customElementCSSURLs",
-			ClientExtensionEntry::getCustomElementCSSURLs);
+			"customElementCSSURLs", ClientExtensionEntry::getCustomElementCSSURLs);
 		attributeSetterBiConsumers.put(
 			"customElementCSSURLs",
 			(BiConsumer<ClientExtensionEntry, String>)
@@ -363,8 +345,7 @@ public class ClientExtensionEntryModelImpl
 			(BiConsumer<ClientExtensionEntry, String>)
 				ClientExtensionEntry::setCustomElementURLs);
 		attributeGetterFunctions.put(
-			"customElementUseESM",
-			ClientExtensionEntry::getCustomElementUseESM);
+			"customElementUseESM", ClientExtensionEntry::getCustomElementUseESM);
 		attributeSetterBiConsumers.put(
 			"customElementUseESM",
 			(BiConsumer<ClientExtensionEntry, Boolean>)
@@ -373,20 +354,17 @@ public class ClientExtensionEntryModelImpl
 			"description", ClientExtensionEntry::getDescription);
 		attributeSetterBiConsumers.put(
 			"description",
-			(BiConsumer<ClientExtensionEntry, String>)
-				ClientExtensionEntry::setDescription);
+			(BiConsumer<ClientExtensionEntry, String>)ClientExtensionEntry::setDescription);
 		attributeGetterFunctions.put(
 			"friendlyURLMapping", ClientExtensionEntry::getFriendlyURLMapping);
 		attributeSetterBiConsumers.put(
 			"friendlyURLMapping",
 			(BiConsumer<ClientExtensionEntry, String>)
 				ClientExtensionEntry::setFriendlyURLMapping);
-		attributeGetterFunctions.put(
-			"iFrameURL", ClientExtensionEntry::getIFrameURL);
+		attributeGetterFunctions.put("iFrameURL", ClientExtensionEntry::getIFrameURL);
 		attributeSetterBiConsumers.put(
 			"iFrameURL",
-			(BiConsumer<ClientExtensionEntry, String>)
-				ClientExtensionEntry::setIFrameURL);
+			(BiConsumer<ClientExtensionEntry, String>)ClientExtensionEntry::setIFrameURL);
 		attributeGetterFunctions.put(
 			"instanceable", ClientExtensionEntry::getInstanceable);
 		attributeSetterBiConsumers.put(
@@ -396,11 +374,9 @@ public class ClientExtensionEntryModelImpl
 		attributeGetterFunctions.put("name", ClientExtensionEntry::getName);
 		attributeSetterBiConsumers.put(
 			"name",
-			(BiConsumer<ClientExtensionEntry, String>)
-				ClientExtensionEntry::setName);
+			(BiConsumer<ClientExtensionEntry, String>)ClientExtensionEntry::setName);
 		attributeGetterFunctions.put(
-			"portletCategoryName",
-			ClientExtensionEntry::getPortletCategoryName);
+			"portletCategoryName", ClientExtensionEntry::getPortletCategoryName);
 		attributeSetterBiConsumers.put(
 			"portletCategoryName",
 			(BiConsumer<ClientExtensionEntry, String>)
@@ -409,8 +385,7 @@ public class ClientExtensionEntryModelImpl
 			"properties", ClientExtensionEntry::getProperties);
 		attributeSetterBiConsumers.put(
 			"properties",
-			(BiConsumer<ClientExtensionEntry, String>)
-				ClientExtensionEntry::setProperties);
+			(BiConsumer<ClientExtensionEntry, String>)ClientExtensionEntry::setProperties);
 		attributeGetterFunctions.put(
 			"sourceCodeURL", ClientExtensionEntry::getSourceCodeURL);
 		attributeSetterBiConsumers.put(
@@ -420,13 +395,11 @@ public class ClientExtensionEntryModelImpl
 		attributeGetterFunctions.put("type", ClientExtensionEntry::getType);
 		attributeSetterBiConsumers.put(
 			"type",
-			(BiConsumer<ClientExtensionEntry, String>)
-				ClientExtensionEntry::setType);
+			(BiConsumer<ClientExtensionEntry, String>)ClientExtensionEntry::setType);
 		attributeGetterFunctions.put("status", ClientExtensionEntry::getStatus);
 		attributeSetterBiConsumers.put(
 			"status",
-			(BiConsumer<ClientExtensionEntry, Integer>)
-				ClientExtensionEntry::setStatus);
+			(BiConsumer<ClientExtensionEntry, Integer>)ClientExtensionEntry::setStatus);
 		attributeGetterFunctions.put(
 			"statusByUserId", ClientExtensionEntry::getStatusByUserId);
 		attributeSetterBiConsumers.put(
@@ -443,8 +416,7 @@ public class ClientExtensionEntryModelImpl
 			"statusDate", ClientExtensionEntry::getStatusDate);
 		attributeSetterBiConsumers.put(
 			"statusDate",
-			(BiConsumer<ClientExtensionEntry, Date>)
-				ClientExtensionEntry::setStatusDate);
+			(BiConsumer<ClientExtensionEntry, Date>)ClientExtensionEntry::setStatusDate);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -1221,8 +1193,7 @@ public class ClientExtensionEntryModelImpl
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			getCompanyId(), ClientExtensionEntry.class.getName(),
-			getPrimaryKey());
+			getCompanyId(), ClientExtensionEntry.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -1273,8 +1244,8 @@ public class ClientExtensionEntryModelImpl
 			getAvailableLanguageIds());
 
 		Locale defaultImportLocale = LocalizationUtil.getDefaultImportLocale(
-			ClientExtensionEntry.class.getName(), getPrimaryKey(),
-			defaultLocale, availableLocales);
+			ClientExtensionEntry.class.getName(), getPrimaryKey(), defaultLocale,
+			availableLocales);
 
 		prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
@@ -1315,34 +1286,28 @@ public class ClientExtensionEntryModelImpl
 
 	@Override
 	public Object clone() {
-		ClientExtensionEntryImpl clientExtensionEntryImpl =
-			new ClientExtensionEntryImpl();
+		ClientExtensionEntryImpl clientExtensionEntryImpl = new ClientExtensionEntryImpl();
 
 		clientExtensionEntryImpl.setMvccVersion(getMvccVersion());
 		clientExtensionEntryImpl.setUuid(getUuid());
-		clientExtensionEntryImpl.setExternalReferenceCode(
-			getExternalReferenceCode());
-		clientExtensionEntryImpl.setClientExtensionEntryId(
-			getClientExtensionEntryId());
+		clientExtensionEntryImpl.setExternalReferenceCode(getExternalReferenceCode());
+		clientExtensionEntryImpl.setClientExtensionEntryId(getClientExtensionEntryId());
 		clientExtensionEntryImpl.setCompanyId(getCompanyId());
 		clientExtensionEntryImpl.setUserId(getUserId());
 		clientExtensionEntryImpl.setUserName(getUserName());
 		clientExtensionEntryImpl.setCreateDate(getCreateDate());
 		clientExtensionEntryImpl.setModifiedDate(getModifiedDate());
-		clientExtensionEntryImpl.setCustomElementCSSURLs(
-			getCustomElementCSSURLs());
+		clientExtensionEntryImpl.setCustomElementCSSURLs(getCustomElementCSSURLs());
 		clientExtensionEntryImpl.setCustomElementHTMLElementName(
 			getCustomElementHTMLElementName());
 		clientExtensionEntryImpl.setCustomElementURLs(getCustomElementURLs());
-		clientExtensionEntryImpl.setCustomElementUseESM(
-			isCustomElementUseESM());
+		clientExtensionEntryImpl.setCustomElementUseESM(isCustomElementUseESM());
 		clientExtensionEntryImpl.setDescription(getDescription());
 		clientExtensionEntryImpl.setFriendlyURLMapping(getFriendlyURLMapping());
 		clientExtensionEntryImpl.setIFrameURL(getIFrameURL());
 		clientExtensionEntryImpl.setInstanceable(isInstanceable());
 		clientExtensionEntryImpl.setName(getName());
-		clientExtensionEntryImpl.setPortletCategoryName(
-			getPortletCategoryName());
+		clientExtensionEntryImpl.setPortletCategoryName(getPortletCategoryName());
 		clientExtensionEntryImpl.setProperties(getProperties());
 		clientExtensionEntryImpl.setSourceCodeURL(getSourceCodeURL());
 		clientExtensionEntryImpl.setType(getType());
@@ -1358,8 +1323,7 @@ public class ClientExtensionEntryModelImpl
 
 	@Override
 	public ClientExtensionEntry cloneWithOriginalValues() {
-		ClientExtensionEntryImpl clientExtensionEntryImpl =
-			new ClientExtensionEntryImpl();
+		ClientExtensionEntryImpl clientExtensionEntryImpl = new ClientExtensionEntryImpl();
 
 		clientExtensionEntryImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
@@ -1396,8 +1360,7 @@ public class ClientExtensionEntryModelImpl
 			this.<String>getColumnOriginalValue("iFrameURL"));
 		clientExtensionEntryImpl.setInstanceable(
 			this.<Boolean>getColumnOriginalValue("instanceable"));
-		clientExtensionEntryImpl.setName(
-			this.<String>getColumnOriginalValue("name"));
+		clientExtensionEntryImpl.setName(this.<String>getColumnOriginalValue("name"));
 		clientExtensionEntryImpl.setPortletCategoryName(
 			this.<String>getColumnOriginalValue("portletCategoryName"));
 		clientExtensionEntryImpl.setProperties(
@@ -1443,8 +1406,7 @@ public class ClientExtensionEntryModelImpl
 			return false;
 		}
 
-		ClientExtensionEntry clientExtensionEntry =
-			(ClientExtensionEntry)object;
+		ClientExtensionEntry clientExtensionEntry = (ClientExtensionEntry)object;
 
 		long primaryKey = clientExtensionEntry.getPrimaryKey();
 
@@ -1515,8 +1477,7 @@ public class ClientExtensionEntryModelImpl
 			clientExtensionEntryCacheModel.externalReferenceCode = null;
 		}
 
-		clientExtensionEntryCacheModel.clientExtensionEntryId =
-			getClientExtensionEntryId();
+		clientExtensionEntryCacheModel.clientExtensionEntryId = getClientExtensionEntryId();
 
 		clientExtensionEntryCacheModel.companyId = getCompanyId();
 
@@ -1542,8 +1503,7 @@ public class ClientExtensionEntryModelImpl
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
-			clientExtensionEntryCacheModel.modifiedDate =
-				modifiedDate.getTime();
+			clientExtensionEntryCacheModel.modifiedDate = modifiedDate.getTime();
 		}
 		else {
 			clientExtensionEntryCacheModel.modifiedDate = Long.MIN_VALUE;
@@ -1573,18 +1533,15 @@ public class ClientExtensionEntryModelImpl
 			clientExtensionEntryCacheModel.customElementHTMLElementName = null;
 		}
 
-		clientExtensionEntryCacheModel.customElementURLs =
-			getCustomElementURLs();
+		clientExtensionEntryCacheModel.customElementURLs = getCustomElementURLs();
 
-		String customElementURLs =
-			clientExtensionEntryCacheModel.customElementURLs;
+		String customElementURLs = clientExtensionEntryCacheModel.customElementURLs;
 
 		if ((customElementURLs != null) && (customElementURLs.length() == 0)) {
 			clientExtensionEntryCacheModel.customElementURLs = null;
 		}
 
-		clientExtensionEntryCacheModel.customElementUseESM =
-			isCustomElementUseESM();
+		clientExtensionEntryCacheModel.customElementUseESM = isCustomElementUseESM();
 
 		clientExtensionEntryCacheModel.description = getDescription();
 
@@ -1594,11 +1551,9 @@ public class ClientExtensionEntryModelImpl
 			clientExtensionEntryCacheModel.description = null;
 		}
 
-		clientExtensionEntryCacheModel.friendlyURLMapping =
-			getFriendlyURLMapping();
+		clientExtensionEntryCacheModel.friendlyURLMapping = getFriendlyURLMapping();
 
-		String friendlyURLMapping =
-			clientExtensionEntryCacheModel.friendlyURLMapping;
+		String friendlyURLMapping = clientExtensionEntryCacheModel.friendlyURLMapping;
 
 		if ((friendlyURLMapping != null) &&
 			(friendlyURLMapping.length() == 0)) {
@@ -1624,8 +1579,7 @@ public class ClientExtensionEntryModelImpl
 			clientExtensionEntryCacheModel.name = null;
 		}
 
-		clientExtensionEntryCacheModel.portletCategoryName =
-			getPortletCategoryName();
+		clientExtensionEntryCacheModel.portletCategoryName = getPortletCategoryName();
 
 		String portletCategoryName =
 			clientExtensionEntryCacheModel.portletCategoryName;
@@ -1666,8 +1620,7 @@ public class ClientExtensionEntryModelImpl
 
 		clientExtensionEntryCacheModel.statusByUserName = getStatusByUserName();
 
-		String statusByUserName =
-			clientExtensionEntryCacheModel.statusByUserName;
+		String statusByUserName = clientExtensionEntryCacheModel.statusByUserName;
 
 		if ((statusByUserName != null) && (statusByUserName.length() == 0)) {
 			clientExtensionEntryCacheModel.statusByUserName = null;
@@ -1687,8 +1640,8 @@ public class ClientExtensionEntryModelImpl
 
 	@Override
 	public String toString() {
-		Map<String, Function<ClientExtensionEntry, Object>>
-			attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<ClientExtensionEntry, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
 		StringBundler sb = new StringBundler(
 			(5 * attributeGetterFunctions.size()) + 2);
@@ -1706,8 +1659,7 @@ public class ClientExtensionEntryModelImpl
 			sb.append(attributeName);
 			sb.append("\": ");
 
-			Object value = attributeGetterFunction.apply(
-				(ClientExtensionEntry)this);
+			Object value = attributeGetterFunction.apply((ClientExtensionEntry)this);
 
 			if (value == null) {
 				sb.append("null");
@@ -1737,8 +1689,8 @@ public class ClientExtensionEntryModelImpl
 
 	@Override
 	public String toXmlString() {
-		Map<String, Function<ClientExtensionEntry, Object>>
-			attributeGetterFunctions = getAttributeGetterFunctions();
+		Map<String, Function<ClientExtensionEntry, Object>> attributeGetterFunctions =
+			getAttributeGetterFunctions();
 
 		StringBundler sb = new StringBundler(
 			(5 * attributeGetterFunctions.size()) + 4);
@@ -1757,8 +1709,7 @@ public class ClientExtensionEntryModelImpl
 			sb.append("<column><column-name>");
 			sb.append(attributeName);
 			sb.append("</column-name><column-value><![CDATA[");
-			sb.append(
-				attributeGetterFunction.apply((ClientExtensionEntry)this));
+			sb.append(attributeGetterFunction.apply((ClientExtensionEntry)this));
 			sb.append("]]></column-value></column>");
 		}
 
@@ -1838,8 +1789,7 @@ public class ClientExtensionEntryModelImpl
 		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put(
 			"externalReferenceCode", _externalReferenceCode);
-		_columnOriginalValues.put(
-			"clientExtensionEntryId", _clientExtensionEntryId);
+		_columnOriginalValues.put("clientExtensionEntryId", _clientExtensionEntryId);
 		_columnOriginalValues.put("companyId", _companyId);
 		_columnOriginalValues.put("userId", _userId);
 		_columnOriginalValues.put("userName", _userName);

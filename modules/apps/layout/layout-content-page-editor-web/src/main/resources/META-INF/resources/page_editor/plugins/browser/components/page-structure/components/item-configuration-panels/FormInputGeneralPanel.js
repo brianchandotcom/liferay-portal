@@ -19,8 +19,10 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {ALLOWED_INPUT_TYPES} from '../../../../../../app/config/constants/allowedInputTypes';
 import {COMMON_STYLES_ROLES} from '../../../../../../app/config/constants/commonStylesRoles';
 import {EDITABLE_TYPES} from '../../../../../../app/config/constants/editableTypes';
+import {FORM_MAPPING_SOURCES} from '../../../../../../app/config/constants/formMappingSources';
 import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../app/config/constants/freemarkerFragmentEntryProcessor';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../../app/config/constants/layoutDataItemTypes';
+import {LAYOUT_TYPES} from '../../../../../../app/config/constants/layoutTypes';
 import {config} from '../../../../../../app/config/index';
 import {
 	useDispatch,
@@ -66,9 +68,22 @@ export function FormInputGeneralPanel({item}) {
 
 				if (parentItem.type === LAYOUT_DATA_ITEM_TYPES.form) {
 					const classNameId = parentItem.config?.classNameId;
+					const mappingSource = parentItem.config?.mappingSource;
 
 					if (classNameId && classNameId !== '0') {
 						return parentItem.config;
+					}
+					else if (
+						config.layoutType === LAYOUT_TYPES.display &&
+						(!mappingSource ||
+							mappingSource === FORM_MAPPING_SOURCES.displayPage)
+					) {
+						const {selectedMappingTypes} = config;
+
+						return {
+							classNameId: selectedMappingTypes?.type.id,
+							classTypeId: selectedMappingTypes?.subtype.id,
+						};
 					}
 					else {
 						return {};

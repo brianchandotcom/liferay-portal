@@ -26,6 +26,7 @@
 		"@clayui/modal": "^3.45.0",
 		"@clayui/pagination": "^3.43.0",
 		"@clayui/pagination-bar": "^3.43.0",
+		"@clayui/panel": "^3.52.0",
 		"@clayui/sticker": "^3.40.0",
 		"@clayui/table": "^3.40.0",
 		"@clayui/tabs": "^3.40.0",

@@ -1260,6 +1260,17 @@
     "@clayui/shared" "^3.49.0"
     classnames "^2.2.6"
 
+"@clayui/panel@^3.52.0":
+  version "3.52.0"
+  resolved "https://registry.yarnpkg.com/@clayui/panel/-/panel-3.52.0.tgz#206a33c70b124b77e40d27e2e2c3c226473c2c51"
+  integrity sha512-yujK2Q3Ar8gqfTQgknUAPxOsqM7lJc8libFjuPwfyQ9zFMoEFEiAkJcKY4EkH5D9tc8AeyPxtpW43Ut6sr8CMw==
+  dependencies:
+    "@clayui/button" "^3.40.0"
+    "@clayui/icon" "^3.40.0"
+    "@clayui/shared" "^3.52.0"
+    classnames "^2.2.6"
+    react-transition-group "^4.4.1"
+
 "@clayui/provider@^3.40.0":
   version "3.40.0"
   resolved "https://registry.yarnpkg.com/@clayui/provider/-/provider-3.40.0.tgz#a2d68aba76a62856c9bb02ead23037052c29f571"
@@ -1271,6 +1282,18 @@
   version "3.49.0"
   resolved "https://registry.yarnpkg.com/@clayui/shared/-/shared-3.49.0.tgz#eee6d5f0fdb1d815102c9f93cb2e994b59ae1dbe"
   integrity sha512-VcSsqRbzhkFsxmPRLZH2ybGp1LcwbuPh7Ftc4M8lr7/m+var/UC+cWNh64b1PJrRDMGxZAjAt82cCNUdCSi6bg==
+  dependencies:
+    "@clayui/button" "^3.40.0"
+    "@clayui/link" "^3.45.0"
+    "@clayui/provider" "^3.40.0"
+    classnames "^2.2.6"
+    dom-align "^1.12.2"
+    warning "^4.0.3"
+
+"@clayui/shared@^3.52.0":
+  version "3.52.0"
+  resolved "https://registry.yarnpkg.com/@clayui/shared/-/shared-3.52.0.tgz#e36d673e6315d8d8430c4fce18dd0082fc61d410"
+  integrity sha512-4Kb9uERJOUDC8TYxitSQY7sq0SLm3lFQ83ssBg+6yAZiuf4I7DdPqgl/FHliHIO8OUsnziF7ruCCKAwABtx5uQ==
   dependencies:
     "@clayui/button" "^3.40.0"
     "@clayui/link" "^3.45.0"

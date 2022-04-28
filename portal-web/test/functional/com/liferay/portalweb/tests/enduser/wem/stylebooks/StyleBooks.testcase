@@ -622,4 +622,36 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-145292. The user could view new icons on dropdown menu of style book."
+	@priority = "4"
+	test ViewDropdownMenuIconsInStyleBooksAdmin {
+		task ("Given a Style books designer has a new style book") {
+			JSONStylebooks.addStyleBookEntry(
+				groupName = "Test Site Name",
+				styleBookEntryName = "Test Style Book Name");
+		}
+
+		task ("When the Style books designer opens the ellipsis dropdown menu of style book") {
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
+
+			Click.waitForMenuToggleJSClick(
+				key_card = "Test Style Book Name",
+				locator1 = "Card#CARD_ELLIPSIS");
+		}
+
+		task ("Then the Style books designer can see the new icons on the dropdown menu") {
+			DropdownMenuItem.viewIcon(iconList = "pencil,change,upload,copy,trash");
+		}
+
+		task ("When the Style books designer open the dropdown menu of management toolbar after selecting the new style book") {
+			LexiconCard.checkCardCheckbox(card = "Test Style Book Name");
+
+			Click(locator1 = "ManagementBar#MORE_ACTIONS_ELLIPSIS");
+		}
+
+		task ("Then the Style books designer can see the new icons on the dropdown menu") {
+			DropdownMenuItem.viewIcon(iconList = "upload,copy,trash");
+		}
+	}
+
 }

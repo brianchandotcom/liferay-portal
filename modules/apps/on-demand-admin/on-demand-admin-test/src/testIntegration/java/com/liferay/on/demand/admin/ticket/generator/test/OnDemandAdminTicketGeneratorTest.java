@@ -52,7 +52,7 @@ public class OnDemandAdminTicketGeneratorTest {
 		Company company = CompanyTestUtil.addCompany();
 
 		Ticket ticket = _onDemandAdminTicketGenerator.generate(
-			company, TestPropsValues.getUserId());
+			company, TestPropsValues.getUserId(), null);
 
 		Assert.assertEquals(
 			OnDemandAdminConstants.TICKET_TYPE_ON_DEMAND_ADMIN_LOGIN,

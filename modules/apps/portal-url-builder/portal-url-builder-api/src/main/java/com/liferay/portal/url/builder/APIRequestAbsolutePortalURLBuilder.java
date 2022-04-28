@@ -14,18 +14,18 @@
 
 package com.liferay.portal.url.builder;
 
+import com.liferay.portal.url.builder.facet.BuildableAbsolutePortalURLBuilder;
+
 /**
- * Provides a builder that returns a URL.
+ * Builds a URL that connects to a dynamic servlet.
+ *
+ * <p>
+ * API requests are, by definition, not cacheable and should not be stored in
+ * CDNs.
+ * </p>
  *
  * @author Iván Zaera Avellón
  */
-public interface BuildableAbsolutePortalURLBuilder {
-
-	/**
-	 * Returns the URL according to the builder configuration.
-	 *
-	 * @return the URL
-	 */
-	public String build();
-
+public interface APIRequestAbsolutePortalURLBuilder
+	extends BuildableAbsolutePortalURLBuilder {
 }

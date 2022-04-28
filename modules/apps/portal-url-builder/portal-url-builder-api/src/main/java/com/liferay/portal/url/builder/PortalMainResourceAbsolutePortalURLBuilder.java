@@ -14,12 +14,18 @@
 
 package com.liferay.portal.url.builder;
 
+import com.liferay.portal.url.builder.facet.BuildableAbsolutePortalURLBuilder;
+
 /**
- * Builds an image URL. Image resources live in {@code
- * com.liferay.portal.kernel.util.Portal#getPathImage()}.
+ * Builds a legacy portal main resource URL.
+ *
+ * <p>
+ * Main resources live in {@code
+ * com.liferay.portal.kernel.util.Portal#getPathMain()}.
+ * </p>
  *
  * @author Iván Zaera Avellón
  */
-public interface ImageAbsolutePortalURLBuilder
+public interface PortalMainResourceAbsolutePortalURLBuilder
 	extends BuildableAbsolutePortalURLBuilder {
 }

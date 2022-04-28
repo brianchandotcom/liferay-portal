@@ -16,26 +16,25 @@ package com.liferay.portal.url.builder;
 
 import com.liferay.portal.url.builder.facet.BuildableAbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.facet.CDNAwareAbsolutePortalURLBuilder;
+import com.liferay.portal.url.builder.facet.CacheAwareAbsolutePortalURLBuilder;
+import com.liferay.portal.url.builder.facet.PathProxyAwareAbsolutePortalURLBuilder;
 
 /**
- * Builds a portlet dependency URL.
+ * Builds a URL to retrieve a stylesheet living inside a bundle.
  *
  * <p>
- * Portlet dependency resources are retrieved from a configured CSS URN or
- * JS URN if present. (See
- * <code>com.liferay.portal.kernel.util.PropsKeys#PORTLET_DEPENDENCY_CSS_URN</code>
- * and <code>PropsKeys#PORTLET_DEPENDENCY_JAVASCRIPT_URN</code>).
+ * Bundle stylesheets sometimes have additional parameters to account for RTL
+ * support, language, etc. Those are automagically inferred from the request.
  * </p>
  *
- * <p>
- * If neither are present, the resource is retrieved from a CDN host if
- * configured, or Portal otherwise.
- * </p>
- *
- * @author Neil Griffin
+ * @author Iván Zaera Avellón
  */
-public interface PortletDependencyAbsolutePortalURLBuilder
+public interface BundleStylesheetAbsolutePortalURLBuilder
 	extends BuildableAbsolutePortalURLBuilder,
+			CacheAwareAbsolutePortalURLBuilder
+				<BundleStylesheetAbsolutePortalURLBuilder>,
 			CDNAwareAbsolutePortalURLBuilder
-				<PortletDependencyAbsolutePortalURLBuilder> {
+				<BundleStylesheetAbsolutePortalURLBuilder>,
+			PathProxyAwareAbsolutePortalURLBuilder
+				<BundleStylesheetAbsolutePortalURLBuilder> {
 }

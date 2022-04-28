@@ -12,14 +12,27 @@
  * details.
  */
 
-package com.liferay.portal.url.builder;
+package com.liferay.portal.url.builder.facet;
 
 /**
- * Builds a main resource URL. Main resources live in {@code
- * com.liferay.portal.kernel.util.Portal#getPathMain()}.
+ * A URL builder that controls serving by CDN/Portal of underlying resource.
+ *
+ * <p>
+ * By default, CDN aware resources are served from CDN if it is configured.
+ * </p>
  *
  * @author Iván Zaera Avellón
  */
-public interface MainAbsolutePortalURLBuilder
-	extends BuildableAbsolutePortalURLBuilder {
+public interface CDNAwareAbsolutePortalURLBuilder<T> {
+
+	/**
+	 * Returns a version of this URL builder that ignores the CDN part. See
+	 * {@code
+	 * com.liferay.portal.kernel.util.Portal#getCDNHost(
+	 * javax.servlet.http.HttpServletRequest)} for details.
+	 *
+	 * @return a version of this URL builder that ignores the CDN part
+	 */
+	public T ignoreCDNHost();
+
 }

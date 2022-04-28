@@ -12,13 +12,20 @@
  * details.
  */
 
-package com.liferay.portal.url.builder;
+package com.liferay.portal.url.builder.facet;
 
 /**
- * Builds a servlet URL.
+ * Provides a builder that returns a URL.
  *
  * @author Iván Zaera Avellón
  */
-public interface WhiteboardAbsolutePortalURLBuilder
-	extends BuildableAbsolutePortalURLBuilder {
+public interface BuildableAbsolutePortalURLBuilder {
+
+	/**
+	 * Returns the URL according to the builder configuration.
+	 *
+	 * @return the URL
+	 */
+	public String build();
+
 }

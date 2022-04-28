@@ -151,6 +151,9 @@ public class AttachmentObjectFieldBusinessType
 			objectFieldSetting -> properties.put(
 				objectFieldSetting.getName(), objectFieldSetting.getValue()));
 
+		properties.remove("showFilesInDocumentsAndMedia");
+		properties.remove("storageDLFolderPath");
+
 		return properties;
 	}
 

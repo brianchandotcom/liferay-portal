@@ -41,7 +41,17 @@ definition {
 	}
 
 	macro deleteEntry {
-		LexiconCard.delete(card = "${entry}");
+		LexiconCard.clickEllipsisItem(
+			card = "${entry}",
+			item = "Delete");
+
+		AssertTextEquals(
+			locator1 = "Modal#BODY",
+			value1 = "Deleting a fragment is an action impossible to revert. It will be removed from the fragments set and it won't be possible to recover it.");
+
+		Click(
+			key_text = "Delete",
+			locator1 = "Modal#MODAL_FOOTER_BUTTON");
 	}
 
 	macro exportCollection {

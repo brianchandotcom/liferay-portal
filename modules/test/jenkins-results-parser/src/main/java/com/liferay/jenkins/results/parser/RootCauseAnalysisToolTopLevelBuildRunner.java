@@ -74,28 +74,32 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 	protected void prepareInvocationBuildDataList() {
 		PortalTopLevelBuildData portalTopLevelBuildData = getBuildData();
 
+		int retestAmount = _getRetestAmount();
+
 		String downstreamJobName =
 			portalTopLevelBuildData.getJobName() + "-batch";
 
 		for (String portalBranchSHA : _getPortalBranchSHAs()) {
-			BatchBuildData batchBuildData = BuildDataFactory.newBatchBuildData(
-				null, downstreamJobName, null);
+			for (int i = 0; i < retestAmount; i++) {
+				BatchBuildData batchBuildData = BuildDataFactory.newBatchBuildData(
+					null, downstreamJobName, null);
 
-			if (!(batchBuildData instanceof PortalBatchBuildData)) {
-				throw new RuntimeException("Invalid build data");
+				if (!(batchBuildData instanceof PortalBatchBuildData)) {
+					throw new RuntimeException("Invalid build data");
+				}
+
+				PortalBatchBuildData portalBatchBuildData =
+					(PortalBatchBuildData)batchBuildData;
+
+				portalBatchBuildData.setBuildDescription(
+					_getDownstreamBuildDescription(portalBranchSHA));
+
+				portalBatchBuildData.setBatchName(_getBatchName());
+				portalBatchBuildData.setPortalBranchSHA(portalBranchSHA);
+				portalBatchBuildData.setTestList(_getTestList());
+
+				addInvocationBuildData(portalBatchBuildData);
 			}
-
-			PortalBatchBuildData portalBatchBuildData =
-				(PortalBatchBuildData)batchBuildData;
-
-			portalBatchBuildData.setBuildDescription(
-				_getDownstreamBuildDescription(portalBranchSHA));
-
-			portalBatchBuildData.setBatchName(_getBatchName());
-			portalBatchBuildData.setPortalBranchSHA(portalBranchSHA);
-			portalBatchBuildData.setTestList(_getTestList());
-
-			addInvocationBuildData(portalBatchBuildData);
 		}
 	}
 
@@ -253,7 +257,7 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 	private Integer _getMaxRetestAmount() {
 		String maxRetestAmount = getJobPropertyValue("maximum.retest.amount");
 
-		if ((maxRetestAmount == null ) || maxRetestAmount.isEmpty()) {
+		if ((maxRetestAmount == null) || maxRetestAmount.isEmpty()) {
 			return -1;
 		}
 
@@ -352,8 +356,9 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 		return getBuildParameter(_NAME_BUILD_PARAMETER_PORTAL_GITHUB_URL);
 	}
 
-	Private int _getRetestAmount() {
-		String retestAmount = getBuildParameter(_NAME_BUILD_PARAMETER_RETEST_AMOUNT);
+	private int _getRetestAmount() {
+		String retestAmount = getBuildParameter(
+			_NAME_BUILD_PARAMETER_RETEST_AMOUNT);
 
 		if ((retestAmount == null) || retestAmount.isEmpty()) {
 			return 1;
@@ -620,7 +625,7 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 
 		int maxRetestAmount = _getMaxRetestAmount();
 
-		if (retestAmountInt < 0 || retestAmountInt > maxRetestAmount) {
+		if ((retestAmountInt < 0) || (retestAmountInt > maxRetestAmount)) {
 			StringBuilder sb = new StringBuilder();
 
 			sb.append(_NAME_BUILD_PARAMETER_RETEST_AMOUNT);

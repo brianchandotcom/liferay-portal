@@ -57,7 +57,7 @@ definition {
 
 	@description = "COMMERCE-8207. Diagram is rendered on the Product Details page."
 	@priority = "4"
-	test AssertIfDiagramIsRendered {
+	test AssertDiagramFileIsRendered {
 		property portal.acceptance = "false";
 
 		task ("Given a Diagram with the "Type" set to "Default", a png image uploaded as "Diagram File" and 2 pins linked to an SKU within the image") {

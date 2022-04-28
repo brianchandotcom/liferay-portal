@@ -272,7 +272,7 @@ definition {
 
 	@description = "COMMERCE-8284. The Sales Manager can use the localization to change the entry's name based on a language."
 	@priority = "4"
-	test CanUseTheLocalization {
+	test CanUseLocalization {
 		property portal.acceptance = "false";
 
 		task ("Given a new entry into the Terms and Conditions") {

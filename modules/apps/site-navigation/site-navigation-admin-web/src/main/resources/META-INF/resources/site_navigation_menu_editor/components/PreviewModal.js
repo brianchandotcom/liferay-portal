@@ -32,7 +32,7 @@ export function PreviewModal({observer}) {
 	const displayTemplateSelectId = `${portletNamespace}-displayTemplateSelect`;
 
 	const [displayTemplateId, setDisplayTemplateId] = useState(
-		displayTemplateOptions[0].value
+		displayTemplateOptions.find((option) => option.selected).value
 	);
 
 	const [loading, setLoading] = useState(true);

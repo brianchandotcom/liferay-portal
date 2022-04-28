@@ -943,6 +943,53 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-145292. The user could view new icons on dropdown menu of categories admin."
+	@priority = "4"
+	test ViewDropdownMenuIconsInCategoriesAdmin {
+		task ("Given a Categories creator has a category within a vocabulary") {
+			JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("When the Categories creator open the ellipsis dropdown menu of Vocabularies") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Click.waitForMenuToggleJSClick(locator1 = "NavNested#NAV_NESTED_ELLIPSIS");
+		}
+
+		task ("Then the Categories creator can see the new icon on the dropdown menu") {
+			DropdownMenuItem.viewIcon(iconList = "trash");
+		}
+
+		task ("When the Categories creator open the ellipsis dropdown menu of new custom vocabulary") {
+			Click.waitForMenuToggleJSClick(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
+		}
+
+		task ("Then the Categories creator can see the new icons on the dropdown menu") {
+			DropdownMenuItem.viewIcon(iconList = "pencil,password-policies,trash");
+		}
+
+		task ("When the  Categories creator open the ellipsis dropdown menu of custom category") {
+			LexiconEntry.openEntryMenu(rowEntry = "Category Name");
+		}
+
+		task ("Then the Categories creator can see the new icons on the dropdown menu") {
+			DropdownMenuItem.viewIcon(iconList = "pencil,move-folder,password-policies,trash");
+		}
+
+		task ("When the Categories creator open the dropdown menu of management toolbar after selecting the category") {
+			ManagementBar.clickSelectAllCheckbox();
+
+			Click(locator1 = "ManagementBar#MORE_ACTIONS_ELLIPSIS");
+		}
+
+		task ("Then the Categories creator can see the new icons on the dropdown menu") {
+			DropdownMenuItem.viewIcon(iconList = "page,trash");
+		}
+	}
+
 	@description = "View the navigation."
 	@priority = "3"
 	test ViewNavigation {

@@ -15163,7 +15163,7 @@ url=${short.hostname}:8080</echo>
 		<print-file file.name="${osgi.configs.dir}/${osgi.module.configuration.file.names}" />
 	</target>
 
-	<target name="update-service-builder-spring">
+	<target name="update-service-builder-spring-sample-to-ds">
 		<replaceregexp
 			file="${project.dir}/modules/test/spring-service-builder-test-service/service.xml"
 			match="(auto-namespace-tables=&quot;false&quot;)"

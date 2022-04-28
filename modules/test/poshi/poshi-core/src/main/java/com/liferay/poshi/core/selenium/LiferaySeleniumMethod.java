@@ -63,7 +63,7 @@ public class LiferaySeleniumMethod {
 		"assertJavaScript", "executeJavaScript", "getJavaScriptResult",
 		"waitForJavaScript", "waitForJavaScriptNoError", "verifyJavaScript");
 
-	private final Map<String, String[]> _liferaySeleniumMethods =
+	private static final Map<String, String[]> _liferaySeleniumMethods =
 		new HashMap<String, String[]>() {
 			{
 				put(
@@ -87,8 +87,7 @@ public class LiferaySeleniumMethod {
 			}
 		};
 
-	private final Method _method;
-	private final List<String> _singleValueMethodNames = Arrays.asList(
+	private static final List<String> _singleValueMethodNames = Arrays.asList(
 		"assertAlertText", "assertConfirmation", "assertConsoleTextNotPresent",
 		"assertConsoleTextPresent", "assertHTMLSourceTextNotPresent",
 		"assertHTMLSourceTextPresent", "assertLocation", "assertNotLocation",
@@ -97,5 +96,7 @@ public class LiferaySeleniumMethod {
 		"isConsoleTextPresent", "scrollBy", "typeAlert", "waitForConfirmation",
 		"waitForConsoleTextNotPresent", "waitForConsoleTextPresent",
 		"waitForTextNotPresent", "waitForTextPresent");
+
+	private final Method _method;
 
 }

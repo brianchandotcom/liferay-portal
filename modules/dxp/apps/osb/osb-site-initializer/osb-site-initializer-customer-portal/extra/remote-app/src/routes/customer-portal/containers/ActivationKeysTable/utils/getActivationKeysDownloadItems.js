@@ -13,7 +13,7 @@ import ClayIcon from '@clayui/icon';
 import {TOOLTIP_CLASSNAMES_TYPES} from './constants';
 import {
 	downloadAggregatedActivationKey,
-	downloadSingleFileActivationDownloadKey,
+	downloadMultipleActivationKey,
 } from './downloadActivationLicenseKey';
 
 export function getActivationKeysDownloadItems(
@@ -49,14 +49,14 @@ export function getActivationKeysDownloadItems(
 			icon: <ClayIcon className="mr-1 text-neutral-4" symbol="list" />,
 			label: 'Individual Keys (multiple files)',
 			onClick: async () => {
-				const downloadedAggregated = await downloadSingleFileActivationDownloadKey(
+				const downloadedMultiple = await downloadMultipleActivationKey(
 					selectedKeysIDs,
 					licenseKeyDownloadURL,
 					sessionId,
 					projectName
 				);
 
-				return handleAlertStatus(downloadedAggregated);
+				return handleAlertStatus(downloadedMultiple);
 			},
 			tooltip: TOOLTIP_CLASSNAMES_TYPES.dropDownItem,
 		},

@@ -111,7 +111,7 @@ export async function getAggregatedActivationDownloadKey(
 	return response;
 }
 
-export async function getSingleFileActivationDownloadKey(
+export async function getMultipleActivationDownloadKey(
 	selectedKeysIDs,
 	licenseKeyDownloadURL,
 	sessionId

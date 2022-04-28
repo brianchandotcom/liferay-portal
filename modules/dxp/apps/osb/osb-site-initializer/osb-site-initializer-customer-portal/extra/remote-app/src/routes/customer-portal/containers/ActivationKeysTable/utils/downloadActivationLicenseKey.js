@@ -13,7 +13,7 @@ import {
 	getActivationDownloadKey,
 	getAggregatedActivationDownloadKey,
 	getExportedLicenseKeys,
-	getSingleFileActivationDownloadKey,
+	getMultipleActivationDownloadKey,
 } from '../../../../../common/services/liferay/rest/raysource/LicenseKeys';
 import downloadFromBlob from '../../../../../common/utils/downloadFromBlob';
 import {EXTENSION_FILE_TYPES, STATUS_CODE} from '../../../utils/constants';
@@ -108,13 +108,13 @@ export async function downloadAggregatedActivationKey(
 	}
 }
 
-export async function downloadSingleFileActivationDownloadKey(
+export async function downloadMultipleActivationKey(
 	selectedKeysIDs,
 	licenseKeyDownloadURL,
 	sessionId,
 	projectName
 ) {
-	const license = await getSingleFileActivationDownloadKey(
+	const license = await getMultipleActivationDownloadKey(
 		selectedKeysIDs,
 		licenseKeyDownloadURL,
 		sessionId

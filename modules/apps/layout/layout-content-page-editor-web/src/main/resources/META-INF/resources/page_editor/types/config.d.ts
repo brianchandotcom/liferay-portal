@@ -167,6 +167,18 @@ export interface Config {
 	renderFragmentEntryURL: string;
 	restoreCollectionDisplayConfigURL: string;
 	searchContainerPageMaxDelta: number;
+
+	selectedMappingTypes?: {
+		type: {
+			id: string;
+			label: string;
+		};
+		subtype: {
+			id: string;
+			label: string;
+		};
+	};
+
 	selectedSegmentsEntryId: string;
 
 	sidebarPanels: {

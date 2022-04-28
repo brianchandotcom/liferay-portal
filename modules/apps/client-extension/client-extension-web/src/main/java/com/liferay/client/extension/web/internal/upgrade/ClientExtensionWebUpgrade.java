@@ -17,6 +17,7 @@ package com.liferay.client.extension.web.internal.upgrade;
 import com.liferay.client.extension.service.ClientExtensionEntryLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.upgrade.BasePortletIdUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
@@ -32,34 +33,26 @@ public class ClientExtensionWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
-		registry.register(
-			"0.0.0", "1.0.0",
-			new BasePortletIdUpgradeProcess() {
+		UpgradeStep upgradePortletId = new BasePortletIdUpgradeProcess() {
 
-				@Override
-				protected String[][] getRenamePortletIdsArray() {
-					return _getRenamePortletIdsArray(
-						"remote_app_",
+			@Override
+			protected String[][] getRenamePortletIdsArray() {
+				return TransformUtil.transformToArray(
+					_clientExtensionEntryLocalService.getClientExtensionEntries(
+						QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+					clientExtensionEntry -> new String[] {
+						"remote_app_" +
+							clientExtensionEntry.getClientExtensionEntryId(),
 						"com_liferay_remote_app_web_internal_portlet_" +
-							"RemoteAppEntryPortlet_");
-				}
+							"RemoteAppEntryPortlet_" +
+								clientExtensionEntry.getClientExtensionEntryId()
+					},
+					String[].class);
+			}
 
-			});
-	}
+		};
 
-	private String[][] _getRenamePortletIdsArray(
-		String oldPortletIdPrefix, String newPortletIdPrefix) {
-
-		return TransformUtil.transformToArray(
-			_clientExtensionEntryLocalService.getClientExtensionEntries(
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS),
-			clientExtensionEntry -> new String[] {
-				oldPortletIdPrefix +
-					clientExtensionEntry.getClientExtensionEntryId(),
-				newPortletIdPrefix +
-					clientExtensionEntry.getClientExtensionEntryId()
-			},
-			String[].class);
+		registry.register("0.0.0", "1.0.0", upgradePortletId);
 	}
 
 	@Reference

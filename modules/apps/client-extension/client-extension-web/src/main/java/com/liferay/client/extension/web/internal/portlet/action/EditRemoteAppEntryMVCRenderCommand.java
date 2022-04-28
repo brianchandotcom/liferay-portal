@@ -61,16 +61,14 @@ public class EditRemoteAppEntryMVCRenderCommand implements MVCRenderCommand {
 		}
 	}
 
-	private ClientExtensionEntry _getClientExtensionEntry(
-			RenderRequest renderRequest)
+	private ClientExtensionEntry _getClientExtensionEntry(RenderRequest renderRequest)
 		throws PortalException {
 
 		long clientExtensionEntryId = ParamUtil.getLong(
 			renderRequest, "clientExtensionEntryId");
 
 		if (clientExtensionEntryId != 0) {
-			return _clientExtensionEntryService.getClientExtensionEntry(
-				clientExtensionEntryId);
+			return _clientExtensionEntryService.getClientExtensionEntry(clientExtensionEntryId);
 		}
 
 		return null;

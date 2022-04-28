@@ -120,8 +120,7 @@ public class RemoteAppEntryPortlet extends MVCPortlet {
 		PrintWriter printWriter = renderResponse.getWriter();
 
 		printWriter.print(StringPool.LESS_THAN);
-		printWriter.print(
-			_clientExtensionEntry.getCustomElementHTMLElementName());
+		printWriter.print(_clientExtensionEntry.getCustomElementHTMLElementName());
 
 		Properties properties = _getProperties(renderRequest);
 
@@ -158,8 +157,7 @@ public class RemoteAppEntryPortlet extends MVCPortlet {
 		}
 
 		printWriter.print("></");
-		printWriter.print(
-			_clientExtensionEntry.getCustomElementHTMLElementName());
+		printWriter.print(_clientExtensionEntry.getCustomElementHTMLElementName());
 		printWriter.print(StringPool.GREATER_THAN);
 
 		printWriter.flush();
@@ -214,7 +212,7 @@ public class RemoteAppEntryPortlet extends MVCPortlet {
 	private static final Log _log = LogFactoryUtil.getLog(
 		RemoteAppEntryPortlet.class);
 
-	private final ClientExtensionEntry _clientExtensionEntry;
 	private final NPMResolver _npmResolver;
+	private final ClientExtensionEntry _clientExtensionEntry;
 
 }

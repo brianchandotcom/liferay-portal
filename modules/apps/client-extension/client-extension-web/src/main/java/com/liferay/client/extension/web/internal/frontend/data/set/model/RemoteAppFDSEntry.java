@@ -26,19 +26,17 @@ import java.util.Locale;
  */
 public class RemoteAppFDSEntry {
 
-	public RemoteAppFDSEntry(
-		ClientExtensionEntry clientExtensionEntry, Locale locale) {
-
+	public RemoteAppFDSEntry(ClientExtensionEntry clientExtensionEntry, Locale locale) {
 		_clientExtensionEntry = clientExtensionEntry;
 		_locale = locale;
 	}
 
-	public long getClientExtensionEntryId() {
-		return _clientExtensionEntry.getClientExtensionEntryId();
-	}
-
 	public String getName() {
 		return _clientExtensionEntry.getName(_locale);
+	}
+
+	public long getClientExtensionEntryId() {
+		return _clientExtensionEntry.getClientExtensionEntryId();
 	}
 
 	public StatusInfo getStatus() {
@@ -61,7 +59,7 @@ public class RemoteAppFDSEntry {
 		return type;
 	}
 
-	private final ClientExtensionEntry _clientExtensionEntry;
 	private final Locale _locale;
+	private final ClientExtensionEntry _clientExtensionEntry;
 
 }

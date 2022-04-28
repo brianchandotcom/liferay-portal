@@ -40,8 +40,7 @@ public class RemoteAppAdminWebUpgrade implements UpgradeStepRegistrator {
 					_clientExtensionEntryLocalService.getClientExtensionEntries(
 						QueryUtil.ALL_POS, QueryUtil.ALL_POS),
 					clientExtensionEntry -> new String[] {
-						"remote_app_" +
-							clientExtensionEntry.getClientExtensionEntryId(),
+						"remote_app_" + clientExtensionEntry.getClientExtensionEntryId(),
 						"com_liferay_remote_app_web_internal_portlet_" +
 							"RemoteAppEntryPortlet_" +
 								clientExtensionEntry.getClientExtensionEntryId()

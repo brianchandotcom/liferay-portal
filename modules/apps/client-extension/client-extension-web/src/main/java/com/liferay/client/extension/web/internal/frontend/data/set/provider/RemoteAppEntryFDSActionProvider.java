@@ -78,8 +78,7 @@ public class RemoteAppEntryFDSActionProvider implements FDSActionProvider {
 			).setActionName(
 				"/remote_app_admin/delete_remote_app_entry"
 			).setParameter(
-				"clientExtensionEntryId",
-				remoteAppFDSEntry.getClientExtensionEntryId()
+				"clientExtensionEntryId", remoteAppFDSEntry.getClientExtensionEntryId()
 			).buildString());
 
 		dropdownItem.setIcon("times-circle");
@@ -95,8 +94,7 @@ public class RemoteAppEntryFDSActionProvider implements FDSActionProvider {
 		).setMVCRenderCommandName(
 			"/remote_app_admin/edit_remote_app_entry"
 		).setParameter(
-			"clientExtensionEntryId",
-			remoteAppFDSEntry.getClientExtensionEntryId()
+			"clientExtensionEntryId", remoteAppFDSEntry.getClientExtensionEntryId()
 		).buildPortletURL();
 
 		String currentURL = ParamUtil.getString(

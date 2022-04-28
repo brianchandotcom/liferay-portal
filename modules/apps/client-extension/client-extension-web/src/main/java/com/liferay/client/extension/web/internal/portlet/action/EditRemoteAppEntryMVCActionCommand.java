@@ -128,24 +128,21 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private ClientExtensionEntry _getClientExtensionEntry(
-			ActionRequest actionRequest)
+	private ClientExtensionEntry _getClientExtensionEntry(ActionRequest actionRequest)
 		throws PortalException {
 
 		long clientExtensionEntryId = ParamUtil.getLong(
 			actionRequest, "clientExtensionEntryId");
 
 		if (clientExtensionEntryId != 0) {
-			return _clientExtensionEntryService.getClientExtensionEntry(
-				clientExtensionEntryId);
+			return _clientExtensionEntryService.getClientExtensionEntry(clientExtensionEntryId);
 		}
 
 		return null;
 	}
 
 	private void _update(ActionRequest actionRequest) throws PortalException {
-		ClientExtensionEntry clientExtensionEntry = _getClientExtensionEntry(
-			actionRequest);
+		ClientExtensionEntry clientExtensionEntry = _getClientExtensionEntry(actionRequest);
 
 		String description = ParamUtil.getString(actionRequest, "description");
 		String friendlyURLMapping = ParamUtil.getString(
@@ -162,26 +159,24 @@ public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 				clientExtensionEntry.getType(),
 				ClientExtensionConstants.TYPE_CUSTOM_ELEMENT)) {
 
-			_clientExtensionEntryService.
-				updateCustomElementClientExtensionEntry(
-					clientExtensionEntry.getClientExtensionEntryId(),
-					StringUtil.merge(
-						ParamUtil.getStringValues(
-							actionRequest, "customElementCSSURLs"),
-						StringPool.NEW_LINE),
-					ParamUtil.getString(
-						actionRequest, "customElementHTMLElementName"),
-					StringUtil.merge(
-						ParamUtil.getStringValues(
-							actionRequest, "customElementURLs"),
-						StringPool.NEW_LINE),
-					ParamUtil.getBoolean(actionRequest, "customElementUseESM"),
-					description, friendlyURLMapping, nameMap,
-					portletCategoryName, properties, sourceCodeURL);
+			_clientExtensionEntryService.updateCustomElementClientExtensionEntry(
+				clientExtensionEntry.getClientExtensionEntryId(),
+				StringUtil.merge(
+					ParamUtil.getStringValues(
+						actionRequest, "customElementCSSURLs"),
+					StringPool.NEW_LINE),
+				ParamUtil.getString(
+					actionRequest, "customElementHTMLElementName"),
+				StringUtil.merge(
+					ParamUtil.getStringValues(
+						actionRequest, "customElementURLs"),
+					StringPool.NEW_LINE),
+				ParamUtil.getBoolean(actionRequest, "customElementUseESM"),
+				description, friendlyURLMapping, nameMap, portletCategoryName,
+				properties, sourceCodeURL);
 		}
 		else if (Objects.equals(
-					clientExtensionEntry.getType(),
-					ClientExtensionConstants.TYPE_IFRAME)) {
+					clientExtensionEntry.getType(), ClientExtensionConstants.TYPE_IFRAME)) {
 
 			_clientExtensionEntryService.updateIFrameClientExtensionEntry(
 				clientExtensionEntry.getClientExtensionEntryId(), description,

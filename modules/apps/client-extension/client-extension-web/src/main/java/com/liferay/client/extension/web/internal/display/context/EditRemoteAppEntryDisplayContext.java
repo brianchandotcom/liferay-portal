@@ -50,20 +50,10 @@ import javax.servlet.http.HttpServletRequest;
 public class EditRemoteAppEntryDisplayContext {
 
 	public EditRemoteAppEntryDisplayContext(
-		PortletRequest portletRequest,
-		ClientExtensionEntry clientExtensionEntry) {
+		PortletRequest portletRequest, ClientExtensionEntry clientExtensionEntry) {
 
 		_portletRequest = portletRequest;
 		_clientExtensionEntry = clientExtensionEntry;
-	}
-
-	public ClientExtensionEntry getClientExtensionEntry() {
-		return _clientExtensionEntry;
-	}
-
-	public long getClientExtensionEntryId() {
-		return BeanParamUtil.getLong(
-			_clientExtensionEntry, _portletRequest, "clientExtensionEntryId");
 	}
 
 	public String getCmd() {
@@ -138,8 +128,7 @@ public class EditRemoteAppEntryDisplayContext {
 			themeDisplay.getCompanyId(), WebKeys.PORTLET_CATEGORY);
 
 		String portletCategoryName = BeanPropertiesUtil.getString(
-			_clientExtensionEntry, "portletCategoryName",
-			"category.remote-apps");
+			_clientExtensionEntry, "portletCategoryName", "category.remote-apps");
 
 		boolean found = false;
 
@@ -191,6 +180,15 @@ public class EditRemoteAppEntryDisplayContext {
 		return ParamUtil.getString(_portletRequest, "redirect");
 	}
 
+	public ClientExtensionEntry getClientExtensionEntry() {
+		return _clientExtensionEntry;
+	}
+
+	public long getClientExtensionEntryId() {
+		return BeanParamUtil.getLong(
+			_clientExtensionEntry, _portletRequest, "clientExtensionEntryId");
+	}
+
 	public String getTitle() {
 		if (_clientExtensionEntry == null) {
 			return LanguageUtil.get(_getHttpServletRequest(), "new-remote-app");
@@ -203,8 +201,7 @@ public class EditRemoteAppEntryDisplayContext {
 
 	public boolean isCustomElementUseESM() {
 		return BeanParamUtil.getBoolean(
-			_clientExtensionEntry, _getHttpServletRequest(),
-			"customElementUseESM");
+			_clientExtensionEntry, _getHttpServletRequest(), "customElementUseESM");
 	}
 
 	public boolean isEditingClientExtensionEntryType(String type) {
@@ -232,6 +229,35 @@ public class EditRemoteAppEntryDisplayContext {
 		return false;
 	}
 
+	private String _getErrorSection() {
+		if (MultiSessionErrors.contains(
+				_portletRequest,
+				ClientExtensionEntryIFrameURLException.class.getName())) {
+
+			return ClientExtensionConstants.TYPE_IFRAME;
+		}
+
+		if (MultiSessionErrors.contains(
+				_portletRequest,
+				ClientExtensionEntryCustomElementCSSURLsException.class.getName()) ||
+			MultiSessionErrors.contains(
+				_portletRequest,
+				ClientExtensionEntryCustomElementHTMLElementNameException.class.
+					getName()) ||
+			MultiSessionErrors.contains(
+				_portletRequest,
+				ClientExtensionEntryCustomElementURLsException.class.getName())) {
+
+			return ClientExtensionConstants.TYPE_CUSTOM_ELEMENT;
+		}
+
+		return null;
+	}
+
+	private HttpServletRequest _getHttpServletRequest() {
+		return PortalUtil.getHttpServletRequest(_portletRequest);
+	}
+
 	private String _getClientExtensionEntryType() {
 		String errorSection = _getErrorSection();
 
@@ -246,37 +272,6 @@ public class EditRemoteAppEntryDisplayContext {
 		return _clientExtensionEntry.getType();
 	}
 
-	private String _getErrorSection() {
-		if (MultiSessionErrors.contains(
-				_portletRequest,
-				ClientExtensionEntryIFrameURLException.class.getName())) {
-
-			return ClientExtensionConstants.TYPE_IFRAME;
-		}
-
-		if (MultiSessionErrors.contains(
-				_portletRequest,
-				ClientExtensionEntryCustomElementCSSURLsException.class.
-					getName()) ||
-			MultiSessionErrors.contains(
-				_portletRequest,
-				ClientExtensionEntryCustomElementHTMLElementNameException.class.
-					getName()) ||
-			MultiSessionErrors.contains(
-				_portletRequest,
-				ClientExtensionEntryCustomElementURLsException.class.
-					getName())) {
-
-			return ClientExtensionConstants.TYPE_CUSTOM_ELEMENT;
-		}
-
-		return null;
-	}
-
-	private HttpServletRequest _getHttpServletRequest() {
-		return PortalUtil.getHttpServletRequest(_portletRequest);
-	}
-
 	private ThemeDisplay _getThemeDisplay() {
 		HttpServletRequest httpServletRequest = _getHttpServletRequest();
 
@@ -284,7 +279,7 @@ public class EditRemoteAppEntryDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	private final ClientExtensionEntry _clientExtensionEntry;
 	private final PortletRequest _portletRequest;
+	private final ClientExtensionEntry _clientExtensionEntry;
 
 }

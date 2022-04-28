@@ -26,6 +26,7 @@ import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.dynamic.data.mapping.util.DDMBeanTranslator;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
@@ -540,9 +541,11 @@ public class DocumentResourceImpl
 					modelDDMStructure = _ddmStructureService.getStructure(
 						ddmStructure.getStructureId());
 
+				DDMForm ddmForm = modelDDMStructure.getDDMForm();
+
 				com.liferay.dynamic.data.mapping.storage.DDMFormValues
 					ddmFormValues = DDMFormValuesUtil.toDDMFormValues(
-						contentFields, modelDDMStructure.getDDMForm(),
+						ddmForm.getAvailableLocales(), contentFields, ddmForm,
 						_dlAppService, groupId, _journalArticleService,
 						_layoutLocalService,
 						contextAcceptLanguage.getPreferredLocale(),

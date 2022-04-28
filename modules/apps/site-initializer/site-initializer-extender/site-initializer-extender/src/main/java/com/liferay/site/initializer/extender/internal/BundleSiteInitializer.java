@@ -446,10 +446,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 					documentsStringUtilReplaceValues,
 					objectDefinitionIdsStringUtilReplaceValues,
 					serviceContext));
-			_invoke(
-				() -> _addPermissions(
-					objectDefinitionIdsStringUtilReplaceValues,
-					serviceContext));
 
 			// TODO Review order/dependency
 
@@ -468,6 +464,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			TransactionCommitCallbackUtil.registerCallback(
 				() -> {
+					_invoke(
+						() -> _addPermissions(
+							objectDefinitionIdsStringUtilReplaceValues,
+							serviceContext));
 					_invoke(
 						() -> _addWorkflowDefinitions(
 							objectDefinitionResource, serviceContext));
@@ -2980,17 +2980,31 @@ public class BundleSiteInitializer implements SiteInitializer {
 				JSONObject accountBriefsJSONObject =
 					accountBriefsJSONArray.getJSONObject(j);
 
-				userAccountResource.
-					postAccountUserAccountByExternalReferenceCode(
-						accountBriefsJSONObject.getString(
-							"externalReferenceCode"),
-						userAccount);
+				userAccount =
+					userAccountResource.
+						postAccountUserAccountByExternalReferenceCode(
+							accountBriefsJSONObject.getString(
+								"externalReferenceCode"),
+							userAccount);
 
 				j++;
 
 				_associateUserAccounts(
 					accountBriefsJSONObject,
 					jsonObject.getString("emailAddress"), serviceContext);
+
+				if (jsonObject.has("organizationBriefs")) {
+					_associateUserOrganization(
+						jsonObject.getJSONArray("organizationBriefs"),
+						userAccount.getId(), serviceContext);
+				}
+			}
+			else {
+				if (jsonObject.has("organizationBriefs")) {
+					_associateUserOrganization(
+						jsonObject.getJSONArray("organizationBriefs"),
+						existingUserAccount.getUserId(), serviceContext);
+				}
 			}
 
 			for (; j < accountBriefsJSONArray.length(); j++) {
@@ -3207,6 +3221,43 @@ public class BundleSiteInitializer implements SiteInitializer {
 				postAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress(
 					accountBriefsJSONObject.getString("externalReferenceCode"),
 					accountRole.getId(), emailAddress);
+		}
+	}
+
+	private void _associateUserOrganization(
+			JSONArray organizationJSONArray, Long userId,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		if (JSONUtil.isEmpty(organizationJSONArray)) {
+			return;
+		}
+
+		OrganizationResource.Builder organizationResourceBuilder =
+			_organizationResourceFactory.create();
+
+		OrganizationResource organizationResource =
+			organizationResourceBuilder.user(
+				serviceContext.fetchUser()
+			).httpServletRequest(
+				serviceContext.getRequest()
+			).build();
+
+		for (int i = 0; i < organizationJSONArray.length(); i++) {
+			JSONObject jsonObject = organizationJSONArray.getJSONObject(i);
+
+			Page<Organization> organizationsPage =
+				organizationResource.getOrganizationsPage(
+					null, null,
+					organizationResource.toFilter(
+						StringBundler.concat(
+							"name eq '", jsonObject.getString("name"), "'")),
+					null, null);
+
+			Organization organization = organizationsPage.fetchFirstItem();
+
+			_userLocalService.addOrganizationUser(
+				GetterUtil.getLong(organization.getId()), userId);
 		}
 	}
 

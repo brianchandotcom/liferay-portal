@@ -828,6 +828,17 @@ definition {
 		LexiconEntry.viewEntryName(rowEntry = "${dmDocumentTitle}");
 	}
 
+	macro assertDownloadedFileContent {
+		var fileContent = TestCase.getTempFileContent(fileName = "${fileName}");
+
+		if (contains("${fileContent}", "${downloadedContent}")) {
+			echo("The downloaded file content matches the expected file content.");
+		}
+		else {
+			fail("The downloaded file content does not match the expected file content.");
+		}
+	}
+
 	macro assertFileNameFromTempFolder {
 		var tempDir = PropsUtil.get("output.dir.name");
 		var downloadedFile = FileUtil.exists("${tempDir}/${fileName}");

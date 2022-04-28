@@ -2599,7 +2599,7 @@ definition {
 			locator1 = "Portlet#BODY",
 			value1 = "Web Content Content");
 
-		ImportExport.assertDownloadedFileContent(
+		DMDocument.assertDownloadedFileContent(
 			downloadedContent = "This is a *.doc file.",
 			fileName = "Document_1.doc");
 
@@ -2618,7 +2618,7 @@ definition {
 			locator1 = "Portlet#BODY",
 			value1 = "Web Content Content");
 
-		ImportExport.assertDownloadedFileContent(
+		DMDocument.assertDownloadedFileContent(
 			downloadedContent = "This is a test document 2.",
 			fileName = "Document_2.doc");
 	}

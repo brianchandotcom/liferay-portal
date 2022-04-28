@@ -1,6 +1,6 @@
 ## PoshiPauseUsageCheck
 
-Add a comment with explanation on why the pause is there.
+Add a comment with JIRA project on why the pause is there.
 
 ### Example
 

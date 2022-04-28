@@ -170,62 +170,6 @@ public interface ClientExtensionEntryPersistence
 		throws NoSuchClientExtensionEntryException;
 
 	/**
-	 * Returns all the client extension entries that the user has permission to view where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching client extension entries that the user has permission to view
-	 */
-	public java.util.List<ClientExtensionEntry> filterFindByUuid(String uuid);
-
-	/**
-	 * Returns a range of all the client extension entries that the user has permission to view where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ClientExtensionEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of client extension entries
-	 * @param end the upper bound of the range of client extension entries (not inclusive)
-	 * @return the range of matching client extension entries that the user has permission to view
-	 */
-	public java.util.List<ClientExtensionEntry> filterFindByUuid(
-		String uuid, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the client extension entries that the user has permissions to view where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ClientExtensionEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of client extension entries
-	 * @param end the upper bound of the range of client extension entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching client extension entries that the user has permission to view
-	 */
-	public java.util.List<ClientExtensionEntry> filterFindByUuid(
-		String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<ClientExtensionEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the client extension entries before and after the current client extension entry in the ordered set of client extension entries that the user has permission to view where uuid = &#63;.
-	 *
-	 * @param clientExtensionEntryId the primary key of the current client extension entry
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next client extension entry
-	 * @throws NoSuchClientExtensionEntryException if a client extension entry with the primary key could not be found
-	 */
-	public ClientExtensionEntry[] filterFindByUuid_PrevAndNext(
-			long clientExtensionEntryId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<ClientExtensionEntry> orderByComparator)
-		throws NoSuchClientExtensionEntryException;
-
-	/**
 	 * Removes all the client extension entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -239,14 +183,6 @@ public interface ClientExtensionEntryPersistence
 	 * @return the number of matching client extension entries
 	 */
 	public int countByUuid(String uuid);
-
-	/**
-	 * Returns the number of client extension entries that the user has permission to view where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the number of matching client extension entries that the user has permission to view
-	 */
-	public int filterCountByUuid(String uuid);
 
 	/**
 	 * Returns all the client extension entries where uuid = &#63; and companyId = &#63;.
@@ -387,67 +323,6 @@ public interface ClientExtensionEntryPersistence
 		throws NoSuchClientExtensionEntryException;
 
 	/**
-	 * Returns all the client extension entries that the user has permission to view where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching client extension entries that the user has permission to view
-	 */
-	public java.util.List<ClientExtensionEntry> filterFindByUuid_C(
-		String uuid, long companyId);
-
-	/**
-	 * Returns a range of all the client extension entries that the user has permission to view where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ClientExtensionEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of client extension entries
-	 * @param end the upper bound of the range of client extension entries (not inclusive)
-	 * @return the range of matching client extension entries that the user has permission to view
-	 */
-	public java.util.List<ClientExtensionEntry> filterFindByUuid_C(
-		String uuid, long companyId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the client extension entries that the user has permissions to view where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ClientExtensionEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of client extension entries
-	 * @param end the upper bound of the range of client extension entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching client extension entries that the user has permission to view
-	 */
-	public java.util.List<ClientExtensionEntry> filterFindByUuid_C(
-		String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<ClientExtensionEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the client extension entries before and after the current client extension entry in the ordered set of client extension entries that the user has permission to view where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param clientExtensionEntryId the primary key of the current client extension entry
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next client extension entry
-	 * @throws NoSuchClientExtensionEntryException if a client extension entry with the primary key could not be found
-	 */
-	public ClientExtensionEntry[] filterFindByUuid_C_PrevAndNext(
-			long clientExtensionEntryId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<ClientExtensionEntry> orderByComparator)
-		throws NoSuchClientExtensionEntryException;
-
-	/**
 	 * Removes all the client extension entries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -463,15 +338,6 @@ public interface ClientExtensionEntryPersistence
 	 * @return the number of matching client extension entries
 	 */
 	public int countByUuid_C(String uuid, long companyId);
-
-	/**
-	 * Returns the number of client extension entries that the user has permission to view where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the number of matching client extension entries that the user has permission to view
-	 */
-	public int filterCountByUuid_C(String uuid, long companyId);
 
 	/**
 	 * Returns the client extension entry where companyId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchClientExtensionEntryException</code> if it could not be found.

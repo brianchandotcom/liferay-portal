@@ -443,4 +443,71 @@ definition {
 			value1 = "WC WebContent Title");
 	}
 
+	@priority = "3"
+	test ReviewChangesCanProcessWebContentsWithThemeDisplayInTemplate {
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		WebContentStructures.openWebContentStructuresAdmin(siteURLKey = "site-name");
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		WebContentNavigator.openWebContentTemplatesAdmin(siteURLKey = "site-name");
+
+		LexiconEntry.gotoAdd();
+
+		WaitForVisible(locator1 = "Sidebar#PANEL_OPEN");
+
+		Uncheck(
+			checkboxName = "Cacheable",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		WebContentTemplates.inputTemplateAddScreenFields(
+			structureName = "WC Structure Name",
+			templateDescription = "WC Template Description",
+			templateName = "WC Template Name",
+			templateScript = "themeDisplay.getScopeGroupId()");
+
+		DDLDataDefinition.save();
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			structureName = "WC Structure Name",
+			templateName = "WC Template Name",
+			webContentText = "WC Web Content Text",
+			webContentTitle = "WC Web Content Title");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC Web Content Title");
+
+		WebContent.addCP(webContentDescription = "Web Content Description");
+
+		PortletEntry.publish();
+
+		PublicationsNavigator.gotoReviewChanges();
+
+		PublicationsNavigator.gotoViewChangeDetails(
+			changeCategory = "Web Content Article",
+			changeTitle = "WC Web Content Title");
+
+		PublicationsNavigator.gotoNavbar(navBarTitle = "Data");
+
+		AssertConsoleTextNotPresent(value1 = "Error executing FreeMarker template");
+	}
+
 }

@@ -79,6 +79,31 @@ public class InfoFieldSet implements InfoFieldSetEntry {
 		return allInfoFields;
 	}
 
+	public InfoField getInfoField(String name) {
+		for (InfoFieldSetEntry infoFieldSetEntry :
+				_builder._infoFieldSetEntries.values()) {
+
+			InfoField infoField = null;
+
+			if (infoFieldSetEntry instanceof InfoField) {
+				infoField = (InfoField)infoFieldSetEntry;
+			}
+			else if (infoFieldSetEntry instanceof InfoFieldSet) {
+				InfoFieldSet infoFieldSet = (InfoFieldSet)infoFieldSetEntry;
+
+				infoField = infoFieldSet.getInfoField(name);
+			}
+
+			if ((infoField != null) &&
+				Objects.equals(infoField.getUniqueId(), name)) {
+
+				return infoField;
+			}
+		}
+
+		return null;
+	}
+
 	public List<InfoFieldSetEntry> getInfoFieldSetEntries() {
 		return new ArrayList<>(_builder._infoFieldSetEntries.values());
 	}

@@ -44,8 +44,9 @@ public class LiferaySeleniumMethod {
 	}
 
 	public List<String> getParameterNames() {
-		if (_liferaySeleniumMethods.containsKey(getMethodName())) {
-			return Arrays.asList(_liferaySeleniumMethods.get(getMethodName()));
+		if (_liferaySeleniumMethodNames.containsKey(getMethodName())) {
+			return Arrays.asList(
+				_liferaySeleniumMethodNames.get(getMethodName()));
 		}
 
 		int parameterCount = getParameterCount();
@@ -63,7 +64,7 @@ public class LiferaySeleniumMethod {
 		"assertJavaScript", "executeJavaScript", "getJavaScriptResult",
 		"waitForJavaScript", "waitForJavaScriptNoError", "verifyJavaScript");
 
-	private static final Map<String, String[]> _liferaySeleniumMethods =
+	private static final Map<String, String[]> _liferaySeleniumMethodNames =
 		new HashMap<String, String[]>() {
 			{
 				put(

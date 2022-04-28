@@ -1,5 +1,5 @@
 dependencies {
 	testIntegrationCompile project(":apps:portal-configuration:portal-configuration-test-util")
-	testIntegrationCompile project(":apps:client-extension:client-extension-api")
+	testIntegrationCompile project(":apps:remote-app:remote-app-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

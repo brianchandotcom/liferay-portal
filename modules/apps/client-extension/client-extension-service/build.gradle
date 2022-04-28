@@ -1,6 +1,6 @@
 buildService {
-	apiDir = "../client-extension-api/src/main/java"
-	testDir = "../client-extension-test/src/testIntegration/java"
+	apiDir = "../remote-app-api/src/main/java"
+	testDir = "../remote-app-test/src/testIntegration/java"
 }
 
 dependencies {
@@ -10,7 +10,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:portal:portal-aop-api")
-	compileOnly project(":apps:client-extension:client-extension-api")
+	compileOnly project(":apps:remote-app:remote-app-api")
 	compileOnly project(":apps:static:portal:portal-upgrade-api")
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-sql-dsl-api")

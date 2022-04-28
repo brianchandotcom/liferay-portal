@@ -19,14 +19,20 @@ import {rolePermissions} from './RolePermission';
 export class Security {
 	public ready: boolean = false;
 	public cache: Map<string, boolean> = new Map();
+	private skipRoleCheck: boolean;
 	private userAccount: UserAccount;
 
-	constructor(userAccount: UserAccount) {
+	constructor(userAccount: UserAccount, skipRoleCheck: boolean) {
 		this.userAccount = userAccount;
-		this.ready = !!userAccount.id;
+		this.skipRoleCheck = skipRoleCheck;
+		this.ready = skipRoleCheck ? true : !!userAccount.id;
 	}
 
 	checker(entity: Entity, permission: Actions): boolean {
+		if (this.skipRoleCheck) {
+			return true;
+		}
+
 		for (const role of this.userAccount.roleBriefs) {
 			const key = `${entity}/${permission}`;
 			const cachedValue = this.cache.get(key);

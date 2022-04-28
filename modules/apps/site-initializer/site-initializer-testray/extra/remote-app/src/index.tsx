@@ -29,9 +29,15 @@ class Testray extends HTMLElement {
 		if (!this.root) {
 			this.root = createRoot(this);
 
+			const properties = {
+				skipRoleCheck: this.getAttribute('skiprolecheck') === 'true',
+			};
+
 			this.root.render(
 				<ApolloProvider client={apolloClient}>
-					<AccountContextProvider>
+					<AccountContextProvider
+						skipRoleCheck={properties.skipRoleCheck}
+					>
 						<ClayIconProvider>
 							<TestrayRouter />
 						</ClayIconProvider>

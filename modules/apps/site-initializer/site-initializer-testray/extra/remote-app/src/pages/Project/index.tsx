@@ -24,7 +24,7 @@ import ProjectModal from './ProjectModal';
 import useProjectActions from './useProjectActions';
 
 type ProjectsProps = {
-	PageContainer: React.FC;
+	PageContainer?: React.FC;
 	addHeading?: boolean;
 };
 

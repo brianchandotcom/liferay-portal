@@ -27,16 +27,19 @@ type InitialState = {
 
 const initialState: InitialState = {
 	myUserAccount: undefined,
-	security: new Security({
-		additionalName: '',
-		alternateName: '',
-		emailAddress: '',
-		familyName: '',
-		givenName: '',
-		id: 0,
-		image: '',
-		roleBriefs: [],
-	}),
+	security: new Security(
+		{
+			additionalName: '',
+			alternateName: '',
+			emailAddress: '',
+			familyName: '',
+			givenName: '',
+			id: 0,
+			image: '',
+			roleBriefs: [],
+		},
+		true
+	),
 };
 
 export enum AccountTypes {
@@ -44,7 +47,10 @@ export enum AccountTypes {
 }
 
 type AccountPayload = {
-	[AccountTypes.SET_MY_USER_ACCOUNT]: UserAccount;
+	[AccountTypes.SET_MY_USER_ACCOUNT]: {
+		account: UserAccount;
+		skipRoleCheck: boolean;
+	};
 };
 
 type AppActions = ActionMap<AccountPayload>[keyof ActionMap<AccountPayload>];
@@ -56,12 +62,12 @@ export const AccountContext = createContext<
 const reducer = (state: InitialState, action: AppActions) => {
 	switch (action.type) {
 		case AccountTypes.SET_MY_USER_ACCOUNT:
-			const myUserAccount = action.payload;
-			const security = new Security(myUserAccount);
+			const {account, skipRoleCheck} = action.payload;
+			const security = new Security(account, skipRoleCheck);
 
 			return {
 				...state,
-				myUserAccount,
+				myUserAccount: account,
 				security,
 			};
 
@@ -70,7 +76,10 @@ const reducer = (state: InitialState, action: AppActions) => {
 	}
 };
 
-const AccountContextProvider: React.FC = ({children}) => {
+const AccountContextProvider: React.FC<{skipRoleCheck: boolean}> = ({
+	children,
+	skipRoleCheck,
+}) => {
 	const [state, dispatch] = useReducer(reducer, initialState);
 
 	useEffect(() => {
@@ -78,12 +87,15 @@ const AccountContextProvider: React.FC = ({children}) => {
 			.query({query: getLiferayMyUserAccount})
 			.then((response) =>
 				dispatch({
-					payload: response.data.myUserAccount as UserAccount,
+					payload: {
+						account: response.data.myUserAccount as UserAccount,
+						skipRoleCheck,
+					},
 					type: AccountTypes.SET_MY_USER_ACCOUNT,
 				})
 			)
 			.catch(console.error);
-	}, []);
+	}, [skipRoleCheck]);
 
 	return (
 		<AccountContext.Provider value={[state, dispatch]}>

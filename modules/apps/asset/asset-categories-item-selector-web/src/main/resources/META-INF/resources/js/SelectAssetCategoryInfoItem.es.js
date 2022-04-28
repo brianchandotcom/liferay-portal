@@ -90,7 +90,7 @@ function OldAssetCategoryTree({
 	);
 }
 
-const Tree = Liferay.__FF__.enableClayTreeView
+const Tree = Liferay.__FF__['LPS-144630']
 	? AssetCategoryTree
 	: OldAssetCategoryTree;
 

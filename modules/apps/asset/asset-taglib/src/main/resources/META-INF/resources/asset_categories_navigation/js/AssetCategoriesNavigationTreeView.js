@@ -111,6 +111,6 @@ const OldAssetCategoriesNavigationTreeView = ({
 	);
 };
 
-export default Liferay.__FF__.enableClayTreeView
+export default Liferay.__FF__['LPS-144630']
 	? AssetCategoriesNavigationTreeView
 	: OldAssetCategoriesNavigationTreeView;

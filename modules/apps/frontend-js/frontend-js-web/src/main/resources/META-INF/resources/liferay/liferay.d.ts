@@ -13,6 +13,7 @@
  */
 
 declare module Liferay {
+	export const __FF__: any;
 	namespace Address {
 
 		/* Returns a list of countries */
@@ -232,6 +233,7 @@ declare module Liferay {
 	namespace ThemeDisplay {
 		export function getDefaultLanguageId(): string;
 		export function getLanguageId(): Language.Locale;
+		export function getPathThemeImages(): string;
 		export function getSiteGroupId(): number;
 	}
 

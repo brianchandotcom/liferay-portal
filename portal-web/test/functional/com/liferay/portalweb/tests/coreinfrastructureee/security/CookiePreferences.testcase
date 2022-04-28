@@ -4,7 +4,7 @@ definition {
 	property custom.properties = "feature.flag.LPS-142518=true";
 	property portal.release = "quarantine";
 	property portal.upstream = "true";
-	property testray.main.component.name = "Security";
+	property testray.main.component.name = "Cookie Preferences";
 
 	setUp {
 		task ("Setup: Setup portal instance") {

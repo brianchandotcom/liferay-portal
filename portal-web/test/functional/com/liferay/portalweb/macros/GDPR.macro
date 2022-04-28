@@ -275,8 +275,8 @@ definition {
 			rowEntry = "${rowEntry}");
 
 		AssertElementPresent(
-			key_portlet = "${applications}",
-			locator1 = "ProductMenu#PORTLET_ACTIVE");
+			locator1 = "TextInput#TITLE",
+			value1 = "${applicationsTitle}");
 	}
 
 	macro filterByApplications {

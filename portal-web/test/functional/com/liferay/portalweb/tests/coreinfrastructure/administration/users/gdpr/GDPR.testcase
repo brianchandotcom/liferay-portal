@@ -1648,7 +1648,7 @@ definition {
 			totalItemsCount = "1");
 
 		GDPR.editEntryCP(
-			applications = "Documents and Media",
+			applicationsTitle = "DM Document Title",
 			rowEntry = "Document_1.txt");
 
 		DMDocument.editCmd(

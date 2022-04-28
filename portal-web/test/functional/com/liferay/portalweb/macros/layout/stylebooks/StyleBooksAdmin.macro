@@ -8,6 +8,20 @@ definition {
 		Button.clickSave();
 	}
 
+	macro deleteStyleBook {
+		StyleBooksAdmin.gotoStyleBookEllipsisItem(
+			item = "Delete",
+			styleBookName = "${styleBookName}");
+
+		AssertTextEquals(
+			locator1 = "Modal#BODY",
+			value1 = "Deleting a style book is an action impossible to revert. All Style Book tokens and values will be removed and it won't be possible to recover it. Watch out for critical impact on the site's look & feel.");
+
+		Click(
+			key_text = "Delete",
+			locator1 = "Modal#MODAL_FOOTER_BUTTON");
+	}
+
 	macro gotoStyleBook {
 		LexiconCard.clickCardTitle(card = "${styleBookName}");
 	}

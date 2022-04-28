@@ -333,7 +333,17 @@ definition {
 	}
 
 	macro deleteEntry {
-		LexiconList.delete(listEntry = "${assetListTitle}");
+		LexiconList.clickEllipsisItem(
+			item = "Delete",
+			listEntry = "${assetListTitle}");
+
+		AssertTextEquals(
+			locator1 = "Modal#BODY",
+			value1 = "Deleting a collection is an action impossible to revert.");
+
+		Click(
+			key_text = "Delete",
+			locator1 = "Modal#MODAL_FOOTER_BUTTON");
 
 		Alert.viewSuccessMessage();
 	}

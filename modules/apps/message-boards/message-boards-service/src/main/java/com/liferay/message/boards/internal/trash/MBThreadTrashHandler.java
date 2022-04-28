@@ -189,11 +189,6 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
-	public boolean isMovable() {
-		return true;
-	}
-
-	@Override
 	public boolean isMovable(long classPK) throws PortalException {
 		MBThread thread = _mbThreadLocalService.getThread(classPK);
 

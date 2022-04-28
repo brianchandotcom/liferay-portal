@@ -80,11 +80,6 @@ public class MBMessageTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
-	public boolean isDeletable() {
-		return false;
-	}
-
-	@Override
 	public boolean isDeletable(long classPK) throws PortalException {
 		return false;
 	}

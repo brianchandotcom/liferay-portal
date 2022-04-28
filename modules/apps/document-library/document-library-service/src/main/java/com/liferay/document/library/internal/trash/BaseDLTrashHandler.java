@@ -200,11 +200,6 @@ public abstract class BaseDLTrashHandler extends BaseTrashHandler {
 		return trashedModels;
 	}
 
-	@Override
-	public boolean isMovable() {
-		return true;
-	}
-
 	protected DLFolder fetchDLFolder(long classPK) throws PortalException {
 		Repository repository = RepositoryProviderUtil.getFolderRepository(
 			classPK);

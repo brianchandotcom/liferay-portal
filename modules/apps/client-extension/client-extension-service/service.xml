@@ -2,12 +2,12 @@
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.4.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_4_0.dtd">
 
 <service-builder auto-import-default-references="false" auto-namespace-tables="false" dependency-injector="ds" mvcc-enabled="true" package-path="com.liferay.client.extension" short-no-such-exception-enabled="false">
-	<namespace>ClientExtension</namespace>
-	<entity external-reference-code="true" local-service="true" name="ClientExtensionEntry" remote-service="true" trash-enabled="false" uuid="true">
+	<namespace>RemoteApp</namespace>
+	<entity db-name="RemoteAppEntry" external-reference-code="true" local-service="true" name="RemoteAppEntry" remote-service="true" trash-enabled="false" uuid="true">
 
 		<!-- PK fields -->
 
-		<column container-model="true" name="clientExtensionEntryId" primary="true" type="long" />
+		<column container-model="true" db-name="remoteAppEntryId" name="remoteAppEntryId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 
@@ -38,11 +38,11 @@
 		<column name="statusDate" type="Date" />
 	</entity>
 	<exceptions>
-		<exception>DuplicateClientExtensionEntryExternalReferenceCode</exception>
-		<exception>ClientExtensionEntryCustomElementCSSURLs</exception>
-		<exception>ClientExtensionEntryCustomElementHTMLElementName</exception>
-		<exception>ClientExtensionEntryCustomElementURLs</exception>
-		<exception>ClientExtensionEntryFriendlyURLMapping</exception>
-		<exception>ClientExtensionEntryIFrameURL</exception>
+		<exception>DuplicateRemoteAppEntryExternalReferenceCode</exception>
+		<exception>RemoteAppEntryCustomElementCSSURLs</exception>
+		<exception>RemoteAppEntryCustomElementHTMLElementName</exception>
+		<exception>RemoteAppEntryCustomElementURLs</exception>
+		<exception>RemoteAppEntryFriendlyURLMapping</exception>
+		<exception>RemoteAppEntryIFrameURL</exception>
 	</exceptions>
 </service-builder>

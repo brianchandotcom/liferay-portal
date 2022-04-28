@@ -1223,8 +1223,8 @@ definition {
 		Refresh();
 
 		AssertVisible(
-			key_productQuantity = "Test Notification Template",
-			locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_QUANTITY");
+			key_entryName = "Test Notification Template",
+			locator1 = "CommerceNavigation#ENTRY_NAME");
 
 		Click(
 			key_text = "Test Notification Template",
@@ -1254,8 +1254,8 @@ definition {
 		Refresh();
 
 		AssertVisible(
-			key_productQuantity = "Notification Template",
-			locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_QUANTITY");
+			key_entryName = "Notification Template",
+			locator1 = "CommerceNavigation#ENTRY_NAME");
 	}
 
 	@description = "This is a test for COMMERCE-6106. EditPaypalPaymentMethod"

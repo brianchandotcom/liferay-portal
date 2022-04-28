@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Portal Tools Service Builder Spring Sample API
+Bundle-SymbolicName: com.liferay.portal.tools.service.builder.spring.sample.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.portal.tools.service.builder.spring.sample.exception,\
+	com.liferay.portal.tools.service.builder.spring.sample.model,\
+	com.liferay.portal.tools.service.builder.spring.sample.service,\
+	com.liferay.portal.tools.service.builder.spring.sample.service.persistence

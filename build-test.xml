@@ -15165,19 +15165,19 @@ url=${short.hostname}:8080</echo>
 
 	<target name="update-service-builder-spring-sample-to-ds">
 		<replaceregexp
-			file="${project.dir}/modules/test/spring-service-builder-test-service/service.xml"
+			file="${project.dir}/modules/util/portal-tools-service-builder-spring-sample-service/service.xml"
 			match="(auto-namespace-tables=&quot;false&quot;)"
 			replace="\1 dependency-injector=&quot;ds&quot;"
 		/>
 
 		<replaceregexp
-			file="${project.dir}/modules/test/spring-service-builder-test-service/bnd.bnd"
+			file="${project.dir}/modules/util/portal-tools-service-builder-spring-sample-service/bnd.bnd"
 			match="(Liferay-Service: true)"
 			replace="\1${line.separator}-dsannotations-options: inherit;"
 		/>
 
 		<replaceregexp
-			file="${project.dir}/modules/test/spring-service-builder-test-service/build.gradle"
+			file="${project.dir}/modules/util/portal-tools-service-builder-spring-sample-service/build.gradle"
 			match="(compileOnly project\(&quot;:apps:portal:portal-spring-extender-api&quot;\))"
 			replace="\1${line.separator}compileOnly project(&quot;:apps:portal:portal-aop-api&quot;)"
 		/>

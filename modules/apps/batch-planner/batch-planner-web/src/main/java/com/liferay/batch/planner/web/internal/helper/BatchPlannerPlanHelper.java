@@ -105,12 +105,18 @@ public class BatchPlannerPlanHelper {
 			portletRequest, "taskItemDelegateName");
 		boolean template = ParamUtil.getBoolean(portletRequest, "template");
 
-		File file = new File(new URI(importFileURI));
+		int size = 0;
+
+		if (!template) {
+			File file = new File(new URI(importFileURI));
+
+			size = (int)file.length();
+		}
 
 		BatchPlannerPlan batchPlannerPlan =
 			_batchPlannerPlanService.addBatchPlannerPlan(
 				false, externalType, importFileURI, internalClassName, name,
-				(int)file.length(), taskItemDelegateName, template);
+				size, taskItemDelegateName, template);
 
 		_batchPlannerPolicyService.addBatchPlannerPolicy(
 			batchPlannerPlan.getBatchPlannerPlanId(), "containsHeaders",

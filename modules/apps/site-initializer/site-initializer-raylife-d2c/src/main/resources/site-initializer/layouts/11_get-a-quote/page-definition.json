@@ -120,7 +120,7 @@
 													"portletSetupPortletDecoratorId": "barebone",
 													"properties": "route:get-a-quote\ngoogleplaceskey:"
 												},
-												"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:RAYLIFE$]"
+												"widgetName": "[$REMOTE_APP_ENTRY_ID:RAYLIFE$]"
 											}
 										},
 										"type": "Widget"

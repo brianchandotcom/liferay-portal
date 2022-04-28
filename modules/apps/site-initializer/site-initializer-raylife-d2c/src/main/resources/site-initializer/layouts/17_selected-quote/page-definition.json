@@ -42,7 +42,7 @@
 									"portletSetupPortletDecoratorId": "barebone",
 									"properties": "applicationsfoldername:Quote Applications\nroute:selected-quote"
 								},
-								"widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:RAYLIFE$]"
+								"widgetName": "[$REMOTE_APP_ENTRY_ID:RAYLIFE$]"
 							}
 						},
 						"type": "Widget"

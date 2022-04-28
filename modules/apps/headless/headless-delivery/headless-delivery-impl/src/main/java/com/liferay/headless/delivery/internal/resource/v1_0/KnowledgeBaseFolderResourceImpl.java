@@ -292,7 +292,7 @@ public class KnowledgeBaseFolderResourceImpl
 						ActionKeys.UPDATE, kbFolder, "putKnowledgeBaseFolder")
 				).build();
 				creator = CreatorUtil.toCreator(
-					_portal, Optional.ofNullable(contextUriInfo),
+					_portal, Optional.of(contextUriInfo),
 					_userLocalService.fetchUser(kbFolder.getUserId()));
 				customFields = CustomFieldsUtil.toCustomFields(
 					contextAcceptLanguage.isAcceptAllLanguages(),

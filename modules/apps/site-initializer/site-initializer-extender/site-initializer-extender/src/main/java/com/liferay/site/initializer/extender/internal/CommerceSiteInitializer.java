@@ -21,7 +21,6 @@ import com.liferay.commerce.initializer.util.CPDefinitionsImporter;
 import com.liferay.commerce.initializer.util.CPOptionsImporter;
 import com.liferay.commerce.initializer.util.CPSpecificationOptionsImporter;
 import com.liferay.commerce.initializer.util.CommerceInventoryWarehousesImporter;
-import com.liferay.commerce.initializer.util.PortletSettingsImporter;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.notification.service.CommerceNotificationTemplateLocalService;
@@ -55,7 +54,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -119,29 +117,6 @@ public class CommerceSiteInitializer {
 			bundle, channel.getId(), documentsStringUtilReplaceValues,
 			objectDefinitionIdsStringUtilReplaceValues, serviceContext,
 			servletContext);
-	}
-
-	public void addPortletSettings(
-			ClassLoader classLoader, ServiceContext serviceContext,
-			ServletContext servletContext)
-		throws Exception {
-
-		String resourcePath = "/site-initializer/portlet-settings.json";
-
-		String json = SiteInitializerUtil.read(resourcePath, servletContext);
-
-		if (json == null) {
-			return;
-		}
-
-		Group group = _groupLocalService.getCompanyGroup(
-			serviceContext.getCompanyId());
-
-		_portletSettingsImporter.importPortletSettings(
-			JSONFactoryUtil.createJSONArray(json), classLoader,
-			"/site-initializer/portlet-settings/",
-			serviceContext.getScopeGroupId(), group.getGroupId(),
-			serviceContext.getUserId());
 	}
 
 	public long getCommerceChannelGroupId(long siteGroupId) {
@@ -780,9 +755,6 @@ public class CommerceSiteInitializer {
 	private CPSpecificationOptionsImporter _cpSpecificationOptionsImporter;
 
 	@Reference
-	private GroupLocalService _groupLocalService;
-
-	@Reference
 	private JSONFactory _jsonFactory;
 
 	@Reference
@@ -790,9 +762,6 @@ public class CommerceSiteInitializer {
 
 	@Reference
 	private OptionResource.Factory _optionResourceFactory;
-
-	@Reference
-	private PortletSettingsImporter _portletSettingsImporter;
 
 	@Reference
 	private ProductOptionResource.Factory _productOptionResourceFactory;

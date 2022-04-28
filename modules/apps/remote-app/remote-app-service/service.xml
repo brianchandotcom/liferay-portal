@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.4.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_4_0.dtd">
+
+<service-builder auto-import-default-references="false" auto-namespace-tables="false" dependency-injector="ds" mvcc-enabled="true" package-path="com.liferay.remote.app" short-no-such-exception-enabled="false">
+	<namespace>RemoteApp</namespace>
+	<entity external-reference-code="true" local-service="true" name="RemoteAppEntry" remote-service="true" trash-enabled="false" uuid="true">
+
+		<!-- PK fields -->
+
+		<column container-model="true" name="remoteAppEntryId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" uad-anonymize-field-name="fullName" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="customElementCSSURLs" type="String" />
+		<column name="customElementHTMLElementName" type="String" />
+		<column name="customElementURLs" type="String" />
+		<column name="customElementUseESM" type="boolean" />
+		<column name="description" type="String" />
+		<column name="friendlyURLMapping" type="String" />
+		<column method-name="IFrameURL" name="iFrameURL" type="String" />
+		<column name="instanceable" type="boolean" />
+		<column localized="true" name="name" type="String" />
+		<column name="portletCategoryName" type="String" />
+		<column name="properties" type="String" />
+		<column name="sourceCodeURL" type="String" />
+		<column name="type" type="String" />
+		<column name="status" type="int" />
+		<column name="statusByUserId" type="long" />
+		<column name="statusByUserName" type="String" />
+		<column name="statusDate" type="Date" />
+	</entity>
+	<exceptions>
+		<exception>DuplicateRemoteAppEntryExternalReferenceCode</exception>
+		<exception>RemoteAppEntryCustomElementCSSURLs</exception>
+		<exception>RemoteAppEntryCustomElementHTMLElementName</exception>
+		<exception>RemoteAppEntryCustomElementURLs</exception>
+		<exception>RemoteAppEntryFriendlyURLMapping</exception>
+		<exception>RemoteAppEntryIFrameURL</exception>
+	</exceptions>
+</service-builder>

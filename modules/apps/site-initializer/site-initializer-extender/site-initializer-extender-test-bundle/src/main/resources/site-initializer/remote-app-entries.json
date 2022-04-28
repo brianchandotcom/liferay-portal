@@ -1,6 +1,5 @@
 [
 	{
-		"clientExtensionEntryKey": "TEST_REMOTE_APP",
 		"cssURLs": [
 			"[$DOCUMENT_URL:/site-initializer/documents/company/main-test.css$]"
 		],
@@ -15,6 +14,7 @@
 			"en_US": "Test Remote App"
 		},
 		"portletCategoryName": "category.remote-apps",
-		"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_[$CLIENT_EXTENSION_ENTRY_ID:TEST_REMOTE_APP]"
+		"remoteAppEntryKey": "TEST_REMOTE_APP",
+		"widgetName": "com_liferay_remote_app_web_internal_portlet_RemoteAppEntryPortlet_[$REMOTE_APP_ENTRY_ID:TEST_REMOTE_APP]"
 	}
 ]

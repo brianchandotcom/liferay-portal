@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Client Extension Web
-Bundle-SymbolicName: com.liferay.client.extension.web
-Bundle-Version: 1.0.0
-Web-ContextPath: /client-extension-web

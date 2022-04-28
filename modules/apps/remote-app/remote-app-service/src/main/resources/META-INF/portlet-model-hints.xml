@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.remote.app.model.RemoteAppEntry">
+		<field name="mvccVersion" type="long" />
+		<field name="uuid" type="String" />
+		<field name="externalReferenceCode" type="String" />
+		<field name="remoteAppEntryId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="customElementCSSURLs" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="customElementHTMLElementName" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="customElementURLs" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="customElementUseESM" type="boolean" />
+		<field name="description" type="String">
+			<hint-collection name="CLOB" />
+			<sanitize content-type="text/html" modes="ALL" />
+		</field>
+		<field name="friendlyURLMapping" type="String" />
+		<field name="iFrameURL" type="String">
+			<hint-collection name="URL" />
+			<hint name="method-name">IFrameURL</hint>
+		</field>
+		<field name="instanceable" type="boolean" />
+		<field localized="true" name="name" type="String" />
+		<field name="portletCategoryName" type="String" />
+		<field name="properties" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="sourceCodeURL" type="String">
+			<hint-collection name="URL" />
+		</field>
+		<field name="type" type="String" />
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
+	</model>
+</model-hints>

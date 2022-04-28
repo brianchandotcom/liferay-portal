@@ -20,7 +20,7 @@ definition {
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ACCESS_IN_CONTROL_PANEL",
-			resourceName = "com_liferay_client_extension_web_internal_portlet_ClientExtensionAdminPortlet",
+			resourceName = "com_liferay_remote_app_admin_web_portlet_RemoteAppAdminPortlet",
 			roleTitle = "New Regular Role");
 
 		Permissions.definePermissionViaJSONAPI(

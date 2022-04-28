@@ -4,7 +4,7 @@ definition {
 		var currentURL = Navigator.getCurrentURL();
 
 		var findWhereIdBegins = StringUtil.extractLast("${currentURL}", "remoteAppEntryId=");
-		var remoteAppEntryIdValue = StringUtil.extractFirst("${findWhereIdBegins}", "&_com_liferay_client_extension_web_internal_portlet_ClientExtensionAdminPortlet_redirect");
+		var remoteAppEntryIdValue = StringUtil.extractFirst("${findWhereIdBegins}", "&_com_liferay_remote_app_admin_web_portlet_RemoteAppAdminPortlet_redirect");
 
 		JSONRemoteApp.deleteIFrameRemoteAppEntry(remoteAppEntryId = "${remoteAppEntryIdValue}");
 	}
@@ -214,7 +214,7 @@ definition {
 		var currentURL = Navigator.getCurrentURL();
 
 		var findWhereIdBegins = StringUtil.extractLast("${currentURL}", "remoteAppEntryId=");
-		var remoteAppEntryIdValue = StringUtil.extractFirst("${findWhereIdBegins}", "&_com_liferay_client_extension_web_internal_portlet_ClientExtensionAdminPortlet_redirect");
+		var remoteAppEntryIdValue = StringUtil.extractFirst("${findWhereIdBegins}", "&_com_liferay_remote_app_admin_web_portlet_RemoteAppAdminPortlet_redirect");
 
 		return "${remoteAppEntryIdValue}";
 	}
@@ -222,7 +222,7 @@ definition {
 	macro getRemoteAppEntryName {
 		WaitForSPARefresh();
 
-		var remoteAppEntryValue = selenium.getAttribute("//input[contains(@id , '_com_liferay_client_extension_web_internal_portlet_ClientExtensionAdminPortlet_name')]@value");
+		var remoteAppEntryValue = selenium.getAttribute("//input[contains(@id , '_com_liferay_remote_app_admin_web_portlet_RemoteAppAdminPortlet_name')]@value");
 
 		return "${remoteAppEntryValue}";
 	}

@@ -17,7 +17,7 @@ package com.liferay.site.initializer.extender.internal;
 import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
-import com.liferay.client.extension.service.ClientExtensionEntryLocalService;
+import com.liferay.commerce.initializer.util.PortletSettingsImporter;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
@@ -34,8 +34,6 @@ import com.liferay.headless.admin.user.resource.v1_0.UserAccountResource;
 import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowDefinitionResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentFolderResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
-import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseArticleResource;
-import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseFolderResource;
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentFolderResource;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
@@ -61,6 +59,7 @@ import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService;
+import com.liferay.remote.app.service.RemoteAppEntryLocalService;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
@@ -86,7 +85,6 @@ public class SiteInitializerExtension {
 		AccountRoleResource.Factory accountRoleResourceFactory,
 		AssetCategoryLocalService assetCategoryLocalService,
 		AssetListEntryLocalService assetListEntryLocalService, Bundle bundle,
-		ClientExtensionEntryLocalService clientExtensionEntryLocalService,
 		DDMStructureLocalService ddmStructureLocalService,
 		DDMTemplateLocalService ddmTemplateLocalService,
 		DefaultDDMStructureHelper defaultDDMStructureHelper,
@@ -96,11 +94,7 @@ public class SiteInitializerExtension {
 		FragmentsImporter fragmentsImporter,
 		GroupLocalService groupLocalService,
 		JournalArticleLocalService journalArticleLocalService,
-		JSONFactory jsonFactory,
-		KnowledgeBaseArticleResource.Factory
-			knowledgeBaseArticleResourceFactory,
-		KnowledgeBaseFolderResource.Factory knowledgeBaseFolderResourceFactory,
-		LayoutCopyHelper layoutCopyHelper,
+		JSONFactory jsonFactory, LayoutCopyHelper layoutCopyHelper,
 		LayoutLocalService layoutLocalService,
 		LayoutPageTemplateEntryLocalService layoutPageTemplateEntryLocalService,
 		LayoutPageTemplatesImporter layoutPageTemplatesImporter,
@@ -117,6 +111,8 @@ public class SiteInitializerExtension {
 		ObjectRelationshipResource.Factory objectRelationshipResourceFactory,
 		ObjectEntryLocalService objectEntryLocalService,
 		OrganizationResource.Factory organizationResourceFactory, Portal portal,
+		PortletSettingsImporter portletSettingsImporter,
+		RemoteAppEntryLocalService remoteAppEntryLocalService,
 		ResourceActionLocalService resourceActionLocalService,
 		ResourcePermissionLocalService resourcePermissionLocalService,
 		RoleLocalService roleLocalService,
@@ -143,21 +139,19 @@ public class SiteInitializerExtension {
 		BundleSiteInitializer bundleSiteInitializer = new BundleSiteInitializer(
 			accountResourceFactory, accountRoleLocalService,
 			accountRoleResourceFactory, assetCategoryLocalService,
-			assetListEntryLocalService, bundle,
-			clientExtensionEntryLocalService, ddmStructureLocalService,
+			assetListEntryLocalService, bundle, ddmStructureLocalService,
 			ddmTemplateLocalService, defaultDDMStructureHelper, dlURLHelper,
 			documentFolderResourceFactory, documentResourceFactory,
 			fragmentsImporter, groupLocalService, journalArticleLocalService,
-			jsonFactory, knowledgeBaseArticleResourceFactory,
-			knowledgeBaseFolderResourceFactory, layoutCopyHelper,
-			layoutLocalService, layoutPageTemplateEntryLocalService,
-			layoutPageTemplatesImporter,
+			jsonFactory, layoutCopyHelper, layoutLocalService,
+			layoutPageTemplateEntryLocalService, layoutPageTemplatesImporter,
 			layoutPageTemplateStructureLocalService, layoutSetLocalService,
 			listTypeDefinitionResource, listTypeDefinitionResourceFactory,
 			listTypeEntryResource, listTypeEntryResourceFactory,
 			objectActionLocalService, objectDefinitionLocalService,
 			objectDefinitionResourceFactory, objectRelationshipResourceFactory,
 			objectEntryLocalService, organizationResourceFactory, portal,
+			portletSettingsImporter, remoteAppEntryLocalService,
 			resourceActionLocalService, resourcePermissionLocalService,
 			roleLocalService, sapEntryLocalService, settingsFactory,
 			siteNavigationMenuItemLocalService,

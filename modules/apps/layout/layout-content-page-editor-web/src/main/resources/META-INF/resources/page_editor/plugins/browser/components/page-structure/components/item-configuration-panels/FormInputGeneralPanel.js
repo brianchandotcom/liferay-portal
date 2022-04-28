@@ -175,7 +175,10 @@ export function FormInputGeneralPanel({item}) {
 	return (
 		<>
 			<div className="mb-3">
-				<Collapse label="form-input-options" open>
+				<Collapse
+					label={Liferay.Language.get('form-input-options')}
+					open
+				>
 					{fields ? (
 						<MappingFieldSelector
 							fieldType={EDITABLE_TYPES.text}

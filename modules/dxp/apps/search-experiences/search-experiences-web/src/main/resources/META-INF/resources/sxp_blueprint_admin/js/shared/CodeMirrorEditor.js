@@ -249,7 +249,9 @@ function getCodeMirrorHints(cm, autocompleteSchema, availableLanguages) {
 				// The `#` character is used to pass the `type` to the `render`
 				// method.
 
-				displayText: `${item.name}#${item.type}`,
+				displayText: `${item.name}#${
+					Array.isArray(item.type) ? item.type.join('|') : item.type
+				}`,
 				render: (element, cm, data) => {
 					const [propertyName, propertyType] = data.displayText.split(
 						'#'

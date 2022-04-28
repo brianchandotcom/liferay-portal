@@ -182,10 +182,9 @@ public class RecentGroupManager {
 			portletRequest.setAttribute(
 				SiteWebKeys.GROUP_URL_PROVIDER_CONTROL_PANEL, Boolean.TRUE);
 
-			String groupURL = _groupURLProvider.getGroupURL(
-				group, portletRequest);
+			if (Validator.isNull(
+					_groupURLProvider.getGroupURL(group, portletRequest))) {
 
-			if (Validator.isNull(groupURL)) {
 				continue;
 			}
 

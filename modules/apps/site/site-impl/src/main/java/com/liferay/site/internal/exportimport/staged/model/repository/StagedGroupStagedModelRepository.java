@@ -88,19 +88,16 @@ public class StagedGroupStagedModelRepository
 
 		List<StagedModel> childrenStagedModels = new ArrayList<>();
 
-		LayoutSet layoutSet = null;
-
 		Group group = stagedGroup.getGroup();
 
 		long groupId = group.getGroupId();
 
 		try {
-			layoutSet = _layoutSetLocalService.getLayoutSet(
-				groupId, portletDataContext.isPrivateLayout());
-
 			childrenStagedModels.add(
 				ModelAdapterUtil.adapt(
-					layoutSet, LayoutSet.class, StagedLayoutSet.class));
+					_layoutSetLocalService.getLayoutSet(
+						groupId, portletDataContext.isPrivateLayout()),
+					LayoutSet.class, StagedLayoutSet.class));
 		}
 		catch (PortalException portalException) {
 			_log.error(
@@ -189,9 +186,9 @@ public class StagedGroupStagedModelRepository
 	public StagedGroup fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
-		Group group = _groupLocalService.fetchGroup(groupId);
-
-		return ModelAdapterUtil.adapt(group, Group.class, StagedGroup.class);
+		return ModelAdapterUtil.adapt(
+			_groupLocalService.fetchGroup(groupId), Group.class,
+			StagedGroup.class);
 	}
 
 	@Override

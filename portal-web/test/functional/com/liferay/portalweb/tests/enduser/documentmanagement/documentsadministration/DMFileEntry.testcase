@@ -2559,7 +2559,7 @@ definition {
 
 	@description = "This is a test for LPS-145630. It checks that the DOCs linked in web articles content can be updated."
 	@priority = "4"
-	test DucumentLinkedInWCCanBeUpdated {
+	test DocumentLinkedInWCCanBeUpdated {
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentTitle = "Document_1.doc",
 			groupName = "Guest",

@@ -9,6 +9,7 @@ dependencies {
 	testIntegrationCompile project(":apps:portal:portal-instance-lifecycle-api")
 	testIntegrationCompile project(":apps:segments:segments-api")
 	testIntegrationCompile project(":apps:segments:segments-test-util")
+	testIntegrationCompile project(":apps:staging:staging-api")
 	testIntegrationCompile project(":dxp:apps:search-experiences:search-experiences-api")
 	testIntegrationCompile project(":dxp:apps:search-experiences:search-experiences-rest-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")

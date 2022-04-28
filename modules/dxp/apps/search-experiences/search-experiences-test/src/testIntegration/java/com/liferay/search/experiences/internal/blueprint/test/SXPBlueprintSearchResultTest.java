@@ -29,6 +29,8 @@ import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalServiceUtil;
 import com.liferay.expando.kernel.service.ExpandoTableLocalServiceUtil;
+import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationParameterMapFactoryUtil;
+import com.liferay.exportimport.kernel.service.StagingLocalServiceUtil;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalFolderServiceUtil;
@@ -89,6 +91,8 @@ import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.test.util.SegmentsTestUtil;
 
+import java.io.Serializable;
+
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
@@ -98,6 +102,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
@@ -1713,6 +1718,80 @@ public class SXPBlueprintSearchResultTest {
 	}
 
 	@Test
+	public void testStagingAware() throws Exception {
+		_updateConfigurationJSON(
+			"queryConfiguration", JSONUtil.put("applyIndexerClauses", false));
+
+		_enableLocalStaging();
+
+		Group stagingGroup = _group.getStagingGroup();
+
+		_journalArticles.add(
+			JournalTestUtil.addArticle(
+				stagingGroup.getGroupId(), 0,
+				PortalUtil.getClassNameId(JournalArticle.class),
+				HashMapBuilder.put(
+					LocaleUtil.US, "Staged"
+				).build(),
+				null,
+				HashMapBuilder.put(
+					LocaleUtil.US, StringPool.BLANK
+				).build(),
+				LocaleUtil.getSiteDefault(), false, true, _serviceContext));
+
+		_updateElementInstancesJSON(
+			new Object[] {
+				HashMapBuilder.<String, Object>put(
+					"boost", 1
+				).put(
+					"fields", new String[] {"title_${context.language_id}^2"}
+				).put(
+					"fuzziness", "AUTO"
+				).put(
+					"keywords", "${keywords}"
+				).put(
+					"minimum_should_match", 0
+				).put(
+					"operator", "or"
+				).put(
+					"slop", 0
+				).put(
+					"type", "best_fields"
+				).build()
+			},
+			new String[] {"Text Match Over Multiple Fields"});
+
+		_keywords = "Staged";
+
+		_assertSearch("[Staged]");
+
+		_updateElementInstancesJSON(
+			new Object[] {
+				HashMapBuilder.<String, Object>put(
+					"boost", 1
+				).put(
+					"fields", new String[] {"title_${context.language_id}^2"}
+				).put(
+					"fuzziness", "AUTO"
+				).put(
+					"keywords", "${keywords}"
+				).put(
+					"minimum_should_match", 0
+				).put(
+					"operator", "or"
+				).put(
+					"slop", 0
+				).put(
+					"type", "best_fields"
+				).build(),
+				null
+			},
+			new String[] {"Text Match Over Multiple Fields", "Staging Aware"});
+
+		_assertSearch("[]");
+	}
+
+	@Test
 	public void testTextMatchOverMultipleFields_bestFields() throws Exception {
 		_setUpJournalArticles(
 			new String[] {
@@ -2125,6 +2204,20 @@ public class SXPBlueprintSearchResultTest {
 				searchResponse.getRequestString(),
 				searchResponse.getDocumentsStream(), "title_en_US", expected);
 		}
+	}
+
+	private void _enableLocalStaging() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		Map<String, Serializable> attributes = serviceContext.getAttributes();
+
+		attributes.putAll(
+			ExportImportConfigurationParameterMapFactoryUtil.
+				buildParameterMap());
+
+		StagingLocalServiceUtil.enableLocalStaging(
+			TestPropsValues.getUserId(), _group, false, false, serviceContext);
 	}
 
 	private ConfigurationTemporarySwapper _getConfigurationTemporarySwapper(

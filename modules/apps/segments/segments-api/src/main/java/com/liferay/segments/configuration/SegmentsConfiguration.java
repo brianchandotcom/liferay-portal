@@ -44,7 +44,7 @@ public interface SegmentsConfiguration {
 	@Meta.AD(
 		deflt = "120",
 		description = "segments-preview-check-interval-description",
-		name = "segments-preview-check-interval", required = false
+		name = "segments-preview-check-interval-name", required = false
 	)
 	public int segmentsPreviewCheckInterval();
 

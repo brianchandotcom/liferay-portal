@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.client.extension.web.internal.frontend.data.set.view.table;
+package com.liferay.remote.app.web.internal.frontend.data.set.view.table;
 
 import com.liferay.frontend.data.set.view.FDSView;
 import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
@@ -20,7 +20,7 @@ import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaField;
-import com.liferay.client.extension.web.internal.constants.RemoteAppAdminFDSNames;
+import com.liferay.remote.app.web.internal.constants.RemoteAppAdminFDSNames;
 
 import java.util.Locale;
 

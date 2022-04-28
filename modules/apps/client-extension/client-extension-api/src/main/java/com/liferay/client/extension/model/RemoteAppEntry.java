@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.client.extension.model;
+package com.liferay.remote.app.model;
 
 import com.liferay.portal.kernel.annotation.ImplementationClassName;
 import com.liferay.portal.kernel.model.PersistedModel;
@@ -27,14 +27,14 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see RemoteAppEntryModel
  * @generated
  */
-@ImplementationClassName("com.liferay.client.extension.model.impl.RemoteAppEntryImpl")
+@ImplementationClassName("com.liferay.remote.app.model.impl.RemoteAppEntryImpl")
 @ProviderType
 public interface RemoteAppEntry extends PersistedModel, RemoteAppEntryModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to <code>com.liferay.client.extension.model.impl.RemoteAppEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to <code>com.liferay.remote.app.model.impl.RemoteAppEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public static final Accessor<RemoteAppEntry, Long>
 		REMOTE_APP_ENTRY_ID_ACCESSOR = new Accessor<RemoteAppEntry, Long>() {

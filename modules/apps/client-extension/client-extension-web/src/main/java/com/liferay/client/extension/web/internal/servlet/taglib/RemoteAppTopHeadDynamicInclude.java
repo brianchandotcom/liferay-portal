@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.client.extension.web.internal.servlet.taglib;
+package com.liferay.remote.app.web.internal.servlet.taglib;
 
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;

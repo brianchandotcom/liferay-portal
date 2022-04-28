@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.client.extension.internal.security.permission.resource;
+package com.liferay.remote.app.internal.security.permission.resource;
 
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.client.extension.constants.RemoteAppConstants;
+import com.liferay.remote.app.constants.RemoteAppConstants;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.client.extension.uad.anonymizer;
+package com.liferay.remote.app.uad.anonymizer;
 
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.client.extension.service.impl;
+package com.liferay.remote.app.service.impl;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
@@ -47,16 +47,16 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
-import com.liferay.client.extension.constants.RemoteAppConstants;
-import com.liferay.client.extension.deployer.RemoteAppEntryDeployer;
-import com.liferay.client.extension.exception.DuplicateRemoteAppEntryExternalReferenceCodeException;
-import com.liferay.client.extension.exception.RemoteAppEntryCustomElementCSSURLsException;
-import com.liferay.client.extension.exception.RemoteAppEntryCustomElementHTMLElementNameException;
-import com.liferay.client.extension.exception.RemoteAppEntryCustomElementURLsException;
-import com.liferay.client.extension.exception.RemoteAppEntryFriendlyURLMappingException;
-import com.liferay.client.extension.exception.RemoteAppEntryIFrameURLException;
-import com.liferay.client.extension.model.RemoteAppEntry;
-import com.liferay.client.extension.service.base.RemoteAppEntryLocalServiceBaseImpl;
+import com.liferay.remote.app.constants.RemoteAppConstants;
+import com.liferay.remote.app.deployer.RemoteAppEntryDeployer;
+import com.liferay.remote.app.exception.DuplicateRemoteAppEntryExternalReferenceCodeException;
+import com.liferay.remote.app.exception.RemoteAppEntryCustomElementCSSURLsException;
+import com.liferay.remote.app.exception.RemoteAppEntryCustomElementHTMLElementNameException;
+import com.liferay.remote.app.exception.RemoteAppEntryCustomElementURLsException;
+import com.liferay.remote.app.exception.RemoteAppEntryFriendlyURLMappingException;
+import com.liferay.remote.app.exception.RemoteAppEntryIFrameURLException;
+import com.liferay.remote.app.model.RemoteAppEntry;
+import com.liferay.remote.app.service.base.RemoteAppEntryLocalServiceBaseImpl;
 
 import java.io.Serializable;
 
@@ -82,7 +82,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  */
 @Component(
-	property = "model.class.name=com.liferay.client.extension.model.RemoteAppEntry",
+	property = "model.class.name=com.liferay.remote.app.model.RemoteAppEntry",
 	service = AopService.class
 )
 public class RemoteAppEntryLocalServiceImpl

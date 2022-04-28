@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.client.extension.uad.exporter;
+package com.liferay.remote.app.uad.exporter;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.client.extension.model.RemoteAppEntry;
-import com.liferay.client.extension.service.RemoteAppEntryLocalService;
-import com.liferay.client.extension.uad.constants.RemoteAppUADConstants;
+import com.liferay.remote.app.model.RemoteAppEntry;
+import com.liferay.remote.app.service.RemoteAppEntryLocalService;
+import com.liferay.remote.app.uad.constants.RemoteAppUADConstants;
 import com.liferay.user.associated.data.exporter.DynamicQueryUADExporter;
 
 import org.osgi.service.component.annotations.Reference;
@@ -58,7 +58,7 @@ public abstract class BaseRemoteAppEntryUADExporter
 		StringBundler sb = new StringBundler(19);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.client.extension.model.RemoteAppEntry");
+		sb.append("com.liferay.remote.app.model.RemoteAppEntry");
 		sb.append("</model-name>");
 
 		sb.append(

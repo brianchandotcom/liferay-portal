@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.client.extension.model.impl;
+package com.liferay.remote.app.model.impl;
 
 /**
  * @author Brian Wing Shun Chan

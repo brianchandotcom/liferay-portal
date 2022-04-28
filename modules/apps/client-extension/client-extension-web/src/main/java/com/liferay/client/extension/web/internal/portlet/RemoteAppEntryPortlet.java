@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.client.extension.web.internal.portlet;
+package com.liferay.remote.app.web.internal.portlet;
 
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.petra.string.CharPool;
@@ -30,8 +30,8 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.client.extension.constants.RemoteAppConstants;
-import com.liferay.client.extension.model.RemoteAppEntry;
+import com.liferay.remote.app.constants.RemoteAppConstants;
+import com.liferay.remote.app.model.RemoteAppEntry;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

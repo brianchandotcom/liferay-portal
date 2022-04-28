@@ -25,7 +25,7 @@ const ERROR_CODES = {
 	/* eslint-enable sort-keys */
 };
 
-export const REMOTE_APP_PROTOCOL = 'com.liferay.client.extension.protocol';
+export const REMOTE_APP_PROTOCOL = 'com.liferay.remote.app.protocol';
 
 export const VERSION = 0;
 

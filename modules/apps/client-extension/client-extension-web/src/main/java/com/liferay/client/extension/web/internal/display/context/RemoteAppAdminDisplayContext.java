@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.client.extension.web.internal.display.context;
+package com.liferay.remote.app.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;

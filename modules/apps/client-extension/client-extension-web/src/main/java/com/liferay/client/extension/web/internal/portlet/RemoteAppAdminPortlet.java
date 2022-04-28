@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.client.extension.web.internal.portlet;
+package com.liferay.remote.app.web.internal.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.client.extension.web.internal.constants.RemoteAppAdminPortletKeys;
+import com.liferay.remote.app.web.internal.constants.RemoteAppAdminPortletKeys;
 
 import javax.portlet.Portlet;
 

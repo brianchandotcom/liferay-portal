@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.client.extension.uad.exporter;
+package com.liferay.remote.app.uad.exporter;
 
 import com.liferay.user.associated.data.exporter.UADExporter;
 

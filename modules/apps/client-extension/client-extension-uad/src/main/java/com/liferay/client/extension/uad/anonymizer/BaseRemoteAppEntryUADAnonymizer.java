@@ -12,16 +12,16 @@
  * details.
  */
 
-package com.liferay.client.extension.uad.anonymizer;
+package com.liferay.remote.app.uad.anonymizer;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.client.extension.model.RemoteAppEntry;
-import com.liferay.client.extension.service.RemoteAppEntryLocalService;
-import com.liferay.client.extension.uad.constants.RemoteAppUADConstants;
+import com.liferay.remote.app.model.RemoteAppEntry;
+import com.liferay.remote.app.service.RemoteAppEntryLocalService;
+import com.liferay.remote.app.uad.constants.RemoteAppUADConstants;
 import com.liferay.user.associated.data.anonymizer.DynamicQueryUADAnonymizer;
 
 import org.osgi.service.component.annotations.Reference;

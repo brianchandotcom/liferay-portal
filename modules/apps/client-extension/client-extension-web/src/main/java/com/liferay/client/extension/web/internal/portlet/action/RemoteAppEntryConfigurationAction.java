@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.client.extension.web.internal.portlet.action;
+package com.liferay.remote.app.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 

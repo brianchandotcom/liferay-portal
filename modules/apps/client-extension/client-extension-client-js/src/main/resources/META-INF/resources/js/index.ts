@@ -113,7 +113,7 @@ const ERROR_CODES = {
 	/* eslint-enable sort-keys */
 };
 
-const REMOTE_APP_PROTOCOL = 'com.liferay.client.extension.protocol';
+const REMOTE_APP_PROTOCOL = 'com.liferay.remote.app.protocol';
 
 const VERSION = 0;
 

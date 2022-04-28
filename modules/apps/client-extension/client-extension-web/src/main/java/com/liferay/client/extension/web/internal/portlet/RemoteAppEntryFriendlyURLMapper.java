@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.client.extension.web.internal.portlet;
+package com.liferay.remote.app.web.internal.portlet;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.Route;
 import com.liferay.portal.kernel.portlet.Router;
 import com.liferay.portlet.RouterImpl;
-import com.liferay.client.extension.model.RemoteAppEntry;
+import com.liferay.remote.app.model.RemoteAppEntry;
 
 import java.util.HashMap;
 import java.util.Map;

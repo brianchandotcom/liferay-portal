@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.client.extension.internal.upgrade.v2_1_0;
+package com.liferay.remote.app.internal.upgrade.v2_1_0;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.client.extension.model.RemoteAppEntry;
+import com.liferay.remote.app.model.RemoteAppEntry;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

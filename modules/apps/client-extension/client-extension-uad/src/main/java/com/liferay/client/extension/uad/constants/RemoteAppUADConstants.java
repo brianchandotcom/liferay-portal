@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.client.extension.uad.constants;
+package com.liferay.remote.app.uad.constants;
 
 /**
  * @author Brian Wing Shun Chan

@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.client.extension.service.persistence.impl;
+package com.liferay.remote.app.service.persistence.impl;
 
 import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.client.extension.model.RemoteAppEntryTable;
-import com.liferay.client.extension.model.impl.RemoteAppEntryImpl;
-import com.liferay.client.extension.model.impl.RemoteAppEntryModelImpl;
+import com.liferay.remote.app.model.RemoteAppEntryTable;
+import com.liferay.remote.app.model.impl.RemoteAppEntryImpl;
+import com.liferay.remote.app.model.impl.RemoteAppEntryModelImpl;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

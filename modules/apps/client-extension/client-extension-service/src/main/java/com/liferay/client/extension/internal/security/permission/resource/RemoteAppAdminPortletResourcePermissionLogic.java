@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.client.extension.internal.security.permission.resource;
+package com.liferay.remote.app.internal.security.permission.resource;
 
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;

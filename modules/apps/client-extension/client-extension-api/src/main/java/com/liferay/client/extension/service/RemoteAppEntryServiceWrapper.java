@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.client.extension.service;
+package com.liferay.remote.app.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
@@ -37,7 +37,7 @@ public class RemoteAppEntryServiceWrapper
 	}
 
 	@Override
-	public com.liferay.client.extension.model.RemoteAppEntry
+	public com.liferay.remote.app.model.RemoteAppEntry
 			addCustomElementRemoteAppEntry(
 				String externalReferenceCode, String customElementCSSURLs,
 				String customElementHTMLElementName, String customElementURLs,
@@ -56,7 +56,7 @@ public class RemoteAppEntryServiceWrapper
 	}
 
 	@Override
-	public com.liferay.client.extension.model.RemoteAppEntry addIFrameRemoteAppEntry(
+	public com.liferay.remote.app.model.RemoteAppEntry addIFrameRemoteAppEntry(
 			String description, String friendlyURLMapping, String iFrameURL,
 			boolean instanceable,
 			java.util.Map<java.util.Locale, String> nameMap,
@@ -69,7 +69,7 @@ public class RemoteAppEntryServiceWrapper
 	}
 
 	@Override
-	public com.liferay.client.extension.model.RemoteAppEntry deleteRemoteAppEntry(
+	public com.liferay.remote.app.model.RemoteAppEntry deleteRemoteAppEntry(
 			long remoteAppEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -87,7 +87,7 @@ public class RemoteAppEntryServiceWrapper
 	}
 
 	@Override
-	public com.liferay.client.extension.model.RemoteAppEntry getRemoteAppEntry(
+	public com.liferay.remote.app.model.RemoteAppEntry getRemoteAppEntry(
 			long remoteAppEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -95,7 +95,7 @@ public class RemoteAppEntryServiceWrapper
 	}
 
 	@Override
-	public com.liferay.client.extension.model.RemoteAppEntry
+	public com.liferay.remote.app.model.RemoteAppEntry
 			updateCustomElementRemoteAppEntry(
 				long remoteAppEntryId, String customElementCSSURLs,
 				String customElementHTMLElementName, String customElementURLs,
@@ -114,7 +114,7 @@ public class RemoteAppEntryServiceWrapper
 	}
 
 	@Override
-	public com.liferay.client.extension.model.RemoteAppEntry
+	public com.liferay.remote.app.model.RemoteAppEntry
 			updateIFrameRemoteAppEntry(
 				long remoteAppEntryId, String description,
 				String friendlyURLMapping, String iFrameURL,

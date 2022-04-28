@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.client.extension.internal.search;
+package com.liferay.remote.app.internal.search;
 
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -30,8 +30,8 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.LocalizationUtil;
-import com.liferay.client.extension.model.RemoteAppEntry;
-import com.liferay.client.extension.service.RemoteAppEntryLocalService;
+import com.liferay.remote.app.model.RemoteAppEntry;
+import com.liferay.remote.app.service.RemoteAppEntryLocalService;
 
 import java.util.Locale;
 

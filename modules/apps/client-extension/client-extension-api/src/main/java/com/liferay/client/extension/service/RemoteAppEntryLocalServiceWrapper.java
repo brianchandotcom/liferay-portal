@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.client.extension.service;
+package com.liferay.remote.app.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
@@ -38,7 +38,7 @@ public class RemoteAppEntryLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.client.extension.model.RemoteAppEntry
+	public com.liferay.remote.app.model.RemoteAppEntry
 			addCustomElementRemoteAppEntry(
 				String externalReferenceCode, long userId,
 				String customElementCSSURLs,
@@ -58,7 +58,7 @@ public class RemoteAppEntryLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.client.extension.model.RemoteAppEntry addIFrameRemoteAppEntry(
+	public com.liferay.remote.app.model.RemoteAppEntry addIFrameRemoteAppEntry(
 			long userId, String description, String friendlyURLMapping,
 			String iFrameURL, boolean instanceable,
 			java.util.Map<java.util.Locale, String> nameMap,
@@ -71,7 +71,7 @@ public class RemoteAppEntryLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.client.extension.model.RemoteAppEntry
+	public com.liferay.remote.app.model.RemoteAppEntry
 			addOrUpdateCustomElementRemoteAppEntry(
 				String externalReferenceCode, long userId,
 				String customElementCSSURLs,
@@ -103,8 +103,8 @@ public class RemoteAppEntryLocalServiceWrapper
 	 * @return the remote app entry that was added
 	 */
 	@Override
-	public com.liferay.client.extension.model.RemoteAppEntry addRemoteAppEntry(
-		com.liferay.client.extension.model.RemoteAppEntry remoteAppEntry) {
+	public com.liferay.remote.app.model.RemoteAppEntry addRemoteAppEntry(
+		com.liferay.remote.app.model.RemoteAppEntry remoteAppEntry) {
 
 		return _remoteAppEntryLocalService.addRemoteAppEntry(remoteAppEntry);
 	}
@@ -127,7 +127,7 @@ public class RemoteAppEntryLocalServiceWrapper
 	 * @return the new remote app entry
 	 */
 	@Override
-	public com.liferay.client.extension.model.RemoteAppEntry createRemoteAppEntry(
+	public com.liferay.remote.app.model.RemoteAppEntry createRemoteAppEntry(
 		long remoteAppEntryId) {
 
 		return _remoteAppEntryLocalService.createRemoteAppEntry(
@@ -157,7 +157,7 @@ public class RemoteAppEntryLocalServiceWrapper
 	 * @throws PortalException if a remote app entry with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.client.extension.model.RemoteAppEntry deleteRemoteAppEntry(
+	public com.liferay.remote.app.model.RemoteAppEntry deleteRemoteAppEntry(
 			long remoteAppEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -177,8 +177,8 @@ public class RemoteAppEntryLocalServiceWrapper
 	 * @throws PortalException
 	 */
 	@Override
-	public com.liferay.client.extension.model.RemoteAppEntry deleteRemoteAppEntry(
-			com.liferay.client.extension.model.RemoteAppEntry remoteAppEntry)
+	public com.liferay.remote.app.model.RemoteAppEntry deleteRemoteAppEntry(
+			com.liferay.remote.app.model.RemoteAppEntry remoteAppEntry)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _remoteAppEntryLocalService.deleteRemoteAppEntry(remoteAppEntry);
@@ -186,7 +186,7 @@ public class RemoteAppEntryLocalServiceWrapper
 
 	@Override
 	public void deployRemoteAppEntry(
-		com.liferay.client.extension.model.RemoteAppEntry remoteAppEntry) {
+		com.liferay.remote.app.model.RemoteAppEntry remoteAppEntry) {
 
 		_remoteAppEntryLocalService.deployRemoteAppEntry(remoteAppEntry);
 	}
@@ -225,7 +225,7 @@ public class RemoteAppEntryLocalServiceWrapper
 	 * Performs a dynamic query on the database and returns a range of the matching rows.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.client.extension.model.impl.RemoteAppEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.remote.app.model.impl.RemoteAppEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param dynamicQuery the dynamic query
@@ -246,7 +246,7 @@ public class RemoteAppEntryLocalServiceWrapper
 	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.client.extension.model.impl.RemoteAppEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.remote.app.model.impl.RemoteAppEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param dynamicQuery the dynamic query
@@ -295,7 +295,7 @@ public class RemoteAppEntryLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.client.extension.model.RemoteAppEntry fetchRemoteAppEntry(
+	public com.liferay.remote.app.model.RemoteAppEntry fetchRemoteAppEntry(
 		long remoteAppEntryId) {
 
 		return _remoteAppEntryLocalService.fetchRemoteAppEntry(
@@ -310,7 +310,7 @@ public class RemoteAppEntryLocalServiceWrapper
 	 * @return the matching remote app entry, or <code>null</code> if a matching remote app entry could not be found
 	 */
 	@Override
-	public com.liferay.client.extension.model.RemoteAppEntry
+	public com.liferay.remote.app.model.RemoteAppEntry
 		fetchRemoteAppEntryByExternalReferenceCode(
 			long companyId, String externalReferenceCode) {
 
@@ -324,7 +324,7 @@ public class RemoteAppEntryLocalServiceWrapper
 	 */
 	@Deprecated
 	@Override
-	public com.liferay.client.extension.model.RemoteAppEntry
+	public com.liferay.remote.app.model.RemoteAppEntry
 		fetchRemoteAppEntryByReferenceCode(
 			long companyId, String externalReferenceCode) {
 
@@ -340,7 +340,7 @@ public class RemoteAppEntryLocalServiceWrapper
 	 * @return the matching remote app entry, or <code>null</code> if a matching remote app entry could not be found
 	 */
 	@Override
-	public com.liferay.client.extension.model.RemoteAppEntry
+	public com.liferay.remote.app.model.RemoteAppEntry
 		fetchRemoteAppEntryByUuidAndCompanyId(String uuid, long companyId) {
 
 		return _remoteAppEntryLocalService.
@@ -396,7 +396,7 @@ public class RemoteAppEntryLocalServiceWrapper
 	 * Returns a range of all the remote app entries.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.client.extension.model.impl.RemoteAppEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.remote.app.model.impl.RemoteAppEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of remote app entries
@@ -404,7 +404,7 @@ public class RemoteAppEntryLocalServiceWrapper
 	 * @return the range of remote app entries
 	 */
 	@Override
-	public java.util.List<com.liferay.client.extension.model.RemoteAppEntry>
+	public java.util.List<com.liferay.remote.app.model.RemoteAppEntry>
 		getRemoteAppEntries(int start, int end) {
 
 		return _remoteAppEntryLocalService.getRemoteAppEntries(start, end);
@@ -428,7 +428,7 @@ public class RemoteAppEntryLocalServiceWrapper
 	 * @throws PortalException if a remote app entry with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.client.extension.model.RemoteAppEntry getRemoteAppEntry(
+	public com.liferay.remote.app.model.RemoteAppEntry getRemoteAppEntry(
 			long remoteAppEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -444,7 +444,7 @@ public class RemoteAppEntryLocalServiceWrapper
 	 * @throws PortalException if a matching remote app entry could not be found
 	 */
 	@Override
-	public com.liferay.client.extension.model.RemoteAppEntry
+	public com.liferay.remote.app.model.RemoteAppEntry
 			getRemoteAppEntryByExternalReferenceCode(
 				long companyId, String externalReferenceCode)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -463,7 +463,7 @@ public class RemoteAppEntryLocalServiceWrapper
 	 * @throws PortalException if a matching remote app entry could not be found
 	 */
 	@Override
-	public com.liferay.client.extension.model.RemoteAppEntry
+	public com.liferay.remote.app.model.RemoteAppEntry
 			getRemoteAppEntryByUuidAndCompanyId(String uuid, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -472,7 +472,7 @@ public class RemoteAppEntryLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.client.extension.model.RemoteAppEntry> search(
+	public java.util.List<com.liferay.remote.app.model.RemoteAppEntry> search(
 			long companyId, String keywords, int start, int end,
 			com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -490,13 +490,13 @@ public class RemoteAppEntryLocalServiceWrapper
 
 	@Override
 	public void undeployRemoteAppEntry(
-		com.liferay.client.extension.model.RemoteAppEntry remoteAppEntry) {
+		com.liferay.remote.app.model.RemoteAppEntry remoteAppEntry) {
 
 		_remoteAppEntryLocalService.undeployRemoteAppEntry(remoteAppEntry);
 	}
 
 	@Override
-	public com.liferay.client.extension.model.RemoteAppEntry
+	public com.liferay.remote.app.model.RemoteAppEntry
 			updateCustomElementRemoteAppEntry(
 				long userId, long remoteAppEntryId, String customElementCSSURLs,
 				String customElementHTMLElementName, String customElementURLs,
@@ -515,7 +515,7 @@ public class RemoteAppEntryLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.client.extension.model.RemoteAppEntry
+	public com.liferay.remote.app.model.RemoteAppEntry
 			updateIFrameRemoteAppEntry(
 				long userId, long remoteAppEntryId, String description,
 				String friendlyURLMapping, String iFrameURL,
@@ -540,14 +540,14 @@ public class RemoteAppEntryLocalServiceWrapper
 	 * @return the remote app entry that was updated
 	 */
 	@Override
-	public com.liferay.client.extension.model.RemoteAppEntry updateRemoteAppEntry(
-		com.liferay.client.extension.model.RemoteAppEntry remoteAppEntry) {
+	public com.liferay.remote.app.model.RemoteAppEntry updateRemoteAppEntry(
+		com.liferay.remote.app.model.RemoteAppEntry remoteAppEntry) {
 
 		return _remoteAppEntryLocalService.updateRemoteAppEntry(remoteAppEntry);
 	}
 
 	@Override
-	public com.liferay.client.extension.model.RemoteAppEntry updateStatus(
+	public com.liferay.remote.app.model.RemoteAppEntry updateStatus(
 			long userId, long remoteAppEntryId, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

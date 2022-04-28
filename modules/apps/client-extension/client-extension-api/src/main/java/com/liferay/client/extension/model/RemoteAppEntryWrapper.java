@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.client.extension.model;
+package com.liferay.remote.app.model;
 
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.model.ModelWrapper;

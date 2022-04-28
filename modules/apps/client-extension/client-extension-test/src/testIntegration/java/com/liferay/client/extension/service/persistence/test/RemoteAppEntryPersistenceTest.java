@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.client.extension.service.persistence.test;
+package com.liferay.remote.app.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -33,11 +33,11 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
-import com.liferay.client.extension.exception.NoSuchRemoteAppEntryException;
-import com.liferay.client.extension.model.RemoteAppEntry;
-import com.liferay.client.extension.service.RemoteAppEntryLocalServiceUtil;
-import com.liferay.client.extension.service.persistence.RemoteAppEntryPersistence;
-import com.liferay.client.extension.service.persistence.RemoteAppEntryUtil;
+import com.liferay.remote.app.exception.NoSuchRemoteAppEntryException;
+import com.liferay.remote.app.model.RemoteAppEntry;
+import com.liferay.remote.app.service.RemoteAppEntryLocalServiceUtil;
+import com.liferay.remote.app.service.persistence.RemoteAppEntryPersistence;
+import com.liferay.remote.app.service.persistence.RemoteAppEntryUtil;
 
 import java.io.Serializable;
 
@@ -68,7 +68,7 @@ public class RemoteAppEntryPersistenceTest {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(
-				Propagation.REQUIRED, "com.liferay.client.extension.service"));
+				Propagation.REQUIRED, "com.liferay.remote.app.service"));
 
 	@Before
 	public void setUp() {

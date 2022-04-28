@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.client.extension.service.http;
+package com.liferay.remote.app.service.http;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.security.auth.HttpPrincipal;
 import com.liferay.portal.kernel.service.http.TunnelUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
-import com.liferay.client.extension.service.RemoteAppEntryServiceUtil;
+import com.liferay.remote.app.service.RemoteAppEntryServiceUtil;
 
 /**
  * Provides the HTTP utility for the
@@ -50,7 +50,7 @@ import com.liferay.client.extension.service.RemoteAppEntryServiceUtil;
  */
 public class RemoteAppEntryServiceHttp {
 
-	public static com.liferay.client.extension.model.RemoteAppEntry
+	public static com.liferay.remote.app.model.RemoteAppEntry
 			addCustomElementRemoteAppEntry(
 				HttpPrincipal httpPrincipal, String externalReferenceCode,
 				String customElementCSSURLs,
@@ -92,7 +92,7 @@ public class RemoteAppEntryServiceHttp {
 					exception);
 			}
 
-			return (com.liferay.client.extension.model.RemoteAppEntry)returnObj;
+			return (com.liferay.remote.app.model.RemoteAppEntry)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException
 					systemException) {
@@ -103,7 +103,7 @@ public class RemoteAppEntryServiceHttp {
 		}
 	}
 
-	public static com.liferay.client.extension.model.RemoteAppEntry
+	public static com.liferay.remote.app.model.RemoteAppEntry
 			addIFrameRemoteAppEntry(
 				HttpPrincipal httpPrincipal, String description,
 				String friendlyURLMapping, String iFrameURL,
@@ -140,7 +140,7 @@ public class RemoteAppEntryServiceHttp {
 					exception);
 			}
 
-			return (com.liferay.client.extension.model.RemoteAppEntry)returnObj;
+			return (com.liferay.remote.app.model.RemoteAppEntry)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException
 					systemException) {
@@ -151,7 +151,7 @@ public class RemoteAppEntryServiceHttp {
 		}
 	}
 
-	public static com.liferay.client.extension.model.RemoteAppEntry
+	public static com.liferay.remote.app.model.RemoteAppEntry
 			deleteRemoteAppEntry(
 				HttpPrincipal httpPrincipal, long remoteAppEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -181,7 +181,7 @@ public class RemoteAppEntryServiceHttp {
 					exception);
 			}
 
-			return (com.liferay.client.extension.model.RemoteAppEntry)returnObj;
+			return (com.liferay.remote.app.model.RemoteAppEntry)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException
 					systemException) {
@@ -192,7 +192,7 @@ public class RemoteAppEntryServiceHttp {
 		}
 	}
 
-	public static com.liferay.client.extension.model.RemoteAppEntry getRemoteAppEntry(
+	public static com.liferay.remote.app.model.RemoteAppEntry getRemoteAppEntry(
 			HttpPrincipal httpPrincipal, long remoteAppEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -221,7 +221,7 @@ public class RemoteAppEntryServiceHttp {
 					exception);
 			}
 
-			return (com.liferay.client.extension.model.RemoteAppEntry)returnObj;
+			return (com.liferay.remote.app.model.RemoteAppEntry)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException
 					systemException) {
@@ -232,7 +232,7 @@ public class RemoteAppEntryServiceHttp {
 		}
 	}
 
-	public static com.liferay.client.extension.model.RemoteAppEntry
+	public static com.liferay.remote.app.model.RemoteAppEntry
 			updateCustomElementRemoteAppEntry(
 				HttpPrincipal httpPrincipal, long remoteAppEntryId,
 				String customElementCSSURLs,
@@ -273,7 +273,7 @@ public class RemoteAppEntryServiceHttp {
 					exception);
 			}
 
-			return (com.liferay.client.extension.model.RemoteAppEntry)returnObj;
+			return (com.liferay.remote.app.model.RemoteAppEntry)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException
 					systemException) {
@@ -284,7 +284,7 @@ public class RemoteAppEntryServiceHttp {
 		}
 	}
 
-	public static com.liferay.client.extension.model.RemoteAppEntry
+	public static com.liferay.remote.app.model.RemoteAppEntry
 			updateIFrameRemoteAppEntry(
 				HttpPrincipal httpPrincipal, long remoteAppEntryId,
 				String description, String friendlyURLMapping, String iFrameURL,
@@ -320,7 +320,7 @@ public class RemoteAppEntryServiceHttp {
 					exception);
 			}
 
-			return (com.liferay.client.extension.model.RemoteAppEntry)returnObj;
+			return (com.liferay.remote.app.model.RemoteAppEntry)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException
 					systemException) {

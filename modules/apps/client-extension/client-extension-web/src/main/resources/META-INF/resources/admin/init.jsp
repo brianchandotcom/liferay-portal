@@ -20,14 +20,14 @@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil" %><%@
-page import="com.liferay.client.extension.exception.RemoteAppEntryCustomElementCSSURLsException" %><%@
-page import="com.liferay.client.extension.exception.RemoteAppEntryCustomElementHTMLElementNameException" %><%@
-page import="com.liferay.client.extension.exception.RemoteAppEntryCustomElementURLsException" %><%@
-page import="com.liferay.client.extension.exception.RemoteAppEntryFriendlyURLMappingException" %><%@
-page import="com.liferay.client.extension.exception.RemoteAppEntryIFrameURLException" %><%@
-page import="com.liferay.client.extension.web.internal.constants.RemoteAppAdminFDSNames" %><%@
-page import="com.liferay.client.extension.web.internal.constants.RemoteAppAdminWebKeys" %><%@
-page import="com.liferay.client.extension.web.internal.display.context.EditRemoteAppEntryDisplayContext" %><%@
-page import="com.liferay.client.extension.web.internal.display.context.RemoteAppAdminDisplayContext" %>
+page import="com.liferay.remote.app.exception.RemoteAppEntryCustomElementCSSURLsException" %><%@
+page import="com.liferay.remote.app.exception.RemoteAppEntryCustomElementHTMLElementNameException" %><%@
+page import="com.liferay.remote.app.exception.RemoteAppEntryCustomElementURLsException" %><%@
+page import="com.liferay.remote.app.exception.RemoteAppEntryFriendlyURLMappingException" %><%@
+page import="com.liferay.remote.app.exception.RemoteAppEntryIFrameURLException" %><%@
+page import="com.liferay.remote.app.web.internal.constants.RemoteAppAdminFDSNames" %><%@
+page import="com.liferay.remote.app.web.internal.constants.RemoteAppAdminWebKeys" %><%@
+page import="com.liferay.remote.app.web.internal.display.context.EditRemoteAppEntryDisplayContext" %><%@
+page import="com.liferay.remote.app.web.internal.display.context.RemoteAppAdminDisplayContext" %>
 
 <%@ page import="java.util.Arrays" %>

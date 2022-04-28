@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.client.extension.internal.workflow;
+package com.liferay.remote.app.internal.workflow;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
@@ -20,8 +20,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.BaseWorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
-import com.liferay.client.extension.model.RemoteAppEntry;
-import com.liferay.client.extension.service.RemoteAppEntryLocalService;
+import com.liferay.remote.app.model.RemoteAppEntry;
+import com.liferay.remote.app.service.RemoteAppEntryLocalService;
 
 import java.io.Serializable;
 
@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Javier de Arcos
  */
 @Component(
-	property = "model.class.name=com.liferay.client.extension.model.RemoteAppEntry",
+	property = "model.class.name=com.liferay.remote.app.model.RemoteAppEntry",
 	service = WorkflowHandler.class
 )
 public class RemoteAppEntryWorkflowHandler

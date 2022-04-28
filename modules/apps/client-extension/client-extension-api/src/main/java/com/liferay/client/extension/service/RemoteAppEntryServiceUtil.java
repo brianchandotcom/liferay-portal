@@ -12,16 +12,16 @@
  * details.
  */
 
-package com.liferay.client.extension.service;
+package com.liferay.remote.app.service;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.client.extension.model.RemoteAppEntry;
+import com.liferay.remote.app.model.RemoteAppEntry;
 
 import java.util.Map;
 
 /**
  * Provides the remote service utility for RemoteAppEntry. This utility wraps
- * <code>com.liferay.client.extension.service.impl.RemoteAppEntryServiceImpl</code> and is an
+ * <code>com.liferay.remote.app.service.impl.RemoteAppEntryServiceImpl</code> and is an
  * access point for service operations in application layer code running on a
  * remote server. Methods of this service are expected to have security checks
  * based on the propagated JAAS credentials because this service can be
@@ -36,7 +36,7 @@ public class RemoteAppEntryServiceUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this class directly. Add custom service methods to <code>com.liferay.client.extension.service.impl.RemoteAppEntryServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
+	 * Never modify this class directly. Add custom service methods to <code>com.liferay.remote.app.service.impl.RemoteAppEntryServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static RemoteAppEntry addCustomElementRemoteAppEntry(
 			String externalReferenceCode, String customElementCSSURLs,

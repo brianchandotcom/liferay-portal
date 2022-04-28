@@ -82,7 +82,7 @@ public class ProductNavigationSimulationTopHeadDynamicInclude
 				httpServletRequest);
 
 		sb.append(
-			absolutePortalURLBuilder.forModuleStylesheet(
+			absolutePortalURLBuilder.forBundleStylesheet(
 				_bundle, "/css/simulation_panel.css"
 			).build());
 

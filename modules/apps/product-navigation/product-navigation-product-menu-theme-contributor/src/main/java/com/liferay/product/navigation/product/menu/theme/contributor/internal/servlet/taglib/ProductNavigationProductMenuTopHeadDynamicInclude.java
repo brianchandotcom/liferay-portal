@@ -66,7 +66,7 @@ public class ProductNavigationProductMenuTopHeadDynamicInclude
 				httpServletRequest);
 
 		sb.append(
-			absolutePortalURLBuilder.forModuleStylesheet(
+			absolutePortalURLBuilder.forBundleStylesheet(
 				_bundle, "/product_navigation_product_menu.css"
 			).build());
 

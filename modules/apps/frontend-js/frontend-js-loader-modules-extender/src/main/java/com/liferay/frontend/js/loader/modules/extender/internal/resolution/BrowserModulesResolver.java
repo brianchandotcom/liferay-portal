@@ -254,11 +254,9 @@ public class BrowserModulesResolver {
 			_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
 				httpServletRequest);
 
-		absolutePortalURLBuilder.ignoreCDNHost();
-
 		browserModulesResolution.putPath(
 			moduleName,
-			absolutePortalURLBuilder.forResource(
+			absolutePortalURLBuilder.forBrowserModule(
 				browserModule.getPath()
 			).build());
 

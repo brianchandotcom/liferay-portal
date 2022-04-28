@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
+import com.liferay.portal.url.builder.ComboRequestAbsolutePortalURLBuilder;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -74,33 +75,25 @@ public class JQueryTopHeadDynamicInclude extends BaseDynamicInclude {
 		if (themeDisplay.isThemeJsFastLoad()) {
 			sb.append("<script data-senna-track=\"permanent\" src=\"");
 
-			String comboPath = _portal.getStaticResourceURL(
-				httpServletRequest, "/combo", "minifierType=js", _lastModified);
+			ComboRequestAbsolutePortalURLBuilder
+				comboRequestAbsolutePortalURLBuilder =
+					absolutePortalURLBuilder.forComboRequest();
 
-			boolean cdnDynamicResourcesEnabled =
-				_portal.isCDNDynamicResourcesEnabled(
-					themeDisplay.getCompanyId());
-
-			if (!cdnDynamicResourcesEnabled) {
-				absolutePortalURLBuilder.ignoreCDNHost();
-			}
-
-			sb.append(
-				absolutePortalURLBuilder.forResource(
-					comboPath
-				).build());
-
-			if (cdnDynamicResourcesEnabled) {
-				absolutePortalURLBuilder.ignoreCDNHost();
-			}
+			comboRequestAbsolutePortalURLBuilder.setTimestamp(_lastModified);
 
 			for (String fileName : _FILE_NAMES) {
 				sb.append("&");
-				sb.append(
-					absolutePortalURLBuilder.forModuleScript(
-						_bundleContext.getBundle(), fileName
-					).build());
+
+				String filePath = absolutePortalURLBuilder.forBundleScript(
+					_bundleContext.getBundle(), fileName
+				).ignoreCDNHost(
+				).ignorePathProxy(
+				).build();
+
+				comboRequestAbsolutePortalURLBuilder.addFile(filePath);
 			}
+
+			sb.append(comboRequestAbsolutePortalURLBuilder.build());
 
 			sb.append("\" type=\"text/javascript\"></script>");
 		}
@@ -108,7 +101,7 @@ public class JQueryTopHeadDynamicInclude extends BaseDynamicInclude {
 			for (String fileName : _FILE_NAMES) {
 				sb.append("<script data-senna-track=\"permanent\" src=\"");
 				sb.append(
-					absolutePortalURLBuilder.forModuleScript(
+					absolutePortalURLBuilder.forBundleScript(
 						_bundleContext.getBundle(), fileName
 					).build());
 				sb.append("\" type=\"text/javascript\"></script>");

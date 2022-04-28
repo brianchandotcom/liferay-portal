@@ -78,7 +78,7 @@ public class JSImportmapsExtenderTopHeadDynamicInclude
 					httpServletRequest);
 
 			printWriter.print(
-				absolutePortalURLBuilder.forModuleScript(
+				absolutePortalURLBuilder.forBundleScript(
 					_bundleContext.getBundle(),
 					"/es-module-shims/es-module-shims.js"
 				).build());

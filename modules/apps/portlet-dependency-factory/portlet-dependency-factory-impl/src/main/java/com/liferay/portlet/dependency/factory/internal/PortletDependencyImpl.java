@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.model.portlet.PortletDependency;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
-import com.liferay.portal.url.builder.BuildableAbsolutePortalURLBuilder;
+import com.liferay.portal.url.builder.facet.BuildableAbsolutePortalURLBuilder;
 import com.liferay.portal.util.PropsValues;
 
 /**

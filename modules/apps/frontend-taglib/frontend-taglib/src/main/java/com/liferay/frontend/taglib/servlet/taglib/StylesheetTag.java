@@ -62,7 +62,7 @@ public class StylesheetTag extends AttributesTagSupport {
 
 		sb.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"");
 		sb.append(
-			absolutePortalURLBuilder.forModule(
+			absolutePortalURLBuilder.forBundleStylesheet(
 				bundle, _css
 			).build());
 		sb.append("\"></link>");

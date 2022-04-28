@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
+import com.liferay.portal.url.builder.BundleScriptAbsolutePortalURLBuilder;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -84,18 +85,20 @@ public class SVG4EverybodyTopHeadDynamicInclude extends BaseDynamicInclude {
 				_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
 					httpServletRequest);
 
-			if (!cdnDynamicResourcesEnabled) {
-				absolutePortalURLBuilder.ignoreCDNHost();
-			}
-
 			for (String jsFileName : _JS_FILE_NAMES) {
 				printWriter.print(
 					"<script data-senna-track=\"permanent\" src=\"");
 
-				printWriter.print(
-					absolutePortalURLBuilder.forModuleScript(
-						_bundleContext.getBundle(), jsFileName
-					).build());
+				BundleScriptAbsolutePortalURLBuilder
+					bundleScriptAbsolutePortalURLBuilder =
+						absolutePortalURLBuilder.forBundleScript(
+							_bundleContext.getBundle(), jsFileName);
+
+				if (!cdnDynamicResourcesEnabled) {
+					bundleScriptAbsolutePortalURLBuilder.ignoreCDNHost();
+				}
+
+				printWriter.print(bundleScriptAbsolutePortalURLBuilder.build());
 
 				printWriter.println("\" type=\"text/javascript\"></script>");
 			}

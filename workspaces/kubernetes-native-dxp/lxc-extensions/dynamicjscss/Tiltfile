@@ -1,0 +1,13 @@
+custom_build(
+  'dynamicjscss',
+  command='./build.sh',
+  deps=[
+    './src',
+    './pom.xml',
+  ],
+  ignore=['./target']
+)
+yaml = kustomize('../../k8s/dynamicjscss')
+ip = str(local('minikube ip')).strip()
+patched = local('yq \'.spec.template.spec += {"hostAliases": [{"ip":"' + ip + '", "hostnames": ["dxp.localdev.me"]}]}\'', stdin=str(yaml))
+k8s_yaml(patched)

@@ -14,12 +14,6 @@
 
 package com.liferay.client.extension.web.internal.display.context;
 
-import com.liferay.client.extension.constants.RemoteAppConstants;
-import com.liferay.client.extension.exception.RemoteAppEntryCustomElementCSSURLsException;
-import com.liferay.client.extension.exception.RemoteAppEntryCustomElementHTMLElementNameException;
-import com.liferay.client.extension.exception.RemoteAppEntryCustomElementURLsException;
-import com.liferay.client.extension.exception.RemoteAppEntryIFrameURLException;
-import com.liferay.client.extension.model.RemoteAppEntry;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SelectOption;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
@@ -34,6 +28,12 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.WebAppPool;
+import com.liferay.client.extension.constants.RemoteAppConstants;
+import com.liferay.client.extension.exception.RemoteAppEntryCustomElementCSSURLsException;
+import com.liferay.client.extension.exception.RemoteAppEntryCustomElementHTMLElementNameException;
+import com.liferay.client.extension.exception.RemoteAppEntryCustomElementURLsException;
+import com.liferay.client.extension.exception.RemoteAppEntryIFrameURLException;
+import com.liferay.client.extension.model.RemoteAppEntry;
 
 import java.util.ArrayList;
 import java.util.Comparator;

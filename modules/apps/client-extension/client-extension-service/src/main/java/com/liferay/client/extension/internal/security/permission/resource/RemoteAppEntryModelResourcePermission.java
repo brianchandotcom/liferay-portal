@@ -14,13 +14,13 @@
 
 package com.liferay.client.extension.internal.security.permission.resource;
 
-import com.liferay.client.extension.constants.RemoteAppConstants;
-import com.liferay.client.extension.model.RemoteAppEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.client.extension.constants.RemoteAppConstants;
+import com.liferay.client.extension.model.RemoteAppEntry;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;

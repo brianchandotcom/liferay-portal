@@ -14,13 +14,6 @@
 
 package com.liferay.client.extension.web.internal.deployer;
 
-import com.liferay.client.extension.constants.RemoteAppConstants;
-import com.liferay.client.extension.deployer.RemoteAppEntryDeployer;
-import com.liferay.client.extension.model.RemoteAppEntry;
-import com.liferay.client.extension.web.internal.portlet.RemoteAppEntryFriendlyURLMapper;
-import com.liferay.client.extension.web.internal.portlet.RemoteAppEntryPortlet;
-import com.liferay.client.extension.web.internal.portlet.action.RemoteAppEntryConfigurationAction;
-import com.liferay.client.extension.web.internal.servlet.taglib.RemoteAppTopHeadDynamicInclude;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
@@ -28,6 +21,13 @@ import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.client.extension.constants.RemoteAppConstants;
+import com.liferay.client.extension.deployer.RemoteAppEntryDeployer;
+import com.liferay.client.extension.model.RemoteAppEntry;
+import com.liferay.client.extension.web.internal.portlet.RemoteAppEntryFriendlyURLMapper;
+import com.liferay.client.extension.web.internal.portlet.RemoteAppEntryPortlet;
+import com.liferay.client.extension.web.internal.portlet.action.RemoteAppEntryConfigurationAction;
+import com.liferay.client.extension.web.internal.servlet.taglib.RemoteAppTopHeadDynamicInclude;
 
 import java.util.ArrayList;
 import java.util.Dictionary;

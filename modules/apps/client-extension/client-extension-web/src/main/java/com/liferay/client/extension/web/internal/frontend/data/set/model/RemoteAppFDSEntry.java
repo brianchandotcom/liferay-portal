@@ -14,10 +14,10 @@
 
 package com.liferay.client.extension.web.internal.frontend.data.set.model;
 
-import com.liferay.client.extension.constants.RemoteAppConstants;
-import com.liferay.client.extension.model.RemoteAppEntry;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.client.extension.constants.RemoteAppConstants;
+import com.liferay.client.extension.model.RemoteAppEntry;
 
 import java.util.Locale;
 

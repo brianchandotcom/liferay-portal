@@ -16,7 +16,11 @@
 
 <%@ include file="/init.jsp" %>
 
-<%@ page import="com.liferay.client.extension.exception.RemoteAppEntryCustomElementCSSURLsException" %><%@
+<%@ page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.SelectOption" %><%@
+page import="com.liferay.petra.string.StringPool" %><%@
+page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil" %><%@
+page import="com.liferay.client.extension.exception.RemoteAppEntryCustomElementCSSURLsException" %><%@
 page import="com.liferay.client.extension.exception.RemoteAppEntryCustomElementHTMLElementNameException" %><%@
 page import="com.liferay.client.extension.exception.RemoteAppEntryCustomElementURLsException" %><%@
 page import="com.liferay.client.extension.exception.RemoteAppEntryFriendlyURLMappingException" %><%@
@@ -24,10 +28,6 @@ page import="com.liferay.client.extension.exception.RemoteAppEntryIFrameURLExcep
 page import="com.liferay.client.extension.web.internal.constants.RemoteAppAdminFDSNames" %><%@
 page import="com.liferay.client.extension.web.internal.constants.RemoteAppAdminWebKeys" %><%@
 page import="com.liferay.client.extension.web.internal.display.context.EditRemoteAppEntryDisplayContext" %><%@
-page import="com.liferay.client.extension.web.internal.display.context.RemoteAppAdminDisplayContext" %><%@
-page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.SelectOption" %><%@
-page import="com.liferay.petra.string.StringPool" %><%@
-page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
-page import="com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil" %>
+page import="com.liferay.client.extension.web.internal.display.context.RemoteAppAdminDisplayContext" %>
 
 <%@ page import="java.util.Arrays" %>

@@ -14,9 +14,9 @@
 
 package com.liferay.client.extension.internal.upgrade.v2_0_0;
 
-import com.liferay.client.extension.constants.RemoteAppConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.client.extension.constants.RemoteAppConstants;
 
 /**
  * @author Iván Zaera Avellón

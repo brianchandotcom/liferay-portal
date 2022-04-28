@@ -14,14 +14,14 @@
 
 package com.liferay.client.extension.web.internal.portlet.action;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.client.extension.model.RemoteAppEntry;
 import com.liferay.client.extension.service.RemoteAppEntryService;
 import com.liferay.client.extension.web.internal.constants.RemoteAppAdminPortletKeys;
 import com.liferay.client.extension.web.internal.constants.RemoteAppAdminWebKeys;
 import com.liferay.client.extension.web.internal.display.context.EditRemoteAppEntryDisplayContext;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.util.ParamUtil;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;

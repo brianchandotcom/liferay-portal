@@ -14,14 +14,14 @@
 
 package com.liferay.client.extension.service.impl;
 
-import com.liferay.client.extension.constants.RemoteAppConstants;
-import com.liferay.client.extension.model.RemoteAppEntry;
-import com.liferay.client.extension.service.base.RemoteAppEntryServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.client.extension.constants.RemoteAppConstants;
+import com.liferay.client.extension.model.RemoteAppEntry;
+import com.liferay.client.extension.service.base.RemoteAppEntryServiceBaseImpl;
 
 import java.util.Locale;
 import java.util.Map;

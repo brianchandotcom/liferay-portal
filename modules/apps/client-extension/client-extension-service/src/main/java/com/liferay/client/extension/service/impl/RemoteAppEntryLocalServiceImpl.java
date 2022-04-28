@@ -14,16 +14,6 @@
 
 package com.liferay.client.extension.service.impl;
 
-import com.liferay.client.extension.constants.RemoteAppConstants;
-import com.liferay.client.extension.deployer.RemoteAppEntryDeployer;
-import com.liferay.client.extension.exception.DuplicateRemoteAppEntryExternalReferenceCodeException;
-import com.liferay.client.extension.exception.RemoteAppEntryCustomElementCSSURLsException;
-import com.liferay.client.extension.exception.RemoteAppEntryCustomElementHTMLElementNameException;
-import com.liferay.client.extension.exception.RemoteAppEntryCustomElementURLsException;
-import com.liferay.client.extension.exception.RemoteAppEntryFriendlyURLMappingException;
-import com.liferay.client.extension.exception.RemoteAppEntryIFrameURLException;
-import com.liferay.client.extension.model.RemoteAppEntry;
-import com.liferay.client.extension.service.base.RemoteAppEntryLocalServiceBaseImpl;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -57,6 +47,16 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
+import com.liferay.client.extension.constants.RemoteAppConstants;
+import com.liferay.client.extension.deployer.RemoteAppEntryDeployer;
+import com.liferay.client.extension.exception.DuplicateRemoteAppEntryExternalReferenceCodeException;
+import com.liferay.client.extension.exception.RemoteAppEntryCustomElementCSSURLsException;
+import com.liferay.client.extension.exception.RemoteAppEntryCustomElementHTMLElementNameException;
+import com.liferay.client.extension.exception.RemoteAppEntryCustomElementURLsException;
+import com.liferay.client.extension.exception.RemoteAppEntryFriendlyURLMappingException;
+import com.liferay.client.extension.exception.RemoteAppEntryIFrameURLException;
+import com.liferay.client.extension.model.RemoteAppEntry;
+import com.liferay.client.extension.service.base.RemoteAppEntryLocalServiceBaseImpl;
 
 import java.io.Serializable;
 

@@ -14,12 +14,12 @@
 
 package com.liferay.client.extension.web.internal.upgrade;
 
-import com.liferay.client.extension.service.RemoteAppEntryLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.upgrade.BasePortletIdUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.vulcan.util.TransformUtil;
+import com.liferay.client.extension.service.RemoteAppEntryLocalService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;

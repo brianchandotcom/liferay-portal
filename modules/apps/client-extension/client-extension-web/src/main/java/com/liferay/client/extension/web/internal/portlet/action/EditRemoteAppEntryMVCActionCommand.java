@@ -14,12 +14,6 @@
 
 package com.liferay.client.extension.web.internal.portlet.action;
 
-import com.liferay.client.extension.constants.RemoteAppConstants;
-import com.liferay.client.extension.model.RemoteAppEntry;
-import com.liferay.client.extension.service.RemoteAppEntryService;
-import com.liferay.client.extension.web.internal.constants.RemoteAppAdminPortletKeys;
-import com.liferay.client.extension.web.internal.constants.RemoteAppAdminWebKeys;
-import com.liferay.client.extension.web.internal.display.context.EditRemoteAppEntryDisplayContext;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -30,6 +24,12 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.client.extension.constants.RemoteAppConstants;
+import com.liferay.client.extension.model.RemoteAppEntry;
+import com.liferay.client.extension.service.RemoteAppEntryService;
+import com.liferay.client.extension.web.internal.constants.RemoteAppAdminPortletKeys;
+import com.liferay.client.extension.web.internal.constants.RemoteAppAdminWebKeys;
+import com.liferay.client.extension.web.internal.display.context.EditRemoteAppEntryDisplayContext;
 
 import java.util.Locale;
 import java.util.Map;

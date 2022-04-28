@@ -8,7 +8,7 @@
 		]
 	},
 	"main": "js/index.js",
-	"name": "client-extension-client-js",
+	"name": "@liferay/client-extension-client-js",
 	"scripts": {
 		"build": "liferay-npm-scripts build",
 		"checkFormat": "liferay-npm-scripts check",

@@ -15,36 +15,25 @@
 package com.liferay.frontend.icons.web.internal.servlet.taglib;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.icons.IconsUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.icons.IconsUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.WebKeys;
 
 /**
  * @author Bryce Osterhaus
  */
-@Component(
-	immediate = true, service = DynamicInclude.class
-)
-public class AUICompatibilityTopHeadDynamicInclude
-	extends BaseDynamicInclude {
+@Component(immediate = true, service = DynamicInclude.class)
+public class AUICompatibilityTopHeadDynamicInclude extends BaseDynamicInclude {
 
 	@Override
 	public void include(
@@ -62,16 +51,14 @@ public class AUICompatibilityTopHeadDynamicInclude
 
 		sb.append("<script>var Liferay = window.Liferay || {};");
 		sb.append("Liferay._ICONS_ = Liferay._ICONS_ || {};");
-		sb.append("Liferay._ICONS_.spritemap = '");
-		sb.append(IconsUtil.getSpritemapPath(themeDisplay));
-		sb.append("'");
-		sb.append(StringPool.SEMICOLON);
-
-		sb.append("Liferay._ICONS_.systemSpritemap = '");
-		sb.append(IconsUtil.getSystemSpritemapPath());
-		sb.append("'");
-		sb.append(StringPool.SEMICOLON);
-
+		sb.append(
+			StringBundler.concat(
+				"Liferay._ICONS_.spritemap = '",
+				IconsUtil.getSpritemapPath(themeDisplay), "';"));
+		sb.append(
+			StringBundler.concat(
+				"Liferay._ICONS_.systemSpritemap = '",
+				IconsUtil.getSystemSpritemapPath(), "';"));
 		sb.append("</script>");
 
 		printWriter.println(sb);

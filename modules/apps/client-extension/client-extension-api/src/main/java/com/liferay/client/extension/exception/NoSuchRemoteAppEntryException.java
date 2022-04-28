@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.client.extension.exception;
+package com.liferay.remote.app.exception;
 
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 

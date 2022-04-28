@@ -207,7 +207,7 @@ definition {
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 
-		Depot.viewNoPanel(panelName = "Display Page Template");
+		Depot.viewNoPanel(panelName = "Display Page");
 
 		PortletEntry.publish();
 

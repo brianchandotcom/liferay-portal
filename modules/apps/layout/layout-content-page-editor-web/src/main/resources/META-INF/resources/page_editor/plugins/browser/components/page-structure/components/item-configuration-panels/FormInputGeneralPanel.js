@@ -40,6 +40,27 @@ import {CommonStyles} from './CommonStyles';
 const FIELD_ID_CONFIGURATION_KEY = 'inputFieldId';
 
 export function FormInputGeneralPanel({item}) {
+	return (
+		<>
+			<div className="mb-3">
+				<Collapse
+					label={Liferay.Language.get('form-input-options')}
+					open
+				>
+					<FormInputOptions item={item} />
+				</Collapse>
+			</div>
+
+			<CommonStyles
+				commonStylesValues={item.config.styles || {}}
+				item={item}
+				role={COMMON_STYLES_ROLES.general}
+			/>
+		</>
+	);
+}
+
+function FormInputOptions({item}) {
 	const dispatch = useDispatch();
 	const [fields, setFields] = useState(null);
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
@@ -187,35 +208,18 @@ export function FormInputGeneralPanel({item}) {
 		);
 	}
 
-	return (
-		<>
-			<div className="mb-3">
-				<Collapse
-					label={Liferay.Language.get('form-input-options')}
-					open
-				>
-					{fields ? (
-						<MappingFieldSelector
-							fieldType={EDITABLE_TYPES.text}
-							fields={fields}
-							onValueSelect={handleValueSelect}
-							value={
-								fragmentEntryLink.editableValues[
-									FREEMARKER_FRAGMENT_ENTRY_PROCESSOR
-								][FIELD_ID_CONFIGURATION_KEY] || ''
-							}
-						/>
-					) : (
-						<ClayLoadingIndicator />
-					)}
-				</Collapse>
-			</div>
-
-			<CommonStyles
-				commonStylesValues={item.config.styles || {}}
-				item={item}
-				role={COMMON_STYLES_ROLES.general}
-			/>
-		</>
+	return fields ? (
+		<MappingFieldSelector
+			fieldType={EDITABLE_TYPES.text}
+			fields={fields}
+			onValueSelect={handleValueSelect}
+			value={
+				fragmentEntryLink.editableValues[
+					FREEMARKER_FRAGMENT_ENTRY_PROCESSOR
+				][FIELD_ID_CONFIGURATION_KEY] || ''
+			}
+		/>
+	) : (
+		<ClayLoadingIndicator />
 	);
 }

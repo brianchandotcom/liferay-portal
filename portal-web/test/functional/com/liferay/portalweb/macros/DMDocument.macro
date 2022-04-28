@@ -2169,7 +2169,13 @@ definition {
 	macro revertPG {
 		DMNavigator.gotoDocumentVersion();
 
-		var key_dmDocumentVersionNumber = "Version ${dmDocumentVersionNumber}";
+		var key_dmDocumentVersionNumber = "${dmDocumentVersionNumber}";
+		var documentCreationDate = DateUtil.getFormattedCurrentDate("M/d/yy");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "DocumentsAndMediaDocument#DOCUMENT_VERSIONS_CREATION_DATE",
+			value1 = "${documentCreationDate}",
+			versionNumber = "${key_dmDocumentVersionNumber}");
 
 		Click(locator1 = "DocumentsAndMedia#DOCUMENT_VERSION_VERTICAL_ELLIPSIS");
 

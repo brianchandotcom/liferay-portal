@@ -52,7 +52,7 @@ public class EditClientExtensionEntryMVCRenderCommand
 		try {
 			renderRequest.setAttribute(
 				ClientExtensionAdminWebKeys.
-					EDIT_CLIENT_EXTENSION_ENTRY_DISPLAY_CONTEXT,
+					EDIT_REMOTE_APP_ENTRY_DISPLAY_CONTEXT,
 				new EditClientExtensionEntryDisplayContext(
 					renderRequest, _getClientExtensionEntry(renderRequest)));
 

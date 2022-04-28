@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "frontend.data.set.name=" + ClientExtensionAdminFDSNames.CLIENT_EXTENSION_ENTRIES,
+	property = "frontend.data.set.name=" + ClientExtensionAdminFDSNames.REMOTE_APP_ENTRIES,
 	service = FDSView.class
 )
 public class ClientExtensionEntryTableFDSView extends BaseTableFDSView {

@@ -81,7 +81,7 @@ public class EditClientExtensionEntryMVCActionCommand
 
 			actionRequest.setAttribute(
 				ClientExtensionAdminWebKeys.
-					EDIT_CLIENT_EXTENSION_ENTRY_DISPLAY_CONTEXT,
+					EDIT_REMOTE_APP_ENTRY_DISPLAY_CONTEXT,
 				new EditClientExtensionEntryDisplayContext(
 					actionRequest, _getClientExtensionEntry(actionRequest)));
 

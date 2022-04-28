@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "fds.data.provider.key=" + ClientExtensionAdminFDSNames.CLIENT_EXTENSION_ENTRIES,
+	property = "fds.data.provider.key=" + ClientExtensionAdminFDSNames.REMOTE_APP_ENTRIES,
 	service = FDSActionProvider.class
 )
 public class ClientExtensionEntryFDSActionProvider

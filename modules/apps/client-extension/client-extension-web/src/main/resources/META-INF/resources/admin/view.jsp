@@ -23,9 +23,9 @@ ClientExtensionAdminDisplayContext clientExtensionAdminDisplayContext = (ClientE
 <frontend-data-set:classic-display
 	actionParameterName="clientExtensionEntryId"
 	creationMenu="<%= clientExtensionAdminDisplayContext.getCreationMenu() %>"
-	dataProviderKey="<%= ClientExtensionAdminFDSNames.CLIENT_EXTENSION_ENTRIES %>"
+	dataProviderKey="<%= ClientExtensionAdminFDSNames.REMOTE_APP_ENTRIES %>"
 	formName="fm"
-	id="<%= ClientExtensionAdminFDSNames.CLIENT_EXTENSION_ENTRIES %>"
+	id="<%= ClientExtensionAdminFDSNames.REMOTE_APP_ENTRIES %>"
 	itemsPerPage="<%= 10 %>"
 	namespace="<%= liferayPortletResponse.getNamespace() %>"
 	pageNumber="<%= 1 %>"

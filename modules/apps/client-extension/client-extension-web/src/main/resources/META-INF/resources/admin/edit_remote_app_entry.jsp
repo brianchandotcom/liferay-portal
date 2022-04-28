@@ -17,7 +17,7 @@
 <%@ include file="/admin/init.jsp" %>
 
 <%
-EditClientExtensionEntryDisplayContext editClientExtensionEntryDisplayContext = (EditClientExtensionEntryDisplayContext)renderRequest.getAttribute(ClientExtensionAdminWebKeys.EDIT_CLIENT_EXTENSION_ENTRY_DISPLAY_CONTEXT);
+EditClientExtensionEntryDisplayContext editClientExtensionEntryDisplayContext = (EditClientExtensionEntryDisplayContext)renderRequest.getAttribute(ClientExtensionAdminWebKeys.EDIT_REMOTE_APP_ENTRY_DISPLAY_CONTEXT);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(editClientExtensionEntryDisplayContext.getRedirect());

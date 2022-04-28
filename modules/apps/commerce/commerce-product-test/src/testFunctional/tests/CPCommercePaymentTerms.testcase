@@ -289,7 +289,7 @@ definition {
 			Click(locator1 = "Icon#BACK");
 		}
 
-		task ("When the Sales Manager opens the new entry, presented on the details page of the entry") {
+		task ("When I open the new entry, presented on the details page of the entry") {
 			CommerceNavigator.gotoEntry(entryName = "Test Terms and Condition");
 
 			CommercePaymentTerms.assertTermsAndConditionEntry(
@@ -297,7 +297,7 @@ definition {
 				valuePosition = "1.0");
 		}
 
-		task ("Then the Sales Manager can use the localization to change the entry's name based on a language") {
+		task ("And when I use localization to change the entry's name based on a language") {
 			CommercePaymentTerms.changeLocale(locale = "zh-CN");
 
 			Type(
@@ -311,7 +311,9 @@ definition {
 				valuePosition = "1.0");
 
 			CommercePaymentTerms.changeLocale(locale = "zh-CN");
+		}
 
+		task ("Then the entry name should be localized") {
 			CommercePaymentTerms.assertTermsAndConditionEntry(
 				termsAndConditionName = "测试条款和条件",
 				valuePosition = "1.0");

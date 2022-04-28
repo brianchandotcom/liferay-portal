@@ -93,21 +93,21 @@ definition {
 			Alert.viewSuccessMessage();
 		}
 
-		task ("When a Buyer goes on Minium catalog page") {
+		task ("When I navigate to a Minium catalog page") {
 			ApplicationsMenu.gotoSite(site = "Minium");
 
 			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
 		}
 
-		task ("And search for the Diagram we created before") {
+		task ("And search for the previously created Diagram product") {
 			CommerceNavigator.searchCatalog(productName = "Diagram Test");
 		}
 
-		task ("When we click on it") {
+		task ("When I click on it") {
 			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "Diagram Test");
 		}
 
-		task ("Then the Buyer is presented with the correct related product details page") {
+		task ("Then I am presented with the correct related product details page") {
 			AssertElementPresent(
 				key_pinNumber = "1",
 				locator1 = "CommerceDiagrams#DIAGRAM_PIN");
@@ -198,7 +198,7 @@ definition {
 				productType = "Diagram");
 		}
 
-		task ("When a Buyer goes into the product details of the diagram on Minium") {
+		task ("When I go into the product details of the diagram on Minium") {
 			ApplicationsMenu.gotoSite(site = "Minium");
 
 			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
@@ -208,7 +208,7 @@ definition {
 			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "Diagram Test");
 		}
 
-		task ("Then the Buyer will see the name of the diagram that we created and below will we see the short description") {
+		task ("Then I should see the name and description of the diagram that was previously created") {
 			AssertElementPresent(
 				key_productName = "Diagram Test",
 				locator1 = "CommerceDiagrams#DIAGRAM_PRODUCT_DETAIL_NAME");
@@ -255,7 +255,7 @@ definition {
 				sku = "MIN93015");
 		}
 
-		task ("When a Buyer goes on the Product Details page of the product on Minium") {
+		task ("When I go to the Product Details page of the product on Minium") {
 			ApplicationsMenu.gotoSite(site = "Minium");
 
 			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
@@ -269,17 +269,19 @@ definition {
 			CommerceDiagram.viewPinInProduct(pinNumber = "1");
 		}
 
-		task ("Then the Buyer will be able to see into the tooltip the SKU (MIN93015) and the name of the product (ABS Sensor)") {
+		task ("Then the tooltip should display the SKU (MIN93015) and the name of the product (ABS Sensor)") {
 			CommerceDiagram.assertPinToolTipInfoInProduct(
 				productName = "ABS Sensor",
 				sku = "MIN93015");
 		}
 
-		task ("And if the Buyer clicks on the product name inside the tooltip he will be redirected to the ABS Sensor product details page") {
+		task ("And when I click on the product name inside the tooltip") {
 			Click(
 				key_productName = "ABS Sensor",
 				locator1 = "CommerceDiagrams#DIAGRAM_PRODUCT_TOOLTIP_LINKED_PRODUCT_NAME");
+		}
 
+		task ("Then I should be redirected to the ABS Sensor product details page") {
 			FrontStore.assertProductDetails(
 				productListPrice = "50.00",
 				productName = "ABS Sensor",

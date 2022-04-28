@@ -467,18 +467,13 @@ public class FragmentsImporterTest {
 		Enumeration<URL> enumeration = _bundle.findEntries(
 			path, FragmentExportImportConstants.FILE_NAME_FRAGMENT, true);
 
-		try {
-			while (enumeration.hasMoreElements()) {
-				URL url = enumeration.nextElement();
+		while (enumeration.hasMoreElements()) {
+			URL url = enumeration.nextElement();
 
-				_populateZipWriter(zipWriter, url);
-			}
+			_populateZipWriter(zipWriter, url);
+		}
 
-			return zipWriter.getFile();
-		}
-		catch (Exception exception) {
-			throw new Exception(exception);
-		}
+		return zipWriter.getFile();
 	}
 
 	private void _importFragmentsByType(int type) throws Exception {

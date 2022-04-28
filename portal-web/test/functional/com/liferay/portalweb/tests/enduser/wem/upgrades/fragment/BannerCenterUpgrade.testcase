@@ -76,7 +76,7 @@ definition {
 		task ("View the edited inline content at edit mode") {
 			ContentPages.gotoPageEditor();
 
-			PageEditor.viewFragment(fragmentName = "Element");
+			PageEditor.viewFragment(fragmentName = "Fragment");
 
 			for (var text : list "Edited Banner Title,Edited Banner Subtitle,Edited Banner Link") {
 				AssertVisible(locator1 = "//div[contains(@class,'banner')]//*[normalize-space(text())='${text}']");
@@ -108,7 +108,7 @@ definition {
 		task ("View the edited inline content at edit mode") {
 			ContentPages.gotoPageEditor();
 
-			PageEditor.viewFragment(fragmentName = "Element");
+			PageEditor.viewFragment(fragmentName = "Fragment");
 
 			var n = "1";
 
@@ -148,7 +148,7 @@ definition {
 		task ("View the edited inline content at edit mode") {
 			ContentPages.gotoPageEditor();
 
-			PageEditor.viewFragment(fragmentName = "Element");
+			PageEditor.viewFragment(fragmentName = "Fragment");
 
 			for (var text : list "Edited Banner Title,Edited Banner Subtitle,Edited Banner Link") {
 				AssertVisible(locator1 = "//div[contains(@class,'banner')]//*[normalize-space(text())='${text}']");

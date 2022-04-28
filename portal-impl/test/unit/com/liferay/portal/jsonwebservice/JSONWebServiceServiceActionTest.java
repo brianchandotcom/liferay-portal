@@ -14,6 +14,8 @@
 
 package com.liferay.portal.jsonwebservice;
 
+import com.liferay.petra.memory.DeleteFileFinalizeAction;
+import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
 import com.liferay.portal.kernel.servlet.HttpMethods;
@@ -24,15 +26,15 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.portal.upload.LiferayFileItem;
-import com.liferay.portal.upload.LiferayFileItemFactory;
 import com.liferay.portal.upload.UploadServletRequestImpl;
 import com.liferay.portal.util.PortalImpl;
 
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.File;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -145,7 +147,7 @@ public class JSONWebServiceServiceActionTest
 
 		Map<String, FileItem[]> fileParams =
 			HashMapBuilder.<String, FileItem[]>put(
-				"fileName", new FileItem[] {createLiferayFileItem("aaa")}
+				"fileName", new FileItem[] {_createFileItem("aaa")}
 			).build();
 
 		HttpServletRequest httpServletRequest = new UploadServletRequestImpl(
@@ -176,12 +178,10 @@ public class JSONWebServiceServiceActionTest
 		HttpServletRequest httpServletRequest = new UploadServletRequestImpl(
 			createHttpRequest("/foo/upload-files"),
 			HashMapBuilder.<String, FileItem[]>put(
-				"firstFile", new FileItem[] {createLiferayFileItem("aaa")}
+				"firstFile", new FileItem[] {_createFileItem("aaa")}
 			).put(
 				"otherFiles",
-				new FileItem[] {
-					createLiferayFileItem("bbb"), createLiferayFileItem("ccc")
-				}
+				new FileItem[] {_createFileItem("bbb"), _createFileItem("ccc")}
 			).build(),
 			null);
 
@@ -242,23 +242,6 @@ public class JSONWebServiceServiceActionTest
 		mockHttpServletRequest.setRemoteUser("root");
 
 		return mockHttpServletRequest;
-	}
-
-	protected FileItem createLiferayFileItem(String content)
-		throws IOException {
-
-		LiferayFileItemFactory liferayFileItemFactory =
-			new LiferayFileItemFactory(null, 0, null);
-
-		LiferayFileItem liferayFileItem = liferayFileItemFactory.createItem(
-			StringUtil.randomString(), StringUtil.randomString(), true,
-			StringUtil.randomString());
-
-		try (OutputStream outputStream = liferayFileItem.getOutputStream()) {
-			outputStream.write(content.getBytes());
-		}
-
-		return liferayFileItem;
 	}
 
 	protected void testServletContextInvoker(
@@ -334,6 +317,33 @@ public class JSONWebServiceServiceActionTest
 			mockHttpServletRequest, new MockHttpServletResponse());
 
 		Assert.assertEquals("\"Welcome 173 to Jupiter\"", json);
+	}
+
+	private FileItem _createFileItem(String content) throws Exception {
+		Path tempFilePath = Files.createTempFile(null, null);
+
+		Files.write(tempFilePath, content.getBytes());
+
+		File tempFile = tempFilePath.toFile();
+
+		FinalizeManager.register(
+			tempFile, new DeleteFileFinalizeAction(tempFile.getAbsolutePath()),
+			FinalizeManager.PHANTOM_REFERENCE_FACTORY);
+
+		return ProxyUtil.newDelegateProxyInstance(
+			FileItem.class.getClassLoader(), FileItem.class,
+			new Object() {
+
+				public File getStoreLocation() {
+					return tempFile;
+				}
+
+				public boolean isInMemory() {
+					return false;
+				}
+
+			},
+			null);
 	}
 
 	private static JSONWebServiceServiceAction _jsonWebServiceServiceAction;

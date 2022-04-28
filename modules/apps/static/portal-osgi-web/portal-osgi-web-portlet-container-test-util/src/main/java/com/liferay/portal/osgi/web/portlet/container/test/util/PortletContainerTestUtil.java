@@ -14,6 +14,8 @@
 
 package com.liferay.portal.osgi.web.portlet.container.test.util;
 
+import com.liferay.petra.memory.DeleteFileFinalizeAction;
+import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.WriterOutputStream;
 import com.liferay.portal.kernel.log.Log;
@@ -28,23 +30,24 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.FileItem;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ProgressTracker;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplayFactory;
-import com.liferay.portal.upload.LiferayFileItem;
-import com.liferay.portal.upload.LiferayFileItemFactory;
 import com.liferay.portal.upload.LiferayServletRequest;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.StringWriter;
 
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -92,9 +95,6 @@ public class PortletContainerTestUtil {
 
 		Map<String, FileItem[]> fileParameters = new HashMap<>();
 
-		LiferayFileItemFactory fileItemFactory = new LiferayFileItemFactory(
-			new File(SystemProperties.get(SystemProperties.TMP_DIR)), 0, null);
-
 		for (int i = 0; i < size; i++) {
 			String fileParameter = "fileParameter" + i;
 
@@ -102,22 +102,13 @@ public class PortletContainerTestUtil {
 				fileParameter = namespace.concat(fileParameter);
 			}
 
-			LiferayFileItem[] liferayFileItems = new LiferayFileItem[2];
+			FileItem[] fileItems = new FileItem[2];
 
-			for (int j = 0; j < liferayFileItems.length; j++) {
-				liferayFileItems[j] = fileItemFactory.createItem(
-					RandomTestUtil.randomString(),
-					RandomTestUtil.randomString(), true,
-					RandomTestUtil.randomString());
-
-				try (OutputStream outputStream =
-						liferayFileItems[j].getOutputStream()) {
-
-					outputStream.write(bytes);
-				}
+			for (int j = 0; j < fileItems.length; j++) {
+				fileItems[j] = _createFileItem(bytes);
 			}
 
-			fileParameters.put(fileParameter, liferayFileItems);
+			fileParameters.put(fileParameter, fileItems);
 		}
 
 		return fileParameters;
@@ -356,6 +347,67 @@ public class PortletContainerTestUtil {
 		private final int _code;
 		private final List<String> _cookies;
 
+	}
+
+	private static FileItem _createFileItem(byte[] bytes) throws Exception {
+		Path tempFilePath = Files.createTempFile(null, null);
+
+		Files.write(tempFilePath, bytes);
+
+		File tempFile = tempFilePath.toFile();
+
+		FinalizeManager.register(
+			tempFile, new DeleteFileFinalizeAction(tempFile.getAbsolutePath()),
+			FinalizeManager.PHANTOM_REFERENCE_FACTORY);
+
+		String contentType = RandomTestUtil.randomString();
+
+		return ProxyUtil.newDelegateProxyInstance(
+			FileItem.class.getClassLoader(), FileItem.class,
+			new Object() {
+
+				public void delete() {
+					tempFile.delete();
+				}
+
+				public String getContentType() {
+					return contentType;
+				}
+
+				public String getFileName() {
+					return tempFile.getName();
+				}
+
+				public String getFullFileName() {
+					return tempFile.getName();
+				}
+
+				public InputStream getInputStream() throws IOException {
+					return new FileInputStream(tempFile);
+				}
+
+				public long getSize() {
+					return bytes.length;
+				}
+
+				public int getSizeThreshold() {
+					return 1024;
+				}
+
+				public File getStoreLocation() {
+					return tempFile;
+				}
+
+				public boolean isFormField() {
+					return true;
+				}
+
+				public boolean isInMemory() {
+					return false;
+				}
+
+			},
+			null);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

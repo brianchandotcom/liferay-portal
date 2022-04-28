@@ -14,10 +14,12 @@
 
 package com.liferay.jenkins.results.parser.testray;
 
+import com.liferay.jenkins.results.parser.AxisBuild;
 import com.liferay.jenkins.results.parser.Build;
 import com.liferay.jenkins.results.parser.BuildDatabase;
 import com.liferay.jenkins.results.parser.BuildDatabaseUtil;
 import com.liferay.jenkins.results.parser.Dom4JUtil;
+import com.liferay.jenkins.results.parser.DownstreamBuild;
 import com.liferay.jenkins.results.parser.GitWorkingDirectory;
 import com.liferay.jenkins.results.parser.GitWorkingDirectoryFactory;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
@@ -131,10 +133,19 @@ public class TestrayAttachmentRecorder {
 
 		if (!(_build instanceof TopLevelBuild)) {
 			sb.append(_build.getJobVariant());
-			sb.append("/");
 
-			sb.append(
-				JenkinsResultsParserUtil.getAxisVariable(_build.getBuildURL()));
+			if (_build instanceof AxisBuild) {
+				AxisBuild axisBuild = (AxisBuild)_build;
+
+				sb.append("/");
+				sb.append(axisBuild.getAxisNumber());
+			}
+			else if (_build instanceof DownstreamBuild) {
+				DownstreamBuild downstreamBuild = (DownstreamBuild)_build;
+
+				sb.append("/");
+				sb.append(downstreamBuild.getAxisVariable());
+			}
 		}
 
 		return sb.toString();

@@ -13,7 +13,7 @@
  */
 
 import addFragmentEntryLinks from '../actions/addFragmentEntryLinks';
-import {FRAGMENT_TYPES} from '../config/constants/fragmentTypes';
+import {FRAGMENT_ENTRY_TYPES} from '../config/constants/fragmentEntryTypes';
 import FragmentService from '../services/FragmentService';
 
 export default function addFragment({
@@ -50,7 +50,7 @@ export default function addFragment({
 			selectItem(itemId);
 		};
 
-		if (type === FRAGMENT_TYPES.composition) {
+		if (type === FRAGMENT_ENTRY_TYPES.composition) {
 			FragmentService.addFragmentEntryLinks(params).then(
 				({addedItemId, fragmentEntryLinks, layoutData}) => {
 					updateState(

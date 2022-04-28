@@ -13,9 +13,9 @@
  */
 
 /**
- * Available fragment types
+ * Available fragment entry types
  */
-export const FRAGMENT_TYPES = {
+export const FRAGMENT_ENTRY_TYPES = {
 	composition: 'composition',
 	input: 'input',
 };

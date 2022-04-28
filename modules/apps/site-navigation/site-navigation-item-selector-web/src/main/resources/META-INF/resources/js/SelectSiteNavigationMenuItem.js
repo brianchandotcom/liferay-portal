@@ -64,7 +64,7 @@ const SelectSiteNavigationMenuItem = ({itemSelectorSaveEvent, nodes}) => {
 	const handleQueryChange = (event) => {
 		const value = event.target.value;
 
-		if (!window.Liferay.__FF__.enableClayTreeView) {
+		if (!window.Liferay.__FF__['LPS-144630']) {
 			setFilter(value);
 		}
 		else {
@@ -135,7 +135,7 @@ const SelectSiteNavigationMenuItem = ({itemSelectorSaveEvent, nodes}) => {
 				</ClayInput.Group>
 			</ClayForm.Group>
 
-			{!window.Liferay.__FF__.enableClayTreeView ? (
+			{!window.Liferay.__FF__['LPS-144630'] ? (
 				<Treeview
 					NodeComponent={Treeview.Card}
 					filter={filter}

@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>NAME</td>
-	<td>//input[@id='_com_liferay_client_extension_web_internal_portlet_ClientExtensionAdminPortlet_name']</td>
+	<td>//input[@id='_com_liferay_remote_app_admin_web_portlet_RemoteAppAdminPortlet_name']</td>
 	<td></td>
 </tr>
 <tr>

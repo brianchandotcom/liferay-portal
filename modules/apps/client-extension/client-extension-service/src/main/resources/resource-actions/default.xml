@@ -5,7 +5,7 @@
 	<model-resource>
 		<model-name>com.liferay.client.extension</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_client_extension_web_internal_portlet_ClientExtensionAdminPortlet</portlet-name>
+			<portlet-name>com_liferay_remote_app_admin_web_portlet_RemoteAppAdminPortlet</portlet-name>
 		</portlet-ref>
 		<root>true</root>
 		<weight>1</weight>
@@ -23,7 +23,7 @@
 	<model-resource>
 		<model-name>com.liferay.client.extension.model.ClientExtensionEntry</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_client_extension_web_internal_portlet_ClientExtensionAdminPortlet</portlet-name>
+			<portlet-name>com_liferay_remote_app_admin_web_portlet_RemoteAppAdminPortlet</portlet-name>
 		</portlet-ref>
 		<weight>1</weight>
 		<permissions>

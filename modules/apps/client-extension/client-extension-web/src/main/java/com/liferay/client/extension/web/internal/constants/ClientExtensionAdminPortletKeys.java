@@ -20,7 +20,7 @@ package com.liferay.client.extension.web.internal.constants;
 public class ClientExtensionAdminPortletKeys {
 
 	public static final String CLIENT_EXTENSION_ADMIN =
-		"com_liferay_client_extension_web_internal_portlet_" +
+		"com_liferay_client_extension_admin_web_portlet_" +
 			"ClientExtensionAdminPortlet";
 
 }

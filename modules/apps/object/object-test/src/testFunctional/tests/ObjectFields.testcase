@@ -26,6 +26,8 @@ definition {
 	@description = "LPS-146889 - Verify that when turn on the 'Set the Maximum Number of Characters' on a Text the Maximum Number of Characters field has the 280 value as default"
 	@priority = "4"
 	test 280IsDefaultMaximumCharacterText {
+		property portal.upstream = "quarantine";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151571",
 			objectName = "CustomObject151571",
@@ -222,6 +224,8 @@ definition {
 	@description = "LPS-146889 - Verify that when turn on the 'Set the Maximum Number of Characters' a Maximum Number of Characters field is shown"
 	@priority = "4"
 	test CanViewMaximumCharactersField {
+		property portal.upstream = "quarantine";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151570",
 			objectName = "CustomObject151570",
@@ -288,6 +292,8 @@ definition {
 	@description = "LPS-146889 - Verify that 'Set the Maximum Number of Characters' toggle is available for Text and Long Text fields"
 	@priority = "5"
 	test CanViewSetMaximumCharactersOption {
+		property portal.upstream = "quarantine";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151569",
 			objectName = "CustomObject151569",
@@ -407,6 +413,8 @@ definition {
 	@description = "LPS-143065 - Change the Maximum File Size to 0 (zero) and verify if the Maximum File Size is now set by the System configurations"
 	@priority = "4"
 	test MaximumFileSizeIsSetBySystemConfigurationsWhenZero {
+		property portal.upstream = "quarantine";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151561",
 			objectName = "CustomObject151561",

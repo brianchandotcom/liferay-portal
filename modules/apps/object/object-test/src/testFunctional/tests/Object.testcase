@@ -26,6 +26,8 @@ definition {
 	@description = "LPS-135406 - Verify it is not possible to delete native fields of objects native"
 	@priority = "4"
 	test CannotDeleteFieldsFromNativeObjects {
+		property portal.upstream = "quarantine";
+
 		ObjectAdmin.openObjectAdmin();
 
 		ObjectPortlet.selectCustomObject(label = "User");
@@ -38,6 +40,8 @@ definition {
 	@description = "LPS-135406 - Verify it is the user is not able to delete a relationship of object native"
 	@priority = "4"
 	test CannotDeleteRelationshipFromNativeObject {
+		property portal.upstream = "quarantine";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151498",
 			objectName = "CustomObject151498",

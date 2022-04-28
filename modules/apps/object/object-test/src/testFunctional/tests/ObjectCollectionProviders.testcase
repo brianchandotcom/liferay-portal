@@ -26,6 +26,8 @@ definition {
 	@description = "LPS-135388 - Verify it is possible to search for an object's entry with the search experience in collection providers"
 	@priority = "4"
 	test CanSearchForObjectEntryOnSearchExperience {
+		property portal.upstream = "quarantine";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 145750",
 			objectName = "CustomObject145750",

@@ -101,6 +101,8 @@ definition {
 	@description = "LPS-143065 - Verify that the file can be downloaded (a download button appears on the side of the name on the mouse hover)"
 	@priority = "4"
 	test CanDownloadFile {
+		property portal.upstream = "quarantine";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151581",
 			objectName = "CustomObject151581",

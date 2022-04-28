@@ -1,7 +1,19 @@
 definition {
 
 	macro testPoshiPauseUsage {
+		Button.clickSave();
+
 		Pause(locator1 = "1000");
+
+		// Pausing X seconds
+
+		Pause(locator1 = "1000");
+
+		// Pausing X seconds due to LRQA-74458
+
+		Pause(locator1 = "1000");
+
+		Button.clickSave();
 	}
 
 }

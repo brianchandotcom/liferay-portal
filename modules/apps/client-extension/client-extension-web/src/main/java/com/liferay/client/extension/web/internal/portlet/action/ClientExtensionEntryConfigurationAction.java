@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Iván Zaera Avellón
  */
-public class ClientExtensionEntryConfigurationAction
+public class RemoteAppEntryConfigurationAction
 	extends DefaultConfigurationAction {
 
 	@Override

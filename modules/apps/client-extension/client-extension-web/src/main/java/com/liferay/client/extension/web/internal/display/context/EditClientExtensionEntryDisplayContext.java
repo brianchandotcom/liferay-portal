@@ -47,9 +47,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Iván Zaera Avellón
  */
-public class EditClientExtensionEntryDisplayContext {
+public class EditRemoteAppEntryDisplayContext {
 
-	public EditClientExtensionEntryDisplayContext(
+	public EditRemoteAppEntryDisplayContext(
 		PortletRequest portletRequest,
 		ClientExtensionEntry clientExtensionEntry) {
 

@@ -32,10 +32,10 @@ import javax.portlet.WindowState;
 /**
  * @author Iván Zaera Avellón
  */
-public class ClientExtensionEntryFriendlyURLMapper
+public class RemoteAppEntryFriendlyURLMapper
 	extends DefaultFriendlyURLMapper implements FriendlyURLMapper {
 
-	public ClientExtensionEntryFriendlyURLMapper(
+	public RemoteAppEntryFriendlyURLMapper(
 		ClientExtensionEntry clientExtensionEntry) {
 
 		_mapping = clientExtensionEntry.getFriendlyURLMapping();

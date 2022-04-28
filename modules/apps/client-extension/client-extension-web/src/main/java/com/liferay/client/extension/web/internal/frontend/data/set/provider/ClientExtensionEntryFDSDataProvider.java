@@ -16,8 +16,8 @@ package com.liferay.client.extension.web.internal.frontend.data.set.provider;
 
 import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.service.ClientExtensionEntryLocalService;
-import com.liferay.client.extension.web.internal.constants.ClientExtensionAdminFDSNames;
-import com.liferay.client.extension.web.internal.frontend.data.set.model.ClientExtensionFDSEntry;
+import com.liferay.client.extension.web.internal.constants.RemoteAppAdminFDSNames;
+import com.liferay.client.extension.web.internal.frontend.data.set.model.RemoteAppFDSEntry;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
@@ -40,14 +40,14 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "fds.data.provider.key=" + ClientExtensionAdminFDSNames.REMOTE_APP_ENTRIES,
+	property = "fds.data.provider.key=" + RemoteAppAdminFDSNames.REMOTE_APP_ENTRIES,
 	service = FDSDataProvider.class
 )
-public class ClientExtensionEntryFDSDataProvider
-	implements FDSDataProvider<ClientExtensionFDSEntry> {
+public class RemoteAppEntryFDSDataProvider
+	implements FDSDataProvider<RemoteAppFDSEntry> {
 
 	@Override
-	public List<ClientExtensionFDSEntry> getItems(
+	public List<RemoteAppFDSEntry> getItems(
 			FDSKeywords fdsKeywords, FDSPagination fdsPagination,
 			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
@@ -56,16 +56,16 @@ public class ClientExtensionEntryFDSDataProvider
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		List<ClientExtensionEntry> clientExtensionEntries =
+		List<ClientExtensionEntry> remoteAppEntries =
 			_clientExtensionEntryLocalService.search(
 				themeDisplay.getCompanyId(), fdsKeywords.getKeywords(),
 				fdsPagination.getStartPosition(),
 				fdsPagination.getEndPosition(), sort);
 
-		Stream<ClientExtensionEntry> stream = clientExtensionEntries.stream();
+		Stream<ClientExtensionEntry> stream = remoteAppEntries.stream();
 
 		return stream.map(
-			clientExtensionEntry -> new ClientExtensionFDSEntry(
+			clientExtensionEntry -> new RemoteAppFDSEntry(
 				clientExtensionEntry, themeDisplay.getLocale())
 		).collect(
 			Collectors.toList()

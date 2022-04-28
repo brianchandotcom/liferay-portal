@@ -17,12 +17,12 @@ package com.liferay.client.extension.web.internal.constants;
 /**
  * @author Bruno Basto
  */
-public class ClientExtensionAdminWebKeys {
-
-	public static final String CLIENT_EXTENSION_ADMIN_DISPLAY_CONTEXT =
-		"CLIENT_EXTENSION_ADMIN_DISPLAY_CONTEXT";
+public class RemoteAppAdminWebKeys {
 
 	public static final String EDIT_REMOTE_APP_ENTRY_DISPLAY_CONTEXT =
 		"EDIT_REMOTE_APP_ENTRY_DISPLAY_CONTEXT";
+
+	public static final String REMOTE_APP_ADMIN_DISPLAY_CONTEXT =
+		"REMOTE_APP_ADMIN_DISPLAY_CONTEXT";
 
 }

@@ -14,7 +14,7 @@
 
 package com.liferay.client.extension.web.internal.portlet;
 
-import com.liferay.client.extension.web.internal.constants.ClientExtensionAdminPortletKeys;
+import com.liferay.client.extension.web.internal.constants.RemoteAppAdminPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;
@@ -41,11 +41,11 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.init-param.mvc-command-names-default-views=/admin/view",
 		"javax.portlet.init-param.portlet-title-based-navigation=true",
 		"javax.portlet.init-param.template-path=/META-INF/resources/",
-		"javax.portlet.name=" + ClientExtensionAdminPortletKeys.CLIENT_EXTENSION_ADMIN,
+		"javax.portlet.name=" + RemoteAppAdminPortletKeys.REMOTE_APP_ADMIN,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator"
 	},
 	service = Portlet.class
 )
-public class ClientExtensionAdminPortlet extends MVCPortlet {
+public class RemoteAppAdminPortlet extends MVCPortlet {
 }

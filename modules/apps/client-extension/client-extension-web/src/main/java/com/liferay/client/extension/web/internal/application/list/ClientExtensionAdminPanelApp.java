@@ -17,7 +17,7 @@ package com.liferay.client.extension.web.internal.application.list;
 import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
-import com.liferay.client.extension.web.internal.constants.ClientExtensionAdminPortletKeys;
+import com.liferay.client.extension.web.internal.constants.RemoteAppAdminPortletKeys;
 import com.liferay.portal.kernel.model.Portlet;
 
 import org.osgi.service.component.annotations.Component;
@@ -34,16 +34,16 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = PanelApp.class
 )
-public class ClientExtensionAdminPanelApp extends BasePanelApp {
+public class RemoteAppAdminPanelApp extends BasePanelApp {
 
 	@Override
 	public String getPortletId() {
-		return ClientExtensionAdminPortletKeys.CLIENT_EXTENSION_ADMIN;
+		return RemoteAppAdminPortletKeys.REMOTE_APP_ADMIN;
 	}
 
 	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + ClientExtensionAdminPortletKeys.CLIENT_EXTENSION_ADMIN + ")",
+		target = "(javax.portlet.name=" + RemoteAppAdminPortletKeys.REMOTE_APP_ADMIN + ")",
 		unbind = "-"
 	)
 	public void setPortlet(Portlet portlet) {

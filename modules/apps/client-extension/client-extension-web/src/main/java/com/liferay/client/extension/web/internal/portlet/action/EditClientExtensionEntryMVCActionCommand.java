@@ -17,9 +17,9 @@ package com.liferay.client.extension.web.internal.portlet.action;
 import com.liferay.client.extension.constants.ClientExtensionConstants;
 import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.service.ClientExtensionEntryService;
-import com.liferay.client.extension.web.internal.constants.ClientExtensionAdminPortletKeys;
-import com.liferay.client.extension.web.internal.constants.ClientExtensionAdminWebKeys;
-import com.liferay.client.extension.web.internal.display.context.EditClientExtensionEntryDisplayContext;
+import com.liferay.client.extension.web.internal.constants.RemoteAppAdminPortletKeys;
+import com.liferay.client.extension.web.internal.constants.RemoteAppAdminWebKeys;
+import com.liferay.client.extension.web.internal.display.context.EditRemoteAppEntryDisplayContext;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -47,13 +47,12 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + ClientExtensionAdminPortletKeys.CLIENT_EXTENSION_ADMIN,
-		"mvc.command.name=/client_extension_admin/edit_client_extension_entry"
+		"javax.portlet.name=" + RemoteAppAdminPortletKeys.REMOTE_APP_ADMIN,
+		"mvc.command.name=/remote_app_admin/edit_remote_app_entry"
 	},
 	service = MVCActionCommand.class
 )
-public class EditClientExtensionEntryMVCActionCommand
-	extends BaseMVCActionCommand {
+public class EditRemoteAppEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
@@ -80,13 +79,12 @@ public class EditClientExtensionEntryMVCActionCommand
 			SessionErrors.add(actionRequest, exception.getClass());
 
 			actionRequest.setAttribute(
-				ClientExtensionAdminWebKeys.
-					EDIT_REMOTE_APP_ENTRY_DISPLAY_CONTEXT,
-				new EditClientExtensionEntryDisplayContext(
+				RemoteAppAdminWebKeys.EDIT_REMOTE_APP_ENTRY_DISPLAY_CONTEXT,
+				new EditRemoteAppEntryDisplayContext(
 					actionRequest, _getClientExtensionEntry(actionRequest)));
 
 			actionResponse.setRenderParameter(
-				"mvcPath", "/admin/edit_client_extension_entry.jsp");
+				"mvcPath", "/admin/edit_remote_app_entry.jsp");
 		}
 	}
 

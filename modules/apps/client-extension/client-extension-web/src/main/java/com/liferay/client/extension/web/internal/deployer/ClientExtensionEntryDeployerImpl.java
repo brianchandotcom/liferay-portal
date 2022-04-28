@@ -17,10 +17,10 @@ package com.liferay.client.extension.web.internal.deployer;
 import com.liferay.client.extension.constants.ClientExtensionConstants;
 import com.liferay.client.extension.deployer.ClientExtensionEntryDeployer;
 import com.liferay.client.extension.model.ClientExtensionEntry;
-import com.liferay.client.extension.web.internal.portlet.ClientExtensionEntryFriendlyURLMapper;
-import com.liferay.client.extension.web.internal.portlet.ClientExtensionEntryPortlet;
-import com.liferay.client.extension.web.internal.portlet.action.ClientExtensionEntryConfigurationAction;
-import com.liferay.client.extension.web.internal.servlet.taglib.ClientExtensionTopHeadDynamicInclude;
+import com.liferay.client.extension.web.internal.portlet.RemoteAppEntryFriendlyURLMapper;
+import com.liferay.client.extension.web.internal.portlet.RemoteAppEntryPortlet;
+import com.liferay.client.extension.web.internal.portlet.action.RemoteAppEntryConfigurationAction;
+import com.liferay.client.extension.web.internal.servlet.taglib.RemoteAppTopHeadDynamicInclude;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
@@ -89,8 +89,8 @@ public class ClientExtensionEntryDeployerImpl
 	}
 
 	private String _getPortletId(ClientExtensionEntry clientExtensionEntry) {
-		return "com_liferay_client_extension_web_internal_portlet_" +
-			"ClientExtensionEntryPortlet_" +
+		return "com_liferay_remote_app_web_internal_portlet_" +
+			"RemoteAppEntryPortlet_" +
 				clientExtensionEntry.getClientExtensionEntryId();
 	}
 
@@ -99,8 +99,7 @@ public class ClientExtensionEntryDeployerImpl
 			ClientExtensionEntry clientExtensionEntry) {
 
 		return _bundleContext.registerService(
-			ConfigurationAction.class,
-			new ClientExtensionEntryConfigurationAction(),
+			ConfigurationAction.class, new RemoteAppEntryConfigurationAction(),
 			HashMapDictionaryBuilder.<String, Object>put(
 				"javax.portlet.name", _getPortletId(clientExtensionEntry)
 			).build());
@@ -111,7 +110,7 @@ public class ClientExtensionEntryDeployerImpl
 
 		return _bundleContext.registerService(
 			FriendlyURLMapper.class,
-			new ClientExtensionEntryFriendlyURLMapper(clientExtensionEntry),
+			new RemoteAppEntryFriendlyURLMapper(clientExtensionEntry),
 			HashMapDictionaryBuilder.<String, Object>put(
 				"javax.portlet.name", _getPortletId(clientExtensionEntry)
 			).build());
@@ -151,7 +150,7 @@ public class ClientExtensionEntryDeployerImpl
 				clientExtensionEntry.getCustomElementURLs();
 
 			if (clientExtensionEntry.isCustomElementUseESM()) {
-				_clientExtensionTopHeadDynamicInclude.registerURLs(
+				_remoteAppTopHeadDynamicInclude.registerURLs(
 					portletName, customElementURLs.split(StringPool.NEW_LINE));
 			}
 			else {
@@ -185,17 +184,16 @@ public class ClientExtensionEntryDeployerImpl
 
 		return _bundleContext.registerService(
 			Portlet.class,
-			new ClientExtensionEntryPortlet(_npmResolver, clientExtensionEntry),
+			new RemoteAppEntryPortlet(_npmResolver, clientExtensionEntry),
 			dictionary);
 	}
 
 	private BundleContext _bundleContext;
 
 	@Reference
-	private ClientExtensionTopHeadDynamicInclude
-		_clientExtensionTopHeadDynamicInclude;
+	private NPMResolver _npmResolver;
 
 	@Reference
-	private NPMResolver _npmResolver;
+	private RemoteAppTopHeadDynamicInclude _remoteAppTopHeadDynamicInclude;
 
 }

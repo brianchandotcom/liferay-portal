@@ -17,19 +17,19 @@
 <%@ include file="/admin/init.jsp" %>
 
 <%
-ClientExtensionAdminDisplayContext clientExtensionAdminDisplayContext = (ClientExtensionAdminDisplayContext)renderRequest.getAttribute(ClientExtensionAdminWebKeys.CLIENT_EXTENSION_ADMIN_DISPLAY_CONTEXT);
+RemoteAppAdminDisplayContext remoteAppAdminDisplayContext = (RemoteAppAdminDisplayContext)renderRequest.getAttribute(RemoteAppAdminWebKeys.REMOTE_APP_ADMIN_DISPLAY_CONTEXT);
 %>
 
 <frontend-data-set:classic-display
 	actionParameterName="clientExtensionEntryId"
-	creationMenu="<%= clientExtensionAdminDisplayContext.getCreationMenu() %>"
-	dataProviderKey="<%= ClientExtensionAdminFDSNames.REMOTE_APP_ENTRIES %>"
+	creationMenu="<%= remoteAppAdminDisplayContext.getCreationMenu() %>"
+	dataProviderKey="<%= RemoteAppAdminFDSNames.REMOTE_APP_ENTRIES %>"
 	formName="fm"
-	id="<%= ClientExtensionAdminFDSNames.REMOTE_APP_ENTRIES %>"
+	id="<%= RemoteAppAdminFDSNames.REMOTE_APP_ENTRIES %>"
 	itemsPerPage="<%= 10 %>"
 	namespace="<%= liferayPortletResponse.getNamespace() %>"
 	pageNumber="<%= 1 %>"
-	portletURL="<%= clientExtensionAdminDisplayContext.getCurrentPortletURL() %>"
+	portletURL="<%= remoteAppAdminDisplayContext.getCurrentPortletURL() %>"
 	selectedItemsKey="clientExtensionEntryId"
 	selectionType="multiple"
 	style="fluid"

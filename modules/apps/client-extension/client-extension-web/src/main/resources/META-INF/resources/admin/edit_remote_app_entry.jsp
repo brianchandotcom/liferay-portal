@@ -17,7 +17,7 @@
 <%@ include file="/admin/init.jsp" %>
 
 <%
-EditClientExtensionEntryDisplayContext editClientExtensionEntryDisplayContext = (EditClientExtensionEntryDisplayContext)renderRequest.getAttribute(ClientExtensionAdminWebKeys.EDIT_REMOTE_APP_ENTRY_DISPLAY_CONTEXT);
+EditRemoteAppEntryDisplayContext editClientExtensionEntryDisplayContext = (EditRemoteAppEntryDisplayContext)renderRequest.getAttribute(RemoteAppAdminWebKeys.EDIT_REMOTE_APP_ENTRY_DISPLAY_CONTEXT);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(editClientExtensionEntryDisplayContext.getRedirect());
@@ -25,7 +25,7 @@ portletDisplay.setURLBack(editClientExtensionEntryDisplayContext.getRedirect());
 renderResponse.setTitle(editClientExtensionEntryDisplayContext.getTitle());
 %>
 
-<portlet:actionURL name="/client_extension_admin/edit_client_extension_entry" var="editClientExtensionEntryURL" />
+<portlet:actionURL name="/remote_app_admin/edit_remote_app_entry" var="editClientExtensionEntryURL" />
 
 <liferay-frontend:edit-form
 	action="<%= editClientExtensionEntryURL %>"

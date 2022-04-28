@@ -17,8 +17,8 @@ package com.liferay.client.extension.web.internal.constants;
 /**
  * @author Bruno Basto
  */
-public class ClientExtensionAdminFDSNames {
+public class RemoteAppAdminFDSNames {
 
-	public static final String REMOTE_APP_ENTRIES = "clientExtensionEntries";
+	public static final String REMOTE_APP_ENTRIES = "remoteAppEntries";
 
 }

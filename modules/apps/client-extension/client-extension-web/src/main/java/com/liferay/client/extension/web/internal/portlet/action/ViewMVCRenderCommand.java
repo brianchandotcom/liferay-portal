@@ -15,9 +15,9 @@
 package com.liferay.client.extension.web.internal.portlet.action;
 
 import com.liferay.client.extension.service.ClientExtensionEntryService;
-import com.liferay.client.extension.web.internal.constants.ClientExtensionAdminPortletKeys;
-import com.liferay.client.extension.web.internal.constants.ClientExtensionAdminWebKeys;
-import com.liferay.client.extension.web.internal.display.context.ClientExtensionAdminDisplayContext;
+import com.liferay.client.extension.web.internal.constants.RemoteAppAdminPortletKeys;
+import com.liferay.client.extension.web.internal.constants.RemoteAppAdminWebKeys;
+import com.liferay.client.extension.web.internal.display.context.RemoteAppAdminDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 
 import javax.portlet.PortletException;
@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + ClientExtensionAdminPortletKeys.CLIENT_EXTENSION_ADMIN,
+		"javax.portlet.name=" + RemoteAppAdminPortletKeys.REMOTE_APP_ADMIN,
 		"mvc.command.name=/"
 	},
 	service = MVCRenderCommand.class
@@ -46,9 +46,8 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		renderRequest.setAttribute(
-			ClientExtensionAdminWebKeys.CLIENT_EXTENSION_ADMIN_DISPLAY_CONTEXT,
-			new ClientExtensionAdminDisplayContext(
-				renderRequest, renderResponse));
+			RemoteAppAdminWebKeys.REMOTE_APP_ADMIN_DISPLAY_CONTEXT,
+			new RemoteAppAdminDisplayContext(renderRequest, renderResponse));
 
 		return "/admin/view.jsp";
 	}

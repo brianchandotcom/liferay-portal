@@ -30,9 +30,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Iván Zaera Avellón
  */
-public class ClientExtensionAdminDisplayContext {
+public class RemoteAppAdminDisplayContext {
 
-	public ClientExtensionAdminDisplayContext(
+	public RemoteAppAdminDisplayContext(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		_renderRequest = renderRequest;
@@ -46,7 +46,7 @@ public class ClientExtensionAdminDisplayContext {
 					PortletURLBuilder.createRenderURL(
 						_renderResponse
 					).setMVCRenderCommandName(
-						"/client_extension_admin/edit_client_extension_entry"
+						"/remote_app_admin/edit_remote_app_entry"
 					).setRedirect(
 						_getRedirect()
 					).buildPortletURL());

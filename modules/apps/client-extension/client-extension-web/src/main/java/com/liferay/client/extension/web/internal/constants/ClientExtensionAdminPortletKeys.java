@@ -17,10 +17,9 @@ package com.liferay.client.extension.web.internal.constants;
 /**
  * @author Iván Zaera
  */
-public class ClientExtensionAdminPortletKeys {
+public class RemoteAppAdminPortletKeys {
 
-	public static final String CLIENT_EXTENSION_ADMIN =
-		"com_liferay_client_extension_admin_web_portlet_" +
-			"ClientExtensionAdminPortlet";
+	public static final String REMOTE_APP_ADMIN =
+		"com_liferay_remote_app_admin_web_portlet_RemoteAppAdminPortlet";
 
 }

@@ -14,7 +14,7 @@
 
 package com.liferay.client.extension.web.internal.frontend.data.set.view.table;
 
-import com.liferay.client.extension.web.internal.constants.ClientExtensionAdminFDSNames;
+import com.liferay.client.extension.web.internal.constants.RemoteAppAdminFDSNames;
 import com.liferay.frontend.data.set.view.FDSView;
 import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
 import com.liferay.frontend.data.set.view.table.FDSTableSchema;
@@ -32,10 +32,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "frontend.data.set.name=" + ClientExtensionAdminFDSNames.REMOTE_APP_ENTRIES,
+	property = "frontend.data.set.name=" + RemoteAppAdminFDSNames.REMOTE_APP_ENTRIES,
 	service = FDSView.class
 )
-public class ClientExtensionEntryTableFDSView extends BaseTableFDSView {
+public class RemoteAppEntryTableFDSView extends BaseTableFDSView {
 
 	@Override
 	public FDSTableSchema getFDSTableSchema(Locale locale) {

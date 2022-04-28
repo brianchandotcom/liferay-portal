@@ -6,4 +6,12 @@ definition {
 			locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
 	}
 
+	macro viewIcon {
+		for (var icon : list "${iconList}") {
+			AssertVisible(
+				key_text = "${icon}",
+				locator1 = "MenuItem#ANY_ICON");
+		}
+	}
+
 }

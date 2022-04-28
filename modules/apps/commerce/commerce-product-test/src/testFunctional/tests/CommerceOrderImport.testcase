@@ -206,14 +206,80 @@ definition {
 		}
 	}
 
-	@description = "[Please Update]"
-	@ignore = "Test Stub"
-	@priority = "4"
+	@description = "Verify users can delete an order entry after importing an order"
+	@priority = "3"
 	test DeleteAnEntryIntoAnOrder {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-7689 DeleteAnEntryIntoAnOrder pending implementation
+		task ("Given a Minium site with a buyer user") {
+			User.logoutPG();
 
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And given a completed order") {
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+
+			WaitForElementPresent(locator1 = "CommerceEntry#ACTIVE_ORDER_ID");
+
+			var activeOrderId = selenium.getText("CommerceEntry#ACTIVE_ORDER_ID");
+
+			CommerceCheckout.gotoCheckout();
+
+			CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				productName = "U-Joint",
+				productQuantity = "1",
+				productUnitPrice = "24",
+				shippingMethod = "Standard");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+		}
+
+		task ("And given the buyer starts a new order and imports the completed order") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
+
+			CommerceOrders.importFromOrder(orderId = "${activeOrderId}");
+
+			Alert.viewSuccessMessageText(successMessage = "1 row was imported successfully.");
+
+			CommerceAcceleratorsInitializer.reviewOrder(
+				orderAuthor = "Buyer User",
+				productName = "U-Joint",
+				productPrice = "24.00",
+				productQuantity = "1",
+				productSku = "MIN55861",
+				productUnitPrice = "24.00");
+		}
+
+		task ("When the buyer deletes an entry from the order") {
+			ClickNoError(
+				key_value = "U-Joint",
+				locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+			CommerceEntry.clickNoError(menuItem = "Delete");
+
+			Button.clickSave();
+
+			Refresh();
+		}
+
+		task ("Than the entry should no longer be present in the order") {
+			AssertElementNotPresent(
+				key_productName = "U-Joint",
+				locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_NAME");
+		}
 	}
 
 	@description = "[Please Update]"

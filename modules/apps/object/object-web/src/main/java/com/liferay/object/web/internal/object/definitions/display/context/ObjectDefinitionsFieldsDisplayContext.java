@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeFormatter;
 import com.liferay.portal.util.PropsValues;
@@ -248,6 +249,15 @@ public class ObjectDefinitionsFieldsDisplayContext
 	private void _putObjectFieldSettingJSONObject(
 		String businessType, JSONArray jsonArray,
 		ObjectFieldSetting objectFieldSetting) {
+
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-148112")) &&
+			(Objects.equals(
+				objectFieldSetting.getName(), "showFilesInDocumentsAndMedia") ||
+			 Objects.equals(
+				 objectFieldSetting.getName(), "storageDLFolderPath"))) {
+
+			return;
+		}
 
 		jsonArray.put(
 			JSONUtil.put(

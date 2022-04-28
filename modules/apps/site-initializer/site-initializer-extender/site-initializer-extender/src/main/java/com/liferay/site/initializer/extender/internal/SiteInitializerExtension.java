@@ -18,6 +18,7 @@ import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.client.extension.service.RemoteAppEntryLocalService;
+import com.liferay.commerce.initializer.util.PortletSettingsImporter;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
@@ -110,6 +111,7 @@ public class SiteInitializerExtension {
 		ObjectRelationshipResource.Factory objectRelationshipResourceFactory,
 		ObjectEntryLocalService objectEntryLocalService,
 		OrganizationResource.Factory organizationResourceFactory, Portal portal,
+		PortletSettingsImporter portletSettingsImporter,
 		RemoteAppEntryLocalService remoteAppEntryLocalService,
 		ResourceActionLocalService resourceActionLocalService,
 		ResourcePermissionLocalService resourcePermissionLocalService,
@@ -149,9 +151,9 @@ public class SiteInitializerExtension {
 			objectActionLocalService, objectDefinitionLocalService,
 			objectDefinitionResourceFactory, objectRelationshipResourceFactory,
 			objectEntryLocalService, organizationResourceFactory, portal,
-			remoteAppEntryLocalService, resourceActionLocalService,
-			resourcePermissionLocalService, roleLocalService,
-			sapEntryLocalService, settingsFactory,
+			portletSettingsImporter, remoteAppEntryLocalService,
+			resourceActionLocalService, resourcePermissionLocalService,
+			roleLocalService, sapEntryLocalService, settingsFactory,
 			siteNavigationMenuItemLocalService,
 			siteNavigationMenuItemTypeRegistry, siteNavigationMenuLocalService,
 			structuredContentFolderResourceFactory, styleBookEntryZipProcessor,

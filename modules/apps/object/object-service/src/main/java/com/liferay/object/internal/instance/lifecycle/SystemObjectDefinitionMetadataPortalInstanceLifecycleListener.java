@@ -14,7 +14,6 @@
 
 package com.liferay.object.internal.instance.lifecycle;
 
-import com.liferay.account.model.AccountEntry;
 import com.liferay.object.constants.ObjectSAPConstants;
 import com.liferay.object.internal.related.models.ObjectEntry1toMObjectRelatedModelsProviderImpl;
 import com.liferay.object.internal.rest.context.path.RESTContextPathResolverImpl;
@@ -40,15 +39,11 @@ import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.security.service.access.policy.model.SAPEntry;
 import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService;
-
-import java.util.Objects;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -178,14 +173,6 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 	private void _apply(
 		long companyId,
 		SystemObjectDefinitionMetadata systemObjectDefinitionMetadata) {
-
-		if (Objects.equals(
-				systemObjectDefinitionMetadata.getModelClass(),
-				AccountEntry.class) &&
-			!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-151765"))) {
-
-			return;
-		}
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(

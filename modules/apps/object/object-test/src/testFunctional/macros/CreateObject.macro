@@ -238,8 +238,6 @@ definition {
 	macro assertSelectedValueInDeletionType {
 		WaitForSPARefresh();
 
-		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
-
 		AssertElementPresent(
 			key_fieldLabel = "Deletion Type",
 			key_value = "${deletionType}",

@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.client.extension.deployer;
+package com.liferay.remote.app.deployer;
 
-import com.liferay.client.extension.model.RemoteAppEntry;
+import com.liferay.remote.app.model.RemoteAppEntry;
 
 import java.util.List;
 

@@ -279,13 +279,12 @@ public class ExportTranslationServlet extends HttpServlet {
 		Optional<String> infoItemTitleOptional =
 			infoItemHelper.getInfoItemTitleOptional(classPK, locale);
 
-		String prefixName = _getPrefixName(
-			classPK, classNameTitle, infoItemTitleOptional, multipleModels,
-			locale);
-
 		return StringBundler.concat(
 			StringUtil.removeSubstrings(
-				prefixName, PropsValues.DL_CHAR_BLACKLIST),
+				_getPrefixName(
+					classPK, classNameTitle, infoItemTitleOptional,
+					multipleModels, locale),
+				PropsValues.DL_CHAR_BLACKLIST),
 			StringPool.DASH, sourceLanguageId, ".zip");
 	}
 

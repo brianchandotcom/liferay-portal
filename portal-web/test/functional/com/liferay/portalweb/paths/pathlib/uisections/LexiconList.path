@@ -11,6 +11,11 @@
 
 <tbody>
 <tr>
+	<td>ANY_ICON</td>
+	<td>//*[@data-qa-id='row'][contains(.,'${key_listEntry}')]//*[*[name()='svg'][contains(@class,'lexicon-icon-${key_text}')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LIST_ENTRY</td>
 	<td>//*[@data-qa-id='row'][contains(.,'${key_listEntry}')]</td>
 	<td></td>

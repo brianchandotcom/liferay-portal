@@ -92,11 +92,11 @@ public class ActionUtil {
 		PortletPreferences portletSetup = getLayoutPortletSetup(
 			renderRequest, portlet);
 
-		portletSetup = _getPortletSetup(
-			httpServletRequest, renderRequest.getPreferences(), portletSetup);
-
 		String title = PortletConfigurationUtil.getPortletTitle(
-			portletSetup, themeDisplay.getLanguageId());
+			_getPortletSetup(
+				httpServletRequest, renderRequest.getPreferences(),
+				portletSetup),
+			themeDisplay.getLanguageId());
 
 		if (Validator.isNull(title)) {
 			ServletContext servletContext =

@@ -40,8 +40,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutSet;
-import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.model.LayoutSetBranchConstants;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
@@ -220,16 +218,14 @@ public class StagingImplTest {
 
 		Group stagingGroup = _group.getStagingGroup();
 
-		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-			_group.getGroupId(), false);
-
-		Assert.assertNull(ExportImportDateUtil.getLastPublishDate(layoutSet));
-
-		layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-			stagingGroup.getGroupId(), false);
-
+		Assert.assertNull(
+			ExportImportDateUtil.getLastPublishDate(
+				LayoutSetLocalServiceUtil.getLayoutSet(
+					_group.getGroupId(), false)));
 		Assert.assertNotNull(
-			ExportImportDateUtil.getLastPublishDate(layoutSet));
+			ExportImportDateUtil.getLastPublishDate(
+				LayoutSetLocalServiceUtil.getLayoutSet(
+					stagingGroup.getGroupId(), false)));
 
 		PortletPreferences portletPreferences =
 			PortletPreferencesFactoryUtil.getStrictPortletSetup(
@@ -416,18 +412,14 @@ public class StagingImplTest {
 
 		Group stagingGroup = _group.getStagingGroup();
 
-		LayoutSetBranch layoutSetBranch =
+		Assert.assertNotNull(
 			LayoutSetBranchLocalServiceUtil.fetchLayoutSetBranch(
 				stagingGroup.getGroupId(), false,
-				LayoutSetBranchConstants.MASTER_BRANCH_NAME);
-
-		Assert.assertNotNull(layoutSetBranch);
-
-		layoutSetBranch = LayoutSetBranchLocalServiceUtil.fetchLayoutSetBranch(
-			stagingGroup.getGroupId(), true,
-			LayoutSetBranchConstants.MASTER_BRANCH_NAME);
-
-		Assert.assertNotNull(layoutSetBranch);
+				LayoutSetBranchConstants.MASTER_BRANCH_NAME));
+		Assert.assertNotNull(
+			LayoutSetBranchLocalServiceUtil.fetchLayoutSetBranch(
+				stagingGroup.getGroupId(), true,
+				LayoutSetBranchConstants.MASTER_BRANCH_NAME));
 	}
 
 	protected void enableLocalStaging(
@@ -573,18 +565,14 @@ public class StagingImplTest {
 			GetterUtil.getBoolean(
 				typeSettingsUnicodeProperties.getProperty("branchingPublic")));
 
-		LayoutSetBranch layoutSetBranch =
+		Assert.assertNotNull(
 			LayoutSetBranchLocalServiceUtil.fetchLayoutSetBranch(
 				_remoteStagingGroup.getGroupId(), false,
-				LayoutSetBranchConstants.MASTER_BRANCH_NAME);
-
-		Assert.assertNotNull(layoutSetBranch);
-
-		layoutSetBranch = LayoutSetBranchLocalServiceUtil.fetchLayoutSetBranch(
-			_remoteStagingGroup.getGroupId(), true,
-			LayoutSetBranchConstants.MASTER_BRANCH_NAME);
-
-		Assert.assertNotNull(layoutSetBranch);
+				LayoutSetBranchConstants.MASTER_BRANCH_NAME));
+		Assert.assertNotNull(
+			LayoutSetBranchLocalServiceUtil.fetchLayoutSetBranch(
+				_remoteStagingGroup.getGroupId(), true,
+				LayoutSetBranchConstants.MASTER_BRANCH_NAME));
 	}
 
 	protected AssetCategory updateAssetCategory(

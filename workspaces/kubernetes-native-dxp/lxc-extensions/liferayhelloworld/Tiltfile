@@ -1,0 +1,11 @@
+custom_build(
+  'liferayhelloworld',
+  command='./build.sh',
+  deps=[
+    './public',
+    './src',
+    './package.json',
+  ],
+  ignore=['./build', './node_modules']
+)
+k8s_yaml(kustomize('../../k8s/liferayhelloworld'))

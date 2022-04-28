@@ -4,6 +4,10 @@ cd "$(dirname "$0")"
 
 eval $(minikube docker-env)
 
+if [[ ! -z "${EXPECTED_REF}" ]]; then
+  IMAGE=${EXPECTED_REF}
+fi
+
 echo "[run_local] Build the liferayhelloworld PoC"
 
 yarn install && yarn build-local &&\

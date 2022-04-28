@@ -45,39 +45,6 @@ public class ClientExtensionWebUpgrade implements UpgradeStepRegistrator {
 				}
 
 			});
-
-		registry.register(
-			"1.0.0", "2.0.0",
-			new BasePortletIdUpgradeProcess() {
-
-				@Override
-				protected String[][] getRenamePortletIdsArray() {
-					return new String[][] {
-						{
-							"com_liferay_remote_app_admin_web_portlet_" +
-								"RemoteAppAdminPortlet",
-							"com_liferay_client_extension_web_internal_" +
-								"portlet_ClientExtensionAdminPortlet"
-						}
-					};
-				}
-
-			});
-
-		registry.register(
-			"2.0.0", "2.0.1",
-			new BasePortletIdUpgradeProcess() {
-
-				@Override
-				protected String[][] getRenamePortletIdsArray() {
-					return _getRenamePortletIdsArray(
-						"com_liferay_remote_app_web_internal_portlet_" +
-							"RemoteAppEntryPortlet_",
-						"com_liferay_client_extension_web_internal_portlet_" +
-							"ClientExtensionEntryPortlet_");
-				}
-
-			});
 	}
 
 	private String[][] _getRenamePortletIdsArray(

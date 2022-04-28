@@ -1,10 +1,10 @@
-Bundle-Name: Liferay Client Extension API
-Bundle-SymbolicName: com.liferay.client.extension.api
-Bundle-Version: 1.0.0
+Bundle-Name: Liferay Remote App API
+Bundle-SymbolicName: com.liferay.remote.app.api
+Bundle-Version: 9.0.1
 Export-Package:\
-	com.liferay.client.extension.constants,\
-	com.liferay.client.extension.deployer,\
-	com.liferay.client.extension.exception,\
-	com.liferay.client.extension.model,\
-	com.liferay.client.extension.service,\
-	com.liferay.client.extension.service.persistence
+	com.liferay.remote.app.constants,\
+	com.liferay.remote.app.deployer,\
+	com.liferay.remote.app.exception,\
+	com.liferay.remote.app.model,\
+	com.liferay.remote.app.service,\
+	com.liferay.remote.app.service.persistence

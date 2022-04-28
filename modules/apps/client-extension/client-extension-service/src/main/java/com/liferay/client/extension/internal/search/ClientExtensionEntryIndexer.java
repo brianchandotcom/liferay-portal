@@ -177,12 +177,10 @@ public class ClientExtensionEntryIndexer
 				}
 				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
-						long clientExtensionEntryId =
-							clientExtensionEntry.getClientExtensionEntryId();
-
 						_log.warn(
-							"Unable to index client extension entry " +
-								clientExtensionEntryId,
+							"Unable to index remote app entry " +
+								clientExtensionEntry.
+									getClientExtensionEntryId(),
 							portalException);
 					}
 				}

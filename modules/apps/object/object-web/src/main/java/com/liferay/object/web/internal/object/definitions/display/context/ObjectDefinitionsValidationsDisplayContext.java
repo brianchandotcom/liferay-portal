@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -97,6 +98,8 @@ public class ObjectDefinitionsValidationsDisplayContext
 			).put(
 				"name", objectValidationRuleEngine.getName()
 			).build()
+		).sorted(
+			Comparator.comparing(item -> item.get("label"))
 		).collect(
 			Collectors.toList()
 		);

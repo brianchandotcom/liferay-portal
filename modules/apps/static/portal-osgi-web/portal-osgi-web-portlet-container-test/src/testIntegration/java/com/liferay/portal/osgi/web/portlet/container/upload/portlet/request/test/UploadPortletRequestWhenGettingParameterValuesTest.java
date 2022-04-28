@@ -87,11 +87,8 @@ public class UploadPortletRequestWhenGettingParameterValuesTest {
 		for (Map.Entry<String, List<String>> entry :
 				regularParameters.entrySet()) {
 
-			String[] parameterValues = uploadPortletRequest.getParameterValues(
-				entry.getKey());
-
 			List<String> parameterValuesList = ListUtil.fromArray(
-				parameterValues);
+				uploadPortletRequest.getParameterValues(entry.getKey()));
 
 			Assert.assertTrue(
 				parameterValuesList.containsAll(entry.getValue()));
@@ -106,11 +103,8 @@ public class UploadPortletRequestWhenGettingParameterValuesTest {
 		for (Map.Entry<String, FileItem[]> entry : fileParameters.entrySet()) {
 			String key = entry.getKey();
 
-			String[] parameterValues = uploadPortletRequest.getParameterValues(
-				key);
-
 			List<String> parameterValuesList = ListUtil.fromArray(
-				parameterValues);
+				uploadPortletRequest.getParameterValues(key));
 
 			Assert.assertFalse(
 				parameterValuesList.toString(),

@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.WriterOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
@@ -133,11 +132,8 @@ public class PortletContainerTestUtil {
 
 		ThemeDisplay themeDisplay = ThemeDisplayFactory.create();
 
-		Company company = CompanyLocalServiceUtil.getCompany(
-			layout.getCompanyId());
-
-		themeDisplay.setCompany(company);
-
+		themeDisplay.setCompany(
+			CompanyLocalServiceUtil.getCompany(layout.getCompanyId()));
 		themeDisplay.setLayout(layout);
 		themeDisplay.setLayoutSet(layout.getLayoutSet());
 		themeDisplay.setPlid(layout.getPlid());

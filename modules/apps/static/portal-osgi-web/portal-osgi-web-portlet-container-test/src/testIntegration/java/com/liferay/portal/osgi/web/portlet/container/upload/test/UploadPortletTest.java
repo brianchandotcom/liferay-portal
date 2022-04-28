@@ -18,7 +18,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
@@ -95,11 +94,11 @@ public class UploadPortletTest extends BasePortletContainerTestCase {
 
 				PortletURL portletURL = resourceResponse.createActionURL();
 
-				String queryString = HttpComponentsUtil.getQueryString(
-					portletURL.toString());
-
 				String portalAuthenticationToken = MapUtil.getString(
-					HttpComponentsUtil.getParameterMap(queryString), "p_auth");
+					HttpComponentsUtil.getParameterMap(
+						HttpComponentsUtil.getQueryString(
+							portletURL.toString())),
+					"p_auth");
 
 				printWriter.write(portalAuthenticationToken);
 			}
@@ -238,15 +237,11 @@ public class UploadPortletTest extends BasePortletContainerTestCase {
 
 		ThemeDisplay themeDisplay = ThemeDisplayFactory.create();
 
-		Company company = CompanyLocalServiceUtil.getCompany(
-			layout.getCompanyId());
-
-		themeDisplay.setCompany(company);
-
+		themeDisplay.setCompany(
+			CompanyLocalServiceUtil.getCompany(layout.getCompanyId()));
 		themeDisplay.setLayout(layout);
 		themeDisplay.setLayoutSet(layout.getLayoutSet());
 		themeDisplay.setPlid(layout.getPlid());
-
 		themeDisplay.setPortalURL(TestPropsValues.PORTAL_URL);
 		themeDisplay.setRequest(httpServletRequest);
 

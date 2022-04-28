@@ -134,14 +134,12 @@ public class RenderRequestPortletContainerTest
 					resourceRequest, testTargetPortletId, layout.getPlid(),
 					PortletRequest.RENDER_PHASE);
 
-				String queryString = HttpComponentsUtil.getQueryString(
-					portletURL.toString());
-
-				String portletAuthenticationToken = MapUtil.getString(
-					HttpComponentsUtil.getParameterMap(queryString),
-					"p_p_auth");
-
-				printWriter.write(portletAuthenticationToken);
+				printWriter.write(
+					MapUtil.getString(
+						HttpComponentsUtil.getParameterMap(
+							HttpComponentsUtil.getQueryString(
+								portletURL.toString())),
+						"p_p_auth"));
 			}
 
 		};

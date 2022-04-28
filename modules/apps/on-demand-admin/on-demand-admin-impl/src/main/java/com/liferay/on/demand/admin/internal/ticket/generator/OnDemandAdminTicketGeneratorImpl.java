@@ -23,6 +23,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.audit.AuditRouter;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.Ticket;
@@ -50,7 +51,8 @@ public class OnDemandAdminTicketGeneratorImpl
 	implements OnDemandAdminTicketGenerator {
 
 	@Override
-	public Ticket generate(Company company, long requestorUserId)
+	public Ticket generate(
+			Company company, long requestorUserId, String justification)
 		throws PortalException {
 
 		_onDemandAdminHelper.checkRequestAdministratorAccessPermission(
@@ -63,6 +65,9 @@ public class OnDemandAdminTicketGeneratorImpl
 				AUDIT_EVENT_TYPE_ON_DEMAND_ADMIN_TICKET_GENERATED,
 			User.class.getName(), requestorUserId, null);
 
+		auditMessage.setAdditionalInfo(
+			JSONUtil.put("justification", justification));
+
 		_auditRouter.route(auditMessage);
 
 		OnDemandAdminConfiguration onDemandAdminConfiguration =
@@ -74,7 +79,8 @@ public class OnDemandAdminTicketGeneratorImpl
 
 		return _ticketLocalService.addDistinctTicket(
 			user.getCompanyId(), User.class.getName(), user.getUserId(),
-			OnDemandAdminConstants.TICKET_TYPE_ON_DEMAND_ADMIN_LOGIN, null,
+			OnDemandAdminConstants.TICKET_TYPE_ON_DEMAND_ADMIN_LOGIN,
+			justification,
 			new Date(
 				System.currentTimeMillis() +
 					TimeUnit.MINUTES.toMillis(expirationTime)),

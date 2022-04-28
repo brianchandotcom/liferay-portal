@@ -21,7 +21,7 @@
 		</permissions>
 	</model-resource>
 	<model-resource>
-		<model-name>com.liferay.client.extension.model.ClientExtensionEntry</model-name>
+		<model-name>com.liferay.client.extension.model.RemoteAppEntry</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_remote_app_admin_web_portlet_RemoteAppAdminPortlet</portlet-name>
 		</portlet-ref>

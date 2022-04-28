@@ -88,6 +88,11 @@ public abstract class BaseTestResult implements TestResult {
 
 			return axisBuild.getAxisNumber();
 		}
+		else if (build instanceof DownstreamBuild) {
+			DownstreamBuild downstreamBuild = (DownstreamBuild)build;
+
+			return downstreamBuild.getAxisVariable();
+		}
 
 		return "INVALID_AXIS_NUMBER";
 	}

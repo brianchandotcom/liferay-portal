@@ -42,31 +42,31 @@ public class ClientExtensionInitialUpgradeStepRegistrator
 						return;
 					}
 
-					for (UpgradeProcess upgradeProcess : _upgradeProcesses) {
+					for (UpgradeProcess upgradeProcess :
+							new UpgradeProcess[] {
+								new com.liferay.client.extension.internal.
+									upgrade.v1_0_1.RemoteAppEntryUpgradeProcess(),
+								new com.liferay.client.extension.internal.
+									upgrade.v2_0_0.RemoteAppEntryUpgradeProcess(),
+								new com.liferay.client.extension.internal.
+									upgrade.v2_1_0.ResourcePermissionsUpgradeProcess(),
+								new com.liferay.client.extension.internal.
+									upgrade.v2_2_0.RemoteAppEntryUpgradeProcess(),
+								new com.liferay.client.extension.internal.
+									upgrade.v2_3_0.RemoteAppEntryUpgradeProcess(),
+								new com.liferay.client.extension.internal.
+									upgrade.v2_4_0.RemoteAppEntryUpgradeProcess(),
+								new com.liferay.client.extension.internal.
+									upgrade.v2_5_0.RemoteAppEntryUpgradeProcess(),
+								new com.liferay.client.extension.internal.
+									upgrade.v3_0_0.ClientExtensionEntryUpgradeProcess()
+							}) {
+
 						upgradeProcess.upgrade();
 					}
 				}
 
 			});
 	}
-
-	private final UpgradeProcess[] _upgradeProcesses = {
-		new com.liferay.client.extension.internal.upgrade.v1_0_1.
-			RemoteAppEntryUpgradeProcess(),
-		new com.liferay.client.extension.internal.upgrade.v2_0_0.
-			RemoteAppEntryUpgradeProcess(),
-		new com.liferay.client.extension.internal.upgrade.v2_1_0.
-			ResourcePermissionsUpgradeProcess(),
-		new com.liferay.client.extension.internal.upgrade.v2_2_0.
-			RemoteAppEntryUpgradeProcess(),
-		new com.liferay.client.extension.internal.upgrade.v2_3_0.
-			RemoteAppEntryUpgradeProcess(),
-		new com.liferay.client.extension.internal.upgrade.v2_4_0.
-			RemoteAppEntryUpgradeProcess(),
-		new com.liferay.client.extension.internal.upgrade.v2_5_0.
-			RemoteAppEntryUpgradeProcess(),
-		new com.liferay.client.extension.internal.upgrade.v3_0_0.
-			ClientExtensionEntryUpgradeProcess()
-	};
 
 }

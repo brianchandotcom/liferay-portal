@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.site.navigation.admin.constants.SiteNavigationAdminPortletKeys;
 import com.liferay.site.navigation.admin.web.internal.security.permission.resource.DDMTemplatePermission;
 import com.liferay.site.navigation.admin.web.internal.security.permission.resource.SiteNavigationMenuPermission;
@@ -67,6 +68,7 @@ import com.liferay.template.constants.TemplatePortletKeys;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -86,6 +88,7 @@ public class SiteNavigationAdminDisplayContext {
 		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
+		PortletDisplayTemplate portletDisplayTemplate,
 		SiteNavigationMenuItemTypeRegistry siteNavigationMenuItemTypeRegistry,
 		SiteNavigationMenuLocalService siteNavigationMenuLocalService,
 		SiteNavigationMenuService siteNavigationMenuService) {
@@ -93,6 +96,7 @@ public class SiteNavigationAdminDisplayContext {
 		_httpServletRequest = httpServletRequest;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
+		_portletDisplayTemplate = portletDisplayTemplate;
 		_siteNavigationMenuItemTypeRegistry =
 			siteNavigationMenuItemTypeRegistry;
 		_siteNavigationMenuLocalService = siteNavigationMenuLocalService;
@@ -458,11 +462,38 @@ public class SiteNavigationAdminDisplayContext {
 					HtmlUtil.escape(
 						ddmTemplate.getName(_themeDisplay.getLocale()))
 				).put(
+					"selected",
+					() -> {
+						if (Objects.equals(
+								ddmTemplate.getTemplateKey(),
+								_getDefaultDDMTemplateKey())) {
+
+							return true;
+						}
+
+						return false;
+					}
+				).put(
 					"value", HtmlUtil.escape(ddmTemplate.getTemplateKey())
 				));
 		}
 
 		return jsonArray;
+	}
+
+	private String _getDefaultDDMTemplateKey() {
+		if (_ddmTemplateKey != null) {
+			return _ddmTemplateKey;
+		}
+
+		DDMTemplate portletDisplayDDMTemplate =
+			_portletDisplayTemplate.getDefaultPortletDisplayTemplateDDMTemplate(
+				_themeDisplay.getScopeGroupId(),
+				PortalUtil.getClassNameId(NavItem.class));
+
+		_ddmTemplateKey = portletDisplayDDMTemplate.getTemplateKey();
+
+		return _ddmTemplateKey;
 	}
 
 	private DropdownItem _getDropdownItem(
@@ -552,6 +583,7 @@ public class SiteNavigationAdminDisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SiteNavigationAdminDisplayContext.class);
 
+	private String _ddmTemplateKey;
 	private String _displayStyle;
 	private final HttpServletRequest _httpServletRequest;
 	private String _keywords;
@@ -559,6 +591,7 @@ public class SiteNavigationAdminDisplayContext {
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _orderByCol;
 	private String _orderByType;
+	private final PortletDisplayTemplate _portletDisplayTemplate;
 	private SearchContainer<SiteNavigationMenu> _searchContainer;
 	private Long _siteNavigationMenuId;
 	private final SiteNavigationMenuItemTypeRegistry

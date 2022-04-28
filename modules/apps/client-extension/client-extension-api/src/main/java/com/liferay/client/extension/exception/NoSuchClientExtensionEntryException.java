@@ -19,20 +19,20 @@ import com.liferay.portal.kernel.exception.NoSuchModelException;
 /**
  * @author Brian Wing Shun Chan
  */
-public class NoSuchClientExtensionEntryException extends NoSuchModelException {
+public class NoSuchRemoteAppEntryException extends NoSuchModelException {
 
-	public NoSuchClientExtensionEntryException() {
+	public NoSuchRemoteAppEntryException() {
 	}
 
-	public NoSuchClientExtensionEntryException(String msg) {
+	public NoSuchRemoteAppEntryException(String msg) {
 		super(msg);
 	}
 
-	public NoSuchClientExtensionEntryException(String msg, Throwable throwable) {
+	public NoSuchRemoteAppEntryException(String msg, Throwable throwable) {
 		super(msg, throwable);
 	}
 
-	public NoSuchClientExtensionEntryException(Throwable throwable) {
+	public NoSuchRemoteAppEntryException(Throwable throwable) {
 		super(throwable);
 	}
 

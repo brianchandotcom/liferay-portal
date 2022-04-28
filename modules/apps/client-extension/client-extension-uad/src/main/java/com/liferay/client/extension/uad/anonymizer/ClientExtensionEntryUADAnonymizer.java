@@ -22,6 +22,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Brian Wing Shun Chan
  */
 @Component(immediate = true, service = UADAnonymizer.class)
-public class ClientExtensionEntryUADAnonymizer
-	extends BaseClientExtensionEntryUADAnonymizer {
+public class RemoteAppEntryUADAnonymizer
+	extends BaseRemoteAppEntryUADAnonymizer {
 }

@@ -14,9 +14,9 @@
 
 package com.liferay.client.extension.service.persistence.impl;
 
-import com.liferay.client.extension.model.ClientExtensionEntryTable;
-import com.liferay.client.extension.model.impl.ClientExtensionEntryImpl;
-import com.liferay.client.extension.model.impl.ClientExtensionEntryModelImpl;
+import com.liferay.client.extension.model.RemoteAppEntryTable;
+import com.liferay.client.extension.model.impl.RemoteAppEntryImpl;
+import com.liferay.client.extension.model.impl.RemoteAppEntryModelImpl;
 import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -27,7 +27,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * The arguments resolver class for retrieving value from ClientExtensionEntry.
+ * The arguments resolver class for retrieving value from RemoteAppEntry.
  *
  * @author Brian Wing Shun Chan
  * @generated
@@ -35,10 +35,10 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	service = {
-		ClientExtensionEntryModelArgumentsResolver.class, ArgumentsResolver.class
+		RemoteAppEntryModelArgumentsResolver.class, ArgumentsResolver.class
 	}
 )
-public class ClientExtensionEntryModelArgumentsResolver implements ArgumentsResolver {
+public class RemoteAppEntryModelArgumentsResolver implements ArgumentsResolver {
 
 	@Override
 	public Object[] getArguments(
@@ -55,13 +55,13 @@ public class ClientExtensionEntryModelArgumentsResolver implements ArgumentsReso
 			return null;
 		}
 
-		ClientExtensionEntryModelImpl clientExtensionEntryModelImpl =
-			(ClientExtensionEntryModelImpl)baseModel;
+		RemoteAppEntryModelImpl remoteAppEntryModelImpl =
+			(RemoteAppEntryModelImpl)baseModel;
 
-		long columnBitmask = clientExtensionEntryModelImpl.getColumnBitmask();
+		long columnBitmask = remoteAppEntryModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(clientExtensionEntryModelImpl, columnNames, original);
+			return _getValue(remoteAppEntryModelImpl, columnNames, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -72,7 +72,7 @@ public class ClientExtensionEntryModelArgumentsResolver implements ArgumentsReso
 
 			for (String columnName : columnNames) {
 				finderPathColumnBitmask |=
-					clientExtensionEntryModelImpl.getColumnBitmask(columnName);
+					remoteAppEntryModelImpl.getColumnBitmask(columnName);
 			}
 
 			_finderPathColumnBitmasksCache.put(
@@ -80,7 +80,7 @@ public class ClientExtensionEntryModelArgumentsResolver implements ArgumentsReso
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(clientExtensionEntryModelImpl, columnNames, original);
+			return _getValue(remoteAppEntryModelImpl, columnNames, original);
 		}
 
 		return null;
@@ -88,16 +88,16 @@ public class ClientExtensionEntryModelArgumentsResolver implements ArgumentsReso
 
 	@Override
 	public String getClassName() {
-		return ClientExtensionEntryImpl.class.getName();
+		return RemoteAppEntryImpl.class.getName();
 	}
 
 	@Override
 	public String getTableName() {
-		return ClientExtensionEntryTable.INSTANCE.getTableName();
+		return RemoteAppEntryTable.INSTANCE.getTableName();
 	}
 
 	private static Object[] _getValue(
-		ClientExtensionEntryModelImpl clientExtensionEntryModelImpl, String[] columnNames,
+		RemoteAppEntryModelImpl remoteAppEntryModelImpl, String[] columnNames,
 		boolean original) {
 
 		Object[] arguments = new Object[columnNames.length];
@@ -106,11 +106,11 @@ public class ClientExtensionEntryModelArgumentsResolver implements ArgumentsReso
 			String columnName = columnNames[i];
 
 			if (original) {
-				arguments[i] = clientExtensionEntryModelImpl.getColumnOriginalValue(
+				arguments[i] = remoteAppEntryModelImpl.getColumnOriginalValue(
 					columnName);
 			}
 			else {
-				arguments[i] = clientExtensionEntryModelImpl.getColumnValue(
+				arguments[i] = remoteAppEntryModelImpl.getColumnValue(
 					columnName);
 			}
 		}

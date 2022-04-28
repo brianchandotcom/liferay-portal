@@ -14,7 +14,7 @@
 
 package com.liferay.client.extension.service;
 
-import com.liferay.client.extension.model.ClientExtensionEntry;
+import com.liferay.client.extension.model.RemoteAppEntry;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.cluster.Clusterable;
@@ -47,13 +47,13 @@ import java.util.Map;
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * Provides the local service interface for ClientExtensionEntry. Methods of this
+ * Provides the local service interface for RemoteAppEntry. Methods of this
  * service will not have security checks based on the propagated JAAS
  * credentials because this service can only be accessed from within the same
  * VM.
  *
  * @author Brian Wing Shun Chan
- * @see ClientExtensionEntryLocalServiceUtil
+ * @see RemoteAppEntryLocalServiceUtil
  * @generated
  */
 @ProviderType
@@ -61,16 +61,16 @@ import org.osgi.annotation.versioning.ProviderType;
 	isolation = Isolation.PORTAL,
 	rollbackFor = {PortalException.class, SystemException.class}
 )
-public interface ClientExtensionEntryLocalService
+public interface RemoteAppEntryLocalService
 	extends BaseLocalService, PersistedModelLocalService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.client.extension.service.impl.ClientExtensionEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the remote app entry local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ClientExtensionEntryLocalServiceUtil} if injection and service tracking are not available.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.client.extension.service.impl.RemoteAppEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the remote app entry local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link RemoteAppEntryLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	@Indexable(type = IndexableType.REINDEX)
-	public ClientExtensionEntry addCustomElementClientExtensionEntry(
+	public RemoteAppEntry addCustomElementRemoteAppEntry(
 			String externalReferenceCode, long userId,
 			String customElementCSSURLs, String customElementHTMLElementName,
 			String customElementURLs, boolean customElementUseESM,
@@ -80,14 +80,14 @@ public interface ClientExtensionEntryLocalService
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
-	public ClientExtensionEntry addIFrameClientExtensionEntry(
+	public RemoteAppEntry addIFrameRemoteAppEntry(
 			long userId, String description, String friendlyURLMapping,
 			String iFrameURL, boolean instanceable, Map<Locale, String> nameMap,
 			String portletCategoryName, String properties, String sourceCodeURL)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
-	public ClientExtensionEntry addOrUpdateCustomElementClientExtensionEntry(
+	public RemoteAppEntry addOrUpdateCustomElementRemoteAppEntry(
 			String externalReferenceCode, long userId,
 			String customElementCSSURLs, String customElementHTMLElementName,
 			String customElementURLs, boolean customElementUseESM,
@@ -100,14 +100,14 @@ public interface ClientExtensionEntryLocalService
 	 * Adds the remote app entry to the database. Also notifies the appropriate model listeners.
 	 *
 	 * <p>
-	 * <strong>Important:</strong> Inspect ClientExtensionEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * <strong>Important:</strong> Inspect RemoteAppEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
 	 * </p>
 	 *
-	 * @param clientExtensionEntry the remote app entry
+	 * @param remoteAppEntry the remote app entry
 	 * @return the remote app entry that was added
 	 */
 	@Indexable(type = IndexableType.REINDEX)
-	public ClientExtensionEntry addClientExtensionEntry(ClientExtensionEntry clientExtensionEntry);
+	public RemoteAppEntry addRemoteAppEntry(RemoteAppEntry remoteAppEntry);
 
 	/**
 	 * @throws PortalException
@@ -118,11 +118,11 @@ public interface ClientExtensionEntryLocalService
 	/**
 	 * Creates a new remote app entry with the primary key. Does not add the remote app entry to the database.
 	 *
-	 * @param clientExtensionEntryId the primary key for the new remote app entry
+	 * @param remoteAppEntryId the primary key for the new remote app entry
 	 * @return the new remote app entry
 	 */
 	@Transactional(enabled = false)
-	public ClientExtensionEntry createClientExtensionEntry(long clientExtensionEntryId);
+	public RemoteAppEntry createRemoteAppEntry(long remoteAppEntryId);
 
 	/**
 	 * @throws PortalException
@@ -135,35 +135,35 @@ public interface ClientExtensionEntryLocalService
 	 * Deletes the remote app entry with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * <p>
-	 * <strong>Important:</strong> Inspect ClientExtensionEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * <strong>Important:</strong> Inspect RemoteAppEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
 	 * </p>
 	 *
-	 * @param clientExtensionEntryId the primary key of the remote app entry
+	 * @param remoteAppEntryId the primary key of the remote app entry
 	 * @return the remote app entry that was removed
 	 * @throws PortalException if a remote app entry with the primary key could not be found
 	 */
 	@Indexable(type = IndexableType.DELETE)
-	public ClientExtensionEntry deleteClientExtensionEntry(long clientExtensionEntryId)
+	public RemoteAppEntry deleteRemoteAppEntry(long remoteAppEntryId)
 		throws PortalException;
 
 	/**
 	 * Deletes the remote app entry from the database. Also notifies the appropriate model listeners.
 	 *
 	 * <p>
-	 * <strong>Important:</strong> Inspect ClientExtensionEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * <strong>Important:</strong> Inspect RemoteAppEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
 	 * </p>
 	 *
-	 * @param clientExtensionEntry the remote app entry
+	 * @param remoteAppEntry the remote app entry
 	 * @return the remote app entry that was removed
 	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
-	public ClientExtensionEntry deleteClientExtensionEntry(ClientExtensionEntry clientExtensionEntry)
+	public RemoteAppEntry deleteRemoteAppEntry(RemoteAppEntry remoteAppEntry)
 		throws PortalException;
 
 	@Clusterable
-	public void deployClientExtensionEntry(ClientExtensionEntry clientExtensionEntry);
+	public void deployRemoteAppEntry(RemoteAppEntry remoteAppEntry);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> T dslQuery(DSLQuery dslQuery);
@@ -187,7 +187,7 @@ public interface ClientExtensionEntryLocalService
 	 * Performs a dynamic query on the database and returns a range of the matching rows.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.client.extension.model.impl.ClientExtensionEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.client.extension.model.impl.RemoteAppEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param dynamicQuery the dynamic query
@@ -203,7 +203,7 @@ public interface ClientExtensionEntryLocalService
 	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.client.extension.model.impl.ClientExtensionEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.client.extension.model.impl.RemoteAppEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param dynamicQuery the dynamic query
@@ -238,7 +238,7 @@ public interface ClientExtensionEntryLocalService
 		DynamicQuery dynamicQuery, Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ClientExtensionEntry fetchClientExtensionEntry(long clientExtensionEntryId);
+	public RemoteAppEntry fetchRemoteAppEntry(long remoteAppEntryId);
 
 	/**
 	 * Returns the remote app entry with the matching external reference code and company.
@@ -248,15 +248,15 @@ public interface ClientExtensionEntryLocalService
 	 * @return the matching remote app entry, or <code>null</code> if a matching remote app entry could not be found
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ClientExtensionEntry fetchClientExtensionEntryByExternalReferenceCode(
+	public RemoteAppEntry fetchRemoteAppEntryByExternalReferenceCode(
 		long companyId, String externalReferenceCode);
 
 	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchClientExtensionEntryByExternalReferenceCode(long, String)}
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchRemoteAppEntryByExternalReferenceCode(long, String)}
 	 */
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ClientExtensionEntry fetchClientExtensionEntryByReferenceCode(
+	public RemoteAppEntry fetchRemoteAppEntryByReferenceCode(
 		long companyId, String externalReferenceCode);
 
 	/**
@@ -267,7 +267,7 @@ public interface ClientExtensionEntryLocalService
 	 * @return the matching remote app entry, or <code>null</code> if a matching remote app entry could not be found
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ClientExtensionEntry fetchClientExtensionEntryByUuidAndCompanyId(
+	public RemoteAppEntry fetchRemoteAppEntryByUuidAndCompanyId(
 		String uuid, long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -299,7 +299,7 @@ public interface ClientExtensionEntryLocalService
 	 * Returns a range of all the remote app entries.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.client.extension.model.impl.ClientExtensionEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.client.extension.model.impl.RemoteAppEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of remote app entries
@@ -307,7 +307,7 @@ public interface ClientExtensionEntryLocalService
 	 * @return the range of remote app entries
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<ClientExtensionEntry> getClientExtensionEntries(int start, int end);
+	public List<RemoteAppEntry> getRemoteAppEntries(int start, int end);
 
 	/**
 	 * Returns the number of remote app entries.
@@ -315,17 +315,17 @@ public interface ClientExtensionEntryLocalService
 	 * @return the number of remote app entries
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getClientExtensionEntriesCount();
+	public int getRemoteAppEntriesCount();
 
 	/**
 	 * Returns the remote app entry with the primary key.
 	 *
-	 * @param clientExtensionEntryId the primary key of the remote app entry
+	 * @param remoteAppEntryId the primary key of the remote app entry
 	 * @return the remote app entry
 	 * @throws PortalException if a remote app entry with the primary key could not be found
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ClientExtensionEntry getClientExtensionEntry(long clientExtensionEntryId)
+	public RemoteAppEntry getRemoteAppEntry(long remoteAppEntryId)
 		throws PortalException;
 
 	/**
@@ -337,7 +337,7 @@ public interface ClientExtensionEntryLocalService
 	 * @throws PortalException if a matching remote app entry could not be found
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ClientExtensionEntry getClientExtensionEntryByExternalReferenceCode(
+	public RemoteAppEntry getRemoteAppEntryByExternalReferenceCode(
 			long companyId, String externalReferenceCode)
 		throws PortalException;
 
@@ -350,12 +350,12 @@ public interface ClientExtensionEntryLocalService
 	 * @throws PortalException if a matching remote app entry could not be found
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ClientExtensionEntry getClientExtensionEntryByUuidAndCompanyId(
+	public RemoteAppEntry getRemoteAppEntryByUuidAndCompanyId(
 			String uuid, long companyId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<ClientExtensionEntry> search(
+	public List<RemoteAppEntry> search(
 			long companyId, String keywords, int start, int end, Sort sort)
 		throws PortalException;
 
@@ -364,11 +364,11 @@ public interface ClientExtensionEntryLocalService
 		throws PortalException;
 
 	@Clusterable
-	public void undeployClientExtensionEntry(ClientExtensionEntry clientExtensionEntry);
+	public void undeployRemoteAppEntry(RemoteAppEntry remoteAppEntry);
 
 	@Indexable(type = IndexableType.REINDEX)
-	public ClientExtensionEntry updateCustomElementClientExtensionEntry(
-			long userId, long clientExtensionEntryId, String customElementCSSURLs,
+	public RemoteAppEntry updateCustomElementRemoteAppEntry(
+			long userId, long remoteAppEntryId, String customElementCSSURLs,
 			String customElementHTMLElementName, String customElementURLs,
 			boolean customElementUseESM, String description,
 			String friendlyURLMapping, Map<Locale, String> nameMap,
@@ -376,8 +376,8 @@ public interface ClientExtensionEntryLocalService
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
-	public ClientExtensionEntry updateIFrameClientExtensionEntry(
-			long userId, long clientExtensionEntryId, String description,
+	public RemoteAppEntry updateIFrameRemoteAppEntry(
+			long userId, long remoteAppEntryId, String description,
 			String friendlyURLMapping, String iFrameURL,
 			Map<Locale, String> nameMap, String portletCategoryName,
 			String properties, String sourceCodeURL)
@@ -387,18 +387,18 @@ public interface ClientExtensionEntryLocalService
 	 * Updates the remote app entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
 	 * <p>
-	 * <strong>Important:</strong> Inspect ClientExtensionEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * <strong>Important:</strong> Inspect RemoteAppEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
 	 * </p>
 	 *
-	 * @param clientExtensionEntry the remote app entry
+	 * @param remoteAppEntry the remote app entry
 	 * @return the remote app entry that was updated
 	 */
 	@Indexable(type = IndexableType.REINDEX)
-	public ClientExtensionEntry updateClientExtensionEntry(ClientExtensionEntry clientExtensionEntry);
+	public RemoteAppEntry updateRemoteAppEntry(RemoteAppEntry remoteAppEntry);
 
 	@Indexable(type = IndexableType.REINDEX)
-	public ClientExtensionEntry updateStatus(
-			long userId, long clientExtensionEntryId, int status)
+	public RemoteAppEntry updateStatus(
+			long userId, long remoteAppEntryId, int status)
 		throws PortalException;
 
 }

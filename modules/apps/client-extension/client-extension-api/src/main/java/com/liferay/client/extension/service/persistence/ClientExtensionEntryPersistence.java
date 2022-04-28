@@ -14,8 +14,8 @@
 
 package com.liferay.client.extension.service.persistence;
 
-import com.liferay.client.extension.exception.NoSuchClientExtensionEntryException;
-import com.liferay.client.extension.model.ClientExtensionEntry;
+import com.liferay.client.extension.exception.NoSuchRemoteAppEntryException;
+import com.liferay.client.extension.model.RemoteAppEntry;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -28,17 +28,17 @@ import org.osgi.annotation.versioning.ProviderType;
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see ClientExtensionEntryUtil
+ * @see RemoteAppEntryUtil
  * @generated
  */
 @ProviderType
-public interface ClientExtensionEntryPersistence
-	extends BasePersistence<ClientExtensionEntry> {
+public interface RemoteAppEntryPersistence
+	extends BasePersistence<RemoteAppEntry> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link ClientExtensionEntryUtil} to access the remote app entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
+	 * Never modify or reference this interface directly. Always use {@link RemoteAppEntryUtil} to access the remote app entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
 
 	/**
@@ -47,13 +47,13 @@ public interface ClientExtensionEntryPersistence
 	 * @param uuid the uuid
 	 * @return the matching remote app entries
 	 */
-	public java.util.List<ClientExtensionEntry> findByUuid(String uuid);
+	public java.util.List<RemoteAppEntry> findByUuid(String uuid);
 
 	/**
 	 * Returns a range of all the remote app entries where uuid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ClientExtensionEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RemoteAppEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -61,14 +61,14 @@ public interface ClientExtensionEntryPersistence
 	 * @param end the upper bound of the range of remote app entries (not inclusive)
 	 * @return the range of matching remote app entries
 	 */
-	public java.util.List<ClientExtensionEntry> findByUuid(
+	public java.util.List<RemoteAppEntry> findByUuid(
 		String uuid, int start, int end);
 
 	/**
 	 * Returns an ordered range of all the remote app entries where uuid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ClientExtensionEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RemoteAppEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -77,16 +77,16 @@ public interface ClientExtensionEntryPersistence
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching remote app entries
 	 */
-	public java.util.List<ClientExtensionEntry> findByUuid(
+	public java.util.List<RemoteAppEntry> findByUuid(
 		String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<ClientExtensionEntry>
+		com.liferay.portal.kernel.util.OrderByComparator<RemoteAppEntry>
 			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the remote app entries where uuid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ClientExtensionEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RemoteAppEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -96,9 +96,9 @@ public interface ClientExtensionEntryPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching remote app entries
 	 */
-	public java.util.List<ClientExtensionEntry> findByUuid(
+	public java.util.List<RemoteAppEntry> findByUuid(
 		String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<ClientExtensionEntry>
+		com.liferay.portal.kernel.util.OrderByComparator<RemoteAppEntry>
 			orderByComparator,
 		boolean useFinderCache);
 
@@ -108,13 +108,13 @@ public interface ClientExtensionEntryPersistence
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching remote app entry
-	 * @throws NoSuchClientExtensionEntryException if a matching remote app entry could not be found
+	 * @throws NoSuchRemoteAppEntryException if a matching remote app entry could not be found
 	 */
-	public ClientExtensionEntry findByUuid_First(
+	public RemoteAppEntry findByUuid_First(
 			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<ClientExtensionEntry>
+			com.liferay.portal.kernel.util.OrderByComparator<RemoteAppEntry>
 				orderByComparator)
-		throws NoSuchClientExtensionEntryException;
+		throws NoSuchRemoteAppEntryException;
 
 	/**
 	 * Returns the first remote app entry in the ordered set where uuid = &#63;.
@@ -123,9 +123,9 @@ public interface ClientExtensionEntryPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching remote app entry, or <code>null</code> if a matching remote app entry could not be found
 	 */
-	public ClientExtensionEntry fetchByUuid_First(
+	public RemoteAppEntry fetchByUuid_First(
 		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<ClientExtensionEntry>
+		com.liferay.portal.kernel.util.OrderByComparator<RemoteAppEntry>
 			orderByComparator);
 
 	/**
@@ -134,13 +134,13 @@ public interface ClientExtensionEntryPersistence
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching remote app entry
-	 * @throws NoSuchClientExtensionEntryException if a matching remote app entry could not be found
+	 * @throws NoSuchRemoteAppEntryException if a matching remote app entry could not be found
 	 */
-	public ClientExtensionEntry findByUuid_Last(
+	public RemoteAppEntry findByUuid_Last(
 			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<ClientExtensionEntry>
+			com.liferay.portal.kernel.util.OrderByComparator<RemoteAppEntry>
 				orderByComparator)
-		throws NoSuchClientExtensionEntryException;
+		throws NoSuchRemoteAppEntryException;
 
 	/**
 	 * Returns the last remote app entry in the ordered set where uuid = &#63;.
@@ -149,25 +149,25 @@ public interface ClientExtensionEntryPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching remote app entry, or <code>null</code> if a matching remote app entry could not be found
 	 */
-	public ClientExtensionEntry fetchByUuid_Last(
+	public RemoteAppEntry fetchByUuid_Last(
 		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<ClientExtensionEntry>
+		com.liferay.portal.kernel.util.OrderByComparator<RemoteAppEntry>
 			orderByComparator);
 
 	/**
 	 * Returns the remote app entries before and after the current remote app entry in the ordered set where uuid = &#63;.
 	 *
-	 * @param clientExtensionEntryId the primary key of the current remote app entry
+	 * @param remoteAppEntryId the primary key of the current remote app entry
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next remote app entry
-	 * @throws NoSuchClientExtensionEntryException if a remote app entry with the primary key could not be found
+	 * @throws NoSuchRemoteAppEntryException if a remote app entry with the primary key could not be found
 	 */
-	public ClientExtensionEntry[] findByUuid_PrevAndNext(
-			long clientExtensionEntryId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<ClientExtensionEntry>
+	public RemoteAppEntry[] findByUuid_PrevAndNext(
+			long remoteAppEntryId, String uuid,
+			com.liferay.portal.kernel.util.OrderByComparator<RemoteAppEntry>
 				orderByComparator)
-		throws NoSuchClientExtensionEntryException;
+		throws NoSuchRemoteAppEntryException;
 
 	/**
 	 * Returns all the remote app entries that the user has permission to view where uuid = &#63;.
@@ -175,13 +175,13 @@ public interface ClientExtensionEntryPersistence
 	 * @param uuid the uuid
 	 * @return the matching remote app entries that the user has permission to view
 	 */
-	public java.util.List<ClientExtensionEntry> filterFindByUuid(String uuid);
+	public java.util.List<RemoteAppEntry> filterFindByUuid(String uuid);
 
 	/**
 	 * Returns a range of all the remote app entries that the user has permission to view where uuid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ClientExtensionEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RemoteAppEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -189,14 +189,14 @@ public interface ClientExtensionEntryPersistence
 	 * @param end the upper bound of the range of remote app entries (not inclusive)
 	 * @return the range of matching remote app entries that the user has permission to view
 	 */
-	public java.util.List<ClientExtensionEntry> filterFindByUuid(
+	public java.util.List<RemoteAppEntry> filterFindByUuid(
 		String uuid, int start, int end);
 
 	/**
 	 * Returns an ordered range of all the remote app entries that the user has permissions to view where uuid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ClientExtensionEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RemoteAppEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -205,25 +205,25 @@ public interface ClientExtensionEntryPersistence
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching remote app entries that the user has permission to view
 	 */
-	public java.util.List<ClientExtensionEntry> filterFindByUuid(
+	public java.util.List<RemoteAppEntry> filterFindByUuid(
 		String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<ClientExtensionEntry>
+		com.liferay.portal.kernel.util.OrderByComparator<RemoteAppEntry>
 			orderByComparator);
 
 	/**
 	 * Returns the remote app entries before and after the current remote app entry in the ordered set of remote app entries that the user has permission to view where uuid = &#63;.
 	 *
-	 * @param clientExtensionEntryId the primary key of the current remote app entry
+	 * @param remoteAppEntryId the primary key of the current remote app entry
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next remote app entry
-	 * @throws NoSuchClientExtensionEntryException if a remote app entry with the primary key could not be found
+	 * @throws NoSuchRemoteAppEntryException if a remote app entry with the primary key could not be found
 	 */
-	public ClientExtensionEntry[] filterFindByUuid_PrevAndNext(
-			long clientExtensionEntryId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<ClientExtensionEntry>
+	public RemoteAppEntry[] filterFindByUuid_PrevAndNext(
+			long remoteAppEntryId, String uuid,
+			com.liferay.portal.kernel.util.OrderByComparator<RemoteAppEntry>
 				orderByComparator)
-		throws NoSuchClientExtensionEntryException;
+		throws NoSuchRemoteAppEntryException;
 
 	/**
 	 * Removes all the remote app entries where uuid = &#63; from the database.
@@ -255,14 +255,14 @@ public interface ClientExtensionEntryPersistence
 	 * @param companyId the company ID
 	 * @return the matching remote app entries
 	 */
-	public java.util.List<ClientExtensionEntry> findByUuid_C(
+	public java.util.List<RemoteAppEntry> findByUuid_C(
 		String uuid, long companyId);
 
 	/**
 	 * Returns a range of all the remote app entries where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ClientExtensionEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RemoteAppEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -271,14 +271,14 @@ public interface ClientExtensionEntryPersistence
 	 * @param end the upper bound of the range of remote app entries (not inclusive)
 	 * @return the range of matching remote app entries
 	 */
-	public java.util.List<ClientExtensionEntry> findByUuid_C(
+	public java.util.List<RemoteAppEntry> findByUuid_C(
 		String uuid, long companyId, int start, int end);
 
 	/**
 	 * Returns an ordered range of all the remote app entries where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ClientExtensionEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RemoteAppEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -288,16 +288,16 @@ public interface ClientExtensionEntryPersistence
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching remote app entries
 	 */
-	public java.util.List<ClientExtensionEntry> findByUuid_C(
+	public java.util.List<RemoteAppEntry> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<ClientExtensionEntry>
+		com.liferay.portal.kernel.util.OrderByComparator<RemoteAppEntry>
 			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the remote app entries where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ClientExtensionEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RemoteAppEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -308,9 +308,9 @@ public interface ClientExtensionEntryPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching remote app entries
 	 */
-	public java.util.List<ClientExtensionEntry> findByUuid_C(
+	public java.util.List<RemoteAppEntry> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<ClientExtensionEntry>
+		com.liferay.portal.kernel.util.OrderByComparator<RemoteAppEntry>
 			orderByComparator,
 		boolean useFinderCache);
 
@@ -321,13 +321,13 @@ public interface ClientExtensionEntryPersistence
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching remote app entry
-	 * @throws NoSuchClientExtensionEntryException if a matching remote app entry could not be found
+	 * @throws NoSuchRemoteAppEntryException if a matching remote app entry could not be found
 	 */
-	public ClientExtensionEntry findByUuid_C_First(
+	public RemoteAppEntry findByUuid_C_First(
 			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<ClientExtensionEntry>
+			com.liferay.portal.kernel.util.OrderByComparator<RemoteAppEntry>
 				orderByComparator)
-		throws NoSuchClientExtensionEntryException;
+		throws NoSuchRemoteAppEntryException;
 
 	/**
 	 * Returns the first remote app entry in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -337,9 +337,9 @@ public interface ClientExtensionEntryPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching remote app entry, or <code>null</code> if a matching remote app entry could not be found
 	 */
-	public ClientExtensionEntry fetchByUuid_C_First(
+	public RemoteAppEntry fetchByUuid_C_First(
 		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<ClientExtensionEntry>
+		com.liferay.portal.kernel.util.OrderByComparator<RemoteAppEntry>
 			orderByComparator);
 
 	/**
@@ -349,13 +349,13 @@ public interface ClientExtensionEntryPersistence
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching remote app entry
-	 * @throws NoSuchClientExtensionEntryException if a matching remote app entry could not be found
+	 * @throws NoSuchRemoteAppEntryException if a matching remote app entry could not be found
 	 */
-	public ClientExtensionEntry findByUuid_C_Last(
+	public RemoteAppEntry findByUuid_C_Last(
 			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<ClientExtensionEntry>
+			com.liferay.portal.kernel.util.OrderByComparator<RemoteAppEntry>
 				orderByComparator)
-		throws NoSuchClientExtensionEntryException;
+		throws NoSuchRemoteAppEntryException;
 
 	/**
 	 * Returns the last remote app entry in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -365,26 +365,26 @@ public interface ClientExtensionEntryPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching remote app entry, or <code>null</code> if a matching remote app entry could not be found
 	 */
-	public ClientExtensionEntry fetchByUuid_C_Last(
+	public RemoteAppEntry fetchByUuid_C_Last(
 		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<ClientExtensionEntry>
+		com.liferay.portal.kernel.util.OrderByComparator<RemoteAppEntry>
 			orderByComparator);
 
 	/**
 	 * Returns the remote app entries before and after the current remote app entry in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
-	 * @param clientExtensionEntryId the primary key of the current remote app entry
+	 * @param remoteAppEntryId the primary key of the current remote app entry
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next remote app entry
-	 * @throws NoSuchClientExtensionEntryException if a remote app entry with the primary key could not be found
+	 * @throws NoSuchRemoteAppEntryException if a remote app entry with the primary key could not be found
 	 */
-	public ClientExtensionEntry[] findByUuid_C_PrevAndNext(
-			long clientExtensionEntryId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<ClientExtensionEntry>
+	public RemoteAppEntry[] findByUuid_C_PrevAndNext(
+			long remoteAppEntryId, String uuid, long companyId,
+			com.liferay.portal.kernel.util.OrderByComparator<RemoteAppEntry>
 				orderByComparator)
-		throws NoSuchClientExtensionEntryException;
+		throws NoSuchRemoteAppEntryException;
 
 	/**
 	 * Returns all the remote app entries that the user has permission to view where uuid = &#63; and companyId = &#63;.
@@ -393,14 +393,14 @@ public interface ClientExtensionEntryPersistence
 	 * @param companyId the company ID
 	 * @return the matching remote app entries that the user has permission to view
 	 */
-	public java.util.List<ClientExtensionEntry> filterFindByUuid_C(
+	public java.util.List<RemoteAppEntry> filterFindByUuid_C(
 		String uuid, long companyId);
 
 	/**
 	 * Returns a range of all the remote app entries that the user has permission to view where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ClientExtensionEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RemoteAppEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -409,14 +409,14 @@ public interface ClientExtensionEntryPersistence
 	 * @param end the upper bound of the range of remote app entries (not inclusive)
 	 * @return the range of matching remote app entries that the user has permission to view
 	 */
-	public java.util.List<ClientExtensionEntry> filterFindByUuid_C(
+	public java.util.List<RemoteAppEntry> filterFindByUuid_C(
 		String uuid, long companyId, int start, int end);
 
 	/**
 	 * Returns an ordered range of all the remote app entries that the user has permissions to view where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ClientExtensionEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RemoteAppEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -426,26 +426,26 @@ public interface ClientExtensionEntryPersistence
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching remote app entries that the user has permission to view
 	 */
-	public java.util.List<ClientExtensionEntry> filterFindByUuid_C(
+	public java.util.List<RemoteAppEntry> filterFindByUuid_C(
 		String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<ClientExtensionEntry>
+		com.liferay.portal.kernel.util.OrderByComparator<RemoteAppEntry>
 			orderByComparator);
 
 	/**
 	 * Returns the remote app entries before and after the current remote app entry in the ordered set of remote app entries that the user has permission to view where uuid = &#63; and companyId = &#63;.
 	 *
-	 * @param clientExtensionEntryId the primary key of the current remote app entry
+	 * @param remoteAppEntryId the primary key of the current remote app entry
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next remote app entry
-	 * @throws NoSuchClientExtensionEntryException if a remote app entry with the primary key could not be found
+	 * @throws NoSuchRemoteAppEntryException if a remote app entry with the primary key could not be found
 	 */
-	public ClientExtensionEntry[] filterFindByUuid_C_PrevAndNext(
-			long clientExtensionEntryId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<ClientExtensionEntry>
+	public RemoteAppEntry[] filterFindByUuid_C_PrevAndNext(
+			long remoteAppEntryId, String uuid, long companyId,
+			com.liferay.portal.kernel.util.OrderByComparator<RemoteAppEntry>
 				orderByComparator)
-		throws NoSuchClientExtensionEntryException;
+		throws NoSuchRemoteAppEntryException;
 
 	/**
 	 * Removes all the remote app entries where uuid = &#63; and companyId = &#63; from the database.
@@ -474,16 +474,16 @@ public interface ClientExtensionEntryPersistence
 	public int filterCountByUuid_C(String uuid, long companyId);
 
 	/**
-	 * Returns the remote app entry where companyId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchClientExtensionEntryException</code> if it could not be found.
+	 * Returns the remote app entry where companyId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchRemoteAppEntryException</code> if it could not be found.
 	 *
 	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
 	 * @return the matching remote app entry
-	 * @throws NoSuchClientExtensionEntryException if a matching remote app entry could not be found
+	 * @throws NoSuchRemoteAppEntryException if a matching remote app entry could not be found
 	 */
-	public ClientExtensionEntry findByC_ERC(
+	public RemoteAppEntry findByC_ERC(
 			long companyId, String externalReferenceCode)
-		throws NoSuchClientExtensionEntryException;
+		throws NoSuchRemoteAppEntryException;
 
 	/**
 	 * Returns the remote app entry where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -492,7 +492,7 @@ public interface ClientExtensionEntryPersistence
 	 * @param externalReferenceCode the external reference code
 	 * @return the matching remote app entry, or <code>null</code> if a matching remote app entry could not be found
 	 */
-	public ClientExtensionEntry fetchByC_ERC(
+	public RemoteAppEntry fetchByC_ERC(
 		long companyId, String externalReferenceCode);
 
 	/**
@@ -503,7 +503,7 @@ public interface ClientExtensionEntryPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching remote app entry, or <code>null</code> if a matching remote app entry could not be found
 	 */
-	public ClientExtensionEntry fetchByC_ERC(
+	public RemoteAppEntry fetchByC_ERC(
 		long companyId, String externalReferenceCode, boolean useFinderCache);
 
 	/**
@@ -513,9 +513,9 @@ public interface ClientExtensionEntryPersistence
 	 * @param externalReferenceCode the external reference code
 	 * @return the remote app entry that was removed
 	 */
-	public ClientExtensionEntry removeByC_ERC(
+	public RemoteAppEntry removeByC_ERC(
 			long companyId, String externalReferenceCode)
-		throws NoSuchClientExtensionEntryException;
+		throws NoSuchRemoteAppEntryException;
 
 	/**
 	 * Returns the number of remote app entries where companyId = &#63; and externalReferenceCode = &#63;.
@@ -529,80 +529,80 @@ public interface ClientExtensionEntryPersistence
 	/**
 	 * Caches the remote app entry in the entity cache if it is enabled.
 	 *
-	 * @param clientExtensionEntry the remote app entry
+	 * @param remoteAppEntry the remote app entry
 	 */
-	public void cacheResult(ClientExtensionEntry clientExtensionEntry);
+	public void cacheResult(RemoteAppEntry remoteAppEntry);
 
 	/**
 	 * Caches the remote app entries in the entity cache if it is enabled.
 	 *
-	 * @param clientExtensionEntries the remote app entries
+	 * @param remoteAppEntries the remote app entries
 	 */
-	public void cacheResult(java.util.List<ClientExtensionEntry> clientExtensionEntries);
+	public void cacheResult(java.util.List<RemoteAppEntry> remoteAppEntries);
 
 	/**
 	 * Creates a new remote app entry with the primary key. Does not add the remote app entry to the database.
 	 *
-	 * @param clientExtensionEntryId the primary key for the new remote app entry
+	 * @param remoteAppEntryId the primary key for the new remote app entry
 	 * @return the new remote app entry
 	 */
-	public ClientExtensionEntry create(long clientExtensionEntryId);
+	public RemoteAppEntry create(long remoteAppEntryId);
 
 	/**
 	 * Removes the remote app entry with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param clientExtensionEntryId the primary key of the remote app entry
+	 * @param remoteAppEntryId the primary key of the remote app entry
 	 * @return the remote app entry that was removed
-	 * @throws NoSuchClientExtensionEntryException if a remote app entry with the primary key could not be found
+	 * @throws NoSuchRemoteAppEntryException if a remote app entry with the primary key could not be found
 	 */
-	public ClientExtensionEntry remove(long clientExtensionEntryId)
-		throws NoSuchClientExtensionEntryException;
+	public RemoteAppEntry remove(long remoteAppEntryId)
+		throws NoSuchRemoteAppEntryException;
 
-	public ClientExtensionEntry updateImpl(ClientExtensionEntry clientExtensionEntry);
+	public RemoteAppEntry updateImpl(RemoteAppEntry remoteAppEntry);
 
 	/**
-	 * Returns the remote app entry with the primary key or throws a <code>NoSuchClientExtensionEntryException</code> if it could not be found.
+	 * Returns the remote app entry with the primary key or throws a <code>NoSuchRemoteAppEntryException</code> if it could not be found.
 	 *
-	 * @param clientExtensionEntryId the primary key of the remote app entry
+	 * @param remoteAppEntryId the primary key of the remote app entry
 	 * @return the remote app entry
-	 * @throws NoSuchClientExtensionEntryException if a remote app entry with the primary key could not be found
+	 * @throws NoSuchRemoteAppEntryException if a remote app entry with the primary key could not be found
 	 */
-	public ClientExtensionEntry findByPrimaryKey(long clientExtensionEntryId)
-		throws NoSuchClientExtensionEntryException;
+	public RemoteAppEntry findByPrimaryKey(long remoteAppEntryId)
+		throws NoSuchRemoteAppEntryException;
 
 	/**
 	 * Returns the remote app entry with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param clientExtensionEntryId the primary key of the remote app entry
+	 * @param remoteAppEntryId the primary key of the remote app entry
 	 * @return the remote app entry, or <code>null</code> if a remote app entry with the primary key could not be found
 	 */
-	public ClientExtensionEntry fetchByPrimaryKey(long clientExtensionEntryId);
+	public RemoteAppEntry fetchByPrimaryKey(long remoteAppEntryId);
 
 	/**
 	 * Returns all the remote app entries.
 	 *
 	 * @return the remote app entries
 	 */
-	public java.util.List<ClientExtensionEntry> findAll();
+	public java.util.List<RemoteAppEntry> findAll();
 
 	/**
 	 * Returns a range of all the remote app entries.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ClientExtensionEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RemoteAppEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of remote app entries
 	 * @param end the upper bound of the range of remote app entries (not inclusive)
 	 * @return the range of remote app entries
 	 */
-	public java.util.List<ClientExtensionEntry> findAll(int start, int end);
+	public java.util.List<RemoteAppEntry> findAll(int start, int end);
 
 	/**
 	 * Returns an ordered range of all the remote app entries.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ClientExtensionEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RemoteAppEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of remote app entries
@@ -610,16 +610,16 @@ public interface ClientExtensionEntryPersistence
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of remote app entries
 	 */
-	public java.util.List<ClientExtensionEntry> findAll(
+	public java.util.List<RemoteAppEntry> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<ClientExtensionEntry>
+		com.liferay.portal.kernel.util.OrderByComparator<RemoteAppEntry>
 			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the remote app entries.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ClientExtensionEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RemoteAppEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of remote app entries
@@ -628,9 +628,9 @@ public interface ClientExtensionEntryPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of remote app entries
 	 */
-	public java.util.List<ClientExtensionEntry> findAll(
+	public java.util.List<RemoteAppEntry> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<ClientExtensionEntry>
+		com.liferay.portal.kernel.util.OrderByComparator<RemoteAppEntry>
 			orderByComparator,
 		boolean useFinderCache);
 

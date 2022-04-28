@@ -17,28 +17,28 @@ package com.liferay.client.extension.service;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
- * Provides a wrapper for {@link ClientExtensionEntryService}.
+ * Provides a wrapper for {@link RemoteAppEntryService}.
  *
  * @author Brian Wing Shun Chan
- * @see ClientExtensionEntryService
+ * @see RemoteAppEntryService
  * @generated
  */
-public class ClientExtensionEntryServiceWrapper
-	implements ClientExtensionEntryService, ServiceWrapper<ClientExtensionEntryService> {
+public class RemoteAppEntryServiceWrapper
+	implements RemoteAppEntryService, ServiceWrapper<RemoteAppEntryService> {
 
-	public ClientExtensionEntryServiceWrapper() {
+	public RemoteAppEntryServiceWrapper() {
 		this(null);
 	}
 
-	public ClientExtensionEntryServiceWrapper(
-		ClientExtensionEntryService clientExtensionEntryService) {
+	public RemoteAppEntryServiceWrapper(
+		RemoteAppEntryService remoteAppEntryService) {
 
-		_clientExtensionEntryService = clientExtensionEntryService;
+		_remoteAppEntryService = remoteAppEntryService;
 	}
 
 	@Override
-	public com.liferay.client.extension.model.ClientExtensionEntry
-			addCustomElementClientExtensionEntry(
+	public com.liferay.client.extension.model.RemoteAppEntry
+			addCustomElementRemoteAppEntry(
 				String externalReferenceCode, String customElementCSSURLs,
 				String customElementHTMLElementName, String customElementURLs,
 				boolean customElementUseESM, String description,
@@ -48,7 +48,7 @@ public class ClientExtensionEntryServiceWrapper
 				String sourceCodeURL)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _clientExtensionEntryService.addCustomElementClientExtensionEntry(
+		return _remoteAppEntryService.addCustomElementRemoteAppEntry(
 			externalReferenceCode, customElementCSSURLs,
 			customElementHTMLElementName, customElementURLs,
 			customElementUseESM, description, friendlyURLMapping, instanceable,
@@ -56,8 +56,8 @@ public class ClientExtensionEntryServiceWrapper
 	}
 
 	@Override
-	public com.liferay.client.extension.model.ClientExtensionEntry
-			addIFrameClientExtensionEntry(
+	public com.liferay.client.extension.model.RemoteAppEntry
+			addIFrameRemoteAppEntry(
 				String description, String friendlyURLMapping, String iFrameURL,
 				boolean instanceable,
 				java.util.Map<java.util.Locale, String> nameMap,
@@ -65,17 +65,17 @@ public class ClientExtensionEntryServiceWrapper
 				String sourceCodeURL)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _clientExtensionEntryService.addIFrameClientExtensionEntry(
+		return _remoteAppEntryService.addIFrameRemoteAppEntry(
 			description, friendlyURLMapping, iFrameURL, instanceable, nameMap,
 			portletCategoryName, properties, sourceCodeURL);
 	}
 
 	@Override
-	public com.liferay.client.extension.model.ClientExtensionEntry
-			deleteClientExtensionEntry(long clientExtensionEntryId)
+	public com.liferay.client.extension.model.RemoteAppEntry
+			deleteRemoteAppEntry(long remoteAppEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _clientExtensionEntryService.deleteClientExtensionEntry(clientExtensionEntryId);
+		return _remoteAppEntryService.deleteRemoteAppEntry(remoteAppEntryId);
 	}
 
 	/**
@@ -85,21 +85,21 @@ public class ClientExtensionEntryServiceWrapper
 	 */
 	@Override
 	public String getOSGiServiceIdentifier() {
-		return _clientExtensionEntryService.getOSGiServiceIdentifier();
+		return _remoteAppEntryService.getOSGiServiceIdentifier();
 	}
 
 	@Override
-	public com.liferay.client.extension.model.ClientExtensionEntry getClientExtensionEntry(
-			long clientExtensionEntryId)
+	public com.liferay.client.extension.model.RemoteAppEntry getRemoteAppEntry(
+			long remoteAppEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _clientExtensionEntryService.getClientExtensionEntry(clientExtensionEntryId);
+		return _remoteAppEntryService.getRemoteAppEntry(remoteAppEntryId);
 	}
 
 	@Override
-	public com.liferay.client.extension.model.ClientExtensionEntry
-			updateCustomElementClientExtensionEntry(
-				long clientExtensionEntryId, String customElementCSSURLs,
+	public com.liferay.client.extension.model.RemoteAppEntry
+			updateCustomElementRemoteAppEntry(
+				long remoteAppEntryId, String customElementCSSURLs,
 				String customElementHTMLElementName, String customElementURLs,
 				boolean customElementUseESM, String description,
 				String friendlyURLMapping,
@@ -108,38 +108,38 @@ public class ClientExtensionEntryServiceWrapper
 				String sourceCodeURL)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _clientExtensionEntryService.updateCustomElementClientExtensionEntry(
-			clientExtensionEntryId, customElementCSSURLs,
+		return _remoteAppEntryService.updateCustomElementRemoteAppEntry(
+			remoteAppEntryId, customElementCSSURLs,
 			customElementHTMLElementName, customElementURLs,
 			customElementUseESM, description, friendlyURLMapping, nameMap,
 			portletCategoryName, properties, sourceCodeURL);
 	}
 
 	@Override
-	public com.liferay.client.extension.model.ClientExtensionEntry
-			updateIFrameClientExtensionEntry(
-				long clientExtensionEntryId, String description,
+	public com.liferay.client.extension.model.RemoteAppEntry
+			updateIFrameRemoteAppEntry(
+				long remoteAppEntryId, String description,
 				String friendlyURLMapping, String iFrameURL,
 				java.util.Map<java.util.Locale, String> nameMap,
 				String portletCategoryName, String properties,
 				String sourceCodeURL)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _clientExtensionEntryService.updateIFrameClientExtensionEntry(
-			clientExtensionEntryId, description, friendlyURLMapping, iFrameURL,
+		return _remoteAppEntryService.updateIFrameRemoteAppEntry(
+			remoteAppEntryId, description, friendlyURLMapping, iFrameURL,
 			nameMap, portletCategoryName, properties, sourceCodeURL);
 	}
 
 	@Override
-	public ClientExtensionEntryService getWrappedService() {
-		return _clientExtensionEntryService;
+	public RemoteAppEntryService getWrappedService() {
+		return _remoteAppEntryService;
 	}
 
 	@Override
-	public void setWrappedService(ClientExtensionEntryService clientExtensionEntryService) {
-		_clientExtensionEntryService = clientExtensionEntryService;
+	public void setWrappedService(RemoteAppEntryService remoteAppEntryService) {
+		_remoteAppEntryService = remoteAppEntryService;
 	}
 
-	private ClientExtensionEntryService _clientExtensionEntryService;
+	private RemoteAppEntryService _remoteAppEntryService;
 
 }

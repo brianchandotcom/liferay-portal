@@ -14,14 +14,14 @@
 
 package com.liferay.client.extension.service.persistence.impl;
 
-import com.liferay.client.extension.exception.NoSuchClientExtensionEntryException;
-import com.liferay.client.extension.model.ClientExtensionEntry;
-import com.liferay.client.extension.model.ClientExtensionEntryTable;
-import com.liferay.client.extension.model.impl.ClientExtensionEntryImpl;
-import com.liferay.client.extension.model.impl.ClientExtensionEntryModelImpl;
-import com.liferay.client.extension.service.persistence.ClientExtensionEntryPersistence;
-import com.liferay.client.extension.service.persistence.ClientExtensionEntryUtil;
-import com.liferay.client.extension.service.persistence.impl.constants.ClientExtensionPersistenceConstants;
+import com.liferay.client.extension.exception.NoSuchRemoteAppEntryException;
+import com.liferay.client.extension.model.RemoteAppEntry;
+import com.liferay.client.extension.model.RemoteAppEntryTable;
+import com.liferay.client.extension.model.impl.RemoteAppEntryImpl;
+import com.liferay.client.extension.model.impl.RemoteAppEntryModelImpl;
+import com.liferay.client.extension.service.persistence.RemoteAppEntryPersistence;
+import com.liferay.client.extension.service.persistence.RemoteAppEntryUtil;
+import com.liferay.client.extension.service.persistence.impl.constants.RemoteAppPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -87,18 +87,18 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@Component(service = {ClientExtensionEntryPersistence.class, BasePersistence.class})
-public class ClientExtensionEntryPersistenceImpl
-	extends BasePersistenceImpl<ClientExtensionEntry>
-	implements ClientExtensionEntryPersistence {
+@Component(service = {RemoteAppEntryPersistence.class, BasePersistence.class})
+public class RemoteAppEntryPersistenceImpl
+	extends BasePersistenceImpl<RemoteAppEntry>
+	implements RemoteAppEntryPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use <code>ClientExtensionEntryUtil</code> to access the remote app entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
+	 * Never modify or reference this class directly. Always use <code>RemoteAppEntryUtil</code> to access the remote app entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static final String FINDER_CLASS_NAME_ENTITY =
-		ClientExtensionEntryImpl.class.getName();
+		RemoteAppEntryImpl.class.getName();
 
 	public static final String FINDER_CLASS_NAME_LIST_WITH_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List1";
@@ -120,7 +120,7 @@ public class ClientExtensionEntryPersistenceImpl
 	 * @return the matching remote app entries
 	 */
 	@Override
-	public List<ClientExtensionEntry> findByUuid(String uuid) {
+	public List<RemoteAppEntry> findByUuid(String uuid) {
 		return findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -128,7 +128,7 @@ public class ClientExtensionEntryPersistenceImpl
 	 * Returns a range of all the remote app entries where uuid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ClientExtensionEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RemoteAppEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -137,7 +137,7 @@ public class ClientExtensionEntryPersistenceImpl
 	 * @return the range of matching remote app entries
 	 */
 	@Override
-	public List<ClientExtensionEntry> findByUuid(String uuid, int start, int end) {
+	public List<RemoteAppEntry> findByUuid(String uuid, int start, int end) {
 		return findByUuid(uuid, start, end, null);
 	}
 
@@ -145,7 +145,7 @@ public class ClientExtensionEntryPersistenceImpl
 	 * Returns an ordered range of all the remote app entries where uuid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ClientExtensionEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RemoteAppEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -155,9 +155,9 @@ public class ClientExtensionEntryPersistenceImpl
 	 * @return the ordered range of matching remote app entries
 	 */
 	@Override
-	public List<ClientExtensionEntry> findByUuid(
+	public List<RemoteAppEntry> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<ClientExtensionEntry> orderByComparator) {
+		OrderByComparator<RemoteAppEntry> orderByComparator) {
 
 		return findByUuid(uuid, start, end, orderByComparator, true);
 	}
@@ -166,7 +166,7 @@ public class ClientExtensionEntryPersistenceImpl
 	 * Returns an ordered range of all the remote app entries where uuid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ClientExtensionEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RemoteAppEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -177,9 +177,9 @@ public class ClientExtensionEntryPersistenceImpl
 	 * @return the ordered range of matching remote app entries
 	 */
 	@Override
-	public List<ClientExtensionEntry> findByUuid(
+	public List<RemoteAppEntry> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<ClientExtensionEntry> orderByComparator,
+		OrderByComparator<RemoteAppEntry> orderByComparator,
 		boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
@@ -200,15 +200,15 @@ public class ClientExtensionEntryPersistenceImpl
 			finderArgs = new Object[] {uuid, start, end, orderByComparator};
 		}
 
-		List<ClientExtensionEntry> list = null;
+		List<RemoteAppEntry> list = null;
 
 		if (useFinderCache) {
-			list = (List<ClientExtensionEntry>)finderCache.getResult(
+			list = (List<RemoteAppEntry>)finderCache.getResult(
 				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
-				for (ClientExtensionEntry clientExtensionEntry : list) {
-					if (!uuid.equals(clientExtensionEntry.getUuid())) {
+				for (RemoteAppEntry remoteAppEntry : list) {
+					if (!uuid.equals(remoteAppEntry.getUuid())) {
 						list = null;
 
 						break;
@@ -246,7 +246,7 @@ public class ClientExtensionEntryPersistenceImpl
 					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
 			else {
-				sb.append(ClientExtensionEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(RemoteAppEntryModelImpl.ORDER_BY_JPQL);
 			}
 
 			String sql = sb.toString();
@@ -264,7 +264,7 @@ public class ClientExtensionEntryPersistenceImpl
 					queryPos.add(uuid);
 				}
 
-				list = (List<ClientExtensionEntry>)QueryUtil.list(
+				list = (List<RemoteAppEntry>)QueryUtil.list(
 					query, getDialect(), start, end);
 
 				cacheResult(list);
@@ -290,18 +290,18 @@ public class ClientExtensionEntryPersistenceImpl
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching remote app entry
-	 * @throws NoSuchClientExtensionEntryException if a matching remote app entry could not be found
+	 * @throws NoSuchRemoteAppEntryException if a matching remote app entry could not be found
 	 */
 	@Override
-	public ClientExtensionEntry findByUuid_First(
-			String uuid, OrderByComparator<ClientExtensionEntry> orderByComparator)
-		throws NoSuchClientExtensionEntryException {
+	public RemoteAppEntry findByUuid_First(
+			String uuid, OrderByComparator<RemoteAppEntry> orderByComparator)
+		throws NoSuchRemoteAppEntryException {
 
-		ClientExtensionEntry clientExtensionEntry = fetchByUuid_First(
+		RemoteAppEntry remoteAppEntry = fetchByUuid_First(
 			uuid, orderByComparator);
 
-		if (clientExtensionEntry != null) {
-			return clientExtensionEntry;
+		if (remoteAppEntry != null) {
+			return remoteAppEntry;
 		}
 
 		StringBundler sb = new StringBundler(4);
@@ -313,7 +313,7 @@ public class ClientExtensionEntryPersistenceImpl
 
 		sb.append("}");
 
-		throw new NoSuchClientExtensionEntryException(sb.toString());
+		throw new NoSuchRemoteAppEntryException(sb.toString());
 	}
 
 	/**
@@ -324,10 +324,10 @@ public class ClientExtensionEntryPersistenceImpl
 	 * @return the first matching remote app entry, or <code>null</code> if a matching remote app entry could not be found
 	 */
 	@Override
-	public ClientExtensionEntry fetchByUuid_First(
-		String uuid, OrderByComparator<ClientExtensionEntry> orderByComparator) {
+	public RemoteAppEntry fetchByUuid_First(
+		String uuid, OrderByComparator<RemoteAppEntry> orderByComparator) {
 
-		List<ClientExtensionEntry> list = findByUuid(uuid, 0, 1, orderByComparator);
+		List<RemoteAppEntry> list = findByUuid(uuid, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -342,18 +342,18 @@ public class ClientExtensionEntryPersistenceImpl
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching remote app entry
-	 * @throws NoSuchClientExtensionEntryException if a matching remote app entry could not be found
+	 * @throws NoSuchRemoteAppEntryException if a matching remote app entry could not be found
 	 */
 	@Override
-	public ClientExtensionEntry findByUuid_Last(
-			String uuid, OrderByComparator<ClientExtensionEntry> orderByComparator)
-		throws NoSuchClientExtensionEntryException {
+	public RemoteAppEntry findByUuid_Last(
+			String uuid, OrderByComparator<RemoteAppEntry> orderByComparator)
+		throws NoSuchRemoteAppEntryException {
 
-		ClientExtensionEntry clientExtensionEntry = fetchByUuid_Last(
+		RemoteAppEntry remoteAppEntry = fetchByUuid_Last(
 			uuid, orderByComparator);
 
-		if (clientExtensionEntry != null) {
-			return clientExtensionEntry;
+		if (remoteAppEntry != null) {
+			return remoteAppEntry;
 		}
 
 		StringBundler sb = new StringBundler(4);
@@ -365,7 +365,7 @@ public class ClientExtensionEntryPersistenceImpl
 
 		sb.append("}");
 
-		throw new NoSuchClientExtensionEntryException(sb.toString());
+		throw new NoSuchRemoteAppEntryException(sb.toString());
 	}
 
 	/**
@@ -376,8 +376,8 @@ public class ClientExtensionEntryPersistenceImpl
 	 * @return the last matching remote app entry, or <code>null</code> if a matching remote app entry could not be found
 	 */
 	@Override
-	public ClientExtensionEntry fetchByUuid_Last(
-		String uuid, OrderByComparator<ClientExtensionEntry> orderByComparator) {
+	public RemoteAppEntry fetchByUuid_Last(
+		String uuid, OrderByComparator<RemoteAppEntry> orderByComparator) {
 
 		int count = countByUuid(uuid);
 
@@ -385,7 +385,7 @@ public class ClientExtensionEntryPersistenceImpl
 			return null;
 		}
 
-		List<ClientExtensionEntry> list = findByUuid(
+		List<RemoteAppEntry> list = findByUuid(
 			uuid, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -398,36 +398,36 @@ public class ClientExtensionEntryPersistenceImpl
 	/**
 	 * Returns the remote app entries before and after the current remote app entry in the ordered set where uuid = &#63;.
 	 *
-	 * @param clientExtensionEntryId the primary key of the current remote app entry
+	 * @param remoteAppEntryId the primary key of the current remote app entry
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next remote app entry
-	 * @throws NoSuchClientExtensionEntryException if a remote app entry with the primary key could not be found
+	 * @throws NoSuchRemoteAppEntryException if a remote app entry with the primary key could not be found
 	 */
 	@Override
-	public ClientExtensionEntry[] findByUuid_PrevAndNext(
-			long clientExtensionEntryId, String uuid,
-			OrderByComparator<ClientExtensionEntry> orderByComparator)
-		throws NoSuchClientExtensionEntryException {
+	public RemoteAppEntry[] findByUuid_PrevAndNext(
+			long remoteAppEntryId, String uuid,
+			OrderByComparator<RemoteAppEntry> orderByComparator)
+		throws NoSuchRemoteAppEntryException {
 
 		uuid = Objects.toString(uuid, "");
 
-		ClientExtensionEntry clientExtensionEntry = findByPrimaryKey(clientExtensionEntryId);
+		RemoteAppEntry remoteAppEntry = findByPrimaryKey(remoteAppEntryId);
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			ClientExtensionEntry[] array = new ClientExtensionEntryImpl[3];
+			RemoteAppEntry[] array = new RemoteAppEntryImpl[3];
 
 			array[0] = getByUuid_PrevAndNext(
-				session, clientExtensionEntry, uuid, orderByComparator, true);
+				session, remoteAppEntry, uuid, orderByComparator, true);
 
-			array[1] = clientExtensionEntry;
+			array[1] = remoteAppEntry;
 
 			array[2] = getByUuid_PrevAndNext(
-				session, clientExtensionEntry, uuid, orderByComparator, false);
+				session, remoteAppEntry, uuid, orderByComparator, false);
 
 			return array;
 		}
@@ -439,9 +439,9 @@ public class ClientExtensionEntryPersistenceImpl
 		}
 	}
 
-	protected ClientExtensionEntry getByUuid_PrevAndNext(
-		Session session, ClientExtensionEntry clientExtensionEntry, String uuid,
-		OrderByComparator<ClientExtensionEntry> orderByComparator, boolean previous) {
+	protected RemoteAppEntry getByUuid_PrevAndNext(
+		Session session, RemoteAppEntry remoteAppEntry, String uuid,
+		OrderByComparator<RemoteAppEntry> orderByComparator, boolean previous) {
 
 		StringBundler sb = null;
 
@@ -524,7 +524,7 @@ public class ClientExtensionEntryPersistenceImpl
 			}
 		}
 		else {
-			sb.append(ClientExtensionEntryModelImpl.ORDER_BY_JPQL);
+			sb.append(RemoteAppEntryModelImpl.ORDER_BY_JPQL);
 		}
 
 		String sql = sb.toString();
@@ -543,13 +543,13 @@ public class ClientExtensionEntryPersistenceImpl
 		if (orderByComparator != null) {
 			for (Object orderByConditionValue :
 					orderByComparator.getOrderByConditionValues(
-						clientExtensionEntry)) {
+						remoteAppEntry)) {
 
 				queryPos.add(orderByConditionValue);
 			}
 		}
 
-		List<ClientExtensionEntry> list = query.list();
+		List<RemoteAppEntry> list = query.list();
 
 		if (list.size() == 2) {
 			return list.get(1);
@@ -566,7 +566,7 @@ public class ClientExtensionEntryPersistenceImpl
 	 * @return the matching remote app entries that the user has permission to view
 	 */
 	@Override
-	public List<ClientExtensionEntry> filterFindByUuid(String uuid) {
+	public List<RemoteAppEntry> filterFindByUuid(String uuid) {
 		return filterFindByUuid(
 			uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
@@ -575,7 +575,7 @@ public class ClientExtensionEntryPersistenceImpl
 	 * Returns a range of all the remote app entries that the user has permission to view where uuid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ClientExtensionEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RemoteAppEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -584,7 +584,7 @@ public class ClientExtensionEntryPersistenceImpl
 	 * @return the range of matching remote app entries that the user has permission to view
 	 */
 	@Override
-	public List<ClientExtensionEntry> filterFindByUuid(
+	public List<RemoteAppEntry> filterFindByUuid(
 		String uuid, int start, int end) {
 
 		return filterFindByUuid(uuid, start, end, null);
@@ -594,7 +594,7 @@ public class ClientExtensionEntryPersistenceImpl
 	 * Returns an ordered range of all the remote app entries that the user has permissions to view where uuid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ClientExtensionEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RemoteAppEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -604,9 +604,9 @@ public class ClientExtensionEntryPersistenceImpl
 	 * @return the ordered range of matching remote app entries that the user has permission to view
 	 */
 	@Override
-	public List<ClientExtensionEntry> filterFindByUuid(
+	public List<RemoteAppEntry> filterFindByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<ClientExtensionEntry> orderByComparator) {
+		OrderByComparator<RemoteAppEntry> orderByComparator) {
 
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByUuid(uuid, start, end, orderByComparator);
@@ -660,15 +660,15 @@ public class ClientExtensionEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(ClientExtensionEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(RemoteAppEntryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
-				sb.append(ClientExtensionEntryModelImpl.ORDER_BY_SQL);
+				sb.append(RemoteAppEntryModelImpl.ORDER_BY_SQL);
 			}
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), ClientExtensionEntry.class.getName(),
+			sb.toString(), RemoteAppEntry.class.getName(),
 			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		Session session = null;
@@ -680,11 +680,11 @@ public class ClientExtensionEntryPersistenceImpl
 
 			if (getDB().isSupportsInlineDistinct()) {
 				sqlQuery.addEntity(
-					_FILTER_ENTITY_ALIAS, ClientExtensionEntryImpl.class);
+					_FILTER_ENTITY_ALIAS, RemoteAppEntryImpl.class);
 			}
 			else {
 				sqlQuery.addEntity(
-					_FILTER_ENTITY_TABLE, ClientExtensionEntryImpl.class);
+					_FILTER_ENTITY_TABLE, RemoteAppEntryImpl.class);
 			}
 
 			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
@@ -693,7 +693,7 @@ public class ClientExtensionEntryPersistenceImpl
 				queryPos.add(uuid);
 			}
 
-			return (List<ClientExtensionEntry>)QueryUtil.list(
+			return (List<RemoteAppEntry>)QueryUtil.list(
 				sqlQuery, getDialect(), start, end);
 		}
 		catch (Exception exception) {
@@ -707,41 +707,41 @@ public class ClientExtensionEntryPersistenceImpl
 	/**
 	 * Returns the remote app entries before and after the current remote app entry in the ordered set of remote app entries that the user has permission to view where uuid = &#63;.
 	 *
-	 * @param clientExtensionEntryId the primary key of the current remote app entry
+	 * @param remoteAppEntryId the primary key of the current remote app entry
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next remote app entry
-	 * @throws NoSuchClientExtensionEntryException if a remote app entry with the primary key could not be found
+	 * @throws NoSuchRemoteAppEntryException if a remote app entry with the primary key could not be found
 	 */
 	@Override
-	public ClientExtensionEntry[] filterFindByUuid_PrevAndNext(
-			long clientExtensionEntryId, String uuid,
-			OrderByComparator<ClientExtensionEntry> orderByComparator)
-		throws NoSuchClientExtensionEntryException {
+	public RemoteAppEntry[] filterFindByUuid_PrevAndNext(
+			long remoteAppEntryId, String uuid,
+			OrderByComparator<RemoteAppEntry> orderByComparator)
+		throws NoSuchRemoteAppEntryException {
 
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByUuid_PrevAndNext(
-				clientExtensionEntryId, uuid, orderByComparator);
+				remoteAppEntryId, uuid, orderByComparator);
 		}
 
 		uuid = Objects.toString(uuid, "");
 
-		ClientExtensionEntry clientExtensionEntry = findByPrimaryKey(clientExtensionEntryId);
+		RemoteAppEntry remoteAppEntry = findByPrimaryKey(remoteAppEntryId);
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			ClientExtensionEntry[] array = new ClientExtensionEntryImpl[3];
+			RemoteAppEntry[] array = new RemoteAppEntryImpl[3];
 
 			array[0] = filterGetByUuid_PrevAndNext(
-				session, clientExtensionEntry, uuid, orderByComparator, true);
+				session, remoteAppEntry, uuid, orderByComparator, true);
 
-			array[1] = clientExtensionEntry;
+			array[1] = remoteAppEntry;
 
 			array[2] = filterGetByUuid_PrevAndNext(
-				session, clientExtensionEntry, uuid, orderByComparator, false);
+				session, remoteAppEntry, uuid, orderByComparator, false);
 
 			return array;
 		}
@@ -753,9 +753,9 @@ public class ClientExtensionEntryPersistenceImpl
 		}
 	}
 
-	protected ClientExtensionEntry filterGetByUuid_PrevAndNext(
-		Session session, ClientExtensionEntry clientExtensionEntry, String uuid,
-		OrderByComparator<ClientExtensionEntry> orderByComparator, boolean previous) {
+	protected RemoteAppEntry filterGetByUuid_PrevAndNext(
+		Session session, RemoteAppEntry remoteAppEntry, String uuid,
+		OrderByComparator<RemoteAppEntry> orderByComparator, boolean previous) {
 
 		StringBundler sb = null;
 
@@ -868,15 +868,15 @@ public class ClientExtensionEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(ClientExtensionEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(RemoteAppEntryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
-				sb.append(ClientExtensionEntryModelImpl.ORDER_BY_SQL);
+				sb.append(RemoteAppEntryModelImpl.ORDER_BY_SQL);
 			}
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), ClientExtensionEntry.class.getName(),
+			sb.toString(), RemoteAppEntry.class.getName(),
 			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
@@ -885,10 +885,10 @@ public class ClientExtensionEntryPersistenceImpl
 		sqlQuery.setMaxResults(2);
 
 		if (getDB().isSupportsInlineDistinct()) {
-			sqlQuery.addEntity(_FILTER_ENTITY_ALIAS, ClientExtensionEntryImpl.class);
+			sqlQuery.addEntity(_FILTER_ENTITY_ALIAS, RemoteAppEntryImpl.class);
 		}
 		else {
-			sqlQuery.addEntity(_FILTER_ENTITY_TABLE, ClientExtensionEntryImpl.class);
+			sqlQuery.addEntity(_FILTER_ENTITY_TABLE, RemoteAppEntryImpl.class);
 		}
 
 		QueryPos queryPos = QueryPos.getInstance(sqlQuery);
@@ -900,13 +900,13 @@ public class ClientExtensionEntryPersistenceImpl
 		if (orderByComparator != null) {
 			for (Object orderByConditionValue :
 					orderByComparator.getOrderByConditionValues(
-						clientExtensionEntry)) {
+						remoteAppEntry)) {
 
 				queryPos.add(orderByConditionValue);
 			}
 		}
 
-		List<ClientExtensionEntry> list = sqlQuery.list();
+		List<RemoteAppEntry> list = sqlQuery.list();
 
 		if (list.size() == 2) {
 			return list.get(1);
@@ -923,10 +923,10 @@ public class ClientExtensionEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (ClientExtensionEntry clientExtensionEntry :
+		for (RemoteAppEntry remoteAppEntry :
 				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 
-			remove(clientExtensionEntry);
+			remove(remoteAppEntry);
 		}
 	}
 
@@ -1022,7 +1022,7 @@ public class ClientExtensionEntryPersistenceImpl
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), ClientExtensionEntry.class.getName(),
+			sb.toString(), RemoteAppEntry.class.getName(),
 			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		Session session = null;
@@ -1054,16 +1054,16 @@ public class ClientExtensionEntryPersistenceImpl
 	}
 
 	private static final String _FINDER_COLUMN_UUID_UUID_2 =
-		"clientExtensionEntry.uuid = ?";
+		"remoteAppEntry.uuid = ?";
 
 	private static final String _FINDER_COLUMN_UUID_UUID_3 =
-		"(clientExtensionEntry.uuid IS NULL OR clientExtensionEntry.uuid = '')";
+		"(remoteAppEntry.uuid IS NULL OR remoteAppEntry.uuid = '')";
 
 	private static final String _FINDER_COLUMN_UUID_UUID_2_SQL =
-		"clientExtensionEntry.uuid_ = ?";
+		"remoteAppEntry.uuid_ = ?";
 
 	private static final String _FINDER_COLUMN_UUID_UUID_3_SQL =
-		"(clientExtensionEntry.uuid_ IS NULL OR clientExtensionEntry.uuid_ = '')";
+		"(remoteAppEntry.uuid_ IS NULL OR remoteAppEntry.uuid_ = '')";
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
@@ -1077,7 +1077,7 @@ public class ClientExtensionEntryPersistenceImpl
 	 * @return the matching remote app entries
 	 */
 	@Override
-	public List<ClientExtensionEntry> findByUuid_C(String uuid, long companyId) {
+	public List<RemoteAppEntry> findByUuid_C(String uuid, long companyId) {
 		return findByUuid_C(
 			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
@@ -1086,7 +1086,7 @@ public class ClientExtensionEntryPersistenceImpl
 	 * Returns a range of all the remote app entries where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ClientExtensionEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RemoteAppEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -1096,7 +1096,7 @@ public class ClientExtensionEntryPersistenceImpl
 	 * @return the range of matching remote app entries
 	 */
 	@Override
-	public List<ClientExtensionEntry> findByUuid_C(
+	public List<RemoteAppEntry> findByUuid_C(
 		String uuid, long companyId, int start, int end) {
 
 		return findByUuid_C(uuid, companyId, start, end, null);
@@ -1106,7 +1106,7 @@ public class ClientExtensionEntryPersistenceImpl
 	 * Returns an ordered range of all the remote app entries where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ClientExtensionEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RemoteAppEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -1117,9 +1117,9 @@ public class ClientExtensionEntryPersistenceImpl
 	 * @return the ordered range of matching remote app entries
 	 */
 	@Override
-	public List<ClientExtensionEntry> findByUuid_C(
+	public List<RemoteAppEntry> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<ClientExtensionEntry> orderByComparator) {
+		OrderByComparator<RemoteAppEntry> orderByComparator) {
 
 		return findByUuid_C(
 			uuid, companyId, start, end, orderByComparator, true);
@@ -1129,7 +1129,7 @@ public class ClientExtensionEntryPersistenceImpl
 	 * Returns an ordered range of all the remote app entries where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ClientExtensionEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RemoteAppEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -1141,9 +1141,9 @@ public class ClientExtensionEntryPersistenceImpl
 	 * @return the ordered range of matching remote app entries
 	 */
 	@Override
-	public List<ClientExtensionEntry> findByUuid_C(
+	public List<RemoteAppEntry> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<ClientExtensionEntry> orderByComparator,
+		OrderByComparator<RemoteAppEntry> orderByComparator,
 		boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
@@ -1166,16 +1166,16 @@ public class ClientExtensionEntryPersistenceImpl
 			};
 		}
 
-		List<ClientExtensionEntry> list = null;
+		List<RemoteAppEntry> list = null;
 
 		if (useFinderCache) {
-			list = (List<ClientExtensionEntry>)finderCache.getResult(
+			list = (List<RemoteAppEntry>)finderCache.getResult(
 				finderPath, finderArgs);
 
 			if ((list != null) && !list.isEmpty()) {
-				for (ClientExtensionEntry clientExtensionEntry : list) {
-					if (!uuid.equals(clientExtensionEntry.getUuid()) ||
-						(companyId != clientExtensionEntry.getCompanyId())) {
+				for (RemoteAppEntry remoteAppEntry : list) {
+					if (!uuid.equals(remoteAppEntry.getUuid()) ||
+						(companyId != remoteAppEntry.getCompanyId())) {
 
 						list = null;
 
@@ -1216,7 +1216,7 @@ public class ClientExtensionEntryPersistenceImpl
 					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
 			else {
-				sb.append(ClientExtensionEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(RemoteAppEntryModelImpl.ORDER_BY_JPQL);
 			}
 
 			String sql = sb.toString();
@@ -1236,7 +1236,7 @@ public class ClientExtensionEntryPersistenceImpl
 
 				queryPos.add(companyId);
 
-				list = (List<ClientExtensionEntry>)QueryUtil.list(
+				list = (List<RemoteAppEntry>)QueryUtil.list(
 					query, getDialect(), start, end);
 
 				cacheResult(list);
@@ -1263,19 +1263,19 @@ public class ClientExtensionEntryPersistenceImpl
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching remote app entry
-	 * @throws NoSuchClientExtensionEntryException if a matching remote app entry could not be found
+	 * @throws NoSuchRemoteAppEntryException if a matching remote app entry could not be found
 	 */
 	@Override
-	public ClientExtensionEntry findByUuid_C_First(
+	public RemoteAppEntry findByUuid_C_First(
 			String uuid, long companyId,
-			OrderByComparator<ClientExtensionEntry> orderByComparator)
-		throws NoSuchClientExtensionEntryException {
+			OrderByComparator<RemoteAppEntry> orderByComparator)
+		throws NoSuchRemoteAppEntryException {
 
-		ClientExtensionEntry clientExtensionEntry = fetchByUuid_C_First(
+		RemoteAppEntry remoteAppEntry = fetchByUuid_C_First(
 			uuid, companyId, orderByComparator);
 
-		if (clientExtensionEntry != null) {
-			return clientExtensionEntry;
+		if (remoteAppEntry != null) {
+			return remoteAppEntry;
 		}
 
 		StringBundler sb = new StringBundler(6);
@@ -1290,7 +1290,7 @@ public class ClientExtensionEntryPersistenceImpl
 
 		sb.append("}");
 
-		throw new NoSuchClientExtensionEntryException(sb.toString());
+		throw new NoSuchRemoteAppEntryException(sb.toString());
 	}
 
 	/**
@@ -1302,11 +1302,11 @@ public class ClientExtensionEntryPersistenceImpl
 	 * @return the first matching remote app entry, or <code>null</code> if a matching remote app entry could not be found
 	 */
 	@Override
-	public ClientExtensionEntry fetchByUuid_C_First(
+	public RemoteAppEntry fetchByUuid_C_First(
 		String uuid, long companyId,
-		OrderByComparator<ClientExtensionEntry> orderByComparator) {
+		OrderByComparator<RemoteAppEntry> orderByComparator) {
 
-		List<ClientExtensionEntry> list = findByUuid_C(
+		List<RemoteAppEntry> list = findByUuid_C(
 			uuid, companyId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1323,19 +1323,19 @@ public class ClientExtensionEntryPersistenceImpl
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching remote app entry
-	 * @throws NoSuchClientExtensionEntryException if a matching remote app entry could not be found
+	 * @throws NoSuchRemoteAppEntryException if a matching remote app entry could not be found
 	 */
 	@Override
-	public ClientExtensionEntry findByUuid_C_Last(
+	public RemoteAppEntry findByUuid_C_Last(
 			String uuid, long companyId,
-			OrderByComparator<ClientExtensionEntry> orderByComparator)
-		throws NoSuchClientExtensionEntryException {
+			OrderByComparator<RemoteAppEntry> orderByComparator)
+		throws NoSuchRemoteAppEntryException {
 
-		ClientExtensionEntry clientExtensionEntry = fetchByUuid_C_Last(
+		RemoteAppEntry remoteAppEntry = fetchByUuid_C_Last(
 			uuid, companyId, orderByComparator);
 
-		if (clientExtensionEntry != null) {
-			return clientExtensionEntry;
+		if (remoteAppEntry != null) {
+			return remoteAppEntry;
 		}
 
 		StringBundler sb = new StringBundler(6);
@@ -1350,7 +1350,7 @@ public class ClientExtensionEntryPersistenceImpl
 
 		sb.append("}");
 
-		throw new NoSuchClientExtensionEntryException(sb.toString());
+		throw new NoSuchRemoteAppEntryException(sb.toString());
 	}
 
 	/**
@@ -1362,9 +1362,9 @@ public class ClientExtensionEntryPersistenceImpl
 	 * @return the last matching remote app entry, or <code>null</code> if a matching remote app entry could not be found
 	 */
 	@Override
-	public ClientExtensionEntry fetchByUuid_C_Last(
+	public RemoteAppEntry fetchByUuid_C_Last(
 		String uuid, long companyId,
-		OrderByComparator<ClientExtensionEntry> orderByComparator) {
+		OrderByComparator<RemoteAppEntry> orderByComparator) {
 
 		int count = countByUuid_C(uuid, companyId);
 
@@ -1372,7 +1372,7 @@ public class ClientExtensionEntryPersistenceImpl
 			return null;
 		}
 
-		List<ClientExtensionEntry> list = findByUuid_C(
+		List<RemoteAppEntry> list = findByUuid_C(
 			uuid, companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1385,38 +1385,38 @@ public class ClientExtensionEntryPersistenceImpl
 	/**
 	 * Returns the remote app entries before and after the current remote app entry in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
-	 * @param clientExtensionEntryId the primary key of the current remote app entry
+	 * @param remoteAppEntryId the primary key of the current remote app entry
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next remote app entry
-	 * @throws NoSuchClientExtensionEntryException if a remote app entry with the primary key could not be found
+	 * @throws NoSuchRemoteAppEntryException if a remote app entry with the primary key could not be found
 	 */
 	@Override
-	public ClientExtensionEntry[] findByUuid_C_PrevAndNext(
-			long clientExtensionEntryId, String uuid, long companyId,
-			OrderByComparator<ClientExtensionEntry> orderByComparator)
-		throws NoSuchClientExtensionEntryException {
+	public RemoteAppEntry[] findByUuid_C_PrevAndNext(
+			long remoteAppEntryId, String uuid, long companyId,
+			OrderByComparator<RemoteAppEntry> orderByComparator)
+		throws NoSuchRemoteAppEntryException {
 
 		uuid = Objects.toString(uuid, "");
 
-		ClientExtensionEntry clientExtensionEntry = findByPrimaryKey(clientExtensionEntryId);
+		RemoteAppEntry remoteAppEntry = findByPrimaryKey(remoteAppEntryId);
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			ClientExtensionEntry[] array = new ClientExtensionEntryImpl[3];
+			RemoteAppEntry[] array = new RemoteAppEntryImpl[3];
 
 			array[0] = getByUuid_C_PrevAndNext(
-				session, clientExtensionEntry, uuid, companyId, orderByComparator,
+				session, remoteAppEntry, uuid, companyId, orderByComparator,
 				true);
 
-			array[1] = clientExtensionEntry;
+			array[1] = remoteAppEntry;
 
 			array[2] = getByUuid_C_PrevAndNext(
-				session, clientExtensionEntry, uuid, companyId, orderByComparator,
+				session, remoteAppEntry, uuid, companyId, orderByComparator,
 				false);
 
 			return array;
@@ -1429,9 +1429,9 @@ public class ClientExtensionEntryPersistenceImpl
 		}
 	}
 
-	protected ClientExtensionEntry getByUuid_C_PrevAndNext(
-		Session session, ClientExtensionEntry clientExtensionEntry, String uuid,
-		long companyId, OrderByComparator<ClientExtensionEntry> orderByComparator,
+	protected RemoteAppEntry getByUuid_C_PrevAndNext(
+		Session session, RemoteAppEntry remoteAppEntry, String uuid,
+		long companyId, OrderByComparator<RemoteAppEntry> orderByComparator,
 		boolean previous) {
 
 		StringBundler sb = null;
@@ -1517,7 +1517,7 @@ public class ClientExtensionEntryPersistenceImpl
 			}
 		}
 		else {
-			sb.append(ClientExtensionEntryModelImpl.ORDER_BY_JPQL);
+			sb.append(RemoteAppEntryModelImpl.ORDER_BY_JPQL);
 		}
 
 		String sql = sb.toString();
@@ -1538,13 +1538,13 @@ public class ClientExtensionEntryPersistenceImpl
 		if (orderByComparator != null) {
 			for (Object orderByConditionValue :
 					orderByComparator.getOrderByConditionValues(
-						clientExtensionEntry)) {
+						remoteAppEntry)) {
 
 				queryPos.add(orderByConditionValue);
 			}
 		}
 
-		List<ClientExtensionEntry> list = query.list();
+		List<RemoteAppEntry> list = query.list();
 
 		if (list.size() == 2) {
 			return list.get(1);
@@ -1562,7 +1562,7 @@ public class ClientExtensionEntryPersistenceImpl
 	 * @return the matching remote app entries that the user has permission to view
 	 */
 	@Override
-	public List<ClientExtensionEntry> filterFindByUuid_C(
+	public List<RemoteAppEntry> filterFindByUuid_C(
 		String uuid, long companyId) {
 
 		return filterFindByUuid_C(
@@ -1573,7 +1573,7 @@ public class ClientExtensionEntryPersistenceImpl
 	 * Returns a range of all the remote app entries that the user has permission to view where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ClientExtensionEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RemoteAppEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -1583,7 +1583,7 @@ public class ClientExtensionEntryPersistenceImpl
 	 * @return the range of matching remote app entries that the user has permission to view
 	 */
 	@Override
-	public List<ClientExtensionEntry> filterFindByUuid_C(
+	public List<RemoteAppEntry> filterFindByUuid_C(
 		String uuid, long companyId, int start, int end) {
 
 		return filterFindByUuid_C(uuid, companyId, start, end, null);
@@ -1593,7 +1593,7 @@ public class ClientExtensionEntryPersistenceImpl
 	 * Returns an ordered range of all the remote app entries that the user has permissions to view where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ClientExtensionEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RemoteAppEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -1604,9 +1604,9 @@ public class ClientExtensionEntryPersistenceImpl
 	 * @return the ordered range of matching remote app entries that the user has permission to view
 	 */
 	@Override
-	public List<ClientExtensionEntry> filterFindByUuid_C(
+	public List<RemoteAppEntry> filterFindByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<ClientExtensionEntry> orderByComparator) {
+		OrderByComparator<RemoteAppEntry> orderByComparator) {
 
 		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
 			return findByUuid_C(uuid, companyId, start, end, orderByComparator);
@@ -1662,15 +1662,15 @@ public class ClientExtensionEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(ClientExtensionEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(RemoteAppEntryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
-				sb.append(ClientExtensionEntryModelImpl.ORDER_BY_SQL);
+				sb.append(RemoteAppEntryModelImpl.ORDER_BY_SQL);
 			}
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), ClientExtensionEntry.class.getName(),
+			sb.toString(), RemoteAppEntry.class.getName(),
 			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		Session session = null;
@@ -1682,11 +1682,11 @@ public class ClientExtensionEntryPersistenceImpl
 
 			if (getDB().isSupportsInlineDistinct()) {
 				sqlQuery.addEntity(
-					_FILTER_ENTITY_ALIAS, ClientExtensionEntryImpl.class);
+					_FILTER_ENTITY_ALIAS, RemoteAppEntryImpl.class);
 			}
 			else {
 				sqlQuery.addEntity(
-					_FILTER_ENTITY_TABLE, ClientExtensionEntryImpl.class);
+					_FILTER_ENTITY_TABLE, RemoteAppEntryImpl.class);
 			}
 
 			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
@@ -1697,7 +1697,7 @@ public class ClientExtensionEntryPersistenceImpl
 
 			queryPos.add(companyId);
 
-			return (List<ClientExtensionEntry>)QueryUtil.list(
+			return (List<RemoteAppEntry>)QueryUtil.list(
 				sqlQuery, getDialect(), start, end);
 		}
 		catch (Exception exception) {
@@ -1711,43 +1711,43 @@ public class ClientExtensionEntryPersistenceImpl
 	/**
 	 * Returns the remote app entries before and after the current remote app entry in the ordered set of remote app entries that the user has permission to view where uuid = &#63; and companyId = &#63;.
 	 *
-	 * @param clientExtensionEntryId the primary key of the current remote app entry
+	 * @param remoteAppEntryId the primary key of the current remote app entry
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next remote app entry
-	 * @throws NoSuchClientExtensionEntryException if a remote app entry with the primary key could not be found
+	 * @throws NoSuchRemoteAppEntryException if a remote app entry with the primary key could not be found
 	 */
 	@Override
-	public ClientExtensionEntry[] filterFindByUuid_C_PrevAndNext(
-			long clientExtensionEntryId, String uuid, long companyId,
-			OrderByComparator<ClientExtensionEntry> orderByComparator)
-		throws NoSuchClientExtensionEntryException {
+	public RemoteAppEntry[] filterFindByUuid_C_PrevAndNext(
+			long remoteAppEntryId, String uuid, long companyId,
+			OrderByComparator<RemoteAppEntry> orderByComparator)
+		throws NoSuchRemoteAppEntryException {
 
 		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
 			return findByUuid_C_PrevAndNext(
-				clientExtensionEntryId, uuid, companyId, orderByComparator);
+				remoteAppEntryId, uuid, companyId, orderByComparator);
 		}
 
 		uuid = Objects.toString(uuid, "");
 
-		ClientExtensionEntry clientExtensionEntry = findByPrimaryKey(clientExtensionEntryId);
+		RemoteAppEntry remoteAppEntry = findByPrimaryKey(remoteAppEntryId);
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			ClientExtensionEntry[] array = new ClientExtensionEntryImpl[3];
+			RemoteAppEntry[] array = new RemoteAppEntryImpl[3];
 
 			array[0] = filterGetByUuid_C_PrevAndNext(
-				session, clientExtensionEntry, uuid, companyId, orderByComparator,
+				session, remoteAppEntry, uuid, companyId, orderByComparator,
 				true);
 
-			array[1] = clientExtensionEntry;
+			array[1] = remoteAppEntry;
 
 			array[2] = filterGetByUuid_C_PrevAndNext(
-				session, clientExtensionEntry, uuid, companyId, orderByComparator,
+				session, remoteAppEntry, uuid, companyId, orderByComparator,
 				false);
 
 			return array;
@@ -1760,9 +1760,9 @@ public class ClientExtensionEntryPersistenceImpl
 		}
 	}
 
-	protected ClientExtensionEntry filterGetByUuid_C_PrevAndNext(
-		Session session, ClientExtensionEntry clientExtensionEntry, String uuid,
-		long companyId, OrderByComparator<ClientExtensionEntry> orderByComparator,
+	protected RemoteAppEntry filterGetByUuid_C_PrevAndNext(
+		Session session, RemoteAppEntry remoteAppEntry, String uuid,
+		long companyId, OrderByComparator<RemoteAppEntry> orderByComparator,
 		boolean previous) {
 
 		StringBundler sb = null;
@@ -1878,15 +1878,15 @@ public class ClientExtensionEntryPersistenceImpl
 		}
 		else {
 			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(ClientExtensionEntryModelImpl.ORDER_BY_JPQL);
+				sb.append(RemoteAppEntryModelImpl.ORDER_BY_JPQL);
 			}
 			else {
-				sb.append(ClientExtensionEntryModelImpl.ORDER_BY_SQL);
+				sb.append(RemoteAppEntryModelImpl.ORDER_BY_SQL);
 			}
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), ClientExtensionEntry.class.getName(),
+			sb.toString(), RemoteAppEntry.class.getName(),
 			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
@@ -1895,10 +1895,10 @@ public class ClientExtensionEntryPersistenceImpl
 		sqlQuery.setMaxResults(2);
 
 		if (getDB().isSupportsInlineDistinct()) {
-			sqlQuery.addEntity(_FILTER_ENTITY_ALIAS, ClientExtensionEntryImpl.class);
+			sqlQuery.addEntity(_FILTER_ENTITY_ALIAS, RemoteAppEntryImpl.class);
 		}
 		else {
-			sqlQuery.addEntity(_FILTER_ENTITY_TABLE, ClientExtensionEntryImpl.class);
+			sqlQuery.addEntity(_FILTER_ENTITY_TABLE, RemoteAppEntryImpl.class);
 		}
 
 		QueryPos queryPos = QueryPos.getInstance(sqlQuery);
@@ -1912,13 +1912,13 @@ public class ClientExtensionEntryPersistenceImpl
 		if (orderByComparator != null) {
 			for (Object orderByConditionValue :
 					orderByComparator.getOrderByConditionValues(
-						clientExtensionEntry)) {
+						remoteAppEntry)) {
 
 				queryPos.add(orderByConditionValue);
 			}
 		}
 
-		List<ClientExtensionEntry> list = sqlQuery.list();
+		List<RemoteAppEntry> list = sqlQuery.list();
 
 		if (list.size() == 2) {
 			return list.get(1);
@@ -1936,12 +1936,12 @@ public class ClientExtensionEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (ClientExtensionEntry clientExtensionEntry :
+		for (RemoteAppEntry remoteAppEntry :
 				findByUuid_C(
 					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 					null)) {
 
-			remove(clientExtensionEntry);
+			remove(remoteAppEntry);
 		}
 	}
 
@@ -2045,7 +2045,7 @@ public class ClientExtensionEntryPersistenceImpl
 		sb.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), ClientExtensionEntry.class.getName(),
+			sb.toString(), RemoteAppEntry.class.getName(),
 			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
 
 		Session session = null;
@@ -2079,40 +2079,40 @@ public class ClientExtensionEntryPersistenceImpl
 	}
 
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 =
-		"clientExtensionEntry.uuid = ? AND ";
+		"remoteAppEntry.uuid = ? AND ";
 
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 =
-		"(clientExtensionEntry.uuid IS NULL OR clientExtensionEntry.uuid = '') AND ";
+		"(remoteAppEntry.uuid IS NULL OR remoteAppEntry.uuid = '') AND ";
 
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2_SQL =
-		"clientExtensionEntry.uuid_ = ? AND ";
+		"remoteAppEntry.uuid_ = ? AND ";
 
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3_SQL =
-		"(clientExtensionEntry.uuid_ IS NULL OR clientExtensionEntry.uuid_ = '') AND ";
+		"(remoteAppEntry.uuid_ IS NULL OR remoteAppEntry.uuid_ = '') AND ";
 
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 =
-		"clientExtensionEntry.companyId = ?";
+		"remoteAppEntry.companyId = ?";
 
 	private FinderPath _finderPathFetchByC_ERC;
 	private FinderPath _finderPathCountByC_ERC;
 
 	/**
-	 * Returns the remote app entry where companyId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchClientExtensionEntryException</code> if it could not be found.
+	 * Returns the remote app entry where companyId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchRemoteAppEntryException</code> if it could not be found.
 	 *
 	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
 	 * @return the matching remote app entry
-	 * @throws NoSuchClientExtensionEntryException if a matching remote app entry could not be found
+	 * @throws NoSuchRemoteAppEntryException if a matching remote app entry could not be found
 	 */
 	@Override
-	public ClientExtensionEntry findByC_ERC(
+	public RemoteAppEntry findByC_ERC(
 			long companyId, String externalReferenceCode)
-		throws NoSuchClientExtensionEntryException {
+		throws NoSuchRemoteAppEntryException {
 
-		ClientExtensionEntry clientExtensionEntry = fetchByC_ERC(
+		RemoteAppEntry remoteAppEntry = fetchByC_ERC(
 			companyId, externalReferenceCode);
 
-		if (clientExtensionEntry == null) {
+		if (remoteAppEntry == null) {
 			StringBundler sb = new StringBundler(6);
 
 			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
@@ -2129,10 +2129,10 @@ public class ClientExtensionEntryPersistenceImpl
 				_log.debug(sb.toString());
 			}
 
-			throw new NoSuchClientExtensionEntryException(sb.toString());
+			throw new NoSuchRemoteAppEntryException(sb.toString());
 		}
 
-		return clientExtensionEntry;
+		return remoteAppEntry;
 	}
 
 	/**
@@ -2143,7 +2143,7 @@ public class ClientExtensionEntryPersistenceImpl
 	 * @return the matching remote app entry, or <code>null</code> if a matching remote app entry could not be found
 	 */
 	@Override
-	public ClientExtensionEntry fetchByC_ERC(
+	public RemoteAppEntry fetchByC_ERC(
 		long companyId, String externalReferenceCode) {
 
 		return fetchByC_ERC(companyId, externalReferenceCode, true);
@@ -2158,7 +2158,7 @@ public class ClientExtensionEntryPersistenceImpl
 	 * @return the matching remote app entry, or <code>null</code> if a matching remote app entry could not be found
 	 */
 	@Override
-	public ClientExtensionEntry fetchByC_ERC(
+	public RemoteAppEntry fetchByC_ERC(
 		long companyId, String externalReferenceCode, boolean useFinderCache) {
 
 		externalReferenceCode = Objects.toString(externalReferenceCode, "");
@@ -2175,13 +2175,13 @@ public class ClientExtensionEntryPersistenceImpl
 			result = finderCache.getResult(_finderPathFetchByC_ERC, finderArgs);
 		}
 
-		if (result instanceof ClientExtensionEntry) {
-			ClientExtensionEntry clientExtensionEntry = (ClientExtensionEntry)result;
+		if (result instanceof RemoteAppEntry) {
+			RemoteAppEntry remoteAppEntry = (RemoteAppEntry)result;
 
-			if ((companyId != clientExtensionEntry.getCompanyId()) ||
+			if ((companyId != remoteAppEntry.getCompanyId()) ||
 				!Objects.equals(
 					externalReferenceCode,
-					clientExtensionEntry.getExternalReferenceCode())) {
+					remoteAppEntry.getExternalReferenceCode())) {
 
 				result = null;
 			}
@@ -2222,7 +2222,7 @@ public class ClientExtensionEntryPersistenceImpl
 					queryPos.add(externalReferenceCode);
 				}
 
-				List<ClientExtensionEntry> list = query.list();
+				List<RemoteAppEntry> list = query.list();
 
 				if (list.isEmpty()) {
 					if (useFinderCache) {
@@ -2242,17 +2242,17 @@ public class ClientExtensionEntryPersistenceImpl
 							}
 
 							_log.warn(
-								"ClientExtensionEntryPersistenceImpl.fetchByC_ERC(long, String, boolean) with parameters (" +
+								"RemoteAppEntryPersistenceImpl.fetchByC_ERC(long, String, boolean) with parameters (" +
 									StringUtil.merge(finderArgs) +
 										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
 						}
 					}
 
-					ClientExtensionEntry clientExtensionEntry = list.get(0);
+					RemoteAppEntry remoteAppEntry = list.get(0);
 
-					result = clientExtensionEntry;
+					result = remoteAppEntry;
 
-					cacheResult(clientExtensionEntry);
+					cacheResult(remoteAppEntry);
 				}
 			}
 			catch (Exception exception) {
@@ -2267,7 +2267,7 @@ public class ClientExtensionEntryPersistenceImpl
 			return null;
 		}
 		else {
-			return (ClientExtensionEntry)result;
+			return (RemoteAppEntry)result;
 		}
 	}
 
@@ -2279,14 +2279,14 @@ public class ClientExtensionEntryPersistenceImpl
 	 * @return the remote app entry that was removed
 	 */
 	@Override
-	public ClientExtensionEntry removeByC_ERC(
+	public RemoteAppEntry removeByC_ERC(
 			long companyId, String externalReferenceCode)
-		throws NoSuchClientExtensionEntryException {
+		throws NoSuchRemoteAppEntryException {
 
-		ClientExtensionEntry clientExtensionEntry = findByC_ERC(
+		RemoteAppEntry remoteAppEntry = findByC_ERC(
 			companyId, externalReferenceCode);
 
-		return remove(clientExtensionEntry);
+		return remove(remoteAppEntry);
 	}
 
 	/**
@@ -2357,15 +2357,15 @@ public class ClientExtensionEntryPersistenceImpl
 	}
 
 	private static final String _FINDER_COLUMN_C_ERC_COMPANYID_2 =
-		"clientExtensionEntry.companyId = ? AND ";
+		"remoteAppEntry.companyId = ? AND ";
 
 	private static final String _FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_2 =
-		"clientExtensionEntry.externalReferenceCode = ?";
+		"remoteAppEntry.externalReferenceCode = ?";
 
 	private static final String _FINDER_COLUMN_C_ERC_EXTERNALREFERENCECODE_3 =
-		"(clientExtensionEntry.externalReferenceCode IS NULL OR clientExtensionEntry.externalReferenceCode = '')";
+		"(remoteAppEntry.externalReferenceCode IS NULL OR remoteAppEntry.externalReferenceCode = '')";
 
-	public ClientExtensionEntryPersistenceImpl() {
+	public RemoteAppEntryPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
@@ -2373,32 +2373,32 @@ public class ClientExtensionEntryPersistenceImpl
 
 		setDBColumnNames(dbColumnNames);
 
-		setModelClass(ClientExtensionEntry.class);
+		setModelClass(RemoteAppEntry.class);
 
-		setModelImplClass(ClientExtensionEntryImpl.class);
+		setModelImplClass(RemoteAppEntryImpl.class);
 		setModelPKClass(long.class);
 
-		setTable(ClientExtensionEntryTable.INSTANCE);
+		setTable(RemoteAppEntryTable.INSTANCE);
 	}
 
 	/**
 	 * Caches the remote app entry in the entity cache if it is enabled.
 	 *
-	 * @param clientExtensionEntry the remote app entry
+	 * @param remoteAppEntry the remote app entry
 	 */
 	@Override
-	public void cacheResult(ClientExtensionEntry clientExtensionEntry) {
+	public void cacheResult(RemoteAppEntry remoteAppEntry) {
 		entityCache.putResult(
-			ClientExtensionEntryImpl.class, clientExtensionEntry.getPrimaryKey(),
-			clientExtensionEntry);
+			RemoteAppEntryImpl.class, remoteAppEntry.getPrimaryKey(),
+			remoteAppEntry);
 
 		finderCache.putResult(
 			_finderPathFetchByC_ERC,
 			new Object[] {
-				clientExtensionEntry.getCompanyId(),
-				clientExtensionEntry.getExternalReferenceCode()
+				remoteAppEntry.getCompanyId(),
+				remoteAppEntry.getExternalReferenceCode()
 			},
-			clientExtensionEntry);
+			remoteAppEntry);
 	}
 
 	private int _valueObjectFinderCacheListThreshold;
@@ -2406,24 +2406,24 @@ public class ClientExtensionEntryPersistenceImpl
 	/**
 	 * Caches the remote app entries in the entity cache if it is enabled.
 	 *
-	 * @param clientExtensionEntries the remote app entries
+	 * @param remoteAppEntries the remote app entries
 	 */
 	@Override
-	public void cacheResult(List<ClientExtensionEntry> clientExtensionEntries) {
+	public void cacheResult(List<RemoteAppEntry> remoteAppEntries) {
 		if ((_valueObjectFinderCacheListThreshold == 0) ||
 			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (clientExtensionEntries.size() >
+			 (remoteAppEntries.size() >
 				 _valueObjectFinderCacheListThreshold))) {
 
 			return;
 		}
 
-		for (ClientExtensionEntry clientExtensionEntry : clientExtensionEntries) {
+		for (RemoteAppEntry remoteAppEntry : remoteAppEntries) {
 			if (entityCache.getResult(
-					ClientExtensionEntryImpl.class, clientExtensionEntry.getPrimaryKey()) ==
+					RemoteAppEntryImpl.class, remoteAppEntry.getPrimaryKey()) ==
 						null) {
 
-				cacheResult(clientExtensionEntry);
+				cacheResult(remoteAppEntry);
 			}
 		}
 	}
@@ -2437,9 +2437,9 @@ public class ClientExtensionEntryPersistenceImpl
 	 */
 	@Override
 	public void clearCache() {
-		entityCache.clearCache(ClientExtensionEntryImpl.class);
+		entityCache.clearCache(RemoteAppEntryImpl.class);
 
-		finderCache.clearCache(ClientExtensionEntryImpl.class);
+		finderCache.clearCache(RemoteAppEntryImpl.class);
 	}
 
 	/**
@@ -2450,73 +2450,73 @@ public class ClientExtensionEntryPersistenceImpl
 	 * </p>
 	 */
 	@Override
-	public void clearCache(ClientExtensionEntry clientExtensionEntry) {
-		entityCache.removeResult(ClientExtensionEntryImpl.class, clientExtensionEntry);
+	public void clearCache(RemoteAppEntry remoteAppEntry) {
+		entityCache.removeResult(RemoteAppEntryImpl.class, remoteAppEntry);
 	}
 
 	@Override
-	public void clearCache(List<ClientExtensionEntry> clientExtensionEntries) {
-		for (ClientExtensionEntry clientExtensionEntry : clientExtensionEntries) {
-			entityCache.removeResult(ClientExtensionEntryImpl.class, clientExtensionEntry);
+	public void clearCache(List<RemoteAppEntry> remoteAppEntries) {
+		for (RemoteAppEntry remoteAppEntry : remoteAppEntries) {
+			entityCache.removeResult(RemoteAppEntryImpl.class, remoteAppEntry);
 		}
 	}
 
 	@Override
 	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(ClientExtensionEntryImpl.class);
+		finderCache.clearCache(RemoteAppEntryImpl.class);
 
 		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(ClientExtensionEntryImpl.class, primaryKey);
+			entityCache.removeResult(RemoteAppEntryImpl.class, primaryKey);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		ClientExtensionEntryModelImpl clientExtensionEntryModelImpl) {
+		RemoteAppEntryModelImpl remoteAppEntryModelImpl) {
 
 		Object[] args = new Object[] {
-			clientExtensionEntryModelImpl.getCompanyId(),
-			clientExtensionEntryModelImpl.getExternalReferenceCode()
+			remoteAppEntryModelImpl.getCompanyId(),
+			remoteAppEntryModelImpl.getExternalReferenceCode()
 		};
 
 		finderCache.putResult(_finderPathCountByC_ERC, args, Long.valueOf(1));
 		finderCache.putResult(
-			_finderPathFetchByC_ERC, args, clientExtensionEntryModelImpl);
+			_finderPathFetchByC_ERC, args, remoteAppEntryModelImpl);
 	}
 
 	/**
 	 * Creates a new remote app entry with the primary key. Does not add the remote app entry to the database.
 	 *
-	 * @param clientExtensionEntryId the primary key for the new remote app entry
+	 * @param remoteAppEntryId the primary key for the new remote app entry
 	 * @return the new remote app entry
 	 */
 	@Override
-	public ClientExtensionEntry create(long clientExtensionEntryId) {
-		ClientExtensionEntry clientExtensionEntry = new ClientExtensionEntryImpl();
+	public RemoteAppEntry create(long remoteAppEntryId) {
+		RemoteAppEntry remoteAppEntry = new RemoteAppEntryImpl();
 
-		clientExtensionEntry.setNew(true);
-		clientExtensionEntry.setPrimaryKey(clientExtensionEntryId);
+		remoteAppEntry.setNew(true);
+		remoteAppEntry.setPrimaryKey(remoteAppEntryId);
 
 		String uuid = _portalUUID.generate();
 
-		clientExtensionEntry.setUuid(uuid);
+		remoteAppEntry.setUuid(uuid);
 
-		clientExtensionEntry.setCompanyId(CompanyThreadLocal.getCompanyId());
+		remoteAppEntry.setCompanyId(CompanyThreadLocal.getCompanyId());
 
-		return clientExtensionEntry;
+		return remoteAppEntry;
 	}
 
 	/**
 	 * Removes the remote app entry with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param clientExtensionEntryId the primary key of the remote app entry
+	 * @param remoteAppEntryId the primary key of the remote app entry
 	 * @return the remote app entry that was removed
-	 * @throws NoSuchClientExtensionEntryException if a remote app entry with the primary key could not be found
+	 * @throws NoSuchRemoteAppEntryException if a remote app entry with the primary key could not be found
 	 */
 	@Override
-	public ClientExtensionEntry remove(long clientExtensionEntryId)
-		throws NoSuchClientExtensionEntryException {
+	public RemoteAppEntry remove(long remoteAppEntryId)
+		throws NoSuchRemoteAppEntryException {
 
-		return remove((Serializable)clientExtensionEntryId);
+		return remove((Serializable)remoteAppEntryId);
 	}
 
 	/**
@@ -2524,32 +2524,32 @@ public class ClientExtensionEntryPersistenceImpl
 	 *
 	 * @param primaryKey the primary key of the remote app entry
 	 * @return the remote app entry that was removed
-	 * @throws NoSuchClientExtensionEntryException if a remote app entry with the primary key could not be found
+	 * @throws NoSuchRemoteAppEntryException if a remote app entry with the primary key could not be found
 	 */
 	@Override
-	public ClientExtensionEntry remove(Serializable primaryKey)
-		throws NoSuchClientExtensionEntryException {
+	public RemoteAppEntry remove(Serializable primaryKey)
+		throws NoSuchRemoteAppEntryException {
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			ClientExtensionEntry clientExtensionEntry = (ClientExtensionEntry)session.get(
-				ClientExtensionEntryImpl.class, primaryKey);
+			RemoteAppEntry remoteAppEntry = (RemoteAppEntry)session.get(
+				RemoteAppEntryImpl.class, primaryKey);
 
-			if (clientExtensionEntry == null) {
+			if (remoteAppEntry == null) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
-				throw new NoSuchClientExtensionEntryException(
+				throw new NoSuchRemoteAppEntryException(
 					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
-			return remove(clientExtensionEntry);
+			return remove(remoteAppEntry);
 		}
-		catch (NoSuchClientExtensionEntryException noSuchEntityException) {
+		catch (NoSuchRemoteAppEntryException noSuchEntityException) {
 			throw noSuchEntityException;
 		}
 		catch (Exception exception) {
@@ -2561,20 +2561,20 @@ public class ClientExtensionEntryPersistenceImpl
 	}
 
 	@Override
-	protected ClientExtensionEntry removeImpl(ClientExtensionEntry clientExtensionEntry) {
+	protected RemoteAppEntry removeImpl(RemoteAppEntry remoteAppEntry) {
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			if (!session.contains(clientExtensionEntry)) {
-				clientExtensionEntry = (ClientExtensionEntry)session.get(
-					ClientExtensionEntryImpl.class,
-					clientExtensionEntry.getPrimaryKeyObj());
+			if (!session.contains(remoteAppEntry)) {
+				remoteAppEntry = (RemoteAppEntry)session.get(
+					RemoteAppEntryImpl.class,
+					remoteAppEntry.getPrimaryKeyObj());
 			}
 
-			if (clientExtensionEntry != null) {
-				session.delete(clientExtensionEntry);
+			if (remoteAppEntry != null) {
+				session.delete(remoteAppEntry);
 			}
 		}
 		catch (Exception exception) {
@@ -2584,41 +2584,41 @@ public class ClientExtensionEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		if (clientExtensionEntry != null) {
-			clearCache(clientExtensionEntry);
+		if (remoteAppEntry != null) {
+			clearCache(remoteAppEntry);
 		}
 
-		return clientExtensionEntry;
+		return remoteAppEntry;
 	}
 
 	@Override
-	public ClientExtensionEntry updateImpl(ClientExtensionEntry clientExtensionEntry) {
-		boolean isNew = clientExtensionEntry.isNew();
+	public RemoteAppEntry updateImpl(RemoteAppEntry remoteAppEntry) {
+		boolean isNew = remoteAppEntry.isNew();
 
-		if (!(clientExtensionEntry instanceof ClientExtensionEntryModelImpl)) {
+		if (!(remoteAppEntry instanceof RemoteAppEntryModelImpl)) {
 			InvocationHandler invocationHandler = null;
 
-			if (ProxyUtil.isProxyClass(clientExtensionEntry.getClass())) {
+			if (ProxyUtil.isProxyClass(remoteAppEntry.getClass())) {
 				invocationHandler = ProxyUtil.getInvocationHandler(
-					clientExtensionEntry);
+					remoteAppEntry);
 
 				throw new IllegalArgumentException(
-					"Implement ModelWrapper in clientExtensionEntry proxy " +
+					"Implement ModelWrapper in remoteAppEntry proxy " +
 						invocationHandler.getClass());
 			}
 
 			throw new IllegalArgumentException(
-				"Implement ModelWrapper in custom ClientExtensionEntry implementation " +
-					clientExtensionEntry.getClass());
+				"Implement ModelWrapper in custom RemoteAppEntry implementation " +
+					remoteAppEntry.getClass());
 		}
 
-		ClientExtensionEntryModelImpl clientExtensionEntryModelImpl =
-			(ClientExtensionEntryModelImpl)clientExtensionEntry;
+		RemoteAppEntryModelImpl remoteAppEntryModelImpl =
+			(RemoteAppEntryModelImpl)remoteAppEntry;
 
-		if (Validator.isNull(clientExtensionEntry.getUuid())) {
+		if (Validator.isNull(remoteAppEntry.getUuid())) {
 			String uuid = _portalUUID.generate();
 
-			clientExtensionEntry.setUuid(uuid);
+			remoteAppEntry.setUuid(uuid);
 		}
 
 		ServiceContext serviceContext =
@@ -2626,22 +2626,22 @@ public class ClientExtensionEntryPersistenceImpl
 
 		Date date = new Date();
 
-		if (isNew && (clientExtensionEntry.getCreateDate() == null)) {
+		if (isNew && (remoteAppEntry.getCreateDate() == null)) {
 			if (serviceContext == null) {
-				clientExtensionEntry.setCreateDate(date);
+				remoteAppEntry.setCreateDate(date);
 			}
 			else {
-				clientExtensionEntry.setCreateDate(
+				remoteAppEntry.setCreateDate(
 					serviceContext.getCreateDate(date));
 			}
 		}
 
-		if (!clientExtensionEntryModelImpl.hasSetModifiedDate()) {
+		if (!remoteAppEntryModelImpl.hasSetModifiedDate()) {
 			if (serviceContext == null) {
-				clientExtensionEntry.setModifiedDate(date);
+				remoteAppEntry.setModifiedDate(date);
 			}
 			else {
-				clientExtensionEntry.setModifiedDate(
+				remoteAppEntry.setModifiedDate(
 					serviceContext.getModifiedDate(date));
 			}
 		}
@@ -2649,23 +2649,23 @@ public class ClientExtensionEntryPersistenceImpl
 		long userId = GetterUtil.getLong(PrincipalThreadLocal.getName());
 
 		if (userId > 0) {
-			long companyId = clientExtensionEntry.getCompanyId();
+			long companyId = remoteAppEntry.getCompanyId();
 
 			long groupId = 0;
 
-			long clientExtensionEntryId = 0;
+			long remoteAppEntryId = 0;
 
 			if (!isNew) {
-				clientExtensionEntryId = clientExtensionEntry.getPrimaryKey();
+				remoteAppEntryId = remoteAppEntry.getPrimaryKey();
 			}
 
 			try {
-				clientExtensionEntry.setDescription(
+				remoteAppEntry.setDescription(
 					SanitizerUtil.sanitize(
 						companyId, groupId, userId,
-						ClientExtensionEntry.class.getName(), clientExtensionEntryId,
+						RemoteAppEntry.class.getName(), remoteAppEntryId,
 						ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL,
-						clientExtensionEntry.getDescription(), null));
+						remoteAppEntry.getDescription(), null));
 			}
 			catch (SanitizerException sanitizerException) {
 				throw new SystemException(sanitizerException);
@@ -2678,10 +2678,10 @@ public class ClientExtensionEntryPersistenceImpl
 			session = openSession();
 
 			if (isNew) {
-				session.save(clientExtensionEntry);
+				session.save(remoteAppEntry);
 			}
 			else {
-				clientExtensionEntry = (ClientExtensionEntry)session.merge(clientExtensionEntry);
+				remoteAppEntry = (RemoteAppEntry)session.merge(remoteAppEntry);
 			}
 		}
 		catch (Exception exception) {
@@ -2692,17 +2692,17 @@ public class ClientExtensionEntryPersistenceImpl
 		}
 
 		entityCache.putResult(
-			ClientExtensionEntryImpl.class, clientExtensionEntryModelImpl, false, true);
+			RemoteAppEntryImpl.class, remoteAppEntryModelImpl, false, true);
 
-		cacheUniqueFindersCache(clientExtensionEntryModelImpl);
+		cacheUniqueFindersCache(remoteAppEntryModelImpl);
 
 		if (isNew) {
-			clientExtensionEntry.setNew(false);
+			remoteAppEntry.setNew(false);
 		}
 
-		clientExtensionEntry.resetOriginalValues();
+		remoteAppEntry.resetOriginalValues();
 
-		return clientExtensionEntry;
+		return remoteAppEntry;
 	}
 
 	/**
@@ -2710,49 +2710,49 @@ public class ClientExtensionEntryPersistenceImpl
 	 *
 	 * @param primaryKey the primary key of the remote app entry
 	 * @return the remote app entry
-	 * @throws NoSuchClientExtensionEntryException if a remote app entry with the primary key could not be found
+	 * @throws NoSuchRemoteAppEntryException if a remote app entry with the primary key could not be found
 	 */
 	@Override
-	public ClientExtensionEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchClientExtensionEntryException {
+	public RemoteAppEntry findByPrimaryKey(Serializable primaryKey)
+		throws NoSuchRemoteAppEntryException {
 
-		ClientExtensionEntry clientExtensionEntry = fetchByPrimaryKey(primaryKey);
+		RemoteAppEntry remoteAppEntry = fetchByPrimaryKey(primaryKey);
 
-		if (clientExtensionEntry == null) {
+		if (remoteAppEntry == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
-			throw new NoSuchClientExtensionEntryException(
+			throw new NoSuchRemoteAppEntryException(
 				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 		}
 
-		return clientExtensionEntry;
+		return remoteAppEntry;
 	}
 
 	/**
-	 * Returns the remote app entry with the primary key or throws a <code>NoSuchClientExtensionEntryException</code> if it could not be found.
+	 * Returns the remote app entry with the primary key or throws a <code>NoSuchRemoteAppEntryException</code> if it could not be found.
 	 *
-	 * @param clientExtensionEntryId the primary key of the remote app entry
+	 * @param remoteAppEntryId the primary key of the remote app entry
 	 * @return the remote app entry
-	 * @throws NoSuchClientExtensionEntryException if a remote app entry with the primary key could not be found
+	 * @throws NoSuchRemoteAppEntryException if a remote app entry with the primary key could not be found
 	 */
 	@Override
-	public ClientExtensionEntry findByPrimaryKey(long clientExtensionEntryId)
-		throws NoSuchClientExtensionEntryException {
+	public RemoteAppEntry findByPrimaryKey(long remoteAppEntryId)
+		throws NoSuchRemoteAppEntryException {
 
-		return findByPrimaryKey((Serializable)clientExtensionEntryId);
+		return findByPrimaryKey((Serializable)remoteAppEntryId);
 	}
 
 	/**
 	 * Returns the remote app entry with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param clientExtensionEntryId the primary key of the remote app entry
+	 * @param remoteAppEntryId the primary key of the remote app entry
 	 * @return the remote app entry, or <code>null</code> if a remote app entry with the primary key could not be found
 	 */
 	@Override
-	public ClientExtensionEntry fetchByPrimaryKey(long clientExtensionEntryId) {
-		return fetchByPrimaryKey((Serializable)clientExtensionEntryId);
+	public RemoteAppEntry fetchByPrimaryKey(long remoteAppEntryId) {
+		return fetchByPrimaryKey((Serializable)remoteAppEntryId);
 	}
 
 	/**
@@ -2761,7 +2761,7 @@ public class ClientExtensionEntryPersistenceImpl
 	 * @return the remote app entries
 	 */
 	@Override
-	public List<ClientExtensionEntry> findAll() {
+	public List<RemoteAppEntry> findAll() {
 		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -2769,7 +2769,7 @@ public class ClientExtensionEntryPersistenceImpl
 	 * Returns a range of all the remote app entries.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ClientExtensionEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RemoteAppEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of remote app entries
@@ -2777,7 +2777,7 @@ public class ClientExtensionEntryPersistenceImpl
 	 * @return the range of remote app entries
 	 */
 	@Override
-	public List<ClientExtensionEntry> findAll(int start, int end) {
+	public List<RemoteAppEntry> findAll(int start, int end) {
 		return findAll(start, end, null);
 	}
 
@@ -2785,7 +2785,7 @@ public class ClientExtensionEntryPersistenceImpl
 	 * Returns an ordered range of all the remote app entries.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ClientExtensionEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RemoteAppEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of remote app entries
@@ -2794,9 +2794,9 @@ public class ClientExtensionEntryPersistenceImpl
 	 * @return the ordered range of remote app entries
 	 */
 	@Override
-	public List<ClientExtensionEntry> findAll(
+	public List<RemoteAppEntry> findAll(
 		int start, int end,
-		OrderByComparator<ClientExtensionEntry> orderByComparator) {
+		OrderByComparator<RemoteAppEntry> orderByComparator) {
 
 		return findAll(start, end, orderByComparator, true);
 	}
@@ -2805,7 +2805,7 @@ public class ClientExtensionEntryPersistenceImpl
 	 * Returns an ordered range of all the remote app entries.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ClientExtensionEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RemoteAppEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of remote app entries
@@ -2815,8 +2815,8 @@ public class ClientExtensionEntryPersistenceImpl
 	 * @return the ordered range of remote app entries
 	 */
 	@Override
-	public List<ClientExtensionEntry> findAll(
-		int start, int end, OrderByComparator<ClientExtensionEntry> orderByComparator,
+	public List<RemoteAppEntry> findAll(
+		int start, int end, OrderByComparator<RemoteAppEntry> orderByComparator,
 		boolean useFinderCache) {
 
 		FinderPath finderPath = null;
@@ -2835,10 +2835,10 @@ public class ClientExtensionEntryPersistenceImpl
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<ClientExtensionEntry> list = null;
+		List<RemoteAppEntry> list = null;
 
 		if (useFinderCache) {
-			list = (List<ClientExtensionEntry>)finderCache.getResult(
+			list = (List<RemoteAppEntry>)finderCache.getResult(
 				finderPath, finderArgs);
 		}
 
@@ -2860,7 +2860,7 @@ public class ClientExtensionEntryPersistenceImpl
 			else {
 				sql = _SQL_SELECT_REMOTEAPPENTRY;
 
-				sql = sql.concat(ClientExtensionEntryModelImpl.ORDER_BY_JPQL);
+				sql = sql.concat(RemoteAppEntryModelImpl.ORDER_BY_JPQL);
 			}
 
 			Session session = null;
@@ -2870,7 +2870,7 @@ public class ClientExtensionEntryPersistenceImpl
 
 				Query query = session.createQuery(sql);
 
-				list = (List<ClientExtensionEntry>)QueryUtil.list(
+				list = (List<RemoteAppEntry>)QueryUtil.list(
 					query, getDialect(), start, end);
 
 				cacheResult(list);
@@ -2896,8 +2896,8 @@ public class ClientExtensionEntryPersistenceImpl
 	 */
 	@Override
 	public void removeAll() {
-		for (ClientExtensionEntry clientExtensionEntry : findAll()) {
-			remove(clientExtensionEntry);
+		for (RemoteAppEntry remoteAppEntry : findAll()) {
+			remove(remoteAppEntry);
 		}
 	}
 
@@ -2947,7 +2947,7 @@ public class ClientExtensionEntryPersistenceImpl
 
 	@Override
 	protected String getPKDBName() {
-		return "clientExtensionEntryId";
+		return "remoteAppEntryId";
 	}
 
 	@Override
@@ -2957,7 +2957,7 @@ public class ClientExtensionEntryPersistenceImpl
 
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
-		return ClientExtensionEntryModelImpl.TABLE_COLUMNS_MAP;
+		return RemoteAppEntryModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**
@@ -3027,26 +3027,26 @@ public class ClientExtensionEntryPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "externalReferenceCode"}, false);
 
-		_setClientExtensionEntryUtilPersistence(this);
+		_setRemoteAppEntryUtilPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_setClientExtensionEntryUtilPersistence(null);
+		_setRemoteAppEntryUtilPersistence(null);
 
-		entityCache.removeCache(ClientExtensionEntryImpl.class.getName());
+		entityCache.removeCache(RemoteAppEntryImpl.class.getName());
 	}
 
-	private void _setClientExtensionEntryUtilPersistence(
-		ClientExtensionEntryPersistence clientExtensionEntryPersistence) {
+	private void _setRemoteAppEntryUtilPersistence(
+		RemoteAppEntryPersistence remoteAppEntryPersistence) {
 
 		try {
-			Field field = ClientExtensionEntryUtil.class.getDeclaredField(
+			Field field = RemoteAppEntryUtil.class.getDeclaredField(
 				"_persistence");
 
 			field.setAccessible(true);
 
-			field.set(null, clientExtensionEntryPersistence);
+			field.set(null, remoteAppEntryPersistence);
 		}
 		catch (ReflectiveOperationException reflectiveOperationException) {
 			throw new RuntimeException(reflectiveOperationException);
@@ -3055,7 +3055,7 @@ public class ClientExtensionEntryPersistenceImpl
 
 	@Override
 	@Reference(
-		target = ClientExtensionPersistenceConstants.SERVICE_CONFIGURATION_FILTER,
+		target = RemoteAppPersistenceConstants.SERVICE_CONFIGURATION_FILTER,
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {
@@ -3063,7 +3063,7 @@ public class ClientExtensionEntryPersistenceImpl
 
 	@Override
 	@Reference(
-		target = ClientExtensionPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		target = RemoteAppPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
 		unbind = "-"
 	)
 	public void setDataSource(DataSource dataSource) {
@@ -3072,7 +3072,7 @@ public class ClientExtensionEntryPersistenceImpl
 
 	@Override
 	@Reference(
-		target = ClientExtensionPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		target = RemoteAppPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
 		unbind = "-"
 	)
 	public void setSessionFactory(SessionFactory sessionFactory) {
@@ -3086,50 +3086,50 @@ public class ClientExtensionEntryPersistenceImpl
 	protected FinderCache finderCache;
 
 	private static final String _SQL_SELECT_REMOTEAPPENTRY =
-		"SELECT clientExtensionEntry FROM ClientExtensionEntry clientExtensionEntry";
+		"SELECT remoteAppEntry FROM RemoteAppEntry remoteAppEntry";
 
 	private static final String _SQL_SELECT_REMOTEAPPENTRY_WHERE =
-		"SELECT clientExtensionEntry FROM ClientExtensionEntry clientExtensionEntry WHERE ";
+		"SELECT remoteAppEntry FROM RemoteAppEntry remoteAppEntry WHERE ";
 
 	private static final String _SQL_COUNT_REMOTEAPPENTRY =
-		"SELECT COUNT(clientExtensionEntry) FROM ClientExtensionEntry clientExtensionEntry";
+		"SELECT COUNT(remoteAppEntry) FROM RemoteAppEntry remoteAppEntry";
 
 	private static final String _SQL_COUNT_REMOTEAPPENTRY_WHERE =
-		"SELECT COUNT(clientExtensionEntry) FROM ClientExtensionEntry clientExtensionEntry WHERE ";
+		"SELECT COUNT(remoteAppEntry) FROM RemoteAppEntry remoteAppEntry WHERE ";
 
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
-		"clientExtensionEntry.clientExtensionEntryId";
+		"remoteAppEntry.remoteAppEntryId";
 
 	private static final String _FILTER_SQL_SELECT_REMOTEAPPENTRY_WHERE =
-		"SELECT DISTINCT {clientExtensionEntry.*} FROM ClientExtensionEntry clientExtensionEntry WHERE ";
+		"SELECT DISTINCT {remoteAppEntry.*} FROM RemoteAppEntry remoteAppEntry WHERE ";
 
 	private static final String
 		_FILTER_SQL_SELECT_REMOTEAPPENTRY_NO_INLINE_DISTINCT_WHERE_1 =
-			"SELECT {ClientExtensionEntry.*} FROM (SELECT DISTINCT clientExtensionEntry.clientExtensionEntryId FROM ClientExtensionEntry clientExtensionEntry WHERE ";
+			"SELECT {RemoteAppEntry.*} FROM (SELECT DISTINCT remoteAppEntry.remoteAppEntryId FROM RemoteAppEntry remoteAppEntry WHERE ";
 
 	private static final String
 		_FILTER_SQL_SELECT_REMOTEAPPENTRY_NO_INLINE_DISTINCT_WHERE_2 =
-			") TEMP_TABLE INNER JOIN ClientExtensionEntry ON TEMP_TABLE.clientExtensionEntryId = ClientExtensionEntry.clientExtensionEntryId";
+			") TEMP_TABLE INNER JOIN RemoteAppEntry ON TEMP_TABLE.remoteAppEntryId = RemoteAppEntry.remoteAppEntryId";
 
 	private static final String _FILTER_SQL_COUNT_REMOTEAPPENTRY_WHERE =
-		"SELECT COUNT(DISTINCT clientExtensionEntry.clientExtensionEntryId) AS COUNT_VALUE FROM ClientExtensionEntry clientExtensionEntry WHERE ";
+		"SELECT COUNT(DISTINCT remoteAppEntry.remoteAppEntryId) AS COUNT_VALUE FROM RemoteAppEntry remoteAppEntry WHERE ";
 
-	private static final String _FILTER_ENTITY_ALIAS = "clientExtensionEntry";
+	private static final String _FILTER_ENTITY_ALIAS = "remoteAppEntry";
 
-	private static final String _FILTER_ENTITY_TABLE = "ClientExtensionEntry";
+	private static final String _FILTER_ENTITY_TABLE = "RemoteAppEntry";
 
-	private static final String _ORDER_BY_ENTITY_ALIAS = "clientExtensionEntry.";
+	private static final String _ORDER_BY_ENTITY_ALIAS = "remoteAppEntry.";
 
-	private static final String _ORDER_BY_ENTITY_TABLE = "ClientExtensionEntry.";
+	private static final String _ORDER_BY_ENTITY_TABLE = "RemoteAppEntry.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No ClientExtensionEntry exists with the primary key ";
+		"No RemoteAppEntry exists with the primary key ";
 
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No ClientExtensionEntry exists with the key {";
+		"No RemoteAppEntry exists with the key {";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ClientExtensionEntryPersistenceImpl.class);
+		RemoteAppEntryPersistenceImpl.class);
 
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid", "type"});
@@ -3143,7 +3143,7 @@ public class ClientExtensionEntryPersistenceImpl
 	private PortalUUID _portalUUID;
 
 	@Reference
-	private ClientExtensionEntryModelArgumentsResolver
-		_clientExtensionEntryModelArgumentsResolver;
+	private RemoteAppEntryModelArgumentsResolver
+		_remoteAppEntryModelArgumentsResolver;
 
 }

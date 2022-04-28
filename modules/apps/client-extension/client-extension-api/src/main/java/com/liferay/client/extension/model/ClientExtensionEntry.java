@@ -21,29 +21,29 @@ import com.liferay.portal.kernel.util.Accessor;
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * The extended model interface for the ClientExtensionEntry service. Represents a row in the &quot;ClientExtensionEntry&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the RemoteAppEntry service. Represents a row in the &quot;RemoteAppEntry&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
- * @see ClientExtensionEntryModel
+ * @see RemoteAppEntryModel
  * @generated
  */
 @ImplementationClassName(
-	"com.liferay.client.extension.model.impl.ClientExtensionEntryImpl"
+	"com.liferay.client.extension.model.impl.RemoteAppEntryImpl"
 )
 @ProviderType
-public interface ClientExtensionEntry extends PersistedModel, ClientExtensionEntryModel {
+public interface RemoteAppEntry extends PersistedModel, RemoteAppEntryModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to <code>com.liferay.client.extension.model.impl.ClientExtensionEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to <code>com.liferay.client.extension.model.impl.RemoteAppEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<ClientExtensionEntry, Long>
-		REMOTE_APP_ENTRY_ID_ACCESSOR = new Accessor<ClientExtensionEntry, Long>() {
+	public static final Accessor<RemoteAppEntry, Long>
+		REMOTE_APP_ENTRY_ID_ACCESSOR = new Accessor<RemoteAppEntry, Long>() {
 
 			@Override
-			public Long get(ClientExtensionEntry clientExtensionEntry) {
-				return clientExtensionEntry.getClientExtensionEntryId();
+			public Long get(RemoteAppEntry remoteAppEntry) {
+				return remoteAppEntry.getRemoteAppEntryId();
 			}
 
 			@Override
@@ -52,8 +52,8 @@ public interface ClientExtensionEntry extends PersistedModel, ClientExtensionEnt
 			}
 
 			@Override
-			public Class<ClientExtensionEntry> getTypeClass() {
-				return ClientExtensionEntry.class;
+			public Class<RemoteAppEntry> getTypeClass() {
+				return RemoteAppEntry.class;
 			}
 
 		};

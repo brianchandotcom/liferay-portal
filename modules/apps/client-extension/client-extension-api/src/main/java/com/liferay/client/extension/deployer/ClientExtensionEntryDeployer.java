@@ -14,7 +14,7 @@
 
 package com.liferay.client.extension.deployer;
 
-import com.liferay.client.extension.model.ClientExtensionEntry;
+import com.liferay.client.extension.model.RemoteAppEntry;
 
 import java.util.List;
 
@@ -23,8 +23,8 @@ import org.osgi.framework.ServiceRegistration;
 /**
  * @author Brian Wing Shun Chan
  */
-public interface ClientExtensionEntryDeployer {
+public interface RemoteAppEntryDeployer {
 
-	public List<ServiceRegistration<?>> deploy(ClientExtensionEntry clientExtensionEntry);
+	public List<ServiceRegistration<?>> deploy(RemoteAppEntry remoteAppEntry);
 
 }

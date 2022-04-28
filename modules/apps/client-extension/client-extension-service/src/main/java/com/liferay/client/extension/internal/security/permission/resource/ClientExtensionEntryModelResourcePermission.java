@@ -14,8 +14,8 @@
 
 package com.liferay.client.extension.internal.security.permission.resource;
 
-import com.liferay.client.extension.constants.ClientExtensionConstants;
-import com.liferay.client.extension.model.ClientExtensionEntry;
+import com.liferay.client.extension.constants.RemoteAppConstants;
+import com.liferay.client.extension.model.RemoteAppEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -30,60 +30,60 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "model.class.name=com.liferay.client.extension.model.ClientExtensionEntry",
+	property = "model.class.name=com.liferay.client.extension.model.RemoteAppEntry",
 	service = ModelResourcePermission.class
 )
-public class ClientExtensionEntryModelResourcePermission
-	implements ModelResourcePermission<ClientExtensionEntry> {
+public class RemoteAppEntryModelResourcePermission
+	implements ModelResourcePermission<RemoteAppEntry> {
 
 	@Override
 	public void check(
-			PermissionChecker permissionChecker, long clientExtensionEntryId,
+			PermissionChecker permissionChecker, long remoteAppEntryId,
 			String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, clientExtensionEntryId, actionId)) {
+		if (!contains(permissionChecker, remoteAppEntryId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker, ClientExtensionEntry.class.getName(),
-				clientExtensionEntryId, actionId);
+				permissionChecker, RemoteAppEntry.class.getName(),
+				remoteAppEntryId, actionId);
 		}
 	}
 
 	@Override
 	public void check(
-			PermissionChecker permissionChecker, ClientExtensionEntry clientExtensionEntry,
+			PermissionChecker permissionChecker, RemoteAppEntry remoteAppEntry,
 			String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, clientExtensionEntry, actionId)) {
+		if (!contains(permissionChecker, remoteAppEntry, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker, ClientExtensionEntry.class.getName(),
-				clientExtensionEntry.getClientExtensionEntryId(), actionId);
+				permissionChecker, RemoteAppEntry.class.getName(),
+				remoteAppEntry.getRemoteAppEntryId(), actionId);
 		}
 	}
 
 	@Override
 	public boolean contains(
-		PermissionChecker permissionChecker, long clientExtensionEntryId,
+		PermissionChecker permissionChecker, long remoteAppEntryId,
 		String actionId) {
 
 		return permissionChecker.hasPermission(
-			null, ClientExtensionEntry.class.getName(), clientExtensionEntryId, actionId);
+			null, RemoteAppEntry.class.getName(), remoteAppEntryId, actionId);
 	}
 
 	@Override
 	public boolean contains(
-		PermissionChecker permissionChecker, ClientExtensionEntry clientExtensionEntry,
+		PermissionChecker permissionChecker, RemoteAppEntry remoteAppEntry,
 		String actionId) {
 
 		return permissionChecker.hasPermission(
-			null, ClientExtensionEntry.class.getName(),
-			clientExtensionEntry.getClientExtensionEntryId(), actionId);
+			null, RemoteAppEntry.class.getName(),
+			remoteAppEntry.getRemoteAppEntryId(), actionId);
 	}
 
 	@Override
 	public String getModelName() {
-		return ClientExtensionEntry.class.getName();
+		return RemoteAppEntry.class.getName();
 	}
 
 	@Override
@@ -92,7 +92,7 @@ public class ClientExtensionEntryModelResourcePermission
 	}
 
 	@Reference(
-		target = "(resource.name=" + ClientExtensionConstants.RESOURCE_NAME + ")"
+		target = "(resource.name=" + RemoteAppConstants.RESOURCE_NAME + ")"
 	)
 	private PortletResourcePermission _portletResourcePermission;
 

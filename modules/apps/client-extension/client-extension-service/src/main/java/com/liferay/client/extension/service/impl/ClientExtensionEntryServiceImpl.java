@@ -14,9 +14,9 @@
 
 package com.liferay.client.extension.service.impl;
 
-import com.liferay.client.extension.constants.ClientExtensionConstants;
-import com.liferay.client.extension.model.ClientExtensionEntry;
-import com.liferay.client.extension.service.base.ClientExtensionEntryServiceBaseImpl;
+import com.liferay.client.extension.constants.RemoteAppConstants;
+import com.liferay.client.extension.model.RemoteAppEntry;
+import com.liferay.client.extension.service.base.RemoteAppEntryServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -35,14 +35,14 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"json.web.service.context.name=remoteapp",
-		"json.web.service.context.path=ClientExtensionEntry"
+		"json.web.service.context.path=RemoteAppEntry"
 	},
 	service = AopService.class
 )
-public class ClientExtensionEntryServiceImpl extends ClientExtensionEntryServiceBaseImpl {
+public class RemoteAppEntryServiceImpl extends RemoteAppEntryServiceBaseImpl {
 
 	@Override
-	public ClientExtensionEntry addCustomElementClientExtensionEntry(
+	public RemoteAppEntry addCustomElementRemoteAppEntry(
 			String externalReferenceCode, String customElementCSSURLs,
 			String customElementHTMLElementName, String customElementURLs,
 			boolean customElementUseESM, String description,
@@ -54,7 +54,7 @@ public class ClientExtensionEntryServiceImpl extends ClientExtensionEntryService
 		_portletResourcePermission.check(
 			getPermissionChecker(), null, ActionKeys.ADD_ENTRY);
 
-		return clientExtensionEntryLocalService.addCustomElementClientExtensionEntry(
+		return remoteAppEntryLocalService.addCustomElementRemoteAppEntry(
 			externalReferenceCode, getUserId(), customElementCSSURLs,
 			customElementHTMLElementName, customElementURLs,
 			customElementUseESM, description, friendlyURLMapping, instanceable,
@@ -62,7 +62,7 @@ public class ClientExtensionEntryServiceImpl extends ClientExtensionEntryService
 	}
 
 	@Override
-	public ClientExtensionEntry addIFrameClientExtensionEntry(
+	public RemoteAppEntry addIFrameRemoteAppEntry(
 			String description, String friendlyURLMapping, String iFrameURL,
 			boolean instanceable, Map<Locale, String> nameMap,
 			String portletCategoryName, String properties, String sourceCodeURL)
@@ -71,77 +71,77 @@ public class ClientExtensionEntryServiceImpl extends ClientExtensionEntryService
 		_portletResourcePermission.check(
 			getPermissionChecker(), null, ActionKeys.ADD_ENTRY);
 
-		return clientExtensionEntryLocalService.addIFrameClientExtensionEntry(
+		return remoteAppEntryLocalService.addIFrameRemoteAppEntry(
 			getUserId(), description, friendlyURLMapping, iFrameURL,
 			instanceable, nameMap, portletCategoryName, properties,
 			sourceCodeURL);
 	}
 
 	@Override
-	public ClientExtensionEntry deleteClientExtensionEntry(long clientExtensionEntryId)
+	public RemoteAppEntry deleteRemoteAppEntry(long remoteAppEntryId)
 		throws PortalException {
 
-		_clientExtensionEntryModelResourcePermission.check(
-			getPermissionChecker(), clientExtensionEntryId, ActionKeys.DELETE);
+		_remoteAppEntryModelResourcePermission.check(
+			getPermissionChecker(), remoteAppEntryId, ActionKeys.DELETE);
 
-		return clientExtensionEntryLocalService.deleteClientExtensionEntry(
-			clientExtensionEntryId);
+		return remoteAppEntryLocalService.deleteRemoteAppEntry(
+			remoteAppEntryId);
 	}
 
 	@Override
-	public ClientExtensionEntry getClientExtensionEntry(long clientExtensionEntryId)
+	public RemoteAppEntry getRemoteAppEntry(long remoteAppEntryId)
 		throws PortalException {
 
-		_clientExtensionEntryModelResourcePermission.check(
-			getPermissionChecker(), clientExtensionEntryId, ActionKeys.VIEW);
+		_remoteAppEntryModelResourcePermission.check(
+			getPermissionChecker(), remoteAppEntryId, ActionKeys.VIEW);
 
-		return clientExtensionEntryLocalService.getClientExtensionEntry(clientExtensionEntryId);
+		return remoteAppEntryLocalService.getRemoteAppEntry(remoteAppEntryId);
 	}
 
 	@Override
-	public ClientExtensionEntry updateCustomElementClientExtensionEntry(
-			long clientExtensionEntryId, String customElementCSSURLs,
+	public RemoteAppEntry updateCustomElementRemoteAppEntry(
+			long remoteAppEntryId, String customElementCSSURLs,
 			String customElementHTMLElementName, String customElementURLs,
 			boolean customElementUseESM, String description,
 			String friendlyURLMapping, Map<Locale, String> nameMap,
 			String portletCategoryName, String properties, String sourceCodeURL)
 		throws PortalException {
 
-		_clientExtensionEntryModelResourcePermission.check(
-			getPermissionChecker(), clientExtensionEntryId, ActionKeys.UPDATE);
+		_remoteAppEntryModelResourcePermission.check(
+			getPermissionChecker(), remoteAppEntryId, ActionKeys.UPDATE);
 
-		return clientExtensionEntryLocalService.updateCustomElementClientExtensionEntry(
-			getUserId(), clientExtensionEntryId, customElementCSSURLs,
+		return remoteAppEntryLocalService.updateCustomElementRemoteAppEntry(
+			getUserId(), remoteAppEntryId, customElementCSSURLs,
 			customElementHTMLElementName, customElementURLs,
 			customElementUseESM, description, friendlyURLMapping, nameMap,
 			portletCategoryName, properties, sourceCodeURL);
 	}
 
 	@Override
-	public ClientExtensionEntry updateIFrameClientExtensionEntry(
-			long clientExtensionEntryId, String description,
+	public RemoteAppEntry updateIFrameRemoteAppEntry(
+			long remoteAppEntryId, String description,
 			String friendlyURLMapping, String iFrameURL,
 			Map<Locale, String> nameMap, String portletCategoryName,
 			String properties, String sourceCodeURL)
 		throws PortalException {
 
-		_clientExtensionEntryModelResourcePermission.check(
-			getPermissionChecker(), clientExtensionEntryId, ActionKeys.UPDATE);
+		_remoteAppEntryModelResourcePermission.check(
+			getPermissionChecker(), remoteAppEntryId, ActionKeys.UPDATE);
 
-		return clientExtensionEntryLocalService.updateIFrameClientExtensionEntry(
-			getUserId(), clientExtensionEntryId, description, friendlyURLMapping,
+		return remoteAppEntryLocalService.updateIFrameRemoteAppEntry(
+			getUserId(), remoteAppEntryId, description, friendlyURLMapping,
 			iFrameURL, nameMap, portletCategoryName, properties, sourceCodeURL);
 	}
 
 	@Reference(
-		target = "(resource.name=" + ClientExtensionConstants.RESOURCE_NAME + ")"
+		target = "(resource.name=" + RemoteAppConstants.RESOURCE_NAME + ")"
 	)
 	private PortletResourcePermission _portletResourcePermission;
 
 	@Reference(
-		target = "(model.class.name=com.liferay.client.extension.model.ClientExtensionEntry)"
+		target = "(model.class.name=com.liferay.client.extension.model.RemoteAppEntry)"
 	)
-	private ModelResourcePermission<ClientExtensionEntry>
-		_clientExtensionEntryModelResourcePermission;
+	private ModelResourcePermission<RemoteAppEntry>
+		_remoteAppEntryModelResourcePermission;
 
 }

@@ -14,7 +14,7 @@
 
 package com.liferay.client.extension.internal.security.permission.resource;
 
-import com.liferay.client.extension.constants.ClientExtensionConstants;
+import com.liferay.client.extension.constants.RemoteAppConstants;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
@@ -29,17 +29,17 @@ import org.osgi.service.component.annotations.Deactivate;
  * @author Javier de Arcos
  */
 @Component(immediate = true, service = {})
-public class ClientExtensionAdminPortletResourcePermissionRegistrar {
+public class RemoteAppAdminPortletResourcePermissionRegistrar {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceRegistration = bundleContext.registerService(
 			PortletResourcePermission.class,
 			PortletResourcePermissionFactory.create(
-				ClientExtensionConstants.RESOURCE_NAME,
-				new ClientExtensionAdminPortletResourcePermissionLogic()),
+				RemoteAppConstants.RESOURCE_NAME,
+				new RemoteAppAdminPortletResourcePermissionLogic()),
 			HashMapDictionaryBuilder.<String, Object>put(
-				"resource.name", ClientExtensionConstants.RESOURCE_NAME
+				"resource.name", RemoteAppConstants.RESOURCE_NAME
 			).build());
 	}
 

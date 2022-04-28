@@ -14,31 +14,31 @@
 
 package com.liferay.client.extension.service;
 
-import com.liferay.client.extension.model.ClientExtensionEntry;
+import com.liferay.client.extension.model.RemoteAppEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.Map;
 
 /**
- * Provides the remote service utility for ClientExtensionEntry. This utility wraps
- * <code>com.liferay.client.extension.service.impl.ClientExtensionEntryServiceImpl</code> and is an
+ * Provides the remote service utility for RemoteAppEntry. This utility wraps
+ * <code>com.liferay.client.extension.service.impl.RemoteAppEntryServiceImpl</code> and is an
  * access point for service operations in application layer code running on a
  * remote server. Methods of this service are expected to have security checks
  * based on the propagated JAAS credentials because this service can be
  * accessed remotely.
  *
  * @author Brian Wing Shun Chan
- * @see ClientExtensionEntryService
+ * @see RemoteAppEntryService
  * @generated
  */
-public class ClientExtensionEntryServiceUtil {
+public class RemoteAppEntryServiceUtil {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this class directly. Add custom service methods to <code>com.liferay.client.extension.service.impl.ClientExtensionEntryServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
+	 * Never modify this class directly. Add custom service methods to <code>com.liferay.client.extension.service.impl.RemoteAppEntryServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static ClientExtensionEntry addCustomElementClientExtensionEntry(
+	public static RemoteAppEntry addCustomElementRemoteAppEntry(
 			String externalReferenceCode, String customElementCSSURLs,
 			String customElementHTMLElementName, String customElementURLs,
 			boolean customElementUseESM, String description,
@@ -47,28 +47,28 @@ public class ClientExtensionEntryServiceUtil {
 			String properties, String sourceCodeURL)
 		throws PortalException {
 
-		return getService().addCustomElementClientExtensionEntry(
+		return getService().addCustomElementRemoteAppEntry(
 			externalReferenceCode, customElementCSSURLs,
 			customElementHTMLElementName, customElementURLs,
 			customElementUseESM, description, friendlyURLMapping, instanceable,
 			nameMap, portletCategoryName, properties, sourceCodeURL);
 	}
 
-	public static ClientExtensionEntry addIFrameClientExtensionEntry(
+	public static RemoteAppEntry addIFrameRemoteAppEntry(
 			String description, String friendlyURLMapping, String iFrameURL,
 			boolean instanceable, Map<java.util.Locale, String> nameMap,
 			String portletCategoryName, String properties, String sourceCodeURL)
 		throws PortalException {
 
-		return getService().addIFrameClientExtensionEntry(
+		return getService().addIFrameRemoteAppEntry(
 			description, friendlyURLMapping, iFrameURL, instanceable, nameMap,
 			portletCategoryName, properties, sourceCodeURL);
 	}
 
-	public static ClientExtensionEntry deleteClientExtensionEntry(long clientExtensionEntryId)
+	public static RemoteAppEntry deleteRemoteAppEntry(long remoteAppEntryId)
 		throws PortalException {
 
-		return getService().deleteClientExtensionEntry(clientExtensionEntryId);
+		return getService().deleteRemoteAppEntry(remoteAppEntryId);
 	}
 
 	/**
@@ -80,43 +80,43 @@ public class ClientExtensionEntryServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static ClientExtensionEntry getClientExtensionEntry(long clientExtensionEntryId)
+	public static RemoteAppEntry getRemoteAppEntry(long remoteAppEntryId)
 		throws PortalException {
 
-		return getService().getClientExtensionEntry(clientExtensionEntryId);
+		return getService().getRemoteAppEntry(remoteAppEntryId);
 	}
 
-	public static ClientExtensionEntry updateCustomElementClientExtensionEntry(
-			long clientExtensionEntryId, String customElementCSSURLs,
+	public static RemoteAppEntry updateCustomElementRemoteAppEntry(
+			long remoteAppEntryId, String customElementCSSURLs,
 			String customElementHTMLElementName, String customElementURLs,
 			boolean customElementUseESM, String description,
 			String friendlyURLMapping, Map<java.util.Locale, String> nameMap,
 			String portletCategoryName, String properties, String sourceCodeURL)
 		throws PortalException {
 
-		return getService().updateCustomElementClientExtensionEntry(
-			clientExtensionEntryId, customElementCSSURLs,
+		return getService().updateCustomElementRemoteAppEntry(
+			remoteAppEntryId, customElementCSSURLs,
 			customElementHTMLElementName, customElementURLs,
 			customElementUseESM, description, friendlyURLMapping, nameMap,
 			portletCategoryName, properties, sourceCodeURL);
 	}
 
-	public static ClientExtensionEntry updateIFrameClientExtensionEntry(
-			long clientExtensionEntryId, String description,
+	public static RemoteAppEntry updateIFrameRemoteAppEntry(
+			long remoteAppEntryId, String description,
 			String friendlyURLMapping, String iFrameURL,
 			Map<java.util.Locale, String> nameMap, String portletCategoryName,
 			String properties, String sourceCodeURL)
 		throws PortalException {
 
-		return getService().updateIFrameClientExtensionEntry(
-			clientExtensionEntryId, description, friendlyURLMapping, iFrameURL,
+		return getService().updateIFrameRemoteAppEntry(
+			remoteAppEntryId, description, friendlyURLMapping, iFrameURL,
 			nameMap, portletCategoryName, properties, sourceCodeURL);
 	}
 
-	public static ClientExtensionEntryService getService() {
+	public static RemoteAppEntryService getService() {
 		return _service;
 	}
 
-	private static volatile ClientExtensionEntryService _service;
+	private static volatile RemoteAppEntryService _service;
 
 }

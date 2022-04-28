@@ -22,5 +22,5 @@ import org.osgi.service.component.annotations.Component;
  * @author Brian Wing Shun Chan
  */
 @Component(immediate = true, service = UADExporter.class)
-public class ClientExtensionEntryUADExporter extends BaseClientExtensionEntryUADExporter {
+public class RemoteAppEntryUADExporter extends BaseRemoteAppEntryUADExporter {
 }

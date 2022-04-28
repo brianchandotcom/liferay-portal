@@ -14,7 +14,7 @@
 
 package com.liferay.client.extension.service;
 
-import com.liferay.client.extension.model.ClientExtensionEntry;
+import com.liferay.client.extension.model.RemoteAppEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -30,12 +30,12 @@ import java.util.Map;
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * Provides the remote service interface for ClientExtensionEntry. Methods of this
+ * Provides the remote service interface for RemoteAppEntry. Methods of this
  * service are expected to have security checks based on the propagated JAAS
  * credentials because this service can be accessed remotely.
  *
  * @author Brian Wing Shun Chan
- * @see ClientExtensionEntryServiceUtil
+ * @see RemoteAppEntryServiceUtil
  * @generated
  */
 @AccessControlled
@@ -45,14 +45,14 @@ import org.osgi.annotation.versioning.ProviderType;
 	isolation = Isolation.PORTAL,
 	rollbackFor = {PortalException.class, SystemException.class}
 )
-public interface ClientExtensionEntryService extends BaseService {
+public interface RemoteAppEntryService extends BaseService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.client.extension.service.impl.ClientExtensionEntryServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the remote app entry remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ClientExtensionEntryServiceUtil} if injection and service tracking are not available.
+	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.client.extension.service.impl.RemoteAppEntryServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the remote app entry remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link RemoteAppEntryServiceUtil} if injection and service tracking are not available.
 	 */
-	public ClientExtensionEntry addCustomElementClientExtensionEntry(
+	public RemoteAppEntry addCustomElementRemoteAppEntry(
 			String externalReferenceCode, String customElementCSSURLs,
 			String customElementHTMLElementName, String customElementURLs,
 			boolean customElementUseESM, String description,
@@ -61,13 +61,13 @@ public interface ClientExtensionEntryService extends BaseService {
 			String properties, String sourceCodeURL)
 		throws PortalException;
 
-	public ClientExtensionEntry addIFrameClientExtensionEntry(
+	public RemoteAppEntry addIFrameRemoteAppEntry(
 			String description, String friendlyURLMapping, String iFrameURL,
 			boolean instanceable, Map<Locale, String> nameMap,
 			String portletCategoryName, String properties, String sourceCodeURL)
 		throws PortalException;
 
-	public ClientExtensionEntry deleteClientExtensionEntry(long clientExtensionEntryId)
+	public RemoteAppEntry deleteRemoteAppEntry(long remoteAppEntryId)
 		throws PortalException;
 
 	/**
@@ -78,19 +78,19 @@ public interface ClientExtensionEntryService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ClientExtensionEntry getClientExtensionEntry(long clientExtensionEntryId)
+	public RemoteAppEntry getRemoteAppEntry(long remoteAppEntryId)
 		throws PortalException;
 
-	public ClientExtensionEntry updateCustomElementClientExtensionEntry(
-			long clientExtensionEntryId, String customElementCSSURLs,
+	public RemoteAppEntry updateCustomElementRemoteAppEntry(
+			long remoteAppEntryId, String customElementCSSURLs,
 			String customElementHTMLElementName, String customElementURLs,
 			boolean customElementUseESM, String description,
 			String friendlyURLMapping, Map<Locale, String> nameMap,
 			String portletCategoryName, String properties, String sourceCodeURL)
 		throws PortalException;
 
-	public ClientExtensionEntry updateIFrameClientExtensionEntry(
-			long clientExtensionEntryId, String description,
+	public RemoteAppEntry updateIFrameRemoteAppEntry(
+			long remoteAppEntryId, String description,
 			String friendlyURLMapping, String iFrameURL,
 			Map<Locale, String> nameMap, String portletCategoryName,
 			String properties, String sourceCodeURL)

@@ -23,91 +23,91 @@ import java.sql.Types;
 import java.util.Date;
 
 /**
- * The table class for the &quot;ClientExtensionEntry&quot; database table.
+ * The table class for the &quot;RemoteAppEntry&quot; database table.
  *
  * @author Brian Wing Shun Chan
- * @see ClientExtensionEntry
+ * @see RemoteAppEntry
  * @generated
  */
-public class ClientExtensionEntryTable extends BaseTable<ClientExtensionEntryTable> {
+public class RemoteAppEntryTable extends BaseTable<RemoteAppEntryTable> {
 
-	public static final ClientExtensionEntryTable INSTANCE =
-		new ClientExtensionEntryTable();
+	public static final RemoteAppEntryTable INSTANCE =
+		new RemoteAppEntryTable();
 
-	public final Column<ClientExtensionEntryTable, Long> mvccVersion = createColumn(
+	public final Column<RemoteAppEntryTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
-	public final Column<ClientExtensionEntryTable, String> uuid = createColumn(
+	public final Column<RemoteAppEntryTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<ClientExtensionEntryTable, String> externalReferenceCode =
+	public final Column<RemoteAppEntryTable, String> externalReferenceCode =
 		createColumn(
 			"externalReferenceCode", String.class, Types.VARCHAR,
 			Column.FLAG_DEFAULT);
-	public final Column<ClientExtensionEntryTable, Long> clientExtensionEntryId =
+	public final Column<RemoteAppEntryTable, Long> remoteAppEntryId =
 		createColumn(
-			"clientExtensionEntryId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
-	public final Column<ClientExtensionEntryTable, Long> companyId = createColumn(
+			"remoteAppEntryId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
+	public final Column<RemoteAppEntryTable, Long> companyId = createColumn(
 		"companyId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<ClientExtensionEntryTable, Long> userId = createColumn(
+	public final Column<RemoteAppEntryTable, Long> userId = createColumn(
 		"userId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<ClientExtensionEntryTable, String> userName = createColumn(
+	public final Column<RemoteAppEntryTable, String> userName = createColumn(
 		"userName", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<ClientExtensionEntryTable, Date> createDate = createColumn(
+	public final Column<RemoteAppEntryTable, Date> createDate = createColumn(
 		"createDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
-	public final Column<ClientExtensionEntryTable, Date> modifiedDate = createColumn(
+	public final Column<RemoteAppEntryTable, Date> modifiedDate = createColumn(
 		"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
-	public final Column<ClientExtensionEntryTable, Clob> customElementCSSURLs =
+	public final Column<RemoteAppEntryTable, Clob> customElementCSSURLs =
 		createColumn(
 			"customElementCSSURLs", Clob.class, Types.CLOB,
 			Column.FLAG_DEFAULT);
-	public final Column<ClientExtensionEntryTable, String>
+	public final Column<RemoteAppEntryTable, String>
 		customElementHTMLElementName = createColumn(
 			"customElementHTMLElementName", String.class, Types.VARCHAR,
 			Column.FLAG_DEFAULT);
-	public final Column<ClientExtensionEntryTable, Clob> customElementURLs =
+	public final Column<RemoteAppEntryTable, Clob> customElementURLs =
 		createColumn(
 			"customElementURLs", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
-	public final Column<ClientExtensionEntryTable, Boolean> customElementUseESM =
+	public final Column<RemoteAppEntryTable, Boolean> customElementUseESM =
 		createColumn(
 			"customElementUseESM", Boolean.class, Types.BOOLEAN,
 			Column.FLAG_DEFAULT);
-	public final Column<ClientExtensionEntryTable, Clob> description = createColumn(
+	public final Column<RemoteAppEntryTable, Clob> description = createColumn(
 		"description", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
-	public final Column<ClientExtensionEntryTable, String> friendlyURLMapping =
+	public final Column<RemoteAppEntryTable, String> friendlyURLMapping =
 		createColumn(
 			"friendlyURLMapping", String.class, Types.VARCHAR,
 			Column.FLAG_DEFAULT);
-	public final Column<ClientExtensionEntryTable, String> iFrameURL = createColumn(
+	public final Column<RemoteAppEntryTable, String> iFrameURL = createColumn(
 		"iFrameURL", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<ClientExtensionEntryTable, Boolean> instanceable =
+	public final Column<RemoteAppEntryTable, Boolean> instanceable =
 		createColumn(
 			"instanceable", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
-	public final Column<ClientExtensionEntryTable, String> name = createColumn(
+	public final Column<RemoteAppEntryTable, String> name = createColumn(
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<ClientExtensionEntryTable, String> portletCategoryName =
+	public final Column<RemoteAppEntryTable, String> portletCategoryName =
 		createColumn(
 			"portletCategoryName", String.class, Types.VARCHAR,
 			Column.FLAG_DEFAULT);
-	public final Column<ClientExtensionEntryTable, Clob> properties = createColumn(
+	public final Column<RemoteAppEntryTable, Clob> properties = createColumn(
 		"properties", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
-	public final Column<ClientExtensionEntryTable, String> sourceCodeURL =
+	public final Column<RemoteAppEntryTable, String> sourceCodeURL =
 		createColumn(
 			"sourceCodeURL", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<ClientExtensionEntryTable, String> type = createColumn(
+	public final Column<RemoteAppEntryTable, String> type = createColumn(
 		"type_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<ClientExtensionEntryTable, Integer> status = createColumn(
+	public final Column<RemoteAppEntryTable, Integer> status = createColumn(
 		"status", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
-	public final Column<ClientExtensionEntryTable, Long> statusByUserId =
+	public final Column<RemoteAppEntryTable, Long> statusByUserId =
 		createColumn(
 			"statusByUserId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<ClientExtensionEntryTable, String> statusByUserName =
+	public final Column<RemoteAppEntryTable, String> statusByUserName =
 		createColumn(
 			"statusByUserName", String.class, Types.VARCHAR,
 			Column.FLAG_DEFAULT);
-	public final Column<ClientExtensionEntryTable, Date> statusDate = createColumn(
+	public final Column<RemoteAppEntryTable, Date> statusDate = createColumn(
 		"statusDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 
-	private ClientExtensionEntryTable() {
-		super("ClientExtensionEntry", ClientExtensionEntryTable::new);
+	private RemoteAppEntryTable() {
+		super("RemoteAppEntry", RemoteAppEntryTable::new);
 	}
 
 }

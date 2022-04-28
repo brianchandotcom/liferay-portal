@@ -14,8 +14,8 @@
 
 package com.liferay.client.extension.internal.workflow;
 
-import com.liferay.client.extension.model.ClientExtensionEntry;
-import com.liferay.client.extension.service.ClientExtensionEntryLocalService;
+import com.liferay.client.extension.model.RemoteAppEntry;
+import com.liferay.client.extension.service.RemoteAppEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -35,15 +35,15 @@ import org.osgi.service.component.annotations.Reference;
  * @author Javier de Arcos
  */
 @Component(
-	property = "model.class.name=com.liferay.client.extension.model.ClientExtensionEntry",
+	property = "model.class.name=com.liferay.client.extension.model.RemoteAppEntry",
 	service = WorkflowHandler.class
 )
-public class ClientExtensionEntryWorkflowHandler
-	extends BaseWorkflowHandler<ClientExtensionEntry> {
+public class RemoteAppEntryWorkflowHandler
+	extends BaseWorkflowHandler<RemoteAppEntry> {
 
 	@Override
 	public String getClassName() {
-		return ClientExtensionEntry.class.getName();
+		return RemoteAppEntry.class.getName();
 	}
 
 	@Override
@@ -57,7 +57,7 @@ public class ClientExtensionEntryWorkflowHandler
 	}
 
 	@Override
-	public ClientExtensionEntry updateStatus(
+	public RemoteAppEntry updateStatus(
 			int status, Map<String, Serializable> workflowContext)
 		throws PortalException {
 
@@ -67,11 +67,11 @@ public class ClientExtensionEntryWorkflowHandler
 			(String)workflowContext.get(
 				WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
 
-		return _clientExtensionEntryLocalService.updateStatus(
+		return _remoteAppEntryLocalService.updateStatus(
 			userId, classPK, status);
 	}
 
 	@Reference
-	private ClientExtensionEntryLocalService _clientExtensionEntryLocalService;
+	private RemoteAppEntryLocalService _remoteAppEntryLocalService;
 
 }

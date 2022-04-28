@@ -19,23 +19,23 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ClientExtensionEntryCustomElementCSSURLsException
+public class RemoteAppEntryCustomElementCSSURLsException
 	extends PortalException {
 
-	public ClientExtensionEntryCustomElementCSSURLsException() {
+	public RemoteAppEntryCustomElementCSSURLsException() {
 	}
 
-	public ClientExtensionEntryCustomElementCSSURLsException(String msg) {
+	public RemoteAppEntryCustomElementCSSURLsException(String msg) {
 		super(msg);
 	}
 
-	public ClientExtensionEntryCustomElementCSSURLsException(
+	public RemoteAppEntryCustomElementCSSURLsException(
 		String msg, Throwable throwable) {
 
 		super(msg, throwable);
 	}
 
-	public ClientExtensionEntryCustomElementCSSURLsException(Throwable throwable) {
+	public RemoteAppEntryCustomElementCSSURLsException(Throwable throwable) {
 		super(throwable);
 	}
 

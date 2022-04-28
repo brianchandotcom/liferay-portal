@@ -36,4 +36,24 @@ definition {
 		Upgrade.viewCardWithThreeColumnsInMobileBreakpoint();
 	}
 
+	@description = "This is a test for LPS-146029. The old Grid should keep previous layout styles in non-desktop viewports and changes back to default after editing."
+	@priority = "4"
+	test ViewDefinedGridLayoutAfterUpgrade7413 {
+		property data.archive.type = "data-archive-grid-layout-style";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property portal.version = "7.4.13";
+
+		Upgrade.viewDefinedGridLayout();
+	}
+
+	@description = "This is a test for LPS-146029. The old Grid should keep previous layout styles in non-desktop viewports and changes back to default after editing."
+	@priority = "4"
+	test ViewDefinedGridLayoutAfterUpgrade740321 {
+		property data.archive.type = "data-archive-grid-layout-style";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property portal.version = "7.4.3.21";
+
+		Upgrade.viewDefinedGridLayout();
+	}
+
 }

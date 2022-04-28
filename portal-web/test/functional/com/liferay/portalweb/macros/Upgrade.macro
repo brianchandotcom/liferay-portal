@@ -4159,6 +4159,80 @@ definition {
 		AssertVisible(locator1 = "ControlMenu#ADD");
 	}
 
+	macro viewDefinedGridLayout {
+		task ("Navigate to page in edit mode") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("View the Grid Styles") {
+			PageEditor.gotoConfiguration(fragmentName = "Grid");
+
+			PageEditor.viewGridStyle(
+				columnCount = "6",
+				position = "1");
+
+			PageEditor.switchViewport(deviceType = "Tablet");
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Layout",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "1 Module per Row");
+
+			PageEditor.switchViewport(deviceType = "Landscape Phone");
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Layout",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "3 Modules per Row");
+
+			PageEditor.switchViewport(deviceType = "Portrait Phone");
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Layout",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "2 Modules per Row");
+		}
+
+		task ("Change to the Desktop viewport") {
+			PageEditor.switchViewport(deviceType = "Desktop");
+		}
+
+		task ("Configure the Grid") {
+			PageEditor.editLayoutGrid(
+				columnCount = "3",
+				panel = "General");
+		}
+
+		task ("View the Grid Styles after updating") {
+			PageEditor.viewGridStyle(
+				columnCount = "3",
+				position = "1");
+
+			PageEditor.switchViewport(deviceType = "Tablet");
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Layout",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "3 Modules per Row");
+
+			PageEditor.switchViewport(deviceType = "Landscape Phone");
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Layout",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "1 Module per Row");
+
+			PageEditor.switchViewport(deviceType = "Portrait Phone");
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Layout",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "1 Module per Row");
+		}
+	}
+
 	macro viewDocument {
 		Navigator.gotoPage(pageName = "Document");
 

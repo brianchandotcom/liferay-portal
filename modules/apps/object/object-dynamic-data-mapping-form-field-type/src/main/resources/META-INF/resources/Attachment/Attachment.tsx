@@ -24,8 +24,8 @@ import {
 	FieldChangeEventHandler,
 	ReactFieldBase as FieldBase,
 } from 'dynamic-data-mapping-form-field-type';
-import {fetch, openSelectionModal} from 'frontend-js-web';
-import React, {ChangeEventHandler, useEffect, useRef, useState} from 'react';
+import {openSelectionModal} from 'frontend-js-web';
+import React, {ChangeEventHandler, useRef, useState} from 'react';
 
 import './Attachment.scss';
 
@@ -85,10 +85,7 @@ function File({attachment, loading, onDelete}: IFileProps) {
 					<ClayButton
 						displayType="unstyled"
 						onClick={() => {
-							window.open(
-								window.location.origin + attachment.contentUrl,
-								'_blank'
-							);
+							window.open(attachment.contentURL, '_blank');
 						}}
 					>
 						{attachment.title}
@@ -97,7 +94,7 @@ function File({attachment, loading, onDelete}: IFileProps) {
 					<a
 						className="lfr-objects__attachment-download"
 						download
-						href={`${window.location.origin}${attachment.contentUrl}`}
+						href={attachment.contentURL}
 					>
 						<ClayIcon symbol="download" />
 					</a>
@@ -106,7 +103,7 @@ function File({attachment, loading, onDelete}: IFileProps) {
 					borderless
 					displayType="secondary"
 					monospaced
-					onClick={() => onDelete(attachment)}
+					onClick={() => onDelete()}
 					symbol="times-circle-full"
 				/>
 			</>
@@ -118,54 +115,21 @@ function File({attachment, loading, onDelete}: IFileProps) {
 
 export default function Attachment({
 	acceptedFileExtensions,
+	contentURL,
 	fileSource,
 	maximumFileSize,
-	objectEntryId, // "0" means that there is no previews
 	onChange,
+	title,
 	url,
-	value,
-	warningMessage,
 	...otherProps
 }: IProps) {
 	const {portletNamespace} = useConfig();
 	const inputRef = useRef<HTMLInputElement>(null);
-	const [isLoading, setLoading] = useState(false);
+	const [attachment, setAttachment] = useState<Attachment | null>(
+		contentURL && title ? {contentURL, title} : null
+	);
 	const [error, setError] = useState({});
-	const [attachment, setAttachment] = useState<Attachment>();
-
-	useEffect(() => {
-		let isMounted = true;
-
-		if (value) {
-			fetch(`/o/headless-delivery/v1.0/documents/${value}`).then(
-				async (response: any) => {
-					if (isMounted && response.ok) {
-						const file = await response.json();
-						setAttachment(file as Attachment);
-					}
-				}
-			);
-		}
-		else if (value === null) {
-			setAttachment(undefined);
-		}
-
-		return () => {
-			isMounted = false;
-		};
-	}, [value]);
-
-	const handleDelete = async ({
-		actions: {
-			delete: {href, method},
-		},
-	}: Attachment) => {
-		if (objectEntryId === '0') {
-			await fetch(href, {method});
-		}
-
-		onChange({target: {value: null}});
-	};
+	const [isLoading, setLoading] = useState(false);
 
 	const handleSelectedItem = (selectedItem: any) => {
 		if (!selectedItem) {
@@ -178,15 +142,25 @@ export default function Attachment({
 			validateFileExtension(
 				acceptedFileExtensions,
 				selectedItemValue.extension
-			) ??
-			validateFileSize(selectedItemValue.size, Number(maximumFileSize));
+			) ?? validateFileSize(selectedItemValue.size, maximumFileSize);
 
 		if (error) {
 			setError(error);
 		}
 		else {
+			setAttachment({
+				contentURL: selectedItemValue.url,
+				title: selectedItemValue.title,
+			});
+
 			onChange({target: {value: selectedItemValue.fileEntryId}});
 		}
+	};
+
+	const handleDelete = () => {
+		setAttachment(null);
+
+		onChange({target: {value: ''}}); // TODO: fix backend to support null
 	};
 
 	const handleUpload: ChangeEventHandler<HTMLInputElement> = async ({
@@ -196,7 +170,7 @@ export default function Attachment({
 		if (selectedFile) {
 			const fileSizeError = validateFileSize(
 				selectedFile.size,
-				Number(maximumFileSize)
+				maximumFileSize
 			);
 
 			if (fileSizeError) {
@@ -223,6 +197,11 @@ export default function Attachment({
 					});
 				}
 				else {
+					setAttachment({
+						contentURL: file.contentURL,
+						title: file.title,
+					});
+
 					onChange({target: {value: file.fileEntryId}});
 				}
 			}
@@ -232,23 +211,11 @@ export default function Attachment({
 		}
 	};
 
-	const tip = Liferay.Util.sub(
-		Liferay.Language.get('upload-a-x-no-larger-than-x-mb'),
-		acceptedFileExtensions,
-		maximumFileSize
-	);
-
 	return (
-		<FieldBase
-			tip={tip}
-			warningMessage={warningMessage}
-			{...otherProps}
-			{...error}
-		>
+		<FieldBase {...otherProps} {...error}>
 			<div className="inline-item lfr-objects__attachment">
 				<ClayButton
 					className="lfr-objects__attachment-button"
-					disabled={!!warningMessage}
 					displayType="secondary"
 					onClick={() => {
 						setError({});
@@ -276,11 +243,7 @@ export default function Attachment({
 				<File
 					attachment={attachment}
 					loading={isLoading}
-					onDelete={(event) =>
-						fileSource === 'userComputer'
-							? handleDelete(event)
-							: onChange({target: {value: null}})
-					}
+					onDelete={handleDelete}
 				/>
 			</div>
 
@@ -299,42 +262,27 @@ export default function Attachment({
 }
 
 interface File {
-	attributeDataImageId: 'data-image-id';
-	fileEntryId: '40678';
-	groupId: '20123';
-	mimeType: 'image/jpeg';
-	randomId: '';
-	title: 'star-wars-the-rise-of-skywalker-new_1572371043 (1).jpg';
-	type: 'document';
-	url: string;
-	uuid: '5e564762-705a-de9e-05a2-f427c1232b56';
+	contentURL: string;
+	fileEntryId: string;
+	title: string;
 }
 
-interface Action {
-	href: string;
-	method: 'DELETE' | 'GET' | 'PATCH' | 'PUT';
-}
 interface Attachment {
-	actions: {
-		delete: Action;
-	};
-	contentUrl: string;
-	id: number;
+	contentURL: string;
 	title: string;
 }
 
 interface IFileProps {
-	attachment?: Attachment;
+	attachment: Attachment | null;
 	loading?: boolean;
-	onDelete: (attachment: Attachment) => void;
+	onDelete: () => void;
 }
 interface IProps {
 	acceptedFileExtensions: string;
+	contentURL: string;
 	fileSource: string;
-	maximumFileSize: string; // TODO: Fix endpoint to fetch as a number
-	objectEntryId: string; // TODO: Fix endpoint to fetch as a number
+	maximumFileSize: number;
 	onChange: FieldChangeEventHandler;
+	title: string;
 	url: string;
-	value: string; // TODO: Fix endpoint to fetch as a number
-	warningMessage?: string;
 }

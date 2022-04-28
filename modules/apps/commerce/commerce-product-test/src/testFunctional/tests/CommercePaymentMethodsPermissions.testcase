@@ -30,14 +30,94 @@ definition {
 		CommerceConfiguration.commerceTearDown();
 	}
 
-	@description = "[Please Update]"
-	@ignore = "Test Stub"
-	@priority = "4"
+	@description = "Verify users with the 'Manage Commerce Order Payment Methods' permission can edit the payment method of an order"
+	@priority = "3"
 	test UsersWithManagePaymentMethodsPermissionCanEditSelectedPaymentMethod {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-8607 UsersWithManagePaymentMethodsPermissionCanEditSelectedPaymentMethod pending implementation
+		task ("Given multiple active payment methods") {
+			CommerceChannels.openChannelsAdmin();
 
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			CommerceChannels.activatePaymentMethod(paymentMethod = "Money Order");
+
+			CommerceChannels.activatePaymentMethod(paymentMethod = "PayPal");
+		}
+
+		task ("And given a user with the Operations Manager role") {
+			JSONUser.addUserWithRole(
+				roleTitle = "Operations Manager",
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+		}
+
+		task ("And given the Operations Manager role is given the 'Manage Commerce Order Payment Methods' permission") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "MANAGE_COMMERCE_ORDER_PAYMENT_METHODS",
+				resourceName = "com.liferay.commerce.order",
+				roleTitle = "Operations Manager");
+		}
+
+		task ("And given a buyer has checked out an order using one of the active payment methods") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+
+			CommerceNavigator.gotoMiniCart();
+
+			Button.click(button = "View Details");
+
+			Button.click(button = "Checkout");
+
+			CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				paymentMethod = "Money Order",
+				productName = "U-Joint",
+				productQuantity = "1",
+				productUnitPrice = "24",
+				shippingMethod = "Standard");
+		}
+
+		task ("When the Operations Manager opens the order from the orders page") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+
+			CommerceOrders.openOrdersAdmin();
+
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
+		}
+
+		task ("Then the Operations Manager can edit the payment method of the order") {
+			Click(
+				key_menuTab = "Payments",
+				locator1 = "CommerceEntry#MENU_TAB");
+
+			AssertTextEquals.assertPartialText(
+				key_paymentMethod = "Money Order",
+				locator1 = "CommerceOrders#ORDER_DETAILS_PAYMENT_METHOD_NAME",
+				value1 = "Money Order");
+
+			CommerceOrders.editPaymentMethod(paymentMethod = "PayPal");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "CommerceOrders#ORDER_DETAILS_PAYMENT_METHOD_NAME",
+				value1 = "PayPal");
+		}
 	}
 
 	@description = "Verify users with the 'Manage Commerce Order Payment Methods' permission can select payment method during checkout"

@@ -1,13 +1,29 @@
 @component-name = "portal-commerce"
 definition {
 
+	property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Product Info Management";
 
 	setUp {
-		CommerceConfiguration.commerceSetUp();
+		CommerceConfiguration.commerceSetUp(minium = "true");
+
+		task ("Setup: Create an account with a buyer user") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
 	}
 
 	tearDown {
@@ -24,14 +40,73 @@ definition {
 
 	}
 
-	@description = "[Please Update]"
-	@ignore = "Test Stub"
-	@priority = "4"
+	@description = "Verify users with the 'Manage Commerce Order Payment Methods' permission can select payment method during checkout"
+	@priority = "3"
 	test UsersWithManagePermissionCanSelectPaymentMethodDuringCheckout {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-8606 UsersWithManagePermissionCanSelectPaymentMethodDuringCheckout pending implementation
+		task ("Given multiple active payment methods") {
+			CommerceChannels.openChannelsAdmin();
 
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			CommerceChannels.activatePaymentMethod(paymentMethod = "Money Order");
+
+			CommerceChannels.activatePaymentMethod(paymentMethod = "PayPal");
+		}
+
+		task ("When a buyer with 'Manage Commerce Order Payment Methods' permission checks out an order") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+
+			CommerceNavigator.gotoMiniCart();
+
+			Button.click(button = "View Details");
+
+			Button.click(button = "Checkout");
+
+			CommerceCheckout.setAddress(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code");
+
+			Click(locator1 = "Button#CONTINUE");
+
+			Click(
+				key_radioOption = "Standard",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+
+			Click(locator1 = "Button#CONTINUE");
+		}
+
+		task ("Then at the Payment Method step, the buyer can select one of the active payment methods") {
+			AssertElementPresent(
+				key_radioOption = "Money Order",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+
+			Click(
+				key_radioOption = "PayPal",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+
+			Click(locator1 = "Button#CONTINUE");
+
+			AssertTextEquals(
+				key_paymentMethod = "PayPal",
+				locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_PAYMENT_METHOD",
+				value1 = "PayPal");
+
+			Click(locator1 = "Button#CONTINUE");
+		}
 	}
 
 	@description = "[Please Update]"

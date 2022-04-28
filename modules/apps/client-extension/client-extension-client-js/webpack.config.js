@@ -14,7 +14,7 @@
 
 const path = require('path');
 
-const PUBLIC_PATH = '/o/client-extension-client-js/';
+const PUBLIC_PATH = '/o/remote-app-client-js/';
 
 module.exports = {
 	context: path.resolve(__dirname),
@@ -30,7 +30,7 @@ module.exports = {
 		],
 	},
 	output: {
-		filename: 'client-extension-client-js.js',
+		filename: 'remote-app-client-js.js',
 		libraryTarget: 'window',
 		path: path.resolve('./build/node/packageRunBuild/resources/'),
 		publicPath: PUBLIC_PATH,

@@ -1,4 +1,4 @@
-Bundle-Name: Liferay Client Extension Client JS
-Bundle-SymbolicName: com.liferay.client.extension.client.js
-Bundle-Version: 1.0.0
-Web-ContextPath: /client-extension-client-js
+Bundle-Name: Liferay Remote App Client JS
+Bundle-SymbolicName: com.liferay.remote.app.client.js
+Bundle-Version: 1.0.8
+Web-ContextPath: /remote-app-client-js

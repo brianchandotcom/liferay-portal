@@ -121,6 +121,9 @@
 			return editable;
 		},
 
+		/**
+		 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+		 */
 		addInputCancel() {
 			A.use('aui-button-search-cancel', (A) => {
 				new A.ButtonSearchCancel({

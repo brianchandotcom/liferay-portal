@@ -252,9 +252,7 @@ public class UserGroupCascadeReindexUsersTest {
 		long[] userIds = _getAllUserIds(users);
 
 		for (long userId : userIds) {
-			User user = _userLocalService.fetchUser(userId);
-
-			consumer.accept(user);
+			consumer.accept(_userLocalService.fetchUser(userId));
 		}
 	}
 

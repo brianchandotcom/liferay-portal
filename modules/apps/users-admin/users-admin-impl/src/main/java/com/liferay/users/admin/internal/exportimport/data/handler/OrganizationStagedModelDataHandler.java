@@ -339,12 +339,10 @@ public class OrganizationStagedModelDataHandler
 			return;
 		}
 
-		PasswordPolicy passwordPolicy =
-			_passwordPolicyLocalService.getPasswordPolicy(
-				passwordPolicyRel.getPasswordPolicyId());
-
 		StagedModelDataHandlerUtil.exportReferenceStagedModel(
-			portletDataContext, organization, passwordPolicy,
+			portletDataContext, organization,
+			_passwordPolicyLocalService.getPasswordPolicy(
+				passwordPolicyRel.getPasswordPolicyId()),
 			PortletDataContext.REFERENCE_TYPE_STRONG);
 	}
 

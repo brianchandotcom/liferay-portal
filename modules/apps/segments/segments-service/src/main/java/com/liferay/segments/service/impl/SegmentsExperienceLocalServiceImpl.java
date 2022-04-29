@@ -517,13 +517,26 @@ public class SegmentsExperienceLocalServiceImpl
 			return segmentsExperience;
 		}
 
+		SegmentsExperience swapSegmentsExperience =
+			segmentsExperiencePersistence.fetchByG_C_C_P(
+				segmentsExperience.getGroupId(),
+				segmentsExperience.getClassNameId(),
+				segmentsExperience.getClassPK(), newPriority);
+
+		if (swapSegmentsExperience == null) {
+			segmentsExperience.setPriority(newPriority);
+
+			return segmentsExperiencePersistence.update(segmentsExperience);
+		}
+
 		int lowestPriority = _getLowestPriority(
 			segmentsExperience.getGroupId(),
 			segmentsExperience.getClassNameId(),
 			segmentsExperience.getClassPK());
 
 		return _swapSegmentsExperience(
-			lowestPriority, newPriority, segmentsExperience);
+			lowestPriority, newPriority, segmentsExperience,
+			swapSegmentsExperience);
 	}
 
 	private void _deleteSegmentsExperiment(
@@ -570,20 +583,8 @@ public class SegmentsExperienceLocalServiceImpl
 	}
 
 	private SegmentsExperience _swapSegmentsExperience(
-		int lowestPriority, int priority,
-		SegmentsExperience segmentsExperience) {
-
-		SegmentsExperience swapSegmentsExperience =
-			segmentsExperiencePersistence.fetchByG_C_C_P(
-				segmentsExperience.getGroupId(),
-				segmentsExperience.getClassNameId(),
-				segmentsExperience.getClassPK(), priority);
-
-		if (swapSegmentsExperience == null) {
-			segmentsExperience.setPriority(priority);
-
-			return segmentsExperiencePersistence.update(segmentsExperience);
-		}
+		int lowestPriority, int priority, SegmentsExperience segmentsExperience,
+		SegmentsExperience swapSegmentsExperience) {
 
 		int originalPriority = segmentsExperience.getPriority();
 
@@ -607,7 +608,7 @@ public class SegmentsExperienceLocalServiceImpl
 
 		swapSegmentsExperience.setPriority(originalPriority);
 
-		segmentsExperienceLocalService.updateSegmentsExperience(
+		segmentsExperienceLocalService.updateSegmentsExperience( 
 			swapSegmentsExperience);
 
 		return segmentsExperience;

@@ -15,6 +15,7 @@
 package com.liferay.layout.internal.crawler;
 
 import com.liferay.layout.crawler.LayoutCrawler;
+import com.liferay.layout.internal.configuration.LayoutCrawlerClientConfiguration;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
@@ -153,6 +154,9 @@ public class LayoutCrawlerImpl implements LayoutCrawler {
 
 	@Reference
 	private Language _language;
+
+	private volatile LayoutCrawlerClientConfiguration
+		_layoutCrawlerClientConfiguration;
 
 	@Reference
 	private Portal _portal;

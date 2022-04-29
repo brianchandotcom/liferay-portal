@@ -29,15 +29,12 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 import org.junit.Assert;
@@ -400,23 +397,6 @@ public class TextDDMFormFieldTypeSettingsTest
 		LanguageUtil languageUtil = new LanguageUtil();
 
 		languageUtil.setLanguage(Mockito.mock(Language.class));
-	}
-
-	@Override
-	protected void setUpPortalUtil() {
-		PortalUtil portalUtil = new PortalUtil();
-
-		Portal portal = Mockito.mock(Portal.class);
-
-		ResourceBundle resourceBundle = Mockito.mock(ResourceBundle.class);
-
-		Mockito.when(
-			portal.getResourceBundle(Matchers.any(Locale.class))
-		).thenReturn(
-			resourceBundle
-		);
-
-		portalUtil.setPortal(portal);
 	}
 
 	@Override

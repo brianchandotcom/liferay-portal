@@ -64,7 +64,16 @@ public class LiferaySeleniumMethod {
 		"assertJavaScript", "executeJavaScript", "getJavaScriptResult",
 		"waitForJavaScript", "waitForJavaScriptNoError", "verifyJavaScript");
 	private static final Map<String, String[]> _liferaySeleniumMethodNames =
-		new HashMap<>();
+		new HashMap<String, String[]>() {
+			{
+				put(
+					"assertCSSValue",
+					new String[] {"locator1", "locator2", "value1"});
+				put(
+					"ocularAssertElementImage",
+					new String[] {"locator1", "value1", "value2"});
+			}
+		};
 	private static final List<String> _singleValueMethodNames = Arrays.asList(
 		"assertAlertText", "assertConfirmation", "assertConsoleTextNotPresent",
 		"assertConsoleTextPresent", "assertHTMLSourceTextNotPresent",
@@ -76,12 +85,6 @@ public class LiferaySeleniumMethod {
 		"waitForTextNotPresent", "waitForTextPresent");
 
 	static {
-		_liferaySeleniumMethodNames.put(
-			"assertCSSValue", new String[] {"locator1", "locator2", "value1"});
-		_liferaySeleniumMethodNames.put(
-			"ocularAssertElementImage",
-			new String[] {"locator1", "value1", "value2"});
-
 		for (String methodName : _singleValueMethodNames) {
 			_liferaySeleniumMethodNames.put(
 				methodName, new String[] {"value1"});

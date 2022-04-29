@@ -1498,6 +1498,7 @@ public class PoshiValidation {
 				new PoshiElementException(
 					poshiElement, "Invalid selenium method name: \"",
 					seleniumMethodName, "\"\n"));
+
 			return;
 		}
 

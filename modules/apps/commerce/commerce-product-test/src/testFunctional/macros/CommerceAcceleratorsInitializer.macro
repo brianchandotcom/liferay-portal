@@ -202,9 +202,11 @@ definition {
 	}
 
 	macro reviewOrder {
-		Click(
-			key_orderAuthor = "${orderAuthor}",
-			locator1 = "CommerceAccelerators#ORDERS_ENTRY_VIEW_BUTTON");
+		if (IsElementPresent(locator1 = "CommerceAccelerators#ORDERS_ENTRY_VIEW_BUTTON")) {
+			Click(
+				key_orderAuthor = "${orderAuthor}",
+				locator1 = "CommerceAccelerators#ORDERS_ENTRY_VIEW_BUTTON");
+		}
 
 		AssertTextEquals(
 			locator1 = "CommerceAccelerators#ORDER_DETAILS_SKU",

@@ -113,7 +113,14 @@
 					'button[type=submit], input[type=button], input[type=image], input[type=reset], input[type=submit]'
 				);
 
-				Util.disableFormButtons(inputs, form);
+				const inputsArray = Array.from(inputs._nodes);
+
+				if (inputsArray.length) {
+					inputsArray.map((input) => {
+						input.disabled = true;
+						input.style.opacity = 0.5;
+					});
+				}
 
 				if (singleSubmit === false) {
 					Util._submitLocked = A.later(

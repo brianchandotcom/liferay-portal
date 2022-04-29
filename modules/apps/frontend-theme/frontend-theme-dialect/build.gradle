@@ -3,7 +3,6 @@ assemble {
 }
 
 task copyClassicTheme(type: Copy)
-task copyCommerceIcons(type: Copy)
 
 copyClassicTheme {
 	from("../frontend-theme-classic/src/") {
@@ -19,13 +18,6 @@ copyClassicTheme {
 	rename '^_custom.scss$', '_classic_custom.scss'
 }
 
-copyCommerceIcons {
-	from("../../commerce/commerce-theme-minium/commerce-theme-minium/src/images/icons.svg")
-
-	into file("src/images")
-}
-
 packageRunBuild {
 	dependsOn copyClassicTheme
-	dependsOn copyCommerceIcons
 }

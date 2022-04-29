@@ -257,13 +257,15 @@ const WalkthroughStep = ({
 
 							<ClayLayout.ContentCol>
 								<ClayButton.Group spaced>
-									<ClayButton
-										displayType="secondary"
-										onClick={() => onPrevious()}
-										small
-									>
-										{Liferay.Language.get('previous')}
-									</ClayButton>
+									{stepIndex > 0 && (
+										<ClayButton
+											displayType="secondary"
+											onClick={() => onPrevious()}
+											small
+										>
+											{Liferay.Language.get('previous')}
+										</ClayButton>
+									)}
 
 									{stepIndex + 1 !== stepLength ? (
 										<ClayButton

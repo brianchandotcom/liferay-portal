@@ -218,6 +218,7 @@ definition {
 
 	@priority = "4"
 	test CanSetVirtualHostViaPages {
+		property test.assert.warning.exceptions = "true";
 		property test.name.skip.portal.instance = "DatabasePartitioning#CanSetVirtualHostViaPages";
 
 		PortalInstances.openVirtualInstancesAdmin();
@@ -241,9 +242,11 @@ definition {
 			pageVirtualHosts = "true",
 			pageVirtualHostURL = "www.baker.com");
 
-		Navigator.openSpecificURL(url = "http://www.baker.com:8080");
+		Navigator.gotoPage(
+			baseURL = "www.baker.com:8080",
+			pageName = "Home");
 
-		AssertLocation.assertPartialLocation(value1 = "http://www.baker.com:8080");
+		AssertLocation(value1 = "http://www.baker.com:8080/web/guest/home");
 
 		SignOut.signOut();
 
@@ -256,9 +259,11 @@ definition {
 
 		ServerAdministration.executeServerResourcesActions(actionsDescription = "Clear the database cache.");
 
-		Navigator.openSpecificURL(url = "http://www.baker.com:8080");
+		Navigator.gotoPage(
+			baseURL = "www.baker.com:8080",
+			pageName = "Home");
 
-		AssertConsoleTextNotPresent(value1 = "com.liferay.portal.kernel.exception.NoSuchLayoutSetException: No LayoutSet exists with the primary key");
+		AssertLocation(value1 = "http://www.baker.com:8080/web/guest/home");
 	}
 
 	@priority = "5"

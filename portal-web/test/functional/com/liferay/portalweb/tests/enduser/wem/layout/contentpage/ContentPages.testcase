@@ -677,7 +677,7 @@ definition {
 	@priority = "4"
 	@uitest
 	test GroupsOfFragmentsCanBeHiddenAndShown {
-		task ("Add a container and 4 headings inside") {
+		task ("Add a Container and 4 elements inside") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
 				siteName = "Test Site Name");
@@ -700,17 +700,14 @@ definition {
 		}
 
 		task ("Hide Blogs and HTML") {
-			for (var fragmentName : list "Blogs,HTML") {
-				PageEditor.hideFragmentViaPageStructure(fragmentName = "${fragmentName}");
+			for (var elementName : list "Blogs,HTML") {
+				PageEditor.hideFragmentViaPageStructure(fragmentName = "${elementName}");
 			}
 		}
 
 		task ("View Blogs widget and HTML fragment are not shown") {
-			for (var portletName : list "Blogs,HTML") {
-				AssertNotVisible(
-					index = "1",
-					key_fragmentName = "${portletName}",
-					locator1 = "Fragment#FRAGMENT_LABEL");
+			for (var elementName : list "Blogs,HTML") {
+				PageEditor.viewFragmentNotVisible(fragmentName = "${elementName}");
 			}
 		}
 
@@ -724,9 +721,9 @@ definition {
 			PageEditor.hideFragmentViaHeader(fragmentName = "Container");
 		}
 
-		task ("Assert no fragment or widget is shown") {
-			for (var fragmentName : list "Container,Blogs,HTML,Button,Heading") {
-				PageEditor.viewFragmentNotPresent(fragmentName = "${fragmentName}");
+		task ("View elements are not shown") {
+			for (var elementName : list "Container,Blogs,HTML,Button,Heading") {
+				PageEditor.viewFragmentNotPresent(fragmentName = "${elementName}");
 			}
 		}
 
@@ -743,11 +740,8 @@ definition {
 		}
 
 		task ("View Blogs, Button and Heading are not shown") {
-			for (var portletName : list "Blogs,Button,Heading") {
-				AssertNotVisible(
-					index = "1",
-					key_fragmentName = "${portletName}",
-					locator1 = "Fragment#FRAGMENT_LABEL");
+			for (var elementName : list "Blogs,Button,Heading") {
+				PageEditor.viewFragmentNotVisible(fragmentName = "${elementName}");
 			}
 		}
 
@@ -759,9 +753,9 @@ definition {
 			PageEditor.hideFragmentViaHeader(fragmentName = "Container");
 		}
 
-		task ("Assert no fragment or widget is shown") {
-			for (var fragmentName : list "Container,Blogs,HTML,Button,Heading") {
-				PageEditor.viewFragmentNotPresent(fragmentName = "${fragmentName}");
+		task ("View elements are not shown") {
+			for (var elementName : list "Container,Blogs,HTML,Button,Heading") {
+				PageEditor.viewFragmentNotPresent(fragmentName = "${elementName}");
 			}
 		}
 
@@ -770,15 +764,8 @@ definition {
 		}
 
 		task ("Assert only HTML fragments is shown") {
-			AssertTextNotPresent(
-				locator1 = "Message#EMPTY_INFO",
-				value1 = "No entries were found.");
-
-			for (var portletName : list "Blogs,Button,Heading") {
-				AssertNotVisible(
-					index = "1",
-					key_fragmentName = "${portletName}",
-					locator1 = "Fragment#FRAGMENT_LABEL");
+			for (var elementName : list "Blogs,Button,Heading") {
+				PageEditor.viewFragmentNotVisible(fragmentName = "${elementName}");
 			}
 
 			PageEditor.viewFragmentEditableText(

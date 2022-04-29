@@ -1,6 +1,7 @@
 @component-name = "portal-document-management"
 definition {
 
+	property custom.properties = "jsonws.web.service.paths.excludes=";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Depot";
@@ -19,6 +20,17 @@ definition {
 		JSONStaging.enableLocalStaging(
 			groupName = "Test Depot Name",
 			site = "false");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
 	}
 
 	tearDown {
@@ -39,25 +51,12 @@ definition {
 	@description = "This test covers LPS-151760. It ensures that an image can be downloaded in a staged asset library by a user with permissions."
 	@priority = "4"
 	test CanDownloadImage {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_2.jpg",
 			groupName = "Test Depot Name-staging",
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_2.jpg");
-
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
 
 		JSONRole.addRegularRole(
 			roleKey = "Regular Role",
@@ -101,19 +100,6 @@ definition {
 	@description = "This test covers LPS-151756. It ensures that a user can add a document and publish it to live in asset library with permissions."
 	@priority = "4"
 	test CanPublishDocument {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
-
 		JSONRole.addRegularRole(
 			roleKey = "Regular Role",
 			roleTitle = "Regular Role");

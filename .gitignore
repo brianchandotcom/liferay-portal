@@ -87,6 +87,7 @@
 /portal-web/*.iws
 /portal-web/ROOT.war
 /portal-web/build
+/portal-web/poshi-ext.properties
 /portal-web/classes
 /portal-web/docroot/WEB-INF/classes
 /portal-web/docroot/WEB-INF/lib

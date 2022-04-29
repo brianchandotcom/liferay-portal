@@ -73,7 +73,6 @@ public class WebServerTrashTest extends BaseWebServerTestCase {
 		super.setUp();
 
 		_user = UserTestUtil.addUser(null, group.getGroupId());
-
 		_role = RoleTestUtil.addRole(
 			"Trash Admin", RoleConstants.TYPE_REGULAR,
 			PortletProviderUtil.getPortletId(

@@ -16,6 +16,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENTRY_COVER_IMAGE_CAPTION_LINK</td>
+	<td>//div[contains(@class,'cover-image-caption')]//a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENTRY_COVER_IMAGE_CAPTION_LINK_CHECK_ICON</td>
 	<td>//span[contains(@class,'check_icon')]</td>
 	<td></td>

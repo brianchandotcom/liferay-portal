@@ -911,14 +911,7 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Templates");
 
-			LexiconEntry.gotoEntry(rowEntry = "Test Account Export Template");
-
-			ImportExport.assertExportTemplate(
-				entityType = "Account",
-				exportFields = "name,type,description,externalReferenceCode",
-				exportFileFormat = "JSON",
-				headlessEndpoint = "/headless-admin-user",
-				templateName = "Test Account Export Template");
+			LexiconEntry.viewEntryName(rowEntry = "Test Account Export Template");
 		}
 	}
 
@@ -948,12 +941,7 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Templates");
 
-			LexiconEntry.gotoEntry(rowEntry = "Test Account Import Template");
-
-			ImportExport.assertImportTemplate(
-				entityType = "Account",
-				headlessEndpoint = "/headless-admin-user",
-				templateName = "Test Account Import Template");
+			LexiconEntry.viewEntryName(rowEntry = "Test Account Import Template");
 		}
 	}
 

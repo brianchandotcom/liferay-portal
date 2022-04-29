@@ -1,11 +1,8 @@
-custom_build(
-  'liferayhelloworld',
+load('ext://lxc', 'lxc_extension')
+lxc_extension(
+  name='liferayhelloworld',
   command='./build.sh',
-  deps=[
-    './public',
-    './src',
-    './package.json',
-  ],
-  ignore=['./build', './node_modules']
+  deps=['./public', './src', './package.json'],
+  ignore=['./build', './node_modules'],
+  kustomize_path='../../k8s/liferayhelloworld'
 )
-k8s_yaml(kustomize('../../k8s/liferayhelloworld'))

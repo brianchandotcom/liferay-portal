@@ -1,13 +1,8 @@
-custom_build(
+load('ext://lxc', 'lxc_extension') 
+lxc_extension(
   'dynamicjscss',
   command='./build.sh',
-  deps=[
-    './src',
-    './pom.xml',
-  ],
-  ignore=['./target']
+  deps=['./src', './pom.xml'],
+  ignore=['./target'],
+  kustomize_path='../../k8s/dynamicjscss'
 )
-yaml = kustomize('../../k8s/dynamicjscss')
-ip = str(local('minikube ip')).strip()
-patched = local('yq \'.spec.template.spec += {"hostAliases": [{"ip":"' + ip + '", "hostnames": ["dxp.localdev.me"]}]}\'', stdin=str(yaml))
-k8s_yaml(patched)

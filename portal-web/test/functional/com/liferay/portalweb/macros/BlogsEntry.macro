@@ -54,21 +54,6 @@ definition {
 		}
 	}
 
-	macro addCoverImageCaptionWithLink {
-		SelectFieldText(
-			key_editor = "coverImageCaption",
-			locator1 = "AlloyEditor#EDITOR",
-			value1 = "${captionField}");
-
-		Click(locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_CAPTION_LINK_ICON");
-
-		Type(
-			locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_CAPTION_LINK_INPUT",
-			value1 = "${captionFieldLink}");
-
-		Click(locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_CAPTION_LINK_CHECK_ICON");
-	}
-
 	macro addCustomAbstract {
 		Click(locator1 = "Radio#CUSTOM_ABSTRACT");
 
@@ -938,17 +923,6 @@ definition {
 		AssertVisible(
 			key_uploadFileName = "${uploadFileName}",
 			locator1 = "BlogsEntry#ENTRY_COVER_IMAGE");
-	}
-
-	macro viewCoverImageCaptionWithLink {
-		Click(
-			key_editor = "coverImageCaption",
-			locator1 = "AlloyEditor#EDITOR",
-			value1 = "${captionField}");
-
-		AssertTextEquals(
-			locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_CAPTION_LINK_INPUT",
-			value1 = "${captionFieldLink}");
 	}
 
 	macro viewDefaultCP {

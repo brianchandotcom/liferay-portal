@@ -457,6 +457,36 @@ definition {
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE");
 	}
 
+	@description = "This test covers LPS-130200. It ensures that users can edit the entry through Office 365 after checkin the entry from the document editor."
+	@priority = "4"
+	test CanEditEntryThroughOneDriveAfterCheckinFromDocumentEditor {
+		property test.name.skip.portal.instance = "OneDrive#CanEditEntryThroughOneDriveAfterCheckinFromDocumentEditor";
+
+		for (var documentTitle : list "OneDrive Entry Title,OneDrive Entry Title Edited") {
+			OneDrive.deleteDocument(dmDocumentTitle = "${documentTitle}");
+		}
+
+		Navigator.openURL();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Word");
+
+		OneDrive.AddDocument(
+			dmDocumentTitle = "OneDrive Entry Title",
+			dmDocumentTypeName = "Word");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.saveAndCheckinEditedDocumentPG(dmDocumentTitle = "OneDrive Entry Title");
+
+		OneDrive.gotoEdit(dmDocumentTitle = "OneDrive Entry Title");
+
+		OneDrive.editTitle(dmDocumentTitle = "OneDrive Entry Title Edited");
+
+		AssertConsoleTextNotPresent(value1 = "javax.portlet.PortletException: org.hibernate.exception.ConstraintViolationException");
+	}
+
 	@description = "This test ensures that an Excel sheet can be deleted."
 	@priority = "5"
 	test DeleteExcelSheet {

@@ -8,13 +8,13 @@ $custom-control-indicator-active-bg: var(--custom-control-background-color);
 $custom-control-indicator-active-border-color: $custom-control-indicator-border-color;
 
 $custom-control-indicator-hover-box-shadow: 0 0 0 1rem
-	var(--custom-control-hover-color);
+	var(--custom-control-color-hover);
 
 $custom-control-indicator-focus-border-color: $form-input-focus-color;
 
 $custom-control-indicator-disabled-bg: var(--custom-control-background-color);
 $custom-control-indicator-disabled-border-color: var(
-	--custom-control-disabled-border-color
+	--custom-control-border-color-disabled
 );
 
 $custom-control-indicator-checked-bg: var(--custom-control-border-color);
@@ -28,7 +28,7 @@ $custom-control-indicator-checked-active-border-color: var(
 );
 
 $custom-control-indicator-checked-disabled-bg: var(
-	--custom-control-disabled-border-color
+	--custom-control-border-color-disabled
 );
 $custom-control-indicator-checked-disabled-border-color: transparent;
 
@@ -43,10 +43,10 @@ $custom-radio-indicator-icon-checked: clay-icon(circle, #fff);
 $custom-radio-indicator-icon-checked-bg-size: 0.5rem;
 
 $custom-radio-indicator-checked-disabled-border-color: var(
-	--custom-control-disabled-border-color
+	--custom-control-border-color-disabled
 );
 $custom-radio-indicator-disabled-border-color: var(
-	--custom-control-disabled-border-color
+	--custom-control-border-color-disabled
 );
 
 $custom-control-label: (

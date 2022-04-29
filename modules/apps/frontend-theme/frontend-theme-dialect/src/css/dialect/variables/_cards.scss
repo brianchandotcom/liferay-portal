@@ -96,18 +96,18 @@ $card-elevated-interactive: map-deep-merge(
 	$card-interactive-base,
 	(
 		active: (
-			background-color: var(--card-elevated-active-background-color),
-			border-color: var(--card-elevated-active-border-color),
-			box-shadow: var(--card-elevated-active-box-shadow),
+			background-color: var(--card-elevated-background-color-active),
+			border-color: var(--card-elevated-border-color-active),
+			box-shadow: var(--card-elevated-box-shadow-active),
 		),
 		focus: (
 			border-color: null,
 			box-shadow: $component-focus-box-shadow,
 		),
 		hover: (
-			background-color: var(--card-elevated-hover-background-color),
-			border-color: var(--card-elevated-hover-border-color),
-			box-shadow: var(--card-elevated-hover-box-shadow),
+			background-color: var(--card-elevated-background-color-hover),
+			border-color: var(--card-elevated-border-color-hover),
+			box-shadow: var(--card-elevated-box-shadow-hover),
 		),
 	)
 );
@@ -122,18 +122,18 @@ $card-outlined-interactive: map-deep-merge(
 	$card-interactive-base,
 	(
 		active: (
-			background-color: var(--card-outlined-active-background-color),
-			border-color: var(--card-outlined-active-border-color),
-			box-shadow: var(--card-outlined-active-box-shadow),
+			background-color: var(--card-outlined-background-color-active),
+			border-color: var(--card-outlined-border-color-active),
+			box-shadow: var(--card-outlined-box-shadow-active),
 		),
 		focus: (
 			border-color: null,
 			box-shadow: $component-focus-box-shadow,
 		),
 		hover: (
-			background-color: var(--card-outlined-hover-background-color),
-			border-color: var(--card-outlined-hover-border-color),
-			box-shadow: var(--card-outlined-hover-box-shadow),
+			background-color: var(--card-outlined-background-color-hover),
+			border-color: var(--card-outlined-border-color-hover),
+			box-shadow: var(--card-outlined-box-shadow-hover),
 		),
 	)
 );
@@ -148,18 +148,18 @@ $card-flat-interactive: map-deep-merge(
 	$card-interactive-base,
 	(
 		active: (
-			background-color: var(--card-flat-active-background-color),
-			border-color: var(--card-flat-active-border-color),
-			box-shadow: var(--card-flat-active-box-shadow),
+			background-color: var(--card-flat-background-color-active),
+			border-color: var(--card-flat-border-color-active),
+			box-shadow: var(--card-flat-box-shadow-active),
 		),
 		focus: (
 			border-color: null,
 			box-shadow: $component-focus-box-shadow,
 		),
 		hover: (
-			background-color: var(--card-flat-hover-background-color),
-			border-color: var(--card-flat-hover-border-color),
-			box-shadow: var(--card-flat-hover-box-shadow),
+			background-color: var(--card-flat-background-color-hover),
+			border-color: var(--card-flat-border-color-hover),
+			box-shadow: var(--card-flat-box-shadow-hover),
 		),
 	)
 );

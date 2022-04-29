@@ -1,5 +1,5 @@
 $input-label-color: var(--form-input-label-color);
-$input-label-disabled-color: var(--form-input-disabled-label-color);
+$input-label-disabled-color: var(--form-input-label-color-disabled);
 $input-label-font-size: var(--form-input-label-font-size);
 $input-label-font-weight: var(--form-input-label-font-weight);
 $input-label-margin-bottom: var(--form-input-label-margin-bottom);
@@ -32,11 +32,11 @@ $input-disabled-border-color: var(
 	--current-form-input-disabled-border-color,
 	var(--form-input-disabled-border-color)
 );
-$input-disabled-color: var(--form-input-disabled-color);
+$input-disabled-color: var(--form-input-color-disabled);
 
 $input-placeholder-color: var(--form-input-placeholder-color);
-$input-placeholder-disabled-color: var(--form-input-placeholder-disabled-color);
-$input-placeholder-focus-color: var(--form-input-placeholder-focus-color);
+$input-placeholder-disabled-color: var(--form-input-placeholder-color-disabled);
+$input-placeholder-focus-color: var(--form-input-placeholder-color-focus);
 
 $input-danger-bg: var(--form-input-error-bg, #{danger-l2});
 $input-danger-border-color: var(--form-input-error-border-color, #{$danger});

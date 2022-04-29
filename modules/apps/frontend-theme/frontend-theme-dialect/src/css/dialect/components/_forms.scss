@@ -7,9 +7,9 @@
 				) - 0.5em
 		)
 	);
-	--current-form-input-disabled-border-color: var(
-		--condensed-form-input-disabled-border-color,
-		var(--condensed-form-input-disabled-background-color)
+	--current-form-input-border-color-disabled: var(
+		--condensed-form-input-border-color-disabled,
+		var(--condensed-form-input-background-color-disabled)
 	);
 	--form-feedback-item-margin: var(--condensed-form-feedback-item-margin);
 	--form-input-background-color: var(--condensed-form-input-background-color);
@@ -18,7 +18,7 @@
 		var(--condensed-form-input-background-color)
 	);
 	--form-input-disabled-background-color: var(
-		--condensed-form-input-disabled-background-color
+		--condensed-form-input-background-color-disabled
 	);
 	--form-input-label-font-weight: var(
 		--condensed-form-input-label-font-weight
@@ -30,9 +30,9 @@
 	.form-group {
 		&:not(.filled):not(:focus-within):not(.toggle-switch) {
 			--form-input-color: transparent;
-			--form-input-disabled-color: transparent;
+			--form-input-color-disabled: transparent;
 			--form-input-placeholder-color: transparent;
-			--form-input-placeholder-disabled-color: transparent;
+			--form-input-placeholder-color-disabled: transparent;
 
 			> label {
 				pointer-events: none;
@@ -59,7 +59,7 @@
 
 .filled,
 .form-group:focus-within {
-	--condensed-form-input-disabled-background-color: #{$form-white-color};
+	--condensed-form-input-background-color-disabled: #{$form-white-color};
 	--condensed-form-input-label-background-color: #{$form-white-color};
 	--condensed-form-input-label-font-size: var(
 		--condensed-form-input-filled-label-font-size
@@ -75,8 +75,8 @@
 	--condensed-form-input-border-color: var(
 		--condensed-form-input-filled-border-color
 	);
-	--condensed-form-input-disabled-border-color: var(
-		--form-input-disabled-border-color
+	--condensed-form-input-border-color-disabled: var(
+		--form-input-border-color-disabled
 	);
 	--condensed-form-input-label-color: var(
 		--condensed-form-input-filled-label-color
@@ -106,7 +106,7 @@ label.disabled,
 fieldset[disabled],
 .form-control[disabled] {
 	--condensed-form-input-label-color: var(
-		--condensed-form-input-disabled-label-color
+		--condensed-form-input-label-color-disabled
 	);
 }
 

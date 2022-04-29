@@ -3367,38 +3367,38 @@
 						},
 						{
 							"defaultValue": "8rem",
-							"label": "autofit-col-sm-width",
+							"label": "card-autofit-col-sm-width",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "autofit-col-sm-width"
+									"value": "card-autofit-col-sm-width"
 								}
 							],
-							"name": "autofitColSmWidth",
+							"name": "cardAutofitColSmWidth",
 							"type": "String"
 						},
 						{
 							"defaultValue": "16rem",
-							"label": "autofit-col-md-width",
+							"label": "card-autofit-col-md-width",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "autofit-col-md-width"
+									"value": "card-autofit-col-md-width"
 								}
 							],
-							"name": "autofitColMdWidth",
+							"name": "cardAutofitColMdWidth",
 							"type": "String"
 						},
 						{
 							"defaultValue": "24rem",
-							"label": "autofit-col-lg-width",
+							"label": "card-autofit-col-lg-width",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "autofit-col-lg-width"
+									"value": "card-autofit-col-lg-width"
 								}
 							],
-							"name": "autofitColLgWidth",
+							"name": "cardAutofitColLgWidth",
 							"type": "String"
 						}
 					],
@@ -3423,27 +3423,27 @@
 						{
 							"defaultValue": "var(--color-neutral-0)",
 							"editorType": "ColorPicker",
-							"label": "card-elevated-active-background-color",
+							"label": "card-elevated-background-color-active",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "card-elevated-active-background-color"
+									"value": "card-elevated-background-color-active"
 								}
 							],
-							"name": "cardElevatedActiveBackgroundColor",
+							"name": "cardElevatedBackgroundColorActive",
 							"type": "String"
 						},
 						{
 							"defaultValue": "var(--color-neutral-0)",
 							"editorType": "ColorPicker",
-							"label": "card-elevated-hover-background-color",
+							"label": "card-elevated-background-color-hover",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "card-elevated-hover-background-color"
+									"value": "card-elevated-background-color-hover"
 								}
 							],
-							"name": "cardElevatedHoverBackgroundColor",
+							"name": "cardElevatedBackgroundColorHover",
 							"type": "String"
 						},
 						{
@@ -3462,27 +3462,27 @@
 						{
 							"defaultValue": "transparent",
 							"editorType": "ColorPicker",
-							"label": "card-elevated-active-border-color",
+							"label": "card-elevated-border-color-active",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "card-elevated-active-border-color"
+									"value": "card-elevated-border-color-active"
 								}
 							],
-							"name": "cardElevatedActiveBorderColor",
+							"name": "cardElevatedBorderColorActive",
 							"type": "String"
 						},
 						{
 							"defaultValue": "transparent",
 							"editorType": "ColorPicker",
-							"label": "card-elevated-hover-border-color",
+							"label": "card-elevated-border-color-hover",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "card-elevated-hover-border-color"
+									"value": "card-elevated-border-color-hover"
 								}
 							],
-							"name": "cardElevatedHoverBorderColor",
+							"name": "cardElevatedBorderColorHover",
 							"type": "String"
 						},
 						{
@@ -3511,26 +3511,26 @@
 						},
 						{
 							"defaultValue": "var(--elevation-tight-3) rgba(89, 36, 235, 0.22)",
-							"label": "card-elevated-active-box-shadow",
+							"label": "card-elevated-box-shadow-active",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "card-elevated-active-box-shadow"
+									"value": "card-elevated-box-shadow-active"
 								}
 							],
-							"name": "cardElevatedActiveBoxShadow",
+							"name": "cardElevatedBoxShadowActive",
 							"type": "String"
 						},
 						{
 							"defaultValue": "var(--elevation-tight-7) rgba(89, 36, 235, 0.17)",
-							"label": "card-elevated-hover-box-shadow",
+							"label": "card-elevated-box-shadow-hover",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "card-elevated-hover-box-shadow"
+									"value": "card-elevated-box-shadow-hover"
 								}
 							],
-							"name": "cardElevatedHoverBoxShadow",
+							"name": "cardElevatedBoxShadowHover",
 							"type": "String"
 						}
 					],
@@ -3555,27 +3555,27 @@
 						{
 							"defaultValue": "var(--color-neutral-0)",
 							"editorType": "ColorPicker",
-							"label": "card-outlined-active-background-color",
+							"label": "card-outlined-background-color-active",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "card-outlined-active-background-color"
+									"value": "card-outlined-background-color-active"
 								}
 							],
-							"name": "cardOutlinedActiveBackgroundColor",
+							"name": "cardOutlinedBackgroundColorActive",
 							"type": "String"
 						},
 						{
 							"defaultValue": "var(--color-neutral-0)",
 							"editorType": "ColorPicker",
-							"label": "card-outlined-hover-background-color",
+							"label": "card-outlined-background-color-hover",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "card-outlined-hover-background-color"
+									"value": "card-outlined-background-color-hover"
 								}
 							],
-							"name": "cardOutlinedHoverBackgroundColor",
+							"name": "cardOutlinedBackgroundColorHover",
 							"type": "String"
 						},
 						{
@@ -3594,27 +3594,27 @@
 						{
 							"defaultValue": "var(--color-action-primary-active)",
 							"editorType": "ColorPicker",
-							"label": "card-outlined-active-border-color",
+							"label": "card-outlined-border-color-active",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "card-outlined-active-border-color"
+									"value": "card-outlined-border-color-active"
 								}
 							],
-							"name": "cardOutlinedActiveBorderColor",
+							"name": "cardOutlinedBorderColorActive",
 							"type": "String"
 						},
 						{
 							"defaultValue": "var(--color-action-primary-hover)",
 							"editorType": "ColorPicker",
-							"label": "card-outlined-hover-border-color",
+							"label": "card-outlined-border-color-hover",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "card-outlined-hover-border-color"
+									"value": "card-outlined-border-color-hover"
 								}
 							],
-							"name": "cardOutlinedHoverBorderColor",
+							"name": "cardOutlinedBorderColorHover",
 							"type": "String"
 						},
 						{
@@ -3643,26 +3643,26 @@
 						},
 						{
 							"defaultValue": "none",
-							"label": "card-outlined-active-box-shadow",
+							"label": "card-outlined-box-shadow-active",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "card-outlined-active-box-shadow"
+									"value": "card-outlined-box-shadow-active"
 								}
 							],
-							"name": "cardOutlinedActiveBoxShadow",
+							"name": "cardOutlinedBoxShadowActive",
 							"type": "String"
 						},
 						{
 							"defaultValue": "none",
-							"label": "card-outlined-hover-box-shadow",
+							"label": "card-outlined-box-shadow-hover",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "card-outlined-hover-box-shadow"
+									"value": "card-outlined-box-shadow-hover"
 								}
 							],
-							"name": "cardOutlinedHoverBoxShadow",
+							"name": "cardOutlinedBoxShadowHover",
 							"type": "String"
 						}
 					],
@@ -3687,27 +3687,27 @@
 						{
 							"defaultValue": "var(--color-neutral-1)",
 							"editorType": "ColorPicker",
-							"label": "card-flat-active-background-color",
+							"label": "card-flat-background-color-active",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "card-flat-active-background-color"
+									"value": "card-flat-background-color-active"
 								}
 							],
-							"name": "cardFlatActiveBackgroundColor",
+							"name": "cardFlatBackgroundColorActive",
 							"type": "String"
 						},
 						{
 							"defaultValue": "var(--color-neutral-1)",
 							"editorType": "ColorPicker",
-							"label": "card-flat-hover-background-color",
+							"label": "card-flat-background-color-hover",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "card-flat-hover-background-color"
+									"value": "card-flat-background-color-hover"
 								}
 							],
-							"name": "cardFlatHoverBackgroundColor",
+							"name": "cardFlatBackgroundColorHover",
 							"type": "String"
 						},
 						{
@@ -3726,27 +3726,27 @@
 						{
 							"defaultValue": "var(--color-action-primary-active)",
 							"editorType": "ColorPicker",
-							"label": "card-flat-active-border-color",
+							"label": "card-flat-border-color-active",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "card-flat-active-border-color"
+									"value": "card-flat-border-color-active"
 								}
 							],
-							"name": "cardFlatActiveBorderColor",
+							"name": "cardFlatBorderColorActive",
 							"type": "String"
 						},
 						{
 							"defaultValue": "var(--color-action-primary-hover)",
 							"editorType": "ColorPicker",
-							"label": "card-flat-hover-border-color",
+							"label": "card-flat-border-color-hover",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "card-flat-hover-border-color"
+									"value": "card-flat-border-color-hover"
 								}
 							],
-							"name": "cardFlatHoverBorderColor",
+							"name": "cardFlatBorderColorHover",
 							"type": "String"
 						},
 						{
@@ -3775,26 +3775,26 @@
 						},
 						{
 							"defaultValue": "none",
-							"label": "card-flat-active-box-shadow",
+							"label": "card-flat-box-shadow-active",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "card-flat-active-box-shadow"
+									"value": "card-flat-box-shadow-active"
 								}
 							],
-							"name": "cardFlatActiveBoxShadow",
+							"name": "cardFlatBoxShadowActive",
 							"type": "String"
 						},
 						{
 							"defaultValue": "none",
-							"label": "card-flat-hover-box-shadow",
+							"label": "card-flat-box-shadow-hover",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "card-flat-hover-box-shadow"
+									"value": "card-flat-box-shadow-hover"
 								}
 							],
-							"name": "cardFlatHoverBoxShadow",
+							"name": "cardFlatBoxShadowHover",
 							"type": "String"
 						}
 					],
@@ -3825,14 +3825,14 @@
 						{
 							"defaultValue": "var(--color-neutral-8)",
 							"editorType": "ColorPicker",
-							"label": "form-input-disabled-label-color",
+							"label": "form-input-label-color-disabled",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "form-input-disabled-label-color"
+									"value": "form-input-label-color-disabled"
 								}
 							],
-							"name": "formInputDisabledLabelColor",
+							"name": "formInputLabelColorDisabled",
 							"type": "String"
 						},
 						{
@@ -3966,14 +3966,14 @@
 						{
 							"defaultValue": "var(--color-neutral-2)",
 							"editorType": "ColorPicker",
-							"label": "form-input-disabled-border-color",
+							"label": "form-input-border-color-disabled",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "form-input-disabled-border-color"
+									"value": "form-input-border-color-disabled"
 								}
 							],
-							"name": "formInputDisabledBorderColor",
+							"name": "formInputBorderColorDisabled",
 							"type": "String"
 						},
 						{
@@ -4016,14 +4016,14 @@
 						{
 							"defaultValue": "var(--color-neutral-4)",
 							"editorType": "ColorPicker",
-							"label": "form-input-disabled-color",
+							"label": "form-input-color-disabled",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "form-input-disabled-color"
+									"value": "form-input-color-disabled"
 								}
 							],
-							"name": "formInputDisabledColor",
+							"name": "formInputColorDisabled",
 							"type": "String"
 						},
 						{
@@ -4108,27 +4108,27 @@
 						{
 							"defaultValue": "var(--color-neutral-3)",
 							"editorType": "ColorPicker",
-							"label": "form-input-placeholder-disabled-color",
+							"label": "form-input-placeholder-color-disabled",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "form-input-placeholder-disabled-color"
+									"value": "form-input-placeholder-color-disabled"
 								}
 							],
-							"name": "formInputPlaceholderDisabledColor",
+							"name": "formInputPlaceholderColorDisabled",
 							"type": "String"
 						},
 						{
 							"defaultValue": "var(--color-neutral-4)",
 							"editorType": "ColorPicker",
-							"label": "form-input-placeholder-focus-color",
+							"label": "form-input-placeholder-color-focus",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "form-input-placeholder-focus-color"
+									"value": "form-input-placeholder-color-focus"
 								}
 							],
-							"name": "formInputPlaceholderFocusColor",
+							"name": "formInputPlaceholderColorFocus",
 							"type": "String"
 						},
 						{
@@ -4408,27 +4408,27 @@
 						{
 							"defaultValue": "var(--color-action-primary-disabled)",
 							"editorType": "ColorPicker",
-							"label": "custom-control-disabled-border-color",
+							"label": "custom-control-border-color-disabled",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "custom-control-disabled-border-color"
+									"value": "custom-control-border-color-disabled"
 								}
 							],
-							"name": "customControlDisabledBorderColor",
+							"name": "customControlBorderColorDisabled",
 							"type": "String"
 						},
 						{
 							"defaultValue": "var(--color-action-primary-active-lighten)",
 							"editorType": "ColorPicker",
-							"label": "custom-control-hover-color",
+							"label": "custom-control-color-hover",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "custom-control-hover-color"
+									"value": "custom-control-color-hover"
 								}
 							],
-							"name": "customControlHoverColor",
+							"name": "customControlColorHover",
 							"type": "String"
 						}
 					],
@@ -4600,27 +4600,27 @@
 						{
 							"defaultValue": "var(--color-neutral-4)",
 							"editorType": "ColorPicker",
-							"label": "condensed-form-input-disabled-label-color",
+							"label": "condensed-form-input-label-color-disabled",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "condensed-form-input-disabled-label-color"
+									"value": "condensed-form-input-label-color-disabled"
 								}
 							],
-							"name": "condensedFormInputDisabledLabelColor",
+							"name": "condensedFormInputLabelColorDisabled",
 							"type": "String"
 						},
 						{
 							"defaultValue": "var(--color-neutral-1)",
 							"editorType": "ColorPicker",
-							"label": "condensed-form-input-disabled-background-color",
+							"label": "condensed-form-input-background-color-disabled",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "condensed-form-input-disabled-background-color"
+									"value": "condensed-form-input-background-color-disabled"
 								}
 							],
-							"name": "condensedFormInputDisabledBackgroundColor",
+							"name": "condensedFormInputBackgroundColorDisabled",
 							"type": "String"
 						}
 					],

@@ -50,6 +50,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.InputStream;
+import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -105,7 +106,7 @@ public class JournalConverterUtilTest {
 
 		_addField(
 			_ddmStructure.getStructureId(), null, fields, "list",
-			HashMapBuilder.put(
+			HashMapBuilder.<Locale, List<Serializable>>put(
 				_enLocale, Collections.singletonList("[\"value 01\"]")
 			).build());
 
@@ -127,7 +128,7 @@ public class JournalConverterUtilTest {
 
 		_addField(
 			_ddmStructure.getStructureId(), null, fields, "multi_list",
-			HashMapBuilder.put(
+			HashMapBuilder.<Locale, List<Serializable>>put(
 				_enLocale,
 				Collections.singletonList("[\"value 01\",\"value 02\"]")
 			).build());
@@ -164,7 +165,7 @@ public class JournalConverterUtilTest {
 
 		_addField(
 			_ddmStructure.getStructureId(), null, fields, "text_area",
-			HashMapBuilder.put(
+			HashMapBuilder.<Locale, List<Serializable>>put(
 				_enLocale, Collections.singletonList("<p>Hello World!</p>")
 			).build());
 
@@ -187,7 +188,7 @@ public class JournalConverterUtilTest {
 
 		_addField(
 			_ddmStructure.getStructureId(), null, fields, "text_box",
-			HashMapBuilder.put(
+			HashMapBuilder.<Locale, List<Serializable>>put(
 				_enLocale, Arrays.asList("one", "two", "three")
 			).put(
 				_ptLocale, Arrays.asList("um", "dois", "tres")
@@ -214,7 +215,7 @@ public class JournalConverterUtilTest {
 
 		_addField(
 			_ddmStructure.getStructureId(), null, fields, "text",
-			HashMapBuilder.put(
+			HashMapBuilder.<Locale, List<Serializable>>put(
 				_enLocale, Collections.singletonList("one")
 			).put(
 				_ptLocale, Collections.singletonList("um")
@@ -238,7 +239,7 @@ public class JournalConverterUtilTest {
 
 		_addField(
 			_ddmStructure.getStructureId(), null, expectedFields, "list",
-			HashMapBuilder.put(
+			HashMapBuilder.<Locale, List<Serializable>>put(
 				_enLocale, Collections.singletonList("[\"value 01\"]")
 			).build());
 
@@ -266,7 +267,7 @@ public class JournalConverterUtilTest {
 
 		_addField(
 			_ddmStructure.getStructureId(), null, expectedFields, "multi_list",
-			HashMapBuilder.put(
+			HashMapBuilder.<Locale, List<Serializable>>put(
 				_enLocale,
 				Collections.singletonList("[\"value 01\",\"value 02\"]")
 			).build());
@@ -337,14 +338,14 @@ public class JournalConverterUtilTest {
 		_addField(
 			childDDMStructure.getStructureId(), _enLocale, expectedFields,
 			"Text23i4",
-			HashMapBuilder.put(
+			HashMapBuilder.<Locale, List<Serializable>>put(
 				_enLocale, Collections.singletonList("Text 1")
 			).build());
 
 		_addField(
 			childDDMStructure.getStructureId(), _enLocale, expectedFields,
 			"Textlmzq",
-			HashMapBuilder.put(
+			HashMapBuilder.<Locale, List<Serializable>>put(
 				_enLocale, Collections.singletonList("Text 2")
 			).build());
 
@@ -374,7 +375,7 @@ public class JournalConverterUtilTest {
 
 		_addField(
 			_ddmStructure.getStructureId(), null, expectedFields, "text",
-			HashMapBuilder.put(
+			HashMapBuilder.<Locale, List<Serializable>>put(
 				_enLocale, Collections.singletonList("one")
 			).put(
 				_ptLocale, Collections.singletonList("one")
@@ -541,15 +542,15 @@ public class JournalConverterUtilTest {
 
 		_addField(
 			ddmStructureId, null, fields, "boolean",
-			HashMapBuilder.put(
-				_enLocale, Collections.singletonList("")
+			HashMapBuilder.<Locale, List<Serializable>>put(
+				_enLocale, Collections.singletonList(false)
 			).put(
-				_ptLocale, Collections.singletonList("")
+				_ptLocale, Collections.singletonList(false)
 			).build());
 
 		_addField(
 			ddmStructureId, null, fields, "document_library",
-			HashMapBuilder.put(
+			HashMapBuilder.<Locale, List<Serializable>>put(
 				_enLocale, Collections.singletonList("")
 			).put(
 				_ptLocale, Collections.singletonList("")
@@ -557,7 +558,7 @@ public class JournalConverterUtilTest {
 
 		_addField(
 			ddmStructureId, null, fields, "link_to_layout",
-			HashMapBuilder.put(
+			HashMapBuilder.<Locale, List<Serializable>>put(
 				_enLocale, Collections.singletonList("")
 			).put(
 				_ptLocale, Collections.singletonList("")
@@ -565,7 +566,7 @@ public class JournalConverterUtilTest {
 
 		_addField(
 			ddmStructureId, null, fields, "text_area",
-			HashMapBuilder.put(
+			HashMapBuilder.<Locale, List<Serializable>>put(
 				_enLocale, Collections.singletonList("")
 			).put(
 				_ptLocale, Collections.singletonList("")
@@ -573,7 +574,7 @@ public class JournalConverterUtilTest {
 
 		_addField(
 			ddmStructureId, null, fields, "multi_list",
-			HashMapBuilder.put(
+			HashMapBuilder.<Locale, List<Serializable>>put(
 				_enLocale, Collections.singletonList("[\"\"]")
 			).put(
 				_ptLocale, Collections.singletonList("[\"\"]")
@@ -581,7 +582,7 @@ public class JournalConverterUtilTest {
 
 		_addField(
 			ddmStructureId, null, fields, "list",
-			HashMapBuilder.put(
+			HashMapBuilder.<Locale, List<Serializable>>put(
 				_enLocale, Collections.singletonList("[\"\"]")
 			).put(
 				_ptLocale, Collections.singletonList("[\"\"]")
@@ -589,7 +590,7 @@ public class JournalConverterUtilTest {
 
 		_addField(
 			ddmStructureId, null, fields, "contact",
-			HashMapBuilder.put(
+			HashMapBuilder.<Locale, List<Serializable>>put(
 				_enLocale, Arrays.asList("joe", "richard")
 			).put(
 				_ptLocale, Arrays.asList("joao", "ricardo")
@@ -597,7 +598,7 @@ public class JournalConverterUtilTest {
 
 		_addField(
 			ddmStructureId, null, fields, "phone",
-			HashMapBuilder.put(
+			HashMapBuilder.<Locale, List<Serializable>>put(
 				_enLocale, Arrays.asList("123", "456")
 			).put(
 				_ptLocale, Arrays.asList("123", "456")
@@ -605,7 +606,7 @@ public class JournalConverterUtilTest {
 
 		_addField(
 			ddmStructureId, null, fields, "ext",
-			HashMapBuilder.put(
+			HashMapBuilder.<Locale, List<Serializable>>put(
 				_enLocale, Arrays.asList("1", "2", "3", "4", "5")
 			).put(
 				_ptLocale, Arrays.asList("1", "2", "3", "4", "5")
@@ -613,7 +614,7 @@ public class JournalConverterUtilTest {
 
 		_addField(
 			ddmStructureId, null, fields, "text",
-			HashMapBuilder.put(
+			HashMapBuilder.<Locale, List<Serializable>>put(
 				_enLocale, Collections.singletonList("")
 			).put(
 				_ptLocale, Collections.singletonList("")
@@ -621,7 +622,7 @@ public class JournalConverterUtilTest {
 
 		_addField(
 			ddmStructureId, null, fields, "text_box",
-			HashMapBuilder.put(
+			HashMapBuilder.<Locale, List<Serializable>>put(
 				_enLocale, Collections.singletonList("")
 			).put(
 				_ptLocale, Collections.singletonList("")
@@ -629,7 +630,7 @@ public class JournalConverterUtilTest {
 
 		_addField(
 			ddmStructureId, null, fields, "image_1",
-			HashMapBuilder.put(
+			HashMapBuilder.<Locale, List<Serializable>>put(
 				_enLocale, Collections.singletonList("")
 			).put(
 				_ptLocale, Collections.singletonList("")
@@ -637,7 +638,7 @@ public class JournalConverterUtilTest {
 
 		_addField(
 			ddmStructureId, null, fields, "image_2",
-			HashMapBuilder.put(
+			HashMapBuilder.<Locale, List<Serializable>>put(
 				_enLocale, Collections.singletonList("")
 			).put(
 				_ptLocale, Collections.singletonList("")
@@ -645,7 +646,7 @@ public class JournalConverterUtilTest {
 
 		_addField(
 			ddmStructureId, null, fields, "image_3",
-			HashMapBuilder.put(
+			HashMapBuilder.<Locale, List<Serializable>>put(
 				_enLocale, Collections.singletonList("")
 			).put(
 				_ptLocale, Collections.singletonList("")
@@ -744,7 +745,7 @@ public class JournalConverterUtilTest {
 
 	private void _addField(
 		long ddmStructureId, Locale defaultLocale, Fields fields, String name,
-		HashMap<Locale, List<String>> values) {
+		HashMap<Locale, List<Serializable>> values) {
 
 		Field field = new Field();
 
@@ -756,8 +757,8 @@ public class JournalConverterUtilTest {
 
 		field.setName(name);
 
-		for (Map.Entry<Locale, List<String>> entry : values.entrySet()) {
-			for (String value : entry.getValue()) {
+		for (Map.Entry<Locale, List<Serializable>> entry : values.entrySet()) {
+			for (Serializable value : entry.getValue()) {
 				field.addValue(entry.getKey(), value);
 			}
 		}

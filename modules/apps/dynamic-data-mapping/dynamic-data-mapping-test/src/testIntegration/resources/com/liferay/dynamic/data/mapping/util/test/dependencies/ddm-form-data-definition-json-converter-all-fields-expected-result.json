@@ -6,7 +6,7 @@
 	"definitionSchemaVersion": "2.0",
 	"fields": [
 		{
-			"dataType": "string",
+			"dataType": "boolean",
 			"fieldReference": "Boolean",
 			"indexType": "keyword",
 			"label": {
@@ -14,16 +14,8 @@
 			},
 			"localizable": true,
 			"name": "Boolean",
-			"options": [
-				{
-					"label": {
-						"en_US": "Boolean"
-					},
-					"value": "Boolean"
-				}
-			],
 			"predefinedValue": {
-				"en_US": ""
+				"en_US": "false"
 			},
 			"readOnly": false,
 			"repeatable": false,
@@ -32,7 +24,7 @@
 			"tip": {
 				"en_US": ""
 			},
-			"type": "checkbox_multiple"
+			"type": "checkbox"
 		},
 		{
 			"dataType": "string",

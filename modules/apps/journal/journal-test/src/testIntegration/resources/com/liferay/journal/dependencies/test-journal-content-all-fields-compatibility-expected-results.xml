@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <root available-locales="en_US" default-locale="en_US" version="1.0">
-	<dynamic-element index-type="keyword" instance-id="aghw" name="Boolean" type="checkbox_multiple">
+	<dynamic-element index-type="keyword" instance-id="aghw" name="Boolean" type="checkbox">
 		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="keyword" instance-id="qyem" name="Color" type="color">

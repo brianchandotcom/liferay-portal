@@ -15,27 +15,17 @@
 package com.liferay.journal.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.asset.kernel.model.AssetRenderer;
-import com.liferay.asset.kernel.model.DDMFormValuesReader;
 import com.liferay.dynamic.data.mapping.configuration.DDMIndexerConfiguration;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
-import com.liferay.dynamic.data.mapping.model.DDMFormField;
-import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
-import com.liferay.dynamic.data.mapping.model.LocalizedValue;
-import com.liferay.dynamic.data.mapping.model.Value;
-import com.liferay.dynamic.data.mapping.render.ValueAccessor;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
-import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
-import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.constants.FieldConstants;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.search.TestOrderHelper;
-import com.liferay.dynamic.data.mapping.util.DDMBeanTranslatorUtil;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.dynamic.data.mapping.util.DDMUtil;
 import com.liferay.journal.configuration.JournalServiceConfiguration;
@@ -47,7 +37,6 @@ import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.service.JournalArticleServiceUtil;
 import com.liferay.journal.service.JournalFolderServiceUtil;
 import com.liferay.journal.test.util.JournalTestUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -77,19 +66,15 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.test.util.BaseSearchTestCase;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -624,7 +609,7 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 		public void testOrderByDDMBooleanField() throws Exception {
 			testOrderByDDMField(
 				new String[] {"false", "true", "false", "true"},
-				new String[] {"true", "true", "false", "false"},
+				new String[] {"false", "false", "true", "true"},
 				FieldConstants.BOOLEAN, DDMFormFieldTypeConstants.CHECKBOX);
 		}
 
@@ -696,56 +681,6 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 		@Override
 		protected String getSearchableAssetEntryStructureClassName() {
 			return getBaseModelClassName();
-		}
-
-		@Override
-		protected String getValue(AssetRenderer<?> assetRenderer)
-			throws Exception {
-
-			DDMFormValuesReader ddmFormValuesReader =
-				assetRenderer.getDDMFormValuesReader();
-
-			DDMFormValues ddmFormValues = DDMBeanTranslatorUtil.translate(
-				ddmFormValuesReader.getDDMFormValues());
-
-			Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
-				ddmFormValues.getDDMFormFieldValuesMap();
-
-			return ListUtil.toString(
-				ddmFormFieldValuesMap.get("name"),
-				new ValueAccessor(LocaleUtil.getDefault()) {
-
-					@Override
-					public String get(DDMFormFieldValue ddmFormFieldValue) {
-						Value value = ddmFormFieldValue.getValue();
-
-						DDMFormField ddmFormField =
-							ddmFormFieldValue.getDDMFormField();
-
-						DDMFormFieldOptions ddmFormFieldOptions =
-							(DDMFormFieldOptions)ddmFormField.getProperty(
-								"options");
-
-						Map<String, LocalizedValue> options =
-							ddmFormFieldOptions.getOptions();
-
-						if (StringUtil.equals(
-								ddmFormField.getType(),
-								DDMFormFieldTypeConstants.CHECKBOX_MULTIPLE) &&
-							(options.size() == 1)) {
-
-							if (Validator.isNull(value.getString(locale))) {
-								return Boolean.FALSE.toString();
-							}
-
-							return Boolean.TRUE.toString();
-						}
-
-						return value.getString(locale);
-					}
-
-				},
-				StringPool.PIPE);
 		}
 
 	}

@@ -69,23 +69,6 @@ public class DDMDataDefinitionConverterTest {
 	}
 
 	@Test
-	public void testConvertDDMFormDataDefinitionCheckboxToCheckboxMultiple()
-		throws Exception {
-
-		String dataDefinition =
-			_ddmDataDefinitionConverter.convertDDMFormDataDefinition(
-				_read("ddm-form-data-definition-json-converter-checkbox.json"),
-				0, 0);
-
-		Assert.assertEquals(
-			_objectMapper.readTree(
-				_read(
-					"ddm-form-data-definition-json-converter-checkbox-" +
-						"expected-result.json")),
-			_objectMapper.readTree(dataDefinition));
-	}
-
-	@Test
 	public void testConvertDDMFormDataDefinitionEmptyValidation()
 		throws Exception {
 

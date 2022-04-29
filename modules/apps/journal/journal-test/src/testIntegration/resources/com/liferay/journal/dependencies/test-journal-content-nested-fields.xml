@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 
 <root available-locales="en_US,pt_BR" default-locale="en_US">
-	<dynamic-element index-type="text" instance-id="YELSrniM" name="boolean" type="checkbox_multiple">
-		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
-		<dynamic-content language-id="pt_BR"><![CDATA[]]></dynamic-content>
+	<dynamic-element index-type="text" instance-id="YELSrniM" name="boolean" type="checkbox">
+		<dynamic-content language-id="en_US"><![CDATA[false]]></dynamic-content>
+		<dynamic-content language-id="pt_BR"><![CDATA[false]]></dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="text" instance-id="HzKJrSts" name="document_library" type="document_library">
 		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>

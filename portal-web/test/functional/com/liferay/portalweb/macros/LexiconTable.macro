@@ -4,10 +4,6 @@ definition {
 		Check(
 			key_tableEntry = "${tableEntry}",
 			locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
-
-		AssertChecked.assertCheckedNotVisible(
-			key_tableEntry = "${tableEntry}",
-			locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
 	}
 
 	macro clickEllipsisItem {

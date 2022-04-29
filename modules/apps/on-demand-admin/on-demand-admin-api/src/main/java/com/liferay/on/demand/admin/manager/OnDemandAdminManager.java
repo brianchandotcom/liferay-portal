@@ -31,7 +31,7 @@ public interface OnDemandAdminManager {
 		throws PortalException;
 
 	public String getLoginURL(
-			PortletRequest portletRequest, Company company, long userId)
+			Company company, PortletRequest portletRequest, long userId)
 		throws PortalException;
 
 	public boolean isOnDemandAdminUser(User user);

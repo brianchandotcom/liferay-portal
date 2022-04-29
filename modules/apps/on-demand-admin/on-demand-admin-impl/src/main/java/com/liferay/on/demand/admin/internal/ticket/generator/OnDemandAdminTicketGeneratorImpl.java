@@ -52,7 +52,7 @@ public class OnDemandAdminTicketGeneratorImpl
 
 	@Override
 	public Ticket generate(
-			Company company, long requestorUserId, String justification)
+			Company company, String justification, long requestorUserId)
 		throws PortalException {
 
 		_onDemandAdminHelper.checkRequestAdministratorAccessPermission(

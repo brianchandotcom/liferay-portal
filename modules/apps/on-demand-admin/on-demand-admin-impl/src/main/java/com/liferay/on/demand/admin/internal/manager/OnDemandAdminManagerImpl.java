@@ -75,7 +75,7 @@ public class OnDemandAdminManagerImpl implements OnDemandAdminManager {
 
 	@Override
 	public String getLoginURL(
-			PortletRequest portletRequest, Company company, long userId)
+			Company company, PortletRequest portletRequest, long userId)
 		throws PortalException {
 
 		StringBundler sb = new StringBundler(3);
@@ -91,8 +91,8 @@ public class OnDemandAdminManagerImpl implements OnDemandAdminManager {
 		sb.append("?ticketKey=");
 
 		Ticket ticket = _onDemandAdminTicketGenerator.generate(
-			company, userId,
-			ParamUtil.getString(portletRequest, "justification"));
+			company, ParamUtil.getString(portletRequest, "justification"),
+			userId);
 
 		sb.append(ticket.getKey());
 

@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.model.Ticket;
 public interface OnDemandAdminTicketGenerator {
 
 	public Ticket generate(
-			Company company, long requestorUserId, String justification)
+			Company company, String justification, long requestorUserId)
 		throws PortalException;
 
 }

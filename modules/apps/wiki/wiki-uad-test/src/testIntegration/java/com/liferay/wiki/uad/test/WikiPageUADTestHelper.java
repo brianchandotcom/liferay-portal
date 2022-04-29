@@ -59,13 +59,10 @@ public class WikiPageUADTestHelper {
 
 		WikiPage wikiPage = addWikiPage(userId);
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				TestPropsValues.getGroupId());
-
 		return _wikiPageLocalService.updateStatus(
 			statusByUserId, wikiPage, WorkflowConstants.STATUS_APPROVED,
-			serviceContext,
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getGroupId()),
 			HashMapBuilder.<String, Serializable>put(
 				WorkflowConstants.CONTEXT_URL, "http://localhost"
 			).build());

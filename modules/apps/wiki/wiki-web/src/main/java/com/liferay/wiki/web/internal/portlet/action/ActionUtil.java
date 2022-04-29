@@ -255,22 +255,20 @@ public class ActionUtil {
 			}
 		).buildPortletURL();
 
-		PortletURL editPageURL = PortletURLBuilder.createRenderURL(
-			liferayPortletResponse
-		).setMVCRenderCommandName(
-			"wiki/edit_page"
-		).setParameter(
-			"nodeId", nodeId
-		).setParameter(
-			"title", title
-		).buildPortletURL();
-
-		String attachmentURLPrefix = WikiUtil.getAttachmentURLPrefix(
-			themeDisplay.getPathMain(), themeDisplay.getPlid(), nodeId, title);
-
 		return wikiEngineRenderer.diffHtml(
-			sourcePage, targetPage, viewPageURL, editPageURL,
-			attachmentURLPrefix);
+			sourcePage, targetPage, viewPageURL,
+			PortletURLBuilder.createRenderURL(
+				liferayPortletResponse
+			).setMVCRenderCommandName(
+				"wiki/edit_page"
+			).setParameter(
+				"nodeId", nodeId
+			).setParameter(
+				"title", title
+			).buildPortletURL(),
+			WikiUtil.getAttachmentURLPrefix(
+				themeDisplay.getPathMain(), themeDisplay.getPlid(), nodeId,
+				title));
 	}
 
 	public static WikiNode getNode(PortletRequest portletRequest)

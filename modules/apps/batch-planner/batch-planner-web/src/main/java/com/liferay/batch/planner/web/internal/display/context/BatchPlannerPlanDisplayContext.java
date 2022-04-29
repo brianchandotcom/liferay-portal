@@ -15,6 +15,7 @@
 package com.liferay.batch.planner.web.internal.display.context;
 
 import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
+import com.liferay.batch.engine.constants.BatchEngineImportTaskConstants;
 import com.liferay.batch.engine.model.BatchEngineExportTask;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.service.BatchEngineExportTaskLocalServiceUtil;
@@ -150,6 +151,20 @@ public class BatchPlannerPlanDisplayContext extends BaseDisplayContext {
 		return _orderByType;
 	}
 
+	private int _getProcessedItemsCount(
+		BatchEngineImportTask batchEngineImportTask,
+		int batchEngineImportTaskErrorsCount) {
+
+		if (batchEngineImportTask.getImportStrategy() ==
+				BatchEngineImportTaskConstants.IMPORT_STRATEGY_ON_ERROR_FAIL) {
+
+			return batchEngineImportTask.getProcessedItemsCount();
+		}
+
+		return batchEngineImportTask.getTotalItemsCount() -
+			batchEngineImportTaskErrorsCount;
+	}
+
 	private BatchPlannerPlanDisplay _toBatchPlannerPlanDisplay(
 			BatchPlannerPlan batchPlannerPlan)
 		throws PortalException {
@@ -203,12 +218,16 @@ public class BatchPlannerPlanDisplayContext extends BaseDisplayContext {
 						String.valueOf(
 							batchPlannerPlan.getBatchPlannerPlanId()));
 
-			builder.failedItemsCount(
+			int batchEngineImportTaskErrorsCount =
 				BatchEngineImportTaskErrorLocalServiceUtil.
 					getBatchEngineImportTaskErrorsCount(
-						batchEngineImportTask.getBatchEngineImportTaskId())
+						batchEngineImportTask.getBatchEngineImportTaskId());
+
+			builder.failedItemsCount(
+				batchEngineImportTaskErrorsCount
 			).processedItemsCount(
-				batchEngineImportTask.getProcessedItemsCount()
+				_getProcessedItemsCount(
+					batchEngineImportTask, batchEngineImportTaskErrorsCount)
 			).status(
 				BatchPlannerPlanConstants.getStatus(
 					BatchEngineTaskExecuteStatus.valueOf(

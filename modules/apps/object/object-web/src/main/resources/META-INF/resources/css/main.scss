@@ -1,21 +1,11 @@
 @import 'atlas-variables';
 
-.side-panel-iframe {
-	& &-content {
-		padding: 0 !important;
-	}
+.side-panel-iframe__tabs {
+	background-color: $white;
+	padding: 0.5rem 1rem 0;
 
-	& &-header {
-		background-color: $white !important;
-	}
-
-	&__tabs {
-		background-color: $white;
-		padding: 0.5rem 1rem 0;
-
-		.nav-link {
-			padding: 1rem;
-		}
+	.nav-link {
+		padding: 1rem;
 	}
 }
 

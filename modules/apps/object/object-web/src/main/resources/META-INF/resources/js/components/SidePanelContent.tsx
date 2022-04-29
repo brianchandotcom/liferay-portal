@@ -52,7 +52,6 @@ export default function SidePanelContent({
 				<h3 className="mb-0">{title}</h3>
 
 				<ClayButtonWithIcon
-					className="side-panel-iframe-close"
 					displayType="unstyled"
 					monospaced={false}
 					onClick={closeSidePanel}

@@ -82,7 +82,7 @@ export default function EditObjectValidation({
 	return (
 		<SidePanelForm
 			onSubmit={handleSubmit}
-			title={initialValues.name?.[defaultLanguageId]}
+			title={initialValues.name?.[defaultLanguageId] as string}
 		>
 			<ClayTabs className="side-panel-iframe__tabs">
 				{TABS.map(({label}, index) => (

@@ -72,7 +72,7 @@ interface ObjectValidation {
 	engineLabel: string;
 	errorLabel: LocalizedValue<string>;
 	id: number;
-	name: any;
+	name: LocalizedValue<string>;
 	script: string;
 }
 

@@ -642,13 +642,15 @@ public class ObjectFieldLocalServiceTest {
 				objectDefinition.getObjectDefinitionId(), "Text", "String",
 				true, false, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"text", false, Collections.emptyList());
+				"text", false,
+				Collections.singletonList(
+					_createObjectFieldSetting("showCounter", "true")));
 		}
 		catch (ObjectFieldSettingValueException.MissingRequiredValues
 					objectFieldSettingValueException) {
 
 			Assert.assertEquals(
-				"The settings showCounter are required for object field text",
+				"The settings maxLength are required for object field text",
 				objectFieldSettingValueException.getMessage());
 		}
 
@@ -670,6 +672,42 @@ public class ObjectFieldLocalServiceTest {
 
 			Assert.assertEquals(
 				"The settings anySetting are not allowed for object field text",
+				objectFieldSettingNameException.getMessage());
+		}
+
+		try {
+			_objectFieldLocalService.addCustomObjectField(
+				TestPropsValues.getUserId(), 0,
+				objectDefinition.getObjectDefinitionId(), "Text", "String",
+				true, false, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"text", false,
+				Arrays.asList(_createObjectFieldSetting("maxLength", null)));
+		}
+		catch (ObjectFieldSettingNameException.NotAllowedNames
+					objectFieldSettingNameException) {
+
+			Assert.assertEquals(
+				"The settings maxLength are not allowed for object field text",
+				objectFieldSettingNameException.getMessage());
+		}
+
+		try {
+			_objectFieldLocalService.addCustomObjectField(
+				TestPropsValues.getUserId(), 0,
+				objectDefinition.getObjectDefinitionId(), "Text", "String",
+				true, false, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"text", false,
+				Arrays.asList(
+					_createObjectFieldSetting("maxLength", "10"),
+					_createObjectFieldSetting("showCounter", "false")));
+		}
+		catch (ObjectFieldSettingNameException.NotAllowedNames
+					objectFieldSettingNameException) {
+
+			Assert.assertEquals(
+				"The settings maxLength are not allowed for object field text",
 				objectFieldSettingNameException.getMessage());
 		}
 

@@ -963,17 +963,8 @@ public class SXPBlueprintSearchResultTest {
 
 	@Test
 	public void testHideComments() throws Exception {
-		JournalArticle article = JournalTestUtil.addArticle(
-			_group.getGroupId(), 0,
-			PortalUtil.getClassNameId(JournalArticle.class),
-			HashMapBuilder.put(
-				LocaleUtil.US, "Article"
-			).build(),
-			null,
-			HashMapBuilder.put(
-				LocaleUtil.US, StringPool.BLANK
-			).build(),
-			LocaleUtil.getSiteDefault(), false, true, _serviceContext);
+		JournalArticle article = _addJournalArticle(
+			_group.getGroupId(), 0, "Article", StringPool.BLANK, false, true);
 
 		_journalArticles.add(article);
 
@@ -1186,17 +1177,9 @@ public class SXPBlueprintSearchResultTest {
 			"queryConfiguration", JSONUtil.put("applyIndexerClauses", false));
 
 		_journalArticles.add(
-			JournalTestUtil.addArticle(
-				_group.getGroupId(), 0,
-				PortalUtil.getClassNameId(JournalArticle.class),
-				HashMapBuilder.put(
-					LocaleUtil.US, "Article 1.0"
-				).build(),
-				null,
-				HashMapBuilder.put(
-					LocaleUtil.US, StringPool.BLANK
-				).build(),
-				LocaleUtil.getSiteDefault(), false, true, _serviceContext));
+			_addJournalArticle(
+				_group.getGroupId(), 0, "Article 1.0", StringPool.BLANK, false,
+				true));
 
 		_journalArticles.set(
 			0,
@@ -1318,17 +1301,9 @@ public class SXPBlueprintSearchResultTest {
 			"queryConfiguration", JSONUtil.put("applyIndexerClauses", false));
 
 		_journalArticles.add(
-			JournalTestUtil.addArticle(
-				_group.getGroupId(), 0,
-				PortalUtil.getClassNameId(JournalArticle.class),
-				HashMapBuilder.put(
-					LocaleUtil.US, "Draft Article"
-				).build(),
-				null,
-				HashMapBuilder.put(
-					LocaleUtil.US, StringPool.BLANK
-				).build(),
-				LocaleUtil.getSiteDefault(), true, false, _serviceContext));
+			_addJournalArticle(
+				_group.getGroupId(), 0, "Draft Article", StringPool.BLANK, true,
+				false));
 
 		_updateElementInstancesJSON(
 			new Object[] {_getDefaultValuesForTextMatchOverMultipleFields()},
@@ -1629,17 +1604,9 @@ public class SXPBlueprintSearchResultTest {
 		Group stagingGroup = _group.getStagingGroup();
 
 		_journalArticles.add(
-			JournalTestUtil.addArticle(
-				stagingGroup.getGroupId(), 0,
-				PortalUtil.getClassNameId(JournalArticle.class),
-				HashMapBuilder.put(
-					LocaleUtil.US, "Staged"
-				).build(),
-				null,
-				HashMapBuilder.put(
-					LocaleUtil.US, StringPool.BLANK
-				).build(),
-				LocaleUtil.getSiteDefault(), false, true, _serviceContext));
+			_addJournalArticle(
+				stagingGroup.getGroupId(), 0, "Staged", StringPool.BLANK, false,
+				true));
 
 		HashMap<String, Object> textMatchOverMultipleFields =
 			_getDefaultValuesForTextMatchOverMultipleFields();
@@ -1937,6 +1904,24 @@ public class SXPBlueprintSearchResultTest {
 		return UserTestUtil.addGroupUser(group, role.getName());
 	}
 
+	private JournalArticle _addJournalArticle(
+			long groupId, long folderId, String name, String content,
+			boolean workflowEnabled, boolean approved)
+		throws Exception {
+
+		return JournalTestUtil.addArticle(
+			groupId, folderId, PortalUtil.getClassNameId(JournalArticle.class),
+			HashMapBuilder.put(
+				LocaleUtil.US, name
+			).build(),
+			null,
+			HashMapBuilder.put(
+				LocaleUtil.US, content
+			).build(),
+			LocaleUtil.getSiteDefault(), workflowEnabled, approved,
+			_serviceContext);
+	}
+
 	private SegmentsEntry _addSegmentsEntry(User user) throws Exception {
 		Criteria criteria = new Criteria();
 
@@ -2149,17 +2134,9 @@ public class SXPBlueprintSearchResultTest {
 		}
 
 		_journalArticles.add(
-			JournalTestUtil.addArticle(
-				group.getGroupId(), 0,
-				PortalUtil.getClassNameId(JournalArticle.class),
-				HashMapBuilder.put(
-					LocaleUtil.US, journalArticleTitles[0]
-				).build(),
-				null,
-				HashMapBuilder.put(
-					LocaleUtil.US, journalArticleContents[0]
-				).build(),
-				LocaleUtil.getSiteDefault(), false, true, _serviceContext));
+			_addJournalArticle(
+				group.getGroupId(), 0, journalArticleTitles[0],
+				journalArticleContents[0], false, true));
 
 		if (journalArticleTitles.length < 2) {
 			return;
@@ -2188,34 +2165,18 @@ public class SXPBlueprintSearchResultTest {
 		}
 
 		_journalArticles.add(
-			JournalTestUtil.addArticle(
-				group.getGroupId(), journalFolderId,
-				PortalUtil.getClassNameId(JournalArticle.class),
-				HashMapBuilder.put(
-					LocaleUtil.US, journalArticleTitles[1]
-				).build(),
-				null,
-				HashMapBuilder.put(
-					LocaleUtil.US, journalArticleContents[1]
-				).build(),
-				LocaleUtil.getSiteDefault(), false, true, _serviceContext));
+			_addJournalArticle(
+				group.getGroupId(), journalFolderId, journalArticleTitles[1],
+				journalArticleContents[1], false, true));
 
 		for (int i = 2;
 			 (journalArticleTitles.length > 2) &&
 			 (i < journalArticleTitles.length); i++) {
 
 			_journalArticles.add(
-				JournalTestUtil.addArticle(
-					_group.getGroupId(), 0,
-					PortalUtil.getClassNameId(JournalArticle.class),
-					HashMapBuilder.put(
-						LocaleUtil.US, journalArticleTitles[i]
-					).build(),
-					null,
-					HashMapBuilder.put(
-						LocaleUtil.US, journalArticleContents[i]
-					).build(),
-					LocaleUtil.getSiteDefault(), false, true, _serviceContext));
+				_addJournalArticle(
+					_group.getGroupId(), 0, journalArticleTitles[i],
+					journalArticleContents[i], false, true));
 		}
 	}
 

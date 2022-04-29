@@ -54,11 +54,10 @@ public class AnonymizeNonreviewableUADDataMVCActionCommand
 		for (UADAnonymizer<?> uadAnonymizer : uadAnonymizers) {
 			User selectedUser = getSelectedUser(actionRequest);
 
-			User anonymousUser = _uadAnonymousUserProvider.getAnonymousUser(
-				selectedUser.getCompanyId());
-
 			uadAnonymizer.autoAnonymizeAll(
-				selectedUser.getUserId(), anonymousUser);
+				selectedUser.getUserId(),
+				_uadAnonymousUserProvider.getAnonymousUser(
+					selectedUser.getCompanyId()));
 		}
 
 		doNonreviewableRedirect(actionRequest, actionResponse);

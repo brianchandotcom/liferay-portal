@@ -129,15 +129,10 @@ public class InfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 				(UADDisplay<Object>)_uadRegistry.getUADDisplay(uadRegistryKey));
 		}
 
-		boolean hierarchyView = ParamUtil.getBoolean(
-			resourceRequest, "hierarchyView");
-
-		uadInfoPanelDisplay.setHierarchyView(hierarchyView);
-
-		boolean topLevelView = ParamUtil.getBoolean(
-			resourceRequest, "topLevelView");
-
-		uadInfoPanelDisplay.setTopLevelView(topLevelView);
+		uadInfoPanelDisplay.setHierarchyView(
+			ParamUtil.getBoolean(resourceRequest, "hierarchyView"));
+		uadInfoPanelDisplay.setTopLevelView(
+			ParamUtil.getBoolean(resourceRequest, "topLevelView"));
 
 		resourceRequest.setAttribute(
 			UADWebKeys.UAD_INFO_PANEL_DISPLAY, uadInfoPanelDisplay);

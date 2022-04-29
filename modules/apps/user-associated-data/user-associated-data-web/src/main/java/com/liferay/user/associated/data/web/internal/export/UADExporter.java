@@ -46,12 +46,11 @@ public class UADExporter {
 		PortletFileRepositoryUtil.addPortletRepository(
 			groupId, PortletKeys.BACKGROUND_TASK, new ServiceContext());
 
-		long defaultUserId = UserLocalServiceUtil.getDefaultUserId(
-			CompanyThreadLocal.getCompanyId());
-
 		BackgroundTask backgroundTask =
 			BackgroundTaskManagerUtil.addBackgroundTask(
-				defaultUserId, groupId, String.valueOf(userId),
+				UserLocalServiceUtil.getDefaultUserId(
+					CompanyThreadLocal.getCompanyId()),
+				groupId, String.valueOf(userId),
 				UADExportBackgroundTaskExecutor.class.getName(), taskContextMap,
 				new ServiceContext());
 

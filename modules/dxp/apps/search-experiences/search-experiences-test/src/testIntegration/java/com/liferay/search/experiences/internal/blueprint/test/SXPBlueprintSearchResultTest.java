@@ -38,6 +38,7 @@ import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
+import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -46,6 +47,7 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
+import com.liferay.portal.kernel.service.IdentityServiceContextFunction;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -957,6 +959,56 @@ public class SXPBlueprintSearchResultTest {
 		_updateElementInstancesJSON(null, null);
 
 		_assertSearchIgnoreRelevance("[In-Folder, Out of the folder]");
+	}
+
+	@Test
+	public void testHideComments() throws Exception {
+		JournalArticle article = JournalTestUtil.addArticle(
+			_group.getGroupId(), 0,
+			PortalUtil.getClassNameId(JournalArticle.class),
+			HashMapBuilder.put(
+				LocaleUtil.US, "Article"
+			).build(),
+			null,
+			HashMapBuilder.put(
+				LocaleUtil.US, StringPool.BLANK
+			).build(),
+			LocaleUtil.getSiteDefault(), false, true, _serviceContext);
+
+		_journalArticles.add(article);
+
+		CommentManagerUtil.addComment(
+			_user.getUserId(), _serviceContext.getScopeGroupId(),
+			JournalArticle.class.getName(), article.getResourcePrimKey(),
+			"Comment", new IdentityServiceContextFunction(_serviceContext));
+
+		_sxpBlueprint.setConfigurationJSON(
+			JSONUtil.put(
+				"generalConfiguration",
+				JSONUtil.put(
+					"searchableAssetTypes",
+					JSONUtil.put("com.liferay.message.boards.model.MBMessage"))
+			).put(
+				"queryConfiguration", JSONUtil.put("applyIndexerClauses", false)
+			).toString());
+
+		_updateSXPBlueprint();
+
+		_updateElementInstancesJSON(
+			new Object[] {_getDefaultValuesForTextMatchOverMultipleFields()},
+			new String[] {"Text Match Over Multiple Fields"});
+
+		_keywords = "Comment";
+
+		_assertSearch("[Comment]");
+
+		_updateElementInstancesJSON(
+			new Object[] {
+				_getDefaultValuesForTextMatchOverMultipleFields(), null
+			},
+			new String[] {"Text Match Over Multiple Fields", "Hide Comments"});
+
+		_assertSearch("[]");
 	}
 
 	@Test

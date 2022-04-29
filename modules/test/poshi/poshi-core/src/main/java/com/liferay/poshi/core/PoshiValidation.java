@@ -214,6 +214,26 @@ public class PoshiValidation {
 		validateRequiredAttributeNames(poshiElement, attributes, filePath);
 	}
 
+	protected static void validateAttributeValue(
+		PoshiElement poshiElement, String attributeValue) {
+
+		if (attributeValue.contains("\"")) {
+			int escapedQuoteCount = StringUtils.countMatches(
+				attributeValue, "\\\"");
+			int quoteCount = StringUtils.countMatches(attributeValue, "\"");
+
+			if ((escapedQuoteCount != quoteCount) ||
+				!((escapedQuoteCount % 2) == 0)) {
+
+				_exceptions.add(
+					new PoshiElementException(
+						poshiElement,
+						"Unescaped quotes in parameter value: " +
+							attributeValue));
+			}
+		}
+	}
+
 	protected static void validateCommandElement(PoshiElement poshiElement) {
 		String filePath = _getFilePath(poshiElement);
 
@@ -318,9 +338,9 @@ public class PoshiValidation {
 		String elementName = poshiElement.getName();
 
 		if (elementName.equals("contains")) {
-			validateEscapedString(
+			validateAttributeValue(
 				poshiElement, poshiElement.attributeValue("string"));
-			validateEscapedString(
+			validateAttributeValue(
 				poshiElement, poshiElement.attributeValue("substring"));
 		}
 
@@ -511,25 +531,6 @@ public class PoshiValidation {
 		validateHasNoAttributes(thenElement);
 
 		parseElements(thenElement);
-	}
-
-	protected static void validateEscapedString(
-		PoshiElement poshiElement, String attributeValue) {
-
-		if (attributeValue.contains("\"")) {
-			int escapedQuoteCount = StringUtils.countMatches(
-				attributeValue, "\\\"");
-			int quoteCount = StringUtils.countMatches(attributeValue, "\"");
-
-			if ((escapedQuoteCount != quoteCount) ||
-				!((escapedQuoteCount % 2) == 0)) {
-
-				_exceptions.add(
-					new PoshiElementException(
-						poshiElement,
-						"Unescaped quotes in contains parameter string"));
-			}
-		}
 	}
 
 	protected static void validateExecuteElement(PoshiElement poshiElement) {

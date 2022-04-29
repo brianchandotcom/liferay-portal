@@ -24,16 +24,19 @@ const CURRENT_PAGE_MOCK = {
 			content: '<span>Content 1</span><br/><code>Hello1</code>',
 			darkbg: true,
 			nodeToHighlight: '#step1',
+			positioning: ['tl', 'tr'],
 			title: 'Title 1',
 		},
 		{
 			content: '<span>Content 2</span><br/><code>Hello2</code>',
 			nodeToHighlight: '#step2',
+			positioning: ['bc', 'tc'],
 			title: 'Title 2',
 		},
 		{
 			content: '<span>Content 3</span><br/><code>Hello3</code>',
 			nodeToHighlight: '#step3',
+			positioning: ['tl', 'cr'],
 			title: 'Title 3',
 		},
 		{

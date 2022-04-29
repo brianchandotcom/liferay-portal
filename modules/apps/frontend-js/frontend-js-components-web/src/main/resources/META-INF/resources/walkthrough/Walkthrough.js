@@ -107,11 +107,13 @@ const Walkthrough = ({closeOnClickOutside, closeable, skippable, steps}) => {
 Walkthrough.propTypes = {
 	closeOnClickOutside: PropTypes.bool,
 	closeable: PropTypes.bool,
+	darkbg: PropTypes.bool,
 	skippable: PropTypes.bool,
 	steps: PropTypes.arrayOf(
 		PropTypes.shape({
 			content: PropTypes.string,
-			nodeToHighlight: PropTypes.string,
+			nodeToHighlight: PropTypes.string.isRequired,
+			positioning: PropTypes.arrayOf(PropTypes.string),
 			title: PropTypes.string,
 		})
 	),
@@ -129,6 +131,7 @@ const WalkthroughStep = ({
 	darkbg,
 	onNext,
 	onPrevious,
+	positioning,
 	previousTrigger,
 	skippable,
 	stepIndex,
@@ -167,12 +170,12 @@ const WalkthroughStep = ({
 
 			doAlign({
 				offset: [OVERLAY_OFFSET_X, OVERLAY_OFFSET_Y],
-				points: ['tl', 'tr'],
+				points: positioning || ['tl', 'tr'],
 				sourceElement: popoverRef.current,
 				targetElement: trigger,
 			});
 		}
-	}, [popoverRef, trigger, darkbg, previousTrigger]);
+	}, [popoverRef, trigger, darkbg, previousTrigger, positioning]);
 
 	useEffect(() => {
 		if (popoverRef?.current) {

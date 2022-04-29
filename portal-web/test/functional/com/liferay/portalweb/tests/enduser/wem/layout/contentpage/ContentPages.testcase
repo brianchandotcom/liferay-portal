@@ -722,9 +722,7 @@ definition {
 		}
 
 		task ("View elements are not shown") {
-			for (var elementName : list "Container,Blogs,HTML,Button,Heading") {
-				PageEditor.viewFragmentNotPresent(fragmentName = "${elementName}");
-			}
+			AssertVisible(locator1 = "PageEditor#NO_FRAGMENTS_MESSAGE");
 		}
 
 		task ("Unhide the Container and HTML ") {
@@ -754,9 +752,7 @@ definition {
 		}
 
 		task ("View elements are not shown") {
-			for (var elementName : list "Container,Blogs,HTML,Button,Heading") {
-				PageEditor.viewFragmentNotPresent(fragmentName = "${elementName}");
-			}
+			AssertVisible(locator1 = "PageEditor#NO_FRAGMENTS_MESSAGE");
 		}
 
 		task ("Unhide the container") {

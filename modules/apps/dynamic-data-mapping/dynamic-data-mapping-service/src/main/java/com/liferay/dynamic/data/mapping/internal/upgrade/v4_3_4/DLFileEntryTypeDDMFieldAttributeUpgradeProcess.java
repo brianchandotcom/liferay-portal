@@ -25,9 +25,7 @@ import java.sql.ResultSet;
 
 import java.text.NumberFormat;
 
-import java.util.Arrays;
 import java.util.Locale;
-import java.util.Objects;
 
 /**
  * @author Alicia García
@@ -37,76 +35,6 @@ public class DLFileEntryTypeDDMFieldAttributeUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		_updateCheckboxFieldType();
-		_updateNumericFieldType();
-	}
-
-	private void _updateCheckboxFieldType() throws Exception {
-		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-				StringBundler.concat(
-					"select DDMField.storageId, DDMField.fieldName from ",
-					"DLFileEntryType inner join DDMStructureLink on ",
-					"DDMStructureLink.classPK = ",
-					"DLFileEntryType.fileEntryTypeId inner join ",
-					"DDMStructureVersion on DDMStructureVersion.structureId = ",
-					"DDMStructureLink.structureId inner join DDMField on ",
-					"DDMStructureVersion.structureVersionId = ",
-					"DDMField.structureVersionId and DDMField.fieldType like ",
-					"? "))) {
-
-			PreparedStatement preparedStatement2 = connection.prepareStatement(
-				"select fieldAttributeId, smallAttributeValue from " +
-					"DDMFieldAttribute where storageId = ? and " +
-						"smallAttributeValue in (? , ?) ");
-
-			PreparedStatement preparedStatement3 =
-				AutoBatchPreparedStatementUtil.autoBatch(
-					connection.prepareStatement(
-						"update DDMFieldAttribute set smallAttributeValue = " +
-							"? where fieldAttributeId = ? "));
-
-			preparedStatement1.setString(1, "%checkbox%");
-
-			try (ResultSet resultSet1 = preparedStatement1.executeQuery()) {
-				while (resultSet1.next()) {
-					preparedStatement2.setLong(1, resultSet1.getLong(1));
-					preparedStatement2.setString(2, Boolean.TRUE.toString());
-					preparedStatement2.setString(3, Boolean.FALSE.toString());
-
-					try (ResultSet resultSet2 =
-							preparedStatement2.executeQuery()) {
-
-						while (resultSet2.next()) {
-							if (Objects.equals(
-									Boolean.TRUE.toString(),
-									resultSet2.getString(2))) {
-
-								preparedStatement3.setString(
-									1,
-									Arrays.toString(
-										new String[] {
-											resultSet1.getString(2)
-										}));
-							}
-							else {
-								preparedStatement3.setString(
-									1, Arrays.toString(new String[0]));
-							}
-
-							preparedStatement3.setLong(
-								2, resultSet2.getLong(1));
-
-							preparedStatement3.addBatch();
-						}
-					}
-				}
-
-				preparedStatement3.executeBatch();
-			}
-		}
-	}
-
-	private void _updateNumericFieldType() throws Exception {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				StringBundler.concat(
 					"select DDMField.storageId, DDMField.fieldId from ",

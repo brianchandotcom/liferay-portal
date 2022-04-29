@@ -288,22 +288,6 @@ public class DDMDataDefinitionConverterImpl
 		};
 	}
 
-	private DDMFormFieldOptions _getDDMFormFieldOptions(
-		DDMFormField ddmFormField) {
-
-		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
-
-		LocalizedValue localizedValue = ddmFormField.getLabel();
-
-		for (Locale locale : localizedValue.getAvailableLocales()) {
-			ddmFormFieldOptions.addOptionLabel(
-				ddmFormField.getName(), locale,
-				localizedValue.getString(locale));
-		}
-
-		return ddmFormFieldOptions;
-	}
-
 	private String _getDDMFormFieldsRows(DDMFormField fieldSetDDMFormField) {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
@@ -339,28 +323,6 @@ public class DDMDataDefinitionConverterImpl
 			"$[\"pages\"][*][\"rows\"][*][\"columns\"][*][\"fieldNames\"][*]");
 	}
 
-	private LocalizedValue _getLocalizedPredefinedValue(
-		DDMFormField ddmFormField) {
-
-		LocalizedValue newPredefinedValue = new LocalizedValue();
-
-		LocalizedValue oldPredefinedValue = ddmFormField.getPredefinedValue();
-
-		for (Locale locale : oldPredefinedValue.getAvailableLocales()) {
-			if (GetterUtil.getBoolean(oldPredefinedValue.getString(locale))) {
-				newPredefinedValue.addString(locale, ddmFormField.getName());
-			}
-			else {
-				newPredefinedValue.addString(locale, StringPool.BLANK);
-			}
-		}
-
-		newPredefinedValue.setDefaultLocale(
-			oldPredefinedValue.getDefaultLocale());
-
-		return newPredefinedValue;
-	}
-
 	private boolean _hasNestedFields(DDMForm ddmForm) {
 		for (DDMFormField ddmFormField : ddmForm.getDDMFormFields()) {
 			if (ListUtil.isNotEmpty(ddmFormField.getNestedDDMFormFields())) {
@@ -369,15 +331,6 @@ public class DDMDataDefinitionConverterImpl
 		}
 
 		return false;
-	}
-
-	private void _upgradeBooleanField(DDMFormField ddmFormField) {
-		ddmFormField.setDataType("string");
-		ddmFormField.setDDMFormFieldOptions(
-			_getDDMFormFieldOptions(ddmFormField));
-		ddmFormField.setPredefinedValue(
-			_getLocalizedPredefinedValue(ddmFormField));
-		ddmFormField.setType("checkbox_multiple");
 	}
 
 	private void _upgradeColorField(DDMFormField ddmFormField) {
@@ -461,10 +414,7 @@ public class DDMDataDefinitionConverterImpl
 				(DDMFormFieldOptions)ddmFormField.getProperty("rows"));
 		}
 
-		if (Objects.equals(ddmFormField.getType(), "checkbox")) {
-			_upgradeBooleanField(ddmFormField);
-		}
-		else if (Objects.equals(ddmFormField.getType(), "ddm-color")) {
+		if (Objects.equals(ddmFormField.getType(), "ddm-color")) {
 			_upgradeColorField(ddmFormField);
 		}
 		else if (Objects.equals(ddmFormField.getType(), "ddm-date")) {

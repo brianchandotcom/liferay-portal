@@ -118,7 +118,7 @@ public class JournalContentCompatibilityConverterImpl
 
 	private String _convertDDMFieldType(String ddmFieldType) {
 		if (Objects.equals(ddmFieldType, "boolean")) {
-			return DDMFormFieldTypeConstants.CHECKBOX_MULTIPLE;
+			return DDMFormFieldTypeConstants.CHECKBOX;
 		}
 
 		if (Objects.equals(ddmFieldType, "ddm-color")) {

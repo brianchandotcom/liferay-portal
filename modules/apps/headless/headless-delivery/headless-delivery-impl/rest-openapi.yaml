@@ -1988,6 +1988,46 @@ components:
                     description:
                         The fragment's viewport style.
                     properties:
+                        backgroundColor:
+                            # @review
+                            description:
+                                The fragment viewport's background color.
+                            type: string
+                        borderColor:
+                            # @review
+                            description:
+                                The fragment viewport's border color.
+                            type: string
+                        borderRadius:
+                            # @review
+                            description:
+                                The fragment viewport's background radius.
+                            type: string
+                        borderWidth:
+                            # @review
+                            description:
+                                The fragment viewport's border width.
+                            type: string
+                        fontFamily:
+                            # @review
+                            description:
+                                The fragment viewport's font family.
+                            type: string
+                        fontSize:
+                            # @review
+                            description:
+                                The fragment viewport's font size.
+                            type: string
+                        fontWeight:
+                            # @review
+                            description:
+                                The fragment viewport's font weight.
+                            type: string
+                        height:
+                            # @review
+                            description:
+                                The fragment viewport's height.
+                            type: string
                         hidden:
                             # @review
                             description:
@@ -2013,6 +2053,36 @@ components:
                             description:
                                 The fragment viewport's margin top.
                             type: string
+                        maxHeight:
+                            # @review
+                            description:
+                                The fragment viewport's max height.
+                            type: string
+                        maxWidth:
+                            # @review
+                            description:
+                                The fragment viewport's max width.
+                            type: string
+                        minHeight:
+                            # @review
+                            description:
+                                The fragment viewport's min height.
+                            type: string
+                        minWidth:
+                            # @review
+                            description:
+                                The fragment viewport's min width.
+                            type: string
+                        opacity:
+                            # @review
+                            description:
+                                The fragment viewport's opacity.
+                            type: string
+                        overflow:
+                            # @review
+                            description:
+                                The fragment viewport's overflow behavior.
+                            type: string
                         paddingBottom:
                             # @review
                             description:
@@ -2033,9 +2103,25 @@ components:
                             description:
                                 The fragment viewport's padding top.
                             type: string
+                        shadow:
+                            # @review
+                            description:
+                                The fragment viewport's shadow effect.
+                            type: string
                         textAlign:
+                            # @review
                             description:
                                 The fragment viewport's text align.
+                            type: string
+                        textColor:
+                            # @review
+                            description:
+                                The fragment viewport's text color.
+                            type: string
+                        width:
+                            # @review
+                            description:
+                                The fragment viewport's width.
                             type: string
                     type: object
                 id:

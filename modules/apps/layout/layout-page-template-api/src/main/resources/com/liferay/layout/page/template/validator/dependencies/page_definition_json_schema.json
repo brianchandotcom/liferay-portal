@@ -678,6 +678,38 @@
 				"fragmentViewportStyle": {
 					"additionalProperties": false,
 					"properties": {
+						"backgroundColor": {
+							"title": "The backgroundColor Schema",
+							"type": "string"
+						},
+						"borderColor": {
+							"title": "The borderColor Schema",
+							"type": "string"
+						},
+						"borderRadius": {
+							"title": "The borderRadius Schema",
+							"type": "string"
+						},
+						"borderWidth": {
+							"title": "The borderWidth Schema",
+							"type": "string"
+						},
+						"fontFamily": {
+							"title": "The fontFamily Schema",
+							"type": "string"
+						},
+						"fontSize": {
+							"title": "The fontSize Schema",
+							"type": "string"
+						},
+						"fontWeight": {
+							"title": "The fontWeight Schema",
+							"type": "string"
+						},
+						"height": {
+							"title": "The height Schema",
+							"type": "string"
+						},
 						"hidden": {
 							"title": "The hidden Schema",
 							"type": "boolean"
@@ -698,6 +730,30 @@
 							"title": "The marginTop Schema",
 							"type": "string"
 						},
+						"maxHeight": {
+							"title": "The maxHeight Schema",
+							"type": "string"
+						},
+						"maxWidth": {
+							"title": "The maxWidth Schema",
+							"type": "string"
+						},
+						"minHeight": {
+							"title": "The minHeight Schema",
+							"type": "string"
+						},
+						"minWidth": {
+							"title": "The minWidth Schema",
+							"type": "string"
+						},
+						"opacity": {
+							"title": "The opacity Schema",
+							"type": "string"
+						},
+						"overflow": {
+							"title": "The overflow Schema",
+							"type": "string"
+						},
 						"paddingBottom": {
 							"title": "The paddingBottom Schema",
 							"type": "string"
@@ -714,8 +770,20 @@
 							"title": "The paddingTop Schema",
 							"type": "string"
 						},
+						"shadow": {
+							"title": "The shadow Schema",
+							"type": "string"
+						},
 						"textAlign": {
 							"title": "The textAlign Schema",
+							"type": "string"
+						},
+						"textColor": {
+							"title": "The textColor Schema",
+							"type": "string"
+						},
+						"width": {
+							"title": "The width Schema",
 							"type": "string"
 						}
 					},

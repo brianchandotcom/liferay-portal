@@ -4173,6 +4173,17 @@ definition {
 			locator1 = "Fragment#FRAGMENT_LABEL");
 	}
 
+	macro viewFragmentNotVisible {
+		if (!(isSet(position))) {
+			var position = "1";
+		}
+
+		AssertNotVisible(
+			index = "${position}",
+			key_fragmentName = "${fragmentName}",
+			locator1 = "Fragment#FRAGMENT_LABEL");
+	}
+
 	macro viewFragmentOrder {
 		AssertElementPresent(
 			key_fragmentName = "${fragmentName}",

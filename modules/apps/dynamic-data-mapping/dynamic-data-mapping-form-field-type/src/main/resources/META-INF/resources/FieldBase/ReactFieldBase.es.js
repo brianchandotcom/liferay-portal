@@ -204,9 +204,6 @@ export function FieldBase({
 
 	const fieldDetailsId = `${id ?? name}_fieldDetails`;
 
-	const accessibleProps =
-		accessible && fieldDetails ? {'aria-labelledby': fieldDetailsId} : null;
-
 	const hiddenTranslations = useMemo(() => {
 		if (!localizedValue) {
 			return;
@@ -237,6 +234,16 @@ export function FieldBase({
 		type === 'paragraph' ||
 		type === 'radio';
 	const showPopover = fieldName === 'inputMaskFormat';
+	const showFor =
+		type === 'text' ||
+		type === 'numeric' ||
+		type === 'image' ||
+		type === 'search_location';
+
+	const accessibleProps = {
+		...(accessible && fieldDetails && {'aria-labelledby': fieldDetailsId}),
+		...(showFor ? {htmlFor: id ?? name} : {tabIndex: 0}),
+	};
 
 	const defaultRows = nestedFields?.map((field) => ({
 		columns: [{fields: [field], size: 12}],
@@ -313,7 +320,6 @@ export function FieldBase({
 							<legend
 								{...accessibleProps}
 								className="lfr-ddm-legend"
-								tabIndex={0}
 							>
 								{showLabel && label}
 
@@ -337,8 +343,6 @@ export function FieldBase({
 									'ddm-empty': !showLabel && !required,
 									'ddm-label': showLabel || required,
 								})}
-								htmlFor={id ?? name}
-								tabIndex={0}
 							>
 								{showLabel && label && (
 									<LabelProperty

@@ -34,6 +34,174 @@ public class FragmentViewportStyle implements Cloneable, Serializable {
 		return FragmentViewportStyleSerDes.toDTO(json);
 	}
 
+	public String getBackgroundColor() {
+		return backgroundColor;
+	}
+
+	public void setBackgroundColor(String backgroundColor) {
+		this.backgroundColor = backgroundColor;
+	}
+
+	public void setBackgroundColor(
+		UnsafeSupplier<String, Exception> backgroundColorUnsafeSupplier) {
+
+		try {
+			backgroundColor = backgroundColorUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String backgroundColor;
+
+	public String getBorderColor() {
+		return borderColor;
+	}
+
+	public void setBorderColor(String borderColor) {
+		this.borderColor = borderColor;
+	}
+
+	public void setBorderColor(
+		UnsafeSupplier<String, Exception> borderColorUnsafeSupplier) {
+
+		try {
+			borderColor = borderColorUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String borderColor;
+
+	public String getBorderRadius() {
+		return borderRadius;
+	}
+
+	public void setBorderRadius(String borderRadius) {
+		this.borderRadius = borderRadius;
+	}
+
+	public void setBorderRadius(
+		UnsafeSupplier<String, Exception> borderRadiusUnsafeSupplier) {
+
+		try {
+			borderRadius = borderRadiusUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String borderRadius;
+
+	public String getBorderWidth() {
+		return borderWidth;
+	}
+
+	public void setBorderWidth(String borderWidth) {
+		this.borderWidth = borderWidth;
+	}
+
+	public void setBorderWidth(
+		UnsafeSupplier<String, Exception> borderWidthUnsafeSupplier) {
+
+		try {
+			borderWidth = borderWidthUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String borderWidth;
+
+	public String getFontFamily() {
+		return fontFamily;
+	}
+
+	public void setFontFamily(String fontFamily) {
+		this.fontFamily = fontFamily;
+	}
+
+	public void setFontFamily(
+		UnsafeSupplier<String, Exception> fontFamilyUnsafeSupplier) {
+
+		try {
+			fontFamily = fontFamilyUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String fontFamily;
+
+	public String getFontSize() {
+		return fontSize;
+	}
+
+	public void setFontSize(String fontSize) {
+		this.fontSize = fontSize;
+	}
+
+	public void setFontSize(
+		UnsafeSupplier<String, Exception> fontSizeUnsafeSupplier) {
+
+		try {
+			fontSize = fontSizeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String fontSize;
+
+	public String getFontWeight() {
+		return fontWeight;
+	}
+
+	public void setFontWeight(String fontWeight) {
+		this.fontWeight = fontWeight;
+	}
+
+	public void setFontWeight(
+		UnsafeSupplier<String, Exception> fontWeightUnsafeSupplier) {
+
+		try {
+			fontWeight = fontWeightUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String fontWeight;
+
+	public String getHeight() {
+		return height;
+	}
+
+	public void setHeight(String height) {
+		this.height = height;
+	}
+
+	public void setHeight(
+		UnsafeSupplier<String, Exception> heightUnsafeSupplier) {
+
+		try {
+			height = heightUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String height;
+
 	public Boolean getHidden() {
 		return hidden;
 	}
@@ -139,6 +307,132 @@ public class FragmentViewportStyle implements Cloneable, Serializable {
 
 	protected String marginTop;
 
+	public String getMaxHeight() {
+		return maxHeight;
+	}
+
+	public void setMaxHeight(String maxHeight) {
+		this.maxHeight = maxHeight;
+	}
+
+	public void setMaxHeight(
+		UnsafeSupplier<String, Exception> maxHeightUnsafeSupplier) {
+
+		try {
+			maxHeight = maxHeightUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String maxHeight;
+
+	public String getMaxWidth() {
+		return maxWidth;
+	}
+
+	public void setMaxWidth(String maxWidth) {
+		this.maxWidth = maxWidth;
+	}
+
+	public void setMaxWidth(
+		UnsafeSupplier<String, Exception> maxWidthUnsafeSupplier) {
+
+		try {
+			maxWidth = maxWidthUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String maxWidth;
+
+	public String getMinHeight() {
+		return minHeight;
+	}
+
+	public void setMinHeight(String minHeight) {
+		this.minHeight = minHeight;
+	}
+
+	public void setMinHeight(
+		UnsafeSupplier<String, Exception> minHeightUnsafeSupplier) {
+
+		try {
+			minHeight = minHeightUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String minHeight;
+
+	public String getMinWidth() {
+		return minWidth;
+	}
+
+	public void setMinWidth(String minWidth) {
+		this.minWidth = minWidth;
+	}
+
+	public void setMinWidth(
+		UnsafeSupplier<String, Exception> minWidthUnsafeSupplier) {
+
+		try {
+			minWidth = minWidthUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String minWidth;
+
+	public String getOpacity() {
+		return opacity;
+	}
+
+	public void setOpacity(String opacity) {
+		this.opacity = opacity;
+	}
+
+	public void setOpacity(
+		UnsafeSupplier<String, Exception> opacityUnsafeSupplier) {
+
+		try {
+			opacity = opacityUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String opacity;
+
+	public String getOverflow() {
+		return overflow;
+	}
+
+	public void setOverflow(String overflow) {
+		this.overflow = overflow;
+	}
+
+	public void setOverflow(
+		UnsafeSupplier<String, Exception> overflowUnsafeSupplier) {
+
+		try {
+			overflow = overflowUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String overflow;
+
 	public String getPaddingBottom() {
 		return paddingBottom;
 	}
@@ -223,6 +517,27 @@ public class FragmentViewportStyle implements Cloneable, Serializable {
 
 	protected String paddingTop;
 
+	public String getShadow() {
+		return shadow;
+	}
+
+	public void setShadow(String shadow) {
+		this.shadow = shadow;
+	}
+
+	public void setShadow(
+		UnsafeSupplier<String, Exception> shadowUnsafeSupplier) {
+
+		try {
+			shadow = shadowUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String shadow;
+
 	public String getTextAlign() {
 		return textAlign;
 	}
@@ -243,6 +558,48 @@ public class FragmentViewportStyle implements Cloneable, Serializable {
 	}
 
 	protected String textAlign;
+
+	public String getTextColor() {
+		return textColor;
+	}
+
+	public void setTextColor(String textColor) {
+		this.textColor = textColor;
+	}
+
+	public void setTextColor(
+		UnsafeSupplier<String, Exception> textColorUnsafeSupplier) {
+
+		try {
+			textColor = textColorUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String textColor;
+
+	public String getWidth() {
+		return width;
+	}
+
+	public void setWidth(String width) {
+		this.width = width;
+	}
+
+	public void setWidth(
+		UnsafeSupplier<String, Exception> widthUnsafeSupplier) {
+
+		try {
+			width = widthUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String width;
 
 	@Override
 	public FragmentViewportStyle clone() throws CloneNotSupportedException {

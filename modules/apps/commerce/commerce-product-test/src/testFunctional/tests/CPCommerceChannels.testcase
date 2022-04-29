@@ -2094,6 +2094,72 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	@description = "This is a test for COMMERCE-8386. SearchProductDisplayPage"
+	@priority = "3"
+	test SearchProductDisplayPage {
+		property portal.acceptance = "false";
+
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		AppBuilderAdmin.searchByItem(itemName = "Turbocharger");
+
+		CommerceNavigator.gotoEntry(entryName = "Turbocharger");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Media");
+
+		for (var number : list "106,107,108") {
+			CommerceEntry.checkImageName(uploadFileName = "Minium_ProductImage_${number}.png");
+		}
+
+		CommerceEntry.gotoMenuTab(menuTab = "Visibility");
+
+		for (var nameList : list "Channels,Account Groups") {
+			CommerceEntry.assertCheckedSpecificToggle(name = "${nameList}");
+		}
+
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
+			portlet = "Channels");
+
+		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Product Display Pages");
+
+		Click(locator1 = "Button#PLUS");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Button.click(button = "Select Product");
+
+		SelectFrameTop();
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
+
+		AppBuilderAdmin.searchByItem(itemName = "Turbocharger");
+
+		AssertElementPresent(
+			key_entry = "Turbocharger",
+			locator1 = "CommerceNavigation#TD_ANY_ENTRY_NAME");
+
+		CommerceNavigator.clearSearchBar();
+
+		AssertElementNotPresent(
+			key_entry = "Turbocharger",
+			locator1 = "CommerceNavigation#TD_ANY_ENTRY_NAME");
+
+		Click(
+			key_pageNumber = "3",
+			locator1 = "CommerceNavigation#PAGINATION_ANY_PAGE");
+
+		AssertElementPresent(
+			key_entry = "Turbocharger",
+			locator1 = "CommerceNavigation#TD_ANY_ENTRY_NAME");
+	}
+
 	@description = "This is a test for COMMERCE-6267. UsePunchOut"
 	@ignore = "true"
 	@priority = "3"
@@ -2257,69 +2323,4 @@ definition {
 
 	}
 
-	@description = "This is a test for COMMERCE-8386. SearchProductDisplayPage"
-	@priority = "3"
-	test SearchProductDisplayPage {
-		property portal.acceptance = "false";
-
-		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
-
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
-
-		AppBuilderAdmin.searchByItem(itemName = "Turbocharger");
-
-		CommerceNavigator.gotoEntry(entryName = "Turbocharger");
-
-		CommerceEntry.gotoMenuTab(menuTab = "Media");
-
-		for (var number : list "106,107,108") {
-			CommerceEntry.checkImageName(uploadFileName = "Minium_ProductImage_${number}.png");
-		}
-
-		CommerceEntry.gotoMenuTab(menuTab = "Visibility");
-
-		for (var nameList : list "Channels,Account Groups") {
-			CommerceEntry.assertCheckedSpecificToggle(name = "${nameList}");
-		}
-
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
-
-		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
-
-		CommerceEntry.gotoMenuTab(menuTab = "Product Display Pages");
-
-		Click(locator1 = "Button#PLUS");
-
-		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
-
-		Button.click(button = "Select Product");
-
-		SelectFrameTop();
-
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
-
-		AppBuilderAdmin.searchByItem(itemName = "Turbocharger");
-
-		AssertElementPresent(
-			locator1 = "CommerceNavigation#TD_ANY_ENTRY_NAME",
-			key_entry = "Turbocharger");
-
-		CommerceNavigator.clearSearchBar();
-
-		AssertElementNotPresent(
-			locator1 = "CommerceNavigation#TD_ANY_ENTRY_NAME",
-			key_entry = "Turbocharger");
-
-		Click(
-			key_pageNumber = "3",
-			locator1 = "CommerceNavigation#PAGINATION_ANY_PAGE");
-
-		AssertElementPresent(
-			locator1 = "CommerceNavigation#TD_ANY_ENTRY_NAME",
-			key_entry = "Turbocharger");
-	}
 }

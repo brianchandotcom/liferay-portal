@@ -17,6 +17,16 @@ definition {
 		IFrame.closeFrame();
 	}
 
+	macro clearSearchBar {
+		DoubleClick(locator1 = "CommerceEntry#SEARCH_PRODUCT_RELATIONS");
+
+		KeyPress(
+			locator1 = "CommerceEntry#SEARCH_PRODUCT_RELATIONS",
+			value1 = "\BACK_SPACE");
+
+		Click(locator1 = "AppBuilder#SEARCH_BUTTON");
+	}
+
 	macro editMiniCartItemQuantity {
 		Type(
 			key_cartItemSku = "${cartItemSku}",
@@ -191,16 +201,6 @@ definition {
 				resultOrder = "${resultOrder}",
 				value1 = "${searchAssetTitle}");
 		}
-	}
-
-	macro clearSearchBar {
-		DoubleClick(locator1 = "CommerceEntry#SEARCH_PRODUCT_RELATIONS");
-
-			KeyPress(
-				locator1 = "CommerceEntry#SEARCH_PRODUCT_RELATIONS",
-				value1 = "\BACK_SPACE");
-
-		Click(locator1 = "AppBuilder#SEARCH_BUTTON");
 	}
 
 }

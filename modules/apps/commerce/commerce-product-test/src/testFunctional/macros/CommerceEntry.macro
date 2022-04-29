@@ -583,6 +583,16 @@ definition {
 		Click(locator1 = "Button#BACK");
 	}
 
+	macro assertCheckedSpecificToggle {
+		task ("Check if the Toggle is checked") {
+			AssertElementPresent(
+				key_name = "${name}",
+				locator1 = "CommerceEntry#CHECK_SPECIFIC_TOGGLE_SWITCH");
+
+			echo("The toggle for the ${name} is active");
+		}
+	}
+
 	macro assertDefaultDisplayPage {
 		if (!(isSet(pageType))) {
 			AssertTextEquals(
@@ -632,7 +642,7 @@ definition {
 					key_entry = "Commerce_${image} (${number}).jpg",
 					locator1 = "CommerceNavigation#ANY_ENTRY_NAME_WITHOUT_CONTAINS");
 			}
-		}	
+		}
 		else {
 			echo("uploadFileName is: ${uploadFileName}");
 
@@ -1545,17 +1555,6 @@ definition {
 			AssertElementPresent(
 				key_rowEntry = "${specificationLabelsEntry}",
 				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK");
-		}
-	}
-
-	macro assertCheckedSpecificToggle {
-
-		task ("Check if the Toggle is checked") {
-			AssertElementPresent(
-				locator1 = "CommerceEntry#CHECK_SPECIFIC_TOGGLE_SWITCH",
-				key_name = "${name}");
-
-			echo("The toggle for the ${name} is active"); 
 		}
 	}
 

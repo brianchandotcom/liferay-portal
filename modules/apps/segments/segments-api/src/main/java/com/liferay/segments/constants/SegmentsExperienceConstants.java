@@ -27,6 +27,4 @@ public class SegmentsExperienceConstants {
 
 	public static final String KEY_DEFAULT = "DEFAULT";
 
-	public static final int PRIORITY_DEFAULT = -1;
-
 }

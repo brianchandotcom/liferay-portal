@@ -1548,4 +1548,15 @@ definition {
 		}
 	}
 
+	macro assertCheckedSpecificToggle {
+
+		task ("Check if the Toggle is checked") {
+			AssertElementPresent(
+				locator1 = "CommerceEntry#CHECK_SPECIFIC_TOGGLE_SWITCH",
+				key_name = "${name}");
+
+			echo("The toggle for the ${name} is active"); 
+		}
+	}
+
 }

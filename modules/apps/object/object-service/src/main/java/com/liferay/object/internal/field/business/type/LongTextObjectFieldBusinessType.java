@@ -16,6 +16,7 @@ package com.liferay.object.internal.field.business.type;
 
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.exception.ObjectFieldSettingNameException;
 import com.liferay.object.exception.ObjectFieldSettingValueException;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.render.ObjectFieldRenderingContext;
@@ -34,10 +35,11 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
@@ -63,7 +65,7 @@ public class LongTextObjectFieldBusinessType
 				getAllowedObjectFieldSettingsNames();
 		}
 
-		return SetUtil.fromArray("maxLength");
+		return SetUtil.fromArray("maxLength", "showCounter");
 	}
 
 	@Override
@@ -123,16 +125,6 @@ public class LongTextObjectFieldBusinessType
 	}
 
 	@Override
-	public Set<String> getRequiredObjectFieldSettingsNames() {
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-146889"))) {
-			return ObjectFieldBusinessType.super.
-				getRequiredObjectFieldSettingsNames();
-		}
-
-		return SetUtil.fromArray("showCounter");
-	}
-
-	@Override
 	public void validateObjectFieldSettings(
 			String objectFieldName,
 			List<ObjectFieldSetting> objectFieldSettings)
@@ -145,30 +137,41 @@ public class LongTextObjectFieldBusinessType
 			return;
 		}
 
-		for (ObjectFieldSetting objectFieldSetting : objectFieldSettings) {
-			if (Objects.equals(objectFieldSetting.getName(), "maxLength") &&
-				Validator.isNotNull(objectFieldSetting.getValue())) {
+		Map<String, String> objectFieldSettingsValues = new HashMap<>();
 
-				int maxLength = GetterUtil.getInteger(
-					objectFieldSetting.getValue());
+		objectFieldSettings.forEach(
+			objectFieldSetting -> objectFieldSettingsValues.put(
+				objectFieldSetting.getName(), objectFieldSetting.getValue()));
 
-				if ((maxLength < 1) || (maxLength > 65000)) {
-					throw new ObjectFieldSettingValueException.InvalidValue(
-						objectFieldName, "maxLength",
-						objectFieldSetting.getValue());
-				}
+		String showCounter = objectFieldSettingsValues.get("showCounter");
+
+		if (Validator.isNull(showCounter) ||
+			StringUtil.equalsIgnoreCase(showCounter, StringPool.FALSE)) {
+
+			if (objectFieldSettingsValues.containsKey("maxLength")) {
+				throw new ObjectFieldSettingNameException.NotAllowedNames(
+					objectFieldName, Collections.singleton("maxLength"));
 			}
-			else if (Objects.equals(
-						objectFieldSetting.getName(), "showCounter") &&
-					 !StringUtil.equalsIgnoreCase(
-						 objectFieldSetting.getValue(), StringPool.FALSE) &&
-					 !StringUtil.equalsIgnoreCase(
-						 objectFieldSetting.getValue(), StringPool.TRUE)) {
+		}
+		else if (StringUtil.equalsIgnoreCase(showCounter, StringPool.TRUE)) {
+			String maxLength = objectFieldSettingsValues.get("maxLength");
 
+			if (Validator.isNull(maxLength)) {
+				throw new ObjectFieldSettingValueException.
+					MissingRequiredValues(
+						objectFieldName, Collections.singleton("maxLength"));
+			}
+
+			int maxLengthInteger = GetterUtil.getInteger(maxLength);
+
+			if ((maxLengthInteger < 1) || (maxLengthInteger > 65000)) {
 				throw new ObjectFieldSettingValueException.InvalidValue(
-					objectFieldName, "showCounter",
-					objectFieldSetting.getValue());
+					objectFieldName, "maxLength", maxLength);
 			}
+		}
+		else {
+			throw new ObjectFieldSettingValueException.InvalidValue(
+				objectFieldName, "showCounter", showCounter);
 		}
 	}
 

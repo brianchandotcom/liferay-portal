@@ -1,0 +1,11 @@
+@default = "verifyElementPresent"
+@summary = "Verify that '${locator1}' is available"
+definition {
+
+	function verifyElementPresent {
+		selenium.waitForElementPresent("${locator1}", "false");
+
+		selenium.verifyElementPresent();
+	}
+
+}

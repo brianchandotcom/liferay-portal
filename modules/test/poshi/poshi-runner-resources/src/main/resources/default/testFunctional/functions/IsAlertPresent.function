@@ -1,0 +1,8 @@
+@default = "isAlertPresent"
+definition {
+
+	function isAlertPresent {
+		selenium.isAlertPresent();
+	}
+
+}

@@ -1,0 +1,10 @@
+@default = "isSelectedLabel"
+definition {
+
+	function isSelectedLabel {
+		selenium.waitForElementPresent();
+
+		selenium.isSelectedLabel();
+	}
+
+}

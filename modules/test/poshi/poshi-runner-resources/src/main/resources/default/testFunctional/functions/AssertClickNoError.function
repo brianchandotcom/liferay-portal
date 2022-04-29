@@ -1,0 +1,46 @@
+@default = "assertClickNoError"
+@summary = "Click on '${locator1}' that should have a value of '${value1}'"
+definition {
+
+	function assertClickNoError {
+		if (contains("${locator1}", "/input")) {
+			AssertClickNoError.assertValueClick();
+		}
+		else {
+			AssertClickNoError.assertTextClick();
+		}
+	}
+
+	function assertPartialTextClickAt {
+		AssertTextEquals.assertPartialText();
+
+		selenium.mouseOver();
+
+		selenium.clickAt();
+	}
+
+	function assertTextClick {
+		selenium.waitForVisible();
+
+		selenium.waitForTextCaseInsensitive();
+
+		selenium.assertTextCaseInsensitive();
+
+		selenium.mouseOver();
+
+		selenium.click();
+	}
+
+	function assertValueClick {
+		selenium.waitForVisible();
+
+		selenium.waitForValue();
+
+		selenium.assertValue();
+
+		selenium.mouseOver();
+
+		selenium.click();
+	}
+
+}

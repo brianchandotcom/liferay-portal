@@ -1,0 +1,14 @@
+@default = "select"
+definition {
+
+	function select {
+		selenium.pause("5000");
+
+		selenium.waitForVisible();
+
+		selenium.mouseOver();
+
+		selenium.select();
+	}
+
+}

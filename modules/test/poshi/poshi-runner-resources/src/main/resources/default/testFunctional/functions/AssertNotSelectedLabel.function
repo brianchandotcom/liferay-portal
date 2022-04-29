@@ -1,0 +1,10 @@
+@default = "assertNotSelectedLabel"
+definition {
+
+	function assertNotSelectedLabel {
+		selenium.waitForVisible();
+
+		selenium.assertNotSelectedLabel();
+	}
+
+}

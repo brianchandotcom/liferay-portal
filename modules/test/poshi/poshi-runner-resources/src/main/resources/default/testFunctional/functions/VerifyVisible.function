@@ -1,0 +1,11 @@
+@default = "verifyVisible"
+@summary = "Verify that '${locator1}' is visible"
+definition {
+
+	function verifyVisible {
+		selenium.waitForVisible("${locator1}", "false");
+
+		selenium.verifyVisible();
+	}
+
+}

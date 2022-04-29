@@ -1,0 +1,8 @@
+@default = "waitForElementNotPresent"
+definition {
+
+	function waitForElementNotPresent {
+		selenium.waitForElementNotPresent();
+	}
+
+}

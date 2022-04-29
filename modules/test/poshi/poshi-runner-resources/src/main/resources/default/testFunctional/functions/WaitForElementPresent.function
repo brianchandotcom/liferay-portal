@@ -1,0 +1,12 @@
+@default = "waitForElementPresent"
+definition {
+
+	function waitForElementPresent {
+		selenium.waitForElementPresent();
+	}
+
+	function waitForLastScript {
+		selenium.waitForElementPresent("xpath=(//script)[last()]");
+	}
+
+}

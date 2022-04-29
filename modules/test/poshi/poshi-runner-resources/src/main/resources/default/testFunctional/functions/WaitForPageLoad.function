@@ -1,0 +1,20 @@
+@default = "waitForPageLoad"
+definition {
+
+	function waitForPageLoad {
+		if (!(isSet(locator1))) {
+			var locator1 = "0";
+		}
+
+		var javascript = '''
+			window.onload = function() {
+				setTimeout(() => {
+					console.log("Page is fully loaded");
+				}, "${locator1}");
+			};
+		''';
+
+		selenium.runScript("${javascript}");
+	}
+
+}

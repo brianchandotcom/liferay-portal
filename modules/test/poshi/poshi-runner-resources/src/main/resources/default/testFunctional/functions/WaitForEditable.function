@@ -1,0 +1,10 @@
+@default = "waitForEditable"
+definition {
+
+	function waitForEditable {
+		selenium.waitForVisible();
+
+		selenium.waitForEditable();
+	}
+
+}

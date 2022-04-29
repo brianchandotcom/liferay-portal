@@ -97,11 +97,10 @@ public class SearchLocalizationHelperTest {
 
 	@Test
 	public void testGetLocalesFromCompany() throws Exception {
-		SearchContext searchContext = getSearchContext(
-			addCompany(LocaleUtil.BRAZIL, LocaleUtil.JAPAN));
-
 		assertSameValues(
-			searchLocalizationHelper.getLocales(searchContext),
+			searchLocalizationHelper.getLocales(
+				getSearchContext(
+					addCompany(LocaleUtil.BRAZIL, LocaleUtil.JAPAN))),
 			LocaleUtil.BRAZIL, LocaleUtil.JAPAN);
 	}
 
@@ -111,22 +110,19 @@ public class SearchLocalizationHelperTest {
 			LocaleUtil.BRAZIL, LocaleUtil.JAPAN, LocaleUtil.GERMANY,
 			LocaleUtil.SPAIN);
 
-		SearchContext searchContext = getSearchContext(
-			company, addGroup(company, LocaleUtil.GERMANY),
-			addGroup(company, LocaleUtil.SPAIN));
-
 		assertSameValues(
-			searchLocalizationHelper.getLocales(searchContext),
+			searchLocalizationHelper.getLocales(
+				getSearchContext(
+					company, addGroup(company, LocaleUtil.GERMANY),
+					addGroup(company, LocaleUtil.SPAIN))),
 			LocaleUtil.GERMANY, LocaleUtil.SPAIN);
 	}
 
 	@Test
 	public void testGetLocalizedFieldNamesFromCompany() throws Exception {
-		SearchContext searchContext = getSearchContext(
-			addCompany(LocaleUtil.BRAZIL, LocaleUtil.JAPAN));
-
 		String[] locales = searchLocalizationHelper.getLocalizedFieldNames(
-			new String[] {"test", "example"}, searchContext);
+			new String[] {"test", "example"},
+			getSearchContext(addCompany(LocaleUtil.BRAZIL, LocaleUtil.JAPAN)));
 
 		assertSameValues(
 			locales, "test_pt_BR", "test_ja_JP", "example_pt_BR",
@@ -139,12 +135,11 @@ public class SearchLocalizationHelperTest {
 			LocaleUtil.BRAZIL, LocaleUtil.JAPAN, LocaleUtil.GERMANY,
 			LocaleUtil.SPAIN);
 
-		SearchContext searchContext = getSearchContext(
-			company, addGroup(company, LocaleUtil.GERMANY),
-			addGroup(company, LocaleUtil.SPAIN));
-
 		String[] locales = searchLocalizationHelper.getLocalizedFieldNames(
-			new String[] {"test", "example"}, searchContext);
+			new String[] {"test", "example"},
+			getSearchContext(
+				company, addGroup(company, LocaleUtil.GERMANY),
+				addGroup(company, LocaleUtil.SPAIN)));
 
 		assertSameValues(
 			locales, "test_de_DE", "test_es_ES", "example_de_DE",

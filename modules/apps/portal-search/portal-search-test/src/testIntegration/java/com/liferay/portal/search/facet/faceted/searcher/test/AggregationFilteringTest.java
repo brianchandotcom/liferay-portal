@@ -486,11 +486,10 @@ public class AggregationFilteringTest {
 
 		Stream<Group> stream = _groups.stream();
 
-		long[] groupIds = stream.mapToLong(
-			Group::getGroupId
-		).toArray();
-
-		searchContext.setGroupIds(groupIds);
+		searchContext.setGroupIds(
+			stream.mapToLong(
+				Group::getGroupId
+			).toArray());
 
 		return searchContext;
 	}

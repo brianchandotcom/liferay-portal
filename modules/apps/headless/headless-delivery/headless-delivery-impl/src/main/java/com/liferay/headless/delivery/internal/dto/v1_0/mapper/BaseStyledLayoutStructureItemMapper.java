@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -365,6 +366,45 @@ public abstract class BaseStyledLayoutStructureItemMapper
 								"paddingTop", null);
 							textAlign = styleJSONObject.getString(
 								"textAlign", null);
+
+							if (GetterUtil.getBoolean(
+									PropsUtil.get("feature.flag.LPS-132571"))) {
+
+								backgroundColor = styleJSONObject.getString(
+									"backgroundColor", null);
+								borderColor = styleJSONObject.getString(
+									"borderColor", null);
+								borderRadius = styleJSONObject.getString(
+									"borderRadius", null);
+								borderWidth = styleJSONObject.getString(
+									"borderWidth", null);
+								fontFamily = styleJSONObject.getString(
+									"fontFamily", null);
+								fontSize = styleJSONObject.getString(
+									"fontSize", null);
+								fontWeight = styleJSONObject.getString(
+									"fontWeight", null);
+								height = styleJSONObject.getString(
+									"height", null);
+								maxHeight = styleJSONObject.getString(
+									"maxHeight", null);
+								maxWidth = styleJSONObject.getString(
+									"maxWidth", null);
+								minHeight = styleJSONObject.getString(
+									"minHeight", null);
+								minWidth = styleJSONObject.getString(
+									"minWidth", null);
+								opacity = styleJSONObject.getString(
+									"opacity", null);
+								overflow = styleJSONObject.getString(
+									"overflow", null);
+								shadow = styleJSONObject.getString(
+									"shadow", null);
+								textColor = styleJSONObject.getString(
+									"textColor", null);
+								width = styleJSONObject.getString(
+									"width", null);
+							}
 
 							setHidden(
 								() -> {

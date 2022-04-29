@@ -10,7 +10,7 @@
 		/>
 	</target>
 
-	<target name="unzip-temp-file">
+	<target name="unzip-translation-file">
 		<antelope:stringutil property="fileName" string="${fileName}">
 			<antelope:replace regex="\*" replacement=" " />
 		</antelope:stringutil>

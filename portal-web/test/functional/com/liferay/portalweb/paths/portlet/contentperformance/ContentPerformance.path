@@ -26,11 +26,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CONTENT_PERFORMANCE_START_FREE_TRIAL</td>
-	<td>//span[contains(@class,'taglib-text') and contains(.,'Start Free Trial')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CONTENT_PERFORMANCE_TITLE</td>
 	<td>//*[contains(@class, 'font-weight-semi-bold text-truncate-inline')]//span[contains(text(),'${pageName}')]</td>
 	<td></td>

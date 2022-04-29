@@ -349,12 +349,6 @@ definition {
 	test CheckAllInfoDisplayed {
 		task ("Open Content Performance") {
 			ContentPerformance.openContentPerformance();
-
-			if (IsVisible(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_PANEL")) {
-				Click(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_BUTTON");
-			}
-
-			Click(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_BUTTON");
 		}
 
 		task ("Assert Title is present") {
@@ -438,19 +432,13 @@ definition {
 	@priority = "3"
 	test FreeTrialButtonNotPresent {
 		task ("Open Content Performance and Assert if element is not present") {
-			if (IsVisible(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_PANEL")) {
-				Click(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_BUTTON");
-			}
-
-			Click(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_BUTTON");
+			ContentPerformance.openContentPerformance();
 
 			AssertElementNotPresent(
-				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_START_FREE_TRIAL",
-				value1 = "Start Free Trial");
+				key_text = "Start Free Trial",
+				locator1 = "Button#ANY");
 
-			AssertElementNotPresent(
-				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_DO_NOT_SHOW_AGAIN",
-				value1 = "Do not show me this again.");
+			AssertElementNotPresent(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_DO_NOT_SHOW_AGAIN");
 		}
 	}
 

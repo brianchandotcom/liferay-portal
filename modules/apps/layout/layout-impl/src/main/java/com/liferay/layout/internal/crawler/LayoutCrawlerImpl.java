@@ -80,14 +80,11 @@ public class LayoutCrawlerImpl implements LayoutCrawler {
 			CookieKeys.GUEST_LANGUAGE_ID, LocaleUtil.toLanguageId(locale));
 
 		if (_layoutCrawlerClientConfiguration.enabled()) {
-
-			cookie.setDomain(
-				_layoutCrawlerClientConfiguration.hostName());
+			cookie.setDomain(_layoutCrawlerClientConfiguration.hostName());
 		}
 		else {
 			cookie.setDomain(inetAddress.getHostName());
 		}
-
 
 		options.setCookies(new Cookie[] {cookie});
 
@@ -113,9 +110,8 @@ public class LayoutCrawlerImpl implements LayoutCrawler {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_layoutCrawlerClientConfiguration =
-			ConfigurableUtil.createConfigurable(
-				LayoutCrawlerClientConfiguration.class, properties);
+		_layoutCrawlerClientConfiguration = ConfigurableUtil.createConfigurable(
+			LayoutCrawlerClientConfiguration.class, properties);
 	}
 
 	private String _getI18nPath(Locale locale) {
@@ -145,9 +141,7 @@ public class LayoutCrawlerImpl implements LayoutCrawler {
 		themeDisplay.setScopeGroupId(layout.getGroupId());
 
 		if (_layoutCrawlerClientConfiguration.enabled()) {
-
-			themeDisplay.setSecure(
-				_layoutCrawlerClientConfiguration.secure());
+			themeDisplay.setSecure(_layoutCrawlerClientConfiguration.secure());
 			themeDisplay.setServerName(
 				_layoutCrawlerClientConfiguration.hostName());
 			themeDisplay.setServerPort(

@@ -1170,55 +1170,51 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 			}
 		</#if>
 
-		@Override
-		public com.liferay.trash.kernel.model.TrashEntry getTrashEntry() throws PortalException {
-			if (!isInTrash()) {
-				return null;
-			}
-
-			com.liferay.trash.kernel.model.TrashEntry trashEntry = com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil.fetchEntry(getModelClassName(), getTrashEntryClassPK());
-
-			if (trashEntry != null) {
-				return trashEntry;
-			}
-
-			com.liferay.portal.kernel.trash.TrashHandler trashHandler =
-
-			<#if serviceBuilder.isVersionLTE_7_3_0()>
-				getTrashHandler();
-			<#else>
-				com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil.getTrashHandler(getModelClassName());
-			</#if>
-
-			if (Validator.isNotNull(trashHandler.getContainerModelClassName(getPrimaryKey()))) {
-				ContainerModel containerModel = null;
-
-				try {
-					containerModel = trashHandler.getParentContainerModel(this);
-				}
-				catch (NoSuchModelException noSuchModelException) {
+		<#if serviceBuilder.isVersionLTE_7_3_0()>
+			@Override
+			public com.liferay.trash.kernel.model.TrashEntry getTrashEntry() throws PortalException {
+				if (!isInTrash()) {
 					return null;
 				}
 
-				while (containerModel != null) {
-					if (containerModel instanceof TrashedModel) {
-						TrashedModel trashedModel = (TrashedModel)containerModel;
+				com.liferay.trash.kernel.model.TrashEntry trashEntry = com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil.fetchEntry(getModelClassName(), getTrashEntryClassPK());
 
-						return trashedModel.getTrashEntry();
+				if (trashEntry != null) {
+					return trashEntry;
+				}
+
+				com.liferay.portal.kernel.trash.TrashHandler trashHandler = getTrashHandler();
+
+				if (Validator.isNotNull(trashHandler.getContainerModelClassName(getPrimaryKey()))) {
+					ContainerModel containerModel = null;
+
+					try {
+						containerModel = trashHandler.getParentContainerModel(this);
 					}
-
-					trashHandler = com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil.getTrashHandler(trashHandler.getContainerModelClassName(containerModel.getContainerModelId()));
-
-					if (trashHandler == null) {
+					catch (NoSuchModelException noSuchModelException) {
 						return null;
 					}
 
-					containerModel = trashHandler.getContainerModel(containerModel.getParentContainerModelId());
-				}
-			}
+					while (containerModel != null) {
+						if (containerModel instanceof TrashedModel) {
+							TrashedModel trashedModel = (TrashedModel)containerModel;
 
-			return null;
-		}
+							return trashedModel.getTrashEntry();
+						}
+
+						trashHandler = com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil.getTrashHandler(trashHandler.getContainerModelClassName(containerModel.getContainerModelId()));
+
+						if (trashHandler == null) {
+							return null;
+						}
+
+						containerModel = trashHandler.getContainerModel(containerModel.getParentContainerModelId());
+					}
+				}
+
+				return null;
+			}
+		</#if>
 
 		@Override
 		public long getTrashEntryClassPK() {
@@ -1246,66 +1242,62 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 			}
 		}
 
-		@Override
-		public boolean isInTrashContainer() {
-			com.liferay.portal.kernel.trash.TrashHandler trashHandler =
+		<#if serviceBuilder.isVersionLTE_7_3_0()>
+			@Override
+			public boolean isInTrashContainer() {
+				com.liferay.portal.kernel.trash.TrashHandler trashHandler = getTrashHandler();
 
-			<#if serviceBuilder.isVersionLTE_7_3_0()>
-				getTrashHandler();
-			<#else>
-				com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil.getTrashHandler(getModelClassName());
-			</#if>
-
-			if ((trashHandler == null) || Validator.isNull(trashHandler.getContainerModelClassName(getPrimaryKey()))) {
-				return false;
-			}
-
-			try {
-				ContainerModel containerModel = trashHandler.getParentContainerModel(this);
-
-				if (containerModel == null) {
+				if ((trashHandler == null) || Validator.isNull(trashHandler.getContainerModelClassName(getPrimaryKey()))) {
 					return false;
 				}
 
-				if (containerModel instanceof TrashedModel) {
-					return ((TrashedModel)containerModel).isInTrash();
+				try {
+					ContainerModel containerModel = trashHandler.getParentContainerModel(this);
+
+					if (containerModel == null) {
+						return false;
+					}
+
+					if (containerModel instanceof TrashedModel) {
+						return ((TrashedModel)containerModel).isInTrash();
+					}
 				}
-			}
-			catch (Exception exception) {
-			}
+				catch (Exception exception) {
+				}
 
-			return false;
-		}
-
-		@Override
-		public boolean isInTrashExplicitly() {
-			if (!isInTrash()) {
 				return false;
 			}
 
-			com.liferay.trash.kernel.model.TrashEntry trashEntry = com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil.fetchEntry(getModelClassName(), getTrashEntryClassPK());
+			@Override
+			public boolean isInTrashExplicitly() {
+				if (!isInTrash()) {
+					return false;
+				}
 
-			if (trashEntry != null) {
+				com.liferay.trash.kernel.model.TrashEntry trashEntry = com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil.fetchEntry(getModelClassName(), getTrashEntryClassPK());
+
+				if (trashEntry != null) {
+					return true;
+				}
+
+				return false;
+			}
+
+			@Override
+			public boolean isInTrashImplicitly() {
+				if (!isInTrash()) {
+					return false;
+				}
+
+				com.liferay.trash.kernel.model.TrashEntry trashEntry = com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil.fetchEntry(getModelClassName(), getTrashEntryClassPK());
+
+				if (trashEntry != null) {
+					return false;
+				}
+
 				return true;
 			}
-
-			return false;
-		}
-
-		@Override
-		public boolean isInTrashImplicitly() {
-			if (!isInTrash()) {
-				return false;
-			}
-
-			com.liferay.trash.kernel.model.TrashEntry trashEntry = com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil.fetchEntry(getModelClassName(), getTrashEntryClassPK());
-
-			if (trashEntry != null) {
-				return false;
-			}
-
-			return true;
-		}
+		</#if>
 	</#if>
 
 	<#if entity.isWorkflowEnabled()>

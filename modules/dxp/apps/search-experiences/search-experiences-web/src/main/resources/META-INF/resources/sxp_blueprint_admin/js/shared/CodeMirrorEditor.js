@@ -378,6 +378,32 @@ function getSchemaProperties(
 		fullSchema = schema;
 	}
 
+	// If an `allOf` or `anyOf` property is available, separate the schema
+	// and getSchemaProperties from each one.
+
+	if (schema.allOf || schema.anyOf) {
+		const {allOf, anyOf, ...restOfSchema} = schema;
+
+		const ofProperties = (allOf || anyOf).map((item) =>
+			getSchemaProperties(
+				item,
+				propertyPathList,
+				availableLanguages,
+				fullSchema
+			)
+		);
+
+		return [
+			...getSchemaProperties(
+				restOfSchema,
+				propertyPathList,
+				availableLanguages,
+				fullSchema
+			),
+			...removeDuplicateProperties(ofProperties.flat()),
+		];
+	}
+
 	// If the schema links to a reference ($ref), forward to the referenced
 	// schema.
 
@@ -510,6 +536,31 @@ function isObjectProperty(token) {
 		token.string.startsWith('"') &&
 		token.string.endsWith('"')
 	);
+}
+
+/**
+ * Removes any duplicate properties in an array with the same type and name.
+ * This could happen in some cases like when flattening properties from `anyOf`
+ * in a schema.
+ * @param {Array} items An array of properties
+ * @returns {Array}
+ */
+function removeDuplicateProperties(items) {
+	const uniqueProperties = [];
+
+	items.forEach((item) => {
+		if (
+			uniqueProperties.findIndex(
+				({name, type}) =>
+					name === item.name &&
+					type.toString() === item.type.toString()
+			) === -1
+		) {
+			uniqueProperties.push(item);
+		}
+	});
+
+	return uniqueProperties;
 }
 
 /**

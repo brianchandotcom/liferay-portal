@@ -243,7 +243,7 @@ public class SegmentsExperienceLocalServiceImpl
 		// Segments experiences priorities
 
 		if (!GroupThreadLocal.isDeleteInProcess()) {
-			_updateSegmentExperiencesPriority(segmentsExperience);
+			_compactSegmentsExperiencesPriorities(segmentsExperience);
 		}
 
 		// Segments experiments
@@ -685,56 +685,6 @@ public class SegmentsExperienceLocalServiceImpl
 				segmentsExperiencePersistence.update(curSegmentsExperience);
 
 				segmentsExperiencePersistence.flush();
-			}
-		}
-	}
-
-	private void _updateSegmentExperiencesPriority(
-		SegmentsExperience segmentsExperience) {
-
-		if (segmentsExperience.getPriority() >= 0) {
-			List<SegmentsExperience> segmentsExperiences = new ArrayList<>(
-				segmentsExperiencePersistence.findByG_C_C_GtP(
-					segmentsExperience.getGroupId(),
-					segmentsExperience.getClassNameId(),
-					segmentsExperience.getClassPK(),
-					segmentsExperience.getPriority()));
-
-			if (ListUtil.isEmpty(segmentsExperiences)) {
-				return;
-			}
-
-			for (int i = segmentsExperiences.size(); i > 0; i--) {
-				SegmentsExperience curSegmentsExperience =
-					segmentsExperiences.get(i - 1);
-
-				curSegmentsExperience.setPriority(
-					curSegmentsExperience.getPriority() - 1);
-
-				segmentsExperiencePersistence.update(curSegmentsExperience);
-
-				segmentsExperiencePersistence.flush();
-			}
-		}
-		else {
-			List<SegmentsExperience> segmentsExperiences = new ArrayList<>(
-				segmentsExperiencePersistence.findByG_C_C_LtP(
-					segmentsExperience.getGroupId(),
-					segmentsExperience.getClassNameId(),
-					segmentsExperience.getClassPK(),
-					segmentsExperience.getPriority()));
-
-			if (ListUtil.isEmpty(segmentsExperiences)) {
-				return;
-			}
-
-			for (SegmentsExperience curSegmentsExperience :
-					segmentsExperiences) {
-
-				curSegmentsExperience.setPriority(
-					curSegmentsExperience.getPriority() + 1);
-
-				segmentsExperiencePersistence.update(curSegmentsExperience);
 			}
 		}
 	}

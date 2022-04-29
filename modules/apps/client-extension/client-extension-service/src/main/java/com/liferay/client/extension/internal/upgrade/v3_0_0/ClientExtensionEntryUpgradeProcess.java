@@ -41,8 +41,7 @@ public class ClientExtensionEntryUpgradeProcess extends UpgradeProcess {
 		runSQL("drop table RemoteAppEntry");
 
 		runSQL(
-			"delete from ServiceComponent where buildNamespace = " +
-				"'RemoteApp'");
+			"delete from ServiceComponent where buildNamespace = 'RemoteApp'");
 	}
 
 	private void _insertClientExtensionEntries() throws Exception {

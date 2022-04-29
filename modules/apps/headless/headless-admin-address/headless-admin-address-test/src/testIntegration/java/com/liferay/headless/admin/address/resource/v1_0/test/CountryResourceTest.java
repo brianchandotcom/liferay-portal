@@ -16,26 +16,29 @@ package com.liferay.headless.admin.address.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.address.client.dto.v1_0.Country;
+import com.liferay.headless.admin.address.client.http.HttpInvoker;
 import com.liferay.headless.admin.address.client.pagination.Page;
 import com.liferay.headless.admin.address.client.pagination.Pagination;
 import com.liferay.headless.admin.address.client.serdes.v1_0.CountrySerDes;
 import com.liferay.petra.function.UnsafeTriConsumer;
+import com.liferay.portal.kernel.exception.CountryA2Exception;
+import com.liferay.portal.kernel.exception.CountryA3Exception;
+import com.liferay.portal.kernel.exception.DuplicateCountryException;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.service.CountryLocalService;
 import com.liferay.portal.kernel.test.randomizerbumpers.RandomizerBumper;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.test.rule.Inject;
-import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import javax.ws.rs.core.Response;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -53,10 +56,10 @@ public class CountryResourceTest extends BaseCountryResourceTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		for (com.liferay.portal.kernel.model.Country country :
-				_countryLocalService.getCompanyCountries(
-					TestPropsValues.getCompanyId())) {
+		Page<Country> countriesPage = countryResource.getCountriesPage(
+			null, null, Pagination.of(1, -1), null);
 
+		for (Country country : countriesPage.getItems()) {
 			_addCountryA2AndA3(country.getA2(), country.getA3());
 		}
 	}
@@ -119,6 +122,74 @@ public class CountryResourceTest extends BaseCountryResourceTestCase {
 			country2,
 			Arrays.asList(
 				CountrySerDes.toDTOs(countriesJSONObject.getString("items"))));
+	}
+
+	@Override
+	@Test
+	public void testPostCountry() throws Exception {
+		super.testPostCountry();
+
+		Country existingCountry = _addCountry(randomCountry());
+
+		Country country = randomCountry();
+
+		country.setA2((String)null);
+
+		_testPostCountryProblem(country, null);
+
+		country.setA2("");
+
+		_testPostCountryProblem(country, null);
+
+		country.setA2("too long");
+
+		_testPostCountryProblem(country, CountryA2Exception.class);
+
+		country.setA2(existingCountry.getA2());
+
+		_testPostCountryProblem(country, DuplicateCountryException.class);
+
+		country = randomCountry();
+
+		country.setA3((String)null);
+
+		_testPostCountryProblem(country, null);
+
+		country.setA3("");
+
+		_testPostCountryProblem(country, null);
+
+		country.setA3("too long");
+
+		_testPostCountryProblem(country, CountryA3Exception.class);
+
+		country.setA3(existingCountry.getA3());
+
+		_testPostCountryProblem(country, DuplicateCountryException.class);
+
+		country = randomCountry();
+
+		country.setName((String)null);
+
+		_testPostCountryProblem(country, null);
+
+		country.setName("");
+
+		_testPostCountryProblem(country, null);
+
+		country.setName(existingCountry.getName());
+
+		_testPostCountryProblem(country, DuplicateCountryException.class);
+
+		country = randomCountry();
+
+		country.setNumber((Integer)null);
+
+		_testPostCountryProblem(country, null);
+
+		country.setNumber(existingCountry.getNumber());
+
+		_testPostCountryProblem(country, DuplicateCountryException.class);
 	}
 
 	@Override
@@ -261,23 +332,19 @@ public class CountryResourceTest extends BaseCountryResourceTestCase {
 		return _addCountry(randomCountry());
 	}
 
+	@Override
+	protected Country testPostCountry_addCountry(Country country)
+		throws Exception {
+
+		return _addCountry(country);
+	}
+
 	private Country _addCountry(Country country) throws Exception {
-		com.liferay.portal.kernel.model.Country serviceBuilderCountry =
-			_countryLocalService.addCountry(
-				country.getA2(), country.getA3(), country.getActive(),
-				country.getBillingAllowed(), String.valueOf(country.getIdd()),
-				country.getName(), String.valueOf(country.getNumber()),
-				country.getPosition(), country.getShippingAllowed(),
-				country.getSubjectToVAT(), country.getZipRequired(),
-				ServiceContextTestUtil.getServiceContext());
+		country = countryResource.postCountry(country);
 
-		_addCountryA2AndA3(
-			serviceBuilderCountry.getA2(), serviceBuilderCountry.getA3());
+		_addCountryA2AndA3(country.getA2(), country.getA3());
 
-		com.liferay.headless.admin.address.dto.v1_0.Country apiCountry =
-			_countryResourceDTOConverter.toDTO(serviceBuilderCountry);
-
-		return Country.toDTO(String.valueOf(apiCountry));
+		return country;
 	}
 
 	private void _addCountryA2AndA3(String a2, String a3) {
@@ -297,16 +364,30 @@ public class CountryResourceTest extends BaseCountryResourceTestCase {
 			!existingValues.contains(randomValue);
 	}
 
+	private <T extends Exception> void _testPostCountryProblem(
+			Country country, Class<T> exceptionClass)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			countryResource.postCountryHttpResponse(country);
+
+		Assert.assertEquals(
+			Response.Status.BAD_REQUEST.getStatusCode(),
+			httpResponse.getStatusCode());
+
+		if (exceptionClass != null) {
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
+				httpResponse.getContent());
+
+			Assert.assertEquals(
+				exceptionClass.getSimpleName(), jsonObject.get("type"));
+		}
+	}
+
 	private final List<String> _countryA2s = new ArrayList<>();
 	private final List<String> _countryA3s = new ArrayList<>();
 
 	@Inject
-	private CountryLocalService _countryLocalService;
-
-	@Inject(filter = "dto.class.name=com.liferay.portal.kernel.model.Country")
-	private DTOConverter
-		<com.liferay.portal.kernel.model.Country,
-		 com.liferay.headless.admin.address.dto.v1_0.Country>
-			_countryResourceDTOConverter;
+	private JSONFactory _jsonFactory;
 
 }

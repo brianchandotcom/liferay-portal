@@ -1161,11 +1161,29 @@ definition {
 	}
 
 	@description = "LPS-146028 - Verify that the view name is the same of the original, adding a "(Copy)" on the right side"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test DuplicatedViewHasSameOriginalName {
 
-		// TODO LPS-152051 DuplicatedViewHasSameOriginalName pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 152051",
+			objectName = "CustomObject152051",
+			pluralLabelName = "Custom Objects 152051");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 152051");
+
+		ObjectCustomViews.goToViewsTab();
+
+		ObjectCustomViews.addObjectViewViaUI(viewName = "Custom View 152051");
+
+		SelectFrame(locator1 = "ObjectCustomViews#OBJECT_VIEW_KEBAB_MENU");
+
+		ObjectCustomViews.duplicateObjectCustomView(viewLabel = "Custom View 152051");
+
+		ObjectCustomViews.goToViewsDetails(label = "Custom View 152051 (Copy)");
+
+		ObjectCustomViews.assertObjectViewName(name = "Custom View 152051 (Copy)");
 
 	}
 

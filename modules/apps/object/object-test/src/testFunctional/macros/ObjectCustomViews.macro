@@ -66,6 +66,13 @@ definition {
 		AssertElementNotPresent(locator1 = "ObjectCustomViews#OBJECT_VIEW_LABEL");
 	}
 
+	macro assertObjectViewName {
+		AssertElementPresent(
+			locator1 = "ObjectCustomViews#OBJECT_VIEWS_NAME",
+			value1 = "${name}");
+	}
+
+
 	macro deleteObjectCustomViewViaUI {
 		Click(
 			key_objectCustomViewLabel = "${viewLabel}",

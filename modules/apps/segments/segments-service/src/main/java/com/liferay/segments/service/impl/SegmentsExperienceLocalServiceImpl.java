@@ -520,6 +520,8 @@ public class SegmentsExperienceLocalServiceImpl
 			return segmentsExperiencePersistence.update(segmentsExperience);
 		}
 
+		int oldPriority = segmentsExperience.getPriority();
+
 		_releaseSegmentExperiencesPriority(
 			newPriority, segmentsExperience, swapSegmentsExperience);
 
@@ -530,6 +532,15 @@ public class SegmentsExperienceLocalServiceImpl
 
 		segmentsExperience = segmentsExperiencePersistence.update(
 			segmentsExperience);
+
+		segmentsExperiencePersistence.flush();
+
+		swapSegmentsExperience = segmentsExperiencePersistence.findByPrimaryKey(
+			swapSegmentsExperience.getSegmentsExperienceId());
+
+		swapSegmentsExperience.setPriority(oldPriority);
+
+		segmentsExperiencePersistence.update(swapSegmentsExperience);
 
 		segmentsExperiencePersistence.flush();
 

@@ -506,7 +506,7 @@
 </tr>
 <tr>
 	<td>ORDER_DETAILS_NAME</td>
-	<td>//div[contains(@class,'tbody')]/div/div[1]</td>
+	<td>//div[contains(@class,'tbody')]/div/div[1]//a</td>
 	<td></td>
 </tr>
 <tr>
@@ -521,7 +521,7 @@
 </tr>
 <tr>
 	<td>ORDER_DETAILS_SKU</td>
-	<td>//div[contains(@class,'tbody')]/div/div[3]</td>
+	<td>//div[contains(@class,'tbody')]/div/div[3]//a</td>
 	<td></td>
 </tr>
 <tr>

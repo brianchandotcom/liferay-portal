@@ -781,6 +781,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECT_BUTTON</td>
+	<td>//label[text()='${key_fieldName}']/..//*[text()='Select']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_CONTENT</td>
 	<td>//div[@data-fieldname='${key_fieldName}']//button[contains(.,'Select')]</td>
 	<td></td>

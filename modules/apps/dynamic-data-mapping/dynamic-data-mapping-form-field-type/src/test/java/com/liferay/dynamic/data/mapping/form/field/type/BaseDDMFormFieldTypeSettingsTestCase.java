@@ -106,7 +106,7 @@ public abstract class BaseDDMFormFieldTypeSettingsTestCase {
 	}
 
 	protected void setUpPortalClassLoaderUtil() {
-		PortalClassLoaderUtil.setClassLoader(_classLoader);
+		PortalClassLoaderUtil.setClassLoader(Mockito.mock(ClassLoader.class));
 	}
 
 	protected void setUpPortalUtil() {
@@ -138,17 +138,19 @@ public abstract class BaseDDMFormFieldTypeSettingsTestCase {
 			ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE
 		);
 
+		ResourceBundle mockResourceBundle = Mockito.mock(ResourceBundle.class);
+
 		Mockito.when(
 			resourceBundleLoader.loadResourceBundle(Matchers.eq(LocaleUtil.US))
 		).thenReturn(
-			_resourceBundle
+			mockResourceBundle
 		);
 
 		Mockito.when(
 			resourceBundleLoader.loadResourceBundle(
 				Matchers.eq(LocaleUtil.BRAZIL))
 		).thenReturn(
-			_resourceBundle
+			mockResourceBundle
 		);
 	}
 
@@ -224,9 +226,5 @@ public abstract class BaseDDMFormFieldTypeSettingsTestCase {
 				_getAssertDDMFormLayoutColumnsFunction(),
 				"getDDMFormLayoutColumns", null);
 	}
-
-	private final ClassLoader _classLoader = Mockito.mock(ClassLoader.class);
-	private final ResourceBundle _resourceBundle = Mockito.mock(
-		ResourceBundle.class);
 
 }

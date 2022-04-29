@@ -537,7 +537,65 @@ public class SegmentsExperienceLocalServiceImpl
 
 		segmentsExperience.setPriority(newPriority);
 
-		return segmentsExperiencePersistence.update(segmentsExperience);
+		segmentsExperience = segmentsExperiencePersistence.update(
+			segmentsExperience);
+
+		segmentsExperiencePersistence.flush();
+
+		_compactSegmentsExperiencesPriorities(segmentsExperience);
+
+		return segmentsExperiencePersistence.findByPrimaryKey(
+			segmentsExperience.getSegmentsExperienceId());
+	}
+
+	private void _compactSegmentsExperiencesPriorities(
+		SegmentsExperience segmentsExperience) {
+
+		List<SegmentsExperience> segmentsExperiences = new ArrayList<>(
+			segmentsExperiencePersistence.findByG_C_C_GtP(
+				segmentsExperience.getGroupId(),
+				segmentsExperience.getClassNameId(),
+				segmentsExperience.getClassPK(), 0));
+
+		int updatedPriority = 1;
+
+		for (int i = segmentsExperiences.size(); i > 0;
+			 i--, updatedPriority++) {
+
+			SegmentsExperience curSegmentsExperience = segmentsExperiences.get(
+				i - 1);
+
+			if (curSegmentsExperience.getPriority() != updatedPriority) {
+				curSegmentsExperience.setPriority(updatedPriority);
+
+				segmentsExperiencePersistence.update(curSegmentsExperience);
+
+				segmentsExperiencePersistence.flush();
+			}
+		}
+
+		segmentsExperiences = new ArrayList<>(
+			segmentsExperiencePersistence.findByG_C_C_LtP(
+				segmentsExperience.getGroupId(),
+				segmentsExperience.getClassNameId(),
+				segmentsExperience.getClassPK(), 0));
+
+		updatedPriority = -1;
+
+		for (int i = 0; i < segmentsExperiences.size();
+			 i++, updatedPriority--) {
+
+			SegmentsExperience curSegmentsExperience = segmentsExperiences.get(
+				i);
+
+			if (curSegmentsExperience.getPriority() != updatedPriority) {
+				curSegmentsExperience.setPriority(updatedPriority);
+
+				segmentsExperiencePersistence.update(curSegmentsExperience);
+
+				segmentsExperiencePersistence.flush();
+			}
+		}
 	}
 
 	private void _deleteSegmentsExperiment(

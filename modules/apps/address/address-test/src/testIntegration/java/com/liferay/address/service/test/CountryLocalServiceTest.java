@@ -301,15 +301,16 @@ public class CountryLocalServiceTest {
 
 		List<Country> expectedCountriesList = Arrays.asList(expectedCountries);
 
-		OrderByComparator<Country> orderByComparator =
-			OrderByComparatorFactoryUtil.create("Country", "name", true);
-
-		Arrays.sort(expectedCountries, orderByComparator);
+		Arrays.sort(
+			expectedCountries,
+			Comparator.comparing(
+				Country::getName, String.CASE_INSENSITIVE_ORDER));
 
 		BaseModelSearchResult<Country> baseModelSearchResult =
 			_countryLocalService.searchCountries(
 				TestPropsValues.getCompanyId(), active, keywords,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, orderByComparator);
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				OrderByComparatorFactoryUtil.create("Country", "name", true));
 
 		Assert.assertEquals(
 			expectedCountriesList.size(), baseModelSearchResult.getLength());

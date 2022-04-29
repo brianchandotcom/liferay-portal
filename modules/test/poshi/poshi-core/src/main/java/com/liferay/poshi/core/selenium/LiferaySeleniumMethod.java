@@ -85,14 +85,14 @@ public class LiferaySeleniumMethod {
 		"waitForTextNotPresent", "waitForTextPresent");
 
 	static {
-		for (String methodName : _singleValueMethodNames) {
-			_liferaySeleniumMethodNames.put(
-				methodName, new String[] {"value1"});
-		}
-
 		for (String methodName : _javaScriptMethodNames) {
 			_liferaySeleniumMethodNames.put(
 				methodName, new String[] {"value1", "value2", "value3"});
+		}
+
+		for (String methodName : _singleValueMethodNames) {
+			_liferaySeleniumMethodNames.put(
+				methodName, new String[] {"value1"});
 		}
 	}
 

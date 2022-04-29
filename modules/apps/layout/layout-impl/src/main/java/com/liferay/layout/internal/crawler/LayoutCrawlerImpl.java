@@ -135,9 +135,22 @@ public class LayoutCrawlerImpl implements LayoutCrawler {
 		themeDisplay.setLayoutSet(layout.getLayoutSet());
 		themeDisplay.setLocale(locale);
 		themeDisplay.setScopeGroupId(layout.getGroupId());
-		themeDisplay.setServerName(inetAddress.getHostName());
-		themeDisplay.setServerPort(
-			_portal.getPortalServerPort(_isHttpsEnabled()));
+
+		if (_layoutCrawlerClientConfiguration.enabled()) {
+
+			themeDisplay.setSecure(
+				_layoutCrawlerClientConfiguration.secure());
+			themeDisplay.setServerName(
+				_layoutCrawlerClientConfiguration.hostName());
+			themeDisplay.setServerPort(
+				_layoutCrawlerClientConfiguration.port());
+		}
+		else {
+			themeDisplay.setServerName(inetAddress.getHostName());
+			themeDisplay.setServerPort(
+				_portal.getPortalServerPort(_isHttpsEnabled()));
+		}
+
 		themeDisplay.setSiteGroupId(layout.getGroupId());
 
 		return themeDisplay;

@@ -55,11 +55,11 @@ public class DefaultUploadHandler implements UploadHandler {
 		throws PortalException {
 
 		try {
-			JSONObject responseJSONObject = _getResponseJSONObject(
-				uploadFileEntryHandler, uploadResponseHandler, portletRequest);
-
 			JSONPortletResponseUtil.writeJSON(
-				portletRequest, portletResponse, responseJSONObject);
+				portletRequest, portletResponse,
+				_getResponseJSONObject(
+					uploadFileEntryHandler, uploadResponseHandler,
+					portletRequest));
 		}
 		catch (IOException ioException) {
 			throw new SystemException(ioException);

@@ -27,13 +27,9 @@ import com.liferay.dynamic.data.mapping.util.DDMFormLayoutFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
-import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -43,7 +39,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 /**
@@ -397,21 +392,6 @@ public class TextDDMFormFieldTypeSettingsTest
 		LanguageUtil languageUtil = new LanguageUtil();
 
 		languageUtil.setLanguage(Mockito.mock(Language.class));
-	}
-
-	@Override
-	protected void setUpResourceBundleUtil() {
-		ResourceBundleLoader resourceBundleLoader = Mockito.mock(
-			ResourceBundleLoader.class);
-
-		ResourceBundleLoaderUtil.setPortalResourceBundleLoader(
-			resourceBundleLoader);
-
-		Mockito.when(
-			resourceBundleLoader.loadResourceBundle(Matchers.any(Locale.class))
-		).thenReturn(
-			ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE
-		);
 	}
 
 }

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -130,6 +131,12 @@ public abstract class BaseDDMFormFieldTypeSettingsTestCase {
 
 		ResourceBundleLoaderUtil.setPortalResourceBundleLoader(
 			resourceBundleLoader);
+
+		Mockito.when(
+			resourceBundleLoader.loadResourceBundle(Matchers.any(Locale.class))
+		).thenReturn(
+			ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE
+		);
 
 		Mockito.when(
 			resourceBundleLoader.loadResourceBundle(Matchers.eq(LocaleUtil.US))

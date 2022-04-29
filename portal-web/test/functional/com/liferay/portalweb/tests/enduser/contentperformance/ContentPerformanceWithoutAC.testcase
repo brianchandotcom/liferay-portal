@@ -245,13 +245,11 @@ definition {
 		}
 
 		task ("Check if elements present") {
-			AssertElementPresent(
-				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_START_FREE_TRIAL",
-				value1 = "Start Free Trial");
+			AssertVisible(
+				key_text = "Start Free Trial",
+				locator1 = "Button#ANY");
 
-			AssertElementPresent(
-				locator1 = "ContentPerformance#CONTENT_PERFORMANCE_DO_NOT_SHOW_AGAIN",
-				value1 = "Do not show me this again.");
+			AssertVisible(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_DO_NOT_SHOW_AGAIN");
 		}
 	}
 

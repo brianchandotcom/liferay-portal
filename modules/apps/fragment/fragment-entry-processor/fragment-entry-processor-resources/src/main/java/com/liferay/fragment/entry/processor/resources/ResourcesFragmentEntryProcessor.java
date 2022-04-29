@@ -14,7 +14,7 @@
 
 package com.liferay.fragment.entry.processor.resources;
 
-import com.liferay.document.library.util.DLURLHelperUtil;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -92,7 +92,7 @@ public class ResourcesFragmentEntryProcessor implements FragmentEntryProcessor {
 			String fileEntryURL = StringPool.BLANK;
 
 			if (fileEntry != null) {
-				fileEntryURL = DLURLHelperUtil.getDownloadURL(
+				fileEntryURL = _dlURLHelper.getDownloadURL(
 					fileEntry, fileEntry.getFileVersion(), null,
 					StringPool.BLANK, false, false);
 			}
@@ -105,6 +105,9 @@ public class ResourcesFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	private static final Pattern _pattern = Pattern.compile(
 		"\\[resources:(.+?)\\]");
+
+	@Reference
+	private DLURLHelper _dlURLHelper;
 
 	@Reference
 	private FragmentCollectionService _fragmentCollectionService;

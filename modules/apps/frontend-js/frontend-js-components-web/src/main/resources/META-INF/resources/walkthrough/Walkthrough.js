@@ -252,7 +252,7 @@ const WalkthroughStep = ({
 								<ClayLayout.ContentCol expand>
 									<ClayCheckbox
 										label={Liferay.Language.get(
-											'do-not-show-this-again'
+											'do-not-show-me-this-again'
 										)}
 									/>
 								</ClayLayout.ContentCol>

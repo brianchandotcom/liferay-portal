@@ -341,6 +341,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DOC_LINK_GENERIC</td>
+	<td>//div[contains(@class,'${linkContext}')]//a[contains(.,'${linkText}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ELEMENTS_EDIT_PAGE_PREDEFINED_VARIABLES_SHOW_HIDE_BUTTON</td>
 	<td>//button[@title='Predefined Variables']</td>
 	<td></td>
@@ -358,6 +363,11 @@
 <tr>
 	<td>ELEMENTS_EDIT_PAGE_READ_ONLY_INDICATOR</td>
 	<td>//div[contains(@class,'alert') and contains(.,'Read Only')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_BUTTON</td>
+	<td>//button[*[name()='svg'][contains(@class,'lexicon-icon-info-circle')]]</td>
 	<td></td>
 </tr>
 </tbody>

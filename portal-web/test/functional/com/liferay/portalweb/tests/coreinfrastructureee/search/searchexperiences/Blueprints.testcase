@@ -3678,6 +3678,75 @@ definition {
 			value1 = "com.liferay.journal.model.JournalArticle");
 	}
 
+	@description = "This is a use case for LPS-147066."
+	test ViewLinksToLiferayDocumentation {
+		Blueprints.openBlueprintsAdmin();
+
+		Blueprints.createBlueprint(title = "Test Blueprint");
+
+		Click(
+			linkContext = "element-sidebar",
+			linkText = "Learn more",
+			locator1 = "Blueprints#DOC_LINK_GENERIC");
+
+		SelectWindow(locator1 = "Search Blueprints Elements Reference — Liferay Learn");
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		Close.closeAndSelectWindow(locator1 = "Edit Blueprint - ${siteName}");
+
+		Navigator.gotoNavNested(navNested = "Query Settings");
+
+		Check.checkNotVisible(
+			locator1 = "Radio#ANY",
+			radioLabel = "Customize");
+
+		Button.click(button = "Customize Contributors");
+
+		Click(
+			linkContext = "clause-contributors-sidebar",
+			linkText = "Learn more",
+			locator1 = "Blueprints#DOC_LINK_GENERIC");
+
+		SelectWindow(locator1 = "Creating and Managing Search Blueprints — Liferay Learn");
+
+		Close.closeAndSelectWindow(locator1 = "Edit Blueprint - ${siteName}");
+
+		ClickNoError(
+			key_text = "Cancel",
+			locator1 = "Link#ANY");
+
+		Blueprints.editElement(element = "Text Match Over Multiple Fields");
+
+		Click(locator1 = "Blueprints#INFO_BUTTON");
+
+		Click(
+			linkContext = "info-sidebar",
+			linkText = "Learn more",
+			locator1 = "Blueprints#DOC_LINK_GENERIC");
+
+		SelectWindow(locator1 = "Search Blueprints Elements Reference — Liferay Learn");
+
+		Close.closeAndSelectWindow(locator1 = "View Element - ${siteName}");
+
+		Search.openSearchPage();
+
+		SearchPortlets.addWidgets(searchPortletList = "Blueprints Options");
+
+		Portlet.gotoPortletOptions(
+			portletName = "Blueprints Options",
+			portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		Click(
+			linkContext = "portlet-configuration",
+			linkText = "Learn how",
+			locator1 = "Blueprints#DOC_LINK_GENERIC");
+
+		SelectWindow(locator1 = "Using a Search Blueprint on a Search Page — Liferay Learn");
+	}
+
 	test ViewQueryBuilderFieldValidation {
 		Blueprints.openBlueprintsAdmin();
 

@@ -14,8 +14,14 @@
 
 package com.liferay.portal.url.builder.internal;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.url.builder.BundleScriptAbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.internal.util.CacheHelper;
+import com.liferay.portal.url.builder.internal.util.URLUtil;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.framework.Bundle;
 
@@ -23,15 +29,31 @@ import org.osgi.framework.Bundle;
  * @author Iván Zaera Avellón
  */
 public class BundleScriptAbsolutePortalURLBuilderImpl
-	extends BundleResourceAbsolutePortalURLBuilderImplBase
+	extends AbstractBundleResourceAbsolutePortalURLBuilderImpl
 		<BundleScriptAbsolutePortalURLBuilder>
 	implements BundleScriptAbsolutePortalURLBuilder {
 
 	public BundleScriptAbsolutePortalURLBuilderImpl(
 		Bundle bundle, CacheHelper cacheHelper, String cdnHost,
-		String pathModule, String pathProxy, String relativeURL) {
+		HttpServletRequest httpServletRequest, String pathModule,
+		String pathProxy, String relativeURL) {
 
-		super(bundle, cacheHelper, cdnHost, pathModule, pathProxy, relativeURL);
+		super(
+			bundle, cacheHelper, cdnHost, httpServletRequest, pathModule,
+			pathProxy, relativeURL);
+	}
+
+	@Override
+	protected void addSpecificParams(
+		HttpServletRequest httpServletRequest, StringBundler sb) {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (themeDisplay.isThemeJsFastLoad()) {
+			URLUtil.appendParam(sb, "minifierType", "js");
+		}
 	}
 
 }

@@ -27,6 +27,31 @@ import org.osgi.framework.Bundle;
  */
 public class URLUtil {
 
+	public static void appendParam(
+		StringBundler sb, String name, String value) {
+
+		boolean hasQueryString = false;
+
+		for (String string : sb.getStrings()) {
+			if (string.contains(StringPool.QUESTION)) {
+				hasQueryString = true;
+
+				break;
+			}
+		}
+
+		if (!hasQueryString) {
+			sb.append(StringPool.QUESTION);
+		}
+		else {
+			sb.append(StringPool.AMPERSAND);
+		}
+
+		sb.append(name);
+		sb.append(StringPool.EQUAL);
+		sb.append(value);
+	}
+
 	public static void appendURL(
 		StringBundler sb, String cdnHost, boolean ignoreCDNHost,
 		boolean ignorePathProxy, String pathPrefix, String pathProxy,

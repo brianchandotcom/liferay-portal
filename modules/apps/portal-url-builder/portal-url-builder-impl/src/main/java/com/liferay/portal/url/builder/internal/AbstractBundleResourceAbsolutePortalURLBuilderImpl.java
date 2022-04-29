@@ -16,6 +16,9 @@ package com.liferay.portal.url.builder.internal;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.url.builder.facet.BuildableAbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.facet.CDNAwareAbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.facet.CacheAwareAbsolutePortalURLBuilder;
@@ -23,20 +26,23 @@ import com.liferay.portal.url.builder.facet.PathProxyAwareAbsolutePortalURLBuild
 import com.liferay.portal.url.builder.internal.util.CacheHelper;
 import com.liferay.portal.url.builder.internal.util.URLUtil;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.osgi.framework.Bundle;
 
 /**
  * @author Iván Zaera Avellón
  */
-public class BundleResourceAbsolutePortalURLBuilderImplBase<T>
+public abstract class AbstractBundleResourceAbsolutePortalURLBuilderImpl<T>
 	implements BuildableAbsolutePortalURLBuilder,
 			   CacheAwareAbsolutePortalURLBuilder<T>,
 			   CDNAwareAbsolutePortalURLBuilder<T>,
 			   PathProxyAwareAbsolutePortalURLBuilder<T> {
 
-	public BundleResourceAbsolutePortalURLBuilderImplBase(
+	public AbstractBundleResourceAbsolutePortalURLBuilderImpl(
 		Bundle bundle, CacheHelper cacheHelper, String cdnHost,
-		String pathModule, String pathProxy, String relativeURL) {
+		HttpServletRequest httpServletRequest, String pathModule,
+		String pathProxy, String relativeURL) {
 
 		if (!relativeURL.startsWith(StringPool.SLASH)) {
 			relativeURL = StringPool.SLASH + relativeURL;
@@ -45,6 +51,7 @@ public class BundleResourceAbsolutePortalURLBuilderImplBase<T>
 		_bundle = bundle;
 		_cacheHelper = cacheHelper;
 		_cdnHost = cdnHost;
+		_httpServletRequest = httpServletRequest;
 		_pathProxy = pathProxy;
 		_relativeURL = relativeURL;
 
@@ -62,6 +69,18 @@ public class BundleResourceAbsolutePortalURLBuilderImplBase<T>
 		sb.append(StringPool.QUESTION);
 
 		_cacheHelper.appendCacheParam(sb, _bundle, _cachePolicy, _relativeURL);
+
+		URLUtil.appendParam(
+			sb, "browserId",
+			BrowserSnifferUtil.getBrowserId(_httpServletRequest));
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		URLUtil.appendParam(sb, "languageId", themeDisplay.getLanguageId());
+
+		addSpecificParams(_httpServletRequest, sb);
 
 		return sb.toString();
 	}
@@ -87,11 +106,15 @@ public class BundleResourceAbsolutePortalURLBuilderImplBase<T>
 		return (T)this;
 	}
 
+	protected abstract void addSpecificParams(
+		HttpServletRequest httpServletRequest, StringBundler sb);
+
 	private final Bundle _bundle;
 	private final String _bundlePathPrefix;
 	private final CacheHelper _cacheHelper;
 	private CachePolicy _cachePolicy = CachePolicy.UNTIL_CHANGED;
 	private final String _cdnHost;
+	private final HttpServletRequest _httpServletRequest;
 	private boolean _ignoreCDNHost;
 	private boolean _ignorePathProxy;
 	private final String _pathProxy;

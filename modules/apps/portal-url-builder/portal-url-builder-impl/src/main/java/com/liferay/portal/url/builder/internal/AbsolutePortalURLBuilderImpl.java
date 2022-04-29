@@ -81,8 +81,8 @@ public class AbsolutePortalURLBuilderImpl implements AbsolutePortalURLBuilder {
 		Bundle bundle, String relativeURL) {
 
 		return new BundleScriptAbsolutePortalURLBuilderImpl(
-			bundle, _cacheHelper, _getCDNHost(_httpServletRequest), _pathModule,
-			_pathProxy, relativeURL);
+			bundle, _cacheHelper, _getCDNHost(_httpServletRequest),
+			_httpServletRequest, _pathModule, _pathProxy, relativeURL);
 	}
 
 	@Override
@@ -90,8 +90,8 @@ public class AbsolutePortalURLBuilderImpl implements AbsolutePortalURLBuilder {
 		Bundle bundle, String relativeURL) {
 
 		return new BundleStylesheetAbsolutePortalURLBuilderImpl(
-			bundle, _cacheHelper, _getCDNHost(_httpServletRequest), _pathModule,
-			_pathProxy, relativeURL);
+			bundle, _cacheHelper, _getCDNHost(_httpServletRequest),
+			_httpServletRequest, _pathModule, _pathProxy, relativeURL);
 	}
 
 	@Override

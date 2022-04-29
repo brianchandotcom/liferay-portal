@@ -55,8 +55,7 @@ public class CacheHelper {
 			String mac = _digest(bundle, "META-INF/resources" + resourcePath);
 
 			if (mac != null) {
-				sb.append("mac=");
-				sb.append(mac);
+				URLUtil.appendParam(sb, "mac", mac);
 			}
 		}
 	}
@@ -75,13 +74,12 @@ public class CacheHelper {
 	 * restarting).
 	 */
 	public void appendLastRestartCacheParam(StringBundler sb) {
-		sb.append("t=");
-		sb.append(_lastRestartTime);
+		URLUtil.appendParam(sb, "t", String.valueOf(_lastRestartTime));
 	}
 
 	public void appendNeverCacheParam(StringBundler sb) {
-		sb.append("t=");
-		sb.append(System.currentTimeMillis());
+		URLUtil.appendParam(
+			sb, "t", String.valueOf(System.currentTimeMillis()));
 	}
 
 	@Activate

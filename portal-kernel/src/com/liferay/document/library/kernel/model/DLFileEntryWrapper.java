@@ -751,18 +751,6 @@ public class DLFileEntryWrapper
 	}
 
 	/**
-	 * Returns the trash entry created when this document library file entry was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this document library file entry.
-	 *
-	 * @return the trash entry created when this document library file entry was moved to the Recycle Bin
-	 */
-	@Override
-	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return model.getTrashEntry();
-	}
-
-	/**
 	 * Returns the class primary key of the trash entry for this document library file entry.
 	 *
 	 * @return the class primary key of the trash entry for this document library file entry
@@ -855,26 +843,6 @@ public class DLFileEntryWrapper
 	@Override
 	public boolean isInTrash() {
 		return model.isInTrash();
-	}
-
-	/**
-	 * Returns <code>true</code> if the parent of this document library file entry is in the Recycle Bin.
-	 *
-	 * @return <code>true</code> if the parent of this document library file entry is in the Recycle Bin; <code>false</code> otherwise
-	 */
-	@Override
-	public boolean isInTrashContainer() {
-		return model.isInTrashContainer();
-	}
-
-	@Override
-	public boolean isInTrashExplicitly() {
-		return model.isInTrashExplicitly();
-	}
-
-	@Override
-	public boolean isInTrashImplicitly() {
-		return model.isInTrashImplicitly();
 	}
 
 	/**

@@ -21,13 +21,10 @@ import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.model.JournalFolderModel;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
-import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.ContainerModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -36,7 +33,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
@@ -893,63 +889,6 @@ public class JournalFolderModelImpl
 	}
 
 	@Override
-	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
-		throws PortalException {
-
-		if (!isInTrash()) {
-			return null;
-		}
-
-		com.liferay.trash.kernel.model.TrashEntry trashEntry =
-			com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil.
-				fetchEntry(getModelClassName(), getTrashEntryClassPK());
-
-		if (trashEntry != null) {
-			return trashEntry;
-		}
-
-		com.liferay.portal.kernel.trash.TrashHandler trashHandler =
-			com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil.
-				getTrashHandler(getModelClassName());
-
-		if (Validator.isNotNull(
-				trashHandler.getContainerModelClassName(getPrimaryKey()))) {
-
-			ContainerModel containerModel = null;
-
-			try {
-				containerModel = trashHandler.getParentContainerModel(this);
-			}
-			catch (NoSuchModelException noSuchModelException) {
-				return null;
-			}
-
-			while (containerModel != null) {
-				if (containerModel instanceof TrashedModel) {
-					TrashedModel trashedModel = (TrashedModel)containerModel;
-
-					return trashedModel.getTrashEntry();
-				}
-
-				trashHandler =
-					com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil.
-						getTrashHandler(
-							trashHandler.getContainerModelClassName(
-								containerModel.getContainerModelId()));
-
-				if (trashHandler == null) {
-					return null;
-				}
-
-				containerModel = trashHandler.getContainerModel(
-					containerModel.getParentContainerModelId());
-			}
-		}
-
-		return null;
-	}
-
-	@Override
 	public long getTrashEntryClassPK() {
 		return getPrimaryKey();
 	}
@@ -962,71 +901,6 @@ public class JournalFolderModelImpl
 		else {
 			return false;
 		}
-	}
-
-	@Override
-	public boolean isInTrashContainer() {
-		com.liferay.portal.kernel.trash.TrashHandler trashHandler =
-			com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil.
-				getTrashHandler(getModelClassName());
-
-		if ((trashHandler == null) ||
-			Validator.isNull(
-				trashHandler.getContainerModelClassName(getPrimaryKey()))) {
-
-			return false;
-		}
-
-		try {
-			ContainerModel containerModel =
-				trashHandler.getParentContainerModel(this);
-
-			if (containerModel == null) {
-				return false;
-			}
-
-			if (containerModel instanceof TrashedModel) {
-				return ((TrashedModel)containerModel).isInTrash();
-			}
-		}
-		catch (Exception exception) {
-		}
-
-		return false;
-	}
-
-	@Override
-	public boolean isInTrashExplicitly() {
-		if (!isInTrash()) {
-			return false;
-		}
-
-		com.liferay.trash.kernel.model.TrashEntry trashEntry =
-			com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil.
-				fetchEntry(getModelClassName(), getTrashEntryClassPK());
-
-		if (trashEntry != null) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public boolean isInTrashImplicitly() {
-		if (!isInTrash()) {
-			return false;
-		}
-
-		com.liferay.trash.kernel.model.TrashEntry trashEntry =
-			com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil.
-				fetchEntry(getModelClassName(), getTrashEntryClassPK());
-
-		if (trashEntry != null) {
-			return false;
-		}
-
-		return true;
 	}
 
 	@Override

@@ -15,7 +15,6 @@
 package com.liferay.exportimport.kernel.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.MVCCModel;
@@ -348,15 +347,6 @@ public interface ExportImportConfigurationModel
 	public void setStatusDate(Date statusDate);
 
 	/**
-	 * Returns the trash entry created when this export import configuration was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this export import configuration.
-	 *
-	 * @return the trash entry created when this export import configuration was moved to the Recycle Bin
-	 */
-	@Override
-	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
-		throws PortalException;
-
-	/**
 	 * Returns the class primary key of the trash entry for this export import configuration.
 	 *
 	 * @return the class primary key of the trash entry for this export import configuration
@@ -371,20 +361,6 @@ public interface ExportImportConfigurationModel
 	 */
 	@Override
 	public boolean isInTrash();
-
-	/**
-	 * Returns <code>true</code> if the parent of this export import configuration is in the Recycle Bin.
-	 *
-	 * @return <code>true</code> if the parent of this export import configuration is in the Recycle Bin; <code>false</code> otherwise
-	 */
-	@Override
-	public boolean isInTrashContainer();
-
-	@Override
-	public boolean isInTrashExplicitly();
-
-	@Override
-	public boolean isInTrashImplicitly();
 
 	/**
 	 * Returns <code>true</code> if this export import configuration is approved.

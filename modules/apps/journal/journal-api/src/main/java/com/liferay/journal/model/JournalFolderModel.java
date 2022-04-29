@@ -15,7 +15,6 @@
 package com.liferay.journal.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ContainerModel;
 import com.liferay.portal.kernel.model.MVCCModel;
@@ -430,15 +429,6 @@ public interface JournalFolderModel
 	public void setStatusDate(Date statusDate);
 
 	/**
-	 * Returns the trash entry created when this journal folder was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this journal folder.
-	 *
-	 * @return the trash entry created when this journal folder was moved to the Recycle Bin
-	 */
-	@Override
-	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
-		throws PortalException;
-
-	/**
 	 * Returns the class primary key of the trash entry for this journal folder.
 	 *
 	 * @return the class primary key of the trash entry for this journal folder
@@ -453,20 +443,6 @@ public interface JournalFolderModel
 	 */
 	@Override
 	public boolean isInTrash();
-
-	/**
-	 * Returns <code>true</code> if the parent of this journal folder is in the Recycle Bin.
-	 *
-	 * @return <code>true</code> if the parent of this journal folder is in the Recycle Bin; <code>false</code> otherwise
-	 */
-	@Override
-	public boolean isInTrashContainer();
-
-	@Override
-	public boolean isInTrashExplicitly();
-
-	@Override
-	public boolean isInTrashImplicitly();
 
 	/**
 	 * Returns <code>true</code> if this journal folder is approved.

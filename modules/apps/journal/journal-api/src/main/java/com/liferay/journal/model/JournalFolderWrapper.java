@@ -454,18 +454,6 @@ public class JournalFolderWrapper
 	}
 
 	/**
-	 * Returns the trash entry created when this journal folder was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this journal folder.
-	 *
-	 * @return the trash entry created when this journal folder was moved to the Recycle Bin
-	 */
-	@Override
-	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return model.getTrashEntry();
-	}
-
-	/**
 	 * Returns the class primary key of the trash entry for this journal folder.
 	 *
 	 * @return the class primary key of the trash entry for this journal folder
@@ -593,26 +581,6 @@ public class JournalFolderWrapper
 	@Override
 	public boolean isInTrash() {
 		return model.isInTrash();
-	}
-
-	/**
-	 * Returns <code>true</code> if the parent of this journal folder is in the Recycle Bin.
-	 *
-	 * @return <code>true</code> if the parent of this journal folder is in the Recycle Bin; <code>false</code> otherwise
-	 */
-	@Override
-	public boolean isInTrashContainer() {
-		return model.isInTrashContainer();
-	}
-
-	@Override
-	public boolean isInTrashExplicitly() {
-		return model.isInTrashExplicitly();
-	}
-
-	@Override
-	public boolean isInTrashImplicitly() {
-		return model.isInTrashImplicitly();
 	}
 
 	/**

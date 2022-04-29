@@ -84,11 +84,8 @@ public abstract class BaseSearchTestCase {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
-		BaseModel<?> parentBaseModel = getParentBaseModel(
-			group, serviceContext);
-
 		baseModel = addBaseModelWithWorkflow(
-			parentBaseModel, true,
+			getParentBaseModel(group, serviceContext), true,
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), "entity title"
 			).put(
@@ -540,11 +537,9 @@ public abstract class BaseSearchTestCase {
 
 		assertBaseModelsCount(initialBaseModelsSearchCount, searchContext);
 
-		BaseModel<?> parentBaseModel = getParentBaseModel(
-			group, serviceContext);
-
 		baseModel = addBaseModelWithDDMStructure(
-			parentBaseModel, getSearchKeywords(), serviceContext);
+			getParentBaseModel(group, serviceContext), getSearchKeywords(),
+			serviceContext);
 
 		searchContext.setAttribute(
 			"ddmStructureFieldName", getDDMStructureFieldName());
@@ -571,11 +566,9 @@ public abstract class BaseSearchTestCase {
 
 		assertBaseModelsCount(initialBaseModelsSearchCount, searchContext);
 
-		BaseModel<?> parentBaseModel = getParentBaseModel(
-			group, serviceContext);
-
 		baseModel = addBaseModel(
-			parentBaseModel, true, getSearchKeywords(), serviceContext);
+			getParentBaseModel(group, serviceContext), true,
+			getSearchKeywords(), serviceContext);
 
 		assertBaseModelsCount(initialBaseModelsSearchCount + 1, searchContext);
 	}
@@ -641,11 +634,9 @@ public abstract class BaseSearchTestCase {
 
 		assertBaseModelsCount(initialBaseModelsSearchCount, searchContext);
 
-		BaseModel<?> parentBaseModel = getParentBaseModel(
-			group, serviceContext);
-
 		baseModel = addBaseModel(
-			parentBaseModel, true, combinedKeywords, serviceContext);
+			getParentBaseModel(group, serviceContext), true, combinedKeywords,
+			serviceContext);
 
 		assertBaseModelsCount(initialBaseModelsSearchCount + 1, searchContext);
 
@@ -752,11 +743,9 @@ public abstract class BaseSearchTestCase {
 
 		assertBaseModelsCount(initialBaseModelsCount, searchContext);
 
-		BaseModel<?> parentBaseModel = getParentBaseModel(
-			group, serviceContext);
-
 		baseModel = addBaseModel(
-			parentBaseModel, true, getSearchKeywords(), serviceContext);
+			getParentBaseModel(group, serviceContext), true,
+			getSearchKeywords(), serviceContext);
 
 		assertBaseModelsCount(initialBaseModelsCount + 1, searchContext);
 
@@ -937,11 +926,9 @@ public abstract class BaseSearchTestCase {
 
 		assertBaseModelsCount(initialBaseModelsCount, "1.0", searchContext);
 
-		BaseModel<?> parentBaseModel = getParentBaseModel(
-			group, serviceContext);
-
 		baseModel = addBaseModel(
-			parentBaseModel, false, "Version 1.0", serviceContext);
+			getParentBaseModel(group, serviceContext), false, "Version 1.0",
+			serviceContext);
 
 		assertBaseModelsCount(initialBaseModelsCount, searchContext);
 
@@ -980,11 +967,9 @@ public abstract class BaseSearchTestCase {
 
 		assertBaseModelsCount(initialBaseModelsCount, searchContext);
 
-		BaseModel<?> parentBaseModel = getParentBaseModel(
-			group, serviceContext);
-
 		baseModel = addBaseModel(
-			parentBaseModel, true, getSearchKeywords(), serviceContext);
+			getParentBaseModel(group, serviceContext), true,
+			getSearchKeywords(), serviceContext);
 
 		assertBaseModelsCount(initialBaseModelsCount + 1, searchContext);
 
@@ -1012,11 +997,9 @@ public abstract class BaseSearchTestCase {
 
 		assertBaseModelsCount(initialBaseModelsSearchCount, searchContext);
 
-		BaseModel<?> parentBaseModel = getParentBaseModel(
-			group, serviceContext);
-
 		baseModel = addBaseModelWithDDMStructure(
-			parentBaseModel, getSearchKeywords(), serviceContext);
+			getParentBaseModel(group, serviceContext), getSearchKeywords(),
+			serviceContext);
 
 		assertBaseModelsCount(initialBaseModelsSearchCount + 1, searchContext);
 	}

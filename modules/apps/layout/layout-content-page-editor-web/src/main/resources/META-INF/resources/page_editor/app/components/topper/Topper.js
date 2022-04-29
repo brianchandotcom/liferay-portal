@@ -79,7 +79,12 @@ function isItemHighlighted(item, layoutData, targetItemId, targetPosition) {
 
 const MemoizedTopperContent = React.memo(TopperContent);
 
-export default function Topper({children, item, ...props}) {
+export default function Topper({
+	children,
+	isDropTarget = true,
+	item,
+	...props
+}) {
 	const canUpdatePageStructure = useSelector(selectCanUpdatePageStructure);
 	const canUpdateItemConfiguration = useSelector(
 		selectCanUpdateItemConfiguration
@@ -91,6 +96,7 @@ export default function Topper({children, item, ...props}) {
 		return (
 			<MemoizedTopperContent
 				isActive={isActive(item.itemId)}
+				isDropTarget={isDropTarget}
 				isHovered={isHovered(item.itemId)}
 				item={item}
 				{...props}
@@ -107,6 +113,7 @@ function TopperContent({
 	children,
 	className,
 	isActive,
+	isDropTarget,
 	isHovered,
 	item,
 	itemElement,
@@ -173,7 +180,9 @@ function TopperContent({
 				'drag-over-left':
 					isOverTarget && targetPosition === TARGET_POSITIONS.LEFT,
 				'drag-over-middle':
-					isOverTarget && targetPosition === TARGET_POSITIONS.MIDDLE,
+					isDropTarget &&
+					isOverTarget &&
+					targetPosition === TARGET_POSITIONS.MIDDLE,
 				'drag-over-right':
 					isOverTarget && targetPosition === TARGET_POSITIONS.RIGHT,
 				'drag-over-top':
@@ -271,7 +280,10 @@ function TopperContent({
 				</TopperLabel>
 			) : null}
 
-			<div className="page-editor__topper__content" ref={targetRef}>
+			<div
+				className="page-editor__topper__content"
+				ref={isDropTarget ? targetRef : null}
+			>
 				<TopperErrorBoundary>
 					{React.cloneElement(children, {
 						withinTopper: true,

@@ -218,9 +218,8 @@ public class SharingDLViewFileVersionDisplayContext
 			else if (Objects.equals("download", dropdownItem.get("icon"))) {
 				break;
 			}
-			else {
-				i++;
-			}
+
+			i++;
 		}
 
 		if (i < dropdownItems.size()) {

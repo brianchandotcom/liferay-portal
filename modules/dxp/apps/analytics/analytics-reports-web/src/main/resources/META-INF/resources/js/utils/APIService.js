@@ -12,6 +12,12 @@
 import {fetch} from 'frontend-js-web';
 
 export default {
+	getAnalyticsReportsData(analyticsReportsURL, body) {
+		return _fetchWithError(analyticsReportsURL, {
+			body,
+			method: 'POST',
+		});
+	},
 	getHistoricalReads(
 		analyticsReportsHistoricalReadsURL,
 		{namespace, plid, timeSpanKey, timeSpanOffset}

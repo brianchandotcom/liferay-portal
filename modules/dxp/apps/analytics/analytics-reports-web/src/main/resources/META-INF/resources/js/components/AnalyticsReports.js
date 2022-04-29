@@ -12,7 +12,6 @@
 import ClayAlert from '@clayui/alert';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
-import {fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useReducer} from 'react';
 
@@ -20,6 +19,7 @@ import {ChartStateContextProvider} from '../context/ChartStateContext';
 import ConnectionContext from '../context/ConnectionContext';
 import {StoreContextProvider} from '../context/StoreContext';
 import {dataReducer, initialState} from '../context/dataReducer';
+import APIService from '../utils/APIService';
 import ConnectToAC from './ConnectToAC';
 import Navigation from './Navigation';
 
@@ -52,17 +52,12 @@ export default function AnalyticsReports({
 					? {timeSpanKey, timeSpanOffset}
 					: {};
 
-			fetch(fetchURL, {
-				body,
-				method: 'POST',
-			})
-				.then((response) =>
-					response.json().then((data) =>
-						safeDispatch({
-							data: data.context,
-							type: 'SET_DATA',
-						})
-					)
+			APIService.getAnalyticsReportsData(fetchURL, body)
+				.then((data) =>
+					safeDispatch({
+						data: data.context,
+						type: 'SET_DATA',
+					})
 				)
 				.catch(() => {
 					safeDispatch({

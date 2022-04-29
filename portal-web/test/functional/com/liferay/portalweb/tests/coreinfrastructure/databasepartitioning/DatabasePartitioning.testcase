@@ -216,6 +216,56 @@ definition {
 			expectedCount = "1");
 	}
 
+	@priority = "4"
+	test CanSetVirtualHostViaPages {
+		property test.assert.warning.exceptions = "true";
+		property test.name.skip.portal.instance = "DatabasePartitioning#CanSetVirtualHostViaPages";
+
+		PortalInstances.openVirtualInstancesAdmin();
+
+		PortalInstances.addCP(
+			mailDomain = "www.able.com",
+			virtualHost = "www.able.com",
+			webId = "www.able.com");
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://www.able.com:8080",
+			userEmailAddress = "test@www.able.com");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Site Settings");
+
+		Site.addVirtualHostsURLCP(
+			pageVirtualHosts = "true",
+			pageVirtualHostURL = "www.baker.com");
+
+		Navigator.gotoPage(
+			baseURL = "www.baker.com:8080",
+			pageName = "Home");
+
+		AssertLocation(value1 = "http://www.baker.com:8080/web/guest/home");
+
+		SignOut.signOut();
+
+		User.firstLoginPG();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "Server Administration");
+
+		ServerAdministration.executeServerResourcesActions(actionsDescription = "Clear the database cache.");
+
+		Navigator.gotoPage(
+			baseURL = "www.baker.com:8080",
+			pageName = "Home");
+
+		AssertLocation(value1 = "http://www.baker.com:8080/web/guest/home");
+	}
+
 	@priority = "5"
 	test DeleteCompany {
 		property custom.properties = "database.partition.schema.name.prefix=testPartition";

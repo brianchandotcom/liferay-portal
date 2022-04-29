@@ -671,6 +671,7 @@ definition {
 
 			JSONFragment.addSection(
 				collectionName = "New Fragment Set Name",
+				fragmentStatus = "Approved",
 				groupName = "Test Site Name",
 				name = "Fragment Name");
 		}

@@ -24,8 +24,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
-import com.liferay.portal.kernel.model.PortalPreferences;
-import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.model.User;
@@ -38,7 +36,6 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -123,17 +120,12 @@ public class UserLocalServiceTest {
 
 		_userLocalService.deleteUser(user);
 
-		PortalPreferences portalPreferences =
+		Assert.assertNull(
 			_portalPreferencesLocalService.fetchPortalPreferences(
-				user.getUserId(), PortletKeys.PREFS_OWNER_TYPE_USER);
-
-		Assert.assertNull(portalPreferences);
-
-		PortletPreferences portletPreferences =
+				user.getUserId(), PortletKeys.PREFS_OWNER_TYPE_USER));
+		Assert.assertNull(
 			_portletPreferencesLocalService.fetchPortletPreferences(
-				user.getUserId(), PortletKeys.PREFS_OWNER_TYPE_USER, 0, null);
-
-		Assert.assertNull(portletPreferences);
+				user.getUserId(), PortletKeys.PREFS_OWNER_TYPE_USER, 0, null));
 	}
 
 	@Test
@@ -559,10 +551,6 @@ public class UserLocalServiceTest {
 				() -> {
 					_userLocalService.updateUser(user);
 
-					ServiceContext serviceContext =
-						ServiceContextTestUtil.getServiceContext(
-							user.getGroupId(), user.getUserId());
-
 					return _userLocalService.updateUser(
 						user.getUserId(), StringPool.BLANK, StringPool.BLANK,
 						StringPool.BLANK, false, StringPool.BLANK,
@@ -576,7 +564,9 @@ public class UserLocalServiceTest {
 						Calendar.JANUARY, 1, 1970, StringPool.BLANK,
 						StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 						StringPool.BLANK, StringPool.BLANK, null, null, null,
-						null, null, serviceContext);
+						null, null,
+						ServiceContextTestUtil.getServiceContext(
+							user.getGroupId(), user.getUserId()));
 				});
 		}
 		catch (Throwable throwable) {

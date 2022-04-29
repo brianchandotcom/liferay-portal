@@ -2060,6 +2060,15 @@ public abstract class BaseBuild implements Build {
 			String axisName1 = _getAxisName(build1);
 			String axisName2 = _getAxisName(build2);
 
+			if (JenkinsResultsParserUtil.isNullOrEmpty(axisName1) ||
+				JenkinsResultsParserUtil.isNullOrEmpty(axisName2)) {
+
+				String displayName1 = build1.getDisplayName();
+				String displayName2 = build2.getDisplayName();
+
+				return displayName1.compareTo(displayName2);
+			}
+
 			Matcher matcher1 = _pattern.matcher(axisName1);
 			Matcher matcher2 = _pattern.matcher(axisName2);
 

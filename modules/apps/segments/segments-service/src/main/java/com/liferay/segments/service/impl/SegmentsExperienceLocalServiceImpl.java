@@ -501,6 +501,13 @@ public class SegmentsExperienceLocalServiceImpl
 					" has a locked segments experiment");
 		}
 
+		if ((newPriority == 0) && (segmentsExperience.getPriority() > 0)) {
+			newPriority = -1;
+		}
+		else if ((newPriority == 0) && (segmentsExperience.getPriority() < 0)) {
+			newPriority = 1;
+		}
+
 		int count = segmentsExperiencePersistence.countByG_C_C(
 			segmentsExperience.getGroupId(),
 			segmentsExperience.getClassNameId(),

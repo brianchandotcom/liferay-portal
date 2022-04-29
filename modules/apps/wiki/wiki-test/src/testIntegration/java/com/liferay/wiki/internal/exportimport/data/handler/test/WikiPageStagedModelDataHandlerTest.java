@@ -222,12 +222,10 @@ public class WikiPageStagedModelDataHandlerTest
 		addDependentStagedModel(
 			dependentStagedModelsMap, DLFileEntry.class,
 			attachmentsFileEntries.get(0));
-
-		Repository repository = RepositoryLocalServiceUtil.getRepository(
-			fileEntry.getRepositoryId());
-
 		addDependentStagedModel(
-			dependentStagedModelsMap, Repository.class, repository);
+			dependentStagedModelsMap, Repository.class,
+			RepositoryLocalServiceUtil.getRepository(
+				fileEntry.getRepositoryId()));
 
 		return page;
 	}

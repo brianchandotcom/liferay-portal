@@ -60,18 +60,17 @@ definition {
 		AssertElementPresent(locator1 = "ObjectCustomViews#OBJECT_VIEW_LABEL");
 	}
 
-	macro assertObjectViewNotPresent {
-		var key_viewLabel = "${viewLabel}";
-
-		AssertElementNotPresent(locator1 = "ObjectCustomViews#OBJECT_VIEW_LABEL");
-	}
-
 	macro assertObjectViewName {
 		AssertElementPresent(
 			locator1 = "ObjectCustomViews#OBJECT_VIEWS_NAME",
 			value1 = "${name}");
 	}
 
+	macro assertObjectViewNotPresent {
+		var key_viewLabel = "${viewLabel}";
+
+		AssertElementNotPresent(locator1 = "ObjectCustomViews#OBJECT_VIEW_LABEL");
+	}
 
 	macro deleteObjectCustomViewViaUI {
 		Click(

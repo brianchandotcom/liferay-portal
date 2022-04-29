@@ -18,8 +18,8 @@ import com.liferay.on.demand.admin.constants.OnDemandAdminActionKeys;
 import com.liferay.on.demand.admin.constants.OnDemandAdminPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.permission.PortletPermission;
 import com.liferay.portal.util.PortalInstances;
@@ -50,7 +50,7 @@ public class OnDemandAdminHelper {
 		}
 
 		if (!_portletPermission.contains(
-				GuestOrUserUtil.getPermissionChecker(), 0, 0,
+				PermissionCheckerFactoryUtil.create(user), 0, 0,
 				OnDemandAdminPortletKeys.ON_DEMAND_ADMIN,
 				OnDemandAdminActionKeys.REQUEST_ADMINISTRATOR_ACCESS, true)) {
 

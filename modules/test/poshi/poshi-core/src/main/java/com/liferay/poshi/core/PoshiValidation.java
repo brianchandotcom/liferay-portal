@@ -1493,6 +1493,14 @@ public class PoshiValidation {
 		LiferaySeleniumMethod liferaySeleniumMethod =
 			PoshiContext.getLiferaySeleniumMethod(seleniumMethodName);
 
+		if (liferaySeleniumMethod == null) {
+			_exceptions.add(
+				new PoshiElementException(
+					poshiElement, "Invalid selenium method name: \"",
+					seleniumMethodName, "\"\n"));
+			return;
+		}
+
 		int seleniumParameterCount = liferaySeleniumMethod.getParameterCount();
 
 		List<String> methodParameterValues =

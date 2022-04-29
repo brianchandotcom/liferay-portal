@@ -159,10 +159,10 @@ function TriggerEventContainer({disabled, eventTypes}: ITriggerEventProps) {
 	return (
 		<Card title={Liferay.Language.get('trigger-event')}>
 			<Select
+				defaultValue={0}
 				disabled={disabled}
 				label={Liferay.Language.get('event')}
 				options={eventTypes}
-				value={0}
 			/>
 		</Card>
 	);

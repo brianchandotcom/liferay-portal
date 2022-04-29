@@ -247,6 +247,21 @@ definition {
 					locator1 = "AlloyEditor#EDITOR",
 					value1 = "${captionField}");
 			}
+
+			if (isSet(captionFieldLink)) {
+				SelectFieldText(
+					key_editor = "coverImageCaption",
+					locator1 = "AlloyEditor#EDITOR",
+					value1 = "Caption");
+
+				Click(locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_CAPTION_LINK_ICON");
+
+				Type(
+					locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_CAPTION_LINK_INPUT",
+					value1 = "${captionFieldLink}");
+
+				Click(locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_CAPTION_LINK_CHECK_ICON");
+			}
 		}
 
 		BlogsEntry.addEntryContent(

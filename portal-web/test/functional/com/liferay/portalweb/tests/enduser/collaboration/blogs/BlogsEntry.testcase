@@ -1340,15 +1340,12 @@ definition {
 
 		Blogs.addEntryWithUploadedCoverImage(
 			captionField = "Cover Image Caption",
+			captionFieldLink = "www.google.com",
 			coverImageName = "Document_1",
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title",
 			navTab = "Blog Images",
 			uploadFileName = "Document_1.jpg");
-
-		BlogsEntry.addCoverImageCaptionWithLink(
-			captionField = "Caption",
-			captionFieldLink = "www.google.com");
 
 		Button.clickPublish();
 

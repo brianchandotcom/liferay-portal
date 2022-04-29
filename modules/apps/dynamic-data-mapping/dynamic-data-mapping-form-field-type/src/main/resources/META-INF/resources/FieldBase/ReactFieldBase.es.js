@@ -62,12 +62,17 @@ function normalizeInputValue(fieldType, locale, value) {
 const getFieldDetails = ({
 	errorMessage,
 	hasError,
+	label,
 	required,
 	text,
 	tip,
 	warningMessage,
 }) => {
 	const fieldDetails = [];
+
+	if (label) {
+		fieldDetails.push(Liferay.Util.escape(label));
+	}
 
 	if (tip) {
 		fieldDetails.push(Liferay.Util.escape(tip));
@@ -196,6 +201,7 @@ export function FieldBase({
 	const fieldDetails = getFieldDetails({
 		errorMessage,
 		hasError,
+		label,
 		required,
 		text,
 		tip,

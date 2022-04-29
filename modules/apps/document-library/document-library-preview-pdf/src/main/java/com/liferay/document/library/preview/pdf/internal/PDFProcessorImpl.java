@@ -544,7 +544,6 @@ public class PDFProcessorImpl
 				"-sOutputFile=" + getPreviewTempFilePath(tempFileId, -1));
 		}
 
-		arguments.add("-dPDFFitPage");
 		arguments.add("-dTextAlphaBits=4");
 		arguments.add("-dGraphicsAlphaBits=4");
 		arguments.add("-r" + PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_DPI);

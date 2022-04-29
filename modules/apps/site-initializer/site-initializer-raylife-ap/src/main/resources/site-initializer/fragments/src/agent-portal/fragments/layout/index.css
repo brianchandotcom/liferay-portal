@@ -33,6 +33,11 @@
 	opacity: 10;
 }
 
+.sidebar-container:hover .footer-bar .avatar-container,
+.sidebar-container:hover .middle-bar .menu-item-name {
+	overflow: hidden;
+}
+
 .sidebar-container .middle-bar div {
 	border-left: 4px solid transparent;
 	cursor: pointer;
@@ -60,10 +65,10 @@
 	content: '';
 	display: inline-block;
 	flex-shrink: 0;
-	height: 24px;
+	height: 20px;
 	margin-right: 4px;
 	transition: background-color 0.3s ease-in;
-	width: 24px;
+	width: 20px;
 }
 
 .sidebar-container .middle-bar #Applications.applications-menu::before,
@@ -76,10 +81,10 @@
 	content: '';
 	display: inline-block;
 	flex-shrink: 0;
-	height: 24px;
+	height: 20px;
 	margin-right: 4px;
 	transition: background-color 0.3s ease-in;
-	width: 24px;
+	width: 20px;
 }
 
 .sidebar-container .middle-bar .dashboard-menu::before {

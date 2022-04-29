@@ -1,6 +1,6 @@
 load('ext://lxc', 'lxc_extension') 
 lxc_extension(
-  'dynamicjscss',
+  name='dynamicjscss',
   command='./build.sh',
   deps=['./src', './pom.xml'],
   ignore=['./target'],

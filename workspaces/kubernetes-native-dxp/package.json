@@ -2,8 +2,8 @@
     "private": true,
     "workspaces": {
         "packages": [
-            "lxc-extensions/design-packs/fire",
-            "lxc-extensions/liferayhelloworld"
+            "lxc-extensions/liferayhelloworld",
+            "lxc-extensions/designpackfire"
         ]
     }
 }

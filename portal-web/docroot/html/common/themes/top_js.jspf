@@ -152,7 +152,7 @@
 			};
 		})();
 
-		Liferay.FeatureFlags = <%= JSONFactoryUtil.createJSONObject(PropsUtil.getProperties("feature.flag.", true)) %>;
+		Liferay.FeatureFlags = <%= PropsValues.FEATURE_FLAGS_JSON_OBJECT %>;
 
 		Liferay.PortletKeys = {
 			DOCUMENT_LIBRARY: '<%= PortletKeys.DOCUMENT_LIBRARY %>',

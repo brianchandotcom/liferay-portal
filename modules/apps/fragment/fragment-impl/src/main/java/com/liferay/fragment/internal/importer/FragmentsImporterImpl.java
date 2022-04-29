@@ -750,6 +750,15 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 			String fragmentCollectionKey, ZipFile zipFile)
 		throws Exception {
 
+		if (groupId == 0) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Importing resources at the system level is not supported");
+			}
+
+			return;
+		}
+
 		Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
 
 		List<? extends ZipEntry> zipEntries = Collections.list(enumeration);

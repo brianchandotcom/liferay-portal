@@ -24,8 +24,6 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -34,9 +32,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Bryce Osterhaus
  */
-@Component(
-	immediate = true, service = DynamicInclude.class
-)
+@Component(immediate = true, service = DynamicInclude.class)
 public class FrontendJSFeatureFlagTopHeadDynamicInclude
 	extends BaseDynamicInclude {
 
@@ -52,15 +48,9 @@ public class FrontendJSFeatureFlagTopHeadDynamicInclude
 
 		sb.append("<script>var Liferay = window.Liferay || {};");
 		sb.append("Liferay.__FF__ = Liferay.__FF__ || {};");
-		sb.append(
-			_buildFeatureFlagJSGlobalVariable(
-				"LPS-144630"));
-		sb.append(
-			_buildFeatureFlagJSGlobalVariable(
-				"LPS-148659"));
-		sb.append(
-			_buildFeatureFlagJSGlobalVariable(
-				"LPS-145112"));
+		sb.append(_buildFeatureFlagJSGlobalVariable("LPS-144630"));
+		sb.append(_buildFeatureFlagJSGlobalVariable("LPS-148659"));
+		sb.append(_buildFeatureFlagJSGlobalVariable("LPS-145112"));
 		sb.append("</script>");
 
 		printWriter.println(sb);
@@ -71,11 +61,9 @@ public class FrontendJSFeatureFlagTopHeadDynamicInclude
 		dynamicIncludeRegistry.register("/html/common/themes/top_head.jsp#pre");
 	}
 
-	private String _buildFeatureFlagJSGlobalVariable(
-		String ticketName) {
-
-			boolean validator = GetterUtil.getBoolean(
-					PropsUtil.get("feature.flag." + ticketName));
+	private String _buildFeatureFlagJSGlobalVariable(String ticketName) {
+		boolean validator = GetterUtil.getBoolean(
+			PropsUtil.get("feature.flag." + ticketName));
 
 		return StringBundler.concat(
 			"Liferay.__FF__['", ticketName, "'] = ", validator,

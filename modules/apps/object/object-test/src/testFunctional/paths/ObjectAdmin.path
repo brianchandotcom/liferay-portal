@@ -42,17 +42,12 @@
 	</tr>
 	<tr>
 		<td>LAYOUT_BASIC_INFO_NAME_FIELD</td>
-		<td>//input[@id='objectLayoutName']</td>
+		<td>//input[@name='name']</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>ADD_FIELD_ON_BLOCK</td>
 		<td>//button[contains(@class,'btn-secondary') and contains (text(),'Add Field')]</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>BASIC_INFO_NAME_FIELD</td>
-		<td>//input[contains(@id,'objectLayoutName')]</td>
 		<td></td>
 	</tr>
 	<tr>

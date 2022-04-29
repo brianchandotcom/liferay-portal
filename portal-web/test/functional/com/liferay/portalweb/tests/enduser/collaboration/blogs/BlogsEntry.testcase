@@ -1351,9 +1351,11 @@ definition {
 
 		BlogsNavigator.gotoEditCP(entryTitle = "Blogs Entry Title");
 
-		BlogsEntry.viewCoverImageCaptionWithLink(
-			captionField = "Caption",
-			captionFieldLink = "www.google.com");
+		BlogsEntry.viewEntryCP(
+			captionField = "true",
+			captionFieldLink = "Cover Image Caption",
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
 	}
 
 	@description = "This test covers LPS-133714. The blog entry creator receives a notification of its own blog"

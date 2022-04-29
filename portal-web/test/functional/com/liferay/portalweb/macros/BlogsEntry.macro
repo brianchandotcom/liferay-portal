@@ -1024,6 +1024,19 @@ definition {
 			}
 		}
 
+		if (isSet(captionField)) {
+			if (isSet(captionFieldLink)) {
+				AssertTextEquals(
+					locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_CAPTION_LINK",
+					value1 = "${captionFieldLink}");
+			}
+			else {
+				AssertTextEquals(
+					locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_CAPTION",
+					value1 = "${entryCaption}");
+			}
+		}
+
 		if (isSet(entryContent)) {
 			AssertTextEquals.assertPartialText(
 				locator1 = "BlogsEntry#CONTENT",

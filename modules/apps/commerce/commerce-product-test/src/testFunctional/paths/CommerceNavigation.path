@@ -110,6 +110,11 @@
 	<td>//ul[contains(@class,'pagination')]//li[contains(@class,'page-item')]//*[(contains(@class,'page-link')) and (contains(.,'${key_pageNumber}'))]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>TD_ANY_ENTRY_NAME</td>
+	<td>//td//div[contains(.,'${key_entry}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -103,26 +103,6 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro editBlueprint {
-		Blueprints.editEntry(title = "${title}");
-	}
-
-	macro editElement {
-		Navigator.gotoNavItem(navItem = "Elements");
-
-		if ("${searchForElement}" == "true") {
-			Search.searchCP(searchTerm = "${element}");
-		}
-
-		Blueprints.editEntry(title = "${element}");
-	}
-
-	macro editEntry {
-		Click(
-			entryTitle = "${title}",
-			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_TITLE");
-	}
-
 	macro getBlueprintID {
 		Variables.assertDefined(parameterList = "${title}");
 
@@ -155,6 +135,26 @@ definition {
 		echo("## ID for Element ${title}: ${elementId}");
 
 		return "${elementId}";
+	}
+
+	macro gotoBlueprint {
+		Blueprints.gotoEntry(title = "${title}");
+	}
+
+	macro gotoElement {
+		Navigator.gotoNavItem(navItem = "Elements");
+
+		if ("${searchForElement}" == "true") {
+			Search.searchCP(searchTerm = "${element}");
+		}
+
+		Blueprints.gotoEntry(title = "${element}");
+	}
+
+	macro gotoEntry {
+		Click(
+			entryTitle = "${title}",
+			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_TITLE");
 	}
 
 	macro gotoEntryMenuItem {

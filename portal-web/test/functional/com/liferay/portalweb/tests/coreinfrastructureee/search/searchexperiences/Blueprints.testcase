@@ -53,7 +53,7 @@ definition {
 
 		PortletEntry.save();
 
-		Blueprints.editBlueprint(title = "Test Blueprint");
+		Blueprints.gotoBlueprint(title = "Test Blueprint");
 
 		AssertElementPresent(
 			element = "Boost All Keywords Match",
@@ -380,7 +380,7 @@ definition {
 			elementSourceJson = "${elementSourceJson}",
 			title = "Test Element");
 
-		Blueprints.editElement(element = "Test Element");
+		Blueprints.gotoElement(element = "Test Element");
 
 		Click(
 			item = "user",
@@ -456,7 +456,7 @@ definition {
 
 		Blueprints.openBlueprintsAdmin();
 
-		Blueprints.editBlueprint(title = "Test Blueprint");
+		Blueprints.gotoBlueprint(title = "Test Blueprint");
 
 		Click(locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_HEADER_TITLE");
 
@@ -511,7 +511,7 @@ definition {
 
 		Blueprints.openBlueprintsAdmin();
 
-		Blueprints.editBlueprint(title = "Test Blueprint");
+		Blueprints.gotoBlueprint(title = "Test Blueprint");
 
 		Uncheck.uncheckToggleSwitch(
 			elementName = "Boost Tags Match",
@@ -633,7 +633,7 @@ definition {
 
 		Navigator.gotoNavItem(navItem = "Blueprints");
 
-		Blueprints.editBlueprint(title = "Test Blueprint");
+		Blueprints.gotoBlueprint(title = "Test Blueprint");
 
 		Blueprints.addElement(element = "Boost Results of Web Content Articles");
 
@@ -899,7 +899,7 @@ definition {
 
 		Confirm();
 
-		Blueprints.editBlueprint(title = "Test Blueprint");
+		Blueprints.gotoBlueprint(title = "Test Blueprint");
 
 		AssertElementPresent(locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENTS_EMPTY");
 
@@ -933,7 +933,7 @@ definition {
 
 		Confirm();
 
-		Blueprints.editBlueprint(title = "Test Blueprint");
+		Blueprints.gotoBlueprint(title = "Test Blueprint");
 
 		AssertElementPresent(locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENTS_EMPTY");
 	}
@@ -964,7 +964,7 @@ definition {
 			menuItem = "Copy",
 			title = "Test Element");
 
-		Blueprints.editElement(element = "Copy of Test Element");
+		Blueprints.gotoElement(element = "Copy of Test Element");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Blueprints#CODE_MIRROR_EDITOR",
@@ -996,7 +996,7 @@ definition {
 	test CopyElementJSONViaEditElementPreview {
 		Blueprints.openBlueprintsAdmin();
 
-		Blueprints.editElement(
+		Blueprints.gotoElement(
 			element = "Text Match Over Multiple Fields",
 			searchForElement = "true");
 
@@ -1180,7 +1180,7 @@ definition {
 
 		PortletEntry.save();
 
-		Blueprints.editBlueprint(title = "New Blueprint");
+		Blueprints.gotoBlueprint(title = "New Blueprint");
 
 		Click(locator1 = "Icon#EDIT_PENCIL");
 
@@ -1247,7 +1247,7 @@ definition {
 
 		Blueprints.createElement(title = "New Element");
 
-		Blueprints.editElement(element = "New Element");
+		Blueprints.gotoElement(element = "New Element");
 
 		var elementSourceJson = '''
 {
@@ -1317,7 +1317,7 @@ definition {
 	test DownloadElementJSONViaElementsEditPreview {
 		Blueprints.openBlueprintsAdmin();
 
-		Blueprints.editElement(
+		Blueprints.gotoElement(
 			element = "Text Match Over Multiple Fields",
 			searchForElement = "true");
 
@@ -1487,7 +1487,7 @@ definition {
 			key_text = "Import",
 			locator1 = "Button#ANY");
 
-		Blueprints.editBlueprint(title = "Test Blueprint");
+		Blueprints.gotoBlueprint(title = "Test Blueprint");
 
 		AssertElementPresent(
 			element = "Boost Tags Match",
@@ -1554,7 +1554,7 @@ definition {
 			key_text = "Import",
 			locator1 = "Button#ANY");
 
-		Blueprints.editElement(element = "Test Element");
+		Blueprints.gotoElement(element = "Test Element");
 
 		AssertTextPresent(value1 = "Import Element");
 	}
@@ -1749,7 +1749,7 @@ definition {
 
 		PortletEntry.save();
 
-		Blueprints.editBlueprint(title = "Test Blueprint");
+		Blueprints.gotoBlueprint(title = "Test Blueprint");
 
 		Navigator.gotoNavNested(navNested = "Query Settings");
 
@@ -1759,7 +1759,7 @@ definition {
 
 		PortletEntry.save();
 
-		Blueprints.editBlueprint(title = "Test Blueprint");
+		Blueprints.gotoBlueprint(title = "Test Blueprint");
 
 		Navigator.gotoNavNested(navNested = "Query Settings");
 
@@ -1787,7 +1787,7 @@ definition {
 
 		PortletEntry.save();
 
-		Blueprints.editBlueprint(title = "Test Blueprint");
+		Blueprints.gotoBlueprint(title = "Test Blueprint");
 
 		ControlMenu.viewHeaderTitle(headerTitle = "Edit Blueprint");
 	}
@@ -2026,7 +2026,7 @@ definition {
 
 		PortletEntry.save();
 
-		Blueprints.editBlueprint(title = "Test Blueprint");
+		Blueprints.gotoBlueprint(title = "Test Blueprint");
 
 		Blueprints.selectAddedElementMenuItem(
 			element = "Boost All Keywords Match",
@@ -2034,7 +2034,7 @@ definition {
 
 		PortletEntry.save();
 
-		Blueprints.editBlueprint(title = "Test Blueprint");
+		Blueprints.gotoBlueprint(title = "Test Blueprint");
 
 		AssertElementNotPresent(
 			element = "Boost All Keywords Match",
@@ -2100,7 +2100,7 @@ definition {
 
 		PortletEntry.save();
 
-		Blueprints.editBlueprint(title = "Test Blueprint");
+		Blueprints.gotoBlueprint(title = "Test Blueprint");
 
 		AssertElementPresent(
 			element = "Boost Tags Match Custom JSON",
@@ -2127,7 +2127,7 @@ definition {
 
 		PortletEntry.save();
 
-		Blueprints.editBlueprint(title = "Test Blueprint");
+		Blueprints.gotoBlueprint(title = "Test Blueprint");
 
 		AssertElementPresent(
 			element = "Custom JSON Element Edited",
@@ -2315,7 +2315,7 @@ definition {
 			menuItem = "Copy",
 			title = "Test Blueprint");
 
-		Blueprints.editBlueprint(title = "Copy of Test Blueprint");
+		Blueprints.gotoBlueprint(title = "Copy of Test Blueprint");
 
 		Blueprints.searchBlueprintsPreview(searchTerm = "apple");
 
@@ -2351,7 +2351,7 @@ definition {
 			menuItem = "Copy",
 			title = "Text Match Over Multiple Fields");
 
-		Blueprints.editElement(element = "Copy of Text Match Over Multiple Fields");
+		Blueprints.gotoElement(element = "Copy of Text Match Over Multiple Fields");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Blueprints#CODE_MIRROR_EDITOR",
@@ -2410,7 +2410,7 @@ definition {
 
 		PortletEntry.save();
 
-		Blueprints.editBlueprint(title = "Test Blueprint");
+		Blueprints.gotoBlueprint(title = "Test Blueprint");
 
 		Navigator.gotoNavNested(navNested = "Query Settings");
 
@@ -2476,7 +2476,7 @@ definition {
 
 		Blueprints.viewEntriesSpecificOrder(entryList = "Test Blueprint 3,Test Blueprint 2,Test Blueprint 1");
 
-		Blueprints.editBlueprint(title = "Test Blueprint 2");
+		Blueprints.gotoBlueprint(title = "Test Blueprint 2");
 
 		Blueprints.addElement(element = "Boost All Keywords Match");
 
@@ -2520,7 +2520,7 @@ definition {
 
 		Blueprints.viewEntriesSpecificOrder(entryList = "Test Element 3,Test Element 2,Test Element 1");
 
-		Blueprints.editElement(element = "Test Element 2");
+		Blueprints.gotoElement(element = "Test Element 2");
 
 		var elementSourceJson = '''
 {
@@ -2749,7 +2749,7 @@ definition {
 
 		Confirm();
 
-		Blueprints.editBlueprint(title = "Test Blueprint");
+		Blueprints.gotoBlueprint(title = "Test Blueprint");
 
 		Navigator.gotoNavTab(navTab = "Configuration");
 
@@ -2787,7 +2787,7 @@ definition {
 
 		Blueprints.openBlueprintsAdmin();
 
-		Blueprints.editBlueprint(title = "Test Blueprint");
+		Blueprints.gotoBlueprint(title = "Test Blueprint");
 
 		Click(locator1 = "Blueprints#BLUEPRINTS_PREVIEW_BUTTON_PORTUGUESE");
 
@@ -3019,7 +3019,7 @@ definition {
 
 		PortletEntry.save();
 
-		Blueprints.editBlueprint(title = "Test Blueprint");
+		Blueprints.gotoBlueprint(title = "Test Blueprint");
 
 		Navigator.gotoNavNested(navNested = "Query Settings");
 
@@ -3033,7 +3033,7 @@ definition {
 
 		PortletEntry.save();
 
-		Blueprints.editBlueprint(title = "Test Blueprint");
+		Blueprints.gotoBlueprint(title = "Test Blueprint");
 
 		Navigator.gotoNavNested(navNested = "Query Settings");
 
@@ -3051,7 +3051,7 @@ definition {
 
 		PortletEntry.save();
 
-		Blueprints.editBlueprint(title = "Test Blueprint");
+		Blueprints.gotoBlueprint(title = "Test Blueprint");
 
 		Navigator.gotoNavNested(navNested = "Query Settings");
 
@@ -3182,7 +3182,7 @@ definition {
 			menuItem = "Copy",
 			title = "Test Blueprint");
 
-		Blueprints.editBlueprint(title = "Copy of Test Blueprint");
+		Blueprints.gotoBlueprint(title = "Copy of Test Blueprint");
 
 		AssertElementPresent(
 			element = "Boost Tags Match",
@@ -3233,7 +3233,7 @@ definition {
 
 		Navigator.gotoNavItem(navItem = "Elementos");
 
-		Blueprints.editEntry(title = "Test Element");
+		Blueprints.gotoEntry(title = "Test Element");
 
 		Click(
 			item = "context",
@@ -3249,7 +3249,7 @@ definition {
 
 		Blueprints.createElement(title = "Test Element");
 
-		Blueprints.editElement(element = "Test Element");
+		Blueprints.gotoElement(element = "Test Element");
 
 		AssertVisible(locator1 = "Blueprints#ELEMENTS_EDIT_PAGE_PREDEFINED_VARIABLES_SIDEBAR");
 
@@ -3442,7 +3442,7 @@ definition {
 
 		AssertElementNotPresent(locator1 = "Message#ERROR");
 
-		Blueprints.editElement(element = "Test Element");
+		Blueprints.gotoElement(element = "Test Element");
 
 		AssertTextPresent(value1 = "apple");
 	}
@@ -3584,7 +3584,7 @@ definition {
 	test ViewElementsAdminPreview {
 		Blueprints.openBlueprintsAdmin();
 
-		Blueprints.editElement(
+		Blueprints.gotoElement(
 			element = "Boost All Keywords Match",
 			searchForElement = "true");
 
@@ -3716,7 +3716,7 @@ definition {
 			key_text = "Cancel",
 			locator1 = "Link#ANY");
 
-		Blueprints.editElement(element = "Text Match Over Multiple Fields");
+		Blueprints.gotoElement(element = "Text Match Over Multiple Fields");
 
 		Click(locator1 = "Blueprints#INFO_BUTTON");
 
@@ -3836,7 +3836,7 @@ definition {
 
 		AssertElementNotPresent(locator1 = "TextInput#REQUIRED_ALERT");
 
-		Blueprints.editElement(element = "Test Element");
+		Blueprints.gotoElement(element = "Test Element");
 
 		var elementSourceJson = '''
 {
@@ -3888,7 +3888,7 @@ definition {
 
 		Blueprints.openBlueprintsAdmin();
 
-		Blueprints.editBlueprint(title = "Test Blueprint");
+		Blueprints.gotoBlueprint(title = "Test Blueprint");
 
 		Blueprints.addElement(element = "Test Element");
 
@@ -4018,7 +4018,7 @@ definition {
 
 		PortletEntry.save();
 
-		Blueprints.editBlueprint(title = "Test Blueprint");
+		Blueprints.gotoBlueprint(title = "Test Blueprint");
 
 		Navigator.gotoNavNested(navNested = "Query Settings");
 
@@ -4066,7 +4066,7 @@ definition {
 
 		AssertConfirm(value1 = "You have unsaved changes. Do you want to proceed without saving?");
 
-		Blueprints.editBlueprint(title = "Test Blueprint");
+		Blueprints.gotoBlueprint(title = "Test Blueprint");
 
 		AssertElementPresent(locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENTS_EMPTY");
 
@@ -4092,7 +4092,7 @@ definition {
 
 		AssertConfirm(value1 = "You have unsaved changes. Do you want to proceed without saving?");
 
-		Blueprints.editBlueprint(title = "Test Blueprint");
+		Blueprints.gotoBlueprint(title = "Test Blueprint");
 
 		AssertElementPresent(locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENTS_EMPTY");
 	}
@@ -4140,7 +4140,7 @@ definition {
 
 		AssertConfirm(value1 = "You have unsaved changes. Do you want to proceed without saving?");
 
-		Blueprints.editElement(element = "Test Element");
+		Blueprints.gotoElement(element = "Test Element");
 
 		AssertTextNotEquals.assertNotPartialText(
 			locator1 = "Blueprints#CODE_MIRROR_EDITOR",
@@ -4172,7 +4172,7 @@ definition {
 
 		AssertConfirm(value1 = "You have unsaved changes. Do you want to proceed without saving?");
 
-		Blueprints.editElement(element = "Test Element");
+		Blueprints.gotoElement(element = "Test Element");
 
 		AssertTextNotEquals.assertNotPartialText(
 			locator1 = "Blueprints#CODE_MIRROR_EDITOR",

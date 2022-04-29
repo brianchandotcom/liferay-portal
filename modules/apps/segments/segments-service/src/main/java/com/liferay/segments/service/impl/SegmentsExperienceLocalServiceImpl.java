@@ -508,15 +508,6 @@ public class SegmentsExperienceLocalServiceImpl
 			newPriority = 1;
 		}
 
-		int count = segmentsExperiencePersistence.countByG_C_C(
-			segmentsExperience.getGroupId(),
-			segmentsExperience.getClassNameId(),
-			segmentsExperience.getClassPK());
-
-		if (newPriority >= count) {
-			return segmentsExperience;
-		}
-
 		SegmentsExperience swapSegmentsExperience =
 			segmentsExperiencePersistence.fetchByG_C_C_P(
 				segmentsExperience.getGroupId(),

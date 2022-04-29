@@ -17,6 +17,7 @@ package com.liferay.layout.internal.crawler;
 import com.liferay.layout.crawler.LayoutCrawler;
 import com.liferay.layout.internal.configuration.LayoutCrawlerClientConfiguration;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Layout;
@@ -35,13 +36,16 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import java.net.InetAddress;
 
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.servlet.http.Cookie;
 
 import org.apache.http.HttpStatus;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -96,6 +100,14 @@ public class LayoutCrawlerImpl implements LayoutCrawler {
 		}
 
 		return StringPool.BLANK;
+	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_layoutCrawlerClientConfiguration =
+			ConfigurableUtil.createConfigurable(
+				LayoutCrawlerClientConfiguration.class, properties);
 	}
 
 	private String _getI18nPath(Locale locale) {

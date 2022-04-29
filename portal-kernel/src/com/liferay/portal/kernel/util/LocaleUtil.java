@@ -345,7 +345,9 @@ public class LocaleUtil {
 
 		String displayName = null;
 
-		if (duplicateLanguages.contains(locale.getLanguage())) {
+		if (duplicateLanguages.contains(locale.getLanguage()) &&
+			Validator.isNotNull(country)) {
+
 			displayName = StringUtil.appendParentheticalSuffix(
 				language, country);
 		}
@@ -383,8 +385,13 @@ public class LocaleUtil {
 			return displayLocale.getDisplayName(locale);
 		}
 
-		return StringBundler.concat(
-			displayName, " (", _getDisplayCountry(displayLocale, locale), ")");
+		String country = _getDisplayCountry(displayLocale, locale);
+
+		if (Validator.isNull(country)) {
+			return displayName;
+		}
+
+		return StringBundler.concat(displayName, " (", country, ")");
 	}
 
 	private String _getLongDisplayName(

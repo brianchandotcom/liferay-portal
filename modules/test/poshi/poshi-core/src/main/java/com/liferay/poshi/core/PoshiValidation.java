@@ -944,7 +944,7 @@ public class PoshiValidation {
 			poshiElement.elements());
 
 		List<String> conditionTags = Arrays.asList(
-			"and", "condition", "equals", "contains", "isset", "not", "or");
+			"and", "condition", "contains", "equals", "isset", "not", "or");
 
 		if (fileName.equals("function")) {
 			conditionTags = Arrays.asList(

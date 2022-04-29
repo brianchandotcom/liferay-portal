@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayIcon from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import {FieldArray, Formik} from 'formik';
@@ -111,8 +112,7 @@ const RequiredInformation = ({
 			);
 
 			setShowKeyEmptyError(true);
-		}
-		else {
+		} else {
 			const productName = `${infoSelectedKey?.productType} ${infoSelectedKey?.licenseEntryType}`;
 
 			const licenseKey = {
@@ -139,8 +139,7 @@ const RequiredInformation = ({
 					sessionId,
 					licenseKey
 				);
-			}
-			else {
+			} else {
 				await Promise.all(
 					values?.keys?.map(
 						({hostName, ipAddresses, macAddresses}) => {
@@ -267,6 +266,18 @@ const RequiredInformation = ({
 									</h4>
 
 									<div className="dropdown-divider mb-4 mt-2"></div>
+
+									<ClayAlert
+										className="px-3 py-1"
+										displayType="info"
+									>
+										<span>
+											One or more
+											<b> Host Name, IP Address, </b>
+											or
+											<b> MAC Address</b> is required.
+										</span>
+									</ClayAlert>
 
 									{values?.keys?.map((_, index) => (
 										<KeyInputs id={index} key={index} />

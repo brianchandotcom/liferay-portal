@@ -193,4 +193,14 @@ definition {
 		}
 	}
 
+	macro clearSearchBar {
+		DoubleClick(locator1 = "CommerceEntry#SEARCH_PRODUCT_RELATIONS");
+
+			KeyPress(
+				locator1 = "CommerceEntry#SEARCH_PRODUCT_RELATIONS",
+				value1 = "\BACK_SPACE");
+
+		Click(locator1 = "AppBuilder#SEARCH_BUTTON");
+	}
+
 }

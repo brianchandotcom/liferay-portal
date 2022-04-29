@@ -75,7 +75,7 @@ public class DesignPackFactory implements DynamicInclude {
 
 	@Override
 	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
-		dynamicIncludeRegistry.register("/html/common/themes/top_js.jspf#resources");
+		dynamicIncludeRegistry.register("/html/common/themes/top_head.jsp#post");
 	}
 
 	private final DesignPackConfiguration _designPackConfiguration;

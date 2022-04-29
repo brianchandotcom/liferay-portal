@@ -60,5 +60,5 @@ spec:
     - dxp.localdev.me
     - customrestservice.localdev.me
     - liferayhelloworld.localdev.me
-    - dynamicjscss.localdev.me,
+    - dynamicjscss.localdev.me
     - designpackfire.localdev.me

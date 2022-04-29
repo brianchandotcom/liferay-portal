@@ -587,6 +587,10 @@ public class K8sAgentImpl implements K8sAgent {
 		dictionary.put(_KUBERNETES_CONFIG_UID, metadata.getUid());
 		dictionary.put(_KUBERNETES_CONFIG_RESOURCE_VERSION, resourceVersion);
 
+		if (_log.isDebugEnabled()) {
+			_log.debug("Created Configuration " + dictionary);
+		}
+
 		configuration.updateIfDifferent(dictionary);
 
 		configuration.addAttributes(

@@ -47,12 +47,12 @@ public interface DesignPackConfiguration {
 		description = "clay-css-description",
 		name = "clay-css"
 	)
-	public String[] clayCss();
+	public String clayCss();
 
 	@Meta.AD(
 		description = "main-css-description",
 		name = "main-css"
 	)
-	public String[] mainCss();
+	public String mainCss();
 
 }

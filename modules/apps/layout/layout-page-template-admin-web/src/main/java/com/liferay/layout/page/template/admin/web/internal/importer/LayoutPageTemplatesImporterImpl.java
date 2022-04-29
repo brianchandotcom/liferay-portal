@@ -350,40 +350,6 @@ public class LayoutPageTemplatesImporterImpl
 		return _language.format(locale, languageKey, arguments);
 	}
 
-	private List<FragmentEntryLink> _getFragmentEntryLinks(
-			LayoutStructure layoutStructure, List<String> childrenItemIds)
-		throws Exception {
-
-		List<FragmentEntryLink> fragmentEntryLinks = new ArrayList<>();
-
-		for (String childItemId : childrenItemIds) {
-			LayoutStructureItem layoutStructureItem =
-				layoutStructure.getLayoutStructureItem(childItemId);
-
-			if (layoutStructureItem instanceof
-					FragmentStyledLayoutStructureItem) {
-
-				FragmentStyledLayoutStructureItem
-					fragmentStyledLayoutStructureItem =
-						(FragmentStyledLayoutStructureItem)layoutStructureItem;
-
-				fragmentEntryLinks.add(
-					_fragmentEntryLinkLocalService.getFragmentEntryLink(
-						fragmentStyledLayoutStructureItem.
-							getFragmentEntryLinkId()));
-			}
-
-			List<String> currentChildrenItemIds =
-				layoutStructureItem.getChildrenItemIds();
-
-			fragmentEntryLinks.addAll(
-				_getFragmentEntryLinks(
-					layoutStructure, currentChildrenItemIds));
-		}
-
-		return fragmentEntryLinks;
-	}
-
 	private String _getKey(String defaultKey, String name, ZipEntry zipEntry) {
 		String[] pathParts = StringUtil.split(
 			zipEntry.getName(), CharPool.SLASH);
@@ -817,20 +783,12 @@ public class LayoutPageTemplatesImporterImpl
 
 		Set<String> warningMessages = new HashSet<>();
 
-		_processPageElement(
-			layout, layoutStructure,
-			LayoutStructureConstants.LATEST_PAGE_DEFINITION_VERSION,
-			pageElement, parentItemId, position, warningMessages);
-
 		List<FragmentEntryLink> fragmentEntryLinks = new ArrayList<>();
 
-		LayoutStructureItem parentLayoutStructureItem =
-			layoutStructure.getLayoutStructureItem(parentItemId);
-
-		fragmentEntryLinks.addAll(
-			_getFragmentEntryLinks(
-				layoutStructure,
-				parentLayoutStructureItem.getChildrenItemIds()));
+		_processPageElement(
+			fragmentEntryLinks, layout, layoutStructure,
+			LayoutStructureConstants.LATEST_PAGE_DEFINITION_VERSION,
+			pageElement, parentItemId, position, warningMessages);
 
 		consumer.accept(layoutStructure);
 
@@ -1133,8 +1091,8 @@ public class LayoutPageTemplatesImporterImpl
 						pageElement.getPageElements()) {
 
 					if (_processPageElement(
-							layout, layoutStructure, pageDefinitionVersion,
-							childPageElement,
+							new ArrayList<>(), layout, layoutStructure,
+							pageDefinitionVersion, childPageElement,
 							rootLayoutStructureItem.getItemId(), position,
 							warningMessages)) {
 
@@ -1156,9 +1114,10 @@ public class LayoutPageTemplatesImporterImpl
 	}
 
 	private boolean _processPageElement(
-			Layout layout, LayoutStructure layoutStructure,
-			double pageDefinitionVersion, PageElement pageElement,
-			String parentItemId, int position, Set<String> warningMessages)
+			List<FragmentEntryLink> fragmentEntryLinks, Layout layout,
+			LayoutStructure layoutStructure, double pageDefinitionVersion,
+			PageElement pageElement, String parentItemId, int position,
+			Set<String> warningMessages)
 		throws Exception {
 
 		LayoutStructureItemImporter layoutStructureItemImporter =
@@ -1186,6 +1145,17 @@ public class LayoutPageTemplatesImporterImpl
 			return false;
 		}
 
+		if (layoutStructureItem instanceof FragmentStyledLayoutStructureItem) {
+			FragmentStyledLayoutStructureItem
+				fragmentStyledLayoutStructureItem =
+					(FragmentStyledLayoutStructureItem)layoutStructureItem;
+
+			fragmentEntryLinks.add(
+				_fragmentEntryLinkLocalService.getFragmentEntryLink(
+					fragmentStyledLayoutStructureItem.
+						getFragmentEntryLinkId()));
+		}
+
 		if (pageElement.getPageElements() == null) {
 			return true;
 		}
@@ -1194,9 +1164,10 @@ public class LayoutPageTemplatesImporterImpl
 
 		for (PageElement childPageElement : pageElement.getPageElements()) {
 			if (_processPageElement(
-					layout, layoutStructure, pageDefinitionVersion,
-					childPageElement, layoutStructureItem.getItemId(),
-					childPosition, warningMessages)) {
+					fragmentEntryLinks, layout, layoutStructure,
+					pageDefinitionVersion, childPageElement,
+					layoutStructureItem.getItemId(), childPosition,
+					warningMessages)) {
 
 				childPosition++;
 			}

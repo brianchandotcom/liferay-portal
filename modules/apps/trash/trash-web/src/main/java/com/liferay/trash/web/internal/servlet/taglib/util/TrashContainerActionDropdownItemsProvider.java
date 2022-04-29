@@ -150,13 +150,9 @@ public class TrashContainerActionDropdownItemsProvider {
 				"classPK", _trashRenderer.getClassPK()
 			).setParameter(
 				"containerModelClassNameId",
-				() -> {
-					String containerModelClassName =
-						_trashHandler.getContainerModelClassName(
-							_trashDisplayContext.getClassPK());
-
-					return PortalUtil.getClassNameId(containerModelClassName);
-				}
+				() -> PortalUtil.getClassNameId(
+					_trashHandler.getContainerModelClassName(
+						_trashDisplayContext.getClassPK()))
 			).setWindowState(
 				LiferayWindowState.POP_UP
 			).buildString()

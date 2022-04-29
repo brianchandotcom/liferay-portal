@@ -243,6 +243,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NO_FRAGMENTS_MESSAGE</td>
+	<td>//div[contains(@class,'page-editor__no-fragments-message')][normalize-space()='Place fragments here.']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>VIEWPORT</td>
 	<td>//div[contains(@class,'layout-viewport')][contains(@class,'${key_deviceType}')]</td>
 	<td></td>

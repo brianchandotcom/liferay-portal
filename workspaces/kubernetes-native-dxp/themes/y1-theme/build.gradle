@@ -1,0 +1,4 @@
+node{
+	nodeVersion = "10.15.3"
+	npmVersion = "6.4.1"
+}

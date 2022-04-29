@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dynamicjscss-dxp-configs
+  labels:
+    cloud.liferay.com/serviceId: dynamicjscss
+    dxp.liferay.com/configs: "true"
+    projectCustomer: "yes"
+    projectId: lcd13977
+    projectSandbox: ""
+    projectTrial: "no"
+    projectType: ""
+  annotations:
+    cloud.liferay.com/context-data: '{"domains":["dynamicjscss.localdev.me"]}'
+data:
+  com.liferay.dynamic.include.factory.configuration.v1.DynamicIncludeConfiguration-dynamicjscss.config: |
+    charset="UTF-8"
+    key="/html/common/themes/top_js.jspf#resources"
+    description="Foo"
+    urls=[\
+      "https://$[conf:cloud.liferay.com.domain.0]/modal.js",\
+      "https://$[conf:cloud.liferay.com.domain.0]/modal.css",\
+      ]

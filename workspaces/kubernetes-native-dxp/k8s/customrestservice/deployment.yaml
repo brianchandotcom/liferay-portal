@@ -1,0 +1,69 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: customrestservice
+  labels:
+    app: customrestservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: customrestservice
+  template:
+    metadata:
+      labels:
+        app: customrestservice
+    spec:
+      containers:
+      - name: customrestservice
+        image: customrestservice
+        imagePullPolicy: Never
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 8081
+        - containerPort: 8000
+        env:
+          - name: AMADEUS_CLIENT_ID
+            valueFrom:
+              configMapKeyRef:
+                name: amadeus-credentials-configmap
+                key: AMADEUS_CLIENT_ID
+          - name: AMADEUS_CLIENT_SECRET
+            valueFrom:
+              configMapKeyRef:
+                name: amadeus-credentials-configmap
+                key: AMADEUS_CLIENT_SECRET
+          - name: LIFERAY_OAUTH2_USER_AGENT_CLIENT_ID
+            valueFrom:
+              configMapKeyRef:
+                key: liferay_oauth2_user_agent_client_id
+                name: customrestservice.extension.liferay.com
+          - name: LIFERAY_OAUTH2_AUTHORIZATION_URI
+            valueFrom:
+              configMapKeyRef:
+                key: liferay_oauth2_authorization_uri
+                name: customrestservice.extension.liferay.com
+          - name: LIFERAY_OAUTH2_INTROSPECTION_URI
+            valueFrom:
+              configMapKeyRef:
+                key: liferay_oauth2_introspection_uri
+                name: customrestservice.extension.liferay.com
+          - name: LIFERAY_OAUTH2_REDIRECT_URIS
+            valueFrom:
+              configMapKeyRef:
+                key: liferay_oauth2_redirect_uris
+                name: customrestservice.extension.liferay.com
+          - name: LIFERAY_OAUTH2_TOKEN_URI
+            valueFrom:
+              configMapKeyRef:
+                key: liferay_oauth2_token_uri
+                name: customrestservice.extension.liferay.com
+          - name: LCP_SERVICE_DOMAIN
+            value: localdev.me
+          - name: LCP_PROJECT_ID
+            value: dxp
+          - name: WEBSERVER_SERVICE_HOST
+            value: ""

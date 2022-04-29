@@ -1,0 +1,13 @@
+<Context crossContext="true">
+	<JarScanner className="com.liferay.support.tomcat.util.scan.NOPJarScanner" />
+
+	<!-- JAAS -->
+
+	<!--<Realm
+		className="org.apache.catalina.realm.JAASRealm"
+		appName="PortalRealm"
+		userClassNames="com.liferay.portal.kernel.security.jaas.PortalPrincipal"
+		roleClassNames="com.liferay.portal.kernel.security.jaas.PortalRole"
+	/>-->
+    <Valve className="org.apache.catalina.valves.HealthCheckValve" />
+</Context>

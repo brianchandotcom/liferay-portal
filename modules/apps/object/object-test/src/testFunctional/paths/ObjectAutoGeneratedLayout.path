@@ -80,6 +80,16 @@
 		<td>//span[contains(@class,'bulletedlist_icon')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>HEIGHT_VALUE_IN_ENTRY_VIEW</td>
+		<td>//span[contains(@class,'text-truncate') and contains(@style,'${key_heightValue}')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>ANY_FORMAT_TEXT</td>
+		<td>//${key_formatName}[contains(text(),'${key_anyFormatText}')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

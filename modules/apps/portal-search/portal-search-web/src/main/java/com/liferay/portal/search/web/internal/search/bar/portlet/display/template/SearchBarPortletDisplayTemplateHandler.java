@@ -52,10 +52,11 @@ public class SearchBarPortletDisplayTemplateHandler
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		String portletTitle = _portal.getPortletTitle(
-			SearchBarPortletKeys.SEARCH_BAR, resourceBundle);
-
-		return LanguageUtil.format(locale, "x-template", portletTitle, false);
+		return LanguageUtil.format(
+			locale, "x-template",
+			_portal.getPortletTitle(
+				SearchBarPortletKeys.SEARCH_BAR, resourceBundle),
+			false);
 	}
 
 	@Override

@@ -56,10 +56,11 @@ public class UserFacetPortletDisplayTemplateHandler
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		String portletTitle = _portal.getPortletTitle(
-			UserFacetPortletKeys.USER_FACET, resourceBundle);
-
-		return LanguageUtil.format(locale, "x-template", portletTitle, false);
+		return LanguageUtil.format(
+			locale, "x-template",
+			_portal.getPortletTitle(
+				UserFacetPortletKeys.USER_FACET, resourceBundle),
+			false);
 	}
 
 	@Override

@@ -56,10 +56,11 @@ public class CustomFacetPortletDisplayTemplateHandler
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		String portletTitle = _portal.getPortletTitle(
-			CustomFacetPortletKeys.CUSTOM_FACET, resourceBundle);
-
-		return _language.format(locale, "x-template", portletTitle, false);
+		return _language.format(
+			locale, "x-template",
+			_portal.getPortletTitle(
+				CustomFacetPortletKeys.CUSTOM_FACET, resourceBundle),
+			false);
 	}
 
 	@Override

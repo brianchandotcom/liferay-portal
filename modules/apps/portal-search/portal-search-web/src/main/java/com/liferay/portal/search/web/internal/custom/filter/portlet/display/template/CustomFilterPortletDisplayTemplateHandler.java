@@ -53,10 +53,11 @@ public class CustomFilterPortletDisplayTemplateHandler
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		String portletTitle = _portal.getPortletTitle(
-			CustomFilterPortletKeys.CUSTOM_FILTER, resourceBundle);
-
-		return LanguageUtil.format(locale, "x-template", portletTitle, false);
+		return LanguageUtil.format(
+			locale, "x-template",
+			_portal.getPortletTitle(
+				CustomFilterPortletKeys.CUSTOM_FILTER, resourceBundle),
+			false);
 	}
 
 	@Override

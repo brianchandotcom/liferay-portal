@@ -28,7 +28,6 @@ import com.liferay.portlet.display.template.constants.PortletDisplayTemplateCons
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
@@ -53,11 +52,10 @@ public class CategoryFacetPortletDisplayTemplateHandler
 
 	@Override
 	public String getName(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
-
 		String portletTitle = _portal.getPortletTitle(
-			CategoryFacetPortletKeys.CATEGORY_FACET, resourceBundle);
+			CategoryFacetPortletKeys.CATEGORY_FACET,
+			ResourceBundleUtil.getBundle(
+				"content.Language", locale, getClass()));
 
 		return LanguageUtil.format(locale, "x-template", portletTitle, false);
 	}

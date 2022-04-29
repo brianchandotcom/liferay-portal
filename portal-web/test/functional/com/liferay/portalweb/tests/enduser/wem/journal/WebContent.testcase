@@ -1554,7 +1554,7 @@ definition {
 				title = "Web Content Title");
 		}
 
-		task ("When the Web Content creator open the dropdown menu of management toolbar after selecting the new web content") {
+		task ("When the Web Content creator opens the dropdown menu of management toolbar after selecting the new web content") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			ManagementBar.clickSelectAllCheckbox();
@@ -1566,7 +1566,7 @@ definition {
 			DropdownMenuItem.viewIcon(iconList = "time,move-folder,trash");
 		}
 
-		task ("When the Web Content creator open the ellipsis dropdown menu of web content") {
+		task ("When the Web Content creator opens the dropdown menu of web content") {
 			LexiconEntry.openEntryMenu(rowEntry = "Web Content Title");
 		}
 
@@ -1574,7 +1574,7 @@ definition {
 			DropdownMenuItem.viewIcon(iconList = "pencil,view,automatic-translate,time,bell-on,date-time,list-ul,copy,upload,download,move-folder,password-policies,trash");
 		}
 
-		task ("When the Web Content creator access the view history page and open the ellipsis dropdown menu of web content") {
+		task ("When the Web Content creator opens the dropdown menu of given version on View History page") {
 			MenuItem.click(menuItem = "View History");
 
 			LexiconEntry.openEntryMenu(rowEntry = "Web Content Title");
@@ -1584,7 +1584,7 @@ definition {
 			DropdownMenuItem.viewIcon(iconList = "view,time,copy,trash");
 		}
 
-		task ("When the Web Content creator open the dropdown menu of management toolbar after selecting all versions") {
+		task ("When the Web Content creator opens the dropdown menu of management toolbar after selecting all versions") {
 			ManagementBar.clickSelectAllCheckbox();
 
 			Click(locator1 = "ManagementBar#MORE_ACTIONS_ELLIPSIS");
@@ -1606,7 +1606,7 @@ definition {
 			WebContentStructures.saveCP();
 		}
 
-		task ("When the Web Content creator open the dropdown menu of management toolbar after selecting new structure") {
+		task ("When the Web Content creator opens the dropdown menu of management toolbar after selecting new structure") {
 			ManagementBar.clickSelectAllCheckbox();
 
 			Click(locator1 = "ManagementBar#MORE_ACTIONS_ELLIPSIS");
@@ -1616,7 +1616,7 @@ definition {
 			DropdownMenuItem.viewIcon(iconList = "trash");
 		}
 
-		task ("When the Web Content creator open the ellipsis dropdown menu of new strucure") {
+		task ("When the Web Content creator opens the dropdown menu of new strucure") {
 			LexiconEntry.openEntryMenu(rowEntry = "WC Structure Name");
 		}
 
@@ -1630,7 +1630,7 @@ definition {
 			WebContentTemplates.addCP(templateName = "WC Template Name");
 		}
 
-		task ("When the Web Content creator open the dropdown menu of management toolbar after selecting new template") {
+		task ("When the Web Content creator opens the dropdown menu of management toolbar after selecting new template") {
 			ManagementBar.clickSelectAllCheckbox();
 
 			Click(locator1 = "ManagementBar#MORE_ACTIONS_ELLIPSIS");
@@ -1640,7 +1640,7 @@ definition {
 			DropdownMenuItem.viewIcon(iconList = "trash");
 		}
 
-		task ("When the Web Content creator openo the ellipsis dropdown menu of new template") {
+		task ("When the Web Content creator opens the dropdown menu of new template") {
 			Click.waitForMenuToggleJSClick(
 				key_card = "WC Template Name",
 				locator1 = "Card#CARD_ELLIPSIS");

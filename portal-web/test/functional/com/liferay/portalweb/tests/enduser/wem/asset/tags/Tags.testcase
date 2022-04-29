@@ -315,7 +315,7 @@ definition {
 				tagName = "tagname");
 		}
 
-		task ("When the  Tags creator open the ellipsis dropdown menu of new tag") {
+		task ("When the  Tags creator opens the dropdown menu of new tag") {
 			Tag.openTagsAdmin(siteURLKey = "test-site-name");
 
 			LexiconEntry.openEntryMenu(rowEntry = "tagname");
@@ -325,7 +325,7 @@ definition {
 			DropdownMenuItem.viewIcon(iconList = "pencil,merge,trash");
 		}
 
-		task ("When the Tags creator open the dropdown menu of management toolbar after selecting new tag") {
+		task ("When the Tags creator opens the dropdown menu of management toolbar after selecting new tag") {
 			ManagementBar.clickSelectAllCheckbox();
 
 			Click(locator1 = "ManagementBar#MORE_ACTIONS_ELLIPSIS");

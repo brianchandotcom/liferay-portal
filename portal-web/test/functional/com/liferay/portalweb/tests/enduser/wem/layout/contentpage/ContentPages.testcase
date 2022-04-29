@@ -1107,7 +1107,7 @@ definition {
 			}
 		}
 
-		task ("When the Page designer select Collection Display and open its ellipsis dropdown menu") {
+		task ("When the Page designer opens the dropdown menu of Collection Display topper") {
 			PageEditor.clickConfigurableField(fragmentName = "Collection Display");
 
 			Click.waitForMenuToggleJSClick(
@@ -1119,7 +1119,7 @@ definition {
 			DropdownMenuItem.viewIcon(iconList = "hidden,copy,trash");
 		}
 
-		task ("When the Page designer select the dynamic collection in Collection Display and open its ellipsis dropdown menu") {
+		task ("When the Page designer opens the dropdown menu of Collection after selecting a dynamic collection") {
 			PageEditor.editCollectionDisplay(
 				assetListName = "Dynamic Collection",
 				fragmentName = "Collection Display");

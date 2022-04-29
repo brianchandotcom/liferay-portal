@@ -1118,7 +1118,7 @@ definition {
 				siteNavigationMenuName = "Navigation Menu Name");
 		}
 
-		task ("When the Navigation menu creator open the ellipsis dropdown menu of navigation menu") {
+		task ("When the Navigation menu creator opens the dropdown menu of navigation menu") {
 			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
 			LexiconEntry.openEntryMenu(rowEntry = "Navigation Menu Name");
@@ -1128,7 +1128,7 @@ definition {
 			DropdownMenuItem.viewIcon(iconList = "pencil,password-policies,trash");
 		}
 
-		task ("When the Navigation menu creator open the dropdown menu of management toolbar after selecting the new navigation menu") {
+		task ("When the Navigation menu creator opens the dropdown menu of management toolbar after selecting the new navigation menu") {
 			LexiconTable.checkTableCheckbox(tableEntry = "Navigation Menu Name");
 
 			Click(locator1 = "ManagementBar#MORE_ACTIONS_ELLIPSIS");

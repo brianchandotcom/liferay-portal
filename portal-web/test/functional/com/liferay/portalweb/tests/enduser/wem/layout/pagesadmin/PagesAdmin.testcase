@@ -1416,7 +1416,7 @@ definition {
 			Portlet.viewSpecificPG(portletName = "Web Content Display");
 		}
 
-		task ("When the Page designer open the ellipsis dropdown menu of widget page") {
+		task ("When the Page designer opens the dropdown menu of widget page") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			PagesAdmin.openPageEllipsisMenu(pageName = "Widget Page Name");
@@ -1426,7 +1426,7 @@ definition {
 			DropdownMenuItem.viewIcon(iconList = "view,page,copy,cog,password-policies,trash");
 		}
 
-		task ("When the Page designer pen the dropdown menu of management toolbar after selecting the new widget page") {
+		task ("When the Page designer opens the dropdown menu of management toolbar after selecting the new widget page") {
 			PagesAdmin.selectPageItem(pageName = "Widget Page Name");
 
 			Click(locator1 = "ManagementBar#MORE_ACTIONS_ELLIPSIS");
@@ -1436,7 +1436,7 @@ definition {
 			DropdownMenuItem.viewIcon(iconList = "page,trash");
 		}
 
-		task ("When the Page designer access the Orphan Widgets menu of widget page") {
+		task ("When the Page designer access the Orphan Widgets page of widget page") {
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Orphan Widgets",
 				pageName = "Widget Page Name");
@@ -1462,7 +1462,7 @@ definition {
 				layoutName = "Content Page Name");
 		}
 
-		task ("When the Page designer open the ellipsis dropdown menu of content page") {
+		task ("When the Page designer opens the dropdown menu of content page") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
 			PagesAdmin.openPageEllipsisMenu(pageName = "Content Page Name");

@@ -953,7 +953,7 @@ definition {
 				vocabularyName = "Vocabulary Name");
 		}
 
-		task ("When the Categories creator open the ellipsis dropdown menu of Vocabularies") {
+		task ("When the Categories creator opens the dropdown menu of Vocabularies") {
 			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
 			Click.waitForMenuToggleJSClick(locator1 = "NavNested#NAV_NESTED_ELLIPSIS");
@@ -963,7 +963,7 @@ definition {
 			DropdownMenuItem.viewIcon(iconList = "trash");
 		}
 
-		task ("When the Categories creator open the ellipsis dropdown menu of new custom vocabulary") {
+		task ("When the Categories creator opens the dropdown menu of new vocabulary") {
 			Click.waitForMenuToggleJSClick(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
 		}
 
@@ -971,7 +971,7 @@ definition {
 			DropdownMenuItem.viewIcon(iconList = "pencil,password-policies,trash");
 		}
 
-		task ("When the  Categories creator open the ellipsis dropdown menu of custom category") {
+		task ("When the  Categories creator opens the dropdown menu of category") {
 			LexiconEntry.openEntryMenu(rowEntry = "Category Name");
 		}
 
@@ -979,7 +979,7 @@ definition {
 			DropdownMenuItem.viewIcon(iconList = "pencil,move-folder,password-policies,trash");
 		}
 
-		task ("When the Categories creator open the dropdown menu of management toolbar after selecting the category") {
+		task ("When the Categories creator opens the dropdown menu of management toolbar after selecting the category") {
 			ManagementBar.clickSelectAllCheckbox();
 
 			Click(locator1 = "ManagementBar#MORE_ACTIONS_ELLIPSIS");

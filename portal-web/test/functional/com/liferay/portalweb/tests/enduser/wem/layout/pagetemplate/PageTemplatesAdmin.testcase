@@ -67,7 +67,7 @@ definition {
 			}
 		}
 
-		task ("When the Page Template creator open the ellipsis dropdown menu of display page template") {
+		task ("When the Page Template creator opens the dropdown menu of display page template") {
 			Click.waitForMenuToggleJSClick(
 				key_card = "Display Page Name",
 				locator1 = "Card#CARD_ELLIPSIS");
@@ -77,7 +77,7 @@ definition {
 			DropdownMenuItem.viewIcon(iconList = "pencil,change,upload,cog,password-policies,trash");
 		}
 
-		task ("When the Page Template creator open the dropdown menu of management toolbar after selecting the new display page template") {
+		task ("When the Page Template creator opens the dropdown menu of management toolbar after selecting the new display page template") {
 			LexiconCard.checkCardCheckbox(card = "Display Page Name");
 
 			Click(locator1 = "ManagementBar#MORE_ACTIONS_ELLIPSIS");
@@ -106,7 +106,7 @@ definition {
 			}
 		}
 
-		task ("When the Page Template creator open the ellipsis dropdown menu of Page Template Sets") {
+		task ("When the Page Template creator opens the dropdown menu of Page Template Sets") {
 			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
 
 			Click.waitForMenuToggleJSClick(locator1 = "NavNested#NAV_NESTED_ELLIPSIS");
@@ -116,7 +116,7 @@ definition {
 			DropdownMenuItem.viewIcon(iconList = "trash");
 		}
 
-		task ("When the Page Template creator open the ellipsis dropdown menu of custom page template set") {
+		task ("When the Page Template creator opens the dropdown menu of custom page template set") {
 			Click.waitForMenuToggleJSClick(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
 		}
 
@@ -124,7 +124,7 @@ definition {
 			DropdownMenuItem.viewIcon(iconList = "pencil,password-policies,trash");
 		}
 
-		task ("When the Page Template creator open the ellipsis dropdown menu of content template") {
+		task ("When the Page Template creator opens the dropdown menu of content template") {
 			Click.waitForMenuToggleJSClick(
 				key_card = "Content Template Name",
 				locator1 = "Card#CARD_ELLIPSIS");
@@ -134,7 +134,7 @@ definition {
 			DropdownMenuItem.viewIcon(iconList = "pencil,move-folder,change,upload,cog,password-policies,trash");
 		}
 
-		task ("When the Page Template creator open the ellipsis dropdown menu of widget template") {
+		task ("When the Page Template creator opens the dropdown menu of widget template") {
 			Click.waitForMenuToggleJSClick(
 				key_card = "Widget Template Name",
 				locator1 = "Card#CARD_ELLIPSIS");
@@ -144,7 +144,7 @@ definition {
 			DropdownMenuItem.viewIcon(iconList = "pencil,move-folder,change,cog,password-policies,trash");
 		}
 
-		task ("When the Page Template creator open the dropdown menu of management toolbar after selecting the new templates") {
+		task ("When the Page Template creator opens the dropdown menu of management toolbar after selecting the new templates") {
 			ManagementBar.clickSelectAllCheckbox();
 
 			Click(locator1 = "ManagementBar#MORE_ACTIONS_ELLIPSIS");
@@ -170,7 +170,7 @@ definition {
 			}
 		}
 
-		task ("When the Page Template creator open the ellipsis dropdown menu of masters template") {
+		task ("When the Page Template creator opens the dropdown menu of masters template") {
 			Click.waitForMenuToggleJSClick(
 				key_card = "Custom Masters Page Template",
 				locator1 = "Card#CARD_ELLIPSIS");
@@ -180,7 +180,7 @@ definition {
 			DropdownMenuItem.viewIcon(iconList = "pencil,change,upload,copy,password-policies,trash");
 		}
 
-		task ("When the Page Template creator open the dropdown menu of management toolbar after selecting the new masters tamplate") {
+		task ("When the Page Template creator opens the dropdown menu of management toolbar after selecting the new masters tamplate") {
 			LexiconCard.checkCardCheckbox(card = "Custom Masters Page Template");
 
 			Click(locator1 = "ManagementBar#MORE_ACTIONS_ELLIPSIS");

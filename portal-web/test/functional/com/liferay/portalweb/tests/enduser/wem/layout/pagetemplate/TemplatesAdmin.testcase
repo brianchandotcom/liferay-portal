@@ -41,7 +41,7 @@ definition {
 			}
 		}
 
-		task ("When the Template creator open the ellipsis dropdown menu of information template") {
+		task ("When the Template creator opens the dropdown menu of information template") {
 			InformationTemplates.openInformationTemplatesAdmin(siteURLKey = "test-site-name");
 
 			Click.waitForMenuToggleJSClick(
@@ -53,7 +53,7 @@ definition {
 			DropdownMenuItem.viewIcon(iconList = "pencil,copy,password-policies,trash");
 		}
 
-		task ("When the Template creator open the dropdown menu of management toolbar after selecting the new information template") {
+		task ("When the Template creator opens the dropdown menu of management toolbar after selecting the new information template") {
 			LexiconTable.checkTableCheckbox(tableEntry = "Test Information Template");
 
 			Click(locator1 = "ManagementBar#MORE_ACTIONS_ELLIPSIS");
@@ -73,7 +73,7 @@ definition {
 			}
 		}
 
-		task ("When the Template creator opens the ellipsis dropdown menu of widget template") {
+		task ("When the Template creator opens the dropdown menu of widget template") {
 			Click.waitForMenuToggleJSClick(
 				key_tableEntry = "Breadcrumb Test ADT",
 				locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
@@ -83,7 +83,7 @@ definition {
 			DropdownMenuItem.viewIcon(iconList = "pencil,copy,password-policies,trash");
 		}
 
-		task ("When the Template creator open the dropdown menu of management toolbar after selecting the new wiget template") {
+		task ("When the Template creator opens the dropdown menu of management toolbar after selecting the new wiget template") {
 			LexiconTable.checkTableCheckbox(tableEntry = "Breadcrumb Test ADT");
 
 			Click(locator1 = "ManagementBar#MORE_ACTIONS_ELLIPSIS");

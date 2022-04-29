@@ -631,7 +631,7 @@ definition {
 				styleBookEntryName = "Test Style Book Name");
 		}
 
-		task ("When the Style books designer opens the ellipsis dropdown menu of style book") {
+		task ("When the Style books designer opens the dropdown menu of style book") {
 			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
 
 			Click.waitForMenuToggleJSClick(
@@ -643,7 +643,7 @@ definition {
 			DropdownMenuItem.viewIcon(iconList = "pencil,change,upload,copy,trash");
 		}
 
-		task ("When the Style books designer open the dropdown menu of management toolbar after selecting the new style book") {
+		task ("When the Style books designer opens the dropdown menu of management toolbar after selecting the new style book") {
 			LexiconCard.checkCardCheckbox(card = "Test Style Book Name");
 
 			Click(locator1 = "ManagementBar#MORE_ACTIONS_ELLIPSIS");

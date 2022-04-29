@@ -3610,7 +3610,7 @@ definition {
 				title = "Dynamic Collection");
 		}
 
-		task ("When the Collection creator open the ellipsis dropdown menu of a variation") {
+		task ("When the Collection creator opens the dropdown menu of Anyone") {
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection");
@@ -3622,7 +3622,7 @@ definition {
 			DropdownMenuItem.viewIcon(iconList = "view");
 		}
 
-		task ("When the Collection creator open the ellipsis dropdown menu of dynamic collection") {
+		task ("When the Collection creator opens the dropdown menu of dynamic collection") {
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
 			LexiconList.clickEllipsis(listEntry = "Dynamic Collection");
@@ -3632,7 +3632,7 @@ definition {
 			DropdownMenuItem.viewIcon(iconList = "pencil,list-ul,password-policies,trash");
 		}
 
-		task ("When the Collection creator open the dropdown menu of management toolbar after selecting the new collection") {
+		task ("When the Collection creator opens the dropdown menu of management toolbar after selecting the new collection") {
 			LexiconEntry.selectEntry(key_rowEntry = "Dynamic Collection");
 
 			Click(locator1 = "ManagementBar#MORE_ACTIONS_ELLIPSIS");
@@ -3642,7 +3642,7 @@ definition {
 			DropdownMenuItem.viewIcon(iconList = "trash");
 		}
 
-		task ("When the Collection creator open the ellipsis dropdown menu of any collection providers") {
+		task ("When the Collection creator opens the dropdown menu of any collection providers") {
 			Navigator.gotoNavTab(navTab = "Collection Providers");
 
 			LexiconList.clickEllipsis(listEntry = "Most Viewed Assets");

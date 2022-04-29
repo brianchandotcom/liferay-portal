@@ -3124,10 +3124,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			ServiceContext serviceContext, WikiPage page)
 		throws PortalException {
 
-		long[] assetCategoryIds = _assetCategoryLocalService.getCategoryIds(
-			WikiPage.class.getName(), page.getResourcePrimKey());
-
-		serviceContext.setAssetCategoryIds(assetCategoryIds);
+		serviceContext.setAssetCategoryIds(
+			_assetCategoryLocalService.getCategoryIds(
+				WikiPage.class.getName(), page.getResourcePrimKey()));
 
 		AssetEntry assetEntry = _assetEntryLocalService.getEntry(
 			WikiPage.class.getName(), page.getResourcePrimKey());
@@ -3135,15 +3134,12 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		List<AssetLink> assetLinks = _assetLinkLocalService.getLinks(
 			assetEntry.getEntryId());
 
-		long[] assetLinkEntryIds = ListUtil.toLongArray(
-			assetLinks, AssetLink.ENTRY_ID2_ACCESSOR);
+		serviceContext.setAssetLinkEntryIds(
+			ListUtil.toLongArray(assetLinks, AssetLink.ENTRY_ID2_ACCESSOR));
 
-		serviceContext.setAssetLinkEntryIds(assetLinkEntryIds);
-
-		String[] assetTagNames = _assetTagLocalService.getTagNames(
-			WikiPage.class.getName(), page.getResourcePrimKey());
-
-		serviceContext.setAssetTagNames(assetTagNames);
+		serviceContext.setAssetTagNames(
+			_assetTagLocalService.getTagNames(
+				WikiPage.class.getName(), page.getResourcePrimKey()));
 
 		ExpandoBridge expandoBridge = page.getExpandoBridge();
 

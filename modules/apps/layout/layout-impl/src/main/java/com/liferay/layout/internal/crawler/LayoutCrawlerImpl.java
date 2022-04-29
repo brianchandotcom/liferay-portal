@@ -46,7 +46,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Pavel Savinov
  */
-@Component(immediate = true, service = LayoutCrawler.class)
+@Component(
+	configurationPid = "com.liferay.layout.internal.configuration.LayoutCrawlerClientConfiguration",
+	immediate = true, service = LayoutCrawler.class
+)
 public class LayoutCrawlerImpl implements LayoutCrawler {
 
 	@Override

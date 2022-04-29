@@ -83,6 +83,10 @@ public class ResourcesFragmentEntryProcessor implements FragmentEntryProcessor {
 		Matcher matcher = _pattern.matcher(code);
 
 		while (matcher.find()) {
+			if (fragmentEntry.getGroupId() <= 0) {
+				continue;
+			}
+
 			FileEntry fileEntry =
 				PortletFileRepositoryUtil.fetchPortletFileEntry(
 					fragmentEntry.getGroupId(),

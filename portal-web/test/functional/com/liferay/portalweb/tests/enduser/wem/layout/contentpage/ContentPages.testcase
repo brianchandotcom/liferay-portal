@@ -1088,23 +1088,19 @@ definition {
 	@priority = "4"
 	test ViewDropdownIconsInPageEditor {
 		task ("Given a Page designer has a content page with a Collection Display fragment") {
-			task ("Add a Dynamic Collection") {
-				JSONAssetlist.addDynamicAssetListEntryWithItemType(
-					groupName = "Test Site Name",
-					itemSubtype = "All Subtypes",
-					itemType = "Web Content Article",
-					title = "Dynamic Collection");
-			}
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article",
+				title = "Dynamic Collection");
 
-			task ("Add a Collection Display fragment to a content page") {
-				ContentPagesNavigator.openEditContentPage(
-					pageName = "Test Content Page Name",
-					siteName = "Test Site Name");
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 
-				PageEditor.addFragment(
-					collectionName = "Content Display",
-					fragmentName = "Collection Display");
-			}
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
 		}
 
 		task ("When the Page designer opens the dropdown menu of Collection Display topper") {

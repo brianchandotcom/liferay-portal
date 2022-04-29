@@ -665,18 +665,14 @@ definition {
 	@priority = "4"
 	test ViewDropdownMenuIconsInFragmentsAdmin {
 		task ("Given a Fragments creator has a new Fragment Set and custom fragment") {
-			task ("Add a Fragment Set") {
-				JSONFragment.addFragmentCollection(
-					groupName = "Test Site Name",
-					name = "New Fragment Set Name");
-			}
+			JSONFragment.addFragmentCollection(
+				groupName = "Test Site Name",
+				name = "New Fragment Set Name");
 
-			task ("Add a fragment") {
-				JSONFragment.addSection(
-					collectionName = "New Fragment Set Name",
-					groupName = "Test Site Name",
-					name = "Fragment Name");
-			}
+			JSONFragment.addSection(
+				collectionName = "New Fragment Set Name",
+				groupName = "Test Site Name",
+				name = "Fragment Name");
 		}
 
 		task ("When the Fragments creator opens the dropdown menu of custom fragment") {

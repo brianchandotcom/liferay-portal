@@ -52,19 +52,17 @@ definition {
 	@priority = "4"
 	test ViewDropdownMenuIconsInPageTemplatesAdmin {
 		task ("Given a Page Template creator has a new Display Page Template") {
-			task ("Add a display page template for Web Content Article and Basic Web Content") {
-				JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
-					contentType = "Web Content Article",
-					displayPageTemplateEntryName = "Display Page Name",
-					groupName = "Test Site Name",
-					subType = "Basic Web Content");
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
 
-				DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-				DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
-				PageEditor.clickPublish();
-			}
+			PageEditor.clickPublish();
 		}
 
 		task ("When the Page Template creator opens the dropdown menu of display page template") {
@@ -88,21 +86,17 @@ definition {
 		}
 
 		task ("Given a Page Template creator has a new Page Template Set with a Content and Widget Page Template") {
-			task ("Add a Page Template Sets") {
-				JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
-					groupName = "Test Site Name",
-					layoutPageTemplateCollectionName = "Test Page Template Set");
-			}
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Test Page Template Set");
 
-			task ("Add a content and widget page template") {
-				for (var type : list "Content,Widget") {
-					JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
-						groupName = "Test Site Name",
-						layoutPageTemplateCollectionName = "Test Page Template Set",
-						layoutPageTemplateEntryName = "${type} Template Name",
-						layoutPageTemplateStatus = "Approved",
-						layoutPageTemplateType = "${type} Page Template");
-				}
+			for (var type : list "Content,Widget") {
+				JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
+					groupName = "Test Site Name",
+					layoutPageTemplateCollectionName = "Test Page Template Set",
+					layoutPageTemplateEntryName = "${type} Template Name",
+					layoutPageTemplateStatus = "Approved",
+					layoutPageTemplateType = "${type} Page Template");
 			}
 		}
 
@@ -155,19 +149,17 @@ definition {
 		}
 
 		task ("Given a Page Template creator has a new Masters Template") {
-			task ("Add a custom master") {
-				JSONLayoutpagetemplate.addMasterPageTemplateEntry(
-					groupName = "Test Site Name",
-					masterPageTemplateEntryName = "Custom Masters Page Template");
+			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
+				groupName = "Test Site Name",
+				masterPageTemplateEntryName = "Custom Masters Page Template");
 
-				MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
 
-				MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
+			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
 
-				Button.click(button = "Publish Master");
+			Button.click(button = "Publish Master");
 
-				Alert.viewSuccessMessage();
-			}
+			Alert.viewSuccessMessage();
 		}
 
 		task ("When the Page Template creator opens the dropdown menu of masters template") {

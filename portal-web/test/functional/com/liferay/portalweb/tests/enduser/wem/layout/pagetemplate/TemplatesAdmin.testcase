@@ -32,13 +32,11 @@ definition {
 	@priority = "4"
 	test ViewDropdownMenuIconsInTemplatesAdmin {
 		task ("Given a Template creator has an Information Template") {
-			task ("Add an information template for Blogs Entry") {
-				InformationTemplates.openInformationTemplatesAdmin(siteURLKey = "test-site-name");
+			InformationTemplates.openInformationTemplatesAdmin(siteURLKey = "test-site-name");
 
-				InformationTemplates.addCP(
-					informationTemplateName = "Test Information Template",
-					itemType = "Blogs Entry");
-			}
+			InformationTemplates.addCP(
+				informationTemplateName = "Test Information Template",
+				itemType = "Blogs Entry");
 		}
 
 		task ("When the Template creator opens the dropdown menu of information template") {
@@ -64,13 +62,11 @@ definition {
 		}
 
 		task ("Given a Template creator has a Widget Template") {
-			task ("Add a widget template for Breadcrumb widget") {
-				ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
+			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
 
-				ApplicationDisplayTemplates.addCP(
-					adtType = "Breadcrumb",
-					fieldNameList = "Breadcrumb Entry");
-			}
+			ApplicationDisplayTemplates.addCP(
+				adtType = "Breadcrumb",
+				fieldNameList = "Breadcrumb Entry");
 		}
 
 		task ("When the Template creator opens the dropdown menu of widget template") {

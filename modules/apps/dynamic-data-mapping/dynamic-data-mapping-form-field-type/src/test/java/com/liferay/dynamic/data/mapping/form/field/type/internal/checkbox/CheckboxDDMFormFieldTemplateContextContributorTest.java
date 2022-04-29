@@ -208,7 +208,11 @@ public class CheckboxDDMFormFieldTemplateContextContributorTest
 
 		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
 
-		themeDisplay.setPlid(Mockito.anyLong());
+		Mockito.doReturn(
+			0L
+		).when(
+			themeDisplay
+		).getPlid();
 
 		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
 

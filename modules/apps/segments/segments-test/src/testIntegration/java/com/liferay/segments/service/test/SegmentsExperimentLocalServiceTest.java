@@ -90,14 +90,6 @@ public class SegmentsExperimentLocalServiceTest {
 
 		_layout = LayoutTestUtil.addTypeContentLayout(_group);
 
-		long defaultSegmentsExperienceId =
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				_layout.getPlid());
-
-		_segmentsExperienceLocalService.updateSegmentsExperiencePriority(
-			defaultSegmentsExperienceId,
-			SegmentsExperienceConstants.PRIORITY_DEFAULT - 10);
-
 		ServiceContextThreadLocal.pushServiceContext(new ServiceContext());
 	}
 

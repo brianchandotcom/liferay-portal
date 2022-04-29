@@ -501,11 +501,15 @@ public class SegmentsExperienceLocalServiceImpl
 					" has a locked segments experiment");
 		}
 
+		boolean swap = true;
+
 		if ((newPriority == 0) && (segmentsExperience.getPriority() > 0)) {
 			newPriority = -1;
+			swap = false;
 		}
 		else if ((newPriority == 0) && (segmentsExperience.getPriority() < 0)) {
 			newPriority = 1;
+			swap = false;
 		}
 
 		SegmentsExperience swapSegmentsExperience =
@@ -535,14 +539,17 @@ public class SegmentsExperienceLocalServiceImpl
 
 		segmentsExperiencePersistence.flush();
 
-		swapSegmentsExperience = segmentsExperiencePersistence.findByPrimaryKey(
-			swapSegmentsExperience.getSegmentsExperienceId());
+		if (swap) {
+			swapSegmentsExperience =
+				segmentsExperiencePersistence.findByPrimaryKey(
+					swapSegmentsExperience.getSegmentsExperienceId());
 
-		swapSegmentsExperience.setPriority(oldPriority);
+			swapSegmentsExperience.setPriority(oldPriority);
 
-		segmentsExperiencePersistence.update(swapSegmentsExperience);
+			segmentsExperiencePersistence.update(swapSegmentsExperience);
 
-		segmentsExperiencePersistence.flush();
+			segmentsExperiencePersistence.flush();
+		}
 
 		_compactSegmentsExperiencesPriorities(segmentsExperience);
 

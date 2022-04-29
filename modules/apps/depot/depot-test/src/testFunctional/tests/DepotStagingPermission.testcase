@@ -48,6 +48,116 @@ definition {
 		}
 	}
 
+	@description = "This test ensures that an image can be deleted in a staged asset library by a user with permissions."
+	@priority = "4"
+	test CanDeleteImage {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_2.jpg",
+			groupName = "Test Depot Name-staging",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpg");
+
+		JSONRole.addRegularRole(
+			roleKey = "Regular Role",
+			roleTitle = "Regular Role");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_document_library_web_portlet_DLAdminPortlet",
+			roleTitle = "Regular Role");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "DELETE",
+			resourceName = "com.liferay.document.library.kernel.model.DLFileEntry",
+			roleTitle = "Regular Role");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_depot_web_portlet_DepotAdminPortlet",
+			roleTitle = "Regular Role");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com.liferay.depot.model.DepotEntry",
+			roleTitle = "Regular Role");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW_STAGING",
+			resourceName = "com.liferay.depot.model.DepotEntry",
+			roleTitle = "Regular Role");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Regular Role",
+			userEmailAddress = "userea@liferay.com");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
+
+		DMDocument.deleteCP(dmDocumentTitle = "Document_2.jpg");
+
+		DMDocument.viewDefault();
+	}
+
+	@description = "This test ensures that a basic article can be deleted in a staged asset library by a user with permissions."
+	@priority = "4"
+	test CanDeleteWC {
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Depot Name (Staging)",
+			site = "false",
+			title = "WC WebContent Title");
+
+		JSONRole.addRegularRole(
+			roleKey = "Regular Role",
+			roleTitle = "Regular Role");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
+			roleTitle = "Regular Role");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "UPDATE",
+			resourceName = "com.liferay.journal.model.JournalArticle",
+			roleTitle = "Regular Role");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "DELETE",
+			resourceName = "com.liferay.journal.model.JournalArticle",
+			roleTitle = "Regular Role");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_depot_web_portlet_DepotAdminPortlet",
+			roleTitle = "Regular Role");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com.liferay.depot.model.DepotEntry",
+			roleTitle = "Regular Role");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW_STAGING",
+			resourceName = "com.liferay.depot.model.DepotEntry",
+			roleTitle = "Regular Role");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Regular Role",
+			userEmailAddress = "userea@liferay.com");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		DepotNavigator.openDepotWebContentAdminStaging(depotName = "Test Depot Name");
+
+		WebContent.moveToRecycleBinCP(webContentTitle = "WC WebContent Title");
+	}
+
 	@description = "This test covers LPS-151760. It ensures that an image can be downloaded in a staged asset library by a user with permissions."
 	@priority = "4"
 	test CanDownloadImage {
@@ -151,6 +261,196 @@ definition {
 			dmDocumentTitle = "Document_1.doc");
 
 		DMDocument.viewCP(dmDocumentTitle = "Document_1.doc");
+	}
+
+	@description = "This test ensures that a user with permissions can edit an image and publish it to live in asset library."
+	@priority = "4"
+	test CanPublishEditedImage {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_2.jpg",
+			groupName = "Test Depot Name-staging",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpg");
+
+		JSONRole.addRegularRole(
+			roleKey = "Regular Role",
+			roleTitle = "Regular Role");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_document_library_web_portlet_DLAdminPortlet",
+			roleTitle = "Regular Role");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "UPDATE",
+			resourceName = "com.liferay.document.library.kernel.model.DLFileEntry",
+			roleTitle = "Regular Role");
+
+		for (var resourceActionIndex : list "ACCESS_IN_CONTROL_PANEL,CONFIGURATION,PERMISSIONS,PREFERENCES,VIEW") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com_liferay_depot_web_portlet_DepotAdminPortlet",
+				roleTitle = "Regular Role");
+		}
+
+		for (var resourceActionIndex : list "ASSIGN_MEMBERS,ASSIGN_USER_ROLES,DELETE,PERMISSIONS,UPDATE,VIEW,VIEW_MEMBERS,VIEW_SITE_ADMINISTRATION,PUBLISH_STAGING,VIEW_STAGING") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com.liferay.depot.model.DepotEntry",
+				roleTitle = "Regular Role");
+		}
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Regular Role",
+			userEmailAddress = "userea@liferay.com");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
+
+		DMDocument.editCP(
+			dmDocumentTitle = "Document_2.jpg",
+			dmDocumentTitleEdit = "DM Document Image Edit");
+
+		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
+
+		Staging.publishToLive();
+
+		DepotNavigator.openToDMEntryInDepot(
+			depotName = "Test Depot Name",
+			dmDocumentTitle = "DM Document Image Edit");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document Image Edit");
+	}
+
+	@description = "This test ensures that a user with permissions can edit a basic article and publish it to live in asset library."
+	@priority = "4"
+	test CanPublishEditedWC {
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Depot Name (Staging)",
+			site = "false",
+			title = "WC WebContent Title");
+
+		JSONRole.addRegularRole(
+			roleKey = "Regular Role",
+			roleTitle = "Regular Role");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
+			roleTitle = "Regular Role");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "UPDATE",
+			resourceName = "com.liferay.journal.model.JournalArticle",
+			roleTitle = "Regular Role");
+
+		for (var resourceActionIndex : list "ACCESS_IN_CONTROL_PANEL,CONFIGURATION,PERMISSIONS,PREFERENCES,VIEW") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com_liferay_depot_web_portlet_DepotAdminPortlet",
+				roleTitle = "Regular Role");
+		}
+
+		for (var resourceActionIndex : list "ASSIGN_MEMBERS,ASSIGN_USER_ROLES,DELETE,PERMISSIONS,UPDATE,VIEW,VIEW_MEMBERS,VIEW_SITE_ADMINISTRATION,PUBLISH_STAGING,VIEW_STAGING") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com.liferay.depot.model.DepotEntry",
+				roleTitle = "Regular Role");
+		}
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Regular Role",
+			userEmailAddress = "userea@liferay.com");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		DepotNavigator.openDepotWebContentAdminStaging(depotName = "Test Depot Name");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
+		WebContent.editCP(
+			webContentTitle = "WC WebContent Title",
+			webContentTitleEdit = "WC WebContent Title Edit");
+
+		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
+
+		Staging.publishToLive();
+
+		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
+
+		WebContent.viewTitle(
+			onLive = "true",
+			webContentTitle = "WC WebContent Title Edit");
+	}
+
+	@description = "This test ensures that a user with permissions can add a basic article and publish it to live in asset library."
+	@priority = "4"
+	test CanPublishWC {
+		JSONRole.addRegularRole(
+			roleKey = "Regular Role",
+			roleTitle = "Regular Role");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
+			roleTitle = "Regular Role");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ADD_ARTICLE",
+			resourceName = "com.liferay.journal",
+			roleTitle = "Regular Role");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ADD_FOLDER",
+			resourceName = "com.liferay.journal",
+			roleTitle = "Regular Role");
+
+		for (var resourceActionIndex : list "ACCESS_IN_CONTROL_PANEL,CONFIGURATION,PERMISSIONS,PREFERENCES,VIEW") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com_liferay_depot_web_portlet_DepotAdminPortlet",
+				roleTitle = "Regular Role");
+		}
+
+		for (var resourceActionIndex : list "ASSIGN_MEMBERS,ASSIGN_USER_ROLES,DELETE,PERMISSIONS,UPDATE,VIEW,VIEW_MEMBERS,VIEW_SITE_ADMINISTRATION,PUBLISH_STAGING,VIEW_STAGING") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com.liferay.depot.model.DepotEntry",
+				roleTitle = "Regular Role");
+		}
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Regular Role",
+			userEmailAddress = "userea@liferay.com");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		DepotNavigator.openDepotWebContentAdminStaging(depotName = "Test Depot Name");
+
+		WebContent.addArticleCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
+
+		Staging.publishToLive();
+
+		DepotNavigator.openToEditWCEntry(
+			depotName = "Test Depot Name",
+			webContentTitle = "WC WebContent Title");
+
+		WebContent.viewCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
 	}
 
 }

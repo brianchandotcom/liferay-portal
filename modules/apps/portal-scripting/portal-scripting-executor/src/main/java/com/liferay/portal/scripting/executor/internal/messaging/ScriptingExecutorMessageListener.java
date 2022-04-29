@@ -58,11 +58,9 @@ public class ScriptingExecutorMessageListener extends BaseMessageListener {
 						MESSAGE_KEY_BUNDLE_CLASS_LOADER);
 
 				if (bundleClassLoader != null) {
-					ClassLoader aggregateClassLoader =
+					currentThread.setContextClassLoader(
 						AggregateClassLoader.getAggregateClassLoader(
-							contextClassLoader, bundleClassLoader);
-
-					currentThread.setContextClassLoader(aggregateClassLoader);
+							contextClassLoader, bundleClassLoader));
 				}
 
 				_scripting.exec(

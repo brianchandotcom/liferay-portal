@@ -125,10 +125,9 @@ public class EntityCacheImplTest {
 
 		entityCacheImpl.putResult(EntityCacheImplTest.class, 12345, _nullModel);
 
-		Serializable result = entityCacheImpl.getResult(
-			EntityCacheImplTest.class, 12345);
-
-		Assert.assertSame(_nullModel, result);
+		Assert.assertSame(
+			_nullModel,
+			entityCacheImpl.getResult(EntityCacheImplTest.class, 12345));
 	}
 
 	private ClassLoader _classLoader;

@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.portal.db.partition.messaging.test;
+package com.liferay.portal.db.partition.messaging.test.util;
 
-import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.db.partition.test.util.BaseDBPartitionTestCase;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Destination;
@@ -32,62 +31,26 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.test.rule.Inject;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * @author Alberto Chaparro
  */
-@RunWith(Arquillian.class)
-public class DBPartitionMessageBusInterceptorTest
+public abstract class BaseDBPartitionMessageBusInterceptorTestCase
 	extends BaseDBPartitionTestCase {
-
-	@BeforeClass
-	public static void setUpClass() throws Exception {
-		_company = CompanyTestUtil.addCompany();
-
-		Set<Long> companyIds = new TreeSet<>();
-
-		_companyLocalService.forEachCompany(
-			company -> {
-				if (company.isActive()) {
-					companyIds.add(company.getCompanyId());
-				}
-			});
-
-		_activeCompanyIds = companyIds.toArray(new Long[0]);
-
-		_currentDatabasePartitionEnabled =
-			ReflectionTestUtil.getAndSetFieldValue(
-				_dbPartitionMessageBusInterceptor, "_databasePartitionEnabled",
-				true);
-
-		_testDBPartitionMessageListener = new TestDBPartitionMessageListener();
-
-		Destination destination = DestinationFactoryUtil.createDestination(
-			new DestinationConfiguration(
-				DestinationConfiguration.DESTINATION_TYPE_SYNCHRONOUS,
-				_DESTINATION_NAME));
-
-		destination.register(_testDBPartitionMessageListener);
-
-		destination.open();
-
-		_destinations = ReflectionTestUtil.getFieldValue(
-			_messageBus, "_destinations");
-
-		_destinations.put(_DESTINATION_NAME, destination);
-	}
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
@@ -132,9 +95,11 @@ public class DBPartitionMessageBusInterceptorTest
 	}
 
 	@Test
-	public void testSendMessage() {
+	public void testSendMessage() throws InterruptedException {
 
 		// Test 1
+
+		_countDownLatch = new CountDownLatch(_activeCompanyIds.length);
 
 		_messageBus.sendMessage(_DESTINATION_NAME, new Message());
 
@@ -144,6 +109,8 @@ public class DBPartitionMessageBusInterceptorTest
 
 		CompanyThreadLocal.setCompanyId(_company.getCompanyId());
 
+		_countDownLatch = new CountDownLatch(1);
+
 		_messageBus.sendMessage(_DESTINATION_NAME, new Message());
 
 		_testDBPartitionMessageListener.assertCollected(
@@ -151,7 +118,11 @@ public class DBPartitionMessageBusInterceptorTest
 	}
 
 	@Test
-	public void testSendMessageExcludingDestination() {
+	public void testSendMessageExcludingDestination()
+		throws InterruptedException {
+
+		_countDownLatch = new CountDownLatch(_activeCompanyIds.length);
+
 		_messageBus.sendMessage(_DESTINATION_NAME, new Message());
 
 		_testDBPartitionMessageListener.assertCollected(_activeCompanyIds);
@@ -161,6 +132,8 @@ public class DBPartitionMessageBusInterceptorTest
 			"_excludedMessageBusDestinationNames",
 			Collections.singleton(_DESTINATION_NAME));
 
+		_countDownLatch = new CountDownLatch(1);
+
 		_messageBus.sendMessage(_DESTINATION_NAME, new Message());
 
 		_testDBPartitionMessageListener.assertCollected(
@@ -168,12 +141,16 @@ public class DBPartitionMessageBusInterceptorTest
 	}
 
 	@Test
-	public void testSendMessageExcludingScheduledJob() {
+	public void testSendMessageExcludingScheduledJob()
+		throws InterruptedException {
+
 		Message message = new Message();
 
 		message.put(
 			SchedulerEngine.JOB_NAME,
 			TestDBPartitionMessageListener.class.getName());
+
+		_countDownLatch = new CountDownLatch(_activeCompanyIds.length);
 
 		_messageBus.sendMessage(_DESTINATION_NAME, message.clone());
 
@@ -184,6 +161,8 @@ public class DBPartitionMessageBusInterceptorTest
 			Collections.singleton(
 				TestDBPartitionMessageListener.class.getName()));
 
+		_countDownLatch = new CountDownLatch(1);
+
 		_messageBus.sendMessage(_DESTINATION_NAME, message.clone());
 
 		_testDBPartitionMessageListener.assertCollected(
@@ -191,13 +170,15 @@ public class DBPartitionMessageBusInterceptorTest
 	}
 
 	@Test
-	public void testSendMessageWithCompanyId() {
+	public void testSendMessageWithCompanyId() throws InterruptedException {
 
 		// Test 1
 
 		Message message = new Message();
 
 		message.put("companyId", CompanyConstants.SYSTEM);
+
+		_countDownLatch = new CountDownLatch(_activeCompanyIds.length);
 
 		_messageBus.sendMessage(_DESTINATION_NAME, message);
 
@@ -210,6 +191,8 @@ public class DBPartitionMessageBusInterceptorTest
 		message = new Message();
 
 		message.put("companyId", CompanyConstants.SYSTEM);
+
+		_countDownLatch = new CountDownLatch(_activeCompanyIds.length);
 
 		_messageBus.sendMessage(_DESTINATION_NAME, message);
 
@@ -223,10 +206,46 @@ public class DBPartitionMessageBusInterceptorTest
 
 		message.put("companyId", _company.getCompanyId());
 
+		_countDownLatch = new CountDownLatch(1);
+
 		_messageBus.sendMessage(_DESTINATION_NAME, message);
 
 		_testDBPartitionMessageListener.assertCollected(
 			_company.getCompanyId());
+	}
+
+	protected static void setUpClass(String destinationType) throws Exception {
+		_company = CompanyTestUtil.addCompany();
+
+		Set<Long> companyIds = new TreeSet<>();
+
+		_companyLocalService.forEachCompany(
+			company -> {
+				if (company.isActive()) {
+					companyIds.add(company.getCompanyId());
+				}
+			});
+
+		_activeCompanyIds = companyIds.toArray(new Long[0]);
+
+		_currentDatabasePartitionEnabled =
+			ReflectionTestUtil.getAndSetFieldValue(
+				_dbPartitionMessageBusInterceptor, "_databasePartitionEnabled",
+				true);
+
+		_testDBPartitionMessageListener = new TestDBPartitionMessageListener();
+
+		Destination destination = DestinationFactoryUtil.createDestination(
+			new DestinationConfiguration(destinationType, _DESTINATION_NAME));
+
+		destination.register(_testDBPartitionMessageListener);
+
+		destination.open();
+
+		_destinations = ReflectionTestUtil.getFieldValue(
+			_messageBus, "_destinations");
+
+		_destinations.put(_DESTINATION_NAME, destination);
 	}
 
 	private static final String _DESTINATION_NAME = "liferay/test_dbpartition";
@@ -237,6 +256,7 @@ public class DBPartitionMessageBusInterceptorTest
 	@Inject
 	private static CompanyLocalService _companyLocalService;
 
+	private static volatile CountDownLatch _countDownLatch;
 	private static boolean _currentDatabasePartitionEnabled;
 
 	@Inject(
@@ -259,9 +279,17 @@ public class DBPartitionMessageBusInterceptorTest
 	private static class TestDBPartitionMessageListener
 		extends BaseMessageListener {
 
-		public void assertCollected(Long... companyIds) {
+		public void assertCollected(Long... companyIds)
+			throws InterruptedException {
+
+			_countDownLatch.await(1, TimeUnit.MINUTES);
+
+			ArrayList<Long> receivedCompanyIds = new ArrayList<>(_companyIds);
+
+			Collections.sort(receivedCompanyIds);
+
 			Assert.assertArrayEquals(
-				companyIds, _companyIds.toArray(new Long[0]));
+				companyIds, receivedCompanyIds.toArray(new Long[0]));
 
 			_companyIds.clear();
 		}
@@ -269,9 +297,11 @@ public class DBPartitionMessageBusInterceptorTest
 		@Override
 		protected void doReceive(Message message) {
 			_companyIds.add(CompanyThreadLocal.getCompanyId());
+			_countDownLatch.countDown();
 		}
 
-		private final Set<Long> _companyIds = new TreeSet<>();
+		private final CopyOnWriteArraySet<Long> _companyIds =
+			new CopyOnWriteArraySet<>();
 
 	}
 

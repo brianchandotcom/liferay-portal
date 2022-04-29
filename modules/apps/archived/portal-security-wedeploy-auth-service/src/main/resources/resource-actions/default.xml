@@ -26,7 +26,6 @@
 		<portlet-ref>
 			<portlet-name>com_liferay_portal_security_wedeploy_auth_web_internal_portlet_WeDeployAuthAdminPortlet</portlet-name>
 		</portlet-ref>
-		<root>true</root>
 		<weight>2</weight>
 		<permissions>
 			<supports>

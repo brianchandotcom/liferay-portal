@@ -87,7 +87,7 @@ public class ObjectDefinitionResourceTest
 
 		assertEquals(
 			Arrays.asList(objectDefinition1, objectDefinition2),
-			objectDefinitions.subList(0, 2));
+			objectDefinitions.subList(1, 3));
 
 		Page<ObjectDefinition> descPage =
 			objectDefinitionResource.getObjectDefinitionsPage(
@@ -98,7 +98,7 @@ public class ObjectDefinitionResourceTest
 		assertEquals(
 			Arrays.asList(objectDefinition2, objectDefinition1),
 			objectDefinitions.subList(
-				objectDefinitions.size() - 2, objectDefinitions.size()));
+				objectDefinitions.size() - 3, objectDefinitions.size() - 1));
 	}
 
 	@Ignore

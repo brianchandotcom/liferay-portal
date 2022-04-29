@@ -394,9 +394,9 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 		try {
 			return getPortletFileEntry(groupId, folderId, fileName);
 		}
-		catch (PortalException portalException) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
+				_log.debug(exception);
 			}
 		}
 

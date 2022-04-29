@@ -94,12 +94,6 @@
 	);
 </aui:script>
 
-<aui:script use="aui-base">
-	if (A.UA.mobile) {
-		Liferay.Util.addInputCancel();
-	}
-</aui:script>
-
 <%
 Group group = null;
 

@@ -30,7 +30,7 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
-		LexiconCard.clickCard(card = "Raylife");
+		LexiconCard.clickCard(card = "Raylife D2C");
 
 		SelectFrame(
 			key_title = "Add Site",

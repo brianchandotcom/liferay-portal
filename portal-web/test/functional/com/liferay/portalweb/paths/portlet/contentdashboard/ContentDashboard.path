@@ -150,6 +150,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTENT_PERFORMANCE_SIDEBAR</td>
+	<td>//div[contains(@class, 'sidebar ') and descendant-or-self::p[contains(.,'Content Performance')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTENT_PERFORMANCE_TITLE_PANEL</td>
 	<td>//*[contains(@class, 'font-weight-bold mb-0 pr-2') and contains(text(), 'Content Performance')]</td>
 	<td></td>

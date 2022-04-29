@@ -79,7 +79,15 @@ public class LayoutCrawlerImpl implements LayoutCrawler {
 		Cookie cookie = new Cookie(
 			CookieKeys.GUEST_LANGUAGE_ID, LocaleUtil.toLanguageId(locale));
 
-		cookie.setDomain(inetAddress.getHostName());
+		if (_layoutCrawlerClientConfiguration.enabled()) {
+
+			cookie.setDomain(
+				_layoutCrawlerClientConfiguration.hostName());
+		}
+		else {
+			cookie.setDomain(inetAddress.getHostName());
+		}
+
 
 		options.setCookies(new Cookie[] {cookie});
 

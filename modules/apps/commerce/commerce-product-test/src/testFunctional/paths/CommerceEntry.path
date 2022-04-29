@@ -992,6 +992,12 @@
 	<td>//a[contains(text(),'${key_itemName}')]//..//..//*[name()='svg'][contains(@class,'lexicon-icon lexicon-icon-ellipsis-v')]</td>
 	<td></td>
 </tr>
+<!--VISIBILITY-->
+<tr>
+	<td>CHECK_SPECIFIC_TOGGLE_SWITCH</td>
+	<td>//h4[contains(.,"${key_name}")]//span[contains(@id,'toggle-switch')]//..//..//..//div[contains(@class,'collapse show')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

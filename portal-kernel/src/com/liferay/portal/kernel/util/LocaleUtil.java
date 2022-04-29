@@ -391,7 +391,9 @@ public class LocaleUtil {
 			return displayName;
 		}
 
-		return StringBundler.concat(displayName, " (", country, ")");
+		return StringBundler.concat(
+			displayName, StringPool.SPACE, StringPool.OPEN_PARENTHESIS, country,
+			StringPool.CLOSE_PARENTHESIS);
 	}
 
 	private String _getLongDisplayName(

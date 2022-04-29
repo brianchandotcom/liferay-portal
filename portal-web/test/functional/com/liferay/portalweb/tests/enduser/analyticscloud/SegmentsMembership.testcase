@@ -75,6 +75,7 @@ definition {
 	@priority = "4"
 	test AssertSegmentMembershipListShowsAllKnownIndividuals {
 		property test.name.skip.portal.instance = "SegmentsMembership#AssertSegmentMembershipListShowsAllKnownIndividuals";
+		property analytics.cloud.upstream = "false";
 
 		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
 		var nameList = "user1 user1,user2 user2,user3 user3";
@@ -127,6 +128,7 @@ definition {
 	@priority = "5"
 	test CanSearchMembershipList {
 		property test.name.skip.portal.instance = "SegmentsMembership#CanSearchMembershipList";
+		property analytics.cloud.upstream = "false";
 
 		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
 		var nameList = "user1 user1,user2 user2,user3 user3";
@@ -344,6 +346,7 @@ definition {
 	@priority = "3"
 	test OrderSegmentProfileMembershipList {
 		property test.name.skip.portal.instance = "SegmentsMembership#OrderSegmentProfileMembershipList";
+		property analytics.cloud.upstream = "false";
 
 		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
 		var nameList = "user1 user1,user2 user2,user3 user3";
@@ -426,6 +429,7 @@ definition {
 	@priority = "3"
 	test SearchDynamicSegmentsMembershipPreviewModal {
 		property test.name.skip.portal.instance = "SegmentsMembership#SearchDynamicSegmentsMembershipPreviewModal";
+		property analytics.cloud.upstream = "false";
 
 		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
 		var nameList = "user1 user1,user2 user2,user3 user3";

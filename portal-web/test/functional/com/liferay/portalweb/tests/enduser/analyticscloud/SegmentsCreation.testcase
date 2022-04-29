@@ -64,6 +64,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8483 | Test Summary: Add members from different pages"
 	@priority = "3"
 	test CanAddMembersFromDifferentPages {
+		property analytics.cloud.upstream = "false";
+
 		var usernameList = "user1,user2,user3,user4,user5";
 		var emailList = "userea@liferay.com,user1@liferay.com,user2@liferay.com,user3@liferay.com,user4@liferay.com,user5@liferay.com";
 
@@ -159,6 +161,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8476 | Test Summary: Cancel Creating a Dynamic Segment"
 	@priority = "3"
 	test CanCancelCreatingDynamicSegment {
+		property analytics.cloud.upstream = "false";
+
 		task ("Sign in as new user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "userea@liferay.com",
@@ -1055,6 +1059,7 @@ definition {
 	@priority = "5"
 	test CanCreateStaticSegmentWithIndividuals {
 		property test.name.skip.portal.instance = "SegmentsCreation#CanCreateStaticSegmentWithIndividuals";
+		property analytics.cloud.upstream = "false";
 
 		task ("Sign in as new user") {
 			User.logoutAndLoginPG(
@@ -1276,6 +1281,7 @@ definition {
 	@priority = "3"
 	test CanPaginateStaticSegmentAddMembers {
 		property test.name.skip.portal.instance = "SegmentsCreation#CanPaginateStaticSegmentAddMembers";
+		property analytics.cloud.upstream = "false";
 
 		var usernameList = "user1,user2,user3,user4,user5";
 		var emailList = "userea@liferay.com,user1@liferay.com,user2@liferay.com,user3@liferay.com,user4@liferay.com,user5@liferay.com";
@@ -1354,6 +1360,7 @@ definition {
 	@priority = "3"
 	test CanPreviewDynamicSegmentMembers {
 		property test.name.skip.portal.instance = "SegmentsCreation#CanPreviewDynamicSegmentMembers";
+		property analytics.cloud.upstream = "false";
 
 		var emailList = "userea@liferay.com,user1@liferay.com";
 		var usernameList = "userfn userln,user1 user1";
@@ -1440,6 +1447,7 @@ definition {
 	@priority = "3"
 	test CanSearchUserInAddMembersModal {
 		property test.name.skip.portal.instance = "SegmentsCreation#CanSearchUserInAddMembersModal";
+		property analytics.cloud.upstream = "false";
 
 		var emailList = "userea@liferay.com,user1@liferay.com";
 

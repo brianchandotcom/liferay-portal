@@ -284,6 +284,7 @@ definition {
 	@priority = "4"
 	test CanCreateWebBehaviorSegmentSinceXdays {
 		property test.name.skip.portal.instance = "SegmentsCreationWebBehavior#CanCreateWebBehaviorSegmentSinceXdays";
+		property analytics.cloud.upstream = "false";
 
 		ACUtils.createWCAndAddToPage();
 
@@ -1293,6 +1294,7 @@ definition {
 	@priority = "4"
 	test CanCreateWebBehaviorSegmentViewingWC {
 		property test.name.skip.portal.instance = "SegmentsCreationWebBehavior#CanCreateWebBehaviorSegmentViewingWC";
+		property analytics.cloud.upstream = "false";
 
 		ACUtils.createWCAndAddToPage();
 

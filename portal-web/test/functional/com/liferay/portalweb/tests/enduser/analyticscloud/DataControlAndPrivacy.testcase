@@ -75,6 +75,7 @@ definition {
 	@priority = "5"
 	test CanCreateAccessRequest {
 		property test.name.skip.portal.instance = "DataControlAndPrivacy#CanCreateAccessRequest";
+		property analytics.cloud.upstream = "false";
 
 		var userEmail = "dcp1@liferay.com";
 		var userName = "dcp1";
@@ -122,6 +123,7 @@ definition {
 	@priority = "5"
 	test CanCreateDeleteRequest {
 		property test.name.skip.portal.instance = "DataControlAndPrivacy#CanCreateDeleteRequest";
+		property analytics.cloud.upstream = "false";
 
 		var userEmail = "dcp2@liferay.com";
 		var userName = "dcp2";
@@ -169,6 +171,7 @@ definition {
 	@priority = "5"
 	test CanCreateSuppressRequest {
 		property test.name.skip.portal.instance = "DataControlAndPrivacy#CanCreateSuppressRequest";
+		property analytics.cloud.upstream = "false";
 
 		var userEmail = "dcp3@liferay.com";
 		var userName = "dcp3";

@@ -341,6 +341,7 @@ definition {
 	@priority = "5"
 	test CanSyncAllContactsFromDXPToAC {
 		property portal.release = "true";
+		property analytics.cloud.upstream = "false";
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -533,6 +534,7 @@ definition {
 	@priority = "4"
 	test SyncDataSourceContactsByGroups {
 		property portal.release = "true";
+		property analytics.cloud.upstream = "false";
 
 		task ("Add user, group and assign user to group") {
 			JSONUser.addUser(
@@ -596,6 +598,7 @@ definition {
 	@priority = "4"
 	test SyncDataSourceContactsByOrganizations {
 		property portal.release = "true";
+		property analytics.cloud.upstream = "false";
 
 		task ("Create a new user, a new organization and assign the organization for the created user") {
 			JSONUser.addUser(

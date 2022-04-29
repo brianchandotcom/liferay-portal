@@ -69,6 +69,7 @@ definition {
 	@priority = "4"
 	test CanAddSegmentUsingIndividualPropertyRole {
 		property test.name.skip.portal.instance = "SegmentsCreationIndividualAttributes#CanAddSegmentUsingIndividualPropertyRole";
+		property analytics.cloud.upstream = "false";
 
 		task ("Add a new regular role and assign to the user") {
 			JSONRole.addRegularRole(
@@ -283,6 +284,7 @@ definition {
 	@priority = "4"
 	test CanAddSegmentUsingIndividualPropertyTeam {
 		property test.name.skip.portal.instance = "SegmentsCreationIndividualAttributes#CanAddSegmentUsingIndividualPropertyTeam";
+		property analytics.cloud.upstream = "false";
 
 		task ("Assign the site to user") {
 			JSONGroup.assignUserToGroup(
@@ -420,6 +422,7 @@ definition {
 	@priority = "4"
 	test CanAddSegmentUsingIndividualPropertyUserGroup {
 		property test.name.skip.portal.instance = "SegmentsCreationIndividualAttributes#CanAddSegmentUsingIndividualPropertyUserGroup";
+		property analytics.cloud.upstream = "false";
 
 		task ("Add a new user group and assign to the user") {
 			JSONUserGroup.addUserGroup(

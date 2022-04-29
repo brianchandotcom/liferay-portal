@@ -49,6 +49,7 @@ definition {
 	@priority = "3"
 	test CanDeleteCriteria {
 		property test.name.skip.portal.instance = "DeleteSegments#CanDeleteCriteria";
+		property analytics.cloud.upstream = "false";
 
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
@@ -167,6 +168,7 @@ definition {
 	@priority = "4"
 	test CanDeleteSegmentViaSegmentList {
 		property test.name.skip.portal.instance = "DeleteSegments#CanDeleteSegmentViaSegmentList";
+		property analytics.cloud.upstream = "false";
 
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
@@ -229,6 +231,7 @@ definition {
 	@priority = "5"
 	test CanDeleteStaticSegment {
 		property test.name.skip.portal.instance = "DeleteSegments#CanDeleteStaticSegment";
+		property analytics.cloud.upstream = "false";
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
@@ -281,6 +284,7 @@ definition {
 	@priority = "5"
 	test CheckIfKnownIndividualsDontDisappearAfterDeleteStaticSegment {
 		property test.name.skip.portal.instance = "DeleteSegments#CheckIfKnownIndividualsDontDisappearAfterDeleteStaticSegment";
+		property analytics.cloud.upstream = "false";
 
 		task ("Connect the DXP to AC") {
 			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
@@ -371,6 +375,7 @@ definition {
 	@priority = "4"
 	test DeleteCustomFieldUsedSegmentResetData {
 		property test.name.skip.portal.instance = "DeleteSegments#DeleteCustomFieldUsedSegmentResetData";
+		property analytics.cloud.upstream = "false";
 
 		task ("Connect DXP to AC") {
 			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");

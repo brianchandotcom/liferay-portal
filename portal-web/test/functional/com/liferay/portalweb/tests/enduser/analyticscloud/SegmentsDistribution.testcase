@@ -63,6 +63,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8626 | Test Summary: Segment distribution chart can be filtered by date property"
 	@priority = "5"
 	test CanDistributionChartFilteredDateProperty {
+		property analytics.cloud.upstream = "false";
+
 		task ("View AC Page as new user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "userea@liferay.com",

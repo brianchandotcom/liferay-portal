@@ -219,6 +219,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8135 | Test Summary: Edit a static segment and check the edits are saved"
 	@priority = "5"
 	test CanEditStaticSegmentCheckEditSaved {
+		property analytics.cloud.upstream = "false";
 		var usernameList = "ac,liferay";
 		var emailList = "ac@liferay.com,liferay@liferay.com";
 		var nameList = "ac ac,liferay liferay";
@@ -351,6 +352,7 @@ definition {
 	@priority = "4"
 	test CantDuplicateUserToStaticSegment {
 		property test.name.skip.portal.instance = "EditSegments#CantDuplicateUserToStaticSegment";
+		property analytics.cloud.upstream = "false";
 
 		var usernameList = "ac,liferay";
 		var emailList = "ac@liferay.com,liferay@liferay.com";
@@ -402,6 +404,7 @@ definition {
 	@priority = "3"
 	test EditorShowsStaticSegmentLabel {
 		property test.name.skip.portal.instance = "EditSegments#EditorShowsStaticSegmentLabel";
+		property analytics.cloud.upstream = "false";
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
@@ -450,6 +453,7 @@ definition {
 	@priority = "3"
 	test PaginateListOfMembersToBeAddedToTheSegment {
 		property test.name.skip.portal.instance = "EditSegments#PaginateListOfMembersToBeAddedToTheSegment";
+		property analytics.cloud.upstream = "false";
 
 		var users = "ac1,ac2,ac3,ac4,ac5,ac6,ac7";
 		var nameList = "ac2 ac2,ac3 ac3,ac4 ac4,ac5 ac5,ac6 ac6,ac7 ac7";
@@ -570,6 +574,7 @@ definition {
 	@priority = "3"
 	test SegmentListKebabMenuContainsEditAndDeleteButtons {
 		property test.name.skip.portal.instance = "EditSegments#SegmentListKebabMenuContainsEditAndDeleteButtons";
+		property analytics.cloud.upstream = "false";
 
 		task ("Create user and sincronize it") {
 			JSONUser.addUser(
@@ -628,6 +633,7 @@ definition {
 	@priority = "3"
 	test SortSegmentAddMembersModal {
 		property test.name.skip.portal.instance = "EditSegments#SortSegmentAddMembersModal";
+		property analytics.cloud.upstream = "false";
 
 		var users = "ac,liferay,dxp";
 		var emailList = "ac@liferay.com,liferay@liferay.com,dxp@liferay.com";
@@ -705,6 +711,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8590 | Test Summary: Undo Adding a Segment Member in the Edit Modal"
 	@priority = "4"
 	test UndoAddingSegmentMemberInTheEditModal {
+		property analytics.cloud.upstream = "false";
 		var usernameList = "ac,liferay";
 		var emailList = "ac@liferay.com,liferay@liferay.com";
 
@@ -855,6 +862,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8593 | Test Summary: Undo Deleting a Segment Member in the Edit Modal"
 	@priority = "4"
 	test UndoDeletingASegmentMemberInTheEditModal {
+		property analytics.cloud.upstream = "false";
 		var users = "ac,liferay";
 		var emailList = "ac@liferay.com,liferay@liferay.com";
 		var nameList = "ac ac,liferay liferay";
@@ -938,6 +946,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8596 | Test Summary: Undo one static member from being added"
 	@priority = "3"
 	test UndoOneStaticMemberFromBeingAdded {
+		property analytics.cloud.upstream = "false";
+
 		var users = "ac,ac2,ac3";
 		var emailList = "ac@liferay.com,ac2@liferay.com,ac3@liferay.com";
 		var nameList = "ac ac,ac2 ac2,ac3 ac3";

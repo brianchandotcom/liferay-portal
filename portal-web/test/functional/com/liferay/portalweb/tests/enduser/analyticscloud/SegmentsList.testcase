@@ -71,6 +71,7 @@ definition {
 	@priority = "5"
 	test CanSearchForSegment {
 		property test.name.skip.portal.instance = "SegmentsList#CanSearchForSegment";
+		property analytics.cloud.upstream = "false";
 
 		var usernameList = "ac,userea";
 		var emailList = "ac@liferay.com,userea@liferay.com";
@@ -129,6 +130,7 @@ definition {
 	@priority = "5"
 	test CanShowSegmentList {
 		property test.name.skip.portal.instance = "SegmentsList#CanShowSegmentList";
+		property analytics.cloud.upstream = "false";
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -293,6 +295,7 @@ definition {
 	@priority = "4"
 	test OrderSegmentListByName {
 		property test.name.skip.portal.instance = "SegmentsList#OrderSegmentListByName";
+		property analytics.cloud.upstream = "false";
 
 		task ("Add a new user in DXP") {
 			JSONUser.addUser(
@@ -390,6 +393,7 @@ definition {
 	@priority = "3"
 	test PaginateSegmentList {
 		property test.name.skip.portal.instance = "SegmentsList#PaginateSegmentList";
+		property analytics.cloud.upstream = "false";
 
 		task ("Add a new user in DXP") {
 			JSONUser.addUser(

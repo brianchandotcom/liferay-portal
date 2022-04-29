@@ -149,7 +149,7 @@ definition {
 			locator1 = "build-test-translation.xml",
 			value1 = "unzip-temp-file -DfileName=TranslationContentPage-en_US.zip");
 
-		for (var fileName : list "TranslationContentPage-en_US-ja_JP.xlf,TranslationContentPage-en_US-es_ES.xlf,TranslationContentPage (NewAnyoneExperience)-en_US-ja_JP.xlf,TranslationContentPage (NewAnyoneExperience)-en_US-es_ES.xlf") {
+		for (var fileName : list "TranslationContentPage (Default)-en_US-ja_JP.xlf,TranslationContentPage (Default)-en_US-es_ES.xlf,TranslationContentPage (NewAnyoneExperience)-en_US-ja_JP.xlf,TranslationContentPage (NewAnyoneExperience)-en_US-es_ES.xlf") {
 			DMDocument.assertFileNameFromTempFolder(fileName = "${fileName}");
 		}
 	}

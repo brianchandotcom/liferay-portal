@@ -26,22 +26,18 @@ import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -58,22 +54,6 @@ public class OnDemandAdminTicketGeneratorTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Before
-	public void setUp() throws Exception {
-		_user = UserTestUtil.addUser();
-
-		_originalPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(_user));
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
-	}
-
 	@Test
 	public void testGenerate() throws Exception {
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
@@ -81,50 +61,49 @@ public class OnDemandAdminTicketGeneratorTest {
 		RoleTestUtil.addResourcePermission(
 			role, OnDemandAdminPortletKeys.ON_DEMAND_ADMIN,
 			ResourceConstants.SCOPE_COMPANY,
-			String.valueOf(_user.getCompanyId()),
+			String.valueOf(TestPropsValues.getCompanyId()),
 			OnDemandAdminActionKeys.REQUEST_ADMINISTRATOR_ACCESS);
 
-		_userLocalService.addRoleUser(role.getRoleId(), _user);
+		User user = UserTestUtil.addUser();
+
+		_userLocalService.addRoleUser(role.getRoleId(), user);
 
 		Company company = CompanyTestUtil.addCompany();
 
 		Ticket ticket = _onDemandAdminTicketGenerator.generate(
-			company, _user.getUserId(), null);
+			company, user.getUserId(), null);
 
 		Assert.assertEquals(
 			OnDemandAdminConstants.TICKET_TYPE_ON_DEMAND_ADMIN_LOGIN,
 			ticket.getType());
 
-		User user = _userLocalService.getUser(ticket.getClassPK());
+		User onDemandAdminUser = _userLocalService.getUser(ticket.getClassPK());
 
-		Assert.assertEquals(company.getCompanyId(), user.getCompanyId());
+		Assert.assertEquals(
+			company.getCompanyId(), onDemandAdminUser.getCompanyId());
 		Assert.assertTrue(
 			StringUtil.startsWith(
-				user.getScreenName(),
+				onDemandAdminUser.getScreenName(),
 				OnDemandAdminConstants.SCREEN_NAME_PREFIX_ON_DEMAND_ADMIN));
 		Assert.assertTrue(
 			_userLocalService.hasRoleUser(
 				company.getCompanyId(), RoleConstants.ADMINISTRATOR,
-				user.getUserId(), false));
+				onDemandAdminUser.getUserId(), false));
 	}
 
 	@Test(expected = PrincipalException.MustHavePermission.class)
 	public void testGenerateWithoutPermission() throws Exception {
 		Company company = CompanyTestUtil.addCompany();
+		User user = UserTestUtil.addUser();
 
-		_onDemandAdminTicketGenerator.generate(
-			company, _user.getUserId(), null);
+		_onDemandAdminTicketGenerator.generate(company, user.getUserId(), null);
 	}
 
 	@Inject
 	private OnDemandAdminTicketGenerator _onDemandAdminTicketGenerator;
 
-	private PermissionChecker _originalPermissionChecker;
-
 	@Inject
 	private TicketLocalService _ticketLocalService;
-
-	private User _user;
 
 	@Inject
 	private UserLocalService _userLocalService;

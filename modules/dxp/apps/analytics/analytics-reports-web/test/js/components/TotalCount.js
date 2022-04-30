@@ -41,7 +41,8 @@ describe('TotalCount', () => {
 
 		await waitFor(() => expect(mockDataProvider).toHaveBeenCalled());
 
-		expect(getByText('9,999')).toBeInTheDocument();
+		const formatter = new Intl.NumberFormat();
+		expect(getByText(formatter.format(9999))).toBeInTheDocument();
 
 		const label = getByText(testProps.label);
 		expect(label).toBeInTheDocument();

@@ -16,6 +16,7 @@ import React from 'react';
 import TrafficSources from '../../../src/main/resources/META-INF/resources/js/components/TrafficSources';
 
 const noop = () => {};
+const formatter = new Intl.NumberFormat();
 
 describe('TrafficSources', () => {
 	it('displays the traffic sources with buttons to view keywords', async () => {
@@ -57,14 +58,14 @@ describe('TrafficSources', () => {
 		expect(button1).toBeInTheDocument();
 		expect(button1).not.toBeDisabled();
 		expect(button1).toHaveAttribute('type', 'button');
-		expect(getByText('32,178')).toBeInTheDocument();
+		expect(getByText(formatter.format(32178))).toBeInTheDocument();
 
 		const button2 = getByText('Second Testing');
 
 		expect(button2).toBeInTheDocument();
 		expect(button2).not.toBeDisabled();
 		expect(button2).toHaveAttribute('type', 'button');
-		expect(getByText('278,256')).toBeInTheDocument();
+		expect(getByText(formatter.format(278256))).toBeInTheDocument();
 	});
 
 	it('displays the traffic sources without buttons to view keywords when the value is 0', async () => {

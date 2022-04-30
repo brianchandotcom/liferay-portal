@@ -280,6 +280,8 @@ const mockTrafficSourcesDataProvider = jest.fn(() =>
 );
 
 const noop = () => {};
+const formatter = new Intl.NumberFormat();
+const enFormatter = new Intl.NumberFormat(mockLanguageTag);
 
 describe('Detail', () => {
 	afterEach(() => {
@@ -358,7 +360,7 @@ describe('Detail', () => {
 
 			expect(getByText('Organic')).toBeInTheDocument();
 			expect(getByText('90%')).toBeInTheDocument();
-			expect(getByText('278,256')).toBeInTheDocument();
+			expect(getByText(formatter.format(278256))).toBeInTheDocument();
 
 			expect(mockTrafficShareDataProvider).toHaveBeenCalledTimes(1);
 			expect(mockTrafficVolumeDataProvider).toHaveBeenCalledTimes(1);
@@ -386,21 +388,21 @@ describe('Detail', () => {
 			expect(getByText('Spain')).toBeInTheDocument();
 
 			expect(getByText('commerce')).toBeInTheDocument();
-			expect(getByText('90,000')).toBeInTheDocument();
+			expect(getByText(formatter.format(90000))).toBeInTheDocument();
 
 			expect(getByText('e-commerce')).toBeInTheDocument();
-			expect(getByText('14,800')).toBeInTheDocument();
+			expect(getByText(formatter.format(14800))).toBeInTheDocument();
 
 			expect(getByText('what is commerce')).toBeInTheDocument();
-			expect(getByText('14,000')).toBeInTheDocument();
+			expect(getByText(formatter.format(14000))).toBeInTheDocument();
 
 			expect(getByText('what is e-commerce')).toBeInTheDocument();
-			expect(getByText('12,100')).toBeInTheDocument();
+			expect(getByText(formatter.format(12100))).toBeInTheDocument();
 
 			expect(
 				getByText('commerce definition for new business strategy')
 			).toBeInTheDocument();
-			expect(getByText('10,100')).toBeInTheDocument();
+			expect(getByText(formatter.format(10100))).toBeInTheDocument();
 		});
 
 		it('displays a tooltip with info on hover tooltip signs', async () => {
@@ -477,21 +479,21 @@ describe('Detail', () => {
 			userEvent.click(searchVolumeLabel);
 
 			expect(getByText('commerce')).toBeInTheDocument();
-			expect(getByText('12,300')).toBeInTheDocument();
+			expect(getByText(formatter.format(12300))).toBeInTheDocument();
 
 			expect(getByText('e-commerce')).toBeInTheDocument();
-			expect(getByText('9,800')).toBeInTheDocument();
+			expect(getByText(formatter.format(9800))).toBeInTheDocument();
 
 			expect(getByText('what is commerce')).toBeInTheDocument();
-			expect(getByText('9,500')).toBeInTheDocument();
+			expect(getByText(formatter.format(9500))).toBeInTheDocument();
 
 			expect(getByText('what is e-commerce')).toBeInTheDocument();
-			expect(getByText('8,700')).toBeInTheDocument();
+			expect(getByText(formatter.format(8700))).toBeInTheDocument();
 
 			expect(
 				getByText('commerce definition for new business strategy')
 			).toBeInTheDocument();
-			expect(getByText('7,100')).toBeInTheDocument();
+			expect(getByText(formatter.format(7100))).toBeInTheDocument();
 		});
 
 		it('displays the top five relevant keywords sorted by position when user clicks on the dropdown option position', async () => {
@@ -580,33 +582,33 @@ describe('Detail', () => {
 
 			expect(getByText('Referral')).toBeInTheDocument();
 			expect(getByText('90%')).toBeInTheDocument();
-			expect(getByText('278,256')).toBeInTheDocument();
+			expect(getByText(enFormatter.format(278256))).toBeInTheDocument();
 
 			expect(getByText('top-referring-pages')).toBeInTheDocument();
 			expect(getByText('http://one.example.com')).toBeInTheDocument();
-			expect(getByText('125,461')).toBeInTheDocument();
+			expect(getByText(enFormatter.format(125461))).toBeInTheDocument();
 			expect(getByText('http://two.example.com')).toBeInTheDocument();
-			expect(getByText('85,485')).toBeInTheDocument();
+			expect(getByText(enFormatter.format(85485))).toBeInTheDocument();
 			expect(getByText('http://three.example.com')).toBeInTheDocument();
-			expect(getByText('84,564')).toBeInTheDocument();
+			expect(getByText(enFormatter.format(84564))).toBeInTheDocument();
 			expect(getByText('http://four.example.com')).toBeInTheDocument();
-			expect(getByText('5,846')).toBeInTheDocument();
+			expect(getByText(enFormatter.format(5846))).toBeInTheDocument();
 			expect(getByText('http://five.example.com')).toBeInTheDocument();
-			expect(getByText('3,521')).toBeInTheDocument();
+			expect(getByText(enFormatter.format(3521))).toBeInTheDocument();
 
 			expect(getByText('view-more')).toBeInTheDocument();
 
 			expect(getByText('top-referring-domains')).toBeInTheDocument();
 			expect(getByText('http://foo.example.com')).toBeInTheDocument();
-			expect(getByText('17,985,230')).toBeInTheDocument();
+			expect(getByText(enFormatter.format(17985230))).toBeInTheDocument();
 			expect(getByText('http://bar.example.com')).toBeInTheDocument();
-			expect(getByText('12,218,030')).toBeInTheDocument();
+			expect(getByText(enFormatter.format(12218030))).toBeInTheDocument();
 			expect(getByText('http://baz.example.com')).toBeInTheDocument();
-			expect(getByText('9,062,949')).toBeInTheDocument();
+			expect(getByText(enFormatter.format(9062949))).toBeInTheDocument();
 			expect(getByText('http://qux.example.com')).toBeInTheDocument();
-			expect(getByText('4,601,453')).toBeInTheDocument();
+			expect(getByText(enFormatter.format(4601453))).toBeInTheDocument();
 			expect(getByText('http://fred.example.com')).toBeInTheDocument();
-			expect(getByText('253,399')).toBeInTheDocument();
+			expect(getByText(enFormatter.format(253399))).toBeInTheDocument();
 
 			expect(mockTrafficShareDataProvider).toHaveBeenCalledTimes(1);
 			expect(mockTrafficVolumeDataProvider).toHaveBeenCalledTimes(1);
@@ -660,18 +662,18 @@ describe('Detail', () => {
 
 			expect(getByText('Social')).toBeInTheDocument();
 			expect(getByText('90%')).toBeInTheDocument();
-			expect(getByText('278,256')).toBeInTheDocument();
+			expect(getByText(enFormatter.format(278256))).toBeInTheDocument();
 
 			expect(getByText('top-referring-social-media')).toBeInTheDocument();
 
 			expect(getByText('Facebook')).toBeInTheDocument();
-			expect(getByText('1,729')).toBeInTheDocument();
+			expect(getByText(enFormatter.format(1729))).toBeInTheDocument();
 			expect(getByText('LinkedIn')).toBeInTheDocument();
-			expect(getByText('1,256')).toBeInTheDocument();
+			expect(getByText(enFormatter.format(1256))).toBeInTheDocument();
 			expect(getByText('Pinterest')).toBeInTheDocument();
-			expect(getByText('771')).toBeInTheDocument();
+			expect(getByText(enFormatter.format(771))).toBeInTheDocument();
 			expect(getByText('Others')).toBeInTheDocument();
-			expect(getByText('30')).toBeInTheDocument();
+			expect(getByText(enFormatter.format(30))).toBeInTheDocument();
 
 			expect(mockTrafficShareDataProvider).toHaveBeenCalledTimes(1);
 			expect(mockTrafficVolumeDataProvider).toHaveBeenCalledTimes(1);

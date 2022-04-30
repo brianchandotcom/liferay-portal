@@ -131,9 +131,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 					groupId, entry.getKey(), name, description, overwrite);
 
 				_importResources(
-					userId, groupId,
-					fragmentCollection.getFragmentCollectionId(),
-					fragmentCollection.getResourcesFolderId(), entry.getKey(),
+					userId, groupId, fragmentCollection, entry.getKey(),
 					zipFile);
 
 				_importFragmentCompositions(
@@ -746,7 +744,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 	}
 
 	private void _importResources(
-			long userId, long groupId, long fragmentCollectionId, long folderId,
+			long userId, long groupId, FragmentCollection fragmentCollection,
 			String fragmentCollectionKey, ZipFile zipFile)
 		throws Exception {
 
@@ -840,6 +838,8 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 			PortletFileRepositoryUtil.fetchPortletRepository(
 				groupId, FragmentPortletKeys.FRAGMENT);
 
+		long folderId = fragmentCollection.getResourcesFolderId();
+
 		if (repository != null) {
 			for (FileEntry fileEntry :
 					PortletFileRepositoryUtil.getPortletFileEntries(
@@ -860,9 +860,9 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 
 			PortletFileRepositoryUtil.addPortletFileEntry(
 				groupId, userId, FragmentCollection.class.getName(),
-				fragmentCollectionId, FragmentPortletKeys.FRAGMENT, folderId,
-				inputStream, fileName, MimeTypesUtil.getContentType(fileName),
-				false);
+				fragmentCollection.getFragmentCollectionId(),
+				FragmentPortletKeys.FRAGMENT, folderId, inputStream, fileName,
+				MimeTypesUtil.getContentType(fileName), false);
 		}
 	}
 

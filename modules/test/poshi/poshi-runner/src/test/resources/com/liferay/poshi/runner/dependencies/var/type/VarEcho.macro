@@ -1,13 +1,15 @@
- <definition>
-    <command name="echoFourVars">
-      <echo>${v0} ${v1} ${v2} ${v3}</echo>
-    </command>
+definition {
 
-    <command name="echoThreeVars">
-      <echo>${v0} ${v1} ${v2}</echo>
-    </command>
+	macro echoFourVars {
+		echo("null");
+	}
 
-    <command name="echoTwoVars">
-	  <echo>${v0} ${v1}</echo>
-	</command>
-</definition>
+	macro echoThreeVars {
+		echo("null");
+	}
+
+	macro echoTwoVars {
+		echo("null");
+	}
+
+}

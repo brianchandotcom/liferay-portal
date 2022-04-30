@@ -1,46 +1,31 @@
-<definition>
-	<var name="rootVar" value="A global variable in the macro file."/>
+definition {
 
-	<command name="assertExecuteVar">
-		<if>
-			<not>
-				<equals arg1="${referenceExecuteVar}" arg2="An execute var that will referenced by another execute var." />
-			</not>
-			<then>
-				<fail message="'referenceExecuteVar' does not match the value set by the previous execute var in VariableScope.testcase" />
-			</then>
-		</if>
-	</command>
+	var rootVar = "A global variable in the macro file.";
 
-	<command name="assertRootVar">
-		<if>
-			<not>
-				<equals arg1="${rootVar}" arg2="A global variable in the macro file." />
-			</not>
-			<then>
-				<fail message="'rootVar' does not match the global value set in RootVar.macro" />
-			</then>
-		</if>
-	</command>
+	macro assertExecuteVar {
+		if ("${referenceExecuteVar}" != "An execute var that will referenced by another execute var.") {
+			fail("'referenceExecuteVar' does not match the value set by the previous execute var in VariableScope.testcase");
+		}
+	}
 
-	<command name="assertRootVarInNestedMacro">
-		<execute macro="RootVar#assertRootVar" />
-	</command>
+	macro assertRootVar {
+		if ("${rootVar}" != "A global variable in the macro file.") {
+			fail("'rootVar' does not match the global value set in RootVar.macro");
+		}
+	}
 
-	<command name="overrideRootVar">
-		<if>
-			<not>
-				<equals arg1="${rootVar}" arg2="An execute variable passed into a macro." />
-			</not>
-			<then>
-				<fail message="'rootVar' does not match the overridden value set in VariableScope.testcase" />
-			</then>
-		</if>
-	</command>
+	macro assertRootVarInNestedMacro {
+		RootVar.assertRootVar();
+	}
 
-	<command name="overrideRootVarInNestedMacro">
-		<execute macro="RootVar#overrideRootVar">
-			<var name="rootVar" value="${rootVar}" />
-		</execute>
-	</command>
-</definition>
+	macro overrideRootVar {
+		if ("${rootVar}" != "An execute variable passed into a macro.") {
+			fail("'rootVar' does not match the overridden value set in VariableScope.testcase");
+		}
+	}
+
+	macro overrideRootVarInNestedMacro {
+		RootVar.overrideRootVar(rootVar = "${rootVar}");
+	}
+
+}

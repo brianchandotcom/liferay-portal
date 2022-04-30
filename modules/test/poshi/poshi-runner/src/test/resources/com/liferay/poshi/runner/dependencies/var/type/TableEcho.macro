@@ -1,5 +1,61 @@
 definition {
 
+	@prose = "I want to print transposed table: ${table}"
+	macro echoTransposedTable {
+		echo("null");
+
+		var transposedRawData = TableUtil.getTransposedRawDataList("${table}");
+		var RawTable rawTable = new RawTable("${transposedRawData}");
+
+		for (var row : table "${rawTable}") {
+			VarEcho.echoFourVars(
+				v0 = "${row[0]}",
+				v1 = "${row[1]}",
+				v2 = "${row[2]}",
+				v3 = "${row[3]}");
+		}
+	}
+
+	@prose = "I want to print hashes table: ${table}"
+	macro echoHashesTable {
+		echo("null");
+
+		var HashesTable hashesTable = new HashesTable("${table}");
+
+		for (var row : table "${hashesTable}") {
+			VarEcho.echoTwoVars(
+				v0 = "${row.hash('project_id')}",
+				v1 = "${row.hash('status')}");
+		}
+	}
+
+	@prose = "I want to print raw table: ${table}"
+	macro echoRawTable {
+		echo("null");
+
+		var RawTable rawTable = new RawTable("${table}");
+
+		for (var row : table "${rawTable}") {
+			VarEcho.echoTwoVars(
+				v0 = "${row[0]}",
+				v1 = "${row[1]}");
+		}
+	}
+
+	@prose = "I want to print rows-hash table: ${table}"
+	macro echoRowsHashTable {
+		echo("null");
+
+		var RowsHashTable rowsHashTable = new RowsHashTable("${table}");
+
+		for (var row : table "${rowsHashTable}") {
+			VarEcho.echoThreeVars(
+				v0 = "${row.hash('project_id')}",
+				v1 = "${row.hash('status')}",
+				v2 = "${row.hash('date_created')}");
+		}
+	}
+
 	@prose = "I want to print raw table using poshi script macro: ${table}"
 	macro echoRawTableUsingPoshiScriptMacro {
 		echo("echoing the raw table contents:");

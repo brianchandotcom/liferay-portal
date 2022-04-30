@@ -15,6 +15,7 @@
 package com.liferay.trash.internal.helper;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.trash.helper.TrashHelper;
 
 import javax.portlet.PortletURL;
@@ -53,6 +54,21 @@ public class TrashHelperImpl implements TrashHelper {
 
 		return _trashHelper.getViewContentURL(
 			httpServletRequest, className, classPK);
+	}
+
+	@Override
+	public boolean isInTrashContainer(TrashedModel trashedModel) {
+		return _trashHelper.isInTrashContainer(trashedModel);
+	}
+
+	@Override
+	public boolean isInTrashExplicitly(TrashedModel trashedModel) {
+		return _trashHelper.isInTrashExplicitly(trashedModel);
+	}
+
+	@Override
+	public boolean isInTrashImplicitly(TrashedModel trashedModel) {
+		return _trashHelper.isInTrashImplicitly(trashedModel);
 	}
 
 	@Reference

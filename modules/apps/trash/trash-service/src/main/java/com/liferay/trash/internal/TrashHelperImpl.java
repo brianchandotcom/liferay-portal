@@ -17,10 +17,14 @@ package com.liferay.trash.internal;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.ContainerModel;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -123,6 +127,65 @@ public class TrashHelperImpl implements TrashHelper {
 	}
 
 	@Override
+	public TrashEntry getTrashEntry(TrashedModel trashedModel)
+		throws PortalException {
+
+		if (!trashedModel.isInTrash()) {
+			return null;
+		}
+
+		BaseModel<?> baseModel = (BaseModel<?>)trashedModel;
+
+		TrashEntry trashEntry = _trashEntryLocalService.fetchEntry(
+			baseModel.getModelClassName(), trashedModel.getTrashEntryClassPK());
+
+		if (trashEntry != null) {
+			return trashEntry;
+		}
+
+		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
+			baseModel.getModelClassName());
+
+		if (Validator.isNotNull(
+				trashHandler.getContainerModelClassName(
+					(Long)baseModel.getPrimaryKeyObj()))) {
+
+			ContainerModel containerModel = null;
+
+			try {
+				containerModel = trashHandler.getParentContainerModel(
+					trashedModel);
+			}
+			catch (NoSuchModelException noSuchModelException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(noSuchModelException);
+				}
+
+				return null;
+			}
+
+			while (containerModel != null) {
+				if (containerModel instanceof TrashedModel) {
+					return getTrashEntry((TrashedModel)containerModel);
+				}
+
+				trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
+					trashHandler.getContainerModelClassName(
+						containerModel.getContainerModelId()));
+
+				if (trashHandler == null) {
+					return null;
+				}
+
+				containerModel = trashHandler.getContainerModel(
+					containerModel.getParentContainerModelId());
+			}
+		}
+
+		return null;
+	}
+
+	@Override
 	public String getTrashTitle(long entryId) {
 		return _getTrashTitle(entryId, _TRASH_PREFIX);
 	}
@@ -183,6 +246,81 @@ public class TrashHelperImpl implements TrashHelper {
 		portletURL.setParameter("showAssetMetadata", Boolean.TRUE.toString());
 
 		return portletURL;
+	}
+
+	@Override
+	public boolean isInTrashContainer(TrashedModel trashedModel) {
+		BaseModel<?> baseModel = (BaseModel<?>)trashedModel;
+
+		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
+			baseModel.getModelClassName());
+
+		if ((trashHandler == null) ||
+			Validator.isNull(
+				trashHandler.getContainerModelClassName(
+					(Long)baseModel.getPrimaryKeyObj()))) {
+
+			return false;
+		}
+
+		try {
+			ContainerModel containerModel =
+				trashHandler.getParentContainerModel(trashedModel);
+
+			if (containerModel == null) {
+				return false;
+			}
+
+			if (containerModel instanceof TrashedModel) {
+				TrashedModel containerTrashedModel =
+					(TrashedModel)containerModel;
+
+				return containerTrashedModel.isInTrash();
+			}
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean isInTrashExplicitly(TrashedModel trashedModel) {
+		if (!trashedModel.isInTrash()) {
+			return false;
+		}
+
+		BaseModel<?> baseModel = (BaseModel<?>)trashedModel;
+
+		TrashEntry trashEntry = _trashEntryLocalService.fetchEntry(
+			baseModel.getModelClassName(), trashedModel.getTrashEntryClassPK());
+
+		if (trashEntry != null) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean isInTrashImplicitly(TrashedModel trashedModel) {
+		if (!trashedModel.isInTrash()) {
+			return false;
+		}
+
+		BaseModel<?> baseModel = (BaseModel<?>)trashedModel;
+
+		TrashEntry trashEntry = _trashEntryLocalService.fetchEntry(
+			baseModel.getModelClassName(), trashedModel.getTrashEntryClassPK());
+
+		if (trashEntry != null) {
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override

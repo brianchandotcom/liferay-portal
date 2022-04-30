@@ -16,7 +16,9 @@ package com.liferay.trash;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.trash.model.TrashEntry;
 
 import javax.portlet.PortletURL;
 
@@ -38,12 +40,21 @@ public interface TrashHelper {
 
 	public String getOriginalTitle(String title, String paramName);
 
+	public TrashEntry getTrashEntry(TrashedModel trashedModel)
+		throws PortalException;
+
 	public String getTrashTitle(long entryId);
 
 	public PortletURL getViewContentURL(
 			HttpServletRequest httpServletRequest, String className,
 			long classPK)
 		throws PortalException;
+
+	public boolean isInTrashContainer(TrashedModel trashedModel);
+
+	public boolean isInTrashExplicitly(TrashedModel trashedModel);
+
+	public boolean isInTrashImplicitly(TrashedModel trashedModel);
 
 	public boolean isTrashEnabled(Group group);
 

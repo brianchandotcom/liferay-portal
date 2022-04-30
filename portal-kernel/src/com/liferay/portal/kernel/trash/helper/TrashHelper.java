@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.trash.helper;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.TrashedModel;
 
 import javax.portlet.PortletURL;
 
@@ -35,5 +36,11 @@ public interface TrashHelper {
 			HttpServletRequest httpServletRequest, String className,
 			long classPK)
 		throws PortalException;
+
+	public boolean isInTrashContainer(TrashedModel trashedModel);
+
+	public boolean isInTrashExplicitly(TrashedModel trashedModel);
+
+	public boolean isInTrashImplicitly(TrashedModel trashedModel);
 
 }

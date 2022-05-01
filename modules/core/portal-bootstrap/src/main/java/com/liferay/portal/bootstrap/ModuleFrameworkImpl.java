@@ -471,11 +471,10 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			properties.put(key, value);
 		}
 
-		String systemPackagesExtra = _getSystemPackagesExtra(
-			attributes.getValue(Constants.EXPORT_PACKAGE));
-
 		properties.put(
-			Constants.FRAMEWORK_SYSTEMPACKAGES_EXTRA, systemPackagesExtra);
+			Constants.FRAMEWORK_SYSTEMPACKAGES_EXTRA,
+			_getSystemPackagesExtra(
+				attributes.getValue(Constants.EXPORT_PACKAGE)));
 
 		if (_log.isDebugEnabled()) {
 			for (Map.Entry<String, String> entry : properties.entrySet()) {

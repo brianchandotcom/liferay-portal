@@ -61,7 +61,6 @@ import com.liferay.portal.kernel.util.Validator;
 import java.net.URLEncoder;
 
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -185,16 +184,14 @@ public class PunchOutSessionResourceImpl
 			businessCommerceAccount, buyerGroup, buyerLiferayUser,
 			commerceChannel, editCartCommerceOrder, punchOutSession);
 
-		HashMap<String, Object> punchOutSessionAttributes =
-			_punchOutSessionContributor.getPunchOutSessionAttributes(
-				punchOutContext);
-
 		PunchOutAccessToken punchOutAccessToken =
 			_punchOutAccessTokenProvider.generatePunchOutAccessToken(
 				buyerGroup.getGroupId(),
 				businessCommerceAccount.getCommerceAccountId(),
 				cart.getCurrencyCode(), buyerLiferayUser.getEmailAddress(),
-				commerceOrderUuid, punchOutSessionAttributes);
+				commerceOrderUuid,
+				_punchOutSessionContributor.getPunchOutSessionAttributes(
+					punchOutContext));
 
 		String tokenString = Base64.encodeToURL(punchOutAccessToken.getToken());
 

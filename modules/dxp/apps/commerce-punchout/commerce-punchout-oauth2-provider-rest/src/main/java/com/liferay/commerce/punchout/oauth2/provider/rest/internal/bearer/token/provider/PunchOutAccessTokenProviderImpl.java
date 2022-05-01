@@ -191,11 +191,8 @@ public class PunchOutAccessTokenProviderImpl
 		PunchOutAccessToken punchOutAccessToken = new PunchOutAccessToken();
 
 		punchOutAccessToken.setGroupId(groupId);
-
 		punchOutAccessToken.setCommerceAccountId(commerceAccountId);
-
 		punchOutAccessToken.setCurrencyCode(currencyCode);
-
 		punchOutAccessToken.setIssuedAt(System.currentTimeMillis());
 
 		int expiresInSeconds =
@@ -206,15 +203,12 @@ public class PunchOutAccessTokenProviderImpl
 
 		punchOutAccessToken.setExpiresIn(expiresInMilliseconds);
 
-		byte[] token = _generateSecureRandomBytes(
-			_punchOutAccessTokenProviderConfiguration.accessTokenKeyByteSize());
-
-		punchOutAccessToken.setToken(token);
-
+		punchOutAccessToken.setToken(
+			_generateSecureRandomBytes(
+				_punchOutAccessTokenProviderConfiguration.
+					accessTokenKeyByteSize()));
 		punchOutAccessToken.setUserEmailAddress(userEmailAddress);
-
 		punchOutAccessToken.setCommerceOrderUuid(commerceOrderUuid);
-
 		punchOutAccessToken.setPunchOutSessionAttributes(
 			punchOutSessionAttributes);
 

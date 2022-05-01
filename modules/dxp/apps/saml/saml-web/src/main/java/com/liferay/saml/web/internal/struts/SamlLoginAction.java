@@ -84,12 +84,10 @@ public class SamlLoginAction extends BaseSamlStrutsAction {
 		long companyId = _portal.getCompanyId(httpServletRequest);
 
 		if (Validator.isNotNull(entityId)) {
-			SamlSpIdpConnection samlSpIdpConnection =
-				_samlSpIdpConnectionLocalService.getSamlSpIdpConnection(
-					companyId, entityId);
-
 			httpServletRequest.setAttribute(
-				SamlWebKeys.SAML_SP_IDP_CONNECTION, samlSpIdpConnection);
+				SamlWebKeys.SAML_SP_IDP_CONNECTION,
+				_samlSpIdpConnectionLocalService.getSamlSpIdpConnection(
+					companyId, entityId));
 
 			if (GetterUtil.getBoolean(
 					ParamUtil.getBoolean(httpServletRequest, "forceAuthn"))) {

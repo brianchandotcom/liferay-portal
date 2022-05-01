@@ -71,11 +71,10 @@ public class SingleIndexToMultipleIndexImporterImpl
 	@Override
 	public boolean needImport() {
 		for (Company company : _companyService.getCompanies()) {
-			RankingIndexName rankingIndexName =
-				_rankingIndexNameBuilder.getRankingIndexName(
-					company.getCompanyId());
+			if (!_rankingIndexReader.isExists(
+					_rankingIndexNameBuilder.getRankingIndexName(
+						company.getCompanyId()))) {
 
-			if (!_rankingIndexReader.isExists(rankingIndexName)) {
 				return true;
 			}
 		}

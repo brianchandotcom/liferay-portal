@@ -533,12 +533,10 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 
 		String id = editRankingMVCActionRequest.getResultsRankingUid();
 
-		RankingIndexName rankingIndexName =
-			rankingIndexNameBuilder.getRankingIndexName(
-				portal.getCompanyId(actionRequest));
-
 		Optional<Ranking> optional = rankingIndexReader.fetchOptional(
-			rankingIndexName, id);
+			rankingIndexNameBuilder.getRankingIndexName(
+				portal.getCompanyId(actionRequest)),
+			id);
 
 		if (!optional.isPresent()) {
 			return;

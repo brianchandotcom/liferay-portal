@@ -161,11 +161,11 @@ public class KaleoProcessUpgradeProcess extends UpgradeProcess {
 
 		serviceContext.setAttribute("status", ddmTemplateVersion.getStatus());
 
-		ModelPermissions modelPermissions = _getResourceModelPermissions(
-			oldDDMTemplate.getCompanyId(),
-			_getDDMTemplateModelResourceName(oldDDMTemplate), oldDDMTemplateId);
-
-		serviceContext.setModelPermissions(modelPermissions);
+		serviceContext.setModelPermissions(
+			_getResourceModelPermissions(
+				oldDDMTemplate.getCompanyId(),
+				_getDDMTemplateModelResourceName(oldDDMTemplate),
+				oldDDMTemplateId));
 
 		Long newDDMStructureId = _getNewDDMStructureId(
 			oldDDMTemplate.getClassPK());

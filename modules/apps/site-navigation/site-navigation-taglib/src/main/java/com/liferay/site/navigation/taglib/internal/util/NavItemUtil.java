@@ -126,14 +126,28 @@ public class NavItemUtil {
 					continue;
 				}
 
-				navItems.add(
-					new SiteNavigationMenuNavItem(
-						httpServletRequest, themeDisplay,
-						siteNavigationMenuItem));
+				if (!siteNavigationMenuItemType.isDynamic()) {
+					navItems.add(
+						new SiteNavigationMenuNavItem(
+							httpServletRequest, themeDisplay,
+							siteNavigationMenuItem));
+
+					continue;
+				}
+
+				for (SiteNavigationMenuItem dynamicSiteNavigationMenuItem :
+						siteNavigationMenuItemType.getSiteNavigationMenuItems(
+							httpServletRequest, siteNavigationMenuItem)) {
+
+					navItems.add(
+						new SiteNavigationMenuNavItem(
+							httpServletRequest, themeDisplay,
+							dynamicSiteNavigationMenuItem));
+				}
 			}
-			catch (PortalException portalException) {
+			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(portalException);
+					_log.debug(exception);
 				}
 			}
 		}

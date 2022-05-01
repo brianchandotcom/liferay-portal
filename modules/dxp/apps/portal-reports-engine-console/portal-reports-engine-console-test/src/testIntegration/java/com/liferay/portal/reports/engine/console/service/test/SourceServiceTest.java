@@ -186,11 +186,10 @@ public class SourceServiceTest {
 					serviceContext);
 			}
 
-			modelPermissions = ModelPermissionsFactory.create(
-				_SOURCE_GROUP_PERMISSIONS, new String[] {"VIEW"},
-				Source.class.getName());
-
-			serviceContext.setModelPermissions(modelPermissions);
+			serviceContext.setModelPermissions(
+				ModelPermissionsFactory.create(
+					_SOURCE_GROUP_PERMISSIONS, new String[] {"VIEW"},
+					Source.class.getName()));
 
 			for (int i = 0; i < 5; i++) {
 				SourceLocalServiceUtil.addSource(

@@ -75,11 +75,10 @@ public class EntrySearch extends SearchContainer<Entry> {
 		iteratorURL.setParameter(
 			EntryDisplayTerms.USER_NAME, entryDisplayTerms.getUserName());
 
-		String orderByCol = SearchOrderByUtil.getOrderByCol(
-			portletRequest, ReportsEngineConsolePortletKeys.REPORTS_ADMIN,
-			"create-date");
-
-		setOrderByCol(orderByCol);
+		setOrderByCol(
+			SearchOrderByUtil.getOrderByCol(
+				portletRequest, ReportsEngineConsolePortletKeys.REPORTS_ADMIN,
+				"create-date"));
 
 		String orderByType = SearchOrderByUtil.getOrderByType(
 			portletRequest, ReportsEngineConsolePortletKeys.REPORTS_ADMIN,

@@ -313,10 +313,8 @@ public class DataDefinitionDDMFormUtilTest {
 	private void _setUpLanguageUtil() {
 		LanguageUtil languageUtil = new LanguageUtil();
 
-		_whenLanguageIsAvailableLocale("en_US");
-		_whenLanguageIsAvailableLocale("pt_BR");
-		_whenLanguageIsAvailableLocale(LocaleUtil.US);
 		_whenLanguageIsAvailableLocale(LocaleUtil.BRAZIL);
+		_whenLanguageIsAvailableLocale(LocaleUtil.US);
 
 		languageUtil.setLanguage(_language);
 	}
@@ -346,11 +344,10 @@ public class DataDefinitionDDMFormUtilTest {
 		).thenReturn(
 			true
 		);
-	}
 
-	private void _whenLanguageIsAvailableLocale(String languageId) {
 		Mockito.when(
-			_language.isAvailableLocale(Mockito.eq(languageId))
+			_language.isAvailableLocale(
+				Mockito.eq(LocaleUtil.toLanguageId(locale)))
 		).thenReturn(
 			true
 		);

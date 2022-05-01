@@ -303,6 +303,12 @@ public class AssetVocabularySiteNavigationMenuItemType
 				siteNavigationMenuItem.getTypeSettings()
 			).build();
 
+		if (Objects.equals(
+				typeSettingsUnicodeProperties.get("type"), "asset-category")) {
+
+			return typeSettingsUnicodeProperties.get("title");
+		}
+
 		String defaultTitle = typeSettingsUnicodeProperties.getProperty(
 			"title");
 

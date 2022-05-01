@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -86,7 +85,7 @@ public class DataDefinitionDDMFormUtilTest {
 		languageUtil.setLanguage(Mockito.mock(Language.class));
 
 		_setUpJSONFactoryUtil();
-		_setUpLocaleUtil();
+		_setUpLanguageUtil();
 		_setUpSettingsDDMFormFieldsUtil();
 	}
 
@@ -311,17 +310,15 @@ public class DataDefinitionDDMFormUtilTest {
 		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
 	}
 
-	private void _setUpLocaleUtil() {
-		LocaleUtil localeUtil = ReflectionTestUtil.getFieldValue(
-			LocaleUtil.class, "_localeUtil");
+	private void _setUpLanguageUtil() {
+		LanguageUtil languageUtil = new LanguageUtil();
 
-		Map<String, Locale> locales = ReflectionTestUtil.getFieldValue(
-			localeUtil, "_locales");
+		_whenLanguageIsAvailableLocale("en_US");
+		_whenLanguageIsAvailableLocale("pt_BR");
+		_whenLanguageIsAvailableLocale(LocaleUtil.US);
+		_whenLanguageIsAvailableLocale(LocaleUtil.BRAZIL);
 
-		locales.clear();
-
-		locales.put("en_US", LocaleUtil.US);
-		locales.put("pt_BR", LocaleUtil.BRAZIL);
+		languageUtil.setLanguage(_language);
 	}
 
 	private void _setUpSettingsDDMFormFieldsUtil() {
@@ -343,9 +340,26 @@ public class DataDefinitionDDMFormUtilTest {
 		).getDDMFormFieldTypeSettings();
 	}
 
+	private void _whenLanguageIsAvailableLocale(Locale locale) {
+		Mockito.when(
+			_language.isAvailableLocale(Mockito.eq(locale))
+		).thenReturn(
+			true
+		);
+	}
+
+	private void _whenLanguageIsAvailableLocale(String languageId) {
+		Mockito.when(
+			_language.isAvailableLocale(Mockito.eq(languageId))
+		).thenReturn(
+			true
+		);
+	}
+
 	private final DDMFormFieldTypeServicesTracker
 		_ddmFormFieldTypeServicesTracker = Mockito.mock(
 			DDMFormFieldTypeServicesTracker.class);
+	private final Language _language = Mockito.mock(Language.class);
 
 	@com.liferay.dynamic.data.mapping.annotations.DDMForm
 	private interface TestTypeSettings extends DDMFormFieldTypeSettings {

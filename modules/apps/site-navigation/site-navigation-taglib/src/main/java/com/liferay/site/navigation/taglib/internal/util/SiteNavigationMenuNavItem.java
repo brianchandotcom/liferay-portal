@@ -25,6 +25,7 @@ import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -64,11 +65,27 @@ public class SiteNavigationMenuNavItem extends NavItem {
 	}
 
 	@Override
-	public List<NavItem> getChildren() {
-		return NavItemUtil.getChildNavItems(
-			_httpServletRequest,
-			_siteNavigationMenuItem.getSiteNavigationMenuId(),
-			_siteNavigationMenuItem.getSiteNavigationMenuItemId());
+	public List<NavItem> getChildren() throws Exception {
+		if (!_siteNavigationMenuItemType.isDynamic()) {
+			return NavItemUtil.getChildNavItems(
+				_httpServletRequest,
+				_siteNavigationMenuItem.getSiteNavigationMenuId(),
+				_siteNavigationMenuItem.getSiteNavigationMenuItemId());
+		}
+
+		List<NavItem> children = new ArrayList<>();
+
+		for (SiteNavigationMenuItem dynamicSiteNavigationMenuItem :
+				_siteNavigationMenuItemType.getChildrenSiteNavigationMenuItems(
+					_httpServletRequest, _siteNavigationMenuItem)) {
+
+			children.add(
+				new SiteNavigationMenuNavItem(
+					_httpServletRequest, _themeDisplay,
+					dynamicSiteNavigationMenuItem));
+		}
+
+		return children;
 	}
 
 	@Override

@@ -25,6 +25,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -42,6 +43,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.site.navigation.menu.item.asset.vocabulary.internal.constants.AssetVocabularySiteNavigationMenuTypeConstants;
@@ -218,6 +220,32 @@ public class AssetVocabularySiteNavigationMenuItemType
 			).build();
 
 		return typeSettingsUnicodeProperties.get("title");
+	}
+
+	@Override
+	public String getRegularURL(
+		HttpServletRequest httpServletRequest,
+		SiteNavigationMenuItem siteNavigationMenuItem) {
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			UnicodePropertiesBuilder.fastLoad(
+				siteNavigationMenuItem.getTypeSettings()
+			).build();
+
+		if (Objects.equals(
+				typeSettingsUnicodeProperties.get("type"),
+				"asset-vocabulary")) {
+
+			return StringPool.BLANK;
+		}
+
+		String regularURL = typeSettingsUnicodeProperties.get("regularURL");
+
+		if (Validator.isNull(regularURL)) {
+			return StringPool.BLANK;
+		}
+
+		return regularURL;
 	}
 
 	@Override

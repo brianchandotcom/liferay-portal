@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.theme.NavItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
@@ -71,6 +73,10 @@ public class SiteNavigationMenuNavItem extends NavItem {
 				_httpServletRequest,
 				_siteNavigationMenuItem.getSiteNavigationMenuId(),
 				_siteNavigationMenuItem.getSiteNavigationMenuItemId());
+		}
+
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-146502"))) {
+			return Collections.emptyList();
 		}
 
 		List<NavItem> children = new ArrayList<>();

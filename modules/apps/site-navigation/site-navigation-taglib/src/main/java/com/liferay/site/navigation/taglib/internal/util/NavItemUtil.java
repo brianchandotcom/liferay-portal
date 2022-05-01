@@ -22,7 +22,9 @@ import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.NavItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
@@ -122,6 +124,13 @@ public class NavItemUtil {
 					!siteNavigationMenuItemType.hasPermission(
 						themeDisplay.getPermissionChecker(),
 						siteNavigationMenuItem)) {
+
+					continue;
+				}
+
+				if (siteNavigationMenuItemType.isDynamic() &&
+					!GetterUtil.getBoolean(
+						PropsUtil.get("feature.flag.LPS-146502"))) {
 
 					continue;
 				}

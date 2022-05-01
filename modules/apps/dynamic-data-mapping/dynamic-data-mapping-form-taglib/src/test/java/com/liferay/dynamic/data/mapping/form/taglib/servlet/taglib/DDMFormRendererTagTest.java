@@ -54,7 +54,6 @@ import java.lang.reflect.Field;
 
 import java.util.LinkedHashSet;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Set;
 
 import javax.portlet.RenderRequest;
@@ -93,7 +92,6 @@ public class DDMFormRendererTagTest {
 		setUpDDMFormValuesFactory();
 		setUpHttpServletRequest();
 		setUpLanguageUtil();
-		setUpLocaleUtil();
 		setUpPortalUtil();
 	}
 
@@ -409,18 +407,6 @@ public class DDMFormRendererTagTest {
 		LanguageUtil languageUtil = new LanguageUtil();
 
 		languageUtil.setLanguage(_language);
-	}
-
-	protected void setUpLocaleUtil() {
-		LocaleUtil localeUtil = ReflectionTestUtil.getFieldValue(
-			LocaleUtil.class, "_localeUtil");
-
-		Map<String, Locale> locales = ReflectionTestUtil.getFieldValue(
-			localeUtil, "_locales");
-
-		locales.clear();
-
-		locales.put("en_US", LocaleUtil.US);
 	}
 
 	protected void setUpPortalUtil() {

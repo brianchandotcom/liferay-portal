@@ -14,6 +14,8 @@
 
 package com.liferay.site.navigation.menu.item.asset.vocabulary.internal.type;
 
+import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
+import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
@@ -23,6 +25,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -31,6 +34,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -38,18 +42,25 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.site.navigation.menu.item.asset.vocabulary.internal.constants.AssetVocabularySiteNavigationMenuTypeConstants;
 import com.liferay.site.navigation.menu.item.asset.vocabulary.internal.display.context.AssetVocabularySiteNavigationMenuTypeDisplayContext;
 import com.liferay.site.navigation.menu.item.layout.constants.SiteNavigationMenuItemTypeConstants;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
+import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeContext;
 
 import java.io.IOException;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -176,6 +187,74 @@ public class AssetVocabularySiteNavigationMenuItemType
 			).build();
 
 		return typeSettingsUnicodeProperties.get("title");
+	}
+
+	@Override
+	public List<SiteNavigationMenuItem> getSiteNavigationMenuItems(
+			HttpServletRequest httpServletRequest,
+			SiteNavigationMenuItem siteNavigationMenuItem)
+		throws Exception {
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			UnicodePropertiesBuilder.fastLoad(
+				siteNavigationMenuItem.getTypeSettings()
+			).build();
+
+		if (GetterUtil.getBoolean(
+				typeSettingsUnicodeProperties.get(
+					"showAssetVocabularyLevel")) ||
+			Objects.equals(
+				typeSettingsUnicodeProperties.get("type"), "asset-category")) {
+
+			return Arrays.asList(siteNavigationMenuItem);
+		}
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (themeDisplay == null) {
+			return Collections.emptyList();
+		}
+
+		List<SiteNavigationMenuItem> siteNavigationMenuItems =
+			new ArrayList<>();
+
+		for (AssetCategory assetCategory :
+				_assetCategoryLocalService.getVocabularyCategories(
+					0,
+					GetterUtil.getLong(
+						typeSettingsUnicodeProperties.get("classPK")),
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
+			SiteNavigationMenuItem assetCategorySiteNavigationMenuItem =
+				siteNavigationMenuItem.cloneWithOriginalValues();
+
+			assetCategorySiteNavigationMenuItem.setTypeSettings(
+				UnicodePropertiesBuilder.create(
+					true
+				).put(
+					"assetVocabularyId",
+					String.valueOf(assetCategory.getVocabularyId())
+				).put(
+					"classPK", String.valueOf(assetCategory.getCategoryId())
+				).put(
+					"groupId", String.valueOf(assetCategory.getGroupId())
+				).put(
+					"regularURL",
+					_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
+						AssetCategory.class.getName(),
+						assetCategory.getCategoryId(), themeDisplay)
+				).put(
+					"title", assetCategory.getTitle(themeDisplay.getLocale())
+				).put(
+					"type", "asset-category"
+				).buildString());
+
+			siteNavigationMenuItems.add(assetCategorySiteNavigationMenuItem);
+		}
+
+		return siteNavigationMenuItems;
 	}
 
 	@Override
@@ -357,6 +436,10 @@ public class AssetVocabularySiteNavigationMenuItemType
 	private AssetCategoryLocalService _assetCategoryLocalService;
 
 	@Reference
+	private AssetDisplayPageFriendlyURLProvider
+		_assetDisplayPageFriendlyURLProvider;
+
+	@Reference
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 	@Reference
@@ -370,5 +453,9 @@ public class AssetVocabularySiteNavigationMenuItemType
 		unbind = "-"
 	)
 	private ServletContext _servletContext;
+
+	@Reference
+	private SiteNavigationMenuItemLocalService
+		_siteNavigationMenuItemLocalService;
 
 }

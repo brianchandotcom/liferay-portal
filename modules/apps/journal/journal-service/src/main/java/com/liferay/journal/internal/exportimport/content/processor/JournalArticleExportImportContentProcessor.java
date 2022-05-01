@@ -534,19 +534,19 @@ public class JournalArticleExportImportContentProcessor
 					continue;
 				}
 
-				JSONObject newArticleJSONObject = JSONUtil.put(
-					"className", JournalArticle.class.getName()
-				).put(
-					"classPK", journalArticle.getResourcePrimKey()
-				).put(
-					"title",
-					journalArticle.getTitle(
-						journalArticle.getDefaultLanguageId())
-				).put(
-					"titleMap", journalArticle.getTitleMap()
-				);
-
-				field.setValue(locale, newArticleJSONObject.toString());
+				field.setValue(
+					locale,
+					JSONUtil.put(
+						"className", JournalArticle.class.getName()
+					).put(
+						"classPK", journalArticle.getResourcePrimKey()
+					).put(
+						"title",
+						journalArticle.getTitle(
+							journalArticle.getDefaultLanguageId())
+					).put(
+						"titleMap", journalArticle.getTitleMap()
+					).toString());
 			}
 		}
 

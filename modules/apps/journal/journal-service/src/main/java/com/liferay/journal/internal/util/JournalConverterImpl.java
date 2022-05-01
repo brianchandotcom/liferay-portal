@@ -315,7 +315,7 @@ public class JournalConverterImpl implements JournalConverter {
 
 				return JSONUtil.putAll(
 					entry.getKey()
-				).toJSONString();
+				).toString();
 			}
 
 			return StringPool.BLANK;

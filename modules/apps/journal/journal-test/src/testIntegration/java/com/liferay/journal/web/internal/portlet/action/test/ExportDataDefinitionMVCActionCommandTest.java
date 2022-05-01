@@ -78,7 +78,7 @@ public class ExportDataDefinitionMVCActionCommandTest {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			byteArrayOutputStream.toString());
 
-		JSONAssert.assertEquals(json, jsonObject.toJSONString(), false);
+		JSONAssert.assertEquals(json, jsonObject.toString(), false);
 	}
 
 	private MockLiferayResourceRequest _createMockLiferayResourceRequest(

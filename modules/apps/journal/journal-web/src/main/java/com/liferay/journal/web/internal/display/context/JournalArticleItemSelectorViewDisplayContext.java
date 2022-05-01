@@ -199,7 +199,7 @@ public class JournalArticleItemSelectorViewDisplayContext {
 					ResourceActionsUtil.getModelResource(
 						_themeDisplay.getLocale(),
 						JournalArticle.class.getName())
-				).toJSONString();
+				).toString();
 			}
 		).build();
 	}

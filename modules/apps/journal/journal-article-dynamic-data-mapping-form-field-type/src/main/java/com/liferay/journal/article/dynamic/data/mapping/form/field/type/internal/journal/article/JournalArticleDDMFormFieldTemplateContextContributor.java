@@ -205,7 +205,7 @@ public class JournalArticleDDMFormFieldTemplateContextContributor
 				);
 			}
 
-			return jsonObject.toJSONString();
+			return jsonObject.toString();
 		}
 		catch (JSONException jsonException) {
 			if (_log.isDebugEnabled()) {

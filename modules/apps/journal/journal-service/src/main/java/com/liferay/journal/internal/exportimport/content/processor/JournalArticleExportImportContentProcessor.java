@@ -431,10 +431,10 @@ public class JournalArticleExportImportContentProcessor
 					_log.debug(
 						StringBundler.concat(
 							"Replacing ", json, " with ",
-							newArticleJSONObject.toJSONString()));
+							newArticleJSONObject.toString()));
 				}
 
-				field.setValue(locale, newArticleJSONObject.toJSONString());
+				field.setValue(locale, newArticleJSONObject.toString());
 
 				if (exportReferencedContent) {
 					try {
@@ -546,7 +546,7 @@ public class JournalArticleExportImportContentProcessor
 					"titleMap", journalArticle.getTitleMap()
 				);
 
-				field.setValue(locale, newArticleJSONObject.toJSONString());
+				field.setValue(locale, newArticleJSONObject.toString());
 			}
 		}
 

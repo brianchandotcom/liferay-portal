@@ -1312,7 +1312,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		return knowledgeBaseArticleResource.
 			postKnowledgeBaseFolderKnowledgeBaseArticle(
 				parentKnowledgeBaseObjectId,
-				KnowledgeBaseArticle.toDTO(jsonObject.toJSONString()));
+				KnowledgeBaseArticle.toDTO(jsonObject.toString()));
 	}
 
 	private void _addKnowledgeBaseArticle(

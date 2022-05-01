@@ -173,14 +173,11 @@ public abstract class BaseKaleoFormsMVCActionCommand
 				fieldsToDDMFormValuesConverter.convert(
 					ddmStructure, reviewFormFields);
 
-			List<DDMFormFieldValue> removedByReviewerDDMFormFieldValues =
-				_getRemovedByReviewerDDMFormFieldValues(
-					ddmFormValues.getDDMFormFieldValues(),
-					reviewFormDDMFormValues.getDDMFormFieldValues());
-
 			_removeRemovedByReviewerDDMFormFieldValues(
 				ddlRecordDDMFormValues.getDDMFormFieldValues(),
-				removedByReviewerDDMFormFieldValues);
+				_getRemovedByReviewerDDMFormFieldValues(
+					ddmFormValues.getDDMFormFieldValues(),
+					reviewFormDDMFormValues.getDDMFormFieldValues()));
 
 			ddmFormValues = ddmFormValuesMerger.merge(
 				ddmFormValues, ddlRecordDDMFormValues);

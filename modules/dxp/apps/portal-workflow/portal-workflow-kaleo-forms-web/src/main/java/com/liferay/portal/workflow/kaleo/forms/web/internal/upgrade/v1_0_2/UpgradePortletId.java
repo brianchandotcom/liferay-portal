@@ -121,14 +121,10 @@ public class UpgradePortletId extends BasePortletIdUpgradeProcess {
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
-				long plid = resultSet.getLong("plid");
-
-				String typeSettings = resultSet.getString("typeSettings");
-
-				String newTypeSettings = getNewTypeSettings(
-					typeSettings, oldRootPortletId);
-
-				updateLayout(plid, newTypeSettings);
+				updateLayout(
+					resultSet.getLong("plid"),
+					getNewTypeSettings(
+						resultSet.getString("typeSettings"), oldRootPortletId));
 			}
 		}
 	}

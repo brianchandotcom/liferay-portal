@@ -413,6 +413,24 @@ public class AssetVocabularySiteNavigationMenuItemType
 	}
 
 	@Override
+	public boolean isBrowsable(SiteNavigationMenuItem siteNavigationMenuItem) {
+		UnicodeProperties typeSettingsUnicodeProperties =
+			UnicodePropertiesBuilder.fastLoad(
+				siteNavigationMenuItem.getTypeSettings()
+			).build();
+
+		if (Objects.equals(
+				typeSettingsUnicodeProperties.get("type"), "asset-category") &&
+			Validator.isNotNull(
+				typeSettingsUnicodeProperties.get("regularURL"))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isDynamic() {
 		return true;
 	}

@@ -25,7 +25,6 @@ import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.pagination.InfoPage;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -78,14 +77,12 @@ public abstract class BaseItemCollectionProviderTestCase {
 			CommerceCurrencyTestUtil.addCommerceCurrency(
 				TestPropsValues.getCompanyId());
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
-				user.getUserId());
-
 		return _commerceCatalogLocalService.addCommerceCatalog(
 			null, RandomTestUtil.randomString(), commerceCurrency.getCode(),
-			LocaleUtil.US.getDisplayLanguage(), serviceContext);
+			LocaleUtil.US.getDisplayLanguage(),
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
+				user.getUserId()));
 	}
 
 	protected abstract String getInfoItemCollectionProviderName();

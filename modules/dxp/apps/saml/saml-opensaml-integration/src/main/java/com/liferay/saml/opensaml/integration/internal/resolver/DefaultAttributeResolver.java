@@ -429,10 +429,8 @@ public class DefaultAttributeResolver implements AttributeResolver {
 
 			for (Group group : allGroups) {
 				if (_roleLocalService.hasGroupRoles(group.getGroupId())) {
-					List<Role> groupRoles = _roleLocalService.getGroupRoles(
-						group.getGroupId());
-
-					uniqueRoles.addAll(groupRoles);
+					uniqueRoles.addAll(
+						_roleLocalService.getGroupRoles(group.getGroupId()));
 				}
 			}
 

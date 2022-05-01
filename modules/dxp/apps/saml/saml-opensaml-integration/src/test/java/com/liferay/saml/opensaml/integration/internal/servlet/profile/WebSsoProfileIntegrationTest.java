@@ -138,23 +138,14 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 			_samlSpAuthRequestLocalService);
 		_webSsoProfileImpl.setSamlSpSessionLocalService(
 			_samlSpSessionLocalService);
-
-		SamlSpMessageLocalService samlSpMessageLocalService =
+		_webSsoProfileImpl.setSamlSpMessageLocalService(
 			getMockPortletService(
 				SamlSpMessageLocalServiceUtil.class,
-				SamlSpMessageLocalService.class);
-
-		_webSsoProfileImpl.setSamlSpMessageLocalService(
-			samlSpMessageLocalService);
-
-		SamlSpIdpConnectionLocalService samlSpIdpConnectionLocalService =
+				SamlSpMessageLocalService.class));
+		_webSsoProfileImpl.setSamlSpIdpConnectionLocalService(
 			getMockPortletService(
 				SamlSpIdpConnectionLocalServiceUtil.class,
-				SamlSpIdpConnectionLocalService.class);
-
-		_webSsoProfileImpl.setSamlSpIdpConnectionLocalService(
-			samlSpIdpConnectionLocalService);
-
+				SamlSpIdpConnectionLocalService.class));
 		_webSsoProfileImpl.activate(new HashMap<String, Object>());
 
 		prepareServiceProvider(SP_ENTITY_ID);

@@ -36,8 +36,6 @@ import org.opensaml.saml.ext.saml2alg.SigningMethod;
 import org.opensaml.saml.saml2.metadata.EntityDescriptor;
 import org.opensaml.saml.saml2.metadata.RoleDescriptor;
 
-import org.springframework.mock.web.MockHttpServletRequest;
-
 /**
  * @author Mika Koivisto
  */
@@ -58,12 +56,10 @@ public class MetadataGeneratorTest extends BaseSamlTestCase {
 	public void testMetadataGenerator() throws Exception {
 		prepareServiceProvider(SP_ENTITY_ID);
 
-		MockHttpServletRequest mockHttpServletRequest =
-			getMockHttpServletRequest(
-				"http://localhost:8080/c/portal/saml/metadata");
-
 		Assert.assertNotNull(
-			metadataManagerImpl.getEntityDescriptor(mockHttpServletRequest));
+			metadataManagerImpl.getEntityDescriptor(
+				getMockHttpServletRequest(
+					"http://localhost:8080/c/portal/saml/metadata")));
 	}
 
 	@Test
@@ -72,12 +68,10 @@ public class MetadataGeneratorTest extends BaseSamlTestCase {
 
 		prepareServiceProvider(SP_ENTITY_ID);
 
-		MockHttpServletRequest mockHttpServletRequest =
-			getMockHttpServletRequest(
-				"http://localhost:8080/c/portal/saml/metadata");
-
 		EntityDescriptor entityDescriptor =
-			metadataManagerImpl.getEntityDescriptor(mockHttpServletRequest);
+			metadataManagerImpl.getEntityDescriptor(
+				getMockHttpServletRequest(
+					"http://localhost:8080/c/portal/saml/metadata"));
 
 		List<RoleDescriptor> roleDescriptors =
 			entityDescriptor.getRoleDescriptors();
@@ -118,12 +112,10 @@ public class MetadataGeneratorTest extends BaseSamlTestCase {
 				}
 			).build());
 
-		MockHttpServletRequest mockHttpServletRequest =
-			getMockHttpServletRequest(
-				"http://localhost:8080/c/portal/saml/metadata");
-
 		EntityDescriptor entityDescriptor =
-			metadataManagerImpl.getEntityDescriptor(mockHttpServletRequest);
+			metadataManagerImpl.getEntityDescriptor(
+				getMockHttpServletRequest(
+					"http://localhost:8080/c/portal/saml/metadata"));
 
 		List<RoleDescriptor> roleDescriptors =
 			entityDescriptor.getRoleDescriptors();

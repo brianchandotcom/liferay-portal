@@ -671,11 +671,9 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		SAMLPeerEntityContext samlPeerEntityContext =
 			messageContext.getSubcontext(SAMLPeerEntityContext.class);
 
-		int assertionLifetime = metadataManager.getAssertionLifetime(
-			samlPeerEntityContext.getEntityId());
-
 		DateTime notOnOrAfterDateTime = issueInstantDateTime.plusSeconds(
-			assertionLifetime);
+			metadataManager.getAssertionLifetime(
+				samlPeerEntityContext.getEntityId()));
 
 		subjectConfirmationData.setNotOnOrAfter(notOnOrAfterDateTime);
 
@@ -1341,17 +1339,13 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		SAMLSelfEntityContext samlSelfEntityContext =
 			messageContext.getSubcontext(SAMLSelfEntityContext.class);
 
-		Issuer issuer = OpenSamlUtil.buildIssuer(
-			samlSelfEntityContext.getEntityId());
+		assertion.setIssuer(
+			OpenSamlUtil.buildIssuer(samlSelfEntityContext.getEntityId()));
 
-		assertion.setIssuer(issuer);
-
-		Subject subject = getSuccessSubject(
-			samlSsoRequestContext, assertionConsumerService, nameID,
-			subjectConfirmationData);
-
-		assertion.setSubject(subject);
-
+		assertion.setSubject(
+			getSuccessSubject(
+				samlSsoRequestContext, assertionConsumerService, nameID,
+				subjectConfirmationData));
 		assertion.setVersion(SAMLVersion.VERSION_20);
 
 		List<AuthnStatement> authnStatements = assertion.getAuthnStatements();
@@ -1512,10 +1506,8 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		SAMLSelfEntityContext samlSelfEntityContext =
 			messageContext.getSubcontext(SAMLSelfEntityContext.class);
 
-		Issuer issuer = OpenSamlUtil.buildIssuer(
-			samlSelfEntityContext.getEntityId());
-
-		response.setIssuer(issuer);
+		response.setIssuer(
+			OpenSamlUtil.buildIssuer(samlSelfEntityContext.getEntityId()));
 
 		StatusCode statusCode = OpenSamlUtil.buildStatusCode(
 			StatusCode.SUCCESS);
@@ -1896,10 +1888,8 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		SAMLSelfEntityContext samlSelfEntityContext =
 			messageContext.getSubcontext(SAMLSelfEntityContext.class);
 
-		Issuer issuer = OpenSamlUtil.buildIssuer(
-			samlSelfEntityContext.getEntityId());
-
-		response.setIssuer(issuer);
+		response.setIssuer(
+			OpenSamlUtil.buildIssuer(samlSelfEntityContext.getEntityId()));
 
 		StatusCode statusCode = OpenSamlUtil.buildStatusCode(statusURI);
 

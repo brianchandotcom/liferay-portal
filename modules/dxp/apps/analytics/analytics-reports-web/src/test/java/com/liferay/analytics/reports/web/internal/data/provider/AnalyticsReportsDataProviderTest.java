@@ -314,10 +314,10 @@ public class AnalyticsReportsDataProviderTest {
 						).toString()
 					).build()));
 
-		Long totalReads = analyticsReportsDataProvider.getTotalReads(
-			RandomTestUtil.randomLong(), RandomTestUtil.randomString());
-
-		Assert.assertEquals(Long.valueOf(12340), totalReads);
+		Assert.assertEquals(
+			Long.valueOf(12340),
+			analyticsReportsDataProvider.getTotalReads(
+				RandomTestUtil.randomLong(), RandomTestUtil.randomString()));
 	}
 
 	@Test(expected = PortalException.class)
@@ -357,10 +357,10 @@ public class AnalyticsReportsDataProviderTest {
 						).toString()
 					).build()));
 
-		Long totalViews = analyticsReportsDataProvider.getTotalViews(
-			RandomTestUtil.randomLong(), RandomTestUtil.randomString());
-
-		Assert.assertEquals(Long.valueOf(12340), totalViews);
+		Assert.assertEquals(
+			Long.valueOf(12340),
+			analyticsReportsDataProvider.getTotalViews(
+				RandomTestUtil.randomLong(), RandomTestUtil.randomString()));
 	}
 
 	@Test(expected = PortalException.class)

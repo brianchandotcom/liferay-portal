@@ -77,7 +77,6 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
 import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 
 /**
@@ -450,13 +449,11 @@ public class AsyncAntivirusDLStoreTest {
 		_withAsyncAntivirusConfiguration(
 			5, 10, true,
 			() -> {
-				ServiceReference<AntivirusAsyncStatisticsManagerMBean>
-					serviceReference = _bundleContext.getServiceReference(
-						AntivirusAsyncStatisticsManagerMBean.class);
-
 				AntivirusAsyncStatisticsManagerMBean
 					antivirusAsyncStatisticsManagerMBean =
-						_bundleContext.getService(serviceReference);
+						_bundleContext.getService(
+							_bundleContext.getServiceReference(
+								AntivirusAsyncStatisticsManagerMBean.class));
 
 				Assert.assertNotNull(antivirusAsyncStatisticsManagerMBean);
 

@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -35,7 +34,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -52,7 +50,6 @@ public abstract class BaseDDMTestCase {
 	public void setUp() throws Exception {
 		_setUpJSONFactoryUtil();
 		_setUpLanguageUtil();
-		_setUpLocaleUtil();
 		_setUpPortalClassLoaderUtil();
 		_setUpResourceBundleUtil();
 	}
@@ -116,27 +113,12 @@ public abstract class BaseDDMTestCase {
 
 		_whenLanguageGetAvailableLocalesThen(availableLocales);
 
-		_whenLanguageIsAvailableLocale("en_US");
-		_whenLanguageIsAvailableLocale("pt_BR");
+		_whenLanguageIsAvailableLocale(LocaleUtil.BRAZIL);
+		_whenLanguageIsAvailableLocale(LocaleUtil.US);
 
 		LanguageUtil languageUtil = new LanguageUtil();
 
 		languageUtil.setLanguage(language);
-	}
-
-	private void _setUpLocaleUtil() {
-		LocaleUtil localeUtil = ReflectionTestUtil.getFieldValue(
-			LocaleUtil.class, "_localeUtil");
-
-		Map<String, Locale> locales = ReflectionTestUtil.getFieldValue(
-			localeUtil, "_locales");
-
-		locales.clear();
-
-		locales.put("en_US", LocaleUtil.US);
-		locales.put("pt_BR", LocaleUtil.BRAZIL);
-
-		ReflectionTestUtil.setFieldValue(localeUtil, "_locale", LocaleUtil.US);
 	}
 
 	private void _setUpPortalClassLoaderUtil() {
@@ -173,9 +155,16 @@ public abstract class BaseDDMTestCase {
 		);
 	}
 
-	private void _whenLanguageIsAvailableLocale(String languageId) {
+	private void _whenLanguageIsAvailableLocale(Locale locale) {
 		Mockito.when(
-			language.isAvailableLocale(Mockito.eq(languageId))
+			language.isAvailableLocale(
+				Mockito.eq(LocaleUtil.toLanguageId(locale)))
+		).thenReturn(
+			true
+		);
+
+		Mockito.when(
+			language.isAvailableLocale(Mockito.eq(locale))
 		).thenReturn(
 			true
 		);

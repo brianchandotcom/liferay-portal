@@ -174,10 +174,9 @@ public class RulesEngineImpl implements RulesEngine {
 	public void setRulesLanguageMapping(Map<String, String> rulesLanguageMap) {
 		for (Map.Entry<String, String> entry : rulesLanguageMap.entrySet()) {
 			RulesLanguage rulesLanguage = RulesLanguage.valueOf(entry.getKey());
-			ResourceType resourceType = ResourceType.getResourceType(
-				entry.getValue());
 
-			_resourceTypeMap.put(rulesLanguage, resourceType);
+			_resourceTypeMap.put(
+				rulesLanguage, ResourceType.getResourceType(entry.getValue()));
 		}
 	}
 
@@ -196,10 +195,9 @@ public class RulesEngineImpl implements RulesEngine {
 		Dictionary<String, Object> properties =
 			componentContext.getProperties();
 
-		String defaultRulesLanguage = GetterUtil.getString(
-			properties.get("rules.engine.default.language"));
-
-		setDefaultRulesLanguage(defaultRulesLanguage);
+		setDefaultRulesLanguage(
+			GetterUtil.getString(
+				properties.get("rules.engine.default.language")));
 
 		setRulesLanguageMapping(_getRulesLanguageMap(properties));
 

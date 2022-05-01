@@ -674,7 +674,7 @@ public abstract class BaseDDMTestCase {
 	}
 
 	protected void setUpLanguageUtil(Map<String, String> languageKeys) {
-		LanguageUtil languageUtil = new LanguageUtil();
+		setUpLanguageUtil();
 
 		Mockito.when(
 			language.get(Mockito.any(ResourceBundle.class), Mockito.anyString())
@@ -685,23 +685,6 @@ public abstract class BaseDDMTestCase {
 				return languageKeys.get((String)arguments[1]);
 			}
 		);
-
-		languageUtil.setLanguage(language);
-	}
-
-	protected void setUpLocaleUtil() {
-		LocaleUtil localeUtil = ReflectionTestUtil.getFieldValue(
-			LocaleUtil.class, "_localeUtil");
-
-		Map<String, Locale> locales = ReflectionTestUtil.getFieldValue(
-			localeUtil, "_locales");
-
-		locales.clear();
-
-		locales.put("en_US", LocaleUtil.US);
-		locales.put("pt_BR", LocaleUtil.BRAZIL);
-
-		ReflectionTestUtil.setFieldValue(localeUtil, "_locale", LocaleUtil.US);
 	}
 
 	protected void setUpLocalizationUtil() {

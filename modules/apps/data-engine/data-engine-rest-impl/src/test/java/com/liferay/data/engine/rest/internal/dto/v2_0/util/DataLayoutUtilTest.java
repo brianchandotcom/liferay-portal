@@ -30,7 +30,8 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -38,10 +39,9 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.ArrayList;
 import java.util.Locale;
-import java.util.Map;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -58,10 +58,10 @@ public class DataLayoutUtilTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@BeforeClass
-	public static void setUpClass() {
+	@Before
+	public void setUp() {
 		_setUpJSONFactoryUtil();
-		_setUpLocaleUtil();
+		_setUpLanguageUtil();
 	}
 
 	@Test
@@ -202,22 +202,37 @@ public class DataLayoutUtilTest {
 				ddmFormRuleDeserializer));
 	}
 
-	private static void _setUpJSONFactoryUtil() {
+	private void _setUpJSONFactoryUtil() {
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 
 		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
 	}
 
-	private static void _setUpLocaleUtil() {
-		LocaleUtil localeUtil = ReflectionTestUtil.getFieldValue(
-			LocaleUtil.class, "_localeUtil");
+	private void _setUpLanguageUtil() {
+		Mockito.when(
+			_language.getAvailableLocales()
+		).thenReturn(
+			SetUtil.fromArray(LocaleUtil.US)
+		);
 
-		Map<String, Locale> locales = ReflectionTestUtil.getFieldValue(
-			localeUtil, "_locales");
+		Mockito.when(
+			_language.isAvailableLocale(Mockito.eq(LocaleUtil.US))
+		).thenReturn(
+			true
+		);
 
-		locales.clear();
+		Mockito.when(
+			_language.isAvailableLocale(
+				Mockito.eq(LocaleUtil.toLanguageId(LocaleUtil.US)))
+		).thenReturn(
+			true
+		);
 
-		locales.put("en_US", LocaleUtil.US);
+		LanguageUtil languageUtil = new LanguageUtil();
+
+		languageUtil.setLanguage(_language);
 	}
+
+	private final Language _language = Mockito.mock(Language.class);
 
 }

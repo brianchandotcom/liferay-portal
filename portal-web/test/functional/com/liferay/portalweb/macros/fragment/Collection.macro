@@ -7,7 +7,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Modal#BODY",
-			value1 = "Deleting a fragment set is an action impossible to revert. All the fragments in the set will be removed and it won't be possible to recover them.");
+			value1 = "Deleting a fragment set is an action impossible to revert. All the fragments in the set will be removed and it will not be possible to recover them.");
 
 		Click(
 			key_text = "Delete",

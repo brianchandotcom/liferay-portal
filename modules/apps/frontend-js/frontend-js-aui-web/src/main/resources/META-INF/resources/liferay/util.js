@@ -304,6 +304,9 @@
 			}
 		},
 
+		/**
+		 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+		 */
 		enableFormButtons(inputs) {
 			Util._submitLocked = null;
 

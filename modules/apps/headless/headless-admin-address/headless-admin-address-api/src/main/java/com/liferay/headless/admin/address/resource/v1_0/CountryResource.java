@@ -76,6 +76,11 @@ public interface CountryResource {
 
 	public Country getCountryByNumber(Integer number) throws Exception;
 
+	public void deleteCountry(Long countryId) throws Exception;
+
+	public Response deleteCountryBatch(String callbackURL, Object object)
+		throws Exception;
+
 	public Country getCountry(Long countryId) throws Exception;
 
 	public default void setContextAcceptLanguage(

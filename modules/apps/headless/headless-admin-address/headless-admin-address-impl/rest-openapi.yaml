@@ -227,6 +227,7 @@ paths:
             tags: ["Country"]
     "/countries/{countryId}":
         delete:
+            operationId: deleteCountry
             parameters:
                 - in: path
                   name: countryId

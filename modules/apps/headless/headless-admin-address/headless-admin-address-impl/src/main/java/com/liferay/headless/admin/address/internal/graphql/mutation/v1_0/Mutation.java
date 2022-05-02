@@ -76,6 +76,31 @@ public class Mutation {
 				callbackURL, object));
 	}
 
+	@GraphQLField
+	public boolean deleteCountry(@GraphQLName("countryId") Long countryId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_countryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			countryResource -> countryResource.deleteCountry(countryId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Response deleteCountryBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_countryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			countryResource -> countryResource.deleteCountryBatch(
+				callbackURL, object));
+	}
+
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
 			_applyComponentServiceObjects(
 				ComponentServiceObjects<T> componentServiceObjects,

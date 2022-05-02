@@ -31,6 +31,7 @@ import com.liferay.headless.admin.address.client.serdes.v1_0.CountrySerDes;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -218,6 +219,10 @@ public abstract class BaseCountryResourceTestCase {
 		assertContains(country1, (List<Country>)page.getItems());
 		assertContains(country2, (List<Country>)page.getItems());
 		assertValid(page);
+
+		countryResource.deleteCountry(country1.getId());
+
+		countryResource.deleteCountry(country2.getId());
 	}
 
 	@Test
@@ -702,6 +707,60 @@ public abstract class BaseCountryResourceTestCase {
 	protected Country testGraphQLGetCountryByNumber_addCountry()
 		throws Exception {
 
+		return testGraphQLCountry_addCountry();
+	}
+
+	@Test
+	public void testDeleteCountry() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Country country = testDeleteCountry_addCountry();
+
+		assertHttpResponseStatusCode(
+			204, countryResource.deleteCountryHttpResponse(country.getId()));
+
+		assertHttpResponseStatusCode(
+			404, countryResource.getCountryHttpResponse(country.getId()));
+
+		assertHttpResponseStatusCode(
+			404, countryResource.getCountryHttpResponse(0L));
+	}
+
+	protected Country testDeleteCountry_addCountry() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteCountry() throws Exception {
+		Country country = testGraphQLDeleteCountry_addCountry();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteCountry",
+						new HashMap<String, Object>() {
+							{
+								put("countryId", country.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteCountry"));
+		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"country",
+					new HashMap<String, Object>() {
+						{
+							put("countryId", country.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray.length() > 0);
+	}
+
+	protected Country testGraphQLDeleteCountry_addCountry() throws Exception {
 		return testGraphQLCountry_addCountry();
 	}
 

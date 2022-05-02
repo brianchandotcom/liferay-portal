@@ -981,6 +981,7 @@ public class BundleSiteInitializerTest {
 		Organization organization1 = organizationsPage1.fetchFirstItem();
 
 		Assert.assertNotNull(organization1);
+		_assertUserOrganizations(organization1.getId(), serviceContext, 1);
 
 		Page<Organization> organizationsPage2 =
 			organizationResource.getOrganizationsPage(
@@ -992,6 +993,7 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertNotNull(organization2);
 		Assert.assertTrue(organization2.getNumberOfOrganizations() == 1);
+		_assertUserOrganizations(organization2.getId(), serviceContext, 1);
 
 		Page<Organization> organizationsPage3 =
 			organizationResource.getOrganizationChildOrganizationsPage(
@@ -1001,6 +1003,7 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertNotNull(organization3);
 		Assert.assertEquals("Test Organization 3", organization3.getName());
+		_assertUserOrganizations(organization3.getId(), serviceContext, 0);
 	}
 
 	private void _assertPermissions(Group group) throws Exception {
@@ -1194,6 +1197,27 @@ public class BundleSiteInitializerTest {
 
 		Page<UserAccount> page = userAccountResource.getAccountUserAccountsPage(
 			accountId, null, null, null, null);
+
+		Assert.assertNotNull(page);
+		Assert.assertEquals(totalCount, page.getTotalCount());
+	}
+
+	private void _assertUserOrganizations(
+			String organizationId, ServiceContext serviceContext,
+			int totalCount)
+		throws Exception {
+
+		UserAccountResource.Builder userAccountResourceBuilder =
+			_userAccountResourceFactory.create();
+
+		UserAccountResource userAccountResource =
+			userAccountResourceBuilder.user(
+				serviceContext.fetchUser()
+			).build();
+
+		Page<UserAccount> page =
+			userAccountResource.getOrganizationUserAccountsPage(
+				organizationId, null, null, null, null);
 
 		Assert.assertNotNull(page);
 		Assert.assertEquals(totalCount, page.getTotalCount());

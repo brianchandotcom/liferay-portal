@@ -191,6 +191,10 @@ public class JournalContentCompatibilityConverterImpl
 			"dynamic-content");
 
 		for (Element dynamicContentElement : dynamicContentElements) {
+			if (Objects.equals(ddmFieldType, "list")) {
+				continue;
+			}
+
 			String text = dynamicContentElement.getText();
 
 			dynamicContentElement.clearContent();

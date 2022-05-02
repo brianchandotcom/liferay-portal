@@ -373,6 +373,9 @@ components:
                     items:
                         $ref: "#/components/schemas/ElementInstance"
                     type: array
+                externalReferenceCode:
+                    example: AB-34098-789-N
+                    type: string
                 id:
                     format: int64
                     type: integer
@@ -388,6 +391,8 @@ components:
                         type: string
                     type: object
                 userName:
+                    type: string
+                version:
                     type: string
             type: object
         SXPElement:
@@ -410,6 +415,9 @@ components:
                     type: object
                 elementDefinition:
                     $ref: "#/components/schemas/ElementDefinition"
+                externalReferenceCode:
+                    example: AB-34098-789-N
+                    type: string
                 hidden:
                     type: boolean
                 id:
@@ -431,6 +439,8 @@ components:
                 type:
                     type: integer
                 userName:
+                    type: string
+                version:
                     type: string
             type: object
         SXPParameterContributorDefinition:

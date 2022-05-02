@@ -9,7 +9,12 @@
 		"emailAddress": "test.user1@liferay.com",
 		"familyName": "User1",
 		"givenName": "Test",
-		"name": "Test User 1"
+		"name": "Test User 1",
+		"organizationBriefs": [
+        	{
+        		"name": "Test Organization 1"
+        	}
+        ]
 	},
 	{
 		"accountBriefs": [
@@ -21,6 +26,11 @@
 		"emailAddress": "test.user2@liferay.com",
 		"familyName": "User2",
 		"givenName": "Test",
-		"name": "Test User 2"
+		"name": "Test User 2",
+		"organizationBriefs": [
+        	{
+            	"name": "Test Organization 2"
+            }
+        ]
 	}
 ]

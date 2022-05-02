@@ -77,6 +77,7 @@ import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -94,6 +95,8 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -104,6 +107,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -472,6 +476,68 @@ public class ObjectEntryLocalServiceImpl
 		}
 
 		return objectEntryPersistence.dslQueryCount(dslQuery);
+	}
+
+	public Map<String, Object> getSystemModelAttributes(
+			ObjectDefinition objectDefinition, long objectEntryId)
+		throws PortalException {
+
+		if (!objectDefinition.isSystem()) {
+			return new HashMap<>();
+		}
+
+		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
+			_getDynamicObjectDefinitionTable(
+				objectDefinition.getObjectDefinitionId());
+
+		Column<DynamicObjectDefinitionTable, Long> primaryKeyColumn =
+			dynamicObjectDefinitionTable.getPrimaryKeyColumn();
+
+		DSLQuery dslQuery = DSLQueryFactoryUtil.select(
+		).from(
+			dynamicObjectDefinitionTable
+		).where(
+			primaryKeyColumn.eq(objectEntryId)
+		);
+
+		PersistedModelLocalService persistedModelLocalService =
+			_persistedModelLocalServiceRegistry.getPersistedModelLocalService(
+				objectDefinition.getClassName());
+
+		List<BaseModel<?>> baseModels = persistedModelLocalService.dslQuery(
+			dslQuery);
+
+		if (baseModels.isEmpty()) {
+			return new HashMap<>();
+		}
+
+		BaseModel<?> baseModel = baseModels.get(0);
+
+		Map<String, Object> modelAttributes = baseModel.getModelAttributes();
+
+		Map<String, Object> attributes = HashMapBuilder.<String, Object>put(
+			"createDate", modelAttributes.get("createDate")
+		).put(
+			"externalReferenceCode",
+			modelAttributes.get("externalReferenceCode")
+		).put(
+			"modifiedDate", modelAttributes.get("modifiedDate")
+		).put(
+			"objectDefinitionId", objectDefinition.getObjectDefinitionId()
+		).put(
+			"uuid", modelAttributes.get("uuid")
+		).build();
+
+		for (ObjectField objectField :
+				_objectFieldLocalService.getObjectFields(
+					objectDefinition.getObjectDefinitionId())) {
+
+			attributes.put(
+				objectField.getName(),
+				modelAttributes.get(objectField.getDBColumnName()));
+		}
+
+		return attributes;
 	}
 
 	@Override
@@ -2242,6 +2308,10 @@ public class ObjectEntryLocalServiceImpl
 
 	@Reference
 	private ObjectScopeProviderRegistry _objectScopeProviderRegistry;
+
+	@Reference
+	private PersistedModelLocalServiceRegistry
+		_persistedModelLocalServiceRegistry;
 
 	@Reference
 	private PortletFileRepository _portletFileRepository;

@@ -321,34 +321,48 @@ public class OrderItemResourceImpl
 				_commerceOrderItemService.updateCommerceOrderItemPrices(
 					commerceOrderItem.getCommerceOrderItemId(),
 					(BigDecimal)GetterUtil.getNumber(
-						orderItem.getDiscountAmount()),
+						orderItem.getDiscountAmount(), BigDecimal.ZERO),
 					(BigDecimal)GetterUtil.getNumber(
-						orderItem.getDiscountWithTaxAmount()),
+						orderItem.getDiscountWithTaxAmount(), BigDecimal.ZERO),
 					(BigDecimal)GetterUtil.getNumber(
-						orderItem.getDiscountPercentageLevel1()),
+						orderItem.getDiscountPercentageLevel1(),
+						BigDecimal.ZERO),
 					(BigDecimal)GetterUtil.getNumber(
-						orderItem.getDiscountPercentageLevel1WithTaxAmount()),
+						orderItem.getDiscountPercentageLevel1WithTaxAmount(),
+						BigDecimal.ZERO),
 					(BigDecimal)GetterUtil.getNumber(
-						orderItem.getDiscountPercentageLevel2()),
+						orderItem.getDiscountPercentageLevel2(),
+						BigDecimal.ZERO),
 					(BigDecimal)GetterUtil.getNumber(
-						orderItem.getDiscountPercentageLevel2WithTaxAmount()),
+						orderItem.getDiscountPercentageLevel2WithTaxAmount(),
+						BigDecimal.ZERO),
 					(BigDecimal)GetterUtil.getNumber(
-						orderItem.getDiscountPercentageLevel3()),
+						orderItem.getDiscountPercentageLevel3(),
+						BigDecimal.ZERO),
 					(BigDecimal)GetterUtil.getNumber(
-						orderItem.getDiscountPercentageLevel3WithTaxAmount()),
+						orderItem.getDiscountPercentageLevel3WithTaxAmount(),
+						BigDecimal.ZERO),
 					(BigDecimal)GetterUtil.getNumber(
-						orderItem.getDiscountPercentageLevel4()),
+						orderItem.getDiscountPercentageLevel4(),
+						BigDecimal.ZERO),
 					(BigDecimal)GetterUtil.getNumber(
-						orderItem.getDiscountPercentageLevel4WithTaxAmount()),
-					(BigDecimal)GetterUtil.getNumber(orderItem.getFinalPrice()),
+						orderItem.getDiscountPercentageLevel4WithTaxAmount(),
+						BigDecimal.ZERO),
 					(BigDecimal)GetterUtil.getNumber(
-						orderItem.getFinalPriceWithTaxAmount()),
-					(BigDecimal)GetterUtil.getNumber(orderItem.getPromoPrice()),
+						orderItem.getFinalPrice(), BigDecimal.ZERO),
 					(BigDecimal)GetterUtil.getNumber(
-						orderItem.getPromoPriceWithTaxAmount()),
-					(BigDecimal)GetterUtil.getNumber(orderItem.getUnitPrice()),
+						orderItem.getFinalPriceWithTaxAmount(),
+						BigDecimal.ZERO),
 					(BigDecimal)GetterUtil.getNumber(
-						orderItem.getUnitPriceWithTaxAmount()));
+						orderItem.getPromoPrice(), BigDecimal.ZERO),
+					(BigDecimal)GetterUtil.getNumber(
+						orderItem.getPromoPriceWithTaxAmount(),
+						BigDecimal.ZERO),
+					(BigDecimal)GetterUtil.getNumber(
+						orderItem.getUnitPrice(), BigDecimal.ZERO),
+					(BigDecimal)GetterUtil.getNumber(
+						orderItem.getUnitPriceWithTaxAmount(),
+						BigDecimal.ZERO));
 		}
 
 		// Expando
@@ -421,41 +435,53 @@ public class OrderItemResourceImpl
 					_commerceOrderItemService.updateCommerceOrderItemPrices(
 						commerceOrderItem.getCommerceOrderItemId(),
 						(BigDecimal)GetterUtil.getNumber(
-							orderItem.getDiscountAmount()),
+							orderItem.getDiscountAmount(), BigDecimal.ZERO),
 						(BigDecimal)GetterUtil.getNumber(
-							orderItem.getDiscountWithTaxAmount()),
+							orderItem.getDiscountWithTaxAmount(),
+							BigDecimal.ZERO),
 						(BigDecimal)GetterUtil.getNumber(
-							orderItem.getDiscountPercentageLevel1()),
-						(BigDecimal)GetterUtil.getNumber(
-							orderItem.
-								getDiscountPercentageLevel1WithTaxAmount()),
-						(BigDecimal)GetterUtil.getNumber(
-							orderItem.getDiscountPercentageLevel2()),
+							orderItem.getDiscountPercentageLevel1(),
+							BigDecimal.ZERO),
 						(BigDecimal)GetterUtil.getNumber(
 							orderItem.
-								getDiscountPercentageLevel2WithTaxAmount()),
+								getDiscountPercentageLevel1WithTaxAmount(),
+							BigDecimal.ZERO),
 						(BigDecimal)GetterUtil.getNumber(
-							orderItem.getDiscountPercentageLevel3()),
-						(BigDecimal)GetterUtil.getNumber(
-							orderItem.
-								getDiscountPercentageLevel3WithTaxAmount()),
-						(BigDecimal)GetterUtil.getNumber(
-							orderItem.getDiscountPercentageLevel4()),
+							orderItem.getDiscountPercentageLevel2(),
+							BigDecimal.ZERO),
 						(BigDecimal)GetterUtil.getNumber(
 							orderItem.
-								getDiscountPercentageLevel4WithTaxAmount()),
+								getDiscountPercentageLevel2WithTaxAmount(),
+							BigDecimal.ZERO),
 						(BigDecimal)GetterUtil.getNumber(
-							orderItem.getFinalPrice()),
+							orderItem.getDiscountPercentageLevel3(),
+							BigDecimal.ZERO),
 						(BigDecimal)GetterUtil.getNumber(
-							orderItem.getFinalPriceWithTaxAmount()),
+							orderItem.
+								getDiscountPercentageLevel3WithTaxAmount(),
+							BigDecimal.ZERO),
 						(BigDecimal)GetterUtil.getNumber(
-							orderItem.getPromoPrice()),
+							orderItem.getDiscountPercentageLevel4(),
+							BigDecimal.ZERO),
 						(BigDecimal)GetterUtil.getNumber(
-							orderItem.getPromoPriceWithTaxAmount()),
+							orderItem.
+								getDiscountPercentageLevel4WithTaxAmount(),
+							BigDecimal.ZERO),
 						(BigDecimal)GetterUtil.getNumber(
-							orderItem.getUnitPrice()),
+							orderItem.getFinalPrice(), BigDecimal.ZERO),
 						(BigDecimal)GetterUtil.getNumber(
-							orderItem.getUnitPriceWithTaxAmount()));
+							orderItem.getFinalPriceWithTaxAmount(),
+							BigDecimal.ZERO),
+						(BigDecimal)GetterUtil.getNumber(
+							orderItem.getPromoPrice(), BigDecimal.ZERO),
+						(BigDecimal)GetterUtil.getNumber(
+							orderItem.getPromoPriceWithTaxAmount(),
+							BigDecimal.ZERO),
+						(BigDecimal)GetterUtil.getNumber(
+							orderItem.getUnitPrice(), BigDecimal.ZERO),
+						(BigDecimal)GetterUtil.getNumber(
+							orderItem.getUnitPriceWithTaxAmount(),
+							BigDecimal.ZERO));
 			}
 		}
 
@@ -577,21 +603,11 @@ public class OrderItemResourceImpl
 			contextAcceptLanguage.getPreferredLocale());
 	}
 
-	private OrderItem _toOrderItem(CommerceOrderItem commerceOrderItem)
-		throws Exception {
-
-		return _toOrderItem(commerceOrderItem.getCommerceOrderItemId());
-	}
-
 	private OrderItem _toOrderItem(long commerceOrderItemId) throws Exception {
 		return _orderItemDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
 				commerceOrderItemId,
 				contextAcceptLanguage.getPreferredLocale()));
-	}
-
-	private OrderItem _toOrderItem(OrderItem orderItem) throws Exception {
-		return _toOrderItem(orderItem.getId());
 	}
 
 	private OrderItem _updateOrderItem(

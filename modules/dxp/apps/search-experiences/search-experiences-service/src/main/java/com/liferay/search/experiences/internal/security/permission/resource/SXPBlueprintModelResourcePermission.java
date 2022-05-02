@@ -69,10 +69,10 @@ public class SXPBlueprintModelResourcePermission
 			String actionId)
 		throws PortalException {
 
-		SXPBlueprint sxpBlueprint = _sxpBlueprintLocalService.getSXPBlueprint(
-			sxpBlueprintId);
-
-		return contains(permissionChecker, sxpBlueprint, actionId);
+		return contains(
+			permissionChecker,
+			_sxpBlueprintLocalService.getSXPBlueprint(sxpBlueprintId),
+			actionId);
 	}
 
 	@Override

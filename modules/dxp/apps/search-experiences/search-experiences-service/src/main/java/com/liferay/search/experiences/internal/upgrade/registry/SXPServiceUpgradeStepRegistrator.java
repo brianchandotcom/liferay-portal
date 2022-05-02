@@ -16,10 +16,13 @@ package com.liferay.search.experiences.internal.upgrade.registry;
 
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.search.experiences.internal.upgrade.v1_1_0.SXPBlueprintKeyVersionUpgradeProcess;
 import com.liferay.search.experiences.internal.upgrade.v1_1_0.SXPBlueprintUpgradeProcess;
+import com.liferay.search.experiences.internal.upgrade.v1_1_0.SXPElementKeyVersionUpgradeProcess;
 import com.liferay.search.experiences.internal.upgrade.v1_1_0.SXPElementUpgradeProcess;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Petteri Karttunen
@@ -50,5 +53,4 @@ public class SXPServiceUpgradeStepRegistrator
 
 			});
 	}
-
 }

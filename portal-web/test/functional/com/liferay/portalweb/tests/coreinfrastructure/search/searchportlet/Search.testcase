@@ -671,34 +671,15 @@ definition {
 		property environment.acceptance = "true";
 		property portal.acceptance = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Search Result Widget Page");
 
-		PagesAdmin.addPage(pageName = "Search Page");
-
-		var browserType = PropsUtil.get("browser.type");
-
-		if ("${browserType}" == "safari") {
-			Navigator.openSpecificURL(url = "http://localhost:8080/web/guest/search-page");
-		}
-		else {
-			Navigator.gotoPage(pageName = "Search Page");
-		}
-
-		SearchPortlets.addWidgets(searchPortletList = "Search Results");
-
-		Portlet.gotoPortletOptions(
-			portletName = "Search Results",
-			portletOption = "Configuration");
-
-		SelectFrame(locator1 = "IFrame#CONFIGURATION");
-
-		AssertTextEquals(
-			locator1 = "SearchResults#RESULTS_PORTLET_PAGINATION_CONFIG",
-			value1 = "2");
-
-		IFrame.closeFrame();
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Search Result Widget Page",
+			widgetName = "Search Results");
 
 		for (var count : list "1,2,3") {
 			JSONWebcontent.addWebContent(
@@ -707,11 +688,9 @@ definition {
 				title = "WC Title ${count}");
 		}
 
-		SearchPortlets.searchEmbedded(searchTerm = "WC Title");
+		var portalURL = PropsUtil.get("portal.url");
 
-		SearchResultPortlet.viewSearchResults(
-			searchAssetTitle = "WC Title 1",
-			searchAssetType = "Web Content Article");
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/search-result-widget-page");
 
 		Portlet.gotoPortletOptions(
 			portletName = "Search Results",
@@ -724,6 +703,28 @@ definition {
 			value1 = "2");
 
 		IFrame.closeFrame();
+
+		SearchPortlets.searchEmbedded(searchTerm = "WC Title");
+
+		Portlet.gotoPortletOptions(
+			portletName = "Search Results",
+			portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		AssertTextEquals(
+			locator1 = "SearchResults#RESULTS_PORTLET_PAGINATION_CONFIG",
+			value1 = "2");
+
+		IFrame.closeFrame();
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "WC Title 1",
+			searchAssetType = "Web Content Article");
+
+		SearchResultPortlet.viewSearchResultNotPresent(
+			searchAssetTitle = "WC Title 3",
+			searchAssetType = "Web Content Article");
 
 		SearchResultPortlet.paginateAndViewSearchResults(
 			searchAssetTitle = "WC Title 3",

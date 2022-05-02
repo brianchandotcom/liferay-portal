@@ -26,6 +26,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CACHE_ALERT</td>
+	<td>//div[@role="alert"] //div[@class='autofit-section' and not(*)]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CHECK_ISSUES_TEXT</td>
 	<td>//*[contains(@class, 'text-center')]//*[contains(@class, 'font-weight-semi-bold')]</td>
 	<td></td>
@@ -86,8 +91,28 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FAILURE_TYPE</td>
+	<td>//div[contains(@class,'panel-group ')] //div[contains(@class,'autofit-col-expand') and contains(.,'${failureType}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>GOOGLE_PAGESPEED_TITLE</td>
 	<td>//h2[contains(text(), 'Google PageSpeed Insights')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>HELP_TEXT</td>
+	<td>//div[@class='sidebar-body'] //p[@class='text-secondary']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>IMAGE_SUCCESS</td>
+	<td>//img[contains(@alt, 'success-page-audit-image-alt-description')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>IMAGE_DEFAULT</td>
+	<td>//img[contains(@src, 'issues_default.svg')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -153,11 +178,6 @@
 <tr>
 	<td>SIDEBAR</td>
 	<td>//div[contains(@class,'sidenav-menu') and descendant::span[contains(.,'Page Audit')]]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SUCCESS_IMAGE</td>
-	<td>//img[contains(@alt, 'success-page-audit-image-alt-description')]</td>
 	<td></td>
 </tr>
 </tbody>

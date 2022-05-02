@@ -1912,10 +1912,6 @@ definition {
 			ddlListName = "List Name",
 			ddlRecordFieldData = "Text English");
 
-		DDLRecord.populateFieldText(
-			ddlRecordFieldData = "",
-			fieldName = "Text");
-
 		PortletEntry.changeLocale(locale = "zh-CN");
 
 		DDLRecord.populateFieldText(
@@ -1925,7 +1921,7 @@ definition {
 		PortletEntry.publish();
 
 		DDLRecord.viewFieldCP(
-			ddlRecordFieldData = "Text Spanish",
+			ddlRecordFieldData = "Text English",
 			fieldFieldLabel = "Text");
 
 		Navigator.openURL();

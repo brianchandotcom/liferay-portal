@@ -148,7 +148,7 @@ definition {
 
 		Button.clickCancel();
 
-		ObjectCustomViews.assertColumnPresent(colunmName = "Author");
+		ObjectCustomViews.assertColumnLabelPresent(columnLabel = "Author");
 	}
 
 	@description = "LPS-135394 - Verify it is possible to cancel the creation of a View"

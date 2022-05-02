@@ -115,6 +115,11 @@
 		<td>//input[@id='${key_roleName}_ACTION_${key_permissionName}']</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>BUILDER_SEARCH_RESULT_COLUMN_LABEL</td>
+		<td>//p[contains(@class,'list-group-text') and contains(text(),'${key_columnLabel}')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

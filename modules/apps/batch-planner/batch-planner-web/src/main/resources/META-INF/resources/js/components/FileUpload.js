@@ -44,8 +44,8 @@ function FileUpload({portletNamespace}) {
 	const [fileToBeUploaded, setFileToBeUploaded] = useState(null);
 
 	const inputContainsHeadersId = `${portletNamespace}containsHeaders`;
-	const inputCSVSeparatorId = `${portletNamespace}csvSeparator`;
-	const inputCSVEnclosingCharacterId = `${portletNamespace}csvEnclosingCharacter`;
+	const inputDelimiterId = `${portletNamespace}delimiter`;
+	const inputEnclosingCharacterId = `${portletNamespace}enclosingCharacter`;
 	const inputFileId = `${portletNamespace}importFile`;
 	const inputNameId = `${portletNamespace}name`;
 
@@ -156,14 +156,14 @@ function FileUpload({portletNamespace}) {
 					<div className="row">
 						<div className="col-md-6">
 							<ClayForm.Group>
-								<label htmlFor={inputCSVSeparatorId}>
+								<label htmlFor={inputDelimiterId}>
 									{Liferay.Language.get('csv-separator')}
 								</label>
 
 								<ClayInput
-									id={inputCSVSeparatorId}
+									id={inputDelimiterId}
 									maxLength={1}
-									name={inputCSVSeparatorId}
+									name={inputDelimiterId}
 									onChange={({target}) => {
 										setParserOptions({
 											...parserOptions,
@@ -177,15 +177,15 @@ function FileUpload({portletNamespace}) {
 
 						<div className="col-md-6">
 							<ClayForm.Group>
-								<label htmlFor={inputCSVEnclosingCharacterId}>
+								<label htmlFor={inputEnclosingCharacterId}>
 									{Liferay.Language.get(
 										'csv-file-column-delimiter'
 									)}
 								</label>
 
 								<ClaySelect
-									id={inputCSVEnclosingCharacterId}
-									name={inputCSVEnclosingCharacterId}
+									id={inputEnclosingCharacterId}
+									name={inputEnclosingCharacterId}
 									onChange={({target}) =>
 										setParserOptions({
 											...parserOptions,

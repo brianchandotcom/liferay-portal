@@ -358,10 +358,6 @@ definition {
 			DDLRecord.populateFieldText(
 				ddlRecordFieldData = "${language} Pergunta",
 				fieldName = "Pergunta");
-		}
-
-		for (var language : list "pt-BR,en-US,es-ES") {
-			PortletEntry.changeLocale(locale = "${language}");
 
 			FormFields.viewTextValue(
 				fieldName = "Categoria",

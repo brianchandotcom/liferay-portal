@@ -1,0 +1,64 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: common-ingress
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: dxp.localdev.me
+    http:
+      paths:
+      - backend:
+          service:
+            name: dxp-service
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
+  - host: customrestservice.localdev.me
+    http:
+      paths:
+      - backend:
+          service:
+            name: customrestservice
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
+  - host: liferayhelloworld.localdev.me
+    http:
+      paths:
+      - backend:
+          service:
+            name: liferayhelloworld
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
+  - host: dynamicjscss.localdev.me
+    http:
+      paths:
+      - backend:
+          service:
+            name: dynamicjscss
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
+  - host: designpackfire.localdev.me
+    http:
+      paths:
+      - backend:
+          service:
+            name: designpackfire
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - dxp.localdev.me
+    - customrestservice.localdev.me
+    - liferayhelloworld.localdev.me
+    - dynamicjscss.localdev.me
+    - designpackfire.localdev.me

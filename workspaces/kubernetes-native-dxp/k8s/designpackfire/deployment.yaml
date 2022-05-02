@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: designpackfire
+  labels:
+    app: designpackfire
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: designpackfire
+  template:
+    metadata:
+      labels:
+        app: designpackfire
+    spec:
+      containers:
+      - name: designpackfire
+        image: designpackfire
+        imagePullPolicy: Never
+        resources:
+          limits:
+            memory: "50Mi"
+            cpu: "50m"
+        ports:
+        - containerPort: 80
+        env:
+          - name: LCP_SERVICE_DOMAIN
+            value: localdev.me
+          - name: LCP_PROJECT_ID
+            value: dxp
+          - name: WEBSERVER_SERVICE_HOST
+            value: ""

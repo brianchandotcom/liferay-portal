@@ -1,0 +1,8 @@
+load('ext://lxc', 'lxc_extension')
+lxc_extension(
+  name='customrestservice',
+  command='./build.sh',
+  deps=['./src', './pom.xml'],
+  ignore=['./target'],
+  kustomize_path='../../k8s/customrestservice'
+)

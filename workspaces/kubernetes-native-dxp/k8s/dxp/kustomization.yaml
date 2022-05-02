@@ -1,0 +1,9 @@
+resources:
+- dxp-deployment.yaml
+- dxp-role-and-binding.yaml
+- dxp-service.yaml
+- dxp-volume.yaml
+configMapGenerator:
+- name: gcp-oidc-credentials-configmap
+  envs:
+  - ENV

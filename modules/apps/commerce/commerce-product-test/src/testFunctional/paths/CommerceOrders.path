@@ -42,7 +42,7 @@
 </tr>
 <tr>
 	<td>ORDER_DETAILS_PRODUCT_QUANTITY</td>
-	<td>//div[@class='dnd-td'][9][contains(.,'${key_productQuantity}')]</td>
+	<td>//div[@class='dnd-td'][contains(text(),'${key_productQuantity}')]</td>
 	<td></td>
 </tr>
 <tr>

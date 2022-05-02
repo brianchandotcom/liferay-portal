@@ -3142,7 +3142,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.search.elasticsearch7.impl.jar!jackson-dataformat-smile.jar</file-name>
-				<version>2.10.4</version>
+				<version>2.13.2</version>
 				<project-name>Jackson dataformat: Smile</project-name>
 				<project-url>http://github.com/FasterXML/jackson-dataformats-binary</project-url>
 				<licenses>

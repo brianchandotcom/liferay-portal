@@ -172,7 +172,7 @@ public class SystemObjectDefinitionMetadataModelListener<T extends BaseModel<T>>
 
 		return JSONUtil.put(
 			"model" + _modelClass.getSimpleName(),
-			_jsonFactory.createJSONObject(baseModel.toString())
+			_jsonFactory.createJSONObject(_jsonFactory.serialize(baseModel))
 		).put(
 			"modelDTO" + dtoConverterType,
 			_jsonFactory.createJSONObject(
@@ -187,7 +187,7 @@ public class SystemObjectDefinitionMetadataModelListener<T extends BaseModel<T>>
 				}
 
 				return _jsonFactory.createJSONObject(
-					originalBaseModel.toString());
+					_jsonFactory.serialize(originalBaseModel));
 			}
 		).put(
 			"originalDTO" + dtoConverterType,

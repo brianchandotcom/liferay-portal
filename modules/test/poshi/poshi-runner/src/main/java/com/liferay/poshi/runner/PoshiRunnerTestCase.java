@@ -49,15 +49,7 @@ public abstract class PoshiRunnerTestCase extends TestCase {
 				"Test directory does not exist: " + testBaseDirName);
 		}
 
-		PropsUtil.clear();
-
 		Properties properties = new Properties();
-
-		if (Validator.isNotNull(System.getenv("JENKINS_HOME"))) {
-			properties.setProperty("browser.type", "firefox");
-			properties.setProperty(
-				"browser.firefox.bin.file", "/opt/firefox-52.0.2esr/firefox");
-		}
 
 		properties.setProperty("test.base.dir.name", testBaseDirName);
 

@@ -16,6 +16,7 @@ package com.liferay.batch.planner.constants;
 
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
+import java.util.Collections;
 import java.util.Map;
 
 /**
@@ -23,20 +24,22 @@ import java.util.Map;
  */
 public class BatchPlannerPolicyConstants {
 
-	public static final Map<String, String> policyUITypes = HashMapBuilder.put(
-		"allowUpdate", "checkbox"
-	).put(
-		"containsHeaders", "checkbox"
-	).put(
-		"delimiter", "text"
-	).put(
-		"enclosingCharacter", "text"
-	).put(
-		"headlessEndpoint", "text"
-	).put(
-		"onErrorFail", "checkbox"
-	).put(
-		"onUpdateDoPatch", "checkbox"
-	).build();
+	public static final Map<String, String> policyNameTypes =
+		Collections.unmodifiableMap(
+			HashMapBuilder.put(
+				"allowUpdate", "checkbox"
+			).put(
+				"containsHeaders", "checkbox"
+			).put(
+				"delimiter", "text"
+			).put(
+				"enclosingCharacter", "text"
+			).put(
+				"headlessEndpoint", "text"
+			).put(
+				"onErrorFail", "checkbox"
+			).put(
+				"onUpdateDoPatch", "checkbox"
+			).build());
 
 }

@@ -47,7 +47,6 @@ import java.net.URI;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import javax.ws.rs.core.UriInfo;
 
@@ -153,13 +152,12 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 	private UriInfo _getImportTaskUriInfo(BatchPlannerPlan batchPlannerPlan) {
 		BatchPlannerUriInfo.Builder builder = new BatchPlannerUriInfo.Builder();
 
-		Set<String> policies =
-			BatchPlannerPolicyConstants.policyUITypes.keySet();
+		for (String name :
+				BatchPlannerPolicyConstants.policyNameTypes.keySet()) {
 
-		for (String policy : policies) {
 			builder.queryParameter(
-				policy,
-				_getValue(batchPlannerPlan.fetchBatchPlannerPolicy(policy)));
+				name,
+				_getValue(batchPlannerPlan.fetchBatchPlannerPolicy(name)));
 		}
 
 		return builder.taskItemDelegateName(

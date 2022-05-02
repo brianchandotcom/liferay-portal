@@ -179,16 +179,15 @@ public class BatchPlannerPlanHelper {
 			long batchPlannerPlanId, PortletRequest portletRequest)
 		throws Exception {
 
-		Map<String, String> policyEntries =
-			BatchPlannerPolicyConstants.policyUITypes;
+		for (Map.Entry<String, String> policyNameType :
+				BatchPlannerPolicyConstants.policyNameTypes.entrySet()) {
 
-		for (Map.Entry<String, String> policyEntry : policyEntries.entrySet()) {
-			String policy = policyEntry.getKey();
+			String name = policyNameType.getKey();
 
-			String value = ParamUtil.getString(portletRequest, policy);
+			String value = ParamUtil.getString(portletRequest, name);
 
-			if (Objects.equals(policyEntry.getValue(), "checkbox")) {
-				value = _getCheckboxValue(portletRequest, policy);
+			if (Objects.equals(policyNameType.getValue(), "checkbox")) {
+				value = _getCheckboxValue(portletRequest, name);
 			}
 
 			if (Validator.isNull(value)) {
@@ -196,7 +195,7 @@ public class BatchPlannerPlanHelper {
 			}
 
 			_batchPlannerPolicyService.addBatchPlannerPolicy(
-				batchPlannerPlanId, policy, value);
+				batchPlannerPlanId, name, value);
 		}
 	}
 
@@ -369,38 +368,37 @@ public class BatchPlannerPlanHelper {
 			long batchPlannerPlanId, PortletRequest portletRequest)
 		throws PortalException {
 
-		Map<String, String> policyEntries =
-			BatchPlannerPolicyConstants.policyUITypes;
+		for (Map.Entry<String, String> policyNameType :
+				BatchPlannerPolicyConstants.policyNameTypes.entrySet()) {
 
-		for (Map.Entry<String, String> policyEntry : policyEntries.entrySet()) {
-			String policy = policyEntry.getKey();
+			String name = policyNameType.getKey();
 
-			String value = ParamUtil.getString(portletRequest, policy);
+			String value = ParamUtil.getString(portletRequest, name);
 
-			if (Objects.equals(policyEntry.getValue(), "checkbox")) {
-				value = _getCheckboxValue(portletRequest, policy);
+			if (Objects.equals(policyNameType.getValue(), "checkbox")) {
+				value = _getCheckboxValue(portletRequest, name);
 			}
 
 			BatchPlannerPolicy currBatchPlannerPolicy =
 				_batchPlannerPolicyLocalService.fetchBatchPlannerPolicy(
-					batchPlannerPlanId, policy);
+					batchPlannerPlanId, name);
 
 			if (Validator.isNull(value) && (currBatchPlannerPolicy != null)) {
 				_batchPlannerPolicyService.deleteBatchPlannerPolicy(
-					batchPlannerPlanId, policy);
+					batchPlannerPlanId, name);
 
 				continue;
 			}
 
 			if (currBatchPlannerPolicy != null) {
 				_batchPlannerPolicyService.updateBatchPlannerPolicy(
-					batchPlannerPlanId, policy, value);
+					batchPlannerPlanId, name, value);
 
 				continue;
 			}
 
 			_batchPlannerPolicyService.addBatchPlannerPolicy(
-				batchPlannerPlanId, policy, value);
+				batchPlannerPlanId, name, value);
 		}
 	}
 

@@ -4473,77 +4473,545 @@ definition {
 	}
 
 	@description = "LPS-90588: Validate the interaction with how the user interacts with the Experiences Dropdown, when the user has permissions and segments are available and interact with the New Segment by New Experience"
-	@ignore = "true"
 	@priority = "3"
 	test ExperienceDropdownAddNewSegment {
+		task ("Create an User") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
 
-		// TODO LPS-90588 ExperienceDropdownAddNewSegment pending implementation
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				newPassword = "test",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
 
+		task ("Create a Role") {
+			JSONRole.addRegularRole(
+				roleKey = "Experiences Test Role",
+				roleTitle = "Experiences Test Role");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "Experiences Test Role",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Set permissions for this role") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "UPDATE",
+				resourceName = "com.liferay.portal.kernel.model.Layout",
+				roleTitle = "Experiences Test Role");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "MANAGE_SEGMENTS_ENTRIES",
+				resourceName = "com.liferay.segments",
+				roleTitle = "Experiences Test Role");
+		}
+
+		task ("Create a Segment") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "Screen Name",
+				groupName = "Test Site Name",
+				operator = "contains",
+				segmentName = "Experiences Test Segment",
+				text = "Test");
+		}
+
+		task ("Login with user created") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Go to Content Page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+		}
+
+		task ("Go to New Experience Editor") {
+			PageEditor.openNewExperienceEditor();
+
+			AssertTextEquals(
+				key_text = "Name",
+				locator1 = "TextInput#ANY",
+				value1 = "");
+
+			AssertVisible(locator1 = "PageEditor#EXPERIENCE_SELECT_SEGMENT");
+		}
+
+		task ("Check that default experiende is preselected and other experience is available") {
+			AssertSelectedLabel(
+				locator1 = "PageEditor#EXPERIENCE_SELECT_SEGMENT",
+				value1 = "Anyone");
+
+			AssertElementPresent(
+				key_segmentName = "Experiences Test Segment",
+				locator1 = "PageEditor#EXPERIENCE_AUDIENCE_OPTION");
+		}
+
+		task ("Create a new segment") {
+			Click(
+				key_text = "New Segment",
+				locator1 = "Button#ANY");
+
+			Segmentation.addProperties(propertyOption = "First Name");
+
+			Segmentation.fillTitle(titleField = "Segment First Name Test");
+
+			Segmentation.fillProperty(propertyField = "userfn");
+
+			Button.clickSave();
+		}
+
+		task ("Check segment is preselected") {
+			AssertSelectedLabel(
+				locator1 = "PageEditor#EXPERIENCE_SELECT_SEGMENT",
+				value1 = "Segment First Name Test");
+		}
+
+		task ("Login with Test user to allow teardown") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+		}
+
+		task ("Delete Role and User created") {
+			JSONRole.deleteRole(roleTitle = "Experiences Test Role");
+
+			JSONUser.deleteUserByEmailAddress(userEmailAddress = "userea@liferay.com");
+		}
 	}
 
 	@description = "LPS-90588: Validate the interaction with how the user interacts with the Experiences Dropdown, when the user has permissions but no segments are available and interact with the New Segment by New Experience"
-	@ignore = "true"
 	@priority = "3"
 	test ExperienceDropdownAddNewSegmentButton {
+		task ("Create an User") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
 
-		// TODO LPS-90588 ExperienceDropdownAddNewSegmentButton pending implementation
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				newPassword = "test",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
 
+		task ("Create a Role") {
+			JSONRole.addRegularRole(
+				roleKey = "Experiences Test Role",
+				roleTitle = "Experiences Test Role");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "Experiences Test Role",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Set permissions for this role") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "UPDATE",
+				resourceName = "com.liferay.portal.kernel.model.Layout",
+				roleTitle = "Experiences Test Role");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "MANAGE_SEGMENTS_ENTRIES",
+				resourceName = "com.liferay.segments",
+				roleTitle = "Experiences Test Role");
+		}
+
+		task ("Create a Segment") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "Screen Name",
+				groupName = "Test Site Name",
+				operator = "contains",
+				segmentName = "Experiences Test Segment",
+				text = "Test");
+		}
+
+		task ("Login with user created") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Go to Content Page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+		}
+
+		task ("Go to New Experience Editor") {
+			PageEditor.openNewExperienceEditor();
+		}
+
+		task ("Assert name input is empty and audience selector offers the available segments") {
+			AssertTextEquals(
+				key_text = "Name",
+				locator1 = "TextInput#ANY",
+				value1 = "");
+
+			AssertSelectedLabel(
+				locator1 = "PageEditor#EXPERIENCE_SELECT_SEGMENT",
+				value1 = "Anyone");
+
+			AssertElementPresent(
+				key_segmentName = "Experiences Test Segment",
+				locator1 = "PageEditor#EXPERIENCE_AUDIENCE_OPTION");
+		}
+
+		task ("Go to Segment Editor") {
+			Click(
+				key_text = "New Segment",
+				locator1 = "Button#ANY");
+
+			AssertVisible(locator1 = "Segmentation#PROPERTIES_SEARCH");
+		}
+
+		task ("Login with Test user to allow teardown") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+		}
+
+		task ("Delete Role and User created") {
+			JSONRole.deleteRole(roleTitle = "Experiences Test Role");
+
+			JSONUser.deleteUserByEmailAddress(userEmailAddress = "userea@liferay.com");
+		}
 	}
 
 	@description = "LPS-90588: Validate the interaction with once the user is creating the new Segment, when the user saves the segment	"
-	@ignore = "true"
 	@priority = "5"
 	test ExperienceDropdownAddNewSegmentCancel {
+		task ("Go to New Experience Editor") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
 
-		// TODO LPS-90588 ExperienceDropdownAddNewSegmentCancel pending implementation
+			PageEditor.openNewExperienceEditor();
+		}
 
+		task ("Start to create segment and cancel it") {
+			Click(
+				key_text = "New Segment",
+				locator1 = "Button#ANY");
+
+			Segmentation.addProperties(propertyOption = "First Name");
+
+			Segmentation.fillTitle(titleField = "Segment First Name Test");
+
+			Segmentation.fillProperty(propertyField = "userfn");
+
+			Button.clickNoError(button = "Cancel");
+
+			AssertConfirm.waitForConfirmation(value1 = "There are unsaved changes. Are you sure you want to exit?");
+		}
+
+		task ("Check that user back at the Segment editor") {
+			AssertElementPresent(locator1 = "PageEditor#EXPERIENCE_MODAL");
+		}
 	}
 
 	@description = "LPS-90588: Validate the interaction with once the user is creating the new Segment, when the user closes segments edition"
-	@ignore = "true"
 	@priority = "3"
 	test ExperienceDropdownAddNewSegmentCancelInputs {
+		task ("Go to New Experience Editor") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
 
-		// TODO LPS-90588 ExperienceDropdownAddNewSegmentCancelInputs pending implementation
+			PageEditor.openNewExperienceEditor();
+		}
 
+		task ("Check that values are default") {
+			AssertTextEquals(
+				key_text = "Name",
+				locator1 = "TextInput#ANY",
+				value1 = "");
+
+			AssertSelectedLabel(
+				locator1 = "PageEditor#EXPERIENCE_SELECT_SEGMENT",
+				value1 = "Anyone");
+		}
+
+		task ("Start to create segment and cancel it") {
+			Click(
+				key_text = "New Segment",
+				locator1 = "Button#ANY");
+
+			Segmentation.addProperties(propertyOption = "First Name");
+
+			Segmentation.fillTitle(titleField = "Segment First Name Test");
+
+			Segmentation.fillProperty(propertyField = "userfn");
+
+			Button.clickNoError(button = "Cancel");
+
+			AssertConfirm.waitForConfirmation(value1 = "There are unsaved changes. Are you sure you want to exit?");
+		}
+
+		task ("Check that Experience editor still has same data") {
+			AssertTextEquals(
+				key_text = "Name",
+				locator1 = "TextInput#ANY",
+				value1 = "");
+
+			AssertSelectedLabel(
+				locator1 = "PageEditor#EXPERIENCE_SELECT_SEGMENT",
+				value1 = "Anyone");
+		}
 	}
 
-	@description = "LPS-90588: Validate the interaction with how the user interacts with the Experiences Dropdown, when the user has permissions and segments are available and interact with the New Experience button"
-	@ignore = "true"
-	@priority = "3"
-	test ExperienceDropdownAddNewSegmentEmpty {
-
-		// TODO LPS-90588 ExperienceDropdownAddNewSegmentEmpty pending implementation
-
-	}
-
-	@description = "LPS-90588: Validate the interaction with how the user interacts with the Experiences Dropdown, when the user has permissions but no segments are available and interact with the New Experience button"
+	@description = "Validate the interaction with how the user interacts with the Experiences Dropdown, when no segments available and the user has no permissions"
 	@ignore = "true"
 	@priority = "3"
 	test ExperienceDropdownWithNoSegmentsUserWithNoPermisisons {
+		task ("Create an User") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
 
-		// TODO LPS-90588 ExperienceDropdownWithNoSegmentsUserWithNoPermisisons pending implementation
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				newPassword = "test",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
 
+		task ("Create a Role") {
+			JSONRole.addRegularRole(
+				roleKey = "Experiences Test Role",
+				roleTitle = "Experiences Test Role");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "Experiences Test Role",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Set permissions for this role") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_SITE_ADMINISTRATION",
+				resourceName = "com.liferay.portal.kernel.model.Group",
+				roleTitle = "Experiences Test Role");
+		}
+
+		task ("Create a Segment") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "Screen Name",
+				groupName = "Test Site Name",
+				operator = "contains",
+				segmentName = "Experiences Test Segment",
+				text = "Test");
+		}
+
+		task ("Login with user created") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Go to Content Page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+		}
+
+		task ("Go to New Experience Editor") {
+			PageEditor.openNewExperienceEditor();
+		}
+
+		task ("Assert name input is empty and audience selector offers the available segments") {
+			AssertTextEquals(
+				key_text = "Name",
+				locator1 = "TextInput#ANY",
+				value1 = "");
+
+			AssertSelectedLabel(
+				locator1 = "PageEditor#EXPERIENCE_SELECT_SEGMENT",
+				value1 = "Anyone");
+		}
+
+		task ("Assert 'Create New Segment' button is not present") {
+			AssertElementNotPresent(
+				key_text = "New Segment",
+				locator1 = "Button#ANY");
+		}
+	}
+
+	@description = "LPS-90588: Validate the interaction with how the user interacts with the Experiences Dropdown, when the user has permissions but no segments are available and interact with the New Experience button"
+	@priority = "3"
+	test ExperienceDropdownWithNoSegmentsUserWithPermisisons {
+		task ("Create an User") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				newPassword = "test",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Create a Role") {
+			JSONRole.addRegularRole(
+				roleKey = "Experiences Test Role",
+				roleTitle = "Experiences Test Role");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "Experiences Test Role",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Set permissions for this role") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "UPDATE",
+				resourceName = "com.liferay.portal.kernel.model.Layout",
+				roleTitle = "Experiences Test Role");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "MANAGE_SEGMENTS_ENTRIES",
+				resourceName = "com.liferay.segments",
+				roleTitle = "Experiences Test Role");
+		}
+
+		task ("Login with user created") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Go to Content Page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+		}
+
+		task ("Go to New Experience Editor") {
+			PageEditor.openNewExperienceEditor();
+		}
+
+		task ("Assert name input is empty and audience selector offers the default segment") {
+			AssertTextEquals(
+				key_text = "Name",
+				locator1 = "TextInput#ANY",
+				value1 = "");
+
+			AssertSelectedLabel(
+				locator1 = "PageEditor#EXPERIENCE_SELECT_SEGMENT",
+				value1 = "Anyone");
+		}
+
+		task ("Go to Segment Editor") {
+			Click(
+				key_text = "New Segment",
+				locator1 = "Button#ANY");
+
+			AssertVisible(locator1 = "Segmentation#PROPERTIES_SEARCH");
+		}
+
+		task ("Login with Test user to allow teardown") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+		}
+
+		task ("Delete Role and User created") {
+			JSONRole.deleteRole(roleTitle = "Experiences Test Role");
+
+			JSONUser.deleteUserByEmailAddress(userEmailAddress = "userea@liferay.com");
+		}
 	}
 
 	@description = "LPS-90588: Validate the interaction with how the user interacts with the Experiences Dropdown, when segments available but the user has no permissions"
-	@ignore = "true"
 	@priority = "3"
 	test ExperienceDropdownWithSegmentsUserWithNoPermisisons {
+		task ("Create an User") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
 
-		// TODO LPS-90588 ExperienceDropdownWithSegmentsUserWithNoPermisisons pending implementation
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				newPassword = "test",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
 
-	}
+		task ("Create a Role") {
+			JSONRole.addRegularRole(
+				roleKey = "Experiences Test Role",
+				roleTitle = "Experiences Test Role");
 
-	@description = "LPS-91946: Given: in the Site Editor => Page => Content Editor; Having at least on Segment created, with a faulty edition and creation experience web service
-	When: trying to create a new experience
-	Then: the modal does not hides away and an toast error message appears at the bottom left side of the screen."
-	@ignore = "true"
-	@priority = "4"
-	test GeneralErrorOrToastError {
+			JSONRole.assignRoleToUser(
+				roleTitle = "Experiences Test Role",
+				userEmailAddress = "userea@liferay.com");
+		}
 
-		// TODO LPS-91946 GeneralErrorOrToastError pending implementation
+		task ("Set permissions for this role") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "UPDATE",
+				resourceName = "com.liferay.portal.kernel.model.Layout",
+				roleTitle = "Experiences Test Role");
+		}
 
+		task ("Create a Segment") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "Screen Name",
+				groupName = "Test Site Name",
+				operator = "contains",
+				segmentName = "Experiences Test Segment",
+				text = "Test");
+		}
+
+		task ("Login with user created") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("Go to Content Page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+		}
+
+		task ("Go to New Experience Editor") {
+			PageEditor.openNewExperienceEditor();
+		}
+
+		task ("Assert name input is empty and audience selector offers the available segments") {
+			AssertTextEquals(
+				key_text = "Name",
+				locator1 = "TextInput#ANY",
+				value1 = "");
+
+			AssertSelectedLabel(
+				locator1 = "PageEditor#EXPERIENCE_SELECT_SEGMENT",
+				value1 = "Anyone");
+
+			AssertElementPresent(
+				key_segmentName = "Experiences Test Segment",
+				locator1 = "PageEditor#EXPERIENCE_AUDIENCE_OPTION");
+		}
+
+		task ("Assert 'Create New Segment' button is not present") {
+			AssertElementNotPresent(
+				key_text = "New Segment",
+				locator1 = "Button#ANY");
+		}
 	}
 
 	@description = "LPS-86292: Validate if, on simulate view, is possible to have no segment selected, in this case, the page shown is the default

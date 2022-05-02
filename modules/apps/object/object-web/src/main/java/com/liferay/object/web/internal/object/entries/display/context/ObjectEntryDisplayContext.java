@@ -84,7 +84,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.util.TransformUtil;
@@ -627,10 +626,6 @@ public class ObjectEntryDisplayContext {
 	private DDMFormFieldValidation _getDDMFormFieldValidation(
 		String businessType, String objectFieldName,
 		Map<String, Object> properties) {
-
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-146889"))) {
-			return null;
-		}
 
 		int defaultMaxLength = 0;
 

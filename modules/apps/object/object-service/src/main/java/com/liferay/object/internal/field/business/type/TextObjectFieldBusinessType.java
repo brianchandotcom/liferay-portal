@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -56,11 +55,6 @@ public class TextObjectFieldBusinessType implements ObjectFieldBusinessType {
 
 	@Override
 	public Set<String> getAllowedObjectFieldSettingsNames() {
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-146889"))) {
-			return ObjectFieldBusinessType.super.
-				getAllowedObjectFieldSettingsNames();
-		}
-
 		return SetUtil.fromArray("maxLength", "showCounter");
 	}
 
@@ -100,11 +94,6 @@ public class TextObjectFieldBusinessType implements ObjectFieldBusinessType {
 		ObjectField objectField,
 		ObjectFieldRenderingContext objectFieldRenderingContext) {
 
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-146889"))) {
-			return ObjectFieldBusinessType.super.getProperties(
-				objectField, objectFieldRenderingContext);
-		}
-
 		Map<String, Object> properties = new HashMap<>();
 
 		List<ObjectFieldSetting> objectFieldSettings =
@@ -127,10 +116,6 @@ public class TextObjectFieldBusinessType implements ObjectFieldBusinessType {
 
 		ObjectFieldBusinessType.super.validateObjectFieldSettings(
 			objectFieldName, objectFieldSettings);
-
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-146889"))) {
-			return;
-		}
 
 		Map<String, String> objectFieldSettingsValues = new HashMap<>();
 

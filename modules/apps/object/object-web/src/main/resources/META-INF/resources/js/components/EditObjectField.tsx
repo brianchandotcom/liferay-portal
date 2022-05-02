@@ -61,8 +61,6 @@ export default function EditObjectField({
 	objectName,
 	readOnly,
 }: IProps) {
-	const flags = useFeatureFlag();
-
 	const onSubmit = async ({id, ...objectField}: ObjectField) => {
 		const response = await fetch(
 			`/o/object-admin/v1.0/object-fields/${id}`,
@@ -167,20 +165,19 @@ export default function EditObjectField({
 						/>
 					)}
 
-					{flags['LPS-146889'] &&
-						(values.businessType === 'Text' ||
-							values.businessType === 'LongText') && (
-							<MaxLengthProperties
-								disabled={readOnly}
-								errors={errors}
-								objectField={values}
-								objectFieldSettings={
-									values.objectFieldSettings as ObjectFieldSetting[]
-								}
-								onSettingsChange={handleSettingsChange}
-								setValues={setValues}
-							/>
-						)}
+					{(values.businessType === 'Text' ||
+						values.businessType === 'LongText') && (
+						<MaxLengthProperties
+							disabled={readOnly}
+							errors={errors}
+							objectField={values}
+							objectFieldSettings={
+								values.objectFieldSettings as ObjectFieldSetting[]
+							}
+							onSettingsChange={handleSettingsChange}
+							setValues={setValues}
+						/>
+					)}
 				</ObjectFieldFormBase>
 			</Card>
 

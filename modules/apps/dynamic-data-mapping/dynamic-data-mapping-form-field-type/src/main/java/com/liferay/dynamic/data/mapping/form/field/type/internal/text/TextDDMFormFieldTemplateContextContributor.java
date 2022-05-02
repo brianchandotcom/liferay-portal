@@ -24,7 +24,6 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -80,17 +79,6 @@ public class TextDDMFormFieldTemplateContextContributor
 			).put(
 				"maxLength",
 				() -> {
-					try {
-						if (!GetterUtil.getBoolean(
-								PropsUtil.get("feature.flag.LPS-146889"))) {
-
-							return null;
-						}
-					}
-					catch (NullPointerException nullPointerException) {
-						return null;
-					}
-
 					Object maxLength = ddmFormField.getProperty("maxLength");
 
 					if (Validator.isNotNull(maxLength)) {
@@ -110,17 +98,6 @@ public class TextDDMFormFieldTemplateContextContributor
 			).put(
 				"showCounter",
 				() -> {
-					try {
-						if (!GetterUtil.getBoolean(
-								PropsUtil.get("feature.flag.LPS-146889"))) {
-
-							return null;
-						}
-					}
-					catch (NullPointerException nullPointerException) {
-						return null;
-					}
-
 					Object showCounter = ddmFormField.getProperty(
 						"showCounter");
 

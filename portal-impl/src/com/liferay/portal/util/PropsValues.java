@@ -16,7 +16,6 @@ package com.liferay.portal.util;
 
 import com.liferay.portal.json.JSONObjectImpl;
 import com.liferay.portal.kernel.configuration.Filter;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -831,7 +830,7 @@ public class PropsValues {
 			PropsUtil.get(
 				PropsKeys.FACEBOOK_CONNECT_VERIFIED_ACCOUNT_REQUIRED));
 
-	public static final JSONObject FEATURE_FLAGS_JSON_OBJECT =
+	public static final String FEATURE_FLAGS_JSON_OBJECT = String.valueOf(
 		new JSONObjectImpl() {
 			{
 				Properties properties = PropsUtil.getProperties(
@@ -845,7 +844,7 @@ public class PropsValues {
 						GetterUtil.getBoolean(property.getValue()));
 				}
 			}
-		};
+		});
 
 	public static final String[] FIELD_EDITABLE_DOMAINS = PropsUtil.getArray(
 		PropsKeys.FIELD_EDITABLE_DOMAINS);

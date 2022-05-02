@@ -917,6 +917,14 @@ public class PollsToDDMUpgradeProcess extends UpgradeProcess {
 				_defaultLocale = LocaleUtil.fromLanguageId(
 					LocalizationUtil.getDefaultLanguageId(title));
 
+				Timestamp lastPublishDate = null;
+
+				try {
+					lastPublishDate = resultSet.getTimestamp("lastPublishDate");
+				}
+				catch (Exception exception) {
+				}
+
 				_upgradePollsQuestion(
 					questionId, resultSet.getLong("groupId"),
 					resultSet.getLong("companyId"), resultSet.getLong("userId"),
@@ -925,8 +933,7 @@ public class PollsToDDMUpgradeProcess extends UpgradeProcess {
 					resultSet.getTimestamp("modifiedDate"),
 					_getName(resultSet.getString("title")),
 					resultSet.getString("description"),
-					resultSet.getTimestamp("expirationDate"),
-					resultSet.getTimestamp("lastPublishDate"),
+					resultSet.getTimestamp("expirationDate"), lastPublishDate,
 					resultSet.getTimestamp("lastVoteDate"));
 			}
 		}

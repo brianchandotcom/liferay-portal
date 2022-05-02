@@ -1,6 +1,8 @@
 import com.liferay.gradle.plugins.defaults.tasks.ReplaceRegexTask
 import com.liferay.gradle.util.copy.RenameDependencyClosure
 
+apply plugin: "com.liferay.poshi.runner"
+
 buildCSS {
 	ext {
 		autoClean = false
@@ -57,4 +59,10 @@ release {
 	setReplacement(releaseVersion)
 
 	match(/private Object _version = "(\d.+)";/, "../../../sdk/gradle-plugins-poshi-runner/src/main/java/com/liferay/gradle/plugins/poshi/runner/PoshiRunnerExtension.java")
+}
+
+test {
+	systemProperty "webdriver.chrome.driver", "$buildDir/webdriver/chromedriver"
+
+	dependsOn downloadChromeDriver
 }

@@ -39,7 +39,7 @@
 <!--DIAGRAM_MAPPING-->
 <tr>
 	<td>DIAGRAM_EXPAND</td>
-	<td>//*[@id="wkbq___collapse"]/div/div/div/nav[2]/div/div/ul/li[1]/button</td>
+	<td>//*[@id="wkbq___collapse"]//button</td>
 	<td></td>
 </tr>
 <tr>

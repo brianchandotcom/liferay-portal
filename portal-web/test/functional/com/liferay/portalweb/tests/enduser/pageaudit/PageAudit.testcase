@@ -277,6 +277,59 @@ definition {
 		}
 	}
 
+	@description = "LPS-130621 Given the page audit panel
+	When the panel is showing cached data
+	Then there's an alert informing about the date and the hour when it was last updated"
+	@priority = "3"
+	test CachedDataAlert {
+		task ("Create second content page") {
+			task ("Create content page") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Second Page",
+					type = "content");
+			}
+		}
+
+		task ("Set a custom page as canonical URL to have data already loaded") {
+			PageAudit.setSEOcanonicalURL(url = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
+		}
+
+		task ("Set Google PageSpeed API") {
+			PageAudit.setAPIViaSiteSettings(
+				apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE",
+				preferredStrategy = "Mobile");
+		}
+
+		task ("Open Page Audit panel and run it") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+		}
+
+		task ("Navigate to second page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/second-page");
+		}
+
+		task ("Navigate back to audited page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+		}
+
+		task ("Assert if warning is displayed") {
+			PageAudit.openPanelBeforeConfiguration();
+
+			var currentDate = DateUtil.getFormattedCurrentDate("MMM d, yyyy");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "PageAudit#CACHE_ALERT",
+				value1 = "Showing data from ");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "PageAudit#CACHE_ALERT",
+				value1 = "Relaunch to update data.");
+		}
+	}
+
 	@description = "LPS-129375: Given the Page Audit panel of a content page
 	When the localized canonical URLs options is enabled and the user changes the language
 	Then the matching canonical URL shows and is consulted"
@@ -3481,6 +3534,41 @@ definition {
 		}
 	}
 
+	@description = "Given the page audit panel
+	When the user clicks the launch button, either the one on the header or the one in the panel
+	Then the API is called and the data is retrieved"
+	@priority = "4"
+	test LaunchPageAudit {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#CheckIllegibleFontSizes";
+
+		task ("Set a custom page as canonical URL to have data already loaded") {
+			PageAudit.setSEOcanonicalURL(url = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
+		}
+
+		task ("Set Google PageSpeed API") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+		}
+
+		task ("Run Page Audit") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+		}
+
+		task ("Check that data is retrieved") {
+			AssertVisible(
+				failureType = "Accessibility",
+				locator1 = "PageAudit#FAILURE_TYPE");
+
+			AssertVisible(
+				failureType = "SEO",
+				locator1 = "PageAudit#FAILURE_TYPE");
+		}
+	}
+
 	@description = "LPS-128383: Given the preferred strategy dropdown in the Site Scope section
 	When the value is Mobile
 	Then additional checks: Small Tap Targets, Incorrect Aspect Ratios and Illegible font sizes are retrieved"
@@ -3687,6 +3775,65 @@ definition {
 			AssertTextPresent(
 				locator1 = "PageAudit#GOOGLE_PAGESPEED_TITLE",
 				value1 = "Google PageSpeed Insights");
+		}
+	}
+
+	@description = "LPS-130621 Given the page audit panel
+	When there is a language version of the page that has no cached data and another one that does have
+	Then the first one shows the Launch a Page Audit... message, and the other one shows the cached data"
+	@priority = "4"
+	test OtherLanguageCacheData {
+		property portal.acceptance = "true";
+
+		task ("Create second content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Second Page",
+				type = "content");
+		}
+
+		task ("Set a custom page as canonical URL for first language") {
+			PageAudit.setSEOcanonicalURL(url = "https://liferay-tango.github.io/liferay-portal/page-audit-test");
+		}
+
+		task ("Set a custom page as canonical URL for second language") {
+			PageAudit.setSEOcanonicalURL(
+				canonicalLocale = "pt-BR",
+				url = "https://liferay-tango.github.io/liferay-portal/page-audit-test-no-issues");
+		}
+
+		task ("Set Google PageSpeed API to first page") {
+			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+		}
+
+		task ("Run Page Audit for first language") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
+		}
+
+		task ("Navigate to second page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/second-page");
+		}
+
+		task ("Navigate back to audited page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+		}
+
+		task ("Check that language has cache data") {
+			PageAudit.openPanelBeforeConfiguration();
+
+			AssertVisible(
+				failingCheckName = "Small Tap Targets",
+				locator1 = "PageAudit#FAILING_CHECK_NAME");
+		}
+
+		task ("Change page audit for second language") {
+			PageAudit.changeLocale(locale = "Portuguese");
+		}
+
+		task ("Check that language has no cache data") {
+			AssertVisible(locator1 = "PageAudit#LAUNCH_PAGE_AUDIT_BUTTON");
 		}
 	}
 
@@ -4056,7 +4203,7 @@ definition {
 		task ("Open Page Audit panel and assert there are no issues") {
 			PageAudit.openPanelAfterConfiguration(pageName = "Content Page");
 
-			AssertElementPresent(locator1 = "PageAudit#SUCCESS_IMAGE");
+			AssertElementPresent(locator1 = "PageAudit#IMAGE_SUCCESS");
 
 			AssertTextPresent(
 				locator1 = "PageAudit#NO_ISSUES_MESSAGE",
@@ -4065,6 +4212,37 @@ definition {
 
 		task ("Reset Google PageSpeed API to default at System Settings") {
 			PageAudit.configurationTeardown();
+		}
+	}
+
+	@description = "LPS-130621 Given the page audit panel
+	When the panel is showing no data because the audit has never been launched for that page / language combination
+	Then there's an image, a help texts and a button: Launch a Page Audit to check issues that impact on your page’s accessibility and SEO. + Button: Launch Page Audit, and the user is able to launch the audit by the means of clicking the button"
+	@priority = "5"
+	@uitest
+	test PanelInfo {
+		property portal.acceptance = "true";
+
+		task ("Set Google PageSpeed API") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.setAPIViaSiteSettings(apiKey = "AIzaSyAq-oKsvIhlYHdk1UXCFy63h74ECIgbgbE");
+		}
+
+		task ("Open Page Audit sidebar") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+			PageAudit.openPanelBeforeConfiguration();
+		}
+
+		task ("Check that sidebar has an image, a help texts and a button") {
+			AssertVisible(locator1 = "PageAudit#IMAGE_DEFAULT");
+
+			AssertTextEquals(
+				locator1 = "PageAudit#HELP_TEXT",
+				value1 = "Launch a page audit to check issues that impact on your page's accesibility and SEO.");
+
+			AssertVisible(locator1 = "PageAudit#LAUNCH_PAGE_AUDIT_BUTTON");
 		}
 	}
 

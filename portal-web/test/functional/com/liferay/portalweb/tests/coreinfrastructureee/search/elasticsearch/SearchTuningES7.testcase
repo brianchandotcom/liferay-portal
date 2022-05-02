@@ -244,34 +244,18 @@ definition {
 
 	@priority = "4"
 	test AssertResultRankingsWithSynonyms {
-		JSONWebcontent.addWebContent(
-			content = "Article Article Article Article",
-			groupName = "Guest",
-			title = "Article 1");
-
-		JSONWebcontent.addWebContent(
-			content = "Article Article Article",
-			groupName = "Guest",
-			title = "Article 2");
-
-		JSONWebcontent.addWebContent(
-			content = "Journal Journal",
-			groupName = "Guest",
-			title = "Journal 1");
-
-		JSONWebcontent.addWebContent(
-			content = "Journal",
-			groupName = "Guest",
-			title = "Journal 2");
+		for (var webContentTitle : list "Article 1,Article 2,Journal 1,Journal 2") {
+			JSONWebcontent.addWebContent(
+				content = "",
+				groupName = "Guest",
+				title = "${webContentTitle}");
+		}
 
 		SearchTuning.openSynonymsAdmin();
 
 		SearchTuning.addSynonymSet(synonyms = "Article,Journal");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Search Tuning",
-			panel = "Applications",
-			portlet = "Result Rankings");
+		SearchTuning.openResultRankingsAdmin();
 
 		SearchTuning.addResultRanking(searchQuery = "Article");
 
@@ -285,7 +269,15 @@ definition {
 
 		SearchPortlets.searchEmbedded(searchTerm = "Article");
 
-		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "Journal 2,Article 1,Journal 1");
+		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "Journal 2");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "Article 1",
+			searchAssetType = "Web Content Article");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "Journal 1",
+			searchAssetType = "Web Content Article");
 
 		SearchResultPortlet.viewSearchResultNotPresent(
 			searchAssetTitle = "Article 2",
@@ -293,16 +285,22 @@ definition {
 
 		SearchPortlets.searchEmbedded(searchTerm = "Journal");
 
-		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "Article 1,Article 2,Journal 1,Journal 2");
+		AssertTextNotEquals.assertNotPartialText(
+			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE_SPECIFIC_ORDER",
+			resultOrder = "1",
+			value1 = "Journal 2");
+
+		for (var webContentTitle : list "Article 1,Article 2,Journal 1,Journal 2") {
+			SearchResultPortlet.viewSearchResults(
+				searchAssetTitle = "${webContentTitle}",
+				searchAssetType = "Web Content Article");
+		}
 
 		SearchTuning.openSynonymsAdmin();
 
 		SearchTuning.deleteSynonymSet(synonymSet = "Article, Journal");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Search Tuning",
-			panel = "Applications",
-			portlet = "Result Rankings");
+		SearchTuning.openResultRankingsAdmin();
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
@@ -326,12 +324,17 @@ definition {
 
 		SearchPortlets.searchEmbedded(searchTerm = "Journal");
 
-		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "Journal 1,Journal 2");
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "Journal 1",
+			searchAssetType = "Web Content Article");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Search Tuning",
-			panel = "Applications",
-			portlet = "Result Rankings");
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "Journal 2",
+			searchAssetType = "Web Content Article");
+
+		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "Article 1/Web Content Article,Article 2/Web Content Article");
+
+		SearchTuning.openResultRankingsAdmin();
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
@@ -359,10 +362,7 @@ definition {
 
 		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "Article 2/Web Content Article,Journal 1/Web Content Article,Journal 2/Web Content Article");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Search Tuning",
-			panel = "Applications",
-			portlet = "Result Rankings");
+		SearchTuning.openResultRankingsAdmin();
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
@@ -378,10 +378,7 @@ definition {
 
 		SearchTuning.addSynonymSet(synonyms = "Article,Journal");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Search Tuning",
-			panel = "Applications",
-			portlet = "Result Rankings");
+		SearchTuning.openResultRankingsAdmin();
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",

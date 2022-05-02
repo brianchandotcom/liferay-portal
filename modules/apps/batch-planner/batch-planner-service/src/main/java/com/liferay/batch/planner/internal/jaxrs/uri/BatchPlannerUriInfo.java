@@ -130,19 +130,6 @@ public class BatchPlannerUriInfo implements UriInfo {
 			return new BatchPlannerUriInfo(this);
 		}
 
-		public Builder delimiter(String delimiter) {
-			_queryParameters.putSingle("delimiter", delimiter);
-
-			return this;
-		}
-
-		public Builder enclosingCharacter(String enclosingCharacter) {
-			_queryParameters.putSingle(
-				"enclosingCharacter", enclosingCharacter);
-
-			return this;
-		}
-
 		public Builder pathParameter(String name, String value) {
 			_pathParameters.putSingle(name, value);
 

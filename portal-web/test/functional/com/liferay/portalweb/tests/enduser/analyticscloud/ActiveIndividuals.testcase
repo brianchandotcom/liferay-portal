@@ -294,6 +294,7 @@ definition {
 	@priority = "5"
 	test CanAssertIndividualSegment {
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
+
 		property analytics.cloud.upstream = "false";
 
 		JSONUser.addUser(

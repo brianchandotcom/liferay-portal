@@ -220,6 +220,7 @@ definition {
 	@priority = "5"
 	test CanEditStaticSegmentCheckEditSaved {
 		property analytics.cloud.upstream = "false";
+
 		var usernameList = "ac,liferay";
 		var emailList = "ac@liferay.com,liferay@liferay.com";
 		var nameList = "ac ac,liferay liferay";
@@ -712,6 +713,7 @@ definition {
 	@priority = "4"
 	test UndoAddingSegmentMemberInTheEditModal {
 		property analytics.cloud.upstream = "false";
+
 		var usernameList = "ac,liferay";
 		var emailList = "ac@liferay.com,liferay@liferay.com";
 
@@ -863,6 +865,7 @@ definition {
 	@priority = "4"
 	test UndoDeletingASegmentMemberInTheEditModal {
 		property analytics.cloud.upstream = "false";
+
 		var users = "ac,liferay";
 		var emailList = "ac@liferay.com,liferay@liferay.com";
 		var nameList = "ac ac,liferay liferay";

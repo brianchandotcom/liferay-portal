@@ -145,6 +145,7 @@ definition {
 	@priority = "5"
 	test AudienceCardShowsExpectedAmountKnowAndAnonymousIndividualsInBlogs {
 		property analytics.cloud.upstream = "false";
+
 		var usernameList = "ac,liferay";
 		var emailList = "ac@liferay.com,liferay@liferay.com";
 
@@ -202,6 +203,7 @@ definition {
 	@priority = "5"
 	test AudienceCardShowsExpectedAmountSegmentedAndUnsegmentedInBlogs {
 		property analytics.cloud.upstream = "false";
+
 		var usernameList = "ac,liferay";
 		var emailList = "ac@liferay.com,liferay@liferay.com";
 
@@ -598,6 +600,7 @@ definition {
 	@priority = "5"
 	test KnownIndividualsListShowsIndividualsWhoHaveViewedBlog {
 		property analytics.cloud.upstream = "false";
+
 		var usernameList = "ac,dxp,liferay";
 		var emailList = "ac@liferay.com,dxp@liferay.com,liferay@liferay.com";
 		var nameList = "ac ac,liferay liferay,dxp dxp";

@@ -180,7 +180,7 @@ public class ObjectDefinitionsValidationsDisplayContext
 		String engine) {
 
 		List<Map<String, Object>> objectValidationRuleElements =
-		new ArrayList<>();
+			new ArrayList<>();
 
 		objectValidationRuleElements.add(
 			_createObjectValidationRuleElement(

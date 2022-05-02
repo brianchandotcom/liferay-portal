@@ -211,6 +211,11 @@ public class CountryResourceTest extends BaseCountryResourceTestCase {
 	}
 
 	@Override
+	protected Country testDeleteCountry_addCountry() throws Exception {
+		return _addCountry(randomCountry());
+	}
+
+	@Override
 	protected Country testGetCountriesPage_addCountry(Country country)
 		throws Exception {
 
@@ -293,6 +298,11 @@ public class CountryResourceTest extends BaseCountryResourceTestCase {
 
 	@Override
 	protected Country testGraphQLCountry_addCountry() throws Exception {
+		return _addCountry(randomCountry());
+	}
+
+	@Override
+	protected Country testGraphQLDeleteCountry_addCountry() throws Exception {
 		return _addCountry(randomCountry());
 	}
 

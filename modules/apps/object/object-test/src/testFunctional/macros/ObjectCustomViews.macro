@@ -24,6 +24,12 @@ definition {
 		WaitForPageLoad();
 	}
 
+	macro assertColumnLabelPresent {
+		AssertElementPresent(
+			key_columnLabel = "${columnLabel}",
+			locator1 = "ObjectCustomViews#BUILDER_SEARCH_RESULT_COLUMN_LABEL");
+	}
+
 	macro assertColumnNotPresent {
 		AssertElementNotPresent(
 			key_columnName = "${colunmName}",
@@ -100,6 +106,14 @@ definition {
 		Type(
 			locator1 = "ObjectCustomViews#OBJECT_VIEWS_NAME",
 			value1 = "${name}");
+	}
+
+	macro editSpecificColumn {
+		Click(
+			key_columnName = "${columnName}",
+			locator1 = "ObjectCustomViews#VIEW_BUILDER_DROPDOWN_SPECIFIC_COLUMN");
+
+		DropdownMenuItem.click(menuItem = "Edit");
 	}
 
 	macro gotoPermissions {

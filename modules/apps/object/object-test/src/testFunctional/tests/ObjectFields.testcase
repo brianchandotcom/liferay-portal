@@ -26,22 +26,10 @@ definition {
 	@description = "LPS-146889 - Verify that when turn on the 'Set the Maximum Number of Characters' on a Text the Maximum Number of Characters field has the 280 value as default"
 	@priority = "4"
 	test 280IsDefaultMaximumCharacterText {
-		property portal.upstream = "quarantine";
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151571",
 			objectName = "CustomObject151571",
 			pluralLabelName = "Custom Objects 151571");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Text",
-			fieldLabelName = "Custom Field Text",
-			fieldName = "customObjectFieldText",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObject151571");
-
-		Navigator.openURL();
 
 		ObjectAdmin.openObjectAdmin();
 
@@ -49,15 +37,19 @@ definition {
 
 		ObjectAdmin.goToFieldsTab();
 
-		ObjectAdmin.goToFieldsDetails(label = "Custom Field Text");
+		ObjectAdmin.addObjectFieldViaUI(
+			fieldLabel = "Custom Text Field",
+			fieldType = "Text");
+
+		ObjectAdmin.goToFieldsDetails(label = "Custom Text Field");
 
 		Click(
 			key_labelName = "Limit Characters",
 			locator1 = "ObjectField#DEFAULT_TOGGLE_SWITCH");
 
 		AssertElementPresent(
-			locator1 = "ObjectField#MAXIMUM_NUMBER_CHARACTERS_OPTION",
-			value1 = "280");
+			key_maxValue = "280",
+			locator1 = "ObjectField#MAXIMUM_NUMBER_CHARACTERS_OPTION");
 	}
 
 	@description = "LPS-146889 - Verify that when turn on the 'Set the Maximum Number of Characters' on a Long Text the Maximum Number of Characters field has the 65,000 value as default"
@@ -85,8 +77,8 @@ definition {
 			locator1 = "ObjectField#DEFAULT_TOGGLE_SWITCH");
 
 		AssertElementPresent(
-			locator1 = "ObjectField#MAXIMUM_NUMBER_CHARACTERS_OPTION",
-			key_maxValue = "65000");
+			key_maxValue = "65000",
+			locator1 = "ObjectField#MAXIMUM_NUMBER_CHARACTERS_OPTION");
 	}
 
 	@description = "LPS-146523 - Verify if the scope of the object is Virtual Instance (Company) I will be able to add from any folders I have access to"

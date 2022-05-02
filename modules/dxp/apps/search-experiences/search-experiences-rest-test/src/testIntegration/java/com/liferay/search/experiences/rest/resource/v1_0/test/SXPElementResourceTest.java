@@ -110,6 +110,8 @@ public class SXPElementResourceTest extends BaseSXPElementResourceTestCase {
 		sxpElement.setDescription_i18n(
 			Collections.singletonMap(
 				LocaleUtil.toBCP47LanguageId(LocaleUtil.US), description));
+		sxpElement.setExternalReferenceCode(
+			postSXPElement.getExternalReferenceCode());
 		sxpElement.setId(postSXPElement.getId());
 		sxpElement.setModifiedDate(postSXPElement.getModifiedDate());
 		sxpElement.setReadOnly(false);
@@ -119,6 +121,7 @@ public class SXPElementResourceTest extends BaseSXPElementResourceTestCase {
 				LocaleUtil.toBCP47LanguageId(LocaleUtil.US), title));
 		sxpElement.setType(0);
 		sxpElement.setUserName(postSXPElement.getUserName());
+		sxpElement.setVersion(postSXPElement.getVersion());
 
 		Assert.assertEquals(sxpElement.toString(), postSXPElement.toString());
 

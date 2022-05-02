@@ -154,14 +154,13 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessorTest {
 			analyticsUnSyncedPrefsPropsWrapper);
 
 		try {
-			long classNameId = _classNameLocalService.getClassNameId(
-				Layout.class.getName());
-
 			long[] segmentsExperienceIds =
 				_segmentsExperienceRequestProcessor.getSegmentsExperienceIds(
 					_getMockHttpServletRequest(), new MockHttpServletResponse(),
-					_group.getGroupId(), classNameId, _layout.getPlid(),
-					new long[] {12345L});
+					_group.getGroupId(),
+					_classNameLocalService.getClassNameId(
+						Layout.class.getName()),
+					_layout.getPlid(), new long[] {12345L});
 
 			Assert.assertEquals(
 				Arrays.toString(segmentsExperienceIds), 1,
@@ -257,14 +256,13 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessorTest {
 			analyticsSyncedPrefsPropsWrapper);
 
 		try {
-			long classNameId = _classNameLocalService.getClassNameId(
-				Layout.class.getName());
-
 			long[] segmentsExperienceIds =
 				_segmentsExperienceRequestProcessor.getSegmentsExperienceIds(
 					_getMockHttpServletRequest(), new MockHttpServletResponse(),
-					_group.getGroupId(), classNameId, _layout.getPlid(),
-					new long[0]);
+					_group.getGroupId(),
+					_classNameLocalService.getClassNameId(
+						Layout.class.getName()),
+					_layout.getPlid(), new long[0]);
 
 			Assert.assertEquals(
 				Arrays.toString(segmentsExperienceIds), 0,

@@ -183,12 +183,12 @@ public class AddSegmentsExperimentMVCActionCommandTest {
 			segmentsEntryName, RandomTestUtil.randomString(), StringPool.BLANK,
 			SegmentsEntryConstants.SOURCE_DEFAULT);
 
-		long classNameId = _classNameLocalService.getClassNameId(
-			Layout.class.getName());
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		return SegmentsTestUtil.addSegmentsExperience(
-			segmentsEntry.getSegmentsEntryId(), classNameId, layout.getPlid(),
+			segmentsEntry.getSegmentsEntryId(),
+			_classNameLocalService.getClassNameId(Layout.class.getName()),
+			layout.getPlid(),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 	}
 

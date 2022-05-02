@@ -148,8 +148,8 @@ const MultiplePagesExperiences = ({
 
 				<ClayRadioGroup
 					name={`${portletNamespace}exportExperience`}
-					onSelectedValueChange={onChangeExperience}
-					selectedValue={selectedExperienceValue}
+					onChange={onChangeExperience}
+					value={selectedExperienceValue}
 				>
 					<ClayRadio
 						label={Liferay.Language.get('default-experience')}

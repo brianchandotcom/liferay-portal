@@ -73,9 +73,9 @@ export default function CollectionPagination({
 					</ClayPaginationBar.Results>
 
 					<ClayPaginationWithBasicItems
-						activePage={activePage}
+						active={activePage}
 						disableEllipsis
-						onPageChange={onPageChange}
+						onActiveChange={onPageChange}
 						totalPages={
 							(Number.isFinite(totalPages) && totalPages) || 1
 						}

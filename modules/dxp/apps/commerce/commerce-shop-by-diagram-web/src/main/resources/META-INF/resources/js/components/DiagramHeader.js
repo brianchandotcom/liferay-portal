@@ -127,7 +127,7 @@ function DiagramHeader({
 												id="custom-radius-slider"
 												max={PINS_RADIUS.MAX}
 												min={PINS_RADIUS.MIN}
-												onValueChange={updatePinsRadius}
+												onChange={updatePinsRadius}
 												showTooltip={false}
 												step={PINS_RADIUS.STEP}
 												value={pinsRadius}

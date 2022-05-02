@@ -38,6 +38,7 @@ export function Button({label, onClick = noop, tooltip}) {
 				alignPosition="left"
 				disableScroll
 				header={label}
+				onShowChange={setShowPreview}
 				show={showPreview}
 				trigger={
 					<ClayIcon

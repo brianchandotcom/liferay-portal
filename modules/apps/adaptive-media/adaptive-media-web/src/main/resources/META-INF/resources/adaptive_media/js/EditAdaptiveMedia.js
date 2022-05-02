@@ -314,8 +314,8 @@ const EditAdaptiveMedia = ({
 
 				<ClayRadioGroup
 					name={automaticRadioId}
-					onSelectedValueChange={setAutomaticId}
-					selectedValue={automaticId}
+					onChange={setAutomaticId}
+					value={automaticId}
 				>
 					<ClayRadio
 						disabled={!configurationEntryEditable}

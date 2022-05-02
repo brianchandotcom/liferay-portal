@@ -34,7 +34,6 @@ function MultiSelectInput({
 			aria-label={label}
 			disabled={disabled}
 			id={id}
-			inputValue={inputValue}
 			items={value || []}
 			onBlur={() => {
 				setFieldTouched(name);
@@ -51,6 +50,7 @@ function MultiSelectInput({
 			onChange={setInputValue}
 			onItemsChange={(value) => setFieldValue(name, value)}
 			onKeyDown={_handleKeyDown}
+			value={inputValue}
 		/>
 	);
 }

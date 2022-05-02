@@ -284,7 +284,6 @@ const Sharing = ({
 
 							<ClayMultiSelect
 								inputName={`${portletNamespace}userEmailAddress`}
-								inputValue={multiSelectValue}
 								items={selectedItems}
 								menuRenderer={SharingAutocomplete}
 								onChange={handleChange}
@@ -308,6 +307,7 @@ const Sharing = ({
 										  })
 										: []
 								}
+								value={multiSelectValue}
 							/>
 
 							<ClayForm.FeedbackGroup>
@@ -355,10 +355,10 @@ const Sharing = ({
 				<ClayForm.Group>
 					<ClayRadioGroup
 						name={`${portletNamespace}sharingEntryPermissionDisplayActionId`}
-						onSelectedValueChange={(permission) =>
+						onChange={(permission) =>
 							setSharingPermission(permission)
 						}
-						selectedValue={sharingPermission}
+						value={sharingPermission}
 					>
 						{sharingEntryPermissionDisplays.map((display) => (
 							<ClayRadio

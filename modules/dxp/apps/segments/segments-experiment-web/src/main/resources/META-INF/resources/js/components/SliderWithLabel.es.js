@@ -38,7 +38,7 @@ function SliderWithLabel({
 					className="w-100"
 					max={max}
 					min={min}
-					onValueChange={onValueChange}
+					onChange={onValueChange}
 					showTooltip={false}
 					value={value}
 				/>

@@ -80,7 +80,7 @@ function SliderInput({
 						max={max}
 						min={min}
 						onBlur={() => setFieldTouched(name)}
-						onValueChange={_handleSliderChange}
+						onChange={_handleSliderChange}
 						step={step}
 						value={value}
 					/>

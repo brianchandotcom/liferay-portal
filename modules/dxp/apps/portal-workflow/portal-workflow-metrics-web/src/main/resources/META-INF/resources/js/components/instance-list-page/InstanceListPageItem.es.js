@@ -352,6 +352,7 @@ function DueDateSLAResults({slaResults, slaStatusIconInfo}) {
 					header={Liferay.Language.get('due-date')}
 					onMouseEnter={() => setPopover(true)}
 					onMouseLeave={() => setPopover(false)}
+					onShowChange={setPopover}
 					show={popover}
 					trigger={
 						<div

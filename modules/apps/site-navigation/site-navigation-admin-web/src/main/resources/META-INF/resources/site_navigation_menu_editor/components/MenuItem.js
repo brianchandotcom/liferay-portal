@@ -281,8 +281,8 @@ function DeletionModal({
 				</p>
 
 				<ClayRadioGroup
-					onSelectedValueChange={(type) => setDeletionType(type)}
-					selectedValue={deletionType}
+					onChange={(type) => setDeletionType(type)}
+					value={deletionType}
 				>
 					<ClayRadio
 						label={Liferay.Language.get('only-delete-this-item')}

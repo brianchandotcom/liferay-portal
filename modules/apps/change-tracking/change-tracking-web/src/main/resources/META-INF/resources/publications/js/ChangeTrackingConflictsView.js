@@ -197,10 +197,10 @@ class ChangeTrackingConflictsView extends ChangeTrackingBaseScheduleView {
 										disabled={
 											this.unresolvedConflicts.length > 0
 										}
-										onInputChange={this.handleTimeChange}
+										onChange={this.handleTimeChange}
 										spritemap={this.spritemap}
 										timezone={this.timeZone}
-										values={this.state.time}
+										value={this.state.time}
 									/>
 
 									{this.getTimeHelpText()}

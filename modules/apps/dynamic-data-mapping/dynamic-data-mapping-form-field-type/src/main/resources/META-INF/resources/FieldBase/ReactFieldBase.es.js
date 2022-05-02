@@ -135,6 +135,7 @@ const Popover = ({tooltip}) => {
 			data-testid="clayPopover"
 			disableScroll
 			header={Liferay.Language.get('input-mask-format')}
+			onShowChange={setPopoverVisible}
 			show={isPopoverVisible}
 			style={{maxWidth: POPOVER_MAX_WIDTH}}
 			trigger={

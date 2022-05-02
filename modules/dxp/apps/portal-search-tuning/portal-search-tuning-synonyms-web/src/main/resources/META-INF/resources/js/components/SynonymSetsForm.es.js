@@ -135,10 +135,10 @@ class SynonymSetsForm extends Component {
 						<ClayInput.GroupItem>
 							<ClayMultiSelect
 								id="synonym-sets-input"
-								inputValue={inputValue}
 								items={synonyms}
 								onChange={this._handleInputChange}
 								onItemsChange={this._handleItemsChange}
+								value={inputValue}
 							/>
 
 							<ClayForm.FeedbackGroup>

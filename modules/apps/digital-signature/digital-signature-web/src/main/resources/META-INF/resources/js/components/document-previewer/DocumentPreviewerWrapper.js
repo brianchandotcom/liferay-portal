@@ -79,9 +79,9 @@ const DocumentPreviewerWrapper = ({fileEntries = []}) => {
 
 			<div className="align-items-center d-flex flex-column justify-content-center">
 				<ClayPaginationWithBasicItems
-					activePage={documentPage}
+					active={documentPage}
 					ellipsisBuffer={2}
-					onPageChange={setDocumentPage}
+					onActiveChange={setDocumentPage}
 					totalPages={fileEntries.length}
 				/>
 

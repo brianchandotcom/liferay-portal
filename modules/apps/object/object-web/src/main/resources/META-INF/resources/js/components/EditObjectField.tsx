@@ -236,7 +236,7 @@ function SearchableContainer({
 			{isSearchableString && (
 				<ClayForm.Group>
 					<ClayRadioGroup
-						onSelectedValueChange={(selected) => {
+						onChange={(selected: string | number) => {
 							const indexedAsKeyword = selected === 'true';
 							const indexedLanguageId = indexedAsKeyword
 								? null
@@ -247,7 +247,7 @@ function SearchableContainer({
 								indexedLanguageId,
 							});
 						}}
-						selectedValue={new Boolean(
+						value={new Boolean(
 							objectField.indexedAsKeyword
 						).toString()}
 					>

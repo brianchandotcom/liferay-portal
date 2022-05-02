@@ -165,7 +165,11 @@ const DisabledArea = () => {
 				className="cadmin"
 				container={globalContext.document.body}
 			>
-				<ClayPopover alignPosition={position} ref={popoverRef} show>
+				<ClayPopover
+					alignPosition={position}
+					defaultShow
+					ref={popoverRef}
+				>
 					<div
 						dangerouslySetInnerHTML={{
 							__html: Liferay.Util.sub(

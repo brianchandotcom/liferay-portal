@@ -108,10 +108,10 @@ class Alias extends Component {
 					<ClayInput.GroupItem>
 						<ClayMultiSelect
 							id="aliases-input"
-							inputValue={inputValue}
 							items={transformListOfStringsToObjects(keywords)}
 							onChange={this._handleInputChange}
 							onItemsChange={this._handleItemsChange}
+							value={inputValue}
 						/>
 
 						<ClayForm.FeedbackGroup>

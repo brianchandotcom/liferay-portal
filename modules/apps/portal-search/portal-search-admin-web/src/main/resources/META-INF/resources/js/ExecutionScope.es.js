@@ -308,8 +308,8 @@ function ExecutionScope({
 
 			<ClayRadioGroup
 				name={`${portletNamespace}scope`}
-				onSelectedValueChange={(newScope) => setScope(newScope)}
-				selectedValue={scope}
+				onChange={(newScope) => setScope(newScope)}
+				value={scope}
 			>
 				<ClayRadio
 					label={Liferay.Language.get('all-instances')}

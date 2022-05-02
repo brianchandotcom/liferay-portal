@@ -130,13 +130,13 @@ export default function AddOrganizationModal({
 						<ClayInput.GroupItem>
 							<ClayMultiSelect
 								id="addNewOrganization"
-								inputValue={query}
 								items={items}
 								onChange={setQuery}
 								onItemsChange={setItems}
 								placeholder={Liferay.Language.get(
 									'organization-name'
 								)}
+								value={query}
 							/>
 
 							{!!errors.length && (

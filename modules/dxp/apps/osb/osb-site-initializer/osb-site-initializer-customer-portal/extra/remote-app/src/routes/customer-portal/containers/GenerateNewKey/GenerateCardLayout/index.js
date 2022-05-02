@@ -59,11 +59,7 @@ const GenerateCardLayout = ({infoSelectedKey}) => {
 
 						<p className="font-weight-normal m-0">
 							{infoSelectedKey?.selectedSubscription
-								?.instanceSize === 0
-								? infoSelectedKey?.selectedSubscription
-										?.instanceSize + 1
-								: infoSelectedKey?.selectedSubscription
-										?.instanceSize}
+								?.instanceSize || 1}
 						</p>
 					</div>
 				</ClayCard.Description>

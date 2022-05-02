@@ -361,9 +361,7 @@ const SelectSubscription = ({
 									}}
 									selected={selected}
 									subtitle={`Instance size: ${
-										subscriptionTerm.instanceSize === 0
-											? subscriptionTerm.instanceSize + 1
-											: subscriptionTerm.instanceSize
+										subscriptionTerm?.instanceSize || 1
 									}`}
 									value={subscriptionTerm}
 								/>

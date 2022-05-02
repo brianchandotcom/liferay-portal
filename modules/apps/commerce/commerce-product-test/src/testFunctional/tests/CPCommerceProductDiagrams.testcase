@@ -526,8 +526,6 @@ definition {
 
 		task ("Then the diagram product image should fill up the page") {
 			AssertElementNotPresent(locator1 = "ApplicationsMenu#APPLICATIONS_MENU");
-
-			CommerceDiagram.clickExpand();
 		}
 	}
 

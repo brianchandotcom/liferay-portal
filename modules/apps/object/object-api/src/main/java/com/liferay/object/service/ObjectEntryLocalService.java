@@ -15,7 +15,9 @@
 package com.liferay.object.service;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectRelationship;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -360,6 +362,12 @@ public interface ObjectEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getOneToManyRelatedObjectEntriesCount(
 			long groupId, long objectRelationshipId, long primaryKey)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Map<String, Object>> getOneToManyRelatedSystemObjectEntries(
+			long foreignKey, ObjectDefinition objectDefinition,
+			ObjectRelationship objectRelationship)
 		throws PortalException;
 
 	/**

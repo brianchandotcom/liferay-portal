@@ -43,9 +43,6 @@ import javax.crypto.spec.SecretKeySpec;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.codec.DecoderException;
-import org.apache.commons.codec.binary.Hex;
-
 /**
  * @author Tomas Polesovsky
  */
@@ -185,11 +182,11 @@ public class TunnelAuthenticationManagerImpl
 
 		if (PropsValues.TUNNELING_SERVLET_SHARED_SECRET_HEX) {
 			try {
-				key = Hex.decodeHex(sharedSecret.toCharArray());
+				key = StringUtil.hexStringToBytes(sharedSecret);
 			}
-			catch (DecoderException decoderException) {
+			catch (IllegalArgumentException illegalArgumentException) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(decoderException);
+					_log.warn(illegalArgumentException);
 				}
 
 				AuthException authException = new AuthException();

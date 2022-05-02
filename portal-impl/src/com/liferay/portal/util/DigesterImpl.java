@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.Digester;
 import com.liferay.portal.kernel.util.StreamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,8 +31,6 @@ import java.nio.ByteBuffer;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-
-import org.apache.commons.codec.binary.Hex;
 
 /**
  * @author Brian Wing Shun Chan
@@ -137,21 +136,21 @@ public class DigesterImpl implements Digester {
 	public String digestHex(String algorithm, ByteBuffer byteBuffer) {
 		byte[] bytes = digestRaw(algorithm, byteBuffer);
 
-		return Hex.encodeHexString(bytes);
+		return StringUtil.bytesToHexString(bytes);
 	}
 
 	@Override
 	public String digestHex(String algorithm, InputStream inputStream) {
 		byte[] bytes = digestRaw(algorithm, inputStream);
 
-		return Hex.encodeHexString(bytes);
+		return StringUtil.bytesToHexString(bytes);
 	}
 
 	@Override
 	public String digestHex(String algorithm, String... text) {
 		byte[] bytes = digestRaw(algorithm, text);
 
-		return Hex.encodeHexString(bytes);
+		return StringUtil.bytesToHexString(bytes);
 	}
 
 	@Override

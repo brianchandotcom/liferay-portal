@@ -119,12 +119,36 @@ definition {
 	}
 
 	@description = "LPS-147792 - Verify it is possible to cancel the rename of a Column Label"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanCancelRenameColumnLabel {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 152067",
+			objectName = "CustomObject152067",
+			pluralLabelName = "Custom Objects 152067");
 
-		// TODO LPS-152067 CanCancelRenameColumnLabel pending implementation
+		ObjectAdmin.openObjectAdmin();
 
+		ObjectPortlet.selectCustomObject(label = "Custom Object 152067");
+
+		ObjectCustomViews.goToViewsTab();
+
+		ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views");
+
+		ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+
+		ObjectCustomViews.goToViewsBuilderTab();
+
+		ObjectCustomViews.addColumnsViaUI(
+			columnOption = "Author",
+			viewLabel = "Custom Views");
+
+		ObjectCustomViews.editSpecificColumn(columnName = "Author");
+
+		CreateObject.editLabel(labelName = "Publishing House");
+
+		Button.clickCancel();
+
+		ObjectCustomViews.assertColumnPresent(colunmName = "Author");
 	}
 
 	@description = "LPS-135394 - Verify it is possible to cancel the creation of a View"

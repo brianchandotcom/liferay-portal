@@ -102,6 +102,14 @@ definition {
 			value1 = "${name}");
 	}
 
+	macro editSpecificColumn {
+		Click(
+			key_columnName = "${columnName}",
+			locator1 = "ObjectCustomViews#VIEW_BUILDER_DROPDOWN_SPECIFIC_COLUMN");
+
+		DropdownMenuItem.click(menuItem = "Edit");
+	}
+
 	macro gotoPermissions {
 		Click(
 			key_objectLabel = "${entryName}",

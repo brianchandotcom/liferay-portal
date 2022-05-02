@@ -23,6 +23,7 @@ import com.liferay.poshi.core.util.PropsValues;
 import com.liferay.poshi.core.util.RegexUtil;
 import com.liferay.poshi.core.util.StringPool;
 import com.liferay.poshi.core.util.StringUtil;
+import com.liferay.poshi.core.util.Validator;
 
 import java.net.URL;
 
@@ -333,9 +334,6 @@ public abstract class PoshiElement
 			String poshiScriptSnippet = poshiNode.toPoshiScript();
 
 			if (((previousPoshiNode == null) ||
-				 ((previousPoshiNode instanceof VarPoshiElement) &&
-				  !(previousPoshiNode instanceof PropertyPoshiElement) &&
-				  (poshiNode instanceof VarPoshiElement)) ||
 				 ((previousPoshiNode instanceof PropertyPoshiElement) &&
 				  (poshiNode instanceof PropertyPoshiElement)) ||
 				 ((previousPoshiNode instanceof InlinePoshiComment) &&
@@ -348,6 +346,9 @@ public abstract class PoshiElement
 
 			String padPoshiScriptSnippet = padPoshiScriptSnippet(
 				poshiScriptSnippet);
+
+			padPoshiScriptSnippet = _removeEmptyLineBetweenVariables(
+				padPoshiScriptSnippet, poshiNode, previousPoshiNode);
 
 			if (padPoshiScriptSnippet.startsWith("\n\n") &&
 				StringUtil.endsWith(
@@ -1019,6 +1020,50 @@ public abstract class PoshiElement
 				add(new PoshiCDATA((CDATA)node.clone()));
 			}
 		}
+	}
+
+	private String _removeEmptyLineBetweenVariables(
+		String poshiScriptSnippet, PoshiNode<?, ?> poshiNode,
+		PoshiNode<?, ?> previousPoshiNode) {
+
+		if (previousPoshiNode == null) {
+			return poshiScriptSnippet;
+		}
+
+		String trimmedPoshiScript = StringUtil.trimLeading(
+			previousPoshiNode.toPoshiScript());
+
+		if (!trimmedPoshiScript.startsWith("var ")) {
+			return poshiScriptSnippet;
+		}
+
+		trimmedPoshiScript = StringUtil.trimLeading(poshiNode.toPoshiScript());
+
+		if (!trimmedPoshiScript.startsWith("var ")) {
+			return poshiScriptSnippet;
+		}
+
+		String previousVariableName = StringPool.BLANK;
+		PoshiElement previousPoshiElement = (PoshiElement)previousPoshiNode;
+
+		if (previousPoshiNode instanceof VarPoshiElement) {
+			previousVariableName = previousPoshiElement.attributeValue("name");
+		}
+		else if (previousPoshiNode instanceof ExecutePoshiElement) {
+			Element element = previousPoshiElement.element("return");
+
+			if (element != null) {
+				previousVariableName = element.attributeValue("name");
+			}
+		}
+
+		if (Validator.isNotNull(previousVariableName) &&
+			!poshiScriptSnippet.contains("${" + previousVariableName + "}")) {
+
+			return poshiScriptSnippet.replaceFirst("\n\n", "\n");
+		}
+
+		return poshiScriptSnippet;
 	}
 
 	private static final Pattern _nestedConditionPattern = Pattern.compile(

@@ -113,7 +113,8 @@ const RequiredInformation = ({
 			);
 
 			setShowKeyEmptyError(true);
-		} else {
+		}
+		else {
 			const productName = `${infoSelectedKey?.productType} ${infoSelectedKey?.licenseEntryType}`;
 			const sizing =
 				infoSelectedKey?.selectedSubscription.instanceSize === 0
@@ -147,7 +148,8 @@ const RequiredInformation = ({
 					sessionId,
 					licenseKey
 				);
-			} else {
+			}
+			else {
 				await Promise.all(
 					values?.keys?.map(
 						({hostName, ipAddresses, macAddresses}) => {

@@ -3357,6 +3357,14 @@ definition {
 		Click(locator1 = "PageEditor#EXPERIENCE_DEFAULT_BUTTON_NAME");
 	}
 
+	macro openNewExperienceEditor {
+		PageEditor.openExperienceMenu();
+
+		Click(
+			key_text = "New Experience",
+			locator1 = "Button#ANY");
+	}
+
 	macro openPreviewMode {
 		Click(locator1 = "PageEditor#PREVIEW");
 	}

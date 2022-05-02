@@ -299,12 +299,9 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 					"cadmin d-print-none lfr-admin-panel ",
 					"lfr-product-menu-panel lfr-segments-experiment-panel ",
 					"sidenav-fixed sidenav-menu-slider sidenav-right\" id=\""));
-
-			String portletNamespace = _portal.getPortletNamespace(
-				SegmentsPortletKeys.SEGMENTS_EXPERIMENT);
-
-			jspWriter.write(portletNamespace);
-
+			jspWriter.write(
+				_portal.getPortletNamespace(
+					SegmentsPortletKeys.SEGMENTS_EXPERIMENT));
 			jspWriter.write("segmentsExperimentPanelId\">");
 			jspWriter.write(
 				"<div class=\"sidebar sidebar-light sidenav-menu " +

@@ -156,11 +156,9 @@ public class SegmentsExperimentUserNotificationHandler
 				WebKeys.THEME_DISPLAY);
 
 		try {
-			String layoutURL = _portal.getLayoutURL(
-				layout, themeDisplay, false);
-
 			return HttpComponentsUtil.addParameter(
-				layoutURL, "segmentsExperimentKey", segmentsExperimentKey);
+				_portal.getLayoutURL(layout, themeDisplay, false),
+				"segmentsExperimentKey", segmentsExperimentKey);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

@@ -124,9 +124,7 @@ definition {
 			Pause(locator1 = "1500");
 		}
 
-		WaitForElementPresent(
-			key_itemName = "Site Configuration",
-			locator1 = "ListGroupItem#ITEM_TEXT");
+		Refresh();
 
 		Click(
 			key_itemName = "Site Configuration",

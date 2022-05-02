@@ -16,6 +16,12 @@ definition {
 			value1 = "${folderName}");
 	}
 
+	macro assertGlobalHomeFolder {
+		IFrame.selectModalFrame();
+
+		AssertElementPresent(locator1 = "ObjectField#GLOBAL_HOME_FOLDER");
+	}
+
 	macro assertLabel {
 		AssertTextEquals(
 			locator1 = "ObjectField#LABEL_LOCALIZED",

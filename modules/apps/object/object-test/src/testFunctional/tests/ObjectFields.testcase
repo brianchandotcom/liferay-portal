@@ -61,12 +61,32 @@ definition {
 	}
 
 	@description = "LPS-146889 - Verify that when turn on the 'Set the Maximum Number of Characters' on a Long Text the Maximum Number of Characters field has the 65,000 value as default"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test 65000IsDefaultMaximumCharacterLongText {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 151572",
+			objectName = "CustomObject151572",
+			pluralLabelName = "Custom Objects 151572");
 
-		// TODO LPS-151572 65000IsDefaultMaximumCharacterLongText pending implementation
+		ObjectAdmin.openObjectAdmin();
 
+		ObjectPortlet.selectCustomObject(label = "Custom Object 151572");
+
+		ObjectAdmin.goToFieldsTab();
+
+		ObjectAdmin.addObjectFieldViaUI(
+			fieldLabel = "Custom Long Text Field",
+			fieldType = "Long Text");
+
+		ObjectAdmin.goToFieldsDetails(label = "Custom Long Text Field");
+
+		Click(
+			key_labelName = "Limit Characters",
+			locator1 = "ObjectField#DEFAULT_TOGGLE_SWITCH");
+
+		AssertElementPresent(
+			locator1 = "ObjectField#MAXIMUM_NUMBER_CHARACTERS_OPTION",
+			key_maxValue = "65000");
 	}
 
 	@description = "LPS-146523 - Verify if the scope of the object is Virtual Instance (Company) I will be able to add from any folders I have access to"

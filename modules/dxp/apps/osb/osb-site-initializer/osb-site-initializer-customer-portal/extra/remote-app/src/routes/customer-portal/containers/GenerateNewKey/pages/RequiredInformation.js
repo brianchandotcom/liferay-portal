@@ -65,9 +65,10 @@ const RequiredInformation = ({
 	useEffect(() => {
 		const verificationDisabledType = infoSelectedKey.hasNotPermanentLicence
 			? !values.name || !values.maxClusterNodes
-			: !values.name || hasError;
+			: !hasFilledAtLeastOneField || hasError;
 
 		setBaseButtonDisabled(verificationDisabledType);
+
 		setAddButtonDisabled(
 			hasReachedMaximumKeys || !hasFilledAtLeastOneField
 		);
@@ -114,6 +115,13 @@ const RequiredInformation = ({
 			setShowKeyEmptyError(true);
 		} else {
 			const productName = `${infoSelectedKey?.productType} ${infoSelectedKey?.licenseEntryType}`;
+			const sizing =
+				infoSelectedKey?.selectedSubscription.instanceSize === 0
+					? `Sizing ${
+							infoSelectedKey?.selectedSubscription
+								?.instanceSize + 1
+					  }`
+					: `Sizing ${infoSelectedKey?.selectedSubscription.instanceSize}`;
 
 			const licenseKey = {
 				accountKey,
@@ -128,7 +136,7 @@ const RequiredInformation = ({
 				productPurchaseKey:
 					infoSelectedKey?.selectedSubscription.productPurchaseKey,
 				productVersion: infoSelectedKey?.productVersion,
-				sizing: `Sizing ${infoSelectedKey?.selectedSubscription.instanceSize}`,
+				sizing,
 				startDate: infoSelectedKey?.selectedSubscription.startDate,
 			};
 

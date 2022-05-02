@@ -779,10 +779,11 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-48777. User can edit external applications to enable or disable permissions in both scopes. Blocked by LPS-142520."
+	@description = "This is a use case for LRQA-48777. User can edit external applications to enable or disable permissions in both scopes. Blocked by LPS-147637."
 	test EditApplicationScopesAndViewLanguageKeys {
 		property osgi.module.configuration.file.names = "com.liferay.oauth2.provider.scope.internal.configuration.ConfigurableScopeMapperConfiguration~default.config";
 		property osgi.module.configurations = "mapping=[&quot;example-scope-1,example-scope-2\=everything&quot;]${line.separator}osgi.jaxrs.name=&quot;liferay-oauth2-scope-sample-qa-app&quot;${line.separator}passthrough=&quot;true&quot;";
+		property portal.release = "quarantine";
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "OAuth2#EditApplicationScopesAndViewLanguageKeys";
 

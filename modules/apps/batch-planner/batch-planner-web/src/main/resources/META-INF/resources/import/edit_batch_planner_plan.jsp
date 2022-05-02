@@ -101,9 +101,9 @@ renderResponse.setTitle(editable ? LanguageUtil.get(request, "edit-template") : 
 							<div class="mt-2">
 								<clay:checkbox
 									checked="<%= false %>"
-									disabled="<%= true %>"
+									id='<%= liferayPortletResponse.getNamespace() + "allowUpdate" %>'
 									label='<%= LanguageUtil.get(request, "override-existing-records") %>'
-									name="headerCheckbox"
+									name='<%= liferayPortletResponse.getNamespace() + "allowUpdate" %>'
 								/>
 							</div>
 
@@ -111,8 +111,9 @@ renderResponse.setTitle(editable ? LanguageUtil.get(request, "edit-template") : 
 								<clay:checkbox
 									checked="<%= true %>"
 									disabled="<%= true %>"
+									id='<%= liferayPortletResponse.getNamespace() + "onUpdateDoPatch" %>'
 									label='<%= LanguageUtil.get(request, "ignore-blank-field-values-during-import") %>'
-									name="headerCheckbox"
+									name='<%= liferayPortletResponse.getNamespace() + "onUpdateDoPatch" %>'
 								/>
 							</div>
 

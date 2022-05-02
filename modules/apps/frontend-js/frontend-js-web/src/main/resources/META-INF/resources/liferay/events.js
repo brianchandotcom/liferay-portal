@@ -104,6 +104,12 @@
 				}
 			}
 
+			function enableFormButtons(inputs) {
+				Util._submitLocked = null;
+
+				Util.toggleDisabled(inputs, false);
+			}
+
 			if (!hasErrors) {
 				var action = event.action || form.getAttribute('action');
 
@@ -119,7 +125,7 @@
 					Util._submitLocked = A.later(
 						1000,
 						Util,
-						Util.enableFormButtons,
+						enableFormButtons,
 						[inputs, form]
 					);
 				}

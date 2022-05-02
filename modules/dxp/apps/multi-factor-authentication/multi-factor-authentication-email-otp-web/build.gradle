@@ -10,7 +10,6 @@ dependencies {
 	compileOnly project(":apps:configuration-admin:configuration-admin-api")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
 	compileOnly project(":apps:login:login-web-api")
-	compileOnly project(":apps:petra:petra-encryptor")
 	compileOnly project(":apps:portal-settings:portal-settings-api")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	compileOnly project(":core:petra:petra-function")

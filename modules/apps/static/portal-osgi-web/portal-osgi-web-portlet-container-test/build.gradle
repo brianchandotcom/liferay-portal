@@ -10,7 +10,6 @@ dependencies {
 	testIntegrationCompile group: "org.springframework", name: "spring-web", version: "5.2.20.RELEASE"
 	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-taglib")
 	testIntegrationCompile project(":apps:layout:layout-test-util")
-	testIntegrationCompile project(":apps:petra:petra-encryptor")
 	testIntegrationCompile project(":apps:petra:petra-portlet-url-builder")
 	testIntegrationCompile project(":apps:static:portal-osgi-web:portal-osgi-web-portlet-container-test-util")
 	testIntegrationCompile project(":apps:upload:upload-api")

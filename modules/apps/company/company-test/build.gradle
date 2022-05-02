@@ -1,7 +1,6 @@
 dependencies {
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testIntegrationCompile project(":apps:layout:layout-api")
-	testIntegrationCompile project(":apps:petra:petra-encryptor")
 	testIntegrationCompile project(":apps:site:site-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

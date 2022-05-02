@@ -94,7 +94,6 @@ dependencies {
 	compileOnly group: "org.springframework", name: "spring-context", version: "5.2.20.RELEASE"
 	compileOnly group: "org.springframework", name: "spring-core", version: "5.2.20.RELEASE"
 	compileOnly project(":apps:petra:petra-content")
-	compileOnly project(":apps:petra:petra-encryptor")
 	compileOnly project(":apps:petra:petra-log4j")
 	compileOnly project(":apps:petra:petra-mail")
 	compileOnly project(":apps:petra:petra-portlet-url-builder")

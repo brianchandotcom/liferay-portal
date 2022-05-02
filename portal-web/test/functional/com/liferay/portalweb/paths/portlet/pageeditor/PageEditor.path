@@ -306,6 +306,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EXPERIENCE_AUDIENCE_OPTION</td>
+	<td>//div[label[normalize-space(text())='Audience']]//select//option[normalize-space(text())='${key_segmentName}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EXPERIENCE_BUTTON_NAME</td>
 	<td>//div[contains(@class,'page-editor__toolbar-experience')]/button[contains(.,'${key_experienceName}')]</td>
 	<td></td>
@@ -343,6 +348,11 @@
 <tr>
 	<td>EXPERIENCE_DROPDOWN</td>
 	<td>//div[contains(@class,'page-editor__toolbar-experience__dropdown-menu')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXPERIENCE_MODAL</td>
+	<td>//div[contains(@class,'modal-content') and contains(.,'New Experience')]</td>
 	<td></td>
 </tr>
 <tr>

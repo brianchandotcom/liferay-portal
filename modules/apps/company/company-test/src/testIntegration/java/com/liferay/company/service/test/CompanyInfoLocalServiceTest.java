@@ -16,7 +16,7 @@ package com.liferay.company.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.counter.kernel.service.CounterLocalService;
-import com.liferay.petra.encryptor.Encryptor;
+import com.liferay.portal.kernel.encryptor.Encryptor;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyInfo;
 import com.liferay.portal.kernel.service.CompanyInfoLocalService;
@@ -75,7 +75,7 @@ public class CompanyInfoLocalServiceTest {
 			_company.getCompanyId());
 
 		Assert.assertEquals(
-			Encryptor.deserializeKey(companyInfo.getKey()),
+			_encryptor.deserializeKey(companyInfo.getKey()),
 			_company.getKeyObj());
 	}
 
@@ -101,7 +101,7 @@ public class CompanyInfoLocalServiceTest {
 			_company.getCompanyId());
 
 		Assert.assertEquals(
-			Encryptor.deserializeKey(companyInfo.getKey()),
+			_encryptor.deserializeKey(companyInfo.getKey()),
 			_company.getKeyObj());
 	}
 
@@ -113,6 +113,9 @@ public class CompanyInfoLocalServiceTest {
 
 	@Inject
 	private static CounterLocalService _counterLocalService;
+
+	@Inject
+	private static Encryptor _encryptor;
 
 	@DeleteAfterTestRun
 	private Company _company;

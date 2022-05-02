@@ -61,13 +61,13 @@ import com.liferay.headless.commerce.delivery.cart.internal.dto.v1_0.CartDTOConv
 import com.liferay.headless.commerce.delivery.cart.internal.dto.v1_0.CartItemDTOConverter;
 import com.liferay.headless.commerce.delivery.cart.internal.dto.v1_0.CartItemDTOConverterContext;
 import com.liferay.headless.commerce.delivery.cart.resource.v1_0.CartResource;
-import com.liferay.petra.encryptor.Encryptor;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.ServicePreAction;
 import com.liferay.portal.events.ThemeServicePreAction;
+import com.liferay.portal.kernel.encryptor.Encryptor;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.portlet.PortletProvider;
@@ -152,7 +152,7 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 			Key key = contextCompany.getKeyObj();
 
 			sb.append(
-				Encryptor.encrypt(
+				_encryptor.encrypt(
 					key, String.valueOf(commerceOrder.getCommerceOrderId())));
 
 			sb.append(StringPool.AMPERSAND);
@@ -840,6 +840,9 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 
 	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;
+
+	@Reference
+	private Encryptor _encryptor;
 
 	@Reference
 	private Portal _portal;

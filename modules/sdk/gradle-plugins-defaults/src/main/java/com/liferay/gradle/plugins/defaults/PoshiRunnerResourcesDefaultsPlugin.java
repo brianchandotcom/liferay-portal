@@ -79,17 +79,15 @@ public class PoshiRunnerResourcesDefaultsPlugin implements Plugin<Project> {
 		poshiRunnerResourcesExtension.setRootDirName(_ROOT_DIR_NAME);
 
 		if (project.hasProperty(ARTIFACT_APPENDIX_PROPERTY_NAME)) {
-			String artifactAppendix = GradleUtil.getProperty(
-				project, ARTIFACT_APPENDIX_PROPERTY_NAME, (String)null);
-
-			poshiRunnerResourcesExtension.setArtifactAppendix(artifactAppendix);
+			poshiRunnerResourcesExtension.setArtifactAppendix(
+				GradleUtil.getProperty(
+					project, ARTIFACT_APPENDIX_PROPERTY_NAME, (String)null));
 		}
 
 		if (project.hasProperty(ARTIFACT_VERSION_PROPERTY_NAME)) {
-			String artifactVersion = GradleUtil.getProperty(
-				project, ARTIFACT_VERSION_PROPERTY_NAME, (String)null);
-
-			poshiRunnerResourcesExtension.setArtifactVersion(artifactVersion);
+			poshiRunnerResourcesExtension.setArtifactVersion(
+				GradleUtil.getProperty(
+					project, ARTIFACT_VERSION_PROPERTY_NAME, (String)null));
 		}
 	}
 

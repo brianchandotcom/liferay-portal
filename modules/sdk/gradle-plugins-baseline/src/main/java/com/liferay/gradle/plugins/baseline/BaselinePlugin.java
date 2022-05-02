@@ -365,11 +365,9 @@ public class BaselinePlugin implements Plugin<Project> {
 		}
 
 		baselineTask.setReportDiff(reportDiff);
-
-		boolean reportOnlyDirtyPackages = GradleUtil.getProperty(
-			project, "baseline.jar.report.only.dirty.packages", true);
-
-		baselineTask.setReportOnlyDirtyPackages(reportOnlyDirtyPackages);
+		baselineTask.setReportOnlyDirtyPackages(
+			GradleUtil.getProperty(
+				project, "baseline.jar.report.only.dirty.packages", true));
 	}
 
 	private void _configureTasksBaseline(

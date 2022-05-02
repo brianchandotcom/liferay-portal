@@ -485,31 +485,29 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 						project.files(
 							mainSourceSet.getCompileClasspath(),
 							compileJSPJavaCompile.getClasspath()));
+					writeFindBugsProjectTask.setClasspath(
+						project.files(
+							new Callable<File>() {
 
-					FileCollection classpath = project.files(
-						new Callable<File>() {
+								@Override
+								public File call() throws Exception {
+									return compileJSPJavaCompile.
+										getDestinationDir();
+								}
 
-							@Override
-							public File call() throws Exception {
-								return compileJSPJavaCompile.
-									getDestinationDir();
-							}
+							},
+							new Callable<File>() {
 
-						},
-						new Callable<File>() {
+								@Override
+								public File call() throws Exception {
+									return javaSourceDirectorySet.
+										getOutputDir();
+								}
 
-							@Override
-							public File call() throws Exception {
-								return javaSourceDirectorySet.getOutputDir();
-							}
-
-						});
-
-					writeFindBugsProjectTask.setClasspath(classpath);
+							}));
 
 					writeFindBugsProjectTask.setDescription(
 						"Writes the FindBugs project file.");
-
 					writeFindBugsProjectTask.setOutputFile(
 						new Callable<File>() {
 
@@ -520,7 +518,6 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 							}
 
 						});
-
 					writeFindBugsProjectTask.setProjectName(project.getName());
 
 					CompileJSPTask generateJSPJavaCompileJSPTask =

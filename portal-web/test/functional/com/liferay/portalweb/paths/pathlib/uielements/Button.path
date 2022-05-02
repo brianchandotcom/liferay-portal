@@ -516,6 +516,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MODAL_DELETE</td>
+	<td>//div[contains(@class, 'modal-content')]//button[contains(., 'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MORE_MESSAGES</td>
 	<td>//a[contains(@class,'btn') and contains(.,'More Messages')]</td>
 	<td></td>

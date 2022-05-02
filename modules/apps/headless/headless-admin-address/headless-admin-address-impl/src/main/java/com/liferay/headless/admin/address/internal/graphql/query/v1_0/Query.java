@@ -17,6 +17,7 @@ package com.liferay.headless.admin.address.internal.graphql.query.v1_0;
 import com.liferay.headless.admin.address.dto.v1_0.Country;
 import com.liferay.headless.admin.address.dto.v1_0.Region;
 import com.liferay.headless.admin.address.resource.v1_0.CountryResource;
+import com.liferay.headless.admin.address.resource.v1_0.RegionResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.search.Sort;
@@ -55,6 +56,14 @@ public class Query {
 
 		_countryResourceComponentServiceObjects =
 			countryResourceComponentServiceObjects;
+	}
+
+	public static void setRegionResourceComponentServiceObjects(
+		ComponentServiceObjects<RegionResource>
+			regionResourceComponentServiceObjects) {
+
+		_regionResourceComponentServiceObjects =
+			regionResourceComponentServiceObjects;
 	}
 
 	/**
@@ -151,6 +160,29 @@ public class Query {
 			countryResource -> countryResource.getCountry(countryId));
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {regions(active: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public RegionPage regions(
+			@GraphQLName("active") Boolean active,
+			@GraphQLName("search") String search,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_regionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			regionResource -> new RegionPage(
+				regionResource.getRegionsPage(
+					active, search, Pagination.of(page, pageSize),
+					_sortsBiFunction.apply(regionResource, sortsString))));
+	}
+
 	@GraphQLTypeExtension(Region.class)
 	public class GetCountryTypeExtension {
 
@@ -204,6 +236,39 @@ public class Query {
 
 	}
 
+	@GraphQLName("RegionPage")
+	public class RegionPage {
+
+		public RegionPage(Page regionPage) {
+			actions = regionPage.getActions();
+
+			items = regionPage.getItems();
+			lastPage = regionPage.getLastPage();
+			page = regionPage.getPage();
+			pageSize = regionPage.getPageSize();
+			totalCount = regionPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected java.util.Collection<Region> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
 			_applyComponentServiceObjects(
 				ComponentServiceObjects<T> componentServiceObjects,
@@ -236,8 +301,23 @@ public class Query {
 		countryResource.setRoleLocalService(_roleLocalService);
 	}
 
+	private void _populateResourceContext(RegionResource regionResource)
+		throws Exception {
+
+		regionResource.setContextAcceptLanguage(_acceptLanguage);
+		regionResource.setContextCompany(_company);
+		regionResource.setContextHttpServletRequest(_httpServletRequest);
+		regionResource.setContextHttpServletResponse(_httpServletResponse);
+		regionResource.setContextUriInfo(_uriInfo);
+		regionResource.setContextUser(_user);
+		regionResource.setGroupLocalService(_groupLocalService);
+		regionResource.setRoleLocalService(_roleLocalService);
+	}
+
 	private static ComponentServiceObjects<CountryResource>
 		_countryResourceComponentServiceObjects;
+	private static ComponentServiceObjects<RegionResource>
+		_regionResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
 	private com.liferay.portal.kernel.model.Company _company;

@@ -82,6 +82,8 @@ public class OpenAPIResourceImpl {
 		{
 			add(CountryResourceImpl.class);
 
+			add(RegionResourceImpl.class);
+
 			add(OpenAPIResourceImpl.class);
 		}
 	};

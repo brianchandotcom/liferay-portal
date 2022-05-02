@@ -605,7 +605,7 @@ definition {
 				fragmentName = "Grid");
 		}
 
-		task ("Configure the Grid") {
+		task ("Change the Number of Modules to 6") {
 			PageEditor.editLayoutGrid(
 				columnCount = "6",
 				panel = "General");
@@ -615,49 +615,31 @@ definition {
 			PageEditor.switchViewport(deviceType = "Landscape Phone");
 		}
 
-		task ("Get current column width") {
+		task ("View Grid styles in Landscape Phone viewport") {
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
 
-			var columnWidth = Css.getCssValue(
-				attribute = "width",
-				element = "//div[contains(@class,'col-12')]");
-
-			var columnWidth = StringUtil.extractDigits("${columnWidth}");
-
-			echo("${columnWidth}");
+			PageEditor.viewGridStyle(
+				columnCount = "6",
+				layout = "12",
+				position = "1");
 
 			SelectFrame(value1 = "relative=top");
 		}
 
-		task ("Configure the Grid") {
+		task ("Change the Layout to 2 Modules per Row") {
 			Select(
 				key_fieldLabel = "Layout",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "2 Modules per Row");
 		}
 
-		task ("Get current column width") {
+		task ("View edited Grid styles in shown") {
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
 
-			var columnWidth2 = Css.getCssValue(
-				attribute = "width",
-				element = "//div[contains(@class,'col-6')]");
-
-			var columnWidth2 = StringUtil.extractDigits("${columnWidth2}");
-
-			echo("${columnWidth2}");
-
-			SelectFrame(value1 = "relative=top");
-		}
-
-		task ("Assert 2*columnWidth2 equal to columnWidth") {
-			var columnWidth2 = 2 * ${columnWidth2};
-
-			echo("${columnWidth2}");
-
-			TestUtils.assertEquals(
-				actual = "${columnWidth2}",
-				expected = "${columnWidth}");
+			PageEditor.viewGridStyle(
+				columnCount = "6",
+				layout = "6",
+				position = "1");
 		}
 	}
 

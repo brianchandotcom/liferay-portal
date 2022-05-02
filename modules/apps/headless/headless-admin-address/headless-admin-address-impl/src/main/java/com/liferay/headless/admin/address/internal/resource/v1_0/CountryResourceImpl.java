@@ -53,6 +53,11 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class CountryResourceImpl extends BaseCountryResourceImpl {
 
 	@Override
+	public void deleteCountry(Long countryId) throws Exception {
+		_countryService.deleteCountry(countryId);
+	}
+
+	@Override
 	public Page<Country> getCountriesPage(
 			Boolean active, String search, Pagination pagination, Sort[] sorts)
 		throws Exception {

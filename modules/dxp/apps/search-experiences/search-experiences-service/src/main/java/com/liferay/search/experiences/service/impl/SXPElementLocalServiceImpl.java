@@ -60,9 +60,36 @@ public class SXPElementLocalServiceImpl extends SXPElementLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return _addSXPElement(
-			userId, descriptionMap, elementDefinitionJSON, null, readOnly,
-			schemaVersion, titleMap, type, serviceContext);
+		_validate(elementDefinitionJSON, titleMap, type, serviceContext);
+
+		SXPElement sxpElement = createSXPElement(
+			counterLocalService.increment(SXPElement.class.getName()));
+
+		User user = _userLocalService.getUser(userId);
+
+		sxpElement.setCompanyId(user.getCompanyId());
+		sxpElement.setUserId(user.getUserId());
+		sxpElement.setUserName(user.getFullName());
+
+		sxpElement.setDescriptionMap(descriptionMap);
+		sxpElement.setElementDefinitionJSON(elementDefinitionJSON);
+		sxpElement.setHidden(false);
+		sxpElement.setKey(KeyUtil.getKey(counterLocalService, null));
+		sxpElement.setReadOnly(readOnly);
+		sxpElement.setSchemaVersion(schemaVersion);
+		sxpElement.setTitleMap(titleMap);
+		sxpElement.setType(type);
+		sxpElement.setVersion(
+			String.format(
+				"%.1f",
+				GetterUtil.getFloat(sxpElement.getVersion(), 0.9F) + 0.1));
+		sxpElement.setStatus(WorkflowConstants.STATUS_APPROVED);
+
+		sxpElement = sxpElementPersistence.update(sxpElement);
+
+		_resourceLocalService.addModelResources(sxpElement, serviceContext);
+
+		return sxpElement;
 	}
 
 	@Override
@@ -131,57 +158,6 @@ public class SXPElementLocalServiceImpl extends SXPElementLocalServiceBaseImpl {
 			Map<Locale, String> titleMap, ServiceContext serviceContext)
 		throws PortalException {
 
-		return _updateSXPElement(
-			sxpElementId, descriptionMap, elementDefinitionJSON, hidden, null,
-			schemaVersion, titleMap, serviceContext);
-	}
-
-	private SXPElement _addSXPElement(
-			long userId, Map<Locale, String> descriptionMap,
-			String elementDefinitionJSON, String key, boolean readOnly,
-			String schemaVersion, Map<Locale, String> titleMap, int type,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		_validate(elementDefinitionJSON, titleMap, type, serviceContext);
-
-		SXPElement sxpElement = createSXPElement(
-			counterLocalService.increment(SXPElement.class.getName()));
-
-		User user = _userLocalService.getUser(userId);
-
-		sxpElement.setCompanyId(user.getCompanyId());
-		sxpElement.setUserId(user.getUserId());
-		sxpElement.setUserName(user.getFullName());
-
-		sxpElement.setDescriptionMap(descriptionMap);
-		sxpElement.setElementDefinitionJSON(elementDefinitionJSON);
-		sxpElement.setHidden(false);
-		sxpElement.setKey(KeyUtil.getKey(counterLocalService, key));
-		sxpElement.setReadOnly(readOnly);
-		sxpElement.setSchemaVersion(schemaVersion);
-		sxpElement.setTitleMap(titleMap);
-		sxpElement.setType(type);
-		sxpElement.setVersion(
-			String.format(
-				"%.1f",
-				GetterUtil.getFloat(sxpElement.getVersion(), 0.9F) + 0.1));
-		sxpElement.setStatus(WorkflowConstants.STATUS_APPROVED);
-
-		sxpElement = sxpElementPersistence.update(sxpElement);
-
-		_resourceLocalService.addModelResources(sxpElement, serviceContext);
-
-		return sxpElement;
-	}
-
-	private SXPElement _updateSXPElement(
-			long sxpElementId, Map<Locale, String> descriptionMap,
-			String elementDefinitionJSON, boolean hidden, String key,
-			String schemaVersion, Map<Locale, String> titleMap,
-			ServiceContext serviceContext)
-		throws PortalException {
-
 		SXPElement sxpElement = getSXPElement(sxpElementId);
 
 		_validate(
@@ -191,7 +167,7 @@ public class SXPElementLocalServiceImpl extends SXPElementLocalServiceBaseImpl {
 		sxpElement.setDescriptionMap(descriptionMap);
 		sxpElement.setElementDefinitionJSON(elementDefinitionJSON);
 		sxpElement.setHidden(hidden);
-		sxpElement.setKey(KeyUtil.getKey(counterLocalService, key));
+		sxpElement.setKey(KeyUtil.getKey(counterLocalService, null));
 		sxpElement.setSchemaVersion(schemaVersion);
 		sxpElement.setTitleMap(titleMap);
 		sxpElement.setVersion(

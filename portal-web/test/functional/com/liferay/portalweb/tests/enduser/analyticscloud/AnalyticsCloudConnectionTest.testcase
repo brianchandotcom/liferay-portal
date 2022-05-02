@@ -340,8 +340,8 @@ definition {
 	@description = "Sync Liferay Data Source Contacts"
 	@priority = "5"
 	test CanSyncAllContactsFromDXPToAC {
-		property portal.release = "true";
 		property analytics.cloud.upstream = "false";
+		property portal.release = "true";
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -533,8 +533,8 @@ definition {
 	@description = "Automation ID: LRAC-8822 | Test Summary: Sync Liferay Data Source Contacts by User Groups"
 	@priority = "4"
 	test SyncDataSourceContactsByGroups {
-		property portal.release = "true";
 		property analytics.cloud.upstream = "false";
+		property portal.release = "true";
 
 		task ("Add user, group and assign user to group") {
 			JSONUser.addUser(
@@ -597,8 +597,8 @@ definition {
 	@description = "Automation ID: LRAC-8823 | Test Summary: Sync Liferay Data Source Contacts by Organizations"
 	@priority = "4"
 	test SyncDataSourceContactsByOrganizations {
-		property portal.release = "true";
 		property analytics.cloud.upstream = "false";
+		property portal.release = "true";
 
 		task ("Create a new user, a new organization and assign the organization for the created user") {
 			JSONUser.addUser(

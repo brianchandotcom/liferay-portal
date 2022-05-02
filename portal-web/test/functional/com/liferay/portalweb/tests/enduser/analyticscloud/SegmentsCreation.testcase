@@ -1058,8 +1058,8 @@ definition {
 	@description = "Create a static segment with individual"
 	@priority = "5"
 	test CanCreateStaticSegmentWithIndividuals {
-		property test.name.skip.portal.instance = "SegmentsCreation#CanCreateStaticSegmentWithIndividuals";
 		property analytics.cloud.upstream = "false";
+		property test.name.skip.portal.instance = "SegmentsCreation#CanCreateStaticSegmentWithIndividuals";
 
 		task ("Sign in as new user") {
 			User.logoutAndLoginPG(
@@ -1280,8 +1280,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8472 | Test Summary: Paginate static segment 'Add Members' creation model"
 	@priority = "3"
 	test CanPaginateStaticSegmentAddMembers {
-		property test.name.skip.portal.instance = "SegmentsCreation#CanPaginateStaticSegmentAddMembers";
 		property analytics.cloud.upstream = "false";
+		property test.name.skip.portal.instance = "SegmentsCreation#CanPaginateStaticSegmentAddMembers";
 
 		var usernameList = "user1,user2,user3,user4,user5";
 		var emailList = "userea@liferay.com,user1@liferay.com,user2@liferay.com,user3@liferay.com,user4@liferay.com,user5@liferay.com";
@@ -1359,8 +1359,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8475 | Test Summary: Dynamic segment members preview in real time"
 	@priority = "3"
 	test CanPreviewDynamicSegmentMembers {
-		property test.name.skip.portal.instance = "SegmentsCreation#CanPreviewDynamicSegmentMembers";
 		property analytics.cloud.upstream = "false";
+		property test.name.skip.portal.instance = "SegmentsCreation#CanPreviewDynamicSegmentMembers";
 
 		var emailList = "userea@liferay.com,user1@liferay.com";
 		var usernameList = "userfn userln,user1 user1";
@@ -1446,8 +1446,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8473 | Test Summary: Filter the Segment 'Add Members' Modal"
 	@priority = "3"
 	test CanSearchUserInAddMembersModal {
-		property test.name.skip.portal.instance = "SegmentsCreation#CanSearchUserInAddMembersModal";
 		property analytics.cloud.upstream = "false";
+		property test.name.skip.portal.instance = "SegmentsCreation#CanSearchUserInAddMembersModal";
 
 		var emailList = "userea@liferay.com,user1@liferay.com";
 

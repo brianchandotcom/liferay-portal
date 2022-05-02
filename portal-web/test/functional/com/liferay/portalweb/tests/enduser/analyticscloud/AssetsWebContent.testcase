@@ -607,8 +607,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8131 | Test Summary: Web content known individuals shows which individuals interact with the web content"
 	@priority = "5"
 	test KnownIndividualsShowsWhichIndividualsInteractWithWebContent {
-		property test.name.skip.portal.instance = "AssetsWebContent#KnownIndividualsShowsWhichIndividualsInteractWithWebContent";
 		property analytics.cloud.upstream = "false";
+		property test.name.skip.portal.instance = "AssetsWebContent#KnownIndividualsShowsWhichIndividualsInteractWithWebContent";
 
 		var nameList = "ac ac,liferay liferay,dxp dxp";
 		var usernameList = "ac,liferay,dxp";

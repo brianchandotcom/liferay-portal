@@ -226,6 +226,20 @@ paths:
                                 $ref: "#/components/schemas/Country"
             tags: ["Country"]
     "/countries/{countryId}":
+        delete:
+            parameters:
+                - in: path
+                  name: countryId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["Country"]
         get:
             operationId: getCountry
             parameters:

@@ -89,6 +89,39 @@ definition {
 		CommerceNavigator.gotoEntry(entryName = "Diagram T-Shirt");
 	}
 
+	@description = "COMMERCE-7022 This test asserts that a diagram product image can be expanded to fit the full screen"
+	@priority = "3"
+	test CanExpandImageToFitFullScreen {
+		task ("Given a diagram product with an image") {
+			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
+				portlet = "Products");
+
+			CPCommerceCatalog.newProductsEntry(
+				productCatalog = "Master",
+				productName = "Diagram T-Shirt",
+				productType = "Diagram");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Diagram");
+
+			CommerceProductImages.addDiagramImages(
+				imageTitles = "Black",
+				productType = "Diagram");
+
+			Button.clickPublish();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("When the Expand button is clicked") {
+			CommerceDiagram.clickExpand();
+		}
+
+		task ("Then the diagram product image should fill up the page") {
+			AssertElementNotPresent(locator1 = "ApplicationsMenu#APPLICATIONS_MENU");
+		}
+	}
+
 	@description = "COMMERCE-7024 A diagram product cannot be published without an image."
 	@priority = "3"
 	test CannotPublishADiagramProductWithoutAnImage {
@@ -494,39 +527,6 @@ definition {
 			locator1 = "CommerceDiagrams#DIAGRAM_PIN",
 			locator2 = "CommerceDiagrams#DIAGRAM_IMAGE",
 			position = "300,0");
-	}
-
-	@description = "This test asserts that a diagram product imagecan be expanded to fit the full screen"
-	@priority = "3"
-	test UseExpand {
-		task ("Given a diagram product with an image") {
-			CommerceNavigator.gotoPortlet(
-				category = "Product Management",
-				portlet = "Products");
-
-			CPCommerceCatalog.newProductsEntry(
-				productCatalog = "Master",
-				productName = "Diagram T-Shirt",
-				productType = "Diagram");
-
-			CommerceEntry.gotoMenuTab(menuTab = "Diagram");
-
-			CommerceProductImages.addDiagramImages(
-				imageTitles = "Black",
-				productType = "Diagram");
-
-			Button.clickPublish();
-
-			Alert.viewSuccessMessage();
-		}
-
-		task ("When the Expand button is clicked") {
-			CommerceDiagram.clickExpand();
-		}
-
-		task ("Then the diagram product image should fill up the page") {
-			AssertElementNotPresent(locator1 = "ApplicationsMenu#APPLICATIONS_MENU");
-		}
 	}
 
 	@description = "Verify user can use the pin tooltip to edit the information of a diagram product image pin"

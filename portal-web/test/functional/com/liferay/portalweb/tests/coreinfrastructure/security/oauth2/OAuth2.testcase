@@ -31,7 +31,7 @@ definition {
 			for (var count : list "1,2") {
 				OAuth2.addAndEditExternalApplication(
 					applicationName = "My Application${count}",
-					callbackUri = '''http://martamedio.com/oauth2-tester/?url=${portalURL}&client_id=default${count}''',
+					callbackUri = '''http://martamedio.com/oauth2-tester/?url=http://localhost:8080&client_id=default${count}''',
 					checkboxCheckList = "Remember Device",
 					clientId = "default${count}",
 					clientProfile = "Web Application",
@@ -1690,7 +1690,7 @@ definition {
 			for (var count : list "1,2") {
 				OAuth2.addAndEditExternalApplication(
 					applicationName = "My Application${count}",
-					callbackUri = '''http://martamedio.com/oauth2-tester/?url=${portalURL}&client_id=default${count}''',
+					callbackUri = '''http://martamedio.com/oauth2-tester/?url=http://localhost:8080&client_id=default${count}''',
 					checkboxCheckList = "Remember Device",
 					clientId = "default${count}",
 					clientProfile = "Web Application",

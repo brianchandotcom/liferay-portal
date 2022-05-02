@@ -87,7 +87,7 @@ import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
-import com.liferay.users.admin.kernel.util.UsersAdminUtil;
+import com.liferay.users.admin.kernel.util.UsersAdmin;
 
 import java.util.Arrays;
 import java.util.Calendar;
@@ -414,16 +414,16 @@ public class UserAccountResourceImpl
 
 		User user = accountEntryUserRel.getUser();
 
-		UsersAdminUtil.updateAddresses(
+		_usersAdmin.updateAddresses(
 			Contact.class.getName(), user.getContactId(),
 			_getAddresses(userAccount));
-		UsersAdminUtil.updateEmailAddresses(
+		_usersAdmin.updateEmailAddresses(
 			Contact.class.getName(), user.getContactId(),
 			_getServiceBuilderEmailAddresses(userAccount));
-		UsersAdminUtil.updatePhones(
+		_usersAdmin.updatePhones(
 			Contact.class.getName(), user.getContactId(),
 			_getServiceBuilderPhones(userAccount));
-		UsersAdminUtil.updateWebsites(
+		_usersAdmin.updateWebsites(
 			Contact.class.getName(), user.getContactId(),
 			_getWebsites(userAccount));
 
@@ -598,16 +598,16 @@ public class UserAccountResourceImpl
 			PermissionThreadLocal.setPermissionChecker(
 				_permissionCheckerFactory.create(user));
 
-			UsersAdminUtil.updateAddresses(
+			_usersAdmin.updateAddresses(
 				Contact.class.getName(), user.getContactId(),
 				_getAddresses(userAccount));
-			UsersAdminUtil.updateEmailAddresses(
+			_usersAdmin.updateEmailAddresses(
 				Contact.class.getName(), user.getContactId(),
 				_getServiceBuilderEmailAddresses(userAccount));
-			UsersAdminUtil.updatePhones(
+			_usersAdmin.updatePhones(
 				Contact.class.getName(), user.getContactId(),
 				_getServiceBuilderPhones(userAccount));
-			UsersAdminUtil.updateWebsites(
+			_usersAdmin.updateWebsites(
 				Contact.class.getName(), user.getContactId(),
 				_getWebsites(userAccount));
 		}
@@ -1161,6 +1161,9 @@ public class UserAccountResourceImpl
 
 	@Reference
 	private UserResourceDTOConverter _userResourceDTOConverter;
+
+	@Reference
+	private UsersAdmin _usersAdmin;
 
 	@Reference
 	private UserService _userService;

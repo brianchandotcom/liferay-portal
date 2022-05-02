@@ -44,7 +44,7 @@ import com.liferay.portal.kernel.service.WebsiteLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.users.admin.kernel.util.UsersAdminUtil;
+import com.liferay.users.admin.kernel.util.UsersAdmin;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -407,7 +407,7 @@ public class OrganizationStagedModelDataHandler
 			addresses.add(address);
 		}
 
-		UsersAdminUtil.updateAddresses(
+		_usersAdmin.updateAddresses(
 			Organization.class.getName(),
 			importedOrganization.getOrganizationId(), addresses);
 	}
@@ -449,7 +449,7 @@ public class OrganizationStagedModelDataHandler
 			emailAddresses.add(emailAddress);
 		}
 
-		UsersAdminUtil.updateEmailAddresses(
+		_usersAdmin.updateEmailAddresses(
 			Organization.class.getName(),
 			importedOrganization.getOrganizationId(), emailAddresses);
 	}
@@ -469,7 +469,7 @@ public class OrganizationStagedModelDataHandler
 			orgLabor.setOrgLaborId(0);
 		}
 
-		UsersAdminUtil.updateOrgLabors(
+		_usersAdmin.updateOrgLabors(
 			importedOrganization.getOrganizationId(), orgLabors);
 	}
 
@@ -541,7 +541,7 @@ public class OrganizationStagedModelDataHandler
 			phones.add(phone);
 		}
 
-		UsersAdminUtil.updatePhones(
+		_usersAdmin.updatePhones(
 			Organization.class.getName(),
 			importedOrganization.getOrganizationId(), phones);
 	}
@@ -577,7 +577,7 @@ public class OrganizationStagedModelDataHandler
 			websites.add(website);
 		}
 
-		UsersAdminUtil.updateWebsites(
+		_usersAdmin.updateWebsites(
 			Organization.class.getName(),
 			importedOrganization.getOrganizationId(), websites);
 	}
@@ -590,6 +590,10 @@ public class OrganizationStagedModelDataHandler
 	private PasswordPolicyLocalService _passwordPolicyLocalService;
 	private PasswordPolicyRelLocalService _passwordPolicyRelLocalService;
 	private PhoneLocalService _phoneLocalService;
+
+	@Reference
+	private UsersAdmin _usersAdmin;
+
 	private WebsiteLocalService _websiteLocalService;
 
 }

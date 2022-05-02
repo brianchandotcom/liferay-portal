@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 import com.liferay.users.admin.kernel.util.UsersAdmin;
-import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import java.util.Calendar;
 
@@ -72,7 +71,7 @@ public class EditUserOrganizationsMVCActionCommand
 
 			birthdayCal.setTime(user.getBirthday());
 
-			long[] organizationIds = UsersAdminUtil.getOrganizationIds(
+			long[] organizationIds = _usersAdmin.getOrganizationIds(
 				actionRequest);
 
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(

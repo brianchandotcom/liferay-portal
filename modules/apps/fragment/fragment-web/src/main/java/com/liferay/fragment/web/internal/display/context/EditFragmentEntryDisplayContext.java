@@ -26,6 +26,7 @@ import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.fragment.web.internal.constants.FragmentWebKeys;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.icons.IconsUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -428,7 +429,7 @@ public class EditFragmentEntryDisplayContext {
 		).put(
 			"resources", resources
 		).put(
-			"spritemap", _themeDisplay.getPathThemeImages() + "/clay/icons.svg"
+			"spritemap", IconsUtil.getSpritemapPath(_themeDisplay)
 		).put(
 			"status",
 			() -> {

@@ -29,7 +29,7 @@ CommerceOrganizationDisplayContext commerceOrganizationDisplayContext = (Commerc
 			HashMapBuilder.<String, Object>put(
 				"rootOrganizationId", commerceOrganizationDisplayContext.getRootOrganizationId()
 			).put(
-				"spritemap", themeDisplay.getPathThemeImages() + "/lexicon/icons.svg"
+				"spritemap", IconsUtil.getSpritemapPath(themeDisplay)
 			).build()
 		%>'
 	/>

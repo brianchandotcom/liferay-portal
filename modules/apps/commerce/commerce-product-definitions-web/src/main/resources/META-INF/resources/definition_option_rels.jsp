@@ -130,7 +130,7 @@ CPDefinition cpDefinition = cpDefinitionOptionRelDisplayContext.getCPDefinition(
 						fieldName: ['name', 'LANG'],
 					},
 				],
-				spritemap: '<%= themeDisplay.getPathThemeImages() %>/clay/icons.svg',
+				spritemap: '<%= IconsUtil.getSpritemapPath(themeDisplay) %>',
 				titleLabel: '<%= LanguageUtil.get(request, "add-existing-option") %>',
 			});
 		</aui:script>

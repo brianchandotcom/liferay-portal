@@ -21,6 +21,7 @@ import com.liferay.frontend.js.module.launcher.JSModuleResolver;
 import com.liferay.frontend.taglib.internal.util.ServicesProvider;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.icons.IconsUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
@@ -230,8 +231,7 @@ public class ComponentTag extends ParamAndPropertyAncestorTagImpl {
 				).put(
 					"namespace", portletDisplay.getNamespace()
 				).put(
-					"spritemap",
-					themeDisplay.getPathThemeImages() + "/clay/icons.svg"
+					"spritemap", IconsUtil.getSpritemapPath(themeDisplay)
 				).build()));
 
 		String containerId = getContainerId();

@@ -16,6 +16,7 @@ package com.liferay.commerce.frontend.taglib.servlet.taglib;
 
 import com.liferay.commerce.frontend.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.icons.IconsUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -49,7 +50,7 @@ public class PanelTag extends IncludeTag {
 				(ThemeDisplay)httpServletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			_spritemap = themeDisplay.getPathThemeImages() + "/clay/icons.svg";
+			_spritemap = IconsUtil.getSpritemapPath(themeDisplay);
 		}
 
 		String randomNamespace =

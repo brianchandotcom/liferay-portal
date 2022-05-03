@@ -13,6 +13,7 @@
  */
 
 import {openModal} from 'frontend-js-web';
+import {getSpritemapPath} from '@liferay/frontend-icons-web';
 
 import {openShareFormModal} from './components/share-form/openShareFormModal.es';
 
@@ -50,7 +51,7 @@ const ACTIONS = {
 			localizedName,
 			portletNamespace,
 			shareFormInstanceURL,
-			spritemap: `${Liferay.ThemeDisplay.getPathThemeImages()}/clay/icons.svg`,
+			spritemap: getSpritemapPath(),
 			url,
 		});
 	},

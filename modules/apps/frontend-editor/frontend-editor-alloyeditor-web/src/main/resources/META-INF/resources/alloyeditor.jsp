@@ -230,7 +230,7 @@ name = HtmlUtil.escapeJS(name);
 			{
 				documentBrowseLinkCallback: documentBrowseLinkCallback,
 				htmlEncodeOutput: true,
-				spritemap: themeDisplay.getPathThemeImages() + '/clay/icons.svg',
+				spritemap: '<%= IconsUtil.getSpritemapPath(themeDisplay) %>',
 				title: false,
 				uiNode: uiNode,
 			},

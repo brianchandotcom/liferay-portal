@@ -370,7 +370,7 @@
 						);
 
 						var updateMessage = function(message) {
-							connectionMessages.html('<div class="alert alert-danger"><span class="alert-indicator"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-exclamation-full"><use xlink:href="<%= themeDisplay.getPathThemeImages() %>/clay/icons.svg#exclamation-full"></use></svg></span><strong class="lead"><liferay-ui:message key="error-colon" /></strong>' + message + '</div>');
+							connectionMessages.html('<div class="alert alert-danger"><span class="alert-indicator"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-exclamation-full"><use xlink:href="<%= IconsUtil.getSpritemapPath(themeDisplay) %>#exclamation-full"></use></svg></span><strong class="lead"><liferay-ui:message key="error-colon" /></strong>' + message + '</div>');
 						};
 
 						var startInstall = function() {
@@ -434,7 +434,7 @@
 							<div class="alert alert-success">
 								<span class="alert-indicator">
 									<svg aria-hidden="true" class="lexicon-icon lexicon-icon-check-circle-full">
-										<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/clay/icons.svg#check-circle-full"></use>
+										<use xlink:href="<%= IconsUtil.getSpritemapPath(themeDisplay) %>#check-circle-full"></use>
 									</svg>
 								</span>
 
@@ -463,7 +463,7 @@
 							<div class="alert alert-info">
 								<span class="alert-indicator">
 									<svg aria-hidden="true" class="lexicon-icon lexicon-icon-info-circle">
-										<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/clay/icons.svg#info-circle"></use>
+										<use xlink:href="<%= IconsUtil.getSpritemapPath(themeDisplay) %>#info-circle"></use>
 									</svg>
 								</span>
 
@@ -475,7 +475,7 @@
 								<div class="alert alert-warning">
 									<span class="alert-indicator">
 										<svg aria-hidden="true" class="lexicon-icon lexicon-icon-warning-full">
-											<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/clay/icons.svg#warning-full"></use>
+											<use xlink:href="<%= IconsUtil.getSpritemapPath(themeDisplay) %>#warning-full"></use>
 										</svg>
 									</span>
 

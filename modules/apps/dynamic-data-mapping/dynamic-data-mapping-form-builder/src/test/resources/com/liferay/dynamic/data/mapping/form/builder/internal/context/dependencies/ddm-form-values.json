@@ -1,8 +1,7 @@
 {
 	"containerId": "efbLk8Ep",
 	"currentPage": "1",
-	"dataProviderSettings": {
-	},
+	"dataProviderSettings": {},
 	"evaluatorURL": "/o/dynamic-data-mapping-form-context-provider/",
 	"groupId": "20126",
 	"pages": [
@@ -128,12 +127,11 @@
 	"portletNamespace": "_com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormPortlet_",
 	"readOnly": false,
 	"requiredFieldsWarningMessageHTML": {
-		"content": "<label class=\"required-warning\">Todos os campos marcados com <svg aria-hidden=\"true\" class=\"lexicon-icon lexicon-icon-asterisk reference-mark\"><use xlink:href=\"http://localhost:8080/o/classic-theme/images/clay/icons.svg#asterisk\" /></svg> são obrigatórios.</label>",
+		"content": "<label class=\"required-warning\">Todos os campos marcados com <svg aria-hidden=\"true\" class=\"lexicon-icon lexicon-icon-asterisk reference-mark\"><use xlink:href=\"http://localhost:8080/o/icons/pack/clay.svg#asterisk\" /></svg> são obrigatórios.</label>",
 		"contentDirection": null,
 		"contentKind": "HTML"
 	},
-	"rules": [
-	],
+	"rules": [],
 	"showRequiredFieldsWarning": true,
 	"showSubmitButton": true,
 	"strings": {

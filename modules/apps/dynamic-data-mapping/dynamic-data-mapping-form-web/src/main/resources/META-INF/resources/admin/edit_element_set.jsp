@@ -120,7 +120,7 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 					).put(
 						"redirectURL", HtmlUtil.escape(redirect)
 					).put(
-						"spritemap", themeDisplay.getPathThemeImages() + "/clay/icons.svg"
+						"spritemap", IconsUtil.getSpritemapPath(themeDisplay)
 					).put(
 						"view", "fieldSets"
 					).build()
@@ -141,7 +141,7 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 	Liferay.namespace('DDM').FormSettings = {
 		portletNamespace: '<portlet:namespace />',
 		showPagination: false,
-		spritemap: '<%= themeDisplay.getPathThemeImages() %>/clay/icons.svg',
+		spritemap: '<%= IconsUtil.getSpritemapPath(themeDisplay) %>',
 	};
 
 	var clearPortletHandlers = function (event) {

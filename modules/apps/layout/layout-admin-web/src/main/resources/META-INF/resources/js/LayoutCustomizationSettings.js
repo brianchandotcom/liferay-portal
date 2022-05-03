@@ -13,6 +13,7 @@
  */
 
 import {fetch, objectToFormData} from 'frontend-js-web';
+import {getSpritemapPath} from '@liferay/frontend-icons-web';
 
 /**
  * Observes anchorElement position and updates overlayElement to match until
@@ -113,7 +114,7 @@ function createOverlayElement(columnElement) {
 						</span>
 					</label>
 					<svg class="d-inline-block lexicon-icon lexicon-icon-question-circle-full small text-white" role="presentation">
-						<use xlink:href="${themeDisplay.getPathThemeImages()}/lexicon/icons.svg#question-circle-full" />
+						<use xlink:href="${getSpritemapPath()}#question-circle-full" />
 					</svg>
 				</div>
 			</div>

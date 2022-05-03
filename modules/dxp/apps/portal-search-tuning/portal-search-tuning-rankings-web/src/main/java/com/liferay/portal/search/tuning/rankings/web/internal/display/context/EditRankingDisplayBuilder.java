@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.icons.IconsUtil;
 
 import java.util.Map;
 
@@ -88,7 +89,7 @@ public class EditRankingDisplayBuilder {
 		).put(
 			"namespace", _renderResponse.getNamespace()
 		).put(
-			"spritemap", _themeDisplay.getPathThemeImages() + "/clay/icons.svg"
+			"spritemap", IconsUtil.getSpritemapPath(_themeDisplay)
 		).build();
 	}
 

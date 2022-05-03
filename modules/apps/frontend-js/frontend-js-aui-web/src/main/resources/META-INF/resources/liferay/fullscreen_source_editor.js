@@ -22,7 +22,7 @@ AUI.add(
 			'<div class="col-6">' +
 			'<button class="btn btn-secondary btn-sm float-right lfr-portal-tooltip" data-title="{iconMoonTooltip}" id="switchTheme" type="button">' +
 			'<svg class="lexicon-icon lexicon-icon-moon" focusable="false" role="img">' +
-			'<use href="{pathThemeImages}/clay/icons.svg#moon" />' +
+			'<use href="{spritemap}#moon" />' +
 			'</svg>' +
 			'</button>' +
 			'</div>' +
@@ -30,17 +30,17 @@ AUI.add(
 			'<div class="btn-group" role="group">' +
 			'<button class="btn btn-secondary btn-sm" data-layout="vertical">' +
 			'<svg class="lexicon-icon lexicon-icon-columns" focusable="false" role="img">' +
-			'<use href="{pathThemeImages}/clay/icons.svg#columns" />' +
+			'<use href="{spritemap}#columns" />' +
 			'</svg>' +
 			'</button>' +
 			'<button class="btn btn-secondary btn-sm" data-layout="horizontal">' +
 			'<svg class="lexicon-icon lexicon-icon-cards" focusable="false" role="img">' +
-			'<use href="{pathThemeImages}/clay/icons.svg#cards" />' +
+			'<use href="{spritemap}#cards" />' +
 			'</svg>' +
 			'</button>' +
 			'<button class="btn btn-secondary btn-sm" data-layout="simple">' +
 			'<svg class="lexicon-icon lexicon-icon-expand" focusable="false" role="img">' +
-			'<use href="{pathThemeImages}/clay/icons.svg#expand" />' +
+			'<use href="{spritemap}#expand" />' +
 			'</svg>' +
 			'</button>' +
 			'</div>' +
@@ -180,7 +180,7 @@ AUI.add(
 
 				CONTENT_TEMPLATE: Lang.sub(CONTENT_TEMPLATE, {
 					iconMoonTooltip: Liferay.Language.get('dark-theme'),
-					pathThemeImages: themeDisplay.getPathThemeImages(),
+					spritemap: Liferay._ICONS_.spritemap,
 				}),
 
 				bindUI() {

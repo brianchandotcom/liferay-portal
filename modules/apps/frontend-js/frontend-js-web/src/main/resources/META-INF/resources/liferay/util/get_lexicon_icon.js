@@ -24,7 +24,7 @@ export default function getLexiconIcon(icon, cssClass = '') {
 				focusable="false"
 				role="presentation"
 			>
-				<use href="${themeDisplay.getPathThemeImages()}/clay/icons.svg#${iconName}" />
+				<use href="/o/icons/pack/clay.svg#${iconName}" />
 			</svg>`;
 	}
 

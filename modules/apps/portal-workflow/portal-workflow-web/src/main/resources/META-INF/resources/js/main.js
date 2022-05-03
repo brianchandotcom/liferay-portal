@@ -242,8 +242,8 @@ AUI.add(
 									discardDefaultButtonCssClasses: true,
 									labelHTML:
 										'<svg class="lexicon-icon" focusable="false"><use href="' +
-										Liferay.ThemeDisplay.getPathThemeImages() +
-										'/clay/icons.svg#times" /><title>' +
+										Liferay._ICONS_.spritemap +
+										'#times" /><title>' +
 										Liferay.Language.get('close') +
 										'</title></svg>',
 									on: {
@@ -302,8 +302,8 @@ AUI.add(
 									discardDefaultButtonCssClasses: true,
 									labelHTML:
 										'<svg class="lexicon-icon" focusable="false"><use href="' +
-										Liferay.ThemeDisplay.getPathThemeImages() +
-										'/clay/icons.svg#times" /><title>' +
+										Liferay._ICONS_.spritemap +
+										'#times" /><title>' +
 										Liferay.Language.get('close') +
 										'</title></svg>',
 									on: {
@@ -356,8 +356,8 @@ AUI.add(
 									discardDefaultButtonCssClasses: true,
 									labelHTML:
 										'<svg class="lexicon-icon" focusable="false"><use href="' +
-										Liferay.ThemeDisplay.getPathThemeImages() +
-										'/clay/icons.svg#times" /><title>' +
+										Liferay._ICONS_.spritemap +
+										'#times" /><title>' +
 										Liferay.Language.get('close') +
 										'</title></svg>',
 									on: {

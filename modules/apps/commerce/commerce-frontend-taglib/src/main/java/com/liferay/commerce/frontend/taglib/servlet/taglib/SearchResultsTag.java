@@ -22,6 +22,7 @@ import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.frontend.taglib.soy.servlet.taglib.ComponentRendererTag;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.icons.IconsUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -68,8 +69,7 @@ public class SearchResultsTag extends ComponentRendererTag {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		putValue(
-			"spritemap", themeDisplay.getPathThemeImages() + "/clay/icons.svg");
+		putValue("spritemap", IconsUtil.getSpritemapPath(themeDisplay));
 
 		putValue("visible", false);
 

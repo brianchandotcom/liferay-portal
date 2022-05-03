@@ -89,7 +89,7 @@ function FormInputOptions({item}) {
 
 				if (parentItem.type === LAYOUT_DATA_ITEM_TYPES.form) {
 					const classNameId = parentItem.config?.classNameId;
-					const mappingSource = parentItem.config?.mappingSource;
+					const mappingSource = parentItem.config?.formConfig;
 
 					if (classNameId && classNameId !== '0') {
 						return parentItem.config;

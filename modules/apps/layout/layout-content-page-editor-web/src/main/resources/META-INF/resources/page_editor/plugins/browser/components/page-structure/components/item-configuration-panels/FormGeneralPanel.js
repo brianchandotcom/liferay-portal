@@ -63,7 +63,7 @@ function FormOptions({item, onValueSelect}) {
 
 	const showTypeMapping =
 		!isDisplayPage ||
-		item.config.mappingSource === FORM_MAPPING_SOURCES.otherContentType;
+		item.config.formConfig === FORM_MAPPING_SOURCES.otherContentType;
 
 	return (
 		<div className="mb-3">
@@ -106,10 +106,10 @@ function MappingSource({item, onValueSelect}) {
 					],
 				},
 			}}
-			onValueSelect={(_name, mappingSource) => {
-				onValueSelect({mappingSource});
+			onValueSelect={(_name, formConfig) => {
+				onValueSelect({formConfig});
 			}}
-			value={item.config.mappingSource}
+			value={item.config.formConfig}
 		/>
 	);
 }
@@ -150,8 +150,7 @@ function OtherTypeMapping({item, onValueSelect}) {
 					onValueSelect={(_name, classNameId) =>
 						onValueSelect({
 							classNameId,
-							mappingSource:
-								FORM_MAPPING_SOURCES.otherContentType,
+							formConfig: FORM_MAPPING_SOURCES.otherContentType,
 						})
 					}
 					value={item.config.classNameId}
@@ -178,8 +177,7 @@ function OtherTypeMapping({item, onValueSelect}) {
 						onValueSelect({
 							classNameId: item.config.classNameId,
 							classTypeId,
-							mappingSource:
-								FORM_MAPPING_SOURCES.otherContentType,
+							formConfig: FORM_MAPPING_SOURCES.otherContentType,
 						})
 					}
 					value={item.config.classTypeId}

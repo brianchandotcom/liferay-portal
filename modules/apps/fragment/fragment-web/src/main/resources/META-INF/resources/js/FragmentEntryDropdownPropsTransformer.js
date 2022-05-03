@@ -63,11 +63,13 @@ const ACTIONS = {
 	},
 
 	deleteDraftFragmentEntry({deleteDraftFragmentEntryURL}) {
-		openDeleteFragmentModal({
-			onDelete: () => {
-				submitForm(document.hrefFm, deleteDraftFragmentEntryURL);
-			},
-		});
+		if (
+			confirm(
+				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
+			)
+		) {
+			submitForm(document.hrefFm, deleteDraftFragmentEntryURL);
+		}
 	},
 
 	deleteFragmentEntry({deleteFragmentEntryURL}) {

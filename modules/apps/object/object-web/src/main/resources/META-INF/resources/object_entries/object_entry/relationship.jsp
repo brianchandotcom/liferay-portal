@@ -43,10 +43,6 @@ portletDisplay.setURLBack(backURL);
 		dataProviderKey="<%= ObjectEntriesFDSNames.RELATED_MODELS %>"
 		formName="fm"
 		id="<%= ObjectEntriesFDSNames.RELATED_MODELS %>"
-		itemsPerPage="<%= 20 %>"
-		namespace="<%= liferayPortletResponse.getNamespace() %>"
-		pageNumber="<%= 1 %>"
-		portletURL="<%= liferayPortletResponse.createRenderURL() %>"
 		style="fluid"
 	/>
 </aui:form>

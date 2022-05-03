@@ -16,8 +16,6 @@ package com.liferay.batch.engine.internal.reader;
 
 import com.liferay.petra.io.unsync.UnsyncBufferedReader;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
@@ -26,11 +24,18 @@ import java.io.InputStreamReader;
 import java.io.Serializable;
 
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
 
 /**
  * @author Ivica Cardic
  * @author Igor Beslic
+ * @author Matija Petanjek
  */
 public class CSVBatchEngineImportTaskItemReaderImpl
 	implements BatchEngineImportTaskItemReader {
@@ -40,40 +45,39 @@ public class CSVBatchEngineImportTaskItemReaderImpl
 			Map<String, Serializable> parameters)
 		throws IOException {
 
-		_delimiter = (String)parameters.getOrDefault("delimiter", delimiter);
-		_inputStream = inputStream;
+		_csvParser = CSVParser.parse(
+			new UnsyncBufferedReader(new InputStreamReader(inputStream)),
+			_getCSVFormat(
+				(String)parameters.getOrDefault("delimiter", delimiter),
+				(String)parameters.getOrDefault("enclosingCharacter", null)));
 
-		_enclosingCharacter = _getEnclosingCharacter(parameters);
-
-		_delimiterRegex = _getDelimiterRegex(_enclosingCharacter);
-
-		_unsyncBufferedReader = new UnsyncBufferedReader(
-			new InputStreamReader(_inputStream));
+		_csvRecordIterator = _csvParser.iterator();
 
 		_fieldNames = _getFieldNames(
 			Boolean.valueOf(
 				(String)parameters.getOrDefault(
 					"containsHeaders", StringPool.TRUE)),
-			_delimiter, _unsyncBufferedReader);
+			_csvRecordIterator);
 	}
 
 	@Override
 	public void close() throws IOException {
-		_unsyncBufferedReader.close();
+		_csvParser.close();
 	}
 
 	@Override
 	public Map<String, Object> read() throws Exception {
-		String line = _trimEnclosingCharacter(_unsyncBufferedReader.readLine());
-
-		if (Validator.isNull(line)) {
+		if (!_csvRecordIterator.hasNext()) {
 			return null;
 		}
 
 		Map<String, Object> fieldNameValueMap = new HashMap<>();
-		String[] values = line.split(_delimiterRegex);
 
-		for (int i = 0; i < values.length; i++) {
+		CSVRecord csvRecord = _csvRecordIterator.next();
+
+		List<String> values = csvRecord.toList();
+
+		for (int i = 0; i < values.size(); i++) {
 			String fieldName = _fieldNames[i];
 
 			if (fieldName == null) {
@@ -86,51 +90,38 @@ public class CSVBatchEngineImportTaskItemReaderImpl
 						fieldName);
 
 			fieldNameValueMapHandler.handle(
-				fieldName, fieldNameValueMap, values[i]);
+				fieldName, fieldNameValueMap, values.get(i));
 		}
 
 		return fieldNameValueMap;
 	}
 
-	private String _getDelimiterRegex(String enclosingCharacter) {
-		String escapedDelimiter = _delimiter;
+	private CSVFormat _getCSVFormat(
+		String delimiter, String enclosingCharacter) {
 
-		for (String delimiter : _ESCAPED_DELIMITERS) {
-			if (delimiter.equals(escapedDelimiter)) {
-				escapedDelimiter = StringPool.BACK_SLASH + _delimiter;
+		CSVFormat.Builder builder = CSVFormat.Builder.create(
+		).setDelimiter(
+			delimiter
+		).setIgnoreEmptyLines(
+			true
+		);
 
-				break;
-			}
+		if (Validator.isNotNull(enclosingCharacter)) {
+			builder.setQuote(enclosingCharacter.charAt(0));
 		}
 
-		if (Validator.isNull(enclosingCharacter)) {
-			return escapedDelimiter;
-		}
-
-		return StringBundler.concat(
-			enclosingCharacter, escapedDelimiter, enclosingCharacter);
-	}
-
-	private String _getEnclosingCharacter(
-		Map<String, Serializable> parameters) {
-
-		String enclosingCharacter = (String)parameters.getOrDefault(
-			"enclosingCharacter", null);
-
-		if (Validator.isNull(enclosingCharacter)) {
-			return null;
-		}
-
-		return enclosingCharacter;
+		return builder.build();
 	}
 
 	private String[] _getFieldNames(
-			boolean containsHeaders, String delimiter,
-			UnsyncBufferedReader unsyncBufferedReader)
-		throws IOException {
+		boolean containsHeaders, Iterator<CSVRecord> csvRecordIterator) {
 
 		if (containsHeaders) {
-			return StringUtil.split(unsyncBufferedReader.readLine(), delimiter);
+			CSVRecord csvRecord = csvRecordIterator.next();
+
+			List<String> headerFields = csvRecord.toList();
+
+			return headerFields.toArray(new String[0]);
 		}
 
 		String[] fieldNames = new String[100];
@@ -142,36 +133,8 @@ public class CSVBatchEngineImportTaskItemReaderImpl
 		return fieldNames;
 	}
 
-	private String _trimEnclosingCharacter(String line) {
-		if ((_enclosingCharacter == null) || Validator.isNull(line)) {
-			return line;
-		}
-
-		if (line.startsWith(_enclosingCharacter)) {
-			line = line.substring(1);
-		}
-
-		if (line.endsWith(_enclosingCharacter)) {
-			line = line.substring(0, line.length() - 1);
-		}
-
-		return line;
-	}
-
-	private static final String[] _ESCAPED_DELIMITERS = {
-		StringPool.CARET, StringPool.CLOSE_BRACKET,
-		StringPool.CLOSE_CURLY_BRACE, StringPool.CLOSE_PARENTHESIS,
-		StringPool.DOLLAR, StringPool.EXCLAMATION, StringPool.OPEN_BRACKET,
-		StringPool.OPEN_CURLY_BRACE, StringPool.OPEN_PARENTHESIS,
-		StringPool.PERIOD, StringPool.PIPE, StringPool.PLUS,
-		StringPool.QUESTION, StringPool.STAR
-	};
-
-	private final String _delimiter;
-	private final String _delimiterRegex;
-	private final String _enclosingCharacter;
+	private final CSVParser _csvParser;
+	private final Iterator<CSVRecord> _csvRecordIterator;
 	private final String[] _fieldNames;
-	private final InputStream _inputStream;
-	private final UnsyncBufferedReader _unsyncBufferedReader;
 
 }

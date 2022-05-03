@@ -18,7 +18,6 @@
 
 <%
 CookiesBannerDisplayContext cookiesBannerDisplayContext = (CookiesBannerDisplayContext)request.getAttribute(CookiesBannerWebKeys.COOKIES_BANNER_DISPLAY_CONTEXT);
-CookiesManager cookiesManager = (CookiesManager)request.getAttribute(CookiesBannerWebKeys.COOKIES_MANAGER);
 %>
 
 <clay:container-fluid
@@ -32,7 +31,14 @@ CookiesManager cookiesManager = (CookiesManager)request.getAttribute(CookiesBann
 			<clay:content-col
 				expand="<%= true %>"
 			>
-				<span><liferay-ui:message key="cookies-banner-message" /></span>
+				<span>
+					<%= cookiesBannerDisplayContext.getContent(locale) %>
+
+					<clay:link
+						href="<%= cookiesBannerDisplayContext.getPrivacyPolicyLink() %>"
+						label="<%= cookiesBannerDisplayContext.getLinkDisplayText(locale) %>"
+					/>
+				</span>
 			</clay:content-col>
 
 			<clay:content-col>
@@ -53,28 +59,22 @@ CookiesManager cookiesManager = (CookiesManager)request.getAttribute(CookiesBann
 				/>
 			</clay:content-col>
 
-			<clay:content-col>
-				<clay:button
-					displayType="secondary"
-					id='<%= liferayPortletResponse.getNamespace() + "declineAllButton" %>'
-					label='<%= LanguageUtil.get(request, "decline-all") %>'
-					small="<%= true %>"
-				/>
-			</clay:content-col>
+			<c:if test="<%= cookiesBannerDisplayContext.isIncludeDeclineAllButton() %>">
+				<clay:content-col>
+					<clay:button
+						displayType="secondary"
+						id='<%= liferayPortletResponse.getNamespace() + "declineAllButton" %>'
+						label='<%= LanguageUtil.get(request, "decline-all") %>'
+						small="<%= true %>"
+					/>
+				</clay:content-col>
+			</c:if>
 		</clay:content-row>
 	</clay:row>
 </clay:container-fluid>
 
 <liferay-frontend:component
 	componentId="CookiesBanner"
-	context='<%=
-		HashMapBuilder.<String, Object>put(
-			"configurationUrl", cookiesBannerDisplayContext.getConfigurationURL()
-		).put(
-			"optionalCookieNames", cookiesManager.getOptionalCookieNames()
-		).put(
-			"requiredCookieNames", cookiesManager.getRequiredCookieNames()
-		).build()
-	%>'
+	context="<%= cookiesBannerDisplayContext.getContext(locale, scopeGroupId) %>"
 	module="cookies_banner/js/CookiesBanner"
 />

@@ -152,6 +152,19 @@ public class RegionServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.search.BaseModelSearchResult
+		<com.liferay.portal.kernel.model.Region> searchRegions(
+				long companyId, java.lang.Boolean active,
+				java.lang.String keywords, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.portal.kernel.model.Region> orderByComparator)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _regionService.searchRegions(
+			companyId, active, keywords, start, end, orderByComparator);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.model.Region updateActive(
 			long regionId, boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {

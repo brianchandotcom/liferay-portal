@@ -11,6 +11,7 @@ dependencies {
 	testIntegrationCompile project(":apps:headless:headless-admin-user:headless-admin-user-api")
 	testIntegrationCompile project(":apps:headless:headless-admin-workflow:headless-admin-workflow-api")
 	testIntegrationCompile project(":apps:journal:journal-api")
+	testIntegrationCompile project(":apps:knowledge-base:knowledge-base-api")
 	testIntegrationCompile project(":apps:layout:layout-page-template-api")
 	testIntegrationCompile project(":apps:object:object-admin-rest-api")
 	testIntegrationCompile project(":apps:object:object-api")

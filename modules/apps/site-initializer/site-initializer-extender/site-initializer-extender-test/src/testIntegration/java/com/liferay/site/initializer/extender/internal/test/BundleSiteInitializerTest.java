@@ -68,6 +68,12 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalFolderService;
+import com.liferay.knowledge.base.constants.KBFolderConstants;
+import com.liferay.knowledge.base.model.KBArticle;
+import com.liferay.knowledge.base.model.KBFolder;
+import com.liferay.knowledge.base.service.KBArticleLocalService;
+import com.liferay.knowledge.base.service.KBFolderLocalService;
+import com.liferay.knowledge.base.util.comparator.KBArticlePriorityComparator;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
@@ -80,6 +86,7 @@ import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.io.StreamUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
@@ -212,6 +219,7 @@ public class BundleSiteInitializerTest {
 			_assertDLFileEntry(group);
 			_assertFragmentEntries(group);
 			_assertJournalArticles(group);
+			_assertKBArticles(group);
 			_assertLayoutPageTemplateEntry(group);
 			_assertLayouts(group);
 			_assertLayoutSets(group);
@@ -722,6 +730,47 @@ public class BundleSiteInitializerTest {
 		JournalFolder journalFolder2 = journalFolders.get(1);
 
 		Assert.assertEquals("Test Journal Article 2", journalFolder2.getName());
+	}
+
+	private void _assertKBArticles(Group group) throws Exception {
+		KBFolder kbFolder = _kbFolderLocalService.getKBFolderByUrlTitle(
+			group.getGroupId(), KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			"test-folder");
+
+		Assert.assertEquals("test folder", kbFolder.getName());
+
+		List<KBArticle> kbFolderKBArticles =
+			_kbArticleLocalService.getKBArticles(
+				group.getGroupId(), kbFolder.getKbFolderId(),
+				WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, new KBArticlePriorityComparator(true));
+
+		Assert.assertEquals(
+			kbFolderKBArticles.toString(), 1, kbFolderKBArticles.size());
+
+		KBArticle kbArticle1 = kbFolderKBArticles.get(0);
+
+		Assert.assertEquals("test article 1", kbArticle1.getTitle());
+		Assert.assertEquals("test article 1 body", kbArticle1.getContent());
+
+		List<KBArticle> kbArticleKBArticles =
+			_kbArticleLocalService.getKBArticles(
+				group.getGroupId(), kbArticle1.getResourcePrimKey(),
+				WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, new KBArticlePriorityComparator(true));
+
+		Assert.assertEquals(
+			kbArticleKBArticles.toString(), 2, kbArticleKBArticles.size());
+
+		KBArticle kbArticle2 = kbArticleKBArticles.get(0);
+
+		Assert.assertEquals("test article 2", kbArticle2.getTitle());
+		Assert.assertEquals("test article 2 body", kbArticle2.getContent());
+
+		KBArticle kbArticle3 = kbArticleKBArticles.get(1);
+
+		Assert.assertEquals("test article 3", kbArticle3.getTitle());
+		Assert.assertEquals("test article 3 body", kbArticle3.getContent());
 	}
 
 	private void _assertLayoutPageTemplateEntry(Group group) throws Exception {
@@ -1366,6 +1415,12 @@ public class BundleSiteInitializerTest {
 
 	@Inject
 	private JournalFolderService _journalFolderService;
+
+	@Inject
+	private KBArticleLocalService _kbArticleLocalService;
+
+	@Inject
+	private KBFolderLocalService _kbFolderLocalService;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;

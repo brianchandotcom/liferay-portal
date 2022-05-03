@@ -21,7 +21,9 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author dnebinger
  */
-@ExtendedObjectClassDefinition(category = "pages")
+@ExtendedObjectClassDefinition(
+	category = "pages", scope = ExtendedObjectClassDefinition.Scope.GROUP
+)
 @Meta.OCD(
 	description = "layout-crawler-client-configuration-description",
 	id = "com.liferay.layout.internal.configuration.LayoutCrawlerClientConfiguration",

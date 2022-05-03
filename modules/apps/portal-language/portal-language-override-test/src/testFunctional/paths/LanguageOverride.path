@@ -27,6 +27,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BOLD_LANGUAGE_WITH_OVERRIDE</td>
+	<td>//dd[contains(.,'${key_languageKey}')]//h6/strong[contains (.,'${key_language}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

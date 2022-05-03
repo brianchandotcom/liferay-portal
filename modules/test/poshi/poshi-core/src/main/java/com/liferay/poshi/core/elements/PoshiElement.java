@@ -1033,13 +1033,17 @@ public abstract class PoshiElement
 		String trimmedPoshiScript = StringUtil.trimLeading(
 			previousPoshiNode.toPoshiScript());
 
-		if (!trimmedPoshiScript.startsWith("var ")) {
+		if (!trimmedPoshiScript.startsWith("static var ") &&
+			!trimmedPoshiScript.startsWith("var ")) {
+
 			return poshiScriptSnippet;
 		}
 
 		trimmedPoshiScript = StringUtil.trimLeading(poshiNode.toPoshiScript());
 
-		if (!trimmedPoshiScript.startsWith("var ")) {
+		if (!trimmedPoshiScript.startsWith("static var ") &&
+			!trimmedPoshiScript.startsWith("var ")) {
+
 			return poshiScriptSnippet;
 		}
 

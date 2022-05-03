@@ -12,20 +12,18 @@
  * details.
  */
 
-const REQUIRED_FORM_FRAGMENT = Liferay.Language.get('required-form-fragment');
-
 export const REQUIRED_FIELD_DATA = {
 	actionLabel: Liferay.Language.get('hide'),
 	message: Liferay.Language.get(
 		'this-fragment-contains-a-required-form-field-or-a-submit-element.-are-you-sure-you-want-to-hide-it'
 	),
-	title: REQUIRED_FORM_FRAGMENT,
+	title: Liferay.Language.get('required-form-fragment'),
 };
 
 export const MISSING_FIELD_DATA = {
 	actionLabel: Liferay.Language.get('publish'),
 	message: Liferay.Language.get(
-		'this-page-contains-one-or-several-forms-with-a-missing-or-hidden-required-elements'
+		'this-page-contains-one-or-several-forms-with-a-missing-or-hidden-form-components'
 	),
-	title: REQUIRED_FORM_FRAGMENT,
+	title: Liferay.Language.get('required-form-components'),
 };

@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.cookies.consent.internal.settings.definition;
+package com.liferay.cookies.internal.settings.definition;
 
-import com.liferay.cookies.consent.configuration.CookiesConfiguration;
+import com.liferay.cookies.configuration.CookiesBannerConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 
 import org.osgi.service.component.annotations.Component;
@@ -23,12 +23,12 @@ import org.osgi.service.component.annotations.Component;
  * @author Olivér Kecskeméty
  */
 @Component(service = ConfigurationBeanDeclaration.class)
-public class CookiesConfigurationBeanDeclaration
+public class CookiesBannerConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return CookiesConfiguration.class;
+		return CookiesBannerConfiguration.class;
 	}
 
 }

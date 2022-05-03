@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.cookies.consent.internal.configuration.admin.display;
+package com.liferay.cookies.internal.configuration.admin.display;
 
 import com.liferay.configuration.admin.display.ConfigurationVisibilityController;
-import com.liferay.cookies.consent.internal.configuration.CookiesBannerConfiguration;
+import com.liferay.cookies.configuration.CookiesBannerConfiguration;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "configuration.pid=com.liferay.cookies.consent.internal.configuration.CookiesConfiguration",
+	property = "configuration.pid=com.liferay.cookies.configuration.CookiesBannerConfiguration",
 	service = ConfigurationVisibilityController.class
 )
 public class CookiesConfigurationVisibilityController

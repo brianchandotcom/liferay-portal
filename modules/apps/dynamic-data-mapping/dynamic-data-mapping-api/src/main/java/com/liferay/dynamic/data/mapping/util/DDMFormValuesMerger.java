@@ -14,12 +14,17 @@
 
 package com.liferay.dynamic.data.mapping.util;
 
+import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 
 /**
  * @author Inácio Nery
  */
 public interface DDMFormValuesMerger {
+
+	public DDMFormValues merge(
+		DDMForm ddmForm, DDMFormValues newDDMFormValues,
+		DDMFormValues existingDDMFormValues);
 
 	public DDMFormValues merge(
 		DDMFormValues newDDMFormValues, DDMFormValues existingDDMFormValues);

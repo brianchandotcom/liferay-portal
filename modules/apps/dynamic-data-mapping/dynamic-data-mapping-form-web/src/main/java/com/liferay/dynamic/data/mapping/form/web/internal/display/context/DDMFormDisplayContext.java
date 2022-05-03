@@ -276,7 +276,7 @@ public class DDMFormDisplayContext {
 
 		if (ddmFormInstanceRecordVersion != null) {
 			DDMFormValues mergedDDMFormValues = _ddmFormValuesMerger.merge(
-				ddmFormInstanceRecordVersion.getDDMFormValues(),
+				ddmForm, ddmFormInstanceRecordVersion.getDDMFormValues(),
 				ddmFormRenderingContext.getDDMFormValues());
 
 			ddmFormRenderingContext.setDDMFormValues(mergedDDMFormValues);
@@ -337,6 +337,13 @@ public class DDMFormDisplayContext {
 
 					_ddmFormInstance.setSettings(
 						latestApprovedDDMFormInstanceVersion.getSettings());
+
+					DDMStructureVersion structureVersion =
+						latestApprovedDDMFormInstanceVersion.
+							getStructureVersion();
+
+					_ddmFormInstance.setStructureId(
+						structureVersion.getStructureId());
 				}
 			}
 		}

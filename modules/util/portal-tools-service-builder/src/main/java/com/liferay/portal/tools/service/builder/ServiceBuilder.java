@@ -2316,16 +2316,15 @@ public class ServiceBuilder {
 	private void _createBaseUADAnonymizer(Entity entity) throws Exception {
 		Map<String, Object> context = _getContext();
 
-		JavaClass javaClass = _getJavaClass(
-			StringBundler.concat(
-				_outputPath, "/service/impl/", entity.getName(),
-				_getSessionTypeName(_SESSION_TYPE_LOCAL), "ServiceImpl.java"));
-
-		String deleteUADEntityMethodName = _getDeleteUADEntityMethodName(
-			javaClass, entity.getName());
-
-		context.put("deleteUADEntityMethodName", deleteUADEntityMethodName);
-
+		context.put(
+			"deleteUADEntityMethodName",
+			_getDeleteUADEntityMethodName(
+				_getJavaClass(
+					StringBundler.concat(
+						_outputPath, "/service/impl/", entity.getName(),
+						_getSessionTypeName(_SESSION_TYPE_LOCAL),
+						"ServiceImpl.java")),
+				entity.getName()));
 		context.put("entity", entity);
 
 		String content = _processTemplate(_TPL_BASE_UAD_ANONYMIZER, context);

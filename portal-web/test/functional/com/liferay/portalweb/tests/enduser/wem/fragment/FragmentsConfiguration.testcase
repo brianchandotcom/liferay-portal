@@ -47,6 +47,61 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-152633. The changes of a draft contributed fragment cannot be shown on the content page."
+	@priority = "3"
+	test ChangesOfDraftContributedFragmentNotPresentOnPage {
+		task ("Given a Fragments creator has a new Fragment Set with a copied contributed fragment") {
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Basic Components");
+
+			FragmentsAdminNavigator.gotoEntryEllipsisItem(
+				entry = "Button",
+				item = "Copy To");
+
+			FragmentsAdmin.selectCollection(collectionName = "Collection Name");
+		}
+
+		task ("When the Fragments creator makes an edition in the fragment and do not publish it") {
+			FragmentsAdminNavigator.gotoEntryEllipsisItem(
+				entry = "Button (Copy)",
+				item = "Edit");
+
+			var htmlSnippet = '''
+<div class="component-button text-break">
+	<a class="btn btn-${configuration.buttonSize} btn-${configuration.buttonType}" data-lfr-editable-id="link">
+		Go Somewhere edited
+	</a>
+</div>
+		''';
+
+			FragmentsEditor.typeHtmlEditor(content = "${htmlSnippet}");
+
+			FragmentsEditor.waitForAutoSave();
+		}
+
+		task ("Then the changes are not shown after add the fragment into a content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Button (Copy)");
+
+			PageEditor.viewFragmentEditableText(
+				className = "button",
+				editableText = "Go Somewhere",
+				fragmentName = "Button (Copy)",
+				id = "link");
+
+			AssertTextNotEquals(
+				fragmentName = "button",
+				id = "link",
+				index = "1",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
+				value1 = "Go Somewhere edited");
+		}
+	}
+
 	@description = "This is a test for LPS-97177. User can change checkbox fragment configuration."
 	@priority = "5"
 	@uitest

@@ -93,7 +93,9 @@ export default withRouter(
 
 		const [loading, setLoading] = useState(true);
 		const [question, setQuestion] = useState({});
-		const [answers, setAnswers] = useState({});
+		const [answers, setAnswers] = useState({
+			totalCount: 0,
+		});
 
 		const fetchMessages = useCallback(() => {
 			if (question && question.id) {
@@ -122,8 +124,7 @@ export default withRouter(
 							);
 							setError(errorObject);
 							setLoading(false);
-						}
-						else {
+						} else {
 							setQuestion(messageBoardThreadByFriendlyUrlPath);
 							setLoading(false);
 						}
@@ -158,6 +159,35 @@ export default withRouter(
 		}, [fetchMessages]);
 
 		const [createAnswer] = useMutation(createAnswerQuery);
+		const [subscribe] = useMutation(subscribeQuery);
+
+		const onCreateAnswer = async () => {
+			try {
+				await createAnswer({
+					fetchOptionsOverrides: getContextLink(
+						`${sectionTitle}/${questionId}`
+					),
+					variables: {
+						articleBody: editorRef.current.getContent(),
+						messageBoardThreadId: question.id,
+					},
+				});
+
+				editorRef.current.clearContent();
+
+				if (!question.subscribed) {
+					await subscribe({
+						variables: {
+							messageBoardThreadId: question.id,
+						},
+					});
+
+					setQuestion({...question, subscribed: true});
+				}
+
+				fetchMessages();
+			} catch (error) {}
+		};
 
 		const deleteAnswer = useCallback(
 			(answer) => {
@@ -488,21 +518,7 @@ export default withRouter(
 														isPostButtonDisable
 													}
 													displayType="primary"
-													onClick={() => {
-														createAnswer({
-															fetchOptionsOverrides: getContextLink(
-																`${sectionTitle}/${questionId}`
-															),
-															variables: {
-																articleBody: editorRef.current.getContent(),
-																messageBoardThreadId:
-																	question.id,
-															},
-														}).then(() => {
-															editorRef.current.clearContent();
-															fetchMessages();
-														});
-													}}
+													onClick={onCreateAnswer}
 												>
 													{context.trustedUser
 														? Liferay.Language.get(

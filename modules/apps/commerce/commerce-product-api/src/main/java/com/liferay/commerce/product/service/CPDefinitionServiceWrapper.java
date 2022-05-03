@@ -63,7 +63,7 @@ public class CPDefinitionServiceWrapper
 			int deliverySubscriptionLength, String deliverySubscriptionType,
 			com.liferay.portal.kernel.util.UnicodeProperties
 				deliverySubscriptionTypeSettingsUnicodeProperties,
-			long deliveryMaxSubscriptionCycles,
+			long deliveryMaxSubscriptionCycles, int status,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -82,7 +82,7 @@ public class CPDefinitionServiceWrapper
 			deliverySubscriptionEnabled, deliverySubscriptionLength,
 			deliverySubscriptionType,
 			deliverySubscriptionTypeSettingsUnicodeProperties,
-			deliveryMaxSubscriptionCycles, serviceContext);
+			deliveryMaxSubscriptionCycles, status, serviceContext);
 	}
 
 	@Override
@@ -109,7 +109,7 @@ public class CPDefinitionServiceWrapper
 			int subscriptionLength, String subscriptionType,
 			com.liferay.portal.kernel.util.UnicodeProperties
 				subscriptionTypeSettingsUnicodeProperties,
-			long maxSubscriptionCycles,
+			long maxSubscriptionCycles, int status,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -125,7 +125,7 @@ public class CPDefinitionServiceWrapper
 			expirationDateHour, expirationDateMinute, neverExpire, defaultSku,
 			subscriptionEnabled, subscriptionLength, subscriptionType,
 			subscriptionTypeSettingsUnicodeProperties, maxSubscriptionCycles,
-			serviceContext);
+			status, serviceContext);
 	}
 
 	@Override
@@ -156,7 +156,7 @@ public class CPDefinitionServiceWrapper
 			int deliverySubscriptionLength, String deliverySubscriptionType,
 			com.liferay.portal.kernel.util.UnicodeProperties
 				deliverySubscriptionTypeSettingsUnicodeProperties,
-			long deliveryMaxSubscriptionCycles,
+			long deliveryMaxSubscriptionCycles, int status,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -175,7 +175,7 @@ public class CPDefinitionServiceWrapper
 			deliverySubscriptionEnabled, deliverySubscriptionLength,
 			deliverySubscriptionType,
 			deliverySubscriptionTypeSettingsUnicodeProperties,
-			deliveryMaxSubscriptionCycles, serviceContext);
+			deliveryMaxSubscriptionCycles, status, serviceContext);
 	}
 
 	@Override
@@ -202,7 +202,7 @@ public class CPDefinitionServiceWrapper
 			int subscriptionLength, String subscriptionType,
 			com.liferay.portal.kernel.util.UnicodeProperties
 				subscriptionTypeSettingsUnicodeProperties,
-			long maxSubscriptionCycles,
+			long maxSubscriptionCycles, int status,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -218,7 +218,7 @@ public class CPDefinitionServiceWrapper
 			expirationDateHour, expirationDateMinute, neverExpire, defaultSku,
 			subscriptionEnabled, subscriptionLength, subscriptionType,
 			subscriptionTypeSettingsUnicodeProperties, maxSubscriptionCycles,
-			serviceContext);
+			status, serviceContext);
 	}
 
 	@Override

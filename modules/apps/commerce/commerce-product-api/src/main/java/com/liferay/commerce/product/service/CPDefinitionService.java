@@ -95,7 +95,8 @@ public interface CPDefinitionService extends BaseService {
 			long maxSubscriptionCycles, boolean deliverySubscriptionEnabled,
 			int deliverySubscriptionLength, String deliverySubscriptionType,
 			UnicodeProperties deliverySubscriptionTypeSettingsUnicodeProperties,
-			long deliveryMaxSubscriptionCycles, ServiceContext serviceContext)
+			long deliveryMaxSubscriptionCycles, int status,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public CPDefinition addCPDefinition(
@@ -119,7 +120,8 @@ public interface CPDefinitionService extends BaseService {
 			boolean neverExpire, String defaultSku, boolean subscriptionEnabled,
 			int subscriptionLength, String subscriptionType,
 			UnicodeProperties subscriptionTypeSettingsUnicodeProperties,
-			long maxSubscriptionCycles, ServiceContext serviceContext)
+			long maxSubscriptionCycles, int status,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public CPDefinition addOrUpdateCPDefinition(
@@ -146,7 +148,8 @@ public interface CPDefinitionService extends BaseService {
 			long maxSubscriptionCycles, boolean deliverySubscriptionEnabled,
 			int deliverySubscriptionLength, String deliverySubscriptionType,
 			UnicodeProperties deliverySubscriptionTypeSettingsUnicodeProperties,
-			long deliveryMaxSubscriptionCycles, ServiceContext serviceContext)
+			long deliveryMaxSubscriptionCycles, int status,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public CPDefinition addOrUpdateCPDefinition(
@@ -170,7 +173,8 @@ public interface CPDefinitionService extends BaseService {
 			boolean neverExpire, String defaultSku, boolean subscriptionEnabled,
 			int subscriptionLength, String subscriptionType,
 			UnicodeProperties subscriptionTypeSettingsUnicodeProperties,
-			long maxSubscriptionCycles, ServiceContext serviceContext)
+			long maxSubscriptionCycles, int status,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public CPDefinition copyCPDefinition(long cpDefinitionId, long groupId)

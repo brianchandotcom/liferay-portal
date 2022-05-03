@@ -79,7 +79,7 @@ public class CPDefinitionServiceHttp {
 				int deliverySubscriptionLength, String deliverySubscriptionType,
 				com.liferay.portal.kernel.util.UnicodeProperties
 					deliverySubscriptionTypeSettingsUnicodeProperties,
-				long deliveryMaxSubscriptionCycles,
+				long deliveryMaxSubscriptionCycles, int status,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -104,7 +104,7 @@ public class CPDefinitionServiceHttp {
 				maxSubscriptionCycles, deliverySubscriptionEnabled,
 				deliverySubscriptionLength, deliverySubscriptionType,
 				deliverySubscriptionTypeSettingsUnicodeProperties,
-				deliveryMaxSubscriptionCycles, serviceContext);
+				deliveryMaxSubscriptionCycles, status, serviceContext);
 
 			Object returnObj = null;
 
@@ -159,7 +159,7 @@ public class CPDefinitionServiceHttp {
 				String subscriptionType,
 				com.liferay.portal.kernel.util.UnicodeProperties
 					subscriptionTypeSettingsUnicodeProperties,
-				long maxSubscriptionCycles,
+				long maxSubscriptionCycles, int status,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -181,7 +181,7 @@ public class CPDefinitionServiceHttp {
 				expirationDateMinute, neverExpire, defaultSku,
 				subscriptionEnabled, subscriptionLength, subscriptionType,
 				subscriptionTypeSettingsUnicodeProperties,
-				maxSubscriptionCycles, serviceContext);
+				maxSubscriptionCycles, status, serviceContext);
 
 			Object returnObj = null;
 
@@ -240,7 +240,7 @@ public class CPDefinitionServiceHttp {
 				int deliverySubscriptionLength, String deliverySubscriptionType,
 				com.liferay.portal.kernel.util.UnicodeProperties
 					deliverySubscriptionTypeSettingsUnicodeProperties,
-				long deliveryMaxSubscriptionCycles,
+				long deliveryMaxSubscriptionCycles, int status,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -265,7 +265,7 @@ public class CPDefinitionServiceHttp {
 				maxSubscriptionCycles, deliverySubscriptionEnabled,
 				deliverySubscriptionLength, deliverySubscriptionType,
 				deliverySubscriptionTypeSettingsUnicodeProperties,
-				deliveryMaxSubscriptionCycles, serviceContext);
+				deliveryMaxSubscriptionCycles, status, serviceContext);
 
 			Object returnObj = null;
 
@@ -320,7 +320,7 @@ public class CPDefinitionServiceHttp {
 				String subscriptionType,
 				com.liferay.portal.kernel.util.UnicodeProperties
 					subscriptionTypeSettingsUnicodeProperties,
-				long maxSubscriptionCycles,
+				long maxSubscriptionCycles, int status,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -342,7 +342,7 @@ public class CPDefinitionServiceHttp {
 				expirationDateMinute, neverExpire, defaultSku,
 				subscriptionEnabled, subscriptionLength, subscriptionType,
 				subscriptionTypeSettingsUnicodeProperties,
-				maxSubscriptionCycles, serviceContext);
+				maxSubscriptionCycles, status, serviceContext);
 
 			Object returnObj = null;
 
@@ -1564,7 +1564,7 @@ public class CPDefinitionServiceHttp {
 			com.liferay.portal.kernel.util.UnicodeProperties.class, long.class,
 			boolean.class, int.class, String.class,
 			com.liferay.portal.kernel.util.UnicodeProperties.class, long.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
+			int.class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addCPDefinitionParameterTypes1 =
 		new Class[] {
@@ -1579,7 +1579,7 @@ public class CPDefinitionServiceHttp {
 			int.class, boolean.class, String.class, boolean.class, int.class,
 			String.class,
 			com.liferay.portal.kernel.util.UnicodeProperties.class, long.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
+			int.class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addOrUpdateCPDefinitionParameterTypes2 =
 		new Class[] {
@@ -1596,7 +1596,7 @@ public class CPDefinitionServiceHttp {
 			com.liferay.portal.kernel.util.UnicodeProperties.class, long.class,
 			boolean.class, int.class, String.class,
 			com.liferay.portal.kernel.util.UnicodeProperties.class, long.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
+			int.class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addOrUpdateCPDefinitionParameterTypes3 =
 		new Class[] {
@@ -1611,7 +1611,7 @@ public class CPDefinitionServiceHttp {
 			int.class, boolean.class, String.class, boolean.class, int.class,
 			String.class,
 			com.liferay.portal.kernel.util.UnicodeProperties.class, long.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
+			int.class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _copyCPDefinitionParameterTypes4 =
 		new Class[] {long.class, long.class};

@@ -122,10 +122,10 @@ public interface CPDefinitionLocalService
 			long maxSubscriptionCycles, boolean deliverySubscriptionEnabled,
 			int deliverySubscriptionLength, String deliverySubscriptionType,
 			UnicodeProperties deliverySubscriptionTypeSettingsUnicodeProperties,
-			long deliveryMaxSubscriptionCycles, ServiceContext serviceContext)
+			long deliveryMaxSubscriptionCycles, int status,
+			ServiceContext serviceContext)
 		throws PortalException;
 
-	@Indexable(type = IndexableType.REINDEX)
 	public CPDefinition addCPDefinition(
 			String externalReferenceCode, long groupId, long userId,
 			Map<Locale, String> nameMap,
@@ -147,7 +147,8 @@ public interface CPDefinitionLocalService
 			boolean neverExpire, String defaultSku, boolean subscriptionEnabled,
 			int subscriptionLength, String subscriptionType,
 			UnicodeProperties subscriptionTypeSettingsUnicodeProperties,
-			long maxSubscriptionCycles, ServiceContext serviceContext)
+			long maxSubscriptionCycles, int status,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public CPDefinition addOrUpdateCPDefinition(
@@ -174,7 +175,8 @@ public interface CPDefinitionLocalService
 			long maxSubscriptionCycles, boolean deliverySubscriptionEnabled,
 			int deliverySubscriptionLength, String deliverySubscriptionType,
 			UnicodeProperties deliverySubscriptionTypeSettingsUnicodeProperties,
-			long deliveryMaxSubscriptionCycles, ServiceContext serviceContext)
+			long deliveryMaxSubscriptionCycles, int status,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public CPDefinition addOrUpdateCPDefinition(
@@ -198,7 +200,8 @@ public interface CPDefinitionLocalService
 			boolean neverExpire, String defaultSku, boolean subscriptionEnabled,
 			int subscriptionLength, String subscriptionType,
 			UnicodeProperties subscriptionTypeSettingsUnicodeProperties,
-			long maxSubscriptionCycles, ServiceContext serviceContext)
+			long maxSubscriptionCycles, int status,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public void checkCPDefinitions() throws PortalException;

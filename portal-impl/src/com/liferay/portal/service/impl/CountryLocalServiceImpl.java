@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.exception.CountryNumberException;
 import com.liferay.portal.kernel.exception.DuplicateCountryException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.CountryConstants;
 import com.liferay.portal.kernel.model.CountryLocalizationTable;
 import com.liferay.portal.kernel.model.CountryTable;
 import com.liferay.portal.kernel.model.Organization;
@@ -315,8 +316,44 @@ public class CountryLocalServiceImpl extends CountryLocalServiceBaseImpl {
 	}
 
 	protected void validate(
-			String a2, String a3, String idd, String name, String number)
+			String a2, String a3, long countryId, String name, String number)
 		throws PortalException {
+
+		if (countryId != CountryConstants.DEFAULT_COUNTRY_ID) {
+			Country country = countryPersistence.findByPrimaryKey(countryId);
+
+			Country compareCountry = fetchCountryByA2(country.getCompanyId(), a2);
+
+			if((compareCountry != null) && (countryId != compareCountry.getCountryId())) {
+				throw new DuplicateCountryException(
+					"A2 belongs to another country"
+				);
+			}
+
+			compareCountry = fetchCountryByA3(country.getCompanyId(), a3);
+
+			if((compareCountry != null) && (countryId != compareCountry.getCountryId())) {
+				throw new DuplicateCountryException(
+					"A3 belongs to another country"
+				);
+			}
+
+			compareCountry = fetchCountryByName(country.getCompanyId(), name);
+
+			if((compareCountry != null) && (countryId != compareCountry.getCountryId())) {
+				throw new DuplicateCountryException(
+					"Name belongs to another country"
+				);
+			}
+
+			compareCountry = fetchCountryByNumber(country.getCompanyId(), number);
+
+			if((compareCountry != null) && (countryId != compareCountry.getCountryId())) {
+				throw new DuplicateCountryException(
+					"Number belongs to another country"
+				);
+			}
+		}
 
 		if (Validator.isNull(a2)) {
 			throw new CountryA2Exception("Missing A2");

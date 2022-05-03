@@ -929,9 +929,7 @@ public class ObjectEntryLocalServiceImpl
 						objectField.getObjectFieldId(),
 						"showFilesInDocumentsAndMedia");
 
-				if (StringUtil.equalsIgnoreCase(
-						objectFieldSetting.getValue(), StringPool.TRUE)) {
-
+				if (GetterUtil.getBoolean(objectFieldSetting.getValue())) {
 					continue;
 				}
 			}

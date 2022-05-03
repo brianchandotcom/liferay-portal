@@ -144,13 +144,12 @@ public class BNDExportsCheck extends BaseFileCheck {
 		String exportPackagePath = StringUtil.replace(
 			exportPackage, CharPool.PERIOD, CharPool.SLASH);
 
-		File[] exportPackageResourcesFiles = _getExportPackageResourcesFiles(
-			srcDirLocation, exportPackagePath, modulesFile);
-		File[] exportPackageSrcFiles = _getExportPackageSrcFiles(
-			srcDirLocation, exportPackagePath, modulesFile);
-
-		if (ArrayUtil.isNotEmpty(exportPackageResourcesFiles) ||
-			ArrayUtil.isNotEmpty(exportPackageSrcFiles)) {
+		if (ArrayUtil.isNotEmpty(
+				_getExportPackageResourcesFiles(
+					srcDirLocation, exportPackagePath, modulesFile)) ||
+			ArrayUtil.isNotEmpty(
+				_getExportPackageSrcFiles(
+					srcDirLocation, exportPackagePath, modulesFile))) {
 
 			File packageinfoFile = null;
 

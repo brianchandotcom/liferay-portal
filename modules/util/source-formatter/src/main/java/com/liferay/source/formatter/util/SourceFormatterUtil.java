@@ -179,11 +179,9 @@ public class SourceFormatterUtil {
 			return new ArrayList<>();
 		}
 
-		PathMatchers pathMatchers = _getPathMatchers(
-			excludes, includes, sourceFormatterExcludes);
-
 		return _filterRecentChangesFileNames(
-			recentChangesFileNames, pathMatchers);
+			recentChangesFileNames,
+			_getPathMatchers(excludes, includes, sourceFormatterExcludes));
 	}
 
 	public static String getDocumentationURLString(Class<?> checkClass) {
@@ -353,10 +351,10 @@ public class SourceFormatterUtil {
 			return new ArrayList<>();
 		}
 
-		PathMatchers pathMatchers = _getPathMatchers(
-			excludes, includes, sourceFormatterExcludes);
-
-		return _scanForFiles(baseDirName, pathMatchers, includeSubrepositories);
+		return _scanForFiles(
+			baseDirName,
+			_getPathMatchers(excludes, includes, sourceFormatterExcludes),
+			includeSubrepositories);
 	}
 
 	private static String _createRegex(String s) {

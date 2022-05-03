@@ -995,11 +995,10 @@ public class SourceFormatter {
 		_portalSource = _containsDir("portal-impl");
 
 		if (_portalSource) {
-			File portalDir = SourceFormatterUtil.getPortalDir(
-				_sourceFormatterArgs.getBaseDirName(),
-				_sourceFormatterArgs.getMaxLineLength());
-
-			_excludeWorkingDirCheckoutPrivateApps(portalDir);
+			_excludeWorkingDirCheckoutPrivateApps(
+				SourceFormatterUtil.getPortalDir(
+					_sourceFormatterArgs.getBaseDirName(),
+					_sourceFormatterArgs.getMaxLineLength()));
 		}
 
 		_propertiesMap = new HashMap<>();
@@ -1073,12 +1072,12 @@ public class SourceFormatter {
 
 		_projectPathPrefix = _getProjectPathPrefix();
 
-		List<File> suppressionsFiles = SourceFormatterUtil.getSuppressionsFiles(
-			_sourceFormatterArgs.getBaseDirName(), _allFileNames,
-			_sourceFormatterExcludes, _sourceFormatterArgs.getMaxDirLevel());
-
 		_sourceFormatterSuppressions = SuppressionsLoader.loadSuppressions(
-			_sourceFormatterArgs.getBaseDirName(), suppressionsFiles,
+			_sourceFormatterArgs.getBaseDirName(),
+			SourceFormatterUtil.getSuppressionsFiles(
+				_sourceFormatterArgs.getBaseDirName(), _allFileNames,
+				_sourceFormatterExcludes,
+				_sourceFormatterArgs.getMaxDirLevel()),
 			_propertiesMap);
 
 		_sourceFormatterConfiguration = ConfigurationLoader.loadConfiguration(

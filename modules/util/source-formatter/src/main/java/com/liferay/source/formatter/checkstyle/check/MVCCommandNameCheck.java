@@ -204,13 +204,12 @@ public class MVCCommandNameCheck extends BaseCheck {
 		for (int i = 0; i < pathArray.length; i++) {
 			String trimmedPath = _getTrimmedPath(pathArray, i);
 
-			if (StringUtil.startsWith(className, trimmedPath)) {
-				String expectedActionName = _getExpectedActionName(
-					className.substring(trimmedPath.length()));
+			if (StringUtil.startsWith(className, trimmedPath) &&
+				actionName.equals(
+					_getExpectedActionName(
+						className.substring(trimmedPath.length())))) {
 
-				if (actionName.equals(expectedActionName)) {
-					return true;
-				}
+				return true;
 			}
 		}
 
@@ -273,11 +272,10 @@ public class MVCCommandNameCheck extends BaseCheck {
 			if (matcher.find()) {
 				String expectedPath = StringUtil.replace(
 					matcher.group(1), CharPool.PERIOD, CharPool.UNDERLINE);
-				String expectedActionName = _getExpectedActionName(
-					matcher.group(2));
 
 				if (path.equals(expectedPath) &&
-					actionName.equals(expectedActionName)) {
+					actionName.equals(
+						_getExpectedActionName(matcher.group(2)))) {
 
 					return true;
 				}

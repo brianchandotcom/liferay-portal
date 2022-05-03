@@ -49,12 +49,10 @@ public class DTOEnumCreationCheck extends BaseCheck {
 			return;
 		}
 
-		String fullyQualifiedTypeName = getFullyQualifiedTypeName(
-			fullyQualifiedName, firstChildDetailAST, true);
-
 		if (Pattern.matches(
 				"com\\.liferay(\\.\\w+)+\\.v\\d+_\\d+(\\.\\w+){2}\\.valueOf",
-				fullyQualifiedTypeName)) {
+				getFullyQualifiedTypeName(
+					fullyQualifiedName, firstChildDetailAST, true))) {
 
 			log(detailAST, _MSG_USE_CREATE);
 		}

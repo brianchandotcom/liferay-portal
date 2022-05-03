@@ -98,11 +98,9 @@ public class PropertiesBuildIncludeDirsCheck extends BaseFileCheck {
 		List<String> buildExcludeModuleNames = getAttributeValues(
 			_BUILD_EXCLUDE_MODULE_NAMES, absolutePath);
 
-		List<String> ignoredModuleNames = _getIgnoredModuleNames(
-			SourceUtil.getRootDirName(absolutePath));
-
 		List<String> skipModuleNames = ListUtil.concat(
-			buildExcludeModuleNames, ignoredModuleNames);
+			buildExcludeModuleNames,
+			_getIgnoredModuleNames(SourceUtil.getRootDirName(absolutePath)));
 
 		Set<String> buildIncludeDirs = new TreeSet<>();
 

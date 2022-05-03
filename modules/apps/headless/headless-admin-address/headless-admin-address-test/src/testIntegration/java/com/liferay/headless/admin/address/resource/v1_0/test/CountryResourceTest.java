@@ -342,6 +342,10 @@ public class CountryResourceTest extends BaseCountryResourceTestCase {
 		return _addCountry(randomCountry());
 	}
 
+	protected Country testPatchCountry_addCountry() throws Exception {
+		return _addCountry(randomCountry());
+	}
+
 	@Override
 	protected Country testPostCountry_addCountry(Country country)
 		throws Exception {

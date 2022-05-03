@@ -76,13 +76,11 @@ public class DTOOpenAPIParser {
 			String propertySchemaName = entry.getKey();
 			Schema propertySchema = entry.getValue();
 
-			String propertyName = _getPropertyName(
-				propertySchema, propertySchemaName);
-			String propertyType = _getPropertyType(
-				javaDataTypeMap, openAPIYAML, propertySchema,
-				propertySchemaName);
-
-			properties.put(propertyName, propertyType);
+			properties.put(
+				_getPropertyName(propertySchema, propertySchemaName),
+				_getPropertyType(
+					javaDataTypeMap, openAPIYAML, propertySchema,
+					propertySchemaName));
 		}
 
 		return properties;

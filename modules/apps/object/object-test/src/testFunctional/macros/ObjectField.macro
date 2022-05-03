@@ -128,4 +128,28 @@ definition {
 			value1 = "${fieldName}");
 	}
 
+	macro checkLimitCharacters {
+		Click(
+			key_labelName = "Limit Characters",
+			locator1 = "ObjectField#DEFAULT_TOGGLE_SWITCH");
+	}
+
+	macro assertValueOnLimitCharacters {
+		AssertElementPresent(
+			key_maxValue = "${maxValue}",
+			locator1 = "ObjectField#MAXIMUM_NUMBER_CHARACTERS_OPTION");
+	}
+
+	macro assertValueOnLimitCharactersNotPresent {
+		AssertElementNotPresent(
+			key_maxValue = "${maxValue}",
+			locator1 = "ObjectField#MAXIMUM_NUMBER_CHARACTERS_OPTION");
+	}
+
+	macro typeValueOnLimitCharacters {
+		Type(
+			locator1 = "ObjectField#TYPE_MAXIMUM_NUMBER_CHARACTERS",
+			value1 = "${newValue}");
+	}
+
 }

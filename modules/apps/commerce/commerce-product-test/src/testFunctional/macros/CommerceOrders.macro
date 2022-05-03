@@ -551,4 +551,14 @@ definition {
 		}
 	}
 
+	macro importOrderFromType {
+		Click(locator1 = "CommerceEntry#DROPDOWN");
+
+		MenuItem.viewPresent(menuItem = "Import from ${orderType}");
+
+		MenuItem.click(menuItem = "Import from ${orderType}");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
+	}
+
 }

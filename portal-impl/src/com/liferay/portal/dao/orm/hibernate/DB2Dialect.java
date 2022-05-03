@@ -18,6 +18,10 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import org.hibernate.dialect.pagination.AbstractLimitHandler;
+import org.hibernate.dialect.pagination.LimitHandler;
+import org.hibernate.engine.spi.RowSelection;
+
 /**
  * @author Shepherd Ching
  * @author Jian Cao
@@ -33,6 +37,11 @@ public class DB2Dialect extends org.hibernate.dialect.DB2Dialect {
 	@Override
 	public String getForUpdateString() {
 		return " for read only with rs use and keep exclusive locks";
+	}
+
+	@Override
+	public LimitHandler getLimitHandler() {
+		return _db2LimitHandler;
 	}
 
 	@Override
@@ -99,5 +108,32 @@ public class DB2Dialect extends org.hibernate.dialect.DB2Dialect {
 		"FETCH FIRST [$LIMIT$] ROWS ONLY";
 
 	private static final boolean _SUPPORTS_VARIABLE_LIMIT = false;
+
+	private final DB2LimitHandler _db2LimitHandler = new DB2LimitHandler();
+
+	private final class DB2LimitHandler extends AbstractLimitHandler {
+
+		@Override
+		public String processSql(String sql, RowSelection selection) {
+			return getLimitString(
+				sql, selection.getFirstRow(), getMaxOrLimit(selection));
+		}
+
+		@Override
+		public boolean supportsLimit() {
+			return true;
+		}
+
+		@Override
+		public boolean supportsVariableLimit() {
+			return false;
+		}
+
+		@Override
+		public boolean useMaxForLimit() {
+			return true;
+		}
+
+	}
 
 }

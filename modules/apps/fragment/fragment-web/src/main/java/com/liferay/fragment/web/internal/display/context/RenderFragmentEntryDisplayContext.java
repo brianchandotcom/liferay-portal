@@ -77,6 +77,7 @@ public class RenderFragmentEntryDisplayContext {
 			new DefaultFragmentRendererContext(fragmentEntryLink);
 
 		defaultFragmentRendererContext.setMode(FragmentEntryLinkConstants.VIEW);
+		defaultFragmentRendererContext.setUseCachedContent(false);
 
 		return defaultFragmentRendererContext;
 	}

@@ -282,6 +282,9 @@ components:
                     format: int64
                     readOnly: true
                     type: integer
+                isReverse:
+                    readOnly: true
+                    type: boolean
                 label:
                     additionalProperties:
                         type: string

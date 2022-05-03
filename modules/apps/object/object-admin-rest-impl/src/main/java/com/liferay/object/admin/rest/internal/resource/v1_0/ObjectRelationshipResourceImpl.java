@@ -154,6 +154,7 @@ public class ObjectRelationshipResourceImpl
 				deletionType = ObjectRelationship.DeletionType.create(
 					objectRelationship.getDeletionType());
 				id = objectRelationship.getObjectRelationshipId();
+				isReverse = objectRelationship.isReverse();
 				label = LocalizedMapUtil.getLanguageIdMap(
 					objectRelationship.getLabelMap());
 				name = objectRelationship.getName();

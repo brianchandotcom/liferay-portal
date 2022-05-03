@@ -33,6 +33,7 @@ export default withRouter(
 		match: {
 			params: {questionId, sectionTitle},
 		},
+		onSubscription,
 		showNewComment,
 		showNewCommentChange,
 	}) => {
@@ -56,6 +57,29 @@ export default withRouter(
 			},
 			[commentsChange, comments]
 		);
+
+		const onCreateComment = async () => {
+			const {data} = await createComment({
+				fetchOptionsOverrides: getContextLink(
+					`${sectionTitle}/${questionId}`
+				),
+				variables: {
+					articleBody: editorRef.current.getContent(),
+					parentMessageBoardMessageId: entityId,
+				},
+			});
+
+			editorRef.current.clearContent();
+
+			showNewCommentChange(false);
+
+			commentsChange([
+				...comments,
+				data.createMessageBoardMessageMessageBoardMessage,
+			]);
+
+			onSubscription();
+		};
 
 		return (
 			<div>
@@ -81,24 +105,7 @@ export default withRouter(
 								<ClayButton
 									disabled={isReplyButtonDisable}
 									displayType="primary"
-									onClick={() => {
-										createComment({
-											fetchOptionsOverrides: getContextLink(
-												`${sectionTitle}/${questionId}`
-											),
-											variables: {
-												articleBody: editorRef.current.getContent(),
-												parentMessageBoardMessageId: entityId,
-											},
-										}).then(({data}) => {
-											editorRef.current.clearContent();
-											showNewCommentChange(false);
-											commentsChange([
-												...comments,
-												data.createMessageBoardMessageMessageBoardMessage,
-											]);
-										});
-									}}
+									onClick={onCreateComment}
 								>
 									{context.trustedUser
 										? Liferay.Language.get('add-comment')

@@ -161,6 +161,20 @@ export default withRouter(
 		const [createAnswer] = useMutation(createAnswerQuery);
 		const [subscribe] = useMutation(subscribeQuery);
 
+		const onSubscription = useCallback(async () => {
+			if (question.subscribed) {
+				return;
+			}
+
+			await subscribe({
+				variables: {
+					messageBoardThreadId: question.id,
+				},
+			});
+
+			setQuestion({...question, subscribed: true});
+		}, [question, subscribe, setQuestion]);
+
 		const onCreateAnswer = async () => {
 			try {
 				await createAnswer({
@@ -175,15 +189,7 @@ export default withRouter(
 
 				editorRef.current.clearContent();
 
-				if (!question.subscribed) {
-					await subscribe({
-						variables: {
-							messageBoardThreadId: question.id,
-						},
-					});
-
-					setQuestion({...question, subscribed: true});
-				}
+				await onSubscription();
 
 				fetchMessages();
 			} catch (error) {}
@@ -373,15 +379,26 @@ export default withRouter(
 														isSubscribed={
 															question.subscribed
 														}
-														onSubscription={() =>
+														onSubscription={(
+															subscribed
+														) => {
 															deleteCacheKey(
 																getSubscriptionsQuery,
 																{
 																	contentType:
 																		'MessageBoardThread',
 																}
-															)
-														}
+															);
+
+															setQuestion(
+																(
+																	prevQuestion
+																) => ({
+																	...prevQuestion,
+																	subscribed,
+																})
+															);
+														}}
 														queryVariables={{
 															messageBoardThreadId:
 																question.id,
@@ -491,6 +508,7 @@ export default withRouter(
 												deleteAnswer={deleteAnswer}
 												editable={!question.locked}
 												key={answer.id}
+												onSubscription={onSubscription}
 											/>
 										)}
 									</PaginatedList>

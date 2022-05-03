@@ -36,7 +36,7 @@ export default function SubscriptionButton({
 
 	const onCompleted = () => {
 		setSubscription(!subscription);
-		onSubscription?.();
+		onSubscription?.(!subscription);
 	};
 
 	const [subscribe] = useMutation(subscribeQuery);

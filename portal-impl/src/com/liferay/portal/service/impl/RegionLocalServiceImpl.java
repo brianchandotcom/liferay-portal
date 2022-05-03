@@ -14,7 +14,12 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.petra.sql.dsl.query.FromStep;
+import com.liferay.petra.sql.dsl.query.JoinStep;
+import com.liferay.petra.sql.dsl.query.OrderByStep;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -24,8 +29,11 @@ import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationTable;
 import com.liferay.portal.kernel.model.Region;
+import com.liferay.portal.kernel.model.RegionLocalizationTable;
+import com.liferay.portal.kernel.model.RegionTable;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -36,6 +44,7 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.base.RegionLocalServiceBaseImpl;
+import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.List;
 
@@ -181,6 +190,30 @@ public class RegionLocalServiceImpl extends RegionLocalServiceBaseImpl {
 	}
 
 	@Override
+	public BaseModelSearchResult<Region> searchRegions(
+			long companyId, Boolean active, String keywords, int start, int end,
+			OrderByComparator<Region> orderByComparator)
+		throws PortalException {
+
+		return BaseModelSearchResult.unsafeCreateWithStartAndEnd(
+			startAndEnd -> regionPersistence.dslQuery(
+				_getGroupByStep(
+					DSLQueryFactoryUtil.selectDistinct(RegionTable.INSTANCE),
+					companyId, active, keywords
+				).orderBy(
+					RegionTable.INSTANCE, orderByComparator
+				).limit(
+					startAndEnd.getStart(), startAndEnd.getEnd()
+				)),
+			regionPersistence.dslQueryCount(
+				_getGroupByStep(
+					DSLQueryFactoryUtil.countDistinct(
+						RegionTable.INSTANCE.regionId),
+					companyId, active, keywords)),
+			start, end);
+	}
+
+	@Override
 	public Region updateActive(long regionId, boolean active)
 		throws PortalException {
 
@@ -219,6 +252,67 @@ public class RegionLocalServiceImpl extends RegionLocalServiceBaseImpl {
 		if (Validator.isNull(name)) {
 			throw new RegionNameException();
 		}
+	}
+
+	private OrderByStep _getGroupByStep(
+		FromStep fromStep, long companyId, Boolean active, String keywords) {
+
+		JoinStep joinStep = fromStep.from(
+			RegionTable.INSTANCE
+		).leftJoinOn(
+			RegionLocalizationTable.INSTANCE,
+			RegionTable.INSTANCE.regionId.eq(
+				RegionLocalizationTable.INSTANCE.regionId)
+		);
+
+		return joinStep.where(
+			() -> {
+				Predicate predicate = RegionTable.INSTANCE.companyId.eq(
+					companyId);
+
+				if (active != null) {
+					predicate = predicate.and(
+						RegionTable.INSTANCE.active.eq(active));
+				}
+
+				if (Validator.isNotNull(keywords)) {
+					String[] terms = CustomSQLUtil.keywords(keywords, true);
+
+					Predicate keywordsPredicate = null;
+
+					for (String term : terms) {
+						Predicate namePredicate = DSLFunctionFactoryUtil.lower(
+							RegionTable.INSTANCE.name
+						).like(
+							term
+						);
+
+						Predicate titlePredicate = DSLFunctionFactoryUtil.lower(
+							RegionLocalizationTable.INSTANCE.title
+						).like(
+							term
+						);
+
+						Predicate termPredicate = namePredicate.or(
+							titlePredicate);
+
+						if (keywordsPredicate == null) {
+							keywordsPredicate = termPredicate;
+						}
+						else {
+							keywordsPredicate = keywordsPredicate.or(
+								termPredicate);
+						}
+					}
+
+					if (keywordsPredicate != null) {
+						predicate = predicate.and(
+							keywordsPredicate.withParentheses());
+					}
+				}
+
+				return predicate;
+			});
 	}
 
 	@BeanReference(type = AddressLocalService.class)

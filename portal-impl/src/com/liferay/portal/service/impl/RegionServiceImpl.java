@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Region;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.CountryService;
@@ -139,6 +140,16 @@ public class RegionServiceImpl extends RegionServiceBaseImpl {
 	@Override
 	public int getRegionsCount(long countryId, boolean active) {
 		return regionLocalService.getRegionsCount(countryId, active);
+	}
+
+	@Override
+	public BaseModelSearchResult<Region> searchRegions(
+			long companyId, Boolean active, String keywords, int start, int end,
+			OrderByComparator<Region> orderByComparator)
+			throws PortalException {
+
+		return regionLocalService.searchRegions(
+				companyId, active, keywords, start, end, orderByComparator);
 	}
 
 	@Override

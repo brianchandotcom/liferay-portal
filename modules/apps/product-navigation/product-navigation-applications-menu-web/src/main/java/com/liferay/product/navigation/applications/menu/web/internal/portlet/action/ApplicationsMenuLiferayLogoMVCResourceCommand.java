@@ -88,7 +88,7 @@ public class ApplicationsMenuLiferayLogoMVCResourceCommand
 
 			if (index == -1) {
 				inputStream = classLoader.getResourceAsStream(
-					_getApplicationsMenuDefaultLiferayLogo());
+					imageDefaultLiferayLogo);
 			}
 			else {
 				String bundleIdString = imageDefaultLiferayLogo.substring(

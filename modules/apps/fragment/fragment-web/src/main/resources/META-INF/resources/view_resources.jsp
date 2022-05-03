@@ -49,6 +49,7 @@ FragmentCollectionResourcesDisplayContext fragmentCollectionResourcesDisplayCont
 		>
 			<liferay-ui:search-container-column-text>
 				<clay:vertical-card
+					propsTransformer="js/FragmentCollectionResourceDropdownPropsTransformer"
 					verticalCard="<%= new FragmentCollectionResourceVerticalCard(fileEntry, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
 				/>
 			</liferay-ui:search-container-column-text>
@@ -60,10 +61,3 @@ FragmentCollectionResourcesDisplayContext fragmentCollectionResourcesDisplayCont
 		/>
 	</liferay-ui:search-container>
 </aui:form>
-
-<c:if test="<%= FragmentPermission.contains(permissionChecker, scopeGroupId, FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES) %>">
-	<liferay-frontend:component
-		componentId="<%= FragmentWebKeys.FRAGMENT_COLLECTION_RESOURCE_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
-		module="js/FragmentCollectionResourceDropdownDefaultEventHandler.es"
-	/>
-</c:if>

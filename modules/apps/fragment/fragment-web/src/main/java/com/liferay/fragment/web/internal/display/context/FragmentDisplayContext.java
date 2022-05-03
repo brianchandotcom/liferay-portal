@@ -524,8 +524,6 @@ public class FragmentDisplayContext {
 
 		return PortletURLBuilder.createRenderURL(
 			_renderResponse
-		).setMVCRenderCommandName(
-			"/fragment/view"
 		).setParameter(
 			"fragmentCollectionId",
 			() -> {
@@ -710,8 +708,6 @@ public class FragmentDisplayContext {
 	private PortletURL _getPortletURL() {
 		return PortletURLBuilder.createRenderURL(
 			_renderResponse
-		).setMVCRenderCommandName(
-			"/fragment/view"
 		).setKeywords(
 			() -> {
 				String keywords = _getKeywords();

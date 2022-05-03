@@ -15,7 +15,6 @@
 package com.liferay.fragment.web.internal.servlet.taglib.clay;
 
 import com.liferay.document.library.util.DLURLHelperUtil;
-import com.liferay.fragment.web.internal.constants.FragmentWebKeys;
 import com.liferay.fragment.web.internal.servlet.taglib.util.FragmentCollectionResourceActionDropdownItemsProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -69,12 +68,6 @@ public class FragmentCollectionResourceVerticalCard implements VerticalCard {
 		}
 
 		return null;
-	}
-
-	@Override
-	public String getDefaultEventHandler() {
-		return FragmentWebKeys.
-			FRAGMENT_COLLECTION_RESOURCE_DROPDOWN_DEFAULT_EVENT_HANDLER;
 	}
 
 	@Override

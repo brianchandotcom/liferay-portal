@@ -528,6 +528,14 @@ public abstract class BaseRegionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("position", additionalAssertFieldName)) {
+				if (region.getPosition() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("regionCode", additionalAssertFieldName)) {
 				if (region.getRegionCode() == null) {
 					valid = false;
@@ -664,6 +672,16 @@ public abstract class BaseRegionResourceTestCase {
 
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(region1.getName(), region2.getName())) {
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("position", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						region1.getPosition(), region2.getPosition())) {
+
 					return false;
 				}
 
@@ -811,6 +829,12 @@ public abstract class BaseRegionResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("position")) {
+			sb.append(String.valueOf(region.getPosition()));
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("regionCode")) {
 			sb.append("'");
 			sb.append(String.valueOf(region.getRegionCode()));
@@ -872,6 +896,7 @@ public abstract class BaseRegionResourceTestCase {
 				countryId = RandomTestUtil.randomLong();
 				id = RandomTestUtil.randomLong();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				position = RandomTestUtil.randomDouble();
 				regionCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 			}

@@ -890,7 +890,7 @@ public class ObjectEntryLocalServiceImpl
 		ServiceContext serviceContext, boolean showFilesInDocumentsAndMedia,
 		String storageDLFolderPath, long userId) {
 
-		Long dlFolderId;
+		Long dlFolderId = null;
 
 		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-148112")) &&
 			showFilesInDocumentsAndMedia) {

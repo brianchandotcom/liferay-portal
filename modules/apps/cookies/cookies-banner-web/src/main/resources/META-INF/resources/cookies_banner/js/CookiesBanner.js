@@ -20,10 +20,11 @@ import {
 } from '../../js/CookiesUtil';
 
 export default function ({
-	configurationUrl,
+	configurationURL,
 	namespace,
-	optionalCookieNames,
-	requiredCookieNames,
+	optionalConsentCookieTypeNames,
+	requiredConsentCookieTypeNames,
+	title,
 }) {
 	const acceptAllButton = document.getElementById(
 		`${namespace}acceptAllButton`
@@ -40,17 +41,19 @@ export default function ({
 	if (!editMode) {
 		checkCookiesConsent(
 			cookieBanner,
-			optionalCookieNames,
-			requiredCookieNames
+			optionalConsentCookieTypeNames,
+			requiredConsentCookieTypeNames
 		);
 
 		const cookiePreferences = {};
 
-		optionalCookieNames.forEach((optionalCookie) => {
-			cookiePreferences[optionalCookie] = Boolean(
-				getCookie(optionalCookie)
-			).toString();
-		});
+		optionalConsentCookieTypeNames.forEach(
+			(optionalConsentCookieTypeName) => {
+				cookiePreferences[optionalConsentCookieTypeName] = Boolean(
+					getCookie(optionalConsentCookieTypeName)
+				).toString();
+			}
+		);
 
 		Liferay.on('cookiePreferenceUpdate', (event) => {
 			cookiePreferences[event.key] = event.value;
@@ -59,7 +62,10 @@ export default function ({
 		acceptAllButton.addEventListener('click', () => {
 			cookieBanner.style.display = 'none';
 
-			acceptAllCookies(optionalCookieNames, requiredCookieNames);
+			acceptAllCookies(
+				optionalConsentCookieTypeNames,
+				requiredConsentCookieTypeNames
+			);
 		});
 
 		configurationButton.addEventListener('click', () => {
@@ -75,14 +81,19 @@ export default function ({
 								}
 							);
 
-							requiredCookieNames.forEach((requiredCookie) => {
-								setCookie(requiredCookie, 'true');
-							});
+							requiredConsentCookieTypeNames.forEach(
+								(requiredConsentCookieTypeName) => {
+									setCookie(
+										requiredConsentCookieTypeName,
+										'true'
+									);
+								}
+							);
 
 							checkCookiesConsent(
 								cookieBanner,
-								optionalCookieNames,
-								requiredCookieNames
+								optionalConsentCookieTypeNames,
+								requiredConsentCookieTypeNames
 							);
 
 							Liferay.Util.getOpener().Liferay.fire('closeModal');
@@ -93,14 +104,14 @@ export default function ({
 						label: Liferay.Language.get('accept-all'),
 						onClick() {
 							acceptAllCookies(
-								optionalCookieNames,
-								requiredCookieNames
+								optionalConsentCookieTypeNames,
+								requiredConsentCookieTypeNames
 							);
 
 							checkCookiesConsent(
 								cookieBanner,
-								optionalCookieNames,
-								requiredCookieNames
+								optionalConsentCookieTypeNames,
+								requiredConsentCookieTypeNames
 							);
 
 							Liferay.Util.getOpener().Liferay.fire('closeModal');
@@ -111,14 +122,14 @@ export default function ({
 						label: Liferay.Language.get('decline-all'),
 						onClick() {
 							declineAllCookies(
-								optionalCookieNames,
-								requiredCookieNames
+								optionalConsentCookieTypeNames,
+								requiredConsentCookieTypeNames
 							);
 
 							checkCookiesConsent(
 								cookieBanner,
-								optionalCookieNames,
-								requiredCookieNames
+								optionalConsentCookieTypeNames,
+								requiredConsentCookieTypeNames
 							);
 
 							Liferay.Util.getOpener().Liferay.fire('closeModal');
@@ -129,29 +140,34 @@ export default function ({
 				height: '70vh',
 				id: 'cookiesBannerConfiguration',
 				size: 'lg',
-				title: Liferay.Language.get('cookies-configuration'),
-				url: configurationUrl,
+				title,
+				url: configurationURL,
 			});
 		});
 
 		declineAllButton.addEventListener('click', () => {
 			cookieBanner.style.display = 'none';
 
-			declineAllCookies(optionalCookieNames, requiredCookieNames);
+			declineAllCookies(
+				optionalConsentCookieTypeNames,
+				requiredConsentCookieTypeNames
+			);
 		});
 	}
 }
 
 function checkCookiesConsent(
 	cookieBanner,
-	optionalCookieNames,
-	requiredCookieNames
+	optionalConsentCookieTypeNames,
+	requiredConsentCookieTypeNames
 ) {
 	if (
-		optionalCookieNames.every((optionalCookie) =>
-			getCookie(optionalCookie)
+		optionalConsentCookieTypeNames.every((optionalConsentCookieTypeName) =>
+			getCookie(optionalConsentCookieTypeName)
 		) &&
-		requiredCookieNames.every((requiredCookie) => getCookie(requiredCookie))
+		requiredConsentCookieTypeNames.every((requiredConsentCookieTypeName) =>
+			getCookie(requiredConsentCookieTypeName)
+		)
 	) {
 		cookieBanner.style.display = 'none';
 	}

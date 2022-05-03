@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -31,7 +32,9 @@ import java.sql.DatabaseMetaData;
 
 import java.util.concurrent.FutureTask;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -47,6 +50,16 @@ public class DatabasePartitionUpgradeProcessTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@BeforeClass
+	public static void setUpClass() {
+		_originalProps = PropsUtil.getProps();
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		PropsUtil.setProps(_originalProps);
+	}
 
 	@Test
 	public void testUpgradeWithDatabasePartitionDisabled()
@@ -79,6 +92,8 @@ public class DatabasePartitionUpgradeProcessTest {
 
 		upgradeProcess.upgrade();
 	}
+
+	private static Props _originalProps;
 
 	private class AssertConnectionUpgradeProcess extends DummyUpgradeProcess {
 

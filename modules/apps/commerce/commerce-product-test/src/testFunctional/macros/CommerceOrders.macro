@@ -373,6 +373,12 @@ definition {
 			urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_commerce_order_web_internal_portlet_CommerceOrderPortlet");
 	}
 
+	macro openOrderRulesAdmin {
+		Navigator.openWithAppendToBaseURL(
+			baseURL = "${baseURL}",
+			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_commerce_order_rule_web_internal_portlet_COREntryPortlet");
+	}
+
 	macro openOrderTypesAdmin {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = "${baseURL}",

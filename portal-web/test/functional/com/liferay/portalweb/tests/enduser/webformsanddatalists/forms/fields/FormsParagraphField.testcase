@@ -424,8 +424,6 @@ definition {
 
 		Form.save();
 
-		Alert.viewSuccessMessageText(successMessage = "Your request completed successfully.");
-
 		AssertElementPresent(
 			key_formattingStyle = "h2",
 			locator1 = "FormFields#PARAGRAPH_TEXT_VALUE_STYLE",

@@ -85,7 +85,7 @@
 </tr>
 <tr>
 	<td>WIDGET_VIEW_ENTRY_ELLIPSIS</td>
-	<td>//div[contains(@class,'widget-mode')]//div[contains(.,'${key_entryTitle}')]//div[contains(@class,'dropdown')]//button[span/*[name()='svg'][contains(@class,'lexicon-icon-ellipsis')]]</td>
+	<td>//div[contains(@class,'widget-mode')]//div[contains(.,'${key_entryTitle}')]//div[contains(@class,'dropdown')]//button[span/*[name()='svg'][contains(@class,'lexicon-icon-ellipsis')]] | //div[contains(@class,'widget-mode-detail-text') and contains(.,'${key_entryTitle}')]</td>
 	<td></td>
 </tr>
 <tr>

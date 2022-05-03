@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.cookies.consent.configuration;
+package com.liferay.cookies.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 )
 @Meta.OCD(
 	description = "cookie-banner-configuration-description",
-	id = "com.liferay.cookies.consent.configuration.CookiesBannerConfiguration",
+	id = "com.liferay.cookies.configuration.CookiesBannerConfiguration",
 	localization = "content/Language", name = "cookie-banner-configuration-name"
 )
 public interface CookiesBannerConfiguration {

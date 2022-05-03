@@ -178,9 +178,7 @@ function FileUpload({portletNamespace}) {
 						<div className="col-md-6">
 							<ClayForm.Group>
 								<label htmlFor={inputEnclosingCharacterId}>
-									{Liferay.Language.get(
-										'csv-file-column-delimiter'
-									)}
+									{Liferay.Language.get('csv-enclosure')}
 								</label>
 
 								<ClaySelect

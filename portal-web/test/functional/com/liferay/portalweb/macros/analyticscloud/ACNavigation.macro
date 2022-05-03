@@ -6,6 +6,13 @@ definition {
 			value1 = "${headerTitle}");
 	}
 
+	macro assertSidebarOptionLanguage {
+		AssertTextEquals(
+			locator1 = "ACNavigation#SIDEBAR_OPTION_NAME",
+			value1 = "${sidebarLanguageOption}"
+		)
+	}
+
 	macro backNavigation {
 		var key_pageName = "${pageName}";
 

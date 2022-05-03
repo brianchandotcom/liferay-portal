@@ -57,7 +57,7 @@ const EditTagsModal = ({
 	// ones.
 
 	const [initialSelectedItems, setInitialSelectedItems] = useState([]);
-	const [inputValue, setInputValue] = useState();
+	const [inputValue, setInputValue] = useState('');
 
 	// Current selected items.
 

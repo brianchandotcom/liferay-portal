@@ -22,7 +22,7 @@ function AssetTagsSelectorTag({
 	eventName,
 	groupIds = [],
 	id,
-	initialInputValue,
+	initialInputValue = '',
 	initialSelectedItems = [],
 	inputName,
 	label,

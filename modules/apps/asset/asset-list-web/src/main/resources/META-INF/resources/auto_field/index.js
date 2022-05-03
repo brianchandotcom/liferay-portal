@@ -97,7 +97,7 @@ function AssetCategories({
 }
 
 function AssetTags({groupIds, index, namespace, rule, tagSelectorURL}) {
-	const [inputValue, setInputValue] = useState();
+	const [inputValue, setInputValue] = useState('');
 	const [selectedItems, setSelectedItems] = useState(rule.selectedItems);
 
 	return (

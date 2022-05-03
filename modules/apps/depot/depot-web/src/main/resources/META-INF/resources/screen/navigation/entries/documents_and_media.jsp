@@ -41,6 +41,8 @@ UnicodeProperties typeSettingsProperties = group.getTypeSettingsProperties();
 		label='<%= LanguageUtil.get(request, "maximum-file-size-and-mimetypes") %>'
 	>
 		<div>
+			<span aria-hidden="true" class="loading-animation"></span>
+
 			<react:component
 				module="js/FileSizePerMimeType"
 				props='<%=

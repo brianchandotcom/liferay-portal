@@ -83,6 +83,106 @@ definition {
 		Alert.viewErrorMessage(errorMessage = "Unable to create a new order as the open order limit has been reached.");
 	}
 
+	@description = "Verify users can add a minimum order amount rule that applies to order subtotals. Orders that have a subtotal less than the minimum cannot be checked out"
+	@priority = "3"
+	test AddAnOrderRuleOfTypeMinimumOrderSubtotalAmountAndCheckout {
+		property osgi.module.configuration.file.names = "com.liferay.commerce.order.rule.configuration.COREntryConfiguration.config";
+		property osgi.module.configurations = "enabled=&quot;true&quot;";
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site with a buyer user") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("When the user creates a new order rule") {
+			CommerceOrders.openOrderRulesAdmin();
+
+			CommerceOrders.addOrderRule(
+				active = "true",
+				orderRuleDescription = "Test Order Rule Description",
+				orderRuleName = "Test Order Rule",
+				orderRuleType = "Minimum Order Amount");
+		}
+
+		task ("Then the order rule is applied to the order total by default") {
+			AssertSelectedLabel(
+				key_selectFieldLabel = "Apply To",
+				locator1 = "Select#ANY",
+				value1 = "Total");
+		}
+
+		task ("When the minimum order amount value is set to 50.00") {
+			Type(
+				key_text = "Minimum Order Amount",
+				locator1 = "TextInput#ANY",
+				value1 = "50.00");
+		}
+
+		task ("And the rule is applied to the order subtotal") {
+			Select(
+				key_selectFieldLabel = "Apply To",
+				locator1 = "Select#ANY",
+				value1 = "Subtotal");
+		}
+
+		task ("And the rule is published") {
+			Button.clickPublish();
+		}
+
+		task ("Then the new minimum order amount for Subtotal is created and with the set values") {
+			CommerceOrders.openOrderRulesAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Test Order Rule");
+
+			CommerceOrders.assertOrderRulesEntry(
+				amount = "50.00",
+				applyTo = "Subtotal",
+				orderRuleDescription = "Test Order Rule Description",
+				orderRuleName = "Test Order Rule",
+				orderRuleType = "Minimum Order Amount");
+		}
+
+		task ("When the buyer adds a product into the cart with a price less than $50.00 and goes to the order details") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+
+			CommerceNavigator.gotoMiniCart();
+
+			Button.click(button = "View Details");
+		}
+
+		task ("Then a warning message is shown that indicates the additional amount to meet the requirement for the order") {
+			AssertTextEquals(
+				locator1 = "Modal#BODY",
+				value1 = "The minimum order amount is $ 50.00. This order needs an additional $ 26.00 to meet the requirement.");
+		}
+
+		task ("And there is no checkout button in that order's order details page") {
+			AssertElementNotPresent(locator1 = "Button#CHECKOUT");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-6912. Bulk delete orders"
 	@priority = "3"
 	test BulkDeleteOrders {

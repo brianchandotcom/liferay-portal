@@ -17,7 +17,6 @@ package com.liferay.poshi.runner;
 import com.liferay.poshi.core.PoshiContext;
 import com.liferay.poshi.core.PoshiValidation;
 import com.liferay.poshi.core.util.PropsUtil;
-import com.liferay.poshi.core.util.Validator;
 import com.liferay.poshi.runner.selenium.SeleniumUtil;
 
 import java.io.File;

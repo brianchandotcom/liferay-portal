@@ -282,7 +282,7 @@
 	</tr>
 	<tr>
 		<td>RELATIONSHIPS_TYPE_FORM_REQUIRED</td>
-		<td>//input[contains(@class, 'object__custom-select-input')]/../../following-sibling::div[contains(.,'Required')]</td>
+		<td>//label[contains(.,'Type')]/..//div[contains(.,'Required')]</td>
 		<td></td>
 	</tr>
 	<tr>

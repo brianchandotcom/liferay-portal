@@ -17,14 +17,7 @@ import React from 'react';
 
 import './CustomSelect.scss';
 
-interface ICustomSelectProps extends React.HTMLAttributes<HTMLElement> {
-	contentRight?: React.ReactNode;
-	value?: string;
-}
-
-const CustomSelect: React.ForwardRefExoticComponent<
-	ICustomSelectProps & React.RefAttributes<HTMLDivElement>
-> = React.forwardRef(
+const CustomSelect = React.forwardRef<HTMLDivElement, ICustomSelectProps>(
 	(
 		{contentRight, onClick, placeholder, value, ...otherProps},
 		forwardRef
@@ -52,3 +45,8 @@ const CustomSelect: React.ForwardRefExoticComponent<
 );
 
 export default CustomSelect;
+
+interface ICustomSelectProps extends React.HTMLAttributes<HTMLDivElement> {
+	contentRight?: React.ReactNode;
+	value?: string;
+}

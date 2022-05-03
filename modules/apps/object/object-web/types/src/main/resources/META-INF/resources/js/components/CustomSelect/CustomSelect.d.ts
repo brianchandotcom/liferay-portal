@@ -14,11 +14,11 @@
 
 import React from 'react';
 import './CustomSelect.scss';
-interface ICustomSelectProps extends React.HTMLAttributes<HTMLElement> {
-	contentRight?: React.ReactNode;
-	value?: string;
-}
 declare const CustomSelect: React.ForwardRefExoticComponent<
 	ICustomSelectProps & React.RefAttributes<HTMLDivElement>
 >;
 export default CustomSelect;
+interface ICustomSelectProps extends React.HTMLAttributes<HTMLDivElement> {
+	contentRight?: React.ReactNode;
+	value?: string;
+}

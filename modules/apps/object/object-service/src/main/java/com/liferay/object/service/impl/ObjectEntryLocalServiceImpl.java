@@ -815,6 +815,81 @@ public class ObjectEntryLocalServiceImpl
 			ObjectConfiguration.class, properties);
 	}
 
+	private void _addFileEntry(
+			DLFileEntry dlFileEntry, Map.Entry<String, Serializable> entry,
+			List<ObjectFieldSetting> objectFieldSettings, String portletId,
+			ServiceContext serviceContext, long userId)
+		throws PortalException {
+
+		try {
+			String fileSource = null;
+			boolean showFilesInDocumentsAndMedia = false;
+			String storageDLFolderPath = null;
+
+			for (ObjectFieldSetting objectFieldSetting : objectFieldSettings) {
+				if (Objects.equals(
+						objectFieldSetting.getName(), "fileSource")) {
+
+					fileSource = objectFieldSetting.getValue();
+				}
+				else if (Objects.equals(
+							objectFieldSetting.getName(),
+							"showFilesInDocumentsAndMedia")) {
+
+					showFilesInDocumentsAndMedia = GetterUtil.getBoolean(
+						objectFieldSetting.getValue());
+				}
+				else if (Objects.equals(
+							objectFieldSetting.getName(),
+							"storageDLFolderPath")) {
+
+					storageDLFolderPath = objectFieldSetting.getValue();
+				}
+			}
+
+			if (Objects.equals("documentsAndMedia", fileSource)) {
+				return;
+			}
+
+			DLFolder dlFileEntryFolder = dlFileEntry.getFolder();
+
+			DLFolder dlFolder = _getDLFolder(
+				dlFileEntry.getCompanyId(), dlFileEntry.getGroupId(), portletId,
+				serviceContext, showFilesInDocumentsAndMedia,
+				storageDLFolderPath, userId);
+
+			if (Objects.equals(
+					dlFileEntryFolder.getFolderId(), dlFolder.getFolderId())) {
+
+				return;
+			}
+
+			String originalFileName = TempFileEntryUtil.getOriginalTempFileName(
+				dlFileEntry.getFileName());
+
+			FileEntry fileEntry = _dlAppLocalService.addFileEntry(
+				null, userId, dlFolder.getRepositoryId(),
+				dlFolder.getFolderId(),
+				DLUtil.getUniqueFileName(
+					dlFileEntry.getGroupId(), dlFolder.getFolderId(),
+					originalFileName, true),
+				dlFileEntry.getMimeType(),
+				DLUtil.getUniqueTitle(
+					dlFileEntry.getGroupId(), dlFolder.getFolderId(),
+					FileUtil.stripExtension(originalFileName)),
+				StringPool.BLANK, null, null, dlFileEntry.getContentStream(),
+				dlFileEntry.getSize(), null, null, serviceContext);
+
+			entry.setValue(fileEntry.getFileEntryId());
+		}
+		finally {
+			if (dlFileEntry != null) {
+				TempFileEntryUtil.deleteTempFileEntry(
+					dlFileEntry.getFileEntryId());
+			}
+		}
+	}
+
 	private void _deleteFileEntries(
 		Map<String, Serializable> newValues, long objectDefinitionId,
 		Map<String, Serializable> oldValues) {
@@ -1448,81 +1523,6 @@ public class ObjectEntryLocalServiceImpl
 		}
 
 		return results;
-	}
-
-	private void _addFileEntry(
-			DLFileEntry dlFileEntry, Map.Entry<String, Serializable> entry,
-			List<ObjectFieldSetting> objectFieldSettings, String portletId,
-			ServiceContext serviceContext, long userId)
-		throws PortalException {
-
-		try {
-			String fileSource = null;
-			boolean showFilesInDocumentsAndMedia = false;
-			String storageDLFolderPath = null;
-
-			for (ObjectFieldSetting objectFieldSetting : objectFieldSettings) {
-				if (Objects.equals(
-						objectFieldSetting.getName(), "fileSource")) {
-
-					fileSource = objectFieldSetting.getValue();
-				}
-				else if (Objects.equals(
-							objectFieldSetting.getName(),
-							"showFilesInDocumentsAndMedia")) {
-
-					showFilesInDocumentsAndMedia = GetterUtil.getBoolean(
-						objectFieldSetting.getValue());
-				}
-				else if (Objects.equals(
-							objectFieldSetting.getName(),
-							"storageDLFolderPath")) {
-
-					storageDLFolderPath = objectFieldSetting.getValue();
-				}
-			}
-
-			if (Objects.equals("documentsAndMedia", fileSource)) {
-				return;
-			}
-
-			DLFolder dlFileEntryFolder = dlFileEntry.getFolder();
-
-			DLFolder dlFolder = _getDLFolder(
-				dlFileEntry.getCompanyId(), dlFileEntry.getGroupId(), portletId,
-				serviceContext, showFilesInDocumentsAndMedia,
-				storageDLFolderPath, userId);
-
-			if (Objects.equals(
-					dlFileEntryFolder.getFolderId(), dlFolder.getFolderId())) {
-
-				return;
-			}
-
-			String originalFileName = TempFileEntryUtil.getOriginalTempFileName(
-				dlFileEntry.getFileName());
-
-			FileEntry fileEntry = _dlAppLocalService.addFileEntry(
-				null, userId, dlFolder.getRepositoryId(),
-				dlFolder.getFolderId(),
-				DLUtil.getUniqueFileName(
-					dlFileEntry.getGroupId(), dlFolder.getFolderId(),
-					originalFileName, true),
-				dlFileEntry.getMimeType(),
-				DLUtil.getUniqueTitle(
-					dlFileEntry.getGroupId(), dlFolder.getFolderId(),
-					FileUtil.stripExtension(originalFileName)),
-				StringPool.BLANK, null, null, dlFileEntry.getContentStream(),
-				dlFileEntry.getSize(), null, null, serviceContext);
-
-			entry.setValue(fileEntry.getFileEntryId());
-		}
-		finally {
-			if (dlFileEntry != null) {
-				TempFileEntryUtil.deleteTempFileEntry(
-					dlFileEntry.getFileEntryId());
-			}
-		}
 	}
 
 	private void _putValue(

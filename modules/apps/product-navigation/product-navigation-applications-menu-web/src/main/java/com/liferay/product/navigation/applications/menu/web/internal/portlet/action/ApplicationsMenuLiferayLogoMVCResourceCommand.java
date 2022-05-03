@@ -82,13 +82,13 @@ public class ApplicationsMenuLiferayLogoMVCResourceCommand
 			InputStream inputStream = null;
 
 			String imageDefaultLiferayLogo =
-				_getApplicationsMenuDefualtLiferayLogo();
+				_getApplicationsMenuDefaultLiferayLogo();
 
 			int index = imageDefaultLiferayLogo.indexOf(CharPool.SEMICOLON);
 
 			if (index == -1) {
 				inputStream = classLoader.getResourceAsStream(
-					_getApplicationsMenuDefualtLiferayLogo());
+					_getApplicationsMenuDefaultLiferayLogo());
 			}
 			else {
 				String bundleIdString = imageDefaultLiferayLogo.substring(
@@ -137,7 +137,7 @@ public class ApplicationsMenuLiferayLogoMVCResourceCommand
 		return null;
 	}
 
-	private String _getApplicationsMenuDefualtLiferayLogo() {
+	private String _getApplicationsMenuDefaultLiferayLogo() {
 		return GetterUtil.getString(
 			PropsUtil.get(PropsKeys.APPLICATIONS_MENU_DEFAULT_LIFERAY_LOGO),
 			"com/liferay/portal/dependencies/liferay_logo.png");

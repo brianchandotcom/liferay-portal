@@ -48,6 +48,7 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -316,6 +317,7 @@ public class FileInstallConfigTest {
 		_testFactoryConfiguration(CharPool.UNDERLINE);
 	}
 
+	@Ignore
 	@Test
 	public void testReadOnlyConfiguration() throws Exception {
 		String configurationPid = _CONFIGURATION_PID_PREFIX.concat(

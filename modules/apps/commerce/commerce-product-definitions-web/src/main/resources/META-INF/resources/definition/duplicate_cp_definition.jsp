@@ -43,6 +43,7 @@ CPDefinition cpDefinition = cpDefinitionsDisplayContext.getCPDefinition();
 		var <portlet:namespace />defaultLanguageId = null;
 		var <portlet:namespace />product = {
 			active: true,
+			productStatus: <%= WorkflowConstants.STATUS_DRAFT %>,
 			productType: '<%= cpDefinition.getProductTypeName() %>',
 		};
 

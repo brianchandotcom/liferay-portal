@@ -65,6 +65,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -428,7 +429,7 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 				expirationDateDay, expirationDateYear, expirationDateHour,
 				expirationDateMinute, neverExpire,
 				CPInstanceConstants.DEFAULT_SKU, false, 1, null, null, 0L,
-				serviceContext);
+				WorkflowConstants.STATUS_DRAFT, serviceContext);
 		}
 		else {
 

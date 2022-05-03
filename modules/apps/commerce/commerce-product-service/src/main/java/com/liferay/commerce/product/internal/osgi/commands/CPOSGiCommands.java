@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -100,7 +101,7 @@ public class CPOSGiCommands {
 				displayDateMonth, displayDateDay, displayDateYear,
 				displayDateHour, displayDateMinute, 0, 0, 0, 0, 0, true,
 				CPInstanceConstants.DEFAULT_SKU, false, 0, null, null, 0,
-				serviceContext);
+				WorkflowConstants.STATUS_DRAFT, serviceContext);
 		}
 	}
 

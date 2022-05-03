@@ -254,7 +254,7 @@ public class CPDefinitionsImporter {
 			expirationDateHour, expirationDateMinute, true, sku,
 			subscriptionEnabled, subscriptionLength, subscriptionType,
 			subscriptionTypeSettingsUnicodeProperties, maxSubscriptionCycles,
-			serviceContext);
+			WorkflowConstants.STATUS_DRAFT, serviceContext);
 	}
 
 	private void _addWarehouseQuantities(

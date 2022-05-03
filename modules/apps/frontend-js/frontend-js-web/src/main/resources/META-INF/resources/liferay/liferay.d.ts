@@ -235,6 +235,7 @@ declare module Liferay {
 		export function getLanguageId(): Language.Locale;
 		export function getPathThemeImages(): string;
 		export function getSiteGroupId(): number;
+		export function isControlPanel(): boolean;
 	}
 
 	namespace Util {

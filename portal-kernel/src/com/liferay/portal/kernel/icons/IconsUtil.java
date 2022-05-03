@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.icons;
 
+import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -42,6 +43,12 @@ public class IconsUtil {
 	public static String getSpritemapPath(ThemeDisplay themeDisplay) {
 		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-145112"))) {
 			return themeDisplay.getPathThemeImages() + "/clay/icons.svg";
+		}
+
+		Theme theme = themeDisplay.getTheme();
+
+		if (theme.isControlPanelTheme()) {
+			return getSystemSpritemapPath();
 		}
 
 		return getSpritemapPath(themeDisplay.getSiteGroupId());

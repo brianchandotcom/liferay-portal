@@ -899,7 +899,7 @@ public class ObjectEntryLocalServiceImpl
 				companyId, groupId, serviceContext, storageDLFolderPath);
 		}
 		else {
-			dlFolderId = _getObjectsRepositoryFolderId(
+			dlFolderId = _getObjectRepositoryFolderId(
 				companyId, groupId, portletId, serviceContext, userId);
 		}
 
@@ -1024,7 +1024,7 @@ public class ObjectEntryLocalServiceImpl
 		);
 	}
 
-	private Repository _getObjectsRepository(
+	private Repository _getObjectRepository(
 		long groupId, String portletId, ServiceContext serviceContext) {
 
 		Repository repository = _portletFileRepository.fetchPortletRepository(
@@ -1047,11 +1047,11 @@ public class ObjectEntryLocalServiceImpl
 		}
 	}
 
-	private Long _getObjectsRepositoryFolderId(
+	private Long _getObjectRepositoryFolderId(
 		long companyId, long groupId, String portletId,
 		ServiceContext serviceContext, long userId) {
 
-		Repository repository = _getObjectsRepository(
+		Repository repository = _getObjectRepository(
 			groupId, portletId, serviceContext);
 
 		if (repository == null) {

@@ -21,6 +21,7 @@ import {
 
 export default function ({
 	configurationURL,
+	includeDeclineAllButton,
 	namespace,
 	optionalConsentCookieTypeNames,
 	requiredConsentCookieTypeNames,
@@ -118,6 +119,7 @@ export default function ({
 						},
 					},
 					{
+						className: includeDeclineAllButton ? '' : 'd-none',
 						displayType: 'secondary',
 						label: Liferay.Language.get('decline-all'),
 						onClick() {

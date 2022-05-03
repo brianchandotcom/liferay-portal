@@ -41,7 +41,14 @@ export default function ({
 			});
 		});
 
-		toggleSwitch.checked = getCookie(cookieKey) === 'true';
+		const cookie = getCookie(cookieKey);
+
+		if (cookie === null) {
+			toggleSwitch.checked = toggleSwitch.dataset.prechecked === 'true';
+		}
+		else {
+			toggleSwitch.checked = cookie === 'true';
+		}
 
 		toggleSwitch.removeAttribute('disabled');
 	});

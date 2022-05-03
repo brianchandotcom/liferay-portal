@@ -346,4 +346,29 @@ definition {
 		ElasticsearchMonitoring.viewAsGuestPG();
 	}
 
+	@description = "This is a use case for LPS-151205."
+	@priority = "5"
+	test XPackWithRestrictedCipherSuitesAndTLSVersions {
+		property elastic.xpack.configure.tls.cipher.suites = "true";
+		property elastic.xpack.enabled = "true";
+		property remote.elasticsearch.enabled = "true";
+		property search.environment.suite.exclude = "true";
+		property test.name.skip.portal.instance = "Elasticsearch7EE#XPackWithRestrictedCipherSuitesAndTLSVersions";
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Elasticsearch Monitoring Page");
+
+		JSONLayout.updateLayoutTemplateOfPublicLayout(
+			groupName = "Guest",
+			layoutName = "Elasticsearch Monitoring Page",
+			layoutTemplate = "1 Column");
+
+		Navigator.gotoPage(pageName = "Elasticsearch Monitoring Page");
+
+		Portlet.addPG(portletName = "Elasticsearch Monitoring");
+
+		ElasticsearchMonitoring.viewPG();
+	}
+
 }

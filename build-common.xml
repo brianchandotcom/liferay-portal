@@ -518,6 +518,8 @@ information.
 				replace=""
 			/>
 
+			<echo>Executing commands: ${commands.trimmed}</echo>
+
 			<for delimiter="${line.separator}" list="${commands.trimmed}" param="command">
 				<sequential>
 					<propertyregex
@@ -632,12 +634,12 @@ information.
 									<if>
 										<contains string="${command.executable}" substring=".sh" />
 										<then>
-											<exec dir="@{dir}" executable="/bin/bash" failonerror="@{failonerror}">
+											<exec dir="@{dir}" executable="/bin/bash" failonerror="@{failonerror}" logError="true">
 												<arg line="${command.executable} ${command.arg.line}" />
 											</exec>
 										</then>
 										<else>
-											<exec dir="@{dir}" executable="/bin/bash" failonerror="@{failonerror}">
+											<exec dir="@{dir}" executable="/bin/bash" failonerror="@{failonerror}" logError="true">
 												<arg value="-c" />
 												<arg value="${command.executable} ${command.arg.line}" />
 											</exec>
@@ -645,7 +647,7 @@ information.
 									</if>
 								</then>
 								<else>
-									<exec dir="@{dir}" executable="cmd.exe" failonerror="@{failonerror}">
+									<exec dir="@{dir}" executable="cmd.exe" failonerror="@{failonerror}" logError="true">
 										<arg line="/c @{command}" />
 									</exec>
 								</else>

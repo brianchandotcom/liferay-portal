@@ -49,7 +49,8 @@ public class AUICompatibilityTopHeadDynamicInclude extends BaseDynamicInclude {
 
 		StringBundler sb = new StringBundler(5);
 
-		sb.append("<script>var Liferay = window.Liferay || {};");
+		sb.append("<script data-senna-track=\"temporary\">");
+		sb.append("var Liferay = window.Liferay || {};");
 		sb.append("Liferay._ICONS_ = Liferay._ICONS_ || {};");
 		sb.append(
 			StringBundler.concat(

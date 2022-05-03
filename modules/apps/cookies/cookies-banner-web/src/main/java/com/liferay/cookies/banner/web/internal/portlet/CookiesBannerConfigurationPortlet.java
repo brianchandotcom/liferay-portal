@@ -16,7 +16,7 @@ package com.liferay.cookies.banner.web.internal.portlet;
 
 import com.liferay.cookies.banner.web.internal.constants.CookiesBannerPortletKeys;
 import com.liferay.cookies.banner.web.internal.constants.CookiesBannerWebKeys;
-import com.liferay.portal.kernel.cookies.CookiesManager;
+import com.liferay.cookies.banner.web.internal.display.context.CookiesBannerConfigurationDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import java.io.IOException;
@@ -27,7 +27,6 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo García
@@ -57,17 +56,20 @@ import org.osgi.service.component.annotations.Reference;
 public class CookiesBannerConfigurationPortlet extends MVCPortlet {
 
 	@Override
-	protected void doDispatch(
+	public void render(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
+		CookiesBannerConfigurationDisplayContext
+			cookiesBannerConfigurationDisplayContext =
+				new CookiesBannerConfigurationDisplayContext(
+					renderRequest, renderResponse);
+
 		renderRequest.setAttribute(
-			CookiesBannerWebKeys.COOKIES_MANAGER, _cookiesManager);
+			CookiesBannerWebKeys.COOKIES_BANNER_CONFIGURATION_DISPLAY_CONTEXT,
+			cookiesBannerConfigurationDisplayContext);
 
-		super.doDispatch(renderRequest, renderResponse);
+		super.render(renderRequest, renderResponse);
 	}
-
-	@Reference
-	private CookiesManager _cookiesManager;
 
 }

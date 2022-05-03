@@ -1,7 +1,7 @@
 @import 'atlas-variables';
 
 .dm-field-repeatable-delete-button,
-.dm-field-repeatable-duplicate-button {
+.dm-field-repeatable-add-button {
 	border-radius: 10px;
 	height: 18px;
 	padding: 2px;
@@ -21,6 +21,6 @@
 	right: 38px;
 }
 
-.dm-field-repeatable-duplicate-button {
+.dm-field-repeatable-add-button {
 	right: 16px;
 }

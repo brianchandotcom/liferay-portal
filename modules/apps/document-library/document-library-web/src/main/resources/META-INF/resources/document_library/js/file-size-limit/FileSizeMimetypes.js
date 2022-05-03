@@ -84,11 +84,10 @@ const FileSizeField = ({
 			)}
 
 			<ClayButton
-				aria-label={Liferay.Language.get('add')}
-				className="dm-field-repeatable-duplicate-button"
+				className="dm-field-repeatable-add-button"
 				onClick={() => handleAddClick(index)}
 				small
-				title={Liferay.Language.get('duplicate')}
+				title={Liferay.Language.get('add')}
 				type="button"
 			>
 				<ClayIcon symbol="plus" />

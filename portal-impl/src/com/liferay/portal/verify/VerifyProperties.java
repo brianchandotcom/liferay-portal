@@ -2007,6 +2007,10 @@ public class VerifyProperties extends VerifyProcess {
 			"com.liferay.portal.url.rewrite.filter.internal.URLRewriteFilter"
 		},
 		{
+			"com.liferay.portal.upload.LiferayFileItem.threshold.size",
+			"com.liferay.portal.kernel.upload.FileItem.threshold.size"
+		},
+		{
 			"default.guest.friendly.url",
 			"default.guest.public.layout.friendly.url"
 		},

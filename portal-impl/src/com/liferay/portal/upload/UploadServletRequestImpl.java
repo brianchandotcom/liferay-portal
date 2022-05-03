@@ -167,12 +167,12 @@ public class UploadServletRequestImpl
 
 					List<String> values = _regularParameters.get(fieldName);
 
-					if (fileItem.getSize() > LiferayFileItem.THRESHOLD_SIZE) {
+					if (fileItem.getSize() > FileItem.THRESHOLD_SIZE) {
 						UploadException uploadException = new UploadException(
 							StringBundler.concat(
 								"The field ", fieldName,
 								" exceeds its maximum permitted size of ",
-								LiferayFileItem.THRESHOLD_SIZE, " bytes"));
+								FileItem.THRESHOLD_SIZE, " bytes"));
 
 						uploadException.setExceededLiferayFileItemSizeLimit(
 							true);

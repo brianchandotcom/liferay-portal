@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Cookies Consent API
-Bundle-SymbolicName: com.liferay.cookies.consent.api
-Bundle-Version: 1.0.0
-Export-Package: com.liferay.cookies.consent.configuration

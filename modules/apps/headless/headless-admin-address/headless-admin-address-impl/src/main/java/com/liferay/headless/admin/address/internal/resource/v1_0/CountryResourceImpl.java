@@ -133,6 +133,26 @@ public class CountryResourceImpl extends BaseCountryResourceImpl {
 				GetterUtil.getBoolean(country.getGroupFilterEnabled())));
 	}
 
+	public Country putCountry(Long countryId, Country country)
+		throws Exception {
+
+		com.liferay.portal.kernel.model.Country serviceBuilderCountry =
+			_countryService.updateCountry(
+				countryId, country.getA2(), country.getA3(),
+				GetterUtil.getBoolean(country.getActive(), true),
+				GetterUtil.getBoolean(country.getBillingAllowed(), true),
+				String.valueOf(country.getIdd()), country.getName(),
+				String.valueOf(country.getNumber()),
+				GetterUtil.getDouble(country.getPosition()),
+				GetterUtil.getBoolean(country.getShippingAllowed(), true),
+				GetterUtil.getBoolean(country.getSubjectToVAT()));
+
+		return _toCountry(
+			_countryService.updateGroupFilterEnabled(
+				serviceBuilderCountry.getCountryId(),
+				GetterUtil.getBoolean(country.getGroupFilterEnabled())));
+	}
+
 	private Country _toCountry(
 			com.liferay.portal.kernel.model.Country serviceBuilderCountry)
 		throws Exception {

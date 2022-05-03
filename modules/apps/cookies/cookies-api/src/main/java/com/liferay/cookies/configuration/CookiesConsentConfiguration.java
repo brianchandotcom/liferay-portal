@@ -27,11 +27,11 @@ import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 )
 @Meta.OCD(
 	description = "cookie-consent-panel-configuration-description",
-	id = "com.liferay.cookies.configuration.CookiesConfiguration",
+	id = "com.liferay.cookies.configuration.CookiesConsentConfiguration",
 	localization = "content/Language",
 	name = "cookie-consent-panel-configuration-name"
 )
-public interface CookiesConfiguration {
+public interface CookiesConsentConfiguration {
 
 	@Meta.AD(deflt = "Cookie Configuration", name = "title", required = false)
 	public LocalizedValuesMap title();

@@ -296,6 +296,9 @@ components:
                     type: integer
                 objectDefinitionName2:
                     type: string
+                reverse:
+                    readOnly: true
+                    type: boolean
                 type:
                     enum: [oneToMany, oneToOne, manyToMany]
                     type: string

@@ -114,10 +114,29 @@ public class UploadServletRequestImpl
 
 			List<FileItem> fileItemList = new ArrayList<>();
 
-			for (org.apache.commons.fileupload.FileItem fileItem :
-					servletFileUpload.parseRequest(liferayServletRequest)) {
+			try {
+				for (org.apache.commons.fileupload.FileItem fileItem :
+						servletFileUpload.parseRequest(liferayServletRequest)) {
 
-				fileItemList.add((FileItem)fileItem);
+					fileItemList.add((FileItem)fileItem);
+				}
+			}
+			catch (Exception exception) {
+				UploadException uploadException = new UploadException(
+					exception);
+
+				if (exception instanceof
+						FileUploadBase.FileSizeLimitExceededException) {
+
+					uploadException.setExceededFileSizeLimit(true);
+				}
+				else if (exception instanceof
+							FileUploadBase.SizeLimitExceededException) {
+
+					uploadException.setExceededUploadRequestSizeLimit(true);
+				}
+
+				throw uploadException;
 			}
 
 			liferayServletRequest.setFinishedReadingOriginalStream(true);
@@ -207,30 +226,19 @@ public class UploadServletRequestImpl
 				_fileParameters.put(fileItem.getFieldName(), fileItems);
 			}
 		}
-		catch (Exception exception) {
-			UploadException uploadException = new UploadException(exception);
-
-			if (exception instanceof
-					FileUploadBase.FileSizeLimitExceededException) {
-
-				uploadException.setExceededFileSizeLimit(true);
-			}
-			else if (exception instanceof
-						FileUploadBase.SizeLimitExceededException) {
-
-				uploadException.setExceededUploadRequestSizeLimit(true);
-			}
-
+		catch (UploadException uploadException) {
 			httpServletRequest.setAttribute(
 				WebKeys.UPLOAD_EXCEPTION, uploadException);
 
+			Throwable throwable = uploadException.getCause();
+
 			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
+				_log.debug(throwable);
 			}
 			else if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Unable to parse upload request: " +
-						exception.getMessage());
+						throwable.getMessage());
 			}
 		}
 

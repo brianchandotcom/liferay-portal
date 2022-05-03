@@ -16,6 +16,8 @@ package com.liferay.portal.kernel.cookies;
 
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
+import java.util.List;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -80,12 +82,18 @@ public class CookiesManagerUtil {
 		return _cookiesManager.getDomain(host);
 	}
 
-	public static String[] getOptionalCookieNames() {
-		return _cookiesManager.getOptionalCookieNames();
+	public static List<ConsentCookieType> getOptionalConsentCookieTypes(
+			long groupId)
+		throws Exception {
+
+		return _cookiesManager.getOptionalConsentCookieTypes(groupId);
 	}
 
-	public static String[] getRequiredCookieNames() {
-		return _cookiesManager.getRequiredCookieNames();
+	public static List<ConsentCookieType> getRequiredConsentCookieTypes(
+			long groupId)
+		throws Exception {
+
+		return _cookiesManager.getRequiredConsentCookieTypes(groupId);
 	}
 
 	public static boolean hasConsentType(

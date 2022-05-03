@@ -14,16 +14,20 @@
 
 package com.liferay.cookies.internal.manager;
 
+import com.liferay.cookies.configuration.CookiesConsentConfiguration;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.configuration.Filter;
+import com.liferay.portal.kernel.cookies.ConsentCookieType;
 import com.liferay.portal.kernel.cookies.CookiesManager;
 import com.liferay.portal.kernel.cookies.UnsupportedCookieException;
 import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -33,6 +37,7 @@ import com.liferay.portal.kernel.util.UnicodeFormatter;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
@@ -46,7 +51,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Tamas Molnar
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = CookiesManager.class)
+@Component(
+	configurationPid = "com.liferay.cookies.configuration.CookiesConsentConfiguration",
+	immediate = true, service = CookiesManager.class
+)
 public class CookiesManagerImpl implements CookiesManager {
 
 	@Override
@@ -261,13 +269,43 @@ public class CookiesManagerImpl implements CookiesManager {
 	}
 
 	@Override
-	public String[] getOptionalCookieNames() {
-		return _OPTIONAL_COOKIE_NAMES;
+	public List<ConsentCookieType> getOptionalConsentCookieTypes(long groupId)
+		throws Exception {
+
+		CookiesConsentConfiguration cookiesConsentConfiguration =
+			_configurationProvider.getGroupConfiguration(
+				CookiesConsentConfiguration.class, groupId);
+
+		return ListUtil.fromArray(
+			new ConsentCookieType(
+				CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL,
+				cookiesConsentConfiguration.functionalCookiesDescription(),
+				cookiesConsentConfiguration.functionalCookiesPrechecked()),
+			new ConsentCookieType(
+				CookiesConstants.NAME_CONSENT_TYPE_PERFORMANCE,
+				cookiesConsentConfiguration.performanceCookiesDescription(),
+				cookiesConsentConfiguration.performanceCookiesPrechecked()),
+			new ConsentCookieType(
+				CookiesConstants.NAME_CONSENT_TYPE_PERSONALIZATION,
+				cookiesConsentConfiguration.personalizationCookiesDescription(),
+				cookiesConsentConfiguration.
+					personalizationCookiesPrechecked()));
 	}
 
 	@Override
-	public String[] getRequiredCookieNames() {
-		return _REQUIRED_COOKIE_NAMES;
+	public List<ConsentCookieType> getRequiredConsentCookieTypes(long groupId)
+		throws Exception {
+
+		CookiesConsentConfiguration cookiesConsentConfiguration =
+			_configurationProvider.getGroupConfiguration(
+				CookiesConsentConfiguration.class, groupId);
+
+		return ListUtil.fromArray(
+			new ConsentCookieType(
+				CookiesConstants.NAME_CONSENT_TYPE_NECESSARY,
+				cookiesConsentConfiguration.
+					strictlyNecessaryCookiesDescription(),
+				true));
 	}
 
 	@Override
@@ -395,16 +433,6 @@ public class CookiesManagerImpl implements CookiesManager {
 		return cookie.getValue();
 	}
 
-	private static final String[] _OPTIONAL_COOKIE_NAMES = {
-		CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL,
-		CookiesConstants.NAME_CONSENT_TYPE_PERFORMANCE,
-		CookiesConstants.NAME_CONSENT_TYPE_PERSONALIZATION
-	};
-
-	private static final String[] _REQUIRED_COOKIE_NAMES = {
-		CookiesConstants.NAME_CONSENT_TYPE_NECESSARY
-	};
-
 	private static final String _SESSION_COOKIE_DOMAIN = PropsUtil.get(
 		PropsKeys.SESSION_COOKIE_DOMAIN);
 
@@ -424,6 +452,12 @@ public class CookiesManagerImpl implements CookiesManager {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CookiesManagerImpl.class);
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private CookiesConsentConfiguration _cookiesConsentConfiguration;
 
 	@Reference
 	private Portal _portal;

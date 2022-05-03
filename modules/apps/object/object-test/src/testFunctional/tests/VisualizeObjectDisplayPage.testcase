@@ -92,9 +92,9 @@ definition {
 			fieldLabel = "Field",
 			filterCollection = "true",
 			fragmentName = "Collection Display",
-			listStyle = "Table",
 			option = "True",
-			selectedName = "Custom Objects 314");
+			selectedName = "Custom Objects 314",
+			styleDisplay = "Table");
 
 		PageEditor.clickPublish();
 
@@ -161,8 +161,8 @@ definition {
 
 		PageEditor.editCollectionDisplay(
 			fragmentName = "Collection Display",
-			listStyle = "Table",
-			selectedName = "Custom Objects 315");
+			selectedName = "Custom Objects 315",
+			styleDisplay = "Table");
 
 		PageEditor.gotoEllipsisMenuItemInItemSelector(
 			fieldLabel = "Collection",

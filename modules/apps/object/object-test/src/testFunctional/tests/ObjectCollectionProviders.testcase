@@ -64,8 +64,8 @@ definition {
 
 		PageEditor.editCollectionDisplay(
 			fragmentName = "Collection Display",
-			listStyle = "Table",
-			selectedName = "Custom Objects 145750");
+			selectedName = "Custom Objects 145750",
+			styleDisplay = "Table");
 
 		PageEditor.addFragment(
 			collectionName = "Content Display",

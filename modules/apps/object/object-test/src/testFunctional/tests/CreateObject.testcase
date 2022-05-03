@@ -6317,8 +6317,8 @@ definition {
 
 		PageEditor.editCollectionDisplay(
 			fragmentName = "Collection Display",
-			listStyle = "Table",
-			selectedName = "Custom Objects 145");
+			selectedName = "Custom Objects 145",
+			styleDisplay = "Table");
 
 		PageEditor.clickPublish();
 
@@ -7848,8 +7848,8 @@ definition {
 
 		PageEditor.editCollectionDisplay(
 			fragmentName = "Collection Display",
-			listStyle = "Table",
-			selectedName = "Custom Objects B 169");
+			selectedName = "Custom Objects B 169",
+			styleDisplay = "Table");
 
 		PageEditor.clickPublish();
 

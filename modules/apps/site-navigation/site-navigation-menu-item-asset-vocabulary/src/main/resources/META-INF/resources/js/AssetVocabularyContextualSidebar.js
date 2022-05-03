@@ -201,8 +201,8 @@ function AssetVocabularyContextualSidebar({
 						<ClayInput
 							className="text-secondary"
 							id={`${namespace}_itemInput`}
+							onChange={() => {}}
 							onClick={openChooseItemModal}
-							readOnly
 							type="text"
 							value={selectedVocabulary.title}
 						/>

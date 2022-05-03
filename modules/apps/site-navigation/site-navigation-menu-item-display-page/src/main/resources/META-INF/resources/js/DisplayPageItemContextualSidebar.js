@@ -179,8 +179,8 @@ function DisplayPageItemContextualSidebar({
 						<ClayInput
 							className="text-secondary"
 							id={`${namespace}_itemInput`}
+							onChange={() => {}}
 							onClick={openChooseItemModal}
-							readOnly
 							type="text"
 							value={selectedItem.title}
 						/>

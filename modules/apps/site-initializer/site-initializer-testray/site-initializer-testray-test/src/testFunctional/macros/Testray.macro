@@ -60,33 +60,6 @@ definition {
 		Click(locator1 = "TestrayManage#SAVE_BUTTON");
 	}
 
-	macro createTestrayTasks {
-        ApplicationsMenu.gotoPortlet(
-            category = "Object",
-            panel = "Control Panel",
-            portlet = "Testray Tasks");
-
-        LexiconEntry.gotoAdd();
-
-        Type(
-            locator1 = "TestrayTestflow#STATUS_EDIT",
-            value1 = "${value}");
-
-        Type(
-            locator1 = "TestrayTestflow#ADD_NAME_TASKS",
-            value1 = "Hotfix Tester - liferay-hotfix-1987-2008 - 7.4.10.7");
-
-        Type(
-            locator1 = "TestrayTestflow#ADD_BUILD_TASKS",
-            value1 = "43015");
-
-        Type(
-            locator1 = "ObjectPortlet#VIEW_EMPTY_LABEL_IN_DATE_ENTRY",
-            value1 = "04/01/2022");
-
-        Click(locator1 = "Button#SAVE");
-    }
-
 	macro createTestraySite {
 		ApplicationsMenu.gotoPortlet(
 			category = "Sites",
@@ -106,6 +79,33 @@ definition {
 		Click(locator1 = "Button#ADD");
 
 		Alert.viewSuccessMessage();
+	}
+
+	macro createTestrayTasks {
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "Testray Tasks");
+
+		LexiconEntry.gotoAdd();
+
+		Type(
+			locator1 = "TestrayTestflow#STATUS_EDIT",
+			value1 = "${value}");
+
+		Type(
+			locator1 = "TestrayTestflow#ADD_NAME_TASKS",
+			value1 = "Hotfix Tester - liferay-hotfix-1987-2008 - 7.4.10.7");
+
+		Type(
+			locator1 = "TestrayTestflow#ADD_BUILD_TASKS",
+			value1 = "43015");
+
+		Type(
+			locator1 = "ObjectPortlet#VIEW_EMPTY_LABEL_IN_DATE_ENTRY",
+			value1 = "04/01/2022");
+
+		Click(locator1 = "Button#SAVE");
 	}
 
 	macro enableTestrayTasksInPortlet {
@@ -161,6 +161,23 @@ definition {
 		Click(locator1 = "TestrayUser#SIGN_OUT");
 	}
 
+	macro statusChangeTestray {
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "Testray Tasks");
+
+		Click(locator1 = "CommerceEntry#DROPDOWN");
+
+		MenuItem.click(menuItem = "View");
+
+		Type(
+			locator1 = "TestrayTestflow#STATUS_EDIT",
+			value1 = "${value}");
+
+		Click(locator1 = "Button#SAVE");
+	}
+
 	macro tearDownCP {
 		Refresh();
 
@@ -183,26 +200,9 @@ definition {
 	}
 
 	macro viewOverviewTab {
-        AssertElementPresent(
-            key_rowValue = "${rowValue}",
-            locator1 = "Testray#OVERVIEW_LAYOUT_VALUES");
-    }
-
-	macro statusChangeTestray {
-        ApplicationsMenu.gotoPortlet(
-            category = "Object",
-            panel = "Control Panel",
-            portlet = "Testray Tasks");
-
-        Click(locator1 = "CommerceEntry#DROPDOWN");
-
-        MenuItem.click(menuItem = "View");
-
-        Type(
-            locator1 = "TestrayTestflow#STATUS_EDIT",
-            value1 = "${value}");
-
-        Click(locator1 = "Button#SAVE");
-    }
+		AssertElementPresent(
+			key_rowValue = "${rowValue}",
+			locator1 = "Testray#OVERVIEW_LAYOUT_VALUES");
+	}
 
 }

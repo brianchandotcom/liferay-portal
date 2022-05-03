@@ -1,96 +1,96 @@
 @component-name = "portal-solutions"
 definition {
 
-    property osgi.modules.includes = "site-initializer-testray";
-    property portal.release = "false";
-    property portal.upstream = "true";
-    property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
-    property testray.main.component.name = "Testray 2";
+	property osgi.modules.includes = "site-initializer-testray";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "Testray 2";
 
-    setUp {
-        TestCase.setUpPortalInstance();
+	setUp {
+		TestCase.setUpPortalInstance();
 
-        User.firstLoginPG();
+		User.firstLoginPG();
 
-        Testray.createTestraySite(siteName = "Testray 2");
-    }
+		Testray.createTestraySite(siteName = "Testray 2");
+	}
 
-    tearDown {
-        var testPortalInstance = PropsUtil.get("test.portal.instance");
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-        Testray.tearDownCP();
+		Testray.tearDownCP();
 
-        if ("${testPortalInstance}" == "true") {
-            PortalInstances.tearDownCP();
-        }
-    }
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
 
-    @description = "LPS-150029 - Verify if the user will see the results with abandoned status."
-    @priority = "4"
-    test CanVerifyAbandonedStatus {
-        Testray.enableTestrayTasksInPortlet();
+	@description = "LPS-150029 - Verify if the user will see the results with abandoned status."
+	@priority = "4"
+	test CanVerifyAbandonedStatus {
+		Testray.enableTestrayTasksInPortlet();
 
-        Testray.createTestrayTasks(value = "1");
+		Testray.createTestrayTasks(value = "1");
 
-        Testray.statusChangeTestray(value = "2");
+		Testray.statusChangeTestray(value = "2");
 
-        Refresh();
+		Refresh();
 
-        ApplicationsMenu.gotoSite(key_site = "Testray 2");
+		ApplicationsMenu.gotoSite(key_site = "Testray 2");
 
-        TestrayLayout.clickTestfowOnSidebar();
+		TestrayLayout.clickTestfowOnSidebar();
 
-        TestrayTestflow.assertStatusTasks(key_value = "ABANDONED");
-    }
+		TestrayTestflow.assertStatusTasks(key_value = "ABANDONED");
+	}
 
-    @description = "LPS-150028 - Verify if the user will see the results with Complete status."
-    @priority = "4"
-    test CanVerifyCompleteStatus {
-        Testray.enableTestrayTasksInPortlet();
+	@description = "LPS-150028 - Verify if the user will see the results with Complete status."
+	@priority = "4"
+	test CanVerifyCompleteStatus {
+		Testray.enableTestrayTasksInPortlet();
 
-        Testray.createTestrayTasks(value = "1");
+		Testray.createTestrayTasks(value = "1");
 
-        Testray.statusChangeTestray(value = "3");
+		Testray.statusChangeTestray(value = "3");
 
-        ApplicationsMenu.gotoSite(key_site = "Testray 2");
+		ApplicationsMenu.gotoSite(key_site = "Testray 2");
 
-        TestrayLayout.clickTestfowOnSidebar();
+		TestrayLayout.clickTestfowOnSidebar();
 
-        TestrayTestflow.assertStatusTasks(key_value = "COMPLETE");
-    }
+		TestrayTestflow.assertStatusTasks(key_value = "COMPLETE");
+	}
 
-    @description = "LPS-150026 - Verify if the user will see the results with In Analysis status."
-    @priority = "4"
-    test CanVerifyInAnalysisStatus {
-        Testray.enableTestrayTasksInPortlet();
+	@description = "LPS-150026 - Verify if the user will see the results with In Analysis status."
+	@priority = "4"
+	test CanVerifyInAnalysisStatus {
+		Testray.enableTestrayTasksInPortlet();
 
-        Testray.createTestrayTasks(value = "2");
+		Testray.createTestrayTasks(value = "2");
 
-        Testray.statusChangeTestray(value = "1");
+		Testray.statusChangeTestray(value = "1");
 
-        ApplicationsMenu.gotoSite(key_site = "Testray 2");
+		ApplicationsMenu.gotoSite(key_site = "Testray 2");
 
-        TestrayLayout.clickTestfowOnSidebar();
+		TestrayLayout.clickTestfowOnSidebar();
 
-        TestrayTestflow.assertStatusTasks(key_value = "IN ANALYSIS");
-    }
+		TestrayTestflow.assertStatusTasks(key_value = "IN ANALYSIS");
+	}
 
-    @description = "LPS-150027 - Verify if the user will see the results with Open status."
-    @priority = "4"
-    test CanVerifyOpenStatus {
-        Testray.enableTestrayTasksInPortlet();
+	@description = "LPS-150027 - Verify if the user will see the results with Open status."
+	@priority = "4"
+	test CanVerifyOpenStatus {
+		Testray.enableTestrayTasksInPortlet();
 
-        Testray.createTestrayTasks(value = "1");
+		Testray.createTestrayTasks(value = "1");
 
-        Testray.statusChangeTestray(value = "4");
+		Testray.statusChangeTestray(value = "4");
 
-        Refresh();
+		Refresh();
 
-        ApplicationsMenu.gotoSite(key_site = "Testray 2");
+		ApplicationsMenu.gotoSite(key_site = "Testray 2");
 
-        TestrayLayout.clickTestfowOnSidebar();
+		TestrayLayout.clickTestfowOnSidebar();
 
-        TestrayTestflow.assertStatusTasks(key_value = "OPEN");
-    }
+		TestrayTestflow.assertStatusTasks(key_value = "OPEN");
+	}
 
 }

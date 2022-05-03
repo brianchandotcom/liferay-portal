@@ -21,8 +21,8 @@ import {
 
 export default function ({
 	namespace,
-	optionalCookieNames,
-	requiredCookieNames,
+	optionalConsentCookieTypeNames,
+	requiredConsentCookieTypeNames,
 	showButtons,
 }) {
 	const toggleSwitches = Array.from(
@@ -58,7 +58,10 @@ export default function ({
 		);
 
 		acceptAllButton.addEventListener('click', () => {
-			acceptAllCookies(optionalCookieNames, requiredCookieNames);
+			acceptAllCookies(
+				optionalConsentCookieTypeNames,
+				requiredConsentCookieTypeNames
+			);
 
 			window.location.reload();
 		});
@@ -71,15 +74,20 @@ export default function ({
 				);
 			});
 
-			requiredCookieNames.forEach((requiredCookie) => {
-				setCookie(requiredCookie, 'true');
-			});
+			requiredConsentCookieTypeNames.forEach(
+				(requiredConsentCookieTypeName) => {
+					setCookie(requiredConsentCookieTypeName, 'true');
+				}
+			);
 
 			window.location.reload();
 		});
 
 		declineAllButton.addEventListener('click', () => {
-			declineAllCookies(optionalCookieNames, requiredCookieNames);
+			declineAllCookies(
+				optionalConsentCookieTypeNames,
+				requiredConsentCookieTypeNames
+			);
 
 			window.location.reload();
 		});

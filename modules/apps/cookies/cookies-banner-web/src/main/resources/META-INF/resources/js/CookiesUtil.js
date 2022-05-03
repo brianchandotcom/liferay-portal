@@ -12,23 +12,29 @@
  * details.
  */
 
-export function acceptAllCookies(optionalCookieNames, requiredCookieNames) {
-	optionalCookieNames.forEach((optionalCookie) => {
-		setCookie(optionalCookie, 'true');
+export function acceptAllCookies(
+	optionalConsentCookieTypeNames,
+	requiredConsentCookieTypeNames
+) {
+	optionalConsentCookieTypeNames.forEach((optionalConsentCookieTypeName) => {
+		setCookie(optionalConsentCookieTypeName, 'true');
 	});
 
-	requiredCookieNames.forEach((requiredCookie) => {
-		setCookie(requiredCookie, 'true');
+	requiredConsentCookieTypeNames.forEach((requiredConsentCookieTypeName) => {
+		setCookie(requiredConsentCookieTypeName, 'true');
 	});
 }
 
-export function declineAllCookies(optionalCookieNames, requiredCookieNames) {
-	optionalCookieNames.forEach((optionalCookie) => {
-		setCookie(optionalCookie, 'false');
+export function declineAllCookies(
+	optionalConsentCookieTypeNames,
+	requiredConsentCookieTypeNames
+) {
+	optionalConsentCookieTypeNames.forEach((optionalConsentCookieTypeName) => {
+		setCookie(optionalConsentCookieTypeName, 'false');
 	});
 
-	requiredCookieNames.forEach((requiredCookie) => {
-		setCookie(requiredCookie, 'true');
+	requiredConsentCookieTypeNames.forEach((requiredConsentCookieTypeName) => {
+		setCookie(requiredConsentCookieTypeName, 'true');
 	});
 }
 

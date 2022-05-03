@@ -17,7 +17,7 @@
 </tr>
 <tr>
 	<td>CONTENT_PERFORMANCE_DO_NOT_SHOW_AGAIN</td>
-	<td>//div[contains(@class,'sidebar') and descendant::span[contains(.,'Content Performance')]] //a[contains(.,'Do not show me this again')]</td>
+	<td>//div[contains(@class,'sidebar') and descendant::*[contains(.,'Content Performance')]] //a[contains(.,'Do not show me this again')]</td>
 	<td></td>
 </tr>
 <tr>

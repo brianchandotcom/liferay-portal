@@ -47,21 +47,20 @@ export default function SubscriptionButton({
 		fn({variables: queryVariables}).then(onCompleted);
 	};
 
-	const btnTitle = showTitle
-		? subscription
-			? Liferay.Language.get('subscribed')
-			: Liferay.Language.get('subscribe')
-		: '';
+	const btnTitle = subscription
+		? Liferay.Language.get('subscribed')
+		: Liferay.Language.get('subscribe');
 
 	return (
 		<ClayButton
+			data-tooltip-align="top"
 			displayType={subscription ? 'primary' : 'secondary'}
 			onClick={changeSubscription}
 			title={btnTitle}
 		>
 			<ClayIcon symbol="bell-on" />
 
-			{btnTitle && (
+			{showTitle && (
 				<span className="c-ml-2 d-none d-sm-inline-block">
 					{btnTitle}
 				</span>

@@ -18,6 +18,7 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
 import com.liferay.object.exception.NoSuchObjectFieldException;
 import com.liferay.object.exception.ObjectDefinitionActiveException;
@@ -133,12 +134,12 @@ public class ObjectDefinitionLocalServiceImpl
 			long userId, Map<Locale, String> labelMap, String name,
 			String panelAppOrder, String panelCategoryKey,
 			Map<Locale, String> pluralLabelMap, String scope,
-			List<ObjectField> objectFields)
+			String storageType, List<ObjectField> objectFields)
 		throws PortalException {
 
 		return _addObjectDefinition(
 			userId, null, null, labelMap, name, panelAppOrder, panelCategoryKey,
-			null, null, pluralLabelMap, scope, false, 0,
+			null, null, pluralLabelMap, scope, storageType, false, 0,
 			WorkflowConstants.STATUS_DRAFT, objectFields);
 	}
 
@@ -242,7 +243,8 @@ public class ObjectDefinitionLocalServiceImpl
 		return _addObjectDefinition(
 			userId, className, dbTableName, labelMap, name, null, null,
 			pkObjectFieldDBColumnName, pkObjectFieldName, pluralLabelMap, scope,
-			true, version, WorkflowConstants.STATUS_APPROVED, objectFields);
+			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT, true, version,
+			WorkflowConstants.STATUS_APPROVED, objectFields);
 	}
 
 	@Override
@@ -658,8 +660,8 @@ public class ObjectDefinitionLocalServiceImpl
 			Map<Locale, String> labelMap, String name, String panelAppOrder,
 			String panelCategoryKey, String pkObjectFieldDBColumnName,
 			String pkObjectFieldName, Map<Locale, String> pluralLabelMap,
-			String scope, boolean system, int version, int status,
-			List<ObjectField> objectFields)
+			String scope, String storageType, boolean system, int version,
+			int status, List<ObjectField> objectFields)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);
@@ -703,6 +705,9 @@ public class ObjectDefinitionLocalServiceImpl
 		objectDefinition.setPKObjectFieldName(pkObjectFieldName);
 		objectDefinition.setPluralLabelMap(pluralLabelMap);
 		objectDefinition.setScope(scope);
+		objectDefinition.setStorageType(
+			(storageType != null) ? storageType :
+				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT);
 		objectDefinition.setSystem(system);
 		objectDefinition.setVersion(version);
 		objectDefinition.setStatus(status);

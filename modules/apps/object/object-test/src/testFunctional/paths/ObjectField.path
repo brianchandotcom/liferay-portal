@@ -132,6 +132,11 @@
 		<td>//div[contains(@class,'lfr-objects__side-panel-content-container')]//button[@type='submit']</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>TYPE_MAXIMUM_NUMBER_CHARACTERS</td>
+		<td>//label[contains(text(),'Maximum Number of Characters')]/..//input</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

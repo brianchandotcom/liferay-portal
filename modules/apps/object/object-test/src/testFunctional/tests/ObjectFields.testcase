@@ -181,12 +181,44 @@ definition {
 	}
 
 	@description = "LPS-146889 - Verify that when turn on the 'Set the Maximum Number of Characters' the user is not allowed to type any value outside the informed range on the help text"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CannotTypeValueOutsideRange {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 151573",
+			objectName = "CustomObject151573",
+			pluralLabelName = "Custom Objects 151573");
 
-		// TODO LPS-151573 CannotTypeValueOutsideRange pending implementation
+		ObjectAdmin.openObjectAdmin();
 
+		ObjectPortlet.selectCustomObject(label = "Custom Object 151573");
+
+		ObjectAdmin.goToFieldsTab();
+
+		ObjectAdmin.addObjectFieldViaUI(
+			fieldLabel = "Custom Text Field",
+			fieldType = "Text");
+
+		ObjectAdmin.goToFieldsDetails(label = "Custom Text Field");
+
+		Click(
+			key_labelName = "Limit Characters",
+			locator1 = "ObjectField#DEFAULT_TOGGLE_SWITCH");
+
+		AssertElementPresent(
+			locator1 = "ObjectField#MAXIMUM_NUMBER_CHARACTERS_OPTION",
+			key_maxValue = "280");
+
+		Type(
+			locator1 = "ObjectField#TYPE_MAXIMUM_NUMBER_CHARACTERS",
+			value1 = "281");
+
+		AssertElementNotPresent(
+			locator1 = "ObjectField#MAXIMUM_NUMBER_CHARACTERS_OPTION",
+			key_maxValue = "281");
+
+		AssertElementPresent(
+			locator1 = "ObjectField#MAXIMUM_NUMBER_CHARACTERS_OPTION",
+			key_maxValue = "28");
 	}
 
 	@description = "LPS-143065 - Verify if the 'Attachment' option is shown on the 'Type' dropdown"

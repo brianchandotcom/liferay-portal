@@ -14,18 +14,24 @@ import {memo} from 'react';
 import {useApplicationProvider} from '../../../../../../../common/context/AppPropertiesProvider';
 import {Liferay} from '../../../../../../../common/services/liferay';
 import {getMd5Hash} from '../../../../../utils/getMd5Hash';
+import {getInitials} from '../../getInitials';
 
 const AVATAR_SIZE_IN_PX = 40;
 
-const Avatar = ({emailAddress}) => {
+const Avatar = ({emailAddress, userName}) => {
 	const {gravatarAvatarURL} = useApplicationProvider();
 	const emailAddressMD5 = getMd5Hash(emailAddress);
+	const uiAvatarURL = `https://ui-avatars.com/api/${getInitials(
+		userName
+	)}/128/0B5FFF/FFFFFF/2/0.33/true/true/true`;
 
 	return (
 		<div className="cp-team-members-avatar mr-2">
 			<img
 				height={AVATAR_SIZE_IN_PX}
-				src={`${gravatarAvatarURL}/${emailAddressMD5}`}
+				src={`${gravatarAvatarURL}/${emailAddressMD5}?d=${encodeURIComponent(
+					uiAvatarURL
+				)}`}
 				width={AVATAR_SIZE_IN_PX}
 			/>
 		</div>
@@ -37,7 +43,10 @@ const NameColumnType = memo(({userAccount}) => {
 
 	return (
 		<div className="align-items-center d-flex">
-			<Avatar emailAddress={userAccount.emailAddress} />
+			<Avatar
+				emailAddress={userAccount.emailAddress}
+				userName={userAccount.name}
+			/>
 
 			<p className="m-0 text-truncate">{userAccount.name}</p>
 

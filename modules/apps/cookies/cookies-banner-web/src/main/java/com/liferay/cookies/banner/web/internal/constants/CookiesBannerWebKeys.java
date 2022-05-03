@@ -25,6 +25,4 @@ public class CookiesBannerWebKeys {
 	public static final String COOKIES_BANNER_DISPLAY_CONTEXT =
 		"COOKIES_BANNER_DISPLAY_CONTEXT";
 
-	public static final String COOKIES_MANAGER = "COOKIES_MANAGER";
-
 }

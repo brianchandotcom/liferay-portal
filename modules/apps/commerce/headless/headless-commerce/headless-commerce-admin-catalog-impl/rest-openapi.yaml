@@ -876,7 +876,6 @@ components:
                     type: array
                 productStatus:
                     format: int32
-                    readOnly: true
                     type: integer
                 productType:
                     example: simple

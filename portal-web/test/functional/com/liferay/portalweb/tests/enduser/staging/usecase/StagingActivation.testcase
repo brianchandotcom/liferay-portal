@@ -89,7 +89,6 @@ definition {
 	}
 
 	@priority = "4"
-	@uitest
 	test DeleteRecycleBinOnStagingActivation {
 		property portal.acceptance = "true";
 

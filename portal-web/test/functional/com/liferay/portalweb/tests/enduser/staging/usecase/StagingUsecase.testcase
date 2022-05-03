@@ -31,7 +31,6 @@ definition {
 	}
 
 	@priority = "5"
-	@uitest
 	test ActivateStagingForSiteWithTheme {
 		property test.name.skip.portal.instance = "StagingUsecase#ActivateStagingForSiteWithTheme";
 
@@ -353,7 +352,6 @@ definition {
 
 	@description = "This is a use case for LPS-123156."
 	@priority = "3"
-	@uitest
 	test AssertPublishTemplateInfo {
 		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
 
@@ -374,7 +372,6 @@ definition {
 
 	@description = "This is a use case for LPS-123156."
 	@priority = "3"
-	@uitest
 	test AssertScheduledPublicationInfo {
 		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
 
@@ -397,7 +394,6 @@ definition {
 
 	@description = "This is a use case for LPS-123156"
 	@priority = "4"
-	@uitest
 	test AssertStagingPublicationAndProcessesMessage {
 		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
 
@@ -478,7 +474,6 @@ definition {
 	}
 
 	@priority = "5"
-	@uitest
 	test ContentCannotBeCreatedOnLive {
 		property portal.acceptance = "true";
 
@@ -504,7 +499,6 @@ definition {
 	}
 
 	@priority = "5"
-	@uitest
 	test DeleteLivePage {
 		property portal.acceptance = "true";
 
@@ -795,7 +789,6 @@ definition {
 	}
 
 	@priority = "3"
-	@uitest
 	test ModifyInitalPageVariationSetup {
 		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
 
@@ -914,7 +907,6 @@ definition {
 	}
 
 	@priority = "5"
-	@uitest
 	test PublishPortlet {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
@@ -950,7 +942,6 @@ definition {
 	}
 
 	@priority = "5"
-	@uitest
 	test PublishThemeFromStagedToLive {
 		property test.name.skip.portal.instance = "StagingUsecase#PublishThemeFromStagedToLive";
 
@@ -1050,7 +1041,6 @@ definition {
 
 	@description = "This is a use case for LPS-82757."
 	@priority = "3"
-	@uitest
 	test PublishWebContentWithFeeds {
 		property test.name.skip.portal.instance = "StagingUsecase#PublishWebContentWithFeeds";
 		property testray.component.names = "Web Content Administration";
@@ -1167,7 +1157,6 @@ definition {
 
 	@description = "This is a use case for LPS-84418 and LPS-117578."
 	@priority = "5"
-	@uitest
 	test PublishWithImpossibleDateRange {
 		property portal.acceptance = "true";
 
@@ -1304,7 +1293,6 @@ definition {
 
 	@description = "This is a use case for LPS-82028."
 	@priority = "4"
-	@uitest
 	test SingleAssetPublishLayoutScopedContent {
 		JSONLayout.addWidgetToPublicLayout(
 			column = "1",
@@ -2036,7 +2024,6 @@ definition {
 
 	@description = "This is a use case for LPS-96664."
 	@priority = "3"
-	@uitest
 	test ViewPublishTemplateDateRange {
 		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
 

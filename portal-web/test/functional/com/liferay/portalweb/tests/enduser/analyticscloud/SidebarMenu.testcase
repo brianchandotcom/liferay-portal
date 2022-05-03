@@ -140,6 +140,56 @@ definition {
 			value1 = "${assignedPropertyName}");
 	}
 
+	@description = "Feature ID: Release 3.1.7 | Automation ID: LRAC-9870 | Test Summary: Change the AC page default language"
+	@priority = "2"
+	test ChangeDefaultLanguage {
+		task("Switch to property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+		}
+
+		task("Change language in AC") {
+			ACWorkspace.changeLanguage(languageOption = "Portuguese (Brazil)");
+		}
+
+		task("View AC sidebar changed language") {
+			ACNavigation.assertSidebarOptionLanguage(sidebarLanguageOption = "Sites");
+
+			ACNavigation.assertSidebarOptionLanguage(sidebarLanguageOption = "Recursos");
+
+			ACNavigation.assertSidebarOptionLanguage(sidebarLanguageOption = "Eventos");
+
+			ACNavigation.assertSidebarOptionLanguage(sidebarLanguageOption = "Segmentos");
+
+			ACNavigation.assertSidebarOptionLanguage(sidebarLanguageOption = "Contas");
+
+			ACNavigation.assertSidebarOptionLanguage(sidebarLanguageOption = "Indivíduos");
+
+			ACNavigation.assertSidebarOptionLanguage(sidebarLanguageOption = "Testes");
+		}
+
+		task("Change language back in AC") {
+			ACWorkspace.changeLanguage(languageOption = "Inglês");
+		}
+
+		task("View AC sidebar changed language") {
+			ACNavigation.assertSidebarOptionLanguage(sidebarLanguageOption = "Sites");
+
+			ACNavigation.assertSidebarOptionLanguage(sidebarLanguageOption = "Assets");
+
+			ACNavigation.assertSidebarOptionLanguage(sidebarLanguageOption = "Events");
+
+			ACNavigation.assertSidebarOptionLanguage(sidebarLanguageOption = "Segments");
+
+			ACNavigation.assertSidebarOptionLanguage(sidebarLanguageOption = "Accounts");
+
+			ACNavigation.assertSidebarOptionLanguage(sidebarLanguageOption = "Individuals");
+
+			ACNavigation.assertSidebarOptionLanguage(sidebarLanguageOption = "Tests");
+		}
+	}
+
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8974 | Test Summary: Assert the last selected Property is selected after re-logging"
 	@priority = "3"
 	test ViewLastSelectPropertyAfterRelogin {

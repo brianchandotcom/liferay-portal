@@ -105,6 +105,27 @@ public class ObjectRelationship implements Cloneable, Serializable {
 
 	protected Long id;
 
+	public Boolean getIsReverse() {
+		return isReverse;
+	}
+
+	public void setIsReverse(Boolean isReverse) {
+		this.isReverse = isReverse;
+	}
+
+	public void setIsReverse(
+		UnsafeSupplier<Boolean, Exception> isReverseUnsafeSupplier) {
+
+		try {
+			isReverse = isReverseUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean isReverse;
+
 	public Map<String, String> getLabel() {
 		return label;
 	}

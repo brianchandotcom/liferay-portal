@@ -767,6 +767,14 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("isReverse", additionalAssertFieldName)) {
+				if (objectRelationship.getIsReverse() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("label", additionalAssertFieldName)) {
 				if (objectRelationship.getLabel() == null) {
 					valid = false;
@@ -942,6 +950,17 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 				if (!Objects.deepEquals(
 						objectRelationship1.getId(),
 						objectRelationship2.getId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("isReverse", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						objectRelationship1.getIsReverse(),
+						objectRelationship2.getIsReverse())) {
 
 					return false;
 				}
@@ -1134,6 +1153,11 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("isReverse")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("label")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1216,6 +1240,7 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 		return new ObjectRelationship() {
 			{
 				id = RandomTestUtil.randomLong();
+				isReverse = RandomTestUtil.randomBoolean();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				objectDefinitionId1 = RandomTestUtil.randomLong();
 				objectDefinitionId2 = RandomTestUtil.randomLong();

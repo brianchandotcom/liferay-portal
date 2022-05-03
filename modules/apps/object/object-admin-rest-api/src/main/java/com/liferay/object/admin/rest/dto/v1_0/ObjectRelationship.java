@@ -155,6 +155,34 @@ public class ObjectRelationship implements Serializable {
 	protected Long id;
 
 	@Schema
+	public Boolean getIsReverse() {
+		return isReverse;
+	}
+
+	public void setIsReverse(Boolean isReverse) {
+		this.isReverse = isReverse;
+	}
+
+	@JsonIgnore
+	public void setIsReverse(
+		UnsafeSupplier<Boolean, Exception> isReverseUnsafeSupplier) {
+
+		try {
+			isReverse = isReverseUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Boolean isReverse;
+
+	@Schema
 	@Valid
 	public Map<String, String> getLabel() {
 		return label;
@@ -388,6 +416,16 @@ public class ObjectRelationship implements Serializable {
 			sb.append("\"id\": ");
 
 			sb.append(id);
+		}
+
+		if (isReverse != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"isReverse\": ");
+
+			sb.append(isReverse);
 		}
 
 		if (label != null) {

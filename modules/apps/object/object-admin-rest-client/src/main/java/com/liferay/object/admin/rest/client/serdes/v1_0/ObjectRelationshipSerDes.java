@@ -89,6 +89,16 @@ public class ObjectRelationshipSerDes {
 			sb.append(objectRelationship.getId());
 		}
 
+		if (objectRelationship.getIsReverse() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"isReverse\": ");
+
+			sb.append(objectRelationship.getIsReverse());
+		}
+
 		if (objectRelationship.getLabel() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -205,6 +215,14 @@ public class ObjectRelationshipSerDes {
 			map.put("id", String.valueOf(objectRelationship.getId()));
 		}
 
+		if (objectRelationship.getIsReverse() == null) {
+			map.put("isReverse", null);
+		}
+		else {
+			map.put(
+				"isReverse", String.valueOf(objectRelationship.getIsReverse()));
+		}
+
 		if (objectRelationship.getLabel() == null) {
 			map.put("label", null);
 		}
@@ -292,6 +310,12 @@ public class ObjectRelationshipSerDes {
 				if (jsonParserFieldValue != null) {
 					objectRelationship.setId(
 						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "isReverse")) {
+				if (jsonParserFieldValue != null) {
+					objectRelationship.setIsReverse(
+						(Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "label")) {

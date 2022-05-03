@@ -69,6 +69,70 @@ definition {
 		}
 	}
 
+	@description = "LPS-120417 When there is web content published by a user different than the admin user and the admin user visit the Content Dashboard, the content is visible"
+	@priority = "3"
+	test AssetNotFilteredByMe {
+		task ("Create an user via JSONWS") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "Administrator",
+				userEmailAddress = "userea@liferay.com");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Create a web content with Test Test via JSONWS") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title 1");
+		}
+
+		task ("Create a web content with created user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addCP(
+				webContentContent = "WC Content Content",
+				webContentTitle = "Web Content Title 2");
+
+			PortletEntry.publish();
+
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+		}
+
+		task ("Natigate to Content Dashboard") {
+			ContentDashboard.goToContentDashboard();
+		}
+
+		task ("Check that both web contents are displayed and no filter is applyed") {
+			for (var assetName : list "Web Content Title 1,Web Content Title 2") {
+				LexiconTable.viewTableEntryTitle(tableEntry = "${assetName}");
+			}
+
+			AssertElementNotPresent(locator1 = "ContentDashboard#FILTER_TEXT");
+		}
+
+		task ("Delete user created") {
+			JSONUser.deleteUserByEmailAddress(userEmailAddress = "userea@liferay.com");
+		}
+	}
+
 	@description = "LPS-122873 When all the web content is unassigned from a Vocab1's category, the relative ordering of the rest of the categories remain the same"
 	@priority = "3"
 	test AssigningSomeAudienceCategoriesAndCheckingTheOrder {

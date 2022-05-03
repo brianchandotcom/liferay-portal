@@ -63,27 +63,14 @@ public class ApplicationsMenuLiferayLogoMVCResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		InputStream inputStream =
-			_getApplicationsMenuDefaultLiferayLogoInputStream(resourceResponse);
-
-		if (inputStream == null) {
-			return;
-		}
-
-		PortletResponseUtil.write(resourceResponse, inputStream);
-	}
-
-	private InputStream _getApplicationsMenuDefaultLiferayLogoInputStream(
-		ResourceResponse resourceResponse) {
+		String imageDefaultLiferayLogo =
+			_getApplicationsMenuDefaultLiferayLogo();
 
 		ClassLoader classLoader = ImageTool.class.getClassLoader();
 
+		InputStream inputStream = null;
+
 		try {
-			InputStream inputStream = null;
-
-			String imageDefaultLiferayLogo =
-				_getApplicationsMenuDefaultLiferayLogo();
-
 			int index = imageDefaultLiferayLogo.indexOf(CharPool.SEMICOLON);
 
 			if (index == -1) {
@@ -122,14 +109,7 @@ public class ApplicationsMenuLiferayLogoMVCResourceCommand
 				if (_log.isDebugEnabled()) {
 					_log.debug("Default Liferay logo is not available");
 				}
-
-				return inputStream;
 			}
-
-			resourceResponse.setContentType(
-				MimeTypesUtil.getExtensionContentType(imageDefaultLiferayLogo));
-
-			return inputStream;
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -139,7 +119,14 @@ public class ApplicationsMenuLiferayLogoMVCResourceCommand
 			}
 		}
 
-		return null;
+		if (inputStream == null) {
+			return;
+		}
+
+		resourceResponse.setContentType(
+			MimeTypesUtil.getExtensionContentType(imageDefaultLiferayLogo));
+
+		PortletResponseUtil.write(resourceResponse, inputStream);
 	}
 
 	private String _getApplicationsMenuDefaultLiferayLogo() {

@@ -19,7 +19,7 @@ export default function openWarningModal({
 	title,
 }) {
 	Liferay.Util.openModal({
-		bodyHTML: message,
+		bodyHTML: `<p class="text-secondary">${message}</p>`,
 		buttons: [
 			{
 				displayType: 'secondary',

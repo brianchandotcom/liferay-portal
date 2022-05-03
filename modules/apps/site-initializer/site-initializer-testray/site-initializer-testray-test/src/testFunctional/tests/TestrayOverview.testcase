@@ -51,7 +51,7 @@ definition {
 
 		Testray.projectTabNavigator(navTabName = "Overview");
 
-		Testray.viewOverviewTab(rowValue = "Date  Created");
+		Testray.viewOverviewTab(rowValue = "Date");
 	}
 
 	@description = "LPS-150232 - Verify if the user can see the creation user."

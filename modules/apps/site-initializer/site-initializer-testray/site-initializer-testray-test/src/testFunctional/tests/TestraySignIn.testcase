@@ -12,7 +12,7 @@ definition {
 
 		User.firstLoginPG();
 
-		Testray.createTestraySite(siteName = "Testray 2");
+		Testray.createTestraySite(siteName = "Testray2");
 
 		Refresh();
 	}
@@ -30,11 +30,11 @@ definition {
 	@description = "LPS-150436 - Verify when filling the field, the field label is green."
 	@priority = "2"
 	test CanFieldLabelBeGreen {
-		ApplicationsMenu.gotoSite(site = "Testray 2");
+		ApplicationsMenu.gotoSite(site = "Testray2");
 
 		Testray.signOutTestray();
 
-		Navigator.openSpecificURL(url = "http://localhost:8080/web/testray-2");
+		Navigator.openSpecificURL(url = "http://localhost:8080/web/testray2");
 
 		Type(
 			locator1 = "TestrayUser#FIELD_EMAIL",
@@ -54,11 +54,11 @@ definition {
 	@description = "LPS-150437 - Verify when deleting the field, the field label is red."
 	@priority = "2"
 	test CanFieldLabelBeRed {
-		ApplicationsMenu.gotoSite(site = "Testray 2");
+		ApplicationsMenu.gotoSite(site = "Testray2");
 
 		Testray.signOutTestray();
 
-		Navigator.openSpecificURL(url = "http://localhost:8080/web/testray-2");
+		Navigator.openSpecificURL(url = "http://localhost:8080/web/testray2");
 
 		Type(
 			locator1 = "TestrayUser#FIELD_EMAIL",
@@ -82,11 +82,11 @@ definition {
 	@description = "LPS-150438 - Verify the user can enter with an valid email."
 	@priority = "5"
 	test CanSignIn {
-		ApplicationsMenu.gotoSite(site = "Testray 2");
+		ApplicationsMenu.gotoSite(site = "Testray2");
 
 		Testray.signOutTestray();
 
-		Navigator.openSpecificURL(url = "http://localhost:8080/web/testray-2");
+		Navigator.openSpecificURL(url = "http://localhost:8080/web/testray2");
 
 		Type(
 			locator1 = "TestrayUser#FIELD_EMAIL",
@@ -108,11 +108,11 @@ definition {
 	@description = "LPS-150439 - Verify the user can enter with an valid email after getting the password wrong."
 	@priority = "4"
 	test CanSignInAfterPasswordWrong {
-		ApplicationsMenu.gotoSite(site = "Testray 2");
+		ApplicationsMenu.gotoSite(site = "Testray2");
 
 		Testray.signOutTestray();
 
-		Navigator.openSpecificURL(url = "http://localhost:8080/web/testray-2");
+		Navigator.openSpecificURL(url = "http://localhost:8080/web/testray2");
 
 		Type(
 			locator1 = "TestrayUser#FIELD_EMAIL",

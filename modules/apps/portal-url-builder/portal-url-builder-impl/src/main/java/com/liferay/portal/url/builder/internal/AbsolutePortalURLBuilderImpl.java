@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.portlet.PortletDependency;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.url.builder.APIRequestAbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.BrowserModuleAbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.BundleScriptAbsolutePortalURLBuilder;
@@ -30,6 +29,7 @@ import com.liferay.portal.url.builder.ComboRequestAbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.PortalImageAbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.PortalMainResourceAbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.PortletDependencyAbsolutePortalURLBuilder;
+import com.liferay.portal.url.builder.ServletAbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.internal.util.CacheHelper;
 
 import javax.servlet.http.HttpServletRequest;
@@ -60,12 +60,6 @@ public class AbsolutePortalURLBuilderImpl implements AbsolutePortalURLBuilder {
 		_pathModule = _pathContext + Portal.PATH_MODULE;
 
 		_pathProxy = _computePathProxy();
-	}
-
-	@Override
-	public APIRequestAbsolutePortalURLBuilder forAPIRequest(String requestURL) {
-		return new APIRequestAbsolutePortalURLBuilderImpl(
-			_pathModule, _pathProxy, requestURL);
 	}
 
 	@Override
@@ -126,6 +120,12 @@ public class AbsolutePortalURLBuilderImpl implements AbsolutePortalURLBuilder {
 		return new PortletDependencyAbsolutePortalURLBuilderImpl(
 			_getCDNHost(_httpServletRequest), cssURN, javaScriptURN, _pathProxy,
 			portletDependency);
+	}
+
+	@Override
+	public ServletAbsolutePortalURLBuilder forServlet(String requestURL) {
+		return new ServletAbsolutePortalURLBuilderImpl(
+			_pathModule, _pathProxy, requestURL);
 	}
 
 	private String _computePathProxy() {

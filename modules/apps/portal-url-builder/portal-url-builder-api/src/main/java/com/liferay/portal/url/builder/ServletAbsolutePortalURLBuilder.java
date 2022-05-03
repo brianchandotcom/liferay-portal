@@ -26,6 +26,6 @@ import com.liferay.portal.url.builder.facet.BuildableAbsolutePortalURLBuilder;
  *
  * @author Iván Zaera Avellón
  */
-public interface APIRequestAbsolutePortalURLBuilder
+public interface ServletAbsolutePortalURLBuilder
 	extends BuildableAbsolutePortalURLBuilder {
 }

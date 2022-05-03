@@ -136,7 +136,7 @@ public class JSLoaderTopHeadDynamicInclude extends BaseDynamicInclude {
 			_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
 				httpServletRequest);
 
-		return absolutePortalURLBuilder.forAPIRequest(
+		return absolutePortalURLBuilder.forServlet(
 			"/js_resolve_modules"
 		).build();
 	}

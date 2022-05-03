@@ -15,16 +15,16 @@
 package com.liferay.portal.url.builder.internal;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.url.builder.APIRequestAbsolutePortalURLBuilder;
+import com.liferay.portal.url.builder.ServletAbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.internal.util.URLUtil;
 
 /**
  * @author Iván Zaera Avellón
  */
-public class APIRequestAbsolutePortalURLBuilderImpl
-	implements APIRequestAbsolutePortalURLBuilder {
+public class ServletAbsolutePortalURLBuilderImpl
+	implements ServletAbsolutePortalURLBuilder {
 
-	public APIRequestAbsolutePortalURLBuilderImpl(
+	public ServletAbsolutePortalURLBuilderImpl(
 		String pathModule, String pathProxy, String requestURL) {
 
 		_pathModule = pathModule;

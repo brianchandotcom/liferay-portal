@@ -37,15 +37,6 @@ import org.osgi.framework.Bundle;
 public interface AbsolutePortalURLBuilder {
 
 	/**
-	 * Returns a URL builder for server API requests (usually implemented
-	 * by servlets).
-	 *
-	 * @param  requestURL the API's request URL
-	 * @return a URL builder for API requests
-	 */
-	public APIRequestAbsolutePortalURLBuilder forAPIRequest(String requestURL);
-
-	/**
 	 * Returns a URL builder for AMD JavaScript files.
 	 *
 	 * @param  browserModulePath the browser module path (for example:
@@ -118,5 +109,14 @@ public interface AbsolutePortalURLBuilder {
 	public PortletDependencyAbsolutePortalURLBuilder forPortletDependency(
 		PortletDependency portletDependency, String cssURN,
 		String javaScriptURN);
+
+	/**
+	 * Returns a URL builder for requests to dynamic content returned by
+	 * servlets.
+	 *
+	 * @param  requestURL the API's request URL
+	 * @return a URL builder for API requests
+	 */
+	public ServletAbsolutePortalURLBuilder forServlet(String requestURL);
 
 }

@@ -21,8 +21,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.product.navigation.applications.menu.web.internal.constants.ProductNavigationApplicationsMenuPortletKeys;
@@ -64,18 +64,18 @@ public class ApplicationsMenuLiferayLogoMVCResourceCommand
 		throws Exception {
 
 		InputStream inputStream =
-			_getApplicationsMenuDefaultLiferayLogoInputStream();
+			_getApplicationsMenuDefaultLiferayLogoInputStream(resourceResponse);
 
 		if (inputStream == null) {
 			return;
 		}
 
-		resourceResponse.setContentType(ContentTypes.IMAGE_PNG);
-
 		PortletResponseUtil.write(resourceResponse, inputStream);
 	}
 
-	private InputStream _getApplicationsMenuDefaultLiferayLogoInputStream() {
+	private InputStream _getApplicationsMenuDefaultLiferayLogoInputStream(
+		ResourceResponse resourceResponse) {
+
 		ClassLoader classLoader = ImageTool.class.getClassLoader();
 
 		try {
@@ -122,7 +122,12 @@ public class ApplicationsMenuLiferayLogoMVCResourceCommand
 				if (_log.isDebugEnabled()) {
 					_log.debug("Default Liferay logo is not available");
 				}
+
+				return inputStream;
 			}
+
+			resourceResponse.setContentType(
+				MimeTypesUtil.getExtensionContentType(imageDefaultLiferayLogo));
 
 			return inputStream;
 		}

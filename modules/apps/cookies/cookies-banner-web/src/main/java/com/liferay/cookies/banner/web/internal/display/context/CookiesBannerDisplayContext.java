@@ -14,8 +14,11 @@
 
 package com.liferay.cookies.banner.web.internal.display.context;
 
+import com.liferay.cookies.banner.web.internal.constants.CookiesBannerPortletKeys;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 
 import javax.portlet.RenderResponse;
 
@@ -29,8 +32,13 @@ public class CookiesBannerDisplayContext {
 	}
 
 	public Object getConfigurationURL() {
-		return PortletURLBuilder.createRenderURL(
-			_renderResponse
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+			RequestBackedPortletURLFactoryUtil.create(
+				PortalUtil.getLiferayPortletRequest(renderRequest));
+
+		return PortletURLBuilder.create(
+			requestBackedPortletURLFactory.createRenderURL(
+				CookiesBannerPortletKeys.COOKIES_BANNER_CONFIGURATION)
 		).setMVCPath(
 			"/cookies_banner_configuration/view.jsp"
 		).setWindowState(

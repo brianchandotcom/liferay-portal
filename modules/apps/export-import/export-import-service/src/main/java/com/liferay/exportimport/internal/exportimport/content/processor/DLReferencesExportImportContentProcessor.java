@@ -475,7 +475,7 @@ public class DLReferencesExportImportContentProcessor
 				exportedReferenceSB.append(path);
 
 				if (dlReferenceParameters.containsKey("friendlyURL")) {
-					exportedReferenceSB.append("$,$include-friendlyURL");
+					exportedReferenceSB.append("$,$include-friendly-url=true");
 				}
 				else {
 					exportedReferenceSB.append("$,$include-uuid=");
@@ -492,7 +492,8 @@ public class DLReferencesExportImportContentProcessor
 					exportedReferenceSB.append(originalReference);
 
 					if (dlReferenceParameters.containsKey("friendlyURL")) {
-						exportedReferenceSB.append("#,#include-friendlyURL");
+						exportedReferenceSB.append(
+							"#,#include-friendly-url=true");
 					}
 					else {
 						exportedReferenceSB.append("#,#include-uuid=");
@@ -571,7 +572,7 @@ public class DLReferencesExportImportContentProcessor
 
 			while (content.contains(
 						"[$dl-reference=" + path +
-							"$,$include-friendlyURL$]") ||
+							"$,$include-friendly-url=true$]") ||
 				   content.contains(
 					   "[$dl-reference=" + path + "$,$include-uuid=false$]") ||
 				   content.contains(
@@ -666,16 +667,16 @@ public class DLReferencesExportImportContentProcessor
 					0, url.lastIndexOf(StringPool.SLASH));
 
 				String exportedReferenceFriendlyURL =
-					"[$dl-reference=" + path + "$,$include-friendlyURL$]";
+					"[$dl-reference=" + path + "$,$include-friendly-url=true$]";
 				String exportedReferenceWithoutUUID =
 					"[$dl-reference=" + path + "$,$include-uuid=false$]";
 				String exportedReferenceWithUUID =
 					"[$dl-reference=" + path + "$,$include-uuid=true$]";
 
 				if (content.startsWith("[#dl-reference=", endPos)) {
-					if (content.contains("include-friendlyURL")) {
+					if (content.contains("include-friendly-url=true")) {
 						int friendlyURLPosition = content.indexOf(
-							"#,#include-friendlyURL", beginPos);
+							"#,#include-friendly-url=true", beginPos);
 
 						endPos = friendlyURLPosition + 2;
 					}
@@ -686,7 +687,7 @@ public class DLReferencesExportImportContentProcessor
 
 					exportedReferenceFriendlyURL =
 						content.substring(beginPos, endPos) +
-							"#include-friendlyURL#]";
+							"#include-friendly-url=true#]";
 					exportedReferenceWithoutUUID =
 						content.substring(beginPos, endPos) +
 							"#include-uuid=false#]";

@@ -35,6 +35,10 @@ const TablePagination = ({
 				<ClayPaginationBarWithBasicItems
 					activeDelta={itemsPerPage}
 					activePage={activePage}
+					className={
+						itemsPerPage >= totalItems &&
+						'cp-hide-pagination-activation-keys'
+					}
 					deltas={listItemsPerPage}
 					ellipsisBuffer={ellipsisBuffer}
 					labels={labels || defaultLabels}

@@ -9,8 +9,6 @@
  * distribution rights of the Software.
  */
 
-import textMatchOverMultipleFields from '../sxp_elements/textMatchOverMultipleFields';
-
 /**
  * This variable is not currently being used, but it used to be used for
  * applying the baseline clauses. This has been removed for the moment to avoid
@@ -117,8 +115,6 @@ export const CUSTOM_JSON_SXP_ELEMENT = {
 export const DEFAULT_ADVANCED_CONFIGURATION = {};
 
 export const DEFAULT_BASELINE_SXP_ELEMENTS = [];
-
-export const DEFAULT_EDIT_SXP_ELEMENT = textMatchOverMultipleFields;
 
 export const DEFAULT_HIGHLIGHT_CONFIGURATION = {};
 

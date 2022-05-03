@@ -14,19 +14,25 @@
 
 package com.liferay.commerce.product.content.web.internal.info.item.provider;
 
+import com.liferay.commerce.context.CommerceContext;
+import com.liferay.commerce.context.CommerceContextThreadLocal;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.permission.CommerceProductViewPermission;
+import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.info.exception.InfoItemPermissionException;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.provider.InfoItemPermissionProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alec Sloan
+ * @author Alessio Antonio Rendina
  */
 @Component(enabled = false, service = InfoItemPermissionProvider.class)
 public class CPDefinitionInfoItemPermissionProvider
@@ -38,9 +44,18 @@ public class CPDefinitionInfoItemPermissionProvider
 			String actionId)
 		throws InfoItemPermissionException {
 
+		CommerceContext commerceContext = CommerceContextThreadLocal.get();
+
+		if (commerceContext == null) {
+			return false;
+		}
+
 		try {
-			return _cpDefinitionModelResourcePermission.contains(
-				permissionChecker, cpDefinition, actionId);
+			return _commerceProductViewPermission.contains(
+				permissionChecker,
+				CommerceUtil.getCommerceAccountId(commerceContext),
+				commerceContext.getCommerceChannelGroupId(),
+				cpDefinition.getCPDefinitionId());
 		}
 		catch (PortalException portalException) {
 			throw new InfoItemPermissionException(
@@ -54,20 +69,36 @@ public class CPDefinitionInfoItemPermissionProvider
 			InfoItemReference infoItemReference, String actionId)
 		throws InfoItemPermissionException {
 
+		CommerceContext commerceContext = CommerceContextThreadLocal.get();
+
+		if (commerceContext == null) {
+			return false;
+		}
+
+		InfoItemIdentifier infoItemIdentifier =
+			infoItemReference.getInfoItemIdentifier();
+
+		if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier)) {
+			return false;
+		}
+
+		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+			(ClassPKInfoItemIdentifier)infoItemIdentifier;
+
 		try {
-			return _cpDefinitionModelResourcePermission.contains(
-				permissionChecker, infoItemReference.getClassPK(), actionId);
+			return _commerceProductViewPermission.contains(
+				permissionChecker,
+				CommerceUtil.getCommerceAccountId(commerceContext),
+				commerceContext.getCommerceChannelGroupId(),
+				classPKInfoItemIdentifier.getClassPK());
 		}
 		catch (PortalException portalException) {
 			throw new InfoItemPermissionException(
-				infoItemReference.getClassPK(), portalException);
+				classPKInfoItemIdentifier.getClassPK(), portalException);
 		}
 	}
 
-	@Reference(
-		target = "(model.class.name=com.liferay.commerce.product.model.CPDefinition)"
-	)
-	private ModelResourcePermission<CPDefinition>
-		_cpDefinitionModelResourcePermission;
+	@Reference
+	private CommerceProductViewPermission _commerceProductViewPermission;
 
 }

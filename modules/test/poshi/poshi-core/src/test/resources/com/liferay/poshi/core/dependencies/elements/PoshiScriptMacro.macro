@@ -28,6 +28,7 @@ definition {
 		var key_breadcrumbName = "${breadcrumbName}";
 		static var breadcrumbNameUppercase = StringUtil.upperCase("${breadcrumbName}");
 		var integer = 5 + 5;
+
 		var newInteger = 34 + ${integer};
 
 		AssertTextEquals(

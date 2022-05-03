@@ -111,7 +111,7 @@ public class PoshiElementFactoryTest {
 			"PoshiScriptMacro.macro");
 
 		int[] expectedLineNumbers = {
-			4, 9, 11, 17, 19, 28, 29, 30, 31, 33, 37, 41, 45, 49, 53, 57
+			4, 9, 11, 17, 19, 28, 29, 30, 32, 34, 38, 42, 46, 50, 54, 58
 		};
 
 		int i = 0;

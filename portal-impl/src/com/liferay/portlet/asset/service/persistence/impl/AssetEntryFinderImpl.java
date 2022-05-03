@@ -21,8 +21,6 @@ import com.liferay.asset.kernel.service.persistence.AssetEntryFinder;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
@@ -225,14 +223,6 @@ public class AssetEntryFinderImpl
 		AssetEntryQuery entryQuery, boolean count, Session session) {
 
 		StringBundler sb = new StringBundler(77);
-
-		DB db = getDB();
-
-		boolean oracle = false;
-
-		if (db.getDBType() == DBType.ORACLE) {
-			oracle = true;
-		}
 
 		if (count) {
 			sb.append("SELECT COUNT(DISTINCT AssetEntry.entryId) AS ");
@@ -486,8 +476,8 @@ public class AssetEntryFinderImpl
 				sb.append("IS NULL THEN 0 ");
 				sb.append("ELSE TEMP_TABLE_ASSET_ENTRY.viewCount END");
 			}
-			else if (oracle && orderByCol1.equals("title")) {
-				sb.append(", dbms_lob.substr(AssetEntry.title, 4000, 1)");
+			else if (orderByCol1.equals("title")) {
+				sb.append("CAST_CLOB_TEXT(AssetEntry.title)");
 			}
 			else {
 				sb.append("AssetEntry.");
@@ -526,8 +516,8 @@ public class AssetEntryFinderImpl
 					sb.append("THEN 0 ELSE ");
 					sb.append("TEMP_TABLE_ASSET_ENTRY.viewCount END");
 				}
-				else if (oracle && orderByCol2.equals("title")) {
-					sb.append(", dbms_lob.substr(AssetEntry.title, 4000, 1)");
+				else if (orderByCol2.equals("title")) {
+					sb.append(", CAST_CLOB_TEXT(AssetEntry.title)");
 				}
 				else {
 					sb.append(", AssetEntry.");

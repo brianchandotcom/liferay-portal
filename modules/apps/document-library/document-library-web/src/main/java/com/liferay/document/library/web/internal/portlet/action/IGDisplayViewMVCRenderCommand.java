@@ -16,7 +16,12 @@ package com.liferay.document.library.web.internal.portlet.action;
 
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.web.internal.helper.DLTrashHelper;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -34,6 +39,15 @@ import org.osgi.service.component.annotations.Reference;
 public class IGDisplayViewMVCRenderCommand extends BaseFolderMVCRenderCommand {
 
 	@Override
+	protected void checkPermissions(
+			PermissionChecker permissionChecker, Folder folder)
+		throws PortalException {
+
+		_folderModelResourcePermission.check(
+			permissionChecker, folder, ActionKeys.ACCESS);
+	}
+
+	@Override
 	protected DLTrashHelper getDLTrashHelper() {
 		return _dlTrashHelper;
 	}
@@ -45,5 +59,11 @@ public class IGDisplayViewMVCRenderCommand extends BaseFolderMVCRenderCommand {
 
 	@Reference
 	private DLTrashHelper _dlTrashHelper;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.repository.model.Folder)"
+	)
+	private volatile ModelResourcePermission<Folder>
+		_folderModelResourcePermission;
 
 }

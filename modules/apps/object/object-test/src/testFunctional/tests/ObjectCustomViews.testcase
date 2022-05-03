@@ -612,12 +612,59 @@ definition {
 	}
 
 	@description = "LPS-147792 - Verify that the new column name will be displayed on the entries list"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanSeeRenamedColumnNameOnObjectView {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 152070",
+			objectName = "CustomObject152070",
+			pluralLabelName = "Custom Objects 152070");
 
-		// TODO LPS-152070 CanSeeRenamedColumnNameOnObjectView pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field 152070",
+			fieldName = "customObjectField152070",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject152070");
 
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 152070");
+
+		ObjectCustomViews.goToViewsTab();
+
+		ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views");
+
+		ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+
+		ObjectCustomViews.markViewAsDefault();
+
+		ObjectCustomViews.goToViewsBuilderTab();
+
+		ObjectCustomViews.addColumnsViaUI(
+			columnOption = "Custom Field 152070",
+			viewLabel = "Custom Views");
+
+		ObjectCustomViews.editSpecificColumn(columnName = "Custom Field 152070");
+
+		CreateObject.editLabel(labelName = "Column Label 152070");
+
+		Button.clickEdit();
+
+		Button.clickSave();
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject152070");
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "Custom Field 152070",
+			objectName = "CustomObject152070",
+			value = "Entry Test");
+
+		Navigator.openURL();
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject152070");
+
+		ObjectPortlet.assertColumnLabelEntries(columnLabelName = "Column Label 152070");
 	}
 
 	@description = "LPS-147792 - Verify it is possible to see the column label as the alias on the view builder column list"

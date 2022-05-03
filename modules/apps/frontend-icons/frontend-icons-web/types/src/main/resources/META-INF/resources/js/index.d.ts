@@ -12,5 +12,5 @@
  * details.
  */
 
-export declare function getSpritemapPath(iconPack?: String): string;
+export declare function getSpritemapPath(iconPack?: string): string;
 export declare function getSystemSpritemapPath(): string;

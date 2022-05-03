@@ -2211,11 +2211,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addOrganizationUser(
-			JSONArray organizationJSONArray, ServiceContext serviceContext,
-			Long userId)
+			JSONArray jsonArray, ServiceContext serviceContext, Long userId)
 		throws Exception {
 
-		if (JSONUtil.isEmpty(organizationJSONArray)) {
+		if (JSONUtil.isEmpty(jsonArray)) {
 			return;
 		}
 
@@ -2229,8 +2228,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 				serviceContext.getRequest()
 			).build();
 
-		for (int i = 0; i < organizationJSONArray.length(); i++) {
-			JSONObject jsonObject = organizationJSONArray.getJSONObject(i);
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
 			Page<Organization> organizationsPage =
 				organizationResource.getOrganizationsPage(

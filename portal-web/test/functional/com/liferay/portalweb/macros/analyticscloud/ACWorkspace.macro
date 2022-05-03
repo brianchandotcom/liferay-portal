@@ -1,5 +1,19 @@
 definition {
 
+	macro changeLanguage {
+		var key_languageOption = "${languageOption}";
+
+		if (IsElementPresent(locator1 = "ACSettings#SETTINGS_PAGE")) {
+			Click(locator1 = "ACSettings#EXIT_SETTINGS_BUTTON");
+		}
+
+		Click(locator1 = "ACWorkspace#USER_MENU_OPTION");
+
+		Click(locator1 = "ACWorkspace#LANGUAGE_SELECTION_OPTION");
+
+		Click(locator1 = "ACWorkspace#SELECT_LANGUAGE");
+	}
+
 	macro configureWorkspaceSettings {
 		if (isSet(workspaceName)) {
 			Type(

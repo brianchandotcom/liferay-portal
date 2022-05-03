@@ -15,8 +15,10 @@
 package com.liferay.object.internal.model.listener;
 
 import com.liferay.object.model.ObjectLayoutRow;
+import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.audit.AuditRouter;
 import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.security.audit.event.generators.constants.EventTypes;
@@ -40,16 +42,14 @@ public class ObjectLayoutRowModelListener
 	public void onBeforeCreate(ObjectLayoutRow objectLayoutRow)
 		throws ModelListenerException {
 
-		auditObjectLayoutRow(
-			null, objectLayoutRow.getObjectLayoutRowId(), EventTypes.ADD);
+		auditOnCreateOrRemove(EventTypes.ADD, objectLayoutRow);
 	}
 
 	@Override
 	public void onBeforeRemove(ObjectLayoutRow objectLayoutRow)
 		throws ModelListenerException {
 
-		auditObjectLayoutRow(
-			null, objectLayoutRow.getObjectLayoutRowId(), EventTypes.DELETE);
+		auditOnCreateOrRemove(EventTypes.DELETE, objectLayoutRow);
 	}
 
 	@Override
@@ -58,20 +58,38 @@ public class ObjectLayoutRowModelListener
 			ObjectLayoutRow objectLayoutRow)
 		throws ModelListenerException {
 
-		auditObjectLayoutRow(
-			_getModifiedAttributes(originalObjectLayoutRow, objectLayoutRow),
-			objectLayoutRow.getObjectLayoutRowId(), EventTypes.UPDATE);
-	}
-
-	protected void auditObjectLayoutRow(
-			List<Attribute> attributes, long classPK, String eventType)
-		throws ModelListenerException {
-
 		try {
 			_auditRouter.route(
 				AuditMessageBuilder.buildAuditMessage(
-					eventType, ObjectLayoutRow.class.getName(), classPK,
-					attributes));
+					EventTypes.UPDATE, ObjectLayoutRow.class.getName(),
+					objectLayoutRow.getObjectLayoutRowId(),
+					_getModifiedAttributes(
+						originalObjectLayoutRow, objectLayoutRow)));
+		}
+		catch (Exception exception) {
+			throw new ModelListenerException(exception);
+		}
+	}
+
+	protected void auditOnCreateOrRemove(
+			String eventType, ObjectLayoutRow objectLayoutRow)
+		throws ModelListenerException {
+
+		try {
+			AuditMessage auditMessage = AuditMessageBuilder.buildAuditMessage(
+				eventType, ObjectLayoutRow.class.getName(),
+				objectLayoutRow.getObjectLayoutRowId(), null);
+
+			JSONObject additionalInfoJSONObject =
+				auditMessage.getAdditionalInfo();
+
+			additionalInfoJSONObject.put(
+				"objectLayoutBoxId", objectLayoutRow.getObjectLayoutBoxId()
+			).put(
+				"priority", objectLayoutRow.getPriority()
+			);
+
+			_auditRouter.route(auditMessage);
 		}
 		catch (Exception exception) {
 			throw new ModelListenerException(exception);

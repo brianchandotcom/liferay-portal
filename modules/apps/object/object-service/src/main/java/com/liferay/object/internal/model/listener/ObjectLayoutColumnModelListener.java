@@ -15,8 +15,10 @@
 package com.liferay.object.internal.model.listener;
 
 import com.liferay.object.model.ObjectLayoutColumn;
+import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.audit.AuditRouter;
 import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.security.audit.event.generators.constants.EventTypes;
@@ -40,17 +42,14 @@ public class ObjectLayoutColumnModelListener
 	public void onBeforeCreate(ObjectLayoutColumn objectLayoutColumn)
 		throws ModelListenerException {
 
-		auditObjectLayoutColumn(
-			null, objectLayoutColumn.getObjectLayoutColumnId(), EventTypes.ADD);
+		auditOnCreateOrRemove(EventTypes.ADD, objectLayoutColumn);
 	}
 
 	@Override
 	public void onBeforeRemove(ObjectLayoutColumn objectLayoutColumn)
 		throws ModelListenerException {
 
-		auditObjectLayoutColumn(
-			null, objectLayoutColumn.getObjectLayoutColumnId(),
-			EventTypes.DELETE);
+		auditOnCreateOrRemove(EventTypes.DELETE, objectLayoutColumn);
 	}
 
 	@Override
@@ -59,21 +58,42 @@ public class ObjectLayoutColumnModelListener
 			ObjectLayoutColumn objectLayoutColumn)
 		throws ModelListenerException {
 
-		auditObjectLayoutColumn(
-			_getModifiedAttributes(
-				originalObjectLayoutColumn, objectLayoutColumn),
-			objectLayoutColumn.getObjectLayoutColumnId(), EventTypes.UPDATE);
-	}
-
-	protected void auditObjectLayoutColumn(
-			List<Attribute> attributes, long classPK, String eventType)
-		throws ModelListenerException {
-
 		try {
 			_auditRouter.route(
 				AuditMessageBuilder.buildAuditMessage(
-					eventType, ObjectLayoutColumn.class.getName(), classPK,
-					attributes));
+					EventTypes.UPDATE, ObjectLayoutColumn.class.getName(),
+					objectLayoutColumn.getObjectLayoutColumnId(),
+					_getModifiedAttributes(
+						originalObjectLayoutColumn, objectLayoutColumn)));
+		}
+		catch (Exception exception) {
+			throw new ModelListenerException(exception);
+		}
+	}
+
+	protected void auditOnCreateOrRemove(
+			String eventType, ObjectLayoutColumn objectLayoutColumn)
+		throws ModelListenerException {
+
+		try {
+			AuditMessage auditMessage = AuditMessageBuilder.buildAuditMessage(
+				eventType, ObjectLayoutColumn.class.getName(),
+				objectLayoutColumn.getObjectLayoutColumnId(), null);
+
+			JSONObject additionalInfoJSONObject =
+				auditMessage.getAdditionalInfo();
+
+			additionalInfoJSONObject.put(
+				"objectFieldId", objectLayoutColumn.getObjectFieldId()
+			).put(
+				"objectLayoutRowId", objectLayoutColumn.getObjectLayoutRowId()
+			).put(
+				"priority", objectLayoutColumn.getPriority()
+			).put(
+				"size", objectLayoutColumn.getSize()
+			);
+
+			_auditRouter.route(auditMessage);
 		}
 		catch (Exception exception) {
 			throw new ModelListenerException(exception);

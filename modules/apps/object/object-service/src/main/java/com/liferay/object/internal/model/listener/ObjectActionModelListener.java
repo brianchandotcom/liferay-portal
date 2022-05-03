@@ -15,8 +15,10 @@
 package com.liferay.object.internal.model.listener;
 
 import com.liferay.object.model.ObjectAction;
+import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.audit.AuditRouter;
 import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.security.audit.event.generators.constants.EventTypes;
@@ -39,16 +41,14 @@ public class ObjectActionModelListener extends BaseModelListener<ObjectAction> {
 	public void onBeforeCreate(ObjectAction objectAction)
 		throws ModelListenerException {
 
-		auditObjectAction(
-			null, objectAction.getObjectActionId(), EventTypes.ADD);
+		auditOnCreateOrRemove(EventTypes.ADD, objectAction);
 	}
 
 	@Override
 	public void onBeforeRemove(ObjectAction objectAction)
 		throws ModelListenerException {
 
-		auditObjectAction(
-			null, objectAction.getObjectActionId(), EventTypes.DELETE);
+		auditOnCreateOrRemove(EventTypes.DELETE, objectAction);
 	}
 
 	@Override
@@ -56,20 +56,40 @@ public class ObjectActionModelListener extends BaseModelListener<ObjectAction> {
 			ObjectAction originalObjectAction, ObjectAction objectAction)
 		throws ModelListenerException {
 
-		auditObjectAction(
-			_getModifiedAttributes(originalObjectAction, objectAction),
-			objectAction.getObjectActionId(), EventTypes.UPDATE);
-	}
-
-	protected void auditObjectAction(
-			List<Attribute> attributes, long classPK, String eventType)
-		throws ModelListenerException {
-
 		try {
 			_auditRouter.route(
 				AuditMessageBuilder.buildAuditMessage(
-					eventType, ObjectAction.class.getName(), classPK,
-					attributes));
+					EventTypes.UPDATE, ObjectAction.class.getName(),
+					objectAction.getObjectActionId(),
+					_getModifiedAttributes(
+						originalObjectAction, objectAction)));
+		}
+		catch (Exception exception) {
+			throw new ModelListenerException(exception);
+		}
+	}
+
+	protected void auditOnCreateOrRemove(
+			String eventType, ObjectAction objectAction)
+		throws ModelListenerException {
+
+		try {
+			AuditMessage auditMessage = AuditMessageBuilder.buildAuditMessage(
+				eventType, ObjectAction.class.getName(),
+				objectAction.getObjectActionId(), null);
+
+			JSONObject additionalInfoJSONObject =
+				auditMessage.getAdditionalInfo();
+
+			additionalInfoJSONObject.put(
+				"active", objectAction.isActive()
+			).put(
+				"name", objectAction.getName()
+			).put(
+				"parameters", objectAction.getParameters()
+			);
+
+			_auditRouter.route(auditMessage);
 		}
 		catch (Exception exception) {
 			throw new ModelListenerException(exception);

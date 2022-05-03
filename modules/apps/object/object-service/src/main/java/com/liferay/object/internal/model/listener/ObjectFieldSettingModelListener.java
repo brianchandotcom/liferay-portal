@@ -15,8 +15,10 @@
 package com.liferay.object.internal.model.listener;
 
 import com.liferay.object.model.ObjectFieldSetting;
+import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.audit.AuditRouter;
 import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.security.audit.event.generators.constants.EventTypes;
@@ -40,17 +42,14 @@ public class ObjectFieldSettingModelListener
 	public void onBeforeCreate(ObjectFieldSetting objectFieldSetting)
 		throws ModelListenerException {
 
-		auditObjectFieldSetting(
-			null, objectFieldSetting.getObjectFieldSettingId(), EventTypes.ADD);
+		auditOnCreateOrRemove(EventTypes.ADD, objectFieldSetting);
 	}
 
 	@Override
 	public void onBeforeRemove(ObjectFieldSetting objectFieldSetting)
 		throws ModelListenerException {
 
-		auditObjectFieldSetting(
-			null, objectFieldSetting.getObjectFieldSettingId(),
-			EventTypes.DELETE);
+		auditOnCreateOrRemove(EventTypes.DELETE, objectFieldSetting);
 	}
 
 	@Override
@@ -59,21 +58,40 @@ public class ObjectFieldSettingModelListener
 			ObjectFieldSetting objectFieldSetting)
 		throws ModelListenerException {
 
-		auditObjectFieldSetting(
-			_getModifiedAttributes(
-				originalOObjectFieldSetting, objectFieldSetting),
-			objectFieldSetting.getObjectFieldSettingId(), EventTypes.UPDATE);
-	}
-
-	protected void auditObjectFieldSetting(
-			List<Attribute> attributes, long classPK, String eventType)
-		throws ModelListenerException {
-
 		try {
 			_auditRouter.route(
 				AuditMessageBuilder.buildAuditMessage(
-					eventType, ObjectFieldSetting.class.getName(), classPK,
-					attributes));
+					EventTypes.UPDATE, ObjectFieldSetting.class.getName(),
+					objectFieldSetting.getObjectFieldSettingId(),
+					_getModifiedAttributes(
+						originalOObjectFieldSetting, objectFieldSetting)));
+		}
+		catch (Exception exception) {
+			throw new ModelListenerException(exception);
+		}
+	}
+
+	protected void auditOnCreateOrRemove(
+			String eventType, ObjectFieldSetting objectFieldSetting)
+		throws ModelListenerException {
+
+		try {
+			AuditMessage auditMessage = AuditMessageBuilder.buildAuditMessage(
+				eventType, ObjectFieldSetting.class.getName(),
+				objectFieldSetting.getObjectFieldSettingId(), null);
+
+			JSONObject additionalInfoJSONObject =
+				auditMessage.getAdditionalInfo();
+
+			additionalInfoJSONObject.put(
+				"name", objectFieldSetting.getName()
+			).put(
+				"objectFieldId", objectFieldSetting.getObjectFieldId()
+			).put(
+				"value", objectFieldSetting.getValue()
+			);
+
+			_auditRouter.route(auditMessage);
 		}
 		catch (Exception exception) {
 			throw new ModelListenerException(exception);

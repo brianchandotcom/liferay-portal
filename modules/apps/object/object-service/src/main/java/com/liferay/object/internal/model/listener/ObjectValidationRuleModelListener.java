@@ -15,8 +15,10 @@
 package com.liferay.object.internal.model.listener;
 
 import com.liferay.object.model.ObjectValidationRule;
+import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.audit.AuditRouter;
 import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.security.audit.event.generators.constants.EventTypes;
@@ -40,18 +42,14 @@ public class ObjectValidationRuleModelListener
 	public void onBeforeCreate(ObjectValidationRule objectValidationRule)
 		throws ModelListenerException {
 
-		auditObjectValidationRule(
-			null, objectValidationRule.getObjectValidationRuleId(),
-			EventTypes.ADD);
+		auditOnCreateOrRemove(EventTypes.ADD, objectValidationRule);
 	}
 
 	@Override
 	public void onBeforeRemove(ObjectValidationRule objectValidationRule)
 		throws ModelListenerException {
 
-		auditObjectValidationRule(
-			null, objectValidationRule.getObjectValidationRuleId(),
-			EventTypes.DELETE);
+		auditOnCreateOrRemove(EventTypes.DELETE, objectValidationRule);
 	}
 
 	@Override
@@ -60,22 +58,44 @@ public class ObjectValidationRuleModelListener
 			ObjectValidationRule objectValidationRule)
 		throws ModelListenerException {
 
-		auditObjectValidationRule(
-			_getModifiedAttributes(
-				originalObjectValidationRule, objectValidationRule),
-			objectValidationRule.getObjectValidationRuleId(),
-			EventTypes.UPDATE);
-	}
-
-	protected void auditObjectValidationRule(
-			List<Attribute> attributes, long classPK, String eventType)
-		throws ModelListenerException {
-
 		try {
 			_auditRouter.route(
 				AuditMessageBuilder.buildAuditMessage(
-					eventType, ObjectValidationRule.class.getName(), classPK,
-					attributes));
+					EventTypes.UPDATE, ObjectValidationRule.class.getName(),
+					objectValidationRule.getObjectValidationRuleId(),
+					_getModifiedAttributes(
+						originalObjectValidationRule, objectValidationRule)));
+		}
+		catch (Exception exception) {
+			throw new ModelListenerException(exception);
+		}
+	}
+
+	protected void auditOnCreateOrRemove(
+			String eventType, ObjectValidationRule objectValidationRule)
+		throws ModelListenerException {
+
+		try {
+			AuditMessage auditMessage = AuditMessageBuilder.buildAuditMessage(
+				eventType, ObjectValidationRule.class.getName(),
+				objectValidationRule.getObjectValidationRuleId(), null);
+
+			JSONObject additionalInfoJSONObject =
+				auditMessage.getAdditionalInfo();
+
+			additionalInfoJSONObject.put(
+				"active", objectValidationRule.isActive()
+			).put(
+				"engine", objectValidationRule.getEngine()
+			).put(
+				"errorLabelMap", objectValidationRule.getErrorLabelMap()
+			).put(
+				"nameMap", objectValidationRule.getNameMap()
+			).put(
+				"script", objectValidationRule.getScript()
+			);
+
+			_auditRouter.route(auditMessage);
 		}
 		catch (Exception exception) {
 			throw new ModelListenerException(exception);

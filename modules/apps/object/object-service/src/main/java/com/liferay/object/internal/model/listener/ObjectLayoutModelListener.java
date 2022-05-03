@@ -15,8 +15,10 @@
 package com.liferay.object.internal.model.listener;
 
 import com.liferay.object.model.ObjectLayout;
+import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.audit.AuditRouter;
 import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.security.audit.event.generators.constants.EventTypes;
@@ -39,16 +41,14 @@ public class ObjectLayoutModelListener extends BaseModelListener<ObjectLayout> {
 	public void onBeforeCreate(ObjectLayout objectLayout)
 		throws ModelListenerException {
 
-		auditObjectLayout(
-			null, objectLayout.getObjectLayoutId(), EventTypes.ADD);
+		auditOnCreateOrRemove(EventTypes.ADD, objectLayout);
 	}
 
 	@Override
 	public void onBeforeRemove(ObjectLayout objectLayout)
 		throws ModelListenerException {
 
-		auditObjectLayout(
-			null, objectLayout.getObjectLayoutId(), EventTypes.DELETE);
+		auditOnCreateOrRemove(EventTypes.DELETE, objectLayout);
 	}
 
 	@Override
@@ -56,20 +56,38 @@ public class ObjectLayoutModelListener extends BaseModelListener<ObjectLayout> {
 			ObjectLayout originalObjectLayout, ObjectLayout objectLayout)
 		throws ModelListenerException {
 
-		auditObjectLayout(
-			_getModifiedAttributes(originalObjectLayout, objectLayout),
-			objectLayout.getObjectLayoutId(), EventTypes.UPDATE);
-	}
-
-	protected void auditObjectLayout(
-			List<Attribute> attributes, long classPK, String eventType)
-		throws ModelListenerException {
-
 		try {
 			_auditRouter.route(
 				AuditMessageBuilder.buildAuditMessage(
-					eventType, ObjectLayout.class.getName(), classPK,
-					attributes));
+					EventTypes.UPDATE, ObjectLayout.class.getName(),
+					objectLayout.getObjectLayoutId(),
+					_getModifiedAttributes(
+						originalObjectLayout, objectLayout)));
+		}
+		catch (Exception exception) {
+			throw new ModelListenerException(exception);
+		}
+	}
+
+	protected void auditOnCreateOrRemove(
+			String eventType, ObjectLayout objectLayout)
+		throws ModelListenerException {
+
+		try {
+			AuditMessage auditMessage = AuditMessageBuilder.buildAuditMessage(
+				eventType, ObjectLayout.class.getName(),
+				objectLayout.getObjectLayoutId(), null);
+
+			JSONObject additionalInfoJSONObject =
+				auditMessage.getAdditionalInfo();
+
+			additionalInfoJSONObject.put(
+				"defaultObjectLayout", objectLayout.isDefaultObjectLayout()
+			).put(
+				"nameMap", objectLayout.getNameMap()
+			);
+
+			_auditRouter.route(auditMessage);
 		}
 		catch (Exception exception) {
 			throw new ModelListenerException(exception);

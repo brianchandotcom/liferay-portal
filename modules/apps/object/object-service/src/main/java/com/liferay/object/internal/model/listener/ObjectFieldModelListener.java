@@ -15,8 +15,10 @@
 package com.liferay.object.internal.model.listener;
 
 import com.liferay.object.model.ObjectField;
+import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.audit.AuditRouter;
 import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.security.audit.event.generators.constants.EventTypes;
@@ -39,15 +41,14 @@ public class ObjectFieldModelListener extends BaseModelListener<ObjectField> {
 	public void onBeforeCreate(ObjectField objectField)
 		throws ModelListenerException {
 
-		auditObjectField(null, objectField.getObjectFieldId(), EventTypes.ADD);
+		auditOnCreateOrRemove(EventTypes.ADD, objectField);
 	}
 
 	@Override
 	public void onBeforeRemove(ObjectField objectField)
 		throws ModelListenerException {
 
-		auditObjectField(
-			null, objectField.getObjectFieldId(), EventTypes.DELETE);
+		auditOnCreateOrRemove(EventTypes.DELETE, objectField);
 	}
 
 	@Override
@@ -55,20 +56,53 @@ public class ObjectFieldModelListener extends BaseModelListener<ObjectField> {
 			ObjectField originalObjectField, ObjectField objectField)
 		throws ModelListenerException {
 
-		auditObjectField(
-			_getModifiedAttributes(originalObjectField, objectField),
-			objectField.getObjectFieldId(), EventTypes.UPDATE);
-	}
-
-	protected void auditObjectField(
-			List<Attribute> attributes, long classPK, String eventType)
-		throws ModelListenerException {
-
 		try {
 			_auditRouter.route(
 				AuditMessageBuilder.buildAuditMessage(
-					eventType, ObjectField.class.getName(), classPK,
-					attributes));
+					EventTypes.UPDATE, ObjectField.class.getName(),
+					objectField.getObjectFieldId(),
+					_getModifiedAttributes(originalObjectField, objectField)));
+		}
+		catch (Exception exception) {
+			throw new ModelListenerException(exception);
+		}
+	}
+
+	protected void auditOnCreateOrRemove(
+			String eventType, ObjectField objectField)
+		throws ModelListenerException {
+
+		try {
+			AuditMessage auditMessage = AuditMessageBuilder.buildAuditMessage(
+				eventType, ObjectField.class.getName(),
+				objectField.getObjectFieldId(), null);
+
+			JSONObject additionalInfoJSONObject =
+				auditMessage.getAdditionalInfo();
+
+			additionalInfoJSONObject.put(
+				"businessType", objectField.getBusinessType()
+			).put(
+				"DBColumnName", objectField.getDBColumnName()
+			).put(
+				"DBType", objectField.getDBType()
+			).put(
+				"indexed", objectField.isIndexed()
+			).put(
+				"indexedAsKeyword", objectField.isIndexedAsKeyword()
+			).put(
+				"indexedLanguageId", objectField.getIndexedLanguageId()
+			).put(
+				"labelMap", objectField.getLabelMap()
+			).put(
+				"listTypeDefinitionId", objectField.getListTypeDefinitionId()
+			).put(
+				"name", objectField.getName()
+			).put(
+				"required", objectField.isRequired()
+			);
+
+			_auditRouter.route(auditMessage);
 		}
 		catch (Exception exception) {
 			throw new ModelListenerException(exception);

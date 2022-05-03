@@ -15,8 +15,10 @@
 package com.liferay.object.internal.model.listener;
 
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.audit.AuditRouter;
 import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.security.audit.event.generators.constants.EventTypes;
@@ -40,17 +42,14 @@ public class ObjectRelationshipModelListener
 	public void onBeforeCreate(ObjectRelationship objectRelationship)
 		throws ModelListenerException {
 
-		auditObjectRelationship(
-			null, objectRelationship.getObjectRelationshipId(), EventTypes.ADD);
+		auditOnCreateOrRemove(EventTypes.ADD, objectRelationship);
 	}
 
 	@Override
 	public void onBeforeRemove(ObjectRelationship objectRelationship)
 		throws ModelListenerException {
 
-		auditObjectRelationship(
-			null, objectRelationship.getObjectRelationshipId(),
-			EventTypes.DELETE);
+		auditOnCreateOrRemove(EventTypes.DELETE, objectRelationship);
 	}
 
 	@Override
@@ -59,21 +58,38 @@ public class ObjectRelationshipModelListener
 			ObjectRelationship objectRelationship)
 		throws ModelListenerException {
 
-		auditObjectRelationship(
-			_getModifiedAttributes(
-				originalObjectRelationship, objectRelationship),
-			objectRelationship.getObjectRelationshipId(), EventTypes.UPDATE);
-	}
-
-	protected void auditObjectRelationship(
-			List<Attribute> attributes, long classPK, String eventType)
-		throws ModelListenerException {
-
 		try {
 			_auditRouter.route(
 				AuditMessageBuilder.buildAuditMessage(
-					eventType, ObjectRelationship.class.getName(), classPK,
-					attributes));
+					EventTypes.UPDATE, ObjectRelationship.class.getName(),
+					objectRelationship.getObjectRelationshipId(),
+					_getModifiedAttributes(
+						originalObjectRelationship, objectRelationship)));
+		}
+		catch (Exception exception) {
+			throw new ModelListenerException(exception);
+		}
+	}
+
+	protected void auditOnCreateOrRemove(
+			String eventType, ObjectRelationship objectRelationship)
+		throws ModelListenerException {
+
+		try {
+			AuditMessage auditMessage = AuditMessageBuilder.buildAuditMessage(
+				eventType, ObjectRelationship.class.getName(),
+				objectRelationship.getObjectRelationshipId(), null);
+
+			JSONObject additionalInfoJSONObject =
+				auditMessage.getAdditionalInfo();
+
+			additionalInfoJSONObject.put(
+				"deletionType", objectRelationship.getDeletionType()
+			).put(
+				"labelMap", objectRelationship.getLabelMap()
+			);
+
+			_auditRouter.route(auditMessage);
 		}
 		catch (Exception exception) {
 			throw new ModelListenerException(exception);

@@ -15,8 +15,10 @@
 package com.liferay.object.internal.model.listener;
 
 import com.liferay.object.model.ObjectViewSortColumn;
+import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.audit.AuditRouter;
 import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.security.audit.event.generators.constants.EventTypes;
@@ -40,18 +42,14 @@ public class ObjectViewSortColumnModelListener
 	public void onBeforeCreate(ObjectViewSortColumn objectViewSortColumn)
 		throws ModelListenerException {
 
-		auditObjectViewSortColumn(
-			null, objectViewSortColumn.getObjectViewSortColumnId(),
-			EventTypes.ADD);
+		auditOnCreateOrRemove(EventTypes.ADD, objectViewSortColumn);
 	}
 
 	@Override
 	public void onBeforeRemove(ObjectViewSortColumn objectViewSortColumn)
 		throws ModelListenerException {
 
-		auditObjectViewSortColumn(
-			null, objectViewSortColumn.getObjectViewSortColumnId(),
-			EventTypes.DELETE);
+		auditOnCreateOrRemove(EventTypes.DELETE, objectViewSortColumn);
 	}
 
 	@Override
@@ -60,22 +58,40 @@ public class ObjectViewSortColumnModelListener
 			ObjectViewSortColumn objectViewSortColumn)
 		throws ModelListenerException {
 
-		auditObjectViewSortColumn(
-			_getModifiedAttributes(
-				originalObjectViewSortColumn, objectViewSortColumn),
-			objectViewSortColumn.getObjectViewSortColumnId(),
-			EventTypes.UPDATE);
-	}
-
-	protected void auditObjectViewSortColumn(
-			List<Attribute> attributes, long classPK, String eventType)
-		throws ModelListenerException {
-
 		try {
 			_auditRouter.route(
 				AuditMessageBuilder.buildAuditMessage(
-					eventType, ObjectViewSortColumn.class.getName(), classPK,
-					attributes));
+					EventTypes.UPDATE, ObjectViewSortColumn.class.getName(),
+					objectViewSortColumn.getObjectViewSortColumnId(),
+					_getModifiedAttributes(
+						originalObjectViewSortColumn, objectViewSortColumn)));
+		}
+		catch (Exception exception) {
+			throw new ModelListenerException(exception);
+		}
+	}
+
+	protected void auditOnCreateOrRemove(
+			String eventType, ObjectViewSortColumn objectViewSortColumn)
+		throws ModelListenerException {
+
+		try {
+			AuditMessage auditMessage = AuditMessageBuilder.buildAuditMessage(
+				eventType, ObjectViewSortColumn.class.getName(),
+				objectViewSortColumn.getObjectViewSortColumnId(), null);
+
+			JSONObject additionalInfoJSONObject =
+				auditMessage.getAdditionalInfo();
+
+			additionalInfoJSONObject.put(
+				"objectFieldName", objectViewSortColumn.getObjectFieldName()
+			).put(
+				"priority", objectViewSortColumn.getPriority()
+			).put(
+				"sortOrder", objectViewSortColumn.getSortOrder()
+			);
+
+			_auditRouter.route(auditMessage);
 		}
 		catch (Exception exception) {
 			throw new ModelListenerException(exception);

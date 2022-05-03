@@ -15,8 +15,10 @@
 package com.liferay.object.internal.model.listener;
 
 import com.liferay.object.model.ObjectView;
+import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.audit.AuditRouter;
 import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.security.audit.event.generators.constants.EventTypes;
@@ -39,14 +41,14 @@ public class ObjectViewModelListener extends BaseModelListener<ObjectView> {
 	public void onBeforeCreate(ObjectView objectView)
 		throws ModelListenerException {
 
-		auditObjectView(null, objectView.getObjectViewId(), EventTypes.ADD);
+		auditOnCreateOrRemove(EventTypes.ADD, objectView);
 	}
 
 	@Override
 	public void onBeforeRemove(ObjectView objectView)
 		throws ModelListenerException {
 
-		auditObjectView(null, objectView.getObjectViewId(), EventTypes.DELETE);
+		auditOnCreateOrRemove(EventTypes.DELETE, objectView);
 	}
 
 	@Override
@@ -54,20 +56,37 @@ public class ObjectViewModelListener extends BaseModelListener<ObjectView> {
 			ObjectView originalObjectView, ObjectView objectView)
 		throws ModelListenerException {
 
-		auditObjectView(
-			_getModifiedAttributes(originalObjectView, objectView),
-			objectView.getObjectViewId(), EventTypes.UPDATE);
-	}
-
-	protected void auditObjectView(
-			List<Attribute> attributes, long classPK, String eventType)
-		throws ModelListenerException {
-
 		try {
 			_auditRouter.route(
 				AuditMessageBuilder.buildAuditMessage(
-					eventType, ObjectView.class.getName(), classPK,
-					attributes));
+					EventTypes.UPDATE, ObjectView.class.getName(),
+					objectView.getObjectViewId(),
+					_getModifiedAttributes(originalObjectView, objectView)));
+		}
+		catch (Exception exception) {
+			throw new ModelListenerException(exception);
+		}
+	}
+
+	protected void auditOnCreateOrRemove(
+			String eventType, ObjectView objectView)
+		throws ModelListenerException {
+
+		try {
+			AuditMessage auditMessage = AuditMessageBuilder.buildAuditMessage(
+				eventType, ObjectView.class.getName(),
+				objectView.getObjectViewId(), null);
+
+			JSONObject additionalInfoJSONObject =
+				auditMessage.getAdditionalInfo();
+
+			additionalInfoJSONObject.put(
+				"defaultObjectView", objectView.isDefaultObjectView()
+			).put(
+				"nameMap", objectView.getNameMap()
+			);
+
+			_auditRouter.route(auditMessage);
 		}
 		catch (Exception exception) {
 			throw new ModelListenerException(exception);

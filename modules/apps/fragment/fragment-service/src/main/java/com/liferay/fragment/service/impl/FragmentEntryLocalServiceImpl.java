@@ -345,8 +345,20 @@ public class FragmentEntryLocalServiceImpl
 	public FragmentEntry fetchFragmentEntry(
 		long groupId, String fragmentEntryKey) {
 
-		return fragmentEntryPersistence.fetchByG_FEK_First(
-			groupId, _getFragmentEntryKey(fragmentEntryKey), null);
+		FragmentEntry fragmentEntry =
+			fragmentEntryPersistence.fetchByG_FEK_First(
+				groupId, _getFragmentEntryKey(fragmentEntryKey), null);
+
+		if (fragmentEntry == null) {
+			return null;
+		}
+
+		if (!fragmentEntry.isDraft()) {
+			return fragmentEntry;
+		}
+
+		return fetchFragmentEntryByUuidAndGroupId(
+			fragmentEntry.getUuid(), groupId);
 	}
 
 	@Override

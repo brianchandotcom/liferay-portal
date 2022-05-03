@@ -1,0 +1,5 @@
+# CREOLE image reference:
+
+{{/documents/d/[$GROUP_NAME$]/[$FILE_FRIENDLY_URL$]/}}
+{{[$WEB_ID$]/documents/d/[$GROUP_NAME$]/[$FILE_FRIENDLY_URL$]/}}
+

@@ -2244,11 +2244,9 @@ public class GitWorkingDirectory {
 	protected List<File> getSubdirectoriesContainingFiles(
 		int depth, List<File> files, File rootDirectory) {
 
-		List<File> subdirectories = JenkinsResultsParserUtil.getSubdirectories(
-			depth, rootDirectory);
-
 		return JenkinsResultsParserUtil.getDirectoriesContainingFiles(
-			subdirectories, files);
+			JenkinsResultsParserUtil.getSubdirectories(depth, rootDirectory),
+			files);
 	}
 
 	protected boolean isOnlyMatchingFilesModified(MultiPattern multiPattern) {

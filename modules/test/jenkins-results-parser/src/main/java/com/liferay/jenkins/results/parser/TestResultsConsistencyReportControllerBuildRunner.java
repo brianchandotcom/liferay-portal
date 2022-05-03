@@ -75,14 +75,12 @@ public class TestResultsConsistencyReportControllerBuildRunner
 	}
 
 	protected String getJobURL() {
-		String mostAvailableMasterURL =
+		return JenkinsResultsParserUtil.combine(
 			JenkinsResultsParserUtil.getMostAvailableMasterURL(
 				JenkinsResultsParserUtil.combine(
 					"http://" + getInvocationCohortName() + ".liferay.com"),
-				1);
-
-		return JenkinsResultsParserUtil.combine(
-			mostAvailableMasterURL, "/job/test-results-consistency-report");
+				1),
+			"/job/test-results-consistency-report");
 	}
 
 	protected void invokeTestSuiteBuilds() {

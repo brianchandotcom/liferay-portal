@@ -164,11 +164,10 @@ public abstract class BaseTopLevelBuildData
 				buildProperties, JenkinsMaster.getSlaveRAMMinimumDefault(),
 				JenkinsMaster.getSlavesPerHostDefault(), cohortName);
 
-		List<String> slaves = JenkinsResultsParserUtil.getSlaves(
-			buildProperties, cohortName + "-[1-9]{1}[0-9]?");
-
 		List<String> distNodes = JenkinsResultsParserUtil.getRandomList(
-			slaves, jenkinsMasters.size());
+			JenkinsResultsParserUtil.getSlaves(
+				buildProperties, cohortName + "-[1-9]{1}[0-9]?"),
+			jenkinsMasters.size());
 
 		return StringUtils.join(distNodes, ",");
 	}

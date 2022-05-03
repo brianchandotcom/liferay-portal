@@ -45,7 +45,7 @@ FileVersion fileVersion = (FileVersion)request.getAttribute(WebKeys.DOCUMENT_LIB
 					<div class="aspect-ratio-item-center-middle aspect-ratio-item-fluid card-type-asset-icon">
 						<div class="text-secondary">
 							<svg aria-hidden="true" class="h4 lexicon-icon reference-mark">
-								<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/clay/icons.svg#<%= assetRenderer.getIconCssClass() %>" />
+								<use xlink:href="<%= IconsUtil.getSpritemapPath(themeDisplay) %>#<%= assetRenderer.getIconCssClass() %>" />
 							</svg>
 						</div>
 					</div>

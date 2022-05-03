@@ -8,8 +8,8 @@
 	{@param groupIds: string}
 	{@param id: string}
 	{@param? namespace: string}
-	{@param pathThemeImages: string}
 	{@param rules: list<[type: string, queryAndOperator: bool, queryContains: bool]>}
+	{@param spritemap: string}
 	{@param tagSelectorURL: string}
 	{@param vocabularyIds: string}
 
@@ -37,7 +37,7 @@
 						{param groupIds: $groupIds /}
 						{param index: $ruleIndex /}
 						{param namespace: $namespace /}
-						{param pathThemeImages: $pathThemeImages /}
+						{param spritemap: $spritemap /}
 						{param rule: $rule /}
 						{param tagSelectorURL: $tagSelectorURL /}
 						{param vocabularyIds: $vocabularyIds /}
@@ -47,7 +47,7 @@
 		</ul>
 
 		{call .addRuleButton}
-			{param pathThemeImages: $pathThemeImages /}
+			{param spritemap: $spritemap /}
 		{/call}
 	</div>
 {/template}
@@ -56,13 +56,13 @@
  * Renders the Add Button at the bottom of the timeline
  */
 {template .addRuleButton}
-	{@param pathThemeImages: string}
+	{@param spritemap: string}
 
 	<div class="addbutton-timeline-item">
 		<div class="add-condition timeline-increment-icon">
 			<button class="btn btn-monospaced btn-primary btn-xs form-builder-rule-add-condition form-builder-timeline-add-item" data-onclick="addRule_" type="button">
 				<svg class="icon-monospaced lexicon-icon">
-					<use xlink:href="{$pathThemeImages}/clay/icons.svg#plus"></use>
+					<use xlink:href="{$spritemap}#plus"></use>
 				</svg>
 			</button>
 		</div>
@@ -77,8 +77,8 @@
 	{@param groupIds: string}
 	{@param index: int}
 	{@param? namespace: string}
-	{@param pathThemeImages: string}
 	{@param rule: [type: string, queryAndOperator: bool, queryContains: bool]}
+	{@param spritemap: string}
 	{@param tagSelectorURL: string}
 	{@param vocabularyIds: string}
 
@@ -138,7 +138,7 @@
 		</div>
 
 		{call .trashButton}
-			{param pathThemeImages: $pathThemeImages /}
+			{param spritemap: $spritemap /}
 			{param ruleId: $index /}
 		{/call}
 	</li>
@@ -148,13 +148,13 @@
  * Renders a trash button that allows deleting the current rule row
  */
 {template .trashButton}
-	{@param pathThemeImages: string}
 	{@param ruleId: int}
+	{@param spritemap: string}
 
 	<div class="container-trash">
 		<button class="btn btn-link btn-monospaced btn-xs condition-card-delete" data-onclick="deleteRule_" data-rule-id="{$ruleId}" type="button">
 			<svg class="icon-monospaced lexicon-icon">
-				<use xlink:href="{$pathThemeImages}/clay/icons.svg#trash"></use>
+				<use xlink:href="{$spritemap}#trash"></use>
 			</svg>
 		</button>
 	</div>

@@ -19,6 +19,7 @@ import com.liferay.change.tracking.web.internal.scheduler.ScheduledPublishInfo;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.icons.IconsUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -97,7 +98,7 @@ public class ReschedulePublicationDisplayContext {
 				"minutes", String.format("%02d", calendar.get(Calendar.MINUTE))
 			)
 		).put(
-			"spritemap", _themeDisplay.getPathThemeImages() + "/clay/icons.svg"
+			"spritemap", IconsUtil.getSpritemapPath(_themeDisplay)
 		).put(
 			"timeZone",
 			() -> {

@@ -75,7 +75,7 @@
 							fieldName: ['name', 'LANG'],
 						},
 					],
-					spritemap: '<%= themeDisplay.getPathThemeImages() %>/clay/icons.svg',
+					spritemap: '<%= IconsUtil.getSpritemapPath(themeDisplay) %>',
 					titleLabel: '<%= LanguageUtil.get(request, "add-existing-order-type") %>',
 				});
 			</aui:script>

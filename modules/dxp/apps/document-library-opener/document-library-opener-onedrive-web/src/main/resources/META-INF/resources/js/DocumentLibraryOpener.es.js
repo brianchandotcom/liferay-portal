@@ -15,6 +15,7 @@ import {
 	openSimpleInputModal,
 	openToast,
 } from 'frontend-js-web';
+import {getSpritemapPath} from '@liferay/frontend-icons-web';
 
 const TIME_POLLING = 500;
 const TIME_SHOW_MSG = 2000;
@@ -126,8 +127,7 @@ class DocumentLibraryOpener {
 					});
 				}
 			},
-			spritemap:
-				Liferay.ThemeDisplay.getPathThemeImages() + '/clay/icons.svg',
+			spritemap: getSpritemapPath(),
 		});
 	}
 

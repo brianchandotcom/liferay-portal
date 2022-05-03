@@ -35,6 +35,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.icons.IconsUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
@@ -245,7 +246,7 @@ public class PublicationsDisplayContext extends BasePublicationsDisplayContext {
 					"value", PublicationRoleConstants.ROLE_ADMIN
 				))
 		).put(
-			"spritemap", _themeDisplay.getPathThemeImages() + "/clay/icons.svg"
+			"spritemap", IconsUtil.getSpritemapPath(_themeDisplay)
 		).put(
 			"verifyEmailAddressURL",
 			() -> {

@@ -95,12 +95,12 @@ else {
 				<c:choose>
 					<c:when test='<%= pluginType.equals("portlets") %>'>
 						<liferay-util:include page="/icon.jsp" servletContext="<%= application %>">
-							<liferay-util:param name="iconURL" value='<%= PortalUtil.getPathContext(request) + "/images/icons.svg#portlets" %>' />
+							<liferay-util:param name="iconURL" value='<%= IconsUtil.getSpritemapPath(themeDisplay) + "#portlets" %>' />
 						</liferay-util:include>
 					</c:when>
 					<c:otherwise>
 						<liferay-util:include page="/icon.jsp" servletContext="<%= application %>">
-							<liferay-util:param name="iconURL" value='<%= PortalUtil.getPathContext(request) + "/images/icons.svg#components" %>' />
+							<liferay-util:param name="iconURL" value='<%= IconsUtil.getSpritemapPath(themeDisplay) + "#components" %>' />
 						</liferay-util:include>
 					</c:otherwise>
 				</c:choose>

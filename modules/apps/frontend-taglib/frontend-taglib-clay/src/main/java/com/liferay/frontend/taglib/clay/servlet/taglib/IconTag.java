@@ -16,6 +16,7 @@ package com.liferay.frontend.taglib.clay.servlet.taglib;
 
 import com.liferay.frontend.taglib.clay.internal.servlet.taglib.BaseContainerTag;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.icons.IconsUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -45,9 +46,7 @@ public class IconTag extends BaseContainerTag {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		String pathThemeImages = themeDisplay.getPathThemeImages();
-
-		_spritemap = pathThemeImages.concat("/clay/icons.svg");
+		_spritemap = IconsUtil.getSpritemapPath(themeDisplay);
 
 		return super.doStartTag();
 	}

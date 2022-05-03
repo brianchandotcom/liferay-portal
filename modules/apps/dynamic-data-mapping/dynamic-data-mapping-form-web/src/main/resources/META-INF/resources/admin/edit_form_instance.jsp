@@ -203,7 +203,7 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 					).put(
 						"showPublishAlert", ddmFormAdminDisplayContext.isShowPublishAlert()
 					).put(
-						"spritemap", themeDisplay.getPathThemeImages() + "/clay/icons.svg"
+						"spritemap", IconsUtil.getSpritemapPath(themeDisplay)
 					).put(
 						"view", "formBuilder"
 					).build()

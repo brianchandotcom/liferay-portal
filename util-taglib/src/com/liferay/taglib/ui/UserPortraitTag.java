@@ -18,6 +18,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.icons.IconsUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -60,8 +61,8 @@ public class UserPortraitTag extends IncludeTag {
 			sb.append("\"><span class=\"inline-item\">");
 			sb.append("<svg class=\"lexicon-icon\">");
 			sb.append("<use href=\"");
-			sb.append(themeDisplay.getPathThemeImages());
-			sb.append("/clay/icons.svg#user\" /></svg>");
+			sb.append(IconsUtil.getSpritemapPath(themeDisplay));
+			sb.append("#user\" /></svg>");
 			sb.append("</span></span>");
 
 			return sb.toString();

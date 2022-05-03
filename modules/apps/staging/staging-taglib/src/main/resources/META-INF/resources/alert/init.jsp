@@ -25,6 +25,6 @@ String bodyContentString = (bodyContent != null) ? bodyContent.toString() : Stri
 
 boolean dismissible = GetterUtil.getBoolean(request.getAttribute("liferay-staging:alert:dismissible"));
 boolean fluid = GetterUtil.getBoolean(request.getAttribute("liferay-staging:alert:fluid"));
-String themeDisplayPath = themeDisplay.getPathThemeImages();
 String type = GetterUtil.getString(request.getAttribute("liferay-staging:alert:type"));
+String spritemap = IconsUtil.getSpritemapPath(themeDisplay);
 %>

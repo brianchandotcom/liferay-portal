@@ -84,7 +84,7 @@ long commercePriceModifierId = commercePriceListDisplayContext.getCommercePriceM
 							fieldName: ['name'],
 						},
 					],
-					spritemap: '<%= themeDisplay.getPathThemeImages() %>/clay/icons.svg',
+					spritemap: '<%= IconsUtil.getSpritemapPath(themeDisplay) %>',
 					titleLabel: '<%= LanguageUtil.get(request, "add-existing-category") %>',
 				});
 			</aui:script>

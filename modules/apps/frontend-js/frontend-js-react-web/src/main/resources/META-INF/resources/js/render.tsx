@@ -13,6 +13,7 @@
  */
 
 import {ClayIconSpriteContext} from '@clayui/icon';
+import {getSpritemapPath} from '@liferay/frontend-icons-web';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -49,9 +50,7 @@ export default function render(
 ) {
 	if (!(window.Liferay as any).SPA || (window.Liferay as any).SPA.app) {
 		const {portletId} = renderData;
-		const spritemap =
-			(window.Liferay as any).ThemeDisplay.getPathThemeImages() +
-			'/clay/icons.svg';
+		const spritemap = getSpritemapPath();
 
 		let {componentId} = renderData;
 

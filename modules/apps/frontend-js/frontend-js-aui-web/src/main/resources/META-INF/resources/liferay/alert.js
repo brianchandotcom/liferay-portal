@@ -239,7 +239,7 @@ AUI.add(
 					var bodyContent = Lang.sub(instance.TPL_CONTENT, {
 						icon: instance.get('icon'),
 						message: instance.get('message'),
-						pathThemeImages: themeDisplay.getPathThemeImages(),
+						spritemap: Liferay._ICONS_.spritemap,
 						title: instance.get('title') || '',
 					});
 
@@ -258,7 +258,7 @@ AUI.add(
 				TPL_ALERTS_CONTAINER: '<div class="lfr-alert-container"></div>',
 
 				TPL_CONTENT:
-					'<strong class="lead"><svg class="lexicon-icon" focusable="false"><use href="{pathThemeImages}/clay/icons.svg#{icon}" /><title>{title}</title></svg> {title}</strong>{message}',
+					'<strong class="lead"><svg class="lexicon-icon" focusable="false"><use href="{spritemap}#{icon}" /><title>{title}</title></svg> {title}</strong>{message}',
 
 				bindUI() {
 					var instance = this;

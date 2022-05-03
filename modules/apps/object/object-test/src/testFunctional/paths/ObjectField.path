@@ -23,8 +23,8 @@
 		<td></td>
 	</tr>
 	<tr>
-		<td>GLOBAL_HOME_FOLDER</td>
-		<td>//nav[@id = '_com_liferay_item_selector_web_portlet_ItemSelectorPortlet_breadcrumbs-defaultScreen']//span[contains(text(),'Global')]</td>
+		<td>VIEW_HOME_FOLDER</td>
+		<td>//nav[@id = '_com_liferay_item_selector_web_portlet_ItemSelectorPortlet_breadcrumbs-defaultScreen']//span[contains(text(),'${key_viewHomeFolder}')]</td>
 		<td></td>
 	</tr>
 	<tr>

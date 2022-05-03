@@ -16,10 +16,16 @@ definition {
 			value1 = "${folderName}");
 	}
 
-	macro assertGlobalHomeFolder {
+	macro assertDocumentsAndMediaHomeFolder {
 		IFrame.selectModalFrame();
 
-		AssertElementPresent(locator1 = "ObjectField#GLOBAL_HOME_FOLDER");
+		AssertElementPresent(
+			key_viewHomeFolder = "${viewHomeFolder}",
+			locator1 = "ObjectField#VIEW_HOME_FOLDER");
+
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "${infoText}");
 	}
 
 	macro assertLabel {
@@ -84,6 +90,24 @@ definition {
 		AssertElementPresent(locator1 = "ObjectField#TYPE_FIELD_DISABLED");
 	}
 
+	macro assertValueOnLimitCharacters {
+		AssertElementPresent(
+			key_maxValue = "${maxValue}",
+			locator1 = "ObjectField#MAXIMUM_NUMBER_CHARACTERS_OPTION");
+	}
+
+	macro assertValueOnLimitCharactersNotPresent {
+		AssertElementNotPresent(
+			key_maxValue = "${maxValue}",
+			locator1 = "ObjectField#MAXIMUM_NUMBER_CHARACTERS_OPTION");
+	}
+
+	macro checkLimitCharacters {
+		Click(
+			key_labelName = "Limit Characters",
+			locator1 = "ObjectField#DEFAULT_TOGGLE_SWITCH");
+	}
+
 	macro checkToggleMandatory {
 		Check.checkToggleSwitch(locator1 = "ObjectField#MANDATORY_TOGGLE");
 	}
@@ -126,24 +150,6 @@ definition {
 		Type(
 			locator1 = "ObjectField#NAME_FIELD",
 			value1 = "${fieldName}");
-	}
-
-	macro checkLimitCharacters {
-		Click(
-			key_labelName = "Limit Characters",
-			locator1 = "ObjectField#DEFAULT_TOGGLE_SWITCH");
-	}
-
-	macro assertValueOnLimitCharacters {
-		AssertElementPresent(
-			key_maxValue = "${maxValue}",
-			locator1 = "ObjectField#MAXIMUM_NUMBER_CHARACTERS_OPTION");
-	}
-
-	macro assertValueOnLimitCharactersNotPresent {
-		AssertElementNotPresent(
-			key_maxValue = "${maxValue}",
-			locator1 = "ObjectField#MAXIMUM_NUMBER_CHARACTERS_OPTION");
 	}
 
 	macro typeValueOnLimitCharacters {

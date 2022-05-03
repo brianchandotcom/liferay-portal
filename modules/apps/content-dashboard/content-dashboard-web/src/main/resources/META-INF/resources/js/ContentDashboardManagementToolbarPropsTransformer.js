@@ -42,6 +42,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 	const selectAssetCategory = (itemData) => {
 		openSelectionModal({
 			buttonAddLabel: Liferay.Language.get('select'),
+			height: '70vh',
 			iframeBodyCssClass: '',
 			multiple: true,
 			onSelect: (selectedItem) => {
@@ -63,6 +64,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 				}
 			},
 			selectEventName: `${portletNamespace}selectedAssetCategory`,
+			size: 'md',
 			title: itemData?.dialogTitle,
 			url: itemData?.selectAssetCategoryURL,
 		});

@@ -1300,11 +1300,11 @@ public class PoshiContext {
 
 					_namespaces.add(namespace);
 
-					Set<URL> poshiURLs = _getPoshiURLs(
-						fileSystem, includes,
-						resourceURLString.substring(x + 1));
-
-					_storeRootElements(poshiURLs, namespace);
+					_storeRootElements(
+						_getPoshiURLs(
+							fileSystem, includes,
+							resourceURLString.substring(x + 1)),
+						namespace);
 				}
 			}
 		}
@@ -1719,11 +1719,10 @@ public class PoshiContext {
 				maxSubgroupSize = 1;
 			}
 
-			List<List<String>> testBatchGroups = getTestBatchGroups(
-				PropsValues.TEST_BATCH_PROPERTY_QUERY, maxSubgroupSize);
-
 			List<List<List<String>>> segments = Lists.partition(
-				testBatchGroups, PropsValues.TEST_BATCH_MAX_GROUP_SIZE);
+				getTestBatchGroups(
+					PropsValues.TEST_BATCH_PROPERTY_QUERY, maxSubgroupSize),
+				PropsValues.TEST_BATCH_MAX_GROUP_SIZE);
 
 			for (int i = 0; i < segments.size(); i++) {
 				List<List<String>> segment = segments.get(i);

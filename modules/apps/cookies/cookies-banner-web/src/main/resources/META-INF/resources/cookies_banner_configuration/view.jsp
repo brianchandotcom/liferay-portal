@@ -18,7 +18,6 @@
 
 <%
 CookiesBannerConfigurationDisplayContext cookiesBannerConfigurationDisplayContext = (CookiesBannerConfigurationDisplayContext)request.getAttribute(CookiesBannerWebKeys.COOKIES_BANNER_CONFIGURATION_DISPLAY_CONTEXT);
-CookiesManager cookiesManager = (CookiesManager)request.getAttribute(CookiesBannerWebKeys.COOKIES_MANAGER);
 %>
 
 <clay:container-fluid
@@ -31,7 +30,12 @@ CookiesManager cookiesManager = (CookiesManager)request.getAttribute(CookiesBann
 			size="12"
 		>
 			<p>
-				<liferay-ui:message key="cookies-banner-configuration-message" />
+				<%= cookiesBannerConfigurationDisplayContext.getDescription(locale) %>
+
+				<clay:link
+					href="<%= cookiesBannerConfigurationDisplayContext.getCookiePolicyLink() %>"
+					label="<%= cookiesBannerConfigurationDisplayContext.getLinkDisplayText(locale) %>"
+				/>
 			</p>
 		</clay:col>
 
@@ -40,7 +44,7 @@ CookiesManager cookiesManager = (CookiesManager)request.getAttribute(CookiesBann
 		>
 
 			<%
-			for (String requiredCookieName : cookiesManager.getRequiredCookieNames()) {
+			for (ConsentCookieType requiredConsentCookieType : cookiesBannerConfigurationDisplayContext.getRequiredConsentCookieTypes(scopeGroupId)) {
 			%>
 
 				<clay:content-row
@@ -50,7 +54,7 @@ CookiesManager cookiesManager = (CookiesManager)request.getAttribute(CookiesBann
 					<clay:content-col
 						expand="<%= true %>"
 					>
-						<h2><%= cookiesBannerConfigurationDisplayContext.getCookieTitle(requiredCookieName, request) %></h2>
+						<h2><%= cookiesBannerConfigurationDisplayContext.getCookieTitle(requiredConsentCookieType.getName(), request) %></h2>
 					</clay:content-col>
 
 					<clay:content-col>
@@ -61,13 +65,13 @@ CookiesManager cookiesManager = (CookiesManager)request.getAttribute(CookiesBann
 				<clay:content-row
 					cssClass="mb-3"
 				>
-					<p><%= cookiesBannerConfigurationDisplayContext.getCookieDescription(requiredCookieName, request) %></p>
+					<p><%= requiredConsentCookieType.getDescription(locale) %></p>
 				</clay:content-row>
 
 			<%
 			}
 
-			for (String optionalCookieName : cookiesManager.getOptionalCookieNames()) {
+			for (ConsentCookieType optionalConsentCookieType : cookiesBannerConfigurationDisplayContext.getOptionalConsentCookieTypes(scopeGroupId)) {
 			%>
 
 				<clay:content-row
@@ -77,13 +81,13 @@ CookiesManager cookiesManager = (CookiesManager)request.getAttribute(CookiesBann
 					<clay:content-col
 						expand="<%= true %>"
 					>
-						<h2><%= cookiesBannerConfigurationDisplayContext.getCookieTitle(optionalCookieName, request) %></h2>
+						<h2><%= cookiesBannerConfigurationDisplayContext.getCookieTitle(optionalConsentCookieType.getName(), request) %></h2>
 					</clay:content-col>
 
 					<clay:content-col>
 						<label class="toggle-switch">
 							<span class="toggle-switch-check-bar">
-								<input class="toggle-switch-check" data-cookie-key="<%= optionalCookieName %>" disabled type="checkbox" />
+								<input class="toggle-switch-check" data-cookie-key="<%= optionalConsentCookieType.getName() %>" data-prechecked="<%= optionalConsentCookieType.isPrechecked() %>" disabled type="checkbox" />
 
 								<span aria-hidden="true" class="toggle-switch-bar">
 									<span class="toggle-switch-handle"></span>
@@ -96,7 +100,7 @@ CookiesManager cookiesManager = (CookiesManager)request.getAttribute(CookiesBann
 				<clay:content-row
 					cssClass="mb-3"
 				>
-					<p><%= cookiesBannerConfigurationDisplayContext.getCookieDescription(optionalCookieName, request) %></p>
+					<p><%= optionalConsentCookieType.getDescription(locale) %></p>
 				</clay:content-row>
 
 			<%
@@ -132,14 +136,16 @@ CookiesManager cookiesManager = (CookiesManager)request.getAttribute(CookiesBann
 					/>
 				</clay:content-col>
 
-				<clay:content-col>
-					<clay:button
-						displayType="secondary"
-						id='<%= liferayPortletResponse.getNamespace() + "declineAllButton" %>'
-						label='<%= LanguageUtil.get(request, "decline-all") %>'
-						small="<%= true %>"
-					/>
-				</clay:content-col>
+				<c:if test="<%= cookiesBannerConfigurationDisplayContext.isIncludeDeclineAllButton() %>">
+					<clay:content-col>
+						<clay:button
+							displayType="secondary"
+							id='<%= liferayPortletResponse.getNamespace() + "declineAllButton" %>'
+							label='<%= LanguageUtil.get(request, "decline-all") %>'
+							small="<%= true %>"
+						/>
+					</clay:content-col>
+				</c:if>
 			</clay:content-row>
 		</clay:row>
 	</c:if>
@@ -147,14 +153,6 @@ CookiesManager cookiesManager = (CookiesManager)request.getAttribute(CookiesBann
 
 <liferay-frontend:component
 	componentId="CookiesBannerConfiguration"
-	context='<%=
-		HashMapBuilder.<String, Object>put(
-			"optionalCookieNames", cookiesManager.getOptionalCookieNames()
-		).put(
-			"requiredCookieNames", cookiesManager.getRequiredCookieNames()
-		).put(
-			"showButtons", cookiesBannerConfigurationDisplayContext.isShowButtons()
-		).build()
-	%>'
+	context="<%= cookiesBannerConfigurationDisplayContext.getContext(scopeGroupId) %>"
 	module="cookies_banner_configuration/js/CookiesBannerConfiguration"
 />

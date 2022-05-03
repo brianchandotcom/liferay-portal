@@ -4028,7 +4028,7 @@ tell application "Safari" to quit
 		</sequential>
 	</macrodef>
 
-	<macrodef name="prepare-selenium-site-initializer-raylife-paypal-properties">
+	<macrodef name="prepare-selenium-site-initializer-raylife-d2c-paypal-properties">
 		<sequential>
 			<if>
 				<isset property="site.initializer.raylife.d2c.paypal.client.id" />
@@ -11246,7 +11246,7 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		<prepare-selenium-recaptcha-properties />
 		<prepare-selenium-required-properties />
 		<prepare-selenium-sharepoint-properties />
-		<prepare-selenium-site-initializer-raylife-paypal-properties />
+		<prepare-selenium-site-initializer-raylife-d2c-paypal-properties />
 		<prepare-selenium-testcase-properties />
 
 		<get-browser-property property.name="browser.docker.image" />

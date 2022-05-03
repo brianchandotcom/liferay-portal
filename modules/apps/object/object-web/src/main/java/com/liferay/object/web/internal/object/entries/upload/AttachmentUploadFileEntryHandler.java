@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -40,10 +39,15 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Carolina Barbosa
@@ -67,10 +71,7 @@ public class AttachmentUploadFileEntryHandler
 				objectField.getObjectDefinitionId());
 
 		PortletResourcePermission portletResourcePermission =
-			PortletResourcePermissionFactory.create(
-				objectDefinition.getResourceName(),
-				(permissionChecker, name, group, actionId) ->
-					permissionChecker.hasPermission(group, name, 0, actionId));
+			_portletResourcePermissions.get(objectDefinition.getResourceName());
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)uploadPortletRequest.getAttribute(
@@ -114,6 +115,28 @@ public class AttachmentUploadFileEntryHandler
 		}
 	}
 
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(&(com.liferay.object=true)(resource.name=*))"
+	)
+	protected void setPortletResourcePermission(
+		PortletResourcePermission portletResourcePermission,
+		Map<String, Object> properties) {
+
+		_portletResourcePermissions.put(
+			(String)properties.get("resource.name"), portletResourcePermission);
+	}
+
+	protected void unsetPortletResourcePermission(
+		PortletResourcePermission portletResourcePermission,
+		Map<String, Object> properties) {
+
+		_portletResourcePermissions.remove(
+			(String)properties.get("resource.name"));
+	}
+
 	private long _getGroupId(
 			ObjectDefinition objectDefinition, ThemeDisplay themeDisplay)
 		throws PortalException {
@@ -143,5 +166,8 @@ public class AttachmentUploadFileEntryHandler
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
+
+	private final Map<String, PortletResourcePermission>
+		_portletResourcePermissions = new ConcurrentHashMap<>();
 
 }

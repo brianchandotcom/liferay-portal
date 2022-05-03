@@ -80,10 +80,9 @@ public class ObjectDefinitionsRelationshipsDisplayContext
 				LanguageUtil.get(objectRequestHelper.getRequest(), "view"),
 				"get", null, "sidePanel"),
 			new FDSActionDropdownItem(
-				"/o/object-admin/v1.0/object-relationships/{id}", "trash",
-				"delete",
+				"deleteObjectRelationship", "trash", "delete",
 				LanguageUtil.get(objectRequestHelper.getRequest(), "delete"),
-				"delete", "delete", "async"));
+				"delete", "delete", "event"));
 	}
 
 	public JSONArray getObjectRelationshipDeletionTypesJSONArray() {

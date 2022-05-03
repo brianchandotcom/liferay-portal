@@ -137,10 +137,7 @@ public class ObjectRelationshipResourceImpl
 			com.liferay.object.model.ObjectRelationship objectRelationship)
 		throws Exception {
 
-		com.liferay.object.model.ObjectDefinition objectDefinition1 =
-			_objectDefinitionLocalService.getObjectDefinition(
-				objectRelationship.getObjectDefinitionId1());
-		com.liferay.object.model.ObjectDefinition objectDefinition2 =
+		com.liferay.object.model.ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.getObjectDefinition(
 				objectRelationship.getObjectDefinitionId2());
 
@@ -148,19 +145,11 @@ public class ObjectRelationshipResourceImpl
 			{
 				actions = HashMapBuilder.put(
 					"delete",
-					() -> {
-						if (objectDefinition1.isApproved() ||
-							objectRelationship.isReverse()) {
-
-							return null;
-						}
-
-						return addAction(
-							ActionKeys.DELETE, "deleteObjectRelationship",
-							com.liferay.object.model.ObjectDefinition.class.
-								getName(),
-							objectRelationship.getObjectDefinitionId1());
-					}
+					addAction(
+						ActionKeys.DELETE, "deleteObjectRelationship",
+						com.liferay.object.model.ObjectDefinition.class.
+							getName(),
+						objectRelationship.getObjectDefinitionId1())
 				).build();
 				deletionType = ObjectRelationship.DeletionType.create(
 					objectRelationship.getDeletionType());
@@ -172,7 +161,7 @@ public class ObjectRelationshipResourceImpl
 					objectRelationship.getObjectDefinitionId1();
 				objectDefinitionId2 =
 					objectRelationship.getObjectDefinitionId2();
-				objectDefinitionName2 = objectDefinition2.getShortName();
+				objectDefinitionName2 = objectDefinition.getShortName();
 				type = ObjectRelationship.Type.create(
 					objectRelationship.getType());
 			}

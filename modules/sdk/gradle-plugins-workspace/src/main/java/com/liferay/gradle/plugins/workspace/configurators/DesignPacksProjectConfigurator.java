@@ -14,15 +14,21 @@
 
 package com.liferay.gradle.plugins.workspace.configurators;
 
+import aQute.lib.utf8properties.UTF8Properties;
+
 import com.liferay.gradle.plugins.LiferayBasePlugin;
+import com.liferay.gradle.plugins.LiferayOSGiPlugin;
 import com.liferay.gradle.plugins.css.builder.BuildCSSTask;
 import com.liferay.gradle.plugins.css.builder.CSSBuilderPlugin;
+import com.liferay.gradle.plugins.extensions.BundleExtension;
 import com.liferay.gradle.plugins.node.NodePlugin;
 import com.liferay.gradle.plugins.theme.builder.BuildThemeTask;
 import com.liferay.gradle.plugins.theme.builder.ThemeBuilderPlugin;
+import com.liferay.gradle.plugins.util.BndUtil;
 import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
 import com.liferay.gradle.plugins.workspace.WorkspacePlugin;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
+import com.liferay.gradle.util.Validator;
 
 import groovy.json.JsonSlurper;
 
@@ -46,15 +52,21 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 
 import org.gradle.api.Action;
+import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
+import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.artifacts.Dependency;
+import org.gradle.api.artifacts.dsl.ArtifactHandler;
 import org.gradle.api.file.ConfigurableFileCollection;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.DirectoryProperty;
 import org.gradle.api.file.RegularFile;
 import org.gradle.api.initialization.Settings;
 import org.gradle.api.plugins.BasePlugin;
+import org.gradle.api.plugins.BasePluginConvention;
 import org.gradle.api.plugins.ExtensionAware;
+import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.WarPlugin;
 import org.gradle.api.provider.Property;
 import org.gradle.api.provider.Provider;
@@ -62,8 +74,10 @@ import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.Delete;
 import org.gradle.api.tasks.TaskOutputs;
+import org.gradle.api.tasks.TaskProvider;
 import org.gradle.api.tasks.bundling.War;
 import org.gradle.api.tasks.bundling.Zip;
+import org.gradle.jvm.tasks.Jar;
 
 /**
  * @author Simon Jiang
@@ -91,15 +105,21 @@ public class DesignPacksProjectConfigurator extends BaseProjectConfigurator {
 			GradleUtil.addDefaultRepositories(project);
 		}
 
-		GradleUtil.applyPlugin(project, LiferayBasePlugin.class);
+		GradleUtil.applyPlugin(project, LiferayOSGiPlugin.class);
 		GradleUtil.applyPlugin(project, NodePlugin.class);
 		GradleUtil.applyPlugin(project, ThemeBuilderPlugin.class);
 
 		configureLiferay(project, workspaceExtension);
 
 		_addDependenciesParentThemes(project);
-
 		_addDependenciesPortalCommonCSS(project);
+
+		Map<String, Object> packageJsonMap = _getPackageJsonMap(project);
+
+		_configureArchivesBaseName(project, packageJsonMap);
+		_configureVersion(project, packageJsonMap);
+
+		_configureConfigurationDefault(project);
 
 		BuildThemeTask buildThemeTask = _configureTaskBuildTheme(project);
 
@@ -109,13 +129,77 @@ public class DesignPacksProjectConfigurator extends BaseProjectConfigurator {
 
 		war.setEnabled(false);
 
-		Zip zip = _addTaskBuildDesignPack(
-			project, buildCSSTask, buildThemeTask);
+		_addTaskBuildDesignPack(project, buildCSSTask, buildThemeTask);
 
-		_configureRootTaskDistBundle(project, zip);
+		TaskProvider<Jar> jarTaskProvider = GradleUtil.getTaskProvider(
+			project, JavaPlugin.JAR_TASK_NAME, Jar.class);
+
+		jarTaskProvider.configure(
+			new Action<Jar>() {
+
+				@Override
+				public void execute(Jar jar) {
+					jar.dependsOn(buildCSSTask);
+
+					DirectoryProperty destinationDirectoryProperty =
+						jar.getDestinationDirectory();
+
+					destinationDirectoryProperty.set(
+						new File(project.getProjectDir(), "dist"));
+
+					Property<String> archiveExtensionProperty =
+						jar.getArchiveExtension();
+
+					archiveExtensionProperty.set("zip");
+
+					_configureArtifacts(project, jar);
+					_configureTaskDeploy(project, jar);
+					_configureRootTaskDistBundle(project, jar);
+				}
+
+			});
 
 		_configureTaskClean(project);
-		_configureTaskDeploy(project);
+
+		project.afterEvaluate(
+			new Action<Project>() {
+
+				@Override
+				public void execute(Project project) {
+					try {
+						BundleExtension bundleExtension =
+							BndUtil.getBundleExtension(project.getExtensions());
+
+						bundleExtension.instruction(
+							"designPackDockerFrom",
+							"rotty3000/lxc-static-resources:latest");
+
+						UTF8Properties properties = new UTF8Properties();
+
+						properties.load(
+							DesignPacksProjectConfigurator.class.
+								getResourceAsStream(
+									"DesignPackBundleInstructions.properties"));
+
+						properties.forEach(
+							(key, value) -> {
+								String val = value.toString();
+
+								bundleExtension.instruction(
+									key.toString(),
+									val.replace("\n", "\\n\\\n"));
+							});
+					}
+					catch (IOException ioException) {
+						throw new GradleException(
+							"Error configuration Bundle Extension",
+							ioException);
+					}
+				}
+
+			});
+
+		addTaskDockerDeploy(project, jarTaskProvider, workspaceExtension);
 	}
 
 	@Override
@@ -252,14 +336,51 @@ public class DesignPacksProjectConfigurator extends BaseProjectConfigurator {
 		return zip;
 	}
 
+	private void _configureArchivesBaseName(
+		Project project, Map<String, Object> packageJsonMap) {
+
+		String name = null;
+
+		if (packageJsonMap != null) {
+			name = (String)packageJsonMap.get("name");
+		}
+
+		if (Validator.isNull(name)) {
+			return;
+		}
+
+		BasePluginConvention basePluginConvention = GradleUtil.getConvention(
+			project, BasePluginConvention.class);
+
+		basePluginConvention.setArchivesBaseName(name);
+	}
+
+	private void _configureArtifacts(Project project, Jar jar) {
+		ArtifactHandler artifacts = project.getArtifacts();
+
+		artifacts.add(Dependency.ARCHIVES_CONFIGURATION, jar);
+	}
+
+	private void _configureConfigurationDefault(Project project) {
+		Configuration defaultConfiguration = GradleUtil.getConfiguration(
+			project, Dependency.DEFAULT_CONFIGURATION);
+
+		Configuration archivesConfiguration = GradleUtil.getConfiguration(
+			project, Dependency.ARCHIVES_CONFIGURATION);
+
+		defaultConfiguration.extendsFrom(archivesConfiguration);
+	}
+
 	@SuppressWarnings({"serial", "unused"})
-	private void _configureRootTaskDistBundle(Project project, Zip zip) {
+	private void _configureRootTaskDistBundle(Project project, Jar jar) {
 		Task assembleTask = GradleUtil.getTask(
 			project, BasePlugin.ASSEMBLE_TASK_NAME);
 
 		Copy copy = (Copy)GradleUtil.getTask(
 			project.getRootProject(),
 			RootProjectConfigurator.DIST_BUNDLE_TASK_NAME);
+
+		assembleTask.dependsOn(jar);
 
 		copy.dependsOn(assembleTask);
 
@@ -270,7 +391,7 @@ public class DesignPacksProjectConfigurator extends BaseProjectConfigurator {
 				public void doCall(CopySpec copySpec) {
 					Project project = assembleTask.getProject();
 
-					Provider<RegularFile> fileProvider = zip.getArchiveFile();
+					Provider<RegularFile> fileProvider = jar.getArchiveFile();
 
 					ConfigurableFileCollection configurableFileCollection =
 						project.files(fileProvider);
@@ -400,12 +521,12 @@ public class DesignPacksProjectConfigurator extends BaseProjectConfigurator {
 		delete.delete("build", "dist");
 	}
 
-	private void _configureTaskDeploy(Project project) {
+	private void _configureTaskDeploy(Project project, Jar jar) {
 		Copy copy = (Copy)GradleUtil.getTask(
 			project, LiferayBasePlugin.DEPLOY_TASK_NAME);
 
-		copy.dependsOn("build");
-		copy.from(_getZipFile(project));
+		copy.dependsOn(BasePlugin.ASSEMBLE_TASK_NAME);
+		copy.from(jar);
 	}
 
 	private void _configureTaskDisableUpToDate(Task task) {
@@ -422,6 +543,16 @@ public class DesignPacksProjectConfigurator extends BaseProjectConfigurator {
 			});
 	}
 
+	private void _configureVersion(
+		Project project, Map<String, Object> packageJsonMap) {
+
+		String version = (String)packageJsonMap.get("version");
+
+		if (Validator.isNotNull(version)) {
+			project.setVersion(version);
+		}
+	}
+
 	@SuppressWarnings("unchecked")
 	private Map<String, Object> _getPackageJsonMap(File packageJsonFile) {
 		if (!packageJsonFile.exists()) {
@@ -433,9 +564,17 @@ public class DesignPacksProjectConfigurator extends BaseProjectConfigurator {
 		return (Map<String, Object>)jsonSlurper.parse(packageJsonFile);
 	}
 
-	private File _getZipFile(Project project) {
-		return project.file(
-			"dist/" + GradleUtil.getArchivesBaseName(project) + ".zip");
+	@SuppressWarnings("unchecked")
+	private Map<String, Object> _getPackageJsonMap(Project project) {
+		File file = project.file("package.json");
+
+		if (!file.exists()) {
+			return Collections.emptyMap();
+		}
+
+		JsonSlurper jsonSlurper = new JsonSlurper();
+
+		return (Map<String, Object>)jsonSlurper.parse(file);
 	}
 
 	@SuppressWarnings("unchecked")

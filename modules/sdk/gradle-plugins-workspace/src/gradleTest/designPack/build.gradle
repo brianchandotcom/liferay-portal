@@ -22,7 +22,7 @@ node {
 }
 
 runGradleTest {
-	dependsOn ":design-packs:fire:buildDesignPack"
+	dependsOn ":design-packs:fire:buildDesignPack", ":design-packs:fire:build"
 
 	doLast {
 		outputPaths.each{
@@ -49,5 +49,12 @@ runGradleTest {
 				}
 			}
 		}
+
+		Set<File> files = zipTree(project(":design-packs:fire").jar.archiveFile).asFileTree.matching {
+			include "META-INF/resources/*.css"
+			include "OSGI-INF/configurator/*.json"
+		}.files
+
+		assert files.size() == 5
 	}
 }

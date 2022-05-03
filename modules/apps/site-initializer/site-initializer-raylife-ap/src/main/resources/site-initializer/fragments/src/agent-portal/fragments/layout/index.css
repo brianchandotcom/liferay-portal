@@ -33,8 +33,8 @@
 	opacity: 10;
 }
 
-.sidebar-container:hover .footer-bar .avatar-container,
-.sidebar-container:hover .middle-bar .menu-item-name {
+.sidebar-container .footer-bar .avatar-container,
+.sidebar-container .middle-bar .menu-item-name {
 	overflow: hidden;
 }
 

@@ -11,10 +11,10 @@
 		"givenName": "Test",
 		"name": "Test User 1",
 		"organizationBriefs": [
-        	{
-        		"name": "Test Organization 1"
-        	}
-        ]
+			{
+				"name": "Test Organization 1"
+			}
+		]
 	},
 	{
 		"accountBriefs": [
@@ -28,9 +28,9 @@
 		"givenName": "Test",
 		"name": "Test User 2",
 		"organizationBriefs": [
-        	{
-            	"name": "Test Organization 2"
-            }
-        ]
+			{
+				"name": "Test Organization 2"
+			}
+		]
 	}
 ]

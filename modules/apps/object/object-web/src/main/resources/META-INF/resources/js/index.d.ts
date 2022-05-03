@@ -14,11 +14,13 @@
 
 interface ObjectAction {
 	active: boolean;
+	description?: string;
 	id?: number;
 	name: string;
 	objectActionExecutorKey: string;
 	objectActionTriggerKey: string;
 	parameters?: {
+		script?: string;
 		secret?: string;
 		url?: string;
 	};

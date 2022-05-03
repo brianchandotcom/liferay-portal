@@ -12,22 +12,26 @@
  * details.
  */
 
+import ClayForm, {ClayToggle} from '@clayui/form';
+import {useFeatureFlag} from 'data-engine-js-components-web';
 import React, {useMemo} from 'react';
 
 import useForm, {FormError, invalidateRequired} from '../hooks/useForm';
+import Card from './Card/Card';
+import CodeMirrorEditor from './CodeMirrorEditor';
 import CustomSelect, {CustomItem} from './Form/CustomSelect/CustomSelect';
 import Input from './Form/Input';
+import {SidePanelForm, closeSidePanel, openToast} from './SidePanelContent';
 
 const REQUIRED_MSG = Liferay.Language.get('required');
 
 export default function ObjectActionFormBase({
-	children,
-	errors,
-	handleChange,
-	objectAction,
+	objectAction: initialValues,
 	objectActionExecutors,
 	objectActionTriggers,
-	setValues,
+	readOnly,
+	requestParams: {method, url},
+	successMessage,
 }: IProps) {
 	const actionExecutors = useMemo(() => {
 		const executors = new Map<string, string>();
@@ -49,86 +53,167 @@ export default function ObjectActionFormBase({
 		return triggers;
 	}, [objectActionTriggers]);
 
+	const flags = useFeatureFlag();
+
+	const onSubmit = async (objectAction: ObjectAction) => {
+		const response = await Liferay.Util.fetch(url, {
+			body: JSON.stringify(objectAction),
+			headers: new Headers({
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+			}),
+			method,
+		});
+
+		if (response.status === 401) {
+			window.location.reload();
+		}
+		else if (response.ok) {
+			closeSidePanel();
+			openToast({message: successMessage});
+
+			return;
+		}
+
+		const responseJSON = await response.json();
+		if (responseJSON?.title) {
+			openToast({
+				message: responseJSON.title,
+				type: 'danger',
+			});
+		}
+	};
+
+	const {
+		errors,
+		handleChange,
+		handleSubmit,
+		setValues,
+		values,
+	} = useObjectActionForm({initialValues, onSubmit});
+
 	return (
-		<>
-			<Input
-				error={errors.name}
-				label={Liferay.Language.get('name')}
-				name="name"
-				onChange={handleChange}
-				required
-				value={objectAction.name}
-			/>
+		<SidePanelForm
+			onSubmit={handleSubmit}
+			title={Liferay.Language.get('new-action')}
+		>
+			<Card title={Liferay.Language.get('basic-info')}>
+				<Input
+					error={errors.name}
+					label={Liferay.Language.get('name')}
+					name="name"
+					onChange={handleChange}
+					required
+					value={values.name}
+				/>
 
-			<CustomSelect
-				error={errors.objectActionTriggerKey}
-				label={Liferay.Language.get('when[object]')}
-				onChange={({value}) =>
-					setValues({objectActionTriggerKey: value})
-				}
-				options={objectActionTriggers}
-				required
-				value={actionTriggers.get(
-					objectAction.objectActionTriggerKey ?? ''
-				)}
-			/>
-
-			<CustomSelect
-				error={errors.objectActionExecutorKey}
-				label={Liferay.Language.get('then[object]')}
-				onChange={({value}) =>
-					setValues({objectActionExecutorKey: value})
-				}
-				options={objectActionExecutors}
-				required
-				value={actionExecutors.get(
-					objectAction.objectActionExecutorKey ?? ''
-				)}
-			/>
-
-			{children}
-
-			{objectAction.objectActionExecutorKey === 'webhook' && (
-				<>
+				{flags['LPS-146871'] && (
 					<Input
-						error={errors.url}
-						label={Liferay.Language.get('url')}
-						name="url"
-						onChange={({target: {value}}) => {
+						component="textarea"
+						error={errors.description}
+						label={Liferay.Language.get('description')}
+						name="description"
+						onChange={handleChange}
+						value={values.description}
+					/>
+				)}
+
+				<ClayForm.Group>
+					<ClayToggle
+						disabled={readOnly}
+						label={Liferay.Language.get('active')}
+						name="indexed"
+						onToggle={(active) => setValues({active})}
+						toggled={values.active}
+					/>
+				</ClayForm.Group>
+			</Card>
+
+			<Card title={Liferay.Language.get('trigger')}>
+				<CustomSelect
+					error={errors.objectActionTriggerKey}
+					label={Liferay.Language.get('when[object]')}
+					onChange={({value}) =>
+						setValues({objectActionTriggerKey: value})
+					}
+					options={objectActionTriggers}
+					required
+					value={actionTriggers.get(
+						values.objectActionTriggerKey ?? ''
+					)}
+				/>
+			</Card>
+
+			<Card title={Liferay.Language.get('action')}>
+				<CustomSelect
+					error={errors.objectActionExecutorKey}
+					label={Liferay.Language.get('then[object]')}
+					onChange={({value}) =>
+						setValues({
+							objectActionExecutorKey: value,
+							parameters: {},
+						})
+					}
+					options={objectActionExecutors}
+					required
+					value={actionExecutors.get(
+						values.objectActionExecutorKey ?? ''
+					)}
+				/>
+
+				{values.objectActionExecutorKey === 'webhook' && (
+					<>
+						<Input
+							error={errors.url}
+							label={Liferay.Language.get('url')}
+							name="url"
+							onChange={({target: {value}}) => {
+								setValues({
+									parameters: {
+										...values.parameters,
+										url: value,
+									},
+								});
+							}}
+							required
+							value={values.parameters?.url}
+						/>
+
+						<Input
+							label={Liferay.Language.get('secret')}
+							name="secret"
+							onChange={({target: {value}}) => {
+								setValues({
+									parameters: {
+										...values.parameters,
+										secret: value,
+									},
+								});
+							}}
+							value={values.parameters?.secret}
+						/>
+					</>
+				)}
+
+				{values.objectActionExecutorKey === 'groovy' && (
+					<CodeMirrorEditor
+						onChange={(script) =>
 							setValues({
 								parameters: {
-									...objectAction.parameters,
-									url: value,
+									...values.parameters,
+									script,
 								},
-							});
-						}}
-						required
-						value={objectAction.parameters?.url}
+							})
+						}
+						value={values.parameters?.script}
 					/>
-
-					<Input
-						label={Liferay.Language.get('secret')}
-						name="secret"
-						onChange={({target: {value}}) => {
-							setValues({
-								parameters: {
-									...objectAction.parameters,
-									secret: value,
-								},
-							});
-						}}
-						value={objectAction.parameters?.secret}
-					/>
-				</>
-			)}
-		</>
+				)}
+			</Card>
+		</SidePanelForm>
 	);
 }
 
-export function useObjectActionForm({
-	initialValues,
-	onSubmit,
-}: IUseObjectActionForm) {
+function useObjectActionForm({initialValues, onSubmit}: IUseObjectActionForm) {
 	const validate = (values: Partial<ObjectAction>) => {
 		const errors: FormError<ObjectAction & ObjectActionParameters> = {};
 		if (invalidateRequired(values.name)) {
@@ -152,29 +237,24 @@ export function useObjectActionForm({
 		return errors;
 	};
 
-	const {errors, handleChange, handleSubmit, setValues, values} = useForm<
-		ObjectAction,
-		ObjectActionParameters
-	>({
+	return useForm<ObjectAction, ObjectActionParameters>({
 		initialValues,
 		onSubmit,
 		validate,
 	});
-
-	return {errors, handleChange, handleSubmit, setValues, values};
 }
 
-export interface IObjectActionFormBaseProps {
-	errors: FormError<ObjectAction & ObjectActionParameters>;
-	handleChange: React.ChangeEventHandler<HTMLInputElement>;
+interface IProps {
 	objectAction: Partial<ObjectAction>;
 	objectActionExecutors: CustomItem[];
 	objectActionTriggers: CustomItem[];
-	setValues: (values: Partial<ObjectAction>) => void;
-}
-
-interface IProps extends IObjectActionFormBaseProps {
-	children?: React.ReactNode;
+	readOnly?: boolean;
+	requestParams: {
+		method: string;
+		url: string;
+	};
+	successMessage: string;
+	title: string;
 }
 
 interface IUseObjectActionForm {

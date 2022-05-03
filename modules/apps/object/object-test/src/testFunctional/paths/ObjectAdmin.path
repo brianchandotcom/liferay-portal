@@ -376,12 +376,12 @@
 		<td></td>
 	</tr>
 	<tr>
-		<td>FIELDS_DETAILS_IFRAME</td>
+		<td>SIDE_PANEL</td>
 		<td>//div[contains(@class, 'lfr-objects__side-panel-content')]</td>
 		<td></td>
 	</tr>
 	<tr>
-		<td>FIELDS_DETAILS_TITLE</td>
+		<td>SIDE_PANEL_TITLE</td>
 		<td>//div[contains(@class, 'lfr-objects__side-panel-content-header')]//h3[contains(@class, 'mb-0')]</td>
 		<td></td>
 	</tr>
@@ -493,11 +493,6 @@
 	<tr>
 		<td>VIEW_SIMPLE_TEXT_GENERIC</td>
 		<td>//div[contains(text(),'${key_labelName}')]</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>VIEW_ACTION_NAME_ON_SIDE_PANEL</td>
-		<td>//input[@name='name']</td>
 		<td></td>
 	</tr>
 	<tr>

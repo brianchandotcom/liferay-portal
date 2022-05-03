@@ -17,23 +17,18 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String backURL = ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL()));
-
-ObjectDefinition objectDefinition = (ObjectDefinition)request.getAttribute(ObjectWebKeys.OBJECT_DEFINITION);
-
 ObjectDefinitionsActionsDisplayContext objectDefinitionsActionsDisplayContext = (ObjectDefinitionsActionsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(backURL);
-
-renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 %>
 
-<frontend-data-set:headless-display
-	apiURL="<%= objectDefinitionsActionsDisplayContext.getAPIURL() %>"
-	creationMenu="<%= objectDefinitionsActionsDisplayContext.getCreationMenu() %>"
-	fdsActionDropdownItems="<%= objectDefinitionsActionsDisplayContext.getFDSActionDropdownItems() %>"
-	formName="fm"
-	id="<%= ObjectDefinitionsFDSNames.OBJECT_ACTIONS %>"
-	style="fluid"
+<react:component
+	module="js/components/ModalAddObjectAction"
+	props='<%=
+		HashMapBuilder.<String, Object>put(
+			"apiURL", objectDefinitionsActionsDisplayContext.getAPIURL()
+		).put(
+			"objectActionExecutors", objectDefinitionsActionsDisplayContext.getObjectActionExecutorsJSONArray()
+		).put(
+			"objectActionTriggers", objectDefinitionsActionsDisplayContext.getObjectActionTriggersJSONArray()
+		).build()
+	%>'
 />

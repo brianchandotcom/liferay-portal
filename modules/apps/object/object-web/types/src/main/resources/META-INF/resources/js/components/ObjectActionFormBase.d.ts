@@ -12,41 +12,27 @@
  * details.
  */
 
-import React from 'react';
-import {FormError} from '../hooks/useForm';
+/// <reference types="react" />
+
 import {CustomItem} from './Form/CustomSelect/CustomSelect';
 export default function ObjectActionFormBase({
-	children,
-	errors,
-	handleChange,
-	objectAction,
+	objectAction: initialValues,
 	objectActionExecutors,
 	objectActionTriggers,
-	setValues,
+	readOnly,
+	requestParams: {method, url},
+	successMessage,
 }: IProps): JSX.Element;
-export declare function useObjectActionForm({
-	initialValues,
-	onSubmit,
-}: IUseObjectActionForm): {
-	errors: FormError<ObjectAction & ObjectActionParameters>;
-	handleChange: React.ChangeEventHandler<HTMLInputElement>;
-	handleSubmit: React.FormEventHandler<HTMLFormElement>;
-	setValues: (values: Partial<ObjectAction>) => void;
-	values: Partial<ObjectAction>;
-};
-export interface IObjectActionFormBaseProps {
-	errors: FormError<ObjectAction & ObjectActionParameters>;
-	handleChange: React.ChangeEventHandler<HTMLInputElement>;
+interface IProps {
 	objectAction: Partial<ObjectAction>;
 	objectActionExecutors: CustomItem[];
 	objectActionTriggers: CustomItem[];
-	setValues: (values: Partial<ObjectAction>) => void;
-}
-interface IProps extends IObjectActionFormBaseProps {
-	children?: React.ReactNode;
-}
-interface IUseObjectActionForm {
-	initialValues: Partial<ObjectAction>;
-	onSubmit: (field: ObjectAction) => void;
+	readOnly?: boolean;
+	requestParams: {
+		method: string;
+		url: string;
+	};
+	successMessage: string;
+	title: string;
 }
 export {};

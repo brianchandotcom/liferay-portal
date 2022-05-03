@@ -37,11 +37,11 @@ definition {
 
 		ObjectAdmin.goToActionsTab();
 
-		LexiconEntry.gotoAdd();
+		ObjectAdmin.gotoAddObjectAction();
 
 		Button.clickCancel();
 
-		AssertElementNotPresent(locator1 = "Portlet#MODAL_TITLE");
+		Refresh();
 
 		ObjectAdmin.assertNoResultsWereFound();
 	}
@@ -70,15 +70,9 @@ definition {
 
 		ObjectAdmin.viewDetails();
 
-		Type(
-			locator1 = "ObjectAdmin#VIEW_ACTION_NAME_ON_SIDE_PANEL",
-			value1 = "Update Action Name");
-
-		Button.clickCancel();
-
-		AssertElementNotPresent(locator1 = "ObjectAdmin#FIELDS_DETAILS_IFRAME");
-
-		Refresh();
+		ObjectAdmin.fillObjectAction(
+			actionName = "Update Action Name",
+			click = "cancel");
 
 		ObjectAdmin.assertObjectActions(
 			actionActive = "Yes",
@@ -165,13 +159,9 @@ definition {
 			urlAction = "http://localhost:8080",
 			whenAction = "On After Add");
 
-		ObjectAdmin.editObjectAction(viewEntry = "Action Name");
-
-		CreateObject.checkToggleInactive();
-
-		Button.clickSave();
-
-		Refresh();
+		ObjectAdmin.editObjectAction(
+			active = "false",
+			viewEntry = "Action Name");
 
 		ObjectAdmin.assertObjectActions(
 			actionActive = "No",
@@ -192,13 +182,16 @@ definition {
 
 		ObjectAdmin.goToActionsTab();
 
-		ObjectAdmin.addObjectActionViaUI(
-			actionName = "",
+		ObjectAdmin.gotoAddObjectAction();
+
+		ObjectAdmin.fillObjectAction(
 			thenAction = "Webhook",
 			urlAction = "http://localhost:8080",
 			whenAction = "On After Add");
 
-		ObjectAdmin.viewRequiredAlert(requiredAlert = "Required");
+		Button.clickSave();
+
+		ObjectAdmin.assertRequiredErrorPresent();
 	}
 
 	@description = "LPS-139008 - Verify it is not possible to leave the Action Then field blank"
@@ -215,11 +208,15 @@ definition {
 
 		ObjectAdmin.goToActionsTab();
 
-		ObjectAdmin.addObjectActionViaUI(
+		ObjectAdmin.gotoAddObjectAction();
+
+		ObjectAdmin.fillObjectAction(
 			actionName = "Action Name",
 			whenAction = "On After Add");
 
-		ObjectAdmin.viewRequiredAlert(requiredAlert = "Required");
+		Button.clickSave();
+
+		ObjectAdmin.assertRequiredErrorPresent();
 	}
 
 	@description = "LPS-139008 - Verify it is not possible to leave the Action When field blank"
@@ -236,12 +233,16 @@ definition {
 
 		ObjectAdmin.goToActionsTab();
 
-		ObjectAdmin.addObjectActionViaUI(
+		ObjectAdmin.gotoAddObjectAction();
+
+		ObjectAdmin.fillObjectAction(
 			actionName = "Action Name",
 			thenAction = "Webhook",
 			urlAction = "http://localhost:8080");
 
-		ObjectAdmin.viewRequiredAlert(requiredAlert = "Required");
+		Button.clickSave();
+
+		ObjectAdmin.assertRequiredErrorPresent();
 	}
 
 	@description = "LPS-139008 - Verify it is not possible to leave the URL field blank when Webhook is selected"
@@ -258,12 +259,16 @@ definition {
 
 		ObjectAdmin.goToActionsTab();
 
-		ObjectAdmin.addObjectActionViaUI(
+		ObjectAdmin.gotoAddObjectAction();
+
+		ObjectAdmin.fillObjectAction(
 			actionName = "Action Name",
 			thenAction = "Webhook",
 			whenAction = "On After Add");
 
-		ObjectAdmin.viewRequiredAlert(requiredAlert = "Required");
+		Button.clickSave();
+
+		ObjectAdmin.assertRequiredErrorPresent();
 	}
 
 	@description = "LPS-139008 - Verify that it is possible to reactivate an Action"
@@ -282,25 +287,14 @@ definition {
 
 		ObjectAdmin.addObjectActionViaUI(
 			actionName = "Action Name",
+			active = "false",
 			thenAction = "Webhook",
 			urlAction = "http://localhost:8080",
 			whenAction = "On After Add");
 
-		ObjectAdmin.editObjectAction(viewEntry = "Action Name");
-
-		CreateObject.checkToggleInactive();
-
-		Button.clickSave();
-
-		Refresh();
-
-		ObjectAdmin.editObjectAction(viewEntry = "Action Name");
-
-		CreateObject.checkToggleActive();
-
-		Button.clickSave();
-
-		Refresh();
+		ObjectAdmin.editObjectAction(
+			active = "true",
+			viewEntry = "Action Name");
 
 		ObjectAdmin.assertObjectActions(
 			actionActive = "Yes",
@@ -365,7 +359,7 @@ definition {
 			actionName = "Action Name");
 
 		ObjectAdmin.editObjectAction(
-			newActionName = "Update Action Name",
+			actionName = "Update Action Name",
 			viewEntry = "Action Name");
 
 		ObjectAdmin.assertObjectActions(

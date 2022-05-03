@@ -31,43 +31,16 @@ definition {
 	}
 
 	macro addObjectActionViaUI {
-		LexiconEntry.gotoAdd();
+		ObjectAdmin.gotoAddObjectAction();
 
-		Type(
-			locator1 = "ObjectAdmin#ACTION_NAME_FIELD",
-			value1 = "${actionName}");
-
-		if (isSet(whenAction)) {
-			Click(locator1 = "ObjectAdmin#ACTION_WHEN_TYPE");
-
-			Click(
-				key_type = "${whenAction}",
-				locator1 = "ObjectAdmin#SELECT_RELATIONSHIPS_TYPE_OPTION");
-		}
-
-		if (isSet(thenAction)) {
-			Click(locator1 = "ObjectAdmin#ACTION_THEN_TYPE");
-
-			Click(
-				key_type = "${thenAction}",
-				locator1 = "ObjectAdmin#SELECT_RELATIONSHIPS_TYPE_OPTION");
-		}
-
-		if (isSet(urlAction)) {
-			Type(
-				locator1 = "ObjectAdmin#ACTION_URL_FIELD",
-				value1 = "${urlAction}");
-		}
-
-		if (isSet(secretAction)) {
-			Type(
-				locator1 = "ObjectAdmin#ACTION_SECRET_FIELD",
-				value1 = "${secretAction}");
-		}
-
-		Button.clickSave();
-
-		WaitForSPARefresh();
+		ObjectAdmin.fillObjectAction(
+			actionName = "${actionName}",
+			active = "${active}",
+			click = "save",
+			secretAction = "${secretAction}",
+			thenAction = "${thenAction}",
+			urlAction = "${urlAction}",
+			whenAction = "${whenAction}");
 	}
 
 	macro addObjectBoleanFieldEntryViaUI {
@@ -594,6 +567,12 @@ definition {
 			locator1 = "ObjectAdmin#ENTRY_RELATIONSHIP_TAB");
 	}
 
+	macro assertRequiredErrorPresent {
+		AssertTextEquals.assertPartialText(
+			locator1 = "TextInput#REQUIRED_ALERT",
+			value1 = "Required");
+	}
+
 	macro assertTypeFieldRequired {
 		AssertElementPresent(locator1 = "ObjectField#TYPE_ERROR_REQUIRED");
 	}
@@ -785,12 +764,67 @@ definition {
 
 		ObjectAdmin.viewDetails();
 
-		if (isSet(newActionName)) {
-			Type(
-				locator1 = "ObjectAdmin#VIEW_ACTION_NAME_ON_SIDE_PANEL",
-				value1 = "${newActionName}");
+		ObjectAdmin.fillObjectAction(
+			actionName = "${actionName}",
+			active = "${active}",
+			click = "save",
+			secretAction = "${secretAction}",
+			thenAction = "${thenAction}",
+			urlAction = "${urlAction}",
+			whenAction = "${whenAction}");
+	}
 
-			Button.clickSave();
+	macro fillObjectAction {
+		if (isSet(actionName)) {
+			Type(
+				locator1 = "ObjectAdmin#ACTION_NAME_FIELD",
+				value1 = "${actionName}");
+		}
+
+		if (isSet(active)) {
+			if ("${active}" == "true") {
+				CreateObject.checkToggleActive();
+			}
+			else if ("${active}" == "false") {
+				CreateObject.checkToggleInactive();
+			}
+		}
+
+		if (isSet(whenAction)) {
+			Click(locator1 = "ObjectAdmin#ACTION_WHEN_TYPE");
+
+			Click(
+				key_type = "${whenAction}",
+				locator1 = "ObjectAdmin#SELECT_RELATIONSHIPS_TYPE_OPTION");
+		}
+
+		if (isSet(thenAction)) {
+			Click(locator1 = "ObjectAdmin#ACTION_THEN_TYPE");
+
+			Click(
+				key_type = "${thenAction}",
+				locator1 = "ObjectAdmin#SELECT_RELATIONSHIPS_TYPE_OPTION");
+		}
+
+		if (isSet(urlAction)) {
+			Type(
+				locator1 = "ObjectAdmin#ACTION_URL_FIELD",
+				value1 = "${urlAction}");
+		}
+
+		if (isSet(secretAction)) {
+			Type(
+				locator1 = "ObjectAdmin#ACTION_SECRET_FIELD",
+				value1 = "${secretAction}");
+		}
+
+		if (isSet(click)) {
+			if ("${click}" == "cancel") {
+				Button.clickCancel();
+			}
+			else if ("${click}" == "save") {
+				Button.clickSave();
+			}
 
 			Refresh();
 		}
@@ -806,6 +840,12 @@ definition {
 
 	macro goToActionsTab {
 		Click(locator1 = "ObjectAdmin#OBJECT_ACTIONS_TAB");
+	}
+
+	macro gotoAddObjectAction {
+		LexiconEntry.gotoAdd();
+
+		SelectFrame(locator1 = "IFrame#IFRAME");
 	}
 
 	macro goToCustomObject {
@@ -1031,9 +1071,9 @@ definition {
 	macro viewDetails {
 		SelectFrame(locator1 = "IFrame#IFRAME");
 
-		AssertElementPresent(locator1 = "ObjectAdmin#FIELDS_DETAILS_IFRAME");
+		AssertElementPresent(locator1 = "ObjectAdmin#SIDE_PANEL");
 
-		AssertElementPresent(locator1 = "ObjectAdmin#FIELDS_DETAILS_TITLE");
+		AssertElementPresent(locator1 = "ObjectAdmin#SIDE_PANEL_TITLE");
 	}
 
 	macro viewFieldValueDisabled {
@@ -1070,12 +1110,6 @@ definition {
 		AssertElementPresent(
 			key_optionName = "${optionName}",
 			locator1 = "ObjectAdmin#VIEW_PICKLIST_OPTIONS");
-	}
-
-	macro viewRequiredAlert {
-		AssertTextEquals.assertPartialText(
-			locator1 = "TextInput#REQUIRED_ALERT",
-			value1 = "${requiredAlert}");
 	}
 
 	macro viewSystemObject {

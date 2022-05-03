@@ -14,15 +14,17 @@
 
 /// <reference types="react" />
 
-import {IObjectActionFormBaseProps} from './ObjectActionFormBase';
+import {CustomItem} from './Form/CustomSelect/CustomSelect';
 export default function EditObjectAction({
-	objectAction,
+	objectAction: {id, ...values},
 	objectActionExecutors,
 	objectActionTriggers,
 	readOnly,
 }: IProps): JSX.Element;
-interface IProps extends IObjectActionFormBaseProps {
+interface IProps {
 	objectAction: ObjectAction;
+	objectActionExecutors: CustomItem[];
+	objectActionTriggers: CustomItem[];
 	readOnly?: boolean;
 }
 export {};

@@ -4273,7 +4273,7 @@ definition {
 
 		ObjectAdmin.goToFieldsDetails(label = "Custom Field");
 
-		AssertElementPresent(locator1 = "ObjectAdmin#FIELDS_DETAILS_IFRAME");
+		AssertElementPresent(locator1 = "ObjectAdmin#SIDE_PANEL");
 	}
 
 	@description = "LPS-139803 - Verify it the Object Entry Title of a BigDecimal type is displayed on the Relationship field when adding an entry"

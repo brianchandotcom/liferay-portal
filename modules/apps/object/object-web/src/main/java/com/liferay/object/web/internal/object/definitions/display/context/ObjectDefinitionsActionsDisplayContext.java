@@ -205,11 +205,18 @@ public class ObjectDefinitionsActionsDisplayContext
 		getCreationMenuDropdownItemUnsafeConsumer() {
 
 		return dropdownItem -> {
-			dropdownItem.setHref("addObjectAction");
+			dropdownItem.setHref(
+				PortletURLBuilder.create(
+					getPortletURL()
+				).setMVCRenderCommandName(
+					"/object_definitions/add_object_action"
+				).setWindowState(
+					LiferayWindowState.POP_UP
+				).buildString());
 			dropdownItem.setLabel(
 				LanguageUtil.get(
 					objectRequestHelper.getRequest(), "add-object-action"));
-			dropdownItem.setTarget("event");
+			dropdownItem.setTarget("sidePanel");
 		};
 	}
 

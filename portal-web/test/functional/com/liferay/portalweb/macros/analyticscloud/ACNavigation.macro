@@ -9,8 +9,7 @@ definition {
 	macro assertSidebarOptionLanguage {
 		AssertTextEquals(
 			locator1 = "ACNavigation#SIDEBAR_OPTION_NAME",
-			value1 = "${sidebarLanguageOption}"
-		)
+			value1 = "${sidebarLanguageOption}");
 	}
 
 	macro backNavigation {

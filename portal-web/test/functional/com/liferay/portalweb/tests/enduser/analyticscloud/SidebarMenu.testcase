@@ -143,17 +143,17 @@ definition {
 	@description = "Feature ID: Release 3.1.7 | Automation ID: LRAC-9870 | Test Summary: Change the AC page default language"
 	@priority = "2"
 	test ChangeDefaultLanguage {
-		task("Switch to property in AC") {
+		task ("Switch to property in AC") {
 			ACUtils.launchAC();
 
 			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 		}
 
-		task("Change language in AC") {
+		task ("Change language in AC") {
 			ACWorkspace.changeLanguage(languageOption = "Portuguese (Brazil)");
 		}
 
-		task("View AC sidebar changed language") {
+		task ("View AC sidebar changed language") {
 			ACNavigation.assertSidebarOptionLanguage(sidebarLanguageOption = "Sites");
 
 			ACNavigation.assertSidebarOptionLanguage(sidebarLanguageOption = "Recursos");
@@ -169,11 +169,11 @@ definition {
 			ACNavigation.assertSidebarOptionLanguage(sidebarLanguageOption = "Testes");
 		}
 
-		task("Change language back in AC") {
+		task ("Change language back in AC") {
 			ACWorkspace.changeLanguage(languageOption = "Inglês");
 		}
 
-		task("View AC sidebar changed language") {
+		task ("View AC sidebar changed language") {
 			ACNavigation.assertSidebarOptionLanguage(sidebarLanguageOption = "Sites");
 
 			ACNavigation.assertSidebarOptionLanguage(sidebarLanguageOption = "Assets");

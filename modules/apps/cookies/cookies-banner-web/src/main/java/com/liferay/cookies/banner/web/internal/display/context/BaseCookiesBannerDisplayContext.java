@@ -73,6 +73,10 @@ public class BaseCookiesBannerDisplayContext {
 		return _requiredConsentCookieTypes;
 	}
 
+	public boolean isIncludeDeclineAllButton() {
+		return cookiesBannerConfiguration.includeDeclineAllButton();
+	}
+
 	protected JSONArray getConsentCookieTypeNamesJSONArray(
 		List<ConsentCookieType> consentCookieTypes) {
 

@@ -17,16 +17,9 @@ import {LAYOUT_TYPES} from '../config/constants/layoutTypes';
 import {config} from '../config/index';
 
 export function formIsMapped(item) {
-	if (item.config.classNameId && item.config.classNameId !== '0') {
-		return true;
-	}
-
-	if (config.layoutType === LAYOUT_TYPES.display) {
-		return (
-			item.config.mappingSource === FORM_MAPPING_SOURCES.displayPage ||
-			item.config.mappingSource === undefined
-		);
-	}
-
-	return false;
+	return (
+		(config.layoutType === LAYOUT_TYPES.display &&
+			item.config.formConfig === FORM_MAPPING_SOURCES.displayPage) ||
+		(item.config.classNameId && item.config.classNameId !== '0')
+	);
 }

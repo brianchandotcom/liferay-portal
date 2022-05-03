@@ -164,13 +164,7 @@ function OtherTypeMapping({item, onValueSelect}) {
 						label: Liferay.Language.get('subtype'),
 						name: 'classTypeId',
 						typeOptions: {
-							validValues: [
-								{
-									label: Liferay.Language.get('none'),
-									value: '',
-								},
-								...selectedItemType?.subtypes,
-							],
+							validValues: selectedItemType.subtypes,
 						},
 					}}
 					onValueSelect={(_name, classTypeId) =>

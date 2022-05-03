@@ -1450,7 +1450,7 @@ public class ObjectEntryLocalServiceImpl
 		return results;
 	}
 
-	private void _persistFile(
+	private void _addFileEntry(
 			DLFileEntry dlFileEntry, Map.Entry<String, Serializable> entry,
 			List<ObjectFieldSetting> objectFieldSettings, String portletId,
 			ServiceContext serviceContext, long userId)
@@ -2093,7 +2093,7 @@ public class ObjectEntryLocalServiceImpl
 					defaultUser, dlFileEntry.getSize(),
 					objectField.getObjectFieldId(), objectField.getName());
 
-				_persistFile(
+				_addFileEntry(
 					dlFileEntry, entry, objectField.getObjectFieldSettings(),
 					portletId, serviceContext, userId);
 

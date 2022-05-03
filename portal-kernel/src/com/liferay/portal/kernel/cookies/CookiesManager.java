@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.cookies;
 
+import java.util.List;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -54,9 +56,11 @@ public interface CookiesManager {
 
 	public String getDomain(String host);
 
-	public String[] getOptionalCookieNames();
+	public List<ConsentCookieType> getOptionalConsentCookieTypes(long groupId)
+		throws Exception;
 
-	public String[] getRequiredCookieNames();
+	public List<ConsentCookieType> getRequiredConsentCookieTypes(long groupId)
+		throws Exception;
 
 	public boolean hasConsentType(
 		int consentType, HttpServletRequest httpServletRequest);

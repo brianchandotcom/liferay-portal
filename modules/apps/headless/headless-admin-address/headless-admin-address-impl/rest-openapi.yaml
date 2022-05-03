@@ -264,6 +264,33 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Country"
             tags: ["Country"]
+        put:
+            operationId: putCountry
+            parameters:
+                - in: path
+                  name: countryId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Country"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Country"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Country"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Country"
+            tags: ["Country"]
     "/countries/{countryId}/regions":
         get:
             operationId: getCountryRegionsPage

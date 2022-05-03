@@ -69,6 +69,10 @@ components:
                     type: integer
                 name:
                     type: string
+                position:
+                    default: 0.0
+                    format: double
+                    type: number
                 regionCode:
                     type: string
                 title_i18n:

@@ -108,20 +108,43 @@ definition {
 			value1 = "${importStatus}");
 	}
 
-	macro assertOrderTypesEntry {
+	macro assertOrderRulesEntry {
 		AssertTextEquals(
 			locator1 = "CommerceEntry#NAME_FIELD",
-			value1 = "${orderTypeName}");
+			value1 = "${orderRuleName}");
 
 		AssertTextEquals(
 			locator1 = "CommerceEntry#DESCRIPTION_FIELD",
-			value1 = "${orderTypeDescription}");
+			value1 = "${orderRuleDescription}");
 
-		if (isSet(displayOrder)) {
+		AssertSelectedLabel(
+			locator1 = "Select#TYPE",
+			value1 = "${orderRuleType}");
+
+		if (isSet(priority)) {
 			AssertTextEquals(
-				locator1 = "CommerceEntry#DISPLAY_ORDER_FIELD",
-				value1 = "${displayOrder}");
+				locator1 = "CommerceEntry#PRIORITY_FIELD",
+				value1 = "${priority}");
 		}
+
+		if (isSet(amount)) {
+			AssertTextEquals(
+				key_text = "${orderRuleType}",
+				locator1 = "TextInput#ANY",
+				value1 = "${amount}");
+		}
+
+		if (isSet(orderRuleCurrency)) {
+			AssertSelectedLabel(
+				key_selectFieldLabel = "Currency",
+				locator1 = "Select#ANY",
+				value1 = "${orderRuleCurrency}");
+		}
+
+		AssertSelectedLabel(
+			key_selectFieldLabel = "Apply To",
+			locator1 = "Select#ANY",
+			value1 = "${applyTo}");
 	}
 
 	macro assertOrderTypesEntry {

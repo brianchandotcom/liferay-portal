@@ -161,6 +161,8 @@ definition {
 			locator1 = "RaylifePaymentMethod#VALUE_QUOTATION_PAYPAL",
 			value = "$683.05");
 
+		ScrollWebElementIntoView(locator1 = "RaylifePaymentMethod#BUTTON_CONTINUE_PAYPAL");
+
 		Click(locator1 = "RaylifePaymentMethod#BUTTON_CONTINUE_PAYPAL");
 	}
 

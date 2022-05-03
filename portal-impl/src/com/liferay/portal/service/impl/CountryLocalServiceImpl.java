@@ -88,7 +88,7 @@ public class CountryLocalServiceImpl extends CountryLocalServiceBaseImpl {
 				"Number belongs to another country");
 		}
 
-		validate(a2, a3, idd, name, number);
+		validate(a2, a3, CountryConstants.DEFAULT_COUNTRY_ID, name, number);
 
 		long countryId = counterLocalService.increment();
 
@@ -287,7 +287,7 @@ public class CountryLocalServiceImpl extends CountryLocalServiceBaseImpl {
 
 		Country country = countryPersistence.findByPrimaryKey(countryId);
 
-		validate(a2, a3, idd, name, number);
+		validate(a2, a3, countryId, name, number);
 
 		country.setA2(a2);
 		country.setA3(a3);

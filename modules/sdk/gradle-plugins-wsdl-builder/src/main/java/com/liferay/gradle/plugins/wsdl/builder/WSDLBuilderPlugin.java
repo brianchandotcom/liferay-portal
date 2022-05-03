@@ -190,13 +190,11 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 		BuildWSDLTask buildWSDLTask, FileCollection classpath, File inputFile,
 		File tmpDir, Task generateTask) {
 
-		Project project = buildWSDLTask.getProject();
-
 		String taskName = GradleUtil.getTaskName(
 			buildWSDLTask.getName() + "Compile", inputFile);
 
 		JavaCompile javaCompile = GradleUtil.addTask(
-			project, taskName, JavaCompile.class);
+			buildWSDLTask.getProject(), taskName, JavaCompile.class);
 
 		javaCompile.setClasspath(classpath);
 
@@ -213,13 +211,11 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 		BuildWSDLTask buildWSDLTask, FileCollection classpath, File inputFile,
 		final File destinationDir, boolean deleteDestinationDir) {
 
-		Project project = buildWSDLTask.getProject();
-
 		String taskName = GradleUtil.getTaskName(
 			buildWSDLTask.getName() + "Generate", inputFile);
 
 		JavaExec javaExec = GradleUtil.addTask(
-			project, taskName, JavaExec.class);
+			buildWSDLTask.getProject(), taskName, JavaExec.class);
 
 		GenerateOptions generateOptions = buildWSDLTask.getGenerateOptions();
 
@@ -274,10 +270,9 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 
 		Project project = buildWSDLTask.getProject();
 
-		String taskName = GradleUtil.getTaskName(
-			buildWSDLTask.getName(), inputFile);
-
-		Jar jar = GradleUtil.addTask(project, taskName, Jar.class);
+		Jar jar = GradleUtil.addTask(
+			project, GradleUtil.getTaskName(buildWSDLTask.getName(), inputFile),
+			Jar.class);
 
 		jar.from(compileTask.getOutputs());
 

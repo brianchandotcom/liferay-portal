@@ -26,7 +26,6 @@ import java.util.concurrent.Callable;
 
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
-import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.invocation.Gradle;
@@ -161,10 +160,9 @@ public class AppTLDDocBuilderPlugin implements Plugin<Project> {
 	private void _configureTaskAppTLDDoc(
 		TLDDocTask appTLDDocTask, Project subproject) {
 
-		Task task = GradleUtil.getTask(
-			subproject, TLDDocBuilderPlugin.VALIDATE_TLD_TASK_NAME);
-
-		appTLDDocTask.dependsOn(task);
+		appTLDDocTask.dependsOn(
+			GradleUtil.getTask(
+				subproject, TLDDocBuilderPlugin.VALIDATE_TLD_TASK_NAME));
 
 		TLDDocTask tldDocTask = (TLDDocTask)GradleUtil.getTask(
 			subproject, TLDDocBuilderPlugin.TLDDOC_TASK_NAME);

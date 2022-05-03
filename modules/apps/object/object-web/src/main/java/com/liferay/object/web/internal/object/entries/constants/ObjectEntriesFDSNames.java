@@ -14,11 +14,14 @@
 
 package com.liferay.object.web.internal.object.entries.constants;
 
+import com.liferay.object.constants.ObjectPortletKeys;
+
 /**
  * @author Marco Leo
  */
 public class ObjectEntriesFDSNames {
 
-	public static final String RELATED_MODELS = "relatedModels";
+	public static final String RELATED_MODELS =
+		ObjectPortletKeys.OBJECT_ENTRIES + "-relatedModels";
 
 }

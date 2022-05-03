@@ -14,23 +14,32 @@
 
 package com.liferay.object.web.internal.object.definitions.constants;
 
+import com.liferay.object.constants.ObjectPortletKeys;
+
 /**
  * @author Gabriel Albuquerque
  */
 public class ObjectDefinitionsFDSNames {
 
-	public static final String OBJECT_ACTIONS = "objectActions";
+	public static final String OBJECT_ACTIONS =
+		ObjectPortletKeys.OBJECT_DEFINITIONS + "-objectActions";
 
-	public static final String OBJECT_DEFINITIONS = "objectDefinitions";
+	public static final String OBJECT_DEFINITIONS =
+		ObjectPortletKeys.OBJECT_DEFINITIONS + "-objectDefinitions";
 
-	public static final String OBJECT_FIELDS = "objectFields";
+	public static final String OBJECT_FIELDS =
+		ObjectPortletKeys.OBJECT_DEFINITIONS + "-objectFields";
 
-	public static final String OBJECT_LAYOUTS = "objectLayouts";
+	public static final String OBJECT_LAYOUTS =
+		ObjectPortletKeys.OBJECT_DEFINITIONS + "-objectLayouts";
 
-	public static final String OBJECT_RELATIONSHIPS = "objectRelationships";
+	public static final String OBJECT_RELATIONSHIPS =
+		ObjectPortletKeys.OBJECT_DEFINITIONS + "-objectRelationships";
 
-	public static final String OBJECT_VALIDATIONS = "objectValidations";
+	public static final String OBJECT_VALIDATIONS =
+		ObjectPortletKeys.OBJECT_DEFINITIONS + "-objectValidations";
 
-	public static final String OBJECT_VIEWS = "objectViews";
+	public static final String OBJECT_VIEWS =
+		ObjectPortletKeys.OBJECT_DEFINITIONS + "-objectViews";
 
 }

@@ -14,14 +14,17 @@
 
 package com.liferay.object.web.internal.list.type.constants;
 
+import com.liferay.object.constants.ObjectPortletKeys;
+
 /**
  * @author Gabriel Albuquerque
  */
 public class ListTypeFDSNames {
 
 	public static final String LIST_TYPE_DEFINITION_ITEMS =
-		"listTypeDefinitionItems";
+		ObjectPortletKeys.LIST_TYPE_DEFINITIONS + "-listTypeDefinitionItems";
 
-	public static final String LIST_TYPE_DEFINITIONS = "listTypeDefinitions";
+	public static final String LIST_TYPE_DEFINITIONS =
+		ObjectPortletKeys.LIST_TYPE_DEFINITIONS + "-listTypeDefinitions";
 
 }

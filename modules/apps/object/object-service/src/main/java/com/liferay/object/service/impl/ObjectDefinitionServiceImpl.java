@@ -51,7 +51,7 @@ public class ObjectDefinitionServiceImpl
 	public ObjectDefinition addCustomObjectDefinition(
 			Map<Locale, String> labelMap, String name, String panelAppOrder,
 			String panelCategoryKey, Map<Locale, String> pluralLabelMap,
-			String scope, List<ObjectField> objectFields)
+			String scope, String storageType, List<ObjectField> objectFields)
 		throws PortalException {
 
 		_portletResourcePermission.check(
@@ -60,7 +60,7 @@ public class ObjectDefinitionServiceImpl
 
 		return _objectDefinitionLocalService.addCustomObjectDefinition(
 			getUserId(), labelMap, name, panelAppOrder, panelCategoryKey,
-			pluralLabelMap, scope, objectFields);
+			pluralLabelMap, scope, storageType, objectFields);
 	}
 
 	@Override

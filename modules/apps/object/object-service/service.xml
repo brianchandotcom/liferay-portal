@@ -69,6 +69,7 @@
 		<column localized="true" name="pluralLabel" type="String" />
 		<column name="portlet" type="boolean" />
 		<column name="scope" type="String" />
+		<column name="storageType" type="String" />
 		<column name="system" type="boolean" />
 		<column name="version" type="int" />
 		<column name="status" type="int" />

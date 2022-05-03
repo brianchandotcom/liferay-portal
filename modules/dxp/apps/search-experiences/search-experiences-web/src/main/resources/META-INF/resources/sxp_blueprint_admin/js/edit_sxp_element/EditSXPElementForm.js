@@ -123,7 +123,9 @@ function EditSXPElementForm({
 	type,
 	sxpElementId,
 }) {
-	const {defaultLocale, redirectURL} = useContext(ThemeContext);
+	const {defaultLocale, featureFlagLps148749, redirectURL} = useContext(
+		ThemeContext
+	);
 
 	const formRef = useRef();
 	const elementJSONEditorRef = useRef();
@@ -631,7 +633,11 @@ function EditSXPElementForm({
 									size={showVariablesSidebar ? 9 : 12}
 								>
 									<CodeMirrorEditor
-										autocompleteSchema={sxpElementSchema}
+										autocompleteSchema={
+											featureFlagLps148749
+												? sxpElementSchema
+												: null
+										}
 										onChange={(value) =>
 											setElementJSONEditorValue(value)
 										}

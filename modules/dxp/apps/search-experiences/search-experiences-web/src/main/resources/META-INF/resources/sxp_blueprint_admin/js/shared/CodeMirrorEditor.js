@@ -648,9 +648,7 @@ const CodeMirrorEditor = React.forwardRef(
 		const innerRef = useRef(ref);
 		const editorWrapperRef = useRef();
 		const editorRef = useCombinedRefs(ref, innerRef);
-		const {availableLanguages, jsonAutocompleteEnabled} = useContext(
-			ThemeContext
-		);
+		const {availableLanguages} = useContext(ThemeContext);
 
 		useEffect(() => {
 			if (editorWrapperRef.current) {
@@ -686,7 +684,7 @@ const CodeMirrorEditor = React.forwardRef(
 
 				// Enable autocomplete if `autocompleteSchema` is defined.
 
-				if (autocompleteSchema && jsonAutocompleteEnabled) {
+				if (autocompleteSchema) {
 					codeMirror.on('keyup', (cm, event) => {
 						const hint = () =>
 							getCodeMirrorHints(

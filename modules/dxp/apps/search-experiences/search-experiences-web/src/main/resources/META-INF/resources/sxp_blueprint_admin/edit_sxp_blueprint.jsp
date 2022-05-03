@@ -44,7 +44,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "edit-blueprint"));
 			).put(
 				"defaultLocale", LocaleUtil.toLanguageId(LocaleUtil.getDefault())
 			).put(
-				"jsonAutocompleteEnabled", GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-148749"))
+				"featureFlagLps143720", GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-143720"))
+			).put(
+				"featureFlagLps148749", GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-148749"))
 			).put(
 				"learnMessages", LearnMessageUtil.getJSONObject("search-experiences-web")
 			).put(

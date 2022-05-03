@@ -15,6 +15,7 @@
 package com.liferay.portal.events;
 
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
@@ -31,10 +32,14 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.PortalLifecycle;
 import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
+import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.util.PropsValues;
 
+import java.io.File;
 import java.io.InputStream;
+
+import java.util.Arrays;
 
 import org.apache.commons.io.IOUtils;
 
@@ -62,6 +67,24 @@ public class StartupAction extends SimpleAction {
 	}
 
 	protected void doRun(String[] ids) throws Exception {
+		if (ServerDetector.isTomcat()) {
+			File libExtDir = new File(
+				PropsValues.LIFERAY_LIB_GLOBAL_SHARED_DIR, "ext");
+
+			if (libExtDir.exists()) {
+				File[] extJarFiles = libExtDir.listFiles();
+
+				if (extJarFiles.length != 0) {
+					_log.error(
+						StringBundler.concat(
+							"Found files ", Arrays.toString(extJarFiles),
+							" in ", libExtDir, ". Please move to ",
+							PropsValues.LIFERAY_LIB_GLOBAL_SHARED_DIR, " or ",
+							PropsValues.
+								LIFERAY_SHIELDED_CONTAINER_LIB_PORTAL_DIR));
+				}
+			}
+		}
 
 		// Print release information
 

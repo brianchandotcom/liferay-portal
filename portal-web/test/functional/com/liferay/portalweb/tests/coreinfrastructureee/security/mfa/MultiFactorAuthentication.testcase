@@ -973,6 +973,8 @@ definition {
 
 			var secretKey = selenium.getAttribute("//input[contains(@id,'sharedSecret')]@value");
 
+			echo("secretKey is: ${secretKey}");
+
 			MultiFactorAuthentication.getTOTP();
 		}
 
@@ -1414,6 +1416,8 @@ definition {
 			Navigator.gotoNavUnderline(navUnderline = "Multi-Factor Authentication");
 
 			var secretKey = selenium.getAttribute("//input[contains(@id,'sharedSecret')]@value");
+
+			echo("secretKey is: ${secretKey}");
 
 			MultiFactorAuthentication.getTOTP();
 		}

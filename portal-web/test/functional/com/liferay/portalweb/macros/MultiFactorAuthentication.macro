@@ -185,6 +185,9 @@ definition {
 			VerifyElementPresent(locator1 = "MultiFactorAuthentication#TOTP_FIELD");
 
 			var secretKey = selenium.getAttribute("//input[contains(@id,'sharedSecret')]@value");
+
+			echo("secretKey is: ${secretKey}");
+
 			var totp = AuthenticationUtil.generateTimeBasedOTP("${secretKey}");
 
 			Type(

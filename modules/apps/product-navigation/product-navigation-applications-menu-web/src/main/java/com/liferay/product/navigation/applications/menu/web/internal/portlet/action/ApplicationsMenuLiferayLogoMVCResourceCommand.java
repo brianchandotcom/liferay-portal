@@ -104,22 +104,22 @@ public class ApplicationsMenuLiferayLogoMVCResourceCommand
 					}
 				}
 			}
-
-			if (inputStream == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug("Default Liferay logo is not available");
-				}
-			}
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Unable to configure the default Liferay logo: " +
 						exception.getMessage());
+
+				return;
 			}
 		}
 
 		if (inputStream == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Default Liferay logo is not available");
+			}
+
 			return;
 		}
 

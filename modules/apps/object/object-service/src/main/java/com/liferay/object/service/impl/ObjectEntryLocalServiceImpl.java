@@ -1243,12 +1243,12 @@ public class ObjectEntryLocalServiceImpl
 
 		long storageDLFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 
-		for (String folderName :
+		for (String name :
 				com.liferay.petra.string.StringUtil.split(
 					storageDLFolderPath, CharPool.FORWARD_SLASH)) {
 
 			DLFolder dlFolder = _dlFolderLocalService.fetchFolder(
-				groupId, storageDLFolderId, folderName);
+				groupId, storageDLFolderId, name);
 
 			if (dlFolder != null) {
 				storageDLFolderId = dlFolder.getFolderId();
@@ -1259,7 +1259,7 @@ public class ObjectEntryLocalServiceImpl
 			try {
 				Folder folder = _dlAppLocalService.addFolder(
 					_userLocalService.getDefaultUserId(companyId), groupId,
-					storageDLFolderId, folderName, null, serviceContext);
+					storageDLFolderId, name, null, serviceContext);
 
 				storageDLFolderId = folder.getFolderId();
 			}
@@ -2009,10 +2009,10 @@ public class ObjectEntryLocalServiceImpl
 			return;
 		}
 
-		int objectEntriesCount = objectEntryPersistence.countByU_ODI(
+		int count = objectEntryPersistence.countByU_ODI(
 			user.getUserId(), objectDefinitionId);
 
-		if (objectEntriesCount >=
+		if (count >=
 				_objectConfiguration.guestMaximumEntrySubmissionsPerObject()) {
 
 			throw new ObjectEntrySubmissionLimitException(

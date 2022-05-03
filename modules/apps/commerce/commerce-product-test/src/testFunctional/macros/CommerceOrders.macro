@@ -1,5 +1,54 @@
 definition {
 
+	macro addOrderRule {
+		LexiconEntry.gotoAdd();
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		Type(
+			locator1 = "TextInput#NAME",
+			value1 = "${orderRuleName}");
+
+		Type(
+			locator1 = "CommerceEntry#DESCRIPTION_FIELD",
+			value1 = "${orderRuleDescription}");
+
+		Select(
+			locator1 = "Select#TYPE",
+			value1 = "${orderRuleType}");
+
+		Button.clickSubmitButton();
+
+		if (isSet(amount)) {
+			Type(
+				key_text = "${orderRuleType}",
+				locator1 = "TextInput#ANY",
+				value1 = "${amount}");
+		}
+
+		if (isSet(orderRuleCurrency)) {
+			Select(
+				key_selectFieldLabel = "Currency",
+				locator1 = "Select#ANY",
+				value1 = "${orderRuleCurrency}");
+		}
+
+		if (isSet(applyTo)) {
+			Select(
+				key_selectFieldLabel = "Apply To",
+				locator1 = "Select#ANY",
+				value1 = "${applyTo}");
+		}
+
+		if ("${active}" == "true") {
+			ClickNoError(locator1 = "ToggleSwitch#ACTIVE");
+		}
+
+		Button.clickPublish();
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro addOrderType {
 		LexiconEntry.gotoAdd();
 
@@ -57,6 +106,22 @@ definition {
 			key_value = "${importStatus}",
 			locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT",
 			value1 = "${importStatus}");
+	}
+
+	macro assertOrderTypesEntry {
+		AssertTextEquals(
+			locator1 = "CommerceEntry#NAME_FIELD",
+			value1 = "${orderTypeName}");
+
+		AssertTextEquals(
+			locator1 = "CommerceEntry#DESCRIPTION_FIELD",
+			value1 = "${orderTypeDescription}");
+
+		if (isSet(displayOrder)) {
+			AssertTextEquals(
+				locator1 = "CommerceEntry#DISPLAY_ORDER_FIELD",
+				value1 = "${displayOrder}");
+		}
 	}
 
 	macro assertOrderTypesEntry {

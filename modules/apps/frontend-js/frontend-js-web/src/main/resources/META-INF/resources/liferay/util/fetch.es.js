@@ -29,6 +29,19 @@ export default function defaultFetch(resource, init = {}) {
 	let resourceLocation = resource.url ? resource.url : resource.toString();
 
 	if (resourceLocation.startsWith('/')) {
+		const pathContext = Liferay.ThemeDisplay.getPathContext();
+
+		if (pathContext && !resourceLocation.startsWith(pathContext)) {
+			resourceLocation = pathContext + resourceLocation;
+
+			if (typeof resource === 'string') {
+				resource = resourceLocation;
+			}
+			else {
+				resource = {...resource, url: resourceLocation};
+			}
+		}
+
 		resourceLocation = window.location.origin + resourceLocation;
 	}
 

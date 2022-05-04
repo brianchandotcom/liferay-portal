@@ -794,6 +794,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8591 | Test Summary: Undo all members from being added"
 	@priority = "3"
 	test UndoAllMembersFromBeingAdded {
+		property analytics.cloud.upstream = "false";
+
 		task ("Get site assigned property name") {
 			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}

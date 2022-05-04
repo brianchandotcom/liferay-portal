@@ -184,6 +184,7 @@ definition {
 	@description = "Bug: LRAC-8091 | Automation ID: LRAC-10582 | Test Summary: Dynamic segment is updating membership number"
 	@priority = "4"
 	test CanUpdateNumberOfMembersForDynamicSegment {
+		property analytics.cloud.upstream = "false";
 		property test.name.skip.portal.instance = "SegmentsMembership#CanUpdateNumberOfMembersForDynamicSegment";
 
 		var nameList1 = "user2 user2,user3 user3";

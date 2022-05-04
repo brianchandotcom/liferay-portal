@@ -62,12 +62,14 @@ public class AttachmentValidator {
 
 		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-148112")) ||
 			signedIn ||
-			(maximumFileSize < _objectConfiguration.guestMaximumFileSize())) {
+			(maximumFileSize <
+				_objectConfiguration.maximumFileSizeForGuestUsers())) {
 
 			return maximumFileSize * _FILE_LENGTH_MB;
 		}
 
-		return _objectConfiguration.guestMaximumFileSize() * _FILE_LENGTH_MB;
+		return _objectConfiguration.maximumFileSizeForGuestUsers() *
+			_FILE_LENGTH_MB;
 	}
 
 	public void validateFileExtension(String fileName, long objectFieldId)

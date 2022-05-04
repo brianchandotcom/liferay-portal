@@ -186,12 +186,13 @@ public class AttachmentDDMFormFieldTemplateContextContributor
 
 		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-148112")) ||
 			themeDisplay.isSignedIn() ||
-			(maximumFileSize < _objectConfiguration.guestMaximumFileSize())) {
+			(maximumFileSize <
+				_objectConfiguration.maximumFileSizeForGuestUsers())) {
 
 			return maximumFileSize;
 		}
 
-		return _objectConfiguration.guestMaximumFileSize();
+		return _objectConfiguration.maximumFileSizeForGuestUsers();
 	}
 
 	private String _getURL(

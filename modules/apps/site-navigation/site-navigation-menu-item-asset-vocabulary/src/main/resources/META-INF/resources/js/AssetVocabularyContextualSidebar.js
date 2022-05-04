@@ -49,6 +49,9 @@ function AssetVocabularyContextualSidebar({
 		initialNumberOfCategories
 	);
 	const [siteName, setSiteName] = useState(initialSiteName);
+	const [customName, setCustomName] = useState(
+		translations[selectedLocaleId] || assetVocabulary.title
+	);
 
 	const {
 		assetVocabularySelectorURL,
@@ -158,14 +161,16 @@ function AssetVocabularyContextualSidebar({
 						<ClayInput
 							disabled={!customNameEnabled}
 							id={`${namespace}_nameInput`}
-							onChange={(event) =>
+							onChange={(event) => {
 								setTranslations({
 									...translations,
 									[selectedLocaleId]: event.target.value,
-								})
-							}
+								});
+
+								setCustomName(event.target.value);
+							}}
 							type="text"
-							value={translations[selectedLocaleId] || ''}
+							value={customName}
 						/>
 					</ClayInput.GroupItem>
 

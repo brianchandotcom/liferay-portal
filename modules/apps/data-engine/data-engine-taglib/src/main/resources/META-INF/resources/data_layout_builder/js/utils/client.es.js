@@ -49,7 +49,14 @@ export function getURL(path, params) {
 		...params,
 	};
 
-	const uri = new URL(`${window.location.origin}${path}`);
+	let pathContext = themeDisplay.getPathContext();
+
+	if (!pathContext || pathContext === '/') {
+		pathContext = '';
+	}
+
+	const uri = new URL(`${window.location.origin}${pathContext}${path}`);
+
 	const keys = Object.keys(params);
 
 	keys.forEach((key) => uri.searchParams.set(key, params[key]));

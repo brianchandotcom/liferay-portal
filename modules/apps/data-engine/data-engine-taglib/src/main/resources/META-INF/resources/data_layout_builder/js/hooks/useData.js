@@ -99,6 +99,12 @@ const DEFAULT_DATA_LAYOUT = {
 };
 
 export function useData({dataDefinitionId, dataLayoutId}) {
+	let pathContext = themeDisplay.getPathContext();
+
+	if (!pathContext || pathContext === '/') {
+		pathContext = '';
+	}
+
 	const {resource: dataDefinition} = useResource({
 		fetch: customFetch({
 			defaultData: DEFAULT_DATA_DEFINITION,
@@ -109,7 +115,7 @@ export function useData({dataDefinitionId, dataLayoutId}) {
 		fetchRetry: {
 			attempts: 0,
 		},
-		link: `${window.location.origin}/o/data-engine/v2.0/data-definitions/${dataDefinitionId}`,
+		link: `${window.location.origin}${pathContext}/o/data-engine/v2.0/data-definitions/${dataDefinitionId}`,
 	});
 
 	const {resource: dataLayout} = useResource({
@@ -122,7 +128,7 @@ export function useData({dataDefinitionId, dataLayoutId}) {
 		fetchRetry: {
 			attempts: 0,
 		},
-		link: `${window.location.origin}/o/data-engine/v2.0/data-layouts/${dataLayoutId}`,
+		link: `${window.location.origin}${pathContext}/o/data-engine/v2.0/data-layouts/${dataLayoutId}`,
 	});
 
 	return {dataDefinition, dataLayout};

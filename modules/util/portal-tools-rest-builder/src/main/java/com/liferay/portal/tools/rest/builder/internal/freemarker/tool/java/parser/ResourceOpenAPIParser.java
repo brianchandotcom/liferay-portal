@@ -882,13 +882,22 @@ public class ResourceOpenAPIParser {
 	private static String _getParentSchema(
 		String path, Map<String, PathItem> pathItems, String schemaName) {
 
-		int lastIndexOfSlash = path.lastIndexOf("/");
+		String basePath = path;
+
+		if (basePath.endsWith(
+				"/by-external-reference-code/{externalReferenceCode}")) {
+
+			basePath = StringUtil.removeLast(
+				path, "/by-external-reference-code/{externalReferenceCode}");
+		}
+
+		int lastIndexOfSlash = basePath.lastIndexOf("/");
 
 		if (lastIndexOfSlash < 1) {
 			return null;
 		}
 
-		String basePath = path.substring(0, lastIndexOfSlash);
+		basePath = basePath.substring(0, lastIndexOfSlash);
 
 		if (basePath.equals("/asset-libraries/{assetLibraryId}")) {
 			return "AssetLibrary";

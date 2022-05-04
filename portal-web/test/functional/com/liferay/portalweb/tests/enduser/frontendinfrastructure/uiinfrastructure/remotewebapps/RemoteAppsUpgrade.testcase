@@ -1,8 +1,8 @@
 @component-name = "portal-upgrades"
 definition {
 
+	property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
-	property environment.acceptance = "true";
 	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";

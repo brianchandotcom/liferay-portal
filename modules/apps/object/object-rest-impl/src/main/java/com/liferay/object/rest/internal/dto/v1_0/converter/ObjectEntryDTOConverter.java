@@ -56,6 +56,7 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -436,49 +437,51 @@ public class ObjectEntryDTOConverter
 				_objectRelationshipLocalService.getObjectRelationships(
 					objectDefinition.getObjectDefinitionId());
 
-			objectRelationships.forEach(
-				objectRelationship -> {
-					Optional<UriInfo> uriInfoOptional =
-						dtoConverterContext.getUriInfoOptional();
+			Optional<UriInfo> uriInfoOptional =
+				dtoConverterContext.getUriInfoOptional();
 
-					if (uriInfoOptional.map(
-							UriInfo::getQueryParameters
-						).map(
-							queryParameters -> queryParameters.getFirst(
-								"nestedFields")
-						).map(
-							nestedFields -> nestedFields.contains(
-								objectRelationship.getName())
-						).orElse(
-							false
-						)) {
+			for (ObjectRelationship objectRelationship : objectRelationships) {
+				if (!uriInfoOptional.map(
+						UriInfo::getQueryParameters
+					).map(
+						queryParameters -> queryParameters.getFirst(
+							"nestedFields")
+					).map(
+						nestedFields -> {
+							List<String> strings = Arrays.asList(
+								nestedFields.split(","));
 
-						ObjectEntry[] objectEntries = new ObjectEntry[0];
-
-						if (Objects.equals(
-								objectRelationship.getType(),
-								ObjectRelationshipConstants.
-									TYPE_MANY_TO_MANY)) {
-
-							objectEntries =
-								_getManyToManyRelationshipObjectEntries(
-									dtoConverterContext, nestedFieldsDepth,
-									objectEntry, objectRelationship);
+							return strings.contains(
+								objectRelationship.getName());
 						}
-						else if (Objects.equals(
-									objectRelationship.getType(),
-									ObjectRelationshipConstants.
-										TYPE_ONE_TO_MANY)) {
+					).orElse(
+						false
+					)) {
 
-							objectEntries =
-								_getOneToManyRelationshipObjectEntries(
-									dtoConverterContext, nestedFieldsDepth,
-									objectEntry, objectRelationship);
-						}
+					continue;
+				}
 
-						map.put(objectRelationship.getName(), objectEntries);
-					}
-				});
+				ObjectEntry[] objectEntries = new ObjectEntry[0];
+
+				if (Objects.equals(
+						objectRelationship.getType(),
+						ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
+
+					objectEntries = _getManyToManyRelationshipObjectEntries(
+						dtoConverterContext, nestedFieldsDepth, objectEntry,
+						objectRelationship);
+				}
+				else if (Objects.equals(
+							objectRelationship.getType(),
+							ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
+
+					objectEntries = _getOneToManyRelationshipObjectEntries(
+						dtoConverterContext, nestedFieldsDepth, objectEntry,
+						objectRelationship);
+				}
+
+				map.put(objectRelationship.getName(), objectEntries);
+			}
 		}
 
 		values.remove(objectDefinition.getPKObjectFieldName());

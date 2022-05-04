@@ -669,8 +669,8 @@ public abstract class PoshiElement
 				continue;
 			}
 
-			if ((trimmedPoshiScriptSnippet.startsWith("static") ||
-				trimmedPoshiScriptSnippet.startsWith("var")) && (c != ';')) {
+			if (_isVarPoshiScriptSnippet(trimmedPoshiScriptSnippet) &&
+				(c != ';')) {
 
 				continue;
 			}
@@ -1024,27 +1024,27 @@ public abstract class PoshiElement
 		}
 	}
 
+	private boolean _isVarPoshiScriptSnippet(String poshiScriptSnippet) {
+		poshiScriptSnippet = StringUtil.trimLeading(poshiScriptSnippet);
+
+		if (poshiScriptSnippet.startsWith("static") ||
+			poshiScriptSnippet.startsWith("var")) {
+
+			Matcher matcher = _varNamePattern.matcher(poshiScriptSnippet);
+
+			return matcher.find();
+		}
+
+		return false;
+	}
+
 	private String _removeEmptyLineBetweenVariables(
 		String poshiScriptSnippet, PoshiNode<?, ?> poshiNode,
 		PoshiNode<?, ?> previousPoshiNode) {
 
-		if (previousPoshiNode == null) {
-			return poshiScriptSnippet;
-		}
-
-		String trimmedPoshiScript = StringUtil.trimLeading(
-			previousPoshiNode.toPoshiScript());
-
-		if (!trimmedPoshiScript.startsWith("static var ") &&
-			!trimmedPoshiScript.startsWith("var ")) {
-
-			return poshiScriptSnippet;
-		}
-
-		trimmedPoshiScript = StringUtil.trimLeading(poshiNode.toPoshiScript());
-
-		if (!trimmedPoshiScript.startsWith("static var ") &&
-			!trimmedPoshiScript.startsWith("var ")) {
+		if ((previousPoshiNode == null) ||
+			!_isVarPoshiScriptSnippet(previousPoshiNode.toPoshiScript()) ||
+			!_isVarPoshiScriptSnippet(poshiNode.toPoshiScript())) {
 
 			return poshiScriptSnippet;
 		}
@@ -1077,6 +1077,8 @@ public abstract class PoshiElement
 	private static final Pattern _poshiScriptCommentPattern = Pattern.compile(
 		"^[\\s]*(\\/\\/.*?(\\n|$)|\\/\\*.*?\\*\\/)", Pattern.DOTALL);
 	private static final Pattern _varInvocationAssignmentStatementPattern;
+	private static final Pattern _varNamePattern = Pattern.compile(
+		VAR_NAME_REGEX);
 
 	static {
 		INVOCATION_REGEX = "[\\s]*[\\w\\.]*" + PARAMETER_REGEX;

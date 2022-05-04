@@ -40,5 +40,5 @@ dependencies {
 	testCompile group: "com.github.everit-org.json-schema", name: "org.everit.json.schema", version: "1.11.1"
 	testCompile group: "com.google.re2j", name: "re2j", version: "1.2"
 	testCompile group: "joda-time", name: "joda-time", version: "2.9.1"
-	testCompile group: "org.json", name: "json", version: "20180813"
+	testCompile group: "org.json", name: "json", version: "20220320"
 }

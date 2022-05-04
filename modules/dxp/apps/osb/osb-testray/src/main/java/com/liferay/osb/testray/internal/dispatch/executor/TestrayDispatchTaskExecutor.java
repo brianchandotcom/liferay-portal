@@ -177,9 +177,8 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 		}
 
 		for (ObjectDefinition objectDefinition : objectDefinitions) {
-			_objectDefinitionIds.put(
-				objectDefinition.getShortName(),
-				objectDefinition.getObjectDefinitionId());
+			_objectDefinitions.put(
+				objectDefinition.getShortName(), objectDefinition);
 		}
 
 		_loadObjectEntryIds(
@@ -212,9 +211,18 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 			String key, List<String> placeholders)
 		throws Exception {
 
+		ObjectDefinition objectDefinition = _objectDefinitions.get(
+			objectShortName);
+
+		if (objectDefinition == null) {
+			_log.error("Object Definition not found");
+
+			throw new PortalException("Object Definition not found");
+		}
+
 		List<Map<String, Serializable>> values =
 			_objectEntryLocalService.getValuesList(
-				_objectDefinitionIds.get(objectShortName), null, 0, 0);
+				objectDefinition.getObjectDefinitionId(), null, 0, 0);
 
 		if (ListUtil.isEmpty(values)) {
 			return;
@@ -363,11 +371,11 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 	private static final Log _log = LogFactoryUtil.getLog(
 		TestrayDispatchTaskExecutor.class);
 
-	private final Map<String, Long> _objectDefinitionIds = new HashMap<>();
-
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
+	private final Map<String, ObjectDefinition> _objectDefinitions =
+		new HashMap<>();
 	private final Map<String, Long> _objectEntryIds = new HashMap<>();
 
 	@Reference

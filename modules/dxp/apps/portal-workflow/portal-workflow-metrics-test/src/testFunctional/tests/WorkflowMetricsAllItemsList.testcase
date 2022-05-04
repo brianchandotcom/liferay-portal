@@ -29,6 +29,42 @@ definition {
 		}
 	}
 
+	@description = "Verify that an administrator user that it's not asset creator can reassign and transition the task"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test AdministratorUserCanReassignAndTransitionAnyTasks {
+
+		// TODO AdministratorUserCanReassignAndTransitionAnyTasks pending implementation
+
+	}
+
+	@description = "Verify that any user with administrator role can reassign allowed tasks"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test AdministratorUserCanReassignAnyTasks {
+
+		// TODO AdministratorUserCanReassignAnyTasks pending implementation
+
+	}
+
+	@description = "Verify that an administrator user that it's not asset creator can reassign multiple already assigned tasks to different users"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test AdministratorUserCanReassignMultipleTasksAssignedToOtherUsers {
+
+		// TODO AdministratorUserCanReassignMultipleTasksAssignedToOtherUsers pending implementation
+
+	}
+
+	@description = "Verify that the Asset Creator user can resubmit the task after a administrator that it's not asset creator reject a task assigned to him"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test AssetCreatorCanResubmitTaskRejectedByOtherAdministratorUser {
+
+		// TODO AssetCreatorCanResubmitTaskRejectedByOtherAdministratorUser pending implementation
+
+	}
+
 	@description = "LPS-98517 - Verify that the Assignee dropdown options are listed in alphabetical order"
 	@priority = "3"
 	test AssigneeOptionsAreListedInAlphabeticalOrder {
@@ -1949,6 +1985,15 @@ definition {
 			locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_FILTER_OPTION2",
 			locator2 = "font-weight",
 			value1 = "400");
+	}
+
+	@description = "Verify that users with different roles then administrator can't reassign tasks"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test NonAdministratorUsersCantReassignTasks {
+
+		// TODO NonAdministratorUsersCantReassignTasks pending implementation
+
 	}
 
 	@description = "LPS-92053 - Verify that the Go to submission page button opens the submission page in another tab"

@@ -1,0 +1,103 @@
+@component-name = "portal-upgrades"
+definition {
+
+	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+	property portal.release = "true";
+	property testray.component.names = "Workflow Metrics";
+	property testray.main.component.name = "Upgrades Workflow";
+
+	setUp {
+		SignIn.signIn();
+
+		SearchAdministration.executeReindex();
+	}
+
+	@ignore = "Test Stub"
+	@priority = "5"
+	test UpdateMetricsAfterUpgrade7110 {
+		property data.archive.type = "data-archive-portal";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.1.10";
+
+		// TODO UpdateMetricsAfterUpgrade7110 pending implementation
+
+	}
+
+	@ignore = "Test Stub"
+	@priority = "5"
+	test UpdateMetricsAfterUpgrade72101 {
+		property data.archive.type = "data-archive-portal";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.2.10.1";
+
+		// TODO UpdateMetricsAfterUpgrade72101 pending implementation
+
+	}
+
+	@ignore = "Test Stub"
+	@priority = "5"
+	test UpdateMetricsAfterUpgrade73101 {
+		property data.archive.type = "data-archive-portal";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.3.10.1";
+
+		// TODO UpdateMetricsAfterUpgrade73101 pending implementation
+
+	}
+
+	@ignore = "Test Stub"
+	@priority = "5"
+	test ViewMetricsAfterUpgrade625 {
+		property data.archive.type = "data-archive-portal";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "6.2.5";
+
+		// TODO ViewMetricsAfterUpgrade625 pending implementation
+
+	}
+
+	@ignore = "Test Stub"
+	@priority = "5"
+	test ViewMetricsAfterUpgrade704 {
+		property data.archive.type = "data-archive-portal";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.0.4";
+
+		// TODO ViewMetricsAfterUpgrade704 pending implementation
+
+	}
+
+	@ignore = "Test Stub"
+	@priority = "5"
+	test ViewMetricsAfterUpgrade7110 {
+		property data.archive.type = "data-archive-portal";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.1.10";
+
+		// TODO ViewMetricsAfterUpgrade7110 pending implementation
+
+	}
+
+	@ignore = "Test Stub"
+	@priority = "5"
+	test ViewMetricsAfterUpgrade72101 {
+		property data.archive.type = "data-archive-portal";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.2.10.1";
+
+		// TODO ViewMetricsAfterUpgrade72101 pending implementation
+
+	}
+
+	@ignore = "Test Stub"
+	@priority = "5"
+	test ViewMetricsAfterUpgrade73101 {
+		property data.archive.type = "data-archive-portal";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.3.10.1";
+
+		// TODO ViewMetricsAfterUpgrade73101 pending implementation
+
+	}
+
+}

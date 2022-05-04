@@ -11,21 +11,39 @@
 
 <tbody>
 
+<!-- GENERAL_PATHS -->
 <tr>
 	<td>BUTTON_DIAGRAM_SOURCE_SWITCH</td>
 	<td>//*[not(self::div)][contains(@class,'btn-secondary')][normalize-space()=''][not(contains(@class,'navbar'))]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>BUTTON_CLOSE_MODAL</td>
-	<td>//button[contains (@class,'close')]</td>
+	<td>ALERT_MESSAGE_FEEDBACK</td>
+	<td>//div[contains(@class, 'alert-notifications')]</td>
 	<td></td>
 </tr>
+<!-- SOURCE_VIEW_PATHS -->
 <tr>
 	<td>SOURCE_EDITOR</td>
 	<td>//div[@class='CodeMirror-lines']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>XML_CODE_SNIPPET</td>
+	<td>//div[contains(@class, 'CodeMirror-lines')]//span[contains(@role,'presentation')and contains(text(),'${key_codeSnippet}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>XML_CODE_METADATA_ELEMENT</td>
+	<td>//div[contains(@class,'CodeMirror-gutter-wrapper') and contains(.,'${key_line}')]/..//span[contains(@class,'cm-atom')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>XML_CODE_SPECIFIC_ELEMENT</td>
+	<td>//div[contains(@class,'CodeMirror-gutter-wrapper')]//..//pre[@class=' CodeMirror-line ']//span[contains(.,'${key_elementOption}')]//..//*[normalize-space(text())='${key_elementValue}']</td>
+	<td></td>
+</tr>
+<!-- TRANSLATION_PATHS -->
 <tr>
 	<td>ICON_COUNTRY</td>
 	<td>//button[contains(@class,'btn')]//*[contains(@class,'lexicon-icon-${key_translationOptionSelected}')]</td>
@@ -37,8 +55,19 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TRANSLATION_DROPDOWN</td>
+	<td>//div[@class='dropdown-menu show']</td>
+	<td></td>
+</tr>
+<!-- DIAGRAM_VIEW_PATHS -->
+<tr>
 	<td>SIDEBAR_NODE</td>
 	<td>//div[@class='sidebar']//span[contains(.,'${key_nodeLabel}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BACK_TO_SIDEBAR_BUTTON</td>
+	<td>//button[@class='text-secondary btn btn-monospaced btn-unstyled']</td>
 	<td></td>
 </tr>
 <tr>
@@ -51,6 +80,37 @@
 	<td>//div[@class='react-flow']//div[contains(@class, 'node ${key_nodeType}-node')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>REACT_PANEL</td>
+	<td>//div[@class='react-flow__pane']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DIAGRAM_BODY</td>
+	<td>//body</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECTED_NODE</td>
+	<td>//div[contains(@class, 'react-flow__node-${key_nodeType} selected')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DIAGRAM_NODE_LABEL_SPECIFIC</td>
+	<td>//div[contains(@class, 'node ${key_nodeType}-node')]//span[contains(text(),'${key_nodeLabel}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DIAGRAM_NODE_LABEL</td>
+	<td>//span[contains(@class, 'node-label') and contains(text(), '${key_nodeLabel}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NODE_POSITION</td>
+	<td>//div[@class='react-flow']//span[contains(text(),'${key_nodeLabel}')]/../../..//div[@xpos='${key_nodeXPosition}' and @ypos='${key_nodeYPosition}']</td>
+	<td></td>
+</tr>
+<!-- CONNECTOR_PATHS -->
 <tr>
 	<td>SIDEBAR_CONNECTOR_LABEL</td>
 	<td>//input[@id='edgeLabel']</td>
@@ -72,6 +132,17 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONNECTOR_SOURCE_SELECTED</td>
+	<td>//div[@class='node ${key_nodeType}-node selected']/..//div[@data-handleid='${key_direction}Source']</td>
+	<td></td>
+</tr>
+<!-- MODAL_PATHS -->
+<tr>
+	<td>BUTTON_CLOSE_MODAL</td>
+	<td>//button[contains (@class,'close')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DELETE_MODAL</td>
 	<td>//div[contains(@class, 'modal-content') and contains(.,'${key_title}')]</td>
 	<td></td>
@@ -87,8 +158,14 @@
 	<td></td>
 </tr>
 <tr>
-	<td>BACK_TO_SIDEBAR_BUTTON</td>
-	<td>//button[@class='text-secondary btn btn-monospaced btn-unstyled']</td>
+	<td>MODAL_MESSAGE</td>
+	<td>//div[contains(@class, 'modal-content')]//div[contains(@class, 'modal-body') and contains(text(), '${key_modalMessage}')]</td>
+	<td></td>
+</tr>
+<!-- NODES_PROPERTIES_PATHS -->
+<tr>
+	<td>SIDEBAR_PROPERTY</td>
+	<td>//span[contains(., '${key_propertyName}')]/../..//div[@class='panel-body']/..//span[contains(.,'${key_propertyValue}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -97,23 +174,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NODE_INFO_INPUT</td>
+	<td>//div[@class='sidebar']//input[contains(@ID,'node${key_infoOption}')] | //div[@class='sidebar']//textarea[contains(@ID,'node${key_infoOption}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NODE_INFO</td>
+	<td>//span[contains(., 'Information')]/../..//input[@id='${key_infoOption}' and @value='${key_infoValue}'] | //span[contains(., 'Information')]/../..//textarea[@id='${key_infoOption}' and contains(., '${key_infoValue}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PROPERTIES_INPUT</td>
 	<td>//label[contains(., '${key_inputOption}')]/..//input</td>
-	<td></td>
-</tr>
-<tr>
-	<td>XML_CODE_SNIPPET</td>
-	<td>//div[contains(@class, 'CodeMirror-lines')]//span[contains(@role,'presentation')and contains(text(),'${key_codeSnippet}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>XML_CODE_METADATA_ELEMENT</td>
-	<td>//div[contains(@class,'CodeMirror-gutter-wrapper') and contains(.,'${key_line}')]/..//span[contains(@class,'cm-atom')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>XML_CODE_SPECIFIC_ELEMENT</td>
-	<td>//div[contains(@class,'CodeMirror-gutter-wrapper')]//..//pre[@class=' CodeMirror-line ']//span[contains(.,'${key_elementOption}')]//..//*[normalize-space(text())='${key_elementValue}']</td>
 	<td></td>
 </tr>
 <tr>
@@ -124,6 +196,26 @@
 <tr>
 	<td>PROPERTIES_TEMPLATE_TEXTAREA</td>
 	<td>//label[contains(., 'Template')]/..//textarea | //label[contains(., 'Script')]/..//textarea</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SIDEBAR_MESSAGE_FEEDBACK</td>
+	<td>//div[contains(@class, 'form-feedback-item') and contains(text(), '${key_sidebarMessage}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REQUIRED_FIELD</td>
+	<td>//div[@class='sidebar']//label[@for='${key_requiredField}']//span[contains(text(),'*')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REQUIRED_FEEDBACK_MESSAGE</td>
+	<td>//label[@for='${key_requiredField}']/..//div[@class='form-feedback-item'][contains(text(),'This field is required.')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>HIDE_ANGLE_ICON</td>
+	<td>//div[@class='sidebar']//span[contains(text(),'${key_property}')]/..//*[contains(@class,'lexicon-icon-angle-down')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -142,93 +234,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SELECTED_NODE</td>
-	<td>//div[contains(@class, 'react-flow__node-${key_nodeType} selected')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SIDEBAR_MESSAGE_FEEDBACK</td>
-	<td>//div[contains(@class, 'form-feedback-item') and contains(text(), '${key_sidebarMessage}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ALERT_MESSAGE_FEEDBACK</td>
-	<td>//div[contains(@class, 'alert-notifications')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TRANSLATION_DROPDOWN</td>
-	<td>//div[@class='dropdown-menu show']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONNECTOR_SOURCE_SELECTED</td>
-	<td>//div[@class='node ${key_nodeType}-node selected']/..//div[@data-handleid='${key_direction}Source']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>HIDE_ANGLE_ICON</td>
-	<td>//div[@class='sidebar']//span[contains(text(),'${key_property}')]/..//*[contains(@class,'lexicon-icon-angle-down')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>REACT_PANEL</td>
-	<td>//div[@class='react-flow__pane']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DIAGRAM_BODY</td>
-	<td>//body</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NODE_POSITION</td>
-	<td>//div[@class='react-flow']//span[contains(text(),'${key_nodeLabel}')]/../../..//div[@xpos='${key_nodeXPosition}' and @ypos='${key_nodeYPosition}']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SIDEBAR_FIELD_LABEL</td>
 	<td>//div[@class='sidebar']//span[contains(text(),'${key_fieldName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NODE_INFO</td>
-	<td>//span[contains(., 'Information')]/../..//input[@id='${key_infoOption}' and @value='${key_infoValue}'] | //span[contains(., 'Information')]/../..//textarea[@id='${key_infoOption}' and contains(., '${key_infoValue}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>REQUIRED_FIELD</td>
-	<td>//div[@class='sidebar']//label[@for='${key_requiredField}']//span[contains(text(),'*')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>REQUIRED_FEEDBACK_MESSAGE</td>
-	<td>//label[@for='${key_requiredField}']/..//div[@class='form-feedback-item'][contains(text(),'This field is required.')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MODAL_MESSAGE</td>
-	<td>//div[contains(@class, 'modal-content')]//div[contains(@class, 'modal-body') and contains(text(), '${key_modalMessage}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DIAGRAM_NODE_LABEL_SPECIFIC</td>
-	<td>//div[contains(@class, 'node ${key_nodeType}-node')]//span[contains(text(),'${key_nodeLabel}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DIAGRAM_NODE_LABEL</td>
-	<td>//span[contains(@class, 'node-label') and contains(text(), '${key_nodeLabel}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NODE_INFO_INPUT</td>
-	<td>//div[@class='sidebar']//input[contains(@ID,'node${key_infoOption}')] | //div[@class='sidebar']//textarea[contains(@ID,'node${key_infoOption}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SIDEBAR_PROPERTY</td>
-	<td>//span[contains(., '${key_propertyName}')]/../..//div[@class='panel-body']/..//span[contains(.,'${key_propertyValue}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -25,6 +25,15 @@ definition {
 		}
 	}
 
+	@description = "Verify that, when the user adds a translation, the action reflects in the language selector"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test AddedTranslationsAreDisplayedOnLanguageSelector {
+
+		// TODO AddedTranslationsAreDisplayedOnLanguageSelector pending implementation
+
+	}
+
 	@description = "Verify that Action can be added"
 	@priority = "4"
 	test CanAddAction {
@@ -74,6 +83,87 @@ definition {
 		ProcessBuilderKaleoDesignerReact.viewSelectedAssignments(selectedAssignments = "Resource Actions: Test");
 	}
 
+	@description = "Verify that the user can add Nodes into diagram by drag&drop: Condition"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanAddConditionNode {
+
+		// TODO CanAddConditionNode pending implementation
+
+	}
+
+	@description = "Verify that the user can add Nodes into diagram by drag&drop: End"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanAddEndNode {
+
+		// TODO CanAddEndNode pending implementation
+
+	}
+
+	@description = "Verify that the user can add Nodes into diagram by drag&drop: Fork"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanAddForkNode {
+
+		// TODO CanAddForkNode pending implementation
+
+	}
+
+	@description = "Verify that the user can add Nodes into diagram by drag&drop: Join"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanAddJoinNode {
+
+		// TODO CanAddJoinNode pending implementation
+
+	}
+
+	@description = "Verify that the user can add Nodes into diagram by drag&drop: Join XOR"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanAddJoinXorNode {
+
+		// TODO CanAddJoinXorNode pending implementation
+
+	}
+
+	@description = "Verify that the user can add Multiple Actions to the same node"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanAddMultipleActions {
+
+		// TODO CanAddMultipleActions pending implementation
+
+	}
+
+	@description = "Verify that the user can add multiple notifications"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanAddMultipleNotifications {
+
+		// TODO CanAddMultipleNotifications pending implementation
+
+	}
+
+	@description = "Verify that the user can add multiple Timers to a task node"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanAddMultipleTimers {
+
+		// TODO CanAddMultipleTimers pending implementation
+
+	}
+
+	@description = "Verify that is possible to add new languages"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanAddNewLanguages {
+
+		// TODO CanAddNewLanguages pending implementation
+
+	}
+
 	@description = "Verify that Notification can be added"
 	@priority = "4"
 	test CanAddNotification {
@@ -99,6 +189,42 @@ definition {
 		ProcessBuilderKaleoDesignerReact.viewPropertyValue(
 			propertyName = "Notification",
 			propertyValue = "Liferay Notification");
+	}
+
+	@description = "Verify that the user is able to add a Script to define the Action"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanAddScriptToDefineAction {
+
+		// TODO CanAddScriptToDefineAction pending implementation
+
+	}
+
+	@description = "Verify that the user can add Nodes into diagram by drag&drop: Start"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanAddStartNode {
+
+		// TODO CanAddStartNode pending implementation
+
+	}
+
+	@description = "Verify that the user can add Nodes into diagram by drag&drop: State"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanAddStateNode {
+
+		// TODO CanAddStateNode pending implementation
+
+	}
+
+	@description = "Verify that the user can add Nodes into diagram by drag&drop: Task"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanAddTaskNode {
+
+		// TODO CanAddTaskNode pending implementation
+
 	}
 
 	@description = "Verify that Timers can be added"
@@ -147,6 +273,78 @@ definition {
 			translationStatus = "success");
 	}
 
+	@description = "Verify that is possible to select Account role type for role assignments"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanAssignAccountRole {
+
+		// TODO CanAssignAccountRole pending implementation
+
+	}
+
+	@description = "Verify that the user is able to assign the task node to multiple Role Types"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanAssignMultipleRoleTypesToTaskNode {
+
+		// TODO CanAssignMultipleRoleTypesToTaskNode pending implementation
+
+	}
+
+	@description = "Verify that the user is able to assign the task node to a single Role Type"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanAssignSingleRoleTypeToTaskNode {
+
+		// TODO CanAssignSingleRoleTypeToTaskNode pending implementation
+
+	}
+
+	@description = "Verify that the user is able to assign the task node to the Asset Creator"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanAssignTaskNodeToAssetCreator {
+
+		// TODO CanAssignTaskNodeToAssetCreator pending implementation
+
+	}
+
+	@description = "Verify that the user is able to assign the task node to a Resource Action"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanAssignTaskNodeToResourceActions {
+
+		// TODO CanAssignTaskNodeToResourceActions pending implementation
+
+	}
+
+	@description = "Verify that the user is able to assign the task node to a Role"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanAssignTaskNodeToRole {
+
+		// TODO CanAssignTaskNodeToRole pending implementation
+
+	}
+
+	@description = "Verify that the user is able to assign the task node to a Scripted Assignment"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanAssignTaskNodeToScriptedAssignments {
+
+		// TODO CanAssignTaskNodeToScriptedAssignments pending implementation
+
+	}
+
+	@description = "Verify that the user is able to assign the task node to a specific User"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanAssignTaskNodeToSpecificUser {
+
+		// TODO CanAssignTaskNodeToSpecificUser pending implementation
+
+	}
+
 	@description = "LPS-139387 - Verify that the user can cancel the deletion of a node by clicking on the Cancel button"
 	test CanCancelDelete {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanCancelDelete";
@@ -184,6 +382,51 @@ definition {
 			close = "true",
 			nodeType = "task",
 			title = "Delete Task Node");
+	}
+
+	@description = "Verify that when the user click “X”, the Manage Translations window closes"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanCloseManageTranslationsWindowOnXClick {
+
+		// TODO CanCloseManageTranslationsWindowOnXClick pending implementation
+
+	}
+
+	@description = "Verify that the user is able to complete the task through different types of users assigned at My Workflow Task"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanCompleteTaskThroughDifferentUsersAssignments {
+
+		// TODO CanCompleteTaskThroughDifferentUsersAssignments pending implementation
+
+	}
+
+	@description = "Verify that the user can select and define an Action to be conducted once the timer expires"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanConfigureActionAtTimers {
+
+		// TODO CanConfigureActionAtTimers pending implementation
+
+	}
+
+	@description = "Verify that the user can add multiple Actions to Timers at task node"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanConfigureMultipleActionsAtTimers {
+
+		// TODO CanConfigureMultipleActionsAtTimers pending implementation
+
+	}
+
+	@description = "Verify that the user can select and define an Reassignment to be conducted once the timer expires"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanConfigureReassignmentAtTimers {
+
+		// TODO CanConfigureReassignmentAtTimers pending implementation
+
 	}
 
 	@description = "Verify that the user can create a Template for Notification"
@@ -286,6 +529,114 @@ definition {
 		ProcessBuilderKaleoDesignerReact.viewConnectorPresent(connectorLabel = "STARTTASKCONNECTOR");
 	}
 
+	@description = "Verify that the user is able to input a Groovy script to define the assignment"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanDefineAssignmentWithGroovyScript {
+
+		// TODO CanDefineAssignmentWithGroovyScript pending implementation
+
+	}
+
+	@description = "Verify that the user is able to define the Resource Action"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanDefineResourceAction {
+
+		// TODO CanDefineResourceAction pending implementation
+
+	}
+
+	@description = "Verify that the user can delete action with the trash icon at the bottom right corner"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanDeleteAction {
+
+		// TODO CanDeleteAction pending implementation
+
+	}
+
+	@description = "Verify that the user can delete actions inside Timers"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanDeleteActionsAtTimers {
+
+		// TODO CanDeleteActionsAtTimers pending implementation
+
+	}
+
+	@description = "Verify that the user can delete all actions with the trash icon at the top right corner"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanDeleteAllActionsAtOnce {
+
+		// TODO CanDeleteAllActionsAtOnce pending implementation
+
+	}
+
+	@description = "Verify that the user can delete all Timers at once"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanDeleteAllTimers {
+
+		// TODO CanDeleteAllTimers pending implementation
+
+	}
+
+	@description = "Verify that the user can delete Nodes of Condition"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanDeleteConditionNode {
+
+		// TODO CanDeleteConditionNode pending implementation
+
+	}
+
+	@description = "Verify that the user can delete Nodes of End"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanDeleteEndNode {
+
+		// TODO CanDeleteEndNode pending implementation
+
+	}
+
+	@description = "Verify that the user can delete Nodes of Fork"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanDeleteForkNode {
+
+		// TODO CanDeleteForkNode pending implementation
+
+	}
+
+	@description = "Verify that the user can delete Nodes of Join"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanDeleteJoinNode {
+
+		// TODO CanDeleteJoinNode pending implementation
+
+	}
+
+	@description = "Verify that the user can delete Nodes of Join XOR"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanDeleteJoinXORNode {
+
+		// TODO CanDeleteJoinXORNode pending implementation
+
+	}
+
+	@description = "Verify that the user can delete all notifications configurations"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanDeleteMultipleNotifications {
+
+		// TODO CanDeleteMultipleNotifications pending implementation
+
+	}
+
 	@description = "LPS-139387 - Verify that the user is able to delete a node using the Delete key"
 	@priority = "4"
 	test CanDeleteNodeViaDeleteKey {
@@ -328,6 +679,78 @@ definition {
 		ProcessBuilderKaleoDesignerReact.viewPanelNodeNotPresent(nodeType = "task");
 	}
 
+	@description = "Verify that the user can delete notification role types"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanDeleteNotificationRoleTypes {
+
+		// TODO CanDeleteNotificationRoleTypes pending implementation
+
+	}
+
+	@description = "Verify that the user can delete a specific notification configuration"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanDeleteSpecificNotification {
+
+		// TODO CanDeleteSpecificNotification pending implementation
+
+	}
+
+	@description = "Verify that the user can delete Nodes of Start"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanDeleteStartNode {
+
+		// TODO CanDeleteStartNode pending implementation
+
+	}
+
+	@description = "Verify that the user can delete Nodes of State"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanDeleteStateNode {
+
+		// TODO CanDeleteStateNode pending implementation
+
+	}
+
+	@description = "Verify that the user can delete Nodes of Task"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanDeleteTaskNode {
+
+		// TODO CanDeleteTaskNode pending implementation
+
+	}
+
+	@description = "Verify that the user can delete the Timers"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanDeleteTimers {
+
+		// TODO CanDeleteTimers pending implementation
+
+	}
+
+	@description = "Verify that the user can delete A Timer clicking on trash icon in sidebar Timer Card"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanDeleteTimersBySidebarCard {
+
+		// TODO CanDeleteTimersBySidebarCard pending implementation
+
+	}
+
+	@description = "Verify that is possible to delete translations"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanDeleteTranslations {
+
+		// TODO CanDeleteTranslations pending implementation
+
+	}
+
 	@description = "Verify that the user can Delete a Draft workflow"
 	@priority = "3"
 	test CanDeleteWorkflowDefinitionDraft {
@@ -348,6 +771,24 @@ definition {
 		Workflow.deleteWorkflowDefinition(workflowDefinitionTitle = "New Workflow Definition");
 
 		Workflow.viewDefinitionNotPresent(workflowDefinitionTitle = "New Workflow Definition");
+	}
+
+	@description = "Verify that the user is able to designate a Role Name at a Role Type"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanDesignateRoleTypeRoleName {
+
+		// TODO CanDesignateRoleTypeRoleName pending implementation
+
+	}
+
+	@description = "Verify that the user can edit the Action fields"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanEditActionFields {
+
+		// TODO CanEditActionFields pending implementation
+
 	}
 
 	@description = "LPS-139388 - Verify that the user can edit the node description"
@@ -602,6 +1043,42 @@ definition {
 		ProcessBuilderKaleoDesignerReact.viewNotificationInfo(notificationTemplateLanguage = "Velocity");
 	}
 
+	@description = "Verify that the user can edit the Description of the Timer"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanEditTimerDescription {
+
+		// TODO CanEditTimerDescription pending implementation
+
+	}
+
+	@description = "Verify that the user can edit the Duration of the Timer"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanEditTimerDuration {
+
+		// TODO CanEditTimerDuration pending implementation
+
+	}
+
+	@description = "Verify that the user can edit the Name of the Timer"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanEditTimerName {
+
+		// TODO CanEditTimerName pending implementation
+
+	}
+
+	@description = "Verify that the user can edit the Timers recurrence field"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanEditTimerRecurrenceFields {
+
+		// TODO CanEditTimerRecurrenceFields pending implementation
+
+	}
+
 	@description = "LPS-140056 - Verify that the user is able to edit the transition ID"
 	@priority = "4"
 	test CanEditTransitionID {
@@ -686,6 +1163,15 @@ definition {
 		ProcessBuilderKaleoDesignerReact.viewConnectorPresent(connectorLabel = "START-END CONNECTOR");
 	}
 
+	@description = "Verify that the link to Manage Translations component is displayed"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanManageTranslations {
+
+		// TODO CanManageTranslations pending implementation
+
+	}
+
 	@description = "Verify that the user can move nodes in diagram by drag&drop in the middle of node"
 	@priority = "4"
 	test CanMoveNode {
@@ -717,6 +1203,15 @@ definition {
 			nodeYPosition = "50");
 	}
 
+	@description = "Verify that the user can't delete a Assignment through trash icon"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanNotDeleteAssignmentByTrashIcon {
+
+		// TODO CanNotDeleteAssignmentByTrashIcon pending implementation
+
+	}
+
 	@description = "Verify that is not possible to have multiple Start nodes"
 	@ignore = "Test Stub"
 	@priority = "4"
@@ -741,6 +1236,24 @@ definition {
 	test CanNotPlaceNodeOverAnother {
 
 		// TODO LRQA-73005 CanNotPlaceNodeOverAnother pending implementation
+
+	}
+
+	@description = "Verify that the user can't Publish a workflow without transitions"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanNotPublishWorkflowWithoutTransitions {
+
+		// TODO CanNotPublishWorkflowWithoutTransitions pending implementation
+
+	}
+
+	@description = "Verify that the user can't restore to a invalid previous definition version when the workflow is Published and a Error alert appears (Example: Error:Unable to restore this item)"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanNotRestoreToAInvalidDefinitionWhenPublished {
+
+		// TODO CantRestoreToAInvalidDefinitionWhenPublished pending implementation
 
 	}
 
@@ -789,12 +1302,75 @@ definition {
 			save = "true");
 	}
 
+	@description = "Verify that only the task node thas Assignments property"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanOnlyViewAssignmentsAtTaskNode {
+
+		// TODO CanOnlyViewAssignmentsAtTaskNode pending implementation
+
+	}
+
 	@description = "LPS-139388 - Verify that, when all the parallel reviews are complete, the Join node will allow the instance to progress to the next step"
 	@ignore = "Test Stub"
 	@priority = "4"
 	test CanProgressToNextStepWhenParallelTasksCompleted {
 
 		// TODO LRQA-72985 CanProgressToNextStepWhenParallelTasksCompleted pending implementation
+
+	}
+
+	@description = "Verify that the user can publish a definition with Condition node"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanPublishWithConditionNode {
+
+		// TODO CanPublishWithConditionNode pending implementation
+
+	}
+
+	@description = "Verify that the user can publish a definition with Fork node"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanPublishWithForkNode {
+
+		// TODO CanPublishWithForkNode pending implementation
+
+	}
+
+	@description = "Verify that the user can publish a definition with Join node"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanPublishWithJoinNode {
+
+		// TODO CanPublishWithJoinNode pending implementation
+
+	}
+
+	@description = "Verify that the user can publish a definition with Join XOR node "
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanPublishWithJoinXORNode {
+
+		// TODO CanPublishWithJoinXORNode pending implementation
+
+	}
+
+	@description = "Verify that the user can publish a definition with State node"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanPublishWithStateNode {
+
+		// TODO CanPublishWithStateNode pending implementation
+
+	}
+
+	@description = "Verify that the user can can publish a definition with Task node"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanPublishWithTaskNode {
+
+		// TODO CanPublishWithTaskNode pending implementation
 
 	}
 
@@ -822,6 +1398,24 @@ definition {
 		Workflow.viewDefinitionPublished(workflowDefinitionTitle = "New Workflow Definition");
 	}
 
+	@description = "Verify that the user can publish a workflow with Timer configured"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanPublishWorkflowWithTimerConfigured {
+
+		// TODO CanPublishWorkflowWithTimerConfigured pending implementation
+
+	}
+
+	@description = "Verify that the user can restore to a previous definition version in the Revision History tab"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanRestorePreviousVersionAtRevisionHistoryTab {
+
+		// TODO CanRestorePreviousVersionAtRevisionHistoryTab pending implementation
+
+	}
+
 	@description = "Verify that user can Save workflow as Draft"
 	@priority = "5"
 	test CanSaveAsDraft {
@@ -838,6 +1432,15 @@ definition {
 		Workflow.openWorkflowListView();
 
 		Workflow.viewDefinitionUnpublished(workflowDefinitionTitle = "New Workflow Definition Title");
+	}
+
+	@description = "Verify that the user can search languages"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanSearchLanguages {
+
+		// TODO CanSearchLanguages pending implementation
+
 	}
 
 	@description = "LPS-139387 - Verify that the user is able to see the Start and End nodes on the Diagram when creating a New Process"
@@ -930,6 +1533,15 @@ definition {
 		ProcessBuilderKaleoDesignerReact.viewSelectedNode(nodeType = "task");
 	}
 
+	@description = "Verify that the user can select On Assignment as Execution Type"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanSelectOnAssignmentAsExecutionTypeAtActions {
+
+		// TODO CanSelectOnAssignmentAsExecutionTypeAtActions pending implementation
+
+	}
+
 	@description = "Verify that the user can select On Assignment as the time when the notification will be sent in a task"
 	@priority = "4"
 	test CanSelectOnAssignmentAsExecutionTypeAtTaskNotifications {
@@ -981,6 +1593,24 @@ definition {
 		ProcessBuilderKaleoDesignerReact.gotoNotification(notificationName = "Liferay Notification");
 
 		ProcessBuilderKaleoDesignerReact.viewNotificationInfo(notificationExecutionType = "On Entry");
+	}
+
+	@description = "Verify that the user can select On Entry as Execution Type"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanSelectOnEntryExecutionTypeAtActions {
+
+		// TODO CanSelectOnEntryExecutionTypeAtActions pending implementation
+
+	}
+
+	@description = "Verify that the user can select On Exit as Execution Type"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanSelectOnExitAsExecutionTypeAtActions {
+
+		// TODO CanSelectOnExitAsExecutionTypeAtActions pending implementation
+
 	}
 
 	@description = "Verify that the user can select On Exit as the time when the notification will be sent"
@@ -1140,6 +1770,15 @@ definition {
 		ProcessBuilderKaleoDesignerReact.viewNotificationInfo(notificationTypeOption = "userNotification");
 	}
 
+	@description = "Verify that the user can set the Priority for the Action"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanSetActionsPriority {
+
+		// TODO CanSetActionsPriority pending implementation
+
+	}
+
 	@description = "Verify that the user can set transition Default"
 	@priority = "4"
 	test CanSetDefaultTransition {
@@ -1172,6 +1811,51 @@ definition {
 			defaultStatus = "True");
 	}
 
+	@description = "Verify that the user can switch between Details and Revision Story Tab"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanSwitchBetweenDetailsRevisionTabs {
+
+		// TODO CanSwitchBetweenDetailsRevisionTabs pending implementation
+
+	}
+
+	@description = "Verify that the user can turn on the Timers recurrence mode"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanTurnOnTimerRecurrenceMode {
+
+		// TODO CanTurnOnTimerRecurrenceMode pending implementation
+
+	}
+
+	@description = "Verify that the Revision History tab display the definition current version"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanViewCurrentVersionAtRevisionHistoryTab {
+
+		// TODO CanViewCurrentVersionAtRevisionHistoryTab pending implementation
+
+	}
+
+	@description = "Verify that the user can see the Assignments on Single Approver"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanViewDefaultSingleApproverAssignments {
+
+		// TODO CanViewDefaultSingleApproverAssignments pending implementation
+
+	}
+
+	@description = "Verify that at the Details/Revision Story sidebar Header the definition Title is present"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanViewDefinitionTitleAtInfoHeader {
+
+		// TODO CanViewDefinitionTitleAtInfoHeader pending implementation
+
+	}
+
 	@description = "LPS-129928 - Verify that when the user clicks on the Diagram view button the Diagram editor appears"
 	@priority = "4"
 	test CanViewDiagramEditor {
@@ -1192,6 +1876,42 @@ definition {
 			startLabelList = "Start");
 	}
 
+	@description = "Verify that the Details tab displays the Created date, Last Modified and Total Modifications"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanViewFieldsAtDetailsTab {
+
+		// TODO CanViewFieldsAtDetailsTab pending implementation
+
+	}
+
+	@description = "Verify that the Revision History tab displays a list of the previous definition versions in descending order (3,2,1)"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewPreviousVersionsListInOrderAtRevisionHistoryTab {
+
+		// TODO CanViewPreviousVersionsListInOrderAtRevisionHistoryTab pending implementation
+
+	}
+
+	@description = "Verify that the user can see a tooltip with 'Enter the comma separated resource actions (e.g. ADD, DELETE, UPDATE).' at Resource Actions "
+	@ignore = "Test Stub"
+	@priority = "2"
+	test CanViewResourceActionsTooltip {
+
+		// TODO CanViewResourceActionsTooltip pending implementation
+
+	}
+
+	@description = "Verify that a Success alert appears when the user restore a definition version (Example: Success:Restored to Revision 'X')"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanViewRestoreVersionSuccessAlert {
+
+		// TODO CanViewRestoreVersionSuccessAlert pending implementation
+
+	}
+
 	@description = "LPS-129928 - Verify that when the user clicks on the Source button the Source editor appears"
 	@priority = "4"
 	test CanViewSourceEditor {
@@ -1204,6 +1924,33 @@ definition {
 		ProcessBuilderKaleoDesignerReact.diagramSourceSwitchView();
 
 		ProcessBuilderKaleoDesignerReact.viewSourceEditor();
+	}
+
+	@description = "Verify that the user can see the Timers Recurrence tooltip with the value 'Repeat the action at a given duration until the workflow task is completed.'"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test CanViewTimerRecurrenceFieldTooltip {
+
+		// TODO CanViewTimerRecurrenceFieldTooltip pending implementation
+
+	}
+
+	@description = "Verify that the user can view the Timer required fields"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanViewTimersRequiredFields {
+
+		// TODO CanViewTimersRequiredFields pending implementation
+
+	}
+
+	@description = "Verify that on the Details tab, the Total Modifications field follows the number of times the definition was updated"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanViewTotalModificationsAtDetailsTab {
+
+		// TODO CanViewTotalModificationsAtDetailsTab pending implementation
+
 	}
 
 	@description = "LPS-129928 - Verify that when the user makes changes to the Process Builder these changes are reflected in the XML code"
@@ -1406,6 +2153,33 @@ definition {
 		ProcessBuilderKaleoDesignerReact.viewDefaultToggleStatus(
 			connectorLabel = "LIFERAY LATAM",
 			defaultStatus = "False");
+	}
+
+	@description = "Publish workflow definition with no End Node And View Error Message"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test DefinitionRequiresEndNodeToPublish {
+
+		// TODO DefinitionRequiresEndNodeToPublish pending implementation
+
+	}
+
+	@description = "Publish workflow definition with no start node and view error message"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test DefinitionRequiresStartNodeToPublish {
+
+		// TODO DefinitionRequiresStartNodeToPublish pending implementation
+
+	}
+
+	@description = "Verify that, when the user deletes a translation, the action reflects in the language selector"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test DeletedTranslationsAreNotDisplayedOnLanguageSelector {
+
+		// TODO DeletedTranslationsAreNotDisplayedOnLanguageSelector pending implementation
+
 	}
 
 	@description = "LPS-129928 - Verify that when hovering the Process Builder view button the text Diagram view is displayed"
@@ -1648,6 +2422,15 @@ definition {
 			nodeLabel = "Start");
 	}
 
+	@description = "Verify that the Role ID is a read only field"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test NodeIDIsReadyOnly {
+
+		// TODO NodeIDIsReadyOnly pending implementation
+
+	}
+
 	@description = "LPS-139387 - Verify that the node info is displayed when the node is selected"
 	@priority = "4"
 	test NodeInfoIsDisplayedWhenNodeIsSelected {
@@ -1708,6 +2491,24 @@ definition {
 		PortletEntry.publish();
 
 		ProcessBuilderKaleoDesignerReact.viewPublishButtonNotPresent();
+	}
+
+	@description = "Verify that the Single Approver Workflow comes with the Account Member and Account Administrator role names assigned"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test SingleApproverComesWithAccountMemberAndAdmRoleName {
+
+		// TODO SingleApproverComesWithAccountMemberAndAdmRoleName pending implementation
+
+	}
+
+	@description = "Verify that the Single Approver Workflow comes with the Account role assigned"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test SingleApproverComesWithAccountRole {
+
+		// TODO SingleApproverComesWithAccountRole pending implementation
+
 	}
 
 	@description = "LPS-129928 - Verify that when hovering the Source button the text Source view is displayed"
@@ -1827,6 +2628,15 @@ definition {
 		ProcessBuilderKaleoDesignerReact.viewRequiredField(
 			requiredField = "nodeLabel",
 			save = "true");
+	}
+
+	@description = "Verify that the Task Node comes with Asset Creator Assignment as default"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test TaskNodeComesWithAssetCreatorAssignmentAsDefault {
+
+		// TODO TaskNodeComesWithAssetCreatorAssignmentAsDefault pending implementation
+
 	}
 
 	@description = "Verify that the Task node has Timers property"
@@ -1953,6 +2763,33 @@ definition {
 		ProcessBuilderKaleoDesignerReact.selectTranslationLanguage(translationOptionSelected = "en-us");
 
 		ProcessBuilderKaleoDesignerReact.viewTranslationDropdownNotPresent();
+	}
+
+	@description = "Verify that the date and time format in Details tab is following the system language (Example: Apr 07, 2022, 1:34 PM for en_US and 07 Abr, 2022, 13:34 for pt)"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test ViewDateAndTimeFormatAtDetailsTab {
+
+		// TODO ViewDateAndTimeFormatAtDetailsTab pending implementation
+
+	}
+
+	@description = "Publish workflow definition with Invalid Join Node And View Error Message"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test ViewErrorMessageAfterPublishInvalidJoinDefinition {
+
+		// TODO ViewErrorMessageAfterPublishInvalidJoinDefinition pending implementation
+
+	}
+
+	@description = "Publish workflow definition with Invalid JoinXOR Node And View Error Message"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test ViewErrorMessageAfterPublishInvalidJoinXORDefinition {
+
+		// TODO ViewErrorMessageAfterPublishInvalidJoinXORDefinition pending implementation
+
 	}
 
 	@description = "Verify that a message warning is displayed when the user adds another transition and selects it as default"

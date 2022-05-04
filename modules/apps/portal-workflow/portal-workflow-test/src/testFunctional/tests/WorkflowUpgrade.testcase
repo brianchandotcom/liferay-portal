@@ -13,7 +13,7 @@ definition {
 	}
 
 	@priority = "5"
-	test SubmitAndApproveWorkflowAfterUpgrade625 {
+	test SubmitAndApproveWorkflowBlogAfterUpgrade625 {
 		property data.archive.type = "data-archive-portal";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "6.2.5";
@@ -22,7 +22,7 @@ definition {
 	}
 
 	@priority = "5"
-	test SubmitAndApproveWorkflowAfterUpgrade704 {
+	test SubmitAndApproveWorkflowBlogAfterUpgrade704 {
 		property data.archive.type = "data-archive-portal";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.0.4";
@@ -31,26 +31,24 @@ definition {
 	}
 
 	@priority = "5"
-	test SubmitAndApproveWorkflowAfterUpgrade713 {
+	test SubmitAndApproveWorkflowBlogAfterUpgrade713 {
 		property data.archive.type = "data-archive-portal";
 		property database.types = "mariadb,mysql,postgresql";
-		property portal.upstream = "quarantine";
 		property portal.version = "7.1.3";
 
 		Upgrade.submitNewWorkflow();
 	}
 
 	@priority = "5"
-	test SubmitAndApproveWorkflowAfterUpgrade7110 {
+	test SubmitAndApproveWorkflowBlogAfterUpgrade7110 {
 		property data.archive.type = "data-archive-portal";
-		property portal.upstream = "quarantine";
 		property portal.version = "7.1.10";
 
 		Upgrade.submitNewWorkflow();
 	}
 
 	@priority = "5"
-	test SubmitAndApproveWorkflowAfterUpgrade70106 {
+	test SubmitAndApproveWorkflowBlogAfterUpgrade70106 {
 		property data.archive.type = "data-archive-portal";
 		property portal.version = "7.0.10.6";
 
@@ -58,7 +56,25 @@ definition {
 	}
 
 	@priority = "5"
-	test SubmitAndApproveWorkflowAfterUpgrade621015 {
+	test SubmitAndApproveWorkflowBlogAfterUpgrade72101 {
+		property data.archive.type = "data-archive-portal";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.2.10.1";
+
+		Upgrade.submitNewWorkflow();
+	}
+
+	@priority = "5"
+	test SubmitAndApproveWorkflowBlogAfterUpgrade73101 {
+		property data.archive.type = "data-archive-portal";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.3.10.1";
+
+		Upgrade.submitNewWorkflow();
+	}
+
+	@priority = "5"
+	test SubmitAndApproveWorkflowBlogAfterUpgrade621015 {
 		property data.archive.type = "data-archive-portal";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "6.2.10.15";
@@ -67,7 +83,7 @@ definition {
 	}
 
 	@priority = "5"
-	test SubmitAndApproveWorkflowAfterUpgrade621021 {
+	test SubmitAndApproveWorkflowBlogAfterUpgrade621021 {
 		property data.archive.type = "data-archive-portal";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "6.2.10.21";
@@ -76,7 +92,7 @@ definition {
 	}
 
 	@priority = "5"
-	test ViewWorkflowArchive625 {
+	test ViewAndApproveWorkflowBlogsAfterUpgrade625 {
 		property data.archive.type = "data-archive-workflow";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "6.2.5";
@@ -85,7 +101,7 @@ definition {
 	}
 
 	@priority = "5"
-	test ViewWorkflowArchive704 {
+	test ViewAndApproveWorkflowBlogsAfterUpgrade704 {
 		property data.archive.type = "data-archive-workflow";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.0.4";
@@ -94,36 +110,57 @@ definition {
 	}
 
 	@priority = "5"
-	test ViewWorkflowArchive70106 {
+	test ViewAndApproveWorkflowBlogsAfterUpgrade7110 {
+		property data.archive.type = "data-archive-portal";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.1.10";
+
+		Upgrade.approveWorkflow();
+	}
+
+	@priority = "5"
+	test ViewAndApproveWorkflowBlogsAfterUpgrade70106 {
 		property data.archive.type = "data-archive-workflow";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.0.10.6";
 
 		Upgrade.approveWorkflow();
-
-		Upgrade.publishWorkflowDefinition();
 	}
 
 	@priority = "5"
-	test ViewWorkflowArchive621015 {
+	test ViewAndApproveWorkflowBlogsAfterUpgrade72101 {
+		property data.archive.type = "data-archive-portal";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.2.10.1";
+
+		Upgrade.approveWorkflow();
+	}
+
+	@priority = "5"
+	test ViewAndApproveWorkflowBlogsAfterUpgrade73101 {
+		property data.archive.type = "data-archive-portal";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.version = "7.3.10.1";
+
+		Upgrade.approveWorkflow();
+	}
+
+	@priority = "5"
+	test ViewAndApproveWorkflowBlogsAfterUpgrade621015 {
 		property data.archive.type = "data-archive-workflow";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "6.2.10.15";
 
 		Upgrade.approveWorkflow();
-
-		Upgrade.publishWorkflowDefinition();
 	}
 
 	@priority = "5"
-	test ViewWorkflowArchive621021 {
+	test ViewAndApproveWorkflowBlogsAfterUpgrade621021 {
 		property data.archive.type = "data-archive-workflow";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "6.2.10.21";
 
 		Upgrade.approveWorkflow();
-
-		Upgrade.publishWorkflowDefinition();
 	}
 
 }

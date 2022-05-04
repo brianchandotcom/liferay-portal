@@ -1,0 +1,136 @@
+@component-name = "portal-workflow"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property test.run.environment = "EE";
+	property testray.main.component.name = "Workflow";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Workflow.tearDownPortalWorkflow();
+
+			Workflow.tearDownWorkflowDefinitions();
+		}
+	}
+
+	@description = "Verify that is possible to assign Account role type for role assignments trough XML Source"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanAssignAccountRoleTroughtSource {
+
+		// TODO LRQA-74664 CanAssignAccountRoleTroughtSource pending implementation
+
+	}
+
+	@description = "Verify that when the user clicks on Cancel button he is redirected to the previous page"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CancelButtonTakesToPreviousPage {
+
+		// TODO LRQA-74667 CancelButtonTakesToPreviousPage pending implementation
+
+	}
+
+	@description = "Verify that the user is able to import a XML file"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanImportXMLFile {
+
+		// TODO LRQA-74659 CanImportXMLFile pending implementation
+
+	}
+
+	@description = "Verify that, when importing a non XML file, an error message is displayed and the Workflow is not published"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanNotImportNonXMLFile {
+
+		// TODO LRQA-74660 CanNotImportNonXMLFile pending implementation
+
+	}
+
+	@description = "Verify that the Workflow is not published without title"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanNotPublishWithoutTitle {
+
+		// TODO LRQA-74658 CanNotPublishWithoutTitle pending implementation
+
+	}
+
+	@description = "Verify that, when entering valid content, the Workflow is published"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanPublishWorkflow {
+
+		// TODO LRQA-74657 CanPublishWorkflow pending implementation
+
+	}
+
+	@description = "Verify that the user is able to save a untitled Workflow"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test CanSaveUntitledWorkflow {
+
+		// TODO LRQA-74661 CanSaveUntitledWorkflow pending implementation
+
+	}
+
+	@description = "Verify that the user is able to save a Workflow without publishing it"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanSaveWorkflow {
+
+		// TODO LRQA-74668 CanSaveWorkflow pending implementation
+
+	}
+
+	@description = "Verify that the Single Approver Workflow comes with the Account Member and Account Administrator role names assigned"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test SingleApproverSourceComesWithAccountMemberAndAdminAssigned {
+
+		// TODO LRQA-74663 SingleApproverSourceComesWithAccountMemberAndAdminAssigned pending implementation
+
+	}
+
+	@description = "Verify that the Single Approver Workflow comes with the Account role assigned"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test SingleApproverSourceComesWithAccountRoleAssigned {
+
+		// TODO LRQA-74662 SingleApproverSourceComesWithAccountRoleAssigned pending implementation
+
+	}
+
+	@description = "Verify that the XML source version is updated for a new workflow"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test XMLSourceVersionIsUpdatedForNewWorkfow {
+
+		// TODO LRQA-74666 XMLSourceVersionIsUpdatedForNewWorkfow pending implementation
+
+	}
+
+	@description = "Verify that the XML source version is updated for Single Approver"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test XMLSourceVersionIsUpdatedForSingleApprover {
+
+		// TODO LRQA-74665 XMLSourceVersionIsUpdatedForSingleApprover pending implementation
+
+	}
+
+}

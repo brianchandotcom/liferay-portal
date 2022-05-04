@@ -9,7 +9,6 @@
  * distribution rights of the Software.
  */
 
-import textMatchOverMultipleFields from '../../../src/main/resources/META-INF/resources/sxp_blueprint_admin/js/sxp_elements/textMatchOverMultipleFields';
 import {
 	DEFAULT_ADVANCED_CONFIGURATION,
 	DEFAULT_HIGHLIGHT_CONFIGURATION,
@@ -108,7 +107,197 @@ export const INDEX_FIELDS = [
 	},
 ];
 
-export const QUERY_SXP_ELEMENTS = [textMatchOverMultipleFields];
+export const TEXT_MATCH_OVER_MULTIPLE_FIELDS = {
+	description_i18n: {
+		en_US: 'Search for a text match over multiple text fields.',
+	},
+	elementDefinition: {
+		category: 'match',
+		configuration: {
+			queryConfiguration: {
+				queryEntries: [
+					{
+						clauses: [
+							{
+								context: 'query',
+								occur: 'must',
+								query: {
+									multi_match: {
+										boost: '${configuration.boost}',
+										fields: '${configuration.fields}',
+										fuzziness: '${configuration.fuzziness}',
+										minimum_should_match:
+											'${configuration.minimum_should_match}',
+										operator: '${configuration.operator}',
+										query: '${configuration.keywords}',
+										slop: '${configuration.slop}',
+										type: '${configuration.type}',
+									},
+								},
+							},
+						],
+					},
+				],
+			},
+		},
+		icon: 'picture',
+		uiConfiguration: {
+			fieldSets: [
+				{
+					fields: [
+						{
+							defaultValue: [
+								{
+									boost: '2',
+									field: 'localized_title',
+									locale: '${context.language_id}',
+								},
+								{
+									boost: '1',
+									field: 'content',
+									locale: '${context.language_id}',
+								},
+							],
+							label: 'Fields',
+							name: 'fields',
+							type: 'fieldMappingList',
+							typeOptions: {
+								boost: true,
+							},
+						},
+						{
+							defaultValue: 'or',
+							label: 'Operator',
+							name: 'operator',
+							type: 'select',
+							typeOptions: {
+								options: [
+									{
+										label: 'OR',
+										value: 'or',
+									},
+									{
+										label: 'AND',
+										value: 'and',
+									},
+								],
+							},
+						},
+						{
+							defaultValue: 'best_fields',
+							label: 'Match Type',
+							name: 'type',
+							type: 'select',
+							typeOptions: {
+								options: [
+									{
+										label: 'Best Fields',
+										value: 'best_fields',
+									},
+									{
+										label: 'Most Fields',
+										value: 'most_fields',
+									},
+									{
+										label: 'Cross Fields',
+										value: 'cross_fields',
+									},
+									{
+										label: 'Phrase',
+										value: 'phrase',
+									},
+									{
+										label: 'Phrase Prefix',
+										value: 'phrase_prefix',
+									},
+									{
+										label: 'Boolean Prefix',
+										value: 'bool_prefix',
+									},
+								],
+							},
+						},
+						{
+							defaultValue: 'AUTO',
+							helpText:
+								'Only use fuzziness with the following match types: most fields, best fields, bool prefix.',
+							label: 'Fuzziness',
+							name: 'fuzziness',
+							type: 'select',
+							typeOptions: {
+								nullable: true,
+								options: [
+									{
+										label: 'Auto',
+										value: 'AUTO',
+									},
+									{
+										label: '0',
+										value: '0',
+									},
+									{
+										label: '1',
+										value: '1',
+									},
+									{
+										label: '2',
+										value: '2',
+									},
+								],
+							},
+						},
+						{
+							defaultValue: '0',
+							label: 'Minimum Should Match',
+							name: 'minimum_should_match',
+							type: 'text',
+							typeOptions: {
+								nullable: true,
+							},
+						},
+						{
+							defaultValue: '',
+							helpText:
+								'Only use slop with the following match types: phrase, phrase prefix.',
+							label: 'Slop',
+							name: 'slop',
+							type: 'number',
+							typeOptions: {
+								min: 0,
+								nullable: true,
+								step: 1,
+							},
+						},
+						{
+							defaultValue: 1,
+							label: 'Boost',
+							name: 'boost',
+							type: 'number',
+							typeOptions: {
+								min: 0,
+							},
+						},
+						{
+							helpText:
+								'If this is set, the search terms entered in the search bar will be replaced by this value.',
+							label: 'Text to Match',
+							name: 'keywords',
+							type: 'keywords',
+							typeOptions: {
+								required: false,
+							},
+						},
+					],
+				},
+			],
+		},
+	},
+	title_i18n: {
+		en_US: 'Text Match Over Multiple Fields',
+	},
+};
+
+export const QUERY_SXP_ELEMENTS = [TEXT_MATCH_OVER_MULTIPLE_FIELDS];
 
 export const INITIAL_CONFIGURATION = {
 	advancedConfiguration: DEFAULT_ADVANCED_CONFIGURATION,

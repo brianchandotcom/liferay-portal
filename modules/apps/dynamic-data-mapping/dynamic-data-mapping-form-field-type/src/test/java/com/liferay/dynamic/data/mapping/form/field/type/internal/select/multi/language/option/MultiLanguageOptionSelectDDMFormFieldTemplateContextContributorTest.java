@@ -17,43 +17,48 @@ package com.liferay.dynamic.data.mapping.form.field.type.internal.select.multi.l
 import com.liferay.dynamic.data.mapping.form.field.type.internal.select.SelectDDMFormFieldTemplateContextContributor;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.mockito.Matchers;
-import org.mockito.invocation.InvocationOnMock;
+import org.mockito.Mockito;
 import org.mockito.stubbing.Answer;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.api.support.membermodification.MemberMatcher;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Rodrigo Paulino
  */
-@PrepareForTest({LanguageUtil.class, ResourceBundleUtil.class})
-@RunWith(PowerMockRunner.class)
 public class
 	MultiLanguageOptionSelectDDMFormFieldTemplateContextContributorTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	public void setUp() throws Exception {
 		_setUpLanguageUtil();
-		_setUpResourceBundleUtil();
+		_setUpResourceBundle();
 	}
 
 	@Test
@@ -77,8 +82,8 @@ public class
 		Map<String, Object> parameters =
 			_multiLanguageOptionSelectDDMFormFieldTemplateContextContributor.
 				getParameters(
-					PowerMockito.mock(DDMFormField.class),
-					PowerMockito.mock(DDMFormFieldRenderingContext.class));
+					Mockito.mock(DDMFormField.class),
+					Mockito.mock(DDMFormFieldRenderingContext.class));
 
 		Assert.assertEquals(
 			ListUtil.fromArray(
@@ -105,61 +110,14 @@ public class
 			parameters.get("options"));
 	}
 
-	private void _mockGetLanguageId(Locale locale) {
-		PowerMockito.when(
-			LanguageUtil.getLanguageId(Matchers.eq(locale))
-		).thenReturn(
-			LocaleUtil.toLanguageId(locale)
-		);
-	}
-
-	private void _mockGetModuleAndPortalResourceBundle(
-		Locale locale, Map<String, String> optionLabels) {
-
-		ResourceBundle resourceBundle = _mockResourceBundle(optionLabels);
-
-		PowerMockito.when(
-			ResourceBundleUtil.getModuleAndPortalResourceBundle(
-				Matchers.eq(locale), Matchers.any())
-		).thenReturn(
-			resourceBundle
-		);
-	}
-
-	private ResourceBundle _mockResourceBundle(
-		Map<String, String> optionLabels) {
-
-		ResourceBundle resourceBundle = PowerMockito.mock(ResourceBundle.class);
-
-		PowerMockito.when(
-			LanguageUtil.get(Matchers.eq(resourceBundle), Matchers.anyString())
-		).then(
-			new Answer<String>() {
-
-				public String answer(InvocationOnMock invocationOnMock)
-					throws Throwable {
-
-					Object[] arguments = invocationOnMock.getArguments();
-
-					return optionLabels.get((String)arguments[1]);
-				}
-
-			}
-		);
-
-		return resourceBundle;
-	}
-
 	private void _mockSelectDDMFormFieldTemplateContextContributor(
-			Map<String, Object> optionsMap)
-		throws Exception {
+		Map<String, Object> optionsMap) {
 
 		SelectDDMFormFieldTemplateContextContributor
-			mockSelectDDMFormFieldTemplateContextContributor =
-				PowerMockito.mock(
-					SelectDDMFormFieldTemplateContextContributor.class);
+			mockSelectDDMFormFieldTemplateContextContributor = Mockito.mock(
+				SelectDDMFormFieldTemplateContextContributor.class);
 
-		PowerMockito.when(
+		Mockito.when(
 			mockSelectDDMFormFieldTemplateContextContributor.getParameters(
 				Matchers.any(DDMFormField.class),
 				Matchers.any(DDMFormFieldRenderingContext.class))
@@ -167,60 +125,145 @@ public class
 			optionsMap
 		);
 
-		MemberMatcher.field(
-			MultiLanguageOptionSelectDDMFormFieldTemplateContextContributor.
-				class,
-			"_selectDDMFormFieldTemplateContextContributor"
-		).set(
+		ReflectionTestUtil.setFieldValue(
 			_multiLanguageOptionSelectDDMFormFieldTemplateContextContributor,
-			mockSelectDDMFormFieldTemplateContextContributor
-		);
+			"_selectDDMFormFieldTemplateContextContributor",
+			mockSelectDDMFormFieldTemplateContextContributor);
 	}
 
 	private void _setUpLanguageUtil() {
-		PowerMockito.mockStatic(LanguageUtil.class);
+		LanguageUtil languageUtil = new LanguageUtil();
 
-		PowerMockito.when(
-			LanguageUtil.getAvailableLocales()
+		Mockito.when(
+			_language.getAvailableLocales()
 		).thenReturn(
 			SetUtil.fromArray(LocaleUtil.BRAZIL, LocaleUtil.US)
 		);
 
-		_mockGetLanguageId(LocaleUtil.BRAZIL);
-		_mockGetLanguageId(LocaleUtil.US);
+		Mockito.when(
+			_language.getLanguageId(Matchers.eq(LocaleUtil.BRAZIL))
+		).thenReturn(
+			LocaleUtil.toLanguageId(LocaleUtil.BRAZIL)
+		);
+
+		Mockito.when(
+			_language.getLanguageId(Matchers.eq(LocaleUtil.US))
+		).thenReturn(
+			LocaleUtil.toLanguageId(LocaleUtil.US)
+		);
+
+		languageUtil.setLanguage(_language);
 	}
 
-	private void _setUpResourceBundleUtil() {
-		PowerMockito.mockStatic(ResourceBundleUtil.class);
+	private void _setUpResourceBundle() {
+		ResourceBundle resourceBundle2 = Mockito.mock(ResourceBundle.class);
 
-		_mockGetModuleAndPortalResourceBundle(
-			LocaleUtil.BRAZIL,
-			HashMapBuilder.put(
-				"address", "Endereço"
-			).put(
-				"city", "Cidade"
-			).put(
-				"country", "País"
-			).put(
-				"postal-code", "CEP"
-			).put(
-				"state", "Estado"
-			).build());
-		_mockGetModuleAndPortalResourceBundle(
-			LocaleUtil.US,
-			HashMapBuilder.put(
-				"address", "Address"
-			).put(
-				"city", "City"
-			).put(
-				"country", "Country"
-			).put(
-				"postal-code", "Postal Code"
-			).put(
-				"state", "State"
-			).build());
+		ResourceBundle resourceBundle1 = Mockito.mock(ResourceBundle.class);
+
+		PortalUtil portalUtil = new PortalUtil();
+
+		Portal portal = Mockito.mock(Portal.class);
+
+		portalUtil.setPortal(portal);
+
+		ResourceBundleLoader resourceBundleLoader = Mockito.mock(
+			ResourceBundleLoader.class);
+
+		ResourceBundleLoaderUtil.setPortalResourceBundleLoader(
+			resourceBundleLoader);
+
+		Mockito.when(
+			portal.getResourceBundle(Matchers.eq(LocaleUtil.US))
+		).thenReturn(
+			resourceBundle2
+		);
+
+		Mockito.when(
+			portal.getResourceBundle(Matchers.eq(LocaleUtil.BRAZIL))
+		).thenReturn(
+			resourceBundle1
+		);
+
+		Mockito.when(
+			resourceBundleLoader.loadResourceBundle(Matchers.eq(LocaleUtil.US))
+		).thenReturn(
+			resourceBundle2
+		);
+
+		Mockito.when(
+			resourceBundleLoader.loadResourceBundle(
+				Matchers.eq(LocaleUtil.BRAZIL))
+		).thenReturn(
+			resourceBundle1
+		);
+
+		Mockito.when(
+			resourceBundle2.getLocale()
+		).thenReturn(
+			LocaleUtil.US
+		);
+
+		Mockito.when(
+			resourceBundle1.getLocale()
+		).thenReturn(
+			LocaleUtil.BRAZIL
+		);
+
+		Map<String, String> optionLabelsForBRAZIL = HashMapBuilder.put(
+			"address", "Endereço"
+		).put(
+			"city", "Cidade"
+		).put(
+			"country", "País"
+		).put(
+			"postal-code", "CEP"
+		).put(
+			"state", "Estado"
+		).build();
+
+		Map<String, String> optionLabelsForUS = HashMapBuilder.put(
+			"address", "Address"
+		).put(
+			"city", "City"
+		).put(
+			"country", "Country"
+		).put(
+			"postal-code", "Postal Code"
+		).put(
+			"state", "State"
+		).build();
+
+		Mockito.when(
+			_language.get(
+				Matchers.any(ResourceBundle.class), Matchers.anyString())
+		).then(
+			(Answer<String>)invocationOnMock -> {
+				Object[] arguments = invocationOnMock.getArguments();
+
+				ResourceBundle resourceBundle3 = (ResourceBundle)arguments[0];
+
+				if (resourceBundle3 == null) {
+					return null;
+				}
+
+				if (Objects.equals(
+						LocaleUtil.US, resourceBundle3.getLocale())) {
+
+					return optionLabelsForUS.get(arguments[1]);
+				}
+
+				if (Objects.equals(
+						LocaleUtil.BRAZIL, resourceBundle3.getLocale())) {
+
+					return optionLabelsForBRAZIL.get(arguments[1]);
+				}
+
+				return null;
+			}
+		);
 	}
 
+	private final Language _language = Mockito.mock(Language.class);
 	private final
 		MultiLanguageOptionSelectDDMFormFieldTemplateContextContributor
 			_multiLanguageOptionSelectDDMFormFieldTemplateContextContributor =

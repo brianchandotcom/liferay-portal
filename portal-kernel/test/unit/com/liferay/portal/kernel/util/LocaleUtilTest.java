@@ -20,13 +20,16 @@ import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 import java.util.logging.Level;
 
 import org.junit.Assert;
 import org.junit.Test;
 
+import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 /**
@@ -103,6 +106,77 @@ public class LocaleUtilTest {
 		Assert.assertEquals(
 			Locale.TRADITIONAL_CHINESE,
 			LocaleUtil.fromLanguageId("zh-Hant-TW"));
+	}
+
+	@Test
+	public void testGetLocaleDisplayName() {
+		LanguageUtil languageUtil = new LanguageUtil();
+
+		Language language = Mockito.mock(Language.class);
+
+		languageUtil.setLanguage(language);
+
+		Mockito.when(
+			language.get(Locale.US, "language.en")
+		).thenReturn(
+			"English"
+		);
+
+		Mockito.when(
+			language.get(Locale.US, "language.ca")
+		).thenReturn(
+			"Catalan"
+		);
+
+		Assert.assertEquals(
+			"English (United States)",
+			LocaleUtil.getLocaleDisplayName(Locale.US, Locale.US));
+
+		Locale catalan = new Locale("ca", "ES");
+
+		Assert.assertEquals(
+			"Catalan (Spain)",
+			LocaleUtil.getLocaleDisplayName(catalan, Locale.US));
+
+		Locale catalan_valencia = new Locale("ca", "ES", "VALENCIA");
+
+		Assert.assertEquals(
+			"Catalan (Spain, VALENCIA)",
+			LocaleUtil.getLocaleDisplayName(catalan_valencia, Locale.US));
+	}
+
+	@Test
+	public void testGetLongDisplayName() {
+		LanguageUtil languageUtil = new LanguageUtil();
+
+		Language language = Mockito.mock(Language.class);
+
+		languageUtil.setLanguage(language);
+
+		Mockito.when(
+			language.isBetaLocale(Matchers.anyObject())
+		).thenReturn(
+			false
+		);
+
+		Set<String> duplicateLanguages = Collections.singleton("ca");
+
+		Assert.assertEquals(
+			"English",
+			LocaleUtil.getLongDisplayName(Locale.US, duplicateLanguages));
+
+		Locale catalan = new Locale("ca", "ES");
+
+		Assert.assertEquals(
+			"catal\u00e0 (Espanya)",
+			LocaleUtil.getLongDisplayName(catalan, duplicateLanguages));
+
+		Locale catalan_valencia = new Locale("ca", "ES", "VALENCIA");
+
+		Assert.assertEquals(
+			"catal\u00e0 (Espanya, VALENCIA)",
+			LocaleUtil.getLongDisplayName(
+				catalan_valencia, duplicateLanguages));
 	}
 
 }

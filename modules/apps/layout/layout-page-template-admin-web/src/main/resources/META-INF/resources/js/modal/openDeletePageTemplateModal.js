@@ -12,28 +12,32 @@
  * details.
  */
 
-import openDeletePageTemplateModal from '../modal/openDeletePageTemplateModal';
+export default function openDeletePageTemplateModal({
+	message,
+	onDelete,
+	title,
+}) {
+	Liferay.Util.openModal({
+		bodyHTML:
+			message ||
+			Liferay.Language.get('are-you-sure-you-want-to-delete-this'),
+		buttons: [
+			{
+				displayType: 'secondary',
+				label: Liferay.Language.get('cancel'),
+				type: 'cancel',
+			},
+			{
+				displayType: 'danger',
+				label: Liferay.Language.get('delete'),
+				onClick: ({processClose}) => {
+					processClose();
 
-export default function propsTransformer({portletNamespace, ...otherProps}) {
-	return {
-		...otherProps,
-		onActionButtonClick(event, {item}) {
-			const data = item?.data;
-
-			if (data?.action === 'deleteSelectedLayoutPrototypes') {
-				openDeletePageTemplateModal({
-					onDelete: () => {
-						const form = document.getElementById(
-							`${portletNamespace}fm`
-						);
-
-						if (form) {
-							submitForm(form);
-						}
-					},
-					title: Liferay.Language.get('page-templates'),
-				});
-			}
-		},
-	};
+					onDelete();
+				},
+			},
+		],
+		status: 'danger',
+		title: Liferay.Util.sub(Liferay.Language.get('delete-x'), title),
+	});
 }

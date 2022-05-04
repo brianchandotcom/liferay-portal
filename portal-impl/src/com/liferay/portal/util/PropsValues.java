@@ -24,9 +24,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Time;
 
-import java.util.Map;
-import java.util.Properties;
-
 /**
  * @author Brian Wing Shun Chan
  */

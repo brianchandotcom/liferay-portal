@@ -86,6 +86,19 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 			"CaseType", "c_caseTypeId", "CaseType#[$name$]",
 			Arrays.asList("name"));
 		_loadObjectEntryIds(
+			"Component", "c_componentId",
+			"Component#[$name$]#testrayTeamId#[$r_teamToComponents_c_teamId$]",
+			Arrays.asList("name", "r_teamToComponents_c_teamId"));
+		_loadObjectEntryIds(
+			"FactorCategory", "c_factorCategoryId", "FactorCategory#[$name$]",
+			Arrays.asList("name"));
+		_loadObjectEntryIds(
+			"FactorOption", "c_factorOptionId",
+			"FactorOption#[$name$]#testrayFactorCategoryId#" +
+				"[$r_factorCategoryToOptions_c_factorCategoryId$]",
+			Arrays.asList(
+				"name", "r_factorCategoryToOptions_c_factorCategoryId"));
+		_loadObjectEntryIds(
 			"Project", "c_projectId", "Project#[$name$]",
 			Arrays.asList("name"));
 		_loadObjectEntryIds(

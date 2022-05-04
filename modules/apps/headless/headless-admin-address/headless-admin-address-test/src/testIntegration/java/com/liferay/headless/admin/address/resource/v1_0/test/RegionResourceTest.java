@@ -16,7 +16,10 @@ package com.liferay.headless.admin.address.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.address.client.dto.v1_0.Region;
+import com.liferay.headless.admin.address.client.pagination.Page;
+import com.liferay.headless.admin.address.client.pagination.Pagination;
 import com.liferay.headless.admin.address.client.serdes.v1_0.RegionSerDes;
+import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Country;
@@ -25,9 +28,11 @@ import com.liferay.portal.kernel.service.RegionLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.test.rule.Inject;
 
 import java.util.Arrays;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -61,6 +66,30 @@ public class RegionResourceTest extends BaseRegionResourceTestCase {
 		super.tearDown();
 
 		_countryLocalService.deleteCountry(_country);
+	}
+
+	@Override
+	@Test
+	public void testGetRegionsPage() throws Exception {
+		String keywords = RandomTestUtil.randomString();
+
+		Page<Region> page = regionResource.getRegionsPage(
+			null, keywords, Pagination.of(1, 10), null);
+
+		long totalCount = page.getTotalCount();
+
+		Region region1 = _addRegion(keywords);
+
+		Region region2 = _addRegion(keywords);
+
+		page = regionResource.getRegionsPage(
+			null, keywords, Pagination.of(1, 10), null);
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(region1, (List<Region>)page.getItems());
+		assertContains(region2, (List<Region>)page.getItems());
+		assertValid(page);
 	}
 
 	@Override
@@ -154,6 +183,55 @@ public class RegionResourceTest extends BaseRegionResourceTestCase {
 	}
 
 	@Override
+	protected void testGetRegionsPageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer<EntityField, Region, Region, Exception>
+				unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Region region1 = randomRegion();
+		Region region2 = randomRegion();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(entityField, region1, region2);
+		}
+
+		String keywords = RandomTestUtil.randomString();
+
+		region1.setName(keywords + region1.getName());
+
+		region1 = testGetRegionsPage_addRegion(region1);
+
+		region2.setName(keywords + RandomTestUtil.randomString());
+
+		region2 = testGetRegionsPage_addRegion(region2);
+
+		for (EntityField entityField : entityFields) {
+			Page<Region> ascPage = regionResource.getRegionsPage(
+				null, keywords, Pagination.of(1, 2),
+				entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(region1, region2),
+				(List<Region>)ascPage.getItems());
+
+			Page<Region> descPage = regionResource.getRegionsPage(
+				null, keywords, Pagination.of(1, 2),
+				entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(region2, region1),
+				(List<Region>)descPage.getItems());
+		}
+	}
+
+	@Override
 	protected Region testGraphQLRegion_addRegion() throws Exception {
 		Region region = randomRegion();
 
@@ -169,6 +247,14 @@ public class RegionResourceTest extends BaseRegionResourceTestCase {
 			ServiceContextTestUtil.getServiceContext());
 
 		return region;
+	}
+
+	private Region _addRegion(String keyword) throws Exception {
+		Region region = randomRegion();
+
+		region.setName(keyword + RandomTestUtil.randomString());
+
+		return _addRegion(region);
 	}
 
 	private Country _country;

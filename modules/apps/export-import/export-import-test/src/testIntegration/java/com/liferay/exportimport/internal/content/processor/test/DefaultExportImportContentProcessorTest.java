@@ -74,6 +74,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -1128,7 +1129,11 @@ public class DefaultExportImportContentProcessorTest {
 		List<String> outURLs = new ArrayList<>();
 
 		for (String url : urls) {
-			if (!url.contains("[$TIMESTAMP")) {
+			if (Validator.isNotNull(url) && !url.contains("[$TIMESTAMP") &&
+				!url.endsWith(StringPool.COLON)) {
+
+				outURLs.add(url);
+
 				continue;
 			}
 

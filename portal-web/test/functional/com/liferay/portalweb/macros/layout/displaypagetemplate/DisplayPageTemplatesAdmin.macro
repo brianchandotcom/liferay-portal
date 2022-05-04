@@ -37,9 +37,24 @@ definition {
 	}
 
 	macro deleteDisplayPage {
-		Pause(locator = "5000");
+		LexiconCard.clickEllipsisItem(
+			card = "${displayPageName}",
+			item = "Delete");
 
-		LexiconCard.delete(card = "${displayPageName}");
+		if (isSet(relatedDisplayPages)) {
+			AssertTextEquals(
+				locator1 = "Modal#BODY",
+				value1 = "Are you sure you want to delete the default display page template? All related display pages will be deleted.");
+		}
+		else {
+			AssertTextEquals(
+				locator1 = "Modal#BODY",
+				value1 = "Are you sure you want to delete this? It will be deleted immediately.");
+		}
+
+		Click(
+			key_text = "Delete",
+			locator1 = "Modal#MODAL_FOOTER_BUTTON");
 	}
 
 	macro gotoDisplayPage {

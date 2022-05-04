@@ -293,17 +293,15 @@ definition {
 		task ("Delete the default display page template") {
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
+			DisplayPageTemplatesAdmin.deleteDisplayPage(
 				displayPageName = "Display Page Name",
-				item = "Delete");
-
-			AssertConfirm(value1 = "Are you sure you want to delete the default display page template? All related display pages will be deleted.");
+				relatedDisplayPages = "true");
 
 			Alert.viewSuccessMessageText(successMessage = "You successfully deleted 1 display page template(s).");
 		}
 
 		task ("View the default display page template not shown") {
-			DisplayPageTemplatesAdmin.viewDisplayPageNotPresent(displayPageName = "DisplayPage Name");
+			DisplayPageTemplatesAdmin.viewDisplayPageNotPresent(displayPageName = "Display Page Name");
 		}
 	}
 

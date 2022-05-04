@@ -1012,6 +1012,8 @@ SideNavigation.prototype = {
 		this.options = options;
 		this.useDataAttribute = useDataAttribute;
 
+		this._emitter = new EventEmitter();
+
 		this._bindUI();
 		this._renderUI();
 	},

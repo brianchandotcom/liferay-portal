@@ -13,6 +13,7 @@ definition {
 
 	static var userPassword = "password";
 	var userScreenName = "joeblogs";
+	static var integer = ${endYear} - ${numberOfYears};
 
 	setUp {
 		TestCase.setUpPortalInstance();

@@ -10,6 +10,7 @@
 
 	<var static="true" name="userPassword" value="password"/>
 	<var name="userScreenName" value="joeblogs" />
+	<var static="true" name="integer" method="MathUtil#difference('${endYear}', '${numberOfYears}')"/>
 
 	<set-up>
 		<execute macro="TestCase#setUpPortalInstance" />

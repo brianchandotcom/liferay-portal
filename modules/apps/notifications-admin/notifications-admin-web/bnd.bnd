@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Notifications Admin Web
+Bundle-SymbolicName: com.liferay.notifications.admin.web
+Bundle-Version: 1.0.0
+Web-ContextPath: /notifications-admin-web
+-dsannotations-options: inherit

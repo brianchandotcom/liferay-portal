@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.ByteArrayInputStream;
@@ -74,6 +75,8 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 
 		UnicodeProperties unicodeProperties =
 			dispatchTrigger.getDispatchTaskSettingsUnicodeProperties();
+
+		_validateUnicodeProperties(unicodeProperties);
 
 		_invoke(() -> _loadCache(dispatchTrigger.getCompanyId()));
 		_invoke(() -> _uploadToTestray(unicodeProperties));
@@ -175,8 +178,6 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 	private void _uploadToTestray(UnicodeProperties unicodeProperties)
 		throws Exception {
 
-		// TODO validate properties
-
 		String s3APIKey = unicodeProperties.getProperty("s3APIKey");
 
 		try (InputStream inputStream = new ByteArrayInputStream(
@@ -217,6 +218,24 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 
 			throw new PortalException(
 				"Unable to authenticate with GCP", ioException);
+		}
+	}
+
+	private void _validateUnicodeProperties(UnicodeProperties unicodeProperties)
+		throws Exception {
+
+		if (Validator.isNull(unicodeProperties.getProperty("s3APIKey")) ||
+			Validator.isNull(unicodeProperties.getProperty("s3BucketName")) ||
+			Validator.isNull(
+				unicodeProperties.getProperty("s3ErroredFolderName")) ||
+			Validator.isNull(
+				unicodeProperties.getProperty("s3InboxFolderName")) ||
+			Validator.isNull(
+				unicodeProperties.getProperty("s3ProcessedFolderName"))) {
+
+			_log.error("At least one property is not defined");
+
+			throw new PortalException("At least one property is not defined");
 		}
 	}
 

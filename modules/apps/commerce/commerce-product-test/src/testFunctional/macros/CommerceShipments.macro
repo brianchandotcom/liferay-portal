@@ -2,13 +2,13 @@ definition {
 
 	macro assertShipmentItemWarehouseAndQuantityInShipment {
 		AssertTextEquals(
-            key_columnNumber = "3",
+			key_columnNumber = "3",
 			key_entryName = "${shipmentItemSku}",
 			locator1 = "CommerceEntry#TABLE_CELL_BY_COLUMN_ORDER",
 			value1 = "${warehouseName}");
 
-        AssertTextEquals(
-            key_columnNumber = "5",
+		AssertTextEquals(
+			key_columnNumber = "5",
 			key_entryName = "${shipmentItemSku}",
 			locator1 = "CommerceEntry#TABLE_CELL_BY_COLUMN_ORDER",
 			value1 = "${quantityInShipment}");

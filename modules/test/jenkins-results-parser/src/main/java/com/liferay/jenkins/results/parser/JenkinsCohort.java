@@ -400,12 +400,18 @@ public class JenkinsCohort {
 
 		String jobName = jobNameMatcher.group(1);
 
-		String batchJobName = null;
+		String downstreamJobName = null;
 
 		if (jobName.contains("-batch")) {
-			batchJobName = jobName;
+			downstreamJobName = jobName;
 
 			jobName = jobName.replace("-batch", "");
+		}
+
+		if (jobName.contains("-downstream")) {
+			downstreamJobName = jobName;
+
+			jobName = jobName.replace("-downstream", "");
 		}
 
 		if (!_jenkinsCohortJobsMap.containsKey(jobName)) {
@@ -414,7 +420,7 @@ public class JenkinsCohort {
 
 		JenkinsCohortJob jenkinsCohortJob = _jenkinsCohortJobsMap.get(jobName);
 
-		if (batchJobName == null) {
+		if (downstreamJobName == null) {
 			jenkinsCohortJob.addTopLevelBuildURL(buildURL);
 		}
 		else {
@@ -438,12 +444,18 @@ public class JenkinsCohort {
 
 				String jobName = jobNameMatcher.group(1);
 
-				String batchJobName = null;
+				String downstreamJobName = null;
 
 				if (jobName.contains("-batch")) {
-					batchJobName = jobName;
+					downstreamJobName = jobName;
 
 					jobName = jobName.replace("-batch", "");
+				}
+
+				if (jobName.contains("-downstream")) {
+					downstreamJobName = jobName;
+
+					jobName = jobName.replace("-downstream", "");
 				}
 
 				if (!_jenkinsCohortJobsMap.containsKey(jobName)) {
@@ -454,7 +466,7 @@ public class JenkinsCohort {
 				JenkinsCohortJob jenkinsCohortJob = _jenkinsCohortJobsMap.get(
 					jobName);
 
-				if (batchJobName == null) {
+				if (downstreamJobName == null) {
 					jenkinsCohortJob.addQueuedTopLevelBuildJsonMapEntry(
 						queuedBuildURL);
 				}

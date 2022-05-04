@@ -198,6 +198,229 @@ public abstract class BaseRegionResourceTestCase {
 	}
 
 	@Test
+	public void testGetCountryRegionsPage() throws Exception {
+		Long countryId = testGetCountryRegionsPage_getCountryId();
+		Long irrelevantCountryId =
+			testGetCountryRegionsPage_getIrrelevantCountryId();
+
+		Page<Region> page = regionResource.getCountryRegionsPage(
+			countryId, null, null, Pagination.of(1, 10), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
+
+		if (irrelevantCountryId != null) {
+			Region irrelevantRegion = testGetCountryRegionsPage_addRegion(
+				irrelevantCountryId, randomIrrelevantRegion());
+
+			page = regionResource.getCountryRegionsPage(
+				irrelevantCountryId, null, null, Pagination.of(1, 2), null);
+
+			Assert.assertEquals(1, page.getTotalCount());
+
+			assertEquals(
+				Arrays.asList(irrelevantRegion), (List<Region>)page.getItems());
+			assertValid(page);
+		}
+
+		Region region1 = testGetCountryRegionsPage_addRegion(
+			countryId, randomRegion());
+
+		Region region2 = testGetCountryRegionsPage_addRegion(
+			countryId, randomRegion());
+
+		page = regionResource.getCountryRegionsPage(
+			countryId, null, null, Pagination.of(1, 10), null);
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(region1, region2), (List<Region>)page.getItems());
+		assertValid(page);
+	}
+
+	@Test
+	public void testGetCountryRegionsPageWithPagination() throws Exception {
+		Long countryId = testGetCountryRegionsPage_getCountryId();
+
+		Region region1 = testGetCountryRegionsPage_addRegion(
+			countryId, randomRegion());
+
+		Region region2 = testGetCountryRegionsPage_addRegion(
+			countryId, randomRegion());
+
+		Region region3 = testGetCountryRegionsPage_addRegion(
+			countryId, randomRegion());
+
+		Page<Region> page1 = regionResource.getCountryRegionsPage(
+			countryId, null, null, Pagination.of(1, 2), null);
+
+		List<Region> regions1 = (List<Region>)page1.getItems();
+
+		Assert.assertEquals(regions1.toString(), 2, regions1.size());
+
+		Page<Region> page2 = regionResource.getCountryRegionsPage(
+			countryId, null, null, Pagination.of(2, 2), null);
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<Region> regions2 = (List<Region>)page2.getItems();
+
+		Assert.assertEquals(regions2.toString(), 1, regions2.size());
+
+		Page<Region> page3 = regionResource.getCountryRegionsPage(
+			countryId, null, null, Pagination.of(1, 3), null);
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(region1, region2, region3),
+			(List<Region>)page3.getItems());
+	}
+
+	@Test
+	public void testGetCountryRegionsPageWithSortDateTime() throws Exception {
+		testGetCountryRegionsPageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, region1, region2) -> {
+				BeanUtils.setProperty(
+					region1, entityField.getName(),
+					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetCountryRegionsPageWithSortDouble() throws Exception {
+		testGetCountryRegionsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, region1, region2) -> {
+				BeanUtils.setProperty(region1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(region2, entityField.getName(), 0.5);
+			});
+	}
+
+	@Test
+	public void testGetCountryRegionsPageWithSortInteger() throws Exception {
+		testGetCountryRegionsPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, region1, region2) -> {
+				BeanUtils.setProperty(region1, entityField.getName(), 0);
+				BeanUtils.setProperty(region2, entityField.getName(), 1);
+			});
+	}
+
+	@Test
+	public void testGetCountryRegionsPageWithSortString() throws Exception {
+		testGetCountryRegionsPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, region1, region2) -> {
+				Class<?> clazz = region1.getClass();
+
+				String entityFieldName = entityField.getName();
+
+				java.lang.reflect.Method method = clazz.getMethod(
+					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanUtils.setProperty(
+						region1, entityFieldName,
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanUtils.setProperty(
+						region2, entityFieldName,
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else if (entityFieldName.contains("email")) {
+					BeanUtils.setProperty(
+						region1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+					BeanUtils.setProperty(
+						region2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+				}
+				else {
+					BeanUtils.setProperty(
+						region1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+					BeanUtils.setProperty(
+						region2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+				}
+			});
+	}
+
+	protected void testGetCountryRegionsPageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer<EntityField, Region, Region, Exception>
+				unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long countryId = testGetCountryRegionsPage_getCountryId();
+
+		Region region1 = randomRegion();
+		Region region2 = randomRegion();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(entityField, region1, region2);
+		}
+
+		region1 = testGetCountryRegionsPage_addRegion(countryId, region1);
+
+		region2 = testGetCountryRegionsPage_addRegion(countryId, region2);
+
+		for (EntityField entityField : entityFields) {
+			Page<Region> ascPage = regionResource.getCountryRegionsPage(
+				countryId, null, null, Pagination.of(1, 2),
+				entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(region1, region2),
+				(List<Region>)ascPage.getItems());
+
+			Page<Region> descPage = regionResource.getCountryRegionsPage(
+				countryId, null, null, Pagination.of(1, 2),
+				entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(region2, region1),
+				(List<Region>)descPage.getItems());
+		}
+	}
+
+	protected Region testGetCountryRegionsPage_addRegion(
+			Long countryId, Region region)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetCountryRegionsPage_getCountryId() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetCountryRegionsPage_getIrrelevantCountryId()
+		throws Exception {
+
+		return null;
+	}
+
+	@Test
 	public void testGetRegionsPage() throws Exception {
 		Page<Region> page = regionResource.getRegionsPage(
 			null, null, Pagination.of(1, 10), null);

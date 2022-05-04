@@ -58,6 +58,11 @@ public interface RegionResource {
 		return FactoryHolder.factory.create();
 	}
 
+	public Page<Region> getCountryRegionsPage(
+			Long countryId, Boolean active, String search,
+			Pagination pagination, Sort[] sorts)
+		throws Exception;
+
 	public Page<Region> getRegionsPage(
 			Boolean active, String search, Pagination pagination, Sort[] sorts)
 		throws Exception;

@@ -21,7 +21,7 @@ import classNames from 'classnames';
 import {TranslationAdminSelector} from 'frontend-js-components-web';
 import {fetch, objectToFormData, openSelectionModal} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import '../css/main.scss';
 
@@ -48,6 +48,10 @@ function DisplayPageItemContextualSidebar({
 	const [type, setType] = useState(itemType);
 	const [subtype, setSubtype] = useState(itemSubtype);
 	const [itemData, setItemData] = useState(item.data);
+	const [customName, setCustomName] = useState(
+		translations[selectedLocaleId] || item.title
+	);
+	const [customNameInvalid, setCustomNameInvalid] = useState(false);
 
 	const {
 		eventName,
@@ -55,6 +59,24 @@ function DisplayPageItemContextualSidebar({
 		itemSelectorURL,
 		modalTitle,
 	} = chooseItemProps;
+
+	useEffect(() => {
+		const onFormSubmit = (event) => {
+			if (!customName) {
+				event.preventDefault();
+
+				setCustomNameInvalid(true);
+			}
+		};
+
+		const submitButton = document.querySelector('button[type=submit]');
+
+		submitButton?.addEventListener('click', onFormSubmit);
+
+		return () => {
+			submitButton?.removeEventListener('click', onFormSubmit);
+		};
+	}, [customName]);
 
 	const openChooseItemModal = () =>
 		openSelectionModal({
@@ -128,8 +150,13 @@ function DisplayPageItemContextualSidebar({
 				</span>
 			</ClayForm.Group>
 
-			<ClayForm.Group>
-				<label htmlFor={`${namespace}_nameInput`}>
+			<ClayForm.Group
+				className={classNames({'has-error': customNameInvalid})}
+			>
+				<label
+					className={classNames({disabled: !customNameEnabled})}
+					htmlFor={`${namespace}_nameInput`}
+				>
 					{Liferay.Language.get('name')}
 				</label>
 
@@ -138,14 +165,16 @@ function DisplayPageItemContextualSidebar({
 						<ClayInput
 							disabled={!customNameEnabled}
 							id={`${namespace}_nameInput`}
-							onChange={(event) =>
+							onChange={(event) => {
 								setTranslations({
 									...translations,
 									[selectedLocaleId]: event.target.value,
-								})
-							}
+								});
+
+								setCustomName(event.target.value);
+							}}
 							type="text"
-							value={translations[selectedLocaleId] || ''}
+							value={customName}
 						/>
 					</ClayInput.GroupItem>
 
@@ -165,6 +194,12 @@ function DisplayPageItemContextualSidebar({
 						/>
 					</ClayInput.GroupItem>
 				</ClayInput.Group>
+
+				{customNameInvalid && (
+					<ClayForm.FeedbackItem>
+						{Liferay.Language.get('this-field-is-required')}
+					</ClayForm.FeedbackItem>
+				)}
 			</ClayForm.Group>
 
 			<ClayForm.Group
@@ -221,7 +256,9 @@ function DisplayPageItemContextualSidebar({
 						{Liferay.Language.get('type')}
 					</p>
 
-					<ClayLabel displayType="secondary">{type}</ClayLabel>
+					<div>
+						<ClayLabel displayType="secondary">{type}</ClayLabel>
+					</div>
 				</div>
 			</ClayForm.Group>
 

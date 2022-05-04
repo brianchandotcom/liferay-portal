@@ -1,0 +1,39 @@
+.side-panel-iframe {
+	& &-content {
+		padding: 0 !important;
+	}
+
+	& &-header {
+		background-color: #fff !important;
+	}
+
+	&__tabs {
+		padding: 0.5rem 1rem 0;
+
+		.nav-link {
+			padding: 1rem;
+		}
+	}
+}
+
+.side-panel-content {
+	background-color: #f1f2f5;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	overflow: auto;
+
+	&__body,
+	&__footer {
+		padding: 1.5rem;
+	}
+
+	&--layout {
+		height: calc(100vh - 118px);
+	}
+}
+
+.text-small {
+	color: #a7a9bc !important;
+	font-size: 0.75rem;
+}

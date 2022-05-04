@@ -17,6 +17,7 @@ package com.liferay.vldap.server.internal.directory.builder;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.vldap.server.internal.BaseVLDAPTestCase;
 import com.liferay.vldap.server.internal.directory.FilterConstraint;
 import com.liferay.vldap.server.internal.directory.ldap.Directory;
@@ -25,18 +26,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.mockito.Mockito;
-
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author William Newbury
  */
-@RunWith(PowerMockRunner.class)
 public class RoleBuilderTest extends BaseVLDAPTestCase {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testBuildDirectoriesWithInvalidFilterConstraints()
@@ -66,7 +70,7 @@ public class RoleBuilderTest extends BaseVLDAPTestCase {
 
 		setUpRoles();
 
-		when(
+		Mockito.when(
 			userLocalService.fetchUserByScreenName(
 				Mockito.anyLong(), Mockito.anyString())
 		).thenReturn(
@@ -95,7 +99,7 @@ public class RoleBuilderTest extends BaseVLDAPTestCase {
 
 		setUpRoles();
 
-		when(
+		Mockito.when(
 			userLocalService.fetchUserByScreenName(
 				Mockito.anyLong(), Mockito.anyString())
 		).thenReturn(
@@ -179,7 +183,7 @@ public class RoleBuilderTest extends BaseVLDAPTestCase {
 
 		setUpRoles();
 
-		when(
+		Mockito.when(
 			userLocalService.fetchUserByScreenName(
 				Mockito.anyLong(), Mockito.anyString())
 		).thenReturn(
@@ -231,21 +235,21 @@ public class RoleBuilderTest extends BaseVLDAPTestCase {
 	}
 
 	protected void setUpRoles() {
-		Role role = mock(Role.class);
+		Role role = Mockito.mock(Role.class);
 
-		when(
+		Mockito.when(
 			role.getDescription()
 		).thenReturn(
 			"testDescription"
 		);
 
-		when(
+		Mockito.when(
 			role.getName()
 		).thenReturn(
 			"testName"
 		);
 
-		when(
+		Mockito.when(
 			role.getRoleId()
 		).thenReturn(
 			PRIMARY_KEY
@@ -256,13 +260,13 @@ public class RoleBuilderTest extends BaseVLDAPTestCase {
 
 		roles.add(role);
 
-		when(
+		Mockito.when(
 			roleLocalService.dynamicQuery(Mockito.any(DynamicQuery.class))
 		).thenReturn(
 			roles
 		);
 
-		when(
+		Mockito.when(
 			_user.getRoles()
 		).thenReturn(
 			roles
@@ -270,9 +274,9 @@ public class RoleBuilderTest extends BaseVLDAPTestCase {
 	}
 
 	protected void setUpUsers() {
-		_user = mock(User.class);
+		_user = Mockito.mock(User.class);
 
-		when(
+		Mockito.when(
 			_user.getScreenName()
 		).thenReturn(
 			"testScreenName"

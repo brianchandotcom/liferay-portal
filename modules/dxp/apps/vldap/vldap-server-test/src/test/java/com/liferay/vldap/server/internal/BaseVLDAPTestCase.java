@@ -54,23 +54,17 @@ import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.runner.RunWith;
 
 import org.mockito.Mockito;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author William Newbury
  */
-@RunWith(PowerMockRunner.class)
-public abstract class BaseVLDAPTestCase extends PowerMockito {
+public abstract class BaseVLDAPTestCase {
 
 	@Before
 	public void setUp() throws Exception {
 		_setUpPortal();
-
 		_setUpConfiguration();
 		_setUpCompany();
 		_setUpORM();
@@ -91,7 +85,7 @@ public abstract class BaseVLDAPTestCase extends PowerMockito {
 
 		serviceUtilClasses.add(serviceUtilClass);
 
-		T serviceMock = mock(serviceClass);
+		T serviceMock = Mockito.mock(serviceClass);
 
 		ReflectionTestUtil.setFieldValue(
 			serviceUtilClass, "_service", serviceMock);
@@ -100,55 +94,55 @@ public abstract class BaseVLDAPTestCase extends PowerMockito {
 	}
 
 	protected void setUpPasswordPolicy(PasswordPolicy passwordPolicy) {
-		when(
+		Mockito.when(
 			passwordPolicy.getGraceLimit()
 		).thenReturn(
 			GRACE_LIMIT
 		);
 
-		when(
+		Mockito.when(
 			passwordPolicy.getHistoryCount()
 		).thenReturn(
 			HISTORY_COUNT
 		);
 
-		when(
+		Mockito.when(
 			passwordPolicy.getLockoutDuration()
 		).thenReturn(
 			LOCKOUT_DURATION
 		);
 
-		when(
+		Mockito.when(
 			passwordPolicy.getMaxAge()
 		).thenReturn(
 			MAX_AGE
 		);
 
-		when(
+		Mockito.when(
 			passwordPolicy.getMinAge()
 		).thenReturn(
 			MIN_AGE
 		);
 
-		when(
+		Mockito.when(
 			passwordPolicy.getResetFailureCount()
 		).thenReturn(
 			RESET_FAILURE_COUNT
 		);
 
-		when(
+		Mockito.when(
 			passwordPolicy.isExpireable()
 		).thenReturn(
 			false
 		);
 
-		when(
+		Mockito.when(
 			passwordPolicy.isLockout()
 		).thenReturn(
 			true
 		);
 
-		when(
+		Mockito.when(
 			passwordPolicy.isRequireUnlock()
 		).thenReturn(
 			true
@@ -156,9 +150,9 @@ public abstract class BaseVLDAPTestCase extends PowerMockito {
 	}
 
 	protected void setUpPortalUtil() {
-		Portal portal = mock(Portal.class);
+		Portal portal = Mockito.mock(Portal.class);
 
-		when(
+		Mockito.when(
 			portal.getClassNameId(Mockito.any(Class.class))
 		).thenReturn(
 			PRIMARY_KEY
@@ -170,11 +164,11 @@ public abstract class BaseVLDAPTestCase extends PowerMockito {
 	}
 
 	protected void setUpPropsUtil() {
-		props = mock(Props.class);
+		props = Mockito.mock(Props.class);
 
 		PropsUtil.setProps(props);
 
-		when(
+		Mockito.when(
 			props.get(PortletPropsKeys.SEARCH_MAX_SIZE)
 		).thenReturn(
 			"42"
@@ -208,15 +202,15 @@ public abstract class BaseVLDAPTestCase extends PowerMockito {
 	protected UserLocalService userLocalService;
 
 	private void _setUpCompany() throws Exception {
-		company = mock(Company.class);
+		company = Mockito.mock(Company.class);
 
-		when(
+		Mockito.when(
 			company.getCompanyId()
 		).thenReturn(
 			PRIMARY_KEY
 		);
 
-		when(
+		Mockito.when(
 			company.getWebId()
 		).thenReturn(
 			"liferay.com"
@@ -227,19 +221,19 @@ public abstract class BaseVLDAPTestCase extends PowerMockito {
 		CompanyLocalService companyLocalService = getMockPortalService(
 			CompanyLocalServiceUtil.class, CompanyLocalService.class);
 
-		when(
+		Mockito.when(
 			companyLocalService.getCompanies()
 		).thenReturn(
 			companies
 		);
 
-		when(
+		Mockito.when(
 			companyLocalService.getCompanies(Mockito.anyBoolean())
 		).thenReturn(
 			companies
 		);
 
-		when(
+		Mockito.when(
 			companyLocalService.getCompanyByWebId(Mockito.eq("liferay.com"))
 		).thenReturn(
 			company
@@ -254,31 +248,31 @@ public abstract class BaseVLDAPTestCase extends PowerMockito {
 		ClassLoaderPool.register(
 			"vldap-server", currentThread.getContextClassLoader());
 
-		Configuration configuration = mock(Configuration.class);
+		Configuration configuration = Mockito.mock(Configuration.class);
 
-		when(
+		Mockito.when(
 			configuration.getArray(PortletPropsKeys.SAMBA_DOMAIN_NAMES)
 		).thenReturn(
 			new String[] {"testDomainName"}
 		);
 
-		when(
+		Mockito.when(
 			configuration.getArray(PortletPropsKeys.SAMBA_HOSTS_ALLOWED)
 		).thenReturn(
 			new String[0]
 		);
 
-		ConfigurationFactory configurationFactory = mock(
+		ConfigurationFactory configurationFactory = Mockito.mock(
 			ConfigurationFactory.class);
 
-		when(
+		Mockito.when(
 			configurationFactory.getConfiguration(
 				Mockito.any(ClassLoader.class), Mockito.eq("portlet"))
 		).thenReturn(
 			configuration
 		);
 
-		when(
+		Mockito.when(
 			configurationFactory.getConfiguration(
 				Mockito.any(ClassLoader.class), Mockito.eq("service"))
 		).thenReturn(
@@ -289,14 +283,14 @@ public abstract class BaseVLDAPTestCase extends PowerMockito {
 	}
 
 	private void _setUpORM() {
-		Criterion criterion = mock(Criterion.class);
+		Criterion criterion = Mockito.mock(Criterion.class);
 
-		DynamicQuery dynamicQuery = mock(DynamicQuery.class);
+		DynamicQuery dynamicQuery = Mockito.mock(DynamicQuery.class);
 
-		DynamicQueryFactory dynamicQueryFactory = mock(
+		DynamicQueryFactory dynamicQueryFactory = Mockito.mock(
 			DynamicQueryFactory.class);
 
-		when(
+		Mockito.when(
 			dynamicQueryFactory.forClass(
 				Mockito.any(Class.class), Mockito.any(ClassLoader.class))
 		).thenReturn(
@@ -308,17 +302,17 @@ public abstract class BaseVLDAPTestCase extends PowerMockito {
 
 		dynamicQueryFactoryUtil.setDynamicQueryFactory(dynamicQueryFactory);
 
-		RestrictionsFactory restrictionsFactory = mock(
+		RestrictionsFactory restrictionsFactory = Mockito.mock(
 			RestrictionsFactory.class);
 
-		when(
+		Mockito.when(
 			restrictionsFactory.eq(
 				Mockito.anyString(), Mockito.any(Object.class))
 		).thenReturn(
 			criterion
 		);
 
-		when(
+		Mockito.when(
 			restrictionsFactory.ilike(
 				Mockito.anyString(), Mockito.any(Object.class))
 		).thenReturn(
@@ -347,21 +341,21 @@ public abstract class BaseVLDAPTestCase extends PowerMockito {
 	}
 
 	private void _setUpSearchBase() {
-		searchBase = mock(SearchBase.class);
+		searchBase = Mockito.mock(SearchBase.class);
 
-		when(
+		Mockito.when(
 			searchBase.getCompanies()
 		).thenReturn(
 			companies
 		);
 
-		when(
+		Mockito.when(
 			searchBase.getSizeLimit()
 		).thenReturn(
 			PRIMARY_KEY
 		);
 
-		when(
+		Mockito.when(
 			searchBase.getTop()
 		).thenReturn(
 			"Liferay"

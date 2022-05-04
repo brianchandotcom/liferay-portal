@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.security.auth.Authenticator;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.vldap.server.internal.BaseVLDAPTestCase;
 
 import java.lang.reflect.Method;
@@ -28,18 +29,21 @@ import java.util.HashMap;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.mockito.Mockito;
-
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Jonathan McCann
  */
-@RunWith(PowerMockRunner.class)
 public class SambaAuthTest extends BaseVLDAPTestCase {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	@Override
@@ -50,7 +54,7 @@ public class SambaAuthTest extends BaseVLDAPTestCase {
 
 		_authenticator = new SambaAuth();
 
-		_expandoBridge = mock(ExpandoBridge.class);
+		_expandoBridge = Mockito.mock(ExpandoBridge.class);
 
 		Class<?> clazz = Class.forName(SambaAuth.class.getName());
 
@@ -178,9 +182,9 @@ public class SambaAuthTest extends BaseVLDAPTestCase {
 
 	@Override
 	protected void setUpPortalUtil() {
-		Portal portal = mock(Portal.class);
+		Portal portal = Mockito.mock(Portal.class);
 
-		when(
+		Mockito.when(
 			portal.getCompanyIds()
 		).thenReturn(
 			new long[0]
@@ -192,29 +196,29 @@ public class SambaAuthTest extends BaseVLDAPTestCase {
 	}
 
 	private void _setUpUser() {
-		User user = mock(User.class);
+		User user = Mockito.mock(User.class);
 
-		when(
+		Mockito.when(
 			userLocalService.fetchUserByEmailAddress(
 				Mockito.anyLong(), Mockito.anyString())
 		).thenReturn(
 			user
 		);
 
-		when(
+		Mockito.when(
 			userLocalService.fetchUserByScreenName(
 				Mockito.anyLong(), Mockito.anyString())
 		).thenReturn(
 			user
 		);
 
-		when(
+		Mockito.when(
 			userLocalService.fetchUserById(Mockito.anyLong())
 		).thenReturn(
 			user
 		);
 
-		when(
+		Mockito.when(
 			user.getExpandoBridge()
 		).thenReturn(
 			_expandoBridge

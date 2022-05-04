@@ -14,6 +14,7 @@
 
 package com.liferay.vldap.server.internal.directory.builder;
 
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.vldap.server.internal.BaseVLDAPTestCase;
 import com.liferay.vldap.server.internal.directory.FilterConstraint;
 import com.liferay.vldap.server.internal.directory.ldap.Directory;
@@ -22,17 +23,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author William Newbury
  * @author Matthew Tambara
  */
-@RunWith(PowerMockRunner.class)
 public class CompanyBuilderTest extends BaseVLDAPTestCase {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testBuildDirectoriesNoWebId() throws Exception {

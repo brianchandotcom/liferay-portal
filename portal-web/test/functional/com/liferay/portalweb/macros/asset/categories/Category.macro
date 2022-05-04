@@ -226,23 +226,30 @@ definition {
 	}
 
 	macro deleteByIconCP {
-		var key_categoryName = "${categoryName}";
-
 		Navigator.gotoNavNested(navNested = "${vocabularyName}");
 
+		if (isSet(deletalAll)) {
+			PortletEntry.selectAll();
+		}
+		else {
+			Check(
+				key_listEntry = "${categoryName}",
+				locator1 = "LexiconList#LIST_ENTRY_CHECKBOX");
+		}
+
+		Click(
+			key_text = "trash",
+			locator1 = "ManagementBar#ANY_ICON");
+
 		AssertTextEquals(
-			locator1 = "Categories#VOCABULARY_CATEGORY",
-			value1 = "${categoryName}");
+			locator1 = "Modal#BODY",
+			value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 
-		PortletEntry.selectAll();
-
-		ClickNoError(locator1 = "Icon#DELETE");
-
-		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
+		Click(
+			key_text = "Delete",
+			locator1 = "Modal#MODAL_FOOTER_BUTTON");
 
 		Alert.viewSuccessMessage();
-
-		PortletEntry.viewEmptyMessage(entity = "Categories");
 
 		AssertTextNotPresent(value1 = "${categoryName}");
 	}
@@ -252,9 +259,17 @@ definition {
 
 		PortletEntry.selectAll();
 
-		ClickNoError(locator1 = "Icon#DELETE");
+		Click(
+			key_text = "trash",
+			locator1 = "ManagementBar#ANY_ICON");
 
-		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
+		AssertTextEquals(
+			locator1 = "Modal#BODY",
+			value1 = "Are you sure you want to delete this? It will be deleted immediately.");
+
+		Click(
+			key_text = "Delete",
+			locator1 = "Modal#MODAL_FOOTER_BUTTON");
 
 		Alert.viewSuccessMessage();
 
@@ -264,15 +279,19 @@ definition {
 	macro deleteCategoryByMenuCP {
 		Navigator.gotoNavNested(navNested = "${vocabularyName}");
 
-		LexiconEntry.gotoEntryMenuItemNoError(
+		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Delete",
 			rowEntry = "${categoryName}");
 
-		AssertConfirm(value1 = "This category might be being used in some contents. If you delete it, this category and all of its subcategories will also be deleted and removed from those contents. Do you want to continue deleting this category?");
+		AssertTextEquals(
+			locator1 = "Modal#BODY",
+			value1 = "This category might be being used in some contents. If you delete it, this category and all of its subcategories will also be deleted and removed from those contents. Do you want to continue deleting this category?");
+
+		Click(
+			key_text = "Delete",
+			locator1 = "Modal#MODAL_FOOTER_BUTTON");
 
 		Alert.viewSuccessMessage();
-
-		PortletEntry.viewEmptyMessage(entity = "Categories");
 
 		AssertTextNotPresent(value1 = "${categoryName}");
 	}

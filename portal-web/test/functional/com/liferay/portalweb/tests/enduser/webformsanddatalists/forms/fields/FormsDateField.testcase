@@ -613,7 +613,7 @@ definition {
 			fieldName = "Date",
 			fieldValue = "01-01-0010");
 
-		FormPortlet.submitLocalizedSuccessfully(buttonName = "Versturen");
+		FormPortlet.submitSuccessfully();
 
 		Navigator.openURL();
 
@@ -769,7 +769,7 @@ definition {
 			fieldName = "Date",
 			fieldValue = "01.01.0010");
 
-		FormPortlet.submitLocalizedSuccessfully(buttonName = "Lähetä");
+		FormPortlet.submitSuccessfully();
 
 		Navigator.openURL();
 
@@ -827,7 +827,7 @@ definition {
 			fieldName = "Date",
 			fieldValue = "01.01.0010");
 
-		FormPortlet.submitLocalizedSuccessfully(buttonName = "Senden");
+		FormPortlet.submitSuccessfully();
 
 		Navigator.openURL();
 
@@ -885,7 +885,7 @@ definition {
 			fieldName = "Date",
 			fieldValue = "0010.01.01.");
 
-		FormPortlet.submitLocalizedSuccessfully(buttonName = "Elküldés");
+		FormPortlet.submitSuccessfully();
 
 		Navigator.openURL();
 
@@ -943,7 +943,7 @@ definition {
 			fieldName = "Date",
 			fieldValue = "0010/01/01");
 
-		FormPortlet.submitLocalizedSuccessfully(buttonName = "送信");
+		FormPortlet.submitSuccessfully();
 
 		Navigator.openURL();
 
@@ -1001,7 +1001,7 @@ definition {
 			fieldName = "Date",
 			fieldValue = "01/01/0001");
 
-		FormPortlet.submitLocalizedSuccessfully(buttonName = "Submeter");
+		FormPortlet.submitSuccessfully();
 
 		Navigator.openURL();
 
@@ -1059,7 +1059,7 @@ definition {
 			fieldName = "Date",
 			fieldValue = "0010-01-01");
 
-		FormPortlet.submitLocalizedSuccessfully(buttonName = "Skicka");
+		FormPortlet.submitSuccessfully();
 
 		Navigator.openURL();
 
@@ -1122,7 +1122,7 @@ definition {
 			fieldName = "Date",
 			fieldValue = "01/01/0010");
 
-		FormPortlet.submitLocalizedSuccessfully(buttonName = "Submeter");
+		FormPortlet.submitSuccessfully();
 
 		Navigator.openURL();
 

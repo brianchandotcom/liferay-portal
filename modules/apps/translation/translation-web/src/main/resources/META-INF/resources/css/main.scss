@@ -11,6 +11,10 @@ $productMenuWidth: 320px;
 	$component: &;
 
 	&-edit {
+		.experience-selector select {
+			max-width: 6.5rem;
+		}
+
 		.languages-selector .autofit-col:not(:last-child) {
 			margin-right: 1em;
 		}

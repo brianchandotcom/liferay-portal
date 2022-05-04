@@ -30,7 +30,10 @@ const ExperienceSelector = ({
 	};
 
 	return (
-		<ClayLayout.ContentRow verticalAlign="center">
+		<ClayLayout.ContentRow
+			className="experience-selector"
+			verticalAlign="center"
+		>
 			<ClayLayout.ContentCol>
 				<label className="mr-2" htmlFor={selectorId}>
 					{label}
@@ -42,6 +45,7 @@ const ExperienceSelector = ({
 					id={selectorId}
 					onChange={changePage}
 					options={options}
+					sizing="sm"
 					value={value}
 				/>
 			</ClayLayout.ContentCol>

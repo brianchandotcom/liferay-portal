@@ -55,6 +55,7 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -437,8 +438,13 @@ public class ObjectEntryDTOConverter
 							queryParameters -> queryParameters.getFirst(
 								"nestedFields")
 						).map(
-							nestedFields -> nestedFields.contains(
-								objectRelationship.getName())
+							nestedFields -> {
+								List<String> strings = Arrays.asList(
+									nestedFields.split(","));
+
+								return strings.contains(
+									objectRelationship.getName());
+							}
 						).orElse(
 							false
 						)) {

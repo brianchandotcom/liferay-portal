@@ -12,19 +12,20 @@
  * details.
  */
 
+import openDeleteTagModal from './openDeleteTagModal';
+
 export default function propsTransformer({portletNamespace, ...otherProps}) {
 	const deleteTags = () => {
-		if (
-			confirm(
-				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
-			)
-		) {
-			const form = document.getElementById(`${portletNamespace}fm`);
+		openDeleteTagModal({
+			multiple: true,
+			onDelete: () => {
+				const form = document.getElementById(`${portletNamespace}fm`);
 
-			if (form) {
-				submitForm(form);
-			}
-		}
+				if (form) {
+					submitForm(form);
+				}
+			},
+		});
 	};
 
 	const mergeTags = (itemData) => {

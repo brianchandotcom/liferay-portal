@@ -85,7 +85,7 @@ definition {
 
 	@description = "Verify users can add a minimum order amount rule that applies to order subtotals. Orders that have a subtotal less than the minimum cannot be checked out"
 	@priority = "3"
-	test AddAnOrderRuleOfTypeMinimumOrderSubtotalAmountAndCheckout {
+	test AddAnOrderRuleOfTypeMinimumOrderSubtotalAmount {
 		property osgi.module.configuration.file.names = "com.liferay.commerce.order.rule.configuration.COREntryConfiguration.config";
 		property osgi.module.configurations = "enabled=&quot;true&quot;";
 		property portal.acceptance = "false";
@@ -984,6 +984,88 @@ definition {
 		AssertElementPresent(
 			key_orderStatus = "Approved",
 			locator1 = "CommerceOrders#ORDER_ELLIPSIS_BY_STATUS");
+	}
+
+	@description = ""
+	@priority = "3"
+	test MakeAnOrderWithThreeActiveMinimumOrderAmountsWithDifferentPriority {
+		property osgi.module.configuration.file.names = "com.liferay.commerce.order.rule.configuration.COREntryConfiguration.config";
+		property osgi.module.configurations = "enabled=&quot;true&quot;";
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site with a buyer user") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And given an active minimum order total rule of priority 0 and minimum of 25.00") {
+			CommerceJSONOrdersAPI._addOrderRule(
+				amount = "25.00",
+				applyTo = "Total",
+				orderRuleDescription = "Test Order Rule Description",
+				orderRuleName = "Test Order Rule",
+				orderRuleType = "Minimum Order Amount",
+				priority = "0");
+		}
+
+		task ("And given an active minimum order subtotal rule of priority 1 and minimum of 50.00") {
+			CommerceJSONOrdersAPI._addOrderRule(
+				amount = "50.00",
+				applyTo = "Subtotal",
+				orderRuleDescription = "Test Order Rule 2 Description",
+				orderRuleName = "Test Order Rule 2",
+				orderRuleType = "Minimum Order Amount",
+				priority = "1");
+		}
+
+		task ("And given an active minimum order subtotal rule of priority 2 and minimum of 75.00") {
+			CommerceJSONOrdersAPI._addOrderRule(
+				amount = "75.00",
+				applyTo = "Subtotal",
+				orderRuleDescription = "Test Order Rule 3 Description",
+				orderRuleName = "Test Order Rule 3",
+				orderRuleType = "Minimum Order Amount",
+				priority = "2");
+		}
+
+		task ("When the buyer adds a product into the cart with a price less than $25.00 and goes to the order details") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+
+			CommerceNavigator.gotoMiniCart();
+
+			Button.click(button = "View Details");
+		}
+
+		task ("Then a warning message is shown that indicates the additional amount to meet the requirement for the order according to the priority of order rules") {
+			AssertTextEquals(
+				locator1 = "Modal#BODY",
+				value1 = "The minimum order amount is $ 75.00. This order needs an additional $ 51.00 to meet the requirement.");
+		}
+
+		task ("And there is no checkout button in that order's order details page") {
+			AssertElementNotPresent(locator1 = "Button#CHECKOUT");
+		}
 	}
 
 	@description = "This is a test for COMMERCE-6211. Stock management from order"

@@ -23,11 +23,16 @@ import com.liferay.portal.kernel.service.RegionService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.odata.entity.DoubleEntityField;
+import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.odata.entity.StringEntityField;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -41,6 +46,13 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = RegionResource.class
 )
 public class RegionResourceImpl extends BaseRegionResourceImpl {
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		return _entityModel;
+	}
 
 	@Override
 	public Page<Region> getRegionsPage(
@@ -87,11 +99,17 @@ public class RegionResourceImpl extends BaseRegionResourceImpl {
 				countryId = serviceBuilderRegion.getCountryId();
 				id = serviceBuilderRegion.getRegionId();
 				name = serviceBuilderRegion.getName();
+				position = serviceBuilderRegion.getPosition();
 				regionCode = serviceBuilderRegion.getRegionCode();
 				title_i18n = serviceBuilderRegion.getLanguageIdToTitleMap();
 			}
 		};
 	}
+
+	private static final EntityModel _entityModel =
+		() -> EntityModel.toEntityFieldsMap(
+			new StringEntityField("name", locale -> "name"),
+			new DoubleEntityField("position", locale -> "position"));
 
 	@Reference
 	private RegionService _regionService;

@@ -24,15 +24,18 @@ import java.util.List;
 public class InputTemplateNode extends LinkedHashMap<String, Object> {
 
 	public InputTemplateNode(
-		String label, String name, String type, String value) {
+		String label, String name, boolean required, String type,
+		String value) {
 
 		_label = label;
 		_name = name;
+		_required = required;
 		_type = type;
 		_value = value;
 
 		put("name", name);
 		put("label", label);
+		put("required", required);
 		put("type", type);
 		put("value", value);
 
@@ -63,6 +66,10 @@ public class InputTemplateNode extends LinkedHashMap<String, Object> {
 		return _type;
 	}
 
+	public boolean isRequired() {
+		return _required;
+	}
+
 	public static class Option {
 
 		public Option(String label, String value) {
@@ -86,6 +93,7 @@ public class InputTemplateNode extends LinkedHashMap<String, Object> {
 	private final String _label;
 	private final String _name;
 	private final List<InputTemplateNode.Option> _options = new ArrayList<>();
+	private final boolean _required;
 	private final String _type;
 	private final String _value;
 

@@ -142,4 +142,41 @@ definition {
 		}
     }
 
+	@description = "Verify user can not upload a CSV with invalid quantity"
+	@priority = "3"
+	test UploadNotValidQuantityCSVOrderFile {
+        task ("Given a Minium site with a buyer user") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+        task ("And given the user is creating a new order") {
+			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
+		}
+
+		task ("When the user go to start a new order by Import from CSV") {
+			CommerceOrders.importOrderFromType(orderType = "CSV");
+		}
+
+		task ("And when the user try to import a file with invalid quantity") {
+			UploadDependencyFile.uploadFile(fileName = "invalid_quantity.csv");
+
+			Button.clickImport();
+		}
+
+		task ("Then an error message is displayed because the quantity is invalid") {
+			Button.clickImport();
+
+			SelectFrameTop();
+
+			Alert.viewErrorMessage(errorMessage = "1 row was not imported.");
+
+			IFrame.closeFrame();
+		}
+	}
+
 }

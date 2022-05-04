@@ -23,15 +23,23 @@ definition {
 	}
 
 	macro deleteCP {
-		var key_assetName = "${assetName}";
-
 		LexiconTable.viewTableEntryTitle(tableEntry = "${assetName}");
 
 		LexiconTable.viewTableEntryText(
 			tableEntry = "${assetName}",
 			tableEntryText = "${assetType}");
 
-		LexiconTable.delete(tableEntry = "${assetName}");
+		LexiconTable.clickEllipsisItem(
+			item = "Delete",
+			tableEntry = "${assetName}");
+
+		AssertTextEquals(
+			locator1 = "Modal#BODY",
+			value1 = "Are you sure you want to delete this? It will be deleted immediately.");
+
+		Click(
+			key_text = "Delete",
+			locator1 = "Modal#MODAL_FOOTER_BUTTON");
 
 		Alert.viewSuccessMessage();
 

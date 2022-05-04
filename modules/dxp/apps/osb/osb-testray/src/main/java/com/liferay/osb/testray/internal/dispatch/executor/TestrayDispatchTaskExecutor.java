@@ -20,9 +20,13 @@ import com.liferay.dispatch.executor.DispatchTaskExecutorOutput;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+
+import java.io.Serializable;
 
 import java.util.HashMap;
 import java.util.List;
@@ -61,15 +65,34 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 		return "testray";
 	}
 
-	private void _loadCache(long companyId) {
+	private void _loadCache(long companyId) throws Exception {
 		List<ObjectDefinition> objectDefinitions =
 			_objectDefinitionLocalService.getObjectDefinitions(
 				companyId, true, WorkflowConstants.STATUS_APPROVED);
+
+		if (ListUtil.isEmpty(objectDefinitions)) {
+			return;
+		}
 
 		for (ObjectDefinition objectDefinition : objectDefinitions) {
 			_objectDefinitionIds.put(
 				objectDefinition.getShortName(),
 				objectDefinition.getObjectDefinitionId());
+		}
+
+		List<Map<String, Serializable>> values =
+			_objectEntryLocalService.getValuesList(
+				_objectDefinitionIds.get("Project"), null, 0, 0);
+
+		if (ListUtil.isEmpty(values)) {
+			return;
+		}
+
+		for (Map<String, Serializable> map : values) {
+			Long projectId = (Long)map.get("c_projectId");
+
+			_objectEntryIds.put(
+				"Project#" + (String)map.get("name"), projectId.longValue());
 		}
 	}
 
@@ -80,5 +103,10 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	private final Map<String, Long> _objectEntryIds = new HashMap<>();
+
+	@Reference
+	private ObjectEntryLocalService _objectEntryLocalService;
 
 }

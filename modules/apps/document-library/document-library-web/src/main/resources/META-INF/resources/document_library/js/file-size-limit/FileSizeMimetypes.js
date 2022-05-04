@@ -20,6 +20,8 @@ import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 import uuidv4 from 'uuid/v4';
 
+import '../../css/file_size_mimetypes.scss';
+
 const FileSizeField = ({
 	handleAddClick,
 	handleRemoveClick,
@@ -99,7 +101,7 @@ const FileSizeField = ({
 const FileSizePerMimeType = ({
 	description = Liferay.Language.get('file-size-mimetype-description'),
 	portletNamespace,
-	sizeList: initialSizeList
+	sizeList: initialSizeList,
 }) => {
 	const emptyRow = () => ({id: uuidv4(), mimeType: '', size: ''});
 
@@ -144,7 +146,7 @@ FileSizePerMimeType.propTypes = {
 			mimeType: PropTypes.string,
 			size: PropTypes.number,
 		})
-	)
+	),
 };
 
 export default FileSizePerMimeType;

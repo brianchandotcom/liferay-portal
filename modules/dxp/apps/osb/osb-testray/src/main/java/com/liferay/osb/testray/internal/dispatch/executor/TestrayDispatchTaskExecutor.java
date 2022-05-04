@@ -63,6 +63,10 @@ import org.rauschig.jarchivelib.Archiver;
 import org.rauschig.jarchivelib.ArchiverFactory;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 /**
  * @author José Abelenda
@@ -98,6 +102,50 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 	@Override
 	public String getName() {
 		return "testray";
+	}
+
+	private String _getAttributeValue(String attributeName, Node node) {
+		NamedNodeMap namedNodeMap = node.getAttributes();
+
+		if (namedNodeMap == null) {
+			return null;
+		}
+
+		Node attributeNode = namedNodeMap.getNamedItem(attributeName);
+
+		if (attributeNode == null) {
+			return null;
+		}
+
+		return attributeNode.getTextContent();
+	}
+
+	private Map<String, String> _getPropertiesMap(Element element) {
+		Map<String, String> map = new HashMap<>();
+
+		NodeList propertiesNodeList = element.getElementsByTagName(
+			"properties");
+
+		Node propertiesNode = propertiesNodeList.item(0);
+
+		Element propertiesElement = (Element)propertiesNode;
+
+		NodeList propertyNodeList = propertiesElement.getElementsByTagName(
+			"property");
+
+		for (int i = 0; i < propertyNodeList.getLength(); i++) {
+			Node propertyNode = propertyNodeList.item(i);
+
+			if (!propertyNode.hasAttributes()) {
+				continue;
+			}
+
+			map.put(
+				_getAttributeValue("name", propertyNode),
+				_getAttributeValue("value", propertyNode));
+		}
+
+		return map;
 	}
 
 	private void _invoke(UnsafeRunnable<Exception> unsafeRunnable)
@@ -219,7 +267,7 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 
 					Document document = documentBuilder.parse(file);
 
-					//_processDocument(document);
+					_invoke(() -> _processDocument(document));
 				}
 				catch (Exception exception) {
 					_log.error(exception);
@@ -238,6 +286,12 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 				Files.deleteIfExists(tempFilePath);
 			}
 		}
+	}
+
+	private void _processDocument(Document document) throws Exception {
+		Element element = document.getDocumentElement();
+
+		_getPropertiesMap(element);
 	}
 
 	private void _uploadToTestray(UnicodeProperties unicodeProperties)

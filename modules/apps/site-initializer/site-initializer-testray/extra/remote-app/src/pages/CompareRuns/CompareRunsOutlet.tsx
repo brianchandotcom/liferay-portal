@@ -28,7 +28,7 @@ const COMPARE_RUNS_ROOT_PATH = '/compare-runs';
 
 const CompareRunsOutlet: React.FC = () => {
 	const navigate = useNavigate();
-	const {setHeading, setTabs} = useHeader();
+	const {setDropdownIcon, setHeading, setTabs} = useHeader();
 	const {comparableTabs, currentTab} = useCompareRuns();
 
 	const [runs, setRuns] = useState<TestrayRun[]>([]);
@@ -50,6 +50,18 @@ const CompareRunsOutlet: React.FC = () => {
 				]);
 			});
 		}
+		setDropdownIcon('drop');
+	}, [runs, setDropdownIcon, setHeading]);
+
+	useEffect(() => {
+		setTimeout(() => {
+			setHeading([
+				{
+					category: i18n.translate('project'),
+					title: 'Liferay Portal 7.4',
+				},
+			]);
+		});
 
 		setTabs([]);
 	}, [runs, setHeading, setTabs]);

@@ -15,7 +15,7 @@
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayCheckbox} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
-import {useContext, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 
 import {Avatar} from '../../../components/Avatar';
 import Input from '../../../components/Input';
@@ -23,6 +23,7 @@ import InputFile from '../../../components/Input/InputFile';
 import Container from '../../../components/Layout/Container';
 import {AccountContext} from '../../../context/AccountContext';
 import {UserAccount} from '../../../graphql/queries';
+import {useHeader} from '../../../hooks';
 import i18n from '../../../i18n';
 import {Liferay} from '../../../services/liferay/liferay';
 
@@ -32,6 +33,26 @@ type UserManagementProps = {
 
 const UserManagement: React.FC<UserManagementProps> = ({myUserAccount}) => {
 	const [form, setForm] = useState(myUserAccount || {});
+
+	const {setDropdownIcon, setHeading} = useHeader();
+
+	useEffect(() => {
+		setDropdownIcon('cog');
+	}, [setDropdownIcon]);
+
+	useEffect(() => {
+		setTimeout(() => {
+			setHeading(
+				[
+					{
+						category: i18n.translate('Manage'),
+						title: i18n.translate('manage-users'),
+					},
+				],
+				false
+			);
+		});
+	}, [setDropdownIcon, setHeading]);
 
 	const onChange = ({target: {name, value}}: any) => {
 		setForm({

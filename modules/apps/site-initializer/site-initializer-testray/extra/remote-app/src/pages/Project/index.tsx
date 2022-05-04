@@ -36,7 +36,14 @@ const Projects: React.FC<ProjectsProps & SecurityPermissions> = ({
 }) => {
 	const {actions, formModal} = useProjectActions(security, permissions);
 
-	const {setHeading} = useHeader({shouldUpdate: false});
+	const {setDropdown, setDropdownIcon, setHeading} = useHeader({
+		shouldUpdate: true,
+	});
+
+	useEffect(() => {
+		setDropdownIcon('polls');
+		setDropdown([]);
+	}, [setDropdownIcon, setDropdown]);
 
 	useEffect(() => {
 		if (addHeading) {

@@ -13,6 +13,9 @@
  * details.
  */
 
+import {useEffect} from 'react';
+import {useOutletContext} from 'react-router-dom';
+
 import {AvatarGroup} from '../../components/Avatar';
 import Container from '../../components/Layout/Container';
 import ListView from '../../components/ListView/ListView';
@@ -28,6 +31,11 @@ import TestflowModal from './TestflowModal';
 
 const TestFlow = () => {
 	const {modal} = useFormModal();
+	const {setDropdownIcon}: any = useOutletContext();
+
+	useEffect(() => {
+		setDropdownIcon('merge');
+	}, [setDropdownIcon]);
 
 	return (
 		<Container title={i18n.translate('tasks')}>

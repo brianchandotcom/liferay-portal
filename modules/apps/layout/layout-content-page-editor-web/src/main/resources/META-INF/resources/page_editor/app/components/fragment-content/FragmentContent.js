@@ -343,7 +343,7 @@ const FragmentContent = ({
 					id={elementId}
 					markup={content}
 					onRender={withinTopper ? onRender : () => {}}
-					style={checkStylesFF(item.tiemId, style)}
+					style={checkStylesFF(item.itemId, style)}
 				/>
 
 				{backgroundImageValue.mediaQueries ? (

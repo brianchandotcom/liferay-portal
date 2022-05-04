@@ -97,6 +97,60 @@ definition {
 		}
 	}
 
+	@description = "Bug: LRAC-10602 | Automation ID: LRAC-11055 | Test Summary: Deleted properties don't appear as an option to sync sites"
+	@priority = "2"
+	test DeletedPropertiesNotAppearAsOptionInSyncSites {
+		task ("Go to properties page and add 2 new properties") {
+			var propertyList = "Property Name 1,Property Name 2";
+
+			ACNavigation.goToSettings();
+
+			for (var propertyName : list "${propertyList}") {
+				ACSettings.goToProperties();
+
+				ACProperties.addNewProperty(propertyName = "${propertyName}");
+			}
+		}
+
+		task ("Delete a property") {
+			ACSettings.goToProperties();
+
+			ACSettings.deletePropertyByCheckbox(propertyName = "Property Name 2");
+		}
+
+		task ("Copy the token from AC") {
+			ACSettings.takeTokenFromAnalyticsCloud();
+		}
+
+		task ("Set up instance and sign in DXP") {
+			TestCase.setUpPortalInstance();
+
+			ACUtils.launchDXP();
+		}
+
+		task ("Connect the DXP to AC") {
+			ACDXPSettings.goToInstanceSettingsAC();
+
+			ACDXPSettings.connectAnalyticsCloud();
+		}
+
+		task ("Go to Synced Sites") {
+			ACDXPSettings.navToSyncedSitesMenu();
+		}
+
+		task ("Check that the existing properties in the AC appear in the list") {
+			ACUtils.assertItemsName(itemList = "Property Name 1");
+		}
+
+		task ("Check that the deleted AC properties do not appear in the list") {
+			ACUtils.assertItemsNameNotPresent(itemList = "Property Name 2");
+		}
+
+		task ("Disconnect the DXP to AC") {
+			ACDXPSettings.disconnectDXPFromAnalyticsCloud();
+		}
+	}
+
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9120 | Test Summary: Property field is displayed in empty state when no property is available"
 	@priority = "3"
 	test ViewPropertyListDefault {

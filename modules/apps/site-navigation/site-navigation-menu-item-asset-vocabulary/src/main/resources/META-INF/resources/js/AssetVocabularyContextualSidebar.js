@@ -152,7 +152,10 @@ function AssetVocabularyContextualSidebar({
 			</ClayForm.Group>
 
 			<ClayForm.Group>
-				<label htmlFor={`${namespace}_nameInput`}>
+				<label
+					className={classNames({disabled: !customNameEnabled})}
+					htmlFor={`${namespace}_nameInput`}
+				>
 					{Liferay.Language.get('name')}
 				</label>
 

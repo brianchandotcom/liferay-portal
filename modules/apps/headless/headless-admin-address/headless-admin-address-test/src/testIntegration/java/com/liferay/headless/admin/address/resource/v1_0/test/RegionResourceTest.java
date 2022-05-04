@@ -16,15 +16,23 @@ package com.liferay.headless.admin.address.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.address.client.dto.v1_0.Region;
+import com.liferay.headless.admin.address.client.serdes.v1_0.RegionSerDes;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.service.CountryLocalService;
 import com.liferay.portal.kernel.service.RegionLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.rule.Inject;
 
+import java.util.Arrays;
+
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -53,6 +61,47 @@ public class RegionResourceTest extends BaseRegionResourceTestCase {
 		super.tearDown();
 
 		_countryLocalService.deleteCountry(_country);
+	}
+
+	@Override
+	@Test
+	public void testGraphQLGetRegionsPage() throws Exception {
+		GraphQLField graphQLField = new GraphQLField(
+			"regions",
+			HashMapBuilder.<String, Object>put(
+				"page", 1
+			).put(
+				"pageSize", 10
+			).put(
+				"sort", "\"position:desc\""
+			).build(),
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		JSONObject regionsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/regions");
+
+		long totalCount = regionsJSONObject.getLong("totalCount");
+
+		Region region1 = testGraphQLGetRegionsPage_addRegion();
+		Region region2 = testGraphQLGetRegionsPage_addRegion();
+
+		regionsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/regions");
+
+		Assert.assertEquals(
+			totalCount + 2, regionsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			region1,
+			Arrays.asList(
+				RegionSerDes.toDTOs(regionsJSONObject.getString("items"))));
+		assertContains(
+			region2,
+			Arrays.asList(
+				RegionSerDes.toDTOs(regionsJSONObject.getString("items"))));
 	}
 
 	@Override
@@ -106,7 +155,11 @@ public class RegionResourceTest extends BaseRegionResourceTestCase {
 
 	@Override
 	protected Region testGraphQLRegion_addRegion() throws Exception {
-		return _addRegion(randomRegion());
+		Region region = randomRegion();
+
+		region.setPosition(Double.MAX_VALUE);
+
+		return _addRegion(region);
 	}
 
 	private Region _addRegion(Region region) throws Exception {

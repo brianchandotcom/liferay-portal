@@ -1376,6 +1376,10 @@
 		</check>
 	</source-processor>
 	<source-processor name="TFSourceProcessor">
+		<check name="TFBlockOrderCheck">
+			<category name="Styling" />
+			<description name="Checks the order of blocks in `.tf` file." />
+		</check>
 	</source-processor>
 	<source-processor name="TLDSourceProcessor">
 		<check name="TLDElementOrderCheck">

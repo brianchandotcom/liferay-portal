@@ -1375,6 +1375,8 @@
 			<description name="Finds missing and unnecessary whitespace." />
 		</check>
 	</source-processor>
+	<source-processor name="TFSourceProcessor">
+	</source-processor>
 	<source-processor name="TLDSourceProcessor">
 		<check name="TLDElementOrderCheck">
 			<category name="Styling" />

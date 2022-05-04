@@ -24,7 +24,4 @@ public class TrashWebKeys extends com.liferay.trash.util.TrashWebKeys {
 
 	public static final String TRASH_ENTRIES = "TRASH_ENTRIES";
 
-	public static final String TRASH_ENTRIES_DEFAULT_EVENT_HANDLER =
-		"TRASH_ENTRIES_DEFAULT_EVENT_HANDLER";
-
 }

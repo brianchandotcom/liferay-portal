@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.trash.web.internal.constants.TrashWebKeys;
 import com.liferay.trash.web.internal.servlet.taglib.util.TrashViewContentActionDropdownItemsProvider;
 
 import java.util.Collections;
@@ -75,11 +74,6 @@ public class TrashContentVerticalCard implements VerticalCard {
 		}
 
 		return Collections.emptyList();
-	}
-
-	@Override
-	public String getDefaultEventHandler() {
-		return TrashWebKeys.TRASH_ENTRIES_DEFAULT_EVENT_HANDLER;
 	}
 
 	@Override

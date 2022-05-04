@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!DOCTYPE routes PUBLIC "-//Liferay//DTD Friendly URL Routes 7.4.0//EN" "http://www.liferay.com/dtd/liferay-friendly-url-routes_7_4_0.dtd">
+
+<routes>
+	<route>
+		<pattern>/{commerceOrderId:\d+}</pattern>
+		<implicit-parameter name="mvcRenderCommandName">/commerce_open_order_content/edit_commerce_order</implicit-parameter>
+		<implicit-parameter name="p_p_id">com_liferay_commerce_order_content_web_internal_portlet_CommerceOpenOrderContentPortlet</implicit-parameter>
+		<implicit-parameter name="p_p_lifecycle">0</implicit-parameter>
+	</route>
+</routes>

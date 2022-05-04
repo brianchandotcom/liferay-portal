@@ -32,15 +32,16 @@ public interface ObjectConfiguration {
 
 	@Meta.AD(
 		deflt = "100",
-		description = "guest-maximum-entry-submissions-per-object-help",
-		name = "guest-maximum-entry-submissions-per-object", required = false
+		description = "maximum-number-of-guest-users-submissions-per-object-help",
+		name = "maximum-number-of-guest-users-submissions-per-object",
+		required = false
 	)
-	public int guestMaximumEntrySubmissionsPerObject();
+	public int maximumNumberOfGuestUsersSubmissionsPerObject();
 
 	@Meta.AD(
-		deflt = "25", description = "guest-maximum-file-size-help",
-		name = "guest-maximum-file-size", required = false
+		deflt = "25", description = "maximum-file-size-for-guest-users-help",
+		name = "maximum-file-size-for-guest-users", required = false
 	)
-	public int guestMaximumFileSize();
+	public int maximumFileSizeForGuestUsers();
 
 }

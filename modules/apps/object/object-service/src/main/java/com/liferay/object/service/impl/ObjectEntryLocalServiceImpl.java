@@ -1898,9 +1898,11 @@ public class ObjectEntryLocalServiceImpl
 
 		if (defaultUser &&
 			GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-148112")) &&
-			(_objectConfiguration.guestMaximumFileSize() < maximumFileSize)) {
+			(_objectConfiguration.maximumFileSizeForGuestUsers() <
+				maximumFileSize)) {
 
-			maximumFileSize = _objectConfiguration.guestMaximumFileSize();
+			maximumFileSize =
+				_objectConfiguration.maximumFileSizeForGuestUsers();
 		}
 
 		if ((maximumFileSize > 0) &&
@@ -2011,13 +2013,15 @@ public class ObjectEntryLocalServiceImpl
 
 		int count = objectEntryPersistence.countByU_ODI(
 			user.getUserId(), objectDefinitionId);
-		long guestMaximumEntrySubmissionsPerObject =
-			_objectConfiguration.guestMaximumEntrySubmissionsPerObject();
+		long maximumNumberOfGuestUsersSubmissionsPerObject =
+			_objectConfiguration.
+				maximumNumberOfGuestUsersSubmissionsPerObject();
 
-		if (count >= guestMaximumEntrySubmissionsPerObject) {
+		if (count >= maximumNumberOfGuestUsersSubmissionsPerObject) {
 			throw new ObjectEntrySubmissionLimitException(
 				StringBundler.concat(
-					"Unable to exceed ", guestMaximumEntrySubmissionsPerObject,
+					"Unable to exceed ",
+					maximumNumberOfGuestUsersSubmissionsPerObject,
 					" guest object entries for object definition ",
 					objectDefinitionId));
 		}

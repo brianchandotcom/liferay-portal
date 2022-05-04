@@ -349,9 +349,7 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 				batchEngineImportTask.getBatchEngineImportTaskId()),
 			outputStream);
 
-		String normalizedFileName =
-			(fileName != null) ? _normalizeFileName(fileName) :
-				StringUtil.randomString();
+		String normalizedFileName = _normalizeFileName(fileName);
 
 		return Response.ok(
 			streamingOutput
@@ -389,9 +387,7 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 			}
 		};
 
-		String normalizedFileName =
-			(fileName != null) ? _normalizeFileName(fileName) :
-				StringUtil.randomString();
+		String normalizedFileName = _normalizeFileName(fileName);
 
 		return Response.ok(
 			streamingOutput
@@ -439,8 +435,9 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 
 			String fileExtension = _file.getExtension(fileName);
 
-			String trimmedFileName = fileName.replaceAll(
-				"-.*.", "." + fileExtension);
+			String trimmedFileName =
+				fileName.substring(0, fileName.lastIndexOf("-")) + "." +
+					fileExtension;
 
 			String normalizedFileName = _normalizeFileName(trimmedFileName);
 
@@ -495,7 +492,16 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 	}
 
 	private String _normalizeFileName(String fileName) {
-		return _normalizer.normalizeToAscii(fileName);
+		String normalizedFileName = null;
+
+		if (fileName != null) {
+			normalizedFileName = _normalizer.normalizeToAscii(fileName);
+		}
+		else {
+			normalizedFileName = StringUtil.randomString();
+		}
+
+		return normalizedFileName;
 	}
 
 	private FailedItem _toFailedItem(

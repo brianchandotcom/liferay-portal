@@ -14,9 +14,11 @@
 
 package com.liferay.cookies.banner.web.internal.servlet.taglib;
 
+import com.liferay.cookies.configuration.CookiesBannerConfiguration;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
@@ -61,6 +63,19 @@ public class CookiesBannerBottomJSPDynamicInclude
 			return;
 		}
 
+		try {
+			CookiesBannerConfiguration cookiesBannerConfiguration =
+				_configurationProvider.getGroupConfiguration(
+					CookiesBannerConfiguration.class, group.getGroupId());
+
+			if (!cookiesBannerConfiguration.enabled()) {
+				return;
+			}
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
+
 		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-142518"))) {
 			super.include(httpServletRequest, httpServletResponse, key);
 		}
@@ -92,5 +107,8 @@ public class CookiesBannerBottomJSPDynamicInclude
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CookiesBannerBottomJSPDynamicInclude.class);
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 }

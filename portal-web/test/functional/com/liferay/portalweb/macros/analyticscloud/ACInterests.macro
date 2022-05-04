@@ -16,7 +16,7 @@ definition {
 
 	macro assertNoCurrentInterests {
 		AssertVisible(
-			key_cardTitle = "Interests",
+			key_cardTitle = "interests",
 			locator1 = "ACCards#NO_RESULTS_TITLE");
 	}
 

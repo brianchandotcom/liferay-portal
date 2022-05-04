@@ -1,6 +1,5 @@
 {
 	"dependencies": {
-		"@liferay/document-library-web": "*"
 	},
 	"name": "depot-web",
 	"scripts": {

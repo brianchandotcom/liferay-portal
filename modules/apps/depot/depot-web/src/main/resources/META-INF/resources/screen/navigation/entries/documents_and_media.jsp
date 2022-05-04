@@ -37,8 +37,8 @@ UnicodeProperties typeSettingsProperties = group.getTypeSettingsProperties();
 		</liferay-util:html-top>
 
 		<liferay-frontend:fieldset
-			cssClass="mt-5"
 			collapsible="<%= false %>"
+			cssClass="mt-5"
 			label='<%= LanguageUtil.get(request, "maximum-file-size-and-mimetypes") %>'
 		>
 			<div>

@@ -12,6 +12,6 @@
  * details.
  */
 
-import { FileSizePerMimeType } from "@liferay/document-library-web";
+import {FileSizePerMimeType} from '@liferay/document-library-web';
 
 export default FileSizePerMimeType;

@@ -17,7 +17,6 @@ import ClayForm from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import classNames from 'classnames';
 import React from 'react';
 
 import ExperienceSelector from './ExperienceSelector';
@@ -55,11 +54,7 @@ const TransLateActionBar = ({
 						</li>
 					)}
 
-					<li
-						className={classNames('tbar-item', {
-							'tbar-item-expand': !autoTranslateEnabled,
-						})}
-					>
+					<li className="tbar-item">
 						<TranslateLanguagesSelector
 							{...translateLanguagesSelectorData}
 							confirmChangesBeforeReload={
@@ -69,87 +64,91 @@ const TransLateActionBar = ({
 					</li>
 
 					{autoTranslateEnabled && (
-						<>
-							<li className="tbar-item">
-								<ClayButton
-									disabled={isLoading}
-									displayType="secondary"
-									onClick={fetchAutoTranslateFields}
-									small
-									type="button"
-								>
-									{Liferay.Language.get('auto-translate')}
-								</ClayButton>
-							</li>
-							<li className="tbar-item tbar-item-expand text-left">
-								{isLoading && (
-									<div>
-										<span className="inline-item inline-item-before">
-											<ClayLoadingIndicator small />
-										</span>
+						<li className="tbar-item">
+							<ClayLayout.ContentRow
+								noGutters="y"
+								verticalAlign="center"
+							>
+								<ClayLayout.ContentCol>
+									<ClayButton
+										disabled={isLoading}
+										displayType="secondary"
+										onClick={fetchAutoTranslateFields}
+										small
+										type="button"
+									>
+										{Liferay.Language.get('auto-translate')}
+									</ClayButton>
+								</ClayLayout.ContentCol>
 
-										<span className="inline-item">
-											{Liferay.Language.get(
-												'requesting-translation'
-											)}
-										</span>
-									</div>
-								)}
+								<ClayLayout.ContentCol>
+									{isLoading && (
+										<div>
+											<span className="inline-item inline-item-before">
+												<ClayLoadingIndicator small />
+											</span>
 
-								{status === 'SUCCESS' && (
-									<div className="has-success">
-										<ClayForm.FeedbackItem className="mt-0">
-											<ClayForm.FeedbackIndicator symbol="check-circle-full" />
+											<span className="inline-item">
+												{Liferay.Language.get(
+													'requesting-translation'
+												)}
+											</span>
+										</div>
+									)}
 
-											{message}
-										</ClayForm.FeedbackItem>
-									</div>
-								)}
+									{status === 'SUCCESS' && (
+										<div className="has-success">
+											<ClayForm.FeedbackItem className="mt-0">
+												<ClayForm.FeedbackIndicator symbol="check-circle-full" />
 
-								{status === 'ERROR' && (
-									<div className="has-error">
-										<ClayForm.FeedbackItem className="mt-0">
-											<ClayForm.FeedbackIndicator symbol="exclamation-full" />
+												{message}
+											</ClayForm.FeedbackItem>
+										</div>
+									)}
 
-											{message}
-										</ClayForm.FeedbackItem>
-									</div>
-								)}
-							</li>
-						</>
+									{status === 'ERROR' && (
+										<div className="has-error">
+											<ClayForm.FeedbackItem className="mt-0">
+												<ClayForm.FeedbackIndicator symbol="exclamation-full" />
+
+												{message}
+											</ClayForm.FeedbackItem>
+										</div>
+									)}
+								</ClayLayout.ContentCol>
+							</ClayLayout.ContentRow>
+						</li>
 					)}
 
-					<li className="tbar-item">
-						<div className="tbar-section text-right">
-							<ClayButton.Group spaced>
-								<ClayLink
-									button={{small: true}}
-									displayType="secondary"
-									href={redirectURL}
-								>
-									{Liferay.Language.get('cancel')}
-								</ClayLink>
+					<li className="align-items-end tbar-item tbar-item-expand">
+						<ClayButton.Group spaced>
+							<ClayLink
+								button={{small: true}}
+								displayType="secondary"
+								href={redirectURL}
+							>
+								{Liferay.Language.get('cancel')}
+							</ClayLink>
 
-								<ClayButton
-									disabled={saveButtonDisabled}
-									displayType="secondary"
-									onClick={onSaveButtonClick}
-									small
-									type="submit"
-								>
-									{saveButtonLabel}
-								</ClayButton>
+							<ClayButton
+								disabled={saveButtonDisabled}
+								displayType="secondary"
+								onClick={onSaveButtonClick}
+								small
+								type="submit"
+							>
+								{saveButtonLabel}
+							</ClayButton>
 
-								<ClayButton
-									disabled={publishButtonDisabled}
-									displayType="primary"
-									small
-									type="submit"
-								>
-									{publishButtonLabel}
-								</ClayButton>
-							</ClayButton.Group>
-						</div>
+							<ClayButton
+								disabled={publishButtonDisabled}
+								displayType="primary"
+								small
+								type="submit"
+							>
+								{publishButtonLabel}
+							</ClayButton>
+						</ClayButton.Group>
 					</li>
 				</ul>
 			</ClayLayout.ContainerFluid>

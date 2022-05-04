@@ -72,15 +72,6 @@ $productMenuWidth: 320px;
 						order: 1;
 						width: 100%;
 					}
-
-					> .tbar-item:last-child {
-						flex-grow: 1;
-
-						> .tbar-section {
-							display: flex;
-							justify-content: flex-end;
-						}
-					}
 				}
 			}
 
@@ -90,10 +81,6 @@ $productMenuWidth: 320px;
 						border-top: none;
 						order: 0;
 						width: auto;
-					}
-
-					> .tbar-item:last-child {
-						flex-grow: 0;
 					}
 				}
 			}

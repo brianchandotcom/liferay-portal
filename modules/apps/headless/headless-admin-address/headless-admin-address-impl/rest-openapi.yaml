@@ -264,6 +264,50 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Country"
             tags: ["Country"]
+    "/countries/{countryId}/regions":
+        get:
+            operationId: getCountryRegionsPage
+            parameters:
+                - in: path
+                  name: countryId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: active
+                  schema:
+                      type: boolean
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Region"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Region"
+                                type: array
+            tags: ["Region"]
     "/regions":
         get:
             operationId: getRegionsPage

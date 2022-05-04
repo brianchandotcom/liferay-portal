@@ -1156,13 +1156,6 @@ definition {
 
 		// TODO Review
 
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "User Authentication",
-			configurationName = "General",
-			configurationScope = "Virtual Instance Scope");
-
-		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
-
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		ApplicationsMenu.gotoSite(site = "Minium");
@@ -1201,7 +1194,11 @@ definition {
 			productName = "U-Joint",
 			productQuantity = "1");
 
-		CommerceCheckout.gotoCheckout();
+		CommerceNavigator.gotoMiniCart();
+
+		Button.click(button = "View Details");
+
+		Button.click(button = "Checkout");
 
 		WaitForElementPresent(locator1 = "CommerceAccelerators#CHECKOUT_PORTLET_BODY");
 
@@ -1262,40 +1259,51 @@ definition {
 			key_titleName = "Billing Address",
 			locator1 = "CommerceOrders#ORDER_GENERAL_DETAILS_ADD_EDIT_BUTTON");
 
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		var billingAddressStreet = "Billing Address, Test Street";
+		var billingAddressCity = "Test City, Test Zip Code";
 
 		Type(
 			key_fieldLabel = "Street 1",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "Billing Address, Test Street");
+			value1 = "${billingAddressStreet}");
 
 		Button.click(button = "Submit");
 
 		Refresh();
 
-		AssertElementPresent(
-			key_errorMessage = "Billing Address",
-			locator1 = "WorkflowMetricsSLA#SLA_ERROR_MESSAGE");
+		for (var address : list "${billingAddressStreet},${billingAddressCity}") {
+			AssertTextEquals.assertPartialText(
+				key_titleName = "Billing Address",
+				locator1 = "CommerceOrders#ORDER_GENERAL_DETAILS_DESCRIPTION",
+				value1 = "${address}");
+		}
 
 		Click(
 			key_buttonName = "Edit",
 			key_titleName = "Shipping Address",
 			locator1 = "CommerceOrders#ORDER_GENERAL_DETAILS_ADD_EDIT_BUTTON");
 
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		var shippingAddressStreet = "Shipping Address, Test1 Street";
 
 		Type(
 			key_fieldLabel = "Street 1",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "Shipping Address, Test1 Street");
+			value1 = "${shippingAddressStreet}");
 
 		Button.click(button = "Submit");
 
 		Refresh();
 
-		AssertElementPresent(
-			key_errorMessage = "Shipping Address",
-			locator1 = "WorkflowMetricsSLA#SLA_ERROR_MESSAGE");
+		for (var address : list "${shippingAddressStreet},${billingAddressCity}") {
+			AssertTextEquals.assertPartialText(
+				key_titleName = "Shipping Address",
+				locator1 = "CommerceOrders#ORDER_GENERAL_DETAILS_DESCRIPTION",
+				value1 = "${address}");
+		}
 	}
 
 	@description = "This is a test for COMMERCE-6239. Update shipment items to a shipment"

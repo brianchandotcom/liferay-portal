@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
@@ -41,6 +42,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.junit.Assert;
@@ -149,31 +151,45 @@ public class RegionLocalServiceTest {
 	public void testSearchRegions() throws Exception {
 		String keywords = RandomTestUtil.randomString();
 
-		Country country = _addCountry();
+		Country country1 = _addCountry("a1", "a11");
+		Country country2 = _addCountry("a2", "a22");
 
 		Region region1 = _addRegion(
-			true, country.getCountryId(), RandomTestUtil.randomString());
+			true, country1.getCountryId(), RandomTestUtil.randomString());
 
 		Region region2 = _addRegion(
-			true, country.getCountryId(),
+			true, country1.getCountryId(),
 			keywords + RandomTestUtil.randomString());
 		Region region3 = _addRegion(
-			true, country.getCountryId(),
+			true, country1.getCountryId(),
 			keywords + RandomTestUtil.randomString());
 		Region region4 = _addRegion(
-			false, country.getCountryId(),
+			false, country1.getCountryId(),
 			keywords + RandomTestUtil.randomString());
 
-		_testSearchRegions(true, keywords, region2, region3);
-		_testSearchRegions(false, keywords, region4);
-		_testSearchRegions(null, keywords, region2, region3, region4);
+		Region region5 = _addRegion(
+			true, country2.getCountryId(),
+			keywords + RandomTestUtil.randomString());
+
+		_testSearchRegions(true, keywords, null, region2, region3, region5);
+
+		_testSearchRegions(
+			true, keywords,
+			LinkedHashMapBuilder.<String, Object>put(
+				"countryId", country1.getCountryId()
+			).build(),
+			region2, region3);
+
+		_testSearchRegions(false, keywords, null, region4);
+		_testSearchRegions(
+			null, keywords, null, region2, region3, region4, region5);
 
 		String localizedRegionName = RandomTestUtil.randomString();
 
 		_regionLocalService.updateRegionLocalization(
 			region1, "de_DE", localizedRegionName);
 
-		_testSearchRegions(true, localizedRegionName, region1);
+		_testSearchRegions(true, localizedRegionName, null, region1);
 	}
 
 	@Test
@@ -238,8 +254,12 @@ public class RegionLocalServiceTest {
 	}
 
 	private Country _addCountry() throws Exception {
+		return _addCountry("aa", "aaa");
+	}
+
+	private Country _addCountry(String a2, String a3) throws Exception {
 		return _countryLocalService.addCountry(
-			"aa", "aaa", true, RandomTestUtil.randomBoolean(),
+			a2, a3, true, RandomTestUtil.randomBoolean(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomDouble(),
 			RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean(),
@@ -273,7 +293,7 @@ public class RegionLocalServiceTest {
 
 		BaseModelSearchResult<Region> baseModelSearchResult =
 			_regionLocalService.searchRegions(
-				serviceContext.getCompanyId(), true, keywords, start, end,
+				serviceContext.getCompanyId(), true, keywords, null, start, end,
 				orderByComparator);
 
 		List<Region> actualRegions = baseModelSearchResult.getBaseModels();
@@ -288,12 +308,13 @@ public class RegionLocalServiceTest {
 	}
 
 	private void _testSearchRegions(
-			Boolean active, String keywords, Region... expectedRegions)
+			Boolean active, String keywords,
+			LinkedHashMap<String, Object> params, Region... expectedRegions)
 		throws Exception {
 
 		BaseModelSearchResult<Region> baseModelSearchResult =
 			_regionLocalService.searchRegions(
-				TestPropsValues.getCompanyId(), active, keywords,
+				TestPropsValues.getCompanyId(), active, keywords, params,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				OrderByComparatorFactoryUtil.create("Region", "name", true));
 

@@ -14,14 +14,15 @@
 
 package com.liferay.portal.url.builder.internal;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
-import com.liferay.portal.url.builder.WhiteboardAbsolutePortalURLBuilder;
+import com.liferay.portal.url.builder.BrowserModuleAbsolutePortalURLBuilder;
 
 import java.util.Arrays;
 import java.util.Collection;
-
-import javax.servlet.http.HttpServletRequest;
+import java.util.Dictionary;
+import java.util.Hashtable;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -33,11 +34,13 @@ import org.junit.runners.Parameterized;
 
 import org.mockito.Mockito;
 
+import org.osgi.framework.Bundle;
+
 /**
  * @author Iván Zaera Avellón
  */
 @RunWith(Parameterized.class)
-public class WhiteboardAbsolutePortalURLBuilderTest
+public class BrowserModuleAbsolutePortalURLBuilderTest
 	extends BaseAbsolutePortalURLBuilderTestCase {
 
 	@ClassRule
@@ -57,27 +60,33 @@ public class WhiteboardAbsolutePortalURLBuilderTest
 
 	@Before
 	public void setUp() throws Exception {
-		_absolutePortalURLBuilder = new AbsolutePortalURLBuilderImpl(
-			mockPortal(context, proxy, cdnHost),
-			Mockito.mock(HttpServletRequest.class));
+		super.setUp();
 
-		_whiteboardAbsolutePortalURLBuilder =
-			_absolutePortalURLBuilder.forWhiteboard("path/to/resource");
+		_absolutePortalURLBuilder = new AbsolutePortalURLBuilderImpl(
+			mockCacheHelper(), mockPortal(context, proxy, cdnHost),
+			mockHttpServletRequest());
+
+		Bundle bundle = Mockito.mock(Bundle.class);
+
+		Dictionary<String, String> headers = new Hashtable<>();
+
+		headers.put("Web-ContextPath", "/bundle");
+
+		Mockito.when(
+			bundle.getHeaders(StringPool.BLANK)
+		).thenReturn(
+			headers
+		);
+
+		_browserModuleAbsolutePortalURLBuilder =
+			_absolutePortalURLBuilder.forBrowserModule(
+				"/o/js/resolved-module/frontend-js-web@1.0.0/index");
 	}
 
 	@Test
 	public void test() {
 		Assert.assertEquals(
-			_RESULTS[index], _whiteboardAbsolutePortalURLBuilder.build());
-	}
-
-	@Test
-	public void testIgnoreProxy() {
-		_absolutePortalURLBuilder.ignorePathProxy();
-
-		Assert.assertEquals(
-			_RESULTS_IGNORE_PROXY[index],
-			_whiteboardAbsolutePortalURLBuilder.build());
+			_RESULTS[index], _browserModuleAbsolutePortalURLBuilder.build());
 	}
 
 	@Parameterized.Parameter(3)
@@ -93,19 +102,15 @@ public class WhiteboardAbsolutePortalURLBuilderTest
 	public boolean proxy;
 
 	private static final String[] _RESULTS = {
-		"/o/path/to/resource", "/o/path/to/resource",
-		"/context/o/path/to/resource", "/proxy/context/o/path/to/resource",
-		"/proxy/o/path/to/resource"
-	};
-
-	private static final String[] _RESULTS_IGNORE_PROXY = {
-		"/o/path/to/resource", "/o/path/to/resource",
-		"/context/o/path/to/resource", "/context/o/path/to/resource",
-		"/o/path/to/resource"
+		"/o/js/resolved-module/frontend-js-web@1.0.0/index",
+		"/o/js/resolved-module/frontend-js-web@1.0.0/index",
+		"/context/o/js/resolved-module/frontend-js-web@1.0.0/index",
+		"/proxy/context/o/js/resolved-module/frontend-js-web@1.0.0/index",
+		"/proxy/o/js/resolved-module/frontend-js-web@1.0.0/index"
 	};
 
 	private AbsolutePortalURLBuilder _absolutePortalURLBuilder;
-	private WhiteboardAbsolutePortalURLBuilder
-		_whiteboardAbsolutePortalURLBuilder;
+	private BrowserModuleAbsolutePortalURLBuilder
+		_browserModuleAbsolutePortalURLBuilder;
 
 }

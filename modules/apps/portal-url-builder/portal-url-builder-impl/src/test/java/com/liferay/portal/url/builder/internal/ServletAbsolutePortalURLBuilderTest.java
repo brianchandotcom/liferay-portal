@@ -16,12 +16,10 @@ package com.liferay.portal.url.builder.internal;
 
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
-import com.liferay.portal.url.builder.MainAbsolutePortalURLBuilder;
+import com.liferay.portal.url.builder.ServletAbsolutePortalURLBuilder;
 
 import java.util.Arrays;
 import java.util.Collection;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -31,13 +29,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import org.mockito.Mockito;
-
 /**
  * @author Iván Zaera Avellón
  */
 @RunWith(Parameterized.class)
-public class MainAbsolutePortalURLBuilderTest
+public class ServletAbsolutePortalURLBuilderTest
 	extends BaseAbsolutePortalURLBuilderTestCase {
 
 	@ClassRule
@@ -58,26 +54,17 @@ public class MainAbsolutePortalURLBuilderTest
 	@Before
 	public void setUp() throws Exception {
 		_absolutePortalURLBuilder = new AbsolutePortalURLBuilderImpl(
-			mockPortal(context, proxy, cdnHost),
-			Mockito.mock(HttpServletRequest.class));
+			mockCacheHelper(), mockPortal(context, proxy, cdnHost),
+			mockHttpServletRequest());
 
-		_mainAbsolutePortalURLBuilder = _absolutePortalURLBuilder.forMain(
-			"path/to/login");
+		_servletAbsolutePortalURLBuilder = _absolutePortalURLBuilder.forServlet(
+			"path/to/resource");
 	}
 
 	@Test
 	public void test() {
 		Assert.assertEquals(
-			_RESULTS[index], _mainAbsolutePortalURLBuilder.build());
-	}
-
-	@Test
-	public void testIgnoreProxy() {
-		_absolutePortalURLBuilder.ignorePathProxy();
-
-		Assert.assertEquals(
-			_RESULTS_IGNORE_PROXY[index],
-			_mainAbsolutePortalURLBuilder.build());
+			_RESULTS[index], _servletAbsolutePortalURLBuilder.build());
 	}
 
 	@Parameterized.Parameter(3)
@@ -93,16 +80,12 @@ public class MainAbsolutePortalURLBuilderTest
 	public boolean proxy;
 
 	private static final String[] _RESULTS = {
-		"/c/path/to/login", "/c/path/to/login", "/context/c/path/to/login",
-		"/proxy/context/c/path/to/login", "/proxy/c/path/to/login"
-	};
-
-	private static final String[] _RESULTS_IGNORE_PROXY = {
-		"/c/path/to/login", "/c/path/to/login", "/context/c/path/to/login",
-		"/context/c/path/to/login", "/c/path/to/login"
+		"/o/path/to/resource", "/o/path/to/resource",
+		"/context/o/path/to/resource", "/proxy/context/o/path/to/resource",
+		"/proxy/o/path/to/resource"
 	};
 
 	private AbsolutePortalURLBuilder _absolutePortalURLBuilder;
-	private MainAbsolutePortalURLBuilder _mainAbsolutePortalURLBuilder;
+	private ServletAbsolutePortalURLBuilder _servletAbsolutePortalURLBuilder;
 
 }

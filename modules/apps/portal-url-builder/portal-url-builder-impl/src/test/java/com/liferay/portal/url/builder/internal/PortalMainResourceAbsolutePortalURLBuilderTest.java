@@ -16,12 +16,10 @@ package com.liferay.portal.url.builder.internal;
 
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
-import com.liferay.portal.url.builder.ImageAbsolutePortalURLBuilder;
+import com.liferay.portal.url.builder.PortalMainResourceAbsolutePortalURLBuilder;
 
 import java.util.Arrays;
 import java.util.Collection;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -31,13 +29,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import org.mockito.Mockito;
-
 /**
  * @author Iván Zaera Avellón
  */
 @RunWith(Parameterized.class)
-public class ImageAbsolutePortalURLBuilderTest
+public class PortalMainResourceAbsolutePortalURLBuilderTest
 	extends BaseAbsolutePortalURLBuilderTestCase {
 
 	@ClassRule
@@ -58,44 +54,18 @@ public class ImageAbsolutePortalURLBuilderTest
 	@Before
 	public void setUp() throws Exception {
 		_absolutePortalURLBuilder = new AbsolutePortalURLBuilderImpl(
-			mockPortal(context, proxy, cdnHost),
-			Mockito.mock(HttpServletRequest.class));
+			mockCacheHelper(), mockPortal(context, proxy, cdnHost),
+			mockHttpServletRequest());
 
-		_imageAbsolutePortalURLBuilder = _absolutePortalURLBuilder.forImage(
-			"path/to/image.png");
+		_portalMainResourceAbsolutePortalURLBuilder =
+			_absolutePortalURLBuilder.forPortalMainResource("path/to/login");
 	}
 
 	@Test
 	public void test() {
 		Assert.assertEquals(
-			_RESULTS[index], _imageAbsolutePortalURLBuilder.build());
-	}
-
-	@Test
-	public void testIgnoreCDN() {
-		_absolutePortalURLBuilder.ignoreCDNHost();
-
-		Assert.assertEquals(
-			_RESULTS_IGNORE_CDN[index], _imageAbsolutePortalURLBuilder.build());
-	}
-
-	@Test
-	public void testIgnoreCDNAndProxy() {
-		_absolutePortalURLBuilder.ignoreCDNHost();
-		_absolutePortalURLBuilder.ignorePathProxy();
-
-		Assert.assertEquals(
-			_RESULTS_IGNORE_CDN_AND_PROXY[index],
-			_imageAbsolutePortalURLBuilder.build());
-	}
-
-	@Test
-	public void testIgnoreProxy() {
-		_absolutePortalURLBuilder.ignorePathProxy();
-
-		Assert.assertEquals(
-			_RESULTS_IGNORE_PROXY[index],
-			_imageAbsolutePortalURLBuilder.build());
+			_RESULTS[index],
+			_portalMainResourceAbsolutePortalURLBuilder.build());
 	}
 
 	@Parameterized.Parameter(3)
@@ -111,32 +81,12 @@ public class ImageAbsolutePortalURLBuilderTest
 	public boolean proxy;
 
 	private static final String[] _RESULTS = {
-		"/image/path/to/image.png", "http://cdn-host/image/path/to/image.png",
-		"/context/image/path/to/image.png",
-		"/proxy/context/image/path/to/image.png",
-		"/proxy/image/path/to/image.png"
-	};
-
-	private static final String[] _RESULTS_IGNORE_CDN = {
-		"/image/path/to/image.png", "/image/path/to/image.png",
-		"/context/image/path/to/image.png",
-		"/proxy/context/image/path/to/image.png",
-		"/proxy/image/path/to/image.png"
-	};
-
-	private static final String[] _RESULTS_IGNORE_CDN_AND_PROXY = {
-		"/image/path/to/image.png", "/image/path/to/image.png",
-		"/context/image/path/to/image.png", "/context/image/path/to/image.png",
-		"/image/path/to/image.png"
-	};
-
-	private static final String[] _RESULTS_IGNORE_PROXY = {
-		"/image/path/to/image.png", "http://cdn-host/image/path/to/image.png",
-		"/context/image/path/to/image.png", "/context/image/path/to/image.png",
-		"/image/path/to/image.png"
+		"/c/path/to/login", "/c/path/to/login", "/context/c/path/to/login",
+		"/proxy/context/c/path/to/login", "/proxy/c/path/to/login"
 	};
 
 	private AbsolutePortalURLBuilder _absolutePortalURLBuilder;
-	private ImageAbsolutePortalURLBuilder _imageAbsolutePortalURLBuilder;
+	private PortalMainResourceAbsolutePortalURLBuilder
+		_portalMainResourceAbsolutePortalURLBuilder;
 
 }

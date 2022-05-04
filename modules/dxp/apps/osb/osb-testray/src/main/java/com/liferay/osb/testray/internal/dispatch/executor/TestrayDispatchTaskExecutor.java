@@ -21,6 +21,8 @@ import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -59,12 +61,31 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 			_log.info("Invoking doExecute");
 		}
 
-		_loadCache(dispatchTrigger.getCompanyId());
+		_invoke(() -> _loadCache(dispatchTrigger.getCompanyId()));
 	}
 
 	@Override
 	public String getName() {
 		return "testray";
+	}
+
+	private void _invoke(UnsafeRunnable<Exception> unsafeRunnable)
+		throws Exception {
+
+		long startTime = System.currentTimeMillis();
+
+		unsafeRunnable.run();
+
+		if (_log.isInfoEnabled()) {
+			Thread thread = Thread.currentThread();
+
+			StackTraceElement stackTraceElement = thread.getStackTrace()[2];
+
+			_log.info(
+				StringBundler.concat(
+					"Invoking line ", stackTraceElement.getLineNumber(),
+					" took ", System.currentTimeMillis() - startTime, " ms"));
+		}
 	}
 
 	private void _loadCache(long companyId) throws Exception {

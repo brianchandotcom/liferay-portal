@@ -404,6 +404,16 @@ definition {
 		IFrame.selectTopFrame();
 	}
 
+	macro importOrderFromType {
+		Click(locator1 = "CommerceEntry#DROPDOWN");
+
+		MenuItem.viewPresent(menuItem = "Import from ${orderType}");
+
+		MenuItem.click(menuItem = "Import from ${orderType}");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
+	}
+
 	macro openOrderRulesAdmin {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = "${baseURL}",
@@ -539,16 +549,6 @@ definition {
 				locator1 = "CommerceOrders#ORDER_DETAILS_PAYMENT_METHOD_NAME",
 				value1 = "${paymentMethod}");
 		}
-	}
-
-	macro importOrderFromType {
-		Click(locator1 = "CommerceEntry#DROPDOWN");
-
-		MenuItem.viewPresent(menuItem = "Import from ${orderType}");
-
-		MenuItem.click(menuItem = "Import from ${orderType}");
-
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
 	}
 
 }

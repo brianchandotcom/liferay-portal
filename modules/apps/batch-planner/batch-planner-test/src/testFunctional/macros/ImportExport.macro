@@ -1,5 +1,18 @@
 definition {
 
+	macro assertDownloadedFileName {
+		var downloadedFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "${downloadedFile}");
+
+		echo("## downloadedFileName: ${downloadedFileName}");
+
+		if (contains("${downloadedFileName}", "${downloadedFile}")) {
+			echo("This is a correct file.");
+		}
+		else {
+			fail("FAIL!");
+		}
+	}
+
 	macro assertExecutionEntry {
 		AssertElementPresent(
 			key_entityType = "${entityType}",
@@ -349,19 +362,6 @@ definition {
 		Select(
 			locator1 = "ImportExport#ENTITY_TYPE",
 			value1 = "value=com.liferay.headless.${entityType}");
-	}
-
-	macro assertDownloadedFileName{
-		var downloadedFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "${downloadedFile}");
-
-		echo("## downloadedFileName: ${downloadedFileName}");
-
-		if (contains("${downloadedFileName}", "${downloadedFile}")) {
-			echo("This is a correct file.");
-		}
-		else {
-			fail("FAIL!");
-		}
 	}
 
 }

@@ -2258,30 +2258,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-130917 Given Instance Settings > Segments
-	When the user clicks on Analytics Cloud Segments tab
-	Then help text of Interest Terms Cache Expiration Time will be: Define the time (in seconds) before clearing the Interest Terms cache."
-	@priority = "3"
-	test InterestTermsCacheCacheExpirationCheckText {
-		task ("Go to Instance Settings > Segments") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
-
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "Segments",
-				configurationName = "Analytics Cloud Segments",
-				configurationScope = "Virtual Instance Scope");
-		}
-
-		task ("Assert the text is present") {
-			AssertTextEquals(
-				locator1 = "FormFields#HELP_TEXT",
-				value1 = "Define the time (in seconds) before clearing the Interest Terms cache.");
-		}
-	}
-
 	@description = "LPS-130919 Given the Session Property Vocabularies in Instance Settings
 	When the user is adding a vocabulary to a session property
 	Then the breadcrumb to go to Segments, or Instance Settings is available"
@@ -2399,6 +2375,30 @@ definition {
 			Segmentation.fillProperty(optionsValue = "Audience Category 1");
 
 			Button.clickSave();
+		}
+	}
+
+	@description = "LPS-130917 Given Instance Settings > Segments
+	When the user clicks on Analytics Cloud Segments tab
+	Then help text of Interest Terms Cache Expiration Time will be: Define the time (in seconds) before clearing the Interest Terms cache."
+	@priority = "3"
+	test InterestTermsCacheCacheExpirationCheckText {
+		task ("Go to Instance Settings > Segments") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Segments",
+				configurationName = "Analytics Cloud Segments",
+				configurationScope = "Virtual Instance Scope");
+		}
+
+		task ("Assert the text is present") {
+			AssertTextEquals(
+				locator1 = "FormFields#HELP_TEXT",
+				value1 = "Define the time (in seconds) before clearing the Interest Terms cache.");
 		}
 	}
 

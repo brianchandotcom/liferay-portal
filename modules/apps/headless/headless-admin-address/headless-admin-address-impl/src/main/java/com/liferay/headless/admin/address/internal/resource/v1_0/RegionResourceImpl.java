@@ -19,8 +19,10 @@ import com.liferay.headless.admin.address.resource.v1_0.RegionResource;
 import com.liferay.portal.kernel.model.RegionTable;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.service.RegionService;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.odata.entity.DoubleEntityField;
@@ -48,6 +50,28 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class RegionResourceImpl extends BaseRegionResourceImpl {
 
 	@Override
+	public Page<Region> getCountryRegionsPage(
+			Long countryId, Boolean active, String search,
+			Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		_countryService.getCountry(countryId);
+
+		BaseModelSearchResult<com.liferay.portal.kernel.model.Region>
+			baseModelSearchResult = _regionService.searchRegions(
+				contextCompany.getCompanyId(), active, search,
+				LinkedHashMapBuilder.<String, Object>put(
+					"countryId", countryId
+				).build(),
+				pagination.getStartPosition(), pagination.getEndPosition(),
+				_toOrderByComparator(sorts));
+
+		return Page.of(
+			transform(baseModelSearchResult.getBaseModels(), this::_toRegion),
+			pagination, baseModelSearchResult.getLength());
+	}
+
+	@Override
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
 		throws Exception {
 
@@ -61,7 +85,7 @@ public class RegionResourceImpl extends BaseRegionResourceImpl {
 
 		BaseModelSearchResult<com.liferay.portal.kernel.model.Region>
 			baseModelSearchResult = _regionService.searchRegions(
-				contextCompany.getCompanyId(), active, search,
+				contextCompany.getCompanyId(), active, search, null,
 				pagination.getStartPosition(), pagination.getEndPosition(),
 				_toOrderByComparator(sorts));
 
@@ -110,6 +134,9 @@ public class RegionResourceImpl extends BaseRegionResourceImpl {
 		() -> EntityModel.toEntityFieldsMap(
 			new StringEntityField("name", locale -> "name"),
 			new DoubleEntityField("position", locale -> "position"));
+
+	@Reference
+	private CountryService _countryService;
 
 	@Reference
 	private RegionService _regionService;

@@ -24,10 +24,12 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -80,19 +82,44 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 				objectDefinition.getObjectDefinitionId());
 		}
 
+		_loadObjectEntryIds(
+			"CaseType", "c_caseTypeId", "CaseType#[$name$]",
+			Arrays.asList("name"));
+		_loadObjectEntryIds(
+			"Project", "c_projectId", "Project#[$name$]",
+			Arrays.asList("name"));
+		_loadObjectEntryIds(
+			"Team", "c_teamId",
+			"Team#[$name$]#testrayProjectId#[$r_projectToTeams_c_projectId$]",
+			Arrays.asList("name", "r_projectToTeams_c_projectId"));
+	}
+
+	private void _loadObjectEntryIds(
+			String objectShortName, String pkObjectFieldDBColumnName,
+			String key, List<String> placeholders)
+		throws Exception {
+
 		List<Map<String, Serializable>> values =
 			_objectEntryLocalService.getValuesList(
-				_objectDefinitionIds.get("Project"), null, 0, 0);
+				_objectDefinitionIds.get(objectShortName), null, 0, 0);
 
 		if (ListUtil.isEmpty(values)) {
 			return;
 		}
 
-		for (Map<String, Serializable> map : values) {
-			Long projectId = (Long)map.get("c_projectId");
+		Map<String, String> placeholderMap = new HashMap<>();
 
-			_objectEntryIds.put(
-				"Project#" + (String)map.get("name"), projectId.longValue());
+		for (Map<String, Serializable> map : values) {
+			Long id = (Long)map.get(pkObjectFieldDBColumnName);
+
+			for (String placeholder : placeholders) {
+				placeholderMap.put(
+					placeholder, String.valueOf(map.get(placeholder)));
+			}
+
+			key = StringUtil.replace(key, "[$", "$]", placeholderMap);
+
+			_objectEntryIds.put(key, id.longValue());
 		}
 	}
 

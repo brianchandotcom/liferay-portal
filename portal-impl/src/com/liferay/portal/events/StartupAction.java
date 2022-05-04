@@ -80,9 +80,8 @@ public class StartupAction extends SimpleAction {
 				if (extJarFiles.length != 0) {
 					_log.error(
 						StringBundler.concat(
-							"Files ", Arrays.toString(extJarFiles),
-							" in ", libExtDir, " are no longer read. Move ",
-							"them to ",
+							"Files ", Arrays.toString(extJarFiles), " in ",
+							libExtDir, " are no longer read. Move them to ",
 							PropsValues.LIFERAY_LIB_GLOBAL_SHARED_DIR, " or ",
 							PropsValues.
 								LIFERAY_SHIELDED_CONTAINER_LIB_PORTAL_DIR,

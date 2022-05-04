@@ -186,7 +186,7 @@
 </tr>
 <tr>
 	<td>ITEM_ON_LIST</td>
-	<td>//*[contains(@class,'text-truncate')and text()='${itemName}']</td>
+	<td>//*[contains(@class,'text-truncate')and normalize-space()='${itemName}']</td>
 	<td></td>
 </tr>
 <tr>

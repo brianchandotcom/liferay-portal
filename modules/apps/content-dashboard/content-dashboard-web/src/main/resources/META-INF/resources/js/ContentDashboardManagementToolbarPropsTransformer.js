@@ -18,6 +18,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 	const selectAuthor = (itemData) => {
 		openSelectionModal({
 			buttonAddLabel: Liferay.Language.get('select'),
+			height: '70vh',
 			multiple: true,
 			onSelect: (selectedItem) => {
 				if (selectedItem) {
@@ -34,6 +35,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 				}
 			},
 			selectEventName: `${portletNamespace}selectedAuthorItem`,
+			size: 'lg',
 			title: itemData?.dialogTitle,
 			url: itemData?.selectAuthorURL,
 		});
@@ -73,6 +75,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 	const selectAssetTag = (itemData) => {
 		openSelectionModal({
 			buttonAddLabel: Liferay.Language.get('select'),
+			height: '70vh',
 			multiple: true,
 			onSelect: (selectedItem) => {
 				if (selectedItem) {
@@ -91,6 +94,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 				}
 			},
 			selectEventName: `${portletNamespace}selectedAssetTag`,
+			size: 'lg',
 			title: itemData?.dialogTitle,
 			url: itemData?.selectTagURL,
 		});
@@ -148,6 +152,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 
 	const selectScope = (itemData) => {
 		openSelectionModal({
+			height: '70vh',
 			id: `${portletNamespace}selectedScopeIdItem`,
 			onSelect: (selectedItem) => {
 				navigate(
@@ -158,6 +163,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 				);
 			},
 			selectEventName: `${portletNamespace}selectedScopeIdItem`,
+			size: 'lg',
 			title: itemData?.dialogTitle,
 			url: itemData?.selectScopeURL,
 		});

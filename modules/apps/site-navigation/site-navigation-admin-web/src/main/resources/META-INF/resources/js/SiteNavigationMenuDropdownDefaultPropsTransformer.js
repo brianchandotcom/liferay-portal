@@ -14,15 +14,18 @@
 
 import {openModal, openSimpleInputModal} from 'frontend-js-web';
 
+import openDeleteSiteNavigationMenuModal from './openDeleteSiteNavigationMenuModal';
+
 const ACTIONS = {
 	deleteSiteNavigationMenu(itemData) {
-		if (
-			confirm(
-				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
-			)
-		) {
-			submitForm(document.hrefFm, itemData.deleteSiteNavigationMenuURL);
-		}
+		openDeleteSiteNavigationMenuModal({
+			onDelete: () => {
+				submitForm(
+					document.hrefFm,
+					itemData.deleteSiteNavigationMenuURL
+				);
+			},
+		});
 	},
 
 	markAsPrimary(itemData) {

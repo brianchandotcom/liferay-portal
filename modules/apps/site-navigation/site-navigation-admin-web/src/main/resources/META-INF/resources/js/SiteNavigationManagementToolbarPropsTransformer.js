@@ -14,26 +14,25 @@
 
 import {openSimpleInputModal} from 'frontend-js-web';
 
+import openDeleteSiteNavigationMenuModal from './openDeleteSiteNavigationMenuModal';
+
 export default function propsTransformer({portletNamespace, ...otherProps}) {
 	return {
 		...otherProps,
 		onActionButtonClick(event, {item}) {
 			if (item?.data?.action === 'deleteSelectedSiteNavigationMenus') {
-				if (
-					confirm(
-						Liferay.Language.get(
-							'are-you-sure-you-want-to-delete-this'
-						)
-					)
-				) {
-					const form = document.getElementById(
-						`${portletNamespace}fm`
-					);
+				openDeleteSiteNavigationMenuModal({
+					multiple: true,
+					onDelete: () => {
+						const form = document.getElementById(
+							`${portletNamespace}fm`
+						);
 
-					if (form) {
-						submitForm(form);
-					}
-				}
+						if (form) {
+							submitForm(form);
+						}
+					},
+				});
 			}
 		},
 		onCreateButtonClick(event, {item}) {

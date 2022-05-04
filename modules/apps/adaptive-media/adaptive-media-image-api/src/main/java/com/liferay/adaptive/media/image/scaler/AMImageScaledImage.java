@@ -41,6 +41,13 @@ public interface AMImageScaledImage {
 	public InputStream getInputStream();
 
 	/**
+	 * Returns this image's mime type
+	 *
+	 * @return this image's mime type
+	 */
+	public String getMimeType();
+
+	/**
 	 * Returns this image's size in bytes.
 	 *
 	 * @return this image's size in bytes

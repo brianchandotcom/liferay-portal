@@ -15,6 +15,7 @@
 package com.liferay.headless.admin.address.internal.resource.v1_0;
 
 import com.liferay.headless.admin.address.dto.v1_0.Region;
+import com.liferay.headless.admin.address.internal.dto.v1_0.converter.RegionResourceDTOConverter;
 import com.liferay.headless.admin.address.resource.v1_0.RegionResource;
 import com.liferay.portal.kernel.model.RegionTable;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -117,17 +118,7 @@ public class RegionResourceImpl extends BaseRegionResourceImpl {
 			com.liferay.portal.kernel.model.Region serviceBuilderRegion)
 		throws Exception {
 
-		return new Region() {
-			{
-				active = serviceBuilderRegion.getActive();
-				countryId = serviceBuilderRegion.getCountryId();
-				id = serviceBuilderRegion.getRegionId();
-				name = serviceBuilderRegion.getName();
-				position = serviceBuilderRegion.getPosition();
-				regionCode = serviceBuilderRegion.getRegionCode();
-				title_i18n = serviceBuilderRegion.getLanguageIdToTitleMap();
-			}
-		};
+		return _regionResourceDTOConverter.toDTO(serviceBuilderRegion);
 	}
 
 	private static final EntityModel _entityModel =
@@ -137,6 +128,9 @@ public class RegionResourceImpl extends BaseRegionResourceImpl {
 
 	@Reference
 	private CountryService _countryService;
+
+	@Reference
+	private RegionResourceDTOConverter _regionResourceDTOConverter;
 
 	@Reference
 	private RegionService _regionService;

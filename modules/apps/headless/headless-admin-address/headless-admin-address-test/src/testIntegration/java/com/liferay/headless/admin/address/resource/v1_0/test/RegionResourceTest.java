@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 
 import java.util.Arrays;
 import java.util.List;
@@ -241,12 +242,16 @@ public class RegionResourceTest extends BaseRegionResourceTestCase {
 	}
 
 	private Region _addRegion(Region region) throws Exception {
-		_regionLocalService.addRegion(
-			region.getCountryId(), region.getActive(), region.getName(),
-			region.getPosition(), region.getRegionCode(),
-			ServiceContextTestUtil.getServiceContext());
+		com.liferay.portal.kernel.model.Region serviceBuilderRegion =
+			_regionLocalService.addRegion(
+				region.getCountryId(), region.getActive(), region.getName(),
+				region.getPosition(), region.getRegionCode(),
+				ServiceContextTestUtil.getServiceContext());
 
-		return region;
+		com.liferay.headless.admin.address.dto.v1_0.Region apiRegion =
+			_regionResourceDTOConverter.toDTO(serviceBuilderRegion);
+
+		return Region.toDTO(String.valueOf(apiRegion));
 	}
 
 	private Region _addRegion(String keyword) throws Exception {
@@ -264,5 +269,11 @@ public class RegionResourceTest extends BaseRegionResourceTestCase {
 
 	@Inject
 	private RegionLocalService _regionLocalService;
+
+	@Inject(filter = "dto.class.name=com.liferay.portal.kernel.model.Region")
+	private DTOConverter
+		<com.liferay.portal.kernel.model.Region,
+		 com.liferay.headless.admin.address.dto.v1_0.Region>
+			_regionResourceDTOConverter;
 
 }

@@ -20,17 +20,50 @@ import React, {
 	useMemo,
 	useReducer,
 	useRef,
+	useState,
 } from 'react';
 
 import useUndo from '../components/undo/useUndo';
 
 const StoreDispatchContext = React.createContext(() => {});
 const StoreGetStateContext = React.createContext(null);
-const StoreSubscriptionContext = React.createContext([() => {}, () => {}]);
+const StoreSubscriptionContext = React.createContext(() => {});
 
 const DEFAULT_COMPARE_EQUAL = (a, b) => a === b;
 const DEFAULT_DISPATCH = () => {};
 const DEFAULT_GET_STATE = () => ({});
+
+class EventEmitter {
+	constructor() {
+		this._listeners = new Map();
+		this._nextListenerId = 0;
+	}
+
+	addListener(callback) {
+		const id = this._nextListenerId++;
+
+		this._listeners.set(id, callback);
+
+		return {
+			removeListener: () => {
+				this._listeners.delete(id);
+			},
+		};
+	}
+
+	emit(data) {
+		for (const listener of this._listeners.values()) {
+			try {
+				listener(data);
+			}
+			catch (error) {
+				if (process.env.NODE_ENV === 'development') {
+					console.error(error);
+				}
+			}
+		}
+	}
+}
 
 /**
  * Although StoreContextProvider creates a full functional store,
@@ -46,30 +79,20 @@ export function StoreAPIContextProvider({
 	dispatch = DEFAULT_DISPATCH,
 	getState = DEFAULT_GET_STATE,
 }) {
+	const [emitter] = useState(() => new EventEmitter());
 	const state = getState();
 
-	const subscribersRef = useRef([]);
-
-	const subscribe = useCallback((subscriber) => {
-		subscribersRef.current = [...subscribersRef.current, subscriber];
-	}, []);
-
-	const unsubscribe = useCallback((subscriber) => {
-		subscribersRef.current = subscribersRef.current.filter(
-			(_subscriber) => _subscriber !== subscriber
-		);
-	}, []);
-
-	const subscriptionContextRef = useRef([subscribe, unsubscribe]);
+	const subscribe = useCallback(
+		(subscriber) => emitter.addListener(subscriber),
+		[emitter]
+	);
 
 	useEffect(() => {
-		subscribersRef.current.forEach((subscriber) => subscriber(state));
-	}, [state]);
+		emitter.emit(state);
+	}, [emitter, state]);
 
 	return (
-		<StoreSubscriptionContext.Provider
-			value={subscriptionContextRef.current}
-		>
+		<StoreSubscriptionContext.Provider value={subscribe}>
 			<StoreDispatchContext.Provider value={dispatch}>
 				<StoreGetStateContext.Provider value={getState}>
 					{children}
@@ -121,7 +144,7 @@ export function useSelectorCallback(
 	compareEqual = DEFAULT_COMPARE_EQUAL
 ) {
 	const getState = useContext(StoreGetStateContext);
-	const [subscribe, unsubscribe] = useContext(StoreSubscriptionContext);
+	const subscribe = useContext(StoreSubscriptionContext);
 
 	const initialState = useMemo(
 		() => selector(getState()),
@@ -150,17 +173,16 @@ export function useSelectorCallback(
 	const selectorCallback = useCallback(selector, dependencies);
 
 	useEffect(() => {
-		const onStoreChange = (nextState) => {
-			setSelectorState(selectorCallback(nextState));
-		};
-
 		setSelectorState(selectorCallback(getState()));
-		subscribe(onStoreChange);
+
+		const handler = subscribe((nextState) => {
+			setSelectorState(selectorCallback(nextState));
+		});
 
 		return () => {
-			unsubscribe(onStoreChange);
+			handler.removeListener();
 		};
-	}, [getState, selectorCallback, subscribe, unsubscribe]);
+	}, [getState, selectorCallback, subscribe]);
 
 	return selectorState;
 }

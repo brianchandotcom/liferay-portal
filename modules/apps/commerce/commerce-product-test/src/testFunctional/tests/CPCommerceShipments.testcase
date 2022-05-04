@@ -1261,7 +1261,7 @@ definition {
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
-		var billingAddressStreet = "Billing Address, Test Street";
+		var billingAddressStreet = "Test Address";
 		var billingAddressCity = "Test City, Test Zip Code";
 
 		Type(
@@ -1287,7 +1287,7 @@ definition {
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
-		var shippingAddressStreet = "Shipping Address, Test1 Street";
+		var shippingAddressStreet = "Test1 Street";
 
 		Type(
 			key_fieldLabel = "Street 1",

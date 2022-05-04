@@ -234,6 +234,31 @@ definition {
 			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_TEXT");
 	}
 
+	macro deleteCP {
+		if (isSet(deleteAll)) {
+			ManagementBar.clickSelectAllCheckbox();
+
+			Click(
+				key_text = "trash",
+				locator1 = "ManagementBar#ANY_ICON");
+		}
+		else {
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Delete",
+				rowEntry = "${navigationMenuName}");
+		}
+
+		AssertTextEquals(
+			locator1 = "Modal#BODY",
+			value1 = "Are you sure you want to delete this? It will be deleted immediately.");
+
+		Click(
+			key_text = "Delete",
+			locator1 = "Modal#MODAL_FOOTER_BUTTON");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro deleteItem {
 		Click(
 			key_itemName = "${itemName}",

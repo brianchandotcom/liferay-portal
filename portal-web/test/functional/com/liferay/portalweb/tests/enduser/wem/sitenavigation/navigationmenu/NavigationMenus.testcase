@@ -726,19 +726,7 @@ definition {
 
 			ManagementBar.setFilterAndOrder(filterBy = "All");
 
-			ManagementBar.clickSelectAllCheckbox();
-
-			for (var rowEntry : list "1,2") {
-				AssertChecked(
-					key_rowEntry = "Navigation Menu Name ${rowEntry}",
-					locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX");
-			}
-
-			ClickNoError(locator1 = "Icon#DELETE");
-
-			AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
-
-			Alert.viewSuccessMessage();
+			NavigationMenusAdmin.deleteCP(deleteAll = "true");
 		}
 
 		task ("Assert all navigation menus were deleted") {
@@ -763,9 +751,7 @@ definition {
 		task ("Delete the navigation menu") {
 			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
 
-			LexiconEntry.delete(
-				menuItem = "Delete",
-				rowEntry = "Navigation Menu Name");
+			NavigationMenusAdmin.deleteCP(navigationMenuName = "Navigation Menu Name");
 		}
 
 		task ("Assert the navigation menu was deleted") {

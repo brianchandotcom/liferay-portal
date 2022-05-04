@@ -118,6 +118,8 @@ public class MappingContentUtil {
 		).put(
 			"name", infoField.getName()
 		).put(
+			"required", infoField.isRequired()
+		).put(
 			"type",
 			() -> {
 				InfoFieldType infoFieldType = infoField.getInfoFieldType();

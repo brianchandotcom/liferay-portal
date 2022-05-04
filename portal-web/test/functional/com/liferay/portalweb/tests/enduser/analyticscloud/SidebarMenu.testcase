@@ -157,9 +157,7 @@ definition {
 		}
 
 		task ("View AC sidebar changed language") {
-			for (var sidebar : list "${sidebarList1}") {
-				ACNavigation.assertSidebarOptionLanguage(sidebarLanguageOption = "${sidebar}");
-			}
+			ACNavigation.assertSidebarOptionLanguage(sidebarOptions = "${sidebarList1}");
 		}
 
 		task ("Change language back in AC") {
@@ -167,9 +165,7 @@ definition {
 		}
 
 		task ("View AC sidebar changed language") {
-			for (var sidebar : list "${sidebarList2}") {
-				ACNavigation.assertSidebarOptionLanguage(sidebarLanguageOption = "${sidebar}");
-			}
+			ACNavigation.assertSidebarOptionLanguage(sidebarOptions = "${sidebarList2}");
 		}
 	}
 

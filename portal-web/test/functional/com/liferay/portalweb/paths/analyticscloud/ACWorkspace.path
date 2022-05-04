@@ -23,7 +23,7 @@
 </tr>
 <tr>
 	<td>SELECT_LANGUAGE</td>
-	<td>//button[contains(text(),'${key_languageOption}')]</td>
+	<td>//button[contains(text(),'${key_languageOption}')]/parent::span</td>
 	<td></td>
 </tr>
 <tr>

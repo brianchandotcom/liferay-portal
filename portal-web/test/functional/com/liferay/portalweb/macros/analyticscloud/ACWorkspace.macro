@@ -13,9 +13,7 @@ definition {
 
 		Click(locator1 = "ACWorkspace#SELECT_LANGUAGE");
 
-		if (IsElementPresent(key_languageOption = "${languageOption}", locator1 = "ACWorkspace#SELECT_LANGUAGE")) {
-			Click(locator1 = "ACWorkspace#SELECT_LANGUAGE");
-		}
+		TestUtils.hardRefresh();
 	}
 
 	macro configureWorkspaceSettings {

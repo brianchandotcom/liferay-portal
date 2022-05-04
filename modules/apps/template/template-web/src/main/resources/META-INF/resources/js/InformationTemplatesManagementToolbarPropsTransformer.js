@@ -12,6 +12,7 @@
  * details.
  */
 
+import openDeleteTemplateModal from './modal/openDeleteTemplateModal';
 import openTemplateModal from './modal/openTemplateModal';
 
 export default function propsTransformer({
@@ -20,17 +21,16 @@ export default function propsTransformer({
 	...otherProps
 }) {
 	const deleteSelectedTemplateEntries = () => {
-		if (
-			confirm(
-				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
-			)
-		) {
-			const form = document.getElementById(`${portletNamespace}fm`);
+		openDeleteTemplateModal({
+			multiple: true,
+			onDelete: () => {
+				const form = document.getElementById(`${portletNamespace}fm`);
 
-			if (form) {
-				submitForm(form);
-			}
-		}
+				if (form) {
+					submitForm(form);
+				}
+			},
+		});
 	};
 
 	return {

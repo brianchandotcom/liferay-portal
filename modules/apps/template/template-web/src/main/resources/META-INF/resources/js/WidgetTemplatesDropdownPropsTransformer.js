@@ -14,15 +14,15 @@
 
 import {openModal} from 'frontend-js-web';
 
+import openDeleteTemplateModal from './modal/openDeleteTemplateModal';
+
 const ACTIONS = {
 	deleteDDMTemplate({deleteDDMTemplateURL}) {
-		if (
-			confirm(
-				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
-			)
-		) {
-			submitForm(document.hrefFm, deleteDDMTemplateURL);
-		}
+		openDeleteTemplateModal({
+			onDelete: () => {
+				submitForm(document.hrefFm, deleteDDMTemplateURL);
+			},
+		});
 	},
 
 	permissionsDDMTemplate({permissionsDDMTemplateURL}) {

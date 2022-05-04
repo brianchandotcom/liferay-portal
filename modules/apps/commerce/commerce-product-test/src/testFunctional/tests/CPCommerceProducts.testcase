@@ -990,7 +990,7 @@ definition {
 	@description = "COMMERCE-5802. Use a filter always check that the results are correct"
 	@priority = "3"
 	test UseFilters {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 
 		// TODO Review
 

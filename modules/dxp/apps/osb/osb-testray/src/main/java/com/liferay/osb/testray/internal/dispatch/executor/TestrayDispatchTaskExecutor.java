@@ -32,6 +32,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -39,17 +40,29 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+
+import org.rauschig.jarchivelib.Archiver;
+import org.rauschig.jarchivelib.ArchiverFactory;
+
+import org.w3c.dom.Document;
 
 /**
  * @author José Abelenda
@@ -175,6 +188,58 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 		}
 	}
 
+	private void _processArchive(byte[] bytes) throws Exception {
+		Path tempDirectoryPath = null;
+		Path tempFilePath = null;
+
+		try {
+			tempDirectoryPath = Files.createTempDirectory(null);
+
+			tempFilePath = Files.createTempFile(null, null);
+
+			Files.write(tempFilePath, bytes);
+
+			Archiver archiver = ArchiverFactory.createArchiver("tar");
+
+			File tempDirectoryFile = tempDirectoryPath.toFile();
+
+			archiver.extract(tempFilePath.toFile(), tempDirectoryFile);
+
+			DocumentBuilderFactory documentBuilderFactory =
+				SecureXMLFactoryProviderUtil.newDocumentBuilderFactory();
+
+			DocumentBuilder documentBuilder =
+				documentBuilderFactory.newDocumentBuilder();
+
+			for (File file : tempDirectoryFile.listFiles()) {
+				try {
+					if (_log.isInfoEnabled()) {
+						_log.info("Parsing document " + file.getName());
+					}
+
+					Document document = documentBuilder.parse(file);
+
+					//_processDocument(document);
+				}
+				catch (Exception exception) {
+					_log.error(exception);
+				}
+				finally {
+					file.delete();
+				}
+			}
+		}
+		finally {
+			if (tempDirectoryPath != null) {
+				Files.deleteIfExists(tempDirectoryPath);
+			}
+
+			if (tempFilePath != null) {
+				Files.deleteIfExists(tempFilePath);
+			}
+		}
+	}
+
 	private void _uploadToTestray(UnicodeProperties unicodeProperties)
 		throws Exception {
 
@@ -207,6 +272,8 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 					if (_log.isInfoEnabled()) {
 						_log.info("Processing archive " + name);
 					}
+
+					_processArchive(blob.getContent());
 				}
 				catch (Exception exception) {
 					_log.error(exception);

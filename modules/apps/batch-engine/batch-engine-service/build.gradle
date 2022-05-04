@@ -5,7 +5,6 @@ buildService {
 dependencies {
 	compileInclude group: "com.zaxxer", name: "SparseBitSet", version: "1.2"
 	compileInclude group: "org.apache.commons", name: "commons-collections4", version: "4.3"
-	compileInclude group: "org.apache.commons", name: "commons-csv", version: "1.9.0"
 	compileInclude group: "org.apache.poi", name: "poi", version: "4.1.2"
 	compileInclude group: "org.apache.poi", name: "poi-ooxml", version: "4.1.2"
 	compileInclude group: "org.apache.poi", name: "poi-ooxml-schemas", version: "4.1.2"
@@ -16,6 +15,7 @@ dependencies {
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.13.2.2"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "org.apache.commons", name: "commons-compress", version: "1.21"
+	compileOnly group: "org.apache.commons", name: "commons-csv", version: "1.9.0"
 	compileOnly group: "org.osgi", name: "org.osgi.annotation", version: "6.0.0"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"

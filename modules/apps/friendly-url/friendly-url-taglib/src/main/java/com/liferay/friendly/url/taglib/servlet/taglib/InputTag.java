@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistryUtil;
@@ -175,6 +176,12 @@ public class InputTag extends IncludeTag {
 
 	private String _getFallbackValue() {
 		try {
+			if (Objects.equals(
+					_getActualClassName(), FileEntry.class.getName())) {
+
+				return StringPool.BLANK;
+			}
+
 			String urlTitle = BeanPropertiesUtil.getString(
 				_getModel(), "urlTitle");
 

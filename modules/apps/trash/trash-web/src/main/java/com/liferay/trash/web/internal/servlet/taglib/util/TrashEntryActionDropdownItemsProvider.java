@@ -16,7 +16,7 @@ package com.liferay.trash.web.internal.servlet.taglib.util;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -51,26 +51,34 @@ public class TrashEntryActionDropdownItemsProvider {
 	}
 
 	public List<DropdownItem> getActionDropdownItems() throws Exception {
-		return new DropdownItemList() {
-			{
-				if (_trashHandler.isRestorable(_trashEntry.getClassPK()) &&
-					!_trashHandler.isInTrashContainer(
-						_trashEntry.getClassPK())) {
+		return DropdownItemListBuilder.addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						() -> _trashHandler.isRestorable(
+							_trashEntry.getClassPK()),
+						_getRestoreActionDropdownItem()
+					).add(
+						() ->
+							!_trashHandler.isRestorable(
+								_trashEntry.getClassPK()) &&
+							_trashHandler.isMovable(_trashEntry.getClassPK()),
+						_getMoveActionDropdownItem()
+					).build());
 
-					add(_getRestoreActionDropdownItem());
-				}
-				else if (!_trashHandler.isRestorable(
-							_trashEntry.getClassPK()) &&
-						 _trashHandler.isMovable(_trashEntry.getClassPK())) {
-
-					add(_getMoveActionDropdownItem());
-				}
-
-				if (_trashHandler.isDeletable(_trashEntry.getClassPK())) {
-					add(_getDeleteActionDropdownItem());
-				}
+				dropdownGroupItem.setSeparator(true);
 			}
-		};
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						() -> _trashHandler.isDeletable(
+							_trashEntry.getClassPK()),
+						_getDeleteActionDropdownItem()
+					).build());
+				dropdownGroupItem.setSeparator(true);
+			}
+		).build();
 	}
 
 	private DropdownItem _getDeleteActionDropdownItem() {
@@ -87,6 +95,8 @@ public class TrashEntryActionDropdownItemsProvider {
 			).setParameter(
 				"trashEntryId", _trashEntry.getEntryId()
 			).buildString()
+		).setIcon(
+			"trash"
 		).setLabel(
 			LanguageUtil.get(_themeDisplay.getLocale(), "delete")
 		).build();
@@ -113,6 +123,8 @@ public class TrashEntryActionDropdownItemsProvider {
 			).setWindowState(
 				LiferayWindowState.POP_UP
 			).buildString()
+		).setIcon(
+			"restore"
 		).setLabel(
 			LanguageUtil.get(_themeDisplay.getLocale(), "restore")
 		).build();
@@ -132,6 +144,8 @@ public class TrashEntryActionDropdownItemsProvider {
 			).setParameter(
 				"trashEntryId", _trashEntry.getEntryId()
 			).buildString()
+		).setIcon(
+			"restore"
 		).setLabel(
 			LanguageUtil.get(_themeDisplay.getLocale(), "restore")
 		).build();

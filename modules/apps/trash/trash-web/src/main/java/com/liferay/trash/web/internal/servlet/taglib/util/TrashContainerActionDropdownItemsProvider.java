@@ -16,7 +16,7 @@ package com.liferay.trash.web.internal.servlet.taglib.util;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -54,42 +54,53 @@ public class TrashContainerActionDropdownItemsProvider {
 		_trashRenderer = trashDisplayContext.getTrashRenderer();
 	}
 
-	public List<DropdownItem> getActionDropdownItems() throws Exception {
-		return new DropdownItemList() {
-			{
-				if (_trashEntry != null) {
-					if (_trashHandler.isRestorable(_trashEntry.getClassPK()) &&
-						!_trashHandler.isInTrashContainer(
-							_trashEntry.getClassPK())) {
-
-						add(_getRestoreActionDropdownItem());
-					}
-					else if (!_trashHandler.isRestorable(
+	public List<DropdownItem> getActionDropdownItems() {
+		return DropdownItemListBuilder.addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						() ->
+							(_trashEntry != null) &&
+							_trashHandler.isRestorable(
 								_trashEntry.getClassPK()) &&
-							 _trashHandler.isMovable(
-								 _trashEntry.getClassPK())) {
-
-						add(_getMoveTrashEntryActionDropdownItem());
-					}
-
-					if (_trashHandler.isDeletable(
-							_trashRenderer.getClassPK())) {
-
-						add(_getDeleteTrashEntryActionDropdownItem());
-					}
-				}
-				else {
-					if (_trashHandler.isMovable(_trashRenderer.getClassPK())) {
-						add(_getMoveActionDropdownItem());
-					}
-					else if (_trashHandler.isDeletable(
-								_trashRenderer.getClassPK())) {
-
-						add(_getDeleteActionDropdownItem());
-					}
-				}
+							!_trashHandler.isInTrashContainer(
+								_trashEntry.getClassPK()),
+						_getRestoreActionDropdownItem()
+					).add(
+						() ->
+							(_trashEntry != null) &&
+							!_trashHandler.isRestorable(
+								_trashEntry.getClassPK()) &&
+							_trashHandler.isMovable(_trashEntry.getClassPK()),
+						_getMoveTrashEntryActionDropdownItem()
+					).add(
+						() ->
+							(_trashEntry == null) &&
+							_trashHandler.isMovable(
+								_trashRenderer.getClassPK()),
+						_getMoveActionDropdownItem()
+					).build());
+				dropdownGroupItem.setSeparator(true);
 			}
-		};
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						() ->
+							(_trashEntry != null) &&
+							_trashHandler.isDeletable(
+								_trashRenderer.getClassPK()),
+						_getDeleteTrashEntryActionDropdownItem()
+					).add(
+						() ->
+							(_trashEntry == null) &&
+							_trashHandler.isDeletable(
+								_trashRenderer.getClassPK()),
+						_getDeleteActionDropdownItem()
+					).build());
+				dropdownGroupItem.setSeparator(true);
+			}
+		).build();
 	}
 
 	private DropdownItem _getDeleteActionDropdownItem() throws Exception {
@@ -108,6 +119,8 @@ public class TrashContainerActionDropdownItemsProvider {
 			).setParameter(
 				"classPK", _trashRenderer.getClassPK()
 			).buildString()
+		).setIcon(
+			"trash"
 		).setLabel(
 			LanguageUtil.get(_themeDisplay.getLocale(), "delete")
 		).build();
@@ -129,6 +142,8 @@ public class TrashContainerActionDropdownItemsProvider {
 			).setParameter(
 				"trashEntryId", _trashEntry.getEntryId()
 			).buildString()
+		).setIcon(
+			"trash"
 		).setLabel(
 			LanguageUtil.get(_themeDisplay.getLocale(), "delete")
 		).build();
@@ -156,6 +171,8 @@ public class TrashContainerActionDropdownItemsProvider {
 			).setWindowState(
 				LiferayWindowState.POP_UP
 			).buildString()
+		).setIcon(
+			"restore"
 		).setLabel(
 			LanguageUtil.get(_themeDisplay.getLocale(), "restore")
 		).build();
@@ -189,6 +206,8 @@ public class TrashContainerActionDropdownItemsProvider {
 			).setWindowState(
 				LiferayWindowState.POP_UP
 			).buildString()
+		).setIcon(
+			"restore"
 		).setLabel(
 			LanguageUtil.get(_themeDisplay.getLocale(), "restore")
 		).build();
@@ -208,6 +227,8 @@ public class TrashContainerActionDropdownItemsProvider {
 			).setParameter(
 				"trashEntryId", _trashEntry.getEntryId()
 			).buildString()
+		).setIcon(
+			"restore"
 		).setLabel(
 			LanguageUtil.get(_themeDisplay.getLocale(), "restore")
 		).build();

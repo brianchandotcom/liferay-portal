@@ -33,8 +33,11 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.util.ObjectEntryFieldValueUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -126,22 +129,23 @@ public class ObjectEntryDTOConverter
 			dtoConverterContext.getUser());
 	}
 
-	private Object[] _getManyToManyRelationshipObjectEntries(
+	private ObjectEntry[] _getManyToManyRelationshipObjectEntries(
 		DTOConverterContext dtoConverterContext, int nestedFieldsDepth,
-		ObjectRelationship objectRelationship,
-		com.liferay.object.model.ObjectEntry objectEntry) {
+		com.liferay.object.model.ObjectEntry objectEntry,
+		ObjectRelationship objectRelationship) {
 
 		try {
 			boolean reverse = objectRelationship.isReverse();
 
-			if (objectRelationship.isReverse()) {
+			if (reverse) {
 				objectRelationship =
 					_objectRelationshipLocalService.
 						fetchReverseObjectRelationship(
 							objectRelationship, false);
 			}
 
-			Pagination pagination = Pagination.of(1, 20);
+			Pagination pagination = Pagination.of(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 			List<com.liferay.object.model.ObjectEntry>
 				manyToManyRelatedObjectEntries =
@@ -157,7 +161,9 @@ public class ObjectEntryDTOConverter
 				manyToManyRelatedObjectEntries);
 		}
 		catch (PortalException portalException) {
-			portalException.printStackTrace();
+			if (_log.isWarnEnabled()) {
+				_log.warn(portalException);
+			}
 
 			return null;
 		}
@@ -181,25 +187,35 @@ public class ObjectEntryDTOConverter
 		return objectDefinition;
 	}
 
-	private Object[] _getOneToManyRelationshipObjectEntries(
-			DTOConverterContext dtoConverterContext, int nestedFieldsDepth,
-			ObjectRelationship objectRelationship,
-			com.liferay.object.model.ObjectEntry objectEntry)
-		throws PortalException {
+	private ObjectEntry[] _getOneToManyRelationshipObjectEntries(
+		DTOConverterContext dtoConverterContext, int nestedFieldsDepth,
+		com.liferay.object.model.ObjectEntry objectEntry,
+		ObjectRelationship objectRelationship) {
 
-		Pagination pagination = Pagination.of(1, 20);
+		Pagination pagination = Pagination.of(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		List<com.liferay.object.model.ObjectEntry>
-			oneToManyRelatedObjectEntries =
-				_objectEntryLocalService.getOneToManyRelatedObjectEntries(
-					objectEntry.getGroupId(),
-					objectRelationship.getObjectRelationshipId(),
-					objectEntry.getObjectEntryId(),
-					pagination.getStartPosition(), pagination.getEndPosition());
+		try {
+			List<com.liferay.object.model.ObjectEntry>
+				oneToManyRelatedObjectEntries =
+					_objectEntryLocalService.getOneToManyRelatedObjectEntries(
+						objectEntry.getGroupId(),
+						objectRelationship.getObjectRelationshipId(),
+						objectEntry.getObjectEntryId(),
+						pagination.getStartPosition(),
+						pagination.getEndPosition());
 
-		return _mapRelationshipObjectEntries(
-			dtoConverterContext, nestedFieldsDepth,
-			oneToManyRelatedObjectEntries);
+			return _mapRelationshipObjectEntries(
+				dtoConverterContext, nestedFieldsDepth,
+				oneToManyRelatedObjectEntries);
+		}
+		catch (PortalException portalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(portalException);
+			}
+
+			return null;
+		}
 	}
 
 	private String _getScopeKey(
@@ -224,7 +240,7 @@ public class ObjectEntryDTOConverter
 		return null;
 	}
 
-	private Object[] _mapRelationshipObjectEntries(
+	private ObjectEntry[] _mapRelationshipObjectEntries(
 		DTOConverterContext dtoConverterContext, int nestedFieldsDepth,
 		List<com.liferay.object.model.ObjectEntry> objectEntries) {
 
@@ -239,7 +255,9 @@ public class ObjectEntryDTOConverter
 						nestedFieldsDepth - 1, objectEntry);
 				}
 				catch (Exception exception) {
-					exception.printStackTrace();
+					if (_log.isWarnEnabled()) {
+						_log.warn(exception);
+					}
 
 					return null;
 				}
@@ -435,7 +453,7 @@ public class ObjectEntryDTOConverter
 							false
 						)) {
 
-						Object[] objectEntries = new ObjectEntry[0];
+						ObjectEntry[] objectEntries = new ObjectEntry[0];
 
 						if (Objects.equals(
 								objectRelationship.getType(),
@@ -445,22 +463,17 @@ public class ObjectEntryDTOConverter
 							objectEntries =
 								_getManyToManyRelationshipObjectEntries(
 									dtoConverterContext, nestedFieldsDepth,
-									objectRelationship, objectEntry);
+									objectEntry, objectRelationship);
 						}
 						else if (Objects.equals(
 									objectRelationship.getType(),
 									ObjectRelationshipConstants.
 										TYPE_ONE_TO_MANY)) {
 
-							try {
-								objectEntries =
-									_getOneToManyRelationshipObjectEntries(
-										dtoConverterContext, nestedFieldsDepth,
-										objectRelationship, objectEntry);
-							}
-							catch (PortalException e) {
-								e.printStackTrace();
-							}
+							objectEntries =
+								_getOneToManyRelationshipObjectEntries(
+									dtoConverterContext, nestedFieldsDepth,
+									objectEntry, objectRelationship);
 						}
 
 						map.put(objectRelationship.getName(), objectEntries);
@@ -472,6 +485,9 @@ public class ObjectEntryDTOConverter
 
 		return map;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ObjectEntryDTOConverter.class);
 
 	@Reference
 	private GroupLocalService _groupLocalService;

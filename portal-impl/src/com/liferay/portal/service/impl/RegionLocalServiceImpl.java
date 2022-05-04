@@ -41,11 +41,13 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.persistence.CountryPersistence;
 import com.liferay.portal.kernel.service.persistence.OrganizationPersistence;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.base.RegionLocalServiceBaseImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -191,7 +193,8 @@ public class RegionLocalServiceImpl extends RegionLocalServiceBaseImpl {
 
 	@Override
 	public BaseModelSearchResult<Region> searchRegions(
-			long companyId, Boolean active, String keywords, int start, int end,
+			long companyId, Boolean active, String keywords,
+			LinkedHashMap<String, Object> params, int start, int end,
 			OrderByComparator<Region> orderByComparator)
 		throws PortalException {
 
@@ -199,7 +202,7 @@ public class RegionLocalServiceImpl extends RegionLocalServiceBaseImpl {
 			startAndEnd -> regionPersistence.dslQuery(
 				_getGroupByStep(
 					DSLQueryFactoryUtil.selectDistinct(RegionTable.INSTANCE),
-					companyId, active, keywords
+					companyId, active, keywords, params
 				).orderBy(
 					RegionTable.INSTANCE, orderByComparator
 				).limit(
@@ -209,7 +212,7 @@ public class RegionLocalServiceImpl extends RegionLocalServiceBaseImpl {
 				_getGroupByStep(
 					DSLQueryFactoryUtil.countDistinct(
 						RegionTable.INSTANCE.regionId),
-					companyId, active, keywords)),
+					companyId, active, keywords, params)),
 			start, end);
 	}
 
@@ -255,7 +258,8 @@ public class RegionLocalServiceImpl extends RegionLocalServiceBaseImpl {
 	}
 
 	private OrderByStep _getGroupByStep(
-		FromStep fromStep, long companyId, Boolean active, String keywords) {
+		FromStep fromStep, long companyId, Boolean active, String keywords,
+		LinkedHashMap<String, Object> params) {
 
 		JoinStep joinStep = fromStep.from(
 			RegionTable.INSTANCE
@@ -308,6 +312,15 @@ public class RegionLocalServiceImpl extends RegionLocalServiceBaseImpl {
 					if (keywordsPredicate != null) {
 						predicate = predicate.and(
 							keywordsPredicate.withParentheses());
+					}
+				}
+
+				if (MapUtil.isNotEmpty(params)) {
+					long countryId = (long)params.get("countryId");
+
+					if (countryId > 0) {
+						predicate = predicate.and(
+							RegionTable.INSTANCE.countryId.eq(countryId));
 					}
 				}
 

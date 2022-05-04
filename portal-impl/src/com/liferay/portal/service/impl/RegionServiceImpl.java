@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.model.impl.RegionModelImpl;
 import com.liferay.portal.service.base.RegionServiceBaseImpl;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -144,12 +145,13 @@ public class RegionServiceImpl extends RegionServiceBaseImpl {
 
 	@Override
 	public BaseModelSearchResult<Region> searchRegions(
-			long companyId, Boolean active, String keywords, int start, int end,
+			long companyId, Boolean active, String keywords,
+			LinkedHashMap<String, Object> params, int start, int end,
 			OrderByComparator<Region> orderByComparator)
-			throws PortalException {
+		throws PortalException {
 
 		return regionLocalService.searchRegions(
-				companyId, active, keywords, start, end, orderByComparator);
+			companyId, active, keywords, params, start, end, orderByComparator);
 	}
 
 	@Override

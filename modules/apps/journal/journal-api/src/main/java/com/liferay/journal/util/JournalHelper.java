@@ -31,6 +31,11 @@ import javax.portlet.PortletRequest;
  */
 public interface JournalHelper {
 
+	public String buildURLPattern(
+			JournalArticle article, boolean privateLayout,
+			ThemeDisplay themeDisplay)
+		throws PortalException;
+
 	public String diffHtml(
 			long groupId, String articleId, double sourceVersion,
 			double targetVersion, String languageId,

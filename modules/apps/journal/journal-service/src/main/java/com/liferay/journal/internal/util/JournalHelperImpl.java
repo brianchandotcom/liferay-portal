@@ -19,6 +19,7 @@ import com.liferay.diff.exception.CompareVersionsException;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
+import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.internal.transformer.JournalTransformerListenerRegistryUtil;
@@ -44,12 +45,14 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.kernel.templateparser.TransformerListener;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -76,6 +79,25 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = JournalHelper.class)
 public class JournalHelperImpl implements JournalHelper {
+
+	@Override
+	public String buildURLPattern(
+			JournalArticle article, boolean privateLayout,
+			ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		StringBundler sb = new StringBundler();
+
+		sb.append(PortalUtil.getGroupFriendlyURL(
+			LayoutSetLocalServiceUtil.getLayoutSet(
+				article.getGroupId(), privateLayout), themeDisplay, false, false
+			));
+
+		sb.append(JournalArticleConstants.CANONICAL_URL_SEPARATOR);
+		sb.append(article.getUrlTitle(themeDisplay.getLocale()));
+
+		return sb.toString();
+	}
 
 	@Override
 	public String diffHtml(

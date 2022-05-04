@@ -14,10 +14,13 @@
 
 package com.liferay.journal.web.internal.util;
 
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.util.JournalHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+
+import java.util.Locale;
 
 import javax.portlet.PortletRequest;
 
@@ -29,6 +32,15 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = {})
 public class JournalHelperUtil {
+
+	public static String buildURLPattern(
+			JournalArticle article, boolean privateLayout,
+			ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		return _journalHelper.buildURLPattern(
+			article, privateLayout, themeDisplay);
+	}
 
 	public static String diffHtml(
 			long groupId, String articleId, double sourceVersion,

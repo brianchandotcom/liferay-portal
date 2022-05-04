@@ -25,6 +25,7 @@ import java.util.Map;
 
 import javax.portlet.PortletRequest;
 
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -33,6 +34,15 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = {})
 public class JournalHelperUtil {
+
+	public static String buildURLPattern(
+			JournalArticle article, boolean privateLayout,
+			ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		return _journalHelper.buildURLPattern(
+			article, privateLayout, themeDisplay);
+	}
 
 	public static String getAbsolutePath(
 			PortletRequest portletRequest, long folderId)

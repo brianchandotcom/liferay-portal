@@ -59,6 +59,8 @@ public class LinkEditableElementMapper implements EditableElementMapper {
 			FragmentEntryProcessorContext fragmentEntryProcessorContext)
 		throws PortalException {
 
+		String href = configJSONObject.getString("href");
+
 		JSONObject hrefJSONObject = configJSONObject.getJSONObject("href");
 
 		boolean assetDisplayPage =
@@ -71,13 +73,12 @@ public class LinkEditableElementMapper implements EditableElementMapper {
 		boolean mapped = _fragmentEntryProcessorHelper.isMapped(
 			configJSONObject);
 
-		if ((hrefJSONObject == null) && !assetDisplayPage &&
-			!collectionMapped && !layoutMapped && !mapped) {
+		if (Validator.isNull(href) && (hrefJSONObject == null) &&
+			!assetDisplayPage && !collectionMapped && !layoutMapped &&
+			!mapped) {
 
 			return;
 		}
-
-		String href = StringPool.BLANK;
 
 		if (collectionMapped) {
 			href = GetterUtil.getString(

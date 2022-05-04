@@ -76,6 +76,24 @@ definition {
 			locator1 = "LexiconTable#TABLE_ENTRY_TITLE");
 	}
 
+	macro deleteCP {
+		Click(
+			key_tableEntry = "${widgetTemplateName}",
+			locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Delete");
+
+		AssertTextEquals(
+			locator1 = "Modal#BODY",
+			value1 = "Are you sure you want to delete this? It will be deleted immediately.");
+
+		Click(
+			key_text = "Delete",
+			locator1 = "Modal#MODAL_FOOTER_BUTTON");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro editADTScript {
 		Type.sendKeysAceEditor(
 			locator1 = "DDMEditTemplate#CODE_MIRROR_EDITOR_CONTENT",

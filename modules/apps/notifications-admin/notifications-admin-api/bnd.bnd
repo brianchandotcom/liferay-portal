@@ -1,3 +1,9 @@
 Bundle-Name: Liferay Notifications Admin API
 Bundle-SymbolicName: com.liferay.notifications.admin.api
 Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.notifications.admin.constants,\
+	com.liferay.notifications.admin.exception,\
+	com.liferay.notifications.admin.model,\
+	com.liferay.notifications.admin.service,\
+	com.liferay.notifications.admin.service.persistence

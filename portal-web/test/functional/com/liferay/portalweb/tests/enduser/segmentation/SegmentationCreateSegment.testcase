@@ -2282,6 +2282,126 @@ definition {
 		}
 	}
 
+	@description = "LPS-130919 Given the Session Property Vocabularies in Instance Settings
+	When the user is adding a vocabulary to a session property
+	Then the breadcrumb to go to Segments, or Instance Settings is available"
+	@priority = "3"
+	test InstanceSettingsSessionPropertyVocabulariesBreadcrumb {
+		property test.name.skip.portal.instance = "SegmentationCreateSegment#InstanceSettingsSessionPropertyVocabulariesBreadcrumb";
+
+		task ("Go to Instance Settings > Segments > Session Property Vocabulary") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Segments",
+				configurationName = "Session Property Vocabularies",
+				configurationScope = "Virtual Instance Scope");
+		}
+
+		task ("Click on add") {
+			Button.click(button = "Add");
+		}
+
+		task ("Click on the breadcrumb at Segments") {
+			Click(
+				key_breadcrumbName = "Segments",
+				locator1 = "Breadcrumb#BREADCRUMB_ENTRY_LINK");
+		}
+
+		task ("Check the user is lead to Instance Settings > Segments > Analytics Cloud Segments ") {
+			AssertElementPresent(
+				key_title = "Analytics Cloud Segments",
+				locator1 = "Header#H2_TITLE");
+		}
+	}
+
+	@description = "LPS-130919 Given the adding a vocabulary to a session property view
+	When the user clicks on Cancel button
+	Then the user is lead to the main tab Session Property Vocabularies"
+	@priority = "3"
+	test InstanceSettingsSessionPropertyVocabulariesCancelButton {
+		property test.name.skip.portal.instance = "SegmentationCreateSegment#InstanceSettingsSessionPropertyVocabulariesCancelButton";
+
+		task ("Go to Instance Settings > Segments > Session Property Vocabulary") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Segments",
+				configurationName = "Session Property Vocabularies",
+				configurationScope = "Virtual Instance Scope");
+		}
+
+		task ("Click on add") {
+			Button.click(button = "Add");
+		}
+
+		task ("Click on Cancel") {
+			Button.click(button = "Cancel");
+		}
+
+		task ("Check the user is lead to the main tab Session Property Vocabularies") {
+			AssertTextPresent(
+				locator1 = "Message#EMPTY_INFO",
+				value1 = "No entries for Session Property Vocabularies have been added yet.");
+		}
+	}
+
+	@description = "LPS-130919 Given the Segment Editor
+	When the user adds a Session Property Vocabulary in the Instance Settings
+	Then the associated Categories must be available when selecting the session property"
+	@priority = "5"
+	test InstanceSettingsSessionPropertyVocabularyInSegmentsEditor {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "SegmentationCreateSegment#InstanceSettingsSessionPropertyVocabularyInSegmentsEditor";
+
+		task ("Set Session Property Vocabulary") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Segments",
+				configurationName = "Session Property Vocabularies",
+				configurationScope = "Virtual Instance Scope");
+
+			Button.click(button = "Add");
+
+			Segmentation.setVocabularySessionPropertyDropdown(
+				propertyName = "Browser",
+				vocabularyName = "Audience");
+		}
+
+		task ("Create categories for Audience Vocabulary") {
+			JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Audience Category 1",
+				vocabularyName = "Audience");
+		}
+
+		task ("Create Segment with Vocabulary") {
+			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
+
+			LexiconEntry.gotoAdd();
+
+			Segmentation.gotoSidebar(fieldType = "Session");
+
+			Segmentation.addProperties(propertyOption = "Browser");
+
+			Segmentation.fillTitle(titleField = "Segment Test");
+
+			Segmentation.fillProperty(optionsValue = "Audience Category 1");
+
+			Button.clickSave();
+		}
+	}
+
 	@description = "LPS-132249 If vocabulary or value is deleted, in the segment editor the condition will keep working if the user go out without saving changes"
 	@priority = "4"
 	test KeepInfomationOfDeleteVocabularyInSegment {

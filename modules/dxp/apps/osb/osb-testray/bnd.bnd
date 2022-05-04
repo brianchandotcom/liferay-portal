@@ -1,0 +1,3 @@
+Bundle-Name: Liferay OSB Testray
+Bundle-SymbolicName: com.liferay.osb.testray
+Bundle-Version: 1.0.0

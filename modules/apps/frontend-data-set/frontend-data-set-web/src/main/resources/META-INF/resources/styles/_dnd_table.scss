@@ -140,6 +140,7 @@
 
 	&.fixed {
 		display: block;
+		overflow: auto;
 	}
 
 	&.is-dragging {

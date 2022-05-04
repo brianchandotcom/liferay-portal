@@ -21,7 +21,7 @@ import classNames from 'classnames';
 import {TranslationAdminSelector} from 'frontend-js-components-web';
 import {fetch, objectToFormData, openSelectionModal} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 function AssetVocabularyContextualSidebar({
 	assetVocabulary,
@@ -52,12 +52,31 @@ function AssetVocabularyContextualSidebar({
 	const [customName, setCustomName] = useState(
 		translations[selectedLocaleId] || assetVocabulary.title
 	);
+	const [customNameInvalid, setCustomNameInvalid] = useState(false);
 
 	const {
 		assetVocabularySelectorURL,
 		eventName,
 		getAssetVocabularyDetailsURL,
 	} = chooseAssetVocabularyProps;
+
+	useEffect(() => {
+		const onFormSubmit = (event) => {
+			if (!customName) {
+				event.preventDefault();
+
+				setCustomNameInvalid(true);
+			}
+		};
+
+		const submitButton = document.querySelector('button[type=submit]');
+
+		submitButton?.addEventListener('click', onFormSubmit);
+
+		return () => {
+			submitButton?.removeEventListener('click', onFormSubmit);
+		};
+	}, [customName]);
 
 	const openChooseItemModal = () =>
 		openSelectionModal({
@@ -151,7 +170,9 @@ function AssetVocabularyContextualSidebar({
 				</span>
 			</ClayForm.Group>
 
-			<ClayForm.Group>
+			<ClayForm.Group
+				className={classNames({'has-error': customNameInvalid})}
+			>
 				<label
 					className={classNames({disabled: !customNameEnabled})}
 					htmlFor={`${namespace}_nameInput`}
@@ -171,6 +192,7 @@ function AssetVocabularyContextualSidebar({
 								});
 
 								setCustomName(event.target.value);
+								setCustomNameInvalid(false);
 							}}
 							type="text"
 							value={customName}
@@ -193,6 +215,12 @@ function AssetVocabularyContextualSidebar({
 						/>
 					</ClayInput.GroupItem>
 				</ClayInput.Group>
+
+				{customNameInvalid && (
+					<ClayForm.FeedbackItem>
+						{Liferay.Language.get('this-field-is-required')}
+					</ClayForm.FeedbackItem>
+				)}
 			</ClayForm.Group>
 
 			<ClayForm.Group

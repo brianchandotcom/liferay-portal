@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "configuration.pid=com.liferay.cookies.configuration.CookiesBannerConfiguration",
+	property = "configuration.pid=com.liferay.cookies.configuration.CookiesConsentConfiguration",
 	service = ConfigurationVisibilityController.class
 )
 public class CookiesConfigurationVisibilityController

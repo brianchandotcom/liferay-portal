@@ -13,9 +13,9 @@ definition {
 
 		Click(locator1 = "ACWorkspace#SELECT_LANGUAGE");
 
-		WaitForElementNotPresent(
-			locator1 = "ACNavigation#SIDEBAR_OPTION_NAME",
-			value1 = "Assets");
+		if (IsElementPresent(key_languageOption = "${languageOption}", locator1 = "ACWorkspace#SELECT_LANGUAGE")) {
+			Click(locator1 = "ACWorkspace#SELECT_LANGUAGE");
+		}
 	}
 
 	macro configureWorkspaceSettings {

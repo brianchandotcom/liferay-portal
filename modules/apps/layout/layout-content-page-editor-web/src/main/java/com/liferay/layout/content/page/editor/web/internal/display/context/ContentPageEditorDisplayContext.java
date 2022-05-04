@@ -428,6 +428,9 @@ public class ContentPageEditorDisplayContext {
 				_getResourceURL(
 					"/layout_content_page_editor/get_file_entry_url")
 			).put(
+				"getFormFieldsURL",
+				_getResourceURL("/layout_content_page_editor/get_form_fields")
+			).put(
 				"getIframeContentCssURL",
 				PortalUtil.getStaticResourceURL(
 					httpServletRequest,

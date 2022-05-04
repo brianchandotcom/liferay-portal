@@ -40,7 +40,6 @@ definition {
 	@description = "Nested fields in oneToMany relationship"
 	@priority = "5"
 	test NestedFieldsInOneToManyRelationship {
-
 		task ("Given manager accounts created") {
 			var managerId = ObjectDefinitionAPI.createManager(managerFirstname = "Courtney");
 		}

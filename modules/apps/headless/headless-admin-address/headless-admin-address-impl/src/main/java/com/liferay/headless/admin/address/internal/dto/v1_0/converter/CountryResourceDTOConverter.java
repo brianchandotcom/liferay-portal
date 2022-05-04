@@ -52,13 +52,6 @@ public class CountryResourceDTOConverter
 	}
 
 	@Override
-	public Country toDTO(com.liferay.portal.kernel.model.Country object)
-		throws Exception {
-
-		return DTOConverter.super.toDTO(object);
-	}
-
-	@Override
 	public Country toDTO(
 			DTOConverterContext dtoConverterContext,
 			com.liferay.portal.kernel.model.Country serviceBuilderCountry)

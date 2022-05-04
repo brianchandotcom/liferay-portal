@@ -56,13 +56,6 @@ public class RegionResourceDTOConverter
 		};
 	}
 
-	@Override
-	public Region toDTO(com.liferay.portal.kernel.model.Region object)
-		throws Exception {
-
-		return DTOConverter.super.toDTO(object);
-	}
-
 	@Reference
 	private RegionService _regionService;
 

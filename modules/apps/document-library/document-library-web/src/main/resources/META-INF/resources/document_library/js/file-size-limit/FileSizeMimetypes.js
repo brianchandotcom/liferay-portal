@@ -97,9 +97,9 @@ const FileSizeField = ({
 );
 
 const FileSizePerMimeType = ({
-	currentSizes,
 	description = Liferay.Language.get('file-size-mimetype-description'),
 	portletNamespace,
+	sizeList: initialSizeList
 }) => {
 	const emptyRow = () => ({id: uuidv4(), mimeType: '', size: ''});
 
@@ -115,7 +115,7 @@ const FileSizePerMimeType = ({
 		setSizesList(tempList);
 	};
 
-	const [sizesList, setSizesList] = useState(currentSizes || [emptyRow()]);
+	const [sizesList, setSizesList] = useState(initialSizeList || [emptyRow()]);
 
 	return (
 		<>
@@ -137,14 +137,14 @@ const FileSizePerMimeType = ({
 };
 
 FileSizePerMimeType.propTypes = {
-	currentSizes: PropTypes.arrayOf(
+	description: PropTypes.string,
+	portletNamespace: PropTypes.string.isRequired,
+	sizeList: PropTypes.arrayOf(
 		PropTypes.shape({
 			mimeType: PropTypes.string,
 			size: PropTypes.number,
 		})
-	),
-	description: PropTypes.string,
-	portletNamespace: PropTypes.string.isRequired,
+	)
 };
 
 export default FileSizePerMimeType;

@@ -31,7 +31,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface ObjectConfiguration {
 
 	@Meta.AD(
-		deflt = "10",
+		deflt = "100",
 		description = "guest-maximum-entry-submissions-per-object-help",
 		name = "guest-maximum-entry-submissions-per-object", required = false
 	)

@@ -65,16 +65,11 @@ const TeamMembersTable = ({licenseKeyDownloadURL, project, sessionId}) => {
 
 	const hasOnlyOneAdmin = useMemo(() => {
 		return (
-			userAccounts.filter((user) => {
-				if (
+			userAccounts.filter(
+				(user) =>
 					user?.roles[0] === ROLE_TYPES.admin.key ||
 					user?.roles[0] === ROLE_TYPES.requester.key
-				) {
-					return true;
-				}
-
-				return false;
-			}).length === 1
+			).length === 1
 		);
 	}, [userAccounts]);
 

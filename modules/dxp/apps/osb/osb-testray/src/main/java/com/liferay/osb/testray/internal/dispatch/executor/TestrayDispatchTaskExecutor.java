@@ -18,10 +18,18 @@ import com.liferay.dispatch.executor.BaseDispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskExecutorOutput;
 import com.liferay.dispatch.model.DispatchTrigger;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author José Abelenda
@@ -44,6 +52,8 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 		if (_log.isInfoEnabled()) {
 			_log.info("Invoking doExecute");
 		}
+
+		_loadCache(dispatchTrigger.getCompanyId());
 	}
 
 	@Override
@@ -51,7 +61,24 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 		return "testray";
 	}
 
+	private void _loadCache(long companyId) {
+		List<ObjectDefinition> objectDefinitions =
+			_objectDefinitionLocalService.getObjectDefinitions(
+				companyId, true, WorkflowConstants.STATUS_APPROVED);
+
+		for (ObjectDefinition objectDefinition : objectDefinitions) {
+			_objectDefinitionIds.put(
+				objectDefinition.getShortName(),
+				objectDefinition.getObjectDefinitionId());
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		TestrayDispatchTaskExecutor.class);
+
+	private final Map<String, Long> _objectDefinitionIds = new HashMap<>();
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 }

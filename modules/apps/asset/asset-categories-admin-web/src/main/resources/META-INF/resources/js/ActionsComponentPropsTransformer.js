@@ -14,6 +14,8 @@
 
 import {openSelectionModal} from 'frontend-js-web';
 
+import openDeleteVocabularyModal from './openDeleteVocabularyModal';
+
 const ACTIONS = {
 	deleteVocabularies({
 		deleteVocabulariesURL,
@@ -29,22 +31,21 @@ const ACTIONS = {
 			multiple: true,
 			onSelect: (selectedItems) => {
 				if (selectedItems.length) {
-					if (
-						confirm(
-							Liferay.Language.get(
-								'are-you-sure-you-want-to-delete-the-selected-entries'
-							)
-						)
-					) {
-						const input = document.createElement('input');
+					openDeleteVocabularyModal({
+						multiple: true,
+						onDelete: () => {
+							const input = document.createElement('input');
 
-						input.name = `${portletNamespace}rowIds`;
-						input.value = selectedItems.map((item) => item.value);
+							input.name = `${portletNamespace}rowIds`;
+							input.value = selectedItems.map(
+								(item) => item.value
+							);
 
-						vocabulariesForm.appendChild(input);
+							vocabulariesForm.appendChild(input);
 
-						submitForm(vocabulariesForm, deleteVocabulariesURL);
-					}
+							submitForm(vocabulariesForm, deleteVocabulariesURL);
+						},
+					});
 				}
 			},
 			title: Liferay.Language.get('delete-vocabulary'),

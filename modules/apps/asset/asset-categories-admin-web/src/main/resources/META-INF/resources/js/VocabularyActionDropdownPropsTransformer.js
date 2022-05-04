@@ -14,15 +14,15 @@
 
 import {openModal} from 'frontend-js-web';
 
+import openDeleteVocabularyModal from './openDeleteVocabularyModal';
+
 const ACTIONS = {
 	deleteVocabulary({deleteVocabularyURL}) {
-		if (
-			confirm(
-				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
-			)
-		) {
-			submitForm(document.hrefFm, deleteVocabularyURL);
-		}
+		openDeleteVocabularyModal({
+			onDelete: () => {
+				submitForm(document.hrefFm, deleteVocabularyURL);
+			},
+		});
 	},
 
 	permissionsVocabulary({permissionsVocabularyURL}) {

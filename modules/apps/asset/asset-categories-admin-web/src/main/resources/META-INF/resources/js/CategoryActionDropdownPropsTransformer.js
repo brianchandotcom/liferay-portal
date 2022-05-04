@@ -14,17 +14,18 @@
 
 import {openModal, openSelectionModal, openToast} from 'frontend-js-web';
 
+import openDeleteCategoryModal from './openDeleteCategoryModal';
+
 const ACTIONS = {
 	deleteCategory({deleteCategoryURL}) {
-		if (
-			confirm(
-				Liferay.Language.get(
-					'this-category-might-be-being-used-in-some-contents'
-				)
-			)
-		) {
-			submitForm(document.hrefFm, deleteCategoryURL);
-		}
+		openDeleteCategoryModal({
+			message: Liferay.Language.get(
+				'this-category-might-be-being-used-in-some-contents'
+			),
+			onDelete: () => {
+				submitForm(document.hrefFm, deleteCategoryURL);
+			},
+		});
 	},
 
 	moveCategory(

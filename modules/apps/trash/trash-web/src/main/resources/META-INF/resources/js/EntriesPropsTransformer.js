@@ -14,15 +14,15 @@
 
 import {openSelectionModal} from 'frontend-js-web';
 
+import openDeleteEntryModal from './openDeleteEntryModal';
+
 const ACTIONS = {
 	deleteEntry(itemData) {
-		if (
-			confirm(
-				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
-			)
-		) {
-			submitForm(document.hrefFm, itemData.deleteEntryURL);
-		}
+		openDeleteEntryModal({
+			onDelete: () => {
+				submitForm(document.hrefFm, itemData.deleteEntryURL);
+			},
+		});
 	},
 
 	moveEntry(itemData, portletNamespace) {

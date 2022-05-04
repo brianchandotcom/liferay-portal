@@ -373,10 +373,15 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 				).build(),
 				false);
 
-		String response = jsonWebServiceClient.doGet(
-			absoluteURL, _getParametersArray(allParameters));
+		String response = null;
 
-		jsonWebServiceClient.destroy();
+		try {
+			response = jsonWebServiceClient.doGet(
+				absoluteURL, _getParametersArray(allParameters));
+		}
+		finally {
+			jsonWebServiceClient.destroy();
+		}
 
 		String sanitizedResponse = IOUtils.toString(
 			new BOMInputStream(new ByteArrayInputStream(response.getBytes())),

@@ -506,16 +506,12 @@ definition {
 				siteName = "Site Name");
 		}
 
-		task ("Wait for sending requests") {
-			Pause(locator1 = "10000");
+		task ("Start a new recording") {
+			ProxyUtil.startHarRecording("socialBookmarksEvents");
 		}
 
 		task ("Click the Fackbook icon of blogs enty") {
 			SocialBookmarks.clickBookmarkIcon(socialBookmark = "Facebook");
-		}
-
-		task ("Start a new recording") {
-			ProxyUtil.startHarRecording("socialBookmarksEvents");
 		}
 
 		task ("Wait for sending requests") {
@@ -523,20 +519,6 @@ definition {
 		}
 
 		task ("View the SocialBookmarks events triggered for guest") {
-			var portalURL = PropsUtil.get("portal.url");
-
-			ACUtils.assertEventPropertyValue(
-				applicationId = "SocialBookmarks",
-				eventId = "shared",
-				property = "className",
-				value = "com.liferay.blogs.model.BlogsEntry");
-
-			ACUtils.assertEventPropertyValue(
-				applicationId = "SocialBookmarks",
-				eventId = "shared",
-				property = "classPK",
-				value = "${entryId}");
-
 			ACUtils.assertEventPropertyValue(
 				applicationId = "SocialBookmarks",
 				eventId = "shared",
@@ -546,8 +528,8 @@ definition {
 			ACUtils.assertEventPropertyValue(
 				applicationId = "SocialBookmarks",
 				eventId = "shared",
-				property = "url",
-				value = "${portalURL}/web/site-name/blog/-/blogs/blogs-ac-title");
+				property = "classPK",
+				value = "${entryId}");
 		}
 	}
 

@@ -29,6 +29,10 @@
 		display: flex;
 		justify-content: space-between;
 
+		~ .sidebar-header {
+			padding-top: 48px;
+		}
+
 		button {
 			color: $mainLighten28;
 			margin-left: 8px;

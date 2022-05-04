@@ -505,6 +505,42 @@ function EditSXPElementForm({
 
 					<LearnMessage resourceKey="element-source" />
 				</div>
+
+				{!readOnly && (
+					<>
+						<div className="sidebar-header">
+							<h4 className="component-title">
+								<span className="text-truncate-inline">
+									<span className="text-truncate">
+										{Liferay.Language.get(
+											'json-autocompletion'
+										)}
+									</span>
+								</span>
+							</h4>
+						</div>
+
+						<div className="container-fluid">
+							<div className="help-text text-secondary">
+								{Liferay.Language.get(
+									'begin-typing-inside-double-quotes-to-see-the-autocompletion-options'
+								)}
+							</div>
+
+							<div className="help-text text-secondary">
+								{Liferay.Language.get(
+									'use-the-arrow-keys-or-the-mouse-to-navigate-the-menu'
+								)}
+							</div>
+
+							<div className="help-text text-secondary">
+								{Liferay.Language.get(
+									'use-the-enter-key-to-select-a-menu-item'
+								)}
+							</div>
+						</div>
+					</>
+				)}
 			</Sidebar>
 
 			<div

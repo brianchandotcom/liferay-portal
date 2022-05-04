@@ -55,6 +55,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -636,10 +637,23 @@ public abstract class BaseDataRecordResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<DataRecord, Exception> dataRecordUnsafeConsumer =
-			dataRecord -> postDataDefinitionDataRecord(
-				Long.parseLong((String)parameters.get("dataDefinitionId")),
-				dataRecord);
+		UnsafeConsumer<DataRecord, Exception> dataRecordUnsafeConsumer = null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
+			dataRecordUnsafeConsumer =
+				dataRecord -> postDataDefinitionDataRecord(
+					Long.parseLong((String)parameters.get("dataDefinitionId")),
+					dataRecord);
+		}
+
+		if (dataRecordUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" not supported for DataRecord");
+		}
 
 		if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
@@ -722,11 +736,39 @@ public abstract class BaseDataRecordResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (DataRecord dataRecord : dataRecords) {
-			putDataRecord(
+		UnsafeConsumer<DataRecord, Exception> dataRecordUnsafeConsumer = null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+			dataRecordUnsafeConsumer = dataRecord -> patchDataRecord(
 				dataRecord.getId() != null ? dataRecord.getId() :
 					Long.parseLong((String)parameters.get("dataRecordId")),
 				dataRecord);
+		}
+
+		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+			dataRecordUnsafeConsumer = dataRecord -> putDataRecord(
+				dataRecord.getId() != null ? dataRecord.getId() :
+					Long.parseLong((String)parameters.get("dataRecordId")),
+				dataRecord);
+		}
+
+		if (dataRecordUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" not supported for DataRecord");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				dataRecords, dataRecordUnsafeConsumer);
+		}
+		else {
+			for (DataRecord dataRecord : dataRecords) {
+				dataRecordUnsafeConsumer.accept(dataRecord);
+			}
 		}
 	}
 

@@ -54,6 +54,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -637,8 +638,26 @@ public abstract class BaseUserGroupResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<UserGroup, Exception> userGroupUnsafeConsumer =
-			userGroup -> postUserGroup(userGroup);
+		UnsafeConsumer<UserGroup, Exception> userGroupUnsafeConsumer = null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
+			userGroupUnsafeConsumer = userGroup -> postUserGroup(userGroup);
+		}
+
+		if ("UPSERT".equalsIgnoreCase(createStrategy)) {
+			userGroupUnsafeConsumer =
+				userGroup -> putUserGroupByExternalReferenceCode(
+					userGroup.getExternalReferenceCode(), userGroup);
+		}
+
+		if (userGroupUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" not supported for UserGroup");
+		}
 
 		if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
@@ -718,11 +737,39 @@ public abstract class BaseUserGroupResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (UserGroup userGroup : userGroups) {
-			putUserGroup(
+		UnsafeConsumer<UserGroup, Exception> userGroupUnsafeConsumer = null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+			userGroupUnsafeConsumer = userGroup -> patchUserGroup(
 				userGroup.getId() != null ? userGroup.getId() :
 					Long.parseLong((String)parameters.get("userGroupId")),
 				userGroup);
+		}
+
+		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+			userGroupUnsafeConsumer = userGroup -> putUserGroup(
+				userGroup.getId() != null ? userGroup.getId() :
+					Long.parseLong((String)parameters.get("userGroupId")),
+				userGroup);
+		}
+
+		if (userGroupUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" not supported for UserGroup");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				userGroups, userGroupUnsafeConsumer);
+		}
+		else {
+			for (UserGroup userGroup : userGroups) {
+				userGroupUnsafeConsumer.accept(userGroup);
+			}
 		}
 	}
 

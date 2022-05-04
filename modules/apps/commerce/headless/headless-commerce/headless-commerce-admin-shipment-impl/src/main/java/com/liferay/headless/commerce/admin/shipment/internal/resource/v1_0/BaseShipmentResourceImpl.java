@@ -54,6 +54,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -704,8 +705,26 @@ public abstract class BaseShipmentResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<Shipment, Exception> shipmentUnsafeConsumer =
-			shipment -> postShipment(shipment);
+		UnsafeConsumer<Shipment, Exception> shipmentUnsafeConsumer = null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
+			shipmentUnsafeConsumer = shipment -> postShipment(shipment);
+		}
+
+		if ("UPSERT".equalsIgnoreCase(createStrategy)) {
+			shipmentUnsafeConsumer =
+				shipment -> putShipmentByExternalReferenceCode(
+					shipment.getExternalReferenceCode(), shipment);
+		}
+
+		if (shipmentUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" not supported for Shipment");
+		}
 
 		if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
@@ -784,6 +803,34 @@ public abstract class BaseShipmentResourceImpl
 			java.util.Collection<Shipment> shipments,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		UnsafeConsumer<Shipment, Exception> shipmentUnsafeConsumer = null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+			shipmentUnsafeConsumer = shipment -> patchShipment(
+				shipment.getId() != null ? shipment.getId() :
+					Long.parseLong((String)parameters.get("shipmentId")),
+				shipment);
+		}
+
+		if (shipmentUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" not supported for Shipment");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				shipments, shipmentUnsafeConsumer);
+		}
+		else {
+			for (Shipment shipment : shipments) {
+				shipmentUnsafeConsumer.accept(shipment);
+			}
+		}
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

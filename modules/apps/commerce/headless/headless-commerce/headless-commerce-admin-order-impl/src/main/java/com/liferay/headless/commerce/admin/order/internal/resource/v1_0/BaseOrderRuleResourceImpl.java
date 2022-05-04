@@ -54,6 +54,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -419,8 +420,20 @@ public abstract class BaseOrderRuleResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<OrderRule, Exception> orderRuleUnsafeConsumer =
-			orderRule -> postOrderRule(orderRule);
+		UnsafeConsumer<OrderRule, Exception> orderRuleUnsafeConsumer = null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
+			orderRuleUnsafeConsumer = orderRule -> postOrderRule(orderRule);
+		}
+
+		if (orderRuleUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" not supported for OrderRule");
+		}
 
 		if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
@@ -499,6 +512,34 @@ public abstract class BaseOrderRuleResourceImpl
 			java.util.Collection<OrderRule> orderRules,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		UnsafeConsumer<OrderRule, Exception> orderRuleUnsafeConsumer = null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+			orderRuleUnsafeConsumer = orderRule -> patchOrderRule(
+				orderRule.getId() != null ? orderRule.getId() :
+					Long.parseLong((String)parameters.get("orderRuleId")),
+				orderRule);
+		}
+
+		if (orderRuleUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" not supported for OrderRule");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				orderRules, orderRuleUnsafeConsumer);
+		}
+		else {
+			for (OrderRule orderRule : orderRules) {
+				orderRuleUnsafeConsumer.accept(orderRule);
+			}
+		}
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

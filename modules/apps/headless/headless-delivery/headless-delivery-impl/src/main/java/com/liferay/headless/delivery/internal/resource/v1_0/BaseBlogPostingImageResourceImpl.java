@@ -55,6 +55,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -347,14 +348,27 @@ public abstract class BaseBlogPostingImageResourceImpl
 		throws Exception {
 
 		UnsafeConsumer<BlogPostingImage, Exception>
+			blogPostingImageUnsafeConsumer = null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
 			blogPostingImageUnsafeConsumer = blogPostingImage -> {
 			};
 
-		if (parameters.containsKey("siteId")) {
-			blogPostingImageUnsafeConsumer =
-				blogPostingImage -> postSiteBlogPostingImage(
-					(Long)parameters.get("siteId"),
-					(MultipartBody)parameters.get("multipartBody"));
+			if (parameters.containsKey("siteId")) {
+				blogPostingImageUnsafeConsumer =
+					blogPostingImage -> postSiteBlogPostingImage(
+						(Long)parameters.get("siteId"),
+						(MultipartBody)parameters.get("multipartBody"));
+			}
+		}
+
+		if (blogPostingImageUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" not supported for BlogPostingImage");
 		}
 
 		if (contextBatchUnsafeConsumer != null) {

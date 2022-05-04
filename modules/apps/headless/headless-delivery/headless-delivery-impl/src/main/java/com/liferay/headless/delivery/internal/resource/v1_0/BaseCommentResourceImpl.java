@@ -54,6 +54,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -1429,10 +1430,22 @@ public abstract class BaseCommentResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<Comment, Exception> commentUnsafeConsumer =
-			comment -> postBlogPostingComment(
+		UnsafeConsumer<Comment, Exception> commentUnsafeConsumer = null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
+			commentUnsafeConsumer = comment -> postBlogPostingComment(
 				Long.parseLong((String)parameters.get("blogPostingId")),
 				comment);
+		}
+
+		if (commentUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" not supported for Comment");
+		}
 
 		if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(comments, commentUnsafeConsumer);
@@ -1513,11 +1526,31 @@ public abstract class BaseCommentResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (Comment comment : comments) {
-			putComment(
+		UnsafeConsumer<Comment, Exception> commentUnsafeConsumer = null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+			commentUnsafeConsumer = comment -> putComment(
 				comment.getId() != null ? comment.getId() :
 					Long.parseLong((String)parameters.get("commentId")),
 				comment);
+		}
+
+		if (commentUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" not supported for Comment");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(comments, commentUnsafeConsumer);
+		}
+		else {
+			for (Comment comment : comments) {
+				commentUnsafeConsumer.accept(comment);
+			}
 		}
 	}
 

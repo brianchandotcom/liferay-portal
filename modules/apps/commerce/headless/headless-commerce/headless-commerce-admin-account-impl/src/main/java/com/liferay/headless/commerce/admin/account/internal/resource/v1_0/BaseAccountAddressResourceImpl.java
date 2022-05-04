@@ -55,6 +55,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -770,11 +771,42 @@ public abstract class BaseAccountAddressResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (AccountAddress accountAddress : accountAddresses) {
-			putAccountAddress(
+		UnsafeConsumer<AccountAddress, Exception> accountAddressUnsafeConsumer =
+			null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+			accountAddressUnsafeConsumer =
+				accountAddress -> patchAccountAddress(
+					accountAddress.getId() != null ? accountAddress.getId() :
+						Long.parseLong(
+							(String)parameters.get("accountAddressId")),
+					accountAddress);
+		}
+
+		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+			accountAddressUnsafeConsumer = accountAddress -> putAccountAddress(
 				accountAddress.getId() != null ? accountAddress.getId() :
 					Long.parseLong((String)parameters.get("accountAddressId")),
 				accountAddress);
+		}
+
+		if (accountAddressUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" not supported for AccountAddress");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				accountAddresses, accountAddressUnsafeConsumer);
+		}
+		else {
+			for (AccountAddress accountAddress : accountAddresses) {
+				accountAddressUnsafeConsumer.accept(accountAddress);
+			}
 		}
 	}
 

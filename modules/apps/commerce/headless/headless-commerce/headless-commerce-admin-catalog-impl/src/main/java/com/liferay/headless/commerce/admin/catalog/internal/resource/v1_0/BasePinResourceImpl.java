@@ -54,6 +54,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -417,6 +418,33 @@ public abstract class BasePinResourceImpl
 			java.util.Collection<Pin> pins,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		UnsafeConsumer<Pin, Exception> pinUnsafeConsumer = null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+			pinUnsafeConsumer = pin -> patchPin(
+				pin.getId() != null ? pin.getId() :
+					Long.parseLong((String)parameters.get("pinId")),
+				pin);
+		}
+
+		if (pinUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" not supported for Pin");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(pins, pinUnsafeConsumer);
+		}
+		else {
+			for (Pin pin : pins) {
+				pinUnsafeConsumer.accept(pin);
+			}
+		}
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

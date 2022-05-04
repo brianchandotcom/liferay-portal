@@ -62,6 +62,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -890,16 +891,29 @@ public abstract class BaseKeywordResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<Keyword, Exception> keywordUnsafeConsumer = keyword -> {
-		};
+		UnsafeConsumer<Keyword, Exception> keywordUnsafeConsumer = null;
 
-		if (parameters.containsKey("assetLibraryId")) {
-			keywordUnsafeConsumer = keyword -> postAssetLibraryKeyword(
-				(Long)parameters.get("assetLibraryId"), keyword);
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
+			keywordUnsafeConsumer = keyword -> {
+			};
+
+			if (parameters.containsKey("assetLibraryId")) {
+				keywordUnsafeConsumer = keyword -> postAssetLibraryKeyword(
+					(Long)parameters.get("assetLibraryId"), keyword);
+			}
+			else if (parameters.containsKey("siteId")) {
+				keywordUnsafeConsumer = keyword -> postSiteKeyword(
+					(Long)parameters.get("siteId"), keyword);
+			}
 		}
-		else if (parameters.containsKey("siteId")) {
-			keywordUnsafeConsumer = keyword -> postSiteKeyword(
-				(Long)parameters.get("siteId"), keyword);
+
+		if (keywordUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" not supported for Keyword");
 		}
 
 		if (contextBatchUnsafeConsumer != null) {
@@ -991,11 +1005,31 @@ public abstract class BaseKeywordResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (Keyword keyword : keywords) {
-			putKeyword(
+		UnsafeConsumer<Keyword, Exception> keywordUnsafeConsumer = null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+			keywordUnsafeConsumer = keyword -> putKeyword(
 				keyword.getId() != null ? keyword.getId() :
 					Long.parseLong((String)parameters.get("keywordId")),
 				keyword);
+		}
+
+		if (keywordUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" not supported for Keyword");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(keywords, keywordUnsafeConsumer);
+		}
+		else {
+			for (Keyword keyword : keywords) {
+				keywordUnsafeConsumer.accept(keyword);
+			}
 		}
 	}
 

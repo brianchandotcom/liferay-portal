@@ -53,6 +53,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriInfo;
@@ -297,6 +298,33 @@ public abstract class BaseDiagramResourceImpl
 			java.util.Collection<Diagram> diagrams,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		UnsafeConsumer<Diagram, Exception> diagramUnsafeConsumer = null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+			diagramUnsafeConsumer = diagram -> patchDiagram(
+				diagram.getId() != null ? diagram.getId() :
+					Long.parseLong((String)parameters.get("diagramId")),
+				diagram);
+		}
+
+		if (diagramUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" not supported for Diagram");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(diagrams, diagramUnsafeConsumer);
+		}
+		else {
+			for (Diagram diagram : diagrams) {
+				diagramUnsafeConsumer.accept(diagram);
+			}
+		}
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

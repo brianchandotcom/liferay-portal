@@ -62,6 +62,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -652,13 +653,26 @@ public abstract class BaseNavigationMenuResourceImpl
 		throws Exception {
 
 		UnsafeConsumer<NavigationMenu, Exception> navigationMenuUnsafeConsumer =
-			navigationMenu -> {
+			null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
+			navigationMenuUnsafeConsumer = navigationMenu -> {
 			};
 
-		if (parameters.containsKey("siteId")) {
-			navigationMenuUnsafeConsumer =
-				navigationMenu -> postSiteNavigationMenu(
-					(Long)parameters.get("siteId"), navigationMenu);
+			if (parameters.containsKey("siteId")) {
+				navigationMenuUnsafeConsumer =
+					navigationMenu -> postSiteNavigationMenu(
+						(Long)parameters.get("siteId"), navigationMenu);
+			}
+		}
+
+		if (navigationMenuUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" not supported for NavigationMenu");
 		}
 
 		if (contextBatchUnsafeConsumer != null) {
@@ -745,11 +759,33 @@ public abstract class BaseNavigationMenuResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (NavigationMenu navigationMenu : navigationMenus) {
-			putNavigationMenu(
+		UnsafeConsumer<NavigationMenu, Exception> navigationMenuUnsafeConsumer =
+			null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+			navigationMenuUnsafeConsumer = navigationMenu -> putNavigationMenu(
 				navigationMenu.getId() != null ? navigationMenu.getId() :
 					Long.parseLong((String)parameters.get("navigationMenuId")),
 				navigationMenu);
+		}
+
+		if (navigationMenuUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" not supported for NavigationMenu");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				navigationMenus, navigationMenuUnsafeConsumer);
+		}
+		else {
+			for (NavigationMenu navigationMenu : navigationMenus) {
+				navigationMenuUnsafeConsumer.accept(navigationMenu);
+			}
 		}
 	}
 

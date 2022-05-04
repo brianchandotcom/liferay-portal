@@ -54,6 +54,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -513,8 +514,21 @@ public abstract class BaseObjectDefinitionResourceImpl
 		throws Exception {
 
 		UnsafeConsumer<ObjectDefinition, Exception>
+			objectDefinitionUnsafeConsumer = null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
 			objectDefinitionUnsafeConsumer =
 				objectDefinition -> postObjectDefinition(objectDefinition);
+		}
+
+		if (objectDefinitionUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" not supported for ObjectDefinition");
+		}
 
 		if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
@@ -595,12 +609,46 @@ public abstract class BaseObjectDefinitionResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (ObjectDefinition objectDefinition : objectDefinitions) {
-			putObjectDefinition(
-				objectDefinition.getId() != null ? objectDefinition.getId() :
-					Long.parseLong(
-						(String)parameters.get("objectDefinitionId")),
-				objectDefinition);
+		UnsafeConsumer<ObjectDefinition, Exception>
+			objectDefinitionUnsafeConsumer = null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+			objectDefinitionUnsafeConsumer =
+				objectDefinition -> patchObjectDefinition(
+					objectDefinition.getId() != null ?
+						objectDefinition.getId() :
+							Long.parseLong(
+								(String)parameters.get("objectDefinitionId")),
+					objectDefinition);
+		}
+
+		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+			objectDefinitionUnsafeConsumer =
+				objectDefinition -> putObjectDefinition(
+					objectDefinition.getId() != null ?
+						objectDefinition.getId() :
+							Long.parseLong(
+								(String)parameters.get("objectDefinitionId")),
+					objectDefinition);
+		}
+
+		if (objectDefinitionUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" not supported for ObjectDefinition");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				objectDefinitions, objectDefinitionUnsafeConsumer);
+		}
+		else {
+			for (ObjectDefinition objectDefinition : objectDefinitions) {
+				objectDefinitionUnsafeConsumer.accept(objectDefinition);
+			}
 		}
 	}
 

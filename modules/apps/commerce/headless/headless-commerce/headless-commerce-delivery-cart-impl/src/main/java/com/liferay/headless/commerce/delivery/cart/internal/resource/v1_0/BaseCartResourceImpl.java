@@ -56,6 +56,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -660,11 +661,38 @@ public abstract class BaseCartResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (Cart cart : carts) {
-			putCart(
+		UnsafeConsumer<Cart, Exception> cartUnsafeConsumer = null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+			cartUnsafeConsumer = cart -> patchCart(
 				cart.getId() != null ? cart.getId() :
 					Long.parseLong((String)parameters.get("cartId")),
 				cart);
+		}
+
+		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+			cartUnsafeConsumer = cart -> putCart(
+				cart.getId() != null ? cart.getId() :
+					Long.parseLong((String)parameters.get("cartId")),
+				cart);
+		}
+
+		if (cartUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" not supported for Cart");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(carts, cartUnsafeConsumer);
+		}
+		else {
+			for (Cart cart : carts) {
+				cartUnsafeConsumer.accept(cart);
+			}
 		}
 	}
 

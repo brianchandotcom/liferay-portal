@@ -54,6 +54,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -654,8 +655,21 @@ public abstract class BaseObjectEntryResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<ObjectEntry, Exception> objectEntryUnsafeConsumer =
-			objectEntry -> postObjectEntry(objectEntry);
+		UnsafeConsumer<ObjectEntry, Exception> objectEntryUnsafeConsumer = null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
+			objectEntryUnsafeConsumer = objectEntry -> postObjectEntry(
+				objectEntry);
+		}
+
+		if (objectEntryUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" not supported for ObjectEntry");
+		}
 
 		if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
@@ -735,11 +749,39 @@ public abstract class BaseObjectEntryResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (ObjectEntry objectEntry : objectEntries) {
-			putObjectEntry(
+		UnsafeConsumer<ObjectEntry, Exception> objectEntryUnsafeConsumer = null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+			objectEntryUnsafeConsumer = objectEntry -> patchObjectEntry(
 				objectEntry.getId() != null ? objectEntry.getId() :
 					Long.parseLong((String)parameters.get("objectEntryId")),
 				objectEntry);
+		}
+
+		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+			objectEntryUnsafeConsumer = objectEntry -> putObjectEntry(
+				objectEntry.getId() != null ? objectEntry.getId() :
+					Long.parseLong((String)parameters.get("objectEntryId")),
+				objectEntry);
+		}
+
+		if (objectEntryUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" not supported for ObjectEntry");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				objectEntries, objectEntryUnsafeConsumer);
+		}
+		else {
+			for (ObjectEntry objectEntry : objectEntries) {
+				objectEntryUnsafeConsumer.accept(objectEntry);
+			}
 		}
 	}
 

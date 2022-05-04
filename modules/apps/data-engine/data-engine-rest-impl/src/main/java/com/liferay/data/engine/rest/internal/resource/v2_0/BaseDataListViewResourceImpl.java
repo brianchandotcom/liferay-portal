@@ -54,6 +54,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -420,9 +421,23 @@ public abstract class BaseDataListViewResourceImpl
 		throws Exception {
 
 		UnsafeConsumer<DataListView, Exception> dataListViewUnsafeConsumer =
-			dataListView -> postDataDefinitionDataListView(
-				Long.parseLong((String)parameters.get("dataDefinitionId")),
-				dataListView);
+			null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
+			dataListViewUnsafeConsumer =
+				dataListView -> postDataDefinitionDataListView(
+					Long.parseLong((String)parameters.get("dataDefinitionId")),
+					dataListView);
+		}
+
+		if (dataListViewUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" not supported for DataListView");
+		}
 
 		if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
@@ -504,11 +519,33 @@ public abstract class BaseDataListViewResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (DataListView dataListView : dataListViews) {
-			putDataListView(
+		UnsafeConsumer<DataListView, Exception> dataListViewUnsafeConsumer =
+			null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+			dataListViewUnsafeConsumer = dataListView -> putDataListView(
 				dataListView.getId() != null ? dataListView.getId() :
 					Long.parseLong((String)parameters.get("dataListViewId")),
 				dataListView);
+		}
+
+		if (dataListViewUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" not supported for DataListView");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				dataListViews, dataListViewUnsafeConsumer);
+		}
+		else {
+			for (DataListView dataListView : dataListViews) {
+				dataListViewUnsafeConsumer.accept(dataListView);
+			}
 		}
 	}
 

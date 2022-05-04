@@ -54,6 +54,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -431,8 +432,20 @@ public abstract class BaseOrderResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<Order, Exception> orderUnsafeConsumer =
-			order -> postOrder(order);
+		UnsafeConsumer<Order, Exception> orderUnsafeConsumer = null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
+			orderUnsafeConsumer = order -> postOrder(order);
+		}
+
+		if (orderUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" not supported for Order");
+		}
 
 		if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(orders, orderUnsafeConsumer);
@@ -510,6 +523,33 @@ public abstract class BaseOrderResourceImpl
 			java.util.Collection<Order> orders,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		UnsafeConsumer<Order, Exception> orderUnsafeConsumer = null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+			orderUnsafeConsumer = order -> patchOrder(
+				order.getId() != null ? order.getId() :
+					Long.parseLong((String)parameters.get("orderId")),
+				order);
+		}
+
+		if (orderUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" not supported for Order");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(orders, orderUnsafeConsumer);
+		}
+		else {
+			for (Order order : orders) {
+				orderUnsafeConsumer.accept(order);
+			}
+		}
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

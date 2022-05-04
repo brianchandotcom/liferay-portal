@@ -54,6 +54,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -626,6 +627,33 @@ public abstract class BaseSkuResourceImpl
 			java.util.Collection<Sku> skus,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		UnsafeConsumer<Sku, Exception> skuUnsafeConsumer = null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+			skuUnsafeConsumer = sku -> patchSku(
+				sku.getId() != null ? sku.getId() :
+					Long.parseLong((String)parameters.get("skuId")),
+				sku);
+		}
+
+		if (skuUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" not supported for Sku");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(skus, skuUnsafeConsumer);
+		}
+		else {
+			for (Sku sku : skus) {
+				skuUnsafeConsumer.accept(sku);
+			}
+		}
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

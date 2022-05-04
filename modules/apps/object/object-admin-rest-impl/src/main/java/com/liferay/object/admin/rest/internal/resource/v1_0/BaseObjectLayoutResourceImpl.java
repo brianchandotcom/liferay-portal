@@ -54,6 +54,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -387,9 +388,24 @@ public abstract class BaseObjectLayoutResourceImpl
 		throws Exception {
 
 		UnsafeConsumer<ObjectLayout, Exception> objectLayoutUnsafeConsumer =
-			objectLayout -> postObjectDefinitionObjectLayout(
-				Long.parseLong((String)parameters.get("objectDefinitionId")),
-				objectLayout);
+			null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
+			objectLayoutUnsafeConsumer =
+				objectLayout -> postObjectDefinitionObjectLayout(
+					Long.parseLong(
+						(String)parameters.get("objectDefinitionId")),
+					objectLayout);
+		}
+
+		if (objectLayoutUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" not supported for ObjectLayout");
+		}
 
 		if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
@@ -471,11 +487,33 @@ public abstract class BaseObjectLayoutResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (ObjectLayout objectLayout : objectLayouts) {
-			putObjectLayout(
+		UnsafeConsumer<ObjectLayout, Exception> objectLayoutUnsafeConsumer =
+			null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+			objectLayoutUnsafeConsumer = objectLayout -> putObjectLayout(
 				objectLayout.getId() != null ? objectLayout.getId() :
 					Long.parseLong((String)parameters.get("objectLayoutId")),
 				objectLayout);
+		}
+
+		if (objectLayoutUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" not supported for ObjectLayout");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				objectLayouts, objectLayoutUnsafeConsumer);
+		}
+		else {
+			for (ObjectLayout objectLayout : objectLayouts) {
+				objectLayoutUnsafeConsumer.accept(objectLayout);
+			}
 		}
 	}
 

@@ -54,6 +54,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -431,8 +432,20 @@ public abstract class BaseOptionResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<Option, Exception> optionUnsafeConsumer =
-			option -> postOption(option);
+		UnsafeConsumer<Option, Exception> optionUnsafeConsumer = null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
+			optionUnsafeConsumer = option -> postOption(option);
+		}
+
+		if (optionUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" not supported for Option");
+		}
 
 		if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(options, optionUnsafeConsumer);
@@ -510,6 +523,33 @@ public abstract class BaseOptionResourceImpl
 			java.util.Collection<Option> options,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		UnsafeConsumer<Option, Exception> optionUnsafeConsumer = null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+			optionUnsafeConsumer = option -> patchOption(
+				option.getId() != null ? option.getId() :
+					Long.parseLong((String)parameters.get("optionId")),
+				option);
+		}
+
+		if (optionUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" not supported for Option");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(options, optionUnsafeConsumer);
+		}
+		else {
+			for (Option option : options) {
+				optionUnsafeConsumer.accept(option);
+			}
+		}
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

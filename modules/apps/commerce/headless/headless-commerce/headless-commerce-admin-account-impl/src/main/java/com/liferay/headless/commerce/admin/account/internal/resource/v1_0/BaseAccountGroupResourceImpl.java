@@ -55,6 +55,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -508,7 +509,21 @@ public abstract class BaseAccountGroupResourceImpl
 		throws Exception {
 
 		UnsafeConsumer<AccountGroup, Exception> accountGroupUnsafeConsumer =
-			accountGroup -> postAccountGroup(accountGroup);
+			null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
+			accountGroupUnsafeConsumer = accountGroup -> postAccountGroup(
+				accountGroup);
+		}
+
+		if (accountGroupUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" not supported for AccountGroup");
+		}
 
 		if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
@@ -587,6 +602,35 @@ public abstract class BaseAccountGroupResourceImpl
 			java.util.Collection<AccountGroup> accountGroups,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		UnsafeConsumer<AccountGroup, Exception> accountGroupUnsafeConsumer =
+			null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+			accountGroupUnsafeConsumer = accountGroup -> patchAccountGroup(
+				accountGroup.getId() != null ? accountGroup.getId() :
+					Long.parseLong((String)parameters.get("accountGroupId")),
+				accountGroup);
+		}
+
+		if (accountGroupUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" not supported for AccountGroup");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				accountGroups, accountGroupUnsafeConsumer);
+		}
+		else {
+			for (AccountGroup accountGroup : accountGroups) {
+				accountGroupUnsafeConsumer.accept(accountGroup);
+			}
+		}
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

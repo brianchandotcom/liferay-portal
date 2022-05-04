@@ -54,6 +54,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -462,9 +463,24 @@ public abstract class BaseObjectActionResourceImpl
 		throws Exception {
 
 		UnsafeConsumer<ObjectAction, Exception> objectActionUnsafeConsumer =
-			objectAction -> postObjectDefinitionObjectAction(
-				Long.parseLong((String)parameters.get("objectDefinitionId")),
-				objectAction);
+			null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
+			objectActionUnsafeConsumer =
+				objectAction -> postObjectDefinitionObjectAction(
+					Long.parseLong(
+						(String)parameters.get("objectDefinitionId")),
+					objectAction);
+		}
+
+		if (objectActionUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" not supported for ObjectAction");
+		}
 
 		if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
@@ -546,11 +562,40 @@ public abstract class BaseObjectActionResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (ObjectAction objectAction : objectActions) {
-			putObjectAction(
+		UnsafeConsumer<ObjectAction, Exception> objectActionUnsafeConsumer =
+			null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+			objectActionUnsafeConsumer = objectAction -> patchObjectAction(
 				objectAction.getId() != null ? objectAction.getId() :
 					Long.parseLong((String)parameters.get("objectActionId")),
 				objectAction);
+		}
+
+		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+			objectActionUnsafeConsumer = objectAction -> putObjectAction(
+				objectAction.getId() != null ? objectAction.getId() :
+					Long.parseLong((String)parameters.get("objectActionId")),
+				objectAction);
+		}
+
+		if (objectActionUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" not supported for ObjectAction");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				objectActions, objectActionUnsafeConsumer);
+		}
+		else {
+			for (ObjectAction objectAction : objectActions) {
+				objectActionUnsafeConsumer.accept(objectAction);
+			}
 		}
 	}
 

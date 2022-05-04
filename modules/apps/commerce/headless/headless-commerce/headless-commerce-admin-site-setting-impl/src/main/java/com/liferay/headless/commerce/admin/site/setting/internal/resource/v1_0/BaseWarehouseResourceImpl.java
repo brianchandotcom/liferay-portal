@@ -54,6 +54,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -417,11 +418,32 @@ public abstract class BaseWarehouseResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (Warehouse warehouse : warehouses) {
-			putWarehouse(
+		UnsafeConsumer<Warehouse, Exception> warehouseUnsafeConsumer = null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+			warehouseUnsafeConsumer = warehouse -> putWarehouse(
 				warehouse.getId() != null ? warehouse.getId() :
 					Long.parseLong((String)parameters.get("warehouseId")),
 				warehouse);
+		}
+
+		if (warehouseUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" not supported for Warehouse");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				warehouses, warehouseUnsafeConsumer);
+		}
+		else {
+			for (Warehouse warehouse : warehouses) {
+				warehouseUnsafeConsumer.accept(warehouse);
+			}
 		}
 	}
 

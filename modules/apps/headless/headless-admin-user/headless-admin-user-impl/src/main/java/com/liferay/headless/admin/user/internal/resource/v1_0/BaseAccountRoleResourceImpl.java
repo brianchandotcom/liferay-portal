@@ -54,6 +54,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -706,10 +707,22 @@ public abstract class BaseAccountRoleResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<AccountRole, Exception> accountRoleUnsafeConsumer =
-			accountRole -> postAccountAccountRole(
+		UnsafeConsumer<AccountRole, Exception> accountRoleUnsafeConsumer = null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
+			accountRoleUnsafeConsumer = accountRole -> postAccountAccountRole(
 				Long.parseLong((String)parameters.get("accountId")),
 				accountRole);
+		}
+
+		if (accountRoleUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" not supported for AccountRole");
+		}
 
 		if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(

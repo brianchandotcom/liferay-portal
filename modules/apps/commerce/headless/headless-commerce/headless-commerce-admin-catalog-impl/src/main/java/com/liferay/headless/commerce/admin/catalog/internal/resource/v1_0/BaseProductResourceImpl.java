@@ -54,6 +54,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -507,8 +508,20 @@ public abstract class BaseProductResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<Product, Exception> productUnsafeConsumer =
-			product -> postProduct(product);
+		UnsafeConsumer<Product, Exception> productUnsafeConsumer = null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
+			productUnsafeConsumer = product -> postProduct(product);
+		}
+
+		if (productUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" not supported for Product");
+		}
 
 		if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(products, productUnsafeConsumer);
@@ -586,6 +599,33 @@ public abstract class BaseProductResourceImpl
 			java.util.Collection<Product> products,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		UnsafeConsumer<Product, Exception> productUnsafeConsumer = null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+			productUnsafeConsumer = product -> patchProduct(
+				product.getId() != null ? product.getId() :
+					Long.parseLong((String)parameters.get("productId")),
+				product);
+		}
+
+		if (productUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" not supported for Product");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(products, productUnsafeConsumer);
+		}
+		else {
+			for (Product product : products) {
+				productUnsafeConsumer.accept(product);
+			}
+		}
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

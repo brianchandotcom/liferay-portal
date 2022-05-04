@@ -54,6 +54,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -449,9 +450,22 @@ public abstract class BaseListTypeDefinitionResourceImpl
 		throws Exception {
 
 		UnsafeConsumer<ListTypeDefinition, Exception>
+			listTypeDefinitionUnsafeConsumer = null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
 			listTypeDefinitionUnsafeConsumer =
 				listTypeDefinition -> postListTypeDefinition(
 					listTypeDefinition);
+		}
+
+		if (listTypeDefinitionUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" not supported for ListTypeDefinition");
+		}
 
 		if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
@@ -532,13 +546,46 @@ public abstract class BaseListTypeDefinitionResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (ListTypeDefinition listTypeDefinition : listTypeDefinitions) {
-			putListTypeDefinition(
-				listTypeDefinition.getId() != null ?
-					listTypeDefinition.getId() :
-						Long.parseLong(
-							(String)parameters.get("listTypeDefinitionId")),
-				listTypeDefinition);
+		UnsafeConsumer<ListTypeDefinition, Exception>
+			listTypeDefinitionUnsafeConsumer = null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+			listTypeDefinitionUnsafeConsumer =
+				listTypeDefinition -> patchListTypeDefinition(
+					listTypeDefinition.getId() != null ?
+						listTypeDefinition.getId() :
+							Long.parseLong(
+								(String)parameters.get("listTypeDefinitionId")),
+					listTypeDefinition);
+		}
+
+		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+			listTypeDefinitionUnsafeConsumer =
+				listTypeDefinition -> putListTypeDefinition(
+					listTypeDefinition.getId() != null ?
+						listTypeDefinition.getId() :
+							Long.parseLong(
+								(String)parameters.get("listTypeDefinitionId")),
+					listTypeDefinition);
+		}
+
+		if (listTypeDefinitionUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" not supported for ListTypeDefinition");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				listTypeDefinitions, listTypeDefinitionUnsafeConsumer);
+		}
+		else {
+			for (ListTypeDefinition listTypeDefinition : listTypeDefinitions) {
+				listTypeDefinitionUnsafeConsumer.accept(listTypeDefinition);
+			}
 		}
 	}
 

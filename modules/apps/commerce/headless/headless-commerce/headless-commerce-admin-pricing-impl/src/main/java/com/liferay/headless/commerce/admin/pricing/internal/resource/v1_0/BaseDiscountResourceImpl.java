@@ -54,6 +54,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -414,8 +415,20 @@ public abstract class BaseDiscountResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<Discount, Exception> discountUnsafeConsumer =
-			discount -> postDiscount(discount);
+		UnsafeConsumer<Discount, Exception> discountUnsafeConsumer = null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
+			discountUnsafeConsumer = discount -> postDiscount(discount);
+		}
+
+		if (discountUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" not supported for Discount");
+		}
 
 		if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
@@ -494,6 +507,34 @@ public abstract class BaseDiscountResourceImpl
 			java.util.Collection<Discount> discounts,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		UnsafeConsumer<Discount, Exception> discountUnsafeConsumer = null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+			discountUnsafeConsumer = discount -> patchDiscount(
+				discount.getId() != null ? discount.getId() :
+					Long.parseLong((String)parameters.get("discountId")),
+				discount);
+		}
+
+		if (discountUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" not supported for Discount");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				discounts, discountUnsafeConsumer);
+		}
+		else {
+			for (Discount discount : discounts) {
+				discountUnsafeConsumer.accept(discount);
+			}
+		}
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

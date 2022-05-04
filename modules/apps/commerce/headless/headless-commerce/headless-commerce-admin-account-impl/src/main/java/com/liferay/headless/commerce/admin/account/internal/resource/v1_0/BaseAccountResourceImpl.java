@@ -56,6 +56,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -580,8 +581,20 @@ public abstract class BaseAccountResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<Account, Exception> accountUnsafeConsumer =
-			account -> postAccount(account);
+		UnsafeConsumer<Account, Exception> accountUnsafeConsumer = null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
+			accountUnsafeConsumer = account -> postAccount(account);
+		}
+
+		if (accountUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" not supported for Account");
+		}
 
 		if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(accounts, accountUnsafeConsumer);
@@ -659,6 +672,33 @@ public abstract class BaseAccountResourceImpl
 			java.util.Collection<Account> accounts,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		UnsafeConsumer<Account, Exception> accountUnsafeConsumer = null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+			accountUnsafeConsumer = account -> patchAccount(
+				account.getId() != null ? account.getId() :
+					Long.parseLong((String)parameters.get("accountId")),
+				account);
+		}
+
+		if (accountUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" not supported for Account");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(accounts, accountUnsafeConsumer);
+		}
+		else {
+			for (Account account : accounts) {
+				accountUnsafeConsumer.accept(account);
+			}
+		}
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

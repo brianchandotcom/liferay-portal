@@ -63,6 +63,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -1316,16 +1317,29 @@ public abstract class BaseMessageBoardThreadResourceImpl
 		throws Exception {
 
 		UnsafeConsumer<MessageBoardThread, Exception>
+			messageBoardThreadUnsafeConsumer = null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
 			messageBoardThreadUnsafeConsumer =
 				messageBoardThread -> postMessageBoardSectionMessageBoardThread(
 					Long.parseLong(
 						(String)parameters.get("messageBoardSectionId")),
 					messageBoardThread);
 
-		if (parameters.containsKey("siteId")) {
-			messageBoardThreadUnsafeConsumer =
-				messageBoardThread -> postSiteMessageBoardThread(
-					(Long)parameters.get("siteId"), messageBoardThread);
+			if (parameters.containsKey("siteId")) {
+				messageBoardThreadUnsafeConsumer =
+					messageBoardThread -> postSiteMessageBoardThread(
+						(Long)parameters.get("siteId"), messageBoardThread);
+			}
+		}
+
+		if (messageBoardThreadUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" not supported for MessageBoardThread");
 		}
 
 		if (contextBatchUnsafeConsumer != null) {
@@ -1416,13 +1430,46 @@ public abstract class BaseMessageBoardThreadResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (MessageBoardThread messageBoardThread : messageBoardThreads) {
-			putMessageBoardThread(
-				messageBoardThread.getId() != null ?
-					messageBoardThread.getId() :
-						Long.parseLong(
-							(String)parameters.get("messageBoardThreadId")),
-				messageBoardThread);
+		UnsafeConsumer<MessageBoardThread, Exception>
+			messageBoardThreadUnsafeConsumer = null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+			messageBoardThreadUnsafeConsumer =
+				messageBoardThread -> patchMessageBoardThread(
+					messageBoardThread.getId() != null ?
+						messageBoardThread.getId() :
+							Long.parseLong(
+								(String)parameters.get("messageBoardThreadId")),
+					messageBoardThread);
+		}
+
+		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+			messageBoardThreadUnsafeConsumer =
+				messageBoardThread -> putMessageBoardThread(
+					messageBoardThread.getId() != null ?
+						messageBoardThread.getId() :
+							Long.parseLong(
+								(String)parameters.get("messageBoardThreadId")),
+					messageBoardThread);
+		}
+
+		if (messageBoardThreadUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" not supported for MessageBoardThread");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				messageBoardThreads, messageBoardThreadUnsafeConsumer);
+		}
+		else {
+			for (MessageBoardThread messageBoardThread : messageBoardThreads) {
+				messageBoardThreadUnsafeConsumer.accept(messageBoardThread);
+			}
 		}
 	}
 

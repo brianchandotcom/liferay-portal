@@ -54,6 +54,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -426,7 +427,21 @@ public abstract class BaseProductGroupResourceImpl
 		throws Exception {
 
 		UnsafeConsumer<ProductGroup, Exception> productGroupUnsafeConsumer =
-			productGroup -> postProductGroup(productGroup);
+			null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
+			productGroupUnsafeConsumer = productGroup -> postProductGroup(
+				productGroup);
+		}
+
+		if (productGroupUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" not supported for ProductGroup");
+		}
 
 		if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
@@ -505,6 +520,35 @@ public abstract class BaseProductGroupResourceImpl
 			java.util.Collection<ProductGroup> productGroups,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		UnsafeConsumer<ProductGroup, Exception> productGroupUnsafeConsumer =
+			null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+			productGroupUnsafeConsumer = productGroup -> patchProductGroup(
+				productGroup.getId() != null ? productGroup.getId() :
+					Long.parseLong((String)parameters.get("productGroupId")),
+				productGroup);
+		}
+
+		if (productGroupUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" not supported for ProductGroup");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				productGroups, productGroupUnsafeConsumer);
+		}
+		else {
+			for (ProductGroup productGroup : productGroups) {
+				productGroupUnsafeConsumer.accept(productGroup);
+			}
+		}
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

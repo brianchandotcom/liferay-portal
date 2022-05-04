@@ -55,6 +55,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -481,11 +482,24 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 		throws Exception {
 
 		UnsafeConsumer<MessageBoardAttachment, Exception>
+			messageBoardAttachmentUnsafeConsumer = null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
 			messageBoardAttachmentUnsafeConsumer = messageBoardAttachment ->
 				postMessageBoardMessageMessageBoardAttachment(
 					Long.parseLong(
 						(String)parameters.get("messageBoardMessageId")),
 					(MultipartBody)parameters.get("multipartBody"));
+		}
+
+		if (messageBoardAttachmentUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" not supported for MessageBoardAttachment");
+		}
 
 		if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(

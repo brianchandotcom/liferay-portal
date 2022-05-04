@@ -54,6 +54,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -432,11 +433,35 @@ public abstract class BaseMeasurementUnitResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (MeasurementUnit measurementUnit : measurementUnits) {
-			putMeasurementUnit(
-				measurementUnit.getId() != null ? measurementUnit.getId() :
-					Long.parseLong((String)parameters.get("measurementUnitId")),
-				measurementUnit);
+		UnsafeConsumer<MeasurementUnit, Exception>
+			measurementUnitUnsafeConsumer = null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+			measurementUnitUnsafeConsumer =
+				measurementUnit -> putMeasurementUnit(
+					measurementUnit.getId() != null ? measurementUnit.getId() :
+						Long.parseLong(
+							(String)parameters.get("measurementUnitId")),
+					measurementUnit);
+		}
+
+		if (measurementUnitUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" not supported for MeasurementUnit");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				measurementUnits, measurementUnitUnsafeConsumer);
+		}
+		else {
+			for (MeasurementUnit measurementUnit : measurementUnits) {
+				measurementUnitUnsafeConsumer.accept(measurementUnit);
+			}
 		}
 	}
 

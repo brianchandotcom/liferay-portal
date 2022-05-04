@@ -55,6 +55,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -341,11 +342,24 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 		throws Exception {
 
 		UnsafeConsumer<KnowledgeBaseAttachment, Exception>
+			knowledgeBaseAttachmentUnsafeConsumer = null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
 			knowledgeBaseAttachmentUnsafeConsumer = knowledgeBaseAttachment ->
 				postKnowledgeBaseArticleKnowledgeBaseAttachment(
 					Long.parseLong(
 						(String)parameters.get("knowledgeBaseArticleId")),
 					(MultipartBody)parameters.get("multipartBody"));
+		}
+
+		if (knowledgeBaseAttachmentUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" not supported for KnowledgeBaseAttachment");
+		}
 
 		if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(

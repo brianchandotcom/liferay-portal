@@ -64,6 +64,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -1124,13 +1125,33 @@ public abstract class BaseBlogPostingResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<BlogPosting, Exception> blogPostingUnsafeConsumer =
-			blogPosting -> {
+		UnsafeConsumer<BlogPosting, Exception> blogPostingUnsafeConsumer = null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
+			blogPostingUnsafeConsumer = blogPosting -> {
 			};
 
-		if (parameters.containsKey("siteId")) {
-			blogPostingUnsafeConsumer = blogPosting -> postSiteBlogPosting(
-				(Long)parameters.get("siteId"), blogPosting);
+			if (parameters.containsKey("siteId")) {
+				blogPostingUnsafeConsumer = blogPosting -> postSiteBlogPosting(
+					(Long)parameters.get("siteId"), blogPosting);
+			}
+		}
+
+		if ("UPSERT".equalsIgnoreCase(createStrategy)) {
+			blogPostingUnsafeConsumer =
+				blogPosting -> putSiteBlogPostingByExternalReferenceCode(
+					blogPosting.getSiteId() != null ? blogPosting.getSiteId() :
+						(Long)parameters.get("siteId"),
+					blogPosting.getExternalReferenceCode(), blogPosting);
+		}
+
+		if (blogPostingUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" not supported for BlogPosting");
 		}
 
 		if (contextBatchUnsafeConsumer != null) {
@@ -1218,11 +1239,39 @@ public abstract class BaseBlogPostingResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (BlogPosting blogPosting : blogPostings) {
-			putBlogPosting(
+		UnsafeConsumer<BlogPosting, Exception> blogPostingUnsafeConsumer = null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+			blogPostingUnsafeConsumer = blogPosting -> patchBlogPosting(
 				blogPosting.getId() != null ? blogPosting.getId() :
 					Long.parseLong((String)parameters.get("blogPostingId")),
 				blogPosting);
+		}
+
+		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+			blogPostingUnsafeConsumer = blogPosting -> putBlogPosting(
+				blogPosting.getId() != null ? blogPosting.getId() :
+					Long.parseLong((String)parameters.get("blogPostingId")),
+				blogPosting);
+		}
+
+		if (blogPostingUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" not supported for BlogPosting");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				blogPostings, blogPostingUnsafeConsumer);
+		}
+		else {
+			for (BlogPosting blogPosting : blogPostings) {
+				blogPostingUnsafeConsumer.accept(blogPosting);
+			}
 		}
 	}
 

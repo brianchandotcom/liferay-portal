@@ -54,6 +54,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -416,10 +417,24 @@ public abstract class BaseObjectViewResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<ObjectView, Exception> objectViewUnsafeConsumer =
-			objectView -> postObjectDefinitionObjectView(
-				Long.parseLong((String)parameters.get("objectDefinitionId")),
-				objectView);
+		UnsafeConsumer<ObjectView, Exception> objectViewUnsafeConsumer = null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
+			objectViewUnsafeConsumer =
+				objectView -> postObjectDefinitionObjectView(
+					Long.parseLong(
+						(String)parameters.get("objectDefinitionId")),
+					objectView);
+		}
+
+		if (objectViewUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" not supported for ObjectView");
+		}
 
 		if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
@@ -501,11 +516,32 @@ public abstract class BaseObjectViewResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (ObjectView objectView : objectViews) {
-			putObjectView(
+		UnsafeConsumer<ObjectView, Exception> objectViewUnsafeConsumer = null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+			objectViewUnsafeConsumer = objectView -> putObjectView(
 				objectView.getId() != null ? objectView.getId() :
 					Long.parseLong((String)parameters.get("objectViewId")),
 				objectView);
+		}
+
+		if (objectViewUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" not supported for ObjectView");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				objectViews, objectViewUnsafeConsumer);
+		}
+		else {
+			for (ObjectView objectView : objectViews) {
+				objectViewUnsafeConsumer.accept(objectView);
+			}
 		}
 	}
 

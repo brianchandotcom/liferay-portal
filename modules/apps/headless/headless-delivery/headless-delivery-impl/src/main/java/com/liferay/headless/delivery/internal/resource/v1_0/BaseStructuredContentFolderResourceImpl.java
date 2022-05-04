@@ -62,6 +62,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -1312,20 +1313,34 @@ public abstract class BaseStructuredContentFolderResourceImpl
 		throws Exception {
 
 		UnsafeConsumer<StructuredContentFolder, Exception>
+			structuredContentFolderUnsafeConsumer = null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
 			structuredContentFolderUnsafeConsumer = structuredContentFolder -> {
 			};
 
-		if (parameters.containsKey("assetLibraryId")) {
-			structuredContentFolderUnsafeConsumer =
-				structuredContentFolder ->
-					postAssetLibraryStructuredContentFolder(
-						(Long)parameters.get("assetLibraryId"),
+			if (parameters.containsKey("assetLibraryId")) {
+				structuredContentFolderUnsafeConsumer =
+					structuredContentFolder ->
+						postAssetLibraryStructuredContentFolder(
+							(Long)parameters.get("assetLibraryId"),
+							structuredContentFolder);
+			}
+			else if (parameters.containsKey("siteId")) {
+				structuredContentFolderUnsafeConsumer =
+					structuredContentFolder -> postSiteStructuredContentFolder(
+						(Long)parameters.get("siteId"),
 						structuredContentFolder);
+			}
 		}
-		else if (parameters.containsKey("siteId")) {
-			structuredContentFolderUnsafeConsumer =
-				structuredContentFolder -> postSiteStructuredContentFolder(
-					(Long)parameters.get("siteId"), structuredContentFolder);
+
+		if (structuredContentFolderUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" not supported for StructuredContentFolder");
 		}
 
 		if (contextBatchUnsafeConsumer != null) {
@@ -1428,16 +1443,52 @@ public abstract class BaseStructuredContentFolderResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (StructuredContentFolder structuredContentFolder :
-				structuredContentFolders) {
+		UnsafeConsumer<StructuredContentFolder, Exception>
+			structuredContentFolderUnsafeConsumer = null;
 
-			putStructuredContentFolder(
-				structuredContentFolder.getId() != null ?
-					structuredContentFolder.getId() :
-						Long.parseLong(
-							(String)parameters.get(
-								"structuredContentFolderId")),
-				structuredContentFolder);
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+			structuredContentFolderUnsafeConsumer =
+				structuredContentFolder -> patchStructuredContentFolder(
+					structuredContentFolder.getId() != null ?
+						structuredContentFolder.getId() :
+							Long.parseLong(
+								(String)parameters.get(
+									"structuredContentFolderId")),
+					structuredContentFolder);
+		}
+
+		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+			structuredContentFolderUnsafeConsumer =
+				structuredContentFolder -> putStructuredContentFolder(
+					structuredContentFolder.getId() != null ?
+						structuredContentFolder.getId() :
+							Long.parseLong(
+								(String)parameters.get(
+									"structuredContentFolderId")),
+					structuredContentFolder);
+		}
+
+		if (structuredContentFolderUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" not supported for StructuredContentFolder");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				structuredContentFolders,
+				structuredContentFolderUnsafeConsumer);
+		}
+		else {
+			for (StructuredContentFolder structuredContentFolder :
+					structuredContentFolders) {
+
+				structuredContentFolderUnsafeConsumer.accept(
+					structuredContentFolder);
+			}
 		}
 	}
 

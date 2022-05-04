@@ -54,6 +54,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -584,6 +585,34 @@ public abstract class BaseTierPriceResourceImpl
 			java.util.Collection<TierPrice> tierPrices,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		UnsafeConsumer<TierPrice, Exception> tierPriceUnsafeConsumer = null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+			tierPriceUnsafeConsumer = tierPrice -> patchTierPrice(
+				tierPrice.getId() != null ? tierPrice.getId() :
+					Long.parseLong((String)parameters.get("tierPriceId")),
+				tierPrice);
+		}
+
+		if (tierPriceUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" not supported for TierPrice");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				tierPrices, tierPriceUnsafeConsumer);
+		}
+		else {
+			for (TierPrice tierPrice : tierPrices) {
+				tierPriceUnsafeConsumer.accept(tierPrice);
+			}
+		}
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

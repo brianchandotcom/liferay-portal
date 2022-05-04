@@ -54,6 +54,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -343,8 +344,20 @@ public abstract class BaseProcessResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<Process, Exception> processUnsafeConsumer =
-			process -> postProcess(process);
+		UnsafeConsumer<Process, Exception> processUnsafeConsumer = null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
+			processUnsafeConsumer = process -> postProcess(process);
+		}
+
+		if (processUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" not supported for Process");
+		}
 
 		if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(processes, processUnsafeConsumer);
@@ -423,11 +436,31 @@ public abstract class BaseProcessResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (Process process : processes) {
-			putProcess(
+		UnsafeConsumer<Process, Exception> processUnsafeConsumer = null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+			processUnsafeConsumer = process -> putProcess(
 				process.getId() != null ? process.getId() :
 					Long.parseLong((String)parameters.get("processId")),
 				process);
+		}
+
+		if (processUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" not supported for Process");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(processes, processUnsafeConsumer);
+		}
+		else {
+			for (Process process : processes) {
+				processUnsafeConsumer.accept(process);
+			}
 		}
 	}
 

@@ -54,6 +54,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -608,6 +609,34 @@ public abstract class BaseOptionValueResourceImpl
 			java.util.Collection<OptionValue> optionValues,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		UnsafeConsumer<OptionValue, Exception> optionValueUnsafeConsumer = null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+			optionValueUnsafeConsumer = optionValue -> patchOptionValue(
+				optionValue.getId() != null ? optionValue.getId() :
+					Long.parseLong((String)parameters.get("optionValueId")),
+				optionValue);
+		}
+
+		if (optionValueUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" not supported for OptionValue");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				optionValues, optionValueUnsafeConsumer);
+		}
+		else {
+			for (OptionValue optionValue : optionValues) {
+				optionValueUnsafeConsumer.accept(optionValue);
+			}
+		}
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

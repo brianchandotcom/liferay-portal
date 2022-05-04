@@ -55,6 +55,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -320,10 +321,23 @@ public abstract class BaseWikiPageAttachmentResourceImpl
 		throws Exception {
 
 		UnsafeConsumer<WikiPageAttachment, Exception>
+			wikiPageAttachmentUnsafeConsumer = null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
 			wikiPageAttachmentUnsafeConsumer =
 				wikiPageAttachment -> postWikiPageWikiPageAttachment(
 					Long.parseLong((String)parameters.get("wikiPageId")),
 					(MultipartBody)parameters.get("multipartBody"));
+		}
+
+		if (wikiPageAttachmentUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" not supported for WikiPageAttachment");
+		}
 
 		if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(

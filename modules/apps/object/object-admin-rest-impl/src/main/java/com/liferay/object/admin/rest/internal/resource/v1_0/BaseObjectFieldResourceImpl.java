@@ -54,6 +54,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -474,10 +475,24 @@ public abstract class BaseObjectFieldResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<ObjectField, Exception> objectFieldUnsafeConsumer =
-			objectField -> postObjectDefinitionObjectField(
-				Long.parseLong((String)parameters.get("objectDefinitionId")),
-				objectField);
+		UnsafeConsumer<ObjectField, Exception> objectFieldUnsafeConsumer = null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
+			objectFieldUnsafeConsumer =
+				objectField -> postObjectDefinitionObjectField(
+					Long.parseLong(
+						(String)parameters.get("objectDefinitionId")),
+					objectField);
+		}
+
+		if (objectFieldUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" not supported for ObjectField");
+		}
 
 		if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
@@ -559,11 +574,39 @@ public abstract class BaseObjectFieldResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (ObjectField objectField : objectFields) {
-			putObjectField(
+		UnsafeConsumer<ObjectField, Exception> objectFieldUnsafeConsumer = null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+			objectFieldUnsafeConsumer = objectField -> patchObjectField(
 				objectField.getId() != null ? objectField.getId() :
 					Long.parseLong((String)parameters.get("objectFieldId")),
 				objectField);
+		}
+
+		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+			objectFieldUnsafeConsumer = objectField -> putObjectField(
+				objectField.getId() != null ? objectField.getId() :
+					Long.parseLong((String)parameters.get("objectFieldId")),
+				objectField);
+		}
+
+		if (objectFieldUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" not supported for ObjectField");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				objectFields, objectFieldUnsafeConsumer);
+		}
+		else {
+			for (ObjectField objectField : objectFields) {
+				objectFieldUnsafeConsumer.accept(objectField);
+			}
 		}
 	}
 

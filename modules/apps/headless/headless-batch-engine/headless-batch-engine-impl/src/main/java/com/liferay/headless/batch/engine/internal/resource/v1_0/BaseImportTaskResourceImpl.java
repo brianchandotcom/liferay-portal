@@ -308,6 +308,10 @@ public abstract class BaseImportTaskResourceImpl implements ImportTaskResource {
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "createStrategy"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "externalReferenceCode"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -346,6 +350,9 @@ public abstract class BaseImportTaskResourceImpl implements ImportTaskResource {
 			@javax.ws.rs.QueryParam("callbackURL")
 			String callbackURL,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("createStrategy")
+			String createStrategy,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("externalReferenceCode")
 			String externalReferenceCode,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
@@ -383,6 +390,10 @@ public abstract class BaseImportTaskResourceImpl implements ImportTaskResource {
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "createStrategy"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "externalReferenceCode"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -415,6 +426,9 @@ public abstract class BaseImportTaskResourceImpl implements ImportTaskResource {
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("callbackURL")
 			String callbackURL,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("createStrategy")
+			String createStrategy,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("externalReferenceCode")
 			String externalReferenceCode,
@@ -462,6 +476,10 @@ public abstract class BaseImportTaskResourceImpl implements ImportTaskResource {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "taskItemDelegateName"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "updateStrategy"
 			)
 		}
 	)
@@ -495,6 +513,9 @@ public abstract class BaseImportTaskResourceImpl implements ImportTaskResource {
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("taskItemDelegateName")
 			String taskItemDelegateName,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("updateStrategy")
+			String updateStrategy,
 			Object object)
 		throws Exception {
 
@@ -530,6 +551,10 @@ public abstract class BaseImportTaskResourceImpl implements ImportTaskResource {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "taskItemDelegateName"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "updateStrategy"
 			)
 		}
 	)
@@ -558,6 +583,9 @@ public abstract class BaseImportTaskResourceImpl implements ImportTaskResource {
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("taskItemDelegateName")
 			String taskItemDelegateName,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("updateStrategy")
+			String updateStrategy,
 			MultipartBody multipartBody)
 		throws Exception {
 

@@ -62,6 +62,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -956,11 +957,35 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 		throws Exception {
 
 		UnsafeConsumer<TaxonomyCategory, Exception>
+			taxonomyCategoryUnsafeConsumer = null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
 			taxonomyCategoryUnsafeConsumer =
 				taxonomyCategory -> postTaxonomyVocabularyTaxonomyCategory(
 					Long.parseLong(
 						(String)parameters.get("taxonomyVocabularyId")),
 					taxonomyCategory);
+		}
+
+		if ("UPSERT".equalsIgnoreCase(createStrategy)) {
+			taxonomyCategoryUnsafeConsumer = taxonomyCategory ->
+				putTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode(
+					taxonomyCategory.getTaxonomyVocabularyId() != null ?
+						taxonomyCategory.getTaxonomyVocabularyId() :
+							Long.parseLong(
+								(String)parameters.get("taxonomyVocabularyId")),
+					taxonomyCategory.getExternalReferenceCode(),
+					taxonomyCategory);
+		}
+
+		if (taxonomyCategoryUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" not supported for TaxonomyCategory");
+		}
 
 		if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
@@ -1040,11 +1065,44 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (TaxonomyCategory taxonomyCategory : taxonomyCategories) {
-			putTaxonomyCategory(
-				taxonomyCategory.getId() != null ? taxonomyCategory.getId() :
-					(String)parameters.get("taxonomyCategoryId"),
-				taxonomyCategory);
+		UnsafeConsumer<TaxonomyCategory, Exception>
+			taxonomyCategoryUnsafeConsumer = null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+			taxonomyCategoryUnsafeConsumer =
+				taxonomyCategory -> patchTaxonomyCategory(
+					taxonomyCategory.getId() != null ?
+						taxonomyCategory.getId() :
+							(String)parameters.get("taxonomyCategoryId"),
+					taxonomyCategory);
+		}
+
+		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+			taxonomyCategoryUnsafeConsumer =
+				taxonomyCategory -> putTaxonomyCategory(
+					taxonomyCategory.getId() != null ?
+						taxonomyCategory.getId() :
+							(String)parameters.get("taxonomyCategoryId"),
+					taxonomyCategory);
+		}
+
+		if (taxonomyCategoryUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" not supported for TaxonomyCategory");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				taxonomyCategories, taxonomyCategoryUnsafeConsumer);
+		}
+		else {
+			for (TaxonomyCategory taxonomyCategory : taxonomyCategories) {
+				taxonomyCategoryUnsafeConsumer.accept(taxonomyCategory);
+			}
 		}
 	}
 

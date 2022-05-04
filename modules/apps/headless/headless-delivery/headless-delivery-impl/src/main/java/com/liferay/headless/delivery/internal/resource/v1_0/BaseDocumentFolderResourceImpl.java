@@ -62,6 +62,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -1237,18 +1238,31 @@ public abstract class BaseDocumentFolderResourceImpl
 		throws Exception {
 
 		UnsafeConsumer<DocumentFolder, Exception> documentFolderUnsafeConsumer =
-			documentFolder -> {
+			null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
+			documentFolderUnsafeConsumer = documentFolder -> {
 			};
 
-		if (parameters.containsKey("assetLibraryId")) {
-			documentFolderUnsafeConsumer =
-				documentFolder -> postAssetLibraryDocumentFolder(
-					(Long)parameters.get("assetLibraryId"), documentFolder);
+			if (parameters.containsKey("assetLibraryId")) {
+				documentFolderUnsafeConsumer =
+					documentFolder -> postAssetLibraryDocumentFolder(
+						(Long)parameters.get("assetLibraryId"), documentFolder);
+			}
+			else if (parameters.containsKey("siteId")) {
+				documentFolderUnsafeConsumer =
+					documentFolder -> postSiteDocumentFolder(
+						(Long)parameters.get("siteId"), documentFolder);
+			}
 		}
-		else if (parameters.containsKey("siteId")) {
-			documentFolderUnsafeConsumer =
-				documentFolder -> postSiteDocumentFolder(
-					(Long)parameters.get("siteId"), documentFolder);
+
+		if (documentFolderUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" not supported for DocumentFolder");
 		}
 
 		if (contextBatchUnsafeConsumer != null) {
@@ -1343,11 +1357,42 @@ public abstract class BaseDocumentFolderResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (DocumentFolder documentFolder : documentFolders) {
-			putDocumentFolder(
+		UnsafeConsumer<DocumentFolder, Exception> documentFolderUnsafeConsumer =
+			null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+			documentFolderUnsafeConsumer =
+				documentFolder -> patchDocumentFolder(
+					documentFolder.getId() != null ? documentFolder.getId() :
+						Long.parseLong(
+							(String)parameters.get("documentFolderId")),
+					documentFolder);
+		}
+
+		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+			documentFolderUnsafeConsumer = documentFolder -> putDocumentFolder(
 				documentFolder.getId() != null ? documentFolder.getId() :
 					Long.parseLong((String)parameters.get("documentFolderId")),
 				documentFolder);
+		}
+
+		if (documentFolderUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" not supported for DocumentFolder");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				documentFolders, documentFolderUnsafeConsumer);
+		}
+		else {
+			for (DocumentFolder documentFolder : documentFolders) {
+				documentFolderUnsafeConsumer.accept(documentFolder);
+			}
 		}
 	}
 

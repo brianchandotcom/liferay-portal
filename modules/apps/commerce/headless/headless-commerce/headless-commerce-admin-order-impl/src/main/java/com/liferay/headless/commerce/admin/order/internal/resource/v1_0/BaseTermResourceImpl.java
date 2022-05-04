@@ -54,6 +54,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -413,8 +414,20 @@ public abstract class BaseTermResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<Term, Exception> termUnsafeConsumer = term -> postTerm(
-			term);
+		UnsafeConsumer<Term, Exception> termUnsafeConsumer = null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
+			termUnsafeConsumer = term -> postTerm(term);
+		}
+
+		if (termUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" not supported for Term");
+		}
 
 		if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(terms, termUnsafeConsumer);
@@ -492,6 +505,33 @@ public abstract class BaseTermResourceImpl
 			java.util.Collection<Term> terms,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		UnsafeConsumer<Term, Exception> termUnsafeConsumer = null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+			termUnsafeConsumer = term -> patchTerm(
+				term.getId() != null ? term.getId() :
+					Long.parseLong((String)parameters.get("termId")),
+				term);
+		}
+
+		if (termUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" not supported for Term");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(terms, termUnsafeConsumer);
+		}
+		else {
+			for (Term term : terms) {
+				termUnsafeConsumer.accept(term);
+			}
+		}
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

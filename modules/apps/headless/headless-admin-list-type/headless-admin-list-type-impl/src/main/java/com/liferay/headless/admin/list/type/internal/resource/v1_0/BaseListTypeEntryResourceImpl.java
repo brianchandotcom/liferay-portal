@@ -54,6 +54,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -419,9 +420,24 @@ public abstract class BaseListTypeEntryResourceImpl
 		throws Exception {
 
 		UnsafeConsumer<ListTypeEntry, Exception> listTypeEntryUnsafeConsumer =
-			listTypeEntry -> postListTypeDefinitionListTypeEntry(
-				Long.parseLong((String)parameters.get("listTypeDefinitionId")),
-				listTypeEntry);
+			null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
+			listTypeEntryUnsafeConsumer =
+				listTypeEntry -> postListTypeDefinitionListTypeEntry(
+					Long.parseLong(
+						(String)parameters.get("listTypeDefinitionId")),
+					listTypeEntry);
+		}
+
+		if (listTypeEntryUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" not supported for ListTypeEntry");
+		}
 
 		if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
@@ -501,11 +517,33 @@ public abstract class BaseListTypeEntryResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (ListTypeEntry listTypeEntry : listTypeEntries) {
-			putListTypeEntry(
+		UnsafeConsumer<ListTypeEntry, Exception> listTypeEntryUnsafeConsumer =
+			null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+			listTypeEntryUnsafeConsumer = listTypeEntry -> putListTypeEntry(
 				listTypeEntry.getId() != null ? listTypeEntry.getId() :
 					Long.parseLong((String)parameters.get("listTypeEntryId")),
 				listTypeEntry);
+		}
+
+		if (listTypeEntryUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" not supported for ListTypeEntry");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				listTypeEntries, listTypeEntryUnsafeConsumer);
+		}
+		else {
+			for (ListTypeEntry listTypeEntry : listTypeEntries) {
+				listTypeEntryUnsafeConsumer.accept(listTypeEntry);
+			}
 		}
 	}
 

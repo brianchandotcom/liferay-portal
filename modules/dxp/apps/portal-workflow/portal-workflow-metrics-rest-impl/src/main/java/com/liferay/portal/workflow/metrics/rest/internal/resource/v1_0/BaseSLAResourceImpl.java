@@ -54,6 +54,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -402,9 +403,21 @@ public abstract class BaseSLAResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeConsumer<SLA, Exception> slaUnsafeConsumer =
-			sla -> postProcessSLA(
+		UnsafeConsumer<SLA, Exception> slaUnsafeConsumer = null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if ("INSERT".equalsIgnoreCase(createStrategy)) {
+			slaUnsafeConsumer = sla -> postProcessSLA(
 				Long.parseLong((String)parameters.get("processId")), sla);
+		}
+
+		if (slaUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" not supported for Sla");
+		}
 
 		if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(slas, slaUnsafeConsumer);
@@ -485,11 +498,31 @@ public abstract class BaseSLAResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (SLA sla : slas) {
-			putSLA(
+		UnsafeConsumer<SLA, Exception> slaUnsafeConsumer = null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+			slaUnsafeConsumer = sla -> putSLA(
 				sla.getId() != null ? sla.getId() :
 					Long.parseLong((String)parameters.get("slaId")),
 				sla);
+		}
+
+		if (slaUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" not supported for Sla");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(slas, slaUnsafeConsumer);
+		}
+		else {
+			for (SLA sla : slas) {
+				slaUnsafeConsumer.accept(sla);
+			}
 		}
 	}
 

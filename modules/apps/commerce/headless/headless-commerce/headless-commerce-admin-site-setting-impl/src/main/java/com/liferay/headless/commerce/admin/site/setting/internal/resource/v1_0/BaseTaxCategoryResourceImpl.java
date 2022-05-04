@@ -54,6 +54,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -410,11 +411,32 @@ public abstract class BaseTaxCategoryResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (TaxCategory taxCategory : taxCategories) {
-			putTaxCategory(
+		UnsafeConsumer<TaxCategory, Exception> taxCategoryUnsafeConsumer = null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("UPDATE".equalsIgnoreCase(updateStrategy)) {
+			taxCategoryUnsafeConsumer = taxCategory -> putTaxCategory(
 				taxCategory.getId() != null ? taxCategory.getId() :
 					Long.parseLong((String)parameters.get("taxCategoryId")),
 				taxCategory);
+		}
+
+		if (taxCategoryUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" not supported for TaxCategory");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				taxCategories, taxCategoryUnsafeConsumer);
+		}
+		else {
+			for (TaxCategory taxCategory : taxCategories) {
+				taxCategoryUnsafeConsumer.accept(taxCategory);
+			}
 		}
 	}
 

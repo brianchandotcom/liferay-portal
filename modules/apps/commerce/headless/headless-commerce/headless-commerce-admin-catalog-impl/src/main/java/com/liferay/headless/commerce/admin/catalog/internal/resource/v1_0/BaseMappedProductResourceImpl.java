@@ -54,6 +54,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.NotSupportedException;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -517,6 +518,35 @@ public abstract class BaseMappedProductResourceImpl
 			java.util.Collection<MappedProduct> mappedProducts,
 			Map<String, Serializable> parameters)
 		throws Exception {
+
+		UnsafeConsumer<MappedProduct, Exception> mappedProductUnsafeConsumer =
+			null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if ("PARTIAL_UPDATE".equalsIgnoreCase(updateStrategy)) {
+			mappedProductUnsafeConsumer = mappedProduct -> patchMappedProduct(
+				mappedProduct.getId() != null ? mappedProduct.getId() :
+					Long.parseLong((String)parameters.get("mappedProductId")),
+				mappedProduct);
+		}
+
+		if (mappedProductUnsafeConsumer == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" not supported for MappedProduct");
+		}
+
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				mappedProducts, mappedProductUnsafeConsumer);
+		}
+		else {
+			for (MappedProduct mappedProduct : mappedProducts) {
+				mappedProductUnsafeConsumer.accept(mappedProduct);
+			}
+		}
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

@@ -23,18 +23,23 @@ import EditSXPElementForm from './EditSXPElementForm';
 /**
  * Gets the formatted description_i18n object from the sxp element response.
  * Also creates an object using the default locale and `description` field if
- * the description_i18n object is undefined.
+ * the description_i18n object is undefined. If the description_i18n object is
+ * {}, it will return object with placeholder: {'en_US': ''}.
  *
- * The expected return format is: [{'en_US': 'description'}]
+ * The expected return format is: {'en_US': 'description'}
  * @param {object} sxpElementResponse The response object from the GET
  * 	sxp-elements
  * @param {string} defaultLocale The default locale
- * @returns {Array}
+ * @returns {object}
  */
 const getDescriptionI18n = (sxpElementResponse, defaultLocale) => {
-	const descriptionObject = sxpElementResponse.description_i18n || {
+	let descriptionObject = sxpElementResponse.description_i18n || {
 		[defaultLocale]: sxpElementResponse.description,
 	};
+
+	if (Object.keys(descriptionObject).length === 0) {
+		descriptionObject = {[defaultLocale]: ''};
+	}
 
 	return renameKeys(descriptionObject, (str) => str.replace('-', '_'));
 };
@@ -44,7 +49,7 @@ const getDescriptionI18n = (sxpElementResponse, defaultLocale) => {
  * @param {object} sxpElementResponse The response object from the GET
  * 	sxp-elements
  * @param {string} defaultLocale The default locale
- * @returns {Array}
+ * @returns {object}
  */
 const getTitleI18n = (sxpElementResponse, defaultLocale) => {
 	const titleObject = sxpElementResponse.title_i18n || {

@@ -604,6 +604,9 @@
 			}
 		},
 
+		/**
+		 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+		 */
 		rowCheckerCheckAllBox(
 			ancestorTable,
 			ancestorRow,

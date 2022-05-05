@@ -139,8 +139,6 @@ definition {
 			productName = "Grouped T-Shirt",
 			productType = "Grouped");
 
-		AssertElementPresent(locator1 = "Message#SUCCESS");
-
 		Click(locator1 = "Icon#BACK");
 
 		AssertElementPresent(

@@ -86,6 +86,7 @@ definition {
 	@description = "Verify users can add a minimum order amount rule that applies to order subtotals. Orders that have a subtotal less than the minimum cannot be checked out"
 	@priority = "3"
 	test AddAnOrderRuleOfTypeMinimumOrderSubtotalAmount {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property osgi.module.configuration.file.names = "com.liferay.commerce.order.rule.configuration.COREntryConfiguration.config";
 		property osgi.module.configurations = "enabled=&quot;true&quot;";
 		property portal.acceptance = "false";
@@ -989,6 +990,7 @@ definition {
 	@description = ""
 	@priority = "3"
 	test MakeAnOrderWithThreeActiveMinimumOrderAmountsWithDifferentPriority {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property osgi.module.configuration.file.names = "com.liferay.commerce.order.rule.configuration.COREntryConfiguration.config";
 		property osgi.module.configurations = "enabled=&quot;true&quot;";
 		property portal.acceptance = "false";

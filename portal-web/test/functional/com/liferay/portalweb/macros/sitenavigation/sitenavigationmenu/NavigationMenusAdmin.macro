@@ -235,18 +235,9 @@ definition {
 	}
 
 	macro deleteCP {
-		if (isSet(deleteAll)) {
-			ManagementBar.clickSelectAllCheckbox();
-
-			Click(
-				key_text = "trash",
-				locator1 = "ManagementBar#ANY_ICON");
-		}
-		else {
-			LexiconEntry.gotoEntryMenuItem(
-				menuItem = "Delete",
-				rowEntry = "${navigationMenuName}");
-		}
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Delete",
+			rowEntry = "${navigationMenuName}");
 
 		AssertTextEquals(
 			locator1 = "Modal#BODY",

@@ -23,7 +23,6 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -34,11 +33,7 @@ public class BeanTestUtil {
 	public static void copyProperties(Object source, Object target)
 		throws Exception {
 
-		Class<?> sourceClass = source.getClass();
-
-		if (_hasSuperClass(sourceClass)) {
-			sourceClass = sourceClass.getSuperclass();
-		}
+		Class<?> sourceClass = _getSuperClass(source.getClass());
 
 		Class<?> targetClass = target.getClass();
 
@@ -107,16 +102,14 @@ public class BeanTestUtil {
 			parameterTypes);
 	}
 
-	private static boolean _hasSuperClass(Class<?> clazz) {
+	private static Class<?> _getSuperClass(Class<?> clazz) {
 		Class<?> superClass = clazz.getSuperclass();
 
-		if ((superClass != null) &&
-			!Objects.equals(superClass.getName(), "java.lang.Object")) {
-
-			return true;
+		if ((superClass == null) || (superClass == Object.class)) {
+			return clazz;
 		}
 
-		return false;
+		return superClass;
 	}
 
 	private static Object _translateValue(

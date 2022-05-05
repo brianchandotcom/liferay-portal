@@ -140,7 +140,7 @@ definition {
 			value1 = "${assignedPropertyName}");
 	}
 
-	@description = "Feature ID: Release 3.1.7 | Automation ID: LRAC-10892 | Test Summary: Change the AC page default language"
+	@description = "Bug: LRAC-10856 | Automation ID: LRAC-10892 | Test Summary: Change the AC page default language"
 	@priority = "2"
 	test ChangeDefaultLanguage {
 		var sidebarList1 = "Sites,Recursos,Eventos,Segmentos,Contas,Indivíduos,Testes";
@@ -157,7 +157,7 @@ definition {
 		}
 
 		task ("View AC sidebar changed language") {
-			ACNavigation.assertSidebarOptionLanguage(sidebarOptions = "${sidebarList1}");
+			ACUtils.viewGenericText(textValueList = "${sidebarList1}");
 		}
 
 		task ("Change language back in AC") {
@@ -165,7 +165,7 @@ definition {
 		}
 
 		task ("View AC sidebar changed language") {
-			ACNavigation.assertSidebarOptionLanguage(sidebarOptions = "${sidebarList2}");
+			ACUtils.viewGenericText(textValueList = "${sidebarList2}");
 		}
 	}
 

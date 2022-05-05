@@ -8,9 +8,10 @@
  * permissions and limitations under the License, including but not limited to
  * distribution rights of the Software.
  */
+import il8n from '../../../../common/I18n';
 
 export const MENU_TYPES = {
-	overview: 'Overview',
-	productActivation: 'Product Activation',
-	teamMembers: 'Team Members',
+	overview: il8n.translate('overview'),
+	productActivation: il8n.translate('product-activation'),
+	teamMembers: il8n.translate('team-members'),
 };

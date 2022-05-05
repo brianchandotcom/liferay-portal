@@ -707,11 +707,27 @@ definition {
 	}
 
 	@description = "Verify that the user can delete Nodes of State"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanDeleteStateNode {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteStateNode";
 
-		// TODO CanDeleteStateNode pending implementation
+        Workflow.openWorkflowListView();
+
+        Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+        ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "State",
+			nodePosition = "50,-420",
+			nodeType = "state");
+
+        ProcessBuilderKaleoDesignerReact.deleteNodeOrConnection(
+            modalMessage = "Are you sure you want to delete the selected state node?",
+            nodeType = "state",
+            title = "Delete State Node");
+
+        ProcessBuilderKaleoDesignerReact.viewPanelNodeNotPresent(nodeType = "state");
+
+		
 
 	}
 

@@ -698,11 +698,22 @@ definition {
 	}
 
 	@description = "Verify that the user can delete Nodes of Start"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanDeleteStartNode {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteStartNode";
 
-		// TODO CanDeleteStartNode pending implementation
+		Workflow.openWorkflowListView();
+
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "start");
+
+		ProcessBuilderKaleoDesignerReact.deleteNodeOrConnection(
+			modalMessage = "Are you sure you want to delete the selected start node?",
+			nodeType = "start",
+			title = "Delete Start Node");
+
+		ProcessBuilderKaleoDesignerReact.viewPanelNodeNotPresent(nodeType = "start");
 
 	}
 

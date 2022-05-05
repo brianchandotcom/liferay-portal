@@ -1932,6 +1932,7 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanRevertToOriginal {
+		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 		property portal.acceptance = "true";
 
 		JSONDocument.addFileWithUploadedFile(

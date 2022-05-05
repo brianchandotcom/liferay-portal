@@ -478,10 +478,6 @@ definition {
 			dmDocumentFile = "Document_3.odt",
 			dmDocumentTitle = "Document_3.odt");
 
-		DMDocument.downloadCP(
-			dmDocumentTitle = "Document_3.odt",
-			noDownloadOption = "true");
-
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

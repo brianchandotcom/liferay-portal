@@ -1328,16 +1328,11 @@ definition {
 			key_rowEntry = "${dmDocumentTitle}",
 			locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
 
-		if (isSet(noDownloadOption)) {
-			AssertElementNotPresent(locator1 = "MenuItem#DOWNLOAD");
-		}
-		else {
-			AssertClick.assertPartialTextClickAt(
-				locator1 = "MenuItem#DOWNLOAD",
-				value1 = "Download");
+		AssertClick.assertPartialTextClickAt(
+			locator1 = "MenuItem#DOWNLOAD",
+			value1 = "Download");
 
-			DownloadTempFile();
-		}
+		DownloadTempFile();
 	}
 
 	macro downloadMultipleCP {

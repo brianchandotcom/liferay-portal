@@ -22,9 +22,10 @@ import java.lang.reflect.Method;
 
 import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * @author Guilherme Camacho
@@ -129,8 +130,9 @@ public class BeanTestUtil {
 		return value;
 	}
 
-	private static final List<Class<?>> _parameterTypes = Arrays.asList(
-		Boolean.class, Date.class, Double.class, Integer.class, Long.class,
-		Map.class, String.class);
+	private static final Set<Class<?>> _parameterTypes = new HashSet<>(
+		Arrays.asList(
+			Boolean.class, Date.class, Double.class, Integer.class, Long.class,
+			Map.class, String.class));
 
 }

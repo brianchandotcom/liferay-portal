@@ -303,6 +303,18 @@ declare module Liferay {
 		/* Returns a formatted XML */
 		export function formatXML(content: string, options?: Object): string;
 
+		export function getCheckedCheckboxes(
+			form: HTMLFormElement,
+			except: string,
+			name?: string
+		): Array<number> | [];
+
+		export function getUncheckedCheckboxes(
+			form: HTMLFormElement,
+			except: string,
+			name?: string
+		): Array<number> | [];
+
 		/**
 		 * Returns dimensions and coordinates representing a cropped region
 		 */

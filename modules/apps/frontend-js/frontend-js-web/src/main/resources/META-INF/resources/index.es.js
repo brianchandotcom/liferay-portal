@@ -114,3 +114,7 @@ export {default as runScriptsInElement} from './liferay/util/run_scripts_in_elem
 export {default as selectFolder} from './liferay/util/select_folder';
 export {default as toggleControls} from './liferay/util/toggle_controls';
 export {default as toggleDisabled} from './liferay/util/toggle_disabled';
+export {
+	getCheckedCheckboxes,
+	getUncheckedCheckboxes,
+} from './liferay/util/get_checkboxes';

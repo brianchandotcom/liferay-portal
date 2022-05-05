@@ -52,6 +52,10 @@ import postForm from './util/form/post_form.es';
 import setFormValues from './util/form/set_form_values.es';
 import formatStorage from './util/format_storage.es';
 import formatXML from './util/format_xml.es';
+import {
+	getCheckedCheckboxes,
+	getUncheckedCheckboxes,
+} from './util/get_checkboxes';
 import getCropRegion from './util/get_crop_region.es';
 import getDOM from './util/get_dom';
 import getElement from './util/get_element';
@@ -206,6 +210,8 @@ Liferay.Util.focusFormField = focusFormField;
 
 Liferay.Util.formatStorage = formatStorage;
 Liferay.Util.formatXML = formatXML;
+Liferay.Util.getCheckedCheckboxes = getCheckedCheckboxes;
+Liferay.Util.getUncheckedCheckboxes = getUncheckedCheckboxes;
 Liferay.Util.getCropRegion = getCropRegion;
 
 /**

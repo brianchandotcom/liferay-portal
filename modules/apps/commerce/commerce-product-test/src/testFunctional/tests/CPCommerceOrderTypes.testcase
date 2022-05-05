@@ -38,12 +38,12 @@ definition {
 		task ("Given active and inactive order types") {
 			CommerceJSONOrdersAPI._addOrderType(
 				active = "true",
-				orderTypeDescription = "Test Order Type Descripiton",
+				orderTypeDescription = "Test Order Type Description",
 				orderTypeName = "Test Order Type");
 
 			CommerceJSONOrdersAPI._addOrderType(
 				active = "false",
-				orderTypeDescription = "Test Order Type Descripiton 2",
+				orderTypeDescription = "Test Order Type Description 2",
 				orderTypeName = "Test Order Type 2");
 		}
 
@@ -73,12 +73,12 @@ definition {
 		task ("Given active and inactive order types") {
 			CommerceJSONOrdersAPI._addOrderType(
 				active = "true",
-				orderTypeDescription = "Test Order Type Descripiton",
+				orderTypeDescription = "Test Order Type Description",
 				orderTypeName = "Test Order Type");
 
 			CommerceJSONOrdersAPI._addOrderType(
 				active = "false",
-				orderTypeDescription = "Test Order Type Descripiton 2",
+				orderTypeDescription = "Test Order Type Description 2",
 				orderTypeName = "Test Order Type 2");
 		}
 
@@ -108,7 +108,7 @@ definition {
 		task ("Given an inactive order type") {
 			CommerceJSONOrdersAPI._addOrderType(
 				active = "false",
-				orderTypeDescription = "Test Order Type Descripiton",
+				orderTypeDescription = "Test Order Type Description",
 				orderTypeName = "Test Order Type");
 		}
 
@@ -138,7 +138,7 @@ definition {
 		task ("Given an inactive order type") {
 			CommerceJSONOrdersAPI._addOrderType(
 				active = "false",
-				orderTypeDescription = "Test Order Type Descripiton",
+				orderTypeDescription = "Test Order Type Description",
 				orderTypeName = "Test Order Type");
 		}
 
@@ -168,7 +168,7 @@ definition {
 		task ("Given an active order type") {
 			CommerceJSONOrdersAPI._addOrderType(
 				active = "true",
-				orderTypeDescription = "Test Order Type Descripiton",
+				orderTypeDescription = "Test Order Type Description",
 				orderTypeName = "Test Order Type");
 		}
 
@@ -198,7 +198,7 @@ definition {
 		task ("Given an active order type") {
 			CommerceJSONOrdersAPI._addOrderType(
 				active = "true",
-				orderTypeDescription = "Test Order Type Descripiton",
+				orderTypeDescription = "Test Order Type Description",
 				orderTypeName = "Test Order Type");
 		}
 
@@ -250,7 +250,7 @@ definition {
 		task ("Given an order type is created through the Order Types Page") {
 			CommerceJSONOrdersAPI._addOrderType(
 				active = "true",
-				orderTypeDescription = "Test Order Type Descripiton",
+				orderTypeDescription = "Test Order Type Description",
 				orderTypeName = "Test Order Type");
 
 			CommerceOrders.openOrderTypesAdmin();
@@ -275,7 +275,7 @@ definition {
 		task ("Given an order type") {
 			CommerceJSONOrdersAPI._addOrderType(
 				active = "true",
-				orderTypeDescription = "Test Order Type Descripiton",
+				orderTypeDescription = "Test Order Type Description",
 				orderTypeName = "Test Order Type");
 		}
 
@@ -344,12 +344,12 @@ definition {
 		task ("Given two active order types") {
 			CommerceJSONOrdersAPI._addOrderType(
 				active = "true",
-				orderTypeDescription = "Test Order Type Descripiton",
+				orderTypeDescription = "Test Order Type Description",
 				orderTypeName = "Test Order Type");
 
 			CommerceJSONOrdersAPI._addOrderType(
 				active = "true",
-				orderTypeDescription = "Test Order Type Descripiton 2",
+				orderTypeDescription = "Test Order Type Description 2",
 				orderTypeName = "Test Order Type 2");
 		}
 
@@ -387,12 +387,12 @@ definition {
 		task ("Given two new order types") {
 			CommerceJSONOrdersAPI._addOrderType(
 				active = "true",
-				orderTypeDescription = "Test Order Type Descripiton",
+				orderTypeDescription = "Test Order Type Description",
 				orderTypeName = "Test Order Type");
 
 			CommerceJSONOrdersAPI._addOrderType(
 				active = "true",
-				orderTypeDescription = "Test Order Type Descripiton 2",
+				orderTypeDescription = "Test Order Type Description 2",
 				orderTypeName = "Test Order Type 2");
 		}
 

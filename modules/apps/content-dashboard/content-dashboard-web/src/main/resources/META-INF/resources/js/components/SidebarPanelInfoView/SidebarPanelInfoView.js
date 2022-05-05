@@ -58,6 +58,7 @@ const SidebarPanelInfoView = ({
 	languageTag = 'en',
 	modifiedDate,
 	specificFields = {},
+	subscribe,
 	subType,
 	tags = [],
 	title,
@@ -104,6 +105,21 @@ const SidebarPanelInfoView = ({
 	return (
 		<>
 			<Sidebar.Header title={title} />
+			{subscribe && (
+				<>
+					<ClayLink
+						borderless
+						data-tooltip-align="top"
+						displayType="secondary"
+						href={subscribe.url}
+						monospaced
+						outline
+						title={subscribe.label}
+					>
+						<ClayIcon symbol={subscribe.icon} />
+					</ClayLink>
+				</>
+			)}
 
 			<Sidebar.Body className="px-0">
 				{error && (

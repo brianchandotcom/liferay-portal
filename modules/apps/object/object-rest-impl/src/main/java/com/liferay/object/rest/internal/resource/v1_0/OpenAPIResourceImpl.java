@@ -27,6 +27,7 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.PathItem;
 import io.swagger.v3.oas.models.Paths;
+import io.swagger.v3.oas.models.media.Schema;
 import io.swagger.v3.oas.models.parameters.Parameter;
 
 import java.util.ArrayList;
@@ -84,10 +85,27 @@ public class OpenAPIResourceImpl {
 		relationshipsEndpoints.forEach(
 			endpoint -> {
 				_objectRelationshipRelatedObjectDefinitionMap.forEach(
-					(objectRelationship, objectDefinition) ->
+					(objectRelationship, objectDefinition) -> {
 						_createCustomRelationshipEndpointToOpenAPI(
 							entity, endpoint, objectRelationship,
-							objectDefinition));
+							objectDefinition);
+
+						Schema<Object> relationshipSchema = new Schema<>();
+
+						relationshipSchema.setDescription(
+							"Information about the relationship " +
+								objectRelationship.getName() +
+									". Can be embedded with nestedFields");
+
+						entity.getComponents(
+						).getSchemas(
+						).get(
+							_currentObjectDefinition.getShortName()
+						).getProperties(
+						).put(
+							objectRelationship.getName(), relationshipSchema
+						);
+					});
 
 				Paths entityPaths = entity.getPaths();
 

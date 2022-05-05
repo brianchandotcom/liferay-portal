@@ -172,7 +172,7 @@ definition {
 
 		WebContentNavigator.gotoEntryMenuItem(
 			entry = "${folderName}",
-			menuItem = "Move to Recycle Bin");
+			menuItem = "Delete");
 
 		AssertConfirm(value1 = "Are you sure you want to move this to the Recycle Bin?");
 

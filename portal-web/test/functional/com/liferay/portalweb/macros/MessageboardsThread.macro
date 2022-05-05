@@ -455,7 +455,7 @@ definition {
 
 		LexiconEntry.openEntryMenu(rowEntry = "${threadSubject}");
 
-		MenuItem.click(menuItem = "Move to Recycle Bin");
+		MenuItem.click(menuItem = "Delete");
 
 		VerifyElementPresent(locator1 = "Message#SUCCESS");
 
@@ -501,7 +501,7 @@ definition {
 			AssertClick(
 				key_attachmentName = "${mbAttachmentFile}",
 				locator1 = "MessageBoardsEditMessage#ATTACHMENTS_REMOVE_LINK",
-				value1 = "Move to Recycle Bin");
+				value1 = "Delete");
 
 			AssertElementNotPresent(
 				key_rowEntry = "${mbAttachmentFile}",
@@ -829,7 +829,7 @@ definition {
 			locator1 = "MessageBoards#THREAD_LIST_THREAD",
 			value1 = "${threadSubject}");
 
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Move to Recycle Bin");
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Delete");
 
 		VerifyElementPresent(locator1 = "Message#SUCCESS");
 
@@ -1157,7 +1157,7 @@ definition {
 
 			AssertClick(
 				locator1 = "MessageBoardsAdmin#THREADS_RECYCLE_BIN_BUTTON",
-				value1 = "Move to Recycle Bin");
+				value1 = "Delete");
 
 			VerifyElementPresent(locator1 = "Message#SUCCESS");
 		}

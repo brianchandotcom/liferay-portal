@@ -547,7 +547,7 @@
 </tr>
 <tr>
 	<td>MOVE_TO_RECYCLE_BIN</td>
-	<td>//a[contains(@class,'btn') and contains(.,'Move to Recycle Bin')] | //button[contains(.,'Move to Recycle Bin')]</td>
+	<td>//a[contains(@class,'btn') and contains(.,'Delete')] | //button[contains(.,'Delete')]</td>
 	<td></td>
 </tr>
 <tr>

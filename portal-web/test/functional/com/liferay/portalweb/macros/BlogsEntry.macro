@@ -541,7 +541,7 @@ definition {
 			locator1 = "LexiconList#LIST_ENTRY_ELLIPSIS");
 
 		ClickNoError(
-			key_menuItem = "Move to Recycle Bin",
+			key_menuItem = "Delete",
 			locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
 
 		Alert.viewSuccessMessage();
@@ -561,7 +561,7 @@ definition {
 			locator1 = "LexiconList#LIST_ENTRY_ELLIPSIS");
 
 		ClickNoError(
-			key_menuItem = "Move to Recycle Bin",
+			key_menuItem = "Delete",
 			locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
 
 		Alert.viewSuccessMessage();
@@ -587,7 +587,7 @@ definition {
 
 		Blogs.clickEllipsisItemPG(
 			entryTitle = "${entryTitle}",
-			item = "Move to Recycle Bin");
+			item = "Delete");
 
 		VerifyElementPresent(locator1 = "Message#SUCCESS");
 

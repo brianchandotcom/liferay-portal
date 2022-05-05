@@ -591,7 +591,7 @@ definition {
 			key_dmFolderName = "DM Folder Name",
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_VERTICAL_ELLIPSIS");
 
-		MenuItem.viewNotPresent(menuItem = "Move to Recycle Bin");
+		MenuItem.viewNotPresent(menuItem = "Delete");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
@@ -778,7 +778,7 @@ definition {
 
 		LexiconCard.viewMenuItemNotPresent(
 			card = "DM Document Title",
-			item = "Move to Recycle Bin");
+			item = "Delete");
 
 		LexiconCard.checkCardCheckbox(card = "DM Document Title");
 
@@ -1381,7 +1381,7 @@ definition {
 
 		LexiconCard.viewMenuItemNotPresent(
 			card = "DM Document Title",
-			item = "Move to Recycle Bin");
+			item = "Delete");
 
 		LexiconCard.checkCardCheckbox(card = "DM Document Title");
 
@@ -1443,7 +1443,7 @@ definition {
 
 		LexiconCard.viewMenuItemNotPresent(
 			card = "DM Document Title",
-			item = "Move to Recycle Bin");
+			item = "Delete");
 
 		LexiconCard.checkCardCheckbox(card = "DM Document Title");
 

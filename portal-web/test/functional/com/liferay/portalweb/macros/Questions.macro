@@ -2,7 +2,7 @@ definition {
 
 	macro _deleteAllQuestions {
 		while (IsElementPresent(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS")) {
-			LexiconEntry.gotoEllipsisMenuItemNoError(menuItem = "Move to Recycle Bin");
+			LexiconEntry.gotoEllipsisMenuItemNoError(menuItem = "Delete");
 
 			Alert.viewSuccessMessage();
 		}

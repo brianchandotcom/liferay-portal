@@ -1029,7 +1029,7 @@ definition {
 
 		AssertVisible(
 			locator1 = "Wiki#ATTACHMENT_TABLE_MOVE_TO_RECYCLE_BIN",
-			value1 = "Move to Recycle Bin");
+			value1 = "Delete");
 
 		Click(locator1 = "Wiki#ATTACHMENT_TABLE_MOVE_TO_RECYCLE_BIN");
 
@@ -1267,7 +1267,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Wiki#ATTACHMENT_TABLE_MOVE_TO_RECYCLE_BIN",
-			value1 = "Move to Recycle Bin");
+			value1 = "Delete");
 	}
 
 	macro viewChildPageCP {

@@ -1256,7 +1256,7 @@ definition {
 		}
 		else {
 			LexiconEntry.gotoEntryMenuItem(
-				menuItem = "Move to Recycle Bin",
+				menuItem = "Delete",
 				rowEntry = "${dmDocumentTitle}");
 
 			Alert.viewSuccessMessage();
@@ -1274,7 +1274,7 @@ definition {
 
 		AssertClick(
 			locator1 = "Button#MOVE_TO_RECYCLE_BIN",
-			value1 = "Move to Recycle Bin");
+			value1 = "Delete");
 
 		Alert.viewSuccessMessage();
 	}
@@ -1284,7 +1284,7 @@ definition {
 			key_rowEntry = "${mgDocumentTitle}",
 			locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
 
-		MenuItem.click(menuItem = "Move to Recycle Bin");
+		MenuItem.click(menuItem = "Delete");
 
 		VerifyElementPresent(locator1 = "Message#SUCCESS");
 
@@ -2513,7 +2513,7 @@ definition {
 
 			Click(locator1 = "DocumentsAndMedia#TOOLBAR_ACTIONS");
 
-			MenuItem.viewPresent(menuItem = "Move to Recycle Bin");
+			MenuItem.viewPresent(menuItem = "Delete");
 
 			PortletEntry.clickMoveToRecycleBin();
 		}
@@ -3059,7 +3059,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Button#MOVE_TO_RECYCLE_BIN",
-			value1 = "Move to Recycle Bin");
+			value1 = "Delete");
 	}
 
 	macro viewDocumentTypePG {
@@ -3790,7 +3790,7 @@ definition {
 
 		MenuItem.viewPresent(menuItem = "Checkout");
 
-		MenuItem.viewPresent(menuItem = "Move to Recycle Bin");
+		MenuItem.viewPresent(menuItem = "Delete");
 	}
 
 	macro viewStagingDetailsPG {
@@ -3826,7 +3826,7 @@ definition {
 
 		MenuItem.viewPresent(menuItem = "Permissions");
 
-		MenuItem.viewPresent(menuItem = "Move to Recycle Bin");
+		MenuItem.viewPresent(menuItem = "Delete");
 
 		Check(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
 
@@ -3838,7 +3838,7 @@ definition {
 
 		MenuItem.viewPresent(menuItem = "Move");
 
-		MenuItem.viewPresent(menuItem = "Move to Recycle Bin");
+		MenuItem.viewPresent(menuItem = "Delete");
 
 		Navigator.gotoSitePage(
 			pageName = "Staging Test Page",
@@ -3854,7 +3854,7 @@ definition {
 			locator1 = "MenuItem#DOWNLOAD",
 			value1 = "Download");
 
-		MenuItem.viewPresent(menuItem = "Move to Recycle Bin");
+		MenuItem.viewPresent(menuItem = "Delete");
 
 		Click(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
 

@@ -786,7 +786,7 @@ definition {
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "Publish Templates");
 
 		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Move to Recycle Bin",
+			menuItem = "Delete",
 			rowEntry = "${publishTemplateName}");
 
 		Alert.viewSuccessMessage();

@@ -426,7 +426,7 @@ definition {
 
 			Click(locator1 = "DocumentsAndMedia#TOOLBAR_ACTIONS");
 
-			MenuItem.viewPresent(menuItem = "Move to Recycle Bin");
+			MenuItem.viewPresent(menuItem = "Delete");
 
 			PortletEntry.clickMoveToRecycleBin();
 		}
@@ -442,7 +442,7 @@ definition {
 
 			AssertClick(
 				locator1 = "MediaGallery#ENTRY_RECYCLE_BIN_ICON",
-				value1 = "Move to Recycle Bin");
+				value1 = "Delete");
 
 			VerifyElementPresent(locator1 = "Message#SUCCESS");
 		}

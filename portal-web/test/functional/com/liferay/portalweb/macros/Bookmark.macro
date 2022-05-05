@@ -285,7 +285,7 @@ definition {
 			value1 = "${bookmarkName}");
 
 		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Move to Recycle Bin",
+			menuItem = "Delete",
 			rowEntry = "${bookmarkName}");
 
 		VerifyElementPresent(locator1 = "Message#SUCCESS");
@@ -463,7 +463,7 @@ definition {
 			value1 = "${bookmarkName}");
 
 		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Move to Recycle Bin",
+			menuItem = "Delete",
 			rowEntry = "${bookmarkName}");
 
 		VerifyElementPresent(locator1 = "Message#SUCCESS");
@@ -475,7 +475,7 @@ definition {
 
 	macro moveToRecycleBinPG {
 		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Move to Recycle Bin",
+			menuItem = "Delete",
 			rowEntry = "${bookmarkName}");
 
 		VerifyElementPresent(locator1 = "Message#SUCCESS");

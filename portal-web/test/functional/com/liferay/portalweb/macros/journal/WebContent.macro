@@ -1515,14 +1515,14 @@ definition {
 
 			WebContentNavigator.gotoEntryMenuItem(
 				entry = "${webContentTitleEscapeCharacter}",
-				menuItem = "Move to Recycle Bin");
+				menuItem = "Delete");
 		}
 		else {
 			var key_webContentTitle = "${webContentTitle}";
 
 			WebContentNavigator.gotoEntryMenuItem(
 				entry = "${webContentTitle}",
-				menuItem = "Move to Recycle Bin");
+				menuItem = "Delete");
 		}
 
 		AssertConfirm(value1 = "Are you sure you want to move this to the Recycle Bin?");

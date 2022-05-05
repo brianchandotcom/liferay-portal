@@ -195,7 +195,7 @@ definition {
 			locator1 = "LexiconList#LIST_ENTRY_ELLIPSIS");
 
 		ClickNoError(
-			key_menuItem = "Move to Recycle Bin",
+			key_menuItem = "Delete",
 			locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
 
 		VerifyElementPresent(locator1 = "Message#SUCCESS");

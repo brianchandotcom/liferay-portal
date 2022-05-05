@@ -270,7 +270,7 @@ definition {
 				key_webContentTitle = "Published WebContent Title",
 				locator1 = "WC#ENTRY_LIST_MENULIST_ICON");
 
-			MenuItem.viewOrder(menuItemList = "Edit,Preview,Translate,-,Expire,Subscribe,View History,View Usages,-,Copy,Export for Translation,Import Translation,Move,-,Permissions,-,Move to Recycle Bin");
+			MenuItem.viewOrder(menuItemList = "Edit,Preview,Translate,-,Expire,Subscribe,View History,View Usages,-,Copy,Export for Translation,Import Translation,Move,-,Permissions,-,Delete");
 
 			Click(
 				key_webContentTitle = "Published WebContent Title",
@@ -282,7 +282,7 @@ definition {
 				key_webContentTitle = "Draft WebContent Title",
 				locator1 = "WC#ENTRY_LIST_MENULIST_ICON");
 
-			MenuItem.viewOrder(menuItemList = "Edit,Preview Draft,Translate,-,Subscribe,View History,View Usages,-,Copy,Export for Translation,Import Translation,Move,-,Permissions,-,Move to Recycle Bin");
+			MenuItem.viewOrder(menuItemList = "Edit,Preview Draft,Translate,-,Subscribe,View History,View Usages,-,Copy,Export for Translation,Import Translation,Move,-,Permissions,-,Delete");
 
 			Click(
 				key_webContentTitle = "Draft WebContent Title",
@@ -294,7 +294,7 @@ definition {
 				key_webContentTitle = "Expired WebContent Title",
 				locator1 = "WC#ENTRY_LIST_MENULIST_ICON");
 
-			MenuItem.viewOrder(menuItemList = "Edit,Preview,Translate,-,Subscribe,View History,View Usages,-,Copy,Export for Translation,Import Translation,Move,-,Permissions,-,Move to Recycle Bin");
+			MenuItem.viewOrder(menuItemList = "Edit,Preview,Translate,-,Subscribe,View History,View Usages,-,Copy,Export for Translation,Import Translation,Move,-,Permissions,-,Delete");
 		}
 	}
 

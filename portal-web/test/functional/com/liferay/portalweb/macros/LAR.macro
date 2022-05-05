@@ -679,7 +679,7 @@ definition {
 	}
 
 	macro moveToTheRecycleBinExportTemplate {
-		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Move to Recycle Bin");
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Delete");
 
 		VerifyElementPresent(locator1 = "Message#SUCCESS");
 	}

@@ -5126,4 +5126,89 @@ uuid''',
 		}
 	}
 
+	@description = "This is a use case for LPS-147809. TC1: SP initiated SSO with uploaded metadata XML file."
+	@priority = "4"
+	test ViewSPInitiatedSSOWithUploadMetadataXML {
+		property app.server.bundles.size = "0";
+		property test.name.skip.portal.instance = "SAML#ViewSPInitiatedSSOWithUploadMetadataXML";
+
+		task ("Add virtual instance able.com") {
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
+
+			User.logoutPG();
+
+			User.viewLoggedOutPG();
+		}
+
+		task ("Setup IdP and SP") {
+			SAML.setupIDP(
+				idpURL = "http://localhost:8080",
+				samlEntityId = "samlidp",
+				userEmailAddress = "test@liferay.com");
+
+			SAML.setupSP(
+				encryptionCertificate = "true",
+				samlEntityId = "samlsp",
+				spURL = "http://www.able.com:8080",
+				userEmailAddress = "test@www.able.com");
+		}
+
+		task ("Add IdP configurations to service provider") {
+			SAML.addIDPConfigurationsToServiceProvider(
+				idpAttributeMapping = "UUID,emailAddress,firstName,lastName,screenName",
+				idpEntityId = "samlidp",
+				idpKeepAliveURL = "http://localhost:8080/c/portal/saml/keep_alive",
+				idpURL = "http://localhost:8080",
+				nameIdentifierFormat = "Email Address",
+				spURL = "http://www.able.com:8080",
+				uploadMetadataXML = "idp-metadata.xml",
+				userEmailAddress = "test@www.able.com",
+				userMatchingAttributeIndex = "4",
+				userResolution = "attribute");
+		}
+
+		task ("Enable SP roles and add SP configurations to IdP") {
+			SAML.enableSPRoles(
+				samlEntityId = "samlsp",
+				spURL = "http://www.able.com:8080",
+				userEmailAddress = "test@www.able.com");
+
+			SAML.addSPConfigurationsToIdentityProvider(
+				idpURL = "http://localhost:8080",
+				nameIdentifierFormat = "Email Address",
+				spAttributes = '''emailAddress
+				firstName
+				lastName
+				screenName
+				uuid''',
+				spEntityId = "samlsp",
+				spKeepAliveURL = "http://www.able.com:8080/c/portal/saml/keep_alive",
+				spURL = "http://www.able.com:8080",
+				uploadMetadataXML = "sp-metadata.xml",
+				userEmailAddress = "test@liferay.com");
+		}
+
+		task ("Add and sync new user") {
+			SAML.addAndSyncNewUser(
+				creatorEmailAddress = "test@liferay.com",
+				creatorPassword = "test",
+				newUserEmailAddress = "tester@localhost.com",
+				newUserFirstName = "first",
+				newUserLastName = "tester",
+				newUserPortalURL = "http://localhost:8080",
+				newUserScreenName = "tester",
+				portalInstanceName = "localhost",
+				spURL = "www.able.com:8080");
+		}
+
+		task ("Open portal and assert logged in") {
+			Navigator.openURL();
+
+			User.viewLoggedInPG();
+		}
+	}
+
 }

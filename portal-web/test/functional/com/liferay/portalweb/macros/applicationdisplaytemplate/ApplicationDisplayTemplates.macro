@@ -128,7 +128,7 @@ definition {
 			key_tableEntry = "${widgetTemplateName}",
 			locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
 
-		MenuItem.clickNoError(menuItem = "${item}");
+		MenuItem.click(menuItem = "${item}");
 	}
 
 	macro openWidgetTemplatesAdmin {

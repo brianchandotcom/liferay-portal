@@ -99,7 +99,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 		try (ZipFile zipFile = new ZipFile(file)) {
 			Map<String, String> orphanFragmentCompositions = new HashMap<>();
 			Map<String, String> orphanFragmentEntries = new HashMap<>();
-			Map<String, String> replacedResourcesMap = new HashMap<>();
+			Map<String, String> resourceReferences = new HashMap<>();
 
 			Map<String, FragmentCollectionFolder> fragmentCollectionFolderMap =
 				_getFragmentCollectionFolderMap(
@@ -135,7 +135,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 
 				_importResources(
 					userId, groupId, fragmentCollection, entry.getKey(),
-					zipFile, replacedResourcesMap);
+					zipFile, resourceReferences);
 
 				_importFragmentCompositions(
 					userId, groupId, zipFile,
@@ -147,7 +147,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 					userId, groupId, zipFile,
 					fragmentCollection.getFragmentCollectionId(),
 					fragmentCollectionFolder.getFragmentEntries(),
-					replacedResourcesMap, overwrite);
+					resourceReferences, overwrite);
 			}
 
 			if (MapUtil.isNotEmpty(orphanFragmentCompositions) ||
@@ -184,7 +184,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 
 				_importFragmentEntries(
 					userId, groupId, zipFile, fragmentCollectionId,
-					orphanFragmentEntries, replacedResourcesMap, overwrite);
+					orphanFragmentEntries, resourceReferences, overwrite);
 			}
 		}
 
@@ -678,7 +678,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 	private void _importFragmentEntries(
 			long userId, long groupId, ZipFile zipFile,
 			long fragmentCollectionId, Map<String, String> fragmentEntries,
-			Map<String, String> replacedResourcesMap, boolean overwrite)
+			Map<String, String> resourceReferences, boolean overwrite)
 		throws Exception {
 
 		for (Map.Entry<String, String> entry : fragmentEntries.entrySet()) {
@@ -703,12 +703,12 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 					_getFragmentEntryContent(
 						zipFile, entry.getValue(),
 						jsonObject.getString("cssPath")),
-					replacedResourcesMap);
+					resourceReferences);
 				html = _replaceResourceReferences(
 					_getFragmentEntryContent(
 						zipFile, entry.getValue(),
 						jsonObject.getString("htmlPath")),
-					replacedResourcesMap);
+					resourceReferences);
 				js = _getFragmentEntryContent(
 					zipFile, entry.getValue(), jsonObject.getString("jsPath"));
 				cacheable = jsonObject.getBoolean("cacheable");
@@ -755,7 +755,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 	private void _importResources(
 			long userId, long groupId, FragmentCollection fragmentCollection,
 			String fragmentCollectionKey, ZipFile zipFile,
-			Map<String, String> replacedResourcesMap)
+			Map<String, String> resourceReferences)
 		throws Exception {
 
 		if (groupId == 0) {
@@ -869,7 +869,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 								fileEntry.getGroupId(), fileEntry.getFolderId(),
 								fileEntry.getFileName());
 
-						replacedResourcesMap.put(
+						resourceReferences.put(
 							fileEntry.getFileName(), newFileName);
 
 						zipEntryNames.put(

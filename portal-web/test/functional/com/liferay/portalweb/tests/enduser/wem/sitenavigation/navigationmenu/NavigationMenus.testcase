@@ -726,7 +726,7 @@ definition {
 
 			ManagementBar.setFilterAndOrder(filterBy = "All");
 
-			NavigationMenusAdmin.deleteCP(deleteAll = "true");
+			NavigationMenusAdmin.deleteAllCP();
 		}
 
 		task ("Assert all navigation menus were deleted") {

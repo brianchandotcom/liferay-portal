@@ -1,0 +1,98 @@
+@component-name = "portal-solutions"
+definition {
+
+	property osgi.modules.includes = "site-initializer-testray";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "Testray 2";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		Testray.tearDownCP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+    @description = "This is a test for LPS-152637. Verify if Testray can be created"
+    @priority = "5"
+    test CanBeCreated{
+		task ("Create Testray") {			
+        	ApplicationsMenu.gotoPortlet(
+				category = "Sites",
+				panel = "Control Panel",
+				portlet = "Sites");
+
+			LexiconEntry.gotoAdd();
+
+			LexiconCard.clickCard(card = "Liferay Site Initializer Testray");
+
+			SelectFrame(
+				key_title = "Add Site",
+				locator1 = "IFrame#MODAL_ANY");
+
+			PortletEntry.inputName(name = "Testray 2");
+
+			Click(locator1 = "Button#ADD");
+
+			Alert.viewSuccessMessage();
+
+		}
+
+		task ("Go to Testray") {
+
+			Refresh();
+
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+		}
+
+    }
+
+	@description = "This is a test for LPS-152873. Verify if when Testray is created, Remote Apps will be created for it as well"
+	@priority = "5"
+	test RemoteAppsAreCreatedForTestray {
+		Testray.createTestraySite(siteName = "Testray 2");
+
+		Refresh();
+
+		task ("Go to Remote Apps Portlet") {
+			RemoteApps.goToRemoteAppsPortlet();
+		}
+
+		task ("Assert if Remote Apps is Present") {
+			AssertElementPresent(
+				key_value = "Testray",
+				locator1 = "Testray#ELEMENT_REMOTE");
+		}
+	}
+
+	@description = "This is a test for LPS-152970. Verify if when Testray is created, Style Books will be created for it as well"
+	@priority = "5"
+	test StyleBooksAreCreatedForTestray {
+		task ("Create and Go to Testray") {
+			Testray.createTestraySite(siteName = "Testray 2");
+
+			Refresh();
+
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+		}
+
+		task ("Assert if style books were created") {
+			ProductMenu.gotoPortlet(
+				category = "Design",
+				portlet = "Style Books");
+
+			StyleBooksAdmin.viewStyleBooksPresent(styleBookName = "Testray");
+		}
+	}
+
+}

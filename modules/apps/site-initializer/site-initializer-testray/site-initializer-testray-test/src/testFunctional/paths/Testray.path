@@ -105,6 +105,11 @@
 	<td>//table[contains(@class, 'qa w-100')]//td[contains(text(),"${key_overviewValue}")]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ELEMENT_REMOTE</td>
+	<td>//div[(@class='dnd-tbody')]//div[contains(@class, 'dnd-td')and contains(., '${key_value}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

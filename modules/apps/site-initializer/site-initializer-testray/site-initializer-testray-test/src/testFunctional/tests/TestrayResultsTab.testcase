@@ -38,7 +38,7 @@ definition {
 
 		Testray.projectTabNavigator(navTabName = "Cases");
 
-		Testray.viewOverviewTab(key_value = "Cases");
+		Testray.viewTitlePage(key_title = "Cases");
 	}
 
 	@description = "LPS-150344 - Verify if when you click on the Requirements tab, the Requirements page is shown."
@@ -52,7 +52,7 @@ definition {
 
 		Testray.projectTabNavigator(navTabName = "Requirements");
 
-		Testray.viewOverviewTab(key_value = "Requirements");
+		Testray.viewTitlePage(key_title = "Requirements");
 	}
 
 	@description = "LPS-150342 - Verify if when you click on the Suites tab, the Suites page is shown."
@@ -66,7 +66,7 @@ definition {
 
 		Testray.projectTabNavigator(navTabName = "Suites");
 
-		Testray.viewOverviewTab(key_value = "Suites");
+		Testray.viewTitlePage(key_title = "Suites");
 	}
 
 }

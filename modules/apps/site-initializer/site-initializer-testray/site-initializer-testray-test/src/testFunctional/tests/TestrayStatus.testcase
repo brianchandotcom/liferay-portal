@@ -28,6 +28,8 @@ definition {
 	@description = "LPS-150029 - Verify if the user will see the results with abandoned status."
 	@priority = "4"
 	test CanVerifyAbandonedStatus {
+		property portal.upstream = "quarantine";
+
 		Testray.enableTestrayTasksInPortlet();
 
 		Testray.createTestrayTasks(value = "1");
@@ -46,6 +48,8 @@ definition {
 	@description = "LPS-150028 - Verify if the user will see the results with Complete status."
 	@priority = "4"
 	test CanVerifyCompleteStatus {
+		property portal.upstream = "quarantine";
+
 		Testray.enableTestrayTasksInPortlet();
 
 		Testray.createTestrayTasks(value = "1");
@@ -62,6 +66,8 @@ definition {
 	@description = "LPS-150026 - Verify if the user will see the results with In Analysis status."
 	@priority = "4"
 	test CanVerifyInAnalysisStatus {
+		property portal.upstream = "quarantine";
+
 		Testray.enableTestrayTasksInPortlet();
 
 		Testray.createTestrayTasks(value = "2");
@@ -78,6 +84,8 @@ definition {
 	@description = "LPS-150027 - Verify if the user will see the results with Open status."
 	@priority = "4"
 	test CanVerifyOpenStatus {
+		property portal.upstream = "quarantine";
+		
 		Testray.enableTestrayTasksInPortlet();
 
 		Testray.createTestrayTasks(value = "1");

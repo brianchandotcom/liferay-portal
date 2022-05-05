@@ -201,8 +201,7 @@ definition {
 
 	macro viewOverviewTab {
 		AssertElementPresent(
-			key_rowValue = "${rowValue}",
-			locator1 = "Testray#OVERVIEW_LAYOUT_VALUES");
+			key_pageTabTitle = "${key_title}",
+			locator1 = "Testray#PAGE_TAB_TITLE");
 	}
-
 }

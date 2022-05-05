@@ -296,6 +296,12 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 				data.put(
 					"checkoutDropdownItem",
 					JSONUtil.put(
+						"confirmationMessage",
+						_language.get(
+							themeDisplay.getLocale(),
+							"any-changes-made-in-production-will-immediately-" +
+								"be-live.-continue-to-production")
+					).put(
 						"href", checkoutURL.toString()
 					).put(
 						"label",

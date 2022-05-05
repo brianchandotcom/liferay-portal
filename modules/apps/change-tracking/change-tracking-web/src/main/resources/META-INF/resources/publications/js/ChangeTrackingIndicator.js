@@ -767,7 +767,10 @@ export default function ChangeTrackingIndicator({
 	if (checkoutDropdownItem) {
 		dropdownItems.push({
 			label: checkoutDropdownItem.label,
-			onClick: () => navigate(checkoutDropdownItem.href, true),
+			onClick: () =>
+				(!checkoutDropdownItem.confirmationMessage ||
+					confirm(checkoutDropdownItem.confirmationMessage)) &&
+				navigate(checkoutDropdownItem.href, true),
 			symbolLeft: checkoutDropdownItem.symbolLeft,
 		});
 	}

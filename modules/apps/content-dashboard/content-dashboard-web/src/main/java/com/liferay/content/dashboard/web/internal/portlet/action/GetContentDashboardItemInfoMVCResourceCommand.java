@@ -163,6 +163,10 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 					"specificFields",
 					_getSpecificFieldsJSONObject(contentDashboardItem, locale)
 				).put(
+					"subscribe",
+					_getSubscribeJSONObject(
+						contentDashboardItem, httpServletRequest)
+				).put(
 					"subType",
 					Optional.ofNullable(
 						contentDashboardItem.getContentDashboardItemSubtype()
@@ -384,6 +388,72 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 		}
 
 		return "String";
+	}
+
+	private JSONObject _getSubscribeContentDashboardItemActionJSONObject(
+		ContentDashboardItem contentDashboardItem,
+		HttpServletRequest httpServletRequest) {
+
+		List<ContentDashboardItemAction> contentDashboardItemActions =
+			contentDashboardItem.getContentDashboardItemActions(
+				httpServletRequest, ContentDashboardItemAction.Type.SUBSCRIBE);
+
+		if (!ListUtil.isEmpty(contentDashboardItemActions)) {
+			ContentDashboardItemAction contentDashboardItemAction =
+				contentDashboardItemActions.get(0);
+
+			return JSONUtil.put(
+				"icon", contentDashboardItemAction.getIcon()
+			).put(
+				"label",
+				contentDashboardItemAction.getLabel(
+					_portal.getLocale(httpServletRequest))
+			).put(
+				"url", contentDashboardItemAction.getURL()
+			);
+		}
+
+		return null;
+	}
+
+	private JSONObject _getSubscribeJSONObject(
+		ContentDashboardItem contentDashboardItem,
+		HttpServletRequest httpServletRequest) {
+
+		return Optional.ofNullable(
+			_getSubscribeContentDashboardItemActionJSONObject(
+				contentDashboardItem, httpServletRequest)
+		).orElseGet(
+			() -> _getUnSubscribeContentDashboardItemActionJSONObject(
+				contentDashboardItem, httpServletRequest)
+		);
+	}
+
+	private JSONObject _getUnSubscribeContentDashboardItemActionJSONObject(
+		ContentDashboardItem contentDashboardItem,
+		HttpServletRequest httpServletRequest) {
+
+		List<ContentDashboardItemAction> contentDashboardItemActions =
+			contentDashboardItem.getContentDashboardItemActions(
+				httpServletRequest,
+				ContentDashboardItemAction.Type.UNSUBSCRIBE);
+
+		if (!ListUtil.isEmpty(contentDashboardItemActions)) {
+			ContentDashboardItemAction contentDashboardItemAction =
+				contentDashboardItemActions.get(0);
+
+			return JSONUtil.put(
+				"icon", contentDashboardItemAction.getIcon()
+			).put(
+				"label",
+				contentDashboardItemAction.getLabel(
+					_portal.getLocale(httpServletRequest))
+			).put(
+				"url", contentDashboardItemAction.getURL()
+			);
+		}
+
+		return null;
 	}
 
 	private JSONObject _getUserJSONObject(

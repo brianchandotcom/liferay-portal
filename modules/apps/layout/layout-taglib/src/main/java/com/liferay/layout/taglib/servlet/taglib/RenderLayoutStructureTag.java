@@ -793,35 +793,9 @@ public class RenderLayoutStructureTag extends IncludeTag {
 									fragmentEntryLink.getFragmentEntryLinkId()),
 						true)) {
 
-					jspWriter.write("<div class=\"");
-
-					if (renderLayoutStructureDisplayContext.
-							isCommonStylesFFEnabled()) {
-
-						if (!_includeCommonStyles(fragmentEntryLink)) {
-							jspWriter.write(
-								LayoutStructureItemCSSUtil.
-									getLayoutStructureItemUniqueCssClass(
-										fragmentStyledLayoutStructureItem));
-						}
-
-						jspWriter.write(StringPool.SPACE);
-						jspWriter.write(
-							LayoutStructureItemCSSUtil.
-								getFragmentEntryLinkCssClass(
-									fragmentEntryLink));
-					}
-					else {
-						jspWriter.write(
-							renderLayoutStructureDisplayContext.getCssClass(
-								fragmentStyledLayoutStructureItem));
-					}
-
-					jspWriter.write("\" style=\"");
-					jspWriter.write(
-						renderLayoutStructureDisplayContext.getStyle(
-							fragmentStyledLayoutStructureItem));
-					jspWriter.write("\">");
+					_writeStyledDiv(
+						jspWriter, renderLayoutStructureDisplayContext,
+						fragmentStyledLayoutStructureItem, fragmentEntryLink);
 				}
 				else {
 					jspWriter.write("<div>");
@@ -1107,6 +1081,42 @@ public class RenderLayoutStructureTag extends IncludeTag {
 			layout.getTypeSettings());
 
 		return (LayoutTypePortlet)layout.getLayoutType();
+	}
+
+	private void _writeStyledDiv(
+			JspWriter jspWriter,
+			RenderLayoutStructureDisplayContext
+				renderLayoutStructureDisplayContext,
+			FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem,
+			FragmentEntryLink fragmentEntryLink)
+		throws Exception {
+
+		jspWriter.write("<div class=\"");
+
+		if (renderLayoutStructureDisplayContext.isCommonStylesFFEnabled()) {
+			if (!_includeCommonStyles(fragmentEntryLink)) {
+				jspWriter.write(
+					LayoutStructureItemCSSUtil.
+						getLayoutStructureItemUniqueCssClass(
+							fragmentStyledLayoutStructureItem));
+			}
+
+			jspWriter.write(StringPool.SPACE);
+			jspWriter.write(
+				LayoutStructureItemCSSUtil.getFragmentEntryLinkCssClass(
+					fragmentEntryLink));
+		}
+		else {
+			jspWriter.write(
+				renderLayoutStructureDisplayContext.getCssClass(
+					fragmentStyledLayoutStructureItem));
+		}
+
+		jspWriter.write("\" style=\"");
+		jspWriter.write(
+			renderLayoutStructureDisplayContext.getStyle(
+				fragmentStyledLayoutStructureItem));
+		jspWriter.write("\">");
 	}
 
 	private static final String _KEY_STYLES_FRAGMENT_ENTRY_PROCESSOR =

@@ -575,6 +575,38 @@ public abstract class BaseBuild implements Build {
 
 			buildResultsJSONObject.put("buildResults", buildResultsJSONArray);
 		}
+		else if (dataTypesList.contains("buildResults") &&
+				 (this instanceof DownstreamBuild)) {
+
+			DownstreamBuild downstreamBuild = (DownstreamBuild)this;
+
+			buildResultsJSONObject.put(
+				"axisName", downstreamBuild.getAxisName());
+
+			if (dataTypesList.contains("buildURL")) {
+				buildResultsJSONObject.put("buildURL", getBuildURL());
+			}
+
+			if (dataTypesList.contains("duration")) {
+				buildResultsJSONObject.put("duration", getDuration());
+			}
+
+			buildResultsJSONObject.put("result", getResult());
+
+			if (dataTypesList.contains("stopWatchRecords")) {
+				StopWatchRecordsGroup stopWatchRecordsGroup =
+					downstreamBuild.getStopWatchRecordsGroup();
+
+				if (stopWatchRecordsGroup != null) {
+					JSONArray jsonArray = stopWatchRecordsGroup.getJSONArray();
+
+					if (jsonArray.length() > 0) {
+						buildResultsJSONObject.put(
+							"stopWatchRecords", jsonArray);
+					}
+				}
+			}
+		}
 
 		if (dataTypesList.contains("testResults")) {
 			JSONArray testResultsJSONArray = new JSONArray();
@@ -628,7 +660,6 @@ public abstract class BaseBuild implements Build {
 
 		buildResultsJSONObject.put("jobVariant", getJobVariant());
 		buildResultsJSONObject.put("result", getResult());
-		buildResultsJSONObject.put("testSuiteName", getTestSuiteName());
 
 		return buildResultsJSONObject;
 	}

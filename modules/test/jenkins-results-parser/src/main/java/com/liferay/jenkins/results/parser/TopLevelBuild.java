@@ -273,6 +273,7 @@ public abstract class TopLevelBuild extends BaseBuild {
 			}
 		}
 
+		buildResultsJSONObject.put("testSuiteName", getTestSuiteName());
 		buildResultsJSONObject.put("upstreamBranchSHA", getUpstreamBranchSHA());
 
 		return buildResultsJSONObject;

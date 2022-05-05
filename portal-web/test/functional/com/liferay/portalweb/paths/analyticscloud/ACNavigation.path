@@ -26,11 +26,6 @@
 	<td>//*[contains(@class,'sidebar-item-root')]//*[contains(@href,'${key_sidebarOption}')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td>SIDEBAR_OPTION_NAME</td>
-	<td>//div[contains(@class,'sidebar-body')]//span[@class='item-label' and text()='${key_sidebarLanguageOption}']</td>
-	<td></td>
-</tr>
 <!-- TABS/OPTIONS AVAILABLE IN DIFFERENT PLACES E.G: ASSETS, SEGMENTS, SITES -->
 <tr>
 	<td>ACTIVE_CARD_TAB_NAME</td>

@@ -720,24 +720,21 @@ definition {
 	test CanDeleteTaskNode {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteTaskNode";
 
-        Workflow.openWorkflowListView();
+		Workflow.openWorkflowListView();
 
-        Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
 
-        ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "Task",
 			nodePosition = "-20,-40",
 			nodeType = "task");
 
-        ProcessBuilderKaleoDesignerReact.deleteNodeOrConnection(
-            modalMessage = "Are you sure you want to delete the selected task node?",
-            nodeType = "task",
-            title = "Delete Task Node");
+		ProcessBuilderKaleoDesignerReact.deleteNodeOrConnection(
+			modalMessage = "Are you sure you want to delete the selected task node?",
+			nodeType = "task",
+			title = "Delete Task Node");
 
-        ProcessBuilderKaleoDesignerReact.viewPanelNodeNotPresent(nodeType = "task");
-
-		
-
+		ProcessBuilderKaleoDesignerReact.viewPanelNodeNotPresent(nodeType = "task");
 	}
 
 	@description = "Verify that the user can delete the Timers"

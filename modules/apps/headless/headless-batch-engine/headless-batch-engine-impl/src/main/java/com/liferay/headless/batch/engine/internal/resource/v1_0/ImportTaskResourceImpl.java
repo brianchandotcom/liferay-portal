@@ -95,8 +95,8 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 
 		return _importFile(
 			BatchEngineTaskOperation.DELETE,
-			multipartBody.getBinaryFile("file"), callbackURL, className, null,
-			externalReferenceCode, importStrategy, taskItemDelegateName);
+			multipartBody.getBinaryFile("file"), callbackURL, className,
+			externalReferenceCode, null, importStrategy, taskItemDelegateName);
 	}
 
 	@Override
@@ -110,9 +110,8 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 
 		return _importFile(
 			BatchEngineTaskOperation.DELETE, _getBytes(object, contentType),
-			callbackURL, className, externalReferenceCode,
-			_getBatchEngineTaskContentType(contentType), taskItemDelegateName,
-			importStrategy, null);
+			callbackURL, className, _getBatchEngineTaskContentType(contentType),
+			externalReferenceCode, taskItemDelegateName, importStrategy, null);
 	}
 
 	@Override
@@ -212,8 +211,8 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 
 		return _importFile(
 			BatchEngineTaskOperation.UPDATE,
-			multipartBody.getBinaryFile("file"), callbackURL, className, null,
-			externalReferenceCode, importStrategy, taskItemDelegateName);
+			multipartBody.getBinaryFile("file"), callbackURL, className,
+			externalReferenceCode, null, importStrategy, taskItemDelegateName);
 	}
 
 	@Override
@@ -228,7 +227,7 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 		return _importFile(
 			BatchEngineTaskOperation.UPDATE, _getBytes(object, contentType),
 			callbackURL, className, _getBatchEngineTaskContentType(contentType),
-			null, externalReferenceCode, importStrategy, taskItemDelegateName);
+			externalReferenceCode, null, importStrategy, taskItemDelegateName);
 	}
 
 	@Activate

@@ -52,13 +52,6 @@ public class CountryResourceDTOConverter
 	}
 
 	@Override
-	public Country toDTO(com.liferay.portal.kernel.model.Country object)
-		throws Exception {
-
-		return DTOConverter.super.toDTO(object);
-	}
-
-	@Override
 	public Country toDTO(
 			DTOConverterContext dtoConverterContext,
 			com.liferay.portal.kernel.model.Country serviceBuilderCountry)
@@ -79,7 +72,8 @@ public class CountryResourceDTOConverter
 				regions = TransformUtil.transformToArray(
 					_regionService.getRegions(
 						serviceBuilderCountry.getCountryId()),
-					serviceBuilderRegion -> _toRegion(serviceBuilderRegion),
+					serviceBuilderRegion -> _regionResourceDTOConverter.toDTO(
+						serviceBuilderRegion),
 					Region.class);
 				shippingAllowed = serviceBuilderCountry.getShippingAllowed();
 				subjectToVAT = serviceBuilderCountry.getSubjectToVAT();
@@ -98,23 +92,11 @@ public class CountryResourceDTOConverter
 		};
 	}
 
-	private Region _toRegion(
-		com.liferay.portal.kernel.model.Region serviceBuilderRegion) {
-
-		return new Region() {
-			{
-				active = serviceBuilderRegion.getActive();
-				countryId = serviceBuilderRegion.getCountryId();
-				id = serviceBuilderRegion.getRegionId();
-				name = serviceBuilderRegion.getName();
-				regionCode = serviceBuilderRegion.getRegionCode();
-				title_i18n = serviceBuilderRegion.getLanguageIdToTitleMap();
-			}
-		};
-	}
-
 	@Reference
 	private CountryService _countryService;
+
+	@Reference
+	private RegionResourceDTOConverter _regionResourceDTOConverter;
 
 	@Reference
 	private RegionService _regionService;

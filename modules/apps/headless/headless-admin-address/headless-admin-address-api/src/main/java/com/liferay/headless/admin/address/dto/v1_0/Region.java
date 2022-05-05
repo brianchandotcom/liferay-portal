@@ -170,6 +170,34 @@ public class Region implements Serializable {
 	protected String name;
 
 	@Schema
+	public Double getPosition() {
+		return position;
+	}
+
+	public void setPosition(Double position) {
+		this.position = position;
+	}
+
+	@JsonIgnore
+	public void setPosition(
+		UnsafeSupplier<Double, Exception> positionUnsafeSupplier) {
+
+		try {
+			position = positionUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Double position;
+
+	@Schema
 	public String getRegionCode() {
 		return regionCode;
 	}
@@ -297,6 +325,16 @@ public class Region implements Serializable {
 			sb.append(_escape(name));
 
 			sb.append("\"");
+		}
+
+		if (position != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"position\": ");
+
+			sb.append(position);
 		}
 
 		if (regionCode != null) {

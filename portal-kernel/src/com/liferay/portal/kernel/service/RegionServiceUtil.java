@@ -126,6 +126,17 @@ public class RegionServiceUtil {
 		return getService().getRegionsCount(countryId, active);
 	}
 
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult<Region>
+			searchRegions(
+				long companyId, Boolean active, String keywords,
+				java.util.LinkedHashMap<String, Object> params, int start,
+				int end, OrderByComparator<Region> orderByComparator)
+		throws PortalException {
+
+		return getService().searchRegions(
+			companyId, active, keywords, params, start, end, orderByComparator);
+	}
+
 	public static Region updateActive(long regionId, boolean active)
 		throws PortalException {
 

@@ -97,6 +97,16 @@ public class RegionSerDes {
 			sb.append("\"");
 		}
 
+		if (region.getPosition() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"position\": ");
+
+			sb.append(region.getPosition());
+		}
+
 		if (region.getRegionCode() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -167,6 +177,13 @@ public class RegionSerDes {
 			map.put("name", String.valueOf(region.getName()));
 		}
 
+		if (region.getPosition() == null) {
+			map.put("position", null);
+		}
+		else {
+			map.put("position", String.valueOf(region.getPosition()));
+		}
+
 		if (region.getRegionCode() == null) {
 			map.put("regionCode", null);
 		}
@@ -220,6 +237,12 @@ public class RegionSerDes {
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
 					region.setName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "position")) {
+				if (jsonParserFieldValue != null) {
+					region.setPosition(
+						Double.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "regionCode")) {

@@ -583,6 +583,53 @@ public class RegionServiceHttp {
 		}
 	}
 
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult
+		<com.liferay.portal.kernel.model.Region> searchRegions(
+				HttpPrincipal httpPrincipal, long companyId, Boolean active,
+				String keywords, java.util.LinkedHashMap<String, Object> params,
+				int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.portal.kernel.model.Region> orderByComparator)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				RegionServiceUtil.class, "searchRegions",
+				_searchRegionsParameterTypes15);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, companyId, active, keywords, params, start, end,
+				orderByComparator);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.portal.kernel.search.BaseModelSearchResult
+				<com.liferay.portal.kernel.model.Region>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static com.liferay.portal.kernel.model.Region updateActive(
 			HttpPrincipal httpPrincipal, long regionId, boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -590,7 +637,7 @@ public class RegionServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				RegionServiceUtil.class, "updateActive",
-				_updateActiveParameterTypes15);
+				_updateActiveParameterTypes16);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, regionId, active);
@@ -631,7 +678,7 @@ public class RegionServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				RegionServiceUtil.class, "updateRegion",
-				_updateRegionParameterTypes16);
+				_updateRegionParameterTypes17);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, regionId, active, name, position, regionCode);
@@ -710,9 +757,15 @@ public class RegionServiceHttp {
 		new Class[] {long.class};
 	private static final Class<?>[] _getRegionsCountParameterTypes14 =
 		new Class[] {long.class, boolean.class};
-	private static final Class<?>[] _updateActiveParameterTypes15 =
+	private static final Class<?>[] _searchRegionsParameterTypes15 =
+		new Class[] {
+			long.class, Boolean.class, String.class,
+			java.util.LinkedHashMap.class, int.class, int.class,
+			com.liferay.portal.kernel.util.OrderByComparator.class
+		};
+	private static final Class<?>[] _updateActiveParameterTypes16 =
 		new Class[] {long.class, boolean.class};
-	private static final Class<?>[] _updateRegionParameterTypes16 =
+	private static final Class<?>[] _updateRegionParameterTypes17 =
 		new Class[] {
 			long.class, boolean.class, String.class, double.class, String.class
 		};

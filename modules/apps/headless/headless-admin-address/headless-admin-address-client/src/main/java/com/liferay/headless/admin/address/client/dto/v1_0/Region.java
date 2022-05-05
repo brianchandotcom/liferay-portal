@@ -115,6 +115,27 @@ public class Region implements Cloneable, Serializable {
 
 	protected String name;
 
+	public Double getPosition() {
+		return position;
+	}
+
+	public void setPosition(Double position) {
+		this.position = position;
+	}
+
+	public void setPosition(
+		UnsafeSupplier<Double, Exception> positionUnsafeSupplier) {
+
+		try {
+			position = positionUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Double position;
+
 	public String getRegionCode() {
 		return regionCode;
 	}

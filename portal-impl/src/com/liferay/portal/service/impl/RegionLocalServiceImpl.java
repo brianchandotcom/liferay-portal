@@ -270,16 +270,22 @@ public class RegionLocalServiceImpl extends RegionLocalServiceBaseImpl {
 		);
 
 		return joinStep.where(
-			() -> {
-				Predicate predicate = RegionTable.INSTANCE.companyId.eq(
-					companyId);
+			RegionTable.INSTANCE.companyId.eq(
+				companyId
+			).and(
+				() -> {
+					if (active != null) {
+						return RegionTable.INSTANCE.active.eq(active);
+					}
 
-				if (active != null) {
-					predicate = predicate.and(
-						RegionTable.INSTANCE.active.eq(active));
+					return null;
 				}
+			).and(
+				() -> {
+					if (Validator.isNull(keywords)) {
+						return null;
+					}
 
-				if (Validator.isNotNull(keywords)) {
 					String[] terms = CustomSQLUtil.keywords(keywords, true);
 
 					Predicate keywordsPredicate = null;
@@ -289,43 +295,35 @@ public class RegionLocalServiceImpl extends RegionLocalServiceBaseImpl {
 							RegionTable.INSTANCE.name
 						).like(
 							term
+						).or(
+							DSLFunctionFactoryUtil.lower(
+								RegionLocalizationTable.INSTANCE.title
+							).like(
+								term
+							)
 						);
 
-						Predicate titlePredicate = DSLFunctionFactoryUtil.lower(
-							RegionLocalizationTable.INSTANCE.title
-						).like(
-							term
-						);
-
-						Predicate termPredicate = namePredicate.or(
-							titlePredicate);
-
-						if (keywordsPredicate == null) {
-							keywordsPredicate = termPredicate;
-						}
-						else {
-							keywordsPredicate = keywordsPredicate.or(
-								termPredicate);
-						}
+						keywordsPredicate = Predicate.or(
+							keywordsPredicate, namePredicate);
 					}
 
-					if (keywordsPredicate != null) {
-						predicate = predicate.and(
-							keywordsPredicate.withParentheses());
-					}
+					return Predicate.withParentheses(keywordsPredicate);
 				}
+			).and(
+				() -> {
+					if (MapUtil.isEmpty(params)) {
+						return null;
+					}
 
-				if (MapUtil.isNotEmpty(params)) {
 					long countryId = (long)params.get("countryId");
 
 					if (countryId > 0) {
-						predicate = predicate.and(
-							RegionTable.INSTANCE.countryId.eq(countryId));
+						return RegionTable.INSTANCE.countryId.eq(countryId);
 					}
-				}
 
-				return predicate;
-			});
+					return null;
+				}
+			));
 	}
 
 	@BeanReference(type = AddressLocalService.class)

@@ -51,25 +51,25 @@ public class COREntryClayTableDataSetDisplayView
 
 		activeClayTableSchemaField.setContentRenderer("boolean");
 
-		ClayTableSchemaField startDateClayTableSchemaField =
+		ClayTableSchemaField displayDateStartDateClayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField(
 				"displayDate", "start-date");
 
-		startDateClayTableSchemaField.setContentRenderer("dateTime");
-		startDateClayTableSchemaField.setSortable(true);
+		displayDateStartDateClayTableSchemaField.setContentRenderer("dateTime");
+		displayDateStartDateClayTableSchemaField.setSortable(true);
 
-		ClayTableSchemaField endDateClayTableSchemaField =
+		ClayTableSchemaField expirationDateClayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField(
 				"expirationDate", "end-date");
 
-		endDateClayTableSchemaField.setContentRenderer("dateTime");
-		endDateClayTableSchemaField.setSortable(true);
+		expirationDateClayTableSchemaField.setContentRenderer("dateTime");
+		expirationDateClayTableSchemaField.setSortable(true);
 
-		ClayTableSchemaField statusClayTableSchemaField =
+		ClayTableSchemaField workflowStatusInfoClayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField(
 				"workflowStatusInfo", "status");
 
-		statusClayTableSchemaField.setContentRenderer("status");
+		workflowStatusInfoClayTableSchemaField.setContentRenderer("status");
 
 		return clayTableSchemaBuilder.build();
 	}

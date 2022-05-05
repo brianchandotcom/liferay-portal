@@ -102,6 +102,7 @@ definition {
 			idpMetadataURL = "${idpURL}/c/portal/saml/metadata",
 			idpNameId = "${idpEntityId}",
 			nameIdentifierFormat = "${nameIdentifierFormat}",
+			uploadMetadataXML = "${uploadMetadataXML}",
 			userMatchingAttributeIndex = "${userMatchingAttributeIndex}",
 			userResolution = "${userResolution}");
 
@@ -141,7 +142,8 @@ definition {
 			spEntityId = "${spEntityId}",
 			spKeepAliveURL = "${spKeepAliveURL}",
 			spMetadataURL = "${spURL}/c/portal/saml/metadata",
-			spNameId = "${spEntityId}");
+			spNameId = "${spEntityId}",
+			uploadMetadataXML = "${uploadMetadataXML}");
 
 		// Logout from Identity Provider host
 

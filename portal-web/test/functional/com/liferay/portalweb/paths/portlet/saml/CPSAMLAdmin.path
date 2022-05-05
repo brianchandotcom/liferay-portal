@@ -46,6 +46,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SAML_CHOOSE_METADATA_XML_FILE</td>
+	<td>//input[contains(@id,'metadataXml')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SAML_ENABLED_CHECKBOX</td>
 	<td>//input[contains(@id,'saml-enabled') and @type='checkbox']</td>
 	<td></td>
@@ -68,6 +73,11 @@
 <tr>
 	<td>SAML_SELECTED_ROLE</td>
 	<td>//select[contains(@id,'saml-role')]//option[contains(@selected,'')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAML_UPLOAD_METADATA_XML</td>
+	<td>//label[contains(@for,'metadataDeliveryXml')]/input[@type='radio']</td>
 	<td></td>
 </tr>
 <tr>

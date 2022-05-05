@@ -54,6 +54,20 @@ definition {
 			locator1 = "Modal#MODAL_FOOTER_BUTTON");
 	}
 
+	macro deleteResource {
+		LexiconCard.clickEllipsisItem(
+			card = "${entry}",
+			item = "Delete");
+
+		AssertTextEquals(
+			locator1 = "Modal#BODY",
+			value1 = "Are you sure you want to delete this? It will be deleted immediately.");
+
+		Click(
+			key_text = "Delete",
+			locator1 = "Modal#MODAL_FOOTER_BUTTON");
+	}
+
 	macro exportCollection {
 		Navigator.gotoNavNested(navNested = "${collectionName}");
 

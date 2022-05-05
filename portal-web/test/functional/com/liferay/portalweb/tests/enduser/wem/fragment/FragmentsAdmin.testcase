@@ -57,7 +57,7 @@ definition {
 		}
 
 		task ("Delete resource") {
-			FragmentsAdmin.deleteEntry(entry = "Document_1.png");
+			FragmentsAdmin.deleteResource(entry = "Document_1.png");
 		}
 
 		task ("View no resource") {

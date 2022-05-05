@@ -28,8 +28,10 @@ import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.journal.util.JournalConverter;
+import com.liferay.journal.util.JournalHelper;
 import com.liferay.journal.web.internal.asset.JournalArticleDDMFormValuesReader;
 import com.liferay.journal.web.internal.security.permission.resource.JournalArticlePermission;
+import com.liferay.journal.web.internal.util.JournalHelperUtil;
 import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalServiceUtil;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
@@ -395,13 +397,8 @@ public class JournalArticleAssetRenderer
 			return noSuchEntryRedirect;
 		}
 
-		String friendlyURL = StringBundler.concat(
-			PortalUtil.getGroupFriendlyURL(
-				LayoutSetLocalServiceUtil.getLayoutSet(
-					_article.getGroupId(), layout.isPrivateLayout()),
-				themeDisplay, false, false),
-			JournalArticleConstants.CANONICAL_URL_SEPARATOR,
-			_article.getUrlTitle(themeDisplay.getLocale()));
+		String friendlyURL = JournalHelperUtil.buildURLPattern(
+			_article, layout.isPrivateLayout(),themeDisplay);
 
 		if (!_article.isApproved()) {
 			friendlyURL = HttpComponentsUtil.addParameter(

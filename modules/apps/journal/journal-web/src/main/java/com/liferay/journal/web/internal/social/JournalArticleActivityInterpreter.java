@@ -24,7 +24,7 @@ import com.liferay.journal.exception.NoSuchArticleException;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalService;
-import com.liferay.petra.string.StringBundler;
+import com.liferay.journal.util.JournalHelper;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -96,12 +96,9 @@ public class JournalArticleActivityInterpreter
 			Layout layout = article.getLayout();
 
 			if (layout != null) {
-				return StringBundler.concat(
-					_portal.getGroupFriendlyURL(
-						layout.getLayoutSet(), serviceContext.getThemeDisplay(),
-						false, false),
-					JournalArticleConstants.CANONICAL_URL_SEPARATOR,
-					article.getUrlTitle());
+				return _journalHelper.buildURLPattern(
+					article, layout.isPrivateLayout(),
+					serviceContext.getThemeDisplay());
 			}
 
 			return null;
@@ -238,6 +235,9 @@ public class JournalArticleActivityInterpreter
 	)
 	private ModelResourcePermission<JournalFolder>
 		_journalFolderModelResourcePermission;
+
+	@Reference
+	private JournalHelper _journalHelper;
 
 	@Reference
 	private Portal _portal;

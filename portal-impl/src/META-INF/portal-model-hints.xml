@@ -1394,7 +1394,7 @@
 			<hint name="max-length">4000</hint>
 		</field>
 		<field localized="true" name="description" type="String">
-			<hint-collection name="TEXTAREA" />
+			<hint-collection name="CLOB" />
 		</field>
 		<field name="type" type="int" />
 		<field name="subtype" type="String" />

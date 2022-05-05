@@ -34,7 +34,61 @@ $color-yellow-light: #fffbe7;
 
 $color-blue: #59bbfc;
 
+// ---------- Avatar colors ------------------
+
+.bg-accent-1 {
+	background-color: #eb2453;
+}
+
+.bg-accent-2 {
+	background-color: #a7e204;
+}
+
+.bg-accent-3 {
+	background-color: #c70d95;
+}
+
+.bg-accent-4 {
+	background-color: #221874;
+}
+
+.text-brand-secondary-lighten-6 {
+	color: #fff;
+}
+
 // ---------- Result status colors ----------
+
+.label-inverse-secondary {
+	background-color: #5924eb;
+}
+
+.label-inverse-danger {
+	background-color: #da1414;
+}
+
+.label-inverse-secondary {
+	background-color: #ed7105;
+}
+
+.label-inverse-light {
+	background-color: #f7f6f9;
+}
+
+.label-inverse-primary {
+	background-color: #5924eb;
+}
+
+.label-inverse-success {
+	background-color: #4aab3b;
+}
+
+.label-inverse-info {
+	background-color: #2e5aac;
+}
+
+.label-tonal-success {
+	background-color: #edf7eb;
+}
 
 $blocked-color: $color-yellow;
 $dnr-color: $color-gray;

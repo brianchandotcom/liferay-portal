@@ -95,7 +95,8 @@ const useFormActions = (): Form => {
 			});
 
 			onSave();
-		} catch (error) {
+		}
+		catch (error) {
 			onError(error);
 
 			throw error;

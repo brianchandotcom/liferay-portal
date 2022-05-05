@@ -584,11 +584,28 @@ definition {
 	}
 
 	@description = "Verify that the user can delete Nodes of Condition"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanDeleteConditionNode {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteConditionNode";
 
-		// TODO CanDeleteConditionNode pending implementation
+        Workflow.openWorkflowListView();
+
+        Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+        ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Condition",
+			nodePosition = "-20,-100",
+			nodeType = "condition");
+
+        ProcessBuilderKaleoDesignerReact.deleteNodeOrConnection(
+            modalMessage = "Are you sure you want to delete the selected condition node?",
+            nodeType = "condition",
+            title = "Delete Condition Node");
+
+        ProcessBuilderKaleoDesignerReact.viewPanelNodeNotPresent(nodeType = "condition");
+
+
+		
 
 	}
 

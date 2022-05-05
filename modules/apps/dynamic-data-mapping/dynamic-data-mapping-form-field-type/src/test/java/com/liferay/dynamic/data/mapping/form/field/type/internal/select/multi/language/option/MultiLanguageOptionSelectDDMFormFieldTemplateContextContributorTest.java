@@ -156,10 +156,6 @@ public class
 	}
 
 	private void _setUpResourceBundle() {
-		ResourceBundle resourceBundle2 = Mockito.mock(ResourceBundle.class);
-
-		ResourceBundle resourceBundle1 = Mockito.mock(ResourceBundle.class);
-
 		PortalUtil portalUtil = new PortalUtil();
 
 		Portal portal = Mockito.mock(Portal.class);
@@ -172,22 +168,12 @@ public class
 		ResourceBundleLoaderUtil.setPortalResourceBundleLoader(
 			resourceBundleLoader);
 
-		Mockito.when(
-			portal.getResourceBundle(Matchers.eq(LocaleUtil.US))
-		).thenReturn(
-			resourceBundle2
-		);
+		ResourceBundle resourceBundle1 = Mockito.mock(ResourceBundle.class);
 
 		Mockito.when(
 			portal.getResourceBundle(Matchers.eq(LocaleUtil.BRAZIL))
 		).thenReturn(
 			resourceBundle1
-		);
-
-		Mockito.when(
-			resourceBundleLoader.loadResourceBundle(Matchers.eq(LocaleUtil.US))
-		).thenReturn(
-			resourceBundle2
 		);
 
 		Mockito.when(
@@ -198,15 +184,29 @@ public class
 		);
 
 		Mockito.when(
-			resourceBundle2.getLocale()
-		).thenReturn(
-			LocaleUtil.US
-		);
-
-		Mockito.when(
 			resourceBundle1.getLocale()
 		).thenReturn(
 			LocaleUtil.BRAZIL
+		);
+
+		ResourceBundle resourceBundle2 = Mockito.mock(ResourceBundle.class);
+
+		Mockito.when(
+			portal.getResourceBundle(Matchers.eq(LocaleUtil.US))
+		).thenReturn(
+			resourceBundle2
+		);
+
+		Mockito.when(
+			resourceBundleLoader.loadResourceBundle(Matchers.eq(LocaleUtil.US))
+		).thenReturn(
+			resourceBundle2
+		);
+
+		Mockito.when(
+			resourceBundle2.getLocale()
+		).thenReturn(
+			LocaleUtil.US
 		);
 
 		Map<String, String> optionLabelsForBRAZIL = HashMapBuilder.put(
@@ -240,20 +240,18 @@ public class
 			(Answer<String>)invocationOnMock -> {
 				Object[] arguments = invocationOnMock.getArguments();
 
-				ResourceBundle resourceBundle3 = (ResourceBundle)arguments[0];
+				ResourceBundle resourceBundle = (ResourceBundle)arguments[0];
 
-				if (resourceBundle3 == null) {
+				if (resourceBundle == null) {
 					return null;
 				}
 
-				if (Objects.equals(
-						LocaleUtil.US, resourceBundle3.getLocale())) {
-
+				if (Objects.equals(LocaleUtil.US, resourceBundle.getLocale())) {
 					return optionLabelsForUS.get(arguments[1]);
 				}
 
 				if (Objects.equals(
-						LocaleUtil.BRAZIL, resourceBundle3.getLocale())) {
+						LocaleUtil.BRAZIL, resourceBundle.getLocale())) {
 
 					return optionLabelsForBRAZIL.get(arguments[1]);
 				}

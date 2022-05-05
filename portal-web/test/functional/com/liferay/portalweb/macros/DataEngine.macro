@@ -877,15 +877,22 @@ definition {
 
 		Navigator.gotoSidebarTab(tabName = "Builder");
 
-		if (isSet(fieldsetModal)) {
+		if ("${fieldName}" == "Boolean") {
 			Click(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
-				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL_IN_FIELDSET_MODAL");
+				key_fieldLabel = "${fieldFieldLabel}",
+				locator1 = "Checkbox#CHECKBOX_LABEL");
 		}
 		else {
-			Click(
-				key_fieldFieldLabel = "${fieldFieldLabel}",
-				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+			if (isSet(fieldsetModal)) {
+				Click(
+					key_fieldFieldLabel = "${fieldFieldLabel}",
+					locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL_IN_FIELDSET_MODAL");
+			}
+			else {
+				Click(
+					key_fieldFieldLabel = "${fieldFieldLabel}",
+					locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+			}
 		}
 
 		Type(
@@ -900,9 +907,16 @@ definition {
 			locator1 = "Sidebar#TEXT_INPUT",
 			value1 = "${fieldFieldLabelEdit}");
 
-		AssertElementPresent(
-			key_fieldFieldLabel = "${fieldFieldLabelEdit}",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+		if ("${fieldName}" == "Boolean") {
+			AssertElementPresent(
+				key_fieldLabel = "${fieldFieldLabelEdit}",
+				locator1 = "Checkbox#CHECKBOX_LABEL");
+		}
+		else {
+			AssertElementPresent(
+				key_fieldFieldLabel = "${fieldFieldLabelEdit}",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+		}
 
 		Click(locator1 = "Sidebar#BACK");
 	}

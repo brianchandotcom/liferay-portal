@@ -921,6 +921,9 @@ SideNavigation.prototype = {
 			const target =
 				toggler.dataset.target || toggler.getAttribute('href');
 
+
+			instance._emit('closedStart.lexicon.sidenav');
+
 			dispatchCustomEvent(
 				document,
 				'closedStart.lexicon.sidenav',
@@ -930,6 +933,8 @@ SideNavigation.prototype = {
 			instance._subscribeSidenavTransitionEnd(content, () => {
 				removeClass(container, 'sidenav-transition');
 				removeClass(toggler, 'sidenav-transition');
+
+				instance._emit('closed.lexicon.sidenav');
 
 				dispatchCustomEvent(
 					document,
@@ -1205,6 +1210,8 @@ SideNavigation.prototype = {
 				instance._loadUrl(container, url);
 			}
 
+			instance._emit('openStart.lexicon.sidenav');
+
 			dispatchCustomEvent(
 				document,
 				'openStart.lexicon.sidenav',
@@ -1214,6 +1221,8 @@ SideNavigation.prototype = {
 			instance._subscribeSidenavTransitionEnd(content, () => {
 				removeClass(container, 'sidenav-transition');
 				removeClass(toggler, 'sidenav-transition');
+
+				instance._emit('open.lexicon.sidenav');
 
 				dispatchCustomEvent(document, 'open.lexicon.sidenav', instance);
 			});
@@ -1267,6 +1276,8 @@ SideNavigation.prototype = {
 		const sidenavRight = instance._isSidenavRight();
 
 		if (closed) {
+			instance._emit('openStart.lexicon.sidenav');
+
 			dispatchCustomEvent(
 				document,
 				'openStart.lexicon.sidenav',
@@ -1274,6 +1285,8 @@ SideNavigation.prototype = {
 			);
 		}
 		else {
+			instance._emit('closedStart.lexicon.sidenav');
+
 			dispatchCustomEvent(
 				document,
 				'closedStart.lexicon.sidenav',
@@ -1292,6 +1305,8 @@ SideNavigation.prototype = {
 					'sidenav-transition': false,
 				});
 
+				instance._emit('closed.lexicon.sidenav');
+
 				dispatchCustomEvent(
 					document,
 					'closed.lexicon.sidenav',
@@ -1303,6 +1318,8 @@ SideNavigation.prototype = {
 					'open': true,
 					'sidenav-transition': false,
 				});
+
+				instance._emit('open.lexicon.sidenav');
 
 				dispatchCustomEvent(document, 'open.lexicon.sidenav', instance);
 			}

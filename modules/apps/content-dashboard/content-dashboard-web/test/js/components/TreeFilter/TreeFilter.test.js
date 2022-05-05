@@ -13,16 +13,18 @@
  */
 
 import {cleanup, fireEvent, render} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
 
-import TreeFilter from '../../../../src/main/resources/META-INF/resources/js/components/TreeFilter/FrontendTreeFilter/TreeFilter';
+import TreeFilter from '../../../../src/main/resources/META-INF/resources/js/components/TreeFilter/TreeFilter';
 import {
 	mockEmptyTreeProps,
 	mockExtensionsProps,
+	mockExtensionsProps2,
 	mockTypesProps,
-} from '../../mocks/treeProps';
+} from '../../mocks/clayTreeProps';
 
 describe('SelectFileExtension', () => {
 	beforeEach(() => {
@@ -41,7 +43,7 @@ describe('SelectFileExtension', () => {
 		);
 
 		const {className} = getByRole('tree');
-		expect(className).toContain('lfr-treeview-node-list');
+		expect(className).toContain('treeview treeview-light');
 
 		expect(
 			getByText('Web Content Article', {exact: false})
@@ -84,10 +86,34 @@ describe('SelectFileExtension', () => {
 		expect(getByText('jpeg')).toBeInTheDocument();
 	});
 
-	it('renders a Treeview with a selected node if selected is true', () => {
-		const {container} = render(<TreeFilter {...mockExtensionsProps} />);
+	it('renders a Treeview with a selected node if selected is true', async () => {
+		const {container, getByPlaceholderText} = render(
+			<TreeFilter {...mockExtensionsProps} />
+		);
 
-		expect(container.getElementsByClassName('selected').length).toBe(1);
+		await userEvent.type(getByPlaceholderText('search'), 'aud');
+
+		const checkboxes = container.querySelectorAll('input[type=checkbox]');
+		const checkedCheckboxesCount = Array.from(checkboxes).reduce(
+			(acc, checkbox) => (checkbox.checked ? ++acc : acc),
+			0
+		);
+		expect(checkedCheckboxesCount).toBe(1);
+	});
+
+	it('renders a Treeview with a selected parent node if all children are selected', async () => {
+		const {container, getByPlaceholderText} = render(
+			<TreeFilter {...mockExtensionsProps2} />
+		);
+
+		await userEvent.type(getByPlaceholderText('search'), 'aud');
+
+		const checkboxes = container.querySelectorAll('input[type=checkbox]');
+		const checkedCheckboxesCount = Array.from(checkboxes).reduce(
+			(acc, checkbox) => (checkbox.checked ? ++acc : acc),
+			0
+		);
+		expect(checkedCheckboxesCount).toBe(3);
 	});
 
 	it('shows empty state when there are no nodes in the tree', async () => {
@@ -125,25 +151,26 @@ describe('SelectFileExtension', () => {
 		await findByText('Image (2 items)');
 		expect(getByText('Image (2 items)')).toBeInTheDocument();
 
-		// Then we clear the search input by hitting the clear buttpn
+		// Then we clear the search input by hitting the clear button
 
-		const clear_button = container.getElementsByClassName(
-			'tree-filter-clear'
-		);
+		const clearButton = container.querySelector('.tree-filter-clear');
 
-		expect(clear_button.length).toBe(1);
+		expect(clearButton).toBeTruthy();
 
-		fireEvent.click(clear_button[0]);
-		expect(getByText('Image (4 Items)')).toBeInTheDocument();
+		fireEvent.click(clearButton);
+
+		expect(await getByText('Image (4 items)')).toBeInTheDocument();
 	});
 
-	it('shows the total number of elements selected in the list above the tree', () => {
-		const {getByText} = render(<TreeFilter {...mockExtensionsProps} />);
+	it('shows the total number of elements selected in the list above the tree', async () => {
+		const {container, getByText} = render(
+			<TreeFilter {...mockExtensionsProps} />
+		);
 
 		expect(getByText('1 item-selected')).toBeInTheDocument();
 
-		const node = getByText('wav');
-		fireEvent.click(node);
+		const checkbox = container.querySelector('input[type=checkbox]');
+		fireEvent.click(checkbox);
 
 		expect(getByText('2 items-selected')).toBeInTheDocument();
 	});

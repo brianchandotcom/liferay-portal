@@ -588,25 +588,21 @@ definition {
 	test CanDeleteConditionNode {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteConditionNode";
 
-        Workflow.openWorkflowListView();
+		Workflow.openWorkflowListView();
 
-        Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
 
-        ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "Condition",
 			nodePosition = "-20,-100",
 			nodeType = "condition");
 
-        ProcessBuilderKaleoDesignerReact.deleteNodeOrConnection(
-            modalMessage = "Are you sure you want to delete the selected condition node?",
-            nodeType = "condition",
-            title = "Delete Condition Node");
+		ProcessBuilderKaleoDesignerReact.deleteNodeOrConnection(
+			modalMessage = "Are you sure you want to delete the selected condition node?",
+			nodeType = "condition",
+			title = "Delete Condition Node");
 
-        ProcessBuilderKaleoDesignerReact.viewPanelNodeNotPresent(nodeType = "condition");
-
-
-		
-
+		ProcessBuilderKaleoDesignerReact.viewPanelNodeNotPresent(nodeType = "condition");
 	}
 
 	@description = "Verify that the user can delete Nodes of End"

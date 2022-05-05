@@ -597,20 +597,18 @@ definition {
 	test CanDeleteEndNode {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteEndNode";
 
-        Workflow.openWorkflowListView();
+		Workflow.openWorkflowListView();
 
-        Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
 
-        ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "end");
+		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "end");
 
-        ProcessBuilderKaleoDesignerReact.deleteNodeOrConnection(
-            modalMessage = "Are you sure you want to delete the selected end node?",
-            nodeType = "end",
-            title = "Delete End Node");
+		ProcessBuilderKaleoDesignerReact.deleteNodeOrConnection(
+			modalMessage = "Are you sure you want to delete the selected end node?",
+			nodeType = "end",
+			title = "Delete End Node");
 
-        ProcessBuilderKaleoDesignerReact.viewPanelNodeNotPresent(nodeType = "end");
-
-		
+		ProcessBuilderKaleoDesignerReact.viewPanelNodeNotPresent(nodeType = "end");
 	}
 
 	@description = "Verify that the user can delete Nodes of Fork"

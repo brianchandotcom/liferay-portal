@@ -425,6 +425,11 @@ paths:
                   schema:
                       type: string
                 - in: query
+                  name: createStrategy
+                  schema:
+                      enum: [INSERT, UPSERT]
+                      type: string
+                - in: query
                   name: externalReferenceCode
                   schema:
                       type: string
@@ -500,6 +505,11 @@ paths:
                 - in: query
                   name: taskItemDelegateName
                   schema:
+                      type: string
+                - in: query
+                  name: updateStrategy
+                  schema:
+                      enum: [PARTIAL_UPDATE, UPDATE]
                       type: string
             requestBody:
                 content:

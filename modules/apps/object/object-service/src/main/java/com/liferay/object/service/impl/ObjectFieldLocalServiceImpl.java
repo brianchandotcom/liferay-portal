@@ -490,7 +490,10 @@ public class ObjectFieldLocalServiceImpl
 		if ((objectDefinition.isApproved() || objectDefinition.isSystem()) &&
 			!Objects.equals(
 				objectDefinition.getExtensionDBTableName(),
-				objectField.getDBTableName())) {
+				objectField.getDBTableName()) &&
+			!Objects.equals(
+				objectField.getBusinessType(),
+				ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
 
 			throw new RequiredObjectFieldException();
 		}
@@ -520,7 +523,11 @@ public class ObjectFieldLocalServiceImpl
 
 		if (Objects.equals(
 				objectDefinition.getExtensionDBTableName(),
-				objectField.getDBTableName())) {
+				objectField.getDBTableName()) ||
+			(objectDefinition.isApproved() &&
+			 Objects.equals(
+				 objectField.getBusinessType(),
+				 ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP))) {
 
 			if (Objects.equals(objectFieldSettingFileSource, "userComputer")) {
 				_deleteFileEntries(

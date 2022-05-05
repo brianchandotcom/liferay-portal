@@ -231,7 +231,6 @@ definition {
 			nodeLabel = "Task",
 			nodePosition = "-20,-40",
 			nodeType = "task");
-
 	}
 
 	@description = "Verify that Timers can be added"

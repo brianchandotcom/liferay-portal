@@ -140,6 +140,13 @@ public class RegionResourceTest extends BaseRegionResourceTestCase {
 	}
 
 	@Override
+	protected Region testGetCountryRegionByRegionCode_addRegion()
+		throws Exception {
+
+		return _addRegion(randomRegion());
+	}
+
+	@Override
 	protected Region testGetCountryRegionsPage_addRegion(
 			Long countryId, Region region)
 		throws Exception {
@@ -149,10 +156,12 @@ public class RegionResourceTest extends BaseRegionResourceTestCase {
 		return _addRegion(region);
 	}
 
+	@Override
 	protected Long testGetCountryRegionsPage_getCountryId() throws Exception {
 		return _country.getCountryId();
 	}
 
+	@Override
 	protected Long testGetCountryRegionsPage_getIrrelevantCountryId()
 		throws Exception {
 
@@ -165,6 +174,11 @@ public class RegionResourceTest extends BaseRegionResourceTestCase {
 			ServiceContextTestUtil.getServiceContext());
 
 		return country.getCountryId();
+	}
+
+	@Override
+	protected Region testGetRegion_addRegion() throws Exception {
+		return _addRegion(randomRegion());
 	}
 
 	@Override

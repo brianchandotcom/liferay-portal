@@ -98,9 +98,9 @@ definition {
 	}
 
 	macro deletePageTemplate {
-		LexiconCard.clickEllipsisItem(
-			card = "${pageTemplateName}",
-			item = "Delete");
+		PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
+			item = "Delete",
+			pageTemplateName = "${pageTemplateName}");
 
 		AssertTextEquals(
 			locator1 = "Modal#BODY",

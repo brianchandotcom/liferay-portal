@@ -11,9 +11,9 @@ definition {
 	}
 
 	macro deleteMasters {
-		LexiconCard.clickEllipsisItem(
-			card = "${masterLayoutName}",
-			item = "Delete");
+		MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
+			item = "Delete",
+			masterLayoutName = "${masterLayoutName}");
 
 		AssertTextEquals(
 			locator1 = "Modal#BODY",

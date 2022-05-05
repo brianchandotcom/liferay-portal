@@ -14,10 +14,13 @@
 
 package com.liferay.object.related.models;
 
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectRelationship;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModel;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Marco Leo
@@ -47,5 +50,13 @@ public interface ObjectRelatedModelsProvider<T extends BaseModel<T>> {
 	public int getRelatedModelsCount(
 			long groupId, long objectRelationshipId, long primaryKey)
 		throws PortalException;
+
+	public default List<Map<String, Object>> getRelatedSystemModels(
+			long foreignKey, ObjectDefinition objectDefinition,
+			ObjectRelationship objectRelationship)
+		throws PortalException {
+
+		return null;
+	}
 
 }

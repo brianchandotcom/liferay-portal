@@ -19,6 +19,9 @@ package com.liferay.fragment.constants;
  */
 public class FragmentWebKeys {
 
+	public static final String ACCESS_ALLOWED_TO_FRAGMENT_ENTRY_LINK_ID =
+		"ACCESS_ALLOWED_TO_FRAGMENT_ENTRY_LINK_ID_";
+
 	public static final String FRAGMENT_ENTRY_LINK = "FRAGMENT_ENTRY_LINK";
 
 }

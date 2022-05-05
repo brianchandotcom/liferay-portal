@@ -300,6 +300,64 @@ definition {
 		}
 	}
 
+	@description = "Verify the order type field is empty when creating a new order with no active order types"
+	@priority = "3"
+	test OrderTypeFieldIsEmptyWhenNoOrderTypesAreActive {
+		property portal.acceptance = "false";
+
+		task ("Given there are no active order types") {
+			CommerceOrders.openOrderTypesAdmin();
+
+			AssertElementPresent(locator1 = "Message#EMPTY_STATE_INFO");
+		}
+
+		task ("When the buyer logs in and adds a product to the cart") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+		}
+
+		task ("Then a new order is automatically created and the order type field is empty") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
+
+			Button.click(button = "View");
+
+			AssertTextEquals(
+				key_orderType = "",
+				locator1 = "CommerceOrders#PENDING_ORDERS_ORDER_TYPE",
+				value1 = "");
+		}
+
+		task ("When the buyer creates an order from pending orders") {
+			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
+		}
+
+		task ("Then a new order is created and the order type field is empty") {
+			AssertTextEquals(
+				key_orderType = "",
+				locator1 = "CommerceOrders#PENDING_ORDERS_ORDER_TYPE",
+				value1 = "");
+		}
+
+		task ("When the buyer creates an order from the account selector") {
+			CommerceAcceleratorsInitializer.createNewOrderFromAccountSelectorDropdown();
+		}
+
+		task ("Then a new order is created and the order type field is empty") {
+			AssertTextEquals(
+				key_orderType = "",
+				locator1 = "CommerceOrders#PENDING_ORDERS_ORDER_TYPE",
+				value1 = "");
+		}
+	}
+
 	@description = "Verify when creating an order with add to cart and there are more than 1 active order types for the channel, the order type with the highest priority (lower display order) is set in the order"
 	@priority = "4"
 	test OrderTypeIsAutoAssignedByHighestPriorityToNewOrderWhenTheUserAddsToCart {

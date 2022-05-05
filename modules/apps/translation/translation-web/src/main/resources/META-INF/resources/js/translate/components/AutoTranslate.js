@@ -18,12 +18,14 @@ import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import React from 'react';
 
+import {FETCH_STATUS} from '../constants';
+
 const AutoTranslate = ({
 	fetchAutoTranslateFields,
 	fetchAutoTranslateStatus,
 }) => {
 	const {message, status} = fetchAutoTranslateStatus;
-	const isLoading = status === 'LOADING';
+	const isLoading = status === FETCH_STATUS.LOADING;
 
 	return (
 		<ClayLayout.ContentRow noGutters="y" verticalAlign="center">
@@ -52,7 +54,7 @@ const AutoTranslate = ({
 					</div>
 				)}
 
-				{status === 'SUCCESS' && (
+				{status === FETCH_STATUS.SUCCESS && (
 					<div className="has-success">
 						<ClayForm.FeedbackItem className="mt-0">
 							<ClayForm.FeedbackIndicator symbol="check-circle-full" />
@@ -62,7 +64,7 @@ const AutoTranslate = ({
 					</div>
 				)}
 
-				{status === 'ERROR' && (
+				{status === FETCH_STATUS.ERROR && (
 					<div className="has-error">
 						<ClayForm.FeedbackItem className="mt-0">
 							<ClayForm.FeedbackIndicator symbol="exclamation-full" />

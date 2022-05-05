@@ -135,11 +135,16 @@
 		},
 		"Field": {
 			"properties": {
-				"fieldMappings": {
+				"defaultValue": {
 					"items": {
 						"$ref": "#/definitions/FieldMapping"
 					},
-					"type": "array"
+					"type": [
+						"array",
+						"number",
+						"object",
+						"string"
+					]
 				},
 				"helpText": {
 					"type": "string"
@@ -150,10 +155,20 @@
 				"name": {
 					"type": "string"
 				},
-				"step": {
-					"type": "object"
-				},
 				"type": {
+					"enum": [
+						"date",
+						"fieldMapping",
+						"fieldMappingList",
+						"json",
+						"keywords",
+						"multiselect",
+						"number",
+						"searchableType",
+						"select",
+						"slider",
+						"text"
+					],
 					"type": "string"
 				},
 				"typeOptions": {

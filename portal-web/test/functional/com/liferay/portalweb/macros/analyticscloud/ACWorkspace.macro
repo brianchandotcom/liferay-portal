@@ -9,9 +9,9 @@ definition {
 
 		Click(locator1 = "ACWorkspace#USER_MENU_OPTION");
 
-		Click(locator1 = "ACWorkspace#LANGUAGE_SELECTION_OPTION");
+		ACUtils.clickAnyButton(button = "Language");
 
-		Click(locator1 = "ACWorkspace#SELECT_LANGUAGE");
+		ACUtils.clickAnyButton(button = "${key_languageOption}");
 
 		TestUtils.hardRefresh();
 	}

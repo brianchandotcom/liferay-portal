@@ -57,27 +57,8 @@ public class DeleteFolderPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		try {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)portletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			Folder folder = ActionUtil.getFolder(portletRequest);
-
-			String key = "delete";
-
-			if (_dlTrashHelper.isTrashEnabled(
-					themeDisplay.getScopeGroupId(), folder.getRepositoryId())) {
-
-				key = "move-to-recycle-bin";
-			}
-
-			return LanguageUtil.get(
-				getResourceBundle(getLocale(portletRequest)), key);
-		}
-		catch (PortalException portalException) {
-			return ReflectionUtil.throwException(portalException);
-		}
+		return LanguageUtil.get(
+			getResourceBundle(getLocale(portletRequest)), "delete");
 	}
 
 	@Override

@@ -189,22 +189,9 @@ public class DLAdminManagementToolbarDisplayContext
 			() -> !user.isDefaultUser(),
 			dropdownItem -> {
 				dropdownItem.putData("action", "deleteEntries");
-
-				Group scopeGroup = _themeDisplay.getScopeGroup();
-
-				if (_dlTrashHelper.isTrashEnabled(
-						scopeGroup.getGroupId(), _getRepositoryId())) {
-
-					dropdownItem.setIcon("trash");
-					dropdownItem.setLabel(
-						LanguageUtil.get(
-							_httpServletRequest, "move-to-recycle-bin"));
-				}
-				else {
-					dropdownItem.setIcon("times-circle");
-					dropdownItem.setLabel(
-						LanguageUtil.get(_httpServletRequest, "delete"));
-				}
+				dropdownItem.setIcon("trash");
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "delete"));
 
 				dropdownItem.setQuickAction(true);
 			}

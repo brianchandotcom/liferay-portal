@@ -663,7 +663,7 @@ public class JournalArticleActionDropdownItemsProvider {
 				).buildString());
 			dropdownItem.setIcon("trash");
 			dropdownItem.setLabel(
-				LanguageUtil.get(_httpServletRequest, "move-to-recycle-bin"));
+				LanguageUtil.get(_httpServletRequest, "delete"));
 		};
 	}
 

@@ -263,7 +263,7 @@ public class BlogsEntryActionDropdownItemsProvider {
 					"entryId", blogsEntry.getEntryId()
 				).buildString());
 			dropdownItem.setLabel(
-				LanguageUtil.get(_httpServletRequest, "move-to-recycle-bin"));
+				LanguageUtil.get(_httpServletRequest, "delete"));
 		};
 	}
 

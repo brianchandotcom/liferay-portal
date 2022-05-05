@@ -42,17 +42,17 @@ const ACTIONS = {
 	},
 
 	delete({itemData, trashEnabled}) {
-		let message = Liferay.Language.get(
-			'are-you-sure-you-want-to-delete-this'
-		);
-
 		if (trashEnabled) {
-			message = Liferay.Language.get(
-				'are-you-sure-you-want-to-move-this-to-the-recycle-bin'
-			);
+			this.send(itemData.deleteURL);
+
+			return;
 		}
 
-		if (confirm(message)) {
+		if (
+			confirm(
+				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
+			)
+		) {
 			this.send(itemData.deleteURL);
 		}
 	},

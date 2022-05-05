@@ -28,6 +28,14 @@ export default function propsTransformer({
 	...otherProps
 }) {
 	const deleteEntries = () => {
+		if (trashEnabled) {
+			Liferay.fire(`${portletNamespace}editEntry`, {
+				action: '/journal/move_articles_and_folders_to_trash',
+			});
+
+			return;
+		}
+
 		const searchContainer = Liferay.SearchContainer.get(
 			`${portletNamespace}articles`
 		);
@@ -40,17 +48,7 @@ export default function propsTransformer({
 			'are-you-sure-you-want-to-delete-the-selected-entry'
 		);
 
-		if (trashEnabled && selectedItems > 1) {
-			message = Liferay.Language.get(
-				'are-you-sure-you-want-to-move-the-selected-entries-to-the-recycle-bin'
-			);
-		}
-		else if (trashEnabled && selectedItems === 1) {
-			message = Liferay.Language.get(
-				'are-you-sure-you-want-to-move-the-selected-entry-to-the-recycle-bin'
-			);
-		}
-		else if (!trashEnabled && selectedItems > 1) {
+		if (selectedItems > 1) {
 			message = Liferay.Language.get(
 				'are-you-sure-you-want-to-delete-the-selected-entries'
 			);
@@ -58,12 +56,11 @@ export default function propsTransformer({
 
 		if (confirm(message)) {
 			Liferay.fire(`${portletNamespace}editEntry`, {
-				action: trashEnabled
-					? '/journal/move_articles_and_folders_to_trash'
-					: '/journal/delete_articles_and_folders',
+				action: '/journal/delete_articles_and_folders',
 			});
 		}
 	};
+
 	const expireEntries = () => {
 		Liferay.fire(`${portletNamespace}editEntry`, {
 			action: '/journal/expire_articles_and_folders',

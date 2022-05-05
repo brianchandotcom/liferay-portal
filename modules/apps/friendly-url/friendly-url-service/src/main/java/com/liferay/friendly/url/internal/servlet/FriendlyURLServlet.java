@@ -136,21 +136,21 @@ public class FriendlyURLServlet extends HttpServlet {
 			}
 
 			if (redirectEntryLocalService != null) {
+				HttpServletRequest originalHttpServletRequest =
+					portal.getOriginalServletRequest(httpServletRequest);
+
 				RedirectEntry redirectEntry =
 					redirectEntryLocalService.fetchRedirectEntry(
 						group.getGroupId(),
-						_normalizeFriendlyURL(layoutFriendlyURL), true);
+						_normalizeFriendlyURL(
+							originalHttpServletRequest.getRequestURI()),
+						false);
 
 				if (redirectEntry == null) {
-					HttpServletRequest originalHttpServletRequest =
-						portal.getOriginalServletRequest(httpServletRequest);
-
 					redirectEntry =
 						redirectEntryLocalService.fetchRedirectEntry(
 							group.getGroupId(),
-							_normalizeFriendlyURL(
-								originalHttpServletRequest.getRequestURI()),
-							false);
+							_normalizeFriendlyURL(layoutFriendlyURL), true);
 				}
 
 				if (redirectEntry != null) {

@@ -34,7 +34,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 		if (form) {
 			location.href = itemData?.mergeTagsURL.replace(
 				escape('[$MERGE_TAGS_IDS$]'),
-				Liferay.Util.listCheckedExcept(
+				Liferay.Util.getCheckedCheckboxes(
 					form,
 					`${portletNamespace}allRowIds`
 				)

@@ -80,7 +80,7 @@ PortletURL portletURL = viewUserGroupsManagementToolbarDisplayContext.getPortlet
 	window.<portlet:namespace />deleteUserGroups = function () {
 		<portlet:namespace />doDeleteUserGroup(
 			'<%= UserGroup.class.getName() %>',
-			Liferay.Util.listCheckedExcept(
+			Liferay.Util.getCheckedCheckboxes(
 				document.<portlet:namespace />fm,
 				'<portlet:namespace />allRowIds'
 			)

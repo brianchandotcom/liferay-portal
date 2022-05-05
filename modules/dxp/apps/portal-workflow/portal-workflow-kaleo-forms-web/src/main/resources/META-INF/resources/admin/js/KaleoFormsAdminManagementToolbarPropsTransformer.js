@@ -43,7 +43,7 @@ export default function propsTransformer({
 
 					form.setAttribute('method', 'post');
 
-					kaleoProcessIdsElement.value = Liferay.Util.listCheckedExcept(
+					kaleoProcessIdsElement.value = Liferay.Util.getCheckedCheckboxes(
 						searchContainer,
 						`${portletNamespace}allRowIds`
 					);

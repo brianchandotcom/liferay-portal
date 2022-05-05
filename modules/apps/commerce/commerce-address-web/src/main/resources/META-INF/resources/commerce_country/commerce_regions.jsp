@@ -163,7 +163,7 @@ CommerceRegionsDisplayContext commerceRegionsDisplayContext = (CommerceRegionsDi
 
 				form[
 					'<portlet:namespace />deleteRegionIds'
-				].value = Liferay.Util.listCheckedExcept(
+				].value = Liferay.Util.getCheckedCheckboxes(
 					form,
 					'<portlet:namespace />allRowIds'
 				);

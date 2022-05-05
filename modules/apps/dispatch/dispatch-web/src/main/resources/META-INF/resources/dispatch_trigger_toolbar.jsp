@@ -91,7 +91,9 @@ DispatchTriggerDisplayContext dispatchTriggerDisplayContext = (DispatchTriggerDi
 
 			form.setAttribute('method', 'post');
 			form['<%= Constants.CMD %>'].value = '<%= Constants.DELETE %>';
-			form['deleteDispatchTriggerIds'].value = Liferay.Util.listCheckedExcept(
+			form[
+				'deleteDispatchTriggerIds'
+			].value = Liferay.Util.getCheckedCheckboxes(
 				form,
 				'<portlet:namespace />allRowIds'
 			);

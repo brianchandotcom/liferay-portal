@@ -26,7 +26,7 @@ export default function propsTransformer({
 			return;
 		}
 
-		const contributedEntryKeys = Liferay.Util.listCheckedExcept(
+		const contributedEntryKeys = Liferay.Util.getCheckedCheckboxes(
 			form,
 			`${portletNamespace}allRowIds`
 		);

@@ -20,7 +20,7 @@ const updateAccountEntries = (portletNamespace, url) => {
 	if (form) {
 		postForm(form, {
 			data: {
-				accountEntryIds: Liferay.Util.listCheckedExcept(
+				accountEntryIds: Liferay.Util.getCheckedCheckboxes(
 					form,
 					`${portletNamespace}allRowIds`
 				),

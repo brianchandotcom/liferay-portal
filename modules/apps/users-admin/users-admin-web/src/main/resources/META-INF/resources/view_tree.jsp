@@ -204,7 +204,7 @@ if (organization != null) {
 		Liferay.Util.postForm(form, {
 			data: {
 				deleteOrganizationIds: organizationIds,
-				deleteUserIds: Liferay.Util.listCheckedExcept(
+				deleteUserIds: Liferay.Util.getCheckedCheckboxes(
 					form,
 					'<portlet:namespace />allRowIds',
 					'<portlet:namespace />rowIdsUser'
@@ -225,12 +225,12 @@ if (organization != null) {
 
 		Liferay.Util.postForm(form, {
 			data: {
-				removeOrganizationIds: Liferay.Util.listCheckedExcept(
+				removeOrganizationIds: Liferay.Util.getCheckedCheckboxes(
 					form,
 					'<portlet:namespace />allRowIds',
 					'<portlet:namespace />rowIdsOrganization'
 				),
-				removeUserIds: Liferay.Util.listCheckedExcept(
+				removeUserIds: Liferay.Util.getCheckedCheckboxes(
 					form,
 					'<portlet:namespace />allRowIds',
 					'<portlet:namespace />rowIdsUser'

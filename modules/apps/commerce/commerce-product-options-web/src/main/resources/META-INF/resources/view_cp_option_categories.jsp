@@ -195,7 +195,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "specifications"));
 				'<%= Constants.DELETE %>';
 			form[
 				'<portlet:namespace />deleteCPOptionCategoryIds'
-			].value = Liferay.Util.listCheckedExcept(
+			].value = Liferay.Util.getCheckedCheckboxes(
 				form,
 				'<portlet:namespace />allRowIds'
 			);

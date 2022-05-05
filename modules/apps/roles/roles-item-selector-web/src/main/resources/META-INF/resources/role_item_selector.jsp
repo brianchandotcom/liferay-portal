@@ -85,7 +85,7 @@ RoleItemSelectorViewDisplayContext roleItemSelectorViewDisplayContext = (RoleIte
 				'change',
 				'.entry input',
 				(event) => {
-					var checked = Liferay.Util.listCheckedExcept(
+					var checked = Liferay.Util.getCheckedCheckboxes(
 						document.getElementById(
 							'<portlet:namespace /><%= roleItemSelectorViewDisplayContext.getSearchContainerId() %>'
 						),

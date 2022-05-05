@@ -16,7 +16,7 @@ export default function ({namespace}) {
 	const form = document.getElementById(`${namespace}fm`);
 
 	function fulfillCommerceChannelIds() {
-		const values = Liferay.Util.listCheckedExcept(
+		const values = Liferay.Util.getCheckedCheckboxes(
 			form,
 			`${namespace}allRowIds`
 		);

@@ -32,7 +32,7 @@ export default function propsTransformer({
 				);
 
 				if (columnIds) {
-					var checkedIds = Liferay.Util.listCheckedExcept(
+					var checkedIds = Liferay.Util.getCheckedCheckboxes(
 						form,
 						`${portletNamespace}allRowIds`
 					);

@@ -28,7 +28,7 @@ export default function propsTransformer({
 				return;
 			}
 
-			const deleteRoleIds = Liferay.Util.listCheckedExcept(
+			const deleteRoleIds = Liferay.Util.getCheckedCheckboxes(
 				form,
 				`${portletNamespace}allRowIds`
 			);

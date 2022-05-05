@@ -34,7 +34,10 @@ export default function propsTransformer({
 
 		styleBookEntryIds.setAttribute(
 			'value',
-			Liferay.Util.listCheckedExcept(form, `${portletNamespace}allRowIds`)
+			Liferay.Util.getCheckedCheckboxes(
+				form,
+				`${portletNamespace}allRowIds`
+			)
 		);
 
 		const styleBookEntryFm = document.getElementById(

@@ -41,7 +41,7 @@ export default function propsTransformer({
 					if (form && searchContainer) {
 						postForm(form, {
 							data: {
-								deleteTemplateIds: Liferay.Util.listCheckedExcept(
+								deleteTemplateIds: Liferay.Util.getCheckedCheckboxes(
 									searchContainer,
 									`${portletNamespace}allRowIds`
 								),

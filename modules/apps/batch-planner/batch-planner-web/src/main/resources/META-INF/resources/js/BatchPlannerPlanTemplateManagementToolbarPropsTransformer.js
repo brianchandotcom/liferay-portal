@@ -32,7 +32,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 			if (form && searchContainer) {
 				postForm(form, {
 					data: {
-						batchPlannerPlanIds: Liferay.Util.listCheckedExcept(
+						batchPlannerPlanIds: Liferay.Util.getCheckedCheckboxes(
 							searchContainer,
 							`${portletNamespace}allRowIds`
 						),

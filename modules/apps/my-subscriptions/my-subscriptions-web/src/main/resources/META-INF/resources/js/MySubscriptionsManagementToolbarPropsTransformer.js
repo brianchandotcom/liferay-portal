@@ -32,7 +32,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 				if (subscriptionIds) {
 					subscriptionIds.setAttribute(
 						'value',
-						Liferay.Util.listCheckedExcept(
+						Liferay.Util.getCheckedCheckboxes(
 							form,
 							`${portletNamespace}allRowIds`
 						)

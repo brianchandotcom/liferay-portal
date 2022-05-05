@@ -217,7 +217,7 @@ long[] groupIds = viewUADEntitiesDisplay.getGroupIds();
 					if (applicationKeys) {
 						applicationKeys.setAttribute(
 							'value',
-							Liferay.Util.listCheckedExcept(
+							Liferay.Util.getCheckedCheckboxes(
 								form,
 								'<portlet:namespace />allRowIds'
 							)
@@ -236,7 +236,7 @@ long[] groupIds = viewUADEntitiesDisplay.getGroupIds();
 						);
 
 						if (<%= primaryKeysVar %>) {
-							var primaryKeys = Liferay.Util.listCheckedExcept(
+							var primaryKeys = Liferay.Util.getCheckedCheckboxes(
 								form,
 								'<portlet:namespace />allRowIds',
 								'<portlet:namespace />rowIds<%= typeClass.getSimpleName() %>'

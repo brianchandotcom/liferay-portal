@@ -140,7 +140,7 @@ CPTaxCategoryDisplayContext cpTaxCategoryDisplayContext = (CPTaxCategoryDisplayC
 
 				form[
 					'<portlet:namespace />deleteCPTaxCategoryIds'
-				].value = Liferay.Util.listCheckedExcept(
+				].value = Liferay.Util.getCheckedCheckboxes(
 					form,
 					'<portlet:namespace />allRowIds'
 				);

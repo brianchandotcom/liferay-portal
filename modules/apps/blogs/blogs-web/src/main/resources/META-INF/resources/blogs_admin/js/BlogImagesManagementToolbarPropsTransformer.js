@@ -45,7 +45,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 					if (deleteFileEntryIds) {
 						deleteFileEntryIds.setAttribute(
 							'value',
-							Liferay.Util.listCheckedExcept(
+							Liferay.Util.getCheckedCheckboxes(
 								form,
 								`${portletNamespace}allRowIds`
 							)

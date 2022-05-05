@@ -183,7 +183,7 @@ CommerceCurrenciesDisplayContext commerceCurrenciesDisplayContext = (CommerceCur
 					'<%= Constants.DELETE %>';
 				form[
 					'<portlet:namespace />deleteCommerceCurrencyIds'
-				].value = Liferay.Util.listCheckedExcept(
+				].value = Liferay.Util.getCheckedCheckboxes(
 					form,
 					'<portlet:namespace />allRowIds'
 				);
@@ -204,7 +204,7 @@ CommerceCurrenciesDisplayContext commerceCurrenciesDisplayContext = (CommerceCur
 					'updateExchangeRates';
 				form[
 					'<portlet:namespace />updateCommerceCurrencyExchangeRateIds'
-				].value = Liferay.Util.listCheckedExcept(
+				].value = Liferay.Util.getCheckedCheckboxes(
 					form,
 					'<portlet:namespace />allRowIds'
 				);

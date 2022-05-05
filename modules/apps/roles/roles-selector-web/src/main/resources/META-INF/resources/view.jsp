@@ -225,11 +225,11 @@ SearchContainer<?> searchContainer = (SearchContainer<?>)request.getAttribute("l
 		Util.postForm(form, {
 			data: {
 				redirect: redirect,
-				addUserGroupIds: Util.listCheckedExcept(
+				addUserGroupIds: Util.getCheckedCheckboxes(
 					form,
 					'<portlet:namespace />allRowIds'
 				),
-				removeUserGroupIds: Util.listUncheckedExcept(
+				removeUserGroupIds: Util.getUncheckedCheckboxes(
 					form,
 					'<portlet:namespace />allRowIds'
 				),
@@ -246,11 +246,11 @@ SearchContainer<?> searchContainer = (SearchContainer<?>)request.getAttribute("l
 		Util.postForm(form, {
 			data: {
 				redirect: redirect,
-				addUserIds: Util.listCheckedExcept(
+				addUserIds: Util.getCheckedCheckboxes(
 					form,
 					'<portlet:namespace />allRowIds'
 				),
-				removeUserIds: Util.listUncheckedExcept(
+				removeUserIds: Util.getUncheckedCheckboxes(
 					form,
 					'<portlet:namespace />allRowIds'
 				),

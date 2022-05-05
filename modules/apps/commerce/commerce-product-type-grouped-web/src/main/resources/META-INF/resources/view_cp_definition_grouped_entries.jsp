@@ -201,7 +201,7 @@ renderResponse.setTitle(cpDefinition.getName(themeDisplay.getLanguageId()));
 				'<%= Constants.DELETE %>';
 			form[
 				'<portlet:namespace />deleteCPDefinitionGroupedEntryIds'
-			].value = Liferay.Util.listCheckedExcept(
+			].value = Liferay.Util.getCheckedCheckboxes(
 				form,
 				'<portlet:namespace />allRowIds'
 			);

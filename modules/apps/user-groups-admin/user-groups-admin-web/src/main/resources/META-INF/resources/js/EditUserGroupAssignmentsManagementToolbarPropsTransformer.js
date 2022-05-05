@@ -55,7 +55,7 @@ export default function propsTransformer({
 			postForm(form, {
 				data: {
 					redirect: portletURL,
-					removeUserIds: Liferay.Util.listCheckedExcept(
+					removeUserIds: Liferay.Util.getCheckedCheckboxes(
 						form,
 						`${portletNamespace}allRowIds`
 					),

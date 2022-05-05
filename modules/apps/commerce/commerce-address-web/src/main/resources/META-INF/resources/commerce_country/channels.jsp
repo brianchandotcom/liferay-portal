@@ -72,7 +72,7 @@ long[] commerceChannelIds = commerceCountriesDisplayContext.getCommerceChannelRe
 <aui:script>
 	function <portlet:namespace />fulfillCommerceChannelIds(e) {
 		var form = window.document['<portlet:namespace />fm'];
-		var values = Liferay.Util.listCheckedExcept(
+		var values = Liferay.Util.getCheckedCheckboxes(
 			form,
 			'<portlet:namespace />allRowIds'
 		);

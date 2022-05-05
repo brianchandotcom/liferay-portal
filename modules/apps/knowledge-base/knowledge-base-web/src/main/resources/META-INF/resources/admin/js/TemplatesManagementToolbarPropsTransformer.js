@@ -45,7 +45,7 @@ export default function propsTransformer({
 					if (kbTemplateIds) {
 						kbTemplateIds.setAttribute(
 							'value',
-							Liferay.Util.listCheckedExcept(
+							Liferay.Util.getCheckedCheckboxes(
 								form,
 								`${portletNamespace}allRowIds`
 							)

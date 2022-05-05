@@ -172,7 +172,7 @@ CPMeasurementUnitsDisplayContext cpMeasurementUnitsDisplayContext = (CPMeasureme
 
 				form[
 					'<portlet:namespace />deleteCPMeasurementUnitIds'
-				].value = Liferay.Util.listCheckedExcept(
+				].value = Liferay.Util.getCheckedCheckboxes(
 					form,
 					'<portlet:namespace />allRowIds'
 				);

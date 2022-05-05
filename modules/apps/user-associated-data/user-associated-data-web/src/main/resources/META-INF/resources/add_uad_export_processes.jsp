@@ -145,7 +145,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 			if (applicationKeys) {
 				applicationKeys.setAttribute(
 					'value',
-					Liferay.Util.listCheckedExcept(
+					Liferay.Util.getCheckedCheckboxes(
 						form,
 						'<portlet:namespace />allRowIds',
 						'<portlet:namespace />rowIds'

@@ -211,7 +211,7 @@ CommerceCountriesDisplayContext commerceCountriesDisplayContext = (CommerceCount
 
 				form[
 					'<portlet:namespace />deleteCountryIds'
-				].value = Liferay.Util.listCheckedExcept(
+				].value = Liferay.Util.getCheckedCheckboxes(
 					form,
 					'<portlet:namespace />allRowIds'
 				);

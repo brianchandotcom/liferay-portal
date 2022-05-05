@@ -50,7 +50,7 @@ export default function propsTransformer({
 						if (recordSetIds) {
 							recordSetIds.setAttribute(
 								'value',
-								Liferay.Util.listCheckedExcept(
+								Liferay.Util.getCheckedCheckboxes(
 									searchContainer,
 									`${portletNamespace}allRowIds`
 								)

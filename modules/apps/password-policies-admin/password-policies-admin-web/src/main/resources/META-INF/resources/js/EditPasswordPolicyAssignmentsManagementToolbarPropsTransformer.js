@@ -41,7 +41,7 @@ function deleteEntities(portletNamespace, inputName) {
 		if (form && input) {
 			input.setAttribute(
 				'value',
-				Liferay.Util.listCheckedExcept(
+				Liferay.Util.getCheckedCheckboxes(
 					form,
 					`${portletNamespace}allRowIds`
 				)

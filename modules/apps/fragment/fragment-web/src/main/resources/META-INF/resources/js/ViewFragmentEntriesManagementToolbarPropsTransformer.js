@@ -46,7 +46,7 @@ export default function propsTransformer({
 			return;
 		}
 
-		const fragmentEntryIds = Liferay.Util.listCheckedExcept(
+		const fragmentEntryIds = Liferay.Util.getCheckedCheckboxes(
 			form,
 			`${portletNamespace}allRowIds`
 		);
@@ -110,13 +110,13 @@ export default function propsTransformer({
 			return;
 		}
 
-		const fragmentCompositionIds = Liferay.Util.listCheckedExcept(
+		const fragmentCompositionIds = Liferay.Util.getCheckedCheckboxes(
 			form,
 			`${portletNamespace}allRowIds`,
 			`${portletNamespace}rowIdsFragmentComposition`
 		);
 
-		const fragmentEntryIds = Liferay.Util.listCheckedExcept(
+		const fragmentEntryIds = Liferay.Util.getCheckedCheckboxes(
 			form,
 			`${portletNamespace}allRowIds`,
 			`${portletNamespace}rowIdsFragmentEntry`

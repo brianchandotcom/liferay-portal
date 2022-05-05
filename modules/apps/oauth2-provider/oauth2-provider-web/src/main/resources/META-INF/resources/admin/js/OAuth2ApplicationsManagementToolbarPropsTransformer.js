@@ -37,7 +37,7 @@ export default function propsTransformer({
 					if (form) {
 						postForm(form, {
 							data: {
-								oAuth2ApplicationIds: Liferay.Util.listCheckedExcept(
+								oAuth2ApplicationIds: Liferay.Util.getCheckedCheckboxes(
 									form,
 									`${portletNamespace}allRowIds`
 								),

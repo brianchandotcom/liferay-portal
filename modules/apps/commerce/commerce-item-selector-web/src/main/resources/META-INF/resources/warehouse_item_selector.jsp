@@ -102,7 +102,7 @@ for (ManagementBarFilterItem managementBarFilterItem : managementBarFilterItems)
 		Liferay.Util.getOpener().Liferay.fire(
 			'<%= HtmlUtil.escapeJS(itemSelectedEventName) %>',
 			{
-				data: Liferay.Util.listCheckedExcept(
+				data: Liferay.Util.getCheckedCheckboxes(
 					commerceInventoryWarehouseSelectorWrapper,
 					'<portlet:namespace />allRowIds'
 				),

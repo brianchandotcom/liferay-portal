@@ -30,7 +30,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 <aui:script>
 	window['<portlet:namespace />deleteMBMessages'] = function (dicussion) {
-		var deleteMBMessageIds = Liferay.Util.listCheckedExcept(
+		var deleteMBMessageIds = Liferay.Util.getCheckedCheckboxes(
 			document.<portlet:namespace />fm,
 			'<portlet:namespace />allRowIds'
 		);
@@ -59,7 +59,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 	};
 
 	window['<portlet:namespace />notSpamMBMessages'] = function () {
-		var notSpamMBMessageIds = Liferay.Util.listCheckedExcept(
+		var notSpamMBMessageIds = Liferay.Util.getCheckedCheckboxes(
 			document.<portlet:namespace />fm,
 			'<portlet:namespace />allRowIds'
 		);

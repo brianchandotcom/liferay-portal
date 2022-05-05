@@ -112,7 +112,7 @@ else {
 	function <portlet:namespace />deleteOrganizations(organizationsRedirect) {
 		<portlet:namespace />doDeleteOrganization(
 			'<%= Organization.class.getName() %>',
-			Liferay.Util.listCheckedExcept(
+			Liferay.Util.getCheckedCheckboxes(
 				document.<portlet:namespace />fm,
 				'<portlet:namespace />allRowIds',
 				'<portlet:namespace />rowIdsOrganization'
@@ -137,7 +137,7 @@ else {
 
 			Liferay.Util.postForm(form, {
 				data: {
-					deleteUserIds: Liferay.Util.listCheckedExcept(
+					deleteUserIds: Liferay.Util.getCheckedCheckboxes(
 						form,
 						'<portlet:namespace />allRowIds',
 						'<portlet:namespace />rowIdsUser'

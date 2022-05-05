@@ -124,7 +124,7 @@ PortletURL portletURL = commercePriceListItemSelectorViewDisplayContext.getPortl
 		Liferay.Util.getOpener().Liferay.fire(
 			'<%= HtmlUtil.escapeJS(itemSelectedEventName) %>',
 			{
-				data: Liferay.Util.listCheckedExcept(
+				data: Liferay.Util.getCheckedCheckboxes(
 					commercePriceListSelectorWrapper,
 					'<portlet:namespace />allRowIds'
 				),

@@ -104,7 +104,7 @@ PortletURL portletURL = cpSpecificationOptionItemSelectorViewDisplayContext.getP
 		Liferay.Util.getOpener().Liferay.fire(
 			'<%= HtmlUtil.escapeJS(itemSelectedEventName) %>',
 			{
-				data: Liferay.Util.listCheckedExcept(
+				data: Liferay.Util.getCheckedCheckboxes(
 					cpSpecificationOptionSelectorWrapper,
 					'<portlet:namespace />allRowIds'
 				),

@@ -618,6 +618,9 @@
 			}
 		},
 
+		/**
+		 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+		 */
 		savePortletTitle(params) {
 			params = {
 				doAsUserId: 0,

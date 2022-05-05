@@ -202,7 +202,7 @@ definition {
 	macro viewOverviewTab {
 		AssertElementPresent(
 			key_pageTabTitle = "${key_title}",
-			locator1 = "Testray#PAGE_TAB_TITLE");
+			locator1 = "TestrayHeader#PAGE_TAB_TITLE");
 	}
 
 }

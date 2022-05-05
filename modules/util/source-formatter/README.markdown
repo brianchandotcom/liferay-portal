@@ -120,6 +120,7 @@ Checks are configured in the following files:
    - [.py](src/main/resources/documentation/python_source_processor_checks.markdown#checks-for-py)
    - [.soy](src/main/resources/documentation/soy_source_processor_checks.markdown#checks-for-soy)
    - [.sql](src/main/resources/documentation/sql_source_processor_checks.markdown#checks-for-sql)
+   - [.tf](src/main/resources/documentation/tf_source_processor_checks.markdown#checks-for-tf)
    - [.tld](src/main/resources/documentation/tld_source_processor_checks.markdown#checks-for-tld)
    - [.ts or .tsx](src/main/resources/documentation/ts_source_processor_checks.markdown#checks-for-ts-or-tsx)
    - [.txt](src/main/resources/documentation/txt_source_processor_checks.markdown#checks-for-txt)

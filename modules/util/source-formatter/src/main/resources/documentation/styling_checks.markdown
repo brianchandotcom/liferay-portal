@@ -138,6 +138,7 @@ SizeIsZeroCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds cases of 
 SlantedQuotesCheck | | Finds `slanted quote` (`\u201a`, `\u201b`, `\u201c`, `\u201d`, `\u201e`, `\u201f`, `\u2018` or `\u2019`) characters. |
 SoyEmptyLinesCheck | .soy | Finds missing and unnecessary empty lines. |
 [StringLiteralEqualityCheck](https://checkstyle.sourceforge.io/config_coding.html#StringLiteralEquality) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks that string literals are not used with == or !=. |
+TFBlockOrderCheck | .tf | Checks the order of blocks in `.tf` file. |
 TLDElementOrderCheck | .tld | Checks the order of attributes in `.tld` file. |
 TXTEmptyLinesCheck | .txt | Finds missing and unnecessary empty lines. |
 TXTStylingCheck | .txt | Applies rules to enforce consistency in code style. |

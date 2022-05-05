@@ -41,10 +41,10 @@ public class ListTypeEntriesTableFDSView extends BaseTableFDSView {
 		FDSTableSchemaBuilder fdsTableSchemaBuilder =
 			_fdsTableSchemaBuilderFactory.create();
 
-		FDSTableSchemaField fdsTableSchemaField =
+		FDSTableSchemaField nameFDSTableSchemaField =
 			fdsTableSchemaBuilder.addFDSTableSchemaField("name", "name");
 
-		fdsTableSchemaField.setContentRenderer("actionLink");
+		nameFDSTableSchemaField.setContentRenderer("actionLink");
 
 		fdsTableSchemaBuilder.addFDSTableSchemaField("key", "key");
 

@@ -41,10 +41,10 @@ public class ObjectRelationshipsTableFDSView extends BaseTableFDSView {
 		FDSTableSchemaBuilder fdsTableSchemaBuilder =
 			_fdsTableSchemaBuilderFactory.create();
 
-		FDSTableSchemaField fdsTableSchemaField =
+		FDSTableSchemaField labelLangFDSTableSchemaField =
 			fdsTableSchemaBuilder.addFDSTableSchemaField("label.LANG", "label");
 
-		fdsTableSchemaField.setContentRenderer("actionLink");
+		labelLangFDSTableSchemaField.setContentRenderer("actionLink");
 
 		fdsTableSchemaBuilder.addFDSTableSchemaField(
 			"objectDefinitionName2", "related-object");

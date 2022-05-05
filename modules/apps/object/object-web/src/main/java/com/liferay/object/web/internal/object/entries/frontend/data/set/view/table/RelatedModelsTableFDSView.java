@@ -41,10 +41,10 @@ public class RelatedModelsTableFDSView extends BaseTableFDSView {
 		FDSTableSchemaBuilder fdsTableSchemaBuilder =
 			_fdsTableSchemaBuilderFactory.create();
 
-		FDSTableSchemaField fdsTableSchemaField =
+		FDSTableSchemaField idFDSTableSchemaField =
 			fdsTableSchemaBuilder.addFDSTableSchemaField("id", "id");
 
-		fdsTableSchemaField.setContentRenderer("actionLink");
+		idFDSTableSchemaField.setContentRenderer("actionLink");
 
 		fdsTableSchemaBuilder.addFDSTableSchemaField("label", "label");
 

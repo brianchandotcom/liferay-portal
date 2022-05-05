@@ -41,10 +41,10 @@ public class ObjectValidationsTableFDSView extends BaseTableFDSView {
 		FDSTableSchemaBuilder fdsTableSchemaBuilder =
 			_fdsTableSchemaBuilderFactory.create();
 
-		FDSTableSchemaField labelFDSTableSchemaField =
+		FDSTableSchemaField nameLangFDSTableSchemaField =
 			fdsTableSchemaBuilder.addFDSTableSchemaField("name.LANG", "label");
 
-		labelFDSTableSchemaField.setContentRenderer("actionLink");
+		nameLangFDSTableSchemaField.setContentRenderer("actionLink");
 
 		fdsTableSchemaBuilder.addFDSTableSchemaField("engineLabel", "type");
 
@@ -53,11 +53,11 @@ public class ObjectValidationsTableFDSView extends BaseTableFDSView {
 
 		activeFDSTableSchemaField.setContentRenderer("boolean");
 
-		FDSTableSchemaField modifiedDateFDSTableSchemaField =
+		FDSTableSchemaField dateModifiedFDSTableSchemaField =
 			fdsTableSchemaBuilder.addFDSTableSchemaField(
 				"dateModified", "modified-date");
 
-		modifiedDateFDSTableSchemaField.setContentRenderer("dateTime");
+		dateModifiedFDSTableSchemaField.setContentRenderer("dateTime");
 
 		return fdsTableSchemaBuilder.build();
 	}

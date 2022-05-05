@@ -42,10 +42,10 @@ public class ObjectDefinitionsTableFDSView extends BaseTableFDSView {
 		FDSTableSchemaBuilder fdsTableSchemaBuilder =
 			_fdsTableSchemaBuilderFactory.create();
 
-		FDSTableSchemaField labelFDSTableSchemaField =
+		FDSTableSchemaField labelLangFDSTableSchemaField =
 			fdsTableSchemaBuilder.addFDSTableSchemaField("label.LANG", "label");
 
-		labelFDSTableSchemaField.setContentRenderer("actionLink");
+		labelLangFDSTableSchemaField.setContentRenderer("actionLink");
 
 		fdsTableSchemaBuilder.addFDSTableSchemaField("scope", "scope");
 
@@ -54,11 +54,11 @@ public class ObjectDefinitionsTableFDSView extends BaseTableFDSView {
 
 		systemFDSTableSchemaField.setContentRenderer("boolean");
 
-		FDSTableSchemaField dateFDSTableSchemaField =
+		FDSTableSchemaField dateModifiedFDSTableSchemaField =
 			fdsTableSchemaBuilder.addFDSTableSchemaField(
 				"dateModified", "modified-date");
 
-		dateFDSTableSchemaField.setContentRenderer("dateTime");
+		dateModifiedFDSTableSchemaField.setContentRenderer("dateTime");
 
 		FDSTableSchemaField statusFDSTableSchemaField =
 			fdsTableSchemaBuilder.addFDSTableSchemaField("status", "status");

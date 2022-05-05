@@ -711,24 +711,21 @@ definition {
 	test CanDeleteStateNode {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteStateNode";
 
-        Workflow.openWorkflowListView();
+		Workflow.openWorkflowListView();
 
-        Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
 
-        ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "State",
 			nodePosition = "50,-420",
 			nodeType = "state");
 
-        ProcessBuilderKaleoDesignerReact.deleteNodeOrConnection(
-            modalMessage = "Are you sure you want to delete the selected state node?",
-            nodeType = "state",
-            title = "Delete State Node");
+		ProcessBuilderKaleoDesignerReact.deleteNodeOrConnection(
+			modalMessage = "Are you sure you want to delete the selected state node?",
+			nodeType = "state",
+			title = "Delete State Node");
 
-        ProcessBuilderKaleoDesignerReact.viewPanelNodeNotPresent(nodeType = "state");
-
-		
-
+		ProcessBuilderKaleoDesignerReact.viewPanelNodeNotPresent(nodeType = "state");
 	}
 
 	@description = "Verify that the user can delete Nodes of Task"

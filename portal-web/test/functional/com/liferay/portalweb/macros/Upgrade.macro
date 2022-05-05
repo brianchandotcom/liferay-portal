@@ -1556,19 +1556,21 @@ definition {
 
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
-		if ("${webContentColor}" == "false") {
-			for (var fieldFieldLabel : list "Boolean,Date,Decimal,Documents and Media,Geolocation,HTML,Image,Integer,Link to Page,Number,Radio,Select,Separator,Text,Text Box,Web Content") {
-				DataEngine.editFieldLabel(
-					fieldFieldLabel = "${fieldFieldLabel}",
-					fieldFieldLabelEdit = "${fieldFieldLabel} Edit");
-			}
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Boolean",
+			fieldFieldLabelEdit = "Boolean Edit",
+			fieldName = "Boolean");
+
+		if ("${webContentColor}" == "true") {
+			DataEngine.editFieldLabel(
+				fieldFieldLabel = "Color",
+				fieldFieldLabelEdit = "Color Edit");
 		}
-		else {
-			for (var fieldFieldLabel : list "Boolean,Color,Date,Decimal,Documents and Media,Geolocation,HTML,Image,Integer,Link to Page,Number,Radio,Select,Separator,Text,Text Box,Web Content") {
-				DataEngine.editFieldLabel(
-					fieldFieldLabel = "${fieldFieldLabel}",
-					fieldFieldLabelEdit = "${fieldFieldLabel} Edit");
-			}
+
+		for (var fieldFieldLabel : list "Date,Decimal,Documents and Media,Geolocation,HTML,Image,Integer,Link to Page,Number,Radio,Select,Separator,Text,Text Box,Web Content") {
+			DataEngine.editFieldLabel(
+				fieldFieldLabel = "${fieldFieldLabel}",
+				fieldFieldLabelEdit = "${fieldFieldLabel} Edit");
 		}
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
@@ -5915,8 +5917,8 @@ definition {
 		}
 
 		WebContent.viewWithStructureCP(
-			webContentMultipleSelection = "Boolean",
-			webContentMultipleSelectionFieldLabel = "Boolean",
+			webContentBoolean = "true",
+			webContentBooleanFieldLabel = "Boolean",
 			webContentTitle = "Boolean Web Content");
 
 		Navigator.gotoBack();

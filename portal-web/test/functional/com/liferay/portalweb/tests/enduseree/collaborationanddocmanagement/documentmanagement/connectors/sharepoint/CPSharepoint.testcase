@@ -472,6 +472,8 @@ definition {
 	test SearchDocumentViaHome {
 		property test.name.skip.portal.instance = "CPSharepoint#SearchDocumentViaHome";
 
+		DMRepository.viewNoDownloadItem(dmRepositoryName = "Sharepoint Repository Name");
+
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
 
 		DMDocument.addCP(

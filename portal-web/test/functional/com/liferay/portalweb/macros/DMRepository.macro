@@ -155,4 +155,12 @@ definition {
 			value1 = "${dmRepositoryName}");
 	}
 
+	macro viewNoDownloadItem {
+		Click(
+			key_dmFolderName = "${dmRepositoryName}",
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_VERTICAL_ELLIPSIS");
+
+		AssertElementNotPresent(locator1 = "MenuItem#DOWNLOAD");
+	}
+
 }

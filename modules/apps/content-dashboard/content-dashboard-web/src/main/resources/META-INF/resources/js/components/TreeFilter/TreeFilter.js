@@ -27,7 +27,7 @@ import {
 	handleNodeName,
 	selectedDataOutputTransfomer,
 	visit,
-} from './clayTreeUtils';
+} from './treeUtils';
 
 const SEARCH_QUERY_MIN_LENGHT = 2;
 const SEARCH_INPUT_DEBOUNCE = 300;

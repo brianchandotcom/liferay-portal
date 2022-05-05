@@ -201,11 +201,19 @@ definition {
 	}
 
 	@description = "Verify that the user can add Nodes into diagram by drag&drop: Start"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanAddStartNode {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAddStartNode";
 
-		// TODO CanAddStartNode pending implementation
+        Workflow.openWorkflowListView();
+
+        Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+        ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+            nodeLabel = "Start",
+            nodePosition = "70,-200",
+            nodeType = "start");
+
 
 	}
 

@@ -26,6 +26,42 @@ definition {
 		}
 	}
 
+	@description = "This test ensures that a file that exceed the set maximum size cannot be uploaded via Media Gallery."
+	@priority = "3"
+	test CanLimitMaxFileSizeInMediaGallery {
+		property test.name.skip.portal.instance = "DMFileSizeLimits#CanLimitMaxFileSizeInMediaGallery";
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Media Gallery Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "2",
+			groupName = "Guest",
+			layoutName = "Media Gallery Page",
+			widgetName = "Media Gallery");
+
+		Navigator.gotoPage(pageName = "Media Gallery Page");
+
+		MGPortlet.configureShowAllPG(pageName = "Media Gallery Page");
+
+		DMDocument.updateMaximumFileSize(fieldValue = "2000");
+
+		DMDocument.addPGViaMG(
+			groupName = "Guest",
+			layoutName = "media-gallery-page",
+			mediaGallery = "true",
+			mgDocumentDescription = "DM Document Description",
+			mgDocumentFile = "Document_2.jpeg",
+			mgDocumentTitle = "Document_2.jpeg",
+			siteURLKey = "guest",
+			warningFeedback = "Please enter a file with a valid file size no larger than 2 KB.");
+
+		Navigator.gotoPage(pageName = "Media Gallery Page");
+
+		DMDocument.viewNoFilesViaMG(mgImagePreview = "Document_2.jpeg");
+	}
+
 	@description = "This test ensures that a user is not able to upload a file to an asset library that is bigger than the Maximum File Size in that instance."
 	@priority = "4"
 	test CanLimitMaxFileSizeForDepotAtInstanceScope {

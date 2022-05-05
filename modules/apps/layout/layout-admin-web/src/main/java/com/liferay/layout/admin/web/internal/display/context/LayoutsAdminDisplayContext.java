@@ -1292,8 +1292,7 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public boolean hasLayouts() {
-		int privatePagesCount = LayoutServiceUtil.getLayoutsCount(
-			getSelGroupId(), true, 0);
+		int privatePagesCount = _getPrivateLayoutsCount();
 
 		int publicPagesCount = LayoutServiceUtil.getLayoutsCount(
 			getSelGroupId(), false, 0);
@@ -1410,8 +1409,7 @@ public class LayoutsAdminDisplayContext {
 
 		int publicLayoutsCount = LayoutServiceUtil.getLayoutsCount(
 			getSelGroupId(), false, 0);
-		int privateLayoutsCount = LayoutServiceUtil.getLayoutsCount(
-			getSelGroupId(), true, 0);
+		int privateLayoutsCount = _getPrivateLayoutsCount();
 
 		if ((privateLayoutsCount > 0) && (publicLayoutsCount <= 0)) {
 			privateLayout = true;
@@ -1917,6 +1915,28 @@ public class LayoutsAdminDisplayContext {
 			httpServletRequest, LayoutAdminPortletKeys.GROUP_PAGES, "asc");
 
 		return _orderByType;
+	}
+
+	private int _getPrivateLayoutsCount() {
+		int privatePagesCount = 0;
+
+		try {
+			privatePagesCount = LayoutServiceUtil.getLayoutsCount(
+				getSelGroupId(), true, 0);
+
+			if ((privatePagesCount == 0) &&
+				GroupPermissionUtil.contains(
+					themeDisplay.getPermissionChecker(), getSelGroupId(),
+					ActionKeys.MANAGE_LAYOUTS)) {
+
+				privatePagesCount = LayoutLocalServiceUtil.getLayoutsCount(
+					getSelGroup(), true, 0);
+			}
+		}
+		catch (Exception exception) {
+		}
+
+		return privatePagesCount;
 	}
 
 	private String _getStrictRobots() {

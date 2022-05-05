@@ -8,43 +8,21 @@ definition {
 	property testray.main.component.name = "Order Management";
 
 	setUp {
-		task ("Setup: Setup portal instance") {
-			TestCase.setUpPortalInstance();
-		}
-
-		task ("Setup: Login") {
-			User.firstLoginPG();
-		}
-
-		task ("Setup: Create a Minium site") {
-			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
-		}
+		CommerceConfiguration.commerceSetUp(minium = "true");
 
 		task ("Setup: Create an account with a buyer user") {
-			JSONAccountEntry.addAccountEntry(
-				accountEntryName = "Test Account",
-				accountEntryType = "Business");
-
-			ApplicationsMenu.gotoSite(site = "Minium");
-
-			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
-
-			LexiconEntry.gotoEntry(rowEntry = "Test Account");
-
-			CommerceAcceleratorsInitializer.inviteNewMemberWithRoleToAccount(
-				accountName = "Test Account",
-				emailAddress = "buyer@liferay.com",
-				role = "Buyer",
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
 				userFirstName = "Buyer",
 				userLastName = "User",
-				userScreenName = "buyeruser");
-
-			User.openUsersAdmin();
-
-			CommerceLogin.editPasswordCP(
-				newPassword = "ttest",
-				requirePasswordReset = "true",
-				userScreenName = "buyeruser");
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
 		}
 	}
 
@@ -73,8 +51,7 @@ definition {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
-				newPassword = "test",
-				password = "ttest",
+				password = "test",
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
 
@@ -109,8 +86,7 @@ definition {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
-				newPassword = "test",
-				password = "ttest",
+				password = "test",
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
 
@@ -140,8 +116,7 @@ definition {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
-				newPassword = "test",
-				password = "ttest",
+				password = "test",
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
 
@@ -171,8 +146,7 @@ definition {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
-				newPassword = "test",
-				password = "ttest",
+				password = "test",
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
 
@@ -202,8 +176,7 @@ definition {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
-				newPassword = "test",
-				password = "ttest",
+				password = "test",
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
 
@@ -233,8 +206,7 @@ definition {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
-				newPassword = "test",
-				password = "ttest",
+				password = "test",
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
 
@@ -349,8 +321,7 @@ definition {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
-				newPassword = "test",
-				password = "ttest",
+				password = "test",
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
 
@@ -393,8 +364,7 @@ definition {
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
-				newPassword = "test",
-				password = "ttest",
+				password = "test",
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
 

@@ -55,6 +55,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -577,27 +580,41 @@ public class DefaultCommerceCheckoutStepHttpHelper
 			return commerceOrder;
 		}
 
-		long commerceShippingMethodId = 0;
+		try {
+			CommerceOrder updateCommerceOrder = TransactionInvokerUtil.invoke(
+				_transactionConfig,
+				() -> {
+					long commerceShippingMethodId = 0;
 
-		CommerceShippingMethod commerceShippingMethod =
-			_commerceShippingMethodLocalService.fetchCommerceShippingMethod(
-				commerceContext.getCommerceChannelGroupId(),
-				commerceShippingMethodKey);
+					CommerceShippingMethod commerceShippingMethod =
+						_commerceShippingMethodLocalService.
+							fetchCommerceShippingMethod(
+								commerceContext.getCommerceChannelGroupId(),
+								commerceShippingMethodKey);
 
-		if (commerceShippingMethod != null) {
-			commerceShippingMethodId =
-				commerceShippingMethod.getCommerceShippingMethodId();
+					if (commerceShippingMethod != null) {
+						commerceShippingMethodId =
+							commerceShippingMethod.
+								getCommerceShippingMethodId();
+					}
+
+					_commerceOrderLocalService.updateCommerceShippingMethod(
+						commerceOrder.getCommerceOrderId(),
+						commerceShippingMethodId, commerceShippingOptionKey,
+						commerceContext, _portal.getLocale(httpServletRequest));
+
+					return _commerceOrderLocalService.recalculatePrice(
+						commerceOrder.getCommerceOrderId(), commerceContext);
+				});
+
+			httpServletRequest.setAttribute(
+				CommerceCheckoutWebKeys.COMMERCE_ORDER, updateCommerceOrder);
+
+			return updateCommerceOrder;
 		}
-
-		commerceOrder = _commerceOrderLocalService.updateCommerceShippingMethod(
-			commerceOrder.getCommerceOrderId(), commerceShippingMethodId,
-			commerceShippingOptionKey, commerceContext,
-			_portal.getLocale(httpServletRequest));
-
-		httpServletRequest.setAttribute(
-			CommerceCheckoutWebKeys.COMMERCE_ORDER, commerceOrder);
-
-		return commerceOrder;
+		catch (Throwable throwable) {
+			throw new PortalException(throwable);
+		}
 	}
 
 	private void _updateCommerceOrder(
@@ -718,6 +735,10 @@ public class DefaultCommerceCheckoutStepHttpHelper
 
 		return commerceOrder;
 	}
+
+	private static final TransactionConfig _transactionConfig =
+		TransactionConfig.Factory.create(
+			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
 	@Reference
 	private AccountEntryLocalService _accountEntryLocalService;

@@ -1429,10 +1429,7 @@ public class CommerceOrderLocalServiceImpl
 			}
 		}
 
-		commerceOrder = commerceOrderPersistence.update(commerceOrder);
-
-		return commerceOrderLocalService.recalculatePrice(
-			commerceOrder.getCommerceOrderId(), commerceContext);
+		return commerceOrderPersistence.update(commerceOrder);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

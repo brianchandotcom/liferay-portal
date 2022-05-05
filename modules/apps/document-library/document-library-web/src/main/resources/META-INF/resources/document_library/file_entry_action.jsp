@@ -72,7 +72,7 @@ else {
 %>
 
 <c:choose>
-	<c:when test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-146954")) %>'>
+	<c:when test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-152694")) %>'>
 		<clay:dropdown-actions
 			dropdownItems="<%= dlViewFileVersionDisplayContext.getActionDropdownItems() %>"
 			propsTransformer="document_library/js/DLFileEntryDropdownPropsTransformer"

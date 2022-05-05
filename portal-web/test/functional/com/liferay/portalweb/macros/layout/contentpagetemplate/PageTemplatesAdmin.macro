@@ -130,9 +130,11 @@ definition {
 	}
 
 	macro gotoPageTemplateEllipsisItem {
-		LexiconCard.clickEllipsisItem(
-			card = "${pageTemplateName}",
-			item = "${item}");
+		Click.waitForMenuToggleJSClick(
+			key_card = "${pageTemplateName}",
+			locator1 = "Card#CARD_ELLIPSIS");
+
+		MenuItem.click(menuItem = "${item}");
 	}
 
 	macro importPageTemplatesFromTempFolder {

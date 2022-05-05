@@ -33,9 +33,11 @@ definition {
 	}
 
 	macro gotoMastersEllipsisItem {
-		LexiconCard.clickEllipsisItem(
-			card = "${masterLayoutName}",
-			item = "${item}");
+		Click.waitForMenuToggleJSClick(
+			key_card = "${masterLayoutName}",
+			locator1 = "Card#CARD_ELLIPSIS");
+
+		MenuItem.click(menuItem = "${item}");
 	}
 
 	macro importMastersFromTempFolder {

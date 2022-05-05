@@ -349,13 +349,11 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 				batchEngineImportTask.getBatchEngineImportTaskId()),
 			outputStream);
 
-		String normalizedFileName = _normalizeFileName(fileName);
-
 		return Response.ok(
 			streamingOutput
 		).header(
 			"content-disposition",
-			"attachment; filename=" + normalizedFileName + ".zip"
+			"attachment; filename=" + _normalizeFileName(fileName) + ".zip"
 		).build();
 	}
 
@@ -387,13 +385,12 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 			}
 		};
 
-		String normalizedFileName = _normalizeFileName(fileName);
-
 		return Response.ok(
 			streamingOutput
 		).header(
 			"Content-Disposition",
-			"attachment; filename=" + normalizedFileName + "_Errors.csv"
+			"attachment; filename=" + _normalizeFileName(fileName) +
+				"_Errors.csv"
 		).build();
 	}
 
@@ -439,10 +436,9 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 				fileName.substring(0, fileName.lastIndexOf("-")) + "." +
 					fileExtension;
 
-			String normalizedFileName = _normalizeFileName(trimmedFileName);
-
 			entry = _getContentAndExtensionFromUncompressedFile(
-				normalizedFileName, binaryFile.getInputStream());
+				_normalizeFileName(trimmedFileName),
+				binaryFile.getInputStream());
 		}
 
 		return _importFile(
@@ -492,16 +488,11 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 	}
 
 	private String _normalizeFileName(String fileName) {
-		String normalizedFileName = null;
-
-		if (fileName != null) {
-			normalizedFileName = _normalizer.normalizeToAscii(fileName);
-		}
-		else {
-			normalizedFileName = StringUtil.randomString();
+		if (Validator.isNull(fileName)) {
+			return StringUtil.randomString();
 		}
 
-		return normalizedFileName;
+		return _normalizer.normalizeToAscii(fileName);
 	}
 
 	private FailedItem _toFailedItem(

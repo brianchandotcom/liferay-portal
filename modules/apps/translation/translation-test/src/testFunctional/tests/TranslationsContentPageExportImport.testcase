@@ -817,7 +817,7 @@ definition {
 				fragmentContent = "Heading",
 				fragmentContentTranslation = "Headinges_ES",
 				operation = "zip",
-				translationFileName = "TranslationContentPage${i}-en_US-es_ES",
+				translationFileName = "TranslationContentPage${i} (Default)-en_US-es_ES",
 				translationZipFileName = "TranslationContentPage${i}-en_US");
 		}
 

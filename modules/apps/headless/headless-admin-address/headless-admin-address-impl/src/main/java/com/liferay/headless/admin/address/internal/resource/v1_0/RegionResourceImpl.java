@@ -51,6 +51,14 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class RegionResourceImpl extends BaseRegionResourceImpl {
 
 	@Override
+	public Region getCountryRegionByRegionCode(
+			Long countryId, String regionCode)
+		throws Exception {
+
+		return _toRegion(_regionService.getRegion(countryId, regionCode));
+	}
+
+	@Override
 	public Page<Region> getCountryRegionsPage(
 			Long countryId, Boolean active, String search,
 			Pagination pagination, Sort[] sorts)

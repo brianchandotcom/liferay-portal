@@ -13,6 +13,7 @@ import classNames from 'classnames';
 import {useEffect, useState} from 'react';
 import {useOutletContext} from 'react-router-dom';
 import client from '../../../../../apolloClient';
+import i18n from '../../../../../common/I18n';
 import {getAccountSubscriptions} from '../../../../../common/services/liferay/graphql/queries';
 import CardSubscription from '../../../components/CardSubscription';
 import ProjectSupport from '../../../components/ProjectSupport';
@@ -129,7 +130,7 @@ const Overview = () => {
 		<>
 			<ProjectSupport />
 			<div className="d-flex flex-column mr-4 mt-6">
-				<h3>Subscriptions</h3>
+				<h3>{i18n.translate('subscriptions')}</h3>
 
 				{!!subscriptionGroupsWithSubscriptions.length && (
 					<>
@@ -178,7 +179,9 @@ const Overview = () => {
 								)
 							) : (
 								<p className="mx-auto pt-5">
-									No subscriptions match these criteria.
+									{i18n.translate(
+										'no-subscriptions-match-these-criteria.'
+									)}
 								</p>
 							)}
 						</div>

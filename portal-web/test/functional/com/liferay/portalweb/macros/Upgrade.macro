@@ -4388,9 +4388,7 @@ definition {
 
 		WaitForPageLoad();
 
-		DataEngine.viewField(
-			fieldFieldLabel = "Boolean",
-			fieldName = "Multiple Selection");
+		FormFields.viewBooleanField(fieldValue = "Boolean");
 
 		DataEngine.viewField(
 			fieldFieldLabel = "Number",

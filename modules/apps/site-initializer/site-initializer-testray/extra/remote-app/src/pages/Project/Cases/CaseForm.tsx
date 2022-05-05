@@ -16,23 +16,25 @@ import {useQuery} from '@apollo/client';
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayLayout from '@clayui/layout';
+import {useEffect} from 'react';
 import {useForm} from 'react-hook-form';
+import {useOutletContext, useParams} from 'react-router-dom';
 
 import Input from '../../../components/Input';
 import InputSelect from '../../../components/Input/InputSelect';
 import Container from '../../../components/Layout/Container';
 import MarkdownPreview from '../../../components/Markdown';
-import Modal from '../../../components/Modal';
 import {CreateCase, UpdateCase} from '../../../graphql/mutations';
 import {
 	CTypePagination,
+	TestrayCase,
 	TestrayCaseType,
 	TestrayComponent,
 	getCaseTypes,
 	getComponents,
 } from '../../../graphql/queries';
-import {withVisibleContent} from '../../../hoc/withVisibleContent';
-import {FormModalOptions} from '../../../hooks/useFormModal';
+import {useHeader} from '../../../hooks';
+import useFormState from '../../../hooks/useFormActions';
 import i18n from '../../../i18n';
 import yupSchema, {yupResolver} from '../../../schema/yup';
 import {DescriptionType} from '../../../types';
@@ -74,22 +76,37 @@ const FormRow: React.FC<{title: string}> = ({children, title}) => (
 	</>
 );
 
-type CaseModalProps = {
-	modal: FormModalOptions;
-	projectId: number;
-};
+const CaseForm: React.FC = () => {
+	const {setDropdownIcon} = useHeader({
+		shouldUpdate: true,
+		useDropdown: [],
+		useTabs: [],
+	});
 
-const CaseModal: React.FC<CaseModalProps> = ({
-	modal: {modalState, observer, onClose, onSubmit},
-	projectId,
-}) => {
+	const context: {testrayCase?: TestrayCase} = useOutletContext();
+
+	useEffect(() => {
+		setDropdownIcon('polls');
+	}, [setDropdownIcon]);
+
+	const {
+		form: {formState, onClose, onSubmit},
+	} = useFormState();
+
+	const {projectId} = useParams();
 	const {
 		formState: {errors},
 		handleSubmit,
 		register,
 		watch,
 	} = useForm<CaseFormData>({
-		defaultValues: modalState,
+		defaultValues: context?.testrayCase
+			? {
+					...context?.testrayCase,
+					caseTypeId: context.testrayCase.caseType?.id,
+					componentId: context.testrayCase.component?.id,
+			  }
+			: formState,
 		resolver: yupResolver(yupSchema.case),
 	});
 
@@ -114,6 +131,8 @@ const CaseModal: React.FC<CaseModalProps> = ({
 		);
 	};
 
+	const caseTypeId = watch('caseTypeId');
+	const componentId = watch('componentId');
 	const description = watch('description');
 	const steps = watch('steps');
 
@@ -124,122 +143,123 @@ const CaseModal: React.FC<CaseModalProps> = ({
 	};
 
 	return (
-		<Modal
-			last={
-				<ClayButton.Group spaced>
-					<ClayButton displayType="secondary" onClick={onClose}>
-						{i18n.translate('close')}
-					</ClayButton>
+		<Container className="container">
+			<ClayForm className="container pt-2">
+				<FormRow title={i18n.translate('case-name')}>
+					<Input
+						{...inputProps}
+						label={i18n.translate('name')}
+						name="name"
+					/>
+				</FormRow>
 
-					<ClayButton
-						displayType="primary"
-						onClick={handleSubmit(_onSubmit)}
-					>
-						{i18n.translate('add-case')}
-					</ClayButton>
-				</ClayButton.Group>
-			}
-			observer={observer}
-			size="full-screen"
-			title={i18n.translate('new-case')}
-			visible
-		>
-			<Container>
-				<ClayForm>
-					<FormRow title={i18n.translate('case-name')}>
-						<Input
-							{...inputProps}
-							label={i18n.translate('name')}
-							name="name"
-						/>
-					</FormRow>
+				<FormRow title={i18n.translate('details')}>
+					<InputSelect
+						{...inputProps}
+						label="priority"
+						name="priority"
+						options={priorities}
+						required={false}
+					/>
 
-					<FormRow title={i18n.translate('details')}>
+					<InputSelect
+						{...inputProps}
+						label="type"
+						name="caseTypeId"
+						options={testrayCaseTypes.map(
+							({id: value, name: label}) => ({
+								label,
+								value,
+							})
+						)}
+						value={caseTypeId}
+					/>
+
+					<InputSelect
+						{...inputProps}
+						label="main-component"
+						name="componentId"
+						options={testrayComponents.map(
+							({id: value, name: label}) => ({
+								label,
+								value,
+							})
+						)}
+						value={componentId}
+					/>
+
+					<Input
+						{...inputProps}
+						label={i18n.translate('enter-the-case-name')}
+						name="estimatedDuration"
+						required={false}
+					/>
+				</FormRow>
+
+				<FormRow title={i18n.translate('description')}>
+					<ClayForm.Group className="form-group-sm">
 						<InputSelect
 							{...inputProps}
-							label="priority"
-							name="priority"
-							options={priorities}
-							required={false}
-						/>
-
-						<InputSelect
-							{...inputProps}
-							label="type"
-							name="type"
-							options={testrayCaseTypes.map(
-								({id: value, name: label}) => ({
-									label,
-									value,
-								})
-							)}
-						/>
-
-						<InputSelect
-							{...inputProps}
-							label="main-component"
-							name="componentId"
-							options={testrayComponents.map(
-								({id: value, name: label}) => ({
-									label,
-									value,
-								})
-							)}
-						/>
-
-						<Input
-							{...inputProps}
-							label={i18n.translate('enter-the-case-name')}
-							name="estimatedDuration"
-							required={false}
-						/>
-					</FormRow>
-
-					<FormRow title={i18n.translate('description')}>
-						<ClayForm.Group className="form-group-sm">
-							<InputSelect
-								{...inputProps}
-								label="description-type"
-								name="descriptionType"
-								options={descriptionTypes}
-								required={false}
-							/>
-
-							<Input
-								{...inputProps}
-								label={i18n.translate('description')}
-								name="description"
-								required={false}
-								type="textarea"
-							/>
-						</ClayForm.Group>
-
-						<MarkdownPreview markdown={description} />
-					</FormRow>
-
-					<FormRow title={i18n.translate('steps')}>
-						<InputSelect
-							{...inputProps}
-							label="steps-type"
-							name="stepsType"
+							label="description-type"
+							name="descriptionType"
 							options={descriptionTypes}
 							required={false}
 						/>
 
 						<Input
 							{...inputProps}
-							label={i18n.translate('steps')}
-							name="steps"
+							label={i18n.translate('description')}
+							name="description"
 							required={false}
 							type="textarea"
 						/>
+					</ClayForm.Group>
 
-						<MarkdownPreview markdown={steps} />
-					</FormRow>
-				</ClayForm>
-			</Container>
-		</Modal>
+					<MarkdownPreview markdown={description} />
+				</FormRow>
+
+				<FormRow title={i18n.translate('steps')}>
+					<InputSelect
+						{...inputProps}
+						label="steps-type"
+						name="stepsType"
+						options={descriptionTypes}
+						required={false}
+					/>
+
+					<Input
+						{...inputProps}
+						label={i18n.translate('steps')}
+						name="steps"
+						required={false}
+						type="textarea"
+					/>
+
+					<MarkdownPreview markdown={steps} />
+				</FormRow>
+
+				<div>
+					<ClayButton.Group spaced>
+						<ClayButton
+							displayType="secondary"
+							onClick={() =>
+								onClose(`/project/${projectId}/cases`)
+							}
+						>
+							{i18n.translate('close')}
+						</ClayButton>
+
+						<ClayButton
+							displayType="primary"
+							onClick={handleSubmit(_onSubmit)}
+						>
+							{i18n.translate('save')}
+						</ClayButton>
+					</ClayButton.Group>
+				</div>
+			</ClayForm>
+		</Container>
 	);
 };
 
-export default withVisibleContent(CaseModal);
+export default CaseForm;

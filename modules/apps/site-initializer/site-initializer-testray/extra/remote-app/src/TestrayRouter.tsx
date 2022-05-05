@@ -27,6 +27,7 @@ import OutletBridge from './pages/OutletBridge';
 import Projects from './pages/Project';
 import Cases from './pages/Project/Cases';
 import Case from './pages/Project/Cases/Case';
+import CaseForm from './pages/Project/Cases/CaseForm';
 import CaseOutlet from './pages/Project/Cases/CaseOutlet';
 import CaseRequirement from './pages/Project/Cases/CaseRequirement';
 import Overview from './pages/Project/Overview';
@@ -78,8 +79,12 @@ const TestrayRoute = () => (
 						<Route element={<OutletBridge />} path="cases">
 							<Route element={<Cases />} index />
 
+							<Route element={<CaseForm />} path="create" />
+
 							<Route element={<CaseOutlet />} path=":caseId">
 								<Route element={<Case />} index />
+
+								<Route element={<CaseForm />} path="update" />
 
 								<Route
 									element={<CaseRequirement />}

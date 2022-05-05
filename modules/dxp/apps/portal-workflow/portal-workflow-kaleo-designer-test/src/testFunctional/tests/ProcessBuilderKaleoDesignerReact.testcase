@@ -714,7 +714,6 @@ definition {
 			title = "Delete Start Node");
 
 		ProcessBuilderKaleoDesignerReact.viewPanelNodeNotPresent(nodeType = "start");
-
 	}
 
 	@description = "Verify that the user can delete Nodes of State"

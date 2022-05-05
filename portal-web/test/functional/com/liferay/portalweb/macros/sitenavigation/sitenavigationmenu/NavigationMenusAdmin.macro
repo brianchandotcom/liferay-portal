@@ -234,6 +234,24 @@ definition {
 			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_TEXT");
 	}
 
+	macro deleteAllCP {
+		PortletEntry.selectAll();
+
+		Click(
+			key_text = "trash",
+			locator1 = "ManagementBar#ANY_ICON");
+
+		AssertTextEquals(
+			locator1 = "Modal#BODY",
+			value1 = "Are you sure you want to delete this? It will be deleted immediately.");
+
+		Click(
+			key_text = "Delete",
+			locator1 = "Modal#MODAL_FOOTER_BUTTON");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro deleteCP {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Delete",

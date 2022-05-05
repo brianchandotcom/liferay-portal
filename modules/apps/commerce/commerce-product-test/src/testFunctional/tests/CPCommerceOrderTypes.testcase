@@ -300,6 +300,42 @@ definition {
 		}
 	}
 
+	@description = "Verify when creating a new order with add to cart and there is only 1 order type active for the channel, that order type is set in the order"
+	@priority = "4"
+	test OrderTypeIsAutomaticallySetForNewOrderWhenTheUserAddsToCart {
+		property portal.acceptance = "false";
+
+		task ("Given an active order type") {
+			CommerceJSONOrdersAPI._addOrderType(
+				active = "true",
+				orderTypeDescription = "Test Order Type Description",
+				orderTypeName = "Test Order Type");
+		}
+
+		task ("When the buyer logs in and adds a product to the cart") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+		}
+
+		task ("Then a new order is automatically created and the order type is set as the Order Type for the order") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
+
+			Button.click(button = "View");
+
+			AssertElementPresent(
+				key_orderType = "Test Order Type",
+				locator1 = "CommerceOrders#PENDING_ORDERS_ORDER_TYPE");
+		}
+	}
+
 	@description = "Verify user can select order type when creating a new order via the account selector."
 	@priority = "3"
 	test SelectOrderTypeWhenCreatingNewOrderViaAccountSelector {

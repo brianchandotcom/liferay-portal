@@ -13,12 +13,11 @@
  */
 
 import ClayButton from '@clayui/button';
-import ClayForm from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 import React from 'react';
 
+import AutoTranslate from './AutoTranslate';
 import ExperienceSelector from './ExperienceSelector';
 import TranslateLanguagesSelector from './TranslateLanguagesSelector';
 
@@ -36,9 +35,6 @@ const TransLateActionBar = ({
 	saveButtonLabel,
 	translateLanguagesSelectorData,
 }) => {
-	const {message, status} = fetchAutoTranslateStatus;
-	const isLoading = status === 'LOADING';
-
 	return (
 		<nav className="component-tbar subnav-tbar-light tbar">
 			<ClayLayout.ContainerFluid view>
@@ -65,58 +61,14 @@ const TransLateActionBar = ({
 
 					{autoTranslateEnabled && (
 						<li className="tbar-item">
-							<ClayLayout.ContentRow
-								noGutters="y"
-								verticalAlign="center"
-							>
-								<ClayLayout.ContentCol>
-									<ClayButton
-										disabled={isLoading}
-										displayType="secondary"
-										onClick={fetchAutoTranslateFields}
-										small
-										type="button"
-									>
-										{Liferay.Language.get('auto-translate')}
-									</ClayButton>
-								</ClayLayout.ContentCol>
-
-								<ClayLayout.ContentCol>
-									{isLoading && (
-										<div>
-											<span className="inline-item inline-item-before">
-												<ClayLoadingIndicator small />
-											</span>
-
-											<span className="inline-item">
-												{Liferay.Language.get(
-													'requesting-translation'
-												)}
-											</span>
-										</div>
-									)}
-
-									{status === 'SUCCESS' && (
-										<div className="has-success">
-											<ClayForm.FeedbackItem className="mt-0">
-												<ClayForm.FeedbackIndicator symbol="check-circle-full" />
-
-												{message}
-											</ClayForm.FeedbackItem>
-										</div>
-									)}
-
-									{status === 'ERROR' && (
-										<div className="has-error">
-											<ClayForm.FeedbackItem className="mt-0">
-												<ClayForm.FeedbackIndicator symbol="exclamation-full" />
-
-												{message}
-											</ClayForm.FeedbackItem>
-										</div>
-									)}
-								</ClayLayout.ContentCol>
-							</ClayLayout.ContentRow>
+							<AutoTranslate
+								fetchAutoTranslateFields={
+									fetchAutoTranslateFields
+								}
+								fetchAutoTranslateStatus={
+									fetchAutoTranslateStatus
+								}
+							/>
 						</li>
 					)}
 

@@ -18,7 +18,7 @@ import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import React from 'react';
 
-import {FETCH_STATUS} from '../constants';
+import {FETCH_STATUS} from '../../constants';
 
 const AutoTranslate = ({
 	fetchAutoTranslateFields,

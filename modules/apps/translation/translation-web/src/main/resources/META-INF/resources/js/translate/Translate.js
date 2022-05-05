@@ -19,7 +19,7 @@ import {fetch, navigate} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useMemo, useReducer, useState} from 'react';
 
-import TranslateActionBar from './components/TranslateActionBar';
+import TranslateActionBar from './components/TranslateActionBar/TranslateActionBar';
 import TranslateFieldSetEntries from './components/TranslateFieldSetEntries';
 import TranslateHeader from './components/TranslateHeader';
 import {FETCH_STATUS} from './constants';

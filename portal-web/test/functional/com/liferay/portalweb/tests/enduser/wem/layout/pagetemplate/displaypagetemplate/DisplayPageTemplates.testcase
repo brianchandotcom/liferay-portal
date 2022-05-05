@@ -294,8 +294,8 @@ definition {
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.deleteDisplayPage(
-				displayPageName = "Display Page Name",
-				relatedDisplayPages = "true");
+				defaultDisplayPageTemplate = "true",
+				displayPageName = "Display Page Name");
 
 			Alert.viewSuccessMessageText(successMessage = "You successfully deleted 1 display page template(s).");
 		}

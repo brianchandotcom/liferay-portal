@@ -94,16 +94,13 @@ public class MetaTagsTag extends IncludeTag {
 
 		String metaRobots = layout.getRobots(
 			themeDisplay.getLanguageId(), false);
-		String metaRobotsLanguageId = w3cCurrentLanguageId;
 
 		if (Validator.isNull(metaRobots)) {
 			metaRobots = layout.getRobots(defaultLanguageId);
-			metaRobotsLanguageId = w3cDefaultLanguageId;
 		}
 
 		if (Validator.isNotNull(metaRobots)) {
-			_writeMeta(
-				HtmlUtil.escape(metaRobots), metaRobotsLanguageId, "robots");
+			_writeMeta(HtmlUtil.escape(metaRobots), StringPool.BLANK, "robots");
 		}
 
 		String metaDescription = layout.getDescription(
@@ -183,8 +180,12 @@ public class MetaTagsTag extends IncludeTag {
 
 		jspWriter.write("<meta content=\"");
 		jspWriter.write(content);
-		jspWriter.write("\" lang=\"");
-		jspWriter.write(lang);
+
+		if (!lang.equals("")) {
+			jspWriter.write("\" lang=\"");
+			jspWriter.write(lang);
+		}
+
 		jspWriter.write("\" name=\"");
 		jspWriter.write(name);
 		jspWriter.write("\" />");

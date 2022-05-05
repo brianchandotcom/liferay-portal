@@ -179,10 +179,24 @@ FolderActionDisplayContext folderActionDisplayContext = new FolderActionDisplayC
 		</c:if>
 
 		<c:if test="<%= folderActionDisplayContext.isDeleteFolderActionVisible() %>">
-			<liferay-ui:icon-delete
-				trash="<%= folderActionDisplayContext.isTrashEnabled() %>"
-				url="<%= folderActionDisplayContext.getDeleteFolderURL() %>"
-			/>
+			<c:choose>
+				<c:when test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-152694")) %>'>
+					<liferay-ui:icon
+						icon='<%= folderActionDisplayContext.isTrashEnabled() ? "trash" : "times-circle" %>'
+						iconCssClass="dropdown-item-indicator-start"
+						markupView="lexicon"
+						message='<%= folderActionDisplayContext.isTrashEnabled() ? "move-to-recycle-bin" : "delete" %>'
+						method="get"
+						url="<%= folderActionDisplayContext.getDeleteFolderURL() %>"
+					/>
+				</c:when>
+				<c:otherwise>
+					<liferay-ui:icon-delete
+						trash="<%= folderActionDisplayContext.isTrashEnabled() %>"
+						url="<%= folderActionDisplayContext.getDeleteFolderURL() %>"
+					/>
+				</c:otherwise>
+			</c:choose>
 		</c:if>
 
 		<c:if test="<%= folderActionDisplayContext.isPublishFolderActionVisible() %>">

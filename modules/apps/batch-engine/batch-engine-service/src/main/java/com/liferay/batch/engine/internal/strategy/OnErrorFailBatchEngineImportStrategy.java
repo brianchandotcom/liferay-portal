@@ -47,7 +47,7 @@ public class OnErrorFailBatchEngineImportStrategy
 				addBatchEngineImportTaskError(
 					_companyId, _userId, _batchEngineImportTaskId,
 					item.toString(), ItemIndexThreadLocal.get(item),
-					exception.getMessage());
+					exception.toString());
 
 				throw exception;
 			}

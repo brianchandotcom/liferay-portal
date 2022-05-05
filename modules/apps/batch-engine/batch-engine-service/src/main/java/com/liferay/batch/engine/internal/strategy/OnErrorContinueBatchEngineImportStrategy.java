@@ -53,7 +53,7 @@ public class OnErrorContinueBatchEngineImportStrategy
 				addBatchEngineImportTaskError(
 					_companyId, _userId, _batchEngineImportTaskId,
 					item.toString(), ItemIndexThreadLocal.get(item),
-					exception.getMessage());
+					exception.toString());
 			}
 		}
 	}

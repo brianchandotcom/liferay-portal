@@ -49,8 +49,7 @@ public class BatchEngineImportTaskErrorLocalServiceImpl
 			batchEngineImportTaskId);
 		batchEngineImportTaskError.setItem(_getItem(item, itemIndex));
 		batchEngineImportTaskError.setItemIndex(itemIndex);
-		batchEngineImportTaskError.setMessage(
-			message.replaceAll("\n|\r\n", StringPool.SPACE));
+		batchEngineImportTaskError.setMessage(_sanitize(message));
 
 		return batchEngineImportTaskErrorPersistence.update(
 			batchEngineImportTaskError);
@@ -78,6 +77,14 @@ public class BatchEngineImportTaskErrorLocalServiceImpl
 		}
 
 		return item;
+	}
+
+	private String _sanitize(String message) {
+		if (Validator.isNull(message)) {
+			return StringPool.BLANK;
+		}
+
+		return message.replaceAll("\n|\r\n", StringPool.SPACE);
 	}
 
 }

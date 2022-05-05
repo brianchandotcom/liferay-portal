@@ -1214,7 +1214,7 @@ create table Role_ (
 	classPK LONG,
 	name VARCHAR(75) null,
 	title STRING null,
-	description STRING null,
+	description TEXT null,
 	type_ INTEGER,
 	subtype VARCHAR(75) null,
 	primary key (roleId, ctCollectionId)

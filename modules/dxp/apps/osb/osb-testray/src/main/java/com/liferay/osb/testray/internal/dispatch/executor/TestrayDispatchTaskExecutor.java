@@ -25,6 +25,8 @@ import com.liferay.dispatch.executor.DispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskExecutorOutput;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.rest.dto.v1_0.ObjectEntry;
+import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.function.UnsafeRunnable;
@@ -32,23 +34,27 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Serializable;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -95,8 +101,21 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 
 		_validateUnicodeProperties(unicodeProperties);
 
+		User user = _userLocalService.getUser(dispatchTrigger.getUserId());
+
+		_defaultDTOConverterContext = new DefaultDTOConverterContext(
+			false, null, null, null, null, LocaleUtil.getSiteDefault(), null,
+			user);
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(user));
+
 		_invoke(() -> _loadCache(dispatchTrigger.getCompanyId()));
 		_invoke(() -> _uploadToTestray(unicodeProperties));
+
+		if (_log.isInfoEnabled()) {
+			_log.info("Done!");
+		}
 	}
 
 	@Override
@@ -118,6 +137,30 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 		}
 
 		return attributeNode.getTextContent();
+	}
+
+	private List<ObjectEntry> _getObjectEntries(
+			long companyId, String objectDefinitionShortName)
+		throws Exception {
+
+		ObjectDefinition objectDefinition = _objectDefinitions.get(
+			objectDefinitionShortName);
+
+		if (objectDefinition == null) {
+			_log.error("Object Definition not found");
+
+			throw new PortalException("Object Definition not found");
+		}
+
+		Filter filter = null;
+
+		com.liferay.portal.vulcan.pagination.Page<ObjectEntry>
+			objectEntriesPage = _objectEntryManager.getObjectEntries(
+				companyId, _objectDefinitions.get(objectDefinitionShortName),
+				null, null, _defaultDTOConverterContext, filter, null, null,
+				null);
+
+		return (List<ObjectEntry>)objectEntriesPage.getItems();
 	}
 
 	private Map<String, String> _getPropertiesMap(Element element) {
@@ -181,66 +224,121 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 				objectDefinition.getShortName(), objectDefinition);
 		}
 
-		_loadObjectEntryIds(
-			"CaseType", "c_caseTypeId", "CaseType#[$name$]",
-			Arrays.asList("name"));
-		_loadObjectEntryIds(
-			"Component", "c_componentId",
-			"Component#[$name$]#testrayTeamId#[$r_teamToComponents_c_teamId$]",
-			Arrays.asList("name", "r_teamToComponents_c_teamId"));
-		_loadObjectEntryIds(
-			"FactorCategory", "c_factorCategoryId", "FactorCategory#[$name$]",
-			Arrays.asList("name"));
-		_loadObjectEntryIds(
-			"FactorOption", "c_factorOptionId",
-			"FactorOption#[$name$]#testrayFactorCategoryId#" +
-				"[$r_factorCategoryToOptions_c_factorCategoryId$]",
-			Arrays.asList(
-				"name", "r_factorCategoryToOptions_c_factorCategoryId"));
-		_loadObjectEntryIds(
-			"Project", "c_projectId", "Project#[$name$]",
-			Arrays.asList("name"));
-		_loadObjectEntryIds(
-			"Team", "c_teamId",
-			"Team#[$name$]#testrayProjectId#[$r_projectToTeams_c_projectId$]",
-			Arrays.asList("name", "r_projectToTeams_c_projectId"));
+		_loadTestrayCaseTypes(companyId);
+		_loadTestrayComponents(companyId);
+		_loadTestrayFactorCategories(companyId);
+		_loadTestrayFactorOptions(companyId);
+		_loadTestrayProjects(companyId);
+		_loadTestrayTeams(companyId);
 	}
 
-	private void _loadObjectEntryIds(
-			String objectShortName, String pkObjectFieldDBColumnName,
-			String key, List<String> placeholders)
-		throws Exception {
+	private void _loadTestrayCaseTypes(long companyId) throws Exception {
+		List<ObjectEntry> objectEntriesList = _getObjectEntries(
+			companyId, "CaseType");
 
-		ObjectDefinition objectDefinition = _objectDefinitions.get(
-			objectShortName);
-
-		if (objectDefinition == null) {
-			_log.error("Object Definition not found");
-
-			throw new PortalException("Object Definition not found");
-		}
-
-		List<Map<String, Serializable>> values =
-			_objectEntryLocalService.getValuesList(
-				objectDefinition.getObjectDefinitionId(), null, 0, 0);
-
-		if (ListUtil.isEmpty(values)) {
+		if (ListUtil.isEmpty(objectEntriesList)) {
 			return;
 		}
 
-		Map<String, String> placeholderMap = new HashMap<>();
+		for (ObjectEntry objectEntry : objectEntriesList) {
+			Map<String, Object> properties = objectEntry.getProperties();
 
-		for (Map<String, Serializable> map : values) {
-			Long id = (Long)map.get(pkObjectFieldDBColumnName);
+			_objectEntryIds.put(
+				"CaseType#" + (String)properties.get("name"),
+				objectEntry.getId());
+		}
+	}
 
-			for (String placeholder : placeholders) {
-				placeholderMap.put(
-					placeholder, String.valueOf(map.get(placeholder)));
-			}
+	private void _loadTestrayComponents(long companyId) throws Exception {
+		List<ObjectEntry> objectEntriesList = _getObjectEntries(
+			companyId, "Component");
 
-			key = StringUtil.replace(key, "[$", "$]", placeholderMap);
+		if (ListUtil.isEmpty(objectEntriesList)) {
+			return;
+		}
 
-			_objectEntryIds.put(key, id.longValue());
+		for (ObjectEntry objectEntry : objectEntriesList) {
+			Map<String, Object> properties = objectEntry.getProperties();
+
+			_objectEntryIds.put(
+				StringBundler.concat(
+					"Component#", (String)properties.get("name"), "#TeamId#",
+					(Long)properties.get("r_teamToComponents_c_teamId")),
+				objectEntry.getId());
+		}
+	}
+
+	private void _loadTestrayFactorCategories(long companyId) throws Exception {
+		List<ObjectEntry> objectEntriesList = _getObjectEntries(
+			companyId, "FactorCategory");
+
+		if (ListUtil.isEmpty(objectEntriesList)) {
+			return;
+		}
+
+		for (ObjectEntry objectEntry : objectEntriesList) {
+			Map<String, Object> properties = objectEntry.getProperties();
+
+			_objectEntryIds.put(
+				"FactorCategory#" + (String)properties.get("name"),
+				objectEntry.getId());
+		}
+	}
+
+	private void _loadTestrayFactorOptions(long companyId) throws Exception {
+		List<ObjectEntry> objectEntriesList = _getObjectEntries(
+			companyId, "FactorOption");
+
+		if (ListUtil.isEmpty(objectEntriesList)) {
+			return;
+		}
+
+		for (ObjectEntry objectEntry : objectEntriesList) {
+			Map<String, Object> properties = objectEntry.getProperties();
+
+			_objectEntryIds.put(
+				StringBundler.concat(
+					"FactorOption#", (String)properties.get("name"),
+					"#FactorCategoryId#",
+					(Long)properties.get(
+						"r_factorCategoryToOptions_c_factorCategoryId")),
+				objectEntry.getId());
+		}
+	}
+
+	private void _loadTestrayProjects(long companyId) throws Exception {
+		List<ObjectEntry> objectEntriesList = _getObjectEntries(
+			companyId, "Project");
+
+		if (ListUtil.isEmpty(objectEntriesList)) {
+			return;
+		}
+
+		for (ObjectEntry objectEntry : objectEntriesList) {
+			Map<String, Object> properties = objectEntry.getProperties();
+
+			_objectEntryIds.put(
+				"Project#" + (String)properties.get("name"),
+				objectEntry.getId());
+		}
+	}
+
+	private void _loadTestrayTeams(long companyId) throws Exception {
+		List<ObjectEntry> objectEntriesList = _getObjectEntries(
+			companyId, "Team");
+
+		if (ListUtil.isEmpty(objectEntriesList)) {
+			return;
+		}
+
+		for (ObjectEntry objectEntry : objectEntriesList) {
+			Map<String, Object> properties = objectEntry.getProperties();
+
+			_objectEntryIds.put(
+				StringBundler.concat(
+					"Team#", (String)properties.get("name"), "#ProjectId#",
+					(Long)properties.get("r_projectToTeams_c_projectIds")),
+				objectEntry.getId());
 		}
 	}
 
@@ -269,10 +367,6 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 
 			for (File file : tempDirectoryFile.listFiles()) {
 				try {
-					if (_log.isInfoEnabled()) {
-						_log.info("Parsing document " + file.getName());
-					}
-
 					Document document = documentBuilder.parse(file);
 
 					_invoke(() -> _processDocument(document));
@@ -331,10 +425,6 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 				}
 
 				try {
-					if (_log.isInfoEnabled()) {
-						_log.info("Processing archive " + name);
-					}
-
 					_processArchive(blob.getContent());
 				}
 				catch (Exception exception) {
@@ -371,6 +461,8 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 	private static final Log _log = LogFactoryUtil.getLog(
 		TestrayDispatchTaskExecutor.class);
 
+	private DefaultDTOConverterContext _defaultDTOConverterContext;
+
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
@@ -380,5 +472,11 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Reference
+	private ObjectEntryManager _objectEntryManager;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

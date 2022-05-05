@@ -41,10 +41,10 @@ public class CommerceWishListClayTableDataSetDisplayView
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
 			_clayTableSchemaBuilderFactory.create();
 
-		ClayTableSchemaField clayTableSchemaField =
+		ClayTableSchemaField titleClayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField("title", "title");
 
-		clayTableSchemaField.setContentRenderer("actionLink");
+		titleClayTableSchemaField.setContentRenderer("actionLink");
 
 		clayTableSchemaBuilder.addClayTableSchemaField("date", "create-date");
 		clayTableSchemaBuilder.addClayTableSchemaField("author", "created-by");

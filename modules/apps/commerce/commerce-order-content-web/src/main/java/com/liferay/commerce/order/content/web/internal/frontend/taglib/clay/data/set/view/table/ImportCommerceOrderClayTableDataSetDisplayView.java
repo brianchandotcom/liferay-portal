@@ -41,10 +41,10 @@ public class ImportCommerceOrderClayTableDataSetDisplayView
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
 			_clayTableSchemaBuilderFactory.create();
 
-		ClayTableSchemaField clayTableSchemaField =
+		ClayTableSchemaField titleClayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField("title", "order-id");
 
-		clayTableSchemaField.setContentRenderer("actionLink");
+		titleClayTableSchemaField.setContentRenderer("actionLink");
 
 		clayTableSchemaBuilder.addClayTableSchemaField("date", "order-date");
 		clayTableSchemaBuilder.addClayTableSchemaField(

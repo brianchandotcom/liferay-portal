@@ -240,20 +240,19 @@ definition {
 			nodeLabel = "Task",
 			nodePosition = "-20,-40",
 			nodeType = "task");
-		
+
 		ProcessBuilderKaleoDesignerReact.viewAndFillTimers(
-            newTimer = "true",
-            scaleTypeOption = "Minute",
-            durationValue = "2",
-            actionName = "Liferay Timer",
-            actionsTemplateValue = "Timer Template");
-		
+			actionName = "Liferay Timer",
+			actionsTemplateValue = "Timer Template",
+			durationValue = "2",
+			newTimer = "true",
+			scaleTypeOption = "Minute");
+
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
 		ProcessBuilderKaleoDesignerReact.viewPropertyValue(
 			propertyName = "Timer",
 			propertyValue = "Duration: 2 minute");
-
 	}
 
 	@description = "Verify that the user can add translations"

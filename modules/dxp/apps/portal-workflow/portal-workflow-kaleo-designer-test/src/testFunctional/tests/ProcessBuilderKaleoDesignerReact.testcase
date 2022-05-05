@@ -88,16 +88,14 @@ definition {
 	test CanAddConditionNode {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAddConditionNode";
 
-        Workflow.openWorkflowListView();
+		Workflow.openWorkflowListView();
 
-        Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "Condition",
 			nodePosition = "20,-100",
 			nodeType = "condition");
-			
-
 	}
 
 	@description = "Verify that the user can add Nodes into diagram by drag&drop: End"

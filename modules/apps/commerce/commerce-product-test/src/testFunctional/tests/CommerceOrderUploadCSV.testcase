@@ -144,6 +144,55 @@ definition {
 
 	@description = "Verify user can not upload a CSV with invalid quantity"
 	@priority = "3"
+	test UploadNotValidCSVOrderFile {
+		task ("Given a Minium site with a buyer user") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And given the user is creating a new order") {
+			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
+		}
+
+		task ("When the user start a new order by Import from CSV") {
+			CommerceOrders.importOrderFromType(orderType = "CSV");
+		}
+
+		task ("And when the user try to import a CSV file with missing field") {
+			UploadDependencyFile.uploadFile(fileName = "missing_field.csv");
+
+			Button.clickImport();
+		}
+
+		task ("Then an error message is displayed because the file is not a valid CSV file") {
+			Alert.viewErrorMessage(errorMessage = "The CSV could not be imported.");
+
+			IFrame.closeFrame();
+		}
+
+		task ("When the user start a new order by Import from CSV") {
+			CommerceOrders.importOrderFromType(orderType = "CSV");
+		}
+
+		task ("And when the user try to import a CSV file with invalid fields") {
+			UploadDependencyFile.uploadFile(fileName = "invalid_fields.csv");
+
+			Button.clickImport();
+		}
+
+		task ("Then an error message is displayed because the file is not a valid CSV file") {
+			Alert.viewErrorMessage(errorMessage = "The CSV could not be imported.");
+
+			IFrame.closeFrame();
+		}
+	}
+
+	@description = "Verify user can not upload a CSV with invalid quantity"
+	@priority = "3"
 	test UploadNotValidQuantityCSVOrderFile {
 		task ("Given a Minium site with a buyer user") {
 			User.logoutPG();

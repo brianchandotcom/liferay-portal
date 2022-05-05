@@ -204,6 +204,8 @@ public class DataDefinitionDDMFormUtilTest {
 
 		Assert.assertTrue(SetUtil.isEmpty(ddmForm.getAvailableLocales()));
 		Assert.assertTrue(ListUtil.isEmpty(ddmForm.getDDMFormFields()));
+		Assert.assertEquals(
+			"en_US", LocaleUtil.toLanguageId(ddmForm.getDefaultLocale()));
 	}
 
 	@Test

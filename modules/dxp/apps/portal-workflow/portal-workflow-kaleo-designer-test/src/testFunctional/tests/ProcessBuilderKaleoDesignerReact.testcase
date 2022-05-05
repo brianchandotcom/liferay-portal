@@ -214,17 +214,14 @@ definition {
 	test CanAddStateNode {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAddStateNode";
 
-        Workflow.openWorkflowListView();
+		Workflow.openWorkflowListView();
 
-        Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
 
-        ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "State",
 			nodePosition = "50,-420",
 			nodeType = "state");
-
-		
-
 	}
 
 	@description = "Verify that the user can add Nodes into diagram by drag&drop: Task"

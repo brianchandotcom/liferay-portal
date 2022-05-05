@@ -155,12 +155,27 @@ FolderActionDisplayContext folderActionDisplayContext = new FolderActionDisplayC
 				windowState="<%= LiferayWindowState.POP_UP.toString() %>"
 			/>
 
-			<liferay-ui:icon
-				message="permissions"
-				method="get"
-				url="<%= permissionsURL %>"
-				useDialog="<%= true %>"
-			/>
+			<c:choose>
+				<c:when test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-152694")) %>'>
+					<liferay-ui:icon
+						icon="password-policies"
+						iconCssClass="dropdown-item-indicator-start"
+						markupView="lexicon"
+						message="permissions"
+						method="get"
+						url="<%= permissionsURL %>"
+						useDialog="<%= true %>"
+					/>
+				</c:when>
+				<c:otherwise>
+					<liferay-ui:icon
+						message="permissions"
+						method="get"
+						url="<%= permissionsURL %>"
+						useDialog="<%= true %>"
+					/>
+				</c:otherwise>
+			</c:choose>
 		</c:if>
 
 		<c:if test="<%= folderActionDisplayContext.isDeleteFolderActionVisible() %>">

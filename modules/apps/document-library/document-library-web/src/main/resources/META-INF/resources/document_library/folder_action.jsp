@@ -52,10 +52,23 @@ FolderActionDisplayContext folderActionDisplayContext = new FolderActionDisplayC
 		</c:if>
 
 		<c:if test="<%= folderActionDisplayContext.isEditFolderActionVisible() %>">
-			<liferay-ui:icon
-				message="edit"
-				url="<%= folderActionDisplayContext.getEditFolderURL() %>"
-			/>
+			<c:choose>
+				<c:when test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-152694")) %>'>
+					<liferay-ui:icon
+						icon="pencil"
+						iconCssClass="dropdown-item-indicator-start"
+						markupView="lexicon"
+						message="edit"
+						url="<%= folderActionDisplayContext.getEditFolderURL() %>"
+					/>
+				</c:when>
+				<c:otherwise>
+					<liferay-ui:icon
+						message="edit"
+						url="<%= folderActionDisplayContext.getEditFolderURL() %>"
+					/>
+				</c:otherwise>
+			</c:choose>
 		</c:if>
 
 		<c:if test="<%= folderActionDisplayContext.isMoveFolderActionVisible() %>">

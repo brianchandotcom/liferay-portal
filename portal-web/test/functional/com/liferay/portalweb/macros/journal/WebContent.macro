@@ -2510,6 +2510,21 @@ definition {
 			}
 		}
 
+		if ("${webContentBoolean}" == "true") {
+			var webContentBooleanFieldLabel = "Boolean";
+
+			AssertChecked.assertCheckedNotVisible(
+				checkboxName = "${webContentBooleanFieldLabel}",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+		else if ("${webContentBoolean}" == "false") {
+			var webContentBooleanFieldLabel = "Boolean";
+
+			AssertNotChecked.assertNotCheckedNotVisible(
+				checkboxName = "${webContentBooleanFieldLabel}",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
 		if (isSet(webContentColor)) {
 			if (!(isSet(webContentColorFieldLabel))) {
 				var webContentColorFieldLabel = "Color";

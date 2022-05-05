@@ -228,11 +228,31 @@ definition {
 	}
 
 	@description = "Verify that Timers can be added"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanAddTimers {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAddTimers";
 
-		// TODO LRQA-72952 CanAddTimers pending implementation
+		Workflow.openWorkflowListView();
+
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Task",
+			nodePosition = "-20,-40",
+			nodeType = "task");
+		
+		ProcessBuilderKaleoDesignerReact.viewAndFillTimers(
+            newTimer = "true",
+            scaleTypeOption = "Minute",
+            durationValue = "2",
+            actionName = "Liferay Timer",
+            actionsTemplateValue = "Timer Template");
+		
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.viewPropertyValue(
+			propertyName = "Timer",
+			propertyValue = "Duration: 2 minute");
 
 	}
 

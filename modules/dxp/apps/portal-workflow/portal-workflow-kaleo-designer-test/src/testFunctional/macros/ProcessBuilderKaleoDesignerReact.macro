@@ -950,4 +950,97 @@ definition {
 			value1 = "${coordinateY}");
 	}
 
+	macro viewAndFillTimers {
+		if (isSet(newTimer)) {
+			Click(
+				key_propertyName = "Timer",
+				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_NEW_BUTTON");
+		}
+
+		AssertElementPresent(
+			key_inputOption = "Name",
+			locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT");
+
+		AssertElementPresent(
+			key_inputOption = "Description",
+			locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT");
+
+		AssertElementPresent(
+			key_selectorField = "Scale",
+			locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_SELECTORS");
+
+		AssertElementPresent(
+			key_inputOption = "Duration",
+			locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT");
+
+		AssertElementPresent(locator1 = "ProcessBuilderKaleoDesignerReact#DEFAULT_TOGGLE_SWITCH");
+
+		AssertElementPresent(locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_TEMPLATE_TEXTAREA");
+
+		AssertElementPresent(
+			key_inputOption = "Priority",
+			locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT");
+
+		if (isSet(name)) {
+			Type(
+				key_inputOption = "Name",
+				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT",
+				value1 = "${name}");
+		}
+
+		if (isSet(description)) {
+			Type(
+				key_inputOption = "Description",
+				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT",
+				value1 = "${description}");
+		}
+
+		if (isSet(scaleTypeOption)) {
+			Select(
+				key_selectorField = "Scale",
+				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_SELECTORS",
+				value1 = "${scaleTypeOption}");
+		}
+
+		if (isSet(durationValue)) {
+			Type(
+				key_inputOption = "Duration",
+				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT",
+				value1 = "${durationValue}");
+		}
+
+		if (isSet(actionTypeOption)) {
+			Select(
+				key_selectorField = "Type",
+				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_SELECTORS",
+				value1 = "${actionTypeOption}");
+		}
+
+		if (isSet(actionName)) {
+			Type(
+				key_inputOption = "Name*",
+				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT",
+				value1 = "${actionName}");
+		}
+
+		if (isSet(actionDescription)) {
+			Type(
+				key_inputOption = "Description",
+				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT",
+				value1 = "${actionDescription}");
+		}
+
+		if (isSet(actionsTemplateValue)) {
+			Type(
+				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_TEMPLATE_TEXTAREA",
+				value1 = "${actionsTemplateValue}");
+		}
+
+		if (isSet(priorityValue)) {
+			Type(
+				key_inputOption = "Priority",
+				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT",
+				value1 = "${priorityValue}");
+		}
+	}
 }

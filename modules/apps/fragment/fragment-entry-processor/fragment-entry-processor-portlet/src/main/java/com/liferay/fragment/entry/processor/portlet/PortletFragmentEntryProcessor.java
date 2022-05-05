@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ModelHintsConstants;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.impl.DefaultLayoutTypeAccessPolicyImpl;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
@@ -421,16 +422,44 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 
 		String instanceId = jsonObject.getString("instanceId");
 
+		String encodePortletId = PortletIdCodec.encode(portletId, instanceId);
+
 		PortletPreferences portletPreferences =
 			PortletPreferencesFactoryUtil.getPortletPreferences(
 				fragmentEntryProcessorContext.getHttpServletRequest(),
-				PortletIdCodec.encode(portletId, instanceId));
+				encodePortletId);
 
-		return _fragmentPortletRenderer.renderPortlet(
+		String html = _fragmentPortletRenderer.renderPortlet(
 			fragmentEntryProcessorContext.getHttpServletRequest(),
 			fragmentEntryProcessorContext.getHttpServletResponse(), portletId,
 			instanceId,
 			PortletPreferencesFactoryUtil.toXML(portletPreferences));
+
+		HttpServletRequest httpServletRequest =
+			fragmentEntryProcessorContext.getHttpServletRequest();
+
+		FragmentEntryLink fragmentEntryLink =
+			(FragmentEntryLink)httpServletRequest.getAttribute(
+				FragmentWebKeys.FRAGMENT_ENTRY_LINK);
+
+		if (fragmentEntryLink != null) {
+			String checkAccessAllowedToPortletCacheKey = StringBundler.concat(
+				DefaultLayoutTypeAccessPolicyImpl.class.getName(), "#",
+				ParamUtil.getLong(
+					fragmentEntryProcessorContext.getHttpServletRequest(),
+					"p_l_id"),
+				"#", encodePortletId);
+
+			httpServletRequest.setAttribute(
+				FragmentWebKeys.ACCESS_ALLOWED_TO_FRAGMENT_ENTRY_LINK_ID +
+					fragmentEntryLink.getFragmentEntryLinkId(),
+				GetterUtil.getBoolean(
+					httpServletRequest.getAttribute(
+						checkAccessAllowedToPortletCacheKey),
+					true));
+		}
+
+		return html;
 	}
 
 	private void _updateLayoutPortletSetup(

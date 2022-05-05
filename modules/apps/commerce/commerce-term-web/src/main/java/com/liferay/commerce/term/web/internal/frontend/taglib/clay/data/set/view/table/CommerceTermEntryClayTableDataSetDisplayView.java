@@ -43,11 +43,11 @@ public class CommerceTermEntryClayTableDataSetDisplayView
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
 			_clayTableSchemaBuilderFactory.create();
 
-		ClayTableSchemaField nameClayTableSchemaField =
+		ClayTableSchemaField labelLangClayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField(
 				"label.LANG", "title");
 
-		nameClayTableSchemaField.setContentRenderer("actionLink");
+		labelLangClayTableSchemaField.setContentRenderer("actionLink");
 
 		clayTableSchemaBuilder.addClayTableSchemaField("name", "key");
 
@@ -55,11 +55,11 @@ public class CommerceTermEntryClayTableDataSetDisplayView
 
 		clayTableSchemaBuilder.addClayTableSchemaField("priority", "priority");
 
-		ClayTableSchemaField statusClayTableSchemaField =
+		ClayTableSchemaField workflowStatusInfoClayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField(
 				"workflowStatusInfo", "status");
 
-		statusClayTableSchemaField.setContentRenderer("status");
+		workflowStatusInfoClayTableSchemaField.setContentRenderer("status");
 
 		ClayTableSchemaField activeClayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField("active", "active");

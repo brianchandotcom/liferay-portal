@@ -2402,6 +2402,41 @@ definition {
 		AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
 	}
 
+	@priority = "4"
+	test SearchXSSConfiguration {
+		Search.openSearchPage();
+
+		SearchPortlets.addWidgets(searchPortletList = "Modified Facet");
+
+		Portlet.gotoPortletOptions(
+			portletName = "Modified Facet",
+			portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		Click(locator1 = "Button#ADD_ROW");
+
+		var script = '''test"><script>alert(123);</script>''';
+
+		Type(
+			key_fieldLabel = "Label",
+			locator1 = "Search#MODIFIED_FACET_CONFIG_EMPTY_FIELD",
+			value1 = "${script}");
+
+		Type(
+			key_fieldLabel = "Range",
+			locator1 = "Search#MODIFIED_FACET_CONFIG_EMPTY_FIELD",
+			value1 = "[past-hour TO *]");
+
+		PortletEntry.save();
+
+		IFrame.closeFrame();
+
+		SearchPortlets.searchEmbedded(searchTerm = "test");
+
+		AssertAlertNotPresent();
+	}
+
 	@description = "This is a use case for LPS-84035."
 	@priority = "5"
 	test ViewCreatedSearchPagePermissions {

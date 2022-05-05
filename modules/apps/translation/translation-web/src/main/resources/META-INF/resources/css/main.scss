@@ -15,8 +15,13 @@ $productMenuWidth: 320px;
 			max-width: 6.5rem;
 		}
 
-		.languages-selector .autofit-col:not(:last-child) {
-			margin-right: 1em;
+		.languages-selector {
+			color: $black;
+			font-size: 0.875rem;
+
+			.autofit-col:not(:last-child) {
+				margin-right: 1em;
+			}
 		}
 	}
 

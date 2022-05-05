@@ -439,14 +439,16 @@ function visit(
 	}
 	else {
 		item.children.forEach((childId) => {
-			const childItem = items[childId];
-
 			if (
-				item.type === LAYOUT_DATA_ITEM_TYPES.collection &&
-				!item.config.collection
+				(item.type === LAYOUT_DATA_ITEM_TYPES.collection &&
+					!item.config.collection) ||
+				(item.type === LAYOUT_DATA_ITEM_TYPES.form &&
+					!formIsMapped(item))
 			) {
 				return;
 			}
+
+			const childItem = items[childId];
 
 			if (
 				!isMasterPage &&

@@ -308,6 +308,31 @@ paths:
                                     $ref: "#/components/schemas/Region"
                                 type: array
             tags: ["Region"]
+    "/countries/{countryId}/regions/by-region-code/{regionCode}":
+        get:
+            operationId: getCountryRegionByRegionCode
+            parameters:
+                - in: path
+                  name: countryId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: regionCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Region"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Region"
+            tags: ["Region"]
     "/regions":
         get:
             operationId: getRegionsPage

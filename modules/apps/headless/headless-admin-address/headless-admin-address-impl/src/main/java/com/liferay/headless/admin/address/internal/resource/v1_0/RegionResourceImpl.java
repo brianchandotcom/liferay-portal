@@ -80,6 +80,11 @@ public class RegionResourceImpl extends BaseRegionResourceImpl {
 	}
 
 	@Override
+	public Region getRegion(Long regionId) throws Exception {
+		return _toRegion(_regionService.getRegion(regionId));
+	}
+
+	@Override
 	public Page<Region> getRegionsPage(
 			Boolean active, String search, Pagination pagination, Sort[] sorts)
 		throws Exception {

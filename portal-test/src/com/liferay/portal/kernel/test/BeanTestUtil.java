@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.test;
 
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.lang.reflect.Field;
@@ -124,7 +123,9 @@ public class BeanTestUtil {
 		Class<?> parameterType, Object value) {
 
 		if ((value instanceof Integer) && parameterType.equals(Long.class)) {
-			return GetterUtil.getLong(value);
+			Integer intValue = (Integer)value;
+
+			return intValue.longValue();
 		}
 
 		return value;

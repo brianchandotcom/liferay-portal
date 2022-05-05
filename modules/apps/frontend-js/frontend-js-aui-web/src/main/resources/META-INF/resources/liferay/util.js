@@ -452,6 +452,9 @@
 			return typeof val === 'function';
 		},
 
+		/**
+		 * @deprecated As of Cavanaugh (7.4.x), replaced by `get_checkboxes.js`
+		 */
 		listCheckboxesExcept(form, except, name, checked) {
 			form = Util.getDOM(form);
 
@@ -485,6 +488,9 @@
 				.join();
 		},
 
+		/**
+		 * @deprecated As of Cavanaugh (7.4.x), replaced by `import {getCheckedCheckboxes} from 'frontend-js-web';`
+		 */
 		listCheckedExcept(form, except, name) {
 			return Util.listCheckboxesExcept(form, except, name, true);
 		},
@@ -508,6 +514,9 @@
 				.join(delimeter || ',');
 		},
 
+		/**
+		 * @deprecated As of Cavanaugh (7.4.x), replaced by `import {getUncheckedCheckboxes} from 'frontend-js-web';`
+		 */
 		listUncheckedExcept(form, except, name) {
 			return Util.listCheckboxesExcept(form, except, name, false);
 		},
@@ -834,7 +843,7 @@
 				() => {
 					Util.toggleDisabled(
 						buttonId,
-						!Util.listCheckedExcept(form, ignoreFieldName)
+						!Util.getCheckedCheckboxes(form, ignoreFieldName)
 					);
 				},
 				'input[type=checkbox]'

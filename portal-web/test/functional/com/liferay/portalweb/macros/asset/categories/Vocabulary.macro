@@ -164,20 +164,18 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		if (isSet(deletalAll)) {
-			PortletEntry.selectAll();
-		}
-		else {
-			Check(
-				key_listEntry = "${vocabularyName}",
-				locator1 = "LexiconList#LIST_ENTRY_CHECKBOX");
-		}
+		AssertTextEquals(
+			key_vocabularyName = "${vocabularyName}",
+			locator1 = "Categories#VOCABULARY_ENTRY",
+			value1 = "${vocabularyName}");
+
+		PortletEntry.selectAll();
 
 		SelectFrame(value1 = "relative=top");
 
 		Click(
 			key_text = "Delete",
-			locator1 = "Button#ANY");
+			locator1 = "Modal#MODAL_FOOTER_BUTTON");
 
 		AssertTextEquals(
 			locator1 = "Modal#BODY",
@@ -198,11 +196,21 @@ definition {
 	macro deleteByMenuCP {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
-		Navigator.gotoNavNested(navNested = "${vocabularyName}");
-
-		Click.waitForMenuToggleJSClick(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
+		Click.waitForMenuToggleJSClick(locator1 = "NavNested#NAV_NESTED_ELLIPSIS");
 
 		MenuItem.click(menuItem = "Delete");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		Check(
+			key_vocabularyName = "${vocabularyName}",
+			locator1 = "Categories#VOCABULARY_ENTRY_CHECKBOX");
+
+		SelectFrame(value1 = "relative=top");
+
+		Click(
+			key_text = "Delete",
+			locator1 = "Modal#MODAL_FOOTER_BUTTON");
 
 		AssertTextEquals(
 			locator1 = "Modal#BODY",

@@ -228,14 +228,7 @@ definition {
 	macro deleteByIconCP {
 		Navigator.gotoNavNested(navNested = "${vocabularyName}");
 
-		if (isSet(deletalAll)) {
-			PortletEntry.selectAll();
-		}
-		else {
-			Check(
-				key_listEntry = "${categoryName}",
-				locator1 = "LexiconList#LIST_ENTRY_CHECKBOX");
-		}
+		PortletEntry.selectAll();
 
 		Click(
 			key_text = "trash",
@@ -250,6 +243,8 @@ definition {
 			locator1 = "Modal#MODAL_FOOTER_BUTTON");
 
 		Alert.viewSuccessMessage();
+
+		PortletEntry.viewEmptyMessage(entity = "Categories");
 
 		AssertTextNotPresent(value1 = "${categoryName}");
 	}
@@ -292,6 +287,8 @@ definition {
 			locator1 = "Modal#MODAL_FOOTER_BUTTON");
 
 		Alert.viewSuccessMessage();
+
+		PortletEntry.viewEmptyMessage(entity = "Categories");
 
 		AssertTextNotPresent(value1 = "${categoryName}");
 	}

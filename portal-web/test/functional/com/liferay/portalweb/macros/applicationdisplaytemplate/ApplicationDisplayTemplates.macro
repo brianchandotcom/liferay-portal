@@ -77,11 +77,9 @@ definition {
 	}
 
 	macro deleteCP {
-		Click(
-			key_tableEntry = "${widgetTemplateName}",
-			locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
-
-		MenuItem.click(menuItem = "Delete");
+		ApplicationDisplayTemplates.gotoWidgetTemplatesEllipsisItem(
+			item = "Delete",
+			widgetTemplateName = "${widgetTemplateName}");
 
 		AssertTextEquals(
 			locator1 = "Modal#BODY",

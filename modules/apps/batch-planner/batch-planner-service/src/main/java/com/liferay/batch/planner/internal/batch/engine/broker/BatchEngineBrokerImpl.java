@@ -218,7 +218,7 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 							"allowUpdate")))) {
 
 				_importTaskResource.postImportTask(
-					batchPlannerPlan.getInternalClassName(), null,
+					batchPlannerPlan.getInternalClassName(), null, null,
 					String.valueOf(batchPlannerPlan.getBatchPlannerPlanId()),
 					_getFieldNameMapping(
 						_batchPlannerMappingLocalService.
@@ -243,7 +243,7 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 				batchPlannerPlan.getInternalClassName(), null,
 				String.valueOf(batchPlannerPlan.getBatchPlannerPlanId()),
 				_getImportStrategy(batchPlannerPlan),
-				batchPlannerPlan.getTaskItemDelegateName(),
+				batchPlannerPlan.getTaskItemDelegateName(), null,
 				MultipartBody.of(
 					Collections.singletonMap(
 						"file",

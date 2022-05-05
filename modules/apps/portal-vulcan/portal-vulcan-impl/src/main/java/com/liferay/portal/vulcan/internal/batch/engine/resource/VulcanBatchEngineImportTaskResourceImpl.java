@@ -59,8 +59,9 @@ public class VulcanBatchEngineImportTaskResourceImpl
 		_initializeContext();
 
 		return _importTaskResource.postImportTask(
-			name, callbackURL, _getExternalReferenceCode(), fields,
-			_getImportStrategy(), _getTaskItemDelegateName(), object);
+			name, callbackURL, _getQueryParameterValue("createStrategy"),
+			_getExternalReferenceCode(), fields, _getImportStrategy(),
+			_getTaskItemDelegateName(), object);
 	}
 
 	@Override
@@ -71,7 +72,8 @@ public class VulcanBatchEngineImportTaskResourceImpl
 
 		return _importTaskResource.putImportTask(
 			name, callbackURL, _getExternalReferenceCode(),
-			_getImportStrategy(), _getTaskItemDelegateName(), object);
+			_getImportStrategy(), _getTaskItemDelegateName(),
+			_getQueryParameterValue("updateStrategy"), object);
 	}
 
 	@Override

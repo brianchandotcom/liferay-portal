@@ -8,9 +8,13 @@
  * permissions and limitations under the License, including but not limited to
  * distribution rights of the Software.
  */
+import {Liferay} from '../../../common/services/liferay';
 
-export default function getDateCustomFormat(rawDate, format, locale) {
+export default function getDateCustomFormat(rawDate, format) {
 	const date = new Date(rawDate);
 
-	return date.toLocaleDateString(locale, format);
+	return date.toLocaleDateString(
+		Liferay.ThemeDisplay.getLanguageId().replace('_', '-'),
+		format
+	);
 }

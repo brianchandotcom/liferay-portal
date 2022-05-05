@@ -13,7 +13,7 @@
 <!--ACTIONS_TABLE-->
 <tr>
 	<td>PORTAL_SYSTEM_PROPERTY_TITLE</td>
-	<td>//a[contains(text(),'${key_propertyTitle}')]</td>
+	<td>//a[contains(@class,'nav-link')]//span[contains(text(),'${key_propertyTitle}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -31,15 +31,19 @@ definition {
 			objectName = "CustomObject151571",
 			pluralLabelName = "Custom Objects 151571");
 
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Text Field",
+			fieldName = "customTextField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject151571");
+
 		ObjectAdmin.openObjectAdmin();
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 151571");
 
 		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.addObjectFieldViaUI(
-			fieldLabel = "Custom Text Field",
-			fieldType = "Text");
 
 		ObjectAdmin.goToFieldsDetails(label = "Custom Text Field");
 
@@ -56,15 +60,19 @@ definition {
 			objectName = "CustomObject151572",
 			pluralLabelName = "Custom Objects 151572");
 
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "LongText",
+			fieldLabelName = "Custom Long Text Field",
+			fieldName = "customLongTextField",
+			fieldType = "Clob",
+			isRequired = "false",
+			objectName = "CustomObject151572");
+
 		ObjectAdmin.openObjectAdmin();
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 151572");
 
 		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.addObjectFieldViaUI(
-			fieldLabel = "Custom Long Text Field",
-			fieldType = "Long Text");
 
 		ObjectAdmin.goToFieldsDetails(label = "Custom Long Text Field");
 
@@ -180,15 +188,19 @@ definition {
 			objectName = "CustomObject151573",
 			pluralLabelName = "Custom Objects 151573");
 
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Text Field",
+			fieldName = "customTextField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject151573");
+
 		ObjectAdmin.openObjectAdmin();
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 151573");
 
 		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.addObjectFieldViaUI(
-			fieldLabel = "Custom Text Field",
-			fieldType = "Text");
 
 		ObjectAdmin.goToFieldsDetails(label = "Custom Text Field");
 

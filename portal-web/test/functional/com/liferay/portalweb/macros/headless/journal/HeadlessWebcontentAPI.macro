@@ -86,4 +86,57 @@ definition {
 		return "${articleId}";
 	}
 
+	macro _createStructuredContentDraft {
+		Variables.assertDefined(parameterList = "${data},${label},${name},${ddmStructureId},${title}");
+
+		var portalURL = JSONCompany.getDefaultPortalURL();
+
+		var siteId = JSONGroupAPI._getGroupIdByName(
+			groupName = "Guest",
+			site = "true");
+
+		var curl = '''
+			${portalURL}/o/headless-admin-content/v1.0/sites/${siteId}/structured-contents/draft \
+			-u test@liferay.com:test \
+			-H Content-Type: application/json
+            -d
+					{
+    "contentFields": [{
+        "contentFieldValue": {
+            "data": "${data}"
+        },
+        "dataType": "string",
+        "label": "${label}",
+        "name": "${name}",
+        "nestedContentFields": [],
+        "repeatable": false
+    }],
+    "contentStructureId": "${ddmStructureId}",
+    "title": "${title}"
+	}
+		''';
+		var curl = JSONCurlUtil.post("${curl}");
+
+		return "${curl}";
+	}
+
+	macro assertPriorityFieldWithDefaultValue {
+		var actualPriorityDefaultValue = JSONUtil.getWithJSONPath("${responseToParse}", "$.priority");
+
+		TestUtils.assertEquals(
+			actual = "${actualPriorityDefaultValue}",
+			expected = "${expectedPriorityDefaultValue}");
+	}
+
+	macro createStructuredContentDraft {
+		var response = HeadlessWebcontentAPI._createStructuredContentDraft(
+			data = "${data}",
+			ddmStructureId = "${ddmStructureId}",
+			label = "${label}",
+			name = "${name}",
+			title = "${title}");
+
+		return "${response}";
+	}
+
 }

@@ -191,6 +191,18 @@ definition {
 			rowEntry = "${structureName}");
 	}
 
+	macro getDdmStructureId {
+		var key_ddlDataDefinitionName = "${structureName}";
+
+		WaitForSPARefresh();
+
+		var href = selenium.getAttribute("//tr/td/a[contains(text(),'${key_ddlDataDefinitionName}')]@href");
+		var findWhereIdBegins = StringUtil.extractLast("${href}", "ddmStructureId=");
+		var ddmStructureId = StringUtil.extractFirst("${findWhereIdBegins}", "&p_p_auth");
+
+		return "${ddmStructureId}";
+	}
+
 	macro openWebContentStructuresAdmin {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet&_com_liferay_journal_web_portlet_JournalPortlet_mvcPath=%2Fview_ddm_structures.jsp");
 	}

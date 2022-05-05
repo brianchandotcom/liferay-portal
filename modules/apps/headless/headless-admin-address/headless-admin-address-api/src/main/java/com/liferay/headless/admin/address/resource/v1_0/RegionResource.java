@@ -67,6 +67,8 @@ public interface RegionResource {
 			Boolean active, String search, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
+	public Region getRegion(Long regionId) throws Exception;
+
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
 	}

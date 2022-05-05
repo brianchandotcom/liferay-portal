@@ -207,6 +207,21 @@ public class Query {
 					_sortsBiFunction.apply(regionResource, sortsString))));
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {region(regionId: ___){active, countryId, id, name, position, regionCode, title_i18n}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public Region region(@GraphQLName("regionId") Long regionId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_regionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			regionResource -> regionResource.getRegion(regionId));
+	}
+
 	@GraphQLTypeExtension(Region.class)
 	public class GetCountryTypeExtension {
 

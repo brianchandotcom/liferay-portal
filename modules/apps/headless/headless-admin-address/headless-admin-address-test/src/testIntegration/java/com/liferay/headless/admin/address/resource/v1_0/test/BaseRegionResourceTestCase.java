@@ -653,6 +653,66 @@ public abstract class BaseRegionResourceTestCase {
 		return testGraphQLRegion_addRegion();
 	}
 
+	@Test
+	public void testGetRegion() throws Exception {
+		Region postRegion = testGetRegion_addRegion();
+
+		Region getRegion = regionResource.getRegion(postRegion.getId());
+
+		assertEquals(postRegion, getRegion);
+		assertValid(getRegion);
+	}
+
+	protected Region testGetRegion_addRegion() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetRegion() throws Exception {
+		Region region = testGraphQLGetRegion_addRegion();
+
+		Assert.assertTrue(
+			equals(
+				region,
+				RegionSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"region",
+								new HashMap<String, Object>() {
+									{
+										put("regionId", region.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/region"))));
+	}
+
+	@Test
+	public void testGraphQLGetRegionNotFound() throws Exception {
+		Long irrelevantRegionId = RandomTestUtil.randomLong();
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"region",
+						new HashMap<String, Object>() {
+							{
+								put("regionId", irrelevantRegionId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Region testGraphQLGetRegion_addRegion() throws Exception {
+		return testGraphQLRegion_addRegion();
+	}
+
 	protected Region testGraphQLRegion_addRegion() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");

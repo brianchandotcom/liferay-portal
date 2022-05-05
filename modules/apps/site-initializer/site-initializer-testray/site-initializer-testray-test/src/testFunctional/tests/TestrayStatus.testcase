@@ -85,7 +85,7 @@ definition {
 	@priority = "4"
 	test CanVerifyOpenStatus {
 		property portal.upstream = "quarantine";
-		
+
 		Testray.enableTestrayTasksInPortlet();
 
 		Testray.createTestrayTasks(value = "1");

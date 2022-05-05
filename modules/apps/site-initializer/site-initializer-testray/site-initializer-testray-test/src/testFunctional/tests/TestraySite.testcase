@@ -23,11 +23,11 @@ definition {
 		}
 	}
 
-    @description = "This is a test for LPS-152637. Verify if Testray can be created"
-    @priority = "5"
-    test CanBeCreated{
-		task ("Create Testray") {			
-        	ApplicationsMenu.gotoPortlet(
+	@description = "This is a test for LPS-152637. Verify if Testray can be created"
+	@priority = "5"
+	test CanBeCreated {
+		task ("Create Testray") {
+			ApplicationsMenu.gotoPortlet(
 				category = "Sites",
 				panel = "Control Panel",
 				portlet = "Sites");
@@ -45,17 +45,14 @@ definition {
 			Click(locator1 = "Button#ADD");
 
 			Alert.viewSuccessMessage();
-
 		}
 
 		task ("Go to Testray") {
-
 			Refresh();
 
 			ApplicationsMenu.gotoSite(site = "Testray 2");
 		}
-
-    }
+	}
 
 	@description = "This is a test for LPS-152873. Verify if when Testray is created, Remote Apps will be created for it as well"
 	@priority = "5"

@@ -15,3 +15,22 @@ label {
 		top: -5px;
 	}
 }
+
+.label-tonal-danger {
+	background-color: #fbe8e8;
+	border-color: transparent;
+	color: var(--color-state-error);
+	font-weight: 600;
+	height: 35px;
+	padding: 4px;
+	text-transform: lowercase;
+	.text-paragraph {
+		font-size: 16px;
+	}
+}
+
+.badge .inline-item .lexicon-icon {
+	height: 13px;
+	margin-right: 0;
+	width: 13px;
+}

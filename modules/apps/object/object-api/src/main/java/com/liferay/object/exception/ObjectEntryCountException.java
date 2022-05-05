@@ -28,9 +28,7 @@ public class ObjectEntryCountException extends PortalException {
 		super(msg);
 	}
 
-	public ObjectEntryCountException(
-		String msg, Throwable throwable) {
-
+	public ObjectEntryCountException(String msg, Throwable throwable) {
 		super(msg, throwable);
 	}
 

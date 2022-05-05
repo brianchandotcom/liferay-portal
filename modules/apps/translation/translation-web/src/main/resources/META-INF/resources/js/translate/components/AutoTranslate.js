@@ -41,7 +41,7 @@ const AutoTranslate = ({
 				</ClayButton>
 			</ClayLayout.ContentCol>
 
-			<ClayLayout.ContentCol>
+			<ClayLayout.ContentCol className="autotranslate-feedback">
 				{isLoading && (
 					<div>
 						<span className="inline-item inline-item-before">

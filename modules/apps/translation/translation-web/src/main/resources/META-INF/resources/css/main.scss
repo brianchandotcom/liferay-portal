@@ -23,6 +23,15 @@ $productMenuWidth: 320px;
 				margin-right: 1em;
 			}
 		}
+
+		.autotranslate-feedback {
+			flex-shrink: 1;
+			font-size: 0.875rem;
+
+			@include media-breakpoint-up(xl) {
+				max-width: 18rem;
+			}
+		}
 	}
 
 	&-import {

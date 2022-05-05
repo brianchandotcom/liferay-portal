@@ -75,7 +75,7 @@ renderResponse.setTitle(editable ? LanguageUtil.get(request, "edit-template") : 
 							<clay:checkbox
 								checked="<%= true %>"
 								id='<%= liferayPortletResponse.getNamespace() + "containsHeaders" %>'
-								label="contains-headers"
+								label="include-headers"
 								name='<%= liferayPortletResponse.getNamespace() + "containsHeaders" %>'
 							/>
 						</clay:col>

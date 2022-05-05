@@ -357,7 +357,7 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 				commerceAddress.getCommerceAddressId());
 		}
 
-		_commerceOrderService.updateCommerceOrder(
+		_commerceOrderEngine.updateCommerceOrder(
 			commerceOrder.getExternalReferenceCode(),
 			commerceOrder.getCommerceOrderId(),
 			commerceOrder.getBillingAddressId(),
@@ -367,8 +367,13 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 			commerceOrder.getCommercePaymentMethodKey(),
 			commerceOrder.getPurchaseOrderNumber(),
 			commerceOrder.getShippingAmount(),
-			commerceOrder.getShippingOptionName(), commerceOrder.getSubtotal(),
-			commerceOrder.getTotal(), commerceContext);
+			commerceOrder.getShippingOptionName(),
+			commerceOrder.getShippingWithTaxAmount(),
+			commerceOrder.getSubtotal(),
+			commerceOrder.getSubtotalWithTaxAmount(),
+			commerceOrder.getTaxAmount(), commerceOrder.getTotal(),
+			commerceOrder.getTotalDiscountAmount(),
+			commerceOrder.getTotalWithTaxAmount(), commerceContext, true);
 	}
 
 	private void _addOrUpdateCommerceOrderItem(
@@ -437,10 +442,10 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 		}
 
 		if (useAsBilling) {
-			_commerceOrderService.updateCommerceOrder(
+			_commerceOrderEngine.updateCommerceOrder(
 				commerceOrder.getExternalReferenceCode(),
 				commerceOrder.getCommerceOrderId(),
-				commerceOrder.getShippingAddressId(),
+				commerceOrder.getBillingAddressId(),
 				commerceOrder.getCommerceShippingMethodId(),
 				commerceOrder.getShippingAddressId(),
 				commerceOrder.getAdvanceStatus(),
@@ -448,8 +453,12 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 				commerceOrder.getPurchaseOrderNumber(),
 				commerceOrder.getShippingAmount(),
 				commerceOrder.getShippingOptionName(),
-				commerceOrder.getSubtotal(), commerceOrder.getTotal(),
-				commerceContext);
+				commerceOrder.getShippingWithTaxAmount(),
+				commerceOrder.getSubtotal(),
+				commerceOrder.getSubtotalWithTaxAmount(),
+				commerceOrder.getTaxAmount(), commerceOrder.getTotal(),
+				commerceOrder.getTotalDiscountAmount(),
+				commerceOrder.getTotalWithTaxAmount(), commerceContext, true);
 		}
 		else {
 
@@ -483,7 +492,7 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 				commerceAddress.getCommerceAddressId());
 		}
 
-		return _commerceOrderService.updateCommerceOrder(
+		return _commerceOrderEngine.updateCommerceOrder(
 			commerceOrder.getExternalReferenceCode(),
 			commerceOrder.getCommerceOrderId(),
 			commerceOrder.getBillingAddressId(),
@@ -493,8 +502,13 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 			commerceOrder.getCommercePaymentMethodKey(),
 			commerceOrder.getPurchaseOrderNumber(),
 			commerceOrder.getShippingAmount(),
-			commerceOrder.getShippingOptionName(), commerceOrder.getSubtotal(),
-			commerceOrder.getTotal(), commerceContext);
+			commerceOrder.getShippingOptionName(),
+			commerceOrder.getShippingWithTaxAmount(),
+			commerceOrder.getSubtotal(),
+			commerceOrder.getSubtotalWithTaxAmount(),
+			commerceOrder.getTaxAmount(), commerceOrder.getTotal(),
+			commerceOrder.getTotalDiscountAmount(),
+			commerceOrder.getTotalWithTaxAmount(), commerceContext, true);
 	}
 
 	private long _getCommerceOrderTypeId(Cart cart) throws Exception {
@@ -721,7 +735,7 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 			contextUser.getUserId(), commerceOrder.getCommerceOrderId(),
 			commerceOrder.getCommerceAccountId());
 
-		commerceOrder = _commerceOrderService.updateCommerceOrder(
+		_commerceOrderEngine.updateCommerceOrder(
 			commerceOrder.getExternalReferenceCode(),
 			commerceOrder.getCommerceOrderId(),
 			GetterUtil.get(
@@ -740,8 +754,12 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 			GetterUtil.get(
 				cart.getShippingOption(),
 				commerceOrder.getShippingOptionName()),
-			commerceOrder.getSubtotal(), commerceOrder.getTotal(),
-			commerceContext);
+			commerceOrder.getShippingWithTaxAmount(),
+			commerceOrder.getSubtotal(),
+			commerceOrder.getSubtotalWithTaxAmount(),
+			commerceOrder.getTaxAmount(), commerceOrder.getTotal(),
+			commerceOrder.getTotalDiscountAmount(),
+			commerceOrder.getTotalWithTaxAmount(), commerceContext, true);
 
 		// Expando
 

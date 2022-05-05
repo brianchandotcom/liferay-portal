@@ -581,7 +581,7 @@ public class OrderResourceImpl
 				commerceShippingMethod.getCommerceShippingMethodId();
 		}
 
-		commerceOrder = _commerceOrderService.updateCommerceOrder(
+		commerceOrder = _commerceOrderEngine.updateCommerceOrder(
 			GetterUtil.getString(
 				order.getExternalReferenceCode(),
 				commerceOrder.getExternalReferenceCode()),
@@ -629,7 +629,8 @@ public class OrderResourceImpl
 				contextUser.getUserId(), 0,
 				GetterUtil.getLong(
 					order.getAccountId(),
-					commerceOrder.getCommerceAccountId())));
+					commerceOrder.getCommerceAccountId())),
+			false);
 
 		// Requested Delivery Date
 

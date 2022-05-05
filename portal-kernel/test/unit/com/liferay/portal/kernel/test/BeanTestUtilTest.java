@@ -212,7 +212,8 @@ public class BeanTestUtilTest {
 		BeanTestUtil.setProperty(
 			testClass, "mapProperty", Collections.singletonMap("Aaa", "Aaa"));
 		Assert.assertEquals(
-			Collections.singletonMap("Aaa", "Aaa"), testClass.getMapProperty());
+			Collections.<String, Object>singletonMap("Aaa", "Aaa"),
+			testClass.getMapProperty());
 
 		BeanTestUtil.setProperty(testClass, "stringProperty", "aaa");
 		Assert.assertEquals("aaa", testClass.getStringProperty());

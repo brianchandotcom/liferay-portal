@@ -63,6 +63,10 @@ public interface RegionResource {
 			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
+	public Region getCountryRegionByRegionCode(
+			Long countryId, String regionCode)
+		throws Exception;
+
 	public Page<Region> getRegionsPage(
 			Boolean active, String search, Pagination pagination, Sort[] sorts)
 		throws Exception;

@@ -421,6 +421,81 @@ public abstract class BaseRegionResourceTestCase {
 	}
 
 	@Test
+	public void testGetCountryRegionByRegionCode() throws Exception {
+		Region postRegion = testGetCountryRegionByRegionCode_addRegion();
+
+		Region getRegion = regionResource.getCountryRegionByRegionCode(
+			postRegion.getCountryId(), postRegion.getRegionCode());
+
+		assertEquals(postRegion, getRegion);
+		assertValid(getRegion);
+	}
+
+	protected Region testGetCountryRegionByRegionCode_addRegion()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetCountryRegionByRegionCode() throws Exception {
+		Region region = testGraphQLGetCountryRegionByRegionCode_addRegion();
+
+		Assert.assertTrue(
+			equals(
+				region,
+				RegionSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"countryRegionByRegionCode",
+								new HashMap<String, Object>() {
+									{
+										put("countryId", region.getCountryId());
+										put(
+											"regionCode",
+											"\"" + region.getRegionCode() +
+												"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/countryRegionByRegionCode"))));
+	}
+
+	@Test
+	public void testGraphQLGetCountryRegionByRegionCodeNotFound()
+		throws Exception {
+
+		Long irrelevantCountryId = RandomTestUtil.randomLong();
+		String irrelevantRegionCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"countryRegionByRegionCode",
+						new HashMap<String, Object>() {
+							{
+								put("countryId", irrelevantCountryId);
+								put("regionCode", irrelevantRegionCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Region testGraphQLGetCountryRegionByRegionCode_addRegion()
+		throws Exception {
+
+		return testGraphQLRegion_addRegion();
+	}
+
+	@Test
 	public void testGetRegionsPage() throws Exception {
 		Page<Region> page = regionResource.getRegionsPage(
 			null, null, Pagination.of(1, 10), null);

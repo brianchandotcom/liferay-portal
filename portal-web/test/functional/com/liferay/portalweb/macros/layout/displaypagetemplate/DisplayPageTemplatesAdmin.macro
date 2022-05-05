@@ -41,7 +41,7 @@ definition {
 			card = "${displayPageName}",
 			item = "Delete");
 
-		if (isSet(relatedDisplayPages)) {
+		if ("${defaultDisplayPageTemplate}" == "true") {
 			AssertTextEquals(
 				locator1 = "Modal#BODY",
 				value1 = "Are you sure you want to delete the default display page template? All related display pages will be deleted.");

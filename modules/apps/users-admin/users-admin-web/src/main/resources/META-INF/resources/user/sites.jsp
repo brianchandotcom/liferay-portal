@@ -163,7 +163,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 
 							const rowColumns = [];
 
-							rowColumns.push(selectedItem.entityname);
+							rowColumns.push(A.Escape.html(selectedItem.entityname));
 							rowColumns.push('');
 							rowColumns.push(
 								'<a class="modify-link" data-rowId="' +

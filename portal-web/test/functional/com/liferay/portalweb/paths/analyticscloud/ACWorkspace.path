@@ -17,16 +17,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>LANGUAGE_SELECTION_OPTION</td>
-	<td>//span[@class='dropdown-item']/button</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SELECT_LANGUAGE</td>
-	<td>//button[contains(text(),'${key_languageOption}')]/parent::span</td>
-	<td></td>
-</tr>
-<tr>
 	<td>LOGOUT_WORKSPACE_OPTION</td>
 	<td>//*[contains(@href,'logout')]</td>
 	<td></td>

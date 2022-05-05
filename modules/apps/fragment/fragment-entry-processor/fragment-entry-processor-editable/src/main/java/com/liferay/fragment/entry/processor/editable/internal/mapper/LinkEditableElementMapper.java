@@ -125,15 +125,9 @@ public class LinkEditableElementMapper implements EditableElementMapper {
 			}
 		}
 		else if (hrefJSONObject != null) {
-			String languageId = LocaleUtil.toLanguageId(
-				fragmentEntryProcessorContext.getLocale());
-
-			if (!hrefJSONObject.has(languageId)) {
-				languageId = LocaleUtil.toLanguageId(
-					LocaleUtil.getSiteDefault());
-			}
-
-			href = hrefJSONObject.getString(languageId);
+			href = hrefJSONObject.getString(
+				LocaleUtil.toLanguageId(
+					fragmentEntryProcessorContext.getLocale()));
 		}
 
 		Element linkElement = new Element("a");

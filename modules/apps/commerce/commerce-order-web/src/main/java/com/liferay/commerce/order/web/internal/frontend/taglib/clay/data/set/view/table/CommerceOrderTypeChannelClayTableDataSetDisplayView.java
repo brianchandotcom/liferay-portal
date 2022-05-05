@@ -41,11 +41,11 @@ public class CommerceOrderTypeChannelClayTableDataSetDisplayView
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
 			_clayTableSchemaBuilderFactory.create();
 
-		ClayTableSchemaField nameClayTableSchemaField =
+		ClayTableSchemaField channelNameClayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField(
 				"channel.name", "name");
 
-		nameClayTableSchemaField.setContentRenderer("actionLink");
+		channelNameClayTableSchemaField.setContentRenderer("actionLink");
 
 		return clayTableSchemaBuilder.build();
 	}

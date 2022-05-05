@@ -58,12 +58,12 @@ public class AllCommerceOrderClayTableDataSetDisplayView
 		clayTableSchemaBuilder.addClayTableSchemaField(
 			"totalFormatted", "amount");
 
-		ClayTableSchemaField dateClayTableSchemaField =
+		ClayTableSchemaField orderDateClayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField(
 				"orderDate", "order-date");
 
-		dateClayTableSchemaField.setContentRenderer("dateTime");
-		dateClayTableSchemaField.setSortable(true);
+		orderDateClayTableSchemaField.setContentRenderer("dateTime");
+		orderDateClayTableSchemaField.setSortable(true);
 
 		ClayTableSchemaField orderStatusInfoClayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField(

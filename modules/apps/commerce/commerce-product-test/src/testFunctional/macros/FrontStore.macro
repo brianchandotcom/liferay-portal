@@ -60,9 +60,21 @@ definition {
 		}
 
 		if (isSet(productAvailability)) {
+			if ("${productAvailability}" == "Discontinued") {
+				AssertElementPresent(locator1 = "CommerceFrontStore#FS_PRODUCT_AVAILABILITY_DISCONTINUED");
+			}
+			else {
+				AssertElementPresent(
+					key_availability = "${productAvailability}",
+					locator1 = "CommerceFrontStore#FS_PRODUCT_AVAILABILITY");
+			}
+		}
+
+		if (isSet(endOfLifeDate)) {
 			AssertElementPresent(
-				key_availability = "${productAvailability}",
-				locator1 = "CommerceFrontStore#FS_PRODUCT_AVAILABILITY");
+				key_detail = "End of Life",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_DETAIL",
+				value1 = "${endOfLifeDate}");
 		}
 
 		if (isSet(productSKU)) {

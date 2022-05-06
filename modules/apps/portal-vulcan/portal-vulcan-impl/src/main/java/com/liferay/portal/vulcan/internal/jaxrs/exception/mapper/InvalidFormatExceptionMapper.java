@@ -42,10 +42,6 @@ public class InvalidFormatExceptionMapper
 	protected Problem getProblem(
 		InvalidFormatException invalidFormatException) {
 
-		if (_log.isDebugEnabled()) {
-			_log.debug(invalidFormatException);
-		}
-
 		List<JsonMappingException.Reference> references =
 			invalidFormatException.getPath();
 
@@ -57,12 +53,16 @@ public class InvalidFormatExceptionMapper
 			Collectors.joining(".")
 		);
 
-		Class<?> clazz = invalidFormatException.getTargetType();
+		if (_log.isDebugEnabled()) {
+			Class<?> clazz = invalidFormatException.getTargetType();
 
-		String message = StringBundler.concat(
-			"Unable to map JSON path \"", path, "\" with value \"",
-			invalidFormatException.getValue(), "\" to class \"",
-			clazz.getSimpleName(), "\"");
+			_log.debug(
+				StringBundler.concat(
+					"Unable to map JSON path \"", path, "\" with value \"",
+					invalidFormatException.getValue(), "\" to class \"",
+					clazz.getSimpleName(), "\""),
+				invalidFormatException);
+		}
 
 		return new Problem(
 			Response.Status.BAD_REQUEST, "Unable to map JSON path: " + path);

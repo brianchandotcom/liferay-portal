@@ -16,6 +16,8 @@ package com.liferay.portal.vulcan.internal.jaxrs.exception.mapper;
 
 import com.fasterxml.jackson.core.JsonParseException;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
@@ -32,8 +34,15 @@ public class JsonParseExceptionMapper
 
 	@Override
 	protected Problem getProblem(JsonParseException jsonParseException) {
+		if (_log.isDebugEnabled()) {
+			_log.debug(jsonParseException);
+		}
+
 		return new Problem(
 			Response.Status.BAD_REQUEST, "Input is invalid JSON");
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		JsonParseExceptionMapper.class);
 
 }

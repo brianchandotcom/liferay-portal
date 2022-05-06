@@ -18,6 +18,8 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
@@ -38,29 +40,36 @@ public class UnrecognizedPropertyExceptionMapper
 	protected Problem getProblem(
 		UnrecognizedPropertyException unrecognizedPropertyException) {
 
-		StringBundler sb = new StringBundler();
+		if (_log.isDebugEnabled()) {
+			StringBundler sb = new StringBundler();
 
-		List<JsonMappingException.Reference> references =
-			unrecognizedPropertyException.getPath();
+			List<JsonMappingException.Reference> references =
+				unrecognizedPropertyException.getPath();
 
-		for (int i = 0; i < references.size(); i++) {
-			JsonMappingException.Reference reference = references.get(i);
+			for (int i = 0; i < references.size(); i++) {
+				JsonMappingException.Reference reference = references.get(i);
 
-			Object object = reference.getFrom();
+				Object object = reference.getFrom();
 
-			Class<?> clazz = object.getClass();
+				Class<?> clazz = object.getClass();
 
-			sb.append(
-				StringBundler.concat(
-					"The property \"", reference.getFieldName(),
-					"\" is not defined in ", clazz.getSimpleName(), "."));
+				sb.append(
+					StringBundler.concat(
+						"The property \"", reference.getFieldName(),
+						"\" is not defined in ", clazz.getSimpleName(), "."));
 
-			if ((i + 1) < references.size()) {
-				sb.append(" ");
+				if ((i + 1) < references.size()) {
+					sb.append(" ");
+				}
 			}
+
+			_log.debug(sb.toString(), unrecognizedPropertyException);
 		}
 
 		return new Problem(Response.Status.BAD_REQUEST, "Invalid property");
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		UnrecognizedPropertyExceptionMapper.class);
 
 }

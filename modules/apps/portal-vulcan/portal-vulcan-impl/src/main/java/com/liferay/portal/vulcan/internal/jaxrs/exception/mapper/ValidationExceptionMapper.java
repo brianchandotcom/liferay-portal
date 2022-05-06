@@ -14,6 +14,8 @@
 
 package com.liferay.portal.vulcan.internal.jaxrs.exception.mapper;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
@@ -32,7 +34,14 @@ public class ValidationExceptionMapper
 
 	@Override
 	protected Problem getProblem(ValidationException validationException) {
+		if (_log.isDebugEnabled()) {
+			_log.debug(validationException);
+		}
+
 		return new Problem(Response.Status.BAD_REQUEST, "Validation failed");
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ValidationExceptionMapper.class);
 
 }

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.vulcan.internal.jaxrs.exception.mapper;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.odata.filter.InvalidFilterException;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
@@ -33,7 +35,14 @@ public class InvalidFilterExceptionMapper
 	protected Problem getProblem(
 		InvalidFilterException invalidFilterException) {
 
+		if (_log.isDebugEnabled()) {
+			_log.debug(invalidFilterException);
+		}
+
 		return new Problem(Response.Status.BAD_REQUEST, "Filter is not valid");
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		InvalidFilterExceptionMapper.class);
 
 }

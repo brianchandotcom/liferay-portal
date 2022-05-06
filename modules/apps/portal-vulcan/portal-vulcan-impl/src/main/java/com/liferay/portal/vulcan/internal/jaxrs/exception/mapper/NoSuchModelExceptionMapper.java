@@ -15,6 +15,8 @@
 package com.liferay.portal.vulcan.internal.jaxrs.exception.mapper;
 
 import com.liferay.portal.kernel.exception.NoSuchModelException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
@@ -59,8 +61,15 @@ public class NoSuchModelExceptionMapper
 
 	@Override
 	protected Problem getProblem(NoSuchModelException noSuchModelException) {
+		if (_log.isDebugEnabled()) {
+			_log.debug(noSuchModelException);
+		}
+
 		return new Problem(Response.Status.NOT_FOUND, "Unable to find model");
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		NoSuchModelExceptionMapper.class);
 
 	@Context
 	private HttpServletRequest _httpServletRequest;

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.vulcan.internal.jaxrs.exception.mapper;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
@@ -36,6 +38,10 @@ public class PrincipalExceptionMapper
 
 	@Override
 	protected Problem getProblem(PrincipalException principalException) {
+		if (_log.isDebugEnabled()) {
+			_log.debug(principalException);
+		}
+
 		Response.Status status = Response.Status.FORBIDDEN;
 
 		String method = _httpServletRequest.getMethod();
@@ -46,6 +52,9 @@ public class PrincipalExceptionMapper
 
 		return new Problem(status, "A problem occured");
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		PrincipalExceptionMapper.class);
 
 	@Context
 	private HttpServletRequest _httpServletRequest;

@@ -67,6 +67,7 @@ public class ObjectDefinitionWrapper
 		attributes.put("pluralLabel", getPluralLabel());
 		attributes.put("portlet", isPortlet());
 		attributes.put("scope", getScope());
+		attributes.put("storageType", getStorageType());
 		attributes.put("system", isSystem());
 		attributes.put("version", getVersion());
 		attributes.put("status", getStatus());
@@ -208,6 +209,12 @@ public class ObjectDefinitionWrapper
 
 		if (scope != null) {
 			setScope(scope);
+		}
+
+		String storageType = (String)attributes.get("storageType");
+
+		if (storageType != null) {
+			setStorageType(storageType);
 		}
 
 		Boolean system = (Boolean)attributes.get("system");
@@ -604,6 +611,16 @@ public class ObjectDefinitionWrapper
 	@Override
 	public int getStatus() {
 		return model.getStatus();
+	}
+
+	/**
+	 * Returns the storage type of this object definition.
+	 *
+	 * @return the storage type of this object definition
+	 */
+	@Override
+	public String getStorageType() {
+		return model.getStorageType();
 	}
 
 	/**
@@ -1040,6 +1057,16 @@ public class ObjectDefinitionWrapper
 	@Override
 	public void setStatus(int status) {
 		model.setStatus(status);
+	}
+
+	/**
+	 * Sets the storage type of this object definition.
+	 *
+	 * @param storageType the storage type of this object definition
+	 */
+	@Override
+	public void setStorageType(String storageType) {
+		model.setStorageType(storageType);
 	}
 
 	/**

@@ -599,6 +599,21 @@ public interface ObjectDefinitionModel
 	public void setScope(String scope);
 
 	/**
+	 * Returns the storage type of this object definition.
+	 *
+	 * @return the storage type of this object definition
+	 */
+	@AutoEscape
+	public String getStorageType();
+
+	/**
+	 * Sets the storage type of this object definition.
+	 *
+	 * @param storageType the storage type of this object definition
+	 */
+	public void setStorageType(String storageType);
+
+	/**
 	 * Returns the system of this object definition.
 	 *
 	 * @return the system of this object definition

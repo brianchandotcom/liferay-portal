@@ -168,6 +168,8 @@ public class ObjectDefinitionPersistenceTest {
 
 		newObjectDefinition.setScope(RandomTestUtil.randomString());
 
+		newObjectDefinition.setStorageType(RandomTestUtil.randomString());
+
 		newObjectDefinition.setSystem(RandomTestUtil.randomBoolean());
 
 		newObjectDefinition.setVersion(RandomTestUtil.nextInt());
@@ -243,6 +245,9 @@ public class ObjectDefinitionPersistenceTest {
 		Assert.assertEquals(
 			existingObjectDefinition.getScope(),
 			newObjectDefinition.getScope());
+		Assert.assertEquals(
+			existingObjectDefinition.getStorageType(),
+			newObjectDefinition.getStorageType());
 		Assert.assertEquals(
 			existingObjectDefinition.isSystem(),
 			newObjectDefinition.isSystem());
@@ -364,8 +369,8 @@ public class ObjectDefinitionPersistenceTest {
 			"active", true, "dbTableName", true, "label", true, "className",
 			true, "name", true, "panelAppOrder", true, "panelCategoryKey", true,
 			"pkObjectFieldDBColumnName", true, "pkObjectFieldName", true,
-			"pluralLabel", true, "portlet", true, "scope", true, "system", true,
-			"version", true, "status", true);
+			"pluralLabel", true, "portlet", true, "scope", true, "storageType",
+			true, "system", true, "version", true, "status", true);
 	}
 
 	@Test
@@ -707,6 +712,8 @@ public class ObjectDefinitionPersistenceTest {
 		objectDefinition.setPortlet(RandomTestUtil.randomBoolean());
 
 		objectDefinition.setScope(RandomTestUtil.randomString());
+
+		objectDefinition.setStorageType(RandomTestUtil.randomString());
 
 		objectDefinition.setSystem(RandomTestUtil.randomBoolean());
 

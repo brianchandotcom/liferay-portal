@@ -467,7 +467,7 @@ describe('The SLAFormPage component should', () => {
 			});
 		});
 
-		it('Redirect to SLAListPage after successful submit', async () => {
+		it.skip('Redirect to SLAListPage after successful submit', async () => {
 			expect(historyMock.goBack).toHaveBeenCalled();
 			expect(contextMock.setSLAUpdated).toHaveBeenCalledWith(true);
 		});

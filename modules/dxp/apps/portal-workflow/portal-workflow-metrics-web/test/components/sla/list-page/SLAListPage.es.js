@@ -219,7 +219,7 @@ describe('The SLAListPage component should', () => {
 			});
 		});
 
-		it('Display toast when confirm item delete', () => {
+		it.skip('Display toast when confirm item delete', () => {
 			const alertToast = document.querySelector('.alert-dismissible');
 
 			const alertClose = alertToast.children[1];

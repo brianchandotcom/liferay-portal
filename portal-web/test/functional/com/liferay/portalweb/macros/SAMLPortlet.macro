@@ -35,9 +35,9 @@ definition {
 
 			UploadDependencyFile.uploadFile(fileName = "${uploadMetadataXML}");
 
-			var IdPMetadataXML = selenium.getElementValue("CPSAMLAdmin#SAML_CHOOSE_METADATA_XML_FILE");
+			var idPMetadataXML = selenium.getElementValue("CPSAMLAdmin#SAML_CHOOSE_METADATA_XML_FILE");
 
-			echo("## * IdP Metadata XML File Name: ${IdPMetadataXML}");
+			echo("## * IdP Metadata XML File Name: ${idPMetadataXML}");
 		}
 		else {
 			Type(
@@ -258,9 +258,9 @@ definition {
 
 			UploadDependencyFile.uploadFile(fileName = "${uploadMetadataXML}");
 
-			var SPMetadataXML = selenium.getElementValue("CPSAMLAdmin#SAML_CHOOSE_METADATA_XML_FILE");
+			var spMetadataXML = selenium.getElementValue("CPSAMLAdmin#SAML_CHOOSE_METADATA_XML_FILE");
 
-			echo("## * SP Metadata XML File Name: ${SPMetadataXML}");
+			echo("## * SP Metadata XML File Name: ${spMetadataXML}");
 		}
 		else {
 			Type(

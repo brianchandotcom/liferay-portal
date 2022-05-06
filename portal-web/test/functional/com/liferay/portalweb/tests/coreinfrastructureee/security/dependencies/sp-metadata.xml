@@ -1,25 +1,26 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0"?>
+
 <md:EntityDescriptor entityID="samlsp" xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata"><ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
-<ds:SignedInfo>
-<ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
-<ds:SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"/>
-<ds:Reference URI="">
-<ds:Transforms>
-<ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
-<ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
-</ds:Transforms>
-<ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/>
-<ds:DigestValue>zH7oBe55cqaYRjUy6hReKNsmoWqmZ+dpdOBJCVNtIqo=</ds:DigestValue>
-</ds:Reference>
-</ds:SignedInfo>
-<ds:SignatureValue>
+		<ds:SignedInfo>
+			<ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" />
+			<ds:SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256" />
+			<ds:Reference URI="">
+				<ds:Transforms>
+					<ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />
+					<ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" />
+				</ds:Transforms>
+				<ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256" />
+				<ds:DigestValue>zH7oBe55cqaYRjUy6hReKNsmoWqmZ+dpdOBJCVNtIqo=</ds:DigestValue>
+			</ds:Reference>
+		</ds:SignedInfo>
+		<ds:SignatureValue>
 QxJP8KsjEAJ6ZQ1tzv/U+XZhEaR8hkXeBHMCmVjeeSerzOSwNl38pNTkFvfCs8aHd1UXCggpIns2&#xd;
 Oorizt5dz8ny9WJJjinwDvEE6rJblEnPuoDo/Bb+rOPEkD2P/ArPs9qio+tFq2i4oDV9en0AWabk&#xd;
 J1nzwxNb+EGjkrH9y9EpuucqssmEVh3atHuxr0PKmbiPrvOltsAUNcRG8fQEYPd0C3kf0D2IFqZd&#xd;
 d4ldV7aRvafCjqjWCTscxCgovcLuA/UcgxGqjfXR9aK/zUoIz6aS4q0yUu44J3cCar4nQRwczq0Y&#xd;
 GI99aOK+OICdvPHowme53KeGyI0d1UdroHJt5Q==
-</ds:SignatureValue>
-<ds:KeyInfo><ds:X509Data><ds:X509Certificate>MIIC4zCCAcsCBgGAdK2TMjANBgkqhkiG9w0BAQsFADA1MRMwEQYDVQQDDApMaWZlcmF5IFFBMRAw
+		</ds:SignatureValue>
+		<ds:KeyInfo><ds:X509Data><ds:X509Certificate>MIIC4zCCAcsCBgGAdK2TMjANBgkqhkiG9w0BAQsFADA1MRMwEQYDVQQDDApMaWZlcmF5IFFBMRAw
 DgYDVQQKDAdMaWZlcmF5MQwwCgYDVQQGEwNVU0EwHhcNMjIwNDI5MDkzNjEzWhcNMjMwNDIwMDkz
 NjEzWjA1MRMwEQYDVQQDDApMaWZlcmF5IFFBMRAwDgYDVQQKDAdMaWZlcmF5MQwwCgYDVQQGEwNV
 U0EwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDFYT5wwflpLn4U18WfFsEoVdOV/csO

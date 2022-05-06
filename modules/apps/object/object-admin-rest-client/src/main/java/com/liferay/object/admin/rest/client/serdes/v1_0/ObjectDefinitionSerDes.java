@@ -340,6 +340,20 @@ public class ObjectDefinitionSerDes {
 			sb.append(String.valueOf(objectDefinition.getStatus()));
 		}
 
+		if (objectDefinition.getStorageType() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"storageType\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(objectDefinition.getStorageType()));
+
+			sb.append("\"");
+		}
+
 		if (objectDefinition.getSystem() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -530,6 +544,15 @@ public class ObjectDefinitionSerDes {
 			map.put("status", String.valueOf(objectDefinition.getStatus()));
 		}
 
+		if (objectDefinition.getStorageType() == null) {
+			map.put("storageType", null);
+		}
+		else {
+			map.put(
+				"storageType",
+				String.valueOf(objectDefinition.getStorageType()));
+		}
+
 		if (objectDefinition.getSystem() == null) {
 			map.put("system", null);
 		}
@@ -705,6 +728,12 @@ public class ObjectDefinitionSerDes {
 				if (jsonParserFieldValue != null) {
 					objectDefinition.setStatus(
 						StatusSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "storageType")) {
+				if (jsonParserFieldValue != null) {
+					objectDefinition.setStorageType(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "system")) {

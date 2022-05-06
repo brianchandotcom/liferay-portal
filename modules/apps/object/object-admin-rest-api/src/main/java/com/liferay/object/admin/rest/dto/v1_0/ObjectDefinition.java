@@ -577,6 +577,34 @@ public class ObjectDefinition implements Serializable {
 	protected Status status;
 
 	@Schema
+	public String getStorageType() {
+		return storageType;
+	}
+
+	public void setStorageType(String storageType) {
+		this.storageType = storageType;
+	}
+
+	@JsonIgnore
+	public void setStorageType(
+		UnsafeSupplier<String, Exception> storageTypeUnsafeSupplier) {
+
+		try {
+			storageType = storageTypeUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String storageType;
+
+	@Schema
 	public Boolean getSystem() {
 		return system;
 	}
@@ -914,6 +942,20 @@ public class ObjectDefinition implements Serializable {
 			sb.append("\"status\": ");
 
 			sb.append(String.valueOf(status));
+		}
+
+		if (storageType != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"storageType\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(storageType));
+
+			sb.append("\"");
 		}
 
 		if (system != null) {

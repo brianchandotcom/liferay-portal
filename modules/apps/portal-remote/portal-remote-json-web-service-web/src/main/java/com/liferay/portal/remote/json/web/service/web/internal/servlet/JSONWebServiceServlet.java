@@ -61,6 +61,8 @@ public class JSONWebServiceServlet extends JSONServlet {
 
 		String path = _getPathInfo(httpServletRequest);
 
+		httpServletRequest.setAttribute("originalPathInfo", path);
+
 		if (!PropsValues.JSONWS_WEB_SERVICE_API_DISCOVERABLE ||
 			(!path.equals(StringPool.BLANK) &&
 			 !path.equals(StringPool.SLASH)) ||

@@ -71,7 +71,8 @@ public class JSONWebServiceActionsManagerImpl
 			HttpServletRequest httpServletRequest)
 		throws NoSuchJSONWebServiceException {
 
-		String path = GetterUtil.getString(httpServletRequest.getPathInfo());
+		String path = GetterUtil.getString(
+			httpServletRequest.getAttribute("originalPathInfo"));
 
 		String method = GetterUtil.getString(httpServletRequest.getMethod());
 

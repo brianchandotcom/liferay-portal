@@ -32,13 +32,11 @@ import com.liferay.portal.kernel.portlet.PortletFilterUtil;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
-import com.liferay.portal.kernel.servlet.PluginContextListener;
 import com.liferay.portal.kernel.servlet.PortletServlet;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -195,15 +193,15 @@ public class InvokerPortletImpl
 
 	@Override
 	public ClassLoader getPortletClassLoader() {
-		ClassLoader classLoader =
-			(ClassLoader)_liferayPortletContext.getAttribute(
-				PluginContextListener.PLUGIN_CLASS_LOADER);
+		if (_portlet instanceof InvokerPortlet) {
+			InvokerPortlet invokerPortlet = (InvokerPortlet)_portlet;
 
-		if (classLoader == null) {
-			classLoader = PortalClassLoaderUtil.getClassLoader();
+			return invokerPortlet.getPortletClassLoader();
 		}
 
-		return classLoader;
+		Class<?> portletClass = _portlet.getClass();
+
+		return portletClass.getClassLoader();
 	}
 
 	@Override

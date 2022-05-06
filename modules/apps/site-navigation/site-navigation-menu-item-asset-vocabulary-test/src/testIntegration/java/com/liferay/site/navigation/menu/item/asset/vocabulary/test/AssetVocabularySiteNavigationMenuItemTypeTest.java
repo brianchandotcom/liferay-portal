@@ -15,10 +15,14 @@
 package com.liferay.site.navigation.menu.item.asset.vocabulary.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Field;
@@ -157,6 +161,91 @@ public class AssetVocabularySiteNavigationMenuItemTypeTest {
 
 		_assertGetChildrenSiteNavigationMenuItems(
 			locale, 0, _createSiteNavigationMenuItem(locale, "{}", false));
+	}
+
+	@Test
+	public void testGetRegularURLAssetCategoryTypeWithDisplayPageTemplate()
+		throws Exception {
+
+		_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+			_group.getCreatorUserId(), _group.getGroupId(), 0,
+			_portal.getClassNameId(AssetCategory.class.getName()), 0,
+			RandomTestUtil.randomString(),
+			LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE, 0, true, 0,
+			0, 0, 0, _serviceContext);
+
+		AssetCategory assetCategory = _createAssetCategory(0);
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		ThemeDisplay themeDisplay = _getThemeDisplay();
+
+		Locale locale = _portal.getSiteDefaultLocale(_group.getGroupId());
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		SiteNavigationMenuItemType siteNavigationMenuItemType =
+			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(
+				SiteNavigationMenuItemTypeConstants.ASSET_VOCABULARY);
+
+		SiteNavigationMenuItem assetVocabularySiteNavigationMenuItem =
+			_createSiteNavigationMenuItem(locale, "{}", false);
+
+		List<SiteNavigationMenuItem> childrenSiteNavigationMenuItems =
+			siteNavigationMenuItemType.getChildrenSiteNavigationMenuItems(
+				mockHttpServletRequest, assetVocabularySiteNavigationMenuItem);
+
+		Assert.assertEquals(
+			childrenSiteNavigationMenuItems.toString(), 1,
+			childrenSiteNavigationMenuItems.size());
+
+		Assert.assertEquals(
+			_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
+				AssetCategory.class.getName(), assetCategory.getCategoryId(),
+				themeDisplay),
+			siteNavigationMenuItemType.getRegularURL(
+				mockHttpServletRequest,
+				childrenSiteNavigationMenuItems.get(0)));
+	}
+
+	@Test
+	public void testGetRegularURLAssetCategoryTypeWithoutDisplayPageTemplate()
+		throws Exception {
+
+		_createAssetCategory(0);
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		ThemeDisplay themeDisplay = _getThemeDisplay();
+
+		Locale locale = _portal.getSiteDefaultLocale(_group.getGroupId());
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		SiteNavigationMenuItemType siteNavigationMenuItemType =
+			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(
+				SiteNavigationMenuItemTypeConstants.ASSET_VOCABULARY);
+
+		SiteNavigationMenuItem assetVocabularySiteNavigationMenuItem =
+			_createSiteNavigationMenuItem(locale, "{}", false);
+
+		List<SiteNavigationMenuItem> childrenSiteNavigationMenuItems =
+			siteNavigationMenuItemType.getChildrenSiteNavigationMenuItems(
+				mockHttpServletRequest, assetVocabularySiteNavigationMenuItem);
+
+		Assert.assertEquals(
+			childrenSiteNavigationMenuItems.toString(), 1,
+			childrenSiteNavigationMenuItems.size());
+
+		Assert.assertEquals(
+			StringPool.BLANK,
+			siteNavigationMenuItemType.getRegularURL(
+				mockHttpServletRequest,
+				childrenSiteNavigationMenuItems.get(0)));
 	}
 
 	@Test
@@ -313,6 +402,10 @@ public class AssetVocabularySiteNavigationMenuItemTypeTest {
 	@Inject
 	private AssetCategoryLocalService _assetCategoryLocalService;
 
+	@Inject
+	private AssetDisplayPageFriendlyURLProvider
+		_assetDisplayPageFriendlyURLProvider;
+
 	private AssetVocabulary _assetVocabulary;
 
 	@Inject
@@ -323,6 +416,10 @@ public class AssetVocabularySiteNavigationMenuItemTypeTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 	@Inject
 	private Portal _portal;

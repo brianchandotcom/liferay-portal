@@ -1270,7 +1270,6 @@ definition {
 			siteName = "Site Name");
 
 		Blogs.clickEllipsisItemPG(
-			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title",
 			item = "Edit");
 

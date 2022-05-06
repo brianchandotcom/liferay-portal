@@ -37,6 +37,23 @@ public class NotificationsTemplateLocalServiceWrapper
 		_notificationsTemplateLocalService = notificationsTemplateLocalService;
 	}
 
+	@Override
+	public com.liferay.notifications.admin.model.NotificationsTemplate
+			addNotificationsTemplate(
+				long userId, long groupId, String name, String description,
+				String from,
+				java.util.Map<java.util.Locale, String> fromNameMap, String to,
+				String cc, String bcc, boolean enabled,
+				java.util.Map<java.util.Locale, String> subjectMap,
+				java.util.Map<java.util.Locale, String> bodyMap,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _notificationsTemplateLocalService.addNotificationsTemplate(
+			userId, groupId, name, description, from, fromNameMap, to, cc, bcc,
+			enabled, subjectMap, bodyMap, serviceContext);
+	}
+
 	/**
 	 * Adds the notifications template to the database. Also notifies the appropriate model listeners.
 	 *
@@ -112,15 +129,25 @@ public class NotificationsTemplateLocalServiceWrapper
 	 *
 	 * @param notificationsTemplate the notifications template
 	 * @return the notifications template that was removed
+	 * @throws PortalException
 	 */
 	@Override
 	public com.liferay.notifications.admin.model.NotificationsTemplate
-		deleteNotificationsTemplate(
-			com.liferay.notifications.admin.model.NotificationsTemplate
-				notificationsTemplate) {
+			deleteNotificationsTemplate(
+				com.liferay.notifications.admin.model.NotificationsTemplate
+					notificationsTemplate)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _notificationsTemplateLocalService.deleteNotificationsTemplate(
 			notificationsTemplate);
+	}
+
+	@Override
+	public void deleteNotificationsTemplates(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_notificationsTemplateLocalService.deleteNotificationsTemplates(
+			groupId);
 	}
 
 	/**
@@ -340,6 +367,32 @@ public class NotificationsTemplateLocalServiceWrapper
 			start, end);
 	}
 
+	@Override
+	public java.util.List
+		<com.liferay.notifications.admin.model.NotificationsTemplate>
+			getNotificationsTemplates(
+				long groupId, boolean enabled, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.notifications.admin.model.
+						NotificationsTemplate> orderByComparator) {
+
+		return _notificationsTemplateLocalService.getNotificationsTemplates(
+			groupId, enabled, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List
+		<com.liferay.notifications.admin.model.NotificationsTemplate>
+			getNotificationsTemplates(
+				long groupId, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.notifications.admin.model.
+						NotificationsTemplate> orderByComparator) {
+
+		return _notificationsTemplateLocalService.getNotificationsTemplates(
+			groupId, start, end, orderByComparator);
+	}
+
 	/**
 	 * Returns all the notifications templates matching the UUID and company.
 	 *
@@ -392,6 +445,18 @@ public class NotificationsTemplateLocalServiceWrapper
 			getNotificationsTemplatesCount();
 	}
 
+	@Override
+	public int getNotificationsTemplatesCount(long groupId) {
+		return _notificationsTemplateLocalService.
+			getNotificationsTemplatesCount(groupId);
+	}
+
+	@Override
+	public int getNotificationsTemplatesCount(long groupId, boolean enabled) {
+		return _notificationsTemplateLocalService.
+			getNotificationsTemplatesCount(groupId, enabled);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -412,6 +477,23 @@ public class NotificationsTemplateLocalServiceWrapper
 
 		return _notificationsTemplateLocalService.getPersistedModel(
 			primaryKeyObj);
+	}
+
+	@Override
+	public com.liferay.notifications.admin.model.NotificationsTemplate
+			updateNotificationsTemplate(
+				long notificationsTemplateId, String name, String description,
+				String from,
+				java.util.Map<java.util.Locale, String> fromNameMap, String to,
+				String cc, String bcc, boolean enabled,
+				java.util.Map<java.util.Locale, String> subjectMap,
+				java.util.Map<java.util.Locale, String> bodyMap,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _notificationsTemplateLocalService.updateNotificationsTemplate(
+			notificationsTemplateId, name, description, from, fromNameMap, to,
+			cc, bcc, enabled, subjectMap, bodyMap, serviceContext);
 	}
 
 	/**

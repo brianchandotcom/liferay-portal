@@ -21,6 +21,7 @@ import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.io.Serializable;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -45,10 +47,12 @@ public class ObjectEntry1toMObjectRelatedModelsProviderImpl
 
 	public ObjectEntry1toMObjectRelatedModelsProviderImpl(
 		ObjectDefinition objectDefinition,
+		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectEntryLocalService objectEntryLocalService,
 		ObjectFieldLocalService objectFieldLocalService,
 		ObjectRelationshipLocalService objectRelationshipLocalService) {
 
+		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectEntryLocalService = objectEntryLocalService;
 		_objectFieldLocalService = objectFieldLocalService;
 		_objectRelationshipLocalService = objectRelationshipLocalService;
@@ -117,14 +121,13 @@ public class ObjectEntry1toMObjectRelatedModelsProviderImpl
 			long primaryKey2)
 		throws PortalException {
 
-		_objectEntryLocalService.updateObjectEntry(
-			userId, primaryKey2,
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.getObjectRelationship(
+				objectRelationshipId);
+
+		HashMap<String, Serializable> values =
 			HashMapBuilder.<String, Serializable>put(
 				() -> {
-					ObjectRelationship objectRelationship =
-						_objectRelationshipLocalService.getObjectRelationship(
-							objectRelationshipId);
-
 					ObjectField objectField =
 						_objectFieldLocalService.getObjectField(
 							objectRelationship.getObjectFieldId2());
@@ -132,8 +135,20 @@ public class ObjectEntry1toMObjectRelatedModelsProviderImpl
 					return objectField.getName();
 				},
 				0
-			).build(),
-			new ServiceContext());
+			).build();
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectRelationship.getObjectDefinitionId2());
+
+		if (objectDefinition.isSystem()) {
+			_objectEntryLocalService.disassociateSystemRelatedObjectEntry(
+				primaryKey2, objectDefinition, values);
+		}
+		else {
+			_objectEntryLocalService.updateObjectEntry(
+				userId, primaryKey2, values, new ServiceContext());
+		}
 	}
 
 	@Override
@@ -176,6 +191,7 @@ public class ObjectEntry1toMObjectRelatedModelsProviderImpl
 	}
 
 	private final String _className;
+	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectEntryLocalService _objectEntryLocalService;
 	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final ObjectRelationshipLocalService

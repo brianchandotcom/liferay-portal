@@ -788,6 +788,35 @@ definition {
 		User.viewLoginPG();
 	}
 
+	@description = "This ensures that a guest cannot access a DM folder without permissions."
+	@priority = "3"
+	test GuestCannotAccessFolderWithoutPermissions {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Documents and Media Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Documents and Media Page",
+			widgetName = "Documents and Media");
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest");
+
+		User.logoutPG();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoFolder(
+			dmFolderName = "DM Folder Name",
+			noPermissions = "true");
+
+		Alert.viewErrorMessage(errorMessage = "You do not have the required permissions");
+	}
+
 	@description = "This is a test for LPS-136833. It checks that a guest cannot add a document in a folder without permissions."
 	@priority = "3"
 	test GuestCannotAddDocumentInFolder {

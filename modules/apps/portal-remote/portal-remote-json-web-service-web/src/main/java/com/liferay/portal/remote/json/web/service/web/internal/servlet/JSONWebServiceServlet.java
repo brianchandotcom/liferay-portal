@@ -17,7 +17,6 @@ package com.liferay.portal.remote.json.web.service.web.internal.servlet;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.jsonwebservice.JSONWebServiceServiceAction;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.servlet.JSONServlet;
@@ -27,6 +26,8 @@ import com.liferay.portal.util.PropsValues;
 import java.io.IOException;
 
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.Servlet;
@@ -58,7 +59,7 @@ public class JSONWebServiceServlet extends JSONServlet {
 			HttpServletResponse httpServletResponse)
 		throws IOException, ServletException {
 
-		String path = GetterUtil.getString(httpServletRequest.getPathInfo());
+		String path = _getPathInfo(httpServletRequest);
 
 		if (!PropsValues.JSONWS_WEB_SERVICE_API_DISCOVERABLE ||
 			(!path.equals(StringPool.BLANK) &&
@@ -94,6 +95,22 @@ public class JSONWebServiceServlet extends JSONServlet {
 
 		return jsonWebServiceServiceAction;
 	}
+
+	private String _getPathInfo(HttpServletRequest httpServletRequest) {
+		String currentURL = _portal.getCurrentURL(httpServletRequest);
+
+		Matcher matcher = _pathInfoPattern.matcher(currentURL);
+
+		if (!matcher.find()) {
+			throw new IllegalStateException(
+				"Unable to extract pathInfo from " + currentURL);
+		}
+
+		return matcher.group(1);
+	}
+
+	private static final Pattern _pathInfoPattern = Pattern.compile(
+		"/api/jsonws([^\\?]*)");
 
 	@Reference
 	private Portal _portal;

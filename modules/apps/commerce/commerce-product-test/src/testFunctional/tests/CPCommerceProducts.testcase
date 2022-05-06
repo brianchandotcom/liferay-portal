@@ -1335,4 +1335,85 @@ definition {
 			value1 = "Simple T-Shirt 01");
 
 	}
+
+	@description = "This is a test for COMMERCE-9182. VerifyDraftProductNotAppearOnMiniumCatalogPage"
+	@priority = "3"
+	test VerifyDraftProductNotAppearOnMiniumCatalogPage {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceEntry.addAccountEntryUser(
+			accountName = "Commerce Account",
+			accountType = "Business",
+			agreeToTermsAndAnswerReminderQuery = "true",
+			createNewAccount = "true",
+			requireReset = "false",
+			userEmailAddress = "buyer@liferay.com",
+			userFirstName = "Buyer",
+			userLastName = "User",
+			userRole = "Buyer",
+			userScreenName = "buyeruser",
+			userSiteMembership = "Minium");
+		
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CPCommerceCatalog.newProductsEntry(
+			productCatalog = "Minium",
+			productName = "Simple T-Shirt",
+			publishProduct = "false",
+			productType = "Simple");
+
+		User.logoutPG();
+
+		CommerceLogin.miniumLogin(
+			password = "test",
+			urlAppend = "web/minium",
+			userEmailAddress = "buyer@liferay.com");
+
+		Type(
+			locator1 = "Search#EMBEDDED_SEARCH_BAR",
+			value1 = "Simple T-Shirt");
+
+		Button.clickSubmitButton();
+
+		AssertElementNotPresent(
+			key_productName = "Simple T-Shirt",
+			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+
+		User.logoutPG();
+
+		User.firstLoginPG();
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		AppBuilderAdmin.searchByItem(itemName = "Simple T-Shirt");
+
+		CommerceNavigator.gotoEntry(entryName = "Simple T-Shirt");
+
+		CommerceEntry.publishEntry(status = "Approved");
+
+		User.logoutPG();
+
+		CommerceLogin.miniumLogin(
+			password = "test",
+			urlAppend = "web/minium",
+			userEmailAddress = "buyer@liferay.com");
+
+		Type(
+			locator1 = "Search#EMBEDDED_SEARCH_BAR",
+			value1 = "Simple T-Shirt");
+
+		Button.clickSubmitButton();
+
+		AssertElementPresent(
+			key_productName = "Simple T-Shirt",
+			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+	}
 }

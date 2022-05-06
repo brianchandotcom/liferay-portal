@@ -84,6 +84,31 @@ definition {
 
 			AssertVisible(locator1 = "//div[contains(@class,'banner')][contains(@style,'Document_1.jpg')]");
 		}
+
+		task ("Add a second Banner Center fragment to page") {
+			PageEditor.addFragment(
+				collectionName = "Featured Content",
+				composition = "true",
+				fragmentName = "Banner Center",
+				targetFragmentName = "Fragment");
+		}
+
+		task ("View second Banner Center is shown") {
+			PageEditor.viewFragmentEditableText(
+				editableText = "Banner Title Example",
+				fragmentName = "Heading",
+				id = "element-text");
+
+			PageEditor.viewFragmentEditableText(
+				editableText = "This is a simple banner component that you can use when you need extra attention to featured content or information.",
+				fragmentName = "Paragraph",
+				id = "element-text");
+
+			PageEditor.viewFragmentEditableText(
+				editableText = "Go Somewhere",
+				fragmentName = "Button",
+				id = "link");
+		}
 	}
 
 	@description = "This is a use case for LPS-123098 and LPS-135373. View existing Banner Center fragment on page after upgrade from 7.2."

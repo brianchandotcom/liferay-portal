@@ -11,6 +11,11 @@
 
 <tbody>
 <tr>
+	<td>AUTHENTICATE_CERTIFICATE</td>
+	<td>//button[contains(@onclick,'${key_certificateUsage}')]/span[contains(.,'Authenticate Certificate')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CREATE_CERTIFICATE</td>
 	<td>//button[contains(@onclick,'${key_certificateUsage}')]/span[contains(.,'Create Certificate')]</td>
 	<td></td>

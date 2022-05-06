@@ -242,6 +242,7 @@ definition {
 
 		SAMLRole.configureCertificateAndPrivateKey(
 			certificateUsage = "SIGNING",
+			keystoreEnabled = "${keystoreEnabled}",
 			samlKeyPassword = "${samlEntityId}");
 
 		if (isSet(idpSessionIdleTimeout) || isSet(idpSessionMaximumAge)) {
@@ -733,6 +734,7 @@ definition {
 			idpSessionIdleTimeout = "${idpSessionIdleTimeout}",
 			idpSessionMaximumAge = "${idpSessionMaximumAge}",
 			idpURL = "${idpURL}",
+			keystoreEnabled = "${keystoreEnabled}",
 			samlEntityId = "${samlEntityId}",
 			userEmailAddress = "${userEmailAddress}");
 
@@ -778,6 +780,7 @@ definition {
 		else {
 			SAMLRole.configureCertificateAndPrivateKey(
 				certificateUsage = "SIGNING",
+				keystoreEnabled = "${keystoreEnabled}",
 				samlKeyPassword = "${samlEntityId}");
 		}
 

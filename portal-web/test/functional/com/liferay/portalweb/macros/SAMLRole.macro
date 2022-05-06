@@ -21,34 +21,17 @@ definition {
 	macro configureCertificateAndPrivateKey {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
-		AssertClick(
-			key_certificateUsage = "${certificateUsage}",
-			locator1 = "CPSAMLAdmin#CREATE_CERTIFICATE",
-			value1 = "Create Certificate");
+		if (isSet(keystoreEnabled)) {
+			AssertClick(
+				key_certificateUsage = "${certificateUsage}",
+				locator1 = "CPSAMLAdmin#AUTHENTICATE_CERTIFICATE",
+				value1 = "Authenticate Certificate");
 
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		Type(
-			locator1 = "CPSAMLAdmin#CERTIFICATE_AND_PRIVATE_KEY_COMMON_NAME_FIELD",
-			value1 = "Liferay QA");
-
-		Type(
-			locator1 = "CPSAMLAdmin#CERTIFICATE_AND_PRIVATE_KEY_ORGANIZATION_FIELD",
-			value1 = "Liferay");
-
-		Type(
-			locator1 = "CPSAMLAdmin#CERTIFICATE_AND_PRIVATE_KEY_COUNTRY_FIELD",
-			value1 = "USA");
-
-		if ("${certificateUsage}" == "SIGNING") {
-			Select(
-				locator1 = "CPSAMLAdmin#CERTIFICATE_AND_PRIVATE_KEY_KEY_ALGORITHM_SELECT",
-				value1 = "RSA");
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 		}
-
-		Select(
-			locator1 = "CPSAMLAdmin#CERTIFICATE_AND_PRIVATE_KEY_KEY_LENGTH_SELECT",
-			value1 = "2048");
+		else {
+			SAMLRole.createCertificate(certificateUsage = "${certificateUsage}");
+		}
 
 		Type(
 			locator1 = "CPSAMLAdmin#CERTIFICATE_AND_PRIVATE_KEY_KEY_PASSWORD_FIELD",
@@ -97,6 +80,37 @@ definition {
 		AntCommand(
 			locator1 = "build-test.xml",
 			value1 = "prepare-signing-PCKS12-certificate");
+	}
+
+	macro createCertificate {
+		AssertClick(
+			key_certificateUsage = "${certificateUsage}",
+			locator1 = "CPSAMLAdmin#CREATE_CERTIFICATE",
+			value1 = "Create Certificate");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		Type(
+			locator1 = "CPSAMLAdmin#CERTIFICATE_AND_PRIVATE_KEY_COMMON_NAME_FIELD",
+			value1 = "Liferay QA");
+
+		Type(
+			locator1 = "CPSAMLAdmin#CERTIFICATE_AND_PRIVATE_KEY_ORGANIZATION_FIELD",
+			value1 = "Liferay");
+
+		Type(
+			locator1 = "CPSAMLAdmin#CERTIFICATE_AND_PRIVATE_KEY_COUNTRY_FIELD",
+			value1 = "USA");
+
+		if ("${certificateUsage}" == "SIGNING") {
+			Select(
+				locator1 = "CPSAMLAdmin#CERTIFICATE_AND_PRIVATE_KEY_KEY_ALGORITHM_SELECT",
+				value1 = "RSA");
+		}
+
+		Select(
+			locator1 = "CPSAMLAdmin#CERTIFICATE_AND_PRIVATE_KEY_KEY_LENGTH_SELECT",
+			value1 = "2048");
 	}
 
 	macro deleteCertificate {

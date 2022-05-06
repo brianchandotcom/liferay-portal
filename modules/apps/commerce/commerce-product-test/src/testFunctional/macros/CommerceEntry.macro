@@ -471,11 +471,18 @@ definition {
 			CommerceEntry.publishEntry(status = "Approved");
 		}
 	}
+
+	macro addProductDescription {
 		Type(
 			locator1 = "CommerceEntry#SHORT_DESCRIPTION_FIELD",
 			value1 = "${productShortDescription}");
 
 		CommerceEntry.addFullDescriptionViaCKEditor(entryFullDescription = "${productFullDescription}");
+
+		Click(
+			key_text = "Save as Draft",
+			locator1 = "Button#ANY");
+
 	}
 
 	macro AddShippingOptionSettingsVariableRate {

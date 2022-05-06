@@ -146,7 +146,12 @@ definition {
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE",
 			value1 = "${dmFolderName}");
 
-		AssertVisible(locator1 = "DocumentsAndMedia#BREADCRUMB_FOLDER_NAME");
+		if (isSet(noPermissions)) {
+			AssertElementNotPresent(locator1 = "DocumentsAndMedia#BREADCRUMB_FOLDER_NAME");
+		}
+		else {
+			AssertVisible(locator1 = "DocumentsAndMedia#BREADCRUMB_FOLDER_NAME");
+		}
 	}
 
 	macro gotoFolderPermissions {

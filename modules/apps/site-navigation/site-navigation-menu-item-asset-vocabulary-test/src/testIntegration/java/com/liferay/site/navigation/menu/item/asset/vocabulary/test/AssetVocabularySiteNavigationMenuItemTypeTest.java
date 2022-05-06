@@ -24,6 +24,7 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeCon
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -433,6 +434,104 @@ public class AssetVocabularySiteNavigationMenuItemTypeTest {
 			assetCategory.getTitle(locale),
 			siteNavigationMenuItemType.getTitle(
 				assetCategorySiteNavigationMenuItem, locale));
+	}
+
+	@Test
+	public void testGetTitleAssetVocabularyType() throws Exception {
+		SiteNavigationMenuItemType siteNavigationMenuItemType =
+			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(
+				SiteNavigationMenuItemTypeConstants.ASSET_VOCABULARY);
+
+		Locale locale = _portal.getSiteDefaultLocale(_group.getGroupId());
+
+		SiteNavigationMenuItem assetVocabularySiteNavigationMenuItem =
+			_createSiteNavigationMenuItem(locale, "{}", false);
+
+		Assert.assertEquals(
+			_assetVocabulary.getTitle(locale),
+			siteNavigationMenuItemType.getTitle(
+				assetVocabularySiteNavigationMenuItem, locale));
+	}
+
+	@Test
+	public void testGetTitleAssetVocabularyTypeUseCustomName()
+		throws Exception {
+
+		SiteNavigationMenuItemType siteNavigationMenuItemType =
+			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(
+				SiteNavigationMenuItemTypeConstants.ASSET_VOCABULARY);
+
+		Locale locale = _portal.getSiteDefaultLocale(_group.getGroupId());
+
+		String expectedTitle = RandomTestUtil.randomString();
+
+		SiteNavigationMenuItem assetVocabularySiteNavigationMenuItem =
+			_createSiteNavigationMenuItem(
+				locale,
+				JSONUtil.put(
+					LocaleUtil.toLanguageId(locale), expectedTitle
+				).toString(),
+				false);
+
+		Assert.assertEquals(
+			expectedTitle,
+			siteNavigationMenuItemType.getTitle(
+				assetVocabularySiteNavigationMenuItem, locale));
+	}
+
+	@Test
+	public void testGetTitleAssetVocabularyTypeUseCustomNameNondefaultLocale()
+		throws Exception {
+
+		SiteNavigationMenuItemType siteNavigationMenuItemType =
+			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(
+				SiteNavigationMenuItemTypeConstants.ASSET_VOCABULARY);
+
+		Locale locale = _portal.getSiteDefaultLocale(_group.getGroupId());
+
+		String expectedTitle = RandomTestUtil.randomString();
+
+		SiteNavigationMenuItem assetVocabularySiteNavigationMenuItem =
+			_createSiteNavigationMenuItem(
+				locale,
+				JSONUtil.put(
+					LocaleUtil.toLanguageId(locale),
+					RandomTestUtil.randomString()
+				).put(
+					LocaleUtil.toLanguageId(LocaleUtil.SPAIN), expectedTitle
+				).toString(),
+				false);
+
+		Assert.assertEquals(
+			expectedTitle,
+			siteNavigationMenuItemType.getTitle(
+				assetVocabularySiteNavigationMenuItem, LocaleUtil.SPAIN));
+	}
+
+	@Test
+	public void testGetTitleAssetVocabularyTypeUseCustomNameNontranslatedLocale()
+		throws Exception {
+
+		SiteNavigationMenuItemType siteNavigationMenuItemType =
+			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(
+				SiteNavigationMenuItemTypeConstants.ASSET_VOCABULARY);
+
+		Locale locale = _portal.getSiteDefaultLocale(_group.getGroupId());
+
+		String expectedTitle = RandomTestUtil.randomString();
+
+		SiteNavigationMenuItem assetVocabularySiteNavigationMenuItem =
+			_createSiteNavigationMenuItem(
+				locale,
+				JSONUtil.put(
+					LocaleUtil.toLanguageId(locale), expectedTitle
+				).toString(),
+				false);
+
+		Assert.assertEquals(
+			expectedTitle,
+			siteNavigationMenuItemType.getTitle(
+				assetVocabularySiteNavigationMenuItem, LocaleUtil.SPAIN));
 	}
 
 	private void _assertAssetCategorySiteNavigationMenuItem(

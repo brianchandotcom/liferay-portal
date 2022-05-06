@@ -208,6 +208,9 @@ function ManagementToolbar({
 													className="nav-link nav-link-monospaced"
 													displayType="unstyled"
 													symbol={viewTypeIcon}
+													title={Liferay.Language.get(
+														'show-view-options'
+													)}
 												/>
 											)
 										}

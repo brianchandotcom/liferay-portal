@@ -362,6 +362,7 @@ export default class SidePanel extends React.Component {
 								<button
 									className="btn btn-unstyled nav-link"
 									onClick={() => this.close()}
+									title={Liferay.Language.get('back')}
 								>
 									<ClayIcon symbol="angle-left" />
 								</button>
@@ -397,6 +398,7 @@ export default class SidePanel extends React.Component {
 						)}
 						displayType="monospaced"
 						onClick={() => this.close()}
+						title={Liferay.Language.get('close')}
 					>
 						<ClayIcon symbol="times" />
 					</ClayButton>

@@ -1405,6 +1405,8 @@ definition {
 
 			ContentPages.changeExperience(experienceName = "NewExp1");
 
+			ABTest.openABTestPanel();
+
 			ABTest.editOrDeleteABTest(value = "Delete");
 		}
 	}

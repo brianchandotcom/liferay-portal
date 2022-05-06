@@ -78,9 +78,12 @@ describe('Field Numeric', () => {
 	});
 
 	it('has a label', () => {
-		const {getByText} = render(<Numeric label="label" />);
+		const {getAllByText} = render(<Numeric label="label" />);
 
-		expect(getByText(/label/)).toBeInTheDocument();
+		const allByText = getAllByText(/label/);
+		expect(allByText).toHaveLength(2);
+		expect(allByText[0]).toBeInTheDocument();
+		expect(allByText[1]).toBeInTheDocument();
 	});
 
 	it('has a placeholder', () => {
@@ -98,9 +101,14 @@ describe('Field Numeric', () => {
 	});
 
 	it('renders Label if showLabel is true', () => {
-		const {getByText} = render(<Numeric label="Numeric Field" showLabel />);
+		const {getAllByText} = render(
+			<Numeric label="Numeric Field" showLabel />
+		);
 
-		expect(getByText(/Numeric Field/)).toHaveClass('ddm-label');
+		const allByText = getAllByText(/Numeric Field/);
+		expect(allByText).toHaveLength(2);
+		expect(allByText[0]).toHaveClass('ddm-label');
+		expect(allByText[1]).toHaveClass('sr-only');
 	});
 
 	it('has a value', () => {

@@ -44,12 +44,15 @@ const defaultConfig = {
 	onBlur: jest.fn(),
 	onChange: jest.fn(),
 	readOnly: false,
+	type: 'search_location',
 	visibleFields: ['address', 'city', 'country', 'postal-code', 'state'],
 };
 
-const hasAllFields = (getByLabelText, labels) => {
+const hasAllFields = (getAllByLabelText, labels) => {
 	Object.values(labels).forEach((label) => {
-		if (!getByLabelText(label)) {
+		const allByLabelText = getAllByLabelText(label);
+		expect(allByLabelText).toHaveLength(2);
+		if (!allByLabelText[1]) {
 			return false;
 		}
 	});
@@ -106,11 +109,13 @@ describe('Field Search Location', () => {
 	afterEach(cleanup);
 
 	it('must to be show search location fields', () => {
-		const {getByLabelText} = render(
+		const {getAllByLabelText} = render(
 			<SearchLocationWithProvider {...defaultConfig} />
 		);
 
-		expect(hasAllFields(getByLabelText, defaultConfig.labels)).toBe(true);
+		expect(hasAllFields(getAllByLabelText, defaultConfig.labels)).toBe(
+			true
+		);
 	});
 
 	it('must to be show search location fields in correct order', () => {
@@ -138,11 +143,13 @@ describe('Field Search Location', () => {
 		delete defaultConfig.labels.city;
 		defaultConfig.visibleFields.splice(1, 1);
 
-		const {getByLabelText} = render(
+		const {getAllByLabelText} = render(
 			<SearchLocationWithProvider {...defaultConfig} />
 		);
 
-		expect(hasAllFields(getByLabelText, defaultConfig.labels)).toBe(true);
+		expect(hasAllFields(getAllByLabelText, defaultConfig.labels)).toBe(
+			true
+		);
 	});
 
 	it('must to be show search location fields in correct order - remove field', () => {
@@ -169,11 +176,13 @@ describe('Field Search Location', () => {
 		defaultConfig.labels.city = 'City';
 		defaultConfig.visibleFields.splice(1, 0, 'city');
 
-		const {getByLabelText} = render(
+		const {getAllByLabelText} = render(
 			<SearchLocationWithProvider {...defaultConfig} />
 		);
 
-		expect(hasAllFields(getByLabelText, defaultConfig.labels)).toBe(true);
+		expect(hasAllFields(getAllByLabelText, defaultConfig.labels)).toBe(
+			true
+		);
 	});
 
 	it('must to be show search location fields in correct order - add field', () => {
@@ -230,11 +239,13 @@ describe('Field Search Location', () => {
 		delete defaultConfig.labels.city;
 		defaultConfig.visibleFields.splice(1, 1);
 
-		const {getByLabelText} = render(
+		const {getAllByLabelText} = render(
 			<SearchLocationWithProvider {...defaultConfig} />
 		);
 
-		expect(hasAllFields(getByLabelText, defaultConfig.labels)).toBe(true);
+		expect(hasAllFields(getAllByLabelText, defaultConfig.labels)).toBe(
+			true
+		);
 	});
 
 	it('must to be show search location fields in correct order - remove field - layout changed', () => {
@@ -261,11 +272,13 @@ describe('Field Search Location', () => {
 		defaultConfig.labels.city = 'City';
 		defaultConfig.visibleFields.splice(1, 0, 'city');
 
-		const {getByLabelText} = render(
+		const {getAllByLabelText} = render(
 			<SearchLocationWithProvider {...defaultConfig} />
 		);
 
-		expect(hasAllFields(getByLabelText, defaultConfig.labels)).toBe(true);
+		expect(hasAllFields(getAllByLabelText, defaultConfig.labels)).toBe(
+			true
+		);
 	});
 
 	it('must to be show search location fields in correct order - add field - layout changed', () => {
@@ -290,14 +303,17 @@ describe('Field Search Location', () => {
 	});
 
 	it('must to be append google dropdown places script', async () => {
-		const {getByLabelText} = await render(
+		const {getAllByLabelText} = await render(
 			<SearchLocationWithProvider {...defaultConfig} />
 		);
 
-		const searchLocationField = getByLabelText('Search Location');
-		const googlePlacesScriptElement = searchLocationField
-			.getElementsByTagName('script')
-			.item(0);
+		const searchLocationField = getAllByLabelText('Search Location');
+		expect(searchLocationField).toHaveLength(2);
+		const searchLocationFieldTagName = searchLocationField[1].getElementsByTagName(
+			'script'
+		);
+		expect(searchLocationFieldTagName).toHaveLength(1);
+		const googlePlacesScriptElement = searchLocationFieldTagName.item(0);
 
 		expect(!!googlePlacesScriptElement).toBe(true);
 	});

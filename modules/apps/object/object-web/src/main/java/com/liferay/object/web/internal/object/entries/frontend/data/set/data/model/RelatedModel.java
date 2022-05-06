@@ -19,9 +19,10 @@ package com.liferay.object.web.internal.object.entries.frontend.data.set.data.mo
  */
 public class RelatedModel {
 
-	public RelatedModel(long id, String label) {
+	public RelatedModel(long id, String label, boolean system) {
 		_id = id;
 		_label = label;
+		_system = system;
 	}
 
 	public long getId() {
@@ -32,7 +33,12 @@ public class RelatedModel {
 		return _label;
 	}
 
+	public boolean isSystem() {
+		return _system;
+	}
+
 	private final long _id;
 	private final String _label;
+	private final boolean _system;
 
 }

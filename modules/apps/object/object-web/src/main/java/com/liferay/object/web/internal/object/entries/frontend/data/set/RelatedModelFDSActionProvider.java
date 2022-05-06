@@ -62,9 +62,25 @@ public class RelatedModelFDSActionProvider implements FDSActionProvider {
 
 		RelatedModel relatedModel = (RelatedModel)model;
 
-		if (!_objectEntryService.hasModelResourcePermission(
-				_objectEntryLocalService.getObjectEntry(relatedModel.getId()),
-				ActionKeys.UPDATE)) {
+		if (relatedModel.isSystem()) {
+
+			// TODO Alternative permission checker
+
+			return DropdownItemListBuilder.add(
+				dropdownItem -> {
+					dropdownItem.setHref(
+						_getDeleteURL(
+							relatedModel.getId(), httpServletRequest));
+					dropdownItem.setIcon("trash");
+					dropdownItem.setLabel(
+						LanguageUtil.get(httpServletRequest, Constants.DELETE));
+				}
+			).build();
+		}
+		else if (!_objectEntryService.hasModelResourcePermission(
+					_objectEntryLocalService.getObjectEntry(
+						relatedModel.getId()),
+					ActionKeys.UPDATE)) {
 
 			return null;
 		}

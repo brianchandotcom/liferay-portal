@@ -19,17 +19,20 @@ import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
 import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.web.internal.object.entries.constants.ObjectEntriesFDSNames;
 import com.liferay.object.web.internal.object.entries.frontend.data.set.data.model.RelatedModel;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
@@ -78,6 +81,35 @@ public class RelatedModelsFDSDataProvider
 		long objectEntryId = ParamUtil.getLong(
 			httpServletRequest, "objectEntryId");
 
+		if (objectDefinition.isSystem()) {
+			return TransformUtil.transform(
+				objectRelatedModelsProvider.getSystemRelatedModels(
+					objectEntryId, objectDefinition, objectRelationship),
+				entryMap -> {
+					Long titleFieldId =
+						objectDefinition.getTitleObjectFieldId();
+
+					String titleFieldName =
+						objectDefinition.getPKObjectFieldDBColumnName();
+
+					if (titleFieldId > 0) {
+						ObjectField objectField =
+							_objectFieldLocalService.getObjectField(
+								titleFieldId);
+
+						titleFieldName = objectField.getDBColumnName();
+					}
+
+					return new RelatedModel(
+						GetterUtil.getLong(
+							entryMap.get(
+								objectDefinition.
+									getPKObjectFieldDBColumnName())),
+						GetterUtil.getString(entryMap.get(titleFieldName)),
+						true);
+				});
+		}
+
 		return TransformUtil.transform(
 			objectRelatedModelsProvider.getRelatedModels(
 				objectScopeProvider.getGroupId(httpServletRequest),
@@ -85,7 +117,8 @@ public class RelatedModelsFDSDataProvider
 				fdsPagination.getStartPosition(),
 				fdsPagination.getEndPosition()),
 			objectEntry -> new RelatedModel(
-				objectEntry.getObjectEntryId(), objectEntry.getTitleValue()));
+				objectEntry.getObjectEntryId(), objectEntry.getTitleValue(),
+				false));
 	}
 
 	@Override
@@ -122,6 +155,9 @@ public class RelatedModelsFDSDataProvider
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
+	private ObjectFieldLocalService _objectFieldLocalService;
 
 	@Reference
 	private ObjectRelatedModelsProviderRegistry

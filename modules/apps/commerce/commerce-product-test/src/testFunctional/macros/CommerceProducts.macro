@@ -14,11 +14,11 @@ definition {
 
 		CommerceEntry.addProductsEntry(
 			compileDescription = "${compileDescription}",
-			publishProduct = "${publishProduct}",
 			productCatalog = "${productCatalog}",
 			productFullDescription = "${productFullDescription}",
 			productName = "${productName}",
-			productShortDescription = "${productShortDescription}");
+			productShortDescription = "${productShortDescription}",
+			publishProduct = "${publishProduct}");
 	}
 
 	macro deleteEntries {

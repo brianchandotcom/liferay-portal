@@ -39,12 +39,12 @@ definition {
 	macro newProductsEntry {
 		CommerceProducts.addEntry(
 			compileDescription = "${compileDescription}",
-			publishProduct = "${publishProduct}",
 			productCatalog = "${productCatalog}",
 			productFullDescription = "${productName} Full Description",
 			productName = "${productName}",
 			productShortDescription = "${productName} Short Description",
-			productType = "${productType}");
+			productType = "${productType}",
+			publishProduct = "${publishProduct}");
 	}
 
 }

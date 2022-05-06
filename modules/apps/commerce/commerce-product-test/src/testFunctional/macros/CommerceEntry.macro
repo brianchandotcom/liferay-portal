@@ -419,6 +419,18 @@ definition {
 			value1 = "${price}");
 	}
 
+	macro addProductDescription {
+		Type(
+			locator1 = "CommerceEntry#SHORT_DESCRIPTION_FIELD",
+			value1 = "${productShortDescription}");
+
+		CommerceEntry.addFullDescriptionViaCKEditor(entryFullDescription = "${productFullDescription}");
+
+		Click(
+			key_text = "Save as Draft",
+			locator1 = "Button#ANY");
+	}
+
 	macro addProductsEntry {
 		WaitForElementPresent(locator1 = "IFrame#MODAL_BODY");
 
@@ -457,8 +469,8 @@ definition {
 			echo("compileDescription enabled");
 
 			CommerceEntry.addProductDescription(
-				productShortDescription = "${productShortDescription}",
-				productFullDescription = "${productFullDescription}");
+				productFullDescription = "${productFullDescription}",
+				productShortDescription = "${productShortDescription}");
 		}
 
 		if (!(isSet(publishProduct))) {
@@ -470,19 +482,6 @@ definition {
 
 			CommerceEntry.publishEntry(status = "Approved");
 		}
-	}
-
-	macro addProductDescription {
-		Type(
-			locator1 = "CommerceEntry#SHORT_DESCRIPTION_FIELD",
-			value1 = "${productShortDescription}");
-
-		CommerceEntry.addFullDescriptionViaCKEditor(entryFullDescription = "${productFullDescription}");
-
-		Click(
-			key_text = "Save as Draft",
-			locator1 = "Button#ANY");
-
 	}
 
 	macro AddShippingOptionSettingsVariableRate {

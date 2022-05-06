@@ -14,6 +14,58 @@ definition {
 		CommerceConfiguration.commerceTearDown();
 	}
 
+	@description = "Verify users can view the end of life date for a discontinued product in the product details page"
+	@priority = "3"
+	test AssertEndOfLifeDateIsVisibleInProductDetailsPage {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site with a buyer user") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And given a discontinued product with an End of Life date") {
+			var endOfLifeDate = DateUtil.getFormattedCurrentDate("MM dd, yyyy", "UTC");
+
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Master",
+				discontinued = "True",
+				productName = "Test Simple Product",
+				productType = "Simple",
+				sku = "SKU1002");
+		}
+
+		task ("When the product details page is reached") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "Test Simple Product");
+		}
+
+		task ("Then the product is labeled as Discontinued and the End of Life date is shown") {
+			FrontStore.assertProductDetails(
+				endOfLifeDate = "${endOfLifeDate}",
+				productAvailability = "Discontinued");
+		}
+	}
+
 	@description = "COMMERCE-8160. Verify a product can be marked as 'discontinued' when adding a new SKU"
 	@priority = "3"
 	test CreateNewSKUWithReplacement {

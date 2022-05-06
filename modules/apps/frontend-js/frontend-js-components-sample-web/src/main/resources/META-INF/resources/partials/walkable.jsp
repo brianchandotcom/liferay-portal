@@ -18,42 +18,42 @@
 
 <clay:container-fluid>
 	<clay:row>
-		<clay:col>
-			<h2>Walkable Sample</h2>
+		<h2>Walkable Sample</h2>
 
-			<div class="btn-group">
-				<div class="btn-group-item">
-					<clay:button displayType="primary" id="step1" label="Step 1"></clay:button>
-				</div>
-
-				<div class="btn-group-item">
-					<clay:button displayType="primary" id="step2" label="Step 2"></clay:button>
-				</div>
-
-				<div class="btn-group-item">
-					<clay:button displayType="primary" id="step3" label="Step 3"></clay:button>
-				</div>
+		<div class="btn-group">
+			<div class="btn-group-item">
+				<clay:button displayType="primary" id="step1" label="Step 1"></clay:button>
 			</div>
 
-			<clay:alert
-				displayType="info"
-				id="step4"
-				message="Whassup?"
-				title="Info"
-			/>
+			<div class="btn-group-item">
+				<clay:button displayType="primary" id="step2" label="Step 2"></clay:button>
+			</div>
 
-			<clay:alert
-				displayType="info"
-				id="step5"
-				message="Whassup 2?"
-				title="Info 2"
-			/>
-		</clay:col>
+			<div class="btn-group-item">
+				<clay:button displayType="primary" id="step3" label="Step 3"></clay:button>
+			</div>
+		</div>
+	</clay:row>
+
+	<clay:row>
+		<clay:alert
+			displayType="info"
+			id="step4"
+			message="Whassup?"
+			title="Info"
+		/>
+
+		<clay:alert
+			displayType="info"
+			id="step5"
+			message="Whassup 2?"
+			title="Info 2"
+		/>
 	</clay:row>
 
 	<div>
 		<react:component
-			module="js/WalkableSample"
+			module="js/SampleWalkthrough"
 		/>
 	</div>
 </clay:container-fluid>

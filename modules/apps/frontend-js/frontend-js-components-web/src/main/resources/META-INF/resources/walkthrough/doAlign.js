@@ -14,13 +14,9 @@
 
 import domAlign from 'dom-align';
 
-function isRtl(element) {
-	return window.getComputedStyle(element).direction === 'rtl';
-}
-
 export function doAlign({sourceElement, targetElement, ...config}) {
 	return domAlign(sourceElement, targetElement, {
 		...config,
-		useCssRight: isRtl(sourceElement),
+		useCssRight: window.getComputedStyle(sourceElement).direction === 'rtl',
 	});
 }

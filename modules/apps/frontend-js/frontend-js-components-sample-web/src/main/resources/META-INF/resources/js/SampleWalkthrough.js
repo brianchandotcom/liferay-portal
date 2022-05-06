@@ -15,7 +15,7 @@
 import {Walkthrough} from 'frontend-js-components-web';
 import React from 'react';
 
-const CURRENT_PAGE_MOCK = {
+const WALKTHROUGH_CONFIG = {
 	closeOnClickOutside: false,
 	closeable: true,
 	skippable: true,
@@ -24,35 +24,35 @@ const CURRENT_PAGE_MOCK = {
 			content: '<span>Content 1</span><br/><code>Hello1</code>',
 			darkbg: true,
 			nodeToHighlight: '#step1',
-			positioning: ['tl', 'tr'],
 			title: 'Title 1',
 		},
 		{
 			content: '<span>Content 2</span><br/><code>Hello2</code>',
+			darkbg: true,
 			nodeToHighlight: '#step2',
-			positioning: ['bc', 'tc'],
+			positioning: 'top',
 			title: 'Title 2',
 		},
 		{
 			content: '<span>Content 3</span><br/><code>Hello3</code>',
+			darkbg: true,
 			nodeToHighlight: '#step3',
-			positioning: ['tl', 'cr'],
 			title: 'Title 3',
 		},
 		{
 			content: '<span>Content 4</span><br/><code>Hello4</code>',
-			darkbg: true,
 			nodeToHighlight: '#step4',
 			title: 'Title 4',
 		},
 		{
 			content: '<span>Content 5</span><br/><code>Hello5</code>',
 			nodeToHighlight: '#step5',
+			positioning: 'bottom',
 			title: 'Title 5',
 		},
 	],
 };
 
-export default function WalkableSample(...props) {
-	return <Walkthrough {...CURRENT_PAGE_MOCK} {...props} />;
+export default function SampleWalkthrough(...props) {
+	return <Walkthrough {...WALKTHROUGH_CONFIG} {...props} />;
 }

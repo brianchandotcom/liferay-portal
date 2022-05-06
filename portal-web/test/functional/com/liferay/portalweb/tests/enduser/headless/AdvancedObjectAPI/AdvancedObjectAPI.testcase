@@ -39,7 +39,7 @@ definition {
 
 	@description = "Nested fields in oneToMany relationship"
 	@priority = "5"
-	test NestedFieldsDetailsReturnedCorrectlyInOneToManyRelationship {
+	test CanReturnNestedFieldsDetailsInOneToManyRelationship {
 		property portal.acceptance = "true";
 
 		task ("Given manager accounts created") {

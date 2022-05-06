@@ -1934,6 +1934,9 @@ public class LayoutsAdminDisplayContext {
 			}
 		}
 		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
 		}
 
 		return privatePagesCount;

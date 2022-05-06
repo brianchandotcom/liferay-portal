@@ -155,6 +155,11 @@ public interface ObjectEntryLocalService
 			long groupId, long objectDefinitionId, long primaryKey)
 		throws PortalException;
 
+	public void disassociateSystemRelatedObjectEntry(
+			long primaryKey, ObjectDefinition objectDefinition,
+			Map<String, Serializable> values)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> T dslQuery(DSLQuery dslQuery);
 

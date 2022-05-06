@@ -170,6 +170,17 @@ public class ObjectEntryLocalServiceWrapper
 	}
 
 	@Override
+	public void disassociateSystemRelatedObjectEntry(
+			long primaryKey,
+			com.liferay.object.model.ObjectDefinition objectDefinition,
+			java.util.Map<String, java.io.Serializable> values)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_objectEntryLocalService.disassociateSystemRelatedObjectEntry(
+			primaryKey, objectDefinition, values);
+	}
+
+	@Override
 	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
 		return _objectEntryLocalService.dslQuery(dslQuery);
 	}

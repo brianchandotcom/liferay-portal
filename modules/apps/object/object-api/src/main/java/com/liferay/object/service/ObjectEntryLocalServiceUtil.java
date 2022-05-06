@@ -160,6 +160,16 @@ public class ObjectEntryLocalServiceUtil {
 			groupId, objectDefinitionId, primaryKey);
 	}
 
+	public static void disassociateSystemRelatedObjectEntry(
+			long primaryKey,
+			com.liferay.object.model.ObjectDefinition objectDefinition,
+			Map<String, Serializable> values)
+		throws PortalException {
+
+		getService().disassociateSystemRelatedObjectEntry(
+			primaryKey, objectDefinition, values);
+	}
+
 	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}

@@ -7,7 +7,28 @@ definition {
 	property testray.main.component.name = "Product Info Management";
 
 	setUp {
-		CommerceConfiguration.commerceSetUp();
+		User.firstLoginPG();
+
+		CommerceConfiguration.commerceSetUp(minium = "true");
+
+		CommerceEntry.addAccountEntryUser(
+			accountName = "Commerce Account",
+			accountType = "Business",
+			agreeToTermsAndAnswerReminderQuery = "true",
+			createNewAccount = "true",
+			requireReset = "false",
+			userEmailAddress = "buyer@liferay.com",
+			userFirstName = "Buyer",
+			userLastName = "User",
+			userRole = "Buyer",
+			userScreenName = "buyeruser",
+			userSiteMembership = "Minium");
+
+		for (var termsType : list "Delivery,Payment") {
+			CommerceJSONTermsAndConditionsAPI._addCommerceTermsAndConditions(
+				termsCount = "2",
+				termsType = "${termsType}");
+		}
 	}
 
 	tearDown {
@@ -19,6 +40,8 @@ definition {
 	@priority = "4"
 	test AssertCheckoutStepsNotShownWithoutPermissions {
 		property portal.acceptance = "false";
+
+		echo("TEST");
 
 		// TODO COMMERCE-8599 AssertCheckoutStepsNotShownWithoutPermissions pending implementation
 
@@ -60,8 +83,119 @@ definition {
 	test ChangeDeliveryTermBeforeCompletingCheckout {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-8591 ChangeDeliveryTermBeforeCompletingCheckout pending implementation
+		var deliveryTermsEligibility = "Delivery Term 1,Delivery Term 2";
 
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
+			portlet = "Channels");
+
+		CommerceNavigator.gotoTableListEntry(entryName = "Minium Portal");
+
+		CommerceEntry.clickTableEntryEditButton(
+			entryName = "Flat Rate",
+			table = "Shipping Methods");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Shipping Options");
+
+		CommerceNavigator.gotoEntry(entryName = "Standard Delivery");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		SetWindowSize(value1 = "1765,966");
+
+		Navigator.gotoNavTab(navTab = "Eligibility");
+
+		CommerceEntry.setEntryEligibility(deliveryTermsEligibility = "${deliveryTermsEligibility}");
+
+		Click(locator1 = "Icon#CLOSE");
+
+		User.logoutPG();
+
+		CommerceLogin.miniumLogin(
+			password = "test",
+			urlAppend = "web/minium",
+			userEmailAddress = "buyer@liferay.com");
+
+		CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
+
+		FrontStore.addInitializerProductToCart(
+			productName = "ABS Sensor",
+			productQuantity = "2");
+
+		WaitForElementPresent(locator1 = "CommerceEntry#ACTIVE_ORDER_ID");
+
+		CommerceNavigator.gotoMiniCart();
+
+		Button.click(button = "View Details");
+
+		Button.click(button = "Checkout");
+
+		Type(
+			key_fieldName = "Name",
+			locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT",
+			value1 = "Address Name");
+
+		Type(
+			key_fieldName = "Address",
+			locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT",
+			value1 = "Test Address");
+
+		Select(
+			key_fieldName = "Country",
+			locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_SELECT",
+			value1 = "United States");
+
+		Type(
+			key_fieldName = "Zip",
+			locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT",
+			value1 = "Test Zip Code");
+
+		Type(
+			key_fieldName = "City",
+			locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT",
+			value1 = "Test City");
+
+		Click(locator1 = "Button#CONTINUE");
+
+		Click(
+			key_radioOption = "Standard Delivery",
+			locator1 = "CommerceEntry#RADIO_BUTTON");
+
+		Click(locator1 = "Button#CONTINUE");
+
+		for (var deliveryTerms : list "${deliveryTermsEligibility}") {
+			AssertElementPresent(
+				key_radioOption = "${deliveryTerms}",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+
+			echo("${deliveryTerms} is available");
+		}
+
+		Click(
+			key_radioOption = "Delivery Term 1",
+			locator1 = "CommerceEntry#RADIO_BUTTON");
+
+		Click(locator1 = "Button#CONTINUE");
+
+		AssertTextEquals(
+			key_paymentMethod = "Delivery Term 1",
+			locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_PAYMENT_METHOD",
+			value1 = "Delivery Term 1");
+
+		Click(locator1 = "Button#PREVIOUS");
+
+		Click(
+			key_radioOption = "Delivery Term 2",
+			locator1 = "CommerceEntry#RADIO_BUTTON");
+
+		Click(locator1 = "Button#CONTINUE");
+
+		AssertTextEquals(
+			key_paymentMethod = "Delivery Term 2",
+			locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_PAYMENT_METHOD",
+			value1 = "Delivery Term 2");
 	}
 
 	@description = "[Please Update]"
@@ -70,8 +204,115 @@ definition {
 	test ChangePaymentTermBeforeCompletingCheckout {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-8595 ChangePaymentTermBeforeCompletingCheckout pending implementation
+		var paymentTermsEligibility = "Payment Term 1,Payment Term 2";
 
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
+			portlet = "Channels");
+
+		CommerceNavigator.gotoTableListEntry(entryName = "Minium Portal");
+
+		CommerceChannels.activatePaymentMethod(paymentMethod = "Money Order");
+
+		Refresh();
+
+		CommerceEntry.clickTableEntryEditButton(
+			entryName = "Money Order",
+			table = "Payment Methods");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Navigator.gotoNavTab(navTab = "Eligibility");
+
+		CommerceEntry.setEntryEligibility(paymentTermsEligibility = "${paymentTermsEligibility}");
+
+		Click(locator1 = "Icon#CLOSE");
+
+		User.logoutPG();
+
+		CommerceLogin.miniumLogin(
+			password = "test",
+			urlAppend = "web/minium",
+			userEmailAddress = "buyer@liferay.com");
+
+		CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
+
+		FrontStore.addInitializerProductToCart(
+			productName = "ABS Sensor",
+			productQuantity = "2");
+
+		WaitForElementPresent(locator1 = "CommerceEntry#ACTIVE_ORDER_ID");
+
+		CommerceNavigator.gotoMiniCart();
+
+		Button.click(button = "View Details");
+
+		Button.click(button = "Checkout");
+
+		Type(
+			key_fieldName = "Name",
+			locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT",
+			value1 = "Address Name");
+
+		Type(
+			key_fieldName = "Address",
+			locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT",
+			value1 = "Test Address");
+
+		Select(
+			key_fieldName = "Country",
+			locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_SELECT",
+			value1 = "United States");
+
+		Type(
+			key_fieldName = "Zip",
+			locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT",
+			value1 = "Test Zip Code");
+
+		Type(
+			key_fieldName = "City",
+			locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT",
+			value1 = "Test City");
+
+		Click(locator1 = "Button#CONTINUE");
+
+		Click(
+			key_radioOption = "Standard Delivery",
+			locator1 = "CommerceEntry#RADIO_BUTTON");
+
+		Click(locator1 = "Button#CONTINUE");
+
+		for (var paymentTerms : list "${paymentTermsEligibility}") {
+			AssertElementPresent(
+				key_radioOption = "${deliveryTerms}",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+
+			echo("${paymentTerms} is available");
+		}
+
+		Click(
+			key_radioOption = "Payment Term 1",
+			locator1 = "CommerceEntry#RADIO_BUTTON");
+
+		Click(locator1 = "Button#CONTINUE");
+
+		AssertTextEquals(
+			key_paymentMethod = "Payment Term 1",
+			locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_PAYMENT_METHOD",
+			value1 = "Payment Term 1");
+
+		Click(locator1 = "Button#PREVIOUS");
+
+		Click(
+			key_radioOption = "Payment Term 2",
+			locator1 = "CommerceEntry#RADIO_BUTTON");
+
+		Click(locator1 = "Button#CONTINUE");
+
+		AssertTextEquals(
+			key_paymentMethod = "Payment Term 2",
+			locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_PAYMENT_METHOD",
+			value1 = "Payment Term 2");
 	}
 
 	@description = "[Please Update]"
@@ -87,31 +328,109 @@ definition {
 	@description = "[Please Update]"
 	@ignore = "Test Stub"
 	@priority = "4"
-	test SelectDeliveryTermToBeAttachedToOrder {
-		property portal.acceptance = "false";
-
-		// TODO COMMERCE-8589 SelectDeliveryTermToBeAttachedToOrder pending implementation
-
-	}
-
-	@description = "[Please Update]"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test SelectPaymentTermToBeAttachedToOrder {
-		property portal.acceptance = "false";
-
-		// TODO COMMERCE-8593 SelectPaymentTermToBeAttachedToOrder pending implementation
-
-	}
-
-	@description = "[Please Update]"
-	@ignore = "Test Stub"
-	@priority = "4"
 	test ViewAvailableDeliveryTerms {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-8590 ViewAvailableDeliveryTerms pending implementation
+		var deliveryTermsEligibility = "Delivery Term 1,Delivery Term 2";
 
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
+			portlet = "Channels");
+
+		CommerceNavigator.gotoTableListEntry(entryName = "Minium Portal");
+
+		CommerceEntry.clickTableEntryEditButton(
+			entryName = "Flat Rate",
+			table = "Shipping Methods");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Shipping Options");
+
+		CommerceNavigator.gotoEntry(entryName = "Standard Delivery");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		SetWindowSize(value1 = "1765,966");
+
+		Navigator.gotoNavTab(navTab = "Eligibility");
+
+		CommerceEntry.setEntryEligibility(deliveryTermsEligibility = "${deliveryTermsEligibility}");
+
+		Click(locator1 = "Icon#CLOSE");
+
+		User.logoutPG();
+
+		CommerceLogin.miniumLogin(
+			password = "test",
+			urlAppend = "web/minium",
+			userEmailAddress = "buyer@liferay.com");
+
+		CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
+
+		FrontStore.addInitializerProductToCart(
+			productName = "ABS Sensor",
+			productQuantity = "2");
+
+		WaitForElementPresent(locator1 = "CommerceEntry#ACTIVE_ORDER_ID");
+
+		CommerceNavigator.gotoMiniCart();
+
+		Button.click(button = "View Details");
+
+		Button.click(button = "Checkout");
+
+		Type(
+			key_fieldName = "Name",
+			locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT",
+			value1 = "Address Name");
+
+		Type(
+			key_fieldName = "Address",
+			locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT",
+			value1 = "Test Address");
+
+		Select(
+			key_fieldName = "Country",
+			locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_SELECT",
+			value1 = "United States");
+
+		Type(
+			key_fieldName = "Zip",
+			locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT",
+			value1 = "Test Zip Code");
+
+		Type(
+			key_fieldName = "City",
+			locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT",
+			value1 = "Test City");
+
+		Click(locator1 = "Button#CONTINUE");
+
+		Click(
+			key_radioOption = "Standard Delivery",
+			locator1 = "CommerceEntry#RADIO_BUTTON");
+
+		Click(locator1 = "Button#CONTINUE");
+
+		for (var deliveryTerms : list "${deliveryTermsEligibility}") {
+			AssertElementPresent(
+				key_radioOption = "${deliveryTerms}",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+
+			echo("${deliveryTerms} is available");
+		}
+
+		Click(
+			key_radioOption = "Delivery Term 1",
+			locator1 = "CommerceEntry#RADIO_BUTTON");
+
+		Click(locator1 = "Button#CONTINUE");
+
+		AssertTextEquals(
+			key_paymentMethod = "Delivery Term 1",
+			locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_PAYMENT_METHOD",
+			value1 = "Delivery Term 1");
 	}
 
 	@description = "[Please Update]"
@@ -120,8 +439,102 @@ definition {
 	test ViewAvailablePaymentTerms {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-8594 ViewAvailablePaymentTerms pending implementation
+		var paymentTermsEligibility = "Payment Term 1,Payment Term 2";
 
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
+			portlet = "Channels");
+
+		CommerceNavigator.gotoTableListEntry(entryName = "Minium Portal");
+
+		CommerceChannels.activatePaymentMethod(paymentMethod = "Money Order");
+
+		Refresh();
+
+		CommerceEntry.clickTableEntryEditButton(
+			entryName = "Money Order",
+			table = "Payment Methods");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Navigator.gotoNavTab(navTab = "Eligibility");
+
+		CommerceEntry.setEntryEligibility(paymentTermsEligibility = "${paymentTermsEligibility}");
+
+		Click(locator1 = "Icon#CLOSE");
+
+		User.logoutPG();
+
+		CommerceLogin.miniumLogin(
+			password = "test",
+			urlAppend = "web/minium",
+			userEmailAddress = "buyer@liferay.com");
+
+		CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
+
+		FrontStore.addInitializerProductToCart(
+			productName = "ABS Sensor",
+			productQuantity = "2");
+
+		WaitForElementPresent(locator1 = "CommerceEntry#ACTIVE_ORDER_ID");
+
+		CommerceNavigator.gotoMiniCart();
+
+		Button.click(button = "View Details");
+
+		Button.click(button = "Checkout");
+
+		Type(
+			key_fieldName = "Name",
+			locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT",
+			value1 = "Address Name");
+
+		Type(
+			key_fieldName = "Address",
+			locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT",
+			value1 = "Test Address");
+
+		Select(
+			key_fieldName = "Country",
+			locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_SELECT",
+			value1 = "United States");
+
+		Type(
+			key_fieldName = "Zip",
+			locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT",
+			value1 = "Test Zip Code");
+
+		Type(
+			key_fieldName = "City",
+			locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT",
+			value1 = "Test City");
+
+		Click(locator1 = "Button#CONTINUE");
+
+		Click(
+			key_radioOption = "Standard Delivery",
+			locator1 = "CommerceEntry#RADIO_BUTTON");
+
+		Click(locator1 = "Button#CONTINUE");
+
+		for (var paymentTerms : list "${paymentTermsEligibility}") {
+			AssertElementPresent(
+				key_radioOption = "${paymentTerms}",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+
+			echo("${paymentTerms} is available");
+		}
+
+		Click(
+			key_radioOption = "Payment Term 1",
+			locator1 = "CommerceEntry#RADIO_BUTTON");
+
+		Click(locator1 = "Button#CONTINUE");
+
+		AssertTextEquals(
+			key_paymentMethod = "Payment Term 1",
+			locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_PAYMENT_METHOD",
+			value1 = "Payment Term 1");
 	}
 
 	@description = "[Please Update]"
@@ -130,8 +543,88 @@ definition {
 	test ViewDeliveryTermAttachedToOrder {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-8588 ViewDeliveryTermAttachedToOrder pending implementation
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
+			portlet = "Channels");
 
+		CommerceNavigator.gotoTableListEntry(entryName = "Minium Portal");
+
+		CommerceEntry.clickTableEntryEditButton(
+			entryName = "Flat Rate",
+			table = "Shipping Methods");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Shipping Options");
+
+		CommerceNavigator.gotoEntry(entryName = "Standard Delivery");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		SetWindowSize(value1 = "1765,966");
+
+		Navigator.gotoNavTab(navTab = "Eligibility");
+
+		CommerceEntry.setEntryEligibility(deliveryTermsEligibility = "Delivery Term 1");
+
+		Click(locator1 = "Icon#CLOSE");
+
+		User.logoutPG();
+
+		CommerceLogin.miniumLogin(
+			password = "test",
+			urlAppend = "web/minium",
+			userEmailAddress = "buyer@liferay.com");
+
+		CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
+
+		FrontStore.addInitializerProductToCart(
+			productName = "ABS Sensor",
+			productQuantity = "2");
+
+		WaitForElementPresent(locator1 = "CommerceEntry#ACTIVE_ORDER_ID");
+
+		CommerceNavigator.gotoMiniCart();
+
+		Button.click(button = "View Details");
+
+		Button.click(button = "Checkout");
+
+		CommerceCheckout.initializersCheckout(
+			deliveryTerm = "Delivery Term 1",
+			newAddressAddress = "Test Address",
+			newAddressCity = "Test City",
+			newAddressCountry = "United States",
+			newAddressName = "Address Name",
+			newAddressZipCode = "Test Zip Code",
+			productName = "ABS Sensor",
+			productQuantity = "2",
+			productUnitPrice = "50",
+			shippingMethod = "Standard");
+
+		User.logoutPG();
+
+		CommerceLogin.miniumLogin(
+			password = "test",
+			urlAppend = "web/minium",
+			userEmailAddress = "test@liferay.com");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Order Management",
+			portlet = "Orders");
+
+		CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
+
+		CommerceOrders.viewOrdersEntry(
+			addressAddress = "Test Address",
+			addressCity = "Test City",
+			addressZipCode = "Test Zip Code",
+			deliveryTerm = "Delivery Term 1",
+			productListPrice = "50.00",
+			productName = "ABS Sensor",
+			productQuantity = "2",
+			productSku = "MIN93015",
+			productTotalPrice = "100.00");
 	}
 
 	@description = "[Please Update]"
@@ -140,8 +633,86 @@ definition {
 	test ViewPaymentTermAttachedToOrder {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-8592 ViewPaymentTermAttachedToOrder pending implementation
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
+			portlet = "Channels");
 
+		CommerceNavigator.gotoTableListEntry(entryName = "Minium Portal");
+
+		CommerceChannels.activatePaymentMethod(paymentMethod = "Money Order");
+
+		Refresh();
+
+		CommerceEntry.clickTableEntryEditButton(
+			entryName = "Money Order",
+			table = "Payment Methods");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Navigator.gotoNavTab(navTab = "Eligibility");
+
+		CommerceEntry.setEntryEligibility(paymentTermsEligibility = "Payment Term 1");
+
+		Click(locator1 = "Icon#CLOSE");
+
+		User.logoutPG();
+
+		CommerceLogin.miniumLogin(
+			password = "test",
+			urlAppend = "web/minium",
+			userEmailAddress = "buyer@liferay.com");
+
+		CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
+
+		FrontStore.addInitializerProductToCart(
+			productName = "ABS Sensor",
+			productQuantity = "2");
+
+		WaitForElementPresent(locator1 = "CommerceEntry#ACTIVE_ORDER_ID");
+
+		CommerceNavigator.gotoMiniCart();
+
+		Button.click(button = "View Details");
+
+		Button.click(button = "Checkout");
+
+		CommerceCheckout.initializersCheckout(
+			newAddressAddress = "Test Address",
+			newAddressCity = "Test City",
+			newAddressCountry = "United States",
+			newAddressName = "Address Name",
+			newAddressZipCode = "Test Zip Code",
+			paymentMethod = "Money Order",
+			paymentTerm = "Payment Term 1",
+			productName = "ABS Sensor",
+			productQuantity = "2",
+			productUnitPrice = "50",
+			shippingMethod = "Standard");
+
+		User.logoutPG();
+
+		CommerceLogin.miniumLogin(
+			password = "test",
+			urlAppend = "web/minium",
+			userEmailAddress = "test@liferay.com");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Order Management",
+			portlet = "Orders");
+
+		CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
+
+		CommerceOrders.viewOrdersEntry(
+			addressAddress = "Test Address",
+			addressCity = "Test City",
+			addressZipCode = "Test Zip Code",
+			paymentMethod = "Money Order",
+			paymentTerm = "Payment Term 1",
+			productListPrice = "50.00",
+			productName = "ABS Sensor",
+			productQuantity = "2",
+			productSku = "MIN93015",
+			productTotalPrice = "100.00");
 	}
 
 }

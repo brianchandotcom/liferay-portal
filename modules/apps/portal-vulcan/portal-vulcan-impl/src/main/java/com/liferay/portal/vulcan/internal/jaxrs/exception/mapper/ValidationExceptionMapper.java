@@ -32,8 +32,7 @@ public class ValidationExceptionMapper
 
 	@Override
 	protected Problem getProblem(ValidationException validationException) {
-		return new Problem(
-			Response.Status.BAD_REQUEST, validationException.getMessage());
+		return new Problem(Response.Status.BAD_REQUEST, "Validation failed");
 	}
 
 }

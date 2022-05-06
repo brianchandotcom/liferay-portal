@@ -41,7 +41,7 @@ public class WebApplicationExceptionMapper
 
 		return new Problem(
 			Response.Status.fromStatusCode(response.getStatus()),
-			webApplicationException.getMessage());
+			"A problem occured");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

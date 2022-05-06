@@ -59,8 +59,7 @@ public class NoSuchModelExceptionMapper
 
 	@Override
 	protected Problem getProblem(NoSuchModelException noSuchModelException) {
-		return new Problem(
-			Response.Status.NOT_FOUND, noSuchModelException.getMessage());
+		return new Problem(Response.Status.NOT_FOUND, "Unable to find model");
 	}
 
 	@Context

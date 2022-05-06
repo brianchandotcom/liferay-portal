@@ -33,8 +33,7 @@ public class InvalidFilterExceptionMapper
 	protected Problem getProblem(
 		InvalidFilterException invalidFilterException) {
 
-		return new Problem(
-			Response.Status.BAD_REQUEST, invalidFilterException.getMessage());
+		return new Problem(Response.Status.BAD_REQUEST, "Filter is not valid");
 	}
 
 }

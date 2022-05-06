@@ -44,7 +44,7 @@ public class PrincipalExceptionMapper
 			status = Response.Status.NOT_FOUND;
 		}
 
-		return new Problem(status, principalException.getMessage());
+		return new Problem(status, "A problem occured");
 	}
 
 	@Context

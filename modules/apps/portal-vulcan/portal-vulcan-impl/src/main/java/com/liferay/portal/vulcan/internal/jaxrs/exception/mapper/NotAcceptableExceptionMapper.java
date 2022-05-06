@@ -33,8 +33,7 @@ public class NotAcceptableExceptionMapper
 		NotAcceptableException notAcceptableException) {
 
 		return new Problem(
-			Response.Status.NOT_ACCEPTABLE,
-			notAcceptableException.getMessage());
+			Response.Status.NOT_ACCEPTABLE, "Accept-Language is not valid");
 	}
 
 }

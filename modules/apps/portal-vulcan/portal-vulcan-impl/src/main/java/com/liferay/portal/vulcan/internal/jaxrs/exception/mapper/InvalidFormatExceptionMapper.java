@@ -65,8 +65,7 @@ public class InvalidFormatExceptionMapper
 			clazz.getSimpleName(), "\"");
 
 		return new Problem(
-			invalidFormatException.getLocalizedMessage(),
-			Response.Status.BAD_REQUEST, message, "InvalidFormatException");
+			Response.Status.BAD_REQUEST, "Unable to map JSON path: " + path);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -68,7 +68,7 @@ public class ExceptionMapper extends BaseExceptionMapper<Exception> {
 		_log.error(exception);
 
 		return new Problem(
-			Response.Status.INTERNAL_SERVER_ERROR, exception.getMessage());
+			Response.Status.INTERNAL_SERVER_ERROR, "Internal Server Error");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

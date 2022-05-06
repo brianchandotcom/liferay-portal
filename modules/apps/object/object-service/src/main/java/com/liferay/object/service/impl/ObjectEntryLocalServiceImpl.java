@@ -368,6 +368,20 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	@Override
+	public void disassociateSystemRelatedObjectEntry(
+			long primaryKey, ObjectDefinition objectDefinition,
+			Map<String, Serializable> values)
+		throws PortalException {
+
+		if (objectDefinition.isSystem()) {
+			_updateTable(
+				_getExtensionDynamicObjectDefinitionTable(
+					objectDefinition.getObjectDefinitionId()),
+				primaryKey, values);
+		}
+	}
+
+	@Override
 	public List<ObjectEntry> getManyToManyRelatedObjectEntries(
 			long groupId, long objectRelationshipId, long primaryKey,
 			boolean reverse, int start, int end)

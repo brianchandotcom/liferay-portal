@@ -3,7 +3,7 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.main.component.name = "Headless";
+	property testray.main.component.name = "Headless FI";
 
 	setUp {
 		TestCase.setUpPortalInstance();
@@ -39,7 +39,7 @@ definition {
 
 	@description = "Nested fields in oneToMany relationship"
 	@priority = "5"
-	test NestedFieldsInOneToManyRelationship {
+	test NestedFieldsDetailsReturnedCorrectlyInOneToManyRelationship {
 		task ("Given manager accounts created") {
 			var managerId = ObjectDefinitionAPI.createManager(managerFirstname = "Courtney");
 		}
@@ -57,7 +57,7 @@ definition {
 		}
 
 		task ("Then 'employee' information should be provided with 'manager' information nested as an object") {
-			ObjectDefinitionAPI.assertCorrectManagerInformation(
+			ObjectDefinitionAPI.assertEmployeeHasNestedFieldManager(
 				expectedEmployeeFirstname = "Bruce",
 				expectedManagerFirstname = "Courtney",
 				expectedManagerId = "${managerId}",

@@ -70,6 +70,8 @@ definition {
 	}
 
 	macro _createObjectDefinition {
+		Variables.assertDefined(parameterList = "${en_US_label},${name},${requiredStringFieldName},${en_US_plural_label}");
+
 		var portalURL = JSONCompany.getDefaultPortalURL();
 
 		var curl = '''
@@ -108,6 +110,8 @@ definition {
 	}
 
 	macro _createRelationship {
+		Variables.assertDefined(parameterList = "${deletionType},${en_US_label},${name},${objectDefinitionId1},${objectDefinitionId2},${type}");
+
 		var portalURL = JSONCompany.getDefaultPortalURL();
 
 		var curl = '''
@@ -131,6 +135,8 @@ definition {
 	}
 
 	macro _getEmployeeFirstnameById {
+		Variables.assertDefined(parameterList = "${employeeId}");
+
 		var portalURL = JSONCompany.getDefaultPortalURL();
 
 		var curl = '''
@@ -143,6 +149,8 @@ definition {
 	}
 
 	macro _getManagerFirstnameById {
+		Variables.assertDefined(parameterList = "${managerId}");
+
 		var portalURL = JSONCompany.getDefaultPortalURL();
 
 		var curl = '''
@@ -167,6 +175,8 @@ definition {
 	}
 
 	macro _getObjectDefinitionStatusById {
+		Variables.assertDefined(parameterList = "${objectDefinitionId}");
+
 		var portalURL = JSONCompany.getDefaultPortalURL();
 
 		var curl = '''
@@ -185,6 +195,8 @@ definition {
 	}
 
 	macro _getObjectsWithNestedField {
+		Variables.assertDefined(parameterList = "${nestedField}");
+
 		var portalURL = JSONCompany.getDefaultPortalURL();
 
 		var curl = '''
@@ -197,6 +209,8 @@ definition {
 	}
 
 	macro _getRelationshipNameById {
+		Variables.assertDefined(parameterList = "${relationshipId}");
+
 		var portalURL = JSONCompany.getDefaultPortalURL();
 
 		var curl = '''
@@ -209,6 +223,8 @@ definition {
 	}
 
 	macro _publishObjectDefinition {
+		Variables.assertDefined(parameterList = "${objectDefinitionId}");
+
 		var portalURL = JSONCompany.getDefaultPortalURL();
 
 		var curl = '''
@@ -220,7 +236,7 @@ definition {
 		return "${json}";
 	}
 
-	macro assertCorrectManagerInformation {
+	macro assertEmployeeHasNestedFieldManager {
 		ObjectDefinitionAPI._assertEmployeeFirstnameCorrect(
 			expectedEmployeeFirstname = "${expectedEmployeeFirstname}",
 			objectId = "${objectId}",

@@ -1,0 +1,49 @@
+@component-name = "portal-solutions"
+definition {
+
+	property custom.properties = "javascript.single.page.application.enabled=false${line.separator}jsonws.web.service.paths.excludes=";
+	property portal.release = "false";
+	property portal.upstream = "false";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "Customer Portal";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		//CustomerPortal.setUpForCP20();
+
+		CustomerPortal.createCPSite(siteName = "Customer Portal");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			CustomerPortal.tearDownForOktaAndSAML();
+
+			User.logoutPG();
+		}
+	}
+
+	@description = "LPS-146292 - Verify if after inviting member, the screen goes back to previous screen (Team Members page)."
+	@priority = "4"
+	test IsAnalyticsCloudOptionAvailable {
+
+
+
+	}
+
+	@description = "LPS-146292 - Check if there is a 'Cancel' button if the user wants to leave the process."
+	@priority = "4"
+	test IsAnalyticsCloudOptionAvailable {
+
+
+
+	}
+
+}

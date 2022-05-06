@@ -157,6 +157,22 @@ definition {
 			Button.clickAdd();
 		}
 
+		if ("${item}" == "Vocabulary") {
+			var i = "1";
+
+			for (var assetTitle : list "${assetTitleList}") {
+				Click.mouseDownMouseUp(
+					key_card = "${assetTitle}",
+					locator1 = "Card#CARD");
+
+				var i = ${i} + 1;
+			}
+
+			SelectFrame.selectFrameTop();
+
+			Button.clickSelect();
+		}
+
 		Alert.viewSuccessMessage();
 
 		IFrame.selectTopFrame();

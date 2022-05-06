@@ -57,6 +57,7 @@ public class ObjectLayoutResourceTest extends BaseObjectLayoutResourceTestCase {
 				LocalizedMapUtil.getLocalizedMap(value), value, null, null,
 				LocalizedMapUtil.getLocalizedMap(value),
 				ObjectDefinitionConstants.SCOPE_COMPANY,
+				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 				Collections.emptyList());
 
 		_objectField = _objectFieldLocalService.addCustomObjectField(

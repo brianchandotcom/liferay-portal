@@ -35,6 +35,7 @@ import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectLayoutLocalService;
 import com.liferay.object.service.ObjectViewLocalService;
 import com.liferay.object.util.LocalizedMapUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -42,9 +43,11 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -128,6 +131,12 @@ public class ObjectDefinitionResourceImpl
 	public ObjectDefinition postObjectDefinition(
 			ObjectDefinition objectDefinition)
 		throws Exception {
+
+		if (!Validator.isBlank(objectDefinition.getStorageType()) &&
+			!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-135430"))) {
+
+			throw new PortalException("StorageType is not yet supported");
+		}
 
 		return _toObjectDefinition(
 			_objectDefinitionService.addCustomObjectDefinition(

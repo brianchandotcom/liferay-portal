@@ -23,6 +23,7 @@ import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.object.service.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.object.util.ObjectFieldUtil;
 import com.liferay.petra.string.StringBundler;
@@ -60,36 +61,24 @@ public class ObjectRelationshipLocalServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_objectDefinition1 =
-			_objectDefinitionLocalService.addCustomObjectDefinition(
-				TestPropsValues.getUserId(),
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"A" + RandomTestUtil.randomString(), null, null,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				ObjectDefinitionConstants.SCOPE_COMPANY,
-				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
-				Arrays.asList(
-					ObjectFieldUtil.createObjectField(
-						"Text", "String", RandomTestUtil.randomString(),
-						StringUtil.randomId())));
+		_objectDefinition1 = ObjectDefinitionTestUtil.addObjectDefinition(
+			_objectDefinitionLocalService,
+			Arrays.asList(
+				ObjectFieldUtil.createObjectField(
+					"Text", "String", RandomTestUtil.randomString(),
+					StringUtil.randomId())));
 
 		_objectDefinition1 =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(
 				TestPropsValues.getUserId(),
 				_objectDefinition1.getObjectDefinitionId());
 
-		_objectDefinition2 =
-			_objectDefinitionLocalService.addCustomObjectDefinition(
-				TestPropsValues.getUserId(),
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"A" + RandomTestUtil.randomString(), null, null,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				ObjectDefinitionConstants.SCOPE_COMPANY,
-				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
-				Arrays.asList(
-					ObjectFieldUtil.createObjectField(
-						"Text", "String", RandomTestUtil.randomString(),
-						StringUtil.randomId())));
+		_objectDefinition2 = ObjectDefinitionTestUtil.addObjectDefinition(
+			_objectDefinitionLocalService,
+			Arrays.asList(
+				ObjectFieldUtil.createObjectField(
+					"Text", "String", RandomTestUtil.randomString(),
+					StringUtil.randomId())));
 
 		_objectDefinition2 =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(

@@ -17,13 +17,12 @@ package com.liferay.object.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
-import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectActionService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.object.util.LocalizedMapUtil;
+import com.liferay.object.service.test.util.ObjectDefinitionTestUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
@@ -62,14 +61,8 @@ public class ObjectActionServiceTest {
 	public void setUp() throws Exception {
 		_defaultUser = _userLocalService.getDefaultUser(
 			TestPropsValues.getCompanyId());
-		_objectDefinition =
-			_objectDefinitionLocalService.addCustomObjectDefinition(
-				TestPropsValues.getUserId(),
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"A" + RandomTestUtil.randomString(), null, null,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				ObjectDefinitionConstants.SCOPE_COMPANY,
-				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT, null);
+		_objectDefinition = ObjectDefinitionTestUtil.addObjectDefinition(
+			_objectDefinitionLocalService);
 		_originalName = PrincipalThreadLocal.getName();
 		_originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();

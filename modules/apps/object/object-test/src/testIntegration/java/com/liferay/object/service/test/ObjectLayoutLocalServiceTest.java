@@ -15,7 +15,6 @@
 package com.liferay.object.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.exception.DefaultObjectLayoutException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
@@ -31,6 +30,7 @@ import com.liferay.object.service.persistence.ObjectLayoutBoxPersistence;
 import com.liferay.object.service.persistence.ObjectLayoutColumnPersistence;
 import com.liferay.object.service.persistence.ObjectLayoutRowPersistence;
 import com.liferay.object.service.persistence.ObjectLayoutTabPersistence;
+import com.liferay.object.service.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -65,14 +65,8 @@ public class ObjectLayoutLocalServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_objectDefinition =
-			_objectDefinitionLocalService.addCustomObjectDefinition(
-				TestPropsValues.getUserId(),
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"A" + RandomTestUtil.randomString(), null, null,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				ObjectDefinitionConstants.SCOPE_COMPANY,
-				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT, null);
+		_objectDefinition = ObjectDefinitionTestUtil.addObjectDefinition(
+			_objectDefinitionLocalService);
 	}
 
 	@Test

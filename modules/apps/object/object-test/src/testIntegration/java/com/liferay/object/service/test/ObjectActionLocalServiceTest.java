@@ -18,14 +18,13 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.action.executor.ObjectActionExecutorRegistry;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
-import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
-import com.liferay.object.util.LocalizedMapUtil;
+import com.liferay.object.service.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.util.ObjectFieldUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -73,18 +72,12 @@ public class ObjectActionLocalServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_objectDefinition =
-			_objectDefinitionLocalService.addCustomObjectDefinition(
-				TestPropsValues.getUserId(),
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"A" + RandomTestUtil.randomString(), null, null,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				ObjectDefinitionConstants.SCOPE_COMPANY,
-				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
-				Arrays.asList(
-					ObjectFieldUtil.createObjectField(
-						"Text", "String", true, true, null, "First Name",
-						"firstName", true)));
+		_objectDefinition = ObjectDefinitionTestUtil.addObjectDefinition(
+			_objectDefinitionLocalService,
+			Arrays.asList(
+				ObjectFieldUtil.createObjectField(
+					"Text", "String", true, true, null, "First Name",
+					"firstName", true)));
 
 		_objectDefinition =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(

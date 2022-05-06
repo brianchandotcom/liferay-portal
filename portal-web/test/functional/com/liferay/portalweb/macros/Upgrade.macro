@@ -5049,10 +5049,7 @@ definition {
 	}
 
 	macro viewResultRankingsEntry {
-		ApplicationsMenu.gotoPortlet(
-			category = "Search Tuning",
-			panel = "Applications",
-			portlet = "Result Rankings");
+		SearchTuning.openResultRankingsAdmin();
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",

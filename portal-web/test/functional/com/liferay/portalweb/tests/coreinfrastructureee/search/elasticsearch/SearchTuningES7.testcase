@@ -23,10 +23,7 @@ definition {
 
 	@priority = "3"
 	test AssertCannotAddDuplicateQueriesAndAliases {
-		ApplicationsMenu.gotoPortlet(
-			category = "Search Tuning",
-			panel = "Applications",
-			portlet = "Result Rankings");
+		SearchTuning.openResultRankingsAdmin();
 
 		SearchTuning.addResultRanking(searchQuery = "Article");
 
@@ -52,10 +49,7 @@ definition {
 
 		Alert.viewErrorMessage(errorMessage = "A ranking with that search query already exists.");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Search Tuning",
-			panel = "Applications",
-			portlet = "Result Rankings");
+		SearchTuning.openResultRankingsAdmin();
 
 		AssertElementNotPresent(
 			key_query = "Article",
@@ -95,10 +89,7 @@ definition {
 			var content = StringUtil.replaceFirst("${content}", "Article ", "");
 		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Search Tuning",
-			panel = "Applications",
-			portlet = "Result Rankings");
+		SearchTuning.openResultRankingsAdmin();
 
 		SearchTuning.addResultRanking(searchQuery = "Article");
 
@@ -118,10 +109,7 @@ definition {
 			searchAssetTitle = "Article 2",
 			searchAssetType = "Web Content Article");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Search Tuning",
-			panel = "Applications",
-			portlet = "Result Rankings");
+		SearchTuning.openResultRankingsAdmin();
 
 		LexiconEntry.delete(rowEntry = "Article");
 
@@ -138,10 +126,7 @@ definition {
 
 	@priority = "3"
 	test AssertResultRankingsMiscUI {
-		ApplicationsMenu.gotoPortlet(
-			category = "Search Tuning",
-			panel = "Applications",
-			portlet = "Result Rankings");
+		SearchTuning.openResultRankingsAdmin();
 
 		AssertElementNotPresent(locator1 = "Pagination#PAGINATION_BAR");
 
@@ -218,10 +203,7 @@ definition {
 	test AssertResultRankingsPagination {
 		property custom.properties = "search.container.page.default.delta=5";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Search Tuning",
-			panel = "Applications",
-			portlet = "Result Rankings");
+		SearchTuning.openResultRankingsAdmin();
 
 		AssertElementNotPresent(locator1 = "Pagination#PAGINATION_BAR");
 
@@ -520,10 +502,7 @@ definition {
 			var content = StringUtil.replaceFirst("${content}", "Article ", "");
 		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Search Tuning",
-			panel = "Applications",
-			portlet = "Result Rankings");
+		SearchTuning.openResultRankingsAdmin();
 
 		SearchTuning.addResultRanking(searchQuery = "Article");
 
@@ -595,10 +574,7 @@ definition {
 
 		SearchResultPortlet.viewNoSearchResults(searchTerm = "apple");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Search Tuning",
-			panel = "Applications",
-			portlet = "Result Rankings");
+		SearchTuning.openResultRankingsAdmin();
 
 		Click(
 			key_query = "Article",
@@ -673,10 +649,7 @@ definition {
 			groupName = "Guest",
 			title = "WC Title 3");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Search Tuning",
-			panel = "Applications",
-			portlet = "Result Rankings");
+		SearchTuning.openResultRankingsAdmin();
 
 		SearchTuning.addResultRanking(searchQuery = "WC Title");
 
@@ -716,10 +689,7 @@ definition {
 
 		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "WC Title 1/Web Content Article,WC Title 2/Web Content Article");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Search Tuning",
-			panel = "Applications",
-			portlet = "Result Rankings");
+		SearchTuning.openResultRankingsAdmin();
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
@@ -753,10 +723,7 @@ definition {
 
 		SearchResultPortlet.viewNoSearchResults(searchTerm = "banana");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Search Tuning",
-			panel = "Applications",
-			portlet = "Result Rankings");
+		SearchTuning.openResultRankingsAdmin();
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
@@ -786,10 +753,7 @@ definition {
 				title = "Liferay ${title}");
 		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Search Tuning",
-			panel = "Applications",
-			portlet = "Result Rankings");
+		SearchTuning.openResultRankingsAdmin();
 
 		SearchTuning.addResultRanking(searchQuery = "Article");
 
@@ -803,10 +767,7 @@ definition {
 
 		SearchAdministration.executeReindex();
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Search Tuning",
-			panel = "Applications",
-			portlet = "Result Rankings");
+		SearchTuning.openResultRankingsAdmin();
 
 		for (var title : list "Article,Journal") {
 			AssertElementPresent(
@@ -892,10 +853,7 @@ definition {
 			groupName = "New Site",
 			title = "New Site Journal");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Search Tuning",
-			panel = "Applications",
-			portlet = "Result Rankings");
+		SearchTuning.openResultRankingsAdmin();
 
 		SearchTuning.addResultRanking(searchQuery = "Article");
 
@@ -923,10 +881,7 @@ definition {
 
 		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "Liferay Journal,New Site Article,New Site Journal,Liferay Article");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Search Tuning",
-			panel = "Applications",
-			portlet = "Result Rankings");
+		SearchTuning.openResultRankingsAdmin();
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
@@ -987,10 +942,7 @@ definition {
 				title = "${title}");
 		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Search Tuning",
-			panel = "Applications",
-			portlet = "Synonyms");
+		SearchTuning.openSynonymsAdmin();
 
 		SearchTuning.addSynonymSet(synonyms = "banana,red apple,blue.berry!,&quot;xigua&quot;,fruit,sweet");
 
@@ -1094,10 +1046,7 @@ definition {
 			groupName = "Guest",
 			title = "Web Content Article Apple");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Search Tuning",
-			panel = "Applications",
-			portlet = "Result Rankings");
+		SearchTuning.openResultRankingsAdmin();
 
 		SearchTuning.addResultRanking(searchQuery = "Apple");
 

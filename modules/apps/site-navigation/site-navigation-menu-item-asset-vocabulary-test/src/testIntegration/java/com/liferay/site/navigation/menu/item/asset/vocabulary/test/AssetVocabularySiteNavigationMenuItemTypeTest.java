@@ -159,6 +159,31 @@ public class AssetVocabularySiteNavigationMenuItemTypeTest {
 			locale, 0, _createSiteNavigationMenuItem(locale, "{}", false));
 	}
 
+	@Test
+	public void testGetRegularURLAssetVocabularyType() throws Exception {
+		Locale locale = _portal.getSiteDefaultLocale(_group.getGroupId());
+
+		ThemeDisplay themeDisplay = _getThemeDisplay();
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		SiteNavigationMenuItemType siteNavigationMenuItemType =
+			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(
+				SiteNavigationMenuItemTypeConstants.ASSET_VOCABULARY);
+
+		SiteNavigationMenuItem siteNavigationMenuItem =
+			_createSiteNavigationMenuItem(locale, "{}", false);
+
+		Assert.assertEquals(
+			StringPool.BLANK,
+			siteNavigationMenuItemType.getRegularURL(
+				mockHttpServletRequest, siteNavigationMenuItem));
+	}
+
 	private void _assertGetChildrenSiteNavigationMenuItems(
 			Locale locale, long parentAssetCategoryId,
 			SiteNavigationMenuItem siteNavigationMenuItem)

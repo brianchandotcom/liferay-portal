@@ -31,7 +31,7 @@ interface IProps {
 	errorMessage?: string;
 	helpMessage?: string;
 	id?: string;
-	label: string;
+	label?: string;
 	required?: boolean;
 	warningMessage?: string;
 }

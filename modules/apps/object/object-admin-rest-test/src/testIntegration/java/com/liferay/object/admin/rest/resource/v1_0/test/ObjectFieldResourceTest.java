@@ -52,6 +52,7 @@ public class ObjectFieldResourceTest extends BaseObjectFieldResourceTestCase {
 				LocalizedMapUtil.getLocalizedMap(value), value, null, null,
 				LocalizedMapUtil.getLocalizedMap(value),
 				ObjectDefinitionConstants.SCOPE_COMPANY,
+				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 				Collections.<com.liferay.object.model.ObjectField>emptyList());
 	}
 

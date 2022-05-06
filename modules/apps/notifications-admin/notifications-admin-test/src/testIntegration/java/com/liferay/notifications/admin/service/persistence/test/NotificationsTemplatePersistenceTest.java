@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -131,6 +133,8 @@ public class NotificationsTemplatePersistenceTest {
 
 		newNotificationsTemplate.setUuid(RandomTestUtil.randomString());
 
+		newNotificationsTemplate.setGroupId(RandomTestUtil.nextLong());
+
 		newNotificationsTemplate.setCompanyId(RandomTestUtil.nextLong());
 
 		newNotificationsTemplate.setUserId(RandomTestUtil.nextLong());
@@ -142,6 +146,24 @@ public class NotificationsTemplatePersistenceTest {
 		newNotificationsTemplate.setModifiedDate(RandomTestUtil.nextDate());
 
 		newNotificationsTemplate.setName(RandomTestUtil.randomString());
+
+		newNotificationsTemplate.setDescription(RandomTestUtil.randomString());
+
+		newNotificationsTemplate.setFrom(RandomTestUtil.randomString());
+
+		newNotificationsTemplate.setFromName(RandomTestUtil.randomString());
+
+		newNotificationsTemplate.setTo(RandomTestUtil.randomString());
+
+		newNotificationsTemplate.setCc(RandomTestUtil.randomString());
+
+		newNotificationsTemplate.setBcc(RandomTestUtil.randomString());
+
+		newNotificationsTemplate.setEnabled(RandomTestUtil.randomBoolean());
+
+		newNotificationsTemplate.setSubject(RandomTestUtil.randomString());
+
+		newNotificationsTemplate.setBody(RandomTestUtil.randomString());
 
 		_notificationsTemplates.add(
 			_persistence.update(newNotificationsTemplate));
@@ -159,6 +181,9 @@ public class NotificationsTemplatePersistenceTest {
 		Assert.assertEquals(
 			existingNotificationsTemplate.getNotificationsTemplateId(),
 			newNotificationsTemplate.getNotificationsTemplateId());
+		Assert.assertEquals(
+			existingNotificationsTemplate.getGroupId(),
+			newNotificationsTemplate.getGroupId());
 		Assert.assertEquals(
 			existingNotificationsTemplate.getCompanyId(),
 			newNotificationsTemplate.getCompanyId());
@@ -179,6 +204,33 @@ public class NotificationsTemplatePersistenceTest {
 		Assert.assertEquals(
 			existingNotificationsTemplate.getName(),
 			newNotificationsTemplate.getName());
+		Assert.assertEquals(
+			existingNotificationsTemplate.getDescription(),
+			newNotificationsTemplate.getDescription());
+		Assert.assertEquals(
+			existingNotificationsTemplate.getFrom(),
+			newNotificationsTemplate.getFrom());
+		Assert.assertEquals(
+			existingNotificationsTemplate.getFromName(),
+			newNotificationsTemplate.getFromName());
+		Assert.assertEquals(
+			existingNotificationsTemplate.getTo(),
+			newNotificationsTemplate.getTo());
+		Assert.assertEquals(
+			existingNotificationsTemplate.getCc(),
+			newNotificationsTemplate.getCc());
+		Assert.assertEquals(
+			existingNotificationsTemplate.getBcc(),
+			newNotificationsTemplate.getBcc());
+		Assert.assertEquals(
+			existingNotificationsTemplate.isEnabled(),
+			newNotificationsTemplate.isEnabled());
+		Assert.assertEquals(
+			existingNotificationsTemplate.getSubject(),
+			newNotificationsTemplate.getSubject());
+		Assert.assertEquals(
+			existingNotificationsTemplate.getBody(),
+			newNotificationsTemplate.getBody());
 	}
 
 	@Test
@@ -191,12 +243,36 @@ public class NotificationsTemplatePersistenceTest {
 	}
 
 	@Test
+	public void testCountByUUID_G() throws Exception {
+		_persistence.countByUUID_G("", RandomTestUtil.nextLong());
+
+		_persistence.countByUUID_G("null", 0L);
+
+		_persistence.countByUUID_G((String)null, 0L);
+	}
+
+	@Test
 	public void testCountByUuid_C() throws Exception {
 		_persistence.countByUuid_C("", RandomTestUtil.nextLong());
 
 		_persistence.countByUuid_C("null", 0L);
 
 		_persistence.countByUuid_C((String)null, 0L);
+	}
+
+	@Test
+	public void testCountByGroupId() throws Exception {
+		_persistence.countByGroupId(RandomTestUtil.nextLong());
+
+		_persistence.countByGroupId(0L);
+	}
+
+	@Test
+	public void testCountByG_E() throws Exception {
+		_persistence.countByG_E(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
+
+		_persistence.countByG_E(0L, RandomTestUtil.randomBoolean());
 	}
 
 	@Test
@@ -228,9 +304,11 @@ public class NotificationsTemplatePersistenceTest {
 	protected OrderByComparator<NotificationsTemplate> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
 			"NotificationsTemplate", "mvccVersion", true, "uuid", true,
-			"notificationsTemplateId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true, "name",
-			true);
+			"notificationsTemplateId", true, "groupId", true, "companyId", true,
+			"userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "name", true, "description", true, "from",
+			true, "fromName", true, "to", true, "cc", true, "bcc", true,
+			"enabled", true, "subject", true, "body", true);
 	}
 
 	@Test
@@ -469,6 +547,75 @@ public class NotificationsTemplatePersistenceTest {
 		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
+	public void testResetOriginalValues() throws Exception {
+		NotificationsTemplate newNotificationsTemplate =
+			addNotificationsTemplate();
+
+		_persistence.clearCache();
+
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(
+				newNotificationsTemplate.getPrimaryKey()));
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		NotificationsTemplate newNotificationsTemplate =
+			addNotificationsTemplate();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			NotificationsTemplate.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"notificationsTemplateId",
+				newNotificationsTemplate.getNotificationsTemplateId()));
+
+		List<NotificationsTemplate> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(
+		NotificationsTemplate notificationsTemplate) {
+
+		Assert.assertEquals(
+			notificationsTemplate.getUuid(),
+			ReflectionTestUtil.invoke(
+				notificationsTemplate, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
+		Assert.assertEquals(
+			Long.valueOf(notificationsTemplate.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				notificationsTemplate, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
+	}
+
 	protected NotificationsTemplate addNotificationsTemplate()
 		throws Exception {
 
@@ -479,6 +626,8 @@ public class NotificationsTemplatePersistenceTest {
 		notificationsTemplate.setMvccVersion(RandomTestUtil.nextLong());
 
 		notificationsTemplate.setUuid(RandomTestUtil.randomString());
+
+		notificationsTemplate.setGroupId(RandomTestUtil.nextLong());
 
 		notificationsTemplate.setCompanyId(RandomTestUtil.nextLong());
 
@@ -491,6 +640,24 @@ public class NotificationsTemplatePersistenceTest {
 		notificationsTemplate.setModifiedDate(RandomTestUtil.nextDate());
 
 		notificationsTemplate.setName(RandomTestUtil.randomString());
+
+		notificationsTemplate.setDescription(RandomTestUtil.randomString());
+
+		notificationsTemplate.setFrom(RandomTestUtil.randomString());
+
+		notificationsTemplate.setFromName(RandomTestUtil.randomString());
+
+		notificationsTemplate.setTo(RandomTestUtil.randomString());
+
+		notificationsTemplate.setCc(RandomTestUtil.randomString());
+
+		notificationsTemplate.setBcc(RandomTestUtil.randomString());
+
+		notificationsTemplate.setEnabled(RandomTestUtil.randomBoolean());
+
+		notificationsTemplate.setSubject(RandomTestUtil.randomString());
+
+		notificationsTemplate.setBody(RandomTestUtil.randomString());
 
 		_notificationsTemplates.add(_persistence.update(notificationsTemplate));
 

@@ -170,62 +170,6 @@ public interface NotificationsTemplatePersistence
 		throws NoSuchNotificationsTemplateException;
 
 	/**
-	 * Returns all the notifications templates that the user has permission to view where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching notifications templates that the user has permission to view
-	 */
-	public java.util.List<NotificationsTemplate> filterFindByUuid(String uuid);
-
-	/**
-	 * Returns a range of all the notifications templates that the user has permission to view where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>NotificationsTemplateModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of notifications templates
-	 * @param end the upper bound of the range of notifications templates (not inclusive)
-	 * @return the range of matching notifications templates that the user has permission to view
-	 */
-	public java.util.List<NotificationsTemplate> filterFindByUuid(
-		String uuid, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the notifications templates that the user has permissions to view where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>NotificationsTemplateModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of notifications templates
-	 * @param end the upper bound of the range of notifications templates (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching notifications templates that the user has permission to view
-	 */
-	public java.util.List<NotificationsTemplate> filterFindByUuid(
-		String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<NotificationsTemplate>
-			orderByComparator);
-
-	/**
-	 * Returns the notifications templates before and after the current notifications template in the ordered set of notifications templates that the user has permission to view where uuid = &#63;.
-	 *
-	 * @param notificationsTemplateId the primary key of the current notifications template
-	 * @param uuid the uuid
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next notifications template
-	 * @throws NoSuchNotificationsTemplateException if a notifications template with the primary key could not be found
-	 */
-	public NotificationsTemplate[] filterFindByUuid_PrevAndNext(
-			long notificationsTemplateId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<NotificationsTemplate> orderByComparator)
-		throws NoSuchNotificationsTemplateException;
-
-	/**
 	 * Removes all the notifications templates where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -241,12 +185,54 @@ public interface NotificationsTemplatePersistence
 	public int countByUuid(String uuid);
 
 	/**
-	 * Returns the number of notifications templates that the user has permission to view where uuid = &#63;.
+	 * Returns the notifications template where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchNotificationsTemplateException</code> if it could not be found.
 	 *
 	 * @param uuid the uuid
-	 * @return the number of matching notifications templates that the user has permission to view
+	 * @param groupId the group ID
+	 * @return the matching notifications template
+	 * @throws NoSuchNotificationsTemplateException if a matching notifications template could not be found
 	 */
-	public int filterCountByUuid(String uuid);
+	public NotificationsTemplate findByUUID_G(String uuid, long groupId)
+		throws NoSuchNotificationsTemplateException;
+
+	/**
+	 * Returns the notifications template where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching notifications template, or <code>null</code> if a matching notifications template could not be found
+	 */
+	public NotificationsTemplate fetchByUUID_G(String uuid, long groupId);
+
+	/**
+	 * Returns the notifications template where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching notifications template, or <code>null</code> if a matching notifications template could not be found
+	 */
+	public NotificationsTemplate fetchByUUID_G(
+		String uuid, long groupId, boolean useFinderCache);
+
+	/**
+	 * Removes the notifications template where uuid = &#63; and groupId = &#63; from the database.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the notifications template that was removed
+	 */
+	public NotificationsTemplate removeByUUID_G(String uuid, long groupId)
+		throws NoSuchNotificationsTemplateException;
+
+	/**
+	 * Returns the number of notifications templates where uuid = &#63; and groupId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the number of matching notifications templates
+	 */
+	public int countByUUID_G(String uuid, long groupId);
 
 	/**
 	 * Returns all the notifications templates where uuid = &#63; and companyId = &#63;.
@@ -387,67 +373,6 @@ public interface NotificationsTemplatePersistence
 		throws NoSuchNotificationsTemplateException;
 
 	/**
-	 * Returns all the notifications templates that the user has permission to view where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching notifications templates that the user has permission to view
-	 */
-	public java.util.List<NotificationsTemplate> filterFindByUuid_C(
-		String uuid, long companyId);
-
-	/**
-	 * Returns a range of all the notifications templates that the user has permission to view where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>NotificationsTemplateModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of notifications templates
-	 * @param end the upper bound of the range of notifications templates (not inclusive)
-	 * @return the range of matching notifications templates that the user has permission to view
-	 */
-	public java.util.List<NotificationsTemplate> filterFindByUuid_C(
-		String uuid, long companyId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the notifications templates that the user has permissions to view where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>NotificationsTemplateModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of notifications templates
-	 * @param end the upper bound of the range of notifications templates (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching notifications templates that the user has permission to view
-	 */
-	public java.util.List<NotificationsTemplate> filterFindByUuid_C(
-		String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<NotificationsTemplate>
-			orderByComparator);
-
-	/**
-	 * Returns the notifications templates before and after the current notifications template in the ordered set of notifications templates that the user has permission to view where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param notificationsTemplateId the primary key of the current notifications template
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next notifications template
-	 * @throws NoSuchNotificationsTemplateException if a notifications template with the primary key could not be found
-	 */
-	public NotificationsTemplate[] filterFindByUuid_C_PrevAndNext(
-			long notificationsTemplateId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<NotificationsTemplate> orderByComparator)
-		throws NoSuchNotificationsTemplateException;
-
-	/**
 	 * Removes all the notifications templates where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -465,13 +390,302 @@ public interface NotificationsTemplatePersistence
 	public int countByUuid_C(String uuid, long companyId);
 
 	/**
-	 * Returns the number of notifications templates that the user has permission to view where uuid = &#63; and companyId = &#63;.
+	 * Returns all the notifications templates where groupId = &#63;.
 	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the number of matching notifications templates that the user has permission to view
+	 * @param groupId the group ID
+	 * @return the matching notifications templates
 	 */
-	public int filterCountByUuid_C(String uuid, long companyId);
+	public java.util.List<NotificationsTemplate> findByGroupId(long groupId);
+
+	/**
+	 * Returns a range of all the notifications templates where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>NotificationsTemplateModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of notifications templates
+	 * @param end the upper bound of the range of notifications templates (not inclusive)
+	 * @return the range of matching notifications templates
+	 */
+	public java.util.List<NotificationsTemplate> findByGroupId(
+		long groupId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the notifications templates where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>NotificationsTemplateModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of notifications templates
+	 * @param end the upper bound of the range of notifications templates (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching notifications templates
+	 */
+	public java.util.List<NotificationsTemplate> findByGroupId(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<NotificationsTemplate>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the notifications templates where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>NotificationsTemplateModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of notifications templates
+	 * @param end the upper bound of the range of notifications templates (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching notifications templates
+	 */
+	public java.util.List<NotificationsTemplate> findByGroupId(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<NotificationsTemplate>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first notifications template in the ordered set where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching notifications template
+	 * @throws NoSuchNotificationsTemplateException if a matching notifications template could not be found
+	 */
+	public NotificationsTemplate findByGroupId_First(
+			long groupId,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<NotificationsTemplate> orderByComparator)
+		throws NoSuchNotificationsTemplateException;
+
+	/**
+	 * Returns the first notifications template in the ordered set where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching notifications template, or <code>null</code> if a matching notifications template could not be found
+	 */
+	public NotificationsTemplate fetchByGroupId_First(
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<NotificationsTemplate>
+			orderByComparator);
+
+	/**
+	 * Returns the last notifications template in the ordered set where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching notifications template
+	 * @throws NoSuchNotificationsTemplateException if a matching notifications template could not be found
+	 */
+	public NotificationsTemplate findByGroupId_Last(
+			long groupId,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<NotificationsTemplate> orderByComparator)
+		throws NoSuchNotificationsTemplateException;
+
+	/**
+	 * Returns the last notifications template in the ordered set where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching notifications template, or <code>null</code> if a matching notifications template could not be found
+	 */
+	public NotificationsTemplate fetchByGroupId_Last(
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<NotificationsTemplate>
+			orderByComparator);
+
+	/**
+	 * Returns the notifications templates before and after the current notifications template in the ordered set where groupId = &#63;.
+	 *
+	 * @param notificationsTemplateId the primary key of the current notifications template
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next notifications template
+	 * @throws NoSuchNotificationsTemplateException if a notifications template with the primary key could not be found
+	 */
+	public NotificationsTemplate[] findByGroupId_PrevAndNext(
+			long notificationsTemplateId, long groupId,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<NotificationsTemplate> orderByComparator)
+		throws NoSuchNotificationsTemplateException;
+
+	/**
+	 * Removes all the notifications templates where groupId = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 */
+	public void removeByGroupId(long groupId);
+
+	/**
+	 * Returns the number of notifications templates where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @return the number of matching notifications templates
+	 */
+	public int countByGroupId(long groupId);
+
+	/**
+	 * Returns all the notifications templates where groupId = &#63; and enabled = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param enabled the enabled
+	 * @return the matching notifications templates
+	 */
+	public java.util.List<NotificationsTemplate> findByG_E(
+		long groupId, boolean enabled);
+
+	/**
+	 * Returns a range of all the notifications templates where groupId = &#63; and enabled = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>NotificationsTemplateModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param enabled the enabled
+	 * @param start the lower bound of the range of notifications templates
+	 * @param end the upper bound of the range of notifications templates (not inclusive)
+	 * @return the range of matching notifications templates
+	 */
+	public java.util.List<NotificationsTemplate> findByG_E(
+		long groupId, boolean enabled, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the notifications templates where groupId = &#63; and enabled = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>NotificationsTemplateModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param enabled the enabled
+	 * @param start the lower bound of the range of notifications templates
+	 * @param end the upper bound of the range of notifications templates (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching notifications templates
+	 */
+	public java.util.List<NotificationsTemplate> findByG_E(
+		long groupId, boolean enabled, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<NotificationsTemplate>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the notifications templates where groupId = &#63; and enabled = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>NotificationsTemplateModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param enabled the enabled
+	 * @param start the lower bound of the range of notifications templates
+	 * @param end the upper bound of the range of notifications templates (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching notifications templates
+	 */
+	public java.util.List<NotificationsTemplate> findByG_E(
+		long groupId, boolean enabled, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<NotificationsTemplate>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first notifications template in the ordered set where groupId = &#63; and enabled = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param enabled the enabled
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching notifications template
+	 * @throws NoSuchNotificationsTemplateException if a matching notifications template could not be found
+	 */
+	public NotificationsTemplate findByG_E_First(
+			long groupId, boolean enabled,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<NotificationsTemplate> orderByComparator)
+		throws NoSuchNotificationsTemplateException;
+
+	/**
+	 * Returns the first notifications template in the ordered set where groupId = &#63; and enabled = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param enabled the enabled
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching notifications template, or <code>null</code> if a matching notifications template could not be found
+	 */
+	public NotificationsTemplate fetchByG_E_First(
+		long groupId, boolean enabled,
+		com.liferay.portal.kernel.util.OrderByComparator<NotificationsTemplate>
+			orderByComparator);
+
+	/**
+	 * Returns the last notifications template in the ordered set where groupId = &#63; and enabled = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param enabled the enabled
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching notifications template
+	 * @throws NoSuchNotificationsTemplateException if a matching notifications template could not be found
+	 */
+	public NotificationsTemplate findByG_E_Last(
+			long groupId, boolean enabled,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<NotificationsTemplate> orderByComparator)
+		throws NoSuchNotificationsTemplateException;
+
+	/**
+	 * Returns the last notifications template in the ordered set where groupId = &#63; and enabled = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param enabled the enabled
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching notifications template, or <code>null</code> if a matching notifications template could not be found
+	 */
+	public NotificationsTemplate fetchByG_E_Last(
+		long groupId, boolean enabled,
+		com.liferay.portal.kernel.util.OrderByComparator<NotificationsTemplate>
+			orderByComparator);
+
+	/**
+	 * Returns the notifications templates before and after the current notifications template in the ordered set where groupId = &#63; and enabled = &#63;.
+	 *
+	 * @param notificationsTemplateId the primary key of the current notifications template
+	 * @param groupId the group ID
+	 * @param enabled the enabled
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next notifications template
+	 * @throws NoSuchNotificationsTemplateException if a notifications template with the primary key could not be found
+	 */
+	public NotificationsTemplate[] findByG_E_PrevAndNext(
+			long notificationsTemplateId, long groupId, boolean enabled,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<NotificationsTemplate> orderByComparator)
+		throws NoSuchNotificationsTemplateException;
+
+	/**
+	 * Removes all the notifications templates where groupId = &#63; and enabled = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param enabled the enabled
+	 */
+	public void removeByG_E(long groupId, boolean enabled);
+
+	/**
+	 * Returns the number of notifications templates where groupId = &#63; and enabled = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param enabled the enabled
+	 * @return the number of matching notifications templates
+	 */
+	public int countByG_E(long groupId, boolean enabled);
 
 	/**
 	 * Caches the notifications template in the entity cache if it is enabled.

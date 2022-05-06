@@ -221,18 +221,17 @@ public class NotificationsTemplateLocalServiceUtil {
 	}
 
 	/**
-	 * Returns the notifications template with the matching UUID and company.
+	 * Returns the notifications template matching the UUID and group.
 	 *
 	 * @param uuid the notifications template's UUID
-	 * @param companyId the primary key of the company
+	 * @param groupId the primary key of the group
 	 * @return the matching notifications template, or <code>null</code> if a matching notifications template could not be found
 	 */
 	public static NotificationsTemplate
-		fetchNotificationsTemplateByUuidAndCompanyId(
-			String uuid, long companyId) {
+		fetchNotificationsTemplateByUuidAndGroupId(String uuid, long groupId) {
 
-		return getService().fetchNotificationsTemplateByUuidAndCompanyId(
-			uuid, companyId);
+		return getService().fetchNotificationsTemplateByUuidAndGroupId(
+			uuid, groupId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
@@ -271,20 +270,19 @@ public class NotificationsTemplateLocalServiceUtil {
 	}
 
 	/**
-	 * Returns the notifications template with the matching UUID and company.
+	 * Returns the notifications template matching the UUID and group.
 	 *
 	 * @param uuid the notifications template's UUID
-	 * @param companyId the primary key of the company
+	 * @param groupId the primary key of the group
 	 * @return the matching notifications template
 	 * @throws PortalException if a matching notifications template could not be found
 	 */
 	public static NotificationsTemplate
-			getNotificationsTemplateByUuidAndCompanyId(
-				String uuid, long companyId)
+			getNotificationsTemplateByUuidAndGroupId(String uuid, long groupId)
 		throws PortalException {
 
-		return getService().getNotificationsTemplateByUuidAndCompanyId(
-			uuid, companyId);
+		return getService().getNotificationsTemplateByUuidAndGroupId(
+			uuid, groupId);
 	}
 
 	/**
@@ -302,6 +300,40 @@ public class NotificationsTemplateLocalServiceUtil {
 		int start, int end) {
 
 		return getService().getNotificationsTemplates(start, end);
+	}
+
+	/**
+	 * Returns all the notifications templates matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the notifications templates
+	 * @param companyId the primary key of the company
+	 * @return the matching notifications templates, or an empty list if no matches were found
+	 */
+	public static List<NotificationsTemplate>
+		getNotificationsTemplatesByUuidAndCompanyId(
+			String uuid, long companyId) {
+
+		return getService().getNotificationsTemplatesByUuidAndCompanyId(
+			uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of notifications templates matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the notifications templates
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of notifications templates
+	 * @param end the upper bound of the range of notifications templates (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the range of matching notifications templates, or an empty list if no matches were found
+	 */
+	public static List<NotificationsTemplate>
+		getNotificationsTemplatesByUuidAndCompanyId(
+			String uuid, long companyId, int start, int end,
+			OrderByComparator<NotificationsTemplate> orderByComparator) {
+
+		return getService().getNotificationsTemplatesByUuidAndCompanyId(
+			uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**

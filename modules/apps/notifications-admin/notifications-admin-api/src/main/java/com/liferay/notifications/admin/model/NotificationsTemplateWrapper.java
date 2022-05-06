@@ -48,12 +48,22 @@ public class NotificationsTemplateWrapper
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("notificationsTemplateId", getNotificationsTemplateId());
+		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
+		attributes.put("description", getDescription());
+		attributes.put("from", getFrom());
+		attributes.put("fromName", getFromName());
+		attributes.put("to", getTo());
+		attributes.put("cc", getCc());
+		attributes.put("bcc", getBcc());
+		attributes.put("enabled", isEnabled());
+		attributes.put("subject", getSubject());
+		attributes.put("body", getBody());
 
 		return attributes;
 	}
@@ -77,6 +87,12 @@ public class NotificationsTemplateWrapper
 
 		if (notificationsTemplateId != null) {
 			setNotificationsTemplateId(notificationsTemplateId);
+		}
+
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
 		}
 
 		Long companyId = (Long)attributes.get("companyId");
@@ -114,6 +130,60 @@ public class NotificationsTemplateWrapper
 		if (name != null) {
 			setName(name);
 		}
+
+		String description = (String)attributes.get("description");
+
+		if (description != null) {
+			setDescription(description);
+		}
+
+		String from = (String)attributes.get("from");
+
+		if (from != null) {
+			setFrom(from);
+		}
+
+		String fromName = (String)attributes.get("fromName");
+
+		if (fromName != null) {
+			setFromName(fromName);
+		}
+
+		String to = (String)attributes.get("to");
+
+		if (to != null) {
+			setTo(to);
+		}
+
+		String cc = (String)attributes.get("cc");
+
+		if (cc != null) {
+			setCc(cc);
+		}
+
+		String bcc = (String)attributes.get("bcc");
+
+		if (bcc != null) {
+			setBcc(bcc);
+		}
+
+		Boolean enabled = (Boolean)attributes.get("enabled");
+
+		if (enabled != null) {
+			setEnabled(enabled);
+		}
+
+		String subject = (String)attributes.get("subject");
+
+		if (subject != null) {
+			setSubject(subject);
+		}
+
+		String body = (String)attributes.get("body");
+
+		if (body != null) {
+			setBody(body);
+		}
 	}
 
 	@Override
@@ -124,6 +194,102 @@ public class NotificationsTemplateWrapper
 	@Override
 	public String[] getAvailableLanguageIds() {
 		return model.getAvailableLanguageIds();
+	}
+
+	/**
+	 * Returns the bcc of this notifications template.
+	 *
+	 * @return the bcc of this notifications template
+	 */
+	@Override
+	public String getBcc() {
+		return model.getBcc();
+	}
+
+	/**
+	 * Returns the body of this notifications template.
+	 *
+	 * @return the body of this notifications template
+	 */
+	@Override
+	public String getBody() {
+		return model.getBody();
+	}
+
+	/**
+	 * Returns the localized body of this notifications template in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the locale of the language
+	 * @return the localized body of this notifications template
+	 */
+	@Override
+	public String getBody(java.util.Locale locale) {
+		return model.getBody(locale);
+	}
+
+	/**
+	 * Returns the localized body of this notifications template in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the local of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized body of this notifications template. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	 */
+	@Override
+	public String getBody(java.util.Locale locale, boolean useDefault) {
+		return model.getBody(locale, useDefault);
+	}
+
+	/**
+	 * Returns the localized body of this notifications template in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @return the localized body of this notifications template
+	 */
+	@Override
+	public String getBody(String languageId) {
+		return model.getBody(languageId);
+	}
+
+	/**
+	 * Returns the localized body of this notifications template in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized body of this notifications template
+	 */
+	@Override
+	public String getBody(String languageId, boolean useDefault) {
+		return model.getBody(languageId, useDefault);
+	}
+
+	@Override
+	public String getBodyCurrentLanguageId() {
+		return model.getBodyCurrentLanguageId();
+	}
+
+	@Override
+	public String getBodyCurrentValue() {
+		return model.getBodyCurrentValue();
+	}
+
+	/**
+	 * Returns a map of the locales and localized bodies of this notifications template.
+	 *
+	 * @return the locales and localized bodies of this notifications template
+	 */
+	@Override
+	public Map<java.util.Locale, String> getBodyMap() {
+		return model.getBodyMap();
+	}
+
+	/**
+	 * Returns the cc of this notifications template.
+	 *
+	 * @return the cc of this notifications template
+	 */
+	@Override
+	public String getCc() {
+		return model.getCc();
 	}
 
 	/**
@@ -149,6 +315,122 @@ public class NotificationsTemplateWrapper
 	@Override
 	public String getDefaultLanguageId() {
 		return model.getDefaultLanguageId();
+	}
+
+	/**
+	 * Returns the description of this notifications template.
+	 *
+	 * @return the description of this notifications template
+	 */
+	@Override
+	public String getDescription() {
+		return model.getDescription();
+	}
+
+	/**
+	 * Returns the enabled of this notifications template.
+	 *
+	 * @return the enabled of this notifications template
+	 */
+	@Override
+	public boolean getEnabled() {
+		return model.getEnabled();
+	}
+
+	/**
+	 * Returns the from of this notifications template.
+	 *
+	 * @return the from of this notifications template
+	 */
+	@Override
+	public String getFrom() {
+		return model.getFrom();
+	}
+
+	/**
+	 * Returns the from name of this notifications template.
+	 *
+	 * @return the from name of this notifications template
+	 */
+	@Override
+	public String getFromName() {
+		return model.getFromName();
+	}
+
+	/**
+	 * Returns the localized from name of this notifications template in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the locale of the language
+	 * @return the localized from name of this notifications template
+	 */
+	@Override
+	public String getFromName(java.util.Locale locale) {
+		return model.getFromName(locale);
+	}
+
+	/**
+	 * Returns the localized from name of this notifications template in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the local of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized from name of this notifications template. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	 */
+	@Override
+	public String getFromName(java.util.Locale locale, boolean useDefault) {
+		return model.getFromName(locale, useDefault);
+	}
+
+	/**
+	 * Returns the localized from name of this notifications template in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @return the localized from name of this notifications template
+	 */
+	@Override
+	public String getFromName(String languageId) {
+		return model.getFromName(languageId);
+	}
+
+	/**
+	 * Returns the localized from name of this notifications template in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized from name of this notifications template
+	 */
+	@Override
+	public String getFromName(String languageId, boolean useDefault) {
+		return model.getFromName(languageId, useDefault);
+	}
+
+	@Override
+	public String getFromNameCurrentLanguageId() {
+		return model.getFromNameCurrentLanguageId();
+	}
+
+	@Override
+	public String getFromNameCurrentValue() {
+		return model.getFromNameCurrentValue();
+	}
+
+	/**
+	 * Returns a map of the locales and localized from names of this notifications template.
+	 *
+	 * @return the locales and localized from names of this notifications template
+	 */
+	@Override
+	public Map<java.util.Locale, String> getFromNameMap() {
+		return model.getFromNameMap();
+	}
+
+	/**
+	 * Returns the group ID of this notifications template.
+	 *
+	 * @return the group ID of this notifications template
+	 */
+	@Override
+	public long getGroupId() {
+		return model.getGroupId();
 	}
 
 	/**
@@ -268,6 +550,92 @@ public class NotificationsTemplateWrapper
 	}
 
 	/**
+	 * Returns the subject of this notifications template.
+	 *
+	 * @return the subject of this notifications template
+	 */
+	@Override
+	public String getSubject() {
+		return model.getSubject();
+	}
+
+	/**
+	 * Returns the localized subject of this notifications template in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the locale of the language
+	 * @return the localized subject of this notifications template
+	 */
+	@Override
+	public String getSubject(java.util.Locale locale) {
+		return model.getSubject(locale);
+	}
+
+	/**
+	 * Returns the localized subject of this notifications template in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the local of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized subject of this notifications template. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	 */
+	@Override
+	public String getSubject(java.util.Locale locale, boolean useDefault) {
+		return model.getSubject(locale, useDefault);
+	}
+
+	/**
+	 * Returns the localized subject of this notifications template in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @return the localized subject of this notifications template
+	 */
+	@Override
+	public String getSubject(String languageId) {
+		return model.getSubject(languageId);
+	}
+
+	/**
+	 * Returns the localized subject of this notifications template in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized subject of this notifications template
+	 */
+	@Override
+	public String getSubject(String languageId, boolean useDefault) {
+		return model.getSubject(languageId, useDefault);
+	}
+
+	@Override
+	public String getSubjectCurrentLanguageId() {
+		return model.getSubjectCurrentLanguageId();
+	}
+
+	@Override
+	public String getSubjectCurrentValue() {
+		return model.getSubjectCurrentValue();
+	}
+
+	/**
+	 * Returns a map of the locales and localized subjects of this notifications template.
+	 *
+	 * @return the locales and localized subjects of this notifications template
+	 */
+	@Override
+	public Map<java.util.Locale, String> getSubjectMap() {
+		return model.getSubjectMap();
+	}
+
+	/**
+	 * Returns the to of this notifications template.
+	 *
+	 * @return the to of this notifications template
+	 */
+	@Override
+	public String getTo() {
+		return model.getTo();
+	}
+
+	/**
 	 * Returns the user ID of this notifications template.
 	 *
 	 * @return the user ID of this notifications template
@@ -307,6 +675,16 @@ public class NotificationsTemplateWrapper
 		return model.getUuid();
 	}
 
+	/**
+	 * Returns <code>true</code> if this notifications template is enabled.
+	 *
+	 * @return <code>true</code> if this notifications template is enabled; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isEnabled() {
+		return model.isEnabled();
+	}
+
 	@Override
 	public void persist() {
 		model.persist();
@@ -328,6 +706,89 @@ public class NotificationsTemplateWrapper
 	}
 
 	/**
+	 * Sets the bcc of this notifications template.
+	 *
+	 * @param bcc the bcc of this notifications template
+	 */
+	@Override
+	public void setBcc(String bcc) {
+		model.setBcc(bcc);
+	}
+
+	/**
+	 * Sets the body of this notifications template.
+	 *
+	 * @param body the body of this notifications template
+	 */
+	@Override
+	public void setBody(String body) {
+		model.setBody(body);
+	}
+
+	/**
+	 * Sets the localized body of this notifications template in the language.
+	 *
+	 * @param body the localized body of this notifications template
+	 * @param locale the locale of the language
+	 */
+	@Override
+	public void setBody(String body, java.util.Locale locale) {
+		model.setBody(body, locale);
+	}
+
+	/**
+	 * Sets the localized body of this notifications template in the language, and sets the default locale.
+	 *
+	 * @param body the localized body of this notifications template
+	 * @param locale the locale of the language
+	 * @param defaultLocale the default locale
+	 */
+	@Override
+	public void setBody(
+		String body, java.util.Locale locale, java.util.Locale defaultLocale) {
+
+		model.setBody(body, locale, defaultLocale);
+	}
+
+	@Override
+	public void setBodyCurrentLanguageId(String languageId) {
+		model.setBodyCurrentLanguageId(languageId);
+	}
+
+	/**
+	 * Sets the localized bodies of this notifications template from the map of locales and localized bodies.
+	 *
+	 * @param bodyMap the locales and localized bodies of this notifications template
+	 */
+	@Override
+	public void setBodyMap(Map<java.util.Locale, String> bodyMap) {
+		model.setBodyMap(bodyMap);
+	}
+
+	/**
+	 * Sets the localized bodies of this notifications template from the map of locales and localized bodies, and sets the default locale.
+	 *
+	 * @param bodyMap the locales and localized bodies of this notifications template
+	 * @param defaultLocale the default locale
+	 */
+	@Override
+	public void setBodyMap(
+		Map<java.util.Locale, String> bodyMap, java.util.Locale defaultLocale) {
+
+		model.setBodyMap(bodyMap, defaultLocale);
+	}
+
+	/**
+	 * Sets the cc of this notifications template.
+	 *
+	 * @param cc the cc of this notifications template
+	 */
+	@Override
+	public void setCc(String cc) {
+		model.setCc(cc);
+	}
+
+	/**
 	 * Sets the company ID of this notifications template.
 	 *
 	 * @param companyId the company ID of this notifications template
@@ -345,6 +806,111 @@ public class NotificationsTemplateWrapper
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
+	}
+
+	/**
+	 * Sets the description of this notifications template.
+	 *
+	 * @param description the description of this notifications template
+	 */
+	@Override
+	public void setDescription(String description) {
+		model.setDescription(description);
+	}
+
+	/**
+	 * Sets whether this notifications template is enabled.
+	 *
+	 * @param enabled the enabled of this notifications template
+	 */
+	@Override
+	public void setEnabled(boolean enabled) {
+		model.setEnabled(enabled);
+	}
+
+	/**
+	 * Sets the from of this notifications template.
+	 *
+	 * @param from the from of this notifications template
+	 */
+	@Override
+	public void setFrom(String from) {
+		model.setFrom(from);
+	}
+
+	/**
+	 * Sets the from name of this notifications template.
+	 *
+	 * @param fromName the from name of this notifications template
+	 */
+	@Override
+	public void setFromName(String fromName) {
+		model.setFromName(fromName);
+	}
+
+	/**
+	 * Sets the localized from name of this notifications template in the language.
+	 *
+	 * @param fromName the localized from name of this notifications template
+	 * @param locale the locale of the language
+	 */
+	@Override
+	public void setFromName(String fromName, java.util.Locale locale) {
+		model.setFromName(fromName, locale);
+	}
+
+	/**
+	 * Sets the localized from name of this notifications template in the language, and sets the default locale.
+	 *
+	 * @param fromName the localized from name of this notifications template
+	 * @param locale the locale of the language
+	 * @param defaultLocale the default locale
+	 */
+	@Override
+	public void setFromName(
+		String fromName, java.util.Locale locale,
+		java.util.Locale defaultLocale) {
+
+		model.setFromName(fromName, locale, defaultLocale);
+	}
+
+	@Override
+	public void setFromNameCurrentLanguageId(String languageId) {
+		model.setFromNameCurrentLanguageId(languageId);
+	}
+
+	/**
+	 * Sets the localized from names of this notifications template from the map of locales and localized from names.
+	 *
+	 * @param fromNameMap the locales and localized from names of this notifications template
+	 */
+	@Override
+	public void setFromNameMap(Map<java.util.Locale, String> fromNameMap) {
+		model.setFromNameMap(fromNameMap);
+	}
+
+	/**
+	 * Sets the localized from names of this notifications template from the map of locales and localized from names, and sets the default locale.
+	 *
+	 * @param fromNameMap the locales and localized from names of this notifications template
+	 * @param defaultLocale the default locale
+	 */
+	@Override
+	public void setFromNameMap(
+		Map<java.util.Locale, String> fromNameMap,
+		java.util.Locale defaultLocale) {
+
+		model.setFromNameMap(fromNameMap, defaultLocale);
+	}
+
+	/**
+	 * Sets the group ID of this notifications template.
+	 *
+	 * @param groupId the group ID of this notifications template
+	 */
+	@Override
+	public void setGroupId(long groupId) {
+		model.setGroupId(groupId);
 	}
 
 	/**
@@ -448,6 +1014,81 @@ public class NotificationsTemplateWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	 * Sets the subject of this notifications template.
+	 *
+	 * @param subject the subject of this notifications template
+	 */
+	@Override
+	public void setSubject(String subject) {
+		model.setSubject(subject);
+	}
+
+	/**
+	 * Sets the localized subject of this notifications template in the language.
+	 *
+	 * @param subject the localized subject of this notifications template
+	 * @param locale the locale of the language
+	 */
+	@Override
+	public void setSubject(String subject, java.util.Locale locale) {
+		model.setSubject(subject, locale);
+	}
+
+	/**
+	 * Sets the localized subject of this notifications template in the language, and sets the default locale.
+	 *
+	 * @param subject the localized subject of this notifications template
+	 * @param locale the locale of the language
+	 * @param defaultLocale the default locale
+	 */
+	@Override
+	public void setSubject(
+		String subject, java.util.Locale locale,
+		java.util.Locale defaultLocale) {
+
+		model.setSubject(subject, locale, defaultLocale);
+	}
+
+	@Override
+	public void setSubjectCurrentLanguageId(String languageId) {
+		model.setSubjectCurrentLanguageId(languageId);
+	}
+
+	/**
+	 * Sets the localized subjects of this notifications template from the map of locales and localized subjects.
+	 *
+	 * @param subjectMap the locales and localized subjects of this notifications template
+	 */
+	@Override
+	public void setSubjectMap(Map<java.util.Locale, String> subjectMap) {
+		model.setSubjectMap(subjectMap);
+	}
+
+	/**
+	 * Sets the localized subjects of this notifications template from the map of locales and localized subjects, and sets the default locale.
+	 *
+	 * @param subjectMap the locales and localized subjects of this notifications template
+	 * @param defaultLocale the default locale
+	 */
+	@Override
+	public void setSubjectMap(
+		Map<java.util.Locale, String> subjectMap,
+		java.util.Locale defaultLocale) {
+
+		model.setSubjectMap(subjectMap, defaultLocale);
+	}
+
+	/**
+	 * Sets the to of this notifications template.
+	 *
+	 * @param to the to of this notifications template
+	 */
+	@Override
+	public void setTo(String to) {
+		model.setTo(to);
 	}
 
 	/**

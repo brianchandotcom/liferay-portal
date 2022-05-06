@@ -6401,7 +6401,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "transparent",
+							"defaultValue": "var(--color-neutral-3)",
 							"editorType": "ColorPicker",
 							"label": "tab-secondary-item-border-color-active",
 							"mappings": [
@@ -6952,7 +6952,7 @@
 							"type": "String"
 						},
 						{
-							"defaultValue": "transparent",
+							"defaultValue": "var(--color-neutral-3)",
 							"editorType": "ColorPicker",
 							"label": "tab-tertiary-item-border-color-active",
 							"mappings": [

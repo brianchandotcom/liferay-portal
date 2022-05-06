@@ -197,6 +197,10 @@ $nav-secondary-link: map-deep-merge(
 );
 
 $nav-secondary-link-active-bar-top: (
+	active-class: (
+		border-width: 0,
+		border-top-width: var(--tab-secondary-horizontal-item-border-top-width),
+	),
 	after: (
 		top: 0,
 		width: var(--tab-secondary-horizontal-item-active-bar-width),
@@ -210,6 +214,11 @@ $nav-secondary-link-vertical: (
 	border-top-width: var(--tab-secondary-vertical-item-border-bottom-width),
 	padding: var(--tab-secondary-vertical-item-padding-y)
 		var(--tab-secondary-vertical-item-padding-x),
+	active-class: (
+		border-width: 0,
+		border-left-width:
+			var(--tab-secondary-horizontal-item-border-left-width),
+	),
 	after: (
 		top: 0,
 		height: var(--tab-secondary-vertical-item-active-bar-height),
@@ -309,6 +318,9 @@ $nav-tertiary-link-active-bar-top: (
 	border-left-width: var(--tab-tertiary-horizontal-item-border-left-width),
 	border-right-width: var(--tab-tertiary-horizontal-item-border-right-width),
 	border-top-width: var(--tab-tertiary-horizontal-item-border-bottom-width),
+	active-class: (
+		border-witdh: 0,
+	),
 	after: (
 		top: 0,
 	),
@@ -321,13 +333,13 @@ $nav-tertiary-link-vertical: (
 	border-top-width: var(--tab-tertiary-vertical-item-border-top-width),
 	padding: var(--tab-tertiary-vertical-item-padding-y)
 		var(--tab-tertiary-vertical-item-padding-x),
+	active-class: (
+		border-width: 0,
+	),
 	after: (
 		height: var(--tab-tertiary-vertical-item-active-bar-height),
 		top: 0,
 		width: var(--tab-tertiary-item-active-bar-thickness),
-	),
-	active-class: (
-		border-color: transparent,
 	),
 );
 

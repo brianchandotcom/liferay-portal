@@ -76,7 +76,7 @@ for (AssetRendererFactory<?> assetRendererFactory : assetEntriesSearchFacet.getA
 
 			data[
 				'<%= assetEntriesSearchFacet.getClassName() + "assetTypes" %>'
-			] = Liferay.Util.listSelect(currentAssetTypes);
+			] = Liferay.Util.getSelectedOptionValues(currentAssetTypes);
 
 			Liferay.Util.postForm(form, {data: data});
 		});

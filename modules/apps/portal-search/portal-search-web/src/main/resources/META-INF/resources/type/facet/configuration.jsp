@@ -124,7 +124,7 @@ TypeFacetPortletPreferences typeFacetPortletPreferences = new com.liferay.portal
 
 			data[
 				'<%= PortletPreferencesJspUtil.getInputName(TypeFacetPortletPreferences.PREFERENCE_KEY_ASSET_TYPES) %>'
-			] = Liferay.Util.listSelect(currentAssetTypes);
+			] = Liferay.Util.getSelectedOptionValues(currentAssetTypes);
 
 			Liferay.Util.postForm(form, {data: data});
 		});

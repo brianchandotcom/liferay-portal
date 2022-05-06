@@ -276,7 +276,9 @@ catch (NoSuchFolderException nsfe) {
 			);
 
 			if (currentFolderColumns && folderColumns) {
-				folderColumns.value = Util.listSelect(currentFolderColumns);
+				folderColumns.value = Util.getSelectedOptionValues(
+					currentFolderColumns
+				);
 			}
 
 			var currentEntryColumns = form.querySelector(
@@ -287,7 +289,9 @@ catch (NoSuchFolderException nsfe) {
 			);
 
 			if (currentEntryColumns && entryColumns) {
-				entryColumns.value = Util.listSelect(currentEntryColumns);
+				entryColumns.value = Util.getSelectedOptionValues(
+					currentEntryColumns
+				);
 			}
 
 			submitForm(form);

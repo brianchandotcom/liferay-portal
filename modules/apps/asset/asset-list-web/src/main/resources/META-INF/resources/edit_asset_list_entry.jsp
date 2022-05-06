@@ -111,7 +111,7 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 		%>
 
 			Liferay.Util.setFormValues(form, {
-				classTypeIds<%= className %>: Liferay.Util.listSelect(
+				classTypeIds<%= className %>: Liferay.Util.getSelectedOptionValues(
 					Liferay.Util.getFormElement(
 						form,
 						'<%= className %>currentClassTypeIds'
@@ -131,7 +131,7 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 		if (currentClassNameIdsSelect) {
 			Liferay.Util.postForm(form, {
 				data: {
-					classNameIds: Liferay.Util.listSelect(
+					classNameIds: Liferay.Util.getSelectedOptionValues(
 						currentClassNameIdsSelect
 					),
 				},

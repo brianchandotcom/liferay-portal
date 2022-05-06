@@ -137,7 +137,7 @@
 
 		if (currentLanguageIdsElement) {
 			Liferay.Util.setFormValues(form, {
-				<%= PropsKeys.LOCALES %>: Liferay.Util.listSelect(
+				<%= PropsKeys.LOCALES %>: Liferay.Util.getSelectedOptionValues(
 					currentLanguageIdsElement
 				),
 			});

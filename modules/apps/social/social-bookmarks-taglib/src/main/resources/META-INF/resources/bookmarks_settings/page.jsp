@@ -97,11 +97,11 @@ rightList = ListUtil.sort(rightList, new KeyValuePairComparator(false, true));
 		);
 
 		Liferay.after('inputmoveboxes:moveItem', (event) => {
-			socialBookmarksTypes.value = Util.listSelect(currentTypes);
+			socialBookmarksTypes.value = Util.getSelectedOptionValues(currentTypes);
 		});
 
 		Liferay.after('inputmoveboxes:orderItem', (event) => {
-			socialBookmarksTypes.value = Util.listSelect(currentTypes);
+			socialBookmarksTypes.value = Util.getSelectedOptionValues(currentTypes);
 		});
 	})();
 </script>

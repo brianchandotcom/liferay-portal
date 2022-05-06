@@ -164,7 +164,7 @@ IGConfigurationDisplayContext igConfigurationDisplayContext = (IGConfigurationDi
 
 		Liferay.Util.postForm(form, {
 			data: {
-				mimeTypes: Liferay.Util.listSelect(
+				mimeTypes: Liferay.Util.getSelectedOptionValues(
 					Liferay.Util.getFormElement(form, 'currentMimeTypes')
 				),
 			},

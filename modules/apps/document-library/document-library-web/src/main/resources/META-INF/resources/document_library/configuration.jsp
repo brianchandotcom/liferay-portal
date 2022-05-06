@@ -246,10 +246,10 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 
 		Util.postForm(form, {
 			data: {
-				displayViews: Util.listSelect(
+				displayViews: Util.getSelectedOptionValues(
 					Util.getFormElement(form, 'currentDisplayViews')
 				),
-				entryColumns: Util.listSelect(
+				entryColumns: Util.getSelectedOptionValues(
 					Util.getFormElement(form, 'currentEntryColumns')
 				),
 			},

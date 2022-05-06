@@ -90,7 +90,7 @@ ContentDashboardAdminConfigurationDisplayContext contentDashboardAdminConfigurat
 		var form = document.<portlet:namespace />fm;
 		Liferay.Util.postForm(form, {
 			data: {
-				assetVocabularyIds: Liferay.Util.listSelect(
+				assetVocabularyIds: Liferay.Util.getSelectedOptionValues(
 					Liferay.Util.getFormElement(form, 'currentAssetVocabularyIds')
 				),
 			},

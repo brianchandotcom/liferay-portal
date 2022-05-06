@@ -141,8 +141,12 @@
 		if (availableVisibleNodes && currentVisibleNodes) {
 			Liferay.Util.postForm(form, {
 				data: {
-					hiddenNodes: Liferay.Util.listSelect(availableVisibleNodes),
-					visibleNodes: Liferay.Util.listSelect(currentVisibleNodes),
+					hiddenNodes: Liferay.Util.getSelectedOptionValues(
+						availableVisibleNodes
+					),
+					visibleNodes: Liferay.Util.getSelectedOptionValues(
+						currentVisibleNodes
+					),
 				},
 			});
 		}

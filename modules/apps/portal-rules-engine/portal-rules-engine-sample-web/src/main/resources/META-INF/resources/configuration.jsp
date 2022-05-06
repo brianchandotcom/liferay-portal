@@ -97,7 +97,7 @@ long[] classNameIdValues = StringUtil.split(ParamUtil.getString(request, "classN
 			if (classNameIds && currentClassNameIds) {
 				classNameIds.setAttribute(
 					'value',
-					Liferay.Util.listSelect(currentClassNameIds)
+					Liferay.Util.getSelectedOptionValues(currentClassNameIds)
 				);
 			}
 

@@ -31,6 +31,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FS_PRODUCT_AVAILABILITY_DISCONTINUED</td>
+	<td>//div[contains(@class,'availability')]//span[@class='text-danger'][contains(text(),'Discontinued')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FS_PRODUCT_DESCRIPTION</td>
 	<td>//p[contains(concat(' ',normalize-space(@class),' '),'product-description')]</td>
 	<td></td>

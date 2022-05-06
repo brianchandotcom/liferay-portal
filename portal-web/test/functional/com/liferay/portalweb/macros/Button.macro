@@ -94,6 +94,14 @@ definition {
 		Button.click(button = "Publish");
 	}
 
+	macro clickPublishInNonDefaultLanguage {
+		ScrollWebElementIntoView(
+			key_text = "${button}",
+			locator1 = "Button#ANY");
+
+		Button.click(button = "${button}");
+	}
+
 	macro clickRemove {
 		Button.click(button = "Remove");
 	}

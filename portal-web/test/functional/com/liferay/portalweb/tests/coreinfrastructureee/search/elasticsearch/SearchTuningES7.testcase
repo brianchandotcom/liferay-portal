@@ -630,6 +630,24 @@ definition {
 		SearchResultPortlet.viewNoSearchResults(searchTerm = "orange");
 	}
 
+	test NavigateToResultRankingsViaUI {
+		ApplicationsMenu.gotoPortlet(
+			category = "Search Tuning",
+			panel = "Applications",
+			portlet = "Result Rankings");
+
+		ControlMenu.viewHeaderTitle(headerTitle = "Result Rankings");
+	}
+
+	test NavigateToSynonymsViaUI {
+		ApplicationsMenu.gotoPortlet(
+			category = "Search Tuning",
+			panel = "Applications",
+			portlet = "Synonyms");
+
+		ControlMenu.viewHeaderTitle(headerTitle = "Synonyms");
+	}
+
 	@priority = "4"
 	test PinAndHideResultsWithAliases {
 		property portal.acceptance = "true";

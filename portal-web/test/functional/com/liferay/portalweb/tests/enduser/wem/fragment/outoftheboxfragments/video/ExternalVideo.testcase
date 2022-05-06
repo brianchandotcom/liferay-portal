@@ -38,7 +38,9 @@ definition {
 	@description = "This is a test for LPS-151368. It checks that the video URL is saved when adding external video shortcut in non-default language."
 	@priority = "4"
 	test CanExternalVideoURLSavedAfterLoginNonDefaultLanguage {
-		Navigator.openURL(baseURL = " http://localhost:8080/ja");
+		var portalURL = PropsUtil.get("portal.url");
+
+		Navigator.openSpecificURL(url = "${portalURL}/ja");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
 

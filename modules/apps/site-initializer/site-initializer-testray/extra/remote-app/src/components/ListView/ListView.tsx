@@ -14,7 +14,7 @@
 
 import {TypedDocumentNode, useQuery} from '@apollo/client';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
-import {useCallback, useContext, useEffect, useMemo} from 'react';
+import {memo, useCallback, useContext, useEffect, useMemo} from 'react';
 
 import ListViewContextProvider, {
 	ListViewContext,
@@ -193,4 +193,4 @@ const ListViewWithContext: React.FC<
 	);
 };
 
-export default ListViewWithContext;
+export default memo(ListViewWithContext);

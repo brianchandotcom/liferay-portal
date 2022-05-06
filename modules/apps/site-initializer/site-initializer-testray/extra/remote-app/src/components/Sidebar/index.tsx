@@ -12,34 +12,52 @@
  * details.
  */
 
+import ClayPopover from '@clayui/popover';
 import {Link, useLocation} from 'react-router-dom';
 
 import i18n from '../../i18n';
 import TestrayLogo from '../../images/testray-logo';
+import CompareRun from './CompareRuns';
 import SidebarFooter from './SidebarFooter';
 import SidebarItem from './SidebarItem';
 
-const sidebarItems = [
-	{
-		icon: 'polls',
-		label: i18n.translate('results'),
-		path: '/',
-	},
-	{
-		icon: 'merge',
-		label: i18n.translate('testflow'),
-		path: '/testflow',
-	},
-	{
-		className: 'mt-3',
-		icon: 'drop',
-		label: i18n.translate('compare-runs'),
-		path: '/compare-runs',
-	},
-];
-
 const Sidebar = () => {
 	const {pathname} = useLocation();
+
+	const sidebarItems = [
+		{
+			icon: 'polls',
+			label: i18n.translate('results'),
+			path: '/',
+		},
+		{
+			icon: 'merge',
+			label: i18n.translate('testflow'),
+			path: '/testflow',
+		},
+		{
+			className: 'mt-3',
+			element: (
+				<ClayPopover
+					alignPosition="right"
+					closeOnClickOutside
+					disableScroll={true}
+					header="Compare Runs"
+					size="lg"
+					trigger={
+						<div>
+							<SidebarItem
+								icon="drop"
+								label={i18n.translate('compare-runs')}
+							/>
+						</div>
+					}
+				>
+					<CompareRun />
+				</ClayPopover>
+			),
+		},
+	];
 
 	return (
 		<div className="testray-sidebar">
@@ -48,28 +66,37 @@ const Sidebar = () => {
 					<TestrayLogo />
 				</Link>
 
-				{sidebarItems.map(({className, icon, label, path}, index) => {
-					const [, ...items] = sidebarItems;
+				{sidebarItems.map(
+					(
+						{className, element = <></>, icon, label, path},
+						index
+					) => {
+						const [, ...items] = sidebarItems;
 
-					const someItemIsActive = items.some((item) =>
-						pathname.includes(item.path)
-					);
+						if (path) {
+							const someItemIsActive = items.some((item) =>
+								item.path ? pathname.includes(item.path) : false
+							);
 
-					return (
-						<SidebarItem
-							active={
-								index === 0
-									? !someItemIsActive
-									: pathname.includes(path)
-							}
-							className={className}
-							icon={icon}
-							key={index}
-							label={label}
-							path={path}
-						/>
-					);
-				})}
+							return (
+								<SidebarItem
+									active={
+										index === 0
+											? !someItemIsActive
+											: pathname.includes(path)
+									}
+									className={className}
+									icon={icon}
+									key={index}
+									label={label}
+									path={path}
+								/>
+							);
+						}
+
+						return element;
+					}
+				)}
 			</div>
 
 			<SidebarFooter />

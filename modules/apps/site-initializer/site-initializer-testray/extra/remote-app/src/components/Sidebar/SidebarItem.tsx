@@ -17,11 +17,11 @@ import classNames from 'classnames';
 import {Link} from 'react-router-dom';
 
 type SidebarItemProps = {
-	active: boolean;
+	active?: boolean;
 	className?: string;
 	icon: string;
 	label: string;
-	path: string;
+	path?: string;
 };
 
 const SidebarItem: React.FC<SidebarItemProps> = ({
@@ -30,15 +30,25 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
 	icon,
 	label,
 	path,
-}) => (
-	<Link
-		className={classNames('testray-sidebar-item', {active}, className)}
-		to={path}
-	>
-		<ClayIcon fontSize={20} symbol={icon} />
+}) => {
+	const LinkComponent = path
+		? Link
+		: ({children, ...props}: any) => <div {...props}>{children}</div>;
 
-		<span className="ml-1 testray-sidebar-text">{label}</span>
-	</Link>
-);
+	return (
+		<LinkComponent
+			className={classNames(
+				'cursor-pointer testray-sidebar-item',
+				{active},
+				className
+			)}
+			to={path as string}
+		>
+			<ClayIcon fontSize={20} symbol={icon} />
+
+			<span className="ml-1 testray-sidebar-text">{label}</span>
+		</LinkComponent>
+	);
+};
 
 export default SidebarItem;

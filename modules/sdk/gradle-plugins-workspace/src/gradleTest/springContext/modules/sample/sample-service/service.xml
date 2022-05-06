@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.4.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_4_0.dtd">
 
-<service-builder dependency-injector="spring" package-path="com.example.sample">
+<service-builder dependency-injector="spring" mvcc-enabled="true" package-path="com.example.sample">
 	<namespace>Sample</namespace>
 	<entity local-service="true" name="Foo" remote-service="true" uuid="true">
 

@@ -1,0 +1,145 @@
+@component-name = "portal-wcm"
+definition {
+
+	property custom.properties = "feature.flag.LPS-146502=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Navigation";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site via JSON") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-144089. The navigation menu admin could preview menu in navigation menu editor."
+	@priority = "5"
+	test PreviewMenuInNavigationMenuEditor {
+		task ("Given a navigation menu admin has a navigation menu with multiple items") {
+			task ("Add a web content, blogs entry and document") {
+				JSONWebcontent.addWebContent(
+					content = "Web Content Content",
+					groupName = "Test Site Name",
+					title = "Web Content Title");
+
+				HeadlessBlog.addBlogEntry(
+					content = "Blogs Entry Content",
+					groupName = "Test Site Name",
+					title = "Blogs Entry Title");
+
+				JSONDocument.addFileWithUploadedFile(
+					dmDocumentTitle = "Document Title",
+					groupName = "Test Site Name",
+					mimeType = "image/jpeg",
+					sourceFileName = "Document_1.jpg");
+			}
+
+			task ("Add a category under a vocabulary") {
+				JSONCategory.addVocabulary(
+					groupName = "Test Site Name",
+					title = "Vocabulary Name");
+
+				JSONCategory.addCategory(
+					groupName = "Test Site Name",
+					title = "Category Name",
+					vocabularyName = "Vocabulary Name");
+			}
+
+			task ("Add a widget page") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name");
+			}
+
+			task ("Add a navigation menu") {
+				JSONSitenavigation.addSiteNavigationMenu(
+					groupName = "Test Site Name",
+					siteNavigationMenuName = "Navigation Menu Name");
+			}
+
+			task ("Add different type items to navigation menu") {
+				JSONSitenavigation.addSiteNavigationMenuItem(
+					groupName = "Test Site Name",
+					siteNavigationMenuItemName = "Submenu Name",
+					siteNavigationMenuName = "Navigation Menu Name",
+					type = "node");
+
+				JSONSitenavigation.addSiteNavigationMenuItem(
+					groupName = "Test Site Name",
+					parentSiteNavigationMenuItem = "Submenu Name",
+					siteNavigationMenuItemName = "Liferay",
+					siteNavigationMenuName = "Navigation Menu Name",
+					type = "url",
+					url = "https://www.liferay.com",
+					useNewTab = "false");
+
+				JSONSitenavigation.addSiteNavigationMenuItem(
+					groupName = "Test Site Name",
+					privateLayout = "false",
+					siteNavigationMenuItemName = "Test Page Name",
+					siteNavigationMenuName = "Navigation Menu Name",
+					type = "layout");
+
+				NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+
+				NavigationMenusAdmin.editMenu(navigationMenuName = "Navigation Menu Name");
+
+				NavigationMenusAdmin.addItem(
+					assetTitle = "Web Content Title",
+					item = "Web Content Article");
+
+				NavigationMenusAdmin.addItem(
+					assetTitle = "Blogs Entry Title",
+					item = "Blogs Entry");
+
+				NavigationMenusAdmin.addItem(
+					assetTitle = "Document Title",
+					item = "Document");
+
+				NavigationMenusAdmin.addItem(
+					assetTitleList = "Category Name",
+					item = "Category");
+			}
+		}
+
+		task ("When the navigation menu admin opens the preview menu modal") {
+			NavigationMenusAdmin.openPreviewMenu();
+		}
+
+		task ("Then the navigation menu admin could view the above items on preview menu") {
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			for (var itemName : list "Submenu Name,Test Page Name,Web Content Title,Blogs Entry Title,Document Title,Category Name") {
+				AssertVisible(
+					key_pageName = "${itemName}",
+					locator1 = "Home#PAGE");
+			}
+
+			MouseOver.javaScriptMouseOver(
+				key_pageName = "Submenu Name",
+				locator1 = "NavigationMenusWidget#CHILD_TOGGLE");
+
+			AssertVisible(
+				key_childPageName = "Liferay",
+				locator1 = "Home#PAGE_CHILD_PAGE");
+		}
+	}
+
+}

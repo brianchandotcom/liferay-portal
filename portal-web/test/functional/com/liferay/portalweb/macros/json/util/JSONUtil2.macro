@@ -44,7 +44,7 @@ definition {
 		for (var value : list "${values}") {
 			var temp = RegexUtil.replace("${json}", "\"${key}\"\s*:\s*(\[.*?\])", "1");
 
-			if (contains(""${temp}"", ""${value}"")) {
+			if (contains("\"${temp}\"", "\"${value}\"")) {
 				fail("'${value}' already exists inside 'JSON'");
 			}
 

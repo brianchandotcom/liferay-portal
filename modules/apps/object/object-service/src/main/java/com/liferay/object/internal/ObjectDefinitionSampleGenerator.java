@@ -91,6 +91,7 @@ public class ObjectDefinitionSampleGenerator {
 				PanelCategoryKeys.CONTROL_PANEL_SITES,
 				LocalizedMapUtil.getLocalizedMap("Sample Object Definitions"),
 				ObjectDefinitionConstants.SCOPE_COMPANY,
+				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
 						"LongInteger", "Long", true, false, null, "Able",

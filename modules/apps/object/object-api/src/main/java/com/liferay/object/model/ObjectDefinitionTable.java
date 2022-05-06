@@ -93,6 +93,9 @@ public class ObjectDefinitionTable extends BaseTable<ObjectDefinitionTable> {
 		"portlet", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 	public final Column<ObjectDefinitionTable, String> scope = createColumn(
 		"scope", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<ObjectDefinitionTable, String> storageType =
+		createColumn(
+			"storageType", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<ObjectDefinitionTable, Boolean> system = createColumn(
 		"system_", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 	public final Column<ObjectDefinitionTable, Integer> version = createColumn(

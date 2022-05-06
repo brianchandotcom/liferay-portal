@@ -57,7 +57,7 @@ public interface ObjectDefinitionService extends BaseService {
 	public ObjectDefinition addCustomObjectDefinition(
 			Map<Locale, String> labelMap, String name, String panelAppOrder,
 			String panelCategoryKey, Map<Locale, String> pluralLabelMap,
-			String scope, List<ObjectField> objectFields)
+			String scope, String storageType, List<ObjectField> objectFields)
 		throws PortalException;
 
 	public ObjectDefinition deleteObjectDefinition(long objectDefinitionId)

@@ -74,7 +74,7 @@ definition {
 		}
 	}
 
-	@description = "Bug: LRAC-8557 | Automation ID: LRAC-11056 | Test Summary: Search for a property when assigning sites to a property"
+	@description = "Bug: LRAC-8557 | Automation ID: LRAC-11056 | Test Summary: Search using special characters shown in search overview"
 	@priority = "4"
 	test SearchTermWithSpecialCharacters {
 		task ("Connect DXP to AC") {

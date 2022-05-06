@@ -1051,7 +1051,8 @@ definition {
 					locator1 = "CommerceEntry#ADD_RELATION_CLEAN_INPUT_BUTTON");
 			}
 		}
-		else if (isSet(accountsEligibility)) {
+
+		if (isSet(accountsEligibility)) {
 			var title = "Add Accounts";
 
 			Click(
@@ -1068,13 +1069,7 @@ definition {
 					locator1 = "CommerceEntry#ADD_RELATION_CLEAN_INPUT_BUTTON");
 			}
 		}
-		else {
-			Click(
-				key_radioOption = "All Accounts",
-				locator1 = "CommerceEntry#RADIO_BUTTON");
-		}
-
-		if (isSet(channelsEligibility)) {
+		else if (isSet(channelsEligibility)) {
 			var title = "Add Channels";
 
 			Click(
@@ -1091,17 +1086,77 @@ definition {
 					locator1 = "CommerceEntry#ADD_RELATION_CLEAN_INPUT_BUTTON");
 			}
 		}
-		else {
+
+		if (isSet(paymentTermsEligibility)) {
+			var title = "Add Payment Terms";
+
 			Click(
-				key_radioOption = "All Channels",
+				key_radioOption = "Specific Payment Terms",
 				locator1 = "CommerceEntry#RADIO_BUTTON");
+
+			var paymentTermsEligibility = StringUtil.lowerCase("${paymentTermsEligibility}");
+			var paymentTermsEligibility = StringUtil.replace("${paymentTermsEligibility}", " ", "-");
+
+			for (var paymentTerm : list "${paymentTermsEligibility}") {
+				CommerceRelations.assignSingleRelationToEligibility(
+					entryName = "${paymentTerm}",
+					title = "${title}");
+
+				Click(
+					key_title = "${title}",
+					locator1 = "CommerceEntry#ADD_RELATION_CLEAN_INPUT_BUTTON");
+			}
+		}
+
+		if (isSet(deliveryTermsEligibility)) {
+			var title = "Add Delivery Terms";
+
+			Click(
+				key_radioOption = "Specific Delivery Terms",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+
+			var deliveryTermsEligibility = StringUtil.lowerCase("${deliveryTermsEligibility}");
+			var deliveryTermsEligibility = StringUtil.replace("${deliveryTermsEligibility}", " ", "-");
+
+			for (var deliveryTerm : list "${deliveryTermsEligibility}") {
+				CommerceRelations.assignSingleRelationToEligibility(
+					entryName = "${deliveryTerm}",
+					title = "${title}");
+
+				Click(
+					key_title = "${title}",
+					locator1 = "CommerceEntry#ADD_RELATION_CLEAN_INPUT_BUTTON");
+			}
+		}
+
+		if (isSet(orderTypesEligibility)) {
+			var title = "Add Delivery Terms";
+
+			Click(
+				key_radioOption = "Specific Order Types",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+
+			for (var orderType : list "${orderTypesEligibility}") {
+				CommerceRelations.assignSingleRelationToEligibility(
+					entryName = "${orderType}",
+					title = "${title}");
+
+				Click(
+					key_title = "${title}",
+					locator1 = "CommerceEntry#ADD_RELATION_CLEAN_INPUT_BUTTON");
+			}
 		}
 
 		if (isSet(unpublish)) {
 			echo("Do not need to click Publish button");
 		}
 		else {
-			Button.clickPublish();
+			if (IsElementPresent(key_text = "Publish", locator1 = "Button#ANY")) {
+				Button.clickPublish();
+			}
+			else if (IsElementPresent(key_text = "Save", locator1 = "Button#ANY")) {
+				Button.clickSave();
+			}
 		}
 	}
 

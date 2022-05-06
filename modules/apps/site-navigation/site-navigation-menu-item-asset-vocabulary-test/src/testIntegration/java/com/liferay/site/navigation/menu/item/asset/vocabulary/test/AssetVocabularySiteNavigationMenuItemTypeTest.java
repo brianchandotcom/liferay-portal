@@ -388,6 +388,46 @@ public class AssetVocabularySiteNavigationMenuItemTypeTest {
 			siteNavigationMenuItems.get(0));
 	}
 
+	@Test
+	public void testGetStatusIconEmptyAssetVocabulary() throws Exception {
+		Assert.assertEquals(
+			0,
+			_assetCategoryLocalService.getVocabularyCategoriesCount(
+				_assetVocabulary.getVocabularyId()));
+
+		SiteNavigationMenuItemType siteNavigationMenuItemType =
+			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(
+				SiteNavigationMenuItemTypeConstants.ASSET_VOCABULARY);
+
+		Assert.assertEquals(
+			"warning-full",
+			siteNavigationMenuItemType.getStatusIcon(
+				_createSiteNavigationMenuItem(
+					_portal.getSiteDefaultLocale(_group.getGroupId()), "{}",
+					false)));
+	}
+
+	@Test
+	public void testGetStatusIconNotEmptyAssetVocabulary() throws Exception {
+		_createAssetCategory(0);
+
+		Assert.assertEquals(
+			1,
+			_assetCategoryLocalService.getVocabularyCategoriesCount(
+				_assetVocabulary.getVocabularyId()));
+
+		SiteNavigationMenuItemType siteNavigationMenuItemType =
+			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(
+				SiteNavigationMenuItemTypeConstants.ASSET_VOCABULARY);
+
+		Assert.assertEquals(
+			StringPool.BLANK,
+			siteNavigationMenuItemType.getStatusIcon(
+				_createSiteNavigationMenuItem(
+					_portal.getSiteDefaultLocale(_group.getGroupId()), "{}",
+					false)));
+	}
+
 	private void _assertAssetCategorySiteNavigationMenuItem(
 		AssetCategory assetCategory,
 		SiteNavigationMenuItem assetCategorySiteNavigationMenuItem,

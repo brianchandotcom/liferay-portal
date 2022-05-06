@@ -444,6 +444,20 @@ definition {
 				key_addressInfo = "${addressZipCode}",
 				locator1 = "CommerceOrders#ORDER_DETAILS_SHIPPING_ADDRESS",
 				value1 = "${addressZipCode}");
+
+			if (isSet(deliveryTerm)) {
+				AssertTextEquals.assertPartialText(
+					key_deliveryTerm = "${deliveryTerm}",
+					locator1 = "CommerceOrders#ORDER_DETAILS_DELIVERY_TERMS",
+					value1 = "${deliveryTerm}");
+			}
+
+			if (isSet(paymentTerm)) {
+				AssertTextEquals.assertPartialText(
+					key_paymentTerm = "${paymentTerm}",
+					locator1 = "CommerceOrders#ORDER_DETAILS_PAYMENT_TERMS",
+					value1 = "${paymentTerm}");
+			}
 		}
 
 		AssertTextEquals(

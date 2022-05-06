@@ -489,6 +489,9 @@
 			return Util.listCheckboxesExcept(form, except, name, true);
 		},
 
+		/**
+		 * @deprecated As of Cavanaugh (7.4.x), replaced by `import {getSelectedOptionValues} from 'frontend-js-web';`
+		 */
 		listSelect(select, delimeter) {
 			select = Util.getElement(select);
 

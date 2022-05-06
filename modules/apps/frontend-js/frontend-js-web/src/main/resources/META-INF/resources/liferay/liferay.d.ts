@@ -349,6 +349,11 @@ declare module Liferay {
 
 		export function getWindow(windowId?: string): Window;
 
+		export function getSelectedOptionValues(
+			select: HTMLSelectElement,
+			delimiter?: string
+		): string;
+
 		/**
 		 * Performs navigation to the given url. If SPA is enabled, it will route the
 		 * request through the SPA engine. If not, it will simple change the document

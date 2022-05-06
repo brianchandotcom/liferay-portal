@@ -61,6 +61,7 @@ import getLexiconIconTpl from './util/get_lexicon_icon_template';
 import getOpener from './util/get_opener';
 import getPortletId from './util/get_portlet_id';
 import getPortletNamespace from './util/get_portlet_namespace.es';
+import getSelectedOptionValues from './util/get_selected_option_values';
 import getTop from './util/get_top';
 import getURLWithSessionId from './util/get_url_with_session_id';
 import getWindow from './util/get_window';
@@ -250,6 +251,8 @@ Liferay.Util.isPhone = isPhone;
  * @deprecated As of Athanasius (7.3.x), replaced by `import {isTablet} from 'frontend-js-web'`
  */
 Liferay.Util.isTablet = isTablet;
+
+Liferay.Util.getSelectedOptionValues = getSelectedOptionValues;
 
 Liferay.Util.navigate = navigate;
 Liferay.Util.ns = ns;

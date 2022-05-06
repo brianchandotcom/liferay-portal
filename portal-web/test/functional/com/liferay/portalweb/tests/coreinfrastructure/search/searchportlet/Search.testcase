@@ -2402,6 +2402,7 @@ definition {
 		AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
 	}
 
+	@description = "This is a use case for LPS-147397."
 	@priority = "4"
 	test SearchXSSConfiguration {
 		Search.openSearchPage();

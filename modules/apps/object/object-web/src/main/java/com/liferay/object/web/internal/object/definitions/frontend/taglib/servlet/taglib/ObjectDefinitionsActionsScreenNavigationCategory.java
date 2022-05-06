@@ -14,7 +14,6 @@
 
 package com.liferay.object.web.internal.object.definitions.frontend.taglib.servlet.taglib;
 
-import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.object.action.executor.ObjectActionExecutorRegistry;
@@ -82,15 +81,12 @@ public class ObjectDefinitionsActionsScreenNavigationCategory
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			new ObjectDefinitionsActionsDisplayContext(
-				_ddmFormRenderer, httpServletRequest,
-				_objectActionExecutorRegistry, _objectActionTriggerRegistry,
+				httpServletRequest, _objectActionExecutorRegistry,
+				_objectActionTriggerRegistry,
 				_objectDefinitionModelResourcePermission, _jsonFactory));
 
 		super.render(httpServletRequest, httpServletResponse);
 	}
-
-	@Reference
-	private DDMFormRenderer _ddmFormRenderer;
 
 	@Reference
 	private JSONFactory _jsonFactory;

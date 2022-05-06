@@ -16,7 +16,6 @@ package com.liferay.object.internal.action.executor;
 
 import com.liferay.object.action.executor.ObjectActionExecutor;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
-import com.liferay.object.internal.action.settings.GroovyObjectActionSettings;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.scripting.Scripting;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -52,11 +51,6 @@ public class GroovyObjectActionExecutorImpl implements ObjectActionExecutor {
 	@Override
 	public String getKey() {
 		return ObjectActionExecutorConstants.KEY_GROOVY;
-	}
-
-	@Override
-	public Class<?> getSettings() {
-		return GroovyObjectActionSettings.class;
 	}
 
 	private void _execute(Map<String, Object> inputObjects, String script)

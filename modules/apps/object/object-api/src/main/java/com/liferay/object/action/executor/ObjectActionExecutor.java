@@ -30,8 +30,4 @@ public interface ObjectActionExecutor {
 
 	public String getKey();
 
-	public default Class<?> getSettings() {
-		return null;
-	}
-
 }

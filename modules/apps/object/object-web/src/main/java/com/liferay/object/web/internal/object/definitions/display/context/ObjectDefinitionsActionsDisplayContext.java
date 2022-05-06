@@ -14,16 +14,6 @@
 
 package com.liferay.object.web.internal.object.definitions.display.context;
 
-import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
-import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
-import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
-import com.liferay.dynamic.data.mapping.model.DDMForm;
-import com.liferay.dynamic.data.mapping.model.DDMFormField;
-import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
-import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
-import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
-import com.liferay.dynamic.data.mapping.util.DDMFormLayoutFactory;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.object.action.executor.ObjectActionExecutor;
@@ -36,32 +26,21 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.web.internal.constants.ObjectWebKeys;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.vulcan.util.TransformUtil;
-import com.liferay.taglib.servlet.PipingServletResponseFactory;
-
-import java.io.Serializable;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.jsp.PageContext;
 
 /**
  * @author Marco Leo
@@ -70,7 +49,7 @@ public class ObjectDefinitionsActionsDisplayContext
 	extends BaseObjectDefinitionsDisplayContext {
 
 	public ObjectDefinitionsActionsDisplayContext(
-		DDMFormRenderer ddmFormRenderer, HttpServletRequest httpServletRequest,
+		HttpServletRequest httpServletRequest,
 		ObjectActionExecutorRegistry objectActionExecutorRegistry,
 		ObjectActionTriggerRegistry objectActionTriggerRegistry,
 		ModelResourcePermission<ObjectDefinition>
@@ -79,7 +58,6 @@ public class ObjectDefinitionsActionsDisplayContext
 
 		super(httpServletRequest, objectDefinitionModelResourcePermission);
 
-		_ddmFormRenderer = ddmFormRenderer;
 		_objectActionExecutorRegistry = objectActionExecutorRegistry;
 		_objectActionTriggerRegistry = objectActionTriggerRegistry;
 		_jsonFactory = jsonFactory;
@@ -217,76 +195,6 @@ public class ObjectDefinitionsActionsDisplayContext
 			ObjectWebKeys.OBJECT_DEFINITION);
 	}
 
-	public String renderDDMForm(PageContext pageContext)
-		throws PortalException {
-
-		ObjectActionExecutor objectActionExecutor = getObjectActionExecutor();
-
-		if (objectActionExecutor.getSettings() == null) {
-			return "";
-		}
-
-		DDMForm ddmForm = DDMFormFactory.create(
-			objectActionExecutor.getSettings());
-
-		if (StringUtil.equals(
-				objectActionExecutor.getKey(),
-				ObjectActionExecutorConstants.KEY_WEBHOOK)) {
-
-			List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
-
-			Stream<DDMFormField> stream = ddmFormFields.stream();
-
-			Optional<DDMFormField> ddmFormFieldOptional = stream.filter(
-				ddmFormField -> ddmFormField.getName(
-				).equals(
-					"url"
-				)
-			).findFirst();
-
-			if (ddmFormFieldOptional.isPresent()) {
-				DDMFormField ddmFormField = ddmFormFieldOptional.get();
-
-				ddmFormField.setProperty("required", true);
-			}
-		}
-
-		DDMFormRenderingContext ddmFormRenderingContext =
-			new DDMFormRenderingContext();
-
-		ddmFormRenderingContext.setContainerId(
-			"editObjectActionExecutorSettings");
-
-		DDMFormValues ddmFormValues = _getDDMFormValues(
-			ddmForm, getObjectAction());
-
-		if (ddmFormValues != null) {
-			ddmFormRenderingContext.setDDMFormValues(ddmFormValues);
-		}
-
-		ddmFormRenderingContext.setHttpServletRequest(
-			objectRequestHelper.getRequest());
-		ddmFormRenderingContext.setHttpServletResponse(
-			PipingServletResponseFactory.createPipingServletResponse(
-				pageContext));
-		ddmFormRenderingContext.setLocale(objectRequestHelper.getLocale());
-
-		LiferayPortletResponse liferayPortletResponse =
-			objectRequestHelper.getLiferayPortletResponse();
-
-		ddmFormRenderingContext.setPortletNamespace(
-			liferayPortletResponse.getNamespace());
-
-		ddmFormRenderingContext.setReadOnly(
-			!hasUpdateObjectDefinitionPermission());
-		ddmFormRenderingContext.setShowRequiredFieldsWarning(true);
-
-		return _ddmFormRenderer.render(
-			ddmForm,
-			DDMFormLayoutFactory.create(objectActionExecutor.getSettings()),
-			ddmFormRenderingContext);
-	}
-
 	@Override
 	protected String getAPIURI() {
 		return "/object-actions";
@@ -305,68 +213,6 @@ public class ObjectDefinitionsActionsDisplayContext
 		};
 	}
 
-	private DDMFormValues _getDDMFormValues(
-		DDMForm ddmForm, ObjectAction objectAction) {
-
-		UnicodeProperties parametersUnicodeProperties =
-			objectAction.getParametersUnicodeProperties();
-
-		if (parametersUnicodeProperties.isEmpty()) {
-			return null;
-		}
-
-		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
-
-		ddmFormValues.addAvailableLocale(objectRequestHelper.getLocale());
-
-		Map<String, DDMFormField> ddmFormFieldsMap =
-			ddmForm.getDDMFormFieldsMap(false);
-
-		ddmFormValues.setDDMFormFieldValues(
-			TransformUtil.transform(
-				ddmFormFieldsMap.values(),
-				ddmFormField -> {
-					DDMFormFieldValue ddmFormFieldValue =
-						new DDMFormFieldValue();
-
-					ddmFormFieldValue.setName(ddmFormField.getName());
-
-					Serializable serializable = parametersUnicodeProperties.get(
-						ddmFormField.getName());
-
-					if (serializable == null) {
-						ddmFormFieldValue.setValue(
-							new UnlocalizedValue(GetterUtil.DEFAULT_STRING));
-					}
-					else {
-						ddmFormFieldValue.setValue(
-							new UnlocalizedValue(
-								_getValue(
-									ddmFormField.getType(),
-									String.valueOf(serializable))));
-					}
-
-					return ddmFormFieldValue;
-				}));
-
-		ddmFormValues.setDefaultLocale(objectRequestHelper.getLocale());
-
-		return ddmFormValues;
-	}
-
-	private String _getValue(String type, String value) {
-		if (StringUtil.equals(type, DDMFormFieldTypeConstants.OBJECT_FIELD) ||
-			StringUtil.equals(type, DDMFormFieldTypeConstants.SELECT)) {
-
-			return JSONUtil.putAll(
-				StringUtil.split(value)
-			).toString();
-		}
-
-		return value;
-	}
-
-	private final DDMFormRenderer _ddmFormRenderer;
 	private final JSONFactory _jsonFactory;
 	private final ObjectActionExecutorRegistry _objectActionExecutorRegistry;
 	private final ObjectActionTriggerRegistry _objectActionTriggerRegistry;

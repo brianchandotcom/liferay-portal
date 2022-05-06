@@ -17,7 +17,6 @@ package com.liferay.object.web.internal.object.definitions.portlet.action;
 import com.liferay.object.action.executor.ObjectActionExecutorRegistry;
 import com.liferay.object.action.trigger.ObjectActionTriggerRegistry;
 import com.liferay.object.constants.ObjectPortletKeys;
-import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectActionService;
 import com.liferay.object.service.ObjectDefinitionService;
@@ -40,16 +39,16 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Marco Leo
+ * @author Milton Castro
  */
 @Component(
 	property = {
 		"javax.portlet.name=" + ObjectPortletKeys.OBJECT_DEFINITIONS,
-		"mvc.command.name=/object_definitions/edit_object_action"
+		"mvc.command.name=/object_definitions/add_object_action"
 	},
 	service = MVCRenderCommand.class
 )
-public class EditObjectActionMVCRenderCommand implements MVCRenderCommand {
+public class AddObjectActionMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
@@ -57,15 +56,12 @@ public class EditObjectActionMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		try {
-			ObjectAction objectAction = _objectActionService.getObjectAction(
-				ParamUtil.getLong(renderRequest, "objectActionId"));
+			ObjectDefinition objectDefinition =
+				_objectDefinitionService.getObjectDefinition(
+					ParamUtil.getLong(renderRequest, "objectDefinitionId"));
 
 			renderRequest.setAttribute(
-				ObjectWebKeys.OBJECT_ACTION, objectAction);
-			renderRequest.setAttribute(
-				ObjectWebKeys.OBJECT_DEFINITION,
-				_objectDefinitionService.getObjectDefinition(
-					objectAction.getObjectDefinitionId()));
+				ObjectWebKeys.OBJECT_DEFINITION, objectDefinition);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -78,7 +74,7 @@ public class EditObjectActionMVCRenderCommand implements MVCRenderCommand {
 			SessionErrors.add(renderRequest, portalException.getClass());
 		}
 
-		return "/object_definitions/edit_object_action.jsp";
+		return "/object_definitions/add_object_action.jsp";
 	}
 
 	@Reference

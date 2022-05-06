@@ -22,6 +22,7 @@ import React, {useContext, useLayoutEffect, useRef, useState} from 'react';
 import PreviewSelector from './PreviewSelector';
 import PublishButton from './PublishButton';
 import {StyleBookContext} from './StyleBookContext';
+import Undo from './Undo';
 import {DRAFT_STATUS} from './constants/draftStatusConstants';
 
 const STATUS_TO_LABEL = {
@@ -51,6 +52,10 @@ export default function Toolbar() {
 				<ul className="end navbar-nav">
 					<li className="mr-2 nav-item">
 						<DraftStatus />
+					</li>
+
+					<li className="nav-item">
+						<Undo/>
 					</li>
 
 					<li className="mx-2 nav-item">

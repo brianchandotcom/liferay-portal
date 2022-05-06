@@ -48,4 +48,51 @@ definition {
 		PortalSettings.viewEnabledLDAPSetting(enableSettingList = "${enableSettingList}");
 	}
 
+	@description = "Import an LDIF file on LDAP then trigger the import manually with a groovy script"
+	macro importLDIFOnLDAPAndTriggerSync {
+		LDAP.updateLDAPDatabaseWithLDIFFile(ldifName = "${ldifName}");
+
+		if (!(isSet(nodePort))) {
+			var nodePort = "8080";
+		}
+
+		Clustering.runGroovyScript(
+			nodePort = "${nodePort}",
+			scriptFile = "groovy-script-invoke-ldap-user-import-on-master.groovy");
+
+		AssertElementPresent(locator1 = "Message#SUCCESS");
+	}
+
+	@description = "Install openldap util to be able to use ldap commands on command line"
+	macro installLDAPCommandUtil {
+		AntCommand(
+			locator1 = "build-test-apacheds.xml",
+			value1 = "get-apacheds-commands");
+	}
+
+	@description = "Update LDAP database through LDIF file"
+	macro updateLDAPDatabaseWithLDIFFile {
+		AntCommand(
+			locator1 = "build-test-apacheds.xml",
+			value1 = "update-apacheds -DldifName=${ldifName}");
+	}
+
+	@description = "Verify that the group is imported on localhost after LDAP sync"
+	macro verifyLDAPUserGroupIsImported {
+		UserGroup.openUserGroupsAdmin();
+
+		AssertElementPresent(
+			key_userGroupName = "${userGroupName}",
+			locator1 = "UserGroups#USER_GROUP_TABLE_CHECKBOX");
+	}
+
+	@description = "Verify that the user is removed from group on localhost after LDAP sync"
+	macro verifyLDAPUserIsRemovedFromGroup {
+		UserGroup.openUserGroupsAdmin();
+
+		UserGroup.viewRemoveMemberCP(
+			userFirstName = "${userFirstName}",
+			userGroupName = "${userGroupName}");
+	}
+
 }

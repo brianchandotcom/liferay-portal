@@ -3577,23 +3577,6 @@ public class CPMeasurementUnitPersistenceImpl
 					}
 				}
 				else {
-					if (list.size() > 1) {
-						Collections.sort(list, Collections.reverseOrder());
-
-						if (_log.isWarnEnabled()) {
-							if (!productionMode || !useFinderCache) {
-								finderArgs = new Object[] {
-									companyId, externalReferenceCode
-								};
-							}
-
-							_log.warn(
-								"CPMeasurementUnitPersistenceImpl.fetchByC_ERC(long, String, boolean) with parameters (" +
-									StringUtil.merge(finderArgs) +
-										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
-						}
-					}
-
 					CPMeasurementUnit cpMeasurementUnit = list.get(0);
 
 					result = cpMeasurementUnit;
@@ -4021,6 +4004,11 @@ public class CPMeasurementUnitPersistenceImpl
 
 		CPMeasurementUnitModelImpl cpMeasurementUnitModelImpl =
 			(CPMeasurementUnitModelImpl)cpMeasurementUnit;
+
+		if (Validator.isNull(cpMeasurementUnit.getExternalReferenceCode())) {
+			cpMeasurementUnit.setExternalReferenceCode(
+				String.valueOf(cpMeasurementUnit.getPrimaryKey()));
+		}
 
 		if (Validator.isNull(cpMeasurementUnit.getUuid())) {
 			String uuid = _portalUUID.generate();
@@ -4569,6 +4557,9 @@ public class CPMeasurementUnitPersistenceImpl
 		_uniqueIndexColumnNames.add(new String[] {"uuid_", "groupId"});
 
 		_uniqueIndexColumnNames.add(new String[] {"companyId", "key_"});
+
+		_uniqueIndexColumnNames.add(
+			new String[] {"companyId", "externalReferenceCode"});
 	}
 
 	/**

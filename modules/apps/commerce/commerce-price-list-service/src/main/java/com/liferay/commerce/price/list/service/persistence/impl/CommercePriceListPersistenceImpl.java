@@ -8707,23 +8707,6 @@ public class CommercePriceListPersistenceImpl
 					}
 				}
 				else {
-					if (list.size() > 1) {
-						Collections.sort(list, Collections.reverseOrder());
-
-						if (_log.isWarnEnabled()) {
-							if (!productionMode || !useFinderCache) {
-								finderArgs = new Object[] {
-									companyId, externalReferenceCode
-								};
-							}
-
-							_log.warn(
-								"CommercePriceListPersistenceImpl.fetchByC_ERC(long, String, boolean) with parameters (" +
-									StringUtil.merge(finderArgs) +
-										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
-						}
-					}
-
 					CommercePriceList commercePriceList = list.get(0);
 
 					result = commercePriceList;
@@ -9186,6 +9169,11 @@ public class CommercePriceListPersistenceImpl
 
 		CommercePriceListModelImpl commercePriceListModelImpl =
 			(CommercePriceListModelImpl)commercePriceList;
+
+		if (Validator.isNull(commercePriceList.getExternalReferenceCode())) {
+			commercePriceList.setExternalReferenceCode(
+				String.valueOf(commercePriceList.getPrimaryKey()));
+		}
 
 		if (Validator.isNull(commercePriceList.getUuid())) {
 			String uuid = _portalUUID.generate();
@@ -9739,6 +9727,9 @@ public class CommercePriceListPersistenceImpl
 			CTColumnResolutionType.STRICT, ctStrictColumnNames);
 
 		_uniqueIndexColumnNames.add(new String[] {"uuid_", "groupId"});
+
+		_uniqueIndexColumnNames.add(
+			new String[] {"companyId", "externalReferenceCode"});
 	}
 
 	/**

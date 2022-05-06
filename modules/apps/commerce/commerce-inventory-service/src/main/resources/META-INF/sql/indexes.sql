@@ -14,13 +14,13 @@ create index IX_6C8E22D3 on CIReplenishmentItem (sku[$COLUMN_LENGTH:75$], availa
 create index IX_8427A055 on CIWarehouse (active_, countryTwoLettersISOCode[$COLUMN_LENGTH:75$]);
 create index IX_331A3FD3 on CIWarehouse (companyId, active_, countryTwoLettersISOCode[$COLUMN_LENGTH:75$]);
 create index IX_DADA8974 on CIWarehouse (companyId, countryTwoLettersISOCode[$COLUMN_LENGTH:75$]);
-create index IX_68E6B8D8 on CIWarehouse (companyId, externalReferenceCode[$COLUMN_LENGTH:75$]);
+create unique index IX_68E6B8D8 on CIWarehouse (companyId, externalReferenceCode[$COLUMN_LENGTH:75$]);
 create index IX_7202EB2 on CIWarehouse (countryTwoLettersISOCode[$COLUMN_LENGTH:75$]);
 
 create index IX_3996C237 on CIWarehouseGroupRel (groupId, commerceWarehouseId, primary_);
 create index IX_E4C1F39E on CIWarehouseGroupRel (groupId, primary_);
 
 create unique index IX_8D9FD306 on CIWarehouseItem (commerceInventoryWarehouseId, sku[$COLUMN_LENGTH:75$]);
-create index IX_8A09C40B on CIWarehouseItem (companyId, externalReferenceCode[$COLUMN_LENGTH:75$]);
+create unique index IX_8A09C40B on CIWarehouseItem (companyId, externalReferenceCode[$COLUMN_LENGTH:75$]);
 create index IX_F8B2565B on CIWarehouseItem (companyId, sku[$COLUMN_LENGTH:75$]);
 create index IX_97CADC57 on CIWarehouseItem (sku[$COLUMN_LENGTH:75$]);

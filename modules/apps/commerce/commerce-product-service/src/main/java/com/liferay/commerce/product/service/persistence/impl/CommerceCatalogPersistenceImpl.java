@@ -45,7 +45,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
@@ -2091,23 +2091,6 @@ public class CommerceCatalogPersistenceImpl
 					}
 				}
 				else {
-					if (list.size() > 1) {
-						Collections.sort(list, Collections.reverseOrder());
-
-						if (_log.isWarnEnabled()) {
-							if (!productionMode || !useFinderCache) {
-								finderArgs = new Object[] {
-									companyId, externalReferenceCode
-								};
-							}
-
-							_log.warn(
-								"CommerceCatalogPersistenceImpl.fetchByC_ERC(long, String, boolean) with parameters (" +
-									StringUtil.merge(finderArgs) +
-										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
-						}
-					}
-
 					CommerceCatalog commerceCatalog = list.get(0);
 
 					result = commerceCatalog;
@@ -2492,6 +2475,11 @@ public class CommerceCatalogPersistenceImpl
 
 		CommerceCatalogModelImpl commerceCatalogModelImpl =
 			(CommerceCatalogModelImpl)commerceCatalog;
+
+		if (Validator.isNull(commerceCatalog.getExternalReferenceCode())) {
+			commerceCatalog.setExternalReferenceCode(
+				String.valueOf(commerceCatalog.getPrimaryKey()));
+		}
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
@@ -3023,6 +3011,9 @@ public class CommerceCatalogPersistenceImpl
 			Collections.singleton("commerceCatalogId"));
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.STRICT, ctStrictColumnNames);
+
+		_uniqueIndexColumnNames.add(
+			new String[] {"companyId", "externalReferenceCode"});
 	}
 
 	/**

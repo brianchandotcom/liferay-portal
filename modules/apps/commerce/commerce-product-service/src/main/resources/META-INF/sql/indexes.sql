@@ -3,7 +3,7 @@ create index IX_E53AD4BF on CPAttachmentFileEntry (classNameId, classPK, ctColle
 create index IX_68966943 on CPAttachmentFileEntry (classNameId, classPK, displayDate, status, ctCollectionId);
 create index IX_7C51979E on CPAttachmentFileEntry (classNameId, classPK, fileEntryId, ctCollectionId);
 create index IX_EDBD5798 on CPAttachmentFileEntry (classNameId, classPK, type_, status, ctCollectionId);
-create index IX_6B55EC7F on CPAttachmentFileEntry (companyId, externalReferenceCode[$COLUMN_LENGTH:75$], ctCollectionId);
+create unique index IX_6B55EC7F on CPAttachmentFileEntry (companyId, externalReferenceCode[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_8AF22978 on CPAttachmentFileEntry (displayDate, status, ctCollectionId);
 create index IX_2DC4AC5E on CPAttachmentFileEntry (uuid_[$COLUMN_LENGTH:75$], companyId, ctCollectionId);
 create index IX_5C706B86 on CPAttachmentFileEntry (uuid_[$COLUMN_LENGTH:75$], ctCollectionId);
@@ -81,7 +81,7 @@ create unique index IX_2D902FD4 on CPInstance (CPDefinitionId, sku[$COLUMN_LENGT
 create index IX_B2A4193B on CPInstance (CPDefinitionId, status, ctCollectionId);
 create index IX_7BF6BCF7 on CPInstance (CPInstanceUuid[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_3C22621E on CPInstance (companyId, ctCollectionId);
-create index IX_18ADE5DB on CPInstance (companyId, externalReferenceCode[$COLUMN_LENGTH:75$], ctCollectionId);
+create unique index IX_18ADE5DB on CPInstance (companyId, externalReferenceCode[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_3B8BB0AB on CPInstance (companyId, sku[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_BDD42A9C on CPInstance (displayDate, status, ctCollectionId);
 create index IX_921194A0 on CPInstance (groupId, ctCollectionId);
@@ -101,7 +101,7 @@ create index IX_842818AD on CPInstanceOptionValueRel (uuid_[$COLUMN_LENGTH:75$],
 create unique index IX_BF0C9D99 on CPInstanceOptionValueRel (uuid_[$COLUMN_LENGTH:75$], groupId, ctCollectionId);
 
 create index IX_262058AD on CPMeasurementUnit (companyId, ctCollectionId);
-create index IX_8639FE6C on CPMeasurementUnit (companyId, externalReferenceCode[$COLUMN_LENGTH:75$], ctCollectionId);
+create unique index IX_8639FE6C on CPMeasurementUnit (companyId, externalReferenceCode[$COLUMN_LENGTH:75$], ctCollectionId);
 create unique index IX_7AC67B41 on CPMeasurementUnit (companyId, key_[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_583ED653 on CPMeasurementUnit (companyId, primary_, type_, ctCollectionId);
 create index IX_9CF40D04 on CPMeasurementUnit (companyId, type_, ctCollectionId);
@@ -110,7 +110,7 @@ create index IX_30F911B9 on CPMeasurementUnit (uuid_[$COLUMN_LENGTH:75$], ctColl
 create unique index IX_5EB5120D on CPMeasurementUnit (uuid_[$COLUMN_LENGTH:75$], groupId, ctCollectionId);
 
 create index IX_65CC42FE on CPOption (companyId, ctCollectionId);
-create index IX_FF4508FB on CPOption (companyId, externalReferenceCode[$COLUMN_LENGTH:75$], ctCollectionId);
+create unique index IX_FF4508FB on CPOption (companyId, externalReferenceCode[$COLUMN_LENGTH:75$], ctCollectionId);
 create unique index IX_3D33A4D2 on CPOption (companyId, key_[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_F91440DA on CPOption (uuid_[$COLUMN_LENGTH:75$], companyId, ctCollectionId);
 create index IX_4B90CC8A on CPOption (uuid_[$COLUMN_LENGTH:75$], ctCollectionId);
@@ -123,7 +123,7 @@ create index IX_B572AB2C on CPOptionCategory (uuid_[$COLUMN_LENGTH:75$], ctColle
 create index IX_DEFBE164 on CPOptionValue (CPOptionId, ctCollectionId);
 create unique index IX_3705EB8 on CPOptionValue (CPOptionId, key_[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_29F60E11 on CPOptionValue (companyId, ctCollectionId);
-create index IX_8D647888 on CPOptionValue (companyId, externalReferenceCode[$COLUMN_LENGTH:75$], ctCollectionId);
+create unique index IX_8D647888 on CPOptionValue (companyId, externalReferenceCode[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_29166A67 on CPOptionValue (uuid_[$COLUMN_LENGTH:75$], companyId, ctCollectionId);
 create index IX_24A9191D on CPOptionValue (uuid_[$COLUMN_LENGTH:75$], ctCollectionId);
 
@@ -134,20 +134,20 @@ create index IX_F33CF6C3 on CPSpecificationOption (uuid_[$COLUMN_LENGTH:75$], co
 create index IX_999EAE41 on CPSpecificationOption (uuid_[$COLUMN_LENGTH:75$], ctCollectionId);
 
 create index IX_ADBC7164 on CPTaxCategory (companyId, ctCollectionId);
-create index IX_79A007D5 on CPTaxCategory (companyId, externalReferenceCode[$COLUMN_LENGTH:75$], ctCollectionId);
+create unique index IX_79A007D5 on CPTaxCategory (companyId, externalReferenceCode[$COLUMN_LENGTH:75$], ctCollectionId);
 
-create index IX_10C033E5 on CProduct (companyId, externalReferenceCode[$COLUMN_LENGTH:75$], ctCollectionId);
+create unique index IX_10C033E5 on CProduct (companyId, externalReferenceCode[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_BF7F9F56 on CProduct (groupId, ctCollectionId);
 create index IX_4F867FC4 on CProduct (uuid_[$COLUMN_LENGTH:75$], companyId, ctCollectionId);
 create index IX_36D0BBE0 on CProduct (uuid_[$COLUMN_LENGTH:75$], ctCollectionId);
 create unique index IX_F70CE3C6 on CProduct (uuid_[$COLUMN_LENGTH:75$], groupId, ctCollectionId);
 
 create index IX_7D2B5F22 on CommerceCatalog (companyId, ctCollectionId);
-create index IX_A8DE8457 on CommerceCatalog (companyId, externalReferenceCode[$COLUMN_LENGTH:75$], ctCollectionId);
+create unique index IX_A8DE8457 on CommerceCatalog (companyId, externalReferenceCode[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_B053A95A on CommerceCatalog (companyId, system_, ctCollectionId);
 
 create index IX_6A59A278 on CommerceChannel (companyId, ctCollectionId);
-create index IX_D8DAE041 on CommerceChannel (companyId, externalReferenceCode[$COLUMN_LENGTH:75$], ctCollectionId);
+create unique index IX_D8DAE041 on CommerceChannel (companyId, externalReferenceCode[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_A12DD9F3 on CommerceChannel (siteGroupId, ctCollectionId);
 
 create unique index IX_4469A625 on CommerceChannelRel (classNameId, classPK, commerceChannelId, ctCollectionId);

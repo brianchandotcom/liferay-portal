@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+
+<md:EntityDescriptor entityID="samlidp2" xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata"><ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#"><ds:SignedInfo><ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/><ds:SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"/><ds:Reference URI=""><ds:Transforms><ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/><ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/></ds:Transforms><ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/><ds:DigestValue>STqlV9or3OPjHWd5V9I9hOz8HbzV1rcS1AXBMB6Yhls=</ds:DigestValue></ds:Reference></ds:SignedInfo><ds:SignatureValue>WuLyYPeLwpsHgOc+Phv1Ok6miy5WqXSYqzsjH0INZApgxproc7wg1ZzcVoDnhfvEs/Fshb0d7O09l/aqBKzsHa01yDnQYkOEGE6hQh37jIFSb2VpDlxMiGDik4588BH+fd9A4rblHsMJfEFr5eFlM8/kP4H8Kln7VohGeMtZSAR8oeGTK40dTMBhTpthqdsyBHBzD11VPRa7KWnwrn7P3ha5jbJR0rg+3pnHGGr/sy6wzOxppCGmMHhiPXEwhy68Jmr66mA9q/GzZwELLTvLFiExhMQ1/xYqxtmLBVGobojjx+4hvR13nVH2lwhaBPWcJptSHjuSirzxlQLXWiVHtQ==</ds:SignatureValue><ds:KeyInfo><ds:X509Data><ds:X509Certificate>MIICnTCCAYUCBgGALGdbfzANBgkqhkiG9w0BAQsFADASMRAwDgYDVQQDDAdsaWZlcmF5MB4XDTIy
+MDQxNTA4NDY1MloXDTIzMDQwNjA4NDY1MlowEjEQMA4GA1UEAwwHbGlmZXJheTCCASIwDQYJKoZI
+hvcNAQEBBQADggEPADCCAQoCggEBAIjOlgGHLFBplsA3xjgeErN95aZHdtUEPAr4ElkWS5vkZvBl
+7lOcIhP46Ego965oxcoCntuCIEL6FeAuEATbwiLL0HtdbNRdBl2+moMQJ4mwcZ4zQnAoqT8lBAjG
+N9HYDuRieyR1rGvHuYh7KRU5PutOhJVlGbfOiz/xJQsY7grd8rMeyiTSnhppfxZX0WKV3K/9F/CY
+OjzPh2mI9HlPNxamDLJqqY4BTOKi4lyJIqJ9XtABEF3z20FY7FDmer8WqQxdH/FeWZjqEVwFYlje
+cjUgjML6Tt7oGqXWvbE2PV7zAap2XePtVmFN9fkMw9mWYfmNjPiAWeaRMWZtngfwIucCAwEAATAN
+BgkqhkiG9w0BAQsFAAOCAQEAWsC53gbpENbLhwXrdQ/KKHOZdvdG720tAx1nhgrQo6yvD6FlLUXu
+JG791KDCBbQRIsPglmNz/MkXtuk4RdnE+I2XPvQ0C+LGzGGXiABJR/enxA9oRJTacW+juuR8gNQs
+Of0s4jnZV04/hNpIFWmS+pxebYKyQpof6+H5iC9Ejhj4tOtaYr4ORhnsMFz6XuxlGP62VGAYvTGn
+5GZZ+HlO9FUTwPtWlqt5ZyCoRVasOWJmMkBWhv+Ggq9DS363A2pCuQLo6GxPjQEO1VL2vS/40IY1
+ZvCodt8OtJX0S5SEyquayW5DHFJ3bxFOHPpN5MN0nmUsLYHBcJmJwgH6CMxyEg==</ds:X509Certificate></ds:X509Data></ds:KeyInfo></ds:Signature><md:IDPSSODescriptor WantAuthnRequestsSigned="true" protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol"><md:Extensions><alg:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256" xmlns:alg="urn:oasis:names:tc:SAML:metadata:algsupport"/><alg:DigestMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#sha384" xmlns:alg="urn:oasis:names:tc:SAML:metadata:algsupport"/><alg:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha512" xmlns:alg="urn:oasis:names:tc:SAML:metadata:algsupport"/><alg:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" xmlns:alg="urn:oasis:names:tc:SAML:metadata:algsupport"/><alg:SigningMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256" xmlns:alg="urn:oasis:names:tc:SAML:metadata:algsupport"/><alg:SigningMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha384" xmlns:alg="urn:oasis:names:tc:SAML:metadata:algsupport"/><alg:SigningMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha512" xmlns:alg="urn:oasis:names:tc:SAML:metadata:algsupport"/><alg:SigningMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" xmlns:alg="urn:oasis:names:tc:SAML:metadata:algsupport"/></md:Extensions><md:KeyDescriptor use="signing"><ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#"><ds:X509Data><ds:X509Certificate>MIICnTCCAYUCBgGALGdbfzANBgkqhkiG9w0BAQsFADASMRAwDgYDVQQDDAdsaWZlcmF5MB4XDTIy
+MDQxNTA4NDY1MloXDTIzMDQwNjA4NDY1MlowEjEQMA4GA1UEAwwHbGlmZXJheTCCASIwDQYJKoZI
+hvcNAQEBBQADggEPADCCAQoCggEBAIjOlgGHLFBplsA3xjgeErN95aZHdtUEPAr4ElkWS5vkZvBl
+7lOcIhP46Ego965oxcoCntuCIEL6FeAuEATbwiLL0HtdbNRdBl2+moMQJ4mwcZ4zQnAoqT8lBAjG
+N9HYDuRieyR1rGvHuYh7KRU5PutOhJVlGbfOiz/xJQsY7grd8rMeyiTSnhppfxZX0WKV3K/9F/CY
+OjzPh2mI9HlPNxamDLJqqY4BTOKi4lyJIqJ9XtABEF3z20FY7FDmer8WqQxdH/FeWZjqEVwFYlje
+cjUgjML6Tt7oGqXWvbE2PV7zAap2XePtVmFN9fkMw9mWYfmNjPiAWeaRMWZtngfwIucCAwEAATAN
+BgkqhkiG9w0BAQsFAAOCAQEAWsC53gbpENbLhwXrdQ/KKHOZdvdG720tAx1nhgrQo6yvD6FlLUXu
+JG791KDCBbQRIsPglmNz/MkXtuk4RdnE+I2XPvQ0C+LGzGGXiABJR/enxA9oRJTacW+juuR8gNQs
+Of0s4jnZV04/hNpIFWmS+pxebYKyQpof6+H5iC9Ejhj4tOtaYr4ORhnsMFz6XuxlGP62VGAYvTGn
+5GZZ+HlO9FUTwPtWlqt5ZyCoRVasOWJmMkBWhv+Ggq9DS363A2pCuQLo6GxPjQEO1VL2vS/40IY1
+ZvCodt8OtJX0S5SEyquayW5DHFJ3bxFOHPpN5MN0nmUsLYHBcJmJwgH6CMxyEg==</ds:X509Certificate></ds:X509Data></ds:KeyInfo></md:KeyDescriptor><md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="http://www.baker.com:8080/c/portal/saml/slo"/><md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="http://www.baker.com:8080/c/portal/saml/slo"/><md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="http://www.baker.com:8080/c/portal/saml/sso"/><md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="http://www.baker.com:8080/c/portal/saml/sso"/></md:IDPSSODescriptor></md:EntityDescriptor>

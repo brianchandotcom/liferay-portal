@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelper;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -81,6 +82,9 @@ public class AttachmentDDMFormFieldTemplateContextContributor
 			"fileSource", ddmFormField.getProperty("fileSource")
 		).put(
 			"maximumFileSize", maximumFileSize
+		).put(
+			"overallMaximumUploadRequestSize",
+			_uploadServletRequestConfigurationHelper.getMaxSize()
 		).put(
 			"tip",
 			LanguageUtil.format(
@@ -247,5 +251,9 @@ public class AttachmentDDMFormFieldTemplateContextContributor
 	private ItemSelector _itemSelector;
 
 	private volatile ObjectConfiguration _objectConfiguration;
+
+	@Reference
+	private UploadServletRequestConfigurationHelper
+		_uploadServletRequestConfigurationHelper;
 
 }

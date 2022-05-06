@@ -29,8 +29,6 @@ import React, {ChangeEventHandler, useRef, useState} from 'react';
 
 import './Attachment.scss';
 
-const BYTES_PER_MB = 1048576;
-
 function validateFileExtension(
 	acceptedFileExtensions: string,
 	fileExtension: string
@@ -57,8 +55,28 @@ function validateFileExtension(
 	}
 }
 
-function validateFileSize(fileSize: number, maxFileSize: number) {
-	if (maxFileSize > 0 && fileSize > maxFileSize * BYTES_PER_MB) {
+function validateFileSize(
+	fileSize: number,
+	maxFileSize: number,
+	overallMaximumUploadRequestSize: number
+) {
+	if (maxFileSize === 0 && fileSize > overallMaximumUploadRequestSize) {
+		return {
+			displayErrors: true,
+			errorMessage: Liferay.Util.sub(
+				Liferay.Language.get(
+					'file-size-is-larger-than-the-allowed-overall-maximum-upload-request-size-x'
+				),
+				`${overallMaximumUploadRequestSize / 1048576} MB`
+			),
+			valid: false,
+		};
+	}
+
+	if (
+		maxFileSize > 0 &&
+		fileSize > maxFileSize * overallMaximumUploadRequestSize
+	) {
 		return {
 			displayErrors: true,
 			errorMessage: Liferay.Util.sub(
@@ -119,6 +137,7 @@ export default function Attachment({
 	fileSource,
 	maximumFileSize,
 	onChange,
+	overallMaximumUploadRequestSize,
 	title,
 	url,
 	...otherProps
@@ -142,7 +161,12 @@ export default function Attachment({
 			validateFileExtension(
 				acceptedFileExtensions,
 				selectedItemValue.extension
-			) ?? validateFileSize(selectedItemValue.size, maximumFileSize);
+			) ??
+			validateFileSize(
+				selectedItemValue.size,
+				maximumFileSize,
+				Number(overallMaximumUploadRequestSize)
+			);
 
 		if (error) {
 			setError(error);
@@ -170,7 +194,8 @@ export default function Attachment({
 		if (selectedFile) {
 			const fileSizeError = validateFileSize(
 				selectedFile.size,
-				maximumFileSize
+				maximumFileSize,
+				Number(overallMaximumUploadRequestSize)
 			);
 
 			if (fileSizeError) {
@@ -283,6 +308,7 @@ interface IProps {
 	fileSource: string;
 	maximumFileSize: number;
 	onChange: FieldChangeEventHandler;
+	overallMaximumUploadRequestSize: number;
 	title: string;
 	url: string;
 }

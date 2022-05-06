@@ -199,7 +199,8 @@ public class AttachmentObjectFieldBusinessType
 			String storageDLFolderPath)
 		throws PortalException {
 
-		if (StringUtil.equalsIgnoreCase(
+		if (Validator.isNull(showFilesInDocumentsAndMedia) ||
+			StringUtil.equalsIgnoreCase(
 				showFilesInDocumentsAndMedia, StringPool.FALSE)) {
 
 			if (Validator.isNotNull(storageDLFolderPath)) {
@@ -224,11 +225,6 @@ public class AttachmentObjectFieldBusinessType
 
 				DLValidatorUtil.validateDirectoryName(directoryName);
 			}
-		}
-		else if (Validator.isNull(showFilesInDocumentsAndMedia)) {
-			throw new ObjectFieldSettingValueException.MissingRequiredValues(
-				objectFieldName,
-				Collections.singleton("showFilesInDocumentsAndMedia"));
 		}
 		else {
 			throw new ObjectFieldSettingValueException.InvalidValue(

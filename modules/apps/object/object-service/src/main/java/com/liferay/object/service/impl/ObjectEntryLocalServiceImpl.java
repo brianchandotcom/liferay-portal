@@ -923,7 +923,9 @@ public class ObjectEntryLocalServiceImpl
 			objectFieldSetting = _objectFieldSettingPersistence.fetchByOFI_N(
 				objectField.getObjectFieldId(), "showFilesInDocumentsAndMedia");
 
-			if (GetterUtil.getBoolean(objectFieldSetting.getValue())) {
+			if ((objectFieldSetting != null) &&
+				GetterUtil.getBoolean(objectFieldSetting.getValue())) {
+
 				continue;
 			}
 

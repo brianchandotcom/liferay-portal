@@ -273,6 +273,71 @@ public class AssetVocabularySiteNavigationMenuItemTypeTest {
 				mockHttpServletRequest, siteNavigationMenuItem));
 	}
 
+	@Test
+	public void testGetSiteNavigationMenuItemsAssetCategoryType()
+		throws Exception {
+
+		AssetCategory assetCategory = _createAssetCategory(0);
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		ThemeDisplay themeDisplay = _getThemeDisplay();
+
+		Locale locale = _portal.getSiteDefaultLocale(_group.getGroupId());
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		SiteNavigationMenuItemType siteNavigationMenuItemType =
+			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(
+				SiteNavigationMenuItemTypeConstants.ASSET_VOCABULARY);
+
+		SiteNavigationMenuItem assetVocabularySiteNavigationMenuItem =
+			_createSiteNavigationMenuItem(locale, "{}", false);
+
+		List<SiteNavigationMenuItem> childrenSiteNavigationMenuItems =
+			siteNavigationMenuItemType.getChildrenSiteNavigationMenuItems(
+				mockHttpServletRequest, assetVocabularySiteNavigationMenuItem);
+
+		Assert.assertEquals(
+			childrenSiteNavigationMenuItems.toString(), 1,
+			childrenSiteNavigationMenuItems.size());
+
+		SiteNavigationMenuItem assetCategorySiteNavigationMenuItem =
+			childrenSiteNavigationMenuItems.get(0);
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			UnicodePropertiesBuilder.fastLoad(
+				assetCategorySiteNavigationMenuItem.getTypeSettings()
+			).build();
+
+		Assert.assertEquals(
+			"asset-category", typeSettingsUnicodeProperties.get("type"));
+		Assert.assertEquals(
+			assetCategory.getCategoryId(),
+			GetterUtil.getLong(typeSettingsUnicodeProperties.get("classPK")));
+		Assert.assertEquals(
+			_assetVocabulary.getVocabularyId(),
+			GetterUtil.getLong(
+				typeSettingsUnicodeProperties.get("assetVocabularyId")));
+		Assert.assertEquals(
+			assetCategory.getTitle(locale),
+			typeSettingsUnicodeProperties.get("title"));
+
+		List<SiteNavigationMenuItem> siteNavigationMenuItems =
+			siteNavigationMenuItemType.getSiteNavigationMenuItems(
+				mockHttpServletRequest, assetCategorySiteNavigationMenuItem);
+
+		Assert.assertEquals(
+			siteNavigationMenuItems.toString(), 1,
+			siteNavigationMenuItems.size());
+
+		Assert.assertEquals(
+			assetCategorySiteNavigationMenuItem,
+			siteNavigationMenuItems.get(0));
+	}
+
 	private void _assertGetChildrenSiteNavigationMenuItems(
 			Locale locale, long parentAssetCategoryId,
 			SiteNavigationMenuItem siteNavigationMenuItem)

@@ -348,6 +348,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CHECKOUT_SUMMARY_DELIVERY_TERM</td>
+	<td>//div[contains(@class,'delivery-term')]/div[contains(.,'${key_deliveryTerm}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHECKOUT_SUMMARY_PAYMENT_TERM</td>
+	<td>//div[contains(@class,'payment-term')]/div[contains(.,'${key_paymentTerm}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CHECKOUT_SUMMARY_PRODUCT_TABLE_PRICE</td>
 	<td>//td[contains(@class,'lfr-price-column')]//*/*[contains(.,'${key_productPrice}')]</td>
 	<td></td>

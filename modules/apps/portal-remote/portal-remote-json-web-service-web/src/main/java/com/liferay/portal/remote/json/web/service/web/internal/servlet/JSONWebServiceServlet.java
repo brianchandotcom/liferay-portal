@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.servlet.JSONServlet;
 import com.liferay.portal.struts.JSONAction;
 import com.liferay.portal.util.PropsValues;
@@ -37,6 +36,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Igor Spasic
@@ -65,7 +65,7 @@ public class JSONWebServiceServlet extends JSONServlet {
 			 !path.equals(StringPool.SLASH)) ||
 			(httpServletRequest.getParameter("discover") != null)) {
 
-			Locale locale = PortalUtil.getLocale(
+			Locale locale = _portal.getLocale(
 				httpServletRequest, httpServletResponse, true);
 
 			LocaleThreadLocal.setThemeDisplayLocale(locale);
@@ -94,5 +94,8 @@ public class JSONWebServiceServlet extends JSONServlet {
 
 		return jsonWebServiceServiceAction;
 	}
+
+	@Reference
+	private Portal _portal;
 
 }

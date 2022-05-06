@@ -307,6 +307,27 @@ public class AssetVocabularySiteNavigationMenuItemTypeTest {
 		SiteNavigationMenuItem assetCategorySiteNavigationMenuItem =
 			childrenSiteNavigationMenuItems.get(0);
 
+		_assertAssetCategorySiteNavigationMenuItem(
+			assetCategory, assetCategorySiteNavigationMenuItem, locale);
+
+		List<SiteNavigationMenuItem> siteNavigationMenuItems =
+			siteNavigationMenuItemType.getSiteNavigationMenuItems(
+				mockHttpServletRequest, assetCategorySiteNavigationMenuItem);
+
+		Assert.assertEquals(
+			siteNavigationMenuItems.toString(), 1,
+			siteNavigationMenuItems.size());
+
+		Assert.assertEquals(
+			assetCategorySiteNavigationMenuItem,
+			siteNavigationMenuItems.get(0));
+	}
+
+	private void _assertAssetCategorySiteNavigationMenuItem(
+		AssetCategory assetCategory,
+		SiteNavigationMenuItem assetCategorySiteNavigationMenuItem,
+		Locale locale) {
+
 		UnicodeProperties typeSettingsUnicodeProperties =
 			UnicodePropertiesBuilder.fastLoad(
 				assetCategorySiteNavigationMenuItem.getTypeSettings()
@@ -324,18 +345,6 @@ public class AssetVocabularySiteNavigationMenuItemTypeTest {
 		Assert.assertEquals(
 			assetCategory.getTitle(locale),
 			typeSettingsUnicodeProperties.get("title"));
-
-		List<SiteNavigationMenuItem> siteNavigationMenuItems =
-			siteNavigationMenuItemType.getSiteNavigationMenuItems(
-				mockHttpServletRequest, assetCategorySiteNavigationMenuItem);
-
-		Assert.assertEquals(
-			siteNavigationMenuItems.toString(), 1,
-			siteNavigationMenuItems.size());
-
-		Assert.assertEquals(
-			assetCategorySiteNavigationMenuItem,
-			siteNavigationMenuItems.get(0));
 	}
 
 	private void _assertGetChildrenSiteNavigationMenuItems(
@@ -374,24 +383,8 @@ public class AssetVocabularySiteNavigationMenuItemTypeTest {
 			SiteNavigationMenuItem childrenSiteNavigationMenuItem =
 				childrenSiteNavigationMenuItems.get(i);
 
-			UnicodeProperties typeSettingsUnicodeProperties =
-				UnicodePropertiesBuilder.fastLoad(
-					childrenSiteNavigationMenuItem.getTypeSettings()
-				).build();
-
-			Assert.assertEquals(
-				"asset-category", typeSettingsUnicodeProperties.get("type"));
-			Assert.assertEquals(
-				assetCategory.getCategoryId(),
-				GetterUtil.getLong(
-					typeSettingsUnicodeProperties.get("classPK")));
-			Assert.assertEquals(
-				_assetVocabulary.getVocabularyId(),
-				GetterUtil.getLong(
-					typeSettingsUnicodeProperties.get("assetVocabularyId")));
-			Assert.assertEquals(
-				assetCategory.getTitle(locale),
-				typeSettingsUnicodeProperties.get("title"));
+			_assertAssetCategorySiteNavigationMenuItem(
+				assetCategory, childrenSiteNavigationMenuItem, locale);
 
 			_assertGetChildrenSiteNavigationMenuItems(
 				locale, assetCategory.getCategoryId(),

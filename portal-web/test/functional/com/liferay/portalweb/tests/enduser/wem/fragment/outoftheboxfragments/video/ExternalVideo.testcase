@@ -35,6 +35,30 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-151368. It checks that the video URL is saved when adding external video shortcut in non-default language."
+	@priority = "4"
+	test CanExternalVideoURLSavedAfterLoginNonDefaultLanguage {
+		Navigator.openURL(baseURL = " http://localhost:8080/ja");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+
+		VideoShortcut.addCPInNonDefaultLanguage(
+			button = "公開",
+			dmDocumentTypeName = "外部動画のショートカット",
+			key_text = "動画URL",
+			videoShortcutTitle = "DM Title",
+			videoURL = "https://www.facebook.com/Cristiano/videos/1710977485745946");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "編集",
+			rowEntry = "DM Title");
+
+		AssertTextEquals(
+			key_text = "動画URL",
+			locator1 = "TextInput#ANY",
+			value1 = "https://www.facebook.com/Cristiano/videos/1710977485745946");
+	}
+
 	@description = "This is a test for LPS-130453. Display video from Documents and Media in External Video fragment."
 	@priority = "5"
 	@uitest

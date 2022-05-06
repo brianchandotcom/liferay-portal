@@ -284,6 +284,12 @@ definition {
 			key_selectData = "${applications}",
 			locator1 = "DataErasure#REVIEW_DATA_SELECT");
 
+		if (isSet(webContent)) {
+			Click.clickNoWaitForVisible(
+				key_selectData = "${webContent}",
+				locator1 = "DataErasure#REVIEW_DATA_SELECT");
+		}
+
 		AssertElementPresent(
 			key_dataSelected = "${applications}",
 			locator1 = "DataErasure#REVIEW_DATA_SELECTED");

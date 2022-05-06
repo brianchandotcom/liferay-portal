@@ -545,7 +545,8 @@ definition {
 				GDPR.filterByApplications(
 					applicationItemsCount = "6",
 					applications = "Web Content",
-					totalItemsCount = "6");
+					totalItemsCount = "6",
+					webContent = "JournalArticle (6)");
 
 				for (var rowIndexNum : list "1,3") {
 					GDPR.anonymizeTheSpecificEntry(rowIndexNumber = "${rowIndexNum}");

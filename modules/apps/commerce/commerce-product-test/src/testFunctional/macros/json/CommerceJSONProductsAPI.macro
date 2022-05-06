@@ -3,6 +3,7 @@ definition {
 	macro _addCommerceProduct {
 		Variables.assertDefined(parameterList = "${catalogName},${productName},${productType}");
 
+		var productType = StringUtil.lowerCase("${productType}");
 		var baseURL = "${baseURL}";
 
 		if (!(isSet(baseURL))) {

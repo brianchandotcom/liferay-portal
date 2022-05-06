@@ -21,7 +21,7 @@ definition {
 			CommerceJSONProductsAPI._addCommerceProduct(
 				catalogName = "Master",
 				productName = "Test Simple Product Replacement",
-				productType = "simple",
+				productType = "Simple",
 				sku = "SKU1001");
 		}
 
@@ -29,7 +29,7 @@ definition {
 			CommerceJSONProductsAPI._addCommerceProduct(
 				catalogName = "Master",
 				productName = "Test Simple Product",
-				productType = "simple");
+				productType = "Simple");
 		}
 
 		task ("When the product specialist is creating a new SKU") {
@@ -105,7 +105,7 @@ definition {
 				catalogName = "Master",
 				discontinued = "True",
 				productName = "Test Simple Product Replacement",
-				productType = "simple",
+				productType = "Simple",
 				sku = "SKU1001");
 		}
 
@@ -114,7 +114,7 @@ definition {
 				catalogName = "Master",
 				discontinued = "True",
 				productName = "Test Simple Product",
-				productType = "simple",
+				productType = "Simple",
 				replacementSKU = "SKU1001",
 				sku = "SKU1002");
 		}
@@ -154,7 +154,7 @@ definition {
 				catalogName = "Test Catalog",
 				discontinued = "True",
 				productName = "Test Simple Product",
-				productType = "simple",
+				productType = "Simple",
 				sku = "SKU1001");
 		}
 
@@ -163,7 +163,7 @@ definition {
 				catalogName = "Master",
 				discontinued = "True",
 				productName = "Test Simple Product Replacement",
-				productType = "simple",
+				productType = "Simple",
 				sku = "SKU1002");
 
 			CommerceProducts.openProductsAdmin();
@@ -209,7 +209,7 @@ definition {
 			CommerceJSONProductsAPI._addCommerceProduct(
 				catalogName = "Master",
 				productName = "Test Simple Product",
-				productType = "simple",
+				productType = "Simple",
 				sku = "MIN70291");
 		}
 
@@ -258,7 +258,7 @@ definition {
 				catalogName = "Master",
 				discontinued = "True",
 				productName = "Test Simple Product",
-				productType = "simple",
+				productType = "Simple",
 				sku = "SKU1001");
 		}
 
@@ -266,7 +266,7 @@ definition {
 			CommerceJSONProductsAPI._addCommerceProduct(
 				catalogName = "Master",
 				productName = "Test Simple Product Replacement",
-				productType = "simple",
+				productType = "Simple",
 				sku = "SKU1002");
 		}
 
@@ -305,7 +305,7 @@ definition {
 				catalogName = "Master",
 				discontinued = "True",
 				productName = "Test Simple Product",
-				productType = "simple",
+				productType = "Simple",
 				sku = "SKU1001");
 		}
 

@@ -50,11 +50,13 @@ export default function FieldBase({
 				'has-warning': warningMessage && !errorMessage,
 			})}
 		>
-			<label className={classNames({disabled})} htmlFor={id}>
-				{label}
+			{label && (
+				<label className={classNames({disabled})} htmlFor={id}>
+					{label}
 
-				{required && <RequiredMask />}
-			</label>
+					{required && <RequiredMask />}
+				</label>
+			)}
 
 			{children}
 
@@ -74,7 +76,7 @@ interface IProps {
 	errorMessage?: string;
 	helpMessage?: string;
 	id?: string;
-	label: string;
+	label?: string;
 	required?: boolean;
 	warningMessage?: string;
 }

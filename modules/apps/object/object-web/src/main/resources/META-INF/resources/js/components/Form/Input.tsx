@@ -75,7 +75,7 @@ interface IProps
 	error?: string;
 	feedbackMessage?: string;
 	id?: string;
-	label: string;
+	label?: string;
 	name?: string;
 	required?: boolean;
 	type?: 'number' | 'text';

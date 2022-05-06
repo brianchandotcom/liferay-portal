@@ -8666,7 +8666,7 @@ virtualHostname="localhost"
 	<target name="deploy-keystore-file">
 		<copy
 			file="${project.dir}/portal-web/test/functional/com/liferay/portalweb/tests/coreinfrastructureee/security/dependencies/keystore.jks"
-			tofile="${liferay.home}/data"
+			todir="${liferay.home}/data"
 		/>
 	</target>
 
@@ -13658,15 +13658,6 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 			</then>
 		</if>
 
-		<get-testcase-property property.name="keystore.enabled" />
-
-		<if>
-			<equals arg1="${keystore.enabled}" arg2="true" />
-			<then>
-				<antcall target="deploy-keystore-file" />
-			</then>
-		</if>
-
 		<get-testcase-property property.name="dummy.socket.proxy.disabled" />
 
 		<if>
@@ -14027,6 +14018,15 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 			</and>
 			<then>
 				<antcall target="deploy-osgi-module-configurations" />
+			</then>
+		</if>
+
+		<get-testcase-property property.name="keystore.enabled" />
+
+		<if>
+			<equals arg1="${keystore.enabled}" arg2="true" />
+			<then>
+				<antcall target="deploy-keystore-file" />
 			</then>
 		</if>
 

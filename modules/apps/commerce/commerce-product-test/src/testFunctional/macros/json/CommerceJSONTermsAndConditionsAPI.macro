@@ -1,0 +1,119 @@
+definition {
+
+	macro _addCommerceTermsAndConditions {
+		var baseURL = "${baseURL}";
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (!(isSet(termsCount))) {
+			var termsCount = "1";
+		}
+
+		var size = ${termsCount} + 1;
+		var i = "1";
+
+		while ("${i}" != "${size}") {
+			var termsTypeLowercase = StringUtil.lowerCase("${termsType}");
+
+			var payload = '''
+            {
+                
+                "active": true,
+                "label": {
+                    "en_US": "${termsType} Term ${i}"
+                },
+                "name": "${termsTypeLowercase}-term-${i}",
+                "priority": ${i},
+                "type": "${termsTypeLowercase}-terms"
+                
+            }
+            ''';
+
+			var curl = '''
+                ${baseURL}/o/headless-commerce-admin-order/v1.0/terms \
+                -u test@liferay.com:test \
+                -H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+                -d '${payload}'
+            ''';
+			var i = ${i} + 1;
+
+			JSONCurlUtil.post("${curl}");
+		}
+	}
+
+	macro _deleteAllCommerceTermsAndConditions {
+		var baseURL = "${baseURL}";
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var termsAndConditionsCount = CommerceJSONTermsAndConditionsAPI._getCommerceTermsAndConditionsCount();
+
+		if ("${termsAndConditionsCount}" != "0") {
+			var termsAndConditionsIds = CommerceJSONTermsAndConditionsAPI._getCommerceTermsAndConditionsIds(termsAndConditionsCount = "${termsAndConditionsCount}");
+
+			for (var termsAndConditionsId : list "${termsAndConditionsIds}") {
+				echo("Deleting Commerce Term with id: ${termsAndConditionsId}");
+
+				var curl = '''
+					${baseURL}/o/headless-commerce-admin-order/v1.0/terms/${termsAndConditionsId} \
+					-u test@liferay.com:test \
+					-H 'accept: application/json' \
+				''';
+
+				JSONCurlUtil.delete("${curl}");
+			}
+		}
+		else {
+			echo("No Commerce Option to be deleted");
+		}
+	}
+
+	macro _getCommerceTermsAndConditionsCount {
+		var baseURL = "${baseURL}";
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-order/v1.0/terms \
+			-u test@liferay.com:test \
+			-H 'accept: application/json' \
+		''';
+		var termsAndConditionsCount = JSONCurlUtil.get("${curl}", "$['totalCount']");
+
+		echo("The Commerce Terms And Conditions count is: ${termsAndConditionsCount}");
+
+		return "${termsAndConditionsCount}";
+	}
+
+	macro _getCommerceTermsAndConditionsIds {
+		var baseURL = "${baseURL}";
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (isSet(termsAndConditionsCount)) {
+			var termsAndConditionsCount = "${termsAndConditionsCount}";
+		}
+		else {
+			var termsAndConditionsCount = "100";
+		}
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-order/v1.0/terms?pageSize=${termsAndConditionsCount} \
+			-u test@liferay.com:test \
+			-H 'accept: application/json' \
+		''';
+		var termsAndConditionsIds = JSONCurlUtil.get("${curl}", "$..['id']");
+
+		return "${termsAndConditionsIds}";
+	}
+
+}

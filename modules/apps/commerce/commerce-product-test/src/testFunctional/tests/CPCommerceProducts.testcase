@@ -1262,4 +1262,28 @@ definition {
 
 	}
 
+	@description = "This is a test for COMMERCE-9179. VerifyDraftStatus"
+	@priority = "3"
+	test VerifyDraftStatus {
+		property portal.acceptance = "false";
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CPCommerceCatalog.newProductsEntry(
+			productCatalog = "Master",
+			productName = "Simple T-Shirt",
+			compileDescription = "false",
+			publishProduct = "false",
+			productType = "Simple");
+
+		AssertElementPresent(
+			key_text = "Publish",
+			locator1 = "Button#ANY");
+
+		AssertElementPresent(
+			key_text = "Save as Draft",
+			locator1 = "Button#ANY");
+	}
 }

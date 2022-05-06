@@ -1517,4 +1517,45 @@ definition {
 			key_status = "Draft",
 			locator1 = "CommerceEntry#WORKFLOW_STATUS");	
 	}
+
+	@description = "This is a test for COMMERCE-9191. CheckTheFirstStatusForSingleApproverWorkflow"
+	@priority = "3"
+	test CheckTheFirstStatusForSingleApproverWorkflow {
+		property portal.acceptance = "false";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Configuration");
+
+		Workflow.configureWorkflow(
+			workflowResourceValue = "Commerce Product",
+			workflowDefinition = "Single Approver");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CPCommerceCatalog.newProductsEntry(
+			productCatalog = "Master",
+			productName = "Simple T-Shirt",
+			compileDescription = "false",
+			publishProduct = "false",
+			productType = "Simple");
+
+		task ("Disable Single Approver for avoid issue on CI") { 
+			ApplicationsMenu.gotoPortlet(
+				category = "Workflow",
+				panel = "Applications",
+				portlet = "Process Builder");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Configuration");
+
+			Workflow.configureWorkflow(
+				workflowResourceValue = "Commerce Product",
+				workflowDefinition = "No Workflow");
+		}
+	}
 }

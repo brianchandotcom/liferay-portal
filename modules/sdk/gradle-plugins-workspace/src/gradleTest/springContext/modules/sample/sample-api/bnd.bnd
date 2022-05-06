@@ -1,0 +1,10 @@
+Bundle-Name: sample-api
+Bundle-SymbolicName: sample.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.example.sample.exception,\
+	com.example.sample.model,\
+	com.example.sample.service,\
+	com.example.sample.service.persistence
+-check: EXPORTS
+-includeresource: META-INF/service.xml=../sample-service/service.xml

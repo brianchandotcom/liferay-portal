@@ -78,6 +78,22 @@ definition {
 			value1 = "Add");
 	}
 
+	macro assignSingleRelationToEligibility {
+		var searchTerm = '''"${entryName}"''';
+
+		Type(
+			key_title = "${title}",
+			locator1 = "CommerceEntry#ADD_RELATION_FIELD",
+			value1 = "${searchTerm}");
+
+		Pause(locator1 = "3000");
+
+		ClickNoError(
+			key_entryName = "${entryName}",
+			key_title = "${title}",
+			locator1 = "CommerceEntry#ADD_RELATION_FIELD_SELECT");
+	}
+
 	macro assignSingleRelationToProductsEntry {
 		var searchTerm = '''"${entryName}"''';
 

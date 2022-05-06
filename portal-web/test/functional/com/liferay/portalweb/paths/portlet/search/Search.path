@@ -87,6 +87,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MODIFIED_FACET_CONFIG_SPECIFIC_FIELD</td>
+	<td>//div[contains(@class,'modified-facet')]//input[@value='${fieldValue}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MODIFIED_FACET_SELECTION</td>
 	<td>//div[contains(@id,'ModifiedFacet')]//span[contains(.,'${range}')]</td>
 	<td></td>

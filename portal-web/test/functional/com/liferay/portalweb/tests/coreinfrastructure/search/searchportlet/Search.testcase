@@ -2412,19 +2412,12 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
-		Click(locator1 = "Button#ADD_ROW");
-
 		var script = '''test"><script>alert(123);</script>''';
 
 		Type(
-			key_fieldLabel = "Label",
-			locator1 = "Search#MODIFIED_FACET_CONFIG_EMPTY_FIELD",
+			fieldValue = "past-hour",
+			locator1 = "Search#MODIFIED_FACET_CONFIG_SPECIFIC_FIELD",
 			value1 = "${script}");
-
-		Type(
-			key_fieldLabel = "Range",
-			locator1 = "Search#MODIFIED_FACET_CONFIG_EMPTY_FIELD",
-			value1 = "[past-hour TO *]");
 
 		PortletEntry.save();
 

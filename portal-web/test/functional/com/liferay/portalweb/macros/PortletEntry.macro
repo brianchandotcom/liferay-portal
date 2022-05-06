@@ -155,12 +155,6 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro publishInNonDefaultLanguage {
-		Button.clickPublishInNonDefaultLanguage(button = "${button}");
-
-		Alert.viewSuccessMessage();
-	}
-
 	macro save {
 		Button.clickSave();
 

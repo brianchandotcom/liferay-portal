@@ -78,64 +78,6 @@ definition {
 		}
 	}
 
-	macro addCPInNonDefaultLanguage {
-		if (!(isSet(skipNavigation))) {
-			DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "${dmDocumentTypeName}");
-		}
-
-		Type(
-			key_text = "${key_text}",
-			locator1 = "TextInput#ANY",
-			value1 = "${videoURL}");
-
-		Pause(locator1 = "5000");
-
-		if (isSet(videoShortcutPreview)) {
-			AssertVisible(
-				key_videoShortcutPreview = "${videoShortcutPreview}",
-				locator1 = "DocumentsAndMediaDocument#VIDEO_SHORTCUT_PREVIEW");
-		}
-
-		if (isSet(extractedVideoShortcutTitle)) {
-			var titleText = selenium.getElementValue("TextInput#TITLE");
-
-			if ("${extractedVideoShortcutTitle}" == "${titleText}") {
-				echo("This is a correct title.");
-			}
-			else {
-				fail("FAIL!");
-			}
-		}
-
-		if (isSet(videoShortcutTitle)) {
-			PortletEntry.inputTitle(title = "${videoShortcutTitle}");
-		}
-
-		if (isSet(videoShortcutDescription)) {
-			PortletEntry.inputDescription(description = "${videoShortcutDescription}");
-		}
-
-		if (isSet(categoryName)) {
-			var key_categoryName = "${categoryName}";
-
-			Panel.expandPanel(panel = "Categorization");
-
-			AssetCategorization.addCategory(
-				categoryName = "${categoryName}",
-				vocabularyName = "${vocabularyName}");
-		}
-
-		if (isSet(tagNameList)) {
-			Panel.expandPanel(panel = "Categorization");
-
-			for (var tagName : list "${tagNameList}") {
-				AssetCategorization.addTag(tagName = "${tagName}");
-			}
-		}
-
-		PortletEntry.publishInNonDefaultLanguage(button = "${button}");
-	}
-
 	macro addPG {
 		DMNavigator.gotoAddDocumentTypePG(
 			contentPage = "${contentPage}",

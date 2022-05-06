@@ -21,6 +21,7 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalContentSearch;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.service.JournalContentSearchLocalService;
+import com.liferay.journal.util.JournalHelper;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Layout;
@@ -87,13 +88,8 @@ public class JournalOpenSearchImpl extends HitsOpenSearchImpl {
 			groupId, articleId);
 
 		if (Validator.isNotNull(article.getLayoutUuid())) {
-			return StringBundler.concat(
-				_portal.getGroupFriendlyURL(
-					_layoutSetLocalService.getLayoutSet(
-						article.getGroupId(), false),
-					themeDisplay, false, false),
-				JournalArticleConstants.CANONICAL_URL_SEPARATOR,
-				article.getUrlTitle());
+			return _journalHelper.buildURLPattern(
+				article, false, themeDisplay, themeDisplay.getLocale());
 		}
 
 		Layout layout = themeDisplay.getLayout();
@@ -214,6 +210,10 @@ public class JournalOpenSearchImpl extends HitsOpenSearchImpl {
 	private GroupLocalService _groupLocalService;
 	private JournalArticleService _journalArticleService;
 	private JournalContentSearchLocalService _journalContentSearchLocalService;
+
+	@Reference
+	private JournalHelper _journalHelper;
+
 	private LayoutLocalService _layoutLocalService;
 	private LayoutSetLocalService _layoutSetLocalService;
 

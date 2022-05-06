@@ -127,6 +127,14 @@ definition {
 			actual = "${warehousesCount}",
 			expected = "${emptyCount}");
 
+		CommerceJSONTermsAndConditionsAPI._deleteAllCommerceTermsAndConditions();
+
+		var commerceTermsAndConditionsCount = CommerceJSONTermsAndConditionsAPI._getCommerceTermsAndConditionsCount();
+
+		TestUtils.assertEquals(
+			actual = "${commerceTermsAndConditionsCount}",
+			expected = "${emptyCount}");
+
 		CommerceConfiguration.commerceInitializersTearDown();
 	}
 

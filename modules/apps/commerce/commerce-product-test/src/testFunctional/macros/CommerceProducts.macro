@@ -13,6 +13,8 @@ definition {
 		}
 
 		CommerceEntry.addProductsEntry(
+			compileDescription = "${compileDescription}",
+			publishProduct = "${publishProduct}",
 			productCatalog = "${productCatalog}",
 			productFullDescription = "${productFullDescription}",
 			productName = "${productName}",

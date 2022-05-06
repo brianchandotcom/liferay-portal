@@ -560,6 +560,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TABLE_ENTRY_ROW_NUMBER</td>
+	<td>//div[@class='dnd-tbody']/div[contains(@class,'dnd-tr')][${key_rowNumber}]//a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TABLE_ENTRY_STATUS</td>
 	<td>//h4[contains(.,'${key_table}')]//..//div/a[contains(.,'${key_entryName}')]/parent::div/parent::div/parent::div//div[@class='dnd-td']/span[contains(@class,'label')][contains(.,'${key_entryStatus}')]</td>
 	<td></td>

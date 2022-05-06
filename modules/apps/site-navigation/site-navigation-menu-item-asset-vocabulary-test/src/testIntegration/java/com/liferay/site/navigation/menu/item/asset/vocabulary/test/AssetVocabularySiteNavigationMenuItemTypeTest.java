@@ -214,14 +214,10 @@ public class AssetVocabularySiteNavigationMenuItemTypeTest {
 	public void testGetRegularURLAssetCategoryTypeWithoutDisplayPageTemplate()
 		throws Exception {
 
-		_createAssetCategory(0);
-
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
 		ThemeDisplay themeDisplay = _getThemeDisplay();
-
-		Locale locale = _portal.getSiteDefaultLocale(_group.getGroupId());
 
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
@@ -230,22 +226,13 @@ public class AssetVocabularySiteNavigationMenuItemTypeTest {
 			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(
 				SiteNavigationMenuItemTypeConstants.ASSET_VOCABULARY);
 
-		SiteNavigationMenuItem assetVocabularySiteNavigationMenuItem =
-			_createSiteNavigationMenuItem(locale, "{}", false);
-
-		List<SiteNavigationMenuItem> childrenSiteNavigationMenuItems =
-			siteNavigationMenuItemType.getChildrenSiteNavigationMenuItems(
-				mockHttpServletRequest, assetVocabularySiteNavigationMenuItem);
-
-		Assert.assertEquals(
-			childrenSiteNavigationMenuItems.toString(), 1,
-			childrenSiteNavigationMenuItems.size());
-
 		Assert.assertEquals(
 			StringPool.BLANK,
 			siteNavigationMenuItemType.getRegularURL(
 				mockHttpServletRequest,
-				childrenSiteNavigationMenuItems.get(0)));
+				_getAssetCategorySiteNavigationMenuItem(
+					mockHttpServletRequest, siteNavigationMenuItemType,
+					_portal.getSiteDefaultLocale(_group.getGroupId()))));
 	}
 
 	@Test
@@ -277,8 +264,6 @@ public class AssetVocabularySiteNavigationMenuItemTypeTest {
 	public void testGetSiteNavigationMenuItemsAssetCategoryType()
 		throws Exception {
 
-		AssetCategory assetCategory = _createAssetCategory(0);
-
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
@@ -293,22 +278,9 @@ public class AssetVocabularySiteNavigationMenuItemTypeTest {
 			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(
 				SiteNavigationMenuItemTypeConstants.ASSET_VOCABULARY);
 
-		SiteNavigationMenuItem assetVocabularySiteNavigationMenuItem =
-			_createSiteNavigationMenuItem(locale, "{}", false);
-
-		List<SiteNavigationMenuItem> childrenSiteNavigationMenuItems =
-			siteNavigationMenuItemType.getChildrenSiteNavigationMenuItems(
-				mockHttpServletRequest, assetVocabularySiteNavigationMenuItem);
-
-		Assert.assertEquals(
-			childrenSiteNavigationMenuItems.toString(), 1,
-			childrenSiteNavigationMenuItems.size());
-
 		SiteNavigationMenuItem assetCategorySiteNavigationMenuItem =
-			childrenSiteNavigationMenuItems.get(0);
-
-		_assertAssetCategorySiteNavigationMenuItem(
-			assetCategory, assetCategorySiteNavigationMenuItem, locale);
+			_getAssetCategorySiteNavigationMenuItem(
+				mockHttpServletRequest, siteNavigationMenuItemType, locale);
 
 		List<SiteNavigationMenuItem> siteNavigationMenuItems =
 			siteNavigationMenuItemType.getSiteNavigationMenuItems(
@@ -442,6 +414,34 @@ public class AssetVocabularySiteNavigationMenuItemTypeTest {
 				"uuid", _assetVocabulary.getUuid()
 			).buildString(),
 			_serviceContext);
+	}
+
+	private SiteNavigationMenuItem _getAssetCategorySiteNavigationMenuItem(
+			MockHttpServletRequest mockHttpServletRequest,
+			SiteNavigationMenuItemType siteNavigationMenuItemType,
+			Locale locale)
+		throws Exception {
+
+		AssetCategory assetCategory = _createAssetCategory(0);
+
+		SiteNavigationMenuItem assetVocabularySiteNavigationMenuItem =
+			_createSiteNavigationMenuItem(locale, "{}", false);
+
+		List<SiteNavigationMenuItem> childrenSiteNavigationMenuItems =
+			siteNavigationMenuItemType.getChildrenSiteNavigationMenuItems(
+				mockHttpServletRequest, assetVocabularySiteNavigationMenuItem);
+
+		Assert.assertEquals(
+			childrenSiteNavigationMenuItems.toString(), 1,
+			childrenSiteNavigationMenuItems.size());
+
+		SiteNavigationMenuItem assetCategorySiteNavigationMenuItem =
+			childrenSiteNavigationMenuItems.get(0);
+
+		_assertAssetCategorySiteNavigationMenuItem(
+			assetCategory, assetCategorySiteNavigationMenuItem, locale);
+
+		return assetCategorySiteNavigationMenuItem;
 	}
 
 	private ThemeDisplay _getThemeDisplay() throws Exception {

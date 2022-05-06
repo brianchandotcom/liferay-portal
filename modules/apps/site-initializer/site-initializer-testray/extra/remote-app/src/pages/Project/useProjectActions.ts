@@ -34,7 +34,7 @@ const useProjectActions = (
 		{
 			action: (item: TestrayProject) => modal.open(item),
 			name: i18n.translate('edit'),
-			permission: permissions.EDIT,
+			permission: permissions.UPDATE,
 		},
 		{
 			action: ({id}: TestrayProject) =>

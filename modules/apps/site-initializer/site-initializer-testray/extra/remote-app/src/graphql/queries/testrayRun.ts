@@ -15,11 +15,22 @@
 import {gql} from '@apollo/client';
 
 import {testrayRunFragment} from '../fragments';
+import {TestrayBuild} from './testrayBuild';
 
 export type TestrayRun = {
+	build: TestrayBuild;
 	dateCreated: string;
+	dateModified: string;
+	description: string;
+	environmentHash: string;
+	externalReferenceCode: string;
+	externalReferencePK: string;
+	externalReferenceType: string;
 	id: number;
+	jenkinsJobKey: string;
 	name: string;
+	number: string;
+	status: string;
 };
 
 export const getRuns = gql`
@@ -41,12 +52,31 @@ export const getRuns = gql`
 `;
 
 export const getRun = gql`
-	${testrayRunFragment}
-
 	query getRun($runId: Long!) {
-		c {
-			run(runId: $runId) {
-				...RunFragment
+		run(runId: $runId)
+			@rest(
+				type: "C_Task"
+				path: "runs/{args.runId}?nestedFields=build,build.project&nestedFieldsDepth=2"
+			) {
+			dateCreated
+			dateModified
+			description
+			environmentHash
+			externalReferenceCode
+			externalReferencePK
+			externalReferenceType
+			id: runId
+			jenkinsJobKey
+			name
+			number
+			status
+			build: r_buildToRuns_c_build {
+				id
+				name
+				project: r_projectToBuilds_c_project {
+					id
+					name
+				}
 			}
 		}
 	}

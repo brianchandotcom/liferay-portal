@@ -65,6 +65,7 @@ export default {
 	'choose-an-option': 'Choose an Option',
 	'close': 'Close',
 	'comment': 'Comment',
+	'compare-details': 'Compare Details',
 	'compare-runs': 'Compare Runs',
 	'complete-test': 'Complete Test',
 	'component': 'Component',

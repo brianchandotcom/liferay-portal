@@ -26,14 +26,11 @@ import com.liferay.portal.kernel.util.Props;
 >>>>>>> d47b81674466 (LPS-149256 Backend modifications to use FF)
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceURL;
-
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author David Arques
@@ -55,20 +52,16 @@ public class AnalyticsReportsDisplayContext<T> {
 			return _data;
 		}
 
-		_data = new HashMap<>();
-
-		_data.put(
+		_data = HashMapBuilder.<String, Object>put(
 			"context",
 			Collections.singletonMap(
 				"analyticsReportsDataURL",
-				String.valueOf(
-					_getResourceURL("/analytics_reports/get_data")))
-			);
-
-		_data.put(
-				"featureFlag",
-				GetterUtil.getBoolean(_props.get("feature.flag.LPS-149256"))
-			);
+				String.valueOf(_getResourceURL("/analytics_reports/get_data")))
+		).put(
+			"featureFlag",
+			Boolean.valueOf(
+				GetterUtil.getBoolean(_props.get("feature.flag.LPS-149256")))
+		).build();
 
 		return _data;
 	}
@@ -116,10 +109,14 @@ public class AnalyticsReportsDisplayContext<T> {
 
 	private Map<String, Object> _data;
 	private final InfoItemReference _infoItemReference;
+<<<<<<< HEAD
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 
 	@Reference
+=======
+>>>>>>> 355e5fb7fe77 (LPS-149256 SF)
 	private Props _props;
+	private final RenderResponse _renderResponse;
 
 }

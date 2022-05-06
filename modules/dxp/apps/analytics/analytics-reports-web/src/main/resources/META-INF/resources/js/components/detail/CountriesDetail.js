@@ -31,13 +31,13 @@ import Countries from './Countries';
 
 export default function CountriesDetail({
 	currentPage,
+	featureFlag,
 	handleDetailPeriodChange,
 	timeSpanOptions,
 	trafficShareDataProvider,
 	trafficSourcesDataProvider,
 	trafficVolumeDataProvider,
 }) {
-
 	const {languageTag} = useContext(StoreStateContext);
 
 	const dateFormatters = useMemo(() => dateFormat(languageTag), [
@@ -88,7 +88,11 @@ export default function CountriesDetail({
 
 			trafficSourcesDataProvider()
 				.then((trafficSources) => {
-					handleDetailPeriodChange(trafficSources, 'paid', true);
+					handleDetailPeriodChange(
+						trafficSources,
+						currentPage.view,
+						true
+					);
 				})
 				.catch(() => {
 					dispatch({type: 'ADD_WARNING'});
@@ -104,6 +108,7 @@ export default function CountriesDetail({
 		}
 	}, [
 		chartDispatch,
+		currentPage.view,
 		dispatch,
 		handleDetailPeriodChange,
 		timeSpanKey,
@@ -149,13 +154,21 @@ export default function CountriesDetail({
 				)}
 			/>
 
-			<Countries currentPage={currentPage} /> 
+			<Countries currentPage={currentPage} featureFlag={featureFlag} />
 		</div>
 	);
 }
 
 CountriesDetail.propTypes = {
 	currentPage: PropTypes.object.isRequired,
+	handleDetailPeriodChange: PropTypes.func.isRequired,
+	timeSpanOptions: PropTypes.arrayOf(
+		PropTypes.shape({
+			key: PropTypes.string,
+			label: PropTypes.string,
+		})
+	).isRequired,
 	trafficShareDataProvider: PropTypes.func.isRequired,
+	trafficSourcesDataProvider: PropTypes.func.isRequired,
 	trafficVolumeDataProvider: PropTypes.func.isRequired,
 };

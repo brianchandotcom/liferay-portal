@@ -49,15 +49,52 @@ export default function Detail({
 
 	const currentPageMocked = {
 		data: {
-			countrySearchKeywords:
-				[{countryCode:"es", countryName:"Spain", views: 900, viewsP: 40},
-				 {countryCode:"br", countryName:"Brazil", views: 400, viewsP: 20},
-				 {countryCode:"us", countryName:"United States", views: 700, viewsP: 20},
-				 {countryCode:"ca", countryName:"Canada", views: 1000, viewsP: 20},
-				 {countryCode:"me", countryName:"Mexico", views: 100, viewsP: 20},
-				 {countryCode:"fr", countryName:"France", views: 1700, viewsP: 20},
-				 {countryCode:"it", countryName:"Italy", views: 200, viewsP: 20}],
-		}
+			countrySearch: [
+				{
+					countryCode: 'es',
+					countryName: 'Spain',
+					views: 900,
+					viewsP: 40,
+				},
+				{
+					countryCode: 'br',
+					countryName: 'Brazil',
+					views: 400,
+					viewsP: 20,
+				},
+				{
+					countryCode: 'us',
+					countryName: 'United States',
+					views: 700,
+					viewsP: 20,
+				},
+				{
+					countryCode: 'ca',
+					countryName: 'Canada',
+					views: 1000,
+					viewsP: 20,
+				},
+				{
+					countryCode: 'me',
+					countryName: 'Mexico',
+					views: 100,
+					viewsP: 20,
+				},
+				{
+					countryCode: 'fr',
+					countryName: 'France',
+					views: 1700,
+					viewsP: 20,
+				},
+				{
+					countryCode: 'it',
+					countryName: 'Italy',
+					views: 200,
+					viewsP: 20,
+				},
+			],
+		},
+		view: 'paid',
 	};
 
 	return (
@@ -93,35 +130,36 @@ export default function Detail({
 
 					{(currentPage.view === TRAFFIC_CHANNELS.ORGANIC ||
 						currentPage.view === TRAFFIC_CHANNELS.PAID) &&
-						currentPage.data.countrySearchKeywords.length > 0 && (
-							featureFlag ? (
-								<CountriesDetail
-									currentPage={currentPageMocked}
-									handleDetailPeriodChange={handleDetailPeriodChange}
-									timeSpanOptions={timeSpanOptions}
-									trafficShareDataProvider={trafficShareDataProvider}
-									trafficSourcesDataProvider={
-										trafficSourcesDataProvider
-									}
-									trafficVolumeDataProvider={
-										trafficVolumeDataProvider
-									}
-								/>
-							) : (
-								<KeywordsDetail
-									currentPage={currentPage}
-									handleDetailPeriodChange={handleDetailPeriodChange}
-									timeSpanOptions={timeSpanOptions}
-									trafficShareDataProvider={trafficShareDataProvider}
-									trafficSourcesDataProvider={
-										trafficSourcesDataProvider
-									}
-									trafficVolumeDataProvider={
-										trafficVolumeDataProvider
-									}
-								/>
-							)
-						)}
+						currentPageMocked.data.countrySearch.length > 0 &&
+						(featureFlag ? (
+							<CountriesDetail
+								currentPage={currentPageMocked}
+								featureFlag={featureFlag}
+								handleDetailPeriodChange={
+									handleDetailPeriodChange
+								}
+								timeSpanOptions={timeSpanOptions}
+								trafficShareDataProvider={
+									trafficShareDataProvider
+								}
+								trafficSourcesDataProvider={
+									trafficSourcesDataProvider
+								}
+								trafficVolumeDataProvider={
+									trafficVolumeDataProvider
+								}
+							/>
+						) : (
+							<KeywordsDetail
+								currentPage={currentPage}
+								trafficShareDataProvider={
+									trafficShareDataProvider
+								}
+								trafficVolumeDataProvider={
+									trafficVolumeDataProvider
+								}
+							/>
+						))}
 
 					{currentPage.view === TRAFFIC_CHANNELS.REFERRAL && (
 						<ReferralDetail

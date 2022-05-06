@@ -14,49 +14,32 @@ import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayList from '@clayui/list';
 import PropTypes from 'prop-types';
-import React, {useContext, useMemo, useState} from 'react';
+import React, {useContext, useState} from 'react';
 
 import {StoreStateContext} from '../../context/StoreContext';
 import {numberFormat} from '../../utils/numberFormat';
 
-const KEYWORD_VALUE_TYPE = [
+const COUNTRY_VALUE_TYPE = [
 	{label: Liferay.Language.get('views'), name: 'views'},
 	{label: Liferay.Language.get('views-percentage'), name: 'views-percentage'},
 ];
 
-export default function Countries({currentPage}) {
+export default function Countries({currentPage, featureFlag}) {
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-	const [keywordValueType, setKeywordValueType] = useState(
-		KEYWORD_VALUE_TYPE[0]
+	const [countryValueType, setCountryValueType] = useState(
+		COUNTRY_VALUE_TYPE[0]
 	);
 
 	const {languageTag, publishedToday} = useContext(StoreStateContext);
 
-	const countries = useMemo(() => {
-		const dataKeys = new Set();
-
-		return currentPage.data.countrySearchKeywords.reduce(
-			(acc, {countryCode, countryName, views, viewsP}) => {
-				if (dataKeys.has(countryCode)) {
-					return acc;
-				}
-
-				dataKeys.add(countryCode);
-
-				return acc.concat({countryCode, countryName, views, viewsP});
-			},
-			[]
-		);
-	}, [currentPage.data.countrySearchKeywords]);
-
-	const handleKeywordValueType = (valueTypeName) => {
-		const newKeywordValueType = KEYWORD_VALUE_TYPE.find(
-			(keywordValueType) => {
-				return keywordValueType.name === valueTypeName;
+	const handleCountryValueType = (valueTypeName) => {
+		const newCountryValueType = COUNTRY_VALUE_TYPE.find(
+			(countryValueType) => {
+				return countryValueType.name === valueTypeName;
 			}
 		);
-		setKeywordValueType(newKeywordValueType);
+		setCountryValueType(newCountryValueType);
 	};
 
 	return (
@@ -65,12 +48,18 @@ export default function Countries({currentPage}) {
 				{Liferay.Language.get('views-by-location')}
 			</h5>
 
-			<ClayList className="list-group-keywords-list">
+			<ClayList
+				className={
+					'list-group-' +
+					(featureFlag ? 'countries' : 'keywords') +
+					'-list'
+				}
+			>
 				<ClayList.Item flex>
 					<ClayList.ItemField expand>
 						<ClayList.ItemTitle className="text-truncate-inline">
 							<span className="text-truncate">
-								{Liferay.Language.get('Country')}
+								{Liferay.Language.get('country')}
 							</span>
 						</ClayList.ItemTitle>
 					</ClayList.ItemField>
@@ -87,7 +76,7 @@ export default function Countries({currentPage}) {
 								>
 									<span className="font-weight-semi-bold">
 										<span className="pr-2">
-											{keywordValueType.label}
+											{countryValueType.label}
 										</span>
 
 										<ClayIcon symbol="caret-bottom" />
@@ -96,15 +85,15 @@ export default function Countries({currentPage}) {
 							}
 						>
 							<ClayDropDown.ItemList>
-								{KEYWORD_VALUE_TYPE.map((valueType, index) => (
+								{COUNTRY_VALUE_TYPE.map((valueType, index) => (
 									<ClayDropDown.Item
 										active={
 											valueType.name ===
-											keywordValueType.name
+											countryValueType.name
 										}
 										key={index}
 										onClick={() => {
-											handleKeywordValueType(
+											handleCountryValueType(
 												valueType.name
 											);
 											setIsDropdownOpen(false);
@@ -119,7 +108,7 @@ export default function Countries({currentPage}) {
 				</ClayList.Item>
 
 				{!publishedToday &&
-					countries.map(
+					currentPage.data.countrySearch.map(
 						({countryCode, countryName, views, viewsP}) => {
 							return (
 								<ClayList.Item flex key={countryCode}>
@@ -139,15 +128,18 @@ export default function Countries({currentPage}) {
 
 									<ClayList.ItemField expand>
 										<span className="align-self-end font-weight-semi-bold text-dark">
-											{ 
-												keywordValueType.name ===
-													'views'
-													? numberFormat(languageTag, views)
-													: keywordValueType.name ===
-													  'views-percentage'
-													? `${numberFormat(languageTag, viewsP)}%`
-													: views
-											}
+											{countryValueType.name === 'views'
+												? numberFormat(
+														languageTag,
+														views
+												  )
+												: countryValueType.name ===
+												  'views-percentage'
+												? `${numberFormat(
+														languageTag,
+														viewsP
+												  )}%`
+												: views}
 										</span>
 									</ClayList.ItemField>
 								</ClayList.Item>

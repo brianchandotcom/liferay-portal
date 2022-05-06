@@ -398,9 +398,10 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 						"analyticsReportsDataURL",
 						_getAnalyticsReportsURL(httpServletRequest))
 				).put(
-					"portletNamespace", _portletNamespace
+					"featureFlag",
+					GetterUtil.getBoolean(_props.get("feature.flag.LPS-149256"))
 				).put(
-					"featureFlag", GetterUtil.getBoolean(_props.get("feature.flag.LPS-149256"))
+					"portletNamespace", _portletNamespace
 				).build(),
 				httpServletRequest, jspWriter);
 
@@ -436,13 +437,13 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 	@Reference
 	private Portal _portal;
 
-	@Reference
-	private Props _props;
-
 	private String _portletNamespace;
 
 	@Reference
 	private PortletURLFactory _portletURLFactory;
+
+	@Reference
+	private Props _props;
 
 	@Reference
 	private ReactRenderer _reactRenderer;

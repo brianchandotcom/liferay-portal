@@ -188,25 +188,18 @@ public class AssetVocabularySiteNavigationMenuItemTypeTest {
 			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(
 				SiteNavigationMenuItemTypeConstants.ASSET_VOCABULARY);
 
-		SiteNavigationMenuItem assetVocabularySiteNavigationMenuItem =
-			_createSiteNavigationMenuItem(
-				_portal.getSiteDefaultLocale(_group.getGroupId()), "{}", false);
-
-		List<SiteNavigationMenuItem> childrenSiteNavigationMenuItems =
-			siteNavigationMenuItemType.getChildrenSiteNavigationMenuItems(
-				mockHttpServletRequest, assetVocabularySiteNavigationMenuItem);
-
-		Assert.assertEquals(
-			childrenSiteNavigationMenuItems.toString(), 1,
-			childrenSiteNavigationMenuItems.size());
+		SiteNavigationMenuItem assetCategorySiteNavigationMenuItem =
+			_getAssetCategorySiteNavigationMenuItem(
+				mockHttpServletRequest, assetCategory,
+				siteNavigationMenuItemType,
+				_portal.getSiteDefaultLocale(_group.getGroupId()));
 
 		Assert.assertEquals(
 			_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
 				AssetCategory.class.getName(), assetCategory.getCategoryId(),
 				themeDisplay),
 			siteNavigationMenuItemType.getRegularURL(
-				mockHttpServletRequest,
-				childrenSiteNavigationMenuItems.get(0)));
+				mockHttpServletRequest, assetCategorySiteNavigationMenuItem));
 	}
 
 	@Test

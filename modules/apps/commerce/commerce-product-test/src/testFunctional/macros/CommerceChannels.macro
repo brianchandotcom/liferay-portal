@@ -307,6 +307,54 @@ definition {
 		SelectFrame.selectFrameTop();
 	}
 
+	macro editShippingOption {
+		CommerceNavigator.gotoEntry(entryName = "${shippingOption}");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		if (isSet(name)) {
+			Type(
+				locator1 = "TextInput#NAME",
+				value1 = "${name}");
+		}
+
+		if (isSet(description)) {
+			Type(
+				locator1 = "TextInput#DESCRIPTION",
+				value1 = "${description}");
+		}
+
+		if (isSet(amount)) {
+			Type(
+				key_fieldLabel = "Amount",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${amount}");
+		}
+
+		if (isSet(priority)) {
+			Type(
+				locator1 = "CommerceEntry#PRIORITY_FIELD",
+				value1 = "${priority}");
+		}
+
+		if (isSet(key)) {
+			Type(
+				key_fieldLabel = "Key",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${key}");
+		}
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Click(locator1 = "Icon#CLOSE");
+
+		SelectFrame.selectFrameTop();
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+	}
+
 	macro openChannelsAdmin {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = "${baseURL}",

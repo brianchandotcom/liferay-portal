@@ -615,24 +615,21 @@ definition {
 	test CanDeleteJoinNode {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteJoinNode";
 
-        Workflow.openWorkflowListView();
+		Workflow.openWorkflowListView();
 
-        Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
 
-        ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "Join",
 			nodePosition = "-80,-40",
 			nodeType = "join");
 
-        ProcessBuilderKaleoDesignerReact.deleteNodeOrConnection(
-            modalMessage = "Are you sure you want to delete the selected join node?",
-            nodeType = "join",
-            title = "Delete Join Node");
+		ProcessBuilderKaleoDesignerReact.deleteNodeOrConnection(
+			modalMessage = "Are you sure you want to delete the selected join node?",
+			nodeType = "join",
+			title = "Delete Join Node");
 
-        ProcessBuilderKaleoDesignerReact.viewPanelNodeNotPresent(nodeType = "join");
-
-		
-
+		ProcessBuilderKaleoDesignerReact.viewPanelNodeNotPresent(nodeType = "join");
 	}
 
 	@description = "Verify that the user can delete Nodes of Join XOR"

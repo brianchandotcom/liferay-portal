@@ -1301,4 +1301,38 @@ definition {
 			productName = "Simple T-Shirt",
 			productType = "Simple");
 	}
+
+	@description = "This is a test for COMMERCE-9181. SaveAsDraftAnAlreadyDraftProduct"
+	@priority = "3"
+	test SaveAsDraftAnAlreadyDraftProduct {
+		property portal.acceptance = "false";
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CPCommerceCatalog.newProductsEntry(
+			productCatalog = "Master",
+			productName = "Simple T-Shirt",
+			compileDescription = "false",
+			publishProduct = "false",
+			productType = "Simple");
+
+		Type(
+			locator1 = "CommerceEntry#NAME_FIELD",
+			value1 = "Simple T-Shirt 01");
+
+		Click(
+			key_text = "Save as Draft",
+			locator1 = "Button#ANY");
+
+		AssertElementPresent(
+			key_status = "Draft",
+			locator1 = "CommerceEntry#WORKFLOW_STATUS");
+
+		AssertTextEquals(
+			locator1 = "CommerceEntry#NAME_FIELD",
+			value1 = "Simple T-Shirt 01");
+
+	}
 }

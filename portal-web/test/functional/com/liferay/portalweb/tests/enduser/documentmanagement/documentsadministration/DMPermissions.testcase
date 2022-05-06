@@ -368,21 +368,23 @@ definition {
 			layoutName = "Documents and Media Page",
 			widgetName = "Documents and Media");
 
-		Navigator.gotoSitePage(
-			pageName = "Documents and Media Page",
-			siteName = "Site Name");
-
-		DMDocument.enableActionsMenuOnPortlet();
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Site Name",
+			mimeType = "text/plain",
+			sourceFileName = "Document_1.txt");
 
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
 			groupName = "Site Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Documents and Media",
-			site = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Documents and Media Page",
+			siteName = "Site Name");
+
+		DMDocument.enableActionsMenuOnPortlet();
 
 		DMNavigator.gotoFolderPermissions(dmFolderName = "DM Folder Name");
 
@@ -400,13 +402,6 @@ definition {
 			siteName = "Site Name");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Site Name",
-			mimeType = "text/plain",
-			sourceFileName = "Document_1.txt");
 
 		DMDocument.addDMShortcutPG(
 			dmDocumentTitle = "DM Document Title",

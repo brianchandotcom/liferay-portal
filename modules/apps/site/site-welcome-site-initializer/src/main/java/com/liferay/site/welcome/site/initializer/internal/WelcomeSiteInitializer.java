@@ -53,6 +53,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PropsValues;
@@ -169,9 +170,16 @@ public class WelcomeSiteInitializer implements SiteInitializer {
 			layoutTypePortlet.setLayoutTemplateId(
 				0, PropsValues.DEFAULT_GUEST_PUBLIC_LAYOUT_TEMPLATE_ID, false);
 
+			UnicodeProperties typeSettingsUnicodeProperties =
+				draftLayout.getTypeSettingsProperties();
+
+			typeSettingsUnicodeProperties.setProperty(
+				"published", Boolean.TRUE.toString());
+
 			_layoutLocalService.updateLayout(
-				layout.getGroupId(), layout.isPrivateLayout(),
-				layout.getLayoutId(), layout.getTypeSettings());
+				draftLayout.getGroupId(), draftLayout.isPrivateLayout(),
+				draftLayout.getLayoutId(),
+				typeSettingsUnicodeProperties.toString());
 
 			_layoutLocalService.updatePriority(
 				layout.getPlid(), LayoutConstants.FIRST_PRIORITY);

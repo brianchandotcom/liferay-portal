@@ -208,15 +208,15 @@ public interface NotificationsTemplateLocalService
 		long notificationsTemplateId);
 
 	/**
-	 * Returns the notifications template with the matching UUID and company.
+	 * Returns the notifications template matching the UUID and group.
 	 *
 	 * @param uuid the notifications template's UUID
-	 * @param companyId the primary key of the company
+	 * @param groupId the primary key of the group
 	 * @return the matching notifications template, or <code>null</code> if a matching notifications template could not be found
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public NotificationsTemplate fetchNotificationsTemplateByUuidAndCompanyId(
-		String uuid, long companyId);
+	public NotificationsTemplate fetchNotificationsTemplateByUuidAndGroupId(
+		String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -241,16 +241,16 @@ public interface NotificationsTemplateLocalService
 		throws PortalException;
 
 	/**
-	 * Returns the notifications template with the matching UUID and company.
+	 * Returns the notifications template matching the UUID and group.
 	 *
 	 * @param uuid the notifications template's UUID
-	 * @param companyId the primary key of the company
+	 * @param groupId the primary key of the group
 	 * @return the matching notifications template
 	 * @throws PortalException if a matching notifications template could not be found
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public NotificationsTemplate getNotificationsTemplateByUuidAndCompanyId(
-			String uuid, long companyId)
+	public NotificationsTemplate getNotificationsTemplateByUuidAndGroupId(
+			String uuid, long groupId)
 		throws PortalException;
 
 	/**
@@ -267,6 +267,34 @@ public interface NotificationsTemplateLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<NotificationsTemplate> getNotificationsTemplates(
 		int start, int end);
+
+	/**
+	 * Returns all the notifications templates matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the notifications templates
+	 * @param companyId the primary key of the company
+	 * @return the matching notifications templates, or an empty list if no matches were found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<NotificationsTemplate>
+		getNotificationsTemplatesByUuidAndCompanyId(
+			String uuid, long companyId);
+
+	/**
+	 * Returns a range of notifications templates matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the notifications templates
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of notifications templates
+	 * @param end the upper bound of the range of notifications templates (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the range of matching notifications templates, or an empty list if no matches were found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<NotificationsTemplate>
+		getNotificationsTemplatesByUuidAndCompanyId(
+			String uuid, long companyId, int start, int end,
+			OrderByComparator<NotificationsTemplate> orderByComparator);
 
 	/**
 	 * Returns the number of notifications templates.

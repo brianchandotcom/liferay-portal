@@ -43,6 +43,8 @@ public class NotificationsTemplateTable
 		notificationsTemplateId = createColumn(
 			"notificationsTemplateId", Long.class, Types.BIGINT,
 			Column.FLAG_PRIMARY);
+	public final Column<NotificationsTemplateTable, Long> groupId =
+		createColumn("groupId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<NotificationsTemplateTable, Long> companyId =
 		createColumn(
 			"companyId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
@@ -59,6 +61,28 @@ public class NotificationsTemplateTable
 			"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<NotificationsTemplateTable, String> name = createColumn(
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<NotificationsTemplateTable, String> description =
+		createColumn(
+			"description", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<NotificationsTemplateTable, String> from = createColumn(
+		"from_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<NotificationsTemplateTable, String> fromName =
+		createColumn(
+			"fromName", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<NotificationsTemplateTable, String> to = createColumn(
+		"to_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<NotificationsTemplateTable, String> cc = createColumn(
+		"cc", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<NotificationsTemplateTable, String> bcc = createColumn(
+		"bcc", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<NotificationsTemplateTable, Boolean> enabled =
+		createColumn(
+			"enabled", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
+	public final Column<NotificationsTemplateTable, String> subject =
+		createColumn(
+			"subject", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<NotificationsTemplateTable, String> body = createColumn(
+		"body", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 
 	private NotificationsTemplateTable() {
 		super("NotificationsTemplate", NotificationsTemplateTable::new);

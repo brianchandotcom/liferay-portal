@@ -14,7 +14,7 @@
 
 package com.liferay.notifications.admin.model.impl;
 
-import com.liferay.notifications.admin.model.NotificationsTemplate;
+import com.liferay.notifications.admin.model.NotificationsQueueEntry;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -28,13 +28,13 @@ import java.io.ObjectOutput;
 import java.util.Date;
 
 /**
- * The cache model class for representing NotificationsTemplate in entity cache.
+ * The cache model class for representing NotificationsQueueEntry in entity cache.
  *
  * @author Gabriel Albuquerque
  * @generated
  */
-public class NotificationsTemplateCacheModel
-	implements CacheModel<NotificationsTemplate>, Externalizable, MVCCModel {
+public class NotificationsQueueEntryCacheModel
+	implements CacheModel<NotificationsQueueEntry>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object object) {
@@ -42,16 +42,16 @@ public class NotificationsTemplateCacheModel
 			return true;
 		}
 
-		if (!(object instanceof NotificationsTemplateCacheModel)) {
+		if (!(object instanceof NotificationsQueueEntryCacheModel)) {
 			return false;
 		}
 
-		NotificationsTemplateCacheModel notificationsTemplateCacheModel =
-			(NotificationsTemplateCacheModel)object;
+		NotificationsQueueEntryCacheModel notificationsQueueEntryCacheModel =
+			(NotificationsQueueEntryCacheModel)object;
 
-		if ((notificationsTemplateId ==
-				notificationsTemplateCacheModel.notificationsTemplateId) &&
-			(mvccVersion == notificationsTemplateCacheModel.mvccVersion)) {
+		if ((notificationsQueueEntryId ==
+				notificationsQueueEntryCacheModel.notificationsQueueEntryId) &&
+			(mvccVersion == notificationsQueueEntryCacheModel.mvccVersion)) {
 
 			return true;
 		}
@@ -61,7 +61,7 @@ public class NotificationsTemplateCacheModel
 
 	@Override
 	public int hashCode() {
-		int hashCode = HashUtil.hash(0, notificationsTemplateId);
+		int hashCode = HashUtil.hash(0, notificationsQueueEntryId);
 
 		return HashUtil.hash(hashCode, mvccVersion);
 	}
@@ -78,14 +78,12 @@ public class NotificationsTemplateCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(39);
+		StringBundler sb = new StringBundler(45);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
-		sb.append(", uuid=");
-		sb.append(uuid);
-		sb.append(", notificationsTemplateId=");
-		sb.append(notificationsTemplateId);
+		sb.append(", notificationsQueueEntryId=");
+		sb.append(notificationsQueueEntryId);
 		sb.append(", groupId=");
 		sb.append(groupId);
 		sb.append(", companyId=");
@@ -98,148 +96,153 @@ public class NotificationsTemplateCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", name=");
-		sb.append(name);
-		sb.append(", description=");
-		sb.append(description);
+		sb.append(", classNameId=");
+		sb.append(classNameId);
+		sb.append(", classPK=");
+		sb.append(classPK);
+		sb.append(", notificationsTemplateId=");
+		sb.append(notificationsTemplateId);
 		sb.append(", from=");
 		sb.append(from);
 		sb.append(", fromName=");
 		sb.append(fromName);
 		sb.append(", to=");
 		sb.append(to);
+		sb.append(", toName=");
+		sb.append(toName);
 		sb.append(", cc=");
 		sb.append(cc);
 		sb.append(", bcc=");
 		sb.append(bcc);
-		sb.append(", enabled=");
-		sb.append(enabled);
 		sb.append(", subject=");
 		sb.append(subject);
 		sb.append(", body=");
 		sb.append(body);
+		sb.append(", priority=");
+		sb.append(priority);
+		sb.append(", sent=");
+		sb.append(sent);
+		sb.append(", sentDate=");
+		sb.append(sentDate);
 		sb.append("}");
 
 		return sb.toString();
 	}
 
 	@Override
-	public NotificationsTemplate toEntityModel() {
-		NotificationsTemplateImpl notificationsTemplateImpl =
-			new NotificationsTemplateImpl();
+	public NotificationsQueueEntry toEntityModel() {
+		NotificationsQueueEntryImpl notificationsQueueEntryImpl =
+			new NotificationsQueueEntryImpl();
 
-		notificationsTemplateImpl.setMvccVersion(mvccVersion);
-
-		if (uuid == null) {
-			notificationsTemplateImpl.setUuid("");
-		}
-		else {
-			notificationsTemplateImpl.setUuid(uuid);
-		}
-
-		notificationsTemplateImpl.setNotificationsTemplateId(
-			notificationsTemplateId);
-		notificationsTemplateImpl.setGroupId(groupId);
-		notificationsTemplateImpl.setCompanyId(companyId);
-		notificationsTemplateImpl.setUserId(userId);
+		notificationsQueueEntryImpl.setMvccVersion(mvccVersion);
+		notificationsQueueEntryImpl.setNotificationsQueueEntryId(
+			notificationsQueueEntryId);
+		notificationsQueueEntryImpl.setGroupId(groupId);
+		notificationsQueueEntryImpl.setCompanyId(companyId);
+		notificationsQueueEntryImpl.setUserId(userId);
 
 		if (userName == null) {
-			notificationsTemplateImpl.setUserName("");
+			notificationsQueueEntryImpl.setUserName("");
 		}
 		else {
-			notificationsTemplateImpl.setUserName(userName);
+			notificationsQueueEntryImpl.setUserName(userName);
 		}
 
 		if (createDate == Long.MIN_VALUE) {
-			notificationsTemplateImpl.setCreateDate(null);
+			notificationsQueueEntryImpl.setCreateDate(null);
 		}
 		else {
-			notificationsTemplateImpl.setCreateDate(new Date(createDate));
+			notificationsQueueEntryImpl.setCreateDate(new Date(createDate));
 		}
 
 		if (modifiedDate == Long.MIN_VALUE) {
-			notificationsTemplateImpl.setModifiedDate(null);
+			notificationsQueueEntryImpl.setModifiedDate(null);
 		}
 		else {
-			notificationsTemplateImpl.setModifiedDate(new Date(modifiedDate));
+			notificationsQueueEntryImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		if (name == null) {
-			notificationsTemplateImpl.setName("");
-		}
-		else {
-			notificationsTemplateImpl.setName(name);
-		}
-
-		if (description == null) {
-			notificationsTemplateImpl.setDescription("");
-		}
-		else {
-			notificationsTemplateImpl.setDescription(description);
-		}
+		notificationsQueueEntryImpl.setClassNameId(classNameId);
+		notificationsQueueEntryImpl.setClassPK(classPK);
+		notificationsQueueEntryImpl.setNotificationsTemplateId(
+			notificationsTemplateId);
 
 		if (from == null) {
-			notificationsTemplateImpl.setFrom("");
+			notificationsQueueEntryImpl.setFrom("");
 		}
 		else {
-			notificationsTemplateImpl.setFrom(from);
+			notificationsQueueEntryImpl.setFrom(from);
 		}
 
 		if (fromName == null) {
-			notificationsTemplateImpl.setFromName("");
+			notificationsQueueEntryImpl.setFromName("");
 		}
 		else {
-			notificationsTemplateImpl.setFromName(fromName);
+			notificationsQueueEntryImpl.setFromName(fromName);
 		}
 
 		if (to == null) {
-			notificationsTemplateImpl.setTo("");
+			notificationsQueueEntryImpl.setTo("");
 		}
 		else {
-			notificationsTemplateImpl.setTo(to);
+			notificationsQueueEntryImpl.setTo(to);
+		}
+
+		if (toName == null) {
+			notificationsQueueEntryImpl.setToName("");
+		}
+		else {
+			notificationsQueueEntryImpl.setToName(toName);
 		}
 
 		if (cc == null) {
-			notificationsTemplateImpl.setCc("");
+			notificationsQueueEntryImpl.setCc("");
 		}
 		else {
-			notificationsTemplateImpl.setCc(cc);
+			notificationsQueueEntryImpl.setCc(cc);
 		}
 
 		if (bcc == null) {
-			notificationsTemplateImpl.setBcc("");
+			notificationsQueueEntryImpl.setBcc("");
 		}
 		else {
-			notificationsTemplateImpl.setBcc(bcc);
+			notificationsQueueEntryImpl.setBcc(bcc);
 		}
-
-		notificationsTemplateImpl.setEnabled(enabled);
 
 		if (subject == null) {
-			notificationsTemplateImpl.setSubject("");
+			notificationsQueueEntryImpl.setSubject("");
 		}
 		else {
-			notificationsTemplateImpl.setSubject(subject);
+			notificationsQueueEntryImpl.setSubject(subject);
 		}
 
 		if (body == null) {
-			notificationsTemplateImpl.setBody("");
+			notificationsQueueEntryImpl.setBody("");
 		}
 		else {
-			notificationsTemplateImpl.setBody(body);
+			notificationsQueueEntryImpl.setBody(body);
 		}
 
-		notificationsTemplateImpl.resetOriginalValues();
+		notificationsQueueEntryImpl.setPriority(priority);
+		notificationsQueueEntryImpl.setSent(sent);
 
-		return notificationsTemplateImpl;
+		if (sentDate == Long.MIN_VALUE) {
+			notificationsQueueEntryImpl.setSentDate(null);
+		}
+		else {
+			notificationsQueueEntryImpl.setSentDate(new Date(sentDate));
+		}
+
+		notificationsQueueEntryImpl.resetOriginalValues();
+
+		return notificationsQueueEntryImpl;
 	}
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
-		uuid = objectInput.readUTF();
 
-		notificationsTemplateId = objectInput.readLong();
+		notificationsQueueEntryId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
 
@@ -249,31 +252,32 @@ public class NotificationsTemplateCacheModel
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
-		name = objectInput.readUTF();
-		description = objectInput.readUTF();
+
+		classNameId = objectInput.readLong();
+
+		classPK = objectInput.readLong();
+
+		notificationsTemplateId = objectInput.readLong();
 		from = objectInput.readUTF();
 		fromName = objectInput.readUTF();
 		to = objectInput.readUTF();
+		toName = objectInput.readUTF();
 		cc = objectInput.readUTF();
 		bcc = objectInput.readUTF();
-
-		enabled = objectInput.readBoolean();
 		subject = objectInput.readUTF();
 		body = objectInput.readUTF();
+
+		priority = objectInput.readDouble();
+
+		sent = objectInput.readBoolean();
+		sentDate = objectInput.readLong();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
-		if (uuid == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(uuid);
-		}
-
-		objectOutput.writeLong(notificationsTemplateId);
+		objectOutput.writeLong(notificationsQueueEntryId);
 
 		objectOutput.writeLong(groupId);
 
@@ -291,19 +295,11 @@ public class NotificationsTemplateCacheModel
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
-		if (name == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(name);
-		}
+		objectOutput.writeLong(classNameId);
 
-		if (description == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(description);
-		}
+		objectOutput.writeLong(classPK);
+
+		objectOutput.writeLong(notificationsTemplateId);
 
 		if (from == null) {
 			objectOutput.writeUTF("");
@@ -326,6 +322,13 @@ public class NotificationsTemplateCacheModel
 			objectOutput.writeUTF(to);
 		}
 
+		if (toName == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(toName);
+		}
+
 		if (cc == null) {
 			objectOutput.writeUTF("");
 		}
@@ -340,8 +343,6 @@ public class NotificationsTemplateCacheModel
 			objectOutput.writeUTF(bcc);
 		}
 
-		objectOutput.writeBoolean(enabled);
-
 		if (subject == null) {
 			objectOutput.writeUTF("");
 		}
@@ -355,26 +356,34 @@ public class NotificationsTemplateCacheModel
 		else {
 			objectOutput.writeUTF(body);
 		}
+
+		objectOutput.writeDouble(priority);
+
+		objectOutput.writeBoolean(sent);
+		objectOutput.writeLong(sentDate);
 	}
 
 	public long mvccVersion;
-	public String uuid;
-	public long notificationsTemplateId;
+	public long notificationsQueueEntryId;
 	public long groupId;
 	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public String name;
-	public String description;
+	public long classNameId;
+	public long classPK;
+	public long notificationsTemplateId;
 	public String from;
 	public String fromName;
 	public String to;
+	public String toName;
 	public String cc;
 	public String bcc;
-	public boolean enabled;
 	public String subject;
 	public String body;
+	public double priority;
+	public boolean sent;
+	public long sentDate;
 
 }

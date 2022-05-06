@@ -248,19 +248,18 @@ public class NotificationsTemplateLocalServiceWrapper
 	}
 
 	/**
-	 * Returns the notifications template with the matching UUID and company.
+	 * Returns the notifications template matching the UUID and group.
 	 *
 	 * @param uuid the notifications template's UUID
-	 * @param companyId the primary key of the company
+	 * @param groupId the primary key of the group
 	 * @return the matching notifications template, or <code>null</code> if a matching notifications template could not be found
 	 */
 	@Override
 	public com.liferay.notifications.admin.model.NotificationsTemplate
-		fetchNotificationsTemplateByUuidAndCompanyId(
-			String uuid, long companyId) {
+		fetchNotificationsTemplateByUuidAndGroupId(String uuid, long groupId) {
 
 		return _notificationsTemplateLocalService.
-			fetchNotificationsTemplateByUuidAndCompanyId(uuid, companyId);
+			fetchNotificationsTemplateByUuidAndGroupId(uuid, groupId);
 	}
 
 	@Override
@@ -305,21 +304,20 @@ public class NotificationsTemplateLocalServiceWrapper
 	}
 
 	/**
-	 * Returns the notifications template with the matching UUID and company.
+	 * Returns the notifications template matching the UUID and group.
 	 *
 	 * @param uuid the notifications template's UUID
-	 * @param companyId the primary key of the company
+	 * @param groupId the primary key of the group
 	 * @return the matching notifications template
 	 * @throws PortalException if a matching notifications template could not be found
 	 */
 	@Override
 	public com.liferay.notifications.admin.model.NotificationsTemplate
-			getNotificationsTemplateByUuidAndCompanyId(
-				String uuid, long companyId)
+			getNotificationsTemplateByUuidAndGroupId(String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _notificationsTemplateLocalService.
-			getNotificationsTemplateByUuidAndCompanyId(uuid, companyId);
+			getNotificationsTemplateByUuidAndGroupId(uuid, groupId);
 	}
 
 	/**
@@ -340,6 +338,47 @@ public class NotificationsTemplateLocalServiceWrapper
 
 		return _notificationsTemplateLocalService.getNotificationsTemplates(
 			start, end);
+	}
+
+	/**
+	 * Returns all the notifications templates matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the notifications templates
+	 * @param companyId the primary key of the company
+	 * @return the matching notifications templates, or an empty list if no matches were found
+	 */
+	@Override
+	public java.util.List
+		<com.liferay.notifications.admin.model.NotificationsTemplate>
+			getNotificationsTemplatesByUuidAndCompanyId(
+				String uuid, long companyId) {
+
+		return _notificationsTemplateLocalService.
+			getNotificationsTemplatesByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of notifications templates matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the notifications templates
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of notifications templates
+	 * @param end the upper bound of the range of notifications templates (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the range of matching notifications templates, or an empty list if no matches were found
+	 */
+	@Override
+	public java.util.List
+		<com.liferay.notifications.admin.model.NotificationsTemplate>
+			getNotificationsTemplatesByUuidAndCompanyId(
+				String uuid, long companyId, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.notifications.admin.model.
+						NotificationsTemplate> orderByComparator) {
+
+		return _notificationsTemplateLocalService.
+			getNotificationsTemplatesByUuidAndCompanyId(
+				uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**

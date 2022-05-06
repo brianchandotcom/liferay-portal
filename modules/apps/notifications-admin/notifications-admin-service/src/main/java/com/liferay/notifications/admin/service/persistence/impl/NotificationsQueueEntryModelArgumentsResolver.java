@@ -14,9 +14,9 @@
 
 package com.liferay.notifications.admin.service.persistence.impl;
 
-import com.liferay.notifications.admin.model.NotificationsTemplateTable;
-import com.liferay.notifications.admin.model.impl.NotificationsTemplateImpl;
-import com.liferay.notifications.admin.model.impl.NotificationsTemplateModelImpl;
+import com.liferay.notifications.admin.model.NotificationsQueueEntryTable;
+import com.liferay.notifications.admin.model.impl.NotificationsQueueEntryImpl;
+import com.liferay.notifications.admin.model.impl.NotificationsQueueEntryModelImpl;
 import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -27,7 +27,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * The arguments resolver class for retrieving value from NotificationsTemplate.
+ * The arguments resolver class for retrieving value from NotificationsQueueEntry.
  *
  * @author Gabriel Albuquerque
  * @generated
@@ -35,11 +35,11 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	service = {
-		NotificationsTemplateModelArgumentsResolver.class,
+		NotificationsQueueEntryModelArgumentsResolver.class,
 		ArgumentsResolver.class
 	}
 )
-public class NotificationsTemplateModelArgumentsResolver
+public class NotificationsQueueEntryModelArgumentsResolver
 	implements ArgumentsResolver {
 
 	@Override
@@ -57,14 +57,15 @@ public class NotificationsTemplateModelArgumentsResolver
 			return null;
 		}
 
-		NotificationsTemplateModelImpl notificationsTemplateModelImpl =
-			(NotificationsTemplateModelImpl)baseModel;
+		NotificationsQueueEntryModelImpl notificationsQueueEntryModelImpl =
+			(NotificationsQueueEntryModelImpl)baseModel;
 
-		long columnBitmask = notificationsTemplateModelImpl.getColumnBitmask();
+		long columnBitmask =
+			notificationsQueueEntryModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
 			return _getValue(
-				notificationsTemplateModelImpl, columnNames, original);
+				notificationsQueueEntryModelImpl, columnNames, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -75,11 +76,12 @@ public class NotificationsTemplateModelArgumentsResolver
 
 			for (String columnName : columnNames) {
 				finderPathColumnBitmask |=
-					notificationsTemplateModelImpl.getColumnBitmask(columnName);
+					notificationsQueueEntryModelImpl.getColumnBitmask(
+						columnName);
 			}
 
 			if (finderPath.isBaseModelResult() &&
-				(NotificationsTemplatePersistenceImpl.
+				(NotificationsQueueEntryPersistenceImpl.
 					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
 						finderPath.getCacheName())) {
 
@@ -92,7 +94,7 @@ public class NotificationsTemplateModelArgumentsResolver
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
 			return _getValue(
-				notificationsTemplateModelImpl, columnNames, original);
+				notificationsQueueEntryModelImpl, columnNames, original);
 		}
 
 		return null;
@@ -100,16 +102,16 @@ public class NotificationsTemplateModelArgumentsResolver
 
 	@Override
 	public String getClassName() {
-		return NotificationsTemplateImpl.class.getName();
+		return NotificationsQueueEntryImpl.class.getName();
 	}
 
 	@Override
 	public String getTableName() {
-		return NotificationsTemplateTable.INSTANCE.getTableName();
+		return NotificationsQueueEntryTable.INSTANCE.getTableName();
 	}
 
 	private static Object[] _getValue(
-		NotificationsTemplateModelImpl notificationsTemplateModelImpl,
+		NotificationsQueueEntryModelImpl notificationsQueueEntryModelImpl,
 		String[] columnNames, boolean original) {
 
 		Object[] arguments = new Object[columnNames.length];
@@ -119,11 +121,11 @@ public class NotificationsTemplateModelArgumentsResolver
 
 			if (original) {
 				arguments[i] =
-					notificationsTemplateModelImpl.getColumnOriginalValue(
+					notificationsQueueEntryModelImpl.getColumnOriginalValue(
 						columnName);
 			}
 			else {
-				arguments[i] = notificationsTemplateModelImpl.getColumnValue(
+				arguments[i] = notificationsQueueEntryModelImpl.getColumnValue(
 					columnName);
 			}
 		}
@@ -140,9 +142,7 @@ public class NotificationsTemplateModelArgumentsResolver
 		long orderByColumnsBitmask = 0;
 
 		orderByColumnsBitmask |=
-			NotificationsTemplateModelImpl.getColumnBitmask("modifiedDate");
-		orderByColumnsBitmask |=
-			NotificationsTemplateModelImpl.getColumnBitmask("name");
+			NotificationsQueueEntryModelImpl.getColumnBitmask("priority");
 
 		_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
 	}

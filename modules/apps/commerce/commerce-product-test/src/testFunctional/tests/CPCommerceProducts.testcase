@@ -1481,4 +1481,40 @@ definition {
 			key_status = "Draft",
 			locator1 = "CommerceEntry#WORKFLOW_STATUS");	
 	}
+
+	@description = "This is a test for COMMERCE-9190. DuplicateADraftProduct"
+	@priority = "3"
+	test DuplicateADraftProduct {
+		property portal.acceptance = "false";
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CPCommerceCatalog.newProductsEntry(
+			productCatalog = "Master",
+			productName = "Simple T-Shirt",
+			compileDescription = "false",
+			publishProduct = "false",
+			productType = "Simple");
+
+		Click(
+			key_itemName = "",
+			locator1 = "CommerceEntry#SPECIFIC_MENU_ITEM");
+
+		Click(
+			key_optionValue = "Duplicate",
+			locator1 = "CommerceFrontStore#FS_PRODUCT_OPTION");
+
+		CommerceEntry.addProductsEntry(
+			productCatalog = "Master",
+			productFullDescription = "",
+			publishProduct = "false",
+			productName = "Copy of Simple T-Shirt",
+			productShortDescription = "");
+
+		AssertElementPresent(
+			key_status = "Draft",
+			locator1 = "CommerceEntry#WORKFLOW_STATUS");	
+	}
 }

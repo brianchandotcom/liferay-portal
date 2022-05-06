@@ -33,7 +33,7 @@ public interface SitesItemSelectorViewDisplayContext {
 	public String getDisplayStyle();
 
 	public default GroupItemSelectorCriterion getGroupItemSelectorCriterion() {
-		return getSiteItemSelectorCriterion();
+		return new SiteItemSelectorCriterion();
 	}
 
 	public String getGroupName(Group group) throws PortalException;
@@ -47,15 +47,6 @@ public interface SitesItemSelectorViewDisplayContext {
 	public PortletResponse getPortletResponse();
 
 	public PortletURL getPortletURL() throws PortletException;
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getGroupItemSelectorCriterion()}
-	 */
-	@Deprecated
-	public default SiteItemSelectorCriterion getSiteItemSelectorCriterion() {
-		return new SiteItemSelectorCriterion();
-	}
 
 	public boolean isShowChildSitesLink();
 

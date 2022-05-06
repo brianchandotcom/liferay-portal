@@ -29,6 +29,69 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-144089. The navigation menu admin cannot view empty vocabulary on preview menu."
+	@priority = "4"
+	test CannotViewEmptyVocabularyOnPreviewMenu {
+		task ("Given a navigation menu admin has a navigation menu") {
+			task ("Add a category under the first vocabulary") {
+				JSONCategory.addVocabulary(
+					groupName = "Test Site Name",
+					title = "Vocabulary Name 1");
+
+				JSONCategory.addCategory(
+					groupName = "Test Site Name",
+					title = "Category Name",
+					vocabularyName = "Vocabulary Name 1");
+			}
+
+			task ("Add the second vocabulary") {
+				JSONCategory.addVocabulary(
+					groupName = "Test Site Name",
+					title = "Vocabulary Name 2");
+			}
+
+			task ("Add a navigation menu") {
+				JSONSitenavigation.addSiteNavigationMenu(
+					groupName = "Test Site Name",
+					siteNavigationMenuName = "Navigation Menu Name");
+			}
+		}
+
+		task ("When the navigation menu admin adds two vocabulary items to navigation menu") {
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
+
+			NavigationMenusAdmin.editMenu(navigationMenuName = "Navigation Menu Name");
+
+			NavigationMenusAdmin.addItem(
+				assetTitleList = "Vocabulary Name 1,Vocabulary Name 2",
+				item = "Vocabulary");
+		}
+
+		task ("Then the navigation menu admin could view the alert icon on empty vocabulary item") {
+			NavigationMenusAdmin.viewItem(itemName = "Vocabulary Name 1");
+
+			NavigationMenusAdmin.viewItemWarningIcon(itemName = "Vocabulary Name 2");
+		}
+
+		task ("When the navigation menu admin opens the preview menu modal and changes the display template to List Menu") {
+			NavigationMenusAdmin.openPreviewMenu();
+
+			NavigationMenusAdmin.changeDisplayTemplate(displayTemplate = "List Menu");
+		}
+
+		task ("Then the navigation menu admin could only view the first vocabulary on preview menu") {
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			AssertVisible(
+				key_itemName = "Category Name",
+				locator1 = "NavigationMenusWidget#LIST_MENU_ANY_ITEM");
+
+			AssertElementNotPresent(
+				key_itemName = "Vocabulary Name 2",
+				locator1 = "NavigationMenusWidget#LIST_MENU_ANY_ITEM");
+		}
+	}
+
 	@description = "This is a test for LPS-144089. The navigation menu admin could choose display template when preview navigation menu."
 	@priority = "5"
 	test ConfigureDisplayTemplateOnPreviewMenu {

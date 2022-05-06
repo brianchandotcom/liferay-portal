@@ -14,7 +14,6 @@
 
 import ClayForm, {ClayRadio, ClayRadioGroup, ClayToggle} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import {useFeatureFlag} from 'data-engine-js-components-web';
 import {fetch} from 'frontend-js-web';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {createTextMaskInputElement} from 'text-mask-core';
@@ -393,13 +392,12 @@ function AttachmentProperties({
 	objectFieldSettings,
 	onSettingsChange,
 }: IAttachmentPropertiesProps) {
-	const flags = useFeatureFlag();
 	const settings = normalizeFieldSettings(objectFieldSettings);
 
 	return (
 		<>
 			<ClayForm.Group>
-				{flags['LPS-148112'] && settings.showFilesInDocumentsAndMedia && (
+				{settings.showFilesInDocumentsAndMedia && (
 					<Input
 						error={errors.storageDLFolderPath}
 						feedbackMessage={Liferay.Util.sub(

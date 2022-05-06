@@ -15,15 +15,11 @@
 import ClayForm, {ClayToggle} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
-import {useFeatureFlag} from 'data-engine-js-components-web';
 import {fetch} from 'frontend-js-web';
 import React, {ChangeEventHandler, ReactNode, useMemo, useState} from 'react';
 
 import useForm, {FormError, invalidateRequired} from '../hooks/useForm';
-import {
-	normalizeFieldSettings,
-	updateFieldSettings,
-} from '../utils/fieldSettings';
+import {normalizeFieldSettings} from '../utils/fieldSettings';
 import {defaultLanguageId} from '../utils/locale';
 import {toCamelCase} from '../utils/string';
 import CustomSelect from './Form/CustomSelect/CustomSelect';
@@ -95,14 +91,6 @@ export default function ObjectFieldFormBase({
 	}, [objectFieldTypes]);
 
 	const [pickList, setPickList] = useState<IPickList[]>([]);
-
-	const handleSettingsChange = ({name, value}: ObjectFieldSetting) =>
-		setValues({
-			objectFieldSettings: updateFieldSettings(
-				values.objectFieldSettings,
-				{name, value}
-			),
-		});
 
 	const handleTypeChange = async (option: ObjectFieldType) => {
 		if (option.businessType === 'Picklist') {
@@ -191,7 +179,6 @@ export default function ObjectFieldFormBase({
 						values.objectFieldSettings as ObjectFieldSetting[]
 					}
 					objectName={objectName}
-					onSettingsChange={handleSettingsChange}
 					setValues={setValues}
 				/>
 			)}
@@ -381,10 +368,8 @@ function AttachmentSourceProperty({
 	error,
 	objectFieldSettings,
 	objectName,
-	onSettingsChange,
 	setValues,
 }: IAttachmentSourcePropertyProps) {
-	const flags = useFeatureFlag();
 	const settings = normalizeFieldSettings(objectFieldSettings);
 
 	const attachmentSource = attachmentSources.find(
@@ -393,11 +378,6 @@ function AttachmentSourceProperty({
 
 	const handleAttachmentSourceChange = ({value}: {value: string}) => {
 		const fileSource: ObjectFieldSetting = {name: 'fileSource', value};
-		if (!flags['LPS-148112']) {
-			onSettingsChange(fileSource);
-
-			return;
-		}
 
 		const updatedSettings = objectFieldSettings.filter(
 			(setting) =>
@@ -452,7 +432,7 @@ function AttachmentSourceProperty({
 				value={attachmentSource?.label}
 			/>
 
-			{flags['LPS-148112'] && settings.fileSource === 'userComputer' && (
+			{settings.fileSource === 'userComputer' && (
 				<ClayForm.Group className="lfr-objects__object-field-form-base-container">
 					<ClayToggle
 						disabled={disabled}
@@ -488,7 +468,6 @@ interface IAttachmentSourcePropertyProps {
 	error?: string;
 	objectFieldSettings: ObjectFieldSetting[];
 	objectName: string;
-	onSettingsChange: (setting: ObjectFieldSetting) => void;
 	setValues: (values: Partial<ObjectField>) => void;
 }
 interface IUseObjectFieldForm {

@@ -41,9 +41,9 @@ import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.journal.util.JournalConverter;
+import com.liferay.journal.util.JournalHelper;
 import com.liferay.journal.web.internal.asset.JournalArticleDDMFormValuesReader;
 import com.liferay.journal.web.internal.info.item.JournalArticleInfoItemFields;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
@@ -185,13 +185,8 @@ public class JournalArticleInfoItemFieldValuesProvider
 			return StringPool.BLANK;
 		}
 
-		return StringBundler.concat(
-			_portal.getGroupFriendlyURL(
-				_layoutSetLocalService.getLayoutSet(
-					journalArticle.getGroupId(), layout.isPrivateLayout()),
-				themeDisplay, false, false),
-			JournalArticleConstants.CANONICAL_URL_SEPARATOR,
-			journalArticle.getUrlTitle(themeDisplay.getLocale()));
+		return _journalHelper.buildURLPattern(
+			journalArticle, layout.isPrivateLayout(), themeDisplay);
 	}
 
 	private String _getInfoItemFormVariationKey(JournalArticle journalArticle) {
@@ -461,6 +456,9 @@ public class JournalArticleInfoItemFieldValuesProvider
 
 	@Reference
 	private JournalConverter _journalConverter;
+
+	@Reference
+	private JournalHelper _journalHelper;
 
 	@Reference
 	private LayoutSetLocalService _layoutSetLocalService;

@@ -105,7 +105,6 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -921,17 +920,11 @@ public class ObjectEntryLocalServiceImpl
 				continue;
 			}
 
-			if (GetterUtil.getBoolean(
-					PropsUtil.get("feature.flag.LPS-148112"))) {
+			objectFieldSetting = _objectFieldSettingPersistence.fetchByOFI_N(
+				objectField.getObjectFieldId(), "showFilesInDocumentsAndMedia");
 
-				objectFieldSetting =
-					_objectFieldSettingPersistence.fetchByOFI_N(
-						objectField.getObjectFieldId(),
-						"showFilesInDocumentsAndMedia");
-
-				if (GetterUtil.getBoolean(objectFieldSetting.getValue())) {
-					continue;
-				}
+			if (GetterUtil.getBoolean(objectFieldSetting.getValue())) {
+				continue;
 			}
 
 			try {
@@ -965,9 +958,7 @@ public class ObjectEntryLocalServiceImpl
 
 		Long dlFolderId = null;
 
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-148112")) &&
-			showFilesInDocumentsAndMedia) {
-
+		if (showFilesInDocumentsAndMedia) {
 			dlFolderId = _getStorageDLFolderId(
 				companyId, groupId, serviceContext, storageDLFolderPath);
 		}
@@ -1897,7 +1888,6 @@ public class ObjectEntryLocalServiceImpl
 			objectFieldSetting.getValue());
 
 		if (defaultUser &&
-			GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-148112")) &&
 			(_objectConfiguration.maximumFileSizeForGuestUsers() <
 				maximumFileSize)) {
 
@@ -2005,9 +1995,7 @@ public class ObjectEntryLocalServiceImpl
 	private void _validateSubmissionLimit(long objectDefinitionId, User user)
 		throws PortalException {
 
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-148112")) ||
-			!user.isDefaultUser()) {
-
+		if (!user.isDefaultUser()) {
 			return;
 		}
 

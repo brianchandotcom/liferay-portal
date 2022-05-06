@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -184,8 +183,7 @@ public class AttachmentDDMFormFieldTemplateContextContributor
 		int maximumFileSize = GetterUtil.getInteger(
 			ddmFormField.getProperty("maximumFileSize"));
 
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-148112")) ||
-			themeDisplay.isSignedIn() ||
+		if (themeDisplay.isSignedIn() ||
 			(maximumFileSize <
 				_objectConfiguration.maximumFileSizeForGuestUsers())) {
 

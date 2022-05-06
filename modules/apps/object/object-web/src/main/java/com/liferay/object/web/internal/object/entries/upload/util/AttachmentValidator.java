@@ -24,7 +24,6 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.util.Map;
 
@@ -60,8 +59,7 @@ public class AttachmentValidator {
 		long maximumFileSize = GetterUtil.getLong(
 			objectFieldSetting.getValue());
 
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-148112")) ||
-			signedIn ||
+		if (signedIn ||
 			(maximumFileSize <
 				_objectConfiguration.maximumFileSizeForGuestUsers())) {
 

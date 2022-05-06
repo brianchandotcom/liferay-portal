@@ -358,6 +358,12 @@ definition {
 			groupName = "Site Name",
 			userEmailAddress = "userea@liferay.com");
 
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS",
+			resourceName = "com.liferay.document.library.kernel.model.DLFolder",
+			roleTitle = "Site Member",
+			roleType = "site");
+
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
 			layoutName = "Documents and Media Page");

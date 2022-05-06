@@ -428,17 +428,8 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 				binaryFile.getInputStream());
 		}
 		else {
-			String fileName = binaryFile.getFileName();
-
-			String fileExtension = _file.getExtension(fileName);
-
-			String trimmedFileName =
-				fileName.substring(0, fileName.lastIndexOf("-")) + "." +
-					fileExtension;
-
 			entry = _getContentAndExtensionFromUncompressedFile(
-				_normalizeFileName(trimmedFileName),
-				binaryFile.getInputStream());
+				binaryFile.getFileName(), binaryFile.getInputStream());
 		}
 
 		return _importFile(

@@ -54,7 +54,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-135373. View existing Banner Center fragment on page after upgrade from 7.3."
+	@description = "This is a use case for LPS-135373 and LPS-152405. View existing Banner Center fragment on page after upgrade from 7.3."
 	@priority = "4"
 	test ViewEditedInlineContentOfBannerCenterAfterUpgrade735 {
 		property data.archive.type = "data-archive-banner-center";
@@ -151,7 +151,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-135373. View existing Banner Center fragment on page after upgrade from 7.3."
+	@description = "This is a use case for LPS-135373 and LPS-152405. View existing Banner Center fragment on page after upgrade from 7.3."
 	@priority = "4"
 	test ViewEditedInlineContentOfBannerCenterAfterUpgrade73101 {
 		property data.archive.type = "data-archive-banner-center";

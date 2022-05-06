@@ -2305,14 +2305,68 @@ definition {
 			locator1 = "CommerceEntry#ASSERT_NOTIFICATION_QUEUE");
 	}
 
-	@description = "[Please Update]"
-	@ignore = "Test Stub"
-	@priority = "4"
+	@description = "Verify users can view the priority of shipping options"
+	@priority = "3"
 	test VerifyPriorityColumnForShippingOption {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-8663 VerifyPriorityColumnForShippingOption pending implementation
+		task ("Given a Minium site") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
 
+		task ("When the Sales Manager goes into the Minium channel and opens the Flat Rate shipping method's options tab") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			CommerceEntry.clickTableEntryEditButton(
+				entryName = "Flat Rate",
+				table = "Shipping Methods");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Shipping Options");
+		}
+
+		task ("And the Sales Manager edits the priority for Standard Delivery to 1 and Expedited Delivery to 2") {
+			CommerceChannels.editShippingOption(
+				priority = "1",
+				shippingOption = "Standard Delivery");
+
+			CommerceChannels.editShippingOption(
+				priority = "2",
+				shippingOption = "Expedited Delivery");
+		}
+
+		task ("Then the priority values will be shown in the priority column") {
+			AssertElementPresent(
+				key_text = "Priority",
+				locator1 = "Button#ANY");
+
+			AssertTextEquals(
+				key_columnNumber = "3",
+				key_entryName = "Standard Delivery",
+				locator1 = "CommerceEntry#TABLE_CELL_BY_COLUMN_ORDER",
+				value1 = "1");
+
+			AssertTextEquals(
+				key_columnNumber = "3",
+				key_entryName = "Expedited Delivery",
+				locator1 = "CommerceEntry#TABLE_CELL_BY_COLUMN_ORDER",
+				value1 = "2");
+		}
+
+		task ("And the shipping options will be re-ordered based on the priority") {
+			AssertTextEquals(
+				key_rowNumber = "1",
+				locator1 = "CommerceEntry#TABLE_ENTRY_ROW_NUMBER",
+				value1 = "Standard Delivery");
+
+			AssertTextEquals(
+				key_rowNumber = "2",
+				locator1 = "CommerceEntry#TABLE_ENTRY_ROW_NUMBER",
+				value1 = "Expedited Delivery");
+		}
 	}
 
 }

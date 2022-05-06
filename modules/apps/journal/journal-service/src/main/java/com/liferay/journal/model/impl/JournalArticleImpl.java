@@ -558,24 +558,6 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 			getLayoutUuid(), getGroupId());
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Override
-	public String getLegacyDescription() {
-		return _description;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Override
-	public String getLegacyTitle() {
-		return _title;
-	}
-
 	@JSON
 	@Override
 	public Date getReviewDate() {
@@ -604,26 +586,6 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(JournalArticle.class);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #getDDMStructureKey()}
-	 */
-	@Deprecated
-	@Override
-	public String getStructureId() {
-		return getDDMStructureKey();
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #getDDMTemplateKey()}
-	 */
-	@Deprecated
-	@Override
-	public String getTemplateId() {
-		return getDDMTemplateKey();
 	}
 
 	@JSON
@@ -736,24 +698,6 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		return true;
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public boolean isTemplateDriven() {
-		return true;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Override
-	public void setDescription(String description) {
-		_description = description;
-	}
-
 	@Override
 	public void setDescriptionMap(Map<Locale, String> descriptionMap) {
 		_descriptionMap = descriptionMap;
@@ -774,35 +718,6 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		_smallImageType = smallImageType;
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #setDDMStructureKey(String)}
-	 */
-	@Deprecated
-	@Override
-	public void setStructureId(String ddmStructureKey) {
-		setDDMStructureKey(ddmStructureKey);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #setDDMTemplateKey(String)}
-	 */
-	@Deprecated
-	@Override
-	public void setTemplateId(String ddmTemplateKey) {
-		setDDMTemplateKey(ddmTemplateKey);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Override
-	public void setTitle(String title) {
-		_title = title;
-	}
-
 	@Override
 	public void setTitleMap(Map<Locale, String> titleMap) {
 		_titleMap = titleMap;
@@ -815,12 +730,6 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		_ddmFormValuesToFieldsConverter;
 	private static volatile JournalConverter _journalConverter;
 
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	private String _description;
-
 	private Map<Locale, String> _descriptionMap;
 
 	@CacheField(propagateToInterface = true)
@@ -828,13 +737,6 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 
 	private long _imagesFolderId;
 	private String _smallImageType;
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	private String _title;
-
 	private Map<Locale, String> _titleMap;
 
 }

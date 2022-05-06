@@ -735,6 +735,11 @@ definition {
 			dmFolderName = "DM Folder Name",
 			groupName = "Guest");
 
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS",
+			resourceName = "com.liferay.document.library.kernel.model.DLFolder",
+			roleTitle = "Guest");
+
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.enableActionsMenuOnPortlet();
@@ -803,6 +808,11 @@ definition {
 			dmFolderName = "DM Folder Name",
 			groupName = "Guest");
 
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS",
+			resourceName = "com.liferay.document.library.kernel.model.DLFolder",
+			roleTitle = "Guest");
+
 		User.logoutPG();
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
@@ -869,6 +879,11 @@ definition {
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
 			groupName = "Guest");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS",
+			resourceName = "com.liferay.document.library.kernel.model.DLFolder",
+			roleTitle = "Guest");
 
 		User.logoutPG();
 
@@ -1229,6 +1244,12 @@ definition {
 		JSONUser.addUserToSite(
 			groupName = "Guest",
 			userEmailAddress = "userea@liferay.com");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS",
+			resourceName = "com.liferay.document.library.kernel.model.DLFolder",
+			roleTitle = "Site Member",
+			roleType = "site");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",

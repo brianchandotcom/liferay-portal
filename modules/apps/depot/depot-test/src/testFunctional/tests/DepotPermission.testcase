@@ -383,6 +383,11 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_2.jpg");
 
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS",
+			resourceName = "com.liferay.document.library.kernel.model.DLFolder",
+			roleTitle = "User");
+
 		DepotNavigator.openToDMFolder(
 			depotName = "Test Depot Name",
 			folderName = "DM Folder Name");
@@ -571,6 +576,11 @@ definition {
 			resourceName = "com.liferay.document.library.kernel.model.DLFileEntry",
 			roleTitle = "Remove MG Role");
 
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS",
+			resourceName = "com.liferay.document.library.kernel.model.DLFolder",
+			roleTitle = "Update MG Role");
+
 		JSONRole.assignRoleToUser(
 			roleTitle = "Remove MG Role",
 			userEmailAddress = "userea@liferay.com");
@@ -679,6 +689,11 @@ definition {
 			resourceName = "com.liferay.document.library.kernel.model.DLFileEntry",
 			roleTitle = "Regular Role");
 
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS",
+			resourceName = "com.liferay.document.library.kernel.model.DLFolder",
+			roleTitle = "Regular Role");
+
 		JSONRole.assignRoleToUser(
 			roleTitle = "Regular Role",
 			userEmailAddress = "userea@liferay.com");
@@ -783,6 +798,11 @@ definition {
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "UPDATE",
 			resourceName = "com.liferay.document.library.kernel.model.DLFileEntry",
+			roleTitle = "Update MG Role");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS",
+			resourceName = "com.liferay.document.library.kernel.model.DLFolder",
 			roleTitle = "Update MG Role");
 
 		JSONRole.assignRoleToUser(
@@ -902,6 +922,11 @@ definition {
 			guestPermissions = "false",
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_1.jpg");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS",
+			resourceName = "com.liferay.document.library.kernel.model.DLFolder",
+			roleTitle = "Guest");
 
 		Navigator.openSitePage(
 			pageName = "Documents and Media Page",

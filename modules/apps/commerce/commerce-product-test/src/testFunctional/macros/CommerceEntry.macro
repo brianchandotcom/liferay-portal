@@ -436,6 +436,10 @@ definition {
 
 		WaitForPageLoad();
 
+		AssertElementPresent(
+			key_status = "Draft",
+			locator1 = "CommerceEntry#WORKFLOW_STATUS");
+
 		AssertSelectedLabel(
 			key_fieldLabel = "Catalog",
 			locator1 = "Select#GENERIC_SELECT_FIELD",
@@ -445,6 +449,28 @@ definition {
 			locator1 = "CommerceEntry#NAME_FIELD",
 			value1 = "${productName}");
 
+		if (!(isSet(compileDescription))) {
+			var compileDescription = "true";
+		}
+
+		if ("${compileDescription}" == "true") {
+			echo("compileDescription enabled");
+
+			CommerceEntry.addProductDescription(
+				productShortDescription = "${productShortDescription}",
+				productFullDescription = "${productFullDescription}");
+		}
+
+		if (!(isSet(publishProduct))) {
+			var publishProduct = "true";
+		}
+
+		if ("${publishProduct}" == "true") {
+			echo("publishProduct enabled");
+
+			CommerceEntry.publishEntry(status = "Approved");
+		}
+	}
 		Type(
 			locator1 = "CommerceEntry#SHORT_DESCRIPTION_FIELD",
 			value1 = "${productShortDescription}");

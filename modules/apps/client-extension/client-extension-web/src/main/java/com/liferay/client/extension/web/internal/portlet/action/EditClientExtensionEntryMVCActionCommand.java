@@ -128,6 +128,13 @@ public class EditClientExtensionEntryMVCActionCommand
 				ParamUtil.getString(actionRequest, "iFrameURL"), instanceable,
 				nameMap, portletCategoryName, properties, sourceCodeURL);
 		}
+		else if (type.equals(ClientExtensionConstants.TYPE_THEME_JS)) {
+			_clientExtensionEntryService.addThemeJSClientExtensionEntry(
+				description, nameMap, properties, sourceCodeURL,
+				StringUtil.merge(
+					ParamUtil.getStringValues(actionRequest, "themeJSURLs"),
+					StringPool.NEW_LINE));
+		}
 	}
 
 	private ClientExtensionEntry _getClientExtensionEntry(
@@ -190,6 +197,17 @@ public class EditClientExtensionEntryMVCActionCommand
 				friendlyURLMapping,
 				ParamUtil.getString(actionRequest, "iFrameURL"), nameMap,
 				portletCategoryName, properties, sourceCodeURL);
+		}
+		else if (Objects.equals(
+					clientExtensionEntry.getType(),
+					ClientExtensionConstants.TYPE_THEME_JS)) {
+
+			_clientExtensionEntryService.updateThemeJSClientExtensionEntry(
+				clientExtensionEntry.getClientExtensionEntryId(), description,
+				nameMap, properties, sourceCodeURL,
+				StringUtil.merge(
+					ParamUtil.getStringValues(actionRequest, "themeJSURLs"),
+					StringPool.NEW_LINE));
 		}
 	}
 

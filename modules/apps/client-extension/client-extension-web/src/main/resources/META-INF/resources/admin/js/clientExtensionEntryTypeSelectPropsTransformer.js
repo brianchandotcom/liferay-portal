@@ -24,7 +24,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 					fieldset.classList.add('d-none');
 					fieldset.setAttribute('disabled', true);
 
-					if (fieldset.id.endsWith(value)) {
+					if (fieldset.id.includes('_' + value)) {
 						fieldset.classList.remove('d-none');
 						fieldset.removeAttribute('disabled');
 					}

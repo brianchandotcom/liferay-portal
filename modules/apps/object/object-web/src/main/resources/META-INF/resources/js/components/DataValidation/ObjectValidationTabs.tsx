@@ -12,21 +12,21 @@
  * details.
  */
 
+import 'codemirror/mode/groovy/groovy';
 import ClayIcon from '@clayui/icon';
 import {useFeatureFlag} from 'data-engine-js-components-web';
-import React, {ChangeEventHandler, useState} from 'react';
+import React, {ChangeEventHandler, useRef, useState} from 'react';
 
 import Card from '../Card/Card';
-import Editor from '../Editor/Editor';
+import CodeMirrorEditor from '../CodeMirrorEditor';
 import Sidebar from '../Editor/Sidebar/Sidebar';
-import {useChannel} from '../Editor/Sidebar/useChannel';
 import InputLocalized from '../Form/InputLocalized/InputLocalized';
 import Select from '../Form/Select';
 import ObjectValidationFormBase, {
 	ObjectValidationErrors,
 } from '../ObjectValidationFormBase';
 
-import '../Editor/Editor.scss';
+import './ObjectValidationTabs.scss';
 
 function BasicInfo({
 	componentLabel,
@@ -92,13 +92,13 @@ function Conditions({
 			symbol: string;
 		}
 	);
-	const inputChannel = useChannel();
+	const editorRef = useRef<CodeMirror.Editor>();
 	const flags = useFeatureFlag();
 
 	return (
 		<>
 			<div className="lfr-objects__object-data-validation-alt-sheet">
-				<div className="lfr-objects__object-data-validation-title-container">
+				<div className="lfr-objects__object-validation-tabs-title-container">
 					<h2 className="sheet-title">{values.engineLabel}</h2>
 					&nbsp;
 					{values.engine === 'ddm' && (
@@ -109,24 +109,28 @@ function Conditions({
 							)}
 						>
 							<ClayIcon
-								className="lfr-objects__edit-object-field-tooltip-icon"
+								className="lfr-objects__object-validation-tabs-tooltip-icon"
 								symbol="question-circle-full"
 							/>
 						</span>
 					)}
 				</div>
 
-				<div className="lfr-objects__object-data-validation-editor-container">
-					<Editor
-						content={values.script}
-						disabled={disabled}
-						inputChannel={inputChannel}
-						setValues={setValues}
+				<div className="lfr-objects__object-validation-tabs-editor-container">
+					<CodeMirrorEditor
+						className="lfr-objects__side-panel-content-container"
+						editorRef={editorRef}
+						onChange={(script) => setValues({script})}
+						options={{
+							mode: 'groovy',
+							readOnly: disabled,
+							value: values.script ?? '',
+						}}
 					/>
 
 					{flags['LPS-147651'] && (
 						<Sidebar
-							inputChannel={inputChannel}
+							editorRef={editorRef}
 							objectValidationRuleElements={
 								objectValidationRuleElements
 							}

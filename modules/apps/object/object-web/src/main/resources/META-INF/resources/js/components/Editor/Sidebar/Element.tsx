@@ -80,6 +80,8 @@ interface IProps {
 	items: ObjectValidationRuleElementItem[];
 	onItemClick: (item: ObjectValidationRuleElementItem) => void;
 }
-interface IElementItem extends ObjectValidationRuleElementItem {
+interface IElementItem {
+	label: string;
 	onClick?: MouseEventHandler;
+	tooltip: string;
 }

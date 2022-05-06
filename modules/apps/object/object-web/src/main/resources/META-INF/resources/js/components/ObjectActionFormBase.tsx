@@ -12,6 +12,7 @@
  * details.
  */
 
+import 'codemirror/mode/groovy/groovy';
 import ClayForm, {ClayToggle} from '@clayui/form';
 import {useFeatureFlag} from 'data-engine-js-components-web';
 import React, {useMemo} from 'react';
@@ -197,6 +198,7 @@ export default function ObjectActionFormBase({
 
 				{values.objectActionExecutorKey === 'groovy' && (
 					<CodeMirrorEditor
+						fixed
 						onChange={(script) =>
 							setValues({
 								parameters: {
@@ -205,7 +207,10 @@ export default function ObjectActionFormBase({
 								},
 							})
 						}
-						value={values.parameters?.script}
+						options={{
+							mode: 'groovy',
+							value: values.parameters?.script ?? '',
+						}}
 					/>
 				)}
 			</Card>

@@ -12,33 +12,24 @@
  * details.
  */
 
-import {useState} from 'react';
-
-export function useChannel(): inputChannelObject {
-	const [channel] = useState(() => {
-		const listeners = new Set();
-
-		return {
-			onData(callback: Function): Function {
-				listeners.add(callback);
-
-				return () => {
-					listeners.delete(callback);
-				};
-			},
-
-			sendData(data: string): void {
-				listeners.forEach((callback: any) => {
-					callback(data);
-				});
-			},
-		};
-	});
-
-	return channel;
+import 'codemirror/addon/fold/foldgutter';
+import 'codemirror/addon/fold/foldgutter.css';
+import 'codemirror/lib/codemirror.css';
+import CodeMirror from 'codemirror';
+import React from 'react';
+import './CodeMirrorEditor.scss';
+export default function CodeMirrorEditor({
+	className,
+	editorRef,
+	fixed,
+	onChange,
+	options,
+}: IProps): JSX.Element;
+interface IProps {
+	className?: string;
+	editorRef?: React.MutableRefObject<CodeMirror.Editor | undefined>;
+	fixed?: boolean;
+	onChange: (value?: string) => void;
+	options?: CodeMirror.EditorConfiguration;
 }
-
-interface inputChannelObject {
-	onData: Function;
-	sendData: Function;
-}
+export {};

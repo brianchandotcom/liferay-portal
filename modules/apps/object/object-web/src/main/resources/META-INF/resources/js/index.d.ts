@@ -84,7 +84,7 @@ interface ObjectValidationRuleElement {
 }
 
 interface ObjectValidationRuleElementItem {
-	content?: string;
+	content: string;
 	label: string;
 	tooltip: string;
 }

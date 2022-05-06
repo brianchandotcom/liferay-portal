@@ -1,0 +1,23 @@
+@import 'atlas-variables';
+
+.lfr-objects__object-validation-tabs {
+	&-editor-container {
+		border-top: 1px solid $gray-300;
+		display: flex;
+		height: 450px;
+	}
+
+	&-title-container {
+		align-items: baseline;
+		display: flex;
+		padding-left: 1.5rem;
+	}
+
+	&-tooltip-icon {
+		color: $secondary-l1;
+
+		&:hover {
+			color: $secondary-d1;
+		}
+	}
+}

@@ -14,6 +14,7 @@
 
 /// <reference types="react" />
 
+import 'codemirror/mode/groovy/groovy';
 import {CustomItem} from './Form/CustomSelect/CustomSelect';
 export default function ObjectActionFormBase({
 	objectAction: initialValues,

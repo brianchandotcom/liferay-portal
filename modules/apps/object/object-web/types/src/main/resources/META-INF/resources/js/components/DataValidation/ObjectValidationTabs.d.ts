@@ -12,9 +12,10 @@
  * details.
  */
 
+import 'codemirror/mode/groovy/groovy';
 import {ChangeEventHandler} from 'react';
 import {ObjectValidationErrors} from '../ObjectValidationFormBase';
-import '../Editor/Editor.scss';
+import './ObjectValidationTabs.scss';
 declare function BasicInfo({
 	componentLabel,
 	defaultLocale,

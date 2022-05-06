@@ -12,22 +12,22 @@
  * details.
  */
 
+import CodeMirror from 'codemirror';
 import React, {useMemo} from 'react';
 
-import '../Editor.scss';
-
-import './Sidebar.scss';
 import {defaultLanguageId} from '../../../utils/locale';
 import {METADATAS} from '../../ObjectView/context';
 import {Collapsable} from './Collapsable';
 import Element from './Element';
 
+import './Sidebar.scss';
+
 export default function Sidebar({
-	inputChannel,
+	editorRef,
 	objectValidationRuleElements,
 }: IProps) {
 	const onItemClick = (item: ObjectValidationRuleElementItem) =>
-		inputChannel.sendData(item.content);
+		editorRef.current?.replaceSelection(item.content);
 
 	const metadatas = METADATAS.map((metadata) => ({
 		content: metadata.name,
@@ -65,6 +65,6 @@ export default function Sidebar({
 }
 interface IProps {
 	className?: string;
-	inputChannel: {sendData: Function};
+	editorRef: React.MutableRefObject<CodeMirror.Editor | undefined>;
 	objectValidationRuleElements: ObjectValidationRuleElement[];
 }

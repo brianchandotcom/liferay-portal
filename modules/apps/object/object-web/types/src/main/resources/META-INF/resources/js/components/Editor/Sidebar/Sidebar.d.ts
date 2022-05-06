@@ -12,19 +12,16 @@
  * details.
  */
 
-/// <reference types="react" />
-
-import '../Editor.scss';
+import CodeMirror from 'codemirror';
+import React from 'react';
 import './Sidebar.scss';
 export default function Sidebar({
-	inputChannel,
+	editorRef,
 	objectValidationRuleElements,
 }: IProps): JSX.Element;
 interface IProps {
 	className?: string;
-	inputChannel: {
-		sendData: Function;
-	};
+	editorRef: React.MutableRefObject<CodeMirror.Editor | undefined>;
 	objectValidationRuleElements: ObjectValidationRuleElement[];
 }
 export {};

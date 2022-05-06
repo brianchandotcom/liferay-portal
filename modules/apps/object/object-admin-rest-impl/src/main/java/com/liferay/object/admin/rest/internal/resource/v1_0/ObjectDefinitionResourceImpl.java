@@ -136,7 +136,7 @@ public class ObjectDefinitionResourceImpl
 				objectDefinition.getPanelCategoryKey(),
 				LocalizedMapUtil.getLocalizedMap(
 					objectDefinition.getPluralLabel()),
-				objectDefinition.getScope(),
+				objectDefinition.getScope(), objectDefinition.getStorageType(),
 				transformToList(
 					objectDefinition.getObjectFields(),
 					objectField -> ObjectFieldUtil.toObjectField(

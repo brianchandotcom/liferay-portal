@@ -5130,7 +5130,18 @@ uuid''',
 	@priority = "4"
 	test ViewSPInitiatedSSOWithUploadMetadataXML {
 		property app.server.bundles.size = "0";
+		property keystore.enabled = "true";
 		property test.name.skip.portal.instance = "SAML#ViewSPInitiatedSSOWithUploadMetadataXML";
+
+		task ("Add SAML configuration files") {
+			OSGiConfig.copyOSGiConfigFile(
+				osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructureee/security/dependencies",
+				osgiConfigFileName = "com.liferay.saml.runtime.configuration.SamlKeyStoreManagerConfiguration.config");
+
+			OSGiConfig.copyOSGiConfigFile(
+				osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructureee/security/dependencies",
+				osgiConfigFileName = "com.liferay.saml.runtime.configuration.SamlProviderConfiguration.config");
+		}
 
 		task ("Add virtual instance able.com") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
@@ -5146,11 +5157,12 @@ uuid''',
 		task ("Setup IdP and SP") {
 			SAML.setupIDP(
 				idpURL = "http://localhost:8080",
+				keystoreEnabled = "true",
 				samlEntityId = "samlidp",
 				userEmailAddress = "test@liferay.com");
 
 			SAML.setupSP(
-				encryptionCertificate = "true",
+				keystoreEnabled = "true",
 				samlEntityId = "samlsp",
 				spURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com");

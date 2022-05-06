@@ -18,62 +18,61 @@ import Container from '../../components/Layout/Container';
 import QATable from '../../components/Table/QATable';
 import TableChart from '../../components/TableChart';
 import useTableChartData from '../../data/useTableChartData';
+import {TestrayRun} from '../../graphql/queries/testrayRun';
 import i18n from '../../i18n';
 
-const CompareRuns: React.FC = () => {
+const CompareRunDetails: React.FC<{runs: TestrayRun[]}> = ({runs = []}) => {
 	const {colors, columns, data} = useTableChartData();
 
+	const [runA, runB] = runs;
+
+	const getRun = (
+		run: TestrayRun,
+		{divider}: {divider?: boolean} = {divider: false}
+	) => {
+		if (!run) {
+			return [];
+		}
+
+		const {
+			build: {project, ...build},
+		} = run;
+
+		return [
+			{
+				title: `${i18n.translate('run')} A`,
+				value: <Link to="">{run.id}</Link>,
+			},
+			{
+				title: i18n.translate('project-name'),
+				value: (
+					<Link to={`/project/${project?.id}`}>{project?.name}</Link>
+				),
+			},
+			{
+				title: i18n.translate('build'),
+				value: (
+					<Link to={`/project/${project?.id}/build/${build.id}`}>
+						{build.name}
+					</Link>
+				),
+			},
+			{
+				divider,
+				title: i18n.translate('environment'),
+				value: run.name,
+			},
+		];
+	};
+
 	return (
-		<Container collapsable title={i18n.translate('details')}>
+		<Container collapsable title={i18n.translate('compare-details')}>
 			<div className="d-flex flex-wrap">
 				<div className="col-8 col-lg-8 col-md-12">
 					<QATable
 						items={[
-							{
-								title: `${i18n.translate('run')} A`,
-								value: <Link to="">1660207710</Link>,
-							},
-							{
-								title: i18n.translate('project-name'),
-								value: <Link to="">Liferay Portal 7.4</Link>,
-							},
-							{
-								title: i18n.translate('build'),
-								value: (
-									<Link to="">
-										[master] ci:test:upstream-dxp - 700 -
-										2022-04-09[18:16:18]
-									</Link>
-								),
-							},
-							{
-								divider: true,
-								title: i18n.translate('environment'),
-								value:
-									'Tomcat 9.0 + Chrome 86.0 + IBM DB2 11.1 + Oracle JDK 8 64-Bit + CentOS 7 64-Bit',
-							},
-							{
-								title: `${i18n.translate('run')} A`,
-								value: <Link to="">1660253173</Link>,
-							},
-							{
-								title: i18n.translate('project-name'),
-								value: <Link to="">Liferay Portal 7.4</Link>,
-							},
-							{
-								title: i18n.translate('build'),
-								value: (
-									<Link to="">
-										[master] ci:test:upstream-dxp - 700 -
-										2022-04-09[18:16:18]
-									</Link>
-								),
-							},
-							{
-								title: i18n.translate('environment'),
-								value:
-									'Tomcat 9.0 + Chrome 86.0 + IBM DB2 11.1 + Oracle JDK 8 64-Bit + CentOS 7 64-Bit',
-							},
+							...getRun(runA, {divider: true}),
+							...getRun(runB),
 						]}
 					/>
 				</div>
@@ -91,4 +90,4 @@ const CompareRuns: React.FC = () => {
 	);
 };
 
-export default CompareRuns;
+export default CompareRunDetails;

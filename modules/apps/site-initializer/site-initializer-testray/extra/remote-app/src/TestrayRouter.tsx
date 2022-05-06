@@ -16,9 +16,11 @@ import {ClayModalProvider} from '@clayui/modal';
 import {HashRouter, Route, Routes} from 'react-router-dom';
 
 import Layout from './components/Layout/Layout';
-import CompareRunsComponents from './pages/CompareRuns/CompareRunsComponents';
 import CompareRunsOutlet from './pages/CompareRuns/CompareRunsOutlet';
 import CompareRunsRedirect from './pages/CompareRuns/CompareRunsRedirect';
+import CompareRunsComponents from './pages/CompareRuns/Components';
+import CompareRunsDetails from './pages/CompareRuns/Details';
+import CompareRunsTeams from './pages/CompareRuns/Teams';
 import Users from './pages/Manage/User';
 import UserManagement from './pages/Manage/User/User';
 import OutletBridge from './pages/OutletBridge';
@@ -175,14 +177,11 @@ const TestrayRoute = () => (
 						/>
 
 						<Route
-							element={<CompareRunsComponents />}
+							element={<CompareRunsDetails />}
 							path="details"
 						/>
 
-						<Route
-							element={<CompareRunsComponents />}
-							path="teams"
-						/>
+						<Route element={<CompareRunsTeams />} path="teams" />
 					</Route>
 
 					<Route element={<div>Page not found</div>} path="*" />

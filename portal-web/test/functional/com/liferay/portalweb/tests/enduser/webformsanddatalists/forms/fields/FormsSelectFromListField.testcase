@@ -710,7 +710,7 @@ definition {
 
 		Form.save();
 
-		Alert.viewSuccessMessageText(successMessage = "Success:Your request completed successfully.");
+		Alert.viewSuccessMessage();
 
 		FormsAdminNavigator.gotoPreviewForm();
 

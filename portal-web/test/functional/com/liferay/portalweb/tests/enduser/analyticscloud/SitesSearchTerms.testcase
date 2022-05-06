@@ -74,6 +74,56 @@ definition {
 		}
 	}
 
+	@description = "Bug: LRAC-8557 | Automation ID: LRAC-11056 | Test Summary: Search for a property when assigning sites to a property"
+	@priority = "4"
+	test SearchTermWithSpecialCharacters {
+		task ("Connect DXP to AC") {
+			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
+		}
+
+		task ("Search keywords on DXP Search Bar") {
+			Navigator.openURL();
+
+			for (var keyword : list "atenção com a criança,子供との注意,atención al niño") {
+				ContentDashboard.searchValue(webContentTitle = "${keyword}");
+			}
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Navigate to AC workspace") {
+			ACUtils.launchAC();
+		}
+
+		task ("Switch to new property in AC") {
+			ACProperties.switchProperty(propertyName = "${propertyName}");
+		}
+
+		task ("Go to sites pages tab") {
+			ACNavigation.goToSites();
+
+			ACSites.viewSiteOverviewDashboardCards();
+		}
+
+		task ("View the new report") {
+			ACCards.viewCards(cardTitle = "Search Terms");
+
+			ACTimeFilter.clickTimeFilterButton(cardName = "Search Terms");
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+		task ("Assert Keywords Searched") {
+			for (var keyword : list "atenção com a criança,子供との注意,atención al niño") {
+				AssertElementPresent(
+					key_keyword = "${keyword}",
+					locator1 = "ACSites#SEARCHED_KEYWORD");
+			}
+		}
+	}
+
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8298 | Test Summary: Site overview search terms shows what keywords are being searched for"
 	@priority = "5"
 	test ShowsKeywordsBeingSearched {

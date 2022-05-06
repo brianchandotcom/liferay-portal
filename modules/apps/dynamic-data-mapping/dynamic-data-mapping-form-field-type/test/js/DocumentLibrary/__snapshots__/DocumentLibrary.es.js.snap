@@ -99,7 +99,6 @@ exports[`Field DocumentLibrary has a label 1`] = `
     <label
       aria-labelledby="uploadField_fieldDetails"
       class="ddm-label"
-      for="uploadField"
       tabindex="0"
     >
       label
@@ -175,6 +174,8 @@ exports[`Field DocumentLibrary has a label 1`] = `
       class="sr-only"
       id="uploadField_fieldDetails"
     >
+      label
+      <br />
        you-need-to-be-signed-in-to-edit-this-field
     </span>
   </div>
@@ -673,7 +674,6 @@ exports[`Field DocumentLibrary renders Label if showLabel is true 1`] = `
     <label
       aria-labelledby="uploadField_fieldDetails"
       class="ddm-label"
-      for="uploadField"
       tabindex="0"
     >
       text
@@ -749,6 +749,8 @@ exports[`Field DocumentLibrary renders Label if showLabel is true 1`] = `
       class="sr-only"
       id="uploadField_fieldDetails"
     >
+      text
+      <br />
        you-need-to-be-signed-in-to-edit-this-field
     </span>
   </div>

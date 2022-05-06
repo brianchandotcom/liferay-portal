@@ -10,6 +10,7 @@ exports[`Field Numeric Integer Input Mask toggle has an inputMaskFormat 1`] = `
   >
     <input
       class="form-control ddm-form-field-type__numeric--rtl"
+      id="numericField"
       name="numericField_masked"
       placeholder="+__ (__) ____-____"
       type="text"

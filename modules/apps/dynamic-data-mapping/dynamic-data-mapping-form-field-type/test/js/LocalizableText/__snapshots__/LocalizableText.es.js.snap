@@ -2679,8 +2679,8 @@ exports[`Field LocalizableText has a label 1`] = `
     data-field-name="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_ddm$$emailArticleAddedSubject$uoeJR4Me$0$$en_US"
   >
     <label
+      aria-labelledby="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_ddm$$emailArticleAddedSubject$uoeJR4Me$0$$en_US_fieldDetails"
       class="ddm-label"
-      for="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_ddm$$emailArticleAddedSubject$uoeJR4Me$0$$en_US"
       tabindex="0"
     >
       label
@@ -3340,7 +3340,12 @@ exports[`Field LocalizableText has a label 1`] = `
       type="hidden"
       value="false"
     />
-    
+    <span
+      class="sr-only"
+      id="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_ddm$$emailArticleAddedSubject$uoeJR4Me$0$$en_US_fieldDetails"
+    >
+      label
+    </span>
   </div>
 </div>
 `;

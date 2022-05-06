@@ -2241,7 +2241,6 @@ definition {
 			fieldLabel = "content");
 
 		PortletEntry.publish();
-		
 	}
 
 }

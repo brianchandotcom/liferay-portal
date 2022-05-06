@@ -638,20 +638,6 @@ public class DataGuardTestRuleUtil {
 	private static class RecordingSessionWrapper extends SessionWrapper {
 
 		@Override
-		public void delete(Object object) throws ORMException {
-			super.delete(object);
-
-			BaseModel<?> baseModel = (BaseModel<?>)object;
-
-			Map<Serializable, String> map = _records.get(
-				baseModel.getModelClassName());
-
-			if (map != null) {
-				map.remove(baseModel.getPrimaryKeyObj());
-			}
-		}
-
-		@Override
 		public Serializable save(Object object) throws ORMException {
 			_record(object);
 

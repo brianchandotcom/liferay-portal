@@ -303,6 +303,11 @@
 	<td>//input[contains(@id,'importInterval')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>LDAP_IMPORT_METHOD</td>
+	<td>//select[contains(@id,'importMethod')]</td>
+	<td></td>
+</tr>
 <!--AUTHENTICATION_OPEN_ID_CONNECT-->
 <tr>
 	<td>AUTHENTICATION_OPEN_ID_CONNECT_ENABLED_CHECKBOX</td>

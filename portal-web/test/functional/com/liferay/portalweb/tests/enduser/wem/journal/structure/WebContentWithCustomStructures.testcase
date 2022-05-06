@@ -91,7 +91,7 @@ definition {
 
 	@description = "This is a use case for LPS-69560. Can add a web content with custom structure that has a geolocation field."
 	@priority = "5"
-	test AddStructureWithGeolocationField {
+	test AddWebContentWithWebContentAndGeolocationFields {
 		property portal.acceptance = "true";
 
 		task ("Add a web content based on Basic Web Content") {
@@ -153,7 +153,7 @@ definition {
 
 	@description = "This is a use case for LPS-52248. View no error is thrown when add a web content with separator field in custom structure."
 	@priority = "4"
-	test AddStructureWithSeparatorField {
+	test AddWebContentWithSeparatorField {
 		task ("Add a web content structure with a separator field") {
 			WebContentNavigator.openWebContentStructuresAdmin(siteURLKey = "test-site-name");
 
@@ -201,7 +201,7 @@ definition {
 
 	@description = "Add a web content with custom structure that has nested fields."
 	@priority = "4"
-	test AddStructureWithSubfield {
+	test AddWebContentWithNestedFields {
 		task ("Add a web content strcuture with custom fields") {
 			WebContentNavigator.openWebContentStructuresAdmin(siteURLKey = "test-site-name");
 
@@ -462,7 +462,7 @@ definition {
 
 	@description = "The user can add a web content via Web Content Display widget based on global structure and local template."
 	@priority = "4"
-	test AddWebContentWithGlobalStructureAndLocalTemplate {
+	test AddWebContentViaWCDWithGlobalStructureAndLocalTemplate {
 		task ("Add a web content global structure with a text field") {
 			WebContentNavigator.openWebContentStructuresAdmin(siteURLKey = "global");
 
@@ -828,7 +828,7 @@ definition {
 
 	@description = "Add a web content based on new structure with a text field."
 	@priority = "4"
-	test AddWebContentWithStructure {
+	test AddWebContentWithTextField {
 		task ("Add a web content structure with a text field") {
 			WebContentNavigator.openWebContentStructuresAdmin(siteURLKey = "test-site-name");
 
@@ -1011,7 +1011,7 @@ definition {
 
 	@description = "Can edit a web content from global structure in web content display widget."
 	@priority = "4"
-	test EditWebContentFromGlobalStructure {
+	test EditWebContentWithGlobalStructure {
 		task ("Add a web content structure with a Text field in global site") {
 			WebContentNavigator.openWebContentStructuresAdmin(siteURLKey = "global");
 
@@ -1771,7 +1771,7 @@ definition {
 
 	@description = "The user can view a global web content structure via add menu icon."
 	@priority = "3"
-	test ViewGlobalStructureViaAddIcon {
+	test ViewGlobalStructureAvailableToNormalSite {
 		task ("Add a global web content structure with text field") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "global");
 
@@ -1975,7 +1975,7 @@ definition {
 
 	@description = "The user cannot add a web content, structure and template without a title."
 	@priority = "4"
-	test WebContentAdminNullTitleValidation {
+	test WebContentAdministrationDataValidation {
 		task ("View cannot add web content without title") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 

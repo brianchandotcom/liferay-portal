@@ -1977,14 +1977,8 @@ public class SitesImpl implements Sites {
 			PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS,
 			new String[] {Boolean.FALSE.toString()}
 		).put(
-			PortletDataHandlerKeys.DELETE_LAYOUTS,
-			new String[] {Boolean.TRUE.toString()}
-		).put(
 			PortletDataHandlerKeys.DELETE_PORTLET_DATA,
 			new String[] {Boolean.FALSE.toString()}
-		).put(
-			PortletDataHandlerKeys.DELETIONS,
-			new String[] {Boolean.TRUE.toString()}
 		).put(
 			PortletDataHandlerKeys.IGNORE_LAST_PUBLISH_DATE,
 			new String[] {Boolean.TRUE.toString()}
@@ -2041,6 +2035,13 @@ public class SitesImpl implements Sites {
 				new String[] {Boolean.TRUE.toString()});
 		}
 		else {
+			parameterMap.put(
+				PortletDataHandlerKeys.DELETE_LAYOUTS,
+				new String[] {Boolean.TRUE.toString()});
+			parameterMap.put(
+				PortletDataHandlerKeys.DELETIONS,
+				new String[] {Boolean.TRUE.toString()});
+
 			if (PropsValues.LAYOUT_SET_PROTOTYPE_PROPAGATE_LOGO) {
 				parameterMap.put(
 					PortletDataHandlerKeys.LOGO,

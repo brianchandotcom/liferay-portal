@@ -403,6 +403,13 @@ definition {
 		Button.clickSave();
 	}
 
+	macro viewDisplayTemplate {
+		AssertSelectedLabel(
+			key_fieldLabel = "Display Template",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "${displayTemplate}");
+	}
+
 	macro viewItem {
 		AssertElementPresent(
 			key_itemName = "${itemName}",

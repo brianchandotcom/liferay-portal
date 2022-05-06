@@ -88,12 +88,11 @@ class ChangeTrackingConflictsView extends ChangeTrackingBaseScheduleView {
 
 					{this.containsPageLayoutChanges && (
 						<ClayAlert
-							displayType="warning"
+							displayType="info"
 							spritemap={this.spritemap}
 							title={
-								"This publication contains changes to both Page and LayoutPageTemplateStructureRel (page's layout) entities. " +
-								'The Production version of these page layouts will be fully overwritten by the Publication versions. ' +
-								'This means that modified pages will look exactly like they do in this publication after publishing. '
+								'This publication contains changes to a content page. Publishing these changes will fully ' +
+								"overwrite the page's content and layout in production."
 							}
 						/>
 					)}

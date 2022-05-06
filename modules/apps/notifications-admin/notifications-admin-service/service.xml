@@ -3,12 +3,78 @@
 
 <service-builder auto-import-default-references="false" auto-namespace-tables="false" dependency-injector="ds" mvcc-enabled="true" package-path="com.liferay.notifications.admin" short-no-such-exception-enabled="false">
 	<author>Gabriel Albuquerque</author>
-	<namespace>NotificationsAdmin</namespace>
+	<namespace>Notifications</namespace>
+	<entity local-service="true" name="NotificationsQueueEntry" remote-service="true" uuid="false">
+
+		<!-- PK fields -->
+
+		<column name="notificationsQueueEntryId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="classNameId" type="long" />
+		<column name="classPK" type="long" />
+		<column name="notificationsTemplateId" type="long" />
+		<column name="from" type="String" />
+		<column name="fromName" type="String" />
+		<column name="to" type="String" />
+		<column name="toName" type="String" />
+		<column name="cc" type="String" />
+		<column name="bcc" type="String" />
+		<column name="subject" type="String" />
+		<column name="body" type="String" />
+		<column name="priority" type="double" />
+		<column name="sent" type="boolean" />
+		<column name="sentDate" type="Date" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="priority" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="NotificationsTemplateId" return-type="Collection">
+			<finder-column name="notificationsTemplateId" />
+		</finder>
+		<finder name="Sent" return-type="Collection">
+			<finder-column name="sent" />
+		</finder>
+		<finder name="LtSentDate" return-type="Collection">
+			<finder-column comparator="&lt;" name="sentDate" />
+		</finder>
+		<finder name="G_C_C_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+			<finder-column name="sent" />
+		</finder>
+	</entity>
 	<entity local-service="true" name="NotificationsTemplate" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
 		<column name="notificationsTemplateId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
 
 		<!-- Audit fields -->
 
@@ -21,8 +87,35 @@
 		<!-- Other fields -->
 
 		<column localized="true" name="name" type="String" />
+		<column name="description" type="String" />
+		<column name="from" type="String" />
+		<column localized="true" name="fromName" type="String" />
+		<column name="to" type="String" />
+		<column name="cc" type="String" />
+		<column name="bcc" type="String" />
+		<column name="enabled" type="boolean" />
+		<column localized="true" name="subject" type="String" />
+		<column localized="true" name="body" type="String" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="modifiedDate" />
+			<order-column name="name" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="G_E" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="enabled" />
+		</finder>
 	</entity>
 	<exceptions>
+		<exception>NotificationsTemplateFrom</exception>
 		<exception>NotificationsTemplateName</exception>
 	</exceptions>
 </service-builder>

@@ -39,6 +39,20 @@ public class NotificationsQueueEntryLocalServiceWrapper
 			notificationsQueueEntryLocalService;
 	}
 
+	@Override
+	public com.liferay.notifications.admin.model.NotificationsQueueEntry
+			addNotificationsQueueEntry(
+				long userId, long groupId, String className, long classPK,
+				long notificationsTemplateId, String from, String fromName,
+				String to, String toName, String cc, String bcc, String subject,
+				String body, double priority)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _notificationsQueueEntryLocalService.addNotificationsQueueEntry(
+			userId, groupId, className, classPK, notificationsTemplateId, from,
+			fromName, to, toName, cc, bcc, subject, body, priority);
+	}
+
 	/**
 	 * Adds the notifications queue entry to the database. Also notifies the appropriate model listeners.
 	 *
@@ -83,6 +97,20 @@ public class NotificationsQueueEntryLocalServiceWrapper
 
 		return _notificationsQueueEntryLocalService.createPersistedModel(
 			primaryKeyObj);
+	}
+
+	@Override
+	public void deleteNotificationsQueueEntries(java.util.Date sentDate) {
+		_notificationsQueueEntryLocalService.deleteNotificationsQueueEntries(
+			sentDate);
+	}
+
+	@Override
+	public void deleteNotificationsQueueEntries(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_notificationsQueueEntryLocalService.deleteNotificationsQueueEntries(
+			groupId);
 	}
 
 	/**
@@ -264,6 +292,15 @@ public class NotificationsQueueEntryLocalServiceWrapper
 			getIndexableActionableDynamicQuery();
 	}
 
+	@Override
+	public java.util.List
+		<com.liferay.notifications.admin.model.NotificationsQueueEntry>
+			getNotificationsQueueEntries(boolean sent) {
+
+		return _notificationsQueueEntryLocalService.
+			getNotificationsQueueEntries(sent);
+	}
+
 	/**
 	 * Returns a range of all the notifications queue entries.
 	 *
@@ -284,6 +321,22 @@ public class NotificationsQueueEntryLocalServiceWrapper
 			getNotificationsQueueEntries(start, end);
 	}
 
+	@Override
+	public java.util.List
+		<com.liferay.notifications.admin.model.NotificationsQueueEntry>
+			getNotificationsQueueEntries(
+				long groupId, String className, long classPK, boolean sent,
+				int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.notifications.admin.model.
+						NotificationsQueueEntry> orderByComparator) {
+
+		return _notificationsQueueEntryLocalService.
+			getNotificationsQueueEntries(
+				groupId, className, classPK, sent, start, end,
+				orderByComparator);
+	}
+
 	/**
 	 * Returns the number of notifications queue entries.
 	 *
@@ -293,6 +346,21 @@ public class NotificationsQueueEntryLocalServiceWrapper
 	public int getNotificationsQueueEntriesCount() {
 		return _notificationsQueueEntryLocalService.
 			getNotificationsQueueEntriesCount();
+	}
+
+	@Override
+	public int getNotificationsQueueEntriesCount(long groupId) {
+		return _notificationsQueueEntryLocalService.
+			getNotificationsQueueEntriesCount(groupId);
+	}
+
+	@Override
+	public int getNotificationsQueueEntriesCount(
+		long groupId, String className, long classPK, boolean sent) {
+
+		return _notificationsQueueEntryLocalService.
+			getNotificationsQueueEntriesCount(
+				groupId, className, classPK, sent);
 	}
 
 	/**
@@ -333,6 +401,28 @@ public class NotificationsQueueEntryLocalServiceWrapper
 			primaryKeyObj);
 	}
 
+	@Override
+	public com.liferay.notifications.admin.model.NotificationsQueueEntry
+			resendNotificationsQueueEntry(long notificationsQueueEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _notificationsQueueEntryLocalService.
+			resendNotificationsQueueEntry(notificationsQueueEntryId);
+	}
+
+	@Override
+	public void sendNotificationsQueueEntries() throws Exception {
+		_notificationsQueueEntryLocalService.sendNotificationsQueueEntries();
+	}
+
+	@Override
+	public void updateNotificationsQueueEntriesTemplateIds(
+		long notificationsTemplateId) {
+
+		_notificationsQueueEntryLocalService.
+			updateNotificationsQueueEntriesTemplateIds(notificationsTemplateId);
+	}
+
 	/**
 	 * Updates the notifications queue entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -351,6 +441,15 @@ public class NotificationsQueueEntryLocalServiceWrapper
 
 		return _notificationsQueueEntryLocalService.
 			updateNotificationsQueueEntry(notificationsQueueEntry);
+	}
+
+	@Override
+	public com.liferay.notifications.admin.model.NotificationsQueueEntry
+			updateSent(long notificationsQueueEntryId, boolean sent)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _notificationsQueueEntryLocalService.updateSent(
+			notificationsQueueEntryId, sent);
 	}
 
 	@Override

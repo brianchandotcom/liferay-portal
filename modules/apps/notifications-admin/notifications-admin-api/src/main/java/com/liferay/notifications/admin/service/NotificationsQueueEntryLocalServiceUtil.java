@@ -44,6 +44,17 @@ public class NotificationsQueueEntryLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.notifications.admin.service.impl.NotificationsQueueEntryLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static NotificationsQueueEntry addNotificationsQueueEntry(
+			long userId, long groupId, String className, long classPK,
+			long notificationsTemplateId, String from, String fromName,
+			String to, String toName, String cc, String bcc, String subject,
+			String body, double priority)
+		throws PortalException {
+
+		return getService().addNotificationsQueueEntry(
+			userId, groupId, className, classPK, notificationsTemplateId, from,
+			fromName, to, toName, cc, bcc, subject, body, priority);
+	}
 
 	/**
 	 * Adds the notifications queue entry to the database. Also notifies the appropriate model listeners.
@@ -82,6 +93,18 @@ public class NotificationsQueueEntryLocalServiceUtil {
 		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
+	}
+
+	public static void deleteNotificationsQueueEntries(
+		java.util.Date sentDate) {
+
+		getService().deleteNotificationsQueueEntries(sentDate);
+	}
+
+	public static void deleteNotificationsQueueEntries(long groupId)
+		throws PortalException {
+
+		getService().deleteNotificationsQueueEntries(groupId);
 	}
 
 	/**
@@ -235,6 +258,12 @@ public class NotificationsQueueEntryLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
+	public static List<NotificationsQueueEntry> getNotificationsQueueEntries(
+		boolean sent) {
+
+		return getService().getNotificationsQueueEntries(sent);
+	}
+
 	/**
 	 * Returns a range of all the notifications queue entries.
 	 *
@@ -252,6 +281,14 @@ public class NotificationsQueueEntryLocalServiceUtil {
 		return getService().getNotificationsQueueEntries(start, end);
 	}
 
+	public static List<NotificationsQueueEntry> getNotificationsQueueEntries(
+		long groupId, String className, long classPK, boolean sent, int start,
+		int end, OrderByComparator<NotificationsQueueEntry> orderByComparator) {
+
+		return getService().getNotificationsQueueEntries(
+			groupId, className, classPK, sent, start, end, orderByComparator);
+	}
+
 	/**
 	 * Returns the number of notifications queue entries.
 	 *
@@ -259,6 +296,17 @@ public class NotificationsQueueEntryLocalServiceUtil {
 	 */
 	public static int getNotificationsQueueEntriesCount() {
 		return getService().getNotificationsQueueEntriesCount();
+	}
+
+	public static int getNotificationsQueueEntriesCount(long groupId) {
+		return getService().getNotificationsQueueEntriesCount(groupId);
+	}
+
+	public static int getNotificationsQueueEntriesCount(
+		long groupId, String className, long classPK, boolean sent) {
+
+		return getService().getNotificationsQueueEntriesCount(
+			groupId, className, classPK, sent);
 	}
 
 	/**
@@ -294,6 +342,25 @@ public class NotificationsQueueEntryLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static NotificationsQueueEntry resendNotificationsQueueEntry(
+			long notificationsQueueEntryId)
+		throws PortalException {
+
+		return getService().resendNotificationsQueueEntry(
+			notificationsQueueEntryId);
+	}
+
+	public static void sendNotificationsQueueEntries() throws Exception {
+		getService().sendNotificationsQueueEntries();
+	}
+
+	public static void updateNotificationsQueueEntriesTemplateIds(
+		long notificationsTemplateId) {
+
+		getService().updateNotificationsQueueEntriesTemplateIds(
+			notificationsTemplateId);
+	}
+
 	/**
 	 * Updates the notifications queue entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -309,6 +376,13 @@ public class NotificationsQueueEntryLocalServiceUtil {
 
 		return getService().updateNotificationsQueueEntry(
 			notificationsQueueEntry);
+	}
+
+	public static NotificationsQueueEntry updateSent(
+			long notificationsQueueEntryId, boolean sent)
+		throws PortalException {
+
+		return getService().updateSent(notificationsQueueEntryId, sent);
 	}
 
 	public static NotificationsQueueEntryLocalService getService() {

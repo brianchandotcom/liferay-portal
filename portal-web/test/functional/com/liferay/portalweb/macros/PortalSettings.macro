@@ -28,6 +28,22 @@ definition {
 		Button.clickSave();
 	}
 
+	macro changeGroupImportMethod {
+		Variables.assertDefined(parameterList = "${groupImportMethod}");
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "LDAP",
+			configurationName = "Import",
+			configurationScope = "Virtual Instance Scope");
+
+		Select(
+			locator1 = "Select#SELECT_ID",
+			selectFieldId = "importMethod",
+			value1 = "${groupImportMethod}");
+
+		PortletEntry.save();
+	}
+
 	macro configureAudienceTargetingAnalytics {
 		if (isSet(enableAnalyticsList)) {
 			for (var enableAnalytics : list "${enableAnalyticsList}") {

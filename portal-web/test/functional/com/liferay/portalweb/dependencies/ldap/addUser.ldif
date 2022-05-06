@@ -1,0 +1,22 @@
+changetype: add
+cn: notTestUser
+dn: cn=notTestUser,dc=example,dc=com
+mail: testUser1@liferay.com
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+sn: lastName1
+userPassword: test
+
+changetype: add
+cn: testUser
+dn: cn=testUser,dc=example,dc=com
+givenName: firstName
+mail: testUser2@liferay.com
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+sn: lastName
+userPassword: test

@@ -1,0 +1,6 @@
+cn: testgroup
+dn: cn=testgroup,dc=example,dc=com
+objectClass: groupOfUniqueNames
+objectClass: top
+uniqueMember: cn=notTestUser,dc=example,dc=com
+uniqueMember: cn=testUser,dc=example,dc=com

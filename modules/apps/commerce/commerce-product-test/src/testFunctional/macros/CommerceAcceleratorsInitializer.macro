@@ -209,6 +209,7 @@ definition {
 		}
 
 		AssertTextEquals(
+			key_productName = "${productName}",
 			locator1 = "CommerceAccelerators#ORDER_DETAILS_SKU",
 			value1 = "${productSku}");
 
@@ -217,20 +218,24 @@ definition {
 			value1 = "${productName}");
 
 		AssertTextEquals(
+			key_productName = "${productName}",
 			locator1 = "CommerceAccelerators#ORDER_DETAILS_UNIT_PRICE",
 			value1 = "$ ${productUnitPrice}");
 
 		if (isSet(productDiscount)) {
 			AssertTextEquals(
+				key_productName = "${productName}",
 				locator1 = "CommerceAccelerators#ORDER_DETAILS_DISCOUNT",
 				value1 = "$ ${productDiscount}");
 		}
 
 		AssertTextEquals(
+			key_productName = "${productName}",
 			locator1 = "CommerceAccelerators#ORDER_DETAILS_QUANTITY",
 			value1 = "${productQuantity}");
 
 		AssertTextEquals(
+			key_productName = "${productName}",
 			locator1 = "CommerceAccelerators#ORDER_DETAILS_PRICE",
 			value1 = "$ ${productPrice}");
 	}

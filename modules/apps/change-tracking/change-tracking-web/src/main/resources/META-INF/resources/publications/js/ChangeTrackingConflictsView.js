@@ -32,6 +32,7 @@ class ChangeTrackingConflictsView extends ChangeTrackingBaseScheduleView {
 		super(props);
 
 		const {
+			containsPageLayoutChanges,
 			learnLink,
 			publishURL,
 			redirect,
@@ -43,6 +44,7 @@ class ChangeTrackingConflictsView extends ChangeTrackingBaseScheduleView {
 			unresolvedConflicts,
 		} = props;
 
+		this.containsPageLayoutChanges = containsPageLayoutChanges;
 		this.learnLink = learnLink;
 		this.publishURL = publishURL;
 		this.redirect = redirect;
@@ -83,6 +85,18 @@ class ChangeTrackingConflictsView extends ChangeTrackingBaseScheduleView {
 					<h2 className="sheet-title">
 						{Liferay.Language.get('conflicting-changes')}
 					</h2>
+
+					{this.containsPageLayoutChanges && (
+						<ClayAlert
+							displayType="warning"
+							spritemap={this.spritemap}
+							title={
+								"This publication contains changes to both Page and LayoutPageTemplateStructureRel (page's layout) entities. " +
+								'The Production version of these page layouts will be fully overwritten by the Publication versions. ' +
+								'This means that modified pages will look exactly like they do in this publication after publishing. '
+							}
+						/>
+					)}
 
 					{this.unresolvedConflicts.length > 0 && (
 						<ClayAlert

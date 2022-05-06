@@ -21,6 +21,7 @@ import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
 import com.liferay.change.tracking.web.internal.util.PublicationsPortletURLUtil;
+import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.learn.LearnMessage;
 import com.liferay.learn.LearnMessageUtil;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -89,6 +91,32 @@ public class ViewConflictsDisplayContext {
 		JSONArray unresolvedConflictsJSONArray =
 			JSONFactoryUtil.createJSONArray();
 
+		boolean containsPageLayoutChanges = false;
+
+		if (_conflictInfoMap.containsKey(
+				_portal.getClassNameId(Layout.class)) &&
+			_conflictInfoMap.containsKey(
+				_portal.getClassNameId(LayoutPageTemplateStructureRel.class))) {
+
+			List<ConflictInfo> layoutConflictInfos = _conflictInfoMap.get(
+				_portal.getClassNameId(Layout.class));
+
+			layoutConflictInfos.removeIf(
+				conflictInfo -> !conflictInfo.isResolved());
+
+			List<ConflictInfo> layoutPageTemplateStructureRelConflictInfos =
+				_conflictInfoMap.get(
+					_portal.getClassNameId(
+						LayoutPageTemplateStructureRel.class));
+
+			layoutPageTemplateStructureRelConflictInfos.removeIf(
+				conflictInfo -> !conflictInfo.isResolved());
+
+			containsPageLayoutChanges =
+				!layoutConflictInfos.isEmpty() &&
+				!layoutPageTemplateStructureRelConflictInfos.isEmpty();
+		}
+
 		for (Map.Entry<Long, List<ConflictInfo>> entry :
 				_conflictInfoMap.entrySet()) {
 
@@ -106,6 +134,8 @@ public class ViewConflictsDisplayContext {
 		}
 
 		return HashMapBuilder.<String, Object>put(
+			"containsPageLayoutChanges", containsPageLayoutChanges
+		).put(
 			"learnLink",
 			() -> {
 				LearnMessage learnMessage = LearnMessageUtil.getLearnMessage(

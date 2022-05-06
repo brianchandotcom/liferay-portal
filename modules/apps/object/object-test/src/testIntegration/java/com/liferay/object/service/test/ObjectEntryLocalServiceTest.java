@@ -40,6 +40,7 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectValidationRuleLocalService;
+import com.liferay.object.service.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.object.util.ObjectFieldUtil;
 import com.liferay.petra.string.StringBundler;
@@ -124,13 +125,8 @@ public class ObjectEntryLocalServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		_irrelevantObjectDefinition =
-			_objectDefinitionLocalService.addCustomObjectDefinition(
-				TestPropsValues.getUserId(),
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"A" + RandomTestUtil.randomString(), null, null,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				ObjectDefinitionConstants.SCOPE_COMPANY,
-				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+			ObjectDefinitionTestUtil.addObjectDefinition(
+				_objectDefinitionLocalService,
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
 						"Text", "String", RandomTestUtil.randomString(),
@@ -163,64 +159,56 @@ public class ObjectEntryLocalServiceTest {
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()));
 
-		_objectDefinition =
-			_objectDefinitionLocalService.addCustomObjectDefinition(
-				TestPropsValues.getUserId(),
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"A" + RandomTestUtil.randomString(), null, null,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				ObjectDefinitionConstants.SCOPE_COMPANY,
-				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
-				Arrays.asList(
-					ObjectFieldUtil.createObjectField(
-						"LongInteger", "Long", true, false, null,
-						"Age of Death", "ageOfDeath", false),
-					ObjectFieldUtil.createObjectField(
-						"Boolean", "Boolean", true, false, null,
-						"Author of Gospel", "authorOfGospel", false),
-					ObjectFieldUtil.createObjectField(
-						"Date", "Date", true, false, null, "Birthday",
-						"birthday", false),
-					ObjectFieldUtil.createObjectField(
-						"Text", "String", true, true, null, "Email Address",
-						"emailAddress", false),
-					ObjectFieldUtil.createObjectField(
-						"Text", "String", true, true, null,
-						"Email Address Required", "emailAddressRequired", true),
-					ObjectFieldUtil.createObjectField(
-						"Text", "String", true, true, null,
-						"Email Address Domain", "emailAddressDomain", false),
-					ObjectFieldUtil.createObjectField(
-						"Text", "String", true, false, null, "First Name",
-						"firstName", false),
-					ObjectFieldUtil.createObjectField(
-						"Decimal", "Double", true, false, null, "Height",
-						"height", false),
-					ObjectFieldUtil.createObjectField(
-						"Text", "String", true, false, null, "Last Name",
-						"lastName", false),
-					ObjectFieldUtil.createObjectField(
-						_listTypeDefinition.getListTypeDefinitionId(), "Text",
-						null, "String", true, false, null,
-						"List Type Entry Key", "listTypeEntryKey", false),
-					ObjectFieldUtil.createObjectField(
-						_listTypeDefinition.getListTypeDefinitionId(), "Text",
-						null, "String", true, false, null,
-						"List Type Entry Key Required",
-						"listTypeEntryKeyRequired", true),
-					ObjectFieldUtil.createObjectField(
-						"Text", "String", true, false, null, "Middle Name",
-						"middleName", false),
-					ObjectFieldUtil.createObjectField(
-						"Integer", "Integer", true, false, null,
-						"Number of Books Written", "numberOfBooksWritten",
-						false),
-					ObjectFieldUtil.createObjectField(
-						"LargeFile", "Blob", false, false, null, "Portrait",
-						"portrait", false),
-					ObjectFieldUtil.createObjectField(
-						"LongText", "Clob", false, false, null, "Script",
-						"script", false)));
+		_objectDefinition = ObjectDefinitionTestUtil.addObjectDefinition(
+			_objectDefinitionLocalService,
+			Arrays.asList(
+				ObjectFieldUtil.createObjectField(
+					"LongInteger", "Long", true, false, null, "Age of Death",
+					"ageOfDeath", false),
+				ObjectFieldUtil.createObjectField(
+					"Boolean", "Boolean", true, false, null, "Author of Gospel",
+					"authorOfGospel", false),
+				ObjectFieldUtil.createObjectField(
+					"Date", "Date", true, false, null, "Birthday", "birthday",
+					false),
+				ObjectFieldUtil.createObjectField(
+					"Text", "String", true, true, null, "Email Address",
+					"emailAddress", false),
+				ObjectFieldUtil.createObjectField(
+					"Text", "String", true, true, null,
+					"Email Address Required", "emailAddressRequired", true),
+				ObjectFieldUtil.createObjectField(
+					"Text", "String", true, true, null, "Email Address Domain",
+					"emailAddressDomain", false),
+				ObjectFieldUtil.createObjectField(
+					"Text", "String", true, false, null, "First Name",
+					"firstName", false),
+				ObjectFieldUtil.createObjectField(
+					"Decimal", "Double", true, false, null, "Height", "height",
+					false),
+				ObjectFieldUtil.createObjectField(
+					"Text", "String", true, false, null, "Last Name",
+					"lastName", false),
+				ObjectFieldUtil.createObjectField(
+					_listTypeDefinition.getListTypeDefinitionId(), "Text", null,
+					"String", true, false, null, "List Type Entry Key",
+					"listTypeEntryKey", false),
+				ObjectFieldUtil.createObjectField(
+					_listTypeDefinition.getListTypeDefinitionId(), "Text", null,
+					"String", true, false, null, "List Type Entry Key Required",
+					"listTypeEntryKeyRequired", true),
+				ObjectFieldUtil.createObjectField(
+					"Text", "String", true, false, null, "Middle Name",
+					"middleName", false),
+				ObjectFieldUtil.createObjectField(
+					"Integer", "Integer", true, false, null,
+					"Number of Books Written", "numberOfBooksWritten", false),
+				ObjectFieldUtil.createObjectField(
+					"LargeFile", "Blob", false, false, null, "Portrait",
+					"portrait", false),
+				ObjectFieldUtil.createObjectField(
+					"LongText", "Clob", false, false, null, "Script", "script",
+					false)));
 
 		_objectDefinition =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(

@@ -42,10 +42,10 @@ definition {
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
 
-		VideoShortcut.addCPInNonDefaultLanguage(
-			button = "公開",
-			dmDocumentTypeName = "外部動画のショートカット",
-			key_text = "動画URL",
+		VideoShortcut.addCP(
+			localizedDocumentTypeName = "外部動画のショートカット",
+			localizedPublish = "公開",
+			localizedVideoURL = "動画URL",
 			videoShortcutTitle = "DM Title",
 			videoURL = "https://www.facebook.com/Cristiano/videos/1710977485745946");
 

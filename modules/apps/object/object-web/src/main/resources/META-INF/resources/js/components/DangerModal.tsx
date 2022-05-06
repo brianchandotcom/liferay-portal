@@ -39,7 +39,8 @@ export default function DangerModal({
 
 				<Input
 					error={
-						value !== undefined && value !== token
+						value !== undefined &&
+						value.toLowerCase() !== token.toLowerCase()
 							? errorMessage
 							: ''
 					}
@@ -58,7 +59,10 @@ export default function DangerModal({
 						</ClayButton>
 
 						<ClayButton
-							disabled={token !== value}
+							disabled={
+								token.toLocaleLowerCase() !==
+								value?.toLocaleLowerCase()
+							}
 							displayType="danger"
 							onClick={onDelete}
 						>

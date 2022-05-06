@@ -30,8 +30,9 @@
 						"store": true,
 						"type": "icu_collation_keyword"
 					},
-					"match": "*_en_US_sortable",
-					"match_mapping_type": "string"
+					"match": "\\w+_en_[A-Z]{2}_sortable\\b|\\w+_en_[A-Z]{2}_\\w+_sortable\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
 				}
 			},
 			{
@@ -42,8 +43,9 @@
 						"store": true,
 						"type": "icu_collation_keyword"
 					},
-					"match": "*_fr_FR_sortable",
-					"match_mapping_type": "string"
+					"match": "\\w+_fr_[A-Z]{2}_sortable\\b|\\w+_fr_[A-Z]{2}_\\w+_sortable\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
 				}
 			},
 			{
@@ -54,8 +56,9 @@
 						"store": true,
 						"type": "icu_collation_keyword"
 					},
-					"match": "*_de_DE_sortable",
-					"match_mapping_type": "string"
+					"match": "\\w+_de_[A-Z]{2}_sortable\\b|\\w+_de_[A-Z]{2}_\\w+_sortable\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
 				}
 			},
 			{
@@ -66,8 +69,9 @@
 						"store": true,
 						"type": "icu_collation_keyword"
 					},
-					"match": "*_pl_PL_sortable",
-					"match_mapping_type": "string"
+					"match": "\\w+_pl_[A-Z]{2}_sortable\\b|\\w+_pl_[A-Z]{2}_\\w+_sortable\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
 				}
 			},
 			{
@@ -78,8 +82,9 @@
 						"store": true,
 						"type": "icu_collation_keyword"
 					},
-					"match": "*_pt_BR_sortable",
-					"match_mapping_type": "string"
+					"match": "\\w+_pt_[A-Z]{2}_sortable\\b|\\w+_pt_[A-Z]{2}_\\w+_sortable\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
 				}
 			},
 			{
@@ -90,8 +95,9 @@
 						"store": true,
 						"type": "icu_collation_keyword"
 					},
-					"match": "*_ja_JP_sortable",
-					"match_mapping_type": "string"
+					"match": "\\w+_ja_[A-Z]{2}_sortable\\b|\\w+_ja_[A-Z]{2}_\\w+_sortable\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
 				}
 			},
 			{
@@ -102,8 +108,9 @@
 						"store": true,
 						"type": "icu_collation_keyword"
 					},
-					"match": "*_es_ES_sortable",
-					"match_mapping_type": "string"
+					"match": "\\w+_es_[A-Z]{2}_sortable\\b|\\w+_es_[A-Z]{2}_\\w+_sortable\\b",
+					"match_mapping_type": "string",
+					"match_pattern": "regex"
 				}
 			},
 			{

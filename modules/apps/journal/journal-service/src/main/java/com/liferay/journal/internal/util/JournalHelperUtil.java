@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.search.Hits;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.PortletRequest;
@@ -37,11 +38,11 @@ public class JournalHelperUtil {
 
 	public static String buildURLPattern(
 			JournalArticle article, boolean privateLayout,
-			ThemeDisplay themeDisplay)
+			ThemeDisplay themeDisplay, Locale locale)
 		throws PortalException {
 
 		return _journalHelper.buildURLPattern(
-			article, privateLayout, themeDisplay);
+			article, privateLayout, themeDisplay, locale);
 	}
 
 	public static String getAbsolutePath(

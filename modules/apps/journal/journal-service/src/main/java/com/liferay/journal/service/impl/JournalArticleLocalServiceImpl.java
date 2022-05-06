@@ -8937,25 +8937,17 @@ public class JournalArticleLocalServiceImpl
 			return friendlyURLMap;
 		}
 
-		StringBundler sb = new StringBundler(2);
-
 		Group group = _groupLocalService.getGroup(
 			layoutDisplayPageObjectProvider.getGroupId());
-
-		sb.append(
-			_portal.getGroupFriendlyURL(
-				group.getPublicLayoutSet(), themeDisplay, false, false));
-
-		sb.append(layoutDisplayPageProvider.getURLSeparator());
 
 		Map<Locale, String> friendlyURLs = article.getFriendlyURLMap();
 
 		for (Locale locale : friendlyURLs.keySet()) {
-			String urlTitle = layoutDisplayPageObjectProvider.getURLTitle(
-				locale);
-
 			friendlyURLMap.put(
-				LocaleUtil.toLanguageId(locale), sb.toString() + urlTitle);
+				LocaleUtil.toLanguageId(locale),
+				_journalHelper.buildURLPattern(
+					article, false, themeDisplay, locale
+				));
 		}
 
 		return friendlyURLMap;

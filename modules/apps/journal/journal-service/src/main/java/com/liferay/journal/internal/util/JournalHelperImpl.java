@@ -65,6 +65,7 @@ import com.liferay.portal.kernel.xml.XPath;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -83,7 +84,7 @@ public class JournalHelperImpl implements JournalHelper {
 	@Override
 	public String buildURLPattern(
 			JournalArticle article, boolean privateLayout,
-			ThemeDisplay themeDisplay)
+			ThemeDisplay themeDisplay, Locale locale)
 		throws PortalException {
 
 		StringBundler sb = new StringBundler();
@@ -94,7 +95,7 @@ public class JournalHelperImpl implements JournalHelper {
 			));
 
 		sb.append(JournalArticleConstants.CANONICAL_URL_SEPARATOR);
-		sb.append(article.getUrlTitle(themeDisplay.getLocale()));
+		sb.append(article.getUrlTitle(locale));
 
 		return sb.toString();
 	}

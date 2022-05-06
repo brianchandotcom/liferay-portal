@@ -27,6 +27,8 @@ import javax.portlet.PortletRequest;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
+import java.util.Locale;
+
 /**
  * @author Tom Wang
  */
@@ -35,11 +37,11 @@ public class JournalHelperUtil {
 
 	public static String buildURLPattern(
 			JournalArticle article, boolean privateLayout,
-			ThemeDisplay themeDisplay)
+			ThemeDisplay themeDisplay, Locale locale)
 		throws PortalException {
 
 		return _journalHelper.buildURLPattern(
-			article, privateLayout, themeDisplay);
+			article, privateLayout, themeDisplay, locale);
 	}
 
 	public static String diffHtml(

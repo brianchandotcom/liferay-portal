@@ -154,9 +154,43 @@ definition {
 			var total = "${subtotal}";
 		}
 
-		if (isSet(paymentMethod) && (IsElementPresent(key_radioOption = "", locator1 = "CommerceEntry#RADIO_BUTTON"))) {
+		if (isSet(deliveryTerm)) {
+			if (IsElementPresent(key_label = "Delivery Terms", locator1 = "CommerceAccelerators#CHECKOUT_MULTI_STEP_INDICATOR_LABEL")) {
+				for (var deliveryTerms : list "${availableDeliveryTerms}") {
+					AssertElementPresent(
+						key_radioOption = "${deliveryTerms}",
+						locator1 = "CommerceEntry#RADIO_BUTTON");
+				}
+
+				Click(
+					key_radioOption = "${deliveryTerm}",
+					locator1 = "CommerceEntry#RADIO_BUTTON");
+
+				Click(locator1 = "Button#CONTINUE");
+			}
+		}
+
+		if (isSet(paymentMethod)) {
+			if (IsElementPresent(key_label = "Payment Methods", locator1 = "CommerceAccelerators#CHECKOUT_MULTI_STEP_INDICATOR_LABEL")) {
+				Click(
+					key_radioOption = "${paymentMethod}",
+					locator1 = "CommerceEntry#RADIO_BUTTON");
+
+				Click(locator1 = "Button#CONTINUE");
+			}
+		}
+
+		if (isSet(paymentTerm) && isSet(paymentTermsEligibility) && (IsElementPresent(key_label = "Payment Terms", locator1 = "CommerceAccelerators#CHECKOUT_MULTI_STEP_INDICATOR_LABEL"))) {
+			for (var paymentTerms : list "${paymentTermsEligibility}") {
+				AssertElementPresent(
+					key_radioOption = "${paymentTerms}",
+					locator1 = "CommerceEntry#RADIO_BUTTON");
+
+				echo("${paymentTermsEligibility} is available");
+			}
+
 			Click(
-				key_radioOption = "${paymentMethod}",
+				key_radioOption = "${paymentTerm}",
 				locator1 = "CommerceEntry#RADIO_BUTTON");
 
 			Click(locator1 = "Button#CONTINUE");
@@ -167,8 +201,10 @@ definition {
 			addressCity = "${newAddressCity}",
 			addressCountry = "${newAddressCountry}",
 			addressName = "${newAddressName}",
+			deliveryTerm = "${deliveryTerm}",
 			deliveryValue = "${deliveryValue}",
 			paymentMethod = "${paymentMethod}",
+			paymentTerm = "${paymentTerm}",
 			productName = "${productName}",
 			productPrice = "${productUnitPrice}",
 			productQuantity = "${productQuantity}",
@@ -243,6 +279,20 @@ definition {
 				key_paymentMethod = "${paymentMethod}",
 				locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_PAYMENT_METHOD",
 				value1 = "${paymentMethod}");
+		}
+
+		if (isSet(paymentTerm)) {
+			AssertTextEquals(
+				key_paymentMethod = "${paymentTerm}",
+				locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_PAYMENT_METHOD",
+				value1 = "${paymentTerm}");
+		}
+
+		if (isSet(deliveryTerm)) {
+			AssertTextEquals(
+				key_paymentMethod = "${deliveryTerm}",
+				locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_PAYMENT_METHOD",
+				value1 = "${deliveryTerm}");
 		}
 
 		AssertTextEquals.assertPartialText(

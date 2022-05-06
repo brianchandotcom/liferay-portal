@@ -415,6 +415,27 @@ public class ObjectDefinition implements Cloneable, Serializable {
 
 	protected Status status;
 
+	public String getStorageType() {
+		return storageType;
+	}
+
+	public void setStorageType(String storageType) {
+		this.storageType = storageType;
+	}
+
+	public void setStorageType(
+		UnsafeSupplier<String, Exception> storageTypeUnsafeSupplier) {
+
+		try {
+			storageType = storageTypeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String storageType;
+
 	public Boolean getSystem() {
 		return system;
 	}

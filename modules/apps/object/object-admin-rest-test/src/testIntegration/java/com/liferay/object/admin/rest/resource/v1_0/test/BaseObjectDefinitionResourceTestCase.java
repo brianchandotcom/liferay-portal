@@ -191,6 +191,7 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 		objectDefinition.setPanelAppOrder(regex);
 		objectDefinition.setPanelCategoryKey(regex);
 		objectDefinition.setScope(regex);
+		objectDefinition.setStorageType(regex);
 
 		String json = ObjectDefinitionSerDes.toJSON(objectDefinition);
 
@@ -202,6 +203,7 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 		Assert.assertEquals(regex, objectDefinition.getPanelAppOrder());
 		Assert.assertEquals(regex, objectDefinition.getPanelCategoryKey());
 		Assert.assertEquals(regex, objectDefinition.getScope());
+		Assert.assertEquals(regex, objectDefinition.getStorageType());
 	}
 
 	@Test
@@ -1057,6 +1059,14 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("storageType", additionalAssertFieldName)) {
+				if (objectDefinition.getStorageType() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("system", additionalAssertFieldName)) {
 				if (objectDefinition.getSystem() == null) {
 					valid = false;
@@ -1369,6 +1379,17 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("storageType", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						objectDefinition1.getStorageType(),
+						objectDefinition2.getStorageType())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("system", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						objectDefinition1.getSystem(),
@@ -1651,6 +1672,14 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("storageType")) {
+			sb.append("'");
+			sb.append(String.valueOf(objectDefinition.getStorageType()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("system")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1716,6 +1745,8 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 					RandomTestUtil.randomString());
 				portlet = RandomTestUtil.randomBoolean();
 				scope = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				storageType = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				system = RandomTestUtil.randomBoolean();
 				titleObjectFieldId = RandomTestUtil.randomLong();
 			}

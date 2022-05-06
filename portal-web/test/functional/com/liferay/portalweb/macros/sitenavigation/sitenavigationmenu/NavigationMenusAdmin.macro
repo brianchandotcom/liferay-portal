@@ -212,6 +212,13 @@ definition {
 		Button.clickSave();
 	}
 
+	macro changeDisplayTemplate {
+		Select(
+			key_fieldLabel = "Display Template",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "${displayTemplate}");
+	}
+
 	macro configureMenuType {
 		if ("${menuType}" == "Primary Navigation") {
 			LexiconEntry.gotoEntryMenuItemNoError(

@@ -28,7 +28,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-123156."
+	@description = "This is a use case for LPS-123156. Verify if information about staging system settings are present."
 	@priority = "3"
 	test AssertStagingSystemSettingsInfo {
 		property test.name.skip.portal.instance = "ExportImport#AssertSystemSettingsInfo";
@@ -60,7 +60,7 @@ definition {
 		SystemSettings.viewSettingsText(settingsText = "Uncheck to avoid deleting the temporary LAR during a successful staging publish process. In remote staging contexts, this only applies for the staging environment.");
 	}
 
-	@description = "This is a test for LPS-83011."
+	@description = "This is a use case for LPS-83011. Verify if a user can configure asset links when export."
 	@priority = "4"
 	test AssetLinksCanBeConfiguredWhenExport {
 		property test.name.skip.portal.instance = "ExportImport#AssetLinksCanBeConfiguredWhenExport";
@@ -139,7 +139,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-73362. Custom fields can be added and deleted through importing their LAR file."
+	@description = "This is a use case for LRQA-73362. Verify if custom fields can be added and deleted through importing their LAR file."
 	@priority = "4"
 	test CustomFieldDeletionViaImporting {
 		property app.server.bundles.size = "1";
@@ -209,7 +209,7 @@ definition {
 			resourceName = "Document");
 	}
 
-	@description = "This is a test for LPS-125446."
+	@description = "This is a use case for LPS-125446. Verify if display style remains even after navigation."
 	@priority = "4"
 	test DisplayStyleCanRemainAfterNavigation {
 		ProductMenu.gotoPortlet(
@@ -229,7 +229,7 @@ definition {
 		LexiconEntry.viewActiveDisplayStyle(displayStyle = "table");
 	}
 
-	@description = "This is a test for LPS-84223."
+	@description = "This is a use case for LPS-84223. Verify if a publish fails adding a file entry that do not exist."
 	@priority = "3"
 	test DLLinkValidationInWebContent {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
@@ -269,6 +269,7 @@ definition {
 			value1 = "Unable to validate referenced document because it cannot be found with the following parameters");
 	}
 
+	@description = "Verify is possible edit an exported template."
 	@priority = "4"
 	test EditExportTemplate {
 		property test.name.skip.portal.instance = "ExportImport#EditExportTemplate";
@@ -360,7 +361,7 @@ definition {
 			entryTitle = "Blogs Entry Title");
 	}
 
-	@description = "This is a use case for LPS-86501."
+	@description = "This is a use case for LPS-86501. Verify is possible edit an imported template."
 	@priority = "3"
 	test EditImportedContentPageViaImportedSiteTemplate {
 		property osgi.module.configuration.file.names = "com.liferay.layout.configuration.LayoutExportImportConfiguration.config";
@@ -446,7 +447,7 @@ definition {
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 	}
 
-	@description = "This is a use case for LPS-82752."
+	@description = "This is a use case for LPS-82752. Verify is possible export content and then publish."
 	@priority = "5"
 	test ExportContentThenPublish {
 		property portal.acceptance = "true";
@@ -472,7 +473,7 @@ definition {
 		Staging.publishCustomPublication();
 	}
 
-	@description = "This is a use case for LPS-95589."
+	@description = "This is a use case for LPS-95589. Verify is not possible export a DM with deleted document link."
 	@priority = "4"
 	test ExportDMWithDeletedDocumentLink {
 		property test.name.skip.portal.instance = "ExportImport#ExportDMWithDeletedDocumentLink";
@@ -516,6 +517,7 @@ definition {
 		AssertConsoleTextNotPresent(value1 = "NoSuchFileEntryException");
 	}
 
+	@description = "Verify is possible export and import a DDL via Global."
 	@priority = "5"
 	test ExportImportDDLViaGlobal {
 		property test.name.skip.portal.instance = "ExportImport#ExportImportDDLViaGlobal";
@@ -605,6 +607,7 @@ definition {
 			fieldFieldLabel = "Text Label");
 	}
 
+	@description = "Verify is possible export import deletions."
 	@priority = "4"
 	test ExportImportDeletions {
 		property test.name.skip.portal.instance = "ExportImport#ExportImportDeletions";
@@ -647,7 +650,7 @@ definition {
 		WebContent.viewNotPresentCP(webContentTitle = "Web Content Title");
 	}
 
-	@description = "This is a use case for LPS-91735."
+	@description = "This is a use case for LPS-91735. Verify is possible export/import DDM structure in Global site via instances."
 	@priority = "3"
 	test ExportImportGlobalDDMStructureViaInstances {
 		property portal.release = "false";
@@ -699,7 +702,7 @@ definition {
 		AssertConsoleTextNotPresent(value1 = "com.liferay.exportimport.kernel.lar.PortletDataException");
 	}
 
-	@description = "This is a use case for LPS-91440."
+	@description = "This is a use case for LPS-91440. Verify is possible export/import Global Pages via instances."
 	@priority = "3"
 	test ExportImportGlobalPagesViaInstances {
 		property portal.release = "false";
@@ -753,7 +756,7 @@ definition {
 		AssertConsoleTextNotPresent(value1 = "com.liferay.exportimport.kernel.lar.PortletDataException");
 	}
 
-	@description = "This is a use case for LPS-128533."
+	@description = "This is a use case for LPS-128533. Verify is possible export/import of Journal Article with link to layout."
 	@priority = "3"
 	test ExportImportJournalArticleWithLinkToPage {
 		property testray.component.names = "Web Content Administration";
@@ -864,7 +867,7 @@ definition {
 			webContentTitle = "Web Content Title B");
 	}
 
-	@description = "This is a use case for LPS-88378."
+	@description = "This is a use case for LPS-88378. Verify is possible export/import layout circular reference."
 	@priority = "3"
 	test ExportImportLayoutCircularReference {
 		property testray.component.names = "Site Pages Administration,Web Content Administration";
@@ -970,6 +973,7 @@ definition {
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 	}
 
+	@description = "Verify is possible export/import a Portlet."
 	@priority = "5"
 	test ExportImportPortlet {
 		property portal.acceptance = "true";
@@ -1015,6 +1019,7 @@ definition {
 		Portlet.viewTitle(portletName = "IFrame Custom");
 	}
 
+	@description = "Verify is possible export/import a Portlet with ADT."
 	@priority = "3"
 	test ExportImportPortletWithADT {
 		ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "guest");
@@ -1075,6 +1080,7 @@ definition {
 		AssertElementNotPresent(locator1 = "Link#MOVE_TO_RECYCLING_BIN");
 	}
 
+	@description = "Verify is possible export/import a Private Page."
 	@priority = "5"
 	test ExportImportPrivatePage {
 		property portal.acceptance = "true";
@@ -1116,7 +1122,7 @@ definition {
 			siteName = "Site Name");
 	}
 
-	@description = "This is a use case for LPS-84201."
+	@description = "This is a use case for LPS-84201. Verify if asset publisher's scope settings can be export/import."
 	@priority = "3"
 	test ExportImportSiteWithAssetPublisherScopeSetting {
 		JSONGroup.addGroup(groupName = "Site Name A");
@@ -1175,7 +1181,7 @@ definition {
 		AssetPublisherPortlet.viewConfigureSiteScope(siteName = "Site Name B");
 	}
 
-	@description = "This is a test for LPS-142076. Can import site with the 'Copy as new' option in the Update data section."
+	@description = "This is a use case for LPS-142076. Verify is possible import site with the 'Copy as new' option in the Update data section."
 	@priority = "3"
 	test ExportImportSiteWithCopyAsNew {
 		task ("Add a new site and add a widget page to site") {
@@ -1255,7 +1261,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-88331."
+	@description = "This is a use case for LPS-88331. Verify is possbile export/import a site with nested upload field."
 	@priority = "3"
 	test ExportImportSiteWithNestedUploadField {
 		JSONGroup.addGroup(groupName = "Site A");
@@ -1339,6 +1345,7 @@ definition {
 		AssertConsoleTextNotPresent(value1 = "com.liferay.portal.kernel.repository.InvalidRepositoryIdException");
 	}
 
+	@description = "Verify is possible export/import a Smoke template."
 	@priority = "5"
 	test ExportImportSmoke {
 		property portal.acceptance = "true";
@@ -1363,6 +1370,7 @@ definition {
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 	}
 
+	@description = "Verify is possible export/import theme settings."
 	@priority = "4"
 	test ExportImportThemeSettings {
 		JSONGroup.addGroup(groupName = "Site Name");
@@ -1422,6 +1430,7 @@ definition {
 			uncheckThemeSettingList = "Show Header Search");
 	}
 
+	@description = "Verify is possible export/import validation."
 	@priority = "5"
 	test ExportImportValidation {
 		property portal.acceptance = "true";
@@ -1472,7 +1481,7 @@ definition {
 			siteName = "Site Name");
 	}
 
-	@description = "This is a use case for LPS-88743."
+	@description = "This is a use case for LPS-88743. Verify is possible export/import Web Content circular reference."
 	@priority = "3"
 	test ExportImportWebContentCircularReference {
 		JSONGroup.addGroup(groupName = "Site Name");
@@ -1550,7 +1559,7 @@ definition {
 		AssertConsoleTextNotPresent(value1 = "com.liferay.journal.exception.NoSuchArticleException");
 	}
 
-	@description = "This is a use case for LPS-83326 and LPS-99287."
+	@description = "This is a use case for LPS-83326 and LPS-99287. Verify is possible export/import Web Content Folder with a Workflow."
 	@priority = "5"
 	test ExportImportWebContentFolderWithWorkflow {
 		property portal.acceptance = "true";
@@ -1593,7 +1602,7 @@ definition {
 		AssertConsoleTextNotPresent(value1 = "com.liferay.exportimport.kernel.lar.PortletDataException");
 	}
 
-	@description = "This is a use case for LPS-86608."
+	@description = "This is a use case for LPS-86608. Verify is possible export/import Web Content with repeat field."
 	@priority = "3"
 	test ExportImportWebcontentWithRepeatField {
 		JSONGroup.addGroup(groupName = "Exported Site");
@@ -1710,6 +1719,7 @@ definition {
 			templateName = "Exported Template");
 	}
 
+	@description = "Verify is possible export/import with an export template."
 	@priority = "4"
 	test ExportImportWithExportTemplate {
 		property test.name.skip.portal.instance = "ExportImport#ExportImportWithExportTemplate";
@@ -1743,7 +1753,7 @@ definition {
 			siteName = "Site Name");
 	}
 
-	@description = "This is a use case for LPS-88498."
+	@description = "This is a use case for LPS-88498. Verify if a Guest is able to export files."
 	@priority = "5"
 	test ExportViaGuest {
 		property portal.acceptance = "true";
@@ -1779,7 +1789,7 @@ definition {
 			value1 = "Forbidden");
 	}
 
-	@description = "This is a use case for LPS-88831, LPS-88889 and LPS-88890."
+	@description = "This is a use case for LPS-88831, LPS-88889 and LPS-88890. Verify is possible export a web content with deleted reference."
 	@priority = "4"
 	test ExportWebContentWithDeletedReference {
 		property test.name.skip.portal.instance = "ExportImport#ExportWebContentWithDeletedReference";
@@ -1851,6 +1861,7 @@ definition {
 		AssertConsoleTextNotPresent(value1 = "com.liferay.exportimport.kernel.lar.PortletDataException");
 	}
 
+	@description = "Verify is possible import corrupted file."
 	@priority = "5"
 	test ImportCorruptedFile {
 		property portal.acceptance = "true";
@@ -1872,7 +1883,7 @@ definition {
 			uploadFrom = "dependencies");
 	}
 
-	@description = "This is a test for LPS-135706 - Verified that exporting and importing a Documents & Media URL does not append UUID to the imported URL if it was not there to begin with"
+	@description = "This is a use case for LPS-135706. Verify that exporting and importing a Documents & Media URL does not append UUID to the imported URL if it was not there to begin with."
 	@priority = "3"
 	test ImportDMUrlWithoutUUID {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
@@ -1924,7 +1935,7 @@ definition {
 		CKEditor.assertSourceContent();
 	}
 
-	@description = "This is a use case for LPS-84290 - Verified that can export Home Folder Permissions"
+	@description = "This is a use case for LPS-84290. Verify is possible export Home Folder Permissions."
 	@priority = "3"
 	test ImportSiteHomeFolderPermissions {
 		JSONGroup.addGroup(groupName = "Site Name");
@@ -1987,7 +1998,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-97544 and LPS-90886."
+	@description = "This is a use case for LPS-97544 and LPS-90886. Verify is possible import a staged site with circular reference."
 	@priority = "3"
 	test ImportStagedSiteWithCircularReference {
 		property portal.upstream = "true";
@@ -2122,7 +2133,7 @@ definition {
 			siteName = "Site Name B");
 	}
 
-	@description = "This is a use case for LPS-94738."
+	@description = "This is a use case for LPS-94738. Verify is possible import a WCD after activate staging."
 	@priority = "4"
 	test ImportWCDReferenceAfterActivateStaging {
 		property test.name.skip.portal.instance = "ExportImport#ImportWCDReferenceAfterActivateStaging";
@@ -2177,7 +2188,7 @@ definition {
 			webContentTitle = "WebContent Title");
 	}
 
-	@description = "This is a test for LPS-91233."
+	@description = "This is a use case for LPS-91233. Verify is possible publish a web content with a broken link."
 	@priority = "3"
 	test PublishWebContentWithBrokenLink {
 		property test.name.skip.portal.instance = "ExportImport#PublishWebContentWithBrokenLink";
@@ -2230,6 +2241,7 @@ definition {
 			fieldLabel = "content");
 
 		PortletEntry.publish();
+		
 	}
 
 }

@@ -21,20 +21,19 @@ import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
 import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemActionProvider;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.info.item.InfoItemReference;
+import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -57,7 +56,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.osgi.service.component.annotations.Reference;
 import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
@@ -115,7 +113,9 @@ public class ViewJournalArticleContentDashboardItemActionProviderTest {
 
 			layoutSetImpl.setCompanyFallbackVirtualHostname(null);
 
-			themeDisplay.setCompany(_companyLocalService.fetchCompany(TestPropsValues.getCompanyId()));
+			themeDisplay.setCompany(
+				_companyLocalService.fetchCompany(
+					TestPropsValues.getCompanyId()));
 			themeDisplay.setLayoutSet(layoutSetImpl);
 
 			mockHttpServletRequest.setAttribute(
@@ -168,6 +168,87 @@ public class ViewJournalArticleContentDashboardItemActionProviderTest {
 	}
 
 	@Test
+	public void testGetJournalArticleTranslationSpanishURL() throws Exception {
+		try {
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+			JournalArticle journalArticle = JournalTestUtil.addArticle(
+				_group.getGroupId(), 0,
+				JournalArticleConstants.CLASS_NAME_ID_DEFAULT, "title1",
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				LocaleUtil.getSiteDefault(), false, false, serviceContext);
+
+			DDMStructure ddmStructure = journalArticle.getDDMStructure();
+
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+					_group.getCreatorUserId(), _group.getGroupId(), 0,
+					_portal.getClassNameId(JournalArticle.class.getName()),
+					ddmStructure.getStructureId(),
+					RandomTestUtil.randomString(),
+					LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE, 0,
+					true, 0, 0, 0, 0, serviceContext);
+
+			_assetDisplayPageEntryLocalService.addAssetDisplayPageEntry(
+				journalArticle.getUserId(), _group.getGroupId(),
+				_portal.getClassNameId(JournalArticle.class.getName()),
+				journalArticle.getResourcePrimKey(),
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+				AssetDisplayPageConstants.TYPE_DEFAULT, serviceContext);
+
+			MockHttpServletRequest mockHttpServletRequest =
+				new MockHttpServletRequest();
+
+			ThemeDisplay themeDisplay = _getThemeDisplay(LocaleUtil.US);
+
+			themeDisplay.setRequest(mockHttpServletRequest);
+
+			LayoutSetImpl layoutSetImpl = new LayoutSetImpl();
+
+			layoutSetImpl.setCompanyFallbackVirtualHostname(null);
+
+			themeDisplay.setCompany(
+				_companyLocalService.fetchCompany(
+					TestPropsValues.getCompanyId()));
+			themeDisplay.setLayoutSet(layoutSetImpl);
+
+			mockHttpServletRequest.setAttribute(
+				WebKeys.THEME_DISPLAY, themeDisplay);
+
+			mockHttpServletRequest.setAttribute(
+				"LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER",
+				_layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
+					new InfoItemReference(
+						JournalArticle.class.getName(),
+						journalArticle.getResourcePrimKey())));
+
+			serviceContext.setRequest(mockHttpServletRequest);
+
+			ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+			ContentDashboardItemAction contentDashboardItemAction =
+				_contentDashboardItemActionProvider.
+					getContentDashboardItemAction(
+						journalArticle, mockHttpServletRequest);
+
+			String spainUrl = contentDashboardItemAction.getURL(
+				LocaleUtil.SPAIN);
+
+			Assert.assertTrue(
+				spainUrl.contains(
+					StringUtil.toLowerCase(
+						journalArticle.getTitle(LocaleUtil.US))));
+
+			Assert.assertTrue(
+				spainUrl.contains(StringUtil.toLowerCase("/es/")));
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+	}
+
+	@Test
 	public void testGetKey() {
 		Assert.assertEquals(
 			"view", _contentDashboardItemActionProvider.getKey());
@@ -212,10 +293,12 @@ public class ViewJournalArticleContentDashboardItemActionProviderTest {
 
 			ThemeDisplay themeDisplay = _getThemeDisplay(LocaleUtil.US);
 
+			themeDisplay.setCompany(
+				_companyLocalService.fetchCompany(
+					TestPropsValues.getCompanyId()));
 			themeDisplay.setLayoutSet(new LayoutSetImpl());
 			themeDisplay.setRequest(mockHttpServletRequest);
 			themeDisplay.setURLCurrent("http://localhost:8080/currentURL");
-			themeDisplay.setCompany(_companyLocalService.fetchCompany(TestPropsValues.getCompanyId()));
 
 			mockHttpServletRequest.setAttribute(
 				WebKeys.THEME_DISPLAY, themeDisplay);

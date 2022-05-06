@@ -432,6 +432,17 @@ public class ObjectEntryLocalServiceUtil {
 			groupId, objectRelationshipId, primaryKey);
 	}
 
+	public static List<Map<String, Object>>
+			getOneToManySystemRelatedObjectEntries(
+				long foreignKey,
+				com.liferay.object.model.ObjectDefinition objectDefinition,
+				com.liferay.object.model.ObjectRelationship objectRelationship)
+		throws PortalException {
+
+		return getService().getOneToManySystemRelatedObjectEntries(
+			foreignKey, objectDefinition, objectRelationship);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

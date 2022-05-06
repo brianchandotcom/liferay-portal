@@ -41,8 +41,6 @@ definition {
 	test AssertCheckoutStepsNotShownWithoutPermissions {
 		property portal.acceptance = "false";
 
-		echo("TEST");
-
 		// TODO COMMERCE-8599 AssertCheckoutStepsNotShownWithoutPermissions pending implementation
 
 	}

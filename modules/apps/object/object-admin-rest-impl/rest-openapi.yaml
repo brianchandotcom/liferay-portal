@@ -99,6 +99,8 @@ components:
                 status:
                     $ref: "#/components/schemas/Status"
                     readOnly: true
+                storageType:
+                    type: string
                 system:
                     readOnly: true
                     type: boolean

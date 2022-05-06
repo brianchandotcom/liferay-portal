@@ -61,6 +61,7 @@ const AUTOCOMPLETE_EXCLUDED_KEYS = new Set([
 	'Shift',
 ]);
 
+const CSS_CLASS_HINT_NAME = 'hint-name';
 const CSS_CLASS_HINT_TYPE = 'hint-type';
 
 const LANGUAGE_ID = 'LanguageId';
@@ -72,7 +73,7 @@ const MODES = {
 	},
 };
 
-function getCodeMirrorHints(cm, autocompleteSchema, availableLanguages) {
+export function getCodeMirrorHints(cm, autocompleteSchema, availableLanguages) {
 	const cursor = cm.getCursor();
 	const token = cm.getTokenAt(cursor);
 
@@ -203,7 +204,7 @@ function getCodeMirrorHints(cm, autocompleteSchema, availableLanguages) {
 
 	if (token.type === 'string') {
 		const property = list.find(
-			(item) => item.name === currentProperty.at(-1)
+			(item) => item.name === currentProperty[currentProperty.length - 1]
 		);
 
 		if (property?.enum) {
@@ -258,11 +259,12 @@ function getCodeMirrorHints(cm, autocompleteSchema, availableLanguages) {
 					);
 
 					const name = document.createElement('span');
-					name.innerText = propertyName;
+					name.className = CSS_CLASS_HINT_NAME;
+					name.textContent = propertyName;
 
 					const type = document.createElement('span');
 					type.className = CSS_CLASS_HINT_TYPE;
-					type.innerText = propertyType;
+					type.textContent = propertyType;
 
 					element.appendChild(name);
 					element.appendChild(type);

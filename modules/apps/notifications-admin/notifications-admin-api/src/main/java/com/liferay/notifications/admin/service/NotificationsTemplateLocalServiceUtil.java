@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service utility for NotificationsTemplate. This utility wraps
@@ -44,6 +45,19 @@ public class NotificationsTemplateLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.notifications.admin.service.impl.NotificationsTemplateLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static NotificationsTemplate addNotificationsTemplate(
+			long userId, long groupId, String name, String description,
+			String from, Map<java.util.Locale, String> fromNameMap, String to,
+			String cc, String bcc, boolean enabled,
+			Map<java.util.Locale, String> subjectMap,
+			Map<java.util.Locale, String> bodyMap,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addNotificationsTemplate(
+			userId, groupId, name, description, from, fromNameMap, to, cc, bcc,
+			enabled, subjectMap, bodyMap, serviceContext);
+	}
 
 	/**
 	 * Adds the notifications template to the database. Also notifies the appropriate model listeners.
@@ -112,11 +126,19 @@ public class NotificationsTemplateLocalServiceUtil {
 	 *
 	 * @param notificationsTemplate the notifications template
 	 * @return the notifications template that was removed
+	 * @throws PortalException
 	 */
 	public static NotificationsTemplate deleteNotificationsTemplate(
-		NotificationsTemplate notificationsTemplate) {
+			NotificationsTemplate notificationsTemplate)
+		throws PortalException {
 
 		return getService().deleteNotificationsTemplate(notificationsTemplate);
+	}
+
+	public static void deleteNotificationsTemplates(long groupId)
+		throws PortalException {
+
+		getService().deleteNotificationsTemplates(groupId);
 	}
 
 	/**
@@ -302,6 +324,22 @@ public class NotificationsTemplateLocalServiceUtil {
 		return getService().getNotificationsTemplates(start, end);
 	}
 
+	public static List<NotificationsTemplate> getNotificationsTemplates(
+		long groupId, boolean enabled, int start, int end,
+		OrderByComparator<NotificationsTemplate> orderByComparator) {
+
+		return getService().getNotificationsTemplates(
+			groupId, enabled, start, end, orderByComparator);
+	}
+
+	public static List<NotificationsTemplate> getNotificationsTemplates(
+		long groupId, int start, int end,
+		OrderByComparator<NotificationsTemplate> orderByComparator) {
+
+		return getService().getNotificationsTemplates(
+			groupId, start, end, orderByComparator);
+	}
+
 	/**
 	 * Returns all the notifications templates matching the UUID and company.
 	 *
@@ -345,6 +383,16 @@ public class NotificationsTemplateLocalServiceUtil {
 		return getService().getNotificationsTemplatesCount();
 	}
 
+	public static int getNotificationsTemplatesCount(long groupId) {
+		return getService().getNotificationsTemplatesCount(groupId);
+	}
+
+	public static int getNotificationsTemplatesCount(
+		long groupId, boolean enabled) {
+
+		return getService().getNotificationsTemplatesCount(groupId, enabled);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -361,6 +409,20 @@ public class NotificationsTemplateLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static NotificationsTemplate updateNotificationsTemplate(
+			long notificationsTemplateId, String name, String description,
+			String from, Map<java.util.Locale, String> fromNameMap, String to,
+			String cc, String bcc, boolean enabled,
+			Map<java.util.Locale, String> subjectMap,
+			Map<java.util.Locale, String> bodyMap,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().updateNotificationsTemplate(
+			notificationsTemplateId, name, description, from, fromNameMap, to,
+			cc, bcc, enabled, subjectMap, bodyMap, serviceContext);
 	}
 
 	/**

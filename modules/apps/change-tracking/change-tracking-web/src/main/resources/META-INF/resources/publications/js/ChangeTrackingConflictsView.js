@@ -32,25 +32,25 @@ class ChangeTrackingConflictsView extends ChangeTrackingBaseScheduleView {
 		super(props);
 
 		const {
-			containsPageLayoutChanges,
 			learnLink,
 			publishURL,
 			redirect,
 			resolvedConflicts,
 			schedule,
 			scheduleURL,
+			showPageOverwriteWarning,
 			spritemap,
 			timeZone,
 			unresolvedConflicts,
 		} = props;
 
-		this.containsPageLayoutChanges = containsPageLayoutChanges;
 		this.learnLink = learnLink;
 		this.publishURL = publishURL;
 		this.redirect = redirect;
 		this.resolvedConflicts = resolvedConflicts;
 		this.schedule = schedule;
 		this.scheduleURL = scheduleURL;
+		this.showPageOverwriteWarning = showPageOverwriteWarning;
 		this.spritemap = spritemap;
 		this.timeZone = timeZone;
 		this.unresolvedConflicts = unresolvedConflicts;
@@ -86,17 +86,6 @@ class ChangeTrackingConflictsView extends ChangeTrackingBaseScheduleView {
 						{Liferay.Language.get('conflicting-changes')}
 					</h2>
 
-					{this.containsPageLayoutChanges && (
-						<ClayAlert
-							displayType="info"
-							spritemap={this.spritemap}
-							title={
-								'This publication contains changes to a content page. Publishing these changes will fully ' +
-								"overwrite the page's content and layout in production."
-							}
-						/>
-					)}
-
 					{this.unresolvedConflicts.length > 0 && (
 						<ClayAlert
 							displayType="warning"
@@ -121,6 +110,17 @@ class ChangeTrackingConflictsView extends ChangeTrackingBaseScheduleView {
 							title={Liferay.Language.get(
 								'no-unresolved-conflicts-ready-to-publish'
 							)}
+						/>
+					)}
+
+					{this.showPageOverwriteWarning && (
+						<ClayAlert
+							displayType="info"
+							spritemap={this.spritemap}
+							title={
+								'This publication contains changes to a content page. Publishing these changes will fully ' +
+								"overwrite the page's content and layout in production."
+							}
 						/>
 					)}
 				</div>

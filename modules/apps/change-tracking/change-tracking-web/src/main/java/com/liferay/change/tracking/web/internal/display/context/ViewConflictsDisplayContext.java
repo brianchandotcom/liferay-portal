@@ -91,32 +91,6 @@ public class ViewConflictsDisplayContext {
 		JSONArray unresolvedConflictsJSONArray =
 			JSONFactoryUtil.createJSONArray();
 
-		boolean containsPageLayoutChanges = false;
-
-		if (_conflictInfoMap.containsKey(
-				_portal.getClassNameId(Layout.class)) &&
-			_conflictInfoMap.containsKey(
-				_portal.getClassNameId(LayoutPageTemplateStructureRel.class))) {
-
-			List<ConflictInfo> layoutConflictInfos = _conflictInfoMap.get(
-				_portal.getClassNameId(Layout.class));
-
-			layoutConflictInfos.removeIf(
-				conflictInfo -> !conflictInfo.isResolved());
-
-			List<ConflictInfo> layoutPageTemplateStructureRelConflictInfos =
-				_conflictInfoMap.get(
-					_portal.getClassNameId(
-						LayoutPageTemplateStructureRel.class));
-
-			layoutPageTemplateStructureRelConflictInfos.removeIf(
-				conflictInfo -> !conflictInfo.isResolved());
-
-			containsPageLayoutChanges =
-				!layoutConflictInfos.isEmpty() &&
-				!layoutPageTemplateStructureRelConflictInfos.isEmpty();
-		}
-
 		for (Map.Entry<Long, List<ConflictInfo>> entry :
 				_conflictInfoMap.entrySet()) {
 
@@ -134,8 +108,6 @@ public class ViewConflictsDisplayContext {
 		}
 
 		return HashMapBuilder.<String, Object>put(
-			"containsPageLayoutChanges", containsPageLayoutChanges
-		).put(
 			"learnLink",
 			() -> {
 				LearnMessage learnMessage = LearnMessageUtil.getLearnMessage(
@@ -176,6 +148,46 @@ public class ViewConflictsDisplayContext {
 			).setParameter(
 				"ctCollectionId", _ctCollection.getCtCollectionId()
 			).buildString()
+		).put(
+			"showPageOverwriteWarning",
+			() -> {
+				List<ConflictInfo> layoutConflictInfos = _conflictInfoMap.get(
+					_portal.getClassNameId(Layout.class));
+				List<ConflictInfo> layoutPageTemplateStructureRelConflictInfos =
+					_conflictInfoMap.get(
+						_portal.getClassNameId(
+							LayoutPageTemplateStructureRel.class));
+
+				if ((layoutConflictInfos == null) ||
+					(layoutPageTemplateStructureRelConflictInfos == null)) {
+
+					return false;
+				}
+
+				boolean hasResolvedLayoutConflict = false;
+
+				for (ConflictInfo conflictInfo : layoutConflictInfos) {
+					if (conflictInfo.isResolved()) {
+						hasResolvedLayoutConflict = true;
+
+						break;
+					}
+				}
+
+				if (!hasResolvedLayoutConflict) {
+					return false;
+				}
+
+				for (ConflictInfo conflictInfo :
+						layoutPageTemplateStructureRelConflictInfos) {
+
+					if (conflictInfo.isResolved()) {
+						return true;
+					}
+				}
+
+				return false;
+			}
 		).put(
 			"spritemap", _themeDisplay.getPathThemeImages() + "/clay/icons.svg"
 		).put(

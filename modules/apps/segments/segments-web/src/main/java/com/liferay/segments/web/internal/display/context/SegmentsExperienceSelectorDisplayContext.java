@@ -126,8 +126,6 @@ public class SegmentsExperienceSelectorDisplayContext {
 						"segmentsExperienceId")) {
 
 				segmentsExperiencesJSONObject.put("active", true);
-
-				break;
 			}
 		}
 	}

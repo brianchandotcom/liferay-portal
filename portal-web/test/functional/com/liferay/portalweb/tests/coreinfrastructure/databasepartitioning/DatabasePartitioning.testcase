@@ -387,37 +387,17 @@ definition {
 				webContentContent = "WC WebContent Content New Company",
 				webContentTitle = "WC WebContent Title New Company");
 
-			WebContent.increaseDisplayDate(minuteIncrease = "8");
+			WebContent.increaseDisplayDate(minuteIncrease = "5");
 
 			PortletEntry.publish();
+
+			AssertTextEquals(
+				key_webContentTitle = "WC WebContent Title New Company",
+				locator1 = "WC#ENTRY_LIST_WORKFLOW_STATUS",
+				value1 = "SCHEDULED");
 		}
-
-		task ("Add a page and WebContent display select a WebContent article") {
-			ProductMenu.gotoPortlet(
-				category = "Site Builder",
-				portlet = "Pages");
-
-			PagesAdmin.addPage(pageName = "Web Content Display Page");
-
-			Navigator.gotoPage(
-				baseURL = "www.able.com:8080",
-				pageName = "Web Content Display Page");
-
-			Portlet.addPG(portletName = "Web Content Display");
-
-			WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title New Company");
-
-			IFrame.closeFrame();
-		}
-
-		AssertTextEquals.assertPartialText(
-			key_warningMessage = "WC WebContent Title New Company is scheduled and will be displayed",
-			locator1 = "Message#WARNING_SPECIFIC",
-			value1 = "WC WebContent Title New Company is scheduled and will be displayed");
 
 		task ("Add a WebContent article on default Company") {
-			SignOut.signOut();
-
 			User.firstLoginPG();
 
 			ProductMenu.gotoPortlet(
@@ -430,73 +410,55 @@ definition {
 				webContentContent = "WC WebContent Content Default Company",
 				webContentTitle = "WC WebContent Title Default Company");
 
-			WebContent.increaseDisplayDate(minuteIncrease = "3");
+			WebContent.increaseDisplayDate(minuteIncrease = "2");
 
 			PortletEntry.publish();
+
+			AssertTextEquals(
+				key_webContentTitle = "WC WebContent Title Default Company",
+				locator1 = "WC#ENTRY_LIST_WORKFLOW_STATUS",
+				value1 = "SCHEDULED");
 		}
-
-		task ("Add a page and WebContent display select a WebContent article") {
-			ProductMenu.gotoPortlet(
-				category = "Site Builder",
-				portlet = "Pages");
-
-			PagesAdmin.addPage(pageName = "Web Content Display Page");
-
-			Navigator.gotoPage(pageName = "Web Content Display Page");
-
-			Portlet.addPG(portletName = "Web Content Display");
-
-			WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title Default Company");
-
-			IFrame.closeFrame();
-		}
-
-		AssertTextEquals.assertPartialText(
-			key_warningMessage = "WC WebContent Title Default Company is scheduled and will be displayed",
-			locator1 = "Message#WARNING_SPECIFIC",
-			value1 = "WC WebContent Title Default Company is scheduled and will be displayed");
 
 		task ("View WebContent Article Publish on default Company") {
-			Pause(locator1 = "180000");
+			Pause(locator1 = "150000");
 
-			Refresh();
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Web Content");
 
-			WebContentDisplayPortlet.viewContent(
-				webContentContent = "WC WebContent Content Default Company",
-				webContentTitle = "WC WebContent Title Default Company");
+			AssertTextEquals(
+				key_webContentTitle = "WC WebContent Title Default Company",
+				locator1 = "WC#ENTRY_LIST_WORKFLOW_STATUS",
+				value1 = "APPROVED");
 		}
 
 		task ("New Company publish it's WebContent Article") {
-			SignOut.signOut();
+			Navigator.openSpecificURL(url = "http://www.able.com:8080");
 
-			Navigator.gotoPage(
-				baseURL = "www.able.com:8080",
-				pageName = "Web Content Display Page");
+			Pause(locator1 = "230000");
 
-			AssertTextEquals.assertPartialText(
-				key_warningMessage = "WC WebContent Title New Company is scheduled and will be displayed",
-				locator1 = "Message#WARNING_SPECIFIC",
-				value1 = "WC WebContent Title New Company is scheduled and will be displayed");
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Web Content");
 
-			Pause(locator1 = "240000");
-
-			Refresh();
-
-			WebContentDisplayPortlet.viewContent(
-				webContentContent = "WC WebContent Content New Company",
-				webContentTitle = "WC WebContent Title New Company");
+			AssertTextEquals(
+				key_webContentTitle = "WC WebContent Title New Company",
+				locator1 = "WC#ENTRY_LIST_WORKFLOW_STATUS",
+				value1 = "APPROVED");
 		}
 
 		task ("WebContent Article not repulish on default Company") {
-			SignOut.signOut();
+			Navigator.openURL();
 
-			User.firstLoginPG();
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Web Content");
 
-			Navigator.gotoPage(pageName = "Web Content Display Page");
-
-			WebContentDisplayPortlet.viewContent(
-				webContentContent = "WC WebContent Content Default Company",
-				webContentTitle = "WC WebContent Title Default Company");
+			AssertTextEquals(
+				key_webContentTitle = "WC WebContent Title Default Company",
+				locator1 = "WC#ENTRY_LIST_WORKFLOW_STATUS",
+				value1 = "APPROVED");
 		}
 	}
 

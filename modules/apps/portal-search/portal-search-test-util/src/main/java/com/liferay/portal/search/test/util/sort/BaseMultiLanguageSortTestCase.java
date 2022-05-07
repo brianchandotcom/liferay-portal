@@ -70,7 +70,7 @@ public abstract class BaseMultiLanguageSortTestCase
 	}
 
 	@Test
-	public void testJapanKatana() {
+	public void testJapanKatakana() {
 		testLocaleSort(
 			LocaleUtil.JAPAN, new String[] {"オ", "イ", "ア", "エ", "ウ"},
 			"[ア, イ, ウ, エ, オ]");

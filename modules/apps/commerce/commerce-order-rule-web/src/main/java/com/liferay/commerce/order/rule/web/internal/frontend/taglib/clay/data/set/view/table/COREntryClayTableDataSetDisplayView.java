@@ -51,12 +51,12 @@ public class COREntryClayTableDataSetDisplayView
 
 		activeClayTableSchemaField.setContentRenderer("boolean");
 
-		ClayTableSchemaField displayDateStartDateClayTableSchemaField =
+		ClayTableSchemaField displayDateClayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField(
 				"displayDate", "start-date");
 
-		displayDateStartDateClayTableSchemaField.setContentRenderer("dateTime");
-		displayDateStartDateClayTableSchemaField.setSortable(true);
+		displayDateClayTableSchemaField.setContentRenderer("dateTime");
+		displayDateClayTableSchemaField.setSortable(true);
 
 		ClayTableSchemaField expirationDateClayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField(

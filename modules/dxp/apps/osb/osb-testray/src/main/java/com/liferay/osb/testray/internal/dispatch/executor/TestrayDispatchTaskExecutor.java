@@ -28,7 +28,6 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -36,10 +35,13 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -92,10 +94,6 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 			DispatchTaskExecutorOutput dispatchTaskExecutorOutput)
 		throws Exception {
 
-		if (_log.isInfoEnabled()) {
-			_log.info("Invoking doExecute");
-		}
-
 		UnicodeProperties unicodeProperties =
 			dispatchTrigger.getDispatchTaskSettingsUnicodeProperties();
 
@@ -107,20 +105,50 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 			false, null, null, null, null, LocaleUtil.getSiteDefault(), null,
 			user);
 
+		String originalPrincipalThreadLocalName =
+			PrincipalThreadLocal.getName();
+
+		PermissionChecker originalPermissionThreadLocalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		PrincipalThreadLocal.setName(user.getUserId());
+
 		PermissionThreadLocal.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(user));
 
-		_invoke(() -> _loadCache(dispatchTrigger.getCompanyId()));
-		_invoke(() -> _uploadToTestray(unicodeProperties));
-
-		if (_log.isInfoEnabled()) {
-			_log.info("Done!");
+		try {
+			_invoke(() -> _loadCache(dispatchTrigger.getCompanyId()));
+			_invoke(
+				() -> _uploadToTestray(
+					dispatchTrigger.getCompanyId(), unicodeProperties));
+		}
+		finally {
+			PrincipalThreadLocal.setName(originalPrincipalThreadLocalName);
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionThreadLocalPermissionChecker);
 		}
 	}
 
 	@Override
 	public String getName() {
 		return "testray";
+	}
+
+	private ObjectEntry _addObjectEntry(
+			String objectDefinitionShortName, ObjectEntry objectEntry)
+		throws Exception {
+
+		ObjectDefinition objectDefinition = _objectDefinitions.get(
+			objectDefinitionShortName);
+
+		if (objectDefinition == null) {
+			_log.error("Object Definition not found");
+
+			throw new PortalException("Object Definition not found");
+		}
+
+		return _objectEntryManager.addObjectEntry(
+			_defaultDTOConverterContext, objectDefinition, objectEntry, null);
 	}
 
 	private String _getAttributeValue(String attributeName, Node node) {
@@ -163,6 +191,25 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 		return (List<ObjectEntry>)objectEntriesPage.getItems();
 	}
 
+	private long _getObjectEntryId(
+			long companyId, String name, String objectDefinitionShortName)
+		throws Exception {
+
+		com.liferay.portal.vulcan.pagination.Page<ObjectEntry>
+			objectEntriesPage = _objectEntryManager.getObjectEntries(
+				companyId, _objectDefinitions.get(objectDefinitionShortName),
+				null, null, _defaultDTOConverterContext,
+				StringBundler.concat("name eq '", name, "'"), null, null, null);
+
+		ObjectEntry objectEntry = objectEntriesPage.fetchFirstItem();
+
+		if (objectEntry == null) {
+			return 0;
+		}
+
+		return objectEntry.getId();
+	}
+
 	private Map<String, String> _getPropertiesMap(Element element) {
 		Map<String, String> map = new HashMap<>();
 
@@ -189,6 +236,28 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 		}
 
 		return map;
+	}
+
+	private long _getTestrayProjectId(long companyId, String testrayProjectName)
+		throws Exception {
+
+		long testrayProjectId = _getObjectEntryId(
+			companyId, testrayProjectName, "Project");
+
+		if (testrayProjectId != 0) {
+			return testrayProjectId;
+		}
+
+		ObjectEntry objectEntry = new ObjectEntry();
+
+		objectEntry.setProperties(
+			HashMapBuilder.<String, Object>put(
+				"name", testrayProjectName
+			).build());
+
+		objectEntry = _addObjectEntry("Project", objectEntry);
+
+		return objectEntry.getId();
 	}
 
 	private void _invoke(UnsafeRunnable<Exception> unsafeRunnable)
@@ -342,7 +411,9 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 		}
 	}
 
-	private void _processArchive(byte[] bytes) throws Exception {
+	private void _processArchive(long companyId, byte[] bytes)
+		throws Exception {
+
 		Path tempDirectoryPath = null;
 		Path tempFilePath = null;
 
@@ -369,7 +440,7 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 				try {
 					Document document = documentBuilder.parse(file);
 
-					_invoke(() -> _processDocument(document));
+					_invoke(() -> _processDocument(companyId, document));
 				}
 				catch (Exception exception) {
 					_log.error(exception);
@@ -390,13 +461,19 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 		}
 	}
 
-	private void _processDocument(Document document) throws Exception {
+	private void _processDocument(long companyId, Document document)
+		throws Exception {
+
 		Element element = document.getDocumentElement();
 
-		_getPropertiesMap(element);
+		Map<String, String> propertiesMap = _getPropertiesMap(element);
+
+		_getTestrayProjectId(
+			companyId, propertiesMap.get("testray.project.name"));
 	}
 
-	private void _uploadToTestray(UnicodeProperties unicodeProperties)
+	private void _uploadToTestray(
+			long companyId, UnicodeProperties unicodeProperties)
 		throws Exception {
 
 		String s3APIKey = unicodeProperties.getProperty("s3APIKey");
@@ -425,7 +502,7 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 				}
 
 				try {
-					_processArchive(blob.getContent());
+					_processArchive(companyId, blob.getContent());
 				}
 				catch (Exception exception) {
 					_log.error(exception);
@@ -469,9 +546,6 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 	private final Map<String, ObjectDefinition> _objectDefinitions =
 		new HashMap<>();
 	private final Map<String, Long> _objectEntryIds = new HashMap<>();
-
-	@Reference
-	private ObjectEntryLocalService _objectEntryLocalService;
 
 	@Reference
 	private ObjectEntryManager _objectEntryManager;

@@ -29,6 +29,12 @@ import org.osgi.service.component.annotations.Reference;
 public class CompanyModelListener extends BaseModelListener<Company> {
 
 	@Override
+	public void onAfterCreate(Company company) {
+		ImportDefaultValuesUtil.importDefaultValues(
+			_commerceCurrencyLocalService, company);
+	}
+
+	@Override
 	public void onBeforeRemove(Company company) {
 		_commerceCurrencyLocalService.deleteCommerceCurrencies(
 			company.getCompanyId());

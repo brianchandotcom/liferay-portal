@@ -273,10 +273,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 			_addDefaultUser(company);
 
-			if (webId.equals(PropsValues.COMPANY_DEFAULT_WEB_ID)) {
-				return company;
-			}
-
 			company = _checkCompany(company, mx);
 
 			TransactionCommitCallbackUtil.registerCallback(

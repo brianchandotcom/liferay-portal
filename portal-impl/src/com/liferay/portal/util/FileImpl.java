@@ -778,6 +778,22 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 			while ((entry = zipInputStream.getNextEntry()) != null) {
 				File destinationFile = new File(destination, entry.getName());
 
+				String destinationFileCanonicalPath =
+					destinationFile.getCanonicalPath();
+
+				if (!destinationFileCanonicalPath.startsWith(
+						destination.getCanonicalPath() + File.separator)) {
+
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							StringBundler.concat(
+								"Entry Name: ", entry.getName(),
+								" is not valid"));
+					}
+
+					continue;
+				}
+
 				if (entry.isDirectory()) {
 					destinationFile.mkdirs();
 				}

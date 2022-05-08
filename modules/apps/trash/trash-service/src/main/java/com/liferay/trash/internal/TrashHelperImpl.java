@@ -199,9 +199,10 @@ public class TrashHelperImpl implements TrashHelper {
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
 			className);
 
-		if (trashHandler.isInTrashContainer(classPK)) {
-			com.liferay.trash.kernel.model.TrashEntry trashEntry =
-				trashHandler.getTrashEntry(classPK);
+		TrashedModel trashedModel = trashHandler.getTrashedModel(classPK);
+
+		if (isInTrashContainer(trashedModel)) {
+			TrashEntry trashEntry = getTrashEntry(trashedModel);
 
 			className = trashEntry.getClassName();
 			classPK = trashEntry.getClassPK();

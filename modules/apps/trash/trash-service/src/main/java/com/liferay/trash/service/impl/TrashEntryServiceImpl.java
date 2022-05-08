@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.adapter.ModelAdapterUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.trash.TrashHelper;
 import com.liferay.trash.constants.TrashActionKeys;
 import com.liferay.trash.constants.TrashEntryConstants;
 import com.liferay.trash.exception.RestoreEntryException;
@@ -376,7 +377,8 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 		}
 
 		TrashEntry trashEntry = ModelAdapterUtil.adapt(
-			TrashEntry.class, trashHandler.getTrashEntry(classPK));
+			TrashEntry.class,
+			_trashHelper.getTrashEntry(trashHandler.getTrashedModel(classPK)));
 
 		if (trashEntry.isTrashEntry(className, classPK)) {
 			trashHandler.checkRestorableEntry(
@@ -567,5 +569,8 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private TrashHelper _trashHelper;
 
 }

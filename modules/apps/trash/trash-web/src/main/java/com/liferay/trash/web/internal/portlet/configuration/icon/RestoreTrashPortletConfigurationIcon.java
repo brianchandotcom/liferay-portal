@@ -17,11 +17,13 @@ package com.liferay.trash.web.internal.portlet.configuration.icon;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.trash.TrashHelper;
 import com.liferay.trash.constants.TrashPortletKeys;
 import com.liferay.trash.model.TrashEntry;
 import com.liferay.trash.web.internal.display.context.TrashDisplayContext;
@@ -91,10 +93,13 @@ public class RestoreTrashPortletConfigurationIcon
 		TrashEntry trashEntry = trashDisplayContext.getTrashEntry();
 
 		if (trashEntry != null) {
+			TrashedModel trashedModel = trashHandler.getTrashedModel(
+				trashEntry.getClassPK());
+
 			try {
 				if (!trashHandler.isMovable(trashEntry.getClassPK()) ||
 					!trashHandler.isRestorable(trashEntry.getClassPK()) ||
-					!trashHandler.isInTrashContainer(trashEntry.getClassPK())) {
+					!_trashHelper.isInTrashContainer(trashedModel)) {
 
 					return false;
 				}
@@ -127,5 +132,8 @@ public class RestoreTrashPortletConfigurationIcon
 
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.trash.web)")
 	private ServletContext _servletContext;
+
+	@Reference
+	private TrashHelper _trashHelper;
 
 }

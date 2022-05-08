@@ -364,12 +364,6 @@ public interface TrashHandler {
 	public default TrashEntry getTrashEntry(long classPK)
 		throws PortalException {
 
-		TrashedModel trashedModel = getTrashedModel(classPK);
-
-		if (trashedModel != null) {
-			return trashedModel.getTrashEntry();
-		}
-
 		return null;
 	}
 
@@ -460,12 +454,6 @@ public interface TrashHandler {
 	 */
 	public default boolean isInTrashContainer(long classPK)
 		throws PortalException {
-
-		TrashedModel trashedModel = getTrashedModel(classPK);
-
-		if (trashedModel != null) {
-			return trashedModel.isInTrashContainer();
-		}
 
 		return false;
 	}

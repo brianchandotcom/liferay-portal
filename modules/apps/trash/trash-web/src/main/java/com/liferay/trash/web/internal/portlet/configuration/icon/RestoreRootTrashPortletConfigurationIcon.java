@@ -18,11 +18,13 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.trash.TrashHelper;
 import com.liferay.trash.constants.TrashPortletKeys;
 import com.liferay.trash.model.TrashEntry;
 import com.liferay.trash.web.internal.display.context.TrashDisplayContext;
@@ -109,9 +111,12 @@ public class RestoreRootTrashPortletConfigurationIcon
 			return false;
 		}
 
+		TrashedModel trashedModel = trashHandler.getTrashedModel(
+			trashEntry.getClassPK());
+
 		try {
 			if (!trashHandler.isRestorable(trashEntry.getClassPK()) ||
-				trashHandler.isInTrashContainer(trashEntry.getClassPK())) {
+				_trashHelper.isInTrashContainer(trashedModel)) {
 
 				return false;
 			}
@@ -135,5 +140,8 @@ public class RestoreRootTrashPortletConfigurationIcon
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private TrashHelper _trashHelper;
 
 }

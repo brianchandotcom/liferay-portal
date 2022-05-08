@@ -252,7 +252,9 @@ public class HttpComponentsUtil {
 			uri = getURI(url);
 		}
 		catch (URISyntaxException uriSyntaxException) {
-			_log.error(uriSyntaxException);
+			if (_log.isDebugEnabled()) {
+				_log.debug(uriSyntaxException);
+			}
 		}
 
 		if (uri == null) {
@@ -340,7 +342,9 @@ public class HttpComponentsUtil {
 			uri = getURI(url);
 		}
 		catch (URISyntaxException uriSyntaxException) {
-			_log.error(uriSyntaxException);
+			if (_log.isDebugEnabled()) {
+				_log.debug(uriSyntaxException);
+			}
 		}
 
 		if (uri == null) {
@@ -387,7 +391,9 @@ public class HttpComponentsUtil {
 			uri = getURI(url);
 		}
 		catch (URISyntaxException uriSyntaxException) {
-			_log.error(uriSyntaxException);
+			if (_log.isDebugEnabled()) {
+				_log.debug(uriSyntaxException);
+			}
 		}
 
 		if (uri == null) {
@@ -424,7 +430,9 @@ public class HttpComponentsUtil {
 			uri = getURI(url);
 		}
 		catch (URISyntaxException uriSyntaxException) {
-			_log.error(uriSyntaxException);
+			if (_log.isDebugEnabled()) {
+				_log.debug(uriSyntaxException);
+			}
 		}
 
 		if (uri == null) {

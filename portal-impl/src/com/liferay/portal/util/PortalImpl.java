@@ -918,7 +918,9 @@ public class PortalImpl implements Portal {
 			uri = HttpComponentsUtil.getURI(url);
 		}
 		catch (URISyntaxException uriSyntaxException) {
-			_log.error(uriSyntaxException);
+			if (_log.isDebugEnabled()) {
+				_log.debug(uriSyntaxException);
+			}
 		}
 
 		if (uri == null) {

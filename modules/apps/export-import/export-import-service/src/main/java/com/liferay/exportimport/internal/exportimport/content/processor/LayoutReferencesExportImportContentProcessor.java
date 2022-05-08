@@ -57,6 +57,7 @@ import com.liferay.staging.StagingGroupHelper;
 
 import java.net.InetAddress;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.UnknownHostException;
 
 import java.util.Locale;
@@ -1182,7 +1183,16 @@ public class LayoutReferencesExportImportContentProcessor
 		throws PortalException {
 
 		try {
-			URI uri = HttpComponentsUtil.getURI(url);
+			URI uri = null;
+
+			try {
+				uri = HttpComponentsUtil.getURI(url);
+			}
+			catch (URISyntaxException uriSyntaxException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(uriSyntaxException);
+				}
+			}
 
 			if ((uri != null) &&
 				InetAddressUtil.isLocalInetAddress(

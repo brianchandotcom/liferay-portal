@@ -4,7 +4,7 @@
 <service-builder auto-import-default-references="false" auto-namespace-tables="false" dependency-injector="ds" mvcc-enabled="true" package-path="com.liferay.notification.admin" short-no-such-exception-enabled="false">
 	<author>Gabriel Albuquerque</author>
 	<namespace>Notification</namespace>
-	<entity local-service="true" name="NotificationQueueEntry" remote-service="true" uuid="false">
+	<entity local-service="true" name="NotificationQueueEntry" remote-service="false" uuid="false">
 
 		<!-- PK fields -->
 
@@ -66,7 +66,7 @@
 			<finder-column name="sent" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="NotificationTemplate" remote-service="true" uuid="true">
+	<entity local-service="true" name="NotificationTemplate" remote-service="false" uuid="true">
 
 		<!-- PK fields -->
 

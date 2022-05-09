@@ -16,6 +16,7 @@ import ClayButton from '@clayui/button';
 import {ClayCheckbox} from '@clayui/form';
 import classNames from 'classnames';
 import {useContext, useEffect, useState} from 'react';
+import {setItem} from '../../../../../common/services/liferay/storage';
 import {getLiferaySiteName} from '../../../../../common/utils/liferay';
 import {getWebDavUrl} from '../../../../../common/utils/webdav';
 import {
@@ -122,12 +123,14 @@ const PaymentMethod = () => {
 
 	useEffect(() => {
 		if (!orderId) {
-			createOrder(accountId, channel.id, skus[0].id).then((response) =>
+			createOrder(accountId, channel.id, skus[0].id).then((response) => {
+				const orderId = response.data.id;
+				setItem('orderId', orderId);
 				dispatch({
-					payload: response.data.id,
+					payload: orderId,
 					type: ACTIONS.SET_ORDER_ID,
-				})
-			);
+				});
+			});
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [orderId]);

@@ -14,19 +14,26 @@
 	line-height: 40px;
 }
 
-.congrats-info-price {
+.congrats-information .congrats-price {
 	color: var(--color-neutral-9);
 	font-size: 32px;
 	font-weight: 300;
 	line-height: 40px;
 }
 
-.congrats-info-price span {
+.congrats-information .congrats-price span {
 	color: var(--color-neutral-black);
 	font-size: 32px;
 	font-weight: var(--font-weight-bold);
 	line-height: 40px;
 	position: static;
+}
+
+.congrats-information .congrats-discount{
+	color: #39C38D;
+	font-size: 13px;
+	font-weight: var(--font-weight-bold);
+	height: 70px;
 }
 
 .congrats-information h2 {
@@ -99,8 +106,12 @@
 		display: none;
 	}
 
-	.congrats-information .right-column .congrats-info-price {
+	.congrats-information .right-column .congrats-price  {
 		padding-top: 2rem;
+		text-align: left !important;
+	}
+	
+	.congrats-discount{
 		text-align: left !important;
 	}
 

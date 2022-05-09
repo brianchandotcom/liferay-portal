@@ -84,9 +84,7 @@ definition {
 		}
 
 		task ("Delete tags via Toolbar management") {
-			PortletEntry.deleteViaToolbar(rowEntries = "tagname1,tagname2,tagname3");
-
-			Alert.viewSuccessMessage();
+			Tag.deleteByIconCP(tagNameList = "tagname1,tagname2,tagname3");
 		}
 
 		task ("View tags are not shown") {
@@ -110,9 +108,7 @@ definition {
 		}
 
 		task ("Delete tag via Toolbar management") {
-			PortletEntry.deleteViaToolbar(rowEntries = "tagname");
-
-			Alert.viewSuccessMessage();
+			Tag.deleteByIconCP(tagNameList = "tagname");
 		}
 
 		task ("View tag is not shown") {

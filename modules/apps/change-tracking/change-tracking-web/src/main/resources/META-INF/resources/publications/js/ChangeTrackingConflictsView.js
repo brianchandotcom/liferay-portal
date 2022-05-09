@@ -117,10 +117,9 @@ class ChangeTrackingConflictsView extends ChangeTrackingBaseScheduleView {
 						<ClayAlert
 							displayType="info"
 							spritemap={this.spritemap}
-							title={
-								'This publication contains changes to a content page. Publishing these changes will fully ' +
-								"overwrite the page's content and layout in production."
-							}
+							title={Liferay.Language.get(
+								"this-publication-contains-changes-to-a-content-page.-publishing-these-changes-will-fully-overwrite-the-page's-content-and-layout-in-production"
+							)}
 						/>
 					)}
 				</div>

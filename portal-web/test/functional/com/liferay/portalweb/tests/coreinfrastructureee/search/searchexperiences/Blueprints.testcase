@@ -581,6 +581,18 @@ definition {
 		Portlet.viewNoPermissionPG();
 	}
 
+	test AssertNoXSSTitle {
+		Blueprints.openBlueprintsAdmin();
+
+		Blueprints.createBlueprint(
+			description = "Test Description",
+			title = '''<script>alert(123);</script>''');
+
+		PortletEntry.save();
+
+		AssertAlertNotPresent();
+	}
+
 	test AssertUsingCopiedElementJSONWithinCustomElement {
 		JSONBlog.addEntry(
 			entryContent = "",

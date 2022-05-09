@@ -1292,11 +1292,11 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public boolean hasLayouts() {
-		int privatePagesCount = _getLayoutsCount(true);
+		int privateLayoutsCount = _getLayoutsCount(true);
 
-		int publicPagesCount = _getLayoutsCount(false);
+		int publicLayoutsCount = _getLayoutsCount(false);
 
-		if ((privatePagesCount + publicPagesCount) > 0) {
+		if ((privateLayoutsCount + publicLayoutsCount) > 0) {
 			return true;
 		}
 

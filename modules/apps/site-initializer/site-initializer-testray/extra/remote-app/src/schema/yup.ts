@@ -38,7 +38,7 @@ const yupSchema = {
 		name: yup.string().required(),
 	}),
 	project: yup.object({
-		description: yup.string().required(),
+		description: yup.string(),
 		name: yup.string().required(),
 	}),
 	routine: yup.object({

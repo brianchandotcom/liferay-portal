@@ -31,6 +31,7 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -58,6 +59,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -152,6 +154,164 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 			_defaultDTOConverterContext, objectDefinition, objectEntry, null);
 	}
 
+	private void _addTestrayAttachments(
+			Node testcaseNode, long testrayCaseResultId)
+		throws Exception {
+
+		Element testcaseElement = (Element)testcaseNode;
+
+		NodeList attachmentsNodeList = testcaseElement.getElementsByTagName(
+			"attachments");
+
+		for (int i = 0; i < attachmentsNodeList.getLength(); i++) {
+			Node attachmentsNode = attachmentsNodeList.item(i);
+
+			if (attachmentsNode.getNodeType() != Node.ELEMENT_NODE) {
+				continue;
+			}
+
+			Element attachmentsElement = (Element)attachmentsNode;
+
+			NodeList fileNodeList = attachmentsElement.getElementsByTagName(
+				"file");
+
+			for (int j = 0; j < fileNodeList.getLength(); j++) {
+				Node fileNode = fileNodeList.item(j);
+
+				if (fileNode.getNodeType() != Node.ELEMENT_NODE) {
+					continue;
+				}
+
+				Element fileElement = (Element)fileNode;
+
+				ObjectEntry objectEntry = new ObjectEntry();
+
+				objectEntry.setProperties(
+					HashMapBuilder.<String, Object>put(
+						"name", fileElement.getAttribute("name")
+					).put(
+						"r_caseResultToAttachments_c_caseResultId",
+						testrayCaseResultId
+					).put(
+						"url", fileElement.getAttribute("url")
+					).put(
+						"value", fileElement.getAttribute("value")
+					).build());
+
+				_addObjectEntry("Attachment", objectEntry);
+			}
+		}
+	}
+
+	private void _addTestrayCase(
+			long companyId, Node testcaseNode, long testrayBuildId,
+			String testrayBuildTime,
+			Map<String, Object> testrayCasePropertiesMap, long testrayProjectId,
+			long testrayRunId)
+		throws Exception {
+
+		long testrayTeamId = _getTestrayTeamId(
+			companyId, testrayProjectId,
+			(String)testrayCasePropertiesMap.get("testray.team.name"));
+
+		long testrayComponentId = _getTestrayComponentId(
+			companyId,
+			(String)testrayCasePropertiesMap.get("testray.main.component.name"),
+			testrayProjectId, testrayTeamId);
+
+		ObjectEntry objectEntry = new ObjectEntry();
+
+		objectEntry.setProperties(
+			HashMapBuilder.<String, Object>put(
+				"caseNumber", 0
+			).put(
+				"description",
+				testrayCasePropertiesMap.get("testray.testcase.description")
+			).put(
+				"name",
+				(String)testrayCasePropertiesMap.get("testray.testcase.name")
+			).put(
+				"priority",
+				testrayCasePropertiesMap.get("testray.testcase.priority")
+			).put(
+				"r_caseTypeToCases_c_caseTypeId",
+				_getTestrayCaseTypeId(
+					companyId,
+					(String)testrayCasePropertiesMap.get(
+						"testray.case.type.name"))
+			).put(
+				"r_componentToCases_c_componentId", testrayComponentId
+			).put(
+				"r_projectToCases_c_projectId", testrayProjectId
+			).build());
+
+		objectEntry = _addObjectEntry("Case", objectEntry);
+
+		long testrayCaseResultId = _getTestrayCaseResultId(
+			testcaseNode, testrayBuildId, testrayBuildTime, objectEntry.getId(),
+			testrayCasePropertiesMap, testrayComponentId, testrayRunId);
+
+		_addTestrayAttachments(testcaseNode, testrayCaseResultId);
+
+		_addTestrayCaseResultIssue(
+			companyId, testrayCaseResultId,
+			(String)testrayCasePropertiesMap.get("testray.case.issue"));
+		_addTestrayCaseResultIssue(
+			companyId, testrayCaseResultId,
+			(String)testrayCasePropertiesMap.get("testray.case.defect"));
+		_addTestrayWarnings(testrayCasePropertiesMap, testrayCaseResultId);
+	}
+
+	private void _addTestrayCaseResultIssue(
+			long companyId, long testrayCaseResultId, String testrayIssueName)
+		throws Exception {
+
+		if (_isEmpty(testrayIssueName)) {
+			return;
+		}
+
+		ObjectEntry objectEntry = new ObjectEntry();
+
+		objectEntry.setProperties(
+			HashMapBuilder.<String, Object>put(
+				"r_caseResultToCaseResultsIssues_c_caseResultId",
+				testrayCaseResultId
+			).put(
+				"r_issueToCaseResultsIssues_c_issueId",
+				() -> {
+					long testrayIssueId = _getObjectEntryId(
+						companyId, testrayIssueName, "Issue");
+
+					if (testrayIssueId > 0) {
+						return testrayIssueId;
+					}
+
+					return _addTestrayIssue(testrayIssueName);
+				}
+			).build());
+
+		_addObjectEntry("CaseResultsIssues", objectEntry);
+	}
+
+	private void _addTestrayCases(
+			long companyId, Element element, long testrayBuildId,
+			String testrayBuildTime, long testrayProjectId, long testrayRunId)
+		throws Exception {
+
+		NodeList testCaseNodeList = element.getElementsByTagName("testcase");
+
+		for (int i = 0; i < testCaseNodeList.getLength(); i++) {
+			Node testcaseNode = testCaseNodeList.item(i);
+
+			Map<String, Object> testrayCasePropertiesMap =
+				_getTestrayCaseProperties((Element)testcaseNode);
+
+			_addTestrayCase(
+				companyId, testcaseNode, testrayBuildId, testrayBuildTime,
+				testrayCasePropertiesMap, testrayProjectId, testrayRunId);
+		}
+	}
+
 	private void _addTestrayFactor(
 			long testrayFactorCategoryId, String testrayFactorCategoryName,
 			long testrayFactorOptionId, String testrayFactorOptionName,
@@ -178,6 +338,45 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 			).build());
 
 		_addObjectEntry("Factor", objectEntry);
+	}
+
+	private long _addTestrayIssue(String testrayIssueName) throws Exception {
+		ObjectEntry objectEntry = new ObjectEntry();
+
+		objectEntry.setProperties(
+			HashMapBuilder.<String, Object>put(
+				"name", testrayIssueName
+			).build());
+
+		objectEntry = _addObjectEntry("Issue", objectEntry);
+
+		return objectEntry.getId();
+	}
+
+	private void _addTestrayWarnings(
+			Map<String, Object> testrayCasePropertiesMap,
+			long testrayCaseResultId)
+		throws Exception {
+
+		List<String> warningsList = (List<String>)testrayCasePropertiesMap.get(
+			"testray.testcase.warnings");
+
+		if (warningsList == null) {
+			return;
+		}
+
+		for (String warning : warningsList) {
+			ObjectEntry objectEntry = new ObjectEntry();
+
+			objectEntry.setProperties(
+				HashMapBuilder.<String, Object>put(
+					"content", warning
+				).put(
+					"r_caseResultToWarnings_c_caseResultId", testrayCaseResultId
+				).build());
+
+			_addObjectEntry("Warning", objectEntry);
+		}
 	}
 
 	private String _getAttributeValue(String attributeName, Node node) {
@@ -344,6 +543,180 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 			).build());
 
 		objectEntry = _addObjectEntry("Build", objectEntry);
+
+		return objectEntry.getId();
+	}
+
+	private Map<String, Object> _getTestrayCaseProperties(Element element) {
+		Map<String, Object> map = new HashMap<>();
+
+		NodeList propertiesNodeList = element.getElementsByTagName(
+			"properties");
+
+		Node propertiesNode = propertiesNodeList.item(0);
+
+		Element propertiesElement = (Element)propertiesNode;
+
+		NodeList propertyNodeList = propertiesElement.getElementsByTagName(
+			"property");
+
+		for (int i = 0; i < propertyNodeList.getLength(); i++) {
+			Node propertyNode = propertyNodeList.item(i);
+
+			if (!propertyNode.hasAttributes()) {
+				continue;
+			}
+
+			String propertyName = _getAttributeValue("name", propertyNode);
+
+			if (StringUtil.equalsIgnoreCase(
+					propertyName, "testray.testcase.warnings")) {
+
+				List<String> warningsList = new ArrayList<>();
+
+				NodeList warningsNodeList = propertyNode.getChildNodes();
+
+				for (int j = 0; j < warningsNodeList.getLength(); j++) {
+					Node warningNode = warningsNodeList.item(j);
+
+					String warning = warningNode.getTextContent();
+
+					if (!_isEmpty(warning)) {
+						warningsList.add(warningNode.getTextContent());
+					}
+				}
+
+				map.put(propertyName, warningsList);
+			}
+			else {
+				map.put(
+					propertyName, _getAttributeValue("value", propertyNode));
+			}
+		}
+
+		return map;
+	}
+
+	private long _getTestrayCaseResultId(
+			Node testcaseNode, long testrayBuildId, String testrayBuildTime,
+			long testrayCaseId, Map<String, Object> testrayCasePropertiesMap,
+			long testrayComponentId, long testrayRunId)
+		throws Exception {
+
+		ObjectEntry objectEntry = new ObjectEntry();
+
+		objectEntry.setProperties(
+			HashMapBuilder.<String, Object>put(
+				"closedDate", testrayBuildTime
+			).put(
+				"dueStatus",
+				() -> {
+					String testrayTestcaseStatus =
+						(String)testrayCasePropertiesMap.get(
+							"testray.testcase.status");
+
+					if (testrayTestcaseStatus.equals("blocked")) {
+						return _TESTRAY_CASE_RESULT_STATUS_BLOCKED;
+					}
+					else if (testrayTestcaseStatus.equals("dnr")) {
+						return _TESTRAY_CASE_RESULT_STATUS_DID_NOT_RUN;
+					}
+					else if (testrayTestcaseStatus.equals("failed")) {
+						return _TESTRAY_CASE_RESULT_STATUS_FAILED;
+					}
+					else if (testrayTestcaseStatus.equals("in-progress")) {
+						return _TESTRAY_CASE_RESULT_STATUS_IN_PROGRESS;
+					}
+					else if (testrayTestcaseStatus.equals("passed")) {
+						return _TESTRAY_CASE_RESULT_STATUS_PASSED;
+					}
+					else if (testrayTestcaseStatus.equals("test-fix")) {
+						return _TESTRAY_CASE_RESULT_STATUS_TEST_FIX;
+					}
+
+					return _TESTRAY_CASE_RESULT_STATUS_UNTESTED;
+				}
+			).put(
+				"r_buildToCaseResult_c_buildId", testrayBuildId
+			).put(
+				"r_caseToCaseResult_c_caseId", testrayCaseId
+			).put(
+				"r_componentToCaseResult_c_componentId", testrayComponentId
+			).put(
+				"r_runToCaseResult_c_runId", testrayRunId
+			).put(
+				"startDate", testrayBuildTime
+			).build());
+
+		Element element = (Element)testcaseNode;
+
+		NodeList nodeList = element.getElementsByTagName("failure");
+
+		Node failureNode = nodeList.item(0);
+
+		if (failureNode != null) {
+			String message = _getAttributeValue("message", failureNode);
+
+			if (!message.isEmpty()) {
+				objectEntry.getProperties(
+				).put(
+					"errors", message
+				);
+			}
+		}
+
+		objectEntry = _addObjectEntry("CaseResult", objectEntry);
+
+		return objectEntry.getId();
+	}
+
+	private long _getTestrayCaseTypeId(
+			long companyId, String testrayCaseTypeName)
+		throws Exception {
+
+		long testrayCaseTypeId = _getObjectEntryId(
+			companyId, testrayCaseTypeName, "CaseType");
+
+		if (testrayCaseTypeId != 0) {
+			return testrayCaseTypeId;
+		}
+
+		ObjectEntry objectEntry = new ObjectEntry();
+
+		objectEntry.setProperties(
+			HashMapBuilder.<String, Object>put(
+				"name", testrayCaseTypeName
+			).build());
+
+		objectEntry = _addObjectEntry("CaseType", objectEntry);
+
+		return objectEntry.getId();
+	}
+
+	private long _getTestrayComponentId(
+			long companyId, String testrayComponentName, long testrayProjectId,
+			long testrayTeamId)
+		throws Exception {
+
+		long testrayComponentId = _getObjectEntryId(
+			companyId, testrayComponentName, "Component");
+
+		if (testrayComponentId != 0) {
+			return testrayComponentId;
+		}
+
+		ObjectEntry objectEntry = new ObjectEntry();
+
+		objectEntry.setProperties(
+			HashMapBuilder.<String, Object>put(
+				"name", testrayComponentName
+			).put(
+				"r_projectToComponents_c_projectId", testrayProjectId
+			).put(
+				"r_teamToComponents_c_teamId", testrayTeamId
+			).build());
+
+		objectEntry = _addObjectEntry("Component", objectEntry);
 
 		return objectEntry.getId();
 	}
@@ -554,6 +927,31 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 		return objectEntry.getId();
 	}
 
+	private long _getTestrayTeamId(
+			long companyId, long testrayProjectId, String testrayTeamName)
+		throws Exception {
+
+		long testrayTeamId = _getObjectEntryId(
+			companyId, testrayTeamName, "Team");
+
+		if (testrayTeamId != 0) {
+			return testrayTeamId;
+		}
+
+		ObjectEntry objectEntry = new ObjectEntry();
+
+		objectEntry.setProperties(
+			HashMapBuilder.<String, Object>put(
+				"name", testrayTeamName
+			).put(
+				"r_projectToTeams_c_projectId", testrayProjectId
+			).build());
+
+		objectEntry = _addObjectEntry("Team", objectEntry);
+
+		return objectEntry.getId();
+	}
+
 	private void _invoke(UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
 
@@ -571,6 +969,16 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 					"Invoking line ", stackTraceElement.getLineNumber(),
 					" took ", System.currentTimeMillis() - startTime, " ms"));
 		}
+	}
+
+	private boolean _isEmpty(String value) {
+		if (value == null) {
+			return true;
+		}
+
+		String trimmedValue = value.trim();
+
+		return trimmedValue.isEmpty();
 	}
 
 	private void _loadCache(long companyId) throws Exception {
@@ -769,9 +1177,12 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 			companyId, propertiesMap, propertiesMap.get("testray.build.name"),
 			testrayProjectId);
 
-		_getTestrayRunId(
-			companyId, element, propertiesMap, testrayBuildId,
-			propertiesMap.get("testray.run.id"));
+		_addTestrayCases(
+			companyId, element, testrayBuildId,
+			propertiesMap.get("testray.build.time"), testrayProjectId,
+			_getTestrayRunId(
+				companyId, element, propertiesMap, testrayBuildId,
+				propertiesMap.get("testray.run.id")));
 	}
 
 	private void _uploadToTestray(
@@ -836,6 +1247,20 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 			throw new PortalException("At least one property is not defined");
 		}
 	}
+
+	private static final int _TESTRAY_CASE_RESULT_STATUS_BLOCKED = 4;
+
+	private static final int _TESTRAY_CASE_RESULT_STATUS_DID_NOT_RUN = 6;
+
+	private static final int _TESTRAY_CASE_RESULT_STATUS_FAILED = 3;
+
+	private static final int _TESTRAY_CASE_RESULT_STATUS_IN_PROGRESS = 1;
+
+	private static final int _TESTRAY_CASE_RESULT_STATUS_PASSED = 2;
+
+	private static final int _TESTRAY_CASE_RESULT_STATUS_TEST_FIX = 7;
+
+	private static final int _TESTRAY_CASE_RESULT_STATUS_UNTESTED = 0;
 
 	private static final int _TESTRAY_RUN_EXTERNAL_REFERENCE_TYPE_POSHI = 1;
 

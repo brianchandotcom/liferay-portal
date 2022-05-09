@@ -1,12 +1,14 @@
 {
 	"advanced-configuration": {
 		"en_US": {
-			"message": "Learn more."
+			"message": "Learn more.",
+			"url": "https://learn.liferay.com/dxp/latest/en/using-search/liferay-enterprise-search/search-experiences/search-blueprints-configuration-reference.html#advanced-configuration"
 		}
 	},
 	"aggregation-configuration": {
 		"en_US": {
-			"message": "Learn more."
+			"message": "Learn more.",
+			"url": "https://learn.liferay.com/dxp/latest/en/using-search/liferay-enterprise-search/search-experiences/search-blueprints-configuration-reference.html#aggregation-configuration"
 		}
 	},
 	"element-source": {
@@ -17,12 +19,14 @@
 	},
 	"highlight-configuration": {
 		"en_US": {
-			"message": "Learn more."
+			"message": "Learn more.",
+			"url": "https://learn.liferay.com/dxp/latest/en/using-search/liferay-enterprise-search/search-experiences/search-blueprints-configuration-reference.html#highlight-configuration"
 		}
 	},
 	"parameter-configuration": {
 		"en_US": {
-			"message": "Learn more."
+			"message": "Learn more.",
+			"url": "https://learn.liferay.com/dxp/latest/en/using-search/liferay-enterprise-search/search-experiences/search-blueprints-configuration-reference.html#parameter-configuration"
 		}
 	},
 	"query-clause-contributors-configuration": {
@@ -39,7 +43,8 @@
 	},
 	"search-blueprint-configuration": {
 		"en_US": {
-			"message": "Learn more."
+			"message": "Learn more.",
+			"url": "https://learn.liferay.com/dxp/latest/en/using-search/liferay-enterprise-search/search-experiences/search-blueprints-configuration-reference.html"
 		}
 	},
 	"search-blueprint-on-search-page": {
@@ -50,7 +55,8 @@
 	},
 	"sort-configuration": {
 		"en_US": {
-			"message": "Learn more."
+			"message": "Learn more.",
+			"url": "https://learn.liferay.com/dxp/latest/en/using-search/liferay-enterprise-search/search-experiences/search-blueprints-configuration-reference.html#sort-configuration"
 		}
 	}
 }

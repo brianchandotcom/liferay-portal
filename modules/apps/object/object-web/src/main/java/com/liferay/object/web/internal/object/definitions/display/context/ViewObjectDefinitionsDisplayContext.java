@@ -110,9 +110,9 @@ public class ViewObjectDefinitionsDisplayContext {
 					_objectRequestHelper.getRequest(), "export-as-json"),
 				"get", null, null),
 			new FDSActionDropdownItem(
-				getAPIURL() + "/{id}", "trash", "delete",
+				null, "trash", "deleteObjectDefinition",
 				LanguageUtil.get(_objectRequestHelper.getRequest(), "delete"),
-				"delete", "delete", "async"),
+				"delete", "delete", null),
 			new FDSActionDropdownItem(
 				_getPermissionsURL(), null, "permissions",
 				LanguageUtil.get(

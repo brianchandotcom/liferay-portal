@@ -111,12 +111,22 @@ definition {
 	}
 
 	@description = "Verify that the user can add Nodes into diagram by drag&drop: Join"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanAddJoinNode {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAddJoinNode";
 
-		// TODO CanAddJoinNode pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Title");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Join",
+			nodePosition = "-20,-40",
+			nodeType = "join");
+
+
+
+			
 	}
 
 	@description = "Verify that the user can add Nodes into diagram by drag&drop: Join XOR"

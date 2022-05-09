@@ -17,7 +17,6 @@ package com.liferay.document.library.web.internal.portlet.action;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.web.internal.display.context.DLAdminDisplayContext;
 import com.liferay.document.library.web.internal.display.context.DLAdminDisplayContextProvider;
-import com.liferay.document.library.web.internal.display.context.DLAdminManagementToolbarDisplayContext;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesToMapConverter;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -58,21 +57,11 @@ public class EditFileEntryMVCRenderCommand
 			DDMFormValuesToMapConverter.class.getName(),
 			_ddmFormValuesToMapConverter);
 
-		DLAdminDisplayContext dlAdminDisplayContext =
+		renderRequest.setAttribute(
+			DLAdminDisplayContext.class.getName(),
 			_dlAdminDisplayContextProvider.getDLAdminDisplayContext(
 				_portal.getHttpServletRequest(renderRequest),
-				_portal.getHttpServletResponse(renderResponse));
-
-		renderRequest.setAttribute(
-			DLAdminDisplayContext.class.getName(), dlAdminDisplayContext);
-
-		renderRequest.setAttribute(
-			DLAdminManagementToolbarDisplayContext.class.getName(),
-			_dlAdminDisplayContextProvider.
-				getDLAdminManagementToolbarDisplayContext(
-					_portal.getHttpServletRequest(renderRequest),
-					_portal.getHttpServletResponse(renderResponse),
-					dlAdminDisplayContext));
+				_portal.getHttpServletResponse(renderResponse)));
 
 		return super.render(renderRequest, renderResponse);
 	}

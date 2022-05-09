@@ -4923,6 +4923,354 @@ tell application "Safari" to quit
 		</sequential>
 	</macrodef>
 
+	<macrodef name="rebuild-database">
+		<sequential>
+			<if>
+				<not>
+					<isset property="skip.rebuild-database" />
+				</not>
+				<then>
+					<get-testcase-property property.name="database.hypersonic.embedded" />
+
+					<antcall target="delete-liferay-home">
+						<param name="keep.hypersonicdb" value="${database.hypersonic.embedded}" />
+					</antcall>
+
+					<get-database-property property.name="database.docker.image" />
+
+					<if>
+						<isset property="database.docker.image" />
+						<then>
+							<get-database-property property.name="database.host" />
+							<get-database-property property.name="database.password" />
+							<get-database-property property.name="database.schema" />
+							<get-database-property property.name="database.username" />
+							<get-database-property property.name="database.version" />
+
+							<property location="create.sh" name="create.sh.file.path" />
+							<property location="create.sql" name="create.sql.file.path" />
+
+							<if>
+								<and>
+									<equals arg1="${database.type}" arg2="db2" />
+									<equals arg1="${database.version}" arg2="11.5.6" />
+								</and>
+								<then>
+									<get-testcase-property property.name="databases.size" />
+
+									<echo file="${create.sh.file.path}">
+										<![CDATA[
+											#!/bin/bash
+
+											su - db2inst1 -c '/database/config/db2inst1/sqllib/bin/db2 disconnect lportal'
+
+											su - db2inst1 -c '/database/config/db2inst1/sqllib/bin/db2 drop db lportal'
+
+											su - db2inst1 -c '/database/config/db2inst1/sqllib/bin/db2 -f/tmp/create.sql -st'
+										]]>
+									</echo>
+
+									<if>
+										<isset property="databases.size" />
+										<then>
+											<echo file="${create.sh.file.path}">
+												<![CDATA[
+													su - db2inst1 -c '/database/config/db2inst1/sqllib/bin/db2 drop db lportal${databases.size}'
+												]]>
+											</echo>
+										</then>
+									</if>
+								</then>
+								<elseif>
+									<equals arg1="${database.type}" arg2="db2" />
+									<then>
+										<get-testcase-property property.name="databases.size" />
+
+										<echo file="${create.sh.file.path}">
+											<![CDATA[
+												#!/bin/bash
+
+												db2 disconnect lportal
+
+												db2 drop db lportal
+
+												db2 -f/tmp/create.sql -st
+											]]>
+										</echo>
+
+										<if>
+											<isset property="databases.size" />
+											<then>
+												<echo file="${create.sh.file.path}">
+													<![CDATA[
+														db2 drop db lportal${databases.size}
+													]]>
+												</echo>
+											</then>
+										</if>
+									</then>
+								</elseif>
+								<elseif>
+									<or>
+										<equals arg1="${database.type}" arg2="mariadb" />
+										<equals arg1="${database.type}" arg2="mysql" />
+									</or>
+									<then>
+										<echo file="${create.sh.file.path}">
+											<![CDATA[
+												#!/bin/bash
+
+												mysql --host=${database.host} --password=${database.password} --user=${database.username} < /tmp/create.sql
+											]]>
+										</echo>
+									</then>
+								</elseif>
+								<elseif>
+									<equals arg1="${database.type}" arg2="oracle" />
+									<then>
+										<echo file="${create.sh.file.path}">
+											<![CDATA[
+												#!/bin/bash
+
+												sqlplus ${oracle.admin.user}/${oracle.admin.password} @/tmp/create.sql ${database.username} ${database.password}
+											]]>
+										</echo>
+									</then>
+								</elseif>
+								<elseif>
+									<equals arg1="${database.type}" arg2="postgresql" />
+									<then>
+										<echo file="${create.sh.file.path}">
+											<![CDATA[
+												#!/bin/bash
+
+												export PGPASSWORD=${database.password}
+
+												psql --file=/tmp/create.sql --username=${database.username}
+											]]>
+										</echo>
+									</then>
+								</elseif>
+								<elseif>
+									<equals arg1="${database.type}" arg2="sqlserver" />
+									<then>
+										<echo file="${create.sh.file.path}">
+											<![CDATA[
+												#!/bin/bash
+
+												/opt/mssql-tools/bin/sqlcmd -P ${database.password} -U ${database.username} -i /tmp/create.sql
+											]]>
+										</echo>
+									</then>
+								</elseif>
+								<elseif>
+									<equals arg1="${database.type}" arg2="sybase" />
+									<then>
+										<echo file="${create.sh.file.path}">
+											<![CDATA[
+												#!/bin/bash
+
+												isql -i /tmp/create.sql -P ${database.password} -S ${database.schema} -U ${database.username}
+											]]>
+										</echo>
+									</then>
+								</elseif>
+							</if>
+
+							<execute>
+								<![CDATA[
+									chmod 755 ${create.sh.file.path} ${create.sql.file.path}
+
+									docker cp ${create.sh.file.path} ${database.host}:/tmp/create.sh
+									docker cp ${create.sql.file.path} ${database.host}:/tmp/create.sql
+
+									docker exec ${database.host} /bin/bash /tmp/create.sh
+								]]>
+							</execute>
+
+							<delete file="${create.sh.file.path}" />
+						</then>
+						<else>
+							<if>
+								<equals arg1="${database.type}" arg2="db2" />
+								<then>
+									<get-testcase-property property.name="databases.size" />
+
+									<if>
+										<os family="windows" />
+										<then>
+											<exec executable="${db2.executable}">
+												<arg line="/c /w db2 disconnect lportal" />
+											</exec>
+
+											<exec executable="${db2.executable}">
+												<arg line="/c /w db2 drop db lportal" />
+											</exec>
+
+											<if>
+												<isset property="databases.size" />
+												<then>
+													<exec executable="${db2.executable}">
+														<arg line="/c /w db2 drop db lportal${databases.size}" />
+													</exec>
+												</then>
+											</if>
+
+											<exec executable="${db2.executable}">
+												<arg line="/c /w db2 -fcreate.sql -td;" />
+											</exec>
+										</then>
+										<else>
+											<exec executable="${db2.executable}">
+												<arg line="disconnect lportal" />
+											</exec>
+
+											<exec executable="${db2.executable}">
+												<arg line="drop db lportal" />
+											</exec>
+
+											<exec executable="${db2.executable}" if:set="databases.size">
+												<arg line="drop db lportal${databases.size}" />
+											</exec>
+
+											<exec executable="${db2.executable}" failonerror="true">
+												<arg value="-fcreate.sql" />
+												<arg value="-t" />
+											</exec>
+										</else>
+									</if>
+								</then>
+								<elseif>
+									<or>
+										<equals arg1="${database.type}" arg2="mariadb" />
+										<equals arg1="${database.type}" arg2="mysql" />
+									</or>
+									<then>
+										<var name="arg.line" value="" />
+
+										<get-database-property property.name="database.host" />
+
+										<local name="mysql.host" />
+
+										<if>
+											<and>
+												<equals arg1="${database.host}" arg2="localhost" />
+												<istrue value="${test.docker.environment}" />
+											</and>
+											<then>
+												<property name="mysql.host" value="127.0.0.1" />
+											</then>
+											<else>
+												<property name="mysql.host" value="" />
+											</else>
+										</if>
+
+										<var name="arg.line" unless:blank="${mysql.host}" value="${arg.line} --host=${mysql.host}" />
+
+										<get-database-property property.name="database.password" />
+										<get-database-property property.name="database.username" />
+
+										<var name="arg.line" unless:blank="${database.password}" value="${arg.line} --password=${database.password}" />
+										<var name="arg.line" unless:blank="${database.username}" value="${arg.line} --user=${database.username}" />
+
+										<propertycopy from="${database.type}.executable" name="database.executable" override="true" />
+
+										<retry retrycount="3" retrydelay="60000">
+											<exec executable="${database.executable}" failonerror="true" input="create.sql">
+												<arg line="${arg.line}" />
+											</exec>
+										</retry>
+									</then>
+								</elseif>
+								<elseif>
+									<equals arg1="${database.type}" arg2="oracle" />
+									<then>
+										<get-database-property property.name="database.password" />
+										<get-database-property property.name="database.username" />
+
+										<if>
+											<os family="windows" />
+											<then>
+												<exec executable="${oracle.sqlplus.executable}" failonerror="true">
+													<arg value="${oracle.admin.user}/${oracle.admin.password} as sysdba" />
+													<arg value="@create.sql" />
+													<arg value="${database.username}" />
+													<arg value="${database.password}" />
+												</exec>
+											</then>
+											<else>
+												<retry retrycount="10" retrydelay="60000">
+													<exec executable="${oracle.sqlplus.executable}" failonerror="true">
+														<arg value="${oracle.admin.user}/${oracle.admin.password}" />
+														<arg value="@create.sql" />
+														<arg value="${database.username}" />
+														<arg value="${database.password}" />
+													</exec>
+												</retry>
+											</else>
+										</if>
+									</then>
+								</elseif>
+								<elseif>
+									<equals arg1="${database.type}" arg2="postgresql" />
+									<then>
+										<get-database-property property.name="database.username" />
+
+										<retry retrycount="3" retrydelay="60000">
+											<exec executable="${postgresql.executable}" failonerror="true">
+												<arg value="-f" />
+												<arg value="create.sql" />
+												<arg value="-U" />
+												<arg value="${database.username}" />
+											</exec>
+										</retry>
+									</then>
+								</elseif>
+								<elseif>
+									<equals arg1="${database.type}" arg2="sqlserver" />
+									<then>
+										<get-database-property property.name="database.password" />
+										<get-database-property property.name="database.username" />
+
+										<exec executable="${sqlserver.executable}" failonerror="true">
+											<arg value="-U" />
+											<arg value="${database.username}" />
+											<arg value="-P" />
+											<arg value="${database.password}" />
+											<arg value="-i" />
+											<arg value="create.sql" />
+										</exec>
+									</then>
+								</elseif>
+								<elseif>
+									<equals arg1="${database.type}" arg2="sybase" />
+									<then>
+										<get-database-property property.name="database.password" />
+										<get-database-property property.name="database.schema" />
+										<get-database-property property.name="database.username" />
+
+										<retry retrycount="3" retrydelay="60000">
+											<exec executable="${sybase.executable}" failonerror="true">
+												<arg value="-i" />
+												<arg value="create.sql" />
+												<arg value="-P" />
+												<arg value="${database.password}" />
+												<arg value="-S" />
+												<arg value="${database.schema}" />
+												<arg value="-U" />
+												<arg value="${database.username}" />
+											</exec>
+										</retry>
+									</then>
+								</elseif>
+							</if>
+						</else>
+					</if>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="record-git-commit-portal">
 		<sequential>
 			<exec dir="${project.dir}" executable="git" outputproperty="git.commit.portal.rev.parse">
@@ -12155,351 +12503,23 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 	</target>
 
 	<target depends="build-sql-file" name="rebuild-database">
-		<if>
-			<not>
-				<isset property="skip.rebuild-database" />
-			</not>
-			<then>
-				<get-testcase-property property.name="database.hypersonic.embedded" />
+		<trycatch property="rebuild.database.error">
+			<try>
+				<retry retrycount="2">
+					<sequential>
+						<rebuild-database />
+					</sequential>
+				</retry>
+			</try>
+			<catch>
+				<echo>Failed to rebuild the database</echo>
 
-				<antcall target="delete-liferay-home">
-					<param name="keep.hypersonicdb" value="${database.hypersonic.embedded}" />
-				</antcall>
-
-				<get-database-property property.name="database.docker.image" />
-
-				<if>
-					<isset property="database.docker.image" />
-					<then>
-						<get-database-property property.name="database.host" />
-						<get-database-property property.name="database.password" />
-						<get-database-property property.name="database.schema" />
-						<get-database-property property.name="database.username" />
-						<get-database-property property.name="database.version" />
-
-						<property location="create.sh" name="create.sh.file.path" />
-						<property location="create.sql" name="create.sql.file.path" />
-
-						<if>
-							<and>
-								<equals arg1="${database.type}" arg2="db2" />
-								<equals arg1="${database.version}" arg2="11.5.6" />
-							</and>
-							<then>
-								<get-testcase-property property.name="databases.size" />
-
-								<echo file="${create.sh.file.path}">
-									<![CDATA[
-										#!/bin/bash
-
-										su - db2inst1 -c '/database/config/db2inst1/sqllib/bin/db2 disconnect lportal'
-
-										su - db2inst1 -c '/database/config/db2inst1/sqllib/bin/db2 drop db lportal'
-
-										su - db2inst1 -c '/database/config/db2inst1/sqllib/bin/db2 -f/tmp/create.sql -st'
-									]]>
-								</echo>
-
-								<if>
-									<isset property="databases.size" />
-									<then>
-										<echo file="${create.sh.file.path}">
-											<![CDATA[
-												su - db2inst1 -c '/database/config/db2inst1/sqllib/bin/db2 drop db lportal${databases.size}'
-											]]>
-										</echo>
-									</then>
-								</if>
-							</then>
-							<elseif>
-								<equals arg1="${database.type}" arg2="db2" />
-								<then>
-									<get-testcase-property property.name="databases.size" />
-
-									<echo file="${create.sh.file.path}">
-										<![CDATA[
-											#!/bin/bash
-
-											db2 disconnect lportal
-
-											db2 drop db lportal
-
-											db2 -f/tmp/create.sql -st
-										]]>
-									</echo>
-
-									<if>
-										<isset property="databases.size" />
-										<then>
-											<echo file="${create.sh.file.path}">
-												<![CDATA[
-													db2 drop db lportal${databases.size}
-												]]>
-											</echo>
-										</then>
-									</if>
-								</then>
-							</elseif>
-							<elseif>
-								<or>
-									<equals arg1="${database.type}" arg2="mariadb" />
-									<equals arg1="${database.type}" arg2="mysql" />
-								</or>
-								<then>
-									<echo file="${create.sh.file.path}">
-										<![CDATA[
-											#!/bin/bash
-
-											mysql --host=${database.host} --password=${database.password} --user=${database.username} < /tmp/create.sql
-										]]>
-									</echo>
-								</then>
-							</elseif>
-							<elseif>
-								<equals arg1="${database.type}" arg2="oracle" />
-								<then>
-									<echo file="${create.sh.file.path}">
-										<![CDATA[
-											#!/bin/bash
-
-											sqlplus ${oracle.admin.user}/${oracle.admin.password} @/tmp/create.sql ${database.username} ${database.password}
-										]]>
-									</echo>
-								</then>
-							</elseif>
-							<elseif>
-								<equals arg1="${database.type}" arg2="postgresql" />
-								<then>
-									<echo file="${create.sh.file.path}">
-										<![CDATA[
-											#!/bin/bash
-
-											export PGPASSWORD=${database.password}
-
-											psql --file=/tmp/create.sql --username=${database.username}
-										]]>
-									</echo>
-								</then>
-							</elseif>
-							<elseif>
-								<equals arg1="${database.type}" arg2="sqlserver" />
-								<then>
-									<echo file="${create.sh.file.path}">
-										<![CDATA[
-											#!/bin/bash
-
-											/opt/mssql-tools/bin/sqlcmd -P ${database.password} -U ${database.username} -i /tmp/create.sql
-										]]>
-									</echo>
-								</then>
-							</elseif>
-							<elseif>
-								<equals arg1="${database.type}" arg2="sybase" />
-								<then>
-									<echo file="${create.sh.file.path}">
-										<![CDATA[
-											#!/bin/bash
-
-											isql -i /tmp/create.sql -P ${database.password} -S ${database.schema} -U ${database.username}
-										]]>
-									</echo>
-								</then>
-							</elseif>
-						</if>
-
-						<execute>
-							<![CDATA[
-								chmod 755 ${create.sh.file.path} ${create.sql.file.path}
-
-								docker cp ${create.sh.file.path} ${database.host}:/tmp/create.sh
-								docker cp ${create.sql.file.path} ${database.host}:/tmp/create.sql
-
-								docker exec ${database.host} /bin/bash /tmp/create.sh
-							]]>
-						</execute>
-
-						<delete file="${create.sh.file.path}" />
-					</then>
-					<else>
-						<if>
-							<equals arg1="${database.type}" arg2="db2" />
-							<then>
-								<get-testcase-property property.name="databases.size" />
-
-								<if>
-									<os family="windows" />
-									<then>
-										<exec executable="${db2.executable}">
-											<arg line="/c /w db2 disconnect lportal" />
-										</exec>
-
-										<exec executable="${db2.executable}">
-											<arg line="/c /w db2 drop db lportal" />
-										</exec>
-
-										<if>
-											<isset property="databases.size" />
-											<then>
-												<exec executable="${db2.executable}">
-													<arg line="/c /w db2 drop db lportal${databases.size}" />
-												</exec>
-											</then>
-										</if>
-
-										<exec executable="${db2.executable}">
-											<arg line="/c /w db2 -fcreate.sql -td;" />
-										</exec>
-									</then>
-									<else>
-										<exec executable="${db2.executable}">
-											<arg line="disconnect lportal" />
-										</exec>
-
-										<exec executable="${db2.executable}">
-											<arg line="drop db lportal" />
-										</exec>
-
-										<exec executable="${db2.executable}" if:set="databases.size">
-											<arg line="drop db lportal${databases.size}" />
-										</exec>
-
-										<exec executable="${db2.executable}" failonerror="true">
-											<arg value="-fcreate.sql" />
-											<arg value="-t" />
-										</exec>
-									</else>
-								</if>
-							</then>
-							<elseif>
-								<or>
-									<equals arg1="${database.type}" arg2="mariadb" />
-									<equals arg1="${database.type}" arg2="mysql" />
-								</or>
-								<then>
-									<var name="arg.line" value="" />
-
-									<get-database-property property.name="database.host" />
-
-									<local name="mysql.host" />
-
-									<if>
-										<and>
-											<equals arg1="${database.host}" arg2="localhost" />
-											<istrue value="${test.docker.environment}" />
-										</and>
-										<then>
-											<property name="mysql.host" value="127.0.0.1" />
-										</then>
-										<else>
-											<property name="mysql.host" value="" />
-										</else>
-									</if>
-
-									<var name="arg.line" unless:blank="${mysql.host}" value="${arg.line} --host=${mysql.host}" />
-
-									<get-database-property property.name="database.password" />
-									<get-database-property property.name="database.username" />
-
-									<var name="arg.line" unless:blank="${database.password}" value="${arg.line} --password=${database.password}" />
-									<var name="arg.line" unless:blank="${database.username}" value="${arg.line} --user=${database.username}" />
-
-									<propertycopy from="${database.type}.executable" name="database.executable" override="true" />
-
-									<retry retrycount="3" retrydelay="60000">
-										<exec executable="${database.executable}" failonerror="true" input="create.sql">
-											<arg line="${arg.line}" />
-										</exec>
-									</retry>
-								</then>
-							</elseif>
-							<elseif>
-								<equals arg1="${database.type}" arg2="oracle" />
-								<then>
-									<get-database-property property.name="database.password" />
-									<get-database-property property.name="database.username" />
-
-									<if>
-										<os family="windows" />
-										<then>
-											<exec executable="${oracle.sqlplus.executable}" failonerror="true">
-												<arg value="${oracle.admin.user}/${oracle.admin.password} as sysdba" />
-												<arg value="@create.sql" />
-												<arg value="${database.username}" />
-												<arg value="${database.password}" />
-											</exec>
-										</then>
-										<else>
-											<retry retrycount="10" retrydelay="60000">
-												<exec executable="${oracle.sqlplus.executable}" failonerror="true">
-													<arg value="${oracle.admin.user}/${oracle.admin.password}" />
-													<arg value="@create.sql" />
-													<arg value="${database.username}" />
-													<arg value="${database.password}" />
-												</exec>
-											</retry>
-										</else>
-									</if>
-								</then>
-							</elseif>
-							<elseif>
-								<equals arg1="${database.type}" arg2="postgresql" />
-								<then>
-									<get-database-property property.name="database.username" />
-
-									<retry retrycount="3" retrydelay="60000">
-										<exec executable="${postgresql.executable}" failonerror="true">
-											<arg value="-f" />
-											<arg value="create.sql" />
-											<arg value="-U" />
-											<arg value="${database.username}" />
-										</exec>
-									</retry>
-								</then>
-							</elseif>
-							<elseif>
-								<equals arg1="${database.type}" arg2="sqlserver" />
-								<then>
-									<get-database-property property.name="database.password" />
-									<get-database-property property.name="database.username" />
-
-									<exec executable="${sqlserver.executable}" failonerror="true">
-										<arg value="-U" />
-										<arg value="${database.username}" />
-										<arg value="-P" />
-										<arg value="${database.password}" />
-										<arg value="-i" />
-										<arg value="create.sql" />
-									</exec>
-								</then>
-							</elseif>
-							<elseif>
-								<equals arg1="${database.type}" arg2="sybase" />
-								<then>
-									<get-database-property property.name="database.password" />
-									<get-database-property property.name="database.schema" />
-									<get-database-property property.name="database.username" />
-
-									<retry retrycount="3" retrydelay="60000">
-										<exec executable="${sybase.executable}" failonerror="true">
-											<arg value="-i" />
-											<arg value="create.sql" />
-											<arg value="-P" />
-											<arg value="${database.password}" />
-											<arg value="-S" />
-											<arg value="${database.schema}" />
-											<arg value="-U" />
-											<arg value="${database.username}" />
-										</exec>
-									</retry>
-								</then>
-							</elseif>
-						</if>
-					</else>
-				</if>
-			</then>
-		</if>
-
-		<delete file="create.sql" />
+				<fail>${rebuild.database.error}</fail>
+			</catch>
+			<finally>
+				<delete file="create.sql" />
+			</finally>
+		</trycatch>
 	</target>
 
 	<target name="rebuild-legacy-database">

@@ -180,6 +180,7 @@ public abstract class BaseObjectActionResourceTestCase {
 
 		ObjectAction objectAction = randomObjectAction();
 
+		objectAction.setDescription(regex);
 		objectAction.setName(regex);
 		objectAction.setObjectActionExecutorKey(regex);
 		objectAction.setObjectActionTriggerKey(regex);
@@ -190,6 +191,7 @@ public abstract class BaseObjectActionResourceTestCase {
 
 		objectAction = ObjectActionSerDes.toDTO(json);
 
+		Assert.assertEquals(regex, objectAction.getDescription());
 		Assert.assertEquals(regex, objectAction.getName());
 		Assert.assertEquals(regex, objectAction.getObjectActionExecutorKey());
 		Assert.assertEquals(regex, objectAction.getObjectActionTriggerKey());
@@ -638,6 +640,14 @@ public abstract class BaseObjectActionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("description", additionalAssertFieldName)) {
+				if (objectAction.getDescription() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (objectAction.getName() == null) {
 					valid = false;
@@ -803,6 +813,17 @@ public abstract class BaseObjectActionResourceTestCase {
 				if (!Objects.deepEquals(
 						objectAction1.getDateModified(),
 						objectAction2.getDateModified())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("description", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						objectAction1.getDescription(),
+						objectAction2.getDescription())) {
 
 					return false;
 				}
@@ -1040,6 +1061,14 @@ public abstract class BaseObjectActionResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("description")) {
+			sb.append("'");
+			sb.append(String.valueOf(objectAction.getDescription()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1122,6 +1151,8 @@ public abstract class BaseObjectActionResourceTestCase {
 				active = RandomTestUtil.randomBoolean();
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
+				description = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				objectActionExecutorKey = StringUtil.toLowerCase(

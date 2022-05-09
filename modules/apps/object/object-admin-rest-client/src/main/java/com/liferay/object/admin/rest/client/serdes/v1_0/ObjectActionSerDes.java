@@ -111,6 +111,20 @@ public class ObjectActionSerDes {
 			sb.append("\"");
 		}
 
+		if (objectAction.getDescription() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"description\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(objectAction.getDescription()));
+
+			sb.append("\"");
+		}
+
 		if (objectAction.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -227,6 +241,14 @@ public class ObjectActionSerDes {
 				liferayToJSONDateFormat.format(objectAction.getDateModified()));
 		}
 
+		if (objectAction.getDescription() == null) {
+			map.put("description", null);
+		}
+		else {
+			map.put(
+				"description", String.valueOf(objectAction.getDescription()));
+		}
+
 		if (objectAction.getId() == null) {
 			map.put("id", null);
 		}
@@ -309,6 +331,11 @@ public class ObjectActionSerDes {
 				if (jsonParserFieldValue != null) {
 					objectAction.setDateModified(
 						toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "description")) {
+				if (jsonParserFieldValue != null) {
+					objectAction.setDescription((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {

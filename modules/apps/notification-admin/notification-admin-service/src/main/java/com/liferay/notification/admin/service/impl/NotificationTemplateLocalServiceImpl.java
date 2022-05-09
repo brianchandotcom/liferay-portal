@@ -14,23 +14,19 @@
 
 package com.liferay.notification.admin.service.impl;
 
-import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.notification.admin.exception.NotificationTemplateFromException;
 import com.liferay.notification.admin.exception.NotificationTemplateNameException;
 import com.liferay.notification.admin.model.NotificationTemplate;
+import com.liferay.notification.admin.service.NotificationQueueEntryLocalService;
 import com.liferay.notification.admin.service.base.NotificationTemplateLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.ResourceLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -50,22 +46,20 @@ public class NotificationTemplateLocalServiceImpl
 
 	@Override
 	public NotificationTemplate addNotificationTemplate(
-			long userId, long groupId, String name, String description,
-			String from, Map<Locale, String> fromNameMap, String to, String cc,
-			String bcc, boolean enabled, Map<Locale, String> subjectMap,
-			Map<Locale, String> bodyMap, ServiceContext serviceContext)
+			long userId, String name, String description, String from,
+			Map<Locale, String> fromNameMap, String to, String cc, String bcc,
+			boolean enabled, Map<Locale, String> subjectMap,
+			Map<Locale, String> bodyMap)
 		throws PortalException {
 
-		User user = userLocalService.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		validate(name, from);
 
-		long notificationTemplateId = counterLocalService.increment();
-
 		NotificationTemplate notificationTemplate =
-			notificationTemplatePersistence.create(notificationTemplateId);
+			notificationTemplatePersistence.create(
+				counterLocalService.increment());
 
-		notificationTemplate.setGroupId(groupId);
 		notificationTemplate.setCompanyId(user.getCompanyId());
 		notificationTemplate.setUserId(user.getUserId());
 		notificationTemplate.setUserName(user.getFullName());
@@ -79,7 +73,6 @@ public class NotificationTemplateLocalServiceImpl
 		notificationTemplate.setEnabled(enabled);
 		notificationTemplate.setSubjectMap(subjectMap);
 		notificationTemplate.setBodyMap(bodyMap);
-		notificationTemplate.setExpandoBridgeAttributes(serviceContext);
 
 		return notificationTemplatePersistence.update(notificationTemplate);
 	}
@@ -93,65 +86,21 @@ public class NotificationTemplateLocalServiceImpl
 			notificationTemplatePersistence.findByPrimaryKey(
 				notificationTemplateId);
 
-		return notificationTemplateLocalService.deleteNotificationTemplate(
-			notificationTemplate);
+		return deleteNotificationTemplate(notificationTemplate);
 	}
 
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public NotificationTemplate deleteNotificationTemplate(
-			NotificationTemplate notificationTemplate)
-		throws PortalException {
+		NotificationTemplate notificationTemplate) {
+
+		_notificationQueueEntryLocalService.
+			updateNotificationQueueEntriesTemplateIds(
+				notificationTemplate.getNotificationTemplateId());
 
 		notificationTemplatePersistence.remove(notificationTemplate);
 
-		_expandoRowLocalService.deleteRows(
-			notificationTemplate.getNotificationTemplateId());
-
 		return notificationTemplate;
-	}
-
-	@Override
-	public void deleteNotificationTemplates(long groupId)
-		throws PortalException {
-
-		List<NotificationTemplate> notificationTemplates =
-			notificationTemplatePersistence.findByGroupId(groupId);
-
-		for (NotificationTemplate notificationTemplate :
-				notificationTemplates) {
-
-			notificationTemplateLocalService.deleteNotificationTemplate(
-				notificationTemplate);
-		}
-	}
-
-	@Override
-	public List<NotificationTemplate> getNotificationTemplates(
-		long groupId, boolean enabled, int start, int end,
-		OrderByComparator<NotificationTemplate> orderByComparator) {
-
-		return notificationTemplatePersistence.findByG_E(
-			groupId, enabled, start, end, orderByComparator);
-	}
-
-	@Override
-	public List<NotificationTemplate> getNotificationTemplates(
-		long groupId, int start, int end,
-		OrderByComparator<NotificationTemplate> orderByComparator) {
-
-		return notificationTemplatePersistence.findByGroupId(
-			groupId, start, end, orderByComparator);
-	}
-
-	@Override
-	public int getNotificationTemplatesCount(long groupId) {
-		return notificationTemplatePersistence.countByGroupId(groupId);
-	}
-
-	@Override
-	public int getNotificationTemplatesCount(long groupId, boolean enabled) {
-		return notificationTemplatePersistence.countByG_E(groupId, enabled);
 	}
 
 	@Override
@@ -159,7 +108,7 @@ public class NotificationTemplateLocalServiceImpl
 			long notificationTemplateId, String name, String description,
 			String from, Map<Locale, String> fromNameMap, String to, String cc,
 			String bcc, boolean enabled, Map<Locale, String> subjectMap,
-			Map<Locale, String> bodyMap, ServiceContext serviceContext)
+			Map<Locale, String> bodyMap)
 		throws PortalException {
 
 		NotificationTemplate notificationTemplate =
@@ -178,28 +127,25 @@ public class NotificationTemplateLocalServiceImpl
 		notificationTemplate.setEnabled(enabled);
 		notificationTemplate.setSubjectMap(subjectMap);
 		notificationTemplate.setBodyMap(bodyMap);
-		notificationTemplate.setExpandoBridgeAttributes(serviceContext);
 
 		return notificationTemplatePersistence.update(notificationTemplate);
 	}
 
 	protected void validate(String name, String from) throws PortalException {
 		if (Validator.isNull(name)) {
-			throw new NotificationTemplateNameException();
+			throw new NotificationTemplateNameException("Name is null");
 		}
 
 		if (Validator.isNull(from)) {
-			throw new NotificationTemplateFromException();
+			throw new NotificationTemplateFromException("From is null");
 		}
 	}
 
 	@Reference
-	protected ResourceLocalService resourceLocalService;
+	private NotificationQueueEntryLocalService
+		_notificationQueueEntryLocalService;
 
 	@Reference
-	protected UserLocalService userLocalService;
-
-	@Reference
-	private ExpandoRowLocalService _expandoRowLocalService;
+	private UserLocalService _userLocalService;
 
 }

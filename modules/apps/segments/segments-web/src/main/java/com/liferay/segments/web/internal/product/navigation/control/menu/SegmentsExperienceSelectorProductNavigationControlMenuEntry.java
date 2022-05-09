@@ -85,16 +85,6 @@ public class SegmentsExperienceSelectorProductNavigationControlMenuEntry
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		long segmentsExperiencesCount =
-			_segmentsExperienceLocalService.getSegmentsExperiencesCount(
-				themeDisplay.getScopeGroupId(),
-				_portal.getClassNameId(Layout.class.getName()),
-				themeDisplay.getPlid(), true);
-
-		if (segmentsExperiencesCount <= 1) {
-			return false;
-		}
-
 		LayoutTypePortlet layoutTypePortlet =
 			themeDisplay.getLayoutTypePortlet();
 
@@ -102,6 +92,16 @@ public class SegmentsExperienceSelectorProductNavigationControlMenuEntry
 			layoutTypePortlet.getLayoutTypeController();
 
 		if (layoutTypeController.isFullPageDisplayable()) {
+			return false;
+		}
+
+		long segmentsExperiencesCount =
+			_segmentsExperienceLocalService.getSegmentsExperiencesCount(
+				themeDisplay.getScopeGroupId(),
+				_portal.getClassNameId(Layout.class.getName()),
+				themeDisplay.getPlid(), true);
+
+		if (segmentsExperiencesCount <= 1) {
 			return false;
 		}
 

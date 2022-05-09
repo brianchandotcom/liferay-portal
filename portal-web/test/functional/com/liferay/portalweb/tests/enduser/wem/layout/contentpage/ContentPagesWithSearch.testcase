@@ -52,6 +52,42 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-148919. The user cannot search a content page without publish version and its content."
+	@priority = "5"
+	test CannotSearchContentPageWithoutPublishedVersion {
+		property test.name.skip.portal.instance = "ContentPagesWithSearch#CannotSearchContentPageWithoutPublishedVersion";
+
+		task ("Given a page creator has a content page with Heading fragment and keeps it as draft") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("When the page creator search the content page in Search Bar") {
+			Navigator.gotoSitePage(
+				pageName = "Search",
+				siteName = "Test Site Name");
+
+			SearchPortlets.searchEmbedded(searchTerm = "Content Page");
+		}
+
+		task ("Then the page creator should view empty search results") {
+			SearchResultPortlet.viewNoSearchResults(searchTerm = "Content Page");
+		}
+
+		task ("When the page creator search the content on content page in Search Bar") {
+			SearchPortlets.searchEmbedded(searchTerm = "Heading Example");
+		}
+
+		task ("Then the page creator should view empty search results") {
+			SearchResultPortlet.viewNoSearchResults(searchTerm = "Heading Example");
+		}
+	}
+
 	@description = "This is a test for LPS-78928. View content page in search results when filter by Type Facet."
 	@priority = "5"
 	test FilterByTypeFacet {

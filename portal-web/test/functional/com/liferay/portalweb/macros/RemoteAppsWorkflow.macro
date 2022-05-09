@@ -25,7 +25,7 @@ definition {
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ADD_ENTRY",
-			resourceName = "com.liferay.remote.app",
+			resourceName = "com.liferay.client.extension",
 			roleTitle = "New Regular Role");
 	}
 
@@ -39,7 +39,7 @@ definition {
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Remote App Entry");
+			workflowResourceValue = "Client Extension Entry");
 	}
 
 	macro assertTableStatus {

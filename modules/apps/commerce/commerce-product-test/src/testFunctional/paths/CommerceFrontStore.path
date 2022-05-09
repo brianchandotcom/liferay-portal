@@ -11,6 +11,11 @@
 
 <tbody>
 <tr>
+	<td>FS_PRODUCT_COUNT</td>
+	<td>//div[contains(@class,'pull-right')]/p[contains(text(),'${key_productCount} Products Available')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FS_PRODUCT_SKU</td>
 	<td>//p/span[(normalize-space(text())='SKU')]/following::span[text()='${key_productSku}']</td>
 	<td></td>

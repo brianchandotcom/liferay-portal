@@ -26,6 +26,8 @@ definition {
 	@description = "LPS-143065 - Verify that the user can delete the attachment by clicking on the clear button"
 	@priority = "4"
 	test CanDeleteAttachment {
+		property portal.acceptance = "quarantine";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 151577",
 			objectName = "CustomObject151577",
@@ -66,7 +68,7 @@ definition {
 	@description = "LPS-147658 - Verify it is possible to submit an empty value for a Date field and it will be correctly displayed on the Layout"
 	@priority = "5"
 	test CanDisplayEmptyDateValue {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 147870",

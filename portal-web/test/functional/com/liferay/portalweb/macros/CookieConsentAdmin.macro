@@ -1,0 +1,135 @@
+definition {
+
+	@description = "Turn on Pre-check for all cookie categories"
+	macro precheckAll {
+		Check(locator1 = "CookieConsentAdmin#FUNCTIONAL_COOKIES_DESCRIPTION_PRE_CHECKED");
+
+		Check(locator1 = "CookieConsentAdmin#PREFROMANCE_COOKIES_DESCRIPTION_PRE_CHECKED");
+
+		Check(locator1 = "CookieConsentAdmin#PERSONALIZATION_COOKIES_DESCRIPTION_PRE_CHECKED");
+
+		AssertClick(
+			locator1 = "Button#SAVE",
+			value1 = "Save");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#SUCCESS",
+			value1 = "Your request completed successfully.");
+	}
+
+	@description = "Reset settings"
+	macro resetSettings {
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Reset Default Values");
+	}
+
+	@description = "Save default settings"
+	macro saveDefaultSettings {
+		WaitForElementPresent(locator1 = "CookieConsentAdmin#TITLE");
+
+		if (isSet(cookiePolicyLink)) {
+			CookieConsentAdmin.setCookiePolicyLink(cookiePolicyLink = "${cookiePolicyLink}");
+		}
+
+		if (isSet(precheck)) {
+			CookieConsentAdmin.precheckAll();
+		}
+
+		AssertClick(
+			locator1 = "Button#SAVE",
+			value1 = "Save");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#SUCCESS",
+			value1 = "Your request completed successfully.");
+	}
+
+	@description = "Set Cookie Policy link"
+	macro setCookiePolicyLink {
+		Type(
+			locator1 = "CookieConsentAdmin#COOKIE_POLICY_LINK",
+			value1 = "${cookiePolicyLink}");
+
+		AssertClick(
+			locator1 = "Button#SAVE",
+			value1 = "Save");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#SUCCESS",
+			value1 = "Your request completed successfully.");
+	}
+
+	@description = "Set custom text for all fields"
+	macro setCustomTextForAllFields {
+		Variables.assertDefined(parameterList = "${text}");
+
+		Type(
+			locator1 = "CookieConsentAdmin#TITLE",
+			value1 = "${text}_1");
+
+		Type(
+			locator1 = "CookieConsentAdmin#DESCRIPTION",
+			value1 = "${text}_2");
+
+		Type(
+			locator1 = "CookieConsentAdmin#COOKIE_POLICY_LINK",
+			value1 = "${text}_3");
+
+		Type(
+			locator1 = "CookieConsentAdmin#LINK_DISPLAY_TEXT",
+			value1 = "${text}_4");
+
+		Type(
+			locator1 = "CookieConsentAdmin#STRICTLY_NECESSARY_COOKIES_DESCRIPTION",
+			value1 = "${text}_5");
+
+		Type(
+			locator1 = "CookieConsentAdmin#FUNCTIONAL_COOKIES_DESCRIPTION",
+			value1 = "${text}_6");
+
+		Type(
+			locator1 = "CookieConsentAdmin#PERFORMANCE_COOKIES_DESCRIPTION",
+			value1 = "${text}_7");
+
+		Type(
+			locator1 = "CookieConsentAdmin#PERSONALIZATION_COOKIES_DESCRIPTION",
+			value1 = "${text}_8");
+
+		AssertClick(
+			locator1 = "Button#SAVE",
+			value1 = "Save");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#SUCCESS",
+			value1 = "Your request completed successfully.");
+	}
+
+	@description = "Verify all elements are present"
+	macro verifyAllConfigurationElementsArePresent {
+		WaitForElementPresent(locator1 = "CookieConsentAdmin#MENU_TITLE");
+
+		WaitForElementPresent(locator1 = "CookieConsentAdmin#MENU_DESCRIPTION");
+
+		WaitForElementPresent(locator1 = "CookieConsentAdmin#TITLE");
+
+		WaitForElementPresent(locator1 = "CookieConsentAdmin#DESCRIPTION");
+
+		WaitForElementPresent(locator1 = "CookieConsentAdmin#COOKIE_POLICY_LINK");
+
+		WaitForElementPresent(locator1 = "CookieConsentAdmin#LINK_DISPLAY_TEXT");
+
+		WaitForElementPresent(locator1 = "CookieConsentAdmin#STRICTLY_NECESSARY_COOKIES_DESCRIPTION");
+
+		WaitForElementPresent(locator1 = "CookieConsentAdmin#FUNCTIONAL_COOKIES_DESCRIPTION");
+
+		WaitForElementPresent(locator1 = "CookieConsentAdmin#FUNCTIONAL_COOKIES_DESCRIPTION_PRE_CHECKED");
+
+		WaitForElementPresent(locator1 = "CookieConsentAdmin#PERFORMANCE_COOKIES_DESCRIPTION");
+
+		WaitForElementPresent(locator1 = "CookieConsentAdmin#PREFROMANCE_COOKIES_DESCRIPTION_PRE_CHECKED");
+
+		WaitForElementPresent(locator1 = "CookieConsentAdmin#PERSONALIZATION_COOKIES_DESCRIPTION");
+
+		WaitForElementPresent(locator1 = "CookieConsentAdmin#PERSONALIZATION_COOKIES_DESCRIPTION_PRE_CHECKED");
+	}
+
+}

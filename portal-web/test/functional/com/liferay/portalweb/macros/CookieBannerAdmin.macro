@@ -1,0 +1,102 @@
+definition {
+
+	@description = "Configure Cookie Banner to be visible"
+	macro configuredToShowBanner {
+		CookieNavigator.gotoSiteSettings(portlet = "Cookie Banner");
+
+		CookieBannerAdmin.saveSettings();
+	}
+
+	@description = "Disable Decline All button for Cookie Banner"
+	macro disableDeclineAllButton {
+		AssertClick(
+			locator1 = "CookieBannerAdmin#INCLUDE_DECLINE_ALL_BUTTON",
+			value1 = "Include \&quot;Decline All\&quot; Button");
+
+		Button.clickSave();
+	}
+
+	@description = "Save Cookie Banner settings"
+	macro saveSettings {
+		WaitForElementPresent(locator1 = "CookieBannerAdmin#MENU_TITLE");
+
+		FormFields.enableCheckbox(fieldName = "enable");
+
+		if (isSet(content)) {
+			Type(
+				locator1 = "CookieBannerAdmin#CONTENT",
+				value1 = "${content}");
+		}
+
+		if (isSet(privacyPolicyLink)) {
+			Type(
+				locator1 = "CookieBannerAdmin#PRIVACY_POLICY_LINK",
+				value1 = "${privacyPolicyLink}");
+		}
+
+		if (isSet(linkDisplayText)) {
+			Type(
+				locator1 = "CookieBannerAdmin#LINK_DISPLAY_TEXT",
+				value1 = "${linkDisplayText}");
+		}
+
+		if (isSet(includeDeclineAllButton)) {
+			AssertClick(
+				locator1 = "CookieBannerAdmin#INCLUDE_DECLINE_ALL_BUTTON",
+				value1 = "Include \&quot;Decline All\&quot; Button");
+		}
+
+		AssertClick(
+			locator1 = "Button#SAVE",
+			value1 = "Save");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#SUCCESS",
+			value1 = "Your request completed successfully.");
+	}
+
+	@description = "Set custom texts for Cookie Banner"
+	macro setCustomTextForAllFields {
+		Variables.assertDefined(parameterList = "${text}");
+
+		Type(
+			locator1 = "CookieBannerAdmin#CONTENT",
+			value1 = "${text}_1");
+
+		Type(
+			locator1 = "CookieBannerAdmin#PRIVACY_POLICY_LINK",
+			value1 = "${text}_2");
+
+		Type(
+			locator1 = "CookieBannerAdmin#LINK_DISPLAY_TEXT",
+			value1 = "${text}_3");
+
+		AssertClick(
+			locator1 = "Button#UPDATE",
+			value1 = "Update");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#SUCCESS",
+			value1 = "Your request completed successfully.");
+	}
+
+	@description = "Verify all element is present at Cookie Banner"
+	macro verifyAllConfigurationElementsArePresent {
+		WaitForElementPresent(locator1 = "CookieBannerAdmin#MENU_TITLE");
+
+		WaitForElementPresent(locator1 = "CookieBannerAdmin#MENU_DESCRIPTION");
+
+		WaitForElementPresent(locator1 = "CookieBannerAdmin#ENABLED");
+
+		WaitForElementPresent(locator1 = "CookieBannerAdmin#EXPLICIT_COOKIE_CONSENT_MODE");
+
+		WaitForElementPresent(locator1 = "CookieBannerAdmin#CONTENT");
+
+		WaitForElementPresent(locator1 = "CookieBannerAdmin#PRIVACY_POLICY_LINK");
+
+		WaitForElementPresent(locator1 = "CookieBannerAdmin#LINK_DISPLAY_TEXT");
+
+		WaitForElementPresent(locator1 = "CookieBannerAdmin#INCLUDE_DECLINE_ALL_BUTTON");
+	}
+
+}

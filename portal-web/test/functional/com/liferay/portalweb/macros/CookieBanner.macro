@@ -1,9 +1,11 @@
 definition {
 
+	@description = "Check if Cookie Consent panel is not visible"
 	macro checkCookieConsentPanelIsNotVisible {
 		WaitForElementNotPresent(locator1 = "COOKIES_CONSENT_PANEL_IFRAME");
 	}
 
+	@description = "Check if Cookies has 6 months as expiration date"
 	macro checkIfCookiesHasSixMonthsAsExpirationDate {
 		CookieHelper.checkSelectedCookieExpirationDate(cookieName = "CONSENT_TYPE_PERFORMANCE");
 
@@ -14,14 +16,17 @@ definition {
 		CookieHelper.checkSelectedCookieExpirationDate(cookieName = "CONSENT_TYPE_NECESSARY");
 	}
 
+	@description = "Press Accept All button"
 	macro cookiesBannerAcceptAll {
 		Click(locator1 = "CookieBanner#ACCEPT_ALL_BUTTON");
 	}
 
+	@description = "Press Decline All button"
 	macro cookiesBannerDeclineAll {
 		Click(locator1 = "CookieBanner#DECLINE_ALL_BUTTON");
 	}
 
+	@description = "Open Cookie Consent panel"
 	macro openCookieConsentPanel {
 		Click(locator1 = "CookieBanner#CONFIGURATION_LINK");
 
@@ -30,6 +35,7 @@ definition {
 		WaitForSPARefresh();
 	}
 
+	@description = "Verify all Cookie Consent panel elements are present"
 	macro verifyAllElementsArePresent {
 		WaitForElementPresent(locator1 = "CookieBanner#COOKIES_BANNER");
 
@@ -46,6 +52,27 @@ definition {
 		SelectFrame.selectFrameNoLoading(locator1 = "CookieConsentPanel#COOKIES_CONSENT_PANEL_IFRAME");
 
 		CookieConsentPanel.verifyAllElementsArePresent();
+	}
+
+	@description = "Verify that customized texts are present"
+	macro verifyCustomTextsArePresent {
+		Variables.assertDefined(parameterList = "${key_text}");
+
+		var actualLink = selenium.getAttribute("CookieBanner#COOKIES_BANNER_LOCALIZED_LINK");
+
+		TestUtils.assertEquals(
+			actual = "${actualLink}",
+			expected = "http://localhost:8080/web/guest/${key_text}_2");
+
+		for (var id : list "1,3") {
+			AssertElementPresent(
+				key_text = "${id}",
+				locator1 = "CookieBanner#COOKIES_BANNER_LOCALIZED_TEXT");
+		}
+	}
+
+	macro verifyDeclineAllButtonIsPresent {
+		AssertElementPresent(locator1 = "CookieBanner#DECLINE_ALL_BUTTON");
 	}
 
 }

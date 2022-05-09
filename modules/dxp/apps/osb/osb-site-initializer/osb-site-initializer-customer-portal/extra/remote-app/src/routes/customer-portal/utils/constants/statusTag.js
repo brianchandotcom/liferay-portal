@@ -9,6 +9,8 @@
  * distribution rights of the Software.
  */
 
+import i18n from '../../../../common/I18n';
+
 export const STATUS_TAG_TYPES = {
 	active: 1,
 	expired: 2,
@@ -19,10 +21,10 @@ export const STATUS_TAG_TYPES = {
 };
 
 export const STATUS_TAG_TYPE_NAMES = {
-	active: 'Active',
-	expired: 'Expired',
-	future: 'Future',
-	inProgress: 'In Progress',
-	invited: 'Invited',
-	notActivated: 'Not Activated',
+	active: i18n.translate('active'),
+	expired: i18n.translate('expired'),
+	future: i18n.translate('future'),
+	inProgress: i18n.translate('in-progress'),
+	invited: i18n.translate('invited'),
+	notActivated: i18n.translate('not-activated'),
 };

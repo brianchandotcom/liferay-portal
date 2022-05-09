@@ -14,7 +14,7 @@ export default function getDateCustomFormat(rawDate, format) {
 	const date = new Date(rawDate);
 
 	return date.toLocaleDateString(
-		Liferay.ThemeDisplay.getLanguageId().replace('_', '-'),
+		Liferay.ThemeDisplay.getBCP47LanguageId(),
 		format
 	);
 }

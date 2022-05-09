@@ -180,8 +180,9 @@ const Overview = () => {
 							) : (
 								<p className="mx-auto pt-5">
 									{i18n.translate(
-										'no-subscriptions-match-these-criteria.'
+										'no-subscriptions-match-these-criteria'
 									)}
+									.
 								</p>
 							)}
 						</div>

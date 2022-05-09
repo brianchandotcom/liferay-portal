@@ -1294,8 +1294,7 @@ public class LayoutsAdminDisplayContext {
 	public boolean hasLayouts() {
 		int privatePagesCount = _getLayoutsCount(true);
 
-		int publicPagesCount = LayoutServiceUtil.getLayoutsCount(
-			getSelGroupId(), false, 0);
+		int publicPagesCount = _getLayoutsCount(false);
 
 		if ((privatePagesCount + publicPagesCount) > 0) {
 			return true;
@@ -1407,8 +1406,7 @@ public class LayoutsAdminDisplayContext {
 
 		Boolean privateLayout = false;
 
-		int publicLayoutsCount = LayoutServiceUtil.getLayoutsCount(
-			getSelGroupId(), false, 0);
+		int publicLayoutsCount = _getLayoutsCount(false);
 		int privateLayoutsCount = _getLayoutsCount(true);
 
 		if ((privateLayoutsCount > 0) && (publicLayoutsCount <= 0)) {

@@ -1,0 +1,65 @@
+{
+	"object-entries": [
+		{
+			"name": "Automated Functional Test"
+		},
+		{
+			"name": "Batch"
+		},
+		{
+			"name": "Central Requirements"
+		},
+		{
+			"name": "Compile"
+		},
+		{
+			"name": "Cucumber"
+		},
+		{
+			"name": "Exploratory Test"
+		},
+		{
+			"name": "Fix Pack Test"
+		},
+		{
+			"name": "Integration Test"
+		},
+		{
+			"name": "JS Unit Test"
+		},
+		{
+			"name": "Manual Test"
+		},
+		{
+			"name": "Manual Test WIP"
+		},
+		{
+			"name": "Modules Integration AWS Test"
+		},
+		{
+			"name": "Modules Integration Project Templates Test"
+		},
+		{
+			"name": "Modules Integration Test"
+		},
+		{
+			"name": "Modules Unit Project Templates Test"
+		},
+		{
+			"name": "Modules Unit Test"
+		},
+		{
+			"name": "REST"
+		},
+		{
+			"name": "Selenium"
+		},
+		{
+			"name": "Semantic Versioning"
+		},
+		{
+			"name": "Unit Test"
+		}
+	],
+	"objectDefinitionName": "CaseType"
+}

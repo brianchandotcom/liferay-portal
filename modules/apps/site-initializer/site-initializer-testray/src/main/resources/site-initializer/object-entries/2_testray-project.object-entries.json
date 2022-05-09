@@ -1,0 +1,153 @@
+{
+	"object-entries": [
+		{
+			"name": "Application Server"
+		},
+		{
+			"name": "Analytics Cloud"
+		},
+		{
+			"name": "App Builder"
+		},
+		{
+			"name": "Customer Support"
+		},
+		{
+			"name": "DXP Cloud Client"
+		},
+		{
+			"name": "Forms"
+		},
+		{
+			"name": "Help Center"
+		},
+		{
+			"name": "HR"
+		},
+		{
+			"name": "HR Review"
+		},
+		{
+			"name": "LESA"
+		},
+		{
+			"name": "Liferay Analytics Cloud"
+		},
+		{
+			"name": "Liferay Cloud Platform"
+		},
+		{
+			"name": "Liferay Dev"
+		},
+		{
+			"name": "Liferay Portal 6.1",
+			"externalReferenceCode": "TRPROJ-001"
+		},
+		{
+			"name": "Liferay Portal 6.2",
+			"externalReferenceCode": "TRPROJ-002"
+		},
+		{
+			"name": "Liferay Portal 7.0",
+			"externalReferenceCode": "TRPROJ-003"
+		},
+		{
+			"name": "Liferay Portal 7.1",
+			"externalReferenceCode": "TRPROJ-004"
+		},
+		{
+			"name": "Liferay Portal 7.2",
+			"externalReferenceCode": "TRPROJ-005"
+		},
+		{
+			"name": "Liferay Portal 7.3",
+			"externalReferenceCode": "TRPROJ-006"
+		},
+		{
+			"name": "Liferay Portal 7.4",
+			"externalReferenceCode": "TRPROJ-007"
+		},
+		{
+			"name": "Liferay Sync"
+		},
+		{
+			"name": "Loop"
+		},
+		{
+			"name": "LRDCOM"
+		},
+		{
+			"name": "LXC: Liferay Dev"
+		},
+		{
+			"description": "Test results for liferay.com/marketplace tests",
+			"name": "Marketplace"
+		},
+		{
+			"name": "Objects"
+		},
+		{
+			"name": "Partner"
+		},
+		{
+			"name": "Patcher"
+		},
+		{
+			"name": "Salesforce"
+		},
+		{
+			"name": "Search Infrastructure"
+		},
+		{
+			"description": "All functional features related to the Segmentation & Personalization team",
+			"name": "Segmentation & Personalization"
+		},
+		{
+			"name": "Solutions"
+		},
+		{
+			"name": "Staging"
+		},
+		{
+			"name": "Testray",
+			"externalReferenceCode": "TRPROJ-008"
+		},
+		{
+			"name": "Upgrades"
+		},
+		{
+			"name": "Workflow"
+		},
+		{
+			"name": "WWW"
+		},
+		{
+			"name": "[old] Audience Targeting"
+		},
+		{
+			"name": "[old] Environments"
+		},
+		{
+			"description": "Global Services LatAm, Project Gr1d - Innovation Cloud. Testray - GS Workflow Process: http://goo.gl/an21mo",
+			"name": "[old] GS-LatAm: Gr1d - Innovation Cloud"
+		},
+		{
+			"description": "Global Services LatAm, Project Petrobrás. Testray - GS Workflow Process: http://goo.gl/an21mo",
+			"name": "[old] GS-LatAm: Project Petrobrás"
+		},
+		{
+			"description": "Global Services USA, Project FHLB-NY - Federal Home Loan Bank - New York. Testray - GS Workflow Process: http://goo.gl/an21mo",
+			"name": "[old] GS-USA: Project FHLB-NY"
+		},
+		{
+			"name": "[old] JDK11"
+		},
+		{
+			"name": "[old] LCS"
+		},
+		{
+			"name": "[old] Liferay Marketplace 1.0"
+		}
+	],
+	"objectDefinitionName": "Project"
+}

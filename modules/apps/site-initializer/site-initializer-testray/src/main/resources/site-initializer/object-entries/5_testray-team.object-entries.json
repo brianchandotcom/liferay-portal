@@ -1,0 +1,165 @@
+{
+	"object-entries": [
+		{
+			"name": "Business Productivity",
+			"r_projectToTeams_c_projectId": "[$Project#TRPROJ-001$]"
+		},
+		{
+			"name": "Collaboration",
+			"r_projectToTeams_c_projectId": "[$Project#TRPROJ-001$]"
+		},
+		{
+			"name": "Commerce",
+			"r_projectToTeams_c_projectId": "[$Project#TRPROJ-001$]"
+		},
+		{
+			"name": "Core Infrastructure",
+			"r_projectToTeams_c_projectId": "[$Project#TRPROJ-001$]"
+		},
+		{
+			"name": "Developer Tools",
+			"r_projectToTeams_c_projectId": "[$Project#TRPROJ-001$]"
+		},
+		{
+			"name": "Business Productivity",
+			"r_projectToTeams_c_projectId": "[$Project#TRPROJ-002$]"
+		},
+		{
+			"name": "Collaboration",
+			"r_projectToTeams_c_projectId": "[$Project#TRPROJ-002$]"
+		},
+		{
+			"name": "Commerce",
+			"r_projectToTeams_c_projectId": "[$Project#TRPROJ-002$]"
+		},
+		{
+			"name": "Core Infrastructure",
+			"r_projectToTeams_c_projectId": "[$Project#TRPROJ-002$]"
+		},
+		{
+			"name": "Developer Tools",
+			"r_projectToTeams_c_projectId": "[$Project#TRPROJ-002$]"
+		},
+		{
+			"name": "Business Productivity",
+			"r_projectToTeams_c_projectId": "[$Project#TRPROJ-003$]"
+		},
+		{
+			"name": "Collaboration",
+			"r_projectToTeams_c_projectId": "[$Project#TRPROJ-003$]"
+		},
+		{
+			"name": "Commerce",
+			"r_projectToTeams_c_projectId": "[$Project#TRPROJ-003$]"
+		},
+		{
+			"name": "Core Infrastructure",
+			"r_projectToTeams_c_projectId": "[$Project#TRPROJ-003$]"
+		},
+		{
+			"name": "Developer Tools",
+			"r_projectToTeams_c_projectId": "[$Project#TRPROJ-003$]"
+		},
+		{
+			"name": "Business Productivity",
+			"r_projectToTeams_c_projectId": "[$Project#TRPROJ-004$]"
+		},
+		{
+			"name": "Collaboration",
+			"r_projectToTeams_c_projectId": "[$Project#TRPROJ-004$]"
+		},
+		{
+			"name": "Commerce",
+			"r_projectToTeams_c_projectId": "[$Project#TRPROJ-004$]"
+		},
+		{
+			"name": "Core Infrastructure",
+			"r_projectToTeams_c_projectId": "[$Project#TRPROJ-004$]"
+		},
+		{
+			"name": "Developer Tools",
+			"r_projectToTeams_c_projectId": "[$Project#TRPROJ-004$]"
+		},
+		{
+			"name": "Business Productivity",
+			"r_projectToTeams_c_projectId": "[$Project#TRPROJ-005$]"
+		},
+		{
+			"name": "Collaboration",
+			"r_projectToTeams_c_projectId": "[$Project#TRPROJ-005$]"
+		},
+		{
+			"name": "Commerce",
+			"r_projectToTeams_c_projectId": "[$Project#TRPROJ-005$]"
+		},
+		{
+			"name": "Core Infrastructure",
+			"r_projectToTeams_c_projectId": "[$Project#TRPROJ-005$]"
+		},
+		{
+			"name": "Developer Tools",
+			"r_projectToTeams_c_projectId": "[$Project#TRPROJ-005$]"
+		},
+		{
+			"name": "Business Productivity",
+			"r_projectToTeams_c_projectId": "[$Project#TRPROJ-006$]"
+		},
+		{
+			"name": "Collaboration",
+			"r_projectToTeams_c_projectId": "[$Project#TRPROJ-006$]"
+		},
+		{
+			"name": "Commerce",
+			"r_projectToTeams_c_projectId": "[$Project#TRPROJ-006$]"
+		},
+		{
+			"name": "Core Infrastructure",
+			"r_projectToTeams_c_projectId": "[$Project#TRPROJ-006$]"
+		},
+		{
+			"name": "Developer Tools",
+			"r_projectToTeams_c_projectId": "[$Project#TRPROJ-006$]"
+		},
+		{
+			"name": "Business Productivity",
+			"r_projectToTeams_c_projectId": "[$Project#TRPROJ-007$]"
+		},
+		{
+			"name": "Collaboration",
+			"r_projectToTeams_c_projectId": "[$Project#TRPROJ-007$]"
+		},
+		{
+			"name": "Commerce",
+			"r_projectToTeams_c_projectId": "[$Project#TRPROJ-007$]"
+		},
+		{
+			"name": "Core Infrastructure",
+			"r_projectToTeams_c_projectId": "[$Project#TRPROJ-007$]"
+		},
+		{
+			"name": "Developer Tools",
+			"r_projectToTeams_c_projectId": "[$Project#TRPROJ-007$]"
+		},
+		{
+			"name": "Business Productivity",
+			"r_projectToTeams_c_projectId": "[$Project#TRPROJ-008$]"
+		},
+		{
+			"name": "Collaboration",
+			"r_projectToTeams_c_projectId": "[$Project#TRPROJ-008$]"
+		},
+		{
+			"name": "Commerce",
+			"r_projectToTeams_c_projectId": "[$Project#TRPROJ-008$]"
+		},
+		{
+			"name": "Core Infrastructure",
+			"r_projectToTeams_c_projectId": "[$Project#TRPROJ-008$]"
+		},
+		{
+			"name": "Developer Tools",
+			"r_projectToTeams_c_projectId": "[$Project#TRPROJ-008$]"
+		}
+	],
+	"objectDefinitionName": "Team"
+}

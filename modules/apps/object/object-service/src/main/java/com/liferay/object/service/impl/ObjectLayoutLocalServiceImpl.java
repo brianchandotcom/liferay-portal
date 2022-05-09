@@ -136,6 +136,18 @@ public class ObjectLayoutLocalServiceImpl
 	}
 
 	@Override
+	public void deleteObjectLayouts(long objectDefinitionId)
+		throws PortalException {
+
+		for (ObjectLayout objectLayout :
+				objectLayoutPersistence.findByObjectDefinitionId(
+					objectDefinitionId)) {
+
+			objectLayoutLocalService.deleteObjectLayout(objectLayout);
+		}
+	}
+
+	@Override
 	public ObjectLayout getDefaultObjectLayout(long objectDefinitionId)
 		throws PortalException {
 

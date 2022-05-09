@@ -125,6 +125,18 @@ public class ObjectActionLocalServiceImpl
 	}
 
 	@Override
+	public void deleteObjectActions(long objectDefinitionId)
+		throws PortalException {
+
+		for (ObjectAction objectAction :
+				objectActionPersistence.findByObjectDefinitionId(
+					objectDefinitionId)) {
+
+			objectActionLocalService.deleteObjectAction(objectAction);
+		}
+	}
+
+	@Override
 	public List<ObjectAction> getObjectActions(long objectDefinitionId) {
 		return objectActionPersistence.findByObjectDefinitionId(
 			objectDefinitionId);

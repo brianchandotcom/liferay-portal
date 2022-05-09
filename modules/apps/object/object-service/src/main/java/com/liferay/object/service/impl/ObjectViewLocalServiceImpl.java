@@ -143,6 +143,18 @@ public class ObjectViewLocalServiceImpl extends ObjectViewLocalServiceBaseImpl {
 	}
 
 	@Override
+	public void deleteObjectViews(long objectDefinitionId)
+		throws PortalException {
+
+		for (ObjectView objectView :
+				objectViewPersistence.findByObjectDefinitionId(
+					objectDefinitionId)) {
+
+			objectViewLocalService.deleteObjectView(objectView);
+		}
+	}
+
+	@Override
 	public ObjectView fetchDefaultObjectView(long objectDefinitionId) {
 		ObjectView objectView = objectViewPersistence.fetchByODI_DOV_First(
 			objectDefinitionId, true, null);

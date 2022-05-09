@@ -15,18 +15,22 @@
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import {ClayCheckbox} from '@clayui/form';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {useForm} from 'react-hook-form';
+import {useOutletContext, useParams} from 'react-router-dom';
 
 import Input from '../../../components/Input';
-import Modal from '../../../components/Modal';
-import {CreateSuite} from '../../../graphql/mutations';
-import {withVisibleContent} from '../../../hoc/withVisibleContent';
-import useFormModal, {FormModalOptions} from '../../../hooks/useFormModal';
+import Container from '../../../components/Layout/Container';
+import {CreateSuite, UpdateSuite} from '../../../graphql/mutations';
+import {TestraySuite} from '../../../graphql/queries';
+import {useHeader} from '../../../hooks';
+import useFormActions from '../../../hooks/useFormActions';
+import useFormModal from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
 import yupSchema, {yupResolver} from '../../../schema/yup';
+import {searchUtil} from '../../../util/search';
 import {CaseListView} from '../Cases';
-import SuiteSelectCasesModal from './SuiteSelectCasesModal';
+import SuiteSelectCasesModal from './modal';
 
 type SuiteFormData = {
 	caseParameters?: string;
@@ -36,15 +40,22 @@ type SuiteFormData = {
 	smartSuite: boolean;
 };
 
-type SuiteModalProps = {
-	modal: FormModalOptions;
-	projectId: number;
-};
+const SuiteForm = () => {
+	const {
+		form: {formState, onClose, onSubmit},
+	} = useFormActions();
 
-const SuiteModal: React.FC<SuiteModalProps> = ({
-	modal: {modalState, observer, onClose, onSubmit},
-	projectId,
-}) => {
+	const {setTabs} = useHeader({shouldUpdate: false});
+	const {projectId} = useParams();
+	const [cases, setCases] = useState([]);
+	const context: {testraySuite?: TestraySuite} = useOutletContext();
+
+	useEffect(() => {
+		setTimeout(() => {
+			setTabs([]);
+		}, 10);
+	}, [setTabs]);
+
 	const {
 		formState: {errors},
 		handleSubmit,
@@ -52,7 +63,9 @@ const SuiteModal: React.FC<SuiteModalProps> = ({
 		setValue,
 		watch,
 	} = useForm<SuiteFormData>({
-		defaultValues: {smartSuite: false, ...modalState},
+		defaultValues: context.testraySuite
+			? context.testraySuite
+			: {smartSuite: false, ...formState},
 		resolver: yupResolver(yupSchema.suite),
 	});
 
@@ -64,7 +77,7 @@ const SuiteModal: React.FC<SuiteModalProps> = ({
 			{...form, projectId},
 			{
 				createMutation: CreateSuite,
-				updateMutation: CreateSuite,
+				updateMutation: UpdateSuite,
 			}
 		);
 	};
@@ -76,30 +89,17 @@ const SuiteModal: React.FC<SuiteModalProps> = ({
 	};
 
 	const {modal} = useFormModal({
-		onSave: (value) => setValue('caseParameters', value),
+		onSave: (value) => {
+			if (smartSuite) {
+				return setValue('caseParameters', value);
+			}
+
+			setCases(value);
+		},
 	});
 
 	return (
-		<Modal
-			last={
-				<ClayButton.Group spaced>
-					<ClayButton displayType="secondary" onClick={onClose}>
-						{i18n.translate('close')}
-					</ClayButton>
-
-					<ClayButton
-						displayType="primary"
-						onClick={handleSubmit(_onSubmit)}
-					>
-						{i18n.translate('add-suite')}
-					</ClayButton>
-				</ClayButton.Group>
-			}
-			observer={observer}
-			size="lg"
-			title={i18n.translate('new-suite')}
-			visible
-		>
+		<Container className="container">
 			<Input label={i18n.translate('name')} name="name" {...inputProps} />
 
 			<Input
@@ -143,13 +143,34 @@ const SuiteModal: React.FC<SuiteModalProps> = ({
 				type={smartSuite ? 'select-case-parameters' : 'select-cases'}
 			/>
 
-			<CaseListView
-				listViewProps={{
-					managementToolbarProps: {visible: false},
-				}}
-			/>
-		</Modal>
+			{!!cases.length && (
+				<CaseListView
+					listViewProps={{
+						managementToolbarProps: {visible: false},
+						variables: {filter: searchUtil.in('id', cases)},
+					}}
+				/>
+			)}
+
+			<div>
+				<ClayButton.Group spaced>
+					<ClayButton
+						displayType="secondary"
+						onClick={() => onClose(`/project/${projectId}/cases`)}
+					>
+						{i18n.translate('close')}
+					</ClayButton>
+
+					<ClayButton
+						displayType="primary"
+						onClick={handleSubmit(_onSubmit)}
+					>
+						{i18n.translate('save')}
+					</ClayButton>
+				</ClayButton.Group>
+			</div>
+		</Container>
 	);
 };
 
-export default withVisibleContent(SuiteModal);
+export default SuiteForm;

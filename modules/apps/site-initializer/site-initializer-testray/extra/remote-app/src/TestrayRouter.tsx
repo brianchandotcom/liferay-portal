@@ -49,6 +49,8 @@ import RoutineArchived from './pages/Project/Routines/RoutineArchived';
 import RoutineOutlet from './pages/Project/Routines/RoutineOutlet';
 import Suites from './pages/Project/Suites';
 import Suite from './pages/Project/Suites/Suite';
+import SuiteForm from './pages/Project/Suites/SuiteForm';
+import SuiteOutlet from './pages/Project/Suites/SuiteOutlet';
 import Testflow from './pages/Testflow';
 import Subtasks from './pages/Testflow/Subtask';
 import TestflowArchived from './pages/Testflow/TestflowArchived';
@@ -73,7 +75,16 @@ const TestrayRoute = () => (
 						<Route element={<OutletBridge />} path="suites">
 							<Route element={<Suites />} index />
 
-							<Route element={<Suite />} path=":testraySuiteId" />
+							<Route element={<SuiteForm />} path="create" />
+
+							<Route
+								element={<SuiteOutlet />}
+								path=":testraySuiteId"
+							>
+								<Route element={<Suite />} index />
+
+								<Route element={<SuiteForm />} path="update" />
+							</Route>
 						</Route>
 
 						<Route element={<OutletBridge />} path="cases">

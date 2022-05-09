@@ -26,7 +26,7 @@ import {withVisibleContent} from '../../../hoc/withVisibleContent';
 import {FormModalOptions} from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
 
-type SuiteSelectCasesModalProps = {
+type SuiteCasesModalProps = {
 	modal: FormModalOptions;
 	type: 'select-cases' | 'select-case-parameters';
 };
@@ -145,7 +145,7 @@ type State = {
 	testrayTeams: BoxItem[];
 };
 
-const SuiteSelectCasesModal: React.FC<SuiteSelectCasesModalProps> = ({
+const SuiteCasesModal: React.FC<SuiteCasesModalProps> = ({
 	modal: {observer, onClose, onSave, visible},
 	type,
 }) => {
@@ -184,4 +184,4 @@ const SuiteSelectCasesModal: React.FC<SuiteSelectCasesModalProps> = ({
 	);
 };
 
-export default withVisibleContent(SuiteSelectCasesModal);
+export default withVisibleContent(SuiteCasesModal);

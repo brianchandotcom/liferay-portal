@@ -16,6 +16,9 @@ import {gql} from '@apollo/client';
 
 export const testraySuiteFragment = gql`
 	fragment SuiteFragment on C_Suite {
+		creator {
+			name
+		}
 		dateCreated
 		dateModified
 		description

@@ -9,13 +9,15 @@ definition {
 	setUp {
 		task ("Setup: Setup portal instance") {
 			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
 		}
 	}
 
 	@description = "This is a use case for LPS-142518. TC-9 Verify that Accept All at the Cookie Banner could be set and cookies are stored with declined values."
 	@priority = "5"
 	test CookieBannerAcceptAllSelected {
-		property test.name.skip.portal.instance = "CookiePreferences#CookieBannerAcceptAllSelected";
+		property test.name.skip.portal.instance = "Cookies#CookieBannerAcceptAllSelected";
 
 		task ("Given: User click on Accept all") {
 			CookieBanner.cookiesBannerAcceptAll();
@@ -29,7 +31,7 @@ definition {
 	@description = "This is a use case for LPS-142518. TC-1, TC-2 and TC-3: Verify that Cookie Banner is visible with the options configured by the site admin."
 	@priority = "5"
 	test CookieBannerAndCookieConsentPanelElementsAreVisible {
-		property test.name.skip.portal.instance = "CookiePreferences#CookieBannerAndCookieConsentPanelElementsAreVisible";
+		property test.name.skip.portal.instance = "Cookies#CookieBannerAndCookieConsentPanelElementsAreVisible";
 
 		task ("Given: Cookie banner and Cookie Consent portlet are present") {
 			CookieBanner.verifyAllElementsArePresent();
@@ -48,10 +50,33 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-152844. Combined AC-1, AC-2, AC-3, AC-4. Verify that Cookie Banner could be enabled, and customized."
+	test CookieBannerCouldBeEnabledAndCustomized {
+		property test.name.skip.portal.instance = "Cookies#CookieBannerCouldBeEnabledAndCustomized";
+
+		task ("Given: a site configured to show the Banner") {
+			CookieBannerAdmin.configuredToShowBanner();
+
+			CookieBannerAdmin.setCustomTextForAllFields(text = "CUSTOM");
+		}
+
+		task ("When: the End User first visits the site") {
+			CookieHelper.siteVisit();
+		}
+
+		task ("Then: they see the Banner text as the Description is configured for the Banner in the site administration.") {
+			CookieBanner.verifyCustomTextsArePresent(key_text = "CUSTOM");
+		}
+
+		task ("And: they see the 'Decline All' button on the right side of the Banner, next to the 'Accept All' button.") {
+			CookieBanner.verifyDeclineAllButtonIsPresent();
+		}
+	}
+
 	@description = "This is a use case for LPS-142518. TC-10 Verify that Decline All at the Cookie Banner could be set and cookies are stored with declined values."
 	@priority = "5"
 	test CookieBannerDeclineAllSelected {
-		property test.name.skip.portal.instance = "CookiePreferences#CookieBannerDeclineAllSelected";
+		property test.name.skip.portal.instance = "Cookies#CookieBannerDeclineAllSelected";
 
 		task ("Given: User click on Decline all") {
 			CookieBanner.cookiesBannerDeclineAll();
@@ -65,7 +90,7 @@ definition {
 	@description = "This is a use case for LPS-142518. TC-4 Verify that Decline All could be set and cookies are stored with declined values."
 	@priority = "5"
 	test CookieConsentDeclineAllSelected {
-		property test.name.skip.portal.instance = "CookiePreferences#CookieConsentDeclineAllSelected";
+		property test.name.skip.portal.instance = "Cookies#CookieConsentDeclineAllSelected";
 
 		task ("Given: Use opens the Cookie consent portlet in a popup") {
 			CookieBanner.openCookieConsentPanel();
@@ -87,7 +112,7 @@ definition {
 	@description = "This is a use case for LPS-142518. TC-5 When End-User accept selected cookies, only selected cookies are saved."
 	@priority = "5"
 	test CookieConsentPanelAcceptsOnlySelectedCookies {
-		property test.name.skip.portal.instance = "CookiePreferences#CookieConsentPanelAcceptsOnlySelectedCookies";
+		property test.name.skip.portal.instance = "Cookies#CookieConsentPanelAcceptsOnlySelectedCookies";
 
 		task ("Given: User opens the Cookie Consent portlet from the Cookie Banner via Configuration link") {
 			CookieBanner.openCookieConsentPanel();
@@ -107,7 +132,7 @@ definition {
 	@description = "This is a use case for LPS-142518. TC-7 Verify that Cookie Consent Panel could be added to a Site Page."
 	@priority = "5"
 	test CookieConsentPanelCouldBeAddedToASitePage {
-		property test.name.skip.portal.instance = "CookiePreferences#CookieConsentPanelCouldBeAddedToASitePage";
+		property test.name.skip.portal.instance = "Cookies#CookieConsentPanelCouldBeAddedToASitePage";
 
 		task ("Given: User creates a site page and adds Cookie Consent Configuration widget to it.") {
 			CookieHelper.createSitePageWithCookieBannerConfigurationPortlet();
@@ -118,10 +143,63 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-152844. Combined AC-5, AC-6, AC-7. Verify that Cookie Consent pangel could be enabled and customized."
+	test CookieConsentPanelCouldBeEnabledAndCustomized {
+		property test.name.skip.portal.instance = "Cookies#CookieConsentPanelCouldBeEnabledAndCustomized";
+
+		task ("Given: a site configured to show the Banner") {
+			CookieBannerAdmin.configuredToShowBanner();
+		}
+
+		task ("When: the End User opens the 'Cookie Consent' panel") {
+			CookieNavigator.gotoSiteSettings(portlet = "Cookie Consent");
+
+			CookieConsentAdmin.setCustomTextForAllFields(text = "SITE");
+
+			CookieBanner.openCookieConsentPanel();
+		}
+
+		task ("Then: they see the panel's title as the Title is configured for the 'Consent Panel' in the site administration.") {
+			CookieConsentPanel.verifyCustomTextsArePresent(key_text = "SITE");
+		}
+	}
+
+	@description = "This is a use case for LPS-152844. AC-8. Verify that Cookie Consent panel could be enabled and customized on a Site page."
+	test CookieConsentPanelCouldBeEnabledAndCustomizedOnASitePage {
+		property test.name.skip.portal.instance = "Cookies#CookieConsentPanelCouldBeEnabledAndCustomizedOnASitePage";
+
+		task ("Given: a site configured to show the Banner") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "PolicyPage");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Guest",
+				layoutName = "PolicyPage",
+				widgetName = "Type Facet");
+
+			CookieBannerAdmin.configuredToShowBanner();
+		}
+
+		task ("When: the End User opens the 'Cookie Consent' panel and clicks on the 'Cookie Policy Link's Display Link Text' with the configured URL as a link on that after the Description") {
+			CookieNavigator.gotoSiteSettings(portlet = "Cookie Consent");
+
+			CookieConsentAdmin.setCookiePolicyLink(cookiePolicyLink = "/web/guest/policypage");
+
+			CookieBanner.openCookieConsentPanel();
+
+			CookieConsentPanel.clickOnPolicyLink(cookiePolicyLink = "/web/guest/policypage");
+		}
+
+		task ("Then: they go to the 'Cookie Policy Link' page.") {
+			CookieHelper.verifyPolicyPageIsVisible(cookiePolicyLink = "/web/guest/policypage");
+		}
+	}
+
 	@description = "This is a use case for LPS-142518. TC-6 Verify that Cookie Consent Panel could be used to save Cookie Preferences."
 	@priority = "5"
 	test CookieConsentPanelCouldSaveCookieSettingsWhenItsOnASitePage {
-		property test.name.skip.portal.instance = "CookiePreferences#CookieConsentPanelCouldSaveCookieSettingsWhenItsOnASitePage";
+		property test.name.skip.portal.instance = "Cookies#CookieConsentPanelCouldSaveCookieSettingsWhenItsOnASitePage";
 
 		task ("Given: User creates a site page and adds Cookie Consent Configuration widget to it.") {
 			CookieHelper.createSitePageWithCookieBannerConfigurationPortlet();
@@ -140,7 +218,7 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test CookiesLifetimeIsSixMonthsWhenTheyAreSaved {
-		property test.name.skip.portal.instance = "CookiePreferences#CookiesLifetimeIsSixMonthsWhenTheyAreSaved";
+		property test.name.skip.portal.instance = "Cookies#CookiesLifetimeIsSixMonthsWhenTheyAreSaved";
 
 		task ("Given: Cookie Banner is present on the Site.") {
 			CookieBanner.cookiesBannerAcceptAll();

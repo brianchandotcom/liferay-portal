@@ -1298,11 +1298,7 @@ public class LayoutsAdminDisplayContext {
 
 		boolean hasLayouts = false;
 
-		int privateLayoutsCount = _getLayoutsCount(true);
-
-		int publicLayoutsCount = _getLayoutsCount(false);
-
-		if ((privateLayoutsCount + publicLayoutsCount) > 0) {
+		if ((_getLayoutsCount(true) > 0) || (_getLayoutsCount(false) > 0)) {
 			hasLayouts = true;
 		}
 
@@ -1414,10 +1410,7 @@ public class LayoutsAdminDisplayContext {
 
 		Boolean privateLayout = false;
 
-		int publicLayoutsCount = _getLayoutsCount(false);
-		int privateLayoutsCount = _getLayoutsCount(true);
-
-		if ((privateLayoutsCount > 0) && (publicLayoutsCount <= 0)) {
+		if ((_getLayoutsCount(true) > 0) && (_getLayoutsCount(false) <= 0)) {
 			privateLayout = true;
 		}
 

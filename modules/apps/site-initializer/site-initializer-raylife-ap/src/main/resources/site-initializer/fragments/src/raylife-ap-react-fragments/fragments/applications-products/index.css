@@ -1,4 +1,4 @@
-.applications-products-container .legend-container {
+.applications-products-container .legend-content {
 	font-size: 14px;
 	width: 130px;
 }
@@ -34,4 +34,16 @@
 	font-size: 0.875rem;
 	font-style: normal;
 	width: 100%;
+}
+
+.applications-products-container .legend-container {
+	flex-direction: column;
+}
+
+@media screen and (max-width: 1845px) {
+	.applications-products-container .legend-container {
+		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: space-evenly;
+	}
 }

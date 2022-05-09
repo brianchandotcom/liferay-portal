@@ -105,7 +105,7 @@ export default function () {
 				Products
 			</div>
 
-			<div className="align-items-center d-flex flex-row justify-content-between">
+			<div className="align-items-center d-flex flex-wrap justify-content-center">
 				{chartData && (
 					<ClayChart
 						data={chartData}
@@ -142,10 +142,10 @@ export default function () {
 					/>
 				)}
 
-				<div className="d-flex flex-column">
+				<div className="d-flex legend-container">
 					{chartData?.columns?.map((column, index) => (
 						<div
-							className="d-flex flex-row justify-content-between legend-container"
+							className="d-flex flex-row justify-content-between legend-content pr-1"
 							key={index}
 						>
 							<div className="align-items-center d-flex flex-row justify-content-between mr-2">

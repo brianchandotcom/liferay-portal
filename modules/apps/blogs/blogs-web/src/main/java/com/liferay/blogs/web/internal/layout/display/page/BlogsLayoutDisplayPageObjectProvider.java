@@ -16,7 +16,6 @@ package com.liferay.blogs.web.internal.layout.display.page;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
@@ -96,9 +95,7 @@ public class BlogsLayoutDisplayPageObjectProvider
 
 	@Override
 	public String getURLTitle(Locale locale) {
-		AssetRenderer<?> assetRenderer = _assetEntry.getAssetRenderer();
-
-		return assetRenderer.getUrlTitle(locale);
+		return _blogsEntry.getUrlTitle();
 	}
 
 	private AssetEntry _getAssetEntry(BlogsEntry blogsEntry)

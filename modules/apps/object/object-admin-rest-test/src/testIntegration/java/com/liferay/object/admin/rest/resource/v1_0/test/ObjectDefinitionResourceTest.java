@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectField;
 import com.liferay.object.admin.rest.client.pagination.Page;
+import com.liferay.object.admin.rest.client.problem.Problem;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.exception.NoSuchObjectDefinitionException;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -33,6 +34,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -108,6 +110,33 @@ public class ObjectDefinitionResourceTest
 	@Override
 	@Test
 	public void testGraphQLGetObjectDefinitionNotFound() {
+	}
+
+	@Test
+	public void testPutObjectDefinitionWithStorageType() throws Exception {
+		ObjectDefinition postObjectDefinition =
+			testPutObjectDefinition_addObjectDefinition();
+
+		ObjectDefinition randomObjectDefinition = randomObjectDefinition();
+
+		randomObjectDefinition.setStorageType(
+			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT);
+
+		try {
+			objectDefinitionResource.putObjectDefinition(
+				postObjectDefinition.getId(), randomObjectDefinition);
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
+
+			Assert.assertEquals(
+				"StorageType property cannot be changed",
+				problemException.getMessage());
+		}
 	}
 
 	@Override

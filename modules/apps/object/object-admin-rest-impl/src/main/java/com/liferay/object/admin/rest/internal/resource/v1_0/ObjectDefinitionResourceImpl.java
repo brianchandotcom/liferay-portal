@@ -28,6 +28,7 @@ import com.liferay.object.admin.rest.internal.odata.entity.v1_0.ObjectDefinition
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectConstants;
+import com.liferay.object.exception.ObjectDefinitionStorageTypeException;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -35,7 +36,6 @@ import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectLayoutLocalService;
 import com.liferay.object.service.ObjectViewLocalService;
 import com.liferay.object.util.LocalizedMapUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -135,7 +135,8 @@ public class ObjectDefinitionResourceImpl
 		if (!Validator.isBlank(objectDefinition.getStorageType()) &&
 			!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-135430"))) {
 
-			throw new PortalException("StorageType is not yet supported");
+			throw new ObjectDefinitionStorageTypeException(
+				"StorageType is not yet supported");
 		}
 
 		return _toObjectDefinition(
@@ -165,6 +166,11 @@ public class ObjectDefinitionResourceImpl
 	public ObjectDefinition putObjectDefinition(
 			Long objectDefinitionId, ObjectDefinition objectDefinition)
 		throws Exception {
+
+		if (!Validator.isBlank(objectDefinition.getStorageType())) {
+			throw new ObjectDefinitionStorageTypeException(
+				"StorageType property cannot be changed");
+		}
 
 		com.liferay.object.model.ObjectDefinition
 			serviceBuilderObjectDefinition =

@@ -30,7 +30,6 @@ import {
 	useStyleErrors,
 } from '../../../app/contexts/StyleErrorsContext';
 import {useId} from '../../../app/utils/useId';
-import useControlledState from '../../../core/hooks/useControlledState';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 import {DropdownColorPicker} from './DropdownColorPicker';
 import {parseColorValue} from './parseColorValue';
@@ -41,6 +40,18 @@ const debouncedOnValueSelect = debounce(
 	(onValueSelect, fieldName, value) => onValueSelect(fieldName, value),
 	300
 );
+
+function usePropsFirst(value, {forceProp = false}) {
+	const [nextValue, setNextValue] = useState(value);
+	const [previousValue, setPreviousValue] = useState(value);
+
+	if (value !== previousValue || (forceProp && nextValue !== value)) {
+		setNextValue(value);
+		setPreviousValue(value);
+	}
+
+	return [nextValue, setNextValue];
+}
 
 export function ColorPicker({
 	editedTokenValues,
@@ -61,9 +72,11 @@ export function ColorPicker({
 		false
 	);
 	const [activeColorPicker, setActiveColorPicker] = useState(false);
+	const [clearedValue, setClearedValue] = useState(false);
 	const buttonsRef = useRef(null);
-	const [color, setColor] = useControlledState(
-		tokenValues[value]?.value || value
+	const [color, setColor] = usePropsFirst(
+		tokenValues[value]?.value || value,
+		{forceProp: clearedValue}
 	);
 	const colorButtonRef = useRef(null);
 	const [customColors, setCustomColors] = useState([value || '']);
@@ -73,8 +86,9 @@ export function ColorPicker({
 	});
 	const inputRef = useRef(null);
 	const listboxRef = useRef(null);
-	const [tokenLabel, setTokenLabel] = useControlledState(
-		value ? tokenValues[value]?.label : Liferay.Language.get('default')
+	const [tokenLabel, setTokenLabel] = usePropsFirst(
+		value ? tokenValues[value]?.label : Liferay.Language.get('default'),
+		{forceProp: clearedValue}
 	);
 
 	const showButtons = (tokenLabel && color) || !tokenLabel;
@@ -121,6 +135,13 @@ export function ColorPicker({
 		setColor(value);
 		setTokenLabel(label);
 		onValueSelect(field.name, name ?? value);
+
+		if (value === null) {
+			setClearedValue(true);
+		}
+		else {
+			setClearedValue(false);
+		}
 	};
 
 	const onBlurAutocompleteInput = ({target}) => {
@@ -431,7 +452,7 @@ export function ColorPicker({
 								onClick={() => {
 									setError({label: null, value: null});
 									onSetValue(
-										field.defaultValue ?? '',
+										field.defaultValue ?? null,
 										field.defaultValue
 											? null
 											: Liferay.Language.get('default')

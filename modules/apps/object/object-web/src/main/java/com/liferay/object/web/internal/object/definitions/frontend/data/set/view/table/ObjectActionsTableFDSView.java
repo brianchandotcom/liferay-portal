@@ -21,6 +21,8 @@ import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaField;
 import com.liferay.object.web.internal.object.definitions.constants.ObjectDefinitionsFDSNames;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.util.Locale;
 
@@ -47,8 +49,10 @@ public class ObjectActionsTableFDSView extends BaseTableFDSView {
 
 		nameFDSTableSchemaField.setContentRenderer("actionLink");
 
-		fdsTableSchemaBuilder.addFDSTableSchemaField(
-			"description", "description");
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-146871"))) {
+			fdsTableSchemaBuilder.addFDSTableSchemaField(
+				"description", "description");
+		}
 
 		FDSTableSchemaField activeFDSTableSchemaField =
 			fdsTableSchemaBuilder.addFDSTableSchemaField("active", "active");

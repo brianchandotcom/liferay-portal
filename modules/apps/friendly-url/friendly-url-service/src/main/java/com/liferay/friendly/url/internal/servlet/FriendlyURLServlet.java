@@ -359,7 +359,7 @@ public class FriendlyURLServlet extends HttpServlet {
 					_log.debug(encryptorException);
 				}
 
-				return new Redirect(actualURL);
+				return new Redirect(actualURL, false, false);
 			}
 		}
 
@@ -373,7 +373,7 @@ public class FriendlyURLServlet extends HttpServlet {
 					params, !actualURL.contains(StringPool.QUESTION)));
 		}
 
-		return new Redirect(actualURL);
+		return new Redirect(actualURL, false, false);
 	}
 
 	@Override

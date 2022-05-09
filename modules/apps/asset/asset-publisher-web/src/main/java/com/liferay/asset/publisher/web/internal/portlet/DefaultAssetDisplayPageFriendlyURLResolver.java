@@ -193,7 +193,7 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 		Layout layout = _layoutLocalService.getLayoutByUuidAndGroupId(
 			journalArticle.getLayoutUuid(), groupId, privateLayout);
 
-		return new LayoutFriendlyURLComposite(layout, friendlyURL);
+		return new LayoutFriendlyURLComposite(layout, friendlyURL, false);
 	}
 
 	@Override

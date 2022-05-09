@@ -210,7 +210,8 @@ public class AssetCategoryAssetDisplayPageFriendlyURLResolver
 
 		return new LayoutFriendlyURLComposite(
 			layout,
-			getURLSeparator() + friendlyURLEntry.getUrlTitle(languageId));
+			getURLSeparator() + friendlyURLEntry.getUrlTitle(languageId),
+			false);
 	}
 
 	@Override

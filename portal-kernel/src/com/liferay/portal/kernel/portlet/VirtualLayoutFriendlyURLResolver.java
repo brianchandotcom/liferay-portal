@@ -119,7 +119,7 @@ public class VirtualLayoutFriendlyURLResolver implements FriendlyURLResolver {
 				requestContext);
 
 		return new LayoutFriendlyURLComposite(
-			layoutQueryStringComposite.getLayout(), layoutFriendlyURL);
+			layoutQueryStringComposite.getLayout(), layoutFriendlyURL, false);
 	}
 
 	@Override

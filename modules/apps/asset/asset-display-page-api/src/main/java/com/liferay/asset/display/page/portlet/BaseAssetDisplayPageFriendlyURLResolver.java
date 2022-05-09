@@ -211,7 +211,7 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 			}
 		}
 
-		return new LayoutFriendlyURLComposite(layout, friendlyURL);
+		return new LayoutFriendlyURLComposite(layout, friendlyURL, false);
 	}
 
 	@Reference

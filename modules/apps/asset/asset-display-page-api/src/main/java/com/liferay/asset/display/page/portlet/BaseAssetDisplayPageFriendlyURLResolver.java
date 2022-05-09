@@ -64,6 +64,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
@@ -206,8 +207,15 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 			String urlTitle = layoutDisplayPageObjectProvider.getURLTitle(
 				locale);
 
+			String localizedFriendlyURL = friendlyURL;
+
 			if (Validator.isNotNull(urlTitle)) {
-				friendlyURL = getURLSeparator() + urlTitle;
+				localizedFriendlyURL = getURLSeparator() + urlTitle;
+			}
+
+			if (!Objects.equals(friendlyURL, localizedFriendlyURL)) {
+				return new LayoutFriendlyURLComposite(
+					layout, localizedFriendlyURL, true);
 			}
 		}
 

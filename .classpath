@@ -161,7 +161,6 @@
 	<classpathentry kind="lib" path="lib/portal/log4j-core.jar"/>
 	<classpathentry kind="lib" path="lib/portal/persistence.jar"/>
 	<classpathentry kind="lib" path="lib/portal/portlet.jar"/>
-	<classpathentry kind="lib" path="lib/portal/portletmvc4spring-framework.jar"/>
 	<classpathentry kind="lib" path="lib/portal/slf4j-api.jar"/>
 	<classpathentry kind="lib" path="lib/portal/soap-api.jar"/>
 	<classpathentry kind="lib" path="lib/portal/spring-aop.jar"/>

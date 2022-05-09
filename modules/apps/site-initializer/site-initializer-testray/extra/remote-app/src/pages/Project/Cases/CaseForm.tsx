@@ -77,17 +77,20 @@ const FormRow: React.FC<{title: string}> = ({children, title}) => (
 );
 
 const CaseForm: React.FC = () => {
-	const {setDropdownIcon} = useHeader({
-		shouldUpdate: true,
+	const {setDropdownIcon, setTabs} = useHeader({
+		shouldUpdate: false,
 		useDropdown: [],
-		useTabs: [],
 	});
 
 	const context: {testrayCase?: TestrayCase} = useOutletContext();
 
 	useEffect(() => {
 		setDropdownIcon('polls');
-	}, [setDropdownIcon]);
+
+		setTimeout(() => {
+			setTabs([]);
+		}, 10);
+	}, [setDropdownIcon, setTabs]);
 
 	const {
 		form: {formState, onClose, onSubmit},
@@ -190,7 +193,7 @@ const CaseForm: React.FC = () => {
 
 					<Input
 						{...inputProps}
-						label={i18n.translate('enter-the-case-name')}
+						label={i18n.translate('estimed-duration')}
 						name="estimatedDuration"
 						required={false}
 					/>

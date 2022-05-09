@@ -32,15 +32,15 @@ const ProjectSupport = () => {
 
 					{project.liferayContactName && (
 						<div className="font-weight-bold rounded-sm text-neutral-8 text-paragraph">
-							{i18n.translate(
-								getKebabCase(project.liferayContactName)
-							)}
+							{project.liferayContactName}
 						</div>
 					)}
 
 					{project.liferayContactRole && (
 						<div className="rounded-sm text-neutral-10 text-paragraph">
-							{project.liferayContactRole}
+							{i18n.translate(
+								getKebabCase(project.liferayContactRole)
+							)}
 						</div>
 					)}
 

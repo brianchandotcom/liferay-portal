@@ -49,26 +49,53 @@ export default withRouter(
 			);
 		}, [data]);
 
+		const onInstanceReady = () => {
+			client
+				.request({
+					query: getMessageQuery,
+					variables: {
+						friendlyUrlPath: answerId,
+						siteKey: context.siteKey,
+					},
+				})
+				.then(({data}) => setData(data));
+		};
+
+		const handleClickMessage = () => {
+			addUpdateMessage({
+				fetchOptionsOverrides: getContextLink(
+					`${sectionTitle}/${questionId}`
+				),
+				variables: {
+					articleBody: editorRef.current.getContent(),
+					messageBoardMessageId:
+						data.messageBoardMessageByFriendlyUrlPath.id,
+				},
+			}).then(() => {
+				editorRef.current.clearContent();
+				history.goBack();
+			});
+		};
+		const isAReplyMessage = answerId.includes('re-re-ask');
+
 		return (
 			<section className="c-mt-5 questions-section questions-sections-answer">
 				<div className="questions-container row">
 					<div className="c-mx-auto col-xl-10">
-						<h1>{Liferay.Language.get('edit-answer')}</h1>
+						<h1>
+							{!isAReplyMessage
+								? Liferay.Language.get('edit-answer')
+								: Liferay.Language.get('edit-comment')}
+						</h1>
 
 						<DefaultQuestionsEditor
-							label={Liferay.Language.get('your-answer')}
+							label={
+								!isAReplyMessage
+									? Liferay.Language.get('your-answer')
+									: Liferay.Language.get('your-comment')
+							}
 							onContentLengthValid={setIsUpdateButtonDisabled}
-							onInstanceReady={() => {
-								client
-									.request({
-										query: getMessageQuery,
-										variables: {
-											friendlyUrlPath: answerId,
-											siteKey: context.siteKey,
-										},
-									})
-									.then(({data}) => setData(data));
-							}}
+							onInstanceReady={onInstanceReady}
 							ref={editorRef}
 						/>
 
@@ -77,26 +104,16 @@ export default withRouter(
 								className="c-mt-4 c-mt-sm-0"
 								disabled={isUpdateButtonDisabled}
 								displayType="primary"
-								onClick={() => {
-									addUpdateMessage({
-										fetchOptionsOverrides: getContextLink(
-											`${sectionTitle}/${questionId}`
-										),
-										variables: {
-											articleBody: editorRef.current.getContent(),
-											messageBoardMessageId:
-												data
-													.messageBoardMessageByFriendlyUrlPath
-													.id,
-										},
-									}).then(() => {
-										editorRef.current.clearContent();
-										history.goBack();
-									});
-								}}
+								onClick={handleClickMessage}
 							>
 								{context.trustedUser
-									? Liferay.Language.get('update-your-answer')
+									? !isAReplyMessage
+										? Liferay.Language.get(
+												'update-your-answer'
+										  )
+										: Liferay.Language.get(
+												'update-your-comment'
+										  )
 									: Liferay.Language.get(
 											'submit-for-publication'
 									  )}

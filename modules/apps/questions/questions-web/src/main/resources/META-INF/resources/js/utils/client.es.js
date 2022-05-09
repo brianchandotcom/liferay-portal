@@ -418,6 +418,7 @@ export const getMessagesQuery = `
 						dateModified
 						encodingFormat
 						id
+						friendlyUrlPath
 						showAsAnswer
 						status
 					}

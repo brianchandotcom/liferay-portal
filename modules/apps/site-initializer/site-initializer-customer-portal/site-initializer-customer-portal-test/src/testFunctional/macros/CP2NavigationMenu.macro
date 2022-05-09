@@ -62,4 +62,12 @@ definition {
 		Navigator.openSpecificURL(url = "${openURL}");
 	}
 
+	macro goToTeamMembers {
+		Click(locator1 = "CP2NavigationMenu#TEAM_MEMBERS");
+	}
+
+	macro cancelTeamMembersInvitation {
+		Click(locator1 = "CP2NavigationMenu#INVITE_MEMBERS_CANCEL_BUTTON");
+	}
+
 }

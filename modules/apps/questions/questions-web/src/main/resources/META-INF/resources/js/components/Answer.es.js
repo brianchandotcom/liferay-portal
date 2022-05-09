@@ -63,7 +63,7 @@ export default withRouter(
 
 		useEffect(() => {
 			setShowAsAnswer(answer.showAsAnswer);
-		}, [answer.showAsAnswer]);
+		}, [answer, answer.showAsAnswer]);
 
 		useEffect(() => {
 			setDateModified(new Date(answer.dateModified).toLocaleDateString());
@@ -133,10 +133,11 @@ export default withRouter(
 											{answer.actions[
 												'reply-to-message'
 											] &&
-												answer.status !== 'pending' && (
+												answer.status !== 'pending' &&
+												comments.length === 0 && (
 													<ClayButton
-														className="text-reset"
-														displayType="unstyled"
+														className="btn-sm c-px-2 c-py-1 text-reset text-secondary"
+														displayType="secondary"
 														onClick={() =>
 															setShowNewComment(
 																true
@@ -144,7 +145,7 @@ export default withRouter(
 														}
 													>
 														{Liferay.Language.get(
-															'reply'
+															'add-comment'
 														)}
 													</ClayButton>
 												)}
@@ -278,6 +279,25 @@ export default withRouter(
 							}
 						/>
 					</div>
+				</div>
+				<div className="c-mb-3 col-md-9 offset-md-1">
+					{editable && comments.length > 0 && (
+						<ClayButton.Group
+							className="font-weight-bold text-secondary"
+							spaced={true}
+						>
+							{answer.actions['reply-to-message'] &&
+								answer.status !== 'pending' && (
+									<ClayButton
+										className="btn-sm c-px-2 c-py-1 text-reset text-secondary"
+										displayType="secondary"
+										onClick={() => setShowNewComment(true)}
+									>
+										{Liferay.Language.get('add-comment')}
+									</ClayButton>
+								)}
+						</ClayButton.Group>
+					)}
 				</div>
 			</>
 		);

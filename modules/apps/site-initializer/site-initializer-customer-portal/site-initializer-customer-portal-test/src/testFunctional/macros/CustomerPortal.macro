@@ -371,6 +371,10 @@ definition {
 		AssertElementPresent(locator1 = "CustomerPortalSite#INVITE_TEAM_MEMBERS_TITLE");
 	}
 
+	macro selectNavigatorWindow{
+		SelectWindow(locator1 = "title=${navigatorWidow}");
+	}
+
 	macro viewKoroneikiInfo {
 		Click(
 			key_text = "",
@@ -385,6 +389,10 @@ definition {
 
 	macro viewSubcriptionsPage {
 		AssertElementPresent(locator1 = "CustomerPortalSite#SUBCRIPTIONS_PROJECT_INSIDE_PAGE");
+	}
+
+	macro viewTeamMembersPage {
+		AssertElementPresent(locator1 = "CustomerPortalSite#TEAM_MEMBERS_MAIN_PAGE");
 	}
 
 }

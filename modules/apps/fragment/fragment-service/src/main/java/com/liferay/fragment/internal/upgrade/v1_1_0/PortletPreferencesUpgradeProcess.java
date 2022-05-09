@@ -100,7 +100,7 @@ public class PortletPreferencesUpgradeProcess extends UpgradeProcess {
 					"PortletPreferences.plid from PortletPreferences inner ",
 					"join Layout on PortletPreferences.plid = Layout.plid ",
 					"where PortletPreferences.portletId like ",
-					"CONCAT('%_INSTANCE_', '?') and (Layout.groupId = ? or ",
+					"CONCAT('%_INSTANCE_', ?) and (Layout.groupId = ? or ",
 					"PortletPreferences.plid = ?)"))) {
 
 			preparedStatement.setString(1, namespace);

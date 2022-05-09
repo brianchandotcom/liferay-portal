@@ -440,11 +440,6 @@ const DataSet = ({
 			<span aria-hidden="true" className="loading-animation my-7" />
 		);
 
-	const formRef = useRef(null);
-
-	const wrappedView =
-		formId || formName ? view : <form ref={formRef}>{view}</form>;
-
 	const paginationComponent =
 		showPagination && pagination && items?.length && total ? (
 			<div className="data-set-pagination-wrapper">
@@ -650,7 +645,6 @@ const DataSet = ({
 				filters,
 				formId,
 				formName,
-				formRef,
 				highlightItems,
 				highlightedItemsValue,
 				id,
@@ -699,7 +693,7 @@ const DataSet = ({
 						<div className="data-set data-set-inline">
 							{managementBar}
 
-							{wrappedView}
+							{view}
 
 							{paginationComponent}
 						</div>
@@ -709,7 +703,7 @@ const DataSet = ({
 						<div className="data-set data-set-stacked">
 							{managementBar}
 
-							{wrappedView}
+							{view}
 
 							{paginationComponent}
 						</div>
@@ -720,7 +714,7 @@ const DataSet = ({
 							{managementBar}
 
 							<div className="container-fluid container-xl mt-3">
-								{wrappedView}
+								{view}
 
 								{paginationComponent}
 							</div>

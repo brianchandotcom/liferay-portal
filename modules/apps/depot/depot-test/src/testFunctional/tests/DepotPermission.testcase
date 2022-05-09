@@ -1285,7 +1285,7 @@ definition {
 			siteNameScope = "All Sites and Asset Libraries");
 	}
 
-	@description = "This ensures that a site member without permissions cannot access a depot folder via DM widget on a connect site."
+	@description = "This ensures that a site member without permissions cannot access a depot folder via DM widget on a connected site."
 	@priority = "4"
 	test SiteMemberCannotAccessFolderWithoutPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";

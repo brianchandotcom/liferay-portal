@@ -153,7 +153,7 @@ const SlaCard = ({project}) => {
 				<div className="bg-neutral-1 cp-n-sla-card rounded-lg">
 					<p className="px-3 py-2 text-neutral-7 text-paragraph-sm">
 						{i18n.translate(
-							"the-project's-support-level-is-displayed-here-for-projects-with-ticketing-support."
+							"the-project's-support-level-is-displayed-here-for-projects-with-ticketing-support"
 						)}
 					</p>
 				</div>

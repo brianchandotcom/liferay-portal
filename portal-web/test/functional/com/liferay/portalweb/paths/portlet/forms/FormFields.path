@@ -202,7 +202,7 @@
 </tr>
 <tr>
 	<td>FIELD_TARGET_LABEL_AND_BODY_TEXT</td>
-	<td>//div[contains(@class,'ddm-drag')]//div[contains(*,'${key_fieldName}')]/*/*[contains(text(),'${key_bodyText}')]</td>
+	<td>//div[contains(@class,'ddm-drag')]//div[contains(*,'${key_fieldName}')]/*/*[contains(text(),'${key_bodyText}')] | //fieldset//legend[text()='${key_fieldName}']/..//p[text()='${key_bodyText}']</td>
 	<td></td>
 </tr>
 <tr>

@@ -116,7 +116,7 @@
 </tr>
 <tr>
 	<td>HELP_TEXT_AT_APP_DEPLOYED</td>
-	<td>//span[contains(text(),'${fieldValue}')]</td>
+	<td>//span[contains(text(),'${fieldValue}')] | //div[text()='${fieldValue}']</td>
 	<td></td>
 </tr>
 <tr>

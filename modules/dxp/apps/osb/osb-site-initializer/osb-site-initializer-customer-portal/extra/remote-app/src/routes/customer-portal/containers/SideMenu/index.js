@@ -11,6 +11,7 @@
 
 import classNames from 'classnames';
 import {useEffect, useMemo, useRef, useState} from 'react';
+import i18n from '../../../../common/I18n';
 import {Button} from '../../../../common/components';
 import {useCustomerPortal} from '../../context';
 import {MENU_TYPES} from '../../utils/constants';
@@ -68,7 +69,7 @@ const SideMenu = () => {
 						setActive={menuUpdateStatus}
 						to={`${ACTIVATION_PATH}/${redirectPage}`}
 					>
-						{name}
+						{i18n.translate(getKebabCase(name))}
 					</MenuItem>
 				);
 			}),

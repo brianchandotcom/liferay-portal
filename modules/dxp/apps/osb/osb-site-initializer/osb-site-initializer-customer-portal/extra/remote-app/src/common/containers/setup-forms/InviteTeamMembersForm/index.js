@@ -14,6 +14,7 @@ import ClayForm from '@clayui/form';
 import classNames from 'classnames';
 import {FieldArray, Formik} from 'formik';
 import {useEffect, useState} from 'react';
+import i18n from '../../../I18n';
 import {Badge, Button} from '../../../components';
 import {useApplicationProvider} from '../../../context/AppPropertiesProvider';
 import {Liferay} from '../../../services/liferay';
@@ -151,8 +152,7 @@ const InviteTeamMembersPage = ({
 			setInitialError(false);
 			setBaseButtonDisabled(sucessfullyEmails !== totalEmails);
 			setshowEmptyEmailError(false);
-		}
-		else if (touched['invites']?.some((field) => field?.email)) {
+		} else if (touched['invites']?.some((field) => field?.email)) {
 			setInitialError(true);
 			setBaseButtonDisabled(true);
 		}
@@ -207,8 +207,7 @@ const InviteTeamMembersPage = ({
 				}
 				handlePage();
 			}
-		}
-		else {
+		} else {
 			setInitialError(true);
 			setBaseButtonDisabled(true);
 			setTouched({
@@ -240,21 +239,23 @@ const InviteTeamMembersPage = ({
 						isLoading={isLoadingUserInvitation}
 						onClick={handleSubmit}
 					>
-						Send Invitations
+						{i18n.translate('send-invitations')}
 					</Button>
 				),
 			}}
 			headerProps={{
-				helper:
-					'Team members will receive an email invitation to access this project on Customer Portal.',
-				title: 'Invite Your Team Members',
+				helper: i18n.translate(
+					'team-members-will-receive-an-email-invitation-to-access-this-project-on-customer-portal'
+				),
+				title: i18n.translate('invite-your-team-members'),
 			}}
 		>
 			{hasInitialError && (
 				<Badge>
 					<span className="pl-1">
-						Add at least one user&apos;s email to send an
-						invitation.
+						{i18n.translate(
+							'add-at-least-one-user-s-email-to-send-an-invitation'
+						)}
 					</span>
 				</Badge>
 			)}
@@ -269,7 +270,7 @@ const InviteTeamMembersPage = ({
 							})}
 						>
 							<div className="px-3">
-								<label>Project Name</label>
+								<label>{i18n.translate('project-name')}</label>
 
 								<p className="invites-project-name text-neutral-6 text-paragraph-lg">
 									<strong>{project.name}</strong>
@@ -306,7 +307,9 @@ const InviteTeamMembersPage = ({
 							{showEmptyEmailError && (
 								<Badge badgeClassName="cp-badge-error-message">
 									<span className="pl-1">
-										Please enter your email address.
+										{i18n.translate(
+											'please-enter-your-email-address'
+										)}
 									</span>
 								</Badge>
 							)}
@@ -334,7 +337,7 @@ const InviteTeamMembersPage = ({
 										prependIcon="hr"
 										small
 									>
-										Remove this Member
+										{i18n.translate('remove-this-member')}
 									</Button>
 								)}
 
@@ -358,7 +361,7 @@ const InviteTeamMembersPage = ({
 										prependIcon="plus"
 										small
 									>
-										Add More Members
+										{i18n.translate('add-more-members')}
 									</Button>
 								)}
 							</div>
@@ -369,19 +372,28 @@ const InviteTeamMembersPage = ({
 									<h5 className="text-neutral-7">
 										{`${
 											projectHasSLAGoldPlatinum
-												? 'Support Seats'
-												: `${ROLE_TYPES.admin.name} roles`
-										}   available: ${availableAdminsRoles} of ${
-											project.maxRequestors
-										}`}
+												? i18n.translate(
+														'support-seats'
+												  )
+												: `${
+														ROLE_TYPES.admin.name
+												  } ${i18n.translate('roles')}`
+										}  ${i18n.sub('available-x-of-x', [
+											availableAdminsRoles,
+											project.maxRequestors,
+										])}`}
 									</h5>
 
 									<p className="mb-0 text-neutral-7 text-paragraph-sm">
-										{`Only ${project.maxRequestors} member${
-											project.maxRequestors > 1 ? 's' : ''
-										} per project (including yourself) have
-								   role permissions (Admins & Support Seats) to open Support
-								   tickets. `}
+										{project.maxRequestors > 1
+											? i18n.sub(
+													'only-x-members-per-project-including-yourself-have-role-permissions-admins-support-seats-to-open-support-tickets',
+													[project.maxRequestors]
+											  )
+											: i18n.sub(
+													'only-x-member-per-project-including-yourself-have-role-permissions-admins-support-seats-to-open-support-tickets',
+													[project.maxRequestors]
+											  )}
 
 										<a
 											className="font-weight-bold text-neutral-9"
@@ -389,8 +401,9 @@ const InviteTeamMembersPage = ({
 											rel="noreferrer"
 											target="_blank"
 										>
-											Learn more about Customer Portal
-											roles
+											{i18n.translate(
+												'learn-more-about-customer-portal-roles'
+											)}
 										</a>
 									</p>
 								</div>

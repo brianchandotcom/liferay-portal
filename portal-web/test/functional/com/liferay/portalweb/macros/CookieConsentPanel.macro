@@ -5,14 +5,28 @@ definition {
 		SelectFrame.selectFrameNoLoading(locator1 = "CookieConsentPanel#COOKIES_CONSENT_PANEL");
 	}
 
+	@description = "Verify if Cookie Consent Panel is not visible"
 	macro checkCookieConsentPanelIsNotVisible {
 		WaitForElementNotPresent(locator1 = "COOKIES_CONSENT_PANEL_IFRAME");
 	}
 
+	@description = "Click on Policy link shown on the Cookie Consent Panel"
+	macro clickOnPolicyLink {
+		SelectFrame.selectFrameTop();
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CookieConsentPanel#COOKIES_CONSENT_PANEL_IFRAME");
+
+		Click(
+			key_text = "${cookiePolicyLink}",
+			locator1 = "CookieConsentPanel#COOKIES_CONSENT_PANEL_POLICY_LINK");
+	}
+
+	@description = "Accept all cookies on Cookie Consent Panel"
 	macro cookiesAcceptAll {
 		Click(locator1 = "CookieConsentPanel#ACCEPT_ALL_BUTTON");
 	}
 
+	@description = "Select all cookies on Cookie Consent Panel"
 	macro cookiesCheckAll {
 		Check.checkToggleSwitch(locator1 = "CookieConsentPanel#PERFORMANCE_COOKIES_TOGGLE");
 
@@ -25,18 +39,21 @@ definition {
 		CookieConsentPanel.cookiesConfirmSelected();
 	}
 
+	@description = "Confirm selected cookies on Cookie Consent Panel"
 	macro cookiesConfirmSelected {
 		CookieConsentPanel._selectPanelOuterFrame();
 
 		Click(locator1 = "CookieConsentPanel#CONFIRM_BUTTON");
 	}
 
+	@description = "Decline all cookies on Cookie Consent Panel"
 	macro cookiesDeclineAll {
 		CookieConsentPanel._selectPanelOuterFrame();
 
 		Click(locator1 = "CookieConsentPanel#DECLINE_ALL_BUTTON");
 	}
 
+	@description = "Customized select of cookie consents"
 	macro editCookieConsentConsent {
 		if (isSet(performanceCookies)) {
 			Check.checkToggleSwitch(
@@ -57,6 +74,7 @@ definition {
 		}
 	}
 
+	@description = "Select all cookie categories on the Cookie Consent panel"
 	macro selectAllCookiesOnConsentPanel {
 		Check.checkToggleSwitch(locator1 = "CookieConsentPanel#PERFORMANCE_COOKIES_TOGGLE");
 
@@ -67,6 +85,7 @@ definition {
 		Click(locator1 = "CookieConsentPanel#CONFIRM_BUTTON");
 	}
 
+	@description = "REMOVE THIS"
 	macro verifyAllElementsArePresent {
 		WaitForElementPresent(locator1 = "CookieConsentPanel#PERFORMANCE_COOKIES_TOGGLE");
 
@@ -85,6 +104,7 @@ definition {
 		WaitForElementPresent(locator1 = "CookieConsentPanel#CLOSE_BUTTON");
 	}
 
+	@description = "Verfiy that all Cookie Concent portlet elements are present"
 	macro verifyAllElementsArePresentOnCookieConsentPortlet {
 		WaitForElementPresent(locator1 = "CookieConsentPanel#PERFORMANCE_COOKIES_TOGGLE");
 
@@ -99,6 +119,7 @@ definition {
 		WaitForElementPresent(locator1 = "CookieConsentPanel#ACCEPT_ALL_BUTTON");
 	}
 
+	@description = "Verfiy that cookies are not presen with true as value"
 	macro verifyCookiesAreNotPresent {
 		CookieHelper.checkSelectedCookieIsNotPresent(
 			cookieName = "CONSENT_TYPE_PERFORMANCE",
@@ -115,6 +136,39 @@ definition {
 		CookieHelper.checkSelectedCookieIsNotPresent(
 			cookieName = "CONSENT_TYPE_NECESSARY",
 			expectedCookieValue = "true");
+	}
+
+	@description = "Verfiy that customized texts are present"
+	macro verifyCustomTextsArePresent {
+		Variables.assertDefined(parameterList = "${key_text}");
+
+		SelectFrame.selectFrameTop();
+
+		AssertElementPresent(
+			key_text = "${key_text}_1",
+			locator1 = "CookieConsentPanel#COOKIES_CONSENT_PANEL_TITLE");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CookieConsentPanel#COOKIES_CONSENT_PANEL_IFRAME");
+
+		var actualLink = selenium.getAttribute("CookieConsentPanel#COOKIES_CONSENT_PANEL_POLICY_LINK_VALUE");
+
+		TestUtils.assertEquals(
+			actual = "${actualLink}",
+			expected = "http://localhost:8080/group/guest/~/control_panel/${key_text}_3");
+
+		AssertElementPresent(
+			key_text = "${key_text}_4",
+			locator1 = "CookieConsentPanel#COOKIES_CONSENT_PANEL_POLICY_TITLE");
+
+		for (var id : list "2,5,6,7,8") {
+			AssertElementPresent(
+				key_text = "${id}",
+				locator1 = "CookieConsentPanel#COOKIES_CONSENT_PANEL_LOCALIZED_TEXT");
+		}
+
+		CookieConsentPanel._selectPanelOuterFrame();
+
+		Click(locator1 = "CookieConsentPanel#CLOSE_BUTTON");
 	}
 
 }

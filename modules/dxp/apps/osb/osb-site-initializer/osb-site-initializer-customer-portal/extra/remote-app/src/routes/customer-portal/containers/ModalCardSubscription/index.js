@@ -12,11 +12,13 @@
 import {useQuery} from '@apollo/client';
 import ClayModal from '@clayui/modal';
 import React, {useState} from 'react';
+import i18n from '../../../../common/I18n';
 import {Button, Table} from '../../../../common/components';
 import {getAccountSubscriptionsTerms} from '../../../../common/services/liferay/graphql/queries';
 import StatusTag from '../../components/StatusTag';
 import {STATUS_TAG_TYPES} from '../../utils/constants';
 import getDateCustomFormat from '../../utils/getDateCustomFormat';
+import getKebabCase from '../../utils/getKebabCase';
 
 const dateFormat = {
 	day: '2-digit',
@@ -40,7 +42,7 @@ const columns = [
 		bodyClass: 'border-0',
 		expanded: true,
 		header: {
-			name: 'Start - End Date',
+			name: i18n.translate('start-end-date'),
 			styles:
 				'bg-neutral-1 font-weight-bold text-neutral-8 table-cell-expand-smaller py-3',
 		},
@@ -50,7 +52,7 @@ const columns = [
 		align: 'center',
 		bodyClass: 'border-0',
 		header: {
-			name: 'Provisioned',
+			name: i18n.translate('provisioned'),
 			styles:
 				'bg-neutral-1 font-weight-bold text-neutral-8 table-cell-expand-smaller py-3',
 		},
@@ -60,7 +62,7 @@ const columns = [
 		align: 'center',
 		bodyClass: 'border-0',
 		header: {
-			name: 'Purchased',
+			name: i18n.translate('purchased'),
 			styles:
 				'bg-neutral-1 font-weight-bold text-neutral-8 table-cell-expand-smaller py-3',
 		},
@@ -70,7 +72,7 @@ const columns = [
 		align: 'center',
 		bodyClass: 'border-0',
 		header: {
-			name: 'Instance Size',
+			name: i18n.translate('instance-size'),
 			styles:
 				'bg-neutral-1 font-weight-bold text-neutral-8 table-cell-expand-smaller py-3',
 		},
@@ -80,7 +82,7 @@ const columns = [
 		align: 'center',
 		bodyClass: 'border-0',
 		header: {
-			name: 'Status',
+			name: i18n.translate('status'),
 			styles:
 				'bg-neutral-1 font-weight-bold text-neutral-8 table-cell-expand-smaller py-3',
 		},
@@ -123,10 +125,14 @@ const ModalCardSubscription = ({
 				<div className="d-flex justify-content-between mb-4">
 					<div className="flex-row mb-1">
 						<h6 className="text-brand-primary">
-							SUBSCRIPTION TERMS
+							{i18n.translate('subscription-terms').toUpperCase()}
 						</h6>
 
-						<h2 className="text-neutral-10">{`${subscriptionGroup} ${subscriptionName}`}</h2>
+						<h2 className="text-neutral-10">{`${i18n.translate(
+							getKebabCase(subscriptionGroup)
+						)} ${i18n.translate(
+							getKebabCase(subscriptionName)
+						)}`}</h2>
 					</div>
 
 					<Button
@@ -176,11 +182,11 @@ const ModalCardSubscription = ({
 								'subscription-term-status':
 									(subscriptionTermStatus && (
 										<StatusTag
-											currentStatus={
+											currentStatus={i18n.translate(
 												STATUS_TAG_TYPES[
 													`${subscriptionTermStatus.toLowerCase()}`
 												]
-											}
+											)}
 										/>
 									)) ||
 									'-',

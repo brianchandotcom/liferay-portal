@@ -1,3 +1,4 @@
+/* eslint-disable @liferay/empty-line-between-elements */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,10 +12,12 @@
 
 import {useModal} from '@clayui/modal';
 import {useState} from 'react';
+import i18n from '../../../../common/I18n';
 import ModalCardSubscription from '../../containers/ModalCardSubscription';
 import {useCustomerPortal} from '../../context';
 import {STATUS_TAG_TYPES} from '../../utils/constants';
 import getDateCustomFormat from '../../utils/getDateCustomFormat';
+import getKebabCase from '../../utils/getKebabCase';
 import StatusTag from '../StatusTag';
 
 const dateFormat = {
@@ -79,13 +82,14 @@ const CardSubscription = ({
 
 				<div className="mt-4">
 					<h5 className="mb-1 text-center title">
-						{cardSubscriptionData?.name || ' - '}
+						{i18n.translate(
+							getKebabCase(cardSubscriptionData?.name)
+						) || ' - '}
 					</h5>
 
 					<p className="mb-1 text-center text-neutral-7 text-paragraph-sm">
-						{`Instance size: ${
-							cardSubscriptionData?.instanceSize || ' - '
-						}`}
+						{i18n.translate('instance-size')}:{' '}
+						{`${cardSubscriptionData?.instanceSize || ' - '}`}
 					</p>
 
 					<p className="mb-3 text-center">
@@ -100,7 +104,9 @@ const CardSubscription = ({
 
 					<div className="d-flex justify-content-center">
 						<StatusTag
-							currentStatus={STATUS_TAG_TYPES[subscriptionStatus]}
+							currentStatus={i18n.translate(
+								STATUS_TAG_TYPES[subscriptionStatus]
+							)}
 						/>
 					</div>
 				</div>

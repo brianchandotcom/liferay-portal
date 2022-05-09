@@ -36,6 +36,22 @@ function trimPackage(name) {
 	return name.substr(name.lastIndexOf('.') + 1);
 }
 
+function handleOverrideExistingRecordsCheckbox(namespace) {
+	const overrideExistingRecordsCheckbox = document.querySelector(
+		`#${namespace}allowUpdate`
+	);
+
+	const ignoreBlankFieldCheckbox = document.querySelector(
+		`#${namespace}onUpdateDoPatch`
+	);
+
+	overrideExistingRecordsCheckbox.addEventListener('change', ({target}) => {
+		ignoreBlankFieldCheckbox.disabled = !target.checked;
+
+		ignoreBlankFieldCheckbox.checked = false;
+	});
+}
+
 export default function ({
 	initialExternalType,
 	initialTemplateClassName,
@@ -68,6 +84,8 @@ export default function ({
 			}
 		});
 	}
+
+	handleOverrideExistingRecordsCheckbox(namespace);
 
 	async function handleTemplateSelectedEvent({template}) {
 		if (template) {

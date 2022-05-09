@@ -64,8 +64,6 @@ definition {
 
 		ClickNoError(locator1 = "Icon#DELETE");
 
-		AssertConfirm(value1 = "Are you sure you want to move the selected entries to the Recycle Bin?");
-
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "No web content was found.");

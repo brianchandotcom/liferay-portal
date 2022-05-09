@@ -469,10 +469,6 @@ definition {
 		else {
 			ClickNoError(locator1 = "Icon#MOVE_TO_RECYCLE_BIN");
 
-			if (isSet(webContent)) {
-				AssertConfirm(value1 = "Are you sure you want to move the selected entry to the Recycle Bin?");
-			}
-
 			Alert.viewSuccessMessage();
 		}
 	}

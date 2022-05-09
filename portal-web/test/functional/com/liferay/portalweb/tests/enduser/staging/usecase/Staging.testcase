@@ -1586,6 +1586,8 @@ definition {
 			pageName = "Staging Test Page",
 			siteName = "Site Name");
 
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
 		DMDocument.viewStagingDetailsPG();
 	}
 

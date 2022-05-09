@@ -182,10 +182,10 @@ FolderActionDisplayContext folderActionDisplayContext = new FolderActionDisplayC
 			<c:choose>
 				<c:when test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-152694")) %>'>
 					<liferay-ui:icon
-						icon='<%= folderActionDisplayContext.isTrashEnabled() ? "trash" : "times-circle" %>'
+						icon="trash"
 						iconCssClass="dropdown-item-indicator-start"
 						markupView="lexicon"
-						message='<%= folderActionDisplayContext.isTrashEnabled() ? "move-to-recycle-bin" : "delete" %>'
+						message="delete"
 						method="get"
 						url="<%= folderActionDisplayContext.getDeleteFolderURL() %>"
 					/>

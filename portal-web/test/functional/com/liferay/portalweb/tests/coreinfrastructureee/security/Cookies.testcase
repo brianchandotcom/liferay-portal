@@ -20,6 +20,8 @@ definition {
 		property test.name.skip.portal.instance = "Cookies#CookieBannerAcceptAllSelected";
 
 		task ("Given: User click on Accept all") {
+			CookieBannerAdmin.configuredToShowBanner();
+
 			CookieBanner.cookiesBannerAcceptAll();
 		}
 
@@ -34,6 +36,8 @@ definition {
 		property test.name.skip.portal.instance = "Cookies#CookieBannerAndCookieConsentPanelElementsAreVisible";
 
 		task ("Given: Cookie banner and Cookie Consent portlet are present") {
+			CookieBannerAdmin.configuredToShowBanner();
+
 			CookieBanner.verifyAllElementsArePresent();
 		}
 
@@ -79,6 +83,8 @@ definition {
 		property test.name.skip.portal.instance = "Cookies#CookieBannerDeclineAllSelected";
 
 		task ("Given: User click on Decline all") {
+			CookieBannerAdmin.configuredToShowBanner();
+
 			CookieBanner.cookiesBannerDeclineAll();
 		}
 
@@ -93,6 +99,8 @@ definition {
 		property test.name.skip.portal.instance = "Cookies#CookieConsentDeclineAllSelected";
 
 		task ("Given: Use opens the Cookie consent portlet in a popup") {
+			CookieBannerAdmin.configuredToShowBanner();
+
 			CookieBanner.openCookieConsentPanel();
 		}
 
@@ -115,6 +123,8 @@ definition {
 		property test.name.skip.portal.instance = "Cookies#CookieConsentPanelAcceptsOnlySelectedCookies";
 
 		task ("Given: User opens the Cookie Consent portlet from the Cookie Banner via Configuration link") {
+			CookieBannerAdmin.configuredToShowBanner();
+
 			CookieBanner.openCookieConsentPanel();
 		}
 
@@ -135,6 +145,8 @@ definition {
 		property test.name.skip.portal.instance = "Cookies#CookieConsentPanelCouldBeAddedToASitePage";
 
 		task ("Given: User creates a site page and adds Cookie Consent Configuration widget to it.") {
+			CookieBannerAdmin.configuredToShowBanner();
+
 			CookieHelper.createSitePageWithCookieBannerConfigurationPortlet();
 		}
 
@@ -202,6 +214,8 @@ definition {
 		property test.name.skip.portal.instance = "Cookies#CookieConsentPanelCouldSaveCookieSettingsWhenItsOnASitePage";
 
 		task ("Given: User creates a site page and adds Cookie Consent Configuration widget to it.") {
+			CookieBannerAdmin.configuredToShowBanner();
+
 			CookieHelper.createSitePageWithCookieBannerConfigurationPortlet();
 		}
 
@@ -221,6 +235,8 @@ definition {
 		property test.name.skip.portal.instance = "Cookies#CookiesLifetimeIsSixMonthsWhenTheyAreSaved";
 
 		task ("Given: Cookie Banner is present on the Site.") {
+			CookieBannerAdmin.configuredToShowBanner();
+
 			CookieBanner.cookiesBannerAcceptAll();
 		}
 

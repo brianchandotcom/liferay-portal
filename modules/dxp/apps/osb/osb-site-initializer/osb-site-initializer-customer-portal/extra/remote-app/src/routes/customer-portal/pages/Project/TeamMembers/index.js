@@ -11,6 +11,7 @@
 
 import {useEffect} from 'react';
 import {useOutletContext} from 'react-router-dom';
+import i18n from '../../../../../common/I18n';
 import {useApplicationProvider} from '../../../../../common/context/AppPropertiesProvider';
 import ManageProductUser from '../../../components/ManageProductUsers';
 import TeamMembersTable from '../../../containers/TeamMembersTable';
@@ -27,16 +28,18 @@ const TeamMembers = () => {
 	}, [setHasSideMenu, setHasQuickLinksPanel]);
 
 	if (!project || !subscriptionGroups || !sessionId) {
-		return <>Loading...</>;
+		return <>{i18n.translate('loading')}...</>;
 	}
 
 	return (
 		<>
 			<div>
-				<h1 className="m-0">Team Members</h1>
+				<h1 className="m-0">{i18n.translate('team-members')}</h1>
 
 				<p className="mb-0 mt-1 text-neutral-7 text-paragraph-sm">
-					Team members have access to this project in Customer Portal.
+					{i18n.translate(
+						'team-members-have-access-to-this-project-in-customer-portal'
+					)}
 				</p>
 			</div>
 

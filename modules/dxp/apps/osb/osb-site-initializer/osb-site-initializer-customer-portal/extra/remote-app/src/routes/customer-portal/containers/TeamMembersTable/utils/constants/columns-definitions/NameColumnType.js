@@ -11,6 +11,7 @@
  */
 
 import {memo} from 'react';
+import i18n from '../../../../../../../common/I18n';
 import {useApplicationProvider} from '../../../../../../../common/context/AppPropertiesProvider';
 import {Liferay} from '../../../../../../../common/services/liferay';
 import {getMd5Hash} from '../../../../../utils/getMd5Hash';
@@ -51,7 +52,9 @@ const NameColumnType = memo(({userAccount}) => {
 			<p className="m-0 text-truncate">{userAccount.name}</p>
 
 			{userAccount.id === currentLoggedUserId && (
-				<span className="ml-1 text-neutral-7">(me)</span>
+				<span className="ml-1 text-neutral-7">
+					({i18n.translate('me')})
+				</span>
 			)}
 		</div>
 	);

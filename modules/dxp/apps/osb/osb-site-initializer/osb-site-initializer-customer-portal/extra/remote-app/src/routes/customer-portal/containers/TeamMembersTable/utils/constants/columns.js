@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import i18n from '../../../../../../common/I18n';
 import PopoverIconButton from '../../components/PopoverIconButton';
 
 export const COLUMNS = [
@@ -16,7 +17,7 @@ export const COLUMNS = [
 		accessor: 'name',
 		bodyClass: 'border-0',
 		header: {
-			name: 'Name',
+			name: `${i18n.translate('name')}`,
 			styles:
 				'bg-transparent text-neutral-10 font-weight-bold table-cell-expand',
 		},
@@ -27,7 +28,7 @@ export const COLUMNS = [
 		bodyClass: 'border-0',
 
 		header: {
-			name: 'Email',
+			name: `${i18n.translate('email')}`,
 			styles:
 				'bg-transparent text-neutral-10 font-weight-bold table-cell-expand-small',
 		},
@@ -41,7 +42,7 @@ export const COLUMNS = [
 		header: {
 			name: (
 				<div className="align-items-center d-flex justify-content-center">
-					<p className="m-0">Support Seat</p>
+					<p className="m-0">{i18n.translate('support-seat')}</p>
 
 					<PopoverIconButton />
 				</div>
@@ -55,7 +56,7 @@ export const COLUMNS = [
 		accessor: 'role',
 		bodyClass: 'border-0',
 		header: {
-			name: 'Role',
+			name: `${i18n.translate('role')}`,
 			styles:
 				'bg-transparent text-neutral-10 font-weight-bold table-cell-expand-smaller',
 		},
@@ -65,7 +66,7 @@ export const COLUMNS = [
 		accessor: 'status',
 		bodyClass: 'border-0',
 		header: {
-			name: 'Status',
+			name: `${i18n.translate('status')}`,
 			styles:
 				'bg-transparent text-neutral-10 font-weight-bold table-cell-expand-smallest',
 		},

@@ -12,6 +12,7 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayPopover from '@clayui/popover';
+import i18n from '../../../../../../common/I18n';
 import {useApplicationProvider} from '../../../../../../common/context/AppPropertiesProvider';
 const PopoverIconButton = ({alignPosition = 'bottom'}) => {
 	const {customerPortalRoles} = useApplicationProvider();
@@ -31,18 +32,16 @@ const PopoverIconButton = ({alignPosition = 'bottom'}) => {
 			}
 		>
 			<p className="m-0 text-neutral-10">
-				The limit of support seats available counts the total of&nbsp;
-				<span className="text-weight-bold">
-					Administrators & Requesters
-				</span>
-				&nbsp;roles assigned due to both have role permissions to open
-				support tickets.&nbsp;
+				{i18n.translate(
+					'the-limit-of-support-seats-available-counts-the-total-of-administrators-requesters-roles-assigned-due-to-both-have-role-permissions-to-open-support-tickets'
+				)}
+
 				<a
 					href={customerPortalRoles}
 					rel="noopener noreferrer"
 					target="_blank"
 				>
-					Learn more about Customer Portal roles.
+					{i18n.translate('learn-more-about-customer-portal-roles')}
 				</a>
 			</p>
 		</ClayPopover>

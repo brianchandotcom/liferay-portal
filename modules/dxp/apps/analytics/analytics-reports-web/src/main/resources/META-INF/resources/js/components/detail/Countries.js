@@ -48,7 +48,7 @@ export default function Countries({currentPage}) {
 				{Liferay.Language.get('views-by-location')}
 			</h5>
 
-			<ClayList className="-list list-group-countries">
+			<ClayList className="list-group-countries-list">
 				<ClayList.Item flex>
 					<ClayList.ItemField expand>
 						<ClayList.ItemTitle className="text-truncate-inline">

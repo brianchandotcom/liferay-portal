@@ -17,13 +17,10 @@ package com.liferay.analytics.reports.web.internal.display.context;
 import com.liferay.analytics.reports.info.item.ClassNameClassPKInfoItemIdentifier;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
-<<<<<<< HEAD
-import com.liferay.portal.kernel.util.ParamUtil;
-=======
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Props;
->>>>>>> d47b81674466 (LPS-149256 Backend modifications to use FF)
 
 import java.util.Collections;
 import java.util.Map;
@@ -109,14 +106,8 @@ public class AnalyticsReportsDisplayContext<T> {
 
 	private Map<String, Object> _data;
 	private final InfoItemReference _infoItemReference;
-<<<<<<< HEAD
-	private final RenderRequest _renderRequest;
-	private final RenderResponse _renderResponse;
-
-	@Reference
-=======
->>>>>>> 355e5fb7fe77 (LPS-149256 SF)
 	private Props _props;
+	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 
 }

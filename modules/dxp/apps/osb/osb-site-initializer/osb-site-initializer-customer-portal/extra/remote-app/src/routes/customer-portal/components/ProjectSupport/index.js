@@ -11,6 +11,7 @@
 
 import i18n from '../../../../common/I18n';
 import {useCustomerPortal} from '../../context';
+import getKebabCase from '../../utils/getKebabCase';
 import SlaCard from '../SlaCard';
 import ProjectSupportSkeleton from './Skeleton';
 
@@ -31,7 +32,9 @@ const ProjectSupport = () => {
 
 					{project.liferayContactName && (
 						<div className="font-weight-bold rounded-sm text-neutral-8 text-paragraph">
-							{project.liferayContactName}
+							{i18n.translate(
+								getKebabCase(project.liferayContactName)
+							)}
 						</div>
 					)}
 

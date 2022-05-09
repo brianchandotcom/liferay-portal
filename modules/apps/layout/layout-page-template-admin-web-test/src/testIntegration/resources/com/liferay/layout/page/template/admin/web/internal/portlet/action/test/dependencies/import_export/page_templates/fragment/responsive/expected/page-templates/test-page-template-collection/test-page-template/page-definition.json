@@ -1,0 +1,123 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragment": {
+						"key": "test-text-fragment"
+					},
+					"fragmentConfig": {
+					},
+					"fragmentFields": [
+						{
+							"id": "element-text",
+							"value": {
+								"fragmentLink": {
+								},
+								"text": {
+									"value_i18n": {
+										"en_US": "p2"
+									}
+								}
+							}
+						}
+					],
+					"fragmentStyle": {
+						"borderRadius": "borderRadiusSm",
+						"borderWidth": "1",
+						"fontFamily": "fontFamilySansSerif",
+						"fontSize": "fontSizeSm",
+						"fontWeight": "fontWeightNormal",
+						"height": "250px",
+						"marginBottom": "4",
+						"marginLeft": "2",
+						"marginRight": "3",
+						"marginTop": "1",
+						"maxHeight": "230px",
+						"maxWidth": "250px",
+						"minHeight": "230px",
+						"minWidth": "250px",
+						"opacity": "50",
+						"overflow": "hidden",
+						"paddingBottom": "7",
+						"paddingLeft": "8",
+						"paddingRight": "6",
+						"paddingTop": "5",
+						"shadow": "boxShadowLg",
+						"textAlign": "center",
+						"textColor": "dangerColor",
+						"width": "300px"
+					},
+					"fragmentViewports": [
+						{
+							"fragmentViewportStyle": {
+								"borderRadius": "borderRadiusSm",
+								"borderWidth": "1",
+								"fontFamily": "fontFamilySansSerif",
+								"fontSize": "fontSizeSm",
+								"fontWeight": "fontWeightNormal",
+								"height": "250px",
+								"marginBottom": "1",
+								"marginLeft": "2",
+								"marginRight": "3",
+								"marginTop": "4",
+								"maxHeight": "251px",
+								"maxWidth": "252px",
+								"minHeight": "253px",
+								"minWidth": "254px",
+								"opacity": "50",
+								"overflow": "hidden",
+								"paddingBottom": "5",
+								"paddingLeft": "6",
+								"paddingRight": "7",
+								"paddingTop": "8",
+								"shadow": "boxShadowLg",
+								"textAlign": "center",
+								"textColor": "dangerColor",
+								"width": "255px"
+							},
+							"id": "landscapeMobile"
+						},
+						{
+							"fragmentViewportStyle": {
+								"borderRadius": "borderRadiusSm",
+								"borderWidth": "1",
+								"fontFamily": "fontFamilySansSerif",
+								"fontSize": "fontSizeSm",
+								"fontWeight": "fontWeightNormal",
+								"height": "250px",
+								"marginBottom": "1",
+								"marginLeft": "2",
+								"marginRight": "3",
+								"marginTop": "4",
+								"maxHeight": "251px",
+								"maxWidth": "252px",
+								"minHeight": "253px",
+								"minWidth": "254px",
+								"opacity": "50",
+								"overflow": "hidden",
+								"paddingBottom": "5",
+								"paddingLeft": "6",
+								"paddingRight": "7",
+								"paddingTop": "8",
+								"shadow": "boxShadowLg",
+								"textAlign": "center",
+								"textColor": "dangerColor",
+								"width": "255px"
+							},
+							"id": "portraitMobile"
+						}
+					],
+					"indexed": true
+				},
+				"type": "Fragment"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"colorSchemeName": "01",
+		"themeName": "Classic"
+	},
+	"version": 1.1
+}

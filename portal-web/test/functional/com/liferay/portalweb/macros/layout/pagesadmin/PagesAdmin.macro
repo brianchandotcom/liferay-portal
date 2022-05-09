@@ -481,7 +481,7 @@ definition {
 		}
 
 		if (IsElementPresent(locator1 = "Message#EMPTY_INFO_TAGLIB")) {
-			PagesAdmin.gotoAddFirstPage(pageType = "Page");
+			PagesAdmin.gotoAddFirstPage(pageType = "Public Page");
 		}
 		else {
 			AssertClick(
@@ -489,7 +489,7 @@ definition {
 				locator1 = "Breadcrumb#BREADCRUMB_ENTRY_EXACT_MATCH",
 				value1 = "Pages");
 
-			LexiconEntry.gotoAddMenuItem(menuItem = "Page");
+			LexiconEntry.gotoAddMenuItem(menuItem = "Public Page");
 		}
 
 		PagesAdmin._addPage(

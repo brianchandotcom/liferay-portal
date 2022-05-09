@@ -50,7 +50,7 @@ renderResponse.setTitle(editable ? LanguageUtil.get(request, "edit-template") : 
 								<clay:col>
 									<clay:select
 										id='<%= liferayPortletResponse.getNamespace() + "internalClassName" %>'
-										label='<%= LanguageUtil.get(request, "entity-name") %>'
+										label='<%= LanguageUtil.get(request, "entity-type") %>'
 										name="internalClassName"
 										options="<%= editBatchPlannerPlanDisplayContext.getInternalClassNameSelectOptions() %>"
 									/>

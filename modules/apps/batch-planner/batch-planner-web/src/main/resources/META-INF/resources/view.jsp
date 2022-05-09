@@ -86,12 +86,12 @@ SearchContainer<BatchPlannerPlanDisplay> batchPlannerPlanDisplaySearchContainer 
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
-				name="rows-processed"
+				name="successful-rows"
 				value="<%= String.valueOf(batchPlannerPlanDisplay.getProcessedItemsCount()) %>"
 			/>
 
 			<liferay-ui:search-container-column-text
-				name="rows-failed"
+				name="failed-rows"
 				value="<%= String.valueOf(batchPlannerPlanDisplay.getFailedItemsCount()) %>"
 			/>
 

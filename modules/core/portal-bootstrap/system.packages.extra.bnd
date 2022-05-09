@@ -293,7 +293,6 @@ Provide-Capability:\
 	@../../../lib/portal/log4j-core.jar,\
 	@../../../lib/portal/persistence.jar,\
 	@../../../lib/portal/portlet.jar,\
-	@../../../lib/portal/portletmvc4spring-framework.jar,\
 	@../../../lib/portal/slf4j-api.jar,\
 	@../../../lib/portal/spring-aop.jar,\
 	@../../../lib/portal/spring-beans.jar,\

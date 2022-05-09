@@ -79,12 +79,12 @@ public class ServiceAnalyzerPlugin implements AnalyzerPlugin {
 				analyzer, "com.liferay.portal.spring.extender");
 		}
 
-		Packages refferredPackages = analyzer.getReferred();
+		Packages referredPackages = analyzer.getReferred();
 
-		Object packages = refferredPackages.getByFQN(
+		Attrs springExtenderServiceAttrs = referredPackages.getByFQN(
 			"com.liferay.portal.spring.extender.service");
 
-		if ((jar == null) && (packages == null)) {
+		if ((jar == null) && (springExtenderServiceAttrs == null)) {
 			return false;
 		}
 

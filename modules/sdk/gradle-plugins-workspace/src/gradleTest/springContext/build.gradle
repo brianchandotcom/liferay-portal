@@ -12,10 +12,10 @@ allprojects {
 task runGradleTest
 
 runGradleTest {
-	Project serviceProject = project(":modules:sample:sample-service")
-
 	dependsOn ":modules:sample:sample-service:buildService"
 	dependsOn ":modules:sample:sample-service:jar"
+
+	Project serviceProject = project(":modules:sample:sample-service")
 
 	doLast {
 		String jarFileName = "build/libs/sample.service-1.0.0.jar"

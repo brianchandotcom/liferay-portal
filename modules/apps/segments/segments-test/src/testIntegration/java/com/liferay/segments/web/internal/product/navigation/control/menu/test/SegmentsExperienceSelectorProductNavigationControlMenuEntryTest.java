@@ -121,10 +121,6 @@ public class SegmentsExperienceSelectorProductNavigationControlMenuEntryTest {
 				FriendlyURLNormalizerUtil.normalize("Full Page Application"),
 			ServiceContextTestUtil.getServiceContext());
 
-		SegmentsTestUtil.addSegmentsExperience(
-			_group.getGroupId(), _portal.getClassNameId(Layout.class),
-			layout.getPlid());
-
 		Assert.assertFalse(
 			_productNavigationControlMenuEntry.isShow(
 				_getHttpServletRequest(layout)));
@@ -161,10 +157,6 @@ public class SegmentsExperienceSelectorProductNavigationControlMenuEntryTest {
 	@Test
 	public void testIsShowWithPortletLayout() throws Exception {
 		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
-
-		SegmentsTestUtil.addSegmentsExperience(
-			_group.getGroupId(), _portal.getClassNameId(Layout.class),
-			layout.getPlid());
 
 		Assert.assertFalse(
 			_productNavigationControlMenuEntry.isShow(

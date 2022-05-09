@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -82,13 +81,12 @@ public class NotificationTemplateModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"notificationTemplateId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"name", Types.VARCHAR},
-		{"description", Types.VARCHAR}, {"from_", Types.VARCHAR},
-		{"fromName", Types.VARCHAR}, {"to_", Types.VARCHAR},
-		{"cc", Types.VARCHAR}, {"bcc", Types.VARCHAR},
+		{"notificationTemplateId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"name", Types.VARCHAR}, {"description", Types.VARCHAR},
+		{"from_", Types.VARCHAR}, {"fromName", Types.VARCHAR},
+		{"to_", Types.VARCHAR}, {"cc", Types.VARCHAR}, {"bcc", Types.VARCHAR},
 		{"enabled", Types.BOOLEAN}, {"subject", Types.VARCHAR},
 		{"body", Types.VARCHAR}
 	};
@@ -100,7 +98,6 @@ public class NotificationTemplateModelImpl
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("notificationTemplateId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
@@ -119,16 +116,16 @@ public class NotificationTemplateModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table NotificationTemplate (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,notificationTemplateId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description VARCHAR(75) null,from_ VARCHAR(75) null,fromName STRING null,to_ VARCHAR(75) null,cc VARCHAR(75) null,bcc VARCHAR(75) null,enabled BOOLEAN,subject STRING null,body STRING null)";
+		"create table NotificationTemplate (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,notificationTemplateId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description VARCHAR(75) null,from_ VARCHAR(75) null,fromName STRING null,to_ VARCHAR(75) null,cc VARCHAR(75) null,bcc VARCHAR(75) null,enabled BOOLEAN,subject STRING null,body STRING null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table NotificationTemplate";
 
 	public static final String ORDER_BY_JPQL =
-		" ORDER BY notificationTemplate.modifiedDate DESC, notificationTemplate.name DESC";
+		" ORDER BY notificationTemplate.notificationTemplateId ASC";
 
 	public static final String ORDER_BY_SQL =
-		" ORDER BY NotificationTemplate.modifiedDate DESC, NotificationTemplate.name DESC";
+		" ORDER BY NotificationTemplate.notificationTemplateId ASC";
 
 	public static final String DATA_SOURCE = "liferayDataSource";
 
@@ -146,33 +143,14 @@ public class NotificationTemplateModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long ENABLED_COLUMN_BITMASK = 2L;
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
-	 */
-	@Deprecated
-	public static final long GROUPID_COLUMN_BITMASK = 4L;
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
-	 */
-	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 8L;
+	public static final long UUID_COLUMN_BITMASK = 2L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long MODIFIEDDATE_COLUMN_BITMASK = 16L;
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *		#getColumnBitmask(String)}
-	 */
-	@Deprecated
-	public static final long NAME_COLUMN_BITMASK = 32L;
+	public static final long NOTIFICATIONTEMPLATEID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -306,12 +284,6 @@ public class NotificationTemplateModelImpl
 			"notificationTemplateId",
 			(BiConsumer<NotificationTemplate, Long>)
 				NotificationTemplate::setNotificationTemplateId);
-		attributeGetterFunctions.put(
-			"groupId", NotificationTemplate::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId",
-			(BiConsumer<NotificationTemplate, Long>)
-				NotificationTemplate::setGroupId);
 		attributeGetterFunctions.put(
 			"companyId", NotificationTemplate::getCompanyId);
 		attributeSetterBiConsumers.put(
@@ -456,29 +428,6 @@ public class NotificationTemplateModelImpl
 		}
 
 		_notificationTemplateId = notificationTemplateId;
-	}
-
-	@Override
-	public long getGroupId() {
-		return _groupId;
-	}
-
-	@Override
-	public void setGroupId(long groupId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_groupId = groupId;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
-	public long getOriginalGroupId() {
-		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@Override
@@ -652,7 +601,7 @@ public class NotificationTemplateModelImpl
 
 	@Override
 	public void setName(String name, Locale locale) {
-		setName(name, locale, LocaleUtil.getSiteDefault());
+		setName(name, locale, LocaleUtil.getDefault());
 	}
 
 	@Override
@@ -679,7 +628,7 @@ public class NotificationTemplateModelImpl
 
 	@Override
 	public void setNameMap(Map<Locale, String> nameMap) {
-		setNameMap(nameMap, LocaleUtil.getSiteDefault());
+		setNameMap(nameMap, LocaleUtil.getDefault());
 	}
 
 	@Override
@@ -796,7 +745,7 @@ public class NotificationTemplateModelImpl
 
 	@Override
 	public void setFromName(String fromName, Locale locale) {
-		setFromName(fromName, locale, LocaleUtil.getSiteDefault());
+		setFromName(fromName, locale, LocaleUtil.getDefault());
 	}
 
 	@Override
@@ -826,7 +775,7 @@ public class NotificationTemplateModelImpl
 
 	@Override
 	public void setFromNameMap(Map<Locale, String> fromNameMap) {
-		setFromNameMap(fromNameMap, LocaleUtil.getSiteDefault());
+		setFromNameMap(fromNameMap, LocaleUtil.getDefault());
 	}
 
 	@Override
@@ -919,16 +868,6 @@ public class NotificationTemplateModelImpl
 		_enabled = enabled;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
-	public boolean getOriginalEnabled() {
-		return GetterUtil.getBoolean(
-			this.<Boolean>getColumnOriginalValue("enabled"));
-	}
-
 	@Override
 	public String getSubject() {
 		if (_subject == null) {
@@ -993,7 +932,7 @@ public class NotificationTemplateModelImpl
 
 	@Override
 	public void setSubject(String subject, Locale locale) {
-		setSubject(subject, locale, LocaleUtil.getSiteDefault());
+		setSubject(subject, locale, LocaleUtil.getDefault());
 	}
 
 	@Override
@@ -1023,7 +962,7 @@ public class NotificationTemplateModelImpl
 
 	@Override
 	public void setSubjectMap(Map<Locale, String> subjectMap) {
-		setSubjectMap(subjectMap, LocaleUtil.getSiteDefault());
+		setSubjectMap(subjectMap, LocaleUtil.getDefault());
 	}
 
 	@Override
@@ -1104,7 +1043,7 @@ public class NotificationTemplateModelImpl
 
 	@Override
 	public void setBody(String body, Locale locale) {
-		setBody(body, locale, LocaleUtil.getSiteDefault());
+		setBody(body, locale, LocaleUtil.getDefault());
 	}
 
 	@Override
@@ -1131,7 +1070,7 @@ public class NotificationTemplateModelImpl
 
 	@Override
 	public void setBodyMap(Map<Locale, String> bodyMap) {
-		setBodyMap(bodyMap, LocaleUtil.getSiteDefault());
+		setBodyMap(bodyMap, LocaleUtil.getDefault());
 	}
 
 	@Override
@@ -1250,7 +1189,7 @@ public class NotificationTemplateModelImpl
 			return "";
 		}
 
-		Locale defaultLocale = LocaleUtil.getSiteDefault();
+		Locale defaultLocale = LocaleUtil.getDefault();
 
 		return LocalizationUtil.getDefaultLanguageId(xml, defaultLocale);
 	}
@@ -1275,7 +1214,7 @@ public class NotificationTemplateModelImpl
 	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
 		throws LocaleException {
 
-		Locale defaultLocale = LocaleUtil.getSiteDefault();
+		Locale defaultLocale = LocaleUtil.getDefault();
 
 		String modelDefaultLanguageId = getDefaultLanguageId();
 
@@ -1341,7 +1280,6 @@ public class NotificationTemplateModelImpl
 		notificationTemplateImpl.setUuid(getUuid());
 		notificationTemplateImpl.setNotificationTemplateId(
 			getNotificationTemplateId());
-		notificationTemplateImpl.setGroupId(getGroupId());
 		notificationTemplateImpl.setCompanyId(getCompanyId());
 		notificationTemplateImpl.setUserId(getUserId());
 		notificationTemplateImpl.setUserName(getUserName());
@@ -1374,8 +1312,6 @@ public class NotificationTemplateModelImpl
 			this.<String>getColumnOriginalValue("uuid_"));
 		notificationTemplateImpl.setNotificationTemplateId(
 			this.<Long>getColumnOriginalValue("notificationTemplateId"));
-		notificationTemplateImpl.setGroupId(
-			this.<Long>getColumnOriginalValue("groupId"));
 		notificationTemplateImpl.setCompanyId(
 			this.<Long>getColumnOriginalValue("companyId"));
 		notificationTemplateImpl.setUserId(
@@ -1412,26 +1348,17 @@ public class NotificationTemplateModelImpl
 
 	@Override
 	public int compareTo(NotificationTemplate notificationTemplate) {
-		int value = 0;
+		long primaryKey = notificationTemplate.getPrimaryKey();
 
-		value = DateUtil.compareTo(
-			getModifiedDate(), notificationTemplate.getModifiedDate());
-
-		value = value * -1;
-
-		if (value != 0) {
-			return value;
+		if (getPrimaryKey() < primaryKey) {
+			return -1;
 		}
-
-		value = getName().compareTo(notificationTemplate.getName());
-
-		value = value * -1;
-
-		if (value != 0) {
-			return value;
+		else if (getPrimaryKey() > primaryKey) {
+			return 1;
 		}
-
-		return 0;
+		else {
+			return 0;
+		}
 	}
 
 	@Override
@@ -1506,8 +1433,6 @@ public class NotificationTemplateModelImpl
 
 		notificationTemplateCacheModel.notificationTemplateId =
 			getNotificationTemplateId();
-
-		notificationTemplateCacheModel.groupId = getGroupId();
 
 		notificationTemplateCacheModel.companyId = getCompanyId();
 
@@ -1711,7 +1636,6 @@ public class NotificationTemplateModelImpl
 	private long _mvccVersion;
 	private String _uuid;
 	private long _notificationTemplateId;
-	private long _groupId;
 	private long _companyId;
 	private long _userId;
 	private String _userName;
@@ -1766,7 +1690,6 @@ public class NotificationTemplateModelImpl
 		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put(
 			"notificationTemplateId", _notificationTemplateId);
-		_columnOriginalValues.put("groupId", _groupId);
 		_columnOriginalValues.put("companyId", _companyId);
 		_columnOriginalValues.put("userId", _userId);
 		_columnOriginalValues.put("userName", _userName);
@@ -1813,37 +1736,35 @@ public class NotificationTemplateModelImpl
 
 		columnBitmasks.put("notificationTemplateId", 4L);
 
-		columnBitmasks.put("groupId", 8L);
+		columnBitmasks.put("companyId", 8L);
 
-		columnBitmasks.put("companyId", 16L);
+		columnBitmasks.put("userId", 16L);
 
-		columnBitmasks.put("userId", 32L);
+		columnBitmasks.put("userName", 32L);
 
-		columnBitmasks.put("userName", 64L);
+		columnBitmasks.put("createDate", 64L);
 
-		columnBitmasks.put("createDate", 128L);
+		columnBitmasks.put("modifiedDate", 128L);
 
-		columnBitmasks.put("modifiedDate", 256L);
+		columnBitmasks.put("name", 256L);
 
-		columnBitmasks.put("name", 512L);
+		columnBitmasks.put("description", 512L);
 
-		columnBitmasks.put("description", 1024L);
+		columnBitmasks.put("from_", 1024L);
 
-		columnBitmasks.put("from_", 2048L);
+		columnBitmasks.put("fromName", 2048L);
 
-		columnBitmasks.put("fromName", 4096L);
+		columnBitmasks.put("to_", 4096L);
 
-		columnBitmasks.put("to_", 8192L);
+		columnBitmasks.put("cc", 8192L);
 
-		columnBitmasks.put("cc", 16384L);
+		columnBitmasks.put("bcc", 16384L);
 
-		columnBitmasks.put("bcc", 32768L);
+		columnBitmasks.put("enabled", 32768L);
 
-		columnBitmasks.put("enabled", 65536L);
+		columnBitmasks.put("subject", 65536L);
 
-		columnBitmasks.put("subject", 131072L);
-
-		columnBitmasks.put("body", 262144L);
+		columnBitmasks.put("body", 131072L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

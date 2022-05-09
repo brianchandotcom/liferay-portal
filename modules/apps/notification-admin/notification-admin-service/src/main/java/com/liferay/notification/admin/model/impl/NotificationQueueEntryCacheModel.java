@@ -78,14 +78,12 @@ public class NotificationQueueEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(45);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", notificationQueueEntryId=");
 		sb.append(notificationQueueEntryId);
-		sb.append(", groupId=");
-		sb.append(groupId);
 		sb.append(", companyId=");
 		sb.append(companyId);
 		sb.append(", userId=");
@@ -137,7 +135,6 @@ public class NotificationQueueEntryCacheModel
 		notificationQueueEntryImpl.setMvccVersion(mvccVersion);
 		notificationQueueEntryImpl.setNotificationQueueEntryId(
 			notificationQueueEntryId);
-		notificationQueueEntryImpl.setGroupId(groupId);
 		notificationQueueEntryImpl.setCompanyId(companyId);
 		notificationQueueEntryImpl.setUserId(userId);
 
@@ -244,8 +241,6 @@ public class NotificationQueueEntryCacheModel
 
 		notificationQueueEntryId = objectInput.readLong();
 
-		groupId = objectInput.readLong();
-
 		companyId = objectInput.readLong();
 
 		userId = objectInput.readLong();
@@ -278,8 +273,6 @@ public class NotificationQueueEntryCacheModel
 		objectOutput.writeLong(mvccVersion);
 
 		objectOutput.writeLong(notificationQueueEntryId);
-
-		objectOutput.writeLong(groupId);
 
 		objectOutput.writeLong(companyId);
 
@@ -365,7 +358,6 @@ public class NotificationQueueEntryCacheModel
 
 	public long mvccVersion;
 	public long notificationQueueEntryId;
-	public long groupId;
 	public long companyId;
 	public long userId;
 	public String userName;

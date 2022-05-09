@@ -40,18 +40,16 @@ public class NotificationTemplateLocalServiceWrapper
 	@Override
 	public com.liferay.notification.admin.model.NotificationTemplate
 			addNotificationTemplate(
-				long userId, long groupId, String name, String description,
-				String from,
+				long userId, String name, String description, String from,
 				java.util.Map<java.util.Locale, String> fromNameMap, String to,
 				String cc, String bcc, boolean enabled,
 				java.util.Map<java.util.Locale, String> subjectMap,
-				java.util.Map<java.util.Locale, String> bodyMap,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+				java.util.Map<java.util.Locale, String> bodyMap)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _notificationTemplateLocalService.addNotificationTemplate(
-			userId, groupId, name, description, from, fromNameMap, to, cc, bcc,
-			enabled, subjectMap, bodyMap, serviceContext);
+			userId, name, description, from, fromNameMap, to, cc, bcc, enabled,
+			subjectMap, bodyMap);
 	}
 
 	/**
@@ -129,24 +127,15 @@ public class NotificationTemplateLocalServiceWrapper
 	 *
 	 * @param notificationTemplate the notification template
 	 * @return the notification template that was removed
-	 * @throws PortalException
 	 */
 	@Override
 	public com.liferay.notification.admin.model.NotificationTemplate
-			deleteNotificationTemplate(
-				com.liferay.notification.admin.model.NotificationTemplate
-					notificationTemplate)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		deleteNotificationTemplate(
+			com.liferay.notification.admin.model.NotificationTemplate
+				notificationTemplate) {
 
 		return _notificationTemplateLocalService.deleteNotificationTemplate(
 			notificationTemplate);
-	}
-
-	@Override
-	public void deleteNotificationTemplates(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		_notificationTemplateLocalService.deleteNotificationTemplates(groupId);
 	}
 
 	/**
@@ -274,18 +263,19 @@ public class NotificationTemplateLocalServiceWrapper
 	}
 
 	/**
-	 * Returns the notification template matching the UUID and group.
+	 * Returns the notification template with the matching UUID and company.
 	 *
 	 * @param uuid the notification template's UUID
-	 * @param groupId the primary key of the group
+	 * @param companyId the primary key of the company
 	 * @return the matching notification template, or <code>null</code> if a matching notification template could not be found
 	 */
 	@Override
 	public com.liferay.notification.admin.model.NotificationTemplate
-		fetchNotificationTemplateByUuidAndGroupId(String uuid, long groupId) {
+		fetchNotificationTemplateByUuidAndCompanyId(
+			String uuid, long companyId) {
 
 		return _notificationTemplateLocalService.
-			fetchNotificationTemplateByUuidAndGroupId(uuid, groupId);
+			fetchNotificationTemplateByUuidAndCompanyId(uuid, companyId);
 	}
 
 	@Override
@@ -330,20 +320,21 @@ public class NotificationTemplateLocalServiceWrapper
 	}
 
 	/**
-	 * Returns the notification template matching the UUID and group.
+	 * Returns the notification template with the matching UUID and company.
 	 *
 	 * @param uuid the notification template's UUID
-	 * @param groupId the primary key of the group
+	 * @param companyId the primary key of the company
 	 * @return the matching notification template
 	 * @throws PortalException if a matching notification template could not be found
 	 */
 	@Override
 	public com.liferay.notification.admin.model.NotificationTemplate
-			getNotificationTemplateByUuidAndGroupId(String uuid, long groupId)
+			getNotificationTemplateByUuidAndCompanyId(
+				String uuid, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _notificationTemplateLocalService.
-			getNotificationTemplateByUuidAndGroupId(uuid, groupId);
+			getNotificationTemplateByUuidAndCompanyId(uuid, companyId);
 	}
 
 	/**
@@ -366,73 +357,6 @@ public class NotificationTemplateLocalServiceWrapper
 			start, end);
 	}
 
-	@Override
-	public java.util.List
-		<com.liferay.notification.admin.model.NotificationTemplate>
-			getNotificationTemplates(
-				long groupId, boolean enabled, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.notification.admin.model.NotificationTemplate>
-						orderByComparator) {
-
-		return _notificationTemplateLocalService.getNotificationTemplates(
-			groupId, enabled, start, end, orderByComparator);
-	}
-
-	@Override
-	public java.util.List
-		<com.liferay.notification.admin.model.NotificationTemplate>
-			getNotificationTemplates(
-				long groupId, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.notification.admin.model.NotificationTemplate>
-						orderByComparator) {
-
-		return _notificationTemplateLocalService.getNotificationTemplates(
-			groupId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns all the notification templates matching the UUID and company.
-	 *
-	 * @param uuid the UUID of the notification templates
-	 * @param companyId the primary key of the company
-	 * @return the matching notification templates, or an empty list if no matches were found
-	 */
-	@Override
-	public java.util.List
-		<com.liferay.notification.admin.model.NotificationTemplate>
-			getNotificationTemplatesByUuidAndCompanyId(
-				String uuid, long companyId) {
-
-		return _notificationTemplateLocalService.
-			getNotificationTemplatesByUuidAndCompanyId(uuid, companyId);
-	}
-
-	/**
-	 * Returns a range of notification templates matching the UUID and company.
-	 *
-	 * @param uuid the UUID of the notification templates
-	 * @param companyId the primary key of the company
-	 * @param start the lower bound of the range of notification templates
-	 * @param end the upper bound of the range of notification templates (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the range of matching notification templates, or an empty list if no matches were found
-	 */
-	@Override
-	public java.util.List
-		<com.liferay.notification.admin.model.NotificationTemplate>
-			getNotificationTemplatesByUuidAndCompanyId(
-				String uuid, long companyId, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.notification.admin.model.NotificationTemplate>
-						orderByComparator) {
-
-		return _notificationTemplateLocalService.
-			getNotificationTemplatesByUuidAndCompanyId(
-				uuid, companyId, start, end, orderByComparator);
-	}
-
 	/**
 	 * Returns the number of notification templates.
 	 *
@@ -442,18 +366,6 @@ public class NotificationTemplateLocalServiceWrapper
 	public int getNotificationTemplatesCount() {
 		return _notificationTemplateLocalService.
 			getNotificationTemplatesCount();
-	}
-
-	@Override
-	public int getNotificationTemplatesCount(long groupId) {
-		return _notificationTemplateLocalService.getNotificationTemplatesCount(
-			groupId);
-	}
-
-	@Override
-	public int getNotificationTemplatesCount(long groupId, boolean enabled) {
-		return _notificationTemplateLocalService.getNotificationTemplatesCount(
-			groupId, enabled);
 	}
 
 	/**
@@ -486,13 +398,12 @@ public class NotificationTemplateLocalServiceWrapper
 				java.util.Map<java.util.Locale, String> fromNameMap, String to,
 				String cc, String bcc, boolean enabled,
 				java.util.Map<java.util.Locale, String> subjectMap,
-				java.util.Map<java.util.Locale, String> bodyMap,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+				java.util.Map<java.util.Locale, String> bodyMap)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _notificationTemplateLocalService.updateNotificationTemplate(
 			notificationTemplateId, name, description, from, fromNameMap, to,
-			cc, bcc, enabled, subjectMap, bodyMap, serviceContext);
+			cc, bcc, enabled, subjectMap, bodyMap);
 	}
 
 	/**

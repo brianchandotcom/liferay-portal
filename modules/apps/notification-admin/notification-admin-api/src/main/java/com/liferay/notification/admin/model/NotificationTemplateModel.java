@@ -17,7 +17,6 @@ package com.liferay.notification.admin.model;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.LocalizedModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
@@ -42,8 +41,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface NotificationTemplateModel
-	extends BaseModel<NotificationTemplate>, GroupedModel, LocalizedModel,
-			MVCCModel, ShardedModel, StagedAuditedModel {
+	extends BaseModel<NotificationTemplate>, LocalizedModel, MVCCModel,
+			ShardedModel, StagedAuditedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -111,22 +110,6 @@ public interface NotificationTemplateModel
 	 * @param notificationTemplateId the notification template ID of this notification template
 	 */
 	public void setNotificationTemplateId(long notificationTemplateId);
-
-	/**
-	 * Returns the group ID of this notification template.
-	 *
-	 * @return the group ID of this notification template
-	 */
-	@Override
-	public long getGroupId();
-
-	/**
-	 * Sets the group ID of this notification template.
-	 *
-	 * @param groupId the group ID of this notification template
-	 */
-	@Override
-	public void setGroupId(long groupId);
 
 	/**
 	 * Returns the company ID of this notification template.

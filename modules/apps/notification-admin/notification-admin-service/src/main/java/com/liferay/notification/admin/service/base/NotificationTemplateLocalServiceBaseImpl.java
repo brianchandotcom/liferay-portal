@@ -145,13 +145,11 @@ public abstract class NotificationTemplateLocalServiceBaseImpl
 	 *
 	 * @param notificationTemplate the notification template
 	 * @return the notification template that was removed
-	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public NotificationTemplate deleteNotificationTemplate(
-			NotificationTemplate notificationTemplate)
-		throws PortalException {
+		NotificationTemplate notificationTemplate) {
 
 		return notificationTemplatePersistence.remove(notificationTemplate);
 	}
@@ -266,17 +264,18 @@ public abstract class NotificationTemplateLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the notification template matching the UUID and group.
+	 * Returns the notification template with the matching UUID and company.
 	 *
 	 * @param uuid the notification template's UUID
-	 * @param groupId the primary key of the group
+	 * @param companyId the primary key of the company
 	 * @return the matching notification template, or <code>null</code> if a matching notification template could not be found
 	 */
 	@Override
-	public NotificationTemplate fetchNotificationTemplateByUuidAndGroupId(
-		String uuid, long groupId) {
+	public NotificationTemplate fetchNotificationTemplateByUuidAndCompanyId(
+		String uuid, long companyId) {
 
-		return notificationTemplatePersistence.fetchByUUID_G(uuid, groupId);
+		return notificationTemplatePersistence.fetchByUuid_C_First(
+			uuid, companyId, null);
 	}
 
 	/**
@@ -449,54 +448,20 @@ public abstract class NotificationTemplateLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns all the notification templates matching the UUID and company.
-	 *
-	 * @param uuid the UUID of the notification templates
-	 * @param companyId the primary key of the company
-	 * @return the matching notification templates, or an empty list if no matches were found
-	 */
-	@Override
-	public List<NotificationTemplate>
-		getNotificationTemplatesByUuidAndCompanyId(
-			String uuid, long companyId) {
-
-		return notificationTemplatePersistence.findByUuid_C(uuid, companyId);
-	}
-
-	/**
-	 * Returns a range of notification templates matching the UUID and company.
-	 *
-	 * @param uuid the UUID of the notification templates
-	 * @param companyId the primary key of the company
-	 * @param start the lower bound of the range of notification templates
-	 * @param end the upper bound of the range of notification templates (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the range of matching notification templates, or an empty list if no matches were found
-	 */
-	@Override
-	public List<NotificationTemplate>
-		getNotificationTemplatesByUuidAndCompanyId(
-			String uuid, long companyId, int start, int end,
-			OrderByComparator<NotificationTemplate> orderByComparator) {
-
-		return notificationTemplatePersistence.findByUuid_C(
-			uuid, companyId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the notification template matching the UUID and group.
+	 * Returns the notification template with the matching UUID and company.
 	 *
 	 * @param uuid the notification template's UUID
-	 * @param groupId the primary key of the group
+	 * @param companyId the primary key of the company
 	 * @return the matching notification template
 	 * @throws PortalException if a matching notification template could not be found
 	 */
 	@Override
-	public NotificationTemplate getNotificationTemplateByUuidAndGroupId(
-			String uuid, long groupId)
+	public NotificationTemplate getNotificationTemplateByUuidAndCompanyId(
+			String uuid, long companyId)
 		throws PortalException {
 
-		return notificationTemplatePersistence.findByUUID_G(uuid, groupId);
+		return notificationTemplatePersistence.findByUuid_C_First(
+			uuid, companyId, null);
 	}
 
 	/**

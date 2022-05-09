@@ -45,15 +45,15 @@ public class NotificationQueueEntryLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.notification.admin.service.impl.NotificationQueueEntryLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static NotificationQueueEntry addNotificationQueueEntry(
-			long userId, long groupId, String className, long classPK,
+			long userId, String className, long classPK,
 			long notificationTemplateId, String from, String fromName,
 			String to, String toName, String cc, String bcc, String subject,
 			String body, double priority)
 		throws PortalException {
 
 		return getService().addNotificationQueueEntry(
-			userId, groupId, className, classPK, notificationTemplateId, from,
-			fromName, to, toName, cc, bcc, subject, body, priority);
+			userId, className, classPK, notificationTemplateId, from, fromName,
+			to, toName, cc, bcc, subject, body, priority);
 	}
 
 	/**
@@ -93,16 +93,6 @@ public class NotificationQueueEntryLocalServiceUtil {
 		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
-	}
-
-	public static void deleteNotificationQueueEntries(java.util.Date sentDate) {
-		getService().deleteNotificationQueueEntries(sentDate);
-	}
-
-	public static void deleteNotificationQueueEntries(long groupId)
-		throws PortalException {
-
-		getService().deleteNotificationQueueEntries(groupId);
 	}
 
 	/**
@@ -256,12 +246,6 @@ public class NotificationQueueEntryLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
-	public static List<NotificationQueueEntry> getNotificationQueueEntries(
-		boolean sent) {
-
-		return getService().getNotificationQueueEntries(sent);
-	}
-
 	/**
 	 * Returns a range of all the notification queue entries.
 	 *
@@ -279,14 +263,6 @@ public class NotificationQueueEntryLocalServiceUtil {
 		return getService().getNotificationQueueEntries(start, end);
 	}
 
-	public static List<NotificationQueueEntry> getNotificationQueueEntries(
-		long groupId, String className, long classPK, boolean sent, int start,
-		int end, OrderByComparator<NotificationQueueEntry> orderByComparator) {
-
-		return getService().getNotificationQueueEntries(
-			groupId, className, classPK, sent, start, end, orderByComparator);
-	}
-
 	/**
 	 * Returns the number of notification queue entries.
 	 *
@@ -294,17 +270,6 @@ public class NotificationQueueEntryLocalServiceUtil {
 	 */
 	public static int getNotificationQueueEntriesCount() {
 		return getService().getNotificationQueueEntriesCount();
-	}
-
-	public static int getNotificationQueueEntriesCount(long groupId) {
-		return getService().getNotificationQueueEntriesCount(groupId);
-	}
-
-	public static int getNotificationQueueEntriesCount(
-		long groupId, String className, long classPK, boolean sent) {
-
-		return getService().getNotificationQueueEntriesCount(
-			groupId, className, classPK, sent);
 	}
 
 	/**
@@ -339,18 +304,6 @@ public class NotificationQueueEntryLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static NotificationQueueEntry resendNotificationQueueEntry(
-			long notificationQueueEntryId)
-		throws PortalException {
-
-		return getService().resendNotificationQueueEntry(
-			notificationQueueEntryId);
-	}
-
-	public static void sendNotificationQueueEntries() throws Exception {
-		getService().sendNotificationQueueEntries();
-	}
-
 	public static void updateNotificationQueueEntriesTemplateIds(
 		long notificationTemplateId) {
 
@@ -373,13 +326,6 @@ public class NotificationQueueEntryLocalServiceUtil {
 
 		return getService().updateNotificationQueueEntry(
 			notificationQueueEntry);
-	}
-
-	public static NotificationQueueEntry updateSent(
-			long notificationQueueEntryId, boolean sent)
-		throws PortalException {
-
-		return getService().updateSent(notificationQueueEntryId, sent);
 	}
 
 	public static NotificationQueueEntryLocalService getService() {

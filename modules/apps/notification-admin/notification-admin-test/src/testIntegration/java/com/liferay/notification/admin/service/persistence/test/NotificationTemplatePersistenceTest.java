@@ -26,8 +26,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -132,8 +130,6 @@ public class NotificationTemplatePersistenceTest {
 
 		newNotificationTemplate.setUuid(RandomTestUtil.randomString());
 
-		newNotificationTemplate.setGroupId(RandomTestUtil.nextLong());
-
 		newNotificationTemplate.setCompanyId(RandomTestUtil.nextLong());
 
 		newNotificationTemplate.setUserId(RandomTestUtil.nextLong());
@@ -180,9 +176,6 @@ public class NotificationTemplatePersistenceTest {
 		Assert.assertEquals(
 			existingNotificationTemplate.getNotificationTemplateId(),
 			newNotificationTemplate.getNotificationTemplateId());
-		Assert.assertEquals(
-			existingNotificationTemplate.getGroupId(),
-			newNotificationTemplate.getGroupId());
 		Assert.assertEquals(
 			existingNotificationTemplate.getCompanyId(),
 			newNotificationTemplate.getCompanyId());
@@ -242,36 +235,12 @@ public class NotificationTemplatePersistenceTest {
 	}
 
 	@Test
-	public void testCountByUUID_G() throws Exception {
-		_persistence.countByUUID_G("", RandomTestUtil.nextLong());
-
-		_persistence.countByUUID_G("null", 0L);
-
-		_persistence.countByUUID_G((String)null, 0L);
-	}
-
-	@Test
 	public void testCountByUuid_C() throws Exception {
 		_persistence.countByUuid_C("", RandomTestUtil.nextLong());
 
 		_persistence.countByUuid_C("null", 0L);
 
 		_persistence.countByUuid_C((String)null, 0L);
-	}
-
-	@Test
-	public void testCountByGroupId() throws Exception {
-		_persistence.countByGroupId(RandomTestUtil.nextLong());
-
-		_persistence.countByGroupId(0L);
-	}
-
-	@Test
-	public void testCountByG_E() throws Exception {
-		_persistence.countByG_E(
-			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
-
-		_persistence.countByG_E(0L, RandomTestUtil.randomBoolean());
 	}
 
 	@Test
@@ -303,11 +272,11 @@ public class NotificationTemplatePersistenceTest {
 	protected OrderByComparator<NotificationTemplate> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
 			"NotificationTemplate", "mvccVersion", true, "uuid", true,
-			"notificationTemplateId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "name", true, "description", true, "from",
-			true, "fromName", true, "to", true, "cc", true, "bcc", true,
-			"enabled", true, "subject", true, "body", true);
+			"notificationTemplateId", true, "companyId", true, "userId", true,
+			"userName", true, "createDate", true, "modifiedDate", true, "name",
+			true, "description", true, "from", true, "fromName", true, "to",
+			true, "cc", true, "bcc", true, "enabled", true, "subject", true,
+			"body", true);
 	}
 
 	@Test
@@ -544,75 +513,6 @@ public class NotificationTemplatePersistenceTest {
 		Assert.assertEquals(0, result.size());
 	}
 
-	@Test
-	public void testResetOriginalValues() throws Exception {
-		NotificationTemplate newNotificationTemplate =
-			addNotificationTemplate();
-
-		_persistence.clearCache();
-
-		_assertOriginalValues(
-			_persistence.findByPrimaryKey(
-				newNotificationTemplate.getPrimaryKey()));
-	}
-
-	@Test
-	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
-		throws Exception {
-
-		_testResetOriginalValuesWithDynamicQuery(true);
-	}
-
-	@Test
-	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
-		throws Exception {
-
-		_testResetOriginalValuesWithDynamicQuery(false);
-	}
-
-	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
-		throws Exception {
-
-		NotificationTemplate newNotificationTemplate =
-			addNotificationTemplate();
-
-		if (clearSession) {
-			Session session = _persistence.openSession();
-
-			session.flush();
-
-			session.clear();
-		}
-
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			NotificationTemplate.class, _dynamicQueryClassLoader);
-
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"notificationTemplateId",
-				newNotificationTemplate.getNotificationTemplateId()));
-
-		List<NotificationTemplate> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
-
-		_assertOriginalValues(result.get(0));
-	}
-
-	private void _assertOriginalValues(
-		NotificationTemplate notificationTemplate) {
-
-		Assert.assertEquals(
-			notificationTemplate.getUuid(),
-			ReflectionTestUtil.invoke(
-				notificationTemplate, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "uuid_"));
-		Assert.assertEquals(
-			Long.valueOf(notificationTemplate.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(
-				notificationTemplate, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "groupId"));
-	}
-
 	protected NotificationTemplate addNotificationTemplate() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
@@ -621,8 +521,6 @@ public class NotificationTemplatePersistenceTest {
 		notificationTemplate.setMvccVersion(RandomTestUtil.nextLong());
 
 		notificationTemplate.setUuid(RandomTestUtil.randomString());
-
-		notificationTemplate.setGroupId(RandomTestUtil.nextLong());
 
 		notificationTemplate.setCompanyId(RandomTestUtil.nextLong());
 

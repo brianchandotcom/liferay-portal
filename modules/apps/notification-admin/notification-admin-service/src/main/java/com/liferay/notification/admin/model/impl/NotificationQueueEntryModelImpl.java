@@ -73,17 +73,16 @@ public class NotificationQueueEntryModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT},
-		{"notificationQueueEntryId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"classNameId", Types.BIGINT},
-		{"classPK", Types.BIGINT}, {"notificationTemplateId", Types.BIGINT},
-		{"from_", Types.VARCHAR}, {"fromName", Types.VARCHAR},
-		{"to_", Types.VARCHAR}, {"toName", Types.VARCHAR},
-		{"cc", Types.VARCHAR}, {"bcc", Types.VARCHAR},
-		{"subject", Types.VARCHAR}, {"body", Types.VARCHAR},
-		{"priority", Types.DOUBLE}, {"sent", Types.BOOLEAN},
-		{"sentDate", Types.TIMESTAMP}
+		{"notificationQueueEntryId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
+		{"notificationTemplateId", Types.BIGINT}, {"from_", Types.VARCHAR},
+		{"fromName", Types.VARCHAR}, {"to_", Types.VARCHAR},
+		{"toName", Types.VARCHAR}, {"cc", Types.VARCHAR},
+		{"bcc", Types.VARCHAR}, {"subject", Types.VARCHAR},
+		{"body", Types.VARCHAR}, {"priority", Types.DOUBLE},
+		{"sent", Types.BOOLEAN}, {"sentDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -92,7 +91,6 @@ public class NotificationQueueEntryModelImpl
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("notificationQueueEntryId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
@@ -115,16 +113,16 @@ public class NotificationQueueEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table NotificationQueueEntry (mvccVersion LONG default 0 not null,notificationQueueEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,notificationTemplateId LONG,from_ VARCHAR(75) null,fromName VARCHAR(75) null,to_ VARCHAR(75) null,toName VARCHAR(75) null,cc VARCHAR(75) null,bcc VARCHAR(75) null,subject VARCHAR(75) null,body VARCHAR(75) null,priority DOUBLE,sent BOOLEAN,sentDate DATE null)";
+		"create table NotificationQueueEntry (mvccVersion LONG default 0 not null,notificationQueueEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,notificationTemplateId LONG,from_ VARCHAR(75) null,fromName VARCHAR(75) null,to_ VARCHAR(75) null,toName VARCHAR(75) null,cc VARCHAR(75) null,bcc VARCHAR(75) null,subject VARCHAR(75) null,body VARCHAR(75) null,priority DOUBLE,sent BOOLEAN,sentDate DATE null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table NotificationQueueEntry";
 
 	public static final String ORDER_BY_JPQL =
-		" ORDER BY notificationQueueEntry.priority DESC";
+		" ORDER BY notificationQueueEntry.notificationQueueEntryId ASC";
 
 	public static final String ORDER_BY_SQL =
-		" ORDER BY NotificationQueueEntry.priority DESC";
+		" ORDER BY NotificationQueueEntry.notificationQueueEntryId ASC";
 
 	public static final String DATA_SOURCE = "liferayDataSource";
 
@@ -136,44 +134,14 @@ public class NotificationQueueEntryModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long CLASSNAMEID_COLUMN_BITMASK = 1L;
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
-	 */
-	@Deprecated
-	public static final long CLASSPK_COLUMN_BITMASK = 2L;
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
-	 */
-	@Deprecated
-	public static final long GROUPID_COLUMN_BITMASK = 4L;
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
-	 */
-	@Deprecated
-	public static final long NOTIFICATIONTEMPLATEID_COLUMN_BITMASK = 8L;
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
-	 */
-	@Deprecated
-	public static final long SENT_COLUMN_BITMASK = 16L;
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
-	 */
-	@Deprecated
-	public static final long SENTDATE_COLUMN_BITMASK = 32L;
+	public static final long NOTIFICATIONTEMPLATEID_COLUMN_BITMASK = 1L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long PRIORITY_COLUMN_BITMASK = 64L;
+	public static final long NOTIFICATIONQUEUEENTRYID_COLUMN_BITMASK = 2L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -303,12 +271,6 @@ public class NotificationQueueEntryModelImpl
 			"notificationQueueEntryId",
 			(BiConsumer<NotificationQueueEntry, Long>)
 				NotificationQueueEntry::setNotificationQueueEntryId);
-		attributeGetterFunctions.put(
-			"groupId", NotificationQueueEntry::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId",
-			(BiConsumer<NotificationQueueEntry, Long>)
-				NotificationQueueEntry::setGroupId);
 		attributeGetterFunctions.put(
 			"companyId", NotificationQueueEntry::getCompanyId);
 		attributeSetterBiConsumers.put(
@@ -454,29 +416,6 @@ public class NotificationQueueEntryModelImpl
 	}
 
 	@Override
-	public long getGroupId() {
-		return _groupId;
-	}
-
-	@Override
-	public void setGroupId(long groupId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_groupId = groupId;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
-	public long getOriginalGroupId() {
-		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
-	}
-
-	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -607,16 +546,6 @@ public class NotificationQueueEntryModelImpl
 		_classNameId = classNameId;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
-	public long getOriginalClassNameId() {
-		return GetterUtil.getLong(
-			this.<Long>getColumnOriginalValue("classNameId"));
-	}
-
 	@Override
 	public long getClassPK() {
 		return _classPK;
@@ -629,15 +558,6 @@ public class NotificationQueueEntryModelImpl
 		}
 
 		_classPK = classPK;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
-	public long getOriginalClassPK() {
-		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("classPK"));
 	}
 
 	@Override
@@ -849,16 +769,6 @@ public class NotificationQueueEntryModelImpl
 		_sent = sent;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
-	public boolean getOriginalSent() {
-		return GetterUtil.getBoolean(
-			this.<Boolean>getColumnOriginalValue("sent"));
-	}
-
 	@Override
 	public Date getSentDate() {
 		return _sentDate;
@@ -871,15 +781,6 @@ public class NotificationQueueEntryModelImpl
 		}
 
 		_sentDate = sentDate;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
-	public Date getOriginalSentDate() {
-		return getColumnOriginalValue("sentDate");
 	}
 
 	public long getColumnBitmask() {
@@ -943,7 +844,6 @@ public class NotificationQueueEntryModelImpl
 		notificationQueueEntryImpl.setMvccVersion(getMvccVersion());
 		notificationQueueEntryImpl.setNotificationQueueEntryId(
 			getNotificationQueueEntryId());
-		notificationQueueEntryImpl.setGroupId(getGroupId());
 		notificationQueueEntryImpl.setCompanyId(getCompanyId());
 		notificationQueueEntryImpl.setUserId(getUserId());
 		notificationQueueEntryImpl.setUserName(getUserName());
@@ -979,8 +879,6 @@ public class NotificationQueueEntryModelImpl
 			this.<Long>getColumnOriginalValue("mvccVersion"));
 		notificationQueueEntryImpl.setNotificationQueueEntryId(
 			this.<Long>getColumnOriginalValue("notificationQueueEntryId"));
-		notificationQueueEntryImpl.setGroupId(
-			this.<Long>getColumnOriginalValue("groupId"));
 		notificationQueueEntryImpl.setCompanyId(
 			this.<Long>getColumnOriginalValue("companyId"));
 		notificationQueueEntryImpl.setUserId(
@@ -1025,25 +923,17 @@ public class NotificationQueueEntryModelImpl
 
 	@Override
 	public int compareTo(NotificationQueueEntry notificationQueueEntry) {
-		int value = 0;
+		long primaryKey = notificationQueueEntry.getPrimaryKey();
 
-		if (getPriority() < notificationQueueEntry.getPriority()) {
-			value = -1;
+		if (getPrimaryKey() < primaryKey) {
+			return -1;
 		}
-		else if (getPriority() > notificationQueueEntry.getPriority()) {
-			value = 1;
+		else if (getPrimaryKey() > primaryKey) {
+			return 1;
 		}
 		else {
-			value = 0;
+			return 0;
 		}
-
-		value = value * -1;
-
-		if (value != 0) {
-			return value;
-		}
-
-		return 0;
 	}
 
 	@Override
@@ -1110,8 +1000,6 @@ public class NotificationQueueEntryModelImpl
 
 		notificationQueueEntryCacheModel.notificationQueueEntryId =
 			getNotificationQueueEntryId();
-
-		notificationQueueEntryCacheModel.groupId = getGroupId();
 
 		notificationQueueEntryCacheModel.companyId = getCompanyId();
 
@@ -1324,7 +1212,6 @@ public class NotificationQueueEntryModelImpl
 
 	private long _mvccVersion;
 	private long _notificationQueueEntryId;
-	private long _groupId;
 	private long _companyId;
 	private long _userId;
 	private String _userName;
@@ -1378,7 +1265,6 @@ public class NotificationQueueEntryModelImpl
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put(
 			"notificationQueueEntryId", _notificationQueueEntryId);
-		_columnOriginalValues.put("groupId", _groupId);
 		_columnOriginalValues.put("companyId", _companyId);
 		_columnOriginalValues.put("userId", _userId);
 		_columnOriginalValues.put("userName", _userName);
@@ -1427,45 +1313,43 @@ public class NotificationQueueEntryModelImpl
 
 		columnBitmasks.put("notificationQueueEntryId", 2L);
 
-		columnBitmasks.put("groupId", 4L);
+		columnBitmasks.put("companyId", 4L);
 
-		columnBitmasks.put("companyId", 8L);
+		columnBitmasks.put("userId", 8L);
 
-		columnBitmasks.put("userId", 16L);
+		columnBitmasks.put("userName", 16L);
 
-		columnBitmasks.put("userName", 32L);
+		columnBitmasks.put("createDate", 32L);
 
-		columnBitmasks.put("createDate", 64L);
+		columnBitmasks.put("modifiedDate", 64L);
 
-		columnBitmasks.put("modifiedDate", 128L);
+		columnBitmasks.put("classNameId", 128L);
 
-		columnBitmasks.put("classNameId", 256L);
+		columnBitmasks.put("classPK", 256L);
 
-		columnBitmasks.put("classPK", 512L);
+		columnBitmasks.put("notificationTemplateId", 512L);
 
-		columnBitmasks.put("notificationTemplateId", 1024L);
+		columnBitmasks.put("from_", 1024L);
 
-		columnBitmasks.put("from_", 2048L);
+		columnBitmasks.put("fromName", 2048L);
 
-		columnBitmasks.put("fromName", 4096L);
+		columnBitmasks.put("to_", 4096L);
 
-		columnBitmasks.put("to_", 8192L);
+		columnBitmasks.put("toName", 8192L);
 
-		columnBitmasks.put("toName", 16384L);
+		columnBitmasks.put("cc", 16384L);
 
-		columnBitmasks.put("cc", 32768L);
+		columnBitmasks.put("bcc", 32768L);
 
-		columnBitmasks.put("bcc", 65536L);
+		columnBitmasks.put("subject", 65536L);
 
-		columnBitmasks.put("subject", 131072L);
+		columnBitmasks.put("body", 131072L);
 
-		columnBitmasks.put("body", 262144L);
+		columnBitmasks.put("priority", 262144L);
 
-		columnBitmasks.put("priority", 524288L);
+		columnBitmasks.put("sent", 524288L);
 
-		columnBitmasks.put("sent", 1048576L);
-
-		columnBitmasks.put("sentDate", 2097152L);
+		columnBitmasks.put("sentDate", 1048576L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

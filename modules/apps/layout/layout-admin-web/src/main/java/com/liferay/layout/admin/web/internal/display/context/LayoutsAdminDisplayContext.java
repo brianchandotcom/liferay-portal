@@ -1883,20 +1883,17 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	private int _getLayoutsCount(boolean privateLayouts) {
-		int layoutsCount = 0;
-
 		try {
-			layoutsCount = LayoutServiceUtil.getLayoutsCount(
-				getSelGroupId(), privateLayouts, 0);
-
-			if ((layoutsCount == 0) &&
-				GroupPermissionUtil.contains(
+			if (GroupPermissionUtil.contains(
 					themeDisplay.getPermissionChecker(), getSelGroupId(),
 					ActionKeys.MANAGE_LAYOUTS)) {
 
-				layoutsCount = LayoutLocalServiceUtil.getLayoutsCount(
+				return LayoutLocalServiceUtil.getLayoutsCount(
 					getSelGroup(), privateLayouts, 0);
 			}
+
+			return LayoutServiceUtil.getLayoutsCount(
+				getSelGroupId(), privateLayouts, 0);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -1904,7 +1901,7 @@ public class LayoutsAdminDisplayContext {
 			}
 		}
 
-		return layoutsCount;
+		return 0;
 	}
 
 	private String _getOrderByCol() {

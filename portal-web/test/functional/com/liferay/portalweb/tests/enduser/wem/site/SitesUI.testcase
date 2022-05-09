@@ -189,7 +189,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-149293. The user could view a message in modal when create a new site."
+	@description = "This is a test for LPS-149293 and LPS-146278. The user could view a message in modal when create a new site."
 	@priority = "5"
 	@uitest
 	test ViewSiteCreationMessage {
@@ -233,7 +233,7 @@ definition {
 		task ("View the new site is created") {
 			SelectFrameTop();
 
-			Alert.viewSuccessMessage();
+			Alert.viewSuccessMessageText(successMessage = "Site was successfully added.");
 
 			ControlMenu.viewHeaderTitle(headerTitle = "Site Settings");
 		}

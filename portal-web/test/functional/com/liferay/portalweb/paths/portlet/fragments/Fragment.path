@@ -105,6 +105,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ALERT_INFO</td>
+	<td>//div[@aria-label='${key_fragmentName}']//div[contains(@class,'alert-info')][normalize-space()='${key_alertInfo}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MESSAGE_INFO</td>
 	<td>//div[@aria-label='${key_fragmentName}']//div[@class='portlet-msg-info' and contains(.,'${key_messageInfo}')]</td>
 	<td></td>

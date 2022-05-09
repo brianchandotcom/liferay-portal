@@ -474,6 +474,11 @@ definition {
 			resourceName = "com.liferay.document.library.kernel.model.DLFileEntry",
 			roleTitle = "Regular Role");
 
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS",
+			resourceName = "com.liferay.document.library.kernel.model.DLFolder",
+			roleTitle = "Regular Role");
+
 		JSONRole.assignRoleToUser(
 			roleTitle = "Regular Role",
 			userEmailAddress = "userea@liferay.com");
@@ -579,7 +584,7 @@ definition {
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "ACCESS",
 			resourceName = "com.liferay.document.library.kernel.model.DLFolder",
-			roleTitle = "Update MG Role");
+			roleTitle = "Remove MG Role");
 
 		JSONRole.assignRoleToUser(
 			roleTitle = "Remove MG Role",

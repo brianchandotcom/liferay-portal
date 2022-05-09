@@ -7210,18 +7210,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/portletmvc4spring-framework.jar</file-name>
-				<version>5.2.0</version>
-				<project-name>PortletMVC4Spring</project-name>
-				<project-url>https://github.com/liferay/portletmvc4spring</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/slf4j-api.jar</file-name>
 				<version>1.7.26</version>
 				<project-name>SLF4J</project-name>

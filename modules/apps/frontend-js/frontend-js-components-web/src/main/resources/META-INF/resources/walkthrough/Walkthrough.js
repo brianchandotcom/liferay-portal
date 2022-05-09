@@ -286,10 +286,10 @@ const WalkthroughStep = ({
 			}
 
 			if (!darkbg && previousTrigger !== trigger) {
-				trigger.classList.add('lfr-walkthrough-element-shadow');
+				trigger.classList.add('lfr-walkthough-element-shadow');
 
 				previousTrigger.classList.remove(
-					'lfr-walkthrough-element-shadow'
+					'lfr-walkthough-element-shadow'
 				);
 			}
 		}

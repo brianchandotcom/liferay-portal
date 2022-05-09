@@ -23,6 +23,7 @@ import PreviewSelector from './PreviewSelector';
 import PublishButton from './PublishButton';
 import {StyleBookContext} from './StyleBookContext';
 import Undo from './Undo';
+import {config} from './config';
 import {DRAFT_STATUS} from './constants/draftStatusConstants';
 
 const STATUS_TO_LABEL = {
@@ -54,9 +55,11 @@ export default function Toolbar() {
 						<DraftStatus />
 					</li>
 
-					<li className="nav-item">
-						<Undo/>
-					</li>
+					{config.featureFlagLps142363 ? (
+						<li className="nav-item">
+							<Undo />
+						</li>
+					) : null}
 
 					<li className="mx-2 nav-item">
 						<HelpInformation />

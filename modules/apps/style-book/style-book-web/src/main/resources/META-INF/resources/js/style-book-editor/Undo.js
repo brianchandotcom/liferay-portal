@@ -17,7 +17,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 export default function Undo({onRedo = () => {}, onUndo = () => {}}) {
-
 	return (
 		<>
 			<ClayButton.Group className="flex-nowrap">

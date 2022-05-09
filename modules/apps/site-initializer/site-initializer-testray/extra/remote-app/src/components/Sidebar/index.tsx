@@ -67,10 +67,7 @@ const Sidebar = () => {
 				</Link>
 
 				{sidebarItems.map(
-					(
-						{className, element = <></>, icon, label, path},
-						index
-					) => {
+					({className, element, icon, label, path}, index) => {
 						const [, ...items] = sidebarItems;
 
 						if (path) {
@@ -94,7 +91,7 @@ const Sidebar = () => {
 							);
 						}
 
-						return element;
+						return <div key={index}>{element}</div>;
 					}
 				)}
 			</div>

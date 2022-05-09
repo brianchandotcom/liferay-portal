@@ -58,8 +58,8 @@ const InputSelect: React.FC<InputSelectProps> = ({
 					</option>
 				)}
 
-				{options.map(({label, value}) => (
-					<option key={label} value={value}>
+				{options.map(({label, value}, index) => (
+					<option key={index} value={value}>
 						{label}
 					</option>
 				))}

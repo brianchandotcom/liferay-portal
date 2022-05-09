@@ -44,7 +44,7 @@ const Header = () => {
 				className="dropdown-poll-icon mr-2"
 				color="darkblue"
 				fontSize={22}
-				symbol={symbol}
+				symbol={symbol || 'polls'}
 			/>
 
 			{displayCarret && (

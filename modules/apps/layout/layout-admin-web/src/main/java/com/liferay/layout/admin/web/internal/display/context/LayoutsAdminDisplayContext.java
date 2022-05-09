@@ -1292,7 +1292,7 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public boolean hasLayouts() {
-		int privatePagesCount = _getPrivateLayoutsCount();
+		int privatePagesCount = _getLayoutsCount(true);
 
 		int publicPagesCount = LayoutServiceUtil.getLayoutsCount(
 			getSelGroupId(), false, 0);
@@ -1409,7 +1409,7 @@ public class LayoutsAdminDisplayContext {
 
 		int publicLayoutsCount = LayoutServiceUtil.getLayoutsCount(
 			getSelGroupId(), false, 0);
-		int privateLayoutsCount = _getPrivateLayoutsCount();
+		int privateLayoutsCount = _getLayoutsCount(true);
 
 		if ((privateLayoutsCount > 0) && (publicLayoutsCount <= 0)) {
 			privateLayout = true;
@@ -1884,6 +1884,31 @@ public class LayoutsAdminDisplayContext {
 		return new long[0];
 	}
 
+	private int _getLayoutsCount(boolean privateLayouts) {
+		int layoutsCount = 0;
+
+		try {
+			layoutsCount = LayoutServiceUtil.getLayoutsCount(
+				getSelGroupId(), privateLayouts, 0);
+
+			if ((layoutsCount == 0) &&
+				GroupPermissionUtil.contains(
+					themeDisplay.getPermissionChecker(), getSelGroupId(),
+					ActionKeys.MANAGE_LAYOUTS)) {
+
+				layoutsCount = LayoutLocalServiceUtil.getLayoutsCount(
+					getSelGroup(), privateLayouts, 0);
+			}
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
+
+		return layoutsCount;
+	}
+
 	private String _getOrderByCol() {
 		if (Validator.isNotNull(_orderByCol)) {
 			return _orderByCol;
@@ -1915,31 +1940,6 @@ public class LayoutsAdminDisplayContext {
 			httpServletRequest, LayoutAdminPortletKeys.GROUP_PAGES, "asc");
 
 		return _orderByType;
-	}
-
-	private int _getPrivateLayoutsCount() {
-		int layoutsCount = 0;
-
-		try {
-			layoutsCount = LayoutServiceUtil.getLayoutsCount(
-				getSelGroupId(), true, 0);
-
-			if ((layoutsCount == 0) &&
-				GroupPermissionUtil.contains(
-					themeDisplay.getPermissionChecker(), getSelGroupId(),
-					ActionKeys.MANAGE_LAYOUTS)) {
-
-				layoutsCount = LayoutLocalServiceUtil.getLayoutsCount(
-					getSelGroup(), true, 0);
-			}
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-		}
-
-		return layoutsCount;
 	}
 
 	private String _getStrictRobots() {

@@ -410,12 +410,14 @@ public class ObjectLayoutLocalServiceImpl
 		List<ObjectLayoutTab> objectLayoutTabs) {
 
 		for (ObjectLayoutTab objectLayoutTab : objectLayoutTabs) {
+			List<ObjectLayoutBox> objectLayoutBoxes =
+				_objectLayoutBoxPersistence.findByObjectLayoutTabId(
+					objectLayoutTab.getObjectLayoutTabId());
+
 			_objectLayoutBoxPersistence.removeByObjectLayoutTabId(
 				objectLayoutTab.getObjectLayoutTabId());
 
-			_deleteObjectLayoutRows(
-				_objectLayoutBoxPersistence.findByObjectLayoutTabId(
-					objectLayoutTab.getObjectLayoutTabId()));
+			_deleteObjectLayoutRows(objectLayoutBoxes);
 		}
 	}
 
@@ -432,20 +434,24 @@ public class ObjectLayoutLocalServiceImpl
 		List<ObjectLayoutBox> objectLayoutBoxes) {
 
 		for (ObjectLayoutBox objectLayoutBox : objectLayoutBoxes) {
+			List<ObjectLayoutRow> objectLayoutRows =
+				_objectLayoutRowPersistence.findByObjectLayoutBoxId(
+					objectLayoutBox.getObjectLayoutBoxId());
+
 			_objectLayoutRowPersistence.removeByObjectLayoutBoxId(
 				objectLayoutBox.getObjectLayoutBoxId());
 
-			_deleteObjectLayoutColumns(
-				_objectLayoutRowPersistence.findByObjectLayoutBoxId(
-					objectLayoutBox.getObjectLayoutBoxId()));
+			_deleteObjectLayoutColumns(objectLayoutRows);
 		}
 	}
 
 	private void _deleteObjectLayoutTabs(long objectLayoutId) {
+		List<ObjectLayoutTab> objectLayoutTabs =
+			_objectLayoutTabPersistence.findByObjectLayoutId(objectLayoutId);
+
 		_objectLayoutTabPersistence.removeByObjectLayoutId(objectLayoutId);
 
-		_deleteObjectLayoutBoxes(
-			_objectLayoutTabPersistence.findByObjectLayoutId(objectLayoutId));
+		_deleteObjectLayoutBoxes(objectLayoutTabs);
 	}
 
 	private List<ObjectLayoutBox> _getObjectLayoutBoxes(

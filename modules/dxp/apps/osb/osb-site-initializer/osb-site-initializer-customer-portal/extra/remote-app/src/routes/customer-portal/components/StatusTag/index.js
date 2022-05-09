@@ -10,32 +10,33 @@
  */
 
 import ClayLabel from '@clayui/label';
+import i18n from '../../../../common/I18n';
 import {STATUS_TAG_TYPES} from '../../utils/constants';
 
 const labelProps = {
 	[STATUS_TAG_TYPES.active]: {
 		displayType: 'success',
-		label: 'Active',
+		label: i18n.translate('active'),
 	},
 	[STATUS_TAG_TYPES.expired]: {
 		displayType: 'danger',
-		label: 'Expired',
+		label: i18n.translate('expired'),
 	},
 	[STATUS_TAG_TYPES.future]: {
 		displayType: 'info',
-		label: 'Future',
+		label: i18n.translate('future'),
 	},
 	[STATUS_TAG_TYPES.inProgress]: {
 		displayType: 'warning',
-		label: 'In Progress',
+		label: i18n.translate('in-progress'),
 	},
 	[STATUS_TAG_TYPES.invited]: {
 		displayType: 'info',
-		label: 'Invited',
+		label: i18n.translate('invited'),
 	},
 	[STATUS_TAG_TYPES.notActivated]: {
 		displayType: 'dark',
-		label: 'Not Activated',
+		label: i18n.translate('not-activated'),
 	},
 };
 

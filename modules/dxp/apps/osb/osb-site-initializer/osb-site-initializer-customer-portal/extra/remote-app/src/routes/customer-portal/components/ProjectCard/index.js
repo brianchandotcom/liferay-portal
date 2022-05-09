@@ -11,22 +11,24 @@
 
 import ClayCard from '@clayui/card';
 import classNames from 'classnames';
+import i18n from '../../../../common/I18n';
 import {STATUS_TAG_TYPES} from '../../utils/constants';
 import getDateCustomFormat from '../../utils/getDateCustomFormat';
+import getKebabCase from '../../utils/getKebabCase';
 import StatusTag from '../StatusTag';
 import ProjectCardSkeleton from './Skeleton';
 
 const ProjectCard = ({code, isSmall, onClick, region, sla, status, title}) => {
 	const getStatusMessage = (currentStatus) => {
 		if (currentStatus === STATUS_TAG_TYPES.active) {
-			return 'Ends on ';
+			return `${i18n.translate('ends-on')} `;
 		}
 
 		if (currentStatus === STATUS_TAG_TYPES.expired) {
-			return 'Ended on ';
+			return `${i18n.translate('ended-on')} `;
 		}
 
-		return 'Starts on ';
+		return `${i18n.translate('starts-on')} `;
 	};
 
 	return (
@@ -94,10 +96,10 @@ const ProjectCard = ({code, isSmall, onClick, region, sla, status, title}) => {
 
 						{isSmall && (
 							<div className="text-align-end text-neutral-5 text-paragraph-sm">
-								{'Support Region '}
+								{`${i18n.translate('support-region')} `}
 
 								<span className="font-weight-bold">
-									{region}
+									{`${i18n.translate(getKebabCase(region))}`}
 								</span>
 							</div>
 						)}

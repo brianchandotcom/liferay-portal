@@ -12,6 +12,7 @@
 import classNames from 'classnames';
 import {useEffect, useState} from 'react';
 import client from '../../../../apolloClient';
+import i18n from '../../../../common/I18n';
 import {
 	getAccounts,
 	getKoroneikiAccounts,
@@ -78,8 +79,7 @@ const Home = ({userAccount}) => {
 					accounts = dataAccounts?.accounts?.items;
 					accountKeysFilter = '';
 				}
-			}
-			else if (userAccount?.accountBriefs?.length) {
+			} else if (userAccount?.accountBriefs?.length) {
 				accounts = userAccount?.accountBriefs;
 				accountKeysFilter = getKoroneikiFilter(accounts);
 			}
@@ -168,11 +168,15 @@ const Home = ({userAccount}) => {
 
 						<h5 className="m-0 text-neutral-7">
 							{keyword
-								? `${projectsFiltered.length} result${
-										projectsFiltered.length === 1 ? '' : 's'
+								? `${projectsFiltered.length} ${
+										projectsFiltered.length === 1
+											? i18n.translate('result')
+											: i18n.translate('results')
 								  }`
-								: `${projects.length} project${
-										projects.length === 1 ? '' : 's'
+								: `${projects.length} ${
+										projects.length === 1
+											? i18n.translate('project')
+											: i18n.translate('projects')
 								  }`}
 						</h5>
 					</div>
@@ -196,7 +200,9 @@ const Home = ({userAccount}) => {
 							))
 						) : (
 							<p className="mx-auto">
-								No projects match these criteria.
+								{i18n.translate(
+									'no-projects-match-these-criteria'
+								)}
 							</p>
 						)}
 					</div>

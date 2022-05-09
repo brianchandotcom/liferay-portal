@@ -69,11 +69,19 @@ export default withRouter(
 			url,
 		},
 	}) => {
-		const context = useContext(AppContext);
+		const sectionRef = useRef(null);
 
+		const executeScroll = () =>
+			sectionRef.current.scrollIntoView({
+				behavior: 'smooth',
+				block: 'start',
+			});
+
+		const context = useContext(AppContext);
 		const historyPushParser = historyPushWithSlug(history.push);
 
 		const [error, setError] = useState(null);
+		const [isPageScroll, setIsPageScroll] = useState(false);
 
 		const editorRef = useRef('');
 
@@ -114,8 +122,7 @@ export default withRouter(
 							);
 							setError(errorObject);
 							setLoading(false);
-						}
-						else {
+						} else {
 							setQuestion(messageBoardThreadByFriendlyUrlPath);
 							setLoading(false);
 						}
@@ -189,6 +196,22 @@ export default withRouter(
 			},
 			[markAsAnswerMessageBoardMessage, answers.items, fetchMessages]
 		);
+
+		useEffect(() => {
+			const body = document.body;
+			const html = document.documentElement;
+
+			const docHeight = Math.max(
+				body.scrollHeight,
+				body.offsetHeight,
+				html.clientHeight,
+				html.scrollHeight,
+				html.offsetHeight
+			);
+
+			const winHeight = window.innerHeight;
+			setIsPageScroll(docHeight > winHeight);
+		}, [question, answers]);
 
 		return (
 			<section className="questions-section questions-section-single">
@@ -379,6 +402,21 @@ export default withRouter(
 														</ClayButton>
 													</Link>
 												)}
+
+												{isPageScroll &&
+													answers.items?.length >
+														0 && (
+														<ClayButton
+															displayType="secondary"
+															onClick={
+																executeScroll
+															}
+														>
+															{Liferay.Language.get(
+																'go-to-answers'
+															)}
+														</ClayButton>
+													)}
 											</ClayButton.Group>
 										</div>
 									)}
@@ -388,7 +426,7 @@ export default withRouter(
 									<ArticleBodyRenderer {...question} />
 								</div>
 
-								<div className="c-mt-4">
+								<div className="c-mt-4" ref={sectionRef}>
 									<TagList
 										sectionTitle={sectionTitle}
 										tags={question.keywords}

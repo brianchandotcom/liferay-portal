@@ -139,7 +139,7 @@ public class FormStyledLayoutStructureItem extends StyledLayoutStructureItem {
 
 	private long _classNameId;
 	private long _classTypeId;
-	private int _formConfig = FORM_CONFIG_DISPLAY_PAGE_ITEM_TYPE;
+	private int _formConfig;
 	private boolean _indexed = true;
 
 }

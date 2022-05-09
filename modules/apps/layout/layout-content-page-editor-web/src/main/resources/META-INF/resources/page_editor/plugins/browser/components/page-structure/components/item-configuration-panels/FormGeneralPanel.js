@@ -109,7 +109,12 @@ function MappingSource({item, onValueSelect}) {
 			onValueSelect={(_name, formConfig) => {
 				onValueSelect({formConfig});
 			}}
-			value={item.config.formConfig}
+			value={
+				item.config.formConfig === FORM_MAPPING_SOURCES.default &&
+				config.layoutType === LAYOUT_TYPES.display
+					? FORM_MAPPING_SOURCES.displayPage
+					: item.config.formConfig
+			}
 		/>
 	);
 }

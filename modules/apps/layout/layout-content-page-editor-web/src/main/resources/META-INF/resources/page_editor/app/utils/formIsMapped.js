@@ -19,7 +19,8 @@ import {config} from '../config/index';
 export function formIsMapped(item) {
 	return (
 		(config.layoutType === LAYOUT_TYPES.display &&
-			item.config.formConfig === FORM_MAPPING_SOURCES.displayPage) ||
+			(item.config.formConfig === FORM_MAPPING_SOURCES.default ||
+				item.config.formConfig === FORM_MAPPING_SOURCES.displayPage)) ||
 		(item.config.classNameId && item.config.classNameId !== '0')
 	);
 }

@@ -13,6 +13,7 @@
  */
 
 export const FORM_MAPPING_SOURCES = {
-	displayPage: 0,
-	otherContentType: 1,
+	default: 0,
+	displayPage: 1,
+	otherContentType: 2,
 };

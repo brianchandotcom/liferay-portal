@@ -27,9 +27,9 @@ const TablePagination = ({
 }) => {
 	if (showDeltasDropDown || totalItems > itemsPerPage) {
 		const defaultLabels = {
-			paginationResults: i18n.translate('showing-x-to-x-of-x'),
-			perPageItems: i18n.translate('x-items'),
-			selectPerPageItems: i18n.translate('x-items'),
+			paginationResults: 'showing {0} to {1} of {2}',
+			perPageItems: '{0} items',
+			selectPerPageItems: '{0} items',
 		};
 
 		return (
@@ -55,13 +55,15 @@ const TablePagination = ({
 	}
 
 	return (
-		<p className="mb-4 mx-4 pagination-results">{`${i18n.translate(
-			'showing'
-		)} ${itemsPerPage * activePage + 1 - itemsPerPage} ${i18n.translate(
-			'to'
-		)} ${totalItems} ${i18n.translate('of')} ${totalItems} ${i18n.translate(
-			'entries'
-		)}.`}</p>
+		<>
+			<p className="mb-4 mx-4 pagination-results">
+				{i18n.sub('showing-x-to-x-of-x-entries', [
+					`${itemsPerPage * activePage + 1 - itemsPerPage}`,
+					totalItems,
+					totalItems,
+				])}
+			</p>
+		</>
 	);
 };
 

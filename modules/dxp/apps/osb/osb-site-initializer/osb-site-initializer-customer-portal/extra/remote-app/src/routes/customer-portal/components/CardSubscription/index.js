@@ -1,4 +1,3 @@
-/* eslint-disable @liferay/empty-line-between-elements */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -88,7 +87,8 @@ const CardSubscription = ({
 					</h5>
 
 					<p className="mb-1 text-center text-neutral-7 text-paragraph-sm">
-						{i18n.translate('instance-size')}:{' '}
+						{`${i18n.translate('instance-size')}: `}
+
 						{`${cardSubscriptionData?.instanceSize || ' - '}`}
 					</p>
 

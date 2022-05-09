@@ -54,6 +54,7 @@ function BasicInfo({
 					locales={locales}
 					onSelectedLocaleChange={setSelectedLocale}
 					onTranslationsChange={(label) => setValues({name: label})}
+					placeholder={Liferay.Language.get('add-a-label')}
 					required
 					selectedLocale={locale}
 					translations={values.name as LocalizedValue<string>}
@@ -144,6 +145,7 @@ function Conditions({
 					onTranslationsChange={(message) =>
 						setValues({errorLabel: message})
 					}
+					placeholder={Liferay.Language.get('add-an-error-message')}
 					required
 					selectedLocale={locale}
 					translations={values.errorLabel as LocalizedValue<string>}

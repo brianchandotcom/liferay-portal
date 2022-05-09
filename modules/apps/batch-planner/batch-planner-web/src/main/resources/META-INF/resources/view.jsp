@@ -31,6 +31,8 @@ SearchContainer<BatchPlannerPlanDisplay> batchPlannerPlanDisplaySearchContainer 
 />
 
 <clay:container-fluid>
+	<liferay-ui:error exception="<%= BatchPlannerPlanInternalClassNameException.class %>" message="unable-to-perform-the-search.-provided-search-term-is-too-ambiguous" />
+
 	<liferay-ui:search-container
 		cssClass="mt-3"
 		searchContainer="<%= batchPlannerPlanDisplaySearchContainer %>"

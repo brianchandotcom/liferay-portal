@@ -216,6 +216,7 @@ definition {
 	@priority = "3"
 	test CanCancelCreatingStaticSegment {
 		property analytics.cloud.upstream = "false";
+
 		task ("Sign in as new user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "userea@liferay.com",

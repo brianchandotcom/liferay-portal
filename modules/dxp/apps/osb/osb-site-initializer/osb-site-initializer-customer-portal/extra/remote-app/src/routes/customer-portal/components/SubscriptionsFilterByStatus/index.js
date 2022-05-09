@@ -13,6 +13,7 @@ import ClayButton from '@clayui/button';
 import {DropDown} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
 import React, {useState} from 'react';
+import i18n from '../../../../common/I18n';
 import {SUBSCRIPTIONS_STATUS} from '../../utils/constants';
 
 const SubscriptionsFilterByStatus = ({selectedStatus, setSelectedStatus}) => {
@@ -41,7 +42,7 @@ const SubscriptionsFilterByStatus = ({selectedStatus, setSelectedStatus}) => {
 
 	return (
 		<div className="d-flex mr-5 mt-4">
-			<h6 className="mr-2 my-auto">Status:</h6>
+			<h6 className="mr-2 my-auto">{i18n.translate('status')}:</h6>
 
 			<DropDown
 				active={active}
@@ -58,9 +59,9 @@ const SubscriptionsFilterByStatus = ({selectedStatus, setSelectedStatus}) => {
 						{`${
 							selectedStatus.length ===
 							Object.keys(SUBSCRIPTIONS_STATUS).length
-								? 'All'
+								? i18n.translate('all')
 								: selectedStatus.length === 0
-								? 'None'
+								? i18n.translate('none')
 								: selectedStatus.join(', ')
 						}`}{' '}
 						<></>
@@ -69,7 +70,7 @@ const SubscriptionsFilterByStatus = ({selectedStatus, setSelectedStatus}) => {
 				}
 			>
 				<DropDown.Item
-					onClick={() => handleChange('All')}
+					onClick={() => handleChange(i18n.translate('all'))}
 					symbolRight={
 						selectedStatus.length ===
 						Object.keys(SUBSCRIPTIONS_STATUS).length
@@ -77,7 +78,7 @@ const SubscriptionsFilterByStatus = ({selectedStatus, setSelectedStatus}) => {
 							: ''
 					}
 				>
-					All
+					{i18n.translate('all')}
 				</DropDown.Item>
 
 				<DropDown.Item

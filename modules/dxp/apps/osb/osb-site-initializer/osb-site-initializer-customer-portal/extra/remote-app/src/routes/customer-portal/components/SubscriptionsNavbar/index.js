@@ -12,8 +12,10 @@
 import {Button as ClayButton, DropDown} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
 import React, {useEffect, useRef, useState} from 'react';
+import i18n from '../../../../common/I18n';
 import RoundedGroupButtons from '../../../../common/components/RoundedGroupButtons';
 import {useCustomerPortal} from '../../context';
+import getKebabCase from '../../utils/getKebabCase';
 
 const SubscriptionDropDownMenu = ({
 	selectedSubscriptionGroup,
@@ -24,7 +26,7 @@ const SubscriptionDropDownMenu = ({
 
 	return (
 		<div className="align-items-center d-flex mt-4 pb-3">
-			<h6>Type:</h6>
+			<h6>{i18n.translate('type')}:</h6>
 
 			<DropDown
 				active={active}
@@ -38,7 +40,9 @@ const SubscriptionDropDownMenu = ({
 						className="font-weight-semi-bold ml-2 pb-2 shadow-none text-brand-primary"
 						displayType="unstyled"
 					>
-						{selectedSubscriptionGroup}
+						{i18n.translate(
+							getKebabCase(selectedSubscriptionGroup)
+						)}
 
 						<ClayIcon symbol="caret-bottom" />
 					</ClayButton>
@@ -58,7 +62,7 @@ const SubscriptionDropDownMenu = ({
 						}
 						value={subscriptionGroup.name}
 					>
-						{subscriptionGroup.name}
+						{i18n.translate(getKebabCase(subscriptionGroup.name))}
 					</DropDown.Item>
 				))}
 			</DropDown>
@@ -106,7 +110,9 @@ const SubscriptionsNavbar = ({
 							className="text-brand-primary"
 							key={subscriptionGroup.name}
 						>
-							{subscriptionGroup.name}
+							{i18n.translate(
+								getKebabCase(subscriptionGroup.name)
+							)}
 						</h5>
 					))}
 
@@ -129,7 +135,11 @@ const SubscriptionsNavbar = ({
 								<RoundedGroupButtons
 									groupButtons={subscriptionGroups.map(
 										(subscriptionGroup) => ({
-											label: subscriptionGroup.name,
+											label: `${i18n.translate(
+												getKebabCase(
+													subscriptionGroup.name
+												)
+											)}`,
 											value: subscriptionGroup.name,
 										})
 									)}

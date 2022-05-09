@@ -51,7 +51,6 @@ import com.liferay.portal.kernel.template.URLTemplateResource;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlParser;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -569,8 +568,7 @@ public class DDMFormEmailNotificationSender {
 			_ddmFormFieldTypeServicesTracker.getDDMFormFieldValueRenderer(
 				ddmFormFieldValue.getType());
 
-		return HtmlUtil.unescape(
-			ddmFormFieldValueRenderer.render(ddmFormFieldValue, locale));
+		return ddmFormFieldValueRenderer.render(ddmFormFieldValue, locale);
 	}
 
 	private static final String _TEMPLATE_PATH =

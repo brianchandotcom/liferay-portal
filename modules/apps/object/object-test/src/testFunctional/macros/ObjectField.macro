@@ -17,7 +17,7 @@ definition {
 	}
 
 	macro assertDocumentsAndMediaHomeFolder {
-		IFrame.selectModalFrame();
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		AssertElementPresent(
 			key_viewHomeFolder = "${viewHomeFolder}",

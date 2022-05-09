@@ -1,8 +1,46 @@
-/*FONT FAMILIES*/
+/*Balow*/
+@font-face {
+	font-display: swap;
+	font-family: 'Barlow';
+	font-style: normal;
+	font-weight: 400;
+	src: url([$DOCUMENT_URL:/site-initializer/documents/group/fonts/barlow/Barlow-Regular.ttf$]);
+}
 
-@import url('https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap');
+@font-face {
+	font-display: swap;
+	font-family: 'Barlow';
+	font-style: normal;
+	font-weight: 600;
+	src: url([$DOCUMENT_URL:/site-initializer/documents/group/fonts/barlow/Barlow-SemiBold.ttf$]);
+}
 
-@import url('https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital@0;1&display=swap');
+@font-face {
+	font-display: swap;
+	font-family: 'Barlow';
+	font-style: normal;
+	font-weight: 700;
+	src: url([$DOCUMENT_URL:/site-initializer/documents/group/fonts/barlow/Barlow-Bold.ttf$]);
+}
+
+@font-face {
+	font-display: swap;
+	font-family: 'Barlow';
+	font-style: normal;
+	font-weight: 800;
+	src: url([$DOCUMENT_URL:/site-initializer/documents/group/fonts/barlow/Barlow-ExtraBold.ttf$]);
+}
+
+/*Source Serif Pro*/
+@font-face {
+	font-display: swap;
+	font-family: 'Source Serif Pro';
+	font-style: normal;
+	font-weight: 400;
+	src: 
+		url([$DOCUMENT_URL:/site-initializer/documents/group/fonts/sourceSerifPro/SourceSerifPro-Regular.ttf$]);
+}
+
 
 /*GENERAL*/
 

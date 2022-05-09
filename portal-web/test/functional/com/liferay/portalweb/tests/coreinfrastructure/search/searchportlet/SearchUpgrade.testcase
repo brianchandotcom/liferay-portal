@@ -320,6 +320,16 @@ definition {
 	}
 
 	@priority = "5"
+	test ViewSearchPortletsConfigurationArchive7310 {
+		property data.archive.type = "data-archive-search-portlets";
+		property portal.version = "7.3.10";
+		property test.assert.warning.exceptions = "true";
+		property test.run.environment = "EE";
+
+		Upgrade.viewSearchPortletsConfiguration();
+	}
+
+	@priority = "5"
 	test ViewSearchPortletsConfigurationArchive7413 {
 		property data.archive.type = "data-archive-search-portlets";
 		property portal.version = "7.4.13";

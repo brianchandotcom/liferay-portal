@@ -152,6 +152,34 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 			_defaultDTOConverterContext, objectDefinition, objectEntry, null);
 	}
 
+	private void _addTestrayFactor(
+			long testrayFactorCategoryId, String testrayFactorCategoryName,
+			long testrayFactorOptionId, String testrayFactorOptionName,
+			long testrayRunId)
+		throws Exception {
+
+		ObjectEntry objectEntry = new ObjectEntry();
+
+		objectEntry.setProperties(
+			HashMapBuilder.<String, Object>put(
+				"classNameId", testrayRunId
+			).put(
+				"classPK", testrayRunId
+			).put(
+				"r_factorCategoryToFactors_c_factorCategoryId",
+				testrayFactorCategoryId
+			).put(
+				"r_factorOptionToFactors_c_factorOptionId",
+				testrayFactorOptionId
+			).put(
+				"testrayFactorCategoryName", testrayFactorCategoryName
+			).put(
+				"testrayFactorOptionName", testrayFactorOptionName
+			).build());
+
+		_addObjectEntry("Factor", objectEntry);
+	}
+
 	private String _getAttributeValue(String attributeName, Node node) {
 		NamedNodeMap namedNodeMap = node.getAttributes();
 
@@ -320,6 +348,56 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 		return objectEntry.getId();
 	}
 
+	private long _getTestrayFactorCategoryId(
+			long companyId, String testrayFactorCategoryName)
+		throws Exception {
+
+		long testrayFactorCategoryId = _getObjectEntryId(
+			companyId, testrayFactorCategoryName, "FactorCategory");
+
+		if (testrayFactorCategoryId != 0) {
+			return testrayFactorCategoryId;
+		}
+
+		ObjectEntry objectEntry = new ObjectEntry();
+
+		objectEntry.setProperties(
+			HashMapBuilder.<String, Object>put(
+				"name", testrayFactorCategoryName
+			).build());
+
+		objectEntry = _addObjectEntry("FactorCategory", objectEntry);
+
+		return objectEntry.getId();
+	}
+
+	private long _getTestrayFactorOptionId(
+			long companyId, long testrayFactorCategoryId,
+			String testrayFactorOptionName)
+		throws Exception {
+
+		long testrayFactorOptionId = _getObjectEntryId(
+			companyId, testrayFactorOptionName, "FactorOption");
+
+		if (testrayFactorOptionId != 0) {
+			return testrayFactorOptionId;
+		}
+
+		ObjectEntry objectEntry = new ObjectEntry();
+
+		objectEntry.setProperties(
+			HashMapBuilder.<String, Object>put(
+				"name", testrayFactorOptionName
+			).put(
+				"r_factorCategoryToOptions_c_factorCategoryId",
+				testrayFactorCategoryId
+			).build());
+
+		objectEntry = _addObjectEntry("FactorOption", objectEntry);
+
+		return objectEntry.getId();
+	}
+
 	private long _getTestrayProductVersionId(
 			long companyId, String testrayProductVersionName,
 			long testrayProjectId)
@@ -389,6 +467,89 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 			).build());
 
 		objectEntry = _addObjectEntry("Routine", objectEntry);
+
+		return objectEntry.getId();
+	}
+
+	private String _getTestrayRunEnvironmentHash(
+			long companyId, Element element, long testrayRunId)
+		throws Exception {
+
+		StringBundler sb = new StringBundler();
+
+		NodeList environmentNodeList = element.getElementsByTagName(
+			"environment");
+
+		for (int i = 0; i < environmentNodeList.getLength(); i++) {
+			Node node = environmentNodeList.item(i);
+
+			if (!node.hasAttributes()) {
+				continue;
+			}
+
+			String testrayFactorCategoryName = _getAttributeValue("type", node);
+
+			long testrayFactorCategoryId = _getTestrayFactorCategoryId(
+				companyId, testrayFactorCategoryName);
+
+			String testrayFactorOptionName = _getAttributeValue("option", node);
+
+			long testrayFactorOptionId = _getTestrayFactorOptionId(
+				companyId, testrayFactorCategoryId, testrayFactorOptionName);
+
+			_addTestrayFactor(
+				testrayFactorCategoryId, testrayFactorCategoryName,
+				testrayFactorOptionId, testrayFactorOptionName, testrayRunId);
+
+			sb.append(testrayFactorCategoryId);
+			sb.append(testrayFactorOptionId);
+		}
+
+		String testrayFactorsString = sb.toString();
+
+		return String.valueOf(testrayFactorsString.hashCode());
+	}
+
+	private long _getTestrayRunId(
+			long companyId, Element element, Map<String, String> propertiesMap,
+			long testrayBuildId, String testrayRunName)
+		throws Exception {
+
+		long testrayRunId = _getObjectEntryId(companyId, testrayRunName, "Run");
+
+		if (testrayRunId != 0) {
+			return testrayRunId;
+		}
+
+		ObjectEntry objectEntry = new ObjectEntry();
+
+		objectEntry.setProperties(
+			HashMapBuilder.<String, Object>put(
+				"externalReferencePK", propertiesMap.get("testray.run.id")
+			).put(
+				"externalReferenceType",
+				_TESTRAY_RUN_EXTERNAL_REFERENCE_TYPE_POSHI
+			).put(
+				"jenkinsJobKey", propertiesMap.get("jenkins.job.id")
+			).put(
+				"name", testrayRunName
+			).put(
+				"number", 0
+			).put(
+				"r_buildToRuns_c_buildId", testrayBuildId
+			).build());
+
+		objectEntry = _addObjectEntry("Run", objectEntry);
+
+		objectEntry.getProperties(
+		).put(
+			"environmentHash",
+			_getTestrayRunEnvironmentHash(companyId, element, testrayRunId)
+		);
+
+		_objectEntryManager.updateObjectEntry(
+			_defaultDTOConverterContext, _objectDefinitions.get("Run"),
+			objectEntry.getId(), objectEntry);
 
 		return objectEntry.getId();
 	}
@@ -604,9 +765,13 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 		long testrayProjectId = _getTestrayProjectId(
 			companyId, propertiesMap.get("testray.project.name"));
 
-		_getTestrayBuildId(
+		long testrayBuildId = _getTestrayBuildId(
 			companyId, propertiesMap, propertiesMap.get("testray.build.name"),
 			testrayProjectId);
+
+		_getTestrayRunId(
+			companyId, element, propertiesMap, testrayBuildId,
+			propertiesMap.get("testray.run.id"));
 	}
 
 	private void _uploadToTestray(
@@ -671,6 +836,8 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 			throw new PortalException("At least one property is not defined");
 		}
 	}
+
+	private static final int _TESTRAY_RUN_EXTERNAL_REFERENCE_TYPE_POSHI = 1;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		TestrayDispatchTaskExecutor.class);

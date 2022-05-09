@@ -466,9 +466,7 @@ definition {
 		}
 
 		task ("Delete the navigation menu") {
-			LexiconEntry.delete(
-				menuItem = "Delete",
-				rowEntry = "Navigation Menu Name");
+			NavigationMenusAdmin.deleteCP(navigationMenuName = "Navigation Menu Name");
 		}
 
 		task ("Publish to live") {

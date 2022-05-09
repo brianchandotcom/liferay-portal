@@ -99,6 +99,15 @@ definition {
 	}
 
 	@priority = "5"
+	test ViewClassicSearchPortletConfigurationArchive7310 {
+		property data.archive.type = "data-archive-classic-search-portlet";
+		property portal.version = "7.3.10";
+		property test.run.environment = "EE";
+
+		Upgrade.viewClassicSearchPortletConfiguration();
+	}
+
+	@priority = "5"
 	test ViewClassicSearchPortletConfigurationArchive7413 {
 		property data.archive.type = "data-archive-classic-search-portlet";
 		property portal.version = "7.4.13";

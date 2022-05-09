@@ -200,7 +200,7 @@ definition {
 
 			Form.addTextField(fieldPositionNumber = "0");
 
-			Form.save();
+			Form.publishForm();
 		}
 
 		task ("Add Form page") {

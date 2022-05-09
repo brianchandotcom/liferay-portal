@@ -117,9 +117,7 @@ definition {
 
 		task ("Assert Keywords Searched") {
 			for (var keyword : list "atenção com a criança,子供との注意,atención al niño") {
-				AssertElementPresent(
-					key_keyword = "${keyword}",
-					locator1 = "ACSites#SEARCHED_KEYWORD");
+				ACUtils.viewGenericText(textValueList = "${keyword}");
 			}
 		}
 	}

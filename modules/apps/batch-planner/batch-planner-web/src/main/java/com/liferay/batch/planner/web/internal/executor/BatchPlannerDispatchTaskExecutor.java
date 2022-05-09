@@ -24,6 +24,9 @@ import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
@@ -50,37 +53,51 @@ public class BatchPlannerDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 
 		ExpandoBridge expandoBridge = dispatchTrigger.getExpandoBridge();
 
-		long batchPlannerPlanId = GetterUtil.getLong(
-			expandoBridge.getAttribute("batchPlannerPlanId", false));
-
 		UnicodeProperties dispatchTaskSettingsUnicodeProperties =
 			dispatchTrigger.getDispatchTaskSettingsUnicodeProperties();
 
-		if (batchPlannerPlanId <= 0) {
-			batchPlannerPlanId = GetterUtil.getLong(
+		long batchPlannerPlanId = GetterUtil.getLong(
+			expandoBridge.getAttribute("batchPlannerPlanId", false),
+			GetterUtil.getLong(
 				dispatchTaskSettingsUnicodeProperties.getProperty(
-					"batchPlannerPlanId"));
-		}
+					"batchPlannerPlanId")));
 
 		String externalFileURL =
 			dispatchTaskSettingsUnicodeProperties.getProperty(
 				"external-file-url");
 
-		BatchPlannerPlan batchPlannerPlan =
-			_batchPlannerPlanHelper.copyBatchPlannerPlan(
-				dispatchTrigger.getUserId(), batchPlannerPlanId,
-				externalFileURL,
-				StringBundler.concat(
-					"Triggered by ", dispatchTrigger.getName(),
-					StringPool.COMMA_AND_SPACE, System.currentTimeMillis()));
+		try {
+			TransactionInvokerUtil.invoke(
+				_transactionConfig,
+				() -> {
+					BatchPlannerPlan batchPlannerPlan =
+						_batchPlannerPlanHelper.copyBatchPlannerPlan(
+							dispatchTrigger.getUserId(), batchPlannerPlanId,
+							externalFileURL,
+							StringBundler.concat(
+								"Triggered by ", dispatchTrigger.getName(),
+								StringPool.COMMA_AND_SPACE,
+								System.currentTimeMillis()));
 
-		_batchEngineBroker.submit(batchPlannerPlan.getBatchPlannerPlanId());
+					_batchEngineBroker.submit(
+						batchPlannerPlan.getBatchPlannerPlanId());
+
+					return null;
+				});
+		}
+		catch (Throwable throwable) {
+			throw new Exception(throwable);
+		}
 	}
 
 	@Override
 	public String getName() {
 		return null;
 	}
+
+	private static final TransactionConfig _transactionConfig =
+		TransactionConfig.Factory.create(
+			Propagation.REQUIRES_NEW, new Class<?>[] {Exception.class});
 
 	@Reference
 	private BatchEngineBroker _batchEngineBroker;

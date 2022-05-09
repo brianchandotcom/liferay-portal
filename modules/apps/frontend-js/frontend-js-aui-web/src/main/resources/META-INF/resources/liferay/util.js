@@ -699,6 +699,9 @@
 
 		submitCountdown: 0,
 
+		/**
+		 * @deprecated As of Cavanaugh (7.4.x), replaced by `form.submit()`
+		 */
 		submitForm(form) {
 			form.submit();
 		},

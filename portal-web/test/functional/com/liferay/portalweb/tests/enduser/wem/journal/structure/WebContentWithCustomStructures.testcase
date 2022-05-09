@@ -208,6 +208,91 @@ definition {
 		}
 	}
 
+	@description = "A child site can use structures and templates inherited from its parent."
+	@priority = "4"
+	test AddWebContentBasedOnStructureAndTemplateFromParentSite {
+		property test.name.skip.portal.instance = "WebContentWithCustomStructures#AddWebContentBasedOnStructureAndTemplateFromParentSite";
+
+		task ("Enable ancestor scopes by default in System Settings") {
+			SystemSettings.openSystemSettingsAdmin();
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Web Content",
+				configurationName = "Administration",
+				configurationScope = "System Scope");
+
+			FormFields.enableCheckbox(fieldName = "showAncestorScopesByDefault");
+
+			SystemSettings.saveConfiguration();
+		}
+
+		task ("Add a child site") {
+			JSONGroup.addChildGroup(
+				groupName = "Child Site Name",
+				parentGroupName = "Test Site Name");
+		}
+
+		task ("Add a web content structure with rich text field") {
+			WebContentNavigator.openWebContentStructuresAdmin(siteURLKey = "test-site-name");
+
+			WebContentStructures.addCP(
+				structureDescription = "WC Structure Description",
+				structureName = "WC Structure Name");
+
+			DataEngine.addField(
+				fieldFieldLabel = "Rich Text",
+				fieldName = "Rich Text");
+
+			WebContentStructures.saveCP();
+		}
+
+		task ("Add a web content template associated with new structure") {
+			WebContentNavigator.openWebContentTemplatesAdmin(siteURLKey = "test-site-name");
+
+			WebContentTemplates.addCP(
+				structureName = "WC Structure Name",
+				templateDescription = "WC Template Description",
+				templateFieldNames = "Rich Text",
+				templateName = "WC Template Name");
+		}
+
+		task ("View parent structure is shown in child site") {
+			WebContentNavigator.openWebContentStructuresAdmin(siteURLKey = "child-site-name");
+
+			WebContentStructures.viewCP(
+				structureDescription = "WC Structure Description",
+				structureName = "WC Structure Name");
+		}
+
+		task ("View parent tempalte is shown in child site") {
+			WebContentNavigator.openWebContentTemplatesAdmin(siteURLKey = "child-site-name");
+
+			LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+			WebContentTemplates.viewTableEntryCP(
+				templateDescription = "WC Template Description",
+				templateName = "WC Template Name");
+		}
+
+		task ("Add a web content with new structure in parent site") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+			PortletEntry.inputTitle(title = "Web Content Title");
+
+			CKEditor.addContentInWebContent(
+				content = "Web Content Content",
+				fieldLabel = "Rich Text");
+
+			PortletEntry.publish();
+		}
+
+		task ("View web content is shown in web content admin") {
+			WebContent.viewTitle(webContentTitle = "Web Content Title");
+		}
+	}
+
 	@description = "The user can add a web content via Web Content Display widget based on global structure and local template."
 	@priority = "4"
 	test AddWebContentViaWCDWithGlobalStructureAndLocalTemplate {
@@ -1009,6 +1094,77 @@ definition {
 		}
 	}
 
+	@description = "Can edit a web content from global structure in web content display widget."
+	@priority = "4"
+	test EditWebContentBasedOnGlobalStructure {
+		task ("Add a web content structure with a Text field in global site") {
+			WebContentNavigator.openWebContentStructuresAdmin(siteURLKey = "global");
+
+			WebContentStructures.addCP(structureName = "Global WC Structure Name");
+
+			DataEngine.addField(
+				fieldFieldLabel = "Text",
+				fieldName = "Text");
+
+			WebContentStructures.saveCP(structureName = "Global WC Structure Name");
+		}
+
+		task ("Add a web content template in global site associated to global structure") {
+			WebContentNavigator.openWebContentTemplatesAdmin(siteURLKey = "global");
+
+			WebContentTemplates.addCP(
+				structureName = "Global WC Structure Name",
+				templateFieldNames = "Text",
+				templateName = "Global WC Template Name");
+		}
+
+		task ("Add a Web Content Display widget to widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				widgetName = "Web Content Display");
+		}
+
+		task ("Add a web content via Web Content Display based on global structure and global template") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			WebContentDisplayPortlet.add(
+				fieldLabelList = "Text",
+				structureName = "Global WC Structure Name",
+				templateName = "Global WC Template Name",
+				webContentTextSingleLine = "Web Content Text",
+				webContentTitle = "Web Content Title");
+		}
+
+		task ("View web content is shown in WCD") {
+			WebContentDisplayPortlet.viewContent(
+				webContentContent = "Web Content Text",
+				webContentTitle = "Web Content Title");
+		}
+
+		task ("Edit the web content via WCD") {
+			WebContentDisplayPortletNavigator.gotoEdit(
+				menuItem = "Edit Web Content",
+				webContentTitle = "Web Content Title");
+
+			WebContentDisplayPortlet.edit(
+				webContentTextSingleLine = "Web Content Text Edit",
+				webContentTitleEdit = "Web Content Title Edit");
+		}
+
+		task ("View edited web contet is shown in WCD") {
+			WebContentDisplayPortlet.viewContent(
+				webContentContent = "Web Content Text Edit",
+				webContentTitle = "Web Content Title Edit");
+		}
+	}
+
 	@description = "Can edit a local web content template then view edited template is shown in web content admin"
 	@priority = "4"
 	test EditWebContentTemplate {
@@ -1128,77 +1284,6 @@ definition {
 			WebContent.editCP(
 				webContentTitle = "Web Content Title",
 				webContentTitleEdit = "Web Content Title Edit");
-		}
-	}
-
-	@description = "Can edit a web content from global structure in web content display widget."
-	@priority = "4"
-	test EditWebContentWithGlobalStructure {
-		task ("Add a web content structure with a Text field in global site") {
-			WebContentNavigator.openWebContentStructuresAdmin(siteURLKey = "global");
-
-			WebContentStructures.addCP(structureName = "Global WC Structure Name");
-
-			DataEngine.addField(
-				fieldFieldLabel = "Text",
-				fieldName = "Text");
-
-			WebContentStructures.saveCP(structureName = "Global WC Structure Name");
-		}
-
-		task ("Add a web content template in global site associated to global structure") {
-			WebContentNavigator.openWebContentTemplatesAdmin(siteURLKey = "global");
-
-			WebContentTemplates.addCP(
-				structureName = "Global WC Structure Name",
-				templateFieldNames = "Text",
-				templateName = "Global WC Template Name");
-		}
-
-		task ("Add a Web Content Display widget to widget page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Page Name");
-
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Page Name",
-				widgetName = "Web Content Display");
-		}
-
-		task ("Add a web content via Web Content Display based on global structure and global template") {
-			Navigator.gotoSitePage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name");
-
-			WebContentDisplayPortlet.add(
-				fieldLabelList = "Text",
-				structureName = "Global WC Structure Name",
-				templateName = "Global WC Template Name",
-				webContentTextSingleLine = "Web Content Text",
-				webContentTitle = "Web Content Title");
-		}
-
-		task ("View web content is shown in WCD") {
-			WebContentDisplayPortlet.viewContent(
-				webContentContent = "Web Content Text",
-				webContentTitle = "Web Content Title");
-		}
-
-		task ("Edit the web content via WCD") {
-			WebContentDisplayPortletNavigator.gotoEdit(
-				menuItem = "Edit Web Content",
-				webContentTitle = "Web Content Title");
-
-			WebContentDisplayPortlet.edit(
-				webContentTextSingleLine = "Web Content Text Edit",
-				webContentTitleEdit = "Web Content Title Edit");
-		}
-
-		task ("View edited web contet is shown in WCD") {
-			WebContentDisplayPortlet.viewContent(
-				webContentContent = "Web Content Text Edit",
-				webContentTitle = "Web Content Title Edit");
 		}
 	}
 
@@ -1388,91 +1473,6 @@ definition {
 			SearchPortlets.searchEmbedded(searchTerm = "WC WebContent Title");
 
 			SearchResultPortlet.viewNoSearchResults(searchTerm = "WC WebContent Title");
-		}
-	}
-
-	@description = "A child site can use structures and templates inherited from its parent."
-	@priority = "4"
-	test UseStructureAndTemplateFromParentSiteHierarchy {
-		property test.name.skip.portal.instance = "WebContentWithCustomStructures#UseStructureAndtemplateFromParentSiteHierarchy";
-
-		task ("Enable ancestor scopes by default in System Settings") {
-			SystemSettings.openSystemSettingsAdmin();
-
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "Web Content",
-				configurationName = "Administration",
-				configurationScope = "System Scope");
-
-			FormFields.enableCheckbox(fieldName = "showAncestorScopesByDefault");
-
-			SystemSettings.saveConfiguration();
-		}
-
-		task ("Add a child site") {
-			JSONGroup.addChildGroup(
-				groupName = "Child Site Name",
-				parentGroupName = "Test Site Name");
-		}
-
-		task ("Add a web content structure with rich text field") {
-			WebContentNavigator.openWebContentStructuresAdmin(siteURLKey = "test-site-name");
-
-			WebContentStructures.addCP(
-				structureDescription = "WC Structure Description",
-				structureName = "WC Structure Name");
-
-			DataEngine.addField(
-				fieldFieldLabel = "Rich Text",
-				fieldName = "Rich Text");
-
-			WebContentStructures.saveCP();
-		}
-
-		task ("Add a web content template associated with new structure") {
-			WebContentNavigator.openWebContentTemplatesAdmin(siteURLKey = "test-site-name");
-
-			WebContentTemplates.addCP(
-				structureName = "WC Structure Name",
-				templateDescription = "WC Template Description",
-				templateFieldNames = "Rich Text",
-				templateName = "WC Template Name");
-		}
-
-		task ("View parent structure is shown in child site") {
-			WebContentNavigator.openWebContentStructuresAdmin(siteURLKey = "child-site-name");
-
-			WebContentStructures.viewCP(
-				structureDescription = "WC Structure Description",
-				structureName = "WC Structure Name");
-		}
-
-		task ("View parent tempalte is shown in child site") {
-			WebContentNavigator.openWebContentTemplatesAdmin(siteURLKey = "child-site-name");
-
-			LexiconEntry.changeDisplayStyle(displayStyle = "table");
-
-			WebContentTemplates.viewTableEntryCP(
-				templateDescription = "WC Template Description",
-				templateName = "WC Template Name");
-		}
-
-		task ("Add a web content with new structure in parent site") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
-
-			PortletEntry.inputTitle(title = "Web Content Title");
-
-			CKEditor.addContentInWebContent(
-				content = "Web Content Content",
-				fieldLabel = "Rich Text");
-
-			PortletEntry.publish();
-		}
-
-		task ("View web content is shown in web content admin") {
-			WebContent.viewTitle(webContentTitle = "Web Content Title");
 		}
 	}
 

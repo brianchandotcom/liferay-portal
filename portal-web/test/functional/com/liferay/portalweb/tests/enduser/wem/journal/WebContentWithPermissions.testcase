@@ -262,82 +262,9 @@ definition {
 			subfolderName = "WC SubFolder Name");
 	}
 
-	@priority = "4"
-	test AddWebContentRemoveGuestViewPermission {
-		property test.name.skip.portal.instance = "WebContentWithPermissions#AddWebContentRemoveGuestViewPermission";
-		property testray.component.names = "Permissions,Web Content Administration";
-
-		SystemSettings.openSystemSettingsAdmin();
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Web Content",
-			configurationName = "Web Content",
-			configurationScope = "Virtual Instance Scope");
-
-		FormFields.enableCheckbox(fieldName = "articleViewPermissionsCheckEnabled");
-
-		SystemSettings.saveConfiguration();
-
-		JSONWebcontent.addWebContent(
-			content = "WC WebContent Content",
-			groupName = "Test Site Name",
-			title = "WC WebContent Title");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
-
-		PermissionsInline.gotoWCArticle(webContentTitle = "WC WebContent Title");
-
-		Role.removePermissionPG(
-			permissionDefinitionKey = "CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX",
-			roleTitle = "Guest");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "WCD Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "WCD Page",
-			widgetName = "Web Content Display");
-
-		Navigator.gotoSitePage(
-			pageName = "WCD Page",
-			siteName = "Test Site Name");
-
-		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
-
-		Navigator.gotoSitePage(
-			pageName = "WCD Page",
-			siteName = "Test Site Name");
-
-		PermissionsInline.gotoConfigurationPG();
-
-		AssertChecked(
-			key_roleTitle = "guest",
-			locator1 = "Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX");
-
-		SelectFrame(value1 = "relative=top");
-
-		WebContentDisplayPortlet.viewContent(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
-
-		User.logoutPG();
-
-		Navigator.gotoSitePage(
-			pageName = "WCD Page",
-			siteName = "Test Site Name");
-
-		AssertTextNotPresent(value1 = "Web Content Display");
-
-		AssertTextNotPresent(value1 = "WC WebContent Content");
-	}
-
 	@description = "A new user with power user role can add a web content based on global structure with edited default values."
 	@priority = "3"
-	test AddWebContentWithGlobalStructureAndEditedDefaultValues {
+	test AddWebContentBasedOnGlobalStructureAndEditedDefaultValues {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		task ("Add a web content structure with a Text field in global site") {
@@ -436,6 +363,79 @@ definition {
 
 			WebContent.viewTitle(webContentTitle = "Web Content Title");
 		}
+	}
+
+	@priority = "4"
+	test AddWebContentRemoveGuestViewPermission {
+		property test.name.skip.portal.instance = "WebContentWithPermissions#AddWebContentRemoveGuestViewPermission";
+		property testray.component.names = "Permissions,Web Content Administration";
+
+		SystemSettings.openSystemSettingsAdmin();
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Web Content",
+			configurationName = "Web Content",
+			configurationScope = "Virtual Instance Scope");
+
+		FormFields.enableCheckbox(fieldName = "articleViewPermissionsCheckEnabled");
+
+		SystemSettings.saveConfiguration();
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Site Name",
+			title = "WC WebContent Title");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+
+		PermissionsInline.gotoWCArticle(webContentTitle = "WC WebContent Title");
+
+		Role.removePermissionPG(
+			permissionDefinitionKey = "CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX",
+			roleTitle = "Guest");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "WCD Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "WCD Page",
+			widgetName = "Web Content Display");
+
+		Navigator.gotoSitePage(
+			pageName = "WCD Page",
+			siteName = "Test Site Name");
+
+		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
+
+		Navigator.gotoSitePage(
+			pageName = "WCD Page",
+			siteName = "Test Site Name");
+
+		PermissionsInline.gotoConfigurationPG();
+
+		AssertChecked(
+			key_roleTitle = "guest",
+			locator1 = "Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX");
+
+		SelectFrame(value1 = "relative=top");
+
+		WebContentDisplayPortlet.viewContent(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "WC WebContent Title");
+
+		User.logoutPG();
+
+		Navigator.gotoSitePage(
+			pageName = "WCD Page",
+			siteName = "Test Site Name");
+
+		AssertTextNotPresent(value1 = "Web Content Display");
+
+		AssertTextNotPresent(value1 = "WC WebContent Content");
 	}
 
 }

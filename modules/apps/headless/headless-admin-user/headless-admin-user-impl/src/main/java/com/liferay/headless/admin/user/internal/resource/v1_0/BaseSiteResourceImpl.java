@@ -85,7 +85,9 @@ public abstract class BaseSiteResourceImpl
 			)
 		}
 	)
-	@io.swagger.v3.oas.annotations.tags.Tags(value = {})
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Site")}
+	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path("/my-user-account/sites")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
@@ -110,7 +112,9 @@ public abstract class BaseSiteResourceImpl
 			)
 		}
 	)
-	@io.swagger.v3.oas.annotations.tags.Tags(value = {})
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Site")}
+	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path("/sites/by-friendly-url-path/{friendlyUrlPath}")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
@@ -138,7 +142,9 @@ public abstract class BaseSiteResourceImpl
 			)
 		}
 	)
-	@io.swagger.v3.oas.annotations.tags.Tags(value = {})
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Site")}
+	)
 	@javax.ws.rs.GET
 	@javax.ws.rs.Path("/sites/{siteId}")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})

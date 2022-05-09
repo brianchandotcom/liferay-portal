@@ -21,7 +21,6 @@ import com.liferay.dispatch.executor.BaseDispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskExecutorOutput;
 import com.liferay.dispatch.model.DispatchTrigger;
-import com.liferay.dispatch.service.DispatchTriggerLocalService;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -88,8 +87,5 @@ public class BatchPlannerDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 
 	@Reference
 	private BatchPlannerPlanHelper _batchPlannerPlanHelper;
-
-	@Reference
-	private DispatchTriggerLocalService _dispatchTriggerLocalService;
 
 }

@@ -920,4 +920,82 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-146171. Check the default settings of Collection Display after selecting collection or collection provider."
+	@priority = "5"
+	test ViewDefaultSettingsOfCollectionDisplayWithCollection {
+		task ("Given a page creator has a content page with Collection Display fragment") {
+			task ("Add 21 web contents") {
+				var i = "1";
+
+				while ("${i}" != "22" && (maxIterations = "25")) {
+					JSONWebcontent.addWebContent(
+						content = "Web Content Content ${i}",
+						groupName = "Test Site Name",
+						title = "Web Content Title ${i}");
+
+					var i = ${i} + 1;
+				}
+			}
+
+			task ("Add a dynamic collection for All Types") {
+				JSONAssetlist.addDynamicAssetListEntryWithItemType(
+					groupName = "Test Site Name",
+					itemType = "All Types",
+					title = "Dynamic Collection");
+			}
+
+			task ("Add a Collection Display to page") {
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name");
+
+				PageEditor.addFragment(
+					collectionName = "Content Display",
+					fragmentName = "Collection Display");
+			}
+		}
+
+		task ("When the page creator selects a dynamic collection in Collection Display") {
+			PageEditor.editCollectionDisplay(
+				assetListName = "Dynamic Collection",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Then the page creator could view the default settings of Collection Display") {
+			task ("View the pagination of Collection Display is Numeric") {
+				for (var pageNumber : list "1,2") {
+					AssertVisible(
+						key_pageNumber = "${pageNumber}",
+						locator1 = "Pagination#ANY_PAGE");
+				}
+			}
+
+			task ("View the Display All Pages is checked") {
+				AssertChecked.assertCheckedNotVisible(
+					checkboxName = "Display All Pages",
+					locator1 = "Checkbox#ANY_CHECKBOX");
+			}
+
+			task ("View the Maximum Number of Items per Page is 20") {
+				InputField.viewText(
+					fieldLabel = "Maximum Number of Items per Page",
+					text = "20");
+			}
+		}
+
+		task ("When the page creator changes the Maximum Number of Items per Page to 21") {
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				maxNumberOfItemsPerPage = "21",
+				selectedName = "Dynamic Collection");
+		}
+
+		task ("Then the page creator could view warning message on the bottom of Collection Display") {
+			AssertVisible(
+				key_alertInfo = "In edit mode, the number of elements displayed is limited to 20 due to performance.",
+				key_fragmentName = "Collection Display",
+				locator1 = "Fragment#ALERT_INFO");
+		}
+	}
+
 }

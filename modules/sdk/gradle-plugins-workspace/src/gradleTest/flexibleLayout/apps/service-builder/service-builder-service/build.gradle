@@ -1,3 +1,7 @@
+buildService {
+	apiDir = "../service-builder-api/src/main/java"
+}
+
 dependencies {
 	compileOnly group: "com.liferay", name: "com.liferay.petra.io"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.lang"
@@ -9,10 +13,6 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations"
 	compileOnly group: "org.osgi", name: "osgi.core"
 	compileOnly project(":apps:service-builder:service-builder-api")
-}
-
-buildService {
-	apiDir = "../service-builder-api/src/main/java"
 }
 
 group = "service.builder"

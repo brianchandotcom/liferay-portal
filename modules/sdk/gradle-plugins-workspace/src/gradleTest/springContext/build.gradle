@@ -1,6 +1,8 @@
 import java.util.zip.ZipEntry
 import java.util.zip.ZipFile
 
+task runGradleTest
+
 allprojects {
 	repositories {
 		maven {
@@ -9,18 +11,14 @@ allprojects {
 	}
 }
 
-task runGradleTest
-
 runGradleTest {
 	dependsOn ":modules:sample:sample-service:buildService"
 	dependsOn ":modules:sample:sample-service:jar"
 
-	Project serviceProject = project(":modules:sample:sample-service")
-
 	doLast {
-		String jarFileName = "build/libs/sample.service-1.0.0.jar"
+		Project serviceProject = project(":modules:sample:sample-service")
 
-		File jarFile = serviceProject.file(jarFileName)
+		File jarFile = serviceProject.file("build/libs/sample.service-1.0.0.jar")
 
 		assert jarFile.exists()
 

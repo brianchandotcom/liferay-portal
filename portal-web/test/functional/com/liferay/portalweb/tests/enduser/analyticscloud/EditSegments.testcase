@@ -157,7 +157,7 @@ definition {
 
 		ACNavigation.switchTab(tabName = "Membership");
 
-		ACUtils.viewNoResultsMessage(noResultMessage = "There are no items found.");
+		ACUtils.viewGenericText(textValueList = "There are no items found.");
 
 		ACUtils.launchDXP(userEmailAddress = "ac@liferay.com");
 

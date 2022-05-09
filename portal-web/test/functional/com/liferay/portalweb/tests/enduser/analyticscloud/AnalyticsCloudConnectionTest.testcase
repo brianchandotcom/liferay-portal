@@ -408,7 +408,7 @@ definition {
 		task ("Assert that a data source that doesn't exist is not found") {
 			ACUtils.searchBar(searchItem = "Analytics Cloud");
 
-			ACUtils.viewNoResultsMessage(noResultMessage = "There are no results found.,Please try a different search term.");
+			ACUtils.viewGenericText(textValueList = "There are no results found.,Please try a different search term.");
 		}
 	}
 

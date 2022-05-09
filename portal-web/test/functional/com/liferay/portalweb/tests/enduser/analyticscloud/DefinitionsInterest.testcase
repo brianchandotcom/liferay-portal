@@ -412,7 +412,7 @@ definition {
 		task ("Search a keyword not added and assert that ones shouldn't be there") {
 			ACUtils.searchBar(searchItem = "Should not be here");
 
-			ACUtils.viewNoResultsMessage(noResultMessage = "There are no results found.,Please try a different search term.");
+			ACUtils.viewGenericText(textValueList = "There are no results found.,Please try a different search term.");
 
 			ACUtils.clearSearchBar();
 		}

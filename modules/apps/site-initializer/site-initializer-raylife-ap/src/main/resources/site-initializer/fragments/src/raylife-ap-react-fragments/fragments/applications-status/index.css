@@ -1,3 +1,8 @@
+.applications-products-container .legend-content {
+	font-size: 14px;
+	width: 130px;
+}
+
 .applications-products-container .applications-products-title::after {
 	background-color: var(--primary);
 	content: '';
@@ -34,4 +39,16 @@
 .applications-products-container .legend-title {
 	color: #5c5e5e;
 	font-size: 14px;
+}	
+
+.applications-products-container .legend-container {
+	flex-direction: column;
+}
+
+@media screen and (max-width: 1845px) {
+	.applications-products-container .legend-container {
+		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: space-evenly;
+	}
 }

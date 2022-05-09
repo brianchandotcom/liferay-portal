@@ -120,7 +120,7 @@ export default function () {
 				Status
 			</div>
 
-			<div className="align-items-center d-flex flex-lg-row flex-md-column flex-sm-column justify-content-between px-2">
+			<div className="align-items-center d-flex flex-wrap justify-content-center">
 				<ClayChart
 					data={chartData}
 					donut={{
@@ -153,10 +153,10 @@ export default function () {
 					}}
 				/>
 
-				<div className="d-flex flex-column ml-3 w-50">
+				<div className="d-flex legend-container">
 					{chartData.columns.map((column, index) => (
 						<div
-							className="chart-legend d-flex flex-row justify-content-between"
+							className="chart-legend d-flex flex-row justify-content-between legend-content pr-1"
 							key={index}
 						>
 							<div className="align-items-center d-flex flex-row justify-content-between mr-2">

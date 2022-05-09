@@ -951,21 +951,6 @@ public class UIItemsBuilder {
 			).build();
 		}
 
-		String javaScript =
-			"/com/liferay/document/library/web/display/context/dependencies" +
-				"/checkin_js.ftl";
-		Class<?> clazz = getClass();
-
-		URLTemplateResource urlTemplateResource = new URLTemplateResource(
-			javaScript, clazz.getResource(javaScript));
-
-		Template template = TemplateManagerUtil.getTemplate(
-			TemplateConstants.LANG_TYPE_FTL, urlTemplateResource, false);
-
-		template.put("namespace", _getNamespace());
-
-		template.processTemplate(new UnsyncStringWriter());
-
 		return DropdownItemBuilder.putData(
 			"action", "checkin"
 		).putData(

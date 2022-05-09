@@ -16,7 +16,29 @@ import {openModal} from 'frontend-js-web';
 
 const ACTIONS = {
 	checkin({checkinURL}, portletNamespace) {
-		window[`${portletNamespace}showVersionDetailsDialog`](checkinURL);
+		Liferay.componentReady(
+			`${portletNamespace}DocumentLibraryCheckinModal`
+		).then((documentLibraryCheckinModal) => {
+			documentLibraryCheckinModal.open((versionIncrease, changeLog) => {
+				let portletURL = checkinURL;
+
+				if (versionIncrease) {
+					portletURL += `&${portletNamespace}versionIncrease=${encodeURIComponent(
+						versionIncrease
+					)}`;
+				}
+
+				if (changeLog) {
+					portletURL += `&${portletNamespace}changeLog=${encodeURIComponent(
+						changeLog
+					)}`;
+				}
+
+				portletURL += `&${portletNamespace}updateVersionDetails=true`;
+
+				window.location.href = portletURL;
+			});
+		});
 	},
 
 	delete({deleteURL}) {

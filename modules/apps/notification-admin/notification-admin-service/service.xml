@@ -10,10 +10,6 @@
 
 		<column name="notificationQueueEntryId" primary="true" type="long" />
 
-		<!-- Group instance -->
-
-		<column name="groupId" type="long" />
-
 		<!-- Audit fields -->
 
 		<column name="companyId" type="long" />
@@ -39,31 +35,10 @@
 		<column name="sent" type="boolean" />
 		<column name="sentDate" type="Date" />
 
-		<!-- Order -->
-
-		<order by="desc">
-			<order-column name="priority" />
-		</order>
-
 		<!-- Finder methods -->
 
-		<finder name="GroupId" return-type="Collection">
-			<finder-column name="groupId" />
-		</finder>
 		<finder name="NotificationTemplateId" return-type="Collection">
 			<finder-column name="notificationTemplateId" />
-		</finder>
-		<finder name="Sent" return-type="Collection">
-			<finder-column name="sent" />
-		</finder>
-		<finder name="LtSentDate" return-type="Collection">
-			<finder-column comparator="&lt;" name="sentDate" />
-		</finder>
-		<finder name="G_C_C_S" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="classNameId" />
-			<finder-column name="classPK" />
-			<finder-column name="sent" />
 		</finder>
 	</entity>
 	<entity local-service="true" name="NotificationTemplate" remote-service="false" uuid="true">
@@ -71,10 +46,6 @@
 		<!-- PK fields -->
 
 		<column name="notificationTemplateId" primary="true" type="long" />
-
-		<!-- Group instance -->
-
-		<column name="groupId" type="long" />
 
 		<!-- Audit fields -->
 
@@ -96,23 +67,6 @@
 		<column name="enabled" type="boolean" />
 		<column localized="true" name="subject" type="String" />
 		<column localized="true" name="body" type="String" />
-
-		<!-- Order -->
-
-		<order by="desc">
-			<order-column name="modifiedDate" />
-			<order-column name="name" />
-		</order>
-
-		<!-- Finder methods -->
-
-		<finder name="GroupId" return-type="Collection">
-			<finder-column name="groupId" />
-		</finder>
-		<finder name="G_E" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="enabled" />
-		</finder>
 	</entity>
 	<exceptions>
 		<exception>NotificationTemplateFrom</exception>

@@ -208,7 +208,11 @@ public class ObjectDefinitionResourceImpl
 				actions = HashMapBuilder.put(
 					"delete",
 					() -> {
-						if (objectDefinition.isSystem()) {
+						if ((!GetterUtil.getBoolean(
+								PropsUtil.get("feature.flag.LPS-150886")) &&
+							 objectDefinition.isApproved()) ||
+							objectDefinition.isSystem()) {
+
 							return null;
 						}
 

@@ -190,6 +190,21 @@ public class FriendlyURLServlet extends HttpServlet {
 						group.getGroupId(), _private, layoutFriendlyURL, params,
 						requestContext);
 
+			if (layoutFriendlyURLSeparatorComposite.isRedirect()) {
+				pos = path.indexOf(
+					layoutFriendlyURLSeparatorComposite.getURLSeparator());
+
+				if (pos != 1) {
+					String friendlyURL =
+						layoutFriendlyURLSeparatorComposite.getFriendlyURL();
+
+					return new Redirect(
+						PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
+							path.substring(0, pos) + friendlyURL,
+						true, false);
+				}
+			}
+
 			Layout layout = layoutFriendlyURLSeparatorComposite.getLayout();
 
 			if (layout != null) {

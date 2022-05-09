@@ -24,7 +24,7 @@ export type Sort = {
 	key: string;
 };
 
-type InitialState = {
+export type InitialState = {
 	filters: any;
 	keywords: string;
 	page: number;
@@ -122,8 +122,7 @@ const reducer = (state: InitialState, action: AppActions) => {
 
 			if (rowAlreadyInserted) {
 				selectedRows = selectedRows.filter((row) => row !== rowId);
-			}
-			else {
+			} else {
 				selectedRows = [...selectedRows, rowId];
 			}
 

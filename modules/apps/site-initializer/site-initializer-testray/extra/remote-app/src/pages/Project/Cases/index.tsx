@@ -16,6 +16,7 @@ import {useLocation, useNavigate, useParams} from 'react-router-dom';
 
 import Container from '../../../components/Layout/Container';
 import ListView, {ListViewProps} from '../../../components/ListView/ListView';
+import {TableProps} from '../../../components/Table';
 import {getCases} from '../../../graphql/queries';
 import {FormModal} from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
@@ -27,12 +28,13 @@ type CaseListViewProps = {
 	formModal?: FormModal;
 	projectId?: number | string;
 	variables?: any;
-} & {listViewProps?: Partial<ListViewProps>};
+} & {listViewProps?: Partial<ListViewProps>; tableProps?: Partial<TableProps>};
 
 const CaseListView: React.FC<CaseListViewProps> = ({
 	actions,
 	formModal,
 	listViewProps,
+	tableProps,
 	variables,
 }) => {
 	const {pathname} = useLocation();
@@ -98,6 +100,7 @@ const CaseListView: React.FC<CaseListViewProps> = ({
 					{key: 'issues', value: i18n.translate('issues')},
 				],
 				navigateTo: ({id}) => id?.toString(),
+				...tableProps,
 			}}
 			transformData={(data) => data?.cases}
 			variables={variables}

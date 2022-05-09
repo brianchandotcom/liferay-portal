@@ -17,6 +17,7 @@ import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import {memo, useCallback, useContext, useEffect, useMemo} from 'react';
 
 import ListViewContextProvider, {
+	InitialState as ListViewContextState,
 	ListViewContext,
 	ListViewContextProviderProps,
 	ListViewTypes,
@@ -44,6 +45,7 @@ export type ListViewProps<T = any> = {
 		ManagementToolbarProps,
 		'tableProps' | 'totalItems' | 'onSelectAllRows'
 	>;
+	onContextChange?: (context: ListViewContextState) => void;
 	query: TypedDocumentNode;
 	tableProps: Omit<TableProps, 'items'>;
 	transformData: (data: T) => LiferayQueryResponse<T>;
@@ -56,12 +58,15 @@ const ListView: React.FC<ListViewProps> = ({
 		visible: managementToolbarVisible = true,
 		...managementToolbarProps
 	} = {},
+	onContextChange,
 	query,
 	tableProps,
 	transformData,
 	variables,
 }) => {
-	const [{filters, selectedRows}, dispatch] = useContext(ListViewContext);
+	const [listViewContext, dispatch] = useContext(ListViewContext);
+
+	const {filters, selectedRows} = listViewContext;
 
 	const {data, error, loading, refetch} = useQuery(query, {
 		variables,
@@ -102,6 +107,12 @@ const ListView: React.FC<ListViewProps> = ({
 	const onSelectAllRows = useCallback(() => {
 		items.forEach(onSelectRow);
 	}, [items, onSelectRow]);
+
+	useEffect(() => {
+		if (onContextChange) {
+			onContextChange(listViewContext);
+		}
+	}, [listViewContext, onContextChange]);
 
 	useEffect(() => {
 		if (forceRefetch) {
@@ -168,6 +179,8 @@ const ListView: React.FC<ListViewProps> = ({
 	);
 };
 
+const ListViewMemoized = memo(ListView);
+
 const ListViewWithContext: React.FC<
 	ListViewProps & {
 		initialContext?: ListViewContextProviderProps;
@@ -177,7 +190,7 @@ const ListViewWithContext: React.FC<
 	if (viewPermission) {
 		return (
 			<ListViewContextProvider {...initialContext}>
-				<ListView {...otherProps} />
+				<ListViewMemoized {...otherProps} />
 			</ListViewContextProvider>
 		);
 	}
@@ -193,4 +206,4 @@ const ListViewWithContext: React.FC<
 	);
 };
 
-export default memo(ListViewWithContext);
+export default ListViewWithContext;

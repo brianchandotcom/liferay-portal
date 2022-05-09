@@ -358,9 +358,6 @@ public class Mutation {
 		searchResponseResource.setContextUser(_user);
 		searchResponseResource.setGroupLocalService(_groupLocalService);
 		searchResponseResource.setRoleLocalService(_roleLocalService);
-
-		searchResponseResource.setVulcanBatchEngineImportTaskResource(
-			_vulcanBatchEngineImportTaskResource);
 	}
 
 	private static ComponentServiceObjects<SXPBlueprintResource>

@@ -56,7 +56,13 @@ public interface ${schemaName}Resource {
 		return FactoryHolder.factory.create();
 	}
 
-	<#list freeMarkerTool.getResourceJavaMethodSignatures(configYAML, openAPIYAML, schemaName) as javaMethodSignature>
+	<#assign
+		javaDataType = freeMarkerTool.getJavaDataType(configYAML, openAPIYAML, schemaName)!""
+		javaMethodSignatures = freeMarkerTool.getResourceJavaMethodSignatures(configYAML, openAPIYAML, schemaName)
+		generateBatch = freeMarkerTool.generateBatch(configYAML, javaDataType, javaMethodSignatures)
+	/>
+
+	<#list javaMethodSignatures as javaMethodSignature>
 		public ${javaMethodSignature.returnType} ${javaMethodSignature.methodName}(${freeMarkerTool.getResourceParameters(javaMethodSignature.javaMethodParameters, openAPIYAML, javaMethodSignature.operation, false)}) throws Exception;
 	</#list>
 
@@ -90,7 +96,7 @@ public interface ${schemaName}Resource {
 
 	public void setRoleLocalService(RoleLocalService roleLocalService);
 
-	<#if configYAML.generateBatch>
+	<#if generateBatch>
 		public void setVulcanBatchEngineImportTaskResource(VulcanBatchEngineImportTaskResource vulcanBatchEngineImportTaskResource);
 	</#if>
 

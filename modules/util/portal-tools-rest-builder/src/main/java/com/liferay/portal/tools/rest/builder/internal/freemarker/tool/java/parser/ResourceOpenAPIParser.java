@@ -257,6 +257,37 @@ public class ResourceOpenAPIParser {
 		return sb.toString();
 	}
 
+	public static boolean hasResourceBatchJavaMethodSignatures(
+		List<JavaMethodSignature> javaMethodSignatures) {
+
+		for (JavaMethodSignature javaMethodSignature : javaMethodSignatures) {
+			String methodName = javaMethodSignature.getMethodName();
+
+			if (methodName.endsWith("Batch")) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public static boolean hasResourceGetPageJavaMethodSignature(
+		String javaDataType, List<JavaMethodSignature> javaMethodSignatures) {
+
+		String pageJavaDataType = StringBundler.concat(
+			Page.class.getName(), "<", javaDataType, ">");
+
+		for (JavaMethodSignature javaMethodSignature : javaMethodSignatures) {
+			if (StringUtil.equals(
+					pageJavaDataType, javaMethodSignature.getReturnType())) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private static void _addBatchJavaMethodSignature(
 		JavaMethodSignature javaMethodSignature,
 		List<JavaMethodSignature> javaMethodSignatures) {

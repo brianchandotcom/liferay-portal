@@ -41,8 +41,6 @@ public class NotificationQueueEntryTable
 		notificationQueueEntryId = createColumn(
 			"notificationQueueEntryId", Long.class, Types.BIGINT,
 			Column.FLAG_PRIMARY);
-	public final Column<NotificationQueueEntryTable, Long> groupId =
-		createColumn("groupId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<NotificationQueueEntryTable, Long> companyId =
 		createColumn(
 			"companyId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);

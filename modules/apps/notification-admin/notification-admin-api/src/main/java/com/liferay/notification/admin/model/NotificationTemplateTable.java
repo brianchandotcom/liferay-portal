@@ -43,8 +43,6 @@ public class NotificationTemplateTable
 		notificationTemplateId = createColumn(
 			"notificationTemplateId", Long.class, Types.BIGINT,
 			Column.FLAG_PRIMARY);
-	public final Column<NotificationTemplateTable, Long> groupId = createColumn(
-		"groupId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<NotificationTemplateTable, Long> companyId =
 		createColumn(
 			"companyId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);

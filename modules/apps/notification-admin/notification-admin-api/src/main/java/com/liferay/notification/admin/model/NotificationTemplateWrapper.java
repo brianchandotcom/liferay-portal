@@ -48,7 +48,6 @@ public class NotificationTemplateWrapper
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("notificationTemplateId", getNotificationTemplateId());
-		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
@@ -87,12 +86,6 @@ public class NotificationTemplateWrapper
 
 		if (notificationTemplateId != null) {
 			setNotificationTemplateId(notificationTemplateId);
-		}
-
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
 		}
 
 		Long companyId = (Long)attributes.get("companyId");
@@ -421,16 +414,6 @@ public class NotificationTemplateWrapper
 	@Override
 	public Map<java.util.Locale, String> getFromNameMap() {
 		return model.getFromNameMap();
-	}
-
-	/**
-	 * Returns the group ID of this notification template.
-	 *
-	 * @return the group ID of this notification template
-	 */
-	@Override
-	public long getGroupId() {
-		return model.getGroupId();
 	}
 
 	/**
@@ -901,16 +884,6 @@ public class NotificationTemplateWrapper
 		java.util.Locale defaultLocale) {
 
 		model.setFromNameMap(fromNameMap, defaultLocale);
-	}
-
-	/**
-	 * Sets the group ID of this notification template.
-	 *
-	 * @param groupId the group ID of this notification template
-	 */
-	@Override
-	public void setGroupId(long groupId) {
-		model.setGroupId(groupId);
 	}
 
 	/**

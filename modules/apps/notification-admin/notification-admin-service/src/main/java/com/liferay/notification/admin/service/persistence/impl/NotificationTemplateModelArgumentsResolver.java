@@ -78,14 +78,6 @@ public class NotificationTemplateModelArgumentsResolver
 					notificationTemplateModelImpl.getColumnBitmask(columnName);
 			}
 
-			if (finderPath.isBaseModelResult() &&
-				(NotificationTemplatePersistenceImpl.
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
-						finderPath.getCacheName())) {
-
-				finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
-			}
-
 			_finderPathColumnBitmasksCache.put(
 				finderPath, finderPathColumnBitmask);
 		}
@@ -133,18 +125,5 @@ public class NotificationTemplateModelArgumentsResolver
 
 	private static final Map<FinderPath, Long> _finderPathColumnBitmasksCache =
 		new ConcurrentHashMap<>();
-
-	private static final long _ORDER_BY_COLUMNS_BITMASK;
-
-	static {
-		long orderByColumnsBitmask = 0;
-
-		orderByColumnsBitmask |= NotificationTemplateModelImpl.getColumnBitmask(
-			"modifiedDate");
-		orderByColumnsBitmask |= NotificationTemplateModelImpl.getColumnBitmask(
-			"name");
-
-		_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
-	}
 
 }

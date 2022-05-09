@@ -1,7 +1,6 @@
 create table NotificationQueueEntry (
 	mvccVersion LONG default 0 not null,
 	notificationQueueEntryId LONG not null primary key,
-	groupId LONG,
 	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
@@ -27,7 +26,6 @@ create table NotificationTemplate (
 	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	notificationTemplateId LONG not null primary key,
-	groupId LONG,
 	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,

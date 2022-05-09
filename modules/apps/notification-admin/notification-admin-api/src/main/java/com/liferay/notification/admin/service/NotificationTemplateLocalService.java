@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -69,10 +68,10 @@ public interface NotificationTemplateLocalService
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.notification.admin.service.impl.NotificationTemplateLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the notification template local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link NotificationTemplateLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	public NotificationTemplate addNotificationTemplate(
-			long userId, long groupId, String name, String description,
-			String from, Map<Locale, String> fromNameMap, String to, String cc,
-			String bcc, boolean enabled, Map<Locale, String> subjectMap,
-			Map<Locale, String> bodyMap, ServiceContext serviceContext)
+			long userId, String name, String description, String from,
+			Map<Locale, String> fromNameMap, String to, String cc, String bcc,
+			boolean enabled, Map<Locale, String> subjectMap,
+			Map<Locale, String> bodyMap)
 		throws PortalException;
 
 	/**
@@ -130,16 +129,11 @@ public interface NotificationTemplateLocalService
 	 *
 	 * @param notificationTemplate the notification template
 	 * @return the notification template that was removed
-	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public NotificationTemplate deleteNotificationTemplate(
-			NotificationTemplate notificationTemplate)
-		throws PortalException;
-
-	public void deleteNotificationTemplates(long groupId)
-		throws PortalException;
+		NotificationTemplate notificationTemplate);
 
 	/**
 	 * @throws PortalException
@@ -225,15 +219,15 @@ public interface NotificationTemplateLocalService
 		long notificationTemplateId);
 
 	/**
-	 * Returns the notification template matching the UUID and group.
+	 * Returns the notification template with the matching UUID and company.
 	 *
 	 * @param uuid the notification template's UUID
-	 * @param groupId the primary key of the group
+	 * @param companyId the primary key of the company
 	 * @return the matching notification template, or <code>null</code> if a matching notification template could not be found
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public NotificationTemplate fetchNotificationTemplateByUuidAndGroupId(
-		String uuid, long groupId);
+	public NotificationTemplate fetchNotificationTemplateByUuidAndCompanyId(
+		String uuid, long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -258,16 +252,16 @@ public interface NotificationTemplateLocalService
 		throws PortalException;
 
 	/**
-	 * Returns the notification template matching the UUID and group.
+	 * Returns the notification template with the matching UUID and company.
 	 *
 	 * @param uuid the notification template's UUID
-	 * @param groupId the primary key of the group
+	 * @param companyId the primary key of the company
 	 * @return the matching notification template
 	 * @throws PortalException if a matching notification template could not be found
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public NotificationTemplate getNotificationTemplateByUuidAndGroupId(
-			String uuid, long groupId)
+	public NotificationTemplate getNotificationTemplateByUuidAndCompanyId(
+			String uuid, long companyId)
 		throws PortalException;
 
 	/**
@@ -285,43 +279,6 @@ public interface NotificationTemplateLocalService
 	public List<NotificationTemplate> getNotificationTemplates(
 		int start, int end);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<NotificationTemplate> getNotificationTemplates(
-		long groupId, boolean enabled, int start, int end,
-		OrderByComparator<NotificationTemplate> orderByComparator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<NotificationTemplate> getNotificationTemplates(
-		long groupId, int start, int end,
-		OrderByComparator<NotificationTemplate> orderByComparator);
-
-	/**
-	 * Returns all the notification templates matching the UUID and company.
-	 *
-	 * @param uuid the UUID of the notification templates
-	 * @param companyId the primary key of the company
-	 * @return the matching notification templates, or an empty list if no matches were found
-	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<NotificationTemplate>
-		getNotificationTemplatesByUuidAndCompanyId(String uuid, long companyId);
-
-	/**
-	 * Returns a range of notification templates matching the UUID and company.
-	 *
-	 * @param uuid the UUID of the notification templates
-	 * @param companyId the primary key of the company
-	 * @param start the lower bound of the range of notification templates
-	 * @param end the upper bound of the range of notification templates (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the range of matching notification templates, or an empty list if no matches were found
-	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<NotificationTemplate>
-		getNotificationTemplatesByUuidAndCompanyId(
-			String uuid, long companyId, int start, int end,
-			OrderByComparator<NotificationTemplate> orderByComparator);
-
 	/**
 	 * Returns the number of notification templates.
 	 *
@@ -329,12 +286,6 @@ public interface NotificationTemplateLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getNotificationTemplatesCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getNotificationTemplatesCount(long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getNotificationTemplatesCount(long groupId, boolean enabled);
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -355,7 +306,7 @@ public interface NotificationTemplateLocalService
 			long notificationTemplateId, String name, String description,
 			String from, Map<Locale, String> fromNameMap, String to, String cc,
 			String bcc, boolean enabled, Map<Locale, String> subjectMap,
-			Map<Locale, String> bodyMap, ServiceContext serviceContext)
+			Map<Locale, String> bodyMap)
 		throws PortalException;
 
 	/**

@@ -78,7 +78,7 @@ public class NotificationTemplateCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(39);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -86,8 +86,6 @@ public class NotificationTemplateCacheModel
 		sb.append(uuid);
 		sb.append(", notificationTemplateId=");
 		sb.append(notificationTemplateId);
-		sb.append(", groupId=");
-		sb.append(groupId);
 		sb.append(", companyId=");
 		sb.append(companyId);
 		sb.append(", userId=");
@@ -139,7 +137,6 @@ public class NotificationTemplateCacheModel
 
 		notificationTemplateImpl.setNotificationTemplateId(
 			notificationTemplateId);
-		notificationTemplateImpl.setGroupId(groupId);
 		notificationTemplateImpl.setCompanyId(companyId);
 		notificationTemplateImpl.setUserId(userId);
 
@@ -241,8 +238,6 @@ public class NotificationTemplateCacheModel
 
 		notificationTemplateId = objectInput.readLong();
 
-		groupId = objectInput.readLong();
-
 		companyId = objectInput.readLong();
 
 		userId = objectInput.readLong();
@@ -274,8 +269,6 @@ public class NotificationTemplateCacheModel
 		}
 
 		objectOutput.writeLong(notificationTemplateId);
-
-		objectOutput.writeLong(groupId);
 
 		objectOutput.writeLong(companyId);
 
@@ -360,7 +353,6 @@ public class NotificationTemplateCacheModel
 	public long mvccVersion;
 	public String uuid;
 	public long notificationTemplateId;
-	public long groupId;
 	public long companyId;
 	public long userId;
 	public String userName;

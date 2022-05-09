@@ -130,8 +130,6 @@ public class NotificationQueueEntryPersistenceTest {
 
 		newNotificationQueueEntry.setMvccVersion(RandomTestUtil.nextLong());
 
-		newNotificationQueueEntry.setGroupId(RandomTestUtil.nextLong());
-
 		newNotificationQueueEntry.setCompanyId(RandomTestUtil.nextLong());
 
 		newNotificationQueueEntry.setUserId(RandomTestUtil.nextLong());
@@ -184,9 +182,6 @@ public class NotificationQueueEntryPersistenceTest {
 		Assert.assertEquals(
 			existingNotificationQueueEntry.getNotificationQueueEntryId(),
 			newNotificationQueueEntry.getNotificationQueueEntryId());
-		Assert.assertEquals(
-			existingNotificationQueueEntry.getGroupId(),
-			newNotificationQueueEntry.getGroupId());
 		Assert.assertEquals(
 			existingNotificationQueueEntry.getCompanyId(),
 			newNotificationQueueEntry.getCompanyId());
@@ -251,40 +246,10 @@ public class NotificationQueueEntryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByGroupId() throws Exception {
-		_persistence.countByGroupId(RandomTestUtil.nextLong());
-
-		_persistence.countByGroupId(0L);
-	}
-
-	@Test
 	public void testCountByNotificationTemplateId() throws Exception {
 		_persistence.countByNotificationTemplateId(RandomTestUtil.nextLong());
 
 		_persistence.countByNotificationTemplateId(0L);
-	}
-
-	@Test
-	public void testCountBySent() throws Exception {
-		_persistence.countBySent(RandomTestUtil.randomBoolean());
-
-		_persistence.countBySent(RandomTestUtil.randomBoolean());
-	}
-
-	@Test
-	public void testCountByLtSentDate() throws Exception {
-		_persistence.countByLtSentDate(RandomTestUtil.nextDate());
-
-		_persistence.countByLtSentDate(RandomTestUtil.nextDate());
-	}
-
-	@Test
-	public void testCountByG_C_C_S() throws Exception {
-		_persistence.countByG_C_C_S(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
-
-		_persistence.countByG_C_C_S(0L, 0L, 0L, RandomTestUtil.randomBoolean());
 	}
 
 	@Test
@@ -316,13 +281,12 @@ public class NotificationQueueEntryPersistenceTest {
 	protected OrderByComparator<NotificationQueueEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
 			"NotificationQueueEntry", "mvccVersion", true,
-			"notificationQueueEntryId", true, "groupId", true, "companyId",
-			true, "userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "classNameId", true, "classPK", true,
-			"notificationTemplateId", true, "from", true, "fromName", true,
-			"to", true, "toName", true, "cc", true, "bcc", true, "subject",
-			true, "body", true, "priority", true, "sent", true, "sentDate",
-			true);
+			"notificationQueueEntryId", true, "companyId", true, "userId", true,
+			"userName", true, "createDate", true, "modifiedDate", true,
+			"classNameId", true, "classPK", true, "notificationTemplateId",
+			true, "from", true, "fromName", true, "to", true, "toName", true,
+			"cc", true, "bcc", true, "subject", true, "body", true, "priority",
+			true, "sent", true, "sentDate", true);
 	}
 
 	@Test
@@ -569,8 +533,6 @@ public class NotificationQueueEntryPersistenceTest {
 		NotificationQueueEntry notificationQueueEntry = _persistence.create(pk);
 
 		notificationQueueEntry.setMvccVersion(RandomTestUtil.nextLong());
-
-		notificationQueueEntry.setGroupId(RandomTestUtil.nextLong());
 
 		notificationQueueEntry.setCompanyId(RandomTestUtil.nextLong());
 

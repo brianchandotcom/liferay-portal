@@ -46,17 +46,16 @@ public class NotificationTemplateLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.notification.admin.service.impl.NotificationTemplateLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static NotificationTemplate addNotificationTemplate(
-			long userId, long groupId, String name, String description,
-			String from, Map<java.util.Locale, String> fromNameMap, String to,
-			String cc, String bcc, boolean enabled,
+			long userId, String name, String description, String from,
+			Map<java.util.Locale, String> fromNameMap, String to, String cc,
+			String bcc, boolean enabled,
 			Map<java.util.Locale, String> subjectMap,
-			Map<java.util.Locale, String> bodyMap,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+			Map<java.util.Locale, String> bodyMap)
 		throws PortalException {
 
 		return getService().addNotificationTemplate(
-			userId, groupId, name, description, from, fromNameMap, to, cc, bcc,
-			enabled, subjectMap, bodyMap, serviceContext);
+			userId, name, description, from, fromNameMap, to, cc, bcc, enabled,
+			subjectMap, bodyMap);
 	}
 
 	/**
@@ -124,19 +123,11 @@ public class NotificationTemplateLocalServiceUtil {
 	 *
 	 * @param notificationTemplate the notification template
 	 * @return the notification template that was removed
-	 * @throws PortalException
 	 */
 	public static NotificationTemplate deleteNotificationTemplate(
-			NotificationTemplate notificationTemplate)
-		throws PortalException {
+		NotificationTemplate notificationTemplate) {
 
 		return getService().deleteNotificationTemplate(notificationTemplate);
-	}
-
-	public static void deleteNotificationTemplates(long groupId)
-		throws PortalException {
-
-		getService().deleteNotificationTemplates(groupId);
 	}
 
 	/**
@@ -241,17 +232,18 @@ public class NotificationTemplateLocalServiceUtil {
 	}
 
 	/**
-	 * Returns the notification template matching the UUID and group.
+	 * Returns the notification template with the matching UUID and company.
 	 *
 	 * @param uuid the notification template's UUID
-	 * @param groupId the primary key of the group
+	 * @param companyId the primary key of the company
 	 * @return the matching notification template, or <code>null</code> if a matching notification template could not be found
 	 */
 	public static NotificationTemplate
-		fetchNotificationTemplateByUuidAndGroupId(String uuid, long groupId) {
+		fetchNotificationTemplateByUuidAndCompanyId(
+			String uuid, long companyId) {
 
-		return getService().fetchNotificationTemplateByUuidAndGroupId(
-			uuid, groupId);
+		return getService().fetchNotificationTemplateByUuidAndCompanyId(
+			uuid, companyId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
@@ -290,19 +282,20 @@ public class NotificationTemplateLocalServiceUtil {
 	}
 
 	/**
-	 * Returns the notification template matching the UUID and group.
+	 * Returns the notification template with the matching UUID and company.
 	 *
 	 * @param uuid the notification template's UUID
-	 * @param groupId the primary key of the group
+	 * @param companyId the primary key of the company
 	 * @return the matching notification template
 	 * @throws PortalException if a matching notification template could not be found
 	 */
-	public static NotificationTemplate getNotificationTemplateByUuidAndGroupId(
-			String uuid, long groupId)
+	public static NotificationTemplate
+			getNotificationTemplateByUuidAndCompanyId(
+				String uuid, long companyId)
 		throws PortalException {
 
-		return getService().getNotificationTemplateByUuidAndGroupId(
-			uuid, groupId);
+		return getService().getNotificationTemplateByUuidAndCompanyId(
+			uuid, companyId);
 	}
 
 	/**
@@ -322,56 +315,6 @@ public class NotificationTemplateLocalServiceUtil {
 		return getService().getNotificationTemplates(start, end);
 	}
 
-	public static List<NotificationTemplate> getNotificationTemplates(
-		long groupId, boolean enabled, int start, int end,
-		OrderByComparator<NotificationTemplate> orderByComparator) {
-
-		return getService().getNotificationTemplates(
-			groupId, enabled, start, end, orderByComparator);
-	}
-
-	public static List<NotificationTemplate> getNotificationTemplates(
-		long groupId, int start, int end,
-		OrderByComparator<NotificationTemplate> orderByComparator) {
-
-		return getService().getNotificationTemplates(
-			groupId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns all the notification templates matching the UUID and company.
-	 *
-	 * @param uuid the UUID of the notification templates
-	 * @param companyId the primary key of the company
-	 * @return the matching notification templates, or an empty list if no matches were found
-	 */
-	public static List<NotificationTemplate>
-		getNotificationTemplatesByUuidAndCompanyId(
-			String uuid, long companyId) {
-
-		return getService().getNotificationTemplatesByUuidAndCompanyId(
-			uuid, companyId);
-	}
-
-	/**
-	 * Returns a range of notification templates matching the UUID and company.
-	 *
-	 * @param uuid the UUID of the notification templates
-	 * @param companyId the primary key of the company
-	 * @param start the lower bound of the range of notification templates
-	 * @param end the upper bound of the range of notification templates (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the range of matching notification templates, or an empty list if no matches were found
-	 */
-	public static List<NotificationTemplate>
-		getNotificationTemplatesByUuidAndCompanyId(
-			String uuid, long companyId, int start, int end,
-			OrderByComparator<NotificationTemplate> orderByComparator) {
-
-		return getService().getNotificationTemplatesByUuidAndCompanyId(
-			uuid, companyId, start, end, orderByComparator);
-	}
-
 	/**
 	 * Returns the number of notification templates.
 	 *
@@ -379,16 +322,6 @@ public class NotificationTemplateLocalServiceUtil {
 	 */
 	public static int getNotificationTemplatesCount() {
 		return getService().getNotificationTemplatesCount();
-	}
-
-	public static int getNotificationTemplatesCount(long groupId) {
-		return getService().getNotificationTemplatesCount(groupId);
-	}
-
-	public static int getNotificationTemplatesCount(
-		long groupId, boolean enabled) {
-
-		return getService().getNotificationTemplatesCount(groupId, enabled);
 	}
 
 	/**
@@ -414,13 +347,12 @@ public class NotificationTemplateLocalServiceUtil {
 			String from, Map<java.util.Locale, String> fromNameMap, String to,
 			String cc, String bcc, boolean enabled,
 			Map<java.util.Locale, String> subjectMap,
-			Map<java.util.Locale, String> bodyMap,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+			Map<java.util.Locale, String> bodyMap)
 		throws PortalException {
 
 		return getService().updateNotificationTemplate(
 			notificationTemplateId, name, description, from, fromNameMap, to,
-			cc, bcc, enabled, subjectMap, bodyMap, serviceContext);
+			cc, bcc, enabled, subjectMap, bodyMap);
 	}
 
 	/**

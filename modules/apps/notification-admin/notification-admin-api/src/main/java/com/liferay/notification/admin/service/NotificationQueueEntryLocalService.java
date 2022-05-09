@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
-import java.util.Date;
 import java.util.List;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -64,9 +63,8 @@ public interface NotificationQueueEntryLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.notification.admin.service.impl.NotificationQueueEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the notification queue entry local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link NotificationQueueEntryLocalServiceUtil} if injection and service tracking are not available.
 	 */
-	@Indexable(type = IndexableType.REINDEX)
 	public NotificationQueueEntry addNotificationQueueEntry(
-			long userId, long groupId, String className, long classPK,
+			long userId, String className, long classPK,
 			long notificationTemplateId, String from, String fromName,
 			String to, String toName, String cc, String bcc, String subject,
 			String body, double priority)
@@ -100,11 +98,6 @@ public interface NotificationQueueEntryLocalService
 	 * @throws PortalException
 	 */
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	public void deleteNotificationQueueEntries(Date sentDate);
-
-	public void deleteNotificationQueueEntries(long groupId)
 		throws PortalException;
 
 	/**
@@ -227,10 +220,6 @@ public interface NotificationQueueEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<NotificationQueueEntry> getNotificationQueueEntries(
-		boolean sent);
-
 	/**
 	 * Returns a range of all the notification queue entries.
 	 *
@@ -246,11 +235,6 @@ public interface NotificationQueueEntryLocalService
 	public List<NotificationQueueEntry> getNotificationQueueEntries(
 		int start, int end);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<NotificationQueueEntry> getNotificationQueueEntries(
-		long groupId, String className, long classPK, boolean sent, int start,
-		int end, OrderByComparator<NotificationQueueEntry> orderByComparator);
-
 	/**
 	 * Returns the number of notification queue entries.
 	 *
@@ -258,13 +242,6 @@ public interface NotificationQueueEntryLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getNotificationQueueEntriesCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getNotificationQueueEntriesCount(long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getNotificationQueueEntriesCount(
-		long groupId, String className, long classPK, boolean sent);
 
 	/**
 	 * Returns the notification queue entry with the primary key.
@@ -293,12 +270,6 @@ public interface NotificationQueueEntryLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
-	public NotificationQueueEntry resendNotificationQueueEntry(
-			long notificationQueueEntryId)
-		throws PortalException;
-
-	public void sendNotificationQueueEntries() throws Exception;
-
 	public void updateNotificationQueueEntriesTemplateIds(
 		long notificationTemplateId);
 
@@ -315,10 +286,5 @@ public interface NotificationQueueEntryLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public NotificationQueueEntry updateNotificationQueueEntry(
 		NotificationQueueEntry notificationQueueEntry);
-
-	@Indexable(type = IndexableType.REINDEX)
-	public NotificationQueueEntry updateSent(
-			long notificationQueueEntryId, boolean sent)
-		throws PortalException;
 
 }

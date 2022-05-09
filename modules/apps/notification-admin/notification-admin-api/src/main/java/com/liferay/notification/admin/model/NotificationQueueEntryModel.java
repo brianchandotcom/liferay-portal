@@ -16,8 +16,8 @@ package com.liferay.notification.admin.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.AttachedModel;
+import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 
@@ -38,7 +38,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface NotificationQueueEntryModel
-	extends AttachedModel, BaseModel<NotificationQueueEntry>, GroupedModel,
+	extends AttachedModel, AuditedModel, BaseModel<NotificationQueueEntry>,
 			MVCCModel, ShardedModel {
 
 	/*
@@ -90,22 +90,6 @@ public interface NotificationQueueEntryModel
 	 * @param notificationQueueEntryId the notification queue entry ID of this notification queue entry
 	 */
 	public void setNotificationQueueEntryId(long notificationQueueEntryId);
-
-	/**
-	 * Returns the group ID of this notification queue entry.
-	 *
-	 * @return the group ID of this notification queue entry
-	 */
-	@Override
-	public long getGroupId();
-
-	/**
-	 * Sets the group ID of this notification queue entry.
-	 *
-	 * @param groupId the group ID of this notification queue entry
-	 */
-	@Override
-	public void setGroupId(long groupId);
 
 	/**
 	 * Returns the company ID of this notification queue entry.

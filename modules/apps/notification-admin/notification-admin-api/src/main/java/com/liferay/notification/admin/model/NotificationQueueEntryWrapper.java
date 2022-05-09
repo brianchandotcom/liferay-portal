@@ -47,7 +47,6 @@ public class NotificationQueueEntryWrapper
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put(
 			"notificationQueueEntryId", getNotificationQueueEntryId());
-		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
@@ -84,12 +83,6 @@ public class NotificationQueueEntryWrapper
 
 		if (notificationQueueEntryId != null) {
 			setNotificationQueueEntryId(notificationQueueEntryId);
-		}
-
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
 		}
 
 		Long companyId = (Long)attributes.get("companyId");
@@ -311,16 +304,6 @@ public class NotificationQueueEntryWrapper
 	@Override
 	public String getFromName() {
 		return model.getFromName();
-	}
-
-	/**
-	 * Returns the group ID of this notification queue entry.
-	 *
-	 * @return the group ID of this notification queue entry
-	 */
-	@Override
-	public long getGroupId() {
-		return model.getGroupId();
 	}
 
 	/**
@@ -571,16 +554,6 @@ public class NotificationQueueEntryWrapper
 	@Override
 	public void setFromName(String fromName) {
 		model.setFromName(fromName);
-	}
-
-	/**
-	 * Sets the group ID of this notification queue entry.
-	 *
-	 * @param groupId the group ID of this notification queue entry
-	 */
-	@Override
-	public void setGroupId(long groupId) {
-		model.setGroupId(groupId);
 	}
 
 	/**

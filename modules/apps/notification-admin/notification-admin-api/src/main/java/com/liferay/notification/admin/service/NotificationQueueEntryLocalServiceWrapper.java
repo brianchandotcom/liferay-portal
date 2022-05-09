@@ -41,15 +41,15 @@ public class NotificationQueueEntryLocalServiceWrapper
 	@Override
 	public com.liferay.notification.admin.model.NotificationQueueEntry
 			addNotificationQueueEntry(
-				long userId, long groupId, String className, long classPK,
+				long userId, String className, long classPK,
 				long notificationTemplateId, String from, String fromName,
 				String to, String toName, String cc, String bcc, String subject,
 				String body, double priority)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _notificationQueueEntryLocalService.addNotificationQueueEntry(
-			userId, groupId, className, classPK, notificationTemplateId, from,
-			fromName, to, toName, cc, bcc, subject, body, priority);
+			userId, className, classPK, notificationTemplateId, from, fromName,
+			to, toName, cc, bcc, subject, body, priority);
 	}
 
 	/**
@@ -96,20 +96,6 @@ public class NotificationQueueEntryLocalServiceWrapper
 
 		return _notificationQueueEntryLocalService.createPersistedModel(
 			primaryKeyObj);
-	}
-
-	@Override
-	public void deleteNotificationQueueEntries(java.util.Date sentDate) {
-		_notificationQueueEntryLocalService.deleteNotificationQueueEntries(
-			sentDate);
-	}
-
-	@Override
-	public void deleteNotificationQueueEntries(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		_notificationQueueEntryLocalService.deleteNotificationQueueEntries(
-			groupId);
 	}
 
 	/**
@@ -291,15 +277,6 @@ public class NotificationQueueEntryLocalServiceWrapper
 			getIndexableActionableDynamicQuery();
 	}
 
-	@Override
-	public java.util.List
-		<com.liferay.notification.admin.model.NotificationQueueEntry>
-			getNotificationQueueEntries(boolean sent) {
-
-		return _notificationQueueEntryLocalService.getNotificationQueueEntries(
-			sent);
-	}
-
 	/**
 	 * Returns a range of all the notification queue entries.
 	 *
@@ -320,20 +297,6 @@ public class NotificationQueueEntryLocalServiceWrapper
 			start, end);
 	}
 
-	@Override
-	public java.util.List
-		<com.liferay.notification.admin.model.NotificationQueueEntry>
-			getNotificationQueueEntries(
-				long groupId, String className, long classPK, boolean sent,
-				int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.notification.admin.model.
-						NotificationQueueEntry> orderByComparator) {
-
-		return _notificationQueueEntryLocalService.getNotificationQueueEntries(
-			groupId, className, classPK, sent, start, end, orderByComparator);
-	}
-
 	/**
 	 * Returns the number of notification queue entries.
 	 *
@@ -343,20 +306,6 @@ public class NotificationQueueEntryLocalServiceWrapper
 	public int getNotificationQueueEntriesCount() {
 		return _notificationQueueEntryLocalService.
 			getNotificationQueueEntriesCount();
-	}
-
-	@Override
-	public int getNotificationQueueEntriesCount(long groupId) {
-		return _notificationQueueEntryLocalService.
-			getNotificationQueueEntriesCount(groupId);
-	}
-
-	@Override
-	public int getNotificationQueueEntriesCount(
-		long groupId, String className, long classPK, boolean sent) {
-
-		return _notificationQueueEntryLocalService.
-			getNotificationQueueEntriesCount(groupId, className, classPK, sent);
 	}
 
 	/**
@@ -398,20 +347,6 @@ public class NotificationQueueEntryLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.notification.admin.model.NotificationQueueEntry
-			resendNotificationQueueEntry(long notificationQueueEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _notificationQueueEntryLocalService.resendNotificationQueueEntry(
-			notificationQueueEntryId);
-	}
-
-	@Override
-	public void sendNotificationQueueEntries() throws Exception {
-		_notificationQueueEntryLocalService.sendNotificationQueueEntries();
-	}
-
-	@Override
 	public void updateNotificationQueueEntriesTemplateIds(
 		long notificationTemplateId) {
 
@@ -437,15 +372,6 @@ public class NotificationQueueEntryLocalServiceWrapper
 
 		return _notificationQueueEntryLocalService.updateNotificationQueueEntry(
 			notificationQueueEntry);
-	}
-
-	@Override
-	public com.liferay.notification.admin.model.NotificationQueueEntry
-			updateSent(long notificationQueueEntryId, boolean sent)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _notificationQueueEntryLocalService.updateSent(
-			notificationQueueEntryId, sent);
 	}
 
 	@Override

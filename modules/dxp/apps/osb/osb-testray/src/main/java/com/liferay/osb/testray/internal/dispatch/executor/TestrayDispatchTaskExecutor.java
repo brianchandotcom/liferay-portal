@@ -30,6 +30,7 @@ import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -238,6 +239,113 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 		return map;
 	}
 
+	private String _getTestrayBuildDescription(
+		Map<String, String> propertiesMap) {
+
+		StringBundler sb = new StringBundler(15);
+
+		if (propertiesMap.get("liferay.portal.bundle") != null) {
+			sb.append("Bundle: ");
+			sb.append(propertiesMap.get("liferay.portal.bundle"));
+			sb.append(StringPool.SEMICOLON);
+			sb.append(StringPool.NEW_LINE);
+		}
+
+		if (propertiesMap.get("liferay.plugins.git.id") != null) {
+			sb.append("Plugins hash: ");
+			sb.append(propertiesMap.get("liferay.plugins.git.id"));
+			sb.append(StringPool.SEMICOLON);
+			sb.append(StringPool.NEW_LINE);
+		}
+
+		if (propertiesMap.get("liferay.portal.branch") != null) {
+			sb.append("Portal branch: ");
+			sb.append(propertiesMap.get("liferay.portal.branch"));
+			sb.append(StringPool.SEMICOLON);
+			sb.append(StringPool.NEW_LINE);
+		}
+
+		if (propertiesMap.get("liferay.portal.git.id") != null) {
+			sb.append("Portal hash: ");
+			sb.append(propertiesMap.get("liferay.portal.git.id"));
+			sb.append(StringPool.SEMICOLON);
+		}
+
+		return sb.toString();
+	}
+
+	private long _getTestrayBuildId(
+			long companyId, Map<String, String> propertiesMap,
+			String testrayBuildName, long testrayProjectId)
+		throws Exception {
+
+		long testrayBuildId = _getObjectEntryId(
+			companyId, testrayBuildName, "Build");
+
+		if (testrayBuildId != 0) {
+			return testrayBuildId;
+		}
+
+		long testrayProductVersionId = _getTestrayProductVersionId(
+			companyId, propertiesMap.get("testray.product.version"),
+			testrayProjectId);
+		long testrayRoutineId = _getTestrayRoutineId(
+			companyId, testrayProjectId,
+			propertiesMap.get("testray.build.type"));
+
+		ObjectEntry objectEntry = new ObjectEntry();
+
+		objectEntry.setProperties(
+			HashMapBuilder.<String, Object>put(
+				"description", _getTestrayBuildDescription(propertiesMap)
+			).put(
+				"dueDate", propertiesMap.get("testray.build.time")
+			).put(
+				"gitHash", propertiesMap.get("git.id")
+			).put(
+				"githubCompareURLs", propertiesMap.get("liferay.compare.urls")
+			).put(
+				"name", testrayBuildName
+			).put(
+				"r_productVersionToBuilds_c_productVersionId",
+				testrayProductVersionId
+			).put(
+				"r_projectToBuilds_c_projectId", testrayProjectId
+			).put(
+				"r_routineToBuilds_c_routineId", testrayRoutineId
+			).build());
+
+		objectEntry = _addObjectEntry("Build", objectEntry);
+
+		return objectEntry.getId();
+	}
+
+	private long _getTestrayProductVersionId(
+			long companyId, String testrayProductVersionName,
+			long testrayProjectId)
+		throws Exception {
+
+		long testrayProductVersionId = _getObjectEntryId(
+			companyId, testrayProductVersionName, "ProductVersion");
+
+		if (testrayProductVersionId != 0) {
+			return testrayProductVersionId;
+		}
+
+		ObjectEntry objectEntry = new ObjectEntry();
+
+		objectEntry.setProperties(
+			HashMapBuilder.<String, Object>put(
+				"name", testrayProductVersionName
+			).put(
+				"r_projectToProductVersions_c_projectId", testrayProjectId
+			).build());
+
+		objectEntry = _addObjectEntry("ProductVersion", objectEntry);
+
+		return objectEntry.getId();
+	}
+
 	private long _getTestrayProjectId(long companyId, String testrayProjectName)
 		throws Exception {
 
@@ -256,6 +364,31 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 			).build());
 
 		objectEntry = _addObjectEntry("Project", objectEntry);
+
+		return objectEntry.getId();
+	}
+
+	private long _getTestrayRoutineId(
+			long companyId, long testrayProjectId, String testrayRoutineName)
+		throws Exception {
+
+		long testrayRoutineId = _getObjectEntryId(
+			companyId, testrayRoutineName, "Routine");
+
+		if (testrayRoutineId != 0) {
+			return testrayRoutineId;
+		}
+
+		ObjectEntry objectEntry = new ObjectEntry();
+
+		objectEntry.setProperties(
+			HashMapBuilder.<String, Object>put(
+				"name", testrayRoutineName
+			).put(
+				"r_routineToProjects_c_projectId", testrayProjectId
+			).build());
+
+		objectEntry = _addObjectEntry("Routine", objectEntry);
 
 		return objectEntry.getId();
 	}
@@ -468,8 +601,12 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 
 		Map<String, String> propertiesMap = _getPropertiesMap(element);
 
-		_getTestrayProjectId(
+		long testrayProjectId = _getTestrayProjectId(
 			companyId, propertiesMap.get("testray.project.name"));
+
+		_getTestrayBuildId(
+			companyId, propertiesMap, propertiesMap.get("testray.build.name"),
+			testrayProjectId);
 	}
 
 	private void _uploadToTestray(

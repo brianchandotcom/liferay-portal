@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -237,7 +238,10 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 
 			objectEntry.setProperties(
 				HashMapBuilder.<String, Object>put(
-					"caseNumber", 0
+					"caseNumber",
+					_increment(
+						companyId, "caseNumber",
+						"projectId eq " + testrayProjectId, "Case")
 				).put(
 					"description",
 					testrayCasePropertiesMap.get("testray.testcase.description")
@@ -1026,7 +1030,9 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 			).put(
 				"name", testrayRunName
 			).put(
-				"number", 0
+				"number",
+				_increment(
+					companyId, "number", "buildId eq " + testrayBuildId, "Run")
 			).put(
 				"r_buildToRuns_c_buildId", testrayBuildId
 			).build());
@@ -1082,6 +1088,32 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 		_objectEntryIds.put(objectEntryMapKey, objectEntry.getId());
 
 		return objectEntry.getId();
+	}
+
+	private long _increment(
+			long companyId, String fieldName, String filterString,
+			String objectDefinitionShortName)
+		throws Exception {
+
+		Sort[] sorts = {new Sort(fieldName, true)};
+
+		com.liferay.portal.vulcan.pagination.Page<ObjectEntry>
+			objectEntriesPage = _objectEntryManager.getObjectEntries(
+				companyId, _objectDefinitions.get(objectDefinitionShortName),
+				null, null, _defaultDTOConverterContext, filterString, null,
+				null, sorts);
+
+		ObjectEntry objectEntry = objectEntriesPage.fetchFirstItem();
+
+		if (objectEntry == null) {
+			return 1;
+		}
+
+		Map<String, Object> properties = objectEntry.getProperties();
+
+		int caseNumber = (Integer)properties.get("caseNumber");
+
+		return caseNumber + 1;
 	}
 
 	private void _invoke(UnsafeRunnable<Exception> unsafeRunnable)

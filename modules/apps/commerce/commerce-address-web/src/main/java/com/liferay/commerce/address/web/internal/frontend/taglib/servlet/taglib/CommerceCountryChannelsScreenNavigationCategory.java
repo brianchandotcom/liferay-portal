@@ -20,6 +20,7 @@ import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.io.IOException;
@@ -72,6 +73,15 @@ public class CommerceCountryChannelsScreenNavigationCategory
 	public String getScreenNavigationKey() {
 		return CommerceCountryScreenNavigationConstants.
 			SCREEN_NAVIGATION_KEY_COMMERCE_COUNTRY_GENERAL;
+	}
+
+	@Override
+	public boolean isVisible(User user, Country country) {
+		if (country == null) {
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override

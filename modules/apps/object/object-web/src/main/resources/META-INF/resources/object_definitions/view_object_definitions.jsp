@@ -26,6 +26,7 @@ ViewObjectDefinitionsDisplayContext viewObjectDefinitionsDisplayContext = (ViewO
 	fdsActionDropdownItems="<%= viewObjectDefinitionsDisplayContext.getFDSActionDropdownItems() %>"
 	formName="fm"
 	id="<%= ObjectDefinitionsFDSNames.OBJECT_DEFINITIONS %>"
+	propsTransformer="js/ObjectDefinitionsFDSPropsTransformer"
 	style="fluid"
 />
 
@@ -35,6 +36,19 @@ ViewObjectDefinitionsDisplayContext viewObjectDefinitionsDisplayContext = (ViewO
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"apiURL", viewObjectDefinitionsDisplayContext.getAPIURL()
+			).build()
+		%>'
+	/>
+</div>
+
+<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="baseResourceURL" />
+
+<div id="<portlet:namespace />deleteObjectDefinition">
+	<react:component
+		module="js/components/ModalDeleteObjectDefinition"
+		props='<%=
+			HashMapBuilder.<String, Object>put(
+				"baseResourceURL", String.valueOf(baseResourceURL)
 			).build()
 		%>'
 	/>

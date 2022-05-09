@@ -12,20 +12,6 @@
  * details.
  */
 
-type HTTPMethods = 'GET' | 'POST' | 'DELETE' | 'PUT';
+/// <reference types="react" />
 
-declare module 'frontend-js-web' {
-	function fetch(
-		url: string | Request,
-		options?: {
-			body?: string;
-			headers?: {[key: string]: string} | Headers;
-			method?: HTTPMethods;
-		}
-	): Promise<{
-		json: () => Promise<unknown>;
-		ok: boolean;
-		status: number;
-	}>;
-	const createResourceURL: any;
-}
+export default function ModalWithProvider({baseResourceURL}: any): JSX.Element;

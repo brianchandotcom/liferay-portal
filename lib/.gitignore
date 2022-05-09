@@ -130,7 +130,6 @@
 /portal/log4j-core.jar
 /portal/persistence.jar
 /portal/portlet.jar
-/portal/portletmvc4spring-framework.jar
 /portal/simplecaptcha.jar
 /portal/slf4j-api.jar
 /portal/soap-api.jar

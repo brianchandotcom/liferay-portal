@@ -22,6 +22,7 @@ export default function openDeleteAssetEntryListModal({
 		),
 		buttons: [
 			{
+				autoFocus: true,
 				displayType: 'secondary',
 				label: Liferay.Language.get('cancel'),
 				type: 'cancel',

@@ -19,6 +19,7 @@ export default function openDeleteSiteModal({multiple = false, onDelete}) {
 		),
 		buttons: [
 			{
+				autoFocus: true,
 				displayType: 'secondary',
 				label: Liferay.Language.get('cancel'),
 				type: 'cancel',

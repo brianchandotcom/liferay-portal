@@ -17,6 +17,7 @@ export default function openDeleteEntryModal({onDelete}) {
 		bodyHTML: Liferay.Language.get('are-you-sure-you-want-to-delete-this'),
 		buttons: [
 			{
+				autoFocus: true,
 				displayType: 'secondary',
 				label: Liferay.Language.get('cancel'),
 				type: 'cancel',

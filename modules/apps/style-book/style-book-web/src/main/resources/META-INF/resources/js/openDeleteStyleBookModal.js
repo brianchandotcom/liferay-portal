@@ -19,6 +19,7 @@ export default function openDeleteStyleBookModal({multiple = false, onDelete}) {
 		),
 		buttons: [
 			{
+				autoFocus: true,
 				displayType: 'secondary',
 				label: Liferay.Language.get('cancel'),
 				type: 'cancel',

@@ -21,6 +21,7 @@ export default function openDeleteLayoutModal({
 		bodyHTML: message,
 		buttons: [
 			{
+				autoFocus: true,
 				displayType: 'secondary',
 				label: Liferay.Language.get('cancel'),
 				type: 'cancel',

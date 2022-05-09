@@ -58,9 +58,9 @@ public class NotificationQueueEntryLocalServiceImpl
 		notificationQueueEntry.setUserId(user.getUserId());
 		notificationQueueEntry.setUserName(user.getFullName());
 		notificationQueueEntry.setClassName(className);
-		notificationQueueEntry.setNotificationQueueEntryId(
-			notificationTemplateId);
 		notificationQueueEntry.setClassPK(classPK);
+		notificationQueueEntry.setNotificationTemplateId(
+			notificationTemplateId);
 		notificationQueueEntry.setFrom(from);
 		notificationQueueEntry.setFromName(fromName);
 		notificationQueueEntry.setTo(to);

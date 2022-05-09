@@ -60,7 +60,7 @@ definition {
 
 			AssertClick(
 				locator1 = "Notifications#NOTIFICATIONS_WORKFLOW_TITLE",
-				value1 = "userfn userln sent you a Remote App Entry for review in the workflow.");
+				value1 = "userfn userln sent you a Client Extension Entry for review in the workflow.");
 
 			LexiconEntry.gotoEllipsisMenuItem(menuItem = "Assign to Me");
 
@@ -111,12 +111,12 @@ definition {
 		}
 
 		task ("Search for Remote App Entry") {
-			Search.searchCP(searchTerm = "Remote App Entry");
+			Search.searchCP(searchTerm = "Client Extension Entry");
 		}
 
 		task ("Assert Remote App Entry is listed") {
 			AssertElementPresent(
-				key_fieldName = "Remote App Entry",
+				key_fieldName = "Client Extension Entry",
 				key_order = "1",
 				locator1 = "WorkflowConfiguration#PROCESS_BUILDER_TABLE_FIELD_NAME");
 

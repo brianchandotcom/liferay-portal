@@ -223,7 +223,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 				</h3>
 
 				<aui:field-wrapper cssClass="form-group lfr-input-text-container">
-					<aui:input disabled="<%= !objectDefinitionsDetailsDisplayContext.hasUpdateObjectDefinitionPermission() %>" label="" labelOff='<%= LanguageUtil.get(request, "hide-widget") %>' labelOn='<%= LanguageUtil.get(request, "show-widget") %>' name="portlet" type="toggle-switch" value="<%= objectDefinition.isPortlet() %>" />
+					<aui:input disabled="<%= objectDefinition.isSystem() || !objectDefinitionsDetailsDisplayContext.hasUpdateObjectDefinitionPermission() %>" label="" labelOff='<%= LanguageUtil.get(request, "hide-widget") %>' labelOn='<%= LanguageUtil.get(request, "show-widget") %>' name="portlet" type="toggle-switch" value="<%= objectDefinition.isPortlet() %>" />
 				</aui:field-wrapper>
 			</clay:sheet-section>
 

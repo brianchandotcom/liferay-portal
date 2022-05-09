@@ -132,7 +132,7 @@ definition {
 		}
 
 		task ("View no interest results") {
-			ACInterests.viewNoInterestResults();
+			ACUtils.viewNoResultsMessage(noResultMessage = "There are no results found.,Please try a different search term.");
 		}
 	}
 

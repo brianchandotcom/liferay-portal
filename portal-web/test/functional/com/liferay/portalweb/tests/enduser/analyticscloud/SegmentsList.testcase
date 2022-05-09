@@ -63,7 +63,7 @@ definition {
 		}
 
 		task ("Assert there is message There are no Segments found.") {
-			ACUtils.viewNoResultsMessage(noResultMessage = "There are no Segments found.");
+			ACUtils.viewNoResultsMessage(noResultMessage = "There are no results found.,Please try a different search term.");
 		}
 	}
 

@@ -79,9 +79,10 @@ public class BatchPlannerPlanServiceUtil {
 	}
 
 	public static List<BatchPlannerPlan> getBatchPlannerPlans(
-		long companyId, boolean export, boolean template,
-		String searchByKeyword, int start, int end,
-		OrderByComparator<BatchPlannerPlan> orderByComparator) {
+			long companyId, boolean export, boolean template,
+			String searchByKeyword, int start, int end,
+			OrderByComparator<BatchPlannerPlan> orderByComparator)
+		throws PortalException {
 
 		return getService().getBatchPlannerPlans(
 			companyId, export, template, searchByKeyword, start, end,
@@ -97,8 +98,9 @@ public class BatchPlannerPlanServiceUtil {
 	}
 
 	public static List<BatchPlannerPlan> getBatchPlannerPlans(
-		long companyId, boolean template, String searchByKeyword, int start,
-		int end, OrderByComparator<BatchPlannerPlan> orderByComparator) {
+			long companyId, boolean template, String searchByKeyword, int start,
+			int end, OrderByComparator<BatchPlannerPlan> orderByComparator)
+		throws PortalException {
 
 		return getService().getBatchPlannerPlans(
 			companyId, template, searchByKeyword, start, end,
@@ -137,15 +139,17 @@ public class BatchPlannerPlanServiceUtil {
 	}
 
 	public static int getBatchPlannerPlansCount(
-		long companyId, boolean export, boolean template,
-		String searchByKeyword) {
+			long companyId, boolean export, boolean template,
+			String searchByKeyword)
+		throws PortalException {
 
 		return getService().getBatchPlannerPlansCount(
 			companyId, export, template, searchByKeyword);
 	}
 
 	public static int getBatchPlannerPlansCount(
-		long companyId, boolean template, String searchByKeyword) {
+			long companyId, boolean template, String searchByKeyword)
+		throws PortalException {
 
 		return getService().getBatchPlannerPlansCount(
 			companyId, template, searchByKeyword);

@@ -259,11 +259,12 @@ public class BatchPlannerPlanServiceHttp {
 
 	public static java.util.List
 		<com.liferay.batch.planner.model.BatchPlannerPlan> getBatchPlannerPlans(
-			HttpPrincipal httpPrincipal, long companyId, boolean export,
-			boolean template, String searchByKeyword, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.batch.planner.model.BatchPlannerPlan>
-					orderByComparator) {
+				HttpPrincipal httpPrincipal, long companyId, boolean export,
+				boolean template, String searchByKeyword, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.batch.planner.model.BatchPlannerPlan>
+						orderByComparator)
+			throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -280,6 +281,13 @@ public class BatchPlannerPlanServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
 				throw new com.liferay.portal.kernel.exception.SystemException(
 					exception);
 			}
@@ -336,11 +344,12 @@ public class BatchPlannerPlanServiceHttp {
 
 	public static java.util.List
 		<com.liferay.batch.planner.model.BatchPlannerPlan> getBatchPlannerPlans(
-			HttpPrincipal httpPrincipal, long companyId, boolean template,
-			String searchByKeyword, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.batch.planner.model.BatchPlannerPlan>
-					orderByComparator) {
+				HttpPrincipal httpPrincipal, long companyId, boolean template,
+				String searchByKeyword, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.batch.planner.model.BatchPlannerPlan>
+						orderByComparator)
+			throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -357,6 +366,13 @@ public class BatchPlannerPlanServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
 				throw new com.liferay.portal.kernel.exception.SystemException(
 					exception);
 			}
@@ -542,8 +558,9 @@ public class BatchPlannerPlanServiceHttp {
 	}
 
 	public static int getBatchPlannerPlansCount(
-		HttpPrincipal httpPrincipal, long companyId, boolean export,
-		boolean template, String searchByKeyword) {
+			HttpPrincipal httpPrincipal, long companyId, boolean export,
+			boolean template, String searchByKeyword)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -559,6 +576,13 @@ public class BatchPlannerPlanServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
 				throw new com.liferay.portal.kernel.exception.SystemException(
 					exception);
 			}
@@ -575,8 +599,9 @@ public class BatchPlannerPlanServiceHttp {
 	}
 
 	public static int getBatchPlannerPlansCount(
-		HttpPrincipal httpPrincipal, long companyId, boolean template,
-		String searchByKeyword) {
+			HttpPrincipal httpPrincipal, long companyId, boolean template,
+			String searchByKeyword)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -592,6 +617,13 @@ public class BatchPlannerPlanServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
 				throw new com.liferay.portal.kernel.exception.SystemException(
 					exception);
 			}

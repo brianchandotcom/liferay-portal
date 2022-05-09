@@ -1292,15 +1292,23 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public boolean hasLayouts() {
+		if (_hasLayouts != null) {
+			return _hasLayouts;
+		}
+
+		boolean hasLayouts = false;
+
 		int privateLayoutsCount = _getLayoutsCount(true);
 
 		int publicLayoutsCount = _getLayoutsCount(false);
 
 		if ((privateLayoutsCount + publicLayoutsCount) > 0) {
-			return true;
+			hasLayouts = true;
 		}
 
-		return false;
+		_hasLayouts = hasLayouts;
+
+		return _hasLayouts;
 	}
 
 	public boolean hasRequiredVocabularies() {
@@ -2016,6 +2024,7 @@ public class LayoutsAdminDisplayContext {
 	private String _displayStyle;
 	private Boolean _firstColumn;
 	private final GroupDisplayContextHelper _groupDisplayContextHelper;
+	private Boolean _hasLayouts;
 	private String _keywords;
 	private final LayoutConverterRegistry _layoutConverterRegistry;
 	private final LayoutCopyHelper _layoutCopyHelper;

@@ -13,7 +13,9 @@ import ClayCard from '@clayui/card';
 import ClayLabel from '@clayui/label';
 import classNames from 'classnames';
 import React from 'react';
+import i18n from '../../../../../common/I18n';
 import {SLA_TYPES} from '../../../../../common/utils/constants';
+import getKebabCase from '../../../utils/getKebabCase';
 
 const SlaCardLayout = ({
 	slaDateEnd,
@@ -50,7 +52,7 @@ const SlaCardLayout = ({
 							'text-neutral-7': slaTitle === SLA_TYPES.platinum,
 						})}
 					>
-						{slaTitle}
+						{i18n.translate(getKebabCase(slaTitle))}
 					</div>
 
 					<div>
@@ -69,7 +71,7 @@ const SlaCardLayout = ({
 								)}
 								displayType="secundary"
 							>
-								{slaLabel}
+								{i18n.translate(getKebabCase(slaLabel))}
 							</ClayLabel>
 						</ClayCard.Caption>
 					</div>

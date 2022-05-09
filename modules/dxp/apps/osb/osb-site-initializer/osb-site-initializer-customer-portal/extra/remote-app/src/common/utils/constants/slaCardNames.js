@@ -8,9 +8,10 @@
  * permissions and limitations under the License, including but not limited to
  * distribution rights of the Software.
  */
+import i18n from '../../../common/I18n';
 
 export const SLA_CARD_NAMES = {
-	current: 'CURRENT',
-	expired: 'EXPIRED',
-	future: 'FUTURE',
+	current: i18n.translate('current').toUpperCase(),
+	expired: i18n.translate('expired').toUpperCase(),
+	future: i18n.translate('future').toUpperCase(),
 };

@@ -132,10 +132,6 @@ definition {
 			nodeLabel = "Join XOR",
 			nodePosition = "-40,-200",
 			nodeType = "join-xor");
-
-
-
-
 	}
 
 	@description = "Verify that the user can add Multiple Actions to the same node"

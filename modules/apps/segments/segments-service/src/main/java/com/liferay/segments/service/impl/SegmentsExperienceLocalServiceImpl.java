@@ -615,6 +615,10 @@ public class SegmentsExperienceLocalServiceImpl
 			segmentsExperiencePersistence.fetchByG_C_C_First(
 				groupId, classNameId, classPK, null);
 
+		if (segmentsExperience == null) {
+			return 0;
+		}
+
 		return segmentsExperience.getPriority();
 	}
 
@@ -624,6 +628,10 @@ public class SegmentsExperienceLocalServiceImpl
 		SegmentsExperience segmentsExperience =
 			segmentsExperiencePersistence.fetchByG_C_C_Last(
 				groupId, classNameId, classPK, null);
+
+		if (segmentsExperience == null) {
+			return 0;
+		}
 
 		return segmentsExperience.getPriority();
 	}

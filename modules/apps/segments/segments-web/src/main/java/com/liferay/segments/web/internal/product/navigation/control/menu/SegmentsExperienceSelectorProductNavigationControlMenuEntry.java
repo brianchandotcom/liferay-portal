@@ -95,6 +95,12 @@ public class SegmentsExperienceSelectorProductNavigationControlMenuEntry
 			return false;
 		}
 
+		Layout layout = themeDisplay.getLayout();
+
+		if (!layout.isTypeContent() || !_sites.isLayoutUpdateable(layout)) {
+			return false;
+		}
+
 		long segmentsExperiencesCount =
 			_segmentsExperienceLocalService.getSegmentsExperiencesCount(
 				themeDisplay.getScopeGroupId(),
@@ -111,12 +117,6 @@ public class SegmentsExperienceSelectorProductNavigationControlMenuEntry
 		if (Objects.equals(
 				className, LayoutPageTemplateEntry.class.getName())) {
 
-			return false;
-		}
-
-		Layout layout = themeDisplay.getLayout();
-
-		if (!layout.isTypeContent() || !_sites.isLayoutUpdateable(layout)) {
 			return false;
 		}
 

@@ -90,6 +90,11 @@
 	<td>//div//h2[contains(@id,'project-title')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>TEAM_MEMBERS_MAIN_PAGE</td>
+	<td>//h1[contains(@class,'m-0') and contains(text(),'Team Members')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

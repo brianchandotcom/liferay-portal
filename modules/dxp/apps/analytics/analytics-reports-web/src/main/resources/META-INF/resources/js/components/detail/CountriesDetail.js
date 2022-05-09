@@ -31,7 +31,6 @@ import Countries from './Countries';
 
 export default function CountriesDetail({
 	currentPage,
-	featureFlag,
 	handleDetailPeriodChange,
 	timeSpanOptions,
 	trafficShareDataProvider,
@@ -154,7 +153,7 @@ export default function CountriesDetail({
 				)}
 			/>
 
-			<Countries currentPage={currentPage} featureFlag={featureFlag} />
+			<Countries currentPage={currentPage} />
 		</div>
 	);
 }

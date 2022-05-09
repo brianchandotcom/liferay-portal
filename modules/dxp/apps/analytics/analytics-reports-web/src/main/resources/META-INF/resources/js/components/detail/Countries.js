@@ -24,7 +24,7 @@ const COUNTRY_VALUE_TYPE = [
 	{label: Liferay.Language.get('views-percentage'), name: 'views-percentage'},
 ];
 
-export default function Countries({currentPage, featureFlag}) {
+export default function Countries({currentPage}) {
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
 	const [countryValueType, setCountryValueType] = useState(
@@ -48,13 +48,7 @@ export default function Countries({currentPage, featureFlag}) {
 				{Liferay.Language.get('views-by-location')}
 			</h5>
 
-			<ClayList
-				className={
-					'list-group-' +
-					(featureFlag ? 'countries' : 'keywords') +
-					'-list'
-				}
-			>
+			<ClayList className="-list list-group-countries">
 				<ClayList.Item flex>
 					<ClayList.ItemField expand>
 						<ClayList.ItemTitle className="text-truncate-inline">

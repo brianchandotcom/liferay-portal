@@ -134,7 +134,6 @@ export default function Detail({
 						(featureFlag ? (
 							<CountriesDetail
 								currentPage={currentPageMocked}
-								featureFlag={featureFlag}
 								handleDetailPeriodChange={
 									handleDetailPeriodChange
 								}

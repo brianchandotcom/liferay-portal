@@ -56,22 +56,8 @@ html#{$cadmin-selector} {
 				}
 			}
 
-			.list-group-countries-list,
-			.list-group-pages-list {
-				li {
-					border-width: 0;
-				}
-
-				li > div.autofit-col {
-					padding-left: 0;
-				}
-
-				.dim {
-					opacity: 0.4;
-				}
-			}
-
 			.list-group-keywords-list,
+			.list-group-countries-list,
 			.list-group-pages-list {
 				li {
 					border-width: 0;

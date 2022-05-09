@@ -137,15 +137,6 @@ public class EditStyleBookEntryDisplayContext {
 				return group.isPrivateLayoutsEnabled();
 			}
 		).put(
-			"layoutsTreeURL",
-			() -> {
-				ResourceURL resourceURL = _renderResponse.createResourceURL();
-
-				resourceURL.setResourceID("/style_book/layouts_tree");
-
-				return resourceURL.toString();
-			}
-		).put(
 			"namespace", _renderResponse.getNamespace()
 		).put(
 			"previewOptions",

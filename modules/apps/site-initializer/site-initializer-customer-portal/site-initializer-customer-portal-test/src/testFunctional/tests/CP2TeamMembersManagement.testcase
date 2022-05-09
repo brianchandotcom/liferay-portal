@@ -32,18 +32,53 @@ definition {
 
 	@description = "LPS-146292 - Verify if after inviting member, the screen goes back to previous screen (Team Members page)."
 	@priority = "4"
-	test IsAnalyticsCloudOptionAvailable {
+	test CanGoBackOnTeamMembersPage {
+		CustomerPortal.changeUserRole(
+			accountName = "Test Account 01",
+			accountRoleTitle = "Partner Manager",
+			accountUserName = "Test Test");
 
+        ApplicationsMenu.gotoSite(site = "Customer Portal");
 
+		CustomerPortal.loginOktaToUpdateCP();
+
+		CustomerPortal.selectNavigatorWindow(navigatorWidow = "Home - Customer Portal - Liferay DXP");
+
+        CustomerPortal.enterOnProject(projectName = "Test Account 01");
+
+		CP2NavigationMenu.goToTeamMembers();
+
+		//macro de criação
+
+		//macro de clicar no botão de enviar
+
+		CustomerPortal.viewTeamMembersPage();
 
 	}
 
 	@description = "LPS-146292 - Check if there is a 'Cancel' button if the user wants to leave the process."
 	@priority = "4"
-	test IsAnalyticsCloudOptionAvailable {
+	test CancelButtonIsPresent {
+		CustomerPortal.changeUserRole(
+			accountName = "Test Account 01",
+			accountRoleTitle = "Partner Manager",
+			accountUserName = "Test Test");
 
+        ApplicationsMenu.gotoSite(site = "Customer Portal");
 
+		CustomerPortal.loginOktaToUpdateCP();
 
+		CustomerPortal.selectNavigatorWindow(navigatorWidow = "Home - Customer Portal - Liferay DXP");
+
+        CustomerPortal.enterOnProject(projectName = "Test Account 01");
+
+		CP2NavigationMenu.goToTeamMembers();
+
+		//macro de criação
+
+		CP2NavigationMenu.cancelTeamMembersInvitation();
+
+		CustomerPortal.viewTeamMembersPage();
 	}
 
 }

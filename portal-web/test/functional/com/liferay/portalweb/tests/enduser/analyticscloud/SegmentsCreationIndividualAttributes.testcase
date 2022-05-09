@@ -486,6 +486,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8569 | Test Summary: Add segment with custom field for individuals"
 	@priority = "4"
 	test CanAddSegmentWithCustomFieldsForIndividuals {
+		property analytics.cloud.upstream = "false";
 		property test.name.skip.portal.instance = "SegmentsCreationIndividualAttributes#CanAddSegmentWithCustomFieldsForIndividuals";
 
 		task ("Add a user custom field") {
@@ -581,6 +582,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8570 | Test Summary: Add segment with custom fields for organizations"
 	@priority = "4"
 	test CanAddSegmentWithCustomFieldsForOrganizations {
+		property analytics.cloud.upstream = "false";
 		property test.name.skip.portal.instance = "SegmentsCreationIndividualAttributes#CanAddSegmentWithCustomFieldsForOrganizations";
 
 		task ("Add a new organization and assign to the user") {

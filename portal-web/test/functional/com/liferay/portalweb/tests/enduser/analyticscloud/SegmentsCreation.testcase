@@ -215,6 +215,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8477 | Test Summary: Cancel creating a static segment"
 	@priority = "3"
 	test CanCancelCreatingStaticSegment {
+		property analytics.cloud.upstream = "false";
 		task ("Sign in as new user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "userea@liferay.com",

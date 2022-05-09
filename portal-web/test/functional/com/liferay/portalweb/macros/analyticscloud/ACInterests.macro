@@ -190,10 +190,4 @@ definition {
 			value1 = "${interestTopic}");
 	}
 
-	macro viewNoInterestResults {
-		AssertTextEquals(
-			locator1 = "ACInterests#NO_INTEREST_TITLE",
-			value1 = "There are no items found.");
-	}
-
 }

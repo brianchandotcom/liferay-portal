@@ -1918,18 +1918,18 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	private int _getPrivateLayoutsCount() {
-		int privatePagesCount = 0;
+		int layoutsCount = 0;
 
 		try {
-			privatePagesCount = LayoutServiceUtil.getLayoutsCount(
+			layoutsCount = LayoutServiceUtil.getLayoutsCount(
 				getSelGroupId(), true, 0);
 
-			if ((privatePagesCount == 0) &&
+			if ((layoutsCount == 0) &&
 				GroupPermissionUtil.contains(
 					themeDisplay.getPermissionChecker(), getSelGroupId(),
 					ActionKeys.MANAGE_LAYOUTS)) {
 
-				privatePagesCount = LayoutLocalServiceUtil.getLayoutsCount(
+				layoutsCount = LayoutLocalServiceUtil.getLayoutsCount(
 					getSelGroup(), true, 0);
 			}
 		}
@@ -1939,7 +1939,7 @@ public class LayoutsAdminDisplayContext {
 			}
 		}
 
-		return privatePagesCount;
+		return layoutsCount;
 	}
 
 	private String _getStrictRobots() {

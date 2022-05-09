@@ -140,6 +140,8 @@ public class ObjectActionPersistenceTest {
 
 		newObjectAction.setActive(RandomTestUtil.randomBoolean());
 
+		newObjectAction.setDescription(RandomTestUtil.randomString());
+
 		newObjectAction.setName(RandomTestUtil.randomString());
 
 		newObjectAction.setObjectActionExecutorKey(
@@ -181,6 +183,9 @@ public class ObjectActionPersistenceTest {
 			newObjectAction.getObjectDefinitionId());
 		Assert.assertEquals(
 			existingObjectAction.isActive(), newObjectAction.isActive());
+		Assert.assertEquals(
+			existingObjectAction.getDescription(),
+			newObjectAction.getDescription());
 		Assert.assertEquals(
 			existingObjectAction.getName(), newObjectAction.getName());
 		Assert.assertEquals(
@@ -259,8 +264,8 @@ public class ObjectActionPersistenceTest {
 			"ObjectAction", "mvccVersion", true, "uuid", true, "objectActionId",
 			true, "companyId", true, "userId", true, "userName", true,
 			"createDate", true, "modifiedDate", true, "objectDefinitionId",
-			true, "active", true, "name", true, "objectActionExecutorKey", true,
-			"objectActionTriggerKey", true);
+			true, "active", true, "description", true, "name", true,
+			"objectActionExecutorKey", true, "objectActionTriggerKey", true);
 	}
 
 	@Test
@@ -498,6 +503,8 @@ public class ObjectActionPersistenceTest {
 		objectAction.setObjectDefinitionId(RandomTestUtil.nextLong());
 
 		objectAction.setActive(RandomTestUtil.randomBoolean());
+
+		objectAction.setDescription(RandomTestUtil.randomString());
 
 		objectAction.setName(RandomTestUtil.randomString());
 

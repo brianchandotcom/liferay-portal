@@ -240,6 +240,21 @@ public interface ObjectActionModel
 	public void setActive(boolean active);
 
 	/**
+	 * Returns the description of this object action.
+	 *
+	 * @return the description of this object action
+	 */
+	@AutoEscape
+	public String getDescription();
+
+	/**
+	 * Sets the description of this object action.
+	 *
+	 * @param description the description of this object action
+	 */
+	public void setDescription(String description);
+
+	/**
 	 * Returns the name of this object action.
 	 *
 	 * @return the name of this object action

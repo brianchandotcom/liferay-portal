@@ -23,6 +23,7 @@ import com.liferay.document.library.web.internal.display.context.helper.DLReques
 import com.liferay.document.library.web.internal.security.permission.resource.DLFileEntryPermission;
 import com.liferay.document.library.web.internal.security.permission.resource.DLFolderPermission;
 import com.liferay.document.library.web.internal.settings.DLPortletInstanceSettings;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -87,6 +88,13 @@ public class DLViewFileEntryDisplayContext {
 
 		_dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(
 			_dlRequestHelper);
+	}
+
+	public List<DropdownItem> getActionDropdownItems() throws PortalException {
+		DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext =
+			_getDLViewFileVersionDisplayContext();
+
+		return dlViewFileVersionDisplayContext.getActionDropdownItems();
 	}
 
 	public String getDiscussionClassName() throws PortalException {

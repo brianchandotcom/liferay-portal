@@ -233,6 +233,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>COMMON_STYLES_CLASS</td>
+	<td>xpath=(//div[contains(@class,'${fragmentName}')])[${index}]//ancestor::div[contains(@class,'lfr-layout-structure-item-')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EDIT_MODE_SELECTOR</td>
 	<td>//button[contains(@class,'edit-mode-selector')]</td>
 	<td></td>

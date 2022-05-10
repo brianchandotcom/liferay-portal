@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.test.util.sort;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -112,8 +113,8 @@ public abstract class BaseMultiLanguageSortTestCase
 			indexingTestHelper -> {
 				indexingTestHelper.define(
 					searchContext -> {
-						searchContext.setSorts(sorts);
 						searchContext.setLocale(locale);
+						searchContext.setSorts(sorts);
 					});
 
 				indexingTestHelper.search();
@@ -130,9 +131,9 @@ public abstract class BaseMultiLanguageSortTestCase
 
 		String fieldName = Field.TITLE;
 
-		String fieldNameSortable =
-			fieldName + StringPool.UNDERLINE + LocaleUtil.toLanguageId(locale) +
-				_SORTABLE;
+		String fieldNameSortable = StringBundler.concat(
+			fieldName, StringPool.UNDERLINE, LocaleUtil.toLanguageId(locale),
+			StringPool.UNDERLINE, Field.SORTABLE_FIELD_SUFFIX);
 
 		addDocuments(
 			value -> DocumentCreationHelpers.singleTextSortable(
@@ -143,7 +144,5 @@ public abstract class BaseMultiLanguageSortTestCase
 			new Sort[] {new Sort(fieldNameSortable, Sort.STRING_TYPE, false)},
 			fieldName, expected, locale);
 	}
-
-	private static final String _SORTABLE = "_sortable";
 
 }

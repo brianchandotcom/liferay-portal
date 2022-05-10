@@ -39,6 +39,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -2204,8 +2205,11 @@ public class SXPBlueprintSearchResultTest {
 			String configurationName, JSONObject jsonObject)
 		throws Exception {
 
+		JSONObject configurationJSONObject = JSONFactoryUtil.createJSONObject(
+			_sxpBlueprint.getConfigurationJSON());
+
 		_sxpBlueprint.setConfigurationJSON(
-			_configurationJSONObject.put(
+			configurationJSONObject.put(
 				configurationName, jsonObject
 			).toString());
 

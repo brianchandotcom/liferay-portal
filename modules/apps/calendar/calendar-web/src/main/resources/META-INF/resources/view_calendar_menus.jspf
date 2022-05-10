@@ -680,6 +680,20 @@
 					date: event.date,
 				});
 			},
+			keydown: function (event) {
+				var instance = this;
+
+				var domEvent = event.domEvent;
+
+				if (
+					domEvent.keyCode === 13 &&
+					domEvent.target.hasClass('yui3-calendar-day-selected')
+				) {
+					<portlet:namespace />scheduler.setAttrs({
+						date: instance._getSelectedDatesList()[0],
+					});
+				}
+			},
 		},
 		'date': new Date(<%= String.valueOf(date) %>),
 		'headerRenderer':

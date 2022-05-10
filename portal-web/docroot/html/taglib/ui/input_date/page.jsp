@@ -221,6 +221,14 @@ else {
 	Liferay.component(
 		'<%= nameId %>DatePicker',
 		function() {
+			var keysPressed = {};
+
+			var template = A.CalendarBase.HEADER_TEMPLATE;
+
+			template = template.replace('aria-role="heading"', '');
+
+			A.CalendarBase.HEADER_TEMPLATE = template;
+
 			var datePicker = new A.DatePicker<%= BrowserSnifferUtil.isMobile(request) ? "Native" : StringPool.BLANK %>(
 				{
 					calendar: {
@@ -271,6 +279,21 @@ else {
 							else if (<%= nullable %> && !date) {
 								datePicker.updateValue('');
 							}
+
+							var countInterval = 0;
+
+							var intervalId = setInterval(function () {
+								var trigger = A.one('.datepicker-popover:not(.popover-hidden) .yui3-calendarnav-prevmonth');
+
+								if (trigger) {
+									Liferay.Util.focusFormField(trigger);
+									clearInterval(intervalId);
+								} else if (countInterval > 10) {
+									clearInterval(intervalId);
+								}
+
+								countInterval++;
+							}, 100);
 						},
 						selectionChange: function(event) {
 							var newSelection = event.newSelection[0];
@@ -300,8 +323,13 @@ else {
 
 								var domEvent = event.domEvent;
 
-								if (domEvent.keyCode == 9 && domEvent.target.hasClass('yui3-calendar-grid')) {
+								keysPressed[domEvent.keyCode] = true;
+
+								if ((domEvent.keyCode === 9 && !keysPressed[16] && (domEvent.target.hasClass('yui3-calendar-grid') || domEvent.target.hasClass('yui3-calendar-day'))) ||
+									(domEvent.keyCode === 9 && keysPressed[16] && domEvent.target.hasClass('yui3-calendar-focused')) || domEvent.keyCode === 27) {
 									instance.hide();
+
+									keysPressed = {};
 
 									var trigger = A.one('#<%= nameId %>');
 
@@ -309,6 +337,11 @@ else {
 										Liferay.Util.focusFormField(trigger);
 									}
 								}
+							},
+							keyup: function(event) {
+								var domEvent = event.domEvent;
+
+								delete keysPressed[domEvent.keyCode];
 							}
 						},
 						zIndex: Liferay.zIndex.POPOVER

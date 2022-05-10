@@ -66,29 +66,9 @@ public class CountryLocalServiceImpl extends CountryLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		if (fetchCountryByA2(serviceContext.getCompanyId(), a2) != null) {
-			throw new DuplicateCountryException(
-				"A2 belongs to another country");
-		}
-
-		if (fetchCountryByA3(serviceContext.getCompanyId(), a3) != null) {
-			throw new DuplicateCountryException(
-				"A3 belongs to another country");
-		}
-
-		if (fetchCountryByName(serviceContext.getCompanyId(), name) != null) {
-			throw new DuplicateCountryException(
-				"Name belongs to another country");
-		}
-
-		if (fetchCountryByNumber(serviceContext.getCompanyId(), number) !=
-				null) {
-
-			throw new DuplicateCountryException(
-				"Number belongs to another country");
-		}
-
-		validate(a2, a3, CountryConstants.DEFAULT_COUNTRY_ID, name, number);
+		validate(
+			a2, a3, serviceContext.getCompanyId(),
+			CountryConstants.DEFAULT_COUNTRY_ID, name, number);
 
 		long countryId = counterLocalService.increment();
 
@@ -287,7 +267,7 @@ public class CountryLocalServiceImpl extends CountryLocalServiceBaseImpl {
 
 		Country country = countryPersistence.findByPrimaryKey(countryId);
 
-		validate(a2, a3, countryId, name, number);
+		validate(a2, a3, country.getCompanyId(), countryId, name, number);
 
 		country.setA2(a2);
 		country.setA3(a3);
@@ -316,44 +296,9 @@ public class CountryLocalServiceImpl extends CountryLocalServiceBaseImpl {
 	}
 
 	protected void validate(
-			String a2, String a3, long countryId, String name, String number)
+			String a2, String a3, long companyId, long countryId, String name,
+			String number)
 		throws PortalException {
-
-		if (countryId != CountryConstants.DEFAULT_COUNTRY_ID) {
-			Country country = countryPersistence.findByPrimaryKey(countryId);
-
-			Country compareCountry = fetchCountryByA2(country.getCompanyId(), a2);
-
-			if((compareCountry != null) && (countryId != compareCountry.getCountryId())) {
-				throw new DuplicateCountryException(
-					"A2 belongs to another country"
-				);
-			}
-
-			compareCountry = fetchCountryByA3(country.getCompanyId(), a3);
-
-			if((compareCountry != null) && (countryId != compareCountry.getCountryId())) {
-				throw new DuplicateCountryException(
-					"A3 belongs to another country"
-				);
-			}
-
-			compareCountry = fetchCountryByName(country.getCompanyId(), name);
-
-			if((compareCountry != null) && (countryId != compareCountry.getCountryId())) {
-				throw new DuplicateCountryException(
-					"Name belongs to another country"
-				);
-			}
-
-			compareCountry = fetchCountryByNumber(country.getCompanyId(), number);
-
-			if((compareCountry != null) && (countryId != compareCountry.getCountryId())) {
-				throw new DuplicateCountryException(
-					"Number belongs to another country"
-				);
-			}
-		}
 
 		if (Validator.isNull(a2)) {
 			throw new CountryA2Exception("Missing A2");
@@ -377,6 +322,30 @@ public class CountryLocalServiceImpl extends CountryLocalServiceBaseImpl {
 
 		if (Validator.isNull(number)) {
 			throw new CountryNumberException("Missing number");
+		}
+
+		if (_isConflictingCountry(countryId, fetchCountryByA2(companyId, a2))) {
+			throw new DuplicateCountryException(
+				"A2 belongs to another country");
+		}
+
+		if (_isConflictingCountry(countryId, fetchCountryByA3(companyId, a3))) {
+			throw new DuplicateCountryException(
+				"A3 belongs to another country");
+		}
+
+		if (_isConflictingCountry(
+				countryId, fetchCountryByName(companyId, name))) {
+
+			throw new DuplicateCountryException(
+				"Name belongs to another country");
+		}
+
+		if (_isConflictingCountry(
+				countryId, fetchCountryByNumber(companyId, number))) {
+
+			throw new DuplicateCountryException(
+				"Number belongs to another country");
 		}
 	}
 
@@ -440,6 +409,18 @@ public class CountryLocalServiceImpl extends CountryLocalServiceBaseImpl {
 
 				return predicate;
 			});
+	}
+
+	private boolean _isConflictingCountry(
+		long curCountryId, Country testCountry) {
+
+		if ((testCountry != null) &&
+			(testCountry.getCountryId() != curCountryId)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private void _updateOrganizations(long countryId) throws PortalException {

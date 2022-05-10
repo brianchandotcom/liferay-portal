@@ -12,7 +12,12 @@
  * details.
  */
 
-import {openSelectionModal} from 'frontend-js-web';
+import {
+	fetch,
+	navigate,
+	objectToFormData,
+	openSelectionModal,
+} from 'frontend-js-web';
 
 import openDeleteVocabularyModal from './openDeleteVocabularyModal';
 
@@ -22,10 +27,6 @@ const ACTIONS = {
 		portletNamespace,
 		viewVocabulariesURL,
 	}) {
-		const vocabulariesForm = document.createElement('form');
-
-		vocabulariesForm.setAttribute('method', 'post');
-
 		openSelectionModal({
 			buttonAddLabel: Liferay.Language.get('delete'),
 			multiple: true,
@@ -34,16 +35,14 @@ const ACTIONS = {
 					openDeleteVocabularyModal({
 						multiple: true,
 						onDelete: () => {
-							const input = document.createElement('input');
-
-							input.name = `${portletNamespace}rowIds`;
-							input.value = selectedItems.map(
-								(item) => item.value
-							);
-
-							vocabulariesForm.appendChild(input);
-
-							submitForm(vocabulariesForm, deleteVocabulariesURL);
+							fetch(deleteVocabulariesURL, {
+								body: objectToFormData({
+									[`${portletNamespace}rowIds`]: selectedItems
+										.map((item) => item.value)
+										.join(','),
+								}),
+								method: 'POST',
+							}).then((response) => navigate(response.url));
 						},
 					});
 				}

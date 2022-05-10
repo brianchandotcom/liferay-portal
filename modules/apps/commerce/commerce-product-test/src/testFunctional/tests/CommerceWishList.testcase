@@ -1,0 +1,541 @@
+@component-name = "portal-commerce"
+definition {
+
+	property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+	property osgi.module.configuration.file.names = "com.liferay.commerce.configuration.CommerceOrderImporterTypeConfiguration.config";
+	property osgi.module.configurations = "enabled=&quot;true&quot;";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "Product Info Management";
+
+	setUp {
+		CommerceConfiguration.commerceSetUp(minium = "true");
+
+		task ("Setup: Create an account with a buyer user") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+	}
+
+	tearDown {
+		CommerceConfiguration.commerceTearDown();
+	}
+
+	@description = "Verify only one wish list can be imported from list"
+	@priority = "3"
+	test AssertOnlyOneWishlistCanBeChosenForTheImport {
+		task ("Given a Minium site with a buyer user") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And given the buyer add three new wish lists") {
+			CommerceNavigator.goToWishLists();
+
+			for (var wishListNumber : list "1,2,3") {
+				CommerceWishList.addWishList(wishListName = "Test Wish List ${wishListNumber}");
+			}
+		}
+
+		task ("When the buyer go to import a new order from wish list") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
+
+			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
+
+			CommerceOrders.importOrderFromType(orderType = "Wish Lists");
+
+			SelectFrameTop();
+
+			IFrame.selectModalFrame();
+		}
+
+		task ("Then the created wish lists are displayed") {
+			for (var wishListNumber : list "1,2,3") {
+				AssertElementPresent(
+					key_itemName = "Test Wish List ${wishListNumber}",
+					locator1 = "CommerceEntry#SELECT_ITEM_FROM_LIST");
+			}
+		}
+
+		task ("And when the user select one from then") {
+			Click(
+				key_itemName = "Test Wish List 3",
+				locator1 = "CommerceEntry#SELECT_ITEM_FROM_LIST");
+		}
+
+		task ("Then the modal is changed and the others are not displayed") {
+			AssertElementNotPresent(
+				key_itemName = "Test Wish List 1",
+				locator1 = "CommerceEntry#SELECT_ITEM_FROM_LIST");
+
+			AssertElementNotPresent(
+				key_itemName = "Test Wish List 3",
+				locator1 = "CommerceEntry#SELECT_ITEM_FROM_LIST");
+		}
+	}
+
+	@description = "Verify user can import wish list order in another order and do checkout"
+	@priority = "3"
+	test CheckoutAfterImportFromWishList {
+		task ("Given a Minium site with a buyer user") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And given some products in wish list") {
+			CommerceWishList.addProductToWishList(productName = "U-Joint,ABS Sensor,Torque Converters");
+
+			CommerceNavigator.goToWishLists();
+
+			CommerceWishList.assertWishListProduct(
+				productName = "U-Joint,ABS Sensor,Torque Converters",
+				wishListName = "Default");
+		}
+
+		task ("And given the buyer starts a new order") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+			for (var product : list "U-Joint:1,ABS Sensor:1,Torque Converters:1") {
+				var productName = StringUtil.extractFirst("${product}", ":");
+				var productQuantity = StringUtil.extractLast("${product}", ":");
+
+				CommerceProducts.searchProduct(search = "${productName}");
+
+				FrontStore.addInitializerProductToCart(
+					productName = "${productName}",
+					productQuantity = "${productQuantity}");
+			}
+
+			CommerceNavigator.gotoMiniCart();
+
+			FrontStore.viewMiniCart(
+				cartItemNames = "U-Joint,ABS Sensor,Torque Converters",
+				cartItemPriceValues = "24,50,34",
+				cartItemQuantities = "1,1,1",
+				cartItemSkUs = "MIN55861,MIN93015,MIN55860",
+				cartSummaryQuantity = "3",
+				cartSummarySubtotal = "108",
+				cartSummaryTotal = "${cartSummarySubtotal}");
+		}
+
+		task ("When the buyer select the pending order and import a new order from wish list") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
+
+			Button.click(button = "View");
+
+			CommerceOrders.importOrderFromType(orderType = "Wish Lists");
+
+			SelectFrameTop();
+
+			IFrame.selectModalFrame();
+
+			ClickNoError(
+				key_itemName = "Default",
+				locator1 = "CommerceEntry#SELECT_ITEM_FROM_LIST");
+
+			SelectFrameTop();
+
+			IFrame.selectModalFrame();
+
+			Button.click(button = "Import");
+
+			SelectFrameTop();
+		}
+
+		task ("Then all the orders are displayed") {
+			CommerceOrders.viewOrdersDetails(
+				productListPrice = "24.00",
+				productName = "U-Joint",
+				productQuantity = "2",
+				productSku = "MIN55861",
+				productTotalPrice = "48.00");
+
+			CommerceOrders.viewOrdersDetails(
+				productListPrice = "50.00",
+				productName = "ABS Sensor",
+				productQuantity = "2",
+				productSku = "MIN93015",
+				productTotalPrice = "100.00");
+
+			CommerceOrders.viewOrdersDetails(
+				productListPrice = "34.00",
+				productName = "Torque Converters",
+				productQuantity = "2",
+				productSku = "MIN55859",
+				productTotalPrice = "68.00");
+		}
+
+		task ("And when the user complete the order") {
+			Button.click(button = "Checkout");
+
+			CommerceCheckout.setAddress(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code");
+
+			Button.click(button = "Continue");
+
+			Click(
+				key_radioOption = "Standard",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+
+			Button.click(button = "Continue");
+
+			Button.click(button = "Continue");
+		}
+
+		task ("And when the user go to placed orders and select the completed order") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Placed Orders");
+
+			Button.click(button = "View");
+		}
+
+		task ("Then all the order details are displayed") {
+			CommerceOrders.viewOrdersDetails(
+				productListPrice = "24.00",
+				productName = "U-Joint",
+				productQuantity = "2",
+				productSku = "MIN55861",
+				productTotalPrice = "48.00");
+
+			CommerceOrders.viewOrdersDetails(
+				productListPrice = "50.00",
+				productName = "ABS Sensor",
+				productQuantity = "2",
+				productSku = "MIN93015",
+				productTotalPrice = "100.00");
+
+			CommerceOrders.viewOrdersDetails(
+				productListPrice = "34.00",
+				productName = "Torque Converters",
+				productQuantity = "2",
+				productSku = "MIN55859",
+				productTotalPrice = "68.00");
+
+			AssertTextEquals.assertPartialText(
+				key_priceName = "Subtotal",
+				locator1 = "CommerceOrders#ORDER_PRICES_SEPARETED",
+				value1 = "216.00");
+
+			AssertTextEquals.assertPartialText(
+				key_priceName = "Delivery",
+				locator1 = "CommerceOrders#ORDER_PRICES_SEPARETED",
+				value1 = "15.00");
+
+			AssertTextEquals.assertPartialText(
+				key_priceName = "Tax",
+				locator1 = "CommerceOrders#ORDER_PRICES_SEPARETED",
+				value1 = "0.00");
+
+			AssertTextEquals.assertPartialText(
+				key_priceName = "Total",
+				locator1 = "CommerceOrders#ORDER_PRICES_SEPARETED",
+				value1 = "231.00");
+		}
+	}
+
+	@description = "Verify user can import item from wish list"
+	@priority = "3"
+	test ImportProductsFromWishlist {
+		task ("Given a Minium site with a buyer user") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And given some products in wish list") {
+			CommerceWishList.addProductToWishList(productName = "U-Joint,ABS Sensor,Torque Converters,Power Steering Pump");
+
+			CommerceNavigator.goToWishLists();
+
+			CommerceWishList.assertWishListProduct(
+				productName = "U-Joint,ABS Sensor,Torque Converters,Power Steering Pump",
+				wishListName = "Default");
+		}
+
+		task ("And given the buyer starts a new order") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+			for (var product : list "U-Joint:1,ABS Sensor:3,Transmission Cooler Line Assembly:1") {
+				var productName = StringUtil.extractFirst("${product}", ":");
+				var productQuantity = StringUtil.extractLast("${product}", ":");
+
+				CommerceProducts.searchProduct(search = "${productName}");
+
+				FrontStore.addInitializerProductToCart(
+					productName = "${productName}",
+					productQuantity = "${productQuantity}");
+			}
+
+			CommerceNavigator.gotoMiniCart();
+
+			FrontStore.viewMiniCart(
+				cartItemNames = "U-Joint,ABS Sensor,Transmission Cooler Line Assembly",
+				cartItemPriceValues = "24,50,15",
+				cartItemQuantities = "1,3,1",
+				cartItemSkUs = "MIN55861,MIN93015,MIN55860",
+				cartSummaryQuantity = "5",
+				cartSummarySubtotal = "189",
+				cartSummaryTotal = "${cartSummarySubtotal}");
+		}
+
+		task ("And given the buyer select a pending order") {
+			SelectFrameTop();
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
+
+			Click(
+				currentOrderId = "${currentOrderId}",
+				locator1 = "CommerceOrders#SELECT_ORDER_FROM_LIST");
+		}
+
+		task ("When the buyer import orders from wish list") {
+			CommerceOrders.importOrderFromType(orderType = "Wish Lists");
+
+			SelectFrameTop();
+
+			IFrame.selectModalFrame();
+
+			ClickNoError(
+				key_itemName = "Default",
+				locator1 = "CommerceEntry#SELECT_ITEM_FROM_LIST");
+
+			Button.click(button = "Import");
+
+			SelectFrameTop();
+		}
+
+		task ("Then all the orders are displayed") {
+			CommerceOrders.viewOrdersDetails(
+				productListPrice = "24.00",
+				productName = "U-Joint",
+				productQuantity = "2",
+				productSku = "MIN55861",
+				productTotalPrice = "48.00");
+
+			CommerceOrders.viewOrdersDetails(
+				productListPrice = "50.00",
+				productName = "ABS Sensor",
+				productQuantity = "4",
+				productSku = "MIN93015",
+				productTotalPrice = "200.00");
+
+			CommerceOrders.viewOrdersDetails(
+				productListPrice = "15.00",
+				productName = "Transmission Cooler Line Assembly",
+				productQuantity = "1",
+				productSku = "MIN55860",
+				productTotalPrice = "15.00");
+
+			CommerceOrders.viewOrdersDetails(
+				productListPrice = "34.00",
+				productName = "Torque Converters",
+				productQuantity = "1",
+				productSku = "MIN55859",
+				productTotalPrice = "34.00");
+		}
+	}
+
+	@description = "Verify user can import item from wish list and see imported items"
+	@priority = "3"
+	test ViewImportedWishlistItemsPreview {
+		task ("Given a Minium site with a buyer user") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And given some products in wish list") {
+			CommerceWishList.addProductToWishList(productName = "U-Joint,ABS Sensor,Torque Converters,Power Steering Pump,Brake Fluid");
+
+			CommerceNavigator.goToWishLists();
+
+			CommerceWishList.assertWishListProduct(
+				productName = "U-Joint,ABS Sensor,Torque Converters,Power Steering Pump",
+				wishListName = "Default");
+		}
+
+		task ("When the buyer import orders from wish list") {
+			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
+
+			CommerceOrders.importOrderFromType(orderType = "Wish Lists");
+
+			SelectFrameTop();
+
+			IFrame.selectModalFrame();
+
+			ClickNoError(
+				key_itemName = "Default",
+				locator1 = "CommerceEntry#SELECT_ITEM_FROM_LIST");
+
+			SelectFrameTop();
+
+			IFrame.selectModalFrame();
+		}
+
+		task ("Then all the orders are displayed") {
+			CommerceOrders.assertOrderImportPreviewEntry(
+				importStatus = "OK",
+				productName = "U-Joint",
+				productQuantity = "1",
+				productSku = "MIN55861",
+				totalPrice = "24.00",
+				unitPrice = "24.00");
+
+			CommerceOrders.assertOrderImportPreviewEntry(
+				importStatus = "OK",
+				productName = "ABS Sensor",
+				productQuantity = "1",
+				productSku = "MIN93015",
+				totalPrice = "50.00",
+				unitPrice = "50.00");
+
+			CommerceOrders.assertOrderImportPreviewEntry(
+				importStatus = "OK",
+				productName = "Torque Converters",
+				productQuantity = "1",
+				productSku = "MIN55859",
+				totalPrice = "34.00",
+				unitPrice = "34.00");
+
+			CommerceOrders.assertOrderImportPreviewEntry(
+				importStatus = "The specified quantity is unavailable.",
+				productName = "Power Steering Pump",
+				productQuantity = "1",
+				productSku = "MIN38800",
+				totalPrice = "",
+				unitPrice = "");
+
+			CommerceOrders.assertOrderImportPreviewEntry(
+				importStatus = "The product is no longer available.",
+				productName = "Brake Fluid",
+				productQuantity = "1",
+				productSku = "",
+				totalPrice = "",
+				unitPrice = "");
+		}
+	}
+
+	@description = "Verify if the wish list pagination show the right items"
+	@priority = "3"
+	test ViewPaginationOnImportFromWishlist {
+		task ("Given a Minium site with a buyer user") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And given the buyer add six new wish lists") {
+			CommerceNavigator.goToWishLists();
+
+			for (var wishListNumber : list "1,2,3,4,5,6") {
+				CommerceWishList.addWishList(wishListName = "Test Wish List ${wishListNumber}");
+			}
+		}
+
+		task ("When the buyer go to import a new order from wish list and change tha pagination to 4 items per page") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
+
+			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
+
+			CommerceOrders.importOrderFromType(orderType = "Wish Lists");
+
+			SelectFrameTop();
+
+			IFrame.selectModalFrame();
+		}
+
+		task ("Then only four wish lists are displayed") {
+			Pagination.changePagination(itemsPerPage = "4 items");
+
+			CommerceEntry.viewPaginationResults(results = "Showing 1 to 4 of 6");
+
+			for (var wishListNumber : list "1,2,3,4") {
+				AssertVisible(
+					key_itemName = "Test Wish List ${wishListNumber}",
+					locator1 = "CommerceEntry#SELECT_ITEM_FROM_LIST");
+			}
+
+			AssertElementNotPresent(
+				key_itemName = "Test Wish List 5",
+				locator1 = "CommerceEntry#SELECT_ITEM_FROM_LIST");
+
+			AssertElementNotPresent(
+				key_itemName = "Test Wish List 6",
+				locator1 = "CommerceEntry#SELECT_ITEM_FROM_LIST");
+		}
+
+		task ("And when the user go to next page") {
+			Click(locator1 = "Pagination#NEXT_LINK");
+		}
+
+		task ("Then only two wish lists are displayed") {
+			CommerceEntry.viewPaginationResults(results = "Showing 5 to 6 of 6");
+
+			for (var wishListNumber : list "1,2,3,4") {
+				AssertElementNotPresent(
+					key_itemName = "Test Wish List ${wishListNumber}",
+					locator1 = "CommerceEntry#SELECT_ITEM_FROM_LIST");
+			}
+
+			AssertVisible(
+				key_itemName = "Test Wish List 5",
+				locator1 = "CommerceEntry#SELECT_ITEM_FROM_LIST");
+
+			AssertVisible(
+				key_itemName = "Test Wish List 6",
+				locator1 = "CommerceEntry#SELECT_ITEM_FROM_LIST");
+		}
+
+		task ("And when the user go to first page") {
+			Click(locator1 = "Pagination#PREVIOUS_LINK");
+		}
+
+		task ("Then the first page is displayed") {
+			AssertElementPresent(
+				key_pageNumber = "1",
+				locator1 = "CommerceEntry#SELECTED_TABLE_PAGINATION");
+		}
+
+		task ("And when the user go to second page") {
+			Click(locator1 = "Pagination#NEXT_LINK");
+		}
+
+		task ("Then the first page is displayed") {
+			AssertElementPresent(
+				key_pageNumber = "2",
+				locator1 = "CommerceEntry#SELECTED_TABLE_PAGINATION");
+		}
+	}
+
+}

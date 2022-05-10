@@ -27,108 +27,111 @@ definition {
 		}
 	}
 
-	@description = "LPS-150436 - Verify when filling the field, the field label is green."
-	@priority = "2"
-	test CanFieldLabelBeGreen {
-		ApplicationsMenu.gotoSite(site = "Testray2");
+	@description = "This is a test for LPS-150436 - Verify when filling the field, the field label is green."
+    @priority = "2"
+    test CanFieldLabelBeGreen {
+        task ("Go to Testray and exit Testray") {
+            ApplicationsMenu.gotoSite(site = "Testray2");
 
-		Testray.signOutTestray();
+			var portalURL = PropsUtil.get("portal.url");
 
-		Navigator.openSpecificURL(url = "http://localhost:8080/web/testray2");
+            Testray.signOutTestray();
+        }
 
-		Type(
-			locator1 = "TestrayUser#FIELD_EMAIL",
-			value1 = "test@liferay.com");
+        task ("Sign in New Account and assert the name field label is Green") {
 
-		Type(
-			locator1 = "TestrayUser#FIELD_PASSWORD",
-			value1 = "test");
+            Navigator.openSpecificURL(url = "${portalURL}/web/testray2");
 
-		AssertElementPresent(
-			key_fieldName = "Email Address",
-			locator1 = "TestrayUser#FIELD_SUCCESS");
+            TestraySignIn.addEmailTestray(key_itemvalue = "test@liferay.com");
 
-		User.firstLoginPG();
-	}
+            TestraySignIn.addPasswordTestray(key_itemvalue = "test");
 
-	@description = "LPS-150437 - Verify when deleting the field, the field label is red."
+			TestraySignIn.assertTitleSucess(key_title = "Email Address");
+
+            User.firstLoginPG();
+
+        }
+    }
+
+	@description = "This is a test for LPS-150437 - Verify when deleting the field, the field label is red."
 	@priority = "2"
 	test CanFieldLabelBeRed {
-		ApplicationsMenu.gotoSite(site = "Testray2");
+		task ("Go to Testray and exit Testray") {
+			ApplicationsMenu.gotoSite(site = "Testray2");
 
-		Testray.signOutTestray();
+			var portalURL = PropsUtil.get("portal.url");
 
-		Navigator.openSpecificURL(url = "http://localhost:8080/web/testray2");
+			Testray.signOutTestray();
+		}
 
-		Type(
-			locator1 = "TestrayUser#FIELD_EMAIL",
-			value1 = "test@liferay.com");
+		task ("Sign in New Account and assert the name field label is Red") {
 
-		Type(
-			locator1 = "TestrayUser#FIELD_EMAIL",
-			value1 = "");
+			Navigator.openSpecificURL(url = "${portalURL}/web/testray2");
 
-		Type(
-			locator1 = "TestrayUser#FIELD_PASSWORD",
-			value1 = "test");
+			TestraySignIn.addEmailTestray(key_itemvalue = "test@liferay.com");
 
-		AssertElementPresent(
-			key_fieldName = "Email Address",
-			locator1 = "TestrayUser#FIELD_FAILED");
+			TestraySignIn.addEmailTestray(key_itemvalue = "");
 
-		User.firstLoginPG();
+			TestraySignIn.addPasswordTestray(key_itemvalue = "test");
+
+			TestraySignIn.assertTitleFailed(key_title = "Email Address");
+
+			User.firstLoginPG();
+		}
 	}
 
-	@description = "LPS-150438 - Verify the user can enter with an valid email."
+	@description = "This is a test for LPS-150438 - Verify the user can enter with an valid email."
 	@priority = "5"
 	test CanSignIn {
-		ApplicationsMenu.gotoSite(site = "Testray2");
+		task ("Go to Testray and exit Testray") {
+			ApplicationsMenu.gotoSite(site = "Testray2");
 
-		Testray.signOutTestray();
+			var portalURL = PropsUtil.get("portal.url");
 
-		Navigator.openSpecificURL(url = "http://localhost:8080/web/testray2");
+			Testray.signOutTestray();
+		}
 
-		Type(
-			locator1 = "TestrayUser#FIELD_EMAIL",
-			value1 = "test@liferay.com");
+		task ("Sign in New Account and assert the user can enter with an valid email") {
 
-		Type(
-			locator1 = "TestrayUser#FIELD_PASSWORD",
-			value1 = "test");
+			Navigator.openSpecificURL(url = "${portalURL}/web/testray2");
 
-		Click(locator1 = "TestrayUser#SIGN_IN_BUTTON");
+			TestraySignIn.addEmailTestray(key_itemvalue = "test@liferay.com");
 
-		AssertElementPresent(
-			key_projectName = "Project Directory",
-			locator1 = "TestrayDropdown#PROJECT_NAME_BREADCRUMBS");
+			TestraySignIn.addPasswordTestray(key_itemvalue = "test");
 
-		User.firstLoginPG();
+			TestraySignIn.buttonSignInTestray();
+
+			TestrayLayout.assertTabPageTitle(pageTabTitle = "Projects");
+
+			User.firstLoginPG();
+		}
 	}
 
-	@description = "LPS-150439 - Verify the user can enter with an valid email after getting the password wrong."
+	@description = "This is a test for LPS-150439 - Verify the user can enter with an valid email after getting the password wrong."
 	@priority = "4"
 	test CanSignInAfterPasswordWrong {
-		ApplicationsMenu.gotoSite(site = "Testray2");
+		task ("Go to Testray and exit Testray") {
+			ApplicationsMenu.gotoSite(site = "Testray2");
 
-		Testray.signOutTestray();
+			var portalURL = PropsUtil.get("portal.url");
 
-		Navigator.openSpecificURL(url = "http://localhost:8080/web/testray2");
+			Testray.signOutTestray();
+		}
 
-		Type(
-			locator1 = "TestrayUser#FIELD_EMAIL",
-			value1 = "test@liferay.com");
+		task ("Sign in New Account and assert the user can enter with an valid email after getting the password wrong") {
 
-		Type(
-			locator1 = "TestrayUser#FIELD_PASSWORD",
-			value1 = "test10");
+			Navigator.openSpecificURL(url = "${portalURL}/web/testray2");		
 
-		Click(locator1 = "TestrayUser#SIGN_IN_BUTTON");
+			TestraySignIn.addEmailTestray(key_itemvalue = "test@liferay.com");
 
-		AssertElementNotPresent(
-			key_projectName = "Project Directory",
-			locator1 = "TestrayDropdown#PROJECT_NAME_BREADCRUMBS");
+			TestraySignIn.addPasswordTestray(key_itemvalue = "");
 
-		User.firstLoginPG();
+			TestraySignIn.buttonSignInTestray();
+
+			TestrayLayout.assertTabPageTitleIsNotPresent(pageTabTitle = "Projects");
+
+			User.firstLoginPG();
+		}
 	}
 
 }

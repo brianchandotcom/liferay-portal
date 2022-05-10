@@ -1,0 +1,29 @@
+definition {
+    macro addEmailTestray { 
+		Type(
+			locator1 = "TestrayUser#FIELD_EMAIL",
+			value1 = "${key_itemvalue}");
+	}
+
+	macro addPasswordTestray { 
+		Type(
+			locator1 = "TestrayUser#FIELD_PASSWORD",
+			value1 = "${key_itemvalue}");
+	}
+
+	macro buttonSignInTestray {
+		Click(locator1 = "TestrayUser#SIGN_IN_BUTTON");
+	}
+
+	macro assertTitleSucess { 
+		AssertElementPresent(
+                key_fieldName = "${key_title}",
+                locator1 = "TestrayUser#TITLE_SUCCESS");
+	}
+
+	macro assertTitleFailed {
+		AssertElementPresent(
+			key_fieldName = "${key_title}",
+			locator1 = "TestrayUser#TITLE_FAILED");
+	}
+}

@@ -52,6 +52,7 @@ export default function CustomSelect<T extends CustomItem = CustomItem>({
 					onClick={() => setActive((active) => !active)}
 					placeholder={Liferay.Language.get('choose-an-option')}
 					ref={inputRef}
+					value={value}
 				/>
 
 				<ClayAutocomplete.DropDown

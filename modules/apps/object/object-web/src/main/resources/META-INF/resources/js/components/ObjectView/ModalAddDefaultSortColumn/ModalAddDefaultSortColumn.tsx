@@ -151,7 +151,7 @@ export function ModalAddDefaultSortColumn({
 
 					<CustomSelect
 						label={Liferay.Language.get('sorting')}
-						onChange={(item: any) => {
+						onChange={(item: TSortOptions) => {
 							setSelectedObjetSort(item);
 						}}
 						options={SORT_OPTIONS}

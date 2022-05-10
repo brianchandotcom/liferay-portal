@@ -28,6 +28,8 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.CompanyService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -46,7 +48,9 @@ public abstract class BaseAnalyticsDXPEntityModelListener
 
 	@Override
 	public void onBeforeRemove(T model) throws ModelListenerException {
-		if (!isTrack(model)) {
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LRAC-10632")) ||
+			!isTrack(model)) {
+
 			return;
 		}
 

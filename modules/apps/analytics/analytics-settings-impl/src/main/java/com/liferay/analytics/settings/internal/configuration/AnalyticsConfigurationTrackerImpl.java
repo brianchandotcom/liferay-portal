@@ -52,6 +52,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.service.access.policy.model.SAPEntry;
 import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService;
@@ -372,11 +373,16 @@ public class AnalyticsConfigurationTrackerImpl
 	private void _disable(long companyId) {
 		try {
 			if (companyId != CompanyConstants.SYSTEM) {
-				_analyticsDXPEntityBatchExporter.unscheduleExportTriggers(
-					companyId);
+				if (GetterUtil.getBoolean(
+						PropsUtil.get("feature.flag.LRAC-10632"))) {
 
-				_analyticsMessageLocalService.deleteAnalyticsMessages(
-					companyId);
+					_analyticsDXPEntityBatchExporter.unscheduleExportTriggers(
+						companyId);
+				}
+				else {
+					_analyticsMessageLocalService.deleteAnalyticsMessages(
+						companyId);
+				}
 
 				_deleteAnalyticsAdmin(companyId);
 				_deleteSAPEntry(companyId);
@@ -438,17 +444,22 @@ public class AnalyticsConfigurationTrackerImpl
 			if (Validator.isNotNull(dictionary.get("token")) &&
 				Validator.isNull(dictionary.get("previousToken"))) {
 
-				_analyticsDXPEntityBatchExporter.scheduleExportTriggers(
-					(Long)dictionary.get("companyId"));
+				if (GetterUtil.getBoolean(
+						PropsUtil.get("feature.flag.LRAC-10632"))) {
 
-				Collection<EntityModelListener<?>> entityModelListeners =
-					_entityModelListenerTracker.getEntityModelListeners();
-
-				for (EntityModelListener<?> entityModelListener :
-						entityModelListeners) {
-
-					entityModelListener.syncAll(
+					_analyticsDXPEntityBatchExporter.scheduleExportTriggers(
 						(Long)dictionary.get("companyId"));
+				}
+				else {
+					Collection<EntityModelListener<?>> entityModelListeners =
+						_entityModelListenerTracker.getEntityModelListeners();
+
+					for (EntityModelListener<?> entityModelListener :
+							entityModelListeners) {
+
+						entityModelListener.syncAll(
+							(Long)dictionary.get("companyId"));
+					}
 				}
 			}
 
@@ -466,6 +477,28 @@ public class AnalyticsConfigurationTrackerImpl
 			Arrays.sort(previousSyncedUserFieldNames);
 			Arrays.sort(syncedContactFieldNames);
 			Arrays.sort(syncedUserFieldNames);
+
+			if (GetterUtil.getBoolean(
+					PropsUtil.get("feature.flag.LRAC-10632"))) {
+
+				if (!Arrays.equals(
+						previousSyncedUserFieldNames, syncedUserFieldNames) ||
+					!Arrays.equals(
+						previousSyncedContactFieldNames,
+						syncedContactFieldNames) ||
+					!Arrays.equals(
+						previousSyncedUserFieldNames, syncedUserFieldNames)) {
+
+					_analyticsDXPEntityBatchExporter.refreshExportTrigger(
+						(Long)dictionary.get("companyId"),
+						"export-user-analytics-dxp-entities");
+				}
+
+				_analyticsDXPEntityBatchExporter.export(
+					(Long)dictionary.get("companyId"));
+
+				return;
+			}
 
 			if (!Arrays.equals(
 					previousSyncedUserFieldNames, syncedUserFieldNames)) {
@@ -497,21 +530,6 @@ public class AnalyticsConfigurationTrackerImpl
 				_syncUserGroupUsers(
 					(String[])dictionary.get("syncedUserGroupIds"));
 			}
-
-			if (!Arrays.equals(
-					previousSyncedUserFieldNames, syncedUserFieldNames) ||
-				!Arrays.equals(
-					previousSyncedContactFieldNames, syncedContactFieldNames) ||
-				!Arrays.equals(
-					previousSyncedUserFieldNames, syncedUserFieldNames)) {
-
-				_analyticsDXPEntityBatchExporter.refreshExportTrigger(
-					(Long)dictionary.get("companyId"),
-					"export-user-analytics-dxp-entities");
-			}
-
-			_analyticsDXPEntityBatchExporter.export(
-				(Long)dictionary.get("companyId"));
 
 			Message message = new Message();
 

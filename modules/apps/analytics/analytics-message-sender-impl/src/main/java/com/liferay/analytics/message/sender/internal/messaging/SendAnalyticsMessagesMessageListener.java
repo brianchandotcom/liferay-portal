@@ -37,6 +37,8 @@ import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.nio.charset.StandardCharsets;
 
@@ -155,7 +157,9 @@ public class SendAnalyticsMessagesMessageListener extends BaseMessageListener {
 	}
 
 	private boolean _skipProcess(Message message) {
-		if (!_analyticsConfigurationTracker.isActive()) {
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LRAC-10632")) ||
+			!_analyticsConfigurationTracker.isActive()) {
+
 			return true;
 		}
 

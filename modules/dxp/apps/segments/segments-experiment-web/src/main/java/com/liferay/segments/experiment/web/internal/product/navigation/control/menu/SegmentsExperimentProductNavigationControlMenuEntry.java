@@ -14,24 +14,25 @@
 
 package com.liferay.segments.experiment.web.internal.product.navigation.control.menu;
 
+import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Html;
-import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -39,15 +40,21 @@ import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.template.react.renderer.ComponentDescriptor;
+import com.liferay.portal.template.react.renderer.ReactRenderer;
 import com.liferay.product.navigation.control.menu.BaseProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
 import com.liferay.segments.constants.SegmentsPortletKeys;
+import com.liferay.segments.experiment.web.internal.configuration.SegmentsExperimentConfiguration;
+import com.liferay.segments.experiment.web.internal.display.context.SegmentsExperimentDisplayContext;
 import com.liferay.segments.experiment.web.internal.util.SegmentsExperimentUtil;
 import com.liferay.segments.manager.SegmentsExperienceManager;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
+import com.liferay.segments.service.SegmentsExperienceService;
+import com.liferay.segments.service.SegmentsExperimentRelService;
+import com.liferay.segments.service.SegmentsExperimentService;
 import com.liferay.taglib.aui.IconTag;
-import com.liferay.taglib.portletext.RuntimeTag;
 import com.liferay.taglib.util.BodyBottomTag;
 
 import java.io.IOException;
@@ -59,10 +66,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-import javax.portlet.PortletURL;
-import javax.portlet.RenderRequest;
-import javax.portlet.WindowStateException;
-
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspException;
@@ -71,13 +75,15 @@ import javax.servlet.jsp.PageContext;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo García
  */
 @Component(
-	immediate = true,
+	configurationPid = "com.liferay.segments.experiment.web.internal.configuration.SegmentsExperimentConfiguration",
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {
 		"product.navigation.control.menu.category.key=" + ProductNavigationControlMenuCategoryKeys.USER,
 		"product.navigation.control.menu.entry.order:Integer=500"
@@ -113,10 +119,22 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 		try {
 			bodyBottomTag.doBodyTag(
 				httpServletRequest, httpServletResponse,
-				this::_processBodyBottomTagBody);
+				pageContext -> {
+					try {
+						_processBodyBottomTagBody(pageContext);
+					}
+					catch (Exception exception) {
+						throw new ProcessBodyBottomTagBodyException(exception);
+					}
+				});
 		}
 		catch (JspException jspException) {
 			throw new IOException(jspException);
+		}
+		catch (ProcessBodyBottomTagBodyException
+					processBodyBottomTagBodyException) {
+
+			throw new IOException(processBodyBottomTagBodyException);
 		}
 
 		return true;
@@ -132,7 +150,6 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 
 		if (isPanelStateOpen(httpServletRequest)) {
 			values.put("cssClass", "active");
-			values.put("dataURL", StringPool.BLANK);
 		}
 		else {
 			values.put("cssClass", StringPool.BLANK);
@@ -268,54 +285,108 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 		SessionClicks.put(httpServletRequest, _SESSION_CLICKS_KEY, panelState);
 	}
 
-	@Activate
-	protected void activate() {
-		_portletNamespace = _portal.getPortletNamespace(
-			SegmentsPortletKeys.SEGMENTS_EXPERIMENT);
+	public static class ProcessBodyBottomTagBodyException
+		extends RuntimeException {
+
+		public ProcessBodyBottomTagBodyException(Throwable throwable) {
+			super(throwable);
+		}
+
 	}
 
-	private void _processBodyBottomTagBody(PageContext pageContext) {
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_portletNamespace = _portal.getPortletNamespace(
+			SegmentsPortletKeys.SEGMENTS_EXPERIMENT);
+
+		_segmentsExperimentConfiguration = ConfigurableUtil.createConfigurable(
+			SegmentsExperimentConfiguration.class, properties);
+	}
+
+	private void _processBodyBottomTagBody(PageContext pageContext)
+		throws IOException, JspException {
+
+		HttpServletRequest httpServletRequest =
+			(HttpServletRequest)pageContext.getRequest();
+
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			_portal.getLocale(httpServletRequest), getClass());
+
+		pageContext.setAttribute("resourceBundle", resourceBundle);
+
+		JspWriter jspWriter = pageContext.getOut();
+
 		try {
-			HttpServletRequest httpServletRequest =
-				(HttpServletRequest)pageContext.getRequest();
+			StringBundler sb = new StringBundler(23);
 
-			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-				_portal.getLocale(httpServletRequest), getClass());
-
-			pageContext.setAttribute("resourceBundle", resourceBundle);
-
-			JspWriter jspWriter = pageContext.getOut();
-
-			jspWriter.write("<div class=\"");
+			sb.append("<div class=\"");
 
 			if (isPanelStateOpen(httpServletRequest)) {
-				jspWriter.write(
+				sb.append(
 					"lfr-has-segments-experiment-panel open-admin-panel ");
 			}
 
-			jspWriter.write(
+			sb.append(
 				StringBundler.concat(
 					"cadmin d-print-none lfr-admin-panel ",
 					"lfr-product-menu-panel lfr-segments-experiment-panel ",
 					"sidenav-fixed sidenav-menu-slider sidenav-right\" id=\""));
-			jspWriter.write(
-				_portal.getPortletNamespace(
-					SegmentsPortletKeys.SEGMENTS_EXPERIMENT));
-			jspWriter.write("segmentsExperimentPanelId\">");
-			jspWriter.write(
-				"<div class=\"sidebar sidebar-light sidenav-menu " +
-					"sidebar-sm\">");
+			sb.append(_portletNamespace);
+			sb.append("segmentsExperimentPanelId\">");
+			sb.append("<div class=\"sidebar sidebar-light sidenav-menu ");
+			sb.append("sidebar-sm\">");
 
-			RuntimeTag runtimeTag = new RuntimeTag();
+			sb.append("<div class=\"lfr-segments-experiment-sidebar\" ");
+			sb.append("id=\"segmentsExperimentSidebar\">");
+			sb.append("<div class=\"d-flex justify-content-between p-3 ");
+			sb.append("sidebar-header\">");
+			sb.append("<h1 class=\"sr-only\">");
+			sb.append(_language.get(httpServletRequest, "ab-test-panel"));
+			sb.append("</h1>");
+			sb.append("<span class=\"font-weight-bold\">");
+			sb.append(_language.get(httpServletRequest, "ab-test"));
+			sb.append("</span>");
 
-			runtimeTag.setPortletName(SegmentsPortletKeys.SEGMENTS_EXPERIMENT);
+			IconTag iconTag = new IconTag();
 
-			runtimeTag.doTag(pageContext);
+			iconTag.setCssClass("sidenav-close text-secondary");
+			iconTag.setImage("times");
+			iconTag.setMarkupView("lexicon");
+			iconTag.setUrl("javascript:;");
 
-			jspWriter.write("</div></div>");
+			sb.append(iconTag.doTagAsString(pageContext));
+
+			sb.append("</div>");
+			sb.append("<div class=\"sidebar-body\">");
+			sb.append("<span aria-hidden=\"true\" ");
+			sb.append("className=\"loading-animation ");
+			sb.append("loading-animation-sm\" />");
+
+			jspWriter.write(sb.toString());
+
+			SegmentsExperimentDisplayContext segmentsExperimentDisplayContext =
+				new SegmentsExperimentDisplayContext(
+					_layoutLocalService, _portal,
+					(HttpServletRequest)pageContext.getRequest(),
+					(HttpServletResponse)pageContext.getResponse(),
+					_servletContext.getContextPath(),
+					_segmentsExperienceService,
+					_segmentsExperimentConfiguration,
+					new SegmentsExperienceManager(
+						_segmentsExperienceLocalService),
+					_segmentsExperimentRelService, _segmentsExperimentService);
+
+			_reactRenderer.renderReact(
+				new ComponentDescriptor(
+					_npmResolver.resolveModuleName("segments-experiment-web") +
+						"/js/SegmentsExperimentApp.es"),
+				segmentsExperimentDisplayContext.getData(), httpServletRequest,
+				jspWriter);
+
+			jspWriter.write("</div></div></div></div>");
 		}
 		catch (Exception exception) {
-			ReflectionUtil.throwException(exception);
+			throw new IOException(exception);
 		}
 	}
 
@@ -332,6 +403,12 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 	private Language _language;
 
 	@Reference
+	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private NPMResolver _npmResolver;
+
+	@Reference
 	private Portal _portal;
 
 	private String _portletNamespace;
@@ -340,6 +417,26 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 	private PortletURLFactory _portletURLFactory;
 
 	@Reference
+	private ReactRenderer _reactRenderer;
+
+	@Reference
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
+
+	@Reference
+	private SegmentsExperienceService _segmentsExperienceService;
+
+	private volatile SegmentsExperimentConfiguration
+		_segmentsExperimentConfiguration;
+
+	@Reference
+	private SegmentsExperimentRelService _segmentsExperimentRelService;
+
+	@Reference
+	private SegmentsExperimentService _segmentsExperimentService;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.segments.experiment.web)"
+	)
+	private ServletContext _servletContext;
 
 }

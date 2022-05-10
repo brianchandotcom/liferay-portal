@@ -99,7 +99,9 @@ public class SegmentsExperimentPortlet extends MVCPortlet {
 
 		SegmentsExperimentDisplayContext segmentsExperimentDisplayContext =
 			new SegmentsExperimentDisplayContext(
-				_layoutLocalService, _portal, renderRequest, renderResponse,
+				_layoutLocalService, _portal,
+				_portal.getHttpServletRequest(renderRequest),
+				_portal.getHttpServletResponse(renderResponse),
 				_segmentsExperienceService, _segmentsExperimentConfiguration,
 				new SegmentsExperienceManager(_segmentsExperienceLocalService),
 				_segmentsExperimentRelService, _segmentsExperimentService);

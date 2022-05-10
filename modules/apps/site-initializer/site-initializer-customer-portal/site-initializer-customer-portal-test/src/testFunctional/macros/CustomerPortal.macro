@@ -395,4 +395,20 @@ definition {
 		AssertElementPresent(locator1 = "CustomerPortalSite#TEAM_MEMBERS_MAIN_PAGE");
 	}
 
+    macro addFieldsTeamMembersExtra {
+        Type(
+            key_fieldNumber = "${position}",
+            locator1 = "CustomerPortalSite#EMAIL_FIELD",
+            value1 = "${rowEmail}");
+    
+        Select(
+            key_rowNumber = "${positionNumber}",
+            locator1 = "CustomerPortalSite#ROLE_SELECT",
+            value1 = "${rowRole}");
+        
+        if (isSet(addMembers)) {
+            Click(locator1 = "CustomerPortalSite#ADD_MORE_MEMBERS");
+        }
+    }
+
 }

@@ -391,6 +391,11 @@
 			<property name="description" value="Finds cases where `*Factory` should be used when creating new instances of an object." />
 			<message key="factory.use" value="Use ''{0}'' to create new instance of ''{1}''" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.check.FDSTableSchemaBuilderCheck">
+			<property name="category" value="Styling" />
+			<property name="description" value="Finds cases where `add` should be used." />
+			<message key="add.use" value="Use ''add'' instead of ''addFDSTableSchemaField''" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.FilterStringWhitespaceCheck">
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Finds missing and unnecessary whitespace in the value of the filter string in `ServiceTrackerFactory.open` or `WaiterUtil.waitForFilter`." />

@@ -70,7 +70,6 @@ import javax.servlet.http.HttpServletRequest;
 public class SegmentsExperimentDisplayContext {
 
 	public SegmentsExperimentDisplayContext(
-		HttpServletRequest httpServletRequest,
 		LayoutLocalService layoutLocalService, Portal portal,
 		RenderRequest renderRequest, RenderResponse renderResponse,
 		SegmentsExperienceService segmentsExperienceService,
@@ -79,7 +78,6 @@ public class SegmentsExperimentDisplayContext {
 		SegmentsExperimentRelService segmentsExperimentRelService,
 		SegmentsExperimentService segmentsExperimentService) {
 
-		_httpServletRequest = httpServletRequest;
 		_layoutLocalService = layoutLocalService;
 		_portal = portal;
 		_renderRequest = renderRequest;
@@ -90,7 +88,7 @@ public class SegmentsExperimentDisplayContext {
 		_segmentsExperimentRelService = segmentsExperimentRelService;
 		_segmentsExperimentService = segmentsExperimentService;
 
-		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
+		_themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 
@@ -106,10 +104,6 @@ public class SegmentsExperimentDisplayContext {
 		).build();
 
 		return _data;
-	}
-
-	public String getLiferayAnalyticsURL(long companyId) {
-		return PrefsPropsUtil.getString(companyId, "liferayAnalyticsURL");
 	}
 
 	private Optional<SegmentsExperiment> _getActiveSegmentsExperimentOptional(
@@ -184,8 +178,7 @@ public class SegmentsExperimentDisplayContext {
 	}
 
 	private String _getCreateSegmentsVariantURL() {
-		return _getContentPageEditorActionURL(
-			"/layout_content_page_editor/add_segments_experience");
+		return _getContentPageEditorActionURL("/layout_content_page_editor/+");
 	}
 
 	private String _getDeleteSegmentsExperimentURL() {
@@ -300,7 +293,7 @@ public class SegmentsExperimentDisplayContext {
 	}
 
 	private String _getImagesPath() {
-		return PortalUtil.getPathContext(_httpServletRequest) + "/images";
+		return PortalUtil.getPathContext(_renderRequest) + "/images";
 	}
 
 	private Map<String, Object> _getPage() {
@@ -509,8 +502,11 @@ public class SegmentsExperimentDisplayContext {
 			return _segmentsExperienceId;
 		}
 
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			_renderRequest);
+
 		HttpServletRequest originalHttpServletRequest =
-			_portal.getOriginalServletRequest(_httpServletRequest);
+			_portal.getOriginalServletRequest(httpServletRequest);
 
 		long selectedSegmentsExperienceId = ParamUtil.getLong(
 			originalHttpServletRequest, "segmentsExperienceId", -1);
@@ -521,7 +517,7 @@ public class SegmentsExperimentDisplayContext {
 		else {
 			_segmentsExperienceId =
 				_segmentsExperienceManager.getSegmentsExperienceId(
-					_httpServletRequest);
+					httpServletRequest);
 		}
 
 		return _segmentsExperienceId;
@@ -543,7 +539,6 @@ public class SegmentsExperimentDisplayContext {
 	}
 
 	private Map<String, Object> _data;
-	private final HttpServletRequest _httpServletRequest;
 	private final LayoutLocalService _layoutLocalService;
 	private final Portal _portal;
 	private final RenderRequest _renderRequest;

@@ -101,11 +101,20 @@ DDMStructure ddmStructure = journalEditArticleDisplayContext.getDDMStructure();
 		</div>
 
 		<aui:script>
-			Liferay.Util.disableToggleBoxes(
-				'<portlet:namespace />autoArticleId',
-				'<portlet:namespace />newArticleId',
-				true
+			var autoArticleInput = document.getElementById(
+				'<portlet:namespace />autoArticleId'
 			);
+			var newArticleInput = document.getElementById(
+				'<portlet:namespace />newArticleId'
+			);
+
+			if (autoArticleInput && newArticleInput) {
+				newArticleInput.disabled = true && autoArticleInput.checked;
+
+				autoArticleInput.addEventListener('click', () => {
+					Liferay.Util.toggleDisabled(newArticleInput, !newArticleInput.disabled);
+				});
+			}
 		</aui:script>
 	</c:when>
 	<c:otherwise>

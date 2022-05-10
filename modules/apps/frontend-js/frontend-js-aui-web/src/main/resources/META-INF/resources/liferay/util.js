@@ -297,6 +297,9 @@
 			}
 		},
 
+		/**
+		 * @deprecated As of Cavanaugh (7.4.x), replaced by `toggleDisabled`
+		 */
 		disableToggleBoxes(checkBoxId, toggleBoxId, checkDisabled) {
 			const checkBox = document.getElementById(checkBoxId);
 			const toggleBox = document.getElementById(toggleBoxId);

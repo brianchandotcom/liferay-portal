@@ -411,11 +411,16 @@ renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") :
 		submitForm(document.<portlet:namespace />fm);
 	}
 
-	Liferay.Util.disableToggleBoxes(
-		'<portlet:namespace />autoFeedId',
-		'<portlet:namespace />newFeedId',
-		true
-	);
+	var autoFeedInput = document.getElementById('<portlet:namespace />autoFeedId');
+	var newFeedCheckbox = document.getElementById('<portlet:namespace />newFeedId');
+
+	if (autoFeedInput && newFeedCheckbox) {
+		newFeedCheckbox.disabled = true && autoFeedInput.checked;
+
+		autoFeedInput.addEventListener('click', () => {
+			Liferay.Util.toggleDisabled(newFeedCheckbox, !newFeedCheckbox.disabled);
+		});
+	}
 </aui:script>
 
 <aui:script sandbox="<%= true %>">

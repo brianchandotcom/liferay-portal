@@ -23,6 +23,7 @@ List<PublicRenderParameterConfiguration> publicRenderParameterConfigurations = (
 Set<PublicRenderParameter> publicRenderParameters = (Set<PublicRenderParameter>)request.getAttribute(WebKeys.PUBLIC_RENDER_PARAMETERS);
 %>
 
+<h1>edit_public_render_parameters</h1>
 <portlet:actionURL name="editPublicRenderParameters" var="editPublicRenderParametersURL">
 	<portlet:param name="mvcPath" value="/edit_public_render_parameters.jsp" />
 	<portlet:param name="portletConfiguration" value="<%= Boolean.TRUE.toString() %>" />
@@ -140,11 +141,20 @@ Set<PublicRenderParameter> publicRenderParameters = (Set<PublicRenderParameter>)
 	for (PublicRenderParameterConfiguration publicRenderParameterConfiguration : publicRenderParameterConfigurations) {
 	%>
 
-		Liferay.Util.disableToggleBoxes(
-			'<portlet:namespace /><%= PublicRenderParameterConfiguration.IGNORE_PREFIX + HtmlUtil.escapeJS(publicRenderParameterConfiguration.getPublicRenderParameterName()) %>',
-			'<portlet:namespace /><%= PublicRenderParameterConfiguration.MAPPING_PREFIX + HtmlUtil.escapeJS(publicRenderParameterConfiguration.getPublicRenderParameterName()) %>',
-			true
+		var ignoreInput = document.getElementById(
+			'<portlet:namespace /><%= PublicRenderParameterConfiguration.IGNORE_PREFIX + HtmlUtil.escapeJS(publicRenderParameterConfiguration.getPublicRenderParameterName()) %>'
 		);
+		var mappingInput = document.getElementById(
+			'<portlet:namespace /><%= PublicRenderParameterConfiguration.MAPPING_PREFIX + HtmlUtil.escapeJS(publicRenderParameterConfiguration.getPublicRenderParameterName()) %>'
+		);
+
+		if (ignoreInput && mappingInput) {
+			mappingInput.disabled = true && ignoreInput.checked;
+
+			ignoreInput.addEventListener('click', () => {
+				Liferay.Util.toggleDisabled(mappingInput, !mappingInput.disabled);
+			});
+		}
 
 	<%
 	}

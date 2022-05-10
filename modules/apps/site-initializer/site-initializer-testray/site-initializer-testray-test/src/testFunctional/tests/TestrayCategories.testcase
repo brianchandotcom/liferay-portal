@@ -27,44 +27,37 @@ definition {
 		}
 	}
 
-	@description = "LPS-150328 - Verify that User can acess category modal."
+	@description = "This is a test for LPS-150328 - Verify that User can acess category modal."
 	@priority = "5"
 	test CanAcessCategoryModal {
-		ApplicationsMenu.gotoSite(site = "Testray 2");
+		task ("Go to Testray") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+		}
 
-		Click(locator1 = "TestrayManage#MANAGE_SIDEBAR");
+		task ("Verify that User can acess category modal") {
+			TestrayLayout.clickManageOnSidebar();
 
-		Click(
-			key_itemvalue = "Categories",
-			locator1 = "TestrayDropdown#DROPDOWN_ITEM");
+			TestrayManage.selectOptionsManage(key_itemvalue = "Categories");
 
-		AssertElementPresent(
-			key_title = "Categories",
-			locator1 = "TestrayManage#TITLE_MODAL_ITEM");
+			TestrayManage.assertTitleModal(key_itemvalue = "Categories");
+		}
 	}
 
-	@description = "LPS-150329 - Verify that User can add new category."
+	@description = "This is a test for LPS-150329 - Verify that User can add new category."
 	@priority = "5"
 	test CanAddNewCategory {
-		ApplicationsMenu.gotoSite(site = "Testray 2");
+		task ("Go to Testray") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+		}
 
-		Click(locator1 = "TestrayManage#MANAGE_SIDEBAR");
+		task ("Verify that User can add new category") {
+			TestrayLayout.clickManageOnSidebar();
 
-		Click(
-			key_itemvalue = "Categories",
-			locator1 = "TestrayDropdown#DROPDOWN_ITEM");
+			TestrayManage.selectOptionsManage(key_itemvalue = "Categories");
 
-		Click(locator1 = "TestrayManage#ADD_OPTIONS");
+			TestrayManage.addNewCategory();
 
-		Type(
-			locator1 = "TestrayManage#NEW_OPTION_NAME",
-			value1 = "New Category Test");
-
-		Click(locator1 = "TestrayManage#SAVE_BUTTON");
-
-		AssertElementPresent(
-			key_title = "New Category Test",
-			locator1 = "TestrayManage#PROJECT_NAME_MODAL");
+			TestrayManage.assertCreatedCategories(key_name = "New Category Test");
+		}
 	}
-
 }

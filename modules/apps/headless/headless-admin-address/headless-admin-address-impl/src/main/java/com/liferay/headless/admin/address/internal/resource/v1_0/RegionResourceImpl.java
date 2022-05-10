@@ -22,7 +22,9 @@ import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.service.RegionService;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
@@ -106,6 +108,18 @@ public class RegionResourceImpl extends BaseRegionResourceImpl {
 		return Page.of(
 			transform(baseModelSearchResult.getBaseModels(), this::_toRegion),
 			pagination, baseModelSearchResult.getLength());
+	}
+
+	@Override
+	public Region postRegion(Region region) throws Exception {
+		com.liferay.portal.kernel.model.Region serviceBuilderRegion =
+			_regionService.addRegion(
+				region.getCountryId(), GetterUtil.get(region.getActive(), true),
+				region.getName(), region.getPosition(), region.getRegionCode(),
+				ServiceContextFactory.getInstance(
+					Region.class.getName(), contextHttpServletRequest));
+
+		return _toRegion(serviceBuilderRegion);
 	}
 
 	private OrderByComparator<com.liferay.portal.kernel.model.Region>

@@ -20,6 +20,7 @@
 
 <%
 List<Portlet> portlets = (List<Portlet>)request.getAttribute(WebKeys.LAYOUT_PORTLETS);
+ThemeClientExtensions themeClientExtensions = ThemeClientExtensionsUtil.getThemeClientExtensions();
 %>
 
 <%-- Portlet CSS References --%>
@@ -60,7 +61,15 @@ com.liferay.petra.string.StringBundler pageBottomSB = OutputTag.getDataSB(reques
 
 <%-- Theme JavaScript --%>
 
-<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, themeDisplay.getPathThemeJavaScript() + "/main.js")) %>" type="text/javascript"></script>
+<%
+for (String themeJSURL : themeClientExtensions.getThemeJSURLs(request)) {
+%>
+
+	<script src="<%= themeJSURL %>" type="text/javascript"></script>
+
+<%
+}
+%>
 
 <liferay-util:include page="/html/common/themes/bottom-ext.jsp" />
 <liferay-util:include page="/html/common/themes/bottom-test.jsp" />

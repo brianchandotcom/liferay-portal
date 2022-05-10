@@ -16,7 +16,7 @@ definition {
 		}
 
 		task ("Set up instance and sign in DXP") {
-			TestCase.setUpPortalInstance();
+			// TestCase.setUpPortalInstance();
 
 			ACUtils.launchDXP();
 		}
@@ -153,7 +153,7 @@ definition {
 		}
 
 		task ("Change language in AC") {
-			ACWorkspace.changeLanguage(languageOption = "Portuguese (Brazil)");
+			ACWorkspace.changeLanguageToPortuguese(languageOption = "Portuguese (Brazil)");
 		}
 
 		task ("View AC sidebar changed language") {
@@ -161,7 +161,7 @@ definition {
 		}
 
 		task ("Change language back in AC") {
-			ACWorkspace.changeLanguage(languageOption = "Inglês");
+			ACWorkspace.changeLanguageToEnglish(languageOption = "Inglês");
 		}
 
 		task ("View AC sidebar changed language") {

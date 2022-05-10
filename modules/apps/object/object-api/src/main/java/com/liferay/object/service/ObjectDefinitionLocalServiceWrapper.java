@@ -479,6 +479,12 @@ public class ObjectDefinitionLocalServiceWrapper
 	}
 
 	@Override
+	public boolean hasObjectRelationship(long objectDefinitionId) {
+		return _objectDefinitionLocalService.hasObjectRelationship(
+			objectDefinitionId);
+	}
+
+	@Override
 	public com.liferay.object.model.ObjectDefinition
 			publishCustomObjectDefinition(long userId, long objectDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {

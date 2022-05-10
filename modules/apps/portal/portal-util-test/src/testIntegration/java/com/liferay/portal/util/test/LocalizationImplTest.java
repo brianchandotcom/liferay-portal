@@ -15,6 +15,8 @@
 package com.liferay.portal.util.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.concurrent.ConcurrentReferenceKeyHashMap;
+import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
@@ -42,8 +44,6 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.portlet.PortletPreferences;
-
-import org.apache.commons.collections.map.ReferenceMap;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -104,7 +104,8 @@ public class LocalizationImplTest {
 
 		_cache.set(
 			_localization,
-			new ReferenceMap(ReferenceMap.SOFT, ReferenceMap.HARD));
+			new ConcurrentReferenceKeyHashMap<>(
+				FinalizeManager.SOFT_REFERENCE_FACTORY));
 	}
 
 	@Test

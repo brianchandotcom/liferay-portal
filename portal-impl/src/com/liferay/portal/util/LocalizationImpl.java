@@ -14,9 +14,11 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.petra.concurrent.ConcurrentReferenceKeyHashMap;
 import com.liferay.petra.content.ContentUtil;
 import com.liferay.petra.io.unsync.UnsyncStringReader;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
+import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.xml.XMLUtil;
@@ -62,8 +64,6 @@ import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.XMLStreamWriter;
-
-import org.apache.commons.collections.map.ReferenceMap;
 
 /**
  * @author Alexander Chow
@@ -1510,19 +1510,17 @@ public class LocalizationImpl implements Localization {
 		String value) {
 
 		if (Validator.isNotNull(xml) && !xml.equals(_EMPTY_ROOT_NODE)) {
-			synchronized (_cache) {
-				Map<Tuple, String> map = _cache.get(xml);
+			_cache.compute(
+				xml,
+				(key, map) -> {
+					if (map == null) {
+						map = new HashMap<>();
+					}
 
-				if (map == null) {
-					map = new HashMap<>();
-				}
+					map.put(new Tuple(useDefault, requestedLanguageId), value);
 
-				Tuple subkey = new Tuple(useDefault, requestedLanguageId);
-
-				map.put(subkey, value);
-
-				_cache.put(xml, map);
-			}
+					return map;
+				});
 		}
 	}
 
@@ -1539,7 +1537,8 @@ public class LocalizationImpl implements Localization {
 	private static final Log _log = LogFactoryUtil.getLog(
 		LocalizationImpl.class);
 
-	private final Map<String, Map<Tuple, String>> _cache = new ReferenceMap(
-		ReferenceMap.SOFT, ReferenceMap.HARD);
+	private final Map<String, Map<Tuple, String>> _cache =
+		new ConcurrentReferenceKeyHashMap<>(
+			FinalizeManager.SOFT_REFERENCE_FACTORY);
 
 }

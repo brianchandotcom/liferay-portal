@@ -16,6 +16,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECT_ITEM_FROM_LIST</td>
+	<td>//div[contains(@class,'table-list-title')]/a[contains(.,'${key_itemName}')]//following::div//a[contains(.,'Select')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ACTIVE_CHECKBOX</td>
 	<td>//input[contains(@id,'active') and (@type='checkbox')]</td>
 	<td></td>

@@ -972,17 +972,19 @@ public class SXPBlueprintSearchResultTest {
 		CommentManagerUtil.addComment(
 			_user.getUserId(), _serviceContext.getScopeGroupId(),
 			JournalArticle.class.getName(), article.getResourcePrimKey(),
-			"Comment", new IdentityServiceContextFunction(_serviceContext));
+			"Article Comment",
+			new IdentityServiceContextFunction(_serviceContext));
 
-		_sxpBlueprint.setConfigurationJSON(
+		_updateConfigurationJSON(
+			"generalConfiguration",
 			JSONUtil.put(
-				"generalConfiguration",
-				JSONUtil.put(
-					"searchableAssetTypes",
-					JSONUtil.put("com.liferay.message.boards.model.MBMessage"))
-			).put(
-				"queryConfiguration", JSONUtil.put("applyIndexerClauses", false)
-			).toString());
+				"searchableAssetTypes",
+				JSONUtil.putAll(
+					"com.liferay.journal.model.JournalArticle",
+					"com.liferay.message.boards.model.MBMessage")));
+
+		_updateConfigurationJSON(
+			"queryConfiguration", JSONUtil.put("applyIndexerClauses", false));
 
 		_updateSXPBlueprint();
 
@@ -990,9 +992,9 @@ public class SXPBlueprintSearchResultTest {
 			new Object[] {_getDefaultValuesForTextMatchOverMultipleFields()},
 			new String[] {"Text Match Over Multiple Fields"});
 
-		_keywords = "Comment";
+		_keywords = "Article";
 
-		_assertSearch("[Comment]");
+		_assertSearchIgnoreRelevance("[Article, Article Comment]");
 
 		_updateElementInstancesJSON(
 			new Object[] {
@@ -1000,7 +1002,7 @@ public class SXPBlueprintSearchResultTest {
 			},
 			new String[] {"Text Match Over Multiple Fields", "Hide Comments"});
 
-		_assertSearch("[]");
+		_assertSearchIgnoreRelevance("[Article]");
 	}
 
 	@Test
@@ -1198,7 +1200,7 @@ public class SXPBlueprintSearchResultTest {
 
 		_keywords = "Article";
 
-		_assertSearch("[Article 1.2, Article 1.1, Article 1.0]");
+		_assertSearchIgnoreRelevance("[Article 1.0, Article 1.1, Article 1.2]");
 
 		_updateElementInstancesJSON(
 			new Object[] {
@@ -1301,6 +1303,9 @@ public class SXPBlueprintSearchResultTest {
 		_updateConfigurationJSON(
 			"queryConfiguration", JSONUtil.put("applyIndexerClauses", false));
 
+		_setUpJournalArticles(
+			new String[] {"", "", ""}, new String[] {"Article 1", "Article 2"});
+
 		_journalArticles.add(
 			_addJournalArticle(
 				_group.getGroupId(), 0, "Draft Article", StringPool.BLANK, true,
@@ -1312,7 +1317,7 @@ public class SXPBlueprintSearchResultTest {
 
 		_keywords = "Article";
 
-		_assertSearch("[Draft Article]");
+		_assertSearchIgnoreRelevance("[Article 1, Article 2, Draft Article]");
 
 		_updateElementInstancesJSON(
 			new Object[] {
@@ -1323,7 +1328,7 @@ public class SXPBlueprintSearchResultTest {
 				"Limit Search to Published Contents"
 			});
 
-		_assertSearch("[]");
+		_assertSearchIgnoreRelevance("[Article 1, Article 2]");
 	}
 
 	@Test
@@ -1482,6 +1487,9 @@ public class SXPBlueprintSearchResultTest {
 
 	@Test
 	public void testSchedulingAware() throws Exception {
+		_setUpJournalArticles(
+			new String[] {"", ""}, new String[] {"Article 1", "Article 2"});
+
 		_updateConfigurationJSON(
 			"queryConfiguration", JSONUtil.put("applyIndexerClauses", false));
 
@@ -1518,7 +1526,8 @@ public class SXPBlueprintSearchResultTest {
 
 		_keywords = "Article";
 
-		_assertSearch("[Article Scheduled]");
+		_assertSearchIgnoreRelevance(
+			"[Article 1, Article 2, Article Scheduled]");
 
 		_updateElementInstancesJSON(
 			new Object[] {textMatchOverMultipleFields, null},
@@ -1526,7 +1535,7 @@ public class SXPBlueprintSearchResultTest {
 				"Text Match Over Multiple Fields", "Scheduling Aware"
 			});
 
-		_assertSearch("[]");
+		_assertSearchIgnoreRelevance("[Article 1, Article 2]");
 	}
 
 	@Test
@@ -1604,10 +1613,13 @@ public class SXPBlueprintSearchResultTest {
 
 		Group stagingGroup = _group.getStagingGroup();
 
+		_setUpJournalArticles(
+			new String[] {"", "", ""}, new String[] {"Article 1", "Article 2"});
+
 		_journalArticles.add(
 			_addJournalArticle(
-				stagingGroup.getGroupId(), 0, "Staged", StringPool.BLANK, false,
-				true));
+				stagingGroup.getGroupId(), 0, "Staged Article",
+				StringPool.BLANK, false, true));
 
 		HashMap<String, Object> textMatchOverMultipleFields =
 			_getDefaultValuesForTextMatchOverMultipleFields();
@@ -1619,15 +1631,15 @@ public class SXPBlueprintSearchResultTest {
 			new Object[] {textMatchOverMultipleFields},
 			new String[] {"Text Match Over Multiple Fields"});
 
-		_keywords = "Staged";
+		_keywords = "Article";
 
-		_assertSearch("[Staged]");
+		_assertSearch("[Article 1, Article 2, Staged Article]");
 
 		_updateElementInstancesJSON(
 			new Object[] {textMatchOverMultipleFields, null},
 			new String[] {"Text Match Over Multiple Fields", "Staging Aware"});
 
-		_assertSearch("[]");
+		_assertSearch("[Article 1, Article 2]");
 	}
 
 	@Test

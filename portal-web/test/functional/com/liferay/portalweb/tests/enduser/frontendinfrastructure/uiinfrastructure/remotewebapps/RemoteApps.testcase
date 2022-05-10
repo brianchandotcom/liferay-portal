@@ -362,12 +362,12 @@ definition {
 		}
 
 		task ("Obtain Vanilla Counter's remoteAppEntryId") {
-			var remoteAppEntryIdValue = RemoteApps.getRemoteAppEntryIdValue();
+			var clientExtensionEntryIdValue = RemoteApps.getClientExtensionEntryIdValue();
 
 			JSONLayout.addWidgetToPublicLayout(
 				groupName = "Guest",
 				layoutName = "Test Page",
-				remoteAppEntryId = "${remoteAppEntryIdValue}",
+				remoteAppEntryId = "${clientExtensionEntryIdValue}",
 				widgetName = "Vanilla Counter");
 		}
 
@@ -434,12 +434,12 @@ definition {
 		}
 
 		task ("Add Vanilla Counter to Test Page") {
-			var remoteAppEntryIdValue = RemoteApps.getRemoteAppEntryIdValue();
+			var clientExtensionEntryIdValue = RemoteApps.getClientExtensionEntryIdValue();
 
 			JSONLayout.addWidgetToPublicLayout(
 				groupName = "Guest",
 				layoutName = "Test Page",
-				remoteAppEntryId = "${remoteAppEntryIdValue}",
+				remoteAppEntryId = "${clientExtensionEntryIdValue}",
 				widgetName = "Vanilla Counter");
 		}
 

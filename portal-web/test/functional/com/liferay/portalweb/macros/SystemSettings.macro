@@ -303,6 +303,13 @@ definition {
 			locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
 	}
 
+	macro viewInputText {
+		AssertTextEquals(
+			key_fieldLabel = "${fieldLabel}",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${fieldValue}");
+	}
+
 	macro viewSettingsText {
 		AssertTextEquals.assertPartialText(
 			key_settingsText = "${settingsText}",

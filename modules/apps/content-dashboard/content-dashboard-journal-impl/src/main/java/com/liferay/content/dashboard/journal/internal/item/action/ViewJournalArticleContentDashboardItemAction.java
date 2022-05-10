@@ -33,9 +33,12 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
@@ -156,13 +159,8 @@ public class ViewJournalArticleContentDashboardItemAction
 
 		ListUtil.filter(
 			localizedLayoutSEOLinks, result,
-			seoLink -> {
-				String stringLocale = locale.toString();
-
-				return Objects.equals(
-					StringUtil.replace(stringLocale, '_', '-'),
-					seoLink.getHrefLang());
-			});
+			seoLink -> Objects.equals(
+				LocaleUtil.toW3cLanguageId(locale), seoLink.getHrefLang()));
 
 		LayoutSEOLink localizedLayoutSEOLink = result.get(0);
 
@@ -228,6 +226,19 @@ public class ViewJournalArticleContentDashboardItemAction
 									LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER,
 								initialLayoutDisplayPageObjectProvider);
 						}
+					}
+				).map(
+					url -> {
+						String backURL = ParamUtil.getString(
+							_httpServletRequest, "backURL");
+
+						if (Validator.isNotNull(backURL)) {
+							return HttpComponentsUtil.setParameter(
+								url, "p_l_back_url", backURL);
+						}
+
+						return HttpComponentsUtil.setParameter(
+							url, "p_l_back_url", themeDisplay.getURLCurrent());
 					}
 				).orElse(
 					StringPool.BLANK

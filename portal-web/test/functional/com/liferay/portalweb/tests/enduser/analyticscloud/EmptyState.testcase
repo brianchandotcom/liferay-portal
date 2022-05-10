@@ -302,20 +302,18 @@ definition {
 			ACNavigation.switchTab(tabName = "Interests");
 		}
 
-		task ("Check the empty page status message and the connect button") {
-			ACUtils.viewGenericText(textValueList = "No Sites Synced from Data Sources,Connect a data source with sites data.");
-
-			ACUtils.viewGenericButton(buttonName = "Connect Data Source");
+		task ("Check the empty page status message") {
+			ACUtils.viewGenericText(textValueList = "There are no interests found.,Check back later to verify if data has been received from your data sources.,Learn more about interests.");
 		}
 
 		task ("Check if the hyperlink is taking the user to the documentation") {
-			ACUtils.clickGenericHyperlink(hyperlinkText = "Access our documentation to learn more.");
+			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about interests.");
 
 			task ("Switch to the documentation tab") {
-				SelectWindow(locator1 = "title=Connecting Data Sources — Liferay Learn");
+				SelectWindow(locator1 = "title=Individuals Dashboard — Liferay Learn");
 			}
 
-			ACUtils.viewGenericText(textValueList = "Documentation,Connecting Data Sources");
+			ACUtils.viewGenericText(textValueList = "Documentation,Interests");
 		}
 	}
 

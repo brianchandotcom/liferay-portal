@@ -1,0 +1,80 @@
+@component-name = "portal-frontend-infrastructure"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Clay";
+	property testray.main.component.name = "User Interface";
+
+    setUp {
+        TestCase.setUpPortalInstance();
+
+        User.firstLoginPG();
+
+        task ("Add a site") {
+                JSONGroup.addGroup(groupName = "Test Site Name");
+            }
+
+        task ("Add a widget page") {
+                JSONLayout.addPublicLayout(
+                    groupName = "Test Site Name",
+                    layoutName = "Language Test Page Name");
+            }
+
+        task ("Add a Language Selector to page") {
+                JSONLayout.addWidgetToPublicLayout(
+                    groupName = "Test Site Name",
+                    layoutName = "Language Test Page Name",
+                    widgetName = "Language Selector");
+            }
+        }
+
+        tearDown {
+            var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+            if ("${testPortalInstance}" == "true") {
+                PortalInstances.tearDownCP();
+            }
+            else {
+                JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+            }
+        }
+
+	@description = "LPS-152271 Verify that flag icons are present when clicking on localization button"
+	@priority = "5"
+	test FlagIconsCanRender {
+
+        //task ("Given language portlet") --> in the setup
+
+        task ("When click on localization button") {
+            Navigator.gotoSitePage(
+				pageName = "Language Test Page Name",
+				siteName = "Test Site Name");
+
+            //Click to see the languages using the portlet
+            //task ("View available languages are shown with Long Text template") {
+			LanguagePortlet.viewLanguages(
+				availableLanguageList = "العربية,català,中文,nederlands,suomi,français,deutsch,magyar,日本語,português,español,svenska",
+				displayTemplate = "Long Text");
+		}
+
+        task ("Then flag icons are present on the button and dropdown menu items") {
+            AssertElementPresent(
+                key_item = "català-Espanya",
+                locator1 = "");
+            )
+
+        /**Example:
+        AssertElementPresent(
+			key_item = "three",
+			locator1 = "ClaySamplePortlet#MULTISELECT_DROPDOWN_ITEM_STICKER");
+        **/
+
+/** Flags IDs examples:
+id = _com_liferay_site_navigation_language_web_portlet_SiteNavigationLanguagePortlet_dvyf__menu__catala_2d_espanya
+id = _com_liferay_site_navigation_language_web_portlet_SiteNavigationLanguagePortlet_dvyf__menu__deutsch_2d_deutschland
+**/
+
+        }
+    }
+}

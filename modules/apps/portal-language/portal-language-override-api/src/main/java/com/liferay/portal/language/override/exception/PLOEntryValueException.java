@@ -21,19 +21,16 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class PLOEntryValueException extends PortalException {
 
-	public PLOEntryValueException() {
+	public static class MustNotBeNull extends PLOEntryValueException {
+
+		public MustNotBeNull() {
+			super("Value must not be null");
+		}
+
 	}
 
-	public PLOEntryValueException(String msg) {
+	private PLOEntryValueException(String msg) {
 		super(msg);
-	}
-
-	public PLOEntryValueException(String msg, Throwable throwable) {
-		super(msg, throwable);
-	}
-
-	public PLOEntryValueException(Throwable throwable) {
-		super(throwable);
 	}
 
 }

@@ -50,6 +50,8 @@ renderResponse.setTitle(LanguageUtil.get(request, "import-translations"));
 
 		<liferay-ui:error exception="<%= PLOEntryKeyException.MustNotBeNull.class %>" message="empty-keys-are-not-allowed" />
 
+		<liferay-ui:error exception="<%= PLOEntryValueException.MustNotBeNull.class %>" message="empty-values-are-not-allowed" />
+
 		<h5><liferay-ui:message key="import-file" /></h5>
 
 		<div class="sheet-text">

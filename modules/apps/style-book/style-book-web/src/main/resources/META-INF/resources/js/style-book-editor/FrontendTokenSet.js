@@ -144,5 +144,5 @@ FrontendTokenSet.propTypes = {
 			name: PropTypes.string.isRequired,
 		})
 	),
-	name: PropTypes.string.isRequired,
+	name: PropTypes.string,
 };

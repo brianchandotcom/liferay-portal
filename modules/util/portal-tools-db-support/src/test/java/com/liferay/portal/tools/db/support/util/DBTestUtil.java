@@ -75,7 +75,7 @@ public class DBTestUtil {
 		// See https://www.h2database.com/javadoc/org/h2/engine/DbSettings.html#DATABASE_TO_UPPER
 
 		return databaseMetaData.getTables(
-			null, null, name.toUpperCase(), new String[] {"TABLE"});
+			null, "PUBLIC", name.toUpperCase(), new String[] {"TABLE"});
 	}
 
 }

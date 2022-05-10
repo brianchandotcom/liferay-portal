@@ -62,6 +62,8 @@ public class CommentsContentPageEditorSidebarPanel
 
 		try {
 			if (LayoutPermissionUtil.contains(
+					permissionChecker, plid, ActionKeys.UPDATE) ||
+				LayoutPermissionUtil.contains(
 					permissionChecker, plid,
 					ActionKeys.UPDATE_LAYOUT_CONTENT)) {
 

@@ -79,7 +79,7 @@ if (Validator.isNotNull(portletConfigurationPermissionsDisplayContext.getModelRe
 								<%= role.getTitle(locale) %>
 							</span>
 
-							<c:if test="<%= layout.isPrivateLayout() && name.equals(RoleConstants.GUEST) %>">
+							<c:if test="<%= layout.isPrivateLayout() && name.equals(RoleConstants.GUEST) && PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.PERMISSIONS_CHECK_GUEST_ENABLED) %>">
 								<span class="inline-item-after">
 									<liferay-ui:icon-help message="under-the-current-configuration-all-users-automatically-inherit-permissions-from-the-guest-role" />
 								</span>

@@ -39,7 +39,7 @@ public class CommerceProductGroupSystemObjectDefinitionMetadata
 
 	@Override
 	public Map<Locale, String> getLabelMap() {
-		return createLabelMap("model.resource.com.liferay.commerce.pricing.model.CommercePricingClass");
+		return createLabelMap("commerce-product-group");
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public class CommerceProductGroupSystemObjectDefinitionMetadata
 
 	@Override
 	public Map<Locale, String> getPluralLabelMap() {
-		return createLabelMap("product-groups");
+		return createLabelMap("commerce-product-groups");
 	}
 
 	@Override

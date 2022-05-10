@@ -23,6 +23,8 @@ portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(importTranslationDisplayContext.getRedirect());
 
 renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import-translation"));
+
+String exceptionErrorMessage = null;
 %>
 
 <div class="translation">
@@ -60,7 +62,13 @@ renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import-translation"));
 			<clay:sheet
 				cssClass="translation-import-body-form"
 			>
-				<liferay-ui:error exception="<%= XLIFFFileException.MustBeValid.class %>" message="please-enter-a-file-with-a-valid-xliff-file-extension" />
+				<liferay-ui:error exception="<%= XLIFFFileException.MustBeValid.class %>" message="please-enter-a-file-with-a-valid-xliff-file-extension">
+
+					<%
+					exceptionErrorMessage = LanguageUtil.get(request, "please-enter-a-file-with-a-valid-xliff-file-extension");
+					%>
+
+				</liferay-ui:error>
 
 				<div>
 					<p class="h3"><liferay-ui:message key="import-files" /></p>
@@ -84,6 +92,8 @@ renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import-translation"));
 						module="js/ImportTranslation"
 						props='<%=
 							HashMapBuilder.<String, Object>put(
+								"errorMessage", exceptionErrorMessage
+							).put(
 								"saveDraftBtnId", liferayPortletResponse.getNamespace() + "saveDraftBtn"
 							).put(
 								"submitBtnId", liferayPortletResponse.getNamespace() + "submitBtnId"

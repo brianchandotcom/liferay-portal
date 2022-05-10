@@ -140,6 +140,11 @@
 	<td>//a[contains(text(), '${key_warehouseName}')]/ancestor::tr//td//span[contains(@class,'commerce-admin-icon-check')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SELECT_ORDER_FROM_LIST</td>
+	<td>//a[contains(@href,'${currentOrderId}') and contains(.,'View')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

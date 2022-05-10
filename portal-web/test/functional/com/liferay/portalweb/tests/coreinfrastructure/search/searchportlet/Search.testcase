@@ -245,6 +245,16 @@ definition {
 		Portlet.viewCannotAddPG(portletName = "Search Insights");
 	}
 
+	@description = "This is a use case for LPS-135288."
+	@priority = "4"
+	test AssertNoXSSViaSearchTagURL {
+		var portalURL = PropsUtil.get("portal.url");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/search?tag=asdasd%22%3E%3Csvg/onload=alert(document.domain)%3E");
+
+		AssertAlertNotPresent();
+	}
+
 	@description = "This is a use case for LPS-130227."
 	@priority = "4"
 	test AssertPaginationURLforHTTPS {

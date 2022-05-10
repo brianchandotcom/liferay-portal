@@ -30,6 +30,17 @@ public class PullRequestSubrepositoryTopLevelBuild
 	}
 
 	@Override
+	public String getBranchName() {
+		String branchName = getParameterValue("GITHUB_UPSTREAM_BRANCH_NAME");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(branchName)) {
+			return branchName;
+		}
+
+		return getBranchName();
+	}
+
+	@Override
 	public BranchInformation getOSBAsahBranchInformation() {
 		Workspace workspace = getWorkspace();
 

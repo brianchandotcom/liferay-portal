@@ -1,5 +1,6 @@
 {
 	"dependencies": {
+		"codemirror": "^5.59.0"
 	},
 	"jest": {
 		"setupFiles": [

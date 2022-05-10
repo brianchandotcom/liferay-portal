@@ -101,6 +101,44 @@ public class Mutation {
 				callbackURL, object));
 	}
 
+	@GraphQLField
+	public Country patchCountry(
+			@GraphQLName("countryId") Long countryId,
+			@GraphQLName("country") Country country)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_countryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			countryResource -> countryResource.patchCountry(
+				countryId, country));
+	}
+
+	@GraphQLField
+	public Country updateCountry(
+			@GraphQLName("countryId") Long countryId,
+			@GraphQLName("country") Country country)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_countryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			countryResource -> countryResource.putCountry(countryId, country));
+	}
+
+	@GraphQLField
+	public Response updateCountryBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_countryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			countryResource -> countryResource.putCountryBatch(
+				callbackURL, object));
+	}
+
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
 			_applyComponentServiceObjects(
 				ComponentServiceObjects<T> componentServiceObjects,

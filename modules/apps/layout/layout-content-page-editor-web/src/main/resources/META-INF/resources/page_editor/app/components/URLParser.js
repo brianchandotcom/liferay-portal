@@ -18,6 +18,7 @@ import switchSidebarPanel from '../actions/switchSidebarPanel';
 import {HIGHLIGHTED_COMMENT_ID_KEY} from '../config/constants/highlightedCommentIdKey';
 import {useSelectItem} from '../contexts/ControlsContext';
 import {useDispatch, useSelector} from '../contexts/StoreContext';
+import getFragmentItem from '../utils/getFragmentItem';
 
 export default function URLParser() {
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
@@ -40,10 +41,7 @@ export default function URLParser() {
 				)
 			) || {fragmentEntryLinkId: null};
 
-			const {itemId} = Object.values(layoutData.items).find(
-				(item) =>
-					item.config.fragmentEntryLinkId === fragmentEntryLinkId
-			) || {itemId: null};
+			const {itemId} = getFragmentItem(layoutData, fragmentEntryLinkId);
 
 			if (itemId) {
 				selectItem(itemId);
@@ -56,7 +54,7 @@ export default function URLParser() {
 				);
 			}
 		},
-		[dispatch, fragmentEntryLinks, layoutData.items, selectItem]
+		[dispatch, fragmentEntryLinks, layoutData, selectItem]
 	);
 
 	useEffect(() => {

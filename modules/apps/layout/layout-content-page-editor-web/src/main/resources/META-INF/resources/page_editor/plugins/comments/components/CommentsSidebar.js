@@ -21,6 +21,7 @@ import {
 	useSelectItem,
 } from '../../../app/contexts/ControlsContext';
 import {useSelector} from '../../../app/contexts/StoreContext';
+import getFragmentItem from '../../../app/utils/getFragmentItem';
 import FragmentComments from './FragmentComments';
 import FragmentEntryLinksWithComments from './FragmentEntryLinksWithComments';
 
@@ -81,10 +82,9 @@ export default function CommentsSidebar() {
 	});
 
 	if (highlightMessageId && activeFragmentEntryLink) {
-		const activeItem = Object.values(layoutData.items).find(
-			(item) =>
-				item.config.fragmentEntryLinkId ===
-				activeFragmentEntryLink.fragmentEntryLinkId
+		const activeItem = getFragmentItem(
+			layoutData,
+			activeFragmentEntryLink.fragmentEntryLinkId
 		);
 		selectItem(activeItem.itemId);
 	}

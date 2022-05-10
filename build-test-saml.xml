@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<project basedir="." name="portal-test-saml" xmlns:antelope="antlib:ise.antelope.tasks">
+	<import file="build-test.xml" />
+
+	<target name="deploy-keystore-file">
+		<copy
+			file="${project.dir}/portal-web/test/functional/com/liferay/portalweb/tests/coreinfrastructureee/security/dependencies/keystore.jks"
+			todir="${liferay.home}/data"
+		/>
+	</target>
+</project>

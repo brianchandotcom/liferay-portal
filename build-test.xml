@@ -8663,13 +8663,6 @@ virtualHostname="localhost"
 		</if>
 	</target>
 
-	<target name="deploy-keystore-file">
-		<copy
-			file="${project.dir}/portal-web/test/functional/com/liferay/portalweb/tests/coreinfrastructureee/security/dependencies/keystore.jks"
-			todir="${liferay.home}/data"
-		/>
-	</target>
-
 	<target name="deploy-latest-marketplace-apps">
 		<get-testcase-property property.name="deploy.latest.marketplace.app.disabled" />
 
@@ -14026,7 +14019,7 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 		<if>
 			<equals arg1="${keystore.enabled}" arg2="true" />
 			<then>
-				<antcall target="deploy-keystore-file" />
+				<ant antfile="build-test-saml.xml" target="deploy-keystore-file" />
 			</then>
 		</if>
 

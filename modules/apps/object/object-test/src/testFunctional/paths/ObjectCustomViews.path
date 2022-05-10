@@ -115,6 +115,31 @@
 		<td>//input[@id='${key_roleName}_ACTION_${key_permissionName}']</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>DEFAULT_SORT_TAB</td>
+		<td>//button[@class=('nav-link btn btn-unstyled') and contains(.,'Default Sort')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>SELECT_COLUMN_ON_DEFAULT_SORT</td>
+		<td>//div[@class = 'custom-select__content form-control']//span[contains(text(),'Choose an Option')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>SELECT_SORTING_ON_DEFAULT_SORT</td>
+		<td>//input[@placeholder='Choose an Option' and contains(@value,'Ascending') or contains (@value,'Descending')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>VIEW_CARD_TITLE_ON_SIDE_PANEL</td>
+		<td>//h3[(@class='lfr-objects__card-title') and text()='${key_cardTitle}']</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>ADD_NEW_DEFAULT_SORT</td>
+		<td>//button[contains(text(),'New Default Sort')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

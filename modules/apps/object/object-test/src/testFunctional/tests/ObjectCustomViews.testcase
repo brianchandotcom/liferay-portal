@@ -72,12 +72,97 @@ definition {
 	}
 
 	@description = "LPS-144472 - Verify if the user can add metadata columns to Default Sort and save it"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanAddMetadacolumnDefaultSort {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 152059",
+			objectName = "CustomObject152059",
+			pluralLabelName = "Custom Objects 152059");
 
-		// TODO LPS-152059 CanAddMetadacolumnDefaultSort pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject152059");
 
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject152059");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 152059");
+
+		ObjectCustomViews.goToViewsTab();
+
+		ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views");
+
+		Navigator.openURL();
+
+		JSONRole.addRegularRole(
+			roleKey = "Regular Role",
+			roleTitle = "Regular Role");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Regular Role",
+			userEmailAddress = "userea@liferay.com");
+
+		for (var resourceAction : list "ACCESS_IN_CONTROL_PANEL,VIEW") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceAction}",
+				resourceName = "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet",
+				roleTitle = "Regular Role");
+		}
+
+		for (var resourceAction : list "DELETE,VIEW") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceAction}",
+				resourceName = "com.liferay.object.model.ObjectDefinition",
+				roleTitle = "Regular Role");
+		}
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 152059");
+
+		ObjectCustomViews.goToViewsTab();
+
+		ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+
+		ObjectCustomViews.markViewAsDefault();
+
+		ObjectCustomViews.goToViewsBuilderTab();
+
+		LexiconEntry.gotoAdd();
+
+		for (var columnOption : list "Author,Creation Date,Modified Date,Workflow Status,ID") {
+			Click.clickAtNotVisible(
+				key_columnOption = "${columnOption}",
+				locator1 = "ObjectCustomViews#CHECKBOX_COLUMN_OPTION");
+		}
+
+		ObjectCustomViews.saveColumnsModal();
+
+		for (var assertColumn : list "Author,Creation Date,Modified Date,Workflow Status,ID") {
+			ObjectCustomViews.assertColumnPresent(colunmName = "${assertColumn}");
+		}
+
+		ObjectCustomViews.goToDefaultSortTab();
 	}
 
 	@description = "LPS-147792 - Verify it is possible to add any translation for any Column Label"

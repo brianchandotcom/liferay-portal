@@ -12,6 +12,33 @@ definition {
 			locator1 = "Button#TAB_SUBMIT_BTN");
 	}
 
+	macro addDefaultSort {
+		ObjectCustomViews.viewCardTitleOnSidePanel(cardTitle = "Default Sort");
+
+		if (IsElementPresent(locator1 = "ObjectCustomViews#VIEW_BUILDER_EMPTY_STATE_TEXT", text = "No default sort was created yet")) {
+			ObjectCustomViews.addNewDefaultSort();
+		}
+		else {
+			LexiconEntry.gotoAdd();
+		}
+
+		Click(locator1 = "ObjectCustomViews#SELECT_COLUMN_ON_DEFAULT_SORT");
+
+		DropdownMenuItem.click(menuItem = "${columnOption}");
+
+		Click(locator1 = "ObjectCustomViews#SELECT_SORTING_ON_DEFAULT_SORT");
+
+		DropdownMenuItem.click(menuItem = "${sortOption}");
+
+		Click(
+			key_tab = "Save",
+			locator1 = "Button#TAB_SUBMIT_BTN");
+	}
+
+	macro addNewDefaultSort {
+		Click(locator1 = "ObjectCustomViews#ADD_NEW_DEFAULT_SORT");
+	}
+
 	macro addObjectViewViaUI {
 		LexiconEntry.gotoAdd();
 
@@ -46,6 +73,12 @@ definition {
 		AssertVisible(
 			key_columnName = "${columnOption}",
 			locator1 = "ObjectCustomViews#ADD_COLUMNS_COLUMN_LABEL");
+	}
+
+	macro assertColumnVisibleOnDefaultSort {
+		AssertVisible(
+			key_columnName = "${colunmName}",
+			locator1 = "ObjectCustomViews#VIEW_BUILDER_SEARCH_RESULT");
 	}
 
 	macro assertEmptyStateTextOnViewBuilder {
@@ -100,6 +133,10 @@ definition {
 		Type(
 			locator1 = "ObjectCustomViews#OBJECT_VIEWS_NAME",
 			value1 = "${name}");
+	}
+
+	macro goToDefaultSortTab {
+		Click(locator1 = "ObjectCustomViews#DEFAULT_SORT_TAB");
 	}
 
 	macro gotoPermissions {
@@ -231,6 +268,12 @@ definition {
 				key_permissionName = "${permissionsName}",
 				locator1 = "ObjectCustomViews#SELECT_PERMISSIONS_TO_REGULAR_ROLE");
 		}
+	}
+
+	macro viewCardTitleOnSidePanel {
+		Click(
+			key_cardTitle = "${cardTitle}",
+			locator1 = "ObjectCustomViews#VIEW_CARD_TITLE_ON_SIDE_PANEL");
 	}
 
 	macro viewColumnsOrder {

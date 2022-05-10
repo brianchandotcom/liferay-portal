@@ -39,7 +39,7 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 		<!-- End LPS-38289, LPS-55993, and LPS-61876 -->
 
 		<aui:input name="userId" type="hidden" value="<%= themeDisplay.getUserId() %>" />
-		<aui:input autocomplete="new-password" label="your-password" name="password" required="<%= true %>" size="30" type="password" />
+		<aui:input label="your-password" name="password" required="<%= true %>" size="30" type="password" />
 
 		<div class="form-text">
 			<liferay-ui:message key="enter-your-current-password-to-confirm-changes" />

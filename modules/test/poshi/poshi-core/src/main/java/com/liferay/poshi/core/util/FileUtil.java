@@ -122,6 +122,22 @@ public class FileUtil {
 		return filePath;
 	}
 
+	public static String getDirContents(String filePath) {
+		File sourceDir = new File(filePath);
+
+		File[] filesList = sourceDir.listFiles();
+
+		StringBuilder sb = new StringBuilder();
+
+		for (File file : filesList) {
+			if (file.isDirectory() || file.isFile()) {
+				sb.append(file.getName() + ",");
+			}
+		}
+
+		return sb.toString();
+	}
+
 	public static String getFileName(String filePath) {
 		Path path = Paths.get(filePath);
 

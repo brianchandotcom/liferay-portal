@@ -45,14 +45,18 @@ export default function PublishButton({canPublish, formRef, label, onPublish}) {
 						if (hasStyleErrors) {
 							setOpenStyleErrorsModal(true);
 						}
-						else if (isSomeFormIncomplete()) {
-							openWarningModal({
-								action: onPublish,
-								...MISSING_FIELD_DATA,
-							});
-						}
 						else {
-							onPublish();
+							isSomeFormIncomplete().then((result) => {
+								if (result) {
+									openWarningModal({
+										action: onPublish,
+										...MISSING_FIELD_DATA,
+									});
+								}
+								else {
+									onPublish();
+								}
+							});
 						}
 					}}
 					small

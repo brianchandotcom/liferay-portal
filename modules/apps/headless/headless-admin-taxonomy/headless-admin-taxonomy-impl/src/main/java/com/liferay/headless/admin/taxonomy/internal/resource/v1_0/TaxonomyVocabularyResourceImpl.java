@@ -62,6 +62,7 @@ import com.liferay.portlet.asset.util.AssetVocabularySettingsHelper;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -73,9 +74,6 @@ import java.util.stream.Stream;
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.core.MultivaluedMap;
-
-import org.apache.commons.collections.ListUtils;
-import org.apache.commons.collections.MapUtils;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -317,6 +315,11 @@ public class TaxonomyVocabularyResourceImpl
 		return AssetVocabulary.class.getName();
 	}
 
+	private static void _map(String assetType, String className) {
+		_assetTypeTypeToClassNames.put(assetType, className);
+		_classNameToAssetTypeTypes.put(className, assetType);
+	}
+
 	private AssetVocabulary _addAssetVocabulary(
 			String externalReferenceCode, Long siteId,
 			TaxonomyVocabulary taxonomyVocabulary)
@@ -442,7 +445,7 @@ public class TaxonomyVocabularyResourceImpl
 	private String _getAvailableAssetTypes(
 		List<AssetRendererFactory<?>> categorizableAssetRenderFactories) {
 
-		List<String> assetTypes = ListUtils.union(
+		List<String> assetTypes = ListUtil.concat(
 			transform(
 				categorizableAssetRenderFactories,
 				assetRenderedFactory -> {
@@ -669,28 +672,26 @@ public class TaxonomyVocabularyResourceImpl
 	}
 
 	private static final Map<String, String> _assetTypeTypeToClassNames =
-		HashMapBuilder.put(
-			"BlogPosting", "com.liferay.blogs.model.BlogsEntry"
-		).put(
-			"Document", "com.liferay.document.library.kernel.model.DLFileEntry"
-		).put(
-			"KnowledgeBaseArticle", "com.liferay.knowledge.base.model.KBArticle"
-		).put(
-			"Organization", Organization.class.getName()
-		).put(
-			"StructuredContent", "com.liferay.journal.model.JournalArticle"
-		).put(
-			"UserAccount", User.class.getName()
-		).put(
-			"WebPage", Layout.class.getName()
-		).put(
-			"WebSite", Group.class.getName()
-		).put(
-			"WikiPage", "com.liferay.wiki.model.WikiPage"
-		).build();
+		new HashMap<>();
 	private static final Map<String, String> _classNameToAssetTypeTypes =
-		MapUtils.invertMap(_assetTypeTypeToClassNames);
+		new HashMap<>();
 	private static final EntityModel _entityModel = new VocabularyEntityModel();
+
+	static {
+		_map("BlogPosting", "com.liferay.blogs.model.BlogsEntry");
+		_map(
+			"Document",
+			"com.liferay.document.library.kernel.model.DLFileEntry");
+		_map(
+			"KnowledgeBaseArticle",
+			"com.liferay.knowledge.base.model.KBArticle");
+		_map("Organization", Organization.class.getName());
+		_map("StructuredContent", "com.liferay.journal.model.JournalArticle");
+		_map("UserAccount", User.class.getName());
+		_map("WebPage", Layout.class.getName());
+		_map("WebSite", Group.class.getName());
+		_map("WikiPage", "com.liferay.wiki.model.WikiPage");
+	}
 
 	@Reference
 	private AssetVocabularyLocalService _assetVocabularyLocalService;

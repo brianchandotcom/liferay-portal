@@ -3383,7 +3383,7 @@ definition {
 		}
 
 		task ("Filter by Type") {
-			ContentDashboard.filterByType(typeNameList = "Basic Web Content");
+			ContentDashboard.filterByType(typeName = "Basic Web Content");
 		}
 
 		task ("Assert that the web content and filter label are present") {
@@ -3415,7 +3415,7 @@ definition {
 		}
 
 		task ("Filter by Type: Basic Document") {
-			ContentDashboard.filterByType(typeNameList = "Basic Document");
+			ContentDashboard.filterByType(typeName = "Basic Document");
 		}
 
 		task ("Assert that the web content and filter label are present") {
@@ -3446,7 +3446,7 @@ definition {
 		}
 
 		task ("Filter by Type") {
-			ContentDashboard.filterByType(typeNameList = "Blogs Entry");
+			ContentDashboard.filterByType(typeName = "Blogs Entry");
 		}
 
 		task ("Assert that the web content and filter label are present") {
@@ -3564,7 +3564,7 @@ definition {
 		}
 
 		task ("Filter assets by both structure types") {
-			ContentDashboard.filterByType(typeNameList = "Basic Web Content,WC Structure Name");
+			ContentDashboard.filterByType(typeName = "Basic Web Content,WC Structure Name");
 		}
 
 		task ("Assert if both assets are displayed") {
@@ -3590,9 +3590,7 @@ definition {
 		task ("Navigate to the content Dashboard and filter by file extension") {
 			ContentDashboard.goToContentDashboard();
 
-			ContentDashboard.filterByExtension(
-				extensionName = "doc",
-				filterOption = "Extension");
+			ContentDashboard.filterByExtension(extensionName = "doc");
 		}
 
 		task ("Check if extension is present") {
@@ -3953,9 +3951,7 @@ definition {
 		task ("Navigate to the content Dashboard and filter by file extension") {
 			ContentDashboard.goToContentDashboard();
 
-			ContentDashboard.filterByExtension(
-				extensionName = "mp3",
-				filterOption = "Extension");
+			ContentDashboard.filterByExtension(extensionName = "mp3");
 		}
 
 		task ("Check if extension is present") {
@@ -3981,9 +3977,7 @@ definition {
 		task ("Navigate to the content Dashboard and filter by file extension") {
 			ContentDashboard.goToContentDashboard();
 
-			ContentDashboard.filterByExtension(
-				extensionName = "html",
-				filterOption = "Extension");
+			ContentDashboard.filterByExtension(extensionName = "html");
 		}
 
 		task ("Check if extension is present") {
@@ -4011,9 +4005,7 @@ definition {
 		task ("Navigate to the content Dashboard and filter by file extension") {
 			ContentDashboard.goToContentDashboard();
 
-			ContentDashboard.filterByExtension(
-				extensionName = "zip",
-				filterOption = "Extension");
+			ContentDashboard.filterByExtension(extensionName = "zip");
 		}
 
 		task ("Check if extension is present") {
@@ -4039,9 +4031,7 @@ definition {
 		task ("Navigate to the content Dashboard and filter by file extension") {
 			ContentDashboard.goToContentDashboard();
 
-			ContentDashboard.filterByExtension(
-				extensionName = "json",
-				filterOption = "Extension");
+			ContentDashboard.filterByExtension(extensionName = "json");
 		}
 
 		task ("Check if extension is present") {
@@ -4067,9 +4057,7 @@ definition {
 		task ("Navigate to the content Dashboard and filter by file extension") {
 			ContentDashboard.goToContentDashboard();
 
-			ContentDashboard.filterByExtension(
-				extensionName = "pptx",
-				filterOption = "Extension");
+			ContentDashboard.filterByExtension(extensionName = "pptx");
 		}
 
 		task ("Check if extension is present") {
@@ -4095,9 +4083,7 @@ definition {
 		task ("Navigate to the content Dashboard and filter by file extension") {
 			ContentDashboard.goToContentDashboard();
 
-			ContentDashboard.filterByExtension(
-				extensionName = "xls",
-				filterOption = "Extension");
+			ContentDashboard.filterByExtension(extensionName = "xls");
 		}
 
 		task ("Check if extension is present") {
@@ -4123,9 +4109,7 @@ definition {
 		task ("Navigate to the content Dashboard and filter by file extension") {
 			ContentDashboard.goToContentDashboard();
 
-			ContentDashboard.filterByExtension(
-				extensionName = "docx",
-				filterOption = "Extension");
+			ContentDashboard.filterByExtension(extensionName = "docx");
 		}
 
 		task ("Check if extension is present") {
@@ -4151,9 +4135,7 @@ definition {
 		task ("Navigate to the content Dashboard and filter by file extension") {
 			ContentDashboard.goToContentDashboard();
 
-			ContentDashboard.filterByExtension(
-				extensionName = "pdf",
-				filterOption = "Extension");
+			ContentDashboard.filterByExtension(extensionName = "pdf");
 		}
 
 		task ("Check if extension is present") {
@@ -4179,9 +4161,7 @@ definition {
 		task ("Navigate to the content Dashboard and filter by file extension") {
 			ContentDashboard.goToContentDashboard();
 
-			ContentDashboard.filterByExtension(
-				extensionName = "mp4",
-				filterOption = "Extension");
+			ContentDashboard.filterByExtension(extensionName = "mp4");
 		}
 
 		task ("Check if extension is present") {
@@ -4269,10 +4249,7 @@ definition {
 		task ("Navigate to the content Dashboard and filter by file extension") {
 			ContentDashboard.goToContentDashboard();
 
-			ContentDashboard.filterByExtension(
-				extensionName = "",
-				filterOption = "Extension",
-				noResultMessage = "No results were found.");
+			ContentDashboard.openFilterModal(filterOption = "Extension");
 		}
 
 		task ("Check if message of No results were found is present") {
@@ -4657,17 +4634,7 @@ definition {
 		task ("Navigate to the content Dashboard and filter by file extension") {
 			ContentDashboard.goToContentDashboard();
 
-			ContentDashboard.filterByExtension(
-				extensionName = "mp3",
-				filterOption = "Extension");
-
-			ContentDashboard.filterByExtension(
-				extensionName = "Image",
-				filterOption = "Extension");
-
-			ContentDashboard.filterByExtension(
-				extensionName = "Text",
-				filterOption = "Extension");
+			ContentDashboard.filterByExtension(extensionNameList = "mp3,Image,Text");
 		}
 
 		task ("Check if extension is present") {
@@ -4693,9 +4660,7 @@ definition {
 		task ("Navigate to the content Dashboard and filter by file extension") {
 			ContentDashboard.goToContentDashboard();
 
-			ContentDashboard.filterByMimeParent(
-				filterOption = "Extension",
-				parentExtension = "Text (1 Item)");
+			ContentDashboard.filterByMimeParent(parentExtension = "Text (1 Item)");
 		}
 
 		task ("Check if extension is present") {

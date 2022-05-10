@@ -410,6 +410,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TREEVIEW_OPTION_CHECKBOX</td>
+	<td>//div[(@class='autofit-row') and contains (normalize-space(.),'${key_optionName}')] //input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TREEVIEW_OPTION_ROW</td>
+	<td>//div[(@class='autofit-row') and contains (normalize-space(.),'${optionName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TYPE_COLUMN_VALUE</td>
 	<td>//td[contains(@class,'lfr-type-column') and contains(text(),'${assetType}')]</td>
 	<td></td>

@@ -17,14 +17,14 @@ definition {
 	macro checkMimeExtensionDisplayed {
 		if (isSet(typeName)) {
 			AssertVisible(
-				key_nodeName = "${typeName}",
-				locator1 = "Treeview#NODE_ITEM");
+				optionName = "${typeName}",
+				locator1 = "ContentDashboard#TREEVIEW_OPTION_ROW");
 		}
 		else {
 			for (var typeName : list "${typeNameList}") {
 				AssertVisible(
-					key_nodeName = "${typeName}",
-					locator1 = "Treeview#NODE_ITEM");
+					optionName = "${typeName}",
+					locator1 = "ContentDashboard#TREEVIEW_OPTION_ROW");
 			}
 		}
 
@@ -240,47 +240,29 @@ definition {
 	}
 
 	macro filterByExtension {
-		if (IsElementPresent(locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN")) {
-			AssertClickNoError(
-				locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN",
-				value1 = "Filter and Order");
+		ContentDashboard.openFilterModal(filterOption = "Extension");
+
+		if (!(isSet(extensionNameList))) {
+			var extensionNameList = "${extensionName}";
 		}
 
-		var key_filterOption = "${filterOption}";
-
-		Click(locator1 = "ContentDashboard#FILTER_BY_OPTION");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		if ("${extensionName}" != "") {
-			Click(locator1 = "ContentDashboard#FILTER_EXTENSION_ELEMENT");
-
-			SelectFrame(value1 = "relative=top");
-
-			AssertClickNoError(
-				locator1 = "Button#SELECT",
-				value1 = "Select");
-
-			SelectFrame(value1 = "relative=top");
-
-			WaitForElementPresent(locator1 = "ContentDashboard#ASSET_MENU_DROPDOWN_BUTTON");
-		}
+		ContentDashboard.useTreeviewFilter(optionsList = "${extensionNameList}");
 	}
 
 	macro filterByMimeParent {
-		if (IsElementPresent(locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN")) {
-			AssertClickNoError(
-				locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN",
-				value1 = "Filter and Order");
+		ContentDashboard.openFilterModal(filterOption = "Extension");
+
+		ContentDashboard.useTreeviewFilter(optionsList = "${parentExtension}");
+	}
+
+	macro useTreeviewFilter {
+		Portlet.expandTree();
+
+		for (var optionName : list "${optionsList}") {
+			Click.javaScriptClick(
+				key_optionName = "${optionName}",
+				locator1 = "ContentDashboard#TREEVIEW_OPTION_CHECKBOX");
 		}
-
-		var key_filterOption = "${filterOption}";
-
-		Click(locator1 = "ContentDashboard#FILTER_BY_OPTION");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		Click(locator1 = "ContentDashboard#FILTER_PARENT_EXTENSION");
 
 		SelectFrame(value1 = "relative=top");
 
@@ -404,35 +386,13 @@ definition {
 	}
 
 	macro filterByType {
-		if (IsElementPresent(locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN")) {
-			AssertClickNoError(
-				locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN",
-				value1 = "Filter and Order");
+		ContentDashboard.openFilterModal(filterOption = "Type");
+
+		if (!(isSet(typeNameList))) {
+			var typeNameList = "${typeName}";
 		}
 
-		Click(
-			filterOption = "Type",
-			locator1 = "ContentDashboard#FILTER_BY_OPTION");
-
-		WaitForLiferayEvent.initializeLiferayEventLog();
-
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#IFRAME");
-
-		Portlet.expandTree();
-
-		for (var typeName : list "${typeNameList}") {
-			Click(
-				key_nodeName = "${typeName}",
-				locator1 = "Treeview#NODE_ITEM");
-		}
-
-		SelectFrame(value1 = "relative=top");
-
-		Button.clickSelect();
-
-		SelectFrame(value1 = "relative=top");
-
-		WaitForElementPresent(locator1 = "ContentDashboard#ASSET_MENU_DROPDOWN_BUTTON");
+		ContentDashboard.useTreeviewFilter(optionsList = "${typeNameList}");
 	}
 
 	macro flipAxesButtonClick {
@@ -492,9 +452,11 @@ definition {
 	}
 
 	macro openFilterModal {
-		AssertClickNoError(
-			locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN",
-			value1 = "Filter and Order");
+		if (IsElementPresent(locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN")) {
+			AssertClickNoError(
+				locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN",
+				value1 = "Filter and Order");
+		}
 
 		Click(locator1 = "ContentDashboard#FILTER_BY_OPTION");
 

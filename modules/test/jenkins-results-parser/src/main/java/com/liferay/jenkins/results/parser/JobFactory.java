@@ -559,7 +559,7 @@ public class JobFactory {
 			}
 		}
 
-		if (jobName.startsWith("test-subrepository-acceptance-pullrequest(")) {
+		if (jobName.startsWith("test-subrepository-acceptance-pullrequest")) {
 			if (jsonObject != null) {
 				job = new SubrepositoryAcceptancePullRequestJob(jsonObject);
 			}

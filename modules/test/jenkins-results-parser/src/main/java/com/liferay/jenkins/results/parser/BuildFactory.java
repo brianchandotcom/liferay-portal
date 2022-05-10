@@ -185,9 +185,7 @@ public class BuildFactory {
 				url, (TopLevelBuild)parentBuild);
 		}
 
-		if (jobName.matches(
-				"test-subrepository-acceptance-pullrequest\\(.*\\)")) {
-
+		if (jobName.matches("test-subrepository-acceptance-pullrequest.*")) {
 			return new PullRequestSubrepositoryTopLevelBuild(
 				url, (TopLevelBuild)parentBuild);
 		}

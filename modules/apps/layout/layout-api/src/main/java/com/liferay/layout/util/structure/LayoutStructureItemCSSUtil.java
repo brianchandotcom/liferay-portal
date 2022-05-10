@@ -89,7 +89,7 @@ public class LayoutStructureItemCSSUtil {
 				fragmentEntryLink.getFragmentEntryId());
 
 		if (fragmentEntry != null) {
-			fragmentEntry.getFragmentEntryKey();
+			return fragmentEntry.getFragmentEntryKey();
 		}
 
 		return StringPool.BLANK;

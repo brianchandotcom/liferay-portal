@@ -567,7 +567,7 @@ definition {
 
 		Form.save();
 
-		AssertElementPresent(locator1 = "Message#SUCCESS");
+		Alert.viewSuccessMessage();
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -682,7 +682,7 @@ definition {
 
 		Form.save();
 
-		AssertElementPresent(locator1 = "Message#SUCCESS");
+		Alert.viewSuccessMessage();
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -725,7 +725,7 @@ definition {
 
 		Form.save();
 
-		AssertElementPresent(locator1 = "Message#SUCCESS");
+		Alert.viewSuccessMessage();
 
 		Click(locator1 = "Icon#BACK");
 

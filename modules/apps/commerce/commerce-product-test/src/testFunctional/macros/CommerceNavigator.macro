@@ -1,5 +1,9 @@
 definition {
 
+	macro goToWishLists {
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/minium/lists");
+	}
+
 	macro changeVocabulary {
 		SelectFrame(
 			key_title = "Commerce Categories Navigation",

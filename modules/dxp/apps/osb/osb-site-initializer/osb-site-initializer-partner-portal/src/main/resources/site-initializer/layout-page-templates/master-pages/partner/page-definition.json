@@ -912,7 +912,7 @@
                         },
                         "url" : {
                           "value_i18n" : {
-                            "en_US" : "/documents/20123/0/github.svg/c949364a-bf9e-a315-2536-e7a2024980f6?t=1652117927077&download=true"
+                            "en_US" : "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/github.svg$]"
                           }
                         }
                       },
@@ -971,7 +971,7 @@
                         },
                         "url" : {
                           "value_i18n" : {
-                            "en_US" : "/documents/20123/0/linkedin.svg/481809d6-8a03-562f-e670-02880a2a71a4?t=1652117948081&download=true"
+                            "en_US" : "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/linkedin.svg$]"
                           }
                         }
                       },
@@ -1030,7 +1030,7 @@
                         },
                         "url" : {
                           "value_i18n" : {
-                            "en_US" : "/documents/20123/0/youtube.svg/4a537689-9399-dab0-abc0-f55d68ee7a59?t=1652117966724&download=true"
+                            "en_US" : "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/youtube.svg$]"
                           }
                         }
                       },
@@ -1089,7 +1089,7 @@
                         },
                         "url" : {
                           "value_i18n" : {
-                            "en_US" : "/documents/20123/0/facebook.svg/c778a341-fcc9-5e9a-a62c-079e27f41099?t=1652117982135&download=true"
+                            "en_US" : "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/facebook.svg$]"
                           }
                         }
                       },
@@ -1148,7 +1148,7 @@
                         },
                         "url" : {
                           "value_i18n" : {
-                            "en_US" : "/documents/20123/0/instagram.svg/e4c2dfeb-4563-6957-c837-9193741e2f84?t=1652118003682&download=true"
+                            "en_US" : "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/instagram.svg$]"
                           }
                         }
                       },
@@ -1206,7 +1206,7 @@
                         },
                         "url" : {
                           "value_i18n" : {
-                            "en_US" : "/documents/20123/0/twitter.svg/b7e0462d-9fde-0d21-b346-4af67274559a?t=1652118155270&download=true"
+                            "en_US" : "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/twitter.svg$]"
                           }
                         }
                       },

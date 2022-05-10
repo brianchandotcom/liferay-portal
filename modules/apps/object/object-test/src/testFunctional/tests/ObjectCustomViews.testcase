@@ -1265,7 +1265,6 @@ definition {
 	@description = "LPS-146028 - Verify that when the user duplicate a view, the Mark As Default option comes inactivated"
 	@priority = "4"
 	test DuplicatedViewIsNotDefault {
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 152052",
 			objectName = "CustomObject152052",
@@ -1286,7 +1285,6 @@ definition {
 		AssertNotChecked.assertNotCheckedNotVisible(
 			checkboxName = "Mark as Default",
 			locator1 = "Checkbox#ANY_CHECKBOX");
-
 	}
 
 	@description = "LPS-135394 - Verify the empty state for the View Builder tab"

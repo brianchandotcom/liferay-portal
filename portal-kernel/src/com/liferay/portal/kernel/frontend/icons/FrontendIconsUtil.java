@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.icons;
+package com.liferay.portal.kernel.frontend.icons;
 
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -20,12 +20,10 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
-// getPathThemeImages
-
 /**
  * @author Bryce Osterhaus
  */
-public class IconsUtil {
+public class FrontendIconsUtil {
 
 	public static String getBasePath() {
 		return _ICONS_BASE_PATH;

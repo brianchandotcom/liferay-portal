@@ -15,7 +15,7 @@
 package com.liferay.frontend.icons.web.internal.servlet.taglib;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.icons.IconsUtil;
+import com.liferay.portal.kernel.frontend.icons.FrontendIconsUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -55,11 +55,11 @@ public class AUICompatibilityTopHeadDynamicInclude extends BaseDynamicInclude {
 		sb.append(
 			StringBundler.concat(
 				"Liferay._ICONS_.spritemap = '",
-				IconsUtil.getSpritemapPath(themeDisplay), "';"));
+				FrontendIconsUtil.getSpritemapPath(themeDisplay), "';"));
 		sb.append(
 			StringBundler.concat(
 				"Liferay._ICONS_.systemSpritemap = '",
-				IconsUtil.getSystemSpritemapPath(), "';"));
+				FrontendIconsUtil.getSystemSpritemapPath(), "';"));
 		sb.append("</script>");
 
 		printWriter.println(sb);

@@ -14,7 +14,7 @@
 
 /**
  * These constants should be identical to the constants used at
- * `portal-kernel/src/com/liferay/portal/kernel/icons/IconsUtil.java`
+ * `portal-kernel/src/com/liferay/portal/kernel/frontend/icons/FrontendIconsUtil.java`
  */
 const BASE_PATH = '/o/icons';
 const SYSTEM_ICON_PACK = 'clay';

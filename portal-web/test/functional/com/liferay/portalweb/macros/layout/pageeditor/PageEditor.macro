@@ -4065,6 +4065,20 @@ definition {
 			locator1 = "Fragment#FRAGMENT_LABEL");
 	}
 
+	macro viewFragmentCommonStyle {
+		var actualStyleValue = Css.getStyleValue(
+			className = "${commonStylesClass}",
+			id = "layout-common-styles",
+			styleName = "${styleName}");
+
+		if (contains("${actualStyleValue}", "${styleValue}")) {
+			echo("PASSED");
+		}
+		else {
+			TestUtils.fail(message = "FAILED: expected '${styleValue}', actual was '${actualStyleValue}'");
+		}
+	}
+
 	macro viewFragmentEditableImage {
 		if ("${contributed}" == "false") {
 			AssertVisible(

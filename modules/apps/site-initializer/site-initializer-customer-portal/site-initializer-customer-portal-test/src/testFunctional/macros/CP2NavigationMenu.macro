@@ -70,4 +70,7 @@ definition {
 		Click(locator1 = "CP2NavigationMenu#INVITE_MEMBERS_CANCEL_BUTTON");
 	}
 
+	macro clickTeamMembersSendInvitation {
+		Click(locator1 = "CP2NavigationMenu#SEND_INVITATIONS_BUTTON");
+	}
 }

@@ -597,6 +597,14 @@ definition {
 		PortletEntry.save();
 
 		AssertAlertNotPresent();
+
+		Search.openSearchPage();
+
+		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "<script>alert(123);</script>");
+
+		Refresh();
+
+		AssertAlertNotPresent();
 	}
 
 	test AssertUsingCopiedElementJSONWithinCustomElement {

@@ -186,4 +186,172 @@ definition {
 		}
 
 	}
+
+	@description = "Verify user can import wish list order in another order and do checkout"
+	@priority = "3"
+	test CheckoutAfterImportFromWishList {
+		task ("Given a Minium site with a buyer user") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And given some products in wish list") {
+			CommerceWishList.addProductToWishList(productName = "U-Joint,ABS Sensor,Torque Converters");
+
+			CommerceNavigator.goToWishLists();
+
+			CommerceWishList.assertWishListProduct(
+				productName = "U-Joint,ABS Sensor,Torque Converters",
+				wishListName = "Default");
+		}
+
+		task ("And given the buyer starts a new order") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+			for (var product : list "U-Joint:1,ABS Sensor:1,Torque Converters:1") {
+				var productName = StringUtil.extractFirst("${product}", ":");
+				var productQuantity = StringUtil.extractLast("${product}", ":");
+
+				CommerceProducts.searchProduct(search = "${productName}");
+				
+				FrontStore.addInitializerProductToCart(
+					productName = "${productName}",
+					productQuantity = "${productQuantity}");
+			}
+
+			CommerceNavigator.gotoMiniCart();
+
+			FrontStore.viewMiniCart(
+				cartItemNames = "U-Joint,ABS Sensor,Torque Converters",
+				cartItemPriceValues = "24,50,34",
+				cartItemQuantities = "1,1,1",
+				cartItemSkUs = "MIN55861,MIN93015,MIN55860",
+				cartSummaryQuantity = "3",
+				cartSummarySubtotal = "108",
+				cartSummaryTotal = "${cartSummarySubtotal}");
+		}
+
+		task ("When the buyer select the pending order and import a new order from wish list") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
+
+			Button.click(button = "View");
+
+			CommerceOrders.importOrderFromType(orderType = "Wish Lists");
+
+			SelectFrameTop();
+
+			IFrame.selectModalFrame();
+
+			ClickNoError(
+				key_itemName = "Default",
+				locator1 = "CommerceEntry#SELECT_ITEM_FROM_LIST");
+
+			SelectFrameTop();
+
+			IFrame.selectModalFrame();
+
+			Button.click(button = "Import");
+
+			SelectFrameTop();
+		}
+
+		task ("Then all the orders are displayed") {
+			CommerceOrders.viewOrdersDetails(
+				productListPrice = "24.00",
+				productName = "U-Joint",
+				productQuantity = "2",
+				productSku = "MIN55861",
+				productTotalPrice = "48.00");
+
+			CommerceOrders.viewOrdersDetails(
+				productListPrice = "50.00",
+				productName = "ABS Sensor",
+				productQuantity = "2",
+				productSku = "MIN93015",
+				productTotalPrice = "100.00");
+
+			CommerceOrders.viewOrdersDetails(
+				productListPrice = "34.00",
+				productName = "Torque Converters",
+				productQuantity = "2",
+				productSku = "MIN55859",
+				productTotalPrice = "68.00");
+		}
+
+		task ("And when the user complete the order") {
+			Button.click(button = "Checkout");
+
+			CommerceCheckout.setAddress(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code");
+
+			Button.click(button = "Continue");
+
+			Click(
+				key_radioOption = "Standard",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+
+			Button.click(button = "Continue");
+
+			Button.click(button = "Continue");
+		}
+
+		task ("And when the user go to placed orders and select the completed order") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Placed Orders");
+
+			Button.click(button = "View");
+		}
+
+		task ("Then all the order details are displayed") {
+			CommerceOrders.viewOrdersDetails(
+				productListPrice = "24.00",
+				productName = "U-Joint",
+				productQuantity = "2",
+				productSku = "MIN55861",
+				productTotalPrice = "48.00");
+
+			CommerceOrders.viewOrdersDetails(
+				productListPrice = "50.00",
+				productName = "ABS Sensor",
+				productQuantity = "2",
+				productSku = "MIN93015",
+				productTotalPrice = "100.00");
+
+			CommerceOrders.viewOrdersDetails(
+				productListPrice = "34.00",
+				productName = "Torque Converters",
+				productQuantity = "2",
+				productSku = "MIN55859",
+				productTotalPrice = "68.00");
+
+			AssertTextEquals.assertPartialText(
+				key_priceName = "Subtotal",
+				locator1 = "CommerceOrders#ORDER_PRICES_SEPARETED",
+				value1 = "216.00");
+
+			AssertTextEquals.assertPartialText(
+				key_priceName = "Delivery",
+				locator1 = "CommerceOrders#ORDER_PRICES_SEPARETED",
+				value1 = "15.00");
+
+			AssertTextEquals.assertPartialText(
+				key_priceName = "Tax",
+				locator1 = "CommerceOrders#ORDER_PRICES_SEPARETED",
+				value1 = "0.00");
+
+			AssertTextEquals.assertPartialText(
+				key_priceName = "Total",
+				locator1 = "CommerceOrders#ORDER_PRICES_SEPARETED",
+				value1 = "231.00");
+		}
+
+	}
+
 }

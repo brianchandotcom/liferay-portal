@@ -738,7 +738,15 @@ public class MainServlet extends HttpServlet {
 			String[] webIds = PortalInstances.getWebIds();
 
 			for (String webId : webIds) {
-				PortalInstances.initCompany(servletContext, webId);
+				boolean skipCheck = false;
+
+				if (StartupHelperUtil.isDBNew() &&
+					webId.equals(PropsValues.COMPANY_DEFAULT_WEB_ID)) {
+
+					skipCheck = true;
+				}
+
+				PortalInstances.initCompany(servletContext, webId, skipCheck);
 			}
 		}
 		finally {

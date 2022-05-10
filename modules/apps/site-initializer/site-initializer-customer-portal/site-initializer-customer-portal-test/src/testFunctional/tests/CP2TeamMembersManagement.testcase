@@ -48,12 +48,15 @@ definition {
 
 		CP2NavigationMenu.goToTeamMembers();
 
-		//macro de criação
+		CustomerPortal.addFieldsTeamMembersExtra();
 
-		//macro de clicar no botão de enviar
+		CP2NavigationMenu.clickTeamMembersSendInvitation(
+			position = "1",
+			rowEmail = "test1@liferay.com",
+			positionNumber = "1", 
+			rowRole = "Partner Manager");
 
 		CustomerPortal.viewTeamMembersPage();
-
 	}
 
 	@description = "LPS-146292 - Check if there is a 'Cancel' button if the user wants to leave the process."
@@ -73,8 +76,6 @@ definition {
         CustomerPortal.enterOnProject(projectName = "Test Account 01");
 
 		CP2NavigationMenu.goToTeamMembers();
-
-		//macro de criação
 
 		CP2NavigationMenu.cancelTeamMembersInvitation();
 

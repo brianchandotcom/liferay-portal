@@ -3052,6 +3052,19 @@ definition {
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_COLLECTION_PANEL_EXPANDED");
 	}
 
+	macro getCommonStylesClass {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
+		var class = selenium.getAttribute("xpath=(//div[@aria-label='${fragmentName}'])[${index}]@class");
+		var class = StringUtil.extractFirst("${class}", " page-editor__topper");
+		var class = StringUtil.extractLast("${class}", "lfr-layout-structure-item-topper-");
+		var commonStylesClass = StringUtil.add("lfr-layout-structure-item-", "${class}", "");
+
+		return "${commonStylesClass}";
+	}
+
 	macro getFileSizeOfSelectedImageResolution {
 		var key_resolutionLabel = "File Size";
 

@@ -1,17 +1,5 @@
 definition {
 
-	macro selectOptionsManage {
-		Click(
-			key_itemvalue = "${key_itemvalue}",
-			locator1 = "TestrayDropdown#DROPDOWN_ITEM");
-	}
-
-	macro assertTitleModal {
-		AssertElementPresent(
-			key_title = "${key_itemvalue}",
-			locator1 = "TestrayManage#TITLE_MODAL_ITEM");
-	}
-
 	macro addNewCategory {
 		Click(locator1 = "TestrayManage#ADD_OPTIONS");
 
@@ -26,6 +14,18 @@ definition {
 		AssertElementPresent(
 			key_title = "${key_name}",
 			locator1 = "TestrayManage#PROJECT_NAME_MODAL");
+	}
+
+	macro assertTitleModal {
+		AssertElementPresent(
+			key_title = "${key_itemvalue}",
+			locator1 = "TestrayManage#TITLE_MODAL_ITEM");
+	}
+
+	macro selectOptionsManage {
+		Click(
+			key_itemvalue = "${key_itemvalue}",
+			locator1 = "TestrayDropdown#DROPDOWN_ITEM");
 	}
 
 }

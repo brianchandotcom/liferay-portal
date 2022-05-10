@@ -26,6 +26,67 @@ definition {
 		}
 	}
 
+	@description = "This test Audit log can be disabled to persist in database table Audit_AuditEvent through System Settings or OSGI config file"
+	@priority = "4"
+	test CanEnableOrDisableDatabasePersistence {
+		property osgi.module.configuration.file.names = "com.liferay.portal.security.audit.router.configuration.PersistentAuditMessageProcessorConfiguration.config";
+		property osgi.module.configurations = "enabled=&quot;false&quot;";
+		property test.name.skip.portal.instance = "AuditConfiguration#CanEnableOrDisableDatabasePersistence";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Audit",
+			configurationName = "Persistent Message Audit Message Processor",
+			configurationScope = "System Scope");
+
+		FormFields.viewCheckboxNotChecked(fieldName = "Enabled");
+
+		SignOut.signOut();
+
+		var afterLoginAuditTable = SQL.executeMySQLStatement(mysqlStatement = "SELECT * FROM Audit_AuditEvent;");
+
+		echo("Audit table: ${afterLoginAuditTable}");
+
+		User.firstLoginUI(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Audit",
+			configurationName = "Persistent Message Audit Message Processor",
+			configurationScope = "System Scope");
+
+		FormFields.enableCheckbox(fieldName = "Enabled");
+
+		SystemSettings.saveConfiguration();
+
+		SignOut.signOut();
+
+		User.firstLoginUI(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		var afterAuditTable = SQL.executeMySQLStatement(mysqlStatement = "SELECT * FROM Audit_AuditEvent;");
+
+		echo("Audit table: ${afterAuditTable}");
+
+		if ("${afterLoginAuditTable}" == "${afterAuditTable}") {
+			fail("Audit Table remains unmodified after enable Persistent Message.");
+		}
+		else {
+			echo("Login from Audit is added in persistence.");
+		}
+	}
+
 	@description = "This test Audit can be enabled or disabled through System Settings and OSGI config file."
 	@priority = "4"
 	test CanBeEnabledOrDisabledThroughSystemSettingsAndOSGIConfigFile {

@@ -245,16 +245,6 @@ definition {
 		Portlet.viewCannotAddPG(portletName = "Search Insights");
 	}
 
-	@description = "This is a use case for LPS-135288."
-	@priority = "4"
-	test AssertNoXSSViaSearchTagURL {
-		var portalURL = PropsUtil.get("portal.url");
-
-		Navigator.openSpecificURL(url = "${portalURL}/web/guest/search?tag=test%22%3E%3Csvg/onload=alert(document.domain)%3E");
-
-		AssertAlertNotPresent();
-	}
-
 	@description = "This is a use case for LPS-130227."
 	@priority = "4"
 	test AssertPaginationURLforHTTPS {
@@ -307,6 +297,16 @@ definition {
 		if (!(contains("${currentURL}", "https://")) || !(contains("${currentURL}", "start=2"))) {
 			fail("URL of second search results page should contain HTTPS.");
 		}
+	}
+
+	@description = "This is a use case for LPS-135288."
+	@priority = "4"
+	test AssertSearchTagURLNoXSS {
+		var portalURL = PropsUtil.get("portal.url");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/search?tag=test%22%3E%3Csvg/onload=alert(document.domain)%3E");
+
+		AssertAlertNotPresent();
 	}
 
 	@description = "This is a use case for LPS-89561."

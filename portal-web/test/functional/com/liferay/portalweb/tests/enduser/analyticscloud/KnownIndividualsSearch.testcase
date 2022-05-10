@@ -183,7 +183,7 @@ definition {
 		}
 
 		task ("Assert there are no segments found") {
-			ACUtils.viewNoResultsMessage(noResultMessage = "There are no Associated Segments found.");
+			ACUtils.viewGenericText(textValueList = "There are no segments found.,Create a segment to get started.,Access our documentation to learn more.");
 		}
 	}
 
@@ -316,7 +316,7 @@ definition {
 		}
 
 		task ("Assert there are no segments found") {
-			ACUtils.viewNoResultsMessage(noResultMessage = "There are no Segments found.");
+			ACUtils.viewGenericText(textValueList = "There are no segments found.,Create a segment to get started.,Access our documentation to learn more.");
 		}
 	}
 
@@ -501,7 +501,7 @@ definition {
 		task ("Search and return no results") {
 			ACUtils.searchBar(searchItem = "some invalid query");
 
-			ACUtils.viewNoResultsMessage(noResultMessage = "There are no items found.");
+			ACUtils.viewGenericText(textValueList = "There are no items found.");
 		}
 
 		task ("Search for upper case") {

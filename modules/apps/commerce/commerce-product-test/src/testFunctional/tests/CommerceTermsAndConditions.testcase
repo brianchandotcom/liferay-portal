@@ -76,7 +76,6 @@ definition {
 	}
 
 	@description = "[Please Update]"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test ChangeDeliveryTermBeforeCompletingCheckout {
 		property portal.acceptance = "false";
@@ -197,7 +196,6 @@ definition {
 	}
 
 	@description = "[Please Update]"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test ChangePaymentTermBeforeCompletingCheckout {
 		property portal.acceptance = "false";
@@ -324,7 +322,6 @@ definition {
 	}
 
 	@description = "[Please Update]"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test ViewAvailableDeliveryTerms {
 		property portal.acceptance = "false";
@@ -432,7 +429,6 @@ definition {
 	}
 
 	@description = "[Please Update]"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test ViewAvailablePaymentTerms {
 		property portal.acceptance = "false";
@@ -536,7 +532,6 @@ definition {
 	}
 
 	@description = "[Please Update]"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test ViewDeliveryTermAttachedToOrder {
 		property portal.acceptance = "false";
@@ -626,7 +621,6 @@ definition {
 	}
 
 	@description = "[Please Update]"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test ViewPaymentTermAttachedToOrder {
 		property portal.acceptance = "false";
@@ -685,7 +679,7 @@ definition {
 			productName = "ABS Sensor",
 			productQuantity = "2",
 			productUnitPrice = "50",
-			shippingMethod = "Standard");
+			shippingMethod = "Standard");\
 
 		User.logoutPG();
 

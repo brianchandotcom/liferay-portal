@@ -94,8 +94,10 @@ public abstract class BaseMultiLanguageSortTestCase
 	public void testSpanish() {
 		testLocaleSort(
 			LocaleUtil.SPAIN,
-			new String[] {"a", "d", "c", "ch", "ll", "ñ", "p", "e"},
-			"[a, c, ch, d, e, ll, ñ, p]");
+			new String[] {
+				"a", "é", "d", "c", "cu", "ch", "ll", "ña", "nu", "p", "e", "á"
+			},
+			"[a, á, c, ch, cu, d, e, é, ll, nu, ña, p]");
 	}
 
 	protected void addDocuments(

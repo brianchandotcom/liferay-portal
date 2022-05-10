@@ -1,6 +1,6 @@
 apply plugin: "com.liferay.maven.plugin.builder"
 
-String h2Version = "1.4.193"
+String h2Version = "2.1.212"
 
 buildPluginDescriptor {
 	ext {

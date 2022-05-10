@@ -248,12 +248,12 @@ public class RegionLocalServiceImpl extends RegionLocalServiceBaseImpl {
 	protected void validate(String name, String regionCode)
 		throws PortalException {
 
-		if (Validator.isNull(regionCode)) {
-			throw new RegionCodeException();
+		if (Validator.isNull(name)) {
+			throw new RegionNameException("Missing name");
 		}
 
-		if (Validator.isNull(name)) {
-			throw new RegionNameException();
+		if (Validator.isNull(regionCode)) {
+			throw new RegionCodeException("Missing region code");
 		}
 	}
 

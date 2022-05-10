@@ -1263,11 +1263,29 @@ definition {
 	}
 
 	@description = "LPS-146028 - Verify that when the user duplicate a view, the Mark As Default option comes inactivated"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test DuplicatedViewIsNotDefault {
 
-		// TODO LPS-152052 DuplicatedViewIsNotDefault pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 152052",
+			objectName = "CustomObject152052",
+			pluralLabelName = "Custom Objects 152052");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 152052");
+
+		ObjectCustomViews.goToViewsTab();
+
+		ObjectCustomViews.addObjectViewViaUI(viewName = "Custom View 152052");
+
+		ObjectCustomViews.duplicateObjectCustomView(viewLabel = "Custom View 152052");
+
+		ObjectCustomViews.goToViewsDetails(label = "Custom View 152052 (Copy)");
+
+		AssertNotChecked.assertNotCheckedNotVisible(
+			checkboxName = "Mark as Default",
+			locator1 = "Checkbox#ANY_CHECKBOX");
 
 	}
 

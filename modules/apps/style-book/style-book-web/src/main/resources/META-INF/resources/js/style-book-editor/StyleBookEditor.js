@@ -34,15 +34,6 @@ const StyleBookEditor = ({
 		initialFrontendTokensValues
 	);
 	const [draftStatus, setDraftStatus] = useState(DRAFT_STATUS.notSaved);
-	const [previewLayoutType, setPreviewLayoutType] = useState(
-		() =>
-			config.previewOptions.find((type) =>
-				type.data.recentLayouts.find(
-					(layout) =>
-						layout === getMostRecentLayout(config.previewOptions)
-				)
-			)?.type
-	);
 
 	useEffect(() => {
 		if (frontendTokensValues === initialFrontendTokensValues) {
@@ -75,9 +66,14 @@ const StyleBookEditor = ({
 				draftStatus,
 				frontendTokensValues,
 				previewLayout: getMostRecentLayout(config.previewOptions),
-				previewLayoutType,
+				previewLayoutType: config.previewOptions.find((type) =>
+					type.data.recentLayouts.find(
+						(layout) =>
+							layout ===
+							getMostRecentLayout(config.previewOptions)
+					)
+				)?.type,
 				setFrontendTokensValues,
-				setPreviewLayoutType,
 			}}
 		>
 			<div className="cadmin style-book-editor">

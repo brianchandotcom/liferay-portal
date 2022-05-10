@@ -16,15 +16,19 @@ import ClayButton from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {
-	StyleBookContext,
 	useDispatch,
 	usePreviewLayout,
+	usePreviewLayoutType,
 } from './StyleBookContext';
 import {config} from './config';
-import {LOADING, SET_PREVIEW_LAYOUT} from './constants/actionTypes';
+import {
+	LOADING,
+	SET_PREVIEW_LAYOUT,
+	SET_PREVIEW_LAYOUT_TYPE,
+} from './constants/actionTypes';
 import {LAYOUT_TYPES} from './constants/layoutTypes';
 import {itemSelectorValueFromFragmentCollection} from './item_selector_value/itemSelectorValueFromFragmentCollection';
 import {itemSelectorValueFromLayout} from './item_selector_value/itemSelectorValueFromLayout';
@@ -54,24 +58,20 @@ const LAYOUT_TYPES_OPTIONS = [
 ];
 
 export default function PreviewSelector() {
-	const {previewLayoutType, setPreviewLayoutType} = useContext(
-		StyleBookContext
-	);
+	const previewLayoutType = usePreviewLayoutType();
 
 	return (
 		<>
-			<LayoutTypeSelector
-				layoutType={previewLayoutType}
-				setLayoutType={setPreviewLayoutType}
-			/>
+			<LayoutTypeSelector layoutType={previewLayoutType} />
 
 			<LayoutSelector layoutType={previewLayoutType} />
 		</>
 	);
 }
 
-export function LayoutTypeSelector({layoutType, setLayoutType}) {
+export function LayoutTypeSelector({layoutType}) {
 	const [active, setActive] = useState(false);
+	const dispatch = useDispatch();
 
 	return (
 		<ClayDropDown
@@ -113,7 +113,10 @@ export function LayoutTypeSelector({layoutType, setLayoutType}) {
 							key={type}
 							onClick={() => {
 								setActive(false);
-								setLayoutType(type);
+								dispatch({
+									layoutType: type,
+									type: SET_PREVIEW_LAYOUT_TYPE,
+								});
 							}}
 						>
 							{label}
@@ -127,7 +130,6 @@ export function LayoutTypeSelector({layoutType, setLayoutType}) {
 
 LayoutTypeSelector.propTypes = {
 	layoutType: PropTypes.string.isRequired,
-	setLayoutType: PropTypes.func.isRequired,
 };
 
 export function LayoutSelector({layoutType}) {

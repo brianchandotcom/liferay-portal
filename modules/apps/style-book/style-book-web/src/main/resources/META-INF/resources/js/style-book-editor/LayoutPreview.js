@@ -28,6 +28,7 @@ import {
 	useDispatch,
 	useLoading,
 	usePreviewLayout,
+	usePreviewLayoutType,
 } from './StyleBookContext';
 import {LOADING} from './constants/actionTypes';
 import {LAYOUT_TYPES} from './constants/layoutTypes';
@@ -36,13 +37,12 @@ export default function LayoutPreview() {
 	const dispatch = useDispatch();
 	const loading = useLoading();
 	const previewLayout = usePreviewLayout();
+	const previewLayoutType = usePreviewLayoutType();
 
 	const iframeRef = useRef();
 	const [iframeLoaded, setIframeLoaded] = useState(false);
 
-	const {frontendTokensValues = {}, previewLayoutType} = useContext(
-		StyleBookContext
-	);
+	const {frontendTokensValues = {}} = useContext(StyleBookContext);
 
 	const loadFrontendTokenValues = useCallback(() => {
 		if (iframeLoaded) {

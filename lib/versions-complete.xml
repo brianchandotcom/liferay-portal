@@ -6829,18 +6829,6 @@
 				<comments>This was recompiled for compatibility with JDK 5.</comments>
 			</library>
 			<library>
-				<file-name>lib/portal/commons-collections.jar</file-name>
-				<version>3.2.2</version>
-				<project-name>Commons Collections</project-name>
-				<project-url>http://commons.apache.org/collections</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/commons-configuration.jar</file-name>
 				<version>1.10.LIFERAY-PATCHED-2</version>
 				<project-name>Commons Configuration</project-name>

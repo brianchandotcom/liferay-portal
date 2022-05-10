@@ -17,6 +17,7 @@ package com.liferay.portal.tools.rest.builder.internal.freemarker.tool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
@@ -58,8 +59,6 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import org.apache.commons.collections.CollectionUtils;
 
 /**
  * @author Peter Shin
@@ -689,7 +688,7 @@ public class FreeMarkerTool {
 				javaMethodSignature.getJavaMethodParameters();
 
 			if ((javaMethodParameters.size() != 2) ||
-				CollectionUtils.isEmpty(
+				SetUtil.isEmpty(
 					javaMethodSignature.getRequestBodyMediaTypes())) {
 
 				continue;

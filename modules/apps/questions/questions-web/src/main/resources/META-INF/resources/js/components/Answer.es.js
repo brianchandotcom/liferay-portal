@@ -281,7 +281,7 @@ export default withRouter(
 					</div>
 				</div>
 				<div className="c-mb-3 col-md-9 offset-md-1">
-					{editable && comments.length > 0 && (
+					{editable && comments.length > 0 && !showNewComment && (
 						<ClayButton.Group
 							className="font-weight-bold text-secondary"
 							spaced={true}

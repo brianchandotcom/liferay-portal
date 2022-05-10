@@ -156,20 +156,9 @@ public class JournalManagementToolbarDisplayContext
 					DropdownItemListBuilder.add(
 						dropdownItem -> {
 							dropdownItem.putData("action", "deleteEntries");
-
-							boolean trashEnabled = _isTrashEnabled();
-
 							dropdownItem.setIcon("trash");
-
-							String label = "delete";
-
-							if (trashEnabled) {
-								label = "recycle-bin";
-							}
-
 							dropdownItem.setLabel(
-								LanguageUtil.get(httpServletRequest, label));
-
+								LanguageUtil.get(httpServletRequest, "delete"));
 							dropdownItem.setQuickAction(true);
 						}
 					).build());

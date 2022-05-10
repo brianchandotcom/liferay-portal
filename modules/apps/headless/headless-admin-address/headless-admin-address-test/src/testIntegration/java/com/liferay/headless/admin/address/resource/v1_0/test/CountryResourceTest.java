@@ -196,67 +196,74 @@ public class CountryResourceTest extends BaseCountryResourceTestCase {
 	public void testPutCountry() throws Exception {
 		super.testPutCountry();
 
+		Country country = _addCountry(randomCountry());
 		Country existingCountry = _addCountry(randomCountry());
 
-		Country country = randomCountry();
+		Country randomCountry = randomCountry();
 
-		country.setA2((String)null);
+		randomCountry.setA2((String)null);
 
-		_testPostCountryProblem(country, null);
+		_testPutCountryProblem(country.getId(), randomCountry, null);
 
-		country.setA2("");
+		randomCountry.setA2("");
 
-		_testPostCountryProblem(country, null);
+		_testPutCountryProblem(country.getId(), randomCountry, null);
 
-		country.setA2("too long");
+		randomCountry.setA2("too long");
 
-		_testPostCountryProblem(country, CountryA2Exception.class);
+		_testPutCountryProblem(
+			country.getId(), randomCountry, CountryA2Exception.class);
 
-		country.setA2(existingCountry.getA2());
+		randomCountry.setA2(existingCountry.getA2());
 
-		_testPostCountryProblem(country, DuplicateCountryException.class);
+		_testPutCountryProblem(
+			country.getId(), randomCountry, DuplicateCountryException.class);
 
-		country = randomCountry();
+		randomCountry = randomCountry();
 
-		country.setA3((String)null);
+		randomCountry.setA3((String)null);
 
-		_testPostCountryProblem(country, null);
+		_testPutCountryProblem(country.getId(), randomCountry, null);
 
-		country.setA3("");
+		randomCountry.setA3("");
 
-		_testPostCountryProblem(country, null);
+		_testPutCountryProblem(country.getId(), randomCountry, null);
 
-		country.setA3("too long");
+		randomCountry.setA3("too long");
 
-		_testPostCountryProblem(country, CountryA3Exception.class);
+		_testPutCountryProblem(
+			country.getId(), randomCountry, CountryA3Exception.class);
 
-		country.setA3(existingCountry.getA3());
+		randomCountry.setA3(existingCountry.getA3());
 
-		_testPostCountryProblem(country, DuplicateCountryException.class);
+		_testPutCountryProblem(
+			country.getId(), randomCountry, DuplicateCountryException.class);
 
-		country = randomCountry();
+		randomCountry = randomCountry();
 
-		country.setName((String)null);
+		randomCountry.setName((String)null);
 
-		_testPostCountryProblem(country, null);
+		_testPutCountryProblem(country.getId(), randomCountry, null);
 
-		country.setName("");
+		randomCountry.setName("");
 
-		_testPostCountryProblem(country, null);
+		_testPutCountryProblem(country.getId(), randomCountry, null);
 
-		country.setName(existingCountry.getName());
+		randomCountry.setName(existingCountry.getName());
 
-		_testPostCountryProblem(country, DuplicateCountryException.class);
+		_testPutCountryProblem(
+			country.getId(), randomCountry, DuplicateCountryException.class);
 
-		country = randomCountry();
+		randomCountry = randomCountry();
 
-		country.setNumber((Integer)null);
+		randomCountry.setNumber((Integer)null);
 
-		_testPostCountryProblem(country, null);
+		_testPutCountryProblem(country.getId(), randomCountry, null);
 
-		country.setNumber(existingCountry.getNumber());
+		randomCountry.setNumber(existingCountry.getNumber());
 
-		_testPostCountryProblem(country, DuplicateCountryException.class);
+		_testPutCountryProblem(
+			country.getId(), randomCountry, DuplicateCountryException.class);
 	}
 
 	@Override
@@ -456,6 +463,26 @@ public class CountryResourceTest extends BaseCountryResourceTestCase {
 
 		HttpInvoker.HttpResponse httpResponse =
 			countryResource.postCountryHttpResponse(country);
+
+		Assert.assertEquals(
+			Response.Status.BAD_REQUEST.getStatusCode(),
+			httpResponse.getStatusCode());
+
+		if (exceptionClass != null) {
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
+				httpResponse.getContent());
+
+			Assert.assertEquals(
+				exceptionClass.getSimpleName(), jsonObject.get("type"));
+		}
+	}
+
+	private <T extends Exception> void _testPutCountryProblem(
+			Long countryId, Country country, Class<T> exceptionClass)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			countryResource.putCountryHttpResponse(countryId, country);
 
 		Assert.assertEquals(
 			Response.Status.BAD_REQUEST.getStatusCode(),

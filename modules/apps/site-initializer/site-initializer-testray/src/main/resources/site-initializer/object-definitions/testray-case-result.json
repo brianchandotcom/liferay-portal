@@ -80,17 +80,6 @@
 			"name": "attachments",
 			"required": false,
 			"type": "Clob"
-		},
-		{
-			"DBType": "Clob",
-			"indexed": false,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Warnings"
-			},
-			"name": "warnings",
-			"required": false,
-			"type": "Clob"
 		}
 	],
 	"pluralLabel": {

@@ -33,6 +33,8 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -159,9 +161,10 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 			_defaultDTOConverterContext, objectDefinition, objectEntry, null);
 	}
 
-	private void _addTestrayAttachments(
-			Node testcaseNode, long testrayCaseResultId)
+	private JSONArray _addTestrayAttachments(Node testcaseNode)
 		throws Exception {
+
+		JSONArray jsonArray = null;
 
 		Element testcaseElement = (Element)testcaseNode;
 
@@ -189,20 +192,18 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 
 				Element fileElement = (Element)fileNode;
 
-				_addObjectEntry(
-					"Attachment",
-					HashMapBuilder.<String, Object>put(
+				jsonArray = JSONUtil.put(
+					JSONUtil.put(
 						"name", fileElement.getAttribute("name")
-					).put(
-						"r_caseResultToAttachments_c_caseResultId",
-						testrayCaseResultId
 					).put(
 						"url", fileElement.getAttribute("url")
 					).put(
 						"value", fileElement.getAttribute("value")
-					).build());
+					));
 			}
 		}
+
+		return jsonArray;
 	}
 
 	private void _addTestrayCase(
@@ -272,8 +273,6 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 		long testrayCaseResultId = _getTestrayCaseResultId(
 			testcaseNode, testrayBuildId, testrayBuildTime, testrayCaseId,
 			testrayCasePropertiesMap, testrayComponentId, testrayRunId);
-
-		_addTestrayAttachments(testcaseNode, testrayCaseResultId);
 
 		_addTestrayCaseResultIssue(
 			companyId, testrayCaseResultId,
@@ -636,6 +635,8 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 		throws Exception {
 
 		Map<String, Object> properties = HashMapBuilder.<String, Object>put(
+			"attachments", _addTestrayAttachments(testcaseNode)
+		).put(
 			"closedDate", testrayBuildTime
 		).put(
 			"dueStatus",

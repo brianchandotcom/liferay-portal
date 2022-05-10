@@ -22,6 +22,7 @@ import com.liferay.petra.sql.dsl.query.JoinStep;
 import com.liferay.petra.sql.dsl.query.OrderByStep;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.DuplicateRegionException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.RegionCodeException;
 import com.liferay.portal.kernel.exception.RegionNameException;
@@ -62,6 +63,11 @@ public class RegionLocalServiceImpl extends RegionLocalServiceBaseImpl {
 		throws PortalException {
 
 		_countryPersistence.findByPrimaryKey(countryId);
+
+		if (fetchRegion(countryId, regionCode) != null) {
+			throw new DuplicateRegionException(
+				"Region code belongs to another region");
+		}
 
 		validate(name, regionCode);
 

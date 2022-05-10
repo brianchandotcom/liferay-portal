@@ -139,14 +139,55 @@ definition {
 		}
 	}
 
-	@description = "[Please Update]"
-	@ignore = "Test Stub"
+	@description = "COMMERCE-8165. The existing replacement product can be edited"
 	@priority = "4"
 	test EditReplacementProduct {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-8165 EditReplacementProduct pending implementation
+		task ("Given a site created using Minium") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
 
+		task ("And a simple product with a SKU") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Master",
+				discontinued = "True",
+				productName = "Test Simple Product Replacement",
+				productType = "simple",
+				sku = "SKU1001");
+		}
+
+		task ("And a "Discontinued" product with a replacement product set") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Master",
+				discontinued = "True",
+				productName = "Test Simple Product",
+				productType = "simple",
+				replacementSKU = "SKU1001",
+				sku = "SKU1002");
+		}
+
+		task ("When the product specialist change the replacement product") {
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "Test Simple Product");
+
+			FrontStore.assertProductDetails(
+				productName = "Test Simple Product",
+				productSKU = "SKU1002");
+
+			Click(
+				key_productSku = "SKU1001",
+				locator1 = "CommerceFrontStore#PRODUCT_DETAILS_REPLACEMENTS_SKU");
+		}
+
+		task ("Then the changes made should be visible on the SKU side panel") {
+			FrontStore.assertProductDetails(
+				productName = "Test Simple Product Replacement",
+				productSKU = "SKU1001");
+		}
 	}
 
 	@description = "Verify a replacement product can be removed"

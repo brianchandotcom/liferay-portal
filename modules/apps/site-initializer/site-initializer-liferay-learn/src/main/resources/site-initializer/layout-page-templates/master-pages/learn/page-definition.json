@@ -80,11 +80,11 @@
                 "value" : {
                   "fragmentImage" : {
                     "title" : {
-                      "value" : "Logo.svg"
+                      "value" : "logo.svg"
                     },
                     "url" : {
                       "value_i18n" : {
-                        "en_US" : "/documents/20123/0/Logo.svg/bf596ba4-4b07-b48d-28d7-a406de97c292?t=1652118757517&download=true"
+                        "en_US" : "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/logo.svg$]"
                       }
                     }
                   },

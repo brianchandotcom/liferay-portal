@@ -324,7 +324,7 @@ AUI.add(
 					var instance = this;
 
 					instance._cookieKey =
-						'LFR_SESSION_STATE_' + themeDisplay.getUserId();
+						'LFR_SESSION_STATE_' + themeDisplay.getRealUserId();
 
 					instance._cookieOptions = {
 						path: '/',

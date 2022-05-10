@@ -272,6 +272,9 @@
 			getPortalURL: function() {
 				return '<%= themeDisplay.getPortalURL() %>';
 			},
+			getRealUserId: function() {
+				return '<%= themeDisplay.getRealUserId() %>';
+			},
 			getScopeGroupId: function() {
 				return '<%= scopeGroup.getGroupId() %>';
 			},

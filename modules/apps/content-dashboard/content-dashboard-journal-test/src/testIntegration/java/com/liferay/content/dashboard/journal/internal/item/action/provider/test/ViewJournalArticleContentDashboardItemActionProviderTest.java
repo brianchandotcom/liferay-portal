@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -109,6 +110,8 @@ public class ViewJournalArticleContentDashboardItemActionProviderTest {
 
 			themeDisplay.setRequest(mockHttpServletRequest);
 
+			themeDisplay.setURLCurrent("http://localhost:8080/currentURL");
+
 			LayoutSetImpl layoutSetImpl = new LayoutSetImpl();
 
 			layoutSetImpl.setCompanyFallbackVirtualHostname(null);
@@ -143,6 +146,11 @@ public class ViewJournalArticleContentDashboardItemActionProviderTest {
 				url.contains(
 					StringUtil.toLowerCase(
 						journalArticle.getTitle(LocaleUtil.US))));
+
+			String escapeURL = HtmlUtil.escapeURL(
+				"http://localhost:8080/currentURL");
+
+			Assert.assertTrue(url.contains("p_l_back_url=" + escapeURL));
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();

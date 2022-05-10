@@ -1,0 +1,134 @@
+@component-name = "portal-wcm"
+definition {
+
+	property custom.properties = "feature.flag.LPS-132571=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Fragments";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("Add a fragment set") {
+			JSONFragment.addFragmentCollection(
+				groupName = "Test Site Name",
+				name = "Fragment Set Name");
+		}
+
+		task ("Navigate to the fragment set") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Fragment Set Name");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-151738. When a fragment doesn't have styling attribute the common styles class is generated in the outter div surrounding the fragment	."
+	@priority = "4"
+	test ViewCommonStylesClassGeneratedInOutterDivWhenFragmentWithoutStylingAttribute {
+		task ("Given a page creator has a fragment without styling attribute") {
+			task ("Add a new fragment without styling attribute") {
+				FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
+
+				var htmlSnippet = '''
+<div class="fragment-name">
+	Fragment Name
+</div>			''';
+
+				FragmentsEditor.typeHtmlEditor(content = "${htmlSnippet}");
+
+				FragmentsEditor.waitForAutoSave();
+
+				FragmentsEditor.publish();
+			}
+		}
+
+		task ("When the page creator adds a new fragment to content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Fragment Set Name",
+				fragmentName = "Fragment Name");
+		}
+
+		task ("Then the page creator could see common styles class generated in outter div surrounding the fragment") {
+			AssertElementPresent(
+				fragmentName = "fragment-name",
+				index = "1",
+				locator1 = "PageEditor#COMMON_STYLES_CLASS");
+		}
+
+		task ("When the page creator define common styles of new fragment") {
+			PageEditor.gotoStyle(fragmentName = "Fragment Name");
+
+			PageEditor.configureFragment(textColor = "Success");
+		}
+
+		task ("Then the common styles of new fragment shown in page editor") {
+			var commonStylesClass = PageEditor.getCommonStylesClass(fragmentName = "Fragment Name");
+
+			PageEditor.viewFragmentCommonStyle(
+				commonStylesClass = "${commonStylesClass}",
+				styleName = "color",
+				styleValue = "var(--success)");
+		}
+
+		task ("When the page creator opens the preview modal") {
+			PageEditor.openPreviewMode();
+		}
+
+		task ("Then the common styles of new fragment shown on preview modal") {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			PageEditor.viewFragmentCommonStyle(
+				commonStylesClass = "${commonStylesClass}",
+				styleName = "color",
+				styleValue = "var(--success)");
+
+			IFrame.closeFrame();
+
+			PageEditor.clickPublish();
+		}
+
+		task ("When the page creator navigates to content page at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Then the common styles of new fragment shown at view mode") {
+			PageEditor.viewFragmentCommonStyle(
+				commonStylesClass = "${commonStylesClass}",
+				styleName = "color",
+				styleValue = "var(--success)");
+		}
+	}
+
+}

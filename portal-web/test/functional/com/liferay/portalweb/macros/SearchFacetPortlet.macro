@@ -79,6 +79,13 @@ definition {
 				value1 = "${aggregationField}");
 		}
 
+		if (isSet(customParameterName)) {
+			Type(
+				key_fieldLabel = "Custom Parameter Name",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${customParameterName}");
+		}
+
 		PortletEntry.save();
 
 		IFrame.closeFrame();

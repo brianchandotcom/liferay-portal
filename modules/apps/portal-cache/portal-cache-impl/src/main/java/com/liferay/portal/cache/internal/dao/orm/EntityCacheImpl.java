@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LRUMap;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.Props;
@@ -44,8 +45,6 @@ import java.io.Serializable;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-
-import org.apache.commons.collections.map.LRUMap;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -255,7 +254,7 @@ public class EntityCacheImpl
 		if (localCacheMaxSize > 0) {
 			_localCache = new CentralizedThreadLocal<>(
 				EntityCacheImpl.class + "._localCache",
-				() -> new LRUMap(localCacheMaxSize));
+				() -> new LRUMap<>(localCacheMaxSize));
 		}
 		else {
 			_localCache = null;
@@ -432,7 +431,7 @@ public class EntityCacheImpl
 	@Reference
 	private ClusterExecutor _clusterExecutor;
 
-	private ThreadLocal<LRUMap> _localCache;
+	private ThreadLocal<LRUMap<Serializable, Serializable>> _localCache;
 
 	@Reference
 	private MultiVMPool _multiVMPool;

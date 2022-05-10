@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LRUMap;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.Props;
@@ -61,8 +62,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-
-import org.apache.commons.collections.map.LRUMap;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -532,7 +531,7 @@ public class FinderCacheImpl
 		if (localCacheMaxSize > 0) {
 			_localCache = new CentralizedThreadLocal<>(
 				FinderCacheImpl.class + "._localCache",
-				() -> new LRUMap(localCacheMaxSize));
+				() -> new LRUMap<>(localCacheMaxSize));
 		}
 		else {
 			_localCache = null;
@@ -734,7 +733,7 @@ public class FinderCacheImpl
 		new ConcurrentHashMap<>();
 	private final Map<String, Map<String, FinderPath>> _finderPathsMap =
 		new ConcurrentHashMap<>();
-	private ThreadLocal<LRUMap> _localCache;
+	private ThreadLocal<LRUMap<LocalCacheKey, Serializable>> _localCache;
 	private final Map<String, String> _modelImplClassNames =
 		new ConcurrentHashMap<>();
 

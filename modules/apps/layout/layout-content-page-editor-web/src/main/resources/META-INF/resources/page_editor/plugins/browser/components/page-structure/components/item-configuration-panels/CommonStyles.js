@@ -23,6 +23,7 @@ import {
 	useDispatch,
 	useSelector,
 } from '../../../../../../app/contexts/StoreContext';
+import selectCanUpdateItemStyles from '../../../../../../app/selectors/selectCanUpdateItemStyles';
 import selectSegmentsExperienceId from '../../../../../../app/selectors/selectSegmentsExperienceId';
 import updateItemStyle from '../../../../../../app/utils/updateItemStyle';
 import {FieldSet, fieldIsDisabled} from './FieldSet';
@@ -39,6 +40,12 @@ export function CommonStyles({
 	const selectedViewportSize = useSelector(
 		(state) => state.selectedViewportSize
 	);
+
+	const canUpdateItemStyles = useSelector(selectCanUpdateItemStyles);
+
+	if (!canUpdateItemStyles) {
+		return null;
+	}
 
 	let styles = commonStyles;
 

@@ -23,6 +23,7 @@ import {VIEWPORT_SIZES} from '../../../../../app/config/constants/viewportSizes'
 import selectCanUpdateEditables from '../../../../../app/selectors/selectCanUpdateEditables';
 import selectCanUpdateItemAdvancedConfiguration from '../../../../../app/selectors/selectCanUpdateItemAdvancedConfiguration';
 import selectCanUpdateItemConfiguration from '../../../../../app/selectors/selectCanUpdateItemConfiguration';
+import selectCanUpdateItemStyles from '../../../../../app/selectors/selectCanUpdateItemStyles';
 import {CollectionAppliedFiltersGeneralPanel} from '../components/item-configuration-panels/CollectionAppliedFiltersGeneralPanel';
 import {CollectionFilterGeneralPanel} from '../components/item-configuration-panels/CollectionFilterGeneralPanel';
 import ContainerAdvancedPanel from '../components/item-configuration-panels/ContainerAdvancedPanel';
@@ -217,6 +218,7 @@ export function selectPanels(activeItemId, activeItemType, state) {
 		state
 	);
 	const canUpdateItemConfiguration = selectCanUpdateItemConfiguration(state);
+	const canUpdateItemStyles = selectCanUpdateItemStyles(state);
 
 	if (canUpdateEditables && activeItem.editableId) {
 		panelsIds = {
@@ -250,7 +252,7 @@ export function selectPanels(activeItemId, activeItemType, state) {
 				state.selectedViewportSize === VIEWPORT_SIZES.desktop &&
 				canUpdateItemAdvancedConfiguration,
 			[PANEL_IDS.containerGeneral]: true,
-			[PANEL_IDS.containerStyles]: true,
+			[PANEL_IDS.containerStyles]: canUpdateItemStyles,
 		};
 	}
 	else if (activeItem.type === LAYOUT_DATA_ITEM_TYPES.form) {
@@ -260,7 +262,7 @@ export function selectPanels(activeItemId, activeItemType, state) {
 				canUpdateItemAdvancedConfiguration,
 			[PANEL_IDS.formGeneral]:
 				state.selectedViewportSize === VIEWPORT_SIZES.desktop,
-			[PANEL_IDS.containerStyles]: true,
+			[PANEL_IDS.containerStyles]: canUpdateItemStyles,
 		};
 	}
 	else if (activeItem.type === LAYOUT_DATA_ITEM_TYPES.fragment) {
@@ -272,7 +274,7 @@ export function selectPanels(activeItemId, activeItemType, state) {
 			[PANEL_IDS.fragmentAdvanced]:
 				state.selectedViewportSize === VIEWPORT_SIZES.desktop &&
 				canUpdateItemAdvancedConfiguration,
-			[PANEL_IDS.fragmentStyles]: true,
+			[PANEL_IDS.fragmentStyles]: canUpdateItemStyles,
 			[PANEL_IDS.fragmentGeneral]:
 				fragmentEntryType !== FRAGMENT_ENTRY_TYPES.input &&
 				!FRAGMENT_WITH_CUSTOM_PANEL.includes(fragmentEntryKey),
@@ -290,7 +292,7 @@ export function selectPanels(activeItemId, activeItemType, state) {
 	}
 	else if (activeItem.type === LAYOUT_DATA_ITEM_TYPES.row) {
 		panelsIds = {
-			[PANEL_IDS.rowStyles]: true,
+			[PANEL_IDS.rowStyles]: canUpdateItemStyles,
 			[PANEL_IDS.rowGeneral]: true,
 			[PANEL_IDS.rowAdvanced]:
 				state.selectedViewportSize === VIEWPORT_SIZES.desktop &&

@@ -236,6 +236,25 @@ definition {
 		return "${json}";
 	}
 
+	macro _updateEmployee {
+		var portalURL = JSONCompany.getDefaultPortalURL();
+
+		var curl = '''
+			${portalURL}/o/c/employees/${employeeId} \
+			-u test@liferay.com:test \
+			-H Content-Type: application/json
+
+			-d
+					{	                 
+	"firstname": "${firstname}",
+	"r_supervisor_c_managerId": "${newManagerId}"
+					}
+	''';
+		var response = JSONCurlUtil.put("${curl}");
+
+		return "${response}";
+	}
+
 	macro assertEmployeeHasNestedFieldManager {
 		ObjectDefinitionAPI._assertEmployeeFirstnameCorrect(
 			expectedEmployeeFirstname = "${expectedEmployeeFirstname}",
@@ -327,6 +346,21 @@ definition {
 			objects = "${objects}");
 
 		return "${getObjectsWithNestedFieldJSON}";
+	}
+
+	macro updateEmployee {
+		ObjectDefinitionAPI._updateEmployee(
+			employeeId = "${employeeId}",
+			firstname = "${employeeFirstname}",
+			newManagerId = "${newManagerId}");
+
+		var firstname = ObjectDefinitionAPI._getEmployeeFirstnameById(employeeId = "${employeeId}");
+
+		TestUtils.assertEquals(
+			actual = "${firstname}",
+			expected = "${employeeFirstname}");
+
+		return "${employeeId}";
 	}
 
 }

@@ -124,6 +124,12 @@ public class ObjectLayoutLocalServiceUtil {
 		return getService().deleteObjectLayout(objectLayout);
 	}
 
+	public static void deleteObjectLayouts(long objectDefinitionId)
+		throws PortalException {
+
+		getService().deleteObjectLayouts(objectDefinitionId);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

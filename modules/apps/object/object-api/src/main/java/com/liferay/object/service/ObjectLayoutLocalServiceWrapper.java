@@ -129,6 +129,13 @@ public class ObjectLayoutLocalServiceWrapper
 		return _objectLayoutLocalService.deleteObjectLayout(objectLayout);
 	}
 
+	@Override
+	public void deleteObjectLayouts(long objectDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_objectLayoutLocalService.deleteObjectLayouts(objectDefinitionId);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

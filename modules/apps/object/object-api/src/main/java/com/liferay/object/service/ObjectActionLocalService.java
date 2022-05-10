@@ -131,6 +131,9 @@ public interface ObjectActionLocalService
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public ObjectAction deleteObjectAction(ObjectAction objectAction);
 
+	public void deleteObjectActions(long objectDefinitionId)
+		throws PortalException;
+
 	/**
 	 * @throws PortalException
 	 */

@@ -125,6 +125,12 @@ public class ObjectViewLocalServiceUtil {
 		return getService().deleteObjectView(objectView);
 	}
 
+	public static void deleteObjectViews(long objectDefinitionId)
+		throws PortalException {
+
+		getService().deleteObjectViews(objectDefinitionId);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

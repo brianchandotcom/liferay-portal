@@ -123,6 +123,12 @@ public class ObjectActionLocalServiceUtil {
 		return getService().deleteObjectAction(objectAction);
 	}
 
+	public static void deleteObjectActions(long objectDefinitionId)
+		throws PortalException {
+
+		getService().deleteObjectActions(objectDefinitionId);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

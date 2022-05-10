@@ -137,6 +137,9 @@ public interface ObjectViewLocalService
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public ObjectView deleteObjectView(ObjectView objectView);
 
+	public void deleteObjectViews(long objectDefinitionId)
+		throws PortalException;
+
 	/**
 	 * @throws PortalException
 	 */

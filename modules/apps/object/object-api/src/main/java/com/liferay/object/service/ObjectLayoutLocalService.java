@@ -133,6 +133,9 @@ public interface ObjectLayoutLocalService
 	public ObjectLayout deleteObjectLayout(ObjectLayout objectLayout)
 		throws PortalException;
 
+	public void deleteObjectLayouts(long objectDefinitionId)
+		throws PortalException;
+
 	/**
 	 * @throws PortalException
 	 */

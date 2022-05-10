@@ -129,6 +129,13 @@ public class ObjectActionLocalServiceWrapper
 		return _objectActionLocalService.deleteObjectAction(objectAction);
 	}
 
+	@Override
+	public void deleteObjectActions(long objectDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_objectActionLocalService.deleteObjectActions(objectDefinitionId);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

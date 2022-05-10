@@ -130,6 +130,13 @@ public class ObjectViewLocalServiceWrapper
 		return _objectViewLocalService.deleteObjectView(objectView);
 	}
 
+	@Override
+	public void deleteObjectViews(long objectDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_objectViewLocalService.deleteObjectViews(objectDefinitionId);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

@@ -21,6 +21,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECTED_TABLE_PAGINATION</td>
+	<td>//li[contains(@class,'page-item active')]//button[contains(.,'${key_pageNumber}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ACTIVE_CHECKBOX</td>
 	<td>//input[contains(@id,'active') and (@type='checkbox')]</td>
 	<td></td>

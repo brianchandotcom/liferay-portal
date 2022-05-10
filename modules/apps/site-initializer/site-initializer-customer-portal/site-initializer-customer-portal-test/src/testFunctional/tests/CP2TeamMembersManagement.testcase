@@ -30,35 +30,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-146292 - Verify if after inviting member, the screen goes back to previous screen (Team Members page)."
-	@priority = "4"
-	test CanGoBackOnTeamMembersPage {
-		CustomerPortal.changeUserRole(
-			accountName = "Test Account 01",
-			accountRoleTitle = "Partner Manager",
-			accountUserName = "Test Test");
-
-        ApplicationsMenu.gotoSite(site = "Customer Portal");
-
-		CustomerPortal.loginOktaToUpdateCP();
-
-		CustomerPortal.selectNavigatorWindow(navigatorWidow = "Home - Customer Portal - Liferay DXP");
-
-        CustomerPortal.enterOnProject(projectName = "Test Account 01");
-
-		CP2NavigationMenu.goToTeamMembers();
-
-		CustomerPortal.addFieldsTeamMembersExtra();
-
-		CP2NavigationMenu.clickTeamMembersSendInvitation(
-			position = "1",
-			rowEmail = "test1@liferay.com",
-			positionNumber = "1", 
-			rowRole = "Partner Manager");
-
-		CustomerPortal.viewTeamMembersPage();
-	}
-
 	@description = "LPS-146292 - Check if there is a 'Cancel' button if the user wants to leave the process."
 	@priority = "4"
 	test CancelButtonIsPresent {
@@ -67,17 +38,50 @@ definition {
 			accountRoleTitle = "Partner Manager",
 			accountUserName = "Test Test");
 
-        ApplicationsMenu.gotoSite(site = "Customer Portal");
+		ApplicationsMenu.gotoSite(site = "Customer Portal");
 
 		CustomerPortal.loginOktaToUpdateCP();
 
 		CustomerPortal.selectNavigatorWindow(navigatorWidow = "Home - Customer Portal - Liferay DXP");
 
-        CustomerPortal.enterOnProject(projectName = "Test Account 01");
+		CustomerPortal.enterOnProject(projectName = "Test Account 01");
 
 		CP2NavigationMenu.goToTeamMembers();
 
+		CustomerPortal.clickInviteMembers();
+
 		CP2NavigationMenu.cancelTeamMembersInvitation();
+
+		CustomerPortal.viewTeamMembersPage();
+	}
+
+	@description = "LPS-146292 - Verify if after inviting member, the screen goes back to previous screen (Team Members page)."
+	@priority = "4"
+	test CanGoBackOnTeamMembersPage {
+		CustomerPortal.changeUserRole(
+			accountName = "Test Account 01",
+			accountRoleTitle = "Partner Manager",
+			accountUserName = "Test Test");
+
+		ApplicationsMenu.gotoSite(site = "Customer Portal");
+
+		CustomerPortal.loginOktaToUpdateCP();
+
+		CustomerPortal.selectNavigatorWindow(navigatorWidow = "Home - Customer Portal - Liferay DXP");
+
+		CustomerPortal.enterOnProject(projectName = "Test Account 01");
+
+		CP2NavigationMenu.goToTeamMembers();
+
+		CustomerPortal.clickInviteMembers();
+
+		CustomerPortal.addFieldsTeamMembersExtra(
+			position = "0",
+			positionNumber = "0",
+			rowEmail = "test1@liferay.com",
+			rowRole = "User");
+
+		CP2NavigationMenu.clickTeamMembersSendInvitation();
 
 		CustomerPortal.viewTeamMembersPage();
 	}

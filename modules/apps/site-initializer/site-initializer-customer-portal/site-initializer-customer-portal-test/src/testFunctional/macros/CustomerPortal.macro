@@ -15,6 +15,22 @@ definition {
 		Click(locator1 = "Button#SAVE");
 	}
 
+	macro addFieldsTeamMembersExtra {
+		Type(
+			key_fieldNumber = "${position}",
+			locator1 = "CustomerPortalSite#EMAIL_FIELD",
+			value1 = "${rowEmail}");
+
+		Select(
+			key_rowNumber = "${positionNumber}",
+			locator1 = "CustomerPortalSite#ROLE_SELECT",
+			value1 = "${rowRole}");
+
+		if (isSet(addMembers)) {
+			Click(locator1 = "CustomerPortalSite#ADD_MORE_MEMBERS");
+		}
+	}
+
 	macro addIdPCForCustomerPortal {
 		AssertClick(
 			locator1 = "CPSAMLAdminIdentityProviderConnection#ADD_IDENTITY_PROVIDER_BUTTON",
@@ -244,6 +260,10 @@ definition {
 			locator1 = "CPSAMLAdmin#REPLACE_CERTIFICATE");
 	}
 
+	macro selectNavigatorWindow {
+		SelectWindow(locator1 = "title=${navigatorWidow}");
+	}
+
 	macro setUpForCP20 {
 		task ("Configure SAML Admin general info") {
 			ApplicationsMenu.gotoPortlet(
@@ -371,10 +391,6 @@ definition {
 		AssertElementPresent(locator1 = "CustomerPortalSite#INVITE_TEAM_MEMBERS_TITLE");
 	}
 
-	macro selectNavigatorWindow{
-		SelectWindow(locator1 = "title=${navigatorWidow}");
-	}
-
 	macro viewKoroneikiInfo {
 		Click(
 			key_text = "",
@@ -394,21 +410,5 @@ definition {
 	macro viewTeamMembersPage {
 		AssertElementPresent(locator1 = "CustomerPortalSite#TEAM_MEMBERS_MAIN_PAGE");
 	}
-
-    macro addFieldsTeamMembersExtra {
-        Type(
-            key_fieldNumber = "${position}",
-            locator1 = "CustomerPortalSite#EMAIL_FIELD",
-            value1 = "${rowEmail}");
-    
-        Select(
-            key_rowNumber = "${positionNumber}",
-            locator1 = "CustomerPortalSite#ROLE_SELECT",
-            value1 = "${rowRole}");
-        
-        if (isSet(addMembers)) {
-            Click(locator1 = "CustomerPortalSite#ADD_MORE_MEMBERS");
-        }
-    }
 
 }

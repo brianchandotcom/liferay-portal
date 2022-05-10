@@ -96,19 +96,19 @@
 	<td></td>
 </tr>
 <tr>
-    <td>EMAIL_FIELD</td>
-    <td>//input[contains(@name, 'invites[${key_fieldNumber}]')]</td>
-    <td></td>
+	<td>EMAIL_FIELD</td>
+	<td>//input[contains(@name, 'invites[${key_fieldNumber}]')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>ROLE_SELECT</td>
-    <td>//select[contains(@name, 'invites[${key_rowNumber}]')]</td>
-    <td></td>
+	<td>ROLE_SELECT</td>
+	<td>//select[contains(@name, 'invites[${key_rowNumber}]')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>ADD_MORE_MEMBERS</td>
-    <td>//button[contains(@class, 'cp-btn-add-members')]</td>
-    <td></td>
+	<td>ADD_MORE_MEMBERS</td>
+	<td>//button[contains(@class, 'cp-btn-add-members')]</td>
+	<td></td>
 </tr>
 </tbody>
 </table>

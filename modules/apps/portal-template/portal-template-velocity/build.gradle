@@ -1,12 +1,12 @@
 dependencies {
 	compileInclude group: "com.liferay", name: "org.apache.velocity", version: "1.6.4.LIFERAY-PATCHED-1"
+	compileInclude group: "commons-collections", name: "commons-collections", version: "3.2.2"
 	compileInclude group: "velocity-tools", name: "velocity-tools", version: "1.4"
 
 	compileOnly group: "com.liferay", name: "biz.aQute.bnd.annotation", version: "4.2.0.LIFERAY-PATCHED-2"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "default"
-	compileOnly group: "commons-collections", name: "commons-collections", version: "3.2.2"
 	compileOnly group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"

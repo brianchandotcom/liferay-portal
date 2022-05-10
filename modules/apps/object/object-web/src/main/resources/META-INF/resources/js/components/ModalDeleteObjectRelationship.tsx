@@ -40,7 +40,7 @@ function ModalDeleteObjectRelationship({
 
 			<div>
 				{Liferay.Language.get(
-					'to-delete-this-relationship-you-need-to-go-to-parent-relationship-side'
+					'you-cannot-delete-a-relationship-from-the-child-side'
 				)}
 			</div>
 		</WarningModal>

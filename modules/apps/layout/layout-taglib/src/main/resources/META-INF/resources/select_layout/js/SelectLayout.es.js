@@ -91,7 +91,7 @@ const OldSelectLayoutTree = ({
 	);
 };
 
-const Tree = Liferay.__FF__['LPS-144630']
+const Tree = Liferay.FeatureFlags['LPS-144630']
 	? SelectLayoutTree
 	: OldSelectLayoutTree;
 

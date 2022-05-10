@@ -204,6 +204,67 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 		return persistedModelLocalService.dslQueryCount(dslQuery);
 	}
 
+	@Override
+	public List<T> getUnrelatedModels(
+			long companyId, long groupId, ObjectDefinition objectDefinition,
+			long objectFieldId)
+		throws PortalException {
+
+		Column<?, Long> companyIdColumn = (Column<?, Long>)_table.getColumn(
+			"companyId");
+
+		PersistedModelLocalService persistedModelLocalService =
+			_persistedModelLocalServiceRegistry.getPersistedModelLocalService(
+				objectDefinition.getClassName());
+
+		return persistedModelLocalService.dslQuery(
+			DSLQueryFactoryUtil.select(
+				_table
+			).from(
+				_table
+			).where(
+				companyIdColumn.eq(
+					companyId
+				).and(
+					() -> {
+						Column<?, Long> groupIdColumn = _table.getColumn(
+							"groupId");
+
+						if (groupIdColumn == null) {
+							return null;
+						}
+
+						return groupIdColumn.eq(groupId);
+					}
+				).and(
+					() -> {
+						Column<?, Long> primaryKeyColumn = _table.getColumn(
+							objectDefinition.getPKObjectFieldDBColumnName());
+
+						ObjectField objectField =
+							_objectFieldLocalService.getObjectField(
+								objectFieldId);
+
+						Column<DynamicObjectDefinitionTable, Long>
+							foreignKeyColumn =
+								(Column<DynamicObjectDefinitionTable, Long>)
+									_dynamicObjectDefinitionTable.getColumn(
+										objectField.getDBColumnName());
+
+						return primaryKeyColumn.notIn(
+							DSLQueryFactoryUtil.select(
+								_dynamicObjectDefinitionTable.
+									getPrimaryKeyColumn()
+							).from(
+								_dynamicObjectDefinitionTable
+							).where(
+								foreignKeyColumn.neq(0L)
+							));
+					}
+				)
+			));
+	}
+
 	private GroupByStep _getGroupByStep(
 			long groupId, long objectRelationshipId, long primaryKey,
 			FromStep fromStep)
@@ -216,18 +277,10 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 		ObjectField objectField = _objectFieldLocalService.getObjectField(
 			objectRelationship.getObjectFieldId2());
 
-		Column<?, Long> primaryKeyColumn = null;
-
-		if (Objects.equals(objectField.getDBTableName(), _table)) {
-			primaryKeyColumn = (Column<?, Long>)_table.getColumn(
-				objectField.getDBColumnName());
-		}
-		else {
-			primaryKeyColumn =
-				(Column<DynamicObjectDefinitionTable, Long>)
-					_dynamicObjectDefinitionTable.getColumn(
-						objectField.getDBColumnName());
-		}
+		Column<DynamicObjectDefinitionTable, Long> primaryKeyColumn =
+			(Column<DynamicObjectDefinitionTable, Long>)
+				_dynamicObjectDefinitionTable.getColumn(
+					objectField.getDBColumnName());
 
 		return fromStep.from(
 			_table

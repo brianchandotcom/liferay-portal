@@ -23,6 +23,7 @@ import PreviewSelector from './PreviewSelector';
 import PublishButton from './PublishButton';
 import {StyleBookContext} from './StyleBookContext';
 import Undo from './Undo';
+import UndoHistory from './UndoHistory';
 import {config} from './config';
 import {DRAFT_STATUS} from './constants/draftStatusConstants';
 
@@ -58,6 +59,12 @@ export default function Toolbar() {
 					{config.featureFlagLps142363 ? (
 						<li className="nav-item">
 							<Undo />
+						</li>
+					) : null}
+
+					{config.featureFlagLps142363 ? (
+						<li className="nav-item">
+							<UndoHistory />
 						</li>
 					) : null}
 

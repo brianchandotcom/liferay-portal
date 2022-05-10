@@ -21,19 +21,30 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class PLOEntryKeyException extends PortalException {
 
-	public PLOEntryKeyException() {
+	public static class MustBeShorter extends PLOEntryKeyException {
+
+		public MustBeShorter(long maxLength) {
+			super(
+				String.format(
+					"Key should not have more than %s characters", maxLength));
+
+			this.maxLength = maxLength;
+		}
+
+		public final long maxLength;
+
 	}
 
-	public PLOEntryKeyException(String msg) {
+	public static class MustNotBeNull extends PLOEntryKeyException {
+
+		public MustNotBeNull() {
+			super("Key must not be null");
+		}
+
+	}
+
+	private PLOEntryKeyException(String msg) {
 		super(msg);
-	}
-
-	public PLOEntryKeyException(String msg, Throwable throwable) {
-		super(msg, throwable);
-	}
-
-	public PLOEntryKeyException(Throwable throwable) {
-		super(throwable);
 	}
 
 }

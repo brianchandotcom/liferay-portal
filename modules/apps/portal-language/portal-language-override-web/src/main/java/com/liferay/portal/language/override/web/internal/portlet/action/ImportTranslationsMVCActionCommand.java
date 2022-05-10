@@ -14,6 +14,7 @@
 
 package com.liferay.portal.language.override.web.internal.portlet.action;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -105,8 +106,14 @@ public class ImportTranslationsMVCActionCommand extends BaseMVCActionCommand {
 		while (enumeration.hasMoreElements()) {
 			String key = enumeration.nextElement();
 
-			_ploEntryService.addOrUpdatePLOEntry(
-				key, languageId, languageProperties.getProperty(key));
+			try {
+				_ploEntryService.addOrUpdatePLOEntry(
+					key, languageId, languageProperties.getProperty(key));
+			}
+			catch (PortalException portalException) {
+				SessionErrors.add(
+					actionRequest, portalException.getClass(), portalException);
+			}
 		}
 	}
 

@@ -39,6 +39,17 @@ renderResponse.setTitle(LanguageUtil.get(request, "import-translations"));
 		<liferay-ui:error key="fileExtensionInvalid" message='<%= LanguageUtil.format(request, "please-upload-a-file-with-a-valid-extension-x", "properties", false) %>' />
 		<liferay-ui:error key="fileInvalid" message="please-select-a-valid-file" />
 
+		<liferay-ui:error exception="<%= PLOEntryKeyException.MustBeShorter.class %>">
+
+			<%
+			PLOEntryKeyException.MustBeShorter ploEntryKeyException = (PLOEntryKeyException.MustBeShorter)errorException;
+			%>
+
+			<liferay-ui:message arguments="<%= String.valueOf(ploEntryKeyException.maxLength) %>" key="keys-longer-than-x-characters-are-not-allowed" translateArguments="<%= false %>" />
+		</liferay-ui:error>
+
+		<liferay-ui:error exception="<%= PLOEntryKeyException.MustNotBeNull.class %>" message="empty-keys-are-not-allowed" />
+
 		<h5><liferay-ui:message key="import-file" /></h5>
 
 		<div class="sheet-text">

@@ -354,4 +354,87 @@ definition {
 
 	}
 
+	@description = "Verify user can import item from wish list and see imported items"
+	@priority = "3"
+	test ViewImportedWishlistItemsPreview {
+		task ("Given a Minium site with a buyer user") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And given some products in wish list") {
+			CommerceWishList.addProductToWishList(productName = "U-Joint,ABS Sensor,Torque Converters,Power Steering Pump,Brake Fluid");
+
+			CommerceNavigator.goToWishLists();
+
+			CommerceWishList.assertWishListProduct(
+				productName = "U-Joint,ABS Sensor,Torque Converters,Power Steering Pump",
+				wishListName = "Default");
+		}
+
+		task ("When the buyer import orders from wish list") {
+			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
+
+			CommerceOrders.importOrderFromType(orderType = "Wish Lists");
+
+			SelectFrameTop();
+
+			IFrame.selectModalFrame();
+
+			ClickNoError(
+				key_itemName = "Default",
+				locator1 = "CommerceEntry#SELECT_ITEM_FROM_LIST");
+
+			SelectFrameTop();
+
+			IFrame.selectModalFrame();
+		}
+
+		task ("Then all the orders are displayed") {
+			CommerceOrders.assertOrderImportPreviewEntry(
+				importStatus = "OK",
+				productName = "U-Joint",
+				productQuantity = "1",
+				productSku = "MIN55861",
+				totalPrice = "24.00",
+				unitPrice = "24.00");
+			
+			CommerceOrders.assertOrderImportPreviewEntry(
+				importStatus = "OK",
+				productName = "ABS Sensor",
+				productQuantity = "1",
+				productSku = "MIN93015",
+				totalPrice = "50.00",
+				unitPrice = "50.00");
+
+			CommerceOrders.assertOrderImportPreviewEntry(
+				importStatus = "OK",
+				productName = "Torque Converters",
+				productQuantity = "1",
+				productSku = "MIN55859",
+				totalPrice = "34.00",
+				unitPrice = "34.00");
+
+			CommerceOrders.assertOrderImportPreviewEntry(
+				importStatus = "The specified quantity is unavailable.",
+				productName = "Power Steering Pump",
+				productQuantity = "1",
+				productSku = "MIN38800",
+				totalPrice = "",
+				unitPrice = "");
+
+			CommerceOrders.assertOrderImportPreviewEntry(
+				importStatus = "The product is no longer available.",
+				productName = "Brake Fluid",
+				productQuantity = "1",
+				productSku = "",
+				totalPrice = "",
+				unitPrice = "");
+		}
+    }
+
 }

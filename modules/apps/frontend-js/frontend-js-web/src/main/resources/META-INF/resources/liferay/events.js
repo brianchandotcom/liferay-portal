@@ -175,7 +175,7 @@
 
 				form.attr('action', action);
 
-				form.submit();
+				Util.submitForm(form);
 
 				form.attr('target', '');
 

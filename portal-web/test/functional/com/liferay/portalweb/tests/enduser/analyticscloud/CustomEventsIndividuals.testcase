@@ -222,7 +222,7 @@ definition {
 		}
 
 		task ("Assert empty state") {
-			ACUtils.viewNoResultsMessage(noResultMessage = "There are no events found.,Check back later to verify if data has been received from your data sources.Learn more about individuals.");
+			ACUtils.viewGenericText(textValueList = "There are no events found.,Check back later to verify if data has been received from your data sources.Learn more about individuals.");
 		}
 
 		task ("Select Last 24 hours time period in Individuals Events chart") {

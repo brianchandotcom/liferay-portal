@@ -40,6 +40,7 @@ import {
 import selectCanUpdateEditables from '../../../../../app/selectors/selectCanUpdateEditables';
 import {selectPageContentDropdownItems} from '../../../../../app/selectors/selectPageContentDropdownItems';
 import getFirstControlsId from '../../../../../app/utils/getFirstControlsId';
+import getFragmentItem from '../../../../../app/utils/getFragmentItem';
 import ImageEditorModal from './ImageEditorModal';
 
 export default function PageContent({
@@ -181,11 +182,8 @@ export default function PageContent({
 			item: {
 				id: editableId,
 				itemType: ITEM_TYPES.editable,
-				parentId: Object.values(layoutData.items).find(
-					(item) =>
-						item.config.fragmentEntryLinkId ===
-						editableId.split('-')[0]
-				)?.itemId,
+				parentId: getFragmentItem(layoutData, editableId.split('-')[0])
+					?.itemId,
 			},
 			layoutData,
 		});

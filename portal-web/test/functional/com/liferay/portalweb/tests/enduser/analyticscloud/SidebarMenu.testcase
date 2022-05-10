@@ -153,7 +153,9 @@ definition {
 		}
 
 		task ("Change language in AC") {
-			ACWorkspace.changeLanguageToPortuguese(languageOption = "Portuguese (Brazil)");
+			ACWorkspace.changeLanguage(
+				language = "Language",
+				languageOption = "Portuguese (Brazil)");
 		}
 
 		task ("View AC sidebar changed language") {
@@ -161,7 +163,9 @@ definition {
 		}
 
 		task ("Change language back in AC") {
-			ACWorkspace.changeLanguageToEnglish(languageOption = "Inglês");
+			ACWorkspace.changeLanguage(
+				language = "Idioma",
+				languageOption = "Inglês");
 		}
 
 		task ("View AC sidebar changed language") {

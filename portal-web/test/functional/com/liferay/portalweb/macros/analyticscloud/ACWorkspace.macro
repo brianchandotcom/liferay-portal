@@ -1,7 +1,8 @@
 definition {
 
-	macro changeLanguageToEnglish {
+	macro changeLanguage {
 		var key_languageOption = "${languageOption}";
+		var key_language = "${language}";
 
 		if (IsElementPresent(locator1 = "ACSettings#SETTINGS_PAGE")) {
 			Click(locator1 = "ACSettings#EXIT_SETTINGS_BUTTON");
@@ -9,23 +10,7 @@ definition {
 
 		Click(locator1 = "ACWorkspace#USER_MENU_OPTION");
 
-		ACUtils.clickAnyButton(button = "Idioma");
-
-		ACUtils.clickAnyButton(button = "${key_languageOption}");
-
-		TestUtils.hardRefresh();
-	}
-
-	macro changeLanguageToPortuguese {
-		var key_languageOption = "${languageOption}";
-
-		if (IsElementPresent(locator1 = "ACSettings#SETTINGS_PAGE")) {
-			Click(locator1 = "ACSettings#EXIT_SETTINGS_BUTTON");
-		}
-
-		Click(locator1 = "ACWorkspace#USER_MENU_OPTION");
-
-		ACUtils.clickAnyButton(button = "Language");
+		ACUtils.clickAnyButton(button = "${key_language}");
 
 		ACUtils.clickAnyButton(button = "${key_languageOption}");
 

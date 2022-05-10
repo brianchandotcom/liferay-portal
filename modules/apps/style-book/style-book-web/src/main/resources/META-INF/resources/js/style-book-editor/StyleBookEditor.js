@@ -34,14 +34,12 @@ const StyleBookEditor = ({
 		initialFrontendTokensValues
 	);
 	const [draftStatus, setDraftStatus] = useState(DRAFT_STATUS.notSaved);
-	const [previewLayout, setPreviewLayout] = useState(
-		getMostRecentLayout(config.previewOptions)
-	);
 	const [previewLayoutType, setPreviewLayoutType] = useState(
 		() =>
 			config.previewOptions.find((type) =>
 				type.data.recentLayouts.find(
-					(layout) => layout === previewLayout
+					(layout) =>
+						layout === getMostRecentLayout(config.previewOptions)
 				)
 			)?.type
 	);
@@ -76,10 +74,9 @@ const StyleBookEditor = ({
 			value={{
 				draftStatus,
 				frontendTokensValues,
-				previewLayout,
+				previewLayout: getMostRecentLayout(config.previewOptions),
 				previewLayoutType,
 				setFrontendTokensValues,
-				setPreviewLayout,
 				setPreviewLayoutType,
 			}}
 		>

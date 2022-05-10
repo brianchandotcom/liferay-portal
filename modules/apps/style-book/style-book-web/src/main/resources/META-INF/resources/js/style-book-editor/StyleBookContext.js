@@ -23,7 +23,6 @@ export const StyleBookContext = React.createContext({
 	previewLayout: {},
 	previewLayoutType: null,
 	setFrontendTokensValues: () => {},
-	setPreviewLayout: () => {},
 	setPreviewLayoutType: () => {},
 });
 
@@ -45,4 +44,8 @@ export function useDispatch() {
 
 export function useLoading() {
 	return useContext(StyleBookContext).loading;
+}
+
+export function usePreviewLayout() {
+	return useContext(StyleBookContext).previewLayout;
 }

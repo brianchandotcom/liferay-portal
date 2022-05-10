@@ -18,9 +18,13 @@ import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useState} from 'react';
 
-import {StyleBookContext, useDispatch} from './StyleBookContext';
+import {
+	StyleBookContext,
+	useDispatch,
+	usePreviewLayout,
+} from './StyleBookContext';
 import {config} from './config';
-import {LOADING} from './constants/actionTypes';
+import {LOADING, SET_PREVIEW_LAYOUT} from './constants/actionTypes';
 import {LAYOUT_TYPES} from './constants/layoutTypes';
 import {itemSelectorValueFromFragmentCollection} from './item_selector_value/itemSelectorValueFromFragmentCollection';
 import {itemSelectorValueFromLayout} from './item_selector_value/itemSelectorValueFromLayout';
@@ -130,7 +134,7 @@ export function LayoutSelector({layoutType}) {
 	const dispatch = useDispatch();
 
 	const [active, setActive] = useState(false);
-	const {previewLayout, setPreviewLayout} = useContext(StyleBookContext);
+	const previewLayout = usePreviewLayout();
 
 	const previewData = config.previewOptions.find(
 		(option) => option.type === layoutType
@@ -144,9 +148,12 @@ export function LayoutSelector({layoutType}) {
 
 	useEffect(() => {
 		dispatch({type: LOADING, value: true});
-		setPreviewLayout(previewData.recentLayouts[0]);
+		dispatch({
+			layout: previewData.recentLayouts[0],
+			type: SET_PREVIEW_LAYOUT,
+		});
 		setRecentLayouts(previewData.recentLayouts);
-	}, [setPreviewLayout, previewData, dispatch]);
+	}, [previewData, dispatch]);
 
 	const selectPreviewLayout = (layout) => {
 		if (
@@ -157,7 +164,7 @@ export function LayoutSelector({layoutType}) {
 		}
 
 		dispatch({type: LOADING, value: true});
-		setPreviewLayout(layout);
+		dispatch({layout, type: SET_PREVIEW_LAYOUT});
 		setRecentLayouts(getNextRecentLayouts(recentLayouts, layout));
 	};
 

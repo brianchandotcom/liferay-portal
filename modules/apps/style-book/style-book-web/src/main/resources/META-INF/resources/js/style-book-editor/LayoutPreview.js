@@ -23,22 +23,26 @@ import React, {
 	useState,
 } from 'react';
 
-import {StyleBookContext, useDispatch, useLoading} from './StyleBookContext';
+import {
+	StyleBookContext,
+	useDispatch,
+	useLoading,
+	usePreviewLayout,
+} from './StyleBookContext';
 import {LOADING} from './constants/actionTypes';
 import {LAYOUT_TYPES} from './constants/layoutTypes';
 
 export default function LayoutPreview() {
 	const dispatch = useDispatch();
 	const loading = useLoading();
+	const previewLayout = usePreviewLayout();
 
 	const iframeRef = useRef();
 	const [iframeLoaded, setIframeLoaded] = useState(false);
 
-	const {
-		frontendTokensValues = {},
-		previewLayout,
-		previewLayoutType,
-	} = useContext(StyleBookContext);
+	const {frontendTokensValues = {}, previewLayoutType} = useContext(
+		StyleBookContext
+	);
 
 	const loadFrontendTokenValues = useCallback(() => {
 		if (iframeLoaded) {

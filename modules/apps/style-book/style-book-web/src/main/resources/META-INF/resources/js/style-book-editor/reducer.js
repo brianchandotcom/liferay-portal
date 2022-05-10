@@ -12,7 +12,7 @@
  * details.
  */
 
-import {LOADING} from './constants/actionTypes';
+import {LOADING, SET_PREVIEW_LAYOUT} from './constants/actionTypes';
 
 export default function reducer(state, action) {
 	switch (action.type) {
@@ -20,6 +20,12 @@ export default function reducer(state, action) {
 			const {value} = action;
 
 			return {...state, loading: value};
+		}
+
+		case SET_PREVIEW_LAYOUT: {
+			const {layout} = action;
+
+			return {...state, previewLayout: layout};
 		}
 
 		default:

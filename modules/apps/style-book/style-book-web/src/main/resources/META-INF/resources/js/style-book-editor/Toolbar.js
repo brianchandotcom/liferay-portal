@@ -21,7 +21,7 @@ import React, {useContext, useLayoutEffect, useRef, useState} from 'react';
 
 import PreviewSelector from './PreviewSelector';
 import PublishButton from './PublishButton';
-import {StyleBookContext} from './StyleBookContext';
+import {StyleBookContext, usePreviewLayout} from './StyleBookContext';
 import Undo from './Undo';
 import {config} from './config';
 import {DRAFT_STATUS} from './constants/draftStatusConstants';
@@ -33,7 +33,7 @@ const STATUS_TO_LABEL = {
 };
 
 export default function Toolbar() {
-	const {previewLayout} = useContext(StyleBookContext);
+	const previewLayout = usePreviewLayout();
 
 	return (
 		<div className="management-bar navbar style-book-editor__toolbar">

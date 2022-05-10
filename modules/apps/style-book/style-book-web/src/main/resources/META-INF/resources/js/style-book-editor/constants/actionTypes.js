@@ -13,3 +13,4 @@
  */
 
 export const LOADING = 'LOADING';
+export const SET_PREVIEW_LAYOUT = 'SET_PREVIEW_LAYOUT';

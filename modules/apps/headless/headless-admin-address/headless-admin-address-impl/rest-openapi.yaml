@@ -371,6 +371,26 @@ paths:
                                     $ref: "#/components/schemas/Region"
                                 type: array
             tags: ["Region"]
+        post:
+            operationId: postRegion
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Region"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Region"
+            responses:
+                201:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Region"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Region"
+            tags: ["Region"]
     "/regions/{regionId}":
         get:
             operationId: getRegion

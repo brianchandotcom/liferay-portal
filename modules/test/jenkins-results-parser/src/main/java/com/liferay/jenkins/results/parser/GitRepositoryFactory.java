@@ -111,7 +111,7 @@ public class GitRepositoryFactory {
 		String gitRepositoryName =
 			JenkinsResultsParserUtil.getGitRepositoryName(gitDirectoryName);
 		String gitUpstreamBranchName =
-			JenkinsResultsParserUtil.getGitUpstreamBranchName(gitDirectoryName);
+			pullRequest.getUpstreamRemoteGitBranchName();
 
 		if ((gitRepositoryName == null) || (gitUpstreamBranchName == null)) {
 			throw new RuntimeException(
@@ -150,6 +150,18 @@ public class GitRepositoryFactory {
 	public static WorkspaceGitRepository getWorkspaceGitRepository(
 		String gitDirectoryName) {
 
+		return getWorkspaceGitRepository(
+			JenkinsResultsParserUtil.getGitRepositoryName(gitDirectoryName),
+			JenkinsResultsParserUtil.getGitUpstreamBranchName(
+				gitDirectoryName));
+	}
+
+	public static WorkspaceGitRepository getWorkspaceGitRepository(
+		String repositoryName, String upstreamBranchName) {
+
+		String gitDirectoryName = JenkinsResultsParserUtil.getGitDirectoryName(
+			repositoryName, upstreamBranchName);
+
 		WorkspaceGitRepository workspaceGitRepository =
 			_workspaceGitRepositories.get(gitDirectoryName);
 
@@ -174,10 +186,14 @@ public class GitRepositoryFactory {
 
 		String gitRepositoryName =
 			JenkinsResultsParserUtil.getGitRepositoryName(gitDirectoryName);
-		String gitUpstreamBranchName =
-			JenkinsResultsParserUtil.getGitUpstreamBranchName(gitDirectoryName);
 
-		if ((gitRepositoryName == null) || (gitUpstreamBranchName == null)) {
+		if (JenkinsResultsParserUtil.isNullOrEmpty(upstreamBranchName)) {
+			upstreamBranchName =
+				JenkinsResultsParserUtil.getGitUpstreamBranchName(
+					gitDirectoryName);
+		}
+
+		if ((gitRepositoryName == null) || (upstreamBranchName == null)) {
 			throw new RuntimeException(
 				"Unable to find git directory name " + gitDirectoryName);
 		}
@@ -185,27 +201,27 @@ public class GitRepositoryFactory {
 		RemoteGitRef remoteGitRef = GitUtil.getRemoteGitRef(
 			JenkinsResultsParserUtil.combine(
 				"https://github.com/liferay/", gitRepositoryName, "/tree/",
-				gitUpstreamBranchName));
+				upstreamBranchName));
 
 		if (gitRepositoryName.matches("liferay-plugins(-ee)?")) {
 			workspaceGitRepository = new PluginsWorkspaceGitRepository(
-				remoteGitRef, gitUpstreamBranchName);
+				remoteGitRef, upstreamBranchName);
 		}
 		else if (gitRepositoryName.matches("liferay-portal(-ee)?")) {
 			workspaceGitRepository = new PortalWorkspaceGitRepository(
-				remoteGitRef, gitUpstreamBranchName);
+				remoteGitRef, upstreamBranchName);
 		}
 		else if (gitRepositoryName.equals("liferay-qa-websites-ee")) {
 			workspaceGitRepository = new QAWebsitesWorkspaceGitRepository(
-				remoteGitRef, gitUpstreamBranchName);
+				remoteGitRef, upstreamBranchName);
 		}
 		else if (gitRepositoryName.equals("liferay-release-tool-ee")) {
 			workspaceGitRepository = new ReleaseToolWorkspaceGitRepository(
-				remoteGitRef, gitUpstreamBranchName);
+				remoteGitRef, upstreamBranchName);
 		}
 		else {
 			workspaceGitRepository = new DefaultWorkspaceGitRepository(
-				remoteGitRef, gitUpstreamBranchName);
+				remoteGitRef, upstreamBranchName);
 		}
 
 		buildDatabase.putWorkspaceGitRepository(
@@ -214,14 +230,6 @@ public class GitRepositoryFactory {
 		_workspaceGitRepositories.put(gitDirectoryName, workspaceGitRepository);
 
 		return workspaceGitRepository;
-	}
-
-	public static WorkspaceGitRepository getWorkspaceGitRepository(
-		String repositoryName, String upstreamBranchName) {
-
-		return getWorkspaceGitRepository(
-			JenkinsResultsParserUtil.getGitDirectoryName(
-				repositoryName, upstreamBranchName));
 	}
 
 	protected static WorkspaceGitRepository getWorkspaceGitRepository(

@@ -394,34 +394,12 @@ definition {
 				value1 = "Numeric");
 		}
 
-		task ("Select the None in Pagination field") {
-			PageEditor.editCollectionDisplay(
-				fragmentName = "Collection Display",
-				pagination = "None",
-				selectedName = "Dynamic Collection");
-		}
-
-		task ("View the page number, next and previous buttons not shown in Collection Display") {
-			AssertElementNotPresent(
-				key_pageNumber = "1",
-				locator1 = "Pagination#ANY_PAGE");
-
-			AssertElementNotPresent(
-				locator1 = "Pagination#ICON",
-				type = "angle-left");
-
-			AssertElementNotPresent(
-				locator1 = "Pagination#ICON",
-				type = "angle-right");
-		}
-
-		task ("Select the Numeric in Pagination field, Select the 15 in Maximum Number of Items field and Select the 15 in Maximum Number of Items per Page field") {
+		task ("Select the 15 in Maximum Number of Items field and Select the 15 in Maximum Number of Items per Page field") {
 			PageEditor.editCollectionDisplay(
 				displayAllPages = "false",
 				fragmentName = "Collection Display",
 				maxNumberOfItemsPerPage = "15",
 				maxNumberOfPagesToDisplay = "1",
-				pagination = "Numeric",
 				selectedName = "Dynamic Collection");
 		}
 
@@ -1190,6 +1168,84 @@ definition {
 				key_alertInfo = "In edit mode, the number of elements displayed is limited to 20 due to performance.",
 				key_fragmentName = "Collection Display",
 				locator1 = "Fragment#ALERT_INFO");
+		}
+	}
+
+	@description = "This is a use case for LPS-146171.2 Check the default settings of Collection Display with None pagination."
+	@priority = "4"
+	test ViewDefaultSettingsOfCollectionDisplayWithNonePagination {
+		task ("Given a page creator has a content page with Collection Display fragment then select a dynamic collection") {
+			task ("Add a web content") {
+				JSONWebcontent.addWebContent(
+					content = "Web Content Content",
+					groupName = "Test Site Name",
+					title = "Web Content Title");
+			}
+
+			task ("Add a dynamic collection for All Types") {
+				JSONAssetlist.addDynamicAssetListEntryWithItemType(
+					groupName = "Test Site Name",
+					itemType = "All Types",
+					title = "Dynamic Collection");
+			}
+
+			task ("Add a Collection Display to page") {
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name");
+
+				PageEditor.addFragment(
+					collectionName = "Content Display",
+					fragmentName = "Collection Display");
+			}
+
+			task ("Select the dynamic collection in Collection Display") {
+				PageEditor.editCollectionDisplay(
+					assetListName = "Dynamic Collection",
+					fragmentName = "Collection Display");
+			}
+		}
+
+		task ("When the page creator changes the pagination to None") {
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				pagination = "None",
+				selectedName = "Dynamic Collection");
+		}
+
+		task ("Then the page creator could view the default settings of Collection Display") {
+			task ("View the page number, next and previous buttons not shown in Collection Display") {
+				AssertElementNotPresent(
+					key_pageNumber = "1",
+					locator1 = "Pagination#ANY_PAGE");
+
+				AssertElementNotPresent(
+					locator1 = "Pagination#ICON",
+					type = "angle-left");
+
+				AssertElementNotPresent(
+					locator1 = "Pagination#ICON",
+					type = "angle-right");
+			}
+
+			task ("View the Display All Collection Items is unchecked") {
+				AssertNotChecked.assertNotCheckedNotVisible(
+					checkboxName = "Display All Collection Items",
+					locator1 = "Checkbox#ANY_CHECKBOX");
+			}
+
+			task ("View the Maximum Number of Items to Display is 5") {
+				AssertTextEquals(
+					key_fieldLabel = "Maximum Number of Items to Display",
+					locator1 = "FormFields#NUMBER_FIELD",
+					value1 = "5");
+			}
+
+			task ("View warning message shown below the Maximum Number of Items to Display field") {
+				AssertTextEquals(
+					locator1 = "PageEditor#FRAGMENT_SIDEBAR_SECONDARY_TEXT",
+					value1 = "Setting a value above 200 can affect page performance severely.");
+			}
 		}
 	}
 

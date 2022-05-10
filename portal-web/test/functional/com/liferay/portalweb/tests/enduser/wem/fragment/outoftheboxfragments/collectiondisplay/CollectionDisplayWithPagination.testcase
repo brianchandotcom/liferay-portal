@@ -35,6 +35,201 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-146171. Check the behaviors when user define different Maximum Number of Pages to Display."
+	@priority = "4"
+	test ConfigureMaximumNumberOfPagesToDisplay {
+		task ("Given a page creator has a content page with Collection Display fragment then select a dynamic collection") {
+			task ("Add 6 web contents") {
+				var i = "1";
+
+				while ("${i}" != "7") {
+					JSONWebcontent.addWebContent(
+						content = "Web Content Content ${i}",
+						groupName = "Test Site Name",
+						title = "Web Content Title ${i}");
+
+					var i = ${i} + 1;
+				}
+			}
+
+			task ("Add a dynamic collection for All Types") {
+				JSONAssetlist.addDynamicAssetListEntryWithItemType(
+					groupName = "Test Site Name",
+					itemType = "All Types",
+					title = "Dynamic Collection");
+			}
+
+			task ("Add a Collection Display to page") {
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name");
+
+				PageEditor.addFragment(
+					collectionName = "Content Display",
+					fragmentName = "Collection Display");
+			}
+
+			task ("Select the dynamic collection in Collection Display") {
+				PageEditor.editCollectionDisplay(
+					assetListName = "Dynamic Collection",
+					fragmentName = "Collection Display");
+			}
+		}
+
+		task ("When the page creator changes the Maximum Number of Items per Page to 1") {
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				maxNumberOfItemsPerPage = "1",
+				selectedName = "Dynamic Collection");
+		}
+
+		task ("Then the page creator could view 6 pages shown in Collection Display") {
+			for (var pageNumber : list "1,2,3,...,6") {
+				AssertVisible(
+					key_pageNumber = "${pageNumber}",
+					locator1 = "Pagination#ANY_PAGE");
+			}
+		}
+
+		task ("When the page creator unchecks the Display All Pages") {
+			Uncheck.uncheckNotVisible(
+				checkboxName = "Display All Pages",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		task ("Then the page creator could view the Maximum Number of Pages to Display is 5") {
+			AssertTextEquals(
+				key_fieldLabel = "Maximum Number of Pages to Display",
+				locator1 = "FormFields#NUMBER_FIELD",
+				value1 = "5");
+
+			for (var pageNumber : list "1,2,3,4,5") {
+				AssertVisible(
+					key_pageNumber = "${pageNumber}",
+					locator1 = "Pagination#ANY_PAGE");
+			}
+
+			AssertElementNotPresent(
+				key_pageNumber = "6",
+				locator1 = "Pagination#ANY_PAGE");
+		}
+
+		task ("When the page creator changes the Maximum Number of Pages to Display is 6") {
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				maxNumberOfPagesToDisplay = "6",
+				selectedName = "Dynamic Collection");
+		}
+
+		task ("Then the page creator could view the page 6 shown in pagination bar") {
+			for (var pageNumber : list "1,2,3,...,6") {
+				AssertVisible(
+					key_pageNumber = "${pageNumber}",
+					locator1 = "Pagination#ANY_PAGE");
+			}
+		}
+
+		task ("When the page creator changes the Maximum Number of Pages to Display is 7") {
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				maxNumberOfPagesToDisplay = "7",
+				selectedName = "Dynamic Collection");
+		}
+
+		task ("Then the page creator could only view 6 pages shown in Collection Display") {
+			for (var pageNumber : list "1,2,3,...,6") {
+				AssertVisible(
+					key_pageNumber = "${pageNumber}",
+					locator1 = "Pagination#ANY_PAGE");
+			}
+
+			AssertElementNotPresent(
+				key_pageNumber = "7",
+				locator1 = "Pagination#ANY_PAGE");
+		}
+
+		task ("When the page creator tries to type 0 in the Maximum Number of Pages to Display field") {
+			TripleClick(
+				key_fieldLabel = "Maximum Number of Pages to Display",
+				locator1 = "FormFields#NUMBER_FIELD");
+
+			Type.sendKeys(
+				key_fieldLabel = "Maximum Number of Pages to Display",
+				locator1 = "FormFields#NUMBER_FIELD",
+				value1 = "0");
+		}
+
+		task ("Then the Maximum Number of Pages to Display field should be empty") {
+			AssertTextEquals(
+				key_fieldLabel = "Maximum Number of Pages to Display",
+				locator1 = "FormFields#NUMBER_FIELD",
+				value1 = "");
+		}
+
+		task ("When the page creator tries to type non-digit characters in the Maximum Number of Pages to Display field") {
+			Type.sendKeys(
+				key_fieldLabel = "Maximum Number of Pages to Display",
+				locator1 = "FormFields#NUMBER_FIELD",
+				value1 = "dxp");
+		}
+
+		task ("Then the Maximum Number of Pages to Display field should be empty") {
+			AssertTextEquals(
+				key_fieldLabel = "Maximum Number of Pages to Display",
+				locator1 = "FormFields#NUMBER_FIELD",
+				value1 = "");
+		}
+
+		task ("When the page creator triggers auto save after leave the Maximum Number of Pages to Display field empty") {
+			Click(
+				key_sidebarButton = "Browser",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+		}
+
+		task ("Then the value of Maximum Number of Pages to Display becomes to 1") {
+			AssertTextEquals(
+				key_fieldLabel = "Maximum Number of Pages to Display",
+				locator1 = "FormFields#NUMBER_FIELD",
+				value1 = "1");
+
+			AssertVisible(
+				key_pageNumber = "1",
+				locator1 = "Pagination#ANY_PAGE");
+
+			AssertElementNotPresent(
+				key_pageNumber = "2",
+				locator1 = "Pagination#ANY_PAGE");
+		}
+
+		task ("When the page creator triggers auto save after typing negative number to the Maximum Number of Pages to Display field") {
+			TripleClick(
+				key_fieldLabel = "Maximum Number of Pages to Display",
+				locator1 = "FormFields#NUMBER_FIELD");
+
+			Type.sendKeys(
+				key_fieldLabel = "Maximum Number of Pages to Display",
+				locator1 = "FormFields#NUMBER_FIELD",
+				value1 = "-2");
+
+			Click(
+				key_sidebarButton = "Browser",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+		}
+
+		task ("Then the negative character should be removed") {
+			AssertTextEquals(
+				key_fieldLabel = "Maximum Number of Pages to Display",
+				locator1 = "FormFields#NUMBER_FIELD",
+				value1 = "2");
+
+			for (var pageNumber : list "1,2") {
+				AssertVisible(
+					key_pageNumber = "${pageNumber}",
+					locator1 = "Pagination#ANY_PAGE");
+			}
+		}
+	}
+
 	@description = "This is a use case for LPS-149178. The user could navigate through pages in Collection Display with pagination and Display All Collection Items."
 	@priority = "4"
 	test NavigateToPagesInCollectionDisplayWithDisplayAllCollectionItems {

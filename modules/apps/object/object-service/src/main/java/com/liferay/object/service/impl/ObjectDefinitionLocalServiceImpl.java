@@ -458,6 +458,24 @@ public class ObjectDefinitionLocalServiceImpl
 	}
 
 	@Override
+	public boolean hasObjectRelationship(long objectDefinitionId) {
+		int countByObjectDefinitionId1 =
+			_objectRelationshipPersistence.countByObjectDefinitionId1(
+				objectDefinitionId);
+		int countByObjectDefinitionId2 =
+			_objectRelationshipPersistence.countByObjectDefinitionId2(
+				objectDefinitionId);
+
+		if ((countByObjectDefinitionId1 > 0) ||
+			(countByObjectDefinitionId2 > 0)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public ObjectDefinition publishCustomObjectDefinition(
 			long userId, long objectDefinitionId)
 		throws PortalException {

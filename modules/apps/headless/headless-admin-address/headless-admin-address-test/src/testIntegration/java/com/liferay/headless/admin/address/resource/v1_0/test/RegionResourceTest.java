@@ -16,10 +16,13 @@ package com.liferay.headless.admin.address.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.address.client.dto.v1_0.Region;
+import com.liferay.headless.admin.address.client.http.HttpInvoker;
 import com.liferay.headless.admin.address.client.pagination.Page;
 import com.liferay.headless.admin.address.client.pagination.Pagination;
 import com.liferay.headless.admin.address.client.serdes.v1_0.RegionSerDes;
 import com.liferay.petra.function.UnsafeTriConsumer;
+import com.liferay.portal.kernel.exception.DuplicateRegionException;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Country;
@@ -31,10 +34,11 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.test.rule.Inject;
-import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 
 import java.util.Arrays;
 import java.util.List;
+
+import javax.ws.rs.core.Response;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -123,6 +127,38 @@ public class RegionResourceTest extends BaseRegionResourceTestCase {
 			region2,
 			Arrays.asList(
 				RegionSerDes.toDTOs(regionsJSONObject.getString("items"))));
+	}
+
+	@Override
+	@Test
+	public void testPostRegion() throws Exception {
+		super.testPostRegion();
+
+		Region existingRegion = _addRegion(randomRegion());
+
+		Region region = randomRegion();
+
+		region.setName((String)null);
+
+		_testPostRegionProblem(region, null);
+
+		region.setName("");
+
+		_testPostRegionProblem(region, null);
+
+		region = randomRegion();
+
+		region.setRegionCode((String)null);
+
+		_testPostRegionProblem(region, null);
+
+		region.setRegionCode("");
+
+		_testPostRegionProblem(region, null);
+
+		region.setRegionCode(existingRegion.getRegionCode());
+
+		_testPostRegionProblem(region, DuplicateRegionException.class);
 	}
 
 	@Override
@@ -246,15 +282,13 @@ public class RegionResourceTest extends BaseRegionResourceTestCase {
 		return _addRegion(region);
 	}
 
+	@Override
+	protected Region testPostRegion_addRegion(Region region) throws Exception {
+		return _addRegion(region);
+	}
+
 	private Region _addRegion(Region region) throws Exception {
-		return Region.toDTO(
-			String.valueOf(
-				_regionResourceDTOConverter.toDTO(
-					_regionLocalService.addRegion(
-						region.getCountryId(), region.getActive(),
-						region.getName(), region.getPosition(),
-						region.getRegionCode(),
-						ServiceContextTestUtil.getServiceContext()))));
+		return regionResource.postRegion(region);
 	}
 
 	private Region _addRegion(String keyword) throws Exception {
@@ -265,6 +299,26 @@ public class RegionResourceTest extends BaseRegionResourceTestCase {
 		return _addRegion(region);
 	}
 
+	private <T extends Exception> void _testPostRegionProblem(
+			Region region, Class<T> exceptionClass)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			regionResource.postRegionHttpResponse(region);
+
+		Assert.assertEquals(
+			Response.Status.BAD_REQUEST.getStatusCode(),
+			httpResponse.getStatusCode());
+
+		if (exceptionClass != null) {
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
+				httpResponse.getContent());
+
+			Assert.assertEquals(
+				exceptionClass.getSimpleName(), jsonObject.get("type"));
+		}
+	}
+
 	@DeleteAfterTestRun
 	private Country _country;
 
@@ -272,12 +326,9 @@ public class RegionResourceTest extends BaseRegionResourceTestCase {
 	private CountryLocalService _countryLocalService;
 
 	@Inject
-	private RegionLocalService _regionLocalService;
+	private JSONFactory _jsonFactory;
 
-	@Inject(filter = "dto.class.name=com.liferay.portal.kernel.model.Region")
-	private DTOConverter
-		<com.liferay.portal.kernel.model.Region,
-		 com.liferay.headless.admin.address.dto.v1_0.Region>
-			_regionResourceDTOConverter;
+	@Inject
+	private RegionLocalService _regionLocalService;
 
 }

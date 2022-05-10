@@ -61,7 +61,7 @@ export function HideFragmentField({
 	);
 	const dispatch = useDispatch();
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
-	const hasInputChild = useHasInputChild();
+	const hasInputChild = useHasInputChild(item.itemId);
 	const selectItem = useSelectItem();
 
 	const [nextValue, setNextValue] = useControlledState(value || false);
@@ -105,7 +105,10 @@ export function HideFragmentField({
 									: customValues.unchecked;
 							}
 
-							if (hasInputChild()) {
+							const isHidden =
+								item.config.styles.display === 'none';
+
+							if (!isHidden && hasInputChild()) {
 								openWarningModal({
 									action: () =>
 										hideFragment({

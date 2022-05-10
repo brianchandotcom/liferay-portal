@@ -224,11 +224,11 @@ public class LayoutTypePortletImpl
 		// specified
 
 		if (startPortlets == null) {
-			startPortlets = new ArrayList<>();
+			startPortlets = Collections.emptyList();
 		}
 
 		if (endPortlets == null) {
-			endPortlets = new ArrayList<>();
+			endPortlets = Collections.emptyList();
 		}
 
 		if (startPortlets.isEmpty() && endPortlets.isEmpty()) {

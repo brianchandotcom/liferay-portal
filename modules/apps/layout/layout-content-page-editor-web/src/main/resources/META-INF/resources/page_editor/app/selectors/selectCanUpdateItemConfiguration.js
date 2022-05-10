@@ -16,5 +16,10 @@
  * @param {{ permissions: import("../../types/ActionKeys").ActionKeysMap}} state
  */
 export default function selectCanUpdateItemConfiguration({permissions}) {
-	return !permissions.LOCKED_SEGMENTS_EXPERIMENT && permissions.UPDATE;
+	return (
+		!permissions.LOCKED_SEGMENTS_EXPERIMENT &&
+		(permissions.UPDATE ||
+			permissions.UPDATE_LAYOUT_BASIC ||
+			permissions.UPDATE_LAYOUT_LIMITED)
+	);
 }

@@ -46,7 +46,10 @@ export default function permissionsReducer(state = INITIAL_STATE, action) {
 		case INIT:
 			return {
 				...state,
-				SWITCH_EDIT_MODE: state.UPDATE,
+				SWITCH_EDIT_MODE:
+					state.UPDATE ||
+					state.UPDATE_LAYOUT_BASIC ||
+					state.UPDATE_LAYOUT_LIMITED,
 			};
 
 		default:

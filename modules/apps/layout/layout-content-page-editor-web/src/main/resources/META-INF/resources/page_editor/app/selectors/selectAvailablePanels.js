@@ -25,7 +25,12 @@ export default function selectAvailablePanels(panels) {
 	return function ({permissions, selectedViewportSize}) {
 		const availablePanels = ['comments', 'browser'];
 
-		if (permissions.LOCKED_SEGMENTS_EXPERIMENT || !permissions.UPDATE) {
+		if (
+			permissions.LOCKED_SEGMENTS_EXPERIMENT ||
+			(!permissions.UPDATE &&
+				!permissions.UPDATE_LAYOUT_LIMITED &&
+				!permissions.UPDATE_LAYOUT_BASIC)
+		) {
 			return panels
 				.map((group) =>
 					group.filter((panelId) => availablePanels.includes(panelId))

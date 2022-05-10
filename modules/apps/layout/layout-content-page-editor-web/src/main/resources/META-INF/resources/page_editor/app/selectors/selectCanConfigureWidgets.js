@@ -12,12 +12,14 @@
  * details.
  */
 
+import selectHasAnyUpdatePermission from './selectHasAnyUpdatePermission';
+
 /**
  * @param {{ permissions: import("../../types/ActionKeys").ActionKeysMap }} state
  */
 export default function selectCanConfigureWidgets({permissions}) {
 	return (
 		!permissions.LOCKED_SEGMENTS_EXPERIMENT &&
-		(permissions.UPDATE || permissions.UPDATE_LAYOUT_CONTENT)
+		selectHasAnyUpdatePermission({permissions})
 	);
 }

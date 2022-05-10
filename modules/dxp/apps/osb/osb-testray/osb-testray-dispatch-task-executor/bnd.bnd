@@ -1,5 +1,5 @@
-Bundle-Name: Liferay OSB Testray
-Bundle-SymbolicName: com.liferay.osb.testray
+Bundle-Name: Liferay OSB Testray Dispatch Task Executor
+Bundle-SymbolicName: com.liferay.osb.testray.dispatch.task.executor
 Bundle-Version: 1.0.0
 Import-Package:\
 	!com.google.api.client.json.gson.*,\

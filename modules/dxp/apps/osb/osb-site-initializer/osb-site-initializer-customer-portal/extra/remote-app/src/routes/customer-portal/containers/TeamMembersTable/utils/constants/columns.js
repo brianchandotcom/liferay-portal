@@ -17,7 +17,7 @@ export const COLUMNS = [
 		accessor: 'name',
 		bodyClass: 'border-0',
 		header: {
-			name: `${i18n.translate('name')}`,
+			name: i18n.translate('name'),
 			styles:
 				'bg-transparent text-neutral-10 font-weight-bold table-cell-expand',
 		},
@@ -28,7 +28,7 @@ export const COLUMNS = [
 		bodyClass: 'border-0',
 
 		header: {
-			name: `${i18n.translate('email')}`,
+			name: i18n.translate('email'),
 			styles:
 				'bg-transparent text-neutral-10 font-weight-bold table-cell-expand-small',
 		},
@@ -56,7 +56,7 @@ export const COLUMNS = [
 		accessor: 'role',
 		bodyClass: 'border-0',
 		header: {
-			name: `${i18n.translate('role')}`,
+			name: i18n.translate('role'),
 			styles:
 				'bg-transparent text-neutral-10 font-weight-bold table-cell-expand-smaller',
 		},
@@ -66,7 +66,7 @@ export const COLUMNS = [
 		accessor: 'status',
 		bodyClass: 'border-0',
 		header: {
-			name: `${i18n.translate('status')}`,
+			name: i18n.translate('status'),
 			styles:
 				'bg-transparent text-neutral-10 font-weight-bold table-cell-expand-smallest',
 		},

@@ -152,8 +152,7 @@ const InviteTeamMembersPage = ({
 			setInitialError(false);
 			setBaseButtonDisabled(sucessfullyEmails !== totalEmails);
 			setshowEmptyEmailError(false);
-		}
-		else if (touched['invites']?.some((field) => field?.email)) {
+		} else if (touched['invites']?.some((field) => field?.email)) {
 			setInitialError(true);
 			setBaseButtonDisabled(true);
 		}
@@ -208,8 +207,7 @@ const InviteTeamMembersPage = ({
 				}
 				handlePage();
 			}
-		}
-		else {
+		} else {
 			setInitialError(true);
 			setBaseButtonDisabled(true);
 			setTouched({
@@ -377,9 +375,10 @@ const InviteTeamMembersPage = ({
 												? i18n.translate(
 														'support-seats'
 												  )
-												: `${
-														ROLE_TYPES.admin.name
-												  } ${i18n.translate('roles')}`
+												: i18n.translate(
+														'administrator-roles'
+												  )
+										}
 										}  ${i18n.sub('available-x-of-x', [
 											availableAdminsRoles,
 											project.maxRequestors,

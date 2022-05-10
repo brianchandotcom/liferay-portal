@@ -96,10 +96,10 @@ const ProjectCard = ({code, isSmall, onClick, region, sla, status, title}) => {
 
 						{isSmall && (
 							<div className="text-align-end text-neutral-5 text-paragraph-sm">
-								{`${i18n.translate('support-region')} `}
+								{i18n.translate('support-region')}
 
 								<span className="font-weight-bold">
-									{`${i18n.translate(getKebabCase(region))}`}
+									{i18n.translate(getKebabCase(region))}
 								</span>
 							</div>
 						)}

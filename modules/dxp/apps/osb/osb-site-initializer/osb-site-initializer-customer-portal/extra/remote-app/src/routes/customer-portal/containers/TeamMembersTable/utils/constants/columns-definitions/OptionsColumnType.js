@@ -41,7 +41,7 @@ const OptionsColumnType = ({
 }) => {
 	const userOptions = [
 		{
-			label: `${i18n.translate('edit')}`,
+			label: i18n.translate('edit'),
 			onClick: () =>
 				setUserAction({
 					type: TEAM_MEMBERS_ACTION_TYPES.edit,
@@ -50,7 +50,7 @@ const OptionsColumnType = ({
 		},
 		{
 			customOptionStyle: 'cp-remove-member-option',
-			label: `${i18n.translate('remove')}`,
+			label: i18n.translate('remove'),
 			onClick: () =>
 				setUserAction({
 					type: TEAM_MEMBERS_ACTION_TYPES.remove,

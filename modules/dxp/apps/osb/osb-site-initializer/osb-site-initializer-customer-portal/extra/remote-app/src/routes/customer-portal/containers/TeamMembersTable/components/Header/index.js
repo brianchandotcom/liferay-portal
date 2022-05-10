@@ -116,7 +116,7 @@ const TeamMembersTableHeader = ({
 							prependIcon="user-plus"
 							prependIconClassName="mr-2"
 						>
-							{`${i18n.translate('invite')}`}
+							{i18n.translate('invite')}
 						</Button>
 					)}
 				</div>
